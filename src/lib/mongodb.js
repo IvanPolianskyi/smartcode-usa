@@ -9,7 +9,7 @@ async function connectToMongo() {
   }
 
   const mongoUri = process.env.MONGODB_URI
-  const databaseName = process.env.MONGODB_DB || 'SmartCdeLogs'
+  const databaseName = process.env.MONGODB_DB || 'SmartCodeLogs'
 
   if (!mongoUri) {
     throw new Error('Missing MONGODB_URI environment variable')

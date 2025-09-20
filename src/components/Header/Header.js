@@ -215,6 +215,7 @@ const Header = () => {
 		{ label: 'Курси', dropdown: true },
 		{ label: 'Відгуки', href: '/#testimonials' },
 		{ label: 'Контакти', href: '/#Contactform' },
+		{label: "Проєкти з учнями", href: "/projects"}
 	]
 	
 	const courses = [

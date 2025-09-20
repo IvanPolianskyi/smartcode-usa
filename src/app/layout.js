@@ -19,6 +19,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata = {
+	metadataBase: new URL('https://smartcode-academy.com'),
 	title: 'SmartCode Academy - Школа програмування для дітей та підлітків',
 	description:
 		'Навчаємо дітей 8-17 років програмуванню через інтерактивні заняття. Python, JavaScript, розробка ігор, веб-дизайн. Перший урок безкоштовно! Онлайн та офлайн формати навчання в Україні.',
