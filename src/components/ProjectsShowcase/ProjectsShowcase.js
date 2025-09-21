@@ -224,7 +224,7 @@ const ProjectsShowcase = () => {
 				) : (
 					<div className={styles.emptyState}>
 						<Code size={48} />
-						<p>Перші проєкти з'являться тут!</p>
+						<p>Перші проєкти з&apos;являться тут!</p>
 					</div>
 				)}
 

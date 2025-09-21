@@ -170,7 +170,7 @@ const PhoneModal = ({
 
 							<div className={styles.formGroup}>
 								<label htmlFor="name" className={styles.label}>
-									Ваше ім'я *
+									Ваше ім&apos;я *
 								</label>
 								<input
 									type="text"
