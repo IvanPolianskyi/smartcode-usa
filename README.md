@@ -35,21 +35,57 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## Telegram bot integration for lead notifications
+## Telegram Bot Integration
 
-The site can send contact form submissions to Telegram.
+The application includes two types of Telegram bot functionality:
 
-1. Create a Telegram bot via BotFather and get the bot token.
-2. Add the bot to a group or channel (optional) and obtain the `chat_id`.
-   - For a private chat with your bot, `chat_id` is your user id.
-   - For a group, add the bot to the group and send any message, then call `https://api.telegram.org/bot<token>/getUpdates` to find the `chat.id`.
-3. Create a `.env.local` file and set:
+### 1. Main Project Management Bot
+A comprehensive bot that handles project management and starts automatically with the application.
+
+**Features:**
+- Add new projects via `/addproject` command
+- List all projects via `/listprojects` command  
+- List project source code requests via `/listleads` command
+- Handle project image uploads
+- Quick project creation with format: `Title|Description|Code`
+
+**Setup:**
+1. Create a Telegram bot via BotFather and get the bot token
+2. Create a `.env.local` file and set:
 
 ```
 TELEGRAM_BOT_TOKEN=your_bot_token_here
 TELEGRAM_CHAT_ID=your_chat_id_here
+TELEGRAM_AUTHORIZED_USERS=user_id_1,user_id_2
+API_BASE_URL=http://localhost:3000
 ```
 
-4. Restart the dev server: `npm run dev`.
+3. Start the application: `npm run start` (bot starts automatically)
 
-Form submits to `/api/telegram` and posts a formatted message to the configured chat.
+### 2. Notification Bot
+Sends notifications for contact form submissions and project source code requests.
+
+**Features:**
+- Sends notifications when contact forms are submitted
+- Sends notifications when users request project source code
+- Uses the same bot token as the main bot
+
+**API Endpoints:**
+- `/api/telegram` - Contact form notifications
+- `/api/phone-collection` - Project source code request notifications
+- `/api/telegram/init` - Bot management (start/stop/status)
+
+### Running the Application
+
+**Development:**
+```bash
+npm run dev
+```
+
+**Production:**
+```bash
+npm run build
+npm run start
+```
+
+The Telegram bot will start automatically when you run `npm run start`. For development, you can still use `npm run dev` but the bot won't start automatically (you can manually trigger it via the API).

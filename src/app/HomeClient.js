@@ -24,6 +24,9 @@ const Testimonials = dynamic(() => import('@/components/Testimonials/Testimonial
 const FAQ = dynamic(() => import('@/components/FAQ/FAQ'), {
   loading: () => <SectionSkeleton height='800px' />,
 })
+const ProjectsShowcase = dynamic(() => import('@/components/ProjectsShowcase/ProjectsShowcase'), {
+  loading: () => <SectionSkeleton height='1000px' />,
+})
 
 export default function HomeClient() {
   // Прибрали поведінку з hash, щоб уникнути гонок відкриття модалки
@@ -86,6 +89,7 @@ export default function HomeClient() {
       <div className='overflow-x-hidden'>
         <Visit />
         <Testimonials />
+        <ProjectsShowcase />
         <HeroSection />
         <FAQ />
       </div>

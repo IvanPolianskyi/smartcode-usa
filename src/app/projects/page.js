@@ -10,6 +10,7 @@ import {
     Loader2
 } from 'lucide-react'
 import Image from 'next/image'
+import PhoneModal from '@/components/PhoneModal/PhoneModal'
 import styles from './ProjectsPage.module.css'
 
 const ProjectsPage = () => {
@@ -17,6 +18,7 @@ const ProjectsPage = () => {
     const [projects, setProjects] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const [showPhoneModal, setShowPhoneModal] = useState(false)
 
     // Fetch projects from API
     useEffect(() => {
@@ -43,10 +45,17 @@ const ProjectsPage = () => {
 
     const openProject = (project) => {
         setSelectedProject(project)
+        setShowPhoneModal(true)
     }
 
     const closeModal = () => {
         setSelectedProject(null)
+        setShowPhoneModal(false)
+    }
+
+    const handlePhoneModalSuccess = (data) => {
+        console.log('Phone collected successfully:', data)
+        // You can add additional logic here, like analytics tracking
     }
 
     if (loading) {
@@ -166,42 +175,13 @@ const ProjectsPage = () => {
                 )}
             </section>
 
-            {/* Модальне вікно з кодом */}
-            {selectedProject && (
-                <div className={styles.modal} onClick={closeModal}>
-                    <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-                        <div className={styles.modalHeader}>
-                            <div>
-                                </div>
-                            <button 
-                                className={styles.closeButton}
-                                onClick={closeModal}
-                            >
-                                ×
-                            </button>
-                        </div>
-                        
-                        <div className={styles.modalBody}>
-                            
-                            {/* Code Section */}
-                            <div className={styles.codeContainer}>
-                                <div className={styles.codeHeader}>
-                                    <span>{selectedProject.title}</span>
-                                    <button 
-                                        className={styles.copyButton}
-                                        onClick={() => navigator.clipboard.writeText(selectedProject.code)}
-                                    >
-                                        Копіювати
-                                    </button>
-                                </div>
-                                <pre className={styles.codeBlock}>
-                                    <code>{selectedProject.code}</code>
-                                </pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {/* Phone Modal */}
+            <PhoneModal
+                isOpen={showPhoneModal}
+                onClose={closeModal}
+                project={selectedProject}
+                onSuccess={handlePhoneModalSuccess}
+            />
         </div>
     )
 }

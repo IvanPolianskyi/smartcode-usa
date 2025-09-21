@@ -49,6 +49,7 @@ bot.onText(/\/start|\/help/, (msg) => {
 <b>Доступні команди:</b>
 /addproject - Додати новий проєкт
 /listprojects - Показати всі проєкти
+/listleads - Показати запити на код проєктів
 /help - Показати цю довідку
 
 <b>Як додати проєкт:</b>
@@ -110,6 +111,46 @@ bot.onText(/\/listprojects/, async (msg) => {
     bot.sendMessage(chatId, message, { parse_mode: 'HTML' });
   } else {
     bot.sendMessage(chatId, '❌ Помилка при отриманні списку проєктів.');
+  }
+});
+
+// List leads command (project source code requests)
+bot.onText(/\/listleads/, async (msg) => {
+  const chatId = msg.chat.id;
+  const userId = msg.from.id;
+
+  if (!isAuthorized(userId)) {
+    bot.sendMessage(chatId, '❌ Ви не маєте дозволу використовувати цього бота.');
+    return;
+  }
+
+  const result = await sendToAPI('phone-collection', {});
+  
+  if (result.success && result.leads) {
+    const leads = result.leads;
+    
+    if (leads.length === 0) {
+      bot.sendMessage(chatId, '📝 Поки що немає запитів на код проєктів.');
+      return;
+    }
+
+    let message = '🔓 <b>Останні запити на код проєктів:</b>\n\n';
+    leads.slice(0, 10).forEach((lead, index) => {
+      message += `${index + 1}. <b>${lead.name}</b>\n`;
+      message += `   📞 ${lead.phone}\n`;
+      message += `   📅 ${new Date(lead.lastActivity).toLocaleDateString('uk-UA')}\n`;
+      
+      if (lead.interestedProjects && lead.interestedProjects.length > 0) {
+        message += `   🎯 Проєкти: `;
+        const projectTitles = lead.interestedProjects.map(p => p.projectTitle).join(', ');
+        message += projectTitles + '\n';
+      }
+      message += '\n';
+    });
+
+    bot.sendMessage(chatId, message, { parse_mode: 'HTML' });
+  } else {
+    bot.sendMessage(chatId, '❌ Помилка при отриманні списку запитів.');
   }
 });
 

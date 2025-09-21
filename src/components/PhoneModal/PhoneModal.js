@@ -1,0 +1,290 @@
+'use client'
+import React, { useState, useEffect } from 'react'
+import {
+	X,
+	Phone,
+	Code,
+	Lock,
+	CheckCircle,
+	AlertCircle,
+	Loader2,
+	Eye,
+	Copy,
+	Download
+} from 'lucide-react'
+import styles from './PhoneModal.module.css'
+
+const PhoneModal = ({ 
+	isOpen, 
+	onClose, 
+	project, 
+	onSuccess 
+}) => {
+	const [rawPhone, setRawPhone] = useState('') // тільки цифри без +380
+	const [name, setName] = useState('')
+	const [isSubmitting, setIsSubmitting] = useState(false)
+	const [error, setError] = useState('')
+	const [success, setSuccess] = useState(false)
+
+	// Reset form when modal opens/closes
+	useEffect(() => {
+		if (isOpen) {
+			setRawPhone('')
+			setName('')
+			setError('')
+			setSuccess(false)
+		}
+	}, [isOpen])
+
+	// Форматуємо телефон для відображення
+	const formatPhoneNumber = (digits) => {
+		if (!digits) return '+380 '
+		const part1 = digits.slice(0, 2)  // 96
+		const part2 = digits.slice(2, 5)  // 656
+		const part3 = digits.slice(5, 7)  // 62
+		const part4 = digits.slice(7, 9)  // 43
+
+		let formatted = '+380 '
+		if (part1) formatted += part1
+		if (part2) formatted += '-' + part2
+		if (part3) formatted += '-' + part3
+		if (part4) formatted += '-' + part4
+
+		return formatted
+	}
+
+	// Обробка вводу
+	const handlePhoneChange = (e) => {
+		const digits = e.target.value.replace(/\D/g, '')
+		const clean = digits.startsWith('380') ? digits.slice(3) : digits
+		setRawPhone(clean.slice(0, 9)) // тільки 9 цифр після 380
+		setError('')
+	}
+
+	// Валідація
+	const validatePhone = (digits) => {
+		return digits.length === 9
+	}
+
+	// Сабміт форми
+	const handleSubmit = async (e) => {
+		e.preventDefault()
+		setError('')
+		setIsSubmitting(true)
+
+		if (!validatePhone(rawPhone)) {
+			setError('Будь ласка, введіть повний номер телефону (9 цифр після +380)')
+			setIsSubmitting(false)
+			return
+		}
+
+		if (!name.trim()) {
+			setError('Будь ласка, введіть ваше ім\'я')
+			setIsSubmitting(false)
+			return
+		}
+
+		try {
+			const fullPhoneNumber = `+380${rawPhone}`
+
+			const response = await fetch('/api/phone-collection', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					phone: fullPhoneNumber,
+					name: name.trim(),
+					projectId: project?.id,
+					projectTitle: project?.title,
+					timestamp: new Date().toISOString()
+				})
+			})
+
+			if (response.ok) {
+				setSuccess(true)
+				if (onSuccess) {
+					onSuccess({ phone: fullPhoneNumber, name, project })
+				}
+			} else {
+				throw new Error('Failed to submit phone number')
+			}
+		} catch (err) {
+			console.error('Error submitting phone number:', err)
+			setError('Помилка при відправці. Спробуйте ще раз.')
+		} finally {
+			setIsSubmitting(false)
+		}
+	}
+
+	// Копіювати код
+	const copyCode = () => {
+		navigator.clipboard.writeText(project.code)
+	}
+
+	// Завантажити код
+	const downloadCode = () => {
+		const element = document.createElement('a')
+		const file = new Blob([project.code], { type: 'text/plain' })
+		element.href = URL.createObjectURL(file)
+		element.download = `${project.title.replace(/\s+/g, '_')}_code.txt`
+		document.body.appendChild(element)
+		element.click()
+		document.body.removeChild(element)
+	}
+
+	if (!isOpen) return null
+
+	return (
+		<div className={styles.overlay} onClick={onClose}>
+			<div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+				<div className={styles.header}>
+					<div className={styles.headerContent}>
+						<div className={styles.iconContainer}>
+							<Code className={styles.icon} />
+						</div>
+						<div>
+							<h2 className={styles.title}>
+								{success ? 'Код отримано!' : 'Отримайте код проєкту'}
+							</h2>
+							<p className={styles.subtitle}>
+								{success 
+									? 'Дякуємо! Тепер ви можете переглянути код'
+									: 'Введіть ваші дані, щоб отримати доступ до коду'
+								}
+							</p>
+						</div>
+					</div>
+					<button className={styles.closeButton} onClick={onClose}>
+						<X size={24} />
+					</button>
+				</div>
+
+				<div className={styles.content}>
+					{!success ? (
+						<form onSubmit={handleSubmit} className={styles.form}>
+							<div className={styles.projectInfo}>
+								<h3 className={styles.projectTitle}>{project?.title}</h3>
+								<p className={styles.projectDescription}>{project?.description}</p>
+							</div>
+
+							<div className={styles.formGroup}>
+								<label htmlFor="name" className={styles.label}>
+									Ваше ім'я *
+								</label>
+								<input
+									type="text"
+									id="name"
+									value={name}
+									onChange={(e) => setName(e.target.value)}
+									className={styles.input}
+									placeholder="Введіть ваше ім'я"
+									required
+								/>
+							</div>
+
+							<div className={styles.formGroup}>
+								<label htmlFor="phone" className={styles.label}>
+									Номер телефону *
+								</label>
+								<div className={styles.phoneInputContainer}>
+									<Phone className={styles.phoneIcon} />
+									<input
+										type="tel"
+										id="phone"
+										value={formatPhoneNumber(rawPhone)}
+										onChange={handlePhoneChange}
+										className={styles.phoneInput}
+										placeholder="+380 96-656-62-43"
+										required
+									/>
+								</div>
+							</div>
+
+							{error && (
+								<div className={styles.errorMessage}>
+									<AlertCircle className={styles.errorIcon} />
+									{error}
+								</div>
+							)}
+
+							<div className={styles.privacyNote}>
+								<Lock className={styles.privacyIcon} />
+								<span>
+									Ваші дані захищені та не будуть передані третім особам
+								</span>
+							</div>
+
+							<button
+								type="submit"
+								disabled={isSubmitting}
+								className={styles.submitButton}
+							>
+								{isSubmitting ? (
+									<>
+										<Loader2 className={styles.buttonLoader} />
+										Відправляємо...
+									</>
+								) : (
+									<>
+										<Eye className={styles.buttonIcon} />
+										Отримати код
+									</>
+								)}
+							</button>
+						</form>
+					) : (
+						<div className={styles.successContent}>
+							<div className={styles.successIcon}>
+								<CheckCircle className={styles.checkIcon} />
+							</div>
+							
+							<div className={styles.codeSection}>
+								<div className={styles.codeHeader}>
+									<h3 className={styles.codeTitle}>Код проєкту: {project?.title}</h3>
+									<div className={styles.codeActions}>
+										<button
+											onClick={copyCode}
+											className={styles.actionButton}
+											title="Копіювати код"
+										>
+											<Copy size={16} />
+										</button>
+										<button
+											onClick={downloadCode}
+											className={styles.actionButton}
+											title="Завантажити код"
+										>
+											<Download size={16} />
+										</button>
+									</div>
+								</div>
+								
+								<div className={styles.codeContainer}>
+									<pre className={styles.codeBlock}>
+										<code>{project?.code}</code>
+									</pre>
+								</div>
+							</div>
+
+							<div className={styles.successMessage}>
+								<p>
+									🎉 <strong>Вітаємо!</strong> Ви отримали доступ до коду проєкту.
+								</p>
+							</div>
+
+							<button
+								onClick={onClose}
+								className={styles.closeSuccessButton}
+							>
+								Закрити
+							</button>
+						</div>
+					)}
+				</div>
+			</div>
+		</div>
+	)
+}
+
+export default PhoneModal
