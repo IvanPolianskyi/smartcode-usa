@@ -8,7 +8,7 @@ class TelegramBotService {
     this.userStates = new Map();
     
     // Configuration
-    this.BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "8112933065:AAGSPHlzAmuwJ2Kvul84E6kci-JY6nLpqW0";
+    this.BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN_PROJECTS || "8112933065:AAGSPHlzAmuwJ2Kvul84E6kci-JY6nLpqW0";
     this.API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3000';
     this.AUTHORIZED_USERS = process.env.TELEGRAM_AUTHORIZED_USERS?.split(',') || [];
   }
@@ -33,27 +33,39 @@ class TelegramBotService {
     }
   }
 
-  // Create project function
+  // Create project function (direct DB insert to avoid self-HTTP calls)
   async createProject(chatId, projectData) {
-    const result = await this.sendToAPI('projects', {
-      title: projectData.title,
-      description: projectData.description,
-      code: projectData.code,
-      studentName: 'Student', // You can modify this
-      imageUrl: projectData.imageUrl || null,
-      status: 'published'
-    });
+    try {
+      const { getCollection } = await import('./mongodb.js')
+      const projects = await getCollection('projects')
 
-    if (result.success) {
-      this.bot.sendMessage(chatId, 
-        `✅ <b>Проєкт успішно створено!</b>\n\n` +
-        `📝 <b>Назва:</b> ${projectData.title}\n` +
-        `📄 <b>Опис:</b> ${projectData.description}\n` +
-        `💻 <b>Код:</b> ${projectData.code.substring(0, 100)}${projectData.code.length > 100 ? '...' : ''}`,
-        { parse_mode: 'HTML' }
-      );
-    } else {
-      this.bot.sendMessage(chatId, `❌ Помилка при створенні проєкту: ${result.error}`);
+      const doc = {
+        title: projectData.title,
+        description: projectData.description,
+        code: projectData.code,
+        studentName: 'Student',
+        imageUrl: projectData.imageUrl || null,
+        createdAt: new Date(),
+        status: 'published'
+      }
+
+      const result = await projects.insertOne(doc)
+
+      if (result?.insertedId) {
+        this.bot.sendMessage(
+          chatId,
+          `✅ <b>Проєкт успішно створено!</b>\n\n` +
+            `📝 <b>Назва:</b> ${projectData.title}\n` +
+            `📄 <b>Опис:</b> ${projectData.description}\n` +
+            `💻 <b>Код:</b> ${projectData.code.substring(0, 100)}${projectData.code.length > 100 ? '...' : ''}`,
+          { parse_mode: 'HTML' }
+        )
+      } else {
+        this.bot.sendMessage(chatId, '❌ Помилка при створенні проєкту: неможливо вставити документ')
+      }
+    } catch (error) {
+      console.error('DB insert error (createProject):', error)
+      this.bot.sendMessage(chatId, `❌ Помилка при створенні проєкту: ${error.message || String(error)}`)
     }
   }
 
@@ -245,7 +257,7 @@ class TelegramBotService {
         console.log('📤 Uploading to API...');
         
         // Upload to our API
-        const uploadResponse = await axios.post(`${this.API_BASE_URL}/api/upload`, formData, {
+        const uploadResponse = await axios.post(`http://localhost:3000/api/upload`, formData, {
           headers: {
             ...formData.getHeaders(),
           },
@@ -416,15 +428,24 @@ class TelegramBotService {
 
   // Start the bot
   async start() {
-    if (this.isRunning) {
+    if (this.isRunning || globalThis.__telegramBotStarted) {
       console.log('🤖 Bot is already running');
       return;
     }
 
     try {
-      this.bot = new TelegramBot(this.BOT_TOKEN, { polling: true });
+      // Ensure webhook is disabled before starting polling
+      try {
+        await axios.get(`https://api.telegram.org/bot${this.BOT_TOKEN}/deleteWebhook`);
+        console.log('🔌 Telegram webhook deleted (ensuring polling works)');
+      } catch (whError) {
+        console.warn('⚠️ Could not delete webhook (may be already off):', whError?.response?.data || whError?.message);
+      }
+
+      this.bot = new TelegramBot(this.BOT_TOKEN, { polling: { interval: 800, autoStart: true } });
       this.setupEventHandlers();
       this.isRunning = true;
+      globalThis.__telegramBotStarted = true;
       
       console.log('🤖 Telegram bot started successfully!');
       console.log(`📡 API Base URL: ${this.API_BASE_URL}`);
@@ -445,6 +466,7 @@ class TelegramBotService {
       await this.bot.stopPolling();
       this.bot = null;
       this.isRunning = false;
+      globalThis.__telegramBotStarted = false;
       console.log('🤖 Telegram bot stopped');
     } catch (error) {
       console.error('❌ Error stopping bot:', error);

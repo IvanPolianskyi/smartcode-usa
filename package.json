@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "node server.js",
-    "start:next": "next start",
+    "start": "next start",
+    "start:custom": "node server.js",
     "lint": "next lint",
     "test:projects": "node test-projects.js",
     "test:webhook": "node test-webhook.js",
