@@ -11,7 +11,8 @@
     "test:projects": "node test-projects.js",
     "test:webhook": "node test-webhook.js",
     "test:upload": "node test-image-upload.js",
-    "debug:upload": "node debug-upload.js"
+    "debug:upload": "node debug-upload.js",
+    "setup:webhook": "node scripts/setup-webhook.js"
   },
   "dependencies": {
     "axios": "^1.7.0",

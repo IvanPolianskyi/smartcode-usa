@@ -9,7 +9,7 @@ class TelegramBotService {
     
     // Configuration
     this.BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN_PROJECTS || "8112933065:AAGSPHlzAmuwJ2Kvul84E6kci-JY6nLpqW0";
-    this.API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3000';
+    this.API_BASE_URL = process.env.API_BASE_URL;
     this.AUTHORIZED_USERS = process.env.TELEGRAM_AUTHORIZED_USERS?.split(',') || [];
   }
 
@@ -257,7 +257,7 @@ class TelegramBotService {
         console.log('📤 Uploading to API...');
         
         // Upload to our API
-        const uploadResponse = await axios.post(`http://localhost:3000/api/upload`, formData, {
+        const uploadResponse = await axios.post(`${this.API_BASE_URL}/api/upload`, formData, {
           headers: {
             ...formData.getHeaders(),
           },

@@ -37,53 +37,21 @@ export async function POST() {
       )
     }
 
-    return NextResponse.json({
-      success: true,
-      message: 'Telegram bot webhook configured successfully',
-      webhookUrl
-    })
-
-  } catch (error) {
-    console.error('Error configuring Telegram bot:', error)
-    return NextResponse.json(
-      { success: false, error: 'Failed to configure Telegram bot', detail: error.message },
-      { status: 500 }
-    )
-  }
-}
-
-export async function GET() {
-  try {
-    const botToken = process.env.TELEGRAM_BOT_TOKEN_PROJECTS || process.env.TELEGRAM_BOT_TOKEN
-    
-    if (!botToken) {
-      return NextResponse.json(
-        { success: false, error: 'TELEGRAM_BOT_TOKEN_PROJECTS not configured' },
-        { status: 500 }
-      )
-    }
-
-    // Get webhook info
-    const response = await fetch(`https://api.telegram.org/bot${botToken}/getWebhookInfo`)
-    const data = await response.json()
-
-    if (!data.ok) {
-      return NextResponse.json(
-        { success: false, error: 'Failed to get webhook info', detail: data },
-        { status: 500 }
-      )
-    }
+    // Get webhook info to verify
+    const infoResponse = await fetch(`https://api.telegram.org/bot${botToken}/getWebhookInfo`)
+    const infoData = await infoResponse.json()
 
     return NextResponse.json({
       success: true,
-      message: 'Telegram bot webhook status',
-      webhookInfo: data.result
+      message: 'Webhook set successfully',
+      webhookUrl,
+      webhookInfo: infoData.result
     })
 
   } catch (error) {
-    console.error('Error getting bot status:', error)
+    console.error('Error setting webhook:', error)
     return NextResponse.json(
-      { success: false, error: 'Failed to get bot status', detail: error.message },
+      { success: false, error: 'Failed to set webhook', detail: error.message },
       { status: 500 }
     )
   }
@@ -116,13 +84,49 @@ export async function DELETE() {
 
     return NextResponse.json({
       success: true,
-      message: 'Telegram bot webhook deleted successfully'
+      message: 'Webhook deleted successfully'
     })
 
   } catch (error) {
-    console.error('Error stopping Telegram bot:', error)
+    console.error('Error deleting webhook:', error)
     return NextResponse.json(
-      { success: false, error: 'Failed to stop Telegram bot', detail: error.message },
+      { success: false, error: 'Failed to delete webhook', detail: error.message },
+      { status: 500 }
+    )
+  }
+}
+
+export async function GET() {
+  try {
+    const botToken = process.env.TELEGRAM_BOT_TOKEN_PROJECTS || process.env.TELEGRAM_BOT_TOKEN
+    
+    if (!botToken) {
+      return NextResponse.json(
+        { success: false, error: 'TELEGRAM_BOT_TOKEN_PROJECTS not configured' },
+        { status: 500 }
+      )
+    }
+
+    // Get webhook info
+    const response = await fetch(`https://api.telegram.org/bot${botToken}/getWebhookInfo`)
+    const data = await response.json()
+
+    if (!data.ok) {
+      return NextResponse.json(
+        { success: false, error: 'Failed to get webhook info', detail: data },
+        { status: 500 }
+      )
+    }
+
+    return NextResponse.json({
+      success: true,
+      webhookInfo: data.result
+    })
+
+  } catch (error) {
+    console.error('Error getting webhook info:', error)
+    return NextResponse.json(
+      { success: false, error: 'Failed to get webhook info', detail: error.message },
       { status: 500 }
     )
   }
