@@ -31,12 +31,8 @@ async function makeRequest(url, options = {}) {
 }
 
 async function setupWebhook() {
-  const botToken = process.env.TELEGRAM_BOT_TOKEN_PROJECTS || process.env.TELEGRAM_BOT_TOKEN;
-  const webhookUrl = process.env.VERCEL_URL 
-    ? `https://${process.env.VERCEL_URL}/api/telegram/webhook`
-    : process.env.API_BASE_URL 
-    ? `${process.env.API_BASE_URL}/api/telegram/webhook`
-    : 'http://localhost:3000/api/telegram/webhook';
+  const botToken = process.env.TELEGRAM_BOT_TOKEN_PROJECTS;
+  const webhookUrl = `https://${process.env.API_BASE_URL}/api/telegram/webhook`
 
   if (!botToken) {
     console.error('❌ TELEGRAM_BOT_TOKEN_PROJECTS not configured');
