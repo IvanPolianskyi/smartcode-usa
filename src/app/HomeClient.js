@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { useEffect } from 'react'
+import { Analytics } from "@vercel/analytics/next"
 
 // Lightweight skeletons to keep layout stable while chunks load
 const SectionSkeleton = ({ height = '60vh' }) => (
@@ -86,7 +87,9 @@ export default function HomeClient() {
 
   return (
     <div>
+      
       <div className='overflow-x-hidden'>
+        <Analytics />
         <Visit />
         <Testimonials />
         <ProjectsShowcase />
