@@ -191,7 +191,7 @@ const ContactForm = () => {
                             {!isSubmitted ? (
                                 <>
                                     <div className={styles.formHeader}>
-                                        <h3 className={styles.formTitle}>Залишіть контактні дані — ми зв'яжемося</h3>
+                                        <h3 className={styles.formTitle}>Залишіть контактні дані — ми зв&apos;яжемося</h3>
                                     </div>
                                     <form onSubmit={handleSubmit} className={styles.form}>
                                         <div className={styles.inputWrapper}>
@@ -202,8 +202,8 @@ const ContactForm = () => {
                                                 onChange={handleContactMethodChange}
                                                 className={styles.select}
                                             >
-                                                <option value='phone'>Зв'язатися по номеру телефону</option>
-                                                <option value='telegram'>Зв'язатися по телеграму</option>
+                                                <option value='phone'>Зв&apos;язатися по номеру телефону</option>
+                                                <option value='telegram'>Зв&apos;язатися по телеграму</option>
                                             </select>
                                         </div>
                                         
@@ -228,7 +228,7 @@ const ContactForm = () => {
                                         ) : (
                                             <div>
                                                 <div className={styles.telegramInfo}>
-                                                    <p className={styles.telegramLabel}>Наш телеграм. Якщо пишете перші - залишати заявку необов'язково</p>
+                                                    <p className={styles.telegramLabel}>Наш телеграм. Якщо пишете перші - залишати заявку необов&apos;язково</p>
                                                     <p className={styles.telegramUsername}>@SmartCode_Academy</p>
                                                 </div>
                                                 <div className={`${styles.inputWrapper} ${(telegramError || (touched.telegram && !formData.telegram)) ? styles.hasError : ''}`}>
