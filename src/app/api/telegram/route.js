@@ -25,22 +25,25 @@ export async function POST(request) {
     }
 
     const body = await request.json().catch(() => ({}))
-    const { phone, course, message } = body || {}
+    const { phone, telegram, course, message, contactMethod } = body || {}
 
-    if (!phone) {
+    if (!phone && !telegram) {
       return NextResponse.json(
-        { ok: false, error: 'Required field: phone' },
+        { ok: false, error: 'Required field: phone or telegram' },
         { status: 400 }
       )
     }
 
     const createdAt = new Date().toLocaleString('uk-UA', { timeZone: 'Europe/Kyiv' })
-    const normalizedPhone = "+380" + phone
+    const normalizedPhone = phone ? "+380" + phone : null
+    const normalizedTelegram = telegram ? (telegram.startsWith('@') ? telegram : '@' + telegram) : null
 
     const lines = [
       '<b>Нова заявка зі сайту SmartCode Academy</b>',
       '',
-      `<b>Телефон:</b> ${escapeHtml(normalizedPhone)}`,
+      contactMethod === 'telegram' 
+        ? `<b>Телеграм:</b> ${escapeHtml(normalizedTelegram)}`
+        : `<b>Телефон:</b> ${escapeHtml(normalizedPhone)}`,
       course ? `<b>Курс:</b> ${escapeHtml(course)}` : null,
       message ? `<b>Повідомлення:</b>\n${escapeHtml(message)}` : null,
       '',
@@ -69,9 +72,11 @@ export async function POST(request) {
       try {
         const submissions = await getCollection('submissions')
         await submissions.insertOne({
-          phone: normalizedPhone,
+          phone: normalizedPhone || '',
+          telegram: normalizedTelegram || '',
           course: course || '',
           message: message || '',
+          contactMethod: contactMethod || 'phone',
           createdAt: new Date(),
           via: 'telegram-api-failed',
         })
@@ -86,9 +91,11 @@ export async function POST(request) {
     try {
       const submissions = await getCollection('submissions')
       await submissions.insertOne({
-        phone: normalizedPhone,
+        phone: normalizedPhone || '',
+        telegram: normalizedTelegram || '',
         course: course || '',
         message: message || '',
+        contactMethod: contactMethod || 'phone',
         createdAt: new Date(),
         via: 'telegram',
       })

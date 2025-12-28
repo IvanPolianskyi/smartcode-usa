@@ -5,9 +5,11 @@ import styles from './ContactForm.module.css'
 
 const ContactForm = () => {
     const [isOpen, setIsOpen] = useState(false)
-    const [formData, setFormData] = useState({ phone: '', course: '', message: '' })
+    const [contactMethod, setContactMethod] = useState('phone') // 'phone' or 'telegram'
+    const [formData, setFormData] = useState({ phone: '', telegram: '', course: '', message: '' })
     const [phoneError, setPhoneError] = useState('')
-    const [touched, setTouched] = useState({ phone: false, course: false })
+    const [telegramError, setTelegramError] = useState('')
+    const [touched, setTouched] = useState({ phone: false, telegram: false, course: false })
     const [isSubmitted, setIsSubmitted] = useState(false)
     const dialogRef = useRef(null)
     const overlayRef = useRef(null)
@@ -89,28 +91,63 @@ const ContactForm = () => {
             else setPhoneError('')
             return
         }
+        if (name === 'telegram') {
+            // Remove @ if user types it, we'll add it later if needed
+            const cleanedValue = value.replace(/^@/, '').trim()
+            setFormData(prev => ({ ...prev, telegram: cleanedValue }))
+            if (cleanedValue.length === 0) setTelegramError('Введіть ваш телеграм')
+            else setTelegramError('')
+            return
+        }
         setFormData(prev => ({ ...prev, [name]: value }))
+    };
+
+    const handleContactMethodChange = e => {
+        const method = e.target.value
+        setContactMethod(method)
+        // Reset errors when switching methods
+        if (method === 'phone') {
+            setTelegramError('')
+        } else {
+            setPhoneError('')
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         // позначаємо поля як торкнуті, щоб показати стилі помилок
-        setTouched(prev => ({ ...prev, phone: true, course: true }))
-
-        const isPhoneValid = /^\d{9}$/.test(formData.phone || '')
-        const isCourseSelected = !!formData.course
-        if (!isPhoneValid) {
-            setPhoneError('Введіть коректний номер (9 цифр)')
-            return
-        }
-        if (!isCourseSelected) {
-            return
+        if (contactMethod === 'phone') {
+            setTouched(prev => ({ ...prev, phone: true, course: true }))
+            const isPhoneValid = /^\d{9}$/.test(formData.phone || '')
+            const isCourseSelected = !!formData.course
+            if (!isPhoneValid) {
+                setPhoneError('Введіть коректний номер (9 цифр)')
+                return
+            }
+            if (!isCourseSelected) {
+                return
+            }
+        } else {
+            setTouched(prev => ({ ...prev, telegram: true, course: true }))
+            const isTelegramValid = formData.telegram && formData.telegram.trim().length > 0
+            const isCourseSelected = !!formData.course
+            if (!isTelegramValid) {
+                setTelegramError('Введіть ваш телеграм')
+                return
+            }
+            if (!isCourseSelected) {
+                return
+            }
         }
         try {
+            const submitData = {
+                ...formData,
+                contactMethod: contactMethod
+            }
             const response = await fetch('/api/telegram', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(submitData),
             })
             const data = await response.json().catch(() => ({}))
             if (!response.ok || !data?.ok) {
@@ -120,9 +157,11 @@ const ContactForm = () => {
             }
             // Успіх: закриваємо модальне вікно і скидаємо форму
             setIsSubmitted(false)
-            setFormData({ phone: '', course: '', message: '' })
+            setFormData({ phone: '', telegram: '', course: '', message: '' })
             setPhoneError('')
-            setTouched({ phone: false, course: false })
+            setTelegramError('')
+            setContactMethod('phone')
+            setTouched({ phone: false, telegram: false, course: false })
             setIsOpen(false)
         } catch (err) {
             console.error(err)
@@ -152,26 +191,63 @@ const ContactForm = () => {
                             {!isSubmitted ? (
                                 <>
                                     <div className={styles.formHeader}>
-                                        <h3 className={styles.formTitle}>Залишіть номер — ми зв’яжемося</h3>
+                                        <h3 className={styles.formTitle}>Залишіть контактні дані — ми зв'яжемося</h3>
                                     </div>
                                     <form onSubmit={handleSubmit} className={styles.form}>
-                                        <div className={`${styles.inputWrapper} ${(phoneError || (touched.phone && !formData.phone)) ? styles.hasError : ''}`}>
-                                            <Phone className={styles.inputIcon} size={18} />
-                                            <span className={styles.countryCode}>+380</span>
-                                            <input 
-                                                type='tel'
-                                                name='phone'
-                                                value={formData.phone}
-                                                onChange={handleInputChange}
-                                                onBlur={() => setTouched(prev => ({ ...prev, phone: true }))}
-                                                placeholder='__ ___ __ __'
-                                                className={`${styles.input} ${styles.phoneInput}`}
-                                                inputMode='numeric'
-                                                required
-                                                aria-invalid={!!(phoneError || (touched.phone && !formData.phone))}
-                                            />
-                                            {phoneError && <div className={styles.errorText}>{phoneError}</div>}
+                                        <div className={styles.inputWrapper}>
+                                            <MessageSquare className={styles.inputIcon} size={18} />
+                                            <select 
+                                                name='contactMethod' 
+                                                value={contactMethod} 
+                                                onChange={handleContactMethodChange}
+                                                className={styles.select}
+                                            >
+                                                <option value='phone'>Зв'язатися по номеру телефону</option>
+                                                <option value='telegram'>Зв'язатися по телеграму</option>
+                                            </select>
                                         </div>
+                                        
+                                        {contactMethod === 'phone' ? (
+                                            <div className={`${styles.inputWrapper} ${(phoneError || (touched.phone && !formData.phone)) ? styles.hasError : ''}`}>
+                                                <Phone className={styles.inputIcon} size={18} />
+                                                <span className={styles.countryCode}>+380</span>
+                                                <input 
+                                                    type='tel'
+                                                    name='phone'
+                                                    value={formData.phone}
+                                                    onChange={handleInputChange}
+                                                    onBlur={() => setTouched(prev => ({ ...prev, phone: true }))}
+                                                    placeholder='__ ___ __ __'
+                                                    className={`${styles.input} ${styles.phoneInput}`}
+                                                    inputMode='numeric'
+                                                    required
+                                                    aria-invalid={!!(phoneError || (touched.phone && !formData.phone))}
+                                                />
+                                                {phoneError && <div className={styles.errorText}>{phoneError}</div>}
+                                            </div>
+                                        ) : (
+                                            <div>
+                                                <div className={styles.telegramInfo}>
+                                                    <p className={styles.telegramLabel}>Наш телеграм. Якщо пишете перші - залишати заявку необов'язково</p>
+                                                    <p className={styles.telegramUsername}>@SmartCode_Academy</p>
+                                                </div>
+                                                <div className={`${styles.inputWrapper} ${(telegramError || (touched.telegram && !formData.telegram)) ? styles.hasError : ''}`}>
+                                                    <MessageSquare className={styles.inputIcon} size={18} />
+                                                    <input 
+                                                        type='text'
+                                                        name='telegram'
+                                                        value={formData.telegram}
+                                                        onChange={handleInputChange}
+                                                        onBlur={() => setTouched(prev => ({ ...prev, telegram: true }))}
+                                                        placeholder='Ваш телеграм (наприклад: username)'
+                                                        className={styles.input}
+                                                        required
+                                                        aria-invalid={!!(telegramError || (touched.telegram && !formData.telegram))}
+                                                    />
+                                                    {telegramError && <div className={styles.errorText}>{telegramError}</div>}
+                                                </div>
+                                            </div>
+                                        )}
                                         <div className={`${styles.inputWrapper} ${(touched.course && !formData.course) ? styles.hasError : ''}`}>
                                             <Briefcase className={styles.inputIcon} size={18} />
                                             <select 
@@ -196,7 +272,14 @@ const ContactForm = () => {
                                             <MessageSquare className={`${styles.inputIcon} ${styles.textareaIcon}`} size={18} />
                                             <textarea name='message' value={formData.message} onChange={handleInputChange} placeholder="Ваше повідомлення... (необов'язково)" className={styles.textarea} rows={3}></textarea>
                                         </div>
-                                        <button type='submit' className={styles.submitBtn} disabled={!!phoneError || !(formData.phone && formData.course)}>
+                                        <button 
+                                            type='submit' 
+                                            className={styles.submitBtn} 
+                                            disabled={
+                                                (contactMethod === 'phone' && (!!phoneError || !(formData.phone && formData.course))) ||
+                                                (contactMethod === 'telegram' && (!!telegramError || !(formData.telegram && formData.course)))
+                                            }
+                                        >
                                             <Send size={20} />
                                             Отримати консультацію
                                         </button>
