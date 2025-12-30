@@ -37,58 +37,61 @@ const Visit = () => {
 		setIsVisible(true)
 
 		// GSAP анімації появи при скролі
+		let ctx = null
 		if (sectionRef.current) {
-			gsap.fromTo(
-				sectionRef.current.querySelectorAll('.animate-up'),
-				{ y: 60, opacity: 0 },
-				{
-					y: 0,
-					opacity: 1,
-					duration: 0.8,
-					ease: 'power3.out',
-					stagger: 0.15,
-					scrollTrigger: {
-						trigger: sectionRef.current,
-						start: 'top 85%',
-						end: 'bottom 15%',
-						toggleActions: 'play none none reverse',
-					},
-				}
-			)
+			ctx = gsap.context(() => {
+				gsap.fromTo(
+					'.animate-up',
+					{ y: 60, opacity: 0 },
+					{
+						y: 0,
+						opacity: 1,
+						duration: 0.8,
+						ease: 'power3.out',
+						stagger: 0.15,
+						scrollTrigger: {
+							trigger: sectionRef.current,
+							start: 'top 85%',
+							end: 'bottom 15%',
+							toggleActions: 'play none none reverse',
+						},
+					}
+				)
 
-			gsap.fromTo(
-				sectionRef.current.querySelectorAll('.animate-slide'),
-				{ x: -60, opacity: 0 },
-				{
-					x: 0,
-					opacity: 1,
-					duration: 0.7,
-					ease: 'power2.out',
-					stagger: 0.1,
-					scrollTrigger: {
-						trigger: sectionRef.current,
-						start: 'top 75%',
-						toggleActions: 'play none none reverse',
-					},
-				}
-			)
+				gsap.fromTo(
+					'.animate-slide',
+					{ x: -60, opacity: 0 },
+					{
+						x: 0,
+						opacity: 1,
+						duration: 0.7,
+						ease: 'power2.out',
+						stagger: 0.1,
+						scrollTrigger: {
+							trigger: sectionRef.current,
+							start: 'top 75%',
+							toggleActions: 'play none none reverse',
+						},
+					}
+				)
 
-			gsap.fromTo(
-				sectionRef.current.querySelectorAll('.animate-scale'),
-				{ scale: 0.8, opacity: 0 },
-				{
-					scale: 1,
-					opacity: 1,
-					duration: 0.6,
-					ease: 'back.out(1.7)',
-					stagger: 0.05,
-					scrollTrigger: {
-						trigger: sectionRef.current,
-						start: 'top 80%',
-						toggleActions: 'play none none reverse',
-					},
-				}
-			)
+				gsap.fromTo(
+					'.animate-scale',
+					{ scale: 0.8, opacity: 0 },
+					{
+						scale: 1,
+						opacity: 1,
+						duration: 0.6,
+						ease: 'back.out(1.7)',
+						stagger: 0.05,
+						scrollTrigger: {
+							trigger: sectionRef.current,
+							start: 'top 80%',
+							toggleActions: 'play none none reverse',
+						},
+					}
+				)
+			}, sectionRef)
 		}
 
 		// Анімація статистики
@@ -96,7 +99,10 @@ const Visit = () => {
 			setCurrentStat(prev => (prev + 1) % 8)
 		}, 3000)
 
-		return () => clearInterval(interval)
+		return () => {
+			clearInterval(interval)
+			if (ctx) ctx.revert()
+		}
 	}, [])
 
 	const stats = [

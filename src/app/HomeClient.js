@@ -28,6 +28,9 @@ const FAQ = dynamic(() => import('@/components/FAQ/FAQ'), {
 const ProjectsShowcase = dynamic(() => import('@/components/ProjectsShowcase/ProjectsShowcase'), {
   loading: () => <SectionSkeleton height='1000px' />,
 })
+const KnowledgeTestSection = dynamic(() => import('@/components/KnowledgeTestSection/KnowledgeTestSection'), {
+  loading: () => <SectionSkeleton height='800px' />,
+})
 
 export default function HomeClient() {
   // Прибрали поведінку з hash, щоб уникнути гонок відкриття модалки
@@ -76,13 +79,13 @@ export default function HomeClient() {
         triggered = true
         window.dispatchEvent(new Event('openContactModal'))
         try { sessionStorage.setItem('contactModalShownMid', '1') } catch {}
-        window.removeEventListener('scroll', onScroll)
+        window.removeEventListener('scroll', onScroll, { passive: true })
       }
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     // Перевірка відразу після завантаження (раптом вже внизу)
     onScroll()
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll, { passive: true })
   }, [])
 
   return (
@@ -91,6 +94,7 @@ export default function HomeClient() {
       <div className='overflow-x-hidden'>
         <Analytics />
         <Visit />
+        <KnowledgeTestSection />
         <Testimonials />
         <ProjectsShowcase />
         <HeroSection />

@@ -49,7 +49,6 @@ export async function POST(request) {
       '',
       `<b>Час:</b> ${escapeHtml(createdAt)}`,
     ].filter(Boolean)
-    console.log("hello")
 
     const telegramResponse = await fetch(
       `https://api.telegram.org/bot${telegramBotToken}/sendMessage`,

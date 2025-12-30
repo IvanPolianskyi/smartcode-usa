@@ -54,9 +54,11 @@ const ProjectsShowcase = () => {
 
 	// GSAP animations
 	useEffect(() => {
-		if (sectionRef.current) {
+		if (!sectionRef.current || featuredProjects.length === 0) return
+
+		const ctx = gsap.context(() => {
 			gsap.fromTo(
-				sectionRef.current.querySelectorAll('.animate-up'),
+				'.animate-up',
 				{ y: 60, opacity: 0 },
 				{
 					y: 0,
@@ -74,7 +76,7 @@ const ProjectsShowcase = () => {
 			)
 
 			gsap.fromTo(
-				sectionRef.current.querySelectorAll('.animate-scale'),
+				'.animate-scale',
 				{ scale: 0.8, opacity: 0 },
 				{
 					scale: 1,
@@ -89,7 +91,9 @@ const ProjectsShowcase = () => {
 					},
 				}
 			)
-		}
+		}, sectionRef)
+
+		return () => ctx.revert()
 	}, [featuredProjects])
 
 	const openProject = (project) => {
@@ -102,9 +106,8 @@ const ProjectsShowcase = () => {
 		setShowPhoneModal(false)
 	}
 
-	const handlePhoneModalSuccess = (data) => {
-		console.log('Phone collected successfully:', data)
-		// You can add additional logic here, like analytics tracking
+	const handlePhoneModalSuccess = () => {
+		// Phone collected successfully - can add analytics tracking here if needed
 	}
 
 	if (loading) {

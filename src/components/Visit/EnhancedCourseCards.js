@@ -15,12 +15,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 // Функція для генерації частинок з урахуванням теми
+// Трохи зменшена кількість частинок для кращої продуктивності
 const generateParticles = colors => {
 	const particleTypes = [
-		{ type: 'particle1', count: 20, colors: colors.slice(0, 2) },
-		{ type: 'particle2', count: 15, colors: colors.slice(1, 3) },
-		{ type: 'particle3', count: 12, colors: colors.slice(2, 4) },
-		{ type: 'particle4', count: 18, colors: [colors[3], colors[0]] },
+		{ type: 'particle1', count: 12, colors: colors.slice(0, 2) },
+		{ type: 'particle2', count: 9, colors: colors.slice(1, 3) },
+		{ type: 'particle3', count: 8, colors: colors.slice(2, 4) },
+		{ type: 'particle4', count: 10, colors: [colors[3], colors[0]] },
 	]
 
 	return particleTypes.flatMap(({ type, count, colors }) =>
@@ -140,7 +141,8 @@ const courses = [
 ]
 
 // Окремий компонент для частинок, щоб оптимізувати рендеринг
-const ParticleBackground = ({ colors }) => {
+// Обгорнуто в React.memo, щоб не перерендерюватися при наведенні на картки
+const ParticleBackground = React.memo(({ colors }) => {
 	const particles = useMemo(() => generateParticles(colors), [colors])
 
 	return (
@@ -160,7 +162,7 @@ const ParticleBackground = ({ colors }) => {
 			))}
 		</div>
 	)
-}
+})
 
 const EnhancedCourseCards = () => {
     const [hoveredCard, setHoveredCard] = useState(null)

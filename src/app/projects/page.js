@@ -53,9 +53,8 @@ const ProjectsPage = () => {
         setShowPhoneModal(false)
     }
 
-    const handlePhoneModalSuccess = (data) => {
-        console.log('Phone collected successfully:', data)
-        // You can add additional logic here, like analytics tracking
+    const handlePhoneModalSuccess = () => {
+        // Phone collected successfully - can add analytics tracking here if needed
     }
 
     if (loading) {

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import {
 	Code,
 	Monitor,
@@ -24,7 +24,6 @@ import {
 	Heart,
 } from 'lucide-react'
 import Link from 'next/link'
-import { useRouter, usePathname } from 'next/navigation'
 import styles from './WebCoursePage.module.css'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -41,21 +40,19 @@ const WebCoursePage = () => {
 	const [hoveredModule, setHoveredModule] = useState(null)
 	const [hoveredProject, setHoveredProject] = useState(null)
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-    const router = useRouter()
-    const pathname = usePathname()
 	
 	const mainRef = useRef(null)
 	const heroRef = useRef(null)
 	const modulesRef = useRef(null)
 	const projectsRef = useRef(null)
 
-	// Code string for typing animation
-	const codeString = `const createAwesomeWebsite = () => {
+	// Code string for typing animation (moved outside to avoid dependency warning)
+	const codeString = useMemo(() => `const createAwesomeWebsite = () => {
   const skills = ['HTML', 'CSS', 'JavaScript', 'React'];
   const creativity = Infinity;
   
   return buildFuture(skills, creativity);
-}`
+}`, [])
 
 	// Typing animation
 	useEffect(() => {
@@ -69,7 +66,7 @@ const WebCoursePage = () => {
 			}
 		}, 30)
 		return () => clearInterval(timer)
-	}, [])
+	}, [codeString])
 
 	// Mouse tracking for parallax
 	useEffect(() => {

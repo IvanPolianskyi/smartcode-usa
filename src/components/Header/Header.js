@@ -16,16 +16,13 @@ import {
 import styles from './Header.module.css'
 import gsap from 'gsap'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import Image from 'next/image'
+import Logo from '@/components/Logo/Logo'
 
 const Header = () => {
 	const [isCoursesOpen, setIsCoursesOpen] = useState(false)
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const [isScrolled, setIsScrolled] = useState(false)
 	const headerRef = useRef(null)
-    const router = useRouter()
-    const pathname = usePathname()
     const scrollLockYRef = useRef(0)
 
 	// Відстеження прокрутки для зміни стилю хедера
@@ -34,7 +31,7 @@ const Header = () => {
 			setIsScrolled(window.scrollY > 20)
 		}
 		window.addEventListener('scroll', handleScroll, { passive: true })
-		return () => window.removeEventListener('scroll', handleScroll)
+		return () => window.removeEventListener('scroll', handleScroll, { passive: true })
 	}, [])
 
 	// Анімація випадаючого меню
@@ -213,6 +210,7 @@ const Header = () => {
 
 	const navItems = [
 		{ label: 'Курси', dropdown: true },
+		{ label: 'Тест знань', href: '/knowledge-test' },
 		{ label: 'Відгуки', href: '/#testimonials' },
 		{ label: 'Контакти', href: '/#Contactform' },
 		{label: "Проєкти з учнями", href: "/projects"}
@@ -262,21 +260,7 @@ const Header = () => {
 			<div className={styles.container}>
 				<div className={styles.headerContent}>
 					{/* Логотип */}
-					<Link href="/" className={styles.logo}>
-						<div className={styles.logoIconWrapper}>
-							<Image
-								src="/logo.jpg"
-								alt="SmartCode Academy Logo"
-								className={styles.logoImage}
-								width={48}
-								height={48}
-							/>
-						</div>
-						<div className={styles.logoText}>
-							<span className={styles.logoTitle}>SmartCode</span>
-							<span className={styles.logoSubtitle}>Academy</span>
-						</div>
-					</Link>
+					<Logo className={styles.logo} />
 
 					{/* Навігація для десктопу */}
 					<nav className={styles.nav}>
@@ -398,19 +382,7 @@ const Header = () => {
 					{/* Логотип в меню */}
 					<div className={styles.mobileMenuHeader}>
 						<div className={styles.mobileMenuLogo}>
-							<div className={styles.logoIconWrapper}>
-								<Image
-									src="/logo.jpg"
-									alt="SmartCode Academy Logo"
-									className={styles.logoImage}
-									width={48}
-									height={48}
-								/>
-							</div>
-							<div className={styles.logoText}>
-								<span className={styles.logoTitle}>SmartCode</span>
-								<span className={styles.logoSubtitle}>Academy</span>
-							</div>
+							<Logo />
 						</div>
 					</div>
 
