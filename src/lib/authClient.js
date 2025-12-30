@@ -128,3 +128,45 @@ export async function enrollInCourse(courseId) {
   return data
 }
 
+export async function checkCoursePurchase(courseId) {
+  try {
+    const response = await fetch(`/api/payment?courseId=${courseId}`, {
+      credentials: 'include',
+    })
+
+    if (!response.ok) {
+      return false
+    }
+
+    const data = await response.json()
+    return data.purchased || false
+  } catch (error) {
+    return false
+  }
+}
+
+export async function createPayment(courseId) {
+  const response = await fetch('/api/payment/create', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ courseId }),
+  })
+
+  const data = await response.json()
+
+  if (!response.ok) {
+    throw new Error(data.error || 'Failed to create payment')
+  }
+
+  return data
+}
+
+// Legacy function for backward compatibility
+export async function purchaseCourse(courseId, paymentMethod = 'manual', paymentData = {}) {
+  // This should not be called directly anymore - use createPayment instead
+  throw new Error('Use createPayment() instead of purchaseCourse()')
+}
+

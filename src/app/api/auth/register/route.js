@@ -42,6 +42,8 @@ export async function POST(request) {
       password: hashedPassword,
       name,
       phone: phone || null,
+      role: 'user', // Default role
+      purchasedCourses: [], // Courses that user has paid for
       createdAt: new Date(),
       updatedAt: new Date(),
       enrolledCourses: []
@@ -62,6 +64,8 @@ export async function POST(request) {
       email: user.email,
       name: user.name,
       phone: user.phone,
+      role: user.role,
+      purchasedCourses: user.purchasedCourses,
       enrolledCourses: user.enrolledCourses
     }
 

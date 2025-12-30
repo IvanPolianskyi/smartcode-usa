@@ -20,7 +20,8 @@ import {
 } from 'lucide-react'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
-import { enrollInCourse, getCurrentUser, getUserProgress } from '@/lib/authClient'
+import { enrollInCourse, getCurrentUser, getUserProgress, checkCoursePurchase, createPayment } from '@/lib/authClient'
+import { getCoursePrice, formatPrice } from '@/lib/coursePrices'
 import styles from './CoursePage.module.css'
 
 const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress: initialProgress = null }) => {
@@ -29,7 +30,9 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   const [expandedModule, setExpandedModule] = useState(null)
   const [userProgress, setUserProgress] = useState(initialProgress)
   const [isEnrolling, setIsEnrolling] = useState(false)
+  const [isPurchasing, setIsPurchasing] = useState(false)
   const [user, setUser] = useState(null)
+  const [isPurchased, setIsPurchased] = useState(false)
   
   // Get the appropriate curriculum based on courseId
   const getCurriculum = () => {
@@ -46,39 +49,62 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   useEffect(() => {
     setIsLoaded(true)
     // Check if user is logged in
-    getCurrentUser().then(userData => {
+    getCurrentUser().then(async (userData) => {
       setUser(userData)
-      // If user is logged in but not enrolled, try to fetch progress
-      if (userData && !userProgress) {
-        getUserProgress(courseId).then(progressData => {
-          if (progressData) {
-            setUserProgress(progressData)
-          }
-        })
+      // Check if course is purchased
+      if (userData) {
+        const purchased = await checkCoursePurchase(courseId)
+        setIsPurchased(purchased || userData.role === 'admin')
+        // If user is logged in but not enrolled, try to fetch progress
+        if (!userProgress) {
+          getUserProgress(courseId).then(progressData => {
+            if (progressData) {
+              setUserProgress(progressData)
+            }
+          })
+        }
       }
     })
   }, [courseId, userProgress])
   
-  const handleEnroll = async () => {
+  const handlePurchase = async () => {
     if (!user) {
       router.push('/login?redirect=' + encodeURIComponent(`/courses/${courseId}`))
       return
     }
     
-    setIsEnrolling(true)
+    setIsPurchasing(true)
     try {
-      await enrollInCourse(courseId)
-      // Fetch updated progress
-      const progressData = await getUserProgress(courseId)
-      setUserProgress(progressData)
-      router.refresh()
+      // Create payment and get payment link
+      const paymentData = await createPayment(courseId)
+      
+      // Create form and submit to LiqPay
+      const form = document.createElement('form')
+      form.method = 'POST'
+      form.action = paymentData.paymentUrl
+      
+      const dataInput = document.createElement('input')
+      dataInput.type = 'hidden'
+      dataInput.name = 'data'
+      dataInput.value = paymentData.data
+      form.appendChild(dataInput)
+      
+      const signatureInput = document.createElement('input')
+      signatureInput.type = 'hidden'
+      signatureInput.name = 'signature'
+      signatureInput.value = paymentData.signature
+      form.appendChild(signatureInput)
+      
+      document.body.appendChild(form)
+      form.submit()
     } catch (error) {
-      console.error('Enrollment error:', error)
-      alert('Помилка запису на курс. Спробуйте ще раз.')
-    } finally {
-      setIsEnrolling(false)
+      console.error('Purchase error:', error)
+      alert('Помилка створення платежу. Спробуйте ще раз.')
+      setIsPurchasing(false)
     }
   }
+  
+  const coursePrice = getCoursePrice(courseId)
   
   const getModuleIcon = (moduleOrder) => {
     const icons = [
@@ -103,17 +129,22 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   }
   
   const isLessonUnlocked = (lesson, moduleIndex) => {
-    if (!isEnrolled) return false
-    if (moduleIndex === 0 && lesson.order === 1) return true
-    if (lesson.prerequisites.length === 0) return true
+    // Admin has access to all lessons
+    if (user?.role === 'admin') return true
     
-    // Check if all prerequisites are completed AND their quizzes are passed
-    return lesson.prerequisites.every(prereqId => {
-      const isCompleted = isLessonCompleted(prereqId)
-      const quizPassed = isQuizPassed(prereqId)
-      // Lesson is unlocked if it's completed OR if quiz is passed (>=60%)
-      return isCompleted || quizPassed
-    })
+    // If course is purchased, all lessons are unlocked
+    if (isPurchased) return true
+    
+    // If not enrolled, only first lesson of first module is available (free preview)
+    if (!isEnrolled) {
+      return moduleIndex === 0 && lesson.order === 1
+    }
+    
+    // Free preview: only first lesson of first module
+    if (moduleIndex === 0 && lesson.order === 1) return true
+    
+    // All other lessons require purchase
+    return false
   }
   
   const getLevelBadge = (level) => {
@@ -415,51 +446,44 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
       
       {/* CTA Section */}
       <section className={styles.ctaSection}>
-        {!isEnrolled ? (
+        {!isPurchased && user?.role !== 'admin' ? (
           <div className={styles.ctaCard}>
             <h2 className={styles.ctaTitle}>Готовий почати навчання?</h2>
             <p className={styles.ctaDescription}>
               {user 
-                ? 'Запишись на курс та отримай доступ до всіх матеріалів, практичних завдань та підтримки менторів.'
-                : 'Приєднуйся до курсу та отримай доступ до всіх матеріалів, практичних завдань та підтримки менторів.'
+                ? `Придбай курс за ${formatPrice(coursePrice.price, coursePrice.currency)} та отримай доступ до всіх модулів та тем одразу. Перший урок першого модуля доступний безкоштовно для ознайомлення.`
+                : `Придбай курс за ${formatPrice(coursePrice.price, coursePrice.currency)} та отримай доступ до всіх модулів та тем одразу. Перший урок першого модуля доступний безкоштовно для ознайомлення.`
               }
             </p>
             {user ? (
               <button
-                onClick={handleEnroll}
-                disabled={isEnrolling}
+                onClick={handlePurchase}
+                disabled={isPurchasing}
                 className={styles.ctaButton}
               >
                 <Rocket className="w-5 h-5" />
-                {isEnrolling ? 'Записуємось...' : 'Записатись на курс'}
+                {isPurchasing ? 'Перенаправлення на оплату...' : `Придбати за ${formatPrice(coursePrice.price, coursePrice.currency)}`}
               </button>
             ) : (
-              <>
-                <Link 
-                  href={`/login?redirect=${encodeURIComponent(`/courses/${courseId}`)}`}
-                  className={styles.ctaButton}
-                >
-                  <Rocket className="w-5 h-5" />
-                  Увійти та записатись
-                </Link>
-                <Link 
-                  href="/#Contactform"
-                  className={styles.ctaButtonSecondary}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    window.dispatchEvent(new Event('openContactModal'))
-                  }}
-                >
-                  Купити курс
-                </Link>
-              </>
+              <Link 
+                href={`/login?redirect=${encodeURIComponent(`/courses/${courseId}`)}`}
+                className={styles.ctaButton}
+              >
+                <Rocket className="w-5 h-5" />
+                Увійти та придбати курс
+              </Link>
             )}
           </div>
         ) : (
           <div className={styles.ctaCard}>
-            <h2 className={styles.ctaTitle}>Продовжуй навчання</h2>
+            <h2 className={styles.ctaTitle}>
+              {isPurchased || user?.role === 'admin' ? 'Продовжуй навчання' : 'Продовжуй навчання'}
+            </h2>
             <p className={styles.ctaDescription}>
-              Ти вже на {progress}% шляху до завершення курсу. Продовжуй вивчати нові уроки!
+              {isPurchased || user?.role === 'admin' 
+                ? `Ти вже на ${progress}% шляху до завершення курсу. Продовжуй вивчати нові уроки!`
+                : `Ти вже на ${progress}% шляху до завершення курсу. Продовжуй вивчати нові уроки!`
+              }
             </p>
             <Link 
               href={`/courses/${courseId}`}

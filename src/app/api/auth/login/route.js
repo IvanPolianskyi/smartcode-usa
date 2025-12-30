@@ -15,7 +15,7 @@ export async function POST(request) {
       )
     }
 
-    // Find user
+    // Find user by email (email field can contain username or email)
     const usersCollection = await getCollection('users')
     const user = await usersCollection.findOne({ email: email.toLowerCase() })
 
@@ -49,6 +49,8 @@ export async function POST(request) {
       email: user.email,
       name: user.name,
       phone: user.phone,
+      role: user.role || 'user',
+      purchasedCourses: user.purchasedCourses || [],
       enrolledCourses: user.enrolledCourses || []
     }
 
