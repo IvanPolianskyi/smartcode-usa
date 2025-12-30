@@ -34,10 +34,10 @@
 .container::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     right: 0;
-    height: 40%;
+    bottom: 0;
     background: 
         radial-gradient(circle at 15% 80%, rgba(34, 211, 238, 0.12) 0%, transparent 50%),
         radial-gradient(circle at 85% 70%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
@@ -51,7 +51,7 @@
 .mainContainer {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0rem 1rem 4rem;
+    padding: 0rem 1rem 0;
     position: relative;
     z-index: 10;
 }
