@@ -18,9 +18,9 @@ export const courseStructure = {
   level: "Beginner",
   targetAge: "13-17",
   duration: {
-    weeks: 24,
-    lessons: 48,
-    hours: 96
+    weeks: 36,
+    lessons: 72,
+    hours: 144
   },
   
   // Skills students will gain

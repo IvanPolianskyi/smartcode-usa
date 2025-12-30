@@ -13,7 +13,9 @@ import {
   AlertCircle,
   Lightbulb,
   ChevronRight,
-  Lock
+  Lock,
+  Loader2,
+  Terminal
 } from 'lucide-react'
 import { lesson1_1 } from '@/lib/lessonContent/lesson-1-1'
 import { lesson1_2 } from '@/lib/lessonContent/lesson-1-2'
@@ -215,6 +217,13 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const [quizScore, setQuizScore] = useState(null)
   const [showPracticeSolution, setShowPracticeSolution] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [userCode, setUserCode] = useState('')
+  const [codeExecution, setCodeExecution] = useState({
+    isRunning: false,
+    output: null,
+    error: null,
+    success: null
+  })
   
   // Get lesson content
   const lesson = lessonContentMap[lessonId]
@@ -277,6 +286,61 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   }
   
   const isQuizPassed = quizScore !== null && quizScore >= (fullLesson.quiz?.passingScore || 70)
+
+  const handleRunCode = async () => {
+    if (!userCode.trim()) {
+      setCodeExecution({
+        isRunning: false,
+        output: null,
+        error: 'Будь ласка, введіть код перед запуском',
+        success: false
+      })
+      return
+    }
+
+    setCodeExecution({
+      isRunning: true,
+      output: null,
+      error: null,
+      success: null
+    })
+
+    try {
+      const response = await fetch('/api/code/execute', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code: userCode })
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setCodeExecution({
+          isRunning: false,
+          output: data.output || '',
+          error: data.errorOutput || null,
+          success: data.success
+        })
+      } else {
+        setCodeExecution({
+          isRunning: false,
+          output: data.output || '',
+          error: data.error || data.errorOutput || 'Помилка виконання коду',
+          success: false
+        })
+      }
+    } catch (error) {
+      console.error('Error executing code:', error)
+      setCodeExecution({
+        isRunning: false,
+        output: null,
+        error: 'Помилка підключення до сервера. Спробуйте ще раз.',
+        success: false
+      })
+    }
+  }
   
   return (
     <div className={styles.container}>
@@ -519,11 +583,56 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                       className={styles.codeInput}
                       placeholder="Напишіть ваш код тут..."
                       rows={15}
+                      value={userCode}
+                      onChange={(e) => setUserCode(e.target.value)}
+                      disabled={codeExecution.isRunning}
                     />
-                    <button className={styles.runButton}>
-                      Запустити код
+                    <button 
+                      className={styles.runButton}
+                      onClick={handleRunCode}
+                      disabled={codeExecution.isRunning}
+                    >
+                      {codeExecution.isRunning ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Виконання...
+                        </>
+                      ) : (
+                        <>
+                          <Terminal className="w-4 h-4" />
+                          Запустити код
+                        </>
+                      )}
                     </button>
                   </div>
+                  
+                  {/* Code Execution Results */}
+                  {codeExecution.output !== null || codeExecution.error ? (
+                    <div className={styles.executionResults}>
+                      <h5>
+                        <Terminal className="w-4 h-4" />
+                        Результат виконання:
+                      </h5>
+                      {codeExecution.success !== false && codeExecution.output && (
+                        <div className={styles.executionOutput}>
+                          <strong>Вивід:</strong>
+                          <pre>{codeExecution.output}</pre>
+                        </div>
+                      )}
+                      {codeExecution.error && (
+                        <div className={styles.executionError}>
+                          <strong>Помилка:</strong>
+                          <pre>{codeExecution.error}</pre>
+                        </div>
+                      )}
+                      {codeExecution.success === false && !codeExecution.error && codeExecution.output && (
+                        <div className={styles.executionError}>
+                          <strong>Помилка виконання:</strong>
+                          <pre>{codeExecution.output}</pre>
+                        </div>
+                      )}
+                    </div>
+                  ) : null}
                   
                   {showPracticeSolution && fullLesson.practiceTask.solution && (
                     <div className={styles.solutionSection}>
