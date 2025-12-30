@@ -108,7 +108,7 @@ export default function RootLayout({ children }) {
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				suppressHydrationWarning
 			>
-                <div className='min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'>
+                <div className='min-h-screen flex flex-col'>
 					<Header />
 					<main className='flex-1 pt-16 relative'>{children}</main>
 					<Footer />

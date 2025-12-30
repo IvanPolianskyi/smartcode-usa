@@ -5,11 +5,47 @@
 
 /* --- ОСНОВНА СТРУКТУРА --- */
 .container {
+    
     min-height: 100vh;
     background: #f8fafc;
     position: relative;
     font-family: 'Manrope', sans-serif;
     overflow-x: hidden;
+}
+
+/* Додаткові кольорові градієнти для фону */
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 90% 30%, rgba(168, 85, 247, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 10%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 30% 40%, rgba(249, 115, 22, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 70% 15%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: 
+        radial-gradient(circle at 15% 80%, rgba(34, 211, 238, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 85% 70%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 90%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 25% 85%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 95%, rgba(236, 72, 153, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
 }
 
 .mainContainer {
@@ -31,13 +67,29 @@
 .floatingElement {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.5;
-    filter: blur(80px);
+    opacity: 0.6;
+    filter: blur(90px);
 }
-.element1 { top: 10%; left: 10%; width: 200px; height: 200px; background: var(--primary-blue); animation: float 12s ease-in-out infinite; }
-.element2 { top: 20%; right: 15%; width: 150px; height: 150px; background: #34d399; animation: float 10s ease-in-out infinite reverse; }
-.element3 { bottom: 20%; left: 20%; width: 180px; height: 180px; background: var(--primary-orange); animation: float 14s ease-in-out infinite; }
-.element4 { bottom: 30%; right: 25%; width: 220px; height: 220px; background: var(--primary-purple); animation: float 11s ease-in-out infinite reverse; }
+
+/* Верхні елементи */
+.element1 { top: 5%; left: 5%; width: 250px; height: 250px; background: #3b82f6; animation: float 12s ease-in-out infinite; }
+.element2 { top: 8%; right: 8%; width: 200px; height: 200px; background: #a855f7; animation: float 10s ease-in-out infinite reverse; }
+.element3 { top: 15%; left: 50%; width: 180px; height: 180px; background: #22d3ee; animation: float 14s ease-in-out infinite; }
+.element4 { top: 12%; right: 30%; width: 160px; height: 160px; background: #f97316; animation: float 11s ease-in-out infinite reverse; }
+.element5 { top: 3%; left: 30%; width: 220px; height: 220px; background: #ec4899; animation: float 13s ease-in-out infinite; }
+
+/* Середні елементи */
+.element6 { top: 20%; right: 15%; width: 150px; height: 150px; background: #34d399; animation: float 10s ease-in-out infinite reverse; }
+.element7 { top: 45%; left: 15%; width: 180px; height: 180px; background: #8b5cf6; animation: float 15s ease-in-out infinite; }
+.element8 { top: 50%; right: 20%; width: 200px; height: 200px; background: #06b6d4; animation: float 12s ease-in-out infinite reverse; }
+
+/* Нижні елементи */
+.element9 { bottom: 5%; left: 5%; width: 240px; height: 240px; background: #3b82f6; animation: float 14s ease-in-out infinite; }
+.element10 { bottom: 8%; right: 8%; width: 210px; height: 210px; background: #a855f7; animation: float 11s ease-in-out infinite reverse; }
+.element11 { bottom: 12%; left: 50%; width: 190px; height: 190px; background: #22d3ee; animation: float 13s ease-in-out infinite; }
+.element12 { bottom: 15%; right: 25%; width: 170px; height: 170px; background: #f97316; animation: float 10s ease-in-out infinite reverse; }
+.element13 { bottom: 3%; left: 25%; width: 230px; height: 230px; background: #ec4899; animation: float 12s ease-in-out infinite; }
+.element14 { bottom: 10%; right: 45%; width: 200px; height: 200px; background: #34d399; animation: float 15s ease-in-out infinite reverse; }
 
 /* --- СЕКЦІЯ HERO --- */
 .hero {
@@ -153,6 +205,7 @@
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.5rem;
     padding: 4rem 0;
+    
 }
 .statCard {
     background: rgba(255, 255, 255, 0.7);

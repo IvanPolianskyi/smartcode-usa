@@ -120,10 +120,23 @@ const Visit = () => {
 		<div className={styles.container} ref={sectionRef}>
 			{/* Floating background elements */}
 			<div className={styles.backgroundElements}>
+				{/* Верхні елементи */}
 				<div className={`${styles.floatingElement} ${styles.element1}`}></div>
 				<div className={`${styles.floatingElement} ${styles.element2}`}></div>
 				<div className={`${styles.floatingElement} ${styles.element3}`}></div>
 				<div className={`${styles.floatingElement} ${styles.element4}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element5}`}></div>
+				{/* Середні елементи */}
+				<div className={`${styles.floatingElement} ${styles.element6}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element7}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element8}`}></div>
+				{/* Нижні елементи */}
+				<div className={`${styles.floatingElement} ${styles.element9}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element10}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element11}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element12}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element13}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element14}`}></div>
 			</div>
 
 			<div className={styles.mainContainer}>

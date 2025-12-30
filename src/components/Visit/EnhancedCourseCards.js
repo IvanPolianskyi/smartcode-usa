@@ -79,7 +79,7 @@ const courses = [
 		badge: 'Космічний хіт',
 		rating: 4.9,
 		theme: 'themePython',
-		particleColors: ['#c084fc', '#93c5fd', '#f9a8d4', '#fcd34d'],
+		particleColors: ['#c084fc', '#93c5fd', '#f9a8d4', '#fbbf24'],
         href: '/python',
 	},
 	{
@@ -148,7 +148,12 @@ const courses = [
 // Окремий компонент для частинок, щоб оптимізувати рендеринг
 // Обгорнуто в React.memo, щоб не перерендерюватися при наведенні на картки
 const ParticleBackground = React.memo(({ colors }) => {
-	const particles = useMemo(() => generateParticles(colors), [colors])
+	const [particles, setParticles] = useState([])
+
+	useEffect(() => {
+		// Генеруємо частинки тільки на клієнті, щоб уникнути hydration mismatch
+		setParticles(generateParticles(colors))
+	}, [colors])
 
 	return (
 		<div className={styles.particleContainer}>
@@ -191,7 +196,7 @@ const EnhancedCourseCards = () => {
 				const expandedCard = getExpandedCard()
 				const isExpanded = expandedCard === index
 				const isOtherExpanded = expandedCard !== null && !isExpanded
-
+				
                 const cardClasses = [
 					styles.card,
 					styles[course.theme],
