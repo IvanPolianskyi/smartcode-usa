@@ -74,7 +74,7 @@ export default function DashboardPage() {
         title: 'Python Developer: From Zero to Confident Junior',
         icon: <Code size={24} />,
         color: '#3b82f6',
-        link: '/python'
+        link: '/courses/python-developer-zero-to-junior'
       },
       'unity-game-development': {
         title: 'Розробка ігор на Unity',
@@ -92,7 +92,7 @@ export default function DashboardPage() {
         title: 'Веб-розробка',
         icon: <Monitor size={24} />,
         color: '#8b5cf6',
-        link: '/webDev'
+        link: '/courses/web-development'
       }
     }
     return courses[courseId] || { title: courseId, icon: <BookOpen size={24} />, color: '#6b7280', link: '#' }

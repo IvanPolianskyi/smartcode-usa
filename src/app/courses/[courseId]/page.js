@@ -3,9 +3,20 @@ import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 
-export const metadata = {
-  title: 'Python Developer Course - SmartCode Academy',
-  description: 'Повний курс програмування на Python від основ до рівня впевненого джуніора. 7 модулів, 48 уроків, реальні проекти.',
+export async function generateMetadata({ params }) {
+  const { courseId } = await params
+  
+  if (courseId === 'web-development') {
+    return {
+      title: 'Web Development Course - SmartCode Academy',
+      description: 'Повний курс веб-розробки від HTML/CSS до React та Node.js. 7 модулів, 44 уроки, реальні проекти.',
+    }
+  }
+  
+  return {
+    title: 'Python Developer Course - SmartCode Academy',
+    description: 'Повний курс програмування на Python від основ до рівня впевненого джуніора. 7 модулів, 48 уроків, реальні проекти.',
+  }
 }
 
 export default async function CoursePageRoute({ params }) {
