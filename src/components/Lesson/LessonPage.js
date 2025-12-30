@@ -18,7 +18,7 @@ import {
   Loader2,
   Terminal
 } from 'lucide-react'
-import { updateProgress } from '@/lib/authClient'
+import { updateProgress, checkCoursePurchase, createPayment, enrollInCourse } from '@/lib/authClient'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { lesson1_1 } from '@/lib/lessonContent/lesson-1-1'
@@ -304,7 +304,7 @@ const markdownToHtml = (text) => {
   return html
 }
 
-const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", userProgress = null }) => {
+const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", userProgress = null, isPurchased = false, userRole = 'user', isAccessible = false }) => {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState('theory')
   const [quizAnswers, setQuizAnswers] = useState({})
@@ -320,6 +320,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     success: null
   })
   const [isSaving, setIsSaving] = useState(false)
+  const [isPurchasing, setIsPurchasing] = useState(false)
   
   // Get lesson content
   const lesson = lessonContentMap[lessonId]
@@ -364,6 +365,89 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         <div className={styles.error}>
           <h2>Урок не знайдено</h2>
           <Link href={`/courses/${courseId}`}>Повернутися до курсу</Link>
+        </div>
+      </div>
+    )
+  }
+  
+  // Check if lesson is accessible
+  const allLessons = curriculum.modules.flatMap(m => m.lessons)
+  const currentLesson = allLessons.find(l => l.lessonId === lessonId)
+  const lessonModuleIndex = curriculum.modules.findIndex(m => 
+    m.lessons.some(l => l.lessonId === lessonId)
+  )
+  const isFirstLesson = lessonModuleIndex === 0 && currentLesson?.order === 1
+  const hasAccess = userRole === 'admin' || isPurchased || isAccessible || isFirstLesson
+  
+  const handlePurchase = async () => {
+    setIsPurchasing(true)
+    try {
+      // Create payment and redirect to payment page
+      const paymentData = await createPayment(courseId)
+      
+      // Create form and submit to LiqPay
+      const form = document.createElement('form')
+      form.method = 'POST'
+      form.action = paymentData.paymentUrl
+      
+      const dataInput = document.createElement('input')
+      dataInput.type = 'hidden'
+      dataInput.name = 'data'
+      dataInput.value = paymentData.data
+      form.appendChild(dataInput)
+      
+      const signatureInput = document.createElement('input')
+      signatureInput.type = 'hidden'
+      signatureInput.name = 'signature'
+      signatureInput.value = paymentData.signature
+      form.appendChild(signatureInput)
+      
+      document.body.appendChild(form)
+      form.submit()
+    } catch (error) {
+      console.error('Purchase error:', error)
+      alert('Помилка створення платежу. Спробуйте ще раз.')
+      setIsPurchasing(false)
+    }
+  }
+  
+  // Show locked message if lesson is not accessible
+  if (!hasAccess) {
+    return (
+      <div className={styles.container}>
+        <header className={styles.header}>
+          <Link 
+            href={`/courses/${courseId}`}
+            className={styles.backButton}
+          >
+            <ArrowLeft className="w-5 h-5" />
+            До курсу
+          </Link>
+        </header>
+        <div className={styles.error}>
+          <Lock className="w-16 h-16" style={{ marginBottom: '1rem', opacity: 0.5 }} />
+          <h2>Урок заблоковано</h2>
+          <p style={{ marginBottom: '2rem', textAlign: 'center', maxWidth: '500px' }}>
+            Цей урок доступний тільки після придбання курсу. Перший урок першого модуля доступний безкоштовно для ознайомлення.
+          </p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+            <Link 
+              href={`/courses/${courseId}`}
+              className={styles.ctaButton}
+            >
+              Повернутися до курсу
+            </Link>
+            {userProgress && (
+              <button
+                onClick={handlePurchase}
+                disabled={isPurchasing}
+                className={styles.ctaButton}
+                style={{ backgroundColor: 'var(--accent-blue)' }}
+              >
+                {isPurchasing ? 'Обробка...' : 'Придбати курс'}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     )
