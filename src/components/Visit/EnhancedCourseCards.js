@@ -16,13 +16,13 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
 // Функція для генерації частинок з урахуванням теми
-// Зменшена кількість частинок для кращої продуктивності
+// Трохи зменшена кількість частинок для кращої продуктивності
 const generateParticles = colors => {
 	const particleTypes = [
-		{ type: 'particle1', count: 8, colors: colors.slice(0, 2) },
-		{ type: 'particle2', count: 6, colors: colors.slice(1, 3) },
-		{ type: 'particle3', count: 5, colors: colors.slice(2, 4) },
-		{ type: 'particle4', count: 7, colors: [colors[3], colors[0]] },
+		{ type: 'particle1', count: 12, colors: colors.slice(0, 2) },
+		{ type: 'particle2', count: 9, colors: colors.slice(1, 3) },
+		{ type: 'particle3', count: 8, colors: colors.slice(2, 4) },
+		{ type: 'particle4', count: 10, colors: [colors[3], colors[0]] },
 	]
 
 	return particleTypes.flatMap(({ type, count, colors }) =>
@@ -171,22 +171,14 @@ const ParticleBackground = React.memo(({ colors }) => {
 
 const EnhancedCourseCards = () => {
     const [hoveredCard, setHoveredCard] = useState(null)
-	const [visibleCards, setVisibleCards] = useState([])
+	const [isVisible, setIsVisible] = useState(false)
 	const router = useRouter()
 	const isMobile = useIsMobile()
 	const cardRefs = useRef([])
 
 	useEffect(() => {
-		// Послідовна поява карток з плавною анімацією (більша затримка для плавності)
-		const timers = courses.map((_, index) => {
-			return setTimeout(() => {
-				setVisibleCards(prev => [...prev, index])
-			}, 200 + index * 150) // Збільшена затримка для більшої плавності
-		})
-		
-		return () => {
-			timers.forEach(timer => clearTimeout(timer))
-		}
+		const timer = setTimeout(() => setIsVisible(true), 100)
+		return () => clearTimeout(timer)
 	}, [])
 
     // На мобільних картки не розгортаються; клік веде одразу на сторінку курсу.
@@ -200,12 +192,10 @@ const EnhancedCourseCards = () => {
 				const isExpanded = expandedCard === index
 				const isOtherExpanded = expandedCard !== null && !isExpanded
 
-				const isCardVisible = visibleCards.includes(index)
-				
                 const cardClasses = [
 					styles.card,
 					styles[course.theme],
-					isCardVisible ? styles.cardVisible : styles.cardHidden,
+					isVisible ? styles.cardVisible : styles.cardHidden,
 					isExpanded ? styles.cardExpanded : '',
 					isOtherExpanded ? styles.cardShrunk : '',
 				].join(' ')
@@ -215,10 +205,7 @@ const EnhancedCourseCards = () => {
 						key={course.id}
 						ref={(el) => (cardRefs.current[index] = el)}
 						className={cardClasses}
-						style={{ 
-							'--card-index': index,
-							'--animation-delay': `${index * 120}ms`
-						}}
+						style={{ transitionDelay: `${index * 100}ms` }}
                         onMouseEnter={() => !isMobile && setHoveredCard(index)}
                         onMouseLeave={() => !isMobile && setHoveredCard(null)}
                         onClick={() => {
@@ -238,6 +225,73 @@ const EnhancedCourseCards = () => {
                         {!isMobile && <div className={styles.cardEffects}></div>}
                         {!isMobile && <ParticleBackground colors={course.particleColors} />}
 
+						{/* --- ІНТЕРАКТИВНІ ЕЛЕМЕНТИ ПРИ НАВЕДЕННІ --- */}
+                        {!isMobile && (
+                        <div
+							className={`${styles.hoverElements} ${
+								isExpanded ? styles.hoverElementsVisible : ''
+							}`}
+						>
+							{course.id === 'python' && (
+								<>
+									<div className={`${styles.hoverElement} ${styles.pythonEl1}`}>
+										⭐
+									</div>
+									<div className={`${styles.hoverElement} ${styles.pythonEl2}`}>
+										🚀
+									</div>
+									<div className={`${styles.hoverElement} ${styles.pythonEl3}`}>
+										🌌
+									</div>
+								</>
+							)}
+							{course.id === 'gamedev' && (
+								<>
+									<div
+										className={`${styles.hoverElement} ${styles.gamedevEl1}`}
+									>
+										🎯
+									</div>
+									<div
+										className={`${styles.hoverElement} ${styles.gamedevEl2}`}
+									>
+										💎
+									</div>
+									<div
+										className={`${styles.hoverElement} ${styles.gamedevEl3}`}
+									>
+										⚡
+									</div>
+								</>
+							)}
+							{course.id === 'webdev' && (
+								<>
+									<div className={`${styles.hoverElement} ${styles.webdevEl1}`}>
+										&lt;div&gt;
+									</div>
+									<div className={`${styles.hoverElement} ${styles.webdevEl2}`}>
+										{'{...}'}
+									</div>
+									<div className={`${styles.hoverElement} ${styles.webdevEl3}`}>
+										⚙️
+									</div>
+								</>
+							)}
+                            {course.id === 'roblox' && (
+                                <>
+                                    <div className={`${styles.hoverElement} ${styles.robloxEl1}`}>
+                                        🧱
+                                    </div>
+                                    <div className={`${styles.hoverElement} ${styles.robloxEl2}`}>
+                                        🎮
+                                    </div>
+                                    <div className={`${styles.hoverElement} ${styles.robloxEl3}`}>
+                                        🛠️
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                        )}
 
 						{/* --- ВЕРХНЯ ЧАСТИНА (БЕЙДЖ, РЕЙТИНГ) --- */}
 						<div className={styles.topSection}>
