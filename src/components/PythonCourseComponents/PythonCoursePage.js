@@ -544,30 +544,38 @@ const PythonCoursePage = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {/* Course Section */}
         <section className={styles.ctaSection}>
           <div className={styles.ctaContainer}>
             <h2 className={styles.ctaTitle}>
-              Готовий змінити майбутнє?
+              Почни навчання вже сьогодні!
             </h2>
             <p className={styles.ctaDescription}>
-              Приєднуйся до космічної подорожі у світ програмування вже сьогодні
+              Повний курс Python від основ до просунутого рівня. 7 модулів, 48 уроків, реальні проекти.
             </p>
             
             <div className={styles.ctaButtons}>
               <Link 
-                href="/#Contactform" 
+                href="/courses/python-developer-zero-to-junior" 
                 className={styles.primaryButton}
+              >
+                <div className={styles.buttonOverlay}></div>
+                <span className={styles.buttonContent}>
+                  <Rocket className="w-6 h-6" />
+                  Перейти до курсу
+                </span>
+              </Link>
+              <Link 
+                href="/#Contactform" 
+                className={styles.secondaryButton}
                 onClick={(e)=>{e.preventDefault(); window.dispatchEvent(new Event('openContactModal'))}}
                 scroll={false}
               >
-                <div className={styles.buttonOverlay}></div>
                 <span className={styles.buttonContent}>
                   <Zap className="w-6 h-6" />
                   Безкоштовний урок
                 </span>
               </Link>
-            
             </div>
           </div>
         </section>

@@ -1,5 +1,6 @@
 // src/app/courses/python/page.jsx
 import PythonCoursePage from '@/components/PythonCourseComponents/PythonCoursePage'
+import CoursesSection from '@/components/CoursesSection/CoursesSection'
 
 export const metadata = {
   title: 'Python Programming Course - SmartCode Academy',
@@ -111,6 +112,7 @@ export default function PythonCourse() {
       />
       
       <PythonCoursePage />
+      <CoursesSection />
     </>
   )
 }

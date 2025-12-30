@@ -279,6 +279,7 @@ const Header = () => {
 	}
 
 	const navItems = [
+		{ label: 'Курси', href: '/courses' },
 		{ label: 'Предмети', dropdown: true },
 		{ label: 'Статистика', href: '/#statistics' },
 		{ label: 'Викладачі', href: '/#teachers' },

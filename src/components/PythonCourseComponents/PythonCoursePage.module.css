@@ -473,6 +473,7 @@
 @media (min-width: 640px) {
 	.ctaButtons {
 		flex-direction: row;
+		gap: 1rem;
 	}
 }
 

@@ -27,6 +27,7 @@ import Link from 'next/link'
 import styles from './WebCoursePage.module.css'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import CoursesSection from '@/components/CoursesSection/CoursesSection'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -519,24 +520,30 @@ const WebCoursePage = () => {
 				</div>
 			</section>
 
-			{/* CTA Section */}
+			{/* Course Section */}
 			<section className={styles.ctaSection}>
 				<div className={styles.ctaContainer}>
 					<div className={styles.ctaIcon}>
 						<Terminal size={64} />
 					</div>
-					<h2 className={styles.ctaTitle}>Готовий кодити майбутнє?</h2>
+					<h2 className={styles.ctaTitle}>Почни навчання вже сьогодні!</h2>
 					<p className={styles.ctaText}>
-						Приєднуйся до нас і створи свій перший проект вже сьогодні!
+						Повний курс веб-розробки від HTML/CSS до React та Node.js. 7 модулів, 44 уроки, реальні проекти.
 					</p>
                         <div className={styles.ctaButtons}>
-                            <Link href="/#Contactform" className={styles.ctaButton} onClick={handleCtaClick} scroll={false}>
+                            <Link href="/courses/web-development" className={styles.ctaButton}>
+                                <Rocket size={20} />
+                                Перейти до курсу
+                            </Link>
+                            <Link href="/#Contactform" className={styles.ctaButtonSecondary} onClick={handleCtaClick} scroll={false}>
                                 <Sparkles size={20} />
                                 Безкоштовний урок
                             </Link>
                         </div>
 				</div>
 			</section>
+			
+			<CoursesSection />
 		</div>
 	)
 }
