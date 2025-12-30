@@ -59,6 +59,22 @@ import { lesson7_1 } from '@/lib/lessonContent/lesson-7-1'
 import { lesson7_2 } from '@/lib/lessonContent/lesson-7-2'
 import { lesson7_3 } from '@/lib/lessonContent/lesson-7-3'
 import { lesson7_4 } from '@/lib/lessonContent/lesson-7-4'
+import { lesson8_1 } from '@/lib/lessonContent/lesson-8-1'
+import { lesson8_2 } from '@/lib/lessonContent/lesson-8-2'
+import { lesson8_3 } from '@/lib/lessonContent/lesson-8-3'
+import { lesson8_4 } from '@/lib/lessonContent/lesson-8-4'
+import { lesson8_5 } from '@/lib/lessonContent/lesson-8-5'
+import { lesson8_6 } from '@/lib/lessonContent/lesson-8-6'
+import { lesson9_1 } from '@/lib/lessonContent/lesson-9-1'
+import { lesson9_2 } from '@/lib/lessonContent/lesson-9-2'
+import { lesson9_3 } from '@/lib/lessonContent/lesson-9-3'
+import { lesson9_4 } from '@/lib/lessonContent/lesson-9-4'
+import { lesson10_1 } from '@/lib/lessonContent/lesson-10-1'
+import { lesson10_2 } from '@/lib/lessonContent/lesson-10-2'
+import { lesson10_3 } from '@/lib/lessonContent/lesson-10-3'
+import { lesson10_4 } from '@/lib/lessonContent/lesson-10-4'
+import { lesson11_1 } from '@/lib/lessonContent/lesson-11-1'
+import { lesson11_2 } from '@/lib/lessonContent/lesson-11-2'
 import styles from './LessonPage.module.css'
 
 // Map lesson IDs to content
@@ -100,7 +116,23 @@ const lessonContentMap = {
   "lesson-7-1": lesson7_1,
   "lesson-7-2": lesson7_2,
   "lesson-7-3": lesson7_3,
-  "lesson-7-4": lesson7_4
+  "lesson-7-4": lesson7_4,
+  "lesson-8-1": lesson8_1,
+  "lesson-8-2": lesson8_2,
+  "lesson-8-3": lesson8_3,
+  "lesson-8-4": lesson8_4,
+  "lesson-8-5": lesson8_5,
+  "lesson-8-6": lesson8_6,
+  "lesson-9-1": lesson9_1,
+  "lesson-9-2": lesson9_2,
+  "lesson-9-3": lesson9_3,
+  "lesson-9-4": lesson9_4,
+  "lesson-10-1": lesson10_1,
+  "lesson-10-2": lesson10_2,
+  "lesson-10-3": lesson10_3,
+  "lesson-10-4": lesson10_4,
+  "lesson-11-1": lesson11_1,
+  "lesson-11-2": lesson11_2
 }
 
 // Функція для конвертації markdown в HTML
@@ -120,60 +152,46 @@ const markdownToHtml = (text) => {
       .replace(/'/g, '&#039;')
   }
   
-  // Нормалізуємо відступи - видаляємо зайві порожні рядки (більше 2 підряд)
-  html = html.replace(/\n{3,}/g, '\n\n')
-  
-  // Спочатку розекрановуємо backticks (замінюємо \`\`\` на ```)
+  // КРОК 1: Спочатку обробляємо код блоки - це найважливіше!
+  // Розекрановуємо backticks (замінюємо \`\`\` на ```)
   html = html.replace(/\\`\\`\\`/g, '```')
-  // Також розекрановуємо одинарні backticks для inline коду
   html = html.replace(/\\`/g, '`')
   
-  // Зберігаємо код блоки перед обробкою (підтримуємо різні мови)
-  const codeBlockPlaceholders = []
-  // Обробляємо код блоки з мовою: ```python, ```bash, ```javascript тощо
-  // Спочатку пробуємо знайти код блоки з мовою
-  html = html.replace(/([ \t]*)```(\w+)\s*\n([\s\S]*?)```/g, (match, indent, lang, code) => {
-    const placeholder = `__CODEBLOCK${codeBlockPlaceholders.length}__`
-    const language = lang.trim()
+  // Зберігаємо код блоки в масив перед обробкою
+  const codeBlocks = []
+  let codeBlockIndex = 0
+  
+  // Знаходимо всі код блоки (з мовою та без)
+  // Використовуємо більш надійний regex, який знаходить блоки навіть з відступами
+  html = html.replace(/```(\w+)?\s*\n([\s\S]*?)```/g, (match, lang, code) => {
+    const placeholder = `__CODEBLOCK_${codeBlockIndex}__`
+    const language = (lang && lang.trim()) || 'text'
     const codeContent = code.trim()
+    
     if (codeContent) {
-      codeBlockPlaceholders.push({
+      codeBlocks.push({
         placeholder,
         html: `<pre class="code-block"><code class="language-${language}">${escapeHtml(codeContent)}</code></pre>`
       })
-      // Повертаємо плейсхолдер на новому рядку, щоб він не обгортався в <p>
-      return '\n' + placeholder + '\n'
+      codeBlockIndex++
+      // Повертаємо унікальний плейсхолдер
+      return placeholder
     }
-    return match // Якщо код порожній, залишаємо як є
-  })
-  // Потім знаходимо код блоки без мови
-  html = html.replace(/([ \t]*)```\s*\n([\s\S]*?)```/g, (match, indent, code) => {
-    const placeholder = `__CODEBLOCK${codeBlockPlaceholders.length}__`
-    const codeContent = code.trim()
-    if (codeContent) {
-      codeBlockPlaceholders.push({
-        placeholder,
-        html: `<pre class="code-block"><code class="language-text">${escapeHtml(codeContent)}</code></pre>`
-      })
-      // Повертаємо плейсхолдер на новому рядку, щоб він не обгортався в <p>
-      return '\n' + placeholder + '\n'
-    }
-    return match // Якщо код порожній, залишаємо як є
+    return match
   })
   
-  // Обробляємо inline код (тільки якщо не всередині код блоку)
+  // КРОК 2: Обробляємо inline код (тільки якщо не всередині код блоку)
   html = html.replace(/`([^`\n]+)`/g, '<code>$1</code>')
   
-  // Обробляємо жирний текст **текст** (спочатку обробляємо **, щоб не конфліктувало з *)
-  // Використовуємо більш надійний regex
+  // КРОК 3: Обробляємо жирний текст
   html = html.replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>')
   html = html.replace(/__([^_\n]+?)__/g, '<strong>$1</strong>')
   
-  // Обробляємо курсив *текст* (тільки якщо не частина **)
+  // КРОК 4: Обробляємо курсив
   html = html.replace(/(?<!\*)\*([^*\n]+?)\*(?!\*)/g, '<em>$1</em>')
   html = html.replace(/(?<!_)_([^_\n]+?)_(?!_)/g, '<em>$1</em>')
   
-  // Обробляємо нумеровані списки та марковані списки
+  // КРОК 5: Обробляємо списки та параграфи
   const lines = html.split('\n')
   let inOrderedList = false
   let inUnorderedList = false
@@ -181,12 +199,28 @@ const markdownToHtml = (text) => {
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
-    const orderedMatch = line.match(/^\d+\.\s+(.+)$/)
-    const unorderedMatch = line.match(/^[-*+]\s+(.+)$/)
+    const trimmedLine = line.trim()
     
-    // Перевіряємо, чи це плейсхолдер код блоку - не обгортаємо його в <p>
-    const isCodeBlockPlaceholder = /__CODEBLOCK\d+__/.test(line)
+    // Перевіряємо, чи це плейсхолдер код блоку
+    const isCodeBlockPlaceholder = /__CODEBLOCK_\d+__/.test(trimmedLine)
     
+    if (isCodeBlockPlaceholder) {
+      // Закриваємо відкриті списки перед код блоком
+      if (inOrderedList) {
+        result.push('</ol>')
+        inOrderedList = false
+      }
+      if (inUnorderedList) {
+        result.push('</ul>')
+        inUnorderedList = false
+      }
+      // Додаємо плейсхолдер БЕЗ обгортання в <p>
+      result.push(trimmedLine)
+      continue
+    }
+    
+    // Перевіряємо нумеровані списки
+    const orderedMatch = trimmedLine.match(/^\d+\.\s+(.+)$/)
     if (orderedMatch) {
       if (!inOrderedList) {
         if (inUnorderedList) {
@@ -197,7 +231,12 @@ const markdownToHtml = (text) => {
         inOrderedList = true
       }
       result.push(`<li>${orderedMatch[1]}</li>`)
-    } else if (unorderedMatch) {
+      continue
+    }
+    
+    // Перевіряємо марковані списки
+    const unorderedMatch = trimmedLine.match(/^[-*+]\s+(.+)$/)
+    if (unorderedMatch) {
       if (!inUnorderedList) {
         if (inOrderedList) {
           result.push('</ol>')
@@ -207,34 +246,24 @@ const markdownToHtml = (text) => {
         inUnorderedList = true
       }
       result.push(`<li>${unorderedMatch[1]}</li>`)
-    } else if (isCodeBlockPlaceholder) {
-      // Закриваємо відкриті списки перед код блоком
-      if (inOrderedList) {
-        result.push('</ol>')
-        inOrderedList = false
-      }
-      if (inUnorderedList) {
-        result.push('</ul>')
-        inUnorderedList = false
-      }
-      // Додаємо плейсхолдер без обгортання в <p>, прибираємо зайві пробіли
-      const cleanPlaceholder = line.trim()
-      result.push(cleanPlaceholder)
+      continue
+    }
+    
+    // Звичайний текст - закриваємо списки якщо потрібно
+    if (inOrderedList) {
+      result.push('</ol>')
+      inOrderedList = false
+    }
+    if (inUnorderedList) {
+      result.push('</ul>')
+      inUnorderedList = false
+    }
+    
+    // Додаємо параграф або порожній рядок
+    if (trimmedLine) {
+      result.push(`<p>${trimmedLine}</p>`)
     } else {
-      if (inOrderedList) {
-        result.push('</ol>')
-        inOrderedList = false
-      }
-      if (inUnorderedList) {
-        result.push('</ul>')
-        inUnorderedList = false
-      }
-      // Пропускаємо порожні рядки (вони вже нормалізовані)
-      if (line.trim()) {
-        result.push(`<p>${line}</p>`)
-      } else {
-        result.push('<br />')
-      }
+      result.push('<br />')
     }
   }
   
@@ -244,41 +273,33 @@ const markdownToHtml = (text) => {
   
   html = result.join('')
   
-  // Відновлюємо код блоки (важливо робити це після всіх інших обробок)
-  codeBlockPlaceholders.forEach(({ placeholder, html: blockHtml }) => {
+  // КРОК 6: Відновлюємо код блоки (ВАЖЛИВО: після всіх інших обробок!)
+  codeBlocks.forEach(({ placeholder, html: blockHtml }) => {
+    // Замінюємо плейсхолдер на реальний HTML код блоку
     // Використовуємо глобальну заміну для всіх входжень
-    // Замінюємо плейсхолдер навіть якщо він обгорнутий в <p> теги або має пробіли навколо
     const escapedPlaceholder = placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-    // Знаходимо плейсхолдер в будь-якому контексті (в <p>, з пробілами, на окремих рядках)
-    // Спочатку пробуємо знайти в <p> тегах
-    let regex = new RegExp(`<p>\\s*${escapedPlaceholder}\\s*</p>`, 'g')
-    html = html.replace(regex, blockHtml)
-    // Потім знаходимо без <p> тегів (може бути з пробілами)
-    regex = new RegExp(`\\s*${escapedPlaceholder}\\s*`, 'g')
-    html = html.replace(regex, blockHtml)
-    // Нарешті, знаходимо точний збіг
-    regex = new RegExp(escapedPlaceholder, 'g')
-    html = html.replace(regex, blockHtml)
+    
+    // Спочатку пробуємо знайти в <p> тегах (якщо випадково обгорнувся)
+    html = html.replace(new RegExp(`<p>\\s*${escapedPlaceholder}\\s*</p>`, 'g'), blockHtml)
+    
+    // Потім знаходимо безпосередньо (може бути з пробілами)
+    html = html.replace(new RegExp(`\\s*${escapedPlaceholder}\\s*`, 'g'), blockHtml)
+    
+    // Нарешті, точний збіг
+    html = html.replace(new RegExp(escapedPlaceholder, 'g'), blockHtml)
   })
   
-  // Видаляємо <p> теги навколо код блоків (якщо вони там опинилися)
-  html = html.replace(/<p>\s*(<pre class="code-block">[\s\S]*?<\/pre>)\s*<\/p>/g, '$1')
-  html = html.replace(/<p>\s*(<pre[\s\S]*?<\/pre>)\s*<\/p>/g, '$1')
+  // КРОК 7: Очищаємо зайві <p> теги навколо код блоків
+  html = html.replace(/<p>\s*(<pre class="code-block">[\s\S]*?<\/pre>)\s*<\/p>/gi, '$1')
   
-  // Обробляємо одинарні переноси всередині параграфів
-  html = html.replace(/<p>([^<]+)<br \/>([^<]+)<\/p>/g, '<p>$1<br />$2</p>')
-  
-  // Очищаємо порожні параграфи та зайві br
+  // КРОК 8: Очищаємо порожні параграфи та зайві br
   html = html.replace(/<p><\/p>/g, '')
+  html = html.replace(/<p>\s*<\/p>/g, '')
   html = html.replace(/<p><br \/><\/p>/g, '')
-  html = html.replace(/(<br \/>)+/g, '<br />')
+  html = html.replace(/(<br \/>){2,}/g, '<br />')
   
-  // Видаляємо залишки плейсхолдерів (на випадок якщо щось пішло не так)
-  html = html.replace(/__CODEBLOCK\d+__/g, '')
-  
-  // Видаляємо зайві порожні рядки навколо код блоків
-  html = html.replace(/\n\s*(<pre class="code-block">)/g, '\n$1')
-  html = html.replace(/(<\/pre>)\s*\n/g, '$1\n')
+  // КРОК 9: Видаляємо залишки плейсхолдерів (на випадок якщо щось пішло не так)
+  html = html.replace(/__CODEBLOCK_\d+__/g, '')
   
   return html
 }
@@ -822,7 +843,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                           )}
                         </div>
                         
-                        <p className={styles.questionText}>{question.question}</p>
+                        <div 
+                          className={styles.questionText}
+                          dangerouslySetInnerHTML={{ 
+                            __html: markdownToHtml(question.question)
+                          }}
+                        />
                         
                         {question.type === 'code_reading' && question.code && (
                           <pre className={styles.questionCode}>
@@ -851,7 +877,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                                 <span className={styles.optionLetter}>
                                   {String.fromCharCode(65 + optionIndex)}
                                 </span>
-                                <span className={styles.optionText}>{option}</span>
+                                <span 
+                                  className={styles.optionText}
+                                  dangerouslySetInnerHTML={{ 
+                                    __html: markdownToHtml(option)
+                                  }}
+                                />
                                 {showAnswer && isCorrectAnswer && (
                                   <CheckCircle2 className={styles.optionIcon} />
                                 )}
@@ -864,9 +895,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                         </div>
                         
                         {showAnswer && question.explanation && (
-                          <div className={styles.questionExplanation}>
-                            <strong>Пояснення:</strong> {question.explanation}
-                          </div>
+                          <div 
+                            className={styles.questionExplanation}
+                            dangerouslySetInnerHTML={{ 
+                              __html: `<strong>Пояснення:</strong> ${markdownToHtml(question.explanation)}`
+                            }}
+                          />
                         )}
                       </div>
                     )
