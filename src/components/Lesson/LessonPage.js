@@ -32,6 +32,27 @@ import { lesson3_2 } from '@/lib/lessonContent/lesson-3-2'
 import { lesson3_3 } from '@/lib/lessonContent/lesson-3-3'
 import { lesson3_4 } from '@/lib/lessonContent/lesson-3-4'
 import { lesson3_5 } from '@/lib/lessonContent/lesson-3-5'
+import { lesson4_1 } from '@/lib/lessonContent/lesson-4-1'
+import { lesson4_2 } from '@/lib/lessonContent/lesson-4-2'
+import { lesson4_3 } from '@/lib/lessonContent/lesson-4-3'
+import { lesson4_4 } from '@/lib/lessonContent/lesson-4-4'
+import { lesson4_5 } from '@/lib/lessonContent/lesson-4-5'
+import { lesson5_1 } from '@/lib/lessonContent/lesson-5-1'
+import { lesson5_2 } from '@/lib/lessonContent/lesson-5-2'
+import { lesson5_3 } from '@/lib/lessonContent/lesson-5-3'
+import { lesson5_4 } from '@/lib/lessonContent/lesson-5-4'
+import { lesson5_5 } from '@/lib/lessonContent/lesson-5-5'
+import { lesson5_6 } from '@/lib/lessonContent/lesson-5-6'
+import { lesson6_1 } from '@/lib/lessonContent/lesson-6-1'
+import { lesson6_2 } from '@/lib/lessonContent/lesson-6-2'
+import { lesson6_3 } from '@/lib/lessonContent/lesson-6-3'
+import { lesson6_4 } from '@/lib/lessonContent/lesson-6-4'
+import { lesson6_5 } from '@/lib/lessonContent/lesson-6-5'
+import { lesson6_6 } from '@/lib/lessonContent/lesson-6-6'
+import { lesson7_1 } from '@/lib/lessonContent/lesson-7-1'
+import { lesson7_2 } from '@/lib/lessonContent/lesson-7-2'
+import { lesson7_3 } from '@/lib/lessonContent/lesson-7-3'
+import { lesson7_4 } from '@/lib/lessonContent/lesson-7-4'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import styles from './LessonPage.module.css'
 
@@ -53,7 +74,28 @@ const lessonContentMap = {
   "lesson-3-2": lesson3_2,
   "lesson-3-3": lesson3_3,
   "lesson-3-4": lesson3_4,
-  "lesson-3-5": lesson3_5
+  "lesson-3-5": lesson3_5,
+  "lesson-4-1": lesson4_1,
+  "lesson-4-2": lesson4_2,
+  "lesson-4-3": lesson4_3,
+  "lesson-4-4": lesson4_4,
+  "lesson-4-5": lesson4_5,
+  "lesson-5-1": lesson5_1,
+  "lesson-5-2": lesson5_2,
+  "lesson-5-3": lesson5_3,
+  "lesson-5-4": lesson5_4,
+  "lesson-5-5": lesson5_5,
+  "lesson-5-6": lesson5_6,
+  "lesson-6-1": lesson6_1,
+  "lesson-6-2": lesson6_2,
+  "lesson-6-3": lesson6_3,
+  "lesson-6-4": lesson6_4,
+  "lesson-6-5": lesson6_5,
+  "lesson-6-6": lesson6_6,
+  "lesson-7-1": lesson7_1,
+  "lesson-7-2": lesson7_2,
+  "lesson-7-3": lesson7_3,
+  "lesson-7-4": lesson7_4
 }
 
 // Функція для конвертації markdown в HTML

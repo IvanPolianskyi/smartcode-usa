@@ -29,37 +29,22 @@ export const lesson4_2 = {
         content: `Виняток (exception) — це помилка, яка виникає під час виконання програми.
 
 **Типові винятки:**
+- **ZeroDivisionError** — ділення на нуль
+- **ValueError** — неправильне значення
+- **TypeError** — неправильний тип
+- **FileNotFoundError** — файл не знайдено
+- **KeyError** — ключ не знайдено в словнику
+- **IndexError** — індекс поза межами списку
+
+**Без обробки винятків:**
 \`\`\`python
-# ZeroDivisionError — ділення на нуль
-result = 10 / 0
-
-# ValueError — неправильне значення
-number = int("abc")
-
-# TypeError — неправильний тип
-result = "5" + 5
-
-# IndexError — індекс поза межами
-items = [1, 2, 3]
-item = items[10]
-
-# KeyError — ключа немає в словнику
-data = {"name": "Олександр"}
-value = data["age"]
-
-# FileNotFoundError — файл не знайдено
-file = open("неіснуючий_файл.txt")
-\`\`\`
-
-**Без обробки винятків програма зупиняється!**
-\`\`\`python
-number = int(input("Введіть число: "))  # Якщо ввести "abc" — програма впаде
-print(f"Число: {number}")
+number = int(input("Введіть число: "))  # Якщо ввести текст — програма впаде!
+result = 10 / number  # Якщо 0 — програма впаде!
 \`\`\``
       },
       {
-        title: "Блок try/except",
-        content: `**Базовий синтаксис:**
+        title: "Базова обробка винятків",
+        content: `**try/except блок:**
 \`\`\`python
 try:
     # Код, який може викликати помилку
@@ -67,7 +52,7 @@ try:
     result = 10 / number
     print(f"Результат: {result}")
 except:
-    # Код, який виконується при помилці
+    # Що робити, якщо виникла помилка
     print("Сталася помилка!")
 \`\`\`
 
@@ -77,31 +62,26 @@ try:
     number = int(input("Введіть число: "))
     result = 10 / number
 except ValueError:
-    print("Помилка: введіть правильне число!")
+    print("Помилка! Введіть правильне число.")
 except ZeroDivisionError:
-    print("Помилка: ділення на нуль!")
+    print("Помилка! Ділення на нуль неможливе.")
 except Exception as e:
     print(f"Невідома помилка: {e}")
 \`\`\`
 
-**Краще обробляти конкретні винятки, ніж загальний except!**
+**Краще обробляти конкретні помилки, ніж всі разом!**
 \`\`\`python
 # Погано
-try:
-    # код
-except:  # Ловить ВСІ помилки, навіть системні
-    pass
+except:
+    pass  # Приховує всі помилки, навіть неочікувані
 
 # Добре
-try:
-    # код
 except ValueError:
-    # обробка конкретної помилки
-    pass
+    print("Помилка введення")
 \`\`\``
       },
       {
-        title: "Блоки else та finally",
+        title: "else та finally",
         content: `**else** — виконується, якщо помилок не було:
 \`\`\`python
 try:
@@ -112,32 +92,36 @@ else:
     print(f"Ви ввели: {number}")  # Виконається тільки якщо не було помилки
 \`\`\`
 
-**finally** — виконується завжди:
+**finally** — виконується завжди (навіть якщо була помилка):
 \`\`\`python
+file = None
 try:
     file = open("data.txt", "r")
     content = file.read()
 except FileNotFoundError:
     print("Файл не знайдено!")
 finally:
-    file.close()  # Виконається завжди, навіть при помилці
+    if file:
+        file.close()  # Завжди закриємо файл
 \`\`\`
 
-**Комбінування:**
+**Повна структура:**
 \`\`\`python
 try:
-    # код
-except ValueError:
-    # обробка помилки
+    # Код
+except SpecificError:
+    # Обробка конкретної помилки
+except Exception as e:
+    # Обробка інших помилок
 else:
-    # якщо помилок не було
+    # Якщо помилок не було
 finally:
-    # завжди виконується
+    # Завжди виконується
 \`\`\``
       },
       {
         title: "Підняття винятків (raise)",
-        content: `Можна самостійно викликати винятки:
+        content: `Можна самому викликати виняток:
 
 \`\`\`python
 def divide(a, b):
@@ -173,165 +157,160 @@ except ValueError as e:
     {
       title: "Приклад 1: Обробка введення",
       code: `# Безпечне отримання числа
-def get_number():
-    while True:
-        try:
-            number = int(input("Введіть число: "))
-            return number
-        except ValueError:
-            print("Помилка! Введіть правильне число.")
-        except KeyboardInterrupt:
-            print("\\nОперацію скасовано.")
-            return None
+while True:
+    try:
+        age = int(input("Скільки вам років? "))
+        if age < 0 or age > 150:
+            raise ValueError("Вік має бути від 0 до 150")
+        break
+    except ValueError as e:
+        print(f"Помилка: {e}")
+        print("Спробуйте ще раз!")
 
-number = get_number()
-if number:
-    print(f"Ви ввели: {number}")`,
+print(f"Вам {age} років")`,
       explanation: "Демонструє обробку помилок введення з повторенням."
     },
     {
-      title: "Приклад 2: Обробка ділення",
-      code: `# Безпечне ділення
-def safe_divide(a, b):
-    try:
-        result = a / b
-    except ZeroDivisionError:
-        print("Помилка: ділення на нуль!")
-        return None
-    except TypeError:
-        print("Помилка: нечислові аргументи!")
-        return None
-    else:
-        print("Ділення виконано успішно!")
-        return result
-    finally:
-        print("Операція завершена.")
-
-result = safe_divide(10, 2)
-print(f"Результат: {result}")`,
-      explanation: "Показує обробку різних типів помилок з else та finally."
+      title: "Приклад 2: Робота з файлами",
+      code: `# Безпечне читання файлу
+filename = "data.txt"
+try:
+    with open(filename, "r", encoding="utf-8") as file:
+        content = file.read()
+        print(content)
+except FileNotFoundError:
+    print(f"Файл {filename} не знайдено!")
+except PermissionError:
+    print("Немає доступу до файлу!")
+except Exception as e:
+    print(f"Невідома помилка: {e}")`,
+      explanation: "Показує обробку різних помилок при роботі з файлами."
     },
     {
-      title: "Приклад 3: Валідація з raise",
-      code: `# Валідація даних
-def validate_score(score):
-    if not isinstance(score, (int, float)):
-        raise TypeError("Оцінка має бути числом!")
-    if score < 0 or score > 100:
-        raise ValueError("Оцінка має бути від 0 до 100!")
-    return score
-
+      title: "Приклад 3: try/except/else/finally",
+      code: `# Повна структура обробки помилок
 try:
-    score = validate_score(150)
-except ValueError as e:
-    print(f"Помилка валідації: {e}")`,
-      explanation: "Демонструє використання raise для валідації даних."
+    number = int(input("Введіть число: "))
+    result = 100 / number
+except ValueError:
+    print("Помилка! Введіть число.")
+except ZeroDivisionError:
+    print("Помилка! Ділення на нуль.")
+else:
+    print(f"Результат: {result}")
+finally:
+    print("Обробка завершена.")`,
+      explanation: "Демонструє використання else та finally."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Використання загального except без конкретного типу",
-      explanation: "except: ловить всі помилки, включаючи системні, що може приховати важливі помилки.",
-      correctApproach: "Завжди вказуйте конкретний тип винятку: except ValueError:"
+      mistake: "Занадто широкий except",
+      explanation: "except: без конкретного типу приховує всі помилки, навіть неочікувані.",
+      correctApproach: "Обробляйте конкретні винятки: except ValueError:, except FileNotFoundError:"
     },
     {
-      mistake: "Порожній except блок",
-      explanation: "except: pass приховує помилки, що ускладнює відлагодження.",
+      mistake: "Приховування помилок (except: pass)",
+      explanation: "pass приховує помилки, що ускладнює відлагодження.",
       correctApproach: "Завжди обробляйте помилки або логуйте їх."
     },
     {
-      mistake: "Забути finally для закриття ресурсів",
-      explanation: "Якщо не використати finally, файли можуть залишитися відкритими при помилках.",
-      correctApproach: "Використовуйте finally або краще with для автоматичного закриття."
+      mistake: "Плутанина між else та finally",
+      explanation: "else виконується якщо не було помилки, finally виконується завжди.",
+      correctApproach: "else для коду без помилок, finally для очищення ресурсів."
     }
   ],
   
   summary: `На цьому уроці ми вивчили:
 
 1. **Винятки** — помилки під час виконання програми
-2. **try/except** — обробка помилок
-3. **Конкретні винятки** — ValueError, ZeroDivisionError, FileNotFoundError тощо
-4. **else** — виконується якщо помилок не було
-5. **finally** — виконується завжди
+2. **try/except** — обробка винятків
+3. **Конкретні винятки** — ValueError, FileNotFoundError, ZeroDivisionError
+4. **else** — код без помилок
+5. **finally** — код, який виконується завжди
 6. **raise** — підняття власних винятків
 
 Обробка помилок робить програми надійнішими!`,
   
   practiceTask: {
-    title: "Безпечний калькулятор",
-    description: "Створіть калькулятор з повною обробкою помилок",
+    title: "Безпечна обробка даних",
+    description: "Створіть програму з повною обробкою помилок",
     problemStatement: `Напишіть програму, яка:
-1. Отримує два числа від користувача (з обробкою помилок)
-2. Отримує операцію (+, -, *, /)
-3. Виконує обчислення з обробкою ділення на нуль
-4. Обробляє всі можливі помилки
-5. Продовжує роботу після помилок`,
+1. Безпечно отримує число від користувача (з повторенням при помилці)
+2. Безпечно читає файл (обробляє FileNotFoundError)
+3. Безпечно виконує ділення (обробляє ZeroDivisionError)
+4. Використовує try/except/else/finally
+5. Виводить інформативні повідомлення про помилки`,
     inputFormat: "Користувач вводить дані через input()",
     outputFormat: `Приклад виведення:
-Введіть перше число: 10
-Введіть операцію: /
-Введіть друге число: 0
-Помилка: Ділення на нуль неможливе!
-Спробуйте ще раз...`,
+Введіть число: abc
+Помилка! Введіть правильне число.
+Введіть число: 5
+Число прийнято: 5
+Результат: 20.0`,
     examples: [
       {
-        input: "a=10, op='/', b=0",
-        output: "Помилка: Ділення на нуль неможливе!",
-        explanation: "Програма обробляє помилку ділення на нуль"
+        input: "Неправильне введення, потім правильне",
+        output: "Помилка обробляється, програма продовжує роботу",
+        explanation: "Програма обробляє помилки та продовжує виконання"
       }
     ],
     solution: {
-      code: `def get_number(prompt):
+      code: `# Безпечна обробка даних
+def get_number():
     while True:
         try:
-            return float(input(prompt))
+            number = float(input("Введіть число: "))
+            return number
         except ValueError:
             print("Помилка! Введіть правильне число.")
+        except Exception as e:
+            print(f"Невідома помилка: {e}")
 
-def calculate(a, b, operation):
+def read_file_safe(filename):
     try:
-        if operation == "+":
-            return a + b
-        elif operation == "-":
-            return a - b
-        elif operation == "*":
-            return a * b
-        elif operation == "/":
-            if b == 0:
-                raise ZeroDivisionError("Ділення на нуль неможливе!")
-            return a / b
-        else:
-            raise ValueError(f"Невідома операція: {operation}")
-    except ZeroDivisionError as e:
-        print(f"Помилка: {e}")
+        with open(filename, "r", encoding="utf-8") as file:
+            return file.read()
+    except FileNotFoundError:
+        print(f"Файл {filename} не знайдено!")
         return None
     except Exception as e:
-        print(f"Невідома помилка: {e}")
+        print(f"Помилка читання файлу: {e}")
         return None
 
-while True:
+def safe_divide(a, b):
     try:
-        a = get_number("Введіть перше число: ")
-        operation = input("Введіть операцію (+, -, *, /): ")
-        b = get_number("Введіть друге число: ")
-        
-        result = calculate(a, b, operation)
-        if result is not None:
-            print(f"Результат: {a} {operation} {b} = {result}")
-        
-        again = input("Продовжити? (так/ні): ").lower()
-        if again != "так":
-            break
-    except KeyboardInterrupt:
-        print("\\nПрограму перервано.")
-        break`,
-      explanation: "Рішення демонструє повну обробку помилок для безпечного калькулятора."
+        result = a / b
+    except ZeroDivisionError:
+        print("Помилка! Ділення на нуль неможливе.")
+        return None
+    except TypeError:
+        print("Помилка! Обидва аргументи мають бути числами.")
+        return None
+    else:
+        print(f"Ділення виконано успішно!")
+        return result
+    finally:
+        print("Обробка ділення завершена.")
+
+# Використання
+number = get_number()
+print(f"Число прийнято: {number}")
+
+content = read_file_safe("data.txt")
+if content:
+    print("Файл прочитано успішно!")
+
+result = safe_divide(100, number)
+if result is not None:
+    print(f"Результат: {result}")`,
+      explanation: "Рішення демонструє повну обробку помилок з try/except/else/finally."
     },
     hints: [
-      "Використовуйте try/except для введення чисел",
-      "Перевіряйте ділення на нуль перед операцією",
-      "Використовуйте цикл для повторення після помилок"
+      "Використовуйте while True для повторення при помилці",
+      "Обробляйте конкретні винятки (ValueError, FileNotFoundError)",
+      "Використовуйте finally для очищення"
     ],
     difficulty: "beginner"
   },
@@ -341,30 +320,29 @@ while True:
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Який блок виконується завжди?",
-        options: ["try", "except", "else", "finally"],
-        correctAnswer: 3,
-        explanation: "finally виконується завжди, навіть якщо була помилка."
+        question: "Який виняток виникне при int('abc')?",
+        options: ["TypeError", "ValueError", "NameError", "SyntaxError"],
+        correctAnswer: 1,
+        explanation: "ValueError виникає, коли функція отримує правильний тип, але неправильне значення."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе: int('abc')?",
-        options: ["0", "None", "Помилку ValueError", "Помилку TypeError"],
-        correctAnswer: 2,
-        explanation: "int('abc') викличе ValueError, оскільки 'abc' не можна конвертувати в число."
+        question: "Що виведе: try: 10/0; except: print('Помилка'); finally: print('Готово')?",
+        options: ["Помилка\\nГотово", "Готово", "Помилка", "Помилка ділення"],
+        correctAnswer: 0,
+        explanation: "except обробить помилку, finally виконається завжди, тому обидва повідомлення."
       },
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що робить raise?",
-        options: ["Обробляє помилку", "Викликає помилку", "Ігнорує помилку", "Логує помилку"],
-        correctAnswer: 1,
-        explanation: "raise викликає (піднімає) виняток самостійно."
+        question: "Коли виконується блок else в try/except?",
+        options: ["Завжди", "Якщо була помилка", "Якщо не було помилки", "Ніколи"],
+        correctAnswer: 2,
+        explanation: "else виконується тільки якщо в try не виникло винятків."
       }
     ],
-    timeLimit: 10,
+    timeLimit: 12,
     passingScore: 70
   }
 }
-

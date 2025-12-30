@@ -1,5 +1,5 @@
 /**
- * Lesson 4-3: Створення власних винятків
+ * Lesson 4-3: JSON та структуровані дані
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
@@ -8,13 +8,13 @@ export const lesson4_3 = {
   lessonId: "lesson-4-3",
   moduleId: "module-4",
   order: 3,
-  title: "Створення власних винятків",
+  title: "JSON та структуровані дані",
   
   learningObjectives: [
-    "Створювати кастомні класи винятків",
-    "Піднімати винятки (raise)",
-    "Створювати ієрархію винятків",
-    "Документувати винятки"
+    "Розуміти формат JSON",
+    "Читати та записувати JSON файли",
+    "Конвертувати між Python об'єктами та JSON",
+    "Обробляти складні структури даних"
   ],
   
   estimatedTime: 90,
@@ -25,98 +25,151 @@ export const lesson4_3 = {
   theory: {
     sections: [
       {
-        title: "Створення власного винятку",
-        content: `Власний виняток — це клас, який наслідується від Exception:
+        title: "Що таке JSON?",
+        content: `JSON (JavaScript Object Notation) — формат для зберігання та обміну даними.
 
-\`\`\`python
-class MyCustomError(Exception):
-    pass
+**Переваги JSON:**
+- Легко читається людьми
+- Легко обробляється комп'ютерами
+- Використовується скрізь (API, конфіги, бази даних)
+- Підтримується багатьма мовами
 
-# Використання
-raise MyCustomError("Щось пішло не так!")
+**Структура JSON:**
+\`\`\`json
+{
+  "name": "Олександр",
+  "age": 15,
+  "city": "Київ",
+  "hobbies": ["програмування", "читання"],
+  "student": true
+}
 \`\`\`
 
-**З повідомленням:**
+**Типи даних в JSON:**
+- Числа (int, float)
+- Рядки (str)
+- Булеві (true/false)
+- null
+- Масиви (списки)
+- Об'єкти (словники)`
+      },
+      {
+        title: "Робота з JSON в Python",
+        content: `**Імпорт модуля:**
 \`\`\`python
-class ValidationError(Exception):
-    def __init__(self, message, field=None):
-        self.message = message
-        self.field = field
-        super().__init__(self.message)
-
-# Використання
-raise ValidationError("Вік не може бути від'ємним", field="age")
+import json
 \`\`\`
 
-**Обробка:**
+**Конвертація Python → JSON (dumps):**
 \`\`\`python
-try:
-    raise ValidationError("Помилка валідації")
-except ValidationError as e:
-    print(f"Помилка: {e.message}")
+import json
+
+data = {
+    "name": "Олександр",
+    "age": 15,
+    "city": "Київ"
+}
+
+json_string = json.dumps(data)
+print(json_string)
+# {"name": "Олександр", "age": 15, "city": "Київ"}
+\`\`\`
+
+**Конвертація JSON → Python (loads):**
+\`\`\`python
+json_string = '{"name": "Олександр", "age": 15}'
+data = json.loads(json_string)
+print(data["name"])  # Олександр
+\`\`\`
+
+**Форматування (indent):**
+\`\`\`python
+data = {"name": "Олександр", "age": 15}
+pretty_json = json.dumps(data, indent=2, ensure_ascii=False)
+print(pretty_json)
+# {
+#   "name": "Олександр",
+#   "age": 15
+# }
 \`\`\``
       },
       {
-        title: "Ієрархія винятків",
-        content: `Можна створювати ієрархію винятків:
-
+        title: "Робота з JSON файлами",
+        content: `**Запис у JSON файл (dump):**
 \`\`\`python
-class StudentError(Exception):
-    """Базовий виняток для помилок студентів"""
-    pass
+import json
 
-class InvalidAgeError(StudentError):
-    """Помилка невалідного віку"""
-    pass
+data = {
+    "students": [
+        {"name": "Олександр", "age": 15},
+        {"name": "Марія", "age": 16}
+    ]
+}
 
-class InvalidGradeError(StudentError):
-    """Помилка невалідного класу"""
-    pass
-
-# Використання
-try:
-    raise InvalidAgeError("Вік має бути від 13 до 17")
-except StudentError as e:  # Ловить всі підкласи
-    print(f"Помилка студента: {e}")
+with open("students.json", "w", encoding="utf-8") as file:
+    json.dump(data, file, indent=2, ensure_ascii=False)
 \`\`\`
 
-**Переваги ієрархії:**
-- Можна обробляти групи помилок
-- Краща організація коду
-- Легше розширювати`
+**Читання з JSON файлу (load):**
+\`\`\`python
+import json
+
+with open("students.json", "r", encoding="utf-8") as file:
+    data = json.load(file)
+    print(data["students"][0]["name"])  # Олександр
+\`\`\`
+
+**Обробка помилок:**
+\`\`\`python
+import json
+
+try:
+    with open("data.json", "r", encoding="utf-8") as file:
+        data = json.load(file)
+except FileNotFoundError:
+    print("Файл не знайдено!")
+except json.JSONDecodeError:
+    print("Помилка формату JSON!")
+\`\`\``
       },
       {
-        title: "Підняття винятків (raise)",
-        content: `**Базове використання:**
+        title: "Складні структури даних",
+        content: `**Вкладені структури:**
 \`\`\`python
-def check_age(age):
-    if age < 0:
-        raise ValueError("Вік не може бути від'ємним!")
-    if age > 150:
-        raise ValueError("Вік занадто великий!")
-    return age
+import json
 
-try:
-    age = check_age(-5)
-except ValueError as e:
-    print(f"Помилка: {e}")
-\`\`\`
+school = {
+    "name": "SmartCode Academy",
+    "students": [
+        {
+            "id": 1,
+            "name": "Олександр",
+            "courses": ["Python", "Web Development"],
+            "grades": {
+                "Python": 95,
+                "Web Development": 88
+            }
+        },
+        {
+            "id": 2,
+            "name": "Марія",
+            "courses": ["Python"],
+            "grades": {
+                "Python": 92
+            }
+        }
+    ]
+}
 
-**Повторне підняття:**
-\`\`\`python
-try:
-    # код
-except ValueError:
-    print("Обробка помилки...")
-    raise  # Повторно піднімає помилку
-\`\`\`
+# Запис
+with open("school.json", "w", encoding="utf-8") as file:
+    json.dump(school, file, indent=2, ensure_ascii=False)
 
-**З новим повідомленням:**
-\`\`\`python
-try:
-    # код
-except ValueError as e:
-    raise ValueError(f"Нова помилка: {e}") from e
+# Читання та доступ
+with open("school.json", "r", encoding="utf-8") as file:
+    data = json.load(file)
+    first_student = data["students"][0]
+    print(f"{first_student['name']}: {first_student['grades']['Python']}")
 \`\`\``
       }
     ]
@@ -124,141 +177,200 @@ except ValueError as e:
   
   codeExamples: [
     {
-      title: "Приклад 1: Простий кастомний виняток",
-      code: `# Власний виняток
-class NegativeNumberError(Exception):
-    pass
+      title: "Приклад 1: Базова робота з JSON",
+      code: `import json
 
-def check_positive(number):
-    if number < 0:
-        raise NegativeNumberError("Число не може бути від'ємним!")
-    return number
+# Створення даних
+student = {
+    "name": "Олександр",
+    "age": 15,
+    "city": "Київ",
+    "active": True
+}
 
-try:
-    result = check_positive(-5)
-except NegativeNumberError as e:
-    print(f"Помилка: {e}")`,
-      explanation: "Демонструє створення та використання простого кастомного винятку."
+# Конвертація в JSON рядок
+json_string = json.dumps(student, ensure_ascii=False)
+print("JSON рядок:", json_string)
+
+# Конвертація назад в Python
+data = json.loads(json_string)
+print("Ім'я:", data["name"])`,
+      explanation: "Демонструє базову конвертацію між Python та JSON."
     },
     {
-      title: "Приклад 2: Ієрархія винятків",
-      code: `# Ієрархія винятків
-class BankError(Exception):
-    pass
+      title: "Приклад 2: Робота з JSON файлами",
+      code: `import json
 
-class InsufficientFundsError(BankError):
-    pass
+# Запис у файл
+students = [
+    {"name": "Олександр", "age": 15},
+    {"name": "Марія", "age": 16},
+    {"name": "Дмитро", "age": 15}
+]
 
-class InvalidAccountError(BankError):
-    pass
+with open("students.json", "w", encoding="utf-8") as file:
+    json.dump(students, file, indent=2, ensure_ascii=False)
 
-def withdraw(account, amount):
-    if account not in accounts:
-        raise InvalidAccountError(f"Рахунок {account} не існує!")
-    if accounts[account] < amount:
-        raise InsufficientFundsError("Недостатньо коштів!")
-    accounts[account] -= amount
+# Читання з файлу
+with open("students.json", "r", encoding="utf-8") as file:
+    loaded_students = json.load(file)
+    for student in loaded_students:
+        print(f"{student['name']}, {student['age']} років")`,
+      explanation: "Показує запис та читання JSON файлів."
+    },
+    {
+      title: "Приклад 3: Складні структури",
+      code: `import json
 
-# Обробка всіх банківських помилок
-try:
-    withdraw("account123", 1000)
-except BankError as e:
-    print(f"Банківська помилка: {e}")`,
-      explanation: "Показує створення ієрархії винятків для різних типів помилок."
+# Складна структура
+course = {
+    "title": "Python Basics",
+    "instructor": "Олександр",
+    "students": [
+        {
+            "name": "Марія",
+            "progress": 75,
+            "completed_lessons": [1, 2, 3, 4, 5]
+        },
+        {
+            "name": "Дмитро",
+            "progress": 50,
+            "completed_lessons": [1, 2, 3]
+        }
+    ]
+}
+
+# Запис
+with open("course.json", "w", encoding="utf-8") as file:
+    json.dump(course, file, indent=2, ensure_ascii=False)
+
+# Читання та обробка
+with open("course.json", "r", encoding="utf-8") as file:
+    data = json.load(file)
+    print(f"Курс: {data['title']}")
+    for student in data["students"]:
+        print(f"{student['name']}: {student['progress']}%")`,
+      explanation: "Демонструє роботу зі складними вкладеними структурами."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Не наслідувати від Exception",
-      explanation: "Якщо клас не наслідується від Exception, він не буде правильно оброблятися.",
-      correctApproach: "Завжди наслідуйте від Exception або його підкласів."
+      mistake: "Забути ensure_ascii=False для українського тексту",
+      explanation: "Без ensure_ascii=False українські символи будуть у вигляді \\uXXXX.",
+      correctApproach: "Завжди використовуйте ensure_ascii=False для json.dump/json.dumps з українським текстом."
     },
     {
-      mistake: "Створення занадто багатьох кастомних винятків",
-      explanation: "Не потрібно створювати виняток для кожної ситуації, використовуйте стандартні коли можливо.",
-      correctApproach: "Створюйте кастомні винятки тільки коли стандартні не підходять."
+      mistake: "Плутанина між dumps/loads та dump/load",
+      explanation: "dumps/loads працюють з рядками, dump/load працюють з файлами.",
+      correctApproach: "dumps/loads для рядків, dump/load для файлів."
+    },
+    {
+      mistake: "Не обробляти JSONDecodeError",
+      explanation: "Якщо JSON файл пошкоджений, виникне помилка.",
+      correctApproach: "Обробляйте json.JSONDecodeError при читанні JSON."
     }
   ],
   
   summary: `На цьому уроці ми вивчили:
 
-1. **Створення винятків** — class MyError(Exception)
-2. **Підняття винятків** — raise MyError("повідомлення")
-3. **Ієрархія** — наслідування від базових винятків
-4. **Документація** — docstrings для опису винятків
+1. **JSON** — формат для структурованих даних
+2. **json.dumps/loads** — конвертація між Python та JSON рядками
+3. **json.dump/load** — робота з JSON файлами
+4. **Складні структури** — вкладені словники та списки
+5. **ensure_ascii=False** — для коректного відображення українського тексту
 
-Власні винятки роблять код більш зрозумілим та структурованим!`,
+JSON — стандартний спосіб зберігання та обміну даними!`,
   
   practiceTask: {
-    title: "Система валідації з кастомними винятками",
-    description: "Створіть систему валідації з власними винятками",
-    problemStatement: `Створіть:
-1. Базовий виняток ValidationError
-2. Підкласи: InvalidEmailError, InvalidAgeError, InvalidPasswordError
-3. Функції валідації, які викликають ці винятки
-4. Обробку помилок з виведенням повідомлень`,
-    inputFormat: "Функції валідації викликаються з різними даними",
+    title: "Система управління студентами",
+    description: "Створіть програму для роботи з JSON даними студентів",
+    problemStatement: `Напишіть програму, яка:
+1. Створює JSON файл з даними студентів (ім'я, вік, курс, оцінки)
+2. Додає нового студента до файлу
+3. Знаходить студента за ім'ям
+4. Оновлює оцінки студента
+5. Виводить список всіх студентів з їх середніми оцінками`,
+    inputFormat: "Програма працює з файлом students.json",
     outputFormat: `Приклад виведення:
-Валідація успішна!
-Або:
-Помилка валідації: Неправильний email`,
+Студенти:
+1. Олександр (Python) - середня оцінка: 92.5
+2. Марія (Python) - середня оцінка: 88.0`,
     examples: [
       {
-        input: "email='test@example.com', age=15, password='123456'",
-        output: "Валідація успішна!",
-        explanation: "Всі дані валідні"
+        input: "Додавання студента",
+        output: "Студент додано успішно",
+        explanation: "Програма додає нового студента до JSON файлу"
       }
     ],
     solution: {
-      code: `# Кастомні винятки
-class ValidationError(Exception):
-    """Базовий виняток для валідації"""
-    pass
+      code: `import json
+import os
 
-class InvalidEmailError(ValidationError):
-    pass
+def load_students():
+    if os.path.exists("students.json"):
+        with open("students.json", "r", encoding="utf-8") as file:
+            return json.load(file)
+    return []
 
-class InvalidAgeError(ValidationError):
-    pass
+def save_students(students):
+    with open("students.json", "w", encoding="utf-8") as file:
+        json.dump(students, file, indent=2, ensure_ascii=False)
 
-class InvalidPasswordError(ValidationError):
-    pass
+def add_student(name, age, course, grades):
+    students = load_students()
+    student = {
+        "name": name,
+        "age": age,
+        "course": course,
+        "grades": grades
+    }
+    students.append(student)
+    save_students(students)
+    print(f"Студент {name} додано!")
 
-# Функції валідації
-def validate_email(email):
-    if "@" not in email or "." not in email:
-        raise InvalidEmailError("Неправильний формат email!")
-    return True
+def find_student(name):
+    students = load_students()
+    for student in students:
+        if student["name"] == name:
+            return student
+    return None
 
-def validate_age(age):
-    if not isinstance(age, int):
-        raise InvalidAgeError("Вік має бути числом!")
-    if age < 13 or age > 17:
-        raise InvalidAgeError("Вік має бути від 13 до 17!")
-    return True
+def update_grades(name, new_grades):
+    students = load_students()
+    for student in students:
+        if student["name"] == name:
+            student["grades"].update(new_grades)
+            save_students(students)
+            print(f"Оцінки {name} оновлено!")
+            return True
+    print(f"Студент {name} не знайдено!")
+    return False
 
-def validate_password(password):
-    if len(password) < 6:
-        raise InvalidPasswordError("Пароль має бути мінімум 6 символів!")
-    return True
+def calculate_average(grades):
+    if not grades:
+        return 0
+    return sum(grades.values()) / len(grades)
+
+def list_students():
+    students = load_students()
+    print("Студенти:")
+    for i, student in enumerate(students, 1):
+        avg = calculate_average(student["grades"])
+        print(f"{i}. {student['name']} ({student['course']}) - середня оцінка: {avg:.1f}")
 
 # Використання
-try:
-    validate_email("test@example.com")
-    validate_age(15)
-    validate_password("123456")
-    print("Валідація успішна!")
-except ValidationError as e:
-    print(f"Помилка валідації: {e}")`,
-      explanation: "Рішення демонструє створення ієрархії винятків та їх використання."
+add_student("Олександр", 15, "Python", {"Python": 95, "Math": 90})
+add_student("Марія", 16, "Python", {"Python": 88, "Math": 88})
+list_students()`,
+      explanation: "Рішення демонструє повну роботу з JSON: створення, читання, оновлення, пошук."
     },
     hints: [
-      "Створіть базовий клас ValidationError",
-      "Створіть підкласи для різних типів помилок",
-      "Використовуйте raise для виклику винятків"
+      "Використовуйте json.load() та json.dump() для роботи з файлами",
+      "Перевіряйте існування файлу перед читанням",
+      "Оновлюйте дані в пам'яті, потім зберігайте у файл"
     ],
-    difficulty: "beginner"
+    difficulty: "intermediate"
   },
   
   quiz: {
@@ -266,22 +378,29 @@ except ValidationError as e:
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Від чого має наслідуватися кастомний виняток?",
-        options: ["object", "Exception", "Error", "BaseException"],
+        question: "Яка функція конвертує Python об'єкт в JSON рядок?",
+        options: ["json.load()", "json.dumps()", "json.read()", "json.parse()"],
         correctAnswer: 1,
-        explanation: "Кастомні винятки мають наслідуватися від Exception або його підкласів."
+        explanation: "json.dumps() конвертує Python об'єкт в JSON рядок (string)."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що робить: raise ValueError('Помилка')?",
-        options: ["Обробляє помилку", "Викликає помилку", "Ігнорує помилку", "Логує помилку"],
+        question: "Що виведе: json.loads('{\"age\": 15}')['age']?",
+        options: ["15", "'15'", "Помилку", "None"],
+        correctAnswer: 0,
+        explanation: "json.loads() конвертує JSON рядок в Python словник, тому ['age'] поверне 15 (int)."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Для чого потрібен ensure_ascii=False?",
+        options: ["Швидкість", "Коректне відображення українського тексту", "Безпека", "Стиснення"],
         correctAnswer: 1,
-        explanation: "raise викликає (піднімає) виняток з повідомленням."
+        explanation: "ensure_ascii=False дозволяє коректно зберігати та відображати не-ASCII символи (українські літери)."
       }
     ],
-    timeLimit: 8,
+    timeLimit: 10,
     passingScore: 70
   }
 }
-

@@ -11,7 +11,7 @@ export const lesson3_5 = {
   title: "Модулі та пакети",
   
   learningObjectives: [
-    "Імпортувати модулі",
+    "Імпортувати модулі та використовувати їх функції",
     "Створювати власні модулі",
     "Організовувати код у пакети",
     "Використовувати стандартну бібліотеку Python"
@@ -26,16 +26,15 @@ export const lesson3_5 = {
     sections: [
       {
         title: "Що таке модулі?",
-        content: `Модуль — це файл з розширенням .py, який містить код Python.
+        content: `Модуль — це файл з розширенням .py, який містить Python код.
 
 **Чому використовувати модулі?**
-- **Організація коду** — розділення на логічні частини
-- **Повторне використання** — можна використовувати в різних проектах
-- **Уникання конфліктів** — кожен модуль має свою область видимості
-- **Легше підтримувати** — зміни в одному місці
+- **Організація коду** — розбиваємо великі програми на частини
+- **Повторне використання** — один раз написав, використовуй скрізь
+- **Приховування деталей** — показуємо тільки те, що потрібно
+- **Співпраця** — різні люди можуть працювати над різними модулями
 
 **Створення модуля:**
-Створіть файл \`math_utils.py\`:
 \`\`\`python
 # math_utils.py
 def add(a, b):
@@ -45,44 +44,121 @@ def multiply(a, b):
     return a * b
 
 PI = 3.14159
-\`\`\``
-      },
-      {
-        title: "Імпортування модулів",
-        content: `**Різні способи імпорту:**
-
-\`\`\`python
-# Імпорт всього модуля
-import math
-result = math.sqrt(16)  # 4.0
-
-# Імпорт конкретної функції
-from math import sqrt
-result = sqrt(16)  # 4.0
-
-# Імпорт зі зміною імені
-from math import sqrt as square_root
-result = square_root(16)
-
-# Імпорт кількох функцій
-from math import sqrt, pi, sin
-
-# Імпорт всього (не рекомендується)
-from math import *
-result = sqrt(16)  # Працює, але не рекомендується
 \`\`\`
 
-**Власні модулі:**
+**Використання модуля:**
 \`\`\`python
-# У файлі main.py
+# main.py
 import math_utils
 
 result = math_utils.add(5, 3)
 print(result)  # 8
+\`\`\``
+      },
+      {
+        title: "Різні способи імпорту",
+        content: `**1. Повний імпорт:**
+\`\`\`python
+import math
+result = math.sqrt(16)  # 4.0
+\`\`\`
+
+**2. Імпорт з псевдонімом:**
+\`\`\`python
+import math as m
+result = m.sqrt(16)  # 4.0
+\`\`\`
+
+**3. Імпорт конкретних функцій:**
+\`\`\`python
+from math import sqrt, pi
+result = sqrt(16)  # 4.0 (без math.)
+print(pi)  # 3.14159...
+\`\`\`
+
+**4. Імпорт всього (не рекомендується):**
+\`\`\`python
+from math import *
+result = sqrt(16)  # Працює, але не рекомендується
+\`\`\`
+
+**5. Імпорт з псевдонімом функції:**
+\`\`\`python
+from math import sqrt as квадратний_корінь
+result = квадратний_корінь(16)
+\`\`\``
+      },
+      {
+        title: "Створення власних модулів",
+        content: `**Структура проекту:**
+\`\`\`
+my_project/
+├── main.py
+├── utils.py
+└── helpers.py
+\`\`\`
+
+**utils.py:**
+\`\`\`python
+# utils.py
+def greet(name):
+    return f"Привіт, {name}!"
+
+def calculate_age(birth_year):
+    return 2025 - birth_year
+\`\`\`
+
+**main.py:**
+\`\`\`python
+# main.py
+from utils import greet, calculate_age
+
+name = "Олександр"
+print(greet(name))
+print(f"Вік: {calculate_age(2010)}")
+\`\`\`
+
+**Перевірка, чи модуль запускається напряму:**
+\`\`\`python
+# utils.py
+def greet(name):
+    return f"Привіт, {name}!"
+
+if __name__ == "__main__":
+    # Цей код виконається тільки якщо файл запущено напряму
+    print("Модуль utils запущено напряму")
+    print(greet("Тест"))
+\`\`\``
+      },
+      {
+        title: "Пакети (Packages)",
+        content: `Пакет — це папка, яка містить модулі та файл \`__init__.py\`.
+
+**Структура пакету:**
+\`\`\`
+my_package/
+├── __init__.py
+├── module1.py
+└── module2.py
+\`\`\`
+
+**__init__.py** (може бути порожнім):
+\`\`\`python
+# __init__.py
+from .module1 import function1
+from .module2 import function2
+
+__all__ = ['function1', 'function2']
+\`\`\`
+
+**Використання пакету:**
+\`\`\`python
+# З пакету
+from my_package import function1
+from my_package.module2 import function2
 
 # Або
-from math_utils import add, multiply
-result = add(5, 3)
+import my_package.module1
 \`\`\``
       },
       {
@@ -94,19 +170,20 @@ result = add(5, 3)
 import math
 print(math.sqrt(16))      # 4.0
 print(math.pi)            # 3.14159...
-print(math.sin(math.pi/2))  # 1.0
+print(math.ceil(4.3))     # 5
+print(math.floor(4.7))    # 4
 \`\`\`
 
 **random** — випадкові числа:
 \`\`\`python
 import random
-print(random.randint(1, 10))  # Випадкове число від 1 до 10
-print(random.choice(["a", "b", "c"]))  # Випадковий елемент
+print(random.randint(1, 10))      # Випадкове число від 1 до 10
+print(random.choice(['a', 'b', 'c']))  # Випадковий елемент
 \`\`\`
 
 **datetime** — робота з датами:
 \`\`\`python
-from datetime import datetime
+from datetime import datetime, date
 now = datetime.now()
 print(now.strftime("%Y-%m-%d %H:%M:%S"))
 \`\`\`
@@ -115,41 +192,13 @@ print(now.strftime("%Y-%m-%d %H:%M:%S"))
 \`\`\`python
 import os
 print(os.getcwd())  # Поточна директорія
-\`\`\``
-      },
-      {
-        title: "Пакети",
-        content: `Пакет — це директорія, яка містить модулі та файл \`__init__.py\`.
-
-**Структура пакету:**
-\`\`\`
-my_package/
-    __init__.py
-    module1.py
-    module2.py
-    subpackage/
-        __init__.py
-        module3.py
 \`\`\`
 
-**Використання:**
+**json** — робота з JSON (вивчимо детальніше пізніше):
 \`\`\`python
-# Імпорт модуля з пакету
-from my_package import module1
-from my_package.module2 import function_name
-
-# Імпорт з підпакету
-from my_package.subpackage import module3
-\`\`\`
-
-**Файл __init__.py:**
-Може бути порожнім або містити код ініціалізації пакету:
-\`\`\`python
-# __init__.py
-from .module1 import function1
-from .module2 import function2
-
-__all__ = ['function1', 'function2']
+import json
+data = {"name": "Олександр", "age": 15}
+json_str = json.dumps(data)
 \`\`\``
       }
     ]
@@ -158,19 +207,23 @@ __all__ = ['function1', 'function2']
   codeExamples: [
     {
       title: "Приклад 1: Створення та використання модуля",
-      code: `# Файл: calculator.py
+      code: `# calculator.py
 def add(a, b):
     return a + b
 
 def subtract(a, b):
     return a - b
 
-# Файл: main.py
+def multiply(a, b):
+    return a * b
+
+# main.py
 import calculator
 
 result1 = calculator.add(10, 5)
-result2 = calculator.subtract(10, 5)
-print(f"Додавання: {result1}, Віднімання: {result2}")`,
+result2 = calculator.multiply(3, 4)
+print(f"10 + 5 = {result1}")
+print(f"3 * 4 = {result2}")`,
       explanation: "Демонструє створення власного модуля та його використання."
     },
     {
@@ -184,45 +237,40 @@ print(f"Квадратний корінь з 16: {math.sqrt(16)}")
 print(f"Число π: {math.pi:.2f}")
 
 # Випадкові числа
-random_num = random.randint(1, 100)
-print(f"Випадкове число: {random_num}")
+print(f"Випадкове число: {random.randint(1, 100)}")
+print(f"Випадковий вибір: {random.choice(['яблуко', 'банан', 'апельсин'])}")
 
 # Дата та час
 now = datetime.now()
-print(f"Поточна дата: {now.strftime('%Y-%m-%d %H:%M:%S')}")`,
+print(f"Поточний час: {now.strftime('%Y-%m-%d %H:%M:%S')}")`,
       explanation: "Показує використання різних модулів стандартної бібліотеки."
     },
     {
-      title: "Приклад 3: Створення пакету",
-      code: `# Структура:
-# my_utils/
-#     __init__.py
-#     math_utils.py
-#     string_utils.py
+      title: "Приклад 3: Різні способи імпорту",
+      code: `# Різні способи імпорту math
+import math
+result1 = math.sqrt(16)
 
-# math_utils.py
-def square(x):
-    return x ** 2
+import math as m
+result2 = m.sqrt(16)
 
-# string_utils.py
-def uppercase(text):
-    return text.upper()
+from math import sqrt
+result3 = sqrt(16)
 
-# Використання
-from my_utils.math_utils import square
-from my_utils.string_utils import uppercase
+from math import sqrt as квадратний_корінь
+result4 = квадратний_корінь(16)
 
-print(square(5))           # 25
-print(uppercase("hello"))  # HELLO`,
-      explanation: "Демонструє створення та використання пакету."
+# Всі дають однаковий результат
+print(result1, result2, result3, result4)  # 4.0 4.0 4.0 4.0`,
+      explanation: "Демонструє різні способи імпорту модулів."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Імпорт модуля, який не існує",
+      mistake: "Імпорт модуля, якого немає",
       explanation: "Якщо модуль не знайдено, виникне ImportError.",
-      correctApproach: "Переконайтеся, що файл модуля існує та знаходиться в правильній директорії."
+      correctApproach: "Переконайтеся, що модуль існує та знаходиться в правильній директорії."
     },
     {
       mistake: "Циклічні імпорти",
@@ -232,96 +280,81 @@ print(uppercase("hello"))  # HELLO`,
     {
       mistake: "Використання from module import *",
       explanation: "Це імпортує все, що може призвести до конфліктів імен.",
-      correctApproach: "Імпортуйте конкретні функції або використовуйте import module."
+      correctApproach: "Імпортуйте конкретні функції: from module import function1, function2"
     }
   ],
   
   summary: `На цьому уроці ми вивчили:
 
-1. **Модулі** — файли .py з кодом Python
-2. **Імпортування** — import, from ... import
-3. **Стандартна бібліотека** — math, random, datetime, os та інші
-4. **Пакети** — директорії з модулями та __init__.py
+1. **Модулі** — файли .py з кодом
+2. **Імпорт** — різні способи імпортування модулів
+3. **Власні модулі** — створення та використання
+4. **Пакети** — організація модулів у папки
+5. **Стандартна бібліотека** — math, random, datetime, os, json
 
-Модулі та пакети — основа організації великих проектів!`,
+Модулі допомагають організувати код та робити його багаторазовим!`,
   
   practiceTask: {
-    title: "Створення власної бібліотеки",
+    title: "Створення бібліотеки утиліт",
     description: "Створіть власний модуль з корисними функціями",
     problemStatement: `Створіть модуль utils.py з функціями:
-1. calculate_statistics(numbers) — обчислює суму, середнє, макс, мін
-2. format_text(text, style="normal") — форматує текст (upper, lower, title)
-3. is_prime(number) — перевіряє, чи число просте
-4. generate_password(length=8) — генерує випадковий пароль
+1. format_name(first, last) — форматує ім'я "Ім'я Прізвище"
+2. calculate_discount(price, percent) — обчислює ціну зі знижкою
+3. is_valid_email(email) — перевіряє базову валідацію email
+4. generate_id(prefix="ID") — генерує унікальний ID
 
-Потім створіть main.py, який імпортує та використовує ці функції`,
+Потім створіть main.py, який імпортує та використовує ці функції.`,
     inputFormat: "Створіть два файли: utils.py та main.py",
     outputFormat: `Приклад виведення:
-Статистика: Сума=15, Середнє=5.0, Макс=10, Мін=1
-Текст: HELLO WORLD
-Число 7 просте: True
-Пароль: aB3dE5fG`,
+Ім'я: Олександр Петренко
+Ціна зі знижкою: 85.0
+Email валідний: True
+ID: ID-001`,
     examples: [
       {
-        input: "numbers = [1, 3, 5, 7, 10]",
-        output: `Сума: 26, Середнє: 5.2, Макс: 10, Мін: 1`,
-        explanation: "Модуль містить функції для обробки даних"
+        input: "format_name('Олександр', 'Петренко')",
+        output: "Олександр Петренко",
+        explanation: "Функція форматує повне ім'я"
       }
     ],
     solution: {
       code: `# utils.py
 import random
-import string
 
-def calculate_statistics(numbers):
-    if not numbers:
-        return None
-    return {
-        "сума": sum(numbers),
-        "середнє": sum(numbers) / len(numbers),
-        "макс": max(numbers),
-        "мін": min(numbers)
-    }
+def format_name(first, last):
+    return f"{first} {last}"
 
-def format_text(text, style="normal"):
-    if style == "upper":
-        return text.upper()
-    elif style == "lower":
-        return text.lower()
-    elif style == "title":
-        return text.title()
-    return text
+def calculate_discount(price, percent):
+    discount = price * (percent / 100)
+    return price - discount
 
-def is_prime(number):
-    if number < 2:
-        return False
-    for i in range(2, int(number ** 0.5) + 1):
-        if number % i == 0:
-            return False
-    return True
+def is_valid_email(email):
+    return "@" in email and "." in email.split("@")[1]
 
-def generate_password(length=8):
-    chars = string.ascii_letters + string.digits
-    return ''.join(random.choice(chars) for _ in range(length))
+def generate_id(prefix="ID"):
+    number = random.randint(1, 999)
+    return f"{prefix}-{number:03d}"
 
 # main.py
-from utils import calculate_statistics, format_text, is_prime, generate_password
+from utils import format_name, calculate_discount, is_valid_email, generate_id
 
-numbers = [1, 3, 5, 7, 10]
-stats = calculate_statistics(numbers)
-print(f"Статистика: {stats}")
+name = format_name("Олександр", "Петренко")
+print(f"Ім'я: {name}")
 
-text = format_text("hello world", "upper")
-print(f"Текст: {text}")
+price = calculate_discount(100, 15)
+print(f"Ціна зі знижкою: {price}")
 
-print(f"Число 7 просте: {is_prime(7)}")
-print(f"Пароль: {generate_password(8)}")`,
-      explanation: "Рішення демонструє створення модуля з корисними функціями та їх використання."
+valid = is_valid_email("student@example.com")
+print(f"Email валідний: {valid}")
+
+id = generate_id()
+print(f"ID: {id}")`,
+      explanation: "Рішення демонструє створення модуля з функціями та їх використання в іншому файлі."
     },
     hints: [
-      "Створіть файл utils.py з функціями",
-      "Використовуйте import для стандартних модулів (random, string)",
-      "У main.py імпортуйте функції з utils"
+      "Створіть utils.py з функціями",
+      "Використовуйте from utils import ... для імпорту",
+      "Використовуйте random для генерації ID"
     ],
     difficulty: "beginner"
   },
@@ -331,30 +364,29 @@ print(f"Пароль: {generate_password(8)}")`,
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Як імпортувати функцію sqrt з модуля math?",
-        options: ["import sqrt from math", "from math import sqrt", "import math.sqrt", "math.import(sqrt)"],
+        question: "Що таке модуль в Python?",
+        options: ["Функція", "Файл .py з кодом", "Змінна", "Клас"],
         correctAnswer: 1,
-        explanation: "Правильний синтаксис: from math import sqrt"
+        explanation: "Модуль — це файл з розширенням .py, який містить Python код."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе: import math; print(math.sqrt(9))?",
-        options: ["3", "3.0", "9", "Помилку"],
-        correctAnswer: 1,
-        explanation: "math.sqrt() завжди повертає float, тому 3.0."
+        question: "Що виведе: from math import sqrt; print(sqrt(16))?",
+        options: ["4.0", "4", "math.sqrt(16)", "Помилку"],
+        correctAnswer: 0,
+        explanation: "from math import sqrt дозволяє використовувати sqrt без math., результат 4.0 (float)."
       },
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що має містити директорія, щоб бути пакетом?",
-        options: ["package.py", "__init__.py", "init.py", "Нічого"],
+        question: "Який файл потрібен для створення пакету?",
+        options: ["package.py", "__init__.py", "main.py", "index.py"],
         correctAnswer: 1,
-        explanation: "Пакет має містити файл __init__.py (може бути порожнім)."
+        explanation: "__init__.py (може бути порожнім) вказує Python, що папка є пакетом."
       }
     ],
     timeLimit: 10,
     passingScore: 70
   }
 }
-
