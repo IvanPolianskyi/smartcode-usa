@@ -98,10 +98,10 @@ export default function HomeClient() {
         <Analytics />
         <Visit />
         <KnowledgeTestSection />
+        <CoursesSection />
         <Testimonials />
         <ProjectsShowcase />
         <HeroSection />
-        <CoursesSection />
         <FAQ />
       </div>
     </div>

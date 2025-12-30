@@ -899,6 +899,35 @@
   opacity: 0.9;
 }
 
+.nextLessonButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 1rem 2rem;
+  background: var(--accent-green);
+  color: white;
+  text-decoration: none;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 1.125rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.nextLessonButton:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.completionMessage {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 0.5rem;
+  color: var(--accent-green);
+  font-weight: 600;
+}
+
 /* No Content */
 .noContent {
   text-align: center;

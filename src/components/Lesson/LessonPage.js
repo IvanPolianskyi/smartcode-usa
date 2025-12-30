@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { 
   ArrowLeft, 
   Play, 
@@ -17,6 +18,9 @@ import {
   Loader2,
   Terminal
 } from 'lucide-react'
+import { updateProgress } from '@/lib/authClient'
+import { pythonCurriculum } from '@/lib/pythonCurriculum'
+import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { lesson1_1 } from '@/lib/lessonContent/lesson-1-1'
 import { lesson1_2 } from '@/lib/lessonContent/lesson-1-2'
 import { lesson1_3 } from '@/lib/lessonContent/lesson-1-3'
@@ -55,7 +59,6 @@ import { lesson7_1 } from '@/lib/lessonContent/lesson-7-1'
 import { lesson7_2 } from '@/lib/lessonContent/lesson-7-2'
 import { lesson7_3 } from '@/lib/lessonContent/lesson-7-3'
 import { lesson7_4 } from '@/lib/lessonContent/lesson-7-4'
-import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import styles from './LessonPage.module.css'
 
 // Map lesson IDs to content
@@ -117,15 +120,45 @@ const markdownToHtml = (text) => {
       .replace(/'/g, '&#039;')
   }
   
-  // Зберігаємо код блоки перед обробкою
+  // Нормалізуємо відступи - видаляємо зайві порожні рядки (більше 2 підряд)
+  html = html.replace(/\n{3,}/g, '\n\n')
+  
+  // Спочатку розекрановуємо backticks (замінюємо \`\`\` на ```)
+  html = html.replace(/\\`\\`\\`/g, '```')
+  // Також розекрановуємо одинарні backticks для inline коду
+  html = html.replace(/\\`/g, '`')
+  
+  // Зберігаємо код блоки перед обробкою (підтримуємо різні мови)
   const codeBlockPlaceholders = []
-  html = html.replace(/```python\n([\s\S]*?)```/g, (match, code) => {
-    const placeholder = `__CODE_BLOCK_${codeBlockPlaceholders.length}__`
-    codeBlockPlaceholders.push({
-      placeholder,
-      html: `<pre class="code-block"><code>${escapeHtml(code.trim())}</code></pre>`
-    })
-    return placeholder
+  // Обробляємо код блоки з мовою: ```python, ```bash, ```javascript тощо
+  // Спочатку пробуємо знайти код блоки з мовою
+  html = html.replace(/([ \t]*)```(\w+)\s*\n([\s\S]*?)```/g, (match, indent, lang, code) => {
+    const placeholder = `__CODEBLOCK${codeBlockPlaceholders.length}__`
+    const language = lang.trim()
+    const codeContent = code.trim()
+    if (codeContent) {
+      codeBlockPlaceholders.push({
+        placeholder,
+        html: `<pre class="code-block"><code class="language-${language}">${escapeHtml(codeContent)}</code></pre>`
+      })
+      // Повертаємо плейсхолдер на новому рядку, щоб він не обгортався в <p>
+      return '\n' + placeholder + '\n'
+    }
+    return match // Якщо код порожній, залишаємо як є
+  })
+  // Потім знаходимо код блоки без мови
+  html = html.replace(/([ \t]*)```\s*\n([\s\S]*?)```/g, (match, indent, code) => {
+    const placeholder = `__CODEBLOCK${codeBlockPlaceholders.length}__`
+    const codeContent = code.trim()
+    if (codeContent) {
+      codeBlockPlaceholders.push({
+        placeholder,
+        html: `<pre class="code-block"><code class="language-text">${escapeHtml(codeContent)}</code></pre>`
+      })
+      // Повертаємо плейсхолдер на новому рядку, щоб він не обгортався в <p>
+      return '\n' + placeholder + '\n'
+    }
+    return match // Якщо код порожній, залишаємо як є
   })
   
   // Обробляємо inline код (тільки якщо не всередині код блоку)
@@ -140,7 +173,7 @@ const markdownToHtml = (text) => {
   html = html.replace(/(?<!\*)\*([^*\n]+?)\*(?!\*)/g, '<em>$1</em>')
   html = html.replace(/(?<!_)_([^_\n]+?)_(?!_)/g, '<em>$1</em>')
   
-  // Обробляємо нумеровані списки
+  // Обробляємо нумеровані списки та марковані списки
   const lines = html.split('\n')
   let inOrderedList = false
   let inUnorderedList = false
@@ -150,6 +183,9 @@ const markdownToHtml = (text) => {
     const line = lines[i]
     const orderedMatch = line.match(/^\d+\.\s+(.+)$/)
     const unorderedMatch = line.match(/^[-*+]\s+(.+)$/)
+    
+    // Перевіряємо, чи це плейсхолдер код блоку - не обгортаємо його в <p>
+    const isCodeBlockPlaceholder = /__CODEBLOCK\d+__/.test(line)
     
     if (orderedMatch) {
       if (!inOrderedList) {
@@ -171,6 +207,19 @@ const markdownToHtml = (text) => {
         inUnorderedList = true
       }
       result.push(`<li>${unorderedMatch[1]}</li>`)
+    } else if (isCodeBlockPlaceholder) {
+      // Закриваємо відкриті списки перед код блоком
+      if (inOrderedList) {
+        result.push('</ol>')
+        inOrderedList = false
+      }
+      if (inUnorderedList) {
+        result.push('</ul>')
+        inUnorderedList = false
+      }
+      // Додаємо плейсхолдер без обгортання в <p>, прибираємо зайві пробіли
+      const cleanPlaceholder = line.trim()
+      result.push(cleanPlaceholder)
     } else {
       if (inOrderedList) {
         result.push('</ol>')
@@ -180,6 +229,7 @@ const markdownToHtml = (text) => {
         result.push('</ul>')
         inUnorderedList = false
       }
+      // Пропускаємо порожні рядки (вони вже нормалізовані)
       if (line.trim()) {
         result.push(`<p>${line}</p>`)
       } else {
@@ -194,10 +244,26 @@ const markdownToHtml = (text) => {
   
   html = result.join('')
   
-  // Відновлюємо код блоки
+  // Відновлюємо код блоки (важливо робити це після всіх інших обробок)
   codeBlockPlaceholders.forEach(({ placeholder, html: blockHtml }) => {
-    html = html.replace(placeholder, blockHtml)
+    // Використовуємо глобальну заміну для всіх входжень
+    // Замінюємо плейсхолдер навіть якщо він обгорнутий в <p> теги або має пробіли навколо
+    const escapedPlaceholder = placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    // Знаходимо плейсхолдер в будь-якому контексті (в <p>, з пробілами, на окремих рядках)
+    // Спочатку пробуємо знайти в <p> тегах
+    let regex = new RegExp(`<p>\\s*${escapedPlaceholder}\\s*</p>`, 'g')
+    html = html.replace(regex, blockHtml)
+    // Потім знаходимо без <p> тегів (може бути з пробілами)
+    regex = new RegExp(`\\s*${escapedPlaceholder}\\s*`, 'g')
+    html = html.replace(regex, blockHtml)
+    // Нарешті, знаходимо точний збіг
+    regex = new RegExp(escapedPlaceholder, 'g')
+    html = html.replace(regex, blockHtml)
   })
+  
+  // Видаляємо <p> теги навколо код блоків (якщо вони там опинилися)
+  html = html.replace(/<p>\s*(<pre class="code-block">[\s\S]*?<\/pre>)\s*<\/p>/g, '$1')
+  html = html.replace(/<p>\s*(<pre[\s\S]*?<\/pre>)\s*<\/p>/g, '$1')
   
   // Обробляємо одинарні переноси всередині параграфів
   html = html.replace(/<p>([^<]+)<br \/>([^<]+)<\/p>/g, '<p>$1<br />$2</p>')
@@ -207,10 +273,18 @@ const markdownToHtml = (text) => {
   html = html.replace(/<p><br \/><\/p>/g, '')
   html = html.replace(/(<br \/>)+/g, '<br />')
   
+  // Видаляємо залишки плейсхолдерів (на випадок якщо щось пішло не так)
+  html = html.replace(/__CODEBLOCK\d+__/g, '')
+  
+  // Видаляємо зайві порожні рядки навколо код блоків
+  html = html.replace(/\n\s*(<pre class="code-block">)/g, '\n$1')
+  html = html.replace(/(<\/pre>)\s*\n/g, '$1\n')
+  
   return html
 }
 
 const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", userProgress = null }) => {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState('theory')
   const [quizAnswers, setQuizAnswers] = useState({})
   const [quizSubmitted, setQuizSubmitted] = useState(false)
@@ -224,17 +298,40 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     error: null,
     success: null
   })
+  const [isSaving, setIsSaving] = useState(false)
   
   // Get lesson content
   const lesson = lessonContentMap[lessonId]
   
+  // Get curriculum based on courseId
+  const getCurriculum = () => {
+    if (courseId === "web-development") {
+      return webDevCurriculum
+    }
+    return pythonCurriculum
+  }
+  
+  const curriculum = getCurriculum()
+  
   // If lesson not found in content map, try to get from curriculum
-  const curriculumLesson = pythonCurriculum.modules
+  const curriculumLesson = curriculum.modules
     .flatMap(m => m.lessons)
     .find(l => l.lessonId === lessonId)
   
   const isEnrolled = userProgress !== null
   const isCompleted = userProgress?.completedLessons?.includes(lessonId) || false
+  
+  // Find next lesson
+  const getNextLesson = () => {
+    const allLessons = curriculum.modules.flatMap(m => m.lessons)
+    const currentIndex = allLessons.findIndex(l => l.lessonId === lessonId)
+    if (currentIndex >= 0 && currentIndex < allLessons.length - 1) {
+      return allLessons[currentIndex + 1]
+    }
+    return null
+  }
+  
+  const nextLesson = getNextLesson()
   
   useEffect(() => {
     setIsLoaded(true)
@@ -262,7 +359,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     summary: ""
   }
   
-  const handleQuizSubmit = () => {
+  const handleQuizSubmit = async () => {
     if (!fullLesson.quiz || !fullLesson.quiz.questions) return
     
     let correct = 0
@@ -275,6 +372,31 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     const score = Math.round((correct / fullLesson.quiz.questions.length) * 100)
     setQuizScore(score)
     setQuizSubmitted(true)
+    
+    // Save quiz result and complete lesson if passed
+    if (isEnrolled && score >= 60) {
+      setIsSaving(true)
+      try {
+        await updateProgress(courseId, {
+          action: 'completeQuiz',
+          lessonId,
+          quizScore: score
+        })
+        
+        // Also mark lesson as completed
+        await updateProgress(courseId, {
+          action: 'completeLesson',
+          lessonId
+        })
+        
+        // Refresh the page to update progress
+        router.refresh()
+      } catch (error) {
+        console.error('Error saving progress:', error)
+      } finally {
+        setIsSaving(false)
+      }
+    }
   }
   
   const handleQuizAnswer = (questionId, answerIndex) => {
@@ -285,7 +407,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     }))
   }
   
-  const isQuizPassed = quizScore !== null && quizScore >= (fullLesson.quiz?.passingScore || 70)
+  const isQuizPassed = quizScore !== null && quizScore >= (fullLesson.quiz?.passingScore || 60)
 
   const handleRunCode = async () => {
     if (!userCode.trim()) {
@@ -667,7 +789,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                   </h3>
                   <p className={styles.quizInfo}>
                     {fullLesson.quiz.questions.length} питань • 
-                    Мінімальний бал для проходження: {fullLesson.quiz.passingScore}%
+                    Мінімальний бал для проходження: 60%
                     {fullLesson.quiz.timeLimit > 0 && ` • Час: ${fullLesson.quiz.timeLimit} хв`}
                   </p>
                 </div>
@@ -776,8 +898,22 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                         </div>
                         {!isQuizPassed && (
                           <p className={styles.retakeInfo}>
-                            Мінімальний бал: {fullLesson.quiz.passingScore}%. 
+                            Мінімальний бал: 60%. 
                             Спробуйте ще раз!
+                          </p>
+                        )}
+                        {isQuizPassed && nextLesson && (
+                          <Link
+                            href={`/courses/${courseId}/lessons/${nextLesson.lessonId}`}
+                            className={styles.nextLessonButton}
+                          >
+                            <ChevronRight className="w-5 h-5" />
+                            Перейти до наступного уроку: {nextLesson.title}
+                          </Link>
+                        )}
+                        {isQuizPassed && !nextLesson && (
+                          <p className={styles.completionMessage}>
+                            Вітаємо! Ви завершили всі уроки цього курсу!
                           </p>
                         )}
                       </div>
