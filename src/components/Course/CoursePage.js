@@ -19,6 +19,7 @@ import {
   Globe
 } from 'lucide-react'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
+import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { enrollInCourse, getCurrentUser, getUserProgress } from '@/lib/authClient'
 import styles from './CoursePage.module.css'
 
@@ -30,7 +31,15 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   const [isEnrolling, setIsEnrolling] = useState(false)
   const [user, setUser] = useState(null)
   
-  const course = pythonCurriculum
+  // Get the appropriate curriculum based on courseId
+  const getCurriculum = () => {
+    if (courseId === "web-development") {
+      return webDevCurriculum
+    }
+    return pythonCurriculum
+  }
+  
+  const course = getCurriculum()
   const isEnrolled = userProgress !== null
   const progress = userProgress?.overallProgress || 0
   
@@ -105,7 +114,9 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
     return badges[level] || badges["Beginner"]
   }
   
-  const levelBadge = getLevelBadge("Beginner")
+  const courseLevel = courseId === "web-development" ? "Intermediate" : "Beginner"
+  const courseAge = courseId === "web-development" ? "12-18" : "13-17"
+  const levelBadge = getLevelBadge(courseLevel)
   
   return (
     <div className={styles.container}>
@@ -130,14 +141,17 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                   {levelBadge.text}
                 </span>
                 <span className={styles.ageBadge}>
-                  Вік: 13-17
+                  Вік: {courseAge}
                 </span>
               </div>
               
               <h1 className={styles.title}>{course.title}</h1>
               
               <p className={styles.valueProposition}>
-                Навчись створювати реальні проекти на Python та отримай навички, необхідні для початку кар'єри в IT.
+                {courseId === "web-development" 
+                  ? "Створюй сучасні веб-додатки з нуля. Навчись HTML, CSS, JavaScript, React та Node.js для повноцінної веб-розробки."
+                  : "Навчись створювати реальні проекти на Python та отримай навички, необхідні для початку кар'єри в IT."
+                }
               </p>
             </div>
             
@@ -162,22 +176,28 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
             <div className={styles.statItem}>
               <Clock className="w-5 h-5" />
               <div>
-                <div className={styles.statValue}>24 тижні</div>
+                <div className={styles.statValue}>
+                  {course.modules.reduce((sum, m) => sum + m.duration.weeks, 0)} тижнів
+                </div>
                 <div className={styles.statLabel}>Тривалість</div>
               </div>
             </div>
             <div className={styles.statItem}>
               <BookOpen className="w-5 h-5" />
               <div>
-                <div className={styles.statValue}>48 уроків</div>
+                <div className={styles.statValue}>
+                  {course.modules.reduce((sum, m) => sum + m.lessons.length, 0)} уроків
+                </div>
                 <div className={styles.statLabel}>Матеріалів</div>
               </div>
             </div>
             <div className={styles.statItem}>
               <Target className="w-5 h-5" />
               <div>
-                <div className={styles.statValue}>9 навичок</div>
-                <div className={styles.statLabel}>Навчишся</div>
+                <div className={styles.statValue}>
+                  {course.modules.length} модулів
+                </div>
+                <div className={styles.statLabel}>Модулів</div>
               </div>
             </div>
             <div className={styles.statItem}>
@@ -270,7 +290,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
               Сертифікат
             </h3>
             <p className={styles.certificateInfo}>
-              Після успішного завершення всіх модулів та фінального проекту ти отримаєш міжнародний сертифікат SmartCode Academy, який підтверджує твої навички Python розробника.
+              Після успішного завершення всіх модулів та фінального проекту ти отримаєш міжнародний сертифікат SmartCode Academy, який підтверджує твої навички {courseId === "web-development" ? "веб-розробника" : "Python розробника"}.
             </p>
           </div>
         </div>
@@ -280,7 +300,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
       <section className={styles.roadmapSection}>
         <h2 className={styles.sectionTitle}>Програма курсу</h2>
         <p className={styles.sectionDescription}>
-          7 модулів, 48 уроків — від основ до створення повноцінних веб-додатків
+          {course.modules.length} модулів, {course.modules.reduce((sum, m) => sum + m.lessons.length, 0)} уроків — від основ до створення повноцінних проектів
         </p>
         
         <div className={styles.modulesList}>
