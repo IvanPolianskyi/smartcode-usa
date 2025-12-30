@@ -209,11 +209,12 @@ const Header = () => {
     }
 
 	const navItems = [
-		{ label: 'Курси', dropdown: true },
-		{ label: 'Тест знань', href: '/knowledge-test' },
+		{ label: 'Предмети', dropdown: true },
+		{ label: 'Статистика', href: '/#statistics' },
+		{ label: 'Викладачі', href: '/#teachers' },
+		{ label: 'Тариф', href: '/#tariff' },
 		{ label: 'Відгуки', href: '/#testimonials' },
-		{ label: 'Контакти', href: '/#Contactform' },
-		{label: "Проєкти з учнями", href: "/projects"}
+		{ label: 'Блог', href: '/#blog' },
 	]
 	
 	const courses = [
@@ -285,7 +286,7 @@ const Header = () => {
 									<div className={styles.dropdown}>
 										<div className={styles.dropdownContent}>
 											<div className={styles.dropdownHeader}>
-												<h3 className={styles.dropdownTitle}>Наші курси</h3>
+												<h3 className={styles.dropdownTitle}>Наші предмети</h3>
 												<p className={styles.dropdownSubtitle}>
 													Обери свій шлях у програмуванні
 												</p>
@@ -346,9 +347,11 @@ const Header = () => {
 
 					{/* Права частина хедера */}
                     <div className={styles.headerRight}>
-                        <Link href="/#Contactform" className={styles.ctaButton} onClick={handleCtaClick} scroll={false}>
-							<Sparkles size={18} />
-							Безкоштовний урок
+						<Link href="/login" className={styles.loginButton}>
+							Вхід
+						</Link>
+						<Link href="/register" className={styles.registerButton}>
+							Реєстрація
 						</Link>
 						<button
 							className={styles.mobileMenuButton}
@@ -438,16 +441,21 @@ const Header = () => {
 						</div>
 					</div>
 
-					{/* Контакти та CTA */}
+					{/* Кнопки входу та реєстрації */}
 					<div className={styles.mobileMenuFooter}>
                         <Link 
-                            href="/#Contactform" 
-                            className={`${styles.mobileMenuItem} ${styles.mobileCtaButton}`}
-                            onClick={handleCtaClick}
-                            scroll={false}
+                            href="/login" 
+                            className={`${styles.mobileMenuItem} ${styles.mobileLoginButton}`}
+                            onClick={handleMobileMenuClose}
                         >
-							<Sparkles size={20} />
-							Безкоштовний урок
+							Вхід
+						</Link>
+						<Link 
+                            href="/register" 
+                            className={`${styles.mobileMenuItem} ${styles.mobileRegisterButton}`}
+                            onClick={handleMobileMenuClose}
+                        >
+							Реєстрація
 						</Link>
 					</div>
 				</div>

@@ -1,5 +1,6 @@
 'use client'
-import { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo, useCallback, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Code, Gamepad2, Box, Monitor, Phone, CheckCircle, Award, ArrowRight, Loader2, AlertCircle, Lock } from 'lucide-react'
 import styles from './KnowledgeTestClient.module.css'
 import { TEST_QUESTIONS } from '@/lib/testQuestions'
@@ -36,6 +37,7 @@ const DIRECTIONS = [
 ]
 
 export default function KnowledgeTestClient() {
+  const searchParams = useSearchParams()
   const [selectedDirection, setSelectedDirection] = useState(null)
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState({})
@@ -46,6 +48,22 @@ export default function KnowledgeTestClient() {
   const [error, setError] = useState('')
   const [showResults, setShowResults] = useState(false)
   const [testResult, setTestResult] = useState(null)
+
+  // Auto-select direction from URL parameter
+  useEffect(() => {
+    const courseParam = searchParams.get('course')
+    if (courseParam && !selectedDirection) {
+      const direction = DIRECTIONS.find(d => d.id === courseParam)
+      if (direction) {
+        setSelectedDirection(direction)
+        setCurrentQuestion(0)
+        setAnswers({})
+        setShowPhoneForm(false)
+        setShowResults(false)
+        setTestResult(null)
+      }
+    }
+  }, [searchParams, selectedDirection])
 
   const questions = useMemo(() => 
     selectedDirection ? TEST_QUESTIONS[selectedDirection.id] : [], 

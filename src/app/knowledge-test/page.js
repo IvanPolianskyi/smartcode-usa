@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import KnowledgeTestClient from './KnowledgeTestClient'
 
 export const metadata = {
@@ -6,7 +7,11 @@ export const metadata = {
 }
 
 export default function KnowledgeTestPage() {
-  return <KnowledgeTestClient />
+  return (
+    <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Завантаження...</div>}>
+      <KnowledgeTestClient />
+    </Suspense>
+  )
 }
 
 

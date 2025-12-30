@@ -13,15 +13,16 @@ import {
 import styles from './EnhancedCourseCards.module.css'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 // Функція для генерації частинок з урахуванням теми
-// Трохи зменшена кількість частинок для кращої продуктивності
+// Зменшена кількість частинок для кращої продуктивності
 const generateParticles = colors => {
 	const particleTypes = [
-		{ type: 'particle1', count: 12, colors: colors.slice(0, 2) },
-		{ type: 'particle2', count: 9, colors: colors.slice(1, 3) },
-		{ type: 'particle3', count: 8, colors: colors.slice(2, 4) },
-		{ type: 'particle4', count: 10, colors: [colors[3], colors[0]] },
+		{ type: 'particle1', count: 8, colors: colors.slice(0, 2) },
+		{ type: 'particle2', count: 6, colors: colors.slice(1, 3) },
+		{ type: 'particle3', count: 5, colors: colors.slice(2, 4) },
+		{ type: 'particle4', count: 7, colors: [colors[3], colors[0]] },
 	]
 
 	return particleTypes.flatMap(({ type, count, colors }) =>
@@ -60,7 +61,8 @@ const courses = [
 		id: 'python',
 		title: 'PYTHON',
 		subtitle: 'Програмування майбутнього',
-		icon: '🐍',
+		icon: '/python-logo.png',
+		iconType: 'image',
 		description:
 			'Відкрий космос можливостей з найпопулярнішою мовою програмування світу. Створюй ШІ, веб-додатки та аналізуй дані.',
 		features: [
@@ -84,7 +86,8 @@ const courses = [
 		id: 'gamedev',
 		title: 'ГЕЙМДЕВ',
 		subtitle: 'Створення власних ігор за допомогою Unity',
-		icon: '🎮',
+		icon: '/logos/unity.svg',
+		iconType: 'image',
 		description:
 			'Розробляй захоплюючі ігри на Unity. Від простих 2D до складних 3D проектів.',
 		features: ['C#', 'Unity 3D', 'Дизайн персонажів', 'Логіка геймплею'],
@@ -104,7 +107,8 @@ const courses = [
 		id: 'webdev',
 		title: 'ВЕБ-РОЗРОБКА',
 		subtitle: 'Сучасні сайти та додатки',
-		icon: '💻',
+		icon: '/logos/web.svg',
+		iconType: 'image',
 		description:
 			'Створюй адаптивні сайти та веб-додатки з HTML, CSS, JavaScript та React, що вражають своєю швидкістю та дизайном.',
 		features: ['HTML/CSS', 'JavaScript', 'React', 'Node.js'],
@@ -123,7 +127,8 @@ const courses = [
         id: 'roblox',
         title: 'ROBLOX',
         subtitle: 'Створюй ігри у Roblox Studio',
-        icon: '🟥',
+        icon: '/logos/roblox.svg',
+        iconType: 'image',
         description:
             'Поринь у світ геймдизайну та скриптингу з Roblox Studio і Lua. Створюй свої світи, механіки та публікуй ігри.',
         features: ['Roblox Studio', 'Lua', 'Геймдизайн', 'Публікація ігор'],
@@ -166,14 +171,22 @@ const ParticleBackground = React.memo(({ colors }) => {
 
 const EnhancedCourseCards = () => {
     const [hoveredCard, setHoveredCard] = useState(null)
-	const [isVisible, setIsVisible] = useState(false)
+	const [visibleCards, setVisibleCards] = useState([])
 	const router = useRouter()
 	const isMobile = useIsMobile()
 	const cardRefs = useRef([])
 
 	useEffect(() => {
-		const timer = setTimeout(() => setIsVisible(true), 100)
-		return () => clearTimeout(timer)
+		// Послідовна поява карток з плавною анімацією (більша затримка для плавності)
+		const timers = courses.map((_, index) => {
+			return setTimeout(() => {
+				setVisibleCards(prev => [...prev, index])
+			}, 200 + index * 150) // Збільшена затримка для більшої плавності
+		})
+		
+		return () => {
+			timers.forEach(timer => clearTimeout(timer))
+		}
 	}, [])
 
     // На мобільних картки не розгортаються; клік веде одразу на сторінку курсу.
@@ -187,10 +200,12 @@ const EnhancedCourseCards = () => {
 				const isExpanded = expandedCard === index
 				const isOtherExpanded = expandedCard !== null && !isExpanded
 
+				const isCardVisible = visibleCards.includes(index)
+				
                 const cardClasses = [
 					styles.card,
 					styles[course.theme],
-					isVisible ? styles.cardVisible : styles.cardHidden,
+					isCardVisible ? styles.cardVisible : styles.cardHidden,
 					isExpanded ? styles.cardExpanded : '',
 					isOtherExpanded ? styles.cardShrunk : '',
 				].join(' ')
@@ -200,7 +215,10 @@ const EnhancedCourseCards = () => {
 						key={course.id}
 						ref={(el) => (cardRefs.current[index] = el)}
 						className={cardClasses}
-						style={{ transitionDelay: `${index * 100}ms` }}
+						style={{ 
+							'--card-index': index,
+							'--animation-delay': `${index * 120}ms`
+						}}
                         onMouseEnter={() => !isMobile && setHoveredCard(index)}
                         onMouseLeave={() => !isMobile && setHoveredCard(null)}
                         onClick={() => {
@@ -220,73 +238,6 @@ const EnhancedCourseCards = () => {
                         {!isMobile && <div className={styles.cardEffects}></div>}
                         {!isMobile && <ParticleBackground colors={course.particleColors} />}
 
-						{/* --- ІНТЕРАКТИВНІ ЕЛЕМЕНТИ ПРИ НАВЕДЕННІ --- */}
-                        {!isMobile && (
-                        <div
-							className={`${styles.hoverElements} ${
-								isExpanded ? styles.hoverElementsVisible : ''
-							}`}
-						>
-							{course.id === 'python' && (
-								<>
-									<div className={`${styles.hoverElement} ${styles.pythonEl1}`}>
-										⭐
-									</div>
-									<div className={`${styles.hoverElement} ${styles.pythonEl2}`}>
-										🚀
-									</div>
-									<div className={`${styles.hoverElement} ${styles.pythonEl3}`}>
-										🌌
-									</div>
-								</>
-							)}
-							{course.id === 'gamedev' && (
-								<>
-									<div
-										className={`${styles.hoverElement} ${styles.gamedevEl1}`}
-									>
-										🎯
-									</div>
-									<div
-										className={`${styles.hoverElement} ${styles.gamedevEl2}`}
-									>
-										💎
-									</div>
-									<div
-										className={`${styles.hoverElement} ${styles.gamedevEl3}`}
-									>
-										⚡
-									</div>
-								</>
-							)}
-							{course.id === 'webdev' && (
-								<>
-									<div className={`${styles.hoverElement} ${styles.webdevEl1}`}>
-										&lt;div&gt;
-									</div>
-									<div className={`${styles.hoverElement} ${styles.webdevEl2}`}>
-										{'{...}'}
-									</div>
-									<div className={`${styles.hoverElement} ${styles.webdevEl3}`}>
-										⚙️
-									</div>
-								</>
-							)}
-                            {course.id === 'roblox' && (
-                                <>
-                                    <div className={`${styles.hoverElement} ${styles.robloxEl1}`}>
-                                        🧱
-                                    </div>
-                                    <div className={`${styles.hoverElement} ${styles.robloxEl2}`}>
-                                        🎮
-                                    </div>
-                                    <div className={`${styles.hoverElement} ${styles.robloxEl3}`}>
-                                        🛠️
-                                    </div>
-                                </>
-                            )}
-                        </div>
-                        )}
 
 						{/* --- ВЕРХНЯ ЧАСТИНА (БЕЙДЖ, РЕЙТИНГ) --- */}
 						<div className={styles.topSection}>
@@ -306,9 +257,31 @@ const EnhancedCourseCards = () => {
 							<div
 								className={`${styles.centerIcon} ${
 									isExpanded ? styles.centerIconHovered : ''
-								}`}
+								} ${course.iconType === 'image' ? styles.centerIconImage : ''}`}
 							>
-								{course.icon}
+								{course.iconType === 'image' ? (
+									<div className={styles.logoImageContainer}>
+										{course.icon.endsWith('.svg') ? (
+											<img
+												src={course.icon}
+												alt={`${course.title} logo`}
+												className={styles.logoImage}
+											/>
+										) : (
+											<Image
+												src={course.icon}
+												alt={`${course.title} logo`}
+												width={180}
+												height={180}
+												className={styles.logoImage}
+												priority={index < 2}
+												unoptimized={true}
+											/>
+										)}
+									</div>
+								) : (
+									course.icon
+								)}
 							</div>
 						</div>
 
