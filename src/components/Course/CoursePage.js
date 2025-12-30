@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { 
   Clock, 
   Users, 
@@ -18,11 +19,16 @@ import {
   Globe
 } from 'lucide-react'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
+import { enrollInCourse, getCurrentUser, getUserProgress } from '@/lib/authClient'
 import styles from './CoursePage.module.css'
 
-const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress = null }) => {
+const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress: initialProgress = null }) => {
+  const router = useRouter()
   const [isLoaded, setIsLoaded] = useState(false)
   const [expandedModule, setExpandedModule] = useState(null)
+  const [userProgress, setUserProgress] = useState(initialProgress)
+  const [isEnrolling, setIsEnrolling] = useState(false)
+  const [user, setUser] = useState(null)
   
   const course = pythonCurriculum
   const isEnrolled = userProgress !== null
@@ -30,7 +36,40 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   
   useEffect(() => {
     setIsLoaded(true)
-  }, [])
+    // Check if user is logged in
+    getCurrentUser().then(userData => {
+      setUser(userData)
+      // If user is logged in but not enrolled, try to fetch progress
+      if (userData && !userProgress) {
+        getUserProgress(courseId).then(progressData => {
+          if (progressData) {
+            setUserProgress(progressData)
+          }
+        })
+      }
+    })
+  }, [courseId, userProgress])
+  
+  const handleEnroll = async () => {
+    if (!user) {
+      router.push('/login?redirect=' + encodeURIComponent(`/courses/${courseId}`))
+      return
+    }
+    
+    setIsEnrolling(true)
+    try {
+      await enrollInCourse(courseId)
+      // Fetch updated progress
+      const progressData = await getUserProgress(courseId)
+      setUserProgress(progressData)
+      router.refresh()
+    } catch (error) {
+      console.error('Enrollment error:', error)
+      alert('Помилка запису на курс. Спробуйте ще раз.')
+    } finally {
+      setIsEnrolling(false)
+    }
+  }
   
   const getModuleIcon = (moduleOrder) => {
     const icons = [
@@ -349,19 +388,41 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
           <div className={styles.ctaCard}>
             <h2 className={styles.ctaTitle}>Готовий почати навчання?</h2>
             <p className={styles.ctaDescription}>
-              Приєднуйся до курсу та отримай доступ до всіх матеріалів, практичних завдань та підтримки менторів.
+              {user 
+                ? 'Запишись на курс та отримай доступ до всіх матеріалів, практичних завдань та підтримки менторів.'
+                : 'Приєднуйся до курсу та отримай доступ до всіх матеріалів, практичних завдань та підтримки менторів.'
+              }
             </p>
-            <Link 
-              href="/#Contactform"
-              className={styles.ctaButton}
-              onClick={(e) => {
-                e.preventDefault()
-                window.dispatchEvent(new Event('openContactModal'))
-              }}
-            >
-              <Rocket className="w-5 h-5" />
-              Купити курс
-            </Link>
+            {user ? (
+              <button
+                onClick={handleEnroll}
+                disabled={isEnrolling}
+                className={styles.ctaButton}
+              >
+                <Rocket className="w-5 h-5" />
+                {isEnrolling ? 'Записуємось...' : 'Записатись на курс'}
+              </button>
+            ) : (
+              <>
+                <Link 
+                  href={`/login?redirect=${encodeURIComponent(`/courses/${courseId}`)}`}
+                  className={styles.ctaButton}
+                >
+                  <Rocket className="w-5 h-5" />
+                  Увійти та записатись
+                </Link>
+                <Link 
+                  href="/#Contactform"
+                  className={styles.ctaButtonSecondary}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    window.dispatchEvent(new Event('openContactModal'))
+                  }}
+                >
+                  Купити курс
+                </Link>
+              </>
+            )}
           </div>
         ) : (
           <div className={styles.ctaCard}>
@@ -370,7 +431,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
               Ти вже на {progress}% шляху до завершення курсу. Продовжуй вивчати нові уроки!
             </p>
             <Link 
-              href={`/courses/${courseId}/lessons`}
+              href={`/courses/${courseId}`}
               className={styles.ctaButton}
             >
               <Play className="w-5 h-5" />
