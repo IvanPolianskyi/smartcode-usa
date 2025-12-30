@@ -27,7 +27,6 @@ import Link from 'next/link'
 import styles from './WebCoursePage.module.css'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import CoursesSection from '@/components/CoursesSection/CoursesSection'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -520,30 +519,108 @@ const WebCoursePage = () => {
 				</div>
 			</section>
 
-			{/* Course Section */}
-			<section className={styles.ctaSection}>
-				<div className={styles.ctaContainer}>
-					<div className={styles.ctaIcon}>
-						<Terminal size={64} />
+			{/* Course Section - WebDev Style */}
+			<section className={styles.courseSection}>
+				<div className={styles.courseSectionBackground}>
+					<div className={styles.courseGradientOrb1}></div>
+					<div className={styles.courseGradientOrb2}></div>
+				</div>
+				
+				<div className={styles.courseSectionContainer}>
+					<div className={styles.courseSectionBadge}>
+						<Code size={20} />
+						<span>Повноцінний курс</span>
 					</div>
-					<h2 className={styles.ctaTitle}>Почни навчання вже сьогодні!</h2>
-					<p className={styles.ctaText}>
-						Повний курс веб-розробки від HTML/CSS до React та Node.js. 7 модулів, 44 уроки, реальні проекти.
+					
+					<h2 className={styles.courseSectionTitle}>
+						Веб-розробка: Від основ до просунутого рівня
+					</h2>
+					
+					<p className={styles.courseSectionDescription}>
+						Структурований курс з чіткою програмою навчання. Від HTML/CSS до створення 
+						повноцінних веб-додатків з React та Node.js. 7 модулів, 44 уроки, реальні проекти та підтримка менторів.
 					</p>
-                        <div className={styles.ctaButtons}>
-                            <Link href="/courses/web-development" className={styles.ctaButton}>
-                                <Rocket size={20} />
-                                Перейти до курсу
-                            </Link>
-                            <Link href="/#Contactform" className={styles.ctaButtonSecondary} onClick={handleCtaClick} scroll={false}>
-                                <Sparkles size={20} />
-                                Безкоштовний урок
-                            </Link>
-                        </div>
+
+					<div className={styles.courseSectionStats}>
+						<div className={styles.courseStat}>
+							<div className={styles.courseStatIcon}>
+								<Layers size={24} />
+							</div>
+							<div className={styles.courseStatContent}>
+								<div className={styles.courseStatValue}>7 модулів</div>
+								<div className={styles.courseStatLabel}>Структурована програма</div>
+							</div>
+						</div>
+						
+						<div className={styles.courseStat}>
+							<div className={styles.courseStatIcon}>
+								<Clock size={24} />
+							</div>
+							<div className={styles.courseStatContent}>
+								<div className={styles.courseStatValue}>44 уроки</div>
+								<div className={styles.courseStatLabel}>Практичні завдання</div>
+							</div>
+						</div>
+						
+						<div className={styles.courseStat}>
+							<div className={styles.courseStatIcon}>
+								<Award size={24} />
+							</div>
+							<div className={styles.courseStatContent}>
+								<div className={styles.courseStatValue}>Сертифікат</div>
+								<div className={styles.courseStatLabel}>Після завершення</div>
+							</div>
+						</div>
+						
+						<div className={styles.courseStat}>
+							<div className={styles.courseStatIcon}>
+								<Users size={24} />
+							</div>
+							<div className={styles.courseStatContent}>
+								<div className={styles.courseStatValue}>22 тижні</div>
+								<div className={styles.courseStatLabel}>Тривалість курсу</div>
+							</div>
+						</div>
+					</div>
+
+					<div className={styles.courseSectionModules}>
+						<h3 className={styles.courseSectionModulesTitle}>Що ти вивчиш:</h3>
+						<div className={styles.courseSectionModulesList}>
+							<div className={styles.courseModuleItem}>
+								<Monitor size={20} />
+								<span>HTML, CSS та адаптивний дизайн</span>
+							</div>
+							<div className={styles.courseModuleItem}>
+								<Code size={20} />
+								<span>JavaScript та робота з DOM</span>
+							</div>
+							<div className={styles.courseModuleItem}>
+								<Zap size={20} />
+								<span>React та сучасний frontend</span>
+							</div>
+							<div className={styles.courseModuleItem}>
+								<Server size={20} />
+								<span>Node.js та backend розробка</span>
+							</div>
+							<div className={styles.courseModuleItem}>
+								<Globe size={20} />
+								<span>Деплой та DevOps основи</span>
+							</div>
+						</div>
+					</div>
+					
+					<div className={styles.courseSectionButtons}>
+						<Link href="/courses/web-development" className={styles.coursePrimaryButton}>
+							<Rocket size={20} />
+							Перейти до курсу
+						</Link>
+						<Link href="/#Contactform" className={styles.courseSecondaryButton} onClick={handleCtaClick} scroll={false}>
+							<Sparkles size={20} />
+							Безкоштовний урок
+						</Link>
+					</div>
 				</div>
 			</section>
-			
-			<CoursesSection />
 		</div>
 	)
 }

@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { 
   ArrowLeft, 
   Play, 
@@ -15,6 +16,9 @@ import {
   ChevronRight,
   Lock
 } from 'lucide-react'
+import { updateProgress } from '@/lib/authClient'
+import { pythonCurriculum } from '@/lib/pythonCurriculum'
+import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { lesson1_1 } from '@/lib/lessonContent/lesson-1-1'
 import { lesson1_2 } from '@/lib/lessonContent/lesson-1-2'
 import { lesson1_3 } from '@/lib/lessonContent/lesson-1-3'
@@ -53,7 +57,6 @@ import { lesson7_1 } from '@/lib/lessonContent/lesson-7-1'
 import { lesson7_2 } from '@/lib/lessonContent/lesson-7-2'
 import { lesson7_3 } from '@/lib/lessonContent/lesson-7-3'
 import { lesson7_4 } from '@/lib/lessonContent/lesson-7-4'
-import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import styles from './LessonPage.module.css'
 
 // Map lesson IDs to content
@@ -209,23 +212,47 @@ const markdownToHtml = (text) => {
 }
 
 const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", userProgress = null }) => {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState('theory')
   const [quizAnswers, setQuizAnswers] = useState({})
   const [quizSubmitted, setQuizSubmitted] = useState(false)
   const [quizScore, setQuizScore] = useState(null)
   const [showPracticeSolution, setShowPracticeSolution] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
   
   // Get lesson content
   const lesson = lessonContentMap[lessonId]
   
+  // Get curriculum based on courseId
+  const getCurriculum = () => {
+    if (courseId === "web-development") {
+      return webDevCurriculum
+    }
+    return pythonCurriculum
+  }
+  
+  const curriculum = getCurriculum()
+  
   // If lesson not found in content map, try to get from curriculum
-  const curriculumLesson = pythonCurriculum.modules
+  const curriculumLesson = curriculum.modules
     .flatMap(m => m.lessons)
     .find(l => l.lessonId === lessonId)
   
   const isEnrolled = userProgress !== null
   const isCompleted = userProgress?.completedLessons?.includes(lessonId) || false
+  
+  // Find next lesson
+  const getNextLesson = () => {
+    const allLessons = curriculum.modules.flatMap(m => m.lessons)
+    const currentIndex = allLessons.findIndex(l => l.lessonId === lessonId)
+    if (currentIndex >= 0 && currentIndex < allLessons.length - 1) {
+      return allLessons[currentIndex + 1]
+    }
+    return null
+  }
+  
+  const nextLesson = getNextLesson()
   
   useEffect(() => {
     setIsLoaded(true)
@@ -253,7 +280,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     summary: ""
   }
   
-  const handleQuizSubmit = () => {
+  const handleQuizSubmit = async () => {
     if (!fullLesson.quiz || !fullLesson.quiz.questions) return
     
     let correct = 0
@@ -266,6 +293,31 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     const score = Math.round((correct / fullLesson.quiz.questions.length) * 100)
     setQuizScore(score)
     setQuizSubmitted(true)
+    
+    // Save quiz result and complete lesson if passed
+    if (isEnrolled && score >= 60) {
+      setIsSaving(true)
+      try {
+        await updateProgress(courseId, {
+          action: 'completeQuiz',
+          lessonId,
+          quizScore: score
+        })
+        
+        // Also mark lesson as completed
+        await updateProgress(courseId, {
+          action: 'completeLesson',
+          lessonId
+        })
+        
+        // Refresh the page to update progress
+        router.refresh()
+      } catch (error) {
+        console.error('Error saving progress:', error)
+      } finally {
+        setIsSaving(false)
+      }
+    }
   }
   
   const handleQuizAnswer = (questionId, answerIndex) => {
@@ -276,7 +328,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     }))
   }
   
-  const isQuizPassed = quizScore !== null && quizScore >= (fullLesson.quiz?.passingScore || 70)
+  const isQuizPassed = quizScore !== null && quizScore >= 60
   
   return (
     <div className={styles.container}>
@@ -558,7 +610,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                   </h3>
                   <p className={styles.quizInfo}>
                     {fullLesson.quiz.questions.length} питань • 
-                    Мінімальний бал для проходження: {fullLesson.quiz.passingScore}%
+                    Мінімальний бал для проходження: 60%
                     {fullLesson.quiz.timeLimit > 0 && ` • Час: ${fullLesson.quiz.timeLimit} хв`}
                   </p>
                 </div>
@@ -667,8 +719,22 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                         </div>
                         {!isQuizPassed && (
                           <p className={styles.retakeInfo}>
-                            Мінімальний бал: {fullLesson.quiz.passingScore}%. 
+                            Мінімальний бал: 60%. 
                             Спробуйте ще раз!
+                          </p>
+                        )}
+                        {isQuizPassed && nextLesson && (
+                          <Link
+                            href={`/courses/${courseId}/lessons/${nextLesson.lessonId}`}
+                            className={styles.nextLessonButton}
+                          >
+                            <ChevronRight className="w-5 h-5" />
+                            Перейти до наступного уроку: {nextLesson.title}
+                          </Link>
+                        )}
+                        {isQuizPassed && !nextLesson && (
+                          <p className={styles.completionMessage}>
+                            Вітаємо! Ви завершили всі уроки цього курсу!
                           </p>
                         )}
                       </div>

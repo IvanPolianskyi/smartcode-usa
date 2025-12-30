@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
+import { pythonCurriculum } from '@/lib/pythonCurriculum'
+import { webDevCurriculum } from '@/lib/webDevCurriculum'
 
 // Get user progress for a course
 export async function GET(request) {
@@ -122,7 +124,7 @@ export async function POST(request) {
         [`completedQuizzes.${lessonId}`]: {
           score: quizScore,
           attempts: (progress.completedQuizzes[lessonId]?.attempts || 0) + 1,
-          passed: quizScore >= 70,
+          passed: quizScore >= 60,
           lastAttempt: new Date()
         }
       }
@@ -138,10 +140,26 @@ export async function POST(request) {
       update.$set.currentLesson = lessonId
     }
 
-    // Calculate overall progress (simplified - you can enhance this)
-    const totalLessons = 48 // This should come from course data
-    const completedCount = progress.completedLessons.length
-    const newProgress = Math.round((completedCount / totalLessons) * 100)
+    // Calculate overall progress using actual course data
+    const getTotalLessons = (courseId) => {
+      let curriculum
+      if (courseId === "web-development") {
+        curriculum = webDevCurriculum
+      } else {
+        curriculum = pythonCurriculum
+      }
+      return curriculum.modules.reduce((sum, m) => sum + m.lessons.length, 0)
+    }
+    
+    // Get updated completed lessons count after applying updates
+    let updatedCompletedLessons = [...(progress.completedLessons || [])]
+    if (action === 'completeLesson' && lessonId && !updatedCompletedLessons.includes(lessonId)) {
+      updatedCompletedLessons.push(lessonId)
+    }
+    
+    const totalLessons = getTotalLessons(courseId)
+    const completedCount = updatedCompletedLessons.length
+    const newProgress = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0
 
     update.$set.overallProgress = newProgress
 

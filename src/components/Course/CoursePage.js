@@ -97,12 +97,23 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
     return userProgress?.completedLessons?.includes(lessonId) || false
   }
   
+  const isQuizPassed = (lessonId) => {
+    const quizData = userProgress?.completedQuizzes?.[lessonId]
+    return quizData?.passed === true || quizData?.score >= 60
+  }
+  
   const isLessonUnlocked = (lesson, moduleIndex) => {
     if (!isEnrolled) return false
     if (moduleIndex === 0 && lesson.order === 1) return true
     if (lesson.prerequisites.length === 0) return true
     
-    return lesson.prerequisites.every(prereqId => isLessonCompleted(prereqId))
+    // Check if all prerequisites are completed AND their quizzes are passed
+    return lesson.prerequisites.every(prereqId => {
+      const isCompleted = isLessonCompleted(prereqId)
+      const quizPassed = isQuizPassed(prereqId)
+      // Lesson is unlocked if it's completed OR if quiz is passed (>=60%)
+      return isCompleted || quizPassed
+    })
   }
   
   const getLevelBadge = (level) => {

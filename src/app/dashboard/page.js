@@ -233,6 +233,13 @@ export default function DashboardPage() {
               </Link>
             </div>
           )}
+          {user.enrolledCourses && user.enrolledCourses.length > 0 && (
+            <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+              <Link href="/courses" className={styles.browseButton}>
+                Подивитися всі курси
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

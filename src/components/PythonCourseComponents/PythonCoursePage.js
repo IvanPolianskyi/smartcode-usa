@@ -19,7 +19,8 @@ import {
   Sparkles,
   ArrowLeft,
   Terminal,
-  Database
+  Database,
+  BookOpen
 } from 'lucide-react'
 import Link from 'next/link'
 import styles from './PythonCoursePage.module.css'
@@ -544,30 +545,112 @@ const PythonCoursePage = () => {
           </div>
         </section>
 
-        {/* Course Section */}
-        <section className={styles.ctaSection}>
-          <div className={styles.ctaContainer}>
-            <h2 className={styles.ctaTitle}>
-              Почни навчання вже сьогодні!
-            </h2>
-            <p className={styles.ctaDescription}>
-              Повний курс Python від основ до просунутого рівня. 7 модулів, 48 уроків, реальні проекти.
-            </p>
+        {/* Course Section - Cosmic Style */}
+        <section className={styles.courseSection}>
+          <div className={styles.courseSectionBackground}>
+            <div className={styles.cosmicStars}></div>
+            <div className={styles.cosmicStars}></div>
+            <div className={styles.cosmicStars}></div>
+          </div>
+          
+          <div className={styles.courseSectionContainer}>
+            <div className={styles.courseSectionBadge}>
+              <Star className="w-5 h-5" />
+              <span>Повноцінний курс</span>
+            </div>
             
-            <div className={styles.ctaButtons}>
+            <h2 className={styles.courseSectionTitle}>
+              Python Developer: From Zero to Confident Junior
+            </h2>
+            
+            <p className={styles.courseSectionDescription}>
+              Структурований курс з чіткою програмою навчання. Від основ Python до створення 
+              повноцінних веб-додатків. 7 модулів, 48 уроків, реальні проекти та підтримка менторів.
+            </p>
+
+            <div className={styles.courseSectionStats}>
+              <div className={styles.courseStat}>
+                <div className={styles.courseStatIcon}>
+                  <BookOpen className="w-6 h-6" />
+                </div>
+                <div className={styles.courseStatContent}>
+                  <div className={styles.courseStatValue}>7 модулів</div>
+                  <div className={styles.courseStatLabel}>Структурована програма</div>
+                </div>
+              </div>
+              
+              <div className={styles.courseStat}>
+                <div className={styles.courseStatIcon}>
+                  <Clock className="w-6 h-6" />
+                </div>
+                <div className={styles.courseStatContent}>
+                  <div className={styles.courseStatValue}>48 уроків</div>
+                  <div className={styles.courseStatLabel}>Практичні завдання</div>
+                </div>
+              </div>
+              
+              <div className={styles.courseStat}>
+                <div className={styles.courseStatIcon}>
+                  <Award className="w-6 h-6" />
+                </div>
+                <div className={styles.courseStatContent}>
+                  <div className={styles.courseStatValue}>Сертифікат</div>
+                  <div className={styles.courseStatLabel}>Після завершення</div>
+                </div>
+              </div>
+              
+              <div className={styles.courseStat}>
+                <div className={styles.courseStatIcon}>
+                  <Users className="w-6 h-6" />
+                </div>
+                <div className={styles.courseStatContent}>
+                  <div className={styles.courseStatValue}>24 тижні</div>
+                  <div className={styles.courseStatLabel}>Тривалість курсу</div>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.courseSectionModules}>
+              <h3 className={styles.courseSectionModulesTitle}>Що ти вивчиш:</h3>
+              <div className={styles.courseSectionModulesList}>
+                <div className={styles.courseModuleItem}>
+                  <Code className="w-5 h-5" />
+                  <span>Основи Python та середовище розробки</span>
+                </div>
+                <div className={styles.courseModuleItem}>
+                  <Brain className="w-5 h-5" />
+                  <span>ООП, алгоритми та структури даних</span>
+                </div>
+                <div className={styles.courseModuleItem}>
+                  <Database className="w-5 h-5" />
+                  <span>Робота з базами даних</span>
+                </div>
+                <div className={styles.courseModuleItem}>
+                  <Globe className="w-5 h-5" />
+                  <span>Веб-розробка з Flask та REST API</span>
+                </div>
+                <div className={styles.courseModuleItem}>
+                  <Rocket className="w-5 h-5" />
+                  <span>Деплой проектів та DevOps основи</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className={styles.courseSectionButtons}>
               <Link 
                 href="/courses/python-developer-zero-to-junior" 
-                className={styles.primaryButton}
+                className={styles.coursePrimaryButton}
               >
                 <div className={styles.buttonOverlay}></div>
                 <span className={styles.buttonContent}>
                   <Rocket className="w-6 h-6" />
                   Перейти до курсу
+                  <ChevronRight className={styles.buttonArrow} />
                 </span>
               </Link>
               <Link 
                 href="/#Contactform" 
-                className={styles.secondaryButton}
+                className={styles.courseSecondaryButton}
                 onClick={(e)=>{e.preventDefault(); window.dispatchEvent(new Event('openContactModal'))}}
                 scroll={false}
               >

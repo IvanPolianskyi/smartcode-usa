@@ -542,6 +542,245 @@
 	transform: scale(1.05);
 }
 
+/* === COURSE SECTION (Cosmic Style) === */
+.courseSection {
+	position: relative;
+	padding: 6rem 2rem;
+	background: linear-gradient(135deg, #581c87 0%, #000 50%, #312e81 100%);
+	overflow: hidden;
+	margin-top: 4rem;
+}
+
+.courseSectionBackground {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+.cosmicStars {
+	position: absolute;
+	width: 2px;
+	height: 2px;
+	background: white;
+	border-radius: 50%;
+	animation: twinkle 3s infinite;
+}
+
+.cosmicStars:nth-child(1) {
+	top: 20%;
+	left: 10%;
+	animation-delay: 0s;
+}
+
+.cosmicStars:nth-child(2) {
+	top: 60%;
+	right: 15%;
+	animation-delay: 1s;
+}
+
+.cosmicStars:nth-child(3) {
+	bottom: 30%;
+	left: 50%;
+	animation-delay: 2s;
+}
+
+@keyframes twinkle {
+	0%, 100% { opacity: 0.3; transform: scale(1); }
+	50% { opacity: 1; transform: scale(1.5); }
+}
+
+.courseSectionContainer {
+	max-width: 1200px;
+	margin: 0 auto;
+	position: relative;
+	z-index: 1;
+}
+
+.courseSectionBadge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 1.25rem;
+	background: linear-gradient(135deg, rgba(196, 181, 253, 0.2), rgba(147, 51, 234, 0.2));
+	border: 1px solid rgba(196, 181, 253, 0.3);
+	border-radius: 50px;
+	color: rgb(196, 181, 253);
+	font-size: 0.875rem;
+	font-weight: 600;
+	margin-bottom: 2rem;
+}
+
+.courseSectionTitle {
+	font-size: clamp(2rem, 5vw, 3rem);
+	font-weight: 900;
+	color: white;
+	margin: 0 0 1.5rem 0;
+	line-height: 1.2;
+	text-shadow: 0 0 20px rgba(196, 181, 253, 0.5);
+}
+
+.courseSectionDescription {
+	font-size: 1.125rem;
+	color: rgba(255, 255, 255, 0.9);
+	line-height: 1.7;
+	max-width: 800px;
+	margin: 0 0 3rem 0;
+}
+
+.courseSectionStats {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 1.5rem;
+	margin-bottom: 3rem;
+}
+
+.courseStat {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 1.5rem;
+	background: rgba(255, 255, 255, 0.05);
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(196, 181, 253, 0.2);
+	border-radius: 16px;
+	transition: all 0.3s ease;
+}
+
+.courseStat:hover {
+	background: rgba(255, 255, 255, 0.1);
+	border-color: rgba(196, 181, 253, 0.4);
+	transform: translateY(-4px);
+}
+
+.courseStatIcon {
+	width: 56px;
+	height: 56px;
+	border-radius: 12px;
+	background: linear-gradient(135deg, rgba(196, 181, 253, 0.2), rgba(147, 51, 234, 0.2));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: rgb(196, 181, 253);
+	flex-shrink: 0;
+}
+
+.courseStatContent {
+	flex: 1;
+}
+
+.courseStatValue {
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: white;
+	margin-bottom: 0.25rem;
+}
+
+.courseStatLabel {
+	font-size: 0.875rem;
+	color: rgba(255, 255, 255, 0.7);
+}
+
+.courseSectionModules {
+	margin-bottom: 3rem;
+	padding: 2rem;
+	background: rgba(255, 255, 255, 0.05);
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(196, 181, 253, 0.2);
+	border-radius: 16px;
+}
+
+.courseSectionModulesTitle {
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: white;
+	margin: 0 0 1.5rem 0;
+}
+
+.courseSectionModulesList {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 1rem;
+}
+
+.courseModuleItem {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 1rem;
+	background: rgba(255, 255, 255, 0.05);
+	border-radius: 8px;
+	color: rgba(255, 255, 255, 0.9);
+	font-size: 0.9375rem;
+	transition: all 0.3s ease;
+}
+
+.courseModuleItem:hover {
+	background: rgba(255, 255, 255, 0.1);
+	transform: translateX(8px);
+}
+
+.courseModuleItem svg {
+	color: rgb(196, 181, 253);
+	flex-shrink: 0;
+}
+
+.courseSectionButtons {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	align-items: center;
+}
+
+@media (min-width: 640px) {
+	.courseSectionButtons {
+		flex-direction: row;
+		justify-content: center;
+	}
+}
+
+.coursePrimaryButton {
+	position: relative;
+	padding: 1rem 2rem;
+	background: linear-gradient(to right, rgb(147, 51, 234), rgb(236, 72, 153));
+	border-radius: 9999px;
+	font-size: 1.125rem;
+	font-weight: 700;
+	color: white;
+	text-decoration: none;
+	overflow: hidden;
+	transition: all 0.3s ease;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.coursePrimaryButton:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 10px 30px rgba(147, 51, 234, 0.4);
+}
+
+.courseSecondaryButton {
+	padding: 1rem 2rem;
+	border: 2px solid rgba(196, 181, 253, 0.5);
+	border-radius: 9999px;
+	font-size: 1.125rem;
+	font-weight: 600;
+	background: transparent;
+	color: white;
+	text-decoration: none;
+	transition: all 0.3s ease;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.courseSecondaryButton:hover {
+	background: rgba(196, 181, 253, 0.1);
+	border-color: rgba(196, 181, 253, 0.8);
+	transform: translateY(-2px);
+}
+
 /* === STATS === */
 .stats {
 	margin-top: 4rem;
