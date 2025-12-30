@@ -14,6 +14,7 @@ const ContactForm = () => {
     const dialogRef = useRef(null)
     const overlayRef = useRef(null)
     const openedAtRef = useRef(0)
+    const scrollPositionRef = useRef(0)
 
     // Відкриття/закриття через глобальні події (запобігаємо дублюванню)
     useEffect(() => {
@@ -47,12 +48,14 @@ const ContactForm = () => {
     useEffect(() => {
         if (!isOpen) return
 
-        const scrollY = window.scrollY || window.pageYOffset || 0
-        document.body.style.position = 'fixed'
-        document.body.style.top = `-${scrollY}px`
-        document.body.style.left = '0'
-        document.body.style.right = '0'
-        document.body.style.width = '100%'
+        // Зберігаємо поточну позицію прокрутки перед блокуванням
+        const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0
+        scrollPositionRef.current = scrollY
+        
+        // Використовуємо тільки overflow: hidden замість position: fixed
+        // Це не викликає проблем з прокруткою при закритті
+        document.body.style.overflow = 'hidden'
+        document.documentElement.style.overflow = 'hidden'
 
         const onKeyDown = (e) => {
             if (e.key === 'Escape') {
@@ -62,13 +65,11 @@ const ContactForm = () => {
         document.addEventListener('keydown', onKeyDown)
 
         return () => {
-            document.body.style.position = ''
-            const y = Math.abs(parseInt(document.body.style.top || '0', 10)) || 0
-            document.body.style.top = ''
-            document.body.style.left = ''
-            document.body.style.right = ''
-            document.body.style.width = ''
-            window.scrollTo(0, y)
+            // Просто видаляємо стилі - прокрутка залишається на тому ж місці
+            document.body.style.overflow = ''
+            document.documentElement.style.overflow = ''
+            
+            scrollPositionRef.current = 0
             document.removeEventListener('keydown', onKeyDown)
         }
     }, [isOpen])
