@@ -383,7 +383,7 @@
 
 .modulesGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
@@ -1036,14 +1036,15 @@
 
 .courseSecondaryButton {
     padding: 1rem 2rem;
-    background: transparent;
-    color: #6b7280;
-    border: 2px solid #e5e7eb;
+    background: white;
+    color: #a855f7;
+    border: none;
     border-radius: var(--radius-full);
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -1051,11 +1052,10 @@
 }
 
 .courseSecondaryButton:hover {
-    background: rgba(236, 72, 153, 0.1);
-    border-color: #ec4899;
-    color: #ec4899;
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 10px 30px rgba(236, 72, 153, 0.2);
+    box-shadow: 0 15px 40px rgba(236, 72, 153, 0.3);
+    background: linear-gradient(135deg, #ec4899, #a855f7);
+    color: white;
 }
 
 /* --- ANIMATIONS --- */
@@ -1206,6 +1206,12 @@
 }
 
 /* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+    .modulesGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     .pageHud {
         flex-direction: column;

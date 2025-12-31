@@ -14,7 +14,9 @@ import {
   AlertCircle,
   Lightbulb,
   ChevronRight,
-  Lock
+  Lock,
+  Loader2,
+  Terminal
 } from 'lucide-react'
 import { updateProgress, checkCoursePurchase, createPayment, enrollInCourse } from '@/lib/authClient'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
@@ -57,6 +59,22 @@ import { lesson7_1 } from '@/lib/lessonContent/lesson-7-1'
 import { lesson7_2 } from '@/lib/lessonContent/lesson-7-2'
 import { lesson7_3 } from '@/lib/lessonContent/lesson-7-3'
 import { lesson7_4 } from '@/lib/lessonContent/lesson-7-4'
+import { lesson8_1 } from '@/lib/lessonContent/lesson-8-1'
+import { lesson8_2 } from '@/lib/lessonContent/lesson-8-2'
+import { lesson8_3 } from '@/lib/lessonContent/lesson-8-3'
+import { lesson8_4 } from '@/lib/lessonContent/lesson-8-4'
+import { lesson8_5 } from '@/lib/lessonContent/lesson-8-5'
+import { lesson8_6 } from '@/lib/lessonContent/lesson-8-6'
+import { lesson9_1 } from '@/lib/lessonContent/lesson-9-1'
+import { lesson9_2 } from '@/lib/lessonContent/lesson-9-2'
+import { lesson9_3 } from '@/lib/lessonContent/lesson-9-3'
+import { lesson9_4 } from '@/lib/lessonContent/lesson-9-4'
+import { lesson10_1 } from '@/lib/lessonContent/lesson-10-1'
+import { lesson10_2 } from '@/lib/lessonContent/lesson-10-2'
+import { lesson10_3 } from '@/lib/lessonContent/lesson-10-3'
+import { lesson10_4 } from '@/lib/lessonContent/lesson-10-4'
+import { lesson11_1 } from '@/lib/lessonContent/lesson-11-1'
+import { lesson11_2 } from '@/lib/lessonContent/lesson-11-2'
 import styles from './LessonPage.module.css'
 
 // Map lesson IDs to content
@@ -98,7 +116,23 @@ const lessonContentMap = {
   "lesson-7-1": lesson7_1,
   "lesson-7-2": lesson7_2,
   "lesson-7-3": lesson7_3,
-  "lesson-7-4": lesson7_4
+  "lesson-7-4": lesson7_4,
+  "lesson-8-1": lesson8_1,
+  "lesson-8-2": lesson8_2,
+  "lesson-8-3": lesson8_3,
+  "lesson-8-4": lesson8_4,
+  "lesson-8-5": lesson8_5,
+  "lesson-8-6": lesson8_6,
+  "lesson-9-1": lesson9_1,
+  "lesson-9-2": lesson9_2,
+  "lesson-9-3": lesson9_3,
+  "lesson-9-4": lesson9_4,
+  "lesson-10-1": lesson10_1,
+  "lesson-10-2": lesson10_2,
+  "lesson-10-3": lesson10_3,
+  "lesson-10-4": lesson10_4,
+  "lesson-11-1": lesson11_1,
+  "lesson-11-2": lesson11_2
 }
 
 // Функція для конвертації markdown в HTML
@@ -118,30 +152,46 @@ const markdownToHtml = (text) => {
       .replace(/'/g, '&#039;')
   }
   
-  // Зберігаємо код блоки перед обробкою
-  const codeBlockPlaceholders = []
-  html = html.replace(/```python\n([\s\S]*?)```/g, (match, code) => {
-    const placeholder = `__CODE_BLOCK_${codeBlockPlaceholders.length}__`
-    codeBlockPlaceholders.push({
-      placeholder,
-      html: `<pre class="code-block"><code>${escapeHtml(code.trim())}</code></pre>`
-    })
-    return placeholder
+  // КРОК 1: Спочатку обробляємо код блоки - це найважливіше!
+  // Розекрановуємо backticks (замінюємо \`\`\` на ```)
+  html = html.replace(/\\`\\`\\`/g, '```')
+  html = html.replace(/\\`/g, '`')
+  
+  // Зберігаємо код блоки в масив перед обробкою
+  const codeBlocks = []
+  let codeBlockIndex = 0
+  
+  // Знаходимо всі код блоки (з мовою та без)
+  // Використовуємо більш надійний regex, який знаходить блоки навіть з відступами
+  html = html.replace(/```(\w+)?\s*\n([\s\S]*?)```/g, (match, lang, code) => {
+    const placeholder = `__CODEBLOCK_${codeBlockIndex}__`
+    const language = (lang && lang.trim()) || 'text'
+    const codeContent = code.trim()
+    
+    if (codeContent) {
+      codeBlocks.push({
+        placeholder,
+        html: `<pre class="code-block"><code class="language-${language}">${escapeHtml(codeContent)}</code></pre>`
+      })
+      codeBlockIndex++
+      // Повертаємо унікальний плейсхолдер
+      return placeholder
+    }
+    return match
   })
   
-  // Обробляємо inline код (тільки якщо не всередині код блоку)
+  // КРОК 2: Обробляємо inline код (тільки якщо не всередині код блоку)
   html = html.replace(/`([^`\n]+)`/g, '<code>$1</code>')
   
-  // Обробляємо жирний текст **текст** (спочатку обробляємо **, щоб не конфліктувало з *)
-  // Використовуємо більш надійний regex
+  // КРОК 3: Обробляємо жирний текст
   html = html.replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>')
   html = html.replace(/__([^_\n]+?)__/g, '<strong>$1</strong>')
   
-  // Обробляємо курсив *текст* (тільки якщо не частина **)
+  // КРОК 4: Обробляємо курсив
   html = html.replace(/(?<!\*)\*([^*\n]+?)\*(?!\*)/g, '<em>$1</em>')
   html = html.replace(/(?<!_)_([^_\n]+?)_(?!_)/g, '<em>$1</em>')
   
-  // Обробляємо нумеровані списки
+  // КРОК 5: Обробляємо списки та параграфи
   const lines = html.split('\n')
   let inOrderedList = false
   let inUnorderedList = false
@@ -149,9 +199,28 @@ const markdownToHtml = (text) => {
   
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
-    const orderedMatch = line.match(/^\d+\.\s+(.+)$/)
-    const unorderedMatch = line.match(/^[-*+]\s+(.+)$/)
+    const trimmedLine = line.trim()
     
+    // Перевіряємо, чи це плейсхолдер код блоку
+    const isCodeBlockPlaceholder = /__CODEBLOCK_\d+__/.test(trimmedLine)
+    
+    if (isCodeBlockPlaceholder) {
+      // Закриваємо відкриті списки перед код блоком
+      if (inOrderedList) {
+        result.push('</ol>')
+        inOrderedList = false
+      }
+      if (inUnorderedList) {
+        result.push('</ul>')
+        inUnorderedList = false
+      }
+      // Додаємо плейсхолдер БЕЗ обгортання в <p>
+      result.push(trimmedLine)
+      continue
+    }
+    
+    // Перевіряємо нумеровані списки
+    const orderedMatch = trimmedLine.match(/^\d+\.\s+(.+)$/)
     if (orderedMatch) {
       if (!inOrderedList) {
         if (inUnorderedList) {
@@ -162,7 +231,12 @@ const markdownToHtml = (text) => {
         inOrderedList = true
       }
       result.push(`<li>${orderedMatch[1]}</li>`)
-    } else if (unorderedMatch) {
+      continue
+    }
+    
+    // Перевіряємо марковані списки
+    const unorderedMatch = trimmedLine.match(/^[-*+]\s+(.+)$/)
+    if (unorderedMatch) {
       if (!inUnorderedList) {
         if (inOrderedList) {
           result.push('</ol>')
@@ -172,20 +246,24 @@ const markdownToHtml = (text) => {
         inUnorderedList = true
       }
       result.push(`<li>${unorderedMatch[1]}</li>`)
+      continue
+    }
+    
+    // Звичайний текст - закриваємо списки якщо потрібно
+    if (inOrderedList) {
+      result.push('</ol>')
+      inOrderedList = false
+    }
+    if (inUnorderedList) {
+      result.push('</ul>')
+      inUnorderedList = false
+    }
+    
+    // Додаємо параграф або порожній рядок
+    if (trimmedLine) {
+      result.push(`<p>${trimmedLine}</p>`)
     } else {
-      if (inOrderedList) {
-        result.push('</ol>')
-        inOrderedList = false
-      }
-      if (inUnorderedList) {
-        result.push('</ul>')
-        inUnorderedList = false
-      }
-      if (line.trim()) {
-        result.push(`<p>${line}</p>`)
-      } else {
-        result.push('<br />')
-      }
+      result.push('<br />')
     }
   }
   
@@ -195,18 +273,33 @@ const markdownToHtml = (text) => {
   
   html = result.join('')
   
-  // Відновлюємо код блоки
-  codeBlockPlaceholders.forEach(({ placeholder, html: blockHtml }) => {
-    html = html.replace(placeholder, blockHtml)
+  // КРОК 6: Відновлюємо код блоки (ВАЖЛИВО: після всіх інших обробок!)
+  codeBlocks.forEach(({ placeholder, html: blockHtml }) => {
+    // Замінюємо плейсхолдер на реальний HTML код блоку
+    // Використовуємо глобальну заміну для всіх входжень
+    const escapedPlaceholder = placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    
+    // Спочатку пробуємо знайти в <p> тегах (якщо випадково обгорнувся)
+    html = html.replace(new RegExp(`<p>\\s*${escapedPlaceholder}\\s*</p>`, 'g'), blockHtml)
+    
+    // Потім знаходимо безпосередньо (може бути з пробілами)
+    html = html.replace(new RegExp(`\\s*${escapedPlaceholder}\\s*`, 'g'), blockHtml)
+    
+    // Нарешті, точний збіг
+    html = html.replace(new RegExp(escapedPlaceholder, 'g'), blockHtml)
   })
   
-  // Обробляємо одинарні переноси всередині параграфів
-  html = html.replace(/<p>([^<]+)<br \/>([^<]+)<\/p>/g, '<p>$1<br />$2</p>')
+  // КРОК 7: Очищаємо зайві <p> теги навколо код блоків
+  html = html.replace(/<p>\s*(<pre class="code-block">[\s\S]*?<\/pre>)\s*<\/p>/gi, '$1')
   
-  // Очищаємо порожні параграфи та зайві br
+  // КРОК 8: Очищаємо порожні параграфи та зайві br
   html = html.replace(/<p><\/p>/g, '')
+  html = html.replace(/<p>\s*<\/p>/g, '')
   html = html.replace(/<p><br \/><\/p>/g, '')
-  html = html.replace(/(<br \/>)+/g, '<br />')
+  html = html.replace(/(<br \/>){2,}/g, '<br />')
+  
+  // КРОК 9: Видаляємо залишки плейсхолдерів (на випадок якщо щось пішло не так)
+  html = html.replace(/__CODEBLOCK_\d+__/g, '')
   
   return html
 }
@@ -219,8 +312,105 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const [quizScore, setQuizScore] = useState(null)
   const [showPracticeSolution, setShowPracticeSolution] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [userCode, setUserCode] = useState('')
+  const [codeExecution, setCodeExecution] = useState({
+    isRunning: false,
+    output: null,
+    error: null,
+    success: null
+  })
   const [isSaving, setIsSaving] = useState(false)
   const [isPurchasing, setIsPurchasing] = useState(false)
+  
+  // Handle Tab key for indentation in code editor
+  const handleCodeKeyDown = (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault()
+      const textarea = e.target
+      const start = textarea.selectionStart
+      const end = textarea.selectionEnd
+      const value = userCode
+      const indent = '    ' // 4 spaces for Python
+      const indentSize = 4
+      
+      if (e.shiftKey) {
+        // Shift+Tab: remove indentation
+        const lines = value.split('\n')
+        const startLine = value.substring(0, start).split('\n').length - 1
+        const endLine = value.substring(0, end).split('\n').length - 1
+        
+        let newValue = ''
+        let newStart = start
+        let newEnd = end
+        let removedChars = 0
+        
+        for (let i = 0; i < lines.length; i++) {
+          if (i >= startLine && i <= endLine) {
+            const line = lines[i]
+            const leadingSpaces = line.match(/^(\s*)/)[1].length
+            if (leadingSpaces >= indentSize) {
+              const newLine = line.substring(indentSize)
+              newValue += newLine
+              if (i < lines.length - 1) newValue += '\n'
+              if (i === startLine) {
+                removedChars = Math.min(indentSize, leadingSpaces)
+                newStart = start - removedChars
+              }
+              newEnd -= Math.min(indentSize, leadingSpaces)
+            } else {
+              newValue += line
+              if (i < lines.length - 1) newValue += '\n'
+            }
+          } else {
+            newValue += lines[i]
+            if (i < lines.length - 1) newValue += '\n'
+          }
+        }
+        
+        setUserCode(newValue)
+        setTimeout(() => {
+          textarea.selectionStart = Math.max(0, newStart)
+          textarea.selectionEnd = Math.max(0, newEnd)
+        }, 0)
+      } else {
+        // Tab: add indentation
+        if (start === end) {
+          // Single cursor - just add indent
+          const newValue = value.substring(0, start) + indent + value.substring(end)
+          setUserCode(newValue)
+          setTimeout(() => {
+            textarea.selectionStart = start + indent.length
+            textarea.selectionEnd = start + indent.length
+          }, 0)
+        } else {
+          // Multiple lines selected - indent all lines
+          const lines = value.split('\n')
+          const startLine = value.substring(0, start).split('\n').length - 1
+          const endLine = value.substring(0, end).split('\n').length - 1
+          
+          let newValue = ''
+          let newStart = start + indent.length
+          let newEnd = end
+          
+          for (let i = 0; i < lines.length; i++) {
+            if (i >= startLine && i <= endLine) {
+              newValue += indent + lines[i]
+              newEnd += indent.length
+            } else {
+              newValue += lines[i]
+            }
+            if (i < lines.length - 1) newValue += '\n'
+          }
+          
+          setUserCode(newValue)
+          setTimeout(() => {
+            textarea.selectionStart = newStart
+            textarea.selectionEnd = newEnd
+          }, 0)
+        }
+      }
+    }
+  }
   
   // Get lesson content
   const lesson = lessonContentMap[lessonId]
@@ -412,7 +602,62 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     }))
   }
   
-  const isQuizPassed = quizScore !== null && quizScore >= 60
+  const isQuizPassed = quizScore !== null && quizScore >= (fullLesson.quiz?.passingScore || 60)
+
+  const handleRunCode = async () => {
+    if (!userCode.trim()) {
+      setCodeExecution({
+        isRunning: false,
+        output: null,
+        error: 'Будь ласка, введіть код перед запуском',
+        success: false
+      })
+      return
+    }
+
+    setCodeExecution({
+      isRunning: true,
+      output: null,
+      error: null,
+      success: null
+    })
+
+    try {
+      const response = await fetch('/api/code/execute', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code: userCode })
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setCodeExecution({
+          isRunning: false,
+          output: data.output || '',
+          error: data.errorOutput || null,
+          success: data.success
+        })
+      } else {
+        setCodeExecution({
+          isRunning: false,
+          output: data.output || '',
+          error: data.error || data.errorOutput || 'Помилка виконання коду',
+          success: false
+        })
+      }
+    } catch (error) {
+      console.error('Error executing code:', error)
+      setCodeExecution({
+        isRunning: false,
+        output: null,
+        error: 'Помилка підключення до сервера. Спробуйте ще раз.',
+        success: false
+      })
+    }
+  }
   
   return (
     <div className={styles.container}>
@@ -655,11 +900,57 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                       className={styles.codeInput}
                       placeholder="Напишіть ваш код тут..."
                       rows={15}
+                      value={userCode}
+                      onChange={(e) => setUserCode(e.target.value)}
+                      onKeyDown={handleCodeKeyDown}
+                      disabled={codeExecution.isRunning}
                     />
-                    <button className={styles.runButton}>
-                      Запустити код
+                    <button 
+                      className={styles.runButton}
+                      onClick={handleRunCode}
+                      disabled={codeExecution.isRunning}
+                    >
+                      {codeExecution.isRunning ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Виконання...
+                        </>
+                      ) : (
+                        <>
+                          <Terminal className="w-4 h-4" />
+                          Запустити код
+                        </>
+                      )}
                     </button>
                   </div>
+                  
+                  {/* Code Execution Results */}
+                  {codeExecution.output !== null || codeExecution.error ? (
+                    <div className={styles.executionResults}>
+                      <h5>
+                        <Terminal className="w-4 h-4" />
+                        Результат виконання:
+                      </h5>
+                      {codeExecution.success !== false && codeExecution.output && (
+                        <div className={styles.executionOutput}>
+                          <strong>Вивід:</strong>
+                          <pre>{codeExecution.output}</pre>
+                        </div>
+                      )}
+                      {codeExecution.error && (
+                        <div className={styles.executionError}>
+                          <strong>Помилка:</strong>
+                          <pre>{codeExecution.error}</pre>
+                        </div>
+                      )}
+                      {codeExecution.success === false && !codeExecution.error && codeExecution.output && (
+                        <div className={styles.executionError}>
+                          <strong>Помилка виконання:</strong>
+                          <pre>{codeExecution.output}</pre>
+                        </div>
+                      )}
+                    </div>
+                  ) : null}
                   
                   {showPracticeSolution && fullLesson.practiceTask.solution && (
                     <div className={styles.solutionSection}>
@@ -727,7 +1018,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                           )}
                         </div>
                         
-                        <p className={styles.questionText}>{question.question}</p>
+                        <div 
+                          className={styles.questionText}
+                          dangerouslySetInnerHTML={{ 
+                            __html: markdownToHtml(question.question)
+                          }}
+                        />
                         
                         {question.type === 'code_reading' && question.code && (
                           <pre className={styles.questionCode}>
@@ -756,7 +1052,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                                 <span className={styles.optionLetter}>
                                   {String.fromCharCode(65 + optionIndex)}
                                 </span>
-                                <span className={styles.optionText}>{option}</span>
+                                <span 
+                                  className={styles.optionText}
+                                  dangerouslySetInnerHTML={{ 
+                                    __html: markdownToHtml(option)
+                                  }}
+                                />
                                 {showAnswer && isCorrectAnswer && (
                                   <CheckCircle2 className={styles.optionIcon} />
                                 )}
@@ -769,9 +1070,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                         </div>
                         
                         {showAnswer && question.explanation && (
-                          <div className={styles.questionExplanation}>
-                            <strong>Пояснення:</strong> {question.explanation}
-                          </div>
+                          <div 
+                            className={styles.questionExplanation}
+                            dangerouslySetInnerHTML={{ 
+                              __html: `<strong>Пояснення:</strong> ${markdownToHtml(question.explanation)}`
+                            }}
+                          />
                         )}
                       </div>
                     )

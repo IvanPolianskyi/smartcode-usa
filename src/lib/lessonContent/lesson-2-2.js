@@ -1,5 +1,6 @@
 /**
- * Lesson 2-2: Цикли for та while
+ * Lesson 2-2: Логічні оператори та вкладені умови
+ * Full educational content
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
@@ -8,16 +9,16 @@ export const lesson2_2 = {
   lessonId: "lesson-2-2",
   moduleId: "module-2",
   order: 2,
-  title: "Цикли for та while",
+  title: "Логічні оператори та вкладені умови",
   
   learningObjectives: [
-    "Використовувати цикл for для ітерації",
-    "Застосовувати цикл while для умовного повторення",
-    "Контролювати виконання циклів (break, continue)",
-    "Працювати з вкладеними циклами"
+    "Використовувати логічні оператори and, or, not",
+    "Створювати складні умови",
+    "Працювати з вкладеними умовами",
+    "Оптимізувати умовні конструкції"
   ],
   
-  estimatedTime: 105,
+  estimatedTime: 90,
   prerequisites: ["lesson-2-1"],
   
   videoUrl: "",
@@ -25,277 +26,347 @@ export const lesson2_2 = {
   theory: {
     sections: [
       {
-        title: "Цикл for",
-        content: `Цикл for використовується для повторення коду певну кількість разів.
+        title: "Логічні оператори - детальніше",
+        content: `Логічні оператори дозволяють об'єднувати кілька умов в одну складну умову.
 
-**Синтаксис:**
+**Оператор and (та):**
 \`\`\`python
-for змінна in послідовність:
-    # код, який виконується
+age = 16
+has_permission = True
+
+if age >= 13 and has_permission:
+    print("Можете використовувати соціальні мережі")
+else:
+    print("Потрібен дозвіл батьків")
 \`\`\`
 
-**Приклади:**
+**Таблиця істинності для and:**
+- True and True = True
+- True and False = False
+- False and True = False
+- False and False = False
+
+**Оператор or (або):**
 \`\`\`python
-# Ітерація по рядку
-for char in "Python":
-    print(char)
-# Виведе: P, y, t, h, o, n
+is_weekend = False
+is_holiday = True
 
-# Ітерація по списку
-fruits = ["яблуко", "банан", "апельсин"]
-for fruit in fruits:
-    print(fruit)
-
-# Ітерація з range()
-for i in range(5):
-    print(i)
-# Виведе: 0, 1, 2, 3, 4
-
-for i in range(1, 6):
-    print(i)
-# Виведе: 1, 2, 3, 4, 5
-
-for i in range(0, 10, 2):
-    print(i)
-# Виведе: 0, 2, 4, 6, 8 (крок 2)
+if is_weekend or is_holiday:
+    print("Вихідний день!")
+else:
+    print("Робочий день")
 \`\`\`
 
-**Функція range():**
-- \`range(n)\` — від 0 до n-1
-- \`range(start, stop)\` — від start до stop-1
-- \`range(start, stop, step)\` — з кроком step`
+**Таблиця істинності для or:**
+- True or True = True
+- True or False = True
+- False or True = True
+- False or False = False
+
+**Оператор not (не):**
+\`\`\`python
+is_raining = False
+
+if not is_raining:
+    print("Можна йти без парасольки")
+else:
+    print("Візьміть парасольку")
+\`\`\`
+
+**Таблиця істинності для not:**
+- not True = False
+- not False = True`
       },
       {
-        title: "Цикл while",
-        content: `Цикл while виконується, поки умова True.
+        title: "Складні умови",
+        content: `Можна комбінувати кілька логічних операторів:
 
-**Синтаксис:**
 \`\`\`python
-while умова:
-    # код, який виконується
+age = 20
+has_ticket = True
+is_student = False
+is_weekend = True
+
+# Складні умови з дужками
+if (age >= 18) and (has_ticket or is_student) and is_weekend:
+    print("Можете піти на фільм у вихідний!")
+elif age >= 18 and has_ticket:
+    print("Можете піти на фільм")
+else:
+    print("Не можете піти на фільм")
 \`\`\`
 
-**Приклади:**
+**Порядок виконання:**
+1. Спочатку виконуються операції в дужках
+2. Потім not
+3. Потім and
+4. Найостанніше or
+
+**Приклад з пріоритетами:**
 \`\`\`python
-# Простий цикл
-count = 0
-while count < 5:
-    print(count)
-    count += 1
-# Виведе: 0, 1, 2, 3, 4
+# Без дужок
+result = True or False and False
+# Виконується як: True or (False and False) = True or False = True
 
-# Цикл з введенням
-password = ""
-while password != "secret":
-    password = input("Введіть пароль: ")
-print("Пароль правильний!")
-
-# Нескінченний цикл (з break)
-while True:
-    user_input = input("Введіть 'quit' для виходу: ")
-    if user_input == "quit":
-        break
-    print(f"Ви ввели: {user_input}")
+# З дужками (явно)
+result = (True or False) and False
+# Виконується як: True and False = False
 \`\`\`
 
-**Важливо:** Переконайтеся, що умова змінюється, інакше цикл буде нескінченним!`
+**Рекомендація:** Завжди використовуйте дужки для ясності!`
       },
       {
-        title: "break та continue",
-        content: `**break** — виходить з циклу одразу
+        title: "Вкладені умови",
+        content: `Умовні оператори можна вкладати один в один:
+
 \`\`\`python
-for i in range(10):
-    if i == 5:
-        break
-    print(i)
-# Виведе: 0, 1, 2, 3, 4 (зупиниться на 5)
+age = 16
+has_permission = True
+is_weekend = True
+
+if age >= 13:
+    if has_permission:
+        if is_weekend:
+            print("Можете використовувати соціальні мережі у вихідний!")
+        else:
+            print("Можете використовувати соціальні мережі")
+    else:
+        print("Потрібен дозвіл батьків")
+else:
+    print("Занадто молоді для соціальних мереж")
 \`\`\`
 
-**continue** — пропускає поточну ітерацію
+**Альтернативний підхід з and:**
 \`\`\`python
-for i in range(10):
-    if i % 2 == 0:
-        continue  # Пропустити парні числа
-    print(i)
-# Виведе: 1, 3, 5, 7, 9 (тільки непарні)
+age = 16
+has_permission = True
+is_weekend = True
+
+if age >= 13 and has_permission and is_weekend:
+    print("Можете використовувати соціальні мережі у вихідний!")
+elif age >= 13 and has_permission:
+    print("Можете використовувати соціальні мережі")
+elif age >= 13:
+    print("Потрібен дозвіл батьків")
+else:
+    print("Занадто молоді для соціальних мереж")
 \`\`\`
 
-**Практичний приклад:**
+**Коли використовувати вкладені умови:**
+- Коли логіка складна та потребує багато перевірок
+- Коли різні умови мають різні дії
+
+**Коли використовувати and/or:**
+- Коли можна спростити логіку
+- Коли умови логічно пов'язані`
+      },
+      {
+        title: "Оптимізація умов",
+        content: `**Коротке замикання (short-circuit evaluation):**
+
+Python використовує коротке замикання:
+- Для \`and\`: якщо перша умова False, друга не перевіряється
+- Для \`or\`: якщо перша умова True, друга не перевіряється
+
 \`\`\`python
-# Пошук першого парного числа
-numbers = [1, 3, 5, 8, 9, 10]
-for num in numbers:
-    if num % 2 == 0:
-        print(f"Знайдено парне число: {num}")
-        break
+# Ефективно: якщо age < 18, друга умова не перевіряється
+if age >= 18 and expensive_check():
+    do_something()
+
+# Ефективно: якщо is_weekend True, друга умова не перевіряється
+if is_weekend or expensive_check():
+    do_something()
+\`\`\`
+
+**Порядок умов:**
+Розміщуйте найпростіші та найшвидші перевірки спочатку:
+
+\`\`\`python
+# Добре: проста перевірка спочатку
+if age >= 18 and expensive_database_check():
+    do_something()
+
+# Погано: дорога перевірка спочатку
+if expensive_database_check() and age >= 18:
+    do_something()
+\`\`\`
+
+**Уникайте зайвих перевірок:**
+\`\`\`python
+# Погано: зайва перевірка
+if age >= 18:
+    if age >= 18:
+        print("Повнолітній")
+
+# Добре: одна перевірка
+if age >= 18:
+    print("Повнолітній")
 \`\`\``
-      },
-      {
-        title: "Вкладені цикли",
-        content: `Цикли можна вкладати один в один:
-
-\`\`\`python
-# Таблиця множення
-for i in range(1, 4):
-    for j in range(1, 4):
-        print(f"{i} * {j} = {i * j}")
-    print()  # Порожній рядок між таблицями
-
-# Виведе:
-# 1 * 1 = 1
-# 1 * 2 = 2
-# 1 * 3 = 3
-# 
-# 2 * 1 = 2
-# 2 * 2 = 4
-# 2 * 3 = 6
-# ...
-
-# break у вкладених циклах
-for i in range(3):
-    for j in range(3):
-        if j == 1:
-            break  # Вийде тільки з внутрішнього циклу
-        print(f"i={i}, j={j}")
-\`\`\`
-
-**Важливо:** break виходить тільки з найближчого циклу!`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад 1: Цикл for з range",
-      code: `# Виведення чисел від 1 до 10
-for i in range(1, 11):
-    print(i)
+      title: "Приклад 1: Складні умови",
+      code: `# Перевірка, чи можна піти на фільм
+age = 16
+has_ticket = True
+has_permission = True
+is_weekend = True
 
-# Парні числа від 2 до 20
-for i in range(2, 21, 2):
-    print(i)`,
-      explanation: "Демонструє використання range() з різними параметрами."
+if age >= 13 and has_ticket and (has_permission or is_weekend):
+    print("Можете піти на фільм!")
+elif age >= 13 and has_ticket:
+    print("Потрібен дозвіл батьків")
+else:
+    print("Не можете піти на фільм")`,
+      explanation: "Демонструє використання складних умов з and та or."
     },
     {
-      title: "Приклад 2: Цикл while з умовою",
-      code: `# Підрахунок до 10
-count = 1
-while count <= 10:
-    print(count)
-    count += 1
+      title: "Приклад 2: Вкладені умови",
+      code: `# Система оцінювання з додатковими умовами
+score = 85
+attendance = 90
 
-# Введення до правильного значення
-number = 0
-while number < 1 or number > 100:
-    number = int(input("Введіть число від 1 до 100: "))
-print(f"Ви ввели: {number}")`,
-      explanation: "Показує використання while для умовного повторення."
+if score >= 90:
+    if attendance >= 95:
+        grade = "Відмінно з похвалою"
+    else:
+        grade = "Відмінно"
+elif score >= 75:
+    if attendance >= 80:
+        grade = "Добре"
+    else:
+        grade = "Добре (низька відвідуваність)"
+else:
+    grade = "Потрібно покращити"
+
+print(f"Оцінка: {grade}")`,
+      explanation: "Показує використання вкладених умов для складнішої логіки."
     },
     {
-      title: "Приклад 3: break та continue",
-      code: `# Пошук першого дільника
-number = 12
-for i in range(2, number):
-    if number % i == 0:
-        print(f"Знайдено дільник: {i}")
-        break
+      title: "Приклад 3: Оптимізація з not",
+      code: `# Перевірка, чи НЕ виконується умова
+is_raining = False
+has_umbrella = True
 
-# Виведення непарних чисел
-for i in range(1, 11):
-    if i % 2 == 0:
-        continue
-    print(i)`,
-      explanation: "Демонструє використання break та continue."
+# Використання not для інверсії
+if not is_raining:
+    print("Можна йти без парасольки")
+elif not has_umbrella:
+    print("Потрібна парасолька!")
+else:
+    print("Дощ, але є парасолька")`,
+      explanation: "Демонструє використання not для інверсії умов."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Нескінченний цикл while",
-      explanation: "Якщо умова while завжди True і не змінюється, цикл буде виконуватися вічно.",
-      correctApproach: "Завжди переконайтеся, що змінна в умові змінюється всередині циклу."
+      mistake: "Плутанина між and та or",
+      explanation: "and вимагає, щоб обидві умови були True, or вимагає хоча б одну True.",
+      correctApproach: "Пам'ятайте: and = 'обидві', or = 'хоча б одна'."
     },
     {
-      mistake: "Плутанина між for та while",
-      explanation: "for використовується коли знаємо кількість ітерацій, while — коли залежить від умови.",
-      correctApproach: "Використовуйте for для ітерації по послідовностях, while для умовного повторення."
+      mistake: "Забути дужки в складних умовах",
+      explanation: "Без дужок порядок виконання може бути неочевидним.",
+      correctApproach: "Завжди використовуйте дужки для ясності: (умова1) and (умова2 or умова3)."
     },
     {
-      mistake: "Забути збільшити лічильник у while",
-      explanation: "Якщо не збільшити лічильник, цикл стане нескінченним.",
-      correctApproach: "Завжди змінюйте змінну, яка використовується в умові while."
+      mistake: "Занадто глибокі вкладення",
+      explanation: "Багато рівнів вкладеності роблять код важким для читання.",
+      correctApproach: "Спробуйте спростити за допомогою and/or або винести логіку в окремі перевірки."
+    },
+    {
+      mistake: "Подвійна перевірка однієї умови",
+      explanation: "Перевірка однієї умови двічі - це зайва робота.",
+      correctApproach: "Перевіряйте кожну умову тільки один раз."
     }
   ],
   
   summary: `На цьому уроці ми вивчили:
 
-1. **Цикл for** — для ітерації по послідовностях та range()
-2. **Цикл while** — для умовного повторення
-3. **break** — вихід з циклу
-4. **continue** — пропуск ітерації
-5. **Вкладені цикли** — цикли всередині циклів
+1. **Логічні оператори**: and (обидві умови), or (хоча б одна), not (інверсія)
+2. **Складні умови**: комбінування кількох операторів з дужками
+3. **Вкладені умови**: умови всередині умов для складнішої логіки
+4. **Оптимізація**: порядок умов, коротке замикання, уникання зайвих перевірок
 
-Цикли — це потужний інструмент для автоматизації повторюваних дій!`,
+Логічні оператори дозволяють створювати складні умови для прийняття рішень у програмах.`,
   
   practiceTask: {
-    title: "Генератор таблиці множення",
-    description: "Створіть програму для генерації таблиці множення",
+    title: "Система доступу",
+    description: "Створіть програму зі складними умовами доступу",
     problemStatement: `Напишіть програму, яка:
-1. Запитує число від користувача (від 1 до 10)
-2. Генерує таблицю множення для цього числа (від 1 до 10)
-3. Виводить результат у форматі: "5 * 3 = 15"
-4. Дозволяє згенерувати кілька таблиць підряд`,
-    inputFormat: "Користувач вводить число через input()",
+1. Перевіряє вік користувача (>= 13, >= 18)
+2. Перевіряє наявність дозволу батьків
+3. Перевіряє, чи вихідний день
+4. Визначає рівень доступу:
+   - Повний доступ: вік >= 18 та дозвіл
+   - Обмежений доступ: вік >= 13 та дозвіл
+   - Доступ у вихідні: вік >= 13 та вихідний день (навіть без дозволу)
+   - Немає доступу: інші випадки
+5. Виводить детальну інформацію про доступ`,
+    inputFormat: "Використовуйте змінні: age = 16, has_permission = True, is_weekend = False",
     outputFormat: `Приклад виведення:
-Введіть число для таблиці множення: 5
-5 * 1 = 5
-5 * 2 = 10
-5 * 3 = 15
-...
-5 * 10 = 50`,
+Вік: 16
+Дозвіл батьків: Так
+Вихідний день: Ні
+Рівень доступу: Обмежений доступ
+Деталі: Можна використовувати з дозволом батьків`,
     examples: [
       {
-        input: "number = 5",
-        output: `5 * 1 = 5
-5 * 2 = 10
-5 * 3 = 15
-5 * 4 = 20
-5 * 5 = 25
-5 * 6 = 30
-5 * 7 = 35
-5 * 8 = 40
-5 * 9 = 45
-5 * 10 = 50`,
-        explanation: "Програма використовує цикл for для генерації таблиці"
+        input: "age = 16, has_permission = True, is_weekend = False",
+        output: `Рівень доступу: Обмежений доступ
+Деталі: Можна використовувати з дозволом батьків`,
+        explanation: "Студент має дозвіл, але не повнолітній"
+      },
+      {
+        input: "age = 20, has_permission = True, is_weekend = False",
+        output: `Рівень доступу: Повний доступ
+Деталі: Можна використовувати без обмежень`,
+        explanation: "Повнолітній з дозволом"
+      },
+      {
+        input: "age = 14, has_permission = False, is_weekend = True",
+        output: `Рівень доступу: Доступ у вихідні
+Деталі: Можна використовувати тільки у вихідні дні`,
+        explanation: "Вихідний день дозволяє доступ навіть без дозволу"
       }
     ],
     solution: {
-      code: `# Генератор таблиці множення
-while True:
-    try:
-        number = int(input("Введіть число для таблиці множення (1-10): "))
-        
-        if number < 1 or number > 10:
-            print("Число має бути від 1 до 10!")
-            continue
-        
-        print(f"\nТаблиця множення для {number}:")
-        for i in range(1, 11):
-            result = number * i
-            print(f"{number} * {i} = {result}")
-        
-        again = input("\nЗгенерувати ще одну таблицю? (так/ні): ").lower()
-        if again != "так":
-            break
-            
-    except ValueError:
-        print("Помилка! Введіть правильне число.")`,
-      explanation: "Рішення використовує цикл for для генерації таблиці та while для повторення."
+      code: `# Система доступу
+age = 16
+has_permission = True
+is_weekend = False
+
+# Визначення рівня доступу
+if age >= 18 and has_permission:
+    access_level = "Повний доступ"
+    details = "Можна використовувати без обмежень"
+elif age >= 13 and has_permission:
+    access_level = "Обмежений доступ"
+    details = "Можна використовувати з дозволом батьків"
+elif age >= 13 and is_weekend:
+    access_level = "Доступ у вихідні"
+    details = "Можна використовувати тільки у вихідні дні"
+else:
+    access_level = "Немає доступу"
+    details = "Занадто молоді або немає дозволу"
+
+# Виведення інформації
+print(f"Вік: {age}")
+print(f"Дозвіл батьків: {'Так' if has_permission else 'Ні'}")
+print(f"Вихідний день: {'Так' if is_weekend else 'Ні'}")
+print(f"Рівень доступу: {access_level}")
+print(f"Деталі: {details}")`,
+      explanation: "Рішення використовує складні умови з and та or для визначення рівня доступу."
     },
     hints: [
-      "Використовуйте for i in range(1, 11) для чисел від 1 до 10",
-      "Обчислюйте результат як number * i",
-      "Використовуйте while True для можливості генерації кількох таблиць"
+      "Використовуйте if/elif/else для різних рівнів доступу",
+      "Перевіряйте умови від найвищих до найнижчих рівнів",
+      "Використовуйте and для об'єднання умов, or для альтернатив",
+      "Вихідний день має бути окремою умовою"
     ],
     difficulty: "beginner"
   },
@@ -304,48 +375,46 @@ while True:
     questions: [
       {
         id: "q1",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Скільки разів виконається цикл: for i in range(5)?",
-        options: ["4", "5", "6", "Помилку"],
-        correctAnswer: 1,
-        explanation: "range(5) генерує числа 0, 1, 2, 3, 4 — це 5 ітерацій."
+        type: QUIZ_QUESTION_TYPES.LOGIC,
+        question: "Що поверне: (True and False) or True?",
+        options: ["True", "False", "Помилку", "None"],
+        correctAnswer: 0,
+        explanation: "(True and False) = False, потім (False or True) = True."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе цей код?\n\n```python\nfor i in range(3):\n    if i == 1:\n        continue\n    print(i)\n```",
-        options: ["0, 1, 2", "0, 2", "1, 2", "0"],
-        correctAnswer: 1,
-        explanation: "continue пропускає ітерацію коли i == 1, тому виведе 0 та 2."
+        question: "Що виведе цей код?\n\n```python\nx = 5\ny = 10\nif x > 3 and y < 15:\n    print('A')\nelif x > 3 or y < 15:\n    print('B')\nelse:\n    print('C')\n```",
+        options: ["A", "B", "C", "Помилку"],
+        correctAnswer: 0,
+        explanation: "x > 3 (True) and y < 15 (True) = True, тому виконається перший if і виведе 'A'."
       },
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що робить break у циклі?",
-        options: ["Пропускає ітерацію", "Вихід з циклу", "Продовжує цикл", "Нічого"],
-        correctAnswer: 1,
-        explanation: "break одразу виходить з циклу, не виконуючи решту коду."
+        question: "Який оператор інвертує булеве значення?",
+        options: ["and", "or", "not", "!"],
+        correctAnswer: 2,
+        explanation: "not інвертує булеве значення: not True = False, not False = True."
       },
       {
         id: "q4",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе: range(2, 6)?",
-        options: ["[2, 3, 4, 5, 6]", "[2, 3, 4, 5]", "[0, 1, 2, 3, 4, 5]", "Помилку"],
+        type: QUIZ_QUESTION_TYPES.LOGIC,
+        question: "Що поверне: not (True or False)?",
+        options: ["True", "False", "Помилку", "None"],
         correctAnswer: 1,
-        explanation: "range(2, 6) генерує числа від 2 до 5 (не включаючи 6)."
+        explanation: "Спочатку (True or False) = True, потім not True = False."
       },
       {
         id: "q5",
-        type: QUIZ_QUESTION_TYPES.LOGIC,
-        question: "Який цикл краще використати, коли не знаємо скільки разів потрібно повторити?",
-        options: ["for", "while", "обидва однаково", "залежить"],
-        correctAnswer: 1,
-        explanation: "while краще для ситуацій, коли кількість ітерацій залежить від умови."
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Скільки разів виведеться 'Hello'?\n\n```python\nif True and True:\n    print('Hello')\nif True or False:\n    print('Hello')\nif not False:\n    print('Hello')\n```",
+        options: ["0", "1", "2", "3"],
+        correctAnswer: 3,
+        explanation: "Всі три умови True, тому 'Hello' виведеться три рази."
       }
     ],
     timeLimit: 15,
     passingScore: 70
   }
 }
-
-

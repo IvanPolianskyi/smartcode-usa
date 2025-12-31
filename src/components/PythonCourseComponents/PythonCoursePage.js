@@ -629,10 +629,7 @@ const PythonCoursePage = () => {
                   <Globe className="w-5 h-5" />
                   <span>Веб-розробка з Flask та REST API</span>
                 </div>
-                <div className={styles.courseModuleItem}>
-                  <Rocket className="w-5 h-5" />
-                  <span>Деплой проектів та DevOps основи</span>
-                </div>
+                
               </div>
             </div>
             

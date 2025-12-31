@@ -1,5 +1,6 @@
 /**
- * Lesson 2-4: Словники (Dictionaries)
+ * Lesson 2-4: Цикл while
+ * Full educational content
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
@@ -8,16 +9,16 @@ export const lesson2_4 = {
   lessonId: "lesson-2-4",
   moduleId: "module-2",
   order: 4,
-  title: "Словники (Dictionaries)",
+  title: "Цикл while",
   
   learningObjectives: [
-    "Створювати та модифікувати словники",
-    "Отримувати доступ до значень за ключами",
-    "Використовувати методи словників (keys, values, items)",
-    "Ітерувати по словниках"
+    "Використовувати цикл while",
+    "Контролювати умови виходу з циклу",
+    "Уникати нескінченних циклів",
+    "Застосовувати while для різних задач"
   ],
   
-  estimatedTime: 105,
+  estimatedTime: 90,
   prerequisites: ["lesson-2-3"],
   
   videoUrl: "",
@@ -25,141 +26,151 @@ export const lesson2_4 = {
   theory: {
     sections: [
       {
-        title: "Що таке словники?",
-        content: `Словник (dictionary) — це невпорядкована колекція пар ключ-значення.
+        title: "Що таке цикл while?",
+        content: `Цикл while виконує код повторно, поки умова True. Це як питання "Чи продовжувати?" — якщо відповідь "так" (True), цикл виконується знову.
 
-**Створення словників:**
+**Синтаксис:**
 \`\`\`python
-# Порожній словник
-empty_dict = {}
-
-# Словник з елементами
-student = {
-    "ім'я": "Олександр",
-    "вік": 15,
-    "клас": 9
-}
-
-# Альтернативний спосіб
-student = dict(ім'я="Олександр", вік=15, клас=9)
+while умова:
+    # код, який виконується
+    # поки умова True
 \`\`\`
 
-**Доступ до значень:**
+**Простий приклад:**
 \`\`\`python
-student = {"ім'я": "Олександр", "вік": 15}
-print(student["ім'я"])        # Олександр
-print(student.get("вік"))     # 15
-print(student.get("місто", "Невідомо"))  # Невідомо (якщо ключа немає)
+count = 0
+while count < 5:
+    print(count)
+    count += 1
+# Виведе: 0, 1, 2, 3, 4
 \`\`\`
 
-**Зміна та додавання:**
+**Як це працює:**
+1. Перевіряється умова (count < 5)
+2. Якщо True, виконується код всередині циклу
+3. Після виконання знову перевіряється умова
+4. Якщо все ще True, цикл повторюється
+5. Якщо False, цикл завершується`
+      },
+      {
+        title: "Базові приклади",
+        content: `**Підрахунок:**
 \`\`\`python
-student = {"ім'я": "Олександр", "вік": 15}
-student["вік"] = 16           # Зміна значення
-student["місто"] = "Київ"     # Додавання нового ключа
-print(student)  # {"ім'я": "Олександр", "вік": 16, "місто": "Київ"}
+number = 1
+while number <= 10:
+    print(number)
+    number += 1
+# Виведе числа від 1 до 10
+\`\`\`
+
+**Введення до правильного значення:**
+\`\`\`python
+age = 0
+while age < 1 or age > 120:
+    age = int(input("Введіть вік (1-120): "))
+    if age < 1 or age > 120:
+        print("Невірний вік! Спробуйте ще раз.")
+print(f"Ваш вік: {age}")
+\`\`\`
+
+**Підрахунок суми:**
+\`\`\`python
+total = 0
+number = 1
+while number <= 10:
+    total += number
+    number += 1
+print(f"Сума чисел від 1 до 10: {total}")
+# Виведе: Сума чисел від 1 до 10: 55
 \`\`\``
       },
       {
-        title: "Методи словників",
-        content: `**Отримання значень:**
+        title: "Нескінченні цикли та як їх уникнути",
+        content: `**Нескінченний цикл** — це цикл, який ніколи не закінчується, бо умова завжди True.
+
+**Приклад нескінченного циклу:**
 \`\`\`python
-student = {"ім'я": "Олександр", "вік": 15}
-
-# get() - безпечний доступ
-age = student.get("вік", 0)  # 15, або 0 якщо ключа немає
-
-# keys() - всі ключі
-print(list(student.keys()))  # ["ім'я", "вік"]
-
-# values() - всі значення
-print(list(student.values()))  # ["Олександр", 15]
-
-# items() - пари ключ-значення
-print(list(student.items()))  # [("ім'я", "Олександр"), ("вік", 15)]
+# УВАГА: Цей код виконається вічно!
+count = 0
+while count < 5:
+    print(count)
+    # Забули збільшити count!
+    # count завжди 0, тому count < 5 завжди True
 \`\`\`
 
-**Видалення:**
-\`\`\`python
-student = {"ім'я": "Олександр", "вік": 15, "клас": 9}
+**Як уникнути нескінченних циклів:**
 
-del student["клас"]           # Видаляє ключ
-age = student.pop("вік")      # Видаляє та повертає значення
-student.clear()               # Очищає весь словник
+1. **Завжди змінюйте змінну в умові:**
+\`\`\`python
+count = 0
+while count < 5:
+    print(count)
+    count += 1  # Важливо!
 \`\`\`
 
-**Оновлення:**
+2. **Використовуйте break для виходу:**
 \`\`\`python
-student = {"ім'я": "Олександр", "вік": 15}
-updates = {"вік": 16, "місто": "Київ"}
-student.update(updates)       # Оновлює словник
-print(student)  # {"ім'я": "Олександр", "вік": 16, "місто": "Київ"}
+while True:
+    user_input = input("Введіть 'quit' для виходу: ")
+    if user_input == "quit":
+        break  # Виходить з циклу
+    print(f"Ви ввели: {user_input}")
+\`\`\`
+
+3. **Перевіряйте умову перед циклом:**
+\`\`\`python
+# Якщо умова False з самого початку, цикл не виконається
+count = 10
+while count < 5:  # False, цикл не виконається
+    print(count)
 \`\`\``
       },
       {
-        title: "Ітерація по словниках",
-        content: `**Ітерація по ключах:**
+        title: "Практичні застосування",
+        content: `**Меню з вибором:**
 \`\`\`python
-student = {"ім'я": "Олександр", "вік": 15, "клас": 9}
-
-for key in student:
-    print(f"{key}: {student[key]}")
-
-# Або явно
-for key in student.keys():
-    print(key)
+while True:
+    print("1. Додати")
+    print("2. Видалити")
+    print("3. Вийти")
+    choice = input("Виберіть опцію: ")
+    
+    if choice == "1":
+        print("Додавання...")
+    elif choice == "2":
+        print("Видалення...")
+    elif choice == "3":
+        print("До побачення!")
+        break
+    else:
+        print("Невірний вибір!")
 \`\`\`
 
-**Ітерація по значеннях:**
+**Валідація введення:**
 \`\`\`python
-for value in student.values():
-    print(value)
+while True:
+    try:
+        number = int(input("Введіть число: "))
+        if number > 0:
+            break
+        else:
+            print("Число має бути додатнім!")
+    except ValueError:
+        print("Введіть правильне число!")
+print(f"Ви ввели: {number}")
 \`\`\`
 
-**Ітерація по парах:**
+**Підрахунок до досягнення мети:**
 \`\`\`python
-for key, value in student.items():
-    print(f"{key}: {value}")
-\`\`\`
+savings = 0
+target = 1000
+month = 0
 
-**Вкладені словники:**
-\`\`\`python
-students = {
-    "студент1": {"ім'я": "Олександр", "вік": 15},
-    "студент2": {"ім'я": "Марія", "вік": 16}
-}
-
-for student_id, info in students.items():
-    print(f"{student_id}: {info['ім'я']}, {info['вік']} років")
-\`\`\``
-      },
-      {
-        title: "Словникові включення",
-        content: `Аналогічно списковим включенням:
-
-\`\`\`python
-# Звичайний спосіб
-squares = {}
-for x in range(5):
-    squares[x] = x ** 2
-
-# Зі словниковим включенням
-squares = {x: x ** 2 for x in range(5)}
-print(squares)  # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
-
-# З умовою
-evens_squares = {x: x ** 2 for x in range(10) if x % 2 == 0}
-print(evens_squares)  # {0: 0, 2: 4, 4: 16, 6: 36, 8: 64}
-\`\`\`
-
-**Перетворення списків:**
-\`\`\`python
-names = ["Олександр", "Марія", "Дмитро"]
-ages = [15, 16, 14]
-
-# Створення словника з двох списків
-students = {name: age for name, age in zip(names, ages)}
-print(students)  # {"Олександр": 15, "Марія": 16, "Дмитро": 14}
+while savings < target:
+    month += 1
+    savings += 100
+    print(f"Місяць {month}: {savings} грн")
+print(f"Мета досягнута за {month} місяців!")
 \`\`\``
       }
     ]
@@ -167,183 +178,143 @@ print(students)  # {"Олександр": 15, "Марія": 16, "Дмитро": 
   
   codeExamples: [
     {
-      title: "Приклад 1: Базові операції",
-      code: `# Створення та робота зі словником
-student = {
-    "ім'я": "Олександр",
-    "вік": 15,
-    "клас": 9,
-    "місто": "Київ"
-}
-
-# Доступ до значень
-print(f"Ім'я: {student['ім'я']}")
-print(f"Вік: {student.get('вік', 'Невідомо')}")
-
-# Додавання та зміна
-student["середній_бал"] = 4.5
-student["вік"] = 16
-
-# Видалення
-del student["місто"]
-print(student)`,
-      explanation: "Демонструє створення, доступ, зміну та видалення в словниках."
+      title: "Приклад 1: Підрахунок",
+      code: `# Виведення чисел від 1 до 10
+count = 1
+while count <= 10:
+    print(count)
+    count += 1`,
+      explanation: "Базовий приклад циклу while для підрахунку."
     },
     {
-      title: "Приклад 2: Ітерація по словнику",
-      code: `# Перебір елементів словника
-grades = {
-    "Математика": 85,
-    "Фізика": 92,
-    "Хімія": 78,
-    "Історія": 88
-}
-
-# По ключах та значеннях
-for subject, score in grades.items():
-    print(f"{subject}: {score}")
-
-# Тільки предмети з високими оцінками
-high_grades = {s: g for s, g in grades.items() if g >= 85}
-print(f"Високі оцінки: {high_grades}")`,
-      explanation: "Показує ітерацію по словнику та фільтрацію."
+      title: "Приклад 2: Валідація введення",
+      code: `# Отримання правильного віку
+age = 0
+while age < 1 or age > 120:
+    try:
+        age = int(input("Введіть вік (1-120): "))
+        if age < 1 or age > 120:
+            print("Вік має бути від 1 до 120!")
+    except ValueError:
+        print("Введіть число!")
+print(f"Ваш вік: {age}")`,
+      explanation: "Цикл while для валідації введення користувача."
     },
     {
-      title: "Приклад 3: Вкладені словники",
-      code: `# База даних студентів
-students = {
-    "001": {
-        "ім'я": "Олександр",
-        "вік": 15,
-        "оцінки": [85, 92, 78]
-    },
-    "002": {
-        "ім'я": "Марія",
-        "вік": 16,
-        "оцінки": [90, 88, 95]
-    }
-}
-
-# Доступ до вкладених даних
-for student_id, info in students.items():
-    avg = sum(info["оцінки"]) / len(info["оцінки"])
-    print(f"{info['ім'я']} (ID: {student_id}): середній бал {avg:.2f}")`,
-      explanation: "Демонструє роботу з вкладеними словниками."
+      title: "Приклад 3: Меню",
+      code: `# Просте меню
+while True:
+    print("1. Привіт")
+    print("2. Пока")
+    print("3. Вийти")
+    choice = input("Виберіть: ")
+    
+    if choice == "1":
+        print("Привіт!")
+    elif choice == "2":
+        print("Пока!")
+    elif choice == "3":
+        break
+    else:
+        print("Невірний вибір!")`,
+      explanation: "Використання while True з break для меню."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Доступ до неіснуючого ключа",
-      explanation: "student['місто'] викличе KeyError, якщо ключа немає.",
-      correctApproach: "Використовуйте student.get('місто', 'Невідомо') для безпечного доступу."
+      mistake: "Нескінченний цикл через незмінну умову",
+      explanation: "Якщо змінна в умові не змінюється, цикл стає нескінченним.",
+      correctApproach: "Завжди змінюйте змінну, яка використовується в умові циклу."
     },
     {
-      mistake: "Плутанина між ключами та значеннями",
-      explanation: "Ключі — це те, за чим шукаємо, значення — те, що зберігаємо.",
-      correctApproach: "Пам'ятайте: словник[ключ] = значення"
+      mistake: "Забути break у while True",
+      explanation: "while True виконується вічно, якщо немає break.",
+      correctApproach: "Завжди додавайте умову з break для виходу з while True."
     },
     {
-      mistake: "Використання незмінних типів як ключів",
-      explanation: "Ключі мають бути незмінними (str, int, tuple), не можна використовувати списки.",
-      correctApproach: "Використовуйте str, int, tuple як ключі. Для списків використовуйте tuple."
+      mistake: "Неправильна умова виходу",
+      explanation: "Якщо умова ніколи не стає False, цикл не завершиться.",
+      correctApproach: "Переконайтеся, що умова може стати False."
     }
   ],
   
   summary: `На цьому уроці ми вивчили:
 
-1. **Створення словників** — {} або dict()
-2. **Доступ до значень** — dict[key] або dict.get(key, default)
-3. **Методи** — keys(), values(), items(), update(), pop()
-4. **Ітерація** — for key, value in dict.items()
-5. **Словникові включення** — {key: value for ...}
+1. **Цикл while** — виконує код, поки умова True
+2. **Контроль циклу** — зміна змінних, break для виходу
+3. **Нескінченні цикли** — як їх уникнути
+4. **Практичні застосування** — меню, валідація, підрахунки
 
-Словники — ідеальний вибір для структурованих даних!`,
+Цикл while ідеальний для ситуацій, коли не знаємо точно, скільки разів потрібно повторити дію.`,
   
   practiceTask: {
-    title: "Система управління студентами",
-    description: "Створіть програму для управління базою даних студентів",
-    problemStatement: `Напишіть програму, яка:
-1. Дозволяє додавати студентів (ID, ім'я, вік, клас)
-2. Зберігає оцінки для кожного студента
-3. Показує інформацію про студента
-4. Обчислює середній бал студента
-5. Показує список всіх студентів`,
-    inputFormat: "Користувач вводить команди через input()",
+    title: "Гра 'Вгадай число'",
+    description: "Створіть гру, де користувач вгадує число",
+    problemStatement: `Напишіть програму "Вгадай число", яка:
+1. Генерує випадкове число від 1 до 100 (використовуйте number = 42 для тестування)
+2. Дозволяє користувачу вгадувати число
+3. Підказує "більше" або "менше" після кожної спроби
+4. Підраховує кількість спроб
+5. Вітає при правильній відповіді
+6. Питає, чи хоче грати ще раз`,
+    inputFormat: "Користувач вводить числа через input()",
     outputFormat: `Приклад виведення:
-=== Студенти ===
-ID: 001, Ім'я: Олександр, Вік: 15, Клас: 9
-Оцінки: [85, 92, 78], Середній: 85.0`,
+Вгадайте число від 1 до 100!
+Спроба 1: 50
+Менше!
+Спроба 2: 30
+Більше!
+Спроба 3: 42
+Вітаю! Ви вгадали за 3 спроби!
+Грати ще раз? (так/ні): `,
     examples: [
       {
-        input: "Додати студента: ID=001, ім'я=Олександр, вік=15, клас=9",
-        output: "Студент додано!",
-        explanation: "Програма зберігає дані студента у словнику"
+        input: "number = 42, guesses = [50, 30, 42]",
+        output: `Спроба 1: 50
+Менше!
+Спроба 2: 30
+Більше!
+Спроба 3: 42
+Вітаю! Ви вгадали за 3 спроби!`,
+        explanation: "Гра підказує користувачу та підраховує спроби"
       }
     ],
     solution: {
-      code: `# Система управління студентами
-students = {}
-
-def add_student():
-    student_id = input("ID студента: ")
-    name = input("Ім'я: ")
-    age = int(input("Вік: "))
-    grade = int(input("Клас: "))
-    
-    students[student_id] = {
-        "ім'я": name,
-        "вік": age,
-        "клас": grade,
-        "оцінки": []
-    }
-    print("Студент додано!")
-
-def add_grade():
-    student_id = input("ID студента: ")
-    if student_id in students:
-        score = float(input("Оцінка: "))
-        students[student_id]["оцінки"].append(score)
-        print("Оцінку додано!")
-    else:
-        print("Студента не знайдено!")
-
-def show_student():
-    student_id = input("ID студента: ")
-    if student_id in students:
-        s = students[student_id]
-        avg = sum(s["оцінки"]) / len(s["оцінки"]) if s["оцінки"] else 0
-        print(f"ID: {student_id}")
-        print(f"Ім'я: {s['ім'я']}, Вік: {s['вік']}, Клас: {s['клас']}")
-        print(f"Оцінки: {s['оцінки']}, Середній: {avg:.2f}")
-    else:
-        print("Студента не знайдено!")
-
-def show_all():
-    print("\n=== Всі студенти ===")
-    for student_id, info in students.items():
-        avg = sum(info["оцінки"]) / len(info["оцінки"]) if info["оцінки"] else 0
-        print(f"ID: {student_id}, {info['ім'я']}, Середній: {avg:.2f}")
+      code: `# Гра "Вгадай число"
+number = 42  # Для тестування (пізніше використаємо random)
 
 while True:
-    print("\n1. Додати студента")
-    print("2. Додати оцінку")
-    print("3. Показати студента")
-    print("4. Показати всіх")
-    print("5. Вийти")
+    print("Вгадайте число від 1 до 100!")
+    attempts = 0
+    guessed = False
     
-    choice = input("Виберіть: ")
-    if choice == "1": add_student()
-    elif choice == "2": add_grade()
-    elif choice == "3": show_student()
-    elif choice == "4": show_all()
-    elif choice == "5": break`,
-      explanation: "Рішення використовує словники для зберігання структурованих даних про студентів."
+    while not guessed:
+        try:
+            guess = int(input("Ваше число: "))
+            attempts += 1
+            
+            if guess == number:
+                print(f"Вітаю! Ви вгадали за {attempts} спроб!")
+                guessed = True
+            elif guess < number:
+                print("Більше!")
+            else:
+                print("Менше!")
+        except ValueError:
+            print("Введіть число!")
+    
+    play_again = input("Грати ще раз? (так/ні): ").lower()
+    if play_again != "так":
+        print("Дякую за гру!")
+        break`,
+      explanation: "Рішення використовує вкладені цикли while: зовнішній для повторення гри, внутрішній для вгадування."
     },
     hints: [
-      "Використовуйте словник, де ключ — ID студента, значення — словник з даними",
-      "Зберігайте оцінки як список всередині словника студента",
-      "Використовуйте sum() та len() для обчислення середнього"
+      "Використовуйте while True для зовнішнього циклу (повторення гри)",
+      "Використовуйте окремий while для циклу вгадування",
+      "Використовуйте змінну guessed для контролю внутрішнього циклу",
+      "Підраховуйте спроби всередині циклу вгадування"
     ],
     difficulty: "beginner"
   },
@@ -352,40 +323,30 @@ while True:
     questions: [
       {
         id: "q1",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Як отримати значення зі словника без помилки, якщо ключа немає?",
-        options: ["dict[key]", "dict.get(key)", "dict[key, default]", "dict.find(key)"],
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Скільки разів виконається цикл?\n\n```python\ncount = 0\nwhile count < 5:\n    print(count)\n    count += 1\n```",
+        options: ["4", "5", "6", "Нескінченно"],
         correctAnswer: 1,
-        explanation: "get(key, default) повертає значення або default, якщо ключа немає, не викликаючи помилку."
+        explanation: "Цикл виконається 5 разів: для count = 0, 1, 2, 3, 4."
       },
       {
         id: "q2",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе: {'a': 1, 'b': 2}.keys()?",
-        options: ["['a', 'b']", "dict_keys(['a', 'b'])", "[1, 2]", "Помилку"],
-        correctAnswer: 1,
-        explanation: "keys() повертає dict_keys об'єкт, який можна конвертувати в список через list()."
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що потрібно зробити, щоб вийти з while True?",
+        options: ["Змінити умову на False", "Використати break", "Використати continue", "Обидва A і B"],
+        correctAnswer: 3,
+        explanation: "Можна використати break або змінити умову через змінну."
       },
       {
         id: "q3",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Який тип даних може бути ключем словника?",
-        options: ["Тільки str", "str, int, tuple", "Будь-який", "Тільки незмінні типи"],
-        correctAnswer: 3,
-        explanation: "Ключі мають бути незмінними (immutable): str, int, float, tuple, bool. Не можна використовувати списки."
-      },
-      {
-        id: "q4",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе: {x: x*2 for x in range(3)}?",
-        options: ["{0: 0, 1: 2, 2: 4}", "{0, 2, 4}", "[0, 2, 4]", "Помилку"],
+        question: "Що виведе цей код?\n\n```python\nx = 10\nwhile x > 5:\n    print(x)\n    x -= 2\n```",
+        options: ["10, 8, 6", "10, 8, 6, 4", "10", "Нескінченно"],
         correctAnswer: 0,
-        explanation: "Словникове включення створює словник: {0: 0*2, 1: 1*2, 2: 2*2} = {0: 0, 1: 2, 2: 4}."
+        explanation: "x починається з 10, потім 8, потім 6. Коли x стає 4, умова x > 5 стає False, цикл зупиняється."
       }
     ],
     timeLimit: 12,
     passingScore: 70
   }
 }
-
-

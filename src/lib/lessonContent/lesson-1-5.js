@@ -188,14 +188,16 @@ print(text[::-1])     # gnimmargorP nohtyP (реверс)`,
       code: `# Обробка введення користувача
 user_input = "  ОЛЕКСАНДР  "
 name = user_input.strip().title()
-print(f"Привіт, {name}!")  # Привіт, Олександр!
+print("Привіт,", name, "!")  # Привіт, Олександр !
 
 # Розбиття рядка
 sentence = "apple,banana,orange"
 fruits = sentence.split(",")
-for fruit in fruits:
-    print(fruit.capitalize())`,
-      explanation: "Демонструє використання методів для обробки рядків."
+print("Фрукти:", fruits)
+print("Перший фрукт:", fruits[0].capitalize())
+print("Другий фрукт:", fruits[1].capitalize())
+print("Третій фрукт:", fruits[2].capitalize())`,
+      explanation: "Демонструє використання методів для обробки рядків та роботу зі списками."
     }
   ],
   
@@ -260,23 +262,23 @@ for fruit in fruits:
 text = input("Введіть рядок: ")
 
 # Довжина
-print(f"Довжина рядка: {len(text)}")
+print("Довжина рядка:", len(text))
 
 # Верхній регістр
 upper_text = text.upper()
-print(f"Верхній регістр: {upper_text}")
+print("Верхній регістр:", upper_text)
 
 # Перевірка початку
 starts_with = text.lower().startswith("привіт")
-print(f"Починається з 'привіт': {starts_with}")
+print("Починається з 'привіт':", starts_with)
 
 # Розбиття на слова
 words = text.split()
-print(f"Слова: {words}")
+print("Слова:", words)
 
 # Об'єднання
 joined = "-".join(words)
-print(f"Об'єднаний рядок: {joined}")`,
+print("Об'єднаний рядок:", joined)`,
       explanation: "Рішення використовує різні методи рядків для обробки тексту."
     },
     hints: [

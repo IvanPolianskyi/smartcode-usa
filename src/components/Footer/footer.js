@@ -20,6 +20,7 @@ import {
 	Facebook,
 	Linkedin,
 	Box,
+	Music,
 } from 'lucide-react'
 import Image from 'next/image'
 
@@ -55,7 +56,26 @@ const Footer = () => {
 			icon: Instagram,
 			href: 'https://instagram.com/smartcodeacademy',
 		},
-
+		{
+			name: 'TikTok - SmartCode Academy',
+			icon: Music,
+			href: 'https://www.tiktok.com/@smartcodeacademy',
+		},
+		{
+			name: 'TikTok - SmartCode Academy 2',
+			icon: Music,
+			href: 'https://www.tiktok.com/@smartcode_academy',
+		},
+		{
+			name: 'TikTok - Іван Python',
+			icon: Music,
+			href: 'https://www.tiktok.com/@ivan.smartcode.python',
+		},
+		{
+			name: 'TikTok - Артем SmartCode',
+			icon: Music,
+			href: 'https://www.tiktok.com/@Artem.smartcode.academy',
+		},
 	]
 
 	return (
