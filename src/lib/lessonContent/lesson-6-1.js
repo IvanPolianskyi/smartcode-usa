@@ -1,5 +1,5 @@
 /**
- * Lesson 6-1: Вступ до Flask та перший веб-додаток
+ * Lesson 6-1: Основи ООП: класи та об'єкти
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
@@ -8,13 +8,14 @@ export const lesson6_1 = {
   lessonId: "lesson-6-1",
   moduleId: "module-6",
   order: 1,
-  title: "Вступ до Flask та перший веб-додаток",
+  title: "Основи ООП: класи та об'єкти",
   
   learningObjectives: [
-    "Встановити Flask",
-    "Створити перший веб-додаток",
-    "Розуміти маршрутизацію",
-    "Використовувати декоратори для маршрутів"
+    "Створювати класи",
+    "Створювати об'єкти (екземпляри)",
+    "Розуміти атрибути та методи",
+    "Використовувати конструктор __init__",
+    "Розуміти концепцію ООП"
   ],
   
   estimatedTime: 90,
@@ -25,512 +26,513 @@ export const lesson6_1 = {
   theory: {
     sections: [
       {
-        title: "Що таке Flask?",
-        content: `**Flask** — легкий веб-фреймворк для Python, який дозволяє швидко створювати веб-додатки.
+        title: "Що таке ООП?",
+        content: `**ООП (Об'єктно-Орієнтоване Програмування)** — парадигма програмування, яка організує код навколо об'єктів.
 
-**Що таке веб-фреймворк?**
-Веб-фреймворк — це набір інструментів та бібліотек, які спрощують створення веб-додатків. Замість того, щоб писати все з нуля, ви використовуєте готові компоненти.
+**Основні концепції ООП:**
+1. **Класи** — шаблони для створення об'єктів
+2. **Об'єкти** — конкретні екземпляри класів
+3. **Інкапсуляція** — приховування деталей реалізації
+4. **Наслідування** — створення нових класів на основі існуючих
+5. **Поліморфізм** — різні об'єкти можуть реагувати на одну команду по-різному
 
-**Переваги Flask:**
-- **Простий та зрозумілий** — мінімальний синтаксис, легко навчитися
-- **Гнучкий** — вибираєте, які компоненти потрібні
-- **Легкий для початківців** — не перевантажений складністю
-- **Підтримує розширення** — можна додавати потрібний функціонал
-- **Легкий** — не потребує багато ресурсів
-- **Активна спільнота** — багато документації та прикладів
+**Аналогія:**
+- **Клас** = форма для печива (шаблон)
+- **Об'єкт** = конкретне печиво (екземпляр)
+- **Атрибути** = властивості (наприклад, колір, форма)
+- **Методи** = дії (наприклад, "випікати", "прикрашати")
 
-**Коли використовувати Flask:**
-- Невеликі та середні веб-додатки
-- API (RESTful сервіси)
-- Прототипування
-- Навчання веб-розробці
-- Мікросервіси
-
-**Встановлення Flask:**
-\`\`\`bash
-pip install flask
-\`\`\`
-
-**Перевірка встановлення:**
-\`\`\`bash
-python -c "import flask; print(flask.__version__)"
-\`\`\`
-
-Ви повинні побачити версію Flask (наприклад, 2.3.0).`
+**Приклад з життя:**
+- Клас: \`Student\` (студент)
+- Об'єкти: Олександр (студент), Марія (студент), Дмитро (студент)
+- Атрибути: ім'я, вік, курс
+- Методи: вчитися(), здавати_екзамен()`
       },
       {
-        title: "Перший Flask додаток",
-        content: `Створіть файл \`app.py\` з наступним кодом:
+        title: "Що таке клас?",
+        content: `**Клас** — це шаблон (blueprint) для створення об'єктів.
 
+**Створення класу:**
 \`\`\`python
-from flask import Flask
-
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    return '<h1>Привіт, світ!</h1>'
-
-if __name__ == '__main__':
-    app.run(debug=True)
+class Student:
+    pass  # Порожній клас
 \`\`\`
 
-**Розбір коду:**
-
-1. **\`from flask import Flask\`** — імпортуємо клас Flask
-2. **\`app = Flask(__name__)\`** — створюємо екземпляр додатку
-   - \`__name__\` — назва поточного модуля
-   - Flask використовує це для знаходження ресурсів
-3. **\`@app.route('/')\`** — декоратор, який визначає URL маршрут
-   - \`/\` — це головна сторінка (корінь сайту)
-4. **\`def home():\`** — функція, яка обробляє запит
-   - Повертає HTML, який відображається в браузері
-5. **\`if __name__ == '__main__':\`** — запускає сервер тільки якщо файл запущено напряму
-6. **\`app.run(debug=True)\`** — запускає сервер у режимі налагодження
-
-**Запуск додатку:**
-
-\`\`\`bash
-python app.py
+**Клас з атрибутами та методами:**
+\`\`\`python
+class Student:
+    # Атрибути класу (спільні для всіх об'єктів)
+    school = "SmartCode Academy"
+    
+    # Метод (функція всередині класу)
+    def introduce(self):
+        return f"Привіт, я студент {self.school}"
 \`\`\`
 
-Ви побачите:
-\`\`\`
- * Running on http://127.0.0.1:5000
- * Debug mode: on
-\`\`\`
+**Що може містити клас:**
+- **Атрибути** — дані (змінні)
+- **Методи** — функції (дії)
+- **Конструктор** — спеціальний метод для ініціалізації
 
-**Відкрийте браузер:**
-Перейдіть за адресою: http://127.0.0.1:5000
-
-Ви побачите "Привіт, світ!" на сторінці.
-
-**Режим налагодження (debug=True):**
-- Автоматичне перезавантаження при зміні коду
-- Детальні повідомлення про помилки
-- **Увага:** Не використовуйте debug=True у продакшені!`
+**Важливо:** Клас — це лише опис, він не виконує дії сам по собі. Для роботи потрібно створити об'єкт!`
       },
       {
-        title: "Маршрутизація (Routes)",
-        content: `**Маршрут (route)** — це URL, який відповідає певній функції.
+        title: "Що таке об'єкт?",
+        content: `**Об'єкт (екземпляр)** — це конкретний приклад класу.
 
-**Базові маршрути:**
-
+**Створення об'єкта:**
 \`\`\`python
-@app.route('/')
-def home():
-    return 'Головна сторінка'
+class Student:
+    pass
 
-@app.route('/about')
-def about():
-    return 'Про нас'
-
-@app.route('/contact')
-def contact():
-    return 'Контакти'
+# Створення об'єктів
+student1 = Student()  # student1 — це об'єкт класу Student
+student2 = Student()  # student2 — це інший об'єкт класу Student
 \`\`\`
 
-Тепер:
-- http://127.0.0.1:5000/ → "Головна сторінка"
-- http://127.0.0.1:5000/about → "Про нас"
-- http://127.0.0.1:5000/contact → "Контакти"
-
-**HTTP методи:**
-
-За замовчуванням маршрути приймають тільки GET запити. Можна вказати інші:
-
+**Кожен об'єкт унікальний:**
 \`\`\`python
-@app.route('/submit', methods=['GET', 'POST'])
-def submit():
-    if request.method == 'POST':
-        return 'Дані відправлено!'
-    return 'Форма відправки'
+student1 = Student()
+student2 = Student()
+
+print(student1)  # <__main__.Student object at 0x...>
+print(student2)  # <__main__.Student object at 0x...>
+print(student1 == student2)  # False (різні об'єкти)
 \`\`\`
 
-**Динамічні маршрути:**
-
-Можна передавати змінні через URL:
-
+**Атрибути об'єкта:**
 \`\`\`python
-@app.route('/user/<name>')
-def user(name):
-    return f'Привіт, {name}!'
+student1 = Student()
+student1.name = "Олександр"  # Додаємо атрибут об'єкту
+student1.age = 15
 
-# http://127.0.0.1:5000/user/Олександр → "Привіт, Олександр!"
+student2 = Student()
+student2.name = "Марія"
+student2.age = 16
+
+print(student1.name)  # Олександр
+print(student2.name)  # Марія
 \`\`\`
 
-**Типи конвертерів:**
-
-\`\`\`python
-@app.route('/post/<int:post_id>')
-def post(post_id):
-    return f'Пост #{post_id}'
-
-@app.route('/price/<float:price>')
-def show_price(price):
-    return f'Ціна: {price} грн'
-
-@app.route('/path/<path:subpath>')
-def show_path(subpath):
-    return f'Шлях: {subpath}'
-\`\`\`
-
-**Доступні конвертери:**
-- \`string\` (за замовчуванням) — приймає текст
-- \`int\` — ціле число
-- \`float\` — дійсне число
-- \`path\` — шлях (може містити слеші)
-- \`uuid\` — UUID формат`
+**Важливо:** Кожен об'єкт має свої власні атрибути, незалежні від інших об'єктів!`
       },
       {
-        title: "Декоратори та функції обробки",
-        content: `**Декоратор @app.route():**
+        title: "Конструктор __init__",
+        content: `**__init__** — спеціальний метод, який автоматично викликається при створенні об'єкта.
 
-Декоратор — це спеціальна функція, яка змінює поведінку іншої функції. \`@app.route()\` реєструє функцію як обробник для певного URL.
-
+**Синтаксис:**
 \`\`\`python
-@app.route('/hello')
-def hello():
-    return 'Привіт!'
+class Student:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        print(f"Створено студента: {name}")
+
+# При створенні об'єкта автоматично викликається __init__
+student = Student("Олександр", 15)
+# Виведе: Створено студента: Олександр
 \`\`\`
 
-Це еквівалентно:
-\`\`\`python
-def hello():
-    return 'Привіт!'
+**Що таке self?**
+- \`self\` — посилання на поточний об'єкт
+- Завжди перший параметр методів
+- Python автоматично передає self
+- Через self ми отримуємо доступ до атрибутів об'єкта
 
-hello = app.route('/hello')(hello)
+**Приклад:**
+\`\`\`python
+class Student:
+    def __init__(self, name, age, course):
+        self.name = name      # self.name — атрибут об'єкта
+        self.age = age        # self.age — атрибут об'єкта
+        self.course = course  # self.course — атрибут об'єкта
+
+student1 = Student("Олександр", 15, "Python")
+student2 = Student("Марія", 16, "Python")
+
+print(student1.name)   # Олександр
+print(student2.name)   # Марія
+print(student1.course)  # Python
 \`\`\`
 
-**Повернення значень:**
-
-Функція обробки може повертати:
-- **Рядок** — відображається як HTML
-- **Словник** — автоматично конвертується в JSON
-- **Кортеж** — (response, status_code) або (response, headers)
-- **Response об'єкт** — для повного контролю
-
+**Значення за замовчуванням:**
 \`\`\`python
-@app.route('/json')
-def json_data():
-    return {'name': 'Олександр', 'age': 15}
+class Student:
+    def __init__(self, name, age=15, course="Python"):
+        self.name = name
+        self.age = age
+        self.course = course
 
-@app.route('/error')
-def error():
-    return 'Помилка!', 404  # Статус код 404
-
-@app.route('/custom')
-def custom():
-    from flask import Response
-    return Response('Custom response', mimetype='text/plain')
+# Можна не вказувати всі параметри
+student1 = Student("Олександр")  # age=15, course="Python"
+student2 = Student("Марія", 16)  # course="Python"
+student3 = Student("Дмитро", 15, "Web")
 \`\`\``
       },
       {
-        title: "Структура Flask проекту",
-        content: `**Базова структура:**
+        title: "Методи класу",
+        content: `**Методи** — це функції всередині класу, які працюють з об'єктами.
 
-\`\`\`
-my_app/
-├── app.py          # Головний файл додатку
-├── templates/      # HTML шаблони (пізніше)
-├── static/         # CSS, JS, зображення (пізніше)
-└── requirements.txt # Залежності проекту
-\`\`\`
-
-**requirements.txt:**
-
-\`\`\`
-Flask==2.3.0
-\`\`\`
-
-**Встановлення залежностей:**
-
-\`\`\`bash
-pip install -r requirements.txt
-\`\`\`
-
-**Приклад повного додатку:**
-
+**Створення методу:**
 \`\`\`python
-from flask import Flask
+class Student:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def introduce(self):  # Метод завжди приймає self
+        return f"Привіт, я {self.name}, мені {self.age} років"
+    
+    def have_birthday(self):
+        self.age += 1
+        print(f"{self.name} тепер {self.age} років!")
 
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return '''
-    <html>
-        <head><title>Мій сайт</title></head>
-        <body>
-            <h1>Ласкаво просимо!</h1>
-            <p><a href="/about">Про нас</a></p>
-            <p><a href="/contact">Контакти</a></p>
-        </body>
-    </html>
-    '''
-
-@app.route('/about')
-def about():
-    return '<h1>Про нас</h1><p>Ми навчаємо Python!</p>'
-
-@app.route('/contact')
-def contact():
-    return '<h1>Контакти</h1><p>Email: info@example.com</p>'
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+# Використання
+student = Student("Олександр", 15)
+print(student.introduce())  # Привіт, я Олександр, мені 15 років
+student.have_birthday()     # Олександр тепер 16 років!
 \`\`\`
 
-**Параметри app.run():**
-- \`debug=True\` — режим налагодження
-- \`host='0.0.0.0'\` — доступ з будь-якої IP адреси
-- \`port=5000\` — порт сервера (за замовчуванням 5000)`
+**Важливо:**
+- Методи завжди приймають \`self\` як перший параметр
+- Викликаються через об'єкт: \`obj.method()\`
+- Мають доступ до атрибутів об'єкта через \`self\`
+
+**Приклад з кількома методами:**
+\`\`\`python
+class BankAccount:
+    def __init__(self, owner, balance=0):
+        self.owner = owner
+        self.balance = balance
+    
+    def deposit(self, amount):
+        """Поповнити рахунок."""
+        self.balance += amount
+        print(f"Додано {amount}. Баланс: {self.balance}")
+    
+    def withdraw(self, amount):
+        """Зняти з рахунку."""
+        if amount <= self.balance:
+            self.balance -= amount
+            print(f"Знято {amount}. Баланс: {self.balance}")
+        else:
+            print("Недостатньо коштів!")
+    
+    def get_balance(self):
+        """Отримати баланс."""
+        return self.balance
+
+account = BankAccount("Олександр", 1000)
+account.deposit(500)   # Додано 500. Баланс: 1500
+account.withdraw(200)  # Знято 200. Баланс: 1300
+print(account.get_balance())  # 1300
+\`\`\``
+      },
+      {
+        title: "Атрибути класу vs атрибути екземпляра",
+        content: `**Атрибути екземпляра** — унікальні для кожного об'єкта:
+\`\`\`python
+class Student:
+    def __init__(self, name):
+        self.name = name  # Атрибут екземпляра
+
+student1 = Student("Олександр")
+student2 = Student("Марія")
+print(student1.name)  # Олександр
+print(student2.name)  # Марія
+\`\`\`
+
+**Атрибути класу** — спільні для всіх об'єктів:
+\`\`\`python
+class Student:
+    school = "SmartCode Academy"  # Атрибут класу
+    
+    def __init__(self, name):
+        self.name = name
+
+student1 = Student("Олександр")
+student2 = Student("Марія")
+
+print(student1.school)  # SmartCode Academy
+print(student2.school)  # SmartCode Academy
+print(Student.school)   # SmartCode Academy (доступ через клас)
+\`\`\`
+
+**Коли використовувати:**
+- **Атрибути екземпляра** — для унікальних даних кожного об'єкта
+- **Атрибути класу** — для спільних даних всіх об'єктів
+
+**Приклад:**
+\`\`\`python
+class Student:
+    total_students = 0  # Атрибут класу (лічильник)
+    
+    def __init__(self, name):
+        self.name = name  # Атрибут екземпляра
+        Student.total_students += 1  # Збільшуємо лічильник
+
+student1 = Student("Олександр")
+student2 = Student("Марія")
+
+print(Student.total_students)  # 2
+\`\`\``
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад 1: Базовий Flask додаток",
-      code: `from flask import Flask
+      title: "Приклад 1: Базовий клас",
+      code: `class Student:
+    def __init__(self, name, age, course):
+        self.name = name
+        self.age = age
+        self.course = course
+    
+    def introduce(self):
+        return f"Я {self.name}, {self.age} років, вивчаю {self.course}"
+    
+    def get_info(self):
+        return {
+            "name": self.name,
+            "age": self.age,
+            "course": self.course
+        }
 
-app = Flask(__name__)
+# Створення об'єктів
+student1 = Student("Олександр", 15, "Python")
+student2 = Student("Марія", 16, "Python")
 
-@app.route('/')
-def index():
-    return '<h1>Ласкаво просимо!</h1><p>Це мій перший Flask додаток</p>'
-
-@app.route('/hello')
-def hello():
-    return '<h2>Привіт з Flask!</h2>'
-
-@app.route('/info')
-def info():
-    return '''
-    <h1>Інформація</h1>
-    <ul>
-        <li>Flask версія: 2.3.0</li>
-        <li>Python версія: 3.11</li>
-    </ul>
-    '''
-
-if __name__ == '__main__':
-    app.run(debug=True)`,
-      explanation: "Базовий Flask додаток з трьома маршрутами. Демонструє створення простих HTML сторінок."
+print(student1.introduce())
+print(student2.get_info())`,
+      explanation: "Демонструє базовий клас з конструктором та методами."
     },
     {
-      title: "Приклад 2: Динамічні маршрути",
-      code: `from flask import Flask
+      title: "Приклад 2: Атрибути класу",
+      code: `class Student:
+    school = "SmartCode Academy"  # Атрибут класу
+    total_students = 0
+    
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        Student.total_students += 1
+    
+    def introduce(self):
+        return f"Я {self.name}, навчаюся в {Student.school}"
 
-app = Flask(__name__)
+student1 = Student("Олександр", 15)
+student2 = Student("Марія", 16)
 
-@app.route('/user/<name>')
-def user(name):
-    return f'<h1>Привіт, {name}!</h1><p>Ласкаво просимо на наш сайт!</p>'
-
-@app.route('/post/<int:post_id>')
-def post(post_id):
-    return f'<h1>Пост #{post_id}</h1><p>Тут буде вміст поста</p>'
-
-@app.route('/price/<float:price>')
-def price(price):
-    return f'<h1>Ціна: {price} грн</h1>'
-
-if __name__ == '__main__':
-    app.run(debug=True)`,
-      explanation: "Демонструє використання динамічних маршрутів з різними типами конвертерів (string, int, float)."
+print(student1.introduce())
+print(f"Всього студентів: {Student.total_students}")`,
+      explanation: "Показує атрибути класу та підрахунок об'єктів."
     },
     {
-      title: "Приклад 3: JSON відповіді",
-      code: `from flask import Flask, jsonify
+      title: "Приклад 3: Складніший клас",
+      code: `class BankAccount:
+    def __init__(self, owner, balance=0):
+        self.owner = owner
+        self.balance = balance
+    
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
+            print(f"Додано {amount}. Баланс: {self.balance}")
+        else:
+            print("Сума має бути додатньою!")
+    
+    def withdraw(self, amount):
+        if amount > 0 and amount <= self.balance:
+            self.balance -= amount
+            print(f"Знято {amount}. Баланс: {self.balance}")
+        else:
+            print("Недостатньо коштів або невірна сума!")
+    
+    def get_balance(self):
+        return self.balance
+    
+    def __str__(self):
+        return f"Рахунок {self.owner}: {self.balance} грн"
 
-app = Flask(__name__)
-
-@app.route('/api/user')
-def api_user():
-    return {
-        'name': 'Олександр',
-        'age': 15,
-        'city': 'Київ'
-    }
-
-@app.route('/api/users')
-def api_users():
-    users = [
-        {'id': 1, 'name': 'Олександр', 'age': 15},
-        {'id': 2, 'name': 'Марія', 'age': 16},
-        {'id': 3, 'name': 'Дмитро', 'age': 14}
-    ]
-    return jsonify(users)
-
-if __name__ == '__main__':
-    app.run(debug=True)`,
-      explanation: "Показує, як повертати JSON дані з Flask додатку. jsonify() форматує словник у JSON відповідь."
+account = BankAccount("Олександр", 1000)
+account.deposit(500)
+account.withdraw(200)
+print(account)`,
+      explanation: "Демонструє клас з бізнес-логікою та валідацією."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Забути app.run() або запустити його неправильно",
-      explanation: "Без app.run() сервер не запуститься. Також не запускайте app.run() без перевірки __name__ == '__main__', інакше сервер запуститься двічі при імпорті.",
-      correctApproach: "Завжди використовуйте: if __name__ == '__main__': app.run(debug=True)"
+      mistake: "Забути self в методах",
+      explanation: "Без self Python не знає, з яким об'єктом працювати. Метод не зможе отримати доступ до атрибутів об'єкта.",
+      correctApproach: "Завжди додавайте self як перший параметр методів: def method(self, ...):"
     },
     {
-      mistake: "Використання debug=True у продакшені",
-      explanation: "debug=True показує детальні помилки та дозволяє виконувати код, що небезпечно для публічних сайтів.",
-      correctApproach: "Використовуйте debug=True тільки під час розробки. У продакшені встановіть debug=False."
+      mistake: "Плутанина між атрибутами класу та екземпляра",
+      explanation: "Атрибути класу спільні для всіх об'єктів, атрибути екземпляра унікальні для кожного об'єкта.",
+      correctApproach: "self.attr для екземпляра, ClassName.attr або cls.attr для класу."
     },
     {
-      mistake: "Плутанина між одинарними та подвійними слешами в URL",
-      explanation: "/user/name та /user/name/ — це різні маршрути. Flask не додає слеш автоматично.",
-      correctApproach: "Будьте уважні зі слешами. Використовуйте @app.route('/user/<name>') для /user/Олександр."
+      mistake: "Виклик методу без self",
+      explanation: "Методи завжди викликаються через об'єкт: obj.method(), не Class.method().",
+      correctApproach: "student.introduce(), а не Student.introduce(student)."
     },
     {
-      mistake: "Забути імпортувати Flask",
-      explanation: "from flask import Flask має бути на початку файлу, інакше виникне NameError.",
-      correctApproach: "Завжди додавайте from flask import Flask на початку файлу."
+      mistake: "Забути викликати __init__ при наслідуванні",
+      explanation: "При створенні дочірнього класу потрібно викликати super().__init__() для ініціалізації батьківського класу.",
+      correctApproach: "У дочірньому класі викликайте super().__init__(...) в __init__ методі."
     },
     {
-      mistake: "Неправильне використання динамічних маршрутів",
-      explanation: "Якщо не вказати тип конвертера, змінна буде рядком. Для чисел використовуйте <int:> або <float:>.",
-      correctApproach: "Використовуйте @app.route('/post/<int:post_id>') для чисел, а не @app.route('/post/<post_id>')."
+      mistake: "Спроба використати атрибут до його створення",
+      explanation: "Якщо атрибут не створено в __init__, спроба доступу викличе AttributeError.",
+      correctApproach: "Завжди ініціалізуйте всі атрибути в __init__ методі."
     }
   ],
   
   summary: `На цьому уроці ми вивчили:
 
-1. **Flask** — легкий веб-фреймворк для Python
-2. **Встановлення** — pip install flask
-3. **Створення додатку** — app = Flask(__name__)
-4. **Маршрутизація** — @app.route('/path') для створення URL маршрутів
-5. **Динамічні маршрути** — /user/<name>, /post/<int:id> з конвертерами типів
-6. **Запуск сервера** — app.run(debug=True) у режимі налагодження
-7. **JSON відповіді** — повернення словників або використання jsonify()
+1. **ООП** — парадигма програмування навколо об'єктів
+2. **Класи** — шаблони для створення об'єктів
+3. **Об'єкти** — конкретні екземпляри класів
+4. **__init__** — конструктор, ініціалізує об'єкт
+5. **self** — посилання на поточний об'єкт
+6. **Методи** — функції всередині класу
+7. **Атрибути** — дані об'єкта (екземпляра або класу)
 
-Flask дозволяє швидко створювати веб-додатки та API. Це лише початок — далі ми вивчимо шаблони, форми та багато іншого!`,
+**Основні принципи:**
+- Клас = шаблон, Об'єкт = конкретний приклад
+- self завжди перший параметр методів
+- __init__ викликається автоматично при створенні об'єкта
+- Атрибути екземпляра унікальні, атрибути класу спільні
+
+ООП допомагає організувати код та моделювати реальний світ!`,
   
   practiceTask: {
-    title: "Перший веб-додаток",
-    description: "Створіть Flask додаток з кількома сторінками та динамічними маршрутами",
-    problemStatement: `Створіть Flask додаток, який:
-1. Має головну сторінку (/) з привітанням
-2. Має сторінку "Про нас" (/about) з інформацією
-3. Має сторінку "Контакти" (/contact) з контактними даними
-4. Має динамічний маршрут /user/<name> для привітання користувача
-5. Має маршрут /post/<int:post_id> для відображення поста за ID
-6. Має API маршрут /api/info, який повертає JSON з інформацією про додаток`,
-    inputFormat: "Додаток працює через браузер, переходите за різними URL",
+    title: "Створення класу Book",
+    description: "Створіть клас для представлення книги з методами та атрибутами",
+    problemStatement: `Створіть клас Book з наступними вимогами:
+
+**Атрибути:**
+- title (назва) — обов'язковий
+- author (автор) — обов'язковий
+- year (рік видання) — обов'язковий
+- pages (кількість сторінок) — обов'язковий
+- is_read (чи прочитана) — за замовчуванням False
+- rating (оцінка) — за замовчуванням None
+
+**Методи:**
+- __init__(title, author, year, pages) — конструктор
+- read() — позначає книгу як прочитану
+- set_rating(rating) — встановлює оцінку (від 1 до 10)
+- get_info() — повертає словник з інформацією про книгу
+- is_long() — повертає True, якщо більше 300 сторінок
+- __str__() — повертає рядкове представлення книги
+
+**Додатково:**
+- Створіть атрибут класу total_books = 0
+- Збільшуйте total_books при створенні нової книги
+- Створіть метод класу get_total_books() для отримання загальної кількості
+
+**Створіть кілька об'єктів та продемонструйте роботу всіх методів.**`,
+    inputFormat: "Створіть клас та об'єкти в коді",
     outputFormat: `Приклад виведення:
-- http://127.0.0.1:5000/ → Головна сторінка
-- http://127.0.0.1:5000/about → Про нас
-- http://127.0.0.1:5000/user/Олександр → Привіт, Олександр!
-- http://127.0.0.1:5000/post/5 → Пост #5
-- http://127.0.0.1:5000/api/info → JSON з інформацією`,
+Книга: "Python Basics" (Олександр, 2024) - 250 сторінок
+Прочитана: False
+Довга книга: False
+Оцінка: None
+
+Після читання:
+Книгу 'Python Basics' прочитано!
+Прочитана: True
+Оцінка: 8
+
+Всього книг: 2`,
     examples: [
       {
-        input: "Відкрити http://127.0.0.1:5000/user/Марія",
-        output: "Привіт, Марія!",
-        explanation: "Динамічний маршрут підставляє ім'я з URL у відповідь"
-      },
-      {
-        input: "Відкрити http://127.0.0.1:5000/post/42",
-        output: "Пост #42",
-        explanation: "Маршрут з конвертером int приймає тільки цілі числа"
+        input: "Створення об'єкта Book",
+        output: "Об'єкт створено, методи працюють",
+        explanation: "Демонстрація роботи з класом та об'єктами"
       }
     ],
     solution: {
-      code: `from flask import Flask, jsonify
+      code: `class Book:
+    total_books = 0  # Атрибут класу
+    
+    def __init__(self, title, author, year, pages):
+        self.title = title
+        self.author = author
+        self.year = year
+        self.pages = pages
+        self.is_read = False
+        self.rating = None
+        Book.total_books += 1  # Збільшуємо лічильник
+    
+    def read(self):
+        """Позначає книгу як прочитану."""
+        self.is_read = True
+        print(f"Книгу '{self.title}' прочитано!")
+    
+    def set_rating(self, rating):
+        """Встановлює оцінку книги (від 1 до 10)."""
+        if 1 <= rating <= 10:
+            self.rating = rating
+            print(f"Оцінка встановлена: {rating}")
+        else:
+            print("Оцінка має бути від 1 до 10!")
+    
+    def get_info(self):
+        """Повертає інформацію про книгу."""
+        return {
+            "title": self.title,
+            "author": self.author,
+            "year": self.year,
+            "pages": self.pages,
+            "is_read": self.is_read,
+            "rating": self.rating
+        }
+    
+    def is_long(self):
+        """Перевіряє, чи книга довга (>300 сторінок)."""
+        return self.pages > 300
+    
+    def __str__(self):
+        """Рядкове представлення книги."""
+        status = "прочитана" if self.is_read else "не прочитана"
+        rating_text = f", оцінка: {self.rating}" if self.rating else ""
+        return f'"{self.title}" ({self.author}, {self.year}) - {self.pages} сторінок, {status}{rating_text}'
+    
+    @classmethod
+    def get_total_books(cls):
+        """Повертає загальну кількість книг."""
+        return cls.total_books
 
-app = Flask(__name__)
+# Створення об'єктів
+book1 = Book("Python Basics", "Олександр", 2024, 250)
+book2 = Book("Advanced Python", "Марія", 2024, 450)
 
-@app.route('/')
-def home():
-    return '''
-    <html>
-        <head><title>Мій сайт</title></head>
-        <body>
-            <h1>Головна</h1>
-            <p>Ласкаво просимо на мій перший Flask додаток!</p>
-            <nav>
-                <a href="/about">Про нас</a> | 
-                <a href="/contact">Контакти</a>
-            </nav>
-        </body>
-    </html>
-    '''
+# Використання методів
+print(book1)
+print(f"Довга книга: {book1.is_long()}")
 
-@app.route('/about')
-def about():
-    return '''
-    <html>
-        <head><title>Про нас</title></head>
-        <body>
-            <h1>Про нас</h1>
-            <p>Ми навчаємо Python та веб-розробці!</p>
-            <p><a href="/">На головну</a></p>
-        </body>
-    </html>
-    '''
+book1.read()
+book1.set_rating(8)
+print(book1)
 
-@app.route('/contact')
-def contact():
-    return '''
-    <html>
-        <head><title>Контакти</title></head>
-        <body>
-            <h1>Контакти</h1>
-            <p>Email: info@example.com</p>
-            <p>Телефон: +380 12 345 67 89</p>
-            <p><a href="/">На головну</a></p>
-        </body>
-    </html>
-    '''
+print(f"\\n{book2.title}: {book2.pages} сторінок")
+print(f"Довга книга: {book2.is_long()}")
 
-@app.route('/user/<name>')
-def user(name):
-    return f'''
-    <html>
-        <head><title>Привіт, {name}!</title></head>
-        <body>
-            <h1>Привіт, {name}!</h1>
-            <p>Ласкаво просимо на наш сайт!</p>
-            <p><a href="/">На головну</a></p>
-        </body>
-    </html>
-    '''
-
-@app.route('/post/<int:post_id>')
-def post(post_id):
-    return f'''
-    <html>
-        <head><title>Пост #{post_id}</title></head>
-        <body>
-            <h1>Пост #{post_id}</h1>
-            <p>Тут буде вміст поста з ID {post_id}</p>
-            <p><a href="/">На головну</a></p>
-        </body>
-    </html>
-    '''
-
-@app.route('/api/info')
-def api_info():
-    return jsonify({
-        'name': 'Мій Flask додаток',
-        'version': '1.0',
-        'author': 'Олександр',
-        'description': 'Перший веб-додаток на Flask'
-    })
-
-if __name__ == '__main__':
-    app.run(debug=True)`,
-      explanation: "Повний Flask додаток з статичними та динамічними маршрутами, HTML відповідями та JSON API."
+# Використання методу класу
+print(f"\\nВсього книг: {Book.get_total_books()}")`,
+      explanation: "Рішення демонструє повний клас з усіма вимогами, включаючи атрибути класу та методи."
     },
     hints: [
-      "Створіть файл app.py та імпортуйте Flask",
-      "Використовуйте @app.route() для кожного маршруту",
-      "Для динамічних маршрутів використовуйте <name> або <int:post_id>",
-      "Для JSON відповіді використовуйте jsonify() або просто повертайте словник",
-      "Не забудьте app.run(debug=True) в блоці if __name__ == '__main__'"
+      "Використовуйте self для доступу до атрибутів",
+      "Методи повинні приймати self як перший параметр",
+      "is_long() повертає булеве значення",
+      "Використовуйте @classmethod для методу класу",
+      "Не забудьте збільшувати total_books в __init__"
     ],
     difficulty: "beginner"
   },
@@ -540,54 +542,45 @@ if __name__ == '__main__':
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що таке Flask?",
-        options: ["База даних", "Веб-фреймворк", "Мова програмування", "Редактор коду"],
+        question: "Що таке клас?",
+        options: ["Конкретний об'єкт", "Шаблон для створення об'єктів", "Функція", "Змінна"],
         correctAnswer: 1,
-        explanation: "Flask — це легкий веб-фреймворк для Python, який дозволяє створювати веб-додатки."
+        explanation: "Клас — це шаблон (blueprint) для створення об'єктів."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе цей код при відкритті http://127.0.0.1:5000/user/Олександр?\n\n```python\n@app.route('/user/<name>')\ndef user(name):\n    return f'Привіт, {name}!'\n```",
-        options: ["Привіт, name!", "Привіт, Олександр!", "Помилку", "Нічого"],
-        correctAnswer: 1,
-        explanation: "Динамічний маршрут /user/<name> підставляє значення з URL у змінну name, тому виведе 'Привіт, Олександр!'."
+        question: "Що виведе: class A: x=1; a=A(); print(a.x)?",
+        options: ["1", "Помилку", "None", "A"],
+        correctAnswer: 0,
+        explanation: "a.x звертається до атрибута x об'єкта a, який успадковує значення 1 від класу."
       },
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Який конвертер потрібен для прийняття цілого числа в URL?",
-        options: ["<string:id>", "<int:id>", "<number:id>", "<integer:id>"],
+        question: "Що таке self?",
+        options: ["Ключове слово", "Посилання на поточний об'єкт", "Метод", "Клас"],
         correctAnswer: 1,
-        explanation: "<int:id> — правильний конвертер для цілих чисел. Flask автоматично конвертує рядок у int."
+        explanation: "self — це посилання на поточний об'єкт, завжди перший параметр методів."
       },
       {
         id: "q4",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Чому важливо використовувати if __name__ == '__main__' перед app.run()?",
-        options: ["Щоб сервер запускався швидше", "Щоб уникнути подвійного запуску при імпорті", "Щоб зберегти пам'ять", "Це не обов'язково"],
-        correctAnswer: 1,
-        explanation: "Без перевірки __name__ == '__main__' сервер може запуститися двічі, якщо файл імпортується як модуль."
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе: class S: def __init__(self, n): self.n=n; s=S('test'); print(s.n)?",
+        options: ["test", "Помилку", "None", "S"],
+        correctAnswer: 0,
+        explanation: "__init__ встановлює self.n = 'test', тому s.n поверне 'test'."
       },
       {
         id: "q5",
-        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
-        question: "debug=True можна безпечно використовувати у продакшені (публічних сайтах).",
-        options: ["True", "False"],
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Коли викликається __init__?",
+        options: ["При визначенні класу", "При створенні об'єкта", "При виклику методу", "Ніколи"],
         correctAnswer: 1,
-        explanation: "False. debug=True показує детальні помилки та дозволяє виконувати код, що небезпечно для публічних сайтів. Використовуйте тільки під час розробки."
-      },
-      {
-        id: "q6",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що поверне цей маршрут?\n\n```python\n@app.route('/api/data')\ndef data():\n    return {'name': 'Олександр', 'age': 15}\n```",
-        options: ["HTML сторінку", "JSON відповідь", "Помилку", "Текст"],
-        correctAnswer: 1,
-        explanation: "Flask автоматично конвертує словник у JSON відповідь з правильними заголовками."
+        explanation: "__init__ автоматично викликається при створенні об'єкта: obj = ClassName()."
       }
     ],
-    timeLimit: 15,
+    timeLimit: 12,
     passingScore: 70
   }
 }
-

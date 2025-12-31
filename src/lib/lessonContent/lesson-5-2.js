@@ -1,5 +1,5 @@
 /**
- * Lesson 5-2: Методи та властивості
+ * Lesson 5-2: Контекстний менеджер with
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
@@ -8,16 +8,17 @@ export const lesson5_2 = {
   lessonId: "lesson-5-2",
   moduleId: "module-5",
   order: 2,
-  title: "Методи та властивості",
+  title: "Контекстний менеджер with",
   
   learningObjectives: [
-    "Створювати методи екземпляра",
-    "Використовувати методи класу (@classmethod)",
-    "Застосовувати статичні методи (@staticmethod)",
-    "Використовувати property декоратор"
+    "Використовувати контекстний менеджер with",
+    "Розуміти переваги with",
+    "Автоматично закривати файли",
+    "Уникати витоку ресурсів",
+    "Розуміти принцип роботи контекстних менеджерів"
   ],
   
-  estimatedTime: 105,
+  estimatedTime: 60,
   prerequisites: ["lesson-5-1"],
   
   videoUrl: "",
@@ -25,310 +26,479 @@ export const lesson5_2 = {
   theory: {
     sections: [
       {
-        title: "Методи екземпляра",
-        content: `**Методи екземпляра** — працюють з конкретним об'єктом (завжди мають self).
+        title: "Проблема з close()",
+        content: `**Проблема:** Легко забути закрити файл або закрити його не завжди.
 
+**Приклади проблем:**
 \`\`\`python
-class Student:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-    
-    def introduce(self):  # Метод екземпляра
-        return f"Я {self.name}, мені {self.age} років"
-    
-    def have_birthday(self):  # Метод екземпляра
-        self.age += 1
+# Проблема 1: Забули close()
+file = open("data.txt", "r")
+content = file.read()
+# Забули file.close() - файл залишився відкритим!
 
-student = Student("Олександр", 15)
-print(student.introduce())  # Виклик методу екземпляра
+# Проблема 2: Помилка перед close()
+file = open("data.txt", "r")
+content = file.read()
+result = 10 / 0  # Помилка! close() не викличеться
+file.close()  # Цей рядок не виконається
 \`\`\`
 
-**Важливо:** Методи екземпляра завжди приймають \`self\` як перший параметр.`
+**Наслідки:**
+- Файл залишається відкритим
+- Дані можуть не зберегтися
+- Файл може бути заблокований
+- Витрата ресурсів пам'яті
+
+**Рішення:** Контекстний менеджер \`with\`!`
       },
       {
-        title: "Методи класу (@classmethod)",
-        content: `**@classmethod** — метод, який працює з класом, а не з об'єктом.
+        title: "Що таке контекстний менеджер?",
+        content: `**Контекстний менеджер** — об'єкт, який автоматично виконує дії при вході та виході з блоку коду.
 
+**Синтаксис:**
 \`\`\`python
-class Student:
-    total_students = 0
-    
-    def __init__(self, name):
-        self.name = name
-        Student.total_students += 1
-    
-    @classmethod
-    def get_total(cls):
-        return cls.total_students
-    
-    @classmethod
-    def create_from_string(cls, data_string):
-        # "Олександр,15" -> Student("Олександр", 15)
-        name, age = data_string.split(",")
-        return cls(name, int(age))
-
-# Використання
-print(Student.get_total())  # 0
-student1 = Student("Олександр")
-print(Student.get_total())  # 1
-
-student2 = Student.create_from_string("Марія,16")
-print(student2.name)  # Марія
+with open("файл.txt", "режим") as file:
+    # Робота з файлом
+    content = file.read()
+# Тут файл автоматично закриється!
 \`\`\`
 
-**Коли використовувати:**
-- Альтернативні конструктори
-- Робота з атрибутами класу
-- Фабричні методи`
-      },
-      {
-        title: "Статичні методи (@staticmethod)",
-        content: `**@staticmethod** — метод, який не потребує self або cls.
-
-\`\`\`python
-class MathUtils:
-    @staticmethod
-    def add(a, b):
-        return a + b
-    
-    @staticmethod
-    def multiply(a, b):
-        return a * b
-
-# Виклик без створення об'єкта
-result = MathUtils.add(5, 3)  # 8
-result2 = MathUtils.multiply(4, 2)  # 8
-
-# Або через об'єкт
-utils = MathUtils()
-result3 = utils.add(10, 5)  # 15
-\`\`\`
-
-**Коли використовувати:**
-- Утилітарні функції, пов'язані з класом
-- Функції, які не потребують доступу до self або cls
-- Логіка, яка логічно належить класу, але не залежить від стану`
-      },
-      {
-        title: "Property декоратор",
-        content: `**@property** — перетворює метод в атрибут, який можна читати як змінну.
-
-\`\`\`python
-class Circle:
-    def __init__(self, radius):
-        self._radius = radius  # Приватний атрибут
-    
-    @property
-    def radius(self):
-        return self._radius
-    
-    @radius.setter
-    def radius(self, value):
-        if value < 0:
-            raise ValueError("Радіус не може бути від'ємним")
-        self._radius = value
-    
-    @property
-    def area(self):
-        return 3.14159 * self._radius ** 2
-
-circle = Circle(5)
-print(circle.radius)  # 5 (викликається метод, але виглядає як атрибут)
-print(circle.area)    # 78.54 (обчислюється автоматично)
-
-circle.radius = 10    # Викликається setter
-print(circle.area)    # 314.159
-\`\`\`
+**Як це працює:**
+1. Відкриває файл
+2. Виконує код всередині блоку
+3. **Автоматично закриває файл** (навіть якщо виникла помилка!)
 
 **Переваги:**
-- Валідація при встановленні значення
-- Обчислення на льоту
-- Інкапсуляція (приховування внутрішньої реалізації)`
+- ✅ Автоматичне закриття файлу
+- ✅ Працює навіть при помилках
+- ✅ Чистіший код
+- ✅ Менше помилок`
+      },
+      {
+        title: "Базове використання with",
+        content: `**Приклад 1: Читання файлу**
+\`\`\`python
+with open("data.txt", "r", encoding="utf-8") as file:
+    content = file.read()
+    print(content)
+# Файл автоматично закрито!
+
+# Спробувати прочитати після блоку - помилка!
+# content = file.read()  # ValueError: I/O operation on closed file
+\`\`\`
+
+**Приклад 2: Запис у файл**
+\`\`\`python
+with open("output.txt", "w", encoding="utf-8") as file:
+    file.write("Привіт, світ!\\n")
+    file.write("Це другий рядок")
+# Файл автоматично закрито, дані збережено!
+\`\`\`
+
+**Приклад 3: Обробка помилок**
+\`\`\`python
+try:
+    with open("data.txt", "r", encoding="utf-8") as file:
+        content = file.read()
+        result = 10 / 0  # Помилка!
+        # Але файл все одно закриється!
+except ZeroDivisionError:
+    print("Помилка обчислення")
+# Файл гарантовано закрито, навіть при помилці!
+\`\`\`
+
+**Важливо:** Файл закривається автоматично, навіть якщо виникла помилка!`
+      },
+      {
+        title: "Кілька файлів одночасно",
+        content: `**Можна відкривати кілька файлів одночасно:**
+
+\`\`\`python
+# Читання з одного файлу та запис у інший
+with open("input.txt", "r", encoding="utf-8") as input_file, \\
+     open("output.txt", "w", encoding="utf-8") as output_file:
+    content = input_file.read()
+    output_file.write(content.upper())
+# Обидва файли автоматично закрито!
+\`\`\`
+
+**Альтернативний синтаксис (багаторядковий):**
+\`\`\`python
+with open("input.txt", "r", encoding="utf-8") as input_file:
+    with open("output.txt", "w", encoding="utf-8") as output_file:
+        content = input_file.read()
+        output_file.write(content.upper())
+# Обидва файли закрито!
+\`\`\`
+
+**Приклад: Копіювання файлу**
+\`\`\`python
+with open("source.txt", "r", encoding="utf-8") as source, \\
+     open("copy.txt", "w", encoding="utf-8") as destination:
+    destination.write(source.read())
+print("Файл скопійовано!")
+\`\`\``
+      },
+      {
+        title: "Порівняння: з with та без with",
+        content: `**Без with (старий спосіб):**
+\`\`\`python
+file = open("data.txt", "r", encoding="utf-8")
+try:
+    content = file.read()
+    # Якщо тут виникне помилка, close() не викличеться
+    result = 10 / 0
+finally:
+    file.close()  # Потрібно вручну закривати
+\`\`\`
+
+**З with (рекомендований спосіб):**
+\`\`\`python
+with open("data.txt", "r", encoding="utf-8") as file:
+    content = file.read()
+    result = 10 / 0  # Помилка, але файл закриється!
+# Файл автоматично закрито!
+\`\`\`
+
+**Переваги with:**
+- ✅ Менше коду
+- ✅ Автоматичне закриття
+- ✅ Працює при помилках
+- ✅ Більш читабельний код
+- ✅ Менше можливостей для помилок
+
+**Висновок:** Завжди використовуйте \`with\` для роботи з файлами!`
+      },
+      {
+        title: "Що ще можна використовувати з with?",
+        content: `**Контекстні менеджери працюють не тільки з файлами:**
+
+**1. Бібліотеки для роботи з базами даних**
+\`\`\`python
+with database.connection() as conn:
+    # Робота з базою даних
+    pass
+# З'єднання автоматично закрито
+\`\`\`
+
+**2. Блокування потоків (threading)**
+\`\`\`python
+with lock:
+    # Критична секція коду
+    pass
+# Блокування автоматично знято
+\`\`\`
+
+**3. Власні контекстні менеджери (вивчимо пізніше)**
+\`\`\`python
+class MyContextManager:
+    def __enter__(self):
+        # Код при вході
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        # Код при виході
+        pass
+
+with MyContextManager() as cm:
+    # Робота з ресурсом
+    pass
+\`\`\`
+
+**Головна ідея:** Контекстні менеджери гарантують правильне управління ресурсами!`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад 1: Різні типи методів",
-      code: `class Student:
-    school = "SmartCode Academy"
-    total = 0
-    
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-        Student.total += 1
-    
-    def introduce(self):  # Метод екземпляра
-        return f"Я {self.name}, навчаюся в {Student.school}"
-    
-    @classmethod
-    def get_total(cls):
-        return cls.total
-    
-    @classmethod
-    def create_default(cls):
-        return cls("Новий студент", 15)
-    
-    @staticmethod
-    def is_adult(age):
-        return age >= 18
+      title: "Приклад 1: Базове використання with",
+      code: `# Читання файлу
+with open("students.txt", "r", encoding="utf-8") as file:
+    content = file.read()
+    print(content)
+# Файл автоматично закрито!
 
-student1 = Student("Олександр", 15)
-print(student1.introduce())
-print(f"Всього студентів: {Student.get_total()}")
-print(f"Дорослий: {Student.is_adult(20)}")`,
-      explanation: "Демонструє всі типи методів в одному класі."
+# Запис у файл
+with open("output.txt", "w", encoding="utf-8") as file:
+    file.write("Привіт, світ!\\n")
+    file.write("Це другий рядок")
+# Файл автоматично закрито, дані збережено!`,
+      explanation: "Демонструє базове використання контекстного менеджера with для читання та запису."
     },
     {
-      title: "Приклад 2: Property",
-      code: `class Temperature:
-    def __init__(self, celsius):
-        self._celsius = celsius
-    
-    @property
-    def celsius(self):
-        return self._celsius
-    
-    @celsius.setter
-    def celsius(self, value):
-        if value < -273.15:
-            raise ValueError("Температура не може бути нижче абсолютного нуля")
-        self._celsius = value
-    
-    @property
-    def fahrenheit(self):
-        return self._celsius * 9/5 + 32
+      title: "Приклад 2: Обробка помилок з with",
+      code: `# Навіть при помилці файл закриється!
+try:
+    with open("data.txt", "r", encoding="utf-8") as file:
+        content = file.read()
+        result = 10 / 0  # Помилка ділення на нуль
+        print("Цей рядок не виконається")
+except ZeroDivisionError:
+    print("Помилка обчислення")
+# Файл гарантовано закрито, навіть при помилці!
 
-temp = Temperature(25)
-print(f"{temp.celsius}°C = {temp.fahrenheit}°F")
-temp.celsius = 30
-print(f"Нова температура: {temp.celsius}°C")`,
-      explanation: "Показує використання property для валідації та обчислень."
+# Перевірка, що файл закрито
+try:
+    with open("data.txt", "r", encoding="utf-8") as file:
+        content = file.read()
+    # Тут файл вже закрито
+    file.read()  # Спроба прочитати - помилка!
+except ValueError as e:
+    print(f"Помилка: {e}")  # I/O operation on closed file`,
+      explanation: "Показує, що файл закривається автоматично навіть при помилках."
+    },
+    {
+      title: "Приклад 3: Копіювання файлу",
+      code: `# Копіювання вмісту одного файлу в інший
+with open("source.txt", "r", encoding="utf-8") as source, \\
+     open("destination.txt", "w", encoding="utf-8") as destination:
+    content = source.read()
+    destination.write(content)
+    print("Файл скопійовано!")
+# Обидва файли автоматично закрито!`,
+      explanation: "Демонструє відкриття кількох файлів одночасно з with."
+    },
+    {
+      title: "Приклад 4: Обробка даних з файлу",
+      code: `# Читання, обробка та запис
+with open("input.txt", "r", encoding="utf-8") as input_file:
+    lines = input_file.readlines()
+
+# Обробка даних (поза контекстним менеджером)
+processed_lines = []
+for line in lines:
+    processed_lines.append(line.strip().upper() + "\\n")
+
+# Запис оброблених даних
+with open("output.txt", "w", encoding="utf-8") as output_file:
+    output_file.writelines(processed_lines)
+    print("Дані оброблено та збережено!")`,
+      explanation: "Показує читання, обробку та запис даних з використанням with."
+    },
+    {
+      title: "Приклад 5: Додавання до файлу з with",
+      code: `# Додавання записів у лог-файл
+import datetime
+
+def додати_лог(повідомлення):
+    """Додає запис у лог-файл з датою та часом."""
+    зараз = datetime.datetime.now()
+    дата_час = зараз.strftime("%Y-%m-%d %H:%M:%S")
+    
+    with open("app.log", "a", encoding="utf-8") as log_file:
+        log_file.write(f"{дата_час}: {повідомлення}\\n")
+
+# Використання
+додати_лог("Програма запущена")
+додати_лог("Обробка даних")
+додати_лог("Програма завершена")
+
+# Читання логів
+with open("app.log", "r", encoding="utf-8") as log_file:
+    print("=== Логи ===")
+    print(log_file.read())`,
+      explanation: "Демонструє практичне використання with для логування."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Плутанина між @classmethod та @staticmethod",
-      explanation: "@classmethod отримує cls, @staticmethod не отримує ні self, ні cls.",
-      correctApproach: "Використовуйте @classmethod для роботи з класом, @staticmethod для утиліт."
+      mistake: "Спроба використати файл після блоку with",
+      explanation: "Після виходу з блоку with файл автоматично закривається. Спроба прочитати або записати викличе ValueError.",
+      correctApproach: "Використовуйте файл тільки всередині блоку with. Якщо потрібні дані після закриття, збережіть їх у змінну."
     },
     {
-      mistake: "Забути @property перед getter",
-      explanation: "Без @property метод не можна викликати як атрибут.",
-      correctApproach: "Завжди додавайте @property перед getter методом."
+      mistake: "Використання старого способу (без with) замість with",
+      explanation: "Старий спосіб з file.close() більш схильний до помилок та витоку ресурсів.",
+      correctApproach: "Завжди використовуйте with open() для роботи з файлами - це безпечніше та зручніше."
     },
     {
-      mistake: "Використання @classmethod замість @staticmethod",
-      explanation: "Якщо метод не потребує доступу до класу, використовуйте @staticmethod.",
-      correctApproach: "@staticmethod для незалежних функцій, @classmethod для роботи з класом."
+      mistake: "Забути encoding='utf-8' в with",
+      explanation: "Навіть з with потрібно вказувати кодування для українського тексту.",
+      correctApproach: "Завжди вказуйте encoding='utf-8': with open('file.txt', 'r', encoding='utf-8') as file:"
+    },
+    {
+      mistake: "Спроба відкрити файл, який не існує, без обробки помилок",
+      explanation: "Якщо файл не існує, open() з режимом 'r' викличе FileNotFoundError.",
+      correctApproach: "Використовуйте try/except для обробки FileNotFoundError або перевіряйте існування файлу."
     }
   ],
   
   summary: `На цьому уроці ми вивчили:
 
-1. **Методи екземпляра** — працюють з об'єктом (self)
-2. **@classmethod** — працюють з класом (cls)
-3. **@staticmethod** — незалежні функції
-4. **@property** — методи як атрибути
-5. **@setter** — валідація при встановленні значення
+1. **Контекстний менеджер with** — автоматично закриває файли
+2. **Синтаксис:** with open("file.txt", "r") as file: ...
+3. **Переваги:** автоматичне закриття, працює при помилках, чистий код
+4. **Кілька файлів:** можна відкривати кілька файлів одночасно
+5. **Гарантія:** файл завжди закриється, навіть при помилках
 
-Різні типи методів для різних потреб!`,
+**Рекомендація:** Завжди використовуйте \`with\` для роботи з файлами!
+
+Це найбезпечніший та найзручніший спосіб роботи з файлами в Python!`,
   
   practiceTask: {
-    title: "Клас Rectangle з різними методами",
-    description: "Створіть клас з методами різних типів",
-    problemStatement: `Створіть клас Rectangle з наступними вимогами:
+    title: "Створення системи резервного копіювання",
+    description: "Створіть програму для резервного копіювання файлів з використанням with",
+    problemStatement: `Створіть програму для резервного копіювання файлів з наступними функціями:
 
-**Атрибути:**
-- width (ширина)
-- height (висота)
+**Функція 1: Створити резервну копію файлу**
+- Приймає назву файлу
+- Створює копію з назвою "файл_backup.txt"
+- Використовує with для обох файлів
+- Виводить повідомлення про успіх
 
-**Методи екземпляра:**
-- area() — повертає площу
-- perimeter() — повертає периметр
+**Функція 2: Створити резервну копію з датою**
+- Створює копію з назвою "файл_2024-01-15.txt"
+- Використовує поточну дату в назві
+- Використовує with
 
-**@classmethod:**
-- create_square(side) — створює квадрат (width == height)
+**Функція 3: Відновити файл з резервної копії**
+- Приймає назву оригінального файлу та резервної копії
+- Відновлює файл з копії
+- Використовує with
 
-**@staticmethod:**
-- is_valid(width, height) — перевіряє, чи додатні значення
+**Вимоги:**
+- Використовуйте тільки with (без file.close())
+- Обробіть помилки (FileNotFoundError)
+- Використовуйте encoding='utf-8'
+- Додайте перевірку існування файлів
 
-**@property:**
-- area (тільки для читання) — повертає площу
-- is_square — True, якщо це квадрат`,
-    inputFormat: "Створіть клас та продемонструйте всі методи",
+**Приклад використання:**
+\`\`\`
+1. Створити резервну копію
+2. Створити резервну копію з датою
+3. Відновити файл
+0. Вихід
+Виберіть дію: 1
+Введіть назву файлу: data.txt
+Резервна копія створена: data_backup.txt
+\`\`\``,
+    inputFormat: "Створіть програму з меню та функціями",
     outputFormat: `Приклад виведення:
-Прямокутник: 5x3
-Площа: 15
-Периметр: 16
-Це квадрат: False`,
+=== Система резервного копіювання ===
+1. Створити резервну копію
+2. Створити резервну копію з датою
+3. Відновити файл
+0. Вихід
+
+Виберіть дію: 1
+Введіть назву файлу: data.txt
+Резервна копія створена: data_backup.txt`,
     examples: [
       {
-        input: "Створення прямокутника та квадрата",
-        output: "Всі методи працюють коректно",
-        explanation: "Демонстрація різних типів методів"
+        input: "Створити копію: data.txt",
+        output: "Створено data_backup.txt",
+        explanation: "Програма створює резервну копію файлу"
+      },
+      {
+        input: "Відновити data.txt з data_backup.txt",
+        output: "Файл відновлено",
+        explanation: "Програма відновлює оригінальний файл з копії"
       }
     ],
     solution: {
-      code: `class Rectangle:
-    def __init__(self, width, height):
-        if not Rectangle.is_valid(width, height):
-            raise ValueError("Ширина та висота мають бути додатніми")
-        self.width = width
-        self.height = height
-    
-    def area(self):
-        return self.width * self.height
-    
-    def perimeter(self):
-        return 2 * (self.width + self.height)
-    
-    @classmethod
-    def create_square(cls, side):
-        return cls(side, side)
-    
-    @staticmethod
-    def is_valid(width, height):
-        return width > 0 and height > 0
-    
-    @property
-    def area_property(self):
-        return self.width * self.height
-    
-    @property
-    def is_square(self):
-        return self.width == self.height
-    
-    def __str__(self):
-        shape = "квадрат" if self.is_square else "прямокутник"
-        return f"{shape}: {self.width}x{self.height}"
+      code: `from datetime import datetime
+import os
 
-# Використання
-rect = Rectangle(5, 3)
-print(rect)
-print(f"Площа (метод): {rect.area()}")
-print(f"Площа (property): {rect.area_property}")
-print(f"Периметр: {rect.perimeter()}")
-print(f"Це квадрат: {rect.is_square}")
+def створити_резервну_копію(назва_файлу):
+    """Створює резервну копію файлу."""
+    if not os.path.exists(назва_файлу):
+        print(f"Помилка: Файл '{назва_файлу}' не знайдено!")
+        return False
+    
+    резервна_копія = f"{назва_файлу}_backup.txt"
+    
+    try:
+        with open(назва_файлу, "r", encoding="utf-8") as source, \\
+             open(резервна_копія, "w", encoding="utf-8") as backup:
+            content = source.read()
+            backup.write(content)
+        
+        print(f"Резервна копія створена: {резервна_копія}")
+        return True
+    except Exception as e:
+        print(f"Помилка при створенні копії: {e}")
+        return False
 
-# Створення квадрата через classmethod
-square = Rectangle.create_square(4)
-print(f"\\n{square}")
-print(f"Це квадрат: {square.is_square}")
+def створити_резервну_копію_з_датою(назва_файлу):
+    """Створює резервну копію з датою в назві."""
+    if not os.path.exists(назва_файлу):
+        print(f"Помилка: Файл '{назва_файлу}' не знайдено!")
+        return False
+    
+    зараз = datetime.now()
+    дата = зараз.strftime("%Y-%m-%d")
+    резервна_копія = f"{назва_файлу}_{дата}.txt"
+    
+    try:
+        with open(назва_файлу, "r", encoding="utf-8") as source, \\
+             open(резервна_копія, "w", encoding="utf-8") as backup:
+            content = source.read()
+            backup.write(content)
+        
+        print(f"Резервна копія з датою створена: {резервна_копія}")
+        return True
+    except Exception as e:
+        print(f"Помилка при створенні копії: {e}")
+        return False
 
-# Використання staticmethod
-print(f"\\nВалідність (5, 3): {Rectangle.is_valid(5, 3)}")
-print(f"Валідність (-1, 3): {Rectangle.is_valid(-1, 3)}")`,
-      explanation: "Рішення демонструє всі типи методів та property в одному класі."
+def відновити_файл(оригінальний_файл, резервна_копія):
+    """Відновлює файл з резервної копії."""
+    if not os.path.exists(резервна_копія):
+        print(f"Помилка: Резервна копія '{резервна_копія}' не знайдена!")
+        return False
+    
+    try:
+        with open(резервна_копія, "r", encoding="utf-8") as backup, \\
+             open(оригінальний_файл, "w", encoding="utf-8") as original:
+            content = backup.read()
+            original.write(content)
+        
+        print(f"Файл '{оригінальний_файл}' відновлено з '{резервна_копія}'")
+        return True
+    except Exception as e:
+        print(f"Помилка при відновленні: {e}")
+        return False
+
+def головне_меню():
+    """Головне меню програми."""
+    while True:
+        print("\\n=== Система резервного копіювання ===")
+        print("1. Створити резервну копію")
+        print("2. Створити резервну копію з датою")
+        print("3. Відновити файл")
+        print("0. Вихід")
+        
+        вибір = input("Виберіть дію: ")
+        
+        if вибір == "1":
+            назва = input("Введіть назву файлу: ")
+            створити_резервну_копію(назва)
+        elif вибір == "2":
+            назва = input("Введіть назву файлу: ")
+            створити_резервну_копію_з_датою(назва)
+        elif вибір == "3":
+            оригінал = input("Введіть назву оригінального файлу: ")
+            копія = input("Введіть назву резервної копії: ")
+            відновити_файл(оригінал, копія)
+        elif вибір == "0":
+            print("До побачення!")
+            break
+        else:
+            print("Невірний вибір! Спробуйте ще раз.")
+
+# Запуск програми
+if __name__ == "__main__":
+    головне_меню()`,
+      explanation: "Рішення демонструє повну програму для резервного копіювання з використанням with для всіх операцій з файлами."
     },
     hints: [
-      "Використовуйте @classmethod для альтернативного конструктора",
-      "@staticmethod для валідації",
-      "@property для обчислюваних атрибутів"
+      "Використовуйте with для обох файлів (джерело та призначення)",
+      "Використовуйте datetime.now() та strftime() для форматування дати",
+      "Обробіть FileNotFoundError для перевірки існування файлів",
+      "Не забудьте encoding='utf-8'",
+      "Використовуйте os.path.exists() для перевірки існування файлів"
     ],
     difficulty: "intermediate"
   },
@@ -338,30 +508,45 @@ print(f"Валідність (-1, 3): {Rectangle.is_valid(-1, 3)}")`,
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Який параметр отримує @classmethod?",
-        options: ["self", "cls", "obj", "Ніякого"],
-        correctAnswer: 1,
-        explanation: "@classmethod отримує cls (посилання на клас) як перший параметр."
+        question: "Що робить контекстний менеджер with?",
+        options: ["Відкриває файл", "Автоматично закриває файл", "Читає файл", "Всі вище"],
+        correctAnswer: 3,
+        explanation: "Контекстний менеджер with відкриває файл, дозволяє працювати з ним, і автоматично закриває його після виходу з блоку."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе: @staticmethod def add(a,b): return a+b; Math.add(2,3)?",
-        options: ["5", "Помилку", "None", "add"],
-        correctAnswer: 0,
-        explanation: "@staticmethod дозволяє викликати метод без створення об'єкта, результат 2+3=5."
+        question: "Що станеться з файлом у цьому коді?\nwith open('data.txt', 'r') as file:\n    content = file.read()\n    result = 10 / 0\nprint('Готово')",
+        options: ["Файл залишиться відкритим", "Файл закриється автоматично", "Виникне помилка", "Код не виконається"],
+        correctAnswer: 1,
+        explanation: "Навіть при помилці (ZeroDivisionError) файл автоматично закриється, бо with гарантує виклик __exit__ при виході з блоку."
       },
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Для чого використовується @property?",
-        options: ["Створення методів", "Перетворення методів в атрибути", "Валідація", "Всі вище"],
-        correctAnswer: 3,
-        explanation: "@property дозволяє викликати метод як атрибут, з можливістю валідації через setter."
+        question: "Яка перевага with перед звичайним open()?",
+        options: ["Швидше працює", "Автоматично закриває файл навіть при помилках", "Менше пам'яті використовує", "Підтримує більше форматів"],
+        correctAnswer: 1,
+        explanation: "Головна перевага with - автоматичне закриття файлу навіть якщо виникла помилка, що запобігає витоку ресурсів."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\nwith open('test.txt', 'w') as f:\n    f.write('Привіт')\nprint(f.closed)",
+        options: ["True", "False", "Помилку", "None"],
+        correctAnswer: 0,
+        explanation: "Після виходу з блоку with файл автоматично закривається, тому f.closed поверне True."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Чи можна відкрити кілька файлів одночасно з with?",
+        options: ["Ні", "Так, через кому", "Так, але тільки для читання", "Так, але потрібно вкладені блоки"],
+        correctAnswer: 1,
+        explanation: "Так, можна відкрити кілька файлів: with open('file1.txt') as f1, open('file2.txt') as f2: або через вкладені блоки."
       }
     ],
     timeLimit: 12,
     passingScore: 70
   }
 }
-

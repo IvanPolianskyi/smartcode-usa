@@ -1,5 +1,5 @@
 /**
- * Lesson 5-4: Поліморфізм та абстрактні класи
+ * Lesson 5-4: Обробка помилок: try / except / finally
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
@@ -8,16 +8,17 @@ export const lesson5_4 = {
   lessonId: "lesson-5-4",
   moduleId: "module-5",
   order: 4,
-  title: "Поліморфізм та абстрактні класи",
+  title: "Обробка помилок: try / except / finally",
   
   learningObjectives: [
-    "Розуміти поліморфізм",
-    "Використовувати абстрактні базові класи",
-    "Реалізовувати інтерфейси",
-    "Застосовувати duck typing"
+    "Розуміти концепцію винятків",
+    "Використовувати try/except блоки",
+    "Обробляти конкретні типи помилок",
+    "Використовувати finally та else",
+    "Розуміти ієрархію винятків"
   ],
   
-  estimatedTime: 105,
+  estimatedTime: 90,
   prerequisites: ["lesson-5-3"],
   
   videoUrl: "",
@@ -25,81 +26,297 @@ export const lesson5_4 = {
   theory: {
     sections: [
       {
-        title: "Що таке поліморфізм?",
-        content: `**Поліморфізм** — можливість об'єктів різних класів використовувати один інтерфейс.
+        title: "Що таке винятки (exceptions)?",
+        content: `**Виняток (exception)** — це подія, яка виникає під час виконання програми та порушує нормальний потік виконання.
 
-**Ідея:** Різні об'єкти можуть реагувати на однакову команду по-різному.
+**Приклади помилок:**
+- Ділення на нуль: \`10 / 0\` → \`ZeroDivisionError\`
+- Файл не знайдено: \`open("file.txt")\` → \`FileNotFoundError\`
+- Неправильний тип: \`int("abc")\` → \`ValueError\`
+- Неіснуюча змінна: \`print(x)\` → \`NameError\`
+
+**Що відбувається без обробки:**
+\`\`\`python
+result = 10 / 0  # ZeroDivisionError: division by zero
+print("Цей рядок не виконається")  # Програма зупиняється!
+\`\`\`
+
+**Проблема:** Програма зупиняється, користувач бачить страшну помилку.
+
+**Рішення:** Обробка винятків через \`try/except\`!`
+      },
+      {
+        title: "Базовий try/except",
+        content: `**Синтаксис:**
+\`\`\`python
+try:
+    # Код, який може викликати помилку
+    код_що_може_помилитися()
+except:
+    # Що робити, якщо виникла помилка
+    обробка_помилки()
+\`\`\`
+
+**Приклад 1: Ділення на нуль**
+\`\`\`python
+try:
+    result = 10 / 0
+    print(result)
+except:
+    print("Помилка: ділення на нуль!")
+
+print("Програма продовжує роботу")  # Цей рядок виконається!
+\`\`\`
+
+**Приклад 2: Читання файлу**
+\`\`\`python
+try:
+    with open("data.txt", "r", encoding="utf-8") as file:
+        content = file.read()
+        print(content)
+except:
+    print("Файл не знайдено або помилка читання!")
+
+print("Програма продовжує роботу")
+\`\`\`
+
+**Переваги:**
+- ✅ Програма не зупиняється
+- ✅ Можна показати зрозуміле повідомлення
+- ✅ Можна продовжити виконання`
+      },
+      {
+        title: "Обробка конкретних типів помилок",
+        content: `**Краще обробляти конкретні типи помилок:**
 
 \`\`\`python
-class Animal:
-    def speak(self):
-        pass
+try:
+    код_що_може_помилитися()
+except КонкретнийТипПомилки:
+    обробка_конкретної_помилки()
+except ІншийТипПомилки:
+    обробка_іншої_помилки()
+\`\`\`
 
-class Dog(Animal):
-    def speak(self):
-        return "Гав-гав!"
+**Приклад:**
+\`\`\`python
+try:
+    number = int(input("Введіть число: "))
+    result = 10 / number
+    print(f"Результат: {result}")
+except ValueError:
+    print("Помилка: введено не число!")
+except ZeroDivisionError:
+    print("Помилка: ділення на нуль!")
+except Exception as e:
+    print(f"Невідома помилка: {e}")
+\`\`\`
 
-class Cat(Animal):
-    def speak(self):
-        return "Мяу!"
+**Поширені типи помилок:**
+- \`ValueError\` — неправильне значення
+- \`TypeError\` — неправильний тип
+- \`FileNotFoundError\` — файл не знайдено
+- \`ZeroDivisionError\` — ділення на нуль
+- \`KeyError\` — ключ не знайдено в словнику
+- \`IndexError\` — індекс поза межами
+- \`NameError\` — змінна не визначена
 
-animals = [Dog(), Cat(), Dog()]
-for animal in animals:
-    print(animal.speak())  # Поліморфізм: різні об'єкти, одна команда
+**Важливо:** Обробляйте конкретні помилки, а не всі разом!`
+      },
+      {
+        title: "else та finally",
+        content: `**else** — виконується, якщо помилок не було:
+\`\`\`python
+try:
+    number = int(input("Введіть число: "))
+    result = 10 / number
+except ValueError:
+    print("Помилка: введено не число!")
+except ZeroDivisionError:
+    print("Помилка: ділення на нуль!")
+else:
+    print(f"Результат: {result}")  # Виконається тільки якщо помилок не було
+\`\`\`
+
+**finally** — виконується ЗАВЖДИ (навіть при помилках):
+\`\`\`python
+try:
+    file = open("data.txt", "r", encoding="utf-8")
+    content = file.read()
+    print(content)
+except FileNotFoundError:
+    print("Файл не знайдено!")
+finally:
+    print("Цей код виконається завжди!")
+    # Тут можна закрити файли, звільнити ресурси
+\`\`\`
+
+**Порядок виконання:**
+1. \`try\` — виконується спочатку
+2. Якщо помилка → \`except\` (якщо є відповідний)
+3. Якщо помилок не було → \`else\` (якщо є)
+4. \`finally\` — виконується завжди (останнім)
+
+**Приклад з усіма блоками:**
+\`\`\`python
+try:
+    number = int(input("Введіть число: "))
+    result = 10 / number
+except ValueError:
+    print("Помилка: введено не число!")
+except ZeroDivisionError:
+    print("Помилка: ділення на нуль!")
+else:
+    print(f"Результат: {result}")
+finally:
+    print("Обчислення завершено!")
 \`\`\``
       },
       {
-        title: "Абстрактні базові класи (ABC)",
-        content: `**Абстрактний клас** — клас, який не можна інстанціювати напряму, тільки через дочірні класи.
+        title: "Отримання інформації про помилку",
+        content: `**as** — дозволяє отримати об'єкт помилки:
 
 \`\`\`python
-from abc import ABC, abstractmethod
+try:
+    result = 10 / 0
+except ZeroDivisionError as e:
+    print(f"Помилка: {e}")  # division by zero
+    print(f"Тип помилки: {type(e).__name__}")  # ZeroDivisionError
+\`\`\`
 
-class Shape(ABC):
-    @abstractmethod
-    def area(self):
-        pass
-    
-    @abstractmethod
-    def perimeter(self):
-        pass
+**Приклад з файлом:**
+\`\`\`python
+try:
+    with open("data.txt", "r", encoding="utf-8") as file:
+        content = file.read()
+except FileNotFoundError as e:
+    print(f"Файл не знайдено: {e}")
+    print(f"Шлях: {e.filename}")  # Назва файлу
+except Exception as e:
+    print(f"Невідома помилка: {type(e).__name__}: {e}")
+\`\`\`
 
-class Rectangle(Shape):
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-    
-    def area(self):
-        return self.width * self.height
-    
-    def perimeter(self):
-        return 2 * (self.width + self.height)
+**Корисна інформація:**
+- \`str(e)\` — текст помилки
+- \`type(e).__name__\` — назва типу помилки
+- \`e.args\` — аргументи помилки`
+      },
+      {
+        title: "Вкладені try/except",
+        content: `**Можна вкладати try/except блоки:**
 
-# shape = Shape()  # Помилка! Shape — абстрактний
-rect = Rectangle(5, 3)  # OK
-print(rect.area())
+\`\`\`python
+try:
+    number = int(input("Введіть число: "))
+    try:
+        result = 10 / number
+        print(f"Результат: {result}")
+    except ZeroDivisionError:
+        print("Помилка: ділення на нуль!")
+except ValueError:
+    print("Помилка: введено не число!")
+\`\`\`
+
+**Коли використовувати:**
+- Різні рівні обробки помилок
+- Складні операції з багатьма кроками
+- Коли потрібна детальна обробка
+
+**Але:** Не перестарайтеся! Занадто багато вкладень ускладнює код.`
+      },
+      {
+        title: "Підняття винятків (raise)",
+        content: `**raise** — дозволяє викликати помилку вручну:
+
+\`\`\`python
+def ділити(a, b):
+    if b == 0:
+        raise ValueError("Ділення на нуль заборонено!")
+    return a / b
+
+try:
+    result = ділити(10, 0)
+except ValueError as e:
+    print(f"Помилка: {e}")
+\`\`\`
+
+**Коли використовувати:**
+- Валідація вхідних даних
+- Перевірка умов
+- Сигналізація про проблеми
+
+**Приклад валідації:**
+\`\`\`python
+def встановити_вік(вік):
+    if вік < 0:
+        raise ValueError("Вік не може бути від'ємним!")
+    if вік > 150:
+        raise ValueError("Вік занадто великий!")
+    return вік
+
+try:
+    вік = встановити_вік(-5)
+except ValueError as e:
+    print(f"Помилка валідації: {e}")
 \`\`\``
       },
       {
-        title: "Duck Typing",
-        content: `**"Якщо щось ходить як качка і крякає як качка, то це качка"**
-
-Python використовує **duck typing** — тип об'єкта визначається методами, які він має.
-
+        title: "Практичні рекомендації",
+        content: `**1. Обробляйте конкретні помилки:**
 \`\`\`python
-class Dog:
-    def speak(self):
-        return "Гав!"
+# Погано:
+try:
+    код()
+except:  # Обробляє ВСІ помилки
+    pass
 
-class Robot:
-    def speak(self):
-        return "Біп-біп!"
+# Добре:
+try:
+    код()
+except FileNotFoundError:
+    обробка_файлу()
+except ValueError:
+    обробка_значення()
+\`\`\`
 
-def make_sound(thing):
-    print(thing.speak())  # Не важливо, що це — важливо, що має speak()
+**2. Не приховуйте помилки:**
+\`\`\`python
+# Погано:
+try:
+    код()
+except:
+    pass  # Приховує помилку!
 
-make_sound(Dog())    # Гав!
-make_sound(Robot())  # Біп-біп!
+# Добре:
+try:
+    код()
+except Exception as e:
+    print(f"Помилка: {e}")  # Показує помилку
+    # або логуємо, або обробляємо
+\`\`\`
+
+**3. Використовуйте finally для очищення:**
+\`\`\`python
+file = None
+try:
+    file = open("data.txt", "r")
+    # робота з файлом
+except FileNotFoundError:
+    print("Файл не знайдено!")
+finally:
+    if file:
+        file.close()  # Гарантовано закриємо файл
+\`\`\`
+
+**4. Зрозумілі повідомлення:**
+\`\`\`python
+# Погано:
+except:
+    print("Помилка!")
+
+# Добре:
+except FileNotFoundError as e:
+    print(f"Файл '{e.filename}' не знайдено. Перевірте шлях.")
 \`\`\``
       }
     ]
@@ -107,79 +324,383 @@ make_sound(Robot())  # Біп-біп!
   
   codeExamples: [
     {
-      title: "Приклад: Поліморфізм",
-      code: `from abc import ABC, abstractmethod
+      title: "Приклад 1: Базова обробка помилок",
+      code: `# Обробка ділення на нуль
+try:
+    число = int(input("Введіть число: "))
+    результат = 10 / число
+    print(f"Результат: {результат}")
+except ValueError:
+    print("Помилка: введено не число!")
+except ZeroDivisionError:
+    print("Помилка: ділення на нуль!")
+except Exception as e:
+    print(f"Невідома помилка: {e}")
 
-class Animal(ABC):
-    @abstractmethod
-    def speak(self):
-        pass
+print("Програма продовжує роботу")`,
+      explanation: "Демонструє базову обробку різних типів помилок."
+    },
+    {
+      title: "Приклад 2: Робота з файлами та обробка помилок",
+      code: `# Безпечне читання файлу
+try:
+    with open("data.txt", "r", encoding="utf-8") as file:
+        content = file.read()
+        print(content)
+except FileNotFoundError:
+    print("Помилка: файл 'data.txt' не знайдено!")
+    print("Створіть файл або перевірте шлях.")
+except PermissionError:
+    print("Помилка: немає доступу до файлу!")
+except Exception as e:
+    print(f"Помилка читання файлу: {type(e).__name__}: {e}")
 
-class Dog(Animal):
-    def speak(self):
-        return "Гав-гав!"
+print("Програма продовжує роботу")`,
+      explanation: "Показує обробку різних помилок при роботі з файлами."
+    },
+    {
+      title: "Приклад 3: Використання else та finally",
+      code: `# Обчислення з else та finally
+try:
+    число = int(input("Введіть число: "))
+    результат = 10 / число
+except ValueError:
+    print("Помилка: введено не число!")
+except ZeroDivisionError:
+    print("Помилка: ділення на нуль!")
+else:
+    print(f"Результат: {результат}")  # Виконається тільки якщо помилок не було
+finally:
+    print("Обчислення завершено!")  # Виконається завжди`,
+      explanation: "Демонструє використання else (якщо помилок не було) та finally (завжди)."
+    },
+    {
+      title: "Приклад 4: Валідація з raise",
+      code: `# Функція з валідацією
+def встановити_вік(вік):
+    """Встановлює вік з перевіркою."""
+    if not isinstance(вік, int):
+        raise TypeError("Вік має бути числом!")
+    if вік < 0:
+        raise ValueError("Вік не може бути від'ємним!")
+    if вік > 150:
+        raise ValueError("Вік занадто великий!")
+    return вік
 
-class Cat(Animal):
-    def speak(self):
-        return "Мяу!"
+# Використання
+try:
+    вік1 = встановити_вік(25)
+    print(f"Вік встановлено: {вік1}")
+    
+    вік2 = встановити_вік(-5)  # Викличе помилку
+except ValueError as e:
+    print(f"Помилка валідації: {e}")
+except TypeError as e:
+    print(f"Помилка типу: {e}")`,
+      explanation: "Показує створення та виклик помилок через raise для валідації."
+    },
+    {
+      title: "Приклад 5: Обробка помилок у циклі",
+      code: `# Обробка списку чисел з можливими помилками
+числа = ["10", "20", "abc", "30", "0", "40"]
 
-def make_all_speak(animals):
-    for animal in animals:
-        print(animal.speak())
+результати = []
+for число_рядок in числа:
+    try:
+        число = int(число_рядок)
+        результат = 100 / число
+        результати.append(результат)
+        print(f"{число} -> {результат}")
+    except ValueError:
+        print(f"Пропущено '{число_рядок}': не число")
+    except ZeroDivisionError:
+        print(f"Пропущено '{число_рядок}': ділення на нуль")
 
-make_all_speak([Dog(), Cat(), Dog()])`,
-      explanation: "Демонструє поліморфізм та абстрактні класи."
+print(f"\\nУспішно оброблено: {результати}")`,
+      explanation: "Демонструє обробку помилок у циклі, коли деякі елементи можуть викликати помилки."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Забути @abstractmethod",
-      explanation: "Без @abstractmethod метод не буде абстрактним.",
-      correctApproach: "Завжди використовуйте @abstractmethod для абстрактних методів."
+      mistake: "Використання голого except:",
+      explanation: "except: без типу обробляє ВСІ помилки, навіть системні, що може приховати важливі помилки.",
+      correctApproach: "Завжди вказуйте конкретний тип помилки: except ValueError: або except Exception as e: для загальних випадків."
+    },
+    {
+      mistake: "Приховування помилок через pass",
+      explanation: "except: pass приховує помилки, що ускладнює відлагодження та може призвести до неочікуваної поведінки.",
+      correctApproach: "Завжди обробляйте помилки: логуйте, виводьте повідомлення або обробляйте відповідно до ситуації."
+    },
+    {
+      mistake: "Занадто широкий except",
+      explanation: "except Exception: обробляє занадто багато типів помилок, що ускладнює відлагодження.",
+      correctApproach: "Обробляйте конкретні типи помилок: except ValueError:, except FileNotFoundError: тощо."
+    },
+    {
+      mistake: "Не використання finally для очищення",
+      explanation: "Без finally ресурси (файли, з'єднання) можуть не звільнитися при помилках.",
+      correctApproach: "Використовуйте finally для гарантованого очищення ресурсів або використовуйте контекстні менеджери (with)."
+    },
+    {
+      mistake: "Плутанина між else та finally",
+      explanation: "else виконується тільки якщо помилок не було, finally виконується завжди.",
+      correctApproach: "Використовуйте else для коду, який має виконатися тільки при успіху, finally — для очищення ресурсів."
     }
   ],
   
-  summary: `Поліморфізм дозволяє різним об'єктам використовувати один інтерфейс. Абстрактні класи визначають структуру без реалізації.`,
+  summary: `На цьому уроці ми вивчили:
+
+1. **Винятки (exceptions)** — події, що порушують нормальний потік виконання
+2. **try/except** — блоки для обробки помилок
+3. **Конкретні типи помилок** — ValueError, FileNotFoundError, ZeroDivisionError тощо
+4. **else** — виконується, якщо помилок не було
+5. **finally** — виконується завжди (для очищення ресурсів)
+6. **raise** — виклик помилки вручну (для валідації)
+7. **as** — отримання об'єкта помилки для детальної інформації
+
+**Рекомендації:**
+- Обробляйте конкретні типи помилок
+- Не приховуйте помилки (не використовуйте pass)
+- Використовуйте finally для очищення ресурсів
+- Надавайте зрозумілі повідомлення користувачу
+
+Обробка помилок робить програми надійнішими та зручнішими для користувачів!`,
   
   practiceTask: {
-    title: "Система фігур",
-    description: "Створіть абстрактний клас Shape та реалізації",
-    problemStatement: "Створіть абстрактний клас Shape з методами area() та perimeter(), реалізуйте Rectangle та Circle.",
+    title: "Створення безпечного калькулятора",
+    description: "Створіть калькулятор з повною обробкою помилок",
+    problemStatement: `Створіть безпечний калькулятор з наступними функціями:
+
+**Функція 1: Додавання**
+- Приймає два числа
+- Обробляє помилки введення
+
+**Функція 2: Віднімання**
+- Приймає два числа
+- Обробляє помилки
+
+**Функція 3: Множення**
+- Приймає два числа
+- Обробляє помилки
+
+**Функція 4: Ділення**
+- Приймає два числа
+- Обробляє ділення на нуль
+- Обробляє помилки введення
+
+**Функція 5: Обчислення виразу**
+- Приймає рядок з виразом (наприклад, "10 + 5")
+- Парсить вираз
+- Обчислює результат
+- Обробляє всі можливі помилки
+
+**Вимоги:**
+- Використовуйте try/except для всіх операцій
+- Обробляйте конкретні типи помилок (ValueError, ZeroDivisionError)
+- Використовуйте else для виведення результату
+- Використовуйте finally для повідомлення про завершення
+- Надавайте зрозумілі повідомлення про помилки
+
+**Приклад використання:**
+\`\`\`
+=== Безпечний калькулятор ===
+1. Додавання
+2. Віднімання
+3. Множення
+4. Ділення
+5. Обчислити вираз
+0. Вихід
+Виберіть операцію: 4
+Введіть перше число: 10
+Введіть друге число: 0
+Помилка: ділення на нуль!
+Операція завершена.
+\`\`\``,
+    inputFormat: "Створіть програму з меню та функціями",
+    outputFormat: `Приклад виведення:
+=== Безпечний калькулятор ===
+1. Додавання
+2. Віднімання
+3. Множення
+4. Ділення
+5. Обчислити вираз
+0. Вихід
+
+Виберіть операцію: 1
+Введіть перше число: 10
+Введіть друге число: 5
+Результат: 15.0
+Операція завершена.`,
+    examples: [
+      {
+        input: "Ділення: 10 / 0",
+        output: "Помилка: ділення на нуль!",
+        explanation: "Програма обробляє ZeroDivisionError та виводить зрозуміле повідомлення"
+      },
+      {
+        input: "Обчислити вираз: '10 + abc'",
+        output: "Помилка: некоректний вираз!",
+        explanation: "Програма обробляє помилки парсингу виразу"
+      }
+    ],
     solution: {
-      code: `from abc import ABC, abstractmethod
+      code: `def додавання():
+    """Виконує додавання двох чисел."""
+    try:
+        a = float(input("Введіть перше число: "))
+        b = float(input("Введіть друге число: "))
+    except ValueError:
+        print("Помилка: введено не число!")
+        return
+    
+    try:
+        результат = a + b
+    except Exception as e:
+        print(f"Помилка обчислення: {e}")
+    else:
+        print(f"Результат: {результат}")
+    finally:
+        print("Операція завершена.")
 
-class Shape(ABC):
-    @abstractmethod
-    def area(self):
-        pass
+def віднімання():
+    """Виконує віднімання двох чисел."""
+    try:
+        a = float(input("Введіть перше число: "))
+        b = float(input("Введіть друге число: "))
+    except ValueError:
+        print("Помилка: введено не число!")
+        return
     
-    @abstractmethod
-    def perimeter(self):
-        pass
+    try:
+        результат = a - b
+    except Exception as e:
+        print(f"Помилка обчислення: {e}")
+    else:
+        print(f"Результат: {результат}")
+    finally:
+        print("Операція завершена.")
 
-class Rectangle(Shape):
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
+def множення():
+    """Виконує множення двох чисел."""
+    try:
+        a = float(input("Введіть перше число: "))
+        b = float(input("Введіть друге число: "))
+    except ValueError:
+        print("Помилка: введено не число!")
+        return
     
-    def area(self):
-        return self.width * self.height
-    
-    def perimeter(self):
-        return 2 * (self.width + self.height)
+    try:
+        результат = a * b
+    except Exception as e:
+        print(f"Помилка обчислення: {e}")
+    else:
+        print(f"Результат: {результат}")
+    finally:
+        print("Операція завершена.")
 
-class Circle(Shape):
-    def __init__(self, radius):
-        self.radius = radius
+def ділення():
+    """Виконує ділення двох чисел."""
+    try:
+        a = float(input("Введіть перше число: "))
+        b = float(input("Введіть друге число: "))
+    except ValueError:
+        print("Помилка: введено не число!")
+        return
     
-    def area(self):
-        return 3.14159 * self.radius ** 2
+    try:
+        результат = a / b
+    except ZeroDivisionError:
+        print("Помилка: ділення на нуль!")
+    except Exception as e:
+        print(f"Помилка обчислення: {e}")
+    else:
+        print(f"Результат: {результат}")
+    finally:
+        print("Операція завершена.")
+
+def обчислити_вираз():
+    """Обчислює математичний вираз."""
+    вираз = input("Введіть вираз (наприклад, '10 + 5'): ").strip()
     
-    def perimeter(self):
-        return 2 * 3.14159 * self.radius`,
-      explanation: "Демонстрація абстрактних класів."
+    try:
+        # Розбиваємо вираз на частини
+        частини = вираз.split()
+        
+        if len(частини) != 3:
+            raise ValueError("Вираз має містити два числа та операцію")
+        
+        a = float(частини[0])
+        операція = частини[1]
+        b = float(частини[2])
+        
+        # Виконуємо операцію
+        if операція == "+":
+            результат = a + b
+        elif операція == "-":
+            результат = a - b
+        elif операція == "*":
+            результат = a * b
+        elif операція == "/":
+            if b == 0:
+                raise ZeroDivisionError("Ділення на нуль!")
+            результат = a / b
+        else:
+            raise ValueError(f"Невідома операція: {операція}")
+        
+    except ValueError as e:
+        print(f"Помилка: {e}")
+        print("Приклад правильного виразу: '10 + 5'")
+    except ZeroDivisionError as e:
+        print(f"Помилка: {e}")
+    except Exception as e:
+        print(f"Невідома помилка: {type(e).__name__}: {e}")
+    else:
+        print(f"Результат: {результат}")
+    finally:
+        print("Операція завершена.")
+
+def головне_меню():
+    """Головне меню калькулятора."""
+    while True:
+        print("\\n=== Безпечний калькулятор ===")
+        print("1. Додавання")
+        print("2. Віднімання")
+        print("3. Множення")
+        print("4. Ділення")
+        print("5. Обчислити вираз")
+        print("0. Вихід")
+        
+        вибір = input("Виберіть операцію: ")
+        
+        if вибір == "1":
+            додавання()
+        elif вибір == "2":
+            віднімання()
+        elif вибір == "3":
+            множення()
+        elif вибір == "4":
+            ділення()
+        elif вибір == "5":
+            обчислити_вираз()
+        elif вибір == "0":
+            print("До побачення!")
+            break
+        else:
+            print("Невірний вибір! Спробуйте ще раз.")
+
+# Запуск програми
+if __name__ == "__main__":
+    головне_меню()`,
+      explanation: "Рішення демонструє повний калькулятор з обробкою всіх типів помилок, використанням else та finally для кожного блоку."
     },
+    hints: [
+      "Використовуйте try/except для введення чисел (ValueError)",
+      "Для ділення обробіть ZeroDivisionError окремо",
+      "Використовуйте else для виведення результату",
+      "Використовуйте finally для повідомлення про завершення",
+      "Для виразу розбийте рядок на частини та обробіть всі можливі помилки"
+    ],
     difficulty: "intermediate"
   },
   
@@ -188,14 +709,53 @@ class Circle(Shape):
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що таке поліморфізм?",
-        options: ["Багато форм", "Можливість різних об'єктів використовувати один інтерфейс", "Створення класів", "Видалення методів"],
+        question: "Що таке виняток (exception)?",
+        options: ["Функція", "Подія, що порушує нормальний потік виконання", "Змінна", "Модуль"],
         correctAnswer: 1,
-        explanation: "Поліморфізм — це можливість різних об'єктів реагувати на одну команду по-різному."
+        explanation: "Виняток — це подія, яка виникає під час виконання програми та порушує нормальний потік виконання."
+      },
+      {
+        id: "q2",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\ntry:\n    result = 10 / 0\nexcept ZeroDivisionError:\n    print('Помилка')\nprint('Готово')",
+        options: ["Помилка\\nГотово", "Помилка", "Готово", "Помилка ділення на нуль"],
+        correctAnswer: 0,
+        explanation: "Помилка обробляється в except, потім виконується код після try/except блоку, тому виведе 'Помилка' та 'Готово'."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Коли виконується блок finally?",
+        options: ["Тільки при помилках", "Тільки якщо помилок не було", "Завжди", "Ніколи"],
+        correctAnswer: 2,
+        explanation: "Блок finally виконується завжди, незалежно від того, чи виникла помилка, чи ні."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Яка помилка виникне при int('abc')?",
+        options: ["TypeError", "ValueError", "NameError", "SyntaxError"],
+        correctAnswer: 1,
+        explanation: "ValueError виникає, коли функція отримує аргумент правильного типу, але з неправильним значенням (не можна конвертувати 'abc' в int)."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\ntry:\n    x = 10\nexcept:\n    print('Помилка')\nelse:\n    print('Успіх')\nfinally:\n    print('Завершено')",
+        options: ["Успіх\\nЗавершено", "Помилка\\nЗавершено", "Завершено", "Успіх"],
+        correctAnswer: 0,
+        explanation: "Помилок не було, тому виконується else ('Успіх'), потім завжди виконується finally ('Завершено')."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Чому не рекомендується використовувати except: без типу?",
+        options: ["Повільніше", "Обробляє всі помилки, навіть системні", "Не працює", "Складніше писати"],
+        correctAnswer: 1,
+        explanation: "except: без типу обробляє ВСІ помилки, включаючи системні (наприклад, KeyboardInterrupt), що може приховати важливі помилки."
       }
     ],
-    timeLimit: 12,
+    timeLimit: 15,
     passingScore: 70
   }
 }
-

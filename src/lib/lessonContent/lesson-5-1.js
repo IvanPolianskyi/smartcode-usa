@@ -1,5 +1,5 @@
 /**
- * Lesson 5-1: Класи та об'єкти
+ * Lesson 5-1: Робота з файлами: open, read, write
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
@@ -8,353 +8,550 @@ export const lesson5_1 = {
   lessonId: "lesson-5-1",
   moduleId: "module-5",
   order: 1,
-  title: "Класи та об'єкти",
+  title: "Робота з файлами: open, read, write",
   
   learningObjectives: [
-    "Створювати класи",
-    "Створювати об'єкти (екземпляри)",
-    "Розуміти атрибути та методи",
-    "Використовувати конструктор __init__"
+    "Відкривати файли для читання/запису",
+    "Читати та записувати дані",
+    "Працювати з різними кодуваннями",
+    "Обробляти бінарні файли",
+    "Розуміти різні режими відкриття файлів"
   ],
   
-  estimatedTime: 120,
-  prerequisites: ["lesson-4-5"],
+  estimatedTime: 90,
+  prerequisites: ["lesson-4-8"],
   
   videoUrl: "",
   
   theory: {
     sections: [
       {
-        title: "Що таке класи та об'єкти?",
-        content: `**Клас** — це шаблон (blueprint) для створення об'єктів.
-**Об'єкт** — це конкретний екземпляр класу.
+        title: "Що таке файли?",
+        content: `**Файл** — це послідовність байтів, збережена на диску.
 
-**Аналогія:** Клас = форма для печива, Об'єкт = конкретне печиво
+**Чому важливо працювати з файлами?**
+- **Збереження даних** — дані не зникають після закриття програми
+- **Обмін даними** — можна передавати дані між програмами
+- **Обробка великих обсягів** — файли можуть містити мільйони записів
+- **Логування** — збереження інформації про роботу програми
+
+**Типи файлів:**
+- **Текстові** (.txt, .py, .json) — читабельні для людини
+- **Бінарні** (.jpg, .png, .exe) — містять двійкові дані
+
+**Аналогія:** Файл — як зошит: можна читати (read), писати (write), додавати (append).`
+      },
+      {
+        title: "Відкриття файлів: open()",
+        content: `**open()** — функція для відкриття файлів.
+
+**Синтаксис:**
+\`\`\`python
+file = open("назва_файлу.txt", "режим")
+\`\`\`
+
+**Режими відкриття:**
+- \`"r"\` — читання (read) — файл має існувати
+- \`"w"\` — запис (write) — створює новий файл або перезаписує існуючий
+- \`"a"\` — додавання (append) — додає в кінець файлу
+- \`"x"\` — ексклюзивне створення — помилка, якщо файл існує
+- \`"b"\` — бінарний режим (rb, wb, ab)
+- \`"t"\` — текстовий режим (за замовчуванням)
+
+**Приклади:**
+\`\`\`python
+# Читання файлу
+file = open("data.txt", "r")
+content = file.read()
+file.close()
+
+# Запис у файл
+file = open("output.txt", "w")
+file.write("Привіт, світ!")
+file.close()
+
+# Додавання до файлу
+file = open("log.txt", "a")
+file.write("Новий запис\\n")
+file.close()
+\`\`\`
+
+**Важливо:** Завжди закривайте файли методом \`close()\`!`
+      },
+      {
+        title: "Читання файлів",
+        content: `**Методи читання:**
+
+**1. read()** — читає весь файл:
+\`\`\`python
+file = open("data.txt", "r")
+content = file.read()  # Весь файл як один рядок
+file.close()
+print(content)
+\`\`\`
+
+**2. readline()** — читає один рядок:
+\`\`\`python
+file = open("data.txt", "r")
+line1 = file.readline()  # Перший рядок
+line2 = file.readline()  # Другий рядок
+file.close()
+\`\`\`
+
+**3. readlines()** — читає всі рядки як список:
+\`\`\`python
+file = open("data.txt", "r")
+lines = file.readlines()  # Список рядків
+file.close()
+for line in lines:
+    print(line.strip())  # strip() видаляє \\n
+\`\`\`
+
+**4. Ітерація по файлу (найкращий спосіб):**
+\`\`\`python
+file = open("data.txt", "r")
+for line in file:
+    print(line.strip())  # Автоматично читає по рядку
+file.close()
+\`\`\`
+
+**Переваги ітерації:**
+- Ефективніше для великих файлів
+- Не завантажує весь файл в пам'ять
+- Більш читабельний код`
+      },
+      {
+        title: "Запис у файли",
+        content: `**Методи запису:**
+
+**1. write()** — записує рядок:
+\`\`\`python
+file = open("output.txt", "w")
+file.write("Привіт, світ!")
+file.write("\\nДругий рядок")
+file.close()
+\`\`\`
+
+**2. writelines()** — записує список рядків:
+\`\`\`python
+lines = ["Рядок 1\\n", "Рядок 2\\n", "Рядок 3\\n"]
+file = open("output.txt", "w")
+file.writelines(lines)
+file.close()
+\`\`\`
+
+**Режими:**
+- \`"w"\` — перезаписує файл (видаляє старий вміст)
+- \`"a"\` — додає в кінець файлу (зберігає старий вміст)
 
 **Приклад:**
-- Клас: \`Student\` (студент)
-- Об'єкти: Олександр (студент), Марія (студент), Дмитро (студент)
-
-**Чому ООП?**
-- **Організація коду** — логічне групування
-- **Повторне використання** — один клас, багато об'єктів
-- **Моделювання реального світу** — об'єкти як в житті`
-      },
-      {
-        title: "Створення класу",
-        content: `**Базовий клас:**
 \`\`\`python
-class Student:
-    pass  # Порожній клас
+# Створення файлу з даними
+file = open("students.txt", "w")
+file.write("Олександр\\n")
+file.write("Марія\\n")
+file.write("Дмитро\\n")
+file.close()
 
-# Створення об'єкта
-student1 = Student()
-student2 = Student()
-\`\`\`
-
-**Клас з атрибутами:**
-\`\`\`python
-class Student:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-# Створення об'єктів
-student1 = Student("Олександр", 15)
-student2 = Student("Марія", 16)
-
-print(student1.name)  # Олександр
-print(student2.age)   # 16
-\`\`\`
-
-**Що таке self?**
-- \`self\` — посилання на поточний об'єкт
-- Завжди перший параметр методів
-- Python автоматично передає self`
-      },
-      {
-        title: "Конструктор __init__",
-        content: `**__init__** — спеціальний метод, який викликається при створенні об'єкта.
-
-\`\`\`python
-class Student:
-    def __init__(self, name, age, course):
-        self.name = name
-        self.age = age
-        self.course = course
-        print(f"Створено студента: {name}")
-
-# При створенні об'єкта автоматично викликається __init__
-student = Student("Олександр", 15, "Python")
-# Виведе: Створено студента: Олександр
-\`\`\`
-
-**Значення за замовчуванням:**
-\`\`\`python
-class Student:
-    def __init__(self, name, age=15, course="Python"):
-        self.name = name
-        self.age = age
-        self.course = course
-
-# Можна не вказувати всі параметри
-student1 = Student("Олександр")  # age=15, course="Python"
-student2 = Student("Марія", 16)  # course="Python"
-student3 = Student("Дмитро", 15, "Web")
+# Додавання нового студента
+file = open("students.txt", "a")
+file.write("Анна\\n")
+file.close()
 \`\`\``
       },
       {
-        title: "Методи класу",
-        content: `**Методи** — функції всередині класу, які працюють з об'єктами.
+        title: "Кодування файлів",
+        content: `**Кодування** — спосіб представлення символів у байтах.
 
+**Проблема:** Різні мови використовують різні кодування.
+
+**Рішення:** Вказуйте кодування при відкритті файлу.
+
+**UTF-8** — найпоширеніше кодування (підтримує українські літери):
 \`\`\`python
-class Student:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-    
-    def introduce(self):
-        return f"Привіт, я {self.name}, мені {self.age} років"
-    
-    def have_birthday(self):
-        self.age += 1
-        print(f"{self.name} тепер {self.age} років!")
+# Читання з кодуванням
+file = open("data.txt", "r", encoding="utf-8")
+content = file.read()
+file.close()
 
-# Використання
-student = Student("Олександр", 15)
-print(student.introduce())  # Привіт, я Олександр, мені 15 років
-student.have_birthday()     # Олександр тепер 16 років!
+# Запис з кодуванням
+file = open("output.txt", "w", encoding="utf-8")
+file.write("Привіт! Це український текст: ґ, є, і, ї")
+file.close()
 \`\`\`
 
-**Важливо:** Методи завжди приймають \`self\` як перший параметр!`
+**Поширені кодування:**
+- \`utf-8\` — універсальне (рекомендовано)
+- \`cp1251\` — Windows Cyrillic
+- \`latin-1\` — для західних мов
+
+**Помилка кодування:**
+\`\`\`python
+# Якщо кодування не вказано, може виникнути помилка
+file = open("data.txt", "r")  # Може не прочитати українські літери
+# UnicodeDecodeError: 'charmap' codec can't decode byte...
+\`\`\`
+
+**Рішення:** Завжди вказуйте \`encoding="utf-8"\`!`
       },
       {
-        title: "Атрибути класу та екземпляра",
-        content: `**Атрибути екземпляра** — унікальні для кожного об'єкта:
-\`\`\`python
-class Student:
-    def __init__(self, name):
-        self.name = name  # Атрибут екземпляра
+        title: "Бінарні файли",
+        content: `**Бінарні файли** — файли, які містять не текст, а двійкові дані (зображення, відео, виконувані файли).
 
-student1 = Student("Олександр")
-student2 = Student("Марія")
-print(student1.name)  # Олександр
-print(student2.name)  # Марія
+**Режими:**
+- \`"rb"\` — читання бінарного файлу
+- \`"wb"\` — запис бінарного файлу
+- \`"ab"\` — додавання до бінарного файлу
+
+**Приклад:**
+\`\`\`python
+# Копіювання зображення
+source = open("photo.jpg", "rb")
+destination = open("photo_copy.jpg", "wb")
+
+data = source.read()  # Читаємо всі байти
+destination.write(data)  # Записуємо байти
+
+source.close()
+destination.close()
 \`\`\`
 
-**Атрибути класу** — спільні для всіх об'єктів:
-\`\`\`python
-class Student:
-    school = "SmartCode Academy"  # Атрибут класу
-    
-    def __init__(self, name):
-        self.name = name
-
-student1 = Student("Олександр")
-student2 = Student("Марія")
-
-print(student1.school)  # SmartCode Academy
-print(student2.school)  # SmartCode Academy
-print(Student.school)  # SmartCode Academy
-\`\`\``
+**Коли використовувати:**
+- Робота з зображеннями, відео, аудіо
+- Копіювання файлів
+- Робота з архівами
+- Шифрування даних`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад 1: Базовий клас",
-      code: `class Student:
-    def __init__(self, name, age, course):
-        self.name = name
-        self.age = age
-        self.course = course
-    
-    def introduce(self):
-        return f"Я {self.name}, {self.age} років, вивчаю {self.course}"
-    
-    def get_info(self):
-        return {
-            "name": self.name,
-            "age": self.age,
-            "course": self.course
-        }
+      title: "Приклад 1: Базове читання та запис",
+      code: `# Запис даних у файл
+file = open("students.txt", "w", encoding="utf-8")
+file.write("Олександр\\n")
+file.write("Марія\\n")
+file.write("Дмитро\\n")
+file.close()
 
-# Створення об'єктів
-student1 = Student("Олександр", 15, "Python")
-student2 = Student("Марія", 16, "Python")
+# Читання файлу
+file = open("students.txt", "r", encoding="utf-8")
+content = file.read()
+file.close()
+print(content)
 
-print(student1.introduce())
-print(student2.get_info())`,
-      explanation: "Демонструє базовий клас з конструктором та методами."
+# Виведення:
+# Олександр
+# Марія
+# Дмитро`,
+      explanation: "Демонструє базовий запис та читання текстового файлу."
     },
     {
-      title: "Приклад 2: Атрибути класу",
-      code: `class Student:
-    school = "SmartCode Academy"
-    total_students = 0
-    
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-        Student.total_students += 1
-    
-    @classmethod
-    def get_total_students(cls):
-        return cls.total_students
+      title: "Приклад 2: Читання по рядках",
+      code: `# Файл: data.txt
+# Рядок 1
+# Рядок 2
+# Рядок 3
 
-student1 = Student("Олександр", 15)
-student2 = Student("Марія", 16)
+file = open("data.txt", "r", encoding="utf-8")
 
-print(f"Школа: {Student.school}")
-print(f"Всього студентів: {Student.get_total_students()}")`,
-      explanation: "Показує атрибути класу та підрахунок об'єктів."
+# Спосіб 1: readline()
+print("Спосіб 1:")
+line = file.readline()
+while line:
+    print(line.strip())
+    line = file.readline()
+
+file.close()
+
+# Спосіб 2: Ітерація (рекомендовано)
+print("\\nСпосіб 2:")
+file = open("data.txt", "r", encoding="utf-8")
+for line in file:
+    print(line.strip())
+file.close()`,
+      explanation: "Показує різні способи читання файлу по рядках."
     },
     {
-      title: "Приклад 3: Складніший клас",
-      code: `class BankAccount:
-    def __init__(self, owner, balance=0):
-        self.owner = owner
-        self.balance = balance
-    
-    def deposit(self, amount):
-        if amount > 0:
-            self.balance += amount
-            print(f"Додано {amount}. Баланс: {self.balance}")
-        else:
-            print("Сума має бути додатньою!")
-    
-    def withdraw(self, amount):
-        if amount > 0 and amount <= self.balance:
-            self.balance -= amount
-            print(f"Знято {amount}. Баланс: {self.balance}")
-        else:
-            print("Недостатньо коштів або невірна сума!")
-    
-    def get_balance(self):
-        return self.balance
+      title: "Приклад 3: Додавання до файлу",
+      code: `# Створення файлу
+file = open("log.txt", "w", encoding="utf-8")
+file.write("Початок роботи\\n")
+file.close()
 
-account = BankAccount("Олександр", 1000)
-account.deposit(500)
-account.withdraw(200)
-print(f"Поточний баланс: {account.get_balance()}")`,
-      explanation: "Демонструє клас з бізнес-логікою та валідацією."
+# Додавання записів
+file = open("log.txt", "a", encoding="utf-8")
+file.write("Крок 1 виконано\\n")
+file.write("Крок 2 виконано\\n")
+file.write("Крок 3 виконано\\n")
+file.close()
+
+# Читання результату
+file = open("log.txt", "r", encoding="utf-8")
+print(file.read())
+file.close()
+
+# Виведення:
+# Початок роботи
+# Крок 1 виконано
+# Крок 2 виконано
+# Крок 3 виконано`,
+      explanation: "Демонструє різницю між режимами 'w' (перезапис) та 'a' (додавання)."
+    },
+    {
+      title: "Приклад 4: Робота з українським текстом",
+      code: `# Запис українського тексту
+file = open("ukrainian.txt", "w", encoding="utf-8")
+file.write("Привіт, світ!\\n")
+file.write("Це український текст з літерами: ґ, є, і, ї\\n")
+file.write("Числа: 1, 2, 3, 4, 5\\n")
+file.close()
+
+# Читання українського тексту
+file = open("ukrainian.txt", "r", encoding="utf-8")
+content = file.read()
+file.close()
+print(content)`,
+      explanation: "Показує важливість вказання кодування для українського тексту."
+    },
+    {
+      title: "Приклад 5: Обробка даних з файлу",
+      code: `# Файл: scores.txt
+# Олександр:85
+# Марія:92
+# Дмитро:78
+
+# Читання та обробка даних
+file = open("scores.txt", "r", encoding="utf-8")
+students = {}
+
+for line in file:
+    line = line.strip()
+    if line:  # Пропускаємо порожні рядки
+        name, score = line.split(":")
+        students[name] = int(score)
+
+file.close()
+
+# Виведення результатів
+print("Результати студентів:")
+for name, score in students.items():
+    print(f"{name}: {score} балів")
+
+# Знаходження найкращого результату
+best_student = max(students, key=students.get)
+print(f"\\nНайкращий результат: {best_student} - {students[best_student]} балів")`,
+      explanation: "Демонструє читання структурованих даних з файлу та їх обробку."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Забути self в методах",
-      explanation: "Без self Python не знає, з яким об'єктом працювати.",
-      correctApproach: "Завжди додавайте self як перший параметр методів."
+      mistake: "Забути закрити файл",
+      explanation: "Якщо не закрити файл, можуть виникнути проблеми: дані можуть не зберегтися, файл може залишитися заблокованим.",
+      correctApproach: "Завжди викликайте file.close() після роботи з файлом, або використовуйте контекстний менеджер with (вивчимо в наступному уроці)."
     },
     {
-      mistake: "Плутанина між атрибутами класу та екземпляра",
-      explanation: "Атрибути класу спільні, атрибути екземпляра унікальні.",
-      correctApproach: "self.attr для екземпляра, ClassName.attr або cls.attr для класу."
+      mistake: "Не вказати кодування для українського тексту",
+      explanation: "Без encoding='utf-8' Python може не прочитати українські літери, виникне UnicodeDecodeError.",
+      correctApproach: "Завжди вказуйте encoding='utf-8' при роботі з текстовими файлами: open('file.txt', 'r', encoding='utf-8')."
     },
     {
-      mistake: "Виклик методу без self",
-      explanation: "Методи завжди викликаються через об'єкт: obj.method(), не Class.method().",
-      correctApproach: "student.introduce(), а не Student.introduce(student)."
+      mistake: "Використання 'w' замість 'a' для додавання",
+      explanation: "Режим 'w' перезаписує файл, видаляючи весь старий вміст. Якщо потрібно додати дані, використовуйте 'a'.",
+      correctApproach: "Використовуйте 'w' для створення нового файлу або перезапису, 'a' для додавання до існуючого файлу."
+    },
+    {
+      mistake: "Читання великого файлу через read()",
+      explanation: "read() завантажує весь файл в пам'ять, що може призвести до проблем з великими файлами.",
+      correctApproach: "Для великих файлів використовуйте ітерацію по файлу: for line in file: або читайте частинами."
+    },
+    {
+      mistake: "Не перевіряти існування файлу перед читанням",
+      explanation: "Якщо файл не існує, open() з режимом 'r' викличе FileNotFoundError.",
+      correctApproach: "Використовуйте try/except для обробки помилок або перевіряйте існування файлу через os.path.exists() (вивчимо в наступних уроках)."
     }
   ],
   
   summary: `На цьому уроці ми вивчили:
 
-1. **Класи** — шаблони для створення об'єктів
-2. **Об'єкти** — конкретні екземпляри класів
-3. **__init__** — конструктор, ініціалізує об'єкт
-4. **self** — посилання на поточний об'єкт
-5. **Методи** — функції всередині класу
-6. **Атрибути** — дані об'єкта (екземпляра або класу)
+1. **open()** — функція для відкриття файлів
+2. **Режими:** 'r' (читання), 'w' (запис), 'a' (додавання), 'b' (бінарний)
+3. **Методи читання:** read(), readline(), readlines(), ітерація
+4. **Методи запису:** write(), writelines()
+5. **Кодування** — завжди використовуйте encoding='utf-8' для українського тексту
+6. **Бінарні файли** — режими 'rb', 'wb' для роботи з двійковими даними
+7. **Важливо:** Завжди закривайте файли методом close()!
 
-ООП допомагає організувати код та моделювати реальний світ!`,
+Файли дозволяють зберігати дані між сесіями програми!`,
   
   practiceTask: {
-    title: "Створення класу Book",
-    description: "Створіть клас для представлення книги",
-    problemStatement: `Створіть клас Book з наступними вимогами:
+    title: "Створення системи ведення щоденника",
+    description: "Створіть програму для ведення щоденника з можливістю додавання та читання записів",
+    problemStatement: `Створіть програму для ведення щоденника з наступними функціями:
 
-**Атрибути:**
-- title (назва)
-- author (автор)
-- year (рік видання)
-- pages (кількість сторінок)
-- is_read (чи прочитана, за замовчуванням False)
+**Функція 1: Додати запис**
+- Запитує у користувача текст запису
+- Додає запис у файл "diary.txt" з датою та часом
+- Формат: "2024-01-15 14:30: Запис користувача"
 
-**Методи:**
-- __init__(title, author, year, pages) — конструктор
-- read() — позначає книгу як прочитану
-- get_info() — повертає інформацію про книгу
-- is_long() — повертає True, якщо більше 300 сторінок
+**Функція 2: Прочитати всі записи**
+- Читає всі записи з файлу "diary.txt"
+- Виводить їх на екран у зручному форматі
 
-**Створіть кілька об'єктів та продемонструйте роботу методів.**`,
-    inputFormat: "Створіть клас та об'єкти в коді",
+**Функція 3: Пошук записів**
+- Запитує ключове слово
+- Шукає всі записи, що містять це слово
+- Виводить знайдені записи
+
+**Вимоги:**
+- Використовуйте encoding='utf-8'
+- Завжди закривайте файли
+- Обробіть випадок, коли файл не існує (для першого запису)
+
+**Приклад використання:**
+\`\`\`
+1. Додати запис
+2. Прочитати всі записи
+3. Пошук записів
+0. Вихід
+Виберіть дію: 1
+Введіть запис: Сьогодні вивчив роботу з файлами!
+Запис додано!
+
+Виберіть дію: 2
+=== Всі записи ===
+2024-01-15 14:30: Сьогодні вивчив роботу з файлами!
+\`\`\``,
+    inputFormat: "Створіть програму з меню та функціями",
     outputFormat: `Приклад виведення:
-Книга: "Python Basics"
-Автор: Олександр
-Рік: 2024
-Сторінок: 250
-Прочитана: False
-Довга книга: False`,
+=== Щоденник ===
+1. Додати запис
+2. Прочитати всі записи
+3. Пошук записів
+0. Вихід
+
+Виберіть дію: 1
+Введіть запис: Привіт, світ!
+Запис додано!
+
+Виберіть дію: 2
+=== Всі записи ===
+2024-01-15 14:30: Привіт, світ!`,
     examples: [
       {
-        input: "Створення об'єкта Book",
-        output: "Об'єкт створено, методи працюють",
-        explanation: "Демонстрація роботи з класом та об'єктами"
+        input: "Додати запис: 'Сьогодні гарна погода'",
+        output: "Запис додано з датою та часом",
+        explanation: "Програма додає запис у файл з автоматичною датою"
+      },
+      {
+        input: "Пошук: 'погода'",
+        output: "Знайдено записи, що містять 'погода'",
+        explanation: "Програма шукає всі записи з ключовим словом"
       }
     ],
     solution: {
-      code: `class Book:
-    def __init__(self, title, author, year, pages):
-        self.title = title
-        self.author = author
-        self.year = year
-        self.pages = pages
-        self.is_read = False
-    
-    def read(self):
-        self.is_read = True
-        print(f"Книгу '{self.title}' прочитано!")
-    
-    def get_info(self):
-        return {
-            "title": self.title,
-            "author": self.author,
-            "year": self.year,
-            "pages": self.pages,
-            "is_read": self.is_read
-        }
-    
-    def is_long(self):
-        return self.pages > 300
-    
-    def __str__(self):
-        status = "прочитана" if self.is_read else "не прочитана"
-        return f'"{self.title}" ({self.author}, {self.year}) - {status}'
+      code: `from datetime import datetime
 
-# Створення об'єктів
-book1 = Book("Python Basics", "Олександр", 2024, 250)
-book2 = Book("Advanced Python", "Марія", 2024, 450)
+def додати_запис():
+    """Додає новий запис у щоденник."""
+    запис = input("Введіть запис: ")
+    if not запис.strip():
+        print("Запис не може бути порожнім!")
+        return
+    
+    # Отримуємо поточну дату та час
+    зараз = datetime.now()
+    дата_час = зараз.strftime("%Y-%m-%d %H:%M")
+    
+    # Відкриваємо файл для додавання
+    file = open("diary.txt", "a", encoding="utf-8")
+    file.write(f"{дата_час}: {запис}\\n")
+    file.close()
+    
+    print("Запис додано!")
 
-# Використання методів
-print(book1)
-print(f"Довга книга: {book1.is_long()}")
+def прочитати_всі_записи():
+    """Читає та виводить всі записи."""
+    try:
+        file = open("diary.txt", "r", encoding="utf-8")
+        записи = file.readlines()
+        file.close()
+        
+        if not записи:
+            print("Щоденник порожній.")
+            return
+        
+        print("\\n=== Всі записи ===")
+        for запис in записи:
+            print(запис.strip())
+        print()
+    except FileNotFoundError:
+        print("Щоденник порожній. Додайте перший запис!")
 
-book1.read()
-print(book1)
+def пошук_записів():
+    """Шукає записи за ключовим словом."""
+    ключове_слово = input("Введіть ключове слово для пошуку: ")
+    if not ключове_слово.strip():
+        print("Ключове слово не може бути порожнім!")
+        return
+    
+    try:
+        file = open("diary.txt", "r", encoding="utf-8")
+        записи = file.readlines()
+        file.close()
+        
+        знайдені = []
+        for запис in записи:
+            if ключове_слово.lower() in запис.lower():
+                знайдені.append(запис.strip())
+        
+        if знайдені:
+            print(f"\\n=== Знайдено {len(знайдені)} записів ===")
+            for запис in знайдені:
+                print(запис)
+        else:
+            print("Записи не знайдено.")
+    except FileNotFoundError:
+        print("Щоденник порожній. Додайте перший запис!")
 
-print(f"\\n{book2.title}: {book2.pages} сторінок")
-print(f"Довга книга: {book2.is_long()}")`,
-      explanation: "Рішення демонструє повний клас з усіма вимогами та використання об'єктів."
+def головне_меню():
+    """Головне меню програми."""
+    while True:
+        print("\\n=== Щоденник ===")
+        print("1. Додати запис")
+        print("2. Прочитати всі записи")
+        print("3. Пошук записів")
+        print("0. Вихід")
+        
+        вибір = input("Виберіть дію: ")
+        
+        if вибір == "1":
+            додати_запис()
+        elif вибір == "2":
+            прочитати_всі_записи()
+        elif вибір == "3":
+            пошук_записів()
+        elif вибір == "0":
+            print("До побачення!")
+            break
+        else:
+            print("Невірний вибір! Спробуйте ще раз.")
+
+# Запуск програми
+if __name__ == "__main__":
+    головне_меню()`,
+      explanation: "Рішення демонструє повну програму для ведення щоденника з використанням файлів, включаючи обробку помилок та різні функції."
     },
     hints: [
-      "Використовуйте self для доступу до атрибутів",
-      "Методи повинні приймати self як перший параметр",
-      "is_long() повертає булеве значення"
+      "Використовуйте datetime.now() для отримання поточної дати та часу",
+      "Використовуйте strftime() для форматування дати",
+      "Режим 'a' для додавання записів, 'r' для читання",
+      "Не забудьте encoding='utf-8' та close()",
+      "Використовуйте try/except для обробки FileNotFoundError"
     ],
-    difficulty: "beginner"
+    difficulty: "intermediate"
   },
   
   quiz: {
@@ -362,30 +559,53 @@ print(f"Довга книга: {book2.is_long()}")`,
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що таке клас?",
-        options: ["Конкретний об'єкт", "Шаблон для створення об'єктів", "Функція", "Змінна"],
+        question: "Який режим відкриття файлу створює новий файл або перезаписує існуючий?",
+        options: ["'r'", "'w'", "'a'", "'x'"],
         correctAnswer: 1,
-        explanation: "Клас — це шаблон (blueprint) для створення об'єктів."
+        explanation: "Режим 'w' (write) створює новий файл або перезаписує існуючий, видаляючи весь старий вміст."
       },
       {
         id: "q2",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе: class A: x=1; a=A(); print(a.x)?",
-        options: ["1", "Помилку", "None", "A"],
-        correctAnswer: 0,
-        explanation: "a.x звертається до атрибута x об'єкта a, який успадковує значення 1 від класу."
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Яке кодування рекомендується використовувати для українського тексту?",
+        options: ["cp1251", "utf-8", "latin-1", "ascii"],
+        correctAnswer: 1,
+        explanation: "UTF-8 — універсальне кодування, яке підтримує всі символи, включаючи українські літери."
       },
       {
         id: "q3",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\nfile = open('test.txt', 'w', encoding='utf-8')\nfile.write('Привіт')\nfile.write('Світ')\nfile.close()\nfile = open('test.txt', 'r', encoding='utf-8')\nprint(file.read())",
+        options: ["ПривітСвіт", "Привіт\\nСвіт", "Привіт Світ", "Помилку"],
+        correctAnswer: 0,
+        explanation: "write() не додає символ нового рядка автоматично. Обидва рядки будуть записані безпосередньо один за одним: 'ПривітСвіт'."
+      },
+      {
+        id: "q4",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що таке self?",
-        options: ["Ключове слово", "Посилання на поточний об'єкт", "Метод", "Клас"],
+        question: "Який метод найефективніший для читання великого файлу по рядках?",
+        options: ["read()", "readlines()", "Ітерація for line in file", "readline() в циклі while"],
+        correctAnswer: 2,
+        explanation: "Ітерація for line in file найефективніша, бо не завантажує весь файл в пам'ять одразу, а читає по рядку."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що станеться, якщо не закрити файл після роботи з ним?",
+        options: ["Нічого", "Дані можуть не зберегтися", "Файл може залишитися заблокованим", "Обидва варіанти B і C"],
+        correctAnswer: 3,
+        explanation: "Якщо не закрити файл, дані можуть не зберегтися (буфер не записаний) та файл може залишитися заблокованим для інших програм."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\nfile = open('data.txt', 'a', encoding='utf-8')\nfile.write('Новий рядок')\nfile.close()\nfile = open('data.txt', 'a', encoding='utf-8')\nfile.write('Ще один рядок')\nfile.close()",
+        options: ["Перезапише файл двічі", "Додасть обидва рядки в кінець", "Викличе помилку", "Створить два файли"],
         correctAnswer: 1,
-        explanation: "self — це посилання на поточний об'єкт, завжди перший параметр методів."
+        explanation: "Режим 'a' (append) додає дані в кінець файлу, не видаляючи старий вміст. Обидва рядки будуть додані."
       }
     ],
-    timeLimit: 12,
+    timeLimit: 15,
     passingScore: 70
   }
 }
-

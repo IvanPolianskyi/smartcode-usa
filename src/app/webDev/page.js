@@ -238,19 +238,6 @@ const WebCoursePage = () => {
 			Icon: Wind,
 			color: 'iconBlue',
 			gradient: 'from-blue-400 to-cyan-400'
-		},
-		{
-			title: 'Backend & Deployment',
-			duration: '4 тижні',
-			topics: [
-				'Node.js та Express',
-				'REST API',
-				'MongoDB & PostgreSQL',
-				'Cloud deployment'
-			],
-			Icon: Server,
-			color: 'iconGreen',
-			gradient: 'from-cyan-400 to-teal-400'
 		}
 	]
 
@@ -278,14 +265,6 @@ const WebCoursePage = () => {
 			description: 'Створіть соціальну мережу з real-time чатом та stories.',
 			icon: '💬',
 			fillClass: 'fillHard'
-		},
-		{
-			name: 'E-commerce Platform',
-			difficulty: 100,
-			time: '6 тижнів',
-			description: 'Повноцінний маркетплейс з платіжною системою та адмін-панеллю.',
-			icon: '🛍️',
-			fillClass: 'fillExpert'
 		}
 	]
 
@@ -307,12 +286,6 @@ const WebCoursePage = () => {
 			title: 'Web APIs', 
 			desc: 'Інтеграція з сучасними сервісами',
 			emoji: '🌐'
-		},
-		{ 
-			Icon: ShieldCheck, 
-			title: 'Security', 
-			desc: 'Захист додатків від загроз',
-			emoji: '🔒'
 		}
 	]
 
@@ -400,7 +373,7 @@ const WebCoursePage = () => {
 				<header className={styles.sectionHeader}>
 					<h2 className={styles.sectionTitle}>Програма курсу</h2>
 					<p className={styles.sectionSubtitle}>
-						4 модулі = твій шлях до професії веб-розробника
+						3 модулі = твій шлях до професії веб-розробника
 					</p>
 				</header>
 				
