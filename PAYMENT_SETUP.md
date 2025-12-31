@@ -178,3 +178,4 @@ https://your-ngrok-url.ngrok.io/api/payment/webhook
 - Переконайтеся, що статус платежу в базі даних `completed`
 - Перевірте, що курс додано до `purchasedCourses` користувача
 
+
