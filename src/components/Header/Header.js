@@ -279,13 +279,13 @@ const Header = () => {
 	}
 
 	const navItems = [
-		{ label: 'Курси', href: '/courses' },
 		{ label: 'Предмети', dropdown: true },
-		{ label: 'Статистика', href: '/#statistics' },
+		{ label: 'Курси', href: '/courses' },
+		{ label: 'Соцмережі', href: '/#social-media' },
 		{ label: 'Викладачі', href: '/#teachers' },
-		{ label: 'Тариф', href: '/#tariff' },
+		{ label: 'Тарифи', href: '/tariff' },
 		{ label: 'Відгуки', href: '/#testimonials' },
-		{ label: 'Блог', href: '/#blog' },
+		
 	]
 	
 	const courses = [

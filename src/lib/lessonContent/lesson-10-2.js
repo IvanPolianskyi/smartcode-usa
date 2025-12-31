@@ -439,9 +439,33 @@ if users:
         options: ["XML", "JSON", "CSV", "HTML"],
         correctAnswer: 1,
         explanation: "JSON — найпоширеніший формат для REST API завдяки простоті та читабельності."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що робить json.loads('{\"name\": \"John\"}')?",
+        options: ["Зберігає у файл", "Парсить JSON рядок у Python словник", "Виводить на екран", "Помилку"],
+        correctAnswer: 1,
+        explanation: "json.loads() парсить JSON рядок та повертає Python об'єкт (словник, список тощо)."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Як отримати доступ до вкладених полів у JSON?",
+        options: ["data['key']['nested']", "data.key.nested", "data.get('key').get('nested')", "Всі варіанти правильні"],
+        correctAnswer: 0,
+        explanation: "У Python словниках доступ до вкладених полів через квадратні дужки: data['key']['nested']."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "JSON підтримує коментарі як у Python.",
+        options: ["True", "False"],
+        correctAnswer: 1,
+        explanation: "False. JSON не підтримує коментарі, це чистий формат даних без коментарів."
       }
     ],
-    timeLimit: 10,
+    timeLimit: 15,
     passingScore: 70
   }
 }

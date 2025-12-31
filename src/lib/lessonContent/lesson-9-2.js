@@ -500,9 +500,25 @@ pygame.quit()`,
         options: ["Щоб очистити попередній кадр", "Щоб змінити колір", "Не потрібно", "Щоб прискорити"],
         correctAnswer: 0,
         explanation: "screen.fill() очищає екран від попереднього кадру, інакше об'єкти залишатимуть 'слід'."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що робить pygame.draw.circle(screen, BLUE, (400, 300), 50)?",
+        options: ["Малює прямокутник", "Малює синє коло з центром (400, 300) та радіусом 50", "Малює лінію", "Помилку"],
+        correctAnswer: 1,
+        explanation: "Малює синє коло з центром у точці (400, 300) та радіусом 50 пікселів."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Як відобразити текст на екрані в Pygame?",
+        options: ["pygame.text()", "pygame.font.Font().render() та screen.blit()", "print()", "pygame.label()"],
+        correctAnswer: 1,
+        explanation: "Спочатку створюють шрифт, потім render() створює поверхню з текстом, а blit() відображає її на екрані."
       }
     ],
-    timeLimit: 12,
+    timeLimit: 15,
     passingScore: 70
   }
 }

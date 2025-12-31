@@ -34,6 +34,9 @@ const KnowledgeTestSection = dynamic(() => import('@/components/KnowledgeTestSec
 const CoursesSection = dynamic(() => import('@/components/CoursesSection/CoursesSection'), {
   loading: () => <SectionSkeleton height='1000px' />,
 })
+const SocialMedia = dynamic(() => import('@/components/SocialMedia/SocialMedia'), {
+  loading: () => <SectionSkeleton height='600px' />,
+})
 
 export default function HomeClient() {
   // Прибрали поведінку з hash, щоб уникнути гонок відкриття модалки
@@ -102,6 +105,7 @@ export default function HomeClient() {
         <Testimonials />
         <ProjectsShowcase />
         <HeroSection />
+        <SocialMedia />
         <FAQ />
       </div>
     </div>

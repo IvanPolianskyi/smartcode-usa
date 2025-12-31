@@ -393,9 +393,41 @@ def delete_post(post_id: int):
         options: ["GET", "POST", "PUT", "DELETE"],
         correctAnswer: 2,
         explanation: "PUT використовується для оновлення існуючих ресурсів."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що робить @app.post('/posts', status_code=201)?",
+        options: ["Отримує пости", "Створює новий пост зі статусом 201", "Видаляє пост", "Оновлює пост"],
+        correctAnswer: 1,
+        explanation: "@app.post() створює POST endpoint, status_code=201 встановлює код успішного створення."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Як обробити помилку 404 у FastAPI?",
+        options: ["return None", "raise HTTPException(status_code=404)", "return 404", "print('404')"],
+        correctAnswer: 1,
+        explanation: "HTTPException з status_code=404 — правильний спосіб повернути помилку 404 у FastAPI."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "Pydantic моделі автоматично валідують дані у FastAPI.",
+        options: ["True", "False"],
+        correctAnswer: 0,
+        explanation: "True. FastAPI автоматично валідує вхідні дані на основі Pydantic моделей."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Як запустити FastAPI сервер?",
+        options: ["python main.py", "uvicorn main:app --reload", "fastapi run", "npm start"],
+        correctAnswer: 1,
+        explanation: "uvicorn main:app --reload запускає FastAPI сервер з автоматичним перезавантаженням при змінах."
       }
     ],
-    timeLimit: 10,
+    timeLimit: 15,
     passingScore: 70
   }
 }

@@ -428,9 +428,41 @@ app.include_router(router)
         options: ["База даних", "Архітектурний стиль для веб-сервісів", "Мова програмування", "Фреймворк"],
         correctAnswer: 1,
         explanation: "REST (Representational State Transfer) — архітектурний стиль для створення веб-сервісів."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Які HTTP методи використовуються для CRUD операцій?",
+        options: ["GET, POST, PUT, DELETE", "CREATE, READ, UPDATE, DELETE", "SELECT, INSERT, UPDATE, DELETE", "Тільки GET та POST"],
+        correctAnswer: 0,
+        explanation: "GET (читання), POST (створення), PUT (оновлення), DELETE (видалення) — стандартні HTTP методи для CRUD."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що таке Pydantic у FastAPI?",
+        options: ["База даних", "Бібліотека для валідації та серіалізації даних", "Фреймворк для тестування", "Шаблонізатор"],
+        correctAnswer: 1,
+        explanation: "Pydantic — бібліотека для валідації та серіалізації даних, інтегрована з FastAPI."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "FastAPI автоматично генерує OpenAPI документацію.",
+        options: ["True", "False"],
+        correctAnswer: 0,
+        explanation: "True. FastAPI автоматично створює OpenAPI схему та інтерактивну документацію."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Як організувати код у великому FastAPI проекті?",
+        options: ["Все в одному файлі", "Використовувати APIRouter для модульної організації", "Тільки функції", "Не можна організувати"],
+        correctAnswer: 1,
+        explanation: "APIRouter дозволяє організувати роути у окремі модулі для кращої структури та підтримки коду."
       }
     ],
-    timeLimit: 10,
+    timeLimit: 15,
     passingScore: 70
   }
 }

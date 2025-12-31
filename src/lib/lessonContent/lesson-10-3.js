@@ -420,9 +420,33 @@ def create_user(user: User):
         options: ["База даних", "Бібліотека для валідації даних", "Веб-сервер", "Фреймворк"],
         correctAnswer: 1,
         explanation: "Pydantic — бібліотека для валідації даних, яка використовується в FastAPI."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що робить @app.get('/items/{item_id}')?",
+        options: ["Створює item", "Отримує item за ID", "Видаляє item", "Оновлює item"],
+        correctAnswer: 1,
+        explanation: "@app.get() створює GET endpoint для отримання ресурсу за ID з path параметра."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Як отримати query параметри у FastAPI?",
+        options: ["Через path", "Через параметри функції зі значеннями за замовчуванням", "Через headers", "Не можна"],
+        correctAnswer: 1,
+        explanation: "Query параметри передаються як параметри функції зі значеннями за замовчуванням або Optional."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "FastAPI автоматично генерує документацію API за адресою /docs.",
+        options: ["True", "False"],
+        correctAnswer: 0,
+        explanation: "True. FastAPI автоматично створює інтерактивну документацію Swagger UI за адресою /docs."
       }
     ],
-    timeLimit: 10,
+    timeLimit: 15,
     passingScore: 70
   }
 }

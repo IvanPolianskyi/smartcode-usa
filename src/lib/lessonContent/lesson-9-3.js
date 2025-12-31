@@ -519,9 +519,25 @@ pygame.quit()`,
         options: ["Щоб об'єкт не вийшов за межі", "Щоб прискорити гру", "Не потрібно", "Щоб змінити колір"],
         correctAnswer: 0,
         explanation: "Без обмежень об'єкт може вийти за межі екрана та стати невидимим або недоступним."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що повертає rect.colliderect(other_rect)?",
+        options: ["Позицію", "True якщо прямокутники перетинаються, False інакше", "Площа", "Помилку"],
+        correctAnswer: 1,
+        explanation: "colliderect() повертає True, якщо два прямокутники перетинаються, інакше False."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Як створити спрайт у Pygame?",
+        options: ["pygame.Sprite()", "Створити клас з методами draw() та update()", "pygame.create_sprite()", "Не можна"],
+        correctAnswer: 1,
+        explanation: "Спрайт — це клас, який містить позицію, зображення та методи для малювання та оновлення."
       }
     ],
-    timeLimit: 12,
+    timeLimit: 15,
     passingScore: 70
   }
 }

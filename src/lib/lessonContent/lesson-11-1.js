@@ -464,9 +464,41 @@ app.include_router(router)`,
         options: ["Створює користувача", "Отримує користувача за ID", "Видаляє користувача", "Оновлює користувача"],
         correctAnswer: 1,
         explanation: "@app.get() створює GET endpoint для отримання користувача за ID."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Який HTTP метод використовується для створення ресурсу?",
+        options: ["GET", "POST", "PUT", "DELETE"],
+        correctAnswer: 1,
+        explanation: "POST використовується для створення нового ресурсу на сервері."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що робить Pydantic BaseModel у FastAPI?",
+        options: ["Створює базу даних", "Валідує та серіалізує дані", "Обробляє помилки", "Створює роути"],
+        correctAnswer: 1,
+        explanation: "Pydantic BaseModel використовується для валідації вхідних та вихідних даних у FastAPI."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що таке APIRouter у FastAPI?",
+        options: ["База даних", "Спосіб організації роутів у окремі модулі", "Валідатор", "Шаблон"],
+        correctAnswer: 1,
+        explanation: "APIRouter дозволяє організувати роути у окремі модулі для кращої структури коду."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "FastAPI автоматично генерує документацію API.",
+        options: ["True", "False"],
+        correctAnswer: 0,
+        explanation: "True. FastAPI автоматично створює інтерактивну документацію за адресою /docs та /redoc."
       }
     ],
-    timeLimit: 10,
+    timeLimit: 15,
     passingScore: 70
   }
 }

@@ -322,6 +322,96 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const [isSaving, setIsSaving] = useState(false)
   const [isPurchasing, setIsPurchasing] = useState(false)
   
+  // Handle Tab key for indentation in code editor
+  const handleCodeKeyDown = (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault()
+      const textarea = e.target
+      const start = textarea.selectionStart
+      const end = textarea.selectionEnd
+      const value = userCode
+      const indent = '    ' // 4 spaces for Python
+      const indentSize = 4
+      
+      if (e.shiftKey) {
+        // Shift+Tab: remove indentation
+        const lines = value.split('\n')
+        const startLine = value.substring(0, start).split('\n').length - 1
+        const endLine = value.substring(0, end).split('\n').length - 1
+        
+        let newValue = ''
+        let newStart = start
+        let newEnd = end
+        let removedChars = 0
+        
+        for (let i = 0; i < lines.length; i++) {
+          if (i >= startLine && i <= endLine) {
+            const line = lines[i]
+            const leadingSpaces = line.match(/^(\s*)/)[1].length
+            if (leadingSpaces >= indentSize) {
+              const newLine = line.substring(indentSize)
+              newValue += newLine
+              if (i < lines.length - 1) newValue += '\n'
+              if (i === startLine) {
+                removedChars = Math.min(indentSize, leadingSpaces)
+                newStart = start - removedChars
+              }
+              newEnd -= Math.min(indentSize, leadingSpaces)
+            } else {
+              newValue += line
+              if (i < lines.length - 1) newValue += '\n'
+            }
+          } else {
+            newValue += lines[i]
+            if (i < lines.length - 1) newValue += '\n'
+          }
+        }
+        
+        setUserCode(newValue)
+        setTimeout(() => {
+          textarea.selectionStart = Math.max(0, newStart)
+          textarea.selectionEnd = Math.max(0, newEnd)
+        }, 0)
+      } else {
+        // Tab: add indentation
+        if (start === end) {
+          // Single cursor - just add indent
+          const newValue = value.substring(0, start) + indent + value.substring(end)
+          setUserCode(newValue)
+          setTimeout(() => {
+            textarea.selectionStart = start + indent.length
+            textarea.selectionEnd = start + indent.length
+          }, 0)
+        } else {
+          // Multiple lines selected - indent all lines
+          const lines = value.split('\n')
+          const startLine = value.substring(0, start).split('\n').length - 1
+          const endLine = value.substring(0, end).split('\n').length - 1
+          
+          let newValue = ''
+          let newStart = start + indent.length
+          let newEnd = end
+          
+          for (let i = 0; i < lines.length; i++) {
+            if (i >= startLine && i <= endLine) {
+              newValue += indent + lines[i]
+              newEnd += indent.length
+            } else {
+              newValue += lines[i]
+            }
+            if (i < lines.length - 1) newValue += '\n'
+          }
+          
+          setUserCode(newValue)
+          setTimeout(() => {
+            textarea.selectionStart = newStart
+            textarea.selectionEnd = newEnd
+          }, 0)
+        }
+      }
+    }
+  }
+  
   // Get lesson content
   const lesson = lessonContentMap[lessonId]
   
@@ -812,6 +902,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                       rows={15}
                       value={userCode}
                       onChange={(e) => setUserCode(e.target.value)}
+                      onKeyDown={handleCodeKeyDown}
                       disabled={codeExecution.isRunning}
                     />
                     <button 
