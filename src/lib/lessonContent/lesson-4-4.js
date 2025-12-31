@@ -1,5 +1,5 @@
 /**
- * Lesson 4-4: CSV файли та табличні дані
+ * Lesson 4-4: *args, **kwargs
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
@@ -8,13 +8,13 @@ export const lesson4_4 = {
   lessonId: "lesson-4-4",
   moduleId: "module-4",
   order: 4,
-  title: "CSV файли та табличні дані",
+  title: "*args, **kwargs",
   
   learningObjectives: [
-    "Розуміти формат CSV",
-    "Читати та записувати CSV файли",
-    "Використовувати модуль csv",
-    "Обробляти табличні дані"
+    "Використовувати *args для змінної кількості аргументів",
+    "Застосовувати **kwargs для ключових аргументів",
+    "Комбінувати різні типи аргументів",
+    "Розпаковувати аргументи"
   ],
   
   estimatedTime: 90,
@@ -25,156 +25,140 @@ export const lesson4_4 = {
   theory: {
     sections: [
       {
-        title: "Що таке CSV?",
-        content: `CSV (Comma-Separated Values) — формат для зберігання табличних даних.
+        title: "Що таке *args?",
+        content: `**\*args** дозволяє функції приймати змінну кількість позиційних аргументів.
 
-**Структура CSV:**
-\`\`\`csv
-Ім'я,Вік,Місто,Курс
-Олександр,15,Київ,Python
-Марія,16,Львів,Python
-Дмитро,15,Одеса,Web Development
+**Синтаксис:**
+\`\`\`python
+def функція(*args):
+    # args — це кортеж всіх позиційних аргументів
+    pass
 \`\`\`
 
-**Переваги CSV:**
-- Простий формат
-- Легко читається Excel/Google Sheets
-- Компактний
-- Універсальний
+**Приклад:**
+\`\`\`python
+def сума_всіх(*args):
+    результат = 0
+    for число in args:
+        результат += число
+    return результат
 
-**Недоліки:**
-- Немає типів даних (все рядки)
-- Складніше з вкладеними структурами`
+print(сума_всіх(1, 2, 3))        # 6
+print(сума_всіх(1, 2, 3, 4, 5))  # 15
+print(сума_всіх(10))              # 10
+\`\`\`
+
+**Важливо:** Назва `args` — це конвенція, можна використовувати будь-яку назву, але `*` обов'язковий!`
       },
       {
-        title: "Робота з CSV (вручну)",
-        content: `**Читання CSV вручну:**
+        title: "Що таке **kwargs?",
+        content: `**\*\*kwargs** дозволяє функції приймати змінну кількість іменованих аргументів.
+
+**Синтаксис:**
 \`\`\`python
-with open("students.csv", "r", encoding="utf-8") as file:
-    lines = file.readlines()
-    for line in lines:
-        parts = line.strip().split(",")
-        print(parts)
+def функція(**kwargs):
+    # kwargs — це словник всіх іменованих аргументів
+    pass
 \`\`\`
 
-**Проблеми:**
-- Що якщо в даних є коми?
-- Що якщо є переноси рядків?
-- Як обробити лапки?
+**Приклад:**
+\`\`\`python
+def показати_інфо(**kwargs):
+    for ключ, значення in kwargs.items():
+        print(f"{ключ}: {значення}")
 
-**Рішення:** Використовувати модуль \`csv\`!`
+показати_інфо(ім_я="Олександр", вік=15, місто="Київ")
+# ім'я: Олександр
+# вік: 15
+# місто: Київ
+\`\`\`
+
+**Важливо:** Назва `kwargs` — це конвенція (keyword arguments), можна використовувати будь-яку назву, але `**` обов'язковий!`
       },
       {
-        title: "Модуль csv",
-        content: `**Імпорт:**
+        title: "Комбінування аргументів",
+        content: `Можна комбінувати звичайні параметри, *args та **kwargs:
+
 \`\`\`python
-import csv
+def функція(обов_язковий, з_замовчуванням=10, *args, **kwargs):
+    print(f"Обов'язковий: {обов_язковий}")
+    print(f"З замовчуванням: {з_замовчуванням}")
+    print(f"Args: {args}")
+    print(f"Kwargs: {kwargs}")
+
+функція(1, 2, 3, 4, 5, ім_я="Олександр", вік=15)
+# Обов'язковий: 1
+# З замовчуванням: 2
+# Args: (3, 4, 5)
+# Kwargs: {'ім'я': 'Олександр', 'вік': 15}
 \`\`\`
 
-**Читання CSV (reader):**
-\`\`\`python
-import csv
+**Порядок параметрів:**
+1. Звичайні позиційні параметри
+2. Параметри зі значеннями за замовчуванням
+3. *args
+4. **kwargs`
+      },
+      {
+        title: "Розпакування аргументів",
+        content: `Можна **розпаковувати** списки та словники при виклику функції:
 
-with open("students.csv", "r", encoding="utf-8") as file:
-    reader = csv.reader(file)
-    header = next(reader)  # Перший рядок — заголовки
-    for row in reader:
-        print(row)  # row — список значень
+**Розпакування списку (*):**
+\`\`\`python
+def додати(a, b, c):
+    return a + b + c
+
+числа = [1, 2, 3]
+результат = додати(*числа)  # Розпаковує список
+# Еквівалентно: додати(1, 2, 3)
 \`\`\`
 
-**Читання як словник (DictReader):**
+**Розпакування словника (**):**
 \`\`\`python
-import csv
+def створити_профіль(ім_я, вік, місто):
+    return f"{ім_я}, {вік} років, {місто}"
 
-with open("students.csv", "r", encoding="utf-8") as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-        print(row["Ім'я"])  # Доступ по назві колонки
-        print(row["Вік"])
+дані = {"ім_я": "Олександр", "вік": 15, "місто": "Київ"}
+профіль = створити_профіль(**дані)  # Розпаковує словник
+# Еквівалентно: створити_профіль(ім_я="Олександр", вік=15, місто="Київ")
 \`\`\`
 
-**Запис CSV (writer):**
+**Комбінація:**
 \`\`\`python
-import csv
+def функція(a, b, c, d, e):
+    return a + b + c + d + e
 
-data = [
-    ["Ім'я", "Вік", "Місто"],
-    ["Олександр", "15", "Київ"],
-    ["Марія", "16", "Львів"]
-]
-
-with open("output.csv", "w", encoding="utf-8", newline='') as file:
-    writer = csv.writer(file)
-    writer.writerows(data)
-\`\`\`
-
-**Запис як словник (DictWriter):**
-\`\`\`python
-import csv
-
-students = [
-    {"Ім'я": "Олександр", "Вік": "15", "Місто": "Київ"},
-    {"Ім'я": "Марія", "Вік": "16", "Місто": "Львів"}
-]
-
-with open("output.csv", "w", encoding="utf-8", newline='') as file:
-    fieldnames = ["Ім'я", "Вік", "Місто"]
-    writer = csv.DictWriter(file, fieldnames=fieldnames)
-    writer.writeheader()  # Запис заголовків
-    writer.writerows(students)
+список = [1, 2]
+словник = {"c": 3, "d": 4, "e": 5}
+результат = функція(*список, **словник)  # 1 + 2 + 3 + 4 + 5 = 15
 \`\`\``
       },
       {
-        title: "Обробка даних",
-        content: `**Фільтрація:**
+        title: "Практичні приклади",
+        content: `**Функція для логування:**
 \`\`\`python
-import csv
+def логувати(повідомлення, *args, **kwargs):
+    print(f"[LOG] {повідомлення}")
+    if args:
+        print(f"Додаткові дані: {args}")
+    if kwargs:
+        print(f"Метадані: {kwargs}")
 
-with open("students.csv", "r", encoding="utf-8") as file:
-    reader = csv.DictReader(file)
-    python_students = [row for row in reader if row["Курс"] == "Python"]
-    for student in python_students:
-        print(student["Ім'я"])
+логувати("Помилка", "файл.py", "рядок 10", рівень="ERROR", час="12:00")
 \`\`\`
 
-**Обчислення:**
+**Функція-обгортка:**
 \`\`\`python
-import csv
+def обгортка(функція, *args, **kwargs):
+    print("Викликаю функцію...")
+    результат = функція(*args, **kwargs)
+    print("Функція виконана!")
+    return результат
 
-total_age = 0
-count = 0
+def додати(a, b):
+    return a + b
 
-with open("students.csv", "r", encoding="utf-8") as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-        total_age += int(row["Вік"])
-        count += 1
-
-average_age = total_age / count if count > 0 else 0
-print(f"Середній вік: {average_age}")
-\`\`\`
-
-**Оновлення даних:**
-\`\`\`python
-import csv
-
-# Читання
-students = []
-with open("students.csv", "r", encoding="utf-8") as file:
-    reader = csv.DictReader(file)
-    students = list(reader)
-
-# Модифікація
-for student in students:
-    if student["Ім'я"] == "Олександр":
-        student["Вік"] = "16"
-
-# Запис
-with open("students.csv", "w", encoding="utf-8", newline='') as file:
-    if students:
-        writer = csv.DictWriter(file, fieldnames=students[0].keys())
-        writer.writeheader()
-        writer.writerows(students)
+результат = обгортка(додати, 5, 3)  # Викликає додати(5, 3)
 \`\`\``
       }
     ]
@@ -182,194 +166,190 @@ with open("students.csv", "w", encoding="utf-8", newline='') as file:
   
   codeExamples: [
     {
-      title: "Приклад 1: Читання CSV",
-      code: `import csv
+      title: "Приклад 1: *args",
+      code: `def сума_всіх(*args):
+    результат = 0
+    for число in args:
+        результат += число
+    return результат
 
-# Створюємо тестовий файл
-with open("students.csv", "w", encoding="utf-8", newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(["Ім'я", "Вік", "Місто"])
-    writer.writerow(["Олександр", "15", "Київ"])
-    writer.writerow(["Марія", "16", "Львів"])
+print(сума_всіх(1, 2, 3))        # 6
+print(сума_всіх(10, 20, 30, 40)) # 100
+print(сума_всіх(5))              # 5
 
-# Читання
-with open("students.csv", "r", encoding="utf-8") as file:
-    reader = csv.reader(file)
-    header = next(reader)
-    print("Заголовки:", header)
-    for row in reader:
-        print(f"{row[0]}, {row[1]} років, {row[2]}")`,
-      explanation: "Демонструє базове читання та запис CSV файлів."
+def показати_всі(*аргументи):
+    for аргумент in аргументи:
+        print(аргумент)
+
+показати_всі("Олександр", "Марія", "Дмитро")`,
+      explanation: "Демонструє використання *args для змінної кількості аргументів."
     },
     {
-      title: "Приклад 2: Робота з DictReader",
-      code: `import csv
+      title: "Приклад 2: **kwargs",
+      code: `def створити_профіль(**kwargs):
+    профіль = {}
+    for ключ, значення in kwargs.items():
+        профіль[ключ] = значення
+    return профіль
 
-# Створюємо файл
-students = [
-    {"Ім'я": "Олександр", "Вік": "15", "Курс": "Python"},
-    {"Ім'я": "Марія", "Вік": "16", "Курс": "Python"},
-    {"Ім'я": "Дмитро", "Вік": "15", "Курс": "Web"}
-]
+профіль1 = створити_профіль(ім_я="Олександр", вік=15, місто="Київ")
+print(профіль1)
 
-with open("students.csv", "w", encoding="utf-8", newline='') as file:
-    writer = csv.DictWriter(file, fieldnames=["Ім'я", "Вік", "Курс"])
-    writer.writeheader()
-    writer.writerows(students)
-
-# Читання як словник
-with open("students.csv", "r", encoding="utf-8") as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-        print(f"{row['Ім'я']} вивчає {row['Курс']}")`,
-      explanation: "Показує роботу з CSV як зі словниками для зручності."
+профіль2 = створити_профіль(ім_я="Марія", вік=16, курс="Python", email="maria@example.com")
+print(профіль2)`,
+      explanation: "Показує використання **kwargs для іменованих аргументів."
     },
     {
-      title: "Приклад 3: Обробка даних",
-      code: `import csv
+      title: "Приклад 3: Комбінація та розпакування",
+      code: `def обчислити(операція, *args, **kwargs):
+    if операція == "сума":
+        return sum(args)
+    elif операція == "добуток":
+        результат = 1
+        for число in args:
+            результат *= число
+        return результат
+    else:
+        return None
 
-# Обчислення середнього віку
-total_age = 0
-count = 0
+# Використання
+результат1 = обчислити("сума", 1, 2, 3, 4, 5)
+print(результат1)  # 15
 
-with open("students.csv", "r", encoding="utf-8") as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-        total_age += int(row["Вік"])
-        count += 1
+результат2 = обчислити("добуток", 2, 3, 4)
+print(результат2)  # 24
 
-if count > 0:
-    average = total_age / count
-    print(f"Середній вік студентів: {average:.1f}")
+# Розпакування
+числа = [10, 20, 30]
+результат3 = обчислити("сума", *числа)
+print(результат3)  # 60
 
-# Фільтрація
-with open("students.csv", "r", encoding="utf-8") as file:
-    reader = csv.DictReader(file)
-    python_students = [row for row in reader if row["Курс"] == "Python"]
-    print(f"Студентів Python: {len(python_students)}")`,
-      explanation: "Демонструє обробку та аналіз CSV даних."
+дані = {"операція": "сума"}
+результат4 = обчислити(**дані, 1, 2, 3)  # Помилка! Неправильний порядок
+# Правильно:
+результат4 = обчислити("сума", 1, 2, 3)`,
+      explanation: "Демонструє комбінування та розпакування аргументів."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Забути newline='' при записі CSV",
-      explanation: "Без newline='' можуть з'явитися порожні рядки між записами.",
-      correctApproach: "Завжди використовуйте newline='' при відкритті CSV для запису."
+      mistake: "Неправильний порядок параметрів",
+      explanation: "Порядок: звичайні, з замовчуванням, *args, **kwargs.",
+      correctApproach: "def func(a, b=1, *args, **kwargs): — правильний порядок."
     },
     {
-      mistake: "Не обробляти типи даних",
-      explanation: "CSV зберігає все як рядки, потрібно конвертувати в числа.",
-      correctApproach: "Використовуйте int() або float() для конвертації числових значень."
+      mistake: "Розпакування невідповідних даних",
+      explanation: "Розпакування словника потребує відповідних імен параметрів.",
+      correctApproach: "Переконайтеся, що ключі словника відповідають назвам параметрів."
     },
     {
-      mistake: "Не обробляти відсутні дані",
-      explanation: "Якщо в CSV є порожні комірки, вони будуть порожніми рядками.",
-      correctApproach: "Перевіряйте наявність даних перед обробкою: if row['Вік']:"
+      mistake: "Плутанина між *args та **kwargs",
+      explanation: "*args для позиційних аргументів (кортеж), **kwargs для іменованих (словник).",
+      correctApproach: "*args = позиційні (кортеж), **kwargs = іменовані (словник)."
     }
   ],
   
   summary: `На цьому уроці ми вивчили:
 
-1. **CSV формат** — табличні дані, розділені комами
-2. **csv.reader** — читання CSV як списків
-3. **csv.DictReader** — читання CSV як словників
-4. **csv.writer** — запис CSV
-5. **csv.DictWriter** — запис CSV зі словників
-6. **newline=''** — важливо для коректного запису
+1. **\*args** — змінна кількість позиційних аргументів (кортеж)
+2. **\*\*kwargs** — змінна кількість іменованих аргументів (словник)
+3. **Комбінування** — правильний порядок параметрів
+4. **Розпакування** — * для списків, ** для словників
+5. **Практичне застосування** — гнучкі функції
 
-CSV — простий спосіб роботи з табличними даними!`,
+*args та **kwargs роблять функції дуже гнучкими!`,
   
   practiceTask: {
-    title: "Система оцінок студентів",
-    description: "Створіть програму для роботи з CSV даними студентів",
-    problemStatement: `Напишіть програму, яка:
-1. Створює CSV файл з даними студентів (Ім'я, Курс, Оцінка1, Оцінка2, Оцінка3)
-2. Додає нового студента з оцінками
-3. Обчислює середню оцінку для кожного студента
-4. Знаходить студентів з середньою оцінкою > 90
-5. Створює новий CSV файл з додатковою колонкою "Середня оцінка"`,
-    inputFormat: "Програма працює з файлами students.csv та students_with_avg.csv",
+    title: "Робота з *args та **kwargs",
+    description: "Створіть функції, які використовують *args та **kwargs",
+    problemStatement: `Напишіть програму з такими функціями:
+
+1. **обчислити_статистику(*args)** — обчислює суму, середнє, максимум, мінімум з довільної кількості чисел
+2. **створити_користувача(ім_я, вік, **kwargs)** — створює профіль користувача з обов'язковими та додатковими полями
+3. **форматувати_повідомлення(шаблон, *args, **kwargs)** — форматує повідомлення з позиційними та іменованими плейсхолдерами
+
+Використайте розпакування при виклику функцій.`,
+    inputFormat: "Функції викликаються з різною кількістю аргументів",
     outputFormat: `Приклад виведення:
-Середні оцінки:
-Олександр: 92.3
-Марія: 88.7
-Відмінники (>90):
-Олександр: 92.3`,
+Сума: 15, Середнє: 5.0, Макс: 10, Мін: 1
+Користувач: Олександр, 15 років, місто: Київ, курс: Python
+Повідомлення: Привіт, Олександр! Твій вік: 15`,
     examples: [
       {
-        input: "Додавання студента з оцінками",
-        output: "Студент додано, середня оцінка обчислена",
-        explanation: "Програма обробляє CSV та обчислює статистику"
+        input: "Різна кількість аргументів",
+        output: "Функції обробляють довільну кількість аргументів",
+        explanation: "Програма демонструє гнучкість *args та **kwargs"
       }
     ],
     solution: {
-      code: `import csv
+      code: `def обчислити_статистику(*args):
+    if not args:
+        return None
+    
+    сума = sum(args)
+    середнє = сума / len(args)
+    максимум = max(args)
+    мінімум = min(args)
+    
+    return {
+        "сума": сума,
+        "середнє": середнє,
+        "максимум": максимум,
+        "мінімум": мінімум
+    }
 
-def create_initial_file():
-    students = [
-        {"Ім'я": "Олександр", "Курс": "Python", "Оцінка1": "95", "Оцінка2": "90", "Оцінка3": "92"},
-        {"Ім'я": "Марія", "Курс": "Python", "Оцінка1": "88", "Оцінка2": "90", "Оцінка3": "88"},
-        {"Ім'я": "Дмитро", "Курс": "Web", "Оцінка1": "85", "Оцінка2": "87", "Оцінка3": "89"}
-    ]
-    
-    with open("students.csv", "w", encoding="utf-8", newline='') as file:
-        fieldnames = ["Ім'я", "Курс", "Оцінка1", "Оцінка2", "Оцінка3"]
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(students)
+def створити_користувача(ім_я, вік, **kwargs):
+    профіль = {
+        "ім'я": ім_я,
+        "вік": вік
+    }
+    профіль.update(kwargs)  # Додаємо додаткові поля
+    return профіль
 
-def add_student(name, course, grade1, grade2, grade3):
-    with open("students.csv", "a", encoding="utf-8", newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow([name, course, grade1, grade2, grade3])
-    print(f"Студент {name} додано!")
-
-def calculate_average(row):
-    grades = [int(row["Оцінка1"]), int(row["Оцінка2"]), int(row["Оцінка3"])]
-    return sum(grades) / len(grades)
-
-def process_students():
-    students = []
+def форматувати_повідомлення(шаблон, *args, **kwargs):
+    # Спочатку замінюємо позиційні плейсхолдери {}
+    результат = шаблон
+    for аргумент in args:
+        результат = результат.replace("{}", str(аргумент), 1)
     
-    # Читання
-    with open("students.csv", "r", encoding="utf-8") as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            avg = calculate_average(row)
-            row["Середня оцінка"] = f"{avg:.1f}"
-            students.append(row)
+    # Потім замінюємо іменовані плейсхолдери {ключ}
+    for ключ, значення in kwargs.items():
+        результат = результат.replace(f"{{{ключ}}}", str(значення))
     
-    # Виведення середніх оцінок
-    print("Середні оцінки:")
-    for student in students:
-        print(f"{student['Ім'я']}: {student['Середня оцінка']}")
-    
-    # Відмінники
-    print("\\nВідмінники (>90):")
-    for student in students:
-        if float(student["Середня оцінка"]) > 90:
-            print(f"{student['Ім'я']}: {student['Середня оцінка']}")
-    
-    # Запис з середньою оцінкою
-    with open("students_with_avg.csv", "w", encoding="utf-8", newline='') as file:
-        fieldnames = ["Ім'я", "Курс", "Оцінка1", "Оцінка2", "Оцінка3", "Середня оцінка"]
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(students)
-    
-    print("\\nФайл students_with_avg.csv створено!")
+    return результат
 
 # Використання
-create_initial_file()
-add_student("Анна", "Python", "92", "94", "93")
-process_students()`,
-      explanation: "Рішення демонструє повну роботу з CSV: створення, додавання, обробка, обчислення, фільтрація."
+статистика = обчислити_статистику(1, 5, 10, 3, 6)
+if статистика:
+    print(f"Сума: {статистика['сума']}, Середнє: {статистика['середнє']}, "
+          f"Макс: {статистика['максимум']}, Мін: {статистика['мінімум']}")
+
+користувач = створити_користувача("Олександр", 15, місто="Київ", курс="Python")
+print(f"Користувач: {користувач['ім'я']}, {користувач['вік']} років, "
+      f"місто: {користувач['місто']}, курс: {користувач['курс']}")
+
+повідомлення = форматувати_повідомлення(
+    "Привіт, {}! Твій вік: {вік}",
+    "Олександр",
+    вік=15
+)
+print(f"Повідомлення: {повідомлення}")
+
+# Розпакування
+числа = [10, 20, 30, 40]
+статистика2 = обчислити_статистику(*числа)
+print(f"Статистика 2: {статистика2}")
+
+додаткові_дані = {"email": "test@example.com", "телефон": "123-456"}
+користувач2 = створити_користувача("Марія", 16, **додаткові_дані)
+print(f"Користувач 2: {користувач2}")`,
+      explanation: "Рішення демонструє повне використання *args та **kwargs з розпакуванням."
     },
     hints: [
-      "Використовуйте csv.DictReader для зручної роботи",
-      "Не забудьте newline='' при записі",
-      "Конвертуйте оцінки в int перед обчисленням"
+      "*args збирає позиційні аргументи в кортеж",
+      "**kwargs збирає іменовані аргументи в словник",
+      "Використовуйте * для розпакування списків, ** для словників"
     ],
     difficulty: "intermediate"
   },
@@ -379,30 +359,29 @@ process_students()`,
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що означає CSV?",
-        options: ["Computer System Values", "Comma-Separated Values", "Code System Variables", "Complex String Values"],
+        question: "Що таке *args?",
+        options: ["Словник", "Кортеж позиційних аргументів", "Список", "Рядок"],
         correctAnswer: 1,
-        explanation: "CSV = Comma-Separated Values (значення, розділені комами)."
+        explanation: "*args збирає позиційні аргументи в кортеж."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Чому потрібен newline='' при записі CSV?",
-        options: ["Швидкість", "Щоб уникнути порожніх рядків", "Безпека", "Стиснення"],
-        correctAnswer: 1,
-        explanation: "newline='' запобігає додаванню зайвих порожніх рядків між записами в CSV."
+        question: "Що виведе: def f(**k): return k; print(f(a=1, b=2))?",
+        options: ["{'a': 1, 'b': 2}", "(1, 2)", "Помилку", "None"],
+        correctAnswer: 0,
+        explanation: "**kwargs збирає іменовані аргументи в словник."
       },
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Яка різниця між csv.reader та csv.DictReader?",
-        options: ["Немає різниці", "reader повертає списки, DictReader — словники", "DictReader швидший", "reader для запису"],
+        question: "Який правильний порядок параметрів?",
+        options: ["*args, **kwargs, звичайні", "звичайні, *args, **kwargs", "**kwargs, *args, звичайні", "Будь-який"],
         correctAnswer: 1,
-        explanation: "csv.reader повертає рядки як списки, csv.DictReader — як словники з ключами з заголовків."
+        explanation: "Правильний порядок: звичайні параметри, *args, **kwargs."
       }
     ],
-    timeLimit: 10,
+    timeLimit: 12,
     passingScore: 70
   }
 }
-

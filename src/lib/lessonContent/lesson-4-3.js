@@ -1,5 +1,5 @@
 /**
- * Lesson 4-3: JSON та структуровані дані
+ * Lesson 4-3: Позиційні та іменовані аргументи
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
@@ -8,16 +8,16 @@ export const lesson4_3 = {
   lessonId: "lesson-4-3",
   moduleId: "module-4",
   order: 3,
-  title: "JSON та структуровані дані",
+  title: "Позиційні та іменовані аргументи",
   
   learningObjectives: [
-    "Розуміти формат JSON",
-    "Читати та записувати JSON файли",
-    "Конвертувати між Python об'єктами та JSON",
-    "Обробляти складні структури даних"
+    "Використовувати позиційні аргументи",
+    "Застосовувати іменовані аргументи",
+    "Комбінувати різні типи аргументів",
+    "Розуміти порядок аргументів"
   ],
   
-  estimatedTime: 90,
+  estimatedTime: 75,
   prerequisites: ["lesson-4-2"],
   
   videoUrl: "",
@@ -25,151 +25,125 @@ export const lesson4_3 = {
   theory: {
     sections: [
       {
-        title: "Що таке JSON?",
-        content: `JSON (JavaScript Object Notation) — формат для зберігання та обміну даними.
+        title: "Позиційні аргументи",
+        content: `**Позиційні аргументи** — це аргументи, які передаються в тому ж порядку, що й параметри:
 
-**Переваги JSON:**
-- Легко читається людьми
-- Легко обробляється комп'ютерами
-- Використовується скрізь (API, конфіги, бази даних)
-- Підтримується багатьма мовами
+\`\`\`python
+def представитися(ім_я, вік, місто):
+    print(f"{ім_я}, {вік} років, з {місто}")
 
-**Структура JSON:**
-\`\`\`json
-{
-  "name": "Олександр",
-  "age": 15,
-  "city": "Київ",
-  "hobbies": ["програмування", "читання"],
-  "student": true
-}
+представитися("Олександр", 15, "Київ")
+# Олександр, 15 років, з Київ
 \`\`\`
 
-**Типи даних в JSON:**
-- Числа (int, float)
-- Рядки (str)
-- Булеві (true/false)
-- null
-- Масиви (списки)
-- Об'єкти (словники)`
-      },
-      {
-        title: "Робота з JSON в Python",
-        content: `**Імпорт модуля:**
+**Важливо:** Порядок має значення! Перший аргумент відповідає першому параметру, другий — другому, і так далі.
+
+**Помилка порядку:**
 \`\`\`python
-import json
-\`\`\`
-
-**Конвертація Python → JSON (dumps):**
-\`\`\`python
-import json
-
-data = {
-    "name": "Олександр",
-    "age": 15,
-    "city": "Київ"
-}
-
-json_string = json.dumps(data)
-print(json_string)
-# {"name": "Олександр", "age": 15, "city": "Київ"}
-\`\`\`
-
-**Конвертація JSON → Python (loads):**
-\`\`\`python
-json_string = '{"name": "Олександр", "age": 15}'
-data = json.loads(json_string)
-print(data["name"])  # Олександр
-\`\`\`
-
-**Форматування (indent):**
-\`\`\`python
-data = {"name": "Олександр", "age": 15}
-pretty_json = json.dumps(data, indent=2, ensure_ascii=False)
-print(pretty_json)
-# {
-#   "name": "Олександр",
-#   "age": 15
-# }
+представитися(15, "Київ", "Олександр")  # Неправильно!
+# Виведе: 15, Київ років, з Олександр (безглуздя!)
 \`\`\``
       },
       {
-        title: "Робота з JSON файлами",
-        content: `**Запис у JSON файл (dump):**
+        title: "Іменовані аргументи (keyword arguments)",
+        content: `**Іменовані аргументи** дозволяють вказувати параметр за назвою, незалежно від порядку:
+
 \`\`\`python
-import json
+def представитися(ім_я, вік, місто):
+    print(f"{ім_я}, {вік} років, з {місто}")
 
-data = {
-    "students": [
-        {"name": "Олександр", "age": 15},
-        {"name": "Марія", "age": 16}
-    ]
-}
-
-with open("students.json", "w", encoding="utf-8") as file:
-    json.dump(data, file, indent=2, ensure_ascii=False)
+# Використання іменованих аргументів
+представитися(ім_я="Олександр", вік=15, місто="Київ")
+представитися(місто="Київ", ім_я="Олександр", вік=15)  # Порядок не важливий!
 \`\`\`
 
-**Читання з JSON файлу (load):**
-\`\`\`python
-import json
+**Переваги іменованих аргументів:**
+- Порядок не важливий
+- Код стає читабельнішим
+- Менше помилок при виклику
+- Легше зрозуміти, що означає кожне значення`
+      },
+      {
+        title: "Комбінування позиційних та іменованих",
+        content: `Можна комбінувати позиційні та іменовані аргументи:
 
-with open("students.json", "r", encoding="utf-8") as file:
-    data = json.load(file)
-    print(data["students"][0]["name"])  # Олександр
+\`\`\`python
+def обчислити_ціну(кількість, ціна, знижка=0, податок=0.2):
+    сума = кількість * ціна
+    сума_з_знижкою = сума * (1 - знижка)
+    фінальна = сума_з_знижкою * (1 + податок)
+    return фінальна
+
+# Позиційні аргументи
+ціна1 = обчислити_ціну(5, 100)
+
+# Комбінація
+ціна2 = обчислити_ціну(5, 100, знижка=0.1)  # 5 і 100 позиційні, знижка іменована
+ціна3 = обчислити_ціну(5, 100, податок=0.15, знижка=0.05)
 \`\`\`
 
-**Обробка помилок:**
+**Правило:** Позиційні аргументи мають бути перед іменованими!
 \`\`\`python
-import json
+# Правильно
+обчислити_ціну(5, 100, знижка=0.1)
 
-try:
-    with open("data.json", "r", encoding="utf-8") as file:
-        data = json.load(file)
-except FileNotFoundError:
-    print("Файл не знайдено!")
-except json.JSONDecodeError:
-    print("Помилка формату JSON!")
+# Неправильно (помилка!)
+обчислити_ціну(знижка=0.1, 5, 100)  # SyntaxError!
 \`\`\``
       },
       {
-        title: "Складні структури даних",
-        content: `**Вкладені структури:**
+        title: "Порядок параметрів",
+        content: `При оголошенні функції порядок параметрів важливий:
+
 \`\`\`python
-import json
+def функція(позиційний1, позиційний2, з_замовчуванням=значення, *args, іменований, **kwargs):
+    pass
+\`\`\`
 
-school = {
-    "name": "SmartCode Academy",
-    "students": [
-        {
-            "id": 1,
-            "name": "Олександр",
-            "courses": ["Python", "Web Development"],
-            "grades": {
-                "Python": 95,
-                "Web Development": 88
-            }
-        },
-        {
-            "id": 2,
-            "name": "Марія",
-            "courses": ["Python"],
-            "grades": {
-                "Python": 92
-            }
-        }
-    ]
-}
+**Правильний порядок:**
+1. Позиційні параметри (без значень за замовчуванням)
+2. Параметри зі значеннями за замовчуванням
+3. *args (якщо є)
+4. Іменовані параметри (якщо є)
+5. **kwargs (якщо є)
 
-# Запис
-with open("school.json", "w", encoding="utf-8") as file:
-    json.dump(school, file, indent=2, ensure_ascii=False)
+**Приклад:**
+\`\`\`python
+def приклад(a, b, c=10, d=20):
+    print(f"a={a}, b={b}, c={c}, d={d}")
 
-# Читання та доступ
-with open("school.json", "r", encoding="utf-8") as file:
-    data = json.load(file)
-    first_student = data["students"][0]
-    print(f"{first_student['name']}: {first_student['grades']['Python']}")
+приклад(1, 2)              # a=1, b=2, c=10, d=20
+приклад(1, 2, 3)           # a=1, b=2, c=3, d=20
+приклад(1, 2, d=30)        # a=1, b=2, c=10, d=30
+приклад(1, 2, c=5, d=15)   # a=1, b=2, c=5, d=15
+\`\`\``
+      },
+      {
+        title: "Коли використовувати що?",
+        content: `**Позиційні аргументи** — коли:
+- Параметрів мало (1-2)
+- Порядок очевидний
+- Функція проста
+
+**Іменовані аргументи** — коли:
+- Багато параметрів
+- Є параметри за замовчуванням
+- Важлива читабельність
+- Хочеться уникнути помилок порядку
+
+**Приклад:**
+\`\`\`python
+# Проста функція — позиційні
+def додати(a, b):
+    return a + b
+
+# Складна функція — іменовані
+def створити_користувача(ім_я, вік, email="", телефон="", місто="Київ", активний=True):
+    # ...
+    pass
+
+# Виклик з іменованими аргументами
+створити_користувача("Олександр", 15, місто="Львів", email="test@example.com")
 \`\`\``
       }
     ]
@@ -177,200 +151,168 @@ with open("school.json", "r", encoding="utf-8") as file:
   
   codeExamples: [
     {
-      title: "Приклад 1: Базова робота з JSON",
-      code: `import json
+      title: "Приклад 1: Позиційні аргументи",
+      code: `def обчислити_площу(довжина, ширина):
+    return довжина * ширина
 
-# Створення даних
-student = {
-    "name": "Олександр",
-    "age": 15,
-    "city": "Київ",
-    "active": True
-}
+# Позиційні аргументи
+площа1 = обчислити_площу(5, 4)
+print(площа1)  # 20
 
-# Конвертація в JSON рядок
-json_string = json.dumps(student, ensure_ascii=False)
-print("JSON рядок:", json_string)
-
-# Конвертація назад в Python
-data = json.loads(json_string)
-print("Ім'я:", data["name"])`,
-      explanation: "Демонструє базову конвертацію між Python та JSON."
+# Порядок важливий!
+площа2 = обчислити_площу(4, 5)  # Теж 20, але якщо переплутати — помилка!`,
+      explanation: "Демонструє використання позиційних аргументів."
     },
     {
-      title: "Приклад 2: Робота з JSON файлами",
-      code: `import json
+      title: "Приклад 2: Іменовані аргументи",
+      code: `def створити_повідомлення(ім_я, вік, місто, курс):
+    return f"{ім_я}, {вік} років, з {місто}, вивчає {курс}"
 
-# Запис у файл
-students = [
-    {"name": "Олександр", "age": 15},
-    {"name": "Марія", "age": 16},
-    {"name": "Дмитро", "age": 15}
-]
+# Іменовані аргументи — порядок не важливий
+повідомлення1 = створити_повідомлення(
+    ім_я="Олександр",
+    вік=15,
+    місто="Київ",
+    курс="Python"
+)
 
-with open("students.json", "w", encoding="utf-8") as file:
-    json.dump(students, file, indent=2, ensure_ascii=False)
+повідомлення2 = створити_повідомлення(
+    курс="Python",
+    ім_я="Марія",
+    місто="Львів",
+    вік=16
+)
 
-# Читання з файлу
-with open("students.json", "r", encoding="utf-8") as file:
-    loaded_students = json.load(file)
-    for student in loaded_students:
-        print(f"{student['name']}, {student['age']} років")`,
-      explanation: "Показує запис та читання JSON файлів."
+print(повідомлення1)
+print(повідомлення2)`,
+      explanation: "Показує переваги іменованих аргументів."
     },
     {
-      title: "Приклад 3: Складні структури",
-      code: `import json
+      title: "Приклад 3: Комбінація",
+      code: `def обчислити_вартість(кількість, ціна, знижка=0, податок=0.2):
+    сума = кількість * ціна
+    сума_з_знижкою = сума * (1 - знижка)
+    фінальна = сума_з_знижкою * (1 + податок)
+    return фінальна
 
-# Складна структура
-course = {
-    "title": "Python Basics",
-    "instructor": "Олександр",
-    "students": [
-        {
-            "name": "Марія",
-            "progress": 75,
-            "completed_lessons": [1, 2, 3, 4, 5]
-        },
-        {
-            "name": "Дмитро",
-            "progress": 50,
-            "completed_lessons": [1, 2, 3]
-        }
-    ]
-}
+# Позиційні
+вартість1 = обчислити_вартість(10, 100)
 
-# Запис
-with open("course.json", "w", encoding="utf-8") as file:
-    json.dump(course, file, indent=2, ensure_ascii=False)
+# Комбінація
+вартість2 = обчислити_вартість(10, 100, знижка=0.1)
+вартість3 = обчислити_вартість(10, 100, податок=0.15, знижка=0.05)
 
-# Читання та обробка
-with open("course.json", "r", encoding="utf-8") as file:
-    data = json.load(file)
-    print(f"Курс: {data['title']}")
-    for student in data["students"]:
-        print(f"{student['name']}: {student['progress']}%")`,
-      explanation: "Демонструє роботу зі складними вкладеними структурами."
+print(f"Вартість 1: {вартість1}")
+print(f"Вартість 2: {вартість2}")
+print(f"Вартість 3: {вартість3}")`,
+      explanation: "Демонструє комбінування позиційних та іменованих аргументів."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Забути ensure_ascii=False для українського тексту",
-      explanation: "Без ensure_ascii=False українські символи будуть у вигляді \\uXXXX.",
-      correctApproach: "Завжди використовуйте ensure_ascii=False для json.dump/json.dumps з українським текстом."
+      mistake: "Іменовані аргументи перед позиційними",
+      explanation: "Позиційні аргументи мають бути перед іменованими.",
+      correctApproach: "func(позиційний, іменований=значення) — правильно."
     },
     {
-      mistake: "Плутанина між dumps/loads та dump/load",
-      explanation: "dumps/loads працюють з рядками, dump/load працюють з файлами.",
-      correctApproach: "dumps/loads для рядків, dump/load для файлів."
+      mistake: "Плутанина з порядком позиційних аргументів",
+      explanation: "Порядок позиційних аргументів має відповідати порядку параметрів.",
+      correctApproach: "Використовуйте іменовані аргументи для уникнення помилок порядку."
     },
     {
-      mistake: "Не обробляти JSONDecodeError",
-      explanation: "Якщо JSON файл пошкоджений, виникне помилка.",
-      correctApproach: "Обробляйте json.JSONDecodeError при читанні JSON."
+      mistake: "Повторне вказання значення",
+      explanation: "Не можна вказати той самий параметр двічі.",
+      correctApproach: "func(a=1, a=2) — помилка! Кожен параметр тільки один раз."
     }
   ],
   
   summary: `На цьому уроці ми вивчили:
 
-1. **JSON** — формат для структурованих даних
-2. **json.dumps/loads** — конвертація між Python та JSON рядками
-3. **json.dump/load** — робота з JSON файлами
-4. **Складні структури** — вкладені словники та списки
-5. **ensure_ascii=False** — для коректного відображення українського тексту
+1. **Позиційні аргументи** — порядок важливий
+2. **Іменовані аргументи** — порядок не важливий, читабельніше
+3. **Комбінування** — позиційні перед іменованими
+4. **Порядок параметрів** — важливий при оголошенні функції
+5. **Коли що використовувати** — позиційні для простих функцій, іменовані для складних
 
-JSON — стандартний спосіб зберігання та обміну даними!`,
+Правильне використання аргументів робить код зрозумілішим!`,
   
   practiceTask: {
-    title: "Система управління студентами",
-    description: "Створіть програму для роботи з JSON даними студентів",
-    problemStatement: `Напишіть програму, яка:
-1. Створює JSON файл з даними студентів (ім'я, вік, курс, оцінки)
-2. Додає нового студента до файлу
-3. Знаходить студента за ім'ям
-4. Оновлює оцінки студента
-5. Виводить список всіх студентів з їх середніми оцінками`,
-    inputFormat: "Програма працює з файлом students.json",
+    title: "Позиційні та іменовані аргументи",
+    description: "Створіть функції з різними типами аргументів",
+    problemStatement: `Напишіть програму з такими функціями:
+
+1. **обчислити_вартість(кількість, ціна, знижка=0, податок=0.2)** — обчислює фінальну вартість
+2. **створити_профіль(ім_я, вік, місто="Київ", email="", телефон="")** — створює профіль користувача
+3. **форматувати_дату(день, місяць, рік, формат="dd.mm.yyyy")** — форматує дату
+
+Викличте функції:
+- Тільки з позиційними аргументами
+- З комбінацією позиційних та іменованих
+- Тільки з іменованими аргументами`,
+    inputFormat: "Функції викликаються з різними комбінаціями аргументів",
     outputFormat: `Приклад виведення:
-Студенти:
-1. Олександр (Python) - середня оцінка: 92.5
-2. Марія (Python) - середня оцінка: 88.0`,
+Вартість: 108.0
+Профіль: Олександр, 15 років, Київ
+Дата: 15.03.2024`,
     examples: [
       {
-        input: "Додавання студента",
-        output: "Студент додано успішно",
-        explanation: "Програма додає нового студента до JSON файлу"
+        input: "Різні способи виклику функцій",
+        output: "Функції працюють з різними комбінаціями аргументів",
+        explanation: "Програма демонструє гнучкість аргументів"
       }
     ],
     solution: {
-      code: `import json
-import os
+      code: `def обчислити_вартість(кількість, ціна, знижка=0, податок=0.2):
+    сума = кількість * ціна
+    сума_з_знижкою = сума * (1 - знижка)
+    фінальна = сума_з_знижкою * (1 + податок)
+    return фінальна
 
-def load_students():
-    if os.path.exists("students.json"):
-        with open("students.json", "r", encoding="utf-8") as file:
-            return json.load(file)
-    return []
+def створити_профіль(ім_я, вік, місто="Київ", email="", телефон=""):
+    профіль = f"{ім_я}, {вік} років, {місто}"
+    if email:
+        профіль += f", email: {email}"
+    if телефон:
+        профіль += f", телефон: {телефон}"
+    return профіль
 
-def save_students(students):
-    with open("students.json", "w", encoding="utf-8") as file:
-        json.dump(students, file, indent=2, ensure_ascii=False)
+def форматувати_дату(день, місяць, рік, формат="dd.mm.yyyy"):
+    if формат == "dd.mm.yyyy":
+        return f"{день:02d}.{місяць:02d}.{рік}"
+    elif формат == "yyyy-mm-dd":
+        return f"{рік}-{місяць:02d}-{день:02d}"
+    else:
+        return f"{день}/{місяць}/{рік}"
 
-def add_student(name, age, course, grades):
-    students = load_students()
-    student = {
-        "name": name,
-        "age": age,
-        "course": course,
-        "grades": grades
-    }
-    students.append(student)
-    save_students(students)
-    print(f"Студент {name} додано!")
+# Позиційні аргументи
+вартість1 = обчислити_вартість(10, 100)
+print(f"Вартість: {вартість1}")
 
-def find_student(name):
-    students = load_students()
-    for student in students:
-        if student["name"] == name:
-            return student
-    return None
+# Комбінація
+профіль1 = створити_профіль("Олександр", 15, місто="Львів")
+print(f"Профіль: {профіль1}")
 
-def update_grades(name, new_grades):
-    students = load_students()
-    for student in students:
-        if student["name"] == name:
-            student["grades"].update(new_grades)
-            save_students(students)
-            print(f"Оцінки {name} оновлено!")
-            return True
-    print(f"Студент {name} не знайдено!")
-    return False
+# Іменовані аргументи
+дата1 = форматувати_дату(день=15, місяць=3, рік=2024)
+print(f"Дата: {дата1}")
 
-def calculate_average(grades):
-    if not grades:
-        return 0
-    return sum(grades.values()) / len(grades)
+# Різні комбінації
+вартість2 = обчислити_вартість(5, 50, знижка=0.1, податок=0.15)
+профіль2 = створити_профіль("Марія", 16, email="maria@example.com", місто="Одеса")
+дата2 = форматувати_дату(1, 1, 2024, формат="yyyy-mm-dd")
 
-def list_students():
-    students = load_students()
-    print("Студенти:")
-    for i, student in enumerate(students, 1):
-        avg = calculate_average(student["grades"])
-        print(f"{i}. {student['name']} ({student['course']}) - середня оцінка: {avg:.1f}")
-
-# Використання
-add_student("Олександр", 15, "Python", {"Python": 95, "Math": 90})
-add_student("Марія", 16, "Python", {"Python": 88, "Math": 88})
-list_students()`,
-      explanation: "Рішення демонструє повну роботу з JSON: створення, читання, оновлення, пошук."
+print(f"Вартість 2: {вартість2}")
+print(f"Профіль 2: {профіль2}")
+print(f"Дата 2: {дата2}")`,
+      explanation: "Рішення демонструє різні способи виклику функцій з аргументами."
     },
     hints: [
-      "Використовуйте json.load() та json.dump() для роботи з файлами",
-      "Перевіряйте існування файлу перед читанням",
-      "Оновлюйте дані в пам'яті, потім зберігайте у файл"
+      "Позиційні аргументи мають бути перед іменованими",
+      "Іменовані аргументи роблять код читабельнішим",
+      "Параметри за замовчуванням можна пропускати"
     ],
-    difficulty: "intermediate"
+    difficulty: "beginner"
   },
   
   quiz: {
@@ -378,26 +320,26 @@ list_students()`,
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Яка функція конвертує Python об'єкт в JSON рядок?",
-        options: ["json.load()", "json.dumps()", "json.read()", "json.parse()"],
+        question: "Які аргументи можна передавати в будь-якому порядку?",
+        options: ["Позиційні", "Іменовані", "Всі", "Жодні"],
         correctAnswer: 1,
-        explanation: "json.dumps() конвертує Python об'єкт в JSON рядок (string)."
+        explanation: "Іменовані аргументи можна передавати в будь-якому порядку."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе: json.loads('{\"age\": 15}')['age']?",
-        options: ["15", "'15'", "Помилку", "None"],
+        question: "Що виведе: def f(a, b=2): return a+b; print(f(1, b=3))?",
+        options: ["4", "3", "Помилку", "None"],
         correctAnswer: 0,
-        explanation: "json.loads() конвертує JSON рядок в Python словник, тому ['age'] поверне 15 (int)."
+        explanation: "a=1 (позиційний), b=3 (іменований), результат 1+3=4."
       },
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Для чого потрібен ensure_ascii=False?",
-        options: ["Швидкість", "Коректне відображення українського тексту", "Безпека", "Стиснення"],
+        question: "Чи можна поставити іменований аргумент перед позиційним?",
+        options: ["Так", "Ні", "Тільки в Python 3.8+", "Тільки з *args"],
         correctAnswer: 1,
-        explanation: "ensure_ascii=False дозволяє коректно зберігати та відображати не-ASCII символи (українські літери)."
+        explanation: "Ні, позиційні аргументи мають бути перед іменованими."
       }
     ],
     timeLimit: 10,
