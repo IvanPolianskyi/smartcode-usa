@@ -12,12 +12,10 @@ export const lesson_01_2 = {
   title: "Логічні оператори: and, or, not",
   
   learningObjectives: [
-    "Розуміти, що таке логічні оператори та навіщо вони потрібні",
-    "Використовувати оператор and для об'єднання умов",
-    "Використовувати оператор or для альтернативних умов",
-    "Використовувати оператор not для інверсії",
-    "Розуміти пріоритет логічних операторів",
-    "Створювати складні умови з комбінацією операторів"
+    "Використовувати логічні оператори and, or, not",
+    "Створювати складні умови",
+    "Розуміти як працюють логічні оператори",
+    "Застосовувати для реальних задач"
   ],
   
   estimatedTime: 75,
@@ -28,726 +26,405 @@ export const lesson_01_2 = {
   theory: {
     sections: [
       {
-        title: "Вступ до логічних операторів",
-        content: `Логічні оператори дозволяють об'єднувати кілька умов разом та створювати складніші перевірки. Вони працюють з булевими значеннями (True/False) та повертають булеве значення.
+        title: "Що таке логічні оператори?",
+        content: `Логічні оператори дозволяють об'єднувати кілька умов разом. Це як коли ти кажеш:
+- "Я хочу морозиво **І** торт" (обидва мають бути)
+- "Я хочу морозиво **АБО** торт" (хоча б одне)
+- "Я **НЕ** хочу овочі" (навпаки)
 
-**Навіщо потрібні логічні оператори?**
+**Три логічні оператори:**
+1. **and** (і) — обидві умови мають бути True
+2. **or** (або) — хоча б одна умова має бути True
+3. **not** (не) — змінює True на False і навпаки
 
-У реальному житті ми часто використовуємо логічні зв'язки:
-- "Якщо дощ І холодно, то візьму парасольку"
-- "Якщо втомлений АБО пізно, то ляжу спати"
-- "Якщо НЕ вихідний, то йду на роботу"
-
-У програмуванні ми робимо те саме за допомогою логічних операторів:
-- \`and\` — "І" (обидві умови мають бути True)
-- \`or\` — "АБО" (хоча б одна умова має бути True)
-- \`not\` — "НЕ" (інвертує значення)
-
-**Python має три логічні оператори:**
-1. \`and\` — логічне І
-2. \`or\` — логічне АБО
-3. \`not\` — логічне НЕ`
+**Що ми вивчимо:**
+1. Оператор and
+2. Оператор or
+3. Оператор not
+4. Комбінації операторів`
       },
       {
-        title: "Оператор and (Логічне І)",
-        content: `Оператор \`and\` повертає \`True\` тільки якщо **обидві** умови є \`True\`. Якщо хоча б одна умова \`False\`, результат буде \`False\`.
+        title: "Оператор and (і)",
+        content: `Оператор **and** повертає **True** тільки якщо **обидві** умови є True.
 
-**Таблиця істинності для and:**
-
-| A | B | A and B |
-|---|---|---------|
-| True | True | **True** |
-| True | False | False |
-| False | True | False |
-| False | False | False |
-
-**Приклади:**
+**Правило:** True and True = True, все інше = False
 
 \`\`\`python
 # Обидві умови True
-True and True      # True
-5 > 3 and 10 > 5   # True (обидві умови виконуються)
+5 > 3 and 2 < 4    # True (обидві умови True)
+10 == 10 and 5 > 2  # True (обидві умови True)
 
-# Одна з умов False
-True and False     # False
-5 > 3 and 2 > 5    # False (друга умова не виконується)
+# Одна умова False
+5 > 3 and 2 > 4    # False (друга умова False)
+10 == 10 and 5 < 2  # False (друга умова False)
 
 # Обидві умови False
-False and False    # False
-2 > 5 and 1 > 10   # False
+5 < 3 and 2 > 4    # False (обидві умови False)
 \`\`\`
 
-**Практичне застосування:**
-
+**Практичний приклад:**
 \`\`\`python
-# Перевірка віку та наявності документів
-age = 18
-has_id = True
+# Перевірка віку та оцінки
+age = 14
+score = 85
 
-can_access = age >= 18 and has_id  # True
-print(f"Доступ дозволено: {can_access}")  # Доступ дозволено: True
+# Можна грати в гру тільки якщо вік >= 13 І оцінка >= 60
+can_play = age >= 13 and score >= 60
+print(can_play)  # True (обидві умови True)
 
-# Перевірка діапазону
-number = 7
-in_range = number >= 1 and number <= 10  # True
-print(f"Число в діапазоні від 1 до 10: {in_range}")  # Число в діапазоні від 1 до 10: True
-
-# Перевірка пароля та логіну
-username = "admin"
-password = "secret123"
-user_input_name = "admin"
-user_input_pass = "secret123"
-
-login_successful = username == user_input_name and password == user_input_pass  # True
-print(f"Вхід успішний: {login_successful}")  # Вхід успішний: True
+# Якщо одна умова False
+age = 12
+can_play = age >= 13 and score >= 60
+print(can_play)  # False (перша умова False)
 \`\`\`
 
-**Важливо:**
-- \`and\` вимагає, щоб **обидві** умови були True
-- Якщо перша умова False, Python може не перевіряти другу (short-circuit evaluation)`
+**Пам'ятай:** and потребує, щоб ОБИДВІ умови були True!`
       },
       {
-        title: "Оператор or (Логічне АБО)",
-        content: `Оператор \`or\` повертає \`True\` якщо **хоча б одна** з умов є \`True\`. Повертає \`False\` тільки якщо **обидві** умови є \`False\`.
+        title: "Оператор or (або)",
+        content: `Оператор **or** повертає **True** якщо **хоча б одна** умова є True.
 
-**Таблиця істинності для or:**
-
-| A | B | A or B |
-|---|---|--------|
-| True | True | **True** |
-| True | False | **True** |
-| False | True | **True** |
-| False | False | False |
-
-**Приклади:**
+**Правило:** False or False = False, все інше = True
 
 \`\`\`python
 # Хоча б одна умова True
-True or False      # True
-False or True      # True
-5 > 3 or 2 > 10    # True (перша умова виконується)
-
-# Обидві умови True
-True or True       # True
-10 > 5 or 3 > 1    # True
+5 > 3 or 2 > 4     # True (перша умова True)
+2 > 4 or 5 > 3     # True (друга умова True)
+5 > 3 or 2 < 4     # True (обидві умови True)
 
 # Обидві умови False
-False or False     # False
-2 > 5 or 1 > 10    # False
+5 < 3 or 2 > 4     # False (обидві умови False)
+10 < 5 or 2 > 10   # False (обидві умови False)
 \`\`\`
 
-**Практичне застосування:**
-
+**Практичний приклад:**
 \`\`\`python
-# Перевірка знижки (студент АБО пенсіонер)
-is_student = True
-is_pensioner = False
+# Можна отримати знижку якщо вік < 12 АБО вік > 65
+age = 10
+has_discount = age < 12 or age > 65
+print(has_discount)  # True (10 < 12)
 
-has_discount = is_student or is_pensioner  # True
-print(f"Ви маєте право на знижку: {has_discount}")  # Ви маєте право на знижку: True
+age = 70
+has_discount = age < 12 or age > 65
+print(has_discount)  # True (70 > 65)
 
-# Перевірка доступу (адмін АБО модератор)
-role = "user"
-has_access = role == "admin" or role == "moderator"  # False
-print(f"Доступ до панелі управління: {has_access}")  # Доступ до панелі управління: False
-
-# Перевірка температури (спекотно АБО холодно)
-temperature = 35
-is_extreme = temperature > 30 or temperature < 10  # True
-print(f"Екстремальна температура: {is_extreme}")  # Екстремальна температура: True
+age = 20
+has_discount = age < 12 or age > 65
+print(has_discount)  # False (обидві умови False)
 \`\`\`
 
-**Важливо:**
-- \`or\` повертає True, якщо **хоча б одна** умова True
-- Якщо перша умова True, Python може не перевіряти другу (short-circuit evaluation)`
+**Пам'ятай:** or потребує, щоб хоча б ОДНА умова була True!`
       },
       {
-        title: "Оператор not (Логічне НЕ)",
-        content: `Оператор \`not\` **інвертує** (заперечує) булеве значення. Якщо значення \`True\`, то \`not\` поверне \`False\`, і навпаки.
+        title: "Оператор not (не)",
+        content: `Оператор **not** змінює значення на протилежне:
+- not True = False
+- not False = True
 
-**Таблиця істинності для not:**
-
-| A | not A |
-|---|-------|
-| True | False |
-| False | True |
-
-**Приклади:**
+**Правило:** not інвертує (перевертає) значення
 
 \`\`\`python
-# Інверсія True
+# З True на False
 not True           # False
-not (5 > 3)        # False (5 > 3 є True, not True = False)
+not (5 > 3)        # False (5 > 3 це True, not True = False)
 
-# Інверсія False
+# З False на True
 not False          # True
-not (2 > 5)       # True (2 > 5 є False, not False = True)
-
-# Практичні приклади
-is_raining = True
-can_go_out = not is_raining  # False
-print(f"Можна йти на прогулянку: {can_go_out}")  # Можна йти на прогулянку: False
-
-# Перевірка, чи число НЕ в діапазоні
-number = 15
-not_in_range = not (1 <= number <= 10)  # True
-print(f"Число не в діапазоні від 1 до 10: {not_in_range}")  # Число не в діапазоні від 1 до 10: True
+not (5 < 3)        # True (5 < 3 це False, not False = True)
 \`\`\`
 
-**Практичне застосування:**
-
+**Практичний приклад:**
 \`\`\`python
-# Перевірка, чи користувач НЕ заблокований
-is_blocked = False
-is_active = not is_blocked  # True
-print(f"Користувач активний: {is_active}")  # Користувач активний: True
+# Перевірка чи НЕ пройдено тест
+score = 45
+passed = score >= 60
+not_passed = not passed
+print(not_passed)  # True (score < 60, тому passed = False, not False = True)
 
-# Перевірка, чи пароль НЕ порожній
-password = ""
-is_empty = not password  # True
-print(f"Пароль порожній: {is_empty}")  # Пароль порожній: True
-
-# Перевірка, чи число НЕ дорівнює нулю
-number = 5
-not_zero1 = not (number == 0)  # True
-not_zero2 = number != 0  # True (простіше)
-print(f"Число не дорівнює нулю: {not_zero2}")  # Число не дорівнює нулю: True
+# Перевірка чи НЕ дорівнює
+name = "Олександр"
+is_not_alex = not (name == "Олександр")
+print(is_not_alex)  # False (name == "Олександр" це True, not True = False)
 \`\`\`
 
-**Важливо:**
-- \`not\` завжди повертає протилежне значення
-- \`not\` має найвищий пріоритет серед логічних операторів`
+**Пам'ятай:** not завжди змінює значення на протилежне!`
       },
       {
-        title: "Комбінування логічних операторів",
-        content: `Можна комбінувати кілька логічних операторів разом для створення складних умов.
-
-**Приклади комбінацій:**
-
-\`\`\`python
-# Комбінація and та or
-age = 25
-has_license = True
-has_car = False
-
-# Може водити, якщо (вік >= 18 І має права) АБО має машину
-can_drive = (age >= 18 and has_license) or has_car
-# True (оскільки age >= 18 and has_license є True)
-
-# Комбінація з not
-is_weekend = False
-is_holiday = True
-
-# Працюємо, якщо НЕ вихідний АБО НЕ свято
-go_to_work = not is_weekend or not is_holiday  # True
-print(f"Йдемо на роботу: {go_to_work}")  # Йдемо на роботу: True
-
-# Складні умови
-temperature = 22
-is_sunny = True
-has_umbrella = False
-
-# Виходимо, якщо (температура комфортна АБО є парасолька) І сонячно
-can_go_out = (temperature >= 20 and temperature <= 25) or has_umbrella and is_sunny  # True
-print(f"Можна йти на прогулянку: {can_go_out}")  # Можна йти на прогулянку: True
-\`\`\`
+        title: "Комбінації операторів",
+        content: `Можна комбінувати кілька логічних операторів разом.
 
 **Пріоритет операторів:**
-
-1. \`not\` — найвищий пріоритет
-2. \`and\` — середній пріоритет
-3. \`or\` — найнижчий пріоритет
-
-**Використання дужок:**
-
-Дужки допомагають контролювати порядок обчислення:
-
-\`\`\`python
-# Без дужок (може бути незрозуміло)
-result1 = True or False and False
-# Python обчислить: True or (False and False) = True or False = True
-
-# З дужками (ясніше)
-result2 = (True or False) and False
-# Обчислить: (True or False) and False = True and False = False
-
-# Завжди використовуйте дужки для ясності!
-result3 = (age >= 18 and has_license) or has_car
-\`\`\``
-      },
-      {
-        title: "Short-circuit evaluation (Коротке замикання)",
-        content: `Python використовує механізм "короткого замикання" (short-circuit evaluation) для оптимізації обчислень.
-
-**Як це працює:**
-
-**Для оператора \`and\`:**
-- Якщо перша умова \`False\`, Python **не перевіряє** другу умову (результат вже відомий — \`False\`)
-- Якщо перша умова \`True\`, Python перевіряє другу умову
-
-**Для оператора \`or\`:**
-- Якщо перша умова \`True\`, Python **не перевіряє** другу умову (результат вже відомий — \`True\`)
-- Якщо перша умова \`False\`, Python перевіряє другу умову
+1. not (найвищий)
+2. and
+3. or (найнижчий)
 
 **Приклади:**
-
 \`\`\`python
-# Приклад з and - коротке замикання
-# Якщо перша умова False, друга частина не обчислюється
-result1 = False and True  # False (друга частина не перевіряється)
-result2 = True and True   # True (обидві частини перевіряються)
+# and з or
+age = 14
+score = 85
+# (вік >= 13 І оцінка >= 60) АБО вік >= 18
+can_join = (age >= 13 and score >= 60) or age >= 18
+print(can_join)  # True
 
-# Приклад з or - коротке замикання
-# Якщо перша умова True, друга частина не обчислюється
-result3 = True or False   # True (друга частина не перевіряється)
-result4 = False or True   # True (обидві частини перевіряються)
+# not з and
+age = 12
+# НЕ (вік >= 13 І оцінка >= 60)
+cannot_join = not (age >= 13 and score >= 60)
+print(cannot_join)  # True
 
-print(f"False and True: {result1}")  # False
-print(f"True and True: {result2}")   # True
-print(f"True or False: {result3}")   # True
-print(f"False or True: {result4}")   # True
+# Складні умови
+x = 5
+y = 10
+z = 15
+# (x < y) І (y < z) АБО (x > z)
+result = (x < y and y < z) or x > z
+print(result)  # True (x < y and y < z це True)
 \`\`\`
 
-**Практичне застосування:**
-
-\`\`\`python
-# Безпечна перевірка списку
-my_list = [1, 2, 3]
-
-# Якщо список порожній, len(my_list) > 0 буде False
-# і друга частина не виконається (безпечно!)
-is_not_empty = len(my_list) > 0  # True
-first_is_one = my_list[0] == 1  # True
-is_valid = is_not_empty and first_is_one  # True
-print(f"Перший елемент дорівнює 1: {is_valid}")  # Перший елемент дорівнює 1: True
-
-# Безпечна перевірка словника
-my_dict = {"name": "Python"}
-
-# Якщо ключа немає, перша умова False
-# і друга частина не виконається (безпечно!)
-has_key = "name" in my_dict  # True
-value_matches = my_dict["name"] == "Python"  # True
-found = has_key and value_matches  # True
-print(f"Знайдено: {found}")  # Знайдено: True
-\`\`\``
+**Важливо:** Використовуй дужки () для ясності!`
       },
       {
-        title: "Практичні приклади використання",
-        content: `Давайте розглянемо реальні сценарії використання логічних операторів:
+        title: "Ланцюгові порівняння",
+        content: `Python дозволяє "ланцюгувати" порівняння для спрощення коду.
 
-**Приклад 1: Система входу**
-
+**Звичайний спосіб:**
 \`\`\`python
-username = "admin"
+x = 5
+# Перевірити чи x більше 3 І менше 10
+result = x > 3 and x < 10
+print(result)  # True
+\`\`\`
+
+**Ланцюговий спосіб (простіше):**
+\`\`\`python
+x = 5
+# Те саме, але простіше
+result = 3 < x < 10
+print(result)  # True
+\`\`\`
+
+**Більше прикладів:**
+\`\`\`python
+# Перевірка чи число в діапазоні
+age = 14
+is_teenager = 13 <= age <= 19
+print(is_teenager)  # True (14 між 13 і 19)
+
+# Перевірка чи число між двома іншими
+x = 5
+y = 10
+z = 7
+is_between = x < z < y
+print(is_between)  # True (7 між 5 і 10)
+\`\`\`
+
+**Пам'ятай:** Ланцюгові порівняння — це просто спосіб записати and коротше!`
+      },
+      {
+        title: "Практичне застосування",
+        content: `**Система доступу:**
+\`\`\`python
+age = 14
+has_permission = True
+# Можна ввійти якщо вік >= 13 І є дозвіл
+can_enter = age >= 13 and has_permission
+print(can_enter)  # True
+\`\`\`
+
+**Система знижок:**
+\`\`\`python
+age = 10
+is_student = True
+# Знижка якщо вік < 12 АБО є студентський квиток
+has_discount = age < 12 or is_student
+print(has_discount)  # True
+\`\`\`
+
+**Перевірка паролю:**
+\`\`\`python
 password = "secret123"
-
-correct_username = "admin"
 correct_password = "secret123"
-
-# Перевірка логіну та пароля
-login_successful = username == correct_username and password == correct_password  # True
-print(f"Вхід успішний: {login_successful}")  # Вхід успішний: True
+# НЕ правильний пароль
+is_wrong = not (password == correct_password)
+print(is_wrong)  # False (пароль правильний)
 \`\`\`
 
-**Приклад 2: Перевірка віку для різних послуг**
-
-\`\`\`python
-age = 20
-
-# Може водити машину
-can_drive = age >= 18  # True
-
-# Може голосувати
-can_vote = age >= 18  # True
-
-# Може купувати алкоголь
-can_buy_alcohol = age >= 21  # False
-
-# Може отримати знижку (студент або пенсіонер)
-is_student = True
-is_pensioner = False
-has_discount = is_student or is_pensioner  # True
-
-print(f"Може водити: {can_drive}")
-print(f"Може голосувати: {can_vote}")
-print(f"Має знижку: {has_discount}")
-\`\`\`
-
-**Приклад 3: Валідація форми**
-
-\`\`\`python
-email = "user@example.com"
-password = "mypassword123"
-
-# Перевірка, чи email не порожній І містить @
-is_valid_email = email and "@" in email  # True
-
-# Перевірка, чи пароль не порожній І має мінімум 8 символів
-is_valid_password = password and len(password) >= 8  # True
-
-form_is_valid = is_valid_email and is_valid_password  # True
-print(f"Форма заповнена правильно: {form_is_valid}")  # Форма заповнена правильно: True
-\`\`\`
-
-**Приклад 4: Умови для прогулянки**
-
-\`\`\`python
-temperature = 22
-is_raining = False
-is_weekend = True
-
-# Виходимо, якщо (температура комфортна АБО вихідний) І НЕ дощ
-comfortable_temp = 15 <= temperature <= 25  # True
-can_go_out = (comfortable_temp or is_weekend) and not is_raining  # True
-
-print(f"Можна йти на прогулянку: {can_go_out}")  # Можна йти на прогулянку: True
-\`\`\``
-      },
-      {
-        title: "Типові помилки та як їх уникнути",
-        content: `**Помилка 1: Плутати and з or**
-
-\`\`\`python
-# ❌ НЕПРАВИЛЬНО
-age = 20
-is_working_age_wrong = age >= 18 or age <= 65  # Це завжди True!
-print(f"Працездатний вік: {is_working_age_wrong}")  # Працездатний вік: True (завжди!)
-
-# ✅ ПРАВИЛЬНО
-is_working_age_correct = age >= 18 and age <= 65  # True
-print(f"Працездатний вік: {is_working_age_correct}")  # Працездатний вік: True
-\`\`\`
-
-**Помилка 2: Забувати про пріоритет операторів**
-
-\`\`\`python
-# ❌ НЕПРАВИЛЬНО (може працювати не так, як очікується)
-result = True or False and False
-# Python обчислить: True or (False and False) = True
-
-# ✅ ПРАВИЛЬНО (використовуйте дужки для ясності)
-result = (True or False) and False
-# Обчислить: (True or False) and False = False
-\`\`\`
-
-**Помилка 3: Використовувати and замість or (або навпаки)**
-
-\`\`\`python
-# ❌ НЕПРАВИЛЬНО
-is_student = True
-is_pensioner = False
-has_discount_wrong = is_student and is_pensioner  # False (ніхто не може бути і студентом, і пенсіонером одночасно)
-
-# ✅ ПРАВИЛЬНО
-has_discount_correct = is_student or is_pensioner  # True (або студент, або пенсіонер)
-print(f"Має знижку: {has_discount_correct}")
-\`\`\`
-
-**Помилка 4: Неправильне використання not**
-
-\`\`\`python
-# ❌ НЕПРАВИЛЬНО
-age = 15
-is_minor_wrong = not age >= 18  # Працює, але нечитабельно
-
-# ✅ ПРАВИЛЬНО
-is_minor_correct = age < 18  # Простіше та зрозуміліше
-print(f"Неповнолітній: {is_minor_correct}")
-\`\`\``
+Логічні оператори допомагають створювати складні умови!`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад 1: Базові логічні оператори",
+      title: "Приклад 1: Оператор and",
       code: `# Оператор and
-print(f"True and True: {True and True}")      # True
-print(f"True and False: {True and False}")    # False
+age = 14
+score = 85
 
-# Оператор or
-print(f"True or False: {True or False}")      # True
-print(f"False or False: {False or False}")    # False
+# Можна грати якщо вік >= 13 І оцінка >= 60
+can_play = age >= 13 and score >= 60
+print(can_play)  # True
 
-# Оператор not
-print(f"not True: {not True}")               # False
-print(f"not False: {not False}")              # True`,
-      explanation: "Демонструє базову роботу всіх трьох логічних операторів."
+# Якщо одна умова False
+age = 12
+can_play = age >= 13 and score >= 60
+print(can_play)  # False`,
+      explanation: "Демонструє використання оператора and для перевірки двох умов одночасно."
     },
     {
-      title: "Приклад 2: Комбінування операторів",
-      code: `# Комбінація and та or
-age = 25
-has_license = True
-has_car = False
+      title: "Приклад 2: Оператор or",
+      code: `# Оператор or
+age = 10
 
-can_drive = (age >= 18 and has_license) or has_car
-print(f"Може водити: {can_drive}")  # True
+# Знижка якщо вік < 12 АБО вік > 65
+has_discount = age < 12 or age > 65
+print(has_discount)  # True (10 < 12)
 
-# Комбінація з not
-is_weekend = False
-is_holiday = True
-
-go_to_work = not is_weekend or not is_holiday  # True
-print(f"Йдемо на роботу: {go_to_work}")  # Йдемо на роботу: True`,
-      explanation: "Показує, як комбінувати логічні оператори для створення складних умов."
+age = 20
+has_discount = age < 12 or age > 65
+print(has_discount)  # False (обидві умови False)`,
+      explanation: "Показує використання оператора or для перевірки хоча б однієї умови."
     },
     {
-      title: "Приклад 3: Практичне застосування",
-      code: `# Система входу
-username = "admin"
-password = "secret123"
-user_input_name = "admin"
-user_input_pass = "secret123"
+      title: "Приклад 3: Оператор not",
+      code: `# Оператор not
+score = 45
+passed = score >= 60
 
-login_successful = username == user_input_name and password == user_input_pass
-print(f"Вхід успішний: {login_successful}")  # Вхід успішний: True
+# НЕ пройдено тест
+not_passed = not passed
+print(not_passed)  # True (score < 60)
 
-# Перевірка знижки
+# Інвертування булевого значення
+is_raining = True
+is_sunny = not is_raining
+print(is_sunny)  # False`,
+      explanation: "Демонструє використання оператора not для інвертування значень."
+    },
+    {
+      title: "Приклад 4: Комбінації операторів",
+      code: `# Комбінації операторів
+age = 14
+score = 85
 is_student = True
-is_pensioner = False
 
-has_discount = is_student or is_pensioner
-print(f"Ви маєте право на знижку: {has_discount}")  # Ви маєте право на знижку: True`,
-      explanation: "Демонструє реальні сценарії використання логічних операторів."
+# (вік >= 13 І оцінка >= 60) АБО є студентський квиток
+can_join = (age >= 13 and score >= 60) or is_student
+print(can_join)  # True
+
+# НЕ (вік < 13 АБО оцінка < 60)
+cannot_join = not (age < 13 or score < 60)
+print(cannot_join)  # True`,
+      explanation: "Показує комбінацію кількох логічних операторів разом."
     },
     {
-      title: "Приклад 4: Валідація даних",
-      code: `# Перевірка email та пароля
-email = "user@example.com"
-password = "mypassword123"
+      title: "Приклад 5: Ланцюгові порівняння",
+      code: `# Ланцюгові порівняння
+age = 14
 
-# Email має містити @ та не бути порожнім
-is_valid_email = email and "@" in email
+# Перевірка чи вік в діапазоні (13-19)
+is_teenager = 13 <= age <= 19
+print(is_teenager)  # True
 
-# Пароль має бути не менше 8 символів
-is_valid_password = password and len(password) >= 8
+# Те саме що:
+is_teenager2 = age >= 13 and age <= 19
+print(is_teenager2)  # True
 
-data_is_valid = is_valid_email and is_valid_password
-print(f"Дані валідні: {data_is_valid}")  # Дані валідні: True`,
-      explanation: "Показує використання логічних операторів для валідації даних."
-    },
-    {
-      title: "Приклад 5: Складні умови",
-      code: `# Умови для прогулянки
-temperature = 22
-is_raining = False
-is_weekend = True
-
-# Виходимо, якщо (температура комфортна АБО вихідний) І НЕ дощ
-comfortable_temp = 15 <= temperature <= 25
-can_go_out = (comfortable_temp or is_weekend) and not is_raining
-
-print(f"Можна йти на прогулянку: {can_go_out}")  # Можна йти на прогулянку: True`,
-      explanation: "Демонструє створення складних умов з використанням дужок для контролю пріоритету."
+# Перевірка чи число між двома іншими
+x = 5
+y = 10
+z = 7
+is_between = x < z < y
+print(is_between)  # True`,
+      explanation: "Демонструє ланцюгові порівняння як спосіб спростити код."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Плутати and з or",
-      explanation: "and вимагає, щоб обидві умови були True, а or — щоб хоча б одна була True. Це різні речі!",
-      correctApproach: "Використовуйте and для об'єднання умов (обидві мають бути True), or для альтернатив (хоча б одна True)."
+      mistake: "Плутанина між and та or",
+      explanation: "and потребує обидві умови True, or потребує хоча б одну True.",
+      correctApproach: "Пам'ятай: and = 'обидві', or = 'хоча б одна'."
     },
     {
-      mistake: "Забувати про пріоритет операторів",
-      explanation: "not має найвищий пріоритет, потім and, потім or. Без дужок код може працювати не так, як очікується.",
-      correctApproach: "Завжди використовуйте дужки для ясності: (condition1 and condition2) or condition3"
+      mistake: "Неправильний пріоритет операторів",
+      explanation: "not має найвищий пріоритет, потім and, потім or.",
+      correctApproach: "Використовуй дужки () для ясності: (a and b) or c"
     },
     {
-      mistake: "Використовувати and замість or для взаємовиключних умов",
-      explanation: "Якщо умови взаємовиключні (наприклад, студент або пенсіонер), використовуйте or, а не and.",
-      correctApproach: "Для взаємовиключних умов використовуйте or: is_student or is_pensioner"
+      mistake: "Використання & замість and",
+      explanation: "& це бітовий оператор, а не логічний.",
+      correctApproach: "Використовуй and, or, not для логічних операцій."
     },
     {
-      mistake: "Неправильне використання not",
-      explanation: "not інвертує значення. Іноді простіше використовувати інший оператор порівняння замість not.",
-      correctApproach: "Замість not (age >= 18) використовуйте age < 18 — це простіше та зрозуміліше."
-    },
-    {
-      mistake: "Не враховувати short-circuit evaluation",
-      explanation: "Python може не перевіряти другу умову, якщо результат вже відомий. Це може призвести до неочікуваної поведінки.",
-      correctApproach: "Пам'ятайте про short-circuit evaluation. Якщо потрібно, щоб обидві умови завжди перевірялися, використовуйте окремі if-блоки."
+      mistake: "Плутанина з not",
+      explanation: "not інвертує значення, тому not True = False.",
+      correctApproach: "Пам'ятай: not завжди змінює True на False і навпаки."
     }
   ],
   
   summary: `На цьому уроці ми вивчили:
 
-1. **Три логічні оператори:**
-   - \`and\` — логічне І (обидві умови мають бути True)
-   - \`or\` — логічне АБО (хоча б одна умова має бути True)
-   - \`not\` — логічне НЕ (інвертує значення)
+1. **Оператор and (і)** — повертає True тільки якщо обидві умови True
+2. **Оператор or (або)** — повертає True якщо хоча б одна умова True
+3. **Оператор not (не)** — інвертує значення (True стає False, False стає True)
+4. **Комбінації операторів** — можна об'єднувати кілька операторів разом
+5. **Ланцюгові порівняння** — спосіб спростити код (3 < x < 10)
 
-2. **Таблиці істинності:**
-   - \`and\`: True тільки якщо обидві умови True
-   - \`or\`: False тільки якщо обидві умови False
-   - \`not\`: інвертує значення
+Логічні оператори допомагають створювати складні умови для прийняття рішень!
 
-3. **Комбінування операторів:**
-   - Можна комбінувати кілька операторів разом
-   - Використовуйте дужки для контролю порядку обчислення
-
-4. **Пріоритет операторів:**
-   - \`not\` — найвищий
-   - \`and\` — середній
-   - \`or\` — найнижчий
-
-5. **Short-circuit evaluation:**
-   - Python може не перевіряти другу умову, якщо результат вже відомий
-   - Це оптимізує код, але може призвести до неочікуваної поведінки
-
-6. **Практичне застосування:**
-   - Валідація даних
-   - Системи входу
-   - Перевірка умов для різних сценаріїв
-
-Тепер ви можете створювати складні умови та приймати рішення в програмах! Наступний урок — практика з операторами порівняння та логічними операторами.`,
+Наступний урок — практика з операторами порівняння та логічними операторами!`,
   
   practiceTask: {
-    title: "Система валідації користувача",
-    description: "Створіть програму для валідації даних користувача з використанням логічних операторів",
+    title: "Система доступу до гри",
+    description: "Створіть програму для перевірки доступу до гри",
     problemStatement: `Напишіть програму, яка:
-1. Використовує дані користувача (введіть їх напряму в коді, не використовуйте input()):
-   - Ім'я (не може бути порожнім)
-   - Email (має містити символ @)
-   - Вік (має бути від 13 до 120)
-   - Чи є студентом (так/ні)
-   - Чи є пенсіонером (так/ні)
-
-2. Перевіряє всі дані та виводить:
-   - Чи всі дані валідні
-   - Чи має користувач право на знижку (студент АБО пенсіонер)
-   - Чи може користувач зареєструватися (вік >= 13)
-
-3. Використовуйте логічні оператори and, or, not для всіх перевірок
-
-**Важливо:** Не використовуйте функцію input(). Введіть значення напряму в коді (наприклад: name = "Олександр", email = "alex@example.com", age = 20)`,
-    inputFormat: `Введіть значення напряму в коді:
-name = "Олександр"
-email = "alex@example.com"
-age = 20
-is_student_input = "так"
-is_pensioner_input = "ні"
-
-**Примітка:** Не використовуйте input(), введіть значення напряму в коді`,
-    outputFormat: `Результати валідації:
-✅ Ім'я: валідне
-✅ Email: валідний
-✅ Вік: валідний
-✅ Можна зареєструватися: так
-✅ Маєте право на знижку: так`,
+1. Зберігає вік у змінну age (наприклад, 14)
+2. Зберігає оцінку у змінну score (наприклад, 85)
+3. Зберігає чи є дозвіл у змінну has_permission (True або False)
+4. Перевіряє чи можна грати: (вік >= 13 І оцінка >= 60) АБО є дозвіл
+5. Виводить результат`,
+    inputFormat: "Програма використовує фіксовані значення",
+    outputFormat: `Приклад виведення:
+Вік: 14
+Оцінка: 85
+Дозвіл: True
+Можна грати: True`,
     examples: [
       {
-        input: `Введіть ім'я: Олександр
-Введіть email: alex@example.com
-Введіть вік: 20
-Ви студент? (так/ні): так
-Ви пенсіонер? (так/ні): ні`,
-        output: `=== Система реєстрації ===
-
-Результати валідації:
-Ім'я валідне: True
-Email валідний: True
-Вік валідний: True
-Можна зареєструватися: True
-Маєте право на знижку: True
-
-Всі дані валідні: True
-Маєте знижку: True`,
-        explanation: "Демонструє валідацію з використанням логічних операторів."
-      },
-      {
-        input: `Введіть ім'я: 
-Введіть email: invalid-email
-Введіть вік: 10
-Ви студент? (так/ні): ні
-Ви пенсіонер? (так/ні): ні`,
-        output: `=== Система реєстрації ===
-
-Результати валідації:
-Ім'я валідне: False
-Email валідний: False
-Вік валідний: False
-Можна зареєструватися: False
-Маєте право на знижку: False
-
-Всі дані валідні: False
-Маєте знижку: False`,
-        explanation: "Показує обробку невалідних даних."
+        input: "age = 14, score = 85, has_permission = True",
+        output: `Вік: 14
+Оцінка: 85
+Дозвіл: True
+Можна грати: True`,
+        explanation: "Програма використовує логічні оператори and та or для перевірки доступу"
       }
     ],
     solution: {
-      code: `# Система валідації користувача
-print("=== Система реєстрації ===")
-print()
+      code: `# Система доступу до гри
+age = 14
+score = 85
+has_permission = True
 
-# Вводимо дані напряму в коді (не використовуємо input())
-name = "Олександр"
-email = "alex@example.com"
-age = 20
-is_student_input = "так"
-is_pensioner_input = "ні"
+# Вивести значення
+print("Вік: " + str(age))
+print("Оцінка: " + str(score))
+print("Дозвіл: " + str(has_permission))
 
-# Конвертуємо відповіді в булеві значення
-is_student = is_student_input == "так"
-is_pensioner = is_pensioner_input == "так"
+# Перевірка доступу: (вік >= 13 І оцінка >= 60) АБО є дозвіл
+can_play = (age >= 13 and score >= 60) or has_permission
 
-print()
-print("Результати валідації:")
-
-# Валідація імені (не може бути порожнім)
-is_valid_name = name and len(name.strip()) > 0
-print(f"Ім'я валідне: {is_valid_name}")
-
-# Валідація email (має містити @)
-is_valid_email = email and "@" in email
-print(f"Email валідний: {is_valid_email}")
-
-# Валідація віку (від 13 до 120)
-is_valid_age = age >= 13 and age <= 120
-print(f"Вік валідний: {is_valid_age}")
-
-# Перевірка, чи можна зареєструватися (всі дані валідні)
-can_register = is_valid_name and is_valid_email and is_valid_age
-print(f"Можна зареєструватися: {can_register}")
-
-# Перевірка знижки (студент АБО пенсіонер)
-has_discount = is_student or is_pensioner
-print(f"Маєте право на знижку: {has_discount}")
-
-# Додаткова інформація
-print()
-print(f"Всі дані валідні: {can_register}")
-print(f"Маєте знижку: {has_discount}")`,
-      explanation: "Рішення використовує всі три логічні оператори (and, or, not) для валідації даних та перевірки умов. Демонструє практичне застосування логічних операторів."
+print("Можна грати: " + str(can_play))`,
+      explanation: "Рішення використовує комбінацію операторів and та or для перевірки доступу до гри."
     },
     hints: [
-      "Введіть значення напряму в коді (name, email, age тощо) - не використовуйте input()",
-      "Використовуйте and для перевірки, чи всі умови виконуються одночасно",
-      "Використовуйте or для перевірки альтернативних умов (студент АБО пенсіонер)",
-      "Перевірте, чи рядок не порожній: name and len(name.strip()) > 0",
-      "Перевірте наявність символу в рядку: '@' in email",
-      "Використовуйте and для об'єднання всіх валідацій: is_valid_name and is_valid_email and is_valid_age"
+      "Використовуйте оператор and для перевірки обох умов",
+      "Використовуйте оператор or для перевірки хоча б однієї умови",
+      "Використовуйте дужки () для групування умов",
+      "Використовуйте str() для перетворення булевих значень у рядки"
     ],
-    difficulty: "beginner",
-    testCases: [
-      {
-        input: ["Олександр", "alex@example.com", "20", "так", "ні"],
-        expectedOutput: "✅ Можна зареєструватися: так",
-        description: "Перевірка валідних даних"
-      },
-      {
-        input: ["", "invalid", "10", "ні", "ні"],
-        expectedOutput: "❌ Можна зареєструватися: ні",
-        description: "Перевірка невалідних даних"
-      },
-      {
-        input: ["Іван", "ivan@test.com", "25", "ні", "так"],
-        expectedOutput: "✅ Маєте право на знижку: так",
-        description: "Перевірка знижки для пенсіонера"
-      }
-    ]
+    difficulty: "beginner"
   },
   
   quiz: {
@@ -755,135 +432,83 @@ print(f"Маєте знижку: {has_discount}")`,
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що поверне вираз: True and False?",
+        question: "Що поверне вираз True and False?",
         options: [
           "True",
           "False",
           "Помилку",
-          "None"
+          "Нічого"
         ],
         correctAnswer: 1,
-        explanation: "Оператор and повертає True тільки якщо обидві умови True. Оскільки друга умова False, результат буде False."
+        explanation: "Оператор and повертає True тільки якщо обидві умови True. Тут одна False, тому результат False."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що поверне вираз: True or False?",
+        question: "Що поверне вираз True or False?",
         options: [
           "True",
           "False",
           "Помилку",
-          "None"
+          "Нічого"
         ],
         correctAnswer: 0,
-        explanation: "Оператор or повертає True, якщо хоча б одна умова True. Оскільки перша умова True, результат буде True."
+        explanation: "Оператор or повертає True якщо хоча б одна умова True. Тут перша True, тому результат True."
       },
       {
         id: "q3",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що поверне вираз: not True?",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\nage = 12\nscore = 85\nresult = age >= 13 and score >= 60\nprint(result)\n```",
         options: [
           "True",
           "False",
-          "Помилку",
-          "None"
+          "12",
+          "85"
+        ],
+        correctAnswer: 1,
+        explanation: "age >= 13 це False (12 не >= 13), тому and повертає False, навіть якщо score >= 60 це True."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що поверне вираз not True?",
+        options: [
+          "True",
+          "False",
+          "1",
+          "0"
         ],
         correctAnswer: 1,
         explanation: "Оператор not інвертує значення. not True = False."
       },
       {
-        id: "q4",
+        id: "q5",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе цей код?\n\n```python\nage = 20\nhas_license = True\nresult = age >= 18 and has_license\nprint(result)\n```",
+        question: "Що виведе цей код?\n\n```python\nage = 10\nresult = age < 12 or age > 65\nprint(result)\n```",
         options: [
           "True",
           "False",
-          "20",
+          "10",
           "Помилку"
         ],
         correctAnswer: 0,
-        explanation: "age >= 18 є True (20 >= 18) і has_license є True, тому True and True = True."
-      },
-      {
-        id: "q5",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Який оператор має найвищий пріоритет серед логічних операторів?",
-        options: [
-          "and",
-          "or",
-          "not",
-          "Всі мають однаковий пріоритет"
-        ],
-        correctAnswer: 2,
-        explanation: "Оператор not має найвищий пріоритет, потім and, потім or."
+        explanation: "age < 12 це True (10 < 12), тому or повертає True, навіть якщо age > 65 це False."
       },
       {
         id: "q6",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе цей код?\n\n```python\nis_student = True\nis_pensioner = False\nresult = is_student or is_pensioner\nprint(result)\n```",
+        question: "Що виведе цей код?\n\n```python\nx = 5\nresult = 3 < x < 10\nprint(result)\n```",
         options: [
           "True",
           "False",
-          "Помилку",
-          "None"
+          "5",
+          "Помилку"
         ],
         correctAnswer: 0,
-        explanation: "is_student є True, тому True or False = True (or повертає True, якщо хоча б одна умова True)."
-      },
-      {
-        id: "q7",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що поверне вираз: False and True?",
-        options: [
-          "True",
-          "False",
-          "Помилку",
-          "None"
-        ],
-        correctAnswer: 1,
-        explanation: "Оператор and повертає True тільки якщо обидві умови True. Оскільки перша умова False, результат буде False (і друга умова може не перевірятися через short-circuit evaluation)."
-      },
-      {
-        id: "q8",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе цей код?\n\n```python\nresult = (True or False) and False\nprint(result)\n```",
-        options: [
-          "True",
-          "False",
-          "Помилку",
-          "None"
-        ],
-        correctAnswer: 1,
-        explanation: "Спочатку обчислюється (True or False) = True, потім True and False = False."
-      },
-      {
-        id: "q9",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Який оператор використовується для інверсії булевого значення?",
-        options: [
-          "and",
-          "or",
-          "not",
-          "!"
-        ],
-        correctAnswer: 2,
-        explanation: "Оператор not використовується для інверсії булевого значення в Python."
-      },
-      {
-        id: "q10",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе цей код?\n\n```python\nage = 25\nhas_license = True\nhas_car = False\nresult = (age >= 18 and has_license) or has_car\nprint(result)\n```",
-        options: [
-          "True",
-          "False",
-          "Помилку",
-          "None"
-        ],
-        correctAnswer: 0,
-        explanation: "Спочатку обчислюється (age >= 18 and has_license) = (True and True) = True, потім True or has_car = True or False = True."
+        explanation: "Ланцюгове порівняння 3 < x < 10 означає 3 < 5 and 5 < 10, що є True."
       }
     ],
-    timeLimit: 15,
+    timeLimit: 10,
     passingScore: 70
   }
 }

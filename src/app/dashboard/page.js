@@ -29,9 +29,17 @@ export default function DashboardPage() {
     loadUserData()
   }, [])
 
+  // Додати можливість оновити дані
+  const refreshData = () => {
+    loadUserData()
+  }
+
   const loadUserData = async () => {
     try {
+      // Завантажити дані користувача з кешем no-store
       const userData = await getCurrentUser()
+      console.log('Dashboard: Loaded user data:', userData)
+      
       if (!userData) {
         router.push('/login')
         return
@@ -40,15 +48,25 @@ export default function DashboardPage() {
 
       // Load progress for enrolled courses
       if (userData.enrolledCourses && userData.enrolledCourses.length > 0) {
+        console.log('Dashboard: Loading progress for courses:', userData.enrolledCourses)
         const progressPromises = userData.enrolledCourses.map(courseId =>
-          getUserProgress(courseId).then(progress => ({ courseId, progress }))
+          getUserProgress(courseId).then(progress => {
+            console.log('Dashboard: Progress for', courseId, ':', progress)
+            return { courseId, progress }
+          }).catch(error => {
+            console.error('Dashboard: Error loading progress for', courseId, ':', error)
+            return { courseId, progress: null }
+          })
         )
         const progressResults = await Promise.all(progressPromises)
         const progressMap = {}
         progressResults.forEach(({ courseId, progress }) => {
           progressMap[courseId] = progress
         })
+        console.log('Dashboard: Progress map:', progressMap)
         setProgressData(progressMap)
+      } else {
+        console.log('Dashboard: No enrolled courses found')
       }
     } catch (error) {
       console.error('Error loading user data:', error)
@@ -124,6 +142,15 @@ export default function DashboardPage() {
             </div>
           </div>
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <button 
+              onClick={refreshData} 
+              className={styles.logoutButton}
+              style={{ backgroundColor: 'var(--primary-blue)' }}
+              title="Оновити дані"
+            >
+              <TrendingUp size={20} />
+              Оновити
+            </button>
             {user.role === 'admin' && (
               <Link href="/admin" className={styles.adminButton}>
                 Адмін Панель
@@ -194,13 +221,35 @@ export default function DashboardPage() {
 
         {/* Enrolled Courses */}
         <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Мої курси</h2>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <h2 className={styles.sectionTitle}>Мої курси</h2>
+            <button 
+              onClick={refreshData}
+              style={{ 
+                padding: '0.5rem 1rem', 
+                backgroundColor: 'var(--primary-blue)', 
+                color: 'white', 
+                border: 'none', 
+                borderRadius: '0.5rem',
+                cursor: 'pointer',
+                fontSize: '0.875rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+            >
+              <TrendingUp size={16} />
+              Оновити
+            </button>
+          </div>
           {user.enrolledCourses && user.enrolledCourses.length > 0 ? (
             <div className={styles.coursesGrid}>
               {user.enrolledCourses.map((courseId) => {
                 const courseInfo = getCourseInfo(courseId)
                 const progress = progressData[courseId]
                 const progressPercent = progress?.overallProgress || 0
+                const completedLessons = progress?.completedLessons?.length || 0
+                const hasProgress = progress !== null && progress !== undefined
 
                 return (
                   <Link key={courseId} href={courseInfo.link} className={styles.courseCard}>
@@ -208,23 +257,40 @@ export default function DashboardPage() {
                       <div className={styles.courseIcon} style={{ color: courseInfo.color }}>
                         {courseInfo.icon}
                       </div>
-                      <h3 className={styles.courseTitle}>{courseInfo.title}</h3>
-                    </div>
-                    <div className={styles.progressSection}>
-                      <div className={styles.progressBar}>
-                        <div
-                          className={styles.progressFill}
-                          style={{ width: `${progressPercent}%`, backgroundColor: courseInfo.color }}
-                        />
-                      </div>
-                      <div className={styles.progressText}>
-                        <span>{progressPercent}% завершено</span>
-                        <span>{progress?.completedLessons?.length || 0} уроків</span>
+                      <div style={{ flex: 1 }}>
+                        <h3 className={styles.courseTitle}>{courseInfo.title}</h3>
+                        {hasProgress && (
+                          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+                            {completedLessons > 0 ? `Пройдено ${completedLessons} уроків` : 'Ще не почато'}
+                          </div>
+                        )}
                       </div>
                     </div>
-                    {progress?.enrolledAt && (
-                      <div className={styles.courseMeta}>
-                        Записався: {new Date(progress.enrolledAt).toLocaleDateString('uk-UA')}
+                    {hasProgress ? (
+                      <>
+                        <div className={styles.progressSection}>
+                          <div className={styles.progressBar}>
+                            <div
+                              className={styles.progressFill}
+                              style={{ width: `${progressPercent}%`, backgroundColor: courseInfo.color }}
+                            />
+                          </div>
+                          <div className={styles.progressText}>
+                            <span>{progressPercent}% завершено</span>
+                            <span>{completedLessons} уроків</span>
+                          </div>
+                        </div>
+                        {progress?.enrolledAt && (
+                          <div className={styles.courseMeta}>
+                            Записався: {new Date(progress.enrolledAt).toLocaleDateString('uk-UA')}
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div className={styles.progressSection}>
+                        <div style={{ padding: '1rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                          Прогрес завантажується...
+                        </div>
                       </div>
                     )}
                   </Link>

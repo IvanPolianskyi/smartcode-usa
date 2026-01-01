@@ -159,14 +159,13 @@ coordinates = (10, 20)
 
 # Розпакувати
 x, y = coordinates
-print(f"x: {x}, y: {y}")  # x: 10, y: 20
+print("x:", x, ", y:", y)  # x: 10, y: 20
 
-# Повернення кількох значень з функції
-def get_name_age():
-    return 'Олександр', 16
-
-name, age = get_name_age()
-print(f"{name}, {age} років")  # Олександр, 16 років
+# Розпакування кортежу (без функції)
+# (У наступних модулях вивчимо, як створювати функції)
+name_age = ('Олександр', 16)
+name, age = name_age
+print(name + ",", age, "років")  # Олександр, 16 років
 \`\`\``
       },
       {
@@ -345,8 +344,10 @@ print(value)  # None
 print(type(value))  # <class 'NoneType'>
 
 # Перевірка на None
-if value is None:
-    print("Значення не встановлено")
+# (У наступних модулях вивчимо умовні оператори if)
+# Поки що просто виводимо значення
+print("Значення:", value)
+print("(У наступних модулях навчимося перевіряти умови)")
 \`\`\`
 
 Це основи об'єктів та структур даних Python! Далі ми вивчимо рядки детальніше.`
@@ -361,27 +362,27 @@ if value is None:
 coordinates = (10, 20)
 colors = ('червоний', 'зелений', 'синій')
 
-print(f"Координати: {coordinates}")
-print(f"Кольори: {colors}")
+print("Координати:", coordinates)
+print("Кольори:", colors)
 
 # Розпакування
 x, y = coordinates
-print(f"x: {x}, y: {y}")
+print("x:", x, ", y:", y)
 
 # Індексація
-print(f"Перший колір: {colors[0]}")`,
+print("Перший колір:", colors[0])`,
       explanation: "Демонструє створення кортежів, розпакування та індексацію."
     },
     {
       title: "Приклад 2: Незмінність кортежів",
       code: `# Кортежі незмінні
 t = (1, 2, 3)
-print(f"Оригінальний: {t}")
+print("Оригінальний:", t)
 
 # Створити новий кортеж
 new_t = t + (4, 5)
-print(f"Новий: {new_t}")
-print(f"Оригінальний не змінився: {t}")
+print("Новий:", new_t)
+print("Оригінальний не змінився:", t)
 
 # Спроба змінити викличе помилку
 # t[0] = 10  # TypeError: 'tuple' object does not support item assignment`,
@@ -391,16 +392,16 @@ print(f"Оригінальний не змінився: {t}")
       title: "Приклад 3: Множини та унікальність",
       code: `# Створення множин
 numbers = {1, 2, 3, 3, 4, 4, 5}
-print(f"Множина (унікальні): {numbers}")
+print("Множина (унікальні):", numbers)
 
 # Конвертація списку в множину
 my_list = [1, 2, 2, 3, 3, 3, 4]
 unique = set(my_list)
-print(f"Унікальні зі списку: {unique}")
+print("Унікальні зі списку:", unique)
 
 # Додавання елементів
 numbers.add(6)
-print(f"Після додавання: {numbers}")`,
+print("Після додавання:", numbers)`,
       explanation: "Демонструє створення множин та отримання унікальних елементів."
     },
     {
@@ -409,20 +410,20 @@ print(f"Після додавання: {numbers}")`,
 set1 = {1, 2, 3, 4}
 set2 = {3, 4, 5, 6}
 
-print(f"Множина 1: {set1}")
-print(f"Множина 2: {set2}")
+print("Множина 1:", set1)
+print("Множина 2:", set2)
 
 # Об'єднання
 union = set1 | set2
-print(f"Об'єднання: {union}")
+print("Об'єднання:", union)
 
 # Перетин
 intersection = set1 & set2
-print(f"Перетин: {intersection}")
+print("Перетин:", intersection)
 
 # Різниця
 difference = set1 - set2
-print(f"Різниця: {difference}")`,
+print("Різниця:", difference)`,
       explanation: "Показує основні операції з множинами: об'єднання, перетин, різниця."
     },
     {
@@ -433,16 +434,16 @@ age = 16
 
 # Порівняння
 is_adult = age >= 18
-print(f"Чи дорослий: {is_adult}")
+print("Чи дорослий:", is_adult)
 
 # Логічні оператори
 can_vote = is_adult and is_student
-print(f"Може голосувати: {can_vote}")
+print("Може голосувати:", can_vote)
 
 # None
 value = None
-if value is None:
-    print("Значення не встановлено")`,
+print("Значення:", value)
+print("(У наступних модулях навчимося перевіряти умови)")`,
       explanation: "Демонструє використання булевих значень та операторів порівняння."
     }
   ],
@@ -517,32 +518,27 @@ point1 = (0, 0)
 point2 = (3, 4)
 point3 = (5, 12)
 
-print(f"Точка 1: {point1}")
-print(f"Точка 2: {point2}")
+print("Точка 1:", point1)
+print("Точка 2:", point2)
 
-# Обчислити відстань між точками
-def distance(p1, p2):
-    x1, y1 = p1
-    x2, y2 = p2
-    return math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
-
-dist = distance(point1, point2)
-print(f"Відстань: {dist}")
+# Обчислити відстань між точками (без функції)
+# Розпаковуємо координати
+x1, y1 = point1
+x2, y2 = point2
+# Обчислюємо відстань за формулою
+dist = math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+print("Відстань:", dist)
 
 # Створити множину унікальних значень
 my_list = [1, 2, 2, 3, 3, 3, 4, 4, 5]
 unique = set(my_list)
-print(f"Унікальні значення: {unique}")
+print("Унікальні значення:", unique)
 
 # Знайти спільні елементи
 set1 = {1, 2, 3, 4, 5}
-set2 = {3, 4, 5, 6, 7}
+set2 = {3, 4, 6, 7}
 common = set1 & set2
-print(f"Спільні елементи: {common}")
-
-# Булеві перевірки
-is_valid = len(unique) > 0
-print(f"Множина не порожня: {is_valid}")`,
+print("Спільні елементи:", common)`,
       explanation: "Рішення використовує кортежі для координат, множини для унікальних значень та булеві значення для перевірок."
     },
     hints: [

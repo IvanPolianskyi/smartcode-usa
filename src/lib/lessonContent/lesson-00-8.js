@@ -77,24 +77,30 @@ students = [
     }
 ]
 
-# Функція для обчислення середнього балу
-def calculate_average(grades):
-    if not grades:
-        return 0
-    return sum(grades) / len(grades)
+# Обчислити середній бал для першого студента (Олександр)
+student1 = students[0]
+student1_all_grades = []
+# Отримуємо оцінки з кожного предмета
+student1_all_grades.extend(student1['оцінки']['математика'])
+student1_all_grades.extend(student1['оцінки']['фізика'])
+student1_all_grades.extend(student1['оцінки']['хімія'])
+student1_average = sum(student1_all_grades) / len(student1_all_grades)
+print(student1['ім\'я'] + ":", round(student1_average, 2))
 
-# Обчислити середній бал для кожного студента
-for student in students:
-    all_grades = []
-    for subject, grades in student['оцінки'].items():
-        all_grades.extend(grades)
-    
-    student['середній_бал'] = calculate_average(all_grades)
-    print(f"{student['ім\'я']}: {student['середній_бал']:.2f}")
+# Обчислити середній бал для другого студента (Марія)
+student2 = students[1]
+student2_all_grades = []
+student2_all_grades.extend(student2['оцінки']['математика'])
+student2_all_grades.extend(student2['оцінки']['фізика'])
+student2_all_grades.extend(student2['оцінки']['хімія'])
+student2_average = sum(student2_all_grades) / len(student2_all_grades)
+print(student2['ім\'я'] + ":", round(student2_average, 2))
 
-# Знайти найкращого студента
-best_student = max(students, key=lambda s: s['середній_бал'])
-print(f"\\nНайкращий студент: {best_student['ім\'я']} ({best_student['середній_бал']:.2f})")
+# Знайти найкращого студента (порівнюємо середні бали)
+averages = [student1_average, student2_average]
+best_average = max(averages)
+print("\\nНайвищий середній бал:", round(best_average, 2))
+print("(У наступних модулях навчимося автоматично знаходити ім'я студента)")
 \`\`\``
       },
       {
@@ -125,16 +131,21 @@ shortest_word = min(words, key=len)
 print(f"Найдовше слово: {longest_word} ({len(longest_word)} символів)")
 print(f"Найкоротше слово: {shortest_word} ({len(shortest_word)} символів)")
 
-# Підрахувати частоти слів
+# Підрахувати частоти слів (вручну для кожного слова)
 word_count = {}
-for word in words:
-    word_count[word] = word_count.get(word, 0) + 1
+# Перевіряємо кожне слово окремо
+word_count['Python'] = words.count('Python')
+word_count['це'] = words.count('це')
+word_count['чудова'] = words.count('чудова')
+word_count['мова'] = words.count('мова')
+word_count['програмування'] = words.count('програмування')
+word_count['дуже'] = words.count('дуже')
+word_count['популярна'] = words.count('популярна')
 
-# Знайти найчастіші слова
-most_common = sorted(word_count.items(), key=lambda x: x[1], reverse=True)[:3]
-print("\\nНайчастіші слова:")
-for word, count in most_common:
-    print(f"  {word}: {count} разів")
+print("\\nЧастоти слів:")
+print("  Python:", word_count.get('Python', 0), "разів")
+print("  мова:", word_count.get('мова', 0), "разів")
+print("(У наступних модулях навчимося автоматично підраховувати всі слова)")
 \`\`\``
       },
       {
@@ -157,25 +168,25 @@ inventory = {
     'виноград': {'ціна': 80.00, 'кількість': 5}
 }
 
-# Функція для пошуку товару
-def find_product(name):
-    return inventory.get(name)
+# Знайти товар за назвою
+product = inventory.get('яблука')
+print("Товар 'яблука':", product)
 
-# Функція для обчислення загальної вартості
-def calculate_total_value():
-    total = 0
-    for name, info in inventory.items():
-        total += info['ціна'] * info['кількість']
-    return total
+# Обчислити загальну вартість інвентарю
+# Обчислюємо вартість кожного товару окремо
+apples_value = inventory['яблука']['ціна'] * inventory['яблука']['кількість']
+bananas_value = inventory['банани']['ціна'] * inventory['банани']['кількість']
+oranges_value = inventory['апельсини']['ціна'] * inventory['апельсини']['кількість']
+grapes_value = inventory['виноград']['ціна'] * inventory['виноград']['кількість']
+
+total_value = apples_value + bananas_value + oranges_value + grapes_value
+print("Загальна вартість інвентарю:", round(total_value, 2), "грн")
 
 # Знайти товари з низьким запасом (менше 20)
-low_stock = []
-for name, info in inventory.items():
-    if info['кількість'] < 20:
-        low_stock.append(name)
-
-print(f"Загальна вартість інвентарю: {calculate_total_value():.2f} грн")
-print(f"\\nТовари з низьким запасом: {', '.join(low_stock)}")
+# Перевіряємо кількість кожного товару
+grapes_qty = inventory['виноград']['кількість']
+print("Кількість винограду:", grapes_qty)
+print("(У наступних модулях навчимося автоматично перевіряти всі товари та знаходити ті, що мають низький запас)")
 
 # Додати новий товар
 inventory['мандарини'] = {'ціна': 40.00, 'кількість': 60}
@@ -229,15 +240,14 @@ school = {
     }
 }
 
-# Знайти середній бал класу
-def class_average(class_name):
-    students = school['класи'][class_name]['учні']
-    all_grades = []
-    for student in students:
-        all_grades.extend(student['оцінки'])
-    return sum(all_grades) / len(all_grades) if all_grades else 0
-
-print(f"Середній бал класу 9А: {class_average('9А'):.2f}")`,
+# Знайти середній бал класу 9А
+class_9a_students = school['класи']['9А']['учні']
+# Отримуємо оцінки кожного учня
+all_grades = []
+all_grades.extend(class_9a_students[0]['оцінки'])
+all_grades.extend(class_9a_students[1]['оцінки'])
+average_9a = sum(all_grades) / len(all_grades)
+print("Середній бал класу 9А:", round(average_9a, 2))`,
       explanation: "Демонструє складну вкладену структуру для управління школою."
     },
     {
@@ -250,12 +260,18 @@ data = [
 ]
 
 # Обчислити загальну вартість
-total_value = sum(item['ціна'] * item['кількість'] for item in data)
-print(f"Загальна вартість: {total_value} грн")
+# Обчислюємо вартість кожного товару окремо
+item1_value = data[0]['ціна'] * data[0]['кількість']
+item2_value = data[1]['ціна'] * data[1]['кількість']
+item3_value = data[2]['ціна'] * data[2]['кількість']
+total_value = item1_value + item2_value + item3_value
+print("Загальна вартість:", total_value, "грн")
 
-# Знайти найдорожчий товар
-most_expensive = max(data, key=lambda x: x['ціна'])
-print(f"Найдорожчий товар: {most_expensive['назва']}")`,
+# Знайти найдорожчий товар (порівнюємо ціни)
+prices = [data[0]['ціна'], data[1]['ціна'], data[2]['ціна']]
+max_price = max(prices)
+print("Найвища ціна:", max_price)
+print("(У наступних модулях навчимося автоматично знаходити назву товару з найвищою ціною)")`,
       explanation: "Показує обробку списку словників для аналізу даних."
     }
   ],
@@ -300,29 +316,29 @@ print(f"Найдорожчий товар: {most_expensive['назва']}")`,
 7. Виводить статистику по предметах (середній бал по кожному предмету)`,
     inputFormat: "Програма використовує фіксовані значення",
     outputFormat: `Приклад виведення:
-Студент Олександр (16 років): середній бал 85.00
-Студент Марія (15 років): середній бал 91.33
-Студент Дмитро (16 років): середній бал 84.33
+Студент Олександр (16 років): середній бал 84.22
+Студент Марія (15 років): середній бал 92.33
+Студент Дмитро (16 років): середній бал 85.44
 
-Найкращий студент: Марія з середнім балом 91.33
+Найкращий студент: Марія з середнім балом 92.33
 
 Статистика по предметах:
-  Математика: 88.00
-  Фізика: 88.00
-  Хімія: 81.67`,
+  Математика: 88.11
+  Фізика: 88.33
+  Хімія: 85.56`,
     examples: [
       {
         input: "Немає введення",
-        output: `Студент Олександр (16 років): середній бал 85.00
-Студент Марія (15 років): середній бал 91.33
-Студент Дмитро (16 років): середній бал 84.33
+        output: `Студент Олександр (16 років): середній бал 84.22
+Студент Марія (15 років): середній бал 92.33
+Студент Дмитро (16 років): середній бал 85.44
 
-Найкращий студент: Марія з середнім балом 91.33
+Найкращий студент: Марія з середнім балом 92.33
 
 Статистика по предметах:
-  Математика: 88.00
-  Фізика: 88.00
-  Хімія: 81.67`,
+  Математика: 88.11
+  Фізика: 88.33
+  Хімія: 85.56`,
         explanation: "Програма демонструє комплексну роботу зі складними структурами даних"
       }
     ],
@@ -330,7 +346,7 @@ print(f"Найдорожчий товар: {most_expensive['назва']}")`,
       code: `# Система управління студентами
 students = [
     {
-        'ім\'я': 'Олександр',
+        '''ім'я''': 'Олександр',
         'вік': 16,
         'предмети': {
             'математика': [85, 92, 78],
@@ -339,7 +355,7 @@ students = [
         }
     },
     {
-        'ім\'я': 'Марія',
+        '''ім'я''': 'Марія',
         'вік': 15,
         'предмети': {
             'математика': [95, 98, 92],
@@ -348,7 +364,7 @@ students = [
         }
     },
     {
-        'ім\'я': 'Дмитро',
+        '''ім'я''': 'Дмитро',
         'вік': 16,
         'предмети': {
             'математика': [78, 85, 90],
@@ -358,34 +374,72 @@ students = [
     }
 ]
 
-# Обчислити середній бал для кожного студента
-def calculate_student_average(student):
-    all_grades = []
-    for subject, grades in student['предмети'].items():
-        all_grades.extend(grades)
-    return sum(all_grades) / len(all_grades) if all_grades else 0
+# Обчислити середній бал для першого студента (Олександр)
+student1 = students[0]
+student1_all_grades = []
+student1_all_grades.extend(student1['предмети']['математика'])
+student1_all_grades.extend(student1['предмети']['фізика'])
+student1_all_grades.extend(student1['предмети']['хімія'])
+student1_avg = sum(student1_all_grades) / len(student1_all_grades)
+print("Студент " + student1['''ім'я'''] + " (" + str(student1['вік']) + " років): середній бал", round(student1_avg, 2))
 
-for student in students:
-    avg = calculate_student_average(student)
-    student['середній_бал'] = avg
-    print(f"Студент {student['ім\'я']} ({student['вік']} років): середній бал {avg:.2f}")
+# Обчислити середній бал для другого студента (Марія)
+student2 = students[1]
+student2_all_grades = []
+student2_all_grades.extend(student2['предмети']['математика'])
+student2_all_grades.extend(student2['предмети']['фізика'])
+student2_all_grades.extend(student2['предмети']['хімія'])
+student2_avg = sum(student2_all_grades) / len(student2_all_grades)
+print("Студент " + student2['''ім'я'''] + " (" + str(student2['вік']) + " років): середній бал", round(student2_avg, 2))
 
-# Знайти найкращого студента
-best_student = max(students, key=lambda s: s['середній_бал'])
-print(f"\\nНайкращий студент: {best_student['ім\'я']} з середнім балом {best_student['середній_бал']:.2f}")
+# Обчислити середній бал для третього студента (Дмитро)
+student3 = students[2]
+student3_all_grades = []
+student3_all_grades.extend(student3['предмети']['математика'])
+student3_all_grades.extend(student3['предмети']['фізика'])
+student3_all_grades.extend(student3['предмети']['хімія'])
+student3_avg = sum(student3_all_grades) / len(student3_all_grades)
+print("Студент " + student3['''ім'я'''] + " (" + str(student3['вік']) + " років): середній бал", round(student3_avg, 2))
+
+# Знайти найкращого студента (порівнюємо середні бали)
+averages_list = [student1_avg, student2_avg, student3_avg]
+best_avg = max(averages_list)
+# Знаходимо ім'я студента з найвищим балом через словник
+avg_to_name = {
+    student1_avg: student1['''ім'я'''],
+    student2_avg: student2['''ім'я'''],
+    student3_avg: student3['''ім'я''']
+}
+best_student_name = avg_to_name[best_avg]
+
+print("\\nНайкращий студент:", best_student_name, "з середнім балом", round(best_avg, 2))
 
 # Статистика по предметах
-subject_stats = {}
-for student in students:
-    for subject, grades in student['предмети'].items():
-        if subject not in subject_stats:
-            subject_stats[subject] = []
-        subject_stats[subject].extend(grades)
+# Математика
+math_grades = []
+math_grades.extend(student1['предмети']['математика'])
+math_grades.extend(student2['предмети']['математика'])
+math_grades.extend(student3['предмети']['математика'])
+math_avg = sum(math_grades) / len(math_grades)
+
+# Фізика
+physics_grades = []
+physics_grades.extend(student1['предмети']['фізика'])
+physics_grades.extend(student2['предмети']['фізика'])
+physics_grades.extend(student3['предмети']['фізика'])
+physics_avg = sum(physics_grades) / len(physics_grades)
+
+# Хімія
+chemistry_grades = []
+chemistry_grades.extend(student1['предмети']['хімія'])
+chemistry_grades.extend(student2['предмети']['хімія'])
+chemistry_grades.extend(student3['предмети']['хімія'])
+chemistry_avg = sum(chemistry_grades) / len(chemistry_grades)
 
 print("\\nСтатистика по предметах:")
-for subject, grades in subject_stats.items():
-    avg = sum(grades) / len(grades)
-    print(f"  {subject.capitalize()}: {avg:.2f}")`,
+print("  Математика:", round(math_avg, 2))
+print("  Фізика:", round(physics_avg, 2))
+print("  Хімія:", round(chemistry_avg, 2))`,
       explanation: "Рішення використовує складну вкладену структуру (список словників зі словниками списків), обчислює статистику та знаходить найкращого студента."
     },
     hints: [
@@ -450,7 +504,7 @@ for subject, grades in subject_stats.items():
           "max(list).get('key')"
         ],
         correctAnswer: 1,
-        explanation: "Використовуйте max() з key та lambda функцією для доступу до значення ключа."
+        explanation: "Використовуйте max() з key для доступу до значення ключа. (У наступних модулях вивчимо lambda функції для цього)"
       }
     ],
     timeLimit: 15,
