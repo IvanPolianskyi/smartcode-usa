@@ -14,7 +14,7 @@ const { MongoClient, ObjectId } = require('mongodb')
 const bcrypt = require('bcryptjs')
 
 async function createAdmin() {
-  const mongoUri = process.env.MONGODB_URI
+  const mongoUri = process.env.MONGODB_URI || "mongodb+srv://artemonyshchuk123:20032007Art@cluster0.vfkxida.mongodb.net/"
   const databaseName = process.env.MONGODB_DB || 'SmartCodeLogs'
 
   if (!mongoUri) {
@@ -29,7 +29,7 @@ async function createAdmin() {
     const db = client.db(databaseName)
     const usersCollection = db.collection('users')
 
-    const adminEmail = 'smartcodeacademy' // Username used as email
+    const adminEmail = 'smartcodeacademy@gmail.com' // Username used as email
     const adminPassword = 'CodeSmartAcademy24'
     const adminName = 'SmartCode Academy Admin'
 

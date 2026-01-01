@@ -123,10 +123,17 @@ export default function DashboardPage() {
               <p className={styles.email}>{user.email}</p>
             </div>
           </div>
-          <button onClick={handleLogout} className={styles.logoutButton}>
-            <LogOut size={20} />
-            Вийти
-          </button>
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            {user.role === 'admin' && (
+              <Link href="/admin" className={styles.adminButton}>
+                Адмін Панель
+              </Link>
+            )}
+            <button onClick={handleLogout} className={styles.logoutButton}>
+              <LogOut size={20} />
+              Вийти
+            </button>
+          </div>
         </div>
       </div>
 
