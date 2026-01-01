@@ -4,11 +4,14 @@
 /* --- ОСНОВНИЙ КОНТЕЙНЕР ХЕДЕРА --- */
 .header {
     position: sticky;
+    position: -webkit-sticky; /* Для Safari */
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    width: 100%;
+    z-index: 9999;
     margin: 0;
+    padding: 0;
     border-radius: 0;
     background: #ffffff;
     backdrop-filter: none;
@@ -17,6 +20,8 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     transition: all var(--transition-base);
     transform: translateY(0);
+    will-change: transform;
+    align-self: flex-start; /* Для flex контексту */
 }
 .header.scrolled {
     top: 0;

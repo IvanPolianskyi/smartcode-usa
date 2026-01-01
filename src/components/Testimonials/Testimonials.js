@@ -1,138 +1,107 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
-import {
-	Star,
-	Quote,
-	ChevronLeft,
-	ChevronRight,
-	Users,
-	Heart,
-} from 'lucide-react'
+import React, { useEffect, useRef } from 'react'
+import { Star } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import styles from './Testimonials.module.css' // Імпортуємо CSS модуль
-// Реєструємо плагін ScrollTrigger для GSAP
+import styles from './Testimonials.module.css'
+
 gsap.registerPlugin(ScrollTrigger)
 
-// --- ДАНІ ---
+// --- ДАНІ ВІДГУКІВ ---
 const testimonials = [
 	{
 		id: 1,
-		name: 'Костя Горілов',
-		age: 16,
-		position: 'Випускник SmartCode Academy',
+		name: 'Оля',
+		subject: 'Python',
 		rating: 5,
-		text: 'SmartCode Academy - це найкраща школа програмування. Завдяки якісному навчанню та підтримці менторів я зміг освоїти Python та створити свій перший додаток.',
-		avatar: '👨‍💻',
-		course: 'Python & Web Development',
-		duration: '8 місяців',
-		achievement: 'Створив власний додаток',
-		color: 'blue',
+		text: 'Завдяки курсу Python в SmartCode Academy я змогла створити свій перший додаток для обчислення математичних задач. Викладачі дуже терплячі та завжди допомагають розібратися зі складними темами. Тепер я впевнено працюю з циклами та функціями!',
+		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
 	},
 	{
 		id: 2,
-		name: 'Анастасія Суханова',
-		age: 15,
-		position: 'Випускниця SmartCode Academy',
+		name: 'Аліна',
+		subject: 'Веб-розробка',
 		rating: 5,
-		text: 'Навчання в SmartCode Academy змінило моє життя. Тут я не тільки вивчила HTML, CSS та JavaScript, але й навчилася працювати в команді.',
-		avatar: '👩‍💻',
-		course: 'Frontend Development',
-		duration: '6 місяців',
-		achievement: 'Запустила власне агентство',
-		color: 'purple',
+		text: 'Після завершення курсу веб-розробки я створила свій перший сайт-портфоліо! HTML, CSS та JavaScript більше не здаються мені чимось складним. Особливо подобається, що ми одразу застосовуємо знання на практиці через реальні проекти.',
+		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
 	},
 	{
 		id: 3,
-		name: 'Богдан Яремчук',
-		age: 14,
-		position: 'Студент SmartCode Academy',
+		name: 'Ярослава',
+		subject: 'Розробка ігор',
 		rating: 5,
-		text: 'В SmartCode Academy я знайшов друзів-однодумців та створив свою першу гру в Unity. Викладачі завжди готові допомогти, а навчальна платформа дуже зручна. Рекомендую всім, хто хоче стати програмістом!',
-		avatar: '👨‍🎓',
-		course: 'Game Development',
-		duration: '10 місяців',
-		achievement: '1-е місце на хакатоні',
-		color: 'green',
+		text: 'Unity та C# - це те, про що я мріяла! За 8 місяців навчання я створила свою першу гру про космос. Викладачі навчили мене не тільки програмувати, але й правильно організовувати код. Тепер я планую створити ще кілька ігор!',
+		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
 	},
 	{
 		id: 4,
-		name: 'Влад Шульженко',
-		age: 17,
-		position: 'Випускник SmartCode Academy',
+		name: 'Уляна',
+		subject: 'Roblox Studio',
 		rating: 5,
-		text: 'Завдяки SmartCode Academy я вступив до технічного університету з відмінною підготовкою. Знання програмування, які я отримав тут, допомагають мені бути кращим за однокурсників. Дуже вдячний за якісну освіту!',
-		avatar: '🧑‍💻',
-		course: 'Full-Stack Development',
-		duration: '12 місяців',
-		achievement: 'Вступ до ТОП ВНЗ',
-		color: 'orange',
+		text: 'Roblox Studio - це найкрутіший курс! Я навчилася створювати ігри та об\'єкти, які тепер використовують інші гравці. Ментор завжди допомагає, коли щось не виходить. Моя гра вже має понад 1000 відвідувачів!',
+		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
 	},
 	{
 		id: 5,
-		name: 'Галина Петрова',
-		age: 13,
-		position: 'Студентка SmartCode Academy',
+		name: 'Іра',
+		subject: 'Python',
 		rating: 5,
-		text: 'Мені 13 років, але завдяки SmartCode Academy я вже створюю власні проекти! Особливо подобається робота з ментором - він завжди пояснить складні моменти простими словами.',
-		avatar: '👩‍🎓',
-		course: 'Python for Kids',
-		duration: '4 місяці',
-		achievement: 'Наймолодший випускник',
-		color: 'pink',
+		text: 'Python став моїм улюбленим мовою програмування! Завдяки SmartCode Academy я зрозуміла, як працюють алгоритми та структури даних. Тепер я можу писати скрипти для автоматизації завдань. Це дуже корисно для школи!',
+		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+	},
+	{
+		id: 6,
+		name: 'Максим',
+		subject: 'JavaScript',
+		rating: 5,
+		text: 'JavaScript відкрив для мене новий світ веб-розробки! Завдяки практичним завданням я створив кілька інтерактивних сайтів. Викладачі пояснюють все дуже доступно, навіть складні теми стають зрозумілими.',
+		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+	},
+	{
+		id: 7,
+		name: 'Софія',
+		subject: 'Веб-дизайн',
+		rating: 5,
+		text: 'Курс веб-дизайну допоміг мені зрозуміти, як створювати красиві та функціональні інтерфейси. Тепер я можу працювати з Figma та створювати власні макети. Це дуже цікаво та корисно!',
+		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+	},
+	{
+		id: 8,
+		name: 'Дмитро',
+		subject: 'Unity',
+		rating: 5,
+		text: 'Unity - це просто неймовірно! Я створив свою першу 3D гру та опублікував її. Викладачі допомогли мені зрозуміти фізику та анімації. Тепер я мрію стати професійним геймдевелопером!',
+		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+	},
+	{
+		id: 9,
+		name: 'Марія',
+		subject: 'Python',
+		rating: 5,
+		text: 'Python - це найкраща мова для початківців! Я навчилася створювати боти, парсити дані та працювати з бібліотеками. Особливо подобається, що ми одразу застосовуємо знання на реальних проектах.',
+		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+	},
+	{
+		id: 10,
+		name: 'Артем',
+		subject: 'Full-Stack',
+		rating: 5,
+		text: 'Після проходження курсу Full-Stack я можу створювати повноцінні веб-додатки! Frontend та Backend більше не здаються мені чимось складним. Дякую викладачам за терпіння та професійний підхід!',
+		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
 	},
 ]
 
-const stats = [
-	{
-		number: '500+',
-		label: 'Випускників',
-		icon: <Users size={24} />,
-		color: 'blue',
-	},
-	{
-		number: '4.9/5',
-		label: 'Рейтинг',
-		icon: <Star size={24} />,
-		color: 'yellow',
-	},
-	{
-		number: '95%',
-		label: 'Задоволених',
-		icon: <Heart size={24} />,
-		color: 'red',
-	},
-	
-]
-
-// --- ДОПОМІЖНІ КОМПОНЕНТИ ---
-const RatingStars = ({ rating, className = '' }) => (
-	<div className={`${styles.ratingStars} ${className}`}>
-		{Array.from({ length: 5 }, (_, i) => (
-			<Star
-				key={i}
-				size={18}
-				className={i < rating ? styles.starFilled : styles.starEmpty}
-				fill='currentColor'
-			/>
-		))}
-	</div>
-)
-
-// --- ОСНОВНИЙ КОМПОНЕНТ ---
 const Testimonials = () => {
-	const [currentTestimonial, setCurrentTestimonial] = useState(0)
+	const carouselRef = useRef(null)
 	const sectionRef = useRef(null)
-	const testimonialCardRef = useRef(null) // Ref на всю картку
-	const timelineRef = useRef(null)
+	const animationRef = useRef(null)
 
-	// Анімації при першій появі компонента
+	// Анімація появи секції
 	useEffect(() => {
 		const section = sectionRef.current
 		if (!section) return
 
-		// Плавна поява елементів заголовку
 		gsap.fromTo(
 			section.querySelectorAll('.gsap-fade-up'),
 			{ y: 50, opacity: 0 },
@@ -149,259 +118,132 @@ const Testimonials = () => {
 				},
 			}
 		)
-
-		// Плавна поява карток статистики
-		gsap.fromTo(
-			section.querySelectorAll('.gsap-stat-card'),
-			{ scale: 0.8, opacity: 0, y: 30 },
-			{
-				scale: 1,
-				opacity: 1,
-				y: 0,
-				duration: 0.6,
-				ease: 'back.out(1.7)',
-				stagger: 0.1,
-				scrollTrigger: {
-					trigger: `.${styles.statsGrid}`,
-					start: 'top 85%',
-					toggleActions: 'play none none reverse',
-				},
-			}
-		)
 	}, [])
 
-	// Покращена функція анімації зміни відгуку
-	const animateTestimonialChange = newIndex => {
-		if (
-			newIndex === currentTestimonial ||
-			(timelineRef.current && timelineRef.current.isActive())
-		) {
-			return
+	// Безкінечна анімація каруселі
+	useEffect(() => {
+		const carousel = carouselRef.current
+		if (!carousel) return
+
+		let rafId = null
+		let intervalId = null
+
+		// Функція для оновлення анімації
+		const updateAnimation = () => {
+			// Отримуємо ширину однієї картки
+			const card = carousel.querySelector(`.${styles.card}`)
+			if (!card) return
+
+			const cardWidth = card.offsetWidth
+			const totalWidth = cardWidth * testimonials.length
+
+			// Зупиняємо попередню анімацію
+			if (animationRef.current) {
+				animationRef.current.kill()
+			}
+			if (intervalId) {
+				clearInterval(intervalId)
+			}
+			if (rafId) {
+				cancelAnimationFrame(rafId)
+			}
+
+			// Встановлюємо початкову позицію
+			gsap.set(carousel, { x: 0 })
+
+			// Створюємо безкінечну анімацію
+			animationRef.current = gsap.to(carousel, {
+				x: -totalWidth,
+				duration: 45, // Збільшено з 30 до 45 секунд для повільнішого руху
+				ease: 'none',
+				repeat: -1,
+			})
+
+			// Перевіряємо позицію та скидаємо на початок, коли досягаємо кінця
+			const checkAndReset = () => {
+				const currentX = gsap.getProperty(carousel, 'x')
+				// Коли досягаємо кінця першого набору, миттєво скидаємо на початок
+				// Оскільки картки дубльовані, це створює ілюзію безперервного руху
+				if (currentX <= -totalWidth) {
+					gsap.set(carousel, { x: 0 })
+				}
+				rafId = requestAnimationFrame(checkAndReset)
+			}
+
+			rafId = requestAnimationFrame(checkAndReset)
 		}
 
-		const card = testimonialCardRef.current
-		if (!card) return
+		// Затримка для завантаження зображень та розрахунку розмірів
+		const timeoutId = setTimeout(() => {
+			updateAnimation()
+		}, 200)
 
-		// Отримуємо всі дочірні елементи, які будемо анімувати
-		const contentToAnimate = card.querySelector(
-			`.${styles.testimonialContentWrapper}`
-		)
-
-		timelineRef.current = gsap.timeline({
-			// Колбек onComplete тепер не потрібен тут для оновлення стану
-		})
-
-		timelineRef.current
-			// 1. Анімуємо зникнення поточного контенту
-			.to(contentToAnimate, {
-				opacity: 0,
-				y: -25,
-				duration: 0.4,
-				ease: 'expo.in',
-			})
-			// 2. ОНОВЛЮЄМО СТАН В СЕРЕДИНІ АНІМАЦІЇ - це виправляє баг
-			.call(() => {
-				setCurrentTestimonial(newIndex)
-			})
-			// 3. Готуємо елементи до появи (вони будуть невидимі та зміщені)
-			.set(contentToAnimate.children, {
-				opacity: 0,
-				y: 25,
-			})
-			// 4. Повертаємо контейнер у видимий стан
-			.set(contentToAnimate, {
-				opacity: 1,
-				y: 0,
-			})
-			// 5. Анімуємо появу нових елементів по черзі (stagger)
-			.to(contentToAnimate.children, {
-				opacity: 1,
-				y: 0,
-				duration: 0.5,
-				ease: 'power3.out',
-				stagger: 0.08, // Ключ до професійного вигляду!
-			})
-	}
-
-	const handleNext = () => {
-		animateTestimonialChange((currentTestimonial + 1) % testimonials.length)
-	}
-
-	const handlePrev = () => {
-		animateTestimonialChange(
-			(currentTestimonial - 1 + testimonials.length) % testimonials.length
-		)
-	}
-
-	const handleIndicatorClick = index => {
-		animateTestimonialChange(index)
-	}
-
-	const currentData = testimonials[currentTestimonial]
-
-	// Функція для отримання рядка з класами кольорів
-	const getColorClasses = color => {
-		const colorName = color.charAt(0).toUpperCase() + color.slice(1)
-		return {
-			badge: styles[`badge${colorName}`],
-			titleAccent: styles[`titleAccent${colorName}`],
-			cardBorder: styles[`cardBorder${colorName}`],
-			avatarBg: styles[`avatarBg${colorName}`],
-			positionText: styles[`positionText${colorName}`],
-			tag: styles[`tag${colorName}`],
-			navButton: styles[`navButton${colorName}`],
-			indicatorActive: styles[`indicatorActive${colorName}`],
-			avatarButtonActive: styles[`avatarButtonActive${colorName}`],
+		const handleResize = () => {
+			updateAnimation()
 		}
-	}
 
-	const currentTheme = getColorClasses(currentData.color)
+		window.addEventListener('resize', handleResize)
 
-    return (
-        <section ref={sectionRef} id="testimonials" className={styles.testimonialsSection}>
+		return () => {
+			clearTimeout(timeoutId)
+			if (animationRef.current) {
+				animationRef.current.kill()
+			}
+			if (intervalId) {
+				clearInterval(intervalId)
+			}
+			if (rafId) {
+				cancelAnimationFrame(rafId)
+			}
+			window.removeEventListener('resize', handleResize)
+		}
+	}, [])
+
+	// Дублюємо картки для безкінечного ефекту
+	const duplicatedTestimonials = [...testimonials, ...testimonials]
+
+	return (
+		<section ref={sectionRef} id="testimonials" className={styles.testimonialsSection}>
 			<div className={styles.container}>
 				<div className={styles.header}>
-					<div className={`gsap-fade-up ${styles.badge} ${currentTheme.badge}`}>
-						<Quote size={16} />
-						<span>Відгуки студентів</span>
-					</div>
 					<h2 className={`gsap-fade-up ${styles.title}`}>
-						Історії успіху наших{' '}
-						<span
-							className={`${styles.titleAccent} ${currentTheme.titleAccent}`}
-						>
-							випускників
-						</span>
+						Відгуки <span className={styles.rating}></span> учнів
 					</h2>
-					<p className={`gsap-fade-up ${styles.subtitle}`}>
-						Дізнайтеся, як SmartCode Academy змінила життя сотень дітей та
-						підлітків.
-					</p>
 				</div>
 
-				<div className={styles.contentGrid}>
-					<div ref={testimonialCardRef} className={styles.testimonialCard}>
-						<div
-							className={`${styles.cardBorder} ${currentTheme.cardBorder}`}
-						></div>
-
-						{/* Створюємо обгортку для контенту, щоб анімувати його */}
-						<div className={styles.testimonialContentWrapper}>
-							<div className={styles.cardHeader}>
-								<div className={`${styles.avatar} ${currentTheme.avatarBg}`}>
-									{currentData.avatar}
-								</div>
-								<div className={styles.authorInfo}>
-									<h3 className={styles.authorName}>
-										{currentData.name}, {currentData.age} років
-									</h3>
-									<p
-										className={`${styles.authorPosition} ${currentTheme.positionText}`}
-									>
-										{currentData.position}
-									</p>
-								</div>
-								<RatingStars
-									rating={currentData.rating}
-									className={styles.ratingStarsWrapper}
-								/>
-							</div>
-
-							<div className={styles.testimonialBody}>
-								<Quote
-									size={48}
-									className={`${styles.quoteIcon} ${currentTheme.positionText}`}
-								/>
-								<p className={styles.testimonialText}>&quot;{currentData.text}&quot;</p>
-							</div>
-
-							<div className={styles.cardFooter}>
-								<span className={`${styles.tag} ${currentTheme.tag}`}>
-									📚 {currentData.course}
-								</span>
-								<span className={`${styles.tag} ${styles.tagSlate}`}>
-									⏱️ {currentData.duration}
-								</span>
-								<span className={`${styles.tag} ${styles.tagGreen}`}>
-									🏆 {currentData.achievement}
-								</span>
-							</div>
-						</div>
-
-						<div className={styles.cardNavigation}>
-							<button
-								onClick={handlePrev}
-								aria-label='Попередній відгук'
-								className={styles.navButton}
-							>
-								<ChevronLeft size={20} />
-							</button>
-							<button
-								onClick={handleNext}
-								aria-label='Наступний відгук'
-								className={`${styles.navButton} ${styles.navButtonColored} ${currentTheme.navButton}`}
-							>
-								<ChevronRight size={20} />
-							</button>
-						</div>
-					</div>
-
-					<div className={`${styles.statsGrid} stats-grid`}>
-						{stats.map((stat, index) => (
-							<div
-								key={index}
-								className={`gsap-stat-card ${styles.statCard} ${
-									styles[
-										`statCard${
-											stat.color.charAt(0).toUpperCase() + stat.color.slice(1)
-										}`
-									]
-								}`}
-							>
-								<div className={styles.statContent}>
-									<div className={styles.statIconWrapper}>{stat.icon}</div>
-									<div>
-										<div className={styles.statNumber}>{stat.number}</div>
-										<div className={styles.statLabel}>{stat.label}</div>
+				<div className={styles.carouselWrapper}>
+					<div className={styles.carouselContainer}>
+						<div ref={carouselRef} className={styles.carousel}>
+							{duplicatedTestimonials.map((testimonial, index) => (
+								<div key={`${testimonial.id}-${index}`} className={styles.card}>
+									<div className={styles.cardContent}>
+										<div className={styles.stars}>
+											{Array.from({ length: 5 }, (_, i) => (
+												<Star
+													key={i}
+													size={20}
+													className={styles.star}
+													fill="currentColor"
+												/>
+											))}
+										</div>
+										<p className={styles.text}>{testimonial.text}</p>
+										<div className={styles.author}>
+											<img
+												src={testimonial.avatar}
+												alt={testimonial.name}
+												className={styles.avatar}
+												loading="lazy"
+											/>
+											<div className={styles.authorInfo}>
+												<div className={styles.name}>{testimonial.name}</div>
+												<div className={styles.subject}>{testimonial.subject}</div>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						))}
-					</div>
-				</div>
-
-				<div className={styles.bottomNav}>
-					<div className={styles.indicatorGroup}>
-						{testimonials.map((_, index) => (
-							<button
-								key={index}
-								onClick={() => handleIndicatorClick(index)}
-								aria-label={`Перейти до відгуку ${index + 1}`}
-								className={`${styles.indicator} ${
-									currentTestimonial === index
-										? `${styles.indicatorActive} ${currentTheme.indicatorActive}`
-										: ''
-								}`}
-							/>
-						))}
-					</div>
-					<div className={styles.avatarGroup}>
-						{testimonials.map((testimonial, index) => (
-							<button
-								key={testimonial.id}
-								onClick={() => handleIndicatorClick(index)}
-								aria-label={`Перейти до відгуку ${testimonial.name}`}
-								className={`${styles.avatarButton} ${
-									currentTestimonial === index
-										? `${styles.avatarButtonActive} ${
-												getColorClasses(testimonial.color).avatarButtonActive
-										  }`
-										: ''
-								}`}
-							>
-								<span>{testimonial.avatar}</span>
-							</button>
-						))}
+							))}
+						</div>
 					</div>
 				</div>
 			</div>

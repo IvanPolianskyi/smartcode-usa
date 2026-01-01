@@ -1,410 +1,208 @@
-/* --- Змінні для кольорів та стилів --- */
-
-
 /* --- Основна секція --- */
 .testimonialsSection {
-    background-color: var(--color-slate-50);
-    padding: 4rem 0;
-    overflow: hidden;
+	background: #f8fafc;
+	padding: 4rem 0;
+	overflow: hidden;
+	position: relative;
 }
 
-@media (min-width: 640px) {
-    .testimonialsSection {
-        padding: 6rem 0;
-    }
+@media (min-width: 768px) {
+	.testimonialsSection {
+		padding: 6rem 0;
+	}
 }
 
 .container {
-    max-width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 0 1rem;
 }
 
 /* --- Заголовок --- */
 .header {
-    text-align: center;
-    max-width: 48rem;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 3rem;
-}
-
-.badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    border-radius: 9999px;
-    padding: 0.25rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
+	text-align: center;
+	margin-bottom: 3rem;
 }
 
 .title {
-    font-size: 1.875rem;
-    font-weight: 800;
-    color: var(--color-slate-800);
-    letter-spacing: -0.025em;
-    margin-bottom: 1rem;
+	font-size: 2rem;
+	font-weight: 800;
+	color: #1e293b;
+	letter-spacing: -0.025em;
+	margin: 0;
 }
 
-@media (min-width: 640px) { .title { font-size: 2.25rem; } }
-@media (min-width: 768px) { .title { font-size: 3rem; } }
-
-.titleAccent {
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+@media (min-width: 768px) {
+	.title {
+		font-size: 2.5rem;
+	}
 }
 
-.subtitle {
-    font-size: 1.125rem;
-    color: var(--color-slate-600);
+.rating {
+	color: #3b82f6;
 }
 
-/* --- Основний грід --- */
-.contentGrid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
+/* --- Карусель --- */
+.carouselWrapper {
+	position: relative;
+	overflow: hidden;
+	mask-image: linear-gradient(
+		to right,
+		transparent 0%,
+		black 5%,
+		black 95%,
+		transparent 100%
+	);
+	-webkit-mask-image: linear-gradient(
+		to right,
+		transparent 0%,
+		black 5%,
+		black 95%,
+		transparent 100%
+	);
 }
 
-@media (min-width: 1024px) {
-    .contentGrid {
-        grid-template-columns: 2fr 1fr;
-        gap: 3rem;
-        align-items: stretch; /* ЗМІНЕНО: Вирівнює елементи по висоті */
-    }
+.carouselContainer {
+	overflow: hidden;
+	width: 100%;
 }
 
-/* --- Картка відгуку --- */
-.testimonialCard {
-    height: 100%; /* ДОДАНО: Картка займає всю висоту комірки */
-    display: flex; /* ДОДАНО: Для кращого контролю над внутрішнім контентом */
-    flex-direction: column; /* ДОДАНО */
-    background-color: white;
-    border-radius: 1rem;
-    box-shadow: var(--shadow-lg);
-    padding: 2rem;
-    border: 1px solid #e2e8f080;
-    position: relative;
-    overflow: hidden;
-    transition: var(--transition-smooth);
-}
-.testimonialCard:hover {
-    box-shadow: var(--shadow-xl);
-    transform: translateY(-4px);
+.carousel {
+	display: flex;
+	width: fit-content;
+	will-change: transform;
 }
 
-/* Обгортка для анімації */
-.testimonialContentWrapper {
-    flex-grow: 1; /* ДОДАНО: Основний контент розтягується, відсуваючи футер вниз */
-}
-.testimonialContentWrapper > * {
-    will-change: transform, opacity;
-}
-
-.cardBorder {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 6px;
-}
-
-.cardHeader {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: flex-start;
-    margin-bottom: 1.5rem;
+.card {
+	flex: 0 0 auto;
+	width: 320px;
+	padding: 0 1rem;
+	box-sizing: border-box;
 }
 
 @media (min-width: 640px) {
-    .cardHeader {
-        flex-direction: row;
-    }
+	.card {
+		width: 380px;
+	}
+}
+
+@media (min-width: 768px) {
+	.card {
+		width: 400px;
+	}
+}
+
+@media (min-width: 1024px) {
+	.card {
+		width: 420px;
+	}
+}
+
+.cardContent {
+	background: #ffffff;
+	border-radius: 20px;
+	padding: 2rem;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cardContent:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.stars {
+	display: flex;
+	gap: 0.25rem;
+	margin-bottom: 1.5rem;
+	color: #fbbf24;
+}
+
+.star {
+	width: 20px;
+	height: 20px;
+}
+
+.text {
+	color: #475569;
+	line-height: 1.7;
+	font-size: 0.9375rem;
+	margin: 0 0 1.5rem 0;
+	flex-grow: 1;
+}
+
+.author {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding-top: 1rem;
+	border-top: 1px solid #e2e8f0;
 }
 
 .avatar {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 9999px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.875rem;
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 3px solid #e0f2fe;
+	flex-shrink: 0;
 }
 
-.authorInfo { flex-grow: 1; }
-.authorName { font-size: 1.25rem; font-weight: 700; color: var(--color-slate-800); }
-.authorPosition { font-size: 0.875rem; font-weight: 600; }
-.authorCompany { font-size: 0.875rem; color: var(--color-slate-600); }
-.ratingStarsWrapper { flex-shrink: 0; }
-.ratingStars { display: flex; align-items: center; gap: 0.25rem; }
-.starFilled { color: var(--color-yellow-400); }
-.starEmpty { color: var(--color-slate-300); }
-
-.testimonialBody {
-    position: relative;
-    margin-bottom: 1.5rem;
+.authorInfo {
+	flex: 1;
+	min-width: 0;
 }
 
-.quoteIcon {
-    position: absolute;
-    top: -1rem;
-    left: -1rem;
-    opacity: 0.1;
+.name {
+	font-size: 1rem;
+	font-weight: 700;
+	color: #1e293b;
+	margin-bottom: 0.25rem;
 }
 
-.testimonialText {
-    color: var(--color-slate-700);
-    line-height: 1.6;
-    font-style: italic;
-    font-size: 1rem;
-    position: relative;
-    z-index: 10;
+.subject {
+	font-size: 0.875rem;
+	color: #64748b;
+	font-weight: 500;
 }
-
-.cardFooter {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-}
-
-.tag {
-    padding: 0.375rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 500;
-}
-.tagSlate { background-color: var(--color-slate-100); color: var(--color-slate-600); }
-.tagGreen { background-color: #dcfce7; color: #166534; }
-
-.cardNavigation {
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.navButton {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 9999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--color-slate-300);
-    background-color: white;
-    color: var(--color-slate-600);
-    box-shadow: var(--shadow-sm);
-    transition: var(--transition-smooth);
-    cursor: pointer;
-}
-.navButton:hover {
-    background-color: var(--color-slate-100);
-    color: var(--color-slate-800);
-    box-shadow: var(--shadow-md);
-    transform: scale(1.05);
-}
-
-.navButtonColored {
-    color: white;
-    border: none;
-}
-.navButtonColored:hover {
-    filter: brightness(1.1);
-}
-
-/* --- Статистика --- */
-.statsGrid { display: flex; gap: 1rem; }
-@media (min-width: 1024px) { 
-    .statsGrid { 
-        height: 100%; /* ДОДАНО: Займає всю висоту */
-        flex-direction: column; 
-        justify-content: space-between; /* ДОДАНО: Розподіляє картки по висоті */
-    } 
-}
-
-.statCard {
-    flex: 1;
-    padding: 1.25rem;
-    border-radius: 0.75rem;
-    transition: var(--transition-smooth);
-}
-.statCard:hover {
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: var(--shadow-lg);
-}
-
-.statContent { display: flex; align-items: center; gap: 1rem; }
-.statIconWrapper {
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 9999px;
-}
-.statNumber { font-size: 1.5rem; font-weight: 700; }
-.statLabel { font-size: 0.875rem; font-weight: 500; opacity: 0.8; }
-
-/* --- Нижня навігація --- */
-.bottomNav { margin-top: 3rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
-.indicatorGroup { display: flex; gap: 0.5rem; }
-
-.indicator {
-    width: 0.625rem;
-    height: 0.625rem;
-    border-radius: 9999px;
-    background-color: var(--color-slate-300);
-    transition: var(--transition-smooth);
-    cursor: pointer;
-    border: none;
-}
-.indicator:hover { background-color: var(--color-slate-400); }
-.indicatorActive { transform: scale(1.25); }
-
-.avatarGroup { display: flex; gap: 0.5rem; }
-
-.avatarButton {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 9999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    border: 2px solid var(--color-slate-300);
-    background-color: var(--color-slate-100);
-    transition: var(--transition-smooth);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-}
-.avatarButton:hover {
-    border-color: var(--color-slate-400);
-    transform: scale(1.05);
-}
-.avatarButton > span { transition: opacity 0.3s ease; }
-
-.avatarButtonActive {
-    transform: scale(1.1);
-    box-shadow: var(--shadow-lg);
-    border-color: transparent;
-}
-
-
-/* --- Динамічні класи кольорів --- */
-/* Blue */
-.badgeBlue { background-color: #dbeafe; color: #2563eb; }
-.titleAccentBlue { background-image: linear-gradient(to right, var(--color-blue-500), var(--color-cyan-400)); }
-.cardBorderBlue { background-image: linear-gradient(to right, var(--color-blue-500), var(--color-cyan-400)); }
-.avatarBgBlue { background-color: #dbeafe; }
-.positionTextBlue { color: var(--color-blue-500); }
-.tagBlue { background-color: #dbeafe; color: #2563eb; }
-.navButtonBlue { background-image: linear-gradient(to bottom right, var(--color-blue-500), var(--color-cyan-400)); }
-.indicatorActiveBlue { background-image: linear-gradient(to right, var(--color-blue-500), var(--color-cyan-400)); }
-.avatarButtonActiveBlue { background-image: linear-gradient(to bottom right, var(--color-blue-500), var(--color-cyan-400)); }
-.statCardBlue { background-image: linear-gradient(to bottom right, #eff6ff, #cffafe); color: #1e40af; }
-/* Purple */
-.badgePurple { background-color: #f3e8ff; color: #9333ea; }
-.titleAccentPurple { background-image: linear-gradient(to right, var(--color-purple-500), var(--color-pink-500)); }
-.cardBorderPurple { background-image: linear-gradient(to right, var(--color-purple-500), var(--color-pink-500)); }
-.avatarBgPurple { background-color: #f3e8ff; }
-.positionTextPurple { color: var(--color-purple-500); }
-.tagPurple { background-color: #f3e8ff; color: #9333ea; }
-.navButtonPurple { background-image: linear-gradient(to bottom right, var(--color-purple-500), var(--color-pink-500)); }
-.indicatorActivePurple { background-image: linear-gradient(to right, var(--color-purple-500), var(--color-pink-500)); }
-.avatarButtonActivePurple { background-image: linear-gradient(to bottom right, var(--color-purple-500), var(--color-pink-500)); }
-/* Green */
-.badgeGreen { background-color: #dcfce7; color: #16a34a; }
-.titleAccentGreen { background-image: linear-gradient(to right, var(--color-green-500), var(--color-emerald-400)); }
-.cardBorderGreen { background-image: linear-gradient(to right, var(--color-green-500), var(--color-emerald-400)); }
-.avatarBgGreen { background-color: #dcfce7; }
-.positionTextGreen { color: var(--color-green-500); }
-.tagGreen { background-color: #dcfce7; color: #16a34a; }
-.navButtonGreen { background-image: linear-gradient(to bottom right, var(--color-green-500), var(--color-emerald-400)); }
-.indicatorActiveGreen { background-image: linear-gradient(to right, var(--color-green-500), var(--color-emerald-400)); }
-.avatarButtonActiveGreen { background-image: linear-gradient(to bottom right, var(--color-green-500), var(--color-emerald-400)); }
-/* Orange */
-.badgeOrange { background-color: #ffedd5; color: #f97316; }
-.titleAccentOrange { background-image: linear-gradient(to right, var(--color-orange-500), var(--color-amber-400)); }
-.cardBorderOrange { background-image: linear-gradient(to right, var(--color-orange-500), var(--color-amber-400)); }
-.avatarBgOrange { background-color: #ffedd5; }
-.positionTextOrange { color: var(--color-orange-500); }
-.tagOrange { background-color: #ffedd5; color: #f97316; }
-.navButtonOrange { background-image: linear-gradient(to bottom right, var(--color-orange-500), var(--color-amber-400)); }
-.indicatorActiveOrange { background-image: linear-gradient(to right, var(--color-orange-500), var(--color-amber-400)); }
-.avatarButtonActiveOrange { background-image: linear-gradient(to bottom right, var(--color-orange-500), var(--color-amber-400)); }
-/* Pink */
-.badgePink { background-color: #fce7f3; color: #db2777; }
-.titleAccentPink { background-image: linear-gradient(to right, var(--color-pink-500), var(--color-rose-400)); }
-.cardBorderPink { background-image: linear-gradient(to right, var(--color-pink-500), var(--color-rose-400)); }
-.avatarBgPink { background-color: #fce7f3; }
-.positionTextPink { color: var(--color-pink-500); }
-.tagPink { background-color: #fce7f3; color: #db2777; }
-.navButtonPink { background-image: linear-gradient(to bottom right, var(--color-pink-500), var(--color-rose-400)); }
-.indicatorActivePink { background-image: linear-gradient(to right, var(--color-pink-500), var(--color-rose-400)); }
-.avatarButtonActivePink { background-image: linear-gradient(to bottom right, var(--color-pink-500), var(--color-rose-400)); }
-/* Stat Cards Colors */
-.statCardBlue { background-image: linear-gradient(to bottom right, #eff6ff, #cffafe); color: #1e40af; }
-.statCardYellow { background-image: linear-gradient(to bottom right, #fefce8, #fef3c7); color: #a16207; }
-.statCardRed { background-image: linear-gradient(to bottom right, #fee2e2, #ffe4e6); color: #991b1b; }
 
 /* --- Мобільна адаптація --- */
 @media (max-width: 639px) {
-    /* Менші відступи та кращий потоковий макет для картки */
-    .testimonialCard {
-        padding: 1rem 1rem 1.25rem;
-    }
+	.testimonialsSection {
+		padding: 3rem 0;
+	}
 
-    /* Кнопки навігації не перекривають контент, розміщуються знизу */
-    .cardNavigation {
-        position: static;
-        right: auto;
-        bottom: auto;
-        margin-top: 1rem;
-        justify-content: center;
-        width: 100%;
-    }
+	.card {
+		width: 280px;
+		padding: 0 0.75rem;
+	}
 
-    /* Збільшуємо таргет для натискання на телефонах */
-    .navButton {
-        width: 2.75rem;
-        height: 2.75rem;
-    }
+	.cardContent {
+		padding: 1.5rem;
+	}
 
-    .testimonialBody { margin-bottom: 1rem; }
-    .quoteIcon { top: -0.5rem; left: -0.5rem; }
+	.text {
+		font-size: 0.875rem;
+	}
 
-    /* Статистика не стискається занадто сильно, дозволяємо перенос */
-    .statsGrid {
-        flex-wrap: wrap;
-        overflow-x: visible;
-    }
+	.avatar {
+		width: 48px;
+		height: 48px;
+	}
 
-    .statCard {
-        flex: 1 1 calc(50% - 0.5rem);
-        min-width: 9.5rem;
-    }
+	.name {
+		font-size: 0.9375rem;
+	}
 
-    /* Трохи більші індикатори та компактніші аватарки */
-    .indicator {
-        width: 0.75rem;
-        height: 0.75rem;
-    }
+	.subject {
+		font-size: 0.8125rem;
+	}
+}
 
-    .avatarButton {
-        width: 2.5rem;
-        height: 2.5rem;
-        font-size: 1.25rem;
-    }
+/* --- Пауза при наведенні (опціонально) --- */
+.carouselWrapper:hover .carousel {
+	animation-play-state: paused;
 }

@@ -96,6 +96,13 @@
 
 html {
   scroll-behavior: smooth;
+  /* Приховуємо скролбар для Firefox */
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  /* Приховуємо скролбар для Chrome, Safari, Edge */
+  display: none;
 }
 
 body {
@@ -103,7 +110,13 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.6;
+  /* Приховуємо скролбар для Firefox */
+  scrollbar-width: none;
+}
 
+body::-webkit-scrollbar {
+  /* Приховуємо скролбар для Chrome, Safari, Edge */
+  display: none;
 }
 
 /* Prevent horizontal overflow on mobile and ensure full-width layout */

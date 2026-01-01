@@ -124,6 +124,13 @@
 	transition: opacity 0.3s ease;
 }
 
+.pricingCard {
+	position: relative;
+	will-change: transform;
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
 .pricingCard:hover {
 	transform: translateY(-8px);
 	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);

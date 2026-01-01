@@ -26,15 +26,6 @@ const SocialMedia = () => {
 			avatarUrl: 'https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/7933b99a69679696fee99a6a9a20c549~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=618b56a9&x-expires=1767355200&x-signature=D05LXPS0lkjDAxoDhK9qWM73alE%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva',
 		},
 		{
-			id: 2,
-			name: 'SmartCode Academy',
-			username: '@smartcode_academy',
-			url: 'https://www.tiktok.com/@smartcode_academy',
-			description: 'Наші курси та проекти',
-			color: 'purple',
-			avatarUrl: 'https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/6265690dcda2f88f952abb3045e5604d~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=765b7518&x-expires=1767355200&x-signature=q8cA89AAjTj2JVf75dw5mWEP4io%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva',
-		},
-		{
 			id: 3,
 			name: 'Іван - Python',
 			username: '@ivan.smartcode.python',
@@ -51,6 +42,15 @@ const SocialMedia = () => {
 			description: 'Навчальний контент',
 			color: 'orange',
 			avatarUrl: 'https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/15dac559b1a79f75d8c1284cc21348ef~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=11c54edc&x-expires=1767358800&x-signature=%2FyEYVuA%2BZK1fV%2FRINOOyqqoSIkg%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva',
+		},
+		{
+			id: 2,
+			name: 'SmartCode Academy',
+			username: '@smartcode_academy',
+			url: 'https://www.tiktok.com/@smartcode_academy',
+			description: 'Наші курси та проекти',
+			color: 'purple',
+			avatarUrl: 'https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/6265690dcda2f88f952abb3045e5604d~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=765b7518&x-expires=1767355200&x-signature=q8cA89AAjTj2JVf75dw5mWEP4io%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva',
 		},
 	]
 

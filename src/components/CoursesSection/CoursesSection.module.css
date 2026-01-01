@@ -76,6 +76,13 @@
   max-width: 300px;
 }
 
+.courseCard {
+  position: relative;
+  will-change: transform;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
 .courseCard:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);

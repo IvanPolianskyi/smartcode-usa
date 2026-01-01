@@ -29,7 +29,6 @@ gsap.registerPlugin(ScrollTrigger)
 const Visit = () => {
 	const [isVisible, setIsVisible] = useState(false)
 	const [hoveredCard, setHoveredCard] = useState(null)
-	const [currentStat, setCurrentStat] = useState(0)
 	const sectionRef = useRef(null)
 	const cardsRef = useRef(null)
 
@@ -94,13 +93,7 @@ const Visit = () => {
 			}, sectionRef)
 		}
 
-		// Анімація статистики
-		const interval = setInterval(() => {
-			setCurrentStat(prev => (prev + 1) % 8)
-		}, 3000)
-
 		return () => {
-			clearInterval(interval)
 			if (ctx) ctx.revert()
 		}
 	}, [])
@@ -189,9 +182,7 @@ const Visit = () => {
 						{stats.map((stat, index) => (
 							<div
 								key={index}
-								className={`${styles.statCard} ${
-									currentStat === index ? styles.statCardActive : ''
-								} animate-scale`}
+								className={`${styles.statCard} animate-scale`}
 								style={{ animationDelay: `${index * 0.1}s` }}
 							>
 								<div className={styles.statIcon}>{stat.icon}</div>

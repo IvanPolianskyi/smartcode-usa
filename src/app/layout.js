@@ -108,8 +108,8 @@ export default function RootLayout({ children }) {
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				suppressHydrationWarning
 			>
+				<Header />
                 <div className='min-h-screen flex flex-col'>
-					<Header />
 					<main className='flex-1 pt-16 relative'>{children}</main>
 					<Footer />
                     {/* Глобально змонтована модалка контакту, доступна на всіх сторінках */}

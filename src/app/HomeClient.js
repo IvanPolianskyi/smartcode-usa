@@ -104,9 +104,9 @@ export default function HomeClient() {
         <CoursesSection />
         <Testimonials />
         <ProjectsShowcase />
-        <HeroSection />
         <SocialMedia />
         <FAQ />
+        
       </div>
     </div>
   )
