@@ -1,5 +1,5 @@
 /**
- * 01 Object Oriented Programming
+ * Lesson 05-1: Основи ООП: класи та об'єкти
  * Full educational content
  */
 
@@ -9,257 +9,682 @@ export const lesson_05_1 = {
   lessonId: "lesson-05-1",
   moduleId: "module-05",
   order: 1,
-  title: "01 Object Oriented Programming",
+  title: "Основи ООП: класи та об'єкти",
   
   learningObjectives: [
-    "Вивчити основні концепції",
-    "Застосувати знання на практиці",
-    "Розв'язати практичні задачі"
+    "Розуміти концепцію об'єктно-орієнтованого програмування",
+    "Створювати класи та об'єкти",
+    "Використовувати конструктор __init__",
+    "Розуміти різницю між класом та екземпляром",
+    "Працювати з атрибутами та методами"
   ],
   
   estimatedTime: 90,
-  prerequisites: [],
+  prerequisites: ["lesson-04-1"],
   
   videoUrl: "",
   
   theory: {
     sections: [
       {
-        title: "Object Oriented Programming",
-        content: `Object Oriented Programming (OOP) tends to be one of the major obstacles for beginners when they are first starting to learn Python.
+        title: "Що таке об'єктно-орієнтоване програмування?",
+        content: `**Об'єктно-орієнтоване програмування (ООП)** — це парадигма програмування, яка організує код навколо об'єктів та їх взаємодії.
 
-There are many, many tutorials and lessons covering OOP so feel free to Google search other lessons, and I have also put some links to other useful tutorials online at the bottom of this Notebook.
+**Основні переваги ООП:**
+- ✅ **Організація коду** — код стає більш структурованим та зрозумілим
+- ✅ **Повторне використання** — можна створювати класи та використовувати їх багато разів
+- ✅ **Модульність** — код розбивається на логічні частини
+- ✅ **Легкість підтримки** — зміни в одному місці не впливають на інші
 
-For this lesson we will construct our knowledge of OOP in Python by building on the following topics:
+**Основні концепції ООП:**
+1. **Класи** — шаблони для створення об'єктів
+2. **Об'єкти (екземпляри)** — конкретні реалізації класів
+3. **Атрибути** — характеристики об'єкта
+4. **Методи** — дії, які може виконувати об'єкт
 
-* Objects
-* Using the *class* keyword
-* Creating class attributes
-* Creating methods in a class
-* Learning about Inheritance
-* Learning about Polymorphism
-* Learning about Special Methods for classes
+**У Python все є об'єктом:**
+\`\`\`python
+# Всі ці змінні є об'єктами
+number = 5
+text = "Привіт"
+my_list = [1, 2, 3]
+my_dict = {"key": "value"}
+\`\`\`
 
-Lets start the lesson by remembering about the Basic Python Objects. For example:
+Ми вже працювали з об'єктами! Наприклад, список має методи:
+\`\`\`python
+my_list = [1, 2, 3]
+my_list.append(4)  # метод append()
+my_list.count(2)  # метод count()
+\`\`\`
 
-Remember how we could call methods on a list?
+Тепер ми навчимося створювати власні типи об'єктів!`
+      },
+      {
+        title: "Класи та об'єкти",
+        content: `**Клас** — це шаблон або план для створення об'єктів. Він визначає, які атрибути та методи матимуть об'єкти цього типу.
 
-What we will basically be doing in this lecture is exploring how we could create an Object type like a list. We've already learned about how to create functions. So let's explore Objects in general:
+**Об'єкт (екземпляр)** — це конкретна реалізація класу. Кожен об'єкт має свої власні значення атрибутів.
 
-## Objects
-In Python, *everything is an object*. Remember from previous lectures we can use type() to check the type of object something is:
+**Аналогія:** 
+- Клас = креслення будинку
+- Об'єкт = конкретний будинок, побудований за цим кресленням
 
-So we know all these things are objects, so how can we create our own Object types? That is where the class keyword comes in.
-## class
-User defined objects are created using the class keyword. The class is a blueprint that defines the nature of a future object. From classes we can construct instances. An instance is a specific object created from a particular class. For example, above we created the object lst which was an instance of a list object. 
+**Створення простого класу:**
 
-Let see how we can use class:
+\`\`\`python
+class Dog:
+    pass
 
-By convention we give classes a name that starts with a capital letter. Note how x is now the reference to our new instance of a Sample class. In other words, we **instantiate** the Sample class.
+# Створення об'єкта (екземпляра)
+my_dog = Dog()
+print(type(my_dog))  # <class '__main__.Dog'>
+\`\`\`
 
-Inside of the class we currently just have pass. But we can define class attributes and methods.
+**Важливо:**
+- Назви класів зазвичай пишуться з великої літери (PascalCase)
+- \`pass\` означає, що клас поки що порожній
+- \`my_dog\` — це екземпляр класу \`Dog\`
 
-An **attribute** is a characteristic of an object.
-A **method** is an operation we can perform with the object.
+**Перевірка типу:**
+\`\`\`python
+print(type(5))        # <class 'int'>
+print(type("Привіт")) # <class 'str'>
+print(type(my_dog))   # <class '__main__.Dog'>
+\`\`\`
 
-For example, we can create a class called Dog. An attribute of a dog may be its breed or its name, while a method of a dog may be defined by a .bark() method which returns a sound.
+Всі ці об'єкти мають свої типи, і ми можемо створювати власні!`
+      },
+      {
+        title: "Конструктор __init__",
+        content: `**__init__** — це спеціальний метод, який автоматично викликається при створенні об'єкта. Він називається **конструктором**.
 
-Let's get a better understanding of attributes through an example.
+**Призначення:**
+- Ініціалізувати атрибути об'єкта
+- Встановити початкові значення
+- Виконати необхідні налаштування
 
-## Attributes
-The syntax for creating an attribute is:
+**Синтаксис:**
+\`\`\`python
+class Dog:
+    def __init__(self, breed, name):
+        self.breed = breed
+        self.name = name
+\`\`\`
+
+**Розбір:**
+- \`def __init__(self, ...)\` — визначення конструктора
+- \`self\` — посилання на поточний об'єкт (завжди перший параметр)
+- \`self.breed = breed\` — створення атрибута \`breed\` для об'єкта
+
+**Створення об'єктів:**
+\`\`\`python
+# Створюємо два різні об'єкти
+dog1 = Dog("Лабрадор", "Рекс")
+dog2 = Dog("Хаскі", "Луна")
+
+print(dog1.name)   # Рекс
+print(dog1.breed)   # Лабрадор
+print(dog2.name)   # Луна
+print(dog2.breed)  # Хаскі
+\`\`\`
+
+**Важливо:**
+- \`self\` не передається явно при створенні об'єкта
+- Кожен об'єкт має свої власні значення атрибутів
+- \`dog1\` та \`dog2\` — це два різні об'єкти з різними даними`
+      },
+      {
+        title: "Атрибути об'єкта та класу",
+        content: `**Атрибути об'єкта** — це характеристики конкретного об'єкта. Кожен об'єкт має свої власні значення.
+
+**Атрибути класу** — це характеристики, які однакові для всіх об'єктів класу.
+
+**Приклад:**
+
+\`\`\`python
+class Dog:
+    # Атрибут класу (однаковий для всіх собак)
+    species = "Ссавець"
     
-    self.attribute = something
+    def __init__(self, breed, name):
+        # Атрибути об'єкта (різні для кожної собаки)
+        self.breed = breed
+        self.name = name
+
+# Створюємо об'єкти
+dog1 = Dog("Лабрадор", "Рекс")
+dog2 = Dog("Хаскі", "Луна")
+
+# Атрибути об'єкта (різні)
+print(dog1.name)   # Рекс
+print(dog2.name)   # Луна
+
+# Атрибут класу (однаковий)
+print(dog1.species)  # Ссавець
+print(dog2.species)  # Ссавець
+print(Dog.species)   # Ссавець (доступ через клас)
+\`\`\`
+
+**Коли використовувати:**
+- **Атрибути об'єкта** — для даних, які різні для кожного об'єкта (ім'я, вік, колір)
+- **Атрибути класу** — для даних, які однакові для всіх об'єктів (вид, константи)
+
+**Зміна атрибутів:**
+\`\`\`python
+dog1.name = "Рексік"  # Змінюємо атрибут об'єкта
+print(dog1.name)      # Рексік
+
+Dog.species = "Тварина"  # Змінюємо атрибут класу
+print(dog1.species)      # Тварина
+print(dog2.species)     # Тварина (змінилося для всіх)
+\`\`\``
+      },
+      {
+        title: "Методи",
+        content: `**Методи** — це функції, визначені всередині класу. Вони працюють з атрибутами об'єкта.
+
+**Відмінність від функцій:**
+- Методи належать об'єкту та працюють з його даними
+- Перший параметр завжди \`self\` (посилання на об'єкт)
+- Викликаються через об'єкт: \`об'єкт.метод()\`
+
+**Приклад:**
+
+\`\`\`python
+class Circle:
+    pi = 3.14159  # Атрибут класу
     
-There is a special method called:
+    def __init__(self, radius):
+        self.radius = radius
+        self.area = Circle.pi * radius ** 2
+    
+    def get_circumference(self):
+        """Обчислює довжину кола"""
+        return 2 * Circle.pi * self.radius
+    
+    def set_radius(self, new_radius):
+        """Змінює радіус та перераховує площу"""
+        self.radius = new_radius
+        self.area = Circle.pi * new_radius ** 2
+    
+    def get_info(self):
+        """Повертає інформацію про коло"""
+        return f"Радіус: {self.radius}, Площа: {self.area:.2f}"
 
-    __init__()
+# Створюємо об'єкт
+circle = Circle(5)
 
-This method is used to initialize the attributes of an object. For example:
+# Викликаємо методи
+print(circle.get_circumference())  # 31.4159
+print(circle.get_info())           # Радіус: 5, Площа: 78.54
 
-Lets break down what we have above.The special method 
+# Змінюємо радіус
+circle.set_radius(10)
+print(circle.get_info())           # Радіус: 10, Площа: 314.16
+\`\`\`
 
-    __init__() 
-is called automatically right after the object has been created:
-
-    def __init__(self, breed):
-Each attribute in a class definition begins with a reference to the instance object. It is by convention named self. The breed is the argument. The value is passed during the class instantiation.
-
-     self.breed = breed
-
-Now we have created two instances of the Dog class. With two breed types, we can then access these attributes like this:
-
-Note how we don't have any parentheses after breed; this is because it is an attribute and doesn't take any arguments.
-
-In Python there are also *class object attributes*. These Class Object Attributes are the same for any instance of the class. For example, we could create the attribute *species* for the Dog class. Dogs, regardless of their breed, name, or other attributes, will always be mammals. We apply this logic in the following manner:
-
-Note that the Class Object Attribute is defined outside of any methods in the class. Also by convention, we place them first before the init.`
+**Важливо:**
+- Методи мають доступ до всіх атрибутів об'єкта через \`self\`
+- Можна використовувати як \`self.атрибут\`, так і \`Клас.атрибут\` для атрибутів класу
+- Методи можуть змінювати атрибути об'єкта`
       },
       {
-        title: "Methods",
-        content: `Methods are functions defined inside the body of a class. They are used to perform operations with the attributes of our objects. Methods are a key concept of the OOP paradigm. They are essential to dividing responsibilities in programming, especially in large applications.
+        title: "Практичний приклад: клас Student",
+        content: `**Створення класу для студента:**
 
-You can basically think of methods as functions acting on an Object that take the Object itself into account through its *self* argument.
+\`\`\`python
+class Student:
+    # Атрибут класу
+    school = "Університет"
+    
+    def __init__(self, name, age, course):
+        # Атрибути об'єкта
+        self.name = name
+        self.age = age
+        self.course = course
+        self.grades = []
+    
+    def add_grade(self, grade):
+        """Додає оцінку"""
+        if 0 <= grade <= 100:
+            self.grades.append(grade)
+        else:
+            print("Оцінка має бути від 0 до 100")
+    
+    def get_average(self):
+        """Обчислює середній бал"""
+        if len(self.grades) == 0:
+            return 0
+        return sum(self.grades) / len(self.grades)
+    
+    def get_info(self):
+        """Повертає інформацію про студента"""
+        avg = self.get_average()
+        return f"{self.name}, {self.age} років, курс {self.course}, середній бал: {avg:.2f}"
 
-Let's go through an example of creating a Circle class:
+# Створюємо студентів
+student1 = Student("Олександр", 20, 2)
+student2 = Student("Марія", 19, 1)
 
-In the \__init__ method above, in order to calculate the area attribute, we had to call Circle.pi. This is because the object does not yet have its own .pi attribute, so we call the Class Object Attribute pi instead.
-In the setRadius method, however, we'll be working with an existing Circle object that does have its own pi attribute. Here we can use either Circle.pi or self.pi.
-Now let's change the radius and see how that affects our Circle object:
+# Додаємо оцінки
+student1.add_grade(85)
+student1.add_grade(90)
+student1.add_grade(78)
 
-Great! Notice how we used self. notation to reference attributes of the class within the method calls. Review how the code above works and try creating your own method.
+student2.add_grade(92)
+student2.add_grade(88)
 
-## Inheritance
+# Виводимо інформацію
+print(student1.get_info())
+print(student2.get_info())
+print(f"Школа: {Student.school}")
+\`\`\`
 
-Inheritance is a way to form new classes using classes that have already been defined. The newly formed classes are called derived classes, the classes that we derive from are called base classes. Important benefits of inheritance are code reuse and reduction of complexity of a program. The derived classes (descendants) override or extend the functionality of base classes (ancestors).
-
-Let's see an example by incorporating our previous work on the Dog class:
-
-In this example, we have two classes: Animal and Dog. The Animal is the base class, the Dog is the derived class. 
-
-The derived class inherits the functionality of the base class. 
-
-* It is shown by the eat() method. 
-
-The derived class modifies existing behavior of the base class.
-
-* shown by the whoAmI() method. 
-
-Finally, the derived class extends the functionality of the base class, by defining a new bark() method.`
+**Що ми бачимо:**
+- Кожен студент має свої дані (ім'я, вік, оцінки)
+- Методи працюють з даними конкретного об'єкта
+- Атрибут класу \`school\` однаковий для всіх`
       },
       {
-        title: "Polymorphism",
-        content: `We've learned that while functions can take in different arguments, methods belong to the objects they act on. In Python, *polymorphism* refers to the way in which different object classes can share the same method name, and those methods can be called from the same place even though a variety of different objects might be passed in. The best way to explain this is by example:
+        title: "Підсумок",
+        content: `**Що ми вивчили:**
 
-Here we have a Dog class and a Cat class, and each has a \`.speak()\` method. When called, each object's \`.speak()\` method returns a result unique to the object.
+1. ✅ **Класи** — шаблони для створення об'єктів
+2. ✅ **Об'єкти** — конкретні реалізації класів
+3. ✅ **__init__** — конструктор для ініціалізації об'єктів
+4. ✅ **Атрибути** — характеристики об'єктів (об'єкта та класу)
+5. ✅ **Методи** — функції, які працюють з об'єктами
 
-There a few different ways to demonstrate polymorphism. First, with a for loop:
+**Ключові моменти:**
+- \`self\` — посилання на поточний об'єкт
+- Атрибути об'єкта різні для кожного об'єкта
+- Атрибути класу однакові для всіх об'єктів
+- Методи мають доступ до атрибутів через \`self\`
 
-Another is with functions:
+**Наступні кроки:**
+- Вивчимо різні типи методів (@classmethod, @staticmethod)
+- Дізнаємося про інкапсуляцію та модифікатори доступу
+- Вивчимо наслідування та поліморфізм
 
-In both cases we were able to pass in different object types, and we obtained object-specific results from the same mechanism.
-
-A more common practice is to use abstract classes and inheritance. An abstract class is one that never expects to be instantiated. For example, we will never have an Animal object, only Dog and Cat objects, although Dogs and Cats are derived from Animals:
-
-Real life examples of polymorphism include:
-* opening different file types - different tools are needed to display Word, pdf and Excel files
-* adding different objects - the \`+\` operator performs arithmetic and concatenation`
-      },
-      {
-        title: "Special Methods",
-        content: `Finally let's go over special methods. Classes in Python can implement certain operations with special method names. These methods are not actually called directly but by Python specific language syntax. For example let's create a Book class:
-
-The __init__(), __str__(), __len__() and __del__() methods
-These special methods are defined by their use of underscores. They allow us to use Python specific functions on objects created through our class.
-
-**Great! After this lecture you should have a basic understanding of how to create your own objects with class in Python. You will be utilizing this heavily in your next milestone project!**
-
-For more great resources on this topic, check out:
-
-[Tutorial's Point](http://www.tutorialspoint.com/python/python_classes_objects.htm)
-
-[Official Documentation](https://docs.python.org/3/tutorial/classes.html)`
+Тепер ви можете створювати власні класи та об'єкти!`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад коду",
-      code: `lst = [1,2,3]`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `lst.count(2)`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `print(type(1))
-print(type([]))
-print(type(()))
-print(type({}))`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Create a new object type called Sample",
-      code: `# Create a new object type called Sample
-class Sample:
-    pass
-
-# Instance of Sample
-x = Sample()
-
-print(type(x))`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
+      title: "Створення простого класу",
       code: `class Dog:
-    def __init__(self,breed):
+    def __init__(self, name, breed):
+        self.name = name
         self.breed = breed
-        
-sam = Dog(breed='Lab')
-frank = Dog(breed='Huskie')`,
-      explanation: "Приклад коду з курсу"
+
+# Створення об'єктів
+dog1 = Dog("Рекс", "Лабрадор")
+dog2 = Dog("Луна", "Хаскі")
+
+print(f"{dog1.name} - {dog1.breed}")
+print(f"{dog2.name} - {dog2.breed})`,
+      explanation: "Демонструє створення класу з конструктором та створення об'єктів."
     },
     {
-      title: "Приклад коду",
-      code: `sam.breed`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `frank.breed`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `class Dog:
+      title: "Атрибути класу та об'єкта",
+      code: `class Circle:
+    pi = 3.14159  # Атрибут класу
     
-    # Class Object Attribute
-    species = 'mammal'
+    def __init__(self, radius):
+        self.radius = radius  # Атрибут об'єкта
     
-    def __init__(self,breed,name):
-        self.breed = breed
-        self.name = name`,
-      explanation: "Приклад коду з курсу"
+    def get_area(self):
+        return Circle.pi * self.radius ** 2
+
+circle = Circle(5)
+print(f"Площа: {circle.get_area()}")  # Площа: 78.53975`,
+      explanation: "Показує різницю між атрибутами класу (pi) та об'єкта (radius)."
     },
     {
-      title: "Приклад коду",
-      code: `sam = Dog('Lab','Sam')`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `sam.name`,
-      explanation: "Приклад коду з курсу"
+      title: "Методи об'єкта",
+      code: `class Student:
+    def __init__(self, name):
+        self.name = name
+        self.grades = []
+    
+    def add_grade(self, grade):
+        self.grades.append(grade)
+    
+    def get_average(self):
+        if len(self.grades) == 0:
+            return 0
+        return sum(self.grades) / len(self.grades)
+
+student = Student("Олександр")
+student.add_grade(85)
+student.add_grade(90)
+print(f"Середній бал: {student.get_average()}")  # Середній бал: 87.5`,
+      explanation: "Демонструє створення методів, які працюють з атрибутами об'єкта."
     }
   ],
   
-  commonMistakes: [],
+  commonMistakes: [
+    {
+      mistake: "Забувають про self у методах",
+      explanation: "Початківці часто забувають додати self як перший параметр у методах.",
+      correctApproach: `# Неправильно:
+class Dog:
+    def bark():  # Помилка! Немає self
+        print("Гав!")
+
+# Правильно:
+class Dog:
+    def bark(self):  # self обов'язковий
+        print("Гав!")`
+    },
+    {
+      mistake: "Плутають атрибути класу та об'єкта",
+      explanation: "Важливо розуміти різницю між атрибутами класу (однакові для всіх) та об'єкта (різні для кожного).",
+      correctApproach: `# Атрибут класу - однаковий для всіх
+class Dog:
+    species = "Ссавець"  # Атрибут класу
+    
+    def __init__(self, name):
+        self.name = name  # Атрибут об'єкта (різний для кожної собаки)`
+    },
+    {
+      mistake: "Передають self при виклику методів",
+      explanation: "self передається автоматично, не потрібно передавати його явно.",
+      correctApproach: `# Неправильно:
+dog = Dog("Рекс")
+dog.bark(self)  # Помилка!
+
+# Правильно:
+dog = Dog("Рекс")
+dog.bark()  # self передається автоматично`
+    },
+    {
+      mistake: "Не використовують __init__ для ініціалізації",
+      explanation: "Конструктор __init__ — найкращий спосіб ініціалізувати атрибути об'єкта.",
+      correctApproach: `# Неправильно:
+class Dog:
+    pass
+
+dog = Dog()
+dog.name = "Рекс"  # Краще ініціалізувати в __init__
+
+# Правильно:
+class Dog:
+    def __init__(self, name):
+        self.name = name
+
+dog = Dog("Рекс")  # Все ініціалізовано одразу`
+    }
+  ],
   
-  summary: "Підсумок уроку",
+  summary: `На цьому уроці ми вивчили основи об'єктно-орієнтованого програмування:
+
+**Основні концепції:**
+
+1. **Класи та об'єкти**
+   - Клас — шаблон для створення об'єктів
+   - Об'єкт — конкретна реалізація класу
+
+2. **Конструктор __init__**
+   - Автоматично викликається при створенні об'єкта
+   - Використовується для ініціалізації атрибутів
+   - Завжди має параметр self
+
+3. **Атрибути**
+   - Атрибути об'єкта — різні для кожного об'єкта
+   - Атрибути класу — однакові для всіх об'єктів
+
+4. **Методи**
+   - Функції, визначені всередині класу
+   - Працюють з атрибутами об'єкта через self
+   - Викликаються через об'єкт: об'єкт.метод()
+
+**Ключові моменти:**
+- self — посилання на поточний об'єкт
+- Назви класів пишуться з великої літери
+- Кожен об'єкт має свої власні значення атрибутів
+
+Тепер ви можете створювати власні класи та об'єкти!`,
   
   practiceTask: {
-    title: "Практична задача",
-    description: "Опишіть задачу",
-    problemStatement: "Умова задачі",
-    inputFormat: "",
-    outputFormat: "",
-    examples: [],
+    title: "Створення класу Book",
+    description: "Створіть клас для представлення книги з атрибутами та методами",
+    problemStatement: `Створіть клас Book з наступними вимогами:
+
+1. **Атрибути класу:**
+   - \`library_name\` = "Публічна бібліотека"
+
+2. **Атрибути об'єкта (в __init__):**
+   - \`title\` — назва книги
+   - \`author\` — автор
+   - \`year\` — рік видання
+   - \`pages\` — кількість сторінок
+
+3. **Методи:**
+   - \`get_info()\` — повертає рядок з інформацією про книгу у форматі: "Назва: [title], Автор: [author], Рік: [year]"
+   - \`is_old()\` — повертає True, якщо книга старіша за 20 років (порівняти з поточним роком)
+   - \`get_reading_time()\` — повертає приблизний час читання (припустимо, що людина читає 1 сторінку за 2 хвилини)
+
+**Важливо:** Не використовуйте функцію input(). Введіть значення напряму в коді.
+
+Створіть кілька об'єктів Book та продемонструйте роботу всіх методів.`,
+    inputFormat: `Введіть значення напряму в коді:
+title = "Python для початківців"
+author = "Олександр Петренко"
+year = 2020
+pages = 300
+
+**Примітка:** Не використовуйте input(), введіть значення напряму в коді`,
+    outputFormat: `Приклад виведення:
+Інформація про книгу: Назва: Python для початківців, Автор: Олександр Петренко, Рік: 2020
+Книга стара: False
+Час читання: 600 хвилин
+Бібліотека: Публічна бібліотека`,
+    examples: [
+      {
+        input: "title = 'Python для початківців', author = 'Олександр Петренко', year = 2020, pages = 300",
+        output: `Інформація про книгу: Назва: Python для початківців, Автор: Олександр Петренко, Рік: 2020
+Книга стара: False
+Час читання: 600 хвилин
+Бібліотека: Публічна бібліотека`,
+        explanation: "Демонструє створення об'єкта Book та виклик всіх методів."
+      },
+      {
+        input: "title = 'Класична література', author = 'Іван Франко', year = 1995, pages = 250",
+        output: `Інформація про книгу: Назва: Класична література, Автор: Іван Франко, Рік: 1995
+Книга стара: True
+Час читання: 500 хвилин
+Бібліотека: Публічна бібліотека`,
+        explanation: "Демонструє роботу зі старою книгою (більше 20 років)."
+      }
+    ],
     solution: {
-      code: "",
-      explanation: ""
+      code: `# Клас Book
+
+class Book:
+    # Атрибут класу
+    library_name = "Публічна бібліотека"
+    
+    def __init__(self, title, author, year, pages):
+        # Атрибути об'єкта
+        self.title = title
+        self.author = author
+        self.year = year
+        self.pages = pages
+    
+    def get_info(self):
+        """Повертає інформацію про книгу"""
+        return f"Назва: {self.title}, Автор: {self.author}, Рік: {self.year}"
+    
+    def is_old(self):
+        """Перевіряє, чи книга старіша за 20 років"""
+        from datetime import datetime
+        current_year = datetime.now().year
+        return (current_year - self.year) > 20
+    
+    def get_reading_time(self):
+        """Обчислює приблизний час читання (2 хвилини на сторінку)"""
+        return self.pages * 2
+
+# Вводимо значення напряму в коді (не використовуємо input())
+
+# Створюємо об'єкти
+book1 = Book("Python для початківців", "Олександр Петренко", 2020, 300)
+book2 = Book("Класична література", "Іван Франко", 1995, 250)
+
+# Виводимо інформацію про першу книгу
+print(f"Інформація про книгу: {book1.get_info()}")
+print(f"Книга стара: {book1.is_old()}")
+print(f"Час читання: {book1.get_reading_time()} хвилин")
+print(f"Бібліотека: {Book.library_name}")
+
+print()
+
+# Виводимо інформацію про другу книгу
+print(f"Інформація про книгу: {book2.get_info()}")
+print(f"Книга стара: {book2.is_old()}")
+print(f"Час читання: {book2.get_reading_time()} хвилин")
+print(f"Бібліотека: {Book.library_name}")`,
+      explanation: "Рішення демонструє створення класу Book з атрибутами класу та об'єкта, а також методи для роботи з даними книги. Використовується datetime для отримання поточного року."
     },
-    hints: [],
-    difficulty: "beginner"
+    hints: [
+      "Введіть значення напряму в коді - не використовуйте input()",
+      "Використовуйте __init__ для ініціалізації атрибутів об'єкта",
+      "Атрибут класу визначається поза методами, на рівні класу",
+      "Для is_old() використайте datetime.now().year для отримання поточного року",
+      "Методи мають мати self як перший параметр",
+      "Для доступу до атрибутів класу використовуйте Book.library_name",
+      "Метод get_reading_time() просто множить pages на 2"
+    ],
+    difficulty: "beginner",
+    testCases: [
+      {
+        input: ['"Python"', '"Автор"', '2020', '300'],
+        expectedOutput: "Інформація про книгу",
+        description: "Перевірка створення об'єкта та методу get_info()"
+      },
+      {
+        input: ['"Книга"', '"Автор"', '1995', '200'],
+        expectedOutput: "True",
+        description: "Перевірка методу is_old() для старої книги"
+      },
+      {
+        input: ['"Книга"', '"Автор"', '2020', '100'],
+        expectedOutput: "200",
+        description: "Перевірка методу get_reading_time()"
+      }
+    ]
   },
   
   quiz: {
-    questions: [],
-    timeLimit: 10,
+    questions: [
+      {
+        id: "q1",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що таке клас у Python?",
+        options: [
+          "Шаблон для створення об'єктів",
+          "Конкретний об'єкт",
+          "Функція",
+          "Змінна"
+        ],
+        correctAnswer: 0,
+        explanation: "Клас — це шаблон або план для створення об'єктів. Він визначає структуру та поведінку об'єктів."
+      },
+      {
+        id: "q2",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що таке self у методах класу?",
+        options: [
+          "Посилання на поточний об'єкт",
+          "Назва класу",
+          "Метод",
+          "Атрибут"
+        ],
+        correctAnswer: 0,
+        explanation: "self — це посилання на поточний об'єкт. Він завжди є першим параметром методів класу."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Коли викликається метод __init__?",
+        options: [
+          "Автоматично при створенні об'єкта",
+          "При виклику методу",
+          "При видаленні об'єкта",
+          "Ніколи"
+        ],
+        correctAnswer: 0,
+        explanation: "Метод __init__ викликається автоматично одразу після створення об'єкта. Він використовується для ініціалізації атрибутів."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Яка різниця між атрибутом класу та атрибутом об'єкта?",
+        options: [
+          "Атрибут класу однаковий для всіх об'єктів, атрибут об'єкта різний для кожного",
+          "Немає різниці",
+          "Атрибут класу можна змінити, атрибут об'єкта — ні",
+          "Атрибут об'єкта однаковий для всіх, атрибут класу різний"
+        ],
+        correctAnswer: 0,
+        explanation: "Атрибут класу визначається на рівні класу і однаковий для всіх об'єктів. Атрибут об'єкта визначається в __init__ і має своє значення для кожного об'єкта."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\nclass Dog:\n    def __init__(self, name):\n        self.name = name\n\ndog = Dog('Рекс')\nprint(dog.name)\n```",
+        options: [
+          "Рекс",
+          "name",
+          "self",
+          "Помилка"
+        ],
+        correctAnswer: 0,
+        explanation: "Код створює об'єкт Dog з ім'ям 'Рекс' та виводить значення атрибута name, яке дорівнює 'Рекс'."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "Методи класу завжди мають self як перший параметр.",
+        options: [
+          "True",
+          "False"
+        ],
+        correctAnswer: 0,
+        explanation: "Так, методи екземпляра завжди мають self як перший параметр. Це дозволяє методу працювати з атрибутами об'єкта."
+      },
+      {
+        id: "q7",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Як правильно викликати метод об'єкта?",
+        options: [
+          "об'єкт.метод()",
+          "клас.метод(об'єкт)",
+          "self.метод()",
+          "метод(об'єкт)"
+        ],
+        correctAnswer: 0,
+        explanation: "Методи об'єкта викликаються через об'єкт: об'єкт.метод(). Python автоматично передає self."
+      },
+      {
+        id: "q8",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що таке екземпляр класу?",
+        options: [
+          "Конкретний об'єкт, створений з класу",
+          "Назва класу",
+          "Метод класу",
+          "Атрибут класу"
+        ],
+        correctAnswer: 0,
+        explanation: "Екземпляр (instance) — це конкретний об'єкт, створений з класу. Кожен екземпляр має свої власні значення атрибутів."
+      }
+    ],
+    timeLimit: 15,
     passingScore: 70
   }
 }

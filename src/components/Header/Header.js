@@ -282,8 +282,7 @@ const Header = () => {
 		{ label: 'Предмети', dropdown: true },
 		{ label: 'Курси', href: '/courses' },
 		{ label: 'Соцмережі', href: '/#social-media' },
-		{ label: 'Викладачі', href: '/#teachers' },
-		{ label: 'Тарифи', href: '/tariff' },
+		{ label: 'Ціни', href: '/tariff' },
 		{ label: 'Відгуки', href: '/#testimonials' },
 		
 	]
