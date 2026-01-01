@@ -1,505 +1,177 @@
 /**
- * Lesson 11-1: Вступ до FastAPI. Роутинг, запити, відповіді
+ * 01 Iterators And Generators
  * Full educational content
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
-export const lesson11_1 = {
+export const lesson_11_1 = {
   lessonId: "lesson-11-1",
   moduleId: "module-11",
   order: 1,
-  title: "Вступ до FastAPI. Роутинг, запити, відповіді",
+  title: "01 Iterators And Generators",
   
   learningObjectives: [
-    "Створювати маршрути",
-    "Обробляти різні HTTP методи",
-    "Валідувати дані",
-    "Повертати відповіді"
+    "Вивчити основні концепції",
+    "Застосувати знання на практиці",
+    "Розв'язати практичні задачі"
   ],
   
-  estimatedTime: 120,
-  prerequisites: ["lesson-10-4"],
+  estimatedTime: 90,
+  prerequisites: [],
   
   videoUrl: "",
   
   theory: {
     sections: [
       {
-        title: "Роутинг у FastAPI",
-        content: `**Роутинг** — визначення, яка функція обробляє який URL.
+        title: "Iterators and Generators",
+        content: `In this section of the course we will be learning the difference between iteration and generation in Python and how to construct our own Generators with the *yield* statement. Generators allow us to generate as we go along, instead of holding everything in memory. 
 
-**Базовий роутинг:**
+We've touched on this topic in the past when discussing certain built-in Python functions like **range()**, **map()** and **filter()**.
 
-\`\`\`python
-from fastapi import FastAPI
+Let's explore a little deeper. We've learned how to create functions with def and the return statement. Generator functions allow us to write a function that can send back a value and then later resume to pick up where it left off. This type of function is a generator in Python, allowing us to generate a sequence of values over time. The main difference in syntax will be the use of a yield statement.
 
-app = FastAPI()
+In most aspects, a generator function will appear very similar to a normal function. The main difference is when a generator function is compiled they become an object that supports an iteration protocol. That means when they are called in your code they don't actually return a value and then exit. Instead, generator functions will automatically suspend and resume their execution and state around the last point of value generation. The main advantage here is that instead of having to compute an entire series of values up front, the generator computes one value and then suspends its activity awaiting the next instruction. This feature is known as *state suspension*.
 
-@app.get("/")
-def read_root():
-    return {"message": "Головна"}
+￼￼To start getting a better understanding of generators, let's go ahead and see how we can create some.
 
-@app.get("/about")
-def about():
-    return {"message": "Про нас"}
-\`\`\`
+Great! Now since we have a generator function we don't have to keep track of every single cube we created.
 
-**HTTP методи:**
+Generators are best for calculating large sets of results (particularly in calculations that involve loops themselves) in cases where we don’t want to allocate the memory for all of the results at the same time. 
 
-\`\`\`python
-@app.get("/items")      # GET
-@app.post("/items")     # POST
-@app.put("/items/{id}") # PUT
-@app.delete("/items/{id}") # DELETE
-@app.patch("/items/{id}")  # PATCH
-\`\`\`
+Let's create another example generator which calculates [fibonacci](https://en.wikipedia.org/wiki/Fibonacci_number) numbers:
 
-**Path параметри:**
+What if this was a normal function, what would it look like?
 
-\`\`\`python
-@app.get("/users/{user_id}")
-def get_user(user_id: int):  # Автоматична конвертація
-    return {"user_id": user_id}
+Notice that if we call some huge value of n (like 100000) the second function will have to keep track of every single result, when in our case we actually only care about the previous result to generate the next one!
 
-# /users/123 → user_id = 123
-\`\`\`
+## next() and iter() built-in functions
+A key to fully understanding generators is the next() function and the iter() function.
 
-**Query параметри:**
+The next() function allows us to access the next element in a sequence. Lets check it out:
 
-\`\`\`python
-@app.get("/items")
-def get_items(skip: int = 0, limit: int = 10):
-    return {"skip": skip, "limit": limit}
+After yielding all the values next() caused a StopIteration error. What this error informs us of is that all the values have been yielded. 
 
-# /items?skip=0&limit=20
-\`\`\`
+You might be wondering that why don’t we get this error while using a for loop? A for loop automatically catches this error and stops calling next(). 
 
-**Комбінація:**
+Let's go ahead and check out how to use iter(). You remember that strings are iterables:
 
-\`\`\`python
-@app.get("/users/{user_id}/posts")
-def get_posts(user_id: int, published: bool = True):
-    return {"user_id": user_id, "published": published}
-\`\`\``
-      },
-      {
-        title: "Валідація даних",
-        content: `**Pydantic моделі:**
+But that doesn't mean the string itself is an *iterator*! We can check this with the next() function:
 
-\`\`\`python
-from pydantic import BaseModel, EmailStr, Field
+Interesting, this means that a string object supports iteration, but we can not directly iterate over it as we could with a generator function. The iter() function allows us to do just that!
 
-class UserCreate(BaseModel):
-    name: str = Field(..., min_length=1, max_length=100)
-    email: EmailStr
-    age: int = Field(..., ge=0, le=120)
+Great! Now you know how to convert objects that are iterable into iterators themselves!
 
-@app.post("/users")
-def create_user(user: UserCreate):
-    return {"user": user.dict()}
-\`\`\`
+The main takeaway from this lecture is that using the yield keyword at a function will cause the function to become a generator. This change can save you a lot of memory for large use cases. For more information on generators check out:
 
-**Валідація типів:**
+[Stack Overflow Answer](http://stackoverflow.com/questions/1756096/understanding-generators-in-python)
 
-\`\`\`python
-from typing import Optional, List
-
-class Item(BaseModel):
-    name: str
-    price: float = Field(..., gt=0)  # Більше 0
-    tags: List[str] = []
-    description: Optional[str] = None
-\`\`\`
-
-**Автоматичні помилки:**
-
-Якщо дані невалідні, FastAPI автоматично поверне 422 з описом помилок:
-
-\`\`\`json
-{
-  "detail": [
-    {
-      "loc": ["body", "age"],
-      "msg": "value is not a valid integer",
-      "type": "type_error.integer"
-    }
-  ]
-}
-\`\`\``
-      },
-      {
-        title: "Відповіді",
-        content: `**Базові відповіді:**
-
-\`\`\`python
-@app.get("/")
-def read_root():
-    return {"message": "Привіт"}  # Автоматично JSON, статус 200
-\`\`\`
-
-**Статус коди:**
-
-\`\`\`python
-from fastapi import status
-from fastapi.responses import JSONResponse
-
-@app.post("/users", status_code=status.HTTP_201_CREATED)
-def create_user(user: UserCreate):
-    return {"message": "Створено", "user": user.dict()}
-\`\`\`
-
-**Response модель:**
-
-\`\`\`python
-class UserResponse(BaseModel):
-    id: int
-    name: str
-    email: str
-
-@app.get("/users/{user_id}", response_model=UserResponse)
-def get_user(user_id: int):
-    return {"id": user_id, "name": "Олександр", "email": "alex@example.com"}
-\`\`\`
-
-**HTTPException:**
-
-\`\`\`python
-from fastapi import HTTPException
-
-@app.get("/users/{user_id}")
-def get_user(user_id: int):
-    if user_id < 1:
-        raise HTTPException(
-            status_code=404,
-            detail="Користувача не знайдено",
-            headers={"X-Error": "Not Found"}
-        )
-    return {"user_id": user_id}
-\`\`\``
-      },
-      {
-        title: "Залежності (Dependencies)",
-        content: `**Dependency Injection** — передача залежностей у функції.
-
-**Простий приклад:**
-
-\`\`\`python
-from fastapi import Depends
-
-def get_db():
-    # Симуляція підключення до БД
-    db = "database_connection"
-    yield db
-    # Закриття підключення
-
-@app.get("/items")
-def get_items(db: str = Depends(get_db)):
-    return {"db": db}
-\`\`\`
-
-**Загальні залежності:**
-
-\`\`\`python
-from fastapi import Header, Query
-
-def get_user_agent(user_agent: str = Header(...)):
-    return user_agent
-
-@app.get("/")
-def read_root(ua: str = Depends(get_user_agent)):
-    return {"user_agent": ua}
-\`\`\`
-
-**Query параметри як залежності:**
-
-\`\`\`python
-class Pagination:
-    def __init__(self, skip: int = 0, limit: int = 10):
-        self.skip = skip
-        self.limit = limit
-
-@app.get("/items")
-def get_items(pagination: Pagination = Depends()):
-    return {"skip": pagination.skip, "limit": pagination.limit}
-\`\`\``
-      },
-      {
-        title: "Роутери (Routers)",
-        content: `**Роутери** — організація коду через окремі модулі.
-
-**Створення роутера:**
-
-\`\`\`python
-# routers/users.py
-from fastapi import APIRouter
-
-router = APIRouter(prefix="/users", tags=["users"])
-
-@router.get("/")
-def get_users():
-    return {"users": []}
-
-@router.get("/{user_id}")
-def get_user(user_id: int):
-    return {"user_id": user_id}
-\`\`\`
-
-**Підключення до додатку:**
-
-\`\`\`python
-# main.py
-from fastapi import FastAPI
-from routers import users
-
-app = FastAPI()
-app.include_router(users.router)
-
-# Тепер доступні:
-# GET /users
-# GET /users/{user_id}
-\`\`\`
-
-**Переваги роутерів:**
-- Організація коду
-- Модульність
-- Легше підтримувати
-- Можна використовувати префікси та теги`
+[Another StackOverflow Answer](http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python)`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад 1: Роутинг з параметрами",
-      code: `from fastapi import FastAPI
-
-app = FastAPI()
-
-@app.get("/users/{user_id}")
-def get_user(user_id: int):
-    return {"user_id": user_id, "name": f"Користувач {user_id}"}
-
-@app.get("/users/{user_id}/posts")
-def get_user_posts(user_id: int, limit: int = 10):
-    return {"user_id": user_id, "limit": limit, "posts": []}`,
-      explanation: "Демонструє path параметри та query параметри в роутингу."
+      title: "Generator function for the cube of numbers (power of 3)",
+      code: `# Generator function for the cube of numbers (power of 3)
+def gencubes(n):
+    for num in range(n):
+        yield num**3`,
+      explanation: "Приклад коду з курсу"
     },
     {
-      title: "Приклад 2: Валідація з Pydantic",
-      code: `from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
-
-app = FastAPI()
-
-class UserCreate(BaseModel):
-    name: str = Field(..., min_length=1, max_length=100)
-    age: int = Field(..., ge=0, le=120)
-
-@app.post("/users")
-def create_user(user: UserCreate):
-    if user.age < 18:
-        raise HTTPException(400, "Вік має бути >= 18")
-    return {"created": user.dict()}`,
-      explanation: "Показує валідацію даних через Pydantic з обробкою помилок."
+      title: "Приклад коду",
+      code: `for x in gencubes(10):
+    print(x)`,
+      explanation: "Приклад коду з курсу"
     },
     {
-      title: "Приклад 3: Роутер",
-      code: `# routers/items.py
-from fastapi import APIRouter
-
-router = APIRouter(prefix="/items", tags=["items"])
-
-@router.get("/")
-def get_items():
-    return {"items": []}
-
-# main.py
-from fastapi import FastAPI
-from routers.items import router
-
-app = FastAPI()
-app.include_router(router)`,
-      explanation: "Демонструє використання роутерів для організації коду."
+      title: "Приклад коду",
+      code: `def genfibon(n):
+    \"\"\"
+    Generate a fibonnaci sequence up to n
+    \"\"\"
+    a = 1
+    b = 1
+    for i in range(n):
+        yield a
+        a,b = b,a+b`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `for num in genfibon(10):
+    print(num)`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `def fibon(n):
+    a = 1
+    b = 1
+    output = []
+    
+    for i in range(n):
+        output.append(a)
+        a,b = b,a+b
+        
+    return output`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `fibon(10)`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `def simple_gen():
+    for x in range(3):
+        yield x`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Assign simple_gen",
+      code: `# Assign simple_gen 
+g = simple_gen()`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `print(next(g))`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `print(next(g))`,
+      explanation: "Приклад коду з курсу"
     }
   ],
   
-  commonMistakes: [
-    {
-      mistake: "Неправильний порядок роутів",
-      explanation: "Більш специфічні роути мають бути перед загальнішими.",
-      correctApproach: "Роут /users/me має бути перед /users/{user_id}"
-    },
-    {
-      mistake: "Не використовувати Pydantic для валідації",
-      explanation: "Без Pydantic немає автоматичної валідації та документації.",
-      correctApproach: "Завжди використовуйте Pydantic моделі для request body."
-    }
-  ],
+  commonMistakes: [],
   
-  summary: `На цьому уроці ми вивчили:
-
-1. **Роутинг** — визначення маршрутів та обробників
-2. **HTTP методи** — GET, POST, PUT, DELETE, PATCH
-3. **Параметри** — path параметри та query параметри
-4. **Валідація** — Pydantic для автоматичної перевірки
-5. **Відповіді** — статус коди, response моделі
-6. **Роутери** — організація коду через модулі
-7. **Залежності** — Dependency Injection
-
-FastAPI надає потужні інструменти для створення API!`,
+  summary: "Підсумок уроку",
   
   practiceTask: {
-    title: "REST API з роутингом",
-    description: "Створіть REST API з правильним роутингом",
-    problemStatement: `Створіть FastAPI додаток, який:
-1. Має роутер для товарів (items)
-2. GET /items — список товарів
-3. GET /items/{id} — один товар
-4. POST /items — створення товару (з валідацією)
-5. PUT /items/{id} — оновлення
-6. DELETE /items/{id} — видалення
-7. Використовує роутери для організації`,
-    inputFormat: "HTTP запити",
-    outputFormat: "JSON відповіді",
-    examples: [
-      {
-        input: "POST /items, GET /items",
-        output: "Створений товар та список товарів",
-        explanation: "API обробляє CRUD операції"
-      }
-    ],
+    title: "Практична задача",
+    description: "Опишіть задачу",
+    problemStatement: "Умова задачі",
+    inputFormat: "",
+    outputFormat: "",
+    examples: [],
     solution: {
-      code: `from fastapi import FastAPI, HTTPException, APIRouter
-from pydantic import BaseModel, Field
-from typing import Optional
-
-app = FastAPI()
-
-# Роутер
-router = APIRouter(prefix="/items", tags=["items"])
-
-# Моделі
-class ItemCreate(BaseModel):
-    name: str = Field(..., min_length=1)
-    price: float = Field(..., gt=0)
-    description: Optional[str] = None
-
-class ItemUpdate(BaseModel):
-    name: Optional[str] = None
-    price: Optional[float] = Field(None, gt=0)
-    description: Optional[str] = None
-
-# Сховище
-items_db = []
-next_id = 1
-
-@router.get("/")
-def get_items():
-    return {"items": items_db, "total": len(items_db)}
-
-@router.get("/{item_id}")
-def get_item(item_id: int):
-    item = next((i for i in items_db if i["id"] == item_id), None)
-    if not item:
-        raise HTTPException(404, "Товар не знайдено")
-    return item
-
-@router.post("/", status_code=201)
-def create_item(item: ItemCreate):
-    global next_id
-    new_item = {
-        "id": next_id,
-        **item.dict()
-    }
-    items_db.append(new_item)
-    next_id += 1
-    return new_item
-
-@router.put("/{item_id}")
-def update_item(item_id: int, item: ItemUpdate):
-    item_to_update = next((i for i in items_db if i["id"] == item_id), None)
-    if not item_to_update:
-        raise HTTPException(404, "Товар не знайдено")
-    
-    update_data = item.dict(exclude_unset=True)
-    item_to_update.update(update_data)
-    return item_to_update
-
-@router.delete("/{item_id}")
-def delete_item(item_id: int):
-    global items_db
-    item = next((i for i in items_db if i["id"] == item_id), None)
-    if not item:
-        raise HTTPException(404, "Товар не знайдено")
-    items_db = [i for i in items_db if i["id"] != item_id]
-    return {"message": "Товар видалено"}
-
-app.include_router(router)`,
-      explanation: "Повноцінний REST API з роутером, валідацією та всіма CRUD операціями."
+      code: "",
+      explanation: ""
     },
-    hints: [
-      "Використовуйте APIRouter для організації",
-      "Додайте prefix та tags до роутера",
-      "Використовуйте Pydantic для валідації",
-      "Обробляйте помилки через HTTPException"
-    ],
-    difficulty: "intermediate"
+    hints: [],
+    difficulty: "beginner"
   },
   
   quiz: {
-    questions: [
-      {
-        id: "q1",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що таке роутинг?",
-        options: ["База даних", "Визначення, яка функція обробляє який URL", "Валідація", "Шаблон"],
-        correctAnswer: 1,
-        explanation: "Роутинг — це визначення відповідності між URL та функціями-обробниками."
-      },
-      {
-        id: "q2",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що робить @app.get('/users/{user_id}')?",
-        options: ["Створює користувача", "Отримує користувача за ID", "Видаляє користувача", "Оновлює користувача"],
-        correctAnswer: 1,
-        explanation: "@app.get() створює GET endpoint для отримання користувача за ID."
-      },
-      {
-        id: "q3",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Який HTTP метод використовується для створення ресурсу?",
-        options: ["GET", "POST", "PUT", "DELETE"],
-        correctAnswer: 1,
-        explanation: "POST використовується для створення нового ресурсу на сервері."
-      },
-      {
-        id: "q4",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що робить Pydantic BaseModel у FastAPI?",
-        options: ["Створює базу даних", "Валідує та серіалізує дані", "Обробляє помилки", "Створює роути"],
-        correctAnswer: 1,
-        explanation: "Pydantic BaseModel використовується для валідації вхідних та вихідних даних у FastAPI."
-      },
-      {
-        id: "q5",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що таке APIRouter у FastAPI?",
-        options: ["База даних", "Спосіб організації роутів у окремі модулі", "Валідатор", "Шаблон"],
-        correctAnswer: 1,
-        explanation: "APIRouter дозволяє організувати роути у окремі модулі для кращої структури коду."
-      },
-      {
-        id: "q6",
-        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
-        question: "FastAPI автоматично генерує документацію API.",
-        options: ["True", "False"],
-        correctAnswer: 0,
-        explanation: "True. FastAPI автоматично створює інтерактивну документацію за адресою /docs та /redoc."
-      }
-    ],
-    timeLimit: 15,
+    questions: [],
+    timeLimit: 10,
     passingScore: 70
   }
 }
-

@@ -1,482 +1,173 @@
 /**
- * Lesson 10-1: HTTP-запити: requests
+ * 01 Decorators
  * Full educational content
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
-export const lesson10_1 = {
+export const lesson_10_1 = {
   lessonId: "lesson-10-1",
   moduleId: "module-10",
   order: 1,
-  title: "HTTP-запити: requests",
+  title: "01 Decorators",
   
   learningObjectives: [
-    "Встановити та використовувати requests",
-    "Виконувати GET та POST запити",
-    "Обробляти відповіді",
-    "Працювати з заголовками"
+    "Вивчити основні концепції",
+    "Застосувати знання на практиці",
+    "Розв'язати практичні задачі"
   ],
   
   estimatedTime: 90,
-  prerequisites: ["lesson-9-4"],
+  prerequisites: [],
   
   videoUrl: "",
   
   theory: {
     sections: [
       {
-        title: "Що таке HTTP?",
-        content: `**HTTP (HyperText Transfer Protocol)** — протокол для передачі даних через інтернет.
+        title: "Decorators",
+        content: `Decorators can be thought of as functions which modify the *functionality* of another function. They help to make your code shorter and more \"Pythonic\". 
 
-**Основні поняття:**
-- **Клієнт** — програма, яка робить запит (ваш Python скрипт)
-- **Сервер** — програма, яка обробляє запити та повертає відповіді
-- **URL** — адреса ресурсу (https://api.example.com/data)
-- **Метод** — тип запиту (GET, POST, PUT, DELETE)
+To properly explain decorators we will slowly build up from functions. Make sure to run every cell in this Notebook for this lecture to look the same on your own computer.So let's break down the steps:
 
-**HTTP методи:**
-- **GET** — отримати дані
-- **POST** — відправити дані
-- **PUT** — оновити дані
-- **DELETE** — видалити дані
-
-**Приклад:**
-Коли ви відкриваєте сайт у браузері, браузер робить GET запит до сервера, а сервер повертає HTML сторінку.`
+## Functions Review`
       },
       {
-        title: "Бібліотека requests",
-        content: `**requests** — найпопулярніша бібліотека Python для HTTP-запитів.
+        title: "Scope Review",
+        content: `Remember from the nested statements lecture that Python uses Scope to know what a label is referring to. For example:
 
-**Встановлення:**
+Remember that Python functions create a new scope, meaning the function has its own namespace to find variable names when they are mentioned within the function. We can check for local variables and global variables with the locals() and globals() functions. For example:
 
-\`\`\`bash
-pip install requests
-\`\`\`
+Here we get back a dictionary of all the global variables, many of them are predefined in Python. So let's go ahead and look at the keys:
 
-**Перевірка:**
+Note how **s** is there, the Global Variable we defined as a string:
 
-\`\`\`python
-import requests
-print(requests.__version__)
-\`\`\`
+Now let's run our function to check for local variables that might exist inside our function (there shouldn't be any)
 
-**Переваги requests:**
-- Простий API
-- Автоматичне кодування/декодування
-- Підтримка JSON
-- Обробка помилок
-- Підтримка сесій
+Great! Now lets continue with building out the logic of what a decorator is. Remember that in Python **everything is an object**. That means functions are objects which can be assigned labels and passed into other functions. Lets start with some simple examples:
 
-**Базовий приклад:**
+Assign another label to the function. Note that we are not using parentheses here because we are not calling the function **hello**, instead we are just passing a function object to the **greet** variable.
 
-\`\`\`python
-import requests
+So what happens when we delete the name **hello**?
 
-response = requests.get("https://api.github.com")
-print(response.status_code)  # 200
-print(response.text)  # HTML або JSON
-\`\`\``
+Even though we deleted the name **hello**, the name **greet** *still points to* our original function object. It is important to know that functions are objects that can be passed to other objects!`
       },
       {
-        title: "GET запити",
-        content: `**GET** — отримання даних з сервера.
+        title: "Functions within functions",
+        content: `Great! So we've seen how we can treat functions as objects, now let's see how we can define functions inside of other functions:
 
-**Базовий GET:**
+Note how due to scope, the welcome() function is not defined outside of the hello() function. Now lets learn about returning functions from within functions:
+## Returning Functions
 
-\`\`\`python
-import requests
+Now let's see what function is returned if we set x = hello(), note how the empty parentheses means that name has been defined as Jose.
 
-response = requests.get("https://api.github.com/users/octocat")
-print(response.status_code)  # 200 (успіх)
-print(response.json())  # JSON дані
-\`\`\`
+Great! Now we can see how x is pointing to the greet function inside of the hello function.
 
-**Параметри запиту:**
+Let's take a quick look at the code again. 
 
-\`\`\`python
-# Додавання параметрів до URL
-params = {"q": "python", "page": 1}
-response = requests.get("https://api.example.com/search", params=params)
-# URL стане: https://api.example.com/search?q=python&page=1
-\`\`\`
+In the if/else clause we are returning greet and welcome, not greet() and welcome(). 
 
-**Заголовки:**
+This is because when you put a pair of parentheses after it, the function gets executed; whereas if you don’t put parentheses after it, then it can be passed around and can be assigned to other variables without executing it.
 
-\`\`\`python
-headers = {
-    "User-Agent": "MyApp/1.0",
-    "Accept": "application/json"
-}
-response = requests.get("https://api.example.com/data", headers=headers)
-\`\`\`
-
-**Обробка відповіді:**
-
-\`\`\`python
-response = requests.get("https://api.example.com/data")
-
-# Статус код
-print(response.status_code)  # 200, 404, 500 тощо
-
-# Текст відповіді
-print(response.text)
-
-# JSON (якщо відповідь JSON)
-data = response.json()
-
-# Заголовки відповіді
-print(response.headers)
-
-# Перевірка успіху
-if response.status_code == 200:
-    print("Успіх!")
-else:
-    print("Помилка!")
-\`\`\``
+When we write x = hello(), hello() gets executed and because the name is Jose by default, the function greet is returned. If we change the statement to x = hello(name = \"Sam\") then the welcome function will be returned. We can also do print(hello()()) which outputs *This is inside the greet() function*.`
       },
       {
-        title: "POST запити",
-        content: `**POST** — відправка даних на сервер.
+        title: "Functions as Arguments",
+        content: `Now let's see how we can pass functions as arguments into other functions:
 
-**Базовий POST:**
-
-\`\`\`python
-import requests
-
-data = {"name": "Олександр", "age": 15}
-response = requests.post("https://api.example.com/users", json=data)
-print(response.status_code)
-\`\`\`
-
-**Відправка JSON:**
-
-\`\`\`python
-import requests
-
-data = {
-    "title": "Новий пост",
-    "content": "Текст поста"
-}
-
-response = requests.post(
-    "https://api.example.com/posts",
-    json=data,  # Автоматично встановлює Content-Type: application/json
-    headers={"Authorization": "Bearer token123"}
-)
-
-print(response.json())
-\`\`\`
-
-**Відправка форми:**
-
-\`\`\`python
-data = {"username": "user", "password": "pass"}
-response = requests.post("https://api.example.com/login", data=data)
-\`\`\`
-
-**Різниця між json= та data=:**
-- \`json=\` — відправляє JSON, встановлює правильні заголовки
-- \`data=\` — відправляє форму (application/x-www-form-urlencoded)`
+Great! Note how we can pass the functions as objects and then use them within other functions. Now we can get started with writing our first decorator:`
       },
       {
-        title: "Обробка помилок",
-        content: `**Перевірка статус коду:**
+        title: "Creating a Decorator",
+        content: `In the previous example we actually manually created a Decorator. Here we will modify it to make its use case clear:
 
-\`\`\`python
-response = requests.get("https://api.example.com/data")
+So what just happened here? A decorator simply wrapped the function and modified its behavior. Now let's understand how we can rewrite this code using the @ symbol, which is what Python uses for Decorators:
 
-if response.status_code == 200:
-    data = response.json()
-elif response.status_code == 404:
-    print("Ресурс не знайдено!")
-elif response.status_code == 500:
-    print("Помилка сервера!")
-else:
-    print(f"Помилка: {response.status_code}")
-\`\`\`
-
-**Використання raise_for_status():**
-
-\`\`\`python
-response = requests.get("https://api.example.com/data")
-response.raise_for_status()  # Викличе виняток, якщо статус не 2xx
-data = response.json()
-\`\`\`
-
-**Try/except:**
-
-\`\`\`python
-try:
-    response = requests.get("https://api.example.com/data", timeout=5)
-    response.raise_for_status()
-    data = response.json()
-except requests.exceptions.RequestException as e:
-    print(f"Помилка запиту: {e}")
-\`\`\`
-
-**Таймаут:**
-
-\`\`\`python
-# Запит не буде чекати більше 5 секунд
-response = requests.get("https://api.example.com/data", timeout=5)
-\`\`\``
-      },
-      {
-        title: "Практичний приклад: Робота з API",
-        content: `**Приклад: Отримання погоди (приклад API):**
-
-\`\`\`python
-import requests
-
-def get_weather(city):
-    url = f"https://api.openweathermap.org/data/2.5/weather"
-    params = {
-        "q": city,
-        "appid": "YOUR_API_KEY",  # Потрібен API ключ
-        "units": "metric"
-    }
-    
-    try:
-        response = requests.get(url, params=params, timeout=5)
-        response.raise_for_status()
-        data = response.json()
-        
-        return {
-            "temp": data["main"]["temp"],
-            "description": data["weather"][0]["description"]
-        }
-    except requests.exceptions.RequestException as e:
-        print(f"Помилка: {e}")
-        return None
-
-weather = get_weather("Kyiv")
-if weather:
-    print(f"Температура: {weather['temp']}°C")
-    print(f"Опис: {weather['description']}")
-\`\`\`
-
-**Приклад: Отримання даних з JSONPlaceholder:**
-
-\`\`\`python
-import requests
-
-# Отримати список постів
-response = requests.get("https://jsonplaceholder.typicode.com/posts")
-posts = response.json()
-
-for post in posts[:5]:  # Перші 5 постів
-    print(f"ID: {post['id']}")
-    print(f"Заголовок: {post['title']}")
-    print()
-
-# Отримати один пост
-response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
-post = response.json()
-print(f"Пост #1: {post['title']}")
-\`\`\``
+**Great! You've now built a Decorator manually and then saw how we can use the @ symbol in Python to automate this and clean our code. You'll run into Decorators a lot if you begin using Python for Web Development, such as Flask or Django!**`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад 1: Простий GET запит",
-      code: `import requests
-
-# Отримати дані
-response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
-
-print(f"Статус: {response.status_code}")
-print(f"Дані: {response.json()}")`,
-      explanation: "Демонструє базовий GET запит та отримання JSON даних."
+      title: "Приклад коду",
+      code: `def func():
+    return 1`,
+      explanation: "Приклад коду з курсу"
     },
     {
-      title: "Приклад 2: GET з параметрами",
-      code: `import requests
-
-# Пошук з параметрами
-params = {"userId": 1}
-response = requests.get("https://jsonplaceholder.typicode.com/posts", params=params)
-
-posts = response.json()
-print(f"Знайдено {len(posts)} постів")`,
-      explanation: "Показує додавання параметрів до GET запиту."
+      title: "Приклад коду",
+      code: `func()`,
+      explanation: "Приклад коду з курсу"
     },
     {
-      title: "Приклад 3: POST запит",
-      code: `import requests
+      title: "Приклад коду",
+      code: `s = 'Global Variable'
 
-# Створити новий пост
-new_post = {
-    "title": "Мій пост",
-    "body": "Текст поста",
-    "userId": 1
-}
-
-response = requests.post(
-    "https://jsonplaceholder.typicode.com/posts",
-    json=new_post
-)
-
-print(f"Статус: {response.status_code}")
-print(f"Створено: {response.json()}")`,
-      explanation: "Демонструє відправку даних через POST запит."
+def check_for_locals():
+    print(locals())`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `print(globals())`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `print(globals().keys())`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `globals()['s']`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `check_for_locals()`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `def hello(name='Jose'):
+    return 'Hello '+name`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `hello()`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `greet = hello`,
+      explanation: "Приклад коду з курсу"
     }
   ],
   
-  commonMistakes: [
-    {
-      mistake: "Не обробляти помилки",
-      explanation: "Якщо сервер недоступний або повертає помилку, програма може впасти.",
-      correctApproach: "Використовуйте try/except та перевіряйте response.status_code."
-    },
-    {
-      mistake: "Плутанина між json= та data=",
-      explanation: "json= відправляє JSON, data= відправляє форму. Використовуйте правильний параметр.",
-      correctApproach: "Використовуйте json= для JSON API, data= для форм."
-    },
-    {
-      mistake: "Не встановлювати таймаут",
-      explanation: "Без таймауту запит може чекати дуже довго, якщо сервер не відповідає.",
-      correctApproach: "Завжди встановлюйте timeout: requests.get(url, timeout=5)"
-    },
-    {
-      mistake: "Не перевіряти статус код",
-      explanation: "Навіть якщо запит виконався, сервер може повернути помилку (404, 500).",
-      correctApproach: "Перевіряйте response.status_code або використовуйте response.raise_for_status()."
-    }
-  ],
+  commonMistakes: [],
   
-  summary: `На цьому уроці ми вивчили:
-
-1. **HTTP** — протокол для передачі даних через інтернет
-2. **requests** — бібліотека для HTTP-запитів
-3. **GET запити** — отримання даних з сервера
-4. **POST запити** — відправка даних на сервер
-5. **Обробка відповідей** — status_code, json(), text
-6. **Обробка помилок** — try/except, raise_for_status()
-7. **Параметри та заголовки** — params, headers
-
-Тепер ви можете взаємодіяти з веб-API!`,
+  summary: "Підсумок уроку",
   
   practiceTask: {
-    title: "Робота з API",
-    description: "Створіть програму для роботи з публічним API",
-    problemStatement: `Створіть програму, яка:
-1. Отримує список постів з JSONPlaceholder API
-2. Показує перші 5 постів (ID, заголовок)
-3. Дозволяє створити новий пост через POST
-4. Обробляє помилки (таймаут, недоступність сервера)
-5. Виводить результати у зрозумілому форматі`,
-    inputFormat: "Програма робить HTTP-запити",
-    outputFormat: `Приклад виведення:
-Пости з API:
-1. sunt aut facere...
-2. qui est esse...
-...
-
-Створено новий пост з ID: 101`,
-    examples: [
-      {
-        input: "GET запит до API",
-        output: "Список постів",
-        explanation: "Програма отримує дані з API та відображає їх"
-      }
-    ],
+    title: "Практична задача",
+    description: "Опишіть задачу",
+    problemStatement: "Умова задачі",
+    inputFormat: "",
+    outputFormat: "",
+    examples: [],
     solution: {
-      code: `import requests
-
-def get_posts(limit=5):
-    try:
-        response = requests.get(
-            "https://jsonplaceholder.typicode.com/posts",
-            timeout=5
-        )
-        response.raise_for_status()
-        posts = response.json()
-        return posts[:limit]
-    except requests.exceptions.RequestException as e:
-        print(f"Помилка отримання постів: {e}")
-        return []
-
-def create_post(title, body, user_id=1):
-    try:
-        data = {
-            "title": title,
-            "body": body,
-            "userId": user_id
-        }
-        response = requests.post(
-            "https://jsonplaceholder.typicode.com/posts",
-            json=data,
-            timeout=5
-        )
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(f"Помилка створення поста: {e}")
-        return None
-
-# Отримати пости
-print("Пости з API:")
-posts = get_posts(5)
-for post in posts:
-    print(f"{post['id']}. {post['title'][:50]}...")
-
-# Створити новий пост
-print("\\nСтворення нового поста...")
-new_post = create_post("Мій пост", "Текст поста")
-if new_post:
-    print(f"Створено пост з ID: {new_post.get('id', 'невідомо')}")`,
-      explanation: "Програма отримує пости з API та створює новий пост, з обробкою помилок."
+      code: "",
+      explanation: ""
     },
-    hints: [
-      "Використовуйте requests.get() для отримання даних",
-      "Використовуйте requests.post() з json= для створення",
-      "Додайте try/except для обробки помилок",
-      "Використовуйте timeout для обмеження часу очікування"
-    ],
+    hints: [],
     difficulty: "beginner"
   },
   
   quiz: {
-    questions: [
-      {
-        id: "q1",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що таке HTTP?",
-        options: ["Мова програмування", "Протокол для передачі даних", "База даних", "Фреймворк"],
-        correctAnswer: 1,
-        explanation: "HTTP (HyperText Transfer Protocol) — це протокол для передачі даних через інтернет."
-      },
-      {
-        id: "q2",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що робить requests.get('https://api.example.com')?",
-        options: ["Відправляє дані", "Отримує дані з сервера", "Видаляє дані", "Оновлює дані"],
-        correctAnswer: 1,
-        explanation: "requests.get() робить GET запит для отримання даних з сервера."
-      },
-      {
-        id: "q3",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Який статус код означає успіх?",
-        options: ["404", "500", "200", "300"],
-        correctAnswer: 2,
-        explanation: "200 означає успішний запит. 404 — не знайдено, 500 — помилка сервера."
-      },
-      {
-        id: "q4",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Яка різниця між json= та data= у requests.post()?",
-        options: ["Немає різниці", "json= відправляє JSON, data= відправляє форму", "data= відправляє JSON", "json= не працює"],
-        correctAnswer: 1,
-        explanation: "json= автоматично встановлює заголовки для JSON, data= відправляє дані як форму."
-      }
-    ],
-    timeLimit: 12,
+    questions: [],
+    timeLimit: 10,
     passingScore: 70
   }
 }
-

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
+import { createProgressEntry, ensureUserEnrolled } from '@/lib/courseUtils'
 
 export async function POST(request) {
   try {
@@ -26,17 +27,7 @@ export async function POST(request) {
 
     const userIdObj = new ObjectId(userId)
 
-    // Add course to user's enrolled courses
-    const usersCollection = await getCollection('users')
-    await usersCollection.updateOne(
-      { _id: userIdObj },
-      { 
-        $addToSet: { enrolledCourses: courseId },
-        $set: { updatedAt: new Date() }
-      }
-    )
-
-    // Create progress entry
+    // Перевірити чи вже є прогрес
     const progressCollection = await getCollection('userProgress')
     const existingProgress = await progressCollection.findOne({
       userId: userIdObj,
@@ -44,18 +35,11 @@ export async function POST(request) {
     })
 
     if (!existingProgress) {
-      await progressCollection.insertOne({
-        userId: userIdObj,
-        courseId,
-        enrolledAt: new Date(),
-        completedLessons: [],
-        completedQuizzes: {},
-        completedPracticeTasks: [],
-        currentModule: 0,
-        currentLesson: 0,
-        overallProgress: 0,
-        certificates: []
-      })
+      // Створити прогрес (також автоматично додає курс до enrolledCourses)
+      await createProgressEntry(userIdObj, courseId)
+    } else {
+      // Якщо прогрес вже є, просто додати курс до enrolledCourses (на випадок якщо його там немає)
+      await ensureUserEnrolled(userIdObj, courseId)
     }
 
     return NextResponse.json(
@@ -70,5 +54,6 @@ export async function POST(request) {
     )
   }
 }
+
 
 

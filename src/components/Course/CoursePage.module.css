@@ -435,6 +435,21 @@
   background: rgba(16, 185, 129, 0.1);
 }
 
+.lessonItem.lessonGreen {
+  border-left: 4px solid #10b981;
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.lessonItem.lessonYellow {
+  border-left: 4px solid #f59e0b;
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.lessonItem.lessonRed {
+  border-left: 4px solid #ef4444;
+  background: rgba(239, 68, 68, 0.05);
+}
+
 .lessonItemLeft {
   display: flex;
   align-items: center;
@@ -493,6 +508,14 @@
   font-size: 0.75rem;
   color: var(--text-tertiary);
   font-weight: 600;
+}
+
+.quizScore {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  background: rgba(0, 0, 0, 0.05);
 }
 
 /* CTA Section */

@@ -55,17 +55,15 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
       if (userData) {
         const purchased = await checkCoursePurchase(courseId)
         setIsPurchased(purchased || userData.role === 'admin')
-        // If user is logged in but not enrolled, try to fetch progress
-        if (!userProgress) {
-          getUserProgress(courseId).then(progressData => {
-            if (progressData) {
-              setUserProgress(progressData)
-            }
-          })
-        }
+        // Always fetch fresh progress data
+        getUserProgress(courseId).then(progressData => {
+          if (progressData) {
+            setUserProgress(progressData)
+          }
+        })
       }
     })
-  }, [courseId, userProgress])
+  }, [courseId])
   
   const handlePurchase = async () => {
     if (!user) {
@@ -126,6 +124,27 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   const isQuizPassed = (lessonId) => {
     const quizData = userProgress?.completedQuizzes?.[lessonId]
     return quizData?.passed === true || quizData?.score >= 60
+  }
+
+  // Отримати оцінку тесту для уроку
+  const getQuizScore = (lessonId) => {
+    const quizData = userProgress?.completedQuizzes?.[lessonId]
+    return quizData?.score || null
+  }
+
+  // Отримати колір для уроку на основі оцінки тесту
+  const getLessonColor = (lessonId) => {
+    const score = getQuizScore(lessonId)
+    if (score === null) {
+      return null // Немає оцінки
+    }
+    if (score >= 80) {
+      return 'green' // Зелений - хороша оцінка
+    } else if (score >= 50) {
+      return 'yellow' // Жовтий - середня оцінка
+    } else {
+      return 'red' // Червоний - погана оцінка
+    }
   }
   
   const isLessonUnlocked = (lesson, moduleIndex) => {
@@ -395,12 +414,21 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                     {module.lessons.map((lesson, lessonIndex) => {
                       const completed = isLessonCompleted(lesson.lessonId)
                       const unlocked = isLessonUnlocked(lesson, moduleIndex)
+                      const lessonColor = getLessonColor(lesson.lessonId)
+                      const quizScore = getQuizScore(lesson.lessonId)
                       
                       return (
                         <Link
                           key={lesson.lessonId}
                           href={`/courses/${courseId}/lessons/${lesson.lessonId}`}
-                          className={`${styles.lessonItem} ${!unlocked ? styles.locked : ''} ${completed ? styles.completed : ''}`}
+                          className={`${styles.lessonItem} ${!unlocked ? styles.locked : ''} ${completed ? styles.completed : ''} ${lessonColor ? styles[`lesson${lessonColor.charAt(0).toUpperCase() + lessonColor.slice(1)}`] : ''}`}
+                          style={lessonColor ? {
+                            borderLeft: `4px solid ${
+                              lessonColor === 'green' ? '#10b981' :
+                              lessonColor === 'yellow' ? '#f59e0b' :
+                              '#ef4444'
+                            }`
+                          } : {}}
                           onClick={(e) => {
                             if (!unlocked) {
                               e.preventDefault()
@@ -429,6 +457,15 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                             <span className={styles.lessonTime}>
                               {lesson.estimatedTime} хв
                             </span>
+                            {quizScore !== null && (
+                              <span className={styles.quizScore} style={{
+                                color: lessonColor === 'green' ? '#10b981' :
+                                       lessonColor === 'yellow' ? '#f59e0b' :
+                                       '#ef4444'
+                              }}>
+                                Тест: {quizScore}%
+                              </span>
+                            )}
                             {!unlocked && (
                               <span className={styles.lockedLabel}>Заблоковано</span>
                             )}

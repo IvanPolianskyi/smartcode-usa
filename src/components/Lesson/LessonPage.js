@@ -69,70 +69,192 @@ import { lesson9_1 } from '@/lib/lessonContent/lesson-9-1'
 import { lesson9_2 } from '@/lib/lessonContent/lesson-9-2'
 import { lesson9_3 } from '@/lib/lessonContent/lesson-9-3'
 import { lesson9_4 } from '@/lib/lessonContent/lesson-9-4'
-import { lesson10_1 } from '@/lib/lessonContent/lesson-10-1'
-import { lesson10_2 } from '@/lib/lessonContent/lesson-10-2'
-import { lesson10_3 } from '@/lib/lessonContent/lesson-10-3'
-import { lesson10_4 } from '@/lib/lessonContent/lesson-10-4'
-import { lesson11_1 } from '@/lib/lessonContent/lesson-11-1'
-import { lesson11_2 } from '@/lib/lessonContent/lesson-11-2'
+import { lesson_10_1 } from '@/lib/lessonContent/lesson-10-1'
+import { lesson_10_2 } from '@/lib/lessonContent/lesson-10-2'
+import { lesson_10_3 } from '@/lib/lessonContent/lesson-10-3'
+import { lesson_10_4 } from '@/lib/lessonContent/lesson-10-4'
+import { lesson_11_1 } from '@/lib/lessonContent/lesson-11-1'
+import { lesson_11_2 } from '@/lib/lessonContent/lesson-11-2'
+import { lesson_00_1 } from '@/lib/lessonContent/lesson-00-1'
+import { lesson_00_2 } from '@/lib/lessonContent/lesson-00-2'
+import { lesson_00_3 } from '@/lib/lessonContent/lesson-00-3'
+import { lesson_00_4 } from '@/lib/lessonContent/lesson-00-4'
+import { lesson_00_5 } from '@/lib/lessonContent/lesson-00-5'
+import { lesson_00_6 } from '@/lib/lessonContent/lesson-00-6'
+import { lesson_00_7 } from '@/lib/lessonContent/lesson-00-7'
+import { lesson_00_8 } from '@/lib/lessonContent/lesson-00-8'
+import { lesson_01_1 } from '@/lib/lessonContent/lesson-01-1'
+import { lesson_01_2 } from '@/lib/lessonContent/lesson-01-2'
+import { lesson_01_3 } from '@/lib/lessonContent/lesson-01-3'
+import { lesson_02_1 } from '@/lib/lessonContent/lesson-02-1'
+import { lesson_02_2 } from '@/lib/lessonContent/lesson-02-2'
+import { lesson_02_3 } from '@/lib/lessonContent/lesson-02-3'
+import { lesson_02_4 } from '@/lib/lessonContent/lesson-02-4'
+import { lesson_02_5 } from '@/lib/lessonContent/lesson-02-5'
+import { lesson_02_6 } from '@/lib/lessonContent/lesson-02-6'
+import { lesson_02_7 } from '@/lib/lessonContent/lesson-02-7'
+import { lesson_02_8 } from '@/lib/lessonContent/lesson-02-8'
+import { lesson_03_1 } from '@/lib/lessonContent/lesson-03-1'
+import { lesson_03_2 } from '@/lib/lessonContent/lesson-03-2'
+import { lesson_03_3 } from '@/lib/lessonContent/lesson-03-3'
+import { lesson_03_4 } from '@/lib/lessonContent/lesson-03-4'
+import { lesson_03_5 } from '@/lib/lessonContent/lesson-03-5'
+import { lesson_03_6 } from '@/lib/lessonContent/lesson-03-6'
+import { lesson_03_7 } from '@/lib/lessonContent/lesson-03-7'
+import { lesson_03_8 } from '@/lib/lessonContent/lesson-03-8'
+import { lesson_03_9 } from '@/lib/lessonContent/lesson-03-9'
+import { lesson_03_10 } from '@/lib/lessonContent/lesson-03-10'
+import { lesson_04_1 } from '@/lib/lessonContent/lesson-04-1'
+import { lesson_05_1 } from '@/lib/lessonContent/lesson-05-1'
+import { lesson_05_2 } from '@/lib/lessonContent/lesson-05-2'
+import { lesson_05_3 } from '@/lib/lessonContent/lesson-05-3'
+import { lesson_05_4 } from '@/lib/lessonContent/lesson-05-4'
+import { lesson_05_5 } from '@/lib/lessonContent/lesson-05-5'
+import { lesson_05_6 } from '@/lib/lessonContent/lesson-05-6'
+import { lesson_05_7 } from '@/lib/lessonContent/lesson-05-7'
+import { lesson_05_8 } from '@/lib/lessonContent/lesson-05-8'
+import { lesson_05_9 } from '@/lib/lessonContent/lesson-05-9'
+import { lesson_05_10 } from '@/lib/lessonContent/lesson-05-10'
+import { lesson_06_1 } from '@/lib/lessonContent/lesson-06-1'
+import { lesson_06_2 } from '@/lib/lessonContent/lesson-06-2'
+import { lesson_06_3 } from '@/lib/lessonContent/lesson-06-3'
+import { lesson_06_4 } from '@/lib/lessonContent/lesson-06-4'
+import { lesson_06_5 } from '@/lib/lessonContent/lesson-06-5'
+import { lesson_07_1 } from '@/lib/lessonContent/lesson-07-1'
+import { lesson_07_2 } from '@/lib/lessonContent/lesson-07-2'
+import { lesson_07_3 } from '@/lib/lessonContent/lesson-07-3'
+import { lesson_07_4 } from '@/lib/lessonContent/lesson-07-4'
+import { lesson_07_5 } from '@/lib/lessonContent/lesson-07-5'
+import { lesson_08_1 } from '@/lib/lessonContent/lesson-08-1'
+import { lesson_11_3 } from '@/lib/lessonContent/lesson-11-3'
+import { lesson_11_4 } from '@/lib/lessonContent/lesson-11-4'
+import { lesson_12_1 } from '@/lib/lessonContent/lesson-12-1'
+import { lesson_12_2 } from '@/lib/lessonContent/lesson-12-2'
+import { lesson_12_3 } from '@/lib/lessonContent/lesson-12-3'
+import { lesson_12_4 } from '@/lib/lessonContent/lesson-12-4'
+import { lesson_12_5 } from '@/lib/lessonContent/lesson-12-5'
+import { lesson_12_6 } from '@/lib/lessonContent/lesson-12-6'
+import { lesson_13_1 } from '@/lib/lessonContent/lesson-13-1'
+import { lesson_13_2 } from '@/lib/lessonContent/lesson-13-2'
+import { lesson_13_3 } from '@/lib/lessonContent/lesson-13-3'
+import { lesson_13_4 } from '@/lib/lessonContent/lesson-13-4'
+import { lesson_14_1 } from '@/lib/lessonContent/lesson-14-1'
+import { lesson_14_2 } from '@/lib/lessonContent/lesson-14-2'
+import { lesson_14_3 } from '@/lib/lessonContent/lesson-14-3'
+import { lesson_14_4 } from '@/lib/lessonContent/lesson-14-4'
+import { lesson_15_1 } from '@/lib/lessonContent/lesson-15-1'
+import { lesson_15_2 } from '@/lib/lessonContent/lesson-15-2'
+import { lesson_15_3 } from '@/lib/lessonContent/lesson-15-3'
+import { lesson_15_4 } from '@/lib/lessonContent/lesson-15-4'
+import { lesson_16_1 } from '@/lib/lessonContent/lesson-16-1'
+import { lesson_16_2 } from '@/lib/lessonContent/lesson-16-2'
+import { lesson_16_3 } from '@/lib/lessonContent/lesson-16-3'
+import { lesson_17_1 } from '@/lib/lessonContent/lesson-17-1'
+import { lesson_17_2 } from '@/lib/lessonContent/lesson-17-2'
+import { lesson_17_3 } from '@/lib/lessonContent/lesson-17-3'
+import { lesson_17_4 } from '@/lib/lessonContent/lesson-17-4'
+import { lesson_17_5 } from '@/lib/lessonContent/lesson-17-5'
+import { lesson_18_1 } from '@/lib/lessonContent/lesson-18-1'
+import { lesson_19_1 } from '@/lib/lessonContent/lesson-19-1'
+import { lesson_19_2 } from '@/lib/lessonContent/lesson-19-2'
+import { lesson_19_3 } from '@/lib/lessonContent/lesson-19-3'
+import { lesson_19_4 } from '@/lib/lessonContent/lesson-19-4'
+import { lesson_19_5 } from '@/lib/lessonContent/lesson-19-5'
 import styles from './LessonPage.module.css'
 
 // Map lesson IDs to content
 const lessonContentMap = {
-  "lesson-1-1": lesson1_1,
-  "lesson-1-2": lesson1_2,
-  "lesson-1-3": lesson1_3,
-  "lesson-1-4": lesson1_4,
-  "lesson-1-5": lesson1_5,
-  "lesson-1-6": lesson1_6,
-  "lesson-2-1": lesson2_1,
-  "lesson-2-2": lesson2_2,
-  "lesson-2-3": lesson2_3,
-  "lesson-2-4": lesson2_4,
-  "lesson-2-5": lesson2_5,
-  "lesson-2-6": lesson2_6,
-  "lesson-3-1": lesson3_1,
-  "lesson-3-2": lesson3_2,
-  "lesson-3-3": lesson3_3,
-  "lesson-3-4": lesson3_4,
-  "lesson-3-5": lesson3_5,
-  "lesson-4-1": lesson4_1,
-  "lesson-4-2": lesson4_2,
-  "lesson-4-3": lesson4_3,
-  "lesson-4-4": lesson4_4,
-  "lesson-4-5": lesson4_5,
-  "lesson-5-1": lesson5_1,
-  "lesson-5-2": lesson5_2,
-  "lesson-5-3": lesson5_3,
-  "lesson-5-4": lesson5_4,
-  "lesson-5-5": lesson5_5,
-  "lesson-5-6": lesson5_6,
-  "lesson-6-1": lesson6_1,
-  "lesson-6-2": lesson6_2,
-  "lesson-6-3": lesson6_3,
-  "lesson-6-4": lesson6_4,
-  "lesson-6-5": lesson6_5,
-  "lesson-6-6": lesson6_6,
-  "lesson-7-1": lesson7_1,
-  "lesson-7-2": lesson7_2,
-  "lesson-7-3": lesson7_3,
-  "lesson-7-4": lesson7_4,
-  "lesson-8-1": lesson8_1,
-  "lesson-8-2": lesson8_2,
-  "lesson-8-3": lesson8_3,
-  "lesson-8-4": lesson8_4,
-  "lesson-8-5": lesson8_5,
-  "lesson-8-6": lesson8_6,
-  "lesson-9-1": lesson9_1,
-  "lesson-9-2": lesson9_2,
-  "lesson-9-3": lesson9_3,
-  "lesson-9-4": lesson9_4,
-  "lesson-10-1": lesson10_1,
-  "lesson-10-2": lesson10_2,
-  "lesson-10-3": lesson10_3,
-  "lesson-10-4": lesson10_4,
-  "lesson-11-1": lesson11_1,
-  "lesson-11-2": lesson11_2
+  "lesson-00-1": lesson_00_1,
+  "lesson-00-2": lesson_00_2,
+  "lesson-00-3": lesson_00_3,
+  "lesson-00-4": lesson_00_4,
+  "lesson-00-5": lesson_00_5,
+  "lesson-00-6": lesson_00_6,
+  "lesson-00-7": lesson_00_7,
+  "lesson-00-8": lesson_00_8,
+  "lesson-01-1": lesson_01_1,
+  "lesson-01-2": lesson_01_2,
+  "lesson-01-3": lesson_01_3,
+  "lesson-02-1": lesson_02_1,
+  "lesson-02-2": lesson_02_2,
+  "lesson-02-3": lesson_02_3,
+  "lesson-02-4": lesson_02_4,
+  "lesson-02-5": lesson_02_5,
+  "lesson-02-6": lesson_02_6,
+  "lesson-02-7": lesson_02_7,
+  "lesson-02-8": lesson_02_8,
+  "lesson-03-1": lesson_03_1,
+  "lesson-03-2": lesson_03_2,
+  "lesson-03-3": lesson_03_3,
+  "lesson-03-4": lesson_03_4,
+  "lesson-03-5": lesson_03_5,
+  "lesson-03-6": lesson_03_6,
+  "lesson-03-7": lesson_03_7,
+  "lesson-03-8": lesson_03_8,
+  "lesson-03-9": lesson_03_9,
+  "lesson-03-10": lesson_03_10,
+  "lesson-04-1": lesson_04_1,
+  "lesson-05-1": lesson_05_1,
+  "lesson-05-2": lesson_05_2,
+  "lesson-05-3": lesson_05_3,
+  "lesson-05-4": lesson_05_4,
+  "lesson-05-5": lesson_05_5,
+  "lesson-05-6": lesson_05_6,
+  "lesson-05-7": lesson_05_7,
+  "lesson-05-8": lesson_05_8,
+  "lesson-05-9": lesson_05_9,
+  "lesson-05-10": lesson_05_10,
+  "lesson-06-1": lesson_06_1,
+  "lesson-06-2": lesson_06_2,
+  "lesson-06-3": lesson_06_3,
+  "lesson-06-4": lesson_06_4,
+  "lesson-06-5": lesson_06_5,
+  "lesson-07-1": lesson_07_1,
+  "lesson-07-2": lesson_07_2,
+  "lesson-07-3": lesson_07_3,
+  "lesson-07-4": lesson_07_4,
+  "lesson-07-5": lesson_07_5,
+  "lesson-08-1": lesson_08_1,
+  "lesson-10-1": lesson_10_1,
+  "lesson-10-2": lesson_10_2,
+  "lesson-10-3": lesson_10_3,
+  "lesson-10-4": lesson_10_4,
+  "lesson-11-1": lesson_11_1,
+  "lesson-11-2": lesson_11_2,
+  "lesson-11-3": lesson_11_3,
+  "lesson-11-4": lesson_11_4,
+  "lesson-12-1": lesson_12_1,
+  "lesson-12-2": lesson_12_2,
+  "lesson-12-3": lesson_12_3,
+  "lesson-12-4": lesson_12_4,
+  "lesson-12-5": lesson_12_5,
+  "lesson-12-6": lesson_12_6,
+  "lesson-13-1": lesson_13_1,
+  "lesson-13-2": lesson_13_2,
+  "lesson-13-3": lesson_13_3,
+  "lesson-13-4": lesson_13_4,
+  "lesson-14-1": lesson_14_1,
+  "lesson-14-2": lesson_14_2,
+  "lesson-14-3": lesson_14_3,
+  "lesson-14-4": lesson_14_4,
+  "lesson-15-1": lesson_15_1,
+  "lesson-15-2": lesson_15_2,
+  "lesson-15-3": lesson_15_3,
+  "lesson-15-4": lesson_15_4,
+  "lesson-16-1": lesson_16_1,
+  "lesson-16-2": lesson_16_2,
+  "lesson-16-3": lesson_16_3,
+  "lesson-17-1": lesson_17_1,
+  "lesson-17-2": lesson_17_2,
+  "lesson-17-3": lesson_17_3,
+  "lesson-17-4": lesson_17_4,
+  "lesson-17-5": lesson_17_5,
+  "lesson-18-1": lesson_18_1,
+  "lesson-19-1": lesson_19_1,
+  "lesson-19-2": lesson_19_2,
+  "lesson-19-3": lesson_19_3,
+  "lesson-19-4": lesson_19_4,
+  "lesson-19-5": lesson_19_5,
 }
 
 // Функція для конвертації markdown в HTML
@@ -321,6 +443,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   })
   const [isSaving, setIsSaving] = useState(false)
   const [isPurchasing, setIsPurchasing] = useState(false)
+  const [practiceCompleted, setPracticeCompleted] = useState(false)
+  const [practiceChecked, setPracticeChecked] = useState(false)
   
   // Handle Tab key for indentation in code editor
   const handleCodeKeyDown = (e) => {
@@ -430,7 +554,9 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     .flatMap(m => m.lessons)
     .find(l => l.lessonId === lessonId)
   
-  const isEnrolled = userProgress !== null
+  // Користувач вважається зареєстрованим якщо є userProgress або якщо він авторизований
+  // (API автоматично створить прогрес при збереженні)
+  const isEnrolled = userProgress !== null || userRole !== 'user'
   const isCompleted = userProgress?.completedLessons?.includes(lessonId) || false
   
   // Find next lesson
@@ -447,7 +573,26 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   
   useEffect(() => {
     setIsLoaded(true)
-  }, [lessonId])
+    
+    // Завантажити стан практичного завдання при завантаженні сторінки
+    if (userProgress?.completedPracticeTasks?.includes(lessonId)) {
+      console.log('Practice task already completed for lesson:', lessonId)
+      setPracticeCompleted(true)
+    }
+    
+    // Завантажити результат тесту якщо він вже пройдений
+    if (userProgress?.completedQuizzes?.[lessonId]) {
+      const quizData = userProgress.completedQuizzes[lessonId]
+      console.log('Quiz already completed for lesson:', lessonId, 'score:', quizData.score)
+      setQuizScore(quizData.score)
+      setQuizSubmitted(true)
+    }
+    
+    // Перевірити чи урок пройдено
+    if (userProgress?.completedLessons?.includes(lessonId)) {
+      console.log('Lesson already completed:', lessonId)
+    }
+  }, [lessonId, userProgress])
   
   if (!lesson && !curriculumLesson) {
     return (
@@ -568,29 +713,39 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     setQuizScore(score)
     setQuizSubmitted(true)
     
-    // Save quiz result and complete lesson if passed
-    if (isEnrolled && score >= 60) {
-      setIsSaving(true)
-      try {
-        await updateProgress(courseId, {
-          action: 'completeQuiz',
-          lessonId,
-          quizScore: score
-        })
-        
-        // Also mark lesson as completed
-        await updateProgress(courseId, {
+    // Save quiz result (API автоматично створить прогрес якщо його немає)
+    setIsSaving(true)
+    try {
+      console.log('Saving quiz result:', { lessonId, score, courseId, isEnrolled, userProgress })
+      
+      // Спочатку зберігаємо результат тесту (API створить прогрес якщо потрібно)
+      const quizResult = await updateProgress(courseId, {
+        action: 'completeQuiz',
+        lessonId,
+        quizScore: score
+      })
+      console.log('Quiz result saved:', quizResult)
+      
+      // Mark lesson as completed ONLY if quiz passed (score >= passingScore)
+      const passingScore = fullLesson.quiz?.passingScore || 60
+      if (score >= passingScore) {
+        console.log('Quiz passed, marking lesson as completed')
+        const lessonResult = await updateProgress(courseId, {
           action: 'completeLesson',
           lessonId
         })
-        
-        // Refresh the page to update progress
-        router.refresh()
-      } catch (error) {
-        console.error('Error saving progress:', error)
-      } finally {
-        setIsSaving(false)
+        console.log('Lesson marked as completed:', lessonResult)
       }
+      
+      // Force reload to get updated progress from server
+      setTimeout(() => {
+        window.location.href = `/courses/${courseId}/lessons/${lessonId}`
+      }, 1500)
+    } catch (error) {
+      console.error('Error saving progress:', error)
+      alert('Помилка збереження прогресу. Спробуйте ще раз.')
+    } finally {
+      setIsSaving(false)
     }
   }
   
@@ -603,6 +758,34 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   }
   
   const isQuizPassed = quizScore !== null && quizScore >= (fullLesson.quiz?.passingScore || 60)
+
+  // Функція для перевірки правильності практичного завдання
+  const checkPracticeTask = (output) => {
+    if (!fullLesson.practiceTask || !fullLesson.practiceTask.examples || fullLesson.practiceTask.examples.length === 0) {
+      return null // Немає прикладів для перевірки
+    }
+
+    // Нормалізуємо вивід (видаляємо зайві пробіли, переводимо в нижній регістр для порівняння)
+    const normalizeOutput = (text) => {
+      return text.trim().toLowerCase().replace(/\s+/g, ' ')
+    }
+
+    // Перевіряємо хоча б один приклад
+    const expectedOutput = normalizeOutput(fullLesson.practiceTask.examples[0].output)
+    const actualOutput = normalizeOutput(output)
+
+    // Проста перевірка: чи містить вивід ключові елементи очікуваного виводу
+    // Або точне співпадіння (якщо вивід короткий)
+    if (expectedOutput.length < 100) {
+      // Для коротких виводів - точне порівняння
+      return actualOutput === expectedOutput
+    } else {
+      // Для довгих виводів - перевіряємо ключові фрази
+      const keyPhrases = expectedOutput.split('\n').filter(line => line.trim().length > 10)
+      const matches = keyPhrases.filter(phrase => actualOutput.includes(phrase))
+      return matches.length >= keyPhrases.length * 0.7 // 70% співпадінь
+    }
+  }
 
   const handleRunCode = async () => {
     if (!userCode.trim()) {
@@ -621,6 +804,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       error: null,
       success: null
     })
+    setPracticeChecked(false)
 
     try {
       const response = await fetch('/api/code/execute', {
@@ -634,12 +818,36 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       const data = await response.json()
 
       if (response.ok) {
+        const output = data.output || ''
+        const isCorrect = checkPracticeTask(output)
+        
         setCodeExecution({
           isRunning: false,
-          output: data.output || '',
+          output: output,
           error: data.errorOutput || null,
           success: data.success
         })
+
+        // Перевіряємо правильність практичного завдання
+        if (isCorrect !== null) {
+          setPracticeChecked(true)
+          if (isCorrect) {
+            setPracticeCompleted(true)
+            // Зберігаємо статус виконання практичного завдання (API створить прогрес якщо потрібно)
+            try {
+              await updateProgress(courseId, {
+                action: 'completePracticeTask',
+                lessonId
+              })
+              // Оновити сторінку для відображення змін
+              router.refresh()
+            } catch (error) {
+              console.error('Error saving practice task completion:', error)
+            }
+          } else {
+            setPracticeCompleted(false)
+          }
+        }
       } else {
         setCodeExecution({
           isRunning: false,
@@ -647,6 +855,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           error: data.error || data.errorOutput || 'Помилка виконання коду',
           success: false
         })
+        setPracticeChecked(false)
+        setPracticeCompleted(false)
       }
     } catch (error) {
       console.error('Error executing code:', error)
@@ -656,6 +866,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         error: 'Помилка підключення до сервера. Спробуйте ще раз.',
         success: false
       })
+      setPracticeChecked(false)
+      setPracticeCompleted(false)
     }
   }
   
@@ -729,11 +941,21 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           Практика
         </button>
         <button
-          className={`${styles.tab} ${activeTab === 'quiz' ? styles.active : ''}`}
-          onClick={() => setActiveTab('quiz')}
+          className={`${styles.tab} ${activeTab === 'quiz' ? styles.active : ''} ${!practiceCompleted && fullLesson.practiceTask ? styles.disabled : ''}`}
+          onClick={() => {
+            if (!practiceCompleted && fullLesson.practiceTask) {
+              alert('Спочатку виконайте практичне завдання правильно!')
+              setActiveTab('practice')
+            } else {
+              setActiveTab('quiz')
+            }
+          }}
+          disabled={!practiceCompleted && fullLesson.practiceTask}
+          title={!practiceCompleted && fullLesson.practiceTask ? 'Спочатку виконайте практичне завдання' : ''}
         >
           <Target className="w-4 h-4" />
           Тест
+          {!practiceCompleted && fullLesson.practiceTask && <Lock className="w-3 h-3" />}
         </button>
       </div>
       
@@ -949,6 +1171,24 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                           <pre>{codeExecution.output}</pre>
                         </div>
                       )}
+                      {/* Перевірка практичного завдання */}
+                      {practiceChecked && fullLesson.practiceTask && (
+                        <div className={practiceCompleted ? styles.practiceSuccess : styles.practiceError}>
+                          {practiceCompleted ? (
+                            <>
+                              <CheckCircle2 className="w-5 h-5" />
+                              <strong>Вітаємо! Практичне завдання виконано правильно!</strong>
+                              <p>Тепер ви можете перейти до тесту.</p>
+                            </>
+                          ) : (
+                            <>
+                              <XCircle className="w-5 h-5" />
+                              <strong>Практичне завдання виконано неправильно.</strong>
+                              <p>Перевірте ваш код та спробуйте ще раз. Перегляньте приклади виводу та підказки.</p>
+                            </>
+                          )}
+                        </div>
+                      )}
                     </div>
                   ) : null}
                   
@@ -976,7 +1216,23 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         {/* Quiz Tab */}
         {activeTab === 'quiz' && (
           <div className={styles.tabContent}>
-            {fullLesson.quiz && fullLesson.quiz.questions && fullLesson.quiz.questions.length > 0 ? (
+            {/* Перевірка чи практичне завдання виконано */}
+            {!practiceCompleted && fullLesson.practiceTask ? (
+              <div className={styles.practiceError}>
+                <Lock className="w-5 h-5" />
+                <div>
+                  <strong>Тест заблоковано</strong>
+                  <p>Спочатку виконайте практичне завдання правильно!</p>
+                  <button
+                    className={styles.ctaButton}
+                    onClick={() => setActiveTab('practice')}
+                    style={{ marginTop: '1rem' }}
+                  >
+                    Перейти до практичного завдання
+                  </button>
+                </div>
+              </div>
+            ) : fullLesson.quiz && fullLesson.quiz.questions && fullLesson.quiz.questions.length > 0 ? (
               <>
                 <div className={styles.quizHeader}>
                   <h3 className={styles.sectionTitle}>

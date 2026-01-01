@@ -5,7 +5,7 @@
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
-export const lesson10_3 = {
+export const lesson_10_3 = {
   lessonId: "lesson-10-3",
   moduleId: "module-10",
   order: 3,

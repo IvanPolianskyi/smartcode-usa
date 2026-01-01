@@ -4,6 +4,7 @@ import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
+import { createProgressEntry } from '@/lib/courseUtils'
 
 // Get user progress for a course
 export async function GET(request) {
@@ -93,51 +94,42 @@ export async function POST(request) {
     })
 
     if (!progress) {
-      // Create new progress entry
-      progress = {
-        userId: userIdObj,
-        courseId,
-        enrolledAt: new Date(),
-        completedLessons: [],
-        completedQuizzes: {},
-        completedPracticeTasks: [],
-        currentModule: 0,
-        currentLesson: 0,
-        overallProgress: 0,
-        certificates: []
-      }
-      await progressCollection.insertOne(progress)
+      // Create new progress entry (також автоматично додає курс до enrolledCourses)
+      progress = await createProgressEntry(userIdObj, courseId)
     }
 
     // Update based on action
     const update = { $set: { updatedAt: new Date() } }
+    const addToSetOperations = {}
 
     if (action === 'completeLesson' && lessonId) {
-      if (!progress.completedLessons.includes(lessonId)) {
-        update.$push = { completedLessons: lessonId }
+      if (!progress.completedLessons || !progress.completedLessons.includes(lessonId)) {
+        addToSetOperations.completedLessons = lessonId
       }
     }
 
     if (action === 'completeQuiz' && lessonId && quizScore !== undefined) {
-      update.$set = {
-        ...update.$set,
-        [`completedQuizzes.${lessonId}`]: {
-          score: quizScore,
-          attempts: (progress.completedQuizzes[lessonId]?.attempts || 0) + 1,
-          passed: quizScore >= 60,
-          lastAttempt: new Date()
-        }
+      update.$set[`completedQuizzes.${lessonId}`] = {
+        score: quizScore,
+        attempts: (progress.completedQuizzes?.[lessonId]?.attempts || 0) + 1,
+        passed: quizScore >= 60,
+        lastAttempt: new Date()
       }
     }
 
-    if (action === 'completePractice' && lessonId) {
-      if (!progress.completedPracticeTasks.includes(lessonId)) {
-        update.$push = { completedPracticeTasks: lessonId }
+    if (action === 'completePracticeTask' && lessonId) {
+      if (!progress.completedPracticeTasks || !progress.completedPracticeTasks.includes(lessonId)) {
+        addToSetOperations.completedPracticeTasks = lessonId
       }
     }
 
     if (action === 'updateCurrentLesson' && lessonId) {
       update.$set.currentLesson = lessonId
+    }
+
+    // Add $addToSet operations if any (prevents duplicates)
+    if (Object.keys(addToSetOperations).length > 0) {
+      update.$addToSet = addToSetOperations
     }
 
     // Calculate overall progress using actual course data
@@ -163,7 +155,8 @@ export async function POST(request) {
 
     update.$set.overallProgress = newProgress
 
-    await progressCollection.updateOne(
+    // Виконуємо оновлення
+    const updateResult = await progressCollection.updateOne(
       { userId: userIdObj, courseId },
       update
     )
@@ -172,6 +165,16 @@ export async function POST(request) {
     const updatedProgress = await progressCollection.findOne({
       userId: userIdObj,
       courseId
+    })
+
+    // Логування для діагностики
+    console.log('Progress update:', {
+      action,
+      lessonId,
+      quizScore,
+      updateResult: updateResult.modifiedCount,
+      completedLessons: updatedProgress?.completedLessons?.length || 0,
+      completedQuizzes: Object.keys(updatedProgress?.completedQuizzes || {}).length
     })
 
     const progressResponse = {
