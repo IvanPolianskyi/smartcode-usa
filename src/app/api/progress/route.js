@@ -75,7 +75,7 @@ export async function POST(request) {
     }
 
     const body = await request.json()
-    const { courseId, lessonId, quizScore, practiceCompleted, action } = body
+    const { courseId, lessonId, quizScore, quizAnswers, practiceCompleted, action } = body
 
     if (!courseId) {
       return NextResponse.json(
@@ -95,7 +95,15 @@ export async function POST(request) {
 
     if (!progress) {
       // Create new progress entry (також автоматично додає курс до enrolledCourses)
+      console.log('Creating new progress entry for user:', userIdObj.toString(), 'course:', courseId)
       progress = await createProgressEntry(userIdObj, courseId)
+      console.log('Progress entry created, enrolledCourses should be updated')
+    } else {
+      // Якщо прогрес вже існує, переконатися що курс додано до enrolledCourses
+      // (на випадок якщо прогрес був створений до додавання цієї логіки)
+      const { ensureUserEnrolled } = await import('@/lib/courseUtils')
+      const enrollResult = await ensureUserEnrolled(userIdObj, courseId)
+      console.log('Ensured user enrolled (existing progress):', enrollResult.modifiedCount > 0 ? 'updated' : 'already enrolled')
     }
 
     // Update based on action
@@ -113,7 +121,8 @@ export async function POST(request) {
         score: quizScore,
         attempts: (progress.completedQuizzes?.[lessonId]?.attempts || 0) + 1,
         passed: quizScore >= 60,
-        lastAttempt: new Date()
+        lastAttempt: new Date(),
+        answers: quizAnswers || {} // Зберігаємо відповіді
       }
     }
 

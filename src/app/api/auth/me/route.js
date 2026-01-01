@@ -25,6 +25,29 @@ export async function GET() {
       )
     }
 
+    // Синхронізація: якщо є прогрес, але немає курсу в enrolledCourses, додати його
+    const progressCollection = await getCollection('userProgress')
+    const userProgresses = await progressCollection.find({ userId: new ObjectId(userId) }).toArray()
+    const progressCourseIds = userProgresses.map(p => p.courseId)
+    const currentEnrolledCourses = user.enrolledCourses || []
+    
+    // Знайти курси які є в прогресі, але немає в enrolledCourses
+    const missingCourses = progressCourseIds.filter(courseId => !currentEnrolledCourses.includes(courseId))
+    
+    if (missingCourses.length > 0) {
+      console.log('Syncing enrolledCourses: adding missing courses', missingCourses)
+      await usersCollection.updateOne(
+        { _id: new ObjectId(userId) },
+        {
+          $addToSet: { enrolledCourses: { $each: missingCourses } },
+          $set: { updatedAt: new Date() }
+        }
+      )
+      // Оновити дані користувача
+      const updatedUser = await usersCollection.findOne({ _id: new ObjectId(userId) })
+      user.enrolledCourses = updatedUser.enrolledCourses || []
+    }
+
     // Return user (without password)
     const userResponse = {
       id: user._id.toString(),

@@ -586,6 +586,16 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       console.log('Quiz already completed for lesson:', lessonId, 'score:', quizData.score)
       setQuizScore(quizData.score)
       setQuizSubmitted(true)
+      // Відновити відповіді якщо вони збережені
+      if (quizData.answers) {
+        // Конвертуємо всі відповіді в числа для коректного порівняння
+        const normalizedAnswers = {}
+        Object.keys(quizData.answers).forEach(key => {
+          const value = quizData.answers[key]
+          normalizedAnswers[key] = value !== undefined && value !== null ? Number(value) : value
+        })
+        setQuizAnswers(normalizedAnswers)
+      }
     }
     
     // Перевірити чи урок пройдено
@@ -704,8 +714,15 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     
     let correct = 0
     fullLesson.quiz.questions.forEach(q => {
-      if (quizAnswers[q.id] === q.correctAnswer) {
+      const userAnswer = quizAnswers[q.id]
+      // Порівнюємо як числа (індекси відповідей)
+      const isCorrect = userAnswer !== undefined && userAnswer !== null && Number(userAnswer) === Number(q.correctAnswer)
+      if (isCorrect) {
         correct++
+      }
+      // Діагностика
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Quiz submit - Question:', q.id, 'User:', userAnswer, 'Correct:', q.correctAnswer, 'Match:', isCorrect)
       }
     })
     
@@ -719,10 +736,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       console.log('Saving quiz result:', { lessonId, score, courseId, isEnrolled, userProgress })
       
       // Спочатку зберігаємо результат тесту (API створить прогрес якщо потрібно)
+      // Зберігаємо також відповіді для відображення результатів
       const quizResult = await updateProgress(courseId, {
         action: 'completeQuiz',
         lessonId,
-        quizScore: score
+        quizScore: score,
+        quizAnswers: quizAnswers // Зберігаємо відповіді
       })
       console.log('Quiz result saved:', quizResult)
       
@@ -1261,7 +1280,10 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                 <div className={styles.quizQuestions}>
                   {fullLesson.quiz.questions.map((question, index) => {
                     const userAnswer = quizAnswers[question.id]
-                    const isCorrect = userAnswer === question.correctAnswer
+                    // Перевірка правильності відповіді: порівнюємо індекси відповідей як числа
+                    const isCorrect = userAnswer !== undefined && 
+                                     userAnswer !== null && 
+                                     Number(userAnswer) === Number(question.correctAnswer)
                     const showAnswer = quizSubmitted
                     
                     return (
@@ -1301,8 +1323,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                         
                         <div className={styles.questionOptions}>
                           {question.options.map((option, optionIndex) => {
-                            const isSelected = userAnswer === optionIndex
-                            const isCorrectAnswer = optionIndex === question.correctAnswer
+                            const isSelected = userAnswer !== undefined && userAnswer !== null && Number(userAnswer) === optionIndex
+                            const isCorrectAnswer = optionIndex === Number(question.correctAnswer)
                             
                             return (
                               <button

@@ -77,6 +77,10 @@ export async function getUserProgress(courseId) {
   try {
     const response = await fetch(`/api/progress?courseId=${courseId}`, {
       credentials: 'include',
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache',
+      },
     })
 
     if (!response.ok) {
@@ -86,6 +90,7 @@ export async function getUserProgress(courseId) {
     const data = await response.json()
     return data.progress
   } catch (error) {
+    console.error('Error fetching user progress:', error)
     return null
   }
 }

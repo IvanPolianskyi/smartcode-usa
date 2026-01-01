@@ -11,13 +11,22 @@ import { getCollection } from './mongodb'
  */
 export async function ensureUserEnrolled(userIdObj, courseId) {
   const usersCollection = await getCollection('users')
-  await usersCollection.updateOne(
+  const result = await usersCollection.updateOne(
     { _id: userIdObj },
     { 
       $addToSet: { enrolledCourses: courseId },
       $set: { updatedAt: new Date() }
     }
   )
+  
+  console.log('ensureUserEnrolled:', {
+    userId: userIdObj.toString(),
+    courseId,
+    modified: result.modifiedCount,
+    matched: result.matchedCount
+  })
+  
+  return result
 }
 
 /**

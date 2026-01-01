@@ -79,16 +79,26 @@ grades = [
 
 # Отримати оцінки Олександра
 alex_grades = grades[0][1:]  # [85, 92, 78]
+print("Оцінки Олександра:", alex_grades)
 
 # Отримати другу оцінку Марії
 maria_second = grades[1][2]  # 88
+print("Друга оцінка Марії:", maria_second)
 
-# Обчислити середній бал для кожного студента
-for student in grades:
-    name = student[0]
-    scores = student[1:]
-    average = sum(scores) / len(scores)
-    print(f"{name}: {average:.2f}")
+# Обчислити середній бал для Олександра
+alex_scores = grades[0][1:]
+alex_average = sum(alex_scores) / len(alex_scores)
+print("Середній бал Олександра:", round(alex_average, 2))
+
+# Обчислити середній бал для Марії
+maria_scores = grades[1][1:]
+maria_average = sum(maria_scores) / len(maria_scores)
+print("Середній бал Марії:", round(maria_average, 2))
+
+# Обчислити середній бал для Дмитра
+dmitro_scores = grades[2][1:]
+dmitro_average = sum(dmitro_scores) / len(dmitro_scores)
+print("Середній бал Дмитра:", round(dmitro_average, 2))
 \`\`\``
       },
       {
@@ -181,28 +191,42 @@ third_first_grade = students[2]['оцінки'][0]
 print(third_first_grade)  # 78
 \`\`\`
 
-**Ітерація по списку словників:**
+**Робота зі списком словників:**
 \`\`\`python
-# Знайти середній бал для кожного студента
-for student in students:
-    name = student['ім\'я']
-    grades = student['оцінки']
-    average = sum(grades) / len(grades)
-    print(f"{name}: {average:.2f}")
+# Отримати дані першого студента
+student1 = students[0]
+name1 = student1['ім\'я']
+grades1 = student1['оцінки']
+average1 = sum(grades1) / len(grades1)
+print(name1 + ":", round(average1, 2))
+
+# Отримати дані другого студента
+student2 = students[1]
+name2 = student2['ім\'я']
+grades2 = student2['оцінки']
+average2 = sum(grades2) / len(grades2)
+print(name2 + ":", round(average2, 2))
+
+# Отримати дані третього студента
+student3 = students[2]
+name3 = student3['ім\'я']
+grades3 = student3['оцінки']
+average3 = sum(grades3) / len(grades3)
+print(name3 + ":", round(average3, 2))
 
 # Знайти студента з найвищим середнім балом
-best_student = None
-best_average = 0
+# Порівнюємо середні бали
+averages = [average1, average2, average3]
+best_average = max(averages)
 
-for student in students:
-    grades = student['оцінки']
-    average = sum(grades) / len(grades)
-    if average > best_average:
-        best_average = average
-        best_student = student
+# Визначаємо, який студент має найкращий бал
+# (У наступних модулях ми вивчимо цикли та умовні оператори для автоматизації)
+# Поки що просто знаходимо максимальний бал
+print("Найвищий середній бал:", round(best_average, 2))
+print("(У наступних модулях навчимося автоматично знаходити ім'я студента)")
+\`\`\`
 
-print(f"Найкращий студент: {best_student['ім\'я']} ({best_average:.2f})")
-\`\`\``
+**Примітка:** У наступних модулях ми вивчимо цикли (for, while) та умовні оператори (if/elif/else), які дозволять автоматизувати такі перевірки.`
       },
       {
         title: "Словники зі списками",
@@ -247,9 +271,15 @@ alex_score = school_data['клас_9А'][0]['бал']
 print(alex_score)  # 85
 
 # Знайти середній бал класу 9А
-class_9a_scores = [student['бал'] for student in school_data['клас_9А']]
+# Отримуємо оцінки кожного учня окремо
+student1_score = school_data['клас_9А'][0]['бал']
+student2_score = school_data['клас_9А'][1]['бал']
+student3_score = school_data['клас_9А'][2]['бал']
+
+# Обчислюємо середній бал
+class_9a_scores = [student1_score, student2_score, student3_score]
 average_9a = sum(class_9a_scores) / len(class_9a_scores)
-print(f"Середній бал класу 9А: {average_9a:.2f}")
+print("Середній бал класу 9А:", round(average_9a, 2))
 \`\`\``
       },
       {
@@ -279,17 +309,17 @@ users = {
     }
 }
 
-# Знайти загальну суму замовлень користувача
-def get_total_orders(user_id):
-    user = users.get(user_id)
-    if user:
-        orders = user.get('orders', [])
-        total = sum(order['total'] for order in orders)
-        return total
-    return 0
+# Знайти загальну суму замовлень користувача user1
+user1 = users.get('user1')
+user1_orders = user1.get('orders', [])
 
-total = get_total_orders('user1')
-print(f"Загальна сума замовлень: {total} грн")
+# Отримуємо суми кожного замовлення
+order1_total = user1_orders[0]['total']
+order2_total = user1_orders[1]['total']
+
+# Обчислюємо загальну суму
+total = order1_total + order2_total
+print("Загальна сума замовлень:", total, "грн")
 \`\`\`
 
 **Конфігурація програми:**
@@ -339,8 +369,9 @@ print(f"Перший рядок: {matrix[0]}")
 print(f"Елемент [1][1]: {matrix[1][1]}")
 
 # Отримати стовпець (перший елемент кожного рядка)
-column = [row[0] for row in matrix]
-print(f"Перший стовпець: {column}")`,
+# Отримуємо перший елемент кожного рядка окремо
+column = [matrix[0][0], matrix[1][0], matrix[2][0]]
+print("Перший стовпець:", column)`,
       explanation: "Демонструє роботу з матрицею як вкладеним списком."
     },
     {
@@ -374,13 +405,19 @@ students = [
 ]
 
 # Знайти середній бал
-scores = [s['бал'] for s in students]
-average = sum(scores) / len(scores)
-print(f"Середній бал: {average:.2f}")
+# Отримуємо бали кожного студента
+score1 = students[0]['бал']
+score2 = students[1]['бал']
+score3 = students[2]['бал']
 
-# Знайти найкращого студента
-best = max(students, key=lambda s: s['бал'])
-print(f"Найкращий студент: {best['ім\'я']} ({best['бал']} балів)")`,
+scores = [score1, score2, score3]
+average = sum(scores) / len(scores)
+print("Середній бал:", round(average, 2))
+
+# Знайти найкращого студента (найвищий бал)
+best_score = max(scores)
+print("Найвищий бал:", best_score)
+print("(У наступних модулях навчимося автоматично знаходити ім'я студента)")`,
       explanation: "Демонструє роботу зі списком словників та пошук значень."
     },
     {
@@ -393,13 +430,24 @@ classes = {
 }
 
 # Знайти середній бал по кожному предмету
-for subject, grades in classes.items():
-    average = sum(grades) / len(grades)
-    print(f"{subject}: {average:.2f}")
+# Математика
+math_grades = classes['математика']
+math_average = sum(math_grades) / len(math_grades)
+print("математика:", round(math_average, 2))
+
+# Фізика
+physics_grades = classes['фізика']
+physics_average = sum(physics_grades) / len(physics_grades)
+print("фізика:", round(physics_average, 2))
+
+# Хімія
+chemistry_grades = classes['хімія']
+chemistry_average = sum(chemistry_grades) / len(chemistry_grades)
+print("хімія:", round(chemistry_average, 2))
 
 # Додати нову оцінку
 classes['математика'].append(98)
-print(f"Нові оцінки з математики: {classes['математика']}")`,
+print("Нові оцінки з математики:", classes['математика'])`,
       explanation: "Показує роботу зі словником, де значення — це списки."
     },
     {
@@ -515,29 +563,61 @@ library = {
     ]
 }
 
-# Знайти книги автора
+# Знайти книги автора 'Тарас Шевченко'
 author = 'Тарас Шевченко'
-author_books = [book for book in library['книги'] if book['автор'] == author]
-print(f'Книги автора "{author}": {len(author_books)}')
 
-# Знайти найдовшу книгу
-longest_book = max(library['книги'], key=lambda b: b['сторінки'])
-print(f'Найдовша книга: "{longest_book["назва"]}" ({longest_book["сторінки"]} сторінок)')
+# Перевіряємо кожну книгу окремо
+book1 = library['книги'][0]
+book2 = library['книги'][1]
+book3 = library['книги'][2]
+
+# Підраховуємо книги автора вручну
+author_count = {}
+author_count[book1['автор']] = author_count.get(book1['автор'], 0) + 1
+author_count[book2['автор']] = author_count.get(book2['автор'], 0) + 1
+author_count[book3['автор']] = author_count.get(book3['автор'], 0) + 1
+count = author_count.get(author, 0)
+
+print('Книги автора "' + author + '":', count)
+
+# Знайти найдовшу книгу (порівнюємо кількість сторінок)
+pages1 = library['книги'][0]['сторінки']
+pages2 = library['книги'][1]['сторінки']
+pages3 = library['книги'][2]['сторінки']
+
+max_pages = max(pages1, pages2, pages3)
+# Знаходимо назву книги з найбільшою кількістю сторінок через словник
+pages_to_book = {
+    pages1: library['книги'][0]['назва'],
+    pages2: library['книги'][1]['назва'],
+    pages3: library['книги'][2]['назва']
+}
+longest_book = pages_to_book[max_pages]
+
+print('Найдовша книга: "' + longest_book + '" (' + str(max_pages) + ' сторінок)')
 
 # Статистика по жанрах
 genre_stats = {}
-for book in library['книги']:
-    genre = book['жанр']
-    genre_stats[genre] = genre_stats.get(genre, 0) + 1
+# Перевіряємо жанр кожної книги
+genre1 = library['книги'][0]['жанр']
+genre_stats[genre1] = genre_stats.get(genre1, 0) + 1
+
+genre2 = library['книги'][1]['жанр']
+genre_stats[genre2] = genre_stats.get(genre2, 0) + 1
+
+genre3 = library['книги'][2]['жанр']
+genre_stats[genre3] = genre_stats.get(genre3, 0) + 1
 
 print('Статистика по жанрах:')
-for genre, count in genre_stats.items():
-    print(f'  {genre}: {count} {"книга" if count == 1 else "книги" if count < 5 else "книг"}')`,
+# Виводимо статистику для кожного жанру
+# (У наступних модулях навчимося автоматично ітерувати по словнику)
+print('  Поезія:', genre_stats.get('Поезія', 0), 'книги')
+print('  Проза:', genre_stats.get('Проза', 0), 'книга')`,
       explanation: "Рішення використовує список словників для зберігання книг, фільтрацію для пошуку та статистику для підрахунку."
     },
     hints: [
       "Використовуйте список словників для зберігання книг",
-      "Використовуйте list comprehension для фільтрації",
+      "Використовуйте прямі обчислення та доступ до елементів (list comprehensions вивчимо пізніше)",
       "Використовуйте max() з key для знаходження найдовшої книги",
       "Використовуйте словник для підрахунку статистики",
       "Не забудьте обробити множину для слова 'книга'"
