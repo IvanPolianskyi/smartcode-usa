@@ -10,7 +10,7 @@ import { QUIZ_QUESTION_TYPES } from './courseData'
 
 export const pythonCurriculum = {
   courseId: "python-developer-zero-to-junior",
-  title: "Complete Python 3 Bootcamp - Повний курс Python 3",
+  title: "Повний курс Пайтон",
   
   modules: [
     {

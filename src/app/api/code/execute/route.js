@@ -7,13 +7,40 @@ const MAX_OUTPUT_LENGTH = 10000 // Maximum output length
 export async function POST(request) {
   try {
     const body = await request.json().catch(() => ({}))
-    const { code } = body || {}
+    const { code, input } = body || {}
 
     if (!code || typeof code !== 'string') {
       return NextResponse.json(
         { success: false, error: 'Код не надано або має неправильний формат' },
         { status: 400 }
       )
+    }
+
+    // Prepare input data for stdin
+    let stdinData = ''
+    if (input) {
+      if (Array.isArray(input)) {
+        // If input is an array, join with newlines
+        stdinData = input.join('\n') + '\n'
+      } else if (typeof input === 'string') {
+        // If input is a string, parse it (expecting format like "Введіть ваш вік: 20\n...")
+        // Extract values after colons
+        const lines = input.split('\n').filter(line => line.trim())
+        stdinData = lines.map(line => {
+          // Try to extract value after colon
+          const colonMatch = line.match(/:\s*(.+)$/)
+          if (colonMatch) {
+            return colonMatch[1].trim()
+          }
+          // If no colon, try to extract number or text
+          const numberMatch = line.match(/\d+/)
+          if (numberMatch) {
+            return numberMatch[0]
+          }
+          // Return the line as is if no pattern matches
+          return line.trim()
+        }).filter(val => val).join('\n') + '\n'
+      }
     }
 
     // Basic security: check for dangerous operations
@@ -81,6 +108,18 @@ ${code}`
       // Set encoding for streams
       pythonProcess.stdout.setEncoding('utf8')
       pythonProcess.stderr.setEncoding('utf8')
+      pythonProcess.stdin.setEncoding('utf8')
+
+      // Write input data to stdin if provided
+      if (stdinData) {
+        try {
+          pythonProcess.stdin.write(stdinData, 'utf8')
+          pythonProcess.stdin.end()
+        } catch (error) {
+          // If stdin is already closed, ignore the error
+          console.error('Error writing to stdin:', error)
+        }
+      }
 
       // Collect stdout with proper UTF-8 handling
       pythonProcess.stdout.on('data', (data) => {

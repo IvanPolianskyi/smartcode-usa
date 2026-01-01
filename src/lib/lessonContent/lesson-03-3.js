@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_03_3 = {
   lessonId: "lesson-03-3",
-  moduleId: "module-00",
+  moduleId: "module-03",
   order: 3,
   title: "Позиційні та іменовані аргументи",
   
@@ -15,18 +15,11 @@ export const lesson_03_3 = {
     "Використовувати позиційні аргументи",
     "Застосовувати іменовані аргументи",
     "Комбінувати різні типи аргументів",
-    "Розуміти порядок аргументів",
-    "lesson-03-2",
-    "lesson-03-4",
-    "*args та **kwargs"
-],
+    "Розуміти порядок аргументів"
+  ],
   
   estimatedTime: 75,
-  prerequisites: [
-    "lesson-03-2",
-    "lesson-03-4",
-    "*args та **kwargs"
-],
+  prerequisites: ["lesson-03-2"],
   
   videoUrl: "",
   

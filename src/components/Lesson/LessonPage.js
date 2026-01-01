@@ -807,12 +807,24 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     setPracticeChecked(false)
 
     try {
+      // Extract input data from examples if available
+      let inputData = null
+      if (fullLesson.practiceTask?.examples && fullLesson.practiceTask.examples.length > 0) {
+        const firstExample = fullLesson.practiceTask.examples[0]
+        if (firstExample.input) {
+          inputData = firstExample.input
+        }
+      }
+
       const response = await fetch('/api/code/execute', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ code: userCode })
+        body: JSON.stringify({ 
+          code: userCode,
+          input: inputData
+        })
       })
 
       const data = await response.json()

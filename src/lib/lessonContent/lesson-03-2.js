@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_03_2 = {
   lessonId: "lesson-03-2",
-  moduleId: "module-00",
+  moduleId: "module-03",
   order: 2,
   title: "Параметри, return, None",
   
@@ -15,18 +15,11 @@ export const lesson_03_2 = {
     "Розуміти різницю між параметрами та аргументами",
     "Використовувати return для повернення значень",
     "Розуміти None та його використання",
-    "Створювати функції з різними типами повернення",
-    "lesson-03-1",
-    "lesson-03-3",
-    "Позиційні та іменовані аргументи"
-],
+    "Створювати функції з різними типами повернення"
+  ],
   
   estimatedTime: 75,
-  prerequisites: [
-    "lesson-03-1",
-    "lesson-03-3",
-    "Позиційні та іменовані аргументи"
-],
+  prerequisites: ["lesson-03-1"],
   
   videoUrl: "",
   

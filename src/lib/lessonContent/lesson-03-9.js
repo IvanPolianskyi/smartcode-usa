@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_03_9 = {
   lessonId: "lesson-03-9",
-  moduleId: "module-04",
+  moduleId: "module-03",
   order: 9,
   title: "Функції вищого порядку: map, filter, reduce",
   
@@ -15,18 +15,11 @@ export const lesson_03_9 = {
     "Використовувати map() для перетворення",
     "Застосовувати filter() для фільтрації",
     "Використовувати reduce() для згортки",
-    "Комбінувати функції вищого порядку",
-    "lesson-03-8",
-    "lesson-03-10",
-    "Практика: написання функцій"
-],
+    "Комбінувати функції вищого порядку"
+  ],
   
   estimatedTime: 90,
-  prerequisites: [
-    "lesson-03-8",
-    "lesson-03-10",
-    "Практика: написання функцій"
-],
+  prerequisites: ["lesson-03-8"],
   
   videoUrl: "",
   

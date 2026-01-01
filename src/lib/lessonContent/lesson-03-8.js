@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_03_8 = {
   lessonId: "lesson-03-8",
-  moduleId: "module-00",
+  moduleId: "module-03",
   order: 8,
   title: "Рекурсія",
   
@@ -15,18 +15,11 @@ export const lesson_03_8 = {
     "Розуміти концепцію рекурсії",
     "Створювати рекурсивні функції",
     "Розв'язувати задачі рекурсивно",
-    "Уникати нескінченної рекурсії",
-    "lesson-03-7",
-    "lesson-03-9",
-    "Функції вищого порядку: map, filter, reduce"
-],
+    "Уникати нескінченної рекурсії"
+  ],
   
   estimatedTime: 90,
-  prerequisites: [
-    "lesson-03-7",
-    "lesson-03-9",
-    "Функції вищого порядку: map, filter, reduce"
-],
+  prerequisites: ["lesson-03-7"],
   
   videoUrl: "",
   

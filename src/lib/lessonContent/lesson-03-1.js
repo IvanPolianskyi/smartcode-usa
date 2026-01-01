@@ -1,5 +1,5 @@
 /**
- * 02 Functions
+ * Lesson 03-1: Функції: оголошення та виклик
  * Full educational content
  */
 
@@ -9,232 +9,796 @@ export const lesson_03_1 = {
   lessonId: "lesson-03-1",
   moduleId: "module-03",
   order: 1,
-  title: "02 Functions",
+  title: "Функції: оголошення та виклик",
   
   learningObjectives: [
-    "Вивчити основні концепції",
-    "Застосувати знання на практиці",
-    "Розв'язати практичні задачі"
+    "Розуміти, що таке функції та навіщо вони потрібні",
+    "Оголошувати функції за допомогою ключового слова def",
+    "Викликати функції та передавати аргументи",
+    "Розуміти різницю між print() та return",
+    "Створювати функції з параметрами"
   ],
   
   estimatedTime: 90,
-  prerequisites: [],
+  prerequisites: ["lesson-02-8"],
   
   videoUrl: "",
   
   theory: {
     sections: [
       {
-        title: "Functions",
-        content: `## Introduction to Functions
+        title: "Вступ до функцій",
+        content: `Функції — це один з найважливіших інструментів у програмуванні! Вони дозволяють нам організувати код, уникати повторень та створювати більш складні програми.
 
-This lecture will consist of explaining what a function is in Python and how to create one. Functions will be one of our main building blocks when we construct larger and larger amounts of code to solve problems.
+**Що таке функція?**
 
-### What is a function?
+Функція — це блок коду, який виконує певну задачу. Ви можете викликати функцію багато разів, не переписуючи код знову.
 
-Formally, a function is a useful device that groups together a set of statements so they can be run more than once. They can also let us specify parameters that can serve as inputs to the functions.
+**Навіщо потрібні функції?**
 
-On a more fundamental level, functions allow us to not have to repeatedly write the same code again and again. If you remember back to the lessons on strings and lists, remember that we used a function len() to get the length of a string. Since checking the length of a sequence is a common task you would want to write a function that can do this repeatedly at command.
+1. **Уникання повторень** — замість того, щоб писати один і той самий код багато разів, ви пишете його один раз у функції
+2. **Організація коду** — функції допомагають розбити складну програму на менші, зрозумілі частини
+3. **Повторне використання** — один раз написавши функцію, ви можете використовувати її в різних місцях програми
+4. **Легше тестування** — можна перевіряти окремі частини програми
 
-Functions will be one of most basic levels of reusing code in Python, and it will also allow us to start thinking of program design (we will dive much deeper into the ideas of design when we learn about Object Oriented Programming).`
+**Приклад з реального життя:**
+
+Уявіть, що ви готуєте сніданок. Замість того, щоб кожного разу описувати весь процес ("взяти яйця, розбити, посолити, смажити..."), ви просто кажете: "Приготуй яєчню!" — це і є функція!
+
+**В Python ми вже використовували функції:**
+
+\`\`\`python
+# Всі ці функції ми вже використовували:
+print("Привіт!")           # функція print()
+len("Python")              # функція len()
+input("Введіть число: ")   # функція input()
+\`\`\`
+
+Тепер ми навчимося створювати свої власні функції!`
       },
       {
-        title: "Why even use functions?",
-        content: `Put simply, you should use functions when you plan on using a block of code multiple times. The function will allow you to call the same block of code without having to write it multiple times. This in turn will allow you to create more complex Python scripts. To really understand this though, we should actually write our own functions!`
+        title: "Синтаксис функції: ключове слово def",
+        content: `Для створення функції в Python використовується ключове слово \`def\` (скорочення від "define" — визначити).
+
+**Базовий синтаксис:**
+
+\`\`\`python
+def назва_функції():
+    """
+    Документація функції (docstring)
+    Тут описується, що робить функція
+    """
+    # Код функції
+    # Всі рядки мають бути з відступом
+\`\`\`
+
+**Важливі правила:**
+
+1. **def** — ключове слово для створення функції
+2. **Назва функції** — має бути описовою (наприклад, \`calculate_sum\`, а не \`f\`)
+3. **Дужки ()** — обов'язкові, навіть якщо функція не приймає параметрів
+4. **Двокрапка :** — після дужок обов'язково ставиться двокрапка
+5. **Відступ** — весь код всередині функції має бути з відступом (зазвичай 4 пробіли)
+6. **Docstring** — опис функції (не обов'язковий, але дуже корисний)
+
+**Перша функція:**
+
+\`\`\`python
+def say_hello():
+    """
+    Функція, яка виводить привітання
+    """
+    print("Привіт, світ!")
+
+# Виклик функції
+say_hello()  # Виведе: Привіт, світ!
+\`\`\`
+
+**Увага!** Не забувайте дужки при виклику функції:
+- \`say_hello()\` — правильно (викликає функцію)
+- \`say_hello\` — неправильно (просто посилання на функцію, не викликає її)`
       },
       {
-        title: "Function Topics",
-        content: `* def keyword
-* simple example of a function
-* calling a function with ()
-* accepting parameters
-* print versus return
-* adding in logic inside a function
-* multiple returns inside a function
-* adding in loops inside a function
-* tuple unpacking
-* interactions between functions`
+        title: "Виклик функції",
+        content: `Після того, як ви створили функцію, її потрібно **викликати**, щоб вона виконалася.
+
+**Як викликати функцію:**
+
+Просто напишіть назву функції з дужками:
+
+\`\`\`python
+def say_hello():
+    print("Привіт!")
+
+# Виклик функції
+say_hello()  # Виведе: Привіт!
+say_hello()  # Можна викликати багато разів
+say_hello()  # Виведе: Привіт! (кожен раз)
+\`\`\`
+
+**Порядок виконання:**
+
+1. Python спочатку **визначає** функцію (читає код від \`def\` до кінця функції)
+2. Потім, коли зустрічає **виклик** функції, виконує код всередині неї
+
+\`\`\`python
+# Крок 1: Визначення функції
+def greet():
+    print("Вітаю!")
+
+# Крок 2: Виклик функції
+greet()  # Тепер виконається код всередині функції
+\`\`\`
+
+**Важливо:** Функція повинна бути визначена **перед** її викликом!`
       },
       {
-        title: "def keyword",
-        content: `Let's see how to build out a function's syntax in Python. It has the following form:
+        title: "Функції з параметрами",
+        content: `Функції можуть приймати **параметри** (аргументи) — це значення, які передаються в функцію для роботи з ними.
 
-We begin with def then a space followed by the name of the function. Try to keep names relevant, for example len() is a good name for a length() function. Also be careful with names, you wouldn't want to call a function the same name as a [built-in function in Python](https://docs.python.org/3/library/functions.html) (such as len).
+**Синтаксис функції з параметрами:**
 
-Next come a pair of parentheses with a number of arguments separated by a comma. These arguments are the inputs for your function. You'll be able to use these inputs in your function and reference them. After this you put a colon.
+\`\`\`python
+def назва_функції(параметр1, параметр2):
+    # Використання параметрів
+    # код функції
+\`\`\`
 
-Now here is the important step, you must indent to begin the code inside your function correctly. Python makes use of *whitespace* to organize code. Lots of other programing languages do not do this, so keep that in mind.
+**Приклад: функція привітання з ім'ям**
 
-Next you'll see the docstring, this is where you write a basic description of the function. Using Jupyter and Jupyter Notebooks, you'll be able to read these docstrings by pressing Shift+Tab after a function name. Docstrings are not necessary for simple functions, but it's good practice to put them in so you or other people can easily understand the code you write.
+\`\`\`python
+def greet(name):
+    """
+    Функція привітає користувача за ім'ям
+    """
+    print(f"Привіт, {name}!")
 
-After all this you begin writing the code you wish to execute.
+# Виклик функції з аргументом
+greet("Олександр")  # Виведе: Привіт, Олександр!
+greet("Марія")      # Виведе: Привіт, Марія!
+\`\`\`
 
-The best way to learn functions is by going through examples. So let's try to go through examples that relate back to the various objects and data structures we learned about before.`
+**Приклад: функція додавання**
+
+\`\`\`python
+def add_numbers(a, b):
+    """
+    Функція додає два числа
+    """
+    result = a + b
+    print(f"{a} + {b} = {result}")
+
+# Виклик функції
+add_numbers(5, 3)    # Виведе: 5 + 3 = 8
+add_numbers(10, 20) # Виведе: 10 + 20 = 30
+\`\`\`
+
+**Параметри vs Аргументи:**
+
+- **Параметри** — це змінні в визначенні функції (\`def add_numbers(a, b):\`)
+- **Аргументи** — це значення, які передаються при виклику (\`add_numbers(5, 3)\`)
+
+У цьому прикладі:
+- \`a\` та \`b\` — це параметри
+- \`5\` та \`3\` — це аргументи`
       },
       {
-        title: "Calling a function with ()",
-        content: `Call the function:
+        title: "print() vs return: важлива різниця",
+        content: `Це одна з найважливіших тем! Багато початківців плутають \`print()\` та \`return\`.
 
-If you forget the parenthesis (), it will simply display the fact that say_hello is a function. Later on we will learn we can actually pass in functions into other functions! But for now, simply remember to call functions with ().`
+**print() — виводить на екран:**
+
+\`\`\`python
+def print_result(num1, num2):
+    result = num1 + num2
+    print(result)  # Просто виводить на екран
+
+# Виклик функції
+print_result(5, 3)  # Виведе: 8
+
+# Але результат НЕ можна зберегти!
+total = print_result(5, 3)  # total буде None!
+print(total)  # Виведе: None
+\`\`\`
+
+**return — повертає значення:**
+
+\`\`\`python
+def calculate_sum(num1, num2):
+    result = num1 + num2
+    return result  # Повертає значення
+
+# Виклик функції
+calculate_sum(5, 3)  # Поверне 8, але нічого не виведе
+
+# Тепер результат МОЖНА зберегти!
+total = calculate_sum(5, 3)
+print(total)  # Виведе: 8
+
+# Можна використовувати в інших обчисленнях
+double = calculate_sum(5, 3) * 2
+print(double)  # Виведе: 16
+\`\`\`
+
+**Ключова різниця:**
+
+| print() | return |
+|---------|--------|
+| Виводить значення на екран | Повертає значення з функції |
+| Не можна зберегти результат | Можна зберегти результат |
+| Використовується для відображення | Використовується для обчислень |
+
+**Коли використовувати що:**
+
+- **print()** — коли потрібно просто показати щось користувачу
+- **return** — коли потрібно отримати результат для подальшої роботи
+
+**Приклад обох підходів:**
+
+\`\`\`python
+# Функція з print() — тільки виводить
+def show_sum(a, b):
+    print(a + b)
+
+# Функція з return — повертає значення
+def get_sum(a, b):
+    return a + b
+
+# Використання
+show_sum(5, 3)        # Виведе: 8
+result = get_sum(5, 3)  # Збереже 8 в змінну
+print(result)         # Виведе: 8
+\`\`\``
       },
       {
-        title: "Accepting parameters (arguments)",
-        content: `Let's write a function that greets people with their name.`
+        title: "Практичні приклади функцій",
+        content: `Давайте розглянемо кілька практичних прикладів функцій:
+
+**Приклад 1: Функція перевірки парності числа**
+
+\`\`\`python
+def is_even(number):
+    """
+    Перевіряє, чи число парне
+    Повертає True, якщо парне, False — якщо ні
+    """
+    return number % 2 == 0
+
+# Використання
+print(is_even(4))   # True
+print(is_even(5))   # False
+print(is_even(10))  # True
+\`\`\`
+
+**Приклад 2: Функція обчислення площі прямокутника**
+
+\`\`\`python
+def rectangle_area(width, height):
+    """
+    Обчислює площу прямокутника
+    """
+    area = width * height
+    return area
+
+# Використання
+area1 = rectangle_area(5, 3)
+print(f"Площа прямокутника: {area1}")  # Виведе: Площа прямокутника: 15
+
+area2 = rectangle_area(10, 7)
+print(f"Площа прямокутника: {area2}")  # Виведе: Площа прямокутника: 70
+\`\`\`
+
+**Приклад 3: Функція форматування імені**
+
+\`\`\`python
+def format_name(first_name, last_name):
+    """
+    Форматує повне ім'я
+    """
+    full_name = f"{first_name} {last_name}"
+    return full_name.title()  # Перша літера велика
+
+# Використання
+name1 = format_name("олександр", "петренко")
+print(name1)  # Виведе: Олександр Петренко
+
+name2 = format_name("марія", "іваненко")
+print(name2)  # Виведе: Марія Іваненко
+\`\`\`
+
+**Приклад 4: Функція обчислення середнього значення**
+
+\`\`\`python
+def average(num1, num2, num3):
+    """
+    Обчислює середнє арифметичне трьох чисел
+    """
+    total = num1 + num2 + num3
+    avg = total / 3
+    return avg
+
+# Використання
+avg1 = average(10, 20, 30)
+print(f"Середнє значення: {avg1}")  # Виведе: Середнє значення: 20.0
+
+avg2 = average(5, 15, 25)
+print(f"Середнє значення: {avg2}")  # Виведе: Середнє значення: 15.0
+\`\`\``
       },
       {
-        title: "Using return",
-        content: `So far we've only seen print() used, but if we actually want to save the resulting variable we need to use the **return** keyword.
+        title: "Взаємодія між функціями",
+        content: `Функції можуть використовувати результати інших функцій! Це дуже потужна можливість.
 
-Let's see some example that use a return statement. return allows a function to *return* a result that can then be stored as a variable, or used in whatever manner a user wants.
+**Приклад: функції, які працюють разом**
 
-### Example: Addition function
+\`\`\`python
+def add(a, b):
+    """Додає два числа"""
+    return a + b
 
-What happens if we input two strings?`
+def multiply(a, b):
+    """Множить два числа"""
+    return a * b
+
+def calculate_total(x, y, z):
+    """
+    Обчислює: (x + y) * z
+    Використовує інші функції
+    """
+    sum_result = add(x, y)  # Викликаємо функцію add
+    total = multiply(sum_result, z)  # Викликаємо функцію multiply
+    return total
+
+# Використання
+result = calculate_total(2, 3, 4)
+print(result)  # Виведе: 20
+# Пояснення: (2 + 3) * 4 = 5 * 4 = 20
+\`\`\`
+
+**Приклад: складніша взаємодія**
+
+\`\`\`python
+def square(number):
+    """Підносить число до квадрату"""
+    return number ** 2
+
+def is_positive(number):
+    """Перевіряє, чи число додатне"""
+    return number > 0
+
+def process_number(num):
+    """
+    Якщо число додатне, повертає його квадрат
+    Інакше повертає 0
+    """
+    if is_positive(num):
+        return square(num)
+    else:
+        return 0
+
+# Використання
+print(process_number(5))   # Виведе: 25 (5 > 0, тому 5² = 25)
+print(process_number(-3))  # Виведе: 0 (-3 не додатне)
+print(process_number(4))   # Виведе: 16 (4 > 0, тому 4² = 16)
+\`\`\`
+
+**Переваги такого підходу:**
+
+1. **Модульність** — кожна функція виконує одну задачу
+2. **Читабельність** — код легше зрозуміти
+3. **Повторне використання** — функції можна використовувати в різних місцях
+4. **Тестування** — легше перевіряти окремі частини`
       },
       {
-        title: "Very Common Question: \"What is the difference between *return* and *print*?\"",
-        content: `**The return keyword allows you to actually save the result of the output of a function as a variable. The print() function simply displays the output to you, but doesn't save it for future use. Let's explore this in more detail**
+        title: "Підсумок",
+        content: `На цьому уроці ми вивчили основи функцій:
 
-**But what happens if we actually want to save this result for later use?**
+**Ключові концепції:**
 
-**Be careful! Notice how print_result() doesn't let you actually save the result to a variable! It only prints it out, with print() returning None for the assignment!**`
-      },
-      {
-        title: "Adding Logic to Internal Function Operations",
-        content: `So far we know quite a bit about constructing logical statements with Python, such as if/else/elif statements, for and while loops, checking if an item is **in** a list or **not in** a list (Useful Operators Lecture). Let's now see how we can perform these operations within a function.`
-      },
-      {
-        title: "Check if a number is even",
-        content: `**Recall the mod operator % which returns the remainder after division, if a number is even then mod 2 (% 2) should be == to zero.**
+1. **def** — ключове слово для створення функції
+2. **Параметри** — змінні в визначенні функції
+3. **Аргументи** — значення, які передаються при виклику
+4. **print()** — виводить на екран, не повертає значення
+5. **return** — повертає значення з функції
+6. **Виклик функції** — виконання коду функції через \`назва_функції()\`
 
-** Let's use this to construct a function. Notice how we simply return the boolean check.**`
-      },
-      {
-        title: "Check if any number in  a list is even",
-        content: `Let's return a boolean indicating if **any** number in a list is even. Notice here how **return** breaks out of the loop and exits the function
+**Правила:**
 
-** Is this enough? NO! We're not returning anything if they are all odds!**
+- Функція має бути визначена перед викликом
+- Не забувайте дужки при виклику функції
+- Використовуйте \`return\`, якщо потрібно отримати результат
+- Називайте функції описовими назвами
+- Додавайте docstring для опису функції
 
-** VERY COMMON MISTAKE!! LET'S SEE A COMMON LOGIC ERROR, NOTE THIS IS WRONG!!!**
+**Наступний крок:**
 
-** Correct Approach: We need to initiate a return False AFTER running through the entire loop**`
-      },
-      {
-        title: "Return all even numbers in a list",
-        content: `Let's add more complexity, we now will return all the even numbers in a list, otherwise return an empty list.`
-      },
-      {
-        title: "Returning Tuples for Unpacking",
-        content: `** Recall we can loop through a list of tuples and \"unpack\" the values within them**
-
-**Similarly, functions often return tuples, to easily return multiple results for later use.**
-
-Let's imagine the following list:
-
-The employee of the month function will return both the name and number of hours worked for the top performer (judged by number of hours worked).`
-      },
-      {
-        title: "Interactions between functions",
-        content: `Functions often use results from other functions, let's see a simple example through a guessing game. There will be 3 positions in the list, one of which is an 'O', a function will shuffle the list, another will take a player's guess, and finally another will check to see if it is correct. This is based on the classic carnival game of guessing which cup a red ball is under.
-
-**How to shuffle a list in Python**
-
-**OK, let's create our simple game**
-
-Now we will check the user's guess. Notice we only print here, since we have no need to save a user's guess or the shuffled list.
-
-Now we create a little setup logic to run all the functions. Notice how they interact with each other!
-
-Great! You should now have a basic understanding of creating your own functions to save yourself from repeatedly writing code!`
+У наступному уроці ми дізнаємося більше про параметри, \`return\`, та спеціальне значення \`None\`.`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад коду",
-      code: `def name_of_function(arg1,arg2):
-    '''
-    This is where the function's Document String (docstring) goes.
-    When you call help() on your function it will be printed out.
-    '''
-    # Do stuff here
-    # Return desired result`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
+      title: "Проста функція без параметрів",
       code: `def say_hello():
-    print('hello')`,
-      explanation: "Приклад коду з курсу"
+    """
+    Функція, яка виводить привітання
+    """
+    print("Привіт, світ!")
+
+# Виклик функції
+say_hello()`,
+      explanation: "Це найпростіша функція. Вона не приймає параметрів і просто виводить текст."
     },
     {
-      title: "Приклад коду",
-      code: `say_hello()`,
-      explanation: "Приклад коду з курсу"
+      title: "Функція з одним параметром",
+      code: `def greet(name):
+    """
+    Функція привітає користувача за ім'ям
+    """
+    print(f"Привіт, {name}!")
+
+# Виклик функції з різними аргументами
+greet("Олександр")
+greet("Марія")`,
+      explanation: "Функція приймає один параметр name і використовує його для створення привітання."
     },
     {
-      title: "Приклад коду",
-      code: `say_hello`,
-      explanation: "Приклад коду з курсу"
+      title: "Функція з return",
+      code: `def add_numbers(a, b):
+    """
+    Функція додає два числа та повертає результат
+    """
+    result = a + b
+    return result
+
+# Виклик функції та збереження результату
+sum_result = add_numbers(5, 3)
+print(f"Сума: {sum_result}")`,
+      explanation: "Функція використовує return для повернення результату, який можна зберегти в змінну."
     },
     {
-      title: "Приклад коду",
-      code: `def greeting(name):
-    print(f'Hello {name}')`,
-      explanation: "Приклад коду з курсу"
+      title: "Порівняння print() та return",
+      code: `# Функція з print()
+def show_sum(a, b):
+    print(a + b)
+
+# Функція з return
+def get_sum(a, b):
+    return a + b
+
+# Використання
+show_sum(5, 3)        # Виведе: 8
+result = get_sum(5, 3)  # Збереже 8
+print(f"Результат: {result}")`,
+      explanation: "Демонструє різницю між print() (виводить) та return (повертає значення)."
     },
     {
-      title: "Приклад коду",
-      code: `greeting('Jose')`,
-      explanation: "Приклад коду з курсу"
+      title: "Функція перевірки парності",
+      code: `def is_even(number):
+    """
+    Перевіряє, чи число парне
+    """
+    return number % 2 == 0
+
+# Використання
+print(is_even(4))   # True
+print(is_even(5))   # False`,
+      explanation: "Функція використовує оператор % (залишок від ділення) для перевірки парності."
     },
     {
-      title: "Приклад коду",
-      code: `def add_num(num1,num2):
-    return num1+num2`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `add_num(4,5)`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Can also save as variable due to return",
-      code: `# Can also save as variable due to return
-result = add_num(4,5)`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `print(result)`,
-      explanation: "Приклад коду з курсу"
+      title: "Взаємодія функцій",
+      code: `def square(number):
+    """Підносить число до квадрату"""
+    return number ** 2
+
+def add(a, b):
+    """Додає два числа"""
+    return a + b
+
+def calculate(a, b):
+    """Обчислює (a + b)²"""
+    sum_result = add(a, b)
+    return square(sum_result)
+
+# Використання
+result = calculate(3, 4)
+print(result)  # Виведе: 49 (бо (3+4)² = 7² = 49)`,
+      explanation: "Показує, як функції можуть використовувати результати інших функцій."
     }
   ],
   
-  commonMistakes: [],
+  commonMistakes: [
+    {
+      mistake: "Забування дужок при виклику функції",
+      explanation: "Багато початківців забувають дужки при виклику функції.",
+      correctApproach: `# Неправильно:
+greet  # Це просто посилання на функцію, не викликає її
+
+# Правильно:
+greet()  # Викликає функцію`
+    },
+    {
+      mistake: "Плутанина між print() та return",
+      explanation: "Початківці часто використовують print() замість return, коли потрібно повернути значення.",
+      correctApproach: `# Неправильно (якщо потрібно зберегти результат):
+def add(a, b):
+    print(a + b)  # Не можна зберегти результат
+
+# Правильно:
+def add(a, b):
+    return a + b  # Можна зберегти результат`
+    },
+    {
+      mistake: "Відсутність відступів у функції",
+      explanation: "Весь код всередині функції має бути з відступом.",
+      correctApproach: `# Неправильно:
+def greet():
+print("Привіт!")  # Помилка! Немає відступу
+
+# Правильно:
+def greet():
+    print("Привіт!")  # Правильний відступ (4 пробіли)`
+    },
+    {
+      mistake: "Виклик функції до її визначення",
+      explanation: "Python виконує код зверху вниз, тому функція має бути визначена перед викликом.",
+      correctApproach: `# Неправильно:
+greet()  # Помилка! Функція ще не визначена
+
+def greet():
+    print("Привіт!")
+
+# Правильно:
+def greet():
+    print("Привіт!")
+
+greet()  # Тепер функція вже визначена`
+    }
+  ],
   
-  summary: "Підсумок уроку",
+  summary: `На цьому уроці ми вивчили основи функцій:
+
+1. **Що таке функції** — блоки коду, які виконують певну задачу
+2. **Синтаксис def** — як створювати функції за допомогою ключового слова def
+3. **Параметри та аргументи** — як передавати дані в функції
+4. **print() vs return** — важлива різниця між виведенням та поверненням значень
+5. **Виклик функцій** — як використовувати створені функції
+6. **Взаємодія функцій** — як функції можуть використовувати інші функції
+
+Функції — це основа організації коду в Python. Вони дозволяють писати більш чистий, зрозумілий та повторно використовуваний код.`,
   
   practiceTask: {
-    title: "Практична задача",
-    description: "Опишіть задачу",
-    problemStatement: "Умова задачі",
-    inputFormat: "",
-    outputFormat: "",
-    examples: [],
+    title: "Калькулятор функцій",
+    description: "Створіть набір функцій для виконання математичних операцій",
+    problemStatement: `Напишіть програму, яка містить функції для:
+1. Додавання двох чисел
+2. Віднімання двох чисел
+3. Множення двох чисел
+4. Ділення двох чисел
+5. Обчислення середнього арифметичного трьох чисел
+
+**Важливо:** Не використовуйте функцію input(). Введіть значення напряму в коді (наприклад: num1 = 10, num2 = 5).
+
+Кожна функція має:
+- Приймати необхідні параметри
+- Обчислювати результат
+- Повертати результат за допомогою return
+- Мати docstring з описом
+
+Після створення функцій, викличте їх з різними значеннями та виведіть результати.`,
+    inputFormat: `Введіть значення напряму в коді:
+num1 = 10
+num2 = 5
+num3 = 15
+
+**Примітка:** Не використовуйте input(), введіть значення напряму в коді`,
+    outputFormat: `Приклад виведення:
+Сума 10 та 5: 15
+Різниця 10 та 5: 5
+Добуток 10 та 5: 50
+Частка 10 та 5: 2.0
+Середнє значення 10, 5, 15: 10.0`,
+    examples: [
+      {
+        input: "num1 = 10, num2 = 5, num3 = 15",
+        output: `Сума 10 та 5: 15
+Різниця 10 та 5: 5
+Добуток 10 та 5: 50
+Частка 10 та 5: 2.0
+Середнє значення 10, 5, 15: 10.0`,
+        explanation: "Демонструє всі математичні операції через функції."
+      },
+      {
+        input: "num1 = 20, num2 = 4, num3 = 12",
+        output: `Сума 20 та 4: 24
+Різниця 20 та 4: 16
+Добуток 20 та 4: 80
+Частка 20 та 4: 5.0
+Середнє значення 20, 4, 12: 12.0`,
+        explanation: "Інший набір чисел для перевірки функцій."
+      }
+    ],
     solution: {
-      code: "",
-      explanation: ""
+      code: `# Калькулятор функцій
+
+# Функція додавання
+def add(a, b):
+    """
+    Додає два числа
+    """
+    return a + b
+
+# Функція віднімання
+def subtract(a, b):
+    """
+    Віднімає друге число від першого
+    """
+    return a - b
+
+# Функція множення
+def multiply(a, b):
+    """
+    Множить два числа
+    """
+    return a * b
+
+# Функція ділення
+def divide(a, b):
+    """
+    Ділить перше число на друге
+    """
+    return a / b
+
+# Функція обчислення середнього
+def average(num1, num2, num3):
+    """
+    Обчислює середнє арифметичне трьох чисел
+    """
+    total = num1 + num2 + num3
+    return total / 3
+
+# Вводимо значення напряму в коді (не використовуємо input())
+num1 = 10
+num2 = 5
+num3 = 15
+
+# Викликаємо функції та виводимо результати
+print(f"Сума {num1} та {num2}: {add(num1, num2)}")
+print(f"Різниця {num1} та {num2}: {subtract(num1, num2)}")
+print(f"Добуток {num1} та {num2}: {multiply(num1, num2)}")
+print(f"Частка {num1} та {num2}: {divide(num1, num2)}")
+print(f"Середнє значення {num1}, {num2}, {num3}: {average(num1, num2, num3)}")`,
+      explanation: "Рішення створює п'ять функцій для математичних операцій. Кожна функція приймає параметри, обчислює результат та повертає його за допомогою return. Потім функції викликаються з конкретними значеннями."
     },
-    hints: [],
-    difficulty: "beginner"
+    hints: [
+      "Введіть значення напряму в коді (num1, num2, num3) - не використовуйте input()",
+      "Кожна функція має приймати параметри та повертати результат через return",
+      "Використовуйте return, а не print(), щоб повернути значення",
+      "Функція average має додати три числа та розділити на 3",
+      "Не забувайте дужки при виклику функцій"
+    ],
+    difficulty: "beginner",
+    testCases: [
+      {
+        input: ["10", "5", "15"],
+        expectedOutput: "Сума 10 та 5: 15",
+        description: "Перевірка функції додавання"
+      },
+      {
+        input: ["20", "4", "12"],
+        expectedOutput: "Середнє значення 20, 4, 12: 12.0",
+        description: "Перевірка функції обчислення середнього"
+      }
+    ]
   },
   
   quiz: {
-    questions: [],
-    timeLimit: 10,
+    questions: [
+      {
+        id: "q1",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що таке функція в Python?",
+        options: [
+          "Блок коду, який виконує певну задачу і може бути викликаний багато разів",
+          "Змінна, яка зберігає значення",
+          "Оператор для порівняння значень",
+          "Тип даних для зберігання тексту"
+        ],
+        correctAnswer: 0,
+        explanation: "Функція — це блок коду, який виконує певну задачу. Її можна викликати багато разів, не переписуючи код знову."
+      },
+      {
+        id: "q2",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Яке ключове слово використовується для створення функції?",
+        options: [
+          "def",
+          "function",
+          "create",
+          "make"
+        ],
+        correctAnswer: 0,
+        explanation: "Ключове слово def (скорочення від 'define') використовується для створення функції в Python."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Яка різниця між print() та return?",
+        options: [
+          "print() виводить на екран, return повертає значення з функції",
+          "print() повертає значення, return виводить на екран",
+          "Немає різниці, вони роблять одне і те саме",
+          "print() працює тільки з числами, return — з текстом"
+        ],
+        correctAnswer: 0,
+        explanation: "print() виводить значення на екран, але не повертає його. return повертає значення з функції, яке можна зберегти в змінну."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\ndef greet(name):\n    return f\"Привіт, {name}!\"\n\nresult = greet(\"Олександр\")\nprint(result)\n```",
+        options: [
+          "Привіт, Олександр!",
+          "None",
+          "Помилка",
+          "greet"
+        ],
+        correctAnswer: 0,
+        explanation: "Функція greet повертає рядок з привітанням. Це значення зберігається в result і виводиться на екран."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що таке параметр функції?",
+        options: [
+          "Змінна в визначенні функції, яка приймає значення при виклику",
+          "Значення, яке передається при виклику функції",
+          "Результат роботи функції",
+          "Назва функції"
+        ],
+        correctAnswer: 0,
+        explanation: "Параметр — це змінна в визначенні функції (наприклад, def add(a, b):). Аргумент — це значення, яке передається при виклику (наприклад, add(5, 3))."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\ndef add(a, b):\n    print(a + b)\n\nresult = add(5, 3)\nprint(result)\n```",
+        options: [
+          "8, потім None",
+          "8, потім 8",
+          "Помилка",
+          "Нічого не виведе"
+        ],
+        correctAnswer: 0,
+        explanation: "Функція add використовує print(), тому виведе 8. Але оскільки функція не має return, вона повертає None, який зберігається в result."
+      },
+      {
+        id: "q7",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Чому функції корисні?",
+        options: [
+          "Всі перелічені варіанти",
+          "Дозволяють уникати повторення коду",
+          "Організовують код на менші частини",
+          "Можна використовувати багато разів"
+        ],
+        correctAnswer: 0,
+        explanation: "Функції корисні з багатьох причин: вони дозволяють уникати повторень, організовують код, можуть використовуватися багато разів, і полегшують тестування."
+      },
+      {
+        id: "q8",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "Функція має бути визначена перед її викликом.",
+        options: [
+          "True",
+          "False"
+        ],
+        correctAnswer: 0,
+        explanation: "Так, Python виконує код зверху вниз, тому функція має бути визначена (def) перед тим, як її викликати."
+      }
+    ],
+    timeLimit: 15,
     passingScore: 70
   }
 }

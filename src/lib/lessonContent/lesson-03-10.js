@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_03_10 = {
   lessonId: "lesson-03-10",
-  moduleId: "module-04",
+  moduleId: "module-03",
   order: 10,
   title: "Практика: написання функцій",
   
@@ -15,18 +15,11 @@ export const lesson_03_10 = {
     "Створювати складні функції",
     "Застосовувати всі набуті знання",
     "Практикуватися у написанні функцій",
-    "Підготуватися до першого проекту",
-    "lesson-03-9",
-    "module-04",
-    "04 - Milestone Project 1"
-],
+    "Підготуватися до першого проекту"
+  ],
   
   estimatedTime: 120,
-  prerequisites: [
-    "lesson-03-9",
-    "module-04",
-    "04 - Milestone Project 1"
-],
+  prerequisites: ["lesson-03-9"],
   
   videoUrl: "",
   

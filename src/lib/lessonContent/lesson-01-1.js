@@ -1,5 +1,5 @@
 /**
- * 01 Comparison Operators
+ * Lesson 01-1: Оператори порівняння: ==, !=, <, >, <=, >=
  * Full educational content
  */
 
@@ -9,169 +9,749 @@ export const lesson_01_1 = {
   lessonId: "lesson-01-1",
   moduleId: "module-01",
   order: 1,
-  title: "01 Comparison Operators",
+  title: "Оператори порівняння: ==, !=, <, >, <=, >=",
   
   learningObjectives: [
-    "Вивчити основні концепції",
-    "Застосувати знання на практиці",
-    "Розв'язати практичні задачі"
+    "Розуміти, що таке оператори порівняння та як вони працюють",
+    "Використовувати всі шість операторів порівняння",
+    "Порівнювати різні типи даних",
+    "Розуміти результати порівняння (True/False)",
+    "Застосовувати оператори порівняння для різних структур даних"
   ],
   
-  estimatedTime: 90,
-  prerequisites: [],
+  estimatedTime: 75,
+  prerequisites: ["lesson-00-8"],
   
   videoUrl: "",
   
   theory: {
     sections: [
       {
-        title: "Comparison Operators",
-        content: `In this lecture we will be learning about Comparison Operators in Python. These operators will allow us to compare variables and output a Boolean value (True or False). 
+        title: "Вступ до операторів порівняння",
+        content: `Оператори порівняння — це інструменти, які дозволяють нам порівнювати значення та отримувати булеві результати (True або False). Це основа для прийняття рішень у програмах!
 
-If you have any sort of background in Math, these operators should be very straight forward.
+**Навіщо потрібні оператори порівняння?**
 
-First we'll present a table of the comparison operators and then work through some examples:
+У реальному житті ми постійно порівнюємо:
+- "Чи достатньо грошей для покупки?"
+- "Чи старший я за свого друга?"
+- "Чи дорівнює пароль правильному?"
 
- Table of Comparison Operators   In the table below, a=3 and b=4.
+У програмуванні ми робимо те саме, але за допомогою операторів порівняння.
 
-OperatorDescriptionExample
+**Результат порівняння:**
 
-==
-If the values of two operands are equal, then the condition becomes true.
- (a == b) is not true.
+Кожна операція порівняння повертає **булеве значення**:
+- \`True\` — якщо умова виконується
+- \`False\` — якщо умова не виконується
 
-!=
-If values of two operands are not equal, then condition becomes true.
-(a != b) is true
-
-&gt;
-If the value of left operand is greater than the value of right operand, then condition becomes true.
- (a &gt; b) is not true.
-
-&lt;
-If the value of left operand is less than the value of right operand, then condition becomes true.
- (a &lt; b) is true.
-
-&gt;=
-If the value of left operand is greater than or equal to the value of right operand, then condition becomes true.
- (a &gt;= b) is not true. 
-
-&lt;=
-If the value of left operand is less than or equal to the value of right operand, then condition becomes true.
- (a &lt;= b) is true.
-
-Let's now work through quick examples of each of these.
-
-#### Equal
-
-Note that == is a comparison operator, while = is an assignment operator.`
+Ці значення ми використовуємо для прийняття рішень у програмах (про це дізнаємося в наступних модулях).`
       },
       {
-        title: "Less than or Equal to",
-        content: `**Great! Go over each comparison operator to make sure you understand what each one is saying. But hopefully this was straightforward for you.**
+        title: "Таблиця операторів порівняння",
+        content: `Python має шість основних операторів порівняння. Давайте розглянемо їх:
 
-Next we will cover chained comparison operators`
+**Оператори порівняння:**
+
+- \`==\` — Рівно: перевіряє, чи два значення рівні (наприклад, \`5 == 5\` поверне \`True\`)
+- \`!=\` — Не рівно: перевіряє, чи два значення не рівні (наприклад, \`5 != 3\` поверне \`True\`)
+- \`>\` — Більше: перевіряє, чи ліве значення більше правого (наприклад, \`5 > 3\` поверне \`True\`)
+- \`<\` — Менше: перевіряє, чи ліве значення менше правого (наприклад, \`3 < 5\` поверне \`True\`)
+- \`>=\` — Більше або рівно: перевіряє, чи ліве значення більше або рівне правому (наприклад, \`5 >= 5\` поверне \`True\`)
+- \`<=\` — Менше або рівно: перевіряє, чи ліве значення менше або рівне правому (наприклад, \`3 <= 5\` поверне \`True\`)
+
+**Важливо запам'ятати:**
+- \`==\` — це оператор порівняння (перевіряє рівність)
+- \`=\` — це оператор присвоєння (присвоює значення)
+
+Це різні речі! Не плутайте їх!`
       },
       {
-        title: "Chained Comparison Operators",
-        content: `An interesting feature of Python is the ability to *chain* multiple comparisons to perform a more complex test. You can use these chained comparisons as shorthand for larger Boolean Expressions.
+        title: "Оператор == (Рівно)",
+        content: `Оператор \`==\` перевіряє, чи два значення рівні між собою.
 
-In this lecture we will learn how to chain comparison operators and we will also introduce two other important statements in Python: **and** and **or**.
+**Приклади:**
+\`\`\`python
+# Порівняння чисел
+5 == 5          # True
+5 == 3          # False
+10 == 10.0      # True (5 дорівнює 5.0)
 
-Let's look at a few examples of using chains:
+# Порівняння рядків
+"Python" == "Python"    # True
+"Python" == "python"    # False (великі та малі літери різні!)
+"Hello" == "Hello "     # False (пробіл в кінці)
 
-The above statement checks if 1 was less than 2 **and** if 2 was less than 3. We could have written this using an **and** statement in Python:
+# Порівняння булевих значень
+True == True    # True
+True == False   # False
+\`\`\`
 
-The **and** is used to make sure two checks have to be true in order for the total check to be true. Let's see another example:
+**Цікавий факт:**
+Python порівнює не тільки значення, але й враховує тип даних:
+\`\`\`python
+5 == "5"        # False (число 5 не дорівнює рядку "5")
+\`\`\`
 
-The above checks if 3 is larger than both of the other numbers, so you could use **and** to rewrite it as:
+**Практичне застосування:**
+\`\`\`python
+# Перевірка пароля
+password = "secret123"
+user_input = "secret123"
+is_correct = password == user_input  # True
 
-It's important to note that Python is checking both instances of the comparisons. We can also use **or** to write comparisons in Python. For example:
+# Перевірка віку
+age = 18
+is_adult = age == 18  # True
+\`\`\``
+      },
+      {
+        title: "Оператор != (Не рівно)",
+        content: `Оператор \`!=\` перевіряє, чи два значення **не рівні** між собою. Це протилежність оператора \`==\`.
 
-Note how it was true; this is because with the **or** operator, we only need one *or* the other to be true. Let's see one more example to drive this home:
+**Приклади:**
+\`\`\`python
+# Порівняння чисел
+5 != 3          # True (5 не дорівнює 3)
+5 != 5          # False (5 дорівнює 5)
 
-Great! For an overview of this quick lesson: You should have a comfortable understanding of using **and** and **or** statements as well as reading chained comparison code.
+# Порівняння рядків
+"Python" != "Java"     # True
+"Hello" != "Hello"     # False
 
-Go ahead and go to the quiz for this section to check your understanding!`
+# Практичне застосування
+username = "admin"
+user_input = "user"
+is_different = username != user_input  # True
+\`\`\`
+
+**Коли використовувати !=:**
+- Перевірка, чи значення відрізняються
+- Валідація даних (наприклад, перевірка, що поле не порожнє)
+- Умовні перевірки`
+      },
+      {
+        title: "Оператори > та < (Більше та Менше)",
+        content: `Оператори \`>\` та \`<\` порівнюють величини значень.
+
+**Оператор > (Більше):**
+\`\`\`python
+# Порівняння чисел
+10 > 5          # True
+5 > 10          # False
+5 > 5           # False (5 не більше 5, воно дорівнює 5)
+
+# Порівняння рядків (лексикографічне порівняння)
+"banana" > "apple"      # True ("b" йде після "a" в алфавіті)
+"zebra" > "apple"       # True
+"apple" > "banana"      # False
+\`\`\`
+
+**Оператор < (Менше):**
+\`\`\`python
+# Порівняння чисел
+3 < 5           # True
+10 < 5          # False
+5 < 5           # False
+
+# Порівняння рядків
+"apple" < "banana"      # True
+"zebra" < "apple"       # False
+\`\`\`
+
+**Практичне застосування:**
+\`\`\`python
+# Перевірка віку
+age = 16
+can_vote = age > 18      # False (16 не більше 18)
+
+# Перевірка температури
+temperature = 25
+is_hot = temperature > 30    # False
+is_cold = temperature < 10   # False
+
+# Порівняння оцінок
+score = 85
+is_excellent = score > 90    # False
+is_good = score > 70       # True
+\`\`\``
+      },
+      {
+        title: "Оператори >= та <= (Більше або рівно / Менше або рівно)",
+        content: `Ці оператори поєднують перевірку на рівність та нерівність.
+
+**Оператор >= (Більше або рівно):**
+\`\`\`python
+# Порівняння чисел
+5 >= 5          # True (5 дорівнює 5)
+5 >= 3          # True (5 більше 3)
+5 >= 10         # False (5 не більше і не дорівнює 10)
+
+# Практичне застосування
+age = 18
+can_vote = age >= 18      # True (18 більше або дорівнює 18)
+\`\`\`
+
+**Оператор <= (Менше або рівно):**
+\`\`\`python
+# Порівняння чисел
+5 <= 5          # True (5 дорівнює 5)
+5 <= 10         # True (5 менше 10)
+5 <= 3          # False (5 не менше і не дорівнює 3)
+
+# Практичне застосування
+temperature = 25
+is_comfortable = temperature <= 30  # True
+\`\`\`
+
+**Коли використовувати >= та <=:**
+
+Ці оператори дуже корисні для перевірки діапазонів:
+
+\`\`\`python
+# Перевірка оцінки - просто порівняння
+score = 85
+is_excellent = score >= 90  # False
+is_good = score >= 70       # True
+is_satisfactory = score >= 50  # True
+is_unsatisfactory = score < 50  # False
+
+# Перевірка віку для різних категорій
+age = 15
+is_child = age <= 12        # False
+is_teen = age >= 13 and age <= 19  # True
+is_adult = age >= 18        # False
+\`\`\``
+      },
+      {
+        title: "Порівняння різних типів даних",
+        content: `Python дозволяє порівнювати різні типи даних, але є важливі нюанси:
+
+**Порівняння чисел:**
+\`\`\`python
+# Цілі числа та числа з плаваючою точкою
+5 == 5.0        # True
+10 > 5.5        # True
+3.14 < 4        # True
+\`\`\`
+
+**Порівняння рядків:**
+\`\`\`python
+# Лексикографічне порівняння (за алфавітом)
+"apple" < "banana"      # True
+"zebra" > "apple"       # True
+"Apple" < "apple"       # True (великі літери йдуть перед малими в ASCII)
+
+# Порівняння довжини рядків
+len("hello") > len("hi")    # True (5 > 2)
+\`\`\`
+
+**Порівняння з різними типами:**
+\`\`\`python
+# Число та рядок - завжди False
+5 == "5"        # False
+10 > "5"        # TypeError! Не можна порівнювати різні типи таким чином
+
+# Булеві значення та числа
+True == 1        # True (True еквівалентне 1)
+False == 0       # True (False еквівалентне 0)
+True > False    # True (1 > 0)
+\`\`\`
+
+**Важливо:**
+- Завжди порівнюйте значення одного типу
+- Якщо потрібно порівняти різні типи, спочатку конвертуйте їх`
+      },
+      {
+        title: "Ланцюгові оператори порівняння",
+        content: `Python має дуже зручну особливість — можна ланцюжити оператори порівняння!
+
+**Звичайний спосіб (без ланцюжків):**
+\`\`\`python
+# Перевірка, чи число в діапазоні від 1 до 10
+number = 5
+in_range = number >= 1 and number <= 10  # True
+print(in_range)  # True
+\`\`\`
+
+**Ланцюговий спосіб (Python стиль):**
+\`\`\`python
+# Те саме, але коротше та читабельніше
+number = 5
+in_range = 1 <= number <= 10  # True
+print(in_range)  # True
+\`\`\`
+
+**Приклади ланцюгових порівнянь:**
+\`\`\`python
+# Перевірка діапазону
+age = 25
+is_working_age = 18 <= age <= 65  # True
+print(is_working_age)  # True
+
+# Перевірка температури
+temp = 22
+is_comfortable = 20 <= temp <= 25  # True
+print(is_comfortable)  # True
+
+# Множинні порівняння
+x = 5
+is_between = 1 < x < 10  # True
+print(is_between)  # True
+
+# Складніші приклади
+a, b, c = 1, 2, 3
+is_ascending = a < b < c  # True
+print(is_ascending)  # True
+\`\`\`
+
+**Переваги ланцюгових порівнянь:**
+- Код стає коротшим та читабельнішим
+- Менше помилок
+- Більш "Pythonic" стиль коду`
+      },
+      {
+        title: "Практичні приклади використання",
+        content: `Давайте розглянемо реальні сценарії використання операторів порівняння:
+
+**Приклад 1: Валідація пароля**
+\`\`\`python
+correct_password = "secret123"
+user_password = "secret123"
+
+# Перевірка пароля
+is_correct = user_password == correct_password  # True
+print(f"Пароль правильний: {is_correct}")  # Пароль правильний: True
+\`\`\`
+
+**Приклад 2: Перевірка віку**
+\`\`\`python
+age = 20
+
+# Перевірка, чи повнолітній
+is_adult = age >= 18  # True
+print(f"Повнолітній: {is_adult}")  # Повнолітній: True
+\`\`\`
+
+**Приклад 3: Оцінка температури**
+\`\`\`python
+temperature = 25
+
+# Перевірка різних температурних діапазонів
+is_very_hot = temperature > 30  # False
+is_warm = temperature > 20  # True
+is_cool = temperature > 10  # True
+is_cold = temperature <= 10  # False
+
+print(f"Дуже спекотно: {is_very_hot}")  # Дуже спекотно: False
+print(f"Тепло: {is_warm}")  # Тепло: True
+\`\`\`
+
+**Приклад 4: Перевірка оцінки**
+\`\`\`python
+score = 85
+
+# Перевірка різних рівнів оцінок
+is_excellent = score >= 90  # False
+is_good = score >= 70  # True
+is_satisfactory = score >= 50  # True
+is_unsatisfactory = score < 50  # False
+
+print(f"Відмінно: {is_excellent}")  # Відмінно: False
+print(f"Добре: {is_good}")  # Добре: True
+\`\`\``
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад коду",
-      code: `2 == 2`,
-      explanation: "Приклад коду з курсу"
+      title: "Приклад 1: Базові оператори порівняння",
+      code: `# Порівняння чисел
+a = 10
+b = 5
+
+print(f"{a} == {b}: {a == b}")    # False
+print(f"{a} != {b}: {a != b}")    # True
+print(f"{a} > {b}: {a > b}")      # True
+print(f"{a} < {b}: {a < b}")      # False
+print(f"{a} >= {b}: {a >= b}")   # True
+print(f"{a} <= {b}: {a <= b}")   # False`,
+      explanation: "Демонструє всі шість операторів порівняння з числами."
     },
     {
-      title: "Приклад коду",
-      code: `1 == 0`,
-      explanation: "Приклад коду з курсу"
+      title: "Приклад 2: Порівняння рядків",
+      code: `# Порівняння рядків
+name1 = "Python"
+name2 = "Java"
+
+print(f'"{name1}" == "{name2}": {name1 == name2}')  # False
+print(f'"{name1}" != "{name2}": {name1 != name2}')  # True
+print(f'"{name1}" > "{name2}": {name1 > name2}')    # True (P > J в алфавіті)
+print(f'"{name1}" < "{name2}": {name1 < name2}')    # False`,
+      explanation: "Показує, як порівнювати рядки лексикографічно (за алфавітом)."
     },
     {
-      title: "Приклад коду",
-      code: `2 != 1`,
-      explanation: "Приклад коду з курсу"
+      title: "Приклад 3: Ланцюгові порівняння",
+      code: `# Ланцюгові оператори порівняння
+number = 7
+
+# Перевірка, чи число в діапазоні
+in_range = 1 <= number <= 10  # True
+print(f"{number} знаходиться між 1 та 10: {in_range}")
+
+# Множинні порівняння
+x, y, z = 1, 2, 3
+is_ascending = x < y < z  # True
+print(f"Числа в порядку зростання: {is_ascending}")`,
+      explanation: "Демонструє зручний спосіб перевірки діапазонів у Python."
     },
     {
-      title: "Приклад коду",
-      code: `2 != 2`,
-      explanation: "Приклад коду з курсу"
+      title: "Приклад 4: Практичне застосування",
+      code: `# Перевірка віку для доступу
+age = 20
+min_age = 18
+max_age = 65
+
+can_access = age >= min_age  # True
+print(f"Доступ дозволено: {can_access}")
+
+# Перевірка оцінки
+score = 85
+is_excellent = score >= 90  # False
+is_good = score >= 70  # True
+needs_improvement = score < 70  # False
+
+print(f"Відмінно: {is_excellent}")
+print(f"Добре: {is_good}")
+print(f"Треба покращити: {needs_improvement}")`,
+      explanation: "Показує реальні сценарії використання операторів порівняння."
     },
     {
-      title: "Приклад коду",
-      code: `2 > 1`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `2 > 4`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `2 < 4`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `2 < 1`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `2 >= 2`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `2 >= 1`,
-      explanation: "Приклад коду з курсу"
+      title: "Приклад 5: Порівняння з булевими значеннями",
+      code: `# Порівняння булевих значень
+is_active = True
+is_premium = False
+
+print(f"is_active == True: {is_active == True}")        # True
+print(f"is_active != False: {is_active != False}")     # True
+print(f"is_premium == True: {is_premium == True}")     # False
+
+# Булеві значення та числа
+print(f"True == 1: {True == 1}")      # True
+print(f"False == 0: {False == 0}")   # True`,
+      explanation: "Демонструє порівняння булевих значень та їх еквівалентність числам."
     }
   ],
   
-  commonMistakes: [],
+  commonMistakes: [
+    {
+      mistake: "Плутати == (порівняння) з = (присвоєння)",
+      explanation: "Оператор = присвоює значення змінній, а == порівнює два значення. Це різні оператори!",
+      correctApproach: "Використовуйте == для порівняння: x == 5 (не x = 5 для порівняння)"
+    },
+    {
+      mistake: "Порівнювати різні типи даних без конвертації",
+      explanation: "Порівняння числа з рядком завжди поверне False, навіть якщо значення однакові.",
+      correctApproach: "Спочатку конвертуйте типи: int(user_input) == 5 або str(number) == '5'"
+    },
+    {
+      mistake: "Забувати про регістр при порівнянні рядків",
+      explanation: "'Python' != 'python' через різницю в регістрі літер.",
+      correctApproach: "Використовуйте .lower() або .upper(): 'Python'.lower() == 'python'.lower()"
+    },
+    {
+      mistake: "Неправильне використання >= та <=",
+      explanation: "Деякі студенти плутають, коли використовувати >= замість >, або <= замість <.",
+      correctApproach: ">= означає 'більше або дорівнює', <= означає 'менше або дорівнює'. Використовуйте >= для включення граничного значення."
+    },
+    {
+      mistake: "Порівняння з None використовуючи == замість is",
+      explanation: "Хоча == працює з None, краще використовувати is для перевірки на None.",
+      correctApproach: "Використовуйте: value is None (не value == None)"
+    }
+  ],
   
-  summary: "Підсумок уроку",
+  summary: `На цьому уроці ми вивчили:
+
+1. **Шість операторів порівняння:**
+   - \`==\` — рівно
+   - \`!=\` — не рівно
+   - \`>\` — більше
+   - \`<\` — менше
+   - \`>=\` — більше або рівно
+   - \`<=\` — менше або рівно
+
+2. **Результат порівняння** — завжди булеве значення (True або False)
+
+3. **Ланцюгові порівняння** — зручний спосіб перевірки діапазонів: \`1 <= x <= 10\`
+
+4. **Практичне застосування:**
+   - Валідація даних
+   - Перевірка умов
+   - Прийняття рішень у програмах
+
+5. **Важливі нюанси:**
+   - Не плутати \`==\` (порівняння) з \`=\` (присвоєння)
+   - Порівнювати значення одного типу
+   - Враховувати регістр при порівнянні рядків
+
+Тепер ви можете порівнювати значення та приймати рішення в програмах! Наступний урок — про логічні оператори (and, or, not), які дозволять створювати складніші умови.`,
   
   practiceTask: {
-    title: "Практична задача",
-    description: "Опишіть задачу",
-    problemStatement: "Умова задачі",
-    inputFormat: "",
-    outputFormat: "",
-    examples: [],
+    title: "Калькулятор порівнянь",
+    description: "Створіть програму, яка порівнює два числа та виводить результати всіх операцій порівняння",
+    problemStatement: `Напишіть програму, яка:
+1. Використовує два числа (введіть їх напряму в коді, не використовуйте input())
+2. Порівнює їх за допомогою всіх операторів порівняння
+3. Виводить результати всіх порівнянь у зрозумілому форматі
+4. Виводить висновок про співвідношення чисел (більше, менше, рівні)
+
+**Важливо:** Не використовуйте функцію input(). Введіть значення чисел напряму в коді (наприклад: num1 = 10.0, num2 = 5.0)`,
+    inputFormat: `Введіть значення чисел напряму в коді:
+num1 = 10.0
+num2 = 5.0
+
+**Примітка:** Не використовуйте input(), введіть значення напряму в коді`,
+    outputFormat: `Приклад виведення:
+Результати порівняння чисел 10 та 5:
+10 == 5: False
+10 != 5: True
+10 > 5: True
+10 < 5: False
+10 >= 5: True
+10 <= 5: False
+
+Висновок: 10 більше за 5`,
+    examples: [
+      {
+        input: `Введіть перше число: 10
+Введіть друге число: 5`,
+        output: `Результати порівняння чисел 10.0 та 5.0:
+----------------------------------------
+10.0 == 5.0: False
+10.0 != 5.0: True
+10.0 > 5.0: True
+10.0 < 5.0: False
+10.0 >= 5.0: True
+10.0 <= 5.0: False
+
+Висновок:
+Числа рівні: False
+10.0 більше за 5.0: True
+10.0 менше за 5.0: False`,
+        explanation: "Демонструє всі оператори порівняння для чисел 10 та 5."
+      },
+      {
+        input: `Введіть перше число: 7
+Введіть друге число: 7`,
+        output: `Результати порівняння чисел 7.0 та 7.0:
+----------------------------------------
+7.0 == 7.0: True
+7.0 != 7.0: False
+7.0 > 7.0: False
+7.0 < 7.0: False
+7.0 >= 7.0: True
+7.0 <= 7.0: True
+
+Висновок:
+Числа рівні: True
+7.0 більше за 7.0: False
+7.0 менше за 7.0: False`,
+        explanation: "Показує результати порівняння, коли числа рівні."
+      }
+    ],
     solution: {
-      code: "",
-      explanation: ""
+      code: `# Калькулятор порівнянь
+# Вводимо два числа напряму в коді (не використовуємо input())
+num1 = 10.0
+num2 = 5.0
+
+# Виводимо заголовок
+print(f"\\nРезультати порівняння чисел {num1} та {num2}:")
+print("-" * 40)
+
+# Виконуємо всі порівняння
+print(f"{num1} == {num2}: {num1 == num2}")
+print(f"{num1} != {num2}: {num1 != num2}")
+print(f"{num1} > {num2}: {num1 > num2}")
+print(f"{num1} < {num2}: {num1 < num2}")
+print(f"{num1} >= {num2}: {num1 >= num2}")
+print(f"{num1} <= {num2}: {num1 <= num2}")
+
+# Висновок на основі результатів порівнянь
+print("\\nВисновок:")
+is_equal = num1 == num2
+is_greater = num1 > num2
+is_less = num1 < num2
+
+# Виводимо результати порівнянь
+print(f"Числа рівні: {is_equal}")
+print(f"{num1} більше за {num2}: {is_greater}")
+print(f"{num1} менше за {num2}: {is_less}")`,
+      explanation: "Рішення використовує всі шість операторів порівняння. Результати порівнянь зберігаються в змінні та використовуються для виведення висновку."
     },
-    hints: [],
-    difficulty: "beginner"
+    hints: [
+      "Введіть значення чисел напряму в коді (наприклад: num1 = 10.0, num2 = 5.0)",
+      "Не використовуйте функцію input() - введіть значення напряму",
+      "Використовуйте f-рядки для форматування виведення",
+      "Зберігайте результати порівнянь у змінні (наприклад, is_equal = num1 == num2)",
+      "Використовуйте оператори порівняння для всіх перевірок"
+    ],
+    difficulty: "beginner",
+    testCases: [
+      {
+        input: ["10", "5"],
+        expectedOutput: "10 > 5: True",
+        description: "Перевірка, що 10 більше за 5"
+      },
+      {
+        input: ["7", "7"],
+        expectedOutput: "7 == 7: True",
+        description: "Перевірка рівності чисел"
+      },
+      {
+        input: ["3", "8"],
+        expectedOutput: "3 < 8: True",
+        description: "Перевірка, що 3 менше за 8"
+      }
+    ]
   },
   
   quiz: {
-    questions: [],
-    timeLimit: 10,
+    questions: [
+      {
+        id: "q1",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Який оператор перевіряє, чи два значення рівні?",
+        options: [
+          "=",
+          "==",
+          "===",
+          "equals"
+        ],
+        correctAnswer: 1,
+        explanation: "Оператор == використовується для перевірки рівності. Оператор = використовується для присвоєння значення."
+      },
+      {
+        id: "q2",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що поверне вираз: 5 != 5?",
+        options: [
+          "True",
+          "False",
+          "Помилку",
+          "None"
+        ],
+        correctAnswer: 1,
+        explanation: "5 != 5 поверне False, оскільки 5 дорівнює 5, тому вони не є нерівними."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\nx = 10\ny = 5\nprint(x > y)\n```",
+        options: [
+          "True",
+          "False",
+          "10",
+          "Помилку"
+        ],
+        correctAnswer: 0,
+        explanation: "10 > 5 є True, тому програма виведе True."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Який оператор перевіряє 'більше або дорівнює'?",
+        options: [
+          ">",
+          ">=",
+          "=>",
+          ">="
+        ],
+        correctAnswer: 1,
+        explanation: "Оператор >= перевіряє, чи ліве значення більше або дорівнює правому."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\nresult = 7 >= 7\nprint(result)\n```",
+        options: [
+          "True",
+          "False",
+          "7",
+          "Помилку"
+        ],
+        correctAnswer: 0,
+        explanation: "7 >= 7 є True, оскільки 7 дорівнює 7 (умова 'більше або дорівнює' виконується)."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що поверне вираз: 'Python' == 'python'?",
+        options: [
+          "True",
+          "False",
+          "Помилку",
+          "None"
+        ],
+        correctAnswer: 1,
+        explanation: "Рядки 'Python' та 'python' не рівні, оскільки Python розрізняє великі та малі літери."
+      },
+      {
+        id: "q7",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\nage = 20\nresult = 18 <= age <= 65\nprint(result)\n```",
+        options: [
+          "True",
+          "False",
+          "20",
+          "Помилку"
+        ],
+        correctAnswer: 0,
+        explanation: "Ланцюгове порівняння 18 <= 20 <= 65 є True, оскільки 20 знаходиться між 18 та 65."
+      },
+      {
+        id: "q8",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Який оператор НЕ є оператором порівняння?",
+        options: [
+          "==",
+          "!=",
+          "=",
+          "<="
+        ],
+        correctAnswer: 2,
+        explanation: "Оператор = використовується для присвоєння значення, а не для порівняння. Для порівняння використовується ==."
+      },
+      {
+        id: "q9",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\na = 5\nb = 3\nprint(a < b)\n```",
+        options: [
+          "True",
+          "False",
+          "5",
+          "Помилку"
+        ],
+        correctAnswer: 1,
+        explanation: "5 < 3 є False, оскільки 5 не менше за 3."
+      },
+      {
+        id: "q10",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Який тип даних повертають оператори порівняння?",
+        options: [
+          "int",
+          "str",
+          "bool",
+          "float"
+        ],
+        correctAnswer: 2,
+        explanation: "Оператори порівняння завжди повертають булеве значення (True або False)."
+      }
+    ],
+    timeLimit: 15,
     passingScore: 70
   }
 }
