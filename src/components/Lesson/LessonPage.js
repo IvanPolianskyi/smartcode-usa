@@ -966,6 +966,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
             <ChevronRight className="w-4 h-4" />
             <Link href={`/courses/${courseId}`}>Курс</Link>
             <ChevronRight className="w-4 h-4" />
+            {currentModule ? (
+              <Link href={`/courses/${courseId}#module-${currentModule.moduleId}`}>Модуль</Link>
+            ) : (
+              <span>Модуль</span>
+            )}
+            <ChevronRight className="w-4 h-4" />
             <span>Урок</span>
           </div>
           
