@@ -14,9 +14,11 @@ import {
   AlertCircle,
   Lightbulb,
   ChevronRight,
+  ChevronLeft,
   Lock,
   Loader2,
-  Terminal
+  Terminal,
+  GripVertical
 } from 'lucide-react'
 import { updateProgress, checkCoursePurchase, createPayment, enrollInCourse } from '@/lib/authClient'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
@@ -398,6 +400,30 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const [practiceCompleted, setPracticeCompleted] = useState(false)
   const [practiceChecked, setPracticeChecked] = useState(false)
   const [outputErrors, setOutputErrors] = useState([]) // Масив індексів рядків з помилками
+  
+  // Sidebar state
+  const [sidebarWidth, setSidebarWidth] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('lessonSidebarWidth')
+      return saved ? parseInt(saved, 10) : 320
+    }
+    return 320
+  })
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('lessonSidebarCollapsed')
+      return saved === 'true'
+    }
+    return false
+  })
+  const [isResizing, setIsResizing] = useState(false)
+  const [isSidebarClosed, setIsSidebarClosed] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('lessonSidebarClosed')
+      return saved === 'true'
+    }
+    return false
+  })
   
   // Handle Tab key for indentation in code editor
   const handleCodeKeyDown = (e) => {
@@ -889,10 +915,300 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     }
   }
   
+  // Helper function to check if lesson is completed
+  const isLessonCompleted = (lessonId) => {
+    return userProgress?.completedLessons?.includes(lessonId) || false
+  }
+
+  // Helper function to check if lesson is unlocked
+  const isLessonUnlocked = (lesson, lessonIndex, moduleIndex) => {
+    if (userRole === 'admin' || isPurchased) return true
+    if (moduleIndex === 0 && lesson.order === 1) return true
+    if (moduleIndex === 0) return true
+    // Check if previous lesson is completed
+    const allLessons = curriculum.modules.flatMap(m => m.lessons)
+    const currentIndex = allLessons.findIndex(l => l.lessonId === lesson.lessonId)
+    if (currentIndex === 0) return true
+    const previousLesson = allLessons[currentIndex - 1]
+    return isLessonCompleted(previousLesson.lessonId)
+  }
+
+  // Handle sidebar resize
+  const handleResizeStart = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsResizing(true)
+    
+    const startX = e.clientX
+    const startWidth = isSidebarClosed ? 0 : sidebarWidth
+    let currentWidth = startWidth
+    let isClosed = isSidebarClosed
+    
+    let rafId = null
+    
+    const handleMouseMove = (e) => {
+      if (rafId) {
+        cancelAnimationFrame(rafId)
+      }
+      
+      rafId = requestAnimationFrame(() => {
+        const diff = e.clientX - startX
+        const newWidth = Math.max(0, startWidth + diff)
+        const maxWidth = Math.min(600, window.innerWidth * 0.5)
+        
+        if (newWidth <= 0) {
+          currentWidth = 0
+          isClosed = true
+          setIsSidebarClosed(true)
+          setSidebarWidth(0)
+        } else if (newWidth > 0 && newWidth < 50) {
+          // Мінімальна ширина для відображення
+          currentWidth = 50
+          isClosed = false
+          setSidebarWidth(50)
+          setIsSidebarClosed(false)
+        } else if (newWidth >= 50 && newWidth <= maxWidth) {
+          currentWidth = newWidth
+          isClosed = false
+          setSidebarWidth(newWidth)
+          setIsSidebarClosed(false)
+        } else if (newWidth > maxWidth) {
+          currentWidth = maxWidth
+          isClosed = false
+          setSidebarWidth(maxWidth)
+          setIsSidebarClosed(false)
+        }
+      })
+    }
+    
+    const handleMouseUp = () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId)
+      }
+      setIsResizing(false)
+      localStorage.setItem('lessonSidebarWidth', currentWidth.toString())
+      localStorage.setItem('lessonSidebarClosed', isClosed.toString())
+      document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseup', handleMouseUp)
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
+      document.body.style.pointerEvents = ''
+    }
+    
+    document.body.style.cursor = 'col-resize'
+    document.body.style.userSelect = 'none'
+    document.body.style.pointerEvents = 'auto'
+    document.addEventListener('mousemove', handleMouseMove, { passive: true })
+    document.addEventListener('mouseup', handleMouseUp)
+  }
+
+  // Handle edge drag to open sidebar when closed
+  const handleEdgeDragStart = (e) => {
+    if (!isSidebarClosed) return
+    
+    e.preventDefault()
+    setIsResizing(true)
+    
+    const startX = e.clientX
+    const savedWidth = sidebarWidth > 0 ? sidebarWidth : 320
+    let currentWidth = 0
+    let isClosed = true
+    
+    let rafId = null
+    
+    const handleMouseMove = (e) => {
+      if (rafId) {
+        cancelAnimationFrame(rafId)
+      }
+      
+      rafId = requestAnimationFrame(() => {
+        const newWidth = Math.max(0, e.clientX)
+        const maxWidth = Math.min(600, window.innerWidth * 0.5)
+        
+        if (newWidth >= 50 && newWidth <= maxWidth) {
+          currentWidth = newWidth
+          isClosed = false
+          setSidebarWidth(newWidth)
+          setIsSidebarClosed(false)
+        } else if (newWidth > maxWidth) {
+          currentWidth = maxWidth
+          isClosed = false
+          setSidebarWidth(maxWidth)
+          setIsSidebarClosed(false)
+        } else if (newWidth < 50 && newWidth > 0) {
+          currentWidth = 50
+          isClosed = false
+          setSidebarWidth(50)
+          setIsSidebarClosed(false)
+        }
+      })
+    }
+    
+    const handleMouseUp = () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId)
+      }
+      setIsResizing(false)
+      localStorage.setItem('lessonSidebarWidth', currentWidth > 0 ? currentWidth.toString() : savedWidth.toString())
+      localStorage.setItem('lessonSidebarClosed', isClosed.toString())
+      document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseup', handleMouseUp)
+      document.body.style.cursor = ''
+      document.body.style.userSelect = ''
+    }
+    
+    document.body.style.cursor = 'col-resize'
+    document.body.style.userSelect = 'none'
+    document.addEventListener('mousemove', handleMouseMove, { passive: true })
+    document.addEventListener('mouseup', handleMouseUp)
+  }
+
+  // Handle sidebar toggle
+  const toggleSidebar = () => {
+    if (isSidebarClosed) {
+      // Якщо закрите, відкрити
+      setIsSidebarClosed(false)
+      const savedWidth = sidebarWidth > 0 ? sidebarWidth : 320
+      setSidebarWidth(savedWidth)
+      localStorage.setItem('lessonSidebarClosed', 'false')
+      localStorage.setItem('lessonSidebarWidth', savedWidth.toString())
+    } else {
+      // Якщо відкрите, закрити
+      setIsSidebarClosed(true)
+      setSidebarWidth(0)
+      localStorage.setItem('lessonSidebarClosed', 'true')
+    }
+  }
+
+  // Save sidebar width to localStorage when it changes
+  useEffect(() => {
+    if (!isResizing && sidebarWidth) {
+      localStorage.setItem('lessonSidebarWidth', sidebarWidth.toString())
+    }
+  }, [sidebarWidth, isResizing])
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      document.removeEventListener('mousemove', () => {})
+      document.removeEventListener('mouseup', () => {})
+    }
+  }, [])
+
   return (
-    <div className={styles.container}>
-      {/* Header */}
-      <header className={styles.header}>
+    <div className={`${styles.pageWrapper} ${isResizing ? styles.resizing : ''}`}>
+      {/* Edge drag area when sidebar is closed */}
+      {isSidebarClosed && (
+        <div 
+          className={styles.edgeDragArea}
+          onMouseDown={handleEdgeDragStart}
+          title="Тягніть, щоб відкрити меню"
+        />
+      )}
+      
+      {/* Sidebar Navigation */}
+      <aside 
+        className={`${styles.sidebar} ${isSidebarCollapsed ? styles.collapsed : ''} ${isSidebarClosed ? styles.closed : ''}`}
+        style={{ 
+          width: isSidebarClosed ? '0px' : (isSidebarCollapsed ? '60px' : `${sidebarWidth}px`),
+          '--sidebar-width': `${sidebarWidth}px`
+        }}
+      >
+        {/* Collapse/Expand Button */}
+        {!isSidebarClosed && (
+          <button 
+            className={styles.sidebarToggle}
+            onClick={toggleSidebar}
+            title={isSidebarCollapsed ? 'Розгорнути меню' : 'Згорнути меню'}
+          >
+            {isSidebarCollapsed ? (
+              <ChevronRight className={styles.toggleIcon} />
+            ) : (
+              <ChevronLeft className={styles.toggleIcon} />
+            )}
+          </button>
+        )}
+        
+        {/* Toggle button when closed */}
+        {isSidebarClosed && (
+          <button 
+            className={styles.sidebarToggleClosed}
+            onClick={toggleSidebar}
+            title="Відкрити меню"
+          >
+            <ChevronRight className={styles.toggleIcon} />
+          </button>
+        )}
+
+        {/* Resize Handle */}
+        {!isSidebarCollapsed && (
+          <div 
+            className={styles.resizeHandle}
+            onMouseDown={handleResizeStart}
+            title="Змінити розмір меню"
+          >
+            <GripVertical className={styles.resizeIcon} />
+          </div>
+        )}
+
+        <div className={styles.sidebarHeader}>
+          {!isSidebarCollapsed && <h3>Навігація по курсу</h3>}
+        </div>
+        {!isSidebarCollapsed && (
+          <nav className={styles.sidebarNav}>
+            {curriculum.modules.map((module, moduleIndex) => {
+              const isModuleExpanded = moduleIndex === lessonModuleIndex || moduleIndex < lessonModuleIndex
+              return (
+                <div key={module.moduleId} className={styles.moduleSection}>
+                  <div className={styles.moduleHeader}>
+                    <span className={styles.moduleTitle}>
+                      Модуль {module.order}: {module.title}
+                    </span>
+                  </div>
+                  <div className={styles.lessonsList}>
+                    {module.lessons.map((lesson, lessonIndex) => {
+                      const isCompleted = isLessonCompleted(lesson.lessonId)
+                      const isUnlocked = isLessonUnlocked(lesson, lessonIndex, moduleIndex)
+                      const isActive = lesson.lessonId === lessonId
+                      
+                      return (
+                        <Link
+                          key={lesson.lessonId}
+                          href={`/courses/${courseId}/lessons/${lesson.lessonId}`}
+                          className={`${styles.lessonLink} ${isActive ? styles.active : ''} ${!isUnlocked ? styles.locked : ''} ${isCompleted ? styles.completed : ''}`}
+                          onClick={(e) => {
+                            if (!isUnlocked) {
+                              e.preventDefault()
+                            }
+                          }}
+                        >
+                          <div className={styles.lessonLinkContent}>
+                            {isCompleted ? (
+                              <CheckCircle2 className={styles.lessonIcon} />
+                            ) : isUnlocked ? (
+                              <Play className={styles.lessonIcon} />
+                            ) : (
+                              <Lock className={styles.lessonIcon} />
+                            )}
+                            <span className={styles.lessonNumber}>{lesson.order}</span>
+                            <span className={styles.lessonTitle}>{lesson.title}</span>
+                          </div>
+                        </Link>
+                      )
+                    })}
+                  </div>
+                </div>
+              )
+            })}
+          </nav>
+        )}
+      </aside>
+
+      {/* Main Content */}
+      <div className={styles.mainContent}>
+        <div className={styles.container}>
+          {/* Header */}
+          <header className={styles.header}>
         <div className={styles.backButtons}>
           <Link 
             href={`/courses/${courseId}`}
@@ -1465,6 +1781,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
             )}
           </div>
         )}
+        </div>
+        </div>
       </div>
     </div>
   )

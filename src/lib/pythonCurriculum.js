@@ -2,7 +2,6 @@
  * Full Curriculum for "Complete Python 3 Bootcamp" (Ukrainian Version)
  * 
  * Структура відповідає Complete Python 3 Bootcamp від Pierian Data
- * 20 Modules (включаючи 3 Milestone Projects)
  * Курс Python: повна навчальна програма
  */
 
@@ -451,39 +450,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-04",
+      moduleId: "module-05",
       order: 4,
-      title: "04 - Milestone Project 1",
-      description: "Перший великий проект: створення повноцінної програми з використанням всіх набутих знань",
-      duration: { weeks: 2, lessons: 1 },
-      learningOutcomes: [
-        "Застосувати всі набуті знання на практиці",
-        "Створити повноцінну програму",
-        "Організувати код логічно",
-        "Реалізувати інтерактивну програму"
-      ],
-      lessons: [
-        {
-          lessonId: "lesson-04-1",
-          order: 1,
-          title: "Milestone Project 1: Гра або інтерактивна програма",
-          learningObjectives: [
-            "Створити повноцінну програму",
-            "Застосувати об'єкти, структури даних, оператори та функції",
-            "Організувати код логічно",
-            "Реалізувати інтерактивність",
-            "Тестувати та відлагоджувати програму"
-          ],
-          estimatedTime: 300,
-          prerequisites: ["lesson-03-10"],
-          isProject: true
-        }
-      ]
-    },
-    {
-      moduleId: "module-5",
-      order: 5,
-      title: "05 - Робота з файлами та обробка помилок",
+      title: "04 - Робота з файлами та обробка помилок",
       description: "Робота з файлами, CSV, обробка винятків, створення власних винятків, практичні проекти",
       duration: { weeks: 3, lessons: 6 },
       learningOutcomes: [
@@ -496,7 +465,7 @@ export const pythonCurriculum = {
       ],
       lessons: [
         {
-          lessonId: "lesson-5-1",
+          lessonId: "lesson-05-1",
           order: 1,
           title: "Робота з файлами: open, read, write",
           learningObjectives: [
@@ -507,10 +476,10 @@ export const pythonCurriculum = {
             "Розуміти різні режими відкриття файлів"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-04-1"]
+          prerequisites: ["lesson-03-10"]
         },
         {
-          lessonId: "lesson-5-2",
+          lessonId: "lesson-05-2",
           order: 2,
           title: "Контекстний менеджер with",
           learningObjectives: [
@@ -521,10 +490,10 @@ export const pythonCurriculum = {
             "Розуміти принцип роботи контекстних менеджерів"
           ],
           estimatedTime: 60,
-          prerequisites: ["lesson-5-1"]
+          prerequisites: ["lesson-05-1"]
         },
         {
-          lessonId: "lesson-5-3",
+          lessonId: "lesson-05-3",
           order: 3,
           title: "Робота з CSV та TXT",
           learningObjectives: [
@@ -535,10 +504,10 @@ export const pythonCurriculum = {
             "Розуміти різницю між CSV та TXT"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-5-2"]
+          prerequisites: ["lesson-05-2"]
         },
         {
-          lessonId: "lesson-5-4",
+          lessonId: "lesson-05-4",
           order: 4,
           title: "Обробка помилок: try / except / finally",
           learningObjectives: [
@@ -549,10 +518,10 @@ export const pythonCurriculum = {
             "Розуміти ієрархію винятків"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-5-3"]
+          prerequisites: ["lesson-05-3"]
         },
         {
-          lessonId: "lesson-5-5",
+          lessonId: "lesson-05-5",
           order: 5,
           title: "Створення власних винятків",
           learningObjectives: [
@@ -563,10 +532,10 @@ export const pythonCurriculum = {
             "Розуміти коли створювати власні винятки"
           ],
           estimatedTime: 75,
-          prerequisites: ["lesson-5-4"]
+          prerequisites: ["lesson-05-4"]
         },
         {
-          lessonId: "lesson-5-6",
+          lessonId: "lesson-05-6",
           order: 6,
           title: "Практика: файлові задачі",
           learningObjectives: [
@@ -577,15 +546,15 @@ export const pythonCurriculum = {
             "Об'єднати всі знання модуля 5"
           ],
           estimatedTime: 120,
-          prerequisites: ["lesson-5-5"],
+          prerequisites: ["lesson-05-5"],
           isProject: true
         }
       ]
     },
     {
-      moduleId: "module-05",
-      order: 6,
-      title: "06 - Об'єктно-орієнтоване програмування",
+      moduleId: "module-06",
+      order: 5,
+      title: "05 - Об'єктно-орієнтоване програмування",
       description: "Класи, об'єкти, наслідування, поліморфізм, інкапсуляція, магічні методи",
       duration: { weeks: 5, lessons: 10 },
       learningOutcomes: [
@@ -596,7 +565,7 @@ export const pythonCurriculum = {
       ],
       lessons: [
         {
-          lessonId: "lesson-05-1",
+          lessonId: "lesson-06-1",
           order: 1,
           title: "Основи ООП: класи та об'єкти",
           learningObjectives: [
@@ -606,10 +575,10 @@ export const pythonCurriculum = {
             "Використовувати конструктор __init__"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-5-6"]
+          prerequisites: ["lesson-05-6"]
         },
         {
-          lessonId: "lesson-05-2",
+          lessonId: "lesson-06-2",
           order: 2,
           title: "Атрибути та методи класу",
           learningObjectives: [
@@ -619,10 +588,10 @@ export const pythonCurriculum = {
             "Розуміти різницю між типами методів"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-05-1"]
+          prerequisites: ["lesson-06-1"]
         },
         {
-          lessonId: "lesson-05-3",
+          lessonId: "lesson-06-3",
           order: 3,
           title: "Інкапсуляція та модифікатори доступу",
           learningObjectives: [
@@ -632,10 +601,10 @@ export const pythonCurriculum = {
             "Контролювати доступ до даних"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-05-2"]
+          prerequisites: ["lesson-06-2"]
         },
         {
-          lessonId: "lesson-05-4",
+          lessonId: "lesson-06-4",
           order: 4,
           title: "Наслідування",
           learningObjectives: [
@@ -645,10 +614,10 @@ export const pythonCurriculum = {
             "Розуміти MRO (Method Resolution Order)"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-05-3"]
+          prerequisites: ["lesson-06-3"]
         },
         {
-          lessonId: "lesson-05-5",
+          lessonId: "lesson-06-5",
           order: 5,
           title: "Поліморфізм",
           learningObjectives: [
@@ -658,10 +627,10 @@ export const pythonCurriculum = {
             "Використовувати поліморфізм на практиці"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-05-4"]
+          prerequisites: ["lesson-06-4"]
         },
         {
-          lessonId: "lesson-05-6",
+          lessonId: "lesson-06-6",
           order: 6,
           title: "Магічні методи (__str__, __len__, __repr__ тощо)",
           learningObjectives: [
@@ -671,10 +640,10 @@ export const pythonCurriculum = {
             "Використовувати __getitem__, __setitem__"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-05-5"]
+          prerequisites: ["lesson-06-5"]
         },
         {
-          lessonId: "lesson-05-7",
+          lessonId: "lesson-06-7",
           order: 7,
           title: "Dataclasses",
           learningObjectives: [
@@ -684,10 +653,10 @@ export const pythonCurriculum = {
             "Працювати з полями та значеннями за замовчуванням"
           ],
           estimatedTime: 75,
-          prerequisites: ["lesson-05-6"]
+          prerequisites: ["lesson-06-6"]
         },
         {
-          lessonId: "lesson-05-8",
+          lessonId: "lesson-06-8",
           order: 8,
           title: "Абстрактні класи та інтерфейси",
           learningObjectives: [
@@ -697,10 +666,10 @@ export const pythonCurriculum = {
             "Створювати контракти для класів"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-05-7"]
+          prerequisites: ["lesson-06-7"]
         },
         {
-          lessonId: "lesson-05-9",
+          lessonId: "lesson-06-9",
           order: 9,
           title: "Композиція vs наслідування",
           learningObjectives: [
@@ -710,10 +679,10 @@ export const pythonCurriculum = {
             "Уникати проблем наслідування"
           ],
           estimatedTime: 75,
-          prerequisites: ["lesson-05-8"]
+          prerequisites: ["lesson-06-8"]
         },
         {
-          lessonId: "lesson-05-10",
+          lessonId: "lesson-06-10",
           order: 10,
           title: "Практика: ООП-проєкт",
           learningObjectives: [
@@ -723,13 +692,13 @@ export const pythonCurriculum = {
             "Створити повноцінний проект"
           ],
           estimatedTime: 180,
-          prerequisites: ["lesson-05-9"]
+          prerequisites: ["lesson-06-9"]
         }
       ]
     },
     {
-      moduleId: "module-06",
-      order: 7,
+      moduleId: "module-07",
+      order: 6,
       title: "06 - Модулі та пакети",
       description: "Створення та використання модулів, організація коду в пакети, стандартна бібліотека",
       duration: { weeks: 2, lessons: 5 },
@@ -741,7 +710,7 @@ export const pythonCurriculum = {
       ],
       lessons: [
         {
-          lessonId: "lesson-06-1",
+          lessonId: "lesson-07-1",
           order: 1,
           title: "Модулі та імпорт",
           learningObjectives: [
@@ -751,10 +720,10 @@ export const pythonCurriculum = {
             "Розуміти __name__ та __main__"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-05-10"]
+          prerequisites: ["lesson-06-10"]
         },
         {
-          lessonId: "lesson-06-2",
+          lessonId: "lesson-07-2",
           order: 2,
           title: "Пакети та __init__.py",
           learningObjectives: [
@@ -764,10 +733,10 @@ export const pythonCurriculum = {
             "Імпортувати з пакетів"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-06-1"]
+          prerequisites: ["lesson-07-1"]
         },
         {
-          lessonId: "lesson-06-3",
+          lessonId: "lesson-07-3",
           order: 3,
           title: "Стандартна бібліотека Python: os, sys, pathlib",
           learningObjectives: [
@@ -777,10 +746,10 @@ export const pythonCurriculum = {
             "Отримувати інформацію про систему"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-06-2"]
+          prerequisites: ["lesson-07-2"]
         },
         {
-          lessonId: "lesson-06-4",
+          lessonId: "lesson-07-4",
           order: 4,
           title: "Стандартна бібліотека: datetime, math, random",
           learningObjectives: [
@@ -790,10 +759,10 @@ export const pythonCurriculum = {
             "Застосовувати для різних задач"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-06-3"]
+          prerequisites: ["lesson-07-3"]
         },
         {
-          lessonId: "lesson-06-5",
+          lessonId: "lesson-07-5",
           order: 5,
           title: "Практика: створення власного пакету",
           learningObjectives: [
@@ -803,12 +772,12 @@ export const pythonCurriculum = {
             "Практикуватися у написанні модульного коду"
           ],
           estimatedTime: 120,
-          prerequisites: ["lesson-06-4"]
+          prerequisites: ["lesson-07-4"]
         }
       ]
     },
     {
-      moduleId: "module-07",
+      moduleId: "module-08",
       order: 7,
       title: "07 - Обробка помилок та винятків",
       description: "Try/except блоки, створення власних винятків, обробка помилок у програмах",
@@ -821,7 +790,7 @@ export const pythonCurriculum = {
       ],
       lessons: [
         {
-          lessonId: "lesson-07-1",
+          lessonId: "lesson-08-1",
           order: 1,
           title: "Обробка помилок: try / except / finally",
           learningObjectives: [
@@ -831,10 +800,10 @@ export const pythonCurriculum = {
             "Використовувати finally та else"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-06-5"]
+          prerequisites: ["lesson-07-5"]
         },
         {
-          lessonId: "lesson-07-2",
+          lessonId: "lesson-08-2",
           order: 2,
           title: "Типи винятків та обробка помилок",
           learningObjectives: [
@@ -844,10 +813,10 @@ export const pythonCurriculum = {
             "Логувати помилки"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-07-1"]
+          prerequisites: ["lesson-08-5"]
         },
         {
-          lessonId: "lesson-07-3",
+          lessonId: "lesson-08-3",
           order: 3,
           title: "Створення власних винятків",
           learningObjectives: [
@@ -857,10 +826,10 @@ export const pythonCurriculum = {
             "Документувати винятки"
           ],
           estimatedTime: 75,
-          prerequisites: ["lesson-07-2"]
+          prerequisites: ["lesson-08-2"]
         },
         {
-          lessonId: "lesson-07-4",
+          lessonId: "lesson-08-4",
           order: 4,
           title: "Assert та валідація даних",
           learningObjectives: [
@@ -870,10 +839,10 @@ export const pythonCurriculum = {
             "Створювати надійний код"
           ],
           estimatedTime: 75,
-          prerequisites: ["lesson-07-3"]
+          prerequisites: ["lesson-08-3"]
         },
         {
-          lessonId: "lesson-07-5",
+          lessonId: "lesson-08-5",
           order: 5,
           title: "Практика: обробка помилок у програмах",
           learningObjectives: [
@@ -883,44 +852,14 @@ export const pythonCurriculum = {
             "Створити надійну програму"
           ],
           estimatedTime: 120,
-          prerequisites: ["lesson-07-4"]
+          prerequisites: ["lesson-08-4"]
         }
       ]
     },
     {
-      moduleId: "module-08",
+      moduleId: "module-09",
       order: 8,
-      title: "08 - Milestone Project 2",
-      description: "Другий великий проект: створення програми з використанням ООП, модулів та обробки помилок",
-      duration: { weeks: 2, lessons: 1 },
-      learningOutcomes: [
-        "Застосувати ООП принципи",
-        "Створити модульну архітектуру",
-        "Реалізувати обробку помилок",
-        "Створити повноцінну програму"
-      ],
-      lessons: [
-        {
-          lessonId: "lesson-08-1",
-          order: 1,
-          title: "Milestone Project 2: Програма з ООП та модулями",
-          learningObjectives: [
-            "Створити програму з використанням ООП",
-            "Організувати код у модулі та пакети",
-            "Реалізувати обробку помилок",
-            "Створити повноцінну систему",
-            "Тестувати та документувати код"
-          ],
-          estimatedTime: 360,
-          prerequisites: ["lesson-07-5"],
-          isProject: true
-        }
-      ]
-    },
-    {
-      moduleId: "module-10",
-      order: 10,
-      title: "10 - Декоратори Python",
+      title: "08 - Декоратори Python",
       description: "Створення та використання декораторів для розширення функціональності функцій",
       duration: { weeks: 2, lessons: 4 },
       learningOutcomes: [
@@ -941,7 +880,7 @@ export const pythonCurriculum = {
             "Застосовувати декоратори до функцій"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-08-1"]
+          prerequisites: ["lesson-08-5"]
         },
         {
           lessonId: "lesson-10-2",
@@ -985,9 +924,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-11",
-      order: 11,
-      title: "11 - Генератори Python",
+      moduleId: "module-10",
+      order: 9,
+      title: "09 - Генератори Python",
       description: "Створення генераторів, генераторні вирази, yield, ітератори",
       duration: { weeks: 2, lessons: 4 },
       learningOutcomes: [
@@ -1052,9 +991,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-12",
-      order: 12,
-      title: "12 - Розширені модулі Python",
+      moduleId: "module-11",
+      order: 10,
+      title: "10 - Розширені модулі Python",
       description: "Поглиблена робота з модулями: collections, itertools, functools, json, csv",
       duration: { weeks: 3, lessons: 6 },
       learningOutcomes: [
@@ -1145,9 +1084,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-13",
-      order: 13,
-      title: "13 - Веб-скрапінг",
+      moduleId: "module-12",
+      order: 11,
+      title: "11 - Веб-скрапінг",
       description: "Збір даних з веб-сторінок за допомогою BeautifulSoup та requests",
       duration: { weeks: 2, lessons: 4 },
       learningOutcomes: [
@@ -1212,9 +1151,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-14",
-      order: 14,
-      title: "14 - Робота з зображеннями",
+      moduleId: "module-13",
+      order: 12,
+      title: "12 - Робота з зображеннями",
       description: "Обробка зображень за допомогою PIL/Pillow, маніпуляції з зображеннями",
       duration: { weeks: 2, lessons: 4 },
       learningOutcomes: [
@@ -1279,9 +1218,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-15",
-      order: 15,
-      title: "15 - PDF та електронні таблиці",
+      moduleId: "module-14",
+      order: 13,
+      title: "13 - PDF та електронні таблиці",
       description: "Робота з PDF файлами та електронними таблицями (Excel, CSV)",
       duration: { weeks: 2, lessons: 4 },
       learningOutcomes: [
@@ -1346,9 +1285,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-16",
-      order: 16,
-      title: "16 - Відправка email з Python",
+      moduleId: "module-15",
+      order: 14,
+      title: "14 - Відправка email з Python",
       description: "Відправка email повідомлень, робота з SMTP, створення HTML email",
       duration: { weeks: 1, lessons: 3 },
       learningOutcomes: [
@@ -1400,9 +1339,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-17",
-      order: 17,
-      title: "17 - Розширені об'єкти та структури даних",
+      moduleId: "module-16",
+      order: 15,
+      title: "15 - Розширені об'єкти та структури даних",
       description: "Поглиблена робота з об'єктами: протоколи, контекстні менеджери, дескриптори",
       duration: { weeks: 2, lessons: 5 },
       learningOutcomes: [
@@ -1480,42 +1419,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-18",
-      order: 18,
-      title: "18 - Milestone Project 3",
-      description: "Третій великий проект: створення повноцінної програми з використанням всіх набутих знань",
-      duration: { weeks: 3, lessons: 1 },
-      learningOutcomes: [
-        "Застосувати всі набуті знання",
-        "Створити повноцінну програму",
-        "Використати веб-скрапінг, обробку файлів, email",
-        "Створити фінальний проект"
-      ],
-      lessons: [
-        {
-          lessonId: "lesson-18-1",
-          order: 1,
-          title: "Milestone Project 3: Фінальний проект",
-          learningObjectives: [
-            "Створити повноцінну програму",
-            "Застосувати всі набуті знання",
-            "Використати веб-скрапінг, обробку файлів, email",
-            "Створити модульну архітектуру",
-            "Реалізувати обробку помилок",
-            "Створити документацію",
-            "Протестувати програму"
-          ],
-          estimatedTime: 480,
-          prerequisites: ["lesson-17-5"],
-          isProject: true,
-          isFinalProject: true
-        }
-      ]
-    },
-    {
-      moduleId: "module-19",
-      order: 19,
-      title: "19 - Бонус: Вступ до графічних інтерфейсів (GUI)",
+      moduleId: "module-17",
+      order: 16,
+      title: "16 - Бонус: Вступ до графічних інтерфейсів (GUI)",
       description: "Створення графічних інтерфейсів користувача з Tkinter",
       duration: { weeks: 2, lessons: 5 },
       learningOutcomes: [
@@ -1536,7 +1442,7 @@ export const pythonCurriculum = {
             "Підготувати середовище для роботи"
           ],
           estimatedTime: 60,
-          prerequisites: ["lesson-18-1"]
+          prerequisites: ["lesson-16-5"]
         },
         {
           lessonId: "lesson-19-2",

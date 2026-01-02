@@ -1,5 +1,5 @@
 /**
- * Lesson 05-3: Інкапсуляція та модифікатори доступу
+ * Lesson 05-3: Робота з CSV та TXT
  * Full educational content
  */
 
@@ -9,14 +9,14 @@ export const lesson_05_3 = {
   lessonId: "lesson-05-3",
   moduleId: "module-05",
   order: 3,
-  title: "Інкапсуляція та модифікатори доступу",
+  title: "Робота з CSV та TXT",
   
   learningObjectives: [
-    "Розуміти концепцію інкапсуляції",
-    "Використовувати публічні та приватні атрибути",
-    "Застосовувати property декоратор",
-    "Контролювати доступ до даних",
-    "Створювати геттери та сеттери"
+    "Читати та записувати CSV файли",
+    "Працювати з TXT файлами",
+    "Обробляти структуровані дані",
+    "Використовувати csv модуль",
+    "Розуміти різницю між CSV та TXT"
   ],
   
   estimatedTime: 90,
@@ -27,858 +27,308 @@ export const lesson_05_3 = {
   theory: {
     sections: [
       {
-        title: "Що таке інкапсуляція?",
-        content: `**Інкапсуляція** — це один з основних принципів об'єктно-орієнтованого програмування.
+        title: "Що таке CSV?",
+        content: `**CSV (Comma-Separated Values)** - це формат файлів для зберігання табличних даних.
 
-**Визначення:**
-Інкапсуляція — це механізм об'єднання даних та методів, які працюють з цими даними, в одному класі, а також обмеження доступу до внутрішніх деталей об'єкта.
+**Структура CSV:**
+- Кожен рядок = один запис
+- Значення розділені комами (або іншими роздільниками)
+- Перший рядок часто містить заголовки
 
-**Основні ідеї:**
-- ✅ **Приховування реалізації** — внутрішні деталі об'єкта приховані від зовнішнього коду
-- ✅ **Контроль доступу** — можна контролювати, як зовнішній код взаємодіє з об'єктом
-- ✅ **Захист даних** — дані захищені від некоректного використання
-- ✅ **Гнучкість** — можна змінювати внутрішню реалізацію без впливу на зовнішній код
+**Приклад CSV файлу (students.csv):**
+\`\`\`
+Ім'я,Вік,Оцінка
+Іван,15,85
+Марія,16,92
+Петро,15,78
+\`\`\`
 
-**Аналогія:**
-Уявіть автомобіль:
-- Ви знаєте, як керувати (публічний інтерфейс: руль, педалі)
-- Ви не знаєте, як працює двигун всередині (прихована реалізація)
-- Ви не можете безпосередньо змінювати внутрішні деталі (захист)
-
-**У Python:**
-- За замовчуванням всі атрибути та методи публічні
-- Можна зробити атрибути приватними (починаються з подвійного підкреслення)
-- Можна використовувати property для контролю доступу`
+**Переваги CSV:**
+- ✅ Простий формат
+- ✅ Легко читати та редагувати
+- ✅ Підтримується багатьма програмами (Excel, Google Sheets)
+- ✅ Компактний розмір`
       },
       {
-        title: "Публічні атрибути та методи",
-        content: `**Публічні** атрибути та методи доступні з будь-якого місця в коді.
+        title: "Читання CSV з csv модулем",
+        content: `**csv модуль** - стандартний модуль Python для роботи з CSV.
 
-**У Python за замовчуванням все публічне:**
+**Встановлення:** Не потрібно встановлювати, входить у стандартну бібліотеку!
 
+**Базове читання:**
 \`\`\`python
-class Student:
-    def __init__(self, name, age):
-        self.name = name      # Публічний атрибут
-        self.age = age        # Публічний атрибут
-        self.grades = []      # Публічний атрибут
-    
-    def add_grade(self, grade):  # Публічний метод
-        self.grades.append(grade)
-    
-    def get_average(self):  # Публічний метод
-        if len(self.grades) == 0:
-            return 0
-        return sum(self.grades) / len(self.grades)
+import csv
 
-# Можна отримати доступ з будь-якого місця
-student = Student("Олександр", 20)
-print(student.name)        # Прямий доступ до атрибута
-student.age = 21           # Можна змінити напряму
-student.add_grade(85)      # Виклик публічного методу
+with open("students.csv", "r", encoding="utf-8") as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)
 \`\`\`
 
-**Переваги публічних атрибутів:**
-- Простота використання
-- Легкий доступ до даних
-
-**Недоліки:**
-- Немає контролю над змінами
-- Можна встановити некоректні значення
-- Неможливо додати валідацію при зміні`
-      },
-      {
-        title: "Приватні атрибути та методи",
-        content: `**Приватні** атрибути та методи доступні тільки всередині класу.
-
-**Синтаксис:**
-- Починаються з подвійного підкреслення: __attribute
-- Python автоматично перейменовує їх (name mangling)
-
-**Приклад:**
-
-\`\`\`python
-class BankAccount:
-    def __init__(self, owner, initial_balance=0):
-        self.owner = owner                    # Публічний
-        self.__balance = initial_balance      # Приватний
-        self.__transaction_history = []       # Приватний
-    
-    def deposit(self, amount):
-        """Публічний метод для поповнення"""
-        if amount > 0:
-            self.__balance += amount
-            self.__transaction_history.append(f"Поповнення: +{amount}")
-            return True
-        return False
-    
-    def withdraw(self, amount):
-        """Публічний метод для зняття"""
-        if 0 < amount <= self.__balance:
-            self.__balance -= amount
-            self.__transaction_history.append(f"Зняття: -{amount}")
-            return True
-        return False
-    
-    def get_balance(self):
-        """Публічний метод для отримання балансу"""
-        return self.__balance
-    
-    def get_history(self):
-        """Публічний метод для отримання історії"""
-        return self.__transaction_history.copy()
-
-# Використання
-account = BankAccount("Олександр", 1000)
-
-# Публічні методи - працюють
-account.deposit(500)
-account.withdraw(200)
-print(account.get_balance())  # 1300
-
-# Спроба прямого доступу до приватного атрибута
-# print(account.__balance)  # Помилка! AttributeError
-
-# Але можна отримати доступ через name mangling (не рекомендується)
-# print(account._BankAccount__balance)  # Працює, але не рекомендується
+**Виведення:**
+\`\`\`
+['Ім\\'я', 'Вік', 'Оцінка']
+['Іван', '15', '85']
+['Марія', '16', '92']
+['Петро', '15', '78']
 \`\`\`
 
-**Важливо:**
-- Приватні атрибути захищені від прямого доступу
-- Доступ можливий тільки через публічні методи
-- Це дозволяє контролювати та валідувати зміни
-
-**Name Mangling:**
-Python перейменовує приватні атрибути: __balance стає _BankAccount__balance
-Це робить їх важкодоступними, але не повністю недоступними.`
-      },
-      {
-        title: "Захищені атрибути (protected)",
-        content: `**Захищені** атрибути — це конвенція в Python (не захищені на рівні мови).
-
-**Синтаксис:**
-- Починаються з одного підкреслення: \`_attribute\`
-- Це конвенція для розробників: "не використовуйте ззовні класу"
-
-**Приклад:**
-
+**Читання як словник (з DictReader):**
 \`\`\`python
-class Person:
-    def __init__(self, name, age):
-        self.name = name          # Публічний
-        self._age = age           # Захищений (конвенція)
-        self.__id = "P123"        # Приватний
-    
-    def get_age(self):
-        return self._age
-    
-    def set_age(self, age):
-        if 0 <= age <= 150:
-            self._age = age
-        else:
-            print("Невірний вік")
+import csv
 
-class Student(Person):
-    def __init__(self, name, age, student_id):
-        super().__init__(name, age)
-        self._student_id = student_id  # Захищений
-    
-    def show_info(self):
-        # Можна використовувати захищені атрибути батьківського класу
-        return f"{self.name}, {self._age} років, ID: {self._student_id}"
-
-# Використання
-student = Student("Олександр", 20, "S001")
-print(student.show_info())  # Олександр, 20 років, ID: S001
-
-# Технічно можна отримати доступ (але не рекомендується)
-print(student._age)  # Працює, але це конвенція - не використовуйте
+with open("students.csv", "r", encoding="utf-8") as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        print(f"{row['Ім\\'я']}: {row['Оцінка']}")
 \`\`\`
 
-**Конвенції доступу в Python:**
-
-| Префікс | Тип | Доступність | Приклад |
-|---------|-----|-------------|---------|
-| Немає | Публічний | З будь-якого місця | name |
-| _ | Захищений | Конвенція (не використовуйте ззовні) | _age |
-| __ | Приватний | Тільки всередині класу | __balance |
-
-**Важливо:**
-- Python не забороняє доступ до захищених атрибутів
-- Це конвенція для розробників
-- Використовується для позначення "внутрішніх" атрибутів`
-      },
-      {
-        title: "Property декоратор",
-        content: `**Property** — це спосіб контролю доступу до атрибутів через методи.
-
-**Проблема без property:**
-\`\`\`python
-class Circle:
-    def __init__(self, radius):
-        self.radius = radius
-    
-    def get_area(self):
-        return 3.14159 * self.radius ** 2
-
-circle = Circle(5)
-print(circle.radius)  # 5
-circle.radius = -10   # Можна встановити від'ємне значення!
-print(circle.get_area())  # Некоректний результат
+**Виведення:**
 \`\`\`
-
-**Рішення з property:**
-
-\`\`\`python
-class Circle:
-    def __init__(self, radius):
-        self._radius = radius  # Захищений атрибут
-    
-    @property
-    def radius(self):
-        """Геттер - отримує значення"""
-        return self._radius
-    
-    @radius.setter
-    def radius(self, value):
-        """Сеттер - встановлює значення з валідацією"""
-        if value < 0:
-            raise ValueError("Радіус не може бути від'ємним")
-        self._radius = value
-    
-    @property
-    def area(self):
-        """Обчислювана властивість"""
-        return 3.14159 * self._radius ** 2
-
-# Використання
-circle = Circle(5)
-print(circle.radius)  # 5 (викликається геттер)
-print(circle.area)    # 78.54 (обчислюється автоматично)
-
-circle.radius = 10     # Викликається сеттер
-print(circle.radius)   # 10
-print(circle.area)    # 314.16
-
-# circle.radius = -5   # Помилка! ValueError
-\`\`\`
-
-**Переваги property:**
-- ✅ Використання як звичайного атрибута
-- ✅ Можна додати валідацію
-- ✅ Можна обчислювати значення
-- ✅ Можна додати логіку при читанні/записі
-
-**Синтаксис:**
-\`\`\`python
-@property
-def attribute(self):
-    """Геттер"""
-    return self._attribute
-
-@attribute.setter
-def attribute(self, value):
-    """Сеттер"""
-    self._attribute = value
+Іван: 85
+Марія: 92
+Петро: 78
 \`\`\``
       },
       {
-        title: "Практичний приклад: клас Temperature",
-        content: `**Комплексний приклад з property:**
+        title: "Запис у CSV",
+        content: `**Запис даних у CSV:**
 
+**Базовий запис:**
 \`\`\`python
-class Temperature:
-    def __init__(self, celsius=0):
-        self._celsius = celsius
-    
-    @property
-    def celsius(self):
-        """Температура в Цельсіях"""
-        return self._celsius
-    
-    @celsius.setter
-    def celsius(self, value):
-        """Встановлює температуру в Цельсіях з валідацією"""
-        if value < -273.15:
-            raise ValueError("Температура не може бути нижчою за абсолютний нуль")
-        self._celsius = value
-    
-    @property
-    def fahrenheit(self):
-        """Температура в Фаренгейтах (тільки для читання)"""
-        return self._celsius * 9/5 + 32
-    
-    @property
-    def kelvin(self):
-        """Температура в Кельвінах (тільки для читання)"""
-        return self._celsius + 273.15
-    
-    def __str__(self):
-        return f"{self._celsius}°C ({self.fahrenheit}°F, {self.kelvin}K)"
+import csv
 
-# Використання
-temp = Temperature(25)
-print(temp.celsius)     # 25
-print(temp.fahrenheit)   # 77.0 (обчислюється автоматично)
-print(temp.kelvin)      # 298.15 (обчислюється автоматично)
+data = [
+    ["Ім'я", "Вік", "Оцінка"],
+    ["Іван", 15, 85],
+    ["Марія", 16, 92],
+    ["Петро", 15, 78]
+]
 
-temp.celsius = 30       # Змінюємо через сеттер
-print(temp.fahrenheit)  # 86.0 (автоматично перераховується)
-
-# temp.celsius = -300   # Помилка! ValueError
+with open("output.csv", "w", encoding="utf-8", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerows(data)
 \`\`\`
 
-**Що ми бачимо:**
-- \`celsius\` має геттер та сеттер з валідацією
-- \`fahrenheit\` та \`kelvin\` — тільки для читання (немає сеттера)
-- Значення автоматично перераховуються при зміні`
+**Запис як словник (з DictWriter):**
+\`\`\`python
+import csv
+
+data = [
+    {"Ім'я": "Іван", "Вік": 15, "Оцінка": 85},
+    {"Ім'я": "Марія", "Вік": 16, "Оцінка": 92},
+    {"Ім'я": "Петро", "Вік": 15, "Оцінка": 78}
+]
+
+with open("output.csv", "w", encoding="utf-8", newline="") as file:
+    fieldnames = ["Ім'я", "Вік", "Оцінка"]
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
+    writer.writeheader()  # Записує заголовки
+    writer.writerows(data)
+\`\`\`
+
+**Важливо:** Використовуй \`newline=""\` при відкритті для запису, щоб уникнути порожніх рядків!`
       },
       {
-        title: "Геттери та сеттери без property",
-        content: `**Традиційний підхід (без property):**
+        title: "Робота з TXT файлами",
+        content: `**TXT файли** - прості текстові файли без структури.
 
+**Читання TXT:**
 \`\`\`python
-class BankAccount:
-    def __init__(self, balance=0):
-        self.__balance = balance
-    
-    def get_balance(self):
-        """Геттер"""
-        return self.__balance
-    
-    def set_balance(self, value):
-        """Сеттер"""
-        if value < 0:
-            raise ValueError("Баланс не може бути від'ємним")
-        self.__balance = value
-
-# Використання
-account = BankAccount(1000)
-print(account.get_balance())  # 1000
-account.set_balance(2000)     # Використовуємо методи
-print(account.get_balance())  # 2000
+with open("notes.txt", "r", encoding="utf-8") as file:
+    content = file.read()
+    print(content)
 \`\`\`
 
-**Підхід з property (краще):**
-
+**Читання по рядках:**
 \`\`\`python
-class BankAccount:
-    def __init__(self, balance=0):
-        self.__balance = balance
-    
-    @property
-    def balance(self):
-        """Геттер"""
-        return self.__balance
-    
-    @balance.setter
-    def balance(self, value):
-        """Сеттер"""
-        if value < 0:
-            raise ValueError("Баланс не може бути від'ємним")
-        self.__balance = value
-
-# Використання
-account = BankAccount(1000)
-print(account.balance)  # 1000 (виглядає як атрибут)
-account.balance = 2000  # Виглядає як присвоєння атрибуту
-print(account.balance)  # 2000
+with open("notes.txt", "r", encoding="utf-8") as file:
+    for line in file:
+        print(line.strip())  # strip() видаляє \\n
 \`\`\`
 
-**Переваги property:**
-- Більш природний синтаксис
-- Виглядає як робота з атрибутом
-- Легше читати та писати код`
+**Запис у TXT:**
+\`\`\`python
+with open("output.txt", "w", encoding="utf-8") as file:
+    file.write("Перший рядок\\n")
+    file.write("Другий рядок\\n")
+\`\`\`
+
+**Різниця CSV vs TXT:**
+- **CSV** - структуровані дані (таблиця)
+- **TXT** - неструктуровані дані (просто текст)`
       },
       {
-        title: "Read-only properties",
-        content: `**Read-only properties** — властивості тільки для читання (без сеттера).
-
-**Приклад:**
+        title: "Обробка структурованих даних",
+        content: `**Приклад: Обробка CSV даних**
 
 \`\`\`python
-class Rectangle:
-    def __init__(self, width, height):
-        self._width = width
-        self._height = height
-    
-    @property
-    def width(self):
-        return self._width
-    
-    @width.setter
-    def width(self, value):
-        if value <= 0:
-            raise ValueError("Ширина має бути додатньою")
-        self._width = value
-    
-    @property
-    def height(self):
-        return self._height
-    
-    @height.setter
-    def height(self, value):
-        if value <= 0:
-            raise ValueError("Висота має бути додатньою")
-        self._height = value
-    
-    @property
-    def area(self):
-        """Read-only property - обчислюється автоматично"""
-        return self._width * self._height
-    
-    @property
-    def perimeter(self):
-        """Read-only property"""
-        return 2 * (self._width + self._height)
+import csv
 
-# Використання
-rect = Rectangle(5, 10)
-print(rect.area)        # 50 (можна читати)
-print(rect.perimeter)   # 30 (можна читати)
+# Читаємо дані
+students = []
+with open("students.csv", "r", encoding="utf-8") as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        students.append({
+            "ім'я": row["Ім'я"],
+            "вік": int(row["Вік"]),
+            "оцінка": int(row["Оцінка"])
+        })
 
-rect.width = 7          # Можна змінити
-print(rect.area)        # 70 (автоматично перераховується)
+# Обробляємо дані
+high_scores = [s for s in students if s["оцінка"] >= 90]
+print(f"Студенти з високими оцінками: {len(high_scores)}")
 
-# rect.area = 100       # Помилка! Немає сеттера
+# Записуємо результат
+with open("high_scores.csv", "w", encoding="utf-8", newline="") as file:
+    writer = csv.DictWriter(file, fieldnames=["ім'я", "вік", "оцінка"])
+    writer.writeheader()
+    writer.writerows(high_scores)
 \`\`\`
 
-**Коли використовувати read-only properties:**
-- Обчислювані значення (площа, периметр)
-- Значення, які не повинні змінюватися напряму
-- Значення, які залежать від інших атрибутів`
-      },
-      {
-        title: "Підсумок",
-        content: `**Що ми вивчили:**
-
-1. ✅ **Інкапсуляція** — приховування деталей реалізації
-2. ✅ **Публічні атрибути** — доступні з будь-якого місця
-3. ✅ **Приватні атрибути** (__attribute) — доступні тільки всередині класу
-4. ✅ **Захищені атрибути** (\`_attribute\`) — конвенція для розробників
-5. ✅ **Property декоратор** — контроль доступу через методи
-
-**Ключові моменти:**
-
-| Тип | Префікс | Доступність | Приклад |
-|-----|---------|-------------|---------|
-| Публічний | Немає | З будь-якого місця | name |
-| Захищений | _ | Конвенція | _age |
-| Приватний | __ | Тільки в класі | __balance |
-
-**Property:**
-- \`@property\` — геттер
-- \`@attribute.setter\` — сеттер
-- Дозволяє використовувати як атрибут з валідацією
-
-**Переваги інкапсуляції:**
-- Захист даних
-- Контроль доступу
-- Валідація значень
-- Гнучкість змін реалізації
-
-**Наступні кроки:**
-- Вивчимо наслідування
-- Дізнаємося про поліморфізм
-- Вивчимо магічні методи
-
-Тепер ви можете контролювати доступ до даних у ваших класах!`
+**Корисні методи:**
+- \`csv.reader()\` - читає CSV як списки
+- \`csv.DictReader()\` - читає CSV як словники
+- \`csv.writer()\` - записує списки у CSV
+- \`csv.DictWriter()\` - записує словники у CSV`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приватні атрибути",
-      code: `class BankAccount:
-    def __init__(self, balance=0):
-        self.__balance = balance  # Приватний атрибут
-    
-    def deposit(self, amount):
-        if amount > 0:
-            self.__balance += amount
-    
-    def get_balance(self):
-        return self.__balance
+      title: "Приклад 1: Читання CSV",
+      code: `# Читання CSV файлу
+import csv
 
-account = BankAccount(1000)
-account.deposit(500)
-print(account.get_balance())  # 1500
-# print(account.__balance)  # Помилка!`,
-      explanation: "Демонструє використання приватних атрибутів для захисту даних."
+with open("data.csv", "r", encoding="utf-8") as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)`,
+      explanation: "Демонструє базове читання CSV файлу за допомогою csv.reader()."
     },
     {
-      title: "Property з геттером та сеттером",
-      code: `class Circle:
-    def __init__(self, radius):
-        self._radius = radius
-    
-    @property
-    def radius(self):
-        return self._radius
-    
-    @radius.setter
-    def radius(self, value):
-        if value < 0:
-            raise ValueError("Радіус не може бути від'ємним")
-        self._radius = value
+      title: "Приклад 2: Читання як словник",
+      code: `# Читання CSV як словник
+import csv
 
-circle = Circle(5)
-circle.radius = 10  # Викликається сеттер
-print(circle.radius)  # 10`,
-      explanation: "Показує використання property для контролю доступу з валідацією."
+with open("data.csv", "r", encoding="utf-8") as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        print(f"{row['Ім\\'я']}: {row['Оцінка']}")`,
+      explanation: "Показує читання CSV з DictReader для доступу до даних за назвами колонок."
     },
     {
-      title: "Read-only property",
-      code: `class Rectangle:
-    def __init__(self, width, height):
-        self._width = width
-        self._height = height
-    
-    @property
-    def area(self):
-        """Read-only - обчислюється автоматично"""
-        return self._width * self._height
+      title: "Приклад 3: Запис у CSV",
+      code: `# Запис даних у CSV
+import csv
 
-rect = Rectangle(5, 10)
-print(rect.area)  # 50
-# rect.area = 100  # Помилка! Немає сеттера`,
-      explanation: "Демонструє read-only property для обчислюваних значень."
+data = [["Ім'я", "Вік"], ["Іван", 15], ["Марія", 16]]
+with open("output.csv", "w", encoding="utf-8", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerows(data)`,
+      explanation: "Демонструє запис даних у CSV файл."
+    },
+    {
+      title: "Приклад 4: Робота з TXT",
+      code: `# Читання та запис TXT
+with open("notes.txt", "r", encoding="utf-8") as file:
+    content = file.read()
+
+with open("copy.txt", "w", encoding="utf-8") as file:
+    file.write(content.upper())`,
+      explanation: "Показує роботу з простими текстовими файлами."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Плутають приватні та захищені атрибути",
-      explanation: "Важливо розуміти різницю: _attribute — захищений (конвенція), __attribute — приватний (name mangling).",
-      correctApproach: `# Захищений (конвенція)
-class Student:
-    def __init__(self, name):
-        self._age = 20  # Конвенція - не використовуйте ззовні
-
-# Приватний (name mangling)
-class Student:
-    def __init__(self, name):
-        self.__age = 20  # Python перейменовує в _Student__age`
+      mistake: "Забути newline='' при записі CSV",
+      explanation: "Без newline='' можуть з'явитися порожні рядки між записами.",
+      correctApproach: "Завжди використовуй newline='' при відкритті CSV для запису"
     },
     {
-      mistake: "Намагаються встановити read-only property",
-      explanation: "Якщо property не має сеттера, його неможливо змінити.",
-      correctApproach: `# Правильно: read-only property
-class Rectangle:
-    @property
-    def area(self):
-        return self.width * self.height
-    # Немає сеттера - тільки для читання
-
-# Якщо потрібно змінювати, додайте сеттер
-class Rectangle:
-    @property
-    def area(self):
-        return self.width * self.height
-    
-    @area.setter
-    def area(self, value):
-        # Можна додати логіку для зміни width/height
-        pass`
+      mistake: "Не вказати encoding для українського тексту",
+      explanation: "Без encoding='utf-8' можуть бути проблеми з кирилицею в CSV.",
+      correctApproach: "Завжди вказуй encoding='utf-8' для CSV з українським текстом"
     },
     {
-      mistake: "Забувають про валідацію в сеттерах",
-      explanation: "Сеттери — ідеальне місце для валідації даних перед збереженням.",
-      correctApproach: `# Неправильно: без валідації
-class Circle:
-    @property
-    def radius(self):
-        return self._radius
-    
-    @radius.setter
-    def radius(self, value):
-        self._radius = value  # Немає перевірки
-
-# Правильно: з валідацією
-class Circle:
-    @property
-    def radius(self):
-        return self._radius
-    
-    @radius.setter
-    def radius(self, value):
-        if value < 0:
-            raise ValueError("Радіус не може бути від'ємним")
-        self._radius = value`
-    },
-    {
-      mistake: "Використовують публічні атрибути для важливих даних",
-      explanation: "Важливі дані (баланс, паролі) мають бути приватними з контролем доступу.",
-      correctApproach: `# Неправильно: публічний баланс
-class BankAccount:
-    def __init__(self, balance):
-        self.balance = balance  # Можна змінити напряму
-
-# Правильно: приватний баланс з методами
-class BankAccount:
-    def __init__(self, balance):
-        self.__balance = balance  # Приватний
-    
-    def get_balance(self):
-        return self.__balance
-    
-    def deposit(self, amount):
-        if amount > 0:
-            self.__balance += amount`
+      mistake: "Сплутати CSV та TXT",
+      explanation: "CSV - структуровані дані (таблиця), TXT - неструктуровані (текст).",
+      correctApproach: "Використовуй CSV для таблиць, TXT для простого тексту"
     }
   ],
   
-  summary: `На цьому уроці ми вивчили інкапсуляцію та модифікатори доступу:
+  summary: `На цьому уроці ми вивчили:
 
-**Основні концепції:**
+1. **CSV формат** - структуровані табличні дані
+2. **csv модуль** - стандартний модуль для роботи з CSV
+3. **Читання CSV** - csv.reader() та csv.DictReader()
+4. **Запис у CSV** - csv.writer() та csv.DictWriter()
+5. **Робота з TXT** - прості текстові файли
+6. **Обробка даних** - читання, обробка та запис структурованих даних
 
-1. **Інкапсуляція**
-   - Приховування деталей реалізації
-   - Контроль доступу до даних
-   - Захист від некоректного використання
+Тепер ви вмієте працювати з CSV та TXT файлами для зберігання та обробки даних!
 
-2. **Типи доступу:**
-   - **Публічний** (немає префіксу) — доступний з будь-якого місця
-   - **Захищений** (\`_attribute\`) — конвенція, не використовуйте ззовні
-   - **Приватний** (__attribute) — доступний тільки всередині класу
-
-3. **Property декоратор:**
-   - \`@property\` — геттер (отримання значення)
-   - \`@attribute.setter\` — сеттер (встановлення з валідацією)
-   - Read-only properties — тільки для читання
-
-**Ключові моменти:**
-- Python за замовчуванням все публічне
-- \`_attribute\` — конвенція (не захищено на рівні мови)
-- __attribute — name mangling (Python перейменовує)
-- Property дозволяє використовувати методи як атрибути
-
-**Переваги:**
-- Захист даних
-- Валідація значень
-- Гнучкість змін реалізації
-- Чистіший інтерфейс
-
-Тепер ви можете контролювати доступ до даних у ваших класах!`,
+Наступний урок - обробка помилок з try/except!`,
   
   practiceTask: {
-    title: "Клас User з інкапсуляцією",
-    description: "Створіть клас User з приватними атрибутами та property для контролю доступу",
-    problemStatement: `Створіть клас User з наступними вимогами:
-
-1. **Приватні атрибути:**
-   - __username — ім'я користувача
-   - __email — email
-   - __age — вік
-   - __password — пароль (тільки для зберігання, не можна читати напряму)
-
-2. **Property для username:**
-   - Геттер повертає username
-   - Сеттер перевіряє, що username має мінімум 3 символи
-
-3. **Property для email:**
-   - Геттер повертає email
-   - Сеттер перевіряє, що email містить символ '@'
-
-4. **Property для age:**
-   - Геттер повертає age
-   - Сеттер перевіряє, що вік від 0 до 150
-
-5. **Property для password (read-only для читання):**
-   - Геттер повертає "***" (приховує пароль)
-   - Немає сеттера (пароль встановлюється тільки в __init__)
-
-6. **Методи:**
-   - \`change_password(old_password, new_password)\` — змінює пароль, якщо старий правильний
-   - \`verify_password(password)\` — перевіряє, чи пароль правильний (повертає True/False)
-   - \`get_info()\` — повертає інформацію про користувача (без пароля)
-
-**Важливо:** Не використовуйте функцію input(). Введіть значення напряму в коді.
-
-Створіть об'єкт User та продемонструйте роботу всіх property та методів.`,
-    inputFormat: `Введіть значення напряму в коді:
-username = "oleksandr"
-email = "oleksandr@example.com"
-age = 25
-password = "secret123"
-
-**Примітка:** Не використовуйте input(), введіть значення напряму в коді`,
+    title: "Система обліку студентів",
+    description: "Створіть програму для обліку студентів у CSV файлі",
+    problemStatement: `Напишіть програму, яка:
+1. Створює CSV файл students.csv з заголовками: Ім'я, Вік, Оцінка
+2. Записує у файл 3 студентів:
+   - Іван, 15, 85
+   - Марія, 16, 92
+   - Петро, 15, 78
+3. Читає дані з файлу
+4. Виводить інформацію про кожного студента`,
+    inputFormat: "Програма використовує фіксовані дані студентів",
     outputFormat: `Приклад виведення:
-Ім'я користувача: oleksandr
-Email: oleksandr@example.com
-Вік: 25
-Пароль: ***
-Інформація: Користувач: oleksandr, Email: oleksandr@example.com, Вік: 25
-Пароль правильний: True
-Пароль змінено: True`,
+Іван, 15 років, оцінка 85
+Марія, 16 років, оцінка 92
+Петро, 15 років, оцінка 78`,
     examples: [
       {
-        input: "username = 'oleksandr', email = 'oleksandr@example.com', age = 25, password = 'secret123'",
-        output: `Ім'я користувача: oleksandr
-Email: oleksandr@example.com
-Вік: 25
-Пароль: ***
-Інформація: Користувач: oleksandr, Email: oleksandr@example.com, Вік: 25
-Пароль правильний: True
-Пароль змінено: True`,
-        explanation: "Демонструє створення об'єкта User та використання property та методів."
-      },
-      {
-        input: "Спроба встановити некоректні значення",
-        output: `Спроба встановити username 'ab': ValueError
-Спроба встановити email 'invalid': ValueError
-Спроба встановити вік 200: ValueError`,
-        explanation: "Демонструє валідацію через property сеттери."
+        input: "students = [['Ім\\'я', 'Вік', 'Оцінка'], ['Іван', '15', '85'], ['Марія', '16', '92'], ['Петро', '15', '78']]",
+        output: `Іван, 15 років, оцінка 85
+Марія, 16 років, оцінка 92
+Петро, 15 років, оцінка 78`,
+        explanation: "Програма створює CSV файл, записує дані, потім читає та виводить їх"
       }
     ],
     solution: {
-      code: `# Клас User з інкапсуляцією
+      code: `# Система обліку студентів
+import csv
 
-class User:
-    def __init__(self, username, email, age, password):
-        # Приватні атрибути
-        self.__username = username
-        self.__email = email
-        self.__age = age
-        self.__password = password
-    
-    # Property для username
-    @property
-    def username(self):
-        """Геттер для username"""
-        return self.__username
-    
-    @username.setter
-    def username(self, value):
-        """Сеттер для username з валідацією"""
-        if len(value) < 3:
-            raise ValueError("Ім'я користувача має містити мінімум 3 символи")
-        self.__username = value
-    
-    # Property для email
-    @property
-    def email(self):
-        """Геттер для email"""
-        return self.__email
-    
-    @email.setter
-    def email(self, value):
-        """Сеттер для email з валідацією"""
-        if "@" not in value:
-            raise ValueError("Email має містити символ '@'")
-        self.__email = value
-    
-    # Property для age
-    @property
-    def age(self):
-        """Геттер для age"""
-        return self.__age
-    
-    @age.setter
-    def age(self, value):
-        """Сеттер для age з валідацією"""
-        if not (0 <= value <= 150):
-            raise ValueError("Вік має бути від 0 до 150")
-        self.__age = value
-    
-    # Property для password (read-only для читання)
-    @property
-    def password(self):
-        """Геттер для password - приховує пароль"""
-        return "***"
-    
-    # Методи
-    def change_password(self, old_password, new_password):
-        """Змінює пароль, якщо старий правильний"""
-        if self.__password == old_password:
-            self.__password = new_password
-            return True
-        return False
-    
-    def verify_password(self, password):
-        """Перевіряє, чи пароль правильний"""
-        return self.__password == password
-    
-    def get_info(self):
-        """Повертає інформацію про користувача"""
-        return f"Користувач: {self.__username}, Email: {self.__email}, Вік: {self.__age}"
+# Запис даних у CSV
+students_data = [
+    ["Ім'я", "Вік", "Оцінка"],
+    ["Іван", "15", "85"],
+    ["Марія", "16", "92"],
+    ["Петро", "15", "78"]
+]
 
-# Вводимо значення напряму в коді (не використовуємо input())
+with open("students.csv", "w", encoding="utf-8", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerows(students_data)
 
-# Створюємо користувача
-username = "oleksandr"
-email = "oleksandr@example.com"
-age = 25
-password = "secret123"
-
-user = User(username, email, age, password)
-
-# Використовуємо property
-print(f"Ім'я користувача: {user.username}")
-print(f"Email: {user.email}")
-print(f"Вік: {user.age}")
-print(f"Пароль: {user.password}")  # Приховано
-
-# Викликаємо методи
-print(f"Інформація: {user.get_info()}")
-print(f"Пароль правильний: {user.verify_password('secret123')}")
-print(f"Пароль змінено: {user.change_password('secret123', 'newpass456')}")
-print(f"Пароль правильний (новий): {user.verify_password('newpass456')}")
-
-print()
-
-# Демонстрація валідації через property
-try:
-    user.username = "ab"  # Занадто коротке
-except ValueError as e:
-    print(f"Помилка валідації username: {e}")
-
-try:
-    user.email = "invalid"  # Немає @
-except ValueError as e:
-    print(f"Помилка валідації email: {e}")
-
-try:
-    user.age = 200  # Занадто великий вік
-except ValueError as e:
-    print(f"Помилка валідації age: {e}")
-
-# Успішна зміна
-user.username = "oleksandr_new"
-user.email = "newemail@example.com"
-user.age = 30
-print(f"Оновлена інформація: {user.get_info()}")`,
-      explanation: "Рішення демонструє повну інкапсуляцію з приватними атрибутами, property для контролю доступу з валідацією, read-only property для пароля та методи для роботи з паролем."
+# Читання даних з CSV
+with open("students.csv", "r", encoding="utf-8") as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        print(f"{row['Ім\\'я']}, {row['Вік']} років, оцінка {row['Оцінка']}")`,
+      explanation: "Рішення використовує csv.writer() для запису та csv.DictReader() для читання даних з CSV файлу."
     },
     hints: [
-      "Введіть значення напряму в коді - не використовуйте input()",
-      "Приватні атрибути починаються з __",
-      "Property геттер використовує @property декоратор",
-      "Property сеттер використовує @attribute.setter декоратор",
-      "Для read-only property не створюйте сеттер",
-      "Валідацію виконуйте в сеттерах перед присвоєнням",
-      "Метод verify_password() порівнює переданий пароль з __password",
-      "Метод change_password() перевіряє старий пароль перед зміною"
+      "Використовуйте import csv",
+      "Використовуйте csv.writer() для запису",
+      "Використовуйте csv.DictReader() для читання",
+      "Не забудьте newline='' при записі",
+      "Використовуйте encoding='utf-8' для українського тексту"
     ],
-    difficulty: "intermediate",
-    testCases: [
-      {
-        input: ['"oleksandr"', '"oleksandr@example.com"', '25', '"secret123"'],
-        expectedOutput: "oleksandr",
-        description: "Перевірка створення об'єкта та property username"
-      },
-      {
-        input: ['"oleksandr"', '"oleksandr@example.com"', '25', '"secret123"'],
-        expectedOutput: "True",
-        description: "Перевірка методу verify_password()"
-      },
-      {
-        input: ['"ab"'],
-        expectedOutput: "ValueError",
-        description: "Перевірка валідації username (мінімум 3 символи)"
-      }
-    ]
+    difficulty: "beginner"
   },
   
   quiz: {
@@ -886,107 +336,70 @@ print(f"Оновлена інформація: {user.get_info()}")`,
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Як позначаються приватні атрибути в Python?",
+        question: "Що означає CSV?",
         options: [
-          "Починаються з __ (подвійне підкреслення)",
-          "Починаються з _ (одне підкреслення)",
-          "Не мають префіксу",
-          "Починаються з private"
+          "Comma-Separated Values",
+          "Computer System Variables",
+          "Code Source Version",
+          "Common System Values"
         ],
         correctAnswer: 0,
-        explanation: "Приватні атрибути в Python позначаються подвійним підкресленням на початку: __attribute. Python використовує name mangling для їх захисту."
+        explanation: "CSV означає Comma-Separated Values - значення, розділені комами."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що таке інкапсуляція?",
+        question: "Який модуль використовується для роботи з CSV в Python?",
         options: [
-          "Приховування деталей реалізації та контроль доступу до даних",
-          "Створення об'єктів",
-          "Наслідування класів",
-          "Використання функцій"
+          "csv",
+          "pandas",
+          "excel",
+          "table"
         ],
         correctAnswer: 0,
-        explanation: "Інкапсуляція — це механізм приховування деталей реалізації та контролю доступу до даних об'єкта. Вона дозволяє захистити дані від некоректного використання."
+        explanation: "csv - стандартний модуль Python для роботи з CSV файлами."
       },
       {
         id: "q3",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Який декоратор використовується для створення property?",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що зробить цей код?\n\n```python\nimport csv\nwith open('data.csv', 'w', newline='') as file:\n    writer = csv.writer(file)\n    writer.writerow(['A', 'B', 'C'])\n```",
         options: [
-          "@property",
-          "@getter",
-          "@setter",
-          "@attribute"
+          "Створить CSV файл з одним рядком 'A,B,C'",
+          "Прочитає CSV файл",
+          "Додасть рядок до CSV",
+          "Помилку"
         ],
         correctAnswer: 0,
-        explanation: "Декоратор @property використовується для створення property. Для сеттера використовується @attribute.setter."
+        explanation: "Код створює CSV файл та записує один рядок з трьома значеннями."
       },
       {
         id: "q4",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що таке захищені атрибути в Python?",
+        question: "Чому потрібен newline='' при записі CSV?",
         options: [
-          "Конвенція (починаються з _), не захищені на рівні мови",
-          "Повністю захищені атрибути",
-          "Публічні атрибути",
-          "Приватні атрибути"
+          "Щоб уникнути порожніх рядків",
+          "Щоб швидше працювало",
+          "Щоб підтримувати кирилицю",
+          "Не потрібен"
         ],
         correctAnswer: 0,
-        explanation: "Захищені атрибути в Python — це конвенція. Вони починаються з одного підкреслення (_attribute) і вказують розробникам, що не слід використовувати їх ззовні класу, але Python не забороняє доступ до них."
+        explanation: "newline='' потрібен щоб уникнути порожніх рядків між записами в CSV."
       },
       {
         id: "q5",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе цей код?\n\n```python\nclass Circle:\n    def __init__(self, radius):\n        self.__radius = radius\n    \n    @property\n    def radius(self):\n        return self.__radius\n    \n    @radius.setter\n    def radius(self, value):\n        if value < 0:\n            raise ValueError(\"Радіус не може бути від'ємним\")\n        self.__radius = value\n\ncircle = Circle(5)\ncircle.radius = -10\nprint(circle.radius)\n```",
-        options: [
-          "Помилка ValueError",
-          "-10",
-          "5",
-          "None"
-        ],
-        correctAnswer: 0,
-        explanation: "Код спробує встановити від'ємний радіус (-10), що викличе ValueError через валідацію в сеттері. Радіус залишиться 5, але помилка буде викинута."
-      },
-      {
-        id: "q6",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Як створити read-only property?",
+        question: "Яка різниця між csv.reader() та csv.DictReader()?",
         options: [
-          "Створити тільки геттер з @property, без сеттера",
-          "Створити тільки сеттер",
-          "Не використовувати декоратор",
-          "Використати @readonly"
+          "DictReader повертає словники, reader - списки",
+          "Немає різниці",
+          "reader швидший",
+          "DictReader не підтримує заголовки"
         ],
         correctAnswer: 0,
-        explanation: "Read-only property створюється тільки з геттером (@property), без сеттера. Це робить властивість доступною тільки для читання."
-      },
-      {
-        id: "q7",
-        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
-        question: "У Python за замовчуванням всі атрибути та методи публічні.",
-        options: [
-          "True",
-          "False"
-        ],
-        correctAnswer: 0,
-        explanation: "Так, у Python за замовчуванням всі атрибути та методи публічні. Для обмеження доступу потрібно використовувати префікси (_ або __) або property."
-      },
-      {
-        id: "q8",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Навіщо використовувати property замість прямих атрибутів?",
-        options: [
-          "Для валідації та контролю доступу",
-          "Для швидкості",
-          "Для зменшення коду",
-          "Для автоматичного видалення"
-        ],
-        correctAnswer: 0,
-        explanation: "Property використовується для валідації даних, контролю доступу, обчислення значень та додавання логіки при читанні/записі атрибутів."
+        explanation: "csv.reader() повертає рядки як списки, csv.DictReader() - як словники з ключами з заголовків."
       }
     ],
-    timeLimit: 15,
+    timeLimit: 10,
     passingScore: 70
   }
 }
