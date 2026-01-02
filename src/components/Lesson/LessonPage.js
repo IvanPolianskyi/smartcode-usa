@@ -756,10 +756,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         console.log('Lesson marked as completed:', lessonResult)
       }
       
-      // Force reload to get updated progress from server
-      setTimeout(() => {
-        window.location.href = `/courses/${courseId}/lessons/${lessonId}`
-      }, 1500)
+      // Refresh page data without reloading
+      router.refresh()
     } catch (error) {
       console.error('Error saving progress:', error)
       alert('Помилка збереження прогресу. Спробуйте ще раз.')
@@ -1397,7 +1395,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                         </div>
                         {!isQuizPassed && (
                           <p className={styles.retakeInfo}>
-                            Мінімальний бал: 60%. 
+                            Мінімальний бал: {fullLesson.quiz?.passingScore || 60}%. 
                             Спробуйте ще раз!
                           </p>
                         )}

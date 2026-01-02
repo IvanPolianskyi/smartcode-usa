@@ -34,3 +34,5 @@ export function formatPrice(price, currency = 'UAH') {
 
 
 
+
+

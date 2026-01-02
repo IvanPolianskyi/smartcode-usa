@@ -231,3 +231,5 @@ if missing_lessons:
 else:
     print("\nВсі уроки вже існують!")
 
+
+

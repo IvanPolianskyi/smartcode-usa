@@ -254,3 +254,5 @@ print(f"📁 Створено нових файлів: {len(missing_lessons)}")
 print(f"📁 Всього файлів уроків: {len(existing_files) + len(missing_lessons)}")
 print(f"🔗 Оновлено імпорти в LessonPage.js")
 
+
+
