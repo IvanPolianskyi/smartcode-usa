@@ -174,6 +174,9 @@ const Visit = () => {
                                 <Play className={styles.buttonIcon} />
                                 Почати навчання безкоштовно
                             </Link>
+                            <Link href="/tariff" className={styles.secondaryButton}>
+                                Переглянути ціни
+                            </Link>
                         </div>
 					</div>
 

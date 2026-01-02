@@ -173,6 +173,10 @@ const CoursesSection = () => {
             <span>Переглянути всі курси</span>
             <ArrowRight size={20} />
           </Link>
+          <Link href="/tariff" className={styles.viewAllButton}>
+            <span>Переглянути ціни</span>
+            <ArrowRight size={20} />
+          </Link>
         </div>
       </div>
     </section>
