@@ -275,3 +275,5 @@ print(f"\n✅ Готово! Створено {len(missing_lessons)} нових �
 print(f"📚 Всього уроків: {len(lessons)}")
 print(f"📁 Файлів уроків: {len(existing_files) + len(missing_lessons)}")
 
+
+
