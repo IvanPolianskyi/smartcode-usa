@@ -445,6 +445,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const [isPurchasing, setIsPurchasing] = useState(false)
   const [practiceCompleted, setPracticeCompleted] = useState(false)
   const [practiceChecked, setPracticeChecked] = useState(false)
+  const [outputErrors, setOutputErrors] = useState([]) // Масив індексів рядків з помилками
   
   // Handle Tab key for indentation in code editor
   const handleCodeKeyDown = (e) => {
@@ -624,6 +625,9 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const isFirstLesson = lessonModuleIndex === 0 && currentLesson?.order === 1
   const hasAccess = userRole === 'admin' || isPurchased || isAccessible || isFirstLesson
   
+  // Find current module
+  const currentModule = lessonModuleIndex >= 0 ? curriculum.modules[lessonModuleIndex] : null
+  
   const handlePurchase = async () => {
     setIsPurchasing(true)
     try {
@@ -776,12 +780,18 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     }))
   }
   
+  const handleRetakeQuiz = () => {
+    setQuizAnswers({})
+    setQuizSubmitted(false)
+    setQuizScore(null)
+  }
+  
   const isQuizPassed = quizScore !== null && quizScore >= (fullLesson.quiz?.passingScore || 60)
 
   // Функція для перевірки правильності практичного завдання
   const checkPracticeTask = (output) => {
     if (!fullLesson.practiceTask || !fullLesson.practiceTask.examples || fullLesson.practiceTask.examples.length === 0) {
-      return null // Немає прикладів для перевірки
+      return { isCorrect: null, errors: [] } // Немає прикладів для перевірки
     }
 
     // Нормалізуємо вивід (видаляємо зайві пробіли, переводимо в нижній регістр для порівняння)
@@ -789,21 +799,44 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       return text.trim().toLowerCase().replace(/\s+/g, ' ')
     }
 
-    // Перевіряємо хоча б один приклад
-    const expectedOutput = normalizeOutput(fullLesson.practiceTask.examples[0].output)
-    const actualOutput = normalizeOutput(output)
+    // Отримуємо очікуваний та фактичний вивід
+    const expectedOutput = fullLesson.practiceTask.examples[0].output
+    const actualOutput = output
 
-    // Проста перевірка: чи містить вивід ключові елементи очікуваного виводу
-    // Або точне співпадіння (якщо вивід короткий)
-    if (expectedOutput.length < 100) {
+    // Розбиваємо на рядки для порівняння (зберігаємо всі рядки, включаючи порожні)
+    const expectedLines = expectedOutput.split('\n')
+    const actualLines = actualOutput.split('\n')
+
+    // Знаходимо помилки - рядки, які не відповідають
+    const errors = []
+    const maxLines = Math.max(expectedLines.length, actualLines.length)
+    
+    for (let i = 0; i < maxLines; i++) {
+      const expectedLine = normalizeOutput(expectedLines[i] || '')
+      const actualLine = normalizeOutput(actualLines[i] || '')
+      
+      // Якщо рядки не співпадають або один з них відсутній
+      if (expectedLine !== actualLine) {
+        errors.push(i)
+      }
+    }
+
+    // Перевіряємо чи містить вивід ключові елементи очікуваного виводу
+    const normalizedExpected = normalizeOutput(expectedOutput)
+    const normalizedActual = normalizeOutput(actualOutput)
+
+    let isCorrect = false
+    if (normalizedExpected.length < 100) {
       // Для коротких виводів - точне порівняння
-      return actualOutput === expectedOutput
+      isCorrect = normalizedActual === normalizedExpected
     } else {
       // Для довгих виводів - перевіряємо ключові фрази
-      const keyPhrases = expectedOutput.split('\n').filter(line => line.trim().length > 10)
-      const matches = keyPhrases.filter(phrase => actualOutput.includes(phrase))
-      return matches.length >= keyPhrases.length * 0.7 // 70% співпадінь
+      const keyPhrases = normalizedExpected.split('\n').filter(line => line.trim().length > 10)
+      const matches = keyPhrases.filter(phrase => normalizedActual.includes(phrase))
+      isCorrect = matches.length >= keyPhrases.length * 0.7 // 70% співпадінь
     }
+
+    return { isCorrect, errors }
   }
 
   const handleRunCode = async () => {
@@ -824,6 +857,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       success: null
     })
     setPracticeChecked(false)
+    setOutputErrors([])
 
     try {
       // Extract input data from examples if available
@@ -850,7 +884,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
 
       if (response.ok) {
         const output = data.output || ''
-        const isCorrect = checkPracticeTask(output)
+        const checkResult = checkPracticeTask(output)
         
         setCodeExecution({
           isRunning: false,
@@ -860,9 +894,10 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         })
 
         // Перевіряємо правильність практичного завдання
-        if (isCorrect !== null) {
+        if (checkResult.isCorrect !== null) {
           setPracticeChecked(true)
-          if (isCorrect) {
+          setOutputErrors(checkResult.errors)
+          if (checkResult.isCorrect) {
             setPracticeCompleted(true)
             // Зберігаємо статус виконання практичного завдання (API створить прогрес якщо потрібно)
             try {
@@ -887,6 +922,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           success: false
         })
         setPracticeChecked(false)
+    setOutputErrors([])
         setPracticeCompleted(false)
       }
     } catch (error) {
@@ -898,6 +934,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         success: false
       })
       setPracticeChecked(false)
+    setOutputErrors([])
       setPracticeCompleted(false)
     }
   }
@@ -906,13 +943,24 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     <div className={styles.container}>
       {/* Header */}
       <header className={styles.header}>
-        <Link 
-          href={`/courses/${courseId}`}
-          className={styles.backButton}
-        >
-          <ArrowLeft className="w-5 h-5" />
-          До курсу
-        </Link>
+        <div className={styles.backButtons}>
+          <Link 
+            href={`/courses/${courseId}`}
+            className={styles.backButton}
+          >
+            <ArrowLeft className="w-5 h-5" />
+            До курсу
+          </Link>
+          {currentModule && (
+            <Link 
+              href={`/courses/${courseId}#module-${currentModule.moduleId}`}
+              className={styles.backButton}
+            >
+              <ArrowLeft className="w-5 h-5" />
+              До модуля
+            </Link>
+          )}
+        </div>
         
         <div className={styles.headerInfo}>
           <div className={styles.breadcrumb}>
@@ -1187,7 +1235,29 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                       {codeExecution.success !== false && codeExecution.output && (
                         <div className={styles.executionOutput}>
                           <strong>Вивід:</strong>
-                          <pre>{codeExecution.output}</pre>
+                          <pre>
+                            {codeExecution.output.split('\n').map((line, index) => {
+                              const isError = outputErrors.includes(index)
+                              return (
+                                <React.Fragment key={index}>
+                                  <span
+                                    className={isError ? styles.outputErrorLine : ''}
+                                    style={{
+                                      color: isError ? '#ef4444' : undefined,
+                                      backgroundColor: isError ? 'rgba(239, 68, 68, 0.2)' : undefined,
+                                      padding: isError ? '2px 4px' : undefined,
+                                      borderRadius: isError ? '3px' : undefined,
+                                      display: 'inline-block',
+                                      width: '100%'
+                                    }}
+                                  >
+                                    {line || '\u00A0'}
+                                  </span>
+                                  {'\n'}
+                                </React.Fragment>
+                              )
+                            })}
+                          </pre>
                         </div>
                       )}
                       {codeExecution.error && (
@@ -1216,6 +1286,11 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                               <XCircle className="w-5 h-5" />
                               <strong>Практичне завдання виконано неправильно.</strong>
                               <p>Перевірте ваш код та спробуйте ще раз. Перегляньте приклади виводу та підказки.</p>
+                              {outputErrors.length > 0 && (
+                                <p style={{ fontSize: '0.875rem', marginTop: '0.5rem', color: '#ef4444' }}>
+                                  Знайдено {outputErrors.length} помилок у виводі. Рядки з помилками виділені червоним кольором.
+                                </p>
+                              )}
                             </>
                           )}
                         </div>
@@ -1401,7 +1476,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                             Спробуйте ще раз!
                           </p>
                         )}
-                        {isQuizPassed && nextLesson && (
+                        {nextLesson && (
                           <Link
                             href={`/courses/${courseId}/lessons/${nextLesson.lessonId}`}
                             className={styles.nextLessonButton}
@@ -1410,11 +1485,18 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                             Перейти до наступного уроку: {nextLesson.title}
                           </Link>
                         )}
-                        {isQuizPassed && !nextLesson && (
+                        {!nextLesson && (
                           <p className={styles.completionMessage}>
                             Вітаємо! Ви завершили всі уроки цього курсу!
                           </p>
                         )}
+                        <button
+                          className={styles.retakeButton}
+                          onClick={handleRetakeQuiz}
+                          style={{ marginTop: '1rem' }}
+                        >
+                          Пройти тест знову
+                        </button>
                       </div>
                     </div>
                   )}

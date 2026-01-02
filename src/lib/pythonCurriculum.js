@@ -481,9 +481,111 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-05",
+      moduleId: "module-5",
       order: 5,
-      title: "05 - Об'єктно-орієнтоване програмування",
+      title: "05 - Робота з файлами та обробка помилок",
+      description: "Робота з файлами, CSV, обробка винятків, створення власних винятків, практичні проекти",
+      duration: { weeks: 3, lessons: 6 },
+      learningOutcomes: [
+        "Відкривати, читати та записувати файли",
+        "Використовувати контекстні менеджери (with)",
+        "Працювати з CSV та TXT файлами",
+        "Обробляти помилки через try/except",
+        "Створювати власні винятки",
+        "Створювати практичні проекти з файлами"
+      ],
+      lessons: [
+        {
+          lessonId: "lesson-5-1",
+          order: 1,
+          title: "Робота з файлами: open, read, write",
+          learningObjectives: [
+            "Відкривати файли для читання/запису",
+            "Читати та записувати дані",
+            "Працювати з різними кодуваннями",
+            "Обробляти бінарні файли",
+            "Розуміти різні режими відкриття файлів"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-04-1"]
+        },
+        {
+          lessonId: "lesson-5-2",
+          order: 2,
+          title: "Контекстний менеджер with",
+          learningObjectives: [
+            "Використовувати контекстний менеджер with",
+            "Розуміти переваги with",
+            "Автоматично закривати файли",
+            "Уникати витоку ресурсів",
+            "Розуміти принцип роботи контекстних менеджерів"
+          ],
+          estimatedTime: 60,
+          prerequisites: ["lesson-5-1"]
+        },
+        {
+          lessonId: "lesson-5-3",
+          order: 3,
+          title: "Робота з CSV та TXT",
+          learningObjectives: [
+            "Читати та записувати CSV файли",
+            "Працювати з TXT файлами",
+            "Обробляти структуровані дані",
+            "Використовувати csv модуль",
+            "Розуміти різницю між CSV та TXT"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-5-2"]
+        },
+        {
+          lessonId: "lesson-5-4",
+          order: 4,
+          title: "Обробка помилок: try / except / finally",
+          learningObjectives: [
+            "Розуміти концепцію винятків",
+            "Використовувати try/except блоки",
+            "Обробляти конкретні типи помилок",
+            "Використовувати finally та else",
+            "Розуміти ієрархію винятків"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-5-3"]
+        },
+        {
+          lessonId: "lesson-5-5",
+          order: 5,
+          title: "Створення власних винятків",
+          learningObjectives: [
+            "Створювати кастомні класи винятків",
+            "Піднімати винятки (raise)",
+            "Створювати ієрархію винятків",
+            "Документувати винятки",
+            "Розуміти коли створювати власні винятки"
+          ],
+          estimatedTime: 75,
+          prerequisites: ["lesson-5-4"]
+        },
+        {
+          lessonId: "lesson-5-6",
+          order: 6,
+          title: "Практика: файлові задачі",
+          learningObjectives: [
+            "Створити скрипт для обробки файлів",
+            "Реалізувати обробку помилок",
+            "Працювати з JSON/CSV даними",
+            "Генерувати звіти",
+            "Об'єднати всі знання модуля 5"
+          ],
+          estimatedTime: 120,
+          prerequisites: ["lesson-5-5"],
+          isProject: true
+        }
+      ]
+    },
+    {
+      moduleId: "module-05",
+      order: 6,
+      title: "06 - Об'єктно-орієнтоване програмування",
       description: "Класи, об'єкти, наслідування, поліморфізм, інкапсуляція, магічні методи",
       duration: { weeks: 5, lessons: 10 },
       learningOutcomes: [
@@ -504,7 +606,7 @@ export const pythonCurriculum = {
             "Використовувати конструктор __init__"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-04-1"]
+          prerequisites: ["lesson-5-6"]
         },
         {
           lessonId: "lesson-05-2",
@@ -627,7 +729,7 @@ export const pythonCurriculum = {
     },
     {
       moduleId: "module-06",
-      order: 6,
+      order: 7,
       title: "06 - Модулі та пакети",
       description: "Створення та використання модулів, організація коду в пакети, стандартна бібліотека",
       duration: { weeks: 2, lessons: 5 },

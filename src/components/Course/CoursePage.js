@@ -63,7 +63,53 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
         })
       }
     })
-  }, [courseId])
+    
+    // Handle hash navigation to module
+    const handleHashNavigation = () => {
+      if (typeof window !== 'undefined' && course.modules) {
+        const hash = window.location.hash
+        if (hash) {
+          const moduleId = hash.replace('#module-', '')
+          if (moduleId) {
+            const moduleIndex = course.modules.findIndex(m => m.moduleId === moduleId)
+            if (moduleIndex >= 0) {
+              // Expand the module
+              setExpandedModule(moduleIndex)
+              // Scroll to module after a short delay to ensure it's rendered
+              setTimeout(() => {
+                const element = document.getElementById(`module-${moduleId}`)
+                if (element) {
+                  // Add offset for fixed header if needed
+                  const headerOffset = 100
+                  const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+                  const offsetPosition = elementPosition - headerOffset
+                  
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  })
+                }
+              }, 500)
+            }
+          }
+        }
+      }
+    }
+    
+    // Check hash on mount and after course is loaded
+    if (isLoaded && course.modules) {
+      handleHashNavigation()
+    }
+    
+    // Also listen for hash changes
+    if (typeof window !== 'undefined') {
+      window.addEventListener('hashchange', handleHashNavigation)
+      
+      return () => {
+        window.removeEventListener('hashchange', handleHashNavigation)
+      }
+    }
+  }, [courseId, course.modules, isLoaded])
   
   const handlePurchase = async () => {
     if (!user) {
@@ -368,6 +414,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
           {course.modules.map((module, moduleIndex) => (
             <div 
               key={module.moduleId}
+              id={`module-${module.moduleId}`}
               className={`${styles.moduleCard} ${expandedModule === moduleIndex ? styles.expanded : ''}`}
             >
               <div 

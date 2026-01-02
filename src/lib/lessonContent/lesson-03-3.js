@@ -769,12 +769,18 @@ def update_settings(settings, theme=None, language=None, notifications=None, fon
         settings["font_size"] = font_size
     return settings
 
-def display_settings(settings, format="short"):
+def display_settings(settings, format="short", header=None):
     """
     Виводить налаштування користувача
     """
-    if format == "short":
+    if header:
+        print(header)
+    elif format == "short":
         print("=== Налаштування користувача (короткий формат) ===")
+    else:  # full
+        print("=== Налаштування користувача (повний формат) ===")
+    
+    if format == "short":
         print(f"Користувач: {settings['username']}")
         print(f"Тема: {settings['theme']}")
         print(f"Мова: {settings['language']}")
@@ -782,7 +788,6 @@ def display_settings(settings, format="short"):
         print(f"Сповіщення: {status}")
         print(f"Розмір шрифту: {settings['font_size']}")
     else:  # full
-        print("=== Налаштування користувача (повний формат) ===")
         print(f"Користувач: {settings['username']}")
         print(f"Тема інтерфейсу: {settings['theme']}")
         print(f"Мова інтерфейсу: {settings['language']}")
@@ -792,6 +797,7 @@ def display_settings(settings, format="short"):
     print()
 
 # Вводимо значення напряму в коді (не використовуємо input())
+
 # Приклад 1: Тільки обов'язковий параметр (використовуються значення за замовчуванням)
 user1 = create_user_settings("user1")
 display_settings(user1)
@@ -816,8 +822,7 @@ display_settings(user4)
 
 # Приклад 5: Оновлення налаштувань
 updated_user2 = update_settings(user2, theme="light", font_size=20)
-print("=== Оновлені налаштування ===")
-display_settings(updated_user2, format="short")`,
+display_settings(updated_user2, format="short", header="=== Оновлені налаштування ===")`,
       explanation: "Рішення демонструє використання позиційних та іменованих аргументів, значень за замовчуванням та комбінування різних способів виклику функцій."
     },
     hints: [
