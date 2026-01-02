@@ -1038,7 +1038,7 @@ def format_book_info(book, format_type="short"):
         title = book.get("title", "Невідома")
         author = book.get("author", "Невідомий")
         year = book.get("year", "?")
-        isbn = book.get("isbn", "Немає")
+        isbn = book.get("isbn") if book.get("isbn") else "Немає"
         return f"Назва: {title}\\nАвтор: {author}\\nРік: {year}\\nISBN: {isbn}"
 
 def get_books_by_author(library, author):
@@ -1088,44 +1088,33 @@ def remove_book(library, isbn):
 library = {}
 
 # Додаємо книги
-add_book(library, "Python для початківців", "Олександр Петренко", 2023, "978-1234567890")
+result = add_book(library, "Python для початківців", "Олександр Петренко", 2023, "978-1234567890")
 add_book(library, "Поглиблений Python", "Олександр Петренко", 2024, "978-1234567891")
 add_book(library, "Основи програмування", "Марія Іваненко", 2020, "978-1234567892")
 
-print(f"Книга додана: True")
-print()
-
+print(f"Книга додана: {result}")
 # Пошук книг
 found = find_books(library, author="Олександр Петренко")
 print(f"Знайдені книги автора 'Олександр Петренко': {len(found)}")
 for book in found:
-    print(f"  - {format_book_info(book)}")
-
-print()
-
+    print(f"- {format_book_info(book)}")
 # Статистика
 stats = calculate_statistics(library)
-print(f"Статистика бібліотеки:")
-print(f"  Загальна кількість книг: {stats['total_books']}")
-print(f"  Кількість авторів: {stats['total_authors']}")
-print(f"  Найстаріша книга: {stats['oldest_year']}")
-print(f"  Найновіша книга: {stats['newest_year']}")
-
-print()
-
+print("Статистика бібліотеки:")
+print(f"Загальна кількість книг: {stats['total_books']}")
+print(f"Кількість авторів: {stats['total_authors']}")
+print(f"Найстаріша книга: {stats['oldest_year']}")
+print(f"Найновіша книга: {stats['newest_year']}")
 # Форматування
 book = library["books"][0]
 print(f"Коротке форматування: {format_book_info(book, 'short')}")
-print(f"Повне форматування:\\n{format_book_info(book, 'full')}")
-
-print()
-
+print("Повне форматування:")
+full_info = format_book_info(book, 'full')
+for line in full_info.split('\\n'):
+    print(line)
 # Книги автора
 author_books = get_books_by_author(library, "Олександр Петренко")
 print(f"Книги автора 'Олександр Петренко': {author_books}")
-
-print()
-
 # Видалення книги
 removed = remove_book(library, "978-1234567890")
 print(f"Книга видалена: {removed}")

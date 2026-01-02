@@ -100,8 +100,8 @@ export default function HomeClient() {
       <div className='overflow-x-hidden'>
         <Analytics />
         <Visit />
-        <KnowledgeTestSection />
         <CoursesSection />
+        <KnowledgeTestSection />
         <Testimonials />
         <ProjectsShowcase />
         <SocialMedia />
