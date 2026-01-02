@@ -1,5 +1,5 @@
 /**
- * 03 For Loops
+ * Lesson 02-3: Цикл for та функція range()
  * Full educational content
  */
 
@@ -9,194 +9,540 @@ export const lesson_02_3 = {
   lessonId: "lesson-02-3",
   moduleId: "module-02",
   order: 3,
-  title: "03 For Loops",
+  title: "Цикл for та функція range()",
   
   learningObjectives: [
-    "Вивчити основні концепції",
-    "Застосувати знання на практиці",
-    "Розв'язати практичні задачі"
+    "Використовувати цикл for для ітерації",
+    "Застосовувати функцію range()",
+    "Ітерувати по послідовностях",
+    "Працювати з enumerate() та zip()"
   ],
   
   estimatedTime: 90,
-  prerequisites: [],
+  prerequisites: ["lesson-02-2"],
   
   videoUrl: "",
   
   theory: {
     sections: [
       {
-        title: "for Loops",
-        content: `A for loop acts as an iterator in Python; it goes through items that are in a *sequence* or any other iterable item. Objects that we've learned about that we can iterate over include strings, lists, tuples, and even built-in iterables for dictionaries, such as keys or values.
+        title: "Що таке цикл for?",
+        content: `Цикл **for** використовується для ітерації (проходження) по послідовностях: списках, рядках, кортежах тощо.
 
-We've already seen the for statement a little bit in past lectures but now let's formalize our understanding.
+**Синтаксис:**
+\`\`\`python
+for елемент in послідовність:
+    # код для кожного елемента
+    дія
+\`\`\`
 
-Here's the general format for a for loop in Python:
+**Як це працює:**
+1. Python бере перший елемент з послідовності
+2. Присвоює його змінній (після for)
+3. Виконує код всередині циклу
+4. Переходить до наступного елемента
+5. Повторює поки не закінчаться елементи
 
-    for item in object:
-        statements to do stuff
+**Приклад:**
+\`\`\`python
+fruits = ["яблуко", "банан", "апельсин"]
 
-The variable name used for the item is completely up to the coder, so use your best judgment for choosing a name that makes sense and you will be able to understand when revisiting your code. This item name can then be referenced inside your loop, for example if you wanted to use if statements to perform checks.
+for fruit in fruits:
+    print(fruit)
+\`\`\`
 
-Let's go ahead and work through several example of for loops using a variety of data object types. We'll start simple and build more complexity later on.
-
-## Example 1
-Iterating through a list
-
-Great! Hopefully this makes sense. Now let's add an if statement to check for even numbers. We'll first introduce a new concept here--the modulo.
-### Modulo
-The modulo allows us to get the remainder in a division and uses the % symbol. For example:
-
-This makes sense since 17 divided by 5 is 3 remainder 2. Let's see a few more quick examples:
-
-Notice that if a number is fully divisible with no remainder, the result of the modulo call is 0. We can use this to test for even numbers, since if a number modulo 2 is equal to 0, that means it is an even number!
-
-Back to the for loops!
-
-## Example 2
-Let's print only the even numbers from that list!
-
-We could have also put an else statement in there:`
+**Виведення:**
+\`\`\`
+яблуко
+банан
+апельсин
+\`\`\``
       },
       {
-        title: "Example 3",
-        content: `Another common idea during a for loop is keeping some sort of running tally during multiple loops. For example, let's create a for loop that sums up the list:
+        title: "for зі списками",
+        content: `**Ітерація по списку:**
 
-Great! Read over the above cell and make sure you understand fully what is going on. Also we could have implemented a += to perform the addition towards the sum. For example:`
+\`\`\`python
+numbers = [1, 2, 3, 4, 5]
+
+for number in numbers:
+    print(f"Число: {number}")
+\`\`\`
+
+**З індексами (використовуючи range):**
+\`\`\`python
+numbers = [10, 20, 30, 40, 50]
+
+for i in range(len(numbers)):
+    print(f"Індекс {i}: {numbers[i]}")
+\`\`\`
+
+**Використання enumerate (краще рішення):**
+\`\`\`python
+numbers = [10, 20, 30, 40, 50]
+
+for index, value in enumerate(numbers):
+    print(f"Індекс {index}: {value}")
+\`\`\`
+
+**enumerate** повертає пари (індекс, значення), що дуже зручно!`
       },
       {
-        title: "Example 4",
-        content: `We've used for loops with lists, how about with strings? Remember strings are a sequence so when we iterate through them we will be accessing each item in that string.`
+        title: "Функція range()",
+        content: `**range()** створює послідовність чисел. Це найчастіше використовується з for.
+
+**Синтаксис:**
+- \`range(stop)\` - від 0 до stop-1
+- \`range(start, stop)\` - від start до stop-1
+- \`range(start, stop, step)\` - від start до stop-1 з кроком step
+
+**Приклади:**
+\`\`\`python
+# range(5) - 0, 1, 2, 3, 4
+for i in range(5):
+    print(i)
+
+# range(2, 7) - 2, 3, 4, 5, 6
+for i in range(2, 7):
+    print(i)
+
+# range(0, 10, 2) - 0, 2, 4, 6, 8
+for i in range(0, 10, 2):
+    print(i)
+\`\`\`
+
+**Важливо:** range() не включає останнє число (stop), тільки до нього!
+
+**Перетворення в список:**
+\`\`\`python
+numbers = list(range(5))
+print(numbers)  # [0, 1, 2, 3, 4]
+\`\`\``
       },
       {
-        title: "Example 5",
-        content: `Let's now look at how a for loop can be used with a tuple:`
+        title: "for з рядками",
+        content: `Рядки теж є послідовностями, тому можна ітерувати по символах:
+
+\`\`\`python
+word = "Python"
+
+for letter in word:
+    print(letter)
+\`\`\`
+
+**Виведення:**
+\`\`\`
+P
+y
+t
+h
+o
+n
+\`\`\`
+
+**З індексами:**
+\`\`\`python
+word = "Python"
+
+for i, letter in enumerate(word):
+    print(f"Позиція {i}: {letter}")
+\`\`\`
+
+**Виведення:**
+\`\`\`
+Позиція 0: P
+Позиція 1: y
+Позиція 2: t
+Позиція 3: h
+Позиція 4: o
+Позиція 5: n
+\`\`\``
       },
       {
-        title: "Example 6",
-        content: `Tuples have a special quality when it comes to for loops. If you are iterating through a sequence that contains tuples, the item can actually be the tuple itself, this is an example of *tuple unpacking*. During the for loop we will be unpacking the tuple inside of a sequence and we can access the individual items inside that tuple!
+        title: "for зі словниками",
+        content: `**Ітерація по ключах:**
+\`\`\`python
+student = {"ім'я": "Іван", "вік": 15, "клас": 9}
 
-Cool! With tuples in a sequence we can access the items inside of them through unpacking! The reason this is important is because many objects will deliver their iterables through tuples. Let's start exploring iterating through Dictionaries to explore this further!`
+for key in student:
+    print(f"{key}: {student[key]}")
+\`\`\`
+
+**Використання .keys():**
+\`\`\`python
+for key in student.keys():
+    print(key)
+\`\`\`
+
+**Ітерація по значеннях:**
+\`\`\`python
+for value in student.values():
+    print(value)
+\`\`\`
+
+**Ітерація по парах ключ-значення:**
+\`\`\`python
+for key, value in student.items():
+    print(f"{key}: {value}")
+\`\`\`
+
+**items()** повертає пари (ключ, значення) - це найзручніший спосіб!`
       },
       {
-        title: "Example 7",
-        content: `Notice how this produces only the keys. So how can we get the values? Or both the keys and the values? 
+        title: "enumerate() - індекс та значення",
+        content: `**enumerate()** додає індекси до послідовності:
 
-We're going to introduce three new Dictionary methods: **.keys()**, **.values()** and **.items()**
+\`\`\`python
+fruits = ["яблуко", "банан", "апельсин"]
 
-In Python each of these methods return a *dictionary view object*. It supports operations like membership test and iteration, but its contents are not independent of the original dictionary – it is only a view. Let's see it in action:
+for index, fruit in enumerate(fruits):
+    print(f"{index}: {fruit}")
+\`\`\`
 
-Since the .items() method supports iteration, we can perform *dictionary unpacking* to separate keys and values just as we did in the previous examples.
+**Виведення:**
+\`\`\`
+0: яблуко
+1: банан
+2: апельсин
+\`\`\`
 
-If you want to obtain a true list of keys, values, or key/value tuples, you can *cast* the view as a list:
+**Початок з іншого числа:**
+\`\`\`python
+for index, fruit in enumerate(fruits, start=1):
+    print(f"{index}: {fruit}")
+\`\`\`
 
-Remember that dictionaries are unordered, and that keys and values come back in arbitrary order. You can obtain a sorted list using sorted():`
+**Коли використовувати:**
+- Коли потрібен і індекс, і значення
+- Для нумерації елементів
+- Для відстеження позиції`
       },
       {
-        title: "Conclusion",
-        content: `We've learned how to use for loops to iterate through tuples, lists, strings, and dictionaries. It will be an important tool for us, so make sure you know it well and understood the above examples.
+        title: "zip() - об'єднання послідовностей",
+        content: `**zip()** об'єднує кілька послідовностей разом:
 
-[More resources](http://www.tutorialspoint.com/python/python_for_loop.htm)`
+\`\`\`python
+names = ["Іван", "Марія", "Петро"]
+ages = [15, 16, 14]
+
+for name, age in zip(names, ages):
+    print(f"{name} - {age} років")
+\`\`\`
+
+**Виведення:**
+\`\`\`
+Іван - 15 років
+Марія - 16 років
+Петро - 14 років
+\`\`\`
+
+**Важливо:** zip() зупиняється коли закінчується найкоротша послідовність.
+
+**Коли використовувати:**
+- Коли потрібно обробити кілька списків одночасно
+- Для створення пар значень
+- Для об'єднання даних`
+      },
+      {
+        title: "for з else",
+        content: `Як і в while, в for можна використовувати **else**:
+
+\`\`\`python
+numbers = [1, 2, 3, 4, 5]
+
+for number in numbers:
+    if number == 10:
+        print("Знайдено 10!")
+        break
+else:
+    print("10 не знайдено")
+\`\`\`
+
+**else виконується тільки якщо цикл завершився нормально (не через break).**
+
+**Корисно для пошуку:**
+\`\`\`python
+numbers = [1, 2, 3, 4, 5]
+target = 10
+
+for number in numbers:
+    if number == target:
+        print(f"Знайдено {target}!")
+        break
+else:
+    print(f"{target} не знайдено в списку")
+\`\`\``
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "We'll learn how to automate this sort of list in the next lecture",
-      code: `# We'll learn how to automate this sort of list in the next lecture
-list1 = [1,2,3,4,5,6,7,8,9,10]`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `for num in list1:
-    print(num)`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `17 % 5`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "3 Remainder 1",
-      code: `# 3 Remainder 1
-10 % 3`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "2 Remainder 4",
-      code: `# 2 Remainder 4
-18 % 7`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "2 no remainder",
-      code: `# 2 no remainder
-4 % 2`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `for num in list1:
-    if num % 2 == 0:
-        print(num)`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `for num in list1:
-    if num % 2 == 0:
-        print(num)
-    else:
-        print('Odd number')`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Start sum at zero",
-      code: `# Start sum at zero
-list_sum = 0 
+      title: "Приклад 1: for зі списком",
+      code: `# Ітерація по списку
+fruits = ["яблуко", "банан", "апельсин"]
 
-for num in list1:
-    list_sum = list_sum + num
-
-print(list_sum)`,
-      explanation: "Приклад коду з курсу"
+for fruit in fruits:
+    print(fruit)`,
+      explanation: "Демонструє базову ітерацію по списку за допомогою for."
     },
     {
-      title: "Start sum at zero",
-      code: `# Start sum at zero
-list_sum = 0 
+      title: "Приклад 2: range()",
+      code: `# Використання range()
+for i in range(5):
+    print(f"Число: {i}")
 
-for num in list1:
-    list_sum += num
+# range з кроком
+for i in range(0, 10, 2):
+    print(i)  # 0, 2, 4, 6, 8`,
+      explanation: "Показує використання range() для створення послідовностей чисел."
+    },
+    {
+      title: "Приклад 3: enumerate()",
+      code: `# Використання enumerate
+fruits = ["яблуко", "банан", "апельсин"]
 
-print(list_sum)`,
-      explanation: "Приклад коду з курсу"
+for index, fruit in enumerate(fruits):
+    print(f"{index}: {fruit}")`,
+      explanation: "Демонструє як отримати і індекс, і значення за допомогою enumerate()."
+    },
+    {
+      title: "Приклад 4: zip()",
+      code: `# Об'єднання списків
+names = ["Іван", "Марія"]
+ages = [15, 16]
+
+for name, age in zip(names, ages):
+    print(f"{name} - {age} років")`,
+      explanation: "Показує як об'єднати кілька списків разом за допомогою zip()."
+    },
+    {
+      title: "Приклад 5: for зі словником",
+      code: `# Ітерація по словнику
+student = {"ім'я": "Іван", "вік": 15}
+
+for key, value in student.items():
+    print(f"{key}: {value}")`,
+      explanation: "Демонструє ітерацію по парах ключ-значення в словнику."
+    },
+    {
+      title: "Приклад 6: Обчислення суми",
+      code: `# Сума чисел у списку
+numbers = [1, 2, 3, 4, 5]
+total = 0
+
+for number in numbers:
+    total += number
+
+print(f"Сума: {total}")`,
+      explanation: "Показує як використовувати for для обчислення суми."
     }
   ],
   
-  commonMistakes: [],
+  commonMistakes: [
+    {
+      mistake: "Плутанина між range() та списком",
+      explanation: "range(5) це не [0,1,2,3,4], а генератор. Для списку потрібно list(range(5)).",
+      correctApproach: "range() можна використовувати безпосередньо в for, але для списку використовуй list(range())"
+    },
+    {
+      mistake: "range() включає останнє число",
+      explanation: "range(5) створює 0,1,2,3,4 (не включає 5).",
+      correctApproach: "Пам'ятай: range(stop) створює числа від 0 до stop-1"
+    },
+    {
+      mistake: "Забути enumerate() коли потрібен індекс",
+      explanation: "Не потрібно використовувати range(len(list)), коли можна використати enumerate().",
+      correctApproach: "Використовуй enumerate() замість range(len()) для отримання індексу та значення"
+    },
+    {
+      mistake: "Неправильне використання zip()",
+      explanation: "zip() зупиняється коли закінчується найкоротша послідовність.",
+      correctApproach: "Переконайся що всі послідовності в zip() мають однакову довжину, або обробляй різну довжину"
+    }
+  ],
   
-  summary: "Підсумок уроку",
+  summary: `На цьому уроці ми вивчили:
+
+1. **Цикл for** - для ітерації по послідовностях
+2. **range()** - створення послідовностей чисел
+3. **Ітерація по списках** - простий спосіб обробки даних
+4. **Ітерація по рядках** - по символах
+5. **Ітерація по словниках** - по ключах, значеннях, парах
+6. **enumerate()** - отримання індексу та значення
+7. **zip()** - об'єднання кількох послідовностей
+8. **for з else** - обробка після завершення циклу
+
+Тепер ви вмієте ефективно ітерувати по даних!
+
+Наступний урок - break, continue та else в циклах!`,
   
   practiceTask: {
-    title: "Практична задача",
-    description: "Опишіть задачу",
-    problemStatement: "Умова задачі",
-    inputFormat: "",
-    outputFormat: "",
-    examples: [],
+    title: "Аналіз оцінок студентів",
+    description: "Створіть програму для аналізу оцінок студентів",
+    problemStatement: `Напишіть програму, яка:
+1. Має список оцінок: grades = [85, 92, 78, 96, 88, 75, 90]
+2. Використовує for цикл для:
+   - Виведення кожної оцінки з індексом (використай enumerate)
+   - Підрахунку кількості оцінок
+   - Обчислення середньої оцінки
+   - Знаходження максимальної та мінімальної оцінки
+3. Виводить всі результати`,
+    inputFormat: "Програма використовує фіксований список grades",
+    outputFormat: `Приклад виведення:
+Оцінка 0: 85
+Оцінка 1: 92
+Оцінка 2: 78
+Оцінка 3: 96
+Оцінка 4: 88
+Оцінка 5: 75
+Оцінка 6: 90
+Кількість оцінок: 7
+Середня оцінка: 86.57
+Максимальна оцінка: 96
+Мінімальна оцінка: 75`,
+    examples: [
+      {
+        input: "grades = [85, 92, 78, 96, 88, 75, 90]",
+        output: `Оцінка 0: 85
+Оцінка 1: 92
+Оцінка 2: 78
+Оцінка 3: 96
+Оцінка 4: 88
+Оцінка 5: 75
+Оцінка 6: 90
+Кількість оцінок: 7
+Середня оцінка: 86.57
+Максимальна оцінка: 96
+Мінімальна оцінка: 75`,
+        explanation: "Програма аналізує всі оцінки та обчислює статистику"
+      }
+    ],
     solution: {
-      code: "",
-      explanation: ""
+      code: `# Аналіз оцінок студентів
+grades = [85, 92, 78, 96, 88, 75, 90]
+
+# Виведення оцінок з індексами
+for index, grade in enumerate(grades):
+    print(f"Оцінка {index}: {grade}")
+
+# Підрахунок кількості
+count = len(grades)
+print(f"Кількість оцінок: {count}")
+
+# Обчислення суми та середньої
+total = 0
+for grade in grades:
+    total += grade
+
+average = total / count
+print(f"Середня оцінка: {average:.2f}")
+
+# Знаходження максимуму та мінімуму
+max_grade = grades[0]
+min_grade = grades[0]
+
+for grade in grades:
+    if grade > max_grade:
+        max_grade = grade
+    if grade < min_grade:
+        min_grade = grade
+
+print(f"Максимальна оцінка: {max_grade}")
+print(f"Мінімальна оцінка: {min_grade}")`,
+      explanation: "Рішення використовує for з enumerate для виведення, for для обчислення суми, та for для знаходження max/min."
     },
-    hints: [],
+    hints: [
+      "Використовуйте enumerate() для отримання індексу та значення",
+      "Використовуйте for для обчислення суми всіх оцінок",
+      "Середня = сума / кількість",
+      "Для max/min порівнюйте кожну оцінку з поточною max/min",
+      "Використовуйте :.2f для форматування середньої до 2 знаків після коми"
+    ],
     difficulty: "beginner"
   },
   
   quiz: {
-    questions: [],
+    questions: [
+      {
+        id: "q1",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\nfor i in range(3):\n    print(i)\n```",
+        options: [
+          "0\n1\n2",
+          "1\n2\n3",
+          "0\n1\n2\n3",
+          "Нічого"
+        ],
+        correctAnswer: 0,
+        explanation: "range(3) створює 0, 1, 2 (не включає 3)."
+      },
+      {
+        id: "q2",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\nfruits = ['яблуко', 'банан']\nfor fruit in fruits:\n    print(fruit)\n```",
+        options: [
+          "яблуко\nбанан",
+          "0\n1",
+          "яблуко банан",
+          "Помилку"
+        ],
+        correctAnswer: 0,
+        explanation: "for ітерує по елементах списку, тому виводяться 'яблуко' та 'банан'."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\nfor i, letter in enumerate('Hi'):\n    print(f'{i}: {letter}')\n```",
+        options: [
+          "0: H\n1: i",
+          "H\ni",
+          "0\n1",
+          "Помилку"
+        ],
+        correctAnswer: 0,
+        explanation: "enumerate() повертає пари (індекс, значення), тому виводяться '0: H' та '1: i'."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що створює range(5)?",
+        options: [
+          "[0, 1, 2, 3, 4, 5]",
+          "[0, 1, 2, 3, 4]",
+          "[1, 2, 3, 4, 5]",
+          "Генератор чисел 0-4"
+        ],
+        correctAnswer: 3,
+        explanation: "range(5) створює генератор чисел від 0 до 4 (не включає 5)."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\nnames = ['Іван', 'Марія']\nages = [15, 16, 17]\nfor name, age in zip(names, ages):\n    print(f'{name}: {age}')\n```",
+        options: [
+          "Іван: 15\nМарія: 16",
+          "Іван: 15\nМарія: 16\n17",
+          "Помилку",
+          "Нічого"
+        ],
+        correctAnswer: 0,
+        explanation: "zip() зупиняється коли закінчується найкоротша послідовність (names має 2 елементи)."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Як отримати і індекс, і значення в циклі for?",
+        options: [
+          "for i in range(len(list)):",
+          "for i, value in enumerate(list):",
+          "for value in list:",
+          "Всі варіанти правильні"
+        ],
+        correctAnswer: 1,
+        explanation: "enumerate() - найкращий спосіб отримати і індекс, і значення одночасно."
+      }
+    ],
     timeLimit: 10,
     passingScore: 70
   }

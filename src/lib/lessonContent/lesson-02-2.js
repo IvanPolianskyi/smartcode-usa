@@ -1,5 +1,5 @@
 /**
- * 04 While Loops
+ * Lesson 02-2: Цикл while
  * Full educational content
  */
 
@@ -9,157 +9,508 @@ export const lesson_02_2 = {
   lessonId: "lesson-02-2",
   moduleId: "module-02",
   order: 2,
-  title: "04 While Loops",
+  title: "Цикл while",
   
   learningObjectives: [
-    "Вивчити основні концепції",
-    "Застосувати знання на практиці",
-    "Розв'язати практичні задачі"
+    "Використовувати цикл while",
+    "Контролювати умови виходу з циклу",
+    "Уникати нескінченних циклів",
+    "Застосовувати while для різних задач"
   ],
   
   estimatedTime: 90,
-  prerequisites: [],
+  prerequisites: ["lesson-02-1"],
   
   videoUrl: "",
   
   theory: {
     sections: [
       {
-        title: "while Loops",
-        content: `The while statement in Python is one of most general ways to perform iteration. A while statement will repeatedly execute a single statement or group of statements as long as the condition is true. The reason it is called a 'loop' is because the code statements are looped through over and over again until the condition is no longer met.
+        title: "Що таке цикл while?",
+        content: `Цикл **while** повторює код, поки умова є **True**. Це як коли ти кажеш:
+- "Повторюй, поки не з'їм всі цукерки"
+- "Повторюй, поки не досягну 10"
+- "Повторюй, поки не знайду відповідь"
 
-The general format of a while loop is:
+**Синтаксис:**
+\`\`\`python
+while умова:
+    # код, який повторюється
+    дія
+\`\`\`
 
-    while test:
-        code statements
-    else:
-        final code statements
-
-Let’s look at a few simple while loops in action.
-
-Notice how many times the print statements occurred and how the while loop kept going until the True condition was met, which occurred once x==10. It's important to note that once this occurred the code stopped. Let's see how we could add an else statement:`
+**Як це працює:**
+1. Python перевіряє умову
+2. Якщо умова True - виконує код всередині циклу
+3. Після виконання знову перевіряє умову
+4. Повторює поки умова True
+5. Коли умова стає False - виходить з циклу`
       },
       {
-        title: "break, continue, pass",
-        content: `We can use break, continue, and pass statements in our loops to add additional functionality for various cases. The three statements are defined by:
+        title: "Простий приклад while",
+        content: `**Приклад 1: Лічильник**
 
-    break: Breaks out of the current closest enclosing loop.
-    continue: Goes to the top of the closest enclosing loop.
-    pass: Does nothing at all.
-    
-    
-Thinking about break and continue statements, the general format of the while loop looks like this:
+\`\`\`python
+x = 0
 
-    while test: 
-        code statement
-        if test: 
-            break
-        if test: 
-            continue 
+while x < 5:
+    print(f"x дорівнює {x}")
+    x = x + 1  # або x += 1
+
+print("Цикл завершено!")
+\`\`\`
+
+**Що відбувається:**
+- x починає з 0
+- Поки x < 5, виконується цикл
+- Кожна ітерація збільшує x на 1
+- Коли x стає 5, умова False і цикл зупиняється
+
+**Виведення:**
+\`\`\`
+x дорівнює 0
+x дорівнює 1
+x дорівнює 2
+x дорівнює 3
+x дорівнює 4
+Цикл завершено!
+\`\`\`
+
+**Важливо:** Не забудь змінювати змінну в умові, інакше цикл буде нескінченним!`
+      },
+      {
+        title: "while з else",
+        content: `Можна додати **else** після while. Код в else виконується тільки якщо цикл завершився нормально (не через break).
+
+\`\`\`python
+x = 0
+
+while x < 5:
+    print(f"x = {x}")
+    x += 1
+else:
+    print("Цикл завершено успішно!")
+\`\`\`
+
+**Коли використовувати else:**
+- Коли потрібно виконати код після нормального завершення циклу
+- Для підтвердження успішного завершення`
+      },
+      {
+        title: "break - вихід з циклу",
+        content: `**break** дозволяє вийти з циклу достроково, навіть якщо умова ще True.
+
+\`\`\`python
+x = 0
+
+while x < 10:
+    print(f"x = {x}")
+    if x == 5:
+        print("Досягли 5, виходимо!")
+        break
+    x += 1
+
+print("Після циклу")
+\`\`\`
+
+**Виведення:**
+\`\`\`
+x = 0
+x = 1
+x = 2
+x = 3
+x = 4
+x = 5
+Досягли 5, виходимо!
+Після циклу
+\`\`\`
+
+**Коли використовувати break:**
+- Коли знайшли те, що шукали
+- Коли досягли певної умови і не потрібно продовжувати
+- Для дострокового виходу з циклу`
+      },
+      {
+        title: "continue - пропуск ітерації",
+        content: `**continue** пропускає поточну ітерацію і переходить до наступної перевірки умови.
+
+\`\`\`python
+x = 0
+
+while x < 10:
+    x += 1
+    if x % 2 == 0:  # якщо x парне
+        continue  # пропускаємо решту коду
+    print(f"x = {x} (непарне)")
+
+print("Цикл завершено")
+\`\`\`
+
+**Виведення:**
+\`\`\`
+x = 1 (непарне)
+x = 3 (непарне)
+x = 5 (непарне)
+x = 7 (непарне)
+x = 9 (непарне)
+Цикл завершено
+\`\`\`
+
+**Коли використовувати continue:**
+- Коли потрібно пропустити поточну ітерацію
+- Для фільтрації даних
+- Для обробки тільки певних значень`
+      },
+      {
+        title: "Нескінченні цикли",
+        content: `**УВАГА!** Нескінченний цикл - це коли умова завжди True і цикл ніколи не закінчується.
+
+\`\`\`python
+# НЕ ВИКОНУЙ ЦЕЙ КОД!
+while True:
+    print("Це буде друкуватися вічно!")
+\`\`\`
+
+**Як уникнути нескінченних циклів:**
+1. Завжди змінюй змінну в умові циклу
+2. Перевіряй, що умова колись стане False
+3. Використовуй break для виходу за потреби
+
+**Приклад правильної умови:**
+\`\`\`python
+x = 0
+while x < 10:  # умова колись стане False
+    print(x)
+    x += 1  # змінюємо x, тому колись x >= 10
+\`\`\`
+
+**Приклад неправильної умови:**
+\`\`\`python
+x = 0
+while x < 10:  # умова ніколи не стане False!
+    print(x)
+    # забули змінити x!
+\`\`\``
+      },
+      {
+        title: "Практичні приклади",
+        content: `**Приклад 1: Введення до правильного значення**
+
+\`\`\`python
+# Симуляція введення (в реальності використовуй input())
+password = ""
+attempts = 0
+
+while password != "secret123" and attempts < 3:
+    attempts += 1
+    # password = input("Введіть пароль: ")  # в реальній програмі
+    password = "wrong"  # для прикладу
+    
+    if password != "secret123":
+        print(f"Невірний пароль. Спроб залишилось: {3 - attempts}")
     else:
+        print("Пароль правильний!")
+\`\`\`
 
-break and continue statements can appear anywhere inside the loop’s body, but we will usually put them further nested in conjunction with an if statement to perform an action based on some condition.
+**Приклад 2: Обчислення суми**
 
-Let's go ahead and look at some examples!
+\`\`\`python
+total = 0
+number = 1
 
-Note how we have a printed statement when x==3, and a continue being printed out as we continue through the outer while loop. Let's put in a break once x ==3 and see if the result makes sense:
+while number <= 10:
+    total += number
+    number += 1
 
-Note how the other else statement wasn't reached and continuing was never printed!
+print(f"Сума чисел від 1 до 10: {total}")
+\`\`\`
 
-After these brief but simple examples, you should feel comfortable using while statements in your code.
+**Приклад 3: Пошук першого парного числа**
 
-**A word of caution however! It is possible to create an infinitely running loop with while statements. For example:**
+\`\`\`python
+numbers = [1, 3, 5, 8, 9, 11]
+index = 0
 
-A quick note: If you *did* run the above cell, click on the Kernel menu above to restart the kernel!`
+while index < len(numbers):
+    if numbers[index] % 2 == 0:
+        print(f"Знайдено парне число: {numbers[index]}")
+        break
+    index += 1
+else:
+    print("Парних чисел не знайдено")
+\`\`\``
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад коду",
-      code: `x = 0
+      title: "Приклад 1: Простий лічильник",
+      code: `# Лічильник від 0 до 4
+x = 0
 
-while x < 10:
-    print('x is currently: ',x)
-    print(' x is still less than 10, adding 1 to x')
-    x+=1`,
-      explanation: "Приклад коду з курсу"
+while x < 5:
+    print(f"x = {x}")
+    x += 1  # збільшуємо x на 1
+
+print("Цикл завершено!")`,
+      explanation: "Демонструє базовий while цикл з лічильником. Важливо змінювати змінну в умові."
     },
     {
-      title: "Приклад коду",
-      code: `x = 0
+      title: "Приклад 2: while з else",
+      code: `# Цикл з else
+x = 0
 
-while x < 10:
-    print('x is currently: ',x)
-    print(' x is still less than 10, adding 1 to x')
-    x+=1
-    
+while x < 5:
+    print(f"x = {x}")
+    x += 1
 else:
-    print('All Done!')`,
-      explanation: "Приклад коду з курсу"
+    print("Цикл завершено успішно!")`,
+      explanation: "Показує використання else після while. else виконується після нормального завершення циклу."
     },
     {
-      title: "Приклад коду",
-      code: `x = 0
+      title: "Приклад 3: break для виходу",
+      code: `# Використання break
+x = 0
 
 while x < 10:
-    print('x is currently: ',x)
-    print(' x is still less than 10, adding 1 to x')
-    x+=1
-    if x==3:
-        print('x==3')
-    else:
-        print('continuing...')
-        continue`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `x = 0
-
-while x < 10:
-    print('x is currently: ',x)
-    print(' x is still less than 10, adding 1 to x')
-    x+=1
-    if x==3:
-        print('Breaking because x==3')
+    print(f"x = {x}")
+    if x == 5:
+        print("Досягли 5, виходимо!")
         break
-    else:
-        print('continuing...')
-        continue`,
-      explanation: "Приклад коду з курсу"
+    x += 1`,
+      explanation: "Демонструє достроковий вихід з циклу за допомогою break."
     },
     {
-      title: "DO NOT RUN THIS CODE!!!!",
-      code: `# DO NOT RUN THIS CODE!!!! 
-while True:
-    print(\"I'm stuck in an infinite loop!\")`,
-      explanation: "Приклад коду з курсу"
+      title: "Приклад 4: continue для пропуску",
+      code: `# Використання continue
+x = 0
+
+while x < 10:
+    x += 1
+    if x % 2 == 0:  # якщо парне
+        continue  # пропускаємо
+    print(f"{x} - непарне")`,
+      explanation: "Показує як пропустити поточну ітерацію за допомогою continue."
+    },
+    {
+      title: "Приклад 5: Обчислення суми",
+      code: `# Сума чисел від 1 до 10
+total = 0
+number = 1
+
+while number <= 10:
+    total += number
+    number += 1
+
+print(f"Сума: {total}")`,
+      explanation: "Демонструє використання while для обчислення суми чисел."
     }
   ],
   
-  commonMistakes: [],
+  commonMistakes: [
+    {
+      mistake: "Нескінченний цикл",
+      explanation: "Якщо не змінювати змінну в умові, цикл буде виконуватися вічно.",
+      correctApproach: "Завжди змінюй змінну в умові циклу (наприклад, x += 1)"
+    },
+    {
+      mistake: "Неправильна умова",
+      explanation: "Якщо умова завжди True, цикл ніколи не закінчиться.",
+      correctApproach: "Перевіряй, що умова колись стане False"
+    },
+    {
+      mistake: "Забути break або continue",
+      explanation: "Іноді потрібно вийти з циклу достроково або пропустити ітерацію.",
+      correctApproach: "Використовуй break для виходу, continue для пропуску ітерації"
+    },
+    {
+      mistake: "Плутанина між break та continue",
+      explanation: "break виходить з циклу повністю, continue тільки пропускає поточну ітерацію.",
+      correctApproach: "break = вихід з циклу, continue = пропуск поточної ітерації"
+    }
+  ],
   
-  summary: "Підсумок уроку",
+  summary: `На цьому уроці ми вивчили:
+
+1. **Цикл while** - повторює код поки умова True
+2. **Синтаксис while** - while умова: з відступами
+3. **while з else** - виконання коду після нормального завершення
+4. **break** - достроковий вихід з циклу
+5. **continue** - пропуск поточної ітерації
+6. **Нескінченні цикли** - як їх уникнути
+7. **Практичні застосування** - лічильники, пошук, обчислення
+
+Тепер ви вмієте використовувати while для повторення дій!
+
+Наступний урок - цикл for для ітерації по послідовностях!`,
   
   practiceTask: {
-    title: "Практична задача",
-    description: "Опишіть задачу",
-    problemStatement: "Умова задачі",
-    inputFormat: "",
-    outputFormat: "",
-    examples: [],
+    title: "Гра \"Вгадай число\"",
+    description: "Створіть програму для гри \"Вгадай число\" з обмеженою кількістю спроб",
+    problemStatement: `Напишіть програму, яка:
+1. Зберігає секретне число у змінну secret_number (наприклад, 7)
+2. Зберігає початкову кількість спроб у змінну attempts (наприклад, 5)
+3. Використовує while цикл для повторення:
+   - Зменшує attempts на 1
+   - Симулює введення числа (використай guess = 5 для тесту)
+   - Якщо guess == secret_number: виводить "Вітаю! Ви вгадали!" і виходить з циклу
+   - Якщо guess < secret_number: виводить "Занадто мало!"
+   - Якщо guess > secret_number: виводить "Занадто багато!"
+   - Якщо attempts == 0: виводить "Спроб залишилось: 0" і виходить
+4. Після циклу виводить результат`,
+    inputFormat: "Програма використовує фіксовані значення secret_number та guess",
+    outputFormat: `Приклад виведення:
+Спроб залишилось: 4
+Занадто мало!
+Спроб залишилось: 3
+Занадто багато!
+Спроб залишилось: 2
+Вітаю! Ви вгадали!`,
+    examples: [
+      {
+        input: "secret_number = 7, guess = 5 (потім 9, потім 7)",
+        output: `Спроб залишилось: 4
+Занадто мало!
+Спроб залишилось: 3
+Занадто багато!
+Спроб залишилось: 2
+Вітаю! Ви вгадали!`,
+        explanation: "Програма дозволяє кілька спроб поки не вгадаємо число"
+      },
+      {
+        input: "secret_number = 7, guess = 1 (потім 2, потім 3, потім 4, потім 5)",
+        output: `Спроб залишилось: 4
+Занадто мало!
+Спроб залишилось: 3
+Занадто мало!
+Спроб залишилось: 2
+Занадто мало!
+Спроб залишилось: 1
+Занадто мало!
+Спроб залишилось: 0`,
+        explanation: "Якщо не вгадали за 5 спроб, програма завершується"
+      }
+    ],
     solution: {
-      code: "",
-      explanation: ""
+      code: `# Гра "Вгадай число"
+secret_number = 7
+attempts = 5
+
+# Симуляція введення (в реальності: guess = int(input("Введіть число: ")))
+guesses = [5, 9, 7]  # для тестування
+guess_index = 0
+
+while attempts > 0:
+    attempts -= 1
+    guess = guesses[guess_index] if guess_index < len(guesses) else 0
+    guess_index += 1
+    
+    print(f"Спроб залишилось: {attempts}")
+    
+    if guess == secret_number:
+        print("Вітаю! Ви вгадали!")
+        break
+    elif guess < secret_number:
+        print("Занадто мало!")
+    else:
+        print("Занадто багато!")
+    
+    if attempts == 0:
+        print(f"Спроб залишилось: {attempts}")`,
+      explanation: "Рішення використовує while цикл з break для виходу при вгадуванні та перевіркою кількості спроб."
     },
-    hints: [],
+    hints: [
+      "Використовуйте while attempts > 0 для циклу",
+      "Зменшуйте attempts на 1 на початку кожної ітерації",
+      "Використовуйте break для виходу коли вгадали",
+      "Використовуйте if/elif/else для перевірки guess",
+      "Перевіряйте attempts == 0 перед виходом"
+    ],
     difficulty: "beginner"
   },
   
   quiz: {
-    questions: [],
+    questions: [
+      {
+        id: "q1",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\nx = 0\nwhile x < 3:\n    print(x)\n    x += 1\n```",
+        options: [
+          "0\n1\n2",
+          "0\n1\n2\n3",
+          "1\n2\n3",
+          "Нічого"
+        ],
+        correctAnswer: 0,
+        explanation: "x починає з 0, друкується 0, потім 1, потім 2. Коли x стає 3, умова False і цикл зупиняється."
+      },
+      {
+        id: "q2",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\nx = 0\nwhile x < 5:\n    if x == 3:\n        break\n    print(x)\n    x += 1\n```",
+        options: [
+          "0\n1\n2",
+          "0\n1\n2\n3",
+          "0\n1\n2\n3\n4",
+          "Нічого"
+        ],
+        correctAnswer: 0,
+        explanation: "Друкується 0, 1, 2. Коли x == 3, виконується break і цикл зупиняється."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\nx = 0\nwhile x < 5:\n    x += 1\n    if x % 2 == 0:\n        continue\n    print(x)\n```",
+        options: [
+          "1\n3\n5",
+          "0\n1\n2\n3\n4",
+          "2\n4",
+          "Нічого"
+        ],
+        correctAnswer: 0,
+        explanation: "x збільшується на 1, якщо парне - continue пропускає print, тому друкуються тільки непарні: 1, 3, 5."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що робить break в циклі while?",
+        options: [
+          "Пропускає поточну ітерацію",
+          "Виходить з циклу",
+          "Продовжує цикл",
+          "Зупиняє всю програму"
+        ],
+        correctAnswer: 1,
+        explanation: "break виходить з циклу достроково, навіть якщо умова ще True."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що робить continue в циклі while?",
+        options: [
+          "Пропускає поточну ітерацію",
+          "Виходить з циклу",
+          "Зупиняє цикл",
+          "Повторює цикл з початку"
+        ],
+        correctAnswer: 0,
+        explanation: "continue пропускає поточну ітерацію і переходить до наступної перевірки умови."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Як уникнути нескінченного циклу?",
+        options: [
+          "Завжди змінювати змінну в умові",
+          "Використовувати break",
+          "Обидва варіанти правильні",
+          "Не можна уникнути"
+        ],
+        correctAnswer: 2,
+        explanation: "Потрібно завжди змінювати змінну в умові циклу, або використовувати break для виходу."
+      }
+    ],
     timeLimit: 10,
     passingScore: 70
   }
