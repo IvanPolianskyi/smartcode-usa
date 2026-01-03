@@ -1,14 +1,14 @@
 /**
- * Lesson 05-4: Обробка помилок: try / except / finally
+ * Lesson 04-3: Обробка помилок: try / except / finally
  * Full educational content
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
-export const lesson_05_4 = {
-  lessonId: "lesson-05-4",
-  moduleId: "module-05",
-  order: 4,
+export const lesson_04_3 = {
+  lessonId: "lesson-04-3",
+  moduleId: "module-04",
+  order: 3,
   title: "Обробка помилок: try / except / finally",
   
   learningObjectives: [
@@ -20,7 +20,7 @@ export const lesson_05_4 = {
   ],
   
   estimatedTime: 90,
-  prerequisites: ["lesson-05-3"],
+  prerequisites: ["lesson-04-2"],
   
   videoUrl: "",
   
@@ -313,48 +313,30 @@ except PermissionError:
     title: "Калькулятор з обробкою помилок",
     description: "Створіть калькулятор з обробкою різних типів помилок",
     problemStatement: `Напишіть програму, яка:
-1. Запитує у користувача два числа
-2. Запитує операцію (+, -, *, /)
-3. Виконує обчислення
-4. Обробляє помилки:
-   - ValueError - якщо введено не число
+1. Використовує захардкожені значення: num1 = 10, num2 = 5, operation = "/"
+2. Виконує обчислення залежно від операції
+3. Обробляє помилки:
    - ZeroDivisionError - якщо ділення на нуль
    - Інші помилки
-5. Використовує try/except/else/finally`,
-    inputFormat: "Користувач вводить два числа та операцію",
+4. Використовує try/except/else/finally
+5. Виводить результат або повідомлення про помилку`,
     outputFormat: `Приклад виведення:
-Введіть перше число: 10
-Введіть друге число: 5
-Введіть операцію (+, -, *, /): /
 Результат: 2.0
 Операція завершена`,
     examples: [
       {
-        input: "10, 5, /",
-        output: `Введіть перше число: 10
-Введіть друге число: 5
-Введіть операцію (+, -, *, /): /
-Результат: 2.0
+        output: `Результат: 2.0
 Операція завершена`,
         explanation: "Програма виконує ділення та виводить результат"
       },
-      {
-        input: "10, 0, /",
-        output: `Введіть перше число: 10
-Введіть друге число: 0
-Введіть операцію (+, -, *, /): /
-Не можна ділити на нуль!
-Операція завершена`,
-        explanation: "Програма обробляє помилку ділення на нуль"
-      }
     ],
     solution: {
       code: `# Калькулятор з обробкою помилок
+num1 = 10
+num2 = 5
+operation = "/"
+
 try:
-    num1 = float(input("Введіть перше число: "))
-    num2 = float(input("Введіть друге число: "))
-    operation = input("Введіть операцію (+, -, *, /): ")
-    
     if operation == "+":
         result = num1 + num2
     elif operation == "-":
@@ -366,9 +348,6 @@ try:
     else:
         print("Невідома операція!")
         result = None
-except ValueError:
-    print("Потрібно ввести число!")
-    result = None
 except ZeroDivisionError:
     print("Не можна ділити на нуль!")
     result = None
@@ -380,7 +359,7 @@ else:
         print(f"Результат: {result}")
 finally:
     print("Операція завершена")`,
-      explanation: "Рішення використовує try/except для обробки ValueError та ZeroDivisionError, else для виведення результату, та finally для завершення."
+      explanation: "Рішення використовує захардкожені значення, try/except для обробки ZeroDivisionError, else для виведення результату, та finally для завершення."
     },
     hints: [
       "Використовуйте float() для введення чисел",

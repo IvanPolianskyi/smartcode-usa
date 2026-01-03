@@ -59,21 +59,22 @@ import { lesson_03_8 } from '@/lib/lessonContent/lesson-03-8'
 import { lesson_03_9 } from '@/lib/lessonContent/lesson-03-9'
 import { lesson_03_10 } from '@/lib/lessonContent/lesson-03-10'
 import { lesson_04_1 } from '@/lib/lessonContent/lesson-04-1'
+import { lesson_04_2 } from '@/lib/lessonContent/lesson-04-2'
+import { lesson_04_3 } from '@/lib/lessonContent/lesson-04-3'
+import { lesson_04_4 } from '@/lib/lessonContent/lesson-04-4'
+import { lesson_04_5 } from '@/lib/lessonContent/lesson-04-5'
 import { lesson_05_1 } from '@/lib/lessonContent/lesson-05-1'
 import { lesson_05_2 } from '@/lib/lessonContent/lesson-05-2'
 import { lesson_05_3 } from '@/lib/lessonContent/lesson-05-3'
-import { lesson_05_4 } from '@/lib/lessonContent/lesson-05-4'
-import { lesson_05_5 } from '@/lib/lessonContent/lesson-05-5'
-import { lesson_05_6 } from '@/lib/lessonContent/lesson-05-6'
-import { lesson_05_7 } from '@/lib/lessonContent/lesson-05-7'
-import { lesson_05_8 } from '@/lib/lessonContent/lesson-05-8'
-import { lesson_05_9 } from '@/lib/lessonContent/lesson-05-9'
 import { lesson_05_10 } from '@/lib/lessonContent/lesson-05-10'
 import { lesson_06_1 } from '@/lib/lessonContent/lesson-06-1'
 import { lesson_06_2 } from '@/lib/lessonContent/lesson-06-2'
 import { lesson_06_3 } from '@/lib/lessonContent/lesson-06-3'
 import { lesson_06_4 } from '@/lib/lessonContent/lesson-06-4'
 import { lesson_06_5 } from '@/lib/lessonContent/lesson-06-5'
+import { lesson_06_6 } from '@/lib/lessonContent/lesson-06-6'
+import { lesson_06_7 } from '@/lib/lessonContent/lesson-06-7'
+import { lesson_06_8 } from '@/lib/lessonContent/lesson-06-8'
 import { lesson_07_1 } from '@/lib/lessonContent/lesson-07-1'
 import { lesson_07_2 } from '@/lib/lessonContent/lesson-07-2'
 import { lesson_07_3 } from '@/lib/lessonContent/lesson-07-3'
@@ -148,21 +149,22 @@ const lessonContentMap = {
   "lesson-03-9": lesson_03_9,
   "lesson-03-10": lesson_03_10,
   "lesson-04-1": lesson_04_1,
+  "lesson-04-2": lesson_04_2,
+  "lesson-04-3": lesson_04_3,
+  "lesson-04-4": lesson_04_4,
+  "lesson-04-5": lesson_04_5,
   "lesson-05-1": lesson_05_1,
   "lesson-05-2": lesson_05_2,
   "lesson-05-3": lesson_05_3,
-  "lesson-05-4": lesson_05_4,
-  "lesson-05-5": lesson_05_5,
-  "lesson-05-6": lesson_05_6,
-  "lesson-05-7": lesson_05_7,
-  "lesson-05-8": lesson_05_8,
-  "lesson-05-9": lesson_05_9,
   "lesson-05-10": lesson_05_10,
   "lesson-06-1": lesson_06_1,
   "lesson-06-2": lesson_06_2,
   "lesson-06-3": lesson_06_3,
   "lesson-06-4": lesson_06_4,
   "lesson-06-5": lesson_06_5,
+  "lesson-06-6": lesson_06_6,
+  "lesson-06-7": lesson_06_7,
+  "lesson-06-8": lesson_06_8,
   "lesson-07-1": lesson_07_1,
   "lesson-07-2": lesson_07_2,
   "lesson-07-3": lesson_07_3,
@@ -826,6 +828,57 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       return
     }
 
+    // Client-side security check (basic patterns)
+    const dangerousPatterns = [
+      /import\s+os\b/i,
+      /import\s+subprocess\b/i,
+      /import\s+requests\b/i,
+      /import\s+urllib\b/i,
+      /import\s+socket\b/i,
+      /__import__\s*\(/i,
+      /eval\s*\(/i,
+      /exec\s*\(/i,
+      /compile\s*\(/i,
+      /open\s*\(['"]\/etc/i,
+      /open\s*\(['"]\/proc/i,
+      /open\s*\(['"]\/sys/i,
+      /open\s*\(['"]\.\./i,
+    ]
+
+    // Normalize code for checking (remove comments and strings)
+    const normalizeCode = (code) => {
+      let normalized = code.replace(/#.*$/gm, '')
+      normalized = normalized.replace(/""".*?"""/gs, '')
+      normalized = normalized.replace(/'''.*?'''/gs, '')
+      normalized = normalized.replace(/"[^"]*"/g, '')
+      normalized = normalized.replace(/'[^']*'/g, '')
+      return normalized
+    }
+
+    const normalizedCode = normalizeCode(userCode)
+    const hasDangerousCode = dangerousPatterns.some(pattern => pattern.test(normalizedCode))
+
+    if (hasDangerousCode) {
+      setCodeExecution({
+        isRunning: false,
+        output: null,
+        error: 'Код містить небезпечні операції, які не дозволені для виконання. Будь ласка, використовуйте тільки безпечні Python конструкції для навчання.',
+        success: false
+      })
+      return
+    }
+
+    // Check code length
+    if (userCode.length > 50000) {
+      setCodeExecution({
+        isRunning: false,
+        output: null,
+        error: 'Код занадто довгий. Максимальна довжина: 50000 символів',
+        success: false
+      })
+      return
+    }
+
     setCodeExecution({
       isRunning: true,
       output: null,
@@ -887,7 +940,11 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
               console.error('Error saving practice task completion:', error)
             }
           } else {
-            setPracticeCompleted(false)
+            // Не встановлюємо false, якщо завдання вже було успішно виконано раніше
+            const wasAlreadyCompleted = userProgress?.completedPracticeTasks?.includes(lessonId)
+            if (!wasAlreadyCompleted) {
+              setPracticeCompleted(false)
+            }
           }
         }
       } else {
@@ -898,8 +955,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           success: false
         })
         setPracticeChecked(false)
-    setOutputErrors([])
-        setPracticeCompleted(false)
+        setOutputErrors([])
+        // Не встановлюємо false, якщо завдання вже було успішно виконано раніше
+        const wasAlreadyCompleted = userProgress?.completedPracticeTasks?.includes(lessonId)
+        if (!wasAlreadyCompleted) {
+          setPracticeCompleted(false)
+        }
       }
     } catch (error) {
       console.error('Error executing code:', error)
@@ -910,8 +971,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         success: false
       })
       setPracticeChecked(false)
-    setOutputErrors([])
-      setPracticeCompleted(false)
+      setOutputErrors([])
+      // Не встановлюємо false, якщо завдання вже було успішно виконано раніше
+      const wasAlreadyCompleted = userProgress?.completedPracticeTasks?.includes(lessonId)
+      if (!wasAlreadyCompleted) {
+        setPracticeCompleted(false)
+      }
     }
   }
   
@@ -1292,21 +1357,22 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           Практика
         </button>
         <button
-          className={`${styles.tab} ${activeTab === 'quiz' ? styles.active : ''} ${!practiceCompleted && fullLesson.practiceTask ? styles.disabled : ''}`}
+          className={`${styles.tab} ${activeTab === 'quiz' ? styles.active : ''} ${!practiceCompleted && !userProgress?.completedPracticeTasks?.includes(lessonId) && fullLesson.practiceTask ? styles.disabled : ''}`}
           onClick={() => {
-            if (!practiceCompleted && fullLesson.practiceTask) {
+            const isPracticeCompleted = practiceCompleted || userProgress?.completedPracticeTasks?.includes(lessonId)
+            if (!isPracticeCompleted && fullLesson.practiceTask) {
               alert('Спочатку виконайте практичне завдання правильно!')
               setActiveTab('practice')
             } else {
               setActiveTab('quiz')
             }
           }}
-          disabled={!practiceCompleted && fullLesson.practiceTask}
-          title={!practiceCompleted && fullLesson.practiceTask ? 'Спочатку виконайте практичне завдання' : ''}
+          disabled={!practiceCompleted && !userProgress?.completedPracticeTasks?.includes(lessonId) && fullLesson.practiceTask}
+          title={!practiceCompleted && !userProgress?.completedPracticeTasks?.includes(lessonId) && fullLesson.practiceTask ? 'Спочатку виконайте практичне завдання' : ''}
         >
           <Target className="w-4 h-4" />
           Тест
-          {!practiceCompleted && fullLesson.practiceTask && <Lock className="w-3 h-3" />}
+          {!practiceCompleted && !userProgress?.completedPracticeTasks?.includes(lessonId) && fullLesson.practiceTask && <Lock className="w-3 h-3" />}
         </button>
       </div>
       
@@ -1429,10 +1495,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                       <h5>Приклади:</h5>
                       {fullLesson.practiceTask.examples.map((example, index) => (
                         <div key={index} className={styles.exampleBox}>
-                          <div className={styles.exampleInput}>
-                            <strong>Вхід:</strong>
-                            <pre>{example.input}</pre>
-                          </div>
+                          {example.input && (
+                            <div className={styles.exampleInput}>
+                              <strong>Вхід:</strong>
+                              <pre>{example.input}</pre>
+                            </div>
+                          )}
                           <div className={styles.exampleOutput}>
                             <strong>Вихід:</strong>
                             <pre>{example.output}</pre>

@@ -1,5 +1,5 @@
 /**
- * Lesson 05-3: Робота з CSV та TXT
+ * Lesson 05-3: Практична робота з текстовими файлами
  * Full educational content
  */
 
@@ -9,14 +9,13 @@ export const lesson_05_3 = {
   lessonId: "lesson-05-3",
   moduleId: "module-05",
   order: 3,
-  title: "Робота з CSV та TXT",
+  title: "Практична робота з текстовими файлами",
   
   learningObjectives: [
-    "Читати та записувати CSV файли",
-    "Працювати з TXT файлами",
-    "Обробляти структуровані дані",
-    "Використовувати csv модуль",
-    "Розуміти різницю між CSV та TXT"
+    "Створювати практичні програми з файлами",
+    "Обробляти текстові дані",
+    "Аналізувати вміст файлів",
+    "Застосовувати знання на реальних задачах"
   ],
   
   estimatedTime: 90,
@@ -27,306 +26,398 @@ export const lesson_05_3 = {
   theory: {
     sections: [
       {
-        title: "Що таке CSV?",
-        content: `**CSV (Comma-Separated Values)** - це формат файлів для зберігання табличних даних.
+        title: "Практичні задачі з файлами",
+        content: `На цьому уроці ми застосуємо всі знання про роботу з файлами на практиці.
 
-**Структура CSV:**
-- Кожен рядок = один запис
-- Значення розділені комами (або іншими роздільниками)
-- Перший рядок часто містить заголовки
+**Що ми вміємо:**
+1. Відкривати файли (open, with)
+2. Читати дані (read, readline, readlines)
+3. Записувати дані (write, writelines)
+4. Працювати з кодуванням (utf-8)
 
-**Приклад CSV файлу (students.csv):**
-\`\`\`
-Ім'я,Вік,Оцінка
-Іван,15,85
-Марія,16,92
-Петро,15,78
-\`\`\`
-
-**Переваги CSV:**
-- ✅ Простий формат
-- ✅ Легко читати та редагувати
-- ✅ Підтримується багатьма програмами (Excel, Google Sheets)
-- ✅ Компактний розмір`
+**Типові задачі:**
+- Аналіз текстових файлів
+- Обробка та трансформація даних
+- Створення звітів
+- Фільтрація інформації
+- Робота зі списками та записами`
       },
       {
-        title: "Читання CSV з csv модулем",
-        content: `**csv модуль** - стандартний модуль Python для роботи з CSV.
+        title: "Аналіз текстових файлів",
+        content: `**Задача: Статистика тексту**
 
-**Встановлення:** Не потрібно встановлювати, входить у стандартну бібліотеку!
+Створимо програму, яка аналізує текстовий файл та виводить статистику.
 
-**Базове читання:**
 \`\`\`python
-import csv
-
-with open("students.csv", "r", encoding="utf-8") as file:
-    reader = csv.reader(file)
-    for row in reader:
-        print(row)
+# Аналіз файлу
+with open("text.txt", "r", encoding="utf-8") as file:
+    content = file.read()
+    
+    # Підрахунок статистики
+    lines = content.count('\\n') + 1
+    words = len(content.split())
+    chars = len(content)
+    chars_no_spaces = len(content.replace(' ', '').replace('\\n', ''))
+    
+    # Виведення результатів
+    print("=== Статистика файлу ===")
+    print(f"Рядків: {lines}")
+    print(f"Слів: {words}")
+    print(f"Символів (з пробілами): {chars}")
+    print(f"Символів (без пробілів): {chars_no_spaces}")
 \`\`\`
 
-**Виведення:**
+**Результат:**
 \`\`\`
-['Ім\\'я', 'Вік', 'Оцінка']
-['Іван', '15', '85']
-['Марія', '16', '92']
-['Петро', '15', '78']
-\`\`\`
-
-**Читання як словник (з DictReader):**
-\`\`\`python
-import csv
-
-with open("students.csv", "r", encoding="utf-8") as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-        print(f"{row['Ім\\'я']}: {row['Оцінка']}")
-\`\`\`
-
-**Виведення:**
-\`\`\`
-Іван: 85
-Марія: 92
-Петро: 78
+=== Статистика файлу ===
+Рядків: 10
+Слів: 85
+Символів (з пробілами): 450
+Символів (без пробілів): 382
 \`\`\``
       },
       {
-        title: "Запис у CSV",
-        content: `**Запис даних у CSV:**
+        title: "Обробка списків даних",
+        content: `**Задача: Обробка списку студентів**
 
-**Базовий запис:**
-\`\`\`python
-import csv
+Припустимо, у нас є файл з іменами студентів (по одному на рядок).
 
-data = [
-    ["Ім'я", "Вік", "Оцінка"],
-    ["Іван", 15, 85],
-    ["Марія", 16, 92],
-    ["Петро", 15, 78]
-]
-
-with open("output.csv", "w", encoding="utf-8", newline="") as file:
-    writer = csv.writer(file)
-    writer.writerows(data)
+**Файл students.txt:**
+\`\`\`
+Іван Петренко
+Марія Коваленко
+Петро Шевченко
+Олена Мельник
 \`\`\`
 
-**Запис як словник (з DictWriter):**
+**Програма обробки:**
 \`\`\`python
-import csv
-
-data = [
-    {"Ім'я": "Іван", "Вік": 15, "Оцінка": 85},
-    {"Ім'я": "Марія", "Вік": 16, "Оцінка": 92},
-    {"Ім'я": "Петро", "Вік": 15, "Оцінка": 78}
-]
-
-with open("output.csv", "w", encoding="utf-8", newline="") as file:
-    fieldnames = ["Ім'я", "Вік", "Оцінка"]
-    writer = csv.DictWriter(file, fieldnames=fieldnames)
-    writer.writeheader()  # Записує заголовки
-    writer.writerows(data)
-\`\`\`
-
-**Важливо:** Використовуй \`newline=""\` при відкритті для запису, щоб уникнути порожніх рядків!`
-      },
-      {
-        title: "Робота з TXT файлами",
-        content: `**TXT файли** - прості текстові файли без структури.
-
-**Читання TXT:**
-\`\`\`python
-with open("notes.txt", "r", encoding="utf-8") as file:
-    content = file.read()
-    print(content)
-\`\`\`
-
-**Читання по рядках:**
-\`\`\`python
-with open("notes.txt", "r", encoding="utf-8") as file:
-    for line in file:
-        print(line.strip())  # strip() видаляє \\n
-\`\`\`
-
-**Запис у TXT:**
-\`\`\`python
-with open("output.txt", "w", encoding="utf-8") as file:
-    file.write("Перший рядок\\n")
-    file.write("Другий рядок\\n")
-\`\`\`
-
-**Різниця CSV vs TXT:**
-- **CSV** - структуровані дані (таблиця)
-- **TXT** - неструктуровані дані (просто текст)`
-      },
-      {
-        title: "Обробка структурованих даних",
-        content: `**Приклад: Обробка CSV даних**
-
-\`\`\`python
-import csv
-
-# Читаємо дані
+# Читання списку студентів
 students = []
-with open("students.csv", "r", encoding="utf-8") as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-        students.append({
-            "ім'я": row["Ім'я"],
-            "вік": int(row["Вік"]),
-            "оцінка": int(row["Оцінка"])
-        })
+with open("students.txt", "r", encoding="utf-8") as file:
+    for line in file:
+        name = line.strip()
+        if name:  # Пропускаємо порожні рядки
+            students.append(name)
 
-# Обробляємо дані
-high_scores = [s for s in students if s["оцінка"] >= 90]
-print(f"Студенти з високими оцінками: {len(high_scores)}")
+# Виведення результатів
+print(f"Всього студентів: {len(students)}")
+print("\\nСписок студентів:")
+for i, student in enumerate(students, 1):
+    print(f"{i}. {student}")
 
-# Записуємо результат
-with open("high_scores.csv", "w", encoding="utf-8", newline="") as file:
-    writer = csv.DictWriter(file, fieldnames=["ім'я", "вік", "оцінка"])
-    writer.writeheader()
-    writer.writerows(high_scores)
+# Сортування по алфавіту
+students.sort()
+print("\\nСортовані по алфавіту:")
+for student in students:
+    print(f"  - {student}")
+\`\`\``
+      },
+      {
+        title: "Трансформація даних",
+        content: `**Задача: Перетворення тексту**
+
+Створимо програму, яка читає файл та створює новий з перетвореним текстом.
+
+**Приклад 1: Перетворення у великі літери**
+\`\`\`python
+with open("input.txt", "r", encoding="utf-8") as infile, \\
+     open("output.txt", "w", encoding="utf-8") as outfile:
+    
+    for line in infile:
+        outfile.write(line.upper())
+
+print("Файл перетворено!")
 \`\`\`
 
-**Корисні методи:**
-- \`csv.reader()\` - читає CSV як списки
-- \`csv.DictReader()\` - читає CSV як словники
-- \`csv.writer()\` - записує списки у CSV
-- \`csv.DictWriter()\` - записує словники у CSV`
+**Приклад 2: Нумерація рядків**
+\`\`\`python
+with open("input.txt", "r", encoding="utf-8") as infile, \\
+     open("numbered.txt", "w", encoding="utf-8") as outfile:
+    
+    for num, line in enumerate(infile, 1):
+        outfile.write(f"{num}. {line}")
+
+print("Рядки пронумеровано!")
+\`\`\`
+
+**Приклад 3: Видалення порожніх рядків**
+\`\`\`python
+with open("input.txt", "r", encoding="utf-8") as infile, \\
+     open("clean.txt", "w", encoding="utf-8") as outfile:
+    
+    for line in infile:
+        if line.strip():  # Якщо рядок не порожній
+            outfile.write(line)
+
+print("Порожні рядки видалено!")
+\`\`\``
+      },
+      {
+        title: "Пошук та фільтрація",
+        content: `**Задача: Пошук у файлі**
+
+Створимо програму для пошуку певних рядків у файлі.
+
+\`\`\`python
+# Пошук рядків з певним словом
+search_word = "Python"
+found = []
+
+with open("data.txt", "r", encoding="utf-8") as file:
+    for line_num, line in enumerate(file, 1):
+        if search_word.lower() in line.lower():
+            found.append((line_num, line.strip()))
+
+# Виведення результатів
+if found:
+    print(f"\\nЗнайдено {len(found)} входжень:")
+    for line_num, line in found:
+        print(f"Рядок {line_num}: {line}")
+else:
+    print(f"Слово '{search_word}' не знайдено")
+\`\`\`
+
+**Задача: Фільтрація даних**
+\`\`\`python
+# Зберегти тільки рядки, що містять певне слово
+keyword = "Python"
+
+with open("input.txt", "r", encoding="utf-8") as infile, \\
+     open("filtered.txt", "w", encoding="utf-8") as outfile:
+    
+    for line in infile:
+        if keyword in line:
+            outfile.write(line)
+
+print(f"Збережено рядки з '{keyword}'")
+\`\`\``
+      },
+      {
+        title: "Створення звітів",
+        content: `**Задача: Генерація звіту**
+
+Створимо програму, яка генерує текстовий звіт.
+
+\`\`\`python
+# Дані для звіту
+report_data = {
+    "Дата": "2024-01-15",
+    "Проект": "Система обліку",
+    "Виконано завдань": 15,
+    "У процесі": 8,
+    "Заплановано": 12
+}
+
+# Створення звіту
+with open("report.txt", "w", encoding="utf-8") as file:
+    file.write("=" * 40 + "\\n")
+    file.write("         ЗВІТ ПРО ВИКОНАННЯ         \\n")
+    file.write("=" * 40 + "\\n\\n")
+    
+    for key, value in report_data.items():
+        file.write(f"{key}: {value}\\n")
+    
+    file.write("\\n" + "=" * 40 + "\\n")
+    file.write("Звіт згенеровано автоматично\\n")
+
+print("Звіт створено: report.txt")
+\`\`\`
+
+**Результат (report.txt):**
+\`\`\`
+========================================
+         ЗВІТ ПРО ВИКОНАННЯ         
+========================================
+
+Дата: 2024-01-15
+Проект: Система обліку
+Виконано завдань: 15
+У процесі: 8
+Заплановано: 12
+
+========================================
+Звіт згенеровано автоматично
+\`\`\``
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад 1: Читання CSV",
-      code: `# Читання CSV файлу
-import csv
-
-with open("data.csv", "r", encoding="utf-8") as file:
-    reader = csv.reader(file)
-    for row in reader:
-        print(row)`,
-      explanation: "Демонструє базове читання CSV файлу за допомогою csv.reader()."
-    },
-    {
-      title: "Приклад 2: Читання як словник",
-      code: `# Читання CSV як словник
-import csv
-
-with open("data.csv", "r", encoding="utf-8") as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-        print(f"{row['Ім\\'я']}: {row['Оцінка']}")`,
-      explanation: "Показує читання CSV з DictReader для доступу до даних за назвами колонок."
-    },
-    {
-      title: "Приклад 3: Запис у CSV",
-      code: `# Запис даних у CSV
-import csv
-
-data = [["Ім'я", "Вік"], ["Іван", 15], ["Марія", 16]]
-with open("output.csv", "w", encoding="utf-8", newline="") as file:
-    writer = csv.writer(file)
-    writer.writerows(data)`,
-      explanation: "Демонструє запис даних у CSV файл."
-    },
-    {
-      title: "Приклад 4: Робота з TXT",
-      code: `# Читання та запис TXT
-with open("notes.txt", "r", encoding="utf-8") as file:
+      title: "Приклад 1: Статистика тексту",
+      code: `# Аналіз текстового файлу
+with open("text.txt", "r", encoding="utf-8") as file:
     content = file.read()
+    
+    print(f"Рядків: {content.count('\\n') + 1}")
+    print(f"Слів: {len(content.split())}")
+    print(f"Символів: {len(content)}")`,
+      explanation: "Демонструє базовий аналіз текстового файлу."
+    },
+    {
+      title: "Приклад 2: Обробка списку",
+      code: `# Читання та сортування списку
+names = []
+with open("names.txt", "r", encoding="utf-8") as file:
+    for line in file:
+        name = line.strip()
+        if name:
+            names.append(name)
 
-with open("copy.txt", "w", encoding="utf-8") as file:
-    file.write(content.upper())`,
-      explanation: "Показує роботу з простими текстовими файлами."
+names.sort()
+for name in names:
+    print(name)`,
+      explanation: "Показує читання списку з файлу та його обробку."
+    },
+    {
+      title: "Приклад 3: Трансформація тексту",
+      code: `# Перетворення тексту у великі літери
+with open("input.txt", "r", encoding="utf-8") as infile, \\
+     open("output.txt", "w", encoding="utf-8") as outfile:
+    
+    for line in infile:
+        outfile.write(line.upper())
+
+print("Готово!")`,
+      explanation: "Демонструє трансформацію даних між файлами."
+    },
+    {
+      title: "Приклад 4: Пошук у файлі",
+      code: `# Пошук слова у файлі
+search = "Python"
+found = []
+
+with open("data.txt", "r", encoding="utf-8") as file:
+    for num, line in enumerate(file, 1):
+        if search in line:
+            found.append((num, line.strip()))
+
+for num, line in found:
+    print(f"{num}: {line}")`,
+      explanation: "Показує пошук та фільтрацію даних у файлі."
+    },
+    {
+      title: "Приклад 5: Генерація звіту",
+      code: `# Створення звіту
+with open("report.txt", "w", encoding="utf-8") as file:
+    file.write("=== ЗВІТ ===\\n\\n")
+    file.write(f"Дата: 2024-01-15\\n")
+    file.write(f"Завдань виконано: 10\\n")
+    file.write("\\n=============\\n")
+
+print("Звіт створено!")`,
+      explanation: "Демонструє створення структурованого звіту."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Забути newline='' при записі CSV",
-      explanation: "Без newline='' можуть з'явитися порожні рядки між записами.",
-      correctApproach: "Завжди використовуй newline='' при відкритті CSV для запису"
+      mistake: "Не перевіряти чи рядок порожній",
+      explanation: "Порожні рядки можуть спричинити проблеми при обробці.",
+      correctApproach: "Використовуй if line.strip(): для перевірки"
     },
     {
-      mistake: "Не вказати encoding для українського тексту",
-      explanation: "Без encoding='utf-8' можуть бути проблеми з кирилицею в CSV.",
-      correctApproach: "Завжди вказуй encoding='utf-8' для CSV з українським текстом"
+      mistake: "Забути strip() при читанні рядків",
+      explanation: "Кожен рядок містить \\n в кінці, що може заважати.",
+      correctApproach: "Завжди використовуй line.strip() при обробці рядків"
     },
     {
-      mistake: "Сплутати CSV та TXT",
-      explanation: "CSV - структуровані дані (таблиця), TXT - неструктуровані (текст).",
-      correctApproach: "Використовуй CSV для таблиць, TXT для простого тексту"
+      mistake: "Відкрити файл у режимі 'w' для додавання",
+      explanation: "Режим 'w' видаляє весь попередній вміст.",
+      correctApproach: "Використовуй 'a' для додавання до існуючого файлу"
+    },
+    {
+      mistake: "Не вказати encoding='utf-8'",
+      explanation: "Без кодування можуть бути проблеми з кирилицею.",
+      correctApproach: "Завжди вказуй encoding='utf-8' для українського тексту"
     }
   ],
   
-  summary: `На цьому уроці ми вивчили:
+  summary: `На цьому уроці ми застосували знання про файли на практиці:
 
-1. **CSV формат** - структуровані табличні дані
-2. **csv модуль** - стандартний модуль для роботи з CSV
-3. **Читання CSV** - csv.reader() та csv.DictReader()
-4. **Запис у CSV** - csv.writer() та csv.DictWriter()
-5. **Робота з TXT** - прості текстові файли
-6. **Обробка даних** - читання, обробка та запис структурованих даних
+1. **Аналіз файлів** - підрахунок рядків, слів, символів
+2. **Обробка списків** - читання та сортування даних
+3. **Трансформація** - перетворення текстових даних
+4. **Пошук та фільтрація** - знаходження потрібної інформації
+5. **Створення звітів** - генерація структурованих документів
 
-Тепер ви вмієте працювати з CSV та TXT файлами для зберігання та обробки даних!
+Тепер ви вмієте створювати практичні програми для роботи з текстовими файлами!
 
-Наступний урок - обробка помилок з try/except!`,
+Наступний урок - фінальний проект модуля!`,
   
   practiceTask: {
-    title: "Система обліку студентів",
-    description: "Створіть програму для обліку студентів у CSV файлі",
+    title: "Система обліку завдань",
+    description: "Створіть програму для управління списком завдань у текстовому файлі",
     problemStatement: `Напишіть програму, яка:
-1. Створює CSV файл students.csv з заголовками: Ім'я, Вік, Оцінка
-2. Записує у файл 3 студентів:
-   - Іван, 15, 85
-   - Марія, 16, 92
-   - Петро, 15, 78
-3. Читає дані з файлу
-4. Виводить інформацію про кожного студента`,
-    inputFormat: "Програма використовує фіксовані дані студентів",
+1. Створює файл tasks.txt
+2. Записує у файл 5 завдань:
+   - "Вивчити Python"
+   - "Зробити домашнє завдання"
+   - "Прочитати книгу"
+   - "Написати код"
+   - "Переглянути відео"
+3. Читає завдання з файлу
+4. Виводить їх з нумерацією
+5. Підраховує загальну кількість завдань`,
+    inputFormat: "Програма використовує фіксовані завдання",
     outputFormat: `Приклад виведення:
-Іван, 15 років, оцінка 85
-Марія, 16 років, оцінка 92
-Петро, 15 років, оцінка 78`,
+=== СПИСОК ЗАВДАНЬ ===
+1. Вивчити Python
+2. Зробити домашнє завдання
+3. Прочитати книгу
+4. Написати код
+5. Переглянути відео
+
+Всього завдань: 5`,
     examples: [
       {
-        input: "students = [['Ім\\'я', 'Вік', 'Оцінка'], ['Іван', '15', '85'], ['Марія', '16', '92'], ['Петро', '15', '78']]",
-        output: `Іван, 15 років, оцінка 85
-Марія, 16 років, оцінка 92
-Петро, 15 років, оцінка 78`,
-        explanation: "Програма створює CSV файл, записує дані, потім читає та виводить їх"
+        input: "tasks = ['Вивчити Python', 'Зробити домашнє завдання', ...]",
+        output: `=== СПИСОК ЗАВДАНЬ ===
+1. Вивчити Python
+2. Зробити домашнє завдання
+3. Прочитати книгу
+4. Написати код
+5. Переглянути відео
+
+Всього завдань: 5`,
+        explanation: "Програма записує завдання, читає їх та виводить з нумерацією"
       }
     ],
     solution: {
-      code: `# Система обліку студентів
-import csv
-
-# Запис даних у CSV
-students_data = [
-    ["Ім'я", "Вік", "Оцінка"],
-    ["Іван", "15", "85"],
-    ["Марія", "16", "92"],
-    ["Петро", "15", "78"]
+      code: `# Система обліку завдань
+tasks = [
+    "Вивчити Python",
+    "Зробити домашнє завдання",
+    "Прочитати книгу",
+    "Написати код",
+    "Переглянути відео"
 ]
 
-with open("students.csv", "w", encoding="utf-8", newline="") as file:
-    writer = csv.writer(file)
-    writer.writerows(students_data)
+# Записати завдання у файл
+with open("tasks.txt", "w", encoding="utf-8") as file:
+    for task in tasks:
+        file.write(task + "\\n")
 
-# Читання даних з CSV
-with open("students.csv", "r", encoding="utf-8") as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-        print(f"{row['Ім\\'я']}, {row['Вік']} років, оцінка {row['Оцінка']}")`,
-      explanation: "Рішення використовує csv.writer() для запису та csv.DictReader() для читання даних з CSV файлу."
+# Прочитати та вивести завдання
+print("=== СПИСОК ЗАВДАНЬ ===")
+count = 0
+with open("tasks.txt", "r", encoding="utf-8") as file:
+    for num, line in enumerate(file, 1):
+        task = line.strip()
+        if task:
+            print(f"{num}. {task}")
+            count += 1
+
+print(f"\\nВсього завдань: {count}")`,
+      explanation: "Рішення використовує with для роботи з файлом, enumerate для нумерації, та змінну count для підрахунку завдань."
     },
     hints: [
-      "Використовуйте import csv",
-      "Використовуйте csv.writer() для запису",
-      "Використовуйте csv.DictReader() для читання",
-      "Не забудьте newline='' при записі",
-      "Використовуйте encoding='utf-8' для українського тексту"
+      "Використовуй with для безпечної роботи з файлом",
+      "Використовуй enumerate(file, 1) для нумерації з 1",
+      "Не забудь strip() для видалення \\n",
+      "Підраховуй кількість завдань у циклі",
+      "Використовуй encoding='utf-8'"
     ],
     difficulty: "beginner"
   },
@@ -336,67 +427,67 @@ with open("students.csv", "r", encoding="utf-8") as file:
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що означає CSV?",
+        question: "Який метод найкраще використати для підрахунку кількості слів у файлі?",
         options: [
-          "Comma-Separated Values",
-          "Computer System Variables",
-          "Code Source Version",
-          "Common System Values"
+          "content.split()",
+          "content.count(' ')",
+          "len(content)",
+          "content.words()"
         ],
         correctAnswer: 0,
-        explanation: "CSV означає Comma-Separated Values - значення, розділені комами."
+        explanation: "split() розділяє текст на слова, потім len() підраховує їх кількість."
       },
       {
         id: "q2",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Який модуль використовується для роботи з CSV в Python?",
-        options: [
-          "csv",
-          "pandas",
-          "excel",
-          "table"
-        ],
-        correctAnswer: 0,
-        explanation: "csv - стандартний модуль Python для роботи з CSV файлами."
-      },
-      {
-        id: "q3",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що зробить цей код?\n\n```python\nimport csv\nwith open('data.csv', 'w', newline='') as file:\n    writer = csv.writer(file)\n    writer.writerow(['A', 'B', 'C'])\n```",
+        question: "Що виведе цей код, якщо файл містить 3 рядки?\n\n```python\nwith open('data.txt', 'r') as file:\n    count = 0\n    for line in file:\n        count += 1\nprint(count)\n```",
         options: [
-          "Створить CSV файл з одним рядком 'A,B,C'",
-          "Прочитає CSV файл",
-          "Додасть рядок до CSV",
+          "3",
+          "0",
+          "1",
           "Помилку"
         ],
         correctAnswer: 0,
-        explanation: "Код створює CSV файл та записує один рядок з трьома значеннями."
+        explanation: "Цикл підраховує кількість рядків у файлі, результат буде 3."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Навіщо використовувати line.strip() при читанні файлу?",
+        options: [
+          "Щоб видалити символ нового рядка \\n",
+          "Щоб перетворити у великі літери",
+          "Щоб підрахувати символи",
+          "Щоб закрити файл"
+        ],
+        correctAnswer: 0,
+        explanation: "strip() видаляє пробільні символи з початку та кінця, включно з \\n."
       },
       {
         id: "q4",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Чому потрібен newline='' при записі CSV?",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що робить цей код?\n\n```python\nwith open('in.txt', 'r') as f1, open('out.txt', 'w') as f2:\n    for line in f1:\n        f2.write(line.upper())\n```",
         options: [
-          "Щоб уникнути порожніх рядків",
-          "Щоб швидше працювало",
-          "Щоб підтримувати кирилицю",
-          "Не потрібен"
+          "Копіює файл, перетворюючи текст у великі літери",
+          "Видаляє файл",
+          "Підраховує символи",
+          "Виводить текст на екран"
         ],
         correctAnswer: 0,
-        explanation: "newline='' потрібен щоб уникнути порожніх рядків між записами в CSV."
+        explanation: "Код читає файл, перетворює кожен рядок у великі літери та записує в новий файл."
       },
       {
         id: "q5",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Яка різниця між csv.reader() та csv.DictReader()?",
+        question: "Як перевірити чи рядок не порожній після strip()?",
         options: [
-          "DictReader повертає словники, reader - списки",
-          "Немає різниці",
-          "reader швидший",
-          "DictReader не підтримує заголовки"
+          "if line.strip():",
+          "if len(line) > 0:",
+          "if line != '':",
+          "if not line.empty():"
         ],
         correctAnswer: 0,
-        explanation: "csv.reader() повертає рядки як списки, csv.DictReader() - як словники з ключами з заголовків."
+        explanation: "if line.strip(): - найкращий спосіб перевірити чи рядок не порожній після видалення пробілів."
       }
     ],
     timeLimit: 10,

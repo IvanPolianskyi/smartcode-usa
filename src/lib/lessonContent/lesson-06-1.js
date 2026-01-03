@@ -1,5 +1,5 @@
 /**
- * Useful_Info_Notebook
+ * Lesson 06-1: Основи ООП: класи та об'єкти
  * Full educational content
  */
 
@@ -9,133 +9,529 @@ export const lesson_06_1 = {
   lessonId: "lesson-06-1",
   moduleId: "module-06",
   order: 1,
-  title: "Useful_Info_Notebook",
+  title: "Основи ООП: класи та об'єкти",
   
   learningObjectives: [
-    "Вивчити основні концепції",
-    "Застосувати знання на практиці",
-    "Розв'язати практичні задачі"
+    "Створювати класи",
+    "Створювати об'єкти (екземпляри)",
+    "Розуміти атрибути та методи",
+    "Використовувати конструктор __init__"
   ],
   
   estimatedTime: 90,
-  prerequisites: [],
+  prerequisites: ["lesson-04-5"],
   
   videoUrl: "",
   
   theory: {
     sections: [
       {
-        title: "Modules and Packages",
-        content: `There's no code here because it didn't really make sense for the section. Check out the video lectures for more info and the resources for this.
+        title: "Що таке об'єктно-орієнтоване програмування?",
+        content: `**Об'єктно-орієнтоване програмування (ООП)** - це спосіб організації коду, де ми групуємо дані та функції разом у об'єкти.
 
-Here is the best source the official docs!
-https://docs.python.org/3/tutorial/modules.html#packages
+**Аналогія з реальним світом:**
+Уявіть автомобіль. Автомобіль має:
+- **Властивості (атрибути)**: колір, марка, швидкість
+- **Дії (методи)**: їхати, гальмувати, сигналити
 
-But I really like the info here: https://python4astronomers.github.io/installation/packages.html
+У Python ми можемо створити "шаблон" автомобіля (клас) та створювати конкретні автомобілі (об'єкти).
 
-Here's some extra info to help:
+**Основні поняття ООП:**
+1. **Клас** - шаблон або опис об'єкта
+2. **Об'єкт (екземпляр)** - конкретний приклад класу
+3. **Атрибут** - змінна, що належить об'єкту
+4. **Метод** - функція, що належить об'єкту
 
-Modules in Python are simply Python files with the .py extension, which implement a set of functions. Modules are imported from other modules using the import command.
-
-To import a module, we use the import command. Check out the full list of built-in modules in the Python standard library [here](https://docs.python.org/3/py-modindex.html).
-
-The first time a module is loaded into a running Python script, it is initialized by executing the code in the module once. If another module in your code imports the same module again, it will not be loaded twice but once only - so local variables inside the module act as a \"singleton\" - they are initialized only once.
-
-If we want to import the math module, we simply import the name of the module:`
+**Чому ООП корисне?**
+- ✅ Організація коду
+- ✅ Повторне використання
+- ✅ Легше підтримувати
+- ✅ Моделювання реального світу`
       },
       {
-        title: "Exploring built-in modules",
-        content: `Two very important functions come in handy when exploring modules in Python - the dir and help functions.
+        title: "Створення класу",
+        content: `**Синтаксис створення класу:**
 
-We can look for which functions are implemented in each module by using the dir function:
+\`\`\`python
+class НазваКласу:
+    # атрибути та методи класу
+    pass
+\`\`\`
 
-When we find the function in the module we want to use, we can read about it more using the help function, inside the Python interpreter:`
+**Приклад: Клас для представлення собаки**
+
+\`\`\`python
+class Dog:
+    pass
+\`\`\`
+
+Це найпростіший клас. Він поки що нічого не робить, але ми можемо створити об'єкти цього класу.
+
+**Створення об'єкта (екземпляра):**
+
+\`\`\`python
+# Створюємо об'єкт класу Dog
+my_dog = Dog()
+print(my_dog)  # <__main__.Dog object at 0x...>
+\`\`\`
+
+**Додавання атрибутів:**
+
+\`\`\`python
+class Dog:
+    pass
+
+# Створюємо об'єкт
+my_dog = Dog()
+
+# Додаємо атрибути
+my_dog.name = "Рекс"
+my_dog.age = 3
+my_dog.breed = "Лабрадор"
+
+print(my_dog.name)   # Рекс
+print(my_dog.age)    # 3
+print(my_dog.breed)  # Лабрадор
+\`\`\``
       },
       {
-        title: "Writing modules",
-        content: `Writing Python modules is very simple. To create a module of your own, simply create a new .py file with the module name, and then import it using the Python file name (without the .py extension) using the import command.
+        title: "Конструктор __init__",
+        content: `**__init__** - це спеціальний метод, який викликається автоматично при створенні об'єкта.
 
-## Writing packages
-Packages are name-spaces which contain multiple packages and modules themselves. They are simply directories, but with a twist.
+**Синтаксис:**
 
-Each package in Python is a directory which MUST contain a special file called **\__init\__.py**. This file can be empty, and it indicates that the directory it contains is a Python package, so it can be imported the same way a module can be imported.
+\`\`\`python
+class НазваКласу:
+    def __init__(self, параметр1, параметр2):
+        self.атрибут1 = параметр1
+        self.атрибут2 = параметр2
+\`\`\`
 
-If we create a directory called foo, which marks the package name, we can then create a module inside that package called bar. We also must not forget to add the **\__init\__.py** file inside the foo directory.
+**self** - це посилання на сам об'єкт. Завжди перший параметр у методах класу.
 
-To use the module bar, we can import it in two ways:
+**Приклад: Клас Dog з __init__**
 
-In the first method, we must use the foo prefix whenever we access the module bar. In the second method, we don't, because we import the module to our module's name-space.
+\`\`\`python
+class Dog:
+    def __init__(self, name, age, breed):
+        self.name = name
+        self.age = age
+        self.breed = breed
 
-The **\__init\__.py** file can also decide which modules the package exports as the API, while keeping other modules internal, by overriding the **\__all\__** variable, like so:`
+# Створюємо об'єкти
+dog1 = Dog("Рекс", 3, "Лабрадор")
+dog2 = Dog("Барбос", 5, "Овчарка")
+
+print(dog1.name)   # Рекс
+print(dog2.name)    # Барбос
+print(dog1.age)     # 3
+print(dog2.age)     # 5
+\`\`\`
+
+**Переваги __init__:**
+- ✅ Автоматична ініціалізація
+- ✅ Гарантія, що об'єкт має всі необхідні атрибути
+- ✅ Зручніше створювати об'єкти`
+      },
+      {
+        title: "Методи класу",
+        content: `**Метод** - це функція, що належить об'єкту. Вона завжди має параметр **self**.
+
+**Синтаксис:**
+
+\`\`\`python
+class НазваКласу:
+    def метод(self, параметри):
+        # код методу
+        pass
+\`\`\`
+
+**Приклад: Клас Dog з методами**
+
+\`\`\`python
+class Dog:
+    def __init__(self, name, age, breed):
+        self.name = name
+        self.age = age
+        self.breed = breed
+    
+    def bark(self):
+        print(f"{self.name} гавкає: Гав-гав!")
+    
+    def get_info(self):
+        return f"{self.name}, {self.age} років, порода: {self.breed}"
+    
+    def have_birthday(self):
+        self.age += 1
+        print(f"{self.name} тепер {self.age} років!")
+
+# Створюємо об'єкт
+my_dog = Dog("Рекс", 3, "Лабрадор")
+
+# Викликаємо методи
+my_dog.bark()                    # Рекс гавкає: Гав-гав!
+print(my_dog.get_info())         # Рекс, 3 років, порода: Лабрадор
+my_dog.have_birthday()           # Рекс тепер 4 років!
+\`\`\`
+
+**Важливо:**
+- Методи завжди мають 'self' як перший параметр
+- 'self' дозволяє доступ до атрибутів об'єкта
+- Методи викликаються через об'єкт: 'об'єкт.метод()'`
+      },
+      {
+        title: "Практичний приклад: Клас Student",
+        content: `**Створимо клас для представлення студента:**
+
+\`\`\`python
+class Student:
+    def __init__(self, name, age, grade):
+        self.name = name
+        self.age = age
+        self.grade = grade
+        self.subjects = []  # Початковий порожній список
+    
+    def add_subject(self, subject):
+        self.subjects.append(subject)
+        print(f"{self.name} додав предмет: {subject}")
+    
+    def get_info(self):
+        info = f"Студент: {self.name}, {self.age} років, клас: {self.grade}"
+        if self.subjects:
+            subjects_str = ', '.join(self.subjects)
+            info += f"\\nПредмети: {subjects_str}"
+        return info
+    
+    def study(self, subject):
+        print(f"{self.name} вивчає {subject}")
+
+# Створюємо студентів
+student1 = Student("Олексій", 15, 9)
+student2 = Student("Марія", 16, 10)
+
+# Додаємо предмети
+student1.add_subject("Математика")
+student1.add_subject("Фізика")
+student2.add_subject("Історія")
+
+# Викликаємо методи
+print(student1.get_info())
+student1.study("Математика")
+\`\`\`
+
+**Результат:**
+\`\`\`
+Олексій додав предмет: Математика
+Олексій додав предмет: Фізика
+Марія додав предмет: Історія
+Студент: Олексій, 15 років, клас: 9
+Предмети: Математика, Фізика
+Олексій вивчає Математика
+\`\`\``
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "import the library",
-      code: `# import the library
-import math`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "use it (ceiling rounding)",
-      code: `# use it (ceiling rounding)
-math.ceil(2.4)`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `print(dir(math))`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `help(math.ceil)`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Just an example, this won't work",
-      code: `# Just an example, this won't work
-import foo.bar`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "OR could do it this way",
-      code: `# OR could do it this way
-from foo import bar`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `__init__.py:
+      title: "Приклад 1: Простий клас",
+      code: `# Створення простого класу
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def introduce(self):
+        print(f"Привіт, мене звати {self.name}, мені {self.age} років")
 
-__all__ = [\"bar\"]`,
-      explanation: "Приклад коду з курсу"
+# Створюємо об'єкти
+person1 = Person("Олена", 20)
+person2 = Person("Іван", 25)
+
+# Викликаємо метод
+person1.introduce()  # Привіт, мене звати Олена, мені 20 років
+person2.introduce()  # Привіт, мене звати Іван, мені 25 років`,
+      explanation: "Демонструє базовий клас з конструктором та методом."
+    },
+    {
+      title: "Приклад 2: Клас Rectangle (Прямокутник)",
+      code: `# Клас для представлення прямокутника
+class Rectangle:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height
+    
+    def perimeter(self):
+        return 2 * (self.width + self.height)
+    
+    def get_info(self):
+        return f"Прямокутник: ширина={self.width}, висота={self.height}"
+
+# Створюємо прямокутники
+rect1 = Rectangle(5, 3)
+rect2 = Rectangle(10, 4)
+
+print(rect1.get_info())
+print(f"Площа: {rect1.area()}")
+print(f"Периметр: {rect1.perimeter()}")`,
+      explanation: "Показує клас з методами, що обчислюють значення."
+    },
+    {
+      title: "Приклад 3: Клас Book (Книга)",
+      code: `# Клас для представлення книги
+class Book:
+    def __init__(self, title, author, pages):
+        self.title = title
+        self.author = author
+        self.pages = pages
+        self.is_read = False
+    
+    def read(self):
+        if not self.is_read:
+            self.is_read = True
+            print(f"Ви прочитали '{self.title}'")
+        else:
+            print(f"Ви вже читали '{self.title}'")
+    
+    def get_info(self):
+        status = "прочитана" if self.is_read else "не прочитана"
+        return f"'{self.title}' від {self.author}, {self.pages} сторінок ({status})"
+
+# Створюємо книги
+book1 = Book("Гаррі Поттер", "Дж. Роулінг", 320)
+book2 = Book("Війна і мир", "Л. Толстой", 1200)
+
+print(book1.get_info())
+book1.read()
+print(book1.get_info())`,
+      explanation: "Демонструє клас з булевим атрибутом та умовною логікою в методах."
+    },
+    {
+      title: "Приклад 4: Клас BankAccount (Банківський рахунок)",
+      code: `# Клас для представлення банківського рахунку
+class BankAccount:
+    def __init__(self, owner, initial_balance=0):
+        self.owner = owner
+        self.balance = initial_balance
+    
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
+            print(f"Поповнено {amount} грн. Баланс: {self.balance} грн")
+        else:
+            print("Сума має бути додатньою!")
+    
+    def withdraw(self, amount):
+        if amount > 0:
+            if amount <= self.balance:
+                self.balance -= amount
+                print(f"Знято {amount} грн. Баланс: {self.balance} грн")
+            else:
+                print("Недостатньо коштів!")
+        else:
+            print("Сума має бути додатньою!")
+    
+    def get_balance(self):
+        return self.balance
+
+# Створюємо рахунок
+account = BankAccount("Олексій", 1000)
+account.deposit(500)
+account.withdraw(200)
+print(f"Поточний баланс: {account.get_balance()} грн")`,
+      explanation: "Показує клас з методами, що змінюють стан об'єкта та перевіряють умови."
     }
   ],
   
-  commonMistakes: [],
+  commonMistakes: [
+    {
+      mistake: "Забути про self в методах",
+      explanation: "self - обов'язковий перший параметр у всіх методах класу.",
+      correctApproach: "Завжди додавай self як перший параметр: def method(self, ...)"
+    },
+    {
+      mistake: "Забути викликати __init__ при створенні об'єкта",
+      explanation: "__init__ викликається автоматично, не потрібно викликати його вручну.",
+      correctApproach: "Просто створюй об'єкт: obj = ClassName(параметри) - __init__ викличеться автоматично"
+    },
+    {
+      mistake: "Плутати клас та об'єкт",
+      explanation: "Клас - це шаблон, об'єкт - це конкретний екземпляр класу.",
+      correctApproach: "Спочатку створюй клас, потім створюй об'єкти цього класу"
+    },
+    {
+      mistake: "Не ініціалізувати атрибути в __init__",
+      explanation: "Атрибути, які потрібні об'єкту, мають бути ініціалізовані в __init__.",
+      correctApproach: "Визначай всі необхідні атрибути в __init__: self.атрибут = значення"
+    }
+  ],
   
-  summary: "Підсумок уроку",
+  summary: `На цьому уроці ми вивчили:
+
+1. **ООП** - спосіб організації коду через об'єкти
+2. **Клас** - шаблон для створення об'єктів
+3. **Об'єкт (екземпляр)** - конкретний приклад класу
+4. **__init__** - конструктор, що викликається при створенні об'єкта
+5. **self** - посилання на сам об'єкт
+6. **Атрибути** - змінні, що належать об'єкту
+7. **Методи** - функції, що належать об'єкту
+
+Тепер ви вмієте створювати класи та об'єкти в Python!
+
+Наступний урок - атрибути та методи класу!`,
   
   practiceTask: {
-    title: "Практична задача",
-    description: "Опишіть задачу",
-    problemStatement: "Умова задачі",
-    inputFormat: "",
-    outputFormat: "",
-    examples: [],
+    title: "Створення класу Car (Автомобіль)",
+    description: "Створіть клас для представлення автомобіля",
+    problemStatement: `Напишіть програму, яка:
+1. Створює клас Car з атрибутами:
+   - brand (марка)
+   - model (модель)
+   - year (рік)
+   - speed (швидкість, початково 0)
+2. Додає методи:
+   - accelerate(amount) - збільшує швидкість на amount
+   - brake(amount) - зменшує швидкість на amount (не менше 0)
+   - get_info() - повертає інформацію про автомобіль
+3. Створює 2 об'єкти та тестує методи`,
+    outputFormat: `Приклад виведення:
+Автомобіль: Toyota Camry 2020, швидкість: 0 км/год
+Автомобіль: Toyota Camry 2020, швидкість: 50 км/год
+Автомобіль: Toyota Camry 2020, швидкість: 30 км/год`,
+    examples: [
+      {
+        output: `Автомобіль: Toyota Camry 2020, швидкість: 0 км/год
+Автомобіль: Toyota Camry 2020, швидкість: 50 км/год
+Автомобіль: Toyota Camry 2020, швидкість: 30 км/год`,
+        explanation: "Програма створює клас Car та демонструє роботу з методами"
+      }
+    ],
     solution: {
-      code: "",
-      explanation: ""
+      code: `# Клас Car
+class Car:
+    def __init__(self, brand, model, year):
+        self.brand = brand
+        self.model = model
+        self.year = year
+        self.speed = 0
+    
+    def accelerate(self, amount):
+        self.speed += amount
+    
+    def brake(self, amount):
+        self.speed -= amount
+        if self.speed < 0:
+            self.speed = 0
+    
+    def get_info(self):
+        return f"Автомобіль: {self.brand} {self.model} {self.year}, швидкість: {self.speed} км/год"
+
+# Створюємо об'єкти
+car1 = Car("Toyota", "Camry", 2020)
+car2 = Car("BMW", "X5", 2021)
+
+# Тестуємо
+print(car1.get_info())
+car1.accelerate(50)
+print(car1.get_info())
+car1.brake(20)
+print(car1.get_info())`,
+      explanation: "Рішення використовує клас з __init__, методами та атрибутами для управління станом об'єкта."
     },
-    hints: [],
+    hints: [
+      "Використовуй __init__ для ініціалізації атрибутів",
+      "Не забудь про self у всіх методах",
+      "У методі brake перевіряй, щоб швидкість не була від'ємною",
+      "Метод get_info повертає рядок з інформацією",
+      "Використовуй f-strings для форматування"
+    ],
     difficulty: "beginner"
   },
   
   quiz: {
-    questions: [],
+    questions: [
+      {
+        id: "q1",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що таке клас в Python?",
+        options: [
+          "Шаблон для створення об'єктів",
+          "Змінна",
+          "Функція",
+          "Модуль"
+        ],
+        correctAnswer: 0,
+        explanation: "Клас - це шаблон або опис, за яким створюються об'єкти."
+      },
+      {
+        id: "q2",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\nclass Person:\n    def __init__(self, name):\n        self.name = name\n\np = Person('Олексій')\nprint(p.name)\n```",
+        options: [
+          "Олексій",
+          "name",
+          "Помилку",
+          "None"
+        ],
+        correctAnswer: 0,
+        explanation: "Код створює об'єкт Person з ім'ям 'Олексій' та виводить його."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Який метод викликається автоматично при створенні об'єкта?",
+        options: [
+          "__init__",
+          "__str__",
+          "__main__",
+          "constructor"
+        ],
+        correctAnswer: 0,
+        explanation: "__init__ - це конструктор, який викликається автоматично при створенні об'єкта."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що не так з цим кодом?\n\n```python\nclass Dog:\n    def bark(name):\n        print(f'{name} гавкає')\n```",
+        options: [
+          "Відсутній параметр self",
+          "Неправильна назва методу",
+          "Неправильний синтаксис print",
+          "Все правильно"
+        ],
+        correctAnswer: 0,
+        explanation: "У методах класу завжди має бути параметр self як перший параметр."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що таке self в методах класу?",
+        options: [
+          "Посилання на сам об'єкт",
+          "Назва класу",
+          "Змінна",
+          "Функція"
+        ],
+        correctAnswer: 0,
+        explanation: "self - це посилання на конкретний об'єкт, для якого викликається метод."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Скільки об'єктів створюється в цьому коді?\n\n```python\nclass Book:\n    def __init__(self, title):\n        self.title = title\n\nbook1 = Book('Книга 1')\nbook2 = Book('Книга 2')\nbook3 = Book('Книга 1')\n```",
+        options: [
+          "3",
+          "2",
+          "1",
+          "0"
+        ],
+        correctAnswer: 0,
+        explanation: "Створюється 3 об'єкти класу Book, навіть якщо деякі мають однакові значення атрибутів."
+      }
+    ],
     timeLimit: 10,
     passingScore: 70
   }

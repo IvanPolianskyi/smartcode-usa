@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_08_1 = {
   lessonId: "lesson-08-1",
-  moduleId: "module-10",
+  moduleId: "module-08",
   order: 1,
   title: "Milestone Project 2: Програма з ООП та модулями",
   

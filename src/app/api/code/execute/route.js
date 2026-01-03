@@ -43,29 +43,167 @@ export async function POST(request) {
       }
     }
 
-    // Basic security: check for dangerous operations
+    // Comprehensive security: check for dangerous operations
     const dangerousPatterns = [
-      /import\s+os/,
-      /import\s+subprocess/,
-      /import\s+sys/,
-      /__import__/,
-      /eval\(/,
-      /exec\(/,
-      /compile\(/,
-      /open\(['"]\/etc/,
-      /open\(['"]\/proc/,
-      /open\(['"]\/sys/,
-      /rm\s+-rf/,
+      // System access
+      /import\s+os\b/,
+      /from\s+os\s+import/,
+      /import\s+subprocess\b/,
+      /from\s+subprocess\s+import/,
+      /import\s+commands\b/,
+      /from\s+commands\s+import/,
+      
+      // Dynamic code execution
+      /__import__\s*\(/,
+      /eval\s*\(/,
+      /exec\s*\(/,
+      /compile\s*\(/,
+      /execfile\s*\(/,
+      
+      // File system access (dangerous paths)
+      /open\s*\(['"]\/etc/,
+      /open\s*\(['"]\/proc/,
+      /open\s*\(['"]\/sys/,
+      /open\s*\(['"]\/dev/,
+      /open\s*\(['"]\/root/,
+      /open\s*\(['"]\/home/,
+      /open\s*\(['"]\/var/,
+      /open\s*\(['"]\/usr/,
+      /open\s*\(['"]\.\./,
+      /file\s*\(/,
+      
+      // Network access
+      /import\s+requests\b/,
+      /from\s+requests\s+import/,
+      /import\s+urllib\b/,
+      /from\s+urllib\s+import/,
+      /import\s+urllib2\b/,
+      /from\s+urllib2\s+import/,
+      /import\s+http\.client\b/,
+      /from\s+http\.client\s+import/,
+      /import\s+socket\b/,
+      /from\s+socket\s+import/,
+      /import\s+ftplib\b/,
+      /from\s+ftplib\s+import/,
+      /import\s+telnetlib\b/,
+      /from\s+telnetlib\s+import/,
+      /import\s+httplib\b/,
+      /from\s+httplib\s+import/,
+      
+      // System commands
+      /os\.system\s*\(/,
+      /os\.popen\s*\(/,
+      /os\.spawn\s*\(/,
+      /os\.exec\s*\(/,
+      /subprocess\.call\s*\(/,
+      /subprocess\.Popen\s*\(/,
+      /subprocess\.run\s*\(/,
+      /subprocess\.check_call\s*\(/,
+      /subprocess\.check_output\s*\(/,
+      /commands\.getoutput\s*\(/,
+      /commands\.getstatusoutput\s*\(/,
+      
+      // File operations
       /shutil\./,
+      /rm\s+-rf/,
+      /rmdir\s*\(/,
+      /remove\s*\(/,
+      /unlink\s*\(/,
+      /rmtree\s*\(/,
+      
+      // Environment access
+      /os\.environ/,
+      /os\.getenv\s*\(/,
+      /os\.putenv\s*\(/,
+      /os\.setenv\s*\(/,
+      
+      // Process control
+      /os\.kill\s*\(/,
+      /os\.killpg\s*\(/,
+      /signal\./,
+      
+      // Import manipulation
+      /importlib\./,
+      /imp\./,
+      /__builtin__\./,
+      /builtins\./,
+      
+      // Database access
+      /import\s+sqlite3\b/,
+      /from\s+sqlite3\s+import/,
+      /import\s+MySQLdb\b/,
+      /from\s+MySQLdb\s+import/,
+      /import\s+psycopg2\b/,
+      /from\s+psycopg2\s+import/,
+      /import\s+pymongo\b/,
+      /from\s+pymongo\s+import/,
+      
+      // Pickle and serialization (can execute code)
+      /pickle\.loads\s*\(/,
+      /pickle\.load\s*\(/,
+      /marshal\.loads\s*\(/,
+      /marshal\.load\s*\(/,
+      /yaml\.load\s*\(/,
+      
+      // Reflection and introspection
+      /getattr\s*\(/,
+      /setattr\s*\(/,
+      /delattr\s*\(/,
+      /hasattr\s*\(/,
+      /__getattribute__/,
+      /__setattr__/,
+      
+      // Threading (potential DoS)
+      /threading\.Thread\s*\(/,
+      /multiprocessing\.Process\s*\(/,
+      /multiprocessing\.Pool\s*\(/,
+      
+      // System info access
+      /platform\./,
+      /sys\.modules/,
+      /sys\.path/,
+      
+      // Dangerous string operations that could be used for injection
+      /\.format\s*\(.*\{.*__/,
+      
+      // File path traversal attempts
+      /\.\.\/\.\./,
+      /\.\.\\\.\./,
     ]
 
-    const hasDangerousCode = dangerousPatterns.some(pattern => pattern.test(code))
+    // Normalize code for checking (remove comments and strings to avoid false positives)
+    const normalizeCode = (code) => {
+      // Remove single-line comments
+      let normalized = code.replace(/#.*$/gm, '')
+      // Remove multi-line strings (basic)
+      normalized = normalized.replace(/""".*?"""/gs, '')
+      normalized = normalized.replace(/'''.*?'''/gs, '')
+      normalized = normalized.replace(/"[^"]*"/g, '')
+      normalized = normalized.replace(/'[^']*'/g, '')
+      return normalized
+    }
+
+    const normalizedCode = normalizeCode(code)
+    const hasDangerousCode = dangerousPatterns.some(pattern => pattern.test(normalizedCode))
     
     if (hasDangerousCode) {
       return NextResponse.json(
         { 
           success: false, 
-          error: 'Код містить небезпечні операції, які не дозволені для виконання',
+          error: 'Код містить небезпечні операції, які не дозволені для виконання. Будь ласка, використовуйте тільки безпечні Python конструкції для навчання.',
+          output: '',
+          errorOutput: ''
+        },
+        { status: 400 }
+      )
+    }
+    
+    // Additional check: prevent code that's too long (potential DoS)
+    if (code.length > 50000) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Код занадто довгий. Максимальна довжина: 50000 символів',
           output: '',
           errorOutput: ''
         },
@@ -93,17 +231,36 @@ ${code}`
       let stderr = ''
       let isResolved = false
 
-      // Spawn Python process with UTF-8 encoding
+      // Spawn Python process with UTF-8 encoding and restricted environment
+      // Create a minimal, safe environment
+      const safeEnv = {
+        PYTHONUNBUFFERED: '1',
+        PYTHONIOENCODING: 'utf-8',
+        LANG: 'en_US.UTF-8',
+        LC_ALL: 'en_US.UTF-8',
+        PATH: '/usr/bin:/bin', // Minimal PATH
+        HOME: '/tmp', // Safe home directory
+        TMPDIR: '/tmp',
+        // Remove potentially dangerous environment variables
+        // Don't pass through process.env to prevent information leakage
+      }
+
+      // Spawn Python process with restricted environment
       const pythonProcess = spawn('python', ['-c', wrappedCode], {
         shell: false,
-        env: { 
-          ...process.env, 
-          PYTHONUNBUFFERED: '1',
-          PYTHONIOENCODING: 'utf-8',
-          LANG: 'en_US.UTF-8',
-          LC_ALL: 'en_US.UTF-8'
-        }
+        env: safeEnv,
+        stdio: ['pipe', 'pipe', 'pipe'], // Explicit stdio configuration
+        detached: false, // Don't allow process to outlive parent
       })
+      
+      // Set resource limits (if available on the system)
+      // Note: This requires appropriate permissions and may not work on all systems
+      try {
+        // Limit CPU time (if setrlimit is available)
+        // This is handled by the timeout instead
+      } catch (error) {
+        // Ignore if resource limiting is not available
+      }
 
       // Set encoding for streams
       pythonProcess.stdout.setEncoding('utf8')
@@ -121,11 +278,42 @@ ${code}`
         }
       }
 
-      // Collect stdout with proper UTF-8 handling
+      // Filter function to remove sensitive information from output
+      const filterSensitiveInfo = (text) => {
+        if (!text) return text
+        
+        // Remove potential paths that might leak system information
+        let filtered = text
+          .replace(/\/home\/[^\s\n]+/g, '[path removed]')
+          .replace(/\/root\/[^\s\n]+/g, '[path removed]')
+          .replace(/\/etc\/[^\s\n]+/g, '[path removed]')
+          .replace(/\/var\/[^\s\n]+/g, '[path removed]')
+          .replace(/\/usr\/[^\s\n]+/g, '[path removed]')
+          .replace(/\/proc\/[^\s\n]+/g, '[path removed]')
+          .replace(/\/sys\/[^\s\n]+/g, '[path removed]')
+        
+        // Remove potential environment variable values
+        filtered = filtered.replace(/([A-Z_]+)=([^\s\n]+)/g, (match, key, value) => {
+          // Keep common safe env vars, filter others
+          const safeVars = ['PATH', 'HOME', 'TMPDIR', 'LANG', 'LC_ALL', 'PYTHONUNBUFFERED', 'PYTHONIOENCODING']
+          if (safeVars.includes(key)) {
+            return match
+          }
+          return `${key}=[hidden]`
+        })
+        
+        // Remove potential API keys, tokens, passwords (basic patterns)
+        filtered = filtered.replace(/(api[_-]?key|token|password|secret|auth)[\s:=]+([^\s\n]+)/gi, '$1=[hidden]')
+        
+        return filtered
+      }
+
+      // Collect stdout with proper UTF-8 handling and filtering
       pythonProcess.stdout.on('data', (data) => {
         // Ensure data is treated as UTF-8 string
         const text = Buffer.isBuffer(data) ? data.toString('utf8') : String(data)
-        stdout += text
+        const filteredText = filterSensitiveInfo(text)
+        stdout += filteredText
         if (stdout.length > MAX_OUTPUT_LENGTH) {
           stdout = stdout.substring(0, MAX_OUTPUT_LENGTH) + '\n... (вивід обрізано)'
           if (!isResolved) {
@@ -134,11 +322,12 @@ ${code}`
         }
       })
 
-      // Collect stderr with proper UTF-8 handling
+      // Collect stderr with proper UTF-8 handling and filtering
       pythonProcess.stderr.on('data', (data) => {
         // Ensure data is treated as UTF-8 string
         const text = Buffer.isBuffer(data) ? data.toString('utf8') : String(data)
-        stderr += text
+        const filteredText = filterSensitiveInfo(text)
+        stderr += filteredText
         if (stderr.length > MAX_OUTPUT_LENGTH) {
           stderr = stderr.substring(0, MAX_OUTPUT_LENGTH) + '\n... (помилки обрізано)'
         }
