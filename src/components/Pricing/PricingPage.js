@@ -141,7 +141,7 @@ const PricingPage = () => {
 			name: 'Повний курс',
 			emoji: '📚',
 			price: 2000,
-			oldPrice: 3000,
+			oldPrice: 2999,
 			currency: 'грн',
 			period: 'одноразово',
 			description: 'Курс + доступ до платформи',

@@ -10,7 +10,7 @@
  */
 export const courseStructure = {
   courseId: "python-developer-zero-to-junior",
-  title: "Python Developer: From Zero to Confident Junior",
+  title: "Повний курс Пайтон",
   shortDescription: "Повний курс програмування на Python від основ до рівня впевненого джуніора",
   valueProposition: "Навчись створювати реальні проекти на Python та отримай навички, необхідні для початку кар'єри в IT.",
   
@@ -18,9 +18,9 @@ export const courseStructure = {
   level: "Beginner",
   targetAge: "13-17",
   duration: {
-    weeks: 36,
-    lessons: 72,
-    hours: 144
+    weeks: 41,
+    lessons: 96,
+    hours: 192
   },
   
   // Skills students will gain

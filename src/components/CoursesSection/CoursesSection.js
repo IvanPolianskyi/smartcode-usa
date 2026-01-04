@@ -2,18 +2,17 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
-  Code,
-  Gamepad2,
-  Monitor,
-  Box,
   BookOpen,
   Clock,
   Users,
-  Award,
   Star,
   ChevronRight,
-  ArrowRight,
+  Sparkles,
+  Zap,
+  Target,
+  CheckCircle2,
 } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -21,77 +20,84 @@ import styles from './CoursesSection.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const courses = [
-  {
-    courseId: 'python-developer-zero-to-junior',
-    title: 'Python Developer',
-    shortDescription: 'Повний курс програмування на Python від основ до рівня впевненого джуніора',
-    icon: <Code size={32} />,
-    color: '#3b82f6',
-    link: '/courses/python-developer-zero-to-junior',
-    age: '13-17 років',
-    duration: '24 тижні',
-    lessons: '48 уроків',
-    popular: true,
-  },
-  {
-    courseId: 'web-development',
-    title: 'Веб-розробка',
-    shortDescription: 'HTML, CSS, JavaScript, React та Node.js - створюй сучасні веб-додатки',
-    icon: <Monitor size={32} />,
-    color: '#8b5cf6',
-    link: '/courses/web-development',
-    age: '12-18 років',
-    duration: '22 тижні',
-    lessons: '44 уроки',
-    popular: false,
-  },
-  {
-    courseId: 'unity-game-development',
-    title: 'Розробка ігор на Unity',
-    shortDescription: 'Створення захоплюючих ігор на Unity з використанням C#',
-    icon: <Gamepad2 size={32} />,
-    color: '#10b981',
-    link: '/Unity',
-    age: '8-17 років',
-    duration: '20 тижнів',
-    lessons: '40 уроків',
-    popular: false,
-  },
-  {
-    courseId: 'roblox-studio',
-    title: 'Roblox Studio',
-    shortDescription: 'Створення ігор у Roblox Studio та публікація для мільйонів гравців',
-    icon: <Box size={32} />,
-    color: '#10b981',
-    link: '/Roblox',
-    age: '8-16 років',
-    duration: '16 тижнів',
-    lessons: '32 уроки',
-    popular: false,
-  },
-]
+const pythonCourse = {
+  courseId: 'python-developer-zero-to-junior',
+  title: 'Повний курс Пайтон',
+  shortDescription: 'Повний курс програмування на Python від основ до рівня впевненого джуніора',
+  fullDescription: 'Опануй найпопулярнішу мову програмування світу! Від основ синтаксису до створення реальних проектів - ти пройдеш повний шлях від новачка до впевненого джуніора.',
+  logo: '/python-logo.png',
+  color: '#3b82f6',
+  gradient: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+  link: '/courses/python-developer-zero-to-junior',
+  age: '13-17 років',
+  duration: '41 тиждень',
+  lessons: '96 уроків',
+  hours: '192 години',
+  popular: true,
+  rating: 4.9,
+  students: '500+',
+  skills: [
+    'Основи програмування на Python',
+    'Об\'єктно-орієнтоване програмування',
+    'Робота з базами даних',
+    'Веб-розробка з Flask/Django',
+    'REST API та мікросервіси',
+    'Деплой проектів у хмару'
+  ]
+}
 
 const CoursesSection = () => {
-  const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef(null)
+  const cardRef = useRef(null)
 
   useEffect(() => {
-    setIsVisible(true)
-
-    if (sectionRef.current) {
+    if (sectionRef.current && cardRef.current) {
       const ctx = gsap.context(() => {
         gsap.fromTo(
-          `.${styles.courseCard}`,
-          { y: 50, opacity: 0 },
+          `.${styles.heroContent}`,
+          { y: 60, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.8,
+            duration: 1,
             ease: 'power3.out',
-            stagger: 0.15,
             scrollTrigger: {
               trigger: sectionRef.current,
+              start: 'top 80%',
+              toggleActions: 'play none none none',
+            },
+          }
+        )
+
+        gsap.fromTo(
+          `.${styles.courseCard}`,
+          { scale: 0.95, opacity: 0, y: 40 },
+          {
+            scale: 1,
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            delay: 0.2,
+            scrollTrigger: {
+              trigger: cardRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            },
+          }
+        )
+
+        gsap.fromTo(
+          `.${styles.skillItem}`,
+          { x: -20, opacity: 0 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: cardRef.current,
               start: 'top 80%',
               toggleActions: 'play none none none',
             },
@@ -106,76 +112,112 @@ const CoursesSection = () => {
   return (
     <section ref={sectionRef} className={styles.section}>
       <div className={styles.container}>
-        <div className={styles.header}>
+        <div className={styles.heroContent}>
           <div className={styles.badge}>
-            <BookOpen size={18} />
-            <span>Наші курси</span>
+            <Sparkles size={18} />
+            <span>Онлайн курс на платформі</span>
           </div>
           <h2 className={styles.title}>
-            Структуровані курси для глибшого навчання
+            Онлайн курс Python
+            <span className={styles.titleAccent}> для поглибленого вивчення</span>
           </h2>
           <p className={styles.description}>
-            Окрім індивідуальних уроків, ми пропонуємо повноцінні курси з чіткою структурою, 
-            модулями та проектами. Курси доповнюють наші уроки та дають можливість систематично 
-            вивчити конкретну технологію від основ до просунутого рівня.
+            Окрім онлайн уроків, ми пропонуємо повноцінний онлайн курс на сайті для поглибленого вивчення Python. 
+            Курс рекомендується поєднувати з онлайн уроками для максимальної ефективності навчання та швидкого прогресу.
           </p>
         </div>
 
-        <div className={styles.coursesGrid}>
-          {courses.map((course, index) => (
-            <div
-              key={course.courseId}
-              className={styles.courseCard}
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              {course.popular && (
+        <div 
+          ref={cardRef}
+          className={styles.courseCard}
+        >
+          <div className={styles.cardBackground} />
+          
+          <div className={styles.cardHeader}>
+            <div className={styles.headerContent}>
+              <div className={styles.iconWrapper}>
+                <div className={styles.iconGlow} />
+                <Image 
+                  src={pythonCourse.logo} 
+                  alt="Python Logo" 
+                  width={80}
+                  height={80}
+                  className={styles.pythonLogo}
+                  priority
+                />
+              </div>
+              <div className={styles.badgeRow}>
                 <div className={styles.popularBadge}>
-                  <Star size={14} fill="#fbbf24" color="#fbbf24" />
+                  <Star size={16} fill="#fbbf24" color="#fbbf24" />
                   <span>Популярний</span>
                 </div>
-              )}
-
-              <div
-                className={styles.courseIcon}
-                style={{ backgroundColor: `${course.color}15`, color: course.color }}
-              >
-                {course.icon}
-              </div>
-
-              <h3 className={styles.courseTitle}>{course.title}</h3>
-              <p className={styles.courseDescription}>{course.shortDescription}</p>
-
-              <div className={styles.courseMeta}>
-                <div className={styles.metaItem}>
-                  <Users size={16} />
-                  <span>{course.age}</span>
-                </div>
-                <div className={styles.metaItem}>
-                  <Clock size={16} />
-                  <span>{course.duration}</span>
-                </div>
-                <div className={styles.metaItem}>
-                  <BookOpen size={16} />
-                  <span>{course.lessons}</span>
+                <div className={styles.ratingBadge}>
+                  <Star size={14} fill="#3b82f6" color="#3b82f6" />
+                  <span>{pythonCourse.rating}</span>
                 </div>
               </div>
-
-              <Link href={course.link} className={styles.courseButton}>
-                <span>Дізнатися більше</span>
-                <ChevronRight size={18} />
-              </Link>
+              <h3 className={styles.courseTitle}>{pythonCourse.title}</h3>
+              <p className={styles.courseDescription}>{pythonCourse.fullDescription}</p>
             </div>
-          ))}
-        </div>
+          </div>
 
-        <div className={styles.footer}>
-          <Link href="/courses" className={styles.viewAllButton}>
-            <span>Переглянути всі курси</span>
-            <ArrowRight size={20} />
-          </Link>
-          <Link href="/tariff" className={styles.viewAllButton}>
-            <span>Переглянути ціни</span>
-            <ArrowRight size={20} />
+          <div className={styles.statsGrid}>
+            <div className={styles.statItem}>
+              <div className={styles.statIcon}>
+                <Users size={20} />
+              </div>
+              <div className={styles.statContent}>
+                <div className={styles.statValue}>{pythonCourse.age}</div>
+                <div className={styles.statLabel}>Вік</div>
+              </div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statIcon}>
+                <Clock size={20} />
+              </div>
+              <div className={styles.statContent}>
+                <div className={styles.statValue}>{pythonCourse.duration}</div>
+                <div className={styles.statLabel}>Тривалість</div>
+              </div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statIcon}>
+                <BookOpen size={20} />
+              </div>
+              <div className={styles.statContent}>
+                <div className={styles.statValue}>{pythonCourse.lessons}</div>
+                <div className={styles.statLabel}>Уроків</div>
+              </div>
+            </div>
+            <div className={styles.statItem}>
+              <div className={styles.statIcon}>
+                <Zap size={20} />
+              </div>
+              <div className={styles.statContent}>
+                <div className={styles.statValue}>{pythonCourse.hours}</div>
+                <div className={styles.statLabel}>Годин</div>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.skillsSection}>
+            <div className={styles.skillsHeader}>
+              <Target size={20} />
+              <h4 className={styles.skillsTitle}>Що ти опануєш:</h4>
+            </div>
+            <div className={styles.skillsList}>
+              {pythonCourse.skills.map((skill, index) => (
+                <div key={index} className={styles.skillItem}>
+                  <CheckCircle2 size={18} className={styles.checkIcon} />
+                  <span>{skill}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <Link href={pythonCourse.link} className={styles.courseButton}>
+            <span>Почати навчання</span>
+            <ChevronRight size={20} />
           </Link>
         </div>
       </div>

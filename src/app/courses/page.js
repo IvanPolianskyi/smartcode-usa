@@ -13,7 +13,8 @@ import {
   Star,
   ChevronRight,
   BookOpen,
-  Target
+  Target,
+  Lock
 } from 'lucide-react'
 import { getCurrentUser, getUserProgress } from '@/lib/authClient'
 import styles from './CoursesPage.module.css'
@@ -21,7 +22,7 @@ import styles from './CoursesPage.module.css'
 const courses = [
   {
     courseId: 'python-developer-zero-to-junior',
-    title: 'Python Developer: From Zero to Confident Junior',
+    title: 'Повний курс Пайтон',
     shortDescription: 'Повний курс програмування на Python від основ до рівня впевненого джуніора',
     description: 'Навчись створювати реальні проекти на Python та отримай навички, необхідні для початку кар\'єри в IT.',
     icon: <Code size={32} />,
@@ -32,9 +33,9 @@ const courses = [
     age: '13-17 років',
     level: 'Beginner',
     duration: {
-      weeks: 24,
-      lessons: 48,
-      hours: 96
+      weeks: 41,
+      lessons: 96,
+      hours: 192
     },
     skills: [
       'Основи програмування на Python',
@@ -199,15 +200,28 @@ export default function CoursesPage() {
             const isEnrolled = !!progress
             const progressPercent = progress?.overallProgress || 0
             const levelBadge = getLevelBadge(course.level)
+            const isPython = course.courseId === 'python-developer-zero-to-junior'
+            const isLocked = !isPython
 
             return (
-              <div key={course.courseId} className={styles.courseCard}>
-                {course.popular && (
-                  <div className={styles.popularBadge}>
-                    <Star size={14} />
-                    <span>Популярний</span>
-                  </div>
-                )}
+              <div 
+                key={course.courseId} 
+                className={`${styles.courseCard} ${isLocked ? styles.lockedCard : ''}`}
+              >
+                <div className={styles.badgeContainer}>
+                  {course.popular && (
+                    <div className={styles.popularBadge}>
+                      <Star size={14} />
+                      <span>Популярний</span>
+                    </div>
+                  )}
+                  {isLocked && (
+                    <div className={styles.lockedBadge}>
+                      <Lock size={14} />
+                      <span>Скоро</span>
+                    </div>
+                  )}
+                </div>
                 
                 <div className={styles.courseHeader}>
                   <div 
@@ -283,21 +297,36 @@ export default function CoursesPage() {
                 </div>
 
                 <div className={styles.courseActions}>
-                  <Link
-                    href={course.courseLink}
-                    className={styles.primaryButton}
-                    style={{ backgroundColor: course.color }}
-                  >
-                    {isEnrolled ? 'Продовжити навчання' : 'Дізнатися більше'}
-                    <ChevronRight size={18} />
-                  </Link>
-                  {isEnrolled && (
-                    <Link
-                      href={course.courseLink}
-                      className={styles.secondaryButton}
+                  {isLocked ? (
+                    <button
+                      className={styles.lockedButton}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        window.dispatchEvent(new Event('openContactModal'))
+                      }}
                     >
-                      Перейти до курсу
-                    </Link>
+                      <Lock size={18} />
+                      Скоро доступно
+                    </button>
+                  ) : (
+                    <>
+                      <Link
+                        href={course.courseLink}
+                        className={styles.primaryButton}
+                        style={{ backgroundColor: course.color }}
+                      >
+                        {isEnrolled ? 'Продовжити навчання' : 'Дізнатися більше'}
+                        <ChevronRight size={18} />
+                      </Link>
+                      {isEnrolled && (
+                        <Link
+                          href={course.courseLink}
+                          className={styles.secondaryButton}
+                        >
+                          Перейти до курсу
+                        </Link>
+                      )}
+                    </>
                   )}
                 </div>
               </div>

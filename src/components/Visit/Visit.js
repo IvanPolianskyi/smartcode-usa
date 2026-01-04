@@ -28,7 +28,6 @@ gsap.registerPlugin(ScrollTrigger)
 
 const Visit = () => {
 	const [isVisible, setIsVisible] = useState(false)
-	const [hoveredCard, setHoveredCard] = useState(null)
 	const sectionRef = useRef(null)
 	const cardsRef = useRef(null)
 
@@ -99,14 +98,30 @@ const Visit = () => {
 	}, [])
 
 	const stats = [
-		{ number: '500+', label: 'Випускників', icon: <Users /> },
-		{ number: '200+', label: 'Годин кодування', icon: <Code /> },
-		{ number: '3+', label: 'Роки досвіду', icon: <Clock /> },
-		{ number: '4.9', label: 'Рейтинг', icon: <Star /> },
-		{ number: '8+', label: 'Курсів', icon: <BookOpen /> },
-		{ number: '15+', label: 'Викладачів', icon: <Monitor /> },
-		{ number: '20+', label: 'Проектів', icon: <Rocket /> },
-		{ number: '98%', label: 'Задоволених учнів', icon: <Trophy /> },
+		{ 
+			number: '500+', 
+			label: 'дітей навчаються по всьому світу', 
+			icon: <Users />,
+			iconColor: '#3b82f6'
+		},
+		{ 
+			number: '100%', 
+			label: 'занять проходять з живими викладачами', 
+			icon: <Code />,
+			iconColor: '#3b82f6'
+		},
+		{ 
+			number: 'починай з 0', 
+			label: 'Від "нуля" до просунутого рівня', 
+			icon: <BookOpen />,
+			iconColor: '#3b82f6'
+		},
+		{ 
+			number: '98%', 
+			label: 'Задоволених учнів', 
+			icon: <Trophy />,
+			iconColor: '#3b82f6'
+		},
 	]
 
 	return (
@@ -144,8 +159,7 @@ const Visit = () => {
 						</h1>
 
 						<p className={`${styles.subtitle} animate-up`}>
-							Школа програмування нового покоління, де діти створюють технології
-							майбутнього
+							Школа програмування нового покоління, де діти створюють майбутні технології
 						</p>
 
 						<div className={`${styles.heroFeatures} animate-slide`}>
@@ -172,7 +186,7 @@ const Visit = () => {
                         <div className={styles.ctaButtons}>
                             <Link href="/#Contactform" className={styles.primaryButton} onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openContactModal')) }} scroll={false}>
                                 <Play className={styles.buttonIcon} />
-                                Почати навчання безкоштовно
+                                Отримати пробне заняття
                             </Link>
                             <Link href="/tariff" className={styles.secondaryButton}>
                                 Переглянути ціни
@@ -186,11 +200,22 @@ const Visit = () => {
 							<div
 								key={index}
 								className={`${styles.statCard} animate-scale`}
-								style={{ animationDelay: `${index * 0.1}s` }}
+								style={{ 
+									animationDelay: `${index * 0.1}s`
+								}}
 							>
-								<div className={styles.statIcon}>{stat.icon}</div>
+								<div 
+									className={styles.statIcon}
+									style={{ 
+										color: '#6366f1'
+									}}
+								>
+									{stat.icon}
+								</div>
 								<div className={styles.statContent}>
-									<div className={styles.statNumber}>{stat.number}</div>
+									<div className={styles.statNumber}>
+										{stat.number}
+									</div>
 									<div className={styles.statLabel}>{stat.label}</div>
 								</div>
 							</div>

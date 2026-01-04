@@ -4,6 +4,8 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { register } from '@/lib/authClient'
+import Logo from '@/components/Logo/Logo'
+import { Eye, EyeOff } from 'lucide-react'
 import styles from '../login/Auth.module.css'
 
 export default function RegisterPage() {
@@ -17,6 +19,8 @@ export default function RegisterPage() {
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -41,7 +45,6 @@ export default function RegisterPage() {
         formData.name,
         formData.phone || undefined
       )
-      // Dispatch event to update Header
       window.dispatchEvent(new Event('auth:register'))
       router.push('/dashboard')
       router.refresh()
@@ -61,112 +64,133 @@ export default function RegisterPage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.card}>
-        <div className={styles.header}>
-          <h1 className={styles.title}>Реєстрація</h1>
-          <p className={styles.subtitle}>Створіть свій акаунт</p>
+      <div className={styles.content}>
+        <div className={styles.logoWrapper}>
+          <Logo href="/" className={styles.logo} />
         </div>
 
-        {error && <div className={styles.error}>{error}</div>}
+        <div className={styles.card}>
+          <h1 className={styles.title}>Створити акаунт</h1>
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.formGroup}>
-            <label htmlFor="name" className={styles.label}>
-              Ім'я
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className={styles.input}
-              placeholder="Ваше ім'я"
-            />
+          {error && <div className={styles.error}>{error}</div>}
+
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.formGroup}>
+              <label htmlFor="name" className={styles.label}>
+                ПІБ
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                className={styles.input}
+                placeholder="Введіть повне ім'я"
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="email" className={styles.label}>
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className={styles.input}
+                placeholder="smartcode@gmail.com"
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="phone" className={styles.label}>
+                Номер телефону
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className={styles.input}
+                placeholder="+380 (50) 000-00-00"
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="password" className={styles.label}>
+                Пароль
+              </label>
+              <div className={styles.passwordInputWrapper}>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  className={styles.input}
+                  placeholder="••••••••"
+                  minLength={6}
+                />
+                <button
+                  type="button"
+                  className={styles.passwordToggle}
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="confirmPassword" className={styles.label}>
+                Підтвердження пароля
+              </label>
+              <div className={styles.passwordInputWrapper}>
+                <input
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                  className={styles.input}
+                  placeholder="••••••••"
+                  minLength={6}
+                />
+                <button
+                  type="button"
+                  className={styles.passwordToggle}
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className={styles.submitButton}
+            >
+              {loading ? 'Реєстрація...' : 'Зареєструватися'}
+            </button>
+          </form>
+
+          <div className={styles.footer}>
+            <p>
+              Вже зареєстровані?{' '}
+              <Link href="/login" className={styles.link}>
+                Увійти
+              </Link>
+            </p>
           </div>
-
-          <div className={styles.formGroup}>
-            <label htmlFor="email" className={styles.label}>
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className={styles.input}
-              placeholder="your@email.com"
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label htmlFor="phone" className={styles.label}>
-              Телефон (необов'язково)
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className={styles.input}
-              placeholder="+380XXXXXXXXX"
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label htmlFor="password" className={styles.label}>
-              Пароль
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className={styles.input}
-              placeholder="••••••••"
-              minLength={6}
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label htmlFor="confirmPassword" className={styles.label}>
-              Підтвердіть пароль
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              className={styles.input}
-              placeholder="••••••••"
-              minLength={6}
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className={styles.submitButton}
-          >
-            {loading ? 'Реєстрація...' : 'Зареєструватися'}
-          </button>
-        </form>
-
-        <div className={styles.footer}>
-          <p>
-            Вже є акаунт?{' '}
-            <Link href="/login" className={styles.link}>
-              Увійти
-            </Link>
-          </p>
         </div>
       </div>
     </div>

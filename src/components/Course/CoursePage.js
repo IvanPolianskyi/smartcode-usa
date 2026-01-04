@@ -315,6 +315,30 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
               </div>
             </div>
           </div>
+          
+          {/* Purchase Button */}
+          {!isPurchased && user?.role !== 'admin' && (
+            <div className={styles.purchaseButtonWrapper}>
+              {user ? (
+                <button
+                  onClick={handlePurchase}
+                  disabled={isPurchasing}
+                  className={styles.purchaseButton}
+                >
+                  <Rocket className="w-5 h-5" />
+                  {isPurchasing ? 'Перенаправлення на оплату...' : `Придбати курс за ${formatPrice(coursePrice.price, coursePrice.currency)}`}
+                </button>
+              ) : (
+                <Link 
+                  href={`/login?redirect=${encodeURIComponent(`/courses/${courseId}`)}`}
+                  className={styles.purchaseButton}
+                >
+                  <Rocket className="w-5 h-5" />
+                  Придбати курс за {formatPrice(coursePrice.price, coursePrice.currency)}
+                </Link>
+              )}
+            </div>
+          )}
         </div>
       </section>
       

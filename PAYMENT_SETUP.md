@@ -47,12 +47,12 @@ https://your-project.vercel.app/api/payment/webhook
 ```javascript
 export const coursePrices = {
   'python-developer-zero-to-junior': {
-    price: 2999, // UAH
+    price: 2000, // UAH
     currency: 'UAH',
     name: 'Python Developer: From Zero to Confident Junior'
   },
   'web-development': {
-    price: 2999, // UAH
+    price: 2000, // UAH
     currency: 'UAH',
     name: 'Веб-розробка: Від основ до просунутого рівня'
   }

@@ -6,7 +6,7 @@
 
 /* --- HERO СЕКЦІЯ --- */
 .hero {
-	padding: 8rem 2rem 4rem;
+	padding: 4rem 2rem 4rem;
 	text-align: center;
 	background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
 	position: relative;
