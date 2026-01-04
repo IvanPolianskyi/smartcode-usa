@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_15_4 = {
   lessonId: "lesson-15-4",
-  moduleId: "module-16",
+  moduleId: "module-14",
   order: 4,
   title: "Практика: генерація звітів",
   
@@ -17,7 +17,7 @@ export const lesson_15_4 = {
     "Генерувати PDF та Excel звіти",
     "Створити корисний інструмент",
     "lesson-15-3",
-    "module-16",
+    "module-14",
     "16 - Відправка email з Python",
     "Відправка email повідомлень, робота з SMTP, створення HTML email"
 ],
@@ -25,7 +25,7 @@ export const lesson_15_4 = {
   estimatedTime: 120,
   prerequisites: [
     "lesson-15-3",
-    "module-16",
+    "module-14",
     "16 - Відправка email з Python"
 ],
   
@@ -45,13 +45,13 @@ export const lesson_15_4 = {
 - Генерувати PDF та Excel звіти
 - Створити корисний інструмент
 - lesson-15-3
-- module-16
-- 16 - Відправка email з Python
+- module-14
+- 14 - Відправка email з Python
 - Відправка email повідомлень, робота з SMTP, створення HTML email
 
 **Час на вивчення:** приблизно 120 хвилин
 
-**Попередні вимоги:** lesson-15-3, module-16, 16 - Відправка email з Python
+**Попередні вимоги:** lesson-15-3, module-14, 14 - Відправка email з Python
 `
       }
     ]

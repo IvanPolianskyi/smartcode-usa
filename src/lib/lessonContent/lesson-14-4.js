@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_14_4 = {
   lessonId: "lesson-14-4",
-  moduleId: "module-15",
+  moduleId: "module-13",
   order: 4,
   title: "Практика: обробка зображень",
   
@@ -17,14 +17,14 @@ export const lesson_14_4 = {
     "Створити корисний інструмент",
     "Практикуватися у роботі з зображеннями",
     "lesson-14-3",
-    "module-15",
+    "module-13",
     "15 - PDF та електронні таблиці"
 ],
   
   estimatedTime: 120,
   prerequisites: [
     "lesson-14-3",
-    "module-15",
+    "module-13",
     "15 - PDF та електронні таблиці"
 ],
   
@@ -44,12 +44,12 @@ export const lesson_14_4 = {
 - Створити корисний інструмент
 - Практикуватися у роботі з зображеннями
 - lesson-14-3
-- module-15
-- 15 - PDF та електронні таблиці
+- module-13
+- 13 - PDF та електронні таблиці
 
 **Час на вивчення:** приблизно 120 хвилин
 
-**Попередні вимоги:** lesson-14-3, module-15, 15 - PDF та електронні таблиці
+**Попередні вимоги:** lesson-14-3, module-13, 13 - PDF та електронні таблиці
 `
       }
     ]

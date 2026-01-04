@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_12_6 = {
   lessonId: "lesson-12-6",
-  moduleId: "module-13",
+  moduleId: "module-11",
   order: 6,
   title: "Практика: обробка даних з модулями",
   
@@ -17,14 +17,14 @@ export const lesson_12_6 = {
     "Оптимізувати код за допомогою модулів",
     "Практикуватися у використанні інструментів",
     "lesson-12-5",
-    "module-13",
+    "module-11",
     "13 - Веб-скрапінг"
 ],
   
   estimatedTime: 120,
   prerequisites: [
     "lesson-12-5",
-    "module-13",
+    "module-11",
     "13 - Веб-скрапінг"
 ],
   
@@ -44,12 +44,12 @@ export const lesson_12_6 = {
 - Оптимізувати код за допомогою модулів
 - Практикуватися у використанні інструментів
 - lesson-12-5
-- module-13
-- 13 - Веб-скрапінг
+- module-11
+- 11 - Веб-скрапінг
 
 **Час на вивчення:** приблизно 120 хвилин
 
-**Попередні вимоги:** lesson-12-5, module-13, 13 - Веб-скрапінг
+**Попередні вимоги:** lesson-12-5, module-11, 11 - Веб-скрапінг
 `
       }
     ]

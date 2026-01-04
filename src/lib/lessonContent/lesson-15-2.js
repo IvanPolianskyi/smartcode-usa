@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_15_2 = {
   lessonId: "lesson-15-2",
-  moduleId: "module-00",
+  moduleId: "module-13",
   order: 2,
   title: "Робота з Excel: openpyxl",
   

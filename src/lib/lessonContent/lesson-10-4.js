@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_10_4 = {
   lessonId: "lesson-10-4",
-  moduleId: "module-10",
+  moduleId: "module-08",
   order: 4,
   title: "Практика: простий backend",
   

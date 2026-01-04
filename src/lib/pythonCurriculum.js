@@ -808,36 +808,7 @@ export const pythonCurriculum = {
     {
       moduleId: "module-08",
       order: 8,
-      title: "08 - Модулі та пакети",
-      description: "Створення та використання модулів, організація коду в пакети, стандартна бібліотека",
-      duration: { weeks: 2, lessons: 1 },
-      learningOutcomes: [
-        "Створювати власні модулі",
-        "Організовувати код у пакети",
-        "Використовувати стандартну бібліотеку Python",
-        "Імпортувати та експортувати функціональність"
-      ],
-      lessons: [
-        {
-          lessonId: "lesson-08-1",
-          order: 1,
-          title: "Milestone Project 2: Програма з ООП та модулями",
-          learningObjectives: [
-            "Створити програму з використанням ООП",
-            "Організувати код у модулі",
-            "Застосувати всі набуті знання",
-            "Створити повноцінний проект"
-          ],
-          estimatedTime: 180,
-          prerequisites: ["lesson-07-5"],
-          isProject: true
-        }
-      ]
-    },
-    {
-      moduleId: "module-09",
-      order: 9,
-      title: "09 - Декоратори Python",
+      title: "08 - Декоратори Python",
       description: "Створення та використання декораторів для розширення функціональності функцій",
       duration: { weeks: 2, lessons: 4 },
       learningOutcomes: [
@@ -858,7 +829,7 @@ export const pythonCurriculum = {
             "Застосовувати декоратори до функцій"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-08-1"]
+          prerequisites: ["lesson-07-5"]
         },
         {
           lessonId: "lesson-10-2",
@@ -902,9 +873,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-10",
-      order: 10,
-      title: "10 - Генератори Python",
+      moduleId: "module-09",
+      order: 9,
+      title: "09 - Генератори Python",
       description: "Створення генераторів, генераторні вирази, yield, ітератори",
       duration: { weeks: 2, lessons: 4 },
       learningOutcomes: [
@@ -969,9 +940,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-11",
-      order: 11,
-      title: "11 - Розширені модулі Python",
+      moduleId: "module-10",
+      order: 10,
+      title: "10 - Розширені модулі Python",
       description: "Поглиблена робота з модулями: collections, itertools, functools, json, csv",
       duration: { weeks: 3, lessons: 6 },
       learningOutcomes: [
@@ -1062,9 +1033,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-12",
-      order: 12,
-      title: "12 - Веб-скрапінг",
+      moduleId: "module-11",
+      order: 11,
+      title: "11 - Веб-скрапінг",
       description: "Збір даних з веб-сторінок за допомогою BeautifulSoup та requests",
       duration: { weeks: 2, lessons: 4 },
       learningOutcomes: [
@@ -1129,9 +1100,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-13",
-      order: 13,
-      title: "13 - Робота з зображеннями",
+      moduleId: "module-12",
+      order: 12,
+      title: "12 - Робота з зображеннями",
       description: "Обробка зображень за допомогою PIL/Pillow, маніпуляції з зображеннями",
       duration: { weeks: 2, lessons: 4 },
       learningOutcomes: [
@@ -1196,9 +1167,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-14",
-      order: 14,
-      title: "14 - PDF та електронні таблиці",
+      moduleId: "module-13",
+      order: 13,
+      title: "13 - PDF та електронні таблиці",
       description: "Робота з PDF файлами та електронними таблицями (Excel, CSV)",
       duration: { weeks: 2, lessons: 4 },
       learningOutcomes: [
@@ -1263,9 +1234,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-15",
-      order: 15,
-      title: "15 - Відправка email з Python",
+      moduleId: "module-14",
+      order: 14,
+      title: "14 - Відправка email з Python",
       description: "Відправка email повідомлень, робота з SMTP, створення HTML email",
       duration: { weeks: 1, lessons: 3 },
       learningOutcomes: [
@@ -1317,9 +1288,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-16",
-      order: 16,
-      title: "16 - Розширені об'єкти та структури даних",
+      moduleId: "module-15",
+      order: 15,
+      title: "15 - Розширені об'єкти та структури даних",
       description: "Поглиблена робота з об'єктами: протоколи, контекстні менеджери, дескриптори",
       duration: { weeks: 2, lessons: 5 },
       learningOutcomes: [
@@ -1397,9 +1368,9 @@ export const pythonCurriculum = {
       ]
     },
     {
-      moduleId: "module-17",
-      order: 17,
-      title: "17 - Бонус: Вступ до графічних інтерфейсів (GUI)",
+      moduleId: "module-16",
+      order: 16,
+      title: "16 - Бонус: Вступ до графічних інтерфейсів (GUI)",
       description: "Створення графічних інтерфейсів користувача з Tkinter",
       duration: { weeks: 2, lessons: 5 },
       learningOutcomes: [
@@ -1420,7 +1391,7 @@ export const pythonCurriculum = {
             "Підготувати середовище для роботи"
           ],
           estimatedTime: 60,
-          prerequisites: ["lesson-16-5"]
+          prerequisites: ["lesson-15-4"]
         },
         {
           lessonId: "lesson-19-2",

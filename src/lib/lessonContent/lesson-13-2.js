@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_13_2 = {
   lessonId: "lesson-13-2",
-  moduleId: "module-13",
+  moduleId: "module-11",
   order: 2,
   title: "01 Web Scraping Exercises",
   

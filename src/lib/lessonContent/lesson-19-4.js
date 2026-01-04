@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_19_4 = {
   lessonId: "lesson-19-4",
-  moduleId: "module-00",
+  moduleId: "module-16",
   order: 4,
   title: "Розміщення елементів: pack, grid, place",
   

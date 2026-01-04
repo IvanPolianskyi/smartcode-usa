@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_15_1 = {
   lessonId: "lesson-15-1",
-  moduleId: "module-15",
+  moduleId: "module-13",
   order: 1,
   title: "01 Working With Pdfs",
   

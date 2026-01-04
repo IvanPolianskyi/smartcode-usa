@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_11_1 = {
   lessonId: "lesson-11-1",
-  moduleId: "module-11",
+  moduleId: "module-09",
   order: 1,
   title: "01 Iterators And Generators",
   

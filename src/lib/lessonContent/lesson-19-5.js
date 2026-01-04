@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_19_5 = {
   lessonId: "lesson-19-5",
-  moduleId: "module-00",
+  moduleId: "module-16",
   order: 5,
   title: "Обробка подій та практика: GUI-застосунок",
   

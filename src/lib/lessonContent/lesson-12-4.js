@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_12_4 = {
   lessonId: "lesson-12-4",
-  moduleId: "module-12",
+  moduleId: "module-10",
   order: 4,
   title: "01 Opening And Reading Files Folders",
   

@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_11_4 = {
   lessonId: "lesson-11-4",
-  moduleId: "module-12",
+  moduleId: "module-10",
   order: 4,
   title: "Практика: генератори на практиці",
   
@@ -17,14 +17,14 @@ export const lesson_11_4 = {
     "Оптимізувати код з генераторами",
     "Практикуватися у створенні генераторів",
     "lesson-11-3",
-    "module-12",
+    "module-10",
     "12 - Розширені модулі Python"
 ],
   
   estimatedTime: 120,
   prerequisites: [
     "lesson-11-3",
-    "module-12",
+    "module-10",
     "12 - Розширені модулі Python"
 ],
   
@@ -44,12 +44,12 @@ export const lesson_11_4 = {
 - Оптимізувати код з генераторами
 - Практикуватися у створенні генераторів
 - lesson-11-3
-- module-12
-- 12 - Розширені модулі Python
+- module-10
+- 10 - Розширені модулі Python
 
 **Час на вивчення:** приблизно 120 хвилин
 
-**Попередні вимоги:** lesson-11-3, module-12, 12 - Розширені модулі Python
+**Попередні вимоги:** lesson-11-3, module-10, 10 - Розширені модулі Python
 `
       }
     ]

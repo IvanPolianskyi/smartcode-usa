@@ -423,20 +423,9 @@ user = process_user("Олексій", 25, "oleksiy@example.com")`,
 AssertionError: Відсоток знижки має бути від 0 до 100`,
     examples: [
       {
-        input: "calculate_discount(100, 20)",
         output: "Ціна зі знижкою: 80.0",
         explanation: "Функція обчислює ціну зі знижкою 20%"
       },
-      {
-        input: "calculate_discount(100, 150)",
-        output: "AssertionError: Відсоток знижки має бути від 0 до 100",
-        explanation: "Функція валідує що знижка не може бути більше 100%"
-      },
-      {
-        input: "calculate_discount(-100, 20)",
-        output: "AssertionError: Ціна має бути додатнім числом",
-        explanation: "Функція валідує що ціна не може бути від'ємною"
-      }
     ],
     solution: {
       code: `# Функція з валідацією даних

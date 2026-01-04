@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_14_1 = {
   lessonId: "lesson-14-1",
-  moduleId: "module-14",
+  moduleId: "module-12",
   order: 1,
   title: "00 Overview Of Working With Images",
   

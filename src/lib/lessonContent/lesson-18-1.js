@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_18_1 = {
   lessonId: "lesson-18-1",
-  moduleId: "module-19",
+  moduleId: "module-16",
   order: 1,
   title: "Milestone Project 3: Фінальний проект",
   
@@ -25,7 +25,7 @@ export const lesson_18_1 = {
   estimatedTime: 480,
   prerequisites: [
     "lesson-17-5",
-    "module-19"
+    "module-16"
 ],
   
   videoUrl: "",

@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_17_3 = {
   lessonId: "lesson-17-3",
-  moduleId: "module-00",
+  moduleId: "module-15",
   order: 3,
   title: "Протоколи та duck typing",
   

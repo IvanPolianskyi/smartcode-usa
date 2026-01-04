@@ -80,7 +80,6 @@ import { lesson_07_2 } from '@/lib/lessonContent/lesson-07-2'
 import { lesson_07_3 } from '@/lib/lessonContent/lesson-07-3'
 import { lesson_07_4 } from '@/lib/lessonContent/lesson-07-4'
 import { lesson_07_5 } from '@/lib/lessonContent/lesson-07-5'
-import { lesson_08_1 } from '@/lib/lessonContent/lesson-08-1'
 import { lesson_11_3 } from '@/lib/lessonContent/lesson-11-3'
 import { lesson_11_4 } from '@/lib/lessonContent/lesson-11-4'
 import { lesson_12_1 } from '@/lib/lessonContent/lesson-12-1'
@@ -170,7 +169,6 @@ const lessonContentMap = {
   "lesson-07-3": lesson_07_3,
   "lesson-07-4": lesson_07_4,
   "lesson-07-5": lesson_07_5,
-  "lesson-08-1": lesson_08_1,
   "lesson-10-1": lesson_10_1,
   "lesson-10-2": lesson_10_2,
   "lesson-10-3": lesson_10_3,

@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_14_3 = {
   lessonId: "lesson-14-3",
-  moduleId: "module-15",
+  moduleId: "module-13",
   order: 3,
   title: "Робота з кольорами та фільтрами",
   

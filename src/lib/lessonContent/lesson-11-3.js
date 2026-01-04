@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_11_3 = {
   lessonId: "lesson-11-3",
-  moduleId: "module-12",
+  moduleId: "module-10",
   order: 3,
   title: "Ітератори та протокол ітерації",
   

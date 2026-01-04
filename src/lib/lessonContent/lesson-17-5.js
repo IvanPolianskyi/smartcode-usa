@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_17_5 = {
   lessonId: "lesson-17-5",
-  moduleId: "module-18",
+  moduleId: "module-15",
   order: 5,
   title: "Практика: розширені об'єкти",
   

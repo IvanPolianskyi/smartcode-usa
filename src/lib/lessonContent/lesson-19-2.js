@@ -7,7 +7,7 @@ import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_19_2 = {
   lessonId: "lesson-19-2",
-  moduleId: "module-00",
+  moduleId: "module-16",
   order: 2,
   title: "Створення першого вікна. Tk(), mainloop()",
   
