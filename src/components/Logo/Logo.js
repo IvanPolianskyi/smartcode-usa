@@ -11,8 +11,8 @@ export default function Logo({ className = '', href = '/' }) {
           src="/logo.jpg"
           alt="SmartCode Academy Logo"
           className={styles.logoImage}
-          width={48}
-          height={48}
+          width={56}
+          height={56}
           priority
         />
       </div>

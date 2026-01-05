@@ -23,7 +23,7 @@
 }
 
 .heroContent {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -64,7 +64,7 @@
 
 /* Courses Section */
 .coursesSection {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 4rem 2rem;
 }
@@ -87,16 +87,44 @@
   border: 2px solid transparent;
 }
 
-.courseCard:hover {
+.courseCard:hover:not(.lockedCard) {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
   border-color: #e5e7eb;
 }
 
-.popularBadge {
+.lockedCard {
+  opacity: 0.85;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.lockedCard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  z-index: 1;
+  pointer-events: none;
+  backdrop-filter: blur(1px);
+}
+
+.lockedCard > * {
+  position: relative;
+  z-index: 2;
+}
+
+.badgeContainer {
   position: absolute;
   top: 1rem;
   right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 2;
+}
+
+.popularBadge {
   background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
   color: white;
   padding: 0.375rem 0.75rem;
@@ -106,7 +134,18 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  z-index: 1;
+}
+
+.lockedBadge {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+  color: white;
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .courseHeader {
@@ -307,6 +346,28 @@
 .secondaryButton:hover {
   border-color: #d1d5db;
   color: #1f2937;
+}
+
+.lockedButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border-radius: 8px;
+  color: #6b7280;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: not-allowed;
+  width: 100%;
+  transition: all 0.2s;
+}
+
+.lockedButton:hover {
+  background: #e5e7eb;
+  color: #4b5563;
 }
 
 /* Responsive */

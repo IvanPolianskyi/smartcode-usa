@@ -150,6 +150,44 @@
   opacity: 0.9;
 }
 
+.purchaseButtonWrapper {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.purchaseButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.125rem 2.5rem;
+  background: white;
+  color: #667eea;
+  border: none;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.125rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.purchaseButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.purchaseButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.purchaseButton svg {
+  flex-shrink: 0;
+}
+
 .statValue {
   font-size: 1.25rem;
   font-weight: 700;
@@ -606,6 +644,17 @@
   
   .header {
     grid-template-columns: 1fr;
+  }
+  
+  .purchaseButton {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .purchaseButtonWrapper {
+    margin-top: 2rem;
   }
   
   .stats {

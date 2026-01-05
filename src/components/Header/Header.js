@@ -363,19 +363,7 @@ const Header = () => {
 											</div>
 
 											<div className={styles.dropdownGrid}>
-												<Link
-													href="/courses"
-													className={styles.allCoursesLink}
-													onClick={() => setIsCoursesOpen(false)}
-												>
-													<div className={styles.allCoursesContent}>
-														<h4 className={styles.allCoursesTitle}>Всі курси</h4>
-														<p className={styles.allCoursesDescription}>
-															Переглянути всі доступні курси
-														</p>
-													</div>
-													<ChevronRight size={20} />
-												</Link>
+												
 												{courses.map((course, courseIndex) => (
 													<Link
 														key={courseIndex}
