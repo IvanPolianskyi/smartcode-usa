@@ -27,13 +27,10 @@ import Link from 'next/link'
 gsap.registerPlugin(ScrollTrigger)
 
 const Visit = () => {
-	const [isVisible, setIsVisible] = useState(false)
 	const sectionRef = useRef(null)
 	const cardsRef = useRef(null)
 
 	useEffect(() => {
-		setIsVisible(true)
-
 		// GSAP анімації появи при скролі
 		let ctx = null
 		if (sectionRef.current) {
@@ -149,9 +146,7 @@ const Visit = () => {
 
 			<div className={styles.mainContainer}>
 				{/* Hero Header */}
-				<div
-					className={`${styles.hero} ${isVisible ? styles.heroVisible : ''}`}
-				>
+				<div className={styles.hero}>
 					<div className={styles.heroContent}>
 						<h1 className={`${styles.title} animate-up`}>
 							<span className={styles.titleMain}>SmartCode</span>

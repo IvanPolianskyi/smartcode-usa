@@ -95,7 +95,7 @@ export default function HomeClient() {
   }, [])
 
   return (
-    <div>
+    <div className='home-page-wrapper'>
       
       <div className='overflow-x-hidden'>
         <Analytics />

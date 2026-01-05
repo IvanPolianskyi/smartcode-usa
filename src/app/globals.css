@@ -125,6 +125,34 @@ html, body {
   max-width: 100%;
   overflow-x: hidden;
 }
+
+/* Padding-top для main контенту, щоб хедер не перекривав */
+/* Висота хедера: 80px на десктопі, менше на мобільних */
+main.main-content {
+  padding-top: 80px;
+}
+
+@media (max-width: 700px) {
+  main.main-content {
+    padding-top: 20px;
+  }
+}
+
+
+/* iPhone island background для головної сторінки на мобільних пристроях */
+@media (max-width: 1024px) {
+  .home-page-wrapper::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-top, 0px);
+    background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+    z-index: 10000;
+    pointer-events: none;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

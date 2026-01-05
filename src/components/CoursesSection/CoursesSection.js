@@ -7,12 +7,9 @@ import {
   BookOpen,
   Clock,
   Users,
-  Star,
   ChevronRight,
   Sparkles,
   Zap,
-  Target,
-  CheckCircle2,
 } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -32,9 +29,7 @@ const pythonCourse = {
   age: '13-17 років',
   duration: '41 тиждень',
   lessons: '96 уроків',
-  hours: '192 години',
-  popular: true,
-  rating: 4.9,
+  hours: '100%',
   students: '500+',
   skills: [
     'Основи програмування на Python',
@@ -87,22 +82,6 @@ const CoursesSection = () => {
           }
         )
 
-        gsap.fromTo(
-          `.${styles.skillItem}`,
-          { x: -20, opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: cardRef.current,
-              start: 'top 80%',
-              toggleActions: 'play none none none',
-            },
-          }
-        )
       }, sectionRef)
 
       return () => ctx.revert()
@@ -118,12 +97,12 @@ const CoursesSection = () => {
             <span>Онлайн курс на платформі</span>
           </div>
           <h2 className={styles.title}>
-            Онлайн курс Python
+            Онлайн курси
             <span className={styles.titleAccent}> для поглибленого вивчення</span>
           </h2>
           <p className={styles.description}>
-            Окрім онлайн уроків, ми пропонуємо повноцінний онлайн курс на сайті для поглибленого вивчення Python. 
-            Курс рекомендується поєднувати з онлайн уроками для максимальної ефективності навчання та швидкого прогресу.
+            Окрім онлайн уроків, ми пропонуємо повноцінні онлайн курси на платформі для поглибленого вивчення програмування. 
+            Курси рекомендується поєднувати з онлайн уроками для максимальної ефективності навчання та швидкого прогресу.
           </p>
         </div>
 
@@ -145,16 +124,6 @@ const CoursesSection = () => {
                   className={styles.pythonLogo}
                   priority
                 />
-              </div>
-              <div className={styles.badgeRow}>
-                <div className={styles.popularBadge}>
-                  <Star size={16} fill="#fbbf24" color="#fbbf24" />
-                  <span>Популярний</span>
-                </div>
-                <div className={styles.ratingBadge}>
-                  <Star size={14} fill="#3b82f6" color="#3b82f6" />
-                  <span>{pythonCourse.rating}</span>
-                </div>
               </div>
               <h3 className={styles.courseTitle}>{pythonCourse.title}</h3>
               <p className={styles.courseDescription}>{pythonCourse.fullDescription}</p>
@@ -195,23 +164,8 @@ const CoursesSection = () => {
               </div>
               <div className={styles.statContent}>
                 <div className={styles.statValue}>{pythonCourse.hours}</div>
-                <div className={styles.statLabel}>Годин</div>
+                <div className={styles.statLabel}>рівень знань пайтон</div>
               </div>
-            </div>
-          </div>
-
-          <div className={styles.skillsSection}>
-            <div className={styles.skillsHeader}>
-              <Target size={20} />
-              <h4 className={styles.skillsTitle}>Що ти опануєш:</h4>
-            </div>
-            <div className={styles.skillsList}>
-              {pythonCourse.skills.map((skill, index) => (
-                <div key={index} className={styles.skillItem}>
-                  <CheckCircle2 size={18} className={styles.checkIcon} />
-                  <span>{skill}</span>
-                </div>
-              ))}
             </div>
           </div>
 

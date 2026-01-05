@@ -109,6 +109,26 @@ const courses = [
         href: '/python',
 	},
 	{
+        id: 'roblox',
+        title: 'ROBLOX',
+        subtitle: 'Створюй ігри у Roblox Studio',
+        icon: '/logos/roblox.svg',
+        iconType: 'image',
+        description:
+            'Поринь у світ геймдизайну та скриптингу з Roblox Studio і Lua. Створюй свої світи, механіки та публікуй ігри.',
+        features: ['Roblox Studio', 'Lua', 'Геймдизайн', 'Публікація ігор'],
+        stats: {
+            age: '6-17',
+            students: '140+',
+            projects: '8+',
+        },
+        badge: 'Популярно',
+        rating: 4.8,
+        theme: 'themeRoblox',
+        particleColors: ['#fecaca', '#fca5a5', '#fb7185', '#f87171'],
+        href: '/Roblox',
+    },
+	{
 		id: 'gamedev',
 		title: 'ГЕЙМДЕВ',
 		subtitle: 'Створення власних ігор за допомогою Unity',
@@ -149,26 +169,7 @@ const courses = [
 		particleColors: ['#7dd3fc', '#67e8f9', '#a5f3fc', '#38bdf8'],
         href: '/webDev',
 	},
-    {
-        id: 'roblox',
-        title: 'ROBLOX',
-        subtitle: 'Створюй ігри у Roblox Studio',
-        icon: '/logos/roblox.svg',
-        iconType: 'image',
-        description:
-            'Поринь у світ геймдизайну та скриптингу з Roblox Studio і Lua. Створюй свої світи, механіки та публікуй ігри.',
-        features: ['Roblox Studio', 'Lua', 'Геймдизайн', 'Публікація ігор'],
-        stats: {
-            age: '6-17',
-            students: '140+',
-            projects: '8+',
-        },
-        badge: 'Популярно',
-        rating: 4.8,
-        theme: 'themeRoblox',
-        particleColors: ['#fecaca', '#fca5a5', '#fb7185', '#f87171'],
-        href: '/Roblox',
-    },
+    
 ]
 
 // Окремий компонент для частинок, щоб оптимізувати рендеринг
@@ -278,8 +279,12 @@ const EnhancedCourseCards = () => {
     const getExpandedCard = () => (isMobile ? null : hoveredCard)
 
 	return (
-		<div className={styles.wrapper}>
-			{courses.map((course, index) => {
+		<div className={styles.sectionContainer}>
+			<div className={styles.sectionHeader}>
+				<h2 className={styles.sectionTitle}>Навчальні предмети</h2>
+			</div>
+			<div className={styles.wrapper}>
+				{courses.map((course, index) => {
 				const expandedCard = getExpandedCard()
 				const isExpanded = expandedCard === index
 				const isOtherExpanded = expandedCard !== null && !isExpanded
@@ -389,16 +394,11 @@ const EnhancedCourseCards = () => {
                         </div>
                         )}
 
-						{/* --- ВЕРХНЯ ЧАСТИНА (БЕЙДЖ, РЕЙТИНГ) --- */}
+						{/* --- ВЕРХНЯ ЧАСТИНА (РЕЙТИНГ) --- */}
 						<div className={styles.topSection}>
 							<div className={styles.rating}>
 								<Star className={styles.ratingIcon} />
 								<span className={styles.ratingValue}>{course.rating}</span>
-							</div>
-							<div
-								className={`${styles.badge} ${styles[`badge_${course.id}`]}`}
-							>
-								🔥 {course.badge}
 							</div>
 						</div>
 
@@ -467,9 +467,9 @@ const EnhancedCourseCards = () => {
 							{/* --- ДЕТАЛІ (з'являються при наведенні/скролі) --- */}
 							<div
 								className={`${styles.details} ${
-									isExpanded ? styles.detailsVisible : ''
+									isExpanded || isMobile ? styles.detailsVisible : ''
 								}`}
-								aria-hidden={!isExpanded}
+								aria-hidden={!isExpanded && !isMobile}
 							>
 								<p className={styles.description}>{course.description}</p>
 								<div className={styles.featuresGrid}>
@@ -508,6 +508,15 @@ const EnhancedCourseCards = () => {
 									<span>Почати навчання</span>
 									<ArrowRight className={styles.buttonArrow} />
 								</Link>
+								{/* Кнопка "Перейти" для мобільної версії */}
+								<Link
+									href={course.href}
+									className={styles.mobileGoButton}
+									onClick={e => e.stopPropagation()}
+								>
+									<span>Перейти</span>
+									<ArrowRight className={styles.buttonArrow} />
+								</Link>
 							</div>
 						</div>
 
@@ -522,6 +531,7 @@ const EnhancedCourseCards = () => {
 					</div>
 				)
 			})}
+			</div>
 		</div>
 	)
 }
