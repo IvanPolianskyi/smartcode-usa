@@ -487,7 +487,6 @@ functools допомагає писати більш ефективний та �
 Статистика кешу: CacheInfo(hits=..., misses=...)`,
     examples: [
       {
-        input: "numbers = [1, 2, 3]",
         output: `Квадрати: [1, 4, 9]
 Куби: [1, 8, 27]`,
         explanation: "Використовуємо lru_cache для кешування та partial для створення спеціалізованих функцій."
@@ -505,13 +504,12 @@ square = partial(power, exponent=2)
 cube = partial(power, exponent=3)
 
 # Обчислюємо квадрати та куби
-numbers = list(range(1, 11))
+numbers = [1, 2, 3]
 squares = [square(n) for n in numbers]
 cubes = [cube(n) for n in numbers]
 
 print(f'Квадрати: {squares}')
-print(f'Куби: {cubes}')
-print(f'Статистика кешу: {power.cache_info()}')`,
+print(f'Куби: {cubes}')`,
       explanation: "Використовуємо lru_cache для кешування результатів power та partial для створення square та cube."
     },
     hints: [

@@ -1,178 +1,597 @@
 /**
- * 00 Overview Of Working With Images
+ * Lesson 12-3: Практика: автоматизація email
  * Full educational content
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_12_3 = {
-  lessonId: "lesson-10-5",
+  lessonId: "lesson-12-3",
   moduleId: "module-12",
-  order: 1,
-  title: "00 Overview Of Working With Images",
+  order: 3,
+  title: "Практика: автоматизація email",
   
   learningObjectives: [
-    "Вивчити основні концепції",
-    "Застосувати знання на практиці",
-    "Розв'язати практичні задачі"
+    "Створити скрипт для відправки email",
+    "Автоматизувати відправку звітів",
+    "Створити систему сповіщень",
+    "Практикуватися у роботі з email"
   ],
   
-  estimatedTime: 90,
-  prerequisites: [],
+  estimatedTime: 120,
+  prerequisites: ["lesson-12-2"],
   
   videoUrl: "",
   
   theory: {
     sections: [
       {
-        title: "Overview of Working with Images",
-        content: `By leveraging the power of some common libraries that you can install, such as PILLOW, Python gains the ability to work with and manipulate images for simple tasks. You can install Pillow by running:
+        title: "Вступ до автоматизації email",
+        content: `Автоматизація email дозволяє:
+- Відправляти звіти автоматично
+- Створювати системи сповіщень
+- Надсилати масові розсилки
+- Інтегрувати email в програми
 
-    pip install pillow
+**Типові сценарії:**
+
+- Щоденні/щотижневі звіти
+- Сповіщення про помилки
+- Вітальні листи для нових користувачів
+- Нагадування про події
+- Автоматичні відповіді
+
+**Інструменти:**
+
+- smtplib — відправка email
+- schedule — планування задач
+- threading — асинхронна відправка
+- logging — логування подій`
+      },
+      {
+        title: "Створення класу для відправки email",
+        content: `**Базовий клас EmailSender:**
+
+\`\`\`python
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+import os
+
+class EmailSender:
+    def __init__(self, smtp_server, smtp_port, email_address, password):
+        self.smtp_server = smtp_server
+        self.smtp_port = smtp_port
+        self.email_address = email_address
+        self.password = password
     
-In case of any issues, you can refer to their [official documentation](http://pillow.readthedocs.io/en/3.4.x/installation.html) on installation. But for most computers, the simple pip install method should work.
-
----
-____
-**Note: When working with images in the jupyter notebook, you may get the following warning:**
-
-    IOPub data rate exceeded.
-    The notebook server will temporarily stop sending output
-    to the client in order to avoid crashing it.
-    To change this limit, set the config variable
-    \`--NotebookApp.iopub_data_rate_limit\`.
+    def send_text_email(self, recipient, subject, body):
+        """Відправити простий текстовий email"""
+        try:
+            msg = MIMEText(body)
+            msg['From'] = self.email_address
+            msg['To'] = recipient
+            msg['Subject'] = subject
+            
+            server = smtplib.SMTP(self.smtp_server, self.smtp_port)
+            server.starttls()
+            server.login(self.email_address, self.password)
+            server.send_message(msg)
+            server.quit()
+            return True, "Email відправлено"
+        except Exception as e:
+            return False, str(e)
     
-**If you get this warning, try stopping the notebook at the command line, then restarting it with:**
-
-    jupyter notebook --NotebookApp.iopub_data_rate_limit=1.0e10
+    def send_html_email(self, recipient, subject, html_body, text_body=None):
+        """Відправити HTML email"""
+        try:
+            msg = MIMEMultipart('alternative')
+            msg['From'] = self.email_address
+            msg['To'] = recipient
+            msg['Subject'] = subject
+            
+            if text_body:
+                msg.attach(MIMEText(text_body, 'plain'))
+            msg.attach(MIMEText(html_body, 'html'))
+            
+            server = smtplib.SMTP(self.smtp_server, self.smtp_port)
+            server.starttls()
+            server.login(self.email_address, self.password)
+            server.send_message(msg)
+            server.quit()
+            return True, "Email відправлено"
+        except Exception as e:
+            return False, str(e)
     
-** At the command line. Basically this adds a \"flag\" that the limit should be raised during this session of jupyter notebook that you are running.**
+    def send_with_attachment(self, recipient, subject, body, file_path):
+        """Відправити email з вкладенням"""
+        try:
+            msg = MIMEMultipart()
+            msg['From'] = self.email_address
+            msg['To'] = recipient
+            msg['Subject'] = subject
+            
+            msg.attach(MIMEText(body, 'plain'))
+            
+            if os.path.exists(file_path):
+                with open(file_path, 'rb') as f:
+                    part = MIMEBase('application', 'octet-stream')
+                    part.set_payload(f.read())
+                    encoders.encode_base64(part)
+                    part.add_header(
+                        'Content-Disposition',
+                        f'attachment; filename= {os.path.basename(file_path)}'
+                    )
+                    msg.attach(part)
+            
+            server = smtplib.SMTP(self.smtp_server, self.smtp_port)
+            server.starttls()
+            server.login(self.email_address, self.password)
+            server.send_message(msg)
+            server.quit()
+            return True, "Email відправлено"
+        except Exception as e:
+            return False, str(e)
 
-----`
+# Використання
+sender = EmailSender(
+    smtp_server='smtp.gmail.com',
+    smtp_port=587,
+    email_address='your_email@gmail.com',
+    password='your_app_password'
+)
+
+success, message = sender.send_text_email(
+    recipient='recipient@example.com',
+    subject='Тест',
+    body='Тіло листа'
+)
+\`\`\``
       },
       {
-        title: "Working with Pillow Library",
-        content: `## Opening Images
+        title: "Автоматизація звітів",
+        content: `**Щоденний звіт:**
 
-You can use Pillow to open image files. For a jupyter notebook, to show the file simply type the variable name holding the image. For other IDEs , the image variable will have a [.show() method.](https://stackoverflow.com/questions/28139637/how-can-i-display-an-image-using-pillow)`
+\`\`\`python
+import schedule
+import time
+from datetime import datetime
+
+class ReportSender:
+    def __init__(self, email_sender):
+        self.email_sender = email_sender
+    
+    def generate_daily_report(self):
+        """Генерує щоденний звіт"""
+        report_date = datetime.now().strftime("%Y-%m-%d")
+        
+        # Симуляція даних звіту
+        report_data = {
+            'date': report_date,
+            'sales': 15000,
+            'orders': 45,
+            'customers': 23
+        }
+        
+        html_content = f"""
+        <html>
+        <body>
+            <h2>Щоденний звіт за {report_date}</h2>
+            <table border="1" cellpadding="10">
+                <tr>
+                    <th>Показник</th>
+                    <th>Значення</th>
+                </tr>
+                <tr>
+                    <td>Продажі</td>
+                    <td>{report_data['sales']} грн</td>
+                </tr>
+                <tr>
+                    <td>Замовлення</td>
+                    <td>{report_data['orders']}</td>
+                </tr>
+                <tr>
+                    <td>Клієнти</td>
+                    <td>{report_data['customers']}</td>
+                </tr>
+            </table>
+        </body>
+        </html>
+        """
+        
+        return html_content
+    
+    def send_daily_report(self):
+        """Відправляє щоденний звіт"""
+        html_content = self.generate_daily_report()
+        subject = f"Щоденний звіт - {datetime.now().strftime('%Y-%m-%d')}"
+        
+        success, message = self.email_sender.send_html_email(
+            recipient='manager@example.com',
+            subject=subject,
+            html_body=html_content
+        )
+        
+        if success:
+            print(f"Звіт відправлено: {message}")
+        else:
+            print(f"Помилка: {message}")
+
+# Налаштування автоматичної відправки
+email_sender = EmailSender(
+    smtp_server='smtp.gmail.com',
+    smtp_port=587,
+    email_address='your_email@gmail.com',
+    password='your_app_password'
+)
+
+report_sender = ReportSender(email_sender)
+
+# Відправляти щодня о 9:00
+schedule.every().day.at("09:00").do(report_sender.send_daily_report)
+
+# Запуск планувальника
+while True:
+    schedule.run_pending()
+    time.sleep(60)
+\`\`\``
       },
       {
-        title: "Cropping Images",
-        content: `To crop images (that is grab a sub section) you can use the crop() method on the image object. The crop() method returns a rectangular region from this image. The box is a 4-tuple defining the left, upper, right, and lower pixel coordinate.
+        title: "Система сповіщень про помилки",
+        content: `**Автоматичні сповіщення:**
 
-Note! If you take a look at the documentation string, it says the tuple you pass in is defined as (x,y,w,h). These variables can be a bit decieving. Its not really a height or width that is being passed, but instead the end coordinates of your width and height.
+\`\`\`python
+import logging
+from datetime import datetime
 
-All the coordinates of box (x, y, w, h) are measured from the top left corner of the image. Again, all 4 of these values are coordinates!
+class ErrorNotifier:
+    def __init__(self, email_sender, admin_email):
+        self.email_sender = email_sender
+        self.admin_email = admin_email
+        self.error_count = 0
+    
+    def notify_error(self, error_message, error_type="ERROR", traceback=None):
+        """Відправити сповіщення про помилку"""
+        self.error_count += 1
+        
+        html_content = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif;">
+            <div style="background-color: #ff4444; color: white; padding: 20px;">
+                <h2>🚨 Сповіщення про помилку</h2>
+            </div>
+            <div style="padding: 20px;">
+                <p><strong>Тип:</strong> {error_type}</p>
+                <p><strong>Час:</strong> {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
+                <p><strong>Повідомлення:</strong></p>
+                <pre style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">
+{error_message}
+                </pre>
+                {f'<pre style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">{traceback}</pre>' if traceback else ''}
+            </div>
+        </body>
+        </html>
+        """
+        
+        subject = f"🚨 {error_type}: {error_message[:50]}"
+        
+        success, message = self.email_sender.send_html_email(
+            recipient=self.admin_email,
+            subject=subject,
+            html_body=html_content
+        )
+        
+        if success:
+            logging.info(f"Сповіщення про помилку відправлено")
+        else:
+            logging.error(f"Не вдалося відправити сповіщення: {message}")
+    
+    def notify_critical_error(self, error_message, traceback=None):
+        """Відправити критичне сповіщення"""
+        self.notify_error(error_message, "CRITICAL", traceback)
 
-For the mac image this isn't a very useful demonstration. Let's use another image instead:
+# Використання
+email_sender = EmailSender(
+    smtp_server='smtp.gmail.com',
+    smtp_port=587,
+    email_address='your_email@gmail.com',
+    password='your_app_password'
+)
 
-Now let's attempt to grab some of the top pencils from the corner
+notifier = ErrorNotifier(
+    email_sender=email_sender,
+    admin_email='admin@example.com'
+)
 
-Now let's try the pencils from the bottom
-
-Now let's go back to the mac photo and see if we can only grab the computer itself:`
+# Приклад використання
+try:
+    # Ваш код, який може викликати помилку
+    result = 1 / 0
+except Exception as e:
+    import traceback
+    notifier.notify_error(
+        error_message=str(e),
+        error_type="ERROR",
+        traceback=traceback.format_exc()
+    )
+\`\`\``
       },
       {
-        title: "Copying and Pasting Images",
-        content: `We can create copies with the copy() method and paste images on top of others with the paste() method.`
+        title: "Масові розсилки",
+        content: `**Система масових розсилок:**
+
+\`\`\`python
+import time
+from threading import Thread
+
+class MassMailer:
+    def __init__(self, email_sender):
+        self.email_sender = email_sender
+        self.sent_count = 0
+        self.failed_count = 0
+    
+    def send_to_list(self, recipients, subject, html_body, text_body=None, delay=1):
+        """Відправити email списку одержувачів"""
+        results = []
+        
+        for recipient in recipients:
+            try:
+                success, message = self.email_sender.send_html_email(
+                    recipient=recipient,
+                    subject=subject,
+                    html_body=html_body,
+                    text_body=text_body
+                )
+                
+                if success:
+                    self.sent_count += 1
+                    results.append({'recipient': recipient, 'status': 'sent'})
+                else:
+                    self.failed_count += 1
+                    results.append({'recipient': recipient, 'status': 'failed', 'error': message})
+                
+                # Затримка між відправками (щоб не перевантажити сервер)
+                time.sleep(delay)
+                
+            except Exception as e:
+                self.failed_count += 1
+                results.append({'recipient': recipient, 'status': 'error', 'error': str(e)})
+        
+        return results
+    
+    def send_async(self, recipients, subject, html_body, text_body=None):
+        """Асинхронна відправка"""
+        thread = Thread(
+            target=self.send_to_list,
+            args=(recipients, subject, html_body, text_body)
+        )
+        thread.start()
+        return thread
+
+# Використання
+email_sender = EmailSender(
+    smtp_server='smtp.gmail.com',
+    smtp_port=587,
+    email_address='your_email@gmail.com',
+    password='your_app_password'
+)
+
+mailer = MassMailer(email_sender)
+
+recipients = [
+    'user1@example.com',
+    'user2@example.com',
+    'user3@example.com'
+]
+
+html_content = """
+<html>
+<body>
+    <h1>Спеціальна пропозиція!</h1>
+    <p>Ми маємо для вас особливу пропозицію.</p>
+</body>
+</html>
+"""
+
+results = mailer.send_to_list(
+    recipients=recipients,
+    subject='Спеціальна пропозиція',
+    html_body=html_content,
+    delay=2  # 2 секунди між відправками
+)
+
+print(f"Відправлено: {mailer.sent_count}")
+print(f"Помилок: {mailer.failed_count}")
+\`\`\``
       },
       {
-        title: "Resizing",
-        content: `You can use the resize() method to resize an image
+        title: "Інтеграція з програмами",
+        content: `**Декоратор для автоматичних сповіщень:**
 
-Can also stretch and squeeze`
+\`\`\`python
+from functools import wraps
+
+class EmailDecorator:
+    def __init__(self, email_sender, admin_email):
+        self.email_sender = email_sender
+        self.admin_email = admin_email
+    
+    def notify_on_error(self, func):
+        """Декоратор для сповіщень про помилки"""
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            try:
+                return func(*args, **kwargs)
+            except Exception as e:
+                import traceback
+                error_msg = f"Помилка в функції {func.__name__}: {str(e)}"
+                
+                html_content = f"""
+                <html>
+                <body>
+                    <h2>Помилка в функції {func.__name__}</h2>
+                    <pre>{traceback.format_exc()}</pre>
+                </body>
+                </html>
+                """
+                
+                self.email_sender.send_html_email(
+                    recipient=self.admin_email,
+                    subject=f"Помилка: {func.__name__}",
+                    html_body=html_content
+                )
+                raise  # Повторно викликаємо помилку
+        
+        return wrapper
+
+# Використання
+email_sender = EmailSender(
+    smtp_server='smtp.gmail.com',
+    smtp_port=587,
+    email_address='your_email@gmail.com',
+    password='your_app_password'
+)
+
+decorator = EmailDecorator(email_sender, 'admin@example.com')
+
+@decorator.notify_on_error
+def critical_function():
+    # Ваша функція
+    result = 1 / 0  # Це викличе помилку
+    return result
+
+# При виклику функції, якщо виникне помилка, адміністратор отримає email
+try:
+    critical_function()
+except:
+    pass
+\`\`\``
       },
       {
-        title: "Rotating Images",
-        content: `You can rotate images by specifying the amount of degrees to rotate on the rotate() method. The original dimensions will be kept and \"filled\" in with black. You can optionally pass in the expand parameter to fill the new rotated image to the old dimensions.
+        title: "Підсумок",
+        content: `На цьому уроці ми створили систему автоматизації email:
 
-Notice what happens when we rotate by 120.`
-      },
-      {
-        title: "Transparency",
-        content: `We can add an alpha value (RGBA stands for RED,Green,Blue, Alpha) where values can go from 0 to 255. If Alpha is 0 the image is completely transparent, if it is 255 then its completely opaque.
+**Що ми зробили:**
 
-You can create your own color here to check for possible values: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Colors/Color_picker_tool
+1. **EmailSender клас** — базова функціональність для відправки
+2. **ReportSender** — автоматичні звіти
+3. **ErrorNotifier** — сповіщення про помилки
+4. **MassMailer** — масові розсилки
+5. **EmailDecorator** — інтеграція з програмами
 
-We can adjust image alpha values with the putalpha() method:
+**Ключові концепції:**
 
-Transparency and masking can be much more complex than what we've shown here, if you find yourself needing something more, check out the documentation: https://pillow.readthedocs.io/en/stable/`
-      },
-      {
-        title: "Saving Images",
-        content: `Let's save this updated \"blue\" image as 'purple.png' in this folder.
+- Класова структура для повторного використання
+- Планування задач з schedule
+- Асинхронна відправка з threading
+- Декоратори для інтеграції
+- Логування подій
 
-Let's check to make sure that worked:
+**Важливо:**
 
-Great job!`
+- Дотримуйтеся обмежень SMTP серверів
+- Додавайте затримки між відправками
+- Обробляйте помилки
+- Логуйте всі операції
+- Використовуйте BCC для масових розсилок
+
+**Наступні кроки:**
+
+- Інтегруйте email в ваші проекти
+- Створіть власні системи сповіщень
+- Автоматизуйте рутинні задачі
+- Розширте функціональність
+
+Email автоматизація — потужний інструмент для продуктивності!`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад коду",
-      code: `from PIL import Image`,
-      explanation: "Приклад коду з курсу"
+      title: "Приклад 1: Базовий EmailSender",
+      code: `class EmailSender:
+    def __init__(self, smtp_server, email_address, password):
+        self.smtp_server = smtp_server
+        self.email_address = email_address
+        self.password = password
+    
+    def send_text_email(self, recipient, subject, body):
+        msg = MIMEText(body)
+        msg['From'] = self.email_address
+        msg['To'] = recipient
+        msg['Subject'] = subject
+        # Відправка...`,
+      explanation: "Базовий клас для відправки email з повторним використанням."
     },
     {
-      title: "Приклад коду",
-      code: `mac = Image.open('example.jpg')`,
-      explanation: "Приклад коду з курсу"
+      title: "Приклад 2: Автоматичні звіти",
+      code: `import schedule
+
+def send_daily_report():
+    # Генеруємо та відправляємо звіт
+    pass
+
+schedule.every().day.at("09:00").do(send_daily_report)
+
+while True:
+    schedule.run_pending()
+    time.sleep(60)`,
+      explanation: "Планування автоматичної відправки звітів."
     },
     {
-      title: "Note this is a specialized file type from PIL (pillow)",
-      code: `# Note this is a specialized file type from PIL (pillow)
-type(mac)`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Only for jupyter notebook , use mac.show() for other IDEs",
-      code: `# Only for jupyter notebook , use mac.show() for other IDEs 
-mac`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "(width, height)",
-      code: `# (width, height)
-mac.size`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `mac.filename`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `mac.format_description`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `mac.crop((0,0,100,100))`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `pencils = Image.open(\"pencils.jpg\")`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `pencils`,
-      explanation: "Приклад коду з курсу"
+      title: "Приклад 3: Сповіщення про помилки",
+      code: `try:
+    # Ваш код
+    result = risky_operation()
+except Exception as e:
+    notifier.notify_error(
+        error_message=str(e),
+        error_type="ERROR"
+    )`,
+      explanation: "Автоматичні сповіщення про помилки в програмі."
     }
   ],
   
-  commonMistakes: [],
+  commonMistakes: [
+    {
+      mistake: "Не додавати затримки між відправками",
+      explanation: "SMTP сервери можуть заблокувати занадто швидкі відправки.",
+      correctApproach: "Додавайте time.sleep() між відправками для масових розсилок."
+    },
+    {
+      mistake: "Не обробляти помилки в автоматизації",
+      explanation: "Помилки можуть зупинити всю систему автоматизації.",
+      correctApproach: "Використовуйте try/except та логування для всіх операцій."
+    },
+    {
+      mistake: "Не логувати операції",
+      explanation: "Без логування важко відстежити проблеми.",
+      correctApproach: "Використовуйте logging модуль для запису всіх операцій."
+    },
+    {
+      mistake: "Використовувати CC замість BCC для масових розсилок",
+      explanation: "CC показує всі адреси одержувачам, що порушує конфіденційність.",
+      correctApproach: "Використовуйте BCC для масових розсилок, щоб приховати адреси."
+    }
+  ],
   
-  summary: "Підсумок уроку",
+  summary: `На цьому уроці ми створили систему автоматизації email:
+
+1. **EmailSender клас** — базова функціональність
+2. **Автоматичні звіти** — планування з schedule
+3. **Сповіщення про помилки** — інтеграція з програмами
+4. **Масові розсилки** — ефективна відправка
+5. **Декоратори** — автоматизація сповіщень
+
+Автоматизація email — ключ до продуктивності!`,
   
   practiceTask: {
-    title: "Практична задача",
-    description: "Опишіть задачу",
-    problemStatement: "Умова задачі",
+    title: "Практичне завдання",
+    description: "Для цього уроку практичного завдання немає. Ви можете перейти до тесту.",
+    problemStatement: "Для цього уроку практичного завдання немає. Ви можете перейти до тесту.",
     inputFormat: "",
     outputFormat: "",
     examples: [],
@@ -185,8 +604,69 @@ mac.size`,
   },
   
   quiz: {
-    questions: [],
-    timeLimit: 10,
+    questions: [
+      {
+        id: "q1",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Чому важливо додавати затримки між відправками email?",
+        options: [
+          "Щоб не перевантажити SMTP сервер та уникнути блокування",
+          "Щоб зберегти пам'ять",
+          "Щоб прискорити відправку",
+          "Це не потрібно"
+        ],
+        correctAnswer: 0,
+        explanation: "SMTP сервери мають обмеження на швидкість відправки. Затримки допомагають уникнути блокування."
+      },
+      {
+        id: "q2",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Яка бібліотека використовується для планування задач?",
+        options: [
+          "schedule",
+          "time",
+          "datetime",
+          "threading"
+        ],
+        correctAnswer: 0,
+        explanation: "Бібліотека schedule дозволяє планувати виконання функцій за розкладом."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що таке BCC у контексті масових розсилок?",
+        options: [
+          "Прихована копія - одержувачі не бачать адреси інших",
+          "Копія - всі бачать адреси",
+          "Тема листа",
+          "Вкладення"
+        ],
+        correctAnswer: 0,
+        explanation: "BCC (Blind Carbon Copy) приховує адреси одержувачів, що важливо для конфіденційності в масових розсилках."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Як інтегрувати email сповіщення в існуючі функції?",
+        options: [
+          "Використати декоратори",
+          "Додати в код функції",
+          "Використати глобальні змінні",
+          "Це неможливо"
+        ],
+        correctAnswer: 0,
+        explanation: "Декоратори дозволяють додавати функціональність (наприклад, сповіщення про помилки) без зміни коду функції."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "Для масових розсилок завжди слід використовувати CC замість BCC.",
+        options: ["True", "False"],
+        correctAnswer: 1,
+        explanation: "False. Для масових розсилок слід використовувати BCC, щоб приховати адреси одержувачів та забезпечити конфіденційність."
+      }
+    ],
+    timeLimit: 20,
     passingScore: 70
   }
 }

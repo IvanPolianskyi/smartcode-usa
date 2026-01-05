@@ -904,14 +904,13 @@ export const pythonCurriculum = {
         {
           lessonId: "lesson-09-2",
           order: 2,
-          title: "Парсинг HTML: BeautifulSoup",
+          title: "Додаткові інструменти: BeautifulSoup",
           learningObjectives: [
-            "Встановити BeautifulSoup",
-            "Парсити HTML структуру",
-            "Знаходити елементи за тегами, класами, id",
-            "Витягувати дані з HTML"
+            "Дізнатися про BeautifulSoup",
+            "Зрозуміти, коли використовувати BeautifulSoup",
+            "Побачити базові приклади використання"
           ],
-          estimatedTime: 90,
+          estimatedTime: 30,
           prerequisites: ["lesson-09-1"]
         },
         {
@@ -925,7 +924,7 @@ export const pythonCurriculum = {
             "Дотримуватися правил robots.txt"
           ],
           estimatedTime: 120,
-          prerequisites: ["lesson-09-2"]
+          prerequisites: ["lesson-09-1"]
         },
         {
           lessonId: "lesson-09-4",
@@ -1012,14 +1011,12 @@ export const pythonCurriculum = {
     {
       moduleId: "module-11",
       order: 11,
-      title: "11 - PDF та електронні таблиці",
-      description: "Робота з PDF файлами та електронними таблицями (Excel, CSV)",
-      duration: { weeks: 2, lessons: 4 },
+      title: "11 - Робота з PDF",
+      description: "Робота з PDF файлами",
+      duration: { weeks: 1, lessons: 1 },
       learningOutcomes: [
         "Читати та створювати PDF файли",
-        "Працювати з електронними таблицями",
-        "Обробляти структуровані дані",
-        "Генерувати звіти"
+        "Маніпулювати PDF документами"
       ],
       lessons: [
         {
@@ -1034,45 +1031,6 @@ export const pythonCurriculum = {
           ],
           estimatedTime: 90,
           prerequisites: ["lesson-10-4"]
-        },
-        {
-          lessonId: "lesson-11-2",
-          order: 2,
-          title: "Робота з Excel: openpyxl",
-          learningObjectives: [
-            "Встановити openpyxl",
-            "Читати Excel файли",
-            "Записувати дані в Excel",
-            "Маніпулювати листами та комірками"
-          ],
-          estimatedTime: 90,
-          prerequisites: ["lesson-11-1"]
-        },
-        {
-          lessonId: "lesson-11-3",
-          order: 3,
-          title: "Робота з CSV та pandas",
-          learningObjectives: [
-            "Читати та записувати CSV файли",
-            "Використовувати pandas для таблиць",
-            "Обробляти структуровані дані",
-            "Аналізувати дані"
-          ],
-          estimatedTime: 90,
-          prerequisites: ["lesson-11-2"]
-        },
-        {
-          lessonId: "lesson-11-4",
-          order: 4,
-          title: "Практика: генерація звітів",
-          learningObjectives: [
-            "Створити скрипт для генерації звітів",
-            "Обробляти дані з різних джерел",
-            "Генерувати PDF та Excel звіти",
-            "Створити корисний інструмент"
-          ],
-          estimatedTime: 120,
-          prerequisites: ["lesson-11-3"]
         }
       ]
     },
@@ -1100,7 +1058,7 @@ export const pythonCurriculum = {
             "Налаштувати SMTP сервер"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-11-4"]
+          prerequisites: ["lesson-11-1"]
         },
         {
           lessonId: "lesson-12-2",

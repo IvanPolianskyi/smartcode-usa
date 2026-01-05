@@ -495,7 +495,6 @@ JSON — стандартний формат для обміну даними т
 3. Написати тести (виконано)`,
     examples: [
       {
-        input: "tasks = [{'id': 1, 'title': 'Завдання 1', 'completed': False}]",
         output: `Завдання збережено
 Завантажено 1 завдання:
 1. Завдання 1 (не виконано)`,
@@ -508,7 +507,7 @@ JSON — стандартний формат для обміну даними т
 def save_tasks(tasks, filename='tasks.json'):
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(tasks, f, indent=2, ensure_ascii=False)
-    print(f'Завдання збережено у {filename}')
+    print('Завдання збережено')
 
 def load_tasks(filename='tasks.json'):
     try:
@@ -519,11 +518,7 @@ def load_tasks(filename='tasks.json'):
         return []
 
 # Створюємо завдання
-tasks = [
-    {'id': 1, 'title': 'Вивчити JSON', 'completed': False},
-    {'id': 2, 'title': 'Створити проект', 'completed': False},
-    {'id': 3, 'title': 'Написати тести', 'completed': True}
-]
+tasks = [{'id': 1, 'title': 'Завдання 1', 'completed': False}]
 
 # Зберігаємо
 save_tasks(tasks)

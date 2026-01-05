@@ -67,10 +67,18 @@ import { lesson_08_3 } from '@/lib/lessonContent/lesson-08-3'
 import { lesson_08_4 } from '@/lib/lessonContent/lesson-08-4'
 import { lesson_08_5 } from '@/lib/lessonContent/lesson-08-5'
 import { lesson_08_6 } from '@/lib/lessonContent/lesson-08-6'
+import { lesson_09_1 } from '@/lib/lessonContent/lesson-09-1'
+import { lesson_09_2 } from '@/lib/lessonContent/lesson-09-2'
 import { lesson_09_3 } from '@/lib/lessonContent/lesson-09-3'
 import { lesson_09_4 } from '@/lib/lessonContent/lesson-09-4'
-import { lesson_09_5 } from '@/lib/lessonContent/lesson-09-5'
-import { lesson_09_6 } from '@/lib/lessonContent/lesson-09-6'
+import { lesson_10_1 } from '@/lib/lessonContent/lesson-10-1'
+import { lesson_10_2 } from '@/lib/lessonContent/lesson-10-2'
+import { lesson_10_3 } from '@/lib/lessonContent/lesson-10-3'
+import { lesson_10_4 } from '@/lib/lessonContent/lesson-10-4'
+import { lesson_11_1 } from '@/lib/lessonContent/lesson-11-1'
+import { lesson_12_1 } from '@/lib/lessonContent/lesson-12-1'
+import { lesson_12_2 } from '@/lib/lessonContent/lesson-12-2'
+import { lesson_12_3 } from '@/lib/lessonContent/lesson-12-3'
 import { lesson_12_5 } from '@/lib/lessonContent/lesson-12-5'
 import { lesson_12_6 } from '@/lib/lessonContent/lesson-12-6'
 import { lesson_14_4 } from '@/lib/lessonContent/lesson-14-4'
@@ -136,10 +144,18 @@ const lessonContentMap = {
   "lesson-08-4": lesson_08_4,
   "lesson-08-5": lesson_08_5,
   "lesson-08-6": lesson_08_6,
+  "lesson-09-1": lesson_09_1,
+  "lesson-09-2": lesson_09_2,
   "lesson-09-3": lesson_09_3,
   "lesson-09-4": lesson_09_4,
-  "lesson-09-5": lesson_09_5,
-  "lesson-09-6": lesson_09_6,
+  "lesson-10-1": lesson_10_1,
+  "lesson-10-2": lesson_10_2,
+  "lesson-10-3": lesson_10_3,
+  "lesson-10-4": lesson_10_4,
+  "lesson-11-1": lesson_11_1,
+  "lesson-12-1": lesson_12_1,
+  "lesson-12-2": lesson_12_2,
+  "lesson-12-3": lesson_12_3,
   "lesson-12-5": lesson_12_5,
   "lesson-12-6": lesson_12_6,
   "lesson-14-4": lesson_14_4,
@@ -805,7 +821,25 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     }
 
     const normalizedCode = normalizeCode(userCode)
-    const hasDangerousCode = dangerousPatterns.some(pattern => pattern.test(normalizedCode))
+    
+    // Get moduleId to check if requests should be allowed
+    const moduleId = fullLesson?.moduleId || curriculumLesson?.moduleId
+    
+    // Filter dangerous patterns - allow requests and bs4 for module-09, PIL for module-10
+    let filteredPatterns = dangerousPatterns
+    if (moduleId === 'module-09') {
+      // Remove requests and bs4 from blocked patterns for module-09
+      filteredPatterns = dangerousPatterns.filter(pattern => {
+        const patternStr = pattern.toString().toLowerCase()
+        return !patternStr.includes('requests')
+      })
+    } else if (moduleId === 'module-10') {
+      // Allow PIL/Pillow for module-10 - no specific blocking needed as PIL is not in dangerous patterns
+      // But we need to allow subprocess for installation (handled on server side)
+      filteredPatterns = dangerousPatterns
+    }
+    
+    const hasDangerousCode = filteredPatterns.some(pattern => pattern.test(normalizedCode))
 
     if (hasDangerousCode) {
       setCodeExecution({
@@ -847,6 +881,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         }
       }
 
+      // moduleId is already declared above, use it here
       const response = await fetch('/api/code/execute', {
         method: 'POST',
         headers: {
@@ -854,7 +889,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         },
         body: JSON.stringify({ 
           code: userCode,
-          input: inputData
+          input: inputData,
+          moduleId: moduleId
         })
       })
 
@@ -1597,7 +1633,13 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
               </>
             ) : (
               <div className={styles.noContent}>
-                <p>Практичне завдання для цього уроку ще не додано.</p>
+                <p>
+                  {(fullLesson?.moduleId === 'module-09' && fullLesson?.lessonId !== 'lesson-09-1') ||
+                   (fullLesson?.moduleId === 'module-10') ||
+                   (fullLesson?.moduleId === 'module-11')
+                    ? 'Для цього уроку практичного завдання немає. Ви можете перейти до тесту.'
+                    : 'Практичне завдання для цього уроку ще не додано.'}
+                </p>
               </div>
             )}
           </div>

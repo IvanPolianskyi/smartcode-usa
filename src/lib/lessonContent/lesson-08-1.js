@@ -523,7 +523,6 @@ print(dict(grouped))
 Одеса: {'Марія': 1}`,
     examples: [
       {
-        input: "votes = ['Іван', 'Марія', 'Іван']\nregions = ['Київ', 'Львів', 'Київ']",
         output: `Переможець: Іван (2 голоси)
 Статистика за регіонами:
 Київ: {'Іван': 2}
@@ -534,8 +533,8 @@ print(dict(grouped))
     solution: {
       code: `from collections import Counter, defaultdict
 
-votes = ['Іван', 'Марія', 'Іван', 'Петро', 'Марія', 'Іван']
-regions = ['Київ', 'Львів', 'Київ', 'Одеса', 'Львів', 'Київ']
+votes = ['Іван', 'Марія', 'Іван']
+regions = ['Київ', 'Львів', 'Київ']
 
 # Загальний підрахунок
 vote_counter = Counter(votes)

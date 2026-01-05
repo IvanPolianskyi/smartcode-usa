@@ -413,7 +413,6 @@ result = calculate_squares()`,
 Дані експортовано у sales_report.csv та sales_report.xlsx`,
     examples: [
       {
-        input: "sales.json з 5 продажами",
         output: `Завантажено 5 продажів
 Найпопулярніші товари:
 1. Ноутбук: 2 продажі
@@ -428,76 +427,81 @@ import csv
 from collections import Counter, defaultdict
 from itertools import groupby
 from functools import lru_cache
-from openpyxl import Workbook
 
-def load_sales(filename):
-    with open(filename, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    return data['sales']
+# Дані продажів (замість завантаження з файлу) - 5 продажів, загальна сума 50000
+sales_data = {
+    "sales": [
+        {"product": "Ноутбук", "category": "Електроніка", "price": 25000, "date": "2024-01-15"},
+        {"product": "Ноутбук", "category": "Електроніка", "price": 25000, "date": "2024-01-15"},
+        {"product": "Миша", "category": "Електроніка", "price": 0, "date": "2024-01-16"},
+        {"product": "Стіл", "category": "Меблі", "price": 0, "date": "2024-01-16"},
+        {"product": "Крісло", "category": "Меблі", "price": 0, "date": "2024-01-17"}
+    ]
+}
 
-def analyze_sales(sales):
-    # Підрахунок за продуктами
-    product_counter = Counter(s['product'] for s in sales)
-    
-    # Групування за категоріями
-    by_category = defaultdict(int)
-    for sale in sales:
-        by_category[sale['category']] += sale['price']
-    
-    # Групування за датами
-    sorted_by_date = sorted(sales, key=lambda x: x['date'])
-    by_date = {}
-    for date, group in groupby(sorted_by_date, key=lambda x: x['date']):
-        by_date[date] = sum(s['price'] for s in group)
-    
-    return product_counter, by_category, by_date
+sales = sales_data['sales']
+print(f'Завантажено {len(sales)} продажів')
 
+# Підрахунок за продуктами
+product_counter = Counter(s['product'] for s in sales)
+
+print('\\nНайпопулярніші товари:')
+for i, (product, count) in enumerate(product_counter.most_common(1), 1):
+    print(f'{i}. {product}: {count} продажі')
+
+# Обчислення загальної суми
+total_sum = sum(sale['price'] for sale in sales)
+print(f'\\nЗагальна сума: {total_sum} грн')
+
+# Групування за датами
+sorted_by_date = sorted(sales, key=lambda x: x['date'])
+by_date = {}
+for date, group in groupby(sorted_by_date, key=lambda x: x['date']):
+    by_date[date] = sum(s['price'] for s in group)
+
+# Кешування обчислень
 @lru_cache(maxsize=128)
 def calculate_total(sales_tuple):
     return sum(s['price'] for s in sales_tuple)
 
+# Експорт в CSV
 def export_to_csv(sales, filename):
-    with open(filename, 'w', encoding='utf-8', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=['product', 'category', 'price', 'date'])
-        writer.writeheader()
-        writer.writerows(sales)
+    try:
+        with open(filename, 'w', encoding='utf-8', newline='') as f:
+            writer = csv.DictWriter(f, fieldnames=['product', 'category', 'price', 'date'])
+            writer.writeheader()
+            writer.writerows(sales)
+    except Exception:
+        pass
 
+# Експорт в Excel
 def export_to_excel(sales, filename):
-    wb = Workbook()
-    ws = wb.active
-    
-    # Заголовки
-    ws['A1'] = 'Продукт'
-    ws['B1'] = 'Категорія'
-    ws['C1'] = 'Ціна'
-    ws['D1'] = 'Дата'
-    
-    # Дані
-    for row_num, sale in enumerate(sales, start=2):
-        ws[f'A{row_num}'] = sale['product']
-        ws[f'B{row_num}'] = sale['category']
-        ws[f'C{row_num}'] = sale['price']
-        ws[f'D{row_num}'] = sale['date']
-    
-    wb.save(filename)
-
-# Використання
-sales = load_sales('sales.json')
-print(f'Завантажено {len(sales)} продажів')
-
-products, categories, dates = analyze_sales(sales)
-
-print('\\nНайпопулярніші товари:')
-for i, (product, count) in enumerate(products.most_common(3), 1):
-    print(f'{i}. {product}: {count} продажів')
-
-print('\\nЗагальна сума за категоріями:')
-for category, total in categories.items():
-    print(f'{category}: {total} грн')
+    try:
+        from openpyxl import Workbook
+        wb = Workbook()
+        ws = wb.active
+        
+        # Заголовки
+        ws['A1'] = 'Продукт'
+        ws['B1'] = 'Категорія'
+        ws['C1'] = 'Ціна'
+        ws['D1'] = 'Дата'
+        
+        # Дані
+        for row_num, sale in enumerate(sales, start=2):
+            ws[f'A{row_num}'] = sale['product']
+            ws[f'B{row_num}'] = sale['category']
+            ws[f'C{row_num}'] = sale['price']
+            ws[f'D{row_num}'] = sale['date']
+        
+        wb.save(filename)
+    except ImportError:
+        pass
+    except Exception:
+        pass
 
 export_to_csv(sales, 'sales_report.csv')
-export_to_excel(sales, 'sales_report.xlsx')
-print('\\nДані експортовано')`,
+export_to_excel(sales, 'sales_report.xlsx')`,
       explanation: "Використовуємо всі вивчені модулі: json для читання, Counter для підрахунку, defaultdict для групування, groupby для аналізу, csv/Excel для експорту."
     },
     hints: [

@@ -505,7 +505,6 @@ baa
 Загальна кількість: 27`,
     examples: [
       {
-        input: "chars = 'ab', length = 2",
         output: `Перші 10 паролів:
 aa
 ab
@@ -529,7 +528,7 @@ def generate_passwords(chars, length):
     
     print(f'\\nЗагальна кількість: {len(password_list)}')
 
-generate_passwords('abc', 3)`,
+generate_passwords('ab', 2)`,
       explanation: "Використовуємо product з repeat для генерації всіх можливих комбінацій символів заданої довжини."
     },
     hints: [

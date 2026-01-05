@@ -6,7 +6,7 @@
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_13_2 = {
-  lessonId: "lesson-11-4",
+  lessonId: "lesson-13-2",
   moduleId: "module-13",
   order: 4,
   title: "Практика: обробка зображень",

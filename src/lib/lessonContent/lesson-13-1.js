@@ -6,7 +6,7 @@
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_13_1 = {
-  lessonId: "lesson-11-3",
+  lessonId: "lesson-13-1",
   moduleId: "module-13",
   order: 3,
   title: "Робота з кольорами та фільтрами",

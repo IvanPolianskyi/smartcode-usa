@@ -7,7 +7,7 @@ const MAX_OUTPUT_LENGTH = 10000 // Maximum output length
 export async function POST(request) {
   try {
     const body = await request.json().catch(() => ({}))
-    const { code, input } = body || {}
+    const { code, input, moduleId } = body || {}
 
     if (!code || typeof code !== 'string') {
       return NextResponse.json(
@@ -184,7 +184,34 @@ export async function POST(request) {
     }
 
     const normalizedCode = normalizeCode(code)
-    const hasDangerousCode = dangerousPatterns.some(pattern => pattern.test(normalizedCode))
+    
+    // Filter dangerous patterns - allow requests and bs4 for module-09, PIL for module-10
+    let filteredPatterns = dangerousPatterns
+    if (moduleId === 'module-09') {
+      // Remove requests, bs4, and safe subprocess usage from blocked patterns for module-09
+      filteredPatterns = dangerousPatterns.filter(pattern => {
+        const patternStr = pattern.toString()
+        // Allow requests and bs4 imports
+        if (patternStr.includes('requests') || patternStr.includes('bs4') || patternStr.includes('beautifulsoup')) {
+          return false
+        }
+        // Allow subprocess.check_call only for pip install (safe usage)
+        // This is handled in the wrapped code, not user code
+        return true
+      })
+    } else if (moduleId === 'module-10') {
+      // Remove PIL/Pillow imports from blocked patterns for module-10
+      filteredPatterns = dangerousPatterns.filter(pattern => {
+        const patternStr = pattern.toString()
+        // Allow PIL/Pillow imports
+        if (patternStr.includes('PIL') || patternStr.includes('Image')) {
+          return false
+        }
+        return true
+      })
+    }
+    
+    const hasDangerousCode = filteredPatterns.some(pattern => pattern.test(normalizedCode))
     
     if (hasDangerousCode) {
       return NextResponse.json(
@@ -211,6 +238,82 @@ export async function POST(request) {
       )
     }
 
+    // Install required packages for module-09 and module-10 if needed
+    let installPackages = ''
+    if (moduleId === 'module-09') {
+      installPackages = `
+# Install required packages for module-09
+import sys
+import subprocess
+
+def install_package(package_name, import_name=None):
+    """Safely install a Python package if not already installed"""
+    if import_name is None:
+        import_name = package_name
+    try:
+        __import__(import_name)
+    except ImportError:
+        try:
+            subprocess.check_call(
+                [sys.executable, '-m', 'pip', 'install', '--quiet', '--user', package_name],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            )
+            __import__(import_name)
+        except Exception:
+            pass  # Silently fail if installation doesn't work
+
+# Install required packages
+install_package('beautifulsoup4', 'bs4')
+install_package('requests')
+`
+    } else if (moduleId === 'module-10') {
+      installPackages = `
+# Install required packages for module-10
+import sys
+import subprocess
+
+def install_package(package_name, import_name=None):
+    """Safely install a Python package if not already installed"""
+    if import_name is None:
+        import_name = package_name
+    try:
+        __import__(import_name)
+        return True
+    except ImportError:
+        try:
+            subprocess.check_call(
+                [sys.executable, '-m', 'pip', 'install', '--quiet', '--user', package_name],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                timeout=60
+            )
+            # Try to import again after installation
+            try:
+                __import__(import_name)
+                return True
+            except ImportError:
+                # If still fails, try without --user flag
+                try:
+                    subprocess.check_call(
+                        [sys.executable, '-m', 'pip', 'install', '--quiet', package_name],
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                        timeout=60
+                    )
+                    __import__(import_name)
+                    return True
+                except Exception:
+                    return False
+        except Exception:
+            return False
+    return False
+
+# Install required packages
+install_package('Pillow', 'PIL')
+`
+    }
+
     // Wrap code to ensure UTF-8 encoding
     // Add encoding declaration and ensure stdout/stderr use UTF-8
     const wrappedCode = `# -*- coding: utf-8 -*-
@@ -223,6 +326,7 @@ if sys.stdout.encoding != 'utf-8':
 if sys.stderr.encoding != 'utf-8':
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
+${installPackages}
 ${code}`
 
     // Execute Python code
