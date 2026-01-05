@@ -1,5 +1,5 @@
 /**
- * Lesson 07-3: Створення власних винятків
+ * Lesson 07-3: Ітератори та протокол ітерації
  * Full educational content
  */
 
@@ -9,16 +9,16 @@ export const lesson_07_3 = {
   lessonId: "lesson-07-3",
   moduleId: "module-07",
   order: 3,
-  title: "Створення власних винятків",
+  title: "Ітератори та протокол ітерації",
   
   learningObjectives: [
-    "Створювати кастомні класи винятків",
-    "Піднімати винятки (raise)",
-    "Створювати ієрархію винятків",
-    "Документувати винятки"
+    "Розуміти протокол ітерації в Python",
+    "Створювати власні ітератори",
+    "Використовувати __iter__ та __next__",
+    "Розуміти різницю між ітерабельними об'єктами та ітераторами"
   ],
   
-  estimatedTime: 75,
+  estimatedTime: 90,
   prerequisites: ["lesson-07-2"],
   
   videoUrl: "",
@@ -26,608 +26,719 @@ export const lesson_07_3 = {
   theory: {
     sections: [
       {
-        title: "Навіщо створювати власні винятки?",
-        content: `Іноді вбудованих винятків недостатньо для опису конкретних помилок у вашій програмі.
+        title: "Що таке ітератори?",
+        content: `Ітератор — це об'єкт, який дозволяє перебирати елементи послідовності по одному.
 
-**Переваги власних винятків:**
-- ✅ Більш зрозумілі повідомлення про помилки
-- ✅ Краща організація коду
-- ✅ Легше обробляти специфічні помилки
-- ✅ Професійніший код
+**Ключові поняття:**
 
-**Приклад: Без власного винятку**
+1. **Ітерабельний об'єкт (Iterable)** — об'єкт, який можна перебрати (список, рядок, словник)
+2. **Ітератор (Iterator)** — об'єкт, який фактично виконує ітерацію
+3. **Протокол ітерації** — правила, які дозволяють об'єкту бути ітерабельним
+
+**Як це працює:**
+
 \`\`\`python
-def withdraw_money(balance, amount):
-    if amount > balance:
-        raise ValueError("Недостатньо коштів")  # Не дуже зрозуміло
+# Список — ітерабельний об'єкт
+numbers = [1, 2, 3]
+
+# Отримуємо ітератор
+iterator = iter(numbers)
+
+# Використовуємо ітератор
+print(next(iterator))  # 1
+print(next(iterator))  # 2
+print(next(iterator))  # 3
+print(next(iterator))  # StopIteration
 \`\`\`
 
-**Приклад: З власним винятком**
-\`\`\`python
-class InsufficientFundsError(Exception):
-    pass
+**Вбудовані ітерабельні об'єкти:**
 
-def withdraw_money(balance, amount):
-    if amount > balance:
-        raise InsufficientFundsError("Недостатньо коштів на рахунку")
-\`\`\`
+- Списки: \`[1, 2, 3]\`
+- Рядки: \`"hello"\`
+- Словники: \`{'a': 1, 'b': 2}\`
+- range: \`range(10)\`
+- Файли: \`open('file.txt')\`
 
-Тепер помилка більш зрозуміла та специфічна!`
+**Цикл for автоматично:**
+
+1. Викликає \`iter()\` для отримання ітератора
+2. Викликає \`next()\` для отримання значень
+3. Обробляє \`StopIteration\` для завершення`
       },
       {
-        title: "Створення простого кастомного винятку",
-        content: `**Базовий синтаксис:**
+        title: "Протокол ітерації",
+        content: `Протокол ітерації — це набір методів, які об'єкт має реалізувати, щоб бути ітерабельним.
+
+**Два методи протоколу:**
+
+1. **__iter__()** — повертає ітератор
+2. **__next__()** — повертає наступне значення або викликає StopIteration
+
+**Простий ітератор:**
 
 \`\`\`python
-class НазваВинятку(Exception):
-    pass
-\`\`\`
-
-**Приклад: Виняток для віку**
-
-\`\`\`python
-class InvalidAgeError(Exception):
-    pass
-
-def set_age(age):
-    if age < 0:
-        raise InvalidAgeError("Вік не може бути від'ємним")
-    if age > 150:
-        raise InvalidAgeError("Вік не може бути більше 150")
-    return age
-
-# Використання
-try:
-    set_age(-5)
-except InvalidAgeError as e:
-    print(f"Помилка: {e}")
-\`\`\`
-
-**Приклад: Виняток для валідації email**
-
-\`\`\`python
-class InvalidEmailError(Exception):
-    pass
-
-def validate_email(email):
-    if '@' not in email:
-        raise InvalidEmailError(f"Email '{email}' не містить символ @")
-    if '.' not in email.split('@')[1]:
-        raise InvalidEmailError(f"Email '{email}' має неправильний формат")
-    return True
-
-# Використання
-try:
-    validate_email("неправильний_email")
-except InvalidEmailError as e:
-    print(f"Помилка валідації: {e}")
-\`\`\``
-      },
-      {
-        title: "Підняття винятків (raise)",
-        content: `**raise** - ключове слово для підняття (виклику) винятку.
-
-**Синтаксис:**
-
-\`\`\`python
-raise НазваВинятку("Повідомлення про помилку")
-\`\`\`
-
-**Приклад: Підняття вбудованого винятку**
-
-\`\`\`python
-def divide(a, b):
-    if b == 0:
-        raise ZeroDivisionError("Ділення на нуль неможливе!")
-    return a / b
-
-divide(10, 0)  # Піднімає ZeroDivisionError
-\`\`\`
-
-**Приклад: Підняття кастомного винятку**
-
-\`\`\`python
-class NegativeNumberError(Exception):
-    pass
-
-def square_root(number):
-    if number < 0:
-        raise NegativeNumberError("Не можна обчислити квадратний корінь з від'ємного числа")
-    return number ** 0.5
-
-# Використання
-try:
-    result = square_root(-4)
-except NegativeNumberError as e:
-    print(f"Помилка: {e}")
-\`\`\`
-
-**Приклад: Підняття з повідомленням**
-
-\`\`\`python
-class ValidationError(Exception):
-    pass
-
-def validate_password(password):
-    if len(password) < 8:
-        raise ValidationError("Пароль має бути не менше 8 символів")
-    if not any(char.isdigit() for char in password):
-        raise ValidationError("Пароль має містити хоча б одну цифру")
-    return True
-
-try:
-    validate_password("weak")
-except ValidationError as e:
-    print(f"Помилка валідації: {e}")
-\`\`\``
-      },
-      {
-        title: "Кастомні винятки з атрибутами",
-        content: `Можна додати атрибути до кастомного винятку для зберігання додаткової інформації:
-
-**Приклад: Виняток з атрибутами**
-
-\`\`\`python
-class BankAccountError(Exception):
-    def __init__(self, message, balance, amount):
-        self.message = message
-        self.balance = balance
-        self.amount = amount
-        super().__init__(self.message)
-
-def withdraw(balance, amount):
-    if amount > balance:
-        raise BankAccountError(
-            "Недостатньо коштів",
-            balance,
-            amount
-        )
-    return balance - amount
-
-# Використання
-try:
-    withdraw(100, 200)
-except BankAccountError as e:
-    print(f"Помилка: {e.message}")
-    print(f"Баланс: {e.balance}")
-    print(f"Сума зняття: {e.amount}")
-\`\`\`
-
-**Приклад: Виняток з детальною інформацією**
-
-\`\`\`python
-class FileProcessingError(Exception):
-    def __init__(self, filename, operation, reason):
-        self.filename = filename
-        self.operation = operation
-        self.reason = reason
-        message = f"Помилка {operation} файлу {filename}: {reason}"
-        super().__init__(message)
-
-def process_file(filename):
-    try:
-        with open(filename, 'r') as f:
-            content = f.read()
-    except FileNotFoundError:
-        raise FileProcessingError(
-            filename,
-            "читання",
-            "файл не знайдено"
-        )
-    return content
-
-try:
-    process_file("неіснуючий.txt")
-except FileProcessingError as e:
-    print(f"Файл: {e.filename}")
-    print(f"Операція: {e.operation}")
-    print(f"Причина: {e.reason}")
-\`\`\``
-      },
-      {
-        title: "Ієрархія кастомних винятків",
-        content: `Можна створити ієрархію винятків для кращої організації:
-
-**Приклад: Ієрархія винятків для банківської системи**
-
-\`\`\`python
-# Базовий виняток
-class BankError(Exception):
-    """Базовий виняток для всіх банківських помилок"""
-    pass
-
-# Специфічні винятки
-class InsufficientFundsError(BankError):
-    """Недостатньо коштів на рахунку"""
-    pass
-
-class InvalidAccountError(BankError):
-    """Неправильний номер рахунку"""
-    pass
-
-class TransactionLimitError(BankError):
-    """Перевищено ліміт транзакції"""
-    pass
-
-# Використання
-def process_transaction(account, amount):
-    if not account.is_valid():
-        raise InvalidAccountError("Рахунок не існує")
-    if amount > account.balance:
-        raise InsufficientFundsError("Недостатньо коштів")
-    if amount > 10000:
-        raise TransactionLimitError("Перевищено ліміт транзакції")
-    return True
-
-# Обробка
-try:
-    process_transaction(account, 5000)
-except BankError as e:  # Обробить всі банківські помилки
-    print(f"Банківська помилка: {e}")
-except InsufficientFundsError as e:  # Конкретна обробка
-    print(f"Недостатньо коштів: {e}")
-\`\`\``
-      },
-      {
-        title: "Документування винятків",
-        content: `Важливо документувати винятки для інших розробників:
-
-**Приклад: Документований виняток**
-
-\`\`\`python
-class ValidationError(Exception):
-    """
-    Виняток для помилок валідації даних.
+class CountDown:
+    def __init__(self, start):
+        self.current = start
     
-    Attributes:
-        field: Назва поля, яке не пройшло валідацію
-        value: Значення, яке не пройшло валідацію
-        rule: Правило валідації, яке було порушено
-    """
-    def __init__(self, message, field=None, value=None, rule=None):
-        self.message = message
-        self.field = field
-        self.value = value
-        self.rule = rule
-        super().__init__(self.message)
+    def __iter__(self):
+        return self  # Ітератор сам є ітератором
     
-    def __str__(self):
-        details = f"{self.message}"
-        if self.field:
-            details += f" (поле: {self.field})"
-        if self.value:
-            details += f" (значення: {self.value})"
-        if self.rule:
-            details += f" (правило: {self.rule})"
-        return details
+    def __next__(self):
+        if self.current <= 0:
+            raise StopIteration
+        self.current -= 1
+        return self.current + 1
 
 # Використання
-def validate_user_age(age):
-    if age < 18:
-        raise ValidationError(
-            "Вік має бути не менше 18 років",
-            field="age",
-            value=age,
-            rule="min_age_18"
-        )
-    return True
+counter = CountDown(5)
+for num in counter:
+    print(num)
+# Виведе: 5, 4, 3, 2, 1
+\`\`\`
 
-try:
-    validate_user_age(15)
-except ValidationError as e:
-    print(e)  # Виведе детальну інформацію
-\`\`\``
+**Як це працює:**
+
+1. \`for num in counter:\` викликає \`iter(counter)\`
+2. \`iter(counter)\` викликає \`counter.__iter__()\`
+3. Кожна ітерація викликає \`next(counter)\`
+4. \`next(counter)\` викликає \`counter.__next__()\`
+5. Коли \`__next__()\` викликає \`StopIteration\`, цикл завершується`
       },
       {
-        title: "Практичний приклад: Система валідації",
-        content: `**Створимо систему валідації з кастомними винятками:**
+        title: "Створення власного ітератора",
+        content: `Давайте створимо кілька прикладів власних ітераторів:
+
+**Приклад 1: Ітератор для чисел Фібоначчі**
 
 \`\`\`python
-# Базовий виняток валідації
-class ValidationError(Exception):
-    """Базовий виняток для помилок валідації"""
-    pass
-
-# Специфічні винятки
-class EmailValidationError(ValidationError):
-    """Помилка валідації email"""
-    pass
-
-class PasswordValidationError(ValidationError):
-    """Помилка валідації паролю"""
-    pass
-
-class AgeValidationError(ValidationError):
-    """Помилка валідації віку"""
-    pass
-
-# Функції валідації
-def validate_email(email):
-    if '@' not in email:
-        raise EmailValidationError(f"Email '{email}' не містить @")
-    if '.' not in email.split('@')[1]:
-        raise EmailValidationError(f"Email '{email}' має неправильний формат")
-    return True
-
-def validate_password(password):
-    if len(password) < 8:
-        raise PasswordValidationError("Пароль має бути не менше 8 символів")
-    if not any(char.isdigit() for char in password):
-        raise PasswordValidationError("Пароль має містити цифру")
-    return True
-
-def validate_age(age):
-    if age < 18:
-        raise AgeValidationError("Вік має бути не менше 18 років")
-    if age > 120:
-        raise AgeValidationError("Вік не може бути більше 120 років")
-    return True
+class Fibonacci:
+    def __init__(self, limit):
+        self.limit = limit
+        self.a, self.b = 0, 1
+        self.count = 0
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.count >= self.limit:
+            raise StopIteration
+        result = self.a
+        self.a, self.b = self.b, self.a + self.b
+        self.count += 1
+        return result
 
 # Використання
-def register_user(email, password, age):
+fib = Fibonacci(10)
+for num in fib:
+    print(num)
+# Виведе: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34
+\`\`\`
+
+**Приклад 2: Ітератор для діапазону з кроком**
+
+\`\`\`python
+class Range:
+    def __init__(self, start, stop, step=1):
+        self.start = start
+        self.stop = stop
+        self.step = step
+        self.current = start
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if (self.step > 0 and self.current >= self.stop) or \
+           (self.step < 0 and self.current <= self.stop):
+            raise StopIteration
+        result = self.current
+        self.current += self.step
+        return result
+
+# Використання
+my_range = Range(0, 10, 2)
+for num in my_range:
+    print(num)
+# Виведе: 0, 2, 4, 6, 8
+\`\`\`
+
+**Приклад 3: Ітератор для обходу списку в зворотному порядку**
+
+\`\`\`python
+class ReverseList:
+    def __init__(self, items):
+        self.items = items
+        self.index = len(items) - 1
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.index < 0:
+            raise StopIteration
+        result = self.items[self.index]
+        self.index -= 1
+        return result
+
+# Використання
+rev = ReverseList([1, 2, 3, 4, 5])
+for num in rev:
+    print(num)
+# Виведе: 5, 4, 3, 2, 1
+\`\`\`
+`
+      },
+      {
+        title: "Різниця між ітерабельним об'єктом та ітератором",
+        content: `Важливо розуміти різницю між ітерабельним об'єктом та ітератором:
+
+**Ітерабельний об'єкт (Iterable):**
+
+- Має метод \`__iter__()\`
+- Може створити багато ітераторів
+- Можна використати в циклі for багато разів
+
+\`\`\`python
+# Список — ітерабельний об'єкт
+numbers = [1, 2, 3]
+
+# Можна створити багато ітераторів
+iter1 = iter(numbers)
+iter2 = iter(numbers)
+
+# Можна використати багато разів
+for num in numbers:
+    print(num)  # Перший раз
+for num in numbers:
+    print(num)  # Другий раз
+\`\`\`
+
+**Ітератор (Iterator):**
+
+- Має методи \`__iter__()\` та \`__next__()\`
+- Зазвичай вичерпується після одного використання
+- Зберігає стан ітерації
+
+\`\`\`python
+# Ітератор
+iterator = iter([1, 2, 3])
+
+# Використовуємо один раз
+for num in iterator:
+    print(num)  # 1, 2, 3
+
+# Другий раз — порожній
+for num in iterator:
+    print(num)  # Нічого не виведе
+\`\`\`
+
+**Генератори — це ітератори:**
+
+\`\`\`python
+def generator():
+    yield 1
+    yield 2
+    yield 3
+
+gen = generator()
+print(hasattr(gen, '__iter__'))  # True
+print(hasattr(gen, '__next__'))  # True
+
+# Генератор вичерпується
+for num in gen:
+    print(num)  # 1, 2, 3
+for num in gen:
+    print(num)  # Нічого
+\`\`\`
+`
+      },
+      {
+        title: "Функції iter() та next()",
+        content: `Python надає вбудовані функції для роботи з ітераторами:
+
+**iter() — отримання ітератора:**
+
+\`\`\`python
+# З ітерабельного об'єкта
+numbers = [1, 2, 3]
+iterator = iter(numbers)
+
+# З функції (створює генератор)
+def gen():
+    yield 1
+    yield 2
+
+iterator = iter(gen())
+
+# З рядка
+text = "hello"
+iterator = iter(text)
+\`\`\`
+
+**next() — отримання наступного значення:**
+
+\`\`\`python
+numbers = [1, 2, 3]
+iterator = iter(numbers)
+
+print(next(iterator))  # 1
+print(next(iterator))  # 2
+print(next(iterator))  # 3
+print(next(iterator))  # StopIteration
+\`\`\`
+
+**next() з значенням за замовчуванням:**
+
+\`\`\`python
+iterator = iter([1, 2, 3])
+
+# Використовуємо всі значення
+print(next(iterator))  # 1
+print(next(iterator))  # 2
+print(next(iterator))  # 3
+
+# Наступний виклик викличе StopIteration
+# Але можна вказати значення за замовчуванням
+print(next(iterator, 'Кінець'))  # 'Кінець'
+\`\`\`
+
+**Перевірка, чи є об'єкт ітерабельним:**
+
+\`\`\`python
+def is_iterable(obj):
     try:
-        validate_email(email)
-        validate_password(password)
-        validate_age(age)
-        print("Користувач успішно зареєстрований!")
+        iter(obj)
         return True
-    except ValidationError as e:
-        print(f"Помилка валідації: {e}")
+    except TypeError:
         return False
 
-register_user("test@example.com", "strongpass123", 25)
-\`\`\``
+print(is_iterable([1, 2, 3]))  # True
+print(is_iterable("hello"))    # True
+print(is_iterable(123))        # False
+\`\`\`
+`
+      },
+      {
+        title: "Практичні приклади",
+        content: `**Приклад 1: Ітератор для парних чисел**
+
+\`\`\`python
+class EvenNumbers:
+    def __init__(self, limit):
+        self.limit = limit
+        self.current = 0
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.current >= self.limit:
+            raise StopIteration
+        result = self.current
+        self.current += 2
+        return result
+
+# Використання
+evens = EvenNumbers(10)
+for num in evens:
+    print(num)
+# Виведе: 0, 2, 4, 6, 8
+\`\`\`
+
+**Приклад 2: Ітератор для квадратів**
+
+\`\`\`python
+class Squares:
+    def __init__(self, limit):
+        self.limit = limit
+        self.current = 1
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.current > self.limit:
+            raise StopIteration
+        result = self.current ** 2
+        self.current += 1
+        return result
+
+# Використання
+squares = Squares(5)
+for square in squares:
+    print(square)
+# Виведе: 1, 4, 9, 16, 25
+\`\`\`
+
+**Приклад 3: Ітератор з умовою**
+
+\`\`\`python
+class FilteredNumbers:
+    def __init__(self, limit, condition):
+        self.limit = limit
+        self.condition = condition
+        self.current = 0
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        while self.current < self.limit:
+            if self.condition(self.current):
+                result = self.current
+                self.current += 1
+                return result
+            self.current += 1
+        raise StopIteration
+
+# Використання
+# Тільки числа, які діляться на 3
+filtered = FilteredNumbers(20, lambda x: x % 3 == 0)
+for num in filtered:
+    print(num)
+# Виведе: 0, 3, 6, 9, 12, 15, 18
+\`\`\`
+`
+      },
+      {
+        title: "Підсумок",
+        content: `На цьому уроці ми вивчили ітератори та протокол ітерації:
+
+**Ключові концепції:**
+
+1. **Ітерабельний об'єкт** — об'єкт, який можна перебрати (має __iter__)
+2. **Ітератор** — об'єкт, який виконує ітерацію (має __iter__ та __next__)
+3. **Протокол ітерації** — методи __iter__() та __next__()
+4. **StopIteration** — виняток, який сигналізує про кінець ітерації
+
+**Створення власного ітератора:**
+
+\`\`\`python
+class MyIterator:
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        # Логіка генерації значень
+        if умова_завершення:
+            raise StopIteration
+        return значення
+\`\`\`
+
+**Функції:**
+
+- \`iter(obj)\` — отримати ітератор
+- \`next(iterator)\` — отримати наступне значення
+
+**Наступний крок:**
+
+У наступному уроці ми закріпимо всі знання про генератори та ітератори на практиці.`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад 1: Простий кастомний виняток",
-      code: `# Створення простого кастомного винятку
-class InvalidAgeError(Exception):
-    pass
-
-def set_age(age):
-    if age < 0:
-        raise InvalidAgeError("Вік не може бути від'ємним")
-    if age > 150:
-        raise InvalidAgeError("Вік не може бути більше 150")
-    return age
-
-# Використання
-try:
-    set_age(-5)
-except InvalidAgeError as e:
-    print(f"Помилка: {e}")`,
-      explanation: "Демонструє створення та використання простого кастомного винятку."
-    },
-    {
-      title: "Приклад 2: Виняток з атрибутами",
-      code: `# Виняток з додатковими атрибутами
-class BankAccountError(Exception):
-    def __init__(self, message, balance, amount):
-        self.message = message
-        self.balance = balance
-        self.amount = amount
-        super().__init__(self.message)
-
-def withdraw(balance, amount):
-    if amount > balance:
-        raise BankAccountError("Недостатньо коштів", balance, amount)
-    return balance - amount
-
-# Використання
-try:
-    withdraw(100, 200)
-except BankAccountError as e:
-    print(f"Помилка: {e.message}")
-    print(f"Баланс: {e.balance}, Сума: {e.amount}")`,
-      explanation: "Показує як створити виняток з додатковими атрибутами."
-    },
-    {
-      title: "Приклад 3: Ієрархія винятків",
-      code: `# Ієрархія винятків
-class BankError(Exception):
-    pass
-
-class InsufficientFundsError(BankError):
-    pass
-
-class InvalidAccountError(BankError):
-    pass
-
-def process_transaction(account, amount):
-    if not account.is_valid():
-        raise InvalidAccountError("Рахунок не існує")
-    if amount > account.balance:
-        raise InsufficientFundsError("Недостатньо коштів")
-    return True
-
-# Обробка
-try:
-    process_transaction(account, 5000)
-except InsufficientFundsError as e:
-    print(f"Недостатньо коштів: {e}")
-except BankError as e:
-    print(f"Банківська помилка: {e}")`,
-      explanation: "Демонструє створення ієрархії винятків."
-    },
-    {
-      title: "Приклад 4: Підняття винятків",
-      code: `# Підняття винятків
-class NegativeNumberError(Exception):
-    pass
-
-def square_root(number):
-    if number < 0:
-        raise NegativeNumberError("Не можна обчислити квадратний корінь з від'ємного числа")
-    return number ** 0.5
-
-# Використання
-try:
-    result = square_root(-4)
-except NegativeNumberError as e:
-    print(f"Помилка: {e}")`,
-      explanation: "Показує як піднімати кастомні винятки."
-    },
-    {
-      title: "Приклад 5: Документований виняток",
-      code: `# Документований виняток
-class ValidationError(Exception):
-    """
-    Виняток для помилок валідації даних.
+      title: "Простий ітератор",
+      code: `class CountDown:
+    def __init__(self, start):
+        self.current = start
     
-    Attributes:
-        field: Назва поля
-        value: Значення поля
-    """
-    def __init__(self, message, field=None, value=None):
-        self.message = message
-        self.field = field
-        self.value = value
-        super().__init__(self.message)
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.current <= 0:
+            raise StopIteration
+        result = self.current
+        self.current -= 1
+        return result
 
-def validate_age(age):
-    if age < 18:
-        raise ValidationError("Вік має бути не менше 18", field="age", value=age)
-    return True
+# Використання
+counter = CountDown(5)
+for num in counter:
+    print(num)
+# Виведе: 5, 4, 3, 2, 1`,
+      explanation: "Найпростіший приклад власного ітератора, який рахує вниз від start до 1."
+    },
+    {
+      title: "Ітератор чисел Фібоначчі",
+      code: `class Fibonacci:
+    def __init__(self, limit):
+        self.limit = limit
+        self.a, self.b = 0, 1
+        self.count = 0
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.count >= self.limit:
+            raise StopIteration
+        result = self.a
+        self.a, self.b = self.b, self.a + self.b
+        self.count += 1
+        return result
 
-try:
-    validate_age(15)
-except ValidationError as e:
-    print(f"Помилка: {e.message}, поле: {e.field}, значення: {e.value}")`,
-      explanation: "Демонструє документований виняток з атрибутами."
+# Використання
+fib = Fibonacci(10)
+for num in fib:
+    print(num)
+# Виведе: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34`,
+      explanation: "Ітератор, який генерує числа Фібоначчі до заданого ліміту."
+    },
+    {
+      title: "Використання iter() та next()",
+      code: `numbers = [1, 2, 3]
+iterator = iter(numbers)
+
+print(next(iterator))  # 1
+print(next(iterator))  # 2
+print(next(iterator))  # 3
+# print(next(iterator))  # StopIteration
+
+# З значенням за замовчуванням
+iterator = iter([1, 2])
+print(next(iterator))  # 1
+print(next(iterator))  # 2
+print(next(iterator, 'Кінець'))  # 'Кінець'`,
+      explanation: "Демонструє використання функцій iter() та next() для роботи з ітераторами."
+    },
+    {
+      title: "Різниця між ітерабельним та ітератором",
+      code: `# Ітерабельний об'єкт (можна використати багато разів)
+numbers = [1, 2, 3]
+
+for num in numbers:
+    print(num)  # 1, 2, 3
+for num in numbers:
+    print(num)  # 1, 2, 3 (знову)
+
+# Ітератор (вичерпується)
+iterator = iter([1, 2, 3])
+for num in iterator:
+    print(num)  # 1, 2, 3
+for num in iterator:
+    print(num)  # Нічого (вичерпано)`,
+      explanation: "Показує різницю між ітерабельним об'єктом (можна використати багато разів) та ітератором (вичерпується)."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Не успадковувати від Exception",
-      explanation: "Якщо виняток не успадковується від Exception, він не буде правильно оброблятися.",
-      correctApproach: "Завжди успадковуй кастомні винятки від Exception або його підкласів"
+      mistake: "Забування викликати StopIteration",
+      explanation: "Якщо не викликати StopIteration, ітератор буде продовжувати повертати значення.",
+      correctApproach: `# Неправильно:
+def __next__(self):
+    return self.current  # Завжди повертає одне значення
+
+# Правильно:
+def __next__(self):
+    if self.current > self.limit:
+        raise StopIteration
+    return self.current`
     },
     {
-      mistake: "Забути викликати super().__init__()",
-      explanation: "Без виклику super().__init__() повідомлення про помилку може не відображатися правильно.",
-      correctApproach: "Завжди викликай super().__init__(message) в __init__ кастомного винятку"
+      mistake: "Спроба використати ітератор кілька разів",
+      explanation: "Ітератор вичерпується після першого використання.",
+      correctApproach: `# Неправильно:
+iterator = iter([1, 2, 3])
+list1 = list(iterator)  # Використовує ітератор
+list2 = list(iterator)  # Порожній! Ітератор вичерпано
+
+# Правильно:
+numbers = [1, 2, 3]
+list1 = list(iter(numbers))  # Створюємо новий ітератор
+list2 = list(iter(numbers))  # Створюємо новий ітератор`
     },
     {
-      mistake: "Створювати занадто багато специфічних винятків",
-      explanation: "Надмірна кількість винятків ускладнює код та його підтримку.",
-      correctApproach: "Створюй винятки тільки коли це дійсно потрібно, використовуй ієрархію"
+      mistake: "Не реалізувати __iter__()",
+      explanation: "Без __iter__() об'єкт не можна використати в циклі for.",
+      correctApproach: `# Неправильно:
+class MyIterator:
+    def __next__(self):
+        return 1
+
+# Правильно:
+class MyIterator:
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        return 1`
     },
     {
-      mistake: "Не документувати винятки",
-      explanation: "Без документації інші розробники не зрозуміють, коли та як використовувати виняток.",
-      correctApproach: "Завжди документуй кастомні винятки, описуй коли вони виникають"
+      mistake: "Плутанина між ітерабельним об'єктом та ітератором",
+      explanation: "Ітерабельний об'єкт має __iter__(), ітератор має __iter__() та __next__().",
+      correctApproach: `# Ітерабельний об'єкт (створює новий ітератор кожного разу)
+class Iterable:
+    def __iter__(self):
+        return Iterator()
+
+# Ітератор (зберігає стан)
+class Iterator:
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        # Генерує значення
+        pass`
     }
   ],
   
-  summary: `На цьому уроці ми вивчили:
+  summary: `На цьому уроці ми вивчили ітератори та протокол ітерації:
 
-1. **Створення кастомних винятків** - class MyError(Exception)
-2. **Підняття винятків** - raise MyError("повідомлення")
-3. **Винятки з атрибутами** - додавання додаткової інформації
-4. **Ієрархія винятків** - створення базових та специфічних винятків
-5. **Документування** - опис винятків для інших розробників
+1. **Ітерабельні об'єкти та ітератори** — різниця та використання
+2. **Протокол ітерації** — методи __iter__() та __next__()
+3. **Створення власних ітераторів** — класи з реалізацією протоколу
+4. **Функції iter() та next()** — робота з ітераторами
+5. **StopIteration** — сигналізація про кінець ітерації
 
-Тепер ви вмієте створювати власні винятки для кращої обробки помилок у ваших програмах!
-
-Наступний урок - assert та валідація даних!`,
+Ітератори — це основа роботи з послідовностями в Python. Розуміння протоколу ітерації дозволяє створювати потужні та ефективні об'єкти.`,
   
   practiceTask: {
-    title: "Створення системи валідації з кастомними винятками",
-    description: "Створіть систему валідації з використанням кастомних винятків",
-    problemStatement: `Напишіть програму, яка:
-1. Створює ієрархію винятків для валідації:
-   - ValidationError (базовий)
-   - EmailValidationError
-   - PasswordValidationError
-   - AgeValidationError
-2. Створює функції валідації:
-   - validate_email(email) - перевіряє наявність @ та .
-   - validate_password(password) - перевіряє довжину >= 8 та наявність цифри
-   - validate_age(age) - перевіряє що вік між 18 та 120
-3. Створює функцію register_user, яка використовує всі валідації
-4. Обробляє винятки та показує зрозумілі повідомлення
+    title: "Створення власних ітераторів",
+    description: "Створіть кілька власних ітераторів з реалізацією протоколу ітерації",
+    problemStatement: `Створіть три класи-ітератори:
 
-**Важливо:** Напишіть всі класи, функції та викличте register_user з тестовими значеннями для перевірки.`,
+1. **SquareIterator(limit)** — ітератор, який генерує квадрати чисел від 1 до limit
+   - Приклад: для limit=5 має генерувати: 1, 4, 9, 16, 25
+
+2. **EvenIterator(limit)** — ітератор, який генерує парні числа від 0 до limit
+   - Приклад: для limit=10 має генерувати: 0, 2, 4, 6, 8, 10
+
+3. **ReverseIterator(items)** — ітератор, який обходить список в зворотному порядку
+   - Приклад: для [1, 2, 3, 4] має генерувати: 4, 3, 2, 1
+
+**Вимоги:**
+- Кожен клас має реалізувати методи __iter__() та __next__()
+- __next__() має викликати StopIteration, коли значення закінчилися
+- Протестуйте кожен ітератор, використовуючи цикл for
+- Введіть значення напряму в коді (не використовуйте input())`,
     outputFormat: `Приклад виведення:
-Користувач успішно зареєстрований!
-Помилка валідації: Email 'test' не містить @
-Помилка валідації: Пароль має бути не менше 8 символів`,
+
+=== Квадрати чисел ===
+1
+4
+9
+16
+25
+
+=== Парні числа ===
+0
+2
+4
+6
+8
+10
+
+=== Зворотний порядок ===
+4
+3
+2
+1`,
     examples: [
       {
-        input: "",
-        output: "Користувач успішно зареєстрований!\nПомилка валідації: Email 'test' не містить @\nПомилка валідації: Пароль має бути не менше 8 символів",
-        explanation: "Програма обробляє різні випадки: успішна реєстрація, помилка email та помилка паролю"
+        output: `=== Квадрати чисел ===
+1
+4
+9
+16
+25
+
+=== Парні числа ===
+0
+2
+4
+6
+8
+10
+
+=== Зворотний порядок ===
+4
+3
+2
+1`,
+        explanation: "Демонструє роботу всіх трьох ітераторів з різними параметрами."
       }
     ],
     solution: {
-      code: `# Ієрархія винятків для валідації
-class ValidationError(Exception):
-    """Базовий виняток для помилок валідації"""
-    pass
+      code: `# 1. Ітератор квадратів
+class SquareIterator:
+    def __init__(self, limit):
+        self.limit = limit
+        self.current = 1
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.current > self.limit:
+            raise StopIteration
+        result = self.current ** 2
+        self.current += 1
+        return result
 
-class EmailValidationError(ValidationError):
-    """Помилка валідації email"""
-    pass
+# 2. Ітератор парних чисел
+class EvenIterator:
+    def __init__(self, limit):
+        self.limit = limit
+        self.current = 0
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.current > self.limit:
+            raise StopIteration
+        result = self.current
+        self.current += 2
+        return result
 
-class PasswordValidationError(ValidationError):
-    """Помилка валідації паролю"""
-    pass
-
-class AgeValidationError(ValidationError):
-    """Помилка валідації віку"""
-    pass
-
-# Функції валідації
-def validate_email(email):
-    if '@' not in email:
-        raise EmailValidationError(f"Email '{email}' не містить @")
-    if '.' not in email.split('@')[1]:
-        raise EmailValidationError(f"Email '{email}' має неправильний формат")
-    return True
-
-def validate_password(password):
-    if len(password) < 8:
-        raise PasswordValidationError("Пароль має бути не менше 8 символів")
-    if not any(char.isdigit() for char in password):
-        raise PasswordValidationError("Пароль має містити хоча б одну цифру")
-    return True
-
-def validate_age(age):
-    if age < 18:
-        raise AgeValidationError("Вік має бути не менше 18 років")
-    if age > 120:
-        raise AgeValidationError("Вік не може бути більше 120 років")
-    return True
-
-# Функція реєстрації
-def register_user(email, password, age):
-    try:
-        validate_email(email)
-        validate_password(password)
-        validate_age(age)
-        print("Користувач успішно зареєстрований!")
-        return True
-    except ValidationError as e:
-        print(f"Помилка валідації: {e}")
-        return False
+# 3. Ітератор зворотного порядку
+class ReverseIterator:
+    def __init__(self, items):
+        self.items = items
+        self.index = len(items) - 1
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.index < 0:
+            raise StopIteration
+        result = self.items[self.index]
+        self.index -= 1
+        return result
 
 # Тестування
-register_user("test@example.com", "strongpass123", 25)
-register_user("test", "strongpass123", 25)
-register_user("test@example.com", "weak", 25)`,
-      explanation: "Рішення створює ієрархію винятків та функції валідації для реєстрації користувача."
+print("=== Квадрати чисел ===")
+squares = SquareIterator(5)
+for square in squares:
+    print(square)
+
+print()
+print("=== Парні числа ===")
+evens = EvenIterator(10)
+for num in evens:
+    print(num)
+
+print()
+print("=== Зворотний порядок ===")
+reverse = ReverseIterator([1, 2, 3, 4])
+for num in reverse:
+    print(num)`,
+      explanation: "Рішення створює три класи-ітератори, кожен з яких реалізує протокол ітерації через методи __iter__() та __next__(). Кожен ітератор зберігає свій стан та викликає StopIteration, коли значення закінчуються."
     },
     hints: [
-      "Створи базовий клас ValidationError, що успадковується від Exception",
-      "Створи специфічні класи для кожного типу валідації",
-      "Використовуй raise для підняття винятків у функціях валідації",
-      "Обробляй ValidationError в register_user для обробки всіх типів помилок",
-      "Використовуй any() та isdigit() для перевірки наявності цифри в паролі"
+      "Кожен клас має мати __init__ для ініціалізації стану",
+      "Метод __iter__() має повертати self (ітератор сам є ітератором)",
+      "Метод __next__() має перевіряти умову завершення та викликати raise StopIteration",
+      "Для SquareIterator зберігайте поточне число та збільшуйте його",
+      "Для EvenIterator збільшуйте current на 2",
+      "Для ReverseIterator зберігайте індекс та зменшуйте його"
     ],
     difficulty: "intermediate"
   },
@@ -637,83 +748,108 @@ register_user("test@example.com", "weak", 25)`,
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Як правильно створити кастомний виняток?",
+        question: "Що таке ітератор?",
         options: [
-          "class MyError(Exception): pass",
-          "class MyError: pass",
-          "class MyError(Error): pass",
-          "def MyError(): pass"
+          "Об'єкт, який дозволяє перебирати елементи по одному",
+          "Список значень",
+          "Функція для циклів",
+          "Тип даних"
         ],
         correctAnswer: 0,
-        explanation: "Кастомний виняток має успадковуватися від Exception: class MyError(Exception): pass"
+        explanation: "Ітератор — це об'єкт, який дозволяє перебирати елементи послідовності по одному через протокол ітерації."
       },
       {
         id: "q2",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе цей код?\n\n```python\nclass MyError(Exception):\n    pass\n\ntry:\n    raise MyError('Помилка')\nexcept MyError as e:\n    print(e)\n```",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Які методи має реалізувати ітератор?",
         options: [
-          "Помилка",
-          "MyError",
+          "__iter__() та __next__()",
+          "Тільки __iter__()",
+          "Тільки __next__()",
+          "iter() та next()"
+        ],
+        correctAnswer: 0,
+        explanation: "Ітератор має реалізувати обидва методи: __iter__() (повертає ітератор) та __next__() (повертає наступне значення)."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що виведе цей код?\n\n```python\niterator = iter([1, 2, 3])\nfor x in iterator:\n    print(x)\nfor x in iterator:\n    print(x)\n```",
+        options: [
+          "1, 2, 3 (другий цикл нічого не виведе)",
+          "1, 2, 3, 1, 2, 3",
           "Помилку",
           "Нічого"
         ],
         correctAnswer: 0,
-        explanation: "Код піднімає кастомний виняток з повідомленням 'Помилка' та обробляє його, виводячи повідомлення."
-      },
-      {
-        id: "q3",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Як підняти виняток?",
-        options: [
-          "raise MyError('повідомлення')",
-          "throw MyError('повідомлення')",
-          "error MyError('повідомлення')",
-          "except MyError('повідомлення')"
-        ],
-        correctAnswer: 0,
-        explanation: "Для підняття винятку використовується ключове слово raise: raise MyError('повідомлення')"
+        explanation: "Ітератор вичерпується після першого використання. Другий цикл не виведе нічого, оскільки ітератор вже вичерпано."
       },
       {
         id: "q4",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що не так з цим кодом?\n\n```python\nclass MyError(Exception):\n    def __init__(self, message, code):\n        self.message = message\n        self.code = code\n```",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що таке StopIteration?",
         options: [
-          "Відсутній виклик super().__init__()",
-          "Неправильний синтаксис __init__",
-          "Неправильна назва класу",
-          "Все правильно"
+          "Виняток, який сигналізує про кінець ітерації",
+          "Метод ітератора",
+          "Функція для зупинки",
+          "Тип даних"
         ],
         correctAnswer: 0,
-        explanation: "У __init__ кастомного винятку потрібно викликати super().__init__(message) для правильного відображення повідомлення."
+        explanation: "StopIteration — це виняток, який викликається, коли ітератор не має більше значень для повернення."
       },
       {
         id: "q5",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Чому краще створювати ієрархію винятків?",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що робить функція iter()?",
         options: [
-          "Для кращої організації та обробки помилок",
-          "Для швидшої роботи програми",
-          "Для економії пам'яті",
-          "Немає переваг"
+          "Отримує ітератор з ітерабельного об'єкта",
+          "Створює список",
+          "Викликає помилку",
+          "Зупиняє ітерацію"
         ],
         correctAnswer: 0,
-        explanation: "Ієрархія винятків дозволяє краще організувати код та обробляти помилки на різних рівнях (конкретні та загальні)."
+        explanation: "Функція iter() отримує ітератор з ітерабельного об'єкта, викликаючи його метод __iter__()."
       },
       {
         id: "q6",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Як правильно обробити базовий виняток та його підкласи?",
+        question: "Чим відрізняється ітерабельний об'єкт від ітератора?",
         options: [
-          "Спочатку обробляти підкласи, потім базовий клас",
-          "Спочатку обробляти базовий клас, потім підкласи",
-          "Обробляти тільки базовий клас",
-          "Обробляти тільки підкласи"
+          "Ітерабельний об'єкт має __iter__(), ітератор має __iter__() та __next__()",
+          "Немає різниці",
+          "Ітератор має __iter__(), ітерабельний об'єкт має __next__()",
+          "Ітерабельний об'єкт не можна використати в циклі for"
         ],
         correctAnswer: 0,
-        explanation: "Як і з вбудованими винятками, спочатку обробляються конкретні типи (підкласи), потім загальні (базовий клас)."
+        explanation: "Ітерабельний об'єкт має метод __iter__() і може створити ітератор. Ітератор має обидва методи __iter__() та __next__() і зберігає стан ітерації."
+      },
+      {
+        id: "q7",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "Генератор є ітератором.",
+        options: [
+          "True",
+          "False"
+        ],
+        correctAnswer: 0,
+        explanation: "True. Генератор реалізує протокол ітерації (має __iter__() та __next__()), тому є ітератором."
+      },
+      {
+        id: "q8",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що станеться, якщо не викликати StopIteration у __next__()?",
+        options: [
+          "Ітератор буде продовжувати повертати значення",
+          "Виникне помилка",
+          "Ітератор автоматично зупиниться",
+          "Нічого не станеться"
+        ],
+        correctAnswer: 0,
+        explanation: "Якщо не викликати StopIteration, ітератор буде продовжувати повертати значення, що може призвести до нескінченного циклу."
       }
     ],
-    timeLimit: 10,
+    timeLimit: 15,
     passingScore: 70
   }
 }
+

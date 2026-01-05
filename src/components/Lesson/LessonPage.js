@@ -23,12 +23,6 @@ import {
 import { updateProgress, checkCoursePurchase, createPayment, enrollInCourse } from '@/lib/authClient'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
-import { lesson_10_1 } from '@/lib/lessonContent/lesson-10-1'
-import { lesson_10_2 } from '@/lib/lessonContent/lesson-10-2'
-import { lesson_10_3 } from '@/lib/lessonContent/lesson-10-3'
-import { lesson_10_4 } from '@/lib/lessonContent/lesson-10-4'
-import { lesson_11_1 } from '@/lib/lessonContent/lesson-11-1'
-import { lesson_11_2 } from '@/lib/lessonContent/lesson-11-2'
 import { lesson_00_1 } from '@/lib/lessonContent/lesson-00-1'
 import { lesson_00_2 } from '@/lib/lessonContent/lesson-00-2'
 import { lesson_00_3 } from '@/lib/lessonContent/lesson-00-3'
@@ -49,6 +43,7 @@ import { lesson_02_6 } from '@/lib/lessonContent/lesson-02-6'
 import { lesson_02_7 } from '@/lib/lessonContent/lesson-02-7'
 import { lesson_02_8 } from '@/lib/lessonContent/lesson-02-8'
 import { lesson_03_1 } from '@/lib/lessonContent/lesson-03-1'
+import { lesson_03_10 } from '@/lib/lessonContent/lesson-03-10'
 import { lesson_03_2 } from '@/lib/lessonContent/lesson-03-2'
 import { lesson_03_3 } from '@/lib/lessonContent/lesson-03-3'
 import { lesson_03_4 } from '@/lib/lessonContent/lesson-03-4'
@@ -57,63 +52,30 @@ import { lesson_03_6 } from '@/lib/lessonContent/lesson-03-6'
 import { lesson_03_7 } from '@/lib/lessonContent/lesson-03-7'
 import { lesson_03_8 } from '@/lib/lessonContent/lesson-03-8'
 import { lesson_03_9 } from '@/lib/lessonContent/lesson-03-9'
-import { lesson_03_10 } from '@/lib/lessonContent/lesson-03-10'
-import { lesson_04_1 } from '@/lib/lessonContent/lesson-04-1'
-import { lesson_04_2 } from '@/lib/lessonContent/lesson-04-2'
-import { lesson_04_3 } from '@/lib/lessonContent/lesson-04-3'
-import { lesson_04_4 } from '@/lib/lessonContent/lesson-04-4'
-import { lesson_04_5 } from '@/lib/lessonContent/lesson-04-5'
-import { lesson_05_1 } from '@/lib/lessonContent/lesson-05-1'
-import { lesson_05_2 } from '@/lib/lessonContent/lesson-05-2'
-import { lesson_05_3 } from '@/lib/lessonContent/lesson-05-3'
-import { lesson_05_10 } from '@/lib/lessonContent/lesson-05-10'
-import { lesson_06_1 } from '@/lib/lessonContent/lesson-06-1'
-import { lesson_06_2 } from '@/lib/lessonContent/lesson-06-2'
-import { lesson_06_3 } from '@/lib/lessonContent/lesson-06-3'
+import { lesson_04_6 } from '@/lib/lessonContent/lesson-04-6'
+import { lesson_04_7 } from '@/lib/lessonContent/lesson-04-7'
+import { lesson_04_8 } from '@/lib/lessonContent/lesson-04-8'
+import { lesson_05_5 } from '@/lib/lessonContent/lesson-05-5'
 import { lesson_06_4 } from '@/lib/lessonContent/lesson-06-4'
-import { lesson_06_5 } from '@/lib/lessonContent/lesson-06-5'
-import { lesson_06_6 } from '@/lib/lessonContent/lesson-06-6'
-import { lesson_06_7 } from '@/lib/lessonContent/lesson-06-7'
-import { lesson_06_8 } from '@/lib/lessonContent/lesson-06-8'
 import { lesson_07_1 } from '@/lib/lessonContent/lesson-07-1'
 import { lesson_07_2 } from '@/lib/lessonContent/lesson-07-2'
 import { lesson_07_3 } from '@/lib/lessonContent/lesson-07-3'
 import { lesson_07_4 } from '@/lib/lessonContent/lesson-07-4'
-import { lesson_07_5 } from '@/lib/lessonContent/lesson-07-5'
-import { lesson_11_3 } from '@/lib/lessonContent/lesson-11-3'
-import { lesson_11_4 } from '@/lib/lessonContent/lesson-11-4'
-import { lesson_12_1 } from '@/lib/lessonContent/lesson-12-1'
-import { lesson_12_2 } from '@/lib/lessonContent/lesson-12-2'
-import { lesson_12_3 } from '@/lib/lessonContent/lesson-12-3'
-import { lesson_12_4 } from '@/lib/lessonContent/lesson-12-4'
+import { lesson_08_1 } from '@/lib/lessonContent/lesson-08-1'
+import { lesson_08_2 } from '@/lib/lessonContent/lesson-08-2'
+import { lesson_08_3 } from '@/lib/lessonContent/lesson-08-3'
+import { lesson_08_4 } from '@/lib/lessonContent/lesson-08-4'
+import { lesson_08_5 } from '@/lib/lessonContent/lesson-08-5'
+import { lesson_08_6 } from '@/lib/lessonContent/lesson-08-6'
+import { lesson_09_3 } from '@/lib/lessonContent/lesson-09-3'
+import { lesson_09_4 } from '@/lib/lessonContent/lesson-09-4'
+import { lesson_09_5 } from '@/lib/lessonContent/lesson-09-5'
+import { lesson_09_6 } from '@/lib/lessonContent/lesson-09-6'
 import { lesson_12_5 } from '@/lib/lessonContent/lesson-12-5'
 import { lesson_12_6 } from '@/lib/lessonContent/lesson-12-6'
-import { lesson_13_1 } from '@/lib/lessonContent/lesson-13-1'
-import { lesson_13_2 } from '@/lib/lessonContent/lesson-13-2'
-import { lesson_13_3 } from '@/lib/lessonContent/lesson-13-3'
-import { lesson_13_4 } from '@/lib/lessonContent/lesson-13-4'
-import { lesson_14_1 } from '@/lib/lessonContent/lesson-14-1'
-import { lesson_14_2 } from '@/lib/lessonContent/lesson-14-2'
-import { lesson_14_3 } from '@/lib/lessonContent/lesson-14-3'
 import { lesson_14_4 } from '@/lib/lessonContent/lesson-14-4'
-import { lesson_15_1 } from '@/lib/lessonContent/lesson-15-1'
-import { lesson_15_2 } from '@/lib/lessonContent/lesson-15-2'
-import { lesson_15_3 } from '@/lib/lessonContent/lesson-15-3'
-import { lesson_15_4 } from '@/lib/lessonContent/lesson-15-4'
-import { lesson_16_1 } from '@/lib/lessonContent/lesson-16-1'
-import { lesson_16_2 } from '@/lib/lessonContent/lesson-16-2'
-import { lesson_16_3 } from '@/lib/lessonContent/lesson-16-3'
-import { lesson_17_1 } from '@/lib/lessonContent/lesson-17-1'
-import { lesson_17_2 } from '@/lib/lessonContent/lesson-17-2'
-import { lesson_17_3 } from '@/lib/lessonContent/lesson-17-3'
-import { lesson_17_4 } from '@/lib/lessonContent/lesson-17-4'
-import { lesson_17_5 } from '@/lib/lessonContent/lesson-17-5'
-import { lesson_18_1 } from '@/lib/lessonContent/lesson-18-1'
-import { lesson_19_1 } from '@/lib/lessonContent/lesson-19-1'
-import { lesson_19_2 } from '@/lib/lessonContent/lesson-19-2'
-import { lesson_19_3 } from '@/lib/lessonContent/lesson-19-3'
-import { lesson_19_4 } from '@/lib/lessonContent/lesson-19-4'
-import { lesson_19_5 } from '@/lib/lessonContent/lesson-19-5'
+import { lesson_14_5 } from '@/lib/lessonContent/lesson-14-5'
+import { lesson_15_6 } from '@/lib/lessonContent/lesson-15-6'
 import styles from './LessonPage.module.css'
 
 // Map lesson IDs to content
@@ -138,6 +100,7 @@ const lessonContentMap = {
   "lesson-02-7": lesson_02_7,
   "lesson-02-8": lesson_02_8,
   "lesson-03-1": lesson_03_1,
+  "lesson-03-10": lesson_03_10,
   "lesson-03-2": lesson_03_2,
   "lesson-03-3": lesson_03_3,
   "lesson-03-4": lesson_03_4,
@@ -146,69 +109,42 @@ const lessonContentMap = {
   "lesson-03-7": lesson_03_7,
   "lesson-03-8": lesson_03_8,
   "lesson-03-9": lesson_03_9,
-  "lesson-03-10": lesson_03_10,
-  "lesson-04-1": lesson_04_1,
-  "lesson-04-2": lesson_04_2,
-  "lesson-04-3": lesson_04_3,
-  "lesson-04-4": lesson_04_4,
-  "lesson-04-5": lesson_04_5,
-  "lesson-05-1": lesson_05_1,
-  "lesson-05-2": lesson_05_2,
-  "lesson-05-3": lesson_05_3,
-  "lesson-05-10": lesson_05_10,
-  "lesson-06-1": lesson_06_1,
-  "lesson-06-2": lesson_06_2,
-  "lesson-06-3": lesson_06_3,
+  "lesson-04-1": lesson_04_6,
+  "lesson-04-2": lesson_04_6,
+  "lesson-04-3": lesson_04_6,
+  "lesson-04-4": lesson_04_6,
+  "lesson-04-5": lesson_04_6,
+  "lesson-04-6": lesson_04_6,
+  "lesson-04-7": lesson_04_7,
+  "lesson-04-8": lesson_04_8,
+  "lesson-05-1": lesson_05_5,
+  "lesson-05-2": lesson_05_5,
+  "lesson-05-3": lesson_05_5,
+  "lesson-05-4": lesson_05_5,
+  "lesson-05-5": lesson_05_5,
+  "lesson-06-1": lesson_06_4,
+  "lesson-06-2": lesson_06_4,
+  "lesson-06-3": lesson_06_4,
   "lesson-06-4": lesson_06_4,
-  "lesson-06-5": lesson_06_5,
-  "lesson-06-6": lesson_06_6,
-  "lesson-06-7": lesson_06_7,
-  "lesson-06-8": lesson_06_8,
   "lesson-07-1": lesson_07_1,
   "lesson-07-2": lesson_07_2,
   "lesson-07-3": lesson_07_3,
   "lesson-07-4": lesson_07_4,
-  "lesson-07-5": lesson_07_5,
-  "lesson-10-1": lesson_10_1,
-  "lesson-10-2": lesson_10_2,
-  "lesson-10-3": lesson_10_3,
-  "lesson-10-4": lesson_10_4,
-  "lesson-11-1": lesson_11_1,
-  "lesson-11-2": lesson_11_2,
-  "lesson-11-3": lesson_11_3,
-  "lesson-11-4": lesson_11_4,
-  "lesson-12-1": lesson_12_1,
-  "lesson-12-2": lesson_12_2,
-  "lesson-12-3": lesson_12_3,
-  "lesson-12-4": lesson_12_4,
+  "lesson-08-1": lesson_08_1,
+  "lesson-08-2": lesson_08_2,
+  "lesson-08-3": lesson_08_3,
+  "lesson-08-4": lesson_08_4,
+  "lesson-08-5": lesson_08_5,
+  "lesson-08-6": lesson_08_6,
+  "lesson-09-3": lesson_09_3,
+  "lesson-09-4": lesson_09_4,
+  "lesson-09-5": lesson_09_5,
+  "lesson-09-6": lesson_09_6,
   "lesson-12-5": lesson_12_5,
   "lesson-12-6": lesson_12_6,
-  "lesson-13-1": lesson_13_1,
-  "lesson-13-2": lesson_13_2,
-  "lesson-13-3": lesson_13_3,
-  "lesson-13-4": lesson_13_4,
-  "lesson-14-1": lesson_14_1,
-  "lesson-14-2": lesson_14_2,
-  "lesson-14-3": lesson_14_3,
   "lesson-14-4": lesson_14_4,
-  "lesson-15-1": lesson_15_1,
-  "lesson-15-2": lesson_15_2,
-  "lesson-15-3": lesson_15_3,
-  "lesson-15-4": lesson_15_4,
-  "lesson-16-1": lesson_16_1,
-  "lesson-16-2": lesson_16_2,
-  "lesson-16-3": lesson_16_3,
-  "lesson-17-1": lesson_17_1,
-  "lesson-17-2": lesson_17_2,
-  "lesson-17-3": lesson_17_3,
-  "lesson-17-4": lesson_17_4,
-  "lesson-17-5": lesson_17_5,
-  "lesson-18-1": lesson_18_1,
-  "lesson-19-1": lesson_19_1,
-  "lesson-19-2": lesson_19_2,
-  "lesson-19-3": lesson_19_3,
-  "lesson-19-4": lesson_19_4,
-  "lesson-19-5": lesson_19_5,
+  "lesson-14-5": lesson_14_5,
+  "lesson-15-6": lesson_15_6,
 }
 
 // Функція для конвертації markdown в HTML
@@ -582,6 +518,21 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       console.log('Lesson already completed:', lessonId)
     }
   }, [lessonId, userProgress])
+
+  // Save sidebar width to localStorage when it changes
+  useEffect(() => {
+    if (!isResizing && sidebarWidth) {
+      localStorage.setItem('lessonSidebarWidth', sidebarWidth.toString())
+    }
+  }, [sidebarWidth, isResizing])
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      document.removeEventListener('mousemove', () => {})
+      document.removeEventListener('mouseup', () => {})
+    }
+  }, [])
   
   if (!lesson && !curriculumLesson) {
     return (
@@ -1143,21 +1094,6 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     }
   }
 
-  // Save sidebar width to localStorage when it changes
-  useEffect(() => {
-    if (!isResizing && sidebarWidth) {
-      localStorage.setItem('lessonSidebarWidth', sidebarWidth.toString())
-    }
-  }, [sidebarWidth, isResizing])
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      document.removeEventListener('mousemove', () => {})
-      document.removeEventListener('mouseup', () => {})
-    }
-  }, [])
-
   return (
     <div className={`${styles.pageWrapper} ${isResizing ? styles.resizing : ''}`}>
       {/* Edge drag area when sidebar is closed */}
@@ -1642,6 +1578,16 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                       <pre className={styles.codeBlock}>
                         <code>{fullLesson.practiceTask.solution.code}</code>
                       </pre>
+                      <button
+                        className={styles.solutionButton}
+                        onClick={() => {
+                          setUserCode(fullLesson.practiceTask.solution.code)
+                          setShowPracticeSolution(false)
+                        }}
+                        style={{ marginTop: '1rem' }}
+                      >
+                        Вставити код в редактор
+                      </button>
                       <p className={styles.solutionExplanation}>
                         {fullLesson.practiceTask.solution.explanation}
                       </p>

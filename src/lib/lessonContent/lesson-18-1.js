@@ -5,8 +5,8 @@
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
-export const lesson_18_1 = {
-  lessonId: "lesson-18-1",
+export const lesson_16_1 = {
+  lessonId: "lesson-14-1",
   moduleId: "module-16",
   order: 1,
   title: "Milestone Project 3: Фінальний проект",
@@ -19,12 +19,12 @@ export const lesson_18_1 = {
     "Реалізувати обробку помилок",
     "Створити документацію",
     "Протестувати програму",
-    "lesson-17-5"
+    "lesson-15-5"
 ],
   
   estimatedTime: 480,
   prerequisites: [
-    "lesson-17-5",
+    "lesson-15-5",
     "module-16"
 ],
   

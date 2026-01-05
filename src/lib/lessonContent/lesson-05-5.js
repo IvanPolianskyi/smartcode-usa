@@ -1,13 +1,13 @@
 /**
- * Lesson 07-5: Практика: обробка помилок у програмах
+ * Lesson 05-5: Практика: обробка помилок у програмах
  * Full educational content
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
-export const lesson_07_5 = {
-  lessonId: "lesson-07-5",
-  moduleId: "module-07",
+export const lesson_05_5 = {
+  lessonId: "lesson-05-5",
+  moduleId: "module-05",
   order: 5,
   title: "Практика: обробка помилок у програмах",
   
@@ -19,7 +19,7 @@ export const lesson_07_5 = {
   ],
   
   estimatedTime: 120,
-  prerequisites: ["lesson-07-4"],
+  prerequisites: ["lesson-05-4"],
   
   videoUrl: "",
   

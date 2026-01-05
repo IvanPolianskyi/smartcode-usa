@@ -5,8 +5,8 @@
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
-export const lesson_17_3 = {
-  lessonId: "lesson-17-3",
+export const lesson_15_3 = {
+  lessonId: "lesson-13-5",
   moduleId: "module-15",
   order: 3,
   title: "Протоколи та duck typing",
@@ -16,16 +16,16 @@ export const lesson_17_3 = {
     "Застосовувати duck typing",
     "Реалізовувати протоколи",
     "Використовувати typing протоколи",
-    "lesson-17-2",
-    "lesson-17-4",
+    "lesson-15-2",
+    "lesson-15-4",
     "Розширені структури даних",
     "Використовувати спеціалізовані структури"
 ],
   
   estimatedTime: 90,
   prerequisites: [
-    "lesson-17-2",
-    "lesson-17-4",
+    "lesson-15-2",
+    "lesson-15-4",
     "Розширені структури даних"
 ],
   

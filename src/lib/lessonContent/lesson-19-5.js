@@ -5,8 +5,8 @@
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
-export const lesson_19_5 = {
-  lessonId: "lesson-19-5",
+export const lesson_16_6 = {
+  lessonId: "lesson-16-6",
   moduleId: "module-16",
   order: 5,
   title: "Обробка подій та практика: GUI-застосунок",
@@ -16,12 +16,12 @@ export const lesson_19_5 = {
     "Створювати callback-функції",
     "Створити повноцінний GUI-додаток",
     "Застосувати всі набуті знання",
-    "lesson-19-4"
+    "lesson-16-5"
 ],
   
   estimatedTime: 150,
   prerequisites: [
-    "lesson-19-4"
+    "lesson-16-5"
 ],
   
   videoUrl: "",

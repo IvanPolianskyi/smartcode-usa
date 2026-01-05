@@ -1,13 +1,13 @@
 /**
- * Lesson 06-6: Dataclasses
+ * Lesson 04-6: Dataclasses
  * Full educational content
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
-export const lesson_06_6 = {
-  lessonId: "lesson-06-6",
-  moduleId: "module-06",
+export const lesson_04_6 = {
+  lessonId: "lesson-04-6",
+  moduleId: "module-04",
   order: 6,
   title: "Dataclasses",
   
@@ -19,7 +19,7 @@ export const lesson_06_6 = {
   ],
   
   estimatedTime: 75,
-  prerequisites: ["lesson-06-5"],
+  prerequisites: ["lesson-04-5"],
   
   videoUrl: "",
   

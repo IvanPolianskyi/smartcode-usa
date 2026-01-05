@@ -1,152 +1,118 @@
 /**
- * 02 Datetime Module
+ * Практика: веб-скрапінг проект
  * Full educational content
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_12_2 = {
-  lessonId: "lesson-12-2",
-  moduleId: "module-10",
-  order: 2,
-  title: "02 Datetime Module",
+  lessonId: "lesson-10-4",
+  moduleId: "module-12",
+  order: 4,
+  title: "Практика: веб-скрапінг проект",
   
   learningObjectives: [
-    "Вивчити основні концепції",
-    "Застосувати знання на практиці",
-    "Розв'язати практичні задачі"
-  ],
+    "Створити повноцінний скрапер",
+    "Збирати дані з реального сайту",
+    "Обробляти та зберігати дані",
+    "Створити корисний інструмент",
+    "lesson-12-1",
+    "module-12",
+    "14 - Робота з зображеннями",
+    "Обробка зображень за допомогою PIL/Pillow, маніпуляції з зображеннями"
+],
   
-  estimatedTime: 90,
-  prerequisites: [],
+  estimatedTime: 150,
+  prerequisites: [
+    "lesson-12-1",
+    "module-12",
+    "14 - Робота з зображеннями"
+],
   
   videoUrl: "",
   
   theory: {
     sections: [
       {
-        title: "datetime module",
-        content: `Python has the datetime module to help deal with timestamps in your code. Time values are represented with the time class. Times have attributes for hour, minute, second, and microsecond. They can also include time zone information. The arguments to initialize a time instance are optional, but the default of 0 is unlikely to be what you want.
+        title: "Вступ",
+        content: `Практика: веб-скрапінг проект
 
-## time
-Let's take a look at how we can extract time information from the datetime module. We can create a timestamp by specifying datetime.time(hour,minute,second,microsecond)
+На цьому уроці ми вивчимо основні концепції та навички, необхідні для розуміння та застосування матеріалу.
 
-Note: A time instance only holds values of time, and not a date associated with the time. 
+**Що ви дізнаєтеся:**
+- Створити повноцінний скрапер
+- Збирати дані з реального сайту
+- Обробляти та зберігати дані
+- Створити корисний інструмент
+- lesson-13-3
+- module-12
+- 12 - Робота з зображеннями
+- Обробка зображень за допомогою PIL/Pillow, маніпуляції з зображеннями
 
-We can also check the min and max values a time of day can have in the module:
+**Час на вивчення:** приблизно 150 хвилин
 
-The min and max class attributes reflect the valid range of times in a single day.`
-      },
-      {
-        title: "Dates",
-        content: `datetime (as you might suspect) also allows us to work with date timestamps. Calendar date values are represented with the date class. Instances have attributes for year, month, and day. It is easy to create a date representing today’s date using the today() class method.
-
-Let's see some examples:
-
-As with time, the range of date values supported can be determined using the min and max attributes.
-
-Another way to create new date instances uses the replace() method of an existing date. For example, you can change the year, leaving the day and month alone.`
-      },
-      {
-        title: "Arithmetic",
-        content: `We can perform arithmetic on date objects to check for time differences. For example:
-
-This gives us the difference in days between the two dates. You can use the timedelta method to specify various units of times (days, minutes, hours, etc.)
-
-Great! You should now have a basic understanding of how to use datetime with Python to work with timestamps in your code!`
+**Попередні вимоги:** lesson-13-3, module-12, 12 - Робота з зображеннями
+`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад коду",
-      code: `import datetime
-
-t = datetime.time(4, 20, 1)
-
-# Let's show the different components
-print(t)
-print('hour  :', t.hour)
-print('minute:', t.minute)
-print('second:', t.second)
-print('microsecond:', t.microsecond)
-print('tzinfo:', t.tzinfo)`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `print('Earliest  :', datetime.time.min)
-print('Latest    :', datetime.time.max)
-print('Resolution:', datetime.time.resolution)`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `today = datetime.date.today()
-print(today)
-print('ctime:', today.ctime())
-print('tuple:', today.timetuple())
-print('ordinal:', today.toordinal())
-print('Year :', today.year)
-print('Month:', today.month)
-print('Day  :', today.day)`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `print('Earliest  :', datetime.date.min)
-print('Latest    :', datetime.date.max)
-print('Resolution:', datetime.date.resolution)`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `d1 = datetime.date(2015, 3, 11)
-print('d1:', d1)
-
-d2 = d1.replace(year=1990)
-print('d2:', d2)`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `d1`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `d2`,
-      explanation: "Приклад коду з курсу"
-    },
-    {
-      title: "Приклад коду",
-      code: `d1-d2`,
-      explanation: "Приклад коду з курсу"
+      title: "Приклад 1",
+      code: `# Приклад коду
+print("Привіт, світ!")`,
+      explanation: "Базовий приклад для розуміння концепції"
     }
   ],
   
-  commonMistakes: [],
+  commonMistakes: [
+    {
+      mistake: "Типова помилка",
+      explanation: "Пояснення помилки",
+      correctApproach: "Правильний підхід"
+    }
+  ],
   
-  summary: "Підсумок уроку",
+  summary: `Підсумок уроку "Практика: веб-скрапінг проект"
+
+На цьому уроці ми вивчили основні концепції та навички.`,
   
   practiceTask: {
     title: "Практична задача",
-    description: "Опишіть задачу",
-    problemStatement: "Умова задачі",
+    description: "Застосуйте набуті знання на практиці",
+    problemStatement: "Створіть програму, яка демонструє вивчені концепції",
     inputFormat: "",
     outputFormat: "",
     examples: [],
     solution: {
-      code: "",
-      explanation: ""
+      code: `# Рішення
+# Ваш код тут`,
+      explanation: "Пояснення рішення"
     },
-    hints: [],
+    hints: [
+      "Підказка 1",
+      "Підказка 2"
+    ],
     difficulty: "beginner"
   },
   
   quiz: {
-    questions: [],
+    questions: [
+      {
+        id: "q1",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Питання про основні концепції?",
+        options: [
+          "Варіант 1",
+          "Варіант 2",
+          "Варіант 3",
+          "Варіант 4"
+        ],
+        correctAnswer: 0,
+        explanation: "Пояснення правильної відповіді"
+      }
+    ],
     timeLimit: 10,
     passingScore: 70
   }

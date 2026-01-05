@@ -1,5 +1,5 @@
 /**
- * Lesson 07-2: Типи винятків та обробка помилок
+ * Lesson 07-2: Генераторні вирази та yield
  * Full educational content
  */
 
@@ -9,13 +9,13 @@ export const lesson_07_2 = {
   lessonId: "lesson-07-2",
   moduleId: "module-07",
   order: 2,
-  title: "Типи винятків та обробка помилок",
+  title: "Генераторні вирази та yield",
   
   learningObjectives: [
-    "Розуміти різні типи винятків",
-    "Обробляти кілька типів помилок",
-    "Використовувати except без типу",
-    "Логувати помилки"
+    "Створювати генераторні вирази (generator expressions)",
+    "Використовувати yield from для делегування генераторів",
+    "Працювати з нескінченними генераторами",
+    "Оптимізувати код за допомогою генераторів"
   ],
   
   estimatedTime: 90,
@@ -26,525 +26,626 @@ export const lesson_07_2 = {
   theory: {
     sections: [
       {
-        title: "Основні типи винятків в Python",
-        content: `Python має багато вбудованих типів винятків. Ось найпоширеніші:
+        title: "Генераторні вирази",
+        content: `Генераторні вирази — це компактний спосіб створення генераторів, схожий на list comprehensions, але з круглими дужками замість квадратних.
 
-**Основні типи винятків:**
+**Синтаксис:**
 
-1. **ValueError** - неправильне значення
-   \`\`\`python
-   int("abc")  # ValueError: invalid literal for int()
-   \`\`\`
+\`\`\`python
+# List comprehension (створює список)
+[вираз for елемент in послідовність]
 
-2. **TypeError** - неправильний тип
-   \`\`\`python
-   "5" + 3  # TypeError: can only concatenate str to str
-   \`\`\`
+# Generator expression (створює генератор)
+(вираз for елемент in послідовність)
+\`\`\`
 
-3. **ZeroDivisionError** - ділення на нуль
-   \`\`\`python
-   10 / 0  # ZeroDivisionError: division by zero
-   \`\`\`
+**Порівняння:**
 
-4. **IndexError** - неправильний індекс
-   \`\`\`python
-   my_list = [1, 2, 3]
-   my_list[10]  # IndexError: list index out of range
-   \`\`\`
+\`\`\`python
+# List comprehension — створює весь список
+squares_list = [x**2 for x in range(10)]
+print(squares_list)  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
 
-5. **KeyError** - неправильний ключ у словнику
-   \`\`\`python
-   my_dict = {"name": "Олексій"}
-   my_dict["age"]  # KeyError: 'age'
-   \`\`\`
+# Generator expression — створює генератор
+squares_gen = (x**2 for x in range(10))
+print(squares_gen)  # <generator object <genexpr> at 0x...>
+print(list(squares_gen))  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+\`\`\`
 
-6. **FileNotFoundError** - файл не знайдено
-   \`\`\`python
-   open("неіснуючий_файл.txt")  # FileNotFoundError
-   \`\`\`
+**Переваги генераторних виразів:**
 
-7. **AttributeError** - атрибут не існує
-   \`\`\`python
-   my_list = [1, 2, 3]
-   my_list.appendd()  # AttributeError: 'list' object has no attribute 'appendd'
-   \`\`\``
+1. **Компактність** — коротший синтаксис
+2. **Економія пам'яті** — не створює список
+3. **Lazy evaluation** — значення генеруються тільки коли потрібні
+
+**Коли використовувати:**
+
+- Коли потрібен генератор для одноразового використання
+- Коли не потрібно зберігати всі значення
+- Для передачі в функції, які працюють з ітераторами`
       },
       {
-        title: "Ієрархія винятків",
-        content: `Всі винятки в Python успадковуються від базового класу **Exception**.
-
-**Ієрархія винятків:**
-
-\`\`\`
-BaseException
-├── Exception
-│   ├── ArithmeticError
-│   │   ├── ZeroDivisionError
-│   │   └── OverflowError
-│   ├── LookupError
-│   │   ├── IndexError
-│   │   └── KeyError
-│   ├── ValueError
-│   ├── TypeError
-│   ├── FileNotFoundError
-│   └── ...
-└── SystemExit
-\`\`\`
-
-**Важливо:**
-- Якщо обробляєш батьківський клас, він також обробить дочірні класи
-- Наприклад, обробка \`Exception\` обробить всі винятки
-- Краще обробляти конкретні типи, ніж загальні
-
-**Приклад:**
+        title: "Приклади генераторних виразів",
+        content: `**Приклад 1: Квадрати чисел**
 
 \`\`\`python
-try:
-    # код
-    pass
-except ValueError:  # Конкретний тип
-    print("Помилка значення")
-except Exception:  # Загальний тип (обробить всі інші)
-    print("Інша помилка")
-\`\`\``
-      },
-      {
-        title: "Обробка кількох типів помилок",
-        content: `Можна обробляти кілька типів помилок в одному except блоці:
-
-**Спосіб 1: Кілька except блоків**
-
-\`\`\`python
-try:
-    # код
-    pass
-except ValueError:
-    print("Помилка значення")
-except TypeError:
-    print("Помилка типу")
-except ZeroDivisionError:
-    print("Ділення на нуль")
-\`\`\`
-
-**Спосіб 2: Кілька типів в одному except**
-
-\`\`\`python
-try:
-    # код
-    pass
-except (ValueError, TypeError):
-    print("Помилка значення або типу")
-except (ZeroDivisionError, IndexError):
-    print("Ділення на нуль або помилка індексу")
-\`\`\`
-
-**Приклад: Обробка різних помилок при роботі зі списком**
-
-\`\`\`python
-def safe_list_access(my_list, index):
-    try:
-        return my_list[index]
-    except IndexError:
-        print(f"Помилка: індекс {index} виходить за межі списку")
-        return None
-    except TypeError:
-        print("Помилка: індекс має бути числом")
-        return None
-    except Exception as e:
-        print(f"Невідома помилка: {e}")
-        return None
+# Генераторне вираз
+squares = (x**2 for x in range(10))
 
 # Використання
-my_list = [1, 2, 3]
-result = safe_list_access(my_list, 10)  # IndexError
-result = safe_list_access(my_list, "abc")  # TypeError
-\`\`\``
+for square in squares:
+    print(square)
+# Виведе: 0, 1, 4, 9, 16, 25, 36, 49, 64, 81
+\`\`\`
+
+**Приклад 2: Фільтрація з умовою**
+
+\`\`\`python
+# Парні числа
+evens = (x for x in range(20) if x % 2 == 0)
+
+for num in evens:
+    print(num)
+# Виведе: 0, 2, 4, 6, 8, 10, 12, 14, 16, 18
+\`\`\`
+
+**Приклад 3: Перетворення даних**
+
+\`\`\`python
+# Перетворення рядків у верхній регістр
+words = ['hello', 'world', 'python']
+upper_words = (word.upper() for word in words)
+
+for word in upper_words:
+    print(word)
+# Виведе: HELLO, WORLD, PYTHON
+\`\`\`
+
+**Приклад 4: Вкладені генераторні вирази**
+
+\`\`\`python
+# Добуток пар чисел
+products = (x * y for x in range(3) for y in range(3))
+
+for product in products:
+    print(product)
+# Виведе: 0, 0, 0, 0, 1, 2, 0, 2, 4
+\`\`\`
+
+**Приклад 5: Використання з функціями**
+
+\`\`\`python
+# Генераторне вираз як аргумент
+total = sum(x**2 for x in range(10))
+print(total)  # 285
+
+# Максимальне значення
+max_value = max(x * 2 for x in range(10))
+print(max_value)  # 18
+\`\`\`
+`
       },
       {
-        title: "Отримання інформації про помилку",
-        content: `Можна отримати детальну інформацію про помилку за допомогою \`as\`:
+        title: "yield from — делегування генераторів",
+        content: `\`yield from\` дозволяє делегувати генерацію значень іншому генератору. Це корисне для композиції генераторів.
+
+**Синтаксис:**
 
 \`\`\`python
-try:
-    # код, який може викликати помилку
-    pass
-except ExceptionType as e:
-    # e - об'єкт помилки з інформацією
-    print(f"Помилка: {e}")
-    print(f"Тип помилки: {type(e).__name__}")
+def generator1():
+    yield from generator2()  # Делегує генерацію generator2
 \`\`\`
 
-**Приклад:**
+**Приклад 1: Просте делегування**
 
 \`\`\`python
-try:
-    number = int("abc")
-except ValueError as e:
-    print(f"Помилка: {e}")  # invalid literal for int() with base 10: 'abc'
-    print(f"Тип: {type(e).__name__}")  # ValueError
+def numbers():
+    yield 1
+    yield 2
+    yield 3
+
+def more_numbers():
+    yield 4
+    yield 5
+
+def all_numbers():
+    yield from numbers()      # Генерує 1, 2, 3
+    yield from more_numbers() # Генерує 4, 5
+
+for num in all_numbers():
+    print(num)
+# Виведе: 1, 2, 3, 4, 5
 \`\`\`
 
-**Приклад: Логування помилок**
+**Приклад 2: Делегування з range()**
 
 \`\`\`python
-import traceback
+def count_to_ten():
+    yield from range(1, 6)   # 1, 2, 3, 4, 5
+    yield from range(6, 11) # 6, 7, 8, 9, 10
 
-def process_data(data):
-    try:
-        result = int(data) * 2
-        return result
-    except ValueError as e:
-        print(f"Помилка значення: {e}")
-        traceback.print_exc()  # Виводить повний стек помилки
-        return None
-    except Exception as e:
-        print(f"Невідома помилка: {e}")
-        traceback.print_exc()
-        return None
+for num in count_to_ten():
+    print(num)
+# Виведе: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+\`\`\`
 
-process_data("abc")
-\`\`\``
+**Приклад 3: Композиція кількох генераторів**
+
+\`\`\`python
+def first_half():
+    yield from range(1, 6)
+
+def second_half():
+    yield from range(6, 11)
+
+def full_range():
+    yield from first_half()
+    yield from second_half()
+
+for num in full_range():
+    print(num)
+# Виведе: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+\`\`\`
+
+**Переваги yield from:**
+
+1. **Читабельність** — код стає чистішим
+2. **Композиція** — легко комбінувати генератори
+3. **Делегування** — передача контролю іншому генератору
+4. **Оптимізація** — більш ефективне, ніж вручну викликати next()`
       },
       {
-        title: "Загальна обробка всіх помилок",
-        content: `Іноді потрібно обробити всі можливі помилки:
+        title: "Нескінченні генератори",
+        content: `Генератори можуть генерувати значення нескінченно! Це одна з їх найпотужніших можливостей.
 
-**Спосіб 1: except без типу**
+**Приклад 1: Нескінченний лічильник**
 
 \`\`\`python
-try:
-    # код
-    pass
-except:
-    print("Сталася якась помилка")
+def infinite_counter(start=0):
+    """Генерує числа від start до нескінченності"""
+    while True:
+        yield start
+        start += 1
+
+# Використання (з обмеженням!)
+counter = infinite_counter()
+for i, num in enumerate(counter):
+    if i >= 10:  # Обмежуємо до 10 значень
+        break
+    print(num)
+# Виведе: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 \`\`\`
 
-**Спосіб 2: except Exception**
+**Приклад 2: Нескінченні числа Фібоначчі**
 
 \`\`\`python
-try:
-    # код
-    pass
-except Exception as e:
-    print(f"Помилка: {e}")
-\`\`\`
-
-**Різниця:**
-- \`except:\` - ловить ВСІ помилки, включаючи SystemExit, KeyboardInterrupt
-- \`except Exception:\` - ловить тільки винятки, що успадковуються від Exception
-
-**Рекомендація:** Використовуй \`except Exception as e:\` замість \`except:\`
-
-**Приклад:**
-
-\`\`\`python
-def safe_operation():
-    try:
-        # Будь-який код
-        result = 10 / 0
-    except Exception as e:
-        print(f"Помилка: {type(e).__name__}: {e}")
-        return None
-    return result
-
-safe_operation()
-\`\`\``
-      },
-      {
-        title: "Логування помилок",
-        content: `Важливо логувати помилки для відлагодження та моніторингу:
-
-**Базове логування:**
-
-\`\`\`python
-import logging
-
-# Налаштування логування
-logging.basicConfig(level=logging.ERROR)
-
-def process_file(filename):
-    try:
-        with open(filename, 'r') as f:
-            content = f.read()
-            return content
-    except FileNotFoundError as e:
-        logging.error(f"Файл не знайдено: {filename}")
-        logging.error(f"Помилка: {e}")
-        return None
-    except Exception as e:
-        logging.error(f"Невідома помилка при обробці файлу: {e}")
-        return None
-
-process_file("неіснуючий.txt")
-\`\`\`
-
-**Приклад: Детальне логування з traceback**
-
-\`\`\`python
-import logging
-import traceback
-
-logging.basicConfig(
-    level=logging.ERROR,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-
-def divide_numbers(a, b):
-    try:
-        result = a / b
-        return result
-    except ZeroDivisionError:
-        logging.error("Спроба ділення на нуль")
-        logging.error(traceback.format_exc())
-        return None
-    except Exception as e:
-        logging.error(f"Невідома помилка: {e}")
-        logging.error(traceback.format_exc())
-        return None
-
-divide_numbers(10, 0)
-\`\`\``
-      },
-      {
-        title: "Практичний приклад: Універсальна обробка помилок",
-        content: `**Створимо функцію для безпечної обробки різних операцій:**
-
-\`\`\`python
-def safe_operation(operation_func, *args, **kwargs):
-    """
-    Безпечно виконує операцію з обробкою всіх помилок
-    """
-    try:
-        return operation_func(*args, **kwargs)
-    except ValueError as e:
-        print(f"Помилка значення: {e}")
-        return None
-    except TypeError as e:
-        print(f"Помилка типу: {e}")
-        return None
-    except ZeroDivisionError as e:
-        print(f"Ділення на нуль: {e}")
-        return None
-    except KeyError as e:
-        print(f"Ключ не знайдено: {e}")
-        return None
-    except IndexError as e:
-        print(f"Індекс поза межами: {e}")
-        return None
-    except FileNotFoundError as e:
-        print(f"Файл не знайдено: {e}")
-        return None
-    except Exception as e:
-        print(f"Невідома помилка: {type(e).__name__}: {e}")
-        return None
+def infinite_fibonacci():
+    """Генерує числа Фібоначчі нескінченно"""
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
 
 # Використання
-def divide(a, b):
-    return a / b
+fib = infinite_fibonacci()
+for i in range(10):
+    print(next(fib))
+# Виведе: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34
+\`\`\`
 
-result = safe_operation(divide, 10, 2)  # 5.0
-result = safe_operation(divide, 10, 0)  # None (обробка помилки)
-\`\`\``
+**Приклад 3: Нескінченні степені двійки**
+
+\`\`\`python
+def powers_of_two():
+    """Генерує степені двійки нескінченно"""
+    power = 1
+    while True:
+        yield power
+        power *= 2
+
+# Використання
+powers = powers_of_two()
+for i in range(8):
+    print(next(powers))
+# Виведе: 1, 2, 4, 8, 16, 32, 64, 128
+\`\`\`
+
+**Важливо:** Завжди обмежуйте нескінченні генератори, інакше програма зависне!
+`
+      },
+      {
+        title: "Оптимізація з генераторами",
+        content: `Генератори дозволяють оптимізувати код, особливо при роботі з великими обсягами даних.
+
+**Приклад 1: Обробка великого файлу**
+
+\`\`\`python
+# Без генератора (завантажує весь файл в пам'ять)
+def read_file_all(filename):
+    with open(filename, 'r') as f:
+        return f.readlines()  # Завантажує всі рядки
+
+# З генератором (обробляє по одному рядку)
+def read_file_lines(filename):
+    with open(filename, 'r') as f:
+        for line in f:
+            yield line.strip()  # Генерує по одному рядку
+
+# Використання
+for line in read_file_lines('large_file.txt'):
+    process(line)  # Обробляємо по одному рядку
+\`\`\`
+
+**Приклад 2: Фільтрація та перетворення**
+
+\`\`\`python
+# Без генератора (створює проміжні списки)
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+squared = [x**2 for x in numbers]
+filtered = [x for x in squared if x % 2 == 0]
+result = sum(filtered)
+
+# З генератором (без проміжних списків)
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+result = sum(x**2 for x in numbers if (x**2) % 2 == 0)
+\`\`\`
+
+**Приклад 3: Пайплайн обробки даних**
+
+\`\`\`python
+def read_numbers():
+    """Генерує числа"""
+    for i in range(100):
+        yield i
+
+def square(numbers):
+    """Підносить до квадрату"""
+    for num in numbers:
+        yield num ** 2
+
+def filter_even(numbers):
+    """Фільтрує парні"""
+    for num in numbers:
+        if num % 2 == 0:
+            yield num
+
+# Композиція генераторів
+pipeline = filter_even(square(read_numbers()))
+for num in pipeline:
+    print(num)
+\`\`\`
+
+**Переваги:**
+
+1. **Економія пам'яті** — не створює проміжні списки
+2. **Швидкість** — обробка по одному елементу
+3. **Гнучкість** — легко комбінувати операції`
+      },
+      {
+        title: "Практичні поради",
+        content: `**Коли використовувати генераторні вирази:**
+
+✅ Для одноразового використання
+✅ Як аргументи функцій (sum, max, min)
+✅ Для великих обсягів даних
+✅ Коли не потрібен доступ до всіх значень
+
+**Коли використовувати генераторні функції:**
+
+✅ Для складнішої логіки
+✅ Коли потрібно використати кілька разів
+✅ Для рекурсивних генераторів
+✅ Коли потрібна документація
+
+**Коли використовувати yield from:**
+
+✅ Для композиції генераторів
+✅ Для делегування генерації
+✅ Для спрощення коду
+
+**Уникайте:**
+
+❌ Перетворення генераторів у списки без потреби
+❌ Використання генераторів кілька разів (створюйте нові)
+❌ Нескінченні генератори без обмежень
+❌ Складні генераторні вирази (краще функція)`
+      },
+      {
+        title: "Підсумок",
+        content: `На цьому уроці ми вивчили розширені можливості генераторів:
+
+**Ключові концепції:**
+
+1. **Генераторні вирази** — компактний синтаксис для створення генераторів
+2. **yield from** — делегування генерації іншому генератору
+3. **Нескінченні генератори** — генератори без кінця (з обмеженнями!)
+4. **Оптимізація** — використання генераторів для економії пам'яті
+
+**Синтаксис:**
+
+\`\`\`python
+# Генераторне вираз
+gen = (x**2 for x in range(10))
+
+# yield from
+def generator():
+    yield from other_generator()
+\`\`\`
+
+**Наступний крок:**
+
+У наступному уроці ми дізнаємося про ітератори та протокол ітерації в Python.`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад 1: Обробка різних типів помилок",
-      code: `# Обробка кількох типів помилок
-def process_number(number_str):
-    try:
-        number = int(number_str)
-        result = 100 / number
-        my_list = [1, 2, 3]
-        value = my_list[number]
-    except ValueError:
-        print("Помилка: ви ввели не число!")
-    except ZeroDivisionError:
-        print("Помилка: ділення на нуль!")
-    except IndexError:
-        print("Помилка: індекс поза межами списку!")
-    except Exception as e:
-        print(f"Невідома помилка: {e}")
-
-process_number("2")  # Працює
-process_number("abc")  # ValueError
-process_number("0")  # ZeroDivisionError
-process_number("10")  # IndexError`,
-      explanation: "Демонструє обробку кількох конкретних типів помилок."
-    },
-    {
-      title: "Приклад 2: Кілька типів в одному except",
-      code: `# Обробка кількох типів в одному блоці
-try:
-    # код, який може викликати різні помилки
-    data = {"name": "Олексій"}
-    value = data["age"] + 5
-except (KeyError, TypeError) as e:
-    print(f"Помилка доступу або типу: {e}")
-except (ValueError, ZeroDivisionError) as e:
-    print(f"Помилка значення або ділення: {e}")`,
-      explanation: "Показує обробку кількох типів помилок в одному except блоці."
-    },
-    {
-      title: "Приклад 3: Отримання інформації про помилку",
-      code: `# Отримання детальної інформації про помилку
-try:
-    number = int("abc")
-except ValueError as e:
-    print(f"Помилка: {e}")
-    print(f"Тип помилки: {type(e).__name__}")
-    print(f"Повідомлення: {str(e)}")`,
-      explanation: "Демонструє як отримати детальну інформацію про помилку."
-    },
-    {
-      title: "Приклад 4: Логування помилок",
-      code: `# Логування помилок
-import logging
-
-logging.basicConfig(level=logging.ERROR)
-
-try:
-    with open("неіснуючий.txt", "r") as f:
-        content = f.read()
-except FileNotFoundError as e:
-    logging.error(f"Файл не знайдено: {e}")
-except Exception as e:
-    logging.error(f"Помилка: {e}")`,
-      explanation: "Показує як логувати помилки для відлагодження."
-    },
-    {
-      title: "Приклад 5: Загальна обробка всіх помилок",
-      code: `# Обробка всіх можливих помилок
-def safe_function(func, *args):
-    try:
-        return func(*args)
-    except Exception as e:
-        print(f"Помилка {type(e).__name__}: {e}")
-        return None
+      title: "Генераторне вираз",
+      code: `# Генераторне вираз для квадратів
+squares = (x**2 for x in range(10))
 
 # Використання
-def divide(a, b):
-    return a / b
+for square in squares:
+    print(square)
+# Виведе: 0, 1, 4, 9, 16, 25, 36, 49, 64, 81`,
+      explanation: "Компактний спосіб створення генератора квадратів чисел."
+    },
+    {
+      title: "Генераторне вираз з умовою",
+      code: `# Парні числа
+evens = (x for x in range(20) if x % 2 == 0)
 
-result = safe_function(divide, 10, 0)`,
-      explanation: "Демонструє загальну обробку всіх помилок через Exception."
+for num in evens:
+    print(num)
+# Виведе: 0, 2, 4, 6, 8, 10, 12, 14, 16, 18`,
+      explanation: "Генераторне вираз з умовою для фільтрації значень."
+    },
+    {
+      title: "yield from",
+      code: `def first_numbers():
+    yield from range(1, 6)
+
+def last_numbers():
+    yield from range(6, 11)
+
+def all_numbers():
+    yield from first_numbers()
+    yield from last_numbers()
+
+for num in all_numbers():
+    print(num)
+# Виведе: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10`,
+      explanation: "Демонструє використання yield from для композиції генераторів."
+    },
+    {
+      title: "Нескінченний генератор",
+      code: `def infinite_counter(start=0):
+    while True:
+        yield start
+        start += 1
+
+# Використання з обмеженням
+counter = infinite_counter()
+for i in range(10):
+    print(next(counter))
+# Виведе: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9`,
+      explanation: "Нескінченний генератор, який генерує числа без кінця. Важливо обмежувати його використання."
+    },
+    {
+      title: "Генераторне вираз як аргумент",
+      code: `# Використання генераторного виразу як аргументу
+total = sum(x**2 for x in range(10))
+print(total)  # 285
+
+max_value = max(x * 2 for x in range(10))
+print(max_value)  # 18`,
+      explanation: "Генераторні вирази можна використовувати безпосередньо як аргументи функцій."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Обробляти загальний Exception перед конкретними типами",
-      explanation: "Якщо except Exception йде першим, конкретні типи ніколи не спрацюють.",
-      correctApproach: "Спочатку обробляй конкретні типи, потім загальний Exception"
+      mistake: "Плутанина між генераторними виразами та list comprehensions",
+      explanation: "Круглі дужки створюють генератор, квадратні — список.",
+      correctApproach: `# Генератор (круглі дужки)
+gen = (x**2 for x in range(10))
+
+# Список (квадратні дужки)
+lst = [x**2 for x in range(10)]`
     },
     {
-      mistake: "Використовувати except: без типу",
-      explanation: "except: без типу ловить навіть SystemExit та KeyboardInterrupt, що може бути небажаним.",
-      correctApproach: "Використовуй except Exception as e: замість except:"
+      mistake: "Спроба використати нескінченний генератор без обмеження",
+      explanation: "Нескінченні генератори можуть зависнути програму, якщо не обмежити їх.",
+      correctApproach: `# Неправильно:
+def infinite():
+    while True:
+        yield 1
+
+for num in infinite():  # Зависне!
+    print(num)
+
+# Правильно:
+for i, num in enumerate(infinite()):
+    if i >= 10:
+        break
+    print(num)`
     },
     {
-      mistake: "Не логувати помилки",
-      explanation: "Без логування важко відлагоджувати програму та розуміти, що пішло не так.",
-      correctApproach: "Завжди логуй помилки, особливо в продакшн коді"
+      mistake: "Використання yield from з неітерабельними об'єктами",
+      explanation: "yield from працює тільки з ітерабельними об'єктами.",
+      correctApproach: `# Неправильно:
+def gen():
+    yield from 5  # Помилка! 5 не ітерабельний
+
+# Правильно:
+def gen():
+    yield from range(5)  # range() ітерабельний`
     },
     {
-      mistake: "Приховувати важливі помилки",
-      explanation: "Обробка всіх помилок однаково може приховати критичні проблеми.",
-      correctApproach: "Обробляй різні типи помилок по-різному, залежно від їх важливості"
+      mistake: "Перетворення генераторного виразу в список без потреби",
+      explanation: "Якщо не потрібен доступ до всіх значень, краще залишити генератор.",
+      correctApproach: `# Неправильно (якщо не потрібен список):
+gen = (x**2 for x in range(1000000))
+lst = list(gen)  # Втрачаємо переваги генератора
+
+# Правильно:
+gen = (x**2 for x in range(1000000))
+for square in gen:  # Обробляємо по одному
+    process(square)`
     }
   ],
   
-  summary: `На цьому уроці ми вивчили:
+  summary: `На цьому уроці ми вивчили розширені можливості генераторів:
 
-1. **Основні типи винятків** - ValueError, TypeError, ZeroDivisionError, IndexError, KeyError, FileNotFoundError
-2. **Ієрархія винятків** - всі винятки успадковуються від Exception
-3. **Обробка кількох типів** - кілька except блоків або кілька типів в одному
-4. **Отримання інформації** - використання as для отримання деталей помилки
-5. **Загальна обробка** - except Exception для всіх помилок
-6. **Логування помилок** - важливість логування для відлагодження
+1. **Генераторні вирази** — компактний синтаксис (x**2 for x in range(10))
+2. **yield from** — делегування генерації іншим генераторам
+3. **Нескінченні генератори** — генератори без кінця (з обмеженнями!)
+4. **Оптимізація** — використання генераторів для економії пам'яті та швидкості
 
-Тепер ви вмієте обробляти різні типи помилок та логувати їх!
-
-Наступний урок - створення власних винятків!`,
+Генераторні вирази та yield from роблять роботу з генераторами ще більш потужною та зручною.`,
   
   practiceTask: {
-    title: "Створення безпечної функції з обробкою різних помилок",
-    description: "Створіть функцію, яка обробляє різні типи помилок",
-    problemStatement: `Напишіть функцію safe_calculate, яка:
-1. Приймає два аргументи та операцію (+, -, *, /)
-2. Виконує операцію між двома числами
-3. Обробляє різні типи помилок:
-   - ValueError (якщо аргументи не числа)
-   - ZeroDivisionError (при діленні на нуль)
-   - TypeError (якщо операція не підтримується)
-   - Інші несподівані помилки
-4. Повертає результат або None при помилці
-5. Виводить зрозумілі повідомлення про кожен тип помилки
+    title: "Генераторні вирази та yield from",
+    description: "Створіть генератори з використанням генераторних виразів та yield from",
+    problemStatement: `Створіть програму з такими завданнями:
 
-**Важливо:** Напишіть визначення функції та викличте її з тестовими значеннями для перевірки.`,
+1. **Використайте генераторне вираз** для створення генератора, який генерує куби чисел від 1 до 10
+   - Використайте синтаксис: (x**3 for x in range(1, 11))
+
+2. **Створіть генераторну функцію** з використанням yield from:
+   - Функція \`combine_ranges(start1, end1, start2, end2)\` має генерувати числа з двох діапазонів
+   - Використайте yield from для делегування генерації range()
+
+3. **Створіть нескінченний генератор** парних чисел:
+   - Функція \`infinite_evens()\` має генерувати парні числа нескінченно
+   - Обмежте виведення до перших 10 значень
+
+4. **Використайте генераторне вираз** для обчислення суми квадратів чисел від 1 до 20
+
+**Вимоги:**
+- Використовуйте генераторні вирази там, де це можливо
+- Використовуйте yield from для композиції генераторів
+- Не забудьте обмежити нескінченний генератор
+- Введіть значення напряму в коді (не використовуйте input())`,
     outputFormat: `Приклад виведення:
-Результат: 15.0
-Помилка: ділення на нуль неможливе!
-Помилка значення: could not convert string to float: 'abc'`,
+
+=== Куби чисел ===
+1
+8
+27
+64
+125
+216
+343
+512
+729
+1000
+=== Комбіновані діапазони ===
+1
+2
+3
+10
+11
+12
+=== Перші 10 парних чисел ===
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+=== Сума квадратів від 1 до 20 ===
+2870`,
     examples: [
       {
-        input: "",
-        output: "Результат: 15.0\nПомилка: ділення на нуль неможливе!\nПомилка значення: could not convert string to float: 'abc'",
-        explanation: "Функція обробляє різні випадки: успішне обчислення, ділення на нуль та некоректне введення"
+        output: `=== Куби чисел ===
+1
+8
+27
+64
+125
+216
+343
+512
+729
+1000
+=== Комбіновані діапазони ===
+1
+2
+3
+10
+11
+12
+=== Перші 10 парних чисел ===
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+
+=== Сума квадратів від 1 до 20 ===
+2870`,
+        explanation: "Демонструє роботу всіх генераторів: генераторні вирази, yield from, нескінченний генератор та використання з функціями."
       }
     ],
     solution: {
-      code: `# Безпечна функція для обчислень
-def safe_calculate(a, b, operation):
-    try:
-        # Перетворюємо в числа
-        num1 = float(a)
-        num2 = float(b)
-        
-        # Виконуємо операцію
-        if operation == '+':
-            result = num1 + num2
-        elif operation == '-':
-            result = num1 - num2
-        elif operation == '*':
-            result = num1 * num2
-        elif operation == '/':
-            result = num1 / num2
-        else:
-            raise TypeError(f"Операція '{operation}' не підтримується")
-        
-        print(f"Результат: {result}")
-        return result
-        
-    except ValueError as e:
-        print(f"Помилка значення: {e}")
-        return None
-    except ZeroDivisionError:
-        print("Помилка: ділення на нуль неможливе!")
-        return None
-    except TypeError as e:
-        print(f"Помилка типу: {e}")
-        return None
-    except Exception as e:
-        print(f"Невідома помилка: {type(e).__name__}: {e}")
-        return None
+      code: `# 1. Генераторне вираз для кубів
+print("=== Куби чисел ===")
+cubes = (x**3 for x in range(1, 11))
+for cube in cubes:
+    print(cube)
 
-# Тестування
-safe_calculate(10, 5, '+')
-safe_calculate(10, 0, '/')
-safe_calculate('abc', 5, '+')`,
-      explanation: "Рішення обробляє різні типи помилок та повертає зрозумілі повідомлення."
+# 2. Генераторна функція з yield from
+def combine_ranges(start1, end1, start2, end2):
+    """
+    Генерує числа з двох діапазонів
+    """
+    yield from range(start1, end1)
+    yield from range(start2, end2)
+
+print("=== Комбіновані діапазони ===")
+for num in combine_ranges(1, 4, 10, 13):
+    print(num)
+
+# 3. Нескінченний генератор парних чисел
+def infinite_evens():
+    """
+    Генерує парні числа нескінченно
+    """
+    num = 0
+    while True:
+        yield num
+        num += 2
+print("=== Перші 10 парних чисел ===")
+evens = infinite_evens()
+for i in range(10):
+    print(next(evens))
+
+# 4. Генераторне вираз для суми квадратів
+print()
+print("=== Сума квадратів від 1 до 20 ===")
+total = sum(x**2 for x in range(1, 21))
+print(total)`,
+      explanation: "Рішення демонструє різні способи використання генераторів: генераторні вирази для кубів та суми квадратів, yield from для композиції діапазонів, та нескінченний генератор з обмеженням."
     },
     hints: [
-      "Використовуй float() для перетворення аргументів",
-      "Обробляй ValueError для некоректних значень",
-      "Обробляй ZeroDivisionError для ділення на нуль",
-      "Використовуй raise TypeError для непідтримуваних операцій",
-      "Використовуй except Exception для несподіваних помилок"
+      "Використовуйте круглі дужки для генераторних виразів: (x**3 for x in range(1, 11))",
+      "Для yield from використайте: yield from range(start, end)",
+      "Нескінченний генератор потребує while True та обмеження при використанні",
+      "Генераторне вираз можна використати безпосередньо як аргумент sum()",
+      "Не забудьте обмежити нескінченний генератор циклом з range(10)"
     ],
-    difficulty: "beginner"
+    difficulty: "intermediate"
   },
   
   quiz: {
@@ -552,83 +653,108 @@ safe_calculate('abc', 5, '+')`,
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Який тип помилки виникне при int('abc')?",
+        question: "Який синтаксис використовується для генераторних виразів?",
         options: [
-          "ValueError",
-          "TypeError",
-          "ZeroDivisionError",
-          "IndexError"
+          "Круглі дужки: (x**2 for x in range(10))",
+          "Квадратні дужки: [x**2 for x in range(10)]",
+          "Фігурні дужки: {x**2 for x in range(10)}",
+          "Без дужок: x**2 for x in range(10)"
         ],
         correctAnswer: 0,
-        explanation: "ValueError виникає коли значення не може бути перетворене в потрібний тип."
+        explanation: "Генераторні вирази використовують круглі дужки. Квадратні дужки створюють list comprehension."
       },
       {
         id: "q2",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе цей код?\n\n```python\ntry:\n    my_list = [1, 2, 3]\n    value = my_list[10]\nexcept IndexError as e:\n    print(f'Помилка: {e}')\n```",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що робить yield from?",
         options: [
-          "Помилка: list index out of range",
-          "Помилку",
-          "Нічого",
-          "3"
+          "Делегує генерацію іншому генератору",
+          "Завершує генератор",
+          "Створює список",
+          "Викликає помилку"
         ],
         correctAnswer: 0,
-        explanation: "Код обробляє IndexError та виводить повідомлення про помилку з деталями."
+        explanation: "yield from делегує генерацію значень іншому генератору або ітерабельному об'єкту."
       },
       {
         id: "q3",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Як правильно обробити кілька типів помилок в одному блоці?",
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Що створить цей код?\n\n```python\nsquares = (x**2 for x in range(5))\nprint(type(squares))\n```",
         options: [
-          "except (TypeError, ValueError):",
-          "except TypeError, ValueError:",
-          "except TypeError or ValueError:",
-          "except TypeError and ValueError:"
+          "<class 'generator'>",
+          "<class 'list'>",
+          "<class 'tuple'>",
+          "Помилку"
         ],
         correctAnswer: 0,
-        explanation: "Правильний синтаксис: except (TypeError, ValueError): - типи в дужках через кому."
+        explanation: "Генераторне вираз створює об'єкт типу generator, а не список."
       },
       {
         id: "q4",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Чому краще використовувати except Exception as e: замість except:?",
+        question: "Чи можна створити нескінченний генератор?",
         options: [
-          "except Exception не ловить SystemExit та KeyboardInterrupt",
-          "except Exception швидше працює",
-          "except Exception займає менше пам'яті",
-          "Немає різниці"
+          "Так, але потрібно обмежити його використання",
+          "Ні, це неможливо",
+          "Тільки з yield from",
+          "Тільки з генераторними виразами"
         ],
         correctAnswer: 0,
-        explanation: "except Exception не ловить системні винятки як SystemExit та KeyboardInterrupt, що часто є бажаним поведінкою."
+        explanation: "Так, можна створити нескінченний генератор з while True, але важливо обмежити його використання, інакше програма зависне."
       },
       {
         id: "q5",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що не так з цим кодом?\n\n```python\ntry:\n    result = 10 / 0\nexcept Exception:\n    print('Помилка')\nexcept ZeroDivisionError:\n    print('Ділення на нуль')\n```",
+        question: "Що виведе цей код?\n\n```python\ndef gen1():\n    yield from range(3)\n\ndef gen2():\n    yield from range(3, 6)\n\ndef all():\n    yield from gen1()\n    yield from gen2()\n\nfor x in all():\n    print(x)\n```",
         options: [
-          "ZeroDivisionError ніколи не спрацює, бо Exception йде першим",
-          "Неправильний синтаксис except",
-          "Неправильний синтаксис try",
-          "Все правильно"
+          "0, 1, 2, 3, 4, 5",
+          "3, 4, 5, 0, 1, 2",
+          "Помилку",
+          "Нічого"
         ],
         correctAnswer: 0,
-        explanation: "Конкретні типи помилок мають йти перед загальним Exception, інакше вони ніколи не спрацюють."
+        explanation: "yield from спочатку генерує значення з gen1() (0, 1, 2), потім з gen2() (3, 4, 5)."
       },
       {
         id: "q6",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Який тип помилки виникне при my_dict['неіснуючий_ключ']?",
+        question: "Коли краще використовувати генераторні вирази замість генераторних функцій?",
         options: [
-          "KeyError",
-          "ValueError",
-          "TypeError",
-          "IndexError"
+          "Для простих одноразових генераторів",
+          "Для складних генераторів з багатьма умовами",
+          "Для рекурсивних генераторів",
+          "Коли потрібна документація"
         ],
         correctAnswer: 0,
-        explanation: "KeyError виникає коли ключ не знайдено в словнику."
+        explanation: "Генераторні вирази краще використовувати для простих одноразових генераторів. Для складнішої логіки краще функції."
+      },
+      {
+        id: "q7",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "Генераторне вираз можна використати як аргумент функції.",
+        options: [
+          "True",
+          "False"
+        ],
+        correctAnswer: 0,
+        explanation: "True. Генераторні вирази можна використовувати безпосередньо як аргументи функцій, наприклад: sum(x**2 for x in range(10))."
+      },
+      {
+        id: "q8",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Що станеться, якщо використати нескінченний генератор без обмеження?",
+        options: [
+          "Програма зависне",
+          "Виникне помилка",
+          "Генератор автоматично зупиниться",
+          "Поверне None"
+        ],
+        correctAnswer: 0,
+        explanation: "Нескінченний генератор без обмеження призведе до нескінченного циклу, і програма зависне."
       }
     ],
-    timeLimit: 10,
+    timeLimit: 15,
     passingScore: 70
   }
 }
+

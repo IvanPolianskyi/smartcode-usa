@@ -1,13 +1,13 @@
 /**
- * Lesson 06-8: Композиція vs наслідування
+ * Lesson 04-8: Композиція vs наслідування
  * Full educational content
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
-export const lesson_06_8 = {
-  lessonId: "lesson-06-8",
-  moduleId: "module-06",
+export const lesson_04_8 = {
+  lessonId: "lesson-04-8",
+  moduleId: "module-04",
   order: 8,
   title: "Композиція vs наслідування",
   
@@ -19,7 +19,7 @@ export const lesson_06_8 = {
   ],
   
   estimatedTime: 75,
-  prerequisites: ["lesson-06-7"],
+  prerequisites: ["lesson-04-7"],
   
   videoUrl: "",
   

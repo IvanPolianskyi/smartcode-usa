@@ -1,5 +1,5 @@
 /**
- * Lesson 06-4: Наслідування
+ * Lesson 06-4: Практика: задачі з декораторами
  * Full educational content
  */
 
@@ -9,16 +9,16 @@ export const lesson_06_4 = {
   lessonId: "lesson-06-4",
   moduleId: "module-06",
   order: 4,
-  title: "Наслідування",
+  title: "Практика: задачі з декораторами",
   
   learningObjectives: [
-    "Створювати дочірні класи",
-    "Перевизначати методи",
-    "Використовувати super()",
-    "Розуміти MRO (Method Resolution Order)"
+    "Закріпити знання про декоратори",
+    "Створювати складні декоратори",
+    "Комбінувати різні декоратори",
+    "Розв'язувати практичні задачі"
   ],
   
-  estimatedTime: 90,
+  estimatedTime: 120,
   prerequisites: ["lesson-06-3"],
   
   videoUrl: "",
@@ -26,486 +26,540 @@ export const lesson_06_4 = {
   theory: {
     sections: [
       {
-        title: "Що таке наслідування?",
-        content: `**Наслідування** - це механізм ООП, який дозволяє створювати нові класи на основі існуючих.
+        title: "Огляд вивченого",
+        content: `На цьому уроці ми закріпимо всі знання з модуля 08 про декоратори:
 
-**Аналогія:**
-Уявіть тварину. Всі тварини мають спільні властивості (ім'я, вік) та дії (їсти, спати). Але собака має додаткові властивості (порода) та дії (гавкати), а кіт - інші (мурчати).
+**Що ми вивчили:**
+1. **Вступ до декораторів** — що таке декоратори та як їх використовувати
+2. **Створення власних декораторів** — functools.wraps, декоратори з параметрами
+3. **Декоратори класів та методів** — @property, @staticmethod, @classmethod
+4. **Практичні приклади** — логування, вимірювання часу, валідація
 
-**Переваги наслідування:**
-- ✅ Повторне використання коду
-- ✅ Розширення функціональності
-- ✅ Логічна організація класів
-- ✅ Легше підтримувати код
+**Мета цього уроку:**
+- Об'єднати всі концепції
+- Створити складніші декоратори
+- Розв'язати практичні задачі
+- Покращити навички програмування`
+      },
+      {
+        title: "Задача 1: Декоратор для повторення виконання",
+        content: `**Завдання:** Створіть декоратор, який повторює виконання функції задану кількість разів.
 
-**Термінологія:**
-- **Базовий клас (батьківський, суперклас)** - клас, від якого наслідуються інші
-- **Дочірній клас (підклас)** - клас, який наслідує від базового
-- **Перевизначення** - зміна методу батьківського класу в дочірньому
-
-**Синтаксис:**
+**Рішення:**
 
 \`\`\`python
-class ДочірнійКлас(БазовийКлас):
-    # нові атрибути та методи
-    pass
+from functools import wraps
+
+def repeat(times):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            results = []
+            for _ in range(times):
+                result = func(*args, **kwargs)
+                results.append(result)
+            return results[-1]  # Повертаємо останній результат
+        return wrapper
+    return decorator
+
+@repeat(times=3)
+def greet(name):
+    print(f'Привіт, {name}!')
+    return f'Привіт, {name}!'
+
+greet('Олександр')
+# Привіт, Олександр!
+# Привіт, Олександр!
+# Привіт, Олександр!
+\`\`\`
+
+**Покращена версія з можливістю повернути всі результати:**
+
+\`\`\`python
+def repeat(times, return_all=False):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            results = []
+            for _ in range(times):
+                result = func(*args, **kwargs)
+                results.append(result)
+            return results if return_all else results[-1]
+        return wrapper
+    return decorator
 \`\`\``
       },
       {
-        title: "Просте наслідування",
-        content: `**Приклад: Базовий клас Animal та дочірній клас Dog**
+        title: "Задача 2: Декоратор для обробки помилок",
+        content: `**Завдання:** Створіть декоратор, який обробляє помилки та повторює виконання при невдачі.
+
+**Рішення:**
 
 \`\`\`python
-class Animal:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-    
-    def eat(self):
-        print(f"{self.name} їсть")
-    
-    def sleep(self):
-        print(f"{self.name} спить")
-    
-    def get_info(self):
-        return f"{self.name}, {self.age} років"
+from functools import wraps
+import time
 
-# Дочірній клас Dog наслідує від Animal
-class Dog(Animal):
-    def __init__(self, name, age, breed):
-        super().__init__(name, age)  # Викликаємо конструктор батьківського класу
-        self.breed = breed
-    
-    def bark(self):
-        print(f"{self.name} гавкає: Гав-гав!")
+def retry(max_attempts=3, delay=1, exceptions=(Exception,)):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            last_exception = None
+            for attempt in range(1, max_attempts + 1):
+                try:
+                    return func(*args, **kwargs)
+                except exceptions as e:
+                    last_exception = e
+                    if attempt < max_attempts:
+                        print(f'Спроба {attempt} невдала: {e}. Повтор через {delay}с...')
+                        time.sleep(delay)
+                    else:
+                        print(f'Всі {max_attempts} спроби невдалі')
+            raise last_exception
+        return wrapper
+    return decorator
 
-# Створюємо об'єкти
-animal = Animal("Тварина", 5)
-dog = Dog("Рекс", 3, "Лабрадор")
+@retry(max_attempts=3, delay=1)
+def risky_function():
+    import random
+    if random.random() < 0.7:  # 70% шанс помилки
+        raise ValueError('Випадкова помилка!')
+    return 'Успіх!'
 
-animal.eat()        # Тварина їсть
-dog.eat()           # Рекс їсть (успадкований метод)
-dog.bark()          # Рекс гавкає: Гав-гав! (власний метод)
-print(dog.get_info())  # Рекс, 3 років (успадкований метод)
-\`\`\`
-
-**Що успадковується:**
-- ✅ Всі методи базового класу
-- ✅ Всі атрибути (якщо вони встановлені в __init__)
-
-**Що можна додати:**
-- ✅ Нові атрибути
-- ✅ Нові методи
-- ✅ Перевизначити існуючі методи`
-      },
-      {
-        title: "super() - виклик батьківського класу",
-        content: `**super()** - функція для доступу до методів батьківського класу.
-
-**Навіщо потрібен super():**
-- Викликати методи батьківського класу
-- Не дублювати код
-- Правильно ініціалізувати об'єкт
-
-**Синтаксис:**
-
-\`\`\`python
-class ДочірнійКлас(БазовийКлас):
-    def __init__(self, параметри):
-        super().__init__(параметри_базового)  # Виклик батьківського __init__
-        # додаткові атрибути
-\`\`\`
-
-**Приклад:**
-
-\`\`\`python
-class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-    
-    def introduce(self):
-        print(f"Привіт, мене звати {self.name}")
-
-class Student(Person):
-    def __init__(self, name, age, student_id):
-        super().__init__(name, age)  # Викликаємо __init__ батьківського класу
-        self.student_id = student_id
-    
-    def introduce(self):
-        super().introduce()  # Викликаємо метод батьківського класу
-        print(f"Мій студентський ID: {self.student_id}")
-
-student = Student("Олексій", 20, "ST123")
-student.introduce()
-# Виведе:
-# Привіт, мене звати Олексій
-# Мій студентський ID: ST123
+result = risky_function()
+print(result)
 \`\`\``
       },
       {
-        title: "Перевизначення методів",
-        content: `**Перевизначення** - це зміна реалізації методу батьківського класу в дочірньому.
+        title: "Задача 3: Декоратор для кешування результатів",
+        content: `**Завдання:** Створіть декоратор для кешування результатів функцій (мемоізація).
 
-**Приклад:**
-
-\`\`\`python
-class Shape:
-    def __init__(self, name):
-        self.name = name
-    
-    def area(self):
-        return 0  # Базовий метод
-    
-    def get_info(self):
-        return f"{self.name}, площа: {self.area()}"
-
-class Rectangle(Shape):
-    def __init__(self, width, height):
-        super().__init__("Прямокутник")
-        self.width = width
-        self.height = height
-    
-    def area(self):
-        return self.width * self.height  # Перевизначений метод
-
-class Circle(Shape):
-    def __init__(self, radius):
-        super().__init__("Коло")
-        self.radius = radius
-    
-    def area(self):
-        return 3.14 * self.radius ** 2  # Перевизначений метод
-
-# Використання
-rect = Rectangle(5, 3)
-circle = Circle(4)
-
-print(rect.get_info())   # Прямокутник, площа: 15
-print(circle.get_info()) # Коло, площа: 50.24
-\`\`\`
-
-**Важливо:**
-- Дочірній клас може перевизначити будь-який метод батьківського
-- Можна викликати батьківський метод через super()
-- Перевизначений метод замінює батьківський для об'єктів дочірнього класу`
-      },
-      {
-        title: "Множинне наслідування",
-        content: `**Множинне наслідування** - клас може наслідувати від кількох батьківських класів.
-
-**Синтаксис:**
+**Рішення:**
 
 \`\`\`python
-class ДочірнійКлас(Батьківський1, Батьківський2):
-    pass
-\`\`\`
+from functools import wraps
 
-**Приклад:**
+def cache(func):
+    cache_dict = {}
+    
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        # Створюємо ключ з аргументів
+        key = str(args) + str(sorted(kwargs.items()))
+        
+        if key in cache_dict:
+            print(f'Використовуємо кеш для {func.__name__}')
+            return cache_dict[key]
+        
+        result = func(*args, **kwargs)
+        cache_dict[key] = result
+        print(f'Обчислено та збережено в кеш для {func.__name__}')
+        return result
+    
+    # Додаємо метод для очищення кешу
+    wrapper.clear_cache = lambda: cache_dict.clear()
+    wrapper.cache_info = lambda: {
+        'size': len(cache_dict),
+        'keys': list(cache_dict.keys())
+    }
+    
+    return wrapper
 
-\`\`\`python
-class Flyable:
-    def fly(self):
-        print("Літає")
+@cache
+def fibonacci(n):
+    """Обчислює n-те число Фібоначчі"""
+    if n < 2:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
 
-class Swimmable:
-    def swim(self):
-        print("Плаває")
-
-class Duck(Flyable, Swimmable):
-    def quack(self):
-        print("Кря-кря")
-
-duck = Duck()
-duck.fly()    # Літає (від Flyable)
-duck.swim()   # Плаває (від Swimmable)
-duck.quack()  # Кря-кря (власний метод)
-\`\`\`
-
-**MRO (Method Resolution Order):**
-Python визначає порядок пошуку методів при множинному наслідуванні. Використовується алгоритм C3.
-
-**Перевірка MRO:**
-
-\`\`\`python
-print(Duck.__mro__)
-# Показує порядок пошуку методів
+print(fibonacci(10))  # Обчислює
+print(fibonacci(10))  # Використовує кеш
+print(fibonacci.cache_info())  # Інформація про кеш
 \`\`\``
       },
       {
-        title: "Практичний приклад: Ієрархія транспортних засобів",
-        content: `**Повний приклад з наслідуванням:**
+        title: "Задача 4: Декоратор для обмеження швидкості викликів",
+        content: `**Завдання:** Створіть декоратор, який обмежує кількість викликів функції за певний час.
+
+**Рішення:**
 
 \`\`\`python
-class Vehicle:
-    def __init__(self, brand, model, year):
-        self.brand = brand
-        self.model = model
-        self.year = year
-        self.speed = 0
-    
-    def start(self):
-        print(f"{self.brand} {self.model} запущено")
-    
-    def stop(self):
-        print(f"{self.brand} {self.model} зупинено")
-        self.speed = 0
-    
-    def get_info(self):
-        return f"{self.brand} {self.model} {self.year}"
+from functools import wraps
+import time
+from collections import deque
 
-class Car(Vehicle):
-    def __init__(self, brand, model, year, doors):
-        super().__init__(brand, model, year)
-        self.doors = doors
-    
-    def honk(self):
-        print("Біп-біп!")
+def rate_limit(max_calls, period):
+    """Обмежує кількість викликів за період часу"""
+    def decorator(func):
+        calls = deque()
+        
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            now = time.time()
+            # Видаляємо старі виклики
+            while calls and calls[0] < now - period:
+                calls.popleft()
+            
+            if len(calls) >= max_calls:
+                wait_time = period - (now - calls[0])
+                raise Exception(f'Перевищено ліміт. Зачекайте {wait_time:.2f} секунд')
+            
+            calls.append(now)
+            return func(*args, **kwargs)
+        
+        return wrapper
+    return decorator
 
-class Motorcycle(Vehicle):
-    def __init__(self, brand, model, year, has_sidecar):
-        super().__init__(brand, model, year)
-        self.has_sidecar = has_sidecar
-    
-    def wheelie(self):
-        print("Виконує вілі!")
+@rate_limit(max_calls=3, period=10)
+def api_call():
+    print('API виклик виконано')
+    return 'Success'
 
-# Використання
-car = Car("Toyota", "Camry", 2020, 4)
-motorcycle = Motorcycle("Yamaha", "R1", 2021, False)
+# Перші 3 виклики працюють
+for i in range(3):
+    api_call()
 
-car.start()           # Toyota Camry запущено (успадковано)
-car.honk()            # Біп-біп! (власний метод)
-print(car.get_info()) # Toyota Camry 2020 (успадковано)
-
-motorcycle.start()    # Yamaha R1 запущено (успадковано)
-motorcycle.wheelie()  # Виконує вілі! (власний метод)
+# 4-й виклик викличе помилку
+try:
+    api_call()
+except Exception as e:
+    print(e)
 \`\`\``
+      },
+      {
+        title: "Задача 5: Комбінування декораторів",
+        content: `**Завдання:** Створіть функцію з кількома декораторами для комплексної обробки.
+
+**Рішення:**
+
+\`\`\`python
+from functools import wraps
+import time
+import datetime
+
+def log_calls(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        print(f'[{timestamp}] Викликається {func.__name__}')
+        result = func(*args, **kwargs)
+        print(f'[{timestamp}] {func.__name__} завершено')
+        return result
+    return wrapper
+
+def measure_time(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f'{func.__name__} виконався за {end - start:.4f} секунд')
+        return result
+    return wrapper
+
+def cache(func):
+    cache_dict = {}
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        key = str(args) + str(sorted(kwargs.items()))
+        if key in cache_dict:
+            print(f'Використовується кеш для {func.__name__}')
+            return cache_dict[key]
+        result = func(*args, **kwargs)
+        cache_dict[key] = result
+        return result
+    return wrapper
+
+@log_calls
+@measure_time
+@cache
+def expensive_calculation(n):
+    """Обчислює суму квадратів"""
+    return sum(i ** 2 for i in range(n))
+
+result1 = expensive_calculation(1000000)  # Обчислює, логує, вимірює
+result2 = expensive_calculation(1000000)  # Використовує кеш, логує
+\`\`\`
+
+**Порядок виконання:**
+1. Спочатку застосовується @cache (найближчий до функції)
+2. Потім @measure_time
+3. Потім @log_calls (найдальший)
+4. При виклику: спочатку log, потім measure, потім cache, потім функція`
+      },
+      {
+        title: "Практичні поради",
+        content: `**Коли використовувати декоратори:**
+
+1. **Логування** — коли потрібно відстежувати виклики функцій
+2. **Вимірювання продуктивності** — для оптимізації коду
+3. **Кешування** — для дорогих обчислень
+4. **Валідація** — для перевірки вхідних даних
+5. **Обробка помилок** — для централізованої обробки
+6. **Авторизація** — для перевірки прав доступу
+7. **Обмеження швидкості** — для API та веб-додатків
+
+**Найкращі практики:**
+
+✅ Завжди використовуйте \`@wraps(func)\` для збереження метаданих
+✅ Документуйте декоратори
+✅ Обробляйте помилки у декораторах
+✅ Використовуйте *args та **kwargs для гнучкості
+✅ Тестуйте декоратори окремо
+✅ Не робіть декоратори занадто складними
+
+**Уникайте:**
+
+❌ Декораторів, які змінюють сигнатуру функції
+❌ Декораторів з побічними ефектами (якщо не потрібно)
+❌ Занадто багатьох вкладених декораторів
+❌ Декораторів без документації`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад 1: Просте наслідування",
-      code: `# Просте наслідування
-class Animal:
-    def __init__(self, name):
-        self.name = name
-    
-    def speak(self):
-        print(f"{self.name} видає звук")
+      title: "Приклад 1: Комплексний декоратор",
+      code: `from functools import wraps
+import time
 
-class Dog(Animal):
-    def __init__(self, name, breed):
-        super().__init__(name)
-        self.breed = breed
-    
-    def speak(self):
-        print(f"{self.name} гавкає: Гав-гав!")
+def smart_decorator(log=True, measure=True):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            if log:
+                print(f'Викликається {func.__name__}')
+            if measure:
+                start = time.time()
+            
+            result = func(*args, **kwargs)
+            
+            if measure:
+                end = time.time()
+                print(f'Виконано за {end - start:.4f}с')
+            return result
+        return wrapper
+    return decorator
 
-class Cat(Animal):
-    def __init__(self, name):
-        super().__init__(name)
-    
-    def speak(self):
-        print(f"{self.name} мявкає: Мяу!")
+@smart_decorator(log=True, measure=True)
+def calculate(n):
+    return sum(range(n))
 
-dog = Dog("Рекс", "Лабрадор")
-cat = Cat("Мурка")
-
-dog.speak()  # Рекс гавкає: Гав-гав!
-cat.speak()  # Мурка мявкає: Мяу!`,
-      explanation: "Демонструє просте наслідування з перевизначенням методу speak."
+calculate(1000000)`,
+      explanation: "Демонструє декоратор з параметрами для гнучкого налаштування поведінки."
     },
     {
-      title: "Приклад 2: Використання super()",
-      code: `# Використання super()
-class Employee:
-    def __init__(self, name, salary):
-        self.name = name
-        self.salary = salary
-    
-    def get_info(self):
-        return f"{self.name}, зарплата: {self.salary}"
+      title: "Приклад 2: Декоратор з обробкою помилок",
+      code: `from functools import wraps
 
-class Manager(Employee):
-    def __init__(self, name, salary, department):
-        super().__init__(name, salary)
-        self.department = department
-    
-    def get_info(self):
-        base_info = super().get_info()
-        return f"{base_info}, відділ: {self.department}"
+def handle_errors(default_value=None):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            try:
+                return func(*args, **kwargs)
+            except Exception as e:
+                print(f'Помилка у {func.__name__}: {e}')
+                return default_value
+        return wrapper
+    return decorator
 
-manager = Manager("Олексій", 50000, "IT")
-print(manager.get_info())  # Олексій, зарплата: 50000, відділ: IT`,
-      explanation: "Показує використання super() для виклику методів батьківського класу."
+@handle_errors(default_value=0)
+def divide(a, b):
+    return a / b
+
+print(divide(10, 2))  # 5.0
+print(divide(10, 0))   # 0 (повертає default_value)`,
+      explanation: "Показує декоратор для обробки помилок з значенням за замовчуванням."
     },
     {
-      title: "Приклад 3: Множинне наслідування",
-      code: `# Множинне наслідування
-class Reader:
-    def read(self):
-        print("Читає книгу")
+      title: "Приклад 3: Декоратор для класу",
+      code: `def add_repr(cls):
+    def __repr__(self):
+        attrs = ', '.join(f'{k}={v}' for k, v in self.__dict__.items())
+        return f'{self.__class__.__name__}({attrs})'
+    
+    cls.__repr__ = __repr__
+    return cls
 
-class Writer:
-    def write(self):
-        print("Пише книгу")
-
-class Author(Reader, Writer):
-    def __init__(self, name):
+@add_repr
+class Person:
+    def __init__(self, name, age):
         self.name = name
-    
-    def create_book(self):
-        print(f"{self.name} створює книгу")
+        self.age = age
 
-author = Author("Тарас Шевченко")
-author.read()      # Читає книгу (від Reader)
-author.write()     # Пише книгу (від Writer)
-author.create_book()  # Тарас Шевченко створює книгу (власний метод)`,
-      explanation: "Демонструє множинне наслідування від двох батьківських класів."
-    },
-    {
-      title: "Приклад 4: Ієрархія класів",
-      code: `# Ієрархія класів
-class Shape:
-    def __init__(self, name):
-        self.name = name
-    
-    def area(self):
-        return 0
-
-class Rectangle(Shape):
-    def __init__(self, width, height):
-        super().__init__("Прямокутник")
-        self.width = width
-        self.height = height
-    
-    def area(self):
-        return self.width * self.height
-
-class Square(Rectangle):
-    def __init__(self, side):
-        super().__init__(side, side)
-        self.name = "Квадрат"
-
-rect = Rectangle(5, 3)
-square = Square(4)
-
-print(f"{rect.name}, площа: {rect.area()}")   # Прямокутник, площа: 15
-print(f"{square.name}, площа: {square.area()}")  # Квадрат, площа: 16`,
-      explanation: "Показує багаторівневе наслідування: Shape -> Rectangle -> Square."
+p = Person('Олександр', 15)
+print(p)  # Person(name=Олександр, age=15)`,
+      explanation: "Демонструє декоратор, який додає метод __repr__ до класу."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Забути викликати super().__init__()",
-      explanation: "Без super().__init__() атрибути батьківського класу не будуть ініціалізовані.",
-      correctApproach: "Завжди викликай super().__init__() в __init__ дочірнього класу"
+      mistake: "Не використовувати @wraps у складних декораторах",
+      explanation: "Без @wraps функція втрачає метадані, що ускладнює відлагодження.",
+      correctApproach: "Завжди використовуйте @wraps(func) у всіх декораторах."
     },
     {
-      mistake: "Плутати порядок параметрів у super()",
-      explanation: "Параметри для super().__init__() мають відповідати параметрам батьківського __init__.",
-      correctApproach: "Передавай правильні параметри: super().__init__(name, age)"
+      mistake: "Забувати повертати результат у wrapper",
+      explanation: "Якщо wrapper не повертає результат func(), функція поверне None.",
+      correctApproach: "Завжди повертайте результат: return func(*args, **kwargs)"
     },
     {
-      mistake: "Не використовувати super() при перевизначенні",
-      explanation: "Якщо потрібна функціональність батьківського методу, використовуй super().",
-      correctApproach: "Використовуй super().method() для виклику батьківського методу"
+      mistake: "Не обробляти помилки у декораторах",
+      explanation: "Помилки у декораторах можуть приховати реальні помилки функції.",
+      correctApproach: "Обробляйте помилки обережно, не приховуючи важливі винятки."
     },
     {
-      mistake: "Створювати занадто глибоку ієрархію",
-      explanation: "Занадто глибока ієрархія ускладнює код.",
-      correctApproach: "Використовуй наслідування обдумано, уникай занадто глибоких ієрархій"
+      mistake: "Занадто складні декоратори",
+      explanation: "Складні декоратори важко тестувати та підтримувати.",
+      correctApproach: "Розбивайте складні декоратори на простіші або використовуйте композицію."
     }
   ],
   
-  summary: `На цьому уроці ми вивчили:
+  summary: `На цьому практичному уроці ми:
 
-1. **Наслідування** - створення нових класів на основі існуючих
-2. **Базовий клас** - клас, від якого наслідуються інші
-3. **Дочірній клас** - клас, який наслідує від базового
-4. **super()** - функція для доступу до методів батьківського класу
-5. **Перевизначення** - зміна реалізації методу в дочірньому класі
-6. **Множинне наслідування** - наслідування від кількох класів
+1. **Закріпили знання** — повторили всі концепції декораторів
+2. **Створили складні декоратори** — repeat, retry, cache, rate_limit
+3. **Комбінували декоратори** — логування, вимірювання, кешування
+4. **Розв'язали практичні задачі** — реальні сценарії використання
+5. **Вивчили найкращі практики** — коли та як використовувати декоратори
 
-Тепер ви вмієте створювати ієрархії класів та повторно використовувати код!
-
-Наступний урок - поліморфізм!`,
+Тепер ви впевнено можете створювати та використовувати декоратори у своїх проектах!`,
   
   practiceTask: {
-    title: "Ієрархія класів для бібліотеки",
-    description: "Створіть ієрархію класів для представлення книг у бібліотеці",
-    problemStatement: `Напишіть програму, яка:
-1. Створює базовий клас Book з:
-   - Атрибутами: title, author, pages
-   - Методом get_info() - повертає інформацію про книгу
-2. Створює дочірній клас EBook(Book) з:
-   - Додатковим атрибутом: file_size (в МБ)
-   - Перевизначеним get_info() - додає інформацію про розмір файлу
-3. Створює дочірній клас AudioBook(Book) з:
-   - Додатковим атрибутом: duration (в хвилинах)
-   - Перевизначеним get_info() - додає інформацію про тривалість
-4. Створює об'єкти та виводить інформацію`,
-    outputFormat: `Приклад виведення:
-Книга: "1984", автор: Дж. Оруелл, 328 сторінок
-Електронна книга: "1984", автор: Дж. Оруелл, 328 сторінок, розмір: 2.5 МБ
-Аудіокнига: "1984", автор: Дж. Оруелл, 328 сторінок, тривалість: 480 хв`,
+    title: "Створення простих декораторів",
+    description: "Створіть два простих декоратори для логування та авторизації",
+    problemStatement: `Створіть два простих декоратори:
+
+1. **@log_function** — логує виклик функції з її ім'ям та часом
+2. **@require_auth** — перевіряє, чи користувач авторизований (симуляція)
+
+**Крок 1:** Створіть декоратор @log_function, який:
+- Виводить повідомлення перед викликом функції
+- Виводить повідомлення після виклику функції
+- Показує ім'я функції та час
+
+**Крок 2:** Створіть декоратор @require_auth, який:
+- Перевіряє глобальну змінну is_authenticated
+- Якщо False, виводить повідомлення "Потрібна авторизація!" та не викликає функцію
+- Якщо True, викликає функцію нормально
+
+**Крок 3:** Створіть дві функції:
+- get_secret_data() — потребує авторизації, повертає "Секретні дані"
+- get_public_data() — публічна, повертає "Публічні дані"
+
+**Крок 4:** Протестуйте:
+- Викликайте get_secret_data() без авторизації (має вивести повідомлення)
+- Встановіть is_authenticated = True
+- Викликайте get_secret_data() знову (має працювати)
+- Викликайте get_public_data() (має працювати завжди)`,
+    outputFormat: `Приклад виводу програми:
+=== Тест 1: Без авторизації ===
+[10:30:45] Викликається get_secret_data
+Потрібна авторизація!
+Результат: None
+
+=== Тест 2: З авторизацією ===
+[10:30:46] Викликається get_secret_data
+[10:30:46] get_secret_data завершено
+Результат: Секретні дані
+
+=== Тест 3: Публічна функція ===
+[10:30:47] Викликається get_public_data
+[10:30:47] get_public_data завершено
+Результат: Публічні дані`,
     examples: [
       {
-        output: `Книга: "1984", автор: Дж. Оруелл, 328 сторінок
-Електронна книга: "1984", автор: Дж. Оруелл, 328 сторінок, розмір: 2.5 МБ
-Аудіокнига: "1984", автор: Дж. Оруелл, 328 сторінок, тривалість: 480 хв`,
-        explanation: "Програма демонструє наслідування та перевизначення методів"
+        output: `=== Тест 1: Без авторизації ===
+[10:30:45] Викликається get_secret_data
+Потрібна авторизація!
+Результат: None
+
+=== Тест 2: З авторизацією ===
+[10:30:46] Викликається get_secret_data
+[10:30:46] get_secret_data завершено
+Результат: Секретні дані
+
+=== Тест 3: Публічна функція ===
+[10:30:47] Викликається get_public_data
+[10:30:47] get_public_data завершено
+Результат: Публічні дані`,
+        explanation: "Повний вивід програми з усіма тестами. Зверніть увагу: коли функція блокується через відсутність авторизації, повідомлення 'завершено' не виводиться."
       }
     ],
     solution: {
-      code: `# Ієрархія класів для бібліотеки
-class Book:
-    def __init__(self, title, author, pages):
-        self.title = title
-        self.author = author
-        self.pages = pages
-    
-    def get_info(self):
-        return f'Книга: "{self.title}", автор: {self.author}, {self.pages} сторінок'
+      code: `from functools import wraps
+import datetime
 
-class EBook(Book):
-    def __init__(self, title, author, pages, file_size):
-        super().__init__(title, author, pages)
-        self.file_size = file_size
-    
-    def get_info(self):
-        base_info = super().get_info()
-        return f"Електронна {base_info.lower()}, розмір: {self.file_size} МБ"
+# Глобальна змінна для авторизації
+is_authenticated = False
 
-class AudioBook(Book):
-    def __init__(self, title, author, pages, duration):
-        super().__init__(title, author, pages)
-        self.duration = duration
-    
-    def get_info(self):
-        base_info = super().get_info()
-        return f"Аудіо{base_info.lower()}, тривалість: {self.duration} хв"
+def require_auth(func):
+    """Перевіряє авторизацію"""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        global is_authenticated
+        if not is_authenticated:
+            print("Потрібна авторизація!")
+            return None
+        return func(*args, **kwargs)
+    return wrapper
 
-# Створюємо об'єкти
-book = Book("1984", "Дж. Оруелл", 328)
-ebook = EBook("1984", "Дж. Оруелл", 328, 2.5)
-audiobook = AudioBook("1984", "Дж. Оруелл", 328, 480)
+def log_function(func):
+    """Логує виклик функції"""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        # Отримуємо поточний час
+        time_str = datetime.datetime.now().strftime("%H:%M:%S")
+        
+        # Логуємо перед викликом
+        print(f"[{time_str}] Викликається {func.__name__}")
+        
+        # Викликаємо функцію
+        result = func(*args, **kwargs)
+        
+        # Логуємо після виклику тільки якщо функція реально виконалася
+        # (якщо result не None, значить функція виконалася)
+        if result is not None:
+            time_str = datetime.datetime.now().strftime("%H:%M:%S")
+            print(f"[{time_str}] {func.__name__} завершено")
+        
+        return result
+    return wrapper
 
-print(book.get_info())
-print(ebook.get_info())
-print(audiobook.get_info())`,
-      explanation: "Рішення використовує наслідування, super() та перевизначення методів для створення ієрархії класів."
+# Створюємо функції з декораторами
+# Важливо: require_auth має бути всередині log_function
+@log_function
+@require_auth
+def get_secret_data():
+    return "Секретні дані"
+
+@log_function
+def get_public_data():
+    return "Публічні дані"
+
+# Тестування
+print("=== Тест 1: Без авторизації ===")
+result = get_secret_data()
+print(f"Результат: {result}")
+print()
+print("=== Тест 2: З авторизацією ===")
+is_authenticated = True
+result = get_secret_data()
+print(f"Результат: {result}")
+print()
+print("=== Тест 3: Публічна функція ===")
+result = get_public_data()
+print(f"Результат: {result}")`,
+      explanation: "Простий приклад двох декораторів: один для логування, інший для перевірки авторизації. Порядок декораторів важливий: @log_function зовні, @require_auth всередині. Використовуємо @wraps для збереження метаданих функції."
     },
     hints: [
-      "Використовуй super().__init__() для виклику конструктора батьківського класу",
-      "Перевизначай get_info() в дочірніх класах",
-      "Використовуй super().get_info() для отримання базової інформації",
-      "Додавай специфічну інформацію в дочірніх класах",
-      "Не забудь про self у всіх методах"
+      "Почніть з простого декоратора @log_function - він просто виводить повідомлення до та після виклику",
+      "Для @require_auth використовуйте global is_authenticated для доступу до глобальної змінної",
+      "Якщо авторизація не пройдена, просто виведіть повідомлення та поверніть None",
+      "Не забудьте використати @wraps(func) в обох декораторах",
+      "Можна застосувати обидва декоратори до однієї функції: @log_function @require_auth"
     ],
     difficulty: "intermediate"
   },
@@ -515,83 +569,78 @@ print(audiobook.get_info())`,
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що таке наслідування в ООП?",
+        question: "Яка основна мета використання декораторів?",
         options: [
-          "Створення нових класів на основі існуючих",
-          "Приховування даних",
-          "Створення об'єктів",
-          "Виклик функцій"
+          "Збільшити швидкість",
+          "Додати функціональність без зміни коду",
+          "Зменшити розмір коду",
+          "Видалити функції"
         ],
-        correctAnswer: 0,
-        explanation: "Наслідування - це створення нових класів на основі існуючих класів."
+        correctAnswer: 1,
+        explanation: "Основна мета декораторів — додати функціональність до функцій без зміни їх оригінального коду."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе цей код?\n\n```python\nclass A:\n    def method(self):\n        print('A')\n\nclass B(A):\n    def method(self):\n        print('B')\n\nb = B()\nb.method()\n```",
+        question: "Що робить @wraps у декораторі?",
         options: [
-          "B",
-          "A",
-          "A B",
-          "Помилку"
+          "Прискорює функцію",
+          "Зберігає метадані оригінальної функції",
+          "Видаляє функцію",
+          "Кешує результати"
         ],
-        correctAnswer: 0,
-        explanation: "Метод method перевизначений в класі B, тому виводиться 'B'."
+        correctAnswer: 1,
+        explanation: "@wraps зберігає ім'я, документацію та інші метадані оригінальної функції."
       },
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що робить super()?",
+        question: "Як створити декоратор, який приймає параметри?",
         options: [
-          "Дозволяє викликати методи батьківського класу",
-          "Створює новий об'єкт",
-          "Видаляє атрибути",
-          "Блокує доступ"
+          "def decorator(param): return func",
+          "Потрібна додаткова обгортка",
+          "Неможливо",
+          "Використати lambda"
         ],
-        correctAnswer: 0,
-        explanation: "super() дозволяє викликати методи батьківського класу."
+        correctAnswer: 1,
+        explanation: "Потрібна додаткова обгортка: функція, яка приймає параметри та повертає декоратор."
       },
       {
         id: "q4",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Чи правильний цей код?\n\n```python\nclass Parent:\n    def __init__(self, x):\n        self.x = x\n\nclass Child(Parent):\n    def __init__(self, x, y):\n        super().__init__(x)\n        self.y = y\n```",
+        question: "У якому порядку виконуються декоратори @decorator1 @decorator2?",
         options: [
-          "Так, код правильний",
-          "Ні, потрібен self в super()",
-          "Ні, super() не можна використовувати",
-          "Ні, неправильний синтаксис"
+          "decorator1, потім decorator2, потім функція",
+          "decorator2, потім decorator1, потім функція",
+          "Одночасно",
+          "Випадковий"
         ],
         correctAnswer: 0,
-        explanation: "Код правильний, super().__init__(x) викликає конструктор батьківського класу."
+        explanation: "Декоратори виконуються зверху вниз: спочатку decorator1, потім decorator2, потім функція."
       },
       {
         id: "q5",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що таке перевизначення методу?",
+        question: "Що таке мемоізація?",
         options: [
-          "Зміна реалізації методу батьківського класу в дочірньому",
-          "Видалення методу",
-          "Створення нового класу",
-          "Виклик методу"
+          "Кешування результатів функцій",
+          "Видалення функцій",
+          "Оптимізація пам'яті",
+          "Шифрування"
         ],
         correctAnswer: 0,
-        explanation: "Перевизначення - це зміна реалізації методу батьківського класу в дочірньому."
+        explanation: "Мемоізація — це техніка кешування результатів функцій для уникнення повторних обчислень."
       },
       {
         id: "q6",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що не так з цим кодом?\n\n```python\nclass Parent:\n    def __init__(self, name):\n        self.name = name\n\nclass Child(Parent):\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n```",
-        options: [
-          "Не викликається super().__init__()",
-          "Неправильний синтаксис",
-          "Немає помилок",
-          "Потрібен return"
-        ],
-        correctAnswer: 0,
-        explanation: "Краще викликати super().__init__(name) замість дублювання коду."
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "Декоратори можна застосовувати тільки до функцій.",
+        options: ["True", "False"],
+        correctAnswer: 1,
+        explanation: "False. Декоратори можна застосовувати до функцій, методів та класів."
       }
     ],
-    timeLimit: 10,
+    timeLimit: 15,
     passingScore: 70
   }
 }

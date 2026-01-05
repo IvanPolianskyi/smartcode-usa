@@ -1,5 +1,5 @@
 /**
- * Lesson 07-4: Assert та валідація даних
+ * Lesson 07-4: Практика: генератори на практиці
  * Full educational content
  */
 
@@ -9,16 +9,16 @@ export const lesson_07_4 = {
   lessonId: "lesson-07-4",
   moduleId: "module-07",
   order: 4,
-  title: "Assert та валідація даних",
+  title: "Практика: генератори на практиці",
   
   learningObjectives: [
-    "Використовувати assert для перевірки",
-    "Валідувати вхідні дані",
-    "Обробляти помилки валідації",
-    "Створювати надійний код"
+    "Закріпити знання про генератори та ітератори",
+    "Створювати складні генератори для реальних задач",
+    "Оптимізувати код за допомогою генераторів",
+    "Комбінувати різні техніки роботи з генераторами"
   ],
   
-  estimatedTime: 75,
+  estimatedTime: 120,
   prerequisites: ["lesson-07-3"],
   
   videoUrl: "",
@@ -26,439 +26,432 @@ export const lesson_07_4 = {
   theory: {
     sections: [
       {
-        title: "Що таке assert?",
-        content: `**assert** - це ключове слово для перевірки умов під час виконання програми.
+        title: "Огляд вивченого",
+        content: `На цьому уроці ми закріпимо всі знання з модуля 07 про генератори:
 
-**Синтаксис:**
+**Що ми вивчили:**
+1. **Вступ до генераторів** — що таке генератори, yield, переваги
+2. **Генераторні вирази та yield from** — компактний синтаксис, делегування
+3. **Ітератори та протокол ітерації** — __iter__(), __next__(), створення власних ітераторів
+4. **Практичні приклади** — різні способи використання генераторів
 
-\`\`\`python
-assert умова, "Повідомлення про помилку"
-\`\`\`
-
-**Як працює assert:**
-- Якщо умова **True** - програма продовжує виконання
-- Якщо умова **False** - піднімається AssertionError
-
-**Приклад:**
-
-\`\`\`python
-def divide(a, b):
-    assert b != 0, "Ділення на нуль неможливе!"
-    return a / b
-
-result = divide(10, 2)  # Працює
-result = divide(10, 0)  # AssertionError: Ділення на нуль неможливе!
-\`\`\`
-
-**Переваги assert:**
-- ✅ Простий спосіб перевірки умов
-- ✅ Допомагає знаходити помилки на ранніх етапах
-- ✅ Можна додати зрозуміле повідомлення
-- ✅ Корисно для тестування та відлагодження`
+**Мета цього уроку:**
+- Об'єднати всі концепції
+- Створити складніші генератори
+- Розв'язати практичні задачі
+- Покращити навички програмування`
       },
       {
-        title: "Використання assert для валідації",
-        content: `**assert** часто використовується для валідації вхідних даних:
+        title: "Задача 1: Генератор для обробки даних",
+        content: `**Завдання:** Створіть генератор, який обробляє список чисел та повертає тільки ті, які задовольняють умову.
 
-**Приклад: Валідація віку**
-
-\`\`\`python
-def set_age(age):
-    assert age >= 0, "Вік не може бути від'ємним"
-    assert age <= 150, "Вік не може бути більше 150"
-    return age
-
-set_age(25)  # Працює
-set_age(-5)  # AssertionError: Вік не може бути від'ємним
-\`\`\`
-
-**Приклад: Валідація списку**
+**Рішення:**
 
 \`\`\`python
-def get_first_element(my_list):
-    assert len(my_list) > 0, "Список не може бути порожнім"
-    assert isinstance(my_list, list), "Аргумент має бути списком"
-    return my_list[0]
-
-get_first_element([1, 2, 3])  # Працює
-get_first_element([])  # AssertionError: Список не може бути порожнім
-\`\`\`
-
-**Приклад: Валідація діапазону**
-
-\`\`\`python
-def calculate_percentage(value, total):
-    assert value >= 0, "Значення не може бути від'ємним"
-    assert total > 0, "Загальна сума має бути більше нуля"
-    assert value <= total, "Значення не може бути більше загальної суми"
-    return (value / total) * 100
-
-calculate_percentage(75, 100)  # 75.0
-calculate_percentage(150, 100)  # AssertionError
-\`\`\``
-      },
-      {
-        title: "Assert vs try/except",
-        content: `**Коли використовувати assert, а коли try/except?**
-
-**assert використовується для:**
-- Перевірки внутрішніх умов програми (які не повинні порушуватися)
-- Відлагодження та тестування
-- Перевірки передумов функцій
-- Перевірки інваріантів
-
-**try/except використовується для:**
-- Обробки помилок, які можуть виникнути під час виконання
-- Обробки зовнішніх помилок (файли, мережа, введення користувача)
-- Відновлення після помилок
-- Показу зрозумілих повідомлень користувачу
-
-**Приклад: assert для внутрішньої перевірки**
-
-\`\`\`python
-def calculate_average(numbers):
-    # assert для перевірки внутрішньої логіки
-    assert len(numbers) > 0, "Список не може бути порожнім"
-    assert all(isinstance(n, (int, float)) for n in numbers), "Всі елементи мають бути числами"
-    return sum(numbers) / len(numbers)
-\`\`\`
-
-**Приклад: try/except для зовнішніх помилок**
-
-\`\`\`python
-def read_file(filename):
-    # try/except для обробки зовнішніх помилок
-    try:
-        with open(filename, 'r') as f:
-            return f.read()
-    except FileNotFoundError:
-        print(f"Файл {filename} не знайдено")
-        return None
-\`\`\``
-      },
-      {
-        title: "Валідація вхідних даних",
-        content: `Важливо валідувати вхідні дані перед обробкою:
-
-**Приклад: Валідація функції з assert**
-
-\`\`\`python
-def process_user_data(name, age, email):
-    # Валідація імені
-    assert isinstance(name, str), "Ім'я має бути рядком"
-    assert len(name) > 0, "Ім'я не може бути порожнім"
-    assert len(name) <= 50, "Ім'я не може бути довше 50 символів"
-    
-    # Валідація віку
-    assert isinstance(age, int), "Вік має бути цілим числом"
-    assert age >= 0, "Вік не може бути від'ємним"
-    assert age <= 120, "Вік не може бути більше 120"
-    
-    # Валідація email
-    assert isinstance(email, str), "Email має бути рядком"
-    assert '@' in email, "Email має містити @"
-    
-    return {"name": name, "age": age, "email": email}
+def filter_numbers(numbers, condition):
+    """
+    Генерує числа, які задовольняють умову
+    """
+    for num in numbers:
+        if condition(num):
+            yield num
 
 # Використання
-user = process_user_data("Олексій", 25, "oleksiy@example.com")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Парні числа
+evens = filter_numbers(numbers, lambda x: x % 2 == 0)
+print(list(evens))  # [2, 4, 6, 8, 10]
+
+# Числа більше 5
+large = filter_numbers(numbers, lambda x: x > 5)
+print(list(large))  # [6, 7, 8, 9, 10]
 \`\`\`
 
-**Приклад: Валідація з try/except**
+**Покращена версія з генераторним виразом:**
 
 \`\`\`python
-def process_user_data_safe(name, age, email):
-    try:
-        # Валідація
-        if not isinstance(name, str) or len(name) == 0:
-            raise ValueError("Ім'я має бути непорожнім рядком")
-        if not isinstance(age, int) or age < 0 or age > 120:
-            raise ValueError("Вік має бути числом від 0 до 120")
-        if '@' not in email:
-            raise ValueError("Email має містити @")
-        
-        return {"name": name, "age": age, "email": email}
-    except ValueError as e:
-        print(f"Помилка валідації: {e}")
-        return None
+# Те саме, але з генераторним виразом
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-# Використання
-user = process_user_data_safe("Олексій", 25, "oleksiy@example.com")
-\`\`\``
+evens = (x for x in numbers if x % 2 == 0)
+print(list(evens))  # [2, 4, 6, 8, 10]
+\`\`\`
+`
       },
       {
-        title: "Вимкнення assert в продакшн",
-        content: `**Важливо:** assert може бути вимкнений за допомогою прапорця -O (оптимізація).
+        title: "Задача 2: Генератор для об'єднання послідовностей",
+        content: `**Завдання:** Створіть генератор, який об'єднує кілька послідовностей в одну.
 
-**Приклад:**
-
-\`\`\`python
-# Файл: test.py
-def divide(a, b):
-    assert b != 0, "Ділення на нуль!"
-    return a / b
-
-result = divide(10, 0)
-\`\`\`
-
-**Запуск з assert:**
-\`\`\`bash
-python test.py
-# AssertionError: Ділення на нуль!
-\`\`\`
-
-**Запуск без assert (з оптимізацією):**
-\`\`\`bash
-python -O test.py
-# ZeroDivisionError: division by zero
-\`\`\`
-
-**Рекомендація:**
-- Не використовуй assert для критичних перевірок у продакшн коді
-- Використовуй assert для тестування та відлагодження
-- Для критичних перевірок використовуй try/except або if/raise
-
-**Приклад: Правильна валідація для продакшн**
+**Рішення:**
 
 \`\`\`python
-def divide_safe(a, b):
-    if b == 0:
-        raise ValueError("Ділення на нуль неможливе!")
-    return a / b
+def combine_sequences(*sequences):
+    """
+    Об'єднує кілька послідовностей в одну
+    """
+    for seq in sequences:
+        yield from seq
 
-# Це працюватиме навіть з -O
-result = divide_safe(10, 0)
-\`\`\``
+# Використання
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+list3 = [7, 8, 9]
+
+combined = combine_sequences(list1, list2, list3)
+print(list(combined))  # [1, 2, 3, 4, 5, 6, 7, 8, 9]
+\`\`\`
+
+**Альтернативне рішення з генераторним виразом:**
+
+\`\`\`python
+def combine_sequences(*sequences):
+    for seq in sequences:
+        for item in seq:
+            yield item
+\`\`\`
+`
       },
       {
-        title: "Практичний приклад: Валідація даних",
-        content: `**Створимо функцію з повною валідацією:**
+        title: "Задача 3: Генератор для пакетної обробки",
+        content: `**Завдання:** Створіть генератор, який обробляє дані пакетами (batches).
+
+**Рішення:**
 
 \`\`\`python
-def create_bank_account(owner, initial_balance):
+def batch_processor(items, batch_size):
     """
-    Створює банківський рахунок з валідацією даних
+    Обробляє елементи пакетами заданого розміру
     """
-    # Валідація імені власника
-    assert isinstance(owner, str), "Власник має бути рядком"
-    assert len(owner) > 0, "Ім'я власника не може бути порожнім"
-    assert len(owner) <= 100, "Ім'я власника занадто довге"
-    
-    # Валідація початкового балансу
-    assert isinstance(initial_balance, (int, float)), "Баланс має бути числом"
-    assert initial_balance >= 0, "Баланс не може бути від'ємним"
-    
-    return {
-        "owner": owner,
-        "balance": initial_balance
-    }
+    batch = []
+    for item in items:
+        batch.append(item)
+        if len(batch) == batch_size:
+            yield batch
+            batch = []
+    # Повертаємо залишок, якщо він є
+    if batch:
+        yield batch
 
 # Використання
-account = create_bank_account("Олексій", 1000)
-print(account)
+numbers = list(range(1, 11))  # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-# З помилкою
-try:
-    account = create_bank_account("", -100)
-except AssertionError as e:
-    print(f"Помилка валідації: {e}")
+for batch in batch_processor(numbers, 3):
+    print(batch)
+# Виведе:
+# [1, 2, 3]
+# [4, 5, 6]
+# [7, 8, 9]
+# [10]
 \`\`\`
 
-**Приклад: Валідація з try/except (для продакшн)**
+**Практичне застосування:**
 
 \`\`\`python
-def create_bank_account_safe(owner, initial_balance):
-    """
-    Створює банківський рахунок з валідацією (без assert)
-    """
-    # Валідація імені власника
-    if not isinstance(owner, str):
-        raise TypeError("Власник має бути рядком")
-    if len(owner) == 0:
-        raise ValueError("Ім'я власника не може бути порожнім")
-    if len(owner) > 100:
-        raise ValueError("Ім'я власника занадто довге")
-    
-    # Валідація початкового балансу
-    if not isinstance(initial_balance, (int, float)):
-        raise TypeError("Баланс має бути числом")
-    if initial_balance < 0:
-        raise ValueError("Баланс не може бути від'ємним")
-    
-    return {
-        "owner": owner,
-        "balance": initial_balance
-    }
+# Обробка великого списку пакетами
+large_list = list(range(1000))
 
-# Використання
-try:
-    account = create_bank_account_safe("Олексій", 1000)
-    print(account)
-except (TypeError, ValueError) as e:
-    print(f"Помилка: {e}")
-\`\`\``
+for batch in batch_processor(large_list, 100):
+    process_batch(batch)  # Обробляємо по 100 елементів
+\`\`\`
+`
+      },
+      {
+        title: "Задача 5: Композиція генераторів",
+        content: `**Завдання:** Створіть пайплайн з кількох генераторів для обробки даних.
+
+**Рішення:**
+
+\`\`\`python
+def read_numbers(limit):
+    """Генерує числа"""
+    for i in range(limit):
+        yield i
+
+def square(numbers):
+    """Підносить до квадрату"""
+    for num in numbers:
+        yield num ** 2
+
+def filter_even(numbers):
+    """Фільтрує парні"""
+    for num in numbers:
+        if num % 2 == 0:
+            yield num
+
+def multiply(numbers, factor):
+    """Множить на фактор"""
+    for num in numbers:
+        yield num * factor
+
+# Композиція генераторів
+pipeline = multiply(
+    filter_even(
+        square(
+            read_numbers(10)
+        )
+    ),
+    2
+)
+
+for result in pipeline:
+    print(result)
+# Виведе: 0, 8, 32, 72, 128, 200
+# Пояснення: квадрати парних чисел, помножені на 2
+\`\`\`
+
+**Переваги такого підходу:**
+
+1. **Модульність** — кожен генератор виконує одну задачу
+2. **Економія пам'яті** — обробка по одному елементу
+3. **Гнучкість** — легко додавати або видаляти кроки
+4. **Читабельність** — код легко зрозуміти`
+      },
+      {
+        title: "Практичні поради",
+        content: `**Коли використовувати генератори:**
+
+✅ **Великі обсяги даних** — коли не потрібно завантажувати все в пам'ять
+✅ **Потокова обробка** — коли дані обробляються по одному елементу
+✅ **Нескінченні послідовності** — коли потрібно генерувати значення без кінця
+✅ **Пайплайни обробки** — коли потрібно обробити дані через кілька кроків
+✅ **Економія пам'яті** — коли важлива ефективність
+
+**Найкращі практики:**
+
+1. **Використовуйте генераторні вирази** для простих випадків
+2. **Використовуйте генераторні функції** для складнішої логіки
+3. **Використовуйте yield from** для композиції генераторів
+4. **Обмежуйте нескінченні генератори** при використанні
+5. **Не перетворюйте в список** без потреби
+6. **Документуйте генератори** так само, як і функції
+
+**Уникайте:**
+
+❌ Перетворення генераторів у списки без потреби
+❌ Використання генераторів кілька разів (створюйте нові)
+❌ Нескінченні генератори без обмежень
+❌ Занадто складні генераторні вирази (краще функція)`
+      },
+      {
+        title: "Підсумок модуля",
+        content: `На цьому модулі ми вивчили генератори та ітератори:
+
+**Ключові концепції:**
+
+1. **Генератори** — функції з yield, які генерують значення по одному
+2. **Генераторні вирази** — компактний синтаксис (x**2 for x in range(10))
+3. **yield from** — делегування генерації іншим генераторам
+4. **Ітератори** — об'єкти з __iter__() та __next__()
+5. **Протокол ітерації** — правила для створення ітерабельних об'єктів
+
+**Переваги:**
+
+- Економія пам'яті
+- Швидкість (lazy evaluation)
+- Можливість створювати нескінченні послідовності
+- Простота та читабельність коду
+
+**Застосування:**
+
+- Обробка великих файлів
+- Пайплайни обробки даних
+- Створення власних ітераторів
+- Оптимізація коду
+
+Генератори та ітератори — це потужні інструменти для створення ефективного та елегантного коду в Python!`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад 1: Базове використання assert",
-      code: `# Базове використання assert
-def divide(a, b):
-    assert b != 0, "Ділення на нуль неможливе!"
-    return a / b
+      title: "Композиція генераторів",
+      code: `def read_numbers(limit):
+    for i in range(limit):
+        yield i
 
-result = divide(10, 2)  # 5.0
-# result = divide(10, 0)  # AssertionError`,
-      explanation: "Демонструє базове використання assert для перевірки умови."
+def square(numbers):
+    for num in numbers:
+        yield num ** 2
+
+def filter_even(numbers):
+    for num in numbers:
+        if num % 2 == 0:
+            yield num
+
+# Композиція
+pipeline = filter_even(square(read_numbers(10)))
+for result in pipeline:
+    print(result)
+# Виведе: 0, 4, 16, 36, 64`,
+      explanation: "Демонструє композицію генераторів для створення пайплайну обробки даних."
     },
     {
-      title: "Приклад 2: Валідація з assert",
-      code: `# Валідація даних з assert
-def set_age(age):
-    assert age >= 0, "Вік не може бути від'ємним"
-    assert age <= 150, "Вік не може бути більше 150"
-    assert isinstance(age, int), "Вік має бути цілим числом"
-    return age
+      title: "Пакетна обробка",
+      code: `def batch_processor(items, batch_size):
+    batch = []
+    for item in items:
+        batch.append(item)
+        if len(batch) == batch_size:
+            yield batch
+            batch = []
+    if batch:
+        yield batch
 
-set_age(25)  # Працює
-# set_age(-5)  # AssertionError`,
-      explanation: "Показує використання assert для валідації вхідних даних."
-    },
-    {
-      title: "Приклад 3: Валідація списку",
-      code: `# Валідація списку
-def get_average(numbers):
-    assert len(numbers) > 0, "Список не може бути порожнім"
-    assert all(isinstance(n, (int, float)) for n in numbers), "Всі елементи мають бути числами"
-    return sum(numbers) / len(numbers)
-
-result = get_average([1, 2, 3, 4, 5])  # 3.0`,
-      explanation: "Демонструє валідацію списку з assert."
-    },
-    {
-      title: "Приклад 4: Валідація з try/except",
-      code: `# Валідація з try/except (для продакшн)
-def set_age_safe(age):
-    if not isinstance(age, int):
-        raise TypeError("Вік має бути цілим числом")
-    if age < 0:
-        raise ValueError("Вік не може бути від'ємним")
-    if age > 150:
-        raise ValueError("Вік не може бути більше 150")
-    return age
-
-try:
-    set_age_safe(25)
-except (TypeError, ValueError) as e:
-    print(f"Помилка: {e}")`,
-      explanation: "Показує валідацію з try/except замість assert для продакшн коду."
-    },
-    {
-      title: "Приклад 5: Комплексна валідація",
-      code: `# Комплексна валідація даних
-def process_user(name, age, email):
-    assert isinstance(name, str) and len(name) > 0, "Ім'я має бути непорожнім рядком"
-    assert isinstance(age, int) and 0 <= age <= 120, "Вік має бути від 0 до 120"
-    assert isinstance(email, str) and '@' in email, "Email має містити @"
-    
-    return {"name": name, "age": age, "email": email}
-
-user = process_user("Олексій", 25, "oleksiy@example.com")`,
-      explanation: "Демонструє комплексну валідацію кількох параметрів."
+# Використання
+numbers = list(range(1, 11))
+for batch in batch_processor(numbers, 3):
+    print(batch)
+# Виведе: [1, 2, 3], [4, 5, 6], [7, 8, 9], [10]`,
+      explanation: "Генератор для обробки даних пакетами, що корисно для великих обсягів даних."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Використовувати assert для критичних перевірок у продакшн",
-      explanation: "assert може бути вимкнений з прапорцем -O, тому не підходить для критичних перевірок.",
-      correctApproach: "Використовуй if/raise або try/except для критичних перевірок у продакшн коді"
+      mistake: "Перетворення генераторів у списки без потреби",
+      explanation: "Це втрачає переваги генераторів (економію пам'яті).",
+      correctApproach: `# Неправильно (якщо не потрібен список):
+gen = (x**2 for x in range(1000000))
+lst = list(gen)  # Втрачаємо переваги
+
+# Правильно:
+gen = (x**2 for x in range(1000000))
+for square in gen:  # Обробляємо по одному
+    process(square)`
     },
     {
-      mistake: "Не валідувати вхідні дані",
-      explanation: "Без валідації програма може отримати некоректні дані та працювати неправильно.",
-      correctApproach: "Завжди валідуй вхідні дані перед обробкою"
-    },
-    {
-      mistake: "Використовувати assert замість try/except для зовнішніх помилок",
-      explanation: "assert призначений для внутрішніх перевірок, а не для обробки зовнішніх помилок.",
-      correctApproach: "Використовуй try/except для обробки зовнішніх помилок (файли, мережа, введення)"
-    },
-    {
-      mistake: "Не додавати повідомлення до assert",
-      explanation: "Без повідомлення важко зрозуміти, що саме пішло не так.",
-      correctApproach: "Завжди додавай зрозуміле повідомлення до assert: assert умова, 'повідомлення'"
+      mistake: "Використання генераторів кілька разів",
+      explanation: "Генератор вичерпується після першого використання.",
+      correctApproach: `# Неправильно:
+gen = (x**2 for x in range(10))
+list1 = list(gen)  # Використовує генератор
+list2 = list(gen)  # Порожній!
+
+# Правильно:
+numbers = range(10)
+list1 = list(x**2 for x in numbers)  # Створюємо новий генератор
+list2 = list(x**2 for x in numbers)  # Створюємо новий генератор`
     }
   ],
   
-  summary: `На цьому уроці ми вивчили:
+  summary: `На цьому практичному уроці ми:
 
-1. **assert** - ключове слово для перевірки умов
-2. **Валідація даних** - перевірка вхідних даних перед обробкою
-3. **assert vs try/except** - коли використовувати кожен підхід
-4. **Вимкнення assert** - assert може бути вимкнений з -O
-5. **Практики валідації** - як правильно валідувати дані
+1. **Закріпили знання** — повторили всі концепції генераторів та ітераторів
+2. **Створили складні генератори** — для обробки даних, пакетної обробки, композиції
+3. **Розв'язали практичні задачі** — реальні сценарії використання
+4. **Вивчили найкращі практики** — коли та як використовувати генератори
 
-Тепер ви вмієте використовувати assert для валідації та розумієте, коли його використовувати!
-
-Наступний урок - практика: обробка помилок у програмах!`,
+Тепер ви впевнено можете створювати та використовувати генератори та ітератори у своїх проектах!`,
   
   practiceTask: {
-    title: "Створення функції з валідацією даних",
-    description: "Створіть функцію з повною валідацією вхідних даних",
-    problemStatement: `Напишіть функцію calculate_discount, яка:
-1. Приймає параметри: price (ціна) та discount_percent (відсоток знижки)
-2. Валідує дані:
-   - price має бути додатнім числом
-   - discount_percent має бути від 0 до 100
-   - Обидва параметри мають бути числами
-3. Обчислює ціну зі знижкою
-4. Використовує assert для валідації
-5. Повертає фінальну ціну`,
+    title: "Створення пайплайну обробки даних",
+    description: "Створіть систему генераторів для обробки даних через кілька кроків",
+    problemStatement: `Створіть пайплайн обробки даних з такими кроками:
+
+1. **read_numbers(limit)** — генератор, який генерує числа від 0 до limit-1
+
+2. **square(numbers)** — генератор, який підносить кожне число до квадрату
+
+3. **filter_positive(numbers)** — генератор, який фільтрує тільки додатні числа (більше 0)
+
+4. **multiply(numbers, factor)** — генератор, який множить кожне число на factor
+
+5. **limit_results(numbers, max_count)** — генератор, який обмежує кількість результатів
+
+**Завдання:**
+- Створіть всі генератори
+- Об'єднайте їх у пайплайн: read → square → filter_positive → multiply(2) → limit(5)
+- Виведіть результати обробки для limit=10
+
+**Вимоги:**
+- Кожен генератор має приймати попередній генератор як аргумент
+- Використовуйте yield для створення генераторів
+- Введіть значення напряму в коді (не використовуйте input())`,
     outputFormat: `Приклад виведення:
-Ціна зі знижкою: 80.0
-або
-AssertionError: Відсоток знижки має бути від 0 до 100`,
+
+=== Пайплайн обробки даних ===
+Результат 1: 2
+Результат 2: 8
+Результат 3: 18
+Результат 4: 32
+Результат 5: 50`,
     examples: [
       {
-        output: "Ціна зі знижкою: 80.0",
-        explanation: "Функція обчислює ціну зі знижкою 20%"
-      },
+        output: `=== Пайплайн обробки даних ===
+Результат 1: 2
+Результат 2: 8
+Результат 3: 18
+Результат 4: 32
+Результат 5: 50`,
+        explanation: "Демонструє роботу пайплайну: числа генеруються, підносяться до квадрату, фільтруються, множаться та обмежуються."
+      }
     ],
     solution: {
-      code: `# Функція з валідацією даних
-def calculate_discount(price, discount_percent):
-    # Валідація ціни
-    assert isinstance(price, (int, float)), "Ціна має бути числом"
-    assert price > 0, "Ціна має бути додатнім числом"
-    
-    # Валідація відсотка знижки
-    assert isinstance(discount_percent, (int, float)), "Відсоток знижки має бути числом"
-    assert 0 <= discount_percent <= 100, "Відсоток знижки має бути від 0 до 100"
-    
-    # Обчислення ціни зі знижкою
-    discount_amount = price * (discount_percent / 100)
-    final_price = price - discount_amount
-    
-    print(f"Ціна зі знижкою: {final_price}")
-    return final_price
+      code: `# 1. Генератор чисел
+def read_numbers(limit):
+    """Генерує числа від 0 до limit-1"""
+    for i in range(limit):
+        yield i
 
-# Тестування
-calculate_discount(100, 20)  # 80.0
-# calculate_discount(100, 150)  # AssertionError
-# calculate_discount(-100, 20)  # AssertionError`,
-      explanation: "Рішення використовує assert для валідації всіх параметрів перед обчисленням."
+# 2. Генератор квадратів
+def square(numbers):
+    """Підносить кожне число до квадрату"""
+    for num in numbers:
+        yield num ** 2
+
+# 3. Генератор фільтрації
+def filter_positive(numbers):
+    """Фільтрує тільки додатні числа"""
+    for num in numbers:
+        if num > 0:
+            yield num
+
+# 4. Генератор множення
+def multiply(numbers, factor):
+    """Множить кожне число на factor"""
+    for num in numbers:
+        yield num * factor
+
+# 5. Генератор обмеження
+def limit_results(numbers, max_count):
+    """Обмежує кількість результатів"""
+    count = 0
+    for num in numbers:
+        if count >= max_count:
+            break
+        yield num
+        count += 1
+
+# Створюємо пайплайн
+print("=== Пайплайн обробки даних ===")
+pipeline = limit_results(
+    multiply(
+        filter_positive(
+            square(
+                read_numbers(10)
+            )
+        ),
+        2
+    ),
+    5
+)
+
+# Виводимо результати
+for i, result in enumerate(pipeline, 1):
+    print(f"Результат {i}: {result}")`,
+      explanation: "Рішення створює пайплайн з п'яти генераторів, які обробляють дані послідовно. Кожен генератор приймає попередній як аргумент та обробляє дані по одному елементу, економлячи пам'ять."
     },
     hints: [
-      "Використовуй isinstance() для перевірки типу",
-      "Перевіряй що price > 0",
-      "Перевіряй що discount_percent від 0 до 100",
-      "Обчислюй знижку як price * (discount_percent / 100)",
-      "Додавай зрозумілі повідомлення до assert"
+      "Почніть з read_numbers - він просто генерує числа через yield",
+      "square приймає numbers як аргумент та використовує цикл for для ітерації",
+      "filter_positive перевіряє умову num > 0 перед yield",
+      "multiply множить num на factor перед yield",
+      "limit_results зберігає лічильник та зупиняється, коли досягнуто max_count",
+      "Об'єднайте генератори в пайплайн, передаючи один в інший"
     ],
-    difficulty: "beginner"
+    difficulty: "intermediate"
   },
   
   quiz: {
@@ -466,83 +459,55 @@ calculate_discount(100, 20)  # 80.0
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що таке assert?",
+        question: "Що таке пайплайн генераторів?",
         options: [
-          "Ключове слово для перевірки умов",
-          "Функція для обробки помилок",
-          "Тип даних",
-          "Модуль Python"
+          "Послідовність генераторів, які обробляють дані по черзі",
+          "Список генераторів",
+          "Один генератор",
+          "Функція для генераторів"
         ],
         correctAnswer: 0,
-        explanation: "assert - це ключове слово Python для перевірки умов під час виконання програми."
+        explanation: "Пайплайн генераторів — це послідовність генераторів, де кожен обробляє дані від попереднього, створюючи ефективну систему обробки."
       },
       {
         id: "q2",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе цей код?\n\n```python\ndef divide(a, b):\n    assert b != 0, 'Ділення на нуль!'\n    return a / b\n\nresult = divide(10, 0)\n```",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Яка основна перевага використання генераторів у пайплайні?",
         options: [
-          "AssertionError: Ділення на нуль!",
-          "ZeroDivisionError",
-          "5.0",
-          "Нічого"
+          "Економія пам'яті та обробка по одному елементу",
+          "Швидкість виконання",
+          "Простота коду",
+          "Всі перелічені варіанти"
         ],
-        correctAnswer: 0,
-        explanation: "Код піднімає AssertionError з повідомленням 'Ділення на нуль!' коли b == 0."
+        correctAnswer: 3,
+        explanation: "Генератори в пайплайні мають багато переваг: економію пам'яті, обробку по одному елементу, швидкість та простоту коду."
       },
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Коли краще використовувати assert, а коли try/except?",
+        question: "Коли краще використовувати генераторні функції замість генераторних виразів?",
         options: [
-          "assert для внутрішніх перевірок, try/except для зовнішніх помилок",
-          "assert для зовнішніх помилок, try/except для внутрішніх перевірок",
-          "Завжди використовувати assert",
-          "Завжди використовувати try/except"
+          "Для складнішої логіки з багатьма умовами",
+          "Для простих перетворень",
+          "Завжди використовувати вирази",
+          "Ніколи не використовувати функції"
         ],
         correctAnswer: 0,
-        explanation: "assert використовується для внутрішніх перевірок логіки, try/except - для обробки зовнішніх помилок."
+        explanation: "Генераторні функції краще використовувати для складнішої логіки, коли генераторні вирази стають нечитабельними."
       },
       {
         id: "q4",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Чому не варто використовувати assert для критичних перевірок у продакшн?",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "Генератори можна використовувати для обробки вкладених структур даних.",
         options: [
-          "assert може бути вимкнений з прапорцем -O",
-          "assert працює повільніше",
-          "assert займає більше пам'яті",
-          "assert не підтримується в Python"
+          "True",
+          "False"
         ],
         correctAnswer: 0,
-        explanation: "assert може бути вимкнений при запуску Python з прапорцем -O (оптимізація), тому не підходить для критичних перевірок."
-      },
-      {
-        id: "q5",
-        type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що не так з цим кодом?\n\n```python\ndef validate_age(age):\n    assert age >= 0\n    assert age <= 150\n    return age\n```",
-        options: [
-          "Відсутні повідомлення в assert",
-          "Неправильний синтаксис assert",
-          "Неправильна назва функції",
-          "Все правильно"
-        ],
-        correctAnswer: 0,
-        explanation: "Краще додавати зрозумілі повідомлення до assert для легшого відлагодження: assert age >= 0, 'Вік не може бути від\'ємним'"
-      },
-      {
-        id: "q6",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що таке валідація даних?",
-        options: [
-          "Перевірка вхідних даних перед обробкою",
-          "Збереження даних у файл",
-          "Видалення даних",
-          "Сортування даних"
-        ],
-        correctAnswer: 0,
-        explanation: "Валідація даних - це перевірка вхідних даних на коректність перед їх обробкою."
+        explanation: "True. Генератори можна використовувати рекурсивно з yield from для обробки вкладених структур, наприклад, для вирівнювання списків."
       }
     ],
-    timeLimit: 10,
+    timeLimit: 15,
     passingScore: 70
   }
 }

@@ -5,8 +5,8 @@
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
-export const lesson_19_4 = {
-  lessonId: "lesson-19-4",
+export const lesson_16_5 = {
+  lessonId: "lesson-16-5",
   moduleId: "module-16",
   order: 4,
   title: "Розміщення елементів: pack, grid, place",
@@ -16,15 +16,15 @@ export const lesson_19_4 = {
     "Застосовувати grid для таблиць",
     "Використовувати place для точкового розміщення",
     "Вибирати правильний метод",
-    "lesson-19-3",
-    "lesson-19-5",
+    "lesson-16-4",
+    "lesson-16-6",
     "Обробка подій та практика: GUI-застосунок"
 ],
   
   estimatedTime: 90,
   prerequisites: [
-    "lesson-19-3",
-    "lesson-19-5",
+    "lesson-16-4",
+    "lesson-16-6",
     "Обробка подій та практика: GUI-застосунок"
 ],
   

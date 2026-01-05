@@ -5,8 +5,8 @@
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
-export const lesson_19_2 = {
-  lessonId: "lesson-19-2",
+export const lesson_16_3 = {
+  lessonId: "lesson-14-3",
   moduleId: "module-16",
   order: 2,
   title: "Створення першого вікна. Tk(), mainloop()",
@@ -16,16 +16,16 @@ export const lesson_19_2 = {
     "Використовувати Tk() та mainloop()",
     "Налаштувати розміри та заголовок",
     "Закривати вікно",
-    "lesson-19-1",
-    "lesson-19-3",
+    "lesson-16-2",
+    "lesson-16-4",
     "Віджети: Label, Button, Entry, Text",
     "Використовувати Label для тексту"
 ],
   
   estimatedTime: 75,
   prerequisites: [
-    "lesson-19-1",
-    "lesson-19-3",
+    "lesson-16-2",
+    "lesson-16-4",
     "Віджети: Label, Button, Entry, Text"
 ],
   

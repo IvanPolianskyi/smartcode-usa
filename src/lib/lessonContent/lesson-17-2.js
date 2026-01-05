@@ -5,8 +5,8 @@
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
-export const lesson_17_2 = {
-  lessonId: "lesson-17-2",
+export const lesson_15_2 = {
+  lessonId: "lesson-13-4",
   moduleId: "module-15",
   order: 2,
   title: "Дескриптори та property",
@@ -16,16 +16,16 @@ export const lesson_17_2 = {
     "Створювати власні дескриптори",
     "Використовувати property",
     "Застосовувати для валідації",
-    "lesson-17-1",
-    "lesson-17-3",
+    "lesson-15-1",
+    "lesson-15-3",
     "Протоколи та duck typing",
     "Розуміти протоколи Python"
 ],
   
   estimatedTime: 90,
   prerequisites: [
-    "lesson-17-1",
-    "lesson-17-3",
+    "lesson-15-1",
+    "lesson-15-3",
     "Протоколи та duck typing"
 ],
   

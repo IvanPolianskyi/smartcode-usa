@@ -1,116 +1,114 @@
 /**
- * Практика: генератори на практиці
+ * 01 Web Scraping Exercises
  * Full educational content
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_11_4 = {
-  lessonId: "lesson-11-4",
-  moduleId: "module-10",
-  order: 4,
-  title: "Практика: генератори на практиці",
+  lessonId: "lesson-10-2",
+  moduleId: "module-11",
+  order: 2,
+  title: "01 Web Scraping Exercises",
   
   learningObjectives: [
-    "Створити корисні генератори",
-    "Застосувати генератори для обробки даних",
-    "Оптимізувати код з генераторами",
-    "Практикуватися у створенні генераторів",
-    "lesson-11-3",
-    "module-10",
-    "12 - Розширені модулі Python"
-],
+    "Вивчити основні концепції",
+    "Застосувати знання на практиці",
+    "Розв'язати практичні задачі"
+  ],
   
-  estimatedTime: 120,
-  prerequisites: [
-    "lesson-11-3",
-    "module-10",
-    "12 - Розширені модулі Python"
-],
+  estimatedTime: 90,
+  prerequisites: [],
   
   videoUrl: "",
   
   theory: {
     sections: [
       {
-        title: "Вступ",
-        content: `Практика: генератори на практиці
+        title: "Web Scraping Exercises",
+        content: `## Complete the Tasks Below
 
-На цьому уроці ми вивчимо основні концепції та навички, необхідні для розуміння та застосування матеріалу.
+**TASK: Import any libraries you think you'll need to scrape a website.**
 
-**Що ви дізнаєтеся:**
-- Створити корисні генератори
-- Застосувати генератори для обробки даних
-- Оптимізувати код з генераторами
-- Практикуватися у створенні генераторів
-- lesson-11-3
-- module-10
-- 10 - Розширені модулі Python
+**TASK: Use requests library and BeautifulSoup to connect to http://quotes.toscrape.com/ and get the HMTL text from the homepage.**
 
-**Час на вивчення:** приблизно 120 хвилин
+**TASK: Get the names of all the authors on the first page.**
 
-**Попередні вимоги:** lesson-11-3, module-10, 10 - Розширені модулі Python
-`
+**TASK: Create a list of all the quotes on the first page.**
+
+**TASK: Inspect the site and use Beautiful Soup to extract the top ten tags from the requests text shown on the top right from the home page (e.g Love,Inspirational,Life, etc...). HINT: Keep in mind there are also tags underneath each quote, try to find a class only present in the top right tags, perhaps check the span.**
+
+**TASK: Notice how there is more than one page, and subsequent pages look like this http://quotes.toscrape.com/page/2/. Use what you know about for loops and string concatenation to loop through all the pages and get all the unique authors on the website. Keep in mind there are many ways to achieve this, also note that you will need to somehow figure out how to check that your loop is on the last page with quotes. For debugging purposes, I will let you know that there are only 10 pages, so the last page is http://quotes.toscrape.com/page/10/, but try to create a loop that is robust enough that it wouldn't matter to know the amount of pages beforehand, perhaps use try/except for this, its up to you!**
+
+There are lots of other potential solutions that are even more robust and flexible, the main idea is the same though, use a while loop to cycle through potential pages and have a break condition based on the invalid page.`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад 1",
-      code: `# Приклад коду
-print("Привіт, світ!")`,
-      explanation: "Базовий приклад для розуміння концепції"
-    }
-  ],
-  
-  commonMistakes: [
+      title: "CODE HERE",
+      code: `# CODE HERE`,
+      explanation: "Приклад коду з курсу"
+    },
     {
-      mistake: "Типова помилка",
-      explanation: "Пояснення помилки",
-      correctApproach: "Правильний підхід"
+      title: "CODE HERE",
+      code: `# CODE HERE`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "CODE HERE",
+      code: `# CODE HERE`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `authors`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "CODE HERE",
+      code: `#CODE HERE`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "Приклад коду",
+      code: `quotes`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "CODE HERE",
+      code: `# CODE HERE`,
+      explanation: "Приклад коду з курсу"
+    },
+    {
+      title: "CODE HERE",
+      code: `# CODE HERE`,
+      explanation: "Приклад коду з курсу"
     }
   ],
   
-  summary: `Підсумок уроку "Практика: генератори на практиці"
-
-На цьому уроці ми вивчили основні концепції та навички.`,
+  commonMistakes: [],
+  
+  summary: "Підсумок уроку",
   
   practiceTask: {
     title: "Практична задача",
-    description: "Застосуйте набуті знання на практиці",
-    problemStatement: "Створіть програму, яка демонструє вивчені концепції",
+    description: "Опишіть задачу",
+    problemStatement: "Умова задачі",
     inputFormat: "",
     outputFormat: "",
     examples: [],
     solution: {
-      code: `# Рішення
-# Ваш код тут`,
-      explanation: "Пояснення рішення"
+      code: "",
+      explanation: ""
     },
-    hints: [
-      "Підказка 1",
-      "Підказка 2"
-    ],
+    hints: [],
     difficulty: "beginner"
   },
   
   quiz: {
-    questions: [
-      {
-        id: "q1",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Питання про основні концепції?",
-        options: [
-          "Варіант 1",
-          "Варіант 2",
-          "Варіант 3",
-          "Варіант 4"
-        ],
-        correctAnswer: 0,
-        explanation: "Пояснення правильної відповіді"
-      }
-    ],
+    questions: [],
     timeLimit: 10,
     passingScore: 70
   }

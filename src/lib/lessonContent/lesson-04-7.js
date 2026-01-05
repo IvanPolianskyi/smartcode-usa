@@ -1,13 +1,13 @@
 /**
- * Lesson 06-7: Абстрактні класи та інтерфейси
+ * Lesson 04-7: Абстрактні класи та інтерфейси
  * Full educational content
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
-export const lesson_06_7 = {
-  lessonId: "lesson-06-7",
-  moduleId: "module-06",
+export const lesson_04_7 = {
+  lessonId: "lesson-04-7",
+  moduleId: "module-04",
   order: 7,
   title: "Абстрактні класи та інтерфейси",
   
@@ -19,7 +19,7 @@ export const lesson_06_7 = {
   ],
   
   estimatedTime: 90,
-  prerequisites: ["lesson-06-6"],
+  prerequisites: ["lesson-04-6"],
   
   videoUrl: "",
   

@@ -1,32 +1,32 @@
 /**
- * Робота з Excel: openpyxl
+ * Дескриптори та property
  * Full educational content
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_15_2 = {
-  lessonId: "lesson-15-2",
-  moduleId: "module-13",
+  lessonId: "lesson-13-4",
+  moduleId: "module-15",
   order: 2,
-  title: "Робота з Excel: openpyxl",
+  title: "Дескриптори та property",
   
   learningObjectives: [
-    "Встановити openpyxl",
-    "Читати Excel файли",
-    "Записувати дані в Excel",
-    "Маніпулювати листами та комірками",
+    "Розуміти дескриптори",
+    "Створювати власні дескриптори",
+    "Використовувати property",
+    "Застосовувати для валідації",
     "lesson-15-1",
     "lesson-15-3",
-    "Робота з CSV та pandas",
-    "Читати та записувати CSV файли"
+    "Протоколи та duck typing",
+    "Розуміти протоколи Python"
 ],
   
   estimatedTime: 90,
   prerequisites: [
     "lesson-15-1",
     "lesson-15-3",
-    "Робота з CSV та pandas"
+    "Протоколи та duck typing"
 ],
   
   videoUrl: "",
@@ -35,23 +35,23 @@ export const lesson_15_2 = {
     sections: [
       {
         title: "Вступ",
-        content: `Робота з Excel: openpyxl
+        content: `Дескриптори та property
 
 На цьому уроці ми вивчимо основні концепції та навички, необхідні для розуміння та застосування матеріалу.
 
 **Що ви дізнаєтеся:**
-- Встановити openpyxl
-- Читати Excel файли
-- Записувати дані в Excel
-- Маніпулювати листами та комірками
-- lesson-15-1
-- lesson-15-3
-- Робота з CSV та pandas
-- Читати та записувати CSV файли
+- Розуміти дескриптори
+- Створювати власні дескриптори
+- Використовувати property
+- Застосовувати для валідації
+- lesson-17-1
+- lesson-17-3
+- Протоколи та duck typing
+- Розуміти протоколи Python
 
 **Час на вивчення:** приблизно 90 хвилин
 
-**Попередні вимоги:** lesson-15-1, lesson-15-3, Робота з CSV та pandas
+**Попередні вимоги:** lesson-17-1, lesson-17-3, Протоколи та duck typing
 `
       }
     ]
@@ -74,7 +74,7 @@ print("Привіт, світ!")`,
     }
   ],
   
-  summary: `Підсумок уроку "Робота з Excel: openpyxl"
+  summary: `Підсумок уроку "Дескриптори та property"
 
 На цьому уроці ми вивчили основні концепції та навички.`,
   
