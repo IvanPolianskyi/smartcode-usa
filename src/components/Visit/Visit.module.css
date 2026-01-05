@@ -5,7 +5,6 @@
 
 /* --- ОСНОВНА СТРУКТУРА --- */
 .container {
-    
     min-height: 100vh;
     background: #f8fafc;
     position: relative;
@@ -94,7 +93,8 @@
 /* --- СЕКЦІЯ HERO --- */
 .hero {
     text-align: center;
-    padding: 2rem 0;
+    /* padding: 1rem 0; */
+    padding-top: 1rem;
 }
 .title {
     font-size: clamp(3.5rem, 7vw, 6rem);
@@ -414,7 +414,9 @@
     .mainContainer {
         padding: 0 1.5rem 4rem;
     }
-    .hero { padding: 2rem 0; }
+    .hero { 
+        padding: 2rem 0;
+        padding-top: 6rem; }
     .heroFeatures { gap: 1rem; }
     .statsContainer { 
         grid-template-columns: repeat(2, 1fr);

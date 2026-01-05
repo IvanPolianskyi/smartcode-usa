@@ -441,6 +441,16 @@ const Header = () => {
 								</>
 							)
 						)}
+						{/* Кнопка кабінету для мобільної версії */}
+						{!userLoading && (
+							<Link
+								href={user ? "/dashboard" : "/login"}
+								className={styles.mobileCabinetButton}
+								aria-label={user ? "Мій профіль" : "Вхід"}
+							>
+								<User size={20} />
+							</Link>
+						)}
 						<button
 							className={styles.mobileMenuButton}
 							onClick={handleMobileMenuToggle}

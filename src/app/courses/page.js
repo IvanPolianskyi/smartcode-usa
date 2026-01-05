@@ -45,7 +45,7 @@ const courses = [
       'REST API',
       'Деплой проектів'
     ],
-    popular: true,
+    popular: false,
     rating: 4.9
   },
   {

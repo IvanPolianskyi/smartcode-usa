@@ -1,5 +1,33 @@
 /* EnhancedCourseCards.module.css */
 
+/* --- КОНТЕЙНЕР СЕКЦІЇ --- */
+.sectionContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.sectionHeader {
+    width: 100%;
+    padding: 1.5rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.sectionTitle {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #d946ef 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+    margin: 0;
+    position: relative;
+}
+
 /* --- ОСНОВНА РОЗМІТКА --- */
 .wrapper {
     width: 100%;
@@ -398,6 +426,11 @@
     transform: translateY(-1px);
 }
 
+/* Кнопка "Перейти" для мобільної версії */
+.mobileGoButton {
+    display: none;
+}
+
 /* --- БІЧНА НАЗВА --- */
 .sideLabel {
     position: absolute;
@@ -465,6 +498,14 @@
 
 /* --- АДАПТИВНІСТЬ ДЛЯ МОБІЛЬНИХ --- */
 @media (max-width: 1024px) {
+    .sectionHeader {
+        padding: 2rem 1rem 1.5rem;
+    }
+
+    .sectionTitle {
+        font-size: clamp(1.75rem, 6vw, 2.5rem);
+    }
+
     .wrapper {
         height: auto;
         flex-direction: column;
@@ -493,6 +534,11 @@
         right: 1.5rem;
     }
 
+    .centerIconWrapper {
+        top: 40%;
+        transform: translate(-50%, -50%);
+    }
+
     .centerIcon { font-size: 4rem; transition: none; }
 
     /* centerIconHovered не використовується на мобільних → стилі видалено */
@@ -513,16 +559,21 @@
         line-height: 1.3;
     }
 
+    /* Приховуємо features з зеленою галочкою на мобільних */
     .featuresGrid { 
-        grid-template-columns: 1fr; 
-        gap: 0.5rem;
+        display: none;
     }
     .statsGrid { 
         grid-template-columns: 1fr 1fr; 
         gap: 0.75rem;
     }
 
-    /* details/detailsVisible не використовуються на мобільних → стилі видалено */
+    /* Деталі завжди видимі на мобільних */
+    .details {
+        max-height: none !important;
+        opacity: 1 !important;
+        overflow: visible;
+    }
 
     .description {
         font-size: 0.9rem;
@@ -530,7 +581,38 @@
         margin-bottom: 0.75rem;
     }
 
-    /* actionButton у мобільних не відображається (немає details) → стилі видалено */
+    /* Приховуємо малу кнопку "Перейти" на мобільних */
+    .ctaRow {
+        display: none;
+    }
+
+    /* Приховуємо кнопку "Почати навчання" на мобільних */
+    .actionButton {
+        display: none;
+    }
+
+    /* Показуємо кнопку "Перейти" на мобільних */
+    .mobileGoButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.875rem 1.25rem;
+        margin-top: 1rem;
+        border-radius: 12px;
+        background-color: rgba(255,255,255,0.16);
+        border: 1px solid rgba(255,255,255,0.3);
+        color: white;
+        font-weight: 700;
+        font-size: 0.95rem;
+        text-decoration: none;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    .mobileGoButton:active {
+        background-color: rgba(255,255,255,0.22);
+        transform: scale(0.98);
+    }
 
     /* Приховуємо бічну вертикальну назву на мобільних */
     .sideLabel { display: none; }

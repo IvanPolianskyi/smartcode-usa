@@ -110,7 +110,7 @@ export default function RootLayout({ children }) {
 			>
 				<Header />
                 <div className='min-h-screen flex flex-col'>
-					<main className='flex-1 pt-16 relative'>{children}</main>
+					<main className='flex-1 relative main-content'>{children}</main>
 					<Footer />
                     {/* Глобально змонтована модалка контакту, доступна на всіх сторінках */}
                     <ContactForm />

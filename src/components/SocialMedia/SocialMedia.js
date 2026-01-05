@@ -1,10 +1,11 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
-import { Music, ExternalLink, Sparkles } from 'lucide-react'
+import { ExternalLink, Sparkles } from 'lucide-react'
 import Image from 'next/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import TikTokIcon from '@/components/Icons/TikTokIcon'
 import styles from './SocialMedia.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -204,7 +205,7 @@ const SocialMedia = () => {
 											</div>
 										) : (
 											<div className={styles.iconWrapper}>
-												<Music size={32} />
+												<TikTokIcon size={32} />
 											</div>
 										)}
 									</div>

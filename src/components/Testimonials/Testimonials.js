@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger)
 const testimonials = [
 	{
 		id: 1,
-		name: 'Оля',
+		name: 'Сашко',
 		subject: 'Python',
 		rating: 5,
 		text: 'Завдяки курсу Python в SmartCode Academy я змогла створити свій перший додаток для обчислення математичних задач. Викладачі дуже терплячі та завжди допомагають розібратися зі складними темами. Тепер я впевнено працюю з циклами та функціями!',

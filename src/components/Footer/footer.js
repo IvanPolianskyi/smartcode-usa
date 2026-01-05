@@ -20,8 +20,8 @@ import {
 	Facebook,
 	Linkedin,
 	Box,
-	Music,
 } from 'lucide-react'
+import TikTokIcon from '@/components/Icons/TikTokIcon'
 import Image from 'next/image'
 
 const Footer = () => {
@@ -58,22 +58,22 @@ const Footer = () => {
 		},
 		{
 			name: 'TikTok - SmartCode Academy',
-			icon: Music,
+			icon: TikTokIcon,
 			href: 'https://www.tiktok.com/@smartcodeacademy',
 		},
 		{
 			name: 'TikTok - SmartCode Academy 2',
-			icon: Music,
+			icon: TikTokIcon,
 			href: 'https://www.tiktok.com/@smartcode_academy',
 		},
 		{
 			name: 'TikTok - Іван Python',
-			icon: Music,
+			icon: TikTokIcon,
 			href: 'https://www.tiktok.com/@ivan.smartcode.python',
 		},
 		{
 			name: 'TikTok - Артем SmartCode',
-			icon: Music,
+			icon: TikTokIcon,
 			href: 'https://www.tiktok.com/@Artem.smartcode.academy',
 		},
 	]
