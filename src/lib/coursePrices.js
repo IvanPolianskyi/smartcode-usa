@@ -24,12 +24,23 @@ export function getCoursePrice(courseId) {
 
 /**
  * Format price for display
+ * Uses a consistent format to avoid hydration mismatches
  */
 export function formatPrice(price, currency = 'UAH') {
-  return new Intl.NumberFormat('uk-UA', {
-    style: 'currency',
-    currency: currency
+  // Format number with Ukrainian locale (space as thousand separator, comma as decimal)
+  const formattedNumber = new Intl.NumberFormat('uk-UA', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
   }).format(price)
+  
+  // Use consistent currency symbol/abbreviation
+  // Always use "грн" for UAH to ensure server/client consistency
+  if (currency === 'UAH') {
+    return `${formattedNumber} грн`
+  }
+  
+  // Fallback for other currencies
+  return `${formattedNumber} ${currency}`
 }
 
 

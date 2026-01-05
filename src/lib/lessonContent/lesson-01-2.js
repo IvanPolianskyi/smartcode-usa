@@ -384,7 +384,6 @@ print(is_between)  # True`,
 3. Зберігає чи є дозвіл у змінну has_permission (True або False)
 4. Перевіряє чи можна грати: (вік >= 13 І оцінка >= 60) АБО є дозвіл
 5. Виводить результат`,
-    inputFormat: "Програма використовує фіксовані значення",
     outputFormat: `Приклад виведення:
 Вік: 14
 Оцінка: 85
@@ -392,7 +391,6 @@ print(is_between)  # True`,
 Можна грати: True`,
     examples: [
       {
-        input: "age = 14, score = 85, has_permission = True",
         output: `Вік: 14
 Оцінка: 85
 Дозвіл: True
