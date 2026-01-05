@@ -18,7 +18,6 @@ export const lesson_00_8 = {
     "Практикуватися у роботі з даними"
   ],
   
-  estimatedTime: 120,
   prerequisites: ["lesson-00-7"],
   
   videoUrl: "",

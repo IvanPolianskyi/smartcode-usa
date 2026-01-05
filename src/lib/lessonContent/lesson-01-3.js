@@ -18,7 +18,6 @@ export const lesson_01_3 = {
     "Практикуватися у написанні умовних виразів"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-01-2"],
   
   videoUrl: "",

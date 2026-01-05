@@ -18,7 +18,6 @@ export const lesson_12_2 = {
     "Використовувати email модуль"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-12-1"],
   
   videoUrl: "",
@@ -485,8 +484,8 @@ send_email_with_cc_bcc(
 
 **Різниця між CC та BCC:**
 
-- **CC (Carbon Copy)** — всі одержувачі бачать адреси інших
-- **BCC (Blind Carbon Copy)** — одержувачі не бачать адреси BCC`
+- **CC (Carbon Copy)** - всі одержувачі бачать адреси інших
+- **BCC (Blind Carbon Copy)** - одержувачі не бачать адреси BCC`
       },
       {
         title: "Практичні приклади",
@@ -564,19 +563,19 @@ def send_report_email(recipient, report_path):
 
 **Ключові концепції:**
 
-1. **HTML email** — красиве форматування повідомлень
-2. **MIMEMultipart** — для комбінованих повідомлень
-3. **Вкладення** — додавання файлів до email
-4. **Вбудовані зображення** — зображення в HTML
-5. **CC та BCC** — копії та приховані копії
+1. **HTML email** - красиве форматування повідомлень
+2. **MIMEMultipart** - для комбінованих повідомлень
+3. **Вкладення** - додавання файлів до email
+4. **Вбудовані зображення** - зображення в HTML
+5. **CC та BCC** - копії та приховані копії
 
 **Основні модулі:**
 
-- \`email.mime.multipart.MIMEMultipart\` — багаточастинкові повідомлення
-- \`email.mime.text.MIMEText\` — текст та HTML
-- \`email.mime.base.MIMEBase\` — вкладення
-- \`email.mime.image.MIMEImage\` — зображення
-- \`email.encoders\` — кодування вкладень
+- \`email.mime.multipart.MIMEMultipart\` - багаточастинкові повідомлення
+- \`email.mime.text.MIMEText\` - текст та HTML
+- \`email.mime.base.MIMEBase\` - вкладення
+- \`email.mime.image.MIMEImage\` - зображення
+- \`email.encoders\` - кодування вкладень
 
 **Важливо:**
 
@@ -666,28 +665,15 @@ server.send_message(msg, to_addrs=all_recipients)`,
   
   summary: `На цьому уроці ми вивчили розширені можливості email:
 
-1. **HTML email** — створення красивих повідомлень
-2. **Вкладення** — додавання файлів
-3. **Вбудовані зображення** — зображення в HTML
-4. **CC та BCC** — копії та приховані копії
-5. **MIMEMultipart** — багаточастинкові повідомлення
+1. HTML email - створення красивих повідомлень
+2. Вкладення - додавання файлів
+3. Вбудовані зображення - зображення в HTML
+4. CC та BCC - копії та приховані копії
+5. MIMEMultipart - багаточастинкові повідомлення
 
-HTML email та вкладення — потужні інструменти для професійних повідомлень!`,
+HTML email та вкладення - потужні інструменти для професійних повідомлень!`,
   
-  practiceTask: {
-    title: "Практичне завдання",
-    description: "Для цього уроку практичного завдання немає. Ви можете перейти до тесту.",
-    problemStatement: "Для цього уроку практичного завдання немає. Ви можете перейти до тесту.",
-    inputFormat: "",
-    outputFormat: "",
-    examples: [],
-    solution: {
-      code: "",
-      explanation: ""
-    },
-    hints: [],
-    difficulty: "beginner"
-  },
+  practiceTask: null,
   
   quiz: {
     questions: [

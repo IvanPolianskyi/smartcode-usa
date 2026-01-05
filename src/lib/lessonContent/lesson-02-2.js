@@ -18,7 +18,6 @@ export const lesson_02_2 = {
     "Застосовувати while для різних задач"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-02-1"],
   
   videoUrl: "",

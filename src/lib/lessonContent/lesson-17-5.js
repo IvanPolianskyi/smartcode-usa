@@ -21,7 +21,6 @@ export const lesson_15_5 = {
     "18 - Milestone Project 3"
 ],
   
-  estimatedTime: 120,
   prerequisites: [
     "lesson-15-4",
     "module-18",
@@ -46,8 +45,6 @@ export const lesson_15_5 = {
 - lesson-17-4
 - module-18
 - 18 - Milestone Project 3
-
-**Час на вивчення:** приблизно 120 хвилин
 
 **Попередні вимоги:** lesson-17-4, module-18, 18 - Milestone Project 3
 `

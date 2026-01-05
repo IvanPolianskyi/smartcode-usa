@@ -18,7 +18,6 @@ export const lesson_01_1 = {
     "Застосовувати оператори для різних структур даних"
   ],
   
-  estimatedTime: 75,
   prerequisites: ["lesson-00-8"],
   
   videoUrl: "",

@@ -18,7 +18,6 @@ export const lesson_00_4 = {
     "Використовувати базові методи словників"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-00-3"],
   
   videoUrl: "",

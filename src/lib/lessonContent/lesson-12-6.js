@@ -17,17 +17,16 @@ export const lesson_12_6 = {
     "Генерувати PDF та Excel звіти",
     "Створити корисний інструмент",
     "lesson-12-5",
-    "module-14",
-    "16 - Відправка email з Python",
+    "module-13",
+    "13 - Бонус: Вступ до графічних інтерфейсів (GUI)",
     "Відправка email повідомлень, робота з SMTP, створення HTML email"
 ],
   
-  estimatedTime: 120,
   prerequisites: [
     "lesson-12-5",
-    "module-14",
-    "16 - Відправка email з Python"
-],
+    "module-13",
+    "13 - Бонус: Вступ до графічних інтерфейсів (GUI)"
+  ],
   
   videoUrl: "",
   
@@ -44,14 +43,11 @@ export const lesson_12_6 = {
 - Обробляти дані з різних джерел
 - Генерувати PDF та Excel звіти
 - Створити корисний інструмент
-- lesson-15-3
-- module-14
-- 14 - Відправка email з Python
-- Відправка email повідомлень, робота з SMTP, створення HTML email
+- lesson-12-5
+- module-13
+- 13 - Бонус: Вступ до графічних інтерфейсів (GUI)
 
-**Час на вивчення:** приблизно 120 хвилин
-
-**Попередні вимоги:** lesson-15-3, module-14, 14 - Відправка email з Python
+**Попередні вимоги:** lesson-12-5, module-13, 13 - Бонус: Вступ до графічних інтерфейсів (GUI)
 `
       }
     ]
@@ -78,24 +74,7 @@ print("Привіт, світ!")`,
 
 На цьому уроці ми вивчили основні концепції та навички.`,
   
-  practiceTask: {
-    title: "Практична задача",
-    description: "Застосуйте набуті знання на практиці",
-    problemStatement: "Створіть програму, яка демонструє вивчені концепції",
-    inputFormat: "",
-    outputFormat: "",
-    examples: [],
-    solution: {
-      code: `# Рішення
-# Ваш код тут`,
-      explanation: "Пояснення рішення"
-    },
-    hints: [
-      "Підказка 1",
-      "Підказка 2"
-    ],
-    difficulty: "beginner"
-  },
+  practiceTask: null,
   
   quiz: {
     questions: [

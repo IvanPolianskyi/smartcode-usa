@@ -18,7 +18,6 @@ export const lesson_00_1 = {
     "Ознайомитися з інтерпретатором Python"
   ],
   
-  estimatedTime: 60,
   prerequisites: [],
   
   videoUrl: "",
@@ -113,7 +112,7 @@ python hello.py
 Hello, World!
 \`\`\`
 
-Вітаю! Ви написали свою першу програму на Python! 🎉`
+Вітаю! Ви написали свою першу програму на Python!`
       },
       {
         title: "Робота з інтерпретатором Python",

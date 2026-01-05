@@ -17,7 +17,6 @@ export const lesson_12_4 = {
     "Розв'язати практичні задачі"
   ],
   
-  estimatedTime: 90,
   prerequisites: [],
   
   videoUrl: "",
@@ -46,20 +45,7 @@ This exercise is more open-ended, so we won't guide you with the steps, instead,
   
   summary: "Підсумок уроку",
   
-  practiceTask: {
-    title: "Практична задача",
-    description: "Опишіть задачу",
-    problemStatement: "Умова задачі",
-    inputFormat: "",
-    outputFormat: "",
-    examples: [],
-    solution: {
-      code: "",
-      explanation: ""
-    },
-    hints: [],
-    difficulty: "beginner"
-  },
+  practiceTask: null,
   
   quiz: {
     questions: [],

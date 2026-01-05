@@ -18,7 +18,6 @@ export const lesson_00_7 = {
     "Застосовувати для реальних задач"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-00-6"],
   
   videoUrl: "",

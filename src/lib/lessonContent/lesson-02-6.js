@@ -18,7 +18,6 @@ export const lesson_02_6 = {
     "Оптимізувати код з використанням comprehensions"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-02-5"],
   
   videoUrl: "",

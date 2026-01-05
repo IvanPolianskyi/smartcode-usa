@@ -18,7 +18,6 @@ export const lesson_02_7 = {
     "Практикуватися у написанні ефективного коду"
   ],
   
-  estimatedTime: 120,
   prerequisites: ["lesson-02-6"],
   
   videoUrl: "",

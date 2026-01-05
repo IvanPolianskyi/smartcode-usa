@@ -18,7 +18,6 @@ export const lesson_02_4 = {
     "Використовувати корисні оператори: in, not in, min, max"
   ],
   
-  estimatedTime: 75,
   prerequisites: ["lesson-02-3"],
   
   videoUrl: "",

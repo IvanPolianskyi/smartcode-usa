@@ -18,7 +18,6 @@ export const lesson_10_2 = {
     "Застосовувати базові фільтри"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-10-1"],
   
   videoUrl: "",
@@ -27,7 +26,7 @@ export const lesson_10_2 = {
     sections: [
       {
         title: "Зміна розміру зображення",
-        content: `**resize() — зміна розміру:**
+        content: `**resize() - зміна розміру:**
 
 \`\`\`python
 from PIL import Image
@@ -46,7 +45,7 @@ resized = img.resize((new_width, new_height))
 resized.save('photo_proportional.jpg')
 \`\`\`
 
-**thumbnail() — створення мініатюри:**
+**thumbnail() - створення мініатюри:**
 
 \`\`\`python
 from PIL import Image
@@ -70,16 +69,16 @@ from PIL import Image
 
 img = Image.open('photo.jpg')
 
-# NEAREST — найближчий піксель (швидко, але низька якість)
+# NEAREST - найближчий піксель (швидко, але низька якість)
 resized_nearest = img.resize((800, 600), Image.NEAREST)
 
-# BILINEAR — білінійна інтерполяція (краща якість)
+# BILINEAR - білінійна інтерполяція (краща якість)
 resized_bilinear = img.resize((800, 600), Image.BILINEAR)
 
-# BICUBIC — бікубічна інтерполяція (найкраща якість, повільніше)
+# BICUBIC - бікубічна інтерполяція (найкраща якість, повільніше)
 resized_bicubic = img.resize((800, 600), Image.BICUBIC)
 
-# LANCZOS — найкраща якість для зменшення
+# LANCZOS - найкраща якість для зменшення
 resized_lanczos = img.resize((800, 600), Image.LANCZOS)
 
 resized_lanczos.save('photo_high_quality.jpg')
@@ -87,7 +86,7 @@ resized_lanczos.save('photo_high_quality.jpg')
       },
       {
         title: "Обрізання зображення",
-        content: `**crop() — обрізання:**
+        content: `**crop() - обрізання:**
 
 \`\`\`python
 from PIL import Image
@@ -147,7 +146,7 @@ square.save('photo_square.jpg')
       },
       {
         title: "Поворот та відображення",
-        content: `**rotate() — поворот:**
+        content: `**rotate() - поворот:**
 
 \`\`\`python
 from PIL import Image
@@ -167,7 +166,7 @@ rotated = img.rotate(45, expand=True)
 rotated.save('photo_rotated_expanded.jpg')
 \`\`\`
 
-**transpose() — стандартні перетворення:**
+**transpose() - стандартні перетворення:**
 
 \`\`\`python
 from PIL import Image
@@ -208,7 +207,7 @@ cropped.save('photo_rotated_cropped.jpg')
       },
       {
         title: "Яскравість та контраст",
-        content: `**ImageEnhance — покращення зображення:**
+        content: `**ImageEnhance - покращення зображення:**
 
 \`\`\`python
 from PIL import Image, ImageEnhance
@@ -282,7 +281,7 @@ enhanced.save('photo_auto_enhanced.jpg')
       },
       {
         title: "Базові фільтри",
-        content: `**ImageFilter — вбудовані фільтри:**
+        content: `**ImageFilter - вбудовані фільтри:**
 
 \`\`\`python
 from PIL import Image, ImageFilter
@@ -443,13 +442,13 @@ batch_enhance('photos/', 'enhanced/')
 
 **Ключові методи:**
 
-1. **resize()** — зміна розміру
-2. **thumbnail()** — створення мініатюри
-3. **crop()** — обрізання
-4. **rotate()** — поворот
-5. **transpose()** — стандартні перетворення
-6. **ImageEnhance** — покращення яскравості, контрасту
-7. **ImageFilter** — застосування фільтрів
+1. **resize()** - зміна розміру
+2. **thumbnail()** - створення мініатюри
+3. **crop()** - обрізання
+4. **rotate()** - поворот
+5. **transpose()** - стандартні перетворення
+6. **ImageEnhance** - покращення яскравості, контрасту
+7. **ImageFilter** - застосування фільтрів
 
 **Основні операції:**
 
@@ -538,13 +537,13 @@ enhanced.save('photo_enhanced.jpg')`,
   
   summary: `На цьому уроці ми вивчили маніпуляції з зображеннями:
 
-1. **Зміна розміру** — resize(), thumbnail()
-2. **Обрізання** — crop()
-3. **Поворот** — rotate(), transpose()
-4. **Покращення** — ImageEnhance (яскравість, контраст)
-5. **Фільтри** — ImageFilter (розмиття, різкість, краї)
+1. Зміна розміру - resize(), thumbnail()
+2. Обрізання - crop()
+3. Поворот - rotate(), transpose()
+4. Покращення - ImageEnhance (яскравість, контраст)
+5. Фільтри - ImageFilter (розмиття, різкість, краї)
 
-Маніпуляції з зображеннями — основа обробки!`,
+Маніпуляції з зображеннями - основа обробки!`,
   
   practiceTask: null,
   

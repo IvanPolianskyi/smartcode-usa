@@ -18,7 +18,6 @@ export const lesson_02_1 = {
     "Застосовувати тернарний оператор"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-01-3"],
   
   videoUrl: "",

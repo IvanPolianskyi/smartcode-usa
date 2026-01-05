@@ -42,6 +42,7 @@ const Footer = () => {
 
 	const supportLinks = [
 		{ name: 'Часті питання', href: '/#faq' },
+		{ name: 'Публічна оферта', href: '/oferta' },
 	]
 
 	const achievements = [

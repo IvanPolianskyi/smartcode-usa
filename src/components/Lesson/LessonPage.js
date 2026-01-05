@@ -81,8 +81,11 @@ import { lesson_12_2 } from '@/lib/lessonContent/lesson-12-2'
 import { lesson_12_3 } from '@/lib/lessonContent/lesson-12-3'
 import { lesson_12_5 } from '@/lib/lessonContent/lesson-12-5'
 import { lesson_12_6 } from '@/lib/lessonContent/lesson-12-6'
-import { lesson_14_4 } from '@/lib/lessonContent/lesson-14-4'
-import { lesson_14_5 } from '@/lib/lessonContent/lesson-14-5'
+import { lesson_13_1 } from '@/lib/lessonContent/lesson-13-1'
+import { lesson_13_2 } from '@/lib/lessonContent/lesson-13-2'
+import { lesson_13_3 } from '@/lib/lessonContent/lesson-13-3'
+import { lesson_13_4 } from '@/lib/lessonContent/lesson-13-4'
+import { lesson_13_5 } from '@/lib/lessonContent/lesson-13-5'
 import { lesson_15_6 } from '@/lib/lessonContent/lesson-15-6'
 import styles from './LessonPage.module.css'
 
@@ -158,8 +161,11 @@ const lessonContentMap = {
   "lesson-12-3": lesson_12_3,
   "lesson-12-5": lesson_12_5,
   "lesson-12-6": lesson_12_6,
-  "lesson-14-4": lesson_14_4,
-  "lesson-14-5": lesson_14_5,
+  "lesson-13-1": lesson_13_1,
+  "lesson-13-2": lesson_13_2,
+  "lesson-13-3": lesson_13_3,
+  "lesson-13-4": lesson_13_4,
+  "lesson-13-5": lesson_13_5,
   "lesson-15-6": lesson_15_6,
 }
 
@@ -534,6 +540,16 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       console.log('Lesson already completed:', lessonId)
     }
   }, [lessonId, userProgress])
+
+  // Автоматично відкрити тест для модулів 11 та 12, якщо немає практичного завдання
+  useEffect(() => {
+    if (isLoaded && lesson) {
+      const moduleId = lesson.moduleId
+      if ((moduleId === 'module-11' || moduleId === 'module-12') && !lesson.practiceTask) {
+        setActiveTab('quiz')
+      }
+    }
+  }, [isLoaded, lesson])
 
   // Save sidebar width to localStorage when it changes
   useEffect(() => {
@@ -1636,7 +1652,9 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                 <p>
                   {(fullLesson?.moduleId === 'module-09' && fullLesson?.lessonId !== 'lesson-09-1') ||
                    (fullLesson?.moduleId === 'module-10') ||
-                   (fullLesson?.moduleId === 'module-11')
+                   (fullLesson?.moduleId === 'module-11') ||
+                   (fullLesson?.moduleId === 'module-12') ||
+                   (fullLesson?.moduleId === 'module-13')
                     ? 'Для цього уроку практичного завдання немає. Ви можете перейти до тесту.'
                     : 'Практичне завдання для цього уроку ще не додано.'}
                 </p>

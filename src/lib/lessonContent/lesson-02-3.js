@@ -18,7 +18,6 @@ export const lesson_02_3 = {
     "Працювати з enumerate() та zip()"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-02-2"],
   
   videoUrl: "",

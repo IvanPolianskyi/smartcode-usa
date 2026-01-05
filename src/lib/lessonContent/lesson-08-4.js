@@ -18,7 +18,6 @@ export const lesson_08_4 = {
     "Працювати з вкладеними структурами JSON"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-08-3"],
   
   videoUrl: "",
@@ -27,7 +26,7 @@ export const lesson_08_4 = {
     sections: [
       {
         title: "Вступ до JSON",
-        content: `JSON (JavaScript Object Notation) — це формат для обміну даними, який легко читається людьми та машинами.
+        content: `JSON (JavaScript Object Notation) - це формат для обміну даними, який легко читається людьми та машинами.
 
 **Що таке JSON?**
 
@@ -37,12 +36,12 @@ export const lesson_08_4 = {
 
 **Основні типи даних JSON:**
 
-- **Об'єкт** (object) — словник у Python
-- **Масив** (array) — список у Python
-- **Рядок** (string) — рядок у Python
-- **Число** (number) — int або float у Python
-- **Булеве** (boolean) — True/False у Python
-- **null** — None у Python
+- **Об'єкт** (object) - словник у Python
+- **Масив** (array) - список у Python
+- **Рядок** (string) - рядок у Python
+- **Число** (number) - int або float у Python
+- **Булеве** (boolean) - True/False у Python
+- **null** - None у Python
 
 **Приклад JSON:**
 
@@ -65,7 +64,7 @@ import json
       },
       {
         title: "Читання JSON з рядка",
-        content: `**json.loads()** — парсить JSON рядок в Python об'єкт.
+        content: `**json.loads()** - парсить JSON рядок в Python об'єкт.
 
 \`\`\`python
 import json
@@ -114,7 +113,7 @@ except json.JSONDecodeError as e:
       },
       {
         title: "Запис Python об'єктів в JSON",
-        content: `**json.dumps()** — конвертує Python об'єкт в JSON рядок.
+        content: `**json.dumps()** - конвертує Python об'єкт в JSON рядок.
 
 \`\`\`python
 import json
@@ -151,9 +150,9 @@ print(json_string)
 
 **Параметри json.dumps():**
 
-- **indent** — кількість пробілів для відступу
-- **ensure_ascii** — чи екранувати не-ASCII символи (False для українських букв)
-- **sort_keys** — чи сортувати ключі
+- **indent** - кількість пробілів для відступу
+- **ensure_ascii** - чи екранувати не-ASCII символи (False для українських букв)
+- **sort_keys** - чи сортувати ключі
 
 \`\`\`python
 import json
@@ -172,7 +171,7 @@ print(json_string)
       },
       {
         title: "Робота з JSON файлами",
-        content: `**json.load()** — читає JSON з файлу.
+        content: `**json.load()** - читає JSON з файлу.
 
 \`\`\`python
 import json
@@ -184,7 +183,7 @@ with open('data.json', 'r', encoding='utf-8') as f:
 print(data)
 \`\`\`
 
-**json.dump()** — записує Python об'єкт в JSON файл.
+**json.dump()** - записує Python об'єкт в JSON файл.
 
 \`\`\`python
 import json
@@ -378,10 +377,10 @@ print(loaded)
 
 **Ключові функції:**
 
-1. **json.loads()** — парсить JSON рядок в Python об'єкт
-2. **json.dumps()** — конвертує Python об'єкт в JSON рядок
-3. **json.load()** — читає JSON з файлу
-4. **json.dump()** — записує Python об'єкт в JSON файл
+1. **json.loads()** - парсить JSON рядок в Python об'єкт
+2. **json.dumps()** - конвертує Python об'єкт в JSON рядок
+3. **json.load()** - читає JSON з файлу
+4. **json.dump()** - записує Python об'єкт в JSON файл
 
 **Основні типи:**
 
@@ -465,12 +464,12 @@ with open('data.json', 'w', encoding='utf-8') as f:
   
   summary: `На цьому уроці ми вивчили роботу з JSON:
 
-1. **json.loads()** — парсинг JSON рядка
-2. **json.dumps()** — конвертація в JSON рядок
-3. **json.load()** — читання з файлу
-4. **json.dump()** — запис у файл
+1. json.loads() - парсинг JSON рядка
+2. json.dumps() - конвертація в JSON рядок
+3. json.load() - читання з файлу
+4. json.dump() - запис у файл
 
-JSON — стандартний формат для обміну даними та зберігання конфігурацій!`,
+JSON - стандартний формат для обміну даними та зберігання конфігурацій!`,
   
   practiceTask: {
     title: "Створення системи збереження завдань",

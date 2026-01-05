@@ -18,7 +18,6 @@ export const lesson_02_5 = {
     "Оптимізувати вкладені конструкції"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-02-4"],
   
   videoUrl: "",

@@ -18,7 +18,6 @@ export const lesson_00_3 = {
     "Працювати зі списковими включеннями"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-00-2"],
   
   videoUrl: "",

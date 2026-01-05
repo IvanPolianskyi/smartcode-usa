@@ -1091,87 +1091,7 @@ export const pythonCurriculum = {
     {
       moduleId: "module-13",
       order: 13,
-      title: "13 - Розширені об'єкти та структури даних",
-      description: "Поглиблена робота з об'єктами: протоколи, контекстні менеджери, дескриптори",
-      duration: { weeks: 2, lessons: 5 },
-      learningOutcomes: [
-        "Розуміти протоколи Python",
-        "Створювати контекстні менеджери",
-        "Використовувати дескриптори",
-        "Працювати з розширеними структурами"
-      ],
-      lessons: [
-        {
-          lessonId: "lesson-13-1",
-          order: 1,
-          title: "Контекстні менеджери та with",
-          learningObjectives: [
-            "Розуміти контекстні менеджери",
-            "Використовувати with statement",
-            "Створювати власні контекстні менеджери",
-            "Використовувати contextlib"
-          ],
-          estimatedTime: 90,
-          prerequisites: ["lesson-12-3"]
-        },
-        {
-          lessonId: "lesson-13-2",
-          order: 2,
-          title: "Дескриптори та property",
-          learningObjectives: [
-            "Розуміти дескриптори",
-            "Створювати власні дескриптори",
-            "Використовувати property",
-            "Застосовувати для валідації"
-          ],
-          estimatedTime: 90,
-          prerequisites: ["lesson-13-1"]
-        },
-        {
-          lessonId: "lesson-13-3",
-          order: 3,
-          title: "Протоколи та duck typing",
-          learningObjectives: [
-            "Розуміти протоколи Python",
-            "Застосовувати duck typing",
-            "Реалізовувати протоколи",
-            "Використовувати typing протоколи"
-          ],
-          estimatedTime: 90,
-          prerequisites: ["lesson-13-2"]
-        },
-        {
-          lessonId: "lesson-13-4",
-          order: 4,
-          title: "Розширені структури даних",
-          learningObjectives: [
-            "Використовувати спеціалізовані структури",
-            "Створювати власні структури даних",
-            "Оптимізувати роботу з даними",
-            "Застосовувати для складних задач"
-          ],
-          estimatedTime: 90,
-          prerequisites: ["lesson-13-3"]
-        },
-        {
-          lessonId: "lesson-13-5",
-          order: 5,
-          title: "Практика: розширені об'єкти",
-          learningObjectives: [
-            "Створити складні об'єкти",
-            "Застосувати протоколи та дескриптори",
-            "Створити корисні структури даних",
-            "Практикуватися у роботі з об'єктами"
-          ],
-          estimatedTime: 120,
-          prerequisites: ["lesson-13-4"]
-        }
-      ]
-    },
-    {
-      moduleId: "module-14",
-      order: 14,
-      title: "14 - Бонус: Вступ до графічних інтерфейсів (GUI)",
+      title: "13 - Бонус: Вступ до графічних інтерфейсів (GUI)",
       description: "Створення графічних інтерфейсів користувача з Tkinter",
       duration: { weeks: 2, lessons: 5 },
       learningOutcomes: [
@@ -1182,7 +1102,7 @@ export const pythonCurriculum = {
       ],
       lessons: [
         {
-          lessonId: "lesson-14-1",
+          lessonId: "lesson-13-1",
           order: 1,
           title: "Вступ до GUI. Що таке Tkinter",
           learningObjectives: [
@@ -1192,10 +1112,10 @@ export const pythonCurriculum = {
             "Підготувати середовище для роботи"
           ],
           estimatedTime: 60,
-          prerequisites: ["lesson-13-5"]
+          prerequisites: ["lesson-12-3"]
         },
         {
-          lessonId: "lesson-14-2",
+          lessonId: "lesson-13-2",
           order: 2,
           title: "Створення першого вікна. Tk(), mainloop()",
           learningObjectives: [
@@ -1205,10 +1125,10 @@ export const pythonCurriculum = {
             "Закривати вікно"
           ],
           estimatedTime: 75,
-          prerequisites: ["lesson-14-1"]
+          prerequisites: ["lesson-13-1"]
         },
         {
-          lessonId: "lesson-14-3",
+          lessonId: "lesson-13-3",
           order: 3,
           title: "Віджети: Label, Button, Entry, Text",
           learningObjectives: [
@@ -1218,10 +1138,10 @@ export const pythonCurriculum = {
             "Налаштовувати віджети"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-14-2"]
+          prerequisites: ["lesson-13-2"]
         },
         {
-          lessonId: "lesson-14-4",
+          lessonId: "lesson-13-4",
           order: 4,
           title: "Розміщення елементів: pack, grid, place",
           learningObjectives: [
@@ -1231,10 +1151,10 @@ export const pythonCurriculum = {
             "Вибирати правильний метод"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-14-3"]
+          prerequisites: ["lesson-13-3"]
         },
         {
-          lessonId: "lesson-14-5",
+          lessonId: "lesson-13-5",
           order: 5,
           title: "Обробка подій та практика: GUI-застосунок",
           learningObjectives: [
@@ -1244,7 +1164,7 @@ export const pythonCurriculum = {
             "Застосувати всі набуті знання"
           ],
           estimatedTime: 150,
-          prerequisites: ["lesson-14-4"],
+          prerequisites: ["lesson-13-4"],
           isProject: true
         }
       ]

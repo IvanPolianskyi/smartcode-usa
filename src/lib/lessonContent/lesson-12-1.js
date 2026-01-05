@@ -18,7 +18,6 @@ export const lesson_12_1 = {
     "Налаштувати SMTP сервер"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-11-1"],
   
   videoUrl: "",
@@ -27,11 +26,11 @@ export const lesson_12_1 = {
     sections: [
       {
         title: "Вступ до відправки email",
-        content: `Email (електронна пошта) — один з найпоширеніших способів комунікації в інтернеті.
+        content: `Email (електронна пошта) - один з найпоширеніших способів комунікації в інтернеті.
 
 **Що таке SMTP?**
 
-SMTP (Simple Mail Transfer Protocol) — протокол для відправки електронних листів.
+SMTP (Simple Mail Transfer Protocol) - протокол для відправки електронних листів.
 
 **Бібліотека smtplib:**
 
@@ -137,14 +136,14 @@ send_simple_email(
 
 **Покрокове пояснення:**
 
-1. **MIMEText** — створює текстове повідомлення
-2. **msg['From']** — адреса відправника
-3. **msg['To']** — адреса одержувача
-4. **msg['Subject']** — тема листа
-5. **server.starttls()** — вмикає шифрування
-6. **server.login()** — авторизація
-7. **server.send_message()** — відправка
-8. **server.quit()** — закриття з'єднання`
+1. **MIMEText** - створює текстове повідомлення
+2. **msg['From']** - адреса відправника
+3. **msg['To']** - адреса одержувача
+4. **msg['Subject']** - тема листа
+5. **server.starttls()** - вмикає шифрування
+6. **server.login()** - авторизація
+7. **server.send_message()** - відправка
+8. **server.quit()** - закриття з'єднання`
       },
       {
         title: "Безпечне зберігання паролів",
@@ -255,17 +254,17 @@ success, message = send_email_safe(
 )
 
 if success:
-    print(f"✓ {message}")
+    print(f" {message}")
 else:
-    print(f"✗ {message}")
+    print(f" {message}")
 \`\`\`
 
 **Типи помилок:**
 
-- **SMTPAuthenticationError** — невірний email/пароль
-- **SMTPRecipientsRefused** — невірна адреса одержувача
-- **SMTPException** — загальна помилка SMTP
-- **ConnectionError** — проблеми з мережею`
+- **SMTPAuthenticationError** - невірний email/пароль
+- **SMTPRecipientsRefused** - невірна адреса одержувача
+- **SMTPException** - загальна помилка SMTP
+- **ConnectionError** - проблеми з мережею`
       },
       {
         title: "Відправка кільком одержувачам",
@@ -333,7 +332,7 @@ def send_error_notification(error_message):
     msg = MIMEText(f'Помилка в системі:\\n\\n{error_message}')
     msg['From'] = sender
     msg['To'] = recipient
-    msg['Subject'] = '🚨 Сповіщення про помилку'
+    msg['Subject'] = ' Сповіщення про помилку'
     
     try:
         server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -398,11 +397,11 @@ send_daily_report(report_data)
 
 **Ключові концепції:**
 
-1. **SMTP** — протокол для відправки email
-2. **smtplib** — вбудована бібліотека Python
-3. **MIMEText** — створення текстового повідомлення
-4. **starttls()** — шифрування з'єднання
-5. **Безпека** — зберігання паролів у змінних оточення
+1. **SMTP** - протокол для відправки email
+2. **smtplib** - вбудована бібліотека Python
+3. **MIMEText** - створення текстового повідомлення
+4. **starttls()** - шифрування з'єднання
+5. **Безпека** - зберігання паролів у змінних оточення
 
 **Основні кроки:**
 
@@ -512,28 +511,15 @@ server.quit()`,
   
   summary: `На цьому уроці ми вивчили основи відправки email:
 
-1. **SMTP протокол** — протокол для відправки email
-2. **smtplib** — вбудована бібліотека Python
-3. **MIMEText** — створення текстового повідомлення
-4. **Безпека** — зберігання паролів у змінних оточення
-5. **Обробка помилок** — правильна обробка винятків
+1. SMTP протокол - протокол для відправки email
+2. smtplib - вбудована бібліотека Python
+3. MIMEText - створення текстового повідомлення
+4. Безпека - зберігання паролів у змінних оточення
+5. Обробка помилок - правильна обробка винятків
 
-Email — потужний інструмент для автоматизації сповіщень!`,
+Email - потужний інструмент для автоматизації сповіщень!`,
   
-  practiceTask: {
-    title: "Практичне завдання",
-    description: "Для цього уроку практичного завдання немає. Ви можете перейти до тесту.",
-    problemStatement: "Для цього уроку практичного завдання немає. Ви можете перейти до тесту.",
-    inputFormat: "",
-    outputFormat: "",
-    examples: [],
-    solution: {
-      code: "",
-      explanation: ""
-    },
-    hints: [],
-    difficulty: "beginner"
-  },
+  practiceTask: null,
   
   quiz: {
     questions: [
@@ -548,7 +534,7 @@ Email — потужний інструмент для автоматизаці�
           "Бібліотека Python"
         ],
         correctAnswer: 0,
-        explanation: "SMTP (Simple Mail Transfer Protocol) — це протокол для відправки електронних листів."
+        explanation: "SMTP (Simple Mail Transfer Protocol) - це протокол для відправки електронних листів."
       },
       {
         id: "q2",

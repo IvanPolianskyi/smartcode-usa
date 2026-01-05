@@ -18,7 +18,6 @@ export const lesson_09_1 = {
     "Працювати з заголовками та cookies"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-08-6"],
   
   videoUrl: "",
@@ -27,14 +26,14 @@ export const lesson_09_1 = {
     sections: [
       {
         title: "Вступ до HTTP-запитів",
-        content: `HTTP (HyperText Transfer Protocol) — це протокол для передачі даних між клієнтом та сервером.
+        content: `HTTP (HyperText Transfer Protocol) - це протокол для передачі даних між клієнтом та сервером.
 
 **Що таке HTTP-запити?**
 
-- **GET** — отримання даних з сервера
-- **POST** — відправка даних на сервер
-- **PUT** — оновлення даних
-- **DELETE** — видалення даних
+- **GET** - отримання даних з сервера
+- **POST** - відправка даних на сервер
+- **PUT** - оновлення даних
+- **DELETE** - видалення даних
 
 **Бібліотека requests:**
 
@@ -57,7 +56,7 @@ import requests
       },
       {
         title: "GET запити",
-        content: `**requests.get()** — виконує GET запит до URL.
+        content: `**requests.get()** - виконує GET запит до URL.
 
 \`\`\`python
 import requests
@@ -70,10 +69,10 @@ print(response.text)  # HTML або JSON відповідь
 
 **Статус коди:**
 
-- **200** — OK (успішно)
-- **404** — Not Found (не знайдено)
-- **500** — Server Error (помилка сервера)
-- **403** — Forbidden (заборонено)
+- **200** - OK (успішно)
+- **404** - Not Found (не знайдено)
+- **500** - Server Error (помилка сервера)
+- **403** - Forbidden (заборонено)
 
 \`\`\`python
 import requests
@@ -134,7 +133,7 @@ print(f"Знайдено репозиторіїв: {data['total_count']}")
       },
       {
         title: "POST запити",
-        content: `**requests.post()** — виконує POST запит з даними.
+        content: `**requests.post()** - виконує POST запит з даними.
 
 \`\`\`python
 import requests
@@ -168,8 +167,8 @@ print(response.json())
 
 **Різниця між data та json:**
 
-- **data** — відправляє дані як form-data
-- **json** — відправляє дані як JSON (автоматично встановлює Content-Type)
+- **data** - відправляє дані як form-data
+- **json** - відправляє дані як JSON (автоматично встановлює Content-Type)
 
 \`\`\`python
 import requests
@@ -439,20 +438,20 @@ download_file('https://example.com/image.jpg', 'image.jpg')
 
 **Ключові методи:**
 
-1. **requests.get()** — GET запит
-2. **requests.post()** — POST запит
-3. **response.json()** — парсинг JSON відповіді
-4. **response.text** — текстова відповідь
-5. **response.status_code** — статус код
+1. **requests.get()** - GET запит
+2. **requests.post()** - POST запит
+3. **response.json()** - парсинг JSON відповіді
+4. **response.text** - текстова відповідь
+5. **response.status_code** - статус код
 
 **Основні концепції:**
 
-- GET — отримання даних
-- POST — відправка даних
-- Headers — метадані запиту
-- Cookies — збереження стану
-- Сесії — збереження cookies між запитами
-- Таймаути — обмеження часу очікування
+- GET - отримання даних
+- POST - відправка даних
+- Headers - метадані запиту
+- Cookies - збереження стану
+- Сесії - збереження cookies між запитами
+- Таймаути - обмеження часу очікування
 
 **Важливо:**
 
@@ -463,7 +462,7 @@ download_file('https://example.com/image.jpg', 'image.jpg')
 
 **Наступний крок:**
 
-У наступному уроці ми коротко познайомимося з BeautifulSoup — інструментом для парсингу HTML, але основну увагу приділимо роботі з JSON API через requests.`
+У наступному уроці ми коротко познайомимося з BeautifulSoup - інструментом для парсингу HTML, але основну увагу приділимо роботі з JSON API через requests.`
       }
     ]
   },
@@ -534,13 +533,13 @@ print(response.json())`,
   
   summary: `На цьому уроці ми вивчили роботу з HTTP-запитами:
 
-1. **requests.get()** — отримання даних
-2. **requests.post()** — відправка даних
-3. **Заголовки та cookies** — налаштування запитів
-4. **Сесії** — збереження стану
-5. **Обробка помилок** — правильна обробка винятків
+1. requests.get() - отримання даних
+2. requests.post() - відправка даних
+3. Заголовки та cookies - налаштування запитів
+4. Сесії - збереження стану
+5. Обробка помилок - правильна обробка винятків
 
-Бібліотека requests — потужний інструмент для роботи з веб-API!`,
+Бібліотека requests - потужний інструмент для роботи з веб-API!`,
   
   practiceTask: {
     title: "Створення API клієнта",

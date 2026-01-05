@@ -18,7 +18,6 @@ export const lesson_00_6 = {
     "Працювати з індексацією та зрізами рядків"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-00-5"],
   
   videoUrl: "",
@@ -196,10 +195,10 @@ print(s[::-1])  # 'dlroW olleH'
 \`\`\`python
 s = 'Hello World'
 
-# ❌ Не можна змінити елемент
+#  Не можна змінити елемент
 # s[0] = 'x'  # Помилка: TypeError
 
-# ✅ Можна створити новий рядок
+#  Можна створити новий рядок
 s = s + ' concatenate me!'
 print(s)  # 'Hello World concatenate me!'
 \`\`\`
