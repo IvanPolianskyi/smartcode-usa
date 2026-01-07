@@ -38,7 +38,6 @@ export default function DashboardPage() {
     try {
       // Завантажити дані користувача з кешем no-store
       const userData = await getCurrentUser()
-      console.log('Dashboard: Loaded user data:', userData)
       
       if (!userData) {
         router.push('/login')
@@ -48,10 +47,8 @@ export default function DashboardPage() {
 
       // Load progress for enrolled courses
       if (userData.enrolledCourses && userData.enrolledCourses.length > 0) {
-        console.log('Dashboard: Loading progress for courses:', userData.enrolledCourses)
         const progressPromises = userData.enrolledCourses.map(courseId =>
           getUserProgress(courseId).then(progress => {
-            console.log('Dashboard: Progress for', courseId, ':', progress)
             return { courseId, progress }
           }).catch(error => {
             console.error('Dashboard: Error loading progress for', courseId, ':', error)
@@ -63,10 +60,7 @@ export default function DashboardPage() {
         progressResults.forEach(({ courseId, progress }) => {
           progressMap[courseId] = progress
         })
-        console.log('Dashboard: Progress map:', progressMap)
         setProgressData(progressMap)
-      } else {
-        console.log('Dashboard: No enrolled courses found')
       }
     } catch (error) {
       console.error('Error loading user data:', error)

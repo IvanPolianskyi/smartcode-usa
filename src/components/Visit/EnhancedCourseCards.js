@@ -212,18 +212,17 @@ const ParticleBackground = React.memo(({ colors }) => {
 
 const EnhancedCourseCards = () => {
 	const [hoveredCard, setHoveredCard] = useState(null)
-	const [isVisible, setIsVisible] = useState(true) // Починаємо з true для уникнення тремтіння
+	const [isVisible, setIsVisible] = useState(false)
 	const [visibleCards, setVisibleCards] = useState(new Set())
 	const router = useRouter()
 	const isMobile = useIsMobile()
 	const cardRefs = useRef([])
 	const observerRef = useRef(null)
 
-	// Видалено затримку для уникнення тремтіння
-	// useEffect(() => {
-	// 	const timer = setTimeout(() => setIsVisible(true), 100)
-	// 	return () => clearTimeout(timer)
-	// }, [])
+	useEffect(() => {
+		const timer = setTimeout(() => setIsVisible(true), 100)
+		return () => clearTimeout(timer)
+	}, [])
 
 	// Intersection Observer для lazy loading карток
 	useEffect(() => {

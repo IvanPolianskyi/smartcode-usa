@@ -513,14 +513,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     
     // Завантажити стан практичного завдання при завантаженні сторінки
     if (userProgress?.completedPracticeTasks?.includes(lessonId)) {
-      console.log('Practice task already completed for lesson:', lessonId)
       setPracticeCompleted(true)
     }
     
     // Завантажити результат тесту якщо він вже пройдений
     if (userProgress?.completedQuizzes?.[lessonId]) {
       const quizData = userProgress.completedQuizzes[lessonId]
-      console.log('Quiz already completed for lesson:', lessonId, 'score:', quizData.score)
       setQuizScore(quizData.score)
       setQuizSubmitted(true)
       // Відновити відповіді якщо вони збережені
@@ -537,7 +535,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     
     // Перевірити чи урок пройдено
     if (userProgress?.completedLessons?.includes(lessonId)) {
-      console.log('Lesson already completed:', lessonId)
+      // Lesson already completed
     }
   }, [lessonId, userProgress])
 
@@ -685,10 +683,6 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       if (isCorrect) {
         correct++
       }
-      // Діагностика
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Quiz submit - Question:', q.id, 'User:', userAnswer, 'Correct:', q.correctAnswer, 'Match:', isCorrect)
-      }
     })
     
     const score = Math.round((correct / fullLesson.quiz.questions.length) * 100)
@@ -698,8 +692,6 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     // Save quiz result (API автоматично створить прогрес якщо його немає)
     setIsSaving(true)
     try {
-      console.log('Saving quiz result:', { lessonId, score, courseId, isEnrolled, userProgress })
-      
       // Спочатку зберігаємо результат тесту (API створить прогрес якщо потрібно)
       // Зберігаємо також відповіді для відображення результатів
       const quizResult = await updateProgress(courseId, {
@@ -708,17 +700,14 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         quizScore: score,
         quizAnswers: quizAnswers // Зберігаємо відповіді
       })
-      console.log('Quiz result saved:', quizResult)
       
       // Mark lesson as completed ONLY if quiz passed (score >= passingScore)
       const passingScore = fullLesson.quiz?.passingScore || 60
       if (score >= passingScore) {
-        console.log('Quiz passed, marking lesson as completed')
-        const lessonResult = await updateProgress(courseId, {
+        await updateProgress(courseId, {
           action: 'completeLesson',
           lessonId
         })
-        console.log('Lesson marked as completed:', lessonResult)
       }
       
       // Refresh page data without reloading

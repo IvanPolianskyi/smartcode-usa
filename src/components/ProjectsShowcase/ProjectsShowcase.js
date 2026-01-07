@@ -275,20 +275,7 @@ const ProjectsShowcase = () => {
 						</Link>
 					</div>
 					
-					<div className={styles.ctaFeatures}>
-						<div className={styles.featureItem}>
-							<ExternalLink className={styles.featureIcon} />
-							<span>Повний код проєктів</span>
-						</div>
-						<div className={styles.featureItem}>
-							<Star className={styles.featureIcon} />
-							<span>Найкращі роботи</span>
-						</div>
-						<div className={styles.featureItem}>
-							<Code className={styles.featureIcon} />
-							<span>Детальний аналіз</span>
-						</div>
-					</div>
+					
 				</div>
 
 				{/* Phone Modal */}

@@ -51,16 +51,13 @@
 }
 
 .cardHidden {
-    /* Видалено жорсткі переходи для уникнення тремтіння */
-    transform: translateY(0);
-    opacity: 1;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(100%);
+    opacity: 0;
 }
 
 .cardVisible {
     transform: translateY(0);
     opacity: 1;
-    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .cardExpanded {
