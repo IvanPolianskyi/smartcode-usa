@@ -12,59 +12,59 @@ gsap.registerPlugin(ScrollTrigger)
 const testimonials = [
 	{
 		id: 1,
-		name: 'Сашко',
+		name: 'Олександра',
 		subject: 'Python',
 		rating: 5,
-		text: 'Завдяки курсу Python в SmartCode Academy я змогла створити свій перший додаток для обчислення математичних задач. Викладачі дуже терплячі та завжди допомагають розібратися зі складними темами. Тепер я впевнено працюю з циклами та функціями!',
-		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+		text: 'Доброго дня! Щиро дякуємо за заняття. Сину дуже подобається навчання, кожен урок чекає з нетерпінням. Матеріал подається зрозуміло й цікаво. Видно, що викладач справді вміє зацікавити дитину. Успіхів вам і дякуємо за вашу працю!',
+		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
 	},
 	{
 		id: 2,
 		name: 'Аліна',
 		subject: 'Веб-розробка',
 		rating: 5,
-		text: 'Після завершення курсу веб-розробки я створила свій перший сайт-портфоліо! HTML, CSS та JavaScript більше не здаються мені чимось складним. Особливо подобається, що ми одразу застосовуємо знання на практиці через реальні проекти.',
-		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+		text: 'Мені дуже подобається, як проходять уроки. Все пояснюється цікаво і зрозуміло, а завдання веселі й корисні',
+		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
 	},
 	{
 		id: 3,
 		name: 'Ярослава',
-		subject: 'Розробка ігор',
+		subject: 'Unity',
 		rating: 5,
-		text: 'Unity та C# - це те, про що я мріяла! За 8 місяців навчання я створила свою першу гру про космос. Викладачі навчили мене не тільки програмувати, але й правильно організовувати код. Тепер я планую створити ще кілька ігор!',
-		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+		text: 'Викладач дуже круто пояснює, не нудно і завжди допомагає, якщо щось не виходить. Мені подобається, що можна пробувати різні ідеї!',
+		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
 	},
 	{
 		id: 4,
-		name: 'Уляна',
+		name: 'Mарта',
 		subject: 'Roblox Studio',
 		rating: 5,
-		text: 'Roblox Studio - це найкрутіший курс! Я навчилася створювати ігри та об\'єкти, які тепер використовують інші гравці. Ментор завжди допомагає, коли щось не виходить. Моя гра вже має понад 1000 відвідувачів!',
-		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+		text: 'Roblox Studio - це найкрутіший курс! Викладач Артем вміє пояснити так щоб було зрозуміло, і дає дуже корисні поради!',
+		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
 	},
 	{
 		id: 5,
-		name: 'Іра',
+		name: 'Мирослава',
 		subject: 'Python',
 		rating: 5,
-		text: 'Python став моїм улюбленим мовою програмування! Завдяки SmartCode Academy я зрозуміла, як працюють алгоритми та структури даних. Тепер я можу писати скрипти для автоматизації завдань. Це дуже корисно для школи!',
-		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+		text: 'Щиро дякуємо за ваш професіоналізм. Донька із захопленням вчиться програмуванню, уроки проходять легко, цікаво та практично. Видно, що викладач дійсно любить свою справу.',
+		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
 	},
 	{
 		id: 6,
 		name: 'Максим',
-		subject: 'JavaScript',
+		subject: 'Веб-розробка',
 		rating: 5,
-		text: 'JavaScript відкрив для мене новий світ веб-розробки! Завдяки практичним завданням я створив кілька інтерактивних сайтів. Викладачі пояснюють все дуже доступно, навіть складні теми стають зрозумілими.',
-		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+		text: 'Я раніше боявся програмування, а тепер із задоволенням роблю домашні завдання та експериментую з кодом. Уроки мотивують і цікаві!',
+		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
 	},
 	{
 		id: 7,
-		name: 'Софія',
-		subject: 'Веб-дизайн',
+		name: 'Злата',
+		subject: 'Python',
 		rating: 5,
-		text: 'Курс веб-дизайну допоміг мені зрозуміти, як створювати красиві та функціональні інтерфейси. Тепер я можу працювати з Figma та створювати власні макети. Це дуже цікаво та корисно!',
-		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+		text: 'було реально дуже круто ! 10/10',
+		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
 	},
 	{
 		id: 8,
@@ -72,23 +72,23 @@ const testimonials = [
 		subject: 'Unity',
 		rating: 5,
 		text: 'Unity - це просто неймовірно! Я створив свою першу 3D гру та опублікував її. Викладачі допомогли мені зрозуміти фізику та анімації. Тепер я мрію стати професійним геймдевелопером!',
-		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
 	},
 	{
 		id: 9,
 		name: 'Марія',
 		subject: 'Python',
 		rating: 5,
-		text: 'Python - це найкраща мова для початківців! Я навчилася створювати боти, парсити дані та працювати з бібліотеками. Особливо подобається, що ми одразу застосовуємо знання на реальних проектах.',
-		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+		text: 'Дякуємо за індивідуальний підхід та підтримку. Донька із задоволенням готується до уроків і відчуває себе частиною справжнього творчого процесу!',
+		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
 	},
 	{
 		id: 10,
 		name: 'Артем',
-		subject: 'Full-Stack',
+		subject: 'Roblox Studio',
 		rating: 5,
-		text: 'Після проходження курсу Full-Stack я можу створювати повноцінні веб-додатки! Frontend та Backend більше не здаються мені чимось складним. Дякую викладачам за терпіння та професійний підхід!',
-		avatar: 'https://logowik.com/content/uploads/images/university-student6136.logowik.com.webp',
+		text: 'Дуже веселі та корисні завдання!',
+		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
 	},
 ]
 
@@ -97,36 +97,64 @@ const Testimonials = () => {
 	const sectionRef = useRef(null)
 	const animationRef = useRef(null)
 
-	// Анімація появи секції
+	// Анімація появи секції з оптимізацією для мобільних
 	useEffect(() => {
 		const section = sectionRef.current
 		if (!section) return
 
-		gsap.fromTo(
-			section.querySelectorAll('.gsap-fade-up'),
-			{ y: 50, opacity: 0 },
-			{
-				y: 0,
-				opacity: 1,
-				duration: 0.8,
-				ease: 'power3.out',
-				stagger: 0.15,
-				scrollTrigger: {
-					trigger: section,
-					start: 'top 80%',
-					toggleActions: 'play none none reverse',
-				},
-			}
-		)
+		// Перевірка чи це мобільний пристрій
+		const isMobile = window.innerWidth <= 768
+		
+		// На мобільних використовуємо простіші анімації
+		if (isMobile) {
+			gsap.fromTo(
+				section.querySelectorAll('.gsap-fade-up'),
+				{ y: 30, opacity: 0 },
+				{
+					y: 0,
+					opacity: 1,
+					duration: 0.6,
+					ease: 'power2.out',
+					stagger: 0.1,
+					scrollTrigger: {
+						trigger: section,
+						start: 'top 85%',
+						toggleActions: 'play none none none',
+						markers: false,
+					},
+				}
+			)
+		} else {
+			gsap.fromTo(
+				section.querySelectorAll('.gsap-fade-up'),
+				{ y: 50, opacity: 0 },
+				{
+					y: 0,
+					opacity: 1,
+					duration: 0.8,
+					ease: 'power3.out',
+					stagger: 0.15,
+					scrollTrigger: {
+						trigger: section,
+						start: 'top 80%',
+						toggleActions: 'play none none reverse',
+					},
+				}
+			)
+		}
 	}, [])
 
-	// Безкінечна анімація каруселі
+	// Безкінечна анімація каруселі з оптимізацією для мобільних
 	useEffect(() => {
 		const carousel = carouselRef.current
 		if (!carousel) return
 
 		let rafId = null
 		let intervalId = null
+		let isPaused = false
+
+		// Перевірка чи це мобільний пристрій
+		const isMobile = window.innerWidth <= 768
 
 		// Функція для оновлення анімації
 		const updateAnimation = () => {
@@ -151,16 +179,25 @@ const Testimonials = () => {
 			// Встановлюємо початкову позицію
 			gsap.set(carousel, { x: 0 })
 
+			// На мобільних використовуємо повільнішу анімацію для кращої продуктивності
+			const duration = isMobile ? 60 : 45
+
 			// Створюємо безкінечну анімацію
 			animationRef.current = gsap.to(carousel, {
 				x: -totalWidth,
-				duration: 45, // Збільшено з 30 до 45 секунд для повільнішого руху
+				duration: duration,
 				ease: 'none',
 				repeat: -1,
+				// На мобільних використовуємо will-change для оптимізації
+				force3D: isMobile,
 			})
 
 			// Перевіряємо позицію та скидаємо на початок, коли досягаємо кінця
 			const checkAndReset = () => {
+				if (isPaused) {
+					rafId = requestAnimationFrame(checkAndReset)
+					return
+				}
 				const currentX = gsap.getProperty(carousel, 'x')
 				// Коли досягаємо кінця першого набору, миттєво скидаємо на початок
 				// Оскільки картки дубльовані, це створює ілюзію безперервного руху
@@ -171,6 +208,24 @@ const Testimonials = () => {
 			}
 
 			rafId = requestAnimationFrame(checkAndReset)
+
+			// На мобільних паузуємо анімацію при дотику для кращої продуктивності
+			if (isMobile) {
+				const pauseOnTouch = () => {
+					isPaused = true
+					if (animationRef.current) {
+						animationRef.current.pause()
+					}
+				}
+				const resumeOnTouchEnd = () => {
+					isPaused = false
+					if (animationRef.current) {
+						animationRef.current.resume()
+					}
+				}
+				carousel.addEventListener('touchstart', pauseOnTouch, { passive: true })
+				carousel.addEventListener('touchend', resumeOnTouchEnd, { passive: true })
+			}
 		}
 
 		// Затримка для завантаження зображень та розрахунку розмірів

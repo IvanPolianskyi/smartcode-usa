@@ -29,21 +29,36 @@ gsap.registerPlugin(ScrollTrigger)
 const Visit = () => {
 	const sectionRef = useRef(null)
 	const cardsRef = useRef(null)
+	const [isMounted, setIsMounted] = useState(false)
 
 	useEffect(() => {
-		// GSAP анімації появи при скролі
+		setIsMounted(true)
+	}, [])
+
+	useEffect(() => {
+		// GSAP анімації появи при скролі з оптимізацією для мобільних
+		// Критичні елементи (title) не анімуються для кращого LCP
+		// На мобільних пристроях анімації вимкнені для уникнення тремтіння
 		let ctx = null
-		if (sectionRef.current) {
+		if (sectionRef.current && isMounted) {
+			const isMobile = window.innerWidth <= 768
+			
+			// На мобільних пристроях не запускаємо анімації для уникнення тремтіння
+			if (isMobile) {
+				return
+			}
+			
 			ctx = gsap.context(() => {
+				// Десктоп: анімації тільки для не-критичних елементів
 				gsap.fromTo(
-					'.animate-up',
-					{ y: 60, opacity: 0 },
+					'.animate-up:not(.title-critical)',
+					{ y: 30, opacity: 0.8 },
 					{
 						y: 0,
 						opacity: 1,
-						duration: 0.8,
+						duration: 0.5,
 						ease: 'power3.out',
-						stagger: 0.15,
+						stagger: 0.08,
 						scrollTrigger: {
 							trigger: sectionRef.current,
 							start: 'top 85%',
@@ -55,13 +70,13 @@ const Visit = () => {
 
 				gsap.fromTo(
 					'.animate-slide',
-					{ x: -60, opacity: 0 },
+					{ x: -30, opacity: 0.8 },
 					{
 						x: 0,
 						opacity: 1,
-						duration: 0.7,
+						duration: 0.4,
 						ease: 'power2.out',
-						stagger: 0.1,
+						stagger: 0.06,
 						scrollTrigger: {
 							trigger: sectionRef.current,
 							start: 'top 75%',
@@ -72,13 +87,13 @@ const Visit = () => {
 
 				gsap.fromTo(
 					'.animate-scale',
-					{ scale: 0.8, opacity: 0 },
+					{ scale: 0.97, opacity: 0.8 },
 					{
 						scale: 1,
 						opacity: 1,
-						duration: 0.6,
-						ease: 'back.out(1.7)',
-						stagger: 0.05,
+						duration: 0.4,
+						ease: 'back.out(1.2)',
+						stagger: 0.03,
 						scrollTrigger: {
 							trigger: sectionRef.current,
 							start: 'top 80%',
@@ -92,7 +107,7 @@ const Visit = () => {
 		return () => {
 			if (ctx) ctx.revert()
 		}
-	}, [])
+	}, [isMounted])
 
 	const stats = [
 		{ 
@@ -148,7 +163,7 @@ const Visit = () => {
 				{/* Hero Header */}
 				<div className={styles.hero}>
 					<div className={styles.heroContent}>
-						<h1 className={`${styles.title} animate-up`}>
+						<h1 className={`${styles.title} ${styles.titleCritical}`}>
 							<span className={styles.titleMain}>SmartCode</span>
 							<span className={styles.titleAccent}>Academy</span>
 						</h1>

@@ -24,7 +24,7 @@ const SocialMedia = () => {
 			url: 'https://www.tiktok.com/@smartcodeacademy',
 			description: 'Офіційний профіль академії',
 			color: 'blue',
-			avatarUrl: 'https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/7933b99a69679696fee99a6a9a20c549~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=618b56a9&x-expires=1767355200&x-signature=D05LXPS0lkjDAxoDhK9qWM73alE%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva',
+			avatarUrl: '/tiktoklogo/7933b99a69679696fee99a6a9a20c549~tplv-tiktokx-cropcenter_1080_1080.jpeg',
 		},
 		{
 			id: 3,
@@ -33,7 +33,7 @@ const SocialMedia = () => {
 			url: 'https://www.tiktok.com/@ivan.smartcode.python',
 			description: 'Python програмування',
 			color: 'green',
-			avatarUrl: 'https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/00687615ebad2fd100b5ab6dde0a9964~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=be567a78&x-expires=1767355200&x-signature=swysvqbZfRGRYxMicr715GhhTtM%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva',
+			avatarUrl: '/tiktoklogo/00687615ebad2fd100b5ab6dde0a9964~tplv-tiktokx-cropcenter_1080_1080.jpeg',
 		},
 		{
 			id: 4,
@@ -42,7 +42,7 @@ const SocialMedia = () => {
 			url: 'https://www.tiktok.com/@Artem.smartcode.academy',
 			description: 'Навчальний контент',
 			color: 'orange',
-			avatarUrl: 'https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/15dac559b1a79f75d8c1284cc21348ef~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=11c54edc&x-expires=1767358800&x-signature=%2FyEYVuA%2BZK1fV%2FRINOOyqqoSIkg%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva',
+			avatarUrl: '/tiktoklogo/15dac559b1a79f75d8c1284cc21348ef~tplv-tiktokx-cropcenter_1080_1080.jpeg',
 		},
 		{
 			id: 2,
@@ -51,7 +51,7 @@ const SocialMedia = () => {
 			url: 'https://www.tiktok.com/@smartcode_academy',
 			description: 'Наші курси та проекти',
 			color: 'purple',
-			avatarUrl: 'https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/6265690dcda2f88f952abb3045e5604d~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=765b7518&x-expires=1767355200&x-signature=q8cA89AAjTj2JVf75dw5mWEP4io%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=maliva',
+			avatarUrl: '/tiktoklogo/6265690dcda2f88f952abb3045e5604d~tplv-tiktokx-cropcenter_1080_1080.jpeg',
 		},
 	]
 
@@ -96,56 +96,108 @@ const SocialMedia = () => {
 		loadAvatars()
 	}, [])
 
+	// GSAP animations з оптимізацією для мобільних
 	useEffect(() => {
 		const section = sectionRef.current
 		if (!section) return
 
+		const isMobile = window.innerWidth <= 768
 		const cards = cardsRef.current.filter(Boolean)
 
-		// Анімація появи секції
-		gsap.fromTo(
-			section.querySelector(`.${styles.title}`),
-			{
-				opacity: 0,
-				y: 30,
-			},
-			{
-				opacity: 1,
-				y: 0,
-				duration: 0.8,
-				scrollTrigger: {
-					trigger: section,
-					start: 'top 80%',
-					toggleActions: 'play none none none',
+		// Анімація появи секції з оптимізацією для мобільних
+		if (isMobile) {
+			gsap.fromTo(
+				section.querySelector(`.${styles.title}`),
+				{
+					opacity: 0,
+					y: 20,
 				},
-			}
-		)
-
-		// Анімація карток
-		cards.forEach((card, index) => {
-			if (card) {
-				gsap.fromTo(
-					card,
-					{
-						opacity: 0,
-						y: 50,
-						scale: 0.9,
+				{
+					opacity: 1,
+					y: 0,
+					duration: 0.6,
+					ease: 'power2.out',
+					scrollTrigger: {
+						trigger: section,
+						start: 'top 90%',
+						toggleActions: 'play none none none',
+						markers: false,
 					},
-					{
-						opacity: 1,
-						y: 0,
-						scale: 1,
-						duration: 0.6,
-						delay: index * 0.1,
-						scrollTrigger: {
-							trigger: card,
-							start: 'top 85%',
-							toggleActions: 'play none none none',
+				}
+			)
+
+			// Спрощені анімації карток для мобільних
+			cards.forEach((card, index) => {
+				if (card) {
+					gsap.fromTo(
+						card,
+						{
+							opacity: 0,
+							y: 30,
+							scale: 0.95,
 						},
-					}
-				)
-			}
-		})
+						{
+							opacity: 1,
+							y: 0,
+							scale: 1,
+							duration: 0.5,
+							delay: index * 0.08,
+							ease: 'power2.out',
+							scrollTrigger: {
+								trigger: card,
+								start: 'top 90%',
+								toggleActions: 'play none none none',
+								markers: false,
+							},
+						}
+					)
+				}
+			})
+		} else {
+			gsap.fromTo(
+				section.querySelector(`.${styles.title}`),
+				{
+					opacity: 0,
+					y: 30,
+				},
+				{
+					opacity: 1,
+					y: 0,
+					duration: 0.8,
+					scrollTrigger: {
+						trigger: section,
+						start: 'top 80%',
+						toggleActions: 'play none none none',
+					},
+				}
+			)
+
+			// Анімація карток
+			cards.forEach((card, index) => {
+				if (card) {
+					gsap.fromTo(
+						card,
+						{
+							opacity: 0,
+							y: 50,
+							scale: 0.9,
+						},
+						{
+							opacity: 1,
+							y: 0,
+							scale: 1,
+							duration: 0.6,
+							delay: index * 0.1,
+							scrollTrigger: {
+								trigger: card,
+								start: 'top 85%',
+								toggleActions: 'play none none none',
+							},
+						}
+					)
+				}
+			})
+		}
 
 		return () => {
 			ScrollTrigger.getAll().forEach(trigger => trigger.kill())

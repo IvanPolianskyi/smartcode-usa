@@ -9,9 +9,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 10000;
   padding: 20px;
   animation: fadeIn 0.3s ease;
+  overflow-y: auto;
 }
 
 @keyframes fadeIn {
@@ -28,6 +29,10 @@
   max-height: 90vh;
   overflow-y: auto;
   animation: slideUp 0.3s ease;
+  position: relative;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes slideUp {
@@ -47,6 +52,11 @@
   justify-content: space-between;
   padding: 30px 30px 20px;
   border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+  border-radius: 20px 20px 0 0;
 }
 
 .headerContent {
@@ -97,6 +107,13 @@
   border-radius: 8px;
   transition: all 0.2s ease;
   flex-shrink: 0;
+  position: relative;
+  z-index: 20;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .closeButton:hover {
@@ -420,14 +437,29 @@
 @media (max-width: 640px) {
   .overlay {
     padding: 10px;
+    padding-top: 90px;
+    align-items: flex-start;
   }
   
   .modal {
-    max-height: 95vh;
+    max-height: calc(100vh - 100px);
+    margin-top: 0;
   }
   
   .header {
-    padding: 20px 20px 15px;
+    padding: 20px 15px 15px 20px;
+    border-radius: 20px 20px 0 0;
+  }
+  
+  .closeButton {
+    min-width: 48px;
+    min-height: 48px;
+    padding: 12px;
+  }
+  
+  .closeButton svg {
+    width: 28px;
+    height: 28px;
   }
   
   .headerContent {
@@ -502,6 +534,31 @@
 }
 
 @media (max-width: 480px) {
+  .overlay {
+    padding-top: 100px;
+  }
+  
+  .modal {
+    max-height: calc(100vh - 110px);
+    border-radius: 16px;
+  }
+  
+  .header {
+    padding: 18px 12px 12px 18px;
+    border-radius: 16px 16px 0 0;
+  }
+  
+  .closeButton {
+    min-width: 52px;
+    min-height: 52px;
+    padding: 14px;
+  }
+  
+  .closeButton svg {
+    width: 32px;
+    height: 32px;
+  }
+  
   .title {
     font-size: 1.2rem;
   }

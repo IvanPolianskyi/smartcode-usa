@@ -21,7 +21,7 @@ import {
 } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Link from 'next/link'
+
 import styles from './PricingPage.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -30,14 +30,26 @@ const PricingPage = () => {
 	const sectionRef = useRef(null)
 	const cardsRef = useRef([])
 	const [isLoaded, setIsLoaded] = useState(false)
+	const [isMobile, setIsMobile] = useState(false)
 
 	useEffect(() => {
+		// Перевірка на мобільний пристрій
+		const checkMobile = () => {
+			setIsMobile(window.innerWidth <= 768)
+		}
+		
+		checkMobile()
 		setIsLoaded(true)
+		
+		window.addEventListener('resize', checkMobile)
+		
+		const isMobileDevice = window.innerWidth <= 768
 
-		if (sectionRef.current) {
+		// На мобільних пристроях не запускаємо анімації
+		if (sectionRef.current && !isMobileDevice) {
 			const cards = cardsRef.current.filter(Boolean)
 
-			// Анімація заголовка
+			// Анімація заголовка (тільки на десктопі)
 			gsap.fromTo(
 				sectionRef.current.querySelector(`.${styles.title}`),
 				{
@@ -56,7 +68,7 @@ const PricingPage = () => {
 				}
 			)
 
-			// Анімація карток
+			// Анімація карток (тільки на десктопі)
 			cards.forEach((card, index) => {
 				if (card) {
 					gsap.fromTo(
@@ -84,7 +96,10 @@ const PricingPage = () => {
 		}
 
 		return () => {
-			ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+			if (!isMobileDevice) {
+				ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+			}
+			window.removeEventListener('resize', checkMobile)
 		}
 	}, [])
 
@@ -96,8 +111,28 @@ const PricingPage = () => {
 	}
 
 	const pricingPlans = [
+		
 		{
 			id: 1,
+			name: 'Індивідуальні уроки',
+			emoji: '💻',
+			price: 400,
+			currency: 'грн',
+			period: 'заняття',
+			description: 'Персональний підхід до навчання',
+			features: [
+				'Індивідуальний графік',
+				'Фокус на ваших цілях',
+				'Швидкий прогрес',
+				'Гнучкість у виборі теми',
+				'Прямий контакт з викладачем',
+			],
+			color: 'blue',
+			popular: false,
+			recommended: true,
+		},
+		{
+			id: 2,
 			name: 'Групові уроки',
 			emoji: '👥',
 			price: 250,
@@ -116,26 +151,6 @@ const PricingPage = () => {
 			popular: true,
 		
 		},
-		{
-			id: 2,
-			name: 'Індивідуальні уроки',
-			emoji: '💻',
-			price: 400,
-			currency: 'грн',
-			period: 'заняття',
-			description: 'Персональний підхід до навчання',
-			features: [
-				'Індивідуальний графік',
-				'Фокус на ваших цілях',
-				'Швидкий прогрес',
-				'Гнучкість у виборі теми',
-				'Прямий контакт з викладачем',
-			],
-			color: 'blue',
-			popular: false,
-			recommended: true,
-		},
-		
 		{
 			id: 3,
 			name: 'Онлайн курс',

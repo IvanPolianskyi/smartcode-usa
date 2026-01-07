@@ -397,46 +397,155 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .container {
-    padding: 60px 0;
+    padding: 40px 0;
   }
   
   .mainContainer {
-    padding: 0 15px;
+    padding: 0 1rem;
+  }
+
+  .header {
+    margin-bottom: 2.5rem;
+  }
+
+  .title {
+    font-size: clamp(2rem, 6vw, 2.5rem);
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .stats {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .statItem {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
   }
   
   .projectsGrid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 1.25rem;
+    margin-bottom: 3rem;
   }
-  
-  .stats {
-    gap: 20px;
+
+  .projectCard {
+    border-radius: 16px;
   }
-  
-  .statItem {
-    padding: 10px 16px;
-    font-size: 0.9rem;
+
+  .projectImageContainer {
+    height: 180px;
+  }
+
+  .projectContent {
+    padding: 1.25rem;
+  }
+
+  .projectTitle {
+    font-size: 1.125rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .projectDescription {
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
   }
   
   .ctaSection {
-    padding: 40px 20px;
+    padding: 2.5rem 1.5rem;
+    border-radius: 20px;
   }
   
   .ctaTitle {
     font-size: 1.5rem;
+    margin-bottom: 1rem;
   }
   
   .ctaDescription {
-    font-size: 1rem;
+    font-size: 0.9375rem;
+    margin-bottom: 1.5rem;
   }
   
   .ctaFeatures {
-    gap: 20px;
+    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
   }
   
   .featureItem {
-    padding: 10px 16px;
-    font-size: 0.9rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 30px 0;
+  }
+
+  .mainContainer {
+    padding: 0 0.875rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .subtitle {
+    font-size: 0.9375rem;
+  }
+
+  .stats {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .statItem {
+    padding: 0.625rem 1rem;
+    font-size: 0.8125rem;
+  }
+
+  .projectsGrid {
+    gap: 1rem;
+  }
+
+  .projectImageContainer {
+    height: 160px;
+  }
+
+  .projectContent {
+    padding: 1rem;
+  }
+
+  .projectTitle {
+    font-size: 1rem;
+  }
+
+  .projectDescription {
+    font-size: 0.8125rem;
+  }
+
+  .ctaSection {
+    padding: 2rem 1.25rem;
+  }
+
+  .ctaTitle {
+    font-size: 1.25rem;
+  }
+
+  .ctaDescription {
+    font-size: 0.875rem;
+  }
+
+  .ctaButton {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.9375rem;
   }
 }
 

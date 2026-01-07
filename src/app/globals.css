@@ -127,14 +127,22 @@ html, body {
 }
 
 /* Padding-top для main контенту, щоб хедер не перекривав */
-/* Висота хедера: 80px на десктопі, менше на мобільних */
+/* Висота хедера: 80px на десктопі, 70px на мобільних */
 main.main-content {
   padding-top: 80px;
 }
 
+/* На мобільних пристроях хедер не фіксований, тому padding не потрібен */
+@media (max-width: 1024px) {
+  main.main-content {
+    padding-top: 0;
+  }
+}
+
+/* Для дуже малих екранів залишаємо мінімальний відступ */
 @media (max-width: 700px) {
   main.main-content {
-    padding-top: 20px;
+    padding-top: 0;
   }
 }
 

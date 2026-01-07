@@ -378,7 +378,11 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const [isSidebarClosed, setIsSidebarClosed] = useState(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('lessonSidebarClosed')
-      return saved === 'true'
+      if (saved !== null) {
+        return saved === 'true'
+      }
+      // На мобільних пристроях за замовчуванням закритий
+      return window.innerWidth <= 1024
     }
     return false
   })
@@ -513,14 +517,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     
     // Завантажити стан практичного завдання при завантаженні сторінки
     if (userProgress?.completedPracticeTasks?.includes(lessonId)) {
-      console.log('Practice task already completed for lesson:', lessonId)
       setPracticeCompleted(true)
     }
     
     // Завантажити результат тесту якщо він вже пройдений
     if (userProgress?.completedQuizzes?.[lessonId]) {
       const quizData = userProgress.completedQuizzes[lessonId]
-      console.log('Quiz already completed for lesson:', lessonId, 'score:', quizData.score)
       setQuizScore(quizData.score)
       setQuizSubmitted(true)
       // Відновити відповіді якщо вони збережені
@@ -537,7 +539,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     
     // Перевірити чи урок пройдено
     if (userProgress?.completedLessons?.includes(lessonId)) {
-      console.log('Lesson already completed:', lessonId)
+      // Lesson already completed
     }
   }, [lessonId, userProgress])
 
@@ -558,6 +560,30 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     }
   }, [sidebarWidth, isResizing])
 
+  // Handle window resize - auto-close sidebar on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      if (typeof window !== 'undefined') {
+        const isMobile = window.innerWidth <= 1024
+        if (isMobile && !isSidebarClosed) {
+          // На мобільних автоматично закриваємо sidebar
+          setIsSidebarClosed(true)
+          localStorage.setItem('lessonSidebarClosed', 'true')
+        }
+      }
+    }
+    
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize)
+      // Викликаємо один раз при монтуванні
+      handleResize()
+      
+      return () => {
+        window.removeEventListener('resize', handleResize)
+      }
+    }
+  }, [isSidebarClosed])
+  
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -674,7 +700,13 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     summary: ""
   }
   
-  const handleQuizSubmit = async () => {
+  const handleQuizSubmit = async (e) => {
+    // Запобігаємо стандартній поведінці форми та перекиданню на футер
+    if (e) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    
     if (!fullLesson.quiz || !fullLesson.quiz.questions) return
     
     let correct = 0
@@ -685,21 +717,18 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       if (isCorrect) {
         correct++
       }
-      // Діагностика
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Quiz submit - Question:', q.id, 'User:', userAnswer, 'Correct:', q.correctAnswer, 'Match:', isCorrect)
-      }
     })
     
     const score = Math.round((correct / fullLesson.quiz.questions.length) * 100)
     setQuizScore(score)
     setQuizSubmitted(true)
     
+    // Запам'ятовуємо позицію скролу перед оновленням
+    const scrollPosition = window.scrollY || window.pageYOffset
+    
     // Save quiz result (API автоматично створить прогрес якщо його немає)
     setIsSaving(true)
     try {
-      console.log('Saving quiz result:', { lessonId, score, courseId, isEnrolled, userProgress })
-      
       // Спочатку зберігаємо результат тесту (API створить прогрес якщо потрібно)
       // Зберігаємо також відповіді для відображення результатів
       const quizResult = await updateProgress(courseId, {
@@ -708,21 +737,40 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         quizScore: score,
         quizAnswers: quizAnswers // Зберігаємо відповіді
       })
-      console.log('Quiz result saved:', quizResult)
       
       // Mark lesson as completed ONLY if quiz passed (score >= passingScore)
       const passingScore = fullLesson.quiz?.passingScore || 60
       if (score >= passingScore) {
-        console.log('Quiz passed, marking lesson as completed')
-        const lessonResult = await updateProgress(courseId, {
+        await updateProgress(courseId, {
           action: 'completeLesson',
           lessonId
         })
-        console.log('Lesson marked as completed:', lessonResult)
       }
       
       // Refresh page data without reloading
       router.refresh()
+      
+      // Прокручуємо до результатів тесту замість футеру
+      setTimeout(() => {
+        const quizResultsElement = document.getElementById('quiz-results')
+        if (quizResultsElement) {
+          // Додаємо offset для хедера (якщо він фіксований на десктопі)
+          const headerOffset = window.innerWidth > 1024 ? 100 : 0
+          const elementPosition = quizResultsElement.getBoundingClientRect().top + window.pageYOffset
+          const offsetPosition = elementPosition - headerOffset
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          })
+        } else {
+          // Якщо елемент ще не відрендерений, відновлюємо попередню позицію
+          window.scrollTo({
+            top: scrollPosition,
+            behavior: 'instant'
+          })
+        }
+      }, 300)
     } catch (error) {
       console.error('Error saving progress:', error)
       alert('Помилка збереження прогресу. Спробуйте ще раз.')
@@ -1794,6 +1842,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                 <div className={styles.quizActions}>
                   {!quizSubmitted ? (
                     <button
+                      type="button"
                       className={styles.submitButton}
                       onClick={handleQuizSubmit}
                       disabled={Object.keys(quizAnswers).length < fullLesson.quiz.questions.length}
@@ -1801,7 +1850,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                       Завершити тест
                     </button>
                   ) : (
-                    <div className={styles.quizResults}>
+                    <div id="quiz-results" className={styles.quizResults}>
                       <div className={styles.scoreCard}>
                         <h4>Ваш результат</h4>
                         <div className={styles.scoreValue}>
