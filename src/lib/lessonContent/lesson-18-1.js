@@ -22,7 +22,6 @@ export const lesson_16_1 = {
     "lesson-15-5"
 ],
   
-  estimatedTime: 480,
   prerequisites: [
     "lesson-15-5",
     "module-16"
@@ -47,8 +46,6 @@ export const lesson_16_1 = {
 - Створити документацію
 - Протестувати програму
 - lesson-17-5
-
-**Час на вивчення:** приблизно 480 хвилин
 
 **Попередні вимоги:** lesson-17-5, module-19
 `

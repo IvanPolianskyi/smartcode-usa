@@ -18,7 +18,6 @@ export const lesson_12_3 = {
     "Практикуватися у роботі з email"
   ],
   
-  estimatedTime: 120,
   prerequisites: ["lesson-12-2"],
   
   videoUrl: "",
@@ -43,10 +42,10 @@ export const lesson_12_3 = {
 
 **Інструменти:**
 
-- smtplib — відправка email
-- schedule — планування задач
-- threading — асинхронна відправка
-- logging — логування подій`
+- smtplib - відправка email
+- schedule - планування задач
+- threading - асинхронна відправка
+- logging - логування подій`
       },
       {
         title: "Створення класу для відправки email",
@@ -260,7 +259,7 @@ class ErrorNotifier:
         <html>
         <body style="font-family: Arial, sans-serif;">
             <div style="background-color: #ff4444; color: white; padding: 20px;">
-                <h2>🚨 Сповіщення про помилку</h2>
+                <h2> Сповіщення про помилку</h2>
             </div>
             <div style="padding: 20px;">
                 <p><strong>Тип:</strong> {error_type}</p>
@@ -275,7 +274,7 @@ class ErrorNotifier:
         </html>
         """
         
-        subject = f"🚨 {error_type}: {error_message[:50]}"
+        subject = f" {error_type}: {error_message[:50]}"
         
         success, message = self.email_sender.send_html_email(
             recipient=self.admin_email,
@@ -475,11 +474,11 @@ except:
 
 **Що ми зробили:**
 
-1. **EmailSender клас** — базова функціональність для відправки
-2. **ReportSender** — автоматичні звіти
-3. **ErrorNotifier** — сповіщення про помилки
-4. **MassMailer** — масові розсилки
-5. **EmailDecorator** — інтеграція з програмами
+1. **EmailSender клас** - базова функціональність для відправки
+2. **ReportSender** - автоматичні звіти
+3. **ErrorNotifier** - сповіщення про помилки
+4. **MassMailer** - масові розсилки
+5. **EmailDecorator** - інтеграція з програмами
 
 **Ключові концепції:**
 
@@ -504,7 +503,7 @@ except:
 - Автоматизуйте рутинні задачі
 - Розширте функціональність
 
-Email автоматизація — потужний інструмент для продуктивності!`
+Email автоматизація - потужний інструмент для продуктивності!`
       }
     ]
   },
@@ -580,28 +579,15 @@ except Exception as e:
   
   summary: `На цьому уроці ми створили систему автоматизації email:
 
-1. **EmailSender клас** — базова функціональність
-2. **Автоматичні звіти** — планування з schedule
-3. **Сповіщення про помилки** — інтеграція з програмами
-4. **Масові розсилки** — ефективна відправка
-5. **Декоратори** — автоматизація сповіщень
+1. EmailSender клас - базова функціональність
+2. Автоматичні звіти - планування з schedule
+3. Сповіщення про помилки - інтеграція з програмами
+4. Масові розсилки - ефективна відправка
+5. Декоратори - автоматизація сповіщень
 
-Автоматизація email — ключ до продуктивності!`,
+Автоматизація email - ключ до продуктивності!`,
   
-  practiceTask: {
-    title: "Практичне завдання",
-    description: "Для цього уроку практичного завдання немає. Ви можете перейти до тесту.",
-    problemStatement: "Для цього уроку практичного завдання немає. Ви можете перейти до тесту.",
-    inputFormat: "",
-    outputFormat: "",
-    examples: [],
-    solution: {
-      code: "",
-      explanation: ""
-    },
-    hints: [],
-    difficulty: "beginner"
-  },
+  practiceTask: null,
   
   quiz: {
     questions: [

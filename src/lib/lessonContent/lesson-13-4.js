@@ -1,119 +1,276 @@
 /**
- * Робота з Excel: openpyxl
+ * Lesson 13-4: Розміщення елементів: pack, grid, place
  * Full educational content
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_13_4 = {
-  lessonId: "lesson-12-2",
+  lessonId: "lesson-13-4",
   moduleId: "module-13",
-  order: 2,
-  title: "Робота з Excel: openpyxl",
+  order: 4,
+  title: "Розміщення елементів: pack, grid, place",
   
   learningObjectives: [
-    "Встановити openpyxl",
-    "Читати Excel файли",
-    "Записувати дані в Excel",
-    "Маніпулювати листами та комірками",
-    "lesson-13-3",
-    "lesson-13-5",
-    "Робота з CSV та pandas",
-    "Читати та записувати CSV файли"
-],
+    "Використовувати pack для розміщення",
+    "Застосовувати grid для таблиць",
+    "Використовувати place для точкового розміщення",
+    "Вибирати правильний метод"
+  ],
   
-  estimatedTime: 90,
-  prerequisites: [
-    "lesson-13-3",
-    "lesson-13-5",
-    "Робота з CSV та pandas"
-],
+  prerequisites: ["lesson-13-3"],
   
   videoUrl: "",
   
   theory: {
     sections: [
       {
-        title: "Вступ",
-        content: `Робота з Excel: openpyxl
+        title: "Розміщення елементів: pack, grid, place",
+        content: `У Tkinter є три методи для розміщення віджетів у вікні: **pack**, **grid** та **place**. Кожен має свої переваги та використовується в різних ситуаціях.
 
-На цьому уроці ми вивчимо основні концепції та навички, необхідні для розуміння та застосування матеріалу.
+**1. pack() - автоматичне розміщення**
 
-**Що ви дізнаєтеся:**
-- Встановити openpyxl
-- Читати Excel файли
-- Записувати дані в Excel
-- Маніпулювати листами та комірками
-- lesson-15-1
-- lesson-15-3
-- Робота з CSV та pandas
-- Читати та записувати CSV файли
+\`pack()\` розміщує віджети автоматично, один за одним. Це найпростіший метод.
 
-**Час на вивчення:** приблизно 90 хвилин
+\`\`\`python
+from tkinter import *
 
-**Попередні вимоги:** lesson-15-1, lesson-15-3, Робота з CSV та pandas
-`
+root = Tk()
+label1 = Label(root, text="Перший")
+label1.pack()
+
+label2 = Label(root, text="Другий")
+label2.pack()
+
+label3 = Label(root, text="Третій")
+label3.pack()
+
+root.mainloop()
+\`\`\`
+
+**Параметри pack():**
+- \`side\` - TOP (за замовчуванням), BOTTOM, LEFT, RIGHT
+- \`fill\` - X, Y, BOTH - заповнення простору
+- \`padx\`, \`pady\` - відступи
+
+**2. grid() - табличне розміщення**
+
+\`grid()\` розміщує віджети у вигляді таблиці з рядками та стовпцями. Ідеально для форм.
+
+\`\`\`python
+from tkinter import *
+
+root = Tk()
+
+Label(root, text="Ім'я:").grid(row=0, column=0)
+Entry(root).grid(row=0, column=1)
+
+Label(root, text="Email:").grid(row=1, column=0)
+Entry(root).grid(row=1, column=1)
+
+Button(root, text="Відправити").grid(row=2, column=0, columnspan=2)
+
+root.mainloop()
+\`\`\`
+
+**Параметри grid():**
+- \`row\`, \`column\` - позиція у таблиці
+- \`rowspan\`, \`columnspan\` - об'єднання клітинок
+- \`sticky\` - вирівнювання (N, S, E, W)
+- \`padx\`, \`pady\` - відступи
+
+**3. place() - точкове розміщення**
+
+\`place()\` розміщує віджети за абсолютними координатами. Використовується рідко.
+
+\`\`\`python
+from tkinter import *
+
+root = Tk()
+root.geometry("300x200")
+
+label = Label(root, text="Точкове розміщення")
+label.place(x=50, y=50)
+
+button = Button(root, text="Кнопка")
+button.place(x=100, y=100)
+
+root.mainloop()
+\`\`\`
+
+**Параметри place():**
+- \`x\`, \`y\` - координати
+- \`relx\`, \`rely\` - відносні координати (0.0 до 1.0)
+- \`anchor\` - точка прив'язки
+
+**Важливо:**
+
+Не можна змішувати \`pack()\` та \`grid()\` в одному контейнері! Використовуйте один метод для всіх віджетів у контейнері.
+
+**Коли що використовувати:**
+
+- **pack()** - для простого вертикального або горизонтального розміщення
+- **grid()** - для форм, таблиць, складних макетів
+- **place()** - для точкового позиціонування (рідко)`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Приклад 1",
-      code: `# Приклад коду
-print("Привіт, світ!")`,
-      explanation: "Базовий приклад для розуміння концепції"
+      title: "Приклад 1: pack()",
+      code: `from tkinter import *
+
+root = Tk()
+root.title("Приклад pack()")
+
+label1 = Label(root, text="Перший", bg="lightblue")
+label1.pack(fill=X, padx=10, pady=5)
+
+label2 = Label(root, text="Другий", bg="lightgreen")
+label2.pack(fill=X, padx=10, pady=5)
+
+label3 = Label(root, text="Третій", bg="lightyellow")
+label3.pack(fill=X, padx=10, pady=5)
+
+root.mainloop()`,
+      explanation: "pack() автоматично розміщує віджети один за одним з заповненням по ширині."
+    },
+    {
+      title: "Приклад 2: grid()",
+      code: `from tkinter import *
+
+root = Tk()
+root.title("Приклад grid()")
+
+Label(root, text="Ім'я:").grid(row=0, column=0, padx=5, pady=5)
+Entry(root, width=30).grid(row=0, column=1, padx=5, pady=5)
+
+Label(root, text="Email:").grid(row=1, column=0, padx=5, pady=5)
+Entry(root, width=30).grid(row=1, column=1, padx=5, pady=5)
+
+Button(root, text="Відправити").grid(row=2, column=0, columnspan=2, pady=10)
+
+root.mainloop()`,
+      explanation: "grid() створює табличний макет, ідеальний для форм."
+    },
+    {
+      title: "Приклад 3: place()",
+      code: `from tkinter import *
+
+root = Tk()
+root.title("Приклад place()")
+root.geometry("300x200")
+
+label = Label(root, text="Точкове розміщення", bg="lightblue")
+label.place(x=50, y=50)
+
+button = Button(root, text="Кнопка")
+button.place(x=100, y=100)
+
+root.mainloop()`,
+      explanation: "place() розміщує віджети за абсолютними координатами."
+    },
+    {
+      title: "Приклад 4: Комбінація grid() з sticky",
+      code: `from tkinter import *
+
+root = Tk()
+root.title("Grid з sticky")
+
+Label(root, text="Вирівняно вліво").grid(row=0, column=0, sticky=W, padx=5, pady=5)
+Label(root, text="Вирівняно вправо").grid(row=0, column=1, sticky=E, padx=5, pady=5)
+Label(root, text="Заповнює весь простір").grid(row=1, column=0, columnspan=2, sticky=EW, padx=5, pady=5)
+
+root.mainloop()`,
+      explanation: "sticky використовується для вирівнювання та заповнення простору в grid()."
     }
   ],
   
   commonMistakes: [
     {
-      mistake: "Типова помилка",
-      explanation: "Пояснення помилки",
-      correctApproach: "Правильний підхід"
+      mistake: "Змішування pack() та grid()",
+      explanation: "Не можна використовувати pack() та grid() для віджетів в одному контейнері.",
+      correctApproach: "Використовуйте один метод (pack, grid або place) для всіх віджетів у контейнері."
+    },
+    {
+      mistake: "Не вказати row та column для grid()",
+      explanation: "Без вказання row та column віджети можуть розміститися некоректно.",
+      correctApproach: "Завжди вказуйте row та column для віджетів у grid()."
+    },
+    {
+      mistake: "Використання place() для складних макетів",
+      explanation: "place() важко підтримувати та адаптувати для різних розмірів вікна.",
+      correctApproach: "Використовуйте grid() для складних макетів, place() тільки для точкового позиціонування."
     }
   ],
   
-  summary: `Підсумок уроку "Робота з Excel: openpyxl"
+  summary: `На цьому уроці ми вивчили три методи розміщення віджетів:
 
-На цьому уроці ми вивчили основні концепції та навички.`,
+1. pack() - автоматичне розміщення, найпростіший метод
+2. grid() - табличне розміщення, ідеально для форм
+3. place() - точкове розміщення за координатами
+
+Важливо пам'ятати:
+- Не змішувати pack() та grid() в одному контейнері
+- grid() найкраще підходить для складних макетів
+- pack() найпростіший для базового розміщення
+
+У наступному уроці ми навчимося обробляти події та створювати повноцінні GUI-додатки!`,
   
-  practiceTask: {
-    title: "Практична задача",
-    description: "Застосуйте набуті знання на практиці",
-    problemStatement: "Створіть програму, яка демонструє вивчені концепції",
-    inputFormat: "",
-    outputFormat: "",
-    examples: [],
-    solution: {
-      code: `# Рішення
-# Ваш код тут`,
-      explanation: "Пояснення рішення"
-    },
-    hints: [
-      "Підказка 1",
-      "Підказка 2"
-    ],
-    difficulty: "beginner"
-  },
+  practiceTask: null,
   
   quiz: {
     questions: [
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Питання про основні концепції?",
+        question: "Який метод розміщення найкраще підходить для форм?",
         options: [
-          "Варіант 1",
-          "Варіант 2",
-          "Варіант 3",
-          "Варіант 4"
+          "grid()",
+          "pack()",
+          "place()",
+          "layout()"
         ],
         correctAnswer: 0,
-        explanation: "Пояснення правильної відповіді"
+        explanation: "grid() ідеально підходить для форм, оскільки створює табличний макет з рядками та стовпцями."
+      },
+      {
+        id: "q2",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Чи можна змішувати pack() та grid() в одному контейнері?",
+        options: [
+          "Ні, не можна",
+          "Так, можна",
+          "Тільки для різних типів віджетів",
+          "Тільки якщо використати place()"
+        ],
+        correctAnswer: 0,
+        explanation: "Не можна змішувати pack() та grid() в одному контейнері. Використовуйте один метод для всіх віджетів."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Який параметр grid() використовується для об'єднання клітинок?",
+        options: [
+          "columnspan або rowspan",
+          "merge",
+          "combine",
+          "join"
+        ],
+        correctAnswer: 0,
+        explanation: "columnspan та rowspan використовуються для об'єднання клітинок у grid()."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "place() найкраще підходить для складних макетів з багатьма віджетами.",
+        options: ["True", "False"],
+        correctAnswer: 1,
+        explanation: "False. place() важко підтримувати для складних макетів. Використовуйте grid() для складних макетів."
       }
     ],
-    timeLimit: 10,
+    timeLimit: 15,
     passingScore: 70
   }
 }

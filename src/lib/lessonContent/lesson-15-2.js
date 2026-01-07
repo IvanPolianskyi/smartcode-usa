@@ -22,7 +22,6 @@ export const lesson_15_2 = {
     "Розуміти протоколи Python"
 ],
   
-  estimatedTime: 90,
   prerequisites: [
     "lesson-15-1",
     "lesson-15-3",
@@ -48,8 +47,6 @@ export const lesson_15_2 = {
 - lesson-17-3
 - Протоколи та duck typing
 - Розуміти протоколи Python
-
-**Час на вивчення:** приблизно 90 хвилин
 
 **Попередні вимоги:** lesson-17-1, lesson-17-3, Протоколи та duck typing
 `

@@ -18,7 +18,6 @@ export const lesson_08_2 = {
     "Створювати ефективні ітератори для складних задач"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-08-1"],
   
   videoUrl: "",
@@ -31,17 +30,17 @@ export const lesson_08_2 = {
 
 **Чому itertools?**
 
-- **Ефективність** — працює з ітераторами, не створюючи проміжні списки
-- **Потужність** — багато готових функцій для складних задач
-- **Читабельність** — код стає більш декларативним
+- **Ефективність** - працює з ітераторами, не створюючи проміжні списки
+- **Потужність** - багато готових функцій для складних задач
+- **Читабельність** - код стає більш декларативним
 
 **Основні категорії функцій:**
 
-1. **Безкінечні ітератори** — cycle, repeat, count
-2. **Комбінаторика** — combinations, permutations, product
-3. **Групування** — groupby
-4. **Фільтрація** — filterfalse, takewhile, dropwhile
-5. **Об'єднання** — chain, zip_longest
+1. **Безкінечні ітератори** - cycle, repeat, count
+2. **Комбінаторика** - combinations, permutations, product
+3. **Групування** - groupby
+4. **Фільтрація** - filterfalse, takewhile, dropwhile
+5. **Об'єднання** - chain, zip_longest
 
 **Імпорт модуля:**
 
@@ -51,7 +50,7 @@ from itertools import cycle, repeat, count, combinations, permutations, groupby,
       },
       {
         title: "Безкінечні ітератори",
-        content: `**cycle() — циклічне повторення**
+        content: `**cycle() - циклічне повторення**
 
 \`\`\`python
 from itertools import cycle
@@ -66,7 +65,7 @@ for i, color in enumerate(colors):
 # червоний, зелений, синій, червоний, зелений, синій
 \`\`\`
 
-**repeat() — повторення значення**
+**repeat() - повторення значення**
 
 \`\`\`python
 from itertools import repeat
@@ -82,7 +81,7 @@ for num in repeat(10):
     break  # Зупиняємо, щоб не зависнути
 \`\`\`
 
-**count() — лічильник**
+**count() - лічильник**
 
 \`\`\`python
 from itertools import count
@@ -120,9 +119,9 @@ print(get_next_id())  # 3
       },
       {
         title: "Комбінаторика: combinations та permutations",
-        content: `**combinations() — комбінації**
+        content: `**combinations() - комбінації**
 
-Комбінації — це вибір елементів, де порядок не важливий.
+Комбінації - це вибір елементів, де порядок не важливий.
 
 \`\`\`python
 from itertools import combinations
@@ -140,9 +139,9 @@ print(list(combs))
 # [(1, 2, 3), (1, 2, 4), (1, 3, 4), (2, 3, 4)]
 \`\`\`
 
-**permutations() — перестановки**
+**permutations() - перестановки**
 
-Перестановки — це вибір елементів, де порядок важливий.
+Перестановки - це вибір елементів, де порядок важливий.
 
 \`\`\`python
 from itertools import permutations
@@ -159,7 +158,7 @@ print(list(perms))
 # [('x', 'y'), ('y', 'x')]
 \`\`\`
 
-**product() — декартів добуток**
+**product() - декартів добуток**
 
 \`\`\`python
 from itertools import product
@@ -258,7 +257,7 @@ for grade, group in groupby(students_sorted, key=lambda x: x[1]):
       },
       {
         title: "Об'єднання та фільтрація",
-        content: `**chain() — об'єднання ітераторів**
+        content: `**chain() - об'єднання ітераторів**
 
 \`\`\`python
 from itertools import chain
@@ -279,7 +278,7 @@ print(list(combined))
 # [1, 2, 3, 4, 5, 6]
 \`\`\`
 
-**zip_longest() — zip з заповненням**
+**zip_longest() - zip з заповненням**
 
 \`\`\`python
 from itertools import zip_longest
@@ -299,7 +298,7 @@ print(list(zip_longest(list1, list2, fillvalue='-')))
 # [(1, 'a'), (2, 'b'), (3, '-')]
 \`\`\`
 
-**takewhile() та dropwhile() — умовна фільтрація**
+**takewhile() та dropwhile() - умовна фільтрація**
 
 \`\`\`python
 from itertools import takewhile, dropwhile
@@ -317,7 +316,7 @@ print(list(skipped))
 # [5, 6, 7, 8, 9, 10]
 \`\`\`
 
-**filterfalse() — фільтрація хибних значень**
+**filterfalse() - фільтрація хибних значень**
 
 \`\`\`python
 from itertools import filterfalse
@@ -380,17 +379,17 @@ for key, group in groupby(combined):
 
 **Ключові функції:**
 
-1. **Безкінечні ітератори** — cycle, repeat, count
-2. **Комбінаторика** — combinations, permutations, product
-3. **Групування** — groupby (потрібна сортування!)
-4. **Об'єднання** — chain, zip_longest
-5. **Фільтрація** — takewhile, dropwhile, filterfalse
+1. **Безкінечні ітератори** - cycle, repeat, count
+2. **Комбінаторика** - combinations, permutations, product
+3. **Групування** - groupby (потрібна сортування!)
+4. **Об'єднання** - chain, zip_longest
+5. **Фільтрація** - takewhile, dropwhile, filterfalse
 
 **Переваги:**
 
-- Ефективність — працює з ітераторами
-- Потужність — багато готових функцій
-- Читабельність — декларативний код
+- Ефективність - працює з ітераторами
+- Потужність - багато готових функцій
+- Читабельність - декларативний код
 
 **Важливо пам'ятати:**
 
@@ -464,18 +463,18 @@ print(list(combined))
     },
     {
       mistake: "Плутанина між combinations та permutations",
-      explanation: "combinations — порядок не важливий, permutations — порядок важливий.",
+      explanation: "combinations - порядок не важливий, permutations - порядок важливий.",
       correctApproach: "Використовуйте combinations для вибору, permutations для впорядкованих послідовностей."
     }
   ],
   
   summary: `На цьому уроці ми вивчили модуль itertools:
 
-1. **Безкінечні ітератори** — cycle, repeat, count
-2. **Комбінаторика** — combinations, permutations, product
-3. **Групування** — groupby (потрібна сортування!)
-4. **Об'єднання** — chain, zip_longest
-5. **Фільтрація** — takewhile, dropwhile, filterfalse
+1. Безкінечні ітератори - cycle, repeat, count
+2. Комбінаторика - combinations, permutations, product
+3. Групування - groupby (потрібна сортування!)
+4. Об'єднання - chain, zip_longest
+5. Фільтрація - takewhile, dropwhile, filterfalse
 
 itertools допомагає писати ефективний та елегантний код для роботи з послідовностями!`,
   
@@ -489,7 +488,6 @@ itertools допомагає писати ефективний та елеган
 
 Символи: 'abc'
 Довжина: 3`,
-    inputFormat: "Символи та довжина пароля",
     outputFormat: `Перші 10 паролів:
 aaa
 aab
@@ -560,13 +558,13 @@ generate_passwords('ab', 2)`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "Яка різниця між combinations та permutations?",
         options: [
-          "combinations — порядок не важливий, permutations — важливий",
-          "combinations — порядок важливий, permutations — не важливий",
+          "combinations - порядок не важливий, permutations - важливий",
+          "combinations - порядок важливий, permutations - не важливий",
           "Немає різниці",
           "combinations швидший"
         ],
         correctAnswer: 0,
-        explanation: "combinations — вибір без урахування порядку, permutations — з урахуванням порядку."
+        explanation: "combinations - вибір без урахування порядку, permutations - з урахуванням порядку."
       },
       {
         id: "q3",

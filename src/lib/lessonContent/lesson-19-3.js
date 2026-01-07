@@ -17,7 +17,6 @@ export const lesson_16_4 = {
     "Розв'язати практичні задачі"
   ],
   
-  estimatedTime: 90,
   prerequisites: [],
   
   videoUrl: "",

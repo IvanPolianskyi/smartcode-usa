@@ -18,7 +18,6 @@ export const lesson_08_5 = {
     "Використовувати pandas для роботи з таблицями"
   ],
   
-  estimatedTime: 90,
   prerequisites: ["lesson-08-4"],
   
   videoUrl: "",
@@ -27,12 +26,12 @@ export const lesson_08_5 = {
     sections: [
       {
         title: "Вступ до CSV",
-        content: `CSV (Comma-Separated Values) — це текстовий формат для зберігання табличних даних.
+        content: `CSV (Comma-Separated Values) - це текстовий формат для зберігання табличних даних.
 
 **Що таке CSV?**
 
 - Простий формат, де дані розділені комами (або іншими роздільниками)
-- Кожен рядок — це запис
+- Кожен рядок - це запис
 - Перший рядок часто містить заголовки колонок
 - Легко читається та редагується
 
@@ -53,7 +52,7 @@ import csv
       },
       {
         title: "Читання CSV файлів",
-        content: `**csv.reader()** — читає CSV файл рядок за рядком.
+        content: `**csv.reader()** - читає CSV файл рядок за рядком.
 
 \`\`\`python
 import csv
@@ -68,7 +67,7 @@ with open('data.csv', 'r', encoding='utf-8') as f:
 # ['Марія', '23', 'Львів']
 \`\`\`
 
-**csv.DictReader()** — читає CSV як словники (з заголовками).
+**csv.DictReader()** - читає CSV як словники (з заголовками).
 
 \`\`\`python
 import csv
@@ -103,7 +102,7 @@ print(students)
       },
       {
         title: "Запис у CSV файли",
-        content: `**csv.writer()** — записує дані в CSV файл.
+        content: `**csv.writer()** - записує дані в CSV файл.
 
 \`\`\`python
 import csv
@@ -120,7 +119,7 @@ with open('output.csv', 'w', encoding='utf-8', newline='') as f:
     writer.writerows(data)
 \`\`\`
 
-**csv.DictWriter()** — записує словники в CSV.
+**csv.DictWriter()** - записує словники в CSV.
 
 \`\`\`python
 import csv
@@ -230,7 +229,7 @@ for row in ws.iter_rows(values_only=True):
       },
       {
         title: "Робота з pandas для таблиць",
-        content: `\`pandas\` — потужна бібліотека для роботи з даними. Вона спрощує роботу з CSV та Excel.
+        content: `\`pandas\` - потужна бібліотека для роботи з даними. Вона спрощує роботу з CSV та Excel.
 
 **Встановлення:**
 
@@ -386,25 +385,25 @@ def process_chunk(chunk):
 
 **CSV (модуль csv):**
 
-1. **csv.reader()** — читання CSV рядками
-2. **csv.DictReader()** — читання як словники
-3. **csv.writer()** — запис рядками
-4. **csv.DictWriter()** — запис словниками
+1. **csv.reader()** - читання CSV рядками
+2. **csv.DictReader()** - читання як словники
+3. **csv.writer()** - запис рядками
+4. **csv.DictWriter()** - запис словниками
 
 **Excel (openpyxl):**
 
-1. **load_workbook()** — завантаження Excel файлу
-2. **Workbook()** — створення нової книги
-3. **Робота з листами** — створення та вибір листів
-4. **Доступ до комірок** — читання та запис
+1. **load_workbook()** - завантаження Excel файлу
+2. **Workbook()** - створення нової книги
+3. **Робота з листами** - створення та вибір листів
+4. **Доступ до комірок** - читання та запис
 
 **Pandas:**
 
-1. **pd.read_csv()** — читання CSV
-2. **pd.read_excel()** — читання Excel
-3. **df.to_csv()** — запис у CSV
-4. **df.to_excel()** — запис у Excel
-5. **Обробка даних** — фільтрація, групування, сортування
+1. **pd.read_csv()** - читання CSV
+2. **pd.read_excel()** - читання Excel
+3. **df.to_csv()** - запис у CSV
+4. **df.to_excel()** - запис у Excel
+5. **Обробка даних** - фільтрація, групування, сортування
 
 **Важливо:**
 
@@ -482,11 +481,11 @@ print(df['Вік'].mean())  # Середнє значення`,
   
   summary: `На цьому уроці ми вивчили роботу з CSV та Excel:
 
-1. **CSV** — csv.reader, csv.DictReader, csv.writer, csv.DictWriter
-2. **Excel** — openpyxl для читання та запису
-3. **Pandas** — спрощена робота з табличними даними
+1. CSV - csv.reader, csv.DictReader, csv.writer, csv.DictWriter
+2. Excel - openpyxl для читання та запису
+3. Pandas - спрощена робота з табличними даними
 
-CSV та Excel — стандартні формати для зберігання та обміну структурованими даними!`,
+CSV та Excel - стандартні формати для зберігання та обміну структурованими даними!`,
   
   practiceTask: {
     title: "Створення системи обліку студентів",
@@ -501,7 +500,6 @@ CSV та Excel — стандартні формати для зберіганн
 - Олександр, 25, Python, 95
 - Марія, 23, JavaScript, 88
 - Іван, 30, Python, 92`,
-    inputFormat: "Список студентів з даними",
     outputFormat: `Дані збережено у students.csv
 Завантажено 3 студентів
 Середня оцінка: 91.67
@@ -609,7 +607,7 @@ print(f'Середня оцінка: {avg:.1f}')`,
           "Code-Separated Values"
         ],
         correctAnswer: 0,
-        explanation: "CSV означає Comma-Separated Values — значення, розділені комами."
+        explanation: "CSV означає Comma-Separated Values - значення, розділені комами."
       },
       {
         id: "q2",
@@ -629,13 +627,13 @@ print(f'Середня оцінка: {avg:.1f}')`,
         type: QUIZ_QUESTION_TYPES.CODE_READING,
         question: "Яка різниця між csv.reader() та csv.DictReader()?",
         options: [
-          "reader повертає списки, DictReader — словники",
+          "reader повертає списки, DictReader - словники",
           "DictReader швидший",
           "reader працює тільки з файлами",
           "Немає різниці"
         ],
         correctAnswer: 0,
-        explanation: "csv.reader() повертає рядки як списки, csv.DictReader() — як словники з ключами з заголовків."
+        explanation: "csv.reader() повертає рядки як списки, csv.DictReader() - як словники з ключами з заголовків."
       },
       {
         id: "q4",
@@ -648,7 +646,7 @@ print(f'Середня оцінка: {avg:.1f}')`,
           "json"
         ],
         correctAnswer: 1,
-        explanation: "openpyxl — бібліотека для роботи з Excel файлами (.xlsx)."
+        explanation: "openpyxl - бібліотека для роботи з Excel файлами (.xlsx)."
       },
       {
         id: "q5",

@@ -22,7 +22,6 @@ export const lesson_16_3 = {
     "Використовувати Label для тексту"
 ],
   
-  estimatedTime: 75,
   prerequisites: [
     "lesson-16-2",
     "lesson-16-4",
@@ -48,8 +47,6 @@ export const lesson_16_3 = {
 - lesson-19-3
 - Віджети: Label, Button, Entry, Text
 - Використовувати Label для тексту
-
-**Час на вивчення:** приблизно 75 хвилин
 
 **Попередні вимоги:** lesson-19-1, lesson-19-3, Віджети: Label, Button, Entry, Text
 `

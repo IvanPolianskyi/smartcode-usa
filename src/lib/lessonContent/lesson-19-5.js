@@ -19,7 +19,6 @@ export const lesson_16_6 = {
     "lesson-16-5"
 ],
   
-  estimatedTime: 150,
   prerequisites: [
     "lesson-16-5"
 ],
@@ -40,8 +39,6 @@ export const lesson_16_6 = {
 - Створити повноцінний GUI-додаток
 - Застосувати всі набуті знання
 - lesson-19-4
-
-**Час на вивчення:** приблизно 150 хвилин
 
 **Попередні вимоги:** lesson-19-4
 `

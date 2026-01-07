@@ -17,7 +17,6 @@ export const lesson_09_2 = {
     "Побачити базові приклади використання"
   ],
   
-  estimatedTime: 30,
   prerequisites: ["lesson-09-1"],
   
   videoUrl: "",
@@ -26,7 +25,7 @@ export const lesson_09_2 = {
     sections: [
       {
         title: "Що таке BeautifulSoup?",
-        content: `BeautifulSoup — це популярна бібліотека Python для парсингу HTML та XML документів.
+        content: `BeautifulSoup - це популярна бібліотека Python для парсингу HTML та XML документів.
 
 **Основні можливості:**
 
@@ -104,9 +103,9 @@ if paragraph:
         title: "Альтернативи BeautifulSoup",
         content: `**Для простих задач можна використовувати:**
 
-1. **Регулярні вирази (re)** — для простих патернів
-2. **Вбудований html.parser** — для базового парсингу
-3. **JSON API** — якщо сайт надає API (найкращий варіант)
+1. **Регулярні вирази (re)** - для простих патернів
+2. **Вбудований html.parser** - для базового парсингу
+3. **JSON API** - якщо сайт надає API (найкращий варіант)
 
 **Рекомендація:**
 
@@ -125,5 +124,5 @@ if paragraph:
   
   commonMistakes: [],
   
-  summary: `BeautifulSoup — потужний інструмент для парсингу HTML, але для більшості завдань у цьому курсі достатньо requests та JSON API.`
+  summary: `BeautifulSoup - потужний інструмент для парсингу HTML, але для більшості завдань у цьому курсі достатньо requests та JSON API.`
 }
