@@ -19,7 +19,8 @@ import {
   Sparkles,
   ArrowLeft,
   Terminal,
-  Database
+  Database,
+  BookOpen
 } from 'lucide-react'
 import Link from 'next/link'
 import styles from './PythonCoursePage.module.css'
@@ -544,30 +545,26 @@ const PythonCoursePage = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className={styles.ctaSection}>
-          <div className={styles.ctaContainer}>
-            <h2 className={styles.ctaTitle}>
-              Готовий змінити майбутнє?
-            </h2>
-            <p className={styles.ctaDescription}>
-              Приєднуйся до космічної подорожі у світ програмування вже сьогодні
+        {/* Course Section - Simplified */}
+        <section className={styles.courseSection}>
+          <div className={styles.courseSectionContainer}>
+            <p className={styles.courseSectionDescription}>
+              Окрім онлайн уроків, ми пропонуємо повноцінний онлайн курс на сайті для поглибленого вивчення Python. 
+              Курс рекомендується поєднувати з онлайн уроками для максимальної ефективності навчання та швидкого прогресу.
             </p>
             
-            <div className={styles.ctaButtons}>
+            <div className={styles.courseSectionButtons}>
               <Link 
-                href="/#Contactform" 
-                className={styles.primaryButton}
-                onClick={(e)=>{e.preventDefault(); window.dispatchEvent(new Event('openContactModal'))}}
-                scroll={false}
+                href="/courses/python-developer-zero-to-junior" 
+                className={styles.coursePrimaryButton}
               >
                 <div className={styles.buttonOverlay}></div>
                 <span className={styles.buttonContent}>
-                  <Zap className="w-6 h-6" />
-                  Безкоштовний урок
+                  <Rocket className="w-6 h-6" />
+                  Почати навчання
+                  <ChevronRight className={styles.buttonArrow} />
                 </span>
               </Link>
-            
             </div>
           </div>
         </section>

@@ -69,7 +69,7 @@
 }
 
 .container {
-	max-width: 1200px;
+	max-width: 1400px;
 	margin: 0 auto;
 	position: relative;
 	z-index: 1;
@@ -211,6 +211,7 @@
 	border: 2px solid transparent;
 	position: relative;
 	overflow: hidden;
+	cursor: pointer;
 }
 
 .directionCard::before {
@@ -337,4 +338,24 @@
 		height: 24px;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

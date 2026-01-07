@@ -13,31 +13,47 @@ import {
 import styles from './EnhancedCourseCards.module.css'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 // Функція для генерації частинок з урахуванням теми
-// Трохи зменшена кількість частинок для кращої продуктивності
+// Більше частинок (26 всього), але анімуються тільки 3-4
 const generateParticles = colors => {
 	const particleTypes = [
-		{ type: 'particle1', count: 12, colors: colors.slice(0, 2) },
-		{ type: 'particle2', count: 9, colors: colors.slice(1, 3) },
-		{ type: 'particle3', count: 8, colors: colors.slice(2, 4) },
-		{ type: 'particle4', count: 10, colors: [colors[3], colors[0]] },
+		{ type: 'particle1', count: 8, colors: colors.slice(0, 2) },
+		{ type: 'particle2', count: 6, colors: colors.slice(1, 3) },
+		{ type: 'particle3', count: 5, colors: colors.slice(2, 4) },
+		{ type: 'particle4', count: 7, colors: [colors[3], colors[0]] },
 	]
 
-	return particleTypes.flatMap(({ type, count, colors }) =>
+	// Генеруємо всі частинки
+	const allParticles = particleTypes.flatMap(({ type, count, colors }) =>
 		Array.from({ length: count }, (_, i) => ({
 			id: `${type}-${i}`,
 			type,
 			color: colors[Math.floor(Math.random() * colors.length)],
 			left: Math.random() * 100,
 			top: Math.random() * 100,
-			animationDelay: `${Math.random() * 15}s`,
-			animationDuration: `${8 + Math.random() * 10}s`,
 		}))
 	)
+
+	// Випадково вибираємо 3-4 частинки для анімації
+	const maxAnimated = 3 + Math.floor(Math.random() * 2) // 3 або 4
+	const animatedIndices = new Set()
+	while (animatedIndices.size < maxAnimated && animatedIndices.size < allParticles.length) {
+		animatedIndices.add(Math.floor(Math.random() * allParticles.length))
+	}
+
+	// Додаємо інформацію про анімацію
+	return allParticles.map((p, index) => ({
+		...p,
+		animated: animatedIndices.has(index),
+		animationDelay: animatedIndices.has(index) ? `${Math.random() * 15}s` : '0s',
+		animationDuration: animatedIndices.has(index) ? `${8 + Math.random() * 10}s` : 'none',
+	}))
 }
 
 // Хук для визначення чи це мобільний пристрій
+// Оптимізовано з debounce для кращої продуктивності
 const useIsMobile = () => {
 	const [isMobile, setIsMobile] = useState(false)
 
@@ -47,9 +63,20 @@ const useIsMobile = () => {
 		}
 
 		checkIsMobile()
-		window.addEventListener('resize', checkIsMobile)
+		
+		// Debounce resize для кращої продуктивності
+		let timeoutId
+		const handleResize = () => {
+			clearTimeout(timeoutId)
+			timeoutId = setTimeout(checkIsMobile, 150)
+		}
+		
+		window.addEventListener('resize', handleResize, { passive: true })
 
-		return () => window.removeEventListener('resize', checkIsMobile)
+		return () => {
+			window.removeEventListener('resize', handleResize)
+			clearTimeout(timeoutId)
+		}
 	}, [])
 
 	return isMobile
@@ -60,7 +87,8 @@ const courses = [
 		id: 'python',
 		title: 'PYTHON',
 		subtitle: 'Програмування майбутнього',
-		icon: '🐍',
+		icon: '/python-logo.png',
+		iconType: 'image',
 		description:
 			'Відкрий космос можливостей з найпопулярнішою мовою програмування світу. Створюй ШІ, веб-додатки та аналізуй дані.',
 		features: [
@@ -77,14 +105,35 @@ const courses = [
 		badge: 'Космічний хіт',
 		rating: 4.9,
 		theme: 'themePython',
-		particleColors: ['#c084fc', '#93c5fd', '#f9a8d4', '#fcd34d'],
+		particleColors: ['#c084fc', '#93c5fd', '#f9a8d4', '#fbbf24'],
         href: '/python',
 	},
+	{
+        id: 'roblox',
+        title: 'ROBLOX',
+        subtitle: 'Створюй ігри у Roblox Studio',
+        icon: '/logos/roblox.svg',
+        iconType: 'image',
+        description:
+            'Поринь у світ геймдизайну та скриптингу з Roblox Studio і Lua. Створюй свої світи, механіки та публікуй ігри.',
+        features: ['Roblox Studio', 'Lua', 'Геймдизайн', 'Публікація ігор'],
+        stats: {
+            age: '6-17',
+            students: '140+',
+            projects: '8+',
+        },
+        badge: 'Популярно',
+        rating: 4.8,
+        theme: 'themeRoblox',
+        particleColors: ['#fecaca', '#fca5a5', '#fb7185', '#f87171'],
+        href: '/Roblox',
+    },
 	{
 		id: 'gamedev',
 		title: 'ГЕЙМДЕВ',
 		subtitle: 'Створення власних ігор за допомогою Unity',
-		icon: '🎮',
+		icon: '/logos/unity.svg',
+		iconType: 'image',
 		description:
 			'Розробляй захоплюючі ігри на Unity. Від простих 2D до складних 3D проектів.',
 		features: ['C#', 'Unity 3D', 'Дизайн персонажів', 'Логіка геймплею'],
@@ -104,7 +153,8 @@ const courses = [
 		id: 'webdev',
 		title: 'ВЕБ-РОЗРОБКА',
 		subtitle: 'Сучасні сайти та додатки',
-		icon: '💻',
+		icon: '/logos/web.svg',
+		iconType: 'image',
 		description:
 			'Створюй адаптивні сайти та веб-додатки з HTML, CSS, JavaScript та React, що вражають своєю швидкістю та дизайном.',
 		features: ['HTML/CSS', 'JavaScript', 'React', 'Node.js'],
@@ -119,38 +169,31 @@ const courses = [
 		particleColors: ['#7dd3fc', '#67e8f9', '#a5f3fc', '#38bdf8'],
         href: '/webDev',
 	},
-    {
-        id: 'roblox',
-        title: 'ROBLOX',
-        subtitle: 'Створюй ігри у Roblox Studio',
-        icon: '🟥',
-        description:
-            'Поринь у світ геймдизайну та скриптингу з Roblox Studio і Lua. Створюй свої світи, механіки та публікуй ігри.',
-        features: ['Roblox Studio', 'Lua', 'Геймдизайн', 'Публікація ігор'],
-        stats: {
-            age: '6-17',
-            students: '140+',
-            projects: '8+',
-        },
-        badge: 'Популярно',
-        rating: 4.8,
-        theme: 'themeRoblox',
-        particleColors: ['#fecaca', '#fca5a5', '#fb7185', '#f87171'],
-        href: '/Roblox',
-    },
+    
 ]
 
 // Окремий компонент для частинок, щоб оптимізувати рендеринг
 // Обгорнуто в React.memo, щоб не перерендерюватися при наведенні на картки
 const ParticleBackground = React.memo(({ colors }) => {
-	const particles = useMemo(() => generateParticles(colors), [colors])
+	const particlesRef = useRef(null)
+	
+	// Генеруємо частинки один раз при монтуванні
+	useEffect(() => {
+		if (!particlesRef.current) {
+			particlesRef.current = generateParticles(colors)
+		}
+	}, [colors])
+
+	if (!particlesRef.current) {
+		return null
+	}
 
 	return (
 		<div className={styles.particleContainer}>
-			{particles.map(p => (
+			{particlesRef.current.map(p => (
 				<div
 					key={p.id}
-					className={`${styles.particle} ${styles[p.type]}`}
+					className={`${styles.particle} ${styles[p.type]} ${p.animated ? styles.particleAnimated : styles.particleStatic}`}
 					style={{
 						'--particle-color': p.color,
 						left: `${p.left}%`,
@@ -162,31 +205,90 @@ const ParticleBackground = React.memo(({ colors }) => {
 			))}
 		</div>
 	)
+}, (prevProps, nextProps) => {
+	// Кастомна функція порівняння - перерендерюємо тільки якщо змінилися кольори
+	return JSON.stringify(prevProps.colors) === JSON.stringify(nextProps.colors)
 })
 
 const EnhancedCourseCards = () => {
     const [hoveredCard, setHoveredCard] = useState(null)
 	const [isVisible, setIsVisible] = useState(false)
+	const [visibleCards, setVisibleCards] = useState(new Set())
 	const router = useRouter()
 	const isMobile = useIsMobile()
 	const cardRefs = useRef([])
+	const observerRef = useRef(null)
 
 	useEffect(() => {
 		const timer = setTimeout(() => setIsVisible(true), 100)
 		return () => clearTimeout(timer)
 	}, [])
 
-    // На мобільних картки не розгортаються; клік веде одразу на сторінку курсу.
+	// Intersection Observer для lazy loading карток
+	useEffect(() => {
+		if (isMobile || typeof window === 'undefined' || !window.IntersectionObserver) {
+			// На мобільних або якщо немає підтримки - показуємо всі
+			setVisibleCards(new Set(courses.map((_, i) => i)))
+			return
+		}
 
+		// Невелика затримка для того, щоб refs встигли встановитися
+		const timeoutId = setTimeout(() => {
+			observerRef.current = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							const index = parseInt(entry.target.dataset.index, 10)
+							setVisibleCards((prev) => new Set([...prev, index]))
+						}
+					})
+				},
+				{ rootMargin: '100px', threshold: 0.1 }
+			)
+
+			cardRefs.current.forEach((ref, index) => {
+				if (ref) {
+					ref.dataset.index = index
+					observerRef.current.observe(ref)
+				}
+			})
+		}, 100)
+
+		return () => {
+			clearTimeout(timeoutId)
+			if (observerRef.current) {
+				observerRef.current.disconnect()
+			}
+		}
+	}, [isMobile])
+
+	// Оптимізовані обробники hover без debounce для швидкої реакції
+	const handleMouseEnter = (index) => {
+		if (!isMobile) {
+			setHoveredCard(index)
+		}
+	}
+
+	const handleMouseLeave = () => {
+		if (!isMobile) {
+			setHoveredCard(null)
+		}
+	}
+
+    // На мобільних картки не розгортаються; клік веде одразу на сторінку курсу.
     const getExpandedCard = () => (isMobile ? null : hoveredCard)
 
 	return (
-		<div className={styles.wrapper}>
-			{courses.map((course, index) => {
+		<div className={styles.sectionContainer}>
+			<div className={styles.sectionHeader}>
+				<h2 className={styles.sectionTitle}>Навчальні предмети</h2>
+			</div>
+			<div className={styles.wrapper}>
+				{courses.map((course, index) => {
 				const expandedCard = getExpandedCard()
 				const isExpanded = expandedCard === index
 				const isOtherExpanded = expandedCard !== null && !isExpanded
-
+				
                 const cardClasses = [
 					styles.card,
 					styles[course.theme],
@@ -198,11 +300,13 @@ const EnhancedCourseCards = () => {
                 return (
 					<div
 						key={course.id}
-						ref={(el) => (cardRefs.current[index] = el)}
+						ref={(el) => {
+							cardRefs.current[index] = el
+						}}
 						className={cardClasses}
 						style={{ transitionDelay: `${index * 100}ms` }}
-                        onMouseEnter={() => !isMobile && setHoveredCard(index)}
-                        onMouseLeave={() => !isMobile && setHoveredCard(null)}
+                        onMouseEnter={() => handleMouseEnter(index)}
+                        onMouseLeave={handleMouseLeave}
                         onClick={() => {
                             router.push(course.href)
                         }}
@@ -218,14 +322,16 @@ const EnhancedCourseCards = () => {
                         {/* --- ФОН ТА ЕФЕКТИ --- */}
                         <div className={styles.cardBackground}></div>
                         {!isMobile && <div className={styles.cardEffects}></div>}
-                        {!isMobile && <ParticleBackground colors={course.particleColors} />}
+                        {!isMobile && visibleCards.has(index) && (
+							<ParticleBackground 
+								colors={course.particleColors}
+							/>
+						)}
 
-						{/* --- ІНТЕРАКТИВНІ ЕЛЕМЕНТИ ПРИ НАВЕДЕННІ --- */}
+						{/* --- ІНТЕРАКТИВНІ ЕЛЕМЕНТИ (завжди видимі) --- */}
                         {!isMobile && (
                         <div
-							className={`${styles.hoverElements} ${
-								isExpanded ? styles.hoverElementsVisible : ''
-							}`}
+							className={`${styles.hoverElements} ${styles.hoverElementsVisible}`}
 						>
 							{course.id === 'python' && (
 								<>
@@ -288,16 +394,11 @@ const EnhancedCourseCards = () => {
                         </div>
                         )}
 
-						{/* --- ВЕРХНЯ ЧАСТИНА (БЕЙДЖ, РЕЙТИНГ) --- */}
+						{/* --- ВЕРХНЯ ЧАСТИНА (РЕЙТИНГ) --- */}
 						<div className={styles.topSection}>
 							<div className={styles.rating}>
 								<Star className={styles.ratingIcon} />
 								<span className={styles.ratingValue}>{course.rating}</span>
-							</div>
-							<div
-								className={`${styles.badge} ${styles[`badge_${course.id}`]}`}
-							>
-								🔥 {course.badge}
 							</div>
 						</div>
 
@@ -306,9 +407,33 @@ const EnhancedCourseCards = () => {
 							<div
 								className={`${styles.centerIcon} ${
 									isExpanded ? styles.centerIconHovered : ''
-								}`}
+								} ${course.iconType === 'image' ? styles.centerIconImage : ''}`}
 							>
-								{course.icon}
+								{course.iconType === 'image' ? (
+									<div className={styles.logoImageContainer}>
+										{course.icon.endsWith('.svg') ? (
+											<img
+												src={course.icon}
+												alt={`${course.title} logo`}
+												className={styles.logoImage}
+												loading={index < 2 ? 'eager' : 'lazy'}
+												decoding="async"
+											/>
+										) : (
+											<Image
+												src={course.icon}
+												alt={`${course.title} logo`}
+												width={180}
+												height={180}
+												className={styles.logoImage}
+												priority={index < 2}
+												loading={index < 2 ? 'eager' : 'lazy'}
+											/>
+										)}
+									</div>
+								) : (
+									course.icon
+								)}
 							</div>
 						</div>
 
@@ -342,8 +467,9 @@ const EnhancedCourseCards = () => {
 							{/* --- ДЕТАЛІ (з'являються при наведенні/скролі) --- */}
 							<div
 								className={`${styles.details} ${
-									isExpanded ? styles.detailsVisible : ''
+									isExpanded || isMobile ? styles.detailsVisible : ''
 								}`}
+								aria-hidden={!isExpanded && !isMobile}
 							>
 								<p className={styles.description}>{course.description}</p>
 								<div className={styles.featuresGrid}>
@@ -382,6 +508,15 @@ const EnhancedCourseCards = () => {
 									<span>Почати навчання</span>
 									<ArrowRight className={styles.buttonArrow} />
 								</Link>
+								{/* Кнопка "Перейти" для мобільної версії */}
+								<Link
+									href={course.href}
+									className={styles.mobileGoButton}
+									onClick={e => e.stopPropagation()}
+								>
+									<span>Перейти</span>
+									<ArrowRight className={styles.buttonArrow} />
+								</Link>
 							</div>
 						</div>
 
@@ -396,6 +531,7 @@ const EnhancedCourseCards = () => {
 					</div>
 				)
 			})}
+			</div>
 		</div>
 	)
 }

@@ -27,15 +27,10 @@ import Link from 'next/link'
 gsap.registerPlugin(ScrollTrigger)
 
 const Visit = () => {
-	const [isVisible, setIsVisible] = useState(false)
-	const [hoveredCard, setHoveredCard] = useState(null)
-	const [currentStat, setCurrentStat] = useState(0)
 	const sectionRef = useRef(null)
 	const cardsRef = useRef(null)
 
 	useEffect(() => {
-		setIsVisible(true)
-
 		// GSAP анімації появи при скролі
 		let ctx = null
 		if (sectionRef.current) {
@@ -94,43 +89,64 @@ const Visit = () => {
 			}, sectionRef)
 		}
 
-		// Анімація статистики
-		const interval = setInterval(() => {
-			setCurrentStat(prev => (prev + 1) % 8)
-		}, 3000)
-
 		return () => {
-			clearInterval(interval)
 			if (ctx) ctx.revert()
 		}
 	}, [])
 
 	const stats = [
-		{ number: '500+', label: 'Випускників', icon: <Users /> },
-		{ number: '200+', label: 'Годин кодування', icon: <Code /> },
-		{ number: '3+', label: 'Роки досвіду', icon: <Clock /> },
-		{ number: '4.9', label: 'Рейтинг', icon: <Star /> },
-		{ number: '8+', label: 'Курсів', icon: <BookOpen /> },
-		{ number: '15+', label: 'Викладачів', icon: <Monitor /> },
-		{ number: '20+', label: 'Проектів', icon: <Rocket /> },
-		{ number: '98%', label: 'Задоволених учнів', icon: <Trophy /> },
+		{ 
+			number: '500+', 
+			label: 'дітей навчаються по всьому світу', 
+			icon: <Users />,
+			iconColor: '#3b82f6'
+		},
+		{ 
+			number: '100%', 
+			label: 'занять проходять з живими викладачами', 
+			icon: <Code />,
+			iconColor: '#3b82f6'
+		},
+		{ 
+			number: 'починай з 0', 
+			label: 'Від "нуля" до просунутого рівня', 
+			icon: <BookOpen />,
+			iconColor: '#3b82f6'
+		},
+		{ 
+			number: '98%', 
+			label: 'Задоволених учнів', 
+			icon: <Trophy />,
+			iconColor: '#3b82f6'
+		},
 	]
 
 	return (
 		<div className={styles.container} ref={sectionRef}>
 			{/* Floating background elements */}
 			<div className={styles.backgroundElements}>
+				{/* Верхні елементи */}
 				<div className={`${styles.floatingElement} ${styles.element1}`}></div>
 				<div className={`${styles.floatingElement} ${styles.element2}`}></div>
 				<div className={`${styles.floatingElement} ${styles.element3}`}></div>
 				<div className={`${styles.floatingElement} ${styles.element4}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element5}`}></div>
+				{/* Середні елементи */}
+				<div className={`${styles.floatingElement} ${styles.element6}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element7}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element8}`}></div>
+				{/* Нижні елементи */}
+				<div className={`${styles.floatingElement} ${styles.element9}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element10}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element11}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element12}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element13}`}></div>
+				<div className={`${styles.floatingElement} ${styles.element14}`}></div>
 			</div>
 
 			<div className={styles.mainContainer}>
 				{/* Hero Header */}
-				<div
-					className={`${styles.hero} ${isVisible ? styles.heroVisible : ''}`}
-				>
+				<div className={styles.hero}>
 					<div className={styles.heroContent}>
 						<h1 className={`${styles.title} animate-up`}>
 							<span className={styles.titleMain}>SmartCode</span>
@@ -138,8 +154,7 @@ const Visit = () => {
 						</h1>
 
 						<p className={`${styles.subtitle} animate-up`}>
-							Школа програмування нового покоління, де діти створюють технології
-							майбутнього
+							Школа програмування нового покоління, де діти створюють майбутні технології
 						</p>
 
 						<div className={`${styles.heroFeatures} animate-slide`}>
@@ -166,7 +181,10 @@ const Visit = () => {
                         <div className={styles.ctaButtons}>
                             <Link href="/#Contactform" className={styles.primaryButton} onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openContactModal')) }} scroll={false}>
                                 <Play className={styles.buttonIcon} />
-                                Почати навчання безкоштовно
+                                Отримати пробне заняття
+                            </Link>
+                            <Link href="/tariff" className={styles.secondaryButton}>
+                                Переглянути ціни
                             </Link>
                         </div>
 					</div>
@@ -176,14 +194,23 @@ const Visit = () => {
 						{stats.map((stat, index) => (
 							<div
 								key={index}
-								className={`${styles.statCard} ${
-									currentStat === index ? styles.statCardActive : ''
-								} animate-scale`}
-								style={{ animationDelay: `${index * 0.1}s` }}
+								className={`${styles.statCard} animate-scale`}
+								style={{ 
+									animationDelay: `${index * 0.1}s`
+								}}
 							>
-								<div className={styles.statIcon}>{stat.icon}</div>
+								<div 
+									className={styles.statIcon}
+									style={{ 
+										color: '#6366f1'
+									}}
+								>
+									{stat.icon}
+								</div>
 								<div className={styles.statContent}>
-									<div className={styles.statNumber}>{stat.number}</div>
+									<div className={styles.statNumber}>
+										{stat.number}
+									</div>
 									<div className={styles.statLabel}>{stat.label}</div>
 								</div>
 							</div>

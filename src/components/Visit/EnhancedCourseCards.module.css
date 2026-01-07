@@ -1,12 +1,42 @@
 /* EnhancedCourseCards.module.css */
 
+/* --- КОНТЕЙНЕР СЕКЦІЇ --- */
+.sectionContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.sectionHeader {
+    width: 100%;
+    padding: 1.5rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.sectionTitle {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #d946ef 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+    margin: 0;
+    position: relative;
+}
+
 /* --- ОСНОВНА РОЗМІТКА --- */
 .wrapper {
     width: 100%;
     height: 100vh;
     display: flex;
     overflow: hidden;
-    background-color: #f8fafc;
+    background: transparent;
+    contain: layout style paint;
+    transform: translateZ(0); /* Force GPU acceleration */
 }
 
 .card {
@@ -15,6 +45,9 @@
     cursor: pointer;
     overflow: hidden;
     transition: flex 0.7s cubic-bezier(0.65, 0, 0.35, 1), filter 0.7s ease;
+    will-change: flex, filter;
+    contain: layout style paint;
+    transform: translateZ(0); /* Force GPU acceleration */
 }
 
 .cardHidden {
@@ -100,6 +133,8 @@
     inset: 0;
     transition: all 0.7s ease;
     background-image: var(--gradient);
+    will-change: background-image;
+    transform: translateZ(0); /* Force GPU acceleration */
 }
 .cardEffects {
     position: absolute;
@@ -107,30 +142,45 @@
     opacity: 0.2;
     background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.3), transparent),
                 radial-gradient(circle at 70% 80%, rgba(255,255,255,0.2), transparent);
+    will-change: opacity;
+    transform: translateZ(0); /* Force GPU acceleration */
 }
 .particleContainer {
     position: absolute;
     inset: 0;
     overflow: hidden;
+    contain: layout style paint;
+    will-change: contents;
 }
 .particle {
     position: absolute;
     border-radius: 50%;
     background-color: var(--particle-color);
     box-shadow: 0 0 8px var(--particle-color);
+    transform: translateZ(0); /* Force GPU acceleration */
+    contain: strict;
+}
+.particleAnimated {
+    will-change: transform, opacity;
+    animation-play-state: running;
+}
+.particleStatic {
+    will-change: auto;
+    animation: none !important;
+    opacity: 0.6;
 }
 .particle1 { width: 2px; height: 2px; animation-name: starDrift; }
 .particle2 { width: 1.5px; height: 1.5px; animation-name: starFloat; }
 .particle3 { width: 2px; height: 2px; animation-name: starOrbit; }
 .particle4 { width: 1.5px; height: 1.5px; animation-name: starTwinkle; }
 
-/* --- ІНТЕРАКТИВНІ ЕЛЕМЕНТИ ПРИ НАВЕДЕННІ --- */
+/* --- ІНТЕРАКТИВНІ ЕЛЕМЕНТИ (завжди видимі) --- */
 .hoverElements {
     position: absolute;
     inset: 0;
-    transition: opacity 0.5s ease;
-    opacity: 0;
+    opacity: 1;
     pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 .hoverElementsVisible { opacity: 1; }
 .hoverElement {
@@ -139,6 +189,8 @@
     text-shadow: 0 0 10px rgba(0,0,0,0.5);
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
+    will-change: transform, opacity;
+    transform: translateZ(0); /* Force GPU acceleration */
 }
 .pythonEl1 { top: 25%; left: 25%; font-size: 2rem; color: #fcd34d; animation-name: spin-slow; animation-duration: 8s; }
 .pythonEl2 { bottom: 33%; right: 25%; font-size: 1.75rem; animation-name: bounce; animation-duration: 2s; animation-delay: 0.3s; }
@@ -153,6 +205,7 @@
 .robloxEl1 { top: 25%; left: 20%; font-size: 1.75rem; color: #fecaca; animation-name: bounce; animation-duration: 1.8s; }
 .robloxEl2 { top: 35%; right: 22%; font-size: 1.6rem; color: #fde047; animation-name: pulse; animation-duration: 2.2s; animation-delay: 0.2s; }
 .robloxEl3 { bottom: 22%; left: 45%; font-size: 1.75rem; color: #fca5a5; animation-name: spin-slow; animation-duration: 6s; animation-delay: 0.4s; }
+
 
 /* --- ВЕРХНЯ ЧАСТИНА --- */
 .topSection {
@@ -169,11 +222,12 @@
     display: flex;
     align-items: center;
     gap: 0.25rem;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.4);
     backdrop-filter: blur(4px);
     padding: 0.375rem 0.75rem;
     border-radius: 9999px;
     border: 1px solid rgba(255,255,255,0.2);
+    will-change: auto;
 }
 .ratingIcon { width: 1rem; height: 1rem; color: #facc15; fill: currentColor; }
 .ratingValue { color: white; font-weight: 700; font-size: 0.875rem; }
@@ -201,6 +255,40 @@
     font-size: 6rem;
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    will-change: transform;
+    transform: translateZ(0); /* Force GPU acceleration */
+}
+.centerIconImage {
+    width: 180px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logoImageContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.centerIconImage img,
+.centerIconImage .logoImage,
+.centerIconImage img.logoImage {
+    width: 100%;
+    height: 100%;
+    max-width: 180px;
+    max-height: 180px;
+    min-width: 150px;
+    min-height: 150px;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: block;
 }
 .centerIconHovered {
     transform: scale(1.25);
@@ -328,10 +416,19 @@
     font-weight: 700;
     text-decoration: none;
     transition: background-color 0.2s ease, transform 0.2s ease;
+    position: relative;
+    will-change: transform;
+    margin-top: 1px;
+    margin-bottom: 1px;
 }
 .ctaButton:hover {
     background-color: rgba(255,255,255,0.22);
     transform: translateY(-1px);
+}
+
+/* Кнопка "Перейти" для мобільної версії */
+.mobileGoButton {
+    display: none;
 }
 
 /* --- БІЧНА НАЗВА --- */
@@ -341,13 +438,14 @@
     top: 50%;
     transform: translateY(-50%) rotate(-90deg);
     transform-origin: top left;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6);
     backdrop-filter: blur(4px);
     padding: 0.75rem 1.5rem;
     border-top-right-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
     transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 30;
+    will-change: transform;
 }
 .sideLabelHovered { transform: translateY(-50%) rotate(-90deg) translateX(-0.5rem) scale(1.1); }
 .sideLabelText {
@@ -367,35 +465,47 @@
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.25); }
 }
-@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes spin-slow { 
+    from { transform: rotate(0deg); } 
+    to { transform: rotate(360deg); } 
+}
 @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -15px, 0); }
 }
 @keyframes pulse {
     0%, 100% { transform: scale(1); opacity: 0.8; }
     50% { transform: scale(1.1); opacity: 1; }
 }
+/* Оптимізовані анімації з використанням transform та opacity для кращої продуктивності */
 @keyframes starDrift {
-    0% { transform: translate(0, 0) scale(0.5); opacity: 0.4; }
-    50% { transform: translate(40px, -60px) scale(1.2); opacity: 1; }
-    100% { transform: translate(0, 0) scale(0.5); opacity: 0.4; }
+    0% { transform: translate3d(0, 0, 0) scale(0.5); opacity: 0.4; }
+    50% { transform: translate3d(40px, -60px, 0) scale(1.2); opacity: 1; }
+    100% { transform: translate3d(0, 0, 0) scale(0.5); opacity: 0.4; }
 }
 @keyframes starFloat {
-    0%, 100% { transform: translateY(0px) scale(0.8); opacity: 0.5; }
-    50% { transform: translateY(-40px) scale(1.5); opacity: 1; }
+    0%, 100% { transform: translate3d(0, 0, 0) scale(0.8); opacity: 0.5; }
+    50% { transform: translate3d(0, -40px, 0) scale(1.5); opacity: 1; }
 }
 @keyframes starTwinkle {
     0%, 100% { transform: scale(0.5); opacity: 0.3; }
-    50% { transform: scale(2); opacity: 1; }
+    50% { transform: scale(2); opacity: 0.7; }
 }
 @keyframes starOrbit {
-    from { transform: rotate(0deg) translateX(40px) rotate(0deg); }
-    to { transform: rotate(360deg) translateX(40px) rotate(-360deg); }
+    from { transform: rotate(0deg) translate3d(40px, 0, 0) rotate(0deg); }
+    to { transform: rotate(360deg) translate3d(40px, 0, 0) rotate(-360deg); }
 }
 
 /* --- АДАПТИВНІСТЬ ДЛЯ МОБІЛЬНИХ --- */
 @media (max-width: 1024px) {
+    .sectionHeader {
+        padding: 2rem 1rem 1.5rem;
+    }
+
+    .sectionTitle {
+        font-size: clamp(1.75rem, 6vw, 2.5rem);
+    }
+
     .wrapper {
         height: auto;
         flex-direction: column;
@@ -424,6 +534,11 @@
         right: 1.5rem;
     }
 
+    .centerIconWrapper {
+        top: 40%;
+        transform: translate(-50%, -50%);
+    }
+
     .centerIcon { font-size: 4rem; transition: none; }
 
     /* centerIconHovered не використовується на мобільних → стилі видалено */
@@ -444,16 +559,21 @@
         line-height: 1.3;
     }
 
+    /* Приховуємо features з зеленою галочкою на мобільних */
     .featuresGrid { 
-        grid-template-columns: 1fr; 
-        gap: 0.5rem;
+        display: none;
     }
     .statsGrid { 
         grid-template-columns: 1fr 1fr; 
         gap: 0.75rem;
     }
 
-    /* details/detailsVisible не використовуються на мобільних → стилі видалено */
+    /* Деталі завжди видимі на мобільних */
+    .details {
+        max-height: none !important;
+        opacity: 1 !important;
+        overflow: visible;
+    }
 
     .description {
         font-size: 0.9rem;
@@ -461,7 +581,38 @@
         margin-bottom: 0.75rem;
     }
 
-    /* actionButton у мобільних не відображається (немає details) → стилі видалено */
+    /* Приховуємо малу кнопку "Перейти" на мобільних */
+    .ctaRow {
+        display: none;
+    }
+
+    /* Приховуємо кнопку "Почати навчання" на мобільних */
+    .actionButton {
+        display: none;
+    }
+
+    /* Показуємо кнопку "Перейти" на мобільних */
+    .mobileGoButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.875rem 1.25rem;
+        margin-top: 1rem;
+        border-radius: 12px;
+        background-color: rgba(255,255,255,0.16);
+        border: 1px solid rgba(255,255,255,0.3);
+        color: white;
+        font-weight: 700;
+        font-size: 0.95rem;
+        text-decoration: none;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    .mobileGoButton:active {
+        background-color: rgba(255,255,255,0.22);
+        transform: scale(0.98);
+    }
 
     /* Приховуємо бічну вертикальну назву на мобільних */
     .sideLabel { display: none; }

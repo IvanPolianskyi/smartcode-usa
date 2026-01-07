@@ -192,6 +192,10 @@
     background-color: var(--accent-color, #2563eb);
     color: white;
     box-shadow: 0 4px 15px 0 color-mix(in srgb, var(--accent-color) 30%, transparent);
+    position: relative;
+    will-change: transform;
+    margin-top: 3px;
+    margin-bottom: 3px;
 }
 
 .primaryButton:hover {
@@ -205,6 +209,10 @@
     color: #334155;
     border: 1px solid #cbd5e1;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: relative;
+    will-change: transform;
+    margin-top: 3px;
+    margin-bottom: 3px;
 }
 
 .secondaryButton:hover {

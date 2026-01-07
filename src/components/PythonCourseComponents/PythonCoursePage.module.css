@@ -473,6 +473,7 @@
 @media (min-width: 640px) {
 	.ctaButtons {
 		flex-direction: row;
+		gap: 1rem;
 	}
 }
 
@@ -539,6 +540,77 @@
 .secondaryButton:hover {
 	background: rgba(147, 51, 234, 0.2);
 	transform: scale(1.05);
+}
+
+/* === COURSE SECTION (Simplified) === */
+.courseSection {
+	position: relative;
+	padding: 4rem 2rem;
+	margin-top: 4rem;
+}
+
+.courseSectionContainer {
+	max-width: 900px;
+	margin: 0 auto;
+	text-align: center;
+	position: relative;
+	z-index: 1;
+}
+
+.courseSectionDescription {
+	font-size: clamp(1rem, 2.5vw, 1.25rem);
+	color: rgba(255, 255, 255, 0.9);
+	line-height: 1.8;
+	margin: 0 auto 3rem auto;
+	max-width: 800px;
+}
+
+.courseSectionButtons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.coursePrimaryButton {
+	position: relative;
+	padding: 1rem 2rem;
+	background: linear-gradient(to right, rgb(147, 51, 234), rgb(236, 72, 153));
+	border-radius: 9999px;
+	font-size: 1.125rem;
+	font-weight: 700;
+	color: white;
+	text-decoration: none;
+	overflow: hidden;
+	transition: all 0.3s ease;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.coursePrimaryButton:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 10px 30px rgba(147, 51, 234, 0.4);
+}
+
+.courseSecondaryButton {
+	position: relative;
+	padding: 1rem 2rem;
+	background: linear-gradient(to right, rgb(147, 51, 234), rgb(236, 72, 153));
+	border-radius: 9999px;
+	font-size: 1.125rem;
+	font-weight: 700;
+	color: white;
+	text-decoration: none;
+	overflow: hidden;
+	transition: all 0.3s ease;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.courseSecondaryButton:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 10px 30px rgba(147, 51, 234, 0.4);
 }
 
 /* === STATS === */

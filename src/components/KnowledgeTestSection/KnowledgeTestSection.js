@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Award, ArrowRight, CheckCircle, Code, Gamepad2, Box, Monitor, Sparkles } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import styles from './KnowledgeTestSection.module.css'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -11,6 +12,7 @@ gsap.registerPlugin(ScrollTrigger)
 const KnowledgeTestSection = () => {
 	const [isVisible, setIsVisible] = useState(false)
 	const sectionRef = useRef(null)
+	const router = useRouter()
 
 	useEffect(() => {
 		setIsVisible(true)
@@ -58,23 +60,31 @@ const KnowledgeTestSection = () => {
 			name: 'Python',
 			icon: Code,
 			color: '#3b82f6',
+			id: 'python',
 		},
 		{
 			name: 'Roblox Studio',
 			icon: Box,
 			color: '#10b981',
+			id: 'roblox',
 		},
 		{
 			name: 'Веб-розробка',
 			icon: Monitor,
 			color: '#8b5cf6',
+			id: 'webdev',
 		},
 		{
 			name: 'Unity',
 			icon: Gamepad2,
 			color: '#f59e0b',
+			id: 'unity',
 		},
 	]
+
+	const handleDirectionClick = (directionId) => {
+		router.push(`/knowledge-test?course=${directionId}`)
+	}
 
 	return (
 		<section className={styles.section} ref={sectionRef}>
@@ -141,7 +151,9 @@ const KnowledgeTestSection = () => {
 									style={{
 										'--direction-color': direction.color,
 										animationDelay: `${index * 0.1}s`,
+										cursor: 'pointer',
 									}}
+									onClick={() => handleDirectionClick(direction.id)}
 								>
 									<div
 										className={styles.directionIcon}
@@ -168,4 +180,24 @@ const KnowledgeTestSection = () => {
 }
 
 export default KnowledgeTestSection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

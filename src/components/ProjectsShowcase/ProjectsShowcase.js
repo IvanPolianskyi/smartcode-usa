@@ -37,7 +37,7 @@ const ProjectsShowcase = () => {
 				
 				if (data.success) {
 					// Take only the first 3 projects as featured
-					setFeaturedProjects(data.projects.slice(0, 3))
+					setFeaturedProjects(data.projects.slice(2, 5))
 				} else {
 					setError('Failed to load projects')
 				}

@@ -67,10 +67,15 @@
 
   min-height: 100vh;
   background: linear-gradient(180deg, var(--rbx-sky-1), var(--rbx-sky-2));
-  color: var(--rbx-text);
-  font-family: 'Baloo 2', cursive;
-  overflow-x: hidden;
-  position: relative;
+}
+
+@media (max-width: 430px) {
+  .container {
+    color: var(--rbx-text);
+    font-family: 'Baloo 2', cursive;
+    overflow-x: hidden;
+    position: relative;
+  }
 }
 
 /* Animated background - studs + wire grid + floating cubes + cogs */

@@ -1,7 +1,9 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react'
+
 import {
 	ChevronDown,
+	ChevronRight,
 	Phone,
 	Menu,
 	X,
@@ -17,13 +19,68 @@ import styles from './Header.module.css'
 import gsap from 'gsap'
 import Link from 'next/link'
 import Logo from '@/components/Logo/Logo'
+import { getCurrentUser, logout } from '@/lib/authClient'
+import { useRouter, usePathname } from 'next/navigation'
+import { User, LogOut } from 'lucide-react'
 
 const Header = () => {
 	const [isCoursesOpen, setIsCoursesOpen] = useState(false)
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const [isScrolled, setIsScrolled] = useState(false)
+	const [user, setUser] = useState(null)
+	const [userLoading, setUserLoading] = useState(true)
 	const headerRef = useRef(null)
     const scrollLockYRef = useRef(0)
+	const router = useRouter()
+	const pathname = usePathname()
+
+	// Function to load user
+	const loadUser = async () => {
+		try {
+			const userData = await getCurrentUser()
+			setUser(userData)
+		} catch (error) {
+			console.error('Error loading user:', error)
+			setUser(null)
+		} finally {
+			setUserLoading(false)
+		}
+	}
+
+	// Load user on mount and when pathname changes
+	useEffect(() => {
+		loadUser()
+	}, [pathname])
+
+	// Listen for auth events (login/logout)
+	useEffect(() => {
+		const handleAuthChange = () => {
+			// Small delay to ensure cookie is set
+			setTimeout(() => {
+				loadUser()
+			}, 100)
+		}
+
+		// Listen for custom events
+		window.addEventListener('auth:login', handleAuthChange)
+		window.addEventListener('auth:logout', handleAuthChange)
+		window.addEventListener('auth:register', handleAuthChange)
+
+		// Also check on focus (when user returns to tab)
+		const handleFocus = () => {
+			if (!userLoading) {
+				loadUser()
+			}
+		}
+		window.addEventListener('focus', handleFocus)
+
+		return () => {
+			window.removeEventListener('auth:login', handleAuthChange)
+			window.removeEventListener('auth:logout', handleAuthChange)
+			window.removeEventListener('auth:register', handleAuthChange)
+			window.removeEventListener('focus', handleFocus)
+		}
+	}, [userLoading])
 
 	// Відстеження прокрутки для зміни стилю хедера
 	useEffect(() => {
@@ -208,12 +265,26 @@ const Header = () => {
         setIsMobileMenuOpen(false)
     }
 
+	const handleLogout = async () => {
+		try {
+			await logout()
+			setUser(null)
+			// Dispatch event for other components
+			window.dispatchEvent(new Event('auth:logout'))
+			router.push('/')
+			router.refresh()
+		} catch (error) {
+			console.error('Logout error:', error)
+		}
+	}
+
 	const navItems = [
-		{ label: 'Курси', dropdown: true },
-		{ label: 'Тест знань', href: '/knowledge-test' },
+		{ label: 'Предмети', dropdown: true },
+		{ label: 'Курси', href: '/courses' },
+		{ label: 'Соцмережі', href: '/#social-media' },
+		{ label: 'Ціни', href: '/tariff' },
 		{ label: 'Відгуки', href: '/#testimonials' },
-		{ label: 'Контакти', href: '/#Contactform' },
-		{label: "Проєкти з учнями", href: "/projects"}
+		
 	]
 	
 	const courses = [
@@ -285,13 +356,14 @@ const Header = () => {
 									<div className={styles.dropdown}>
 										<div className={styles.dropdownContent}>
 											<div className={styles.dropdownHeader}>
-												<h3 className={styles.dropdownTitle}>Наші курси</h3>
+												<h3 className={styles.dropdownTitle}>Наші предмети</h3>
 												<p className={styles.dropdownSubtitle}>
 													Обери свій шлях у програмуванні
 												</p>
 											</div>
 
 											<div className={styles.dropdownGrid}>
+												
 												{courses.map((course, courseIndex) => (
 													<Link
 														key={courseIndex}
@@ -346,10 +418,39 @@ const Header = () => {
 
 					{/* Права частина хедера */}
                     <div className={styles.headerRight}>
-                        <Link href="/#Contactform" className={styles.ctaButton} onClick={handleCtaClick} scroll={false}>
-							<Sparkles size={18} />
-							Безкоштовний урок
-						</Link>
+						{!userLoading && (
+							user ? (
+								<>
+									<Link href="/dashboard" className={styles.userButton}>
+										<User size={18} />
+										<span className={styles.userName}>{user.name}</span>
+									</Link>
+									<button onClick={handleLogout} className={styles.logoutButton}>
+										<LogOut size={18} />
+										Вийти
+									</button>
+								</>
+							) : (
+								<>
+									<Link href="/login" className={styles.loginButton}>
+										Вхід
+									</Link>
+									<Link href="/register" className={styles.registerButton}>
+										Реєстрація
+									</Link>
+								</>
+							)
+						)}
+						{/* Кнопка кабінету для мобільної версії */}
+						{!userLoading && (
+							<Link
+								href={user ? "/dashboard" : "/login"}
+								className={styles.mobileCabinetButton}
+								aria-label={user ? "Мій профіль" : "Вхід"}
+							>
+								<User size={20} />
+							</Link>
+						)}
 						<button
 							className={styles.mobileMenuButton}
 							onClick={handleMobileMenuToggle}
@@ -438,17 +539,49 @@ const Header = () => {
 						</div>
 					</div>
 
-					{/* Контакти та CTA */}
+					{/* Кнопки входу та реєстрації або профіль */}
 					<div className={styles.mobileMenuFooter}>
-                        <Link 
-                            href="/#Contactform" 
-                            className={`${styles.mobileMenuItem} ${styles.mobileCtaButton}`}
-                            onClick={handleCtaClick}
-                            scroll={false}
-                        >
-							<Sparkles size={20} />
-							Безкоштовний урок
-						</Link>
+						{!userLoading && (
+							user ? (
+								<>
+									<Link 
+										href="/dashboard" 
+										className={`${styles.mobileMenuItem} ${styles.mobileLoginButton}`}
+										onClick={handleMobileMenuClose}
+									>
+										<User size={18} />
+										Мій профіль
+									</Link>
+									<button 
+										onClick={() => {
+											handleLogout()
+											handleMobileMenuClose()
+										}}
+										className={`${styles.mobileMenuItem} ${styles.mobileRegisterButton}`}
+									>
+										<LogOut size={18} />
+										Вийти
+									</button>
+								</>
+							) : (
+								<>
+									<Link 
+										href="/login" 
+										className={`${styles.mobileMenuItem} ${styles.mobileLoginButton}`}
+										onClick={handleMobileMenuClose}
+									>
+										Вхід
+									</Link>
+									<Link 
+										href="/register" 
+										className={`${styles.mobileMenuItem} ${styles.mobileRegisterButton}`}
+										onClick={handleMobileMenuClose}
+									>
+										Реєстрація
+									</Link>
+								</>
+							)
+						)}
 					</div>
 				</div>
 			</div>

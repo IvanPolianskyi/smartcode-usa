@@ -418,10 +418,22 @@ class TelegramBotService {
 
     // Error handling
     this.bot.on('polling_error', (error) => {
+      // Handle 409 Conflict - multiple bot instances running
+      if (error.code === 'ETELEGRAM' && error.response?.statusCode === 409) {
+        console.warn('⚠️ Telegram bot conflict (409): Another bot instance is running. Stopping this instance...');
+        this.stop().catch(err => console.error('Error stopping bot:', err));
+        return;
+      }
       console.error('Polling error:', error);
     });
 
     this.bot.on('error', (error) => {
+      // Handle 409 Conflict - multiple bot instances running
+      if (error.code === 'ETELEGRAM' && error.response?.statusCode === 409) {
+        console.warn('⚠️ Telegram bot conflict (409): Another bot instance is running. Stopping this instance...');
+        this.stop().catch(err => console.error('Error stopping bot:', err));
+        return;
+      }
       console.error('Bot error:', error);
     });
   }
@@ -442,7 +454,27 @@ class TelegramBotService {
         console.warn('⚠️ Could not delete webhook (may be already off):', whError?.response?.data || whError?.message);
       }
 
-      this.bot = new TelegramBot(this.BOT_TOKEN, { polling: { interval: 800, autoStart: true } });
+      // Check if another bot instance is already running by trying to get updates
+      try {
+        const testResponse = await axios.get(`https://api.telegram.org/bot${this.BOT_TOKEN}/getUpdates?offset=-1&limit=1`);
+        // If we get here, we can proceed
+      } catch (testError) {
+        if (testError.response?.status === 409) {
+          console.warn('⚠️ Another bot instance is already running. Skipping bot start.');
+          return;
+        }
+      }
+
+      this.bot = new TelegramBot(this.BOT_TOKEN, { 
+        polling: { 
+          interval: 800, 
+          autoStart: true,
+          params: {
+            timeout: 10
+          }
+        } 
+      });
+      
       this.setupEventHandlers();
       this.isRunning = true;
       globalThis.__telegramBotStarted = true;
@@ -451,8 +483,14 @@ class TelegramBotService {
       console.log(`📡 API Base URL: ${this.API_BASE_URL}`);
       console.log(`👥 Authorized users: ${this.AUTHORIZED_USERS.length > 0 ? this.AUTHORIZED_USERS.join(', ') : 'All users'}`);
     } catch (error) {
+      // Handle 409 Conflict during initialization
+      if (error.code === 'ETELEGRAM' && error.response?.statusCode === 409) {
+        console.warn('⚠️ Telegram bot conflict (409): Another bot instance is running. Skipping bot start.');
+        return;
+      }
       console.error('❌ Failed to start Telegram bot:', error);
       this.isRunning = false;
+      globalThis.__telegramBotStarted = false;
     }
   }
 
