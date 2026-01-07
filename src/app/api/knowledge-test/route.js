@@ -20,7 +20,6 @@ async function sendTelegramNotification({ phone, name, direction, directionName,
     const telegramChatId = process.env.TELEGRAM_CHAT_ID
 
     if (!telegramBotToken || !telegramChatId) {
-      console.log('Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID for knowledge test notification')
       return
     }
 
@@ -55,8 +54,6 @@ async function sendTelegramNotification({ phone, name, direction, directionName,
 
     if (!telegramResponse.ok || !tgData?.ok) {
       console.error('Telegram notification failed for knowledge test:', tgData)
-    } else {
-      console.log('Telegram notification sent successfully for knowledge test')
     }
   } catch (error) {
     console.error('Error sending telegram notification for knowledge test:', error)
@@ -104,7 +101,6 @@ export async function POST(request) {
     }
 
     await testResults.insertOne(testResult)
-    console.log('Test result saved:', { phone: normalizedPhone, name, direction, percentage })
 
     // Send telegram notification to admin
     await sendTelegramNotification({

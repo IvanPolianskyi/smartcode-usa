@@ -1,5 +1,6 @@
 import Footer from '@/components/Footer/footer'
 import ContactForm from '@/components/ContactForm/ContactForm'
+import ScrollToTop from '@/components/ScrollToTop/ScrollToTop'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header/Header'
@@ -108,6 +109,7 @@ export default function RootLayout({ children }) {
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				suppressHydrationWarning
 			>
+				<ScrollToTop />
 				<Header />
                 <div className='min-h-screen flex flex-col'>
 					<main className='flex-1 relative main-content'>{children}</main>

@@ -13,6 +13,12 @@
 	overflow: hidden;
 }
 
+@media (max-width: 768px) {
+	.hero {
+		padding: 2.5rem 1rem 2.5rem;
+	}
+}
+
 .hero::before {
 	content: '';
 	position: absolute;
@@ -39,6 +45,14 @@
 	font-size: 0.875rem;
 	font-weight: 600;
 	margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+	.badge {
+		font-size: 0.8125rem;
+		padding: 0.4375rem 0.875rem;
+		margin-bottom: 1rem;
+	}
 }
 
 .title {
@@ -70,9 +84,22 @@
 	margin: 0 auto;
 }
 
+@media (max-width: 768px) {
+	.subtitle {
+		font-size: 1rem;
+		padding: 0 0.5rem;
+	}
+}
+
 /* --- PRICING СЕКЦІЯ --- */
 .pricingSection {
 	padding: 6rem 2rem;
+}
+
+@media (max-width: 768px) {
+	.pricingSection {
+		padding: 3rem 1rem;
+	}
 }
 
 .container {
@@ -84,6 +111,12 @@
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 2rem;
+}
+
+@media (max-width: 768px) {
+	.pricingGrid {
+		gap: 1.5rem;
+	}
 }
 
 @media (min-width: 768px) {
@@ -110,6 +143,23 @@
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+	will-change: transform;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	/* На мобільних картки одразу видимі без анімації */
+	opacity: 1;
+	transform: translateY(0) scale(1);
+}
+
+@media (max-width: 768px) {
+	.pricingCard {
+		padding: 1.5rem;
+		border-radius: 16px;
+		/* На мобільних пристроях картки завжди видимі одразу */
+		opacity: 1 !important;
+		transform: translateY(0) scale(1) !important;
+		animation: none !important;
+	}
 }
 
 .pricingCard::before {
@@ -124,21 +174,36 @@
 	transition: opacity 0.3s ease;
 }
 
-.pricingCard {
-	position: relative;
-	will-change: transform;
-	margin-top: 8px;
-	margin-bottom: 8px;
-}
+@media (hover: hover) and (pointer: fine) {
+	.pricingCard:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+		border-color: currentColor;
+	}
 
-.pricingCard:hover {
-	transform: translateY(-8px);
-	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-	border-color: currentColor;
-}
+	.pricingCard:hover::before {
+		opacity: 1;
+	}
 
-.pricingCard:hover::before {
-	opacity: 1;
+	.pricingCard:hover .emojiWrapper {
+		opacity: 0.12;
+		transform: scale(1.1) rotate(5deg);
+	}
+
+	.pricingCard:hover .emojiWrapper::before {
+		opacity: 0.08;
+		transform: scale(1.1);
+	}
+
+	.pricingCard:hover .emoji {
+		transform: scale(1.15) rotate(-5deg);
+		filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+	}
+
+	.pricingCard:hover::after {
+		opacity: 0.06;
+		transform: scale(1.2);
+	}
 }
 
 .pricingCard.popular {
@@ -207,9 +272,26 @@
 	box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
 }
 
+@media (max-width: 768px) {
+	.recommendedBadge,
+	.popularBadge,
+	.discountBadge {
+		top: 1rem;
+		right: 1rem;
+		padding: 0.375rem 0.75rem;
+		font-size: 0.6875rem;
+	}
+}
+
 .cardHeader {
 	text-align: center;
 	margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+	.cardHeader {
+		margin-bottom: 1.5rem;
+	}
 }
 
 .emojiWrapper {
@@ -225,6 +307,14 @@
 	margin: 0 auto 1.5rem;
 	transition: all 0.3s ease;
 	overflow: visible;
+}
+
+@media (max-width: 768px) {
+	.emojiWrapper {
+		width: 80px;
+		height: 80px;
+		margin: 0 auto 1rem;
+	}
 }
 
 .emojiWrapper::before {
@@ -256,6 +346,12 @@
 	filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
+@media (max-width: 768px) {
+	.emoji {
+		font-size: 2.5rem;
+	}
+}
+
 .pricingCard:hover .emoji {
 	transform: scale(1.15) rotate(-5deg);
 	filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
@@ -276,10 +372,6 @@
 	transition: all 0.5s ease;
 }
 
-.pricingCard:hover::after {
-	opacity: 0.06;
-	transform: scale(1.2);
-}
 
 .planName {
 	font-size: 1.5rem;
@@ -288,10 +380,22 @@
 	margin: 0 0 0.5rem 0;
 }
 
+@media (max-width: 768px) {
+	.planName {
+		font-size: 1.25rem;
+	}
+}
+
 .planDescription {
 	font-size: 0.9375rem;
 	color: #6b7280;
 	margin: 0;
+}
+
+@media (max-width: 768px) {
+	.planDescription {
+		font-size: 0.875rem;
+	}
 }
 
 /* --- PRICE SECTION --- */
@@ -300,6 +404,13 @@
 	margin-bottom: 2rem;
 	padding-bottom: 2rem;
 	border-bottom: 1px solid #e5e7eb;
+}
+
+@media (max-width: 768px) {
+	.priceSection {
+		margin-bottom: 1.5rem;
+		padding-bottom: 1.5rem;
+	}
 }
 
 .oldPrice {
@@ -325,10 +436,22 @@
 	line-height: 1;
 }
 
+@media (max-width: 768px) {
+	.priceAmount {
+		font-size: 2.25rem;
+	}
+}
+
 .priceCurrency {
 	font-size: 1.25rem;
 	font-weight: 600;
 	color: #6b7280;
+}
+
+@media (max-width: 768px) {
+	.priceCurrency {
+		font-size: 1rem;
+	}
 }
 
 .period {
@@ -350,6 +473,12 @@
 	flex: 1;
 }
 
+@media (max-width: 768px) {
+	.featuresList {
+		margin: 0 0 1.5rem 0;
+	}
+}
+
 .feature {
 	display: flex;
 	align-items: flex-start;
@@ -357,6 +486,14 @@
 	margin-bottom: 1rem;
 	font-size: 0.9375rem;
 	color: #374151;
+}
+
+@media (max-width: 768px) {
+	.feature {
+		font-size: 0.875rem;
+		margin-bottom: 0.75rem;
+		gap: 0.5rem;
+	}
 }
 
 .checkIcon {
@@ -384,10 +521,29 @@
 	box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
 }
 
-.ctaButton:hover {
-	transform: translateY(-2px);
-	box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
-	background: linear-gradient(135deg, #f97316, #ea580c);
+@media (max-width: 768px) {
+	.ctaButton {
+		padding: 0.875rem 1.5rem;
+		font-size: 0.9375rem;
+	}
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.ctaButton:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+		background: linear-gradient(135deg, #f97316, #ea580c);
+	}
+
+	.infoCard:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+	}
+
+	.finalCtaButton:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+	}
 }
 
 /* --- КОЛЬОРОВІ ТЕМИ --- */
@@ -407,6 +563,12 @@
 .infoSection {
 	padding: 4rem 2rem;
 	background: #f8fafc;
+}
+
+@media (max-width: 768px) {
+	.infoSection {
+		padding: 2.5rem 1rem;
+	}
 }
 
 .infoGrid {
@@ -436,10 +598,13 @@
 	transition: all 0.3s ease;
 }
 
-.infoCard:hover {
-	transform: translateY(-4px);
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+@media (max-width: 768px) {
+	.infoCard {
+		padding: 1.5rem;
+		border-radius: 12px;
+	}
 }
+
 
 .infoIcon {
 	width: 56px;
@@ -475,6 +640,12 @@
 	text-align: center;
 }
 
+@media (max-width: 768px) {
+	.finalCta {
+		padding: 3rem 1rem;
+	}
+}
+
 .finalCtaContent {
 	max-width: 600px;
 	margin: 0 auto;
@@ -499,6 +670,13 @@
 	line-height: 1.7;
 }
 
+@media (max-width: 768px) {
+	.finalCtaText {
+		font-size: 1rem;
+		margin: 0 0 1.5rem 0;
+	}
+}
+
 .finalCtaButton {
 	display: inline-flex;
 	align-items: center;
@@ -515,8 +693,13 @@
 	transition: all 0.3s ease;
 }
 
-.finalCtaButton:hover {
-	transform: translateY(-2px);
-	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+@media (max-width: 768px) {
+	.finalCtaButton {
+		padding: 0.875rem 2rem;
+		font-size: 1rem;
+		width: 100%;
+		max-width: 300px;
+	}
 }
+
 

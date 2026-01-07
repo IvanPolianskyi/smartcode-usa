@@ -6,7 +6,6 @@ import {
 	ArrowRight,
 	Star,
 	Users,
-	Rocket,
 	ExternalLink,
 	Loader2
 } from 'lucide-react'
@@ -52,45 +51,86 @@ const ProjectsShowcase = () => {
 		fetchFeaturedProjects()
 	}, [])
 
-	// GSAP animations
+	// GSAP animations з оптимізацією для мобільних
 	useEffect(() => {
 		if (!sectionRef.current || featuredProjects.length === 0) return
 
-		const ctx = gsap.context(() => {
-			gsap.fromTo(
-				'.animate-up',
-				{ y: 60, opacity: 0 },
-				{
-					y: 0,
-					opacity: 1,
-					duration: 0.8,
-					ease: 'power3.out',
-					stagger: 0.15,
-					scrollTrigger: {
-						trigger: sectionRef.current,
-						start: 'top 85%',
-						end: 'bottom 15%',
-						toggleActions: 'play none none reverse',
-					},
-				}
-			)
+		const isMobile = window.innerWidth <= 768
 
-			gsap.fromTo(
-				'.animate-scale',
-				{ scale: 0.8, opacity: 0 },
-				{
-					scale: 1,
-					opacity: 1,
-					duration: 0.6,
-					ease: 'back.out(1.7)',
-					stagger: 0.1,
-					scrollTrigger: {
-						trigger: sectionRef.current,
-						start: 'top 80%',
-						toggleActions: 'play none none reverse',
-					},
-				}
-			)
+		const ctx = gsap.context(() => {
+			if (isMobile) {
+				// Спрощені анімації для мобільних
+				gsap.fromTo(
+					'.animate-up',
+					{ y: 30, opacity: 0 },
+					{
+						y: 0,
+						opacity: 1,
+						duration: 0.6,
+						ease: 'power2.out',
+						stagger: 0.1,
+						scrollTrigger: {
+							trigger: sectionRef.current,
+							start: 'top 90%',
+							toggleActions: 'play none none none',
+							markers: false,
+						},
+					}
+				)
+
+				gsap.fromTo(
+					'.animate-scale',
+					{ scale: 0.95, opacity: 0 },
+					{
+						scale: 1,
+						opacity: 1,
+						duration: 0.5,
+						ease: 'power2.out',
+						stagger: 0.08,
+						scrollTrigger: {
+							trigger: sectionRef.current,
+							start: 'top 88%',
+							toggleActions: 'play none none none',
+							markers: false,
+						},
+					}
+				)
+			} else {
+				gsap.fromTo(
+					'.animate-up',
+					{ y: 60, opacity: 0 },
+					{
+						y: 0,
+						opacity: 1,
+						duration: 0.8,
+						ease: 'power3.out',
+						stagger: 0.15,
+						scrollTrigger: {
+							trigger: sectionRef.current,
+							start: 'top 85%',
+							end: 'bottom 15%',
+							toggleActions: 'play none none reverse',
+						},
+					}
+				)
+
+				gsap.fromTo(
+					'.animate-scale',
+					{ scale: 0.8, opacity: 0 },
+					{
+						scale: 1,
+						opacity: 1,
+						duration: 0.6,
+						ease: 'back.out(1.7)',
+						stagger: 0.1,
+						scrollTrigger: {
+							trigger: sectionRef.current,
+							start: 'top 80%',
+							toggleActions: 'play none none reverse',
+						},
+					}
+				)
+			}
 		}, sectionRef)
 
 		return () => ctx.revert()
@@ -161,17 +201,6 @@ const ProjectsShowcase = () => {
 							Подивіться на чудові роботи наших талановитих студентів. 
 							Кожен проєкт - це крок до великого майбутнього в IT!
 						</p>
-					</div>
-
-					<div className={`${styles.stats} animate-up`}>
-						<div className={styles.statItem}>
-							<Star className={styles.statIcon} />
-							<span>Високий рівень</span>
-						</div>
-						<div className={styles.statItem}>
-							<Rocket className={styles.statIcon} />
-							<span>Інновації</span>
-						</div>
 					</div>
 				</div>
 
@@ -246,20 +275,7 @@ const ProjectsShowcase = () => {
 						</Link>
 					</div>
 					
-					<div className={styles.ctaFeatures}>
-						<div className={styles.featureItem}>
-							<ExternalLink className={styles.featureIcon} />
-							<span>Повний код проєктів</span>
-						</div>
-						<div className={styles.featureItem}>
-							<Star className={styles.featureIcon} />
-							<span>Найкращі роботи</span>
-						</div>
-						<div className={styles.featureItem}>
-							<Code className={styles.featureIcon} />
-							<span>Детальний аналіз</span>
-						</div>
-					</div>
+					
 				</div>
 
 				{/* Phone Modal */}

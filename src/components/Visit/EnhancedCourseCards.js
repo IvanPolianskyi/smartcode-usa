@@ -211,7 +211,7 @@ const ParticleBackground = React.memo(({ colors }) => {
 })
 
 const EnhancedCourseCards = () => {
-    const [hoveredCard, setHoveredCard] = useState(null)
+	const [hoveredCard, setHoveredCard] = useState(null)
 	const [isVisible, setIsVisible] = useState(false)
 	const [visibleCards, setVisibleCards] = useState(new Set())
 	const router = useRouter()
