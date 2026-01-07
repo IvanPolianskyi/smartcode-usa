@@ -141,7 +141,7 @@ export default function DashboardPage() {
               <p className={styles.email}>{user.email}</p>
             </div>
           </div>
-          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <div className={styles.headerActions}>
             <button 
               onClick={refreshData} 
               className={styles.logoutButton}
@@ -221,25 +221,14 @@ export default function DashboardPage() {
 
         {/* Enrolled Courses */}
         <div className={styles.section}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>Мої курси</h2>
             <button 
               onClick={refreshData}
-              style={{ 
-                padding: '0.5rem 1rem', 
-                backgroundColor: 'var(--primary-blue)', 
-                color: 'white', 
-                border: 'none', 
-                borderRadius: '0.5rem',
-                cursor: 'pointer',
-                fontSize: '0.875rem',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem'
-              }}
+              className={styles.refreshButton}
             >
               <TrendingUp size={16} />
-              Оновити
+              <span className={styles.refreshButtonText}>Оновити</span>
             </button>
           </div>
           {user.enrolledCourses && user.enrolledCourses.length > 0 ? (
@@ -260,7 +249,7 @@ export default function DashboardPage() {
                       <div style={{ flex: 1 }}>
                         <h3 className={styles.courseTitle}>{courseInfo.title}</h3>
                         {hasProgress && (
-                          <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+                          <div className={styles.courseSubtitle}>
                             {completedLessons > 0 ? `Пройдено ${completedLessons} уроків` : 'Ще не почато'}
                           </div>
                         )}

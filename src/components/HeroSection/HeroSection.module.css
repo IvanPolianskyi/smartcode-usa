@@ -16,6 +16,21 @@
     overflow: hidden;
 }
 
+@media (max-width: 768px) {
+    .heroSection {
+        padding: 40px 20px;
+        min-height: auto;
+        padding-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .heroSection {
+        padding: 30px 16px;
+        padding-top: 20px;
+    }
+}
+
 /* --- Анімовані фонові елементи --- */
 .backgroundElements {
     position: absolute;
@@ -410,19 +425,92 @@
 
 @media (max-width: 768px) {
     .heroSection {
-        padding: 60px 20px;
+        padding: 40px 20px;
+        padding-top: 20px;
+    }
+    .contentWrapper {
+        min-height: auto;
+        gap: 30px;
+    }
+    .title {
+        font-size: clamp(2rem, 6vw, 2.5rem);
+    }
+    .subtitle {
+        font-size: 16px;
+        max-width: 100%;
     }
     .featuresList {
         grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .featureItem {
+        font-size: 14px;
+        padding: 6px 10px;
     }
     .actions {
        flex-direction: column;
        align-items: center;
        width: 100%;
-       max-width: 300px;
+       max-width: 100%;
+       margin-top: 12px;
     }
     .primaryButton, .secondaryButton {
         width: 100%;
         justify-content: center;
+        font-size: 15px;
+        padding: 10px 20px;
+    }
+    .mockup {
+        width: 280px;
+    }
+    .mockupMainText {
+        font-size: 18px;
+    }
+    .mockupStats {
+        flex-direction: column;
+        gap: 8px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .heroSection {
+        padding: 30px 16px;
+        padding-top: 20px;
+    }
+    .title {
+        font-size: 1.75rem;
+    }
+    .subtitle {
+        font-size: 15px;
+    }
+    .superTitle {
+        font-size: 14px;
+        gap: 8px;
+    }
+    .superTitleIcon {
+        width: 32px;
+        height: 32px;
+    }
+    .mockup {
+        width: 240px;
+        padding: 12px;
+    }
+    .mockupHeader {
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+    }
+    .mockupIcon {
+        font-size: 36px;
+    }
+    .mockupMainText {
+        font-size: 16px;
+    }
+    .navigation {
+        margin-top: 30px;
+    }
+    .navButton {
+        width: 40px;
+        height: 40px;
     }
 }

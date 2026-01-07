@@ -97,36 +97,64 @@ const Testimonials = () => {
 	const sectionRef = useRef(null)
 	const animationRef = useRef(null)
 
-	// Анімація появи секції
+	// Анімація появи секції з оптимізацією для мобільних
 	useEffect(() => {
 		const section = sectionRef.current
 		if (!section) return
 
-		gsap.fromTo(
-			section.querySelectorAll('.gsap-fade-up'),
-			{ y: 50, opacity: 0 },
-			{
-				y: 0,
-				opacity: 1,
-				duration: 0.8,
-				ease: 'power3.out',
-				stagger: 0.15,
-				scrollTrigger: {
-					trigger: section,
-					start: 'top 80%',
-					toggleActions: 'play none none reverse',
-				},
-			}
-		)
+		// Перевірка чи це мобільний пристрій
+		const isMobile = window.innerWidth <= 768
+		
+		// На мобільних використовуємо простіші анімації
+		if (isMobile) {
+			gsap.fromTo(
+				section.querySelectorAll('.gsap-fade-up'),
+				{ y: 30, opacity: 0 },
+				{
+					y: 0,
+					opacity: 1,
+					duration: 0.6,
+					ease: 'power2.out',
+					stagger: 0.1,
+					scrollTrigger: {
+						trigger: section,
+						start: 'top 85%',
+						toggleActions: 'play none none none',
+						markers: false,
+					},
+				}
+			)
+		} else {
+			gsap.fromTo(
+				section.querySelectorAll('.gsap-fade-up'),
+				{ y: 50, opacity: 0 },
+				{
+					y: 0,
+					opacity: 1,
+					duration: 0.8,
+					ease: 'power3.out',
+					stagger: 0.15,
+					scrollTrigger: {
+						trigger: section,
+						start: 'top 80%',
+						toggleActions: 'play none none reverse',
+					},
+				}
+			)
+		}
 	}, [])
 
-	// Безкінечна анімація каруселі
+	// Безкінечна анімація каруселі з оптимізацією для мобільних
 	useEffect(() => {
 		const carousel = carouselRef.current
 		if (!carousel) return
 
 		let rafId = null
 		let intervalId = null
+		let isPaused = false
+
+		// Перевірка чи це мобільний пристрій
+		const isMobile = window.innerWidth <= 768
 
 		// Функція для оновлення анімації
 		const updateAnimation = () => {
@@ -151,16 +179,25 @@ const Testimonials = () => {
 			// Встановлюємо початкову позицію
 			gsap.set(carousel, { x: 0 })
 
+			// На мобільних використовуємо повільнішу анімацію для кращої продуктивності
+			const duration = isMobile ? 60 : 45
+
 			// Створюємо безкінечну анімацію
 			animationRef.current = gsap.to(carousel, {
 				x: -totalWidth,
-				duration: 45, // Збільшено з 30 до 45 секунд для повільнішого руху
+				duration: duration,
 				ease: 'none',
 				repeat: -1,
+				// На мобільних використовуємо will-change для оптимізації
+				force3D: isMobile,
 			})
 
 			// Перевіряємо позицію та скидаємо на початок, коли досягаємо кінця
 			const checkAndReset = () => {
+				if (isPaused) {
+					rafId = requestAnimationFrame(checkAndReset)
+					return
+				}
 				const currentX = gsap.getProperty(carousel, 'x')
 				// Коли досягаємо кінця першого набору, миттєво скидаємо на початок
 				// Оскільки картки дубльовані, це створює ілюзію безперервного руху
@@ -171,6 +208,24 @@ const Testimonials = () => {
 			}
 
 			rafId = requestAnimationFrame(checkAndReset)
+
+			// На мобільних паузуємо анімацію при дотику для кращої продуктивності
+			if (isMobile) {
+				const pauseOnTouch = () => {
+					isPaused = true
+					if (animationRef.current) {
+						animationRef.current.pause()
+					}
+				}
+				const resumeOnTouchEnd = () => {
+					isPaused = false
+					if (animationRef.current) {
+						animationRef.current.resume()
+					}
+				}
+				carousel.addEventListener('touchstart', pauseOnTouch, { passive: true })
+				carousel.addEventListener('touchend', resumeOnTouchEnd, { passive: true })
+			}
 		}
 
 		// Затримка для завантаження зображень та розрахунку розмірів

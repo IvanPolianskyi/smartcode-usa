@@ -1,4 +1,5 @@
 /* Visit.module.css */
+/* Оптимізація завантаження шрифтів - font-display: swap додається через параметр display=swap в URL */
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800;900&display=swap');
 
 
@@ -10,6 +11,10 @@
     position: relative;
     font-family: 'Manrope', sans-serif;
     overflow-x: hidden;
+    /* Оптимізація для продуктивності */
+    contain: layout style paint;
+    transform: translateZ(0);
+    will-change: scroll-position;
 }
 
 /* Додаткові кольорові градієнти для фону */
@@ -53,6 +58,9 @@
     padding: 0 2rem 4rem;
     position: relative;
     z-index: 10;
+    /* Оптимізація для продуктивності */
+    contain: layout style;
+    transform: translateZ(0);
 }
 
 /* --- ФОНОВІ ЕЛЕМЕНТИ --- */
@@ -102,10 +110,24 @@
     margin-bottom: 1.5rem;
     letter-spacing: -0.03em;
     line-height: 1.1;
+    /* Критичний елемент для LCP - завжди видимий одразу */
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    will-change: auto;
+}
+/* Критичний заголовок - без анімації для кращого LCP */
+.titleCritical {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
 }
 .titleMain {
     display: block;
     color: var(--text-primary);
+    /* Оптимізація для LCP */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1em;
+    will-change: auto;
 }
 .titleAccent {
     display: block;
@@ -113,6 +135,8 @@
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    /* Оптимізація для LCP */
+    will-change: auto;
 }
 .subtitle {
     font-size: clamp(1.125rem, 2.5vw, 1.375rem);
@@ -121,6 +145,15 @@
     font-weight: 500;
     line-height: 1.6;
     max-width: 60ch;
+    /* Початковий стан для плавної анімації без тремтіння */
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+/* Стан до анімації - елемент видимий, але злегка зміщений */
+.subtitle:not(.animate-up) {
+    opacity: 1;
+    transform: translateY(0);
 }
 .heroFeatures {
     display: flex;
@@ -129,6 +162,10 @@
     gap: 1.5rem;
     margin-bottom: 2.5rem;
     flex-wrap: wrap;
+    /* Початковий стан для плавної анімації без тремтіння */
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .feature {
     display: flex;
@@ -217,6 +254,10 @@
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.5rem;
     padding: 3rem 0;
+    /* Початковий стан для плавної анімації без тремтіння */
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .statCard {
@@ -232,6 +273,10 @@
     height: 100%;
     border: none;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    /* Початковий стан для плавної анімації без тремтіння */
+    opacity: 1;
+    transform: scale(1);
+    will-change: transform, box-shadow;
 }
 
 .statCard:hover {
@@ -415,13 +460,28 @@
         padding: 0 1.5rem 4rem;
     }
     .hero { 
-        padding: 2rem 0;
-        padding-top: 6rem; }
-    .heroFeatures { gap: 1rem; }
+        padding: 1rem 0;
+        padding-top: 3rem;
+    }
+    /* Оптимізація для мобільних - заголовок завжди видимий */
+    .title,
+    .titleCritical,
+    .titleMain {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+    .heroFeatures { 
+        gap: 1rem;
+        opacity: 1 !important;
+        transform: translateX(0) !important;
+    }
     .statsContainer { 
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
         padding: 2rem 0;
+        opacity: 1 !important;
+        transform: translateY(0) !important;
     }
     .statCard {
         padding: 1.5rem 1rem;
@@ -451,6 +511,18 @@
     .mainContainer {
         padding: 0 1rem 4rem;
     }
+    /* Оптимізація для маленьких екранів - всі елементи видимі одразу */
+    .title,
+    .titleCritical,
+    .titleMain,
+    .subtitle,
+    .heroFeatures,
+    .statsContainer,
+    .statCard {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
     .statsContainer {
         grid-template-columns: 1fr;
         gap: 1rem;
@@ -473,6 +545,34 @@
     .statLabel {
         font-size: 0.875rem;
     }
+}
+
+/* --- АНІМАЦІЙНІ КЛАСИ --- */
+/* Початкові стани для елементів з анімацією - видимі одразу для уникнення тремтіння */
+.animate-up,
+.animate-slide,
+.animate-scale {
+    /* Елементи видимі одразу, анімація буде додана через GSAP */
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+    will-change: transform, opacity;
+}
+
+/* Тільки для не-критичних елементів можна додати легкий початковий зсув */
+.animate-up:not(.title-critical) {
+    /* Легкий початковий зсув, який буде анімований */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animate-slide {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.animate-scale {
+    opacity: 1;
+    transform: scale(1);
 }
 
 /* --- КЛЮЧОВІ КАДРИ АНІМАЦІЙ --- */

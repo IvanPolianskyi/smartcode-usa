@@ -170,9 +170,27 @@
 }
 
 /* --- Мобільна адаптація --- */
-@media (max-width: 639px) {
+@media (max-width: 768px) {
 	.testimonialsSection {
 		padding: 3rem 0;
+	}
+
+	.container {
+		padding: 0 1rem;
+	}
+
+	.header {
+		margin-bottom: 2rem;
+	}
+
+	.title {
+		font-size: 1.75rem;
+	}
+}
+
+@media (max-width: 639px) {
+	.testimonialsSection {
+		padding: 2.5rem 0;
 	}
 
 	.card {
@@ -181,16 +199,34 @@
 	}
 
 	.cardContent {
-		padding: 1.5rem;
+		padding: 1.25rem;
+		border-radius: 16px;
+	}
+
+	.stars {
+		margin-bottom: 1rem;
+	}
+
+	.star {
+		width: 16px;
+		height: 16px;
 	}
 
 	.text {
 		font-size: 0.875rem;
+		line-height: 1.6;
+		margin-bottom: 1rem;
+	}
+
+	.author {
+		padding-top: 0.75rem;
+		gap: 0.75rem;
 	}
 
 	.avatar {
-		width: 48px;
-		height: 48px;
+		width: 44px;
+		height: 44px;
+		border: 2px solid #e0f2fe;
 	}
 
 	.name {
@@ -199,6 +235,25 @@
 
 	.subject {
 		font-size: 0.8125rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.testimonialsSection {
+		padding: 2rem 0;
+	}
+
+	.card {
+		width: 260px;
+		padding: 0 0.5rem;
+	}
+
+	.cardContent {
+		padding: 1rem;
+	}
+
+	.title {
+		font-size: 1.5rem;
 	}
 }
 
