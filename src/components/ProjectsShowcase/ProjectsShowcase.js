@@ -6,7 +6,6 @@ import {
 	ArrowRight,
 	Star,
 	Users,
-	Rocket,
 	ExternalLink,
 	Loader2
 } from 'lucide-react'
@@ -161,17 +160,6 @@ const ProjectsShowcase = () => {
 							Подивіться на чудові роботи наших талановитих студентів. 
 							Кожен проєкт - це крок до великого майбутнього в IT!
 						</p>
-					</div>
-
-					<div className={`${styles.stats} animate-up`}>
-						<div className={styles.statItem}>
-							<Star className={styles.statIcon} />
-							<span>Високий рівень</span>
-						</div>
-						<div className={styles.statItem}>
-							<Rocket className={styles.statIcon} />
-							<span>Інновації</span>
-						</div>
 					</div>
 				</div>
 
