@@ -1,5 +1,6 @@
 import styles from './OfertaPage.module.css'
 import { FileText, Download } from 'lucide-react'
+import { notFound } from 'next/navigation'
 
 export const metadata = {
 	title: 'Публічна оферта - SmartCode Academy',
@@ -7,6 +8,9 @@ export const metadata = {
 }
 
 export default function OfertaPage() {
+	// Тимчасово закрито для доробки
+	notFound()
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.content}>
@@ -129,8 +133,8 @@ export default function OfertaPage() {
 						<p>Замовник може здійснити оплату наступними способами:</p>
 						<ul className={styles.list}>
 							<li>
-								<strong>Онлайн-оплата через платіжні системи</strong> –
-								LiqPay, банківські картки Visa/MasterCard
+								<strong>Онлайн-оплата через платіжну систему WayForPay</strong> –
+								оплата банківськими картками Visa/MasterCard через платіжну систему WayForPay
 							</li>
 							<li>
 								<strong>Банківський переказ</strong> – на реквізити Виконавця
@@ -234,58 +238,6 @@ export default function OfertaPage() {
 				</div>
 
 				<div className={styles.section}>
-					<h2 className={styles.sectionTitle}>5. Контактна інформація</h2>
-					<div className={styles.text}>
-						<p>
-							<strong>Повне фірмове найменування:</strong>
-							<br />
-							[ВКАЖІТЬ ПОВНУ НАЗВУ ПІДПРИЄМСТВА АБО ФОП]
-						</p>
-						<p>
-							<strong>Ідентифікаційний номер платника податків (ІПН):</strong>
-							<br />
-							[ВКАЖІТЬ ІПН]
-						</p>
-						<p>
-							<strong>Юридична адреса:</strong>
-							<br />
-							[ВКАЖІТЬ ЮРИДИЧНУ АДРЕСУ]
-						</p>
-						<p>
-							<strong>Фактична адреса:</strong>
-							<br />
-							[ВКАЖІТЬ ФАКТИЧНУ АДРЕСУ]
-						</p>
-						<p>
-							<strong>Телефон:</strong>
-							<br />
-							<a href='tel:+380XXXXXXXXX' className={styles.contactLink}>
-								+380 XX XXX XX XX
-							</a>
-						</p>
-						<p>
-							<strong>Електронна пошта:</strong>
-							<br />
-							<a href='mailto:info@smartcode-academy.com' className={styles.contactLink}>
-								info@smartcode-academy.com
-							</a>
-						</p>
-						<p>
-							<strong>Веб-сайт:</strong>
-							<br />
-							<a
-								href='https://smartcode-academy.com'
-								target='_blank'
-								rel='noopener noreferrer'
-								className={styles.contactLink}
-							>
-								https://smartcode-academy.com
-							</a>
-						</p>
-					</div>
-				</div>
-
-				<div className={styles.section}>
 					<h2 className={styles.sectionTitle}>6. Права та обов'язки сторін</h2>
 					<div className={styles.text}>
 						<h3 className={styles.subsectionTitle}>6.1. Права та обов'язки Виконавця</h3>
@@ -369,23 +321,7 @@ export default function OfertaPage() {
 				</div>
 
 				<div className={styles.section}>
-					<h2 className={styles.sectionTitle}>8. Захист персональних даних</h2>
-					<div className={styles.text}>
-						<p>
-							Виконавець зобов'язується дотримуватися вимог Закону України «Про
-							захист персональних даних» та не розголошувати персональні дані
-							Замовника третім особам без його згоди, крім випадків, передбачених
-							законодавством України.
-						</p>
-						<p>
-							Детальна інформація про обробку персональних даних надається в
-							Політиці конфіденційності, розміщеній на сайті.
-						</p>
-					</div>
-				</div>
-
-				<div className={styles.section}>
-					<h2 className={styles.sectionTitle}>9. Зміни до Оферти</h2>
+					<h2 className={styles.sectionTitle}>8. Зміни до Оферти</h2>
 					<div className={styles.text}>
 						<p>
 							Виконавець має право вносити зміни до цієї Оферти. Нова версія
@@ -400,7 +336,7 @@ export default function OfertaPage() {
 				</div>
 
 				<div className={styles.section}>
-					<h2 className={styles.sectionTitle}>10. Вирішення спорів</h2>
+					<h2 className={styles.sectionTitle}>9. Вирішення спорів</h2>
 					<div className={styles.text}>
 						<p>
 							Усі спори та розбіжності, що виникають між сторонами, вирішуються
@@ -412,7 +348,7 @@ export default function OfertaPage() {
 				</div>
 
 				<div className={styles.section}>
-					<h2 className={styles.sectionTitle}>11. Заключні положення</h2>
+					<h2 className={styles.sectionTitle}>10. Заключні положення</h2>
 					<div className={styles.text}>
 						<p>
 							Ця Оферта набуває чинності з моменту її розміщення на сайті та
@@ -423,14 +359,81 @@ export default function OfertaPage() {
 							ознайомлений та згоден з усіма умовами надання послуг, зазначеними
 							в цій Оферті.
 						</p>
-						<p className={styles.date}>
+					</div>
+				</div>
+
+				<div className={styles.section}>
+					<h2 className={styles.sectionTitle}>11. Захист персональних даних</h2>
+					<div className={styles.text}>
+						<p>
+							Виконавець зобов'язується дотримуватися вимог Закону України «Про
+							захист персональних даних» та не розголошувати персональні дані
+							Замовника третім особам без його згоди, крім випадків, передбачених
+							законодавством України.
+						</p>
+						<p>
+							Детальна інформація про обробку персональних даних надається в
+							Політиці конфіденційності, розміщеній на сайті.
+						</p>
+					</div>
+				</div>
+				<div className={styles.section}>
+					<h2 className={styles.sectionTitle}>5. Контактна інформація</h2>
+					<div className={styles.text}>
+						<p>
+							<strong>Повне фірмове найменування:</strong>
+							<br />
+							[ВКАЖІТЬ ПОВНУ НАЗВУ ПІДПРИЄМСТВА АБО ФОП]
+						</p>
+						<p>
+							<strong>Ідентифікаційний номер платника податків (ІПН):</strong>
+							<br />
+							[ВКАЖІТЬ ІПН]
+						</p>
+						<p>
+							<strong>Юридична адреса:</strong>
+							<br />
+							[ВКАЖІТЬ ЮРИДИЧНУ АДРЕСУ]
+						</p>
+						<p>
+							<strong>Фактична адреса:</strong>
+							<br />
+							[ВКАЖІТЬ ФАКТИЧНУ АДРЕСУ]
+						</p>
+						<p>
+							<strong>Телефон:</strong>
+							<br />
+							<a href='tel:+380XXXXXXXXX' className={styles.contactLink}>
+								+380 XX XXX XX XX
+							</a>
+						</p>
+						<p>
+							<strong>Електронна пошта:</strong>
+							<br />
+							<a href='mailto:info@smartcode-academy.com' className={styles.contactLink}>
+								info@smartcode-academy.com
+							</a>
+						</p>
+						<p>
+							<strong>Веб-сайт:</strong>
+							<br />
+							<a
+								href='https://smartcode-academy.com'
+								target='_blank'
+								rel='noopener noreferrer'
+								className={styles.contactLink}
+							>
+								https://smartcode-academy.com
+							</a>
+						</p>
+					</div>
+					<p className={styles.date}>
 							Дата публікації: {new Date().toLocaleDateString('uk-UA', {
 								year: 'numeric',
 								month: 'long',
 								day: 'numeric'
 							})}
 						</p>
-					</div>
 				</div>
 			</div>
 		</div>

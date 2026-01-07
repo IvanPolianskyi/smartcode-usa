@@ -551,14 +551,12 @@ print(response.json())`,
 4. Обробляє помилки (користувач не знайдений, мережеві помилки)
 
 API endpoint: https://api.github.com/users/{username}`,
-    inputFormat: "username (рядок)",
     outputFormat: `Інформація про користувача:
 Ім'я: Олександр
 Біо: Python Developer
 Публічні репозиторії: 15`,
     examples: [
       {
-        input: "octocat",
         output: `Інформація про користувача:
 Ім'я: The Octocat
 Біо: None
