@@ -35,6 +35,14 @@
     will-change: transform;
     align-self: flex-start; /* Для flex контексту */
 }
+
+/* На мобільних пристроях хедер не фіксований */
+@media (max-width: 1024px) {
+    .header {
+        position: relative;
+        z-index: 100;
+    }
+}
 .header.scrolled {
     top: 0;
     margin: 0;
