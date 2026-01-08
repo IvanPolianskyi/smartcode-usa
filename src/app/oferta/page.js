@@ -415,7 +415,7 @@ export default function OfertaPage() {
 							</a>
 						</p>
 						<p>
-							<strong>Веб-сайт:</strong>
+							<strong>Веб-сайт:</strong> 
 							<br />
 							<a
 								href='https://smartcode-academy.com'
