@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/mongodb'
+import { cookies } from 'next/headers'
 
 function escapeHtml(input) {
   const str = String(input ?? '')
@@ -38,6 +39,11 @@ export async function POST(request) {
     const normalizedPhone = phone ? "+380" + phone : null
     const normalizedTelegram = telegram ? (telegram.startsWith('@') ? telegram : '@' + telegram) : null
 
+    // Читаємо cookies для реферальної системи
+    const cookieStore = await cookies()
+    const referralIdCookie = cookieStore.get('referralId')
+    const referralId = referralIdCookie?.value || null
+
     const lines = [
       '<b>Нова заявка зі сайту SmartCode Academy</b>',
       '',
@@ -46,6 +52,7 @@ export async function POST(request) {
         : `<b>Телефон:</b> ${escapeHtml(normalizedPhone)}`,
       course ? `<b>Курс:</b> ${escapeHtml(course)}` : null,
       message ? `<b>Повідомлення:</b>\n${escapeHtml(message)}` : null,
+      referralId ? `<b>🔥 Реферал ID:</b> <code>${escapeHtml(referralId)}</code>` : null,
       '',
       `<b>Час:</b> ${escapeHtml(createdAt)}`,
     ].filter(Boolean)
