@@ -1,23 +1,29 @@
 import { NextResponse } from 'next/server'
 
-const ONE_DAY_SECONDS = 60 * 60 * 24
+const THIRTY_DAYS_SECONDS = 60 * 60 * 24 * 30
 
 export async function GET(request, { params }) {
-  const { referralId } = params
-
-  // Якщо раптом немає id — просто ведемо на головну без cookie
-  if (!referralId) {
-    return NextResponse.redirect(new URL('/', request.url))
-  }
+  // У Next.js 15 params є асинхронним (Promise), його потрібно await-ити
+  const awaitedParams = await params
+  const referralId = awaitedParams?.referralId
 
   const redirectUrl = new URL('/', request.url)
+
+  // Якщо немає реферального ID - просто ведемо на головну
+  if (!referralId) {
+    return NextResponse.redirect(redirectUrl)
+  }
+
   const response = NextResponse.redirect(redirectUrl)
 
+  // Встановлюємо cookie з referralId
   response.cookies.set('referralId', referralId, {
-    maxAge: ONE_DAY_SECONDS, // 1 день
+    maxAge: THIRTY_DAYS_SECONDS, // 30 днів - стандарт для рефералів
     path: '/',
+    httpOnly: true, // Захист від XSS
+    secure: process.env.NODE_ENV === 'production', // Тільки HTTPS на продакшені
+    sameSite: 'lax', // Захист від CSRF
   })
 
   return response
 }
-
