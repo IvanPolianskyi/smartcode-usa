@@ -14,7 +14,8 @@ import {
   Calendar,
   BarChart3,
   RefreshCw,
-  LogOut
+  LogOut,
+  Award
 } from 'lucide-react'
 
 export default function AdminPanelPage() {
@@ -23,6 +24,15 @@ export default function AdminPanelPage() {
   const [loading, setLoading] = useState(true)
   const [stats, setStats] = useState(null)
   const [refreshing, setRefreshing] = useState(false)
+  const [certificates, setCertificates] = useState([])
+  const [loadingCertificates, setLoadingCertificates] = useState(false)
+  const [certForm, setCertForm] = useState({
+    studentEmail: '',
+    courseId: '',
+    title: '',
+    description: ''
+  })
+  const [certSubmitting, setCertSubmitting] = useState(false)
 
   useEffect(() => {
     checkAdminAccess()
@@ -43,6 +53,7 @@ export default function AdminPanelPage() {
       
       setUser(userData)
       loadStatistics()
+      loadCertificates()
     } catch (error) {
       console.error('Error checking admin access:', error)
       router.push('/login')
@@ -72,6 +83,76 @@ export default function AdminPanelPage() {
       alert('Помилка завантаження статистики')
     } finally {
       setRefreshing(false)
+    }
+  }
+
+  const loadCertificates = async () => {
+    try {
+      setLoadingCertificates(true)
+      const response = await fetch('/api/admin/certificates')
+
+      if (response.status === 403) {
+        router.push('/dashboard')
+        return
+      }
+
+      if (!response.ok) {
+        throw new Error('Failed to load certificates')
+      }
+
+      const data = await response.json()
+      setCertificates(data.certificates || [])
+    } catch (error) {
+      console.error('Error loading certificates:', error)
+      alert('Помилка завантаження дипломів')
+    } finally {
+      setLoadingCertificates(false)
+    }
+  }
+
+  const handleCertFormChange = (e) => {
+    const { name, value } = e.target
+    setCertForm((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleCreateCertificate = async (e) => {
+    e.preventDefault()
+    if (!certForm.studentEmail || !certForm.courseId) {
+      alert('Введіть email учня та ID курсу')
+      return
+    }
+    setCertSubmitting(true)
+    try {
+      const response = await fetch('/api/admin/certificates', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(certForm)
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create certificate')
+      }
+
+      setCertificates((prev) => [data.certificate, ...prev])
+      setCertForm({
+        studentEmail: '',
+        courseId: '',
+        title: '',
+        description: ''
+      })
+      alert('Диплом успішно створено')
+    } catch (error) {
+      console.error('Create certificate error:', error)
+      alert(error.message || 'Помилка створення диплому')
+    } finally {
+      setCertSubmitting(false)
     }
   }
 
@@ -220,6 +301,133 @@ export default function AdminPanelPage() {
             ) : (
               <p className={styles.emptyState}>Немає записів на курси</p>
             )}
+          </div>
+
+          {/* Certificates management */}
+          <div className={styles.section}>
+            <h2 className={styles.sectionTitle}>
+              <Award size={24} />
+              Дипломи учнів
+            </h2>
+
+            <form onSubmit={handleCreateCertificate} className={styles.certForm}>
+              <div className={styles.certFormRow}>
+                <div className={styles.certFormGroup}>
+                  <label className={styles.certLabel}>Email учня</label>
+                  <input
+                    type="email"
+                    name="studentEmail"
+                    value={certForm.studentEmail}
+                    onChange={handleCertFormChange}
+                    className={styles.certInput}
+                    placeholder="student@example.com"
+                    required
+                  />
+                </div>
+                <div className={styles.certFormGroup}>
+                  <label className={styles.certLabel}>ID курсу</label>
+                  <select
+                    name="courseId"
+                    value={certForm.courseId}
+                    onChange={handleCertFormChange}
+                    className={styles.certInput}
+                    required
+                  >
+                    <option value="">Оберіть курс</option>
+                    <option value="python-developer-zero-to-junior">
+                      Python Developer: From Zero to Confident Junior
+                    </option>
+                    <option value="web-development">Веб-розробка</option>
+                    <option value="unity-game-development">Розробка ігор на Unity</option>
+                    <option value="roblox-studio">Roblox Studio</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className={styles.certFormRow}>
+                <div className={styles.certFormGroup}>
+                  <label className={styles.certLabel}>Назва диплому</label>
+                  <input
+                    type="text"
+                    name="title"
+                    value={certForm.title}
+                    onChange={handleCertFormChange}
+                    className={styles.certInput}
+                    placeholder="Сертифікат про завершення курсу"
+                  />
+                </div>
+              </div>
+
+              <div className={styles.certFormRow}>
+                <div className={styles.certFormGroup}>
+                  <label className={styles.certLabel}>Опис (необов'язково)</label>
+                  <textarea
+                    name="description"
+                    value={certForm.description}
+                    onChange={handleCertFormChange}
+                    className={styles.certInput}
+                    rows={3}
+                    placeholder="Наприклад: Успішно завершив курс та виконав усі практичні завдання"
+                  />
+                </div>
+              </div>
+
+              <div className={styles.certFormActions}>
+                <button
+                  type="submit"
+                  className={styles.certSubmitButton}
+                  disabled={certSubmitting}
+                >
+                  {certSubmitting ? 'Створення...' : 'Створити диплом'}
+                </button>
+                <button
+                  type="button"
+                  onClick={loadCertificates}
+                  className={styles.certReloadButton}
+                  disabled={loadingCertificates}
+                >
+                  <RefreshCw size={16} className={loadingCertificates ? styles.spinning : ''} />
+                  Оновити список
+                </button>
+              </div>
+            </form>
+
+            <div className={styles.certList}>
+              {loadingCertificates ? (
+                <p className={styles.emptyState}>Завантаження дипломів...</p>
+              ) : certificates.length === 0 ? (
+                <p className={styles.emptyState}>Поки що немає створених дипломів</p>
+              ) : (
+                <div className={styles.certTableWrapper}>
+                  <table className={styles.certTable}>
+                    <thead>
+                      <tr>
+                        <th>Учень</th>
+                        <th>Email</th>
+                        <th>Курс</th>
+                        <th>Назва диплому</th>
+                        <th>Дата видачі</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {certificates.map((cert) => (
+                        <tr key={cert.id}>
+                          <td>{cert.userName}</td>
+                          <td>{cert.userEmail}</td>
+                          <td>{cert.courseName}</td>
+                          <td>{cert.title}</td>
+                          <td>
+                            {cert.issuedAt
+                              ? new Date(cert.issuedAt).toLocaleDateString('uk-UA')
+                              : 'Н/Д'}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Course Progress */}

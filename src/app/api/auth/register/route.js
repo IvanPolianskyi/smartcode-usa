@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 import { getCollection } from '@/lib/mongodb'
 import { hashPassword, generateToken, setAuthCookie } from '@/lib/auth'
 
@@ -36,6 +37,11 @@ export async function POST(request) {
     // Hash password
     const hashedPassword = await hashPassword(password)
 
+    // Read referral id from cookies (set by /link-{id} middleware)
+    const cookieStore = await cookies()
+    const referralIdCookie = cookieStore.get('referralId')
+    const referralId = referralIdCookie?.value || null
+
     // Create user
     const user = {
       email: email.toLowerCase(),
@@ -46,7 +52,8 @@ export async function POST(request) {
       purchasedCourses: [], // Courses that user has paid for
       createdAt: new Date(),
       updatedAt: new Date(),
-      enrolledCourses: []
+      enrolledCourses: [],
+      referralId: referralId || null
     }
 
     const result = await usersCollection.insertOne(user)
@@ -55,8 +62,31 @@ export async function POST(request) {
     // Generate token
     const token = generateToken(userId)
 
-    // Set cookie
+    // Set auth cookie
     await setAuthCookie(token)
+
+    // If user registered via referral link, notify Telegram bot
+    if (referralId) {
+      try {
+        const baseUrl =
+          process.env.API_BASE_URL || new URL(request.url).origin
+
+        await fetch(`${baseUrl}/api/telegram`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            phone: phone || '',
+            course: 'Реферальне посилання',
+            message: `Новий користувач зареєструвався по реферальному посиланню ID: ${referralId}\nІм'я: ${name}\nEmail: ${email}`,
+            contactMethod: 'phone',
+          }),
+        })
+      } catch (telegramError) {
+        console.error('Failed to notify Telegram about referral:', telegramError)
+      }
+    }
 
     // Return user (without password)
     const userResponse = {
@@ -66,7 +96,8 @@ export async function POST(request) {
       phone: user.phone,
       role: user.role,
       purchasedCourses: user.purchasedCourses,
-      enrolledCourses: user.enrolledCourses
+      enrolledCourses: user.enrolledCourses,
+      referralId: user.referralId || null
     }
 
     return NextResponse.json(
