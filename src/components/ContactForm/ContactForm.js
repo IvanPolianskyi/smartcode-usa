@@ -276,10 +276,6 @@ const ContactForm = () => {
                                         <button 
                                             type='submit' 
                                             className={styles.submitBtn} 
-                                            disabled={
-                                                (contactMethod === 'phone' && (!!phoneError || !(formData.phone && formData.course))) ||
-                                                (contactMethod === 'telegram' && (!!telegramError || !(formData.telegram && formData.course)))
-                                            }
                                         >
                                             <Send size={20} />
                                             Записатися на пробне заняття

@@ -26,7 +26,7 @@ export default function Logo({ className = '', href = '/' }) {
     >
       <div className={styles.logoIconWrapper}>
         <Image
-          src="/logo.jpg"
+          src="/logo.jpeg"
           alt="SmartCode Academy Logo"
           className={styles.logoImage}
           width={56}

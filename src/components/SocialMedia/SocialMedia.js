@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
-import { ExternalLink, Sparkles } from 'lucide-react'
+import { ExternalLink, Sparkles, Instagram } from 'lucide-react'
 import Image from 'next/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -16,15 +16,24 @@ const SocialMedia = () => {
 	const [avatars, setAvatars] = useState({})
 	const [avatarErrors, setAvatarErrors] = useState({})
 
-	const tiktokAccounts = [
+	const socialAccounts = [
 		{
-			id: 1,
-			name: 'SmartCode Academy',
-			username: '@smartcodeacademy',
+			id: 2,
+			name: 'TikTok',
+			username: '@smartcode_academy',
 			url: 'https://www.tiktok.com/@smartcodeacademy',
-			description: 'Офіційний профіль академії',
-			color: 'blue',
-			avatarUrl: '/tiktoklogo/7933b99a69679696fee99a6a9a20c549~tplv-tiktokx-cropcenter_1080_1080.jpeg',
+			description: 'Наші курси та проекти',
+			color: 'purple',
+			avatarUrl: '/tiktoklogo/6265690dcda2f88f952abb3045e5604d~tplv-tiktokx-cropcenter_1080_1080.jpeg',
+		},
+		{
+			id: 5,
+			name: 'Instagram',
+			username: '@_smartcodeacademy_',
+			url: 'https://www.instagram.com/_smartcodeacademy_/',
+			description: 'Життя академії та новини',
+			color: 'purple',
+			avatarUrl: '/logo.jpeg',
 		},
 		{
 			id: 3,
@@ -44,21 +53,12 @@ const SocialMedia = () => {
 			color: 'orange',
 			avatarUrl: '/tiktoklogo/15dac559b1a79f75d8c1284cc21348ef~tplv-tiktokx-cropcenter_1080_1080.jpeg',
 		},
-		{
-			id: 2,
-			name: 'SmartCode Academy',
-			username: '@smartcode_academy',
-			url: 'https://www.tiktok.com/@smartcode_academy',
-			description: 'Наші курси та проекти',
-			color: 'purple',
-			avatarUrl: '/tiktoklogo/6265690dcda2f88f952abb3045e5604d~tplv-tiktokx-cropcenter_1080_1080.jpeg',
-		},
 	]
 
 	// Завантаження аватарок
 	useEffect(() => {
 		const loadAvatars = async () => {
-			const avatarPromises = tiktokAccounts.map(async (account) => {
+			const avatarPromises = socialAccounts.map(async (account) => {
 				// Якщо аватарка вказана безпосередньо в об'єкті, використовуємо її
 				if (account.avatarUrl) {
 					return {
@@ -213,7 +213,7 @@ const SocialMedia = () => {
 						<span>Соціальні мережі</span>
 					</div>
 					<h2 className={styles.title}>
-						Ми в <span className={styles.titleAccent}>TikTok</span>
+						Ми в <span className={styles.titleAccent}>соцмережах</span>
 					</h2>
 					<p className={styles.subtitle}>
 						Підписуйтесь на наші профілі, щоб бути в курсі останніх новин,
@@ -222,7 +222,7 @@ const SocialMedia = () => {
 				</div>
 
 				<div className={styles.grid}>
-					{tiktokAccounts.map((account, index) => {
+					{socialAccounts.map((account, index) => {
 						const avatarUrl = avatars[account.username]
 						const hasError = avatarErrors[account.username]
 						const showAvatar = avatarUrl && !hasError
@@ -254,6 +254,10 @@ const SocialMedia = () => {
 														}))
 													}}
 												/>
+											</div>
+										) : account.url.includes('instagram') ? (
+											<div className={styles.iconWrapper}>
+												<Instagram size={32} />
 											</div>
 										) : (
 											<div className={styles.iconWrapper}>
