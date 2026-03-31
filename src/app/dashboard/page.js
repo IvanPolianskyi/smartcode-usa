@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { getCurrentUser, logout, getUserProgress } from '@/lib/authClient'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import styles from './Dashboard.module.css'
-import { 
+import {
   User, 
   BookOpen, 
   Award, 

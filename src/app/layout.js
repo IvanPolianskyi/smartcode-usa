@@ -54,9 +54,9 @@ export const metadata = {
 		siteName: 'SmartCode Academy',
 		images: [
 			{
-				url: '/og-image.jpg',
-				width: 1200,
-				height: 630,
+				url: '/logo.jpg',
+				width: 400,
+				height: 400,
 				alt: 'SmartCode Academy - Школа програмування для дітей',
 			},
 		],
@@ -67,12 +67,14 @@ export const metadata = {
 		card: 'summary_large_image',
 		title: 'SmartCode Academy - Школа програмування для дітей',
 		description: 'Навчаємо дітей програмуванню через захопливі проекти',
-		images: ['/og-image.jpg'],
+		images: ['/logo.jpg'],
 	},
+	/* 
+	// РОЗКОМЕНТУЙТЕ ОЦЕЙ БЛОК, КОЛИ ОТРИМАЄТЕ СПРАВЖНІ КОДИ ВІД GOOGLE SEARCH CONSOLE ТА YANDEX WEBMASTER
 	verification: {
-		google: 'your-google-verification-code',
-		yandex: 'your-yandex-verification-code',
+		google: 'МВЕДІТЬ_СВІЙ_КОД_ТУТ',
 	},
+	*/
 	alternates: {
 		canonical: 'https://smartcode-academy.com',
 		languages: {
@@ -128,8 +130,8 @@ export default function RootLayout({ children }) {
 							name: 'SmartCode Academy',
 							description: 'Школа програмування для дітей 8-17 років',
 							url: 'https://smartcode-academy.com',
-							logo: 'https://smartcode-academy.com/logo.png',
-							image: 'https://smartcode-academy.com/og-image.jpg',
+							logo: 'https://smartcode-academy.com/logo.jpg',
+							image: 'https://smartcode-academy.com/logo.jpg',
 							telephone: '+380671234567',
 							email: 'info@smartcode-academy.com',
 							address: {

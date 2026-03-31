@@ -6,8 +6,9 @@ import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
 
 export const metadata = {
-  title: 'Lesson - SmartCode Academy',
-  description: 'Learn Python programming with interactive lessons, code examples, and quizzes.',
+  title: 'Урок курсу - SmartCode Academy',
+  description: 'Закритий урок курсу SmartCode Academy з практичними завданнями та матеріалами.',
+  robots: 'noindex, nofollow',
 }
 
 export default async function LessonPageRoute({ params }) {

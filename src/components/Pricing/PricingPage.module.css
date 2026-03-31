@@ -108,8 +108,9 @@
 }
 
 .pricingGrid {
-	display: grid;
-	grid-template-columns: 1fr;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 	gap: 2rem;
 }
 
@@ -119,19 +120,6 @@
 	}
 }
 
-@media (min-width: 768px) {
-	.pricingGrid {
-		grid-template-columns: repeat(2, 1fr);
-	}
-}
-
-@media (min-width: 1024px) {
-	.pricingGrid {
-		grid-template-columns: repeat(3, 1fr);
-	}
-}
-
-/* --- PRICING CARD --- */
 .pricingCard {
 	position: relative;
 	background: white;
@@ -146,6 +134,8 @@
 	will-change: transform;
 	margin-top: 8px;
 	margin-bottom: 8px;
+	width: 100%;
+	max-width: 380px;
 	/* На мобільних картки одразу видимі без анімації */
 	opacity: 1;
 	transform: translateY(0) scale(1);

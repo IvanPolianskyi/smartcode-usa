@@ -71,6 +71,7 @@
     overflow: visible;
 }
 .headerContent {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -124,6 +125,13 @@
     justify-content: center;
 }
 @media (min-width: 701px) { .nav { display: flex; } }
+@media (min-width: 950px) {
+    .nav {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
 .navLink {
     position: relative;
     display: flex;

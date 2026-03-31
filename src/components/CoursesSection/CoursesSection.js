@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import {
   ChevronRight,
@@ -8,11 +8,13 @@ import {
 } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import PhoneModal from '@/components/PhoneModal/PhoneModal'
 import styles from './CoursesSection.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const CoursesSection = () => {
+  const [showPhoneModal, setShowPhoneModal] = useState(false)
   const sectionRef = useRef(null)
   const cardRef = useRef(null)
 
@@ -104,39 +106,45 @@ const CoursesSection = () => {
     <section ref={sectionRef} className={styles.section}>
       <div className={styles.container}>
         <div className={styles.heroContent}>
-          <div className={styles.badge}>
-            <Sparkles size={18} />
-            <span>Онлайн курс на платформі</span>
-          </div>
-          <h2 className={styles.title}>
-            Онлайн курси
-            <span className={styles.titleAccent}> для поглибленого вивчення</span>
-          </h2>
-          <p className={styles.description}>
-            Окрім онлайн уроків, ми пропонуємо повноцінні онлайн курси на платформі для поглибленого вивчення програмування. 
-            Курси рекомендується поєднувати з онлайн уроками для максимальної ефективності навчання та швидкого прогресу.
-          </p>
+        <div className={styles.badge}>
+          <Sparkles size={18} />
+          <span>Онлайн уроки з викладачем</span>
+        </div>
+        <h2 className={styles.title}>
+          Індивідуальні уроки
+          <span className={styles.titleAccent}> з реальними проєктами</span>
+        </h2>
+        <p className={styles.description}>
+          Усі заняття проходять у форматі онлайн-уроків з викладачем в Zoom. 
+          Дитина навчається в індивідуальному темпі, отримує зворотній зв&apos;язок та працює над власними проєктами.
+        </p>
         </div>
 
         <div 
           ref={cardRef}
           className={styles.buttonWrapper}
         >
-          <Link href="/courses" className={styles.allCoursesButton}>
+          <button onClick={() => setShowPhoneModal(true)} className={styles.allCoursesButton}>
             <div className={styles.buttonContent}>
               <div className={styles.buttonIcon}>
                 <Sparkles size={28} />
               </div>
               <div className={styles.buttonText}>
-                <span className={styles.buttonTitle}>Переглянути всі курси</span>
-                <span className={styles.buttonSubtitle}>Дізнайся більше про наші навчальні програми</span>
+                <span className={styles.buttonTitle}>Записатись на урок</span>
+                <span className={styles.buttonSubtitle}>Дізнайся більше про наші навчальні програми та індивідуальні уроки</span>
               </div>
               <ChevronRight size={24} className={styles.buttonArrow} />
             </div>
             <div className={styles.buttonGlow} />
-          </Link>
+          </button>
         </div>
       </div>
+      
+      <PhoneModal
+        isOpen={showPhoneModal}
+        onClose={() => setShowPhoneModal(false)}
+        project={{ title: "Індивідуальні уроки", description: "Запис на індивідуальні заняття з персональним підходом" }}
+      />
     </section>
   )
 }

@@ -111,7 +111,6 @@ const PricingPage = () => {
 	}
 
 	const pricingPlans = [
-		
 		{
 			id: 1,
 			name: 'Індивідуальні уроки',
@@ -130,47 +129,6 @@ const PricingPage = () => {
 			color: 'blue',
 			popular: false,
 			recommended: true,
-		},
-		{
-			id: 2,
-			name: 'Групові уроки',
-			emoji: '👥',
-			price: 250,
-			currency: 'грн',
-			period: 'заняття',
-			duration: '1 година',
-			description: 'Навчання в команді однодумців',
-			features: [
-				'Група до 6 осіб',
-				'Тривалість: 1 година',
-				'Спілкування з однолітками',
-				'Командні проекти',
-				'Доступна ціна',
-			],
-			color: 'purple',
-			popular: true,
-		
-		},
-		{
-			id: 3,
-			name: 'Онлайн курс',
-			emoji: '📚',
-			price: 2000,
-			oldPrice: 2999,
-			currency: 'грн',
-			period: 'одноразово',
-			description: 'Курс + доступ до платформи',
-			features: [
-				'Повний доступ до курсу',
-				'Онлайн навчальна платформа',
-				'Всі уроки та матеріали',
-				'Практичні завдання',
-				'Сертифікат після завершення',
-				'Підтримка менторів',
-			],
-			color: 'orange',
-			popular: false,
-			discount: true,
 		},
 	]
 

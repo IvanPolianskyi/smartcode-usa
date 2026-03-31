@@ -280,11 +280,10 @@ const Header = () => {
 
 	const navItems = [
 		{ label: 'Предмети', dropdown: true },
-		{ label: 'Курси', href: '/courses' },
+		{ label: 'Записатися', href: '/#Contactform' },
 		{ label: 'Соцмережі', href: '/#social-media' },
 		{ label: 'Ціни', href: '/tariff' },
 		{ label: 'Відгуки', href: '/#testimonials' },
-		
 	]
 	
 	const courses = [
@@ -404,14 +403,14 @@ const Header = () => {
 								</div>
                             ) : (
                                 <Link 
-                                    key={index} 
-                                    href={item.href} 
-                                    className={styles.navLink}
-                                    onClick={item.label === 'Контакти' ? handleCtaClick : undefined}
-                                    scroll={item.label === 'Контакти' ? false : undefined}
-                                >
-                                    {item.label}
-                                </Link>
+									key={index} 
+									href={item.href} 
+									className={styles.navLink}
+									onClick={item.label === 'Записатися' ? handleCtaClick : undefined}
+									scroll={item.label === 'Записатися' ? false : undefined}
+								>
+									{item.label}
+								</Link>
                             )
 						)}
 					</nav>
@@ -430,23 +429,14 @@ const Header = () => {
 										Вийти
 									</button>
 								</>
-							) : (
-								<>
-									<Link href="/login" className={styles.loginButton}>
-										Вхід
-									</Link>
-									<Link href="/register" className={styles.registerButton}>
-										Реєстрація
-									</Link>
-								</>
-							)
+							) : null
 						)}
 						{/* Кнопка кабінету для мобільної версії */}
-						{!userLoading && (
+						{!userLoading && user && (
 							<Link
-								href={user ? "/dashboard" : "/login"}
+								href="/dashboard"
 								className={styles.mobileCabinetButton}
-								aria-label={user ? "Мій профіль" : "Вхід"}
+								aria-label="Мій профіль"
 							>
 								<User size={20} />
 							</Link>
@@ -530,8 +520,8 @@ const Header = () => {
                                         key={index}
                                         href={item.href}
                                         className={`${styles.mobileMenuItem} ${styles.mobileNavItem}`}
-                                        onClick={item.label === 'Контакти' ? handleCtaClick : handleMobileMenuClose}
-                                        scroll={item.label === 'Контакти' ? false : undefined}
+                                        onClick={item.label === 'Записатися' ? handleCtaClick : handleMobileMenuClose}
+                                        scroll={item.label === 'Записатися' ? false : undefined}
                                     >
                                         {item.label}
                                     </Link>
@@ -563,24 +553,7 @@ const Header = () => {
 										Вийти
 									</button>
 								</>
-							) : (
-								<>
-									<Link 
-										href="/login" 
-										className={`${styles.mobileMenuItem} ${styles.mobileLoginButton}`}
-										onClick={handleMobileMenuClose}
-									>
-										Вхід
-									</Link>
-									<Link 
-										href="/register" 
-										className={`${styles.mobileMenuItem} ${styles.mobileRegisterButton}`}
-										onClick={handleMobileMenuClose}
-									>
-										Реєстрація
-									</Link>
-								</>
-							)
+							) : null
 						)}
 					</div>
 				</div>

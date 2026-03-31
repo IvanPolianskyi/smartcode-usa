@@ -38,6 +38,8 @@ const Footer = () => {
         { name: 'Про нас', href: '/#about' },
         { name: 'Відгуки', href: '/#testimonials' },
         { name: 'Контакти', href: '/#Contactform', openModal: true },
+		{ name: 'Вхід', href: '/login' },
+		{ name: 'Реєстрація', href: '/register' },
     ]
 
 	const supportLinks = [

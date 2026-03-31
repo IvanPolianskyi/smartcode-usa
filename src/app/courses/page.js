@@ -23,7 +23,7 @@ const courses = [
   {
     courseId: 'python-developer-zero-to-junior',
     title: 'Повний курс Пайтон',
-    shortDescription: 'Повний курс програмування на Python від основ до рівня впевненого джуніора',
+    shortDescription: 'Повний курс програмування на Python у форматі індивідуальних онлайн-уроків',
     description: 'Навчись створювати реальні проекти на Python та отримай навички, необхідні для початку кар\'єри в IT.',
     icon: <Code size={32} />,
     color: '#3b82f6',
