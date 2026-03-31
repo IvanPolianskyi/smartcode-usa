@@ -8,13 +8,11 @@ import {
 } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import PhoneModal from '@/components/PhoneModal/PhoneModal'
 import styles from './CoursesSection.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const CoursesSection = () => {
-  const [showPhoneModal, setShowPhoneModal] = useState(false)
   const sectionRef = useRef(null)
   const cardRef = useRef(null)
 
@@ -124,7 +122,7 @@ const CoursesSection = () => {
           ref={cardRef}
           className={styles.buttonWrapper}
         >
-          <button onClick={() => setShowPhoneModal(true)} className={styles.allCoursesButton}>
+          <button onClick={() => window.dispatchEvent(new Event('openContactModal'))} className={styles.allCoursesButton}>
             <div className={styles.buttonContent}>
               <div className={styles.buttonIcon}>
                 <Sparkles size={28} />
@@ -139,12 +137,6 @@ const CoursesSection = () => {
           </button>
         </div>
       </div>
-      
-      <PhoneModal
-        isOpen={showPhoneModal}
-        onClose={() => setShowPhoneModal(false)}
-        project={{ title: "Індивідуальні уроки", description: "Запис на індивідуальні заняття з персональним підходом" }}
-      />
     </section>
   )
 }

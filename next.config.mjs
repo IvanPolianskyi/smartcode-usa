@@ -18,6 +18,21 @@ const nextConfig = {
     minimumCacheTTL: 60,
   },
   // Enable static file serving for uploads
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.smartcode-academy.com',
+          },
+        ],
+        destination: 'https://smartcode-academy.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
