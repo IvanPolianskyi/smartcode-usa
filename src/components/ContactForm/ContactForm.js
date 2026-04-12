@@ -22,7 +22,13 @@ const ContactForm = () => {
         const open = () => {
             openedAtRef.current = Date.now()
             if (rafId) cancelAnimationFrame(rafId)
-            rafId = requestAnimationFrame(() => setIsOpen(true))
+            rafId = requestAnimationFrame(() => {
+                setIsOpen(true)
+                // Google Analytics: фіксуємо клік на кнопку пробного заняття
+                if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+                    window.gtag('event', 'click_trial_button')
+                }
+            })
         }
         const close = () => {
             if (rafId) cancelAnimationFrame(rafId)
@@ -157,6 +163,13 @@ const ContactForm = () => {
                 return
             }
             // Успіх: закриваємо модальне вікно і скидаємо форму
+            // Google Analytics: фіксуємо успішну відправку форми
+            if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+                window.gtag('event', 'submit_trial_form', {
+                    course: formData.course,
+                    contact_method: contactMethod,
+                })
+            }
             setIsSubmitted(false)
             setFormData({ phone: '', telegram: '', course: '', message: '' })
             setPhoneError('')
