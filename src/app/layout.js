@@ -107,19 +107,6 @@ export default function RootLayout({ children }) {
 				<meta name='apple-mobile-web-app-status-bar-style' content='default' />
 				<meta name='mobile-web-app-capable' content='yes' />
 				<link rel='icon' href='/logo.jpg' />
-				{/* Google Analytics */}
-				<Script
-					src='https://www.googletagmanager.com/gtag/js?id=G-MYR6FDXWYF'
-					strategy='afterInteractive'
-				/>
-				<Script id='google-analytics' strategy='afterInteractive'>
-					{`
-						window.dataLayer = window.dataLayer || [];
-						function gtag(){dataLayer.push(arguments);}
-						gtag('js', new Date());
-						gtag('config', 'G-MYR6FDXWYF');
-					`}
-				</Script>
 			</head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -192,6 +179,19 @@ export default function RootLayout({ children }) {
 						}),
 					}}
 				/>
+				{/* Google Analytics */}
+				<Script
+					src='https://www.googletagmanager.com/gtag/js?id=G-MYR6FDXWYF'
+					strategy='afterInteractive'
+				/>
+				<Script id='google-analytics' strategy='afterInteractive'>
+					{`
+						window.dataLayer = window.dataLayer || [];
+						function gtag(){dataLayer.push(arguments);}
+						gtag('js', new Date());
+						gtag('config', 'G-MYR6FDXWYF');
+					`}
+				</Script>
 			</body>
 		</html>
 	)
