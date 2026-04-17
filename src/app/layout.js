@@ -55,7 +55,7 @@ export const metadata = {
 		siteName: 'SmartCode Academy',
 		images: [
 			{
-				url: '/logo.jpg',
+				url: '/logo.jpeg',
 				width: 400,
 				height: 400,
 				alt: 'SmartCode Academy - Школа програмування для дітей',
@@ -68,7 +68,7 @@ export const metadata = {
 		card: 'summary_large_image',
 		title: 'SmartCode Academy - Школа програмування для дітей',
 		description: 'Навчаємо дітей програмуванню через захопливі проекти',
-		images: ['/logo.jpg'],
+		images: ['/logo.jpeg'],
 	},
 	/* 
 	// РОЗКОМЕНТУЙТЕ ОЦЕЙ БЛОК, КОЛИ ОТРИМАЄТЕ СПРАВЖНІ КОДИ ВІД GOOGLE SEARCH CONSOLE ТА YANDEX WEBMASTER
@@ -131,8 +131,8 @@ export default function RootLayout({ children }) {
 							name: 'SmartCode Academy',
 							description: 'Школа програмування для дітей 8-17 років',
 							url: 'https://smartcode-academy.com',
-							logo: 'https://smartcode-academy.com/logo.jpg',
-							image: 'https://smartcode-academy.com/logo.jpg',
+							logo: 'https://smartcode-academy.com/logo.jpeg',
+							image: 'https://smartcode-academy.com/logo.jpeg',
 							telephone: '+380671234567',
 							email: 'info@smartcode-academy.com',
 							address: {
@@ -142,7 +142,7 @@ export default function RootLayout({ children }) {
 							},
 							sameAs: [
 								'https://www.facebook.com/smartcodeacademy',
-								'https://www.instagram.com/smartcodeacademy',
+								'https://www.instagram.com/smartcode_academy_official/',
 								'https://t.me/smartcodeacademy',
 							],
 							offers: {

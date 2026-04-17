@@ -29,8 +29,8 @@ const SocialMedia = () => {
 		{
 			id: 5,
 			name: 'Instagram',
-			username: '@_smartcodeacademy_',
-			url: 'https://www.instagram.com/_smartcodeacademy_/',
+			username: '@smartcode_academy_official',
+			url: 'https://www.instagram.com/smartcode_academy_official/',
 			description: 'Життя академії та новини',
 			color: 'purple',
 			avatarUrl: '/logo.jpeg',
@@ -38,8 +38,8 @@ const SocialMedia = () => {
 		{
 			id: 3,
 			name: 'Іван - Python',
-			username: '@ivan.smartcode.python',
-			url: 'https://www.tiktok.com/@ivan.smartcode.python',
+			username: '@ivan_python_smart',
+			url: 'https://www.tiktok.com/@ivan_python_smart',
 			description: 'Python програмування',
 			color: 'green',
 			avatarUrl: '/tiktoklogo/00687615ebad2fd100b5ab6dde0a9964~tplv-tiktokx-cropcenter_1080_1080.jpeg',
@@ -47,8 +47,8 @@ const SocialMedia = () => {
 		{
 			id: 4,
 			name: 'Артем - SmartCode',
-			username: '@Artem.smartcode.academy',
-			url: 'https://www.tiktok.com/@Artem.smartcode.academy',
+			username: '@artem.smartcode',
+			url: 'https://www.tiktok.com/@artem.smartcode',
 			description: 'Навчальний контент',
 			color: 'orange',
 			avatarUrl: '/tiktoklogo/15dac559b1a79f75d8c1284cc21348ef~tplv-tiktokx-cropcenter_1080_1080.jpeg',

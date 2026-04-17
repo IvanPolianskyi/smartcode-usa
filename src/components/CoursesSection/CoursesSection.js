@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import {
   ChevronRight,
+  PlayCircle,
   Sparkles,
 } from 'lucide-react'
 import gsap from 'gsap'
@@ -15,6 +16,28 @@ gsap.registerPlugin(ScrollTrigger)
 const CoursesSection = () => {
   const sectionRef = useRef(null)
   const cardRef = useRef(null)
+  const lessonsRef = useRef(null)
+
+  const lessonExamples = [
+    {
+      id: 1,
+      title: 'Приклад уроку: Python для дітей',
+      description: 'Пояснюємо базові конструкції та одразу закріплюємо у міні-проєкті.',
+      embedUrl: 'https://www.youtube-nocookie.com/embed/ZwW5QCe8Q7M?rel=0&modestbranding=1',
+    },
+    {
+      id: 2,
+      title: 'Приклад уроку: Веб-розробка',
+      description: 'Покроково створюємо першу сторінку та працюємо з реальними задачами.',
+      embedUrl: 'https://www.youtube-nocookie.com/embed/a16fFHx2QDc?rel=0&modestbranding=1',
+    },
+    {
+      id: 3,
+      title: 'Приклад уроку: Roblox',
+      description: 'Пояснюємо основи Roblox та створюємо простий проєкт.',
+      embedUrl: 'https://www.youtube-nocookie.com/embed/89-nuLW2aJ0?rel=0&modestbranding=1',
+    },
+  ]
 
   useEffect(() => {
     if (sectionRef.current && cardRef.current) {
@@ -58,6 +81,24 @@ const CoursesSection = () => {
               },
             }
           )
+
+          gsap.fromTo(
+            `.${styles.lessonExamples}`,
+            { opacity: 0, y: 20 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              delay: 0.15,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: lessonsRef.current,
+                start: 'top 90%',
+                toggleActions: 'play none none none',
+                markers: false,
+              },
+            }
+          )
         } else {
           gsap.fromTo(
             `.${styles.heroContent}`,
@@ -87,6 +128,23 @@ const CoursesSection = () => {
               delay: 0.2,
               scrollTrigger: {
                 trigger: cardRef.current,
+                start: 'top 85%',
+                toggleActions: 'play none none none',
+              },
+            }
+          )
+
+          gsap.fromTo(
+            `.${styles.lessonExamples}`,
+            { opacity: 0, y: 30 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              delay: 0.3,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: lessonsRef.current,
                 start: 'top 85%',
                 toggleActions: 'play none none none',
               },
@@ -135,6 +193,37 @@ const CoursesSection = () => {
             </div>
             <div className={styles.buttonGlow} />
           </button>
+        </div>
+
+        <div ref={lessonsRef} className={styles.lessonExamples}>
+          <div className={styles.examplesHeader}>
+            <div className={styles.examplesBadge}>
+              <PlayCircle size={16} />
+              <span>Приклади уроків</span>
+            </div>
+            <p className={styles.examplesText}>
+              Подивіться, як виглядають наші заняття: практика, пояснення та робота над проєктами в реальному часі.
+            </p>
+          </div>
+
+          <div className={styles.videoGrid}>
+            {lessonExamples.map((lesson) => (
+              <article key={lesson.id} className={styles.videoCard}>
+                <div className={styles.videoWrapper}>
+                  <iframe
+                    src={lesson.embedUrl}
+                    title={lesson.title}
+                    loading='lazy'
+                    allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                    referrerPolicy='strict-origin-when-cross-origin'
+                    allowFullScreen
+                  />
+                </div>
+                <h3 className={styles.videoTitle}>{lesson.title}</h3>
+                <p className={styles.videoDescription}>{lesson.description}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

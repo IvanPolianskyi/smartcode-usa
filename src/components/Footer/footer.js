@@ -57,7 +57,7 @@ const Footer = () => {
 		{
 			name: 'Instagram',
 			icon: Instagram,
-			href: 'https://instagram.com/smartcodeacademy',
+			href: 'https://www.instagram.com/smartcode_academy_official/',
 		},
 		{
 			name: 'TikTok - SmartCode Academy',
@@ -72,12 +72,12 @@ const Footer = () => {
 		{
 			name: 'TikTok - Іван Python',
 			icon: TikTokIcon,
-			href: 'https://www.tiktok.com/@ivan.smartcode.python',
+			href: 'https://www.tiktok.com/@ivan_python_smart',
 		},
 		{
 			name: 'TikTok - Артем SmartCode',
 			icon: TikTokIcon,
-			href: 'https://www.tiktok.com/@Artem.smartcode.academy',
+			href: 'https://www.tiktok.com/@artem.smartcode',
 		},
 	]
 
@@ -94,7 +94,7 @@ const Footer = () => {
 						<div className={styles.logoSection}>
 							<div className={styles.logoIconWrapper}>
 								<Image
-									src='/logo.jpg'
+									src='/logo.jpeg'
 									alt='SmartCode Academy Logo'
 									className={styles.logoImage}
 									width={48}
