@@ -16,7 +16,8 @@ import {
   Target,
   Lock
 } from 'lucide-react'
-import { getCurrentUser, getUserProgress } from '@/lib/authClient'
+import { getUserProgress } from '@/lib/authClient'
+import { useAuthSession } from '@/components/AuthSessionProvider'
 import styles from './CoursesPage.module.css'
 
 const courses = [
@@ -135,36 +136,41 @@ const courses = [
 ]
 
 export default function CoursesPage() {
-  const [user, setUser] = useState(null)
+  const { user, loading: sessionLoading } = useAuthSession()
   const [progressData, setProgressData] = useState({})
-  const [loading, setLoading] = useState(true)
+  const [progressLoading, setProgressLoading] = useState(true)
 
   useEffect(() => {
-    loadUserData()
-  }, [])
+    if (sessionLoading) return
 
-  const loadUserData = async () => {
-    try {
-      const userData = await getCurrentUser()
-      setUser(userData)
-
-      if (userData && userData.enrolledCourses) {
-        const progressPromises = userData.enrolledCourses.map(courseId =>
-          getUserProgress(courseId).then(progress => ({ courseId, progress }))
-        )
-        const progressResults = await Promise.all(progressPromises)
-        const progressMap = {}
-        progressResults.forEach(({ courseId, progress }) => {
-          progressMap[courseId] = progress
-        })
-        setProgressData(progressMap)
+    const loadProgress = async () => {
+      setProgressLoading(true)
+      try {
+        if (user?.enrolledCourses?.length) {
+          const progressPromises = user.enrolledCourses.map(courseId =>
+            getUserProgress(courseId).then(progress => ({ courseId, progress }))
+          )
+          const progressResults = await Promise.all(progressPromises)
+          const progressMap = {}
+          progressResults.forEach(({ courseId, progress }) => {
+            progressMap[courseId] = progress
+          })
+          setProgressData(progressMap)
+        } else {
+          setProgressData({})
+        }
+      } catch (error) {
+        console.error('Error loading progress:', error)
+        setProgressData({})
+      } finally {
+        setProgressLoading(false)
       }
-    } catch (error) {
-      console.error('Error loading user data:', error)
-    } finally {
-      setLoading(false)
     }
-  }
+
+    loadProgress()
+  }, [sessionLoading, user])
+
+  const loading = sessionLoading || progressLoading
 
   const getLevelBadge = (level) => {
     const badges = {

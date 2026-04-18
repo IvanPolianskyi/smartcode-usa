@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { getCurrentUser } from '@/lib/authClient'
+import { useAuthSession } from '@/components/AuthSessionProvider'
 import styles from './AdminPanel.module.css'
 import {
   Users,
@@ -20,8 +20,7 @@ import {
 
 export default function AdminPanelPage() {
   const router = useRouter()
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const { user, loading: sessionLoading } = useAuthSession()
   const [stats, setStats] = useState(null)
   const [refreshing, setRefreshing] = useState(false)
   const [certificates, setCertificates] = useState([])
@@ -35,32 +34,18 @@ export default function AdminPanelPage() {
   const [certSubmitting, setCertSubmitting] = useState(false)
 
   useEffect(() => {
-    checkAdminAccess()
-  }, [])
-
-  const checkAdminAccess = async () => {
-    try {
-      const userData = await getCurrentUser()
-      if (!userData) {
-        router.push('/login')
-        return
-      }
-      
-      if (userData.role !== 'admin') {
-        router.push('/dashboard')
-        return
-      }
-      
-      setUser(userData)
-      loadStatistics()
-      loadCertificates()
-    } catch (error) {
-      console.error('Error checking admin access:', error)
+    if (sessionLoading) return
+    if (!user) {
       router.push('/login')
-    } finally {
-      setLoading(false)
+      return
     }
-  }
+    if (user.role !== 'admin') {
+      router.push('/dashboard')
+      return
+    }
+    loadStatistics()
+    loadCertificates()
+  }, [sessionLoading, user?.id, user?.role, router])
 
   const loadStatistics = async () => {
     try {
@@ -160,6 +145,7 @@ export default function AdminPanelPage() {
     try {
       const { logout } = await import('@/lib/authClient')
       await logout()
+      window.dispatchEvent(new Event('auth:logout'))
       router.push('/')
       router.refresh()
     } catch (error) {
@@ -184,7 +170,7 @@ export default function AdminPanelPage() {
     })
   }
 
-  if (loading) {
+  if (sessionLoading) {
     return (
       <div className={styles.container}>
         <div className={styles.loading}>Завантаження...</div>

@@ -7,6 +7,7 @@ import './globals.css'
 import Header from '@/components/Header/Header'
 import Script from 'next/script'
 import MetaPixelRouteTracker from '@/components/MetaPixel/MetaPixelRouteTracker'
+import AuthSessionProvider from '@/components/AuthSessionProvider'
 import { META_PIXEL_ID } from '@/lib/metaPixel'
 
 const geistSans = Geist({
@@ -111,17 +112,19 @@ export default function RootLayout({ children }) {
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				suppressHydrationWarning
 			>
-				<Suspense fallback={null}>
-					<MetaPixelRouteTracker />
-				</Suspense>
-				<ScrollToTop />
-				<Header />
-                <div className='min-h-screen flex flex-col'>
-					<main className='flex-1 relative main-content'>{children}</main>
-					<Footer />
-                    {/* Глобально змонтована модалка контакту, доступна на всіх сторінках */}
-                    <ContactForm />
-				</div>
+				<AuthSessionProvider>
+					<Suspense fallback={null}>
+						<MetaPixelRouteTracker />
+					</Suspense>
+					<ScrollToTop />
+					<Header />
+					<div className='min-h-screen flex flex-col'>
+						<main className='flex-1 relative main-content'>{children}</main>
+						<Footer />
+						{/* Глобально змонтована модалка контакту, доступна на всіх сторінках */}
+						<ContactForm />
+					</div>
+				</AuthSessionProvider>
 
 				{/* Structured Data */}
 				<script

@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { getCurrentUser, logout, getUserProgress } from '@/lib/authClient'
+import { logout, getUserProgress } from '@/lib/authClient'
+import { useAuthSession } from '@/components/AuthSessionProvider'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import styles from './Dashboard.module.css'
 import {
@@ -21,58 +22,59 @@ import {
 
 export default function DashboardPage() {
   const router = useRouter()
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const { user, loading: sessionLoading, refresh } = useAuthSession()
   const [progressData, setProgressData] = useState({})
+  const [progressLoading, setProgressLoading] = useState(true)
 
   useEffect(() => {
-    loadUserData()
-  }, [])
+    if (sessionLoading) return
+    if (!user) {
+      router.push('/login')
+      return
+    }
+
+    const loadProgress = async () => {
+      setProgressLoading(true)
+      try {
+        if (user.enrolledCourses?.length > 0) {
+          const progressPromises = user.enrolledCourses.map(courseId =>
+            getUserProgress(courseId).then(progress => {
+              return { courseId, progress }
+            }).catch(error => {
+              console.error('Dashboard: Error loading progress for', courseId, ':', error)
+              return { courseId, progress: null }
+            })
+          )
+          const progressResults = await Promise.all(progressPromises)
+          const progressMap = {}
+          progressResults.forEach(({ courseId, progress }) => {
+            progressMap[courseId] = progress
+          })
+          setProgressData(progressMap)
+        } else {
+          setProgressData({})
+        }
+      } catch (error) {
+        console.error('Error loading progress:', error)
+      } finally {
+        setProgressLoading(false)
+      }
+    }
+
+    loadProgress()
+  }, [sessionLoading, user, router])
+
+  const loading = sessionLoading || progressLoading
 
   // Додати можливість оновити дані
   const refreshData = () => {
-    loadUserData()
-  }
-
-  const loadUserData = async () => {
-    try {
-      // Завантажити дані користувача з кешем no-store
-      const userData = await getCurrentUser()
-      
-      if (!userData) {
-        router.push('/login')
-        return
-      }
-      setUser(userData)
-
-      // Load progress for enrolled courses
-      if (userData.enrolledCourses && userData.enrolledCourses.length > 0) {
-        const progressPromises = userData.enrolledCourses.map(courseId =>
-          getUserProgress(courseId).then(progress => {
-            return { courseId, progress }
-          }).catch(error => {
-            console.error('Dashboard: Error loading progress for', courseId, ':', error)
-            return { courseId, progress: null }
-          })
-        )
-        const progressResults = await Promise.all(progressPromises)
-        const progressMap = {}
-        progressResults.forEach(({ courseId, progress }) => {
-          progressMap[courseId] = progress
-        })
-        setProgressData(progressMap)
-      }
-    } catch (error) {
-      console.error('Error loading user data:', error)
-      router.push('/login')
-    } finally {
-      setLoading(false)
-    }
+    refresh(false)
   }
 
   const handleLogout = async () => {
     try {
       await logout()
+      window.dispatchEvent(new Event('auth:logout'))
       router.push('/')
       router.refresh()
     } catch (error) {

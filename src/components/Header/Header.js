@@ -19,68 +19,19 @@ import styles from './Header.module.css'
 import gsap from 'gsap'
 import Link from 'next/link'
 import Logo from '@/components/Logo/Logo'
-import { getCurrentUser, logout } from '@/lib/authClient'
-import { useRouter, usePathname } from 'next/navigation'
+import { logout } from '@/lib/authClient'
+import { useAuthSession } from '@/components/AuthSessionProvider'
+import { useRouter } from 'next/navigation'
 import { User, LogOut } from 'lucide-react'
 
 const Header = () => {
 	const [isCoursesOpen, setIsCoursesOpen] = useState(false)
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const [isScrolled, setIsScrolled] = useState(false)
-	const [user, setUser] = useState(null)
-	const [userLoading, setUserLoading] = useState(true)
 	const headerRef = useRef(null)
     const scrollLockYRef = useRef(0)
 	const router = useRouter()
-	const pathname = usePathname()
-
-	// Function to load user
-	const loadUser = async () => {
-		try {
-			const userData = await getCurrentUser()
-			setUser(userData)
-		} catch (error) {
-			console.error('Error loading user:', error)
-			setUser(null)
-		} finally {
-			setUserLoading(false)
-		}
-	}
-
-	// Load user on mount and when pathname changes
-	useEffect(() => {
-		loadUser()
-	}, [pathname])
-
-	// Listen for auth events (login/logout)
-	useEffect(() => {
-		const handleAuthChange = () => {
-			// Small delay to ensure cookie is set
-			setTimeout(() => {
-				loadUser()
-			}, 100)
-		}
-
-		// Listen for custom events
-		window.addEventListener('auth:login', handleAuthChange)
-		window.addEventListener('auth:logout', handleAuthChange)
-		window.addEventListener('auth:register', handleAuthChange)
-
-		// Also check on focus (when user returns to tab)
-		const handleFocus = () => {
-			if (!userLoading) {
-				loadUser()
-			}
-		}
-		window.addEventListener('focus', handleFocus)
-
-		return () => {
-			window.removeEventListener('auth:login', handleAuthChange)
-			window.removeEventListener('auth:logout', handleAuthChange)
-			window.removeEventListener('auth:register', handleAuthChange)
-			window.removeEventListener('focus', handleFocus)
-		}
-	}, [userLoading])
+	const { user, loading: userLoading } = useAuthSession()
 
 	// Відстеження прокрутки для зміни стилю хедера
 	useEffect(() => {
@@ -268,8 +219,6 @@ const Header = () => {
 	const handleLogout = async () => {
 		try {
 			await logout()
-			setUser(null)
-			// Dispatch event for other components
 			window.dispatchEvent(new Event('auth:logout'))
 			router.push('/')
 			router.refresh()

@@ -7,11 +7,9 @@ export async function GET() {
   try {
     const userId = await getCurrentUser()
 
+    // 200 + user: null — звичайний стан «гість», без 401 (інакше DevTools шумить на кожній сторінці)
     if (!userId) {
-      return NextResponse.json(
-        { error: 'Not authenticated' },
-        { status: 401 }
-      )
+      return NextResponse.json({ user: null }, { status: 200 })
     }
 
     // Get user from database

@@ -20,13 +20,15 @@ import {
 } from 'lucide-react'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
-import { enrollInCourse, getCurrentUser, getUserProgress, checkCoursePurchase, createPayment } from '@/lib/authClient'
+import { enrollInCourse, getUserProgress, checkCoursePurchase, createPayment } from '@/lib/authClient'
+import { useAuthSession } from '@/components/AuthSessionProvider'
 import { getCoursePrice, formatPrice } from '@/lib/coursePrices'
 import { trackCatalogCourseViewContent } from '@/lib/metaPixel'
 import styles from './CoursePage.module.css'
 
 const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress: initialProgress = null }) => {
   const router = useRouter()
+  const { user: sessionUser, loading: sessionLoading } = useAuthSession()
   const [isLoaded, setIsLoaded] = useState(false)
   const [expandedModule, setExpandedModule] = useState(null)
   const [userProgress, setUserProgress] = useState(initialProgress)
@@ -53,23 +55,10 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   
   useEffect(() => {
     setIsLoaded(true)
-    // Check if user is logged in
-    getCurrentUser().then(async (userData) => {
-      setUser(userData)
-      // Check if course is purchased
-      if (userData) {
-        const purchased = await checkCoursePurchase(courseId)
-        setIsPurchased(purchased || userData.role === 'admin')
-        // Always fetch fresh progress data
-        getUserProgress(courseId).then(progressData => {
-          if (progressData) {
-            setUserProgress(progressData)
-          }
-        })
-      }
-    })
-    
-    // Handle hash navigation to module
+  }, [])
+
+  useEffect(() => {
+    if (!course.modules || !isLoaded) return
     const handleHashNavigation = () => {
       if (typeof window !== 'undefined' && course.modules) {
         const hash = window.location.hash
@@ -78,17 +67,13 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
           if (moduleId) {
             const moduleIndex = course.modules.findIndex(m => m.moduleId === moduleId)
             if (moduleIndex >= 0) {
-              // Expand the module
               setExpandedModule(moduleIndex)
-              // Scroll to module after a short delay to ensure it's rendered
               setTimeout(() => {
                 const element = document.getElementById(`module-${moduleId}`)
                 if (element) {
-                  // Add offset for fixed header if needed
                   const headerOffset = 100
                   const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
                   const offsetPosition = elementPosition - headerOffset
-                  
                   window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
@@ -100,21 +85,35 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
         }
       }
     }
-    
-    // Check hash on mount and after course is loaded
-    if (isLoaded && course.modules) {
-      handleHashNavigation()
-    }
-    
-    // Also listen for hash changes
-    if (typeof window !== 'undefined') {
-      window.addEventListener('hashchange', handleHashNavigation)
-      
-      return () => {
-        window.removeEventListener('hashchange', handleHashNavigation)
-      }
-    }
+    handleHashNavigation()
+    window.addEventListener('hashchange', handleHashNavigation)
+    return () => window.removeEventListener('hashchange', handleHashNavigation)
   }, [courseId, course.modules, isLoaded])
+
+  useEffect(() => {
+    if (sessionLoading) return
+    setUser(sessionUser)
+    if (!sessionUser) {
+      setIsPurchased(false)
+      return
+    }
+    let cancelled = false
+    ;(async () => {
+      try {
+        const purchased = await checkCoursePurchase(courseId)
+        if (cancelled) return
+        setIsPurchased(purchased || sessionUser.role === 'admin')
+        const progressData = await getUserProgress(courseId)
+        if (cancelled) return
+        if (progressData) setUserProgress(progressData)
+      } catch {
+        if (!cancelled) setIsPurchased(false)
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [sessionLoading, sessionUser, courseId])
   
   const handlePurchase = async () => {
     if (!user) {
