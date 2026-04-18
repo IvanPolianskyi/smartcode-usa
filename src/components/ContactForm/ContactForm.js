@@ -2,7 +2,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Phone, Send, CheckCircle, Briefcase, MessageSquare, X, Sparkles } from 'lucide-react'
 import {
-	trackTrialLessonModalView,
 	trackTrialInitiateCheckoutOnce,
 	trackTrialLeadOnce,
 	trialInterestToContentIds,
@@ -32,7 +31,6 @@ const ContactForm = () => {
                 if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
                     window.gtag('event', 'click_trial_button')
                 }
-                trackTrialLessonModalView()
                 trackTrialInitiateCheckoutOnce()
             })
         }

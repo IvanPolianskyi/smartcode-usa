@@ -26,10 +26,13 @@ function flushPixelQueue() {
 		try {
 			if (job.type === 'track') {
 				const options = job.eventId ? { eventID: job.eventId } : undefined
-				if (job.params != null && Object.keys(job.params).length > 0) {
+				const hasParams = job.params != null && Object.keys(job.params).length > 0
+				if (hasParams) {
 					window.fbq('track', job.eventName, job.params, ...(options ? [options] : []))
+				} else if (options) {
+					window.fbq('track', job.eventName, {}, options)
 				} else {
-					window.fbq('track', job.eventName, {}, ...(options ? [options] : []))
+					window.fbq('track', job.eventName)
 				}
 			}
 		} catch {
@@ -84,10 +87,13 @@ export function generateEventId() {
 function sendOrQueueTrack(eventName, params, eventId) {
 	const options = eventId ? { eventID: eventId } : undefined
 	if (fbqReady()) {
-		if (params && Object.keys(params).length > 0) {
+		const hasParams = params && Object.keys(params).length > 0
+		if (hasParams) {
 			window.fbq('track', eventName, params, ...(options ? [options] : []))
+		} else if (options) {
+			window.fbq('track', eventName, {}, options)
 		} else {
-			window.fbq('track', eventName, {}, ...(options ? [options] : []))
+			window.fbq('track', eventName)
 		}
 		return
 	}
@@ -130,16 +136,6 @@ export function trackCourseLanding(courseKey) {
 	sendOrQueueTrack('ViewContent', {
 		...spec,
 		content_type: 'product',
-	})
-}
-
-/** Модалка пробного заняття - ViewContent */
-export function trackTrialLessonModalView() {
-	sendOrQueueTrack('ViewContent', {
-		content_ids: ['smartcode_trial_lesson_modal'],
-		content_type: 'product',
-		content_name: 'Запис на пробне заняття',
-		content_category: 'trial_lesson',
 	})
 }
 
