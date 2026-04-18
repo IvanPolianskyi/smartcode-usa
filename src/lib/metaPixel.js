@@ -160,8 +160,9 @@ const STORAGE_TRIAL_INITIATE_CHECKOUT = 'sc_pixel_trial_initiate_checkout'
 const STORAGE_TRIAL_LEAD = 'sc_pixel_trial_lead_once'
 
 /**
- * InitiateCheckout для пробного - один раз за сесію браузера (модалка або блок на головній).
- * Спільний прапорець: не дублюється, якщо вже відправили з іншого місця.
+ * InitiateCheckout для пробного — максимум один раз за сесію (один ключ sessionStorage).
+ * Виклики: блок на головній — при першому фокусі на полі форми; модалка — при відкритті.
+ * Якщо користувач і сфокусував блок, і відкрив модалку, друга дія не відправить другу подію.
  */
 export function trackTrialInitiateCheckoutOnce() {
 	if (typeof window === 'undefined') return

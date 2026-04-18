@@ -129,7 +129,9 @@ export async function sendCapiEvent({
 
 	const body = {
 		data: [eventPayload],
-		// test_event_code: 'TEST12345', // розкоментувати для тестування в Events Manager
+		...(process.env.META_CAPI_TEST_EVENT_CODE && {
+			test_event_code: process.env.META_CAPI_TEST_EVENT_CODE,
+		}),
 	}
 
 	try {

@@ -22,13 +22,6 @@ const ContactForm = () => {
     const openedAtRef = useRef(0)
     const scrollPositionRef = useRef(0)
 
-    const handleFormFocusCapture = (e) => {
-        const t = e.target
-        if (t instanceof HTMLInputElement || t instanceof HTMLSelectElement || t instanceof HTMLTextAreaElement) {
-            trackTrialInitiateCheckoutOnce()
-        }
-    }
-
     useEffect(() => {
         let rafId = null
         const open = () => {
@@ -40,6 +33,7 @@ const ContactForm = () => {
                     window.gtag('event', 'click_trial_button')
                 }
                 trackTrialLessonModalView()
+                trackTrialInitiateCheckoutOnce()
             })
         }
         const close = () => {
@@ -204,7 +198,7 @@ const ContactForm = () => {
                                     </p>
                                 </div>
 
-                                <form onSubmit={handleSubmit} className={styles.modalForm} onFocusCapture={handleFormFocusCapture}>
+                                <form onSubmit={handleSubmit} className={styles.modalForm}>
                                     <div className={styles.modalField}>
                                         <span className={styles.modalLabel}>Як з вами зв&apos;язатися?</span>
                                         <div className={styles.modalSegment} role='group' aria-label="Спосіб зв'язку">
