@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { trackTrialLead } from '@/lib/metaPixel'
+
 import {
 	X,
 	Phone,
@@ -103,10 +103,6 @@ const PhoneModal = ({
 			})
 
 			if (response.ok) {
-				trackTrialLead(
-					project?.title ? `Код проєкту: ${project.title}` : 'project_code_download',
-					['interest_project_code']
-				)
 				setSuccess(true)
 				if (onSuccess) {
 					onSuccess({ phone: fullPhoneNumber, name, project })

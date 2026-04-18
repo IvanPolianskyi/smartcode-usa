@@ -13,7 +13,7 @@ import { getCurrentUser } from '@/lib/authClient'
 const AuthSessionContext = createContext({
 	user: null,
 	loading: true,
-	/** @param {boolean} [withSpinner=true] — false після login/logout без миготіння UI */
+	/** @param {boolean} [withSpinner=true] - false після login/logout без миготіння UI */
 	refresh: async () => {},
 })
 

@@ -1,9 +1,9 @@
 /**
- * Meta (Facebook) Pixel — клієнтські хелпери.
+ * Meta (Facebook) Pixel - клієнтські хелпери.
  * ID: NEXT_PUBLIC_META_PIXEL_ID (у проді задати в env).
  *
  * Черга подій: Next.js підвантажує inline Pixel з `afterInteractive`, тож перші
- * `useEffect` можуть спрацювати раніше за `fbq` — без черги події губляться.
+ * `useEffect` можуть спрацювати раніше за `fbq` - без черги події губляться.
  */
 
 import { getCoursePrice } from '@/lib/coursePrices'
@@ -78,31 +78,31 @@ export function trackMetaPageView() {
 	sendOrQueueTrack('PageView', undefined)
 }
 
-/** Параметри ViewContent для маркетингових лендінгів (без ціни — без value) */
+/** Параметри ViewContent для маркетингових лендінгів (без ціни - без value) */
 const COURSE_LANDING_VIEW_CONTENT = {
 	python: {
 		content_ids: ['smartcode_landing_python'],
-		content_name: 'Python — курс програмування для дітей',
+		content_name: 'Python - курс програмування для дітей',
 		content_category: 'online_course',
 	},
 	roblox: {
 		content_ids: ['smartcode_landing_roblox'],
-		content_name: 'Roblox Studio — курс для дітей',
+		content_name: 'Roblox Studio - курс для дітей',
 		content_category: 'online_course',
 	},
 	unity: {
 		content_ids: ['smartcode_landing_unity'],
-		content_name: 'Unity — розробка ігор для дітей',
+		content_name: 'Unity - розробка ігор для дітей',
 		content_category: 'online_course',
 	},
 	webdev: {
 		content_ids: ['smartcode_landing_webdev'],
-		content_name: 'Веб-розробка — курс для дітей',
+		content_name: 'Веб-розробка - курс для дітей',
 		content_category: 'online_course',
 	},
 }
 
-/** Перегляд лендінгу напряму — ViewContent */
+/** Перегляд лендінгу напряму - ViewContent */
 export function trackCourseLanding(courseKey) {
 	const spec = COURSE_LANDING_VIEW_CONTENT[courseKey]
 	if (!spec) return
@@ -112,7 +112,7 @@ export function trackCourseLanding(courseKey) {
 	})
 }
 
-/** Модалка пробного заняття — ViewContent */
+/** Модалка пробного заняття - ViewContent */
 export function trackTrialLessonModalView() {
 	sendOrQueueTrack('ViewContent', {
 		content_ids: ['smartcode_trial_lesson_modal'],
@@ -122,8 +122,56 @@ export function trackTrialLessonModalView() {
 	})
 }
 
+/** Відкриття модалки / початок оформлення пробного - InitiateCheckout */
+export function trackTrialInitiateCheckout() {
+	sendOrQueueTrack('InitiateCheckout', {
+		content_ids: ['smartcode_trial_signup'],
+		content_type: 'product',
+		content_name: 'Запис на пробне заняття',
+		content_category: 'trial_lesson',
+		num_items: 1,
+	})
+}
+
+const STORAGE_TRIAL_INITIATE_CHECKOUT = 'sc_pixel_trial_initiate_checkout'
+const STORAGE_TRIAL_LEAD = 'sc_pixel_trial_lead_once'
+
 /**
- * Сторінка платного курсу в каталозі (/courses/...) — ViewContent з ціною для value-оптимізації.
+ * InitiateCheckout для пробного - один раз за сесію браузера (модалка або блок на головній).
+ * Спільний прапорець: не дублюється, якщо вже відправили з іншого місця.
+ */
+export function trackTrialInitiateCheckoutOnce() {
+	if (typeof window === 'undefined') return
+	try {
+		if (sessionStorage.getItem(STORAGE_TRIAL_INITIATE_CHECKOUT) === '1') return
+		sessionStorage.setItem(STORAGE_TRIAL_INITIATE_CHECKOUT, '1')
+	} catch {
+		// без sessionStorage — все одно одна подія за виклик
+	}
+	trackTrialInitiateCheckout()
+}
+
+/**
+ * Lead після успішної trial-заявки (модалка / блок) - не більше одного Lead за сесію.
+ * Викликати лише після успішної відповіді API.
+ */
+export function trackTrialLeadOnce(contentName, contentIds) {
+	if (typeof window === 'undefined') return
+	let already = false
+	try {
+		already = sessionStorage.getItem(STORAGE_TRIAL_LEAD) === '1'
+	} catch {
+		already = false
+	}
+	if (already) return
+	trackTrialLead(contentName, contentIds)
+	try {
+		sessionStorage.setItem(STORAGE_TRIAL_LEAD, '1')
+	} catch {}
+}
+
+/**
+ * Сторінка платного курсу в каталозі (/courses/...) - ViewContent з ціною для value-оптимізації.
  */
 export function trackCatalogCourseViewContent(courseId) {
 	const { name, price, currency } = getCoursePrice(courseId)
@@ -153,8 +201,8 @@ export function trialInterestToContentIds(interestLabel) {
 
 /**
  * Заявка з контактом. Не передавати email/телефон (ПІІ).
- * @param {string} contentName — що обрав користувач (текст з форми)
- * @param {string[]|undefined} contentIds — стабільні id для каталогу в Ads
+ * @param {string} contentName - що обрав користувач (текст з форми)
+ * @param {string[]|undefined} contentIds - стабільні id для каталогу в Ads
  */
 export function trackTrialLead(contentName, contentIds) {
 	const params = {
@@ -167,7 +215,7 @@ export function trackTrialLead(contentName, contentIds) {
 	sendOrQueueTrack('Lead', params)
 }
 
-/** Вибір напряму в діагностичному тесті — ViewContent */
+/** Вибір напряму в діагностичному тесті - ViewContent */
 export function trackKnowledgeTestDirection(directionId, directionName) {
 	sendOrQueueTrack('ViewContent', {
 		content_ids: [`smartcode_diagnostic_${directionId}`],

@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import { Code, Gamepad2, Box, Monitor, Phone, CheckCircle, Award, ArrowRight, Loader2, AlertCircle, Lock } from 'lucide-react'
 import styles from './KnowledgeTestClient.module.css'
 import { TEST_QUESTIONS } from '@/lib/testQuestions'
-import { trackKnowledgeTestDirection, trackTrialLead } from '@/lib/metaPixel'
+
 
 const DIRECTIONS = [
   {
@@ -56,7 +56,6 @@ export default function KnowledgeTestClient() {
     if (courseParam && !selectedDirection) {
       const direction = DIRECTIONS.find(d => d.id === courseParam)
       if (direction) {
-        trackKnowledgeTestDirection(direction.id, direction.name)
         setSelectedDirection(direction)
         setCurrentQuestion(0)
         setAnswers({})
@@ -74,7 +73,6 @@ export default function KnowledgeTestClient() {
   const totalQuestions = questions.length
 
   const handleDirectionSelect = (direction) => {
-    trackKnowledgeTestDirection(direction.id, direction.name)
     setSelectedDirection(direction)
     setCurrentQuestion(0)
     setAnswers({})
@@ -180,9 +178,6 @@ export default function KnowledgeTestClient() {
       })
 
       if (response.ok) {
-        trackTrialLead(`Діагностика: ${selectedDirection.name}`, [
-          `smartcode_diagnostic_lead_${selectedDirection.id}`,
-        ])
         setTestResult(score)
         setShowPhoneForm(false)
         setShowResults(true)

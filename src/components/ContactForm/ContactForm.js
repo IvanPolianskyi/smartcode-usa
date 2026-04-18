@@ -1,27 +1,26 @@
 "use client"
 import React, { useState, useRef, useEffect } from 'react'
-import { Phone, Send, CheckCircle, Briefcase, MessageSquare, X } from 'lucide-react'
+import { Phone, Send, CheckCircle, Briefcase, MessageSquare, X, Sparkles } from 'lucide-react'
 import {
 	trackTrialLessonModalView,
-	trackTrialLead,
+	trackTrialInitiateCheckoutOnce,
+	trackTrialLeadOnce,
 	trialInterestToContentIds,
 } from '@/lib/metaPixel'
 import styles from './ContactForm.module.css'
 
 const ContactForm = () => {
     const [isOpen, setIsOpen] = useState(false)
-    const [contactMethod, setContactMethod] = useState('phone') // 'phone' or 'telegram'
+    const [contactMethod, setContactMethod] = useState('phone')
     const [formData, setFormData] = useState({ phone: '', telegram: '', course: '', message: '' })
     const [phoneError, setPhoneError] = useState('')
     const [telegramError, setTelegramError] = useState('')
     const [touched, setTouched] = useState({ phone: false, telegram: false, course: false })
     const [isSubmitted, setIsSubmitted] = useState(false)
-    const dialogRef = useRef(null)
     const overlayRef = useRef(null)
     const openedAtRef = useRef(0)
     const scrollPositionRef = useRef(0)
 
-    // Відкриття/закриття через глобальні події (запобігаємо дублюванню)
     useEffect(() => {
         let rafId = null
         const open = () => {
@@ -29,11 +28,11 @@ const ContactForm = () => {
             if (rafId) cancelAnimationFrame(rafId)
             rafId = requestAnimationFrame(() => {
                 setIsOpen(true)
-                // Google Analytics: фіксуємо клік на кнопку пробного заняття
                 if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
                     window.gtag('event', 'click_trial_button')
                 }
                 trackTrialLessonModalView()
+                trackTrialInitiateCheckoutOnce()
             })
         }
         const close = () => {
@@ -54,18 +53,12 @@ const ContactForm = () => {
         setIsOpen(false)
     }
 
-    // CSS-анімація обробляє появу, JS не потрібен
-
-    // Scroll lock для body, коли модалка відкрита, та закриття по ESC
     useEffect(() => {
         if (!isOpen) return
 
-        // Зберігаємо поточну позицію прокрутки перед блокуванням
         const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0
         scrollPositionRef.current = scrollY
-        
-        // Використовуємо тільки overflow: hidden замість position: fixed
-        // Це не викликає проблем з прокруткою при закритті
+
         document.body.style.overflow = 'hidden'
         document.documentElement.style.overflow = 'hidden'
 
@@ -77,10 +70,8 @@ const ContactForm = () => {
         document.addEventListener('keydown', onKeyDown)
 
         return () => {
-            // Просто видаляємо стилі - прокрутка залишається на тому ж місці
             document.body.style.overflow = ''
             document.documentElement.style.overflow = ''
-            
             scrollPositionRef.current = 0
             document.removeEventListener('keydown', onKeyDown)
         }
@@ -92,12 +83,12 @@ const ContactForm = () => {
         'JavaScript та веб-розробка',
         'Розробка ігор на Unity',
         'Не впевнений(а), потрібна консультація'
-    ];
+    ]
 
     const handleInputChange = e => {
         const { name, value } = e.target
         if (name === 'phone') {
-            const digits = value.replace(/\D/g, '').slice(0, 9)
+            const digits = value.replace(/\D/g, '').replace(/^0+/, '').slice(0, 9)
             setFormData(prev => ({ ...prev, phone: digits }))
             if (digits.length === 0) setPhoneError('Введіть номер телефону')
             else if (digits.length !== 9) setPhoneError('Номер має містити 9 цифр')
@@ -105,7 +96,6 @@ const ContactForm = () => {
             return
         }
         if (name === 'telegram') {
-            // Remove @ if user types it, we'll add it later if needed
             const cleanedValue = value.replace(/^@/, '').trim()
             setFormData(prev => ({ ...prev, telegram: cleanedValue }))
             if (cleanedValue.length === 0) setTelegramError('Введіть ваш телеграм')
@@ -113,22 +103,10 @@ const ContactForm = () => {
             return
         }
         setFormData(prev => ({ ...prev, [name]: value }))
-    };
-
-    const handleContactMethodChange = e => {
-        const method = e.target.value
-        setContactMethod(method)
-        // Reset errors when switching methods
-        if (method === 'phone') {
-            setTelegramError('')
-        } else {
-            setPhoneError('')
-        }
-    };
+    }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        // позначаємо поля як торкнуті, щоб показати стилі помилок
+        e.preventDefault()
         if (contactMethod === 'phone') {
             setTouched(prev => ({ ...prev, phone: true, course: true }))
             const isPhoneValid = /^\d{9}$/.test(formData.phone || '')
@@ -168,15 +146,13 @@ const ContactForm = () => {
                 alert('На жаль, сталася помилка при відправці. Спробуйте ще раз або напишіть нам у Telegram.')
                 return
             }
-            // Успіх: закриваємо модальне вікно і скидаємо форму
-            // Google Analytics: фіксуємо успішну відправку форми
             if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
                 window.gtag('event', 'submit_trial_form', {
                     course: formData.course,
                     contact_method: contactMethod,
                 })
             }
-            trackTrialLead(formData.course, trialInterestToContentIds(formData.course))
+            trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course))
             setIsSubmitted(false)
             setFormData({ phone: '', telegram: '', course: '', message: '' })
             setPhoneError('')
@@ -192,129 +168,167 @@ const ContactForm = () => {
 
     if (!isOpen) return null
 
+    const phoneInvalid = !!(phoneError || (touched.phone && !formData.phone))
+    const telegramInvalid = !!(telegramError || (touched.telegram && !formData.telegram))
+    const courseInvalid = !!(touched.course && !formData.course)
+
     return (
         <div className={styles.modalOverlay} ref={overlayRef} onClick={handleOverlayClick}>
-            <div className={styles.modalContainer} onClick={(e) => e.stopPropagation()}>
-                <div className={styles.backgroundElements}>
-                    <div className={`${styles.floatingElement} ${styles.element1}`}></div>
-                    <div className={`${styles.floatingElement} ${styles.element2}`}></div>
-                    <div className={`${styles.floatingElement} ${styles.element3}`}></div>
-                    <div className={`${styles.floatingElement} ${styles.element4}`}></div>
-                </div>
-                <div className={styles.container} ref={dialogRef}>
-                    <div className={`${styles.contactCard} ${styles.compact}`}>
-                        <button className={styles.modalClose} onClick={() => setIsOpen(false)} aria-label='Закрити форму'>
+            <div className={styles.modalShell} onClick={(e) => e.stopPropagation()}>
+                <div className={styles.modalInner}>
+                    <div className={styles.modalCard}>
+                        <button type='button' className={styles.modalClose} onClick={() => setIsOpen(false)} aria-label='Закрити форму'>
                             <X size={20} />
                         </button>
-                    {/* Мінімалістична форма */}
-                    <div className={styles.rightSection}>
-                        <div className={styles.formContainer}>
-                            {!isSubmitted ? (
-                                <>
-                                    <div className={styles.formHeader}>
-                                        <h3 className={styles.formTitle}>Залишіть контактні дані — ми зв&apos;яжемося</h3>
-                                    </div>
-                                    <form onSubmit={handleSubmit} className={styles.form}>
-                                        <div className={styles.inputWrapper}>
-                                            <MessageSquare className={styles.inputIcon} size={18} />
-                                            <select 
-                                                name='contactMethod' 
-                                                value={contactMethod} 
-                                                onChange={handleContactMethodChange}
-                                                className={styles.select}
+
+                        {!isSubmitted ? (
+                            <>
+                                <div className={styles.modalCardHeader}>
+                                    <span className={styles.modalPill}>
+                                        <Sparkles size={14} aria-hidden />
+                                        Пробне заняття
+                                    </span>
+                                    <h2 className={styles.modalTitle}>Запишіться без зайвих кроків</h2>
+                                    <p className={styles.modalSubtitle}>
+                                        Оберіть зручний спосіб зв&apos;язку та напрямок - відповімо і підберемо час.
+                                    </p>
+                                </div>
+
+                                <form onSubmit={handleSubmit} className={styles.modalForm}>
+                                    <div className={styles.modalField}>
+                                        <span className={styles.modalLabel}>Як з вами зв&apos;язатися?</span>
+                                        <div className={styles.modalSegment} role='group' aria-label="Спосіб зв'язку">
+                                            <button
+                                                type='button'
+                                                className={`${styles.modalSegmentBtn} ${contactMethod === 'phone' ? styles.modalSegmentBtnActive : ''}`}
+                                                onClick={() => {
+                                                    setContactMethod('phone')
+                                                    setTelegramError('')
+                                                }}
                                             >
-                                                <option value='phone'>Зв&apos;язатися по номеру телефону</option>
-                                                <option value='telegram'>Зв&apos;язатися по телеграму</option>
-                                            </select>
+                                                <Phone size={16} aria-hidden />
+                                                Телефон
+                                            </button>
+                                            <button
+                                                type='button'
+                                                className={`${styles.modalSegmentBtn} ${contactMethod === 'telegram' ? styles.modalSegmentBtnActive : ''}`}
+                                                onClick={() => {
+                                                    setContactMethod('telegram')
+                                                    setPhoneError('')
+                                                }}
+                                            >
+                                                <MessageSquare size={16} aria-hidden />
+                                                Telegram
+                                            </button>
                                         </div>
-                                        
-                                        {contactMethod === 'phone' ? (
-                                            <div className={`${styles.inputWrapper} ${(phoneError || (touched.phone && !formData.phone)) ? styles.hasError : ''}`}>
-                                                <Phone className={styles.inputIcon} size={18} />
-                                                <span className={styles.countryCode}>+380</span>
-                                                <input 
+                                    </div>
+
+                                    {contactMethod === 'phone' ? (
+                                        <div className={`${styles.modalField} ${phoneInvalid ? styles.modalFieldError : ''}`}>
+                                            <label className={styles.modalLabel} htmlFor='modal-phone'>
+                                                Номер телефону
+                                            </label>
+                                            <div className={styles.modalPhoneRow}>
+                                                <span className={styles.modalPrefix}>+380</span>
+                                                <input
+                                                    id='modal-phone'
                                                     type='tel'
                                                     name='phone'
                                                     value={formData.phone}
                                                     onChange={handleInputChange}
                                                     onBlur={() => setTouched(prev => ({ ...prev, phone: true }))}
                                                     placeholder='__ ___ __ __'
-                                                    className={`${styles.input} ${styles.phoneInput}`}
+                                                    className={styles.modalInput}
                                                     inputMode='numeric'
-                                                    required
-                                                    aria-invalid={!!(phoneError || (touched.phone && !formData.phone))}
+                                                    autoComplete='tel-national'
+                                                    aria-invalid={phoneInvalid}
                                                 />
-                                                {phoneError && <div className={styles.errorText}>{phoneError}</div>}
                                             </div>
-                                        ) : (
-                                            <div>
-                                                <div className={styles.telegramInfo}>
-                                                    <p className={styles.telegramLabel}>Наш телеграм. Якщо пишете перші - залишати заявку необов&apos;язково</p>
-                                                    <p className={styles.telegramUsername}>@SmartCode_Academy</p>
-                                                </div>
-                                                <div className={`${styles.inputWrapper} ${(telegramError || (touched.telegram && !formData.telegram)) ? styles.hasError : ''}`}>
-                                                    <MessageSquare className={styles.inputIcon} size={18} />
-                                                    <input 
-                                                        type='text'
-                                                        name='telegram'
-                                                        value={formData.telegram}
-                                                        onChange={handleInputChange}
-                                                        onBlur={() => setTouched(prev => ({ ...prev, telegram: true }))}
-                                                        placeholder='Ваш телеграм (наприклад: username)'
-                                                        className={styles.input}
-                                                        required
-                                                        aria-invalid={!!(telegramError || (touched.telegram && !formData.telegram))}
-                                                    />
-                                                    {telegramError && <div className={styles.errorText}>{telegramError}</div>}
-                                                </div>
-                                            </div>
-                                        )}
-                                        <div className={`${styles.inputWrapper} ${(touched.course && !formData.course) ? styles.hasError : ''}`}>
-                                            <Briefcase className={styles.inputIcon} size={18} />
-                                            <select 
-                                                name='course' 
-                                                value={formData.course} 
-                                                onChange={handleInputChange} 
-                                                onBlur={() => setTouched(prev => ({ ...prev, course: true }))}
-                                                className={styles.select} 
-                                                required
-                                                aria-invalid={!!(touched.course && !formData.course)}
-                                            >
-                                                <option value=''>Оберіть цікавий напрямок</option>
-                                                {courses.map((course, index) => (
-                                                    <option key={index} value={course}>{course}</option>
-                                                ))}
-                                            </select>
-                                            {(touched.course && !formData.course) && (
-                                                <div className={styles.errorText}>Оберіть напрямок</div>
-                                            )}
+                                            {phoneError && <span className={styles.modalError}>{phoneError}</span>}
                                         </div>
-                                        <div className={styles.inputWrapper}>
-                                            <MessageSquare className={`${styles.inputIcon} ${styles.textareaIcon}`} size={18} />
-                                            <textarea name='message' value={formData.message} onChange={handleInputChange} placeholder="Ваше повідомлення... (необов'язково)" className={styles.textarea} rows={3}></textarea>
+                                    ) : (
+                                        <div className={`${styles.modalField} ${telegramInvalid ? styles.modalFieldError : ''}`}>
+                                            <p className={styles.modalHint}>
+                                                Наш канал: <span className={styles.modalHintAccent}>@SmartCode_Academy</span>
+                                            </p>
+                                            <label className={styles.modalLabel} htmlFor='modal-tg'>
+                                                Ваш username у Telegram
+                                            </label>
+                                            <input
+                                                id='modal-tg'
+                                                type='text'
+                                                name='telegram'
+                                                value={formData.telegram}
+                                                onChange={handleInputChange}
+                                                onBlur={() => setTouched(prev => ({ ...prev, telegram: true }))}
+                                                placeholder='username'
+                                                className={styles.modalInput}
+                                                autoComplete='username'
+                                                aria-invalid={telegramInvalid}
+                                            />
+                                            {telegramError && <span className={styles.modalError}>{telegramError}</span>}
                                         </div>
-                                        <button 
-                                            type='submit' 
-                                            className={styles.submitBtn} 
+                                    )}
+
+                                    <div className={`${styles.modalField} ${courseInvalid ? styles.modalFieldError : ''}`}>
+                                        <label className={styles.modalLabel} htmlFor='modal-course'>
+                                            <span className={styles.modalLabelInner}>
+                                                <Briefcase size={15} className={styles.modalLabelIcon} aria-hidden />
+                                                Напрямок навчання
+                                            </span>
+                                        </label>
+                                        <select
+                                            id='modal-course'
+                                            name='course'
+                                            value={formData.course}
+                                            onChange={handleInputChange}
+                                            onBlur={() => setTouched(prev => ({ ...prev, course: true }))}
+                                            className={styles.modalSelect}
+                                            aria-invalid={courseInvalid}
                                         >
-                                            <Send size={20} />
-                                            Записатися на пробне заняття
-                                        </button>
-                                    </form>
-                                </>
-                            ) : (
-                                <div className={styles.successMessage}>
-                                    <div className={styles.successIconWrapper}>
-                                        <CheckCircle className={styles.successIcon} />
+                                            <option value=''>Оберіть напрямок</option>
+                                            {courses.map((course, index) => (
+                                                <option key={index} value={course}>{course}</option>
+                                            ))}
+                                        </select>
+                                        {courseInvalid && <span className={styles.modalError}>Оберіть напрямок</span>}
                                     </div>
-                                    <h3 className={styles.successTitle}>Дякуємо за заявку!</h3>
-                                    <p className={styles.successText}>
-                                        Наш менеджер вже готує для вас найкращу пропозицію і зв&apos;яжеться з вами найближчим часом.
-                                    </p>
+
+                                    <div className={`${styles.modalField} ${styles.modalFieldStretch}`}>
+                                        <label className={styles.modalLabel} htmlFor='modal-msg'>
+                                            <span className={styles.modalLabelInner}>
+                                                <MessageSquare size={15} className={styles.modalLabelIcon} aria-hidden />
+                                                Коментар (за бажанням)
+                                            </span>
+                                        </label>
+                                        <textarea
+                                            id='modal-msg'
+                                            name='message'
+                                            value={formData.message}
+                                            onChange={handleInputChange}
+                                            rows={2}
+                                            placeholder='Вік дитини, зручний час, питання…'
+                                            className={styles.modalTextarea}
+                                        />
+                                    </div>
+
+                                    <button type='submit' className={styles.modalSubmit}>
+                                        <Send size={18} aria-hidden />
+                                        Надіслати заявку
+                                    </button>
+                                </form>
+                            </>
+                        ) : (
+                            <div className={styles.modalSuccess}>
+                                <div className={styles.modalSuccessIconWrap}>
+                                    <CheckCircle size={28} className={styles.modalSuccessIcon} />
                                 </div>
-                            )}
-                        </div>
-                    </div>
+                                <h3 className={styles.modalSuccessTitle}>Дякуємо за заявку!</h3>
+                                <p className={styles.modalSuccessText}>
+                                    Наш менеджер зв&apos;яжеться з вами найближчим часом.
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

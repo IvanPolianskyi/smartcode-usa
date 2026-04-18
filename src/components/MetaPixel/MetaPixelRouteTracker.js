@@ -6,7 +6,7 @@ import { trackMetaPageView } from '@/lib/metaPixel'
 
 /**
  * Додатковий PageView при клієнтській навігації Next.js (layout лишається змонтованим).
- * Перший показ сторінки вже дає базовий скрипт у layout — пропускаємо один раз.
+ * Перший показ сторінки вже дає базовий скрипт у layout - пропускаємо один раз.
  */
 export default function MetaPixelRouteTracker() {
 	const pathname = usePathname()

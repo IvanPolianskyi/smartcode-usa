@@ -1,12 +1,8 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
-import {
-  ChevronRight,
-  PlayCircle,
-  Sparkles,
-} from 'lucide-react'
+import { ClipboardCheck, PlayCircle, Sparkles } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './CoursesSection.module.css'
@@ -15,7 +11,6 @@ gsap.registerPlugin(ScrollTrigger)
 
 const CoursesSection = () => {
   const sectionRef = useRef(null)
-  const cardRef = useRef(null)
   const lessonsRef = useRef(null)
 
   const lessonExamples = [
@@ -40,170 +35,103 @@ const CoursesSection = () => {
   ]
 
   useEffect(() => {
-    if (sectionRef.current && cardRef.current) {
-      const isMobile = window.innerWidth <= 768
-      
-      const ctx = gsap.context(() => {
-        // Оптимізовані анімації для мобільних
-        if (isMobile) {
-          gsap.fromTo(
-            `.${styles.heroContent}`,
-            { y: 30, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.6,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: sectionRef.current,
-                start: 'top 85%',
-                toggleActions: 'play none none none',
-                markers: false,
-              },
-            }
-          )
+    if (!sectionRef.current || !lessonsRef.current) return
 
-          gsap.fromTo(
-            `.${styles.buttonWrapper}`,
-            { scale: 0.98, opacity: 0, y: 20 },
-            {
-              scale: 1,
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              ease: 'power2.out',
-              delay: 0.1,
-              scrollTrigger: {
-                trigger: cardRef.current,
-                start: 'top 90%',
-                toggleActions: 'play none none none',
-                markers: false,
-              },
-            }
-          )
+    const isMobile = window.innerWidth <= 768
 
-          gsap.fromTo(
-            `.${styles.lessonExamples}`,
-            { opacity: 0, y: 20 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              delay: 0.15,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: lessonsRef.current,
-                start: 'top 90%',
-                toggleActions: 'play none none none',
-                markers: false,
-              },
-            }
-          )
-        } else {
-          gsap.fromTo(
-            `.${styles.heroContent}`,
-            { y: 60, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 1,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: sectionRef.current,
-                start: 'top 80%',
-                toggleActions: 'play none none none',
-              },
-            }
-          )
+    const ctx = gsap.context(() => {
+      if (isMobile) {
+        gsap.fromTo(
+          `.${styles.heroContent}`,
+          { y: 24, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.55,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 88%',
+              toggleActions: 'play none none none',
+            },
+          }
+        )
 
-          gsap.fromTo(
-            `.${styles.buttonWrapper}`,
-            { scale: 0.95, opacity: 0, y: 40 },
-            {
-              scale: 1,
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              ease: 'power3.out',
-              delay: 0.2,
-              scrollTrigger: {
-                trigger: cardRef.current,
-                start: 'top 85%',
-                toggleActions: 'play none none none',
-              },
-            }
-          )
+        gsap.fromTo(
+          `.${styles.lessonExamples}`,
+          { opacity: 0, y: 16 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.55,
+            delay: 0.08,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: lessonsRef.current,
+              start: 'top 92%',
+              toggleActions: 'play none none none',
+            },
+          }
+        )
+      } else {
+        gsap.fromTo(
+          `.${styles.heroContent}`,
+          { y: 40, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.75,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+          }
+        )
 
-          gsap.fromTo(
-            `.${styles.lessonExamples}`,
-            { opacity: 0, y: 30 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              delay: 0.3,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: lessonsRef.current,
-                start: 'top 85%',
-                toggleActions: 'play none none none',
-              },
-            }
-          )
-        }
+        gsap.fromTo(
+          `.${styles.lessonExamples}`,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.75,
+            delay: 0.12,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: lessonsRef.current,
+              start: 'top 86%',
+              toggleActions: 'play none none none',
+            },
+          }
+        )
+      }
+    }, sectionRef)
 
-      }, sectionRef)
-
-      return () => ctx.revert()
-    }
+    return () => ctx.revert()
   }, [])
 
   return (
     <section ref={sectionRef} className={styles.section}>
       <div className={styles.container}>
         <div className={styles.heroContent}>
-        <div className={styles.badge}>
-          <Sparkles size={18} />
-          <span>Онлайн уроки з викладачем</span>
-        </div>
-        <h2 className={styles.title}>
-          Індивідуальні уроки
-          <span className={styles.titleAccent}> з реальними проєктами</span>
-        </h2>
-        <p className={styles.description}>
-          Усі заняття проходять у форматі онлайн-уроків з викладачем в Zoom. 
-          Дитина навчається в індивідуальному темпі, отримує зворотній зв&apos;язок та працює над власними проєктами.
-        </p>
-        </div>
-
-        <div 
-          ref={cardRef}
-          className={styles.buttonWrapper}
-        >
-          <button onClick={() => window.dispatchEvent(new Event('openContactModal'))} className={styles.allCoursesButton}>
-            <div className={styles.buttonContent}>
-              <div className={styles.buttonIcon}>
-                <Sparkles size={28} />
-              </div>
-              <div className={styles.buttonText}>
-                <span className={styles.buttonTitle}>Записатись на урок</span>
-                <span className={styles.buttonSubtitle}>Дізнайся більше про наші навчальні програми та індивідуальні уроки</span>
-              </div>
-              <ChevronRight size={24} className={styles.buttonArrow} />
-            </div>
-            <div className={styles.buttonGlow} />
-          </button>
+          <div className={styles.badge}>
+            <Sparkles size={16} />
+            <span>Індивідуальні онлайн-уроки</span>
+          </div>
+          <h2 className={styles.title}>
+            Приклади уроків
+            <span className={styles.titleAccent}> з викладачем у Zoom</span>
+          </h2>
+          <p className={styles.description}>
+            Усі заняття - у форматі живого уроку: зворотний зв&apos;язок, власний темп і робота над проєктами. Нижче -
+            короткі фрагменти, щоб побачити стиль пояснення.
+          </p>
         </div>
 
         <div ref={lessonsRef} className={styles.lessonExamples}>
           <div className={styles.examplesHeader}>
-            <div className={styles.examplesBadge}>
-              <PlayCircle size={16} />
-              <span>Приклади уроків</span>
-            </div>
-            <p className={styles.examplesText}>
-              Подивіться, як виглядають наші заняття: практика, пояснення та робота над проєктами в реальному часі.
-            </p>
           </div>
 
           <div className={styles.videoGrid}>
@@ -224,6 +152,13 @@ const CoursesSection = () => {
               </article>
             ))}
           </div>
+
+          <div className={styles.knowledgeRow}>
+            <Link href='/knowledge-test' className={styles.knowledgeButton}>
+              <ClipboardCheck className={styles.knowledgeButtonIcon} size={20} aria-hidden />
+              <span>Перевірте знання</span>
+            </Link>
+          </div>
         </div>
       </div>
     </section>
@@ -231,24 +166,3 @@ const CoursesSection = () => {
 }
 
 export default CoursesSection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

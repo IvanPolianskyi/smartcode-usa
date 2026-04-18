@@ -354,7 +354,7 @@ const Header = () => {
                                 <Link 
 									key={index} 
 									href={item.href} 
-									className={styles.navLink}
+									className={`${styles.navLink} ${item.label === 'Записатися' ? styles.navLinkCta : ''}`}
 									onClick={item.label === 'Записатися' ? handleCtaClick : undefined}
 									scroll={item.label === 'Записатися' ? false : undefined}
 								>
@@ -468,7 +468,7 @@ const Header = () => {
                                     <Link
                                         key={index}
                                         href={item.href}
-                                        className={`${styles.mobileMenuItem} ${styles.mobileNavItem}`}
+                                        className={`${styles.mobileMenuItem} ${styles.mobileNavItem} ${item.label === 'Записатися' ? styles.mobileNavCta : ''}`}
                                         onClick={item.label === 'Записатися' ? handleCtaClick : handleMobileMenuClose}
                                         scroll={item.label === 'Записатися' ? false : undefined}
                                     >

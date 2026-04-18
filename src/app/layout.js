@@ -14,7 +14,7 @@ const geistSans = Geist({
 	variable: '--font-geist-sans',
 	subsets: ['latin'],
 	display: 'swap',
-	// Лише ваги, що реально використовуються — менший CSS з Google Fonts
+	// Лише ваги, що реально використовуються - менший CSS з Google Fonts
 	weight: ['400', '500', '600', '700'],
 })
 
@@ -185,7 +185,7 @@ export default function RootLayout({ children }) {
 						}),
 					}}
 				/>
-				{/* Google Analytics — після основного контенту, без блокування TBT */}
+				{/* Google Analytics - після основного контенту, без блокування TBT */}
 				<Script
 					src='https://www.googletagmanager.com/gtag/js?id=G-MYR6FDXWYF'
 					strategy='lazyOnload'
@@ -198,7 +198,7 @@ export default function RootLayout({ children }) {
 						gtag('config', 'G-MYR6FDXWYF');
 					`}
 				</Script>
-				{/* Meta Pixel — afterInteractive щоб fbq був доступний рано для подій у metaPixel */}
+				{/* Meta Pixel - afterInteractive щоб fbq був доступний рано для подій у metaPixel */}
 				<Script id='meta-pixel' strategy='afterInteractive'>
 					{`
 						!function(f,b,e,v,n,t,s)

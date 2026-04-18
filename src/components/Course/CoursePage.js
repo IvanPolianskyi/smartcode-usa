@@ -23,7 +23,6 @@ import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { enrollInCourse, getUserProgress, checkCoursePurchase, createPayment } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import { getCoursePrice, formatPrice } from '@/lib/coursePrices'
-import { trackCatalogCourseViewContent } from '@/lib/metaPixel'
 import styles from './CoursePage.module.css'
 
 const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress: initialProgress = null }) => {
@@ -49,10 +48,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   const isEnrolled = userProgress !== null
   const progress = userProgress?.overallProgress || 0
 
-  useEffect(() => {
-    trackCatalogCourseViewContent(courseId)
-  }, [courseId])
-  
+
   useEffect(() => {
     setIsLoaded(true)
   }, [])
@@ -435,7 +431,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
       <section className={styles.roadmapSection}>
         <h2 className={styles.sectionTitle}>Програма курсу</h2>
         <p className={styles.sectionDescription}>
-          {course.modules.length} модулів, {course.modules.reduce((sum, m) => sum + m.lessons.length, 0)} уроків — від основ до створення повноцінних проектів
+          {course.modules.length} модулів, {course.modules.reduce((sum, m) => sum + m.lessons.length, 0)} уроків - від основ до створення повноцінних проектів
         </p>
         
         <div className={styles.modulesList}>

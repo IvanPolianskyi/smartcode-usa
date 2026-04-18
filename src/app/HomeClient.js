@@ -28,11 +28,11 @@ const FAQ = dynamic(() => import('@/components/FAQ/FAQ'), {
 const ProjectsShowcase = dynamic(() => import('@/components/ProjectsShowcase/ProjectsShowcase'), {
   loading: () => <SectionSkeleton height='1000px' />,
 })
-const KnowledgeTestSection = dynamic(() => import('@/components/KnowledgeTestSection/KnowledgeTestSection'), {
-  loading: () => <SectionSkeleton height='800px' />,
-})
 const CoursesSection = dynamic(() => import('@/components/CoursesSection/CoursesSection'), {
   loading: () => <SectionSkeleton height='1000px' />,
+})
+const TrialSignupBlock = dynamic(() => import('@/components/TrialSignupBlock/TrialSignupBlock'), {
+  loading: () => <SectionSkeleton height='420px' />,
 })
 const SocialMedia = dynamic(() => import('@/components/SocialMedia/SocialMedia'), {
   loading: () => <SectionSkeleton height='600px' />,
@@ -65,33 +65,6 @@ export default function HomeClient() {
         }
       }
     } catch {}
-
-    // Авто-відкриття модалки, коли користувач дійшов до середини сторінки (одноразово за сесію)
-    try {
-      if (typeof window !== 'undefined' && sessionStorage.getItem('contactModalShownMid') === '1') {
-        return
-      }
-    } catch {}
-
-    let triggered = false
-    const onScroll = () => {
-      const doc = document.documentElement
-      const scrollTop = window.scrollY || doc.scrollTop || 0
-      const docHeight = doc.scrollHeight
-      const winHeight = window.innerHeight || doc.clientHeight
-      const maxScrollable = Math.max(1, docHeight - winHeight)
-      const ratio = scrollTop / maxScrollable
-      if (!triggered && ratio >= 0.5) {
-        triggered = true
-        window.dispatchEvent(new Event('openContactModal'))
-        try { sessionStorage.setItem('contactModalShownMid', '1') } catch {}
-        window.removeEventListener('scroll', onScroll, { passive: true })
-      }
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    // Перевірка відразу після завантаження (раптом вже внизу)
-    onScroll()
-    return () => window.removeEventListener('scroll', onScroll, { passive: true })
   }, [])
 
   return (
@@ -101,9 +74,9 @@ export default function HomeClient() {
         <Analytics />
         <Visit />
         <CoursesSection />
-        <KnowledgeTestSection />
         <Testimonials />
         <ProjectsShowcase />
+        <TrialSignupBlock />
         <SocialMedia />
         <FAQ />
         

@@ -26,7 +26,7 @@ export async function POST(request) {
     }
 
     const body = await request.json().catch(() => ({}))
-    const { phone, telegram, course, message, contactMethod } = body || {}
+    const { phone, telegram, course, message, contactMethod, name } = body || {}
 
     if (!phone && !telegram) {
       return NextResponse.json(
@@ -47,6 +47,7 @@ export async function POST(request) {
     const lines = [
       '<b>Нова заявка зі сайту SmartCode Academy</b>',
       '',
+      name ? `<b>Ім'я:</b> ${escapeHtml(name)}` : null,
       contactMethod === 'telegram' 
         ? `<b>Телеграм:</b> ${escapeHtml(normalizedTelegram)}`
         : `<b>Телефон:</b> ${escapeHtml(normalizedPhone)}`,
@@ -78,6 +79,7 @@ export async function POST(request) {
       try {
         const submissions = await getCollection('submissions')
         await submissions.insertOne({
+          name: name || '',
           phone: normalizedPhone || '',
           telegram: normalizedTelegram || '',
           course: course || '',
@@ -97,6 +99,7 @@ export async function POST(request) {
     try {
       const submissions = await getCollection('submissions')
       await submissions.insertOne({
+        name: name || '',
         phone: normalizedPhone || '',
         telegram: normalizedTelegram || '',
         course: course || '',
