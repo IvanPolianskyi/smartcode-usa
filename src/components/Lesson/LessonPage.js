@@ -620,7 +620,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     try {
       // Create payment and redirect to payment page
       const paymentData = await createPayment(courseId)
-      
+
       // Create form and submit to LiqPay
       const form = document.createElement('form')
       form.method = 'POST'

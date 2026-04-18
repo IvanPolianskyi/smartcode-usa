@@ -121,7 +121,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
     try {
       // Create payment and get payment link
       const paymentData = await createPayment(courseId)
-      
+
       // Create form and submit to LiqPay
       const form = document.createElement('form')
       form.method = 'POST'

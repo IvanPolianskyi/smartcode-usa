@@ -23,6 +23,7 @@ import {
   BookOpen
 } from 'lucide-react'
 import Link from 'next/link'
+import { trackCourseLanding } from '@/lib/metaPixel'
 import styles from './PythonCoursePage.module.css'
 
 const PythonCoursePage = () => {
@@ -109,6 +110,7 @@ const PythonCoursePage = () => {
   }, []); // Пустий масив залежностей
 
   useEffect(() => {
+    trackCourseLanding('python')
     setIsLoaded(true)
     
     // Intersection Observer для анімацій при скролі

@@ -24,6 +24,7 @@ import {
 	Heart,
 } from 'lucide-react'
 import Link from 'next/link'
+import { trackCourseLanding } from '@/lib/metaPixel'
 import styles from './WebCoursePage.module.css'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -41,6 +42,10 @@ const WebCoursePage = () => {
 	const [hoveredProject, setHoveredProject] = useState(null)
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 	
+	useEffect(() => {
+		trackCourseLanding('webdev')
+	}, [])
+
 	const mainRef = useRef(null)
 	const heroRef = useRef(null)
 	const modulesRef = useRef(null)

@@ -1,13 +1,12 @@
 'use client'
 
 import React, { useEffect, useState, Suspense } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { CheckCircle2, XCircle, Loader } from 'lucide-react'
 import styles from './PaymentSuccess.module.css'
 
 function PaymentSuccessContent() {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const [status, setStatus] = useState('loading')
   const [message, setMessage] = useState('Перевіряємо статус оплати...')

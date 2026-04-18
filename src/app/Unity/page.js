@@ -30,6 +30,7 @@ import {
 	Lightbulb,
 } from 'lucide-react'
 import Link from 'next/link'
+import { trackCourseLanding } from '@/lib/metaPixel'
 import styles from './UnityCoursePage.module.css'
 
 const UnityCoursePage = () => {
@@ -111,6 +112,10 @@ const UnityCoursePage = () => {
 			videoRef.current.currentTime = 0
 		}
 	}
+
+	useEffect(() => {
+		trackCourseLanding('unity')
+	}, [])
 
 	// Detect mobile viewport to tune animations and sizes
 	useEffect(() => {

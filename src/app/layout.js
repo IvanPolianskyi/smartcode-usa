@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import Footer from '@/components/Footer/footer'
 import ContactForm from '@/components/ContactForm/ContactForm'
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop'
@@ -5,6 +6,8 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header/Header'
 import Script from 'next/script'
+import MetaPixelRouteTracker from '@/components/MetaPixel/MetaPixelRouteTracker'
+import { META_PIXEL_ID } from '@/lib/metaPixel'
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -95,10 +98,6 @@ export const viewport = {
 }
 
 export default function RootLayout({ children }) {
-
-
-
-
 	return (
 		<html lang='uk' suppressHydrationWarning>
 			<head>
@@ -112,6 +111,9 @@ export default function RootLayout({ children }) {
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 				suppressHydrationWarning
 			>
+				<Suspense fallback={null}>
+					<MetaPixelRouteTracker />
+				</Suspense>
 				<ScrollToTop />
 				<Header />
                 <div className='min-h-screen flex flex-col'>
@@ -192,7 +194,7 @@ export default function RootLayout({ children }) {
 						gtag('config', 'G-MYR6FDXWYF');
 					`}
 				</Script>
-				{/* Meta Pixel */}
+				{/* Meta Pixel — init + PageView; додаткові події в @/lib/metaPixel */}
 				<Script id='meta-pixel' strategy='afterInteractive'>
 					{`
 						!function(f,b,e,v,n,t,s)
@@ -203,7 +205,7 @@ export default function RootLayout({ children }) {
 						t.src=v;s=b.getElementsByTagName(e)[0];
 						s.parentNode.insertBefore(t,s)}(window, document,'script',
 						'https://connect.facebook.net/en_US/fbevents.js');
-						fbq('init', '4274611226126341');
+						fbq('init', '${META_PIXEL_ID}');
 						fbq('track', 'PageView');
 					`}
 				</Script>
@@ -212,7 +214,7 @@ export default function RootLayout({ children }) {
 						height='1'
 						width='1'
 						style={{ display: 'none' }}
-						src='https://www.facebook.com/tr?id=4274611226126341&ev=PageView&noscript=1'
+						src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
 						alt=''
 					/>
 				</noscript>

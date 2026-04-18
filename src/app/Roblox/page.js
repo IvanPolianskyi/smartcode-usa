@@ -18,6 +18,7 @@ import {
   Play,
   ChevronRight,
 } from 'lucide-react'
+import { trackCourseLanding } from '@/lib/metaPixel'
 import styles from './RobloxCoursePage.module.css'
 
 const RobloxCoursePage = () => {
@@ -43,6 +44,7 @@ const RobloxCoursePage = () => {
   }, [])
 
   useEffect(() => {
+    trackCourseLanding('roblox')
     setIsLoaded(true)
 
     const observer = new IntersectionObserver(
