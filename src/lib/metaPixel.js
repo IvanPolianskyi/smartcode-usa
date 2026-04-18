@@ -10,7 +10,7 @@ import { getCoursePrice } from '@/lib/coursePrices'
 
 export const META_PIXEL_ID =
 	(typeof process !== 'undefined' && process.env.NEXT_PUBLIC_META_PIXEL_ID) ||
-	'4274611226126341'
+	null
 
 function fbqReady() {
 	return typeof window !== 'undefined' && typeof window.fbq === 'function'
@@ -25,10 +25,11 @@ function flushPixelQueue() {
 		const job = pixelQueue.shift()
 		try {
 			if (job.type === 'track') {
+				const options = job.eventId ? { eventID: job.eventId } : undefined
 				if (job.params != null && Object.keys(job.params).length > 0) {
-					window.fbq('track', job.eventName, job.params)
+					window.fbq('track', job.eventName, job.params, ...(options ? [options] : []))
 				} else {
-					window.fbq('track', job.eventName)
+					window.fbq('track', job.eventName, {}, ...(options ? [options] : []))
 				}
 			}
 		} catch {
@@ -61,16 +62,36 @@ if (typeof window !== 'undefined') {
 	window.addEventListener('load', () => flushPixelQueue(), { once: true })
 }
 
-function sendOrQueueTrack(eventName, params) {
+/**
+ * Генерує UUID v4 для дедуплікації між браузерним пікселем і CAPI.
+ * Якщо crypto.randomUUID недоступний — fallback на Math.random.
+ */
+export function generateEventId() {
+	if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+		return crypto.randomUUID()
+	}
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+		const r = (Math.random() * 16) | 0
+		return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16)
+	})
+}
+
+/**
+ * @param {string}          eventName
+ * @param {object|undefined} params
+ * @param {string|undefined} eventId  - UUID для дедуплікації з CAPI
+ */
+function sendOrQueueTrack(eventName, params, eventId) {
+	const options = eventId ? { eventID: eventId } : undefined
 	if (fbqReady()) {
 		if (params && Object.keys(params).length > 0) {
-			window.fbq('track', eventName, params)
+			window.fbq('track', eventName, params, ...(options ? [options] : []))
 		} else {
-			window.fbq('track', eventName)
+			window.fbq('track', eventName, {}, ...(options ? [options] : []))
 		}
 		return
 	}
-	pixelQueue.push({ type: 'track', eventName, params })
+	pixelQueue.push({ type: 'track', eventName, params, eventId })
 	schedulePixelFlush()
 }
 
@@ -124,13 +145,15 @@ export function trackTrialLessonModalView() {
 
 /** Відкриття модалки / початок оформлення пробного - InitiateCheckout */
 export function trackTrialInitiateCheckout() {
+	const eventId = generateEventId()
 	sendOrQueueTrack('InitiateCheckout', {
 		content_ids: ['smartcode_trial_signup'],
 		content_type: 'product',
 		content_name: 'Запис на пробне заняття',
 		content_category: 'trial_lesson',
 		num_items: 1,
-	})
+	}, eventId)
+	return eventId
 }
 
 const STORAGE_TRIAL_INITIATE_CHECKOUT = 'sc_pixel_trial_initiate_checkout'
@@ -154,20 +177,25 @@ export function trackTrialInitiateCheckoutOnce() {
 /**
  * Lead після успішної trial-заявки (модалка / блок) - не більше одного Lead за сесію.
  * Викликати лише після успішної відповіді API.
+ * @param {string}             contentName
+ * @param {string[]|undefined} contentIds
+ * @param {string|undefined}   eventId  - UUID для дедуплікації з CAPI
+ * @returns {string|undefined} eventId (undefined якщо вже відправлено цього сесії)
  */
-export function trackTrialLeadOnce(contentName, contentIds) {
-	if (typeof window === 'undefined') return
+export function trackTrialLeadOnce(contentName, contentIds, eventId) {
+	if (typeof window === 'undefined') return undefined
 	let already = false
 	try {
 		already = sessionStorage.getItem(STORAGE_TRIAL_LEAD) === '1'
 	} catch {
 		already = false
 	}
-	if (already) return
-	trackTrialLead(contentName, contentIds)
+	if (already) return undefined
+	const usedId = trackTrialLead(contentName, contentIds, eventId)
 	try {
 		sessionStorage.setItem(STORAGE_TRIAL_LEAD, '1')
 	} catch {}
+	return usedId
 }
 
 /**
@@ -201,10 +229,13 @@ export function trialInterestToContentIds(interestLabel) {
 
 /**
  * Заявка з контактом. Не передавати email/телефон (ПІІ).
- * @param {string} contentName - що обрав користувач (текст з форми)
- * @param {string[]|undefined} contentIds - стабільні id для каталогу в Ads
+ * @param {string}             contentName  - що обрав користувач (текст з форми)
+ * @param {string[]|undefined} contentIds   - стабільні id для каталогу в Ads
+ * @param {string|undefined}   eventId      - UUID для дедуплікації з CAPI (генерується тут якщо не передано)
+ * @returns {string} eventId
  */
-export function trackTrialLead(contentName, contentIds) {
+export function trackTrialLead(contentName, contentIds, eventId) {
+	const id = eventId || generateEventId()
 	const params = {
 		content_name: contentName || 'trial_lesson',
 		content_category: 'lead_generation',
@@ -212,7 +243,8 @@ export function trackTrialLead(contentName, contentIds) {
 	if (Array.isArray(contentIds) && contentIds.length > 0) {
 		params.content_ids = contentIds
 	}
-	sendOrQueueTrack('Lead', params)
+	sendOrQueueTrack('Lead', params, id)
+	return id
 }
 
 /** Вибір напряму в діагностичному тесті - ViewContent */

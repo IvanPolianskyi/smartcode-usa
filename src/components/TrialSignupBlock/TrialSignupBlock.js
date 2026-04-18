@@ -6,6 +6,7 @@ import {
 	trackTrialInitiateCheckoutOnce,
 	trackTrialLeadOnce,
 	trialInterestToContentIds,
+	generateEventId,
 } from '@/lib/metaPixel'
 import styles from './TrialSignupBlock.module.css'
 
@@ -70,6 +71,7 @@ export default function TrialSignupBlock() {
 
 		setSubmitting(true)
 		try {
+			const eventId = generateEventId()
 			const response = await fetch('/api/telegram', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -79,6 +81,8 @@ export default function TrialSignupBlock() {
 					course: formData.course,
 					message: formData.message,
 					contactMethod,
+					eventId,
+					sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://smartcode-academy.com',
 				}),
 			})
 			const data = await response.json().catch(() => ({}))
@@ -86,7 +90,7 @@ export default function TrialSignupBlock() {
 				alert('На жаль, сталася помилка при відправці. Спробуйте ще раз.')
 				return
 			}
-			trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course))
+			trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course), eventId)
 			setDone(true)
 			setFormData({ phone: '', telegram: '', course: '', message: '' })
 			setContactMethod('phone')

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/mongodb'
 import { cookies } from 'next/headers'
+import { sendCapiLead, getClientIp, getClientUserAgent, getFbCookies } from '@/lib/metaCapi'
 
 function escapeHtml(input) {
   const str = String(input ?? '')
@@ -26,7 +27,7 @@ export async function POST(request) {
     }
 
     const body = await request.json().catch(() => ({}))
-    const { phone, telegram, course, message, contactMethod, name } = body || {}
+    const { phone, telegram, course, message, contactMethod, name, eventId, sourceUrl } = body || {}
 
     if (!phone && !telegram) {
       return NextResponse.json(
@@ -109,6 +110,29 @@ export async function POST(request) {
         via: 'telegram',
       })
     } catch {}
+
+    // CAPI: відправляємо Lead серверно (дедуплікується з браузерним пікселем через eventId)
+    if (eventId) {
+      const clientIp = getClientIp(request)
+      const userAgent = getClientUserAgent(request)
+      const { fbc, fbp } = getFbCookies(request)
+      const { trialInterestToContentIds } = await import('@/lib/metaPixel')
+      const contentIds = trialInterestToContentIds(course)
+
+      sendCapiLead({
+        eventId,
+        sourceUrl: sourceUrl || 'https://smartcode-academy.com',
+        phone: normalizedPhone,
+        // Telegram username як external_id — хешується в CAPI, не передається в сирому вигляді
+        externalId: normalizedTelegram ? normalizedTelegram.replace(/^@/, '').toLowerCase() : undefined,
+        clientIp,
+        userAgent,
+        fbc,
+        fbp,
+        contentName: course || 'trial_lesson',
+        contentIds,
+      }).catch(() => {})
+    }
 
     return NextResponse.json({ ok: true })
   } catch (error) {

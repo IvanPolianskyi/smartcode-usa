@@ -6,6 +6,7 @@ import {
 	trackTrialInitiateCheckoutOnce,
 	trackTrialLeadOnce,
 	trialInterestToContentIds,
+	generateEventId,
 } from '@/lib/metaPixel'
 import styles from './ContactForm.module.css'
 
@@ -21,6 +22,13 @@ const ContactForm = () => {
     const openedAtRef = useRef(0)
     const scrollPositionRef = useRef(0)
 
+    const handleFormFocusCapture = (e) => {
+        const t = e.target
+        if (t instanceof HTMLInputElement || t instanceof HTMLSelectElement || t instanceof HTMLTextAreaElement) {
+            trackTrialInitiateCheckoutOnce()
+        }
+    }
+
     useEffect(() => {
         let rafId = null
         const open = () => {
@@ -32,7 +40,6 @@ const ContactForm = () => {
                     window.gtag('event', 'click_trial_button')
                 }
                 trackTrialLessonModalView()
-                trackTrialInitiateCheckoutOnce()
             })
         }
         const close = () => {
@@ -131,9 +138,12 @@ const ContactForm = () => {
             }
         }
         try {
+            const eventId = generateEventId()
             const submitData = {
                 ...formData,
-                contactMethod: contactMethod
+                contactMethod: contactMethod,
+                eventId,
+                sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://smartcode-academy.com',
             }
             const response = await fetch('/api/telegram', {
                 method: 'POST',
@@ -152,7 +162,7 @@ const ContactForm = () => {
                     contact_method: contactMethod,
                 })
             }
-            trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course))
+            trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course), eventId)
             setIsSubmitted(false)
             setFormData({ phone: '', telegram: '', course: '', message: '' })
             setPhoneError('')
@@ -194,7 +204,7 @@ const ContactForm = () => {
                                     </p>
                                 </div>
 
-                                <form onSubmit={handleSubmit} className={styles.modalForm}>
+                                <form onSubmit={handleSubmit} className={styles.modalForm} onFocusCapture={handleFormFocusCapture}>
                                     <div className={styles.modalField}>
                                         <span className={styles.modalLabel}>Як з вами зв&apos;язатися?</span>
                                         <div className={styles.modalSegment} role='group' aria-label="Спосіб зв'язку">
