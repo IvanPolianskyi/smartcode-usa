@@ -30,8 +30,6 @@ function flushPixelQueue() {
 				} else {
 					window.fbq('track', job.eventName)
 				}
-			} else if (job.type === 'trackCustom') {
-				window.fbq('trackCustom', job.eventName, job.params || {})
 			}
 		} catch {
 			// ігноруємо збої pixel у проді
@@ -74,25 +72,6 @@ function sendOrQueueTrack(eventName, params) {
 	}
 	pixelQueue.push({ type: 'track', eventName, params })
 	schedulePixelFlush()
-}
-
-function sendOrQueueTrackCustom(eventName, params) {
-	if (fbqReady()) {
-		window.fbq('trackCustom', eventName, params || {})
-		return
-	}
-	pixelQueue.push({ type: 'trackCustom', eventName, params: params || {} })
-	schedulePixelFlush()
-}
-
-/** Стандартна подія Meta Pixel */
-export function trackMetaEvent(eventName, params) {
-	sendOrQueueTrack(eventName, params)
-}
-
-/** Кастомна подія (лише якщо справді потрібен trackCustom) */
-export function trackMetaCustom(eventName, params) {
-	sendOrQueueTrackCustom(eventName, params)
 }
 
 export function trackMetaPageView() {
