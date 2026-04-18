@@ -496,6 +496,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                         <Link
                           key={lesson.lessonId}
                           href={`/courses/${courseId}/lessons/${lesson.lessonId}`}
+                          prefetch={false}
                           className={`${styles.lessonItem} ${!unlocked ? styles.locked : ''} ${completed ? styles.completed : ''} ${lessonColor ? styles[`lesson${lessonColor.charAt(0).toUpperCase() + lessonColor.slice(1)}`] : ''}`}
                           style={lessonColor ? {
                             borderLeft: `4px solid ${

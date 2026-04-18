@@ -1,9 +1,25 @@
-import LessonPage from '@/components/Lesson/LessonPage'
+import dynamic from 'next/dynamic'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
+
+const LessonPage = dynamic(() => import('@/components/Lesson/LessonPage'), {
+	loading: () => (
+		<div
+			style={{
+				padding: '3rem 1.5rem',
+				textAlign: 'center',
+				maxWidth: 480,
+				margin: '0 auto',
+			}}
+		>
+			<p style={{ color: 'var(--muted-foreground, #64748b)' }}>Завантаження уроку…</p>
+		</div>
+	),
+	ssr: true,
+})
 
 export const metadata = {
   title: 'Урок курсу - SmartCode Academy',

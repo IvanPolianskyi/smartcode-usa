@@ -14,14 +14,15 @@ const geistSans = Geist({
 	variable: '--font-geist-sans',
 	subsets: ['latin'],
 	display: 'swap',
-	weight: ['300', '400', '500', '600', '700', '800', '900'],
+	// Лише ваги, що реально використовуються — менший CSS з Google Fonts
+	weight: ['400', '500', '600', '700'],
 })
 
 const geistMono = Geist_Mono({
 	variable: '--font-geist-mono',
 	subsets: ['latin'],
 	display: 'swap',
-	weight: ['300', '400', '500', '600', '700'],
+	weight: ['400', '500', '600', '700'],
 })
 
 export const metadata = {
@@ -184,12 +185,12 @@ export default function RootLayout({ children }) {
 						}),
 					}}
 				/>
-				{/* Google Analytics */}
+				{/* Google Analytics — після основного контенту, без блокування TBT */}
 				<Script
 					src='https://www.googletagmanager.com/gtag/js?id=G-MYR6FDXWYF'
-					strategy='afterInteractive'
+					strategy='lazyOnload'
 				/>
-				<Script id='google-analytics' strategy='afterInteractive'>
+				<Script id='google-analytics' strategy='lazyOnload'>
 					{`
 						window.dataLayer = window.dataLayer || [];
 						function gtag(){dataLayer.push(arguments);}
@@ -197,7 +198,7 @@ export default function RootLayout({ children }) {
 						gtag('config', 'G-MYR6FDXWYF');
 					`}
 				</Script>
-				{/* Meta Pixel — init + PageView; додаткові події в @/lib/metaPixel */}
+				{/* Meta Pixel — afterInteractive щоб fbq був доступний рано для подій у metaPixel */}
 				<Script id='meta-pixel' strategy='afterInteractive'>
 					{`
 						!function(f,b,e,v,n,t,s)
