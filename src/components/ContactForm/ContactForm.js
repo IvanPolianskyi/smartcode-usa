@@ -1,7 +1,11 @@
 "use client"
 import React, { useState, useRef, useEffect } from 'react'
 import { Phone, Send, CheckCircle, Briefcase, MessageSquare, X } from 'lucide-react'
-import { trackMetaCustom, trackTrialLead } from '@/lib/metaPixel'
+import {
+	trackTrialLessonModalView,
+	trackTrialLead,
+	trialInterestToContentIds,
+} from '@/lib/metaPixel'
 import styles from './ContactForm.module.css'
 
 const ContactForm = () => {
@@ -29,7 +33,7 @@ const ContactForm = () => {
                 if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
                     window.gtag('event', 'click_trial_button')
                 }
-                trackMetaCustom('InterestedTrialLesson', { source: 'contact_modal' })
+                trackTrialLessonModalView()
             })
         }
         const close = () => {
@@ -172,7 +176,7 @@ const ContactForm = () => {
                     contact_method: contactMethod,
                 })
             }
-            trackTrialLead(formData.course)
+            trackTrialLead(formData.course, trialInterestToContentIds(formData.course))
             setIsSubmitted(false)
             setFormData({ phone: '', telegram: '', course: '', message: '' })
             setPhoneError('')

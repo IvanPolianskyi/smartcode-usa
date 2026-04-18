@@ -180,7 +180,9 @@ export default function KnowledgeTestClient() {
       })
 
       if (response.ok) {
-        trackTrialLead(`Діагностика: ${selectedDirection.name}`)
+        trackTrialLead(`Діагностика: ${selectedDirection.name}`, [
+          `smartcode_diagnostic_lead_${selectedDirection.id}`,
+        ])
         setTestResult(score)
         setShowPhoneForm(false)
         setShowResults(true)

@@ -22,6 +22,7 @@ import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { enrollInCourse, getCurrentUser, getUserProgress, checkCoursePurchase, createPayment } from '@/lib/authClient'
 import { getCoursePrice, formatPrice } from '@/lib/coursePrices'
+import { trackCatalogCourseViewContent } from '@/lib/metaPixel'
 import styles from './CoursePage.module.css'
 
 const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress: initialProgress = null }) => {
@@ -45,6 +46,10 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   const course = getCurriculum()
   const isEnrolled = userProgress !== null
   const progress = userProgress?.overallProgress || 0
+
+  useEffect(() => {
+    trackCatalogCourseViewContent(courseId)
+  }, [courseId])
   
   useEffect(() => {
     setIsLoaded(true)
