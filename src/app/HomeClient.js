@@ -74,9 +74,9 @@ export default function HomeClient() {
         <Analytics />
         <Visit />
         <CoursesSection />
+        <TrialSignupBlock />
         <Testimonials />
         <ProjectsShowcase />
-        <TrialSignupBlock />
         <SocialMedia />
         <FAQ />
         

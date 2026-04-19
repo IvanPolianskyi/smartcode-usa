@@ -103,20 +103,17 @@ const Header = () => {
 				ease: 'power2.out' 
 			})
 			
-			// Анімація контенту всередині
+			// Легкий зсув без приховування opacity — пункти одразу видно, можна скролити
 			gsap.fromTo(
 				mobileMenu.querySelectorAll(`.${styles.mobileMenuItem}`),
-				{ 
-					opacity: 0, 
-					y: 20
-				},
+				{ opacity: 1, y: 10 },
 				{
 					opacity: 1,
 					y: 0,
-					stagger: 0.1,
-					duration: 0.4,
+					stagger: 0.04,
+					duration: 0.32,
 					ease: 'power2.out',
-					delay: 0.2
+					delay: 0.08,
 				}
 			)
 		} else {
@@ -229,7 +226,7 @@ const Header = () => {
 
 	const navItems = [
 		{ label: 'Предмети', dropdown: true },
-		{ label: 'Записатися', href: '/#Contactform' },
+		{ label: 'Записатися', href: '/#trial-signup' },
 		{ label: 'Соцмережі', href: '/#social-media' },
 		{ label: 'Ціни', href: '/tariff' },
 		{ label: 'Відгуки', href: '/#testimonials' },
@@ -272,6 +269,7 @@ const Header = () => {
 	]
 
 	return (
+		<>
 		<header
 			ref={headerRef}
 			className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}
@@ -426,14 +424,30 @@ const Header = () => {
 						</div>
 					</div>
 
-					{/* Меню пунктів */}
+					{/* Спочатку сторінки (видно без скролу), потім курси */}
 					<div className={styles.mobileMenuNav}>
-						{/* Курси */}
+						<div className={styles.mobileMenuSection}>
+							<h3 className={styles.mobileMenuSectionTitle}>Сторінки</h3>
+							{navItems
+								.filter((item) => !item.dropdown)
+								.map((item, index) => (
+									<Link
+										key={item.label}
+										href={item.href}
+										className={`${styles.mobileMenuItem} ${styles.mobileNavItem} ${item.label === 'Записатися' ? styles.mobileNavCta : ''}`}
+										onClick={item.label === 'Записатися' ? handleCtaClick : handleMobileMenuClose}
+										scroll={item.label === 'Записатися' ? false : undefined}
+									>
+										{item.label}
+									</Link>
+								))}
+						</div>
+
 						<div className={styles.mobileMenuSection}>
 							<h3 className={styles.mobileMenuSectionTitle}>Курси</h3>
 							{courses.map((course, index) => (
 								<Link
-									key={index}
+									key={course.link}
 									href={course.link}
 									className={`${styles.mobileMenuItem} ${styles.mobileCourseItem}`}
 									onClick={handleMobileMenuClose}
@@ -450,31 +464,11 @@ const Header = () => {
 												</span>
 											)}
 										</div>
-										<div className={styles.mobileCourseDescription}>
-											{course.description}
-										</div>
+										<div className={styles.mobileCourseDescription}>{course.description}</div>
 										<div className={styles.mobileCourseAge}>{course.age}</div>
 									</div>
 								</Link>
 							))}
-						</div>
-
-						{/* Навігація */}
-						<div className={styles.mobileMenuSection}>
-							<h3 className={styles.mobileMenuSectionTitle}>Сторінки</h3>
-							{navItems
-								.filter(item => !item.dropdown)
-                                .map((item, index) => (
-                                    <Link
-                                        key={index}
-                                        href={item.href}
-                                        className={`${styles.mobileMenuItem} ${styles.mobileNavItem} ${item.label === 'Записатися' ? styles.mobileNavCta : ''}`}
-                                        onClick={item.label === 'Записатися' ? handleCtaClick : handleMobileMenuClose}
-                                        scroll={item.label === 'Записатися' ? false : undefined}
-                                    >
-                                        {item.label}
-                                    </Link>
-                                ))}
 						</div>
 					</div>
 
@@ -508,6 +502,19 @@ const Header = () => {
 				</div>
 			</div>
 		</header>
+
+		<button
+			type="button"
+			className={`${styles.mobileFloatingCta} ${isMobileMenuOpen ? styles.mobileFloatingCtaHidden : ''}`}
+			onClick={handleCtaClick}
+			aria-hidden={isMobileMenuOpen}
+			tabIndex={isMobileMenuOpen ? -1 : 0}
+			aria-label="Записатися на пробне заняття"
+		>
+			<Sparkles size={18} aria-hidden className={styles.mobileFloatingCtaIcon} />
+			Записатися
+		</button>
+		</>
 	)
 }
 

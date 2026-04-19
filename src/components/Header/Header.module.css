@@ -207,12 +207,14 @@
 }
 
 .mobileNavCta {
+    display: flex !important;
+    align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%) !important;
     color: #ffffff !important;
     font-weight: 700;
     border-radius: 12px;
-    margin-top: 0.35rem;
+    margin-top: 0.25rem;
 }
 
 .mobileNavCta:hover {
@@ -668,6 +670,49 @@
 }
 .mobileMenuButton:hover { background: rgba(0, 0, 0, 0.05); }
 
+/* Плашка «Записатися» — лише коли видно бургер (≤700px), під модалкою контактів */
+.mobileFloatingCta {
+    display: none;
+}
+@media (max-width: 700px) {
+    .mobileFloatingCta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45rem;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9990;
+        width: 100%;
+        margin: 0;
+        padding: 0.7rem 1rem;
+        padding-bottom: calc(0.7rem + env(safe-area-inset-bottom, 0px));
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.35);
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.9375rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        color: #ffffff;
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        box-shadow: 0 -6px 28px rgba(37, 99, 235, 0.28);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .mobileFloatingCta:active {
+        transform: scale(0.98);
+    }
+    .mobileFloatingCtaIcon {
+        flex-shrink: 0;
+        opacity: 0.95;
+    }
+    .mobileFloatingCtaHidden {
+        display: none;
+    }
+}
+
 /* ПОВНОЕКРАННЕ МОБІЛЬНЕ МЕНЮ */
 .mobileMenu {
     position: fixed;
@@ -675,8 +720,14 @@
     left: 0;
     right: 0;
     bottom: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    max-width: 100vw;
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    display: none;
+    flex-direction: column;
     background: 
         repeating-linear-gradient(
             0deg,
@@ -692,17 +743,18 @@
             #f3e8ff 100%
         );
     z-index: 10000; /* перекриває все */
-    display: none;
     opacity: 0;
-    justify-content: stretch;
     align-items: stretch;
+    justify-content: flex-start;
     padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .mobileMenuClose {
     position: absolute;
-    top: 2rem;
-    right: 2rem;
+    top: calc(env(safe-area-inset-top, 0px) + 0.75rem);
+    right: max(0.75rem, env(safe-area-inset-right, 0px));
     width: 48px;
     height: 48px;
     background: rgba(255, 255, 255, 0.8);
@@ -728,78 +780,108 @@
 .mobileMenuContent { 
     width: 100%;
     max-width: none;
-    height: 100%;
+    flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
     text-align: left;
-    padding: calc(env(safe-area-inset-top) + 4rem) 1rem calc(env(safe-area-inset-bottom) + 1rem);
+    padding-top: calc(env(safe-area-inset-top, 0px) + 3.25rem);
+    padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
+    padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1.25rem);
+    overflow-x: hidden;
     overflow-y: auto;
+    overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
 }
 
 .mobileMenuContent::-webkit-scrollbar { width: 6px; }
 .mobileMenuContent::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 6px; }
 
-.mobileMenuHeader { margin-bottom: 1rem; }
+.mobileMenuHeader { margin-bottom: 0.65rem; flex-shrink: 0; }
 
 .mobileMenuLogo {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 0.35rem;
     color: var(--text-primary);
 }
 
 .mobileMenuLogo .logoTitle {
     color: var(--text-primary);
-    font-size: 2rem;
+    font-size: 1.35rem;
 }
 
 .mobileMenuLogo .logoSubtitle {
     color: var(--primary-purple);
+    font-size: 0.8rem;
+}
+
+/* Компактний логотип у меню (структура Link > icon wrap > Image) */
+.mobileMenuHeader .mobileMenuLogo > a {
+    flex-direction: row !important;
+    align-items: center;
+    gap: 0.55rem;
+}
+.mobileMenuHeader .mobileMenuLogo > a > div:first-of-type {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px;
+    flex-shrink: 0;
+}
+.mobileMenuHeader .mobileMenuLogo > a > div:first-of-type img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none;
+    object-fit: cover;
 }
 
 .mobileMenuNav {
-    flex: 1;
+    flex: 1 1 auto;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 1.25rem;
+    gap: 0.85rem;
     width: 100%;
 }
 
 .mobileMenuSection {
     width: 100%;
+    flex-shrink: 0;
 }
 
 .mobileMenuSectionTitle {
-    font-size: 1rem;
+    font-size: 0.75rem;
     font-weight: 700;
     color: var(--text-secondary);
     text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 1.5rem;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.5rem;
 }
 
+/* Видимість за замовчуванням — анімація GSAP поверх; без JS пункти все одно клікабельні */
 .mobileMenuItem {
     display: block;
-    opacity: 0;
-    transform: translateY(20px);
+    opacity: 1;
+    transform: none;
 }
 
 /* Стилі для курсів */
 .mobileCourseItem {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.65rem;
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 16px;
-    padding: 1rem;
-    margin-bottom: 0.75rem;
+    border-radius: 12px;
+    padding: 0.65rem 0.75rem;
+    margin-bottom: 0.45rem;
     text-decoration: none;
     color: var(--text-primary);
     transition: all 0.3s ease;
@@ -814,8 +896,8 @@
 }
 
 .mobileCourseIcon {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -830,7 +912,7 @@
 }
 
 .mobileCourseTitle {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 0.25rem;
@@ -840,9 +922,14 @@
 }
 
 .mobileCourseDescription {
-    font-size: 0.85rem;
+    font-size: 0.72rem;
+    line-height: 1.35;
     color: var(--text-secondary);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.15rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .mobileCourseAge {
@@ -869,12 +956,12 @@
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 14px;
-    padding: 0.9rem 1.25rem;
-    margin-bottom: 0.75rem;
+    border-radius: 12px;
+    padding: 0.7rem 0.9rem;
+    margin-bottom: 0.45rem;
     text-decoration: none;
     color: var(--text-primary);
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -889,9 +976,11 @@
 .mobileMenuFooter {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 0.65rem;
+    flex-shrink: 0;
+    padding-bottom: 0.25rem;
 }
 
 .mobileContact {
@@ -981,10 +1070,14 @@
 }
 
 @media (max-height: 700px) {
-    .mobileMenuContent { padding-top: calc(env(safe-area-inset-top) + 3.5rem); }
-    .mobileMenuNav { gap: 1rem; }
-    .mobileMenuHeader { margin-bottom: 1rem; }
-    .mobileMenuFooter { margin-top: 1rem; }
+    .mobileMenuContent {
+        padding-top: calc(env(safe-area-inset-top, 0px) + 2.85rem);
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.75rem);
+    }
+    .mobileMenuNav { gap: 0.55rem; }
+    .mobileMenuHeader { margin-bottom: 0.4rem; }
+    .mobileMenuLogo .logoTitle { font-size: 1.15rem; }
+    .mobileMenuFooter { margin-top: 0.45rem; }
 }
 
 /* Адаптація dropdown для маленьких екранів */
