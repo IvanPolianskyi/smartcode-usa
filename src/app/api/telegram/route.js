@@ -119,19 +119,21 @@ export async function POST(request) {
       const { trialInterestToContentIds } = await import('@/lib/metaPixel')
       const contentIds = trialInterestToContentIds(course)
 
-      sendCapiLead({
-        eventId,
-        sourceUrl: sourceUrl || 'https://smartcode-academy.com',
-        phone: normalizedPhone,
-        // Telegram username як external_id — хешується в CAPI, не передається в сирому вигляді
-        externalId: normalizedTelegram ? normalizedTelegram.replace(/^@/, '').toLowerCase() : undefined,
-        clientIp,
-        userAgent,
-        fbc,
-        fbp,
-        contentName: course || 'trial_lesson',
-        contentIds,
-      }).catch(() => {})
+      try {
+        await sendCapiLead({
+          eventId,
+          sourceUrl: sourceUrl || 'https://smartcode-academy.com',
+          phone: normalizedPhone,
+          // Telegram username як external_id — хешується в CAPI, не передається в сирому вигляді
+          externalId: normalizedTelegram ? normalizedTelegram.replace(/^@/, '').toLowerCase() : undefined,
+          clientIp,
+          userAgent,
+          fbc,
+          fbp,
+          contentName: course || 'trial_lesson',
+          contentIds,
+        })
+      } catch {}
     }
 
     return NextResponse.json({ ok: true })
