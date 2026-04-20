@@ -101,12 +101,14 @@
 .cardContent {
 	background: #ffffff;
 	border-radius: 20px;
-	padding: 2rem;
+	padding: 0;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-	height: 100%;
+	height: auto;
 	display: flex;
 	flex-direction: column;
 	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	overflow: hidden;
+	aspect-ratio: 9/16;
 }
 
 .cardContent:hover {
@@ -114,59 +116,11 @@
 	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
-.stars {
-	display: flex;
-	gap: 0.25rem;
-	margin-bottom: 1.5rem;
-	color: #fbbf24;
-}
-
-.star {
-	width: 20px;
-	height: 20px;
-}
-
-.text {
-	color: #475569;
-	line-height: 1.7;
-	font-size: 0.9375rem;
-	margin: 0 0 1.5rem 0;
-	flex-grow: 1;
-}
-
-.author {
-	display: flex;
-	align-items: center;
-	gap: 1rem;
-	padding-top: 1rem;
-	border-top: 1px solid #e2e8f0;
-}
-
-.avatar {
-	width: 56px;
-	height: 56px;
-	border-radius: 50%;
+.media {
+	width: 100%;
+	height: 100%;
 	object-fit: cover;
-	border: 3px solid #e0f2fe;
-	flex-shrink: 0;
-}
-
-.authorInfo {
-	flex: 1;
-	min-width: 0;
-}
-
-.name {
-	font-size: 1rem;
-	font-weight: 700;
-	color: #1e293b;
-	margin-bottom: 0.25rem;
-}
-
-.subject {
-	font-size: 0.875rem;
-	color: #64748b;
-	font-weight: 500;
+	display: block;
 }
 
 /* --- Мобільна адаптація --- */
@@ -199,42 +153,7 @@
 	}
 
 	.cardContent {
-		padding: 1.25rem;
 		border-radius: 16px;
-	}
-
-	.stars {
-		margin-bottom: 1rem;
-	}
-
-	.star {
-		width: 16px;
-		height: 16px;
-	}
-
-	.text {
-		font-size: 0.875rem;
-		line-height: 1.6;
-		margin-bottom: 1rem;
-	}
-
-	.author {
-		padding-top: 0.75rem;
-		gap: 0.75rem;
-	}
-
-	.avatar {
-		width: 44px;
-		height: 44px;
-		border: 2px solid #e0f2fe;
-	}
-
-	.name {
-		font-size: 0.9375rem;
-	}
-
-	.subject {
-		font-size: 0.8125rem;
 	}
 }
 
@@ -248,10 +167,6 @@
 		padding: 0 0.5rem;
 	}
 
-	.cardContent {
-		padding: 1rem;
-	}
-
 	.title {
 		font-size: 1.5rem;
 	}
@@ -261,3 +176,4 @@
 .carouselWrapper:hover .carousel {
 	animation-play-state: paused;
 }
+
