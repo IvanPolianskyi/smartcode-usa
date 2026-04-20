@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react'
-import { Star } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './Testimonials.module.css'
@@ -10,86 +9,13 @@ gsap.registerPlugin(ScrollTrigger)
 
 // --- ДАНІ ВІДГУКІВ ---
 const testimonials = [
-	{
-		id: 1,
-		name: 'Олександра',
-		subject: 'Python',
-		rating: 5,
-		text: 'Доброго дня! Щиро дякуємо за заняття. Сину дуже подобається навчання, кожен урок чекає з нетерпінням. Матеріал подається зрозуміло й цікаво. Видно, що викладач справді вміє зацікавити дитину. Успіхів вам і дякуємо за вашу працю!',
-		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
-	},
-	{
-		id: 2,
-		name: 'Аліна',
-		subject: 'Веб-розробка',
-		rating: 5,
-		text: 'Мені дуже подобається, як проходять уроки. Все пояснюється цікаво і зрозуміло, а завдання веселі й корисні',
-		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
-	},
-	{
-		id: 3,
-		name: 'Ярослава',
-		subject: 'Unity',
-		rating: 5,
-		text: 'Викладач дуже круто пояснює, не нудно і завжди допомагає, якщо щось не виходить. Мені подобається, що можна пробувати різні ідеї!',
-		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
-	},
-	{
-		id: 4,
-		name: 'Mарта',
-		subject: 'Roblox Studio',
-		rating: 5,
-		text: 'Roblox Studio - це найкрутіший курс! Викладач Артем вміє пояснити так щоб було зрозуміло, і дає дуже корисні поради!',
-		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
-	},
-	{
-		id: 5,
-		name: 'Мирослава',
-		subject: 'Python',
-		rating: 5,
-		text: 'Щиро дякуємо за ваш професіоналізм. Донька із захопленням вчиться програмуванню, уроки проходять легко, цікаво та практично. Видно, що викладач дійсно любить свою справу.',
-		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
-	},
-	{
-		id: 6,
-		name: 'Максим',
-		subject: 'Веб-розробка',
-		rating: 5,
-		text: 'Я раніше боявся програмування, а тепер із задоволенням роблю домашні завдання та експериментую з кодом. Уроки мотивують і цікаві!',
-		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
-	},
-	{
-		id: 7,
-		name: 'Злата',
-		subject: 'Python',
-		rating: 5,
-		text: 'було реально дуже круто ! 10/10',
-		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
-	},
-	{
-		id: 8,
-		name: 'Дмитро',
-		subject: 'Unity',
-		rating: 5,
-		text: 'Unity - це просто неймовірно! Я створив свою першу 3D гру та опублікував її. Викладачі допомогли мені зрозуміти фізику та анімації. Тепер я мрію стати професійним геймдевелопером!',
-		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
-	},
-	{
-		id: 9,
-		name: 'Марія',
-		subject: 'Python',
-		rating: 5,
-		text: 'Дякуємо за індивідуальний підхід та підтримку. Донька із задоволенням готується до уроків і відчуває себе частиною справжнього творчого процесу!',
-		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
-	},
-	{
-		id: 10,
-		name: 'Артем',
-		subject: 'Roblox Studio',
-		rating: 5,
-		text: 'Дуже веселі та корисні завдання!',
-		avatar: 'https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg',
-	},
+	
+	{ id: 2, type: 'image', src: '/comments/photo_2026-04-19_13-17-43.jpg' },
+	{ id: 3, type: 'image', src: '/comments/photo_2026-04-20_13-41-17.jpg' },
+	{ id: 4, type: 'image', src: '/comments/photo_2026-04-20_13-58-58.jpg' },
+	{ id: 5, type: 'image', src: '/comments/photo_2026-04-20_14-22-26.jpg' },
+	{ id: 6, type: 'image', src: '/comments/photo_2026-04-20_14-22-57.jpg' },
+	{ id: 7, type: 'image', src: '/comments/photo_2026-04-20_14-26-28.jpg' },
 ]
 
 const Testimonials = () => {
@@ -262,7 +188,7 @@ const Testimonials = () => {
 			<div className={styles.container}>
 				<div className={styles.header}>
 					<h2 className={`gsap-fade-up ${styles.title}`}>
-						Відгуки <span className={styles.rating}></span> учнів
+						Відгуки <span className={styles.rating}>учнів</span>
 					</h2>
 				</div>
 
@@ -272,29 +198,23 @@ const Testimonials = () => {
 							{duplicatedTestimonials.map((testimonial, index) => (
 								<div key={`${testimonial.id}-${index}`} className={styles.card}>
 									<div className={styles.cardContent}>
-										<div className={styles.stars}>
-											{Array.from({ length: 5 }, (_, i) => (
-												<Star
-													key={i}
-													size={20}
-													className={styles.star}
-													fill="currentColor"
-												/>
-											))}
-										</div>
-										<p className={styles.text}>{testimonial.text}</p>
-										<div className={styles.author}>
+										{testimonial.type === 'video' ? (
+											<video 
+												src={testimonial.src}
+												className={styles.media}
+												autoPlay 
+												muted 
+												loop 
+												playsInline
+											/>
+										) : (
 											<img
-												src={testimonial.avatar}
-												alt={testimonial.name}
-												className={styles.avatar}
+												src={testimonial.src}
+												alt="Відгук студента"
+												className={styles.media}
 												loading="lazy"
 											/>
-											<div className={styles.authorInfo}>
-												<div className={styles.name}>{testimonial.name}</div>
-												<div className={styles.subject}>{testimonial.subject}</div>
-											</div>
-										</div>
+										)}
 									</div>
 								</div>
 							))}
@@ -307,3 +227,4 @@ const Testimonials = () => {
 }
 
 export default Testimonials
+
