@@ -8,6 +8,7 @@ import {
 	trialInterestToContentIds,
 	generateEventId,
 } from '@/lib/metaPixel'
+import { getClientAttribution } from '@/lib/attribution'
 import styles from './TrialSignupBlock.module.css'
 
 const COURSES = [
@@ -19,11 +20,10 @@ const COURSES = [
 ]
 
 export default function TrialSignupBlock() {
-	const [contactMethod, setContactMethod] = useState('phone')
-	const [formData, setFormData] = useState({ phone: '', telegram: '', course: '', message: '' })
+	const [preferredContactMethod, setPreferredContactMethod] = useState('phone_call')
+	const [formData, setFormData] = useState({ phone: '', course: '', message: '' })
 	const [phoneError, setPhoneError] = useState('')
-	const [telegramError, setTelegramError] = useState('')
-	const [touched, setTouched] = useState({ phone: false, telegram: false, course: false })
+	const [touched, setTouched] = useState({ phone: false, course: false })
 	const [submitting, setSubmitting] = useState(false)
 	const [done, setDone] = useState(false)
 
@@ -44,27 +44,14 @@ export default function TrialSignupBlock() {
 			else setPhoneError('')
 			return
 		}
-		if (field === 'telegram') {
-			const cleaned = value.replace(/^@/, '').trim()
-			setFormData((prev) => ({ ...prev, telegram: cleaned }))
-			if (!cleaned) setTelegramError('Введіть ваш телеграм')
-			else setTelegramError('')
-			return
-		}
 		setFormData((prev) => ({ ...prev, [field]: value }))
 	}
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		setTouched({ phone: true, telegram: true, course: true })
-
-		if (contactMethod === 'phone') {
-			if (!/^\d{9}$/.test(formData.phone || '')) {
-				setPhoneError('Введіть коректний номер (9 цифр)')
-				return
-			}
-		} else if (!formData.telegram?.trim()) {
-			setTelegramError('Введіть ваш телеграм')
+		setTouched({ phone: true, course: true })
+		if (!/^\d{9}$/.test(formData.phone || '')) {
+			setPhoneError('Введіть коректний номер (9 цифр)')
 			return
 		}
 		if (!formData.course) return
@@ -77,12 +64,13 @@ export default function TrialSignupBlock() {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					phone: formData.phone,
-					telegram: formData.telegram,
 					course: formData.course,
 					message: formData.message,
-					contactMethod,
+					contactMethod: 'phone',
+					preferredContactMethod,
 					eventId,
 					sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://smartcode-academy.com',
+					attribution: getClientAttribution(),
 				}),
 			})
 			const data = await response.json().catch(() => ({}))
@@ -92,8 +80,8 @@ export default function TrialSignupBlock() {
 			}
 			trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course), eventId)
 			setDone(true)
-			setFormData({ phone: '', telegram: '', course: '', message: '' })
-			setContactMethod('phone')
+			setFormData({ phone: '', course: '', message: '' })
+			setPreferredContactMethod('phone_call')
 		} catch {
 			alert('Сталася помилка мережі.')
 		} finally {
@@ -132,73 +120,46 @@ export default function TrialSignupBlock() {
 
 					<form className={styles.form} onSubmit={handleSubmit} onFocusCapture={handleFormFocusCapture}>
 						<div className={styles.field}>
-							<span className={styles.label}>Як з вами зв&apos;язатися?</span>
+							<label className={styles.label} htmlFor='trial-phone'>
+								Номер телефону
+							</label>
+							<div className={styles.phoneRow}>
+								<span className={styles.prefix}>+380</span>
+								<input
+									id='trial-phone'
+									className={styles.input}
+									name='phone'
+									value={formData.phone}
+									onChange={handleInputChange}
+									inputMode='numeric'
+									placeholder='__ ___ __ __'
+									autoComplete='tel-national'
+								/>
+							</div>
+							{phoneError && <span className={styles.error}>{phoneError}</span>}
+						</div>
+
+						<div className={styles.field}>
+							<span className={styles.label}>Як вам зручно отримати контакт?</span>
 							<div className={styles.segment} role='group' aria-label="Спосіб зв'язку">
 								<button
 									type='button'
-									className={`${styles.segmentBtn} ${contactMethod === 'phone' ? styles.segmentBtnActive : ''}`}
-									onClick={() => {
-										setContactMethod('phone')
-										setTelegramError('')
-									}}
+									className={`${styles.segmentBtn} ${preferredContactMethod === 'phone_call' ? styles.segmentBtnActive : ''}`}
+									onClick={() => setPreferredContactMethod('phone_call')}
 								>
 									<Phone size={16} aria-hidden />
-									Телефон
+									Подзвонити вам
 								</button>
 								<button
 									type='button'
-									className={`${styles.segmentBtn} ${contactMethod === 'telegram' ? styles.segmentBtnActive : ''}`}
-									onClick={() => {
-										setContactMethod('telegram')
-										setPhoneError('')
-									}}
+									className={`${styles.segmentBtn} ${preferredContactMethod === 'telegram_phone' ? styles.segmentBtnActive : ''}`}
+									onClick={() => setPreferredContactMethod('telegram_phone')}
 								>
 									<MessageSquare size={16} aria-hidden />
-									Telegram
+									в Telegram за номером
 								</button>
 							</div>
 						</div>
-
-						{contactMethod === 'phone' ? (
-							<div className={styles.field}>
-								<label className={styles.label} htmlFor='trial-phone'>
-									Номер телефону
-								</label>
-								<div className={styles.phoneRow}>
-									<span className={styles.prefix}>+380</span>
-									<input
-										id='trial-phone'
-										className={styles.input}
-										name='phone'
-										value={formData.phone}
-										onChange={handleInputChange}
-										inputMode='numeric'
-										placeholder='__ ___ __ __'
-										autoComplete='tel-national'
-									/>
-								</div>
-								{phoneError && <span className={styles.error}>{phoneError}</span>}
-							</div>
-						) : (
-							<div className={styles.field}>
-								<p className={styles.hint}>
-									Наш телеграм: <span className={styles.hintAccent}>@SmartCode_Academy</span>
-								</p>
-								<label className={styles.label} htmlFor='trial-tg'>
-									Ваш username у Telegram
-								</label>
-								<input
-									id='trial-tg'
-									className={styles.input}
-									name='telegram'
-									value={formData.telegram}
-									onChange={handleInputChange}
-									placeholder='username'
-									autoComplete='username'
-								/>
-								{telegramError && <span className={styles.error}>{telegramError}</span>}
-							</div>
-						)}
 
 						<div className={styles.field}>
 							<label className={styles.label} htmlFor='trial-course'>

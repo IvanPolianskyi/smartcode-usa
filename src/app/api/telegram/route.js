@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/mongodb'
 import { cookies } from 'next/headers'
 import { sendCapiLead, getClientIp, getClientUserAgent, getFbCookies } from '@/lib/metaCapi'
+import { sanitizeAttribution } from '@/lib/attribution'
 
 function escapeHtml(input) {
   const str = String(input ?? '')
@@ -12,6 +13,28 @@ function escapeHtml(input) {
     '"': '&quot;',
     "'": '&#039;',
   })[char])
+}
+
+async function sendLeadToCrm(payload) {
+  const crmLeadEndpoint = process.env.CRM_LEAD_ENDPOINT
+  if (!crmLeadEndpoint) return { skipped: true }
+
+  const headers = { 'content-type': 'application/json' }
+  if (process.env.CRM_API_KEY) {
+    headers['x-api-key'] = process.env.CRM_API_KEY
+  }
+
+  const response = await fetch(crmLeadEndpoint, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(payload),
+  })
+
+  const data = await response.json().catch(() => ({}))
+  if (!response.ok) {
+    throw new Error(`CRM lead sync failed (${response.status}): ${JSON.stringify(data)}`)
+  }
+  return data
 }
 
 export async function POST(request) {
@@ -27,7 +50,7 @@ export async function POST(request) {
     }
 
     const body = await request.json().catch(() => ({}))
-    const { phone, telegram, course, message, contactMethod, name, eventId, sourceUrl } = body || {}
+    const { phone, telegram, course, message, contactMethod, preferredContactMethod, name, eventId, sourceUrl, attribution } = body || {}
 
     if (!phone && !telegram) {
       return NextResponse.json(
@@ -39,6 +62,8 @@ export async function POST(request) {
     const createdAt = new Date().toLocaleString('uk-UA', { timeZone: 'Europe/Kyiv' })
     const normalizedPhone = phone ? "+380" + phone : null
     const normalizedTelegram = telegram ? (telegram.startsWith('@') ? telegram : '@' + telegram) : null
+    const cleanAttribution = sanitizeAttribution(attribution)
+    const preferredContactLabel = preferredContactMethod === 'telegram_phone' ? 'Написати в Telegram за цим номером' : 'Подзвонити'
 
     // Читаємо cookies для реферальної системи
     const cookieStore = await cookies()
@@ -52,8 +77,14 @@ export async function POST(request) {
       contactMethod === 'telegram' 
         ? `<b>Телеграм:</b> ${escapeHtml(normalizedTelegram)}`
         : `<b>Телефон:</b> ${escapeHtml(normalizedPhone)}`,
+      normalizedPhone ? `<b>Бажаний спосіб зв'язку:</b> ${escapeHtml(preferredContactLabel)}` : null,
       course ? `<b>Курс:</b> ${escapeHtml(course)}` : null,
       message ? `<b>Повідомлення:</b>\n${escapeHtml(message)}` : null,
+      cleanAttribution.utm_source ? `<b>UTM Source:</b> ${escapeHtml(cleanAttribution.utm_source)}` : null,
+      cleanAttribution.utm_medium ? `<b>UTM Medium:</b> ${escapeHtml(cleanAttribution.utm_medium)}` : null,
+      cleanAttribution.utm_campaign ? `<b>UTM Campaign:</b> ${escapeHtml(cleanAttribution.utm_campaign)}` : null,
+      cleanAttribution.utm_term ? `<b>UTM Term:</b> ${escapeHtml(cleanAttribution.utm_term)}` : null,
+      cleanAttribution.utm_content ? `<b>UTM Content:</b> ${escapeHtml(cleanAttribution.utm_content)}` : null,
       referralId ? `<b>🔥 Реферал ID:</b> <code>${escapeHtml(referralId)}</code>` : null,
       '',
       `<b>Час:</b> ${escapeHtml(createdAt)}`,
@@ -79,15 +110,33 @@ export async function POST(request) {
       // Even if Telegram fails, still attempt to store submission for auditing
       try {
         const submissions = await getCollection('submissions')
-        await submissions.insertOne({
+        const insertResult = await submissions.insertOne({
           name: name || '',
           phone: normalizedPhone || '',
           telegram: normalizedTelegram || '',
           course: course || '',
           message: message || '',
           contactMethod: contactMethod || 'phone',
+          preferredContactMethod: preferredContactMethod || 'phone_call',
+          attribution: cleanAttribution,
           createdAt: new Date(),
           via: 'telegram-api-failed',
+        })
+        await sendLeadToCrm({
+          leadId: String(insertResult.insertedId),
+          name: name || '',
+          phone: normalizedPhone || null,
+          telegram: normalizedTelegram || null,
+          course: course || '',
+          message: message || '',
+          contactMethod: contactMethod || 'phone',
+          preferredContactMethod: preferredContactMethod || 'phone_call',
+          sourceUrl: sourceUrl || null,
+          attribution: cleanAttribution,
+          referralId,
+          createdAt: new Date().toISOString(),
+        }).catch((error) => {
+          console.error('CRM lead sync failed after telegram error:', error)
         })
       } catch {}
       return NextResponse.json(
@@ -99,15 +148,33 @@ export async function POST(request) {
     // Store successful submission as well
     try {
       const submissions = await getCollection('submissions')
-      await submissions.insertOne({
+      const insertResult = await submissions.insertOne({
         name: name || '',
         phone: normalizedPhone || '',
         telegram: normalizedTelegram || '',
         course: course || '',
         message: message || '',
         contactMethod: contactMethod || 'phone',
+        preferredContactMethod: preferredContactMethod || 'phone_call',
+        attribution: cleanAttribution,
         createdAt: new Date(),
         via: 'telegram',
+      })
+      await sendLeadToCrm({
+        leadId: String(insertResult.insertedId),
+        name: name || '',
+        phone: normalizedPhone || null,
+        telegram: normalizedTelegram || null,
+        course: course || '',
+        message: message || '',
+        contactMethod: contactMethod || 'phone',
+        preferredContactMethod: preferredContactMethod || 'phone_call',
+        sourceUrl: sourceUrl || null,
+        attribution: cleanAttribution,
+        referralId,
+        createdAt: new Date().toISOString(),
+      }).catch((error) => {
+        console.error('CRM lead sync failed:', error)
       })
     } catch {}
 

@@ -174,3 +174,40 @@ export async function sendCapiLead({ eventId, sourceUrl, phone, externalId, clie
 		},
 	})
 }
+
+/**
+ * Зручний хелпер: відправити Purchase з CRM.
+ */
+export async function sendCapiPurchase({
+	eventId,
+	sourceUrl,
+	phone,
+	externalId,
+	clientIp,
+	userAgent,
+	fbc,
+	fbp,
+	value,
+	currency = 'UAH',
+	contentName,
+	contentIds,
+}) {
+	return sendCapiEvent({
+		eventName: 'Purchase',
+		eventId,
+		sourceUrl,
+		phone,
+		externalId,
+		clientIp,
+		userAgent,
+		fbc,
+		fbp,
+		customData: {
+			value: typeof value === 'number' ? value : Number(value || 0),
+			currency,
+			...(contentName && { content_name: contentName }),
+			...(Array.isArray(contentIds) && contentIds.length > 0 && { content_ids: contentIds }),
+			content_type: 'product',
+		},
+	})
+}

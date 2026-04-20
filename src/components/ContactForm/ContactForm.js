@@ -7,15 +7,15 @@ import {
 	trialInterestToContentIds,
 	generateEventId,
 } from '@/lib/metaPixel'
+import { getClientAttribution } from '@/lib/attribution'
 import styles from './ContactForm.module.css'
 
 const ContactForm = () => {
     const [isOpen, setIsOpen] = useState(false)
-    const [contactMethod, setContactMethod] = useState('phone')
-    const [formData, setFormData] = useState({ phone: '', telegram: '', course: '', message: '' })
+    const [preferredContactMethod, setPreferredContactMethod] = useState('phone_call')
+    const [formData, setFormData] = useState({ phone: '', course: '', message: '' })
     const [phoneError, setPhoneError] = useState('')
-    const [telegramError, setTelegramError] = useState('')
-    const [touched, setTouched] = useState({ phone: false, telegram: false, course: false })
+    const [touched, setTouched] = useState({ phone: false, course: false })
     const [isSubmitted, setIsSubmitted] = useState(false)
     const overlayRef = useRef(null)
     const openedAtRef = useRef(0)
@@ -94,48 +94,30 @@ const ContactForm = () => {
             else setPhoneError('')
             return
         }
-        if (name === 'telegram') {
-            const cleanedValue = value.replace(/^@/, '').trim()
-            setFormData(prev => ({ ...prev, telegram: cleanedValue }))
-            if (cleanedValue.length === 0) setTelegramError('Введіть ваш телеграм')
-            else setTelegramError('')
-            return
-        }
         setFormData(prev => ({ ...prev, [name]: value }))
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (contactMethod === 'phone') {
-            setTouched(prev => ({ ...prev, phone: true, course: true }))
-            const isPhoneValid = /^\d{9}$/.test(formData.phone || '')
-            const isCourseSelected = !!formData.course
-            if (!isPhoneValid) {
-                setPhoneError('Введіть коректний номер (9 цифр)')
-                return
-            }
-            if (!isCourseSelected) {
-                return
-            }
-        } else {
-            setTouched(prev => ({ ...prev, telegram: true, course: true }))
-            const isTelegramValid = formData.telegram && formData.telegram.trim().length > 0
-            const isCourseSelected = !!formData.course
-            if (!isTelegramValid) {
-                setTelegramError('Введіть ваш телеграм')
-                return
-            }
-            if (!isCourseSelected) {
-                return
-            }
+        setTouched(prev => ({ ...prev, phone: true, course: true }))
+        const isPhoneValid = /^\d{9}$/.test(formData.phone || '')
+        const isCourseSelected = !!formData.course
+        if (!isPhoneValid) {
+            setPhoneError('Введіть коректний номер (9 цифр)')
+            return
+        }
+        if (!isCourseSelected) {
+            return
         }
         try {
             const eventId = generateEventId()
             const submitData = {
                 ...formData,
-                contactMethod: contactMethod,
+                contactMethod: 'phone',
+                preferredContactMethod,
                 eventId,
                 sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://smartcode-academy.com',
+                attribution: getClientAttribution(),
             }
             const response = await fetch('/api/telegram', {
                 method: 'POST',
@@ -151,16 +133,15 @@ const ContactForm = () => {
             if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
                 window.gtag('event', 'submit_trial_form', {
                     course: formData.course,
-                    contact_method: contactMethod,
+                    contact_method: preferredContactMethod,
                 })
             }
             trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course), eventId)
             setIsSubmitted(false)
-            setFormData({ phone: '', telegram: '', course: '', message: '' })
+            setFormData({ phone: '', course: '', message: '' })
             setPhoneError('')
-            setTelegramError('')
-            setContactMethod('phone')
-            setTouched({ phone: false, telegram: false, course: false })
+            setPreferredContactMethod('phone_call')
+            setTouched({ phone: false, course: false })
             setIsOpen(false)
         } catch (err) {
             console.error(err)
@@ -171,7 +152,6 @@ const ContactForm = () => {
     if (!isOpen) return null
 
     const phoneInvalid = !!(phoneError || (touched.phone && !formData.phone))
-    const telegramInvalid = !!(telegramError || (touched.telegram && !formData.telegram))
     const courseInvalid = !!(touched.course && !formData.course)
 
     return (
@@ -198,79 +178,49 @@ const ContactForm = () => {
 
                                 <form onSubmit={handleSubmit} className={styles.modalForm}>
                                     <div className={styles.modalField}>
-                                        <span className={styles.modalLabel}>Як з вами зв&apos;язатися?</span>
+                                        <label className={styles.modalLabel} htmlFor='modal-phone'>
+                                            Номер телефону
+                                        </label>
+                                        <div className={styles.modalPhoneRow}>
+                                            <span className={styles.modalPrefix}>+380</span>
+                                            <input
+                                                id='modal-phone'
+                                                type='tel'
+                                                name='phone'
+                                                value={formData.phone}
+                                                onChange={handleInputChange}
+                                                onBlur={() => setTouched(prev => ({ ...prev, phone: true }))}
+                                                placeholder='__ ___ __ __'
+                                                className={styles.modalInput}
+                                                inputMode='numeric'
+                                                autoComplete='tel-national'
+                                                aria-invalid={phoneInvalid}
+                                            />
+                                        </div>
+                                        {phoneError && <span className={styles.modalError}>{phoneError}</span>}
+                                    </div>
+
+                                    <div className={styles.modalField}>
+                                        <span className={styles.modalLabel}>Як вам зручно отримати контакт?</span>
                                         <div className={styles.modalSegment} role='group' aria-label="Спосіб зв'язку">
                                             <button
                                                 type='button'
-                                                className={`${styles.modalSegmentBtn} ${contactMethod === 'phone' ? styles.modalSegmentBtnActive : ''}`}
-                                                onClick={() => {
-                                                    setContactMethod('phone')
-                                                    setTelegramError('')
-                                                }}
+                                                className={`${styles.modalSegmentBtn} ${preferredContactMethod === 'phone_call' ? styles.modalSegmentBtnActive : ''}`}
+                                                onClick={() => setPreferredContactMethod('phone_call')}
                                             >
                                                 <Phone size={16} aria-hidden />
-                                                Телефон
+                                                Подзвонити вам
                                             </button>
                                             <button
                                                 type='button'
-                                                className={`${styles.modalSegmentBtn} ${contactMethod === 'telegram' ? styles.modalSegmentBtnActive : ''}`}
-                                                onClick={() => {
-                                                    setContactMethod('telegram')
-                                                    setPhoneError('')
-                                                }}
+                                                className={`${styles.modalSegmentBtn} ${preferredContactMethod === 'telegram_phone' ? styles.modalSegmentBtnActive : ''}`}
+                                                onClick={() => setPreferredContactMethod('telegram_phone')}
                                             >
                                                 <MessageSquare size={16} aria-hidden />
-                                                Telegram
+                                                в Telegram за номером
                                             </button>
                                         </div>
                                     </div>
-
-                                    {contactMethod === 'phone' ? (
-                                        <div className={`${styles.modalField} ${phoneInvalid ? styles.modalFieldError : ''}`}>
-                                            <label className={styles.modalLabel} htmlFor='modal-phone'>
-                                                Номер телефону
-                                            </label>
-                                            <div className={styles.modalPhoneRow}>
-                                                <span className={styles.modalPrefix}>+380</span>
-                                                <input
-                                                    id='modal-phone'
-                                                    type='tel'
-                                                    name='phone'
-                                                    value={formData.phone}
-                                                    onChange={handleInputChange}
-                                                    onBlur={() => setTouched(prev => ({ ...prev, phone: true }))}
-                                                    placeholder='__ ___ __ __'
-                                                    className={styles.modalInput}
-                                                    inputMode='numeric'
-                                                    autoComplete='tel-national'
-                                                    aria-invalid={phoneInvalid}
-                                                />
-                                            </div>
-                                            {phoneError && <span className={styles.modalError}>{phoneError}</span>}
-                                        </div>
-                                    ) : (
-                                        <div className={`${styles.modalField} ${telegramInvalid ? styles.modalFieldError : ''}`}>
-                                            <p className={styles.modalHint}>
-                                                Наш канал: <span className={styles.modalHintAccent}>@SmartCode_Academy</span>
-                                            </p>
-                                            <label className={styles.modalLabel} htmlFor='modal-tg'>
-                                                Ваш username у Telegram
-                                            </label>
-                                            <input
-                                                id='modal-tg'
-                                                type='text'
-                                                name='telegram'
-                                                value={formData.telegram}
-                                                onChange={handleInputChange}
-                                                onBlur={() => setTouched(prev => ({ ...prev, telegram: true }))}
-                                                placeholder='username'
-                                                className={styles.modalInput}
-                                                autoComplete='username'
-                                                aria-invalid={telegramInvalid}
-                                            />
-                                            {telegramError && <span className={styles.modalError}>{telegramError}</span>}
-                                        </div>
-                                    )}
 
                                     <div className={`${styles.modalField} ${courseInvalid ? styles.modalFieldError : ''}`}>
                                         <label className={styles.modalLabel} htmlFor='modal-course'>
