@@ -129,9 +129,6 @@ export async function sendCapiEvent({
 
 	const body = {
 		data: [eventPayload],
-		...(process.env.META_CAPI_TEST_EVENT_CODE && {
-			test_event_code: process.env.META_CAPI_TEST_EVENT_CODE,
-		}),
 	}
 
 	try {

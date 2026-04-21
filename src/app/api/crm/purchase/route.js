@@ -2,10 +2,6 @@ import { NextResponse } from 'next/server'
 import { sendCapiPurchase } from '@/lib/metaCapi'
 import { sanitizeAttribution } from '@/lib/attribution'
 
-function unauthorized() {
-	return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 })
-}
-
 function normalizeExternalId(value) {
 	if (!value) return undefined
 	return String(value).replace(/^@/, '').trim().toLowerCase() || undefined
@@ -13,17 +9,6 @@ function normalizeExternalId(value) {
 
 export async function POST(request) {
 	try {
-		const webhookToken = process.env.CRM_PURCHASE_WEBHOOK_TOKEN
-		if (!webhookToken) {
-			return NextResponse.json(
-				{ ok: false, error: 'CRM_PURCHASE_WEBHOOK_TOKEN is not configured' },
-				{ status: 500 }
-			)
-		}
-
-		const providedToken = request.headers.get('x-crm-token')
-		if (providedToken !== webhookToken) return unauthorized()
-
 		const body = await request.json().catch(() => ({}))
 		const {
 			eventId,
