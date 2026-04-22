@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import styles from './Logo.module.css'
 
-export default function Logo({ className = '', href = '/' }) {
+export default function Logo({ className = '', href = '/', hideText = false }) {
   const pathname = usePathname()
 
   const handleClick = (e) => {
@@ -34,10 +34,12 @@ export default function Logo({ className = '', href = '/' }) {
           priority
         />
       </div>
-      <div className={styles.logoText}>
-        <span className={styles.logoTitle}>SmartCode</span>
-        <span className={styles.logoSubtitle}>Academy</span>
-      </div>
+      {!hideText && (
+        <div className={styles.logoText}>
+          <span className={styles.logoTitle}>SmartCode</span>
+          <span className={styles.logoSubtitle}>Academy</span>
+        </div>
+      )}
     </Link>
   )
 }

@@ -428,7 +428,7 @@ const Header = () => {
 					{/* Логотип в меню */}
 					<div className={styles.mobileMenuHeader}>
 						<div className={styles.mobileMenuLogo}>
-							<Logo />
+							<Logo hideText />
 						</div>
 					</div>
 
