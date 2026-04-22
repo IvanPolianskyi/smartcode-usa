@@ -31,9 +31,11 @@ const SocialMedia = dynamic(() => import('@/components/SocialMedia/SocialMedia')
 
 export default function HomeClient() {
   useEffect(() => {
-    // Fire-and-forget visit log (client-side session guard)
-    try {
-      if (typeof window !== 'undefined') {
+    // Fire-and-forget visit log (deferred to idle to reduce startup TBT)
+    let idleId = null
+    let timeoutId = null
+    const sendVisit = () => {
+      try {
         if (sessionStorage.getItem('sc_visit_logged') !== '1') {
           fetch('/api/visit', {
             method: 'POST',
@@ -52,8 +54,25 @@ export default function HomeClient() {
             })
             .catch(() => {})
         }
+      } catch {}
+    }
+
+    try {
+      if (typeof window !== 'undefined' && typeof window.requestIdleCallback === 'function') {
+        idleId = window.requestIdleCallback(sendVisit, { timeout: 1500 })
+      } else {
+        timeoutId = window.setTimeout(sendVisit, 300)
       }
     } catch {}
+
+    return () => {
+      if (idleId != null && typeof window !== 'undefined' && typeof window.cancelIdleCallback === 'function') {
+        window.cancelIdleCallback(idleId)
+      }
+      if (timeoutId != null) {
+        window.clearTimeout(timeoutId)
+      }
+    }
   }, [])
 
   return (

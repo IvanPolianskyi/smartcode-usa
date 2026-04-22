@@ -1,28 +1,23 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react'
+import dynamic from 'next/dynamic'
 import {
 	Users,
 	Monitor,
-	Gamepad2,
 	Code,
-	Palette,
-	ChevronDown,
-	Cpu,
-	Zap,
-	Rocket,
 	Play,
-	Star,
 	Award,
-	Clock,
 	BookOpen,
 	Trophy,
-	TrendingUp,
 } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './Visit.module.css'
-import EnhancedCourseCards from './EnhancedCourseCards'
 import Link from 'next/link'
+
+const EnhancedCourseCards = dynamic(() => import('./EnhancedCourseCards'), {
+	loading: () => <div style={{ minHeight: '720px', width: '100%' }} />,
+})
 
 // Guard: ScrollTrigger uses DOM APIs — only register in the browser
 if (typeof window !== 'undefined') {
@@ -31,11 +26,33 @@ if (typeof window !== 'undefined') {
 
 const Visit = () => {
 	const sectionRef = useRef(null)
-	const cardsRef = useRef(null)
 	const [isMounted, setIsMounted] = useState(false)
+	const [shouldRenderCards, setShouldRenderCards] = useState(false)
 
 	useEffect(() => {
 		setIsMounted(true)
+	}, [])
+
+	useEffect(() => {
+		let idleId = null
+		let timeoutId = null
+
+		const scheduleCardsRender = () => setShouldRenderCards(true)
+
+		if (typeof window !== 'undefined' && typeof window.requestIdleCallback === 'function') {
+			idleId = window.requestIdleCallback(scheduleCardsRender, { timeout: 1200 })
+		} else {
+			timeoutId = window.setTimeout(scheduleCardsRender, 350)
+		}
+
+		return () => {
+			if (idleId != null && typeof window !== 'undefined' && typeof window.cancelIdleCallback === 'function') {
+				window.cancelIdleCallback(idleId)
+			}
+			if (timeoutId != null) {
+				window.clearTimeout(timeoutId)
+			}
+		}
 	}, [])
 
 	useEffect(() => {
@@ -236,7 +253,11 @@ const Visit = () => {
 					</div>
 				</div>
 
-				<EnhancedCourseCards/>
+				{shouldRenderCards ? (
+					<EnhancedCourseCards />
+				) : (
+					<div style={{ minHeight: '720px', width: '100%' }} aria-hidden='true' />
+				)}
 
 
 			</div>

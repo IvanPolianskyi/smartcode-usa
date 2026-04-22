@@ -198,10 +198,10 @@ export default function RootLayout({ children }) {
 						gtag('config', 'G-MYR6FDXWYF');
 					`}
 				</Script>
-				{/* Meta Pixel - afterInteractive щоб fbq був доступний рано для подій у metaPixel */}
+				{/* Meta Pixel - lazyOnload to keep startup JS lighter on landing */}
 				{META_PIXEL_ID && (
 					<>
-						<Script id='meta-pixel' strategy='afterInteractive'>
+						<Script id='meta-pixel' strategy='lazyOnload'>
 							{`
 								!function(f,b,e,v,n,t,s)
 								{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
