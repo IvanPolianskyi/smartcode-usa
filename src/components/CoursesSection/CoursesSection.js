@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { ClipboardCheck, PlayCircle, Sparkles } from 'lucide-react'
 import gsap from 'gsap'
@@ -12,6 +12,7 @@ gsap.registerPlugin(ScrollTrigger)
 const CoursesSection = () => {
   const sectionRef = useRef(null)
   const lessonsRef = useRef(null)
+  const [loadedVideos, setLoadedVideos] = useState(() => new Set())
 
   const lessonExamples = [
     {
@@ -33,6 +34,27 @@ const CoursesSection = () => {
       embedUrl: 'https://www.youtube-nocookie.com/embed/89-nuLW2aJ0?rel=0&modestbranding=1',
     },
   ]
+
+  const lessonExamplesWithThumbs = useMemo(
+    () =>
+      lessonExamples.map((lesson) => {
+        const videoId = lesson.embedUrl.split('/embed/')[1]?.split('?')[0]
+        return {
+          ...lesson,
+          videoId,
+          thumbnailUrl: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+        }
+      }),
+    []
+  )
+
+  const handleLoadVideo = (lessonId) => {
+    setLoadedVideos((prev) => {
+      const next = new Set(prev)
+      next.add(lessonId)
+      return next
+    })
+  }
 
   useEffect(() => {
     if (!sectionRef.current || !lessonsRef.current) return
@@ -135,17 +157,37 @@ const CoursesSection = () => {
           </div>
 
           <div className={styles.videoGrid}>
-            {lessonExamples.map((lesson) => (
+            {lessonExamplesWithThumbs.map((lesson) => (
               <article key={lesson.id} className={styles.videoCard}>
                 <div className={styles.videoWrapper}>
-                  <iframe
-                    src={lesson.embedUrl}
-                    title={lesson.title}
-                    loading='lazy'
-                    allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-                    referrerPolicy='strict-origin-when-cross-origin'
-                    allowFullScreen
-                  />
+                  {loadedVideos.has(lesson.id) ? (
+                    <iframe
+                      src={`${lesson.embedUrl}&autoplay=1`}
+                      title={lesson.title}
+                      loading='lazy'
+                      allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+                      referrerPolicy='strict-origin-when-cross-origin'
+                      allowFullScreen
+                    />
+                  ) : (
+                    <button
+                      type='button'
+                      className={styles.videoPreviewButton}
+                      onClick={() => handleLoadVideo(lesson.id)}
+                      aria-label={`Відтворити відео: ${lesson.title}`}
+                    >
+                      <img
+                        src={lesson.thumbnailUrl}
+                        alt={lesson.title}
+                        loading='lazy'
+                        decoding='async'
+                        className={styles.videoPreviewImage}
+                      />
+                      <span className={styles.videoPreviewOverlay}>
+                        <PlayCircle size={56} />
+                      </span>
+                    </button>
+                  )}
                 </div>
                 <h3 className={styles.videoTitle}>{lesson.title}</h3>
                 <p className={styles.videoDescription}>{lesson.description}</p>

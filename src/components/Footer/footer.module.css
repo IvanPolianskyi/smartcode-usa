@@ -1,5 +1,4 @@
 /* footer.module.css */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap');
 
 
 .footer {
@@ -7,7 +6,7 @@
     color: var(--text-primary-dark);
     position: relative;
     overflow: hidden;
-    font-family: 'Manrope', sans-serif;
+    font-family: var(--font-geist-sans), Arial, sans-serif;
 }
 .backgroundElements {
     position: absolute;

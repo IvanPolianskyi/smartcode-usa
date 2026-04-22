@@ -16,7 +16,7 @@ import styles from './Visit.module.css'
 import Link from 'next/link'
 
 const EnhancedCourseCards = dynamic(() => import('./EnhancedCourseCards'), {
-	loading: () => <div style={{ minHeight: '720px', width: '100%' }} />,
+	loading: () => <div style={{ minHeight: '980px', width: '100%' }} />,
 })
 
 // Guard: ScrollTrigger uses DOM APIs — only register in the browser
@@ -256,7 +256,7 @@ const Visit = () => {
 				{shouldRenderCards ? (
 					<EnhancedCourseCards />
 				) : (
-					<div style={{ minHeight: '720px', width: '100%' }} aria-hidden='true' />
+					<div style={{ minHeight: '980px', width: '100%' }} aria-hidden='true' />
 				)}
 
 

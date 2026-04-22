@@ -1,6 +1,4 @@
 /* Visit.module.css */
-/* Оптимізація завантаження шрифтів - font-display: swap додається через параметр display=swap в URL */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800;900&display=swap');
 
 
 
@@ -9,7 +7,7 @@
     min-height: 100vh;
     background: #f8fafc;
     position: relative;
-    font-family: 'Manrope', sans-serif;
+    font-family: var(--font-geist-sans), Arial, sans-serif;
     overflow-x: hidden;
     /* Оптимізація для продуктивності */
     contain: layout style paint;
