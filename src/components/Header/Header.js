@@ -10,7 +10,6 @@ import {
 	Code,
 	Gamepad2,
 	Monitor,
-	Sparkles,
 	Star,
 	Users,
 	Box,
@@ -279,6 +278,15 @@ const Header = () => {
 					{/* Логотип */}
 					<Logo className={styles.logo} />
 
+					<button
+						type='button'
+						className={styles.mobileTopCta}
+						onClick={handleCtaClick}
+						aria-label='Записатися на пробне заняття'
+					>
+						Записатися
+					</button>
+
 					{/* Навігація для десктопу */}
 					<nav className={styles.nav}>
                         {navItems.map((item, index) =>
@@ -502,18 +510,6 @@ const Header = () => {
 				</div>
 			</div>
 		</header>
-
-		<button
-			type="button"
-			className={`${styles.mobileFloatingCta} ${isMobileMenuOpen ? styles.mobileFloatingCtaHidden : ''}`}
-			onClick={handleCtaClick}
-			aria-hidden={isMobileMenuOpen}
-			tabIndex={isMobileMenuOpen ? -1 : 0}
-			aria-label="Записатися на пробне заняття"
-		>
-			<Sparkles size={18} aria-hidden className={styles.mobileFloatingCtaIcon} />
-			Записатися
-		</button>
 		</>
 	)
 }

@@ -433,6 +433,10 @@
     gap: 0.75rem; 
 }
 
+.mobileTopCta {
+    display: none;
+}
+
 .loginButton {
     border-radius: 50px;
     background: transparent;
@@ -566,6 +570,22 @@
     .logo {
         display: none;
     }
+    .mobileTopCta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 999px;
+        padding: 0.45rem 1rem;
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        color: #fff;
+        font-size: 0.875rem;
+        font-weight: 700;
+        line-height: 1;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+        cursor: pointer;
+        margin-right: auto;
+    }
 }
 
 @media (max-width: 700px) {
@@ -668,49 +688,6 @@
     .loginButton, .registerButton { display: none; }
 }
 .mobileMenuButton:hover { background: rgba(0, 0, 0, 0.05); }
-
-/* Плашка «Записатися» — лише коли видно бургер (≤700px), під модалкою контактів */
-.mobileFloatingCta {
-    display: none;
-}
-@media (max-width: 700px) {
-    .mobileFloatingCta {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.45rem;
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 9990;
-        width: 100%;
-        margin: 0;
-        padding: 0.7rem 1rem;
-        padding-bottom: calc(0.7rem + env(safe-area-inset-bottom, 0px));
-        border: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.35);
-        cursor: pointer;
-        font-family: inherit;
-        font-size: 0.9375rem;
-        font-weight: 800;
-        letter-spacing: 0.02em;
-        color: #ffffff;
-        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-        box-shadow: 0 -6px 28px rgba(37, 99, 235, 0.28);
-        transition: opacity 0.2s ease, transform 0.2s ease;
-    }
-    .mobileFloatingCta:active {
-        transform: scale(0.98);
-    }
-    .mobileFloatingCtaIcon {
-        flex-shrink: 0;
-        opacity: 0.95;
-    }
-    .mobileFloatingCtaHidden {
-        display: none;
-    }
-}
 
 /* ПОВНОЕКРАННЕ МОБІЛЬНЕ МЕНЮ */
 .mobileMenu {
