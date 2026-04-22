@@ -1,6 +1,7 @@
 /* --- ОСНОВНА СТОРІНКА --- */
 .page {
 	min-height: 100vh;
+	min-height: 100svh;
 	background: linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%);
 }
 
