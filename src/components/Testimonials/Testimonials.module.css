@@ -73,6 +73,26 @@
 	will-change: transform;
 }
 
+/* CSS marquee — runs on compositor thread, zero JS/main-thread cost */
+@keyframes marquee {
+	from { transform: translateX(0); }
+	to   { transform: translateX(-50%); }
+}
+
+.carouselAnimated {
+	animation: marquee 45s linear infinite;
+}
+
+/* Pause on hover (desktop) */
+.carouselWrapper:hover .carouselAnimated {
+	animation-play-state: paused;
+}
+
+/* Pause on touch (injected via class toggle in JS) */
+.paused {
+	animation-play-state: paused !important;
+}
+
 .card {
 	flex: 0 0 auto;
 	width: 320px;
@@ -172,8 +192,5 @@
 	}
 }
 
-/* --- Пауза при наведенні (опціонально) --- */
-.carouselWrapper:hover .carousel {
-	animation-play-state: paused;
-}
+/* Hover / touch pause rules are now defined above with .carouselAnimated */
 

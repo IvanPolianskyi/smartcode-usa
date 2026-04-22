@@ -4,7 +4,7 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
-  
+
   images: {
     remotePatterns: [
       {
@@ -15,8 +15,10 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60,
+    // 1 year — дозволяє CDN/браузеру кешувати optimized зображення
+    minimumCacheTTL: 60 * 60 * 24 * 365,
   },
+
   // Enable static file serving for uploads
   async rewrites() {
     return [
@@ -26,33 +28,32 @@ const nextConfig = {
       },
     ];
   },
-  // Add headers for better caching
+
+  // Cache headers for all static public assets
   async headers() {
+    const IMMUTABLE_CACHE = 'public, max-age=31536000, immutable';
+    const staticAssetSources = [
+      '/uploads/:path*',
+      '/logos/:path*',
+      '/comments/:path*',
+      '/projects/:path*',
+      '/tiktoklogo/:path*',
+      '/:file((?!.*\\.html$).*\\.(?:png|jpg|jpeg|svg|gif|webp|avif|ico|woff|woff2|ttf|otf))',
+    ];
+
     return [
-      {
-        source: '/uploads/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
+      // Long-term cache for all static public assets
+      ...staticAssetSources.map(source => ({
+        source,
+        headers: [{ key: 'Cache-Control', value: IMMUTABLE_CACHE }],
+      })),
+      // Security headers for all routes
       {
         source: '/:path*',
         headers: [
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
-          },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-XSS-Protection', value: '1; mode=block' },
         ],
       },
     ];

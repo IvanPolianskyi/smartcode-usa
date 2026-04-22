@@ -8,17 +8,8 @@ import { Analytics } from "@vercel/analytics/next"
 const SectionSkeleton = ({ height = '60vh' }) => (
   <div style={{ minHeight: height, width: '100%' }} />
 )
-const HeroSkeleton = () => <SectionSkeleton height='75vh' />
 
-// Enable SSR (default) and provide client-side loading fallbacks.
-// Removing ssr:false prevents the server from sending an empty <main>,
-// which previously let the footer appear first.
-const HeroSection = dynamic(() => import('@/components/HeroSection/HeroSection'), {
-  loading: () => <HeroSkeleton />,
-})
-const Visit = dynamic(() => import('@/components/Visit/Visit'), {
-  loading: () => <SectionSkeleton height='1200px' />,
-})
+// Below-fold sections — all lazy loaded to keep initial bundle small
 const Testimonials = dynamic(() => import('@/components/Testimonials/Testimonials'), {
   loading: () => <SectionSkeleton height='800px' />,
 })
@@ -39,8 +30,6 @@ const SocialMedia = dynamic(() => import('@/components/SocialMedia/SocialMedia')
 })
 
 export default function HomeClient() {
-  // Прибрали поведінку з hash, щоб уникнути гонок відкриття модалки
-
   useEffect(() => {
     // Fire-and-forget visit log (client-side session guard)
     try {
@@ -68,19 +57,15 @@ export default function HomeClient() {
   }, [])
 
   return (
-    <div className='home-page-wrapper'>
-      
-      <div className='overflow-x-hidden'>
-        <Analytics />
-        <Visit />
-        <CoursesSection />
-        <TrialSignupBlock />
-        <Testimonials />
-        <ProjectsShowcase />
-        <SocialMedia />
-        <FAQ />
-        
-      </div>
-    </div>
+    <>
+      <Analytics />
+      <CoursesSection />
+      <TrialSignupBlock />
+      <Testimonials />
+      <ProjectsShowcase />
+      <SocialMedia />
+      <FAQ />
+    </>
   )
 }
+

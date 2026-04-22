@@ -23,8 +23,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './Visit.module.css'
 import EnhancedCourseCards from './EnhancedCourseCards'
 import Link from 'next/link'
-// Реєструємо ScrollTrigger
-gsap.registerPlugin(ScrollTrigger)
+
+// Guard: ScrollTrigger uses DOM APIs — only register in the browser
+if (typeof window !== 'undefined') {
+	gsap.registerPlugin(ScrollTrigger)
+}
 
 const Visit = () => {
 	const sectionRef = useRef(null)
