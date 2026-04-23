@@ -17,6 +17,7 @@ const ContactForm = () => {
     const [phoneError, setPhoneError] = useState('')
     const [touched, setTouched] = useState({ phone: false, course: false })
     const [isSubmitted, setIsSubmitted] = useState(false)
+    const [submitting, setSubmitting] = useState(false)
     const overlayRef = useRef(null)
     const openedAtRef = useRef(0)
     const scrollPositionRef = useRef(0)
@@ -99,6 +100,7 @@ const ContactForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (submitting) return
         setTouched(prev => ({ ...prev, phone: true, course: true }))
         const isPhoneValid = /^\d{9}$/.test(formData.phone || '')
         const isCourseSelected = !!formData.course
@@ -109,6 +111,7 @@ const ContactForm = () => {
         if (!isCourseSelected) {
             return
         }
+        setSubmitting(true)
         try {
             const eventId = generateEventId()
             const submitData = {
@@ -146,6 +149,8 @@ const ContactForm = () => {
         } catch (err) {
             console.error(err)
             alert('Сталася помилка мережі. Перевірте підключення та спробуйте ще раз.')
+        } finally {
+            setSubmitting(false)
         }
     }
 
@@ -264,9 +269,9 @@ const ContactForm = () => {
                                         />
                                     </div>
 
-                                    <button type='submit' className={styles.modalSubmit}>
+                                    <button type='submit' className={styles.modalSubmit} disabled={submitting}>
                                         <Send size={18} aria-hidden />
-                                        Надіслати заявку
+                                        {submitting ? 'Відправка…' : 'Надіслати заявку'}
                                     </button>
                                 </form>
                             </>
