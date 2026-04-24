@@ -6,7 +6,6 @@
 .container {
     min-height: 100vh;
     min-height: 100svh;
-    min-height: 100dvh;
     background: #f8fafc;
     position: relative;
     font-family: var(--font-geist-sans), Arial, sans-serif;

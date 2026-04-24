@@ -108,6 +108,12 @@ export default function RootLayout({ children }) {
 				<meta name='apple-mobile-web-app-status-bar-style' content='default' />
 				<meta name='mobile-web-app-capable' content='yes' />
 				<link rel='icon' href='/logo.jpeg' />
+				{/* Фікс для Instagram/Facebook in-app browser: фіксуємо висоту viewport при завантаженні */}
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `(function(){var h=window.innerHeight;document.documentElement.style.setProperty('--app-height',h+'px')})();`,
+					}}
+				/>
 			</head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}

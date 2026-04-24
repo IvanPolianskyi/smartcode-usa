@@ -83,10 +83,7 @@
 	animation: marquee 45s linear infinite;
 }
 
-/* Pause on hover (desktop) */
-.carouselWrapper:hover .carouselAnimated {
-	animation-play-state: paused;
-}
+/* Hover pause removed — carousel always scrolls */
 
 /* Pause on touch (injected via class toggle in JS) */
 .paused {
