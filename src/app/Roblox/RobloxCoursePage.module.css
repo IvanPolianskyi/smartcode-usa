@@ -66,6 +66,7 @@
   --rbx-text: #243b53;
 
   min-height: 100vh;
+  min-height: 100svh;
   background: linear-gradient(180deg, var(--rbx-sky-1), var(--rbx-sky-2));
 }
 
@@ -130,7 +131,7 @@
 .mainContent { position: relative; z-index: 2; }
 
 /* Hero */
-.heroSection { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+.heroSection { min-height: 100vh; min-height: 100svh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
 .heroContent { text-align: center; max-width: 64rem; opacity: 0; transform: translateY(20px); transition: all 1s ease; }
 .heroContent.visible { opacity: 1; transform: translateY(0); }
 
@@ -236,8 +237,8 @@
 .continueButton:hover { background: var(--rbx-primary); color: #fff; transform: scale(1.05); box-shadow: 0 16px 30px rgba(84, 182, 255, 0.35); }
 
 /* Video modal */
-.videoModal { position: fixed; inset: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,.4); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; backdrop-filter: blur(2px); animation: fadeInUp .3s ease-out; }
-.videoModalContent { background: #ffffff; border: 4px solid #ffe9a8; border-radius: 16px; max-width: 90vw; max-height: 90vh; width: 800px; position: relative; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,.12); }
+.videoModal { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100svh; background: rgba(0,0,0,.4); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; backdrop-filter: blur(2px); animation: fadeInUp .3s ease-out; }
+.videoModalContent { background: #ffffff; border: 4px solid #ffe9a8; border-radius: 16px; max-width: 90vw; max-height: 90vh; max-height: 90svh; width: 800px; position: relative; overflow: hidden; box-shadow: 0 16px 40px rgba(0,0,0,.12); }
 .videoHeader { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: #fff8e1; border-bottom: 2px solid #ffe9a8; }
 .videoTitle { color: var(--rbx-text); font-size: 1rem; margin: 0; }
 .closeButton { background: none; border: 2px solid var(--rbx-primary); color: var(--rbx-primary); font-size: 1.5rem; width: 40px; height: 40px; display: grid; place-items: center; cursor: pointer; font-family: 'Baloo 2', cursive; transition: all .3s ease; border-radius: 10px; }
@@ -253,7 +254,7 @@
   .hologram { height: 320px; border-width: 5px; }
   .description { font-size: 1rem; }
   .modulesSection, .projectsSection, .featuresSection, .ctaSection { padding: 3rem 1rem; }
-  .videoModalContent { width: 95vw; max-height: 80vh; }
+  .videoModalContent { width: 95vw; max-height: 80vh; max-height: 80svh; }
   .videoContainer { height: 300px; }
   .projectIcon { font-size: 2.4rem; animation-duration: 4s; }
 }

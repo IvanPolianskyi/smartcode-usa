@@ -6,6 +6,7 @@
 /* --- MAIN CONTAINER --- */
 .container {
     min-height: 100vh;
+    min-height: 100svh;
     background: linear-gradient(135deg, #fdf2f8 0%, #ffffff 50%, #f3e8ff 100%);
     color: var(--text-primary);
     font-family: var(--main-font);
@@ -152,6 +153,7 @@
 /* --- HERO SECTION --- */
 .heroSection {
     min-height: 100vh;
+    min-height: 100svh;
     display: flex;
     align-items: center;
     justify-content: center;

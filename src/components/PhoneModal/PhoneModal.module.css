@@ -27,6 +27,7 @@
   max-width: 600px;
   width: 100%;
   max-height: 90vh;
+  max-height: 90svh;
   overflow-y: auto;
   animation: slideUp 0.3s ease;
   position: relative;
@@ -443,6 +444,7 @@
   
   .modal {
     max-height: calc(100vh - 100px);
+    max-height: calc(100svh - 100px);
     margin-top: 0;
   }
   
@@ -540,6 +542,7 @@
   
   .modal {
     max-height: calc(100vh - 110px);
+    max-height: calc(100svh - 110px);
     border-radius: 16px;
   }
   
