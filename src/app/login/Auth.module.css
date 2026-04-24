@@ -8,6 +8,9 @@
   background: #f8fafc;
   position: relative;
   overflow: hidden;
+  contain: layout style paint;
+  transform: translateZ(0);
+  will-change: scroll-position;
 }
 
 .container::before {

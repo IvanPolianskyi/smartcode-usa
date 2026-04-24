@@ -9,6 +9,9 @@
   overflow-x: hidden;
   margin-top: 0;
   padding-top: 1rem;
+  contain: layout style paint;
+  transform: translateZ(0);
+  will-change: scroll-position;
 }
 
 /* Додаткові кольорові градієнти для фону (як у Visit) */

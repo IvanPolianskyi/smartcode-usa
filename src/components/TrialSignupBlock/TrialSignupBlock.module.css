@@ -11,6 +11,10 @@
 		linear-gradient(180deg, #f8fafc 0%, #eef2ff 40%, #faf5ff 100%);
 	border-top: 1px solid rgba(148, 163, 184, 0.25);
 	border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+	/* Фікс для Instagram in-app browser: ізолюємо від змін viewport при появі/зникненні тулбара */
+	contain: layout style paint;
+	transform: translateZ(0);
+	will-change: scroll-position;
 }
 
 .decor {

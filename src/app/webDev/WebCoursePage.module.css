@@ -12,6 +12,9 @@
     font-family: var(--main-font);
     overflow-x: hidden;
     position: relative;
+    contain: layout style paint;
+    transform: translateZ(0);
+    will-change: scroll-position;
 }
 
 /* --- ANIMATED BACKGROUND --- */
