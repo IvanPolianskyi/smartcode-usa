@@ -139,7 +139,9 @@ const ContactForm = () => {
                     contact_method: preferredContactMethod,
                 })
             }
-            trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course), eventId)
+            if (data?.trackLead) {
+                trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course), eventId)
+            }
             setIsSubmitted(false)
             setFormData({ phone: '', course: '', message: '' })
             setPhoneError('')

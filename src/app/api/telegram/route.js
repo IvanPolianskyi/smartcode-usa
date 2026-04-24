@@ -4,6 +4,14 @@ import { cookies } from 'next/headers'
 import { sendCapiLead, getClientIp, getClientUserAgent, getFbCookies } from '@/lib/metaCapi'
 import { sanitizeAttribution } from '@/lib/attribution'
 
+const TRIAL_COURSES = new Set([
+  'Roblox Studio',
+  'Python',
+  'JavaScript та веб-розробка',
+  'Розробка ігор на Unity',
+  'Не впевнений(а), потрібна консультація',
+])
+
 function escapeHtml(input) {
   const str = String(input ?? '')
   return str.replace(/[&<>"']/g, (char) => ({
@@ -13,6 +21,26 @@ function escapeHtml(input) {
     '"': '&quot;',
     "'": '&#039;',
   })[char])
+}
+
+function buildLeadIdentity({ normalizedPhone, normalizedTelegram }) {
+  if (normalizedPhone) return `phone:${normalizedPhone}`
+  if (normalizedTelegram) return `telegram:${normalizedTelegram.toLowerCase()}`
+  return null
+}
+
+function isUuidLike(value) {
+  return typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)
+}
+
+function detectTrafficType(attribution) {
+  const medium = String(attribution?.utm_medium || '').toLowerCase()
+  const source = String(attribution?.utm_source || '').toLowerCase()
+  const hasClickId = Boolean(attribution?.fbclid || attribution?.gclid || attribution?.ttclid)
+  const paidMedium = ['cpc', 'ppc', 'paid', 'paid_social', 'cpm', 'display']
+  const paidSource = ['facebook', 'instagram', 'meta', 'google', 'tiktok']
+  const looksPaid = hasClickId || paidMedium.some((m) => medium.includes(m)) || paidSource.some((s) => source.includes(s))
+  return looksPaid ? 'Реклама' : 'Органіка/невідомо'
 }
 
 async function sendLeadToCrm(payload) {
@@ -64,27 +92,59 @@ export async function POST(request) {
     const normalizedTelegram = telegram ? (telegram.startsWith('@') ? telegram : '@' + telegram) : null
     const cleanAttribution = sanitizeAttribution(attribution)
     const preferredContactLabel = preferredContactMethod === 'telegram_phone' ? 'Написати в Telegram за цим номером' : 'Подзвонити'
+    const isTrialCourse = TRIAL_COURSES.has(String(course || '').trim())
+    const hasValidEventId = isUuidLike(eventId)
+    const trafficType = detectTrafficType(cleanAttribution)
 
     // Читаємо cookies для реферальної системи
     const cookieStore = await cookies()
     const referralIdCookie = cookieStore.get('referralId')
     const referralId = referralIdCookie?.value || null
 
+    const leadIdentity = buildLeadIdentity({ normalizedPhone, normalizedTelegram })
+    const submissions = await getCollection('submissions')
+    const existingEvent = hasValidEventId
+      ? await submissions.findOne({ eventId })
+      : null
+    const existingLead = leadIdentity
+      ? await submissions.findOne({
+        $or: [
+          { leadIdentity },
+          ...(normalizedPhone ? [{ phone: normalizedPhone }] : []),
+          ...(normalizedTelegram ? [{ telegram: normalizedTelegram }] : []),
+        ],
+      })
+      : null
+    const shouldTrackLead = Boolean(
+      normalizedPhone &&
+      isTrialCourse &&
+      hasValidEventId &&
+      !existingLead &&
+      !existingEvent
+    )
+
     const lines = [
       '<b>Нова заявка зі сайту SmartCode Academy</b>',
       '',
       name ? `<b>Ім'я:</b> ${escapeHtml(name)}` : null,
-      contactMethod === 'telegram' 
+      contactMethod === 'telegram'
         ? `<b>Телеграм:</b> ${escapeHtml(normalizedTelegram)}`
         : `<b>Телефон:</b> ${escapeHtml(normalizedPhone)}`,
       normalizedPhone ? `<b>Бажаний спосіб зв'язку:</b> ${escapeHtml(preferredContactLabel)}` : null,
       course ? `<b>Курс:</b> ${escapeHtml(course)}` : null,
       message ? `<b>Повідомлення:</b>\n${escapeHtml(message)}` : null,
+      `<b>Трафік:</b> ${escapeHtml(trafficType)}`,
+      `<b>Meta Lead Sent:</b> ${shouldTrackLead ? 'yes' : 'no'}`,
       cleanAttribution.utm_source ? `<b>UTM Source:</b> ${escapeHtml(cleanAttribution.utm_source)}` : null,
       cleanAttribution.utm_medium ? `<b>UTM Medium:</b> ${escapeHtml(cleanAttribution.utm_medium)}` : null,
       cleanAttribution.utm_campaign ? `<b>UTM Campaign:</b> ${escapeHtml(cleanAttribution.utm_campaign)}` : null,
       cleanAttribution.utm_term ? `<b>UTM Term:</b> ${escapeHtml(cleanAttribution.utm_term)}` : null,
       cleanAttribution.utm_content ? `<b>UTM Content:</b> ${escapeHtml(cleanAttribution.utm_content)}` : null,
+      cleanAttribution.fbclid ? `<b>fbclid:</b> <code>${escapeHtml(cleanAttribution.fbclid)}</code>` : null,
+      cleanAttribution.gclid ? `<b>gclid:</b> <code>${escapeHtml(cleanAttribution.gclid)}</code>` : null,
+      cleanAttribution.ttclid ? `<b>ttclid:</b> <code>${escapeHtml(cleanAttribution.ttclid)}</code>` : null,
+      sourceUrl ? `<b>URL:</b> ${escapeHtml(sourceUrl)}` : null,
+      hasValidEventId ? `<b>Event ID:</b> <code>${escapeHtml(eventId)}</code>` : `<b>Event ID:</b> невалідний/відсутній`,
       referralId ? `<b>🔥 Реферал ID:</b> <code>${escapeHtml(referralId)}</code>` : null,
       '',
       `<b>Час:</b> ${escapeHtml(createdAt)}`,
@@ -109,11 +169,12 @@ export async function POST(request) {
     if (!telegramResponse.ok || !tgData?.ok) {
       // Even if Telegram fails, still attempt to store submission for auditing
       try {
-        const submissions = await getCollection('submissions')
         const insertResult = await submissions.insertOne({
           name: name || '',
           phone: normalizedPhone || '',
           telegram: normalizedTelegram || '',
+          eventId: hasValidEventId ? eventId : null,
+          leadIdentity,
           course: course || '',
           message: message || '',
           contactMethod: contactMethod || 'phone',
@@ -121,6 +182,7 @@ export async function POST(request) {
           attribution: cleanAttribution,
           createdAt: new Date(),
           via: 'telegram-api-failed',
+          isUniqueLead: shouldTrackLead,
         })
         await sendLeadToCrm({
           leadId: String(insertResult.insertedId),
@@ -147,11 +209,12 @@ export async function POST(request) {
 
     // Store successful submission as well
     try {
-      const submissions = await getCollection('submissions')
       const insertResult = await submissions.insertOne({
         name: name || '',
         phone: normalizedPhone || '',
         telegram: normalizedTelegram || '',
+        eventId: hasValidEventId ? eventId : null,
+        leadIdentity,
         course: course || '',
         message: message || '',
         contactMethod: contactMethod || 'phone',
@@ -159,6 +222,7 @@ export async function POST(request) {
         attribution: cleanAttribution,
         createdAt: new Date(),
         via: 'telegram',
+        isUniqueLead: shouldTrackLead,
       })
       await sendLeadToCrm({
         leadId: String(insertResult.insertedId),
@@ -178,8 +242,8 @@ export async function POST(request) {
       })
     } catch {}
 
-    // CAPI: відправляємо Lead серверно (дедуплікується з браузерним пікселем через eventId)
-    if (eventId) {
+    // CAPI: відправляємо Lead лише для нового унікального контакту
+    if (eventId && shouldTrackLead) {
       const clientIp = getClientIp(request)
       const userAgent = getClientUserAgent(request)
       const { fbc, fbp } = getFbCookies(request)
@@ -203,7 +267,7 @@ export async function POST(request) {
       } catch {}
     }
 
-    return NextResponse.json({ ok: true })
+    return NextResponse.json({ ok: true, trackLead: shouldTrackLead })
   } catch (error) {
     return NextResponse.json(
       { ok: false, error: 'Unexpected server error', detail: String(error?.message || error) },

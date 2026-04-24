@@ -153,7 +153,7 @@ export function trackTrialInitiateCheckout() {
 }
 
 const STORAGE_TRIAL_INITIATE_CHECKOUT = 'sc_pixel_trial_initiate_checkout'
-const STORAGE_TRIAL_LEAD = 'sc_pixel_trial_lead_once'
+const STORAGE_TRIAL_LEAD = 'sc_pixel_trial_lead_sent'
 
 /**
  * InitiateCheckout для пробного — максимум один раз за сесію (один ключ sessionStorage).
@@ -172,7 +172,7 @@ export function trackTrialInitiateCheckoutOnce() {
 }
 
 /**
- * Lead після успішної trial-заявки (модалка / блок) - не більше одного Lead за сесію.
+ * Lead після успішної trial-заявки (модалка / блок) - не більше одного Lead на пристрій (localStorage).
  * Викликати лише після успішної відповіді API.
  * @param {string}             contentName
  * @param {string[]|undefined} contentIds
@@ -183,14 +183,14 @@ export function trackTrialLeadOnce(contentName, contentIds, eventId) {
 	if (typeof window === 'undefined') return undefined
 	let already = false
 	try {
-		already = sessionStorage.getItem(STORAGE_TRIAL_LEAD) === '1'
+		already = localStorage.getItem(STORAGE_TRIAL_LEAD) === '1'
 	} catch {
 		already = false
 	}
 	if (already) return undefined
 	const usedId = trackTrialLead(contentName, contentIds, eventId)
 	try {
-		sessionStorage.setItem(STORAGE_TRIAL_LEAD, '1')
+		localStorage.setItem(STORAGE_TRIAL_LEAD, '1')
 	} catch {}
 	return usedId
 }

@@ -78,7 +78,9 @@ export default function TrialSignupBlock() {
 				alert('На жаль, сталася помилка при відправці. Спробуйте ще раз.')
 				return
 			}
-			trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course), eventId)
+			if (data?.trackLead) {
+				trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course), eventId)
+			}
 			setDone(true)
 			setFormData({ phone: '', course: '', message: '' })
 			setPreferredContactMethod('phone_call')
