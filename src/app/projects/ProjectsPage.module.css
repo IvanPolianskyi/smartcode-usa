@@ -2,6 +2,7 @@
 
 .container {
     min-height: 100vh;
+    min-height: 100svh;
     background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%);
     padding: 2rem 0;
 }
@@ -198,6 +199,7 @@
     width: 100%;
     max-width: 800px;
     max-height: 90vh;
+    max-height: 90svh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -467,6 +469,7 @@
     
     .modalContent {
         max-height: 95vh;
+        max-height: 95svh;
     }
     
     .modalHeader {
