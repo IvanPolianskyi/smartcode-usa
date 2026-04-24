@@ -100,6 +100,8 @@ html {
   scrollbar-width: none;
   /* Фікс для Instagram/Facebook in-app browser: використовуємо svh який не змінюється при появі/зникненні UI панелі */
   --app-height: 100svh;
+  /* Зберігаємо позицію скролу при зміні розміру viewport (Instagram toolbar) */
+  overflow-anchor: auto;
 }
 
 html::-webkit-scrollbar {
@@ -114,6 +116,8 @@ body {
   line-height: 1.6;
   /* Приховуємо скролбар для Firefox */
   scrollbar-width: none;
+  /* Зберігаємо позицію скролу при зміні розміру viewport (Instagram toolbar) */
+  overflow-anchor: auto;
 }
 
 body::-webkit-scrollbar {

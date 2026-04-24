@@ -68,6 +68,9 @@
   min-height: 100vh;
   min-height: 100svh;
   background: linear-gradient(180deg, var(--rbx-sky-1), var(--rbx-sky-2));
+  contain: layout style paint;
+  transform: translateZ(0);
+  will-change: scroll-position;
 }
 
 @media (max-width: 430px) {

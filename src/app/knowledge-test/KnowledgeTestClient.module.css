@@ -3,6 +3,9 @@
   min-height: calc(100svh - 64px);
   padding: 40px 20px;
   background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
+  contain: layout style paint;
+  transform: translateZ(0);
+  will-change: scroll-position;
 }
 
 /* Selection Screen */

@@ -5,6 +5,9 @@
   max-width: 1400px;
   margin: 0 auto;
   background: #f9fafb;
+  contain: layout style paint;
+  transform: translateZ(0);
+  will-change: scroll-position;
 }
 
 .loading {

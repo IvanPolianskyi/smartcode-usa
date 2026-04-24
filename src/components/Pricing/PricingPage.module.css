@@ -3,6 +3,9 @@
 	min-height: 100vh;
 	min-height: 100svh;
 	background: linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%);
+	contain: layout style paint;
+	transform: translateZ(0);
+	will-change: scroll-position;
 }
 
 /* --- HERO СЕКЦІЯ --- */

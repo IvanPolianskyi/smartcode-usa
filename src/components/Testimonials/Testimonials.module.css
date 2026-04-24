@@ -4,6 +4,10 @@
 	padding: 4rem 0;
 	overflow: hidden;
 	position: relative;
+	/* Фікс для Instagram in-app browser: ізолюємо від змін viewport при появі/зникненні тулбара */
+	contain: layout style paint;
+	transform: translateZ(0);
+	will-change: scroll-position;
 }
 
 @media (min-width: 768px) {

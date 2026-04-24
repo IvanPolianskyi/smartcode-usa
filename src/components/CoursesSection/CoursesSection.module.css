@@ -3,6 +3,10 @@
   background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
   position: relative;
   overflow: hidden;
+  /* Фікс для Instagram in-app browser: ізолюємо від змін viewport при появі/зникненні тулбара */
+  contain: layout style paint;
+  transform: translateZ(0);
+  will-change: scroll-position;
 }
 
 .section::before {
