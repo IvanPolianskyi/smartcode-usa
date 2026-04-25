@@ -9,6 +9,7 @@ import {
 	generateEventId,
 } from '@/lib/metaPixel'
 import { getClientAttribution } from '@/lib/attribution'
+import { isValidPhoneBasic, sanitizePhoneInput, getPhoneDigitCount } from '@/lib/phoneField'
 import styles from './TrialSignupBlock.module.css'
 
 const COURSES = [
@@ -37,10 +38,11 @@ export default function TrialSignupBlock() {
 	const handleInputChange = (e) => {
 		const { name: field, value } = e.target
 		if (field === 'phone') {
-			const digits = value.replace(/\D/g, '').replace(/^0+/, '').slice(0, 9)
-			setFormData((prev) => ({ ...prev, phone: digits }))
-			if (digits.length === 0) setPhoneError('Введіть номер телефону')
-			else if (digits.length !== 9) setPhoneError('Номер має містити 9 цифр')
+			const next = sanitizePhoneInput(value)
+			setFormData((prev) => ({ ...prev, phone: next }))
+			const n = getPhoneDigitCount(next)
+			if (n === 0) setPhoneError('Введіть номер телефону')
+			else if (!isValidPhoneBasic(next)) setPhoneError('Від 7 до 15 цифр (код країни разом з номером)')
 			else setPhoneError('')
 			return
 		}
@@ -50,8 +52,12 @@ export default function TrialSignupBlock() {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		setTouched({ phone: true, course: true })
-		if (!/^\d{9}$/.test(formData.phone || '')) {
-			setPhoneError('Введіть коректний номер (9 цифр)')
+		if (!isValidPhoneBasic(formData.phone)) {
+			setPhoneError(
+				getPhoneDigitCount(formData.phone) === 0
+					? 'Введіть номер телефону'
+					: 'Від 7 до 15 цифр (код країни разом з номером)'
+			)
 			return
 		}
 		if (!formData.course) return
@@ -125,19 +131,17 @@ export default function TrialSignupBlock() {
 							<label className={styles.label} htmlFor='trial-phone'>
 								Номер телефону
 							</label>
-							<div className={styles.phoneRow}>
-								<span className={styles.prefix}>+380</span>
-								<input
-									id='trial-phone'
-									className={styles.input}
-									name='phone'
-									value={formData.phone}
-									onChange={handleInputChange}
-									inputMode='numeric'
-									placeholder='__ ___ __ __'
-									autoComplete='tel-national'
-								/>
-							</div>
+							<input
+								id='trial-phone'
+								className={styles.input}
+								name='phone'
+								type='tel'
+								value={formData.phone}
+								onChange={handleInputChange}
+								inputMode='tel'
+								placeholder='+380…, +48…, будь-який код країни'
+								autoComplete='tel'
+							/>
 							{phoneError && <span className={styles.error}>{phoneError}</span>}
 						</div>
 

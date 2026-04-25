@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import { Code, Gamepad2, Box, Monitor, Phone, CheckCircle, Award, ArrowRight, Loader2, AlertCircle, Lock } from 'lucide-react'
 import styles from './KnowledgeTestClient.module.css'
 import { TEST_QUESTIONS } from '@/lib/testQuestions'
+import { isValidPhoneBasic, sanitizePhoneInput } from '@/lib/phoneField'
 
 
 const DIRECTIONS = [
@@ -102,26 +103,8 @@ export default function KnowledgeTestClient() {
     }
   }
 
-  const formatPhoneNumber = (digits) => {
-    if (!digits) return '+380 '
-    const part1 = digits.slice(0, 2)
-    const part2 = digits.slice(2, 5)
-    const part3 = digits.slice(5, 7)
-    const part4 = digits.slice(7, 9)
-
-    let formatted = '+380 '
-    if (part1) formatted += part1
-    if (part2) formatted += '-' + part2
-    if (part3) formatted += '-' + part3
-    if (part4) formatted += '-' + part4
-
-    return formatted
-  }
-
   const handlePhoneChange = (e) => {
-    const digits = e.target.value.replace(/\D/g, '')
-    const clean = digits.startsWith('380') ? digits.slice(3) : digits
-    setPhone(clean.slice(0, 9))
+    setPhone(sanitizePhoneInput(e.target.value))
     setError('')
   }
 
@@ -143,8 +126,8 @@ export default function KnowledgeTestClient() {
     e.preventDefault()
     setError('')
     
-    if (phone.length !== 9) {
-      setError('Будь ласка, введіть повний номер телефону (9 цифр після +380)')
+    if (!isValidPhoneBasic(phone)) {
+      setError('Введіть номер: 7–15 цифр разом з кодом країни (наприклад +380…, +48…)')
       return
     }
 
@@ -157,15 +140,13 @@ export default function KnowledgeTestClient() {
 
     try {
       const score = calculateScore()
-      const fullPhoneNumber = `+380${phone}`
-
       const response = await fetch('/api/knowledge-test', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          phone: fullPhoneNumber,
+          phone,
           name: name.trim(),
           direction: selectedDirection.id,
           directionName: selectedDirection.name,
@@ -297,10 +278,11 @@ export default function KnowledgeTestClient() {
                 <input
                   type="tel"
                   id="phone"
-                  value={formatPhoneNumber(phone)}
+                  value={phone}
                   onChange={handlePhoneChange}
                   className={styles.phoneInput}
-                  placeholder="+380 96-656-62-43"
+                  placeholder="+380…, +48…"
+                  inputMode="tel"
                   required
                 />
               </div>

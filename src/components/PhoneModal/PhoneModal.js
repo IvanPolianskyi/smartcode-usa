@@ -14,6 +14,7 @@ import {
 	Download
 } from 'lucide-react'
 import styles from './PhoneModal.module.css'
+import { isValidPhoneBasic, sanitizePhoneInput } from '@/lib/phoneField'
 
 const PhoneModal = ({ 
 	isOpen, 
@@ -21,7 +22,7 @@ const PhoneModal = ({
 	project, 
 	onSuccess 
 }) => {
-	const [rawPhone, setRawPhone] = useState('') // тільки цифри без +380
+	const [phone, setPhone] = useState('')
 	const [name, setName] = useState('')
 	const [isSubmitting, setIsSubmitting] = useState(false)
 	const [error, setError] = useState('')
@@ -30,41 +31,16 @@ const PhoneModal = ({
 	// Reset form when modal opens/closes
 	useEffect(() => {
 		if (isOpen) {
-			setRawPhone('')
+			setPhone('')
 			setName('')
 			setError('')
 			setSuccess(false)
 		}
 	}, [isOpen])
 
-	// Форматуємо телефон для відображення
-	const formatPhoneNumber = (digits) => {
-		if (!digits) return '+380 '
-		const part1 = digits.slice(0, 2)  // 96
-		const part2 = digits.slice(2, 5)  // 656
-		const part3 = digits.slice(5, 7)  // 62
-		const part4 = digits.slice(7, 9)  // 43
-
-		let formatted = '+380 '
-		if (part1) formatted += part1
-		if (part2) formatted += '-' + part2
-		if (part3) formatted += '-' + part3
-		if (part4) formatted += '-' + part4
-
-		return formatted
-	}
-
-	// Обробка вводу
 	const handlePhoneChange = (e) => {
-		const digits = e.target.value.replace(/\D/g, '')
-		const clean = digits.startsWith('380') ? digits.slice(3) : digits
-		setRawPhone(clean.slice(0, 9)) // тільки 9 цифр після 380
+		setPhone(sanitizePhoneInput(e.target.value))
 		setError('')
-	}
-
-	// Валідація
-	const validatePhone = (digits) => {
-		return digits.length === 9
 	}
 
 	// Сабміт форми
@@ -73,8 +49,8 @@ const PhoneModal = ({
 		setError('')
 		setIsSubmitting(true)
 
-		if (!validatePhone(rawPhone)) {
-			setError('Будь ласка, введіть повний номер телефону (9 цифр після +380)')
+		if (!isValidPhoneBasic(phone)) {
+			setError('Введіть номер: 7–15 цифр разом з кодом країни (наприклад +380…, +48…)')
 			setIsSubmitting(false)
 			return
 		}
@@ -86,15 +62,13 @@ const PhoneModal = ({
 		}
 
 		try {
-			const fullPhoneNumber = `+380${rawPhone}`
-
 			const response = await fetch('/api/phone-collection', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					phone: fullPhoneNumber,
+					phone,
 					name: name.trim(),
 					projectId: project?.id,
 					projectTitle: project?.title,
@@ -193,10 +167,11 @@ const PhoneModal = ({
 									<input
 										type="tel"
 										id="phone"
-										value={formatPhoneNumber(rawPhone)}
+										value={phone}
 										onChange={handlePhoneChange}
 										className={styles.phoneInput}
-										placeholder="+380 96-656-62-43"
+										placeholder="+380…, +48…"
+										inputMode="tel"
 										required
 									/>
 								</div>

@@ -8,6 +8,7 @@ import {
 	generateEventId,
 } from '@/lib/metaPixel'
 import { getClientAttribution } from '@/lib/attribution'
+import { isValidPhoneBasic, sanitizePhoneInput, getPhoneDigitCount } from '@/lib/phoneField'
 import styles from './ContactForm.module.css'
 
 const ContactForm = () => {
@@ -88,10 +89,11 @@ const ContactForm = () => {
     const handleInputChange = e => {
         const { name, value } = e.target
         if (name === 'phone') {
-            const digits = value.replace(/\D/g, '').replace(/^0+/, '').slice(0, 9)
-            setFormData(prev => ({ ...prev, phone: digits }))
-            if (digits.length === 0) setPhoneError('Введіть номер телефону')
-            else if (digits.length !== 9) setPhoneError('Номер має містити 9 цифр')
+            const next = sanitizePhoneInput(value)
+            setFormData(prev => ({ ...prev, phone: next }))
+            const n = getPhoneDigitCount(next)
+            if (n === 0) setPhoneError('Введіть номер телефону')
+            else if (!isValidPhoneBasic(next)) setPhoneError('Від 7 до 15 цифр (код країни разом з номером)')
             else setPhoneError('')
             return
         }
@@ -102,10 +104,13 @@ const ContactForm = () => {
         e.preventDefault()
         if (submitting) return
         setTouched(prev => ({ ...prev, phone: true, course: true }))
-        const isPhoneValid = /^\d{9}$/.test(formData.phone || '')
         const isCourseSelected = !!formData.course
-        if (!isPhoneValid) {
-            setPhoneError('Введіть коректний номер (9 цифр)')
+        if (!isValidPhoneBasic(formData.phone)) {
+            setPhoneError(
+                getPhoneDigitCount(formData.phone) === 0
+                    ? 'Введіть номер телефону'
+                    : 'Від 7 до 15 цифр (код країни разом з номером)'
+            )
             return
         }
         if (!isCourseSelected) {
@@ -158,7 +163,7 @@ const ContactForm = () => {
 
     if (!isOpen) return null
 
-    const phoneInvalid = !!(phoneError || (touched.phone && !formData.phone))
+    const phoneInvalid = !!(phoneError || (touched.phone && !isValidPhoneBasic(formData.phone)))
     const courseInvalid = !!(touched.course && !formData.course)
 
     return (
@@ -188,22 +193,19 @@ const ContactForm = () => {
                                         <label className={styles.modalLabel} htmlFor='modal-phone'>
                                             Номер телефону
                                         </label>
-                                        <div className={styles.modalPhoneRow}>
-                                            <span className={styles.modalPrefix}>+380</span>
-                                            <input
-                                                id='modal-phone'
-                                                type='tel'
-                                                name='phone'
-                                                value={formData.phone}
-                                                onChange={handleInputChange}
-                                                onBlur={() => setTouched(prev => ({ ...prev, phone: true }))}
-                                                placeholder='__ ___ __ __'
-                                                className={styles.modalInput}
-                                                inputMode='numeric'
-                                                autoComplete='tel-national'
-                                                aria-invalid={phoneInvalid}
-                                            />
-                                        </div>
+                                        <input
+                                            id='modal-phone'
+                                            type='tel'
+                                            name='phone'
+                                            value={formData.phone}
+                                            onChange={handleInputChange}
+                                            onBlur={() => setTouched(prev => ({ ...prev, phone: true }))}
+                                            placeholder='+380…, +48…, будь-який код країни'
+                                            className={styles.modalInput}
+                                            inputMode='tel'
+                                            autoComplete='tel'
+                                            aria-invalid={phoneInvalid}
+                                        />
                                         {phoneError && <span className={styles.modalError}>{phoneError}</span>}
                                     </div>
 

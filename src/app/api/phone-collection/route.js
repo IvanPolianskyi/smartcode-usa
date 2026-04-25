@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/mongodb'
+import { normalizePhoneE164 } from '@/lib/phoneE164'
 
 // Helper function to escape HTML for Telegram
 function escapeHtml(input) {
@@ -75,17 +76,13 @@ export async function POST(request) {
       )
     }
 
-    // Validate phone number format (Ukrainian numbers)
-    const phoneDigits = phone.replace(/\D/g, '')
-    if (phoneDigits.length !== 10 && !(phoneDigits.length === 12 && phoneDigits.startsWith('380'))) {
+    const normalizedPhone = normalizePhoneE164(phone)
+    if (!normalizedPhone) {
       return NextResponse.json(
-        { success: false, error: 'Invalid phone number format' },
+        { success: false, error: 'Invalid phone: 7–15 digits (country code included)' },
         { status: 400 }
       )
     }
-
-    // Normalize phone number
-    const normalizedPhone = phoneDigits.length === 10 ? `380${phoneDigits}` : phoneDigits
 
     // Check if phone number already exists
     const leads = await getCollection('leads')

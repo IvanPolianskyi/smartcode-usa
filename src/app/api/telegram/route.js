@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/mongodb'
 import { cookies } from 'next/headers'
 import { sendCapiLead, getClientIp, getClientUserAgent, getFbCookies } from '@/lib/metaCapi'
+import { normalizePhoneE164 } from '@/lib/phoneE164'
 import { sanitizeAttribution } from '@/lib/attribution'
 
 const TRIAL_COURSES = new Set([
@@ -88,7 +89,13 @@ export async function POST(request) {
     }
 
     const createdAt = new Date().toLocaleString('uk-UA', { timeZone: 'Europe/Kyiv' })
-    const normalizedPhone = phone ? "+380" + phone : null
+    const normalizedPhone = phone ? normalizePhoneE164(phone) : null
+    if (phone && !normalizedPhone) {
+      return NextResponse.json(
+        { ok: false, error: 'Invalid phone: use 7–15 digits (country code included)' },
+        { status: 400 }
+      )
+    }
     const normalizedTelegram = telegram ? (telegram.startsWith('@') ? telegram : '@' + telegram) : null
     const cleanAttribution = sanitizeAttribution(attribution)
     const preferredContactLabel = preferredContactMethod === 'telegram_phone' ? 'Написати в Telegram за цим номером' : 'Подзвонити'

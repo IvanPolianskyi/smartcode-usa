@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/mongodb'
+import { normalizePhoneE164 } from '@/lib/phoneE164'
 
 export async function POST(request) {
   try {
@@ -13,13 +14,19 @@ export async function POST(request) {
       )
     }
 
+    const normalizedPhone = normalizePhoneE164(phone)
+    if (!normalizedPhone) {
+      return NextResponse.json(
+        { ok: false, error: 'Invalid phone: use 7–15 digits (country code included)' },
+        { status: 400 }
+      )
+    }
+
     const ip =
       request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
       request.headers.get('x-real-ip') ||
       ''
     const userAgent = request.headers.get('user-agent') || ''
-
-    const normalizedPhone = '+380' + String(phone).replace(/\D/g, '').slice(-9)
 
     const submissions = await getCollection('submissions')
     await submissions.insertOne({
