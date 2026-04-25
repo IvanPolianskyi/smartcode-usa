@@ -12,7 +12,6 @@ export const EUROPE_COUNTRY = new Set([
 	'BA',
 	'BE',
 	'BG',
-	'BY',
 	'CH',
 	'CY',
 	'CZ',

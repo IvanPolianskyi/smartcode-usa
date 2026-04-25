@@ -14,7 +14,6 @@ const PREFERRED = [
 	'de',
 	'ro',
 	'md',
-	'by',
 	'gb',
 	'fr',
 	'it',
