@@ -9,8 +9,8 @@ import {
 	generateEventId,
 } from '@/lib/metaPixel'
 import { getClientAttribution } from '@/lib/attribution'
-import { sanitizePhoneInput, getPhoneDigitCount } from '@/lib/phoneField'
 import { validateEuropeanPhone } from '@/lib/phoneEurope'
+import PhoneField from '@/components/PhoneField/PhoneField'
 import styles from './TrialSignupBlock.module.css'
 
 const COURSES = [
@@ -36,19 +36,18 @@ export default function TrialSignupBlock() {
 		}
 	}
 
+	const handlePhoneChange = (next) => {
+		setFormData((prev) => ({ ...prev, phone: next }))
+		const digits = (next || '').replace(/\D/g, '')
+		if (digits.length === 0) setPhoneError('Введіть номер телефону')
+		else {
+			const r = validateEuropeanPhone(next)
+			setPhoneError(r.ok ? '' : r.message)
+		}
+	}
+
 	const handleInputChange = (e) => {
 		const { name: field, value } = e.target
-		if (field === 'phone') {
-			const next = sanitizePhoneInput(value)
-			setFormData((prev) => ({ ...prev, phone: next }))
-			const n = getPhoneDigitCount(next)
-			if (n === 0) setPhoneError('Введіть номер телефону')
-			else {
-				const r = validateEuropeanPhone(next)
-				setPhoneError(r.ok ? '' : r.message)
-			}
-			return
-		}
 		setFormData((prev) => ({ ...prev, [field]: value }))
 	}
 
@@ -69,7 +68,7 @@ export default function TrialSignupBlock() {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					phone: formData.phone,
+					phone: phoneCheck.e164,
 					course: formData.course,
 					message: formData.message,
 					contactMethod: 'phone',
@@ -131,15 +130,11 @@ export default function TrialSignupBlock() {
 							<label className={styles.label} htmlFor='trial-phone'>
 								Номер телефону
 							</label>
-							<input
+							<PhoneField
 								id='trial-phone'
-								className={styles.input}
 								name='phone'
-								type='tel'
 								value={formData.phone}
-								onChange={handleInputChange}
-								inputMode='tel'
-								autoComplete='tel'
+								onChange={handlePhoneChange}
 							/>
 							{phoneError && <span className={styles.error}>{phoneError}</span>}
 						</div>

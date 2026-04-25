@@ -1,0 +1,38 @@
+.wrap {
+	--react-international-phone-height: 2.5rem;
+	--react-international-phone-border-radius: 10px;
+	--react-international-phone-border-color: #e2e8f0;
+	--react-international-phone-font-size: 0.9rem;
+	--react-international-phone-background-color: #fff;
+	--react-international-phone-country-selector-border-color: #e2e8f0;
+	width: 100%;
+	position: relative;
+	z-index: 0;
+}
+
+.wrap :global(.react-international-phone-input-container) {
+	width: 100%;
+}
+
+.inputContainer {
+	width: 100% !important;
+}
+
+.input {
+	font-family: inherit !important;
+}
+
+.input:focus {
+	border-color: #818cf8 !important;
+	box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2) !important;
+}
+
+.countryButton {
+	border-radius: var(--react-international-phone-border-radius) 0 0 var(--react-international-phone-border-radius) !important;
+}
+
+.wrap :global(.react-international-phone-input) {
+	border-radius: 0 var(--react-international-phone-border-radius) var(--react-international-phone-border-radius) 0 !important;
+	min-width: 0;
+	flex: 1 1 auto;
+}

@@ -164,6 +164,14 @@
 	overflow: hidden;
 }
 
+/* Випадаючий список країн (react-international-phone) не обрізати */
+.modalShell:has([data-phone-field]),
+.modalInner:has([data-phone-field]),
+.modalForm:has([data-phone-field]),
+.modalCard:has([data-phone-field]) {
+	overflow: visible;
+}
+
 .modalField {
 	flex-shrink: 0;
 	display: flex;

@@ -8,8 +8,8 @@ import {
 	generateEventId,
 } from '@/lib/metaPixel'
 import { getClientAttribution } from '@/lib/attribution'
-import { sanitizePhoneInput, getPhoneDigitCount } from '@/lib/phoneField'
 import { validateEuropeanPhone } from '@/lib/phoneEurope'
+import PhoneField from '@/components/PhoneField/PhoneField'
 import styles from './ContactForm.module.css'
 
 const ContactForm = () => {
@@ -87,19 +87,18 @@ const ContactForm = () => {
         'Не впевнений(а), потрібна консультація'
     ]
 
+    const handlePhoneChange = (next) => {
+        setFormData(prev => ({ ...prev, phone: next }))
+        const digits = (next || '').replace(/\D/g, '')
+        if (digits.length === 0) setPhoneError('Введіть номер телефону')
+        else {
+            const r = validateEuropeanPhone(next)
+            setPhoneError(r.ok ? '' : r.message)
+        }
+    }
+
     const handleInputChange = e => {
         const { name, value } = e.target
-        if (name === 'phone') {
-            const next = sanitizePhoneInput(value)
-            setFormData(prev => ({ ...prev, phone: next }))
-            const n = getPhoneDigitCount(next)
-            if (n === 0) setPhoneError('Введіть номер телефону')
-            else {
-                const r = validateEuropeanPhone(next)
-                setPhoneError(r.ok ? '' : r.message)
-            }
-            return
-        }
         setFormData(prev => ({ ...prev, [name]: value }))
     }
 
@@ -121,6 +120,7 @@ const ContactForm = () => {
             const eventId = generateEventId()
             const submitData = {
                 ...formData,
+                phone: phoneCheck.e164,
                 contactMethod: 'phone',
                 preferredContactMethod,
                 eventId,
@@ -196,16 +196,12 @@ const ContactForm = () => {
                                         <label className={styles.modalLabel} htmlFor='modal-phone'>
                                             Номер телефону
                                         </label>
-                                        <input
+                                        <PhoneField
                                             id='modal-phone'
-                                            type='tel'
                                             name='phone'
                                             value={formData.phone}
-                                            onChange={handleInputChange}
+                                            onChange={handlePhoneChange}
                                             onBlur={() => setTouched(prev => ({ ...prev, phone: true }))}
-                                            className={styles.modalInput}
-                                            inputMode='tel'
-                                            autoComplete='tel'
                                             aria-invalid={phoneInvalid}
                                         />
                                         {phoneError && <span className={styles.modalError}>{phoneError}</span>}

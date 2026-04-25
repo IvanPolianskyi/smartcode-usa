@@ -36,6 +36,11 @@
   flex-direction: column;
 }
 
+.modal:has([data-phone-field]),
+.overlay:has([data-phone-field]) {
+  overflow: visible;
+}
+
 @keyframes slideUp {
   from {
     opacity: 0;

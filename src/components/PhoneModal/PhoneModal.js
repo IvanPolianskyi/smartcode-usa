@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 
 import {
 	X,
-	Phone,
 	Code,
 	Lock,
 	CheckCircle,
@@ -14,8 +13,8 @@ import {
 	Download
 } from 'lucide-react'
 import styles from './PhoneModal.module.css'
-import { sanitizePhoneInput } from '@/lib/phoneField'
 import { validateEuropeanPhone } from '@/lib/phoneEurope'
+import PhoneField from '@/components/PhoneField/PhoneField'
 
 const PhoneModal = ({ 
 	isOpen, 
@@ -39,8 +38,8 @@ const PhoneModal = ({
 		}
 	}, [isOpen])
 
-	const handlePhoneChange = (e) => {
-		setPhone(sanitizePhoneInput(e.target.value))
+	const handlePhoneValueChange = (next) => {
+		setPhone(next)
 		setError('')
 	}
 
@@ -70,7 +69,7 @@ const PhoneModal = ({
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					phone,
+					phone: phoneR.e164,
 					name: name.trim(),
 					projectId: project?.id,
 					projectTitle: project?.title,
@@ -81,7 +80,7 @@ const PhoneModal = ({
 			if (response.ok) {
 				setSuccess(true)
 				if (onSuccess) {
-					onSuccess({ phone, name, project })
+					onSuccess({ phone: phoneR.e164, name, project })
 				}
 			} else {
 				throw new Error('Failed to submit phone number')
@@ -164,18 +163,12 @@ const PhoneModal = ({
 								<label htmlFor="phone" className={styles.label}>
 									Номер телефону *
 								</label>
-								<div className={styles.phoneInputContainer}>
-									<Phone className={styles.phoneIcon} />
-									<input
-										type="tel"
-										id="phone"
-										value={phone}
-										onChange={handlePhoneChange}
-										className={styles.phoneInput}
-										inputMode="tel"
-										required
-									/>
-								</div>
+								<PhoneField
+									id="phone"
+									name="phone"
+									value={phone}
+									onChange={handlePhoneValueChange}
+								/>
 							</div>
 
 							{error && (

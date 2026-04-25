@@ -4,8 +4,8 @@ import { useSearchParams } from 'next/navigation'
 import { Code, Gamepad2, Box, Monitor, Phone, CheckCircle, Award, ArrowRight, Loader2, AlertCircle, Lock } from 'lucide-react'
 import styles from './KnowledgeTestClient.module.css'
 import { TEST_QUESTIONS } from '@/lib/testQuestions'
-import { sanitizePhoneInput } from '@/lib/phoneField'
 import { validateEuropeanPhone } from '@/lib/phoneEurope'
+import PhoneField from '@/components/PhoneField/PhoneField'
 
 
 const DIRECTIONS = [
@@ -104,8 +104,8 @@ export default function KnowledgeTestClient() {
     }
   }
 
-  const handlePhoneChange = (e) => {
-    setPhone(sanitizePhoneInput(e.target.value))
+  const handlePhoneValueChange = (next) => {
+    setPhone(next)
     setError('')
   }
 
@@ -148,7 +148,7 @@ export default function KnowledgeTestClient() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          phone,
+          phone: phoneR.e164,
           name: name.trim(),
           direction: selectedDirection.id,
           directionName: selectedDirection.name,
@@ -275,18 +275,12 @@ export default function KnowledgeTestClient() {
               <label htmlFor="phone" className={styles.label}>
                 Номер телефону *
               </label>
-              <div className={styles.phoneInputContainer}>
-                <Phone className={styles.phoneIcon} />
-                <input
-                  type="tel"
-                  id="phone"
-                  value={phone}
-                  onChange={handlePhoneChange}
-                  className={styles.phoneInput}
-                  inputMode="tel"
-                  required
-                />
-              </div>
+              <PhoneField
+                id="phone"
+                name="phone"
+                value={phone}
+                onChange={handlePhoneValueChange}
+              />
             </div>
 
             {error && (

@@ -1,9 +1,10 @@
-import { parsePhoneNumberFromString } from 'libphonenumber-js'
+import { parsePhoneNumberFromString, isValidPhoneNumber } from 'libphonenumber-js'
 
 /**
  * ISO 3166-1 alpha-2, які вважаємо «Європа» для заявок (ЄС/ЄПЗ/Євр. економ. простір + сусіди, без RU/KZ/NA).
  */
-const EUROPE_COUNTRY = new Set([
+/** @type {Set<string>} ISO2 upper case */
+export const EUROPE_COUNTRY = new Set([
 	'AD',
 	'AL',
 	'AT',
@@ -81,22 +82,25 @@ export function validateEuropeanPhone(raw) {
 	if (!e164) {
 		return { ok: false, message: 'Введіть номер телефону' }
 	}
-	const d = e164.replace(/\D/g, '')
-	if (d.length === 0) {
+	const digits = e164.replace(/\D/g, '')
+	if (digits.length === 0) {
 		return { ok: false, message: 'Введіть номер телефону' }
 	}
-	if (d.length < 8) {
+	if (digits.length < 8) {
 		return { ok: false, message: 'Введіть повний номер (код країни + номер)' }
 	}
-	if (d.length > 15) {
+	if (digits.length > 15) {
 		return { ok: false, message: 'Надто довгий номер' }
+	}
+	if (digits.includes('380380')) {
+		return { ok: false, message: 'Не дублюйте код країни (+380 лише один раз)' }
 	}
 	const p = parsePhoneNumberFromString(e164)
 	if (!p) {
 		return { ok: false, message: 'Перевірте формат номера' }
 	}
-	if (!p.isValid()) {
-		return { ok: false, message: 'Перевірте кількість цифр після коду країни' }
+	if (!isValidPhoneNumber(e164) || !p.isValid()) {
+		return { ok: false, message: 'Перевірте кількість цифр (без дубля коду країни)' }
 	}
 	const c = p.country
 	if (!c || !EUROPE_COUNTRY.has(c)) {
