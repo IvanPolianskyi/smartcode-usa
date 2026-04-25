@@ -127,7 +127,7 @@ export default function KnowledgeTestClient() {
     setError('')
     
     if (!isValidPhoneBasic(phone)) {
-      setError('Введіть номер: 7–15 цифр разом з кодом країни (наприклад +380…, +48…)')
+      setError('Введіть номер: 7–15 цифр разом з кодом країни')
       return
     }
 

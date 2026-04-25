@@ -139,7 +139,7 @@ export default function TrialSignupBlock() {
 								value={formData.phone}
 								onChange={handleInputChange}
 								inputMode='tel'
-								placeholder='+380…, +48…, будь-який код країни'
+								placeholder='номер телефону'
 								autoComplete='tel'
 							/>
 							{phoneError && <span className={styles.error}>{phoneError}</span>}
