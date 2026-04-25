@@ -86,7 +86,7 @@ export function validateEuropeanPhone(raw) {
 		return { ok: false, message: 'Введіть номер телефону' }
 	}
 	if (digits.length < 8) {
-		return { ok: false, message: 'Введіть повний номер (код країни + номер)' }
+		return { ok: false, message: 'Введіть номер телефону після коду країни' }
 	}
 	if (digits.length > 15) {
 		return { ok: false, message: 'Надто довгий номер' }

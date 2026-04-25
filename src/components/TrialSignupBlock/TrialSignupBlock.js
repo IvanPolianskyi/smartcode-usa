@@ -31,7 +31,7 @@ export default function TrialSignupBlock() {
 
 	const handleFormFocusCapture = (e) => {
 		const t = e.target
-		if (t instanceof HTMLInputElement || t instanceof HTMLSelectElement || t instanceof HTMLTextAreaElement) {
+		if (t instanceof HTMLInputElement || t instanceof HTMLSelectElement || t instanceof HTMLTextAreaElement || t instanceof HTMLButtonElement) {
 			trackTrialInitiateCheckoutOnce()
 		}
 	}
