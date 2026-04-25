@@ -1,10 +1,8 @@
 /**
- * Міжнародні номери: базова перевірка діапазону цифр (як E.164, 7–15) та збереження + на початку.
+ * Міжнародні номери: збереження + на початку, не більше 15 цифр (E.164 max).
  */
 
-const MIN_DIGITS = 7
 const MAX_DIGITS = 15
-
 /**
  * + лише на початку, далі — цифри, не більше MAX_DIGITS.
  */
@@ -26,10 +24,3 @@ export function getPhoneDigitCount(value) {
     .length
 }
 
-/**
- * 7–15 цифр, без урахування коду конкретної країни.
- */
-export function isValidPhoneBasic(value) {
-  const n = getPhoneDigitCount(value)
-  return n >= MIN_DIGITS && n <= MAX_DIGITS
-}

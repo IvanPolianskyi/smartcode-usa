@@ -4,7 +4,8 @@ import { useSearchParams } from 'next/navigation'
 import { Code, Gamepad2, Box, Monitor, Phone, CheckCircle, Award, ArrowRight, Loader2, AlertCircle, Lock } from 'lucide-react'
 import styles from './KnowledgeTestClient.module.css'
 import { TEST_QUESTIONS } from '@/lib/testQuestions'
-import { isValidPhoneBasic, sanitizePhoneInput } from '@/lib/phoneField'
+import { sanitizePhoneInput } from '@/lib/phoneField'
+import { validateEuropeanPhone } from '@/lib/phoneEurope'
 
 
 const DIRECTIONS = [
@@ -126,8 +127,9 @@ export default function KnowledgeTestClient() {
     e.preventDefault()
     setError('')
     
-    if (!isValidPhoneBasic(phone)) {
-      setError('Введіть номер: 7–15 цифр разом з кодом країни')
+    const phoneR = validateEuropeanPhone(phone)
+    if (!phoneR.ok) {
+      setError(phoneR.message)
       return
     }
 
@@ -281,7 +283,6 @@ export default function KnowledgeTestClient() {
                   value={phone}
                   onChange={handlePhoneChange}
                   className={styles.phoneInput}
-                  placeholder="+380…, +48…"
                   inputMode="tel"
                   required
                 />

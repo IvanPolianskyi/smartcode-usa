@@ -9,7 +9,8 @@ import {
 	generateEventId,
 } from '@/lib/metaPixel'
 import { getClientAttribution } from '@/lib/attribution'
-import { isValidPhoneBasic, sanitizePhoneInput, getPhoneDigitCount } from '@/lib/phoneField'
+import { sanitizePhoneInput, getPhoneDigitCount } from '@/lib/phoneField'
+import { validateEuropeanPhone } from '@/lib/phoneEurope'
 import styles from './TrialSignupBlock.module.css'
 
 const COURSES = [
@@ -42,8 +43,10 @@ export default function TrialSignupBlock() {
 			setFormData((prev) => ({ ...prev, phone: next }))
 			const n = getPhoneDigitCount(next)
 			if (n === 0) setPhoneError('Введіть номер телефону')
-			else if (!isValidPhoneBasic(next)) setPhoneError('Від 7 до 15 цифр (код країни разом з номером)')
-			else setPhoneError('')
+			else {
+				const r = validateEuropeanPhone(next)
+				setPhoneError(r.ok ? '' : r.message)
+			}
 			return
 		}
 		setFormData((prev) => ({ ...prev, [field]: value }))
@@ -52,12 +55,9 @@ export default function TrialSignupBlock() {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		setTouched({ phone: true, course: true })
-		if (!isValidPhoneBasic(formData.phone)) {
-			setPhoneError(
-				getPhoneDigitCount(formData.phone) === 0
-					? 'Введіть номер телефону'
-					: 'Від 7 до 15 цифр (код країни разом з номером)'
-			)
+		const phoneCheck = validateEuropeanPhone(formData.phone)
+		if (!phoneCheck.ok) {
+			setPhoneError(phoneCheck.message)
 			return
 		}
 		if (!formData.course) return
@@ -139,7 +139,6 @@ export default function TrialSignupBlock() {
 								value={formData.phone}
 								onChange={handleInputChange}
 								inputMode='tel'
-								placeholder='номер телефону'
 								autoComplete='tel'
 							/>
 							{phoneError && <span className={styles.error}>{phoneError}</span>}

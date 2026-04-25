@@ -8,7 +8,8 @@ import {
 	generateEventId,
 } from '@/lib/metaPixel'
 import { getClientAttribution } from '@/lib/attribution'
-import { isValidPhoneBasic, sanitizePhoneInput, getPhoneDigitCount } from '@/lib/phoneField'
+import { sanitizePhoneInput, getPhoneDigitCount } from '@/lib/phoneField'
+import { validateEuropeanPhone } from '@/lib/phoneEurope'
 import styles from './ContactForm.module.css'
 
 const ContactForm = () => {
@@ -93,8 +94,10 @@ const ContactForm = () => {
             setFormData(prev => ({ ...prev, phone: next }))
             const n = getPhoneDigitCount(next)
             if (n === 0) setPhoneError('Введіть номер телефону')
-            else if (!isValidPhoneBasic(next)) setPhoneError('Від 7 до 15 цифр (код країни разом з номером)')
-            else setPhoneError('')
+            else {
+                const r = validateEuropeanPhone(next)
+                setPhoneError(r.ok ? '' : r.message)
+            }
             return
         }
         setFormData(prev => ({ ...prev, [name]: value }))
@@ -105,12 +108,9 @@ const ContactForm = () => {
         if (submitting) return
         setTouched(prev => ({ ...prev, phone: true, course: true }))
         const isCourseSelected = !!formData.course
-        if (!isValidPhoneBasic(formData.phone)) {
-            setPhoneError(
-                getPhoneDigitCount(formData.phone) === 0
-                    ? 'Введіть номер телефону'
-                    : 'Від 7 до 15 цифр (код країни разом з номером)'
-            )
+        const phoneCheck = validateEuropeanPhone(formData.phone)
+        if (!phoneCheck.ok) {
+            setPhoneError(phoneCheck.message)
             return
         }
         if (!isCourseSelected) {
@@ -163,7 +163,10 @@ const ContactForm = () => {
 
     if (!isOpen) return null
 
-    const phoneInvalid = !!(phoneError || (touched.phone && !isValidPhoneBasic(formData.phone)))
+    const phoneInvalid = !!(
+        phoneError ||
+        (touched.phone && !validateEuropeanPhone(formData.phone).ok)
+    )
     const courseInvalid = !!(touched.course && !formData.course)
 
     return (
@@ -200,7 +203,6 @@ const ContactForm = () => {
                                             value={formData.phone}
                                             onChange={handleInputChange}
                                             onBlur={() => setTouched(prev => ({ ...prev, phone: true }))}
-                                            placeholder='+380…, +48…, будь-який код країни'
                                             className={styles.modalInput}
                                             inputMode='tel'
                                             autoComplete='tel'

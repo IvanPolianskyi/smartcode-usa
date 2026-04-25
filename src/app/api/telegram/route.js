@@ -92,7 +92,7 @@ export async function POST(request) {
     const normalizedPhone = phone ? normalizePhoneE164(phone) : null
     if (phone && !normalizedPhone) {
       return NextResponse.json(
-        { ok: false, error: 'Invalid phone: use 7–15 digits (country code included)' },
+        { ok: false, error: 'Невалідний номер (потрібен номер країни Європи)' },
         { status: 400 }
       )
     }

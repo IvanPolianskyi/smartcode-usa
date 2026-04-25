@@ -14,7 +14,8 @@ import {
 	Download
 } from 'lucide-react'
 import styles from './PhoneModal.module.css'
-import { isValidPhoneBasic, sanitizePhoneInput } from '@/lib/phoneField'
+import { sanitizePhoneInput } from '@/lib/phoneField'
+import { validateEuropeanPhone } from '@/lib/phoneEurope'
 
 const PhoneModal = ({ 
 	isOpen, 
@@ -49,8 +50,9 @@ const PhoneModal = ({
 		setError('')
 		setIsSubmitting(true)
 
-		if (!isValidPhoneBasic(phone)) {
-			setError('Введіть номер: 7–15 цифр разом з кодом країни')
+		const phoneR = validateEuropeanPhone(phone)
+		if (!phoneR.ok) {
+			setError(phoneR.message)
 			setIsSubmitting(false)
 			return
 		}
@@ -79,7 +81,7 @@ const PhoneModal = ({
 			if (response.ok) {
 				setSuccess(true)
 				if (onSuccess) {
-					onSuccess({ phone: fullPhoneNumber, name, project })
+					onSuccess({ phone, name, project })
 				}
 			} else {
 				throw new Error('Failed to submit phone number')
@@ -170,7 +172,6 @@ const PhoneModal = ({
 										value={phone}
 										onChange={handlePhoneChange}
 										className={styles.phoneInput}
-										placeholder="+380…, +48…"
 										inputMode="tel"
 										required
 									/>
