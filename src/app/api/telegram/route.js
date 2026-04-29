@@ -262,12 +262,14 @@ export async function POST(request) {
           eventId,
           sourceUrl: sourceUrl || 'https://smartcode-academy.com',
           phone: normalizedPhone,
-          // Telegram username як external_id — хешується в CAPI, не передається в сирому вигляді
-          externalId: normalizedTelegram ? normalizedTelegram.replace(/^@/, '').toLowerCase() : undefined,
+          // external_id як стабільний ідентифікатор ліда для покращення matching
+          externalId: leadIdentity || (normalizedTelegram ? normalizedTelegram.replace(/^@/, '').toLowerCase() : undefined),
+          name: name || undefined,
           clientIp,
           userAgent,
           fbc,
           fbp,
+          fbclid: cleanAttribution.fbclid || undefined,
           contentName: course || 'trial_lesson',
           contentIds,
         })

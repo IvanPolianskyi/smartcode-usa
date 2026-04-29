@@ -9,6 +9,7 @@
  */
 
 import crypto from 'crypto'
+import { parsePhoneNumberFromString } from 'libphonenumber-js'
 
 const CAPI_VERSION = 'v22.0'
 const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID
@@ -34,6 +35,37 @@ function sha256(value) {
 function normalizePhone(phone) {
 	if (!phone) return undefined
 	return phone.replace(/\D/g, '')
+}
+
+function normalizeText(value) {
+	if (!value) return undefined
+	return String(value).trim().toLowerCase().replace(/\s+/g, ' ')
+}
+
+function splitNameParts(name) {
+	const n = normalizeText(name)
+	if (!n) return { firstName: undefined, lastName: undefined }
+	const parts = n.split(' ').filter(Boolean)
+	return {
+		firstName: parts[0] || undefined,
+		lastName: parts.length > 1 ? parts.slice(1).join(' ') : undefined,
+	}
+}
+
+function detectCountryByPhone(phone) {
+	try {
+		const parsed = parsePhoneNumberFromString(String(phone || ''))
+		return parsed?.country ? String(parsed.country).toLowerCase() : undefined
+	} catch {
+		return undefined
+	}
+}
+
+function normalizeFbc(fbc, fbclid) {
+	if (fbc) return fbc
+	if (!fbclid) return undefined
+	// Meta format: fb.1.<creation_time_millis>.<fbclid>
+	return `fb.1.${Date.now()}.${String(fbclid).trim()}`
 }
 
 /**
@@ -92,10 +124,15 @@ export async function sendCapiEvent({
 	sourceUrl,
 	phone,
 	externalId,
+	email,
+	firstName,
+	lastName,
+	country,
 	clientIp,
 	userAgent,
 	fbc,
 	fbp,
+	fbclid,
 	customData = {},
 }) {
 	if (!CAPI_TOKEN || !CAPI_URL) {
@@ -107,13 +144,23 @@ export async function sendCapiEvent({
 
 	const hashedPhone = sha256(normalizePhone(phone))
 	const hashedExternalId = externalId ? sha256(externalId) : undefined
+	const hashedEmail = email ? sha256(normalizeText(email)) : undefined
+	const hashedFirstName = firstName ? sha256(normalizeText(firstName)) : undefined
+	const hashedLastName = lastName ? sha256(normalizeText(lastName)) : undefined
+	const normalizedCountry = country ? normalizeText(country) : detectCountryByPhone(phone)
+	const hashedCountry = normalizedCountry ? sha256(normalizedCountry) : undefined
+	const normalizedFbc = normalizeFbc(fbc, fbclid)
 
 	const userData = {
 		...(hashedPhone && { ph: [hashedPhone] }),
 		...(hashedExternalId && { external_id: [hashedExternalId] }),
+		...(hashedEmail && { em: [hashedEmail] }),
+		...(hashedFirstName && { fn: [hashedFirstName] }),
+		...(hashedLastName && { ln: [hashedLastName] }),
+		...(hashedCountry && { country: [hashedCountry] }),
 		...(clientIp && { client_ip_address: clientIp }),
 		...(userAgent && { client_user_agent: userAgent }),
-		...(fbc && { fbc }),
+		...(normalizedFbc && { fbc: normalizedFbc }),
 		...(fbp && { fbp }),
 	}
 
@@ -153,17 +200,36 @@ export async function sendCapiEvent({
 /**
  * Зручний хелпер: відправити Lead після успішної форми запису.
  */
-export async function sendCapiLead({ eventId, sourceUrl, phone, externalId, clientIp, userAgent, fbc, fbp, contentName, contentIds }) {
+export async function sendCapiLead({
+	eventId,
+	sourceUrl,
+	phone,
+	externalId,
+	email,
+	name,
+	clientIp,
+	userAgent,
+	fbc,
+	fbp,
+	fbclid,
+	contentName,
+	contentIds,
+}) {
+	const { firstName, lastName } = splitNameParts(name)
 	return sendCapiEvent({
 		eventName: 'Lead',
 		eventId,
 		sourceUrl,
 		phone,
 		externalId,
+		email,
+		firstName,
+		lastName,
 		clientIp,
 		userAgent,
 		fbc,
 		fbp,
+		fbclid,
 		customData: {
 			...(contentName && { content_name: contentName }),
 			...(Array.isArray(contentIds) && contentIds.length > 0 && { content_ids: contentIds }),
