@@ -1,6 +1,5 @@
 import styles from './OfertaPage.module.css'
-import { FileText, Download } from 'lucide-react'
-import { notFound } from 'next/navigation'
+import { Download } from 'lucide-react'
 
 export const metadata = {
 	title: 'Публічна оферта - SmartCode Academy',
@@ -8,9 +7,6 @@ export const metadata = {
 }
 
 export default function OfertaPage() {
-	// Тимчасово закрито для доробки
-	notFound()
-
 	return (
 		<div className={styles.container}>
 			<div className={styles.content}>
@@ -19,12 +15,7 @@ export default function OfertaPage() {
 					<p className={styles.subtitle}>
 						Договір публічної оферти про надання освітніх послуг
 					</p>
-					<a
-						href='/oferta.pdf'
-						target='_blank'
-						rel='noopener noreferrer'
-						className={styles.pdfLink}
-					>
+					<a href='/api/oferta-pdf' className={styles.pdfLink}>
 						<Download size={20} />
 						Завантажити PDF версію
 					</a>

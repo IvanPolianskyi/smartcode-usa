@@ -44,7 +44,7 @@ const Footer = () => {
 
 	const supportLinks = [
 		{ name: 'Часті питання', href: '/#faq' },
-		{ name: 'Публічна оферта', href: '/oferta' },
+		{ name: 'Публічна оферта', href: '/api/oferta-pdf', useAnchor: true },
 	]
 
 	const achievements = [
@@ -167,9 +167,15 @@ const Footer = () => {
 						<ul className={styles.linksList}>
 							{supportLinks.map((link, index) => (
 								<li key={index}>
-									<Link href={link.href} className={styles.link}>
-										{link.name}
-									</Link>
+									{link.useAnchor ? (
+										<a href={link.href} className={styles.link}>
+											{link.name}
+										</a>
+									) : (
+										<Link href={link.href} className={styles.link}>
+											{link.name}
+										</Link>
+									)}
 								</li>
 							))}
 						</ul>
