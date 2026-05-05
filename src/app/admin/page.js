@@ -551,7 +551,7 @@ export default function AdminPanelPage() {
         </div>
       )}
 
-      {!stats && !loading && (
+      {!stats && !sessionLoading && (
         <div className={styles.errorState}>
           <p>Не вдалося завантажити статистику</p>
           <button onClick={loadStatistics} className={styles.retryButton}>

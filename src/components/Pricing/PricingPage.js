@@ -1,11 +1,10 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import {
 	Users,
 	User,
-	BookOpen,
-	Zap,
 	Check,
 	Star,
 	Sparkles,
@@ -14,10 +13,13 @@ import {
 	Video,
 	Laptop,
 	Rocket,
+	Shield,
+	CreditCard,
+	Gift,
+	Percent,
+	Zap,
+	Heart,
 	TrendingDown,
-	GraduationCap,
-	Monitor,
-	BookMarked,
 } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -30,32 +32,16 @@ const PricingPage = () => {
 	const sectionRef = useRef(null)
 	const cardsRef = useRef([])
 	const [isLoaded, setIsLoaded] = useState(false)
-	const [isMobile, setIsMobile] = useState(false)
 
 	useEffect(() => {
-		// Перевірка на мобільний пристрій
-		const checkMobile = () => {
-			setIsMobile(window.innerWidth <= 768)
-		}
-		
-		checkMobile()
 		setIsLoaded(true)
-		
-		window.addEventListener('resize', checkMobile)
-		
+
 		const isMobileDevice = window.innerWidth <= 768
 
-		// На мобільних пристроях не запускаємо анімації
 		if (sectionRef.current && !isMobileDevice) {
-			const cards = cardsRef.current.filter(Boolean)
-
-			// Анімація заголовка (тільки на десктопі)
 			gsap.fromTo(
 				sectionRef.current.querySelector(`.${styles.title}`),
-				{
-					opacity: 0,
-					y: 30,
-				},
+				{ opacity: 0, y: 30 },
 				{
 					opacity: 1,
 					y: 0,
@@ -68,30 +54,23 @@ const PricingPage = () => {
 				}
 			)
 
-			// Анімація карток (тільки на десктопі)
-			cards.forEach((card, index) => {
-				if (card) {
-					gsap.fromTo(
-						card,
-						{
-							opacity: 0,
-							y: 50,
-							scale: 0.9,
+			cardsRef.current.filter(Boolean).forEach((card, index) => {
+				gsap.fromTo(
+					card,
+					{ opacity: 0, y: 50, scale: 0.95 },
+					{
+						opacity: 1,
+						y: 0,
+						scale: 1,
+						duration: 0.6,
+						delay: index * 0.15,
+						scrollTrigger: {
+							trigger: card,
+							start: 'top 85%',
+							toggleActions: 'play none none none',
 						},
-						{
-							opacity: 1,
-							y: 0,
-							scale: 1,
-							duration: 0.6,
-							delay: index * 0.15,
-							scrollTrigger: {
-								trigger: card,
-								start: 'top 85%',
-								toggleActions: 'play none none none',
-							},
-						}
-					)
-				}
+					}
+				)
 			})
 		}
 
@@ -99,7 +78,6 @@ const PricingPage = () => {
 			if (!isMobileDevice) {
 				ScrollTrigger.getAll().forEach(trigger => trigger.kill())
 			}
-			window.removeEventListener('resize', checkMobile)
 		}
 	}, [])
 
@@ -110,111 +88,144 @@ const PricingPage = () => {
 		}
 	}
 
-	const pricingPlans = [
+	const plans = [
 		{
-			id: 1,
-			name: 'Індивідуальні уроки',
-			emoji: '💻',
-			price: 400,
-			currency: 'грн',
-			period: 'заняття',
-			description: 'Персональний підхід до навчання',
+			id: 'group',
+			name: 'Міні-група',
+			icon: <Users size={28} />,
+			price: 350,
+			period: '/ урок',
+			subtitle: 'До 5 учнів у групі',
+			description: 'Навчання з однолітками — мотивація та командна робота',
 			features: [
+				'Група до 5 учнів',
+				'Спільні проєкти та змагання',
+				'Розвиток командної роботи',
+				'Фіксований графік занять',
+				'Доступ до навчальної платформи',
+				'Сертифікат після курсу',
+			],
+			color: 'purple',
+			badge: null,
+		},
+		{
+			id: 'individual',
+			name: 'Індивідуально',
+			icon: <User size={28} />,
+			price: 500,
+			period: '/ урок',
+			subtitle: '1 на 1 з викладачем',
+			description: 'Максимальна увага та персональна програма навчання',
+			features: [
+				'Персональний підхід',
 				'Індивідуальний графік',
+				'Темп навчання під учня',
 				'Фокус на ваших цілях',
-				'Швидкий прогрес',
-				'Гнучкість у виборі теми',
-				'Прямий контакт з викладачем',
+				'Доступ до навчальної платформи',
+				'Сертифікат після курсу',
 			],
 			color: 'blue',
-			popular: false,
-			recommended: true,
+			badge: 'Найпопулярніший',
+			popular: true,
+		},
+	]
+
+	const trustPoints = [
+		{
+			icon: <CreditCard size={24} />,
+			title: 'Оплата поурочно',
+			text: 'Платіть лише за проведені уроки. Жодних передоплат чи пакетів — повна свобода!',
+		},
+		{
+			icon: <Clock size={24} />,
+			title: 'Гнучкий графік',
+			text: 'Обирайте зручний час. Працюємо з понеділка по неділю, ранок та вечір.',
+		},
+		{
+			icon: <Video size={24} />,
+			title: 'Онлайн в Zoom',
+			text: 'Заняття проходять у Zoom. Зручно з будь-якого місця — потрібен лише ноутбук.',
+		},
+		{
+			icon: <Shield size={24} />,
+			title: 'Без зобов\'язань',
+			text: 'Можете припинити навчання будь-коли. Жодних контрактів чи штрафів.',
 		},
 	]
 
 	return (
 		<div ref={sectionRef} className={styles.page}>
-			{/* Hero Section */}
+			{/* ===== Hero ===== */}
 			<section className={styles.hero}>
+				<div className={styles.heroBackground}>
+					<div className={styles.heroBg1} />
+					<div className={styles.heroBg2} />
+				</div>
 				<div className={styles.heroContent}>
 					<div className={styles.badge}>
 						<Sparkles size={16} />
-						<span>Наші тарифи</span>
+						<span>Прозорі ціни</span>
 					</div>
 					<h1 className={styles.title}>
-						Оберіть <span className={styles.titleAccent}>ідеальний</span> план
-						навчання
+						Оплата <span className={styles.titleAccent}>поурочно</span>
+						<br />
+						без передоплат
 					</h1>
 					<p className={styles.subtitle}>
-						Гнучкі варіанти навчання для будь-якого рівня та бюджету. Почніть
-						свою подорож у світ програмування вже сьогодні!
+						Платіть тільки за проведені уроки. Жодних пакетів, жодних прихованих платежів. 
+						Почніть з пробного безкоштовного заняття!
 					</p>
+					<div className={styles.heroActions}>
+						<button onClick={handleContactClick} className={styles.heroCta}>
+							Записатися на пробний урок
+							<ArrowRight size={18} />
+						</button>
+						<div className={styles.heroNote}>
+							<Shield size={16} />
+							<span>Перший урок — безкоштовно</span>
+						</div>
+					</div>
 				</div>
 			</section>
 
-			{/* Pricing Cards */}
+			{/* ===== Pricing Cards ===== */}
 			<section className={styles.pricingSection}>
 				<div className={styles.container}>
 					<div className={styles.pricingGrid}>
-						{pricingPlans.map((plan, index) => (
+						{plans.map((plan, index) => (
 							<div
 								key={plan.id}
 								className={`${styles.pricingCard} ${styles[plan.color]} ${
 									plan.popular ? styles.popular : ''
-								} ${plan.discount ? styles.discount : ''} ${
-									plan.recommended ? styles.recommended : ''
 								}`}
 								ref={el => (cardsRef.current[index] = el)}
 							>
-								{plan.recommended && (
-									<div className={styles.recommendedBadge}>
-										<Star size={14} />
-										<span>Рекомендуємо</span>
-									</div>
-								)}
-								{plan.popular && (
+								{plan.badge && (
 									<div className={styles.popularBadge}>
 										<Star size={14} />
-										<span>Популярний</span>
-									</div>
-								)}
-								{plan.discount && (
-									<div className={styles.discountBadge}>
-										<TrendingDown size={14} />
-										<span>Знижка 33%</span>
+										<span>{plan.badge}</span>
 									</div>
 								)}
 
 								<div className={styles.cardHeader}>
-									<div className={styles.emojiWrapper}>
-										<span className={styles.emoji}>{plan.emoji}</span>
+									<div className={styles.iconWrapper}>
+										{plan.icon}
 									</div>
 									<h3 className={styles.planName}>{plan.name}</h3>
-									<p className={styles.planDescription}>{plan.description}</p>
+									<p className={styles.planSubtitle}>{plan.subtitle}</p>
 								</div>
 
 								<div className={styles.priceSection}>
-									{plan.oldPrice && (
-										<div className={styles.oldPrice}>
-											{plan.oldPrice} {plan.currency}
-										</div>
-									)}
 									<div className={styles.price}>
 										<span className={styles.priceAmount}>{plan.price}</span>
-										<span className={styles.priceCurrency}>
-											{plan.currency}
-										</span>
-									</div>
-									<div className={styles.period}>
-										{plan.period}
-										{plan.duration && (
-											<span className={styles.duration}>
-												{' '}
-												· {plan.duration}
-											</span>
-										)}
+										<div className={styles.priceLabel}>
+											<span className={styles.priceCurrency}>грн</span>
+											<span className={styles.pricePeriod}>{plan.period}</span>
+										</div>
 									</div>
 								</div>
+
+								<p className={styles.planDescription}>{plan.description}</p>
 
 								<ul className={styles.featuresList}>
 									{plan.features.map((feature, idx) => (
@@ -227,9 +238,9 @@ const PricingPage = () => {
 
 								<button
 									onClick={handleContactClick}
-									className={styles.ctaButton}
+									className={`${styles.ctaButton} ${plan.popular ? styles.ctaPopular : ''}`}
 								>
-									<span>Обрати план</span>
+									<span>Записатися</span>
 									<ArrowRight size={18} />
 								</button>
 							</div>
@@ -238,67 +249,125 @@ const PricingPage = () => {
 				</div>
 			</section>
 
-			{/* Additional Info Section */}
-			<section className={styles.infoSection}>
+			{/* ===== Trust Section ===== */}
+			<section className={styles.trustSection}>
 				<div className={styles.container}>
-					<div className={styles.infoGrid}>
-						<div className={styles.infoCard}>
-							<div className={styles.infoIcon}>
-								<Video size={24} />
+					<div className={styles.trustHeader}>
+						<div className={styles.badge}>
+							<Shield size={16} />
+							<span>Чому обирають нас</span>
+						</div>
+						<h2 className={styles.sectionTitle}>
+							Зручно, прозоро, без ризику
+						</h2>
+					</div>
+					<div className={styles.trustGrid}>
+						{trustPoints.map((item, index) => (
+							<div key={index} className={styles.trustCard}>
+								<div className={styles.trustIcon}>{item.icon}</div>
+								<h4 className={styles.trustCardTitle}>{item.title}</h4>
+								<p className={styles.trustCardText}>{item.text}</p>
 							</div>
-							<h4 className={styles.infoTitle}>Онлайн в Zoom</h4>
-							<p className={styles.infoText}>
-								Всі заняття проходять онлайн в Zoom. Зручно, безпечно та
-								ефективно.
+						))}
+					</div>
+				</div>
+			</section>
+
+			{/* ===== Loyalty / Discount Section ===== */}
+			<section className={styles.loyaltySection}>
+				<div className={styles.container}>
+					<div className={styles.loyaltyCard}>
+						<div className={styles.loyaltyLeft}>
+							<div className={styles.loyaltyBadge}>
+								<Gift size={16} />
+								<span>Система лояльності</span>
+							</div>
+							<h2 className={styles.loyaltyTitle}>
+								Оплатіть курс наперед — <br/>
+								отримайте <span className={styles.loyaltyAccent}>знижку</span>
+							</h2>
+							<p className={styles.loyaltySubtitle}>
+								При оплаті всього курсу наперед ви отримуєте суттєву знижку на кожен урок. 
+								Це вигідно, якщо ви впевнені у своєму виборі!
 							</p>
 						</div>
-						<div className={styles.infoCard}>
-							<div className={styles.infoIcon}>
-								<Clock size={24} />
+						<div className={styles.loyaltyRight}>
+							<div className={styles.loyaltyPriceCard}>
+								<div className={styles.loyaltyPriceHeader}>
+									<User size={20} />
+									<span>Індивідуально</span>
+								</div>
+								<div className={styles.loyaltyPriceRow}>
+									<span className={styles.loyaltyOldPrice}>500 грн</span>
+									<ArrowRight size={16} className={styles.loyaltyArrow} />
+									<span className={styles.loyaltyNewPrice}>400 грн</span>
+									<span className={styles.loyaltySaveBadge}>
+										<TrendingDown size={12} />
+										-20%
+									</span>
+								</div>
+								<p className={styles.loyaltyPriceNote}>за урок при оплаті всього курсу</p>
 							</div>
-							<h4 className={styles.infoTitle}>Гнучкий графік</h4>
-							<p className={styles.infoText}>
-								Обирайте зручний час для навчання. Працюємо з понеділка по
-								неділю.
-							</p>
-						</div>
-						<div className={styles.infoCard}>
-							<div className={styles.infoIcon}>
-								<Laptop size={24} />
+							<div className={styles.loyaltyPriceCard}>
+								<div className={styles.loyaltyPriceHeader}>
+									<Users size={20} />
+									<span>Міні-група</span>
+								</div>
+								<div className={styles.loyaltyPriceRow}>
+									<span className={styles.loyaltyOldPrice}>350 грн</span>
+									<ArrowRight size={16} className={styles.loyaltyArrow} />
+									<span className={styles.loyaltyNewPrice}>250 грн</span>
+									<span className={styles.loyaltySaveBadge}>
+										<TrendingDown size={12} />
+										-29%
+									</span>
+								</div>
+								<p className={styles.loyaltyPriceNote}>за урок при оплаті всього курсу</p>
 							</div>
-							<h4 className={styles.infoTitle}>Доступ до платформи</h4>
-							<p className={styles.infoText}>
-								При покупці курсу отримуєте повний доступ до навчальної
-								платформи 24/7.
-							</p>
-						</div>
-						<div className={styles.infoCard}>
-							<div className={styles.infoIcon}>
-								<Rocket size={24} />
-							</div>
-							<h4 className={styles.infoTitle}>Швидкий старт</h4>
-							<p className={styles.infoText}>
-								Почніть навчання вже сьогодні! Реєстрація займає лише кілька
-								хвилин.
-							</p>
 						</div>
 					</div>
 				</div>
 			</section>
 
-			{/* CTA Section */}
+			{/* ===== Referral Banner ===== */}
+			<section className={styles.referralSection}>
+				<div className={styles.container}>
+					<div className={styles.referralBanner}>
+						<div className={styles.referralContent}>
+							<div className={styles.referralIcon}>
+								<Heart size={28} />
+							</div>
+							<div className={styles.referralText}>
+								<h3 className={styles.referralTitle}>Запроси друга — отримай знижку 500 грн</h3>
+								<p className={styles.referralDescription}>
+									Порекомендуйте SmartCode Academy другу і обидва отримаєте знижку на навчання
+								</p>
+							</div>
+						</div>
+						<Link href="/invite" className={styles.referralButton}>
+							Дізнатись більше
+							<ArrowRight size={18} />
+						</Link>
+					</div>
+				</div>
+			</section>
+
+			{/* ===== Final CTA ===== */}
 			<section className={styles.finalCta}>
+				<div className={styles.finalCtaBackground}>
+					<div className={styles.finalCtaBg1} />
+					<div className={styles.finalCtaBg2} />
+				</div>
 				<div className={styles.container}>
 					<div className={styles.finalCtaContent}>
 						<h2 className={styles.finalCtaTitle}>
-							Готові почати навчання?
+							Перший урок — безкоштовно
 						</h2>
 						<p className={styles.finalCtaText}>
-							Зв'яжіться з нами, щоб обговорити деталі та обрати найкращий план
-							для вас
+							Спробуйте без зобов'язань. Запишіться на безкоштовний пробний урок і переконайтесь у якості навчання
 						</p>
 						<button onClick={handleContactClick} className={styles.finalCtaButton}>
-							<span>Зв'язатися з нами</span>
+							<span>Записатися на пробний урок</span>
 							<ArrowRight size={20} />
 						</button>
 					</div>
@@ -309,4 +378,3 @@ const PricingPage = () => {
 }
 
 export default PricingPage
-

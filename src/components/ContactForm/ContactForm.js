@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useRef, useEffect } from 'react'
-import { Phone, Send, CheckCircle, Briefcase, MessageSquare, X, Sparkles } from 'lucide-react'
+import { Phone, Send, CheckCircle, MessageSquare, X, Sparkles, User } from 'lucide-react'
 import {
 	trackTrialInitiateCheckoutOnce,
 	trackTrialLeadOnce,
@@ -12,15 +12,15 @@ import styles from './ContactForm.module.css'
 
 const ContactForm = () => {
     const [isOpen, setIsOpen] = useState(false)
-    const [preferredContactMethod, setPreferredContactMethod] = useState('phone_call')
-    const [formData, setFormData] = useState({ phone: '', course: '', message: '' })
+    const [formData, setFormData] = useState({ name: '', phone: '', message: '' })
     const [phoneError, setPhoneError] = useState('')
-    const [touched, setTouched] = useState({ phone: false, course: false })
+    const [nameError, setNameError] = useState('')
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [submitting, setSubmitting] = useState(false)
     const overlayRef = useRef(null)
     const openedAtRef = useRef(0)
     const scrollPositionRef = useRef(0)
+    const nameInputRef = useRef(null)
 
     useEffect(() => {
         let rafId = null
@@ -47,6 +47,13 @@ const ContactForm = () => {
             if (rafId) cancelAnimationFrame(rafId)
         }
     }, [])
+
+    // Focus name input when modal opens
+    useEffect(() => {
+        if (isOpen && nameInputRef.current && !isSubmitted) {
+            setTimeout(() => nameInputRef.current?.focus(), 200)
+        }
+    }, [isOpen, isSubmitted])
 
     const handleOverlayClick = () => {
         if (Date.now() - (openedAtRef.current || 0) < 250) return
@@ -77,14 +84,6 @@ const ContactForm = () => {
         }
     }, [isOpen])
 
-    const courses = [
-        'Roblox Studio',
-        'Python',
-        'JavaScript та веб-розробка',
-        'Розробка ігор на Unity',
-        'Не впевнений(а), потрібна консультація'
-    ]
-
     const handleInputChange = e => {
         const { name, value } = e.target
         if (name === 'phone') {
@@ -95,29 +94,42 @@ const ContactForm = () => {
             else setPhoneError('')
             return
         }
+        if (name === 'name') {
+            setFormData(prev => ({ ...prev, name: value }))
+            if (!value.trim()) setNameError('Введіть ваше ім\'я')
+            else setNameError('')
+            return
+        }
         setFormData(prev => ({ ...prev, [name]: value }))
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (submitting) return
-        setTouched(prev => ({ ...prev, phone: true, course: true }))
+
+        // Validate
+        let hasError = false
+        if (!formData.name.trim()) {
+            setNameError('Введіть ваше ім\'я')
+            hasError = true
+        }
         const isPhoneValid = /^\d{9}$/.test(formData.phone || '')
-        const isCourseSelected = !!formData.course
         if (!isPhoneValid) {
             setPhoneError('Введіть коректний номер (9 цифр)')
-            return
+            hasError = true
         }
-        if (!isCourseSelected) {
-            return
-        }
+        if (hasError) return
+
         setSubmitting(true)
         try {
             const eventId = generateEventId()
             const submitData = {
-                ...formData,
+                name: formData.name.trim(),
+                phone: formData.phone,
+                message: formData.message,
+                course: '',
                 contactMethod: 'phone',
-                preferredContactMethod,
+                preferredContactMethod: 'phone_call',
                 eventId,
                 sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://smartcode-academy.com',
                 attribution: getClientAttribution(),
@@ -135,17 +147,20 @@ const ContactForm = () => {
             }
             if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
                 window.gtag('event', 'submit_trial_form', {
-                    course: formData.course,
-                    contact_method: preferredContactMethod,
+                    contact_method: 'phone_call',
                 })
             }
-            trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course), eventId)
-            setIsSubmitted(false)
-            setFormData({ phone: '', course: '', message: '' })
-            setPhoneError('')
-            setPreferredContactMethod('phone_call')
-            setTouched({ phone: false, course: false })
-            setIsOpen(false)
+            trackTrialLeadOnce('', [], eventId)
+            setIsSubmitted(true)
+            
+            // Auto-close after success
+            setTimeout(() => {
+                setIsSubmitted(false)
+                setFormData({ name: '', phone: '', message: '' })
+                setPhoneError('')
+                setNameError('')
+                setIsOpen(false)
+            }, 2500)
         } catch (err) {
             console.error(err)
             alert('Сталася помилка мережі. Перевірте підключення та спробуйте ще раз.')
@@ -155,9 +170,6 @@ const ContactForm = () => {
     }
 
     if (!isOpen) return null
-
-    const phoneInvalid = !!(phoneError || (touched.phone && !formData.phone))
-    const courseInvalid = !!(touched.course && !formData.course)
 
     return (
         <div className={styles.modalOverlay} ref={overlayRef} onClick={handleOverlayClick}>
@@ -171,18 +183,40 @@ const ContactForm = () => {
                         {!isSubmitted ? (
                             <>
                                 <div className={styles.modalCardHeader}>
-                                    <span className={styles.modalPill}>
-                                        <Sparkles size={14} aria-hidden />
-                                        Пробне заняття
-                                    </span>
-                                    <h2 className={styles.modalTitle}>Запишіться без зайвих кроків</h2>
+                                    <div className={styles.modalIconCircle}>
+                                        <Phone size={24} />
+                                    </div>
+                                    <h2 className={styles.modalTitle}>Запишіться на пробний урок</h2>
                                     <p className={styles.modalSubtitle}>
-                                        Оберіть зручний спосіб зв&apos;язку та напрямок - відповімо і підберемо час.
+                                        Залиште контакт — ми зателефонуємо та підберемо зручний час
                                     </p>
                                 </div>
 
                                 <form onSubmit={handleSubmit} className={styles.modalForm}>
-                                    <div className={styles.modalField}>
+                                    {/* Name */}
+                                    <div className={`${styles.modalField} ${nameError ? styles.modalFieldError : ''}`}>
+                                        <label className={styles.modalLabel} htmlFor='modal-name'>
+                                            Ваше ім'я
+                                        </label>
+                                        <div className={styles.modalInputWrap}>
+                                            <User size={18} className={styles.modalInputIcon} />
+                                            <input
+                                                ref={nameInputRef}
+                                                id='modal-name'
+                                                type='text'
+                                                name='name'
+                                                value={formData.name}
+                                                onChange={handleInputChange}
+                                                placeholder="Ім'я дитини або батьків"
+                                                className={styles.modalInput}
+                                                autoComplete='name'
+                                            />
+                                        </div>
+                                        {nameError && <span className={styles.modalError}>{nameError}</span>}
+                                    </div>
+
+                                    {/* Phone */}
+                                    <div className={`${styles.modalField} ${phoneError ? styles.modalFieldError : ''}`}>
                                         <label className={styles.modalLabel} htmlFor='modal-phone'>
                                             Номер телефону
                                         </label>
@@ -194,69 +228,19 @@ const ContactForm = () => {
                                                 name='phone'
                                                 value={formData.phone}
                                                 onChange={handleInputChange}
-                                                onBlur={() => setTouched(prev => ({ ...prev, phone: true }))}
                                                 placeholder='__ ___ __ __'
                                                 className={styles.modalInput}
                                                 inputMode='numeric'
                                                 autoComplete='tel-national'
-                                                aria-invalid={phoneInvalid}
                                             />
                                         </div>
                                         {phoneError && <span className={styles.modalError}>{phoneError}</span>}
                                     </div>
 
+                                    {/* Comment (optional) */}
                                     <div className={styles.modalField}>
-                                        <span className={styles.modalLabel}>Як вам зручно отримати контакт?</span>
-                                        <div className={styles.modalSegment} role='group' aria-label="Спосіб зв'язку">
-                                            <button
-                                                type='button'
-                                                className={`${styles.modalSegmentBtn} ${preferredContactMethod === 'phone_call' ? styles.modalSegmentBtnActive : ''}`}
-                                                onClick={() => setPreferredContactMethod('phone_call')}
-                                            >
-                                                <Phone size={16} aria-hidden />
-                                                Подзвонити вам
-                                            </button>
-                                            <button
-                                                type='button'
-                                                className={`${styles.modalSegmentBtn} ${preferredContactMethod === 'telegram_phone' ? styles.modalSegmentBtnActive : ''}`}
-                                                onClick={() => setPreferredContactMethod('telegram_phone')}
-                                            >
-                                                <MessageSquare size={16} aria-hidden />
-                                                в Telegram за номером
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div className={`${styles.modalField} ${courseInvalid ? styles.modalFieldError : ''}`}>
-                                        <label className={styles.modalLabel} htmlFor='modal-course'>
-                                            <span className={styles.modalLabelInner}>
-                                                <Briefcase size={15} className={styles.modalLabelIcon} aria-hidden />
-                                                Напрямок навчання
-                                            </span>
-                                        </label>
-                                        <select
-                                            id='modal-course'
-                                            name='course'
-                                            value={formData.course}
-                                            onChange={handleInputChange}
-                                            onBlur={() => setTouched(prev => ({ ...prev, course: true }))}
-                                            className={styles.modalSelect}
-                                            aria-invalid={courseInvalid}
-                                        >
-                                            <option value=''>Оберіть напрямок</option>
-                                            {courses.map((course, index) => (
-                                                <option key={index} value={course}>{course}</option>
-                                            ))}
-                                        </select>
-                                        {courseInvalid && <span className={styles.modalError}>Оберіть напрямок</span>}
-                                    </div>
-
-                                    <div className={`${styles.modalField} ${styles.modalFieldStretch}`}>
                                         <label className={styles.modalLabel} htmlFor='modal-msg'>
-                                            <span className={styles.modalLabelInner}>
-                                                <MessageSquare size={15} className={styles.modalLabelIcon} aria-hidden />
-                                                Коментар (за бажанням)
-                                            </span>
+                                            Коментар <span className={styles.modalLabelOptional}>(за бажанням)</span>
                                         </label>
                                         <textarea
                                             id='modal-msg'
@@ -273,14 +257,18 @@ const ContactForm = () => {
                                         <Send size={18} aria-hidden />
                                         {submitting ? 'Відправка…' : 'Надіслати заявку'}
                                     </button>
+
+                                    <p className={styles.modalNote}>
+                                        Перший урок — безкоштовно. Ми зателефонуємо протягом 15 хвилин.
+                                    </p>
                                 </form>
                             </>
                         ) : (
                             <div className={styles.modalSuccess}>
                                 <div className={styles.modalSuccessIconWrap}>
-                                    <CheckCircle size={28} className={styles.modalSuccessIcon} />
+                                    <CheckCircle size={32} className={styles.modalSuccessIcon} />
                                 </div>
-                                <h3 className={styles.modalSuccessTitle}>Дякуємо за заявку!</h3>
+                                <h3 className={styles.modalSuccessTitle}>Дякуємо! 🎉</h3>
                                 <p className={styles.modalSuccessText}>
                                     Наш менеджер зв&apos;яжеться з вами найближчим часом.
                                 </p>

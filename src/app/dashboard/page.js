@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { logout, getUserProgress } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
-import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import styles from './Dashboard.module.css'
 import {
   User, 
@@ -17,9 +16,259 @@ import {
   Code,
   Gamepad2,
   Monitor,
-  Box
+  Box,
+  Users,
+  CreditCard,
+  Settings,
+  Gift
 } from 'lucide-react'
 
+// --- HELPER FUNCTIONS ---
+const getCourseInfo = (courseId) => {
+  const courses = {
+    'python-developer-zero-to-junior': {
+      title: 'Python Developer: From Zero to Confident Junior',
+      icon: <Code size={24} />,
+      color: '#3b82f6',
+      link: '/courses/python-developer-zero-to-junior'
+    },
+    'unity-game-development': {
+      title: 'Розробка ігор на Unity',
+      icon: <Gamepad2 size={24} />,
+      color: '#10b981',
+      link: '/Unity'
+    },
+    'roblox-studio': {
+      title: 'Roblox Studio',
+      icon: <Box size={24} />,
+      color: '#10b981',
+      link: '/Roblox'
+    },
+    'web-development': {
+      title: 'Веб-розробка',
+      icon: <Monitor size={24} />,
+      color: '#8b5cf6',
+      link: '/courses/web-development'
+    }
+  }
+  return courses[courseId] || { title: courseId, icon: <BookOpen size={24} />, color: '#6b7280', link: '#' }
+}
+
+// --- MOCK DATA ---
+const upcomingLesson = {
+  id: 1,
+  courseName: 'Python: Основи ООП',
+  date: 'Сьогодні, 16:00',
+  link: 'https://zoom.us/j/1234567890',
+  active: true,
+}
+
+const mockSchedule = [
+  { id: 1, day: '12', month: 'Трав', title: 'Python: Основи ООП', time: '16:00 - 17:00', status: 'upcoming' },
+  { id: 2, day: '15', month: 'Трав', title: 'Python: Робота з файлами', time: '16:00 - 17:00', status: 'upcoming' },
+  { id: 3, day: '09', month: 'Трав', title: 'Python: Функції', time: '16:00 - 17:00', status: 'completed' },
+  { id: 4, day: '05', month: 'Трав', title: 'Python: Цикли', time: '16:00 - 17:00', status: 'completed' },
+]
+
+const mockAttendance = [
+  { id: 1, date: '09 Травня 2026', title: 'Python: Функції', status: 'Присутній', feedback: 'Гарно попрацював на уроці, швидко вирішив усі задачі.' },
+  { id: 2, date: '05 Травня 2026', title: 'Python: Цикли', status: 'Присутній', feedback: 'Трохи плутався в циклах while, але домашнє завдання виконав ідеально.' },
+  { id: 3, date: '02 Травня 2026', title: 'Python: Умови', status: 'Пропустив', feedback: 'Пропустив заняття. Перегляньте запис уроку.' },
+]
+
+// --- STUDENT DASHBOARD ---
+const StudentDashboard = ({ user, progressData, refreshData, handleLogout }) => {
+  return (
+    <>
+      <div className={styles.upcomingLessonCard}>
+        <div className={styles.upcomingLessonInfo}>
+          <div className={styles.upcomingLabel}>
+            <Clock size={16} /> Найближчий урок
+          </div>
+          <h3 className={styles.upcomingTitle}>{upcomingLesson.courseName}</h3>
+          <div className={styles.upcomingTime}>{upcomingLesson.date}</div>
+        </div>
+        <button 
+          className={`${styles.joinButton} ${!upcomingLesson.active ? styles.disabled : ''}`}
+          onClick={() => {
+            if (upcomingLesson.active) window.open(upcomingLesson.link, '_blank');
+          }}
+          disabled={!upcomingLesson.active}
+        >
+          <Monitor size={20} />
+          Приєднатися до уроку
+        </button>
+      </div>
+
+      <div className={styles.statsGrid}>
+        <div className={styles.statCard}>
+          <div className={styles.statIcon} style={{ backgroundColor: '#dcfce7' }}>
+            <Award size={24} color="#10b981" />
+          </div>
+          <div className={styles.statContent}>
+            <div className={styles.statValue}>15</div>
+            <div className={styles.statLabel}>Балів (Смарткоїнів)</div>
+          </div>
+        </div>
+
+        <div className={styles.statCard}>
+          <div className={styles.statIcon} style={{ backgroundColor: '#fef3c7' }}>
+            <Clock size={24} color="#f59e0b" />
+          </div>
+          <div className={styles.statContent}>
+            <div className={styles.statValue}>12</div>
+            <div className={styles.statLabel}>Завершених уроків</div>
+          </div>
+        </div>
+
+        <div className={styles.statCard}>
+          <div className={styles.statIcon} style={{ backgroundColor: '#e0e7ff' }}>
+            <BookOpen size={24} color="#8b5cf6" />
+          </div>
+          <div className={styles.statContent}>
+            <div className={styles.statValue}>2</div>
+            <div className={styles.statLabel}>Домашні завдання</div>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>Мій розклад</h2>
+          <button onClick={refreshData} className={styles.refreshButton}>
+            <TrendingUp size={16} />
+            <span className={styles.refreshButtonText}>Оновити</span>
+          </button>
+        </div>
+        
+        <div className={styles.scheduleList}>
+          {mockSchedule.map((lesson) => (
+            <div key={lesson.id} className={styles.scheduleItem}>
+              <div className={styles.scheduleItemLeft}>
+                <div className={styles.scheduleDate}>
+                  <div className={styles.scheduleDay}>{lesson.day}</div>
+                  <div className={styles.scheduleMonth}>{lesson.month}</div>
+                </div>
+                <div className={styles.scheduleDetails}>
+                  <h4>{lesson.title}</h4>
+                  <div className={styles.scheduleTime}>
+                    <Clock size={14} /> {lesson.time}
+                  </div>
+                </div>
+              </div>
+              <div className={`${styles.scheduleStatus} ${lesson.status === 'completed' ? styles.statusCompleted : styles.statusUpcoming}`}>
+                {lesson.status === 'completed' ? 'Пройдено' : 'Заплановано'}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  )
+}
+
+// --- PARENT DASHBOARD ---
+const ParentDashboard = ({ user, refreshData }) => {
+  return (
+    <>
+      <div className={styles.statsGrid}>
+        <div className={styles.statCard}>
+          <div className={styles.statIcon} style={{ backgroundColor: '#dbeafe' }}>
+            <Users size={24} color="#3b82f6" />
+          </div>
+          <div className={styles.statContent}>
+            <div className={styles.statValue}>Олексій</div>
+            <div className={styles.statLabel}>Профіль дитини</div>
+          </div>
+        </div>
+
+        <div className={styles.statCard}>
+          <div className={styles.statIcon} style={{ backgroundColor: '#dcfce7' }}>
+            <CreditCard size={24} color="#10b981" />
+          </div>
+          <div className={styles.statContent}>
+            <div className={styles.statValue}>18</div>
+            <div className={styles.statLabel}>Оплачених уроків залишилось</div>
+          </div>
+        </div>
+
+        <div className={styles.statCard}>
+          <div className={styles.statIcon} style={{ backgroundColor: '#fef3c7' }}>
+            <Gift size={24} color="#f59e0b" />
+          </div>
+          <div className={styles.statContent}>
+            <div className={styles.statValue}>0</div>
+            <div className={styles.statLabel}>Запрошених друзів</div>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>Історія відвідувань та відгуки</h2>
+        </div>
+        <div className={styles.attendanceList}>
+          {mockAttendance.map((record) => (
+            <div key={record.id} className={styles.scheduleItem} style={{ alignItems: 'flex-start' }}>
+              <div className={styles.scheduleItemLeft}>
+                <div className={styles.scheduleDetails}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
+                    <h4>{record.title}</h4>
+                    <div className={`${styles.scheduleStatus} ${record.status === 'Присутній' ? styles.statusCompleted : styles.statusMissed}`}>
+                      {record.status}
+                    </div>
+                  </div>
+                  <div className={styles.scheduleTime}>
+                    <Clock size={14} /> {record.date}
+                  </div>
+                  {record.feedback && (
+                    <div className={styles.feedbackBox}>
+                      <div className={styles.feedbackTitle}>Коментар викладача:</div>
+                      <p className={styles.feedbackText}>{record.feedback}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>Швидкі дії</h2>
+        </div>
+        <div className={styles.coursesGrid}>
+          <Link href="/tariff" className={styles.courseCard}>
+             <div className={styles.courseHeader}>
+                <div className={styles.courseIcon} style={{ color: '#10b981' }}>
+                  <CreditCard size={24} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <h3 className={styles.courseTitle}>Поповнити баланс занять</h3>
+                  <div className={styles.courseSubtitle}>Оплатити наступні уроки</div>
+                </div>
+              </div>
+          </Link>
+
+          <Link href="/invite" className={styles.courseCard}>
+             <div className={styles.courseHeader}>
+                <div className={styles.courseIcon} style={{ color: '#f59e0b' }}>
+                  <Gift size={24} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <h3 className={styles.courseTitle}>Реферальна програма</h3>
+                  <div className={styles.courseSubtitle}>Запросити друзів і отримати бонус</div>
+                </div>
+              </div>
+          </Link>
+        </div>
+      </div>
+    </>
+  )
+}
+
+// --- MAIN PAGE ---
 export default function DashboardPage() {
   const router = useRouter()
   const { user, loading: sessionLoading, refresh } = useAuthSession()
@@ -38,12 +287,8 @@ export default function DashboardPage() {
       try {
         if (user.enrolledCourses?.length > 0) {
           const progressPromises = user.enrolledCourses.map(courseId =>
-            getUserProgress(courseId).then(progress => {
-              return { courseId, progress }
-            }).catch(error => {
-              console.error('Dashboard: Error loading progress for', courseId, ':', error)
-              return { courseId, progress: null }
-            })
+            getUserProgress(courseId).then(progress => ({ courseId, progress }))
+            .catch(error => ({ courseId, progress: null }))
           )
           const progressResults = await Promise.all(progressPromises)
           const progressMap = {}
@@ -61,12 +306,15 @@ export default function DashboardPage() {
       }
     }
 
-    loadProgress()
+    if (user.role !== 'parent') {
+      loadProgress()
+    } else {
+      setProgressLoading(false) // Parents don't fetch progress the same way yet
+    }
   }, [sessionLoading, user, router])
 
   const loading = sessionLoading || progressLoading
 
-  // Додати можливість оновити дані
   const refreshData = () => {
     refresh(false)
   }
@@ -80,36 +328,6 @@ export default function DashboardPage() {
     } catch (error) {
       console.error('Logout error:', error)
     }
-  }
-
-  const getCourseInfo = (courseId) => {
-    const courses = {
-      'python-developer-zero-to-junior': {
-        title: 'Python Developer: From Zero to Confident Junior',
-        icon: <Code size={24} />,
-        color: '#3b82f6',
-        link: '/courses/python-developer-zero-to-junior'
-      },
-      'unity-game-development': {
-        title: 'Розробка ігор на Unity',
-        icon: <Gamepad2 size={24} />,
-        color: '#10b981',
-        link: '/Unity'
-      },
-      'roblox-studio': {
-        title: 'Roblox Studio',
-        icon: <Box size={24} />,
-        color: '#10b981',
-        link: '/Roblox'
-      },
-      'web-development': {
-        title: 'Веб-розробка',
-        icon: <Monitor size={24} />,
-        color: '#8b5cf6',
-        link: '/courses/web-development'
-      }
-    }
-    return courses[courseId] || { title: courseId, icon: <BookOpen size={24} />, color: '#6b7280', link: '#' }
   }
 
   if (loading) {
@@ -134,7 +352,9 @@ export default function DashboardPage() {
             </div>
             <div>
               <h1 className={styles.welcome}>Вітаємо, {user.name}!</h1>
-              <p className={styles.email}>{user.email}</p>
+              <p className={styles.email}>
+                {user.email} &bull; <span style={{textTransform:'capitalize'}}>{user.role === 'parent' ? 'Батьки' : 'Учень'}</span>
+              </p>
             </div>
           </div>
           <div className={styles.headerActions}>
@@ -161,144 +381,11 @@ export default function DashboardPage() {
       </div>
 
       <div className={styles.content}>
-        {/* Statistics */}
-        <div className={styles.statsGrid}>
-          <div className={styles.statCard}>
-            <div className={styles.statIcon} style={{ backgroundColor: '#dbeafe' }}>
-              <BookOpen size={24} color="#3b82f6" />
-            </div>
-            <div className={styles.statContent}>
-              <div className={styles.statValue}>{user.enrolledCourses?.length || 0}</div>
-              <div className={styles.statLabel}>Активних курсів</div>
-            </div>
-          </div>
-
-          <div className={styles.statCard}>
-            <div className={styles.statIcon} style={{ backgroundColor: '#dcfce7' }}>
-              <Award size={24} color="#10b981" />
-            </div>
-            <div className={styles.statContent}>
-              <div className={styles.statValue}>
-                {Object.values(progressData).reduce((sum, p) => sum + (p?.certificates?.length || 0), 0)}
-              </div>
-              <div className={styles.statLabel}>Сертифікатів</div>
-            </div>
-          </div>
-
-          <div className={styles.statCard}>
-            <div className={styles.statIcon} style={{ backgroundColor: '#fef3c7' }}>
-              <Clock size={24} color="#f59e0b" />
-            </div>
-            <div className={styles.statContent}>
-              <div className={styles.statValue}>
-                {Object.values(progressData).reduce((sum, p) => sum + (p?.completedLessons?.length || 0), 0)}
-              </div>
-              <div className={styles.statLabel}>Завершених уроків</div>
-            </div>
-          </div>
-
-          <div className={styles.statCard}>
-            <div className={styles.statIcon} style={{ backgroundColor: '#e0e7ff' }}>
-              <TrendingUp size={24} color="#8b5cf6" />
-            </div>
-            <div className={styles.statContent}>
-              <div className={styles.statValue}>
-                {Object.values(progressData).length > 0
-                  ? Math.round(
-                      Object.values(progressData).reduce((sum, p) => sum + (p?.overallProgress || 0), 0) /
-                        Object.values(progressData).length
-                    )
-                  : 0}%
-              </div>
-              <div className={styles.statLabel}>Середній прогрес</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Enrolled Courses */}
-        <div className={styles.section}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Мої курси</h2>
-            <button 
-              onClick={refreshData}
-              className={styles.refreshButton}
-            >
-              <TrendingUp size={16} />
-              <span className={styles.refreshButtonText}>Оновити</span>
-            </button>
-          </div>
-          {user.enrolledCourses && user.enrolledCourses.length > 0 ? (
-            <div className={styles.coursesGrid}>
-              {user.enrolledCourses.map((courseId) => {
-                const courseInfo = getCourseInfo(courseId)
-                const progress = progressData[courseId]
-                const progressPercent = progress?.overallProgress || 0
-                const completedLessons = progress?.completedLessons?.length || 0
-                const hasProgress = progress !== null && progress !== undefined
-
-                return (
-                  <Link key={courseId} href={courseInfo.link} className={styles.courseCard}>
-                    <div className={styles.courseHeader}>
-                      <div className={styles.courseIcon} style={{ color: courseInfo.color }}>
-                        {courseInfo.icon}
-                      </div>
-                      <div style={{ flex: 1 }}>
-                        <h3 className={styles.courseTitle}>{courseInfo.title}</h3>
-                        {hasProgress && (
-                          <div className={styles.courseSubtitle}>
-                            {completedLessons > 0 ? `Пройдено ${completedLessons} уроків` : 'Ще не почато'}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    {hasProgress ? (
-                      <>
-                        <div className={styles.progressSection}>
-                          <div className={styles.progressBar}>
-                            <div
-                              className={styles.progressFill}
-                              style={{ width: `${progressPercent}%`, backgroundColor: courseInfo.color }}
-                            />
-                          </div>
-                          <div className={styles.progressText}>
-                            <span>{progressPercent}% завершено</span>
-                            <span>{completedLessons} уроків</span>
-                          </div>
-                        </div>
-                        {progress?.enrolledAt && (
-                          <div className={styles.courseMeta}>
-                            Записався: {new Date(progress.enrolledAt).toLocaleDateString('uk-UA')}
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <div className={styles.progressSection}>
-                        <div style={{ padding: '1rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
-                          Прогрес завантажується...
-                        </div>
-                      </div>
-                    )}
-                  </Link>
-                )
-              })}
-            </div>
-          ) : (
-            <div className={styles.emptyState}>
-              <BookOpen size={48} color="#9ca3af" />
-              <p>Ви ще не записались на жоден курс</p>
-              <Link href="/courses" className={styles.browseButton}>
-                Переглянути курси
-              </Link>
-            </div>
-          )}
-          {user.enrolledCourses && user.enrolledCourses.length > 0 && (
-            <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-              <Link href="/courses" className={styles.browseButton}>
-                Подивитися всі курси
-              </Link>
-            </div>
-          )}
-        </div>
+        {user.role === 'parent' ? (
+          <ParentDashboard user={user} refreshData={refreshData} />
+        ) : (
+          <StudentDashboard user={user} progressData={progressData} refreshData={refreshData} handleLogout={handleLogout} />
+        )}
       </div>
     </div>
   )

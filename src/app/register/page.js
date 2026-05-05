@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { register } from '@/lib/authClient'
 import Logo from '@/components/Logo/Logo'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, User, Users } from 'lucide-react'
 import styles from '../login/Auth.module.css'
 
 export default function RegisterPage() {
@@ -16,6 +16,7 @@ export default function RegisterPage() {
     password: '',
     confirmPassword: '',
     phone: '',
+    role: 'parent', // Default role
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -43,7 +44,8 @@ export default function RegisterPage() {
         formData.email,
         formData.password,
         formData.name,
-        formData.phone || undefined
+        formData.phone || undefined,
+        formData.role
       )
       window.dispatchEvent(new Event('auth:register'))
       router.push('/dashboard')
@@ -75,9 +77,32 @@ export default function RegisterPage() {
           {error && <div className={styles.error}>{error}</div>}
 
           <form onSubmit={handleSubmit} className={styles.form}>
+            {/* Role Selection */}
+            <div className={styles.formGroup}>
+              <label className={styles.label}>Хто реєструється?</label>
+              <div className={styles.roleSelection}>
+                <button
+                  type="button"
+                  className={`${styles.roleBtn} ${formData.role === 'parent' ? styles.roleBtnActive : ''}`}
+                  onClick={() => setFormData({ ...formData, role: 'parent' })}
+                >
+                  <Users size={18} />
+                  <span>Батьки</span>
+                </button>
+                <button
+                  type="button"
+                  className={`${styles.roleBtn} ${formData.role === 'student' ? styles.roleBtnActive : ''}`}
+                  onClick={() => setFormData({ ...formData, role: 'student' })}
+                >
+                  <User size={18} />
+                  <span>Учень</span>
+                </button>
+              </div>
+            </div>
+
             <div className={styles.formGroup}>
               <label htmlFor="name" className={styles.label}>
-                ПІБ
+                {formData.role === 'parent' ? "ПІБ батьків" : "ПІБ учня"}
               </label>
               <input
                 type="text"
@@ -196,4 +221,5 @@ export default function RegisterPage() {
     </div>
   )
 }
+
 

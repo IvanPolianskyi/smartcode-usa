@@ -6,7 +6,7 @@ import { hashPassword, generateToken, setAuthCookie } from '@/lib/auth'
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { email, password, name, phone } = body
+    const { email, password, name, phone, role } = body
 
     // Validation
     if (!email || !password || !name) {
@@ -42,13 +42,16 @@ export async function POST(request) {
     const referralIdCookie = cookieStore.get('referralId')
     const referralId = referralIdCookie?.value || null
 
+    // Determine role (ensure it's one of allowed roles)
+    const validRole = ['parent', 'student'].includes(role) ? role : 'student'
+
     // Create user
     const user = {
       email: email.toLowerCase(),
       password: hashedPassword,
       name,
       phone: phone || null,
-      role: 'user', // Default role
+      role: validRole, 
       purchasedCourses: [], // Courses that user has paid for
       createdAt: new Date(),
       updatedAt: new Date(),
