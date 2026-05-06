@@ -338,7 +338,7 @@ const markdownToHtml = (text) => {
   return html
 }
 
-const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", userProgress = null, isPurchased = false, userRole = 'user', isAccessible = false }) => {
+const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", userProgress = null, isPurchased = false, userRole = 'user', isAccessible = false, allowedLessons = [] }) => {
   const router = useRouter()
   const [activeTab, setActiveTab] = useState('theory')
   const [quizAnswers, setQuizAnswers] = useState({})
@@ -610,7 +610,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     m.lessons.some(l => l.lessonId === lessonId)
   )
   const isFirstLesson = lessonModuleIndex === 0 && currentLesson?.order === 1
-  const hasAccess = userRole === 'admin' || isPurchased || isAccessible || isFirstLesson
+  const explicitAllowedSet = new Set(allowedLessons || [])
+  const hasAccess = userRole === 'admin' || isPurchased || isAccessible || explicitAllowedSet.has(lessonId) || isFirstLesson
   
   // Find current module
   const currentModule = lessonModuleIndex >= 0 ? curriculum.modules[lessonModuleIndex] : null
@@ -1036,6 +1037,9 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
 
   // Helper function to check if lesson is unlocked
   const isLessonUnlocked = (lesson, lessonIndex, moduleIndex) => {
+    if (explicitAllowedSet.size > 0) {
+      return explicitAllowedSet.has(lesson.lessonId)
+    }
     if (userRole === 'admin' || isPurchased) return true
     if (moduleIndex === 0 && lesson.order === 1) return true
     if (moduleIndex === 0) return true

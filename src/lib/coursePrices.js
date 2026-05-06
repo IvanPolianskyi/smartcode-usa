@@ -6,7 +6,7 @@ export const coursePrices = {
   'python-developer-zero-to-junior': {
     price: 2000, // UAH
     currency: 'UAH',
-    name: 'Python Developer: From Zero to Confident Junior'
+    name: 'Пайтон'
   },
   'web-development': {
     price: 2000, // UAH

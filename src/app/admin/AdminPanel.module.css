@@ -514,6 +514,20 @@
   box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
 }
 
+.receiptLink {
+  display: inline-flex;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.receiptThumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  display: block;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 1rem;

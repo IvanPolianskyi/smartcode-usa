@@ -50,6 +50,13 @@ export async function POST(request) {
       name: user.name,
       phone: user.phone,
       role: user.role || 'user',
+      studentProfile: user.studentProfile || {
+        lessonFormat: 'group',
+        regularSchedule: [],
+        zoomLink: '',
+        activeOnlineCourses: [],
+        courseAccess: {},
+      },
       purchasedCourses: user.purchasedCourses || [],
       enrolledCourses: user.enrolledCourses || []
     }

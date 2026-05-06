@@ -131,7 +131,7 @@ const Visit = () => {
 
 	const stats = [
 		{ 
-			number: '500+', 
+			number: '5000+', 
 			label: 'дітей навчаються по всьому світу', 
 			icon: <Users />,
 			iconColor: '#3b82f6'
@@ -143,14 +143,14 @@ const Visit = () => {
 			iconColor: '#3b82f6'
 		},
 		{ 
-			number: 'починай з 0', 
-			label: 'Від "нуля" до просунутого рівня', 
+			number: '4+ курсів', 
+			label: 'Пайтон, Roblox, Unity, Вебдев', 
 			icon: <BookOpen />,
 			iconColor: '#3b82f6'
 		},
 		{ 
-			number: '98%', 
-			label: 'Задоволених учнів', 
+			number: '0 грн', 
+			label: 'Вартість пробного заняття', 
 			icon: <Trophy />,
 			iconColor: '#3b82f6'
 		},
@@ -189,7 +189,7 @@ const Visit = () => {
 						</h1>
 
 						<p className={`${styles.subtitle} animate-up`}>
-							Школа програмування нового покоління, де діти створюють майбутні технології
+							Живі уроки в Zoom, онлайн платформа та безкоштовне пробне заняття
 						</p>
 
 						<div className={`${styles.heroFeatures} animate-slide`}>

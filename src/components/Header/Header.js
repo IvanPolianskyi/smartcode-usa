@@ -279,14 +279,16 @@ const Header = () => {
 					{/* Логотип */}
 					<Logo className={styles.logo} />
 
-					<button
-						type='button'
-						className={styles.mobileTopCta}
-						onClick={handleCtaClick}
-						aria-label='Записатися на пробне заняття'
-					>
-						Записатися
-					</button>
+					{!userLoading && !user && (
+						<button
+							type='button'
+							className={styles.mobileTopCta}
+							onClick={handleCtaClick}
+							aria-label='Записатися на пробне заняття'
+						>
+							Записатися
+						</button>
+					)}
 
 					{/* Навігація для десктопу */}
 					<nav className={styles.nav}>

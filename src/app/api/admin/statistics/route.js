@@ -134,7 +134,7 @@ export async function GET() {
 
     // Get course names mapping
     const courseNames = {
-      'python-developer-zero-to-junior': 'Python Developer: From Zero to Confident Junior',
+      'python-developer-zero-to-junior': 'Пайтон',
       'unity-game-development': 'Розробка ігор на Unity',
       'roblox-studio': 'Roblox Studio',
       'web-development': 'Веб-розробка'
@@ -170,7 +170,8 @@ export async function GET() {
           courseId,
           courseName: courseNames[courseId] || courseId
         })),
-        createdAt: u.createdAt
+        createdAt: u.createdAt,
+        studentProfile: u.studentProfile || null,
       }))
 
     return NextResponse.json({

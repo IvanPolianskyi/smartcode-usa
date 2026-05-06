@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useRef, useEffect } from 'react'
-import { Phone, Send, CheckCircle, MessageSquare, X, Sparkles, User } from 'lucide-react'
+import { Phone, Send, CheckCircle, X, User } from 'lucide-react'
 import {
 	trackTrialInitiateCheckoutOnce,
 	trackTrialLeadOnce,
@@ -8,12 +8,14 @@ import {
 	generateEventId,
 } from '@/lib/metaPixel'
 import { getClientAttribution } from '@/lib/attribution'
+import { usePhoneInput } from '@/lib/usePhoneInput'
+import PhoneField from '@/components/PhoneField/PhoneField'
+import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 import styles from './ContactForm.module.css'
 
 const ContactForm = () => {
     const [isOpen, setIsOpen] = useState(false)
-    const [formData, setFormData] = useState({ name: '', phone: '', message: '' })
-    const [phoneError, setPhoneError] = useState('')
+    const [formData, setFormData] = useState({ name: '', message: '' })
     const [nameError, setNameError] = useState('')
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [submitting, setSubmitting] = useState(false)
@@ -21,6 +23,8 @@ const ContactForm = () => {
     const openedAtRef = useRef(0)
     const scrollPositionRef = useRef(0)
     const nameInputRef = useRef(null)
+
+    const phoneInput = usePhoneInput('UA')
 
     useEffect(() => {
         let rafId = null
@@ -86,14 +90,6 @@ const ContactForm = () => {
 
     const handleInputChange = e => {
         const { name, value } = e.target
-        if (name === 'phone') {
-            const digits = value.replace(/\D/g, '').replace(/^0+/, '').slice(0, 9)
-            setFormData(prev => ({ ...prev, phone: digits }))
-            if (digits.length === 0) setPhoneError('Введіть номер телефону')
-            else if (digits.length !== 9) setPhoneError('Номер має містити 9 цифр')
-            else setPhoneError('')
-            return
-        }
         if (name === 'name') {
             setFormData(prev => ({ ...prev, name: value }))
             if (!value.trim()) setNameError('Введіть ваше ім\'я')
@@ -113,9 +109,7 @@ const ContactForm = () => {
             setNameError('Введіть ваше ім\'я')
             hasError = true
         }
-        const isPhoneValid = /^\d{9}$/.test(formData.phone || '')
-        if (!isPhoneValid) {
-            setPhoneError('Введіть коректний номер (9 цифр)')
+        if (!phoneInput.validateOnSubmit()) {
             hasError = true
         }
         if (hasError) return
@@ -125,7 +119,7 @@ const ContactForm = () => {
             const eventId = generateEventId()
             const submitData = {
                 name: formData.name.trim(),
-                phone: formData.phone,
+                phone: phoneInput.getFullNumber(),
                 message: formData.message,
                 course: '',
                 contactMethod: 'phone',
@@ -156,9 +150,9 @@ const ContactForm = () => {
             // Auto-close after success
             setTimeout(() => {
                 setIsSubmitted(false)
-                setFormData({ name: '', phone: '', message: '' })
-                setPhoneError('')
+                setFormData({ name: '', message: '' })
                 setNameError('')
+                phoneInput.reset()
                 setIsOpen(false)
             }, 2500)
         } catch (err) {
@@ -170,6 +164,28 @@ const ContactForm = () => {
     }
 
     if (!isOpen) return null
+
+    // Map shared PhoneField classes
+    const phoneClasses = {
+        field: styles.modalField,
+        fieldError: styles.modalFieldError,
+        label: styles.modalLabel,
+        phoneContainer: phoneStyles.phoneContainer,
+        countryBtn: phoneStyles.countryBtn,
+        flagEmoji: phoneStyles.flagEmoji,
+        dropdownArrow: phoneStyles.dropdownArrow,
+        divider: phoneStyles.divider,
+        phoneInputWrap: phoneStyles.phoneInputWrap,
+        phonePrefix: phoneStyles.phonePrefix,
+        phoneInput: phoneStyles.phoneInput,
+        dropdown: phoneStyles.dropdown,
+        dropdownItem: phoneStyles.dropdownItem,
+        dropdownItemActive: phoneStyles.dropdownItemActive,
+        dropdownItemFlag: phoneStyles.dropdownItemFlag,
+        dropdownItemCode: phoneStyles.dropdownItemCode,
+        dropdownItemDial: phoneStyles.dropdownItemDial,
+        error: styles.modalError,
+    }
 
     return (
         <div className={styles.modalOverlay} ref={overlayRef} onClick={handleOverlayClick}>
@@ -196,7 +212,7 @@ const ContactForm = () => {
                                     {/* Name */}
                                     <div className={`${styles.modalField} ${nameError ? styles.modalFieldError : ''}`}>
                                         <label className={styles.modalLabel} htmlFor='modal-name'>
-                                            Ваше ім'я
+                                            Ваше ім&apos;я
                                         </label>
                                         <div className={styles.modalInputWrap}>
                                             <User size={18} className={styles.modalInputIcon} />
@@ -216,26 +232,7 @@ const ContactForm = () => {
                                     </div>
 
                                     {/* Phone */}
-                                    <div className={`${styles.modalField} ${phoneError ? styles.modalFieldError : ''}`}>
-                                        <label className={styles.modalLabel} htmlFor='modal-phone'>
-                                            Номер телефону
-                                        </label>
-                                        <div className={styles.modalPhoneRow}>
-                                            <span className={styles.modalPrefix}>+380</span>
-                                            <input
-                                                id='modal-phone'
-                                                type='tel'
-                                                name='phone'
-                                                value={formData.phone}
-                                                onChange={handleInputChange}
-                                                placeholder='__ ___ __ __'
-                                                className={styles.modalInput}
-                                                inputMode='numeric'
-                                                autoComplete='tel-national'
-                                            />
-                                        </div>
-                                        {phoneError && <span className={styles.modalError}>{phoneError}</span>}
-                                    </div>
+                                    <PhoneField phoneInput={phoneInput} classes={phoneClasses} id="modal-phone" />
 
                                     {/* Comment (optional) */}
                                     <div className={styles.modalField}>

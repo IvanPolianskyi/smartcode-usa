@@ -33,7 +33,7 @@ export async function GET() {
       .toArray()
 
     const courseNames = {
-      'python-developer-zero-to-junior': 'Python Developer: From Zero to Confident Junior',
+      'python-developer-zero-to-junior': 'Пайтон',
       'unity-game-development': 'Розробка ігор на Unity',
       'roblox-studio': 'Roblox Studio',
       'web-development': 'Веб-розробка',

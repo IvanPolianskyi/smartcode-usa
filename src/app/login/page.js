@@ -52,6 +52,14 @@ export default function LoginPage() {
 
         <div className={styles.card}>
           <h1 className={styles.title}>Увійти в акаунт</h1>
+          <div className={styles.authSwitch} role="tablist" aria-label="Вибір дії">
+            <button type="button" className={`${styles.authSwitchBtn} ${styles.authSwitchBtnActive}`} aria-current="page">
+              Увійти
+            </button>
+            <Link href="/register" className={styles.authSwitchBtn}>
+              Зареєструватися
+            </Link>
+          </div>
 
           {error && <div className={styles.error}>{error}</div>}
 

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { register } from '@/lib/authClient'
 import Logo from '@/components/Logo/Logo'
-import { Eye, EyeOff, User, Users } from 'lucide-react'
+import { Eye, EyeOff } from 'lucide-react'
 import styles from '../login/Auth.module.css'
 
 export default function RegisterPage() {
@@ -16,12 +16,30 @@ export default function RegisterPage() {
     password: '',
     confirmPassword: '',
     phone: '',
-    role: 'parent', // Default role
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
+  const formatPhoneNumber = (digits) => {
+    if (!digits) return '+380 '
+    const part1 = digits.slice(0, 2)
+    const part2 = digits.slice(2, 5)
+    const part3 = digits.slice(5, 7)
+    const part4 = digits.slice(7, 9)
+
+    let formatted = '+380 '
+    if (part1) formatted += `(${part1}`
+    if (part1.length === 2) formatted += ') '
+    if (part2) formatted += part2
+    if (part2.length === 3 && digits.length > 5) formatted += '-'
+    if (part3) formatted += part3
+    if (part3.length === 2 && digits.length > 7) formatted += '-'
+    if (part4) formatted += part4
+
+    return formatted
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -37,6 +55,11 @@ export default function RegisterPage() {
       return
     }
 
+    if (formData.phone && formData.phone.length !== 9) {
+      setError('Будь ласка, введіть повний номер телефону (9 цифр після +380)')
+      return
+    }
+
     setLoading(true)
 
     try {
@@ -44,8 +67,7 @@ export default function RegisterPage() {
         formData.email,
         formData.password,
         formData.name,
-        formData.phone || undefined,
-        formData.role
+        formData.phone ? `+380${formData.phone}` : undefined
       )
       window.dispatchEvent(new Event('auth:register'))
       router.push('/dashboard')
@@ -58,6 +80,17 @@ export default function RegisterPage() {
   }
 
   const handleChange = (e) => {
+    if (e.target.name === 'phone') {
+      const digits = e.target.value.replace(/\D/g, '')
+      const clean = digits.startsWith('380') ? digits.slice(3) : digits
+      setFormData({
+        ...formData,
+        phone: clean.slice(0, 9),
+      })
+      setError('')
+      return
+    }
+
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -73,36 +106,21 @@ export default function RegisterPage() {
 
         <div className={styles.card}>
           <h1 className={styles.title}>Створити акаунт</h1>
+          <div className={styles.authSwitch} role="tablist" aria-label="Вибір дії">
+            <Link href="/login" className={styles.authSwitchBtn}>
+              Увійти
+            </Link>
+            <button type="button" className={`${styles.authSwitchBtn} ${styles.authSwitchBtnActive}`} aria-current="page">
+              Зареєструватися
+            </button>
+          </div>
 
           {error && <div className={styles.error}>{error}</div>}
 
           <form onSubmit={handleSubmit} className={styles.form}>
-            {/* Role Selection */}
-            <div className={styles.formGroup}>
-              <label className={styles.label}>Хто реєструється?</label>
-              <div className={styles.roleSelection}>
-                <button
-                  type="button"
-                  className={`${styles.roleBtn} ${formData.role === 'parent' ? styles.roleBtnActive : ''}`}
-                  onClick={() => setFormData({ ...formData, role: 'parent' })}
-                >
-                  <Users size={18} />
-                  <span>Батьки</span>
-                </button>
-                <button
-                  type="button"
-                  className={`${styles.roleBtn} ${formData.role === 'student' ? styles.roleBtnActive : ''}`}
-                  onClick={() => setFormData({ ...formData, role: 'student' })}
-                >
-                  <User size={18} />
-                  <span>Учень</span>
-                </button>
-              </div>
-            </div>
-
             <div className={styles.formGroup}>
               <label htmlFor="name" className={styles.label}>
-                {formData.role === 'parent' ? "ПІБ батьків" : "ПІБ учня"}
+                ПІБ учня
               </label>
               <input
                 type="text"
@@ -140,7 +158,7 @@ export default function RegisterPage() {
                 type="tel"
                 id="phone"
                 name="phone"
-                value={formData.phone}
+                value={formatPhoneNumber(formData.phone)}
                 onChange={handleChange}
                 className={styles.input}
                 placeholder="+380 (50) 000-00-00"

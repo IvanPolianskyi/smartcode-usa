@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
 import {
 	Users,
 	User,
@@ -11,15 +10,8 @@ import {
 	ArrowRight,
 	Clock,
 	Video,
-	Laptop,
-	Rocket,
 	Shield,
 	CreditCard,
-	Gift,
-	Percent,
-	Zap,
-	Heart,
-	TrendingDown,
 } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -96,14 +88,14 @@ const PricingPage = () => {
 			price: 350,
 			period: '/ урок',
 			subtitle: 'До 5 учнів у групі',
-			description: 'Навчання з однолітками — мотивація та командна робота',
+			description: 'Оптимально для соціалізації, мотивації та регулярного темпу навчання',
 			features: [
 				'Група до 5 учнів',
-				'Спільні проєкти та змагання',
-				'Розвиток командної роботи',
-				'Фіксований графік занять',
-				'Доступ до навчальної платформи',
-				'Сертифікат після курсу',
+				'Живі уроки в Zoom з викладачем',
+				'Регулярний графік та дисципліна',
+				'Практика на реальних задачах',
+				'Платформа + домашні завдання',
+				'Підтримка та фідбек по прогресу',
 			],
 			color: 'purple',
 			badge: null,
@@ -115,14 +107,14 @@ const PricingPage = () => {
 			price: 500,
 			period: '/ урок',
 			subtitle: '1 на 1 з викладачем',
-			description: 'Максимальна увага та персональна програма навчання',
+			description: 'Максимальний результат за рахунок персонального темпу й програми під дитину',
 			features: [
-				'Персональний підхід',
+				'Персональний підхід 1 на 1',
 				'Індивідуальний графік',
-				'Темп навчання під учня',
-				'Фокус на ваших цілях',
-				'Доступ до навчальної платформи',
-				'Сертифікат після курсу',
+				'Темп і програма під рівень учня',
+				'Фокус на цілях та слабких місцях',
+				'Платформа + домашні завдання',
+				'Підвищена швидкість прогресу',
 			],
 			color: 'blue',
 			badge: 'Найпопулярніший',
@@ -172,17 +164,17 @@ const PricingPage = () => {
 						без передоплат
 					</h1>
 					<p className={styles.subtitle}>
-						Платіть тільки за проведені уроки. Жодних пакетів, жодних прихованих платежів. 
-						Почніть з пробного безкоштовного заняття!
+						Обирайте формат навчання під вашу ціль і бюджет. Платіть тільки за проведені уроки:
+						без прихованих умов, без ризику, з реальним прогресом дитини.
 					</p>
 					<div className={styles.heroActions}>
 						<button onClick={handleContactClick} className={styles.heroCta}>
-							Записатися на пробний урок
+							Отримати безкоштовний пробний урок
 							<ArrowRight size={18} />
 						</button>
 						<div className={styles.heroNote}>
 							<Shield size={16} />
-							<span>Перший урок — безкоштовно</span>
+							<span>0 грн за перший урок</span>
 						</div>
 					</div>
 				</div>
@@ -273,85 +265,6 @@ const PricingPage = () => {
 				</div>
 			</section>
 
-			{/* ===== Loyalty / Discount Section ===== */}
-			<section className={styles.loyaltySection}>
-				<div className={styles.container}>
-					<div className={styles.loyaltyCard}>
-						<div className={styles.loyaltyLeft}>
-							<div className={styles.loyaltyBadge}>
-								<Gift size={16} />
-								<span>Система лояльності</span>
-							</div>
-							<h2 className={styles.loyaltyTitle}>
-								Оплатіть курс наперед — <br/>
-								отримайте <span className={styles.loyaltyAccent}>знижку</span>
-							</h2>
-							<p className={styles.loyaltySubtitle}>
-								При оплаті всього курсу наперед ви отримуєте суттєву знижку на кожен урок. 
-								Це вигідно, якщо ви впевнені у своєму виборі!
-							</p>
-						</div>
-						<div className={styles.loyaltyRight}>
-							<div className={styles.loyaltyPriceCard}>
-								<div className={styles.loyaltyPriceHeader}>
-									<User size={20} />
-									<span>Індивідуально</span>
-								</div>
-								<div className={styles.loyaltyPriceRow}>
-									<span className={styles.loyaltyOldPrice}>500 грн</span>
-									<ArrowRight size={16} className={styles.loyaltyArrow} />
-									<span className={styles.loyaltyNewPrice}>400 грн</span>
-									<span className={styles.loyaltySaveBadge}>
-										<TrendingDown size={12} />
-										-20%
-									</span>
-								</div>
-								<p className={styles.loyaltyPriceNote}>за урок при оплаті всього курсу</p>
-							</div>
-							<div className={styles.loyaltyPriceCard}>
-								<div className={styles.loyaltyPriceHeader}>
-									<Users size={20} />
-									<span>Міні-група</span>
-								</div>
-								<div className={styles.loyaltyPriceRow}>
-									<span className={styles.loyaltyOldPrice}>350 грн</span>
-									<ArrowRight size={16} className={styles.loyaltyArrow} />
-									<span className={styles.loyaltyNewPrice}>250 грн</span>
-									<span className={styles.loyaltySaveBadge}>
-										<TrendingDown size={12} />
-										-29%
-									</span>
-								</div>
-								<p className={styles.loyaltyPriceNote}>за урок при оплаті всього курсу</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			{/* ===== Referral Banner ===== */}
-			<section className={styles.referralSection}>
-				<div className={styles.container}>
-					<div className={styles.referralBanner}>
-						<div className={styles.referralContent}>
-							<div className={styles.referralIcon}>
-								<Heart size={28} />
-							</div>
-							<div className={styles.referralText}>
-								<h3 className={styles.referralTitle}>Запроси друга — отримай знижку 500 грн</h3>
-								<p className={styles.referralDescription}>
-									Порекомендуйте SmartCode Academy другу і обидва отримаєте знижку на навчання
-								</p>
-							</div>
-						</div>
-						<Link href="/invite" className={styles.referralButton}>
-							Дізнатись більше
-							<ArrowRight size={18} />
-						</Link>
-					</div>
-				</div>
-			</section>
-
 			{/* ===== Final CTA ===== */}
 			<section className={styles.finalCta}>
 				<div className={styles.finalCtaBackground}>
@@ -361,13 +274,13 @@ const PricingPage = () => {
 				<div className={styles.container}>
 					<div className={styles.finalCtaContent}>
 						<h2 className={styles.finalCtaTitle}>
-							Перший урок — безкоштовно
+							Почніть без ризику вже цього тижня
 						</h2>
 						<p className={styles.finalCtaText}>
-							Спробуйте без зобов'язань. Запишіться на безкоштовний пробний урок і переконайтесь у якості навчання
+							Запишіться на пробний урок за 0 грн, познайомтесь з викладачем і отримайте персональний план навчання для дитини.
 						</p>
 						<button onClick={handleContactClick} className={styles.finalCtaButton}>
-							<span>Записатися на пробний урок</span>
+							<span>Забронювати пробний урок</span>
 							<ArrowRight size={20} />
 						</button>
 					</div>

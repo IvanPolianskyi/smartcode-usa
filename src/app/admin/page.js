@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuthSession } from '@/components/AuthSessionProvider'
+import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import styles from './AdminPanel.module.css'
 import {
   Users,
@@ -12,26 +13,44 @@ import {
   BookOpen,
   DollarSign,
   Calendar,
-  BarChart3,
   RefreshCw,
   LogOut,
-  Award
 } from 'lucide-react'
+
+const WEEKDAY_OPTIONS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд']
 
 export default function AdminPanelPage() {
   const router = useRouter()
   const { user, loading: sessionLoading } = useAuthSession()
   const [stats, setStats] = useState(null)
   const [refreshing, setRefreshing] = useState(false)
-  const [certificates, setCertificates] = useState([])
-  const [loadingCertificates, setLoadingCertificates] = useState(false)
-  const [certForm, setCertForm] = useState({
-    studentEmail: '',
-    courseId: '',
-    title: '',
-    description: ''
+  const [students, setStudents] = useState([])
+  const [receipts, setReceipts] = useState([])
+  const [receiptsLoading, setReceiptsLoading] = useState(false)
+  const [courseNames, setCourseNames] = useState({})
+  const [selectedStudentId, setSelectedStudentId] = useState('')
+  const [studentSaving, setStudentSaving] = useState(false)
+  const [studentSearch, setStudentSearch] = useState('')
+  const [studentForm, setStudentForm] = useState({
+    lessonFormat: 'group',
+    regularDays: [],
+    regularScheduleByDay: {},
+    zoomLink: '',
+    onlineCourseIds: [],
+    pythonAccessEnabled: false,
+    pythonUnlockedLessons: [],
   })
-  const [certSubmitting, setCertSubmitting] = useState(false)
+  const studentEditorRef = useRef(null)
+  const selectedStudent = students.find((student) => student.id === selectedStudentId) || null
+  const pythonLessons = pythonCurriculum.modules.flatMap((module) => module.lessons)
+  const filteredStudents = useMemo(() => {
+    const query = studentSearch.trim().toLowerCase()
+    if (!query) return students
+    return students.filter((student) =>
+      (student.name || '').toLowerCase().includes(query) ||
+      (student.email || '').toLowerCase().includes(query)
+    )
+  }, [students, studentSearch])
 
   useEffect(() => {
     if (sessionLoading) return
@@ -44,7 +63,8 @@ export default function AdminPanelPage() {
       return
     }
     loadStatistics()
-    loadCertificates()
+    loadStudents()
+    loadReceipts()
   }, [sessionLoading, user?.id, user?.role, router])
 
   const loadStatistics = async () => {
@@ -71,73 +91,135 @@ export default function AdminPanelPage() {
     }
   }
 
-  const loadCertificates = async () => {
+  const loadStudents = async () => {
     try {
-      setLoadingCertificates(true)
-      const response = await fetch('/api/admin/certificates')
-
+      const response = await fetch('/api/admin/students')
       if (response.status === 403) {
         router.push('/dashboard')
         return
       }
-
       if (!response.ok) {
-        throw new Error('Failed to load certificates')
+        throw new Error('Failed to load students')
       }
-
       const data = await response.json()
-      setCertificates(data.certificates || [])
+      setStudents(data.students || [])
+      setCourseNames(data.courseNames || {})
     } catch (error) {
-      console.error('Error loading certificates:', error)
-      alert('Помилка завантаження дипломів')
-    } finally {
-      setLoadingCertificates(false)
+      console.error('Error loading students:', error)
+      alert('Помилка завантаження списку учнів')
     }
   }
 
-  const handleCertFormChange = (e) => {
-    const { name, value } = e.target
-    setCertForm((prev) => ({
+  const loadReceipts = async () => {
+    try {
+      setReceiptsLoading(true)
+      const response = await fetch('/api/admin/receipts')
+      if (response.status === 403) {
+        router.push('/dashboard')
+        return
+      }
+      if (!response.ok) {
+        throw new Error('Failed to load receipts')
+      }
+      const data = await response.json()
+      setReceipts(data.receipts || [])
+    } catch (error) {
+      console.error('Error loading receipts:', error)
+      alert('Помилка завантаження квитанцій')
+    } finally {
+      setReceiptsLoading(false)
+    }
+  }
+
+  const handleSelectStudent = (student) => {
+    const schedule = student.profile?.regularSchedule || []
+    const dayList = schedule.map((item) => item.day).filter(Boolean)
+    const scheduleByDay = {}
+    schedule.forEach((item) => {
+      if (item?.day) scheduleByDay[item.day] = item.time || ''
+    })
+    const onlineCourseIds = student.profile?.activeOnlineCourses || []
+    const pythonAccess = student.profile?.courseAccess?.['python-developer-zero-to-junior'] || {}
+    const unlockedLessons = pythonAccess.unlockedLessons || []
+
+    setSelectedStudentId(student.id)
+    setStudentForm({
+      lessonFormat: student.profile?.lessonFormat || 'group',
+      regularDays: dayList,
+      regularScheduleByDay: scheduleByDay,
+      zoomLink: student.profile?.zoomLink || '',
+      onlineCourseIds,
+      pythonAccessEnabled: Boolean(pythonAccess.enabled),
+      pythonUnlockedLessons: unlockedLessons,
+    })
+    setTimeout(() => {
+      studentEditorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 80)
+  }
+
+  const handleStudentFormChange = (e) => {
+    const { name, value, type, checked } = e.target
+    setStudentForm((prev) => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value,
     }))
   }
 
-  const handleCreateCertificate = async (e) => {
+  const toggleStudentArrayItem = (fieldName, value) => {
+    setStudentForm((prev) => {
+      const list = prev[fieldName] || []
+      const exists = list.includes(value)
+      const nextScheduleByDay = { ...(prev.regularScheduleByDay || {}) }
+      if (fieldName === 'regularDays') {
+        if (exists) {
+          delete nextScheduleByDay[value]
+        } else if (!nextScheduleByDay[value]) {
+          nextScheduleByDay[value] = ''
+        }
+      }
+      return {
+        ...prev,
+        [fieldName]: exists ? list.filter((item) => item !== value) : [...list, value],
+        regularScheduleByDay: nextScheduleByDay,
+      }
+    })
+  }
+
+  const handleSaveStudent = async (e) => {
     e.preventDefault()
-    if (!certForm.studentEmail || !certForm.courseId) {
-      alert('Введіть email учня та ID курсу')
+    if (!selectedStudentId) {
+      alert('Спочатку оберіть учня')
       return
     }
-    setCertSubmitting(true)
+    setStudentSaving(true)
     try {
-      const response = await fetch('/api/admin/certificates', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(certForm)
+      const response = await fetch('/api/admin/students', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          studentId: selectedStudentId,
+          lessonFormat: studentForm.lessonFormat,
+          regularSchedule: studentForm.regularDays.map((day) => ({
+            day,
+            time: studentForm.regularScheduleByDay?.[day] || '',
+          })),
+          zoomLink: studentForm.zoomLink,
+          onlineCourseIds: studentForm.onlineCourseIds,
+          pythonAccessEnabled: studentForm.pythonAccessEnabled,
+          pythonUnlockedLessons: studentForm.pythonUnlockedLessons,
+        }),
       })
-
       const data = await response.json()
-
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to create certificate')
+        throw new Error(data.error || 'Failed to save student settings')
       }
-
-      setCertificates((prev) => [data.certificate, ...prev])
-      setCertForm({
-        studentEmail: '',
-        courseId: '',
-        title: '',
-        description: ''
-      })
-      alert('Диплом успішно створено')
+      await loadStudents()
+      alert('Налаштування учня збережено')
     } catch (error) {
-      console.error('Create certificate error:', error)
-      alert(error.message || 'Помилка створення диплому')
+      console.error('Save student settings error:', error)
+      alert(error.message || 'Помилка збереження')
     } finally {
-      setCertSubmitting(false)
+      setStudentSaving(false)
     }
   }
 
@@ -289,133 +371,6 @@ export default function AdminPanelPage() {
             )}
           </div>
 
-          {/* Certificates management */}
-          <div className={styles.section}>
-            <h2 className={styles.sectionTitle}>
-              <Award size={24} />
-              Дипломи учнів
-            </h2>
-
-            <form onSubmit={handleCreateCertificate} className={styles.certForm}>
-              <div className={styles.certFormRow}>
-                <div className={styles.certFormGroup}>
-                  <label className={styles.certLabel}>Email учня</label>
-                  <input
-                    type="email"
-                    name="studentEmail"
-                    value={certForm.studentEmail}
-                    onChange={handleCertFormChange}
-                    className={styles.certInput}
-                    placeholder="student@example.com"
-                    required
-                  />
-                </div>
-                <div className={styles.certFormGroup}>
-                  <label className={styles.certLabel}>ID курсу</label>
-                  <select
-                    name="courseId"
-                    value={certForm.courseId}
-                    onChange={handleCertFormChange}
-                    className={styles.certInput}
-                    required
-                  >
-                    <option value="">Оберіть курс</option>
-                    <option value="python-developer-zero-to-junior">
-                      Python Developer: From Zero to Confident Junior
-                    </option>
-                    <option value="web-development">Веб-розробка</option>
-                    <option value="unity-game-development">Розробка ігор на Unity</option>
-                    <option value="roblox-studio">Roblox Studio</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className={styles.certFormRow}>
-                <div className={styles.certFormGroup}>
-                  <label className={styles.certLabel}>Назва диплому</label>
-                  <input
-                    type="text"
-                    name="title"
-                    value={certForm.title}
-                    onChange={handleCertFormChange}
-                    className={styles.certInput}
-                    placeholder="Сертифікат про завершення курсу"
-                  />
-                </div>
-              </div>
-
-              <div className={styles.certFormRow}>
-                <div className={styles.certFormGroup}>
-                  <label className={styles.certLabel}>Опис (необов'язково)</label>
-                  <textarea
-                    name="description"
-                    value={certForm.description}
-                    onChange={handleCertFormChange}
-                    className={styles.certInput}
-                    rows={3}
-                    placeholder="Наприклад: Успішно завершив курс та виконав усі практичні завдання"
-                  />
-                </div>
-              </div>
-
-              <div className={styles.certFormActions}>
-                <button
-                  type="submit"
-                  className={styles.certSubmitButton}
-                  disabled={certSubmitting}
-                >
-                  {certSubmitting ? 'Створення...' : 'Створити диплом'}
-                </button>
-                <button
-                  type="button"
-                  onClick={loadCertificates}
-                  className={styles.certReloadButton}
-                  disabled={loadingCertificates}
-                >
-                  <RefreshCw size={16} className={loadingCertificates ? styles.spinning : ''} />
-                  Оновити список
-                </button>
-              </div>
-            </form>
-
-            <div className={styles.certList}>
-              {loadingCertificates ? (
-                <p className={styles.emptyState}>Завантаження дипломів...</p>
-              ) : certificates.length === 0 ? (
-                <p className={styles.emptyState}>Поки що немає створених дипломів</p>
-              ) : (
-                <div className={styles.certTableWrapper}>
-                  <table className={styles.certTable}>
-                    <thead>
-                      <tr>
-                        <th>Учень</th>
-                        <th>Email</th>
-                        <th>Курс</th>
-                        <th>Назва диплому</th>
-                        <th>Дата видачі</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {certificates.map((cert) => (
-                        <tr key={cert.id}>
-                          <td>{cert.userName}</td>
-                          <td>{cert.userEmail}</td>
-                          <td>{cert.courseName}</td>
-                          <td>{cert.title}</td>
-                          <td>
-                            {cert.issuedAt
-                              ? new Date(cert.issuedAt).toLocaleDateString('uk-UA')
-                              : 'Н/Д'}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-          </div>
-
           {/* Course Progress */}
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>
@@ -455,99 +410,361 @@ export default function AdminPanelPage() {
             )}
           </div>
 
-          {/* Users with Courses */}
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>
-              <Users size={24} />
-              Користувачі та їх курси
+              <DollarSign size={24} />
+              Квитанції учнів
             </h2>
-            {stats.detailedUsers && stats.detailedUsers.length > 0 ? (
+            <div className={styles.certFormActions} style={{ marginBottom: '1rem' }}>
+              <button
+                type="button"
+                className={styles.certReloadButton}
+                onClick={loadReceipts}
+                disabled={receiptsLoading}
+              >
+                <RefreshCw size={16} className={receiptsLoading ? styles.spinning : ''} />
+                Оновити квитанції
+              </button>
+            </div>
+            {receiptsLoading ? (
+              <p className={styles.emptyState}>Завантаження квитанцій...</p>
+            ) : receipts.length === 0 ? (
+              <p className={styles.emptyState}>Поки що немає прикріплених квитанцій.</p>
+            ) : (
               <div className={styles.usersTable}>
                 <table>
                   <thead>
                     <tr>
-                      <th>Ім'я</th>
-                      <th>Email</th>
-                      <th>Куплені курси</th>
-                      <th>Записані курси</th>
-                      <th>Дата реєстрації</th>
+                      <th>Учень</th>
+                      <th>Сума</th>
+                      <th>Формат/ціна</th>
+                      <th>Уроки</th>
+                      <th>Дата</th>
+                      <th>Квитанція</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {stats.detailedUsers.map((user) => (
-                      <tr key={user.id}>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
+                    {receipts.map((receipt) => (
+                      <tr key={receipt.id}>
+                        <td>{receipt.studentName}<br />{receipt.studentEmail}</td>
+                        <td>{formatCurrency(receipt.amount)}</td>
                         <td>
-                          {user.purchasedCourses.length > 0 ? (
-                            <div className={styles.coursesList}>
-                              {user.purchasedCourses.map((course, idx) => (
-                                <span key={idx} className={styles.courseBadge}>
-                                  {course.courseName}
-                                </span>
-                              ))}
-                            </div>
+                          {receipt.lessonFormat === 'individual' ? 'Індивідуальні' : 'Групові'}
+                          <br />
+                          {receipt.lessonPrice} грн/урок
+                        </td>
+                        <td>{receipt.creditedLessons}</td>
+                        <td>{formatDate(receipt.createdAt)}</td>
+                        <td>
+                          {receipt.receipt?.dataUrl ? (
+                            <a href={receipt.receipt.dataUrl} target="_blank" rel="noreferrer" className={styles.receiptLink}>
+                              <img
+                                src={receipt.receipt.dataUrl}
+                                alt={`Квитанція ${receipt.studentName}`}
+                                className={styles.receiptThumb}
+                              />
+                            </a>
                           ) : (
-                            <span className={styles.noData}>Немає</span>
+                            <span className={styles.noData}>Немає файлу</span>
                           )}
                         </td>
-                        <td>
-                          {user.enrolledCourses.length > 0 ? (
-                            <div className={styles.coursesList}>
-                              {user.enrolledCourses.map((course, idx) => (
-                                <span key={idx} className={styles.courseBadge}>
-                                  {course.courseName}
-                                </span>
-                              ))}
-                            </div>
-                          ) : (
-                            <span className={styles.noData}>Немає</span>
-                          )}
-                        </td>
-                        <td>{formatDate(user.createdAt)}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-            ) : (
-              <p className={styles.emptyState}>Немає користувачів з курсами</p>
             )}
           </div>
 
-          {/* Payment Details */}
+
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>
-              <BarChart3 size={24} />
-              Деталі платежів
+              <Calendar size={24} />
+              Розклад і доступи учнів
             </h2>
-            <div className={styles.paymentStats}>
-              <div className={styles.paymentStatCard}>
-                <div className={styles.paymentStatLabel}>Успішні</div>
-                <div className={styles.paymentStatValue} style={{ color: '#10b981' }}>
-                  {stats.payments?.completed || 0}
-                </div>
-              </div>
-              <div className={styles.paymentStatCard}>
-                <div className={styles.paymentStatLabel}>В очікуванні</div>
-                <div className={styles.paymentStatValue} style={{ color: '#f59e0b' }}>
-                  {stats.payments?.pending || 0}
-                </div>
-              </div>
-              <div className={styles.paymentStatCard}>
-                <div className={styles.paymentStatLabel}>Невдалі</div>
-                <div className={styles.paymentStatValue} style={{ color: '#ef4444' }}>
-                  {stats.payments?.failed || 0}
-                </div>
-              </div>
-              <div className={styles.paymentStatCard}>
-                <div className={styles.paymentStatLabel}>Всього спроб</div>
-                <div className={styles.paymentStatValue}>
-                  {stats.payments?.total || 0}
-                </div>
+            <div className={styles.certFormRow} style={{ marginBottom: '1rem' }}>
+              <div className={styles.certFormGroup}>
+                <label className={styles.certLabel}>Пошук учня</label>
+                <input
+                  type="text"
+                  value={studentSearch}
+                  onChange={(e) => setStudentSearch(e.target.value)}
+                  className={styles.certInput}
+                  placeholder="Введіть ім'я або email"
+                />
               </div>
             </div>
+            <div className={styles.usersTable}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Учень</th>
+                    <th>Формат</th>
+                    <th>Курси онлайн</th>
+                    <th>Прогрес</th>
+                    <th>Дія</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredStudents.length > 0 ? filteredStudents.map((student) => (
+                    <tr
+                      key={student.id}
+                      style={{
+                        backgroundColor: selectedStudentId === student.id ? '#eff6ff' : undefined,
+                      }}
+                    >
+                      <td>{student.name}<br />{student.email}</td>
+                      <td>{student.profile?.lessonFormat === 'individual' ? 'Індивідуальні' : 'Групові'}</td>
+                      <td>
+                        {(student.profile?.activeOnlineCourses || []).length > 0
+                          ? student.profile.activeOnlineCourses.map((courseId) => courseNames[courseId] || courseId).join(', ')
+                          : 'Немає'}
+                      </td>
+                      <td>
+                        {student.analytics?.averageProgress || 0}% / {student.analytics?.totalCompletedLessons || 0} уроків
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className={styles.certReloadButton}
+                          onClick={() => router.push(`/admin/students/${student.id}`)}
+                        >
+                          Відкрити профіль
+                        </button>
+                      </td>
+                    </tr>
+                  )) : (
+                    <tr>
+                      <td colSpan={5} style={{ textAlign: 'center', color: '#6b7280' }}>
+                        За запитом нічого не знайдено
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            <form ref={studentEditorRef} onSubmit={handleSaveStudent} className={styles.certForm}>
+              {!selectedStudentId && (
+                <p className={styles.emptyState} style={{ padding: '0.5rem 0 1rem 0' }}>
+                  Обери учня у таблиці вище, щоб відкрити редагування.
+                </p>
+              )}
+              <div className={styles.certFormRow}>
+                <div className={styles.certFormGroup}>
+                  <label className={styles.certLabel}>Формат занять</label>
+                  <select
+                    name="lessonFormat"
+                    value={studentForm.lessonFormat}
+                    onChange={handleStudentFormChange}
+                    className={styles.certInput}
+                  >
+                    <option value="group">Групові</option>
+                    <option value="individual">Індивідуальні</option>
+                  </select>
+                </div>
+                <div className={styles.certFormGroup}>
+                  <label className={styles.certLabel}>Дні тижня</label>
+                  <div className={styles.coursesList}>
+                    {WEEKDAY_OPTIONS.map((day) => (
+                      <label key={day} className={styles.courseBadge} style={{ cursor: 'pointer' }}>
+                        <input
+                          type="checkbox"
+                          checked={studentForm.regularDays.includes(day)}
+                          onChange={() => toggleStudentArrayItem('regularDays', day)}
+                          style={{ marginRight: '0.4rem' }}
+                        />
+                        {day}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                <div className={styles.certFormGroup}>
+                  <label className={styles.certLabel}>Zoom посилання викладача</label>
+                  <input
+                    type="url"
+                    name="zoomLink"
+                    value={studentForm.zoomLink}
+                    onChange={handleStudentFormChange}
+                    className={styles.certInput}
+                    placeholder="https://zoom.us/j/..."
+                  />
+                </div>
+              </div>
+
+              {studentForm.regularDays.length > 0 && (
+                <div className={styles.certFormRow}>
+                  <div className={styles.certFormGroup}>
+                    <label className={styles.certLabel}>Час занять по днях</label>
+                    <div className={styles.usersTable}>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>День</th>
+                            <th>Час</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {studentForm.regularDays.map((day) => (
+                            <tr key={day}>
+                              <td>{day}</td>
+                              <td>
+                                <input
+                                  type="time"
+                                  className={styles.certInput}
+                                  value={studentForm.regularScheduleByDay?.[day] || ''}
+                                  onChange={(e) =>
+                                    setStudentForm((prev) => ({
+                                      ...prev,
+                                      regularScheduleByDay: {
+                                        ...(prev.regularScheduleByDay || {}),
+                                        [day]: e.target.value,
+                                      },
+                                    }))
+                                  }
+                                />
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className={styles.certFormRow}>
+                <div className={styles.certFormGroup}>
+                  <label className={styles.certLabel}>Онлайн-курси учня</label>
+                  <div className={styles.coursesList}>
+                    {Object.entries(courseNames).map(([courseId, courseName]) => (
+                      <label key={courseId} className={styles.courseBadge} style={{ cursor: 'pointer' }}>
+                        <input
+                          type="checkbox"
+                          checked={studentForm.onlineCourseIds.includes(courseId)}
+                          onChange={() => toggleStudentArrayItem('onlineCourseIds', courseId)}
+                          style={{ marginRight: '0.4rem' }}
+                        />
+                        {courseName}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.certFormRow}>
+                <div className={styles.certFormGroup}>
+                  <label className={styles.certLabel}>Доступ до Python курсу</label>
+                  <label className={styles.certLabel}>
+                    <input
+                      type="checkbox"
+                      name="pythonAccessEnabled"
+                      checked={studentForm.pythonAccessEnabled}
+                      onChange={handleStudentFormChange}
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    Увімкнути доступ
+                  </label>
+                </div>
+                <div className={styles.certFormGroup}>
+                  <label className={styles.certLabel}>Відкриті уроки Python</label>
+                  <div className={styles.certFormActions}>
+                    <button
+                      type="button"
+                      className={styles.certReloadButton}
+                      onClick={() => {
+                        const firstFive = pythonLessons.slice(0, 5).map((lesson) => lesson.lessonId)
+                        setStudentForm((prev) => ({ ...prev, pythonUnlockedLessons: firstFive }))
+                      }}
+                    >
+                      Відкрити перші 5
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.certReloadButton}
+                      onClick={() => setStudentForm((prev) => ({ ...prev, pythonUnlockedLessons: [] }))}
+                    >
+                      Закрити все
+                    </button>
+                  </div>
+                  <div className={styles.usersTable} style={{ maxHeight: '260px', overflowY: 'auto' }}>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Відкрити</th>
+                          <th>Урок</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {pythonLessons.map((lesson) => (
+                          <tr key={lesson.lessonId}>
+                            <td>
+                              <input
+                                type="checkbox"
+                                checked={studentForm.pythonUnlockedLessons.includes(lesson.lessonId)}
+                                onChange={() => toggleStudentArrayItem('pythonUnlockedLessons', lesson.lessonId)}
+                              />
+                            </td>
+                            <td>{lesson.lessonId} - {lesson.title}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.certFormActions}>
+                <button
+                  type="submit"
+                  className={styles.certSubmitButton}
+                  disabled={studentSaving || !selectedStudentId}
+                >
+                  {studentSaving ? 'Збереження...' : 'Зберегти налаштування учня'}
+                </button>
+              </div>
+            </form>
+            {selectedStudent && (
+              <div className={styles.progressCard} style={{ marginTop: '1rem' }}>
+                <h3 className={styles.courseTitle}>Аналітика: {selectedStudent.name}</h3>
+                <div className={styles.progressStats}>
+                  <div className={styles.progressStat}>
+                    <span className={styles.progressLabel}>Середній прогрес</span>
+                    <span className={styles.progressValue}>{selectedStudent.analytics?.averageProgress || 0}%</span>
+                  </div>
+                  <div className={styles.progressStat}>
+                    <span className={styles.progressLabel}>Завершено уроків</span>
+                    <span className={styles.progressValue}>{selectedStudent.analytics?.totalCompletedLessons || 0}</span>
+                  </div>
+                </div>
+                {(selectedStudent.analytics?.perCourse || []).length > 0 ? (
+                  <div className={styles.usersTable}>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Курс</th>
+                          <th>Прогрес</th>
+                          <th>Завершено уроків</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {selectedStudent.analytics.perCourse.map((course) => (
+                          <tr key={course.courseId}>
+                            <td>{course.courseName}</td>
+                            <td>{course.progress}%</td>
+                            <td>{course.completedLessons}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p className={styles.emptyState}>Ще немає прогресу по курсах.</p>
+                )}
+              </div>
+            )}
           </div>
+
         </div>
       )}
 
