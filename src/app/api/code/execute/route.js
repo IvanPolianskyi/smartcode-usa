@@ -3,6 +3,55 @@ import { spawn } from 'child_process'
 
 const EXECUTION_TIMEOUT = 10000 // 10 seconds
 const MAX_OUTPUT_LENGTH = 10000 // Maximum output length
+const CODE_RUNNER_URLS = (
+  process.env.CODE_RUNNER_URLS ||
+  process.env.CODE_RUNNER_URL ||
+  'https://emkc.org/api/v2/piston/execute,https://piston.rs/api/v2/execute'
+)
+  .split(',')
+  .map((url) => url.trim())
+  .filter(Boolean)
+
+function runLocalPython(wrappedCode, stdinData) {
+  return new Promise((resolve, reject) => {
+    let stdout = ''
+    let stderr = ''
+    const pythonProcess = spawn('python', ['-c', wrappedCode], {
+      shell: false,
+      stdio: ['pipe', 'pipe', 'pipe'],
+    })
+
+    const timeoutId = setTimeout(() => {
+      pythonProcess.kill()
+      reject(new Error('LOCAL_TIMEOUT'))
+    }, EXECUTION_TIMEOUT)
+
+    pythonProcess.stdout.setEncoding('utf8')
+    pythonProcess.stderr.setEncoding('utf8')
+    pythonProcess.stdout.on('data', (data) => { stdout += data })
+    pythonProcess.stderr.on('data', (data) => { stderr += data })
+
+    if (stdinData) {
+      pythonProcess.stdin.write(stdinData, 'utf8')
+    }
+    pythonProcess.stdin.end()
+
+    pythonProcess.on('error', (error) => {
+      clearTimeout(timeoutId)
+      reject(error)
+    })
+
+    pythonProcess.on('close', (code) => {
+      clearTimeout(timeoutId)
+      resolve({
+        success: code === 0,
+        output: stdout,
+        errorOutput: stderr,
+        exitCode: code,
+      })
+    })
+  })
+}
 
 export async function POST(request) {
   try {
@@ -238,84 +287,7 @@ export async function POST(request) {
       )
     }
 
-    // Install required packages for module-09 and module-10 if needed
-    let installPackages = ''
-    if (moduleId === 'module-09') {
-      installPackages = `
-# Install required packages for module-09
-import sys
-import subprocess
-
-def install_package(package_name, import_name=None):
-    """Safely install a Python package if not already installed"""
-    if import_name is None:
-        import_name = package_name
-    try:
-        __import__(import_name)
-    except ImportError:
-        try:
-            subprocess.check_call(
-                [sys.executable, '-m', 'pip', 'install', '--quiet', '--user', package_name],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL
-            )
-            __import__(import_name)
-        except Exception:
-            pass  # Silently fail if installation doesn't work
-
-# Install required packages
-install_package('beautifulsoup4', 'bs4')
-install_package('requests')
-`
-    } else if (moduleId === 'module-10') {
-      installPackages = `
-# Install required packages for module-10
-import sys
-import subprocess
-
-def install_package(package_name, import_name=None):
-    """Safely install a Python package if not already installed"""
-    if import_name is None:
-        import_name = package_name
-    try:
-        __import__(import_name)
-        return True
-    except ImportError:
-        try:
-            subprocess.check_call(
-                [sys.executable, '-m', 'pip', 'install', '--quiet', '--user', package_name],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-                timeout=60
-            )
-            # Try to import again after installation
-            try:
-                __import__(import_name)
-                return True
-            except ImportError:
-                # If still fails, try without --user flag
-                try:
-                    subprocess.check_call(
-                        [sys.executable, '-m', 'pip', 'install', '--quiet', package_name],
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL,
-                        timeout=60
-                    )
-                    __import__(import_name)
-                    return True
-                except Exception:
-                    return False
-        except Exception:
-            return False
-    return False
-
-# Install required packages
-install_package('Pillow', 'PIL')
-`
-    }
-
-    // Wrap code to ensure UTF-8 encoding
-    // Add encoding declaration and ensure stdout/stderr use UTF-8
+    // Wrap code to ensure UTF-8 encoding in remote runtime
     const wrappedCode = `# -*- coding: utf-8 -*-
 import sys
 import io
@@ -325,170 +297,103 @@ if sys.stdout.encoding != 'utf-8':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 if sys.stderr.encoding != 'utf-8':
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
-
-${installPackages}
 ${code}`
+    const filterSensitiveInfo = (text) => {
+      if (!text) return ''
+      let filtered = String(text)
+        .replace(/\/home\/[^\s\n]+/g, '[path removed]')
+        .replace(/\/root\/[^\s\n]+/g, '[path removed]')
+        .replace(/\/etc\/[^\s\n]+/g, '[path removed]')
+        .replace(/\/var\/[^\s\n]+/g, '[path removed]')
+        .replace(/\/usr\/[^\s\n]+/g, '[path removed]')
+        .replace(/\/proc\/[^\s\n]+/g, '[path removed]')
+        .replace(/\/sys\/[^\s\n]+/g, '[path removed]')
+      filtered = filtered.replace(/(api[_-]?key|token|password|secret|auth)[\s:=]+([^\s\n]+)/gi, '$1=[hidden]')
+      return filtered
+    }
 
-    // Execute Python code
-    return await new Promise((resolve) => {
-      let stdout = ''
-      let stderr = ''
-      let isResolved = false
+    let lastErrorMessage = ''
 
-      // Spawn Python process with UTF-8 encoding and restricted environment
-      // Create a minimal, safe environment
-      const safeEnv = {
-        PYTHONUNBUFFERED: '1',
-        PYTHONIOENCODING: 'utf-8',
-        LANG: 'en_US.UTF-8',
-        LC_ALL: 'en_US.UTF-8',
-        PATH: '/usr/bin:/bin', // Minimal PATH
-        HOME: '/tmp', // Safe home directory
-        TMPDIR: '/tmp',
-        // Remove potentially dangerous environment variables
-        // Don't pass through process.env to prevent information leakage
-      }
-
-      // Spawn Python process with restricted environment
-      const pythonProcess = spawn('python', ['-c', wrappedCode], {
-        shell: false,
-        env: safeEnv,
-        stdio: ['pipe', 'pipe', 'pipe'], // Explicit stdio configuration
-        detached: false, // Don't allow process to outlive parent
-      })
-      
-      // Set resource limits (if available on the system)
-      // Note: This requires appropriate permissions and may not work on all systems
+    const isVercel = Boolean(process.env.VERCEL)
+    if (!isVercel) {
       try {
-        // Limit CPU time (if setrlimit is available)
-        // This is handled by the timeout instead
-      } catch (error) {
-        // Ignore if resource limiting is not available
-      }
-
-      // Set encoding for streams
-      pythonProcess.stdout.setEncoding('utf8')
-      pythonProcess.stderr.setEncoding('utf8')
-      pythonProcess.stdin.setEncoding('utf8')
-
-      // Write input data to stdin if provided
-      if (stdinData) {
-        try {
-          pythonProcess.stdin.write(stdinData, 'utf8')
-          pythonProcess.stdin.end()
-        } catch (error) {
-          // If stdin is already closed, ignore the error
-          console.error('Error writing to stdin:', error)
-        }
-      }
-
-      // Filter function to remove sensitive information from output
-      const filterSensitiveInfo = (text) => {
-        if (!text) return text
-        
-        // Remove potential paths that might leak system information
-        let filtered = text
-          .replace(/\/home\/[^\s\n]+/g, '[path removed]')
-          .replace(/\/root\/[^\s\n]+/g, '[path removed]')
-          .replace(/\/etc\/[^\s\n]+/g, '[path removed]')
-          .replace(/\/var\/[^\s\n]+/g, '[path removed]')
-          .replace(/\/usr\/[^\s\n]+/g, '[path removed]')
-          .replace(/\/proc\/[^\s\n]+/g, '[path removed]')
-          .replace(/\/sys\/[^\s\n]+/g, '[path removed]')
-        
-        // Remove potential environment variable values
-        filtered = filtered.replace(/([A-Z_]+)=([^\s\n]+)/g, (match, key, value) => {
-          // Keep common safe env vars, filter others
-          const safeVars = ['PATH', 'HOME', 'TMPDIR', 'LANG', 'LC_ALL', 'PYTHONUNBUFFERED', 'PYTHONIOENCODING']
-          if (safeVars.includes(key)) {
-            return match
-          }
-          return `${key}=[hidden]`
+        const localResult = await runLocalPython(wrappedCode, stdinData)
+        return NextResponse.json({
+          success: localResult.success,
+          output: localResult.output.trim().slice(0, MAX_OUTPUT_LENGTH),
+          errorOutput: localResult.errorOutput.trim().slice(0, MAX_OUTPUT_LENGTH),
+          exitCode: localResult.exitCode,
         })
-        
-        // Remove potential API keys, tokens, passwords (basic patterns)
-        filtered = filtered.replace(/(api[_-]?key|token|password|secret|auth)[\s:=]+([^\s\n]+)/gi, '$1=[hidden]')
-        
-        return filtered
+      } catch (localError) {
+        lastErrorMessage = localError?.message || 'Local python execution failed'
       }
+    }
 
-      // Collect stdout with proper UTF-8 handling and filtering
-      pythonProcess.stdout.on('data', (data) => {
-        // Ensure data is treated as UTF-8 string
-        const text = Buffer.isBuffer(data) ? data.toString('utf8') : String(data)
-        const filteredText = filterSensitiveInfo(text)
-        stdout += filteredText
+    for (const runnerUrl of CODE_RUNNER_URLS) {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), EXECUTION_TIMEOUT)
+      try {
+        const response = await fetch(runnerUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          signal: controller.signal,
+          body: JSON.stringify({
+            language: 'python',
+            version: '3.10.0',
+            files: [{ content: wrappedCode }],
+            stdin: stdinData || '',
+            run_timeout: EXECUTION_TIMEOUT,
+            compile_timeout: 5000,
+          }),
+        })
+
+        const runnerData = await response.json().catch(() => ({}))
+        if (!response.ok) {
+          lastErrorMessage = `Runner ${runnerUrl} returned ${response.status}`
+          continue
+        }
+
+        const run = runnerData?.run || {}
+        let stdout = filterSensitiveInfo(run.stdout || '')
+        let stderr = filterSensitiveInfo(run.stderr || '')
+
         if (stdout.length > MAX_OUTPUT_LENGTH) {
-          stdout = stdout.substring(0, MAX_OUTPUT_LENGTH) + '\n... (вивід обрізано)'
-          if (!isResolved) {
-            pythonProcess.kill()
-          }
+          stdout = `${stdout.substring(0, MAX_OUTPUT_LENGTH)}\n... (вивід обрізано)`
         }
-      })
-
-      // Collect stderr with proper UTF-8 handling and filtering
-      pythonProcess.stderr.on('data', (data) => {
-        // Ensure data is treated as UTF-8 string
-        const text = Buffer.isBuffer(data) ? data.toString('utf8') : String(data)
-        const filteredText = filterSensitiveInfo(text)
-        stderr += filteredText
         if (stderr.length > MAX_OUTPUT_LENGTH) {
-          stderr = stderr.substring(0, MAX_OUTPUT_LENGTH) + '\n... (помилки обрізано)'
+          stderr = `${stderr.substring(0, MAX_OUTPUT_LENGTH)}\n... (помилки обрізано)`
         }
-      })
 
-      // Set timeout
-      const timeoutId = setTimeout(() => {
-        if (!isResolved) {
-          isResolved = true
-          pythonProcess.kill()
-          resolve(NextResponse.json({
-            success: false,
-            error: `Час виконання перевищено (більше ${EXECUTION_TIMEOUT / 1000} секунд)`,
-            output: stdout.trim(),
-            errorOutput: stderr.trim() || 'Процес було перервано через таймаут'
-          }, { status: 408 }))
-        }
-      }, EXECUTION_TIMEOUT)
-
-      // Handle process completion
-      pythonProcess.on('close', (code) => {
-        if (isResolved) return
-        isResolved = true
-        clearTimeout(timeoutId)
-
-        resolve(NextResponse.json({
-          success: code === 0,
+        return NextResponse.json({
+          success: (run.code ?? 1) === 0,
           output: stdout.trim(),
           errorOutput: stderr.trim(),
-          exitCode: code
-        }))
-      })
-
-      // Handle process errors
-      pythonProcess.on('error', (error) => {
-        if (isResolved) return
-        isResolved = true
-        clearTimeout(timeoutId)
-
-        // Check if Python is not installed
-        if (error.code === 'ENOENT') {
-          resolve(NextResponse.json({
-            success: false,
-            error: 'Python не встановлено на сервері. Будь ласка, встановіть Python для виконання коду.',
-            output: '',
-            errorOutput: ''
-          }, { status: 500 }))
-        } else {
-          resolve(NextResponse.json({
-            success: false,
-            error: `Помилка виконання: ${error.message}`,
-            output: stdout.trim(),
-            errorOutput: stderr.trim()
-          }, { status: 500 }))
+          exitCode: run.code ?? 1,
+        })
+      } catch (error) {
+        if (error?.name === 'AbortError') {
+          lastErrorMessage = `Runner ${runnerUrl} timed out`
+          continue
         }
-      })
-    })
+        lastErrorMessage = `Runner ${runnerUrl} failed`
+      } finally {
+        clearTimeout(timeoutId)
+      }
+    }
+
+    const guidance = isVercel
+      ? 'Сервіси виконання коду недоступні. Налаштуйте власний раннер у CODE_RUNNER_URLS для Vercel.'
+      : 'Сервіси виконання коду недоступні і локальний Python fallback не спрацював.'
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: guidance,
+        output: '',
+        errorOutput: lastErrorMessage,
+      },
+      { status: 503 }
+    )
 
   } catch (error) {
     console.error('Error executing code:', error)

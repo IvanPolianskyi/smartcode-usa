@@ -224,11 +224,12 @@ const Header = () => {
 	}
 
 	const navItems = [
-		{ label: 'Предмети', dropdown: true },
 		{ label: 'Записатися', href: '/#trial-signup' },
+		{ label: 'Курси', dropdown: true },
 		{ label: 'Соцмережі', href: '/#social-media' },
 		{ label: 'Ціни', href: '/tariff' },
 		{ label: 'Відгуки', href: '/#testimonials' },
+		{ label: 'Запроси друга', href: '/invite' },
 	]
 	
 	const courses = [
@@ -278,14 +279,16 @@ const Header = () => {
 					{/* Логотип */}
 					<Logo className={styles.logo} />
 
-					<button
-						type='button'
-						className={styles.mobileTopCta}
-						onClick={handleCtaClick}
-						aria-label='Записатися на пробне заняття'
-					>
-						Записатися
-					</button>
+					{!userLoading && !user && (
+						<button
+							type='button'
+							className={styles.mobileTopCta}
+							onClick={handleCtaClick}
+							aria-label='Записатися на пробне заняття'
+						>
+							Записатися
+						</button>
+					)}
 
 					{/* Навігація для десктопу */}
 					<nav className={styles.nav}>
@@ -372,19 +375,26 @@ const Header = () => {
 
 					{/* Права частина хедера */}
                     <div className={styles.headerRight}>
-						{!userLoading && (
-							user ? (
-								<>
-									<Link href="/dashboard" className={styles.userButton}>
-										<User size={18} />
-										<span className={styles.userName}>{user.name}</span>
-									</Link>
-									<button onClick={handleLogout} className={styles.logoutButton}>
-										<LogOut size={18} />
-										Вийти
-									</button>
-								</>
-							) : null
+						{userLoading ? (
+							<div className={`${styles.userButton} ${styles.skeletonButton}`} style={{ width: '100px', pointerEvents: 'none' }}>
+								<div className={styles.skeletonPulse} />
+							</div>
+						) : user ? (
+							<>
+								<Link href="/dashboard" className={styles.userButton}>
+									<User size={18} />
+									<span className={styles.userName}>{user.name}</span>
+								</Link>
+								<button onClick={handleLogout} className={styles.logoutButton}>
+									<LogOut size={18} />
+									Вийти
+								</button>
+							</>
+						) : (
+							<Link href="/login" className={styles.userButton}>
+								<User size={18} />
+								<span className={styles.userName}>Увійти</span>
+							</Link>
 						)}
 						{/* Кнопка кабінету для мобільної версії */}
 						{!userLoading && user && (
@@ -482,29 +492,54 @@ const Header = () => {
 
 					{/* Кнопки входу та реєстрації або профіль */}
 					<div className={styles.mobileMenuFooter}>
-						{!userLoading && (
-							user ? (
-								<>
-									<Link 
-										href="/dashboard" 
-										className={`${styles.mobileMenuItem} ${styles.mobileLoginButton}`}
-										onClick={handleMobileMenuClose}
-									>
-										<User size={18} />
-										Мій профіль
-									</Link>
-									<button 
-										onClick={() => {
-											handleLogout()
-											handleMobileMenuClose()
-										}}
-										className={`${styles.mobileMenuItem} ${styles.mobileRegisterButton}`}
-									>
-										<LogOut size={18} />
-										Вийти
-									</button>
-								</>
-							) : null
+						{userLoading ? (
+							<>
+								<div className={`${styles.mobileMenuItem} ${styles.skeletonButton}`} style={{ width: '100%', pointerEvents: 'none', height: '48px', marginBottom: '0.5rem' }}>
+									<div className={styles.skeletonPulse} />
+								</div>
+								<div className={`${styles.mobileMenuItem} ${styles.skeletonButton}`} style={{ width: '100%', pointerEvents: 'none', height: '48px' }}>
+									<div className={styles.skeletonPulse} />
+								</div>
+							</>
+						) : user ? (
+							<>
+								<Link 
+									href="/dashboard" 
+									className={`${styles.mobileMenuItem} ${styles.mobileLoginButton}`}
+									onClick={handleMobileMenuClose}
+								>
+									<User size={18} />
+									Мій профіль
+								</Link>
+								<button 
+									onClick={() => {
+										handleLogout()
+										handleMobileMenuClose()
+									}}
+									className={`${styles.mobileMenuItem} ${styles.mobileRegisterButton}`}
+								>
+									<LogOut size={18} />
+									Вийти
+								</button>
+							</>
+						) : (
+							<>
+								<Link 
+									href="/login" 
+									className={`${styles.mobileMenuItem} ${styles.mobileLoginButton}`}
+									onClick={handleMobileMenuClose}
+								>
+									<User size={18} />
+									Увійти
+								</Link>
+								<Link 
+									href="/register" 
+									className={`${styles.mobileMenuItem} ${styles.mobileRegisterButton}`}
+									onClick={handleMobileMenuClose}
+								>
+									Реєстрація
+								</Link>
+							</>
 						)}
 					</div>
 				</div>

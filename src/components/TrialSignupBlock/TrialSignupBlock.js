@@ -9,8 +9,9 @@ import {
 	generateEventId,
 } from '@/lib/metaPixel'
 import { getClientAttribution } from '@/lib/attribution'
-import { validateEuropeanPhone } from '@/lib/phoneEurope'
+import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
+import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 import styles from './TrialSignupBlock.module.css'
 
 const COURSES = [
@@ -23,26 +24,17 @@ const COURSES = [
 
 export default function TrialSignupBlock() {
 	const [preferredContactMethod, setPreferredContactMethod] = useState('phone_call')
-	const [formData, setFormData] = useState({ phone: '', course: '', message: '' })
-	const [phoneError, setPhoneError] = useState('')
+	const [formData, setFormData] = useState({ course: '', message: '' })
 	const [touched, setTouched] = useState({ phone: false, course: false })
 	const [submitting, setSubmitting] = useState(false)
 	const [done, setDone] = useState(false)
+
+	const phoneInput = usePhoneInput('UA')
 
 	const handleFormFocusCapture = (e) => {
 		const t = e.target
 		if (t instanceof HTMLInputElement || t instanceof HTMLSelectElement || t instanceof HTMLTextAreaElement || t instanceof HTMLButtonElement) {
 			trackTrialInitiateCheckoutOnce()
-		}
-	}
-
-	const handlePhoneChange = (next) => {
-		setFormData((prev) => ({ ...prev, phone: next }))
-		const digits = (next || '').replace(/\D/g, '')
-		if (digits.length === 0) setPhoneError('Введіть номер телефону')
-		else {
-			const r = validateEuropeanPhone(next)
-			setPhoneError(r.ok ? '' : r.message)
 		}
 	}
 
@@ -54,9 +46,7 @@ export default function TrialSignupBlock() {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		setTouched({ phone: true, course: true })
-		const phoneCheck = validateEuropeanPhone(formData.phone)
-		if (!phoneCheck.ok) {
-			setPhoneError(phoneCheck.message)
+		if (!phoneInput.validateOnSubmit()) {
 			return
 		}
 		if (!formData.course) return
@@ -68,7 +58,7 @@ export default function TrialSignupBlock() {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					phone: phoneCheck.e164,
+					phone: phoneInput.getFullNumber(),
 					course: formData.course,
 					message: formData.message,
 					contactMethod: 'phone',
@@ -87,13 +77,36 @@ export default function TrialSignupBlock() {
 				trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course), eventId)
 			}
 			setDone(true)
-			setFormData({ phone: '', course: '', message: '' })
+			setFormData({ course: '', message: '' })
 			setPreferredContactMethod('phone_call')
+			phoneInput.reset()
 		} catch {
 			alert('Сталася помилка мережі.')
 		} finally {
 			setSubmitting(false)
 		}
+	}
+
+	// Map shared PhoneField classes using TrialSignupBlock styles where possible
+	const phoneClasses = {
+		field: styles.field,
+		fieldError: phoneStyles.fieldError,
+		label: styles.label,
+		phoneContainer: phoneStyles.phoneContainer,
+		countryBtn: phoneStyles.countryBtn,
+		flagEmoji: phoneStyles.flagEmoji,
+		dropdownArrow: phoneStyles.dropdownArrow,
+		divider: phoneStyles.divider,
+		phoneInputWrap: phoneStyles.phoneInputWrap,
+		phonePrefix: phoneStyles.phonePrefix,
+		phoneInput: phoneStyles.phoneInput,
+		dropdown: phoneStyles.dropdown,
+		dropdownItem: phoneStyles.dropdownItem,
+		dropdownItemActive: phoneStyles.dropdownItemActive,
+		dropdownItemFlag: phoneStyles.dropdownItemFlag,
+		dropdownItemCode: phoneStyles.dropdownItemCode,
+		dropdownItemDial: phoneStyles.dropdownItemDial,
+		error: styles.error,
 	}
 
 	if (done) {
@@ -126,18 +139,7 @@ export default function TrialSignupBlock() {
 					</div>
 
 					<form className={styles.form} onSubmit={handleSubmit} onFocusCapture={handleFormFocusCapture}>
-						<div className={styles.field}>
-							<label className={styles.label} htmlFor='trial-phone'>
-								Номер телефону
-							</label>
-							<PhoneField
-								id='trial-phone'
-								name='phone'
-								value={formData.phone}
-								onChange={handlePhoneChange}
-							/>
-							{phoneError && <span className={styles.error}>{phoneError}</span>}
-						</div>
+						<PhoneField phoneInput={phoneInput} classes={phoneClasses} id="trial-phone" />
 
 						<div className={styles.field}>
 							<span className={styles.label}>Як вам зручно отримати контакт?</span>

@@ -557,8 +557,13 @@ const PythonCoursePage = () => {
             
             <div className={styles.courseSectionButtons}>
               <Link 
-                href="/courses/python-developer-zero-to-junior" 
+                href="/#Contactform" 
                 className={styles.coursePrimaryButton}
+                onClick={(e) => {
+                  e.preventDefault()
+                  window.dispatchEvent(new Event('openContactModal'))
+                }}
+                scroll={false}
               >
                 <div className={styles.buttonOverlay}></div>
                 <span className={styles.buttonContent}>

@@ -28,6 +28,9 @@ const TrialSignupBlock = dynamic(() => import('@/components/TrialSignupBlock/Tri
 const SocialMedia = dynamic(() => import('@/components/SocialMedia/SocialMedia'), {
   loading: () => <SectionSkeleton height='600px' />,
 })
+const LMSPromo = dynamic(() => import('@/components/LMSPromo/LMSPromo'), {
+  loading: () => <SectionSkeleton height='600px' />,
+})
 
 export default function HomeClient() {
   useEffect(() => {
@@ -83,6 +86,7 @@ export default function HomeClient() {
       <Testimonials />
       <ProjectsShowcase />
       <SocialMedia />
+      <LMSPromo />
       <FAQ />
     </>
   )

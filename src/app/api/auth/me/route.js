@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
+import { syncStudentScheduleAccess } from '@/lib/syncStudentScheduleAccess'
 
 export async function GET() {
   try {
@@ -14,7 +15,7 @@ export async function GET() {
 
     // Get user from database
     const usersCollection = await getCollection('users')
-    const user = await usersCollection.findOne({ _id: new ObjectId(userId) })
+    let user = await usersCollection.findOne({ _id: new ObjectId(userId) })
 
     if (!user) {
       return NextResponse.json(
@@ -22,6 +23,7 @@ export async function GET() {
         { status: 404 }
       )
     }
+    user = await syncStudentScheduleAccess(user, usersCollection)
 
     // Синхронізація: якщо є прогрес, але немає курсу в enrolledCourses, додати його
     const progressCollection = await getCollection('userProgress')
@@ -53,6 +55,16 @@ export async function GET() {
       name: user.name,
       phone: user.phone,
       role: user.role || 'user',
+      studentProfile: user.studentProfile || {
+        lessonFormat: 'group',
+        regularSchedule: [],
+        zoomLink: '',
+        activeOnlineCourses: [],
+        courseAccess: {},
+        accountBalance: 0,
+        lessonCredits: 0,
+        scheduleSyncStartAt: null,
+      },
       purchasedCourses: user.purchasedCourses || [],
       enrolledCourses: user.enrolledCourses || [],
       createdAt: user.createdAt

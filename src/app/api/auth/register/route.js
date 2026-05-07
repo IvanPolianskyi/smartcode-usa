@@ -48,7 +48,14 @@ export async function POST(request) {
       password: hashedPassword,
       name,
       phone: phone || null,
-      role: 'user', // Default role
+      role: 'student',
+      studentProfile: {
+        lessonFormat: 'group',
+        regularSchedule: [],
+        zoomLink: '',
+        activeOnlineCourses: [],
+        courseAccess: {},
+      },
       purchasedCourses: [], // Courses that user has paid for
       createdAt: new Date(),
       updatedAt: new Date(),

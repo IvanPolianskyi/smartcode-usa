@@ -20,9 +20,8 @@ import {
 } from 'lucide-react'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
-import { enrollInCourse, getUserProgress, checkCoursePurchase, createPayment } from '@/lib/authClient'
+import { getUserProgress, checkCoursePurchase } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
-import { getCoursePrice, formatPrice } from '@/lib/coursePrices'
 import styles from './CoursePage.module.css'
 
 const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress: initialProgress = null }) => {
@@ -31,10 +30,9 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   const [isLoaded, setIsLoaded] = useState(false)
   const [expandedModule, setExpandedModule] = useState(null)
   const [userProgress, setUserProgress] = useState(initialProgress)
-  const [isEnrolling, setIsEnrolling] = useState(false)
-  const [isPurchasing, setIsPurchasing] = useState(false)
   const [user, setUser] = useState(null)
   const [isPurchased, setIsPurchased] = useState(false)
+  const [allowedLessons, setAllowedLessons] = useState(new Set())
   
   // Get the appropriate curriculum based on courseId
   const getCurriculum = () => {
@@ -96,6 +94,19 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
     let cancelled = false
     ;(async () => {
       try {
+        const explicitAccess = sessionUser?.studentProfile?.courseAccess?.[courseId]
+        const explicitUnlocked = explicitAccess?.unlockedLessons || []
+        const unlockedSet = new Set(explicitUnlocked)
+        const allLessons = course.modules.flatMap(m => m.lessons)
+        const unlockedIndexes = allLessons
+          .map((lesson, index) => (unlockedSet.has(lesson.lessonId) ? index : -1))
+          .filter(index => index >= 0)
+        const highestUnlockedIndex = unlockedIndexes.length > 0 ? Math.max(...unlockedIndexes) : -1
+        if (highestUnlockedIndex >= 0 && highestUnlockedIndex + 1 < allLessons.length) {
+          unlockedSet.add(allLessons[highestUnlockedIndex + 1].lessonId)
+        }
+        setAllowedLessons(unlockedSet)
+
         const purchased = await checkCoursePurchase(courseId)
         if (cancelled) return
         setIsPurchased(purchased || sessionUser.role === 'admin')
@@ -110,45 +121,6 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
       cancelled = true
     }
   }, [sessionLoading, sessionUser, courseId])
-  
-  const handlePurchase = async () => {
-    if (!user) {
-      router.push('/login?redirect=' + encodeURIComponent(`/courses/${courseId}`))
-      return
-    }
-    
-    setIsPurchasing(true)
-    try {
-      // Create payment and get payment link
-      const paymentData = await createPayment(courseId)
-
-      // Create form and submit to LiqPay
-      const form = document.createElement('form')
-      form.method = 'POST'
-      form.action = paymentData.paymentUrl
-      
-      const dataInput = document.createElement('input')
-      dataInput.type = 'hidden'
-      dataInput.name = 'data'
-      dataInput.value = paymentData.data
-      form.appendChild(dataInput)
-      
-      const signatureInput = document.createElement('input')
-      signatureInput.type = 'hidden'
-      signatureInput.name = 'signature'
-      signatureInput.value = paymentData.signature
-      form.appendChild(signatureInput)
-      
-      document.body.appendChild(form)
-      form.submit()
-    } catch (error) {
-      console.error('Purchase error:', error)
-      alert('Помилка створення платежу. Спробуйте ще раз.')
-      setIsPurchasing(false)
-    }
-  }
-  
-  const coursePrice = getCoursePrice(courseId)
   
   const getModuleIcon = (moduleOrder) => {
     const icons = [
@@ -194,6 +166,16 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   }
   
   const isLessonUnlocked = (lesson, moduleIndex) => {
+    const hasOnlineAccess = user?.studentProfile?.activeOnlineCourses?.includes(courseId)
+    if (allowedLessons.size > 0) {
+      return allowedLessons.has(lesson.lessonId)
+    }
+    const explicitEnabled = user?.studentProfile?.courseAccess?.[courseId]?.enabled
+    if (explicitEnabled === false) return false
+    if (hasOnlineAccess) {
+      // Для онлайн-учнів без явного списку уроків лишаємо стартовий урок доступним.
+      return moduleIndex === 0 && lesson.order === 1
+    }
     // Admin has access to all lessons
     if (user?.role === 'admin') return true
     
@@ -316,29 +298,6 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
             </div>
           </div>
           
-          {/* Purchase Button */}
-          {!isPurchased && user?.role !== 'admin' && (
-            <div className={styles.purchaseButtonWrapper}>
-              {user ? (
-                <button
-                  onClick={handlePurchase}
-                  disabled={isPurchasing}
-                  className={styles.purchaseButton}
-                >
-                  <Rocket className="w-5 h-5" />
-                  {isPurchasing ? 'Перенаправлення на оплату...' : `Придбати курс за ${formatPrice(coursePrice.price, coursePrice.currency)}`}
-                </button>
-              ) : (
-                <Link 
-                  href={`/login?redirect=${encodeURIComponent(`/courses/${courseId}`)}`}
-                  className={styles.purchaseButton}
-                >
-                  <Rocket className="w-5 h-5" />
-                  Придбати курс за {formatPrice(coursePrice.price, coursePrice.currency)}
-                </Link>
-              )}
-            </div>
-          )}
         </div>
       </section>
       
@@ -555,54 +514,19 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
       
       {/* CTA Section */}
       <section className={styles.ctaSection}>
-        {!isPurchased && user?.role !== 'admin' ? (
-          <div className={styles.ctaCard}>
-            <h2 className={styles.ctaTitle}>Готовий почати навчання?</h2>
-            <p className={styles.ctaDescription}>
-              {user 
-                ? `Придбай курс за ${formatPrice(coursePrice.price, coursePrice.currency)} та отримай доступ до всіх модулів та тем одразу. Перший урок першого модуля доступний безкоштовно для ознайомлення.`
-                : `Придбай курс за ${formatPrice(coursePrice.price, coursePrice.currency)} та отримай доступ до всіх модулів та тем одразу. Перший урок першого модуля доступний безкоштовно для ознайомлення.`
-              }
-            </p>
-            {user ? (
-              <button
-                onClick={handlePurchase}
-                disabled={isPurchasing}
-                className={styles.ctaButton}
-              >
-                <Rocket className="w-5 h-5" />
-                {isPurchasing ? 'Перенаправлення на оплату...' : `Придбати за ${formatPrice(coursePrice.price, coursePrice.currency)}`}
-              </button>
-            ) : (
-              <Link 
-                href={`/login?redirect=${encodeURIComponent(`/courses/${courseId}`)}`}
-                className={styles.ctaButton}
-              >
-                <Rocket className="w-5 h-5" />
-                Увійти та придбати курс
-              </Link>
-            )}
-          </div>
-        ) : (
-          <div className={styles.ctaCard}>
-            <h2 className={styles.ctaTitle}>
-              {isPurchased || user?.role === 'admin' ? 'Продовжуй навчання' : 'Продовжуй навчання'}
-            </h2>
-            <p className={styles.ctaDescription}>
-              {isPurchased || user?.role === 'admin' 
-                ? `Ти вже на ${progress}% шляху до завершення курсу. Продовжуй вивчати нові уроки!`
-                : `Ти вже на ${progress}% шляху до завершення курсу. Продовжуй вивчати нові уроки!`
-              }
-            </p>
-            <Link 
-              href={`/courses/${courseId}`}
-              className={styles.ctaButton}
-            >
-              <Play className="w-5 h-5" />
-              Перейти до уроків
-            </Link>
-          </div>
-        )}
+        <div className={styles.ctaCard}>
+          <h2 className={styles.ctaTitle}>Продовжуй навчання</h2>
+          <p className={styles.ctaDescription}>
+            Ти вже на {progress}% шляху до завершення курсу. Продовжуй вивчати нові уроки!
+          </p>
+          <Link 
+            href={`/courses/${courseId}`}
+            className={styles.ctaButton}
+          >
+            <Play className="w-5 h-5" />
+            Перейти до уроків
+          </Link>
+        </div>
       </section>
     </div>
   )
