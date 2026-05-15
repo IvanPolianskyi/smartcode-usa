@@ -279,7 +279,7 @@ const EnhancedCourseCards = () => {
     const getExpandedCard = () => (isMobile ? null : hoveredCard)
 
 	return (
-		<div className={styles.sectionContainer}>
+		<div id="our-courses" className={styles.sectionContainer}>
 			<div className={styles.sectionHeader}>
 				<h2 className={styles.sectionTitle}>Навчальні предмети</h2>
 			</div>

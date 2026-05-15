@@ -227,8 +227,8 @@ const Header = () => {
 
 	const navItems = [
 		{ label: 'Записатися', href: '/#trial-signup', ctaModal: true },
-		{ label: 'Курси', href: '/#courses' },
-		{ label: 'Соцмережі', href: '/#social-media' },
+		{ label: 'Курси', href: '/#our-courses' },
+		{ label: 'Приклади уроків', href: '/#courses' },
 		{ label: 'Ціни', href: '/tariff' },
 		{ label: 'Відгуки', href: '/#testimonials' },
 		{ label: 'Запроси друга', href: '/invite' },

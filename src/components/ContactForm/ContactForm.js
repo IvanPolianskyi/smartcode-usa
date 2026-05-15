@@ -271,7 +271,7 @@ const ContactForm = () => {
                                 <div className={styles.modalSuccessIconWrap}>
                                     <CheckCircle size={32} className={styles.modalSuccessIcon} />
                                 </div>
-                                <h3 className={styles.modalSuccessTitle}>Дякуємо! 🎉</h3>
+                                <h3 className={styles.modalSuccessTitle}>Дякуємо!</h3>
                                 <p className={styles.modalSuccessText}>
                                     Наш менеджер зв&apos;яжеться з вами найближчим часом.
                                 </p>
