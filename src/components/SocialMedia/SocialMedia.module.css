@@ -2,6 +2,7 @@
 .section {
 	background: linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%);
 	padding: 6rem 2rem;
+	scroll-margin-top: 5.5rem;
 	position: relative;
 	overflow: hidden;
 	/* Фікс для Instagram in-app browser: ізолюємо від змін viewport при появі/зникненні тулбара */

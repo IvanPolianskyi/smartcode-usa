@@ -442,6 +442,7 @@ export default function DashboardPage() {
 
   const loading = sessionLoading || progressLoading
   const roleLabel = useMemo(() => (user?.role === 'admin' ? 'Адміністратор' : 'Учень'), [user?.role])
+  const accountPendingSetup = user?.role !== 'admin' && user?.studentProfile?.accountReady === false
 
   const refreshData = async () => {
     await refresh(false)
@@ -476,9 +477,17 @@ export default function DashboardPage() {
         </div>
       </header>
 
+      {accountPendingSetup ? (
+        <div className={styles.pendingNotice}>
+          <strong>Зачекайте, поки менеджер налаштує ваш акаунт</strong>
+          Ви вже зареєстровані в SmartCode. Як тільки адміністратор підключить курси, розклад і доступи, тут зʼявиться ваш повний особистий кабінет. Якщо очікування затягується, напишіть нам у зручний для вас спосіб.
+        </div>
+      ) : null}
       {user.role === 'admin'
         ? <AdminDashboard adminStats={adminStats} />
-        : <StudentDashboard user={user} progressData={progressData} paymentStats={paymentStats} refreshData={refreshData} />}
+        : accountPendingSetup
+          ? null
+          : <StudentDashboard user={user} progressData={progressData} paymentStats={paymentStats} refreshData={refreshData} />}
     </div>
   )
 }

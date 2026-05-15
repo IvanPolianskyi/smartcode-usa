@@ -2,6 +2,7 @@
 .testimonialsSection {
 	background: #f8fafc;
 	padding: 4rem 0;
+	scroll-margin-top: 5.5rem;
 	overflow: hidden;
 	position: relative;
 	/* Фікс для Instagram in-app browser: ізолюємо від змін viewport при появі/зникненні тулбара */

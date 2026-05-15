@@ -3,6 +3,10 @@
 import dynamic from 'next/dynamic'
 import { useEffect } from 'react'
 import { Analytics } from "@vercel/analytics/next"
+import {
+	readAndClearPendingHomeSectionScroll,
+	scheduleScrollToHomeSectionId,
+} from '@/lib/homeSectionScroll'
 
 // Lightweight skeletons to keep layout stable while chunks load
 const SectionSkeleton = ({ height = '60vh' }) => (
@@ -33,6 +37,15 @@ const LMSPromo = dynamic(() => import('@/components/LMSPromo/LMSPromo'), {
 })
 
 export default function HomeClient() {
+  useEffect(() => {
+    const pending = readAndClearPendingHomeSectionScroll()
+    const hashId =
+      typeof window !== 'undefined' ? window.location.hash.replace(/^#/, '') : ''
+    const id = pending || hashId
+    if (!id) return undefined
+    return scheduleScrollToHomeSectionId(id)
+  }, [])
+
   useEffect(() => {
     // Fire-and-forget visit log (deferred to idle to reduce startup TBT)
     let idleId = null

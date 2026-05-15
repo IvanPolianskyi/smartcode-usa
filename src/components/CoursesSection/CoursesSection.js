@@ -135,7 +135,7 @@ const CoursesSection = () => {
   }, [])
 
   return (
-    <section ref={sectionRef} className={styles.section}>
+    <section ref={sectionRef} id="courses" className={styles.section}>
       <div className={styles.container}>
         <div className={styles.heroContent}>
           <div className={styles.badge}>

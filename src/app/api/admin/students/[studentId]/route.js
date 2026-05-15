@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
+import { fetchCrmTeachers, pullCrmScheduleToSmartcodeStudent } from '@/lib/crmStudentSchedulePull'
 
 const COURSE_NAMES = {
   'python-developer-zero-to-junior': 'Пайтон',
@@ -9,6 +10,8 @@ const COURSE_NAMES = {
   'roblox-studio': 'Roblox Studio',
   'web-development': 'Веб-розробка',
 }
+
+const CRM_BASE_URL = process.env.CRM_API_URL || process.env.SMARTCODE_CRM_API_URL || ''
 
 async function requireAdmin() {
   const userId = await getCurrentUser()
@@ -35,10 +38,19 @@ export async function GET(request, { params }) {
     const progressCollection = await getCollection('userProgress')
     const studentObjectId = new ObjectId(studentId)
 
-    const student = await usersCollection.findOne({ _id: studentObjectId, role: { $ne: 'admin' } }, { projection: { password: 0 } })
-    if (!student) {
+    const studentDoc = await usersCollection.findOne({ _id: studentObjectId, role: { $ne: 'admin' } }, { projection: { password: 0 } })
+    if (!studentDoc) {
       return NextResponse.json({ error: 'Student not found' }, { status: 404 })
     }
+    const syncedStudent = await pullCrmScheduleToSmartcodeStudent(
+      {
+        id: studentDoc._id.toString(),
+        name: studentDoc.name || 'Без імені',
+        email: studentDoc.email,
+        studentProfile: studentDoc.studentProfile || {},
+      },
+      usersCollection
+    )
 
     const progressDocs = await progressCollection.find({ userId: studentObjectId }).toArray()
     const perCourse = progressDocs.map((doc) => ({
@@ -57,12 +69,21 @@ export async function GET(request, { params }) {
       .sort({ createdAt: -1 })
       .toArray()
 
+    let crmTeachers = []
+    if (CRM_BASE_URL) {
+      try {
+        crmTeachers = await fetchCrmTeachers()
+      } catch (error) {
+        console.error('CRM teachers load error:', error)
+      }
+    }
+
     const responsePayload = {
       student: {
-        id: student._id.toString(),
-        name: student.name || 'Без імені',
-        email: student.email,
-        profile: student.studentProfile || {},
+        id: studentDoc._id.toString(),
+        name: studentDoc.name || 'Без імені',
+        email: studentDoc.email,
+        profile: syncedStudent.studentProfile || studentDoc.studentProfile || {},
       },
       courseNames: COURSE_NAMES,
       analytics: {
@@ -70,6 +91,7 @@ export async function GET(request, { params }) {
         averageProgress,
         perCourse,
       },
+      crmTeachers,
       receipts: receipts.map((item) => ({
         id: item._id.toString(),
         amount: Number(item.amount || 0),
@@ -90,4 +112,3 @@ export async function GET(request, { params }) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
-

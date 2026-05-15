@@ -2,6 +2,12 @@ import { NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
+import {
+  buildCrmHeaders,
+  fetchCrmTeachers,
+  resolveCrmToken,
+  syncStudentToCrm,
+} from '@/lib/crmStudentSchedulePull'
 
 const COURSE_NAMES = {
   'python-developer-zero-to-junior': 'Пайтон',
@@ -19,6 +25,118 @@ const DEFAULT_STUDENT_PROFILE = {
   accountBalance: 0,
   lessonCredits: 0,
   scheduleSyncStartAt: null,
+  crmTeacherId: '',
+  crmTeacherName: '',
+}
+
+const CRM_BASE_URL = process.env.CRM_API_URL || process.env.SMARTCODE_CRM_API_URL || ''
+const DEFAULT_LESSON_DURATION_MINUTES = 60
+const WEEKDAY_INDEX = {
+  'Нд': 0,
+  'Пн': 1,
+  'Вт': 2,
+  'Ср': 3,
+  'Чт': 4,
+  'Пт': 5,
+  'Сб': 6,
+}
+
+function parseTimeToParts(raw) {
+  const text = String(raw || '').trim()
+  const match = /^(\d{1,2}):(\d{2})$/.exec(text)
+  if (!match) return null
+  const hours = Number(match[1])
+  const minutes = Number(match[2])
+  if (Number.isNaN(hours) || Number.isNaN(minutes)) return null
+  if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) return null
+  return { hours, minutes }
+}
+
+function nextDateForWeekday(dayIndex, hours, minutes) {
+  const now = new Date()
+  const next = new Date(now)
+  const delta = (dayIndex - now.getDay() + 7) % 7
+  next.setDate(now.getDate() + delta)
+  next.setHours(hours, minutes, 0, 0)
+  if (next <= now) {
+    next.setDate(next.getDate() + 7)
+  }
+  return next
+}
+
+function regularSlotSignature(dateIso) {
+  const date = new Date(dateIso)
+  if (Number.isNaN(date.getTime())) return null
+  return `${date.getUTCDay()}-${date.getUTCHours()}:${String(date.getUTCMinutes()).padStart(2, '0')}`
+}
+
+async function fetchExistingIndividualLessons(base, token, studentId, teacherId) {
+  const params = new URLSearchParams({
+    kind: 'individual',
+    student_id: studentId,
+    teacher_id: teacherId,
+    limit: '500',
+  })
+  const response = await fetch(`${base}/lessons?${params}`, {
+    headers: buildCrmHeaders(token),
+    cache: 'no-store',
+  })
+  if (!response.ok) return []
+  const data = await response.json()
+  return Array.isArray(data) ? data : []
+}
+
+async function ensureCrmRegularLessons(studentDoc, crmStudent) {
+  if (!CRM_BASE_URL) return
+  const profile = studentDoc?.studentProfile || {}
+  const teacherId = String(profile.crmTeacherId || '').trim()
+  const lessonFormat = String(profile.lessonFormat || '').trim()
+  const schedule = Array.isArray(profile.regularSchedule) ? profile.regularSchedule : []
+  if (!teacherId || lessonFormat !== 'individual' || schedule.length === 0) return
+
+  const studentId = String(crmStudent?.id || profile.crmStudentId || '').trim()
+  if (!studentId) return
+
+  const base = CRM_BASE_URL.replace(/\/$/, '')
+  const token = await resolveCrmToken()
+  const existingLessons = await fetchExistingIndividualLessons(base, token, studentId, teacherId)
+  const existingSignatures = new Set(
+    existingLessons
+      .map((item) => regularSlotSignature(item?.start_at))
+      .filter(Boolean)
+  )
+
+  for (const item of schedule) {
+    const day = String(item?.day || '').trim()
+    const timeParts = parseTimeToParts(item?.time)
+    const weekday = WEEKDAY_INDEX[day]
+    if (weekday == null || !timeParts) continue
+
+    const slotStart = nextDateForWeekday(weekday, timeParts.hours, timeParts.minutes)
+    const slotEnd = new Date(slotStart.getTime() + DEFAULT_LESSON_DURATION_MINUTES * 60 * 1000)
+    const slotSignature = regularSlotSignature(slotStart.toISOString())
+    if (slotSignature && existingSignatures.has(slotSignature)) {
+      continue
+    }
+
+    const createResponse = await fetch(`${base}/lessons`, {
+      method: 'POST',
+      headers: buildCrmHeaders(token),
+      body: JSON.stringify({
+        kind: 'individual',
+        teacher_id: teacherId,
+        student_id: studentId,
+        start_at: slotStart.toISOString(),
+        end_at: slotEnd.toISOString(),
+        series_forever: true,
+      }),
+    })
+
+    if (!createResponse.ok) {
+      const message = await createResponse.text()
+      throw new Error(message || `CRM lessons create failed (${createResponse.status})`)
+    }
+  }
 }
 
 async function requireAdmin() {
@@ -101,6 +219,10 @@ export async function GET() {
           accountBalance: Number(profile.accountBalance || 0),
           lessonCredits: Number(profile.lessonCredits || 0),
           scheduleSyncStartAt: profile.scheduleSyncStartAt || null,
+          crmTeacherId: String(profile.crmTeacherId || ''),
+          crmTeacherName: String(profile.crmTeacherName || ''),
+          crmStudentId: String(profile.crmStudentId || ''),
+          accountReady: profile.accountReady !== false,
         },
         analytics: {
           totalCompletedLessons: analytics.totalCompletedLessons,
@@ -111,7 +233,16 @@ export async function GET() {
       }
     })
 
-    return NextResponse.json({ students: formatted, courseNames: COURSE_NAMES }, { status: 200 })
+    let crmTeachers = []
+    if (CRM_BASE_URL) {
+      try {
+        crmTeachers = await fetchCrmTeachers()
+      } catch (error) {
+        console.error('CRM teachers load error:', error)
+      }
+    }
+
+    return NextResponse.json({ students: formatted, courseNames: COURSE_NAMES, crmTeachers }, { status: 200 })
   } catch (error) {
     console.error('Admin students GET error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
@@ -133,10 +264,21 @@ export async function PATCH(request) {
       onlineCourseIds = [],
       pythonAccessEnabled = false,
       pythonUnlockedLessons = [],
+      crmTeacherId = '',
+      crmTeacherName = '',
+      accountReady: accountReadyBody,
     } = body
 
     if (!studentId) {
       return NextResponse.json({ error: 'studentId is required' }, { status: 400 })
+    }
+
+    const existing = await usersCollection.findOne(
+      { _id: new ObjectId(studentId), role: { $ne: 'admin' } },
+      { projection: { password: 0 } }
+    )
+    if (!existing) {
+      return NextResponse.json({ error: 'Student not found' }, { status: 404 })
     }
 
     const sanitizedSchedule = (regularSchedule || [])
@@ -146,20 +288,34 @@ export async function PATCH(request) {
         time: item.time || '',
       }))
 
-    const updateDoc = {
-      studentProfile: {
-        lessonFormat: lessonFormat === 'individual' ? 'individual' : 'group',
-        regularSchedule: sanitizedSchedule,
-        zoomLink: String(zoomLink || '').trim(),
-        activeOnlineCourses: (onlineCourseIds || []).filter(Boolean),
-        courseAccess: {
-          'python-developer-zero-to-junior': {
-            enabled: Boolean(pythonAccessEnabled),
-            unlockedLessons: (pythonUnlockedLessons || []).filter(Boolean),
-          },
+    const prev = { ...DEFAULT_STUDENT_PROFILE, ...(existing.studentProfile || {}) }
+    const prevPython = prev.courseAccess?.['python-developer-zero-to-junior'] || {}
+
+    const mergedProfile = {
+      ...prev,
+      lessonFormat: lessonFormat === 'individual' ? 'individual' : 'group',
+      regularSchedule: sanitizedSchedule,
+      zoomLink: String(zoomLink || '').trim(),
+      activeOnlineCourses: (onlineCourseIds || []).filter(Boolean),
+      courseAccess: {
+        ...(prev.courseAccess || {}),
+        'python-developer-zero-to-junior': {
+          ...prevPython,
+          enabled: Boolean(pythonAccessEnabled),
+          unlockedLessons: (pythonUnlockedLessons || []).filter(Boolean),
         },
-        scheduleSyncStartAt: new Date(),
       },
+      scheduleSyncStartAt: new Date(),
+      crmTeacherId: String(crmTeacherId || '').trim(),
+      crmTeacherName: String(crmTeacherName || '').trim(),
+    }
+
+    if (accountReadyBody !== undefined) {
+      mergedProfile.accountReady = Boolean(accountReadyBody)
+    }
+
+    const updateDoc = {
+      studentProfile: mergedProfile,
       updatedAt: new Date(),
     }
 
@@ -172,7 +328,66 @@ export async function PATCH(request) {
       return NextResponse.json({ error: 'Student not found' }, { status: 404 })
     }
 
-    return NextResponse.json({ ok: true }, { status: 200 })
+    let updatedStudent = await usersCollection.findOne(
+      { _id: new ObjectId(studentId), role: { $ne: 'admin' } },
+      { projection: { password: 0 } }
+    )
+    if (!updatedStudent) {
+      return NextResponse.json({ error: 'Student not found after update' }, { status: 404 })
+    }
+
+    if (CRM_BASE_URL) {
+      try {
+        const crmStudent = await syncStudentToCrm(updatedStudent)
+        if (crmStudent?.id) {
+          await usersCollection.updateOne(
+            { _id: new ObjectId(studentId) },
+            {
+              $set: {
+                'studentProfile.crmStudentId': String(crmStudent.id),
+                'studentProfile.crmShortId': String(crmStudent.short_id || ''),
+                updatedAt: new Date(),
+              },
+            }
+          )
+        }
+        updatedStudent = await usersCollection.findOne(
+          { _id: new ObjectId(studentId), role: { $ne: 'admin' } },
+          { projection: { password: 0 } }
+        )
+        await ensureCrmRegularLessons(
+          {
+            ...updatedStudent,
+            studentProfile: {
+              ...(updatedStudent?.studentProfile || {}),
+              crmStudentId: String(crmStudent?.id || updatedStudent?.studentProfile?.crmStudentId || ''),
+            },
+          },
+          crmStudent
+        )
+      } catch (crmError) {
+        return NextResponse.json(
+          {
+            error: 'Локальні налаштування збережено, але синхронізація в CRM не вдалась',
+            detail: String(crmError?.message || crmError),
+          },
+          { status: 502 }
+        )
+      }
+    }
+
+    const finalStudent = await usersCollection.findOne(
+      { _id: new ObjectId(studentId), role: { $ne: 'admin' } },
+      { projection: { password: 0 } }
+    )
+
+    return NextResponse.json(
+      {
+        ok: true,
+        studentProfile: finalStudent?.studentProfile || mergedProfile,
+      },
+      { status: 200 }
+    )
   } catch (error) {
     console.error('Admin students PATCH error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })

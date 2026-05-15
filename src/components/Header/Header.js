@@ -2,29 +2,30 @@
 import React, { useState, useEffect, useRef } from 'react'
 
 import {
-	ChevronDown,
-	ChevronRight,
-	Phone,
 	Menu,
 	X,
 	Code,
 	Gamepad2,
 	Monitor,
 	Star,
-	Users,
 	Box,
+	User,
+	LogOut,
 } from 'lucide-react'
 import styles from './Header.module.css'
 import gsap from 'gsap'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import Logo from '@/components/Logo/Logo'
 import { logout } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
-import { useRouter } from 'next/navigation'
-import { User, LogOut } from 'lucide-react'
+import {
+	parseHomeHashTarget,
+	setPendingHomeSectionScroll,
+	scheduleScrollToHomeSectionId,
+} from '@/lib/homeSectionScroll'
 
 const Header = () => {
-	const [isCoursesOpen, setIsCoursesOpen] = useState(false)
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const [isScrolled, setIsScrolled] = useState(false)
 	const headerRef = useRef(null)
@@ -41,39 +42,7 @@ const Header = () => {
 		return () => window.removeEventListener('scroll', handleScroll, { passive: true })
 	}, [])
 
-	// Анімація випадаючого меню
-	useEffect(() => {
-		const dropdown = headerRef.current?.querySelector(`.${styles.dropdown}`)
-		if (!dropdown) return
-
-		if (isCoursesOpen) {
-			gsap
-				.timeline()
-				.set(dropdown, { display: 'block' })
-				.to(dropdown, { opacity: 1, duration: 0.3, ease: 'power2.out' })
-				.fromTo(
-					`.${styles.dropdownItem}`,
-					{ opacity: 0, y: 10 },
-					{
-						opacity: 1,
-						y: 0,
-						stagger: 0.05,
-						duration: 0.3,
-						ease: 'power2.out',
-					},
-					'-=0.2'
-				)
-		} else {
-			gsap.to(dropdown, {
-				opacity: 0,
-				duration: 0.2,
-				ease: 'power2.in',
-				onComplete: () => gsap.set(dropdown, { display: 'none' }),
-			})
-		}
-	}, [isCoursesOpen])
-
-    // ПОВНОЕКРАННА анімація мобільного меню + Scroll Lock як у модального вікна
+	// ПОВНОЕКРАННА анімація мобільного меню + Scroll Lock як у модального вікна
 	useEffect(() => {
 		const mobileMenu = headerRef.current?.querySelector(`.${styles.mobileMenu}`)
 		if (!mobileMenu) return
@@ -149,31 +118,6 @@ const Header = () => {
         }
 	}, [isMobileMenuOpen])
 
-	// Закриття dropdown по ESC або кліку поза меню
-	useEffect(() => {
-		const handleEscape = (e) => {
-			if (e.key === 'Escape') {
-				setIsCoursesOpen(false)
-			}
-		}
-
-		const handleClickOutside = (e) => {
-			if (isCoursesOpen && !e.target.closest(`.${styles.dropdown}`) && !e.target.closest(`.${styles.navItemDropdown}`)) {
-				setIsCoursesOpen(false)
-			}
-		}
-
-		if (isCoursesOpen) {
-			document.addEventListener('keydown', handleEscape)
-			document.addEventListener('mousedown', handleClickOutside)
-		}
-
-		return () => {
-			document.removeEventListener('keydown', handleEscape)
-			document.removeEventListener('mousedown', handleClickOutside)
-		}
-	}, [isCoursesOpen])
-
 	// Закриття мобільного меню по ESC
 	useEffect(() => {
 		const handleEscape = (e) => {
@@ -191,11 +135,6 @@ const Header = () => {
 		}
 	}, [isMobileMenuOpen])
 
-	// Логіка для dropdown меню (тільки клік, без hover)
-	const handleDropdownToggle = () => {
-		setIsCoursesOpen(!isCoursesOpen)
-	}
-
 	const handleMobileMenuToggle = () => {
 		setIsMobileMenuOpen(!isMobileMenuOpen)
 	}
@@ -204,13 +143,51 @@ const Header = () => {
 		setIsMobileMenuOpen(false)
 	}
 
-    const handleCtaClick = (e) => {
+	const handleCtaClick = (e) => {
         e.preventDefault()
         if (typeof window !== 'undefined') {
             window.dispatchEvent(new Event('openContactModal'))
         }
         setIsMobileMenuOpen(false)
     }
+
+	const navigateToHomeSection = (sectionId) => {
+		if (typeof window === 'undefined' || !sectionId) return
+		setIsMobileMenuOpen(false)
+		const path = window.location.pathname
+		if (path === '/' || path === '') {
+			scheduleScrollToHomeSectionId(sectionId)
+			return
+		}
+		setPendingHomeSectionScroll(sectionId)
+		router.push('/')
+	}
+
+	const handleDesktopNavClick = (e, item) => {
+		if (item.ctaModal) {
+			handleCtaClick(e)
+			return
+		}
+		const id = parseHomeHashTarget(item.href)
+		if (id) {
+			e.preventDefault()
+			navigateToHomeSection(id)
+		}
+	}
+
+	const handleMobileNavClick = (e, item) => {
+		if (item.ctaModal) {
+			handleCtaClick(e)
+			return
+		}
+		const id = parseHomeHashTarget(item.href)
+		if (id) {
+			e.preventDefault()
+			navigateToHomeSection(id)
+			return
+		}
+		handleMobileMenuClose()
+	}
 
 	const handleLogout = async () => {
 		try {
@@ -224,8 +201,8 @@ const Header = () => {
 	}
 
 	const navItems = [
-		{ label: 'Записатися', href: '/#trial-signup' },
-		{ label: 'Курси', dropdown: true },
+		{ label: 'Записатися', href: '/#trial-signup', ctaModal: true },
+		{ label: 'Курси', href: '/#courses' },
 		{ label: 'Соцмережі', href: '/#social-media' },
 		{ label: 'Ціни', href: '/tariff' },
 		{ label: 'Відгуки', href: '/#testimonials' },
@@ -292,85 +269,17 @@ const Header = () => {
 
 					{/* Навігація для десктопу */}
 					<nav className={styles.nav}>
-                        {navItems.map((item, index) =>
-							item.dropdown ? (
-								<div
-									key={index}
-									className={styles.navItemDropdown}
-								>
-									<button 
-										className={styles.navLink}
-										onClick={handleDropdownToggle}
-									>
-										{item.label}
-										<ChevronDown
-											size={16}
-											className={`${styles.chevron} ${
-												isCoursesOpen ? styles.chevronRotated : ''
-											}`}
-										/>
-									</button>
-									<div className={styles.dropdown}>
-										<div className={styles.dropdownContent}>
-											<div className={styles.dropdownHeader}>
-												<h3 className={styles.dropdownTitle}>Наші предмети</h3>
-												<p className={styles.dropdownSubtitle}>
-													Обери свій шлях у програмуванні
-												</p>
-											</div>
-
-											<div className={styles.dropdownGrid}>
-												
-												{courses.map((course, courseIndex) => (
-													<Link
-														key={courseIndex}
-														href={course.link}
-														className={styles.dropdownItem}
-														onClick={() => setIsCoursesOpen(false)}
-													>
-														<div
-															className={`${styles.dropdownIcon} ${
-																styles[course.theme]
-															}`}
-														>
-															{course.icon}
-														</div>
-														<div className={styles.dropdownInfo}>
-															<div className={styles.courseHeader}>
-																<h4 className={styles.courseTitle}>
-																	{course.title}
-																</h4>
-																{course.popular && (
-																	<span className={styles.popularBadge}>
-																		<Star size={10} /> Популярний
-																	</span>
-																)}
-															</div>
-															<p className={styles.courseDescription}>
-																{course.description}
-															</p>
-															<span className={styles.courseAge}>
-																{course.age}
-															</span>
-														</div>
-													</Link>
-												))}
-											</div>
-										</div>
-									</div>
-								</div>
-                            ) : (
-                                <Link 
-									key={index} 
-									href={item.href} 
-									className={`${styles.navLink} ${item.label === 'Записатися' ? styles.navLinkCta : ''}`}
-									onClick={item.label === 'Записатися' ? handleCtaClick : undefined}
-									scroll={item.label === 'Записатися' ? false : undefined}
-								>
-									{item.label}
-								</Link>
-                            )
-						)}
+						{navItems.map((item, index) => (
+							<Link
+								key={item.label}
+								href={item.href}
+								className={`${styles.navLink} ${item.ctaModal ? styles.navLinkCta : ''}`}
+								scroll={item.ctaModal || parseHomeHashTarget(item.href) ? false : undefined}
+								onClick={(e) => handleDesktopNavClick(e, item)}
+							>
+								{item.label}
+							</Link>
+						))}
 					</nav>
 
 					{/* Права частина хедера */}
@@ -407,11 +316,14 @@ const Header = () => {
 							</Link>
 						)}
 						<button
+							type="button"
 							className={styles.mobileMenuButton}
 							onClick={handleMobileMenuToggle}
-							aria-label='Меню'
+							aria-label={isMobileMenuOpen ? 'Закрити меню' : 'Відкрити меню'}
+							aria-expanded={isMobileMenuOpen}
+							aria-controls="site-mobile-menu"
 						>
-							<Menu size={24} />
+							{isMobileMenuOpen ? <X size={24} aria-hidden /> : <Menu size={24} aria-hidden />}
 						</button>
 					</div>
 				</div>
@@ -419,6 +331,7 @@ const Header = () => {
 
 			{/* Повноекранне мобільне меню */}
             <div 
+                id="site-mobile-menu"
                 className={styles.mobileMenu}
                 role="dialog" 
                 aria-modal="true" 
@@ -446,22 +359,20 @@ const Header = () => {
 					<div className={styles.mobileMenuNav}>
 						<div className={styles.mobileMenuSection}>
 							<h3 className={styles.mobileMenuSectionTitle}>Сторінки</h3>
-							{navItems
-								.filter((item) => !item.dropdown)
-								.map((item, index) => (
+							{navItems.map((item) => (
 									<Link
 										key={item.label}
 										href={item.href}
-										className={`${styles.mobileMenuItem} ${styles.mobileNavItem} ${item.label === 'Записатися' ? styles.mobileNavCta : ''}`}
-										onClick={item.label === 'Записатися' ? handleCtaClick : handleMobileMenuClose}
-										scroll={item.label === 'Записатися' ? false : undefined}
+										className={`${styles.mobileMenuItem} ${styles.mobileNavItem} ${item.ctaModal ? styles.mobileNavCta : ''}`}
+										scroll={item.ctaModal || parseHomeHashTarget(item.href) ? false : undefined}
+										onClick={(e) => handleMobileNavClick(e, item)}
 									>
 										{item.label}
 									</Link>
 								))}
 						</div>
 
-						<div className={styles.mobileMenuSection}>
+						<div className={`${styles.mobileMenuSection} ${styles.mobileMenuCoursesSection}`}>
 							<h3 className={styles.mobileMenuSectionTitle}>Курси</h3>
 							{courses.map((course, index) => (
 								<Link

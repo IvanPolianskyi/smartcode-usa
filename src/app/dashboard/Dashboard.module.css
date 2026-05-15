@@ -370,6 +370,23 @@
   font-size: 0.88rem;
 }
 
+.pendingNotice {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 1px solid #f59e0b;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  color: #78350f;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.pendingNotice strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #92400e;
+}
+
 @media (max-width: 980px) {
   .gridThree { grid-template-columns: 1fr; }
   .gridTwo { grid-template-columns: 1fr; }

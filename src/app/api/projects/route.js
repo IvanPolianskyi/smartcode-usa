@@ -31,6 +31,15 @@ export async function GET() {
     })
   } catch (error) {
     console.error('Error fetching projects:', error)
+    const errorCode = String(error?.code || '')
+    if (errorCode === 'ETIMEOUT') {
+      // Atlas DNS/network outage should not hard-fail the public projects page.
+      return NextResponse.json({
+        success: true,
+        projects: [],
+        warning: 'MongoDB is temporarily unavailable',
+      })
+    }
     return NextResponse.json(
       { success: false, error: 'Failed to fetch projects' },
       { status: 500 }
@@ -70,7 +79,7 @@ export async function POST(request) {
   } catch (error) {
     console.error('Error adding project:', error)
     return NextResponse.json(
-      { success: false, error: "asdadsasdas" },
+      { success: false, error: 'Failed to add project' },
       { status: 500 }
     )
   }

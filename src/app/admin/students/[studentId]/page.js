@@ -18,9 +18,11 @@ export default function AdminStudentPage() {
 
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [saveNotice, setSaveNotice] = useState('')
   const [approvingId, setApprovingId] = useState('')
   const [student, setStudent] = useState(null)
   const [courseNames, setCourseNames] = useState({})
+  const [crmTeachers, setCrmTeachers] = useState([])
   const [analytics, setAnalytics] = useState(null)
   const [receipts, setReceipts] = useState([])
   const [form, setForm] = useState({
@@ -28,12 +30,24 @@ export default function AdminStudentPage() {
     regularDays: [],
     regularScheduleByDay: {},
     zoomLink: '',
+    crmTeacherId: '',
+    crmTeacherName: '',
     onlineCourseIds: [],
     pythonAccessEnabled: false,
     pythonUnlockedLessons: [],
+    accountReady: true,
   })
+  const [crmGroups, setCrmGroups] = useState([])
+  const [groupsLoading, setGroupsLoading] = useState(false)
+  const [joinGroupId, setJoinGroupId] = useState('')
+  const [joinLoading, setJoinLoading] = useState(false)
+  const [showAdvancedGroup, setShowAdvancedGroup] = useState(false)
 
   const pythonLessons = useMemo(() => pythonCurriculum.modules.flatMap((module) => module.lessons), [])
+  const orderedRegularDays = useMemo(
+    () => WEEKDAY_OPTIONS.filter((day) => form.regularDays.includes(day)),
+    [form.regularDays]
+  )
 
   const loadStudent = async () => {
     if (!studentId) return
@@ -50,6 +64,7 @@ export default function AdminStudentPage() {
       const data = await response.json()
       setStudent(data.student || null)
       setCourseNames(data.courseNames || {})
+      setCrmTeachers(data.crmTeachers || [])
       setAnalytics(data.analytics || null)
       setReceipts(data.receipts || [])
 
@@ -68,10 +83,15 @@ export default function AdminStudentPage() {
         regularDays: dayList,
         regularScheduleByDay: scheduleByDay,
         zoomLink: data.student?.profile?.zoomLink || '',
+        crmTeacherId: data.student?.profile?.crmTeacherId || '',
+        crmTeacherName: data.student?.profile?.crmTeacherName || '',
         onlineCourseIds,
         pythonAccessEnabled: Boolean(pythonAccess.enabled),
         pythonUnlockedLessons: unlockedLessons,
+        accountReady: data.student?.profile?.accountReady !== false,
       })
+      setJoinGroupId('')
+      setShowAdvancedGroup(false)
     } catch (error) {
       console.error(error)
       alert('Помилка завантаження учня')
@@ -92,6 +112,27 @@ export default function AdminStudentPage() {
     }
     loadStudent()
   }, [sessionLoading, user?.id, user?.role, studentId])
+
+  useEffect(() => {
+    if (!studentId || form.lessonFormat !== 'group') return
+    let cancelled = false
+    const run = async () => {
+      setGroupsLoading(true)
+      try {
+        const res = await fetch('/api/admin/crm-groups')
+        const data = await res.json()
+        if (!cancelled && res.ok) setCrmGroups(data.groups || [])
+      } catch {
+        if (!cancelled) setCrmGroups([])
+      } finally {
+        if (!cancelled) setGroupsLoading(false)
+      }
+    }
+    run()
+    return () => {
+      cancelled = true
+    }
+  }, [studentId, form.lessonFormat])
 
   const toggleArray = (fieldName, value) => {
     setForm((prev) => {
@@ -132,17 +173,64 @@ export default function AdminStudentPage() {
           onlineCourseIds: form.onlineCourseIds,
           pythonAccessEnabled: form.pythonAccessEnabled,
           pythonUnlockedLessons: form.pythonUnlockedLessons,
+          crmTeacherId: form.crmTeacherId,
+          crmTeacherName: form.crmTeacherName,
+          accountReady: form.accountReady,
         }),
       })
       const data = await response.json()
       if (!response.ok) throw new Error(data.error || 'Failed to save student')
-      alert('Налаштування учня збережено')
-      await loadStudent()
+      if (data?.studentProfile) {
+        setStudent((prev) => (prev ? { ...prev, profile: data.studentProfile } : prev))
+      }
+      setSaveNotice('Налаштування збережено')
+      setTimeout(() => setSaveNotice(''), 2500)
     } catch (error) {
       console.error(error)
       alert(error.message || 'Помилка збереження')
     } finally {
       setSaving(false)
+    }
+  }
+
+  const joinCrmGroup = async () => {
+    if (!studentId || !joinGroupId) {
+      alert('Оберіть групу')
+      return
+    }
+    setJoinLoading(true)
+    try {
+      const response = await fetch(`/api/admin/students/${studentId}/join-crm-group`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ groupId: joinGroupId }),
+      })
+      const data = await response.json()
+      if (!response.ok) throw new Error(data.error || 'Не вдалося підключити')
+      if (data?.studentProfile) {
+        setStudent((prev) => (prev ? { ...prev, profile: data.studentProfile } : prev))
+        const schedule = data.studentProfile?.regularSchedule || []
+        const dayList = schedule.map((item) => item.day).filter(Boolean)
+        const scheduleByDay = {}
+        schedule.forEach((item) => {
+          if (item?.day) scheduleByDay[item.day] = item.time || ''
+        })
+        setForm((prev) => ({
+          ...prev,
+          lessonFormat: data.studentProfile?.lessonFormat || 'group',
+          regularDays: dayList,
+          regularScheduleByDay: scheduleByDay,
+          zoomLink: data.studentProfile?.zoomLink || '',
+          crmTeacherId: data.studentProfile?.crmTeacherId || '',
+          crmTeacherName: data.studentProfile?.crmTeacherName || '',
+        }))
+      }
+      setSaveNotice('Учня підключено до групи в CRM')
+      setTimeout(() => setSaveNotice(''), 3000)
+    } catch (error) {
+      alert(error.message || 'Помилка')
+    } finally {
+      setJoinLoading(false)
     }
   }
 
@@ -175,6 +263,10 @@ export default function AdminStudentPage() {
           <div>
             <h1 className={styles.title}><User size={24} /> {student.name}</h1>
             <p className={styles.subtitle}>{student.email}</p>
+            <p className={styles.subtitle}>ID: {student.id}</p>
+            {student.profile?.crmStudentId ? (
+              <p className={styles.subtitle}>CRM ID: {student.profile.crmStudentId}</p>
+            ) : null}
           </div>
           <div className={styles.headerActions}>
             <Link href="/admin" className={styles.certReloadButton}>
@@ -193,6 +285,20 @@ export default function AdminStudentPage() {
           <form onSubmit={saveStudent} className={styles.certForm}>
             <div className={styles.certFormRow}>
               <div className={styles.certFormGroup}>
+                <label className={styles.certLabel}>
+                  <input
+                    type="checkbox"
+                    checked={form.accountReady}
+                    onChange={(e) => setForm((prev) => ({ ...prev, accountReady: e.target.checked }))}
+                    style={{ marginRight: '0.5rem' }}
+                  />
+                  Акаунт готовий (учень бачить повний кабінет)
+                </label>
+                <p className={styles.noData} style={{ marginTop: '0.35rem' }}>
+                  Якщо зняти прапорець, учень бачитиме повідомлення про очікування налаштування менеджером.
+                </p>
+              </div>
+              <div className={styles.certFormGroup}>
                 <label className={styles.certLabel}>Формат занять</label>
                 <select
                   className={styles.certInput}
@@ -203,6 +309,51 @@ export default function AdminStudentPage() {
                   <option value="individual">Індивідуальні</option>
                 </select>
               </div>
+            </div>
+
+            {form.lessonFormat === 'group' && (
+              <div className={styles.progressCard} style={{ marginBottom: '1rem' }}>
+                <h3 className={styles.scheduleEditorTitle}>Підключення до групи в CRM</h3>
+                <p className={styles.cardText}>
+                  Оберіть групу та натисніть кнопку — розклад, Zoom і викладач підтягнуться з групи. Створити нову групу можна на сторінці{' '}
+                  <Link href="/admin/groups" className={styles.receiptLink}>Групи CRM</Link>.
+                </p>
+                <div className={styles.certFormRow}>
+                  <div className={styles.certFormGroup}>
+                    <label className={styles.certLabel}>Група</label>
+                    <select
+                      className={styles.certInput}
+                      value={joinGroupId}
+                      onChange={(e) => setJoinGroupId(e.target.value)}
+                      disabled={groupsLoading}
+                    >
+                      <option value="">{groupsLoading ? 'Завантаження…' : 'Оберіть групу'}</option>
+                      {crmGroups.map((g) => (
+                        <option key={g.id} value={g.id}>
+                          {g.name} ({g.teacher_name || 'викладач'}) · {g.student_count ?? (g.students || []).length} учн.
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className={styles.certFormActions} style={{ alignSelf: 'flex-end' }}>
+                    <button type="button" className={styles.certSubmitButton} disabled={joinLoading || !joinGroupId} onClick={joinCrmGroup}>
+                      {joinLoading ? 'Підключення…' : 'Підʼєднати до групи'}
+                    </button>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className={styles.certReloadButton}
+                  onClick={() => setShowAdvancedGroup((v) => !v)}
+                >
+                  {showAdvancedGroup ? 'Сховати ручні налаштування' : 'Розклад / Zoom вручну (за потреби)'}
+                </button>
+              </div>
+            )}
+
+            {(form.lessonFormat === 'individual' || showAdvancedGroup) && (
+            <>
+            <div className={styles.certFormRow}>
               <div className={styles.certFormGroup}>
                 <label className={styles.certLabel}>Zoom посилання</label>
                 <input
@@ -214,24 +365,63 @@ export default function AdminStudentPage() {
                 />
               </div>
             </div>
+            <div className={styles.certFormRow}>
+              <div className={styles.certFormGroup}>
+                <label className={styles.certLabel}>Викладач (CRM)</label>
+                <select
+                  className={styles.certInput}
+                  value={form.crmTeacherId}
+                  onChange={(e) => {
+                    const teacherId = e.target.value
+                    const teacherName = teacherId
+                      ? (crmTeachers.find((item) => item.id === teacherId)?.fullName || '')
+                      : ''
+                    setForm((prev) => ({
+                      ...prev,
+                      crmTeacherId: teacherId,
+                      crmTeacherName: teacherName,
+                    }))
+                  }}
+                >
+                  <option value="">Без викладача</option>
+                  {crmTeachers.map((teacher) => (
+                    <option key={teacher.id} value={teacher.id}>
+                      {teacher.fullName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
 
             <div className={styles.certFormRow}>
               <div className={styles.certFormGroup}>
                 <label className={styles.certLabel}>Дні тижня</label>
-                <div className={styles.coursesList}>
-                  {WEEKDAY_OPTIONS.map((day) => (
-                    <label key={day} className={styles.courseBadge} style={{ cursor: 'pointer' }}>
-                      <input
-                        type="checkbox"
-                        checked={form.regularDays.includes(day)}
-                        onChange={() => toggleArray('regularDays', day)}
-                        style={{ marginRight: '0.4rem' }}
-                      />
-                      {day}
-                    </label>
-                  ))}
+                <div className={styles.scheduleCalendar}>
+                  {WEEKDAY_OPTIONS.map((day) => {
+                    const isActive = form.regularDays.includes(day)
+                    return (
+                      <button
+                        key={day}
+                        type="button"
+                        className={`${styles.scheduleDayCard} ${isActive ? styles.scheduleDayCardActive : ''}`}
+                        onClick={() => toggleArray('regularDays', day)}
+                      >
+                        <span className={styles.scheduleDayName}>{day}</span>
+                        <span className={styles.scheduleDayTime}>
+                          {isActive
+                            ? (form.regularScheduleByDay?.[day] || 'Оберіть час')
+                            : 'Вихідний'}
+                        </span>
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
+            </div>
+            </>
+            )}
+
+            <div className={styles.certFormRow}>
               <div className={styles.certFormGroup}>
                 <label className={styles.certLabel}>Онлайн-курси</label>
                 <div className={styles.coursesList}>
@@ -250,31 +440,25 @@ export default function AdminStudentPage() {
               </div>
             </div>
 
-            {form.regularDays.length > 0 && (
-              <div className={styles.usersTable}>
-                <table>
-                  <thead>
-                    <tr><th>День</th><th>Час</th></tr>
-                  </thead>
-                  <tbody>
-                    {form.regularDays.map((day) => (
-                      <tr key={day}>
-                        <td>{day}</td>
-                        <td>
-                          <input
-                            type="time"
-                            className={styles.certInput}
-                            value={form.regularScheduleByDay?.[day] || ''}
-                            onChange={(e) => setForm((prev) => ({
-                              ...prev,
-                              regularScheduleByDay: { ...(prev.regularScheduleByDay || {}), [day]: e.target.value },
-                            }))}
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            {orderedRegularDays.length > 0 && (form.lessonFormat === 'individual' || showAdvancedGroup) && (
+              <div className={styles.scheduleEditor}>
+                <h3 className={styles.scheduleEditorTitle}>Розклад уроків</h3>
+                <div className={styles.scheduleEditorGrid}>
+                  {orderedRegularDays.map((day) => (
+                    <div key={day} className={styles.scheduleEditorCard}>
+                      <div className={styles.scheduleEditorDay}>{day}</div>
+                      <input
+                        type="time"
+                        className={styles.certInput}
+                        value={form.regularScheduleByDay?.[day] || ''}
+                        onChange={(e) => setForm((prev) => ({
+                          ...prev,
+                          regularScheduleByDay: { ...(prev.regularScheduleByDay || {}), [day]: e.target.value },
+                        }))}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
@@ -315,6 +499,7 @@ export default function AdminStudentPage() {
               <button className={styles.certSubmitButton} type="submit" disabled={saving}>
                 {saving ? 'Збереження...' : 'Зберегти налаштування'}
               </button>
+              {saveNotice ? <span className={styles.noData}>{saveNotice}</span> : null}
             </div>
           </form>
         </div>

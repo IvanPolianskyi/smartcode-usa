@@ -18,8 +18,12 @@ async function connectToMongo() {
   const client = new MongoClient(mongoUri, {
     maxPoolSize: 10,
     minPoolSize: 1,
-    serverSelectionTimeoutMS: 5000,
-    socketTimeoutMS: 45000,
+    // Keep API responses snappy when Atlas/DNS is unavailable.
+    serverSelectionTimeoutMS: 3000,
+    connectTimeoutMS: 3000,
+    socketTimeoutMS: 10000,
+    // Prefer IPv4 first to reduce SRV DNS issues on some networks.
+    family: 4,
   })
 
   await client.connect()

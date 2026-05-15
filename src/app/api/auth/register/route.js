@@ -55,6 +55,7 @@ export async function POST(request) {
         zoomLink: '',
         activeOnlineCourses: [],
         courseAccess: {},
+        accountReady: false,
       },
       purchasedCourses: [], // Courses that user has paid for
       createdAt: new Date(),
@@ -102,6 +103,7 @@ export async function POST(request) {
       name: user.name,
       phone: user.phone,
       role: user.role,
+      studentProfile: user.studentProfile,
       purchasedCourses: user.purchasedCourses,
       enrolledCourses: user.enrolledCourses,
       referralId: user.referralId || null

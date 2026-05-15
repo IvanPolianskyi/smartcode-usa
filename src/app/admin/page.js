@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useMemo, useRef } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
@@ -28,17 +29,22 @@ export default function AdminPanelPage() {
   const [receipts, setReceipts] = useState([])
   const [receiptsLoading, setReceiptsLoading] = useState(false)
   const [courseNames, setCourseNames] = useState({})
+  const [crmTeachers, setCrmTeachers] = useState([])
   const [selectedStudentId, setSelectedStudentId] = useState('')
   const [studentSaving, setStudentSaving] = useState(false)
+  const [studentSaveNotice, setStudentSaveNotice] = useState('')
   const [studentSearch, setStudentSearch] = useState('')
   const [studentForm, setStudentForm] = useState({
     lessonFormat: 'group',
     regularDays: [],
     regularScheduleByDay: {},
     zoomLink: '',
+    crmTeacherId: '',
+    crmTeacherName: '',
     onlineCourseIds: [],
     pythonAccessEnabled: false,
     pythonUnlockedLessons: [],
+    accountReady: true,
   })
   const studentEditorRef = useRef(null)
   const selectedStudent = students.find((student) => student.id === selectedStudentId) || null
@@ -104,6 +110,7 @@ export default function AdminPanelPage() {
       const data = await response.json()
       setStudents(data.students || [])
       setCourseNames(data.courseNames || {})
+      setCrmTeachers(data.crmTeachers || [])
     } catch (error) {
       console.error('Error loading students:', error)
       alert('Помилка завантаження списку учнів')
@@ -148,9 +155,12 @@ export default function AdminPanelPage() {
       regularDays: dayList,
       regularScheduleByDay: scheduleByDay,
       zoomLink: student.profile?.zoomLink || '',
+      crmTeacherId: student.profile?.crmTeacherId || '',
+      crmTeacherName: student.profile?.crmTeacherName || '',
       onlineCourseIds,
       pythonAccessEnabled: Boolean(pythonAccess.enabled),
       pythonUnlockedLessons: unlockedLessons,
+      accountReady: student.profile?.accountReady !== false,
     })
     setTimeout(() => {
       studentEditorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -207,14 +217,26 @@ export default function AdminPanelPage() {
           onlineCourseIds: studentForm.onlineCourseIds,
           pythonAccessEnabled: studentForm.pythonAccessEnabled,
           pythonUnlockedLessons: studentForm.pythonUnlockedLessons,
+          crmTeacherId: studentForm.crmTeacherId,
+          crmTeacherName: studentForm.crmTeacherName,
+          accountReady: studentForm.accountReady,
         }),
       })
       const data = await response.json()
       if (!response.ok) {
         throw new Error(data.error || 'Failed to save student settings')
       }
-      await loadStudents()
-      alert('Налаштування учня збережено')
+      if (data?.studentProfile && selectedStudentId) {
+        setStudents((prev) =>
+          prev.map((item) =>
+            item.id === selectedStudentId
+              ? { ...item, profile: data.studentProfile }
+              : item
+          )
+        )
+      }
+      setStudentSaveNotice('Налаштування збережено')
+      setTimeout(() => setStudentSaveNotice(''), 2500)
     } catch (error) {
       console.error('Save student settings error:', error)
       alert(error.message || 'Помилка збереження')
@@ -281,6 +303,9 @@ export default function AdminPanelPage() {
               <RefreshCw size={20} className={refreshing ? styles.spinning : ''} />
               Оновити
             </button>
+            <Link href="/admin/groups" className={styles.certReloadButton}>
+              Групи CRM
+            </Link>
             <button onClick={handleLogout} className={styles.logoutButton}>
               <LogOut size={20} />
               Вийти
@@ -552,6 +577,18 @@ export default function AdminPanelPage() {
               )}
               <div className={styles.certFormRow}>
                 <div className={styles.certFormGroup}>
+                  <label className={styles.certLabel}>
+                    <input
+                      type="checkbox"
+                      name="accountReady"
+                      checked={studentForm.accountReady}
+                      onChange={handleStudentFormChange}
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    Акаунт готовий для учня
+                  </label>
+                </div>
+                <div className={styles.certFormGroup}>
                   <label className={styles.certLabel}>Формат занять</label>
                   <select
                     name="lessonFormat"
@@ -589,6 +626,34 @@ export default function AdminPanelPage() {
                     className={styles.certInput}
                     placeholder="https://zoom.us/j/..."
                   />
+                </div>
+              </div>
+              <div className={styles.certFormRow}>
+                <div className={styles.certFormGroup}>
+                  <label className={styles.certLabel}>Викладач (CRM)</label>
+                  <select
+                    name="crmTeacherId"
+                    value={studentForm.crmTeacherId}
+                    onChange={(e) => {
+                      const teacherId = e.target.value
+                      const teacherName = teacherId
+                        ? (crmTeachers.find((item) => item.id === teacherId)?.fullName || '')
+                        : ''
+                      setStudentForm((prev) => ({
+                        ...prev,
+                        crmTeacherId: teacherId,
+                        crmTeacherName: teacherName,
+                      }))
+                    }}
+                    className={styles.certInput}
+                  >
+                    <option value="">Без викладача</option>
+                    {crmTeachers.map((teacher) => (
+                      <option key={teacher.id} value={teacher.id}>
+                        {teacher.fullName}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
@@ -722,6 +787,7 @@ export default function AdminPanelPage() {
                 >
                   {studentSaving ? 'Збереження...' : 'Зберегти налаштування учня'}
                 </button>
+                {studentSaveNotice ? <span className={styles.noData}>{studentSaveNotice}</span> : null}
               </div>
             </form>
             {selectedStudent && (

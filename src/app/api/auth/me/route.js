@@ -3,6 +3,7 @@ import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { syncStudentScheduleAccess } from '@/lib/syncStudentScheduleAccess'
+import { maybePullCrmScheduleForStudent } from '@/lib/crmStudentSchedulePull'
 
 export async function GET() {
   try {
@@ -23,6 +24,7 @@ export async function GET() {
         { status: 404 }
       )
     }
+    user = await maybePullCrmScheduleForStudent(user, usersCollection)
     user = await syncStudentScheduleAccess(user, usersCollection)
 
     // Синхронізація: якщо є прогрес, але немає курсу в enrolledCourses, додати його
@@ -49,21 +51,25 @@ export async function GET() {
     }
 
     // Return user (without password)
+    const baseProfile = user.studentProfile || {
+      lessonFormat: 'group',
+      regularSchedule: [],
+      zoomLink: '',
+      activeOnlineCourses: [],
+      courseAccess: {},
+      accountBalance: 0,
+      lessonCredits: 0,
+      scheduleSyncStartAt: null,
+    }
     const userResponse = {
       id: user._id.toString(),
       email: user.email,
       name: user.name,
       phone: user.phone,
       role: user.role || 'user',
-      studentProfile: user.studentProfile || {
-        lessonFormat: 'group',
-        regularSchedule: [],
-        zoomLink: '',
-        activeOnlineCourses: [],
-        courseAccess: {},
-        accountBalance: 0,
-        lessonCredits: 0,
-        scheduleSyncStartAt: null,
+      studentProfile: {
+        ...baseProfile,
+        accountReady: baseProfile.accountReady !== false,
       },
       purchasedCourses: user.purchasedCourses || [],
       enrolledCourses: user.enrolledCourses || [],

@@ -132,13 +132,11 @@ html, body {
   overflow-x: hidden;
 }
 
-/* Padding-top для main контенту, щоб хедер не перекривав */
-/* Висота хедера: 80px на десктопі, 70px на мобільних */
+/* Padding-top для main: десктоп — fixed header; телефон — fixed 70px; планшет — sticky header у потоці, відступ не потрібен */
 main.main-content {
   padding-top: 80px;
 }
 
-/* На планшетах (1024px і менше) хедер не фіксований, тому padding не потрібен */
 @media (max-width: 1024px) and (min-width: 701px) {
   main.main-content {
     padding-top: 0;
