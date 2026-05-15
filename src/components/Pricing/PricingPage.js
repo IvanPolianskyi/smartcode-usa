@@ -6,7 +6,6 @@ import {
 	User,
 	Check,
 	Star,
-	Sparkles,
 	ArrowRight,
 	Clock,
 	Video,
@@ -154,10 +153,6 @@ const PricingPage = () => {
 					<div className={styles.heroBg2} />
 				</div>
 				<div className={styles.heroContent}>
-					<div className={styles.badge}>
-						<Sparkles size={16} />
-						<span>Прозорі ціни</span>
-					</div>
 					<h1 className={styles.title}>
 						Оплата <span className={styles.titleAccent}>поурочно</span>
 						<br />
@@ -169,13 +164,9 @@ const PricingPage = () => {
 					</p>
 					<div className={styles.heroActions}>
 						<button onClick={handleContactClick} className={styles.heroCta}>
-							Отримати безкоштовний пробний урок
+							Записатися на пробне заняття
 							<ArrowRight size={18} />
 						</button>
-						<div className={styles.heroNote}>
-							<Shield size={16} />
-							<span>0 грн за перший урок</span>
-						</div>
 					</div>
 				</div>
 			</section>
@@ -277,10 +268,10 @@ const PricingPage = () => {
 							Почніть без ризику вже цього тижня
 						</h2>
 						<p className={styles.finalCtaText}>
-							Запишіться на пробний урок за 0 грн, познайомтесь з викладачем і отримайте персональний план навчання для дитини.
+							Запишіться на пробне заняття, познайомтесь з викладачем і отримайте персональний план навчання для дитини.
 						</p>
 						<button onClick={handleContactClick} className={styles.finalCtaButton}>
-							<span>Забронювати пробний урок</span>
+							<span>Записатися на пробне заняття</span>
 							<ArrowRight size={20} />
 						</button>
 					</div>

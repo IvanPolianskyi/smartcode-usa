@@ -3,9 +3,11 @@
 import dynamic from 'next/dynamic'
 import { useEffect } from 'react'
 import { Analytics } from "@vercel/analytics/next"
+import { usePathname } from 'next/navigation'
 import {
 	readAndClearPendingHomeSectionScroll,
 	scheduleScrollToHomeSectionId,
+	SCROLL_HOME_SECTION_EVENT,
 } from '@/lib/homeSectionScroll'
 
 // Lightweight skeletons to keep layout stable while chunks load
@@ -37,6 +39,8 @@ const LMSPromo = dynamic(() => import('@/components/LMSPromo/LMSPromo'), {
 })
 
 export default function HomeClient() {
+  const pathname = usePathname()
+
   useEffect(() => {
     const pending = readAndClearPendingHomeSectionScroll()
     const hashId =
@@ -44,6 +48,24 @@ export default function HomeClient() {
     const id = pending || hashId
     if (!id) return undefined
     return scheduleScrollToHomeSectionId(id)
+  }, [pathname])
+
+  useEffect(() => {
+    const onScrollRequest = (e) => {
+      const id = e.detail?.id
+      if (id) scheduleScrollToHomeSectionId(id)
+    }
+    window.addEventListener(SCROLL_HOME_SECTION_EVENT, onScrollRequest)
+    return () => window.removeEventListener(SCROLL_HOME_SECTION_EVENT, onScrollRequest)
+  }, [])
+
+  useEffect(() => {
+    const onHashChange = () => {
+      const hashId = window.location.hash.replace(/^#/, '')
+      if (hashId) scheduleScrollToHomeSectionId(hashId)
+    }
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
 
   useEffect(() => {

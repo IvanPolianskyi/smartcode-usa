@@ -4,6 +4,9 @@
  * when coming from another route.
  */
 export const HOME_SECTION_SCROLL_STORAGE_KEY = 'sc_scroll_to'
+export const SCROLL_HOME_SECTION_EVENT = 'sc:scroll-home-section'
+
+const HEADER_SCROLL_OFFSET = 88
 
 export function parseHomeHashTarget(href) {
 	if (typeof href !== 'string') return null
@@ -27,11 +30,25 @@ export function readAndClearPendingHomeSectionScroll() {
 	}
 }
 
+export function unlockBodyScrollLock(savedScrollY, { restorePosition = true } = {}) {
+	if (typeof document === 'undefined') return
+	document.body.style.position = ''
+	document.body.style.top = ''
+	document.body.style.left = ''
+	document.body.style.right = ''
+	document.body.style.width = ''
+	if (restorePosition && typeof savedScrollY === 'number' && savedScrollY > 0) {
+		window.scrollTo(0, savedScrollY)
+	}
+}
+
 export function scrollToHomeSectionId(id) {
 	if (typeof document === 'undefined' || !id) return false
 	const el = document.getElementById(id)
 	if (!el) return false
-	el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+	const top =
+		el.getBoundingClientRect().top + window.scrollY - HEADER_SCROLL_OFFSET
+	window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
 	return true
 }
 
@@ -40,12 +57,63 @@ export function scheduleScrollToHomeSectionId(id, options = {}) {
 	if (typeof window === 'undefined' || !id) return () => {}
 	const intervalMs = options.intervalMs ?? 80
 	const maxMs = options.maxMs ?? 10000
-	const start = Date.now()
-	if (scrollToHomeSectionId(id)) return () => {}
-	const timer = window.setInterval(() => {
-		if (scrollToHomeSectionId(id) || Date.now() - start > maxMs) {
-			window.clearInterval(timer)
-		}
-	}, intervalMs)
-	return () => window.clearInterval(timer)
+	let timer = null
+	let cancelled = false
+
+	const tryScroll = () => {
+		if (cancelled) return
+		if (scrollToHomeSectionId(id)) return
+		const start = Date.now()
+		timer = window.setInterval(() => {
+			if (cancelled) {
+				window.clearInterval(timer)
+				return
+			}
+			if (scrollToHomeSectionId(id) || Date.now() - start > maxMs) {
+				window.clearInterval(timer)
+			}
+		}, intervalMs)
+	}
+
+	// Після розблокування body / lazy-mount секцій — чекаємо layout
+	requestAnimationFrame(() => {
+		requestAnimationFrame(tryScroll)
+	})
+
+	return () => {
+		cancelled = true
+		if (timer != null) window.clearInterval(timer)
+	}
+}
+
+/** Scroll on the current home page (also updates hash). */
+export function requestHomeSectionScroll(sectionId) {
+	if (typeof window === 'undefined' || !sectionId) return () => {}
+	setPendingHomeSectionScroll(sectionId)
+	try {
+		window.history.replaceState(null, '', `/#${sectionId}`)
+	} catch {}
+	const cancel = scheduleScrollToHomeSectionId(sectionId)
+	window.dispatchEvent(
+		new CustomEvent(SCROLL_HOME_SECTION_EVENT, { detail: { id: sectionId } })
+	)
+	return cancel
+}
+
+/**
+ * Navigate to a home section from header/footer links.
+ * @param {string} sectionId
+ * @param {{ push: (url: string) => void }} router - Next.js router
+ * @param {{ onBeforeNavigate?: () => void }} [options]
+ */
+export function navigateToHomeSection(sectionId, router, options = {}) {
+	if (typeof window === 'undefined' || !sectionId) return
+	options.onBeforeNavigate?.()
+	const path = window.location.pathname
+	if (path === '/' || path === '') {
+		requestHomeSectionScroll(sectionId)
+		return
+	}
+	setPendingHomeSectionScroll(sectionId)
+	router.push(`/#${sectionId}`)
 }

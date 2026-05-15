@@ -1,83 +1,178 @@
 'use client'
-import { useState, useCallback, useRef, useEffect } from 'react'
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react'
+import {
+	parsePhoneNumberFromString,
+	isValidPhoneNumber,
+	AsYouType,
+} from 'libphonenumber-js'
+import {
+	EUROPEAN_PHONE_COUNTRIES,
+	getPhoneCountry,
+	DIAL_CODES_DESC,
+	filterPhoneCountries,
+} from '@/lib/phoneCountries'
+import { EUROPE_COUNTRY } from '@/lib/phoneEurope'
 
-export const COUNTRIES = [
-	{ code: 'UA', dialCode: '380', prefix: '+380', flag: 'https://flagcdn.com/w40/ua.png', length: 9 },
-	{ code: 'PL', dialCode: '48',  prefix: '+48',  flag: 'https://flagcdn.com/w40/pl.png', length: 9 },
-	{ code: 'DE', dialCode: '49',  prefix: '+49',  flag: 'https://flagcdn.com/w40/de.png', length: 11 },
-	{ code: 'CZ', dialCode: '420', prefix: '+420', flag: 'https://flagcdn.com/w40/cz.png', length: 9 },
-	{ code: 'SK', dialCode: '421', prefix: '+421', flag: 'https://flagcdn.com/w40/sk.png', length: 9 },
-	{ code: 'GB', dialCode: '44',  prefix: '+44',  flag: 'https://flagcdn.com/w40/gb.png', length: 10 },
-]
-
-/**
- * Formats raw digits for display: +380 (XX) XXX XX XX
- */
-function formatForDisplay(digits, country) {
-	if (!digits) return country.prefix + ' '
-	if (country.code === 'UA') {
-		const p1 = digits.slice(0, 2)
-		const p2 = digits.slice(2, 5)
-		const p3 = digits.slice(5, 7)
-		const p4 = digits.slice(7, 9)
-		let s = country.prefix + ' '
-		if (p1) s += '(' + p1
-		if (p1.length === 2) s += ') '
-		if (p2) s += p2
-		if (p2.length === 3 && digits.length > 5) s += ' '
-		if (p3) s += p3
-		if (p3.length === 2 && digits.length > 7) s += ' '
-		if (p4) s += p4
-		return s
-	}
-	return country.prefix + ' ' + digits
-}
+export const COUNTRIES = EUROPEAN_PHONE_COUNTRIES
 
 const UA_MOBILE_PREFIXES = new Set([
 	'39', '50', '63', '66', '67', '68', '73',
 	'89', '91', '92', '93', '94', '95', '96', '97', '98', '99',
 ])
 const UA_MOBILE_PREFIX_FIRST_DIGITS = new Set(
-	Array.from(UA_MOBILE_PREFIXES).map(prefix => prefix[0])
+	Array.from(UA_MOBILE_PREFIXES).map((prefix) => prefix[0])
 )
 
-function normalizeDigits(inputDigits, country) {
+function formatUaDisplay(digits, country) {
+	if (!digits) return country.prefix + ' '
+	const p1 = digits.slice(0, 2)
+	const p2 = digits.slice(2, 5)
+	const p3 = digits.slice(5, 7)
+	const p4 = digits.slice(7, 9)
+	let s = country.prefix + ' '
+	if (p1) s += '(' + p1
+	if (p1.length === 2) s += ') '
+	if (p2) s += p2
+	if (p2.length === 3 && digits.length > 5) s += ' '
+	if (p3) s += p3
+	if (p3.length === 2 && digits.length > 7) s += ' '
+	if (p4) s += p4
+	return s
+}
+
+function formatForDisplay(nationalDigits, country) {
+	if (!nationalDigits) return country.prefix + ' '
+	if (country.code === 'UA') return formatUaDisplay(nationalDigits, country)
+	const formatted = new AsYouType(country.code).input(nationalDigits)
+	const stripped = String(formatted).replace(/^\+\d+\s*/, '').trim()
+	return `${country.prefix} ${stripped || nationalDigits}`
+}
+
+function stripLeadingZeros(digits) {
+	return digits.replace(/^0+/, '')
+}
+
+function normalizeNationalDigits(inputDigits, country) {
 	if (!inputDigits) return ''
 	let digits = inputDigits
 	if (digits.startsWith(country.dialCode)) {
 		digits = digits.slice(country.dialCode.length)
 	}
-	digits = digits.replace(/^0+/, '')
-	return digits.slice(0, country.length)
+	return stripLeadingZeros(digits)
+}
+
+function hasDuplicatedDialCode(allDigits, dialCode) {
+	return allDigits.includes(`${dialCode}${dialCode}`)
+}
+
+function validateUaPartial(normalized) {
+	if (!normalized) return ''
+	if (normalized.length >= 1 && !UA_MOBILE_PREFIX_FIRST_DIGITS.has(normalized[0])) {
+		return 'Некоректний код мобільного оператора України'
+	}
+	if (normalized.length >= 2 && !UA_MOBILE_PREFIXES.has(normalized.slice(0, 2))) {
+		return 'Некоректний код мобільного оператора України'
+	}
+	return ''
 }
 
 /**
- * Validates phone input and returns error message or empty string.
+ * @param {string} nationalDigits
+ * @param {import('@/lib/phoneCountries').PhoneCountry} country
+ * @param {string} [rawInput]
+ * @param {{ strict?: boolean }} [opts]
  */
-function validate(rawDigits, rawInput, country) {
-	const normalized = normalizeDigits(rawDigits, country)
-	if (!normalized || normalized.length === 0) {
-		return 'Введіть номер телефону після коду країни'
+function validateNational(nationalDigits, country, rawInput = '', opts = {}) {
+	const { strict = false } = opts
+	const normalized = normalizeNationalDigits(nationalDigits, country)
+
+	if (!normalized) {
+		return strict ? 'Введіть номер телефону після коду країни' : ''
 	}
-	const inputDigits = (rawInput || '').replace(/\D/g, '')
-	if (inputDigits.startsWith(country.dialCode)) {
+
+	const inputDigits = String(rawInput).replace(/\D/g, '')
+	if (inputDigits.startsWith(country.dialCode) && inputDigits.length > country.dialCode.length) {
 		return `Не дублюйте код країни (${country.prefix} лише один раз)`
 	}
-	if (normalized.length !== country.length) {
-		if (country.code === 'UA') {
-			if (normalized.length >= 1 && !UA_MOBILE_PREFIX_FIRST_DIGITS.has(normalized[0])) {
-				return 'Некоректний код мобільного оператора України'
-			}
-			if (normalized.length >= 2 && !UA_MOBILE_PREFIXES.has(normalized.slice(0, 2))) {
-				return 'Некоректний код мобільного оператора України'
+
+	const allDigits = country.dialCode + normalized
+	if (hasDuplicatedDialCode(allDigits, country.dialCode)) {
+		return `Не дублюйте код країни (${country.prefix} лише один раз)`
+	}
+
+	if (country.code === 'UA') {
+		const uaErr = validateUaPartial(normalized)
+		if (uaErr) return uaErr
+	}
+
+	const e164 = `${country.prefix}${normalized}`
+	const parsed = parsePhoneNumberFromString(e164, country.code)
+
+	if (parsed?.country && parsed.country !== country.code) {
+		return `Номер не відповідає обраній країні (${country.nameUk})`
+	}
+
+	if (!strict) {
+		if (country.code === 'UA' && normalized.length === 9 && !UA_MOBILE_PREFIXES.has(normalized.slice(0, 2))) {
+			return 'Введіть коректний мобільний номер України (наприклад, +380 96 123 45 67)'
+		}
+		return ''
+	}
+
+	if (!parsed || !isValidPhoneNumber(e164, country.code) || !parsed.isValid()) {
+		if (country.code === 'UA' && normalized.length === 9) {
+			return 'Введіть коректний мобільний номер України (наприклад, +380 96 123 45 67)'
+		}
+		return 'Перевірте кількість цифр (без дубля коду країни)'
+	}
+
+	if (!parsed.country || !EUROPE_COUNTRY.has(parsed.country)) {
+		return 'Потрібен номер з країни Європи'
+	}
+
+	return ''
+}
+
+/**
+ * @param {string} value
+ * @returns {{ country: import('@/lib/phoneCountries').PhoneCountry, nationalDigits: string } | null}
+ */
+function detectFromPaste(value) {
+	const trimmed = String(value ?? '').trim()
+	if (!trimmed) return null
+
+	const candidate = trimmed.startsWith('+')
+		? trimmed
+		: `+${trimmed.replace(/\D/g, '')}`
+
+	const parsed = parsePhoneNumberFromString(candidate)
+	if (parsed?.country && EUROPE_COUNTRY.has(parsed.country)) {
+		const country = getPhoneCountry(parsed.country)
+		if (country) {
+			return {
+				country,
+				nationalDigits: String(parsed.nationalNumber || ''),
 			}
 		}
-		return 'Введіть повний номер телефону після коду країни'
 	}
-	if (country.code === 'UA' && !UA_MOBILE_PREFIXES.has(normalized.slice(0, 2))) {
-		return 'Введіть коректний мобільний номер України (наприклад, +380 96 123 45 67)'
+
+	const digits = trimmed.replace(/\D/g, '')
+	if (!digits) return null
+
+	for (const dialCode of DIAL_CODES_DESC) {
+		if (digits.startsWith(dialCode)) {
+			const matches = EUROPEAN_PHONE_COUNTRIES.filter((c) => c.dialCode === dialCode)
+			const country = matches.find((c) => c.code === 'UA') || matches[0]
+			if (country) {
+				return {
+					country,
+					nationalDigits: stripLeadingZeros(digits.slice(dialCode.length)),
+				}
+			}
+		}
 	}
-	return ''
+
+	return null
 }
 
 /**
@@ -85,74 +180,175 @@ function validate(rawDigits, rawInput, country) {
  */
 export function usePhoneInput(initialCountryCode = 'UA') {
 	const [country, setCountry] = useState(
-		() => COUNTRIES.find(c => c.code === initialCountryCode) || COUNTRIES[0]
+		() => getPhoneCountry(initialCountryCode) || EUROPEAN_PHONE_COUNTRIES[0]
 	)
 	const [rawDigits, setRawDigits] = useState('')
 	const [phoneError, setPhoneError] = useState('')
 	const [showDropdown, setShowDropdown] = useState(false)
+	const [countryQuery, setCountryQuery] = useState('')
+	const [intlMode, setIntlMode] = useState(false)
+	const [intlInputValue, setIntlInputValue] = useState('')
 	const dropdownRef = useRef(null)
 
-	// Close dropdown on outside click
+	const filteredCountries = useMemo(
+		() => filterPhoneCountries(countryQuery),
+		[countryQuery]
+	)
+
 	useEffect(() => {
 		if (!showDropdown) return
 		const handler = (e) => {
-			if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-				setShowDropdown(false)
-			}
+			const target = e.target
+			if (!(target instanceof Node)) return
+			if (dropdownRef.current?.contains(target)) return
+			if (target instanceof Element && target.closest('[data-phone-country-dropdown]')) return
+			setShowDropdown(false)
+			setCountryQuery('')
 		}
 		document.addEventListener('mousedown', handler)
 		return () => document.removeEventListener('mousedown', handler)
 	}, [showDropdown])
 
-	const handlePhoneChange = useCallback((value) => {
-		const allDigits = value.replace(/\D/g, '')
-		const capped = normalizeDigits(allDigits, country)
-		setRawDigits(capped)
-		setPhoneError(validate(capped, value, country))
-	}, [country])
-
-	const handlePhoneKeyDown = useCallback((event) => {
-		if (event.key !== 'Backspace') return
-		const target = event.target
-		if (!(target instanceof HTMLInputElement)) return
-		if (target.selectionStart !== target.selectionEnd) return
-		if (target.selectionStart !== target.value.length) return
-		if (!rawDigits) return
-		event.preventDefault()
-		const nextDigits = rawDigits.slice(0, -1)
+	const applyDigits = useCallback((nextDigits, nextCountry, rawInput = '', strict = false) => {
 		setRawDigits(nextDigits)
-		setPhoneError(validate(nextDigits, target.value.slice(0, -1), country))
-	}, [rawDigits, country])
+		setPhoneError(validateNational(nextDigits, nextCountry, rawInput, { strict }))
+	}, [])
 
-	const selectCountry = useCallback((c) => {
-		setCountry(c)
-		setShowDropdown(false)
-		// Re-validate with new country
-		const capped = rawDigits.slice(0, c.length)
-		setRawDigits(capped)
-		if (capped.length > 0) {
-			setPhoneError(validate(capped, capped, c))
-		} else {
-			setPhoneError('')
-		}
-	}, [rawDigits])
+	const handlePhoneChange = useCallback(
+		(value) => {
+			const raw = String(value ?? '')
+			const trimmed = raw.trim()
+
+			if (trimmed.startsWith('+') || intlMode) {
+				const intlRaw = trimmed.startsWith('+')
+					? trimmed
+					: `+${trimmed.replace(/\D/g, '')}`
+
+				if (!intlRaw || intlRaw === '+') {
+					setIntlMode(true)
+					setIntlInputValue(intlRaw || '+')
+					setRawDigits('')
+					setPhoneError('')
+					return
+				}
+
+				const detected = detectFromPaste(intlRaw)
+				if (detected) {
+					setIntlMode(false)
+					setIntlInputValue('')
+					setCountry(detected.country)
+					const capped = normalizeNationalDigits(detected.nationalDigits, detected.country)
+					applyDigits(capped, detected.country, intlRaw)
+					return
+				}
+
+				setIntlMode(true)
+				setIntlInputValue(intlRaw)
+				setRawDigits('')
+				setPhoneError('')
+				return
+			}
+
+			setIntlMode(false)
+			setIntlInputValue('')
+			const allDigits = value.replace(/\D/g, '')
+			const capped = normalizeNationalDigits(allDigits, country).slice(0, 15)
+			applyDigits(capped, country, value)
+		},
+		[country, applyDigits, intlMode]
+	)
+
+	const handlePhoneKeyDown = useCallback(
+		(event) => {
+			if (event.key !== 'Backspace') return
+			const target = event.target
+			if (!(target instanceof HTMLInputElement)) return
+			if (target.selectionStart !== target.selectionEnd) return
+			if (target.selectionStart !== target.value.length) return
+
+			if (intlMode) {
+				if (!intlInputValue || intlInputValue === '+') {
+					setIntlMode(false)
+					setIntlInputValue('')
+					return
+				}
+				event.preventDefault()
+				handlePhoneChange(intlInputValue.slice(0, -1))
+				return
+			}
+
+			if (!rawDigits) return
+			event.preventDefault()
+			const nextDigits = rawDigits.slice(0, -1)
+			applyDigits(nextDigits, country, target.value.slice(0, -1))
+		},
+		[rawDigits, country, applyDigits, intlMode, intlInputValue, handlePhoneChange]
+	)
+
+	const selectCountry = useCallback(
+		(c) => {
+			setIntlMode(false)
+			setIntlInputValue('')
+			setCountry(c)
+			setShowDropdown(false)
+			setCountryQuery('')
+			const capped = normalizeNationalDigits(rawDigits, c)
+			applyDigits(capped, c, capped, false)
+		},
+		[rawDigits, applyDigits]
+	)
+
+	const openDropdown = useCallback(() => {
+		setShowDropdown(true)
+		setCountryQuery('')
+	}, [])
 
 	const validateOnSubmit = useCallback(() => {
-		const err = validate(rawDigits, rawDigits, country)
+		if (intlMode && intlInputValue) {
+			const detected = detectFromPaste(intlInputValue)
+			if (detected) {
+				setIntlMode(false)
+				setIntlInputValue('')
+				setCountry(detected.country)
+				const capped = normalizeNationalDigits(detected.nationalDigits, detected.country)
+				applyDigits(capped, detected.country, intlInputValue, true)
+				const err = validateNational(capped, detected.country, intlInputValue, { strict: true })
+				setPhoneError(err)
+				return !err
+			}
+			setPhoneError('Введіть повний номер з кодом країни (наприклад, +380…)')
+			return false
+		}
+		const err = validateNational(rawDigits, country, rawDigits, { strict: true })
 		setPhoneError(err)
 		return !err
-	}, [rawDigits, country])
+	}, [rawDigits, country, intlMode, intlInputValue, applyDigits])
 
-	/** Returns the full international phone number */
 	const getFullNumber = useCallback(() => {
-		return country.prefix + normalizeDigits(rawDigits, country)
-	}, [rawDigits, country])
+		if (intlMode && intlInputValue) {
+			const detected = detectFromPaste(intlInputValue)
+			if (detected) {
+				const e164 = `${detected.country.prefix}${detected.nationalDigits}`
+				const parsed = parsePhoneNumberFromString(e164, detected.country.code)
+				if (parsed?.isValid()) return parsed.format('E.164')
+				return e164
+			}
+		}
+		const normalized = normalizeNationalDigits(rawDigits, country)
+		const e164 = `${country.prefix}${normalized}`
+		const parsed = parsePhoneNumberFromString(e164, country.code)
+		if (parsed?.isValid()) return parsed.format('E.164')
+		return e164
+	}, [rawDigits, country, intlMode, intlInputValue])
 
 	const reset = useCallback(() => {
 		setRawDigits('')
 		setPhoneError('')
-		setCountry(COUNTRIES[0])
+		setIntlMode(false)
+		setIntlInputValue('')
+		setCountry(getPhoneCountry('UA') || EUROPEAN_PHONE_COUNTRIES[0])
 		setShowDropdown(false)
+		setCountryQuery('')
 	}, [])
 
 	const displayValue = formatForDisplay(rawDigits, country)
@@ -161,10 +357,17 @@ export function usePhoneInput(initialCountryCode = 'UA') {
 		country,
 		rawDigits,
 		displayValue,
+		intlMode,
+		intlInputValue,
+		showCountryPrefix: !intlMode,
 		phoneError,
 		showDropdown,
 		dropdownRef,
+		countryQuery,
+		setCountryQuery,
+		filteredCountries,
 		setShowDropdown,
+		openDropdown,
 		handlePhoneChange,
 		handlePhoneKeyDown,
 		selectCountry,

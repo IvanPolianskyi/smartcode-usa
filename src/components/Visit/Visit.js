@@ -215,8 +215,13 @@ const Visit = () => {
 
                         <div className={styles.ctaButtons}>
                             <Link href="/#Contactform" className={styles.primaryButton} onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openContactModal')) }} scroll={false}>
-                                <Play className={styles.buttonIcon} />
-                                Отримати пробне заняття
+                                <span className={styles.primaryButtonIcon} aria-hidden>
+                                    <Play size={18} />
+                                </span>
+                                <span className={styles.primaryButtonText}>
+                                    <span className={styles.primaryButtonMain}>Записатися</span>
+                                    <span className={styles.primaryButtonSub}>на пробне заняття</span>
+                                </span>
                             </Link>
                             <Link href="/tariff" className={styles.secondaryButton}>
                                 Переглянути ціни

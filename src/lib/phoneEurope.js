@@ -1,4 +1,4 @@
-import { parsePhoneNumberFromString, isValidPhoneNumber } from 'libphonenumber-js'
+import { parsePhoneNumberFromString, isValidPhoneNumber, getCountryCallingCode } from 'libphonenumber-js'
 
 /**
  * ISO 3166-1 alpha-2, які вважаємо «Європа» для заявок (ЄС/ЄПЗ/Євр. економ. простір + сусіди, без RU/KZ/NA).
@@ -58,6 +58,18 @@ export const EUROPE_COUNTRY = new Set([
 	'XK',
 ])
 
+const DIAL_CODES_DESC = [...new Set(
+	Array.from(EUROPE_COUNTRY)
+		.map((iso) => {
+			try {
+				return getCountryCallingCode(iso)
+			} catch {
+				return null
+			}
+		})
+		.filter(Boolean)
+)].sort((a, b) => b.length - a.length)
+
 /**
  * @returns {string | null} кандидат E.164: + + лише цифри, без зайвого
  */
@@ -91,8 +103,10 @@ export function validateEuropeanPhone(raw) {
 	if (digits.length > 15) {
 		return { ok: false, message: 'Надто довгий номер' }
 	}
-	if (digits.includes('380380')) {
-		return { ok: false, message: 'Не дублюйте код країни (+380 лише один раз)' }
+	for (const dialCode of DIAL_CODES_DESC) {
+		if (digits.includes(`${dialCode}${dialCode}`)) {
+			return { ok: false, message: `Не дублюйте код країни (+${dialCode} лише один раз)` }
+		}
 	}
 	const p = parsePhoneNumberFromString(e164)
 	if (!p) {

@@ -180,9 +180,14 @@ const ContactForm = () => {
         phonePrefix: phoneStyles.phonePrefix,
         phoneInput: phoneStyles.phoneInput,
         dropdown: phoneStyles.dropdown,
+        dropdownSearchWrap: phoneStyles.dropdownSearchWrap,
+        dropdownSearch: phoneStyles.dropdownSearch,
+        dropdownList: phoneStyles.dropdownList,
+        dropdownEmpty: phoneStyles.dropdownEmpty,
         dropdownItem: phoneStyles.dropdownItem,
         dropdownItemActive: phoneStyles.dropdownItemActive,
         dropdownItemFlag: phoneStyles.dropdownItemFlag,
+        dropdownItemName: phoneStyles.dropdownItemName,
         dropdownItemCode: phoneStyles.dropdownItemCode,
         dropdownItemDial: phoneStyles.dropdownItemDial,
         error: styles.modalError,
@@ -205,7 +210,7 @@ const ContactForm = () => {
                                     </div>
                                     <h2 className={styles.modalTitle}>Запишіться на пробний урок</h2>
                                     <p className={styles.modalSubtitle}>
-                                        Залиште контакт — ми зателефонуємо та підберемо зручний час
+                                        Залиште контакт
                                     </p>
                                 </div>
 
@@ -246,7 +251,7 @@ const ContactForm = () => {
                                             value={formData.message}
                                             onChange={handleInputChange}
                                             rows={2}
-                                            placeholder='Вік дитини, зручний час, питання…'
+                                            placeholder='Інший спосіб зв&apos;язку, вік дитини, питання…'
                                             className={styles.modalTextarea}
                                         />
                                     </div>
@@ -257,7 +262,7 @@ const ContactForm = () => {
                                     </button>
 
                                     <p className={styles.modalNote}>
-                                        Перший урок — безкоштовно. Ми зателефонуємо протягом 15 хвилин.
+                                        Перший урок - безкоштовно. Ми зателефонуємо протягом 15 хвилин.
                                     </p>
                                 </form>
                             </>

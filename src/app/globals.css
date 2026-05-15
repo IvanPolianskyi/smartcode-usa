@@ -125,6 +125,16 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+#courses,
+#social-media,
+#testimonials,
+#trial-signup,
+#faq,
+#about,
+#Contactform {
+  scroll-margin-top: 96px;
+}
+
 /* Prevent horizontal overflow on mobile and ensure full-width layout */
 html, body {
   width: 100%;

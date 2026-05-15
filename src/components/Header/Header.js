@@ -21,8 +21,10 @@ import { logout } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import {
 	parseHomeHashTarget,
+	navigateToHomeSection,
+	requestHomeSectionScroll,
 	setPendingHomeSectionScroll,
-	scheduleScrollToHomeSectionId,
+	unlockBodyScrollLock,
 } from '@/lib/homeSectionScroll'
 
 const Header = () => {
@@ -30,6 +32,7 @@ const Header = () => {
 	const [isScrolled, setIsScrolled] = useState(false)
 	const headerRef = useRef(null)
     const scrollLockYRef = useRef(0)
+	const pendingHomeSectionRef = useRef(null)
 	const router = useRouter()
 	const { user, loading: userLoading } = useAuthSession()
 
@@ -85,14 +88,31 @@ const Header = () => {
 				}
 			)
 		} else {
-            // Розблоковуємо скрол і відновлюємо позицію
-            const y = Math.abs(parseInt(document.body.style.top || '0', 10)) || 0
-            document.body.style.position = ''
-            document.body.style.top = ''
-            document.body.style.left = ''
-            document.body.style.right = ''
-            document.body.style.width = ''
-			
+			const lockedY =
+				scrollLockYRef.current ||
+				Math.abs(parseInt(document.body.style.top || '0', 10)) ||
+				0
+			const sectionAfterUnlock = pendingHomeSectionRef.current
+			const isHome =
+				typeof window !== 'undefined' &&
+				(window.location.pathname === '/' || window.location.pathname === '')
+
+			unlockBodyScrollLock(lockedY, { restorePosition: !sectionAfterUnlock })
+
+			const runSectionScroll = () => {
+				if (!sectionAfterUnlock) return
+				if (!isHome) {
+					pendingHomeSectionRef.current = null
+					return
+				}
+				pendingHomeSectionRef.current = null
+				requestAnimationFrame(() => {
+					requestHomeSectionScroll(sectionAfterUnlock)
+				})
+			}
+
+			runSectionScroll()
+
 			// Анімація виходу
 			gsap.to(mobileMenu, {
 				opacity: 0,
@@ -101,8 +121,7 @@ const Header = () => {
 				ease: 'power2.in',
 				onComplete: () => {
 					gsap.set(mobileMenu, { display: 'none' })
-                    window.scrollTo(0, y)
-				}
+				},
 			})
 		}
 
@@ -151,16 +170,22 @@ const Header = () => {
         setIsMobileMenuOpen(false)
     }
 
-	const navigateToHomeSection = (sectionId) => {
-		if (typeof window === 'undefined' || !sectionId) return
-		setIsMobileMenuOpen(false)
-		const path = window.location.pathname
-		if (path === '/' || path === '') {
-			scheduleScrollToHomeSectionId(sectionId)
+	const scrollToHomeSection = (sectionId) => {
+		const isHome =
+			typeof window !== 'undefined' &&
+			(window.location.pathname === '/' || window.location.pathname === '')
+
+		if (isMobileMenuOpen) {
+			pendingHomeSectionRef.current = sectionId
+			setIsMobileMenuOpen(false)
+			if (!isHome) {
+				setPendingHomeSectionScroll(sectionId)
+				router.push(`/#${sectionId}`)
+			}
 			return
 		}
-		setPendingHomeSectionScroll(sectionId)
-		router.push('/')
+
+		navigateToHomeSection(sectionId, router)
 	}
 
 	const handleDesktopNavClick = (e, item) => {
@@ -171,7 +196,7 @@ const Header = () => {
 		const id = parseHomeHashTarget(item.href)
 		if (id) {
 			e.preventDefault()
-			navigateToHomeSection(id)
+			scrollToHomeSection(id)
 		}
 	}
 
@@ -183,7 +208,7 @@ const Header = () => {
 		const id = parseHomeHashTarget(item.href)
 		if (id) {
 			e.preventDefault()
-			navigateToHomeSection(id)
+			scrollToHomeSection(id)
 			return
 		}
 		handleMobileMenuClose()
@@ -208,6 +233,7 @@ const Header = () => {
 		{ label: 'Відгуки', href: '/#testimonials' },
 		{ label: 'Запроси друга', href: '/invite' },
 	]
+	const mobileNavItems = navItems
 	
 	const courses = [
 		{
@@ -359,17 +385,32 @@ const Header = () => {
 					<div className={styles.mobileMenuNav}>
 						<div className={styles.mobileMenuSection}>
 							<h3 className={styles.mobileMenuSectionTitle}>Сторінки</h3>
-							{navItems.map((item) => (
+							{mobileNavItems.map((item) => {
+								const homeSectionId = parseHomeHashTarget(item.href)
+								if (homeSectionId) {
+									return (
+										<button
+											key={item.label}
+											type="button"
+											className={`${styles.mobileMenuItem} ${styles.mobileNavItem}`}
+											onClick={(e) => handleMobileNavClick(e, item)}
+										>
+											{item.label}
+										</button>
+									)
+								}
+								return (
 									<Link
 										key={item.label}
 										href={item.href}
 										className={`${styles.mobileMenuItem} ${styles.mobileNavItem} ${item.ctaModal ? styles.mobileNavCta : ''}`}
-										scroll={item.ctaModal || parseHomeHashTarget(item.href) ? false : undefined}
+										scroll={item.ctaModal ? false : undefined}
 										onClick={(e) => handleMobileNavClick(e, item)}
 									>
 										{item.label}
 									</Link>
-								))}
+								)
+							})}
 						</div>
 
 						<div className={`${styles.mobileMenuSection} ${styles.mobileMenuCoursesSection}`}>

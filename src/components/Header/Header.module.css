@@ -874,7 +874,7 @@
     justify-content: flex-start;
     align-items: stretch;
     text-align: left;
-    padding-top: calc(env(safe-area-inset-top, 0px) + 3.25rem);
+    padding-top: calc(env(safe-area-inset-top, 0px) + 0.5rem);
     padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
     padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
     padding-bottom: 0.5rem;
@@ -888,13 +888,21 @@
 .mobileMenuCoursesSection::-webkit-scrollbar { width: 4px; }
 .mobileMenuCoursesSection::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 6px; }
 
-.mobileMenuHeader { margin-bottom: 0.4rem; flex-shrink: 0; }
+.mobileMenuHeader {
+    margin-bottom: 0.5rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 48px;
+    padding-right: 3.25rem;
+}
 
 .mobileMenuLogo {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0;
     color: var(--text-primary);
 }
@@ -939,23 +947,14 @@
     flex-shrink: 0;
 }
 
-/* Курси: обмежена висота + внутрішній скрол, щоб нижні кнопки лишались у видимій зоні */
+/* Курси: показуємо всі картки (скрол лише всього меню на дуже низьких екранах) */
 .mobileMenuCoursesSection {
-    flex: 0 1 auto;
+    flex: 1 1 auto;
     min-height: 0;
-    max-height: min(36svh, 11.5rem);
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-    padding-right: 2px;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
     margin-bottom: 0.15rem;
-}
-
-@media (min-height: 640px) {
-    .mobileMenuCoursesSection {
-        max-height: min(40svh, 13rem);
-    }
 }
 
 .mobileMenuSectionTitle {
@@ -964,7 +963,12 @@
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.3rem;
+}
+
+.mobileMenuSection:first-of-type .mobileNavItem {
+    padding: 0.5rem 0.7rem;
+    margin-bottom: 0.25rem;
 }
 
 /* Видимість за замовчуванням — анімація GSAP поверх; без JS пункти все одно клікабельні */
@@ -983,8 +987,8 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 10px;
-    padding: 0.45rem 0.55rem;
-    margin-bottom: 0.3rem;
+    padding: 0.4rem 0.5rem;
+    margin-bottom: 0.25rem;
     text-decoration: none;
     color: var(--text-primary);
     transition: all 0.3s ease;
@@ -1080,6 +1084,15 @@
     font-weight: 600;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+button.mobileNavItem {
+    appearance: none;
+    -webkit-appearance: none;
 }
 
 .mobileNavItem:hover {
@@ -1195,14 +1208,16 @@
 
 @media (max-height: 700px) {
     .mobileMenuContent {
-        padding-top: calc(env(safe-area-inset-top, 0px) + 2.65rem);
+        padding-top: calc(env(safe-area-inset-top, 0px) + 0.4rem);
         padding-bottom: 0.35rem;
     }
-    .mobileMenuNav { gap: 0.4rem; }
-    .mobileMenuHeader { margin-bottom: 0.3rem; }
-    .mobileMenuLogo .logoTitle { font-size: 1.05rem; }
+    .mobileMenuNav { gap: 0.35rem; }
+    .mobileMenuHeader {
+        margin-bottom: 0.35rem;
+        min-height: 44px;
+    }
     .mobileMenuCoursesSection {
-        max-height: min(32svh, 9.5rem);
+        max-height: none;
     }
 }
 

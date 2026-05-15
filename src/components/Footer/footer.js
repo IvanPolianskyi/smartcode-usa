@@ -1,6 +1,8 @@
 'use client'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import styles from './footer.module.css'
+import { parseHomeHashTarget, navigateToHomeSection } from '@/lib/homeSectionScroll'
 import {
 	Code,
 	Gamepad2,
@@ -25,7 +27,15 @@ import TikTokIcon from '@/components/Icons/TikTokIcon'
 import Image from 'next/image'
 
 const Footer = () => {
+	const router = useRouter()
 	const currentYear = new Date().getFullYear()
+
+	const handleHashLinkClick = (e, href) => {
+		const id = parseHomeHashTarget(href)
+		if (!id) return
+		e.preventDefault()
+		navigateToHomeSection(id, router)
+	}
 
 	const courses = [
 		{ name: 'Python програмування', icon: Code, href: '/python' },
@@ -172,7 +182,12 @@ const Footer = () => {
 											{link.name}
 										</a>
 									) : (
-										<Link href={link.href} className={styles.link}>
+										<Link
+											href={link.href}
+											className={styles.link}
+											scroll={parseHomeHashTarget(link.href) ? false : undefined}
+											onClick={(e) => handleHashLinkClick(e, link.href)}
+										>
 											{link.name}
 										</Link>
 									)}

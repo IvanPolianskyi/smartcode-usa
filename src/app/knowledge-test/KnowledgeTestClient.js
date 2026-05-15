@@ -5,7 +5,9 @@ import { Code, Gamepad2, Box, Monitor, Phone, CheckCircle, Award, ArrowRight, Lo
 import styles from './KnowledgeTestClient.module.css'
 import { TEST_QUESTIONS } from '@/lib/testQuestions'
 import { validateEuropeanPhone } from '@/lib/phoneEurope'
+import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
+import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 
 
 const DIRECTIONS = [
@@ -45,8 +47,8 @@ export default function KnowledgeTestClient() {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState({})
   const [showPhoneForm, setShowPhoneForm] = useState(false)
-  const [phone, setPhone] = useState('')
   const [name, setName] = useState('')
+  const phoneInput = usePhoneInput('UA')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [showResults, setShowResults] = useState(false)
@@ -104,11 +106,6 @@ export default function KnowledgeTestClient() {
     }
   }
 
-  const handlePhoneValueChange = (next) => {
-    setPhone(next)
-    setError('')
-  }
-
   const calculateScore = useCallback(() => {
     let correct = 0
     questions.forEach(q => {
@@ -127,7 +124,11 @@ export default function KnowledgeTestClient() {
     e.preventDefault()
     setError('')
     
-    const phoneR = validateEuropeanPhone(phone)
+    if (!phoneInput.validateOnSubmit()) {
+      return
+    }
+
+    const phoneR = validateEuropeanPhone(phoneInput.getFullNumber())
     if (!phoneR.ok) {
       setError(phoneR.message)
       return
@@ -183,7 +184,7 @@ export default function KnowledgeTestClient() {
     setShowPhoneForm(false)
     setShowResults(false)
     setTestResult(null)
-    setPhone('')
+    phoneInput.reset()
     setName('')
     setError('')
   }
@@ -276,10 +277,35 @@ export default function KnowledgeTestClient() {
                 Номер телефону *
               </label>
               <PhoneField
+                phoneInput={phoneInput}
+                classes={{
+                  field: styles.formGroup,
+                  fieldError: phoneStyles.fieldError,
+                  label: styles.label,
+                  phoneContainer: phoneStyles.phoneContainer,
+                  countryBtn: phoneStyles.countryBtn,
+                  flagEmoji: phoneStyles.flagEmoji,
+                  dropdownArrow: phoneStyles.dropdownArrow,
+                  divider: phoneStyles.divider,
+                  phoneInputWrap: phoneStyles.phoneInputWrap,
+                  phonePrefix: phoneStyles.phonePrefix,
+                  phoneInput: phoneStyles.phoneInput,
+                  dropdown: phoneStyles.dropdown,
+                  dropdownSearchWrap: phoneStyles.dropdownSearchWrap,
+                  dropdownSearch: phoneStyles.dropdownSearch,
+                  dropdownList: phoneStyles.dropdownList,
+                  dropdownEmpty: phoneStyles.dropdownEmpty,
+                  dropdownItem: phoneStyles.dropdownItem,
+                  dropdownItemActive: phoneStyles.dropdownItemActive,
+                  dropdownItemFlag: phoneStyles.dropdownItemFlag,
+                  dropdownItemName: phoneStyles.dropdownItemName,
+                  dropdownItemCode: phoneStyles.dropdownItemCode,
+                  dropdownItemDial: phoneStyles.dropdownItemDial,
+                  error: phoneStyles.error,
+                }}
                 id="phone"
-                name="phone"
-                value={phone}
-                onChange={handlePhoneValueChange}
+                labelText="Номер телефону *"
+                showLabel={false}
               />
             </div>
 
