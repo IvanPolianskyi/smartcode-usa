@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 import {
 	Users,
+	User,
 	Monitor,
 	Code,
 	Play,
@@ -14,6 +15,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './Visit.module.css'
 import Link from 'next/link'
+import HeroTrialForm from './HeroTrialForm'
 
 const EnhancedCourseCards = dynamic(() => import('./EnhancedCourseCards'), {
 	loading: () => <div style={{ minHeight: '980px', width: '100%' }} />,
@@ -129,6 +131,34 @@ const Visit = () => {
 		}
 	}, [isMounted])
 
+	const handleTrialCtaClick = (e) => {
+		e.preventDefault()
+		window.dispatchEvent(new Event('openContactModal'))
+	}
+
+	const heroFeatures = (
+		<div className={`${styles.heroFeatures} animate-slide`}>
+			<div className={styles.feature}>
+				<div className={styles.featureIcon}>
+					<Users className={styles.icon} />
+				</div>
+				<span>Віком 8-17 років</span>
+			</div>
+			<div className={styles.feature}>
+				<div className={styles.featureIcon}>
+					<Monitor className={styles.icon} />
+				</div>
+				<span>Онлайн заняття</span>
+			</div>
+			<div className={styles.feature}>
+				<div className={styles.featureIcon}>
+					<Award className={styles.icon} />
+				</div>
+				<span>Міжнародний сертифікат</span>
+			</div>
+		</div>
+	)
+
 	const stats = [
 		{ 
 			number: '5000+', 
@@ -183,51 +213,59 @@ const Visit = () => {
 				{/* Hero Header */}
 				<div className={styles.hero}>
 					<div className={styles.heroContent}>
-						<h1 className={`${styles.title} ${styles.titleCritical}`}>
-							<span className={styles.titleMain}>SmartCode</span>
-							<span className={styles.titleAccent}>Academy</span>
-						</h1>
+						<div className={styles.heroIntro}>
+							<h1 className={`${styles.title} ${styles.titleCritical}`}>
+								<span className={styles.titleMain}>SmartCode</span>
+								<span className={styles.titleAccent}>Academy</span>
+							</h1>
 
-						<p className={`${styles.subtitle} animate-up`}>
-							Живі уроки в Zoom, онлайн платформа та безкоштовне пробне заняття
-						</p>
-
-						<div className={`${styles.heroFeatures} animate-slide`}>
-							<div className={styles.feature}>
-								<div className={styles.featureIcon}>
-									<Users className={styles.icon} />
-								</div>
-								<span>Віком 8-17 років</span>
-							</div>
-							<div className={styles.feature}>
-								<div className={styles.featureIcon}>
-									<Monitor className={styles.icon} />
-								</div>
-								<span>Онлайн заняття</span>
-							</div>
-							<div className={styles.feature}>
-								<div className={styles.featureIcon}>
-									<Award className={styles.icon} />
-								</div>
-								<span>Міжнародний сертифікат</span>
+							<p className={`${styles.subtitle} animate-up`}>
+								Живі уроки в Zoom, онлайн платформа та безкоштовне пробне заняття
+							</p>
+							<div className={styles.lessonTypes}>
+								<span className={styles.lessonTypeBadge}>
+									<span className={styles.lessonTypeIcon} aria-hidden>
+										<Users size={18} />
+									</span>
+									Групові заняття
+								</span>
+								<span className={styles.lessonTypeBadge}>
+									<span className={styles.lessonTypeIcon} aria-hidden>
+										<User size={18} />
+									</span>
+									індивідуальні
+								</span>
 							</div>
 						</div>
 
-                        <div className={styles.ctaButtons}>
-                            <Link href="/#Contactform" className={styles.primaryButton} onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('openContactModal')) }} scroll={false}>
-                                <span className={styles.primaryButtonIcon} aria-hidden>
-                                    <Play size={18} />
-                                </span>
-                                <span className={styles.primaryButtonText}>
-                                    <span className={styles.primaryButtonMain}>Записатися</span>
-                                    <span className={styles.primaryButtonSub}>на пробне заняття</span>
-                                </span>
-                            </Link>
-                            <Link href="/tariff" className={styles.secondaryButton}>
-                                Переглянути ціни
-                            </Link>
-                        </div>
+						<div className={styles.ctaDesktop}>
+							{heroFeatures}
+							<div className={styles.ctaButtons}>
+								<Link
+									href='/#Contactform'
+									className={styles.primaryButton}
+									onClick={handleTrialCtaClick}
+									scroll={false}
+								>
+									<span className={styles.primaryButtonIcon} aria-hidden>
+										<Play size={18} />
+									</span>
+									<span className={styles.primaryButtonText}>
+										Записатися на пробне заняття
+									</span>
+								</Link>
+
+							</div>
+						</div>
+
+						<div className={styles.ctaMobile}>
+							<div className={styles.ctaButtons}>
+								<HeroTrialForm />
+
+							</div>
+						</div>
 					</div>
+						
 
 					{/* Statistics */}
 					<div className={`${styles.statsContainer} animate-up`}>
@@ -255,6 +293,12 @@ const Visit = () => {
 								</div>
 							</div>
 						))}
+					</div>
+
+					<div className={styles.pricesCtaSection}>
+						<Link href='/tariff' className={styles.secondaryButton}>
+							Переглянути ціни
+						</Link>
 					</div>
 				</div>
 
