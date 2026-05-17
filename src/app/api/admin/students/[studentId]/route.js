@@ -70,11 +70,15 @@ export async function GET(request, { params }) {
       .toArray()
 
     let crmTeachers = []
-    if (CRM_BASE_URL) {
+    let crmTeachersError = null
+    if (!CRM_BASE_URL) {
+      crmTeachersError = 'CRM_API_URL не задано на сервері (Vercel env)'
+    } else {
       try {
         crmTeachers = await fetchCrmTeachers()
       } catch (error) {
         console.error('CRM teachers load error:', error)
+        crmTeachersError = error?.message || 'Не вдалося завантажити викладачів з CRM'
       }
     }
 
@@ -92,6 +96,7 @@ export async function GET(request, { params }) {
         perCourse,
       },
       crmTeachers,
+      crmTeachersError,
       receipts: receipts.map((item) => ({
         id: item._id.toString(),
         amount: Number(item.amount || 0),

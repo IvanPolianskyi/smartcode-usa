@@ -6,11 +6,23 @@ const MAX_OUTPUT_LENGTH = 10000 // Maximum output length
 const CODE_RUNNER_URLS = (
   process.env.CODE_RUNNER_URLS ||
   process.env.CODE_RUNNER_URL ||
-  'https://emkc.org/api/v2/piston/execute,https://piston.rs/api/v2/execute'
+  ''
 )
   .split(',')
   .map((url) => url.trim())
   .filter(Boolean)
+
+const CRM_BACKEND_URL = (
+  process.env.CODE_RUNNER_BACKEND_URL ||
+  process.env.CRM_API_URL ||
+  process.env.SMARTCODE_CRM_API_URL ||
+  ''
+).replace(/\/$/, '')
+
+const CODE_RUNNER_SECRET =
+  process.env.CODE_RUNNER_SECRET ||
+  process.env.JWT_SECRET ||
+  ''
 
 function runLocalPython(wrappedCode, stdinData) {
   return new Promise((resolve, reject) => {
@@ -315,6 +327,48 @@ ${code}`
     let lastErrorMessage = ''
 
     const isVercel = Boolean(process.env.VERCEL)
+
+    async function runViaBackend() {
+      if (!CRM_BACKEND_URL) return null
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), EXECUTION_TIMEOUT + 2000)
+      try {
+        const headers = { 'Content-Type': 'application/json' }
+        if (CODE_RUNNER_SECRET) {
+          headers['X-Code-Runner-Secret'] = CODE_RUNNER_SECRET
+        }
+        const response = await fetch(`${CRM_BACKEND_URL}/code/execute`, {
+          method: 'POST',
+          headers,
+          signal: controller.signal,
+          body: JSON.stringify({
+            wrapped_code: wrappedCode,
+            stdin: stdinData || '',
+          }),
+        })
+        const data = await response.json().catch(() => ({}))
+        if (!response.ok) {
+          lastErrorMessage = data?.detail || `Backend runner returned ${response.status}`
+          return null
+        }
+        return NextResponse.json({
+          success: Boolean(data.success),
+          output: String(data.output || '').trim().slice(0, MAX_OUTPUT_LENGTH),
+          errorOutput: String(data.errorOutput || '').trim().slice(0, MAX_OUTPUT_LENGTH),
+          exitCode: data.exitCode ?? (data.success ? 0 : 1),
+        })
+      } catch (error) {
+        if (error?.name === 'AbortError') {
+          lastErrorMessage = 'Backend runner timed out'
+        } else {
+          lastErrorMessage = 'Backend runner failed'
+        }
+        return null
+      } finally {
+        clearTimeout(timeoutId)
+      }
+    }
+
     if (!isVercel) {
       try {
         const localResult = await runLocalPython(wrappedCode, stdinData)
@@ -328,6 +382,9 @@ ${code}`
         lastErrorMessage = localError?.message || 'Local python execution failed'
       }
     }
+
+    const backendResponse = await runViaBackend()
+    if (backendResponse) return backendResponse
 
     for (const runnerUrl of CODE_RUNNER_URLS) {
       const controller = new AbortController()
@@ -382,7 +439,7 @@ ${code}`
     }
 
     const guidance = isVercel
-      ? 'Сервіси виконання коду недоступні. Налаштуйте власний раннер у CODE_RUNNER_URLS для Vercel.'
+      ? 'Сервіси виконання коду недоступні. Перевірте CRM_API_URL на Vercel і задеплойте оновлений backend на Railway.'
       : 'Сервіси виконання коду недоступні і локальний Python fallback не спрацював.'
 
     return NextResponse.json(

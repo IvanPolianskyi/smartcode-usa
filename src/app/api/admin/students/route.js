@@ -234,15 +234,22 @@ export async function GET() {
     })
 
     let crmTeachers = []
-    if (CRM_BASE_URL) {
+    let crmTeachersError = null
+    if (!CRM_BASE_URL) {
+      crmTeachersError = 'CRM_API_URL не задано на сервері (Vercel env)'
+    } else {
       try {
         crmTeachers = await fetchCrmTeachers()
       } catch (error) {
         console.error('CRM teachers load error:', error)
+        crmTeachersError = error?.message || 'Не вдалося завантажити викладачів з CRM'
       }
     }
 
-    return NextResponse.json({ students: formatted, courseNames: COURSE_NAMES, crmTeachers }, { status: 200 })
+    return NextResponse.json(
+      { students: formatted, courseNames: COURSE_NAMES, crmTeachers, crmTeachersError },
+      { status: 200 }
+    )
   } catch (error) {
     console.error('Admin students GET error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })

@@ -30,6 +30,7 @@ export default function AdminPanelPage() {
   const [receiptsLoading, setReceiptsLoading] = useState(false)
   const [courseNames, setCourseNames] = useState({})
   const [crmTeachers, setCrmTeachers] = useState([])
+  const [crmTeachersError, setCrmTeachersError] = useState('')
   const [selectedStudentId, setSelectedStudentId] = useState('')
   const [studentSaving, setStudentSaving] = useState(false)
   const [studentSaveNotice, setStudentSaveNotice] = useState('')
@@ -111,6 +112,7 @@ export default function AdminPanelPage() {
       setStudents(data.students || [])
       setCourseNames(data.courseNames || {})
       setCrmTeachers(data.crmTeachers || [])
+      setCrmTeachersError(data.crmTeachersError || '')
     } catch (error) {
       console.error('Error loading students:', error)
       alert('Помилка завантаження списку учнів')
@@ -654,6 +656,11 @@ export default function AdminPanelPage() {
                       </option>
                     ))}
                   </select>
+                  {crmTeachersError ? (
+                    <p style={{ marginTop: '0.35rem', fontSize: '0.85rem', color: '#b45309' }}>
+                      CRM: {crmTeachersError}
+                    </p>
+                  ) : null}
                 </div>
               </div>
 
