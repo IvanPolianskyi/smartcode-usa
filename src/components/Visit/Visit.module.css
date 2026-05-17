@@ -1,607 +1,1035 @@
 /* Visit.module.css */
 
-
-
 /* --- ОСНОВНА СТРУКТУРА --- */
 .container {
-    min-height: 100vh;
-    min-height: 100svh;
-    background: #f8fafc;
-    position: relative;
-    font-family: var(--font-geist-sans), Arial, sans-serif;
-    overflow-x: hidden;
-    /* Оптимізація для продуктивності */
-    contain: layout style paint;
-    transform: translateZ(0);
-    will-change: scroll-position;
+	min-height: 100vh;
+	min-height: 100svh;
+	background: #f8fafc;
+	position: relative;
+	font-family: var(--font-geist-sans), Arial, sans-serif;
+	overflow-x: hidden;
+	/* Оптимізація для продуктивності */
+	contain: layout style paint;
+	transform: translateZ(0);
+	will-change: scroll-position;
 }
 
 /* Додаткові кольорові градієнти для фону */
 .container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 90% 30%, rgba(168, 85, 247, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 50% 10%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 30% 40%, rgba(249, 115, 22, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 70% 15%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background:
+		radial-gradient(
+			circle at 10% 20%,
+			rgba(59, 130, 246, 0.15) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 90% 30%,
+			rgba(168, 85, 247, 0.12) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 50% 10%,
+			rgba(34, 211, 238, 0.1) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 30% 40%,
+			rgba(249, 115, 22, 0.08) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 70% 15%,
+			rgba(236, 72, 153, 0.1) 0%,
+			transparent 50%
+		);
+	pointer-events: none;
+	z-index: 0;
 }
 
 .container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 15% 80%, rgba(34, 211, 238, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 85% 70%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 50% 90%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 25% 85%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 75% 95%, rgba(236, 72, 153, 0.08) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background:
+		radial-gradient(
+			circle at 15% 80%,
+			rgba(34, 211, 238, 0.12) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 85% 70%,
+			rgba(168, 85, 247, 0.15) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 50% 90%,
+			rgba(59, 130, 246, 0.1) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 25% 85%,
+			rgba(249, 115, 22, 0.1) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 75% 95%,
+			rgba(236, 72, 153, 0.08) 0%,
+			transparent 50%
+		);
+	pointer-events: none;
+	z-index: 0;
 }
 
 .mainContainer {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 2rem 4rem;
-    position: relative;
-    z-index: 10;
-    /* Оптимізація для продуктивності */
-    contain: layout style;
-    transform: translateZ(0);
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 0 2rem 4rem;
+	position: relative;
+	z-index: 10;
+	/* Оптимізація для продуктивності */
+	contain: layout style;
+	transform: translateZ(0);
 }
 
 /* --- ФОНОВІ ЕЛЕМЕНТИ --- */
 .backgroundElements {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    overflow: hidden;
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	z-index: 1;
+	overflow: hidden;
 }
 .floatingElement {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.6;
-    filter: blur(90px);
+	position: absolute;
+	border-radius: 50%;
+	opacity: 0.6;
+	filter: blur(90px);
 }
 
 /* Верхні елементи */
-.element1 { top: 5%; left: 5%; width: 250px; height: 250px; background: #3b82f6; animation: float 12s ease-in-out infinite; }
-.element2 { top: 8%; right: 8%; width: 200px; height: 200px; background: #a855f7; animation: float 10s ease-in-out infinite reverse; }
-.element3 { top: 15%; left: 50%; width: 180px; height: 180px; background: #22d3ee; animation: float 14s ease-in-out infinite; }
-.element4 { top: 12%; right: 30%; width: 160px; height: 160px; background: #f97316; animation: float 11s ease-in-out infinite reverse; }
-.element5 { top: 3%; left: 30%; width: 220px; height: 220px; background: #ec4899; animation: float 13s ease-in-out infinite; }
+.element1 {
+	top: 5%;
+	left: 5%;
+	width: 250px;
+	height: 250px;
+	background: #3b82f6;
+	animation: float 12s ease-in-out infinite;
+}
+.element2 {
+	top: 8%;
+	right: 8%;
+	width: 200px;
+	height: 200px;
+	background: #a855f7;
+	animation: float 10s ease-in-out infinite reverse;
+}
+.element3 {
+	top: 15%;
+	left: 50%;
+	width: 180px;
+	height: 180px;
+	background: #22d3ee;
+	animation: float 14s ease-in-out infinite;
+}
+.element4 {
+	top: 12%;
+	right: 30%;
+	width: 160px;
+	height: 160px;
+	background: #f97316;
+	animation: float 11s ease-in-out infinite reverse;
+}
+.element5 {
+	top: 3%;
+	left: 30%;
+	width: 220px;
+	height: 220px;
+	background: #ec4899;
+	animation: float 13s ease-in-out infinite;
+}
 
 /* Середні елементи */
-.element6 { top: 20%; right: 15%; width: 150px; height: 150px; background: #34d399; animation: float 10s ease-in-out infinite reverse; }
-.element7 { top: 45%; left: 15%; width: 180px; height: 180px; background: #8b5cf6; animation: float 15s ease-in-out infinite; }
-.element8 { top: 50%; right: 20%; width: 200px; height: 200px; background: #06b6d4; animation: float 12s ease-in-out infinite reverse; }
+.element6 {
+	top: 20%;
+	right: 15%;
+	width: 150px;
+	height: 150px;
+	background: #34d399;
+	animation: float 10s ease-in-out infinite reverse;
+}
+.element7 {
+	top: 45%;
+	left: 15%;
+	width: 180px;
+	height: 180px;
+	background: #8b5cf6;
+	animation: float 15s ease-in-out infinite;
+}
+.element8 {
+	top: 50%;
+	right: 20%;
+	width: 200px;
+	height: 200px;
+	background: #06b6d4;
+	animation: float 12s ease-in-out infinite reverse;
+}
 
 /* Нижні елементи */
-.element9 { bottom: 5%; left: 5%; width: 240px; height: 240px; background: #3b82f6; animation: float 14s ease-in-out infinite; }
-.element10 { bottom: 8%; right: 8%; width: 210px; height: 210px; background: #a855f7; animation: float 11s ease-in-out infinite reverse; }
-.element11 { bottom: 12%; left: 50%; width: 190px; height: 190px; background: #22d3ee; animation: float 13s ease-in-out infinite; }
-.element12 { bottom: 15%; right: 25%; width: 170px; height: 170px; background: #f97316; animation: float 10s ease-in-out infinite reverse; }
-.element13 { bottom: 3%; left: 25%; width: 230px; height: 230px; background: #ec4899; animation: float 12s ease-in-out infinite; }
-.element14 { bottom: 10%; right: 45%; width: 200px; height: 200px; background: #34d399; animation: float 15s ease-in-out infinite reverse; }
+.element9 {
+	bottom: 5%;
+	left: 5%;
+	width: 240px;
+	height: 240px;
+	background: #3b82f6;
+	animation: float 14s ease-in-out infinite;
+}
+.element10 {
+	bottom: 8%;
+	right: 8%;
+	width: 210px;
+	height: 210px;
+	background: #a855f7;
+	animation: float 11s ease-in-out infinite reverse;
+}
+.element11 {
+	bottom: 12%;
+	left: 50%;
+	width: 190px;
+	height: 190px;
+	background: #22d3ee;
+	animation: float 13s ease-in-out infinite;
+}
+.element12 {
+	bottom: 15%;
+	right: 25%;
+	width: 170px;
+	height: 170px;
+	background: #f97316;
+	animation: float 10s ease-in-out infinite reverse;
+}
+.element13 {
+	bottom: 3%;
+	left: 25%;
+	width: 230px;
+	height: 230px;
+	background: #ec4899;
+	animation: float 12s ease-in-out infinite;
+}
+.element14 {
+	bottom: 10%;
+	right: 45%;
+	width: 200px;
+	height: 200px;
+	background: #34d399;
+	animation: float 15s ease-in-out infinite reverse;
+}
 
 /* --- СЕКЦІЯ HERO --- */
 .hero {
-    text-align: center;
-    /* padding: 1rem 0; */
-    padding-top: 1rem;
+	text-align: center;
+	/* padding: 1rem 0; */
+	padding-top: 1rem;
+}
+
+.heroContent {
+	width: 100%;
+}
+
+.heroIntro {
+	width: 100%;
 }
 .title {
-    font-size: clamp(3.5rem, 7vw, 6rem);
-    font-weight: 900;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    /* Критичний елемент для LCP - завжди видимий одразу */
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-    will-change: auto;
+	font-size: clamp(3.5rem, 7vw, 6rem);
+	font-weight: 900;
+	margin-bottom: 1.5rem;
+	letter-spacing: -0.03em;
+	line-height: 1.1;
+	/* Критичний елемент для LCP - завжди видимий одразу */
+	opacity: 1 !important;
+	transform: translateY(0) !important;
+	will-change: auto;
 }
 /* Критичний заголовок - без анімації для кращого LCP */
 .titleCritical {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
+	opacity: 1 !important;
+	transform: none !important;
+	animation: none !important;
 }
 .titleMain {
-    display: block;
-    color: var(--text-primary);
-    /* Оптимізація для LCP */
-    content-visibility: auto;
-    contain-intrinsic-size: auto 1em;
-    will-change: auto;
+	display: block;
+	color: var(--text-primary);
+	/* Оптимізація для LCP */
+	content-visibility: auto;
+	contain-intrinsic-size: auto 1em;
+	will-change: auto;
 }
 .titleAccent {
-    display: block;
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-purple) 50%, var(--primary-orange) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    /* Оптимізація для LCP */
-    will-change: auto;
+	display: block;
+	background: linear-gradient(
+		135deg,
+		var(--primary-blue) 0%,
+		var(--primary-purple) 50%,
+		var(--primary-orange) 100%
+	);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	/* Оптимізація для LCP */
+	will-change: auto;
 }
 .subtitle {
-    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
-    color: var(--text-secondary);
-    margin: 0 auto 2.5rem;
-    font-weight: 500;
-    line-height: 1.6;
-    max-width: 60ch;
-    /* Початковий стан для плавної анімації без тремтіння */
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+	font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+	color: var(--text-secondary);
+	margin: 0 auto 2.5rem;
+	font-weight: 500;
+	line-height: 1.6;
+	max-width: 60ch;
+	/* Початковий стан для плавної анімації без тремтіння */
+	opacity: 1;
+	transform: translateY(0);
+	transition:
+		opacity 0.3s ease,
+		transform 0.3s ease;
 }
 /* Стан до анімації - елемент видимий, але злегка зміщений */
 .subtitle:not(.animate-up) {
-    opacity: 1;
-    transform: translateY(0);
+	opacity: 1;
+	transform: translateY(0);
 }
+
+.lessonTypes {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	margin: 0.85rem auto 0;
+	width: 100%;
+	max-width: 420px;
+}
+
+.lessonTypeBadge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.55rem;
+	padding: 0.65rem 1.1rem;
+	background: rgba(255, 255, 255, 0.78);
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.55);
+	border-radius: var(--radius-full);
+	box-shadow:
+		0 8px 22px rgba(99, 102, 241, 0.1),
+		0 1px 0 rgba(255, 255, 255, 0.8) inset;
+	font-size: clamp(0.88rem, 2.6vw, 1rem);
+	font-weight: 700;
+	color: #1e293b;
+	letter-spacing: -0.01em;
+	white-space: nowrap;
+}
+
+.lessonTypeIcon {
+	display: grid;
+	place-items: center;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+	color: #fff;
+	flex-shrink: 0;
+}
+
+.lessonTypeIcon svg {
+	width: 1.05rem;
+	height: 1.05rem;
+}
+
+.pricesCtaSection {
+	display: flex;
+	justify-content: center;
+	padding: 0 0 3rem;
+	margin-top: -0.5rem;
+}
+
+.pricesCtaSection .secondaryButton {
+	width: auto;
+	max-width: none;
+	padding: 0.75rem 1.75rem;
+}
+
 .heroFeatures {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
-    flex-wrap: wrap;
-    /* Початковий стан для плавної анімації без тремтіння */
-    opacity: 1;
-    transform: translateX(0);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1.5rem;
+	margin-bottom: 2.5rem;
+	flex-wrap: wrap;
+	/* Початковий стан для плавної анімації без тремтіння */
+	opacity: 1;
+	transform: translateX(0);
+	transition:
+		opacity 0.3s ease,
+		transform 0.3s ease;
 }
 .feature {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--radius-full);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
-    position: relative;
-    will-change: transform;
-    margin-top: 4px;
-    margin-bottom: 4px;
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	background: rgba(255, 255, 255, 0.7);
+	backdrop-filter: blur(10px);
+	padding: 0.75rem 1.5rem;
+	border-radius: var(--radius-full);
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	transition: all 0.3s ease;
+	position: relative;
+	will-change: transform;
+	margin-top: 4px;
+	margin-bottom: 4px;
 }
 .feature:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+	transform: translateY(-4px);
+	box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
 }
 .featureIcon {
-    width: 2.25rem;
-    height: 2.25rem;
-    display: grid;
-    place-items: center;
-    background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
-    border-radius: 50%;
-    color: white;
+	width: 2.25rem;
+	height: 2.25rem;
+	display: grid;
+	place-items: center;
+	background: linear-gradient(
+		135deg,
+		var(--primary-blue),
+		var(--primary-purple)
+	);
+	border-radius: 50%;
+	color: white;
 }
-.feature span { font-weight: 700; color: var(--text-primary); }
+.feature span {
+	font-weight: 700;
+	color: var(--text-primary);
+}
+
+.ctaDesktop {
+	display: none;
+	width: 100%;
+}
+
+.ctaMobile {
+	display: block;
+	width: 100%;
+}
 
 .ctaButtons {
-    display: flex;
-    gap: 0.85rem;
-    justify-content: center;
-    align-items: stretch;
-    flex-wrap: wrap;
-    width: 100%;
-    max-width: 520px;
-    margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	gap: 0.85rem;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	max-width: 420px;
+	margin: 0 auto;
 }
-.primaryButton, .secondaryButton {
-    padding: 0.9rem 1.35rem;
-    border-radius: 999px;
-    font-size: 1rem;
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.65rem;
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-    line-height: 1.2;
+.primaryButton,
+.secondaryButton {
+	padding: 0.9rem 1.35rem;
+	border-radius: 999px;
+	font-size: 1rem;
+	font-weight: 700;
+	border: none;
+	cursor: pointer;
+	transition:
+		transform 0.25s ease,
+		box-shadow 0.25s ease,
+		filter 0.25s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.65rem;
+	position: relative;
+	overflow: hidden;
+	text-decoration: none;
+	line-height: 1.2;
 }
 .primaryButton {
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 55%, #a855f7 100%);
-    color: #fff;
-    box-shadow:
-        0 4px 14px rgba(99, 102, 241, 0.35),
-        0 0 0 1px rgba(255, 255, 255, 0.12) inset;
-    flex: 1 1 auto;
-    min-width: min(100%, 280px);
-    min-height: 52px;
-    padding: 0.75rem 1.25rem 0.75rem 0.85rem;
+	background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 55%, #a855f7 100%);
+	color: #fff;
+	box-shadow:
+		0 4px 14px rgba(99, 102, 241, 0.35),
+		0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+	flex: 1 1 auto;
+	min-width: min(100%, 280px);
+	min-height: 52px;
+	padding: 0.75rem 1.25rem 0.75rem 0.85rem;
 }
 .primaryButtonIcon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.18);
-    flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.18);
+	flex-shrink: 0;
 }
 .primaryButtonText {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    gap: 0.05rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	text-align: left;
+	gap: 0.05rem;
 }
 .primaryButtonMain {
-    font-size: 1.05rem;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
+	font-size: 1.05rem;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+	white-space: nowrap;
 }
 .primaryButtonSub {
-    font-size: 0.78rem;
-    font-weight: 600;
-    opacity: 0.92;
-    white-space: nowrap;
+	font-size: 0.78rem;
+	font-weight: 600;
+	opacity: 0.92;
+	white-space: nowrap;
 }
 .primaryButton:hover {
-    transform: translateY(-2px);
-    box-shadow:
-        0 8px 24px rgba(99, 102, 241, 0.42),
-        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
-    filter: brightness(1.04);
+	transform: translateY(-2px);
+	box-shadow:
+		0 8px 24px rgba(99, 102, 241, 0.42),
+		0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+	filter: brightness(1.04);
 }
 .primaryButton:active {
-    transform: translateY(0);
+	transform: translateY(0);
 }
 .secondaryButton {
-    background: #fff;
-    color: #4f46e5;
-    border: 1.5px solid #e2e8f0;
-    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
-    flex: 0 1 auto;
-    white-space: nowrap;
-    min-height: 52px;
+	background: #fff;
+	color: #4f46e5;
+	border: 1.5px solid #e2e8f0;
+	box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+	width: 100%;
+	max-width: 420px;
+	white-space: nowrap;
+	min-height: 48px;
+	padding: 0.75rem 1.25rem;
 }
 .secondaryButton:hover {
-    transform: translateY(-2px);
-    border-color: #c7d2fe;
-    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.12);
+	transform: translateY(-2px);
+	border-color: #c7d2fe;
+	box-shadow: 0 6px 18px rgba(99, 102, 241, 0.12);
+}
+
+@media (min-width: 768px) {
+	.ctaDesktop {
+		display: block;
+	}
+
+	.ctaMobile {
+		display: none;
+	}
+
+	.ctaDesktop .heroFeatures {
+		margin-top: 0;
+		margin-bottom: 1.75rem;
+	}
+
+	.ctaDesktop .ctaButtons {
+		max-width: 560px;
+	}
+
+	.ctaDesktop .primaryButton {
+		width: 100%;
+		min-height: 56px;
+		padding: 0.95rem 1.75rem 0.95rem 1.1rem;
+	}
+
+	.ctaDesktop .primaryButtonText {
+		flex-direction: row;
+		align-items: center;
+		font-size: 1.05rem;
+		font-weight: 800;
+		white-space: nowrap;
+	}
+
+	.ctaDesktop .secondaryButton {
+		width: auto;
+		max-width: none;
+		align-self: center;
+		padding: 0.7rem 1.75rem;
+	}
+
+	.ctaMobile .ctaButtons,
+	.ctaMobile .secondaryButton {
+		max-width: 420px;
+	}
+}
+
+@media (min-width: 1024px) {
+	.ctaDesktop .ctaButtons {
+		max-width: 620px;
+	}
 }
 
 @media (min-width: 560px) {
-    .primaryButton {
-        min-width: auto;
-        padding: 0.95rem 1.65rem 0.95rem 1rem;
-    }
-    .primaryButtonText {
-        flex-direction: row;
-        align-items: baseline;
-        gap: 0.35rem;
-    }
-    .primaryButtonSub {
-        font-size: 1rem;
-        font-weight: 700;
-    }
+	.primaryButton {
+		min-width: auto;
+		padding: 0.95rem 1.65rem 0.95rem 1rem;
+	}
+	.primaryButtonText {
+		flex-direction: row;
+		align-items: baseline;
+		gap: 0.35rem;
+	}
+	.primaryButtonSub {
+		font-size: 1rem;
+		font-weight: 700;
+	}
 }
 
 /* --- СЕКЦІЯ СТАТИСТИКИ --- */
 .statsContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    padding: 3rem 0;
-    /* Початковий стан для плавної анімації без тремтіння */
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+	margin-top: 2rem;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 1.5rem;
+	padding: 3rem 0;
+	/* Початковий стан для плавної анімації без тремтіння */
+	opacity: 1;
+	transform: translateY(0);
+	transition:
+		opacity 0.3s ease,
+		transform 0.3s ease;
 }
 
 .statCard {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 2rem 1.5rem;
-    text-align: center;
-    transition: all 0.3s ease;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    border: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    /* Початковий стан для плавної анімації без тремтіння */
-    opacity: 1;
-    transform: scale(1);
-    will-change: transform, box-shadow;
+	background: #ffffff;
+	border-radius: 12px;
+	padding: 2rem 1.5rem;
+	text-align: center;
+	transition: all 0.3s ease;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	border: none;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	/* Початковий стан для плавної анімації без тремтіння */
+	opacity: 1;
+	transform: scale(1);
+	will-change: transform, box-shadow;
 }
 
 .statCard:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 .statIcon {
-    width: 56px;
-    height: 56px;
-    margin: 0 auto 1.5rem;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: white;
-    border: 1.5px solid #6366f1;
-    flex-shrink: 0;
+	width: 56px;
+	height: 56px;
+	margin: 0 auto 1.5rem;
+	display: grid;
+	place-items: center;
+	border-radius: 50%;
+	background: white;
+	border: 1.5px solid #6366f1;
+	flex-shrink: 0;
 }
 
 .statIcon svg {
-    width: 28px;
-    height: 28px;
-    stroke-width: 2;
+	width: 28px;
+	height: 28px;
+	stroke-width: 2;
 }
 
-.statContent { 
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+.statContent {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
 }
 
 .statNumber {
-    font-size: clamp(1.5rem, 2.5vw, 1.875rem);
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 0.75rem;
-    color: #6366f1;
-    word-break: break-word;
+	font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+	font-weight: 700;
+	line-height: 1.3;
+	margin-bottom: 0.75rem;
+	color: #6366f1;
+	word-break: break-word;
 }
 
 .statLabel {
-    font-size: clamp(0.875rem, 1.2vw, 0.9375rem);
-    font-weight: 400;
-    color: #4b5563;
-    line-height: 1.5;
-    word-break: break-word;
-    text-align: center;
+	font-size: clamp(0.875rem, 1.2vw, 0.9375rem);
+	font-weight: 400;
+	color: #4b5563;
+	line-height: 1.5;
+	word-break: break-word;
+	text-align: center;
 }
 
 /* видалено застарілі класи секції курсів (заміщено компонентом EnhancedCourseCards) */
 
 /* --- КАРТКИ КУРСІВ --- */
 .courseCard {
-    position: relative;
-    border-radius: var(--radius-2xl);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-    transition: all 0.5s ease;
-    overflow: hidden;
-    color: white;
+	position: relative;
+	border-radius: var(--radius-2xl);
+	border: 1px solid rgba(0, 0, 0, 0.05);
+	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+	transition: all 0.5s ease;
+	overflow: hidden;
+	color: white;
 }
 .courseCard:hover {
-    transform: translateY(-15px) scale(1.03);
-    box-shadow: 0 40px 60px -15px rgba(0, 0, 0, 0.2);
+	transform: translateY(-15px) scale(1.03);
+	box-shadow: 0 40px 60px -15px rgba(0, 0, 0, 0.2);
 }
 .cardBackground {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
+	position: absolute;
+	inset: 0;
+	z-index: 1;
 }
 .cardContent {
-    position: relative;
-    z-index: 2;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.8) 100%);
-    height: 100%;
-    justify-content: flex-end;
+	position: relative;
+	z-index: 2;
+	padding: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	background: linear-gradient(
+		180deg,
+		rgba(0, 0, 0, 0) 0%,
+		rgba(0, 0, 0, 0.4) 50%,
+		rgba(0, 0, 0, 0.8) 100%
+	);
+	height: 100%;
+	justify-content: flex-end;
 }
 .courseHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 1rem;
 }
 .courseTitle {
-    font-size: 1.75rem;
-    font-weight: 800;
-    line-height: 1.2;
+	font-size: 1.75rem;
+	font-weight: 800;
+	line-height: 1.2;
 }
 .courseSubtitle {
-    font-size: 1rem;
-    font-weight: 500;
-    opacity: 0.8;
+	font-size: 1rem;
+	font-weight: 500;
+	opacity: 0.8;
 }
 .courseIconContainer {
-    font-size: 3rem;
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
-    transition: transform 0.3s ease;
+	font-size: 3rem;
+	filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+	transition: transform 0.3s ease;
 }
-.courseCard:hover .courseIconContainer { transform: scale(1.15) rotate(10deg); }
+.courseCard:hover .courseIconContainer {
+	transform: scale(1.15) rotate(10deg);
+}
 .courseDescription {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    opacity: 0.9;
+	font-size: 0.9rem;
+	line-height: 1.6;
+	opacity: 0.9;
 }
 .courseFeatures {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
 }
 .featureTag {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px);
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-full);
-    font-size: 0.8rem;
-    font-weight: 600;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(5px);
+	padding: 0.5rem 1rem;
+	border-radius: var(--radius-full);
+	font-size: 0.8rem;
+	font-weight: 600;
+	border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .courseMeta {
-    display: flex;
-    gap: 1.5rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    opacity: 0.8;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+	display: flex;
+	gap: 1.5rem;
+	font-size: 0.875rem;
+	font-weight: 500;
+	opacity: 0.8;
+	padding-top: 1rem;
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 .metaItem {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
 }
 
 /* --- АНІМАЦІЇ ЧАСТИНОК ДЛЯ КАРТОК --- */
-.particleContainer { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+.particleContainer {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	z-index: 0;
+}
 .particle {
-    position: absolute;
-    border-radius: 50%;
-    background-color: var(--particle-color);
-    box-shadow: 0 0 8px var(--particle-color);
-    animation-name: starFloat;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
+	position: absolute;
+	border-radius: 50%;
+	background-color: var(--particle-color);
+	box-shadow: 0 0 8px var(--particle-color);
+	animation-name: starFloat;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
 }
 
 /* --- АДАПТИВНІСТЬ --- */
 @media (max-width: 1024px) {
-    .mainContainer {
-        padding: 0 1.5rem 4rem;
-    }
-    .statsContainer {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1.25rem;
-        padding: 2.5rem 0;
-    }
-    .statCard {
-        padding: 1.75rem 1.25rem;
-    }
-    .statIcon {
-        width: 52px;
-        height: 52px;
-        margin-bottom: 1.25rem;
-    }
-    .statIcon svg {
-        width: 26px;
-        height: 26px;
-    }
+	.mainContainer {
+		padding: 0 1.5rem 4rem;
+	}
+	.statsContainer {
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 1.25rem;
+		padding: 2.5rem 0;
+	}
+	.statCard {
+		padding: 1.75rem 1.25rem;
+	}
+	.statIcon {
+		width: 52px;
+		height: 52px;
+		margin-bottom: 1.25rem;
+	}
+	.statIcon svg {
+		width: 26px;
+		height: 26px;
+	}
 }
 
 @media (max-width: 768px) {
-    .mainContainer {
-        padding: 0 1.5rem 4rem;
-    }
-    .hero { 
-        padding: 1rem 0;
-        padding-top: 3rem;
-    }
-    /* Оптимізація для мобільних - заголовок завжди видимий */
-    .title,
-    .titleCritical,
-    .titleMain {
-        opacity: 1 !important;
-        transform: none !important;
-        animation: none !important;
-    }
-    .heroFeatures { 
-        gap: 1rem;
-        opacity: 1 !important;
-        transform: translateX(0) !important;
-    }
-    .statsContainer { 
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        padding: 2rem 0;
-        opacity: 1 !important;
-        transform: translateY(0) !important;
-    }
-    .statCard {
-        padding: 1.5rem 1rem;
-        border-radius: 10px;
-    }
-    .statIcon {
-        width: 48px;
-        height: 48px;
-        margin-bottom: 1rem;
-    }
-    .statIcon svg {
-        width: 24px;
-        height: 24px;
-    }
-    .statNumber {
-        font-size: 1.5rem;
-        margin-bottom: 0.625rem;
-    }
-    .statLabel {
-        font-size: 0.8125rem;
-        line-height: 1.4;
-    }
-    .coursesGrid { grid-template-columns: 1fr; }
+	.mainContainer {
+		padding: 0 1.5rem 4rem;
+	}
+	.hero {
+		padding: 0.5rem 0 1rem;
+		padding-top: 0.5rem;
+	}
+	/* Оптимізація для мобільних - заголовок завжди видимий */
+	.title,
+	.titleCritical,
+	.titleMain {
+		opacity: 1 !important;
+		transform: none !important;
+		animation: none !important;
+	}
+	.heroFeatures {
+		gap: 1rem;
+		opacity: 1 !important;
+		transform: translateX(0) !important;
+	}
+	.statsContainer {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+		padding: 2rem 0;
+		opacity: 1 !important;
+		transform: translateY(0) !important;
+	}
+	.statCard {
+		padding: 1.5rem 1rem;
+		border-radius: 10px;
+	}
+	.statIcon {
+		width: 48px;
+		height: 48px;
+		margin-bottom: 1rem;
+	}
+	.statIcon svg {
+		width: 24px;
+		height: 24px;
+	}
+	.statNumber {
+		font-size: 1.5rem;
+		margin-bottom: 0.625rem;
+	}
+	.statLabel {
+		font-size: 0.8125rem;
+		line-height: 1.4;
+	}
+	.coursesGrid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Повноекранний hero з формою — тільки телефон (форма, не десктоп-кнопка) */
+@media (max-width: 767px) {
+	.mainContainer {
+		padding: 0 1.25rem 4rem;
+	}
+
+	.hero {
+		padding: 0;
+	}
+
+	.heroContent {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: clamp(0.85rem, 2.5vh, 1.5rem);
+		min-height: calc(100dvh - 70px);
+		min-height: calc(100svh - 70px);
+		padding: 0.35rem 0 clamp(1rem, 3vh, 1.5rem);
+		box-sizing: border-box;
+	}
+
+	.heroIntro {
+		flex-shrink: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.65rem;
+		padding: 0 0.25rem;
+	}
+
+	.title,
+	.titleCritical,
+	.titleMain {
+		margin-top: 20px;
+		font-size: clamp(2.9rem, 1.5vw, 4.1rem);
+		margin-bottom: 0;
+		letter-spacing: -0.035em;
+		line-height: 1.05;
+	}
+
+	.titleAccent {
+		margin-top: 0.02em;
+	}
+
+	.subtitle {
+		font-size: clamp(1.08rem, 4.8vw, 1.25rem);
+		font-weight: 600;
+		color: #475569;
+		margin: 0 auto;
+		line-height: 1.5;
+		letter-spacing: -0.015em;
+		max-width: 30ch;
+		padding: 0 0.35rem;
+		text-wrap: balance;
+	}
+
+	.lessonTypes {
+		margin-top: 0.5rem;
+		max-width: 100%;
+		flex-wrap: nowrap;
+		gap: 0.4rem;
+	}
+
+	.lessonTypeBadge {
+		padding: 0.55rem 0.7rem;
+		font-size: clamp(0.72rem, 3.1vw, 0.88rem);
+		gap: 0.4rem;
+	}
+
+	.lessonTypeIcon {
+		width: 1.65rem;
+		height: 1.65rem;
+	}
+
+	.lessonTypeIcon svg {
+		width: 0.95rem;
+		height: 0.95rem;
+	}
+
+	.pricesCtaSection {
+		padding: 0 0 2.5rem;
+		margin-top: 0;
+	}
+
+	.ctaMobile {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-height: 0;
+		width: 100%;
+	}
+
+	.ctaMobile .ctaButtons {
+		width: 100%;
+		max-width: 100%;
+		gap: clamp(0.85rem, 2.2vh, 1.1rem);
+		flex: 1;
+		justify-content: center;
+	}
+
+	.statsContainer {
+		margin-top: 0;
+		padding-top: 2.75rem;
+		padding-bottom: 1.5rem;
+	}
 }
 
 @media (max-width: 480px) {
-    .mainContainer {
-        padding: 0 1rem 4rem;
-    }
-    /* Оптимізація для маленьких екранів - всі елементи видимі одразу */
-    .title,
-    .titleCritical,
-    .titleMain,
-    .subtitle,
-    .heroFeatures,
-    .statsContainer,
-    .statCard {
-        opacity: 1 !important;
-        transform: none !important;
-        animation: none !important;
-    }
-    .statsContainer {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        padding: 1.5rem 0;
-    }
-    .statCard {
-        padding: 1.75rem 1.25rem;
-    }
-    .statIcon {
-        width: 52px;
-        height: 52px;
-    }
-    .statIcon svg {
-        width: 26px;
-        height: 26px;
-    }
-    .statNumber {
-        font-size: 1.625rem;
-    }
-    .statLabel {
-        font-size: 0.875rem;
-    }
+	.mainContainer {
+		padding: 0 1rem 4rem;
+	}
+	/* Оптимізація для маленьких екранів - всі елементи видимі одразу */
+	.title,
+	.titleCritical,
+	.titleMain,
+	.subtitle,
+	.heroFeatures,
+	.statsContainer,
+	.statCard {
+		opacity: 1 !important;
+		transform: none !important;
+		animation: none !important;
+	}
+	.statsContainer {
+		grid-template-columns: 1fr;
+		gap: 1rem;
+		padding: 2.75rem 0 1.5rem;
+	}
+	.statCard {
+		padding: 1.75rem 1.25rem;
+	}
+	.statIcon {
+		width: 52px;
+		height: 52px;
+	}
+	.statIcon svg {
+		width: 26px;
+		height: 26px;
+	}
+	.statNumber {
+		font-size: 1.625rem;
+	}
+	.statLabel {
+		font-size: 0.875rem;
+	}
+
+	.title,
+	.titleCritical,
+	.titleMain {
+		font-size: clamp(2.75rem, 14vw, 3.85rem);
+	}
+
+	.subtitle {
+		font-size: clamp(1.05rem, 5vw, 1.2rem);
+		max-width: 28ch;
+	}
+
+	.heroContent {
+		min-height: calc(100dvh - 70px);
+		min-height: calc(100svh - 70px);
+	}
 }
 
 /* --- АНІМАЦІЙНІ КЛАСИ --- */
@@ -609,47 +1037,76 @@
 .animate-up,
 .animate-slide,
 .animate-scale {
-    /* Елементи видимі одразу, анімація буде додана через GSAP */
-    opacity: 1;
-    transform: translateY(0) translateX(0) scale(1);
-    will-change: transform, opacity;
+	/* Елементи видимі одразу, анімація буде додана через GSAP */
+	opacity: 1;
+	transform: translateY(0) translateX(0) scale(1);
+	will-change: transform, opacity;
 }
 
 /* Тільки для не-критичних елементів можна додати легкий початковий зсув */
 .animate-up:not(.title-critical) {
-    /* Легкий початковий зсув, який буде анімований */
-    opacity: 1;
-    transform: translateY(0);
+	/* Легкий початковий зсув, який буде анімований */
+	opacity: 1;
+	transform: translateY(0);
 }
 
 .animate-slide {
-    opacity: 1;
-    transform: translateX(0);
+	opacity: 1;
+	transform: translateX(0);
 }
 
 .animate-scale {
-    opacity: 1;
-    transform: scale(1);
+	opacity: 1;
+	transform: scale(1);
 }
 
 /* --- КЛЮЧОВІ КАДРИ АНІМАЦІЙ --- */
 @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+	0%,
+	100% {
+		transform: translateY(0px);
+	}
+	50% {
+		transform: translateY(-20px);
+	}
 }
 @keyframes starFloat {
-    0%, 100% { transform: translateY(0px) scale(0.8); opacity: 0.5; }
-    50% { transform: translateY(-40px) scale(1.5); opacity: 1; }
+	0%,
+	100% {
+		transform: translateY(0px) scale(0.8);
+		opacity: 0.5;
+	}
+	50% {
+		transform: translateY(-40px) scale(1.5);
+		opacity: 1;
+	}
 }
 @keyframes icon-pop {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.25); }
+	0%,
+	100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.25);
+	}
 }
 @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(1.1); opacity: 1; }
+	0%,
+	100% {
+		transform: scale(1);
+		opacity: 0.8;
+	}
+	50% {
+		transform: scale(1.1);
+		opacity: 1;
+	}
 }
 @keyframes cosmic-text-anim {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+	0%,
+	100% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
 }
