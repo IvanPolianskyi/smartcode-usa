@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
-import Link from 'next/link'
+import React, { useState, useRef, useEffect, useMemo } from 'react'
+import { Link } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import {
     ChevronDown,
@@ -23,7 +24,10 @@ import styles from './Referral.module.css'
 
 const SITE_URL = 'https://smartcode-academy.com'
 
+const BENEFIT_ICONS = [Gift, Percent, Users, Star]
+
 const Referral = () => {
+    const t = useTranslations('pages.referral')
     const [openFaq, setOpenFaq] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [nickname, setNickname] = useState('')
@@ -90,7 +94,7 @@ const Referral = () => {
 
     const handleCopy = async () => {
         if (!nickname.trim()) {
-            setNicknameError('Введіть свій нікнейм')
+            setNicknameError(t('nicknameRequired'))
             inputRef.current?.focus()
             return
         }
@@ -114,76 +118,23 @@ const Referral = () => {
         }
     }
 
-    const steps = [
-        {
-            number: '01',
-            title: 'Скопіюйте ваше реферальне посилання',
-            description:
-                'Введіть свій нікнейм і скопіюйте унікальне посилання, яке згенерується спеціально для вас.',
-        },
-        {
-            number: '02',
-            title: 'Поділіться лінком з другом',
-            description:
-                'Відправте посилання другу — нехай він перейде за ним та запишеться на курс.',
-        },
-        {
-            number: '03',
-            title: 'Отримайте бонус',
-            description:
-                'Як тільки ваш друг почне навчання — ви обидва отримаєте знижку 500 грн!',
-        },
-    ]
+    const steps = useMemo(() => {
+        const items = t.raw('steps.items')
+        return Object.keys(items).map((key) => items[key])
+    }, [t])
 
-    const benefits = [
-        {
-            icon: <Gift size={26} />,
-            title: 'Знижка 500 грн для вас',
-            description:
-                'Отримайте знижку на будь-який наступний місяць навчання. Кількість рефералів не обмежена!',
-        },
-        {
-            icon: <Percent size={26} />,
-            title: 'Знижка 500 грн для друга',
-            description:
-                'Ваш друг також отримує бонус — знижку на перший місяць навчання в SmartCode Academy.',
-        },
-        {
-            icon: <Users size={26} />,
-            title: 'Без обмежень по кількості',
-            description:
-                'Запрошуйте скільки завгодно друзів — кожне запрошення приносить знижку обом!',
-        },
-        {
-            icon: <Star size={26} />,
-            title: 'Навчайтесь разом',
-            description:
-                'Навчання разом з друзями — веселіше та ефективніше. Мотивуйте одне одного!',
-        },
-    ]
+    const benefits = useMemo(() => {
+        const items = t.raw('benefits.items')
+        return Object.keys(items).map((key, index) => {
+            const Icon = BENEFIT_ICONS[index]
+            return { ...items[key], icon: <Icon size={26} /> }
+        })
+    }, [t])
 
-    const faqs = [
-        {
-            question: 'Як запросити друга?',
-            answer: 'Натисніть кнопку «Хочу запросити друга», введіть свій нікнейм, скопіюйте унікальне посилання та відправте його другу. Коли друг перейде за посиланням і запишеться — ви обидва отримаєте знижку.',
-        },
-        {
-            question: 'Скільки друзів я можу запросити?',
-            answer: 'Кількість друзів не обмежена! Чим більше друзів ви запросите, тим більше знижок отримаєте. Кожне успішне запрошення — це 500 грн знижки для вас.',
-        },
-        {
-            question: 'Коли я отримаю знижку?',
-            answer: 'Знижка нараховується автоматично після того, як ваш друг оплатить перший місяць навчання. Вона буде застосована до вашого наступного платежу.',
-        },
-        {
-            question: 'Чи можна комбінувати знижки?',
-            answer: 'Так! Реферальні знижки можна комбінувати. Якщо ви запросили 3 друзів, ви отримаєте 1500 грн знижки.',
-        },
-        {
-            question: 'На які курси поширюється акція?',
-            answer: 'Акція діє на всі курси SmartCode Academy: Python, веб-розробка, Unity, Roblox Studio та інші.',
-        },
-    ]
+    const faqs = useMemo(() => {
+        const items = t.raw('faq.items')
+        return Object.keys(items).map((key) => items[key])
+    }, [t])
 
     return (
         <>
@@ -203,28 +154,26 @@ const Referral = () => {
                         <button
                             className={styles.modalClose}
                             onClick={closeModal}
-                            aria-label="Закрити"
+                            aria-label={t('close')}
                         >
                             <X size={22} />
                         </button>
 
-                        <h2 className={styles.modalTitle}>
-                            Порекомендуйте SmartCode друзям
-                        </h2>
+                        <h2 className={styles.modalTitle}>{t('modalTitle')}</h2>
 
                         {/* Step 1: Enter nickname */}
                         <div className={styles.modalStep}>
                             <div className={styles.modalStepNumber}>01</div>
                             <div className={styles.modalStepContent}>
                                 <h3 className={styles.modalStepTitle}>
-                                    Введіть свій нікнейм
+                                    {t('modalSteps.enterNickname.title')}
                                 </h3>
                                 <div className={styles.nicknameInputGroup}>
                                     <input
                                         ref={inputRef}
                                         type="text"
                                         className={`${styles.nicknameInput} ${nicknameError ? styles.nicknameInputError : ''}`}
-                                        placeholder="Наприклад: ivan_python"
+                                        placeholder={t('nicknamePlaceholder')}
                                         value={nickname}
                                         onChange={handleNicknameChange}
                                         maxLength={30}
@@ -244,7 +193,7 @@ const Referral = () => {
                             <div className={styles.modalStepNumber}>02</div>
                             <div className={styles.modalStepContent}>
                                 <h3 className={styles.modalStepTitle}>
-                                    Скопіюйте ваше реферальне посилання
+                                    {t('modalSteps.copyLink.title')}
                                 </h3>
                                 <div className={styles.referralLinkRow}>
                                     <div className={styles.referralLinkBox}>
@@ -252,7 +201,7 @@ const Referral = () => {
                                         <span className={styles.referralLinkText}>
                                             {nickname.trim()
                                                 ? referralLink
-                                                : 'Введіть нікнейм вище...'}
+                                                : t('linkPlaceholder')}
                                         </span>
                                     </div>
                                     <button
@@ -263,12 +212,12 @@ const Referral = () => {
                                         {copied ? (
                                             <>
                                                 <Check size={16} />
-                                                Скопійовано
+                                                {t('copied')}
                                             </>
                                         ) : (
                                             <>
                                                 <Copy size={16} />
-                                                Скопіювати
+                                                {t('copy')}
                                             </>
                                         )}
                                     </button>
@@ -281,10 +230,10 @@ const Referral = () => {
                             <div className={styles.modalStepNumber}>03</div>
                             <div className={styles.modalStepContent}>
                                 <h3 className={styles.modalStepTitle}>
-                                    Поділіться цим лінком з другом
+                                    {t('modalSteps.share.title')}
                                 </h3>
                                 <p className={styles.modalStepDescription}>
-                                    Відправте посилання другу. Коли він перейде і запишеться на курс — ви обидва отримаєте знижку 500 грн!
+                                    {t('modalSteps.share.description')}
                                 </p>
                             </div>
                         </div>
@@ -303,18 +252,14 @@ const Referral = () => {
                 <div className={styles.heroContainer}>
                     <div className={styles.heroLeft}>
                         <div className={styles.breadcrumb}>
-                            <Link href="/">Головна</Link>
+                            <Link href="/">{t('breadcrumb.home')}</Link>
                             <span className={styles.breadcrumbSep}>›</span>
-                            <span>Запроси друга</span>
+                            <span>{t('breadcrumb.current')}</span>
                         </div>
 
-                        <h1 className={styles.heroTitle}>
-                            Навчайтеся з друзями
-                        </h1>
+                        <h1 className={styles.heroTitle}>{t('hero.title')}</h1>
 
-                        <p className={styles.heroSubtitle}>
-                            Запросіть друга у SmartCode Academy та отримайте знижку на курс!
-                        </p>
+                        <p className={styles.heroSubtitle}>{t('hero.subtitle')}</p>
 
                         <div className={styles.heroActions}>
                             <button
@@ -322,14 +267,14 @@ const Referral = () => {
                                 onClick={openModal}
                             >
                                 <Send size={18} />
-                                Хочу запросити друга
+                                {t('hero.inviteFriend')}
                             </button>
                             <button
                                 className={styles.btnSecondary}
                                 onClick={handleCtaClick}
                             >
                                 <Heart size={18} />
-                                Я друг
+                                {t('hero.imFriend')}
                             </button>
                         </div>
                     </div>
@@ -339,7 +284,7 @@ const Referral = () => {
                             <div className={`${styles.photoFrame} ${styles.photoFrame1}`}>
                                 <Image
                                     src="/images/referral/kid1.png"
-                                    alt="Щасливий учень SmartCode Academy"
+                                    alt={t('hero.imageAlts.student1')}
                                     width={200}
                                     height={230}
                                     priority
@@ -348,7 +293,7 @@ const Referral = () => {
                             <div className={`${styles.photoFrame} ${styles.photoFrame2}`}>
                                 <Image
                                     src="/images/referral/kid2.png"
-                                    alt="Учениця SmartCode Academy"
+                                    alt={t('hero.imageAlts.student2')}
                                     width={180}
                                     height={210}
                                     priority
@@ -357,7 +302,7 @@ const Referral = () => {
                             <div className={`${styles.photoFrame} ${styles.photoFrame3}`}>
                                 <Image
                                     src="/images/referral/kid3.png"
-                                    alt="Учень програмування"
+                                    alt={t('hero.imageAlts.student3')}
                                     width={170}
                                     height={200}
                                     priority
@@ -378,11 +323,10 @@ const Referral = () => {
                 <div className={styles.stepsContainer}>
                     <div className={styles.sectionBadge}>
                         <Sparkles size={16} />
-                        Як це працює
+                        {t('steps.badge')}
                     </div>
-                    <h2 className={styles.sectionTitle}>Три простих кроки</h2>
-                    <p className={styles.sectionSubtitle}>
-                        Запросити друга легко — усього три кроки до вашої знижки
+                    <h2 className={styles.sectionTitle}>{t('steps.title')}</h2>
+                    <p className={styles.sectionSubtitle}>{t('steps.subtitle')}
                     </p>
 
                     <div className={styles.stepsGrid}>
@@ -402,11 +346,10 @@ const Referral = () => {
                 <div className={styles.benefitsContainer}>
                     <div className={styles.sectionBadge}>
                         <Gift size={16} />
-                        Переваги
+                        {t('benefits.badge')}
                     </div>
-                    <h2 className={styles.sectionTitle}>Що ви отримуєте</h2>
-                    <p className={styles.sectionSubtitle}>
-                        Вигідно для вас та вашого друга — обидва отримують знижку
+                    <h2 className={styles.sectionTitle}>{t('benefits.title')}</h2>
+                    <p className={styles.sectionSubtitle}>{t('benefits.subtitle')}
                     </p>
 
                     <div className={styles.benefitsGrid}>
@@ -430,9 +373,9 @@ const Referral = () => {
                 <div className={styles.faqContainer}>
                     <div className={styles.sectionBadge}>
                         <BookOpen size={16} />
-                        Часті питання
+                        {t('faq.badge')}
                     </div>
-                    <h2 className={styles.sectionTitle}>Відповіді на ваші питання</h2>
+                    <h2 className={styles.sectionTitle}>{t('faq.title')}</h2>
 
                     <div className={styles.faqList}>
                         {faqs.map((faq, index) => (
@@ -479,14 +422,11 @@ const Referral = () => {
                 </div>
                 <div className={styles.ctaContainer}>
                     <h2 className={styles.ctaTitle}>
-                        Готові запросити друга?
+                        {t('cta.title')}
                     </h2>
-                    <p className={styles.ctaSubtitle}>
-                        Створіть своє реферальне посилання та поділіться ним з другом — 
-                        обидва отримаєте знижку 500 грн!
-                    </p>
+                    <p className={styles.ctaSubtitle}>{t('cta.subtitle')}</p>
                     <button className={styles.ctaButton} onClick={openModal}>
-                        Отримати моє посилання
+                        {t('cta.button')}
                         <ArrowRight size={18} />
                     </button>
                 </div>

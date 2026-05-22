@@ -1,0 +1,377 @@
+{
+  "common": {
+    "backToHome": "На головну",
+    "startLearning": "Почати навчання",
+    "bookTrial": "Безкоштовний урок",
+    "modulesTitle": "Модулі курсу",
+    "projectsTitle": "Твої майбутні проекти",
+    "featuresTitle": "Чому обирають нас",
+    "ageLabel": "Вік",
+    "studentsLabel": "Студентів",
+    "projectsCountLabel": "Проектів",
+    "weeks": "тижні",
+    "weeksFew": "тижні",
+    "weeksMany": "тижнів",
+    "moduleBadge": "Модуль {number}",
+    "selectProject": "Вибрати",
+    "difficulty": "Складність",
+    "difficultyPercent": "Складність: {percent}%",
+    "gameplay": "ГЕЙМПЛЕЙ",
+    "xp": "+{points} XP",
+    "videoNotSupported": "Ваш браузер не підтримує відео.",
+    "closeVideo": "Закрити відео",
+    "difficultyLevels": {
+      "beginner": "Новачок",
+      "intermediate": "Середній",
+      "advanced": "Просунутий",
+      "expert": "Експерт",
+      "beginnerEn": "BEGINNER",
+      "middleEn": "MIDDLE",
+      "seniorEn": "SENIOR"
+    }
+  },
+  "python": {
+    "hero": {
+      "title": "PYTHON",
+      "subtitle": "Програмування майбутнього",
+      "description": "Відкрий космос можливостей з найпопулярнішою мовою програмування світу. Створюй веб-додатки, аналізуй дані та будуй майбутнє разом з нами."
+    },
+    "stats": {
+      "items": [
+        { "number": "200+", "label": "Випускників" },
+        { "number": "300+", "label": "Годин кодингу" },
+        { "number": "4.9", "label": "Середня оцінка" },
+        { "number": "50+", "label": "Проектів" }
+      ]
+    },
+    "modules": {
+      "title": "Модулі курсу",
+      "items": [
+        {
+          "title": "Основи Python",
+          "duration": "4 тижні",
+          "topics": ["Змінні та типи даних", "Умови та цикли", "Функції", "Структури даних"]
+        },
+        {
+          "title": "ООП в Python",
+          "duration": "3 тижні",
+          "topics": ["Класи та об'єкти", "Наслідування", "Поліморфізм", "Інкапсуляція"]
+        },
+        {
+          "title": "Веб-розробка",
+          "duration": "5 тижнів",
+          "topics": ["Flask/Django", "REST API", "База даних", "Деплой проектів"]
+        },
+        {
+          "title": "Data Science",
+          "duration": "4 тижні",
+          "topics": ["NumPy/Pandas", "Matplotlib", "Машинне навчання", "Проекти"]
+        }
+      ]
+    },
+    "projects": {
+      "title": "Твої майбутні проекти",
+      "items": [
+        {
+          "name": "Телеграм бот",
+          "difficulty": "Новачок",
+          "time": "2 тижні",
+          "description": "Створи розумного бота для автоматизації завдань"
+        },
+        {
+          "name": "Веб-додаток",
+          "difficulty": "Середній",
+          "time": "3 тижні",
+          "description": "Повноцінний веб-сайт з базою даних"
+        },
+        {
+          "name": "Аналіз даних",
+          "difficulty": "Просунутий",
+          "time": "4 тижні",
+          "description": "Візуалізація та прогнозування трендів"
+        },
+        {
+          "name": "AI чат-бот",
+          "difficulty": "Експерт",
+          "time": "5 тижнів",
+          "description": "Штучний інтелект з машинним навчанням"
+        }
+      ]
+    },
+    "features": {
+      "title": "Чому обирають нас",
+      "items": [
+        { "title": "Індивідуальне навчання", "desc": "Персональний підхід" },
+        { "title": "Гнучкий графік", "desc": "Вечірні та вихідні" },
+        { "title": "Сертифікат", "desc": "Міжнародного зразка" },
+        { "title": "100% практики", "desc": "Реальні проекти" }
+      ]
+    },
+    "sections": {
+      "courseDescription": "Ви навчаєтесь на регулярних онлайн уроках з викладачем в Zoom, де поєднуються теорія, практика та робота над реальними проєктами. Усі матеріали та домашні завдання доступні в зручному форматі, щоб дитина могла повторювати та закріплювати знання у власному темпі."
+    },
+    "cta": {
+      "startLearning": "Почати навчання"
+    }
+  },
+  "webDev": {
+    "hero": {
+      "badge": "Новий курс 2025",
+      "titleLine1": "Web",
+      "titleLine2": "Development",
+      "description": "Від простої сторінки до складних веб-додатків. Навчись створювати сайти, які вражають та надихають!"
+    },
+    "modules": {
+      "title": "Програма курсу",
+      "subtitle": "3 модулі = твій шлях до професії веб-розробника",
+      "items": [
+        {
+          "title": "Frontend Основи",
+          "duration": "4 тижні",
+          "topics": ["HTML5 семантика", "CSS Flexbox & Grid", "Адаптивна верстка", "Основи JavaScript"]
+        },
+        {
+          "title": "Інтерактивний JavaScript",
+          "duration": "6 тижнів",
+          "topics": ["DOM-маніпуляції", "Робота з API (Fetch)", "Асинхронність", "ES6+ синтаксис"]
+        },
+        {
+          "title": "React & Next.js",
+          "duration": "6 тижнів",
+          "topics": ["Компонентний підхід", "State та Props", "React Hooks", "SSR/SSG з Next.js"]
+        }
+      ]
+    },
+    "projects": {
+      "title": "Твої майбутні проекти",
+      "subtitle": "Від простого до складного - створюй реальні проекти",
+      "items": [
+        {
+          "name": "Сайт-портфоліо",
+          "difficulty": 25,
+          "time": "2 тижні",
+          "description": "Створіть свій перший професійний сайт з анімаціями та адаптивним дизайном."
+        },
+        {
+          "name": "Todo App",
+          "difficulty": 50,
+          "time": "3 тижні",
+          "description": "Розробіть розумний планувальник дій із синхронізацією."
+        },
+        {
+          "name": "Social Network",
+          "difficulty": 75,
+          "time": "5 тижнів",
+          "description": "Створіть соціальну мережу з real-time чатом та stories."
+        }
+      ]
+    },
+    "features": {
+      "title": "Що ти отримаєш",
+      "subtitle": "Навички, які зроблять тебе професіоналом",
+      "items": [
+        { "title": "UI/UX Design", "desc": "Створюйте красиві та зручні інтерфейси" },
+        { "title": "Performance", "desc": "Оптимізація швидкості завантаження" },
+        { "title": "Web APIs", "desc": "Інтеграція з сучасними сервісами" }
+      ]
+    },
+    "sections": {
+      "courseBadge": "Повноцінний курс",
+      "courseTitle": "Веб-розробка: Від основ до просунутого рівня",
+      "courseDescription": "Структурований курс з чіткою програмою навчання. Від HTML/CSS до створення повноцінних веб-додатків з React та Node.js. 7 модулів, 44 уроки, реальні проекти та підтримка менторів.",
+      "stats": [
+        { "value": "7 модулів", "label": "Структурована програма" },
+        { "value": "44 уроки", "label": "Практичні завдання" },
+        { "value": "Сертифікат", "label": "Після завершення" },
+        { "value": "22 тижні", "label": "Тривалість курсу" }
+      ],
+      "whatYouLearnTitle": "Що ти вивчиш:",
+      "whatYouLearnItems": [
+        "HTML, CSS та адаптивний дизайн",
+        "JavaScript та робота з DOM",
+        "React та сучасний frontend",
+        "Node.js та backend розробка",
+        "Деплой та DevOps основи"
+      ]
+    },
+    "cta": {
+      "startLearning": "Почати навчання",
+      "goToCourse": "Перейти до курсу",
+      "freeLesson": "Безкоштовний урок"
+    }
+  },
+  "unity": {
+    "hero": {
+      "titleLine1": "C# & UNITY",
+      "titleLine2": "РОЗРОБКА",
+      "pressStart": "РОЗПОЧАТИ НАВЧАННЯ",
+      "freeLesson": "БЕЗКОШТОВНИЙ УРОК",
+      "description": "Стань розробником ігор з нуля! Вивчай C# програмування та Unity Engine. Від перших рядків коду до повноцінних проектів в портфоліо."
+    },
+    "stats": {
+      "progress": "ПРОГРЕС",
+      "level": "РІВЕНЬ",
+      "experience": "ДОСВІД",
+      "language": "C#"
+    },
+    "modules": {
+      "title": "МОДУЛІ КУРСУ",
+      "items": [
+        {
+          "title": "C# Основи",
+          "topics": ["Змінні і типи", "Умови та цикли", "Методи", "ООП базово"]
+        },
+        {
+          "title": "Unity Інтерфейс",
+          "topics": ["Scene View", "Inspector", "Hierarchy", "Project Window"]
+        },
+        {
+          "title": "GameObjects",
+          "topics": ["Components", "Transform", "Prefabs", "Instancing"]
+        },
+        {
+          "title": "Physics & Animation",
+          "topics": ["Rigidbody", "Colliders", "Animator", "Timeline"]
+        },
+        {
+          "title": "Unity 3D",
+          "topics": ["3D Models", "Materials", "Lighting", "Shadows"]
+        },
+        {
+          "title": "Final Project",
+          "topics": ["Game Design", "Scripting", "UI/UX", "Publishing"]
+        }
+      ]
+    },
+    "projects": {
+      "title": "ПРАКТИЧНІ ПРОЕКТИ",
+      "items": [
+        {
+          "name": "Flappy Bird",
+          "difficulty": "BEGINNER",
+          "time": "2 тижні",
+          "description": "2D гра з фізикою та анімаціями",
+          "points": 1500,
+          "videoTitle": "FLAPPY BIRD - ГЕЙМПЛЕЙ"
+        },
+        {
+          "name": "Parkour Game",
+          "difficulty": "MIDDLE",
+          "time": "3 тижні",
+          "description": "3D гра з паркур механіками та анімаціями",
+          "points": 3500,
+          "videoTitle": "HOLLOW KNIGHT PARODY - ГЕЙМПЛЕЙ"
+        },
+        {
+          "name": "Swing Simulator",
+          "difficulty": "SENIOR",
+          "time": "5 тижнів",
+          "description": "Симулятор польоту на грапплері з реалістичною фізикою",
+          "points": 4000,
+          "videoTitle": "SWING SIMULATOR - ГЕЙМПЛЕЙ"
+        }
+      ]
+    },
+    "features": {
+      "title": "ПЕРЕВАГИ КУРСУ",
+      "items": [
+        { "title": "Certification", "desc": "Офіційний сертифікат" },
+        { "title": "Community", "desc": "Спільнота студентів" },
+        { "title": "Job Support", "desc": "Допомога з працевлаштуванням" },
+        { "title": "Code Review", "desc": "Перевірка коду менторами" }
+      ]
+    },
+    "sections": {
+      "videoDescription": "🎮 Унікальний геймплей та механіки"
+    },
+    "cta": {
+      "startCourse": "ПОЧАТИ КУРС",
+      "readyTitle": "ГОТОВИЙ ПОЧАТИ?",
+      "enrollText": "ЗАПИСАТИСЯ НА КУРС",
+      "enroll": "ЗАПИСАТИСЯ"
+    }
+  },
+  "roblox": {
+    "hero": {
+      "titleLine1": "LUA & ROBLOX",
+      "titleLine2": "РОЗРОБКА",
+      "ctaCaption": "РОЗПОЧНІМО СТВОРЮВАТИ",
+      "freeLesson": "БЕЗКОШТОВНИЙ УРОК",
+      "description": "Навчайся створювати ігри в Roblox Studio: від перших скриптів на Lua до повноцінних симуляторів, тайкун-ігор та паркурів. Багато практики і візуальних ефектів."
+    },
+    "modules": {
+      "title": "МОДУЛІ КУРСУ",
+      "items": [
+        {
+          "title": "Lua Основи",
+          "topics": ["Змінні", "Функції", "Таблиці", "Події"]
+        },
+        {
+          "title": "Roblox Studio",
+          "topics": ["Explorer", "Properties", "Workspace", "Toolbox"]
+        },
+        {
+          "title": "Parts & Models",
+          "topics": ["Куби та циліндри", "Anchored", "Collisions", "Materials"]
+        },
+        {
+          "title": "Scripting & Events",
+          "topics": ["Touched", "Clicked", "RemoteEvents", "DataStore базово"]
+        },
+        {
+          "title": "UI & FX",
+          "topics": ["ScreenGui", "TweenService", "Particles", "Billboards"]
+        },
+        {
+          "title": "Фінальний проєкт",
+          "topics": ["Геймдизайн", "Оптимізація", "Публікація", "Аналітика"]
+        }
+      ]
+    },
+    "projects": {
+      "title": "ПРАКТИЧНІ ПРОЄКТИ",
+      "items": [
+        {
+          "name": "Obby Course",
+          "difficulty": "BEGINNER",
+          "time": "2 тижні",
+          "description": "Динамічний паркур з перешкодами, пастками і чекпоінтами",
+          "points": 1200
+        },
+        {
+          "name": "Tycoon",
+          "difficulty": "MIDDLE",
+          "time": "3 тижні",
+          "description": "Економічна міні-гра з апгрейдами, кнопками і колекторами",
+          "points": 2800
+        },
+        {
+          "name": "Simulator",
+          "difficulty": "SENIOR",
+          "time": "5 тижнів",
+          "description": "Симулятор з прогресією, бустерами та збереженням даних",
+          "points": 4200,
+          "videoTitle": "SIMULATOR - ГЕЙМПЛЕЙ"
+        }
+      ]
+    },
+    "features": {
+      "title": "ПЕРЕВАГИ КУРСУ",
+      "items": [
+        { "title": "Сертифікат", "desc": "Офіційне підтвердження навичок" },
+        { "title": "Комʼюніті", "desc": "Команда однодумців та івенти" },
+        { "title": "Практика", "desc": "Реальні механіки та скрипти" },
+        { "title": "Портфоліо", "desc": "Проєкти, якими можна пишатись" }
+      ]
+    },
+    "sections": {
+      "videoDescription": "🎮 Живі ефекти, скрипти і геймплей"
+    },
+    "cta": {
+      "startCourse": "ПОЧАТИ КУРС",
+      "readyTitle": "ГОТОВИЙ ПОЧАТИ?",
+      "enrollText": "ЗАПИСАТИСЯ НА КУРС",
+      "enroll": "ЗАПИСАТИСЯ"
+    }
+  }
+}

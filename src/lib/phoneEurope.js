@@ -1,4 +1,5 @@
 import { parsePhoneNumberFromString, isValidPhoneNumber, getCountryCallingCode } from 'libphonenumber-js'
+import { PHONE_VALIDATION, resolveLocale } from './localeStrings'
 
 /**
  * ISO 3166-1 alpha-2, які вважаємо «Європа» для заявок (ЄС/ЄПЗ/Євр. економ. простір + сусіди, без RU/KZ/NA).
@@ -86,42 +87,44 @@ function toE164Candidate(raw) {
 }
 
 /**
- * isValid() у бібліотеці враховує кількість цифр після коду країни (напр. +380 → 9 цифр, +48 → 9, тощо).
+ * @param {string} raw
+ * @param {'uk'|'en'|string} [locale]
  */
-export function validateEuropeanPhone(raw) {
+export function validateEuropeanPhone(raw, locale = 'uk') {
+	const m = PHONE_VALIDATION[resolveLocale(locale)]
 	const e164 = toE164Candidate(raw)
 	if (!e164) {
-		return { ok: false, message: 'Введіть номер телефону' }
+		return { ok: false, message: m.empty }
 	}
 	const digits = e164.replace(/\D/g, '')
 	if (digits.length === 0) {
-		return { ok: false, message: 'Введіть номер телефону' }
+		return { ok: false, message: m.empty }
 	}
 	if (digits.length < 8) {
-		return { ok: false, message: 'Введіть номер телефону після коду країни' }
+		return { ok: false, message: m.tooShort }
 	}
 	if (digits.length > 15) {
-		return { ok: false, message: 'Надто довгий номер' }
+		return { ok: false, message: m.tooLong }
 	}
 	for (const dialCode of DIAL_CODES_DESC) {
 		if (digits.includes(`${dialCode}${dialCode}`)) {
-			return { ok: false, message: `Не дублюйте код країни (+${dialCode} лише один раз)` }
+			return { ok: false, message: m.duplicateDial(dialCode) }
 		}
 	}
 	const p = parsePhoneNumberFromString(e164)
 	if (!p) {
-		return { ok: false, message: 'Перевірте формат номера' }
+		return { ok: false, message: m.badFormat }
 	}
 	if (!isValidPhoneNumber(e164) || !p.isValid()) {
-		return { ok: false, message: 'Перевірте кількість цифр (без дубля коду країни)' }
+		return { ok: false, message: m.badDigits }
 	}
 	const c = p.country
 	if (!c || !EUROPE_COUNTRY.has(c)) {
-		return { ok: false, message: 'Потрібен номер з країни Європи' }
+		return { ok: false, message: m.notEurope }
 	}
 	return { ok: true, e164: p.format('E.164') }
 }
 
-export function isValidEuropeanPhone(value) {
-	return validateEuropeanPhone(value).ok
+export function isValidEuropeanPhone(value, locale = 'uk') {
+	return validateEuropeanPhone(value, locale).ok
 }

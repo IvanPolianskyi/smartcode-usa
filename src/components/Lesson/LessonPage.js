@@ -1,7 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
 import { 
   ArrowLeft, 
   Play, 
@@ -21,153 +20,11 @@ import {
   GripVertical
 } from 'lucide-react'
 import { updateProgress, checkCoursePurchase, createPayment, enrollInCourse } from '@/lib/authClient'
-import { pythonCurriculum } from '@/lib/pythonCurriculum'
-import { webDevCurriculum } from '@/lib/webDevCurriculum'
-import { lesson_00_1 } from '@/lib/lessonContent/lesson-00-1'
-import { lesson_00_2 } from '@/lib/lessonContent/lesson-00-2'
-import { lesson_00_3 } from '@/lib/lessonContent/lesson-00-3'
-import { lesson_00_4 } from '@/lib/lessonContent/lesson-00-4'
-import { lesson_00_5 } from '@/lib/lessonContent/lesson-00-5'
-import { lesson_00_6 } from '@/lib/lessonContent/lesson-00-6'
-import { lesson_00_7 } from '@/lib/lessonContent/lesson-00-7'
-import { lesson_00_8 } from '@/lib/lessonContent/lesson-00-8'
-import { lesson_01_1 } from '@/lib/lessonContent/lesson-01-1'
-import { lesson_01_2 } from '@/lib/lessonContent/lesson-01-2'
-import { lesson_01_3 } from '@/lib/lessonContent/lesson-01-3'
-import { lesson_02_1 } from '@/lib/lessonContent/lesson-02-1'
-import { lesson_02_2 } from '@/lib/lessonContent/lesson-02-2'
-import { lesson_02_3 } from '@/lib/lessonContent/lesson-02-3'
-import { lesson_02_4 } from '@/lib/lessonContent/lesson-02-4'
-import { lesson_02_5 } from '@/lib/lessonContent/lesson-02-5'
-import { lesson_02_6 } from '@/lib/lessonContent/lesson-02-6'
-import { lesson_02_7 } from '@/lib/lessonContent/lesson-02-7'
-import { lesson_02_8 } from '@/lib/lessonContent/lesson-02-8'
-import { lesson_03_1 } from '@/lib/lessonContent/lesson-03-1'
-import { lesson_03_10 } from '@/lib/lessonContent/lesson-03-10'
-import { lesson_03_2 } from '@/lib/lessonContent/lesson-03-2'
-import { lesson_03_3 } from '@/lib/lessonContent/lesson-03-3'
-import { lesson_03_4 } from '@/lib/lessonContent/lesson-03-4'
-import { lesson_03_5 } from '@/lib/lessonContent/lesson-03-5'
-import { lesson_03_6 } from '@/lib/lessonContent/lesson-03-6'
-import { lesson_03_7 } from '@/lib/lessonContent/lesson-03-7'
-import { lesson_03_8 } from '@/lib/lessonContent/lesson-03-8'
-import { lesson_03_9 } from '@/lib/lessonContent/lesson-03-9'
-import { lesson_04_6 } from '@/lib/lessonContent/lesson-04-6'
-import { lesson_04_7 } from '@/lib/lessonContent/lesson-04-7'
-import { lesson_04_8 } from '@/lib/lessonContent/lesson-04-8'
-import { lesson_05_5 } from '@/lib/lessonContent/lesson-05-5'
-import { lesson_06_4 } from '@/lib/lessonContent/lesson-06-4'
-import { lesson_07_1 } from '@/lib/lessonContent/lesson-07-1'
-import { lesson_07_2 } from '@/lib/lessonContent/lesson-07-2'
-import { lesson_07_3 } from '@/lib/lessonContent/lesson-07-3'
-import { lesson_07_4 } from '@/lib/lessonContent/lesson-07-4'
-import { lesson_08_1 } from '@/lib/lessonContent/lesson-08-1'
-import { lesson_08_2 } from '@/lib/lessonContent/lesson-08-2'
-import { lesson_08_3 } from '@/lib/lessonContent/lesson-08-3'
-import { lesson_08_4 } from '@/lib/lessonContent/lesson-08-4'
-import { lesson_08_5 } from '@/lib/lessonContent/lesson-08-5'
-import { lesson_08_6 } from '@/lib/lessonContent/lesson-08-6'
-import { lesson_09_1 } from '@/lib/lessonContent/lesson-09-1'
-import { lesson_09_2 } from '@/lib/lessonContent/lesson-09-2'
-import { lesson_09_3 } from '@/lib/lessonContent/lesson-09-3'
-import { lesson_09_4 } from '@/lib/lessonContent/lesson-09-4'
-import { lesson_10_1 } from '@/lib/lessonContent/lesson-10-1'
-import { lesson_10_2 } from '@/lib/lessonContent/lesson-10-2'
-import { lesson_10_3 } from '@/lib/lessonContent/lesson-10-3'
-import { lesson_10_4 } from '@/lib/lessonContent/lesson-10-4'
-import { lesson_11_1 } from '@/lib/lessonContent/lesson-11-1'
-import { lesson_12_1 } from '@/lib/lessonContent/lesson-12-1'
-import { lesson_12_2 } from '@/lib/lessonContent/lesson-12-2'
-import { lesson_12_3 } from '@/lib/lessonContent/lesson-12-3'
-import { lesson_12_5 } from '@/lib/lessonContent/lesson-12-5'
-import { lesson_12_6 } from '@/lib/lessonContent/lesson-12-6'
-import { lesson_13_1 } from '@/lib/lessonContent/lesson-13-1'
-import { lesson_13_2 } from '@/lib/lessonContent/lesson-13-2'
-import { lesson_13_3 } from '@/lib/lessonContent/lesson-13-3'
-import { lesson_13_4 } from '@/lib/lessonContent/lesson-13-4'
-import { lesson_13_5 } from '@/lib/lessonContent/lesson-13-5'
-import { lesson_15_6 } from '@/lib/lessonContent/lesson-15-6'
+import { useLocale, useTranslations } from 'next-intl'
+import { getCurriculum } from '@/lib/getCurriculum'
+import { lessonContentMap as lessonContentMapUk } from '@/lib/lessonContentMap.uk'
+import { lessonContentMap as lessonContentMapEn } from '@/lib/lessonContentMap.en'
 import styles from './LessonPage.module.css'
-
-// Map lesson IDs to content
-const lessonContentMap = {
-  "lesson-00-1": lesson_00_1,
-  "lesson-00-2": lesson_00_2,
-  "lesson-00-3": lesson_00_3,
-  "lesson-00-4": lesson_00_4,
-  "lesson-00-5": lesson_00_5,
-  "lesson-00-6": lesson_00_6,
-  "lesson-00-7": lesson_00_7,
-  "lesson-00-8": lesson_00_8,
-  "lesson-01-1": lesson_01_1,
-  "lesson-01-2": lesson_01_2,
-  "lesson-01-3": lesson_01_3,
-  "lesson-02-1": lesson_02_1,
-  "lesson-02-2": lesson_02_2,
-  "lesson-02-3": lesson_02_3,
-  "lesson-02-4": lesson_02_4,
-  "lesson-02-5": lesson_02_5,
-  "lesson-02-6": lesson_02_6,
-  "lesson-02-7": lesson_02_7,
-  "lesson-02-8": lesson_02_8,
-  "lesson-03-1": lesson_03_1,
-  "lesson-03-10": lesson_03_10,
-  "lesson-03-2": lesson_03_2,
-  "lesson-03-3": lesson_03_3,
-  "lesson-03-4": lesson_03_4,
-  "lesson-03-5": lesson_03_5,
-  "lesson-03-6": lesson_03_6,
-  "lesson-03-7": lesson_03_7,
-  "lesson-03-8": lesson_03_8,
-  "lesson-03-9": lesson_03_9,
-  "lesson-04-1": lesson_04_6,
-  "lesson-04-2": lesson_04_6,
-  "lesson-04-3": lesson_04_6,
-  "lesson-04-4": lesson_04_6,
-  "lesson-04-5": lesson_04_6,
-  "lesson-04-6": lesson_04_6,
-  "lesson-04-7": lesson_04_7,
-  "lesson-04-8": lesson_04_8,
-  "lesson-05-1": lesson_05_5,
-  "lesson-05-2": lesson_05_5,
-  "lesson-05-3": lesson_05_5,
-  "lesson-05-4": lesson_05_5,
-  "lesson-05-5": lesson_05_5,
-  "lesson-06-1": lesson_06_4,
-  "lesson-06-2": lesson_06_4,
-  "lesson-06-3": lesson_06_4,
-  "lesson-06-4": lesson_06_4,
-  "lesson-07-1": lesson_07_1,
-  "lesson-07-2": lesson_07_2,
-  "lesson-07-3": lesson_07_3,
-  "lesson-07-4": lesson_07_4,
-  "lesson-08-1": lesson_08_1,
-  "lesson-08-2": lesson_08_2,
-  "lesson-08-3": lesson_08_3,
-  "lesson-08-4": lesson_08_4,
-  "lesson-08-5": lesson_08_5,
-  "lesson-08-6": lesson_08_6,
-  "lesson-09-1": lesson_09_1,
-  "lesson-09-2": lesson_09_2,
-  "lesson-09-3": lesson_09_3,
-  "lesson-09-4": lesson_09_4,
-  "lesson-10-1": lesson_10_1,
-  "lesson-10-2": lesson_10_2,
-  "lesson-10-3": lesson_10_3,
-  "lesson-10-4": lesson_10_4,
-  "lesson-11-1": lesson_11_1,
-  "lesson-12-1": lesson_12_1,
-  "lesson-12-2": lesson_12_2,
-  "lesson-12-3": lesson_12_3,
-  "lesson-12-5": lesson_12_5,
-  "lesson-12-6": lesson_12_6,
-  "lesson-13-1": lesson_13_1,
-  "lesson-13-2": lesson_13_2,
-  "lesson-13-3": lesson_13_3,
-  "lesson-13-4": lesson_13_4,
-  "lesson-13-5": lesson_13_5,
-  "lesson-15-6": lesson_15_6,
-}
 
 // Функція для конвертації markdown в HTML
 const markdownToHtml = (text) => {
@@ -339,6 +196,9 @@ const markdownToHtml = (text) => {
 }
 
 const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", userProgress = null, isPurchased = false, userRole = 'user', isAccessible = false, allowedLessons = [] }) => {
+  const locale = useLocale()
+  const t = useTranslations('lms.lesson')
+  const tCommon = useTranslations('lms.common')
   const router = useRouter()
   const [activeTab, setActiveTab] = useState('theory')
   const [quizAnswers, setQuizAnswers] = useState({})
@@ -477,18 +337,11 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     }
   }
   
-  // Get lesson content
+  // Get lesson content (locale-specific; EN falls back to UK until translated)
+  const lessonContentMap = locale === 'en' ? lessonContentMapEn : lessonContentMapUk
   const lesson = lessonContentMap[lessonId]
   
-  // Get curriculum based on courseId
-  const getCurriculum = () => {
-    if (courseId === "web-development") {
-      return webDevCurriculum
-    }
-    return pythonCurriculum
-  }
-  
-  const curriculum = getCurriculum()
+  const curriculum = getCurriculum(courseId, locale)
   
   // If lesson not found in content map, try to get from curriculum
   const curriculumLesson = curriculum.modules
@@ -596,8 +449,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     return (
       <div className={styles.container}>
         <div className={styles.error}>
-          <h2>Урок не знайдено</h2>
-          <Link href={`/courses/${courseId}`}>Повернутися до курсу</Link>
+          <h2>{t('notFound')}</h2>
+          <Link href={`/courses/${courseId}`}>{t('returnToCourse')}</Link>
         </div>
       </div>
     )
@@ -643,7 +496,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       form.submit()
     } catch (error) {
       console.error('Purchase error:', error)
-      alert('Помилка створення платежу. Спробуйте ще раз.')
+      alert(t('paymentError'))
       setIsPurchasing(false)
     }
   }
@@ -658,21 +511,21 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
             className={styles.backButton}
           >
             <ArrowLeft className="w-5 h-5" />
-            До курсу
+            {t('backToCourse')}
           </Link>
         </header>
         <div className={styles.error}>
           <Lock className="w-16 h-16" style={{ marginBottom: '1rem', opacity: 0.5 }} />
-          <h2>Урок заблоковано</h2>
+          <h2>{t('lockedTitle')}</h2>
           <p style={{ marginBottom: '2rem', textAlign: 'center', maxWidth: '500px' }}>
-            Цей урок доступний тільки після придбання курсу. Перший урок першого модуля доступний безкоштовно для ознайомлення.
+            {t('lockedDescription')}
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
             <Link 
               href={`/courses/${courseId}`}
               className={styles.ctaButton}
             >
-              Повернутися до курсу
+              {t('returnToCourse')}
             </Link>
             {userProgress && (
               <button
@@ -681,7 +534,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                 className={styles.ctaButton}
                 style={{ backgroundColor: 'var(--accent-blue)' }}
               >
-                {isPurchasing ? 'Обробка...' : 'Придбати курс'}
+                {isPurchasing ? t('processing') : t('purchaseCourse')}
               </button>
             )}
           </div>
@@ -774,7 +627,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       }, 300)
     } catch (error) {
       console.error('Error saving progress:', error)
-      alert('Помилка збереження прогресу. Спробуйте ще раз.')
+      alert(t('progressError'))
     } finally {
       setIsSaving(false)
     }
@@ -852,7 +705,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       setCodeExecution({
         isRunning: false,
         output: null,
-        error: 'Будь ласка, введіть код перед запуском',
+        error: t('runCodeErrors.emptyCode'),
         success: false
       })
       return
@@ -910,7 +763,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       setCodeExecution({
         isRunning: false,
         output: null,
-        error: 'Код містить небезпечні операції, які не дозволені для виконання. Будь ласка, використовуйте тільки безпечні Python конструкції для навчання.',
+        error: t('runCodeErrors.dangerousCode'),
         success: false
       })
       return
@@ -921,7 +774,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       setCodeExecution({
         isRunning: false,
         output: null,
-        error: 'Код занадто довгий. Максимальна довжина: 50000 символів',
+        error: t('runCodeErrors.codeTooLong'),
         success: false
       })
       return
@@ -1001,7 +854,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         setCodeExecution({
           isRunning: false,
           output: data.output || '',
-          error: data.error || data.errorOutput || 'Помилка виконання коду',
+          error: data.error || data.errorOutput || t('runCodeErrors.executionFailed'),
           success: false
         })
         setPracticeChecked(false)
@@ -1017,7 +870,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       setCodeExecution({
         isRunning: false,
         output: null,
-        error: 'Помилка підключення до сервера. Спробуйте ще раз.',
+        error: t('runCodeErrors.connectionError'),
         success: false
       })
       setPracticeChecked(false)
@@ -1205,7 +1058,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         <div 
           className={styles.edgeDragArea}
           onMouseDown={handleEdgeDragStart}
-          title="Тягніть, щоб відкрити меню"
+          title={t('dragOpenMenu')}
         />
       )}
       
@@ -1222,7 +1075,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           <button 
             className={styles.sidebarToggle}
             onClick={toggleSidebar}
-            title={isSidebarCollapsed ? 'Розгорнути меню' : 'Згорнути меню'}
+            title={isSidebarCollapsed ? t('expandMenu') : t('collapseMenu')}
           >
             {isSidebarCollapsed ? (
               <ChevronRight className={styles.toggleIcon} />
@@ -1237,7 +1090,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           <button 
             className={styles.sidebarToggleClosed}
             onClick={toggleSidebar}
-            title="Відкрити меню"
+            title={t('openMenu')}
           >
             <ChevronRight className={styles.toggleIcon} />
           </button>
@@ -1248,14 +1101,14 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           <div 
             className={styles.resizeHandle}
             onMouseDown={handleResizeStart}
-            title="Змінити розмір меню"
+            title={t('resizeMenu')}
           >
             <GripVertical className={styles.resizeIcon} />
           </div>
         )}
 
         <div className={styles.sidebarHeader}>
-          {!isSidebarCollapsed && <h3>Навігація по курсу</h3>}
+          {!isSidebarCollapsed && <h3>{t('sidebarTitle')}</h3>}
         </div>
         {!isSidebarCollapsed && (
           <nav className={styles.sidebarNav}>
@@ -1265,7 +1118,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                 <div key={module.moduleId} className={styles.moduleSection}>
                   <div className={styles.moduleHeader}>
                     <span className={styles.moduleTitle}>
-                      Модуль {module.order}: {module.title}
+                      {t('sidebarModule', { order: module.order, title: module.title })}
                     </span>
                   </div>
                   <div className={styles.lessonsList}>
@@ -1318,7 +1171,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
             className={styles.backButton}
           >
             <ArrowLeft className="w-5 h-5" />
-            До курсу
+            {t('backToCourse')}
           </Link>
           {currentModule && (
             <Link 
@@ -1326,24 +1179,24 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
               className={styles.backButton}
             >
               <ArrowLeft className="w-5 h-5" />
-              До модуля
+              {t('backToModule')}
             </Link>
           )}
         </div>
         
         <div className={styles.headerInfo}>
           <div className={styles.breadcrumb}>
-            <Link href="/">Головна</Link>
+            <Link href="/">{tCommon('breadcrumb.home')}</Link>
             <ChevronRight className="w-4 h-4" />
-            <Link href={`/courses/${courseId}`}>Курс</Link>
+            <Link href={`/courses/${courseId}`}>{t('breadcrumb.course')}</Link>
             <ChevronRight className="w-4 h-4" />
             {currentModule ? (
-              <Link href={`/courses/${courseId}#module-${currentModule.moduleId}`}>Модуль</Link>
+              <Link href={`/courses/${courseId}#module-${currentModule.moduleId}`}>{t('breadcrumb.module')}</Link>
             ) : (
-              <span>Модуль</span>
+              <span>{t('breadcrumb.module')}</span>
             )}
             <ChevronRight className="w-4 h-4" />
-            <span>Урок</span>
+            <span>{t('breadcrumb.lesson')}</span>
           </div>
           
           <h1 className={styles.title}>{fullLesson.title}</h1>
@@ -1351,12 +1204,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           <div className={styles.meta}>
             <div className={styles.metaItem}>
               <Clock className="w-4 h-4" />
-              <span>{fullLesson.estimatedTime || 60} хвилин</span>
+              <span>{t('minutes', { count: fullLesson.estimatedTime || 60 })}</span>
             </div>
             {isCompleted && (
               <div className={styles.metaItem}>
                 <CheckCircle2 className="w-4 h-4" />
-                <span>Завершено</span>
+                <span>{t('completed')}</span>
               </div>
             )}
           </div>
@@ -1368,7 +1221,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         <section className={styles.objectivesSection}>
           <h2 className={styles.sectionTitle}>
             <Target className="w-5 h-5" />
-            Цілі уроку
+            {t('objectivesTitle')}
           </h2>
           <ul className={styles.objectivesList}>
             {fullLesson.learningObjectives.map((objective, index) => (
@@ -1385,31 +1238,31 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           onClick={() => setActiveTab('theory')}
         >
           <BookOpen className="w-4 h-4" />
-          Теорія
+          {t('tabs.theory')}
         </button>
         <button
           className={`${styles.tab} ${activeTab === 'practice' ? styles.active : ''}`}
           onClick={() => setActiveTab('practice')}
         >
           <Code className="w-4 h-4" />
-          Практика
+          {t('tabs.practice')}
         </button>
         <button
           className={`${styles.tab} ${activeTab === 'quiz' ? styles.active : ''} ${!practiceCompleted && !userProgress?.completedPracticeTasks?.includes(lessonId) && fullLesson.practiceTask ? styles.disabled : ''}`}
           onClick={() => {
             const isPracticeCompleted = practiceCompleted || userProgress?.completedPracticeTasks?.includes(lessonId)
             if (!isPracticeCompleted && fullLesson.practiceTask) {
-              alert('Спочатку виконайте практичне завдання правильно!')
+              alert(t('practiceRequiredAlert'))
               setActiveTab('practice')
             } else {
               setActiveTab('quiz')
             }
           }}
           disabled={!practiceCompleted && !userProgress?.completedPracticeTasks?.includes(lessonId) && fullLesson.practiceTask}
-          title={!practiceCompleted && !userProgress?.completedPracticeTasks?.includes(lessonId) && fullLesson.practiceTask ? 'Спочатку виконайте практичне завдання' : ''}
+          title={!practiceCompleted && !userProgress?.completedPracticeTasks?.includes(lessonId) && fullLesson.practiceTask ? t('practiceRequiredTitle') : ''}
         >
           <Target className="w-4 h-4" />
-          Тест
+          {t('tabs.quiz')}
           {!practiceCompleted && !userProgress?.completedPracticeTasks?.includes(lessonId) && fullLesson.practiceTask && <Lock className="w-3 h-3" />}
         </button>
       </div>
@@ -1424,7 +1277,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
               <div className={styles.videoSection}>
                 <div className={styles.videoPlaceholder}>
                   <Play className="w-16 h-16" />
-                  <p>Відео-урок</p>
+                  <p>{t('videoLesson')}</p>
                 </div>
               </div>
             )}
@@ -1447,7 +1300,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
               <div className={styles.codeExamplesSection}>
                 <h3 className={styles.sectionTitle}>
                   <Code className="w-5 h-5" />
-                  Приклади коду
+                  {t('codeExamplesTitle')}
                 </h3>
                 {fullLesson.codeExamples.map((example, index) => (
                   <div key={index} className={styles.codeExample}>
@@ -1466,7 +1319,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
               <div className={styles.mistakesSection}>
                 <h3 className={styles.sectionTitle}>
                   <AlertCircle className="w-5 h-5" />
-                  Типові помилки
+                  {t('mistakesTitle')}
                 </h3>
                 {fullLesson.commonMistakes.map((mistake, index) => (
                   <div key={index} className={styles.mistakeItem}>
@@ -1477,7 +1330,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                     <p className={styles.mistakeExplanation}>{mistake.explanation}</p>
                     <div className={styles.mistakeCorrect}>
                       <CheckCircle2 className="w-5 h-5" />
-                      <strong>Правильно:</strong> {mistake.correctApproach}
+                      <strong>{t('correctLabel')}</strong> {mistake.correctApproach}
                     </div>
                   </div>
                 ))}
@@ -1489,7 +1342,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
               <div className={styles.summarySection}>
                 <h3 className={styles.sectionTitle}>
                   <Lightbulb className="w-5 h-5" />
-                  Підсумок
+                  {t('summaryTitle')}
                 </h3>
                 <div className={styles.summaryContent}>
                   {fullLesson.summary.split('\n').map((paragraph, index) => (
@@ -1509,38 +1362,38 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                 <div className={styles.practiceTask}>
                   <h3 className={styles.sectionTitle}>
                     <Code className="w-5 h-5" />
-                    Практичне завдання
+                    {t('practiceTitle')}
                   </h3>
                   
                   <div className={styles.taskHeader}>
                     <h4>{fullLesson.practiceTask.title}</h4>
                     <span className={styles.difficultyBadge}>
-                      {fullLesson.practiceTask.difficulty === 'beginner' ? 'Початківець' :
-                       fullLesson.practiceTask.difficulty === 'intermediate' ? 'Середній' :
-                       'Просунутий'}
+                      {fullLesson.practiceTask.difficulty === 'beginner' ? t('difficulty.beginner') :
+                       fullLesson.practiceTask.difficulty === 'intermediate' ? t('difficulty.intermediate') :
+                       t('difficulty.advanced')}
                     </span>
                   </div>
                   
                   <p className={styles.taskDescription}>{fullLesson.practiceTask.description}</p>
                   
                   <div className={styles.taskSection}>
-                    <h5>Умова завдання:</h5>
+                    <h5>{t('taskCondition')}</h5>
                     <p>{fullLesson.practiceTask.problemStatement}</p>
                   </div>
                   
                   {fullLesson.practiceTask.examples && fullLesson.practiceTask.examples.length > 0 && (
                     <div className={styles.taskSection}>
-                      <h5>Приклади:</h5>
+                      <h5>{t('examplesTitle')}</h5>
                       {fullLesson.practiceTask.examples.map((example, index) => (
                         <div key={index} className={styles.exampleBox}>
                           {example.input && (
                             <div className={styles.exampleInput}>
-                              <strong>Вхід:</strong>
+                              <strong>{t('inputLabel')}</strong>
                               <pre>{example.input}</pre>
                             </div>
                           )}
                           <div className={styles.exampleOutput}>
-                            <strong>Вихід:</strong>
+                            <strong>{t('outputLabel')}</strong>
                             <pre>{example.output}</pre>
                           </div>
                           {example.explanation && (
@@ -1555,7 +1408,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                     <div className={styles.hintsSection}>
                       <h5>
                         <Lightbulb className="w-4 h-4" />
-                        Підказки:
+                        {t('hintsTitle')}
                       </h5>
                       <ul>
                         {fullLesson.practiceTask.hints.map((hint, index) => (
@@ -1567,17 +1420,17 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                   
                   <div className={styles.codeEditor}>
                     <div className={styles.editorHeader}>
-                      <span>Ваш код</span>
+                      <span>{t('yourCode')}</span>
                       <button
                         className={styles.solutionButton}
                         onClick={() => setShowPracticeSolution(!showPracticeSolution)}
                       >
-                        {showPracticeSolution ? 'Приховати' : 'Показати'} рішення
+                        {t('solutionToggle', { action: showPracticeSolution ? t('hideSolution') : t('showSolution') })}
                       </button>
                     </div>
                     <textarea
                       className={styles.codeInput}
-                      placeholder="Напишіть ваш код тут..."
+                      placeholder={t('codePlaceholder')}
                       rows={15}
                       value={userCode}
                       onChange={(e) => setUserCode(e.target.value)}
@@ -1592,12 +1445,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                       {codeExecution.isRunning ? (
                         <>
                           <Loader2 className="w-4 h-4 animate-spin" />
-                          Виконання...
+                          {t('running')}
                         </>
                       ) : (
                         <>
                           <Terminal className="w-4 h-4" />
-                          Запустити код
+                          {t('runCode')}
                         </>
                       )}
                     </button>
@@ -1608,11 +1461,11 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                     <div className={styles.executionResults}>
                       <h5>
                         <Terminal className="w-4 h-4" />
-                        Результат виконання:
+                        {t('executionResult')}
                       </h5>
                       {codeExecution.success !== false && codeExecution.output && (
                         <div className={styles.executionOutput}>
-                          <strong>Вивід:</strong>
+                          <strong>{t('outputResult')}</strong>
                           <pre>
                             {codeExecution.output.split('\n').map((line, index) => {
                               const isError = outputErrors.includes(index)
@@ -1640,13 +1493,13 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                       )}
                       {codeExecution.error && (
                         <div className={styles.executionError}>
-                          <strong>Помилка:</strong>
+                          <strong>{t('errorLabel')}</strong>
                           <pre>{codeExecution.error}</pre>
                         </div>
                       )}
                       {codeExecution.success === false && !codeExecution.error && codeExecution.output && (
                         <div className={styles.executionError}>
-                          <strong>Помилка виконання:</strong>
+                          <strong>{t('executionError')}</strong>
                           <pre>{codeExecution.output}</pre>
                         </div>
                       )}
@@ -1656,17 +1509,17 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                           {practiceCompleted ? (
                             <>
                               <CheckCircle2 className="w-5 h-5" />
-                              <strong>Вітаємо! Практичне завдання виконано правильно!</strong>
-                              <p>Тепер ви можете перейти до тесту.</p>
+                              <strong>{t('practiceSuccess')}</strong>
+                              <p>{t('practiceSuccessHint')}</p>
                             </>
                           ) : (
                             <>
                               <XCircle className="w-5 h-5" />
-                              <strong>Практичне завдання виконано неправильно.</strong>
-                              <p>Перевірте ваш код та спробуйте ще раз. Перегляньте приклади виводу та підказки.</p>
+                              <strong>{t('practiceFail')}</strong>
+                              <p>{t('practiceFailHint')}</p>
                               {outputErrors.length > 0 && (
                                 <p style={{ fontSize: '0.875rem', marginTop: '0.5rem', color: '#ef4444' }}>
-                                  Знайдено {outputErrors.length} помилок у виводі. Рядки з помилками виділені червоним кольором.
+                                  {t('outputErrorsFound', { count: outputErrors.length })}
                                 </p>
                               )}
                             </>
@@ -1678,7 +1531,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                   
                   {showPracticeSolution && fullLesson.practiceTask.solution && (
                     <div className={styles.solutionSection}>
-                      <h5>Приклад рішення:</h5>
+                      <h5>{t('exampleSolution')}</h5>
                       <pre className={styles.codeBlock}>
                         <code>{fullLesson.practiceTask.solution.code}</code>
                       </pre>
@@ -1690,7 +1543,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                         }}
                         style={{ marginTop: '1rem' }}
                       >
-                        Вставити код в редактор
+                        {t('insertCode')}
                       </button>
                       <p className={styles.solutionExplanation}>
                         {fullLesson.practiceTask.solution.explanation}
@@ -1707,8 +1560,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                    (fullLesson?.moduleId === 'module-11') ||
                    (fullLesson?.moduleId === 'module-12') ||
                    (fullLesson?.moduleId === 'module-13')
-                    ? 'Для цього уроку практичного завдання немає. Ви можете перейти до тесту.'
-                    : 'Практичне завдання для цього уроку ще не додано.'}
+                    ? t('noPracticeAdvanced')
+                    : t('noPracticeYet')}
                 </p>
               </div>
             )}
@@ -1723,14 +1576,14 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
               <div className={styles.practiceError}>
                 <Lock className="w-5 h-5" />
                 <div>
-                  <strong>Тест заблоковано</strong>
-                  <p>Спочатку виконайте практичне завдання правильно!</p>
+                  <strong>{t('quizLockedTitle')}</strong>
+                  <p>{t('quizLockedDescription')}</p>
                   <button
                     className={styles.ctaButton}
                     onClick={() => setActiveTab('practice')}
                     style={{ marginTop: '1rem' }}
                   >
-                    Перейти до практичного завдання
+                    {t('goToPractice')}
                   </button>
                 </div>
               </div>
@@ -1739,12 +1592,11 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                 <div className={styles.quizHeader}>
                   <h3 className={styles.sectionTitle}>
                     <Target className="w-5 h-5" />
-                    Тест знань
+                    {t('quizTitle')}
                   </h3>
                   <p className={styles.quizInfo}>
-                    {fullLesson.quiz.questions.length} питань • 
-                    Мінімальний бал для проходження: 60%
-                    {fullLesson.quiz.timeLimit > 0 && ` • Час: ${fullLesson.quiz.timeLimit} хв`}
+                    {t('quizInfo', { count: fullLesson.quiz.questions.length, passingScore: fullLesson.quiz?.passingScore || 60 })}
+                    {fullLesson.quiz.timeLimit > 0 && t('quizTimeLimit', { minutes: fullLesson.quiz.timeLimit })}
                   </p>
                 </div>
                 
@@ -1766,14 +1618,14 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                       >
                         <div className={styles.questionHeader}>
                           <span className={styles.questionNumber}>
-                            Питання {index + 1}
+                            {t('questionNumber', { number: index + 1 })}
                           </span>
                           {showAnswer && (
                             <span className={styles.questionResult}>
                               {isCorrect ? (
-                                <><CheckCircle2 className="w-5 h-5" /> Правильно</>
+                                <><CheckCircle2 className="w-5 h-5" /> {t('correct')}</>
                               ) : (
-                                <><XCircle className="w-5 h-5" /> Неправильно</>
+                                <><XCircle className="w-5 h-5" /> {t('incorrect')}</>
                               )}
                             </span>
                           )}
@@ -1834,7 +1686,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                           <div 
                             className={styles.questionExplanation}
                             dangerouslySetInnerHTML={{ 
-                              __html: `<strong>Пояснення:</strong> ${markdownToHtml(question.explanation)}`
+                              __html: `<strong>${t('explanation')}</strong> ${markdownToHtml(question.explanation)}`
                             }}
                           />
                         )}
@@ -1851,26 +1703,25 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                       onClick={handleQuizSubmit}
                       disabled={Object.keys(quizAnswers).length < fullLesson.quiz.questions.length}
                     >
-                      Завершити тест
+                      {t('submitQuiz')}
                     </button>
                   ) : (
                     <div id="quiz-results" className={styles.quizResults}>
                       <div className={styles.scoreCard}>
-                        <h4>Ваш результат</h4>
+                        <h4>{t('yourScore')}</h4>
                         <div className={styles.scoreValue}>
                           {quizScore}%
                         </div>
                         <div className={styles.scoreStatus}>
                           {isQuizPassed ? (
-                            <><CheckCircle2 className="w-5 h-5" /> Тест пройдено!</>
+                            <><CheckCircle2 className="w-5 h-5" /> {t('quizPassed')}</>
                           ) : (
-                            <><XCircle className="w-5 h-5" /> Тест не пройдено</>
+                            <><XCircle className="w-5 h-5" /> {t('quizFailed')}</>
                           )}
                         </div>
                         {!isQuizPassed && (
                           <p className={styles.retakeInfo}>
-                            Мінімальний бал: {fullLesson.quiz?.passingScore || 60}%. 
-                            Спробуйте ще раз!
+                            {t('retakeInfo', { passingScore: fullLesson.quiz?.passingScore || 60 })}
                           </p>
                         )}
                         {nextLesson && (
@@ -1879,12 +1730,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                             className={styles.nextLessonButton}
                           >
                             <ChevronRight className="w-5 h-5" />
-                            Перейти до наступного уроку: {nextLesson.title}
+                            {t('nextLesson', { title: nextLesson.title })}
                           </Link>
                         )}
                         {!nextLesson && (
                           <p className={styles.completionMessage}>
-                            Вітаємо! Ви завершили всі уроки цього курсу!
+                            {t('courseCompleted')}
                           </p>
                         )}
                         <button
@@ -1892,7 +1743,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                           onClick={handleRetakeQuiz}
                           style={{ marginTop: '1rem' }}
                         >
-                          Пройти тест знову
+                          {t('retakeQuiz')}
                         </button>
                       </div>
                     </div>
@@ -1901,7 +1752,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
               </>
             ) : (
               <div className={styles.noContent}>
-                <p>Тест для цього уроку ще не додано.</p>
+                <p>{t('noQuizYet')}</p>
               </div>
             )}
           </div>

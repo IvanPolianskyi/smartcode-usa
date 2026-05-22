@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/mongodb'
 import { normalizePhoneE164 } from '@/lib/phoneE164'
+import { API_ERRORS, resolveLocale } from '@/lib/localeStrings'
 
 // Helper function to escape HTML for Telegram
 function escapeHtml(input) {
@@ -64,20 +65,22 @@ async function sendTelegramNotification({ phone, name, direction, directionName,
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { phone, name, direction, directionName, score, totalQuestions, percentage, answers, timestamp } = body
+    const { phone, name, direction, directionName, score, totalQuestions, percentage, answers, timestamp, locale: bodyLocale } = body
+    const loc = resolveLocale(bodyLocale)
+    const apiErr = API_ERRORS[loc]
 
     // Validate required fields
     if (!phone || !name || !direction) {
       return NextResponse.json(
-        { success: false, error: 'Phone number, name, and direction are required' },
+        { success: false, error: apiErr.phoneNameDirectionRequired },
         { status: 400 }
       )
     }
 
-    const normalizedPhone = normalizePhoneE164(phone)
+    const normalizedPhone = normalizePhoneE164(phone, loc)
     if (!normalizedPhone) {
       return NextResponse.json(
-        { success: false, error: 'Невалідний номер (потрібен номер країни Європи)' },
+        { success: false, error: apiErr.invalidPhone },
         { status: 400 }
       )
     }

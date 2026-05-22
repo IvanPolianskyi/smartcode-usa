@@ -1,5 +1,10 @@
-const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
+
+/** Lazy-load: node-telegram-bot-api breaks when bundled by Next/Turbopack at import time */
+async function loadTelegramBotClass() {
+  const mod = await import('node-telegram-bot-api');
+  return mod.default ?? mod;
+}
 
 class TelegramBotService {
   constructor() {
@@ -465,6 +470,7 @@ class TelegramBotService {
         }
       }
 
+      const TelegramBot = await loadTelegramBotClass();
       this.bot = new TelegramBot(this.BOT_TOKEN, { 
         polling: { 
           interval: 800, 

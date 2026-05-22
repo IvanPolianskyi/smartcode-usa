@@ -1,5 +1,6 @@
-"use client"
+'use client'
 import React, { useState, useRef, useEffect } from 'react'
+import { useTranslations, useLocale } from 'next-intl'
 import { Phone, Send, CheckCircle, X, User } from 'lucide-react'
 import {
 	trackTrialInitiateCheckoutOnce,
@@ -13,6 +14,9 @@ import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 import styles from './ContactForm.module.css'
 
 const ContactForm = () => {
+	const t = useTranslations('contact')
+	const tc = useTranslations('common')
+	const locale = useLocale()
     const [isOpen, setIsOpen] = useState(false)
     const [formData, setFormData] = useState({ name: '', message: '' })
     const [nameError, setNameError] = useState('')
@@ -91,7 +95,7 @@ const ContactForm = () => {
         const { name, value } = e.target
         if (name === 'name') {
             setFormData(prev => ({ ...prev, name: value }))
-            if (!value.trim()) setNameError('Введіть ваше ім\'я')
+            if (!value.trim()) setNameError(t('nameRequired'))
             else setNameError('')
             return
         }
@@ -105,7 +109,7 @@ const ContactForm = () => {
         // Validate
         let hasError = false
         if (!formData.name.trim()) {
-            setNameError('Введіть ваше ім\'я')
+            setNameError(t('nameRequired'))
             hasError = true
         }
         if (!phoneInput.validateOnSubmit()) {
@@ -126,6 +130,7 @@ const ContactForm = () => {
                 eventId,
                 sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://smartcode-academy.com',
                 attribution: getClientAttribution(),
+                locale,
             }
             const response = await fetch('/api/telegram', {
                 method: 'POST',
@@ -135,7 +140,7 @@ const ContactForm = () => {
             const data = await response.json().catch(() => ({}))
             if (!response.ok || !data?.ok) {
                 console.error('Failed to send telegram message', data)
-                alert('На жаль, сталася помилка при відправці. Спробуйте ще раз або напишіть нам у Telegram.')
+                alert(t('errorSubmit'))
                 return
             }
             if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -158,7 +163,7 @@ const ContactForm = () => {
             }, 2500)
         } catch (err) {
             console.error(err)
-            alert('Сталася помилка мережі. Перевірте підключення та спробуйте ще раз.')
+            alert(t('errorNetwork'))
         } finally {
             setSubmitting(false)
         }
@@ -198,7 +203,7 @@ const ContactForm = () => {
             <div className={styles.modalShell} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.modalInner}>
                     <div className={styles.modalCard}>
-                        <button type='button' className={styles.modalClose} onClick={() => setIsOpen(false)} aria-label='Закрити форму'>
+                        <button type='button' className={styles.modalClose} onClick={() => setIsOpen(false)} aria-label={t('closeAria')}>
                             <X size={20} />
                         </button>
 
@@ -208,9 +213,9 @@ const ContactForm = () => {
                                     <div className={styles.modalIconCircle}>
                                         <Phone size={24} />
                                     </div>
-                                    <h2 className={styles.modalTitle}>Запишіться на пробний урок</h2>
+                                    <h2 className={styles.modalTitle}>{t('title')}</h2>
                                     <p className={styles.modalSubtitle}>
-                                        Залиште контакт
+                                        {t('subtitle')}
                                     </p>
                                 </div>
 
@@ -218,7 +223,7 @@ const ContactForm = () => {
                                     {/* Name */}
                                     <div className={`${styles.modalField} ${nameError ? styles.modalFieldError : ''}`}>
                                         <label className={styles.modalLabel} htmlFor='modal-name'>
-                                            Ваше ім&apos;я
+                                            {t('nameLabel')}
                                         </label>
                                         <div className={styles.modalInputWrap}>
                                             <User size={18} className={styles.modalInputIcon} />
@@ -229,7 +234,7 @@ const ContactForm = () => {
                                                 name='name'
                                                 value={formData.name}
                                                 onChange={handleInputChange}
-                                                placeholder="Ім'я дитини або батьків"
+                                                placeholder={t('namePlaceholder')}
                                                 className={styles.modalInput}
                                                 autoComplete='name'
                                             />
@@ -243,7 +248,10 @@ const ContactForm = () => {
                                     {/* Comment (optional) */}
                                     <div className={styles.modalField}>
                                         <label className={styles.modalLabel} htmlFor='modal-msg'>
-                                            Коментар <span className={styles.modalLabelOptional}>(за бажанням)</span>
+                                            {t('messageLabel')}{' '}
+											<span className={styles.modalLabelOptional}>
+												{t('messageOptional')}
+											</span>
                                         </label>
                                         <textarea
                                             id='modal-msg'
@@ -251,18 +259,18 @@ const ContactForm = () => {
                                             value={formData.message}
                                             onChange={handleInputChange}
                                             rows={2}
-                                            placeholder='Інший спосіб зв&apos;язку, вік дитини, питання…'
+                                            placeholder={t('messagePlaceholder')}
                                             className={styles.modalTextarea}
                                         />
                                     </div>
 
                                     <button type='submit' className={styles.modalSubmit} disabled={submitting}>
                                         <Send size={18} aria-hidden />
-                                        {submitting ? 'Відправка…' : 'Надіслати заявку'}
+                                        {submitting ? tc('submitting') : t('submit')}
                                     </button>
 
                                     <p className={styles.modalNote}>
-                                        Перший урок - безкоштовно. Ми зателефонуємо протягом 15 хвилин.
+                                        {t('note')}
                                     </p>
                                 </form>
                             </>
@@ -271,9 +279,9 @@ const ContactForm = () => {
                                 <div className={styles.modalSuccessIconWrap}>
                                     <CheckCircle size={32} className={styles.modalSuccessIcon} />
                                 </div>
-                                <h3 className={styles.modalSuccessTitle}>Дякуємо!</h3>
+                                <h3 className={styles.modalSuccessTitle}>{t('successTitle')}</h3>
                                 <p className={styles.modalSuccessText}>
-                                    Наш менеджер зв&apos;яжеться з вами найближчим часом.
+                                    {t('successText')}
                                 </p>
                             </div>
                         )}

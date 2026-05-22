@@ -1,5 +1,6 @@
 'use client'
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react'
+import { useTranslations, useLocale } from 'next-intl'
 import {
 	parsePhoneNumberFromString,
 	isValidPhoneNumber,
@@ -65,15 +66,19 @@ function hasDuplicatedDialCode(allDigits, dialCode) {
 	return allDigits.includes(`${dialCode}${dialCode}`)
 }
 
-function validateUaPartial(normalized) {
+function validateUaPartial(normalized, t) {
 	if (!normalized) return ''
 	if (normalized.length >= 1 && !UA_MOBILE_PREFIX_FIRST_DIGITS.has(normalized[0])) {
-		return 'Некоректний код мобільного оператора України'
+		return t('invalidUaOperator')
 	}
 	if (normalized.length >= 2 && !UA_MOBILE_PREFIXES.has(normalized.slice(0, 2))) {
-		return 'Некоректний код мобільного оператора України'
+		return t('invalidUaOperator')
 	}
 	return ''
+}
+
+function countryDisplayName(country, locale) {
+	return locale === 'en' ? country.nameEn : country.nameUk
 }
 
 /**
@@ -81,27 +86,29 @@ function validateUaPartial(normalized) {
  * @param {import('@/lib/phoneCountries').PhoneCountry} country
  * @param {string} [rawInput]
  * @param {{ strict?: boolean }} [opts]
+ * @param {(key: string, values?: Record<string, string>) => string} t
+ * @param {string} locale
  */
-function validateNational(nationalDigits, country, rawInput = '', opts = {}) {
+function validateNational(nationalDigits, country, rawInput = '', opts = {}, t, locale) {
 	const { strict = false } = opts
 	const normalized = normalizeNationalDigits(nationalDigits, country)
 
 	if (!normalized) {
-		return strict ? 'Введіть номер телефону після коду країни' : ''
+		return strict ? t('enterAfterCountryCode') : ''
 	}
 
 	const inputDigits = String(rawInput).replace(/\D/g, '')
 	if (inputDigits.startsWith(country.dialCode) && inputDigits.length > country.dialCode.length) {
-		return `Не дублюйте код країни (${country.prefix} лише один раз)`
+		return t('duplicateCountry', { prefix: country.prefix })
 	}
 
 	const allDigits = country.dialCode + normalized
 	if (hasDuplicatedDialCode(allDigits, country.dialCode)) {
-		return `Не дублюйте код країни (${country.prefix} лише один раз)`
+		return t('duplicateCountry', { prefix: country.prefix })
 	}
 
 	if (country.code === 'UA') {
-		const uaErr = validateUaPartial(normalized)
+		const uaErr = validateUaPartial(normalized, t)
 		if (uaErr) return uaErr
 	}
 
@@ -109,25 +116,25 @@ function validateNational(nationalDigits, country, rawInput = '', opts = {}) {
 	const parsed = parsePhoneNumberFromString(e164, country.code)
 
 	if (parsed?.country && parsed.country !== country.code) {
-		return `Номер не відповідає обраній країні (${country.nameUk})`
+		return t('countryMismatch', { country: countryDisplayName(country, locale) })
 	}
 
 	if (!strict) {
 		if (country.code === 'UA' && normalized.length === 9 && !UA_MOBILE_PREFIXES.has(normalized.slice(0, 2))) {
-			return 'Введіть коректний мобільний номер України (наприклад, +380 96 123 45 67)'
+			return t('invalidUaMobile')
 		}
 		return ''
 	}
 
 	if (!parsed || !isValidPhoneNumber(e164, country.code) || !parsed.isValid()) {
 		if (country.code === 'UA' && normalized.length === 9) {
-			return 'Введіть коректний мобільний номер України (наприклад, +380 96 123 45 67)'
+			return t('invalidUaMobile')
 		}
-		return 'Перевірте кількість цифр (без дубля коду країни)'
+		return t('checkDigitCount')
 	}
 
 	if (!parsed.country || !EUROPE_COUNTRY.has(parsed.country)) {
-		return 'Потрібен номер з країни Європи'
+		return t('europeOnly')
 	}
 
 	return ''
@@ -179,6 +186,8 @@ function detectFromPaste(value) {
  * Shared hook for phone input with country selector.
  */
 export function usePhoneInput(initialCountryCode = 'UA') {
+	const t = useTranslations('phoneField')
+	const locale = useLocale()
 	const [country, setCountry] = useState(
 		() => getPhoneCountry(initialCountryCode) || EUROPEAN_PHONE_COUNTRIES[0]
 	)
@@ -211,8 +220,8 @@ export function usePhoneInput(initialCountryCode = 'UA') {
 
 	const applyDigits = useCallback((nextDigits, nextCountry, rawInput = '', strict = false) => {
 		setRawDigits(nextDigits)
-		setPhoneError(validateNational(nextDigits, nextCountry, rawInput, { strict }))
-	}, [])
+		setPhoneError(validateNational(nextDigits, nextCountry, rawInput, { strict }, t, locale))
+	}, [t, locale])
 
 	const handlePhoneChange = useCallback(
 		(value) => {
@@ -312,17 +321,17 @@ export function usePhoneInput(initialCountryCode = 'UA') {
 				setCountry(detected.country)
 				const capped = normalizeNationalDigits(detected.nationalDigits, detected.country)
 				applyDigits(capped, detected.country, intlInputValue, true)
-				const err = validateNational(capped, detected.country, intlInputValue, { strict: true })
+				const err = validateNational(capped, detected.country, intlInputValue, { strict: true }, t, locale)
 				setPhoneError(err)
 				return !err
 			}
-			setPhoneError('Введіть повний номер з кодом країни (наприклад, +380…)')
+			setPhoneError(t('enterFullNumber'))
 			return false
 		}
-		const err = validateNational(rawDigits, country, rawDigits, { strict: true })
+		const err = validateNational(rawDigits, country, rawDigits, { strict: true }, t, locale)
 		setPhoneError(err)
 		return !err
-	}, [rawDigits, country, intlMode, intlInputValue, applyDigits])
+	}, [rawDigits, country, intlMode, intlInputValue, applyDigits, t, locale])
 
 	const getFullNumber = useCallback(() => {
 		if (intlMode && intlInputValue) {

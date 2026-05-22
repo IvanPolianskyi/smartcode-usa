@@ -4,14 +4,7 @@ import { cookies } from 'next/headers'
 import { sendCapiLead, getClientIp, getClientUserAgent, getFbCookies } from '@/lib/metaCapi'
 import { normalizePhoneE164 } from '@/lib/phoneE164'
 import { sanitizeAttribution } from '@/lib/attribution'
-
-const TRIAL_COURSES = new Set([
-  'Roblox Studio',
-  'Python',
-  'JavaScript та веб-розробка',
-  'Розробка ігор на Unity',
-  'Не впевнений(а), потрібна консультація',
-])
+import { API_ERRORS, isTrialCourseValue, resolveLocale } from '@/lib/localeStrings'
 
 function escapeHtml(input) {
   const str = String(input ?? '')
@@ -79,7 +72,21 @@ export async function POST(request) {
     }
 
     const body = await request.json().catch(() => ({}))
-    const { phone, telegram, course, message, contactMethod, preferredContactMethod, name, eventId, sourceUrl, attribution } = body || {}
+    const {
+      phone,
+      telegram,
+      course,
+      message,
+      contactMethod,
+      preferredContactMethod,
+      name,
+      eventId,
+      sourceUrl,
+      attribution,
+      locale: bodyLocale,
+    } = body || {}
+    const loc = resolveLocale(bodyLocale)
+    const apiErr = API_ERRORS[loc]
 
     if (!phone && !telegram) {
       return NextResponse.json(
@@ -89,17 +96,17 @@ export async function POST(request) {
     }
 
     const createdAt = new Date().toLocaleString('uk-UA', { timeZone: 'Europe/Kyiv' })
-    const normalizedPhone = phone ? normalizePhoneE164(phone) : null
+    const normalizedPhone = phone ? normalizePhoneE164(phone, loc) : null
     if (phone && !normalizedPhone) {
       return NextResponse.json(
-        { ok: false, error: 'Невалідний номер (потрібен номер країни Європи)' },
+        { ok: false, error: apiErr.invalidPhone },
         { status: 400 }
       )
     }
     const normalizedTelegram = telegram ? (telegram.startsWith('@') ? telegram : '@' + telegram) : null
     const cleanAttribution = sanitizeAttribution(attribution)
     const preferredContactLabel = preferredContactMethod === 'telegram_phone' ? 'Написати в Telegram за цим номером' : 'Подзвонити'
-    const isTrialCourse = TRIAL_COURSES.has(String(course || '').trim())
+    const isTrialCourse = isTrialCourseValue(course)
     const hasValidEventId = isUuidLike(eventId)
     const trafficType = detectTrafficType(cleanAttribution)
 

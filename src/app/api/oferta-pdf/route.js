@@ -1,15 +1,19 @@
 import { readFile } from 'fs/promises'
 import { join } from 'path'
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
+import { ofertaDownloadFilename } from '@/lib/localeStrings'
 
 const SOURCE_FILE = 'oferta.pdf'
-const DOWNLOAD_NAME = 'Публічна оферта.pdf'
 
 export async function GET() {
+  const cookieStore = await cookies()
+  const locale = cookieStore.get('NEXT_LOCALE')?.value
+  const downloadName = ofertaDownloadFilename(locale)
   const filePath = join(process.cwd(), SOURCE_FILE)
   try {
     const buf = await readFile(filePath)
-    const encoded = encodeURIComponent(DOWNLOAD_NAME)
+    const encoded = encodeURIComponent(downloadName)
     return new NextResponse(buf, {
       status: 200,
       headers: {

@@ -1,0 +1,185 @@
+{
+  "courses": {
+    "python-developer-zero-to-junior": { "title": "Python" },
+    "unity-game-development": { "title": "Unity Game Development" },
+    "roblox-studio": { "title": "Roblox Studio" },
+    "web-development": { "title": "Web Development" }
+  },
+  "days": {
+    "sun": "Sun",
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat"
+  },
+  "dayMap": {
+    "Нд": "sun",
+    "Пн": "mon",
+    "Вт": "tue",
+    "Ср": "wed",
+    "Чт": "thu",
+    "Пт": "fri",
+    "Сб": "sat"
+  },
+  "loading": "Loading...",
+  "title": "Dashboard",
+  "roles": {
+    "admin": "Administrator",
+    "student": "Student"
+  },
+  "adminPanelLink": "Admin panel",
+  "logout": "Sign out",
+  "enLayout": {
+    "welcomeLabel": "Your learning space",
+    "welcomeSub": "Buy a full course for instant platform access, or book a live lesson with a teacher. Pay securely with card, Apple Pay, or Google Pay.",
+    "refresh": "Refresh",
+    "scheduledSlots": "Weekly slots",
+    "scheduleHint": "Your recurring lesson times appear here after you book.",
+    "bookToSchedule": "Book a live lesson below to add your weekly slot.",
+    "noUpcoming": "No lessons scheduled yet",
+    "nextSlot": "Next",
+    "browseCourses": "Browse courses"
+  },
+  "pending": {
+    "title": "Please wait while your account is being set up",
+    "text": "You are registered at SmartCode. Once an administrator connects your courses, schedule, and access, your full dashboard will appear here. If the wait takes too long, contact us in any convenient way."
+  },
+  "adminView": {
+    "management": {
+      "title": "Management",
+      "text": "Manage students, schedules, course access, and analytics.",
+      "button": "Open admin panel"
+    },
+    "stats": {
+      "title": "Dashboard",
+      "visits": "Visits",
+      "users": "Users",
+      "revenue": "Revenue",
+      "currency": "UAH"
+    },
+    "topCourses": {
+      "title": "Top courses",
+      "empty": "No enrollment data yet."
+    },
+    "activity": {
+      "title": "30-day activity",
+      "text": "Visits in the last month"
+    }
+  },
+  "student": {
+    "heroLabel": "Student progress",
+    "greeting": "Hi, {name}! Let's keep learning",
+    "goalTitle": "Weekly goal",
+    "tabs": {
+      "overview": "Overview",
+      "history": "History"
+    },
+    "metrics": {
+      "activeCourses": "Active courses",
+      "completedLessons": "Completed lessons",
+      "formatLabel": "Learning format",
+      "individual": "Individual",
+      "group": "Group"
+    },
+    "schedule": {
+      "noLessons": "No scheduled lessons",
+      "motivationRemaining": "{count} lesson(s) left this week. Next: {next}",
+      "motivationDone": "No more lessons this week. Next: {next}",
+      "timePending": "time TBD"
+    },
+    "courses": {
+      "title": "My courses",
+      "active": "Course active",
+      "purchased": "Full access",
+      "goTo": "Open",
+      "progress": "Progress: {percent}%",
+      "empty": "No courses assigned yet.",
+      "buyIntro": "Choose a course and get instant access to all lessons after payment.",
+      "buyMore": "Add another course:"
+    },
+    "zoom": {
+      "title": "Schedule & Zoom",
+      "empty": "Schedule not configured yet.",
+      "join": "Join lesson on Zoom",
+      "waiting": "Waiting for Zoom link"
+    },
+    "history": {
+      "title": "Lesson history",
+      "empty": "No completed lessons yet."
+    },
+    "payments": {
+      "title": "Payment stats",
+      "completed": "Successful",
+      "pending": "Pending",
+      "failed": "Failed",
+      "totalAmount": "Total paid",
+      "lessonCredits": "Lessons credited",
+      "accountBalance": "Account balance",
+      "currency": "UAH",
+      "accountNumber": "Account for lesson payments:",
+      "hideForm": "Hide form",
+      "attachReceipt": "Attach receipt",
+      "amountLabel": "Payment amount (UAH)",
+      "amountPlaceholder": "e.g. {amount}",
+      "amountHint": "Only amounts divisible by {price} UAH ({format} plan).",
+      "receiptPhoto": "Receipt photo",
+      "submitting": "Sending...",
+      "submit": "Submit receipt",
+      "errors": {
+        "invalidAmount": "Enter a valid payment amount",
+        "amountMultiple": "Amount must be a multiple of {price} UAH for your plan",
+        "noPhoto": "Add a receipt photo",
+        "submitFailed": "Failed to submit receipt",
+        "submitError": "Error submitting receipt"
+      },
+      "success": "Receipt submitted. After admin approval, lessons credited: {count}"
+    },
+    "refresh": "Refresh data"
+  },
+  "enCourses": {
+    "title": "Buy a full course",
+    "description": "Get instant access to all lessons on the platform. Pay once with card, Apple Pay, or Google Pay.",
+    "owned": "Purchased",
+    "buyButton": "Buy course",
+    "openCourse": "Open course",
+    "preview": "Preview",
+    "processing": "Redirecting…",
+    "payMethods": "Visa/Mastercard, Apple Pay, Google Pay via WayForPay.",
+    "oneTime": "One-time · full access",
+    "descriptions": {
+      "roblox-studio": "72 lessons — from your first Part in Roblox Studio to publishing your own game.",
+      "python-developer-zero-to-junior": "96 lessons — Python from zero to building real projects and junior-level skills."
+    },
+    "errors": {
+      "failed": "Payment could not be started. Try again."
+    }
+  },
+  "enBooking": {
+    "title": "Book a live lesson",
+    "description": "Pay for your next online lesson with card, Apple Pay, or Google Pay. After payment, your schedule slot is saved and the next lesson unlocks on the platform.",
+    "courseLabel": "Course",
+    "formatLabel": "Lesson format",
+    "perLesson": "lesson",
+    "group": "Group",
+    "individual": "1-on-1",
+    "dayLabel": "Day of week",
+    "timeLabel": "Lesson time",
+    "days": {
+      "mon": "Monday",
+      "tue": "Tuesday",
+      "wed": "Wednesday",
+      "thu": "Thursday",
+      "fri": "Friday",
+      "sat": "Saturday",
+      "sun": "Sunday"
+    },
+    "payMethods": "Accepted: Visa/Mastercard, Apple Pay, Google Pay (via WayForPay).",
+    "payButton": "Pay {price} and book",
+    "processing": "Redirecting to payment…",
+    "errors": {
+      "failed": "Could not start payment. Try again or contact support."
+    }
+  }
+}

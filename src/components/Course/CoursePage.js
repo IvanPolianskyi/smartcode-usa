@@ -1,10 +1,9 @@
 "use client"
-import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import React, { useState, useEffect, useMemo } from 'react'
+import { Link } from '@/i18n/navigation'
+import { useTranslations, useLocale } from 'next-intl'
 import { 
   Clock, 
-  Users, 
   Award, 
   Target, 
   BookOpen, 
@@ -18,14 +17,33 @@ import {
   Database,
   Globe
 } from 'lucide-react'
-import { pythonCurriculum } from '@/lib/pythonCurriculum'
-import { webDevCurriculum } from '@/lib/webDevCurriculum'
+import { getCurriculum } from '@/lib/getCurriculum'
+import { getRobloxCurriculum } from '@/lib/robloxCurriculumLocale'
 import { getUserProgress, checkCoursePurchase } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import styles from './CoursePage.module.css'
 
+function normalizeRawList(raw) {
+  if (Array.isArray(raw)) return raw
+  if (raw && typeof raw === 'object') {
+    return Object.keys(raw)
+      .sort((a, b) => Number(a) - Number(b))
+      .map((k) => raw[k])
+  }
+  return []
+}
+
 const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress: initialProgress = null }) => {
-  const router = useRouter()
+  const locale = useLocale()
+  const courseSlug =
+    courseId === 'web-development'
+      ? 'webdev'
+      : courseId === 'roblox-studio'
+        ? 'roblox'
+        : 'python'
+  const tCommon = useTranslations('lms.common')
+  const tCourse = useTranslations('lms.course')
+  const tVariant = useTranslations(`lms.course.${courseSlug}`)
   const { user: sessionUser, loading: sessionLoading } = useAuthSession()
   const [isLoaded, setIsLoaded] = useState(false)
   const [expandedModule, setExpandedModule] = useState(null)
@@ -33,19 +51,19 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   const [user, setUser] = useState(null)
   const [isPurchased, setIsPurchased] = useState(false)
   const [allowedLessons, setAllowedLessons] = useState(new Set())
+
+  const skills = useMemo(() => normalizeRawList(tVariant.raw('skills')), [tVariant])
+  const formatItems = useMemo(() => normalizeRawList(tVariant.raw('format')), [tVariant])
+  const requirements = useMemo(() => normalizeRawList(tVariant.raw('requirements')), [tVariant])
   
-  // Get the appropriate curriculum based on courseId
-  const getCurriculum = () => {
-    if (courseId === "web-development") {
-      return webDevCurriculum
-    }
-    return pythonCurriculum
-  }
-  
-  const course = getCurriculum()
+  const course = useMemo(() => {
+    if (courseId === 'roblox-studio') return getRobloxCurriculum(locale)
+    return getCurriculum(courseId, locale)
+  }, [courseId, locale])
   const isEnrolled = userProgress !== null
   const progress = userProgress?.overallProgress || 0
-
+  const totalWeeks = course.modules.reduce((sum, m) => sum + m.duration.weeks, 0)
+  const totalLessons = course.modules.reduce((sum, m) => sum + m.lessons.length, 0)
 
   useEffect(() => {
     setIsLoaded(true)
@@ -139,32 +157,6 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
     return userProgress?.completedLessons?.includes(lessonId) || false
   }
   
-  const isQuizPassed = (lessonId) => {
-    const quizData = userProgress?.completedQuizzes?.[lessonId]
-    return quizData?.passed === true || quizData?.score >= 60
-  }
-
-  // Отримати оцінку тесту для уроку
-  const getQuizScore = (lessonId) => {
-    const quizData = userProgress?.completedQuizzes?.[lessonId]
-    return quizData?.score || null
-  }
-
-  // Отримати колір для уроку на основі оцінки тесту
-  const getLessonColor = (lessonId) => {
-    const score = getQuizScore(lessonId)
-    if (score === null) {
-      return null // Немає оцінки
-    }
-    if (score >= 80) {
-      return 'green' // Зелений - хороша оцінка
-    } else if (score >= 50) {
-      return 'yellow' // Жовтий - середня оцінка
-    } else {
-      return 'red' // Червоний - погана оцінка
-    }
-  }
-  
   const isLessonUnlocked = (lesson, moduleIndex) => {
     const hasOnlineAccess = user?.studentProfile?.activeOnlineCourses?.includes(courseId)
     if (allowedLessons.size > 0) {
@@ -173,49 +165,52 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
     const explicitEnabled = user?.studentProfile?.courseAccess?.[courseId]?.enabled
     if (explicitEnabled === false) return false
     if (hasOnlineAccess) {
-      // Для онлайн-учнів без явного списку уроків лишаємо стартовий урок доступним.
       return moduleIndex === 0 && lesson.order === 1
     }
-    // Admin has access to all lessons
     if (user?.role === 'admin') return true
-    
-    // If course is purchased, all lessons are unlocked
     if (isPurchased) return true
-    
-    // If not enrolled, only first lesson of first module is available (free preview)
     if (!isEnrolled) {
       return moduleIndex === 0 && lesson.order === 1
     }
-    
-    // Free preview: only first lesson of first module
     if (moduleIndex === 0 && lesson.order === 1) return true
-    
-    // All other lessons require purchase
     return false
   }
   
   const getLevelBadge = (level) => {
-    const badges = {
-      "Beginner": { text: "Початківець", color: "var(--accent-green)" },
-      "Intermediate": { text: "Середній", color: "var(--accent-yellow)" },
-      "Advanced": { text: "Просунутий", color: "var(--accent-red)" }
+    const levelKey = level === 'Intermediate' ? 'intermediate' : level === 'Advanced' ? 'advanced' : 'beginner'
+    const colors = {
+      beginner: "var(--accent-green)",
+      intermediate: "var(--accent-yellow)",
+      advanced: "var(--accent-red)",
     }
-    return badges[level] || badges["Beginner"]
+    return { text: tCommon(`levels.${levelKey}`), color: colors[levelKey] }
   }
   
   const courseLevel = courseId === "web-development" ? "Intermediate" : "Beginner"
   const courseAge = courseId === "web-development" ? "12-18" : "13-17"
   const levelBadge = getLevelBadge(courseLevel)
+
+  const getQuizScore = (lessonId) => {
+    const quizData = userProgress?.completedQuizzes?.[lessonId]
+    return quizData?.score ?? null
+  }
+
+  const getLessonColor = (lessonId) => {
+    const score = getQuizScore(lessonId)
+    if (score === null) return null
+    if (score >= 80) return 'green'
+    if (score >= 50) return 'yellow'
+    return 'red'
+  }
   
   return (
     <div className={styles.container}>
-      {/* Hero Section */}
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
           <div className={styles.breadcrumb}>
-            <Link href="/">Головна</Link>
+            <Link href="/">{tCommon('breadcrumb.home')}</Link>
             <ChevronRight className="w-4 h-4" />
-            <span>Курси</span>
+            <span>{tCommon('breadcrumb.courses')}</span>
             <ChevronRight className="w-4 h-4" />
             <span>{course.title}</span>
           </div>
@@ -230,24 +225,21 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                   {levelBadge.text}
                 </span>
                 <span className={styles.ageBadge}>
-                  Вік: {courseAge}
+                  {tCommon('age', { age: courseAge })}
                 </span>
               </div>
               
               <h1 className={styles.title}>{course.title}</h1>
               
               <p className={styles.valueProposition}>
-                {courseId === "web-development" 
-                  ? "Створюй сучасні веб-додатки з нуля. Навчись HTML, CSS, JavaScript, React та Node.js для повноцінної веб-розробки."
-                  : "Навчись створювати реальні проекти на Python та отримай навички, необхідні для початку кар'єри в IT."
-                }
+                {tVariant('valueProposition')}
               </p>
             </div>
             
             {isEnrolled && (
               <div className={styles.progressCard}>
                 <div className={styles.progressHeader}>
-                  <span>Прогрес курсу</span>
+                  <span>{tCourse('progressLabel')}</span>
                   <span className={styles.progressPercent}>{progress}%</span>
                 </div>
                 <div className={styles.progressBar}>
@@ -260,40 +252,39 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
             )}
           </div>
           
-          {/* Course Stats */}
           <div className={styles.stats}>
             <div className={styles.statItem}>
               <Clock className="w-5 h-5" />
               <div>
                 <div className={styles.statValue}>
-                  {course.modules.reduce((sum, m) => sum + m.duration.weeks, 0)} тижнів
+                  {totalWeeks} {tCommon('stats.weeks')}
                 </div>
-                <div className={styles.statLabel}>Тривалість</div>
+                <div className={styles.statLabel}>{tCommon('stats.duration')}</div>
               </div>
             </div>
             <div className={styles.statItem}>
               <BookOpen className="w-5 h-5" />
               <div>
                 <div className={styles.statValue}>
-                  {course.modules.reduce((sum, m) => sum + m.lessons.length, 0)} уроків
+                  {totalLessons} {tCommon('stats.lessons')}
                 </div>
-                <div className={styles.statLabel}>Матеріалів</div>
+                <div className={styles.statLabel}>{tCommon('stats.materials')}</div>
               </div>
             </div>
             <div className={styles.statItem}>
               <Target className="w-5 h-5" />
               <div>
                 <div className={styles.statValue}>
-                  {course.modules.length} модулів
+                  {course.modules.length} {tCommon('stats.modules')}
                 </div>
-                <div className={styles.statLabel}>Модулів</div>
+                <div className={styles.statLabel}>{tCommon('stats.modulesLabel')}</div>
               </div>
             </div>
             <div className={styles.statItem}>
               <Award className="w-5 h-5" />
               <div>
-                <div className={styles.statValue}>Сертифікат</div>
-                <div className={styles.statLabel}>Після завершення</div>
+                <div className={styles.statValue}>{tCommon('stats.certificate')}</div>
+                <div className={styles.statLabel}>{tCommon('stats.afterCompletion')}</div>
               </div>
             </div>
           </div>
@@ -301,27 +292,15 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
         </div>
       </section>
       
-      {/* Course Info Section */}
       <section className={styles.infoSection}>
         <div className={styles.infoGrid}>
-          {/* Skills */}
           <div className={styles.infoCard}>
             <h3 className={styles.infoCardTitle}>
               <Target className="w-5 h-5" />
-              Навички, які ти отримаєш
+              {tCourse('skillsTitle')}
             </h3>
             <ul className={styles.skillsList}>
-              {[
-                "Основи програмування на Python",
-                "Робота з даними та файлами",
-                "Об'єктно-орієнтоване програмування",
-                "Робота з базами даних",
-                "Веб-розробка з Flask",
-                "Тестування коду",
-                "Версійний контроль Git",
-                "Розробка REST API",
-                "Деплой проектів"
-              ].map((skill, index) => (
+              {skills.map((skill, index) => (
                 <li key={index} className={styles.skillItem}>
                   <CheckCircle2 className="w-4 h-4" />
                   {skill}
@@ -330,67 +309,49 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
             </ul>
           </div>
           
-          {/* Learning Format */}
           <div className={styles.infoCard}>
             <h3 className={styles.infoCardTitle}>
               <Play className="w-5 h-5" />
-              Формат навчання
+              {tCourse('formatTitle')}
             </h3>
             <ul className={styles.formatList}>
-              <li>
-                <CheckCircle2 className="w-4 h-4" />
-                Відео-уроки з поясненнями
-              </li>
-              <li>
-                <CheckCircle2 className="w-4 h-4" />
-                Практичні завдання після кожного уроку
-              </li>
-              <li>
-                <CheckCircle2 className="w-4 h-4" />
-                Тести для перевірки знань
-              </li>
-              <li>
-                <CheckCircle2 className="w-4 h-4" />
-                Реальні проекти для портфоліо
-              </li>
-              <li>
-                <CheckCircle2 className="w-4 h-4" />
-                Code review від менторів
-              </li>
+              {formatItems.map((item, index) => (
+                <li key={index}>
+                  <CheckCircle2 className="w-4 h-4" />
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
           
-          {/* Requirements */}
           <div className={styles.infoCard}>
             <h3 className={styles.infoCardTitle}>
               <BookOpen className="w-5 h-5" />
-              Вимоги
+              {tCourse('requirementsTitle')}
             </h3>
             <ul className={styles.requirementsList}>
-              <li>Базові знання англійської мови</li>
-              <li>Доступ до комп'ютера з інтернетом</li>
-              <li>Мотивація та готовність до навчання</li>
+              {requirements.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
             </ul>
           </div>
           
-          {/* Certificate */}
           <div className={styles.infoCard}>
             <h3 className={styles.infoCardTitle}>
               <Award className="w-5 h-5" />
-              Сертифікат
+              {tCourse('certificateTitle')}
             </h3>
             <p className={styles.certificateInfo}>
-              Після успішного завершення всіх модулів та фінального проекту ти отримаєш міжнародний сертифікат SmartCode Academy, який підтверджує твої навички {courseId === "web-development" ? "веб-розробника" : "Python розробника"}.
+              {tVariant('certificateText')}
             </p>
           </div>
         </div>
       </section>
       
-      {/* Course Roadmap */}
       <section className={styles.roadmapSection}>
-        <h2 className={styles.sectionTitle}>Програма курсу</h2>
+        <h2 className={styles.sectionTitle}>{tCourse('programTitle')}</h2>
         <p className={styles.sectionDescription}>
-          {course.modules.length} модулів, {course.modules.reduce((sum, m) => sum + m.lessons.length, 0)} уроків - від основ до створення повноцінних проектів
+          {tCourse('programDescription', { modules: course.modules.length, lessons: totalLessons })}
         </p>
         
         <div className={styles.modulesList}>
@@ -410,7 +371,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                   </div>
                   <div>
                     <div className={styles.moduleNumber}>
-                      Модуль {module.order}
+                      {tCourse('moduleLabel', { order: module.order })}
                     </div>
                     <h3 className={styles.moduleTitle}>{module.title}</h3>
                     <p className={styles.moduleDescription}>{module.description}</p>
@@ -418,9 +379,9 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                 </div>
                 <div className={styles.moduleHeaderRight}>
                   <div className={styles.moduleMeta}>
-                    <span>{module.duration.weeks} тижні</span>
+                    <span>{tCourse('moduleWeeks', { count: module.duration.weeks })}</span>
                     <span>•</span>
-                    <span>{module.lessons.length} уроків</span>
+                    <span>{tCourse('moduleLessons', { count: module.lessons.length })}</span>
                   </div>
                   <ChevronRight 
                     className={`${styles.expandIcon} ${expandedModule === moduleIndex ? styles.expanded : ''}`}
@@ -431,7 +392,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
               {expandedModule === moduleIndex && (
                 <div className={styles.moduleContent}>
                   <div className={styles.learningOutcomes}>
-                    <h4>Що ти навчишся:</h4>
+                    <h4>{tCourse('learnTitle')}</h4>
                     <ul>
                       {module.learningOutcomes.map((outcome, idx) => (
                         <li key={idx}>{outcome}</li>
@@ -440,8 +401,8 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                   </div>
                   
                   <div className={styles.lessonsList}>
-                    <h4>Уроки модуля:</h4>
-                    {module.lessons.map((lesson, lessonIndex) => {
+                    <h4>{tCourse('lessonsTitle')}</h4>
+                    {module.lessons.map((lesson) => {
                       const completed = isLessonCompleted(lesson.lessonId)
                       const unlocked = isLessonUnlocked(lesson, moduleIndex)
                       const lessonColor = getLessonColor(lesson.lessonId)
@@ -476,17 +437,17 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                             )}
                             <div>
                               <div className={styles.lessonNumber}>
-                                Урок {lesson.order}
+                                {tCourse('lessonLabel', { order: lesson.order })}
                               </div>
                               <div className={styles.lessonTitle}>{lesson.title}</div>
                               {lesson.isProject && (
-                                <span className={styles.projectBadge}>Проект</span>
+                                <span className={styles.projectBadge}>{tCourse('projectBadge')}</span>
                               )}
                             </div>
                           </div>
                           <div className={styles.lessonItemRight}>
                             <span className={styles.lessonTime}>
-                              {lesson.estimatedTime} хв
+                              {tCourse('minutes', { count: lesson.estimatedTime })}
                             </span>
                             {quizScore !== null && (
                               <span className={styles.quizScore} style={{
@@ -494,11 +455,11 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                                        lessonColor === 'yellow' ? '#f59e0b' :
                                        '#ef4444'
                               }}>
-                                Тест: {quizScore}%
+                                {tCourse('quizScore', { score: quizScore })}
                               </span>
                             )}
                             {!unlocked && (
-                              <span className={styles.lockedLabel}>Заблоковано</span>
+                              <span className={styles.lockedLabel}>{tCourse('locked')}</span>
                             )}
                           </div>
                         </Link>
@@ -512,19 +473,18 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
         </div>
       </section>
       
-      {/* CTA Section */}
       <section className={styles.ctaSection}>
         <div className={styles.ctaCard}>
-          <h2 className={styles.ctaTitle}>Продовжуй навчання</h2>
+          <h2 className={styles.ctaTitle}>{tCourse('ctaTitle')}</h2>
           <p className={styles.ctaDescription}>
-            Ти вже на {progress}% шляху до завершення курсу. Продовжуй вивчати нові уроки!
+            {tCourse('ctaDescription', { progress })}
           </p>
           <Link 
             href={`/courses/${courseId}`}
             className={styles.ctaButton}
           >
             <Play className="w-5 h-5" />
-            Перейти до уроків
+            {tCourse('ctaButton')}
           </Link>
         </div>
       </section>
@@ -533,4 +493,3 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
 }
 
 export default CoursePage
-

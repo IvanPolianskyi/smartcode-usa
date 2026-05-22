@@ -1,32 +1,22 @@
 'use client'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
 import styles from './footer.module.css'
 import { parseHomeHashTarget, navigateToHomeSection } from '@/lib/homeSectionScroll'
 import {
 	Code,
 	Gamepad2,
-	Palette,
-	Rocket,
 	Award,
 	Star,
-	Users,
 	GraduationCap,
-	Phone,
-	Mail,
-	MapPin,
-	Clock,
-	Send,
-	Instagram,
-	Youtube,
-	Facebook,
-	Linkedin,
 	Box,
+	Instagram,
 } from 'lucide-react'
 import TikTokIcon from '@/components/Icons/TikTokIcon'
 import Image from 'next/image'
 
 const Footer = () => {
+	const t = useTranslations('footer')
 	const router = useRouter()
 	const currentYear = new Date().getFullYear()
 
@@ -38,54 +28,66 @@ const Footer = () => {
 	}
 
 	const courses = [
-		{ name: 'Python програмування', icon: Code, href: '/python' },
-		{ name: 'Веб-розробка', icon: Code, href: '/webDev' },
-		{ name: 'Розробка ігор на Unity', icon: Gamepad2, href: '/Unity' },
-		{ name: 'Roblox Studio', icon: Box, href: '/Roblox' },
+		{ name: t('courses.python'), icon: Code, href: '/python' },
+		{ name: t('courses.webDev'), icon: Code, href: '/webDev' },
+		{ name: t('courses.unity'), icon: Gamepad2, href: '/Unity' },
+		{ name: t('courses.roblox'), icon: Box, href: '/Roblox' },
 	]
 
-    const quickLinks = [
-        { name: 'Про нас', href: '/#about' },
-        { name: 'Відгуки', href: '/#testimonials' },
-        { name: 'Контакти', href: '/#Contactform', openModal: true },
-		{ name: 'Вхід', href: '/login' },
-		{ name: 'Реєстрація', href: '/register' },
-    ]
+	const quickLinks = [
+		{ name: t('quickLinks.about'), href: '/#about' },
+		{ name: t('quickLinks.reviews'), href: '/#testimonials' },
+		{ name: t('quickLinks.contacts'), href: '/#Contactform', openModal: true },
+		{ name: t('quickLinks.login'), href: '/login' },
+		{ name: t('quickLinks.register'), href: '/register' },
+	]
 
 	const supportLinks = [
-		{ name: 'Часті питання', href: '/#faq' },
-		{ name: 'Публічна оферта', href: '/api/oferta-pdf', useAnchor: true },
+		{ name: t('supportLinks.faq'), href: '/#faq' },
+		{ name: t('supportLinks.offer'), href: '/api/oferta-pdf', useAnchor: true },
 	]
 
 	const achievements = [
-		{ number: '500+', label: 'Випускників', icon: GraduationCap },
-		{ number: '3+', label: 'Роки досвіду', icon: Award },
-		{ number: '4.9', label: 'Рейтинг', icon: Star },
+		{
+			number: t('achievements.graduates.number'),
+			label: t('achievements.graduates.label'),
+			icon: GraduationCap,
+		},
+		{
+			number: t('achievements.experience.number'),
+			label: t('achievements.experience.label'),
+			icon: Award,
+		},
+		{
+			number: t('achievements.rating.number'),
+			label: t('achievements.rating.label'),
+			icon: Star,
+		},
 	]
 
 	const socialLinks = [
 		{
-			name: 'Instagram',
+			name: t('social.instagram'),
 			icon: Instagram,
 			href: 'https://www.instagram.com/smartcode_academy_official/',
 		},
 		{
-			name: 'TikTok - SmartCode Academy',
+			name: t('social.tiktokMain'),
 			icon: TikTokIcon,
 			href: 'https://www.tiktok.com/@smartcodeacademy',
 		},
 		{
-			name: 'TikTok - SmartCode Academy 2',
+			name: t('social.tiktokAlt'),
 			icon: TikTokIcon,
 			href: 'https://www.tiktok.com/@smartcode_academy',
 		},
 		{
-			name: 'TikTok - Іван Python',
+			name: t('social.tiktokIvan'),
 			icon: TikTokIcon,
 			href: 'https://www.tiktok.com/@ivan_python_smart',
 		},
 		{
-			name: 'TikTok - Артем SmartCode',
+			name: t('social.tiktokArtem'),
 			icon: TikTokIcon,
 			href: 'https://www.tiktok.com/@artem.smartcode',
 		},
@@ -99,7 +101,6 @@ const Footer = () => {
 			</div>
 			<div className={styles.container}>
 				<div className={styles.mainContent}>
-					{/* --- Секція з інформацією про школу --- */}
 					<div className={styles.schoolInfo}>
 						<div className={styles.logoSection}>
 							<div className={styles.logoIconWrapper}>
@@ -112,14 +113,11 @@ const Footer = () => {
 								/>
 							</div>
 							<div className={styles.logoText}>
-								<h3 className={styles.schoolName}>SmartCode</h3>
-								<p className={styles.schoolSubtitle}>Academy</p>
+								<h3 className={styles.schoolName}>{t('schoolName')}</h3>
+								<p className={styles.schoolSubtitle}>{t('schoolSubtitle')}</p>
 							</div>
 						</div>
-						<p className={styles.description}>
-							Провідна школа програмування для дітей 8-17 років. Навчаємо через
-							практику, створюємо майбутнє разом!
-						</p>
+						<p className={styles.description}>{t('description')}</p>
 						<div className={styles.achievements}>
 							{achievements.map((item, index) => (
 								<div key={index} className={styles.achievement}>
@@ -137,9 +135,8 @@ const Footer = () => {
 						</div>
 					</div>
 
-					{/* --- Секція з курсами --- */}
 					<div className={styles.section}>
-						<h4 className={styles.sectionTitle}>Наші курси</h4>
+						<h4 className={styles.sectionTitle}>{t('coursesTitle')}</h4>
 						<ul className={styles.linksList}>
 							{courses.map((course, index) => (
 								<li key={index}>
@@ -152,28 +149,35 @@ const Footer = () => {
 						</ul>
 					</div>
 
-					{/* --- Секція швидких посилань --- */}
 					<div className={styles.section}>
-						<h4 className={styles.sectionTitle}>Навігація</h4>
+						<h4 className={styles.sectionTitle}>{t('navigationTitle')}</h4>
 						<ul className={styles.linksList}>
-                            {quickLinks.map((link, index) => (
-                                <li key={index}>
-                                    <Link 
-                                        href={link.href} 
-                                        className={styles.link}
-                                        onClick={link.openModal ? (e)=>{ e.preventDefault(); window.dispatchEvent(new Event('openContactModal')) } : undefined}
-                                        scroll={link.openModal ? false : undefined}
-                                    >
-                                        {link.name}
-                                    </Link>
-                                </li>
-                            ))}
+							{quickLinks.map((link, index) => (
+								<li key={index}>
+									<Link
+										href={link.href}
+										className={styles.link}
+										onClick={
+											link.openModal
+												? (e) => {
+														e.preventDefault()
+														window.dispatchEvent(
+															new Event('openContactModal'),
+														)
+													}
+												: undefined
+										}
+										scroll={link.openModal ? false : undefined}
+									>
+										{link.name}
+									</Link>
+								</li>
+							))}
 						</ul>
 					</div>
 
-					{/* --- Секція підтримки --- */}
 					<div className={styles.section}>
-						<h4 className={styles.sectionTitle}>Підтримка</h4>
+						<h4 className={styles.sectionTitle}>{t('supportTitle')}</h4>
 						<ul className={styles.linksList}>
 							{supportLinks.map((link, index) => (
 								<li key={index}>
@@ -199,10 +203,9 @@ const Footer = () => {
 
 				<div className={styles.divider}></div>
 
-				{/* --- Нижня секція --- */}
 				<div className={styles.bottomSection}>
 					<div className={styles.copyright}>
-						© {currentYear} SmartCode Academy. Усі права захищені.
+						{t('copyright', { year: currentYear })}
 					</div>
 					<div className={styles.socialLinks}>
 						{socialLinks.map((social, index) => (

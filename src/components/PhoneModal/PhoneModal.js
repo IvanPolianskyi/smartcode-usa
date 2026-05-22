@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-
+import { useTranslations, useLocale } from 'next-intl'
 import {
 	X,
 	Code,
@@ -24,13 +24,14 @@ const PhoneModal = ({
 	project, 
 	onSuccess 
 }) => {
+	const t = useTranslations('pages.phoneModal')
+	const locale = useLocale()
 	const [name, setName] = useState('')
 	const phoneInput = usePhoneInput('UA')
 	const [isSubmitting, setIsSubmitting] = useState(false)
 	const [error, setError] = useState('')
 	const [success, setSuccess] = useState(false)
 
-	// Reset form when modal opens/closes
 	useEffect(() => {
 		if (isOpen) {
 			phoneInput.reset()
@@ -40,7 +41,6 @@ const PhoneModal = ({
 		}
 	}, [isOpen])
 
-	// Сабміт форми
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		setError('')
@@ -51,7 +51,7 @@ const PhoneModal = ({
 			return
 		}
 
-		const phoneR = validateEuropeanPhone(phoneInput.getFullNumber())
+		const phoneR = validateEuropeanPhone(phoneInput.getFullNumber(), locale)
 		if (!phoneR.ok) {
 			setError(phoneR.message)
 			setIsSubmitting(false)
@@ -59,7 +59,7 @@ const PhoneModal = ({
 		}
 
 		if (!name.trim()) {
-			setError('Будь ласка, введіть ваше ім\'я')
+			setError(t('nameRequired'))
 			setIsSubmitting(false)
 			return
 		}
@@ -75,7 +75,8 @@ const PhoneModal = ({
 					name: name.trim(),
 					projectId: project?.id,
 					projectTitle: project?.title,
-					timestamp: new Date().toISOString()
+					timestamp: new Date().toISOString(),
+					locale,
 				})
 			})
 
@@ -89,18 +90,16 @@ const PhoneModal = ({
 			}
 		} catch (err) {
 			console.error('Error submitting phone number:', err)
-			setError('Помилка при відправці. Спробуйте ще раз.')
+			setError(t('submitError'))
 		} finally {
 			setIsSubmitting(false)
 		}
 	}
 
-	// Копіювати код
 	const copyCode = () => {
 		navigator.clipboard.writeText(project.code)
 	}
 
-	// Завантажити код
 	const downloadCode = () => {
 		const element = document.createElement('a')
 		const file = new Blob([project.code], { type: 'text/plain' })
@@ -123,13 +122,10 @@ const PhoneModal = ({
 						</div>
 						<div>
 							<h2 className={styles.title}>
-								{success ? 'Код отримано!' : 'Отримайте код проєкту'}
+								{success ? t('titleSuccess') : t('titleDefault')}
 							</h2>
 							<p className={styles.subtitle}>
-								{success 
-									? 'Дякуємо! Тепер ви можете переглянути код'
-									: 'Введіть ваші дані, щоб отримати доступ до коду'
-								}
+								{success ? t('subtitleSuccess') : t('subtitleDefault')}
 							</p>
 						</div>
 					</div>
@@ -148,7 +144,7 @@ const PhoneModal = ({
 
 							<div className={styles.formGroup}>
 								<label htmlFor="name" className={styles.label}>
-									Ваше ім&apos;я *
+									{t('nameLabel')}
 								</label>
 								<input
 									type="text"
@@ -156,7 +152,7 @@ const PhoneModal = ({
 									value={name}
 									onChange={(e) => setName(e.target.value)}
 									className={styles.input}
-									placeholder="Введіть ваше ім'я"
+									placeholder={t('namePlaceholder')}
 									required
 								/>
 							</div>
@@ -189,7 +185,7 @@ const PhoneModal = ({
 									error: phoneStyles.error,
 								}}
 								id="phone"
-								labelText="Номер телефону *"
+								labelText={t('phoneLabel')}
 							/>
 
 							{error && (
@@ -201,9 +197,7 @@ const PhoneModal = ({
 
 							<div className={styles.privacyNote}>
 								<Lock className={styles.privacyIcon} />
-								<span>
-									Ваші дані захищені та не будуть передані третім особам
-								</span>
+								<span>{t('privacy')}</span>
 							</div>
 
 							<button
@@ -214,12 +208,12 @@ const PhoneModal = ({
 								{isSubmitting ? (
 									<>
 										<Loader2 className={styles.buttonLoader} />
-										Відправляємо...
+										{t('submitting')}
 									</>
 								) : (
 									<>
 										<Eye className={styles.buttonIcon} />
-										Отримати код
+										{t('submit')}
 									</>
 								)}
 							</button>
@@ -232,19 +226,19 @@ const PhoneModal = ({
 							
 							<div className={styles.codeSection}>
 								<div className={styles.codeHeader}>
-									<h3 className={styles.codeTitle}>Код проєкту: {project?.title}</h3>
+									<h3 className={styles.codeTitle}>{t('codeTitle', { title: project?.title })}</h3>
 									<div className={styles.codeActions}>
 										<button
 											onClick={copyCode}
 											className={styles.actionButton}
-											title="Копіювати код"
+											title={t('copyCode')}
 										>
 											<Copy size={16} />
 										</button>
 										<button
 											onClick={downloadCode}
 											className={styles.actionButton}
-											title="Завантажити код"
+											title={t('downloadCode')}
 										>
 											<Download size={16} />
 										</button>
@@ -259,16 +253,14 @@ const PhoneModal = ({
 							</div>
 
 							<div className={styles.successMessage}>
-								<p>
-									🎉 <strong>Вітаємо!</strong> Ви отримали доступ до коду проєкту.
-								</p>
+								<p>🎉 <strong>{t('successMessage')}</strong></p>
 							</div>
 
 							<button
 								onClick={onClose}
 								className={styles.closeSuccessButton}
 							>
-								Закрити
+								{t('close')}
 							</button>
 						</div>
 					)}

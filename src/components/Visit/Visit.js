@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import {
 	Users,
@@ -11,28 +11,39 @@ import {
 	BookOpen,
 	Trophy,
 } from 'lucide-react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './Visit.module.css'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
+import { useTranslations, useLocale } from 'next-intl'
 import HeroTrialForm from './HeroTrialForm'
+import HeroEnCta from './HeroEnCta'
 
 const EnhancedCourseCards = dynamic(() => import('./EnhancedCourseCards'), {
 	loading: () => <div style={{ minHeight: '980px', width: '100%' }} />,
 })
 
-// Guard: ScrollTrigger uses DOM APIs — only register in the browser
-if (typeof window !== 'undefined') {
-	gsap.registerPlugin(ScrollTrigger)
-}
-
 const Visit = () => {
-	const sectionRef = useRef(null)
-	const [isMounted, setIsMounted] = useState(false)
+	const locale = useLocale()
+	const isEn = locale === 'en'
+	const t = useTranslations('home')
 	const [shouldRenderCards, setShouldRenderCards] = useState(false)
 
+	// Стабільна висота hero на телефоні (Instagram / iOS toolbar) — дублює layout.js
 	useEffect(() => {
-		setIsMounted(true)
+		const setAppHeight = () => {
+			const h = window.visualViewport?.height ?? window.innerHeight
+			document.documentElement.style.setProperty('--app-height', `${h}px`)
+		}
+		setAppHeight()
+		window.addEventListener('resize', setAppHeight, { passive: true })
+		window.addEventListener('orientationchange', setAppHeight, { passive: true })
+		window.visualViewport?.addEventListener('resize', setAppHeight, {
+			passive: true,
+		})
+		return () => {
+			window.removeEventListener('resize', setAppHeight)
+			window.removeEventListener('orientationchange', setAppHeight)
+			window.visualViewport?.removeEventListener('resize', setAppHeight)
+		}
 	}, [])
 
 	useEffect(() => {
@@ -41,14 +52,23 @@ const Visit = () => {
 
 		const scheduleCardsRender = () => setShouldRenderCards(true)
 
-		if (typeof window !== 'undefined' && typeof window.requestIdleCallback === 'function') {
-			idleId = window.requestIdleCallback(scheduleCardsRender, { timeout: 1200 })
+		if (
+			typeof window !== 'undefined' &&
+			typeof window.requestIdleCallback === 'function'
+		) {
+			idleId = window.requestIdleCallback(scheduleCardsRender, {
+				timeout: 1200,
+			})
 		} else {
 			timeoutId = window.setTimeout(scheduleCardsRender, 350)
 		}
 
 		return () => {
-			if (idleId != null && typeof window !== 'undefined' && typeof window.cancelIdleCallback === 'function') {
+			if (
+				idleId != null &&
+				typeof window !== 'undefined' &&
+				typeof window.cancelIdleCallback === 'function'
+			) {
 				window.cancelIdleCallback(idleId)
 			}
 			if (timeoutId != null) {
@@ -57,137 +77,63 @@ const Visit = () => {
 		}
 	}, [])
 
-	useEffect(() => {
-		// GSAP анімації появи при скролі з оптимізацією для мобільних
-		// Критичні елементи (title) не анімуються для кращого LCP
-		// На мобільних пристроях анімації вимкнені для уникнення тремтіння
-		let ctx = null
-		if (sectionRef.current && isMounted) {
-			const isMobile = window.innerWidth <= 768
-			
-			// На мобільних пристроях не запускаємо анімації для уникнення тремтіння
-			if (isMobile) {
-				return
-			}
-			
-			ctx = gsap.context(() => {
-				// Десктоп: анімації тільки для не-критичних елементів
-				gsap.fromTo(
-					'.animate-up:not(.title-critical)',
-					{ y: 30, opacity: 0.8 },
-					{
-						y: 0,
-						opacity: 1,
-						duration: 0.5,
-						ease: 'power3.out',
-						stagger: 0.08,
-						scrollTrigger: {
-							trigger: sectionRef.current,
-							start: 'top 85%',
-							end: 'bottom 15%',
-							toggleActions: 'play none none reverse',
-						},
-					}
-				)
-
-				gsap.fromTo(
-					'.animate-slide',
-					{ x: -30, opacity: 0.8 },
-					{
-						x: 0,
-						opacity: 1,
-						duration: 0.4,
-						ease: 'power2.out',
-						stagger: 0.06,
-						scrollTrigger: {
-							trigger: sectionRef.current,
-							start: 'top 75%',
-							toggleActions: 'play none none reverse',
-						},
-					}
-				)
-
-				gsap.fromTo(
-					'.animate-scale',
-					{ scale: 0.97, opacity: 0.8 },
-					{
-						scale: 1,
-						opacity: 1,
-						duration: 0.4,
-						ease: 'back.out(1.2)',
-						stagger: 0.03,
-						scrollTrigger: {
-							trigger: sectionRef.current,
-							start: 'top 80%',
-							toggleActions: 'play none none reverse',
-						},
-					}
-				)
-			}, sectionRef)
-		}
-
-		return () => {
-			if (ctx) ctx.revert()
-		}
-	}, [isMounted])
-
-	const handleTrialCtaClick = (e) => {
+	const handleTrialCtaClick = e => {
 		e.preventDefault()
 		window.dispatchEvent(new Event('openContactModal'))
 	}
 
 	const heroFeatures = (
-		<div className={`${styles.heroFeatures} animate-slide`}>
+		<div className={styles.heroFeatures}>
 			<div className={styles.feature}>
 				<div className={styles.featureIcon}>
 					<Users className={styles.icon} />
 				</div>
-				<span>Віком 8-17 років</span>
+				<span>{t('features.age')}</span>
 			</div>
 			<div className={styles.feature}>
 				<div className={styles.featureIcon}>
 					<Monitor className={styles.icon} />
 				</div>
-				<span>Онлайн заняття</span>
+				<span>{t('features.online')}</span>
 			</div>
 			<div className={styles.feature}>
 				<div className={styles.featureIcon}>
 					<Award className={styles.icon} />
 				</div>
-				<span>Міжнародний сертифікат</span>
+				<span>{t('features.certificate')}</span>
 			</div>
 		</div>
 	)
 
 	const stats = [
-		{ 
-			number: '5000+', 
-			label: 'дітей навчаються по всьому світу', 
+		{
+			number: t('stats.students.number'),
+			label: t('stats.students.label'),
 			icon: <Users />,
-			iconColor: '#3b82f6'
+			iconColor: '#3b82f6',
 		},
-		{ 
-			number: '100%', 
-			label: 'занять проходять з живими викладачами', 
+		{
+			number: t('stats.liveLessons.number'),
+			label: t('stats.liveLessons.label'),
 			icon: <Code />,
-			iconColor: '#3b82f6'
+			iconColor: '#3b82f6',
 		},
-		{ 
-			number: '4+ курсів', 
-			label: 'Пайтон, Roblox, Unity, Вебдев', 
+		{
+			number: t('stats.courses.number'),
+			label: t('stats.courses.label'),
 			icon: <BookOpen />,
-			iconColor: '#3b82f6'
+			iconColor: '#3b82f6',
 		},
-		{ 
-			number: '0 грн', 
-			label: 'Вартість пробного заняття', 
+		{
+			number: t('stats.trial.number'),
+			label: t('stats.trial.label'),
 			icon: <Trophy />,
-			iconColor: '#3b82f6'
+			iconColor: '#3b82f6',
 		},
 	]
 
 	return (
-		<div className={styles.container} ref={sectionRef}>
+		<div className={styles.container}>
 			{/* Floating background elements */}
 			<div className={styles.backgroundElements}>
 				{/* Верхні елементи */}
@@ -219,76 +165,93 @@ const Visit = () => {
 								<span className={styles.titleAccent}>Academy</span>
 							</h1>
 
-							<p className={`${styles.subtitle} animate-up`}>
-								Живі уроки в Zoom, онлайн платформа та безкоштовне пробне заняття
+							<p className={styles.subtitle}>
+								{t('subtitle')}
 							</p>
-							<div className={styles.lessonTypes}>
-								<span className={styles.lessonTypeBadge}>
-									<span className={styles.lessonTypeIcon} aria-hidden>
-										<Users size={18} />
-									</span>
-									Групові заняття
-								</span>
-								<span className={styles.lessonTypeBadge}>
-									<span className={styles.lessonTypeIcon} aria-hidden>
-										<User size={18} />
-									</span>
-									індивідуальні
-								</span>
-							</div>
+							{!isEn && (
+								<div className={styles.lessonTypesWrap}>
+									<div className={styles.lessonTypes}>
+										<span className={styles.lessonTypeBadge}>
+											<span className={styles.lessonTypeIcon} aria-hidden>
+												<Users size={18} />
+											</span>
+											{t('lessonTypes.group')}
+										</span>
+										<span className={styles.lessonTypeBadge}>
+											<span className={styles.lessonTypeIcon} aria-hidden>
+												<User size={18} />
+											</span>
+											{t('lessonTypes.individual')}
+										</span>
+									</div>
+									<div
+										className={`${styles.lessonTypes} ${styles.lessonTypesSecondRow}`}
+									>
+										<span className={styles.lessonTypeBadge}>
+											<span className={styles.lessonTypeIcon} aria-hidden>
+												<Trophy size={18} />
+											</span>
+											{t('lessonTypes.students')}
+										</span>
+										<span className={styles.lessonTypeBadge}>
+											<span className={styles.lessonTypeIcon} aria-hidden>
+												<Monitor size={18} />
+											</span>
+											{t('lessonTypes.platform')}
+										</span>
+									</div>
+								</div>
+							)}
 						</div>
 
-						<div className={styles.ctaDesktop}>
-							{heroFeatures}
-							<div className={styles.ctaButtons}>
-								<Link
-									href='/#Contactform'
-									className={styles.primaryButton}
-									onClick={handleTrialCtaClick}
-									scroll={false}
-								>
-									<span className={styles.primaryButtonIcon} aria-hidden>
-										<Play size={18} />
-									</span>
-									<span className={styles.primaryButtonText}>
-										Записатися на пробне заняття
-									</span>
-								</Link>
-
-							</div>
+						<div
+							className={`${styles.ctaDesktop} ${isEn ? styles.ctaDesktopEn : ''}`}
+						>
+							{isEn ? (
+								<HeroEnCta />
+							) : (
+								<>
+									{heroFeatures}
+									<div className={styles.ctaButtons}>
+										<Link
+											href='/#Contactform'
+											className={styles.primaryButton}
+											onClick={handleTrialCtaClick}
+											scroll={false}
+										>
+											<span className={styles.primaryButtonIcon} aria-hidden>
+												<Play size={18} />
+											</span>
+											<span className={styles.primaryButtonText}>
+												{t('cta.signUpTrial')}
+											</span>
+										</Link>
+									</div>
+								</>
+							)}
 						</div>
 
 						<div className={styles.ctaMobile}>
 							<div className={styles.ctaButtons}>
-								<HeroTrialForm />
-
+								{isEn ? <HeroEnCta /> : <HeroTrialForm />}
 							</div>
 						</div>
 					</div>
-						
 
 					{/* Statistics */}
-					<div className={`${styles.statsContainer} animate-up`}>
+					<div className={styles.statsContainer}>
 						{stats.map((stat, index) => (
-							<div
-								key={index}
-								className={`${styles.statCard} animate-scale`}
-								style={{ 
-									animationDelay: `${index * 0.1}s`
-								}}
-							>
-								<div 
+							<div key={index} className={styles.statCard}>
+								<div
 									className={styles.statIcon}
-									style={{ 
-										color: '#6366f1'
+									style={{
+										color: '#6366f1',
 									}}
 								>
 									{stat.icon}
 								</div>
 								<div className={styles.statContent}>
-									<div className={styles.statNumber}>
-										{stat.number}
-									</div>
+									<div className={styles.statNumber}>{stat.number}</div>
 									<div className={styles.statLabel}>{stat.label}</div>
 								</div>
 							</div>
@@ -297,7 +260,7 @@ const Visit = () => {
 
 					<div className={styles.pricesCtaSection}>
 						<Link href='/tariff' className={styles.secondaryButton}>
-							Переглянути ціни
+							{t('cta.viewPrices')}
 						</Link>
 					</div>
 				</div>
@@ -305,10 +268,11 @@ const Visit = () => {
 				{shouldRenderCards ? (
 					<EnhancedCourseCards />
 				) : (
-					<div style={{ minHeight: '980px', width: '100%' }} aria-hidden='true' />
+					<div
+						style={{ minHeight: '980px', width: '100%' }}
+						aria-hidden='true'
+					/>
 				)}
-
-
 			</div>
 		</div>
 	)

@@ -1,21 +1,23 @@
 // Next.js instrumentation hook (runs on server startup)
-// Must live at the project root and use ESM exports
-
-import telegramBotService from './src/lib/telegramBot.js'
-
-async function startBotIfNeeded() {
-  try {
-    const status = telegramBotService.getStatus()
-    if (!status.isRunning) {
-      await telegramBotService.start()
-    }
-  } catch (error) {
-    console.error('Failed to start Telegram bot in instrumentation:', error)
-  }
-}
+// Telegram polling bot is loaded only on demand — never at module top level.
 
 export async function register() {
-  await startBotIfNeeded()
+	if (process.env.NEXT_RUNTIME === 'edge') return
+
+	// Polling does not work on Vercel serverless; use /api/telegram/webhook instead.
+	if (process.env.VERCEL) return
+
+	// Opt-in for local dev / dedicated Node server (set in .env.local).
+	if (process.env.ENABLE_TELEGRAM_POLLING !== 'true') return
+
+	try {
+		const mod = await import('./src/lib/telegramBot.js')
+		const telegramBotService = mod.default ?? mod
+		const status = telegramBotService.getStatus()
+		if (!status.isRunning) {
+			await telegramBotService.start()
+		}
+	} catch (error) {
+		console.error('Failed to start Telegram bot in instrumentation:', error)
+	}
 }
-
-

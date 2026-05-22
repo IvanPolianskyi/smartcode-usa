@@ -1,0 +1,239 @@
+{
+  "common": {
+    "breadcrumb": {
+      "home": "Головна",
+      "courses": "Курси"
+    },
+    "levels": {
+      "beginner": "Початківець",
+      "intermediate": "Середній",
+      "advanced": "Просунутий"
+    },
+    "stats": {
+      "weeks": "тижнів",
+      "lessons": "уроків",
+      "modules": "модулів",
+      "certificate": "Сертифікат",
+      "duration": "Тривалість",
+      "materials": "Матеріалів",
+      "modulesLabel": "Модулів",
+      "afterCompletion": "Після завершення"
+    },
+    "age": "Вік: {age}"
+  },
+  "course": {
+    "skillsTitle": "Навички, які ти отримаєш",
+    "formatTitle": "Формат навчання",
+    "requirementsTitle": "Вимоги",
+    "certificateTitle": "Сертифікат",
+    "programTitle": "Програма курсу",
+    "programDescription": "{modules} модулів, {lessons} уроків — від основ до створення повноцінних проектів",
+    "moduleLabel": "Модуль {order}",
+    "moduleWeeks": "{count} тижні",
+    "moduleLessons": "{count} уроків",
+    "learnTitle": "Що ти навчишся:",
+    "lessonsTitle": "Уроки модуля:",
+    "lessonLabel": "Урок {order}",
+    "projectBadge": "Проект",
+    "minutes": "{count} хв",
+    "quizScore": "Тест: {score}%",
+    "locked": "Заблоковано",
+    "ctaTitle": "Продовжуй навчання",
+    "ctaDescription": "Ти вже на {progress}% шляху до завершення курсу. Продовжуй вивчати нові уроки!",
+    "ctaButton": "Перейти до уроків",
+    "progressLabel": "Прогрес курсу",
+    "python": {
+      "valueProposition": "Навчись створювати реальні проекти на Python та отримай навички, необхідні для початку кар'єри в IT.",
+      "skills": [
+        "Основи програмування на Python",
+        "Робота з даними та файлами",
+        "Об'єктно-орієнтоване програмування",
+        "Робота з базами даних",
+        "Веб-розробка з Flask",
+        "Тестування коду",
+        "Версійний контроль Git",
+        "Розробка REST API",
+        "Деплой проектів"
+      ],
+      "format": [
+        "Відео-уроки з поясненнями",
+        "Практичні завдання після кожного уроку",
+        "Тести для перевірки знань",
+        "Реальні проекти для портфоліо",
+        "Code review від менторів"
+      ],
+      "requirements": [
+        "Базові знання англійської мови",
+        "Доступ до комп'ютера з інтернетом",
+        "Мотивація та готовність до навчання"
+      ],
+      "certificateText": "Після успішного завершення всіх модулів та фінального проекту ти отримаєш міжнародний сертифікат SmartCode Academy, який підтверджує твої навички Python розробника.",
+      "certificateRole": "Python розробника"
+    },
+    "webdev": {
+      "valueProposition": "Створюй сучасні веб-додатки з нуля. Навчись HTML, CSS, JavaScript, React та Node.js для повноцінної веб-розробки.",
+      "skills": [
+        "HTML5 та семантична розмітка",
+        "CSS Flexbox та Grid",
+        "Адаптивний дизайн",
+        "Основи JavaScript",
+        "DOM-маніпуляції та події",
+        "Робота з API (Fetch)",
+        "React та компонентний підхід",
+        "Next.js (SSR/SSG)",
+        "Деплой веб-додатків"
+      ],
+      "format": [
+        "Відео-уроки з поясненнями",
+        "Практичні завдання після кожного уроку",
+        "Тести для перевірки знань",
+        "Реальні проекти для портфоліо",
+        "Code review від менторів"
+      ],
+      "requirements": [
+        "Базові знання англійської мови",
+        "Доступ до комп'ютера з інтернетом",
+        "Мотивація та готовність до навчання"
+      ],
+      "certificateText": "Після успішного завершення всіх модулів та фінального проекту ти отримаєш міжнародний сертифікат SmartCode Academy, який підтверджує твої навички веб-розробника.",
+      "certificateRole": "веб-розробника"
+    },
+    "roblox": {
+      "valueProposition": "Roblox Studio: від першого Part до власної гри — 72 уроки, 12 блоків, онлайн-заняття з викладачем.",
+      "skills": [
+        "Roblox Studio та 3D-сцени",
+        "Скрипти на Luau",
+        "Obby, симулятори, tycoon",
+        "Мультиплеєр client-server",
+        "NPC, квести, polish",
+        "Публікація ігор"
+      ],
+      "format": [
+        "Живі онлайн-уроки в Zoom",
+        "Матеріали на платформі",
+        "Практика на кожному занятті",
+        "Checkpoint-проєкти кожного блоку",
+        "Портфоліо .rbxl файлів"
+      ],
+      "requirements": [
+        "Windows 10+ або macOS 10.13+",
+        "Акаунт Roblox (безкоштовний)",
+        "Встановлений Roblox Studio",
+        "Інтернет для встановлення та мультиплеєру"
+      ],
+      "certificateText": "Після завершення курсу — сертифікат SmartCode Academy з Roblox game development.",
+      "certificateRole": "Roblox-розробника"
+    }
+  },
+  "lesson": {
+    "notFound": "Урок не знайдено",
+    "backToCourse": "До курсу",
+    "backToModule": "До модуля",
+    "lockedTitle": "Урок заблоковано",
+    "lockedDescription": "Цей урок доступний тільки після придбання курсу. Перший урок першого модуля доступний безкоштовно для ознайомлення.",
+    "returnToCourse": "Повернутися до курсу",
+    "purchaseCourse": "Придбати курс",
+    "processing": "Обробка...",
+    "paymentError": "Помилка створення платежу. Спробуйте ще раз.",
+    "progressError": "Помилка збереження прогресу. Спробуйте ще раз.",
+    "sidebarTitle": "Навігація по курсу",
+    "sidebarModule": "Модуль {order}: {title}",
+    "dragOpenMenu": "Тягніть, щоб відкрити меню",
+    "expandMenu": "Розгорнути меню",
+    "collapseMenu": "Згорнути меню",
+    "openMenu": "Відкрити меню",
+    "resizeMenu": "Змінити розмір меню",
+    "breadcrumb": {
+      "home": "Головна",
+      "course": "Курс",
+      "module": "Модуль",
+      "lesson": "Урок"
+    },
+    "tabs": {
+      "theory": "Теорія",
+      "practice": "Практика",
+      "quiz": "Тест"
+    },
+    "practiceRequiredAlert": "Спочатку виконайте практичне завдання правильно!",
+    "practiceRequiredTitle": "Спочатку виконайте практичне завдання",
+    "objectivesTitle": "Цілі уроку",
+    "videoLesson": "Відео-урок",
+    "codeExamplesTitle": "Приклади коду",
+    "mistakesTitle": "Типові помилки",
+    "correctLabel": "Правильно:",
+    "summaryTitle": "Підсумок",
+    "practiceTitle": "Практичне завдання",
+    "difficulty": {
+      "beginner": "Початківець",
+      "intermediate": "Середній",
+      "advanced": "Просунутий"
+    },
+    "taskCondition": "Умова завдання:",
+    "examplesTitle": "Приклади:",
+    "inputLabel": "Вхід:",
+    "outputLabel": "Вихід:",
+    "hintsTitle": "Підказки:",
+    "yourCode": "Ваш код",
+    "showSolution": "Показати",
+    "hideSolution": "Приховати",
+    "solutionToggle": "{action} рішення",
+    "codePlaceholder": "Напишіть ваш код тут...",
+    "runCode": "Запустити код",
+    "running": "Виконання...",
+    "executionResult": "Результат виконання:",
+    "outputResult": "Вивід:",
+    "errorLabel": "Помилка:",
+    "executionError": "Помилка виконання:",
+    "practiceSuccess": "Вітаємо! Практичне завдання виконано правильно!",
+    "practiceSuccessHint": "Тепер ви можете перейти до тесту.",
+    "practiceFail": "Практичне завдання виконано неправильно.",
+    "practiceFailHint": "Перевірте ваш код та спробуйте ще раз. Перегляньте приклади виводу та підказки.",
+    "outputErrorsFound": "Знайдено {count} помилок у виводі. Рядки з помилками виділені червоним кольором.",
+    "exampleSolution": "Приклад рішення:",
+    "insertCode": "Вставити код в редактор",
+    "noPracticeAdvanced": "Для цього уроку практичного завдання немає. Ви можете перейти до тесту.",
+    "noPracticeYet": "Практичне завдання для цього уроку ще не додано.",
+    "quizLockedTitle": "Тест заблоковано",
+    "quizLockedDescription": "Спочатку виконайте практичне завдання правильно!",
+    "goToPractice": "Перейти до практичного завдання",
+    "quizTitle": "Тест знань",
+    "quizInfo": "{count} питань • Мінімальний бал для проходження: {passingScore}%",
+    "quizTimeLimit": " • Час: {minutes} хв",
+    "questionNumber": "Питання {number}",
+    "correct": "Правильно",
+    "incorrect": "Неправильно",
+    "explanation": "Пояснення:",
+    "submitQuiz": "Завершити тест",
+    "yourScore": "Ваш результат",
+    "quizPassed": "Тест пройдено!",
+    "quizFailed": "Тест не пройдено",
+    "retakeInfo": "Мінімальний бал: {passingScore}%. Спробуйте ще раз!",
+    "nextLesson": "Перейти до наступного уроку: {title}",
+    "courseCompleted": "Вітаємо! Ви завершили всі уроки цього курсу!",
+    "retakeQuiz": "Пройти тест знову",
+    "noQuizYet": "Тест для цього уроку ще не додано.",
+    "completed": "Завершено",
+    "minutes": "{count} хвилин",
+    "runCodeErrors": {
+      "emptyCode": "Будь ласка, введіть код перед запуском",
+      "dangerousCode": "Код містить небезпечні операції, які не дозволені для виконання. Будь ласка, використовуйте тільки безпечні Python конструкції для навчання.",
+      "codeTooLong": "Код занадто довгий. Максимальна довжина: 50000 символів",
+      "executionFailed": "Помилка виконання коду",
+      "connectionError": "Помилка підключення до сервера. Спробуйте ще раз."
+    },
+    "roblox": {
+      "lockedDescriptionEn": "This lesson is locked. Purchase the full course for $15, or book live lessons in your dashboard.",
+      "lockedDescriptionUk": "Цей урок доступний учням онлайн-груп SmartCode. Перше заняття (1.1) — для ознайомлення. Доступ до інших уроків відкриває викладач за розкладом.",
+      "purchaseFullCourse": "Придбати курс — {price}",
+      "onlineAccessHint": "Доступ для онлайн-учнів",
+      "comingSoon": "Матеріал скоро з'явиться",
+      "markComplete": "Позначити урок виконаним",
+      "optionalChallenge": "Необов'язковий виклик",
+      "theoryDuration": "{minutes} хв теорія",
+      "quizDuration": "{minutes} хв тест",
+      "markPracticeComplete": "Практику в Studio завершено",
+      "practiceDone": "Практику завершено — тест розблоковано",
+      "quizLockedHint": "Спочатку завершіть практику"
+    }
+  }
+}

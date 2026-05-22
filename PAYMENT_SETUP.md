@@ -40,6 +40,33 @@ https://yourdomain.com/api/payment/webhook
 https://your-project.vercel.app/api/payment/webhook
 ```
 
+## WayForPay (англійська версія сайту)
+
+Для курсу **Roblox Studio** та бронювання живих уроків на `/en` використовується **WayForPay** (USD, Apple Pay, Google Pay).
+
+Додайте до `.env`:
+
+```env
+WAYFORPAY_MERCHANT_ACCOUNT=your_merchant_account
+WAYFORPAY_MERCHANT_SECRET=your_secret_key
+WAYFORPAY_MERCHANT_DOMAIN=smartcode-academy.com
+```
+
+Webhook URL у кабінеті WayForPay:
+
+```
+https://yourdomain.com/api/payment/wayforpay/webhook
+```
+
+Ціни (див. `src/lib/coursePrices.js`):
+- Повний курс Roblox (EN): **$15**
+- Повний курс Python (EN): **$15**
+- Повний курс Roblox Studio (EN): **72 уроки** — теорія + практика на платформі (`/en/courses/roblox-studio`)
+- Групове заняття (EN): **$10**
+- Індивідуальне заняття (EN): **$15**
+
+На українській версії курс Roblox доступний **лише онлайн-учням** (без самообслуговування оплати на сайті).
+
 ## Ціни курсів
 
 Ціни налаштовуються в файлі `src/lib/coursePrices.js`:
@@ -55,6 +82,11 @@ export const coursePrices = {
     price: 2000, // UAH
     currency: 'UAH',
     name: 'Веб-розробка: Від основ до просунутого рівня'
+  },
+  'roblox-studio': {
+    price: 15, // USD (WayForPay, EN site only)
+    currency: 'USD',
+    name: 'Roblox Studio'
   }
 }
 ```

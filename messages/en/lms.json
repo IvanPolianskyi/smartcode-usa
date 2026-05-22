@@ -1,0 +1,239 @@
+{
+  "common": {
+    "breadcrumb": {
+      "home": "Home",
+      "courses": "Courses"
+    },
+    "levels": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "stats": {
+      "weeks": "weeks",
+      "lessons": "lessons",
+      "modules": "modules",
+      "certificate": "Certificate",
+      "duration": "Duration",
+      "materials": "Lessons",
+      "modulesLabel": "Modules",
+      "afterCompletion": "Upon completion"
+    },
+    "age": "Age: {age}"
+  },
+  "course": {
+    "skillsTitle": "Skills you will gain",
+    "formatTitle": "Learning format",
+    "requirementsTitle": "Requirements",
+    "certificateTitle": "Certificate",
+    "programTitle": "Course curriculum",
+    "programDescription": "{modules} modules, {lessons} lessons — from fundamentals to building full projects",
+    "moduleLabel": "Module {order}",
+    "moduleWeeks": "{count} weeks",
+    "moduleLessons": "{count} lessons",
+    "learnTitle": "What you will learn:",
+    "lessonsTitle": "Module lessons:",
+    "lessonLabel": "Lesson {order}",
+    "projectBadge": "Project",
+    "minutes": "{count} min",
+    "quizScore": "Quiz: {score}%",
+    "locked": "Locked",
+    "ctaTitle": "Keep learning",
+    "ctaDescription": "You are already {progress}% through the course. Continue with new lessons!",
+    "ctaButton": "Go to lessons",
+    "progressLabel": "Course progress",
+    "python": {
+      "valueProposition": "Learn to build real Python projects and gain the skills needed to start a career in tech.",
+      "skills": [
+        "Python programming fundamentals",
+        "Working with data and files",
+        "Object-oriented programming",
+        "Working with databases",
+        "Web development with Flask",
+        "Code testing",
+        "Git version control",
+        "REST API development",
+        "Project deployment"
+      ],
+      "format": [
+        "Video lessons with explanations",
+        "Hands-on tasks after each lesson",
+        "Quizzes to check your knowledge",
+        "Real portfolio projects",
+        "Code review from mentors"
+      ],
+      "requirements": [
+        "Basic English skills",
+        "Access to a computer with internet",
+        "Motivation and readiness to learn"
+      ],
+      "certificateText": "After successfully completing all modules and the final project, you will receive an international SmartCode Academy certificate confirming your skills as a Python developer.",
+      "certificateRole": "Python developer"
+    },
+    "webdev": {
+      "valueProposition": "Build modern web applications from scratch. Learn HTML, CSS, JavaScript, React, and Node.js for full-stack web development.",
+      "skills": [
+        "HTML5 and semantic markup",
+        "CSS Flexbox and Grid",
+        "Responsive design",
+        "JavaScript fundamentals",
+        "DOM manipulation and events",
+        "Working with APIs (Fetch)",
+        "React and component-based architecture",
+        "Next.js (SSR/SSG)",
+        "Deploying web applications"
+      ],
+      "format": [
+        "Video lessons with explanations",
+        "Hands-on tasks after each lesson",
+        "Quizzes to check your knowledge",
+        "Real portfolio projects",
+        "Code review from mentors"
+      ],
+      "requirements": [
+        "Basic English skills",
+        "Access to a computer with internet",
+        "Motivation and readiness to learn"
+      ],
+      "certificateText": "After successfully completing all modules and the final project, you will receive an international SmartCode Academy certificate confirming your skills as a web developer.",
+      "certificateRole": "web developer"
+    },
+    "roblox": {
+      "valueProposition": "Learn Roblox Studio from your first Part to publishing your own game — 72 lessons across 12 blocks.",
+      "skills": [
+        "Roblox Studio and 3D scene building",
+        "Luau scripting fundamentals",
+        "Obby, simulator, and tycoon mechanics",
+        "Client-server multiplayer systems",
+        "NPCs, quests, and game polish",
+        "Publishing and portfolio projects"
+      ],
+      "format": [
+        "Live online lessons with a teacher",
+        "Self-paced lesson materials on the platform",
+        "Hands-on practice every class",
+        "Checkpoint projects each block",
+        "Portfolio of .rbxl projects"
+      ],
+      "requirements": [
+        "Windows 10+ or macOS 10.13+",
+        "Roblox account (free)",
+        "Roblox Studio installed",
+        "Internet for Studio setup and multiplayer tests"
+      ],
+      "certificateText": "After completing the course you receive a SmartCode Academy certificate confirming Roblox game development skills.",
+      "certificateRole": "Roblox developer"
+    }
+  },
+  "lesson": {
+    "notFound": "Lesson not found",
+    "backToCourse": "Back to course",
+    "backToModule": "Back to module",
+    "lockedTitle": "Lesson locked",
+    "lockedDescription": "This lesson is available only after purchasing the course. The first lesson of the first module is free for preview.",
+    "returnToCourse": "Return to course",
+    "purchaseCourse": "Purchase course",
+    "processing": "Processing...",
+    "paymentError": "Failed to create payment. Please try again.",
+    "progressError": "Failed to save progress. Please try again.",
+    "sidebarTitle": "Course navigation",
+    "sidebarModule": "Module {order}: {title}",
+    "dragOpenMenu": "Drag to open menu",
+    "expandMenu": "Expand menu",
+    "collapseMenu": "Collapse menu",
+    "openMenu": "Open menu",
+    "resizeMenu": "Resize menu",
+    "breadcrumb": {
+      "home": "Home",
+      "course": "Course",
+      "module": "Module",
+      "lesson": "Lesson"
+    },
+    "tabs": {
+      "theory": "Theory",
+      "practice": "Practice",
+      "quiz": "Quiz"
+    },
+    "practiceRequiredAlert": "Complete the practice task correctly first!",
+    "practiceRequiredTitle": "Complete the practice task first",
+    "objectivesTitle": "Lesson objectives",
+    "videoLesson": "Video lesson",
+    "codeExamplesTitle": "Code examples",
+    "mistakesTitle": "Common mistakes",
+    "correctLabel": "Correct:",
+    "summaryTitle": "Summary",
+    "practiceTitle": "Practice task",
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "taskCondition": "Task description:",
+    "examplesTitle": "Examples:",
+    "inputLabel": "Input:",
+    "outputLabel": "Output:",
+    "hintsTitle": "Hints:",
+    "yourCode": "Your code",
+    "showSolution": "Show",
+    "hideSolution": "Hide",
+    "solutionToggle": "{action} solution",
+    "codePlaceholder": "Write your code here...",
+    "runCode": "Run code",
+    "running": "Running...",
+    "executionResult": "Execution result:",
+    "outputResult": "Output:",
+    "errorLabel": "Error:",
+    "executionError": "Execution error:",
+    "practiceSuccess": "Congratulations! The practice task was completed correctly!",
+    "practiceSuccessHint": "You can now proceed to the quiz.",
+    "practiceFail": "The practice task was not completed correctly.",
+    "practiceFailHint": "Check your code and try again. Review the output examples and hints.",
+    "outputErrorsFound": "Found {count} errors in the output. Lines with errors are highlighted in red.",
+    "exampleSolution": "Sample solution:",
+    "insertCode": "Insert code into editor",
+    "noPracticeAdvanced": "This lesson has no practice task. You can proceed to the quiz.",
+    "noPracticeYet": "The practice task for this lesson has not been added yet.",
+    "quizLockedTitle": "Quiz locked",
+    "quizLockedDescription": "Complete the practice task correctly first!",
+    "goToPractice": "Go to practice task",
+    "quizTitle": "Knowledge quiz",
+    "quizInfo": "{count} questions • Minimum passing score: {passingScore}%",
+    "quizTimeLimit": " • Time: {minutes} min",
+    "questionNumber": "Question {number}",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "explanation": "Explanation:",
+    "submitQuiz": "Submit quiz",
+    "yourScore": "Your score",
+    "quizPassed": "Quiz passed!",
+    "quizFailed": "Quiz not passed",
+    "retakeInfo": "Minimum score: {passingScore}%. Try again!",
+    "nextLesson": "Go to next lesson: {title}",
+    "courseCompleted": "Congratulations! You have completed all lessons in this course!",
+    "retakeQuiz": "Retake quiz",
+    "noQuizYet": "The quiz for this lesson has not been added yet.",
+    "completed": "Completed",
+    "minutes": "{count} minutes",
+    "runCodeErrors": {
+      "emptyCode": "Please enter code before running",
+      "dangerousCode": "The code contains unsafe operations that are not allowed. Please use only safe Python constructs for learning.",
+      "codeTooLong": "Code is too long. Maximum length: 50,000 characters",
+      "executionFailed": "Code execution error",
+      "connectionError": "Failed to connect to the server. Please try again."
+    },
+    "roblox": {
+      "lockedDescriptionEn": "This lesson is locked. Purchase the full course for $15, or book live lessons in your dashboard ($10 group / $15 individual). The first lesson is free to preview.",
+      "lockedDescriptionUk": "Цей урок доступний учням онлайн-груп. Зверніться до адміністратора або викладача, щоб отримати доступ.",
+      "purchaseFullCourse": "Buy full course — {price}",
+      "onlineAccessHint": "Online student access",
+      "comingSoon": "Content coming soon",
+      "markComplete": "Mark lesson complete",
+      "optionalChallenge": "Optional challenge",
+      "theoryDuration": "{minutes} min theory",
+      "quizDuration": "{minutes} min quiz",
+      "markPracticeComplete": "I've finished the practice in Studio",
+      "practiceDone": "Practice complete — quiz unlocked",
+      "quizLockedHint": "Complete the practice first"
+    }
+  }
+}

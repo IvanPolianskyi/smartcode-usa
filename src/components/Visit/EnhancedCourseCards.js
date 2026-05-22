@@ -11,8 +11,9 @@ import {
 	Eye,
 } from 'lucide-react'
 import styles from './EnhancedCourseCards.module.css'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
+import { useHomeCourseCards } from '@/hooks/useHomeCourseCards'
 import Image from 'next/image'
 
 // Функція для генерації частинок з урахуванням теми
@@ -82,96 +83,6 @@ const useIsMobile = () => {
 	return isMobile
 }
 
-const courses = [
-	{
-		id: 'python',
-		title: 'PYTHON',
-		subtitle: 'Програмування майбутнього',
-		icon: '/python-logo.png',
-		iconType: 'image',
-		description:
-			'Відкрий космос можливостей з найпопулярнішою мовою програмування світу. Створюй ШІ, веб-додатки та аналізуй дані.',
-		features: [
-			'Основи Python',
-			'ООП та алгоритми',
-			'Django/Flask',
-			'Data Science',
-		],
-		stats: {
-			age: '8-17',
-			students: '324+',
-			projects: '20+',
-		},
-		badge: 'Космічний хіт',
-		rating: 4.9,
-		theme: 'themePython',
-		particleColors: ['#c084fc', '#93c5fd', '#f9a8d4', '#fbbf24'],
-        href: '/python',
-	},
-	{
-        id: 'roblox',
-        title: 'ROBLOX',
-        subtitle: 'Створюй ігри у Roblox Studio',
-        icon: '/logos/roblox.svg',
-        iconType: 'image',
-        description:
-            'Поринь у світ геймдизайну та скриптингу з Roblox Studio і Lua. Створюй свої світи, механіки та публікуй ігри.',
-        features: ['Roblox Studio', 'Lua', 'Геймдизайн', 'Публікація ігор'],
-        stats: {
-            age: '6-17',
-            students: '140+',
-            projects: '8+',
-        },
-        badge: 'Популярно',
-        rating: 4.8,
-        theme: 'themeRoblox',
-        particleColors: ['#fecaca', '#fca5a5', '#fb7185', '#f87171'],
-        href: '/Roblox',
-    },
-	{
-		id: 'gamedev',
-		title: 'ГЕЙМДЕВ',
-		subtitle: 'Створення власних ігор за допомогою Unity',
-		icon: '/logos/unity.svg',
-		iconType: 'image',
-		description:
-			'Розробляй захоплюючі ігри на Unity. Від простих 2D до складних 3D проектів.',
-		features: ['C#', 'Unity 3D', 'Дизайн персонажів', 'Логіка геймплею'],
-		stats: {
-			duration: '8 міс',
-			age: '8-17',
-			students: '189+',
-			projects: '12+',
-		},
-		badge: 'Тренд 2025',
-		rating: 4.8,
-		theme: 'themeGamedev',
-		particleColors: ['#6ee7b7', '#5eead4', '#a7f3d0', '#34d399'],
-        href: '/Unity',
-	},
-	{
-		id: 'webdev',
-		title: 'ВЕБ-РОЗРОБКА',
-		subtitle: 'Сучасні сайти та додатки',
-		icon: '/logos/web.svg',
-		iconType: 'image',
-		description:
-			'Створюй адаптивні сайти та веб-додатки з HTML, CSS, JavaScript та React, що вражають своєю швидкістю та дизайном.',
-		features: ['HTML/CSS', 'JavaScript', 'React', 'Node.js'],
-		stats: {
-			age: '10-17',
-			students: '156+',
-			projects: '10+',
-		},
-		badge: 'Новинка',
-		rating: 4.9,
-		theme: 'themeWebdev',
-		particleColors: ['#7dd3fc', '#67e8f9', '#a5f3fc', '#38bdf8'],
-        href: '/webDev',
-	},
-    
-]
-
 // Окремий компонент для частинок, щоб оптимізувати рендеринг
 // Обгорнуто в React.memo, щоб не перерендерюватися при наведенні на картки
 const ParticleBackground = React.memo(({ colors }) => {
@@ -211,56 +122,11 @@ const ParticleBackground = React.memo(({ colors }) => {
 })
 
 const EnhancedCourseCards = () => {
+	const t = useTranslations('homeSections.courseCards')
+	const courses = useHomeCourseCards()
 	const [hoveredCard, setHoveredCard] = useState(null)
-	const [isVisible, setIsVisible] = useState(false)
-	const [visibleCards, setVisibleCards] = useState(new Set())
 	const router = useRouter()
 	const isMobile = useIsMobile()
-	const cardRefs = useRef([])
-	const observerRef = useRef(null)
-
-	useEffect(() => {
-		const timer = setTimeout(() => setIsVisible(true), 100)
-		return () => clearTimeout(timer)
-	}, [])
-
-	// Intersection Observer для lazy loading карток
-	useEffect(() => {
-		if (isMobile || typeof window === 'undefined' || !window.IntersectionObserver) {
-			// На мобільних або якщо немає підтримки - показуємо всі
-			setVisibleCards(new Set(courses.map((_, i) => i)))
-			return
-		}
-
-		// Невелика затримка для того, щоб refs встигли встановитися
-		const timeoutId = setTimeout(() => {
-			observerRef.current = new IntersectionObserver(
-				(entries) => {
-					entries.forEach((entry) => {
-						if (entry.isIntersecting) {
-							const index = parseInt(entry.target.dataset.index, 10)
-							setVisibleCards((prev) => new Set([...prev, index]))
-						}
-					})
-				},
-				{ rootMargin: '100px', threshold: 0.1 }
-			)
-
-			cardRefs.current.forEach((ref, index) => {
-				if (ref) {
-					ref.dataset.index = index
-					observerRef.current.observe(ref)
-				}
-			})
-		}, 100)
-
-		return () => {
-			clearTimeout(timeoutId)
-			if (observerRef.current) {
-				observerRef.current.disconnect()
-			}
-		}
-	}, [isMobile])
 
 	// Оптимізовані обробники hover без debounce для швидкої реакції
 	const handleMouseEnter = (index) => {
@@ -281,7 +147,7 @@ const EnhancedCourseCards = () => {
 	return (
 		<div id="our-courses" className={styles.sectionContainer}>
 			<div className={styles.sectionHeader}>
-				<h2 className={styles.sectionTitle}>Навчальні предмети</h2>
+				<h2 className={styles.sectionTitle}>{t('sectionTitle')}</h2>
 			</div>
 			<div className={styles.wrapper}>
 				{courses.map((course, index) => {
@@ -292,7 +158,7 @@ const EnhancedCourseCards = () => {
                 const cardClasses = [
 					styles.card,
 					styles[course.theme],
-					isVisible ? styles.cardVisible : styles.cardHidden,
+					styles.cardVisible,
 					isExpanded ? styles.cardExpanded : '',
 					isOtherExpanded ? styles.cardShrunk : '',
 				].join(' ')
@@ -300,11 +166,7 @@ const EnhancedCourseCards = () => {
                 return (
 					<div
 						key={course.id}
-						ref={(el) => {
-							cardRefs.current[index] = el
-						}}
 						className={cardClasses}
-						style={{ transitionDelay: `${index * 100}ms` }}
                         onMouseEnter={() => handleMouseEnter(index)}
                         onMouseLeave={handleMouseLeave}
                         onClick={() => {
@@ -322,7 +184,7 @@ const EnhancedCourseCards = () => {
                         {/* --- ФОН ТА ЕФЕКТИ --- */}
                         <div className={styles.cardBackground}></div>
                         {!isMobile && <div className={styles.cardEffects}></div>}
-                        {!isMobile && visibleCards.has(index) && (
+                        {!isMobile && (
 							<ParticleBackground 
 								colors={course.particleColors}
 							/>
@@ -459,7 +321,7 @@ const EnhancedCourseCards = () => {
                                     className={styles.ctaButton}
                                     onClick={e => e.stopPropagation()}
                                 >
-                                    <span>Перейти</span>
+                                    <span>{t('goTo')}</span>
                                     <ArrowRight className={styles.buttonArrow} />
                                 </Link>
                             </div>
@@ -483,15 +345,15 @@ const EnhancedCourseCards = () => {
 								<div className={styles.statsGrid}>
 									<div className={styles.statItem}>
 										<Users className={styles.statIcon} />
-										<span>{course.stats.age} років</span>
+										<span>{course.stats.age} {t('years')}</span>
 									</div>
 									<div className={styles.statItem}>
 										<Eye className={styles.statIcon} />
-										<span>{course.stats.students} учнів</span>
+										<span>{course.stats.students} {t('students')}</span>
 									</div>
 									<div className={styles.statItem}>
 										<Target className={styles.statIcon} />
-										<span>{course.stats.projects} проектів</span>
+										<span>{course.stats.projects} {t('projects')}</span>
 									</div>
 								</div>
                                 <Link 
@@ -505,7 +367,7 @@ const EnhancedCourseCards = () => {
                                     scroll={false}
                                 >
 									<PlayCircle className={styles.buttonIcon} />
-									<span>Почати навчання</span>
+									<span>{t('startLearning')}</span>
 									<ArrowRight className={styles.buttonArrow} />
 								</Link>
 								{/* Кнопка "Перейти" для мобільної версії */}
@@ -514,7 +376,7 @@ const EnhancedCourseCards = () => {
 									className={styles.mobileGoButton}
 									onClick={e => e.stopPropagation()}
 								>
-									<span>Перейти</span>
+									<span>{t('goTo')}</span>
 									<ArrowRight className={styles.buttonArrow} />
 								</Link>
 							</div>

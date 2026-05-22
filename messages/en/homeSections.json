@@ -1,0 +1,148 @@
+{
+  "hero": {
+    "tryFree": "Try for free",
+    "mockupProgress": "Progress: 75%",
+    "mockupLevel": "Level: Junior+",
+    "slides": {
+      "platform": {
+        "superTitle": "Interactive Platform",
+        "title": "Learning that engages",
+        "subtitle": "Dive into code with a platform where theory instantly turns into practice.",
+        "features": {
+          "0": "24/7 mentor support",
+          "1": "Interactive tasks",
+          "2": "Recorded video lessons",
+          "3": "Gamified progress"
+        }
+      },
+      "mentorship": {
+        "superTitle": "Personal Mentorship",
+        "title": "Your personal IT guide",
+        "subtitle": "Get support from experienced developers who help you avoid mistakes and grow faster.",
+        "features": {
+          "0": "Individual approach",
+          "1": "Detailed code review",
+          "2": "Career consultations",
+          "3": "Preparation for real projects"
+        }
+      },
+      "community": {
+        "superTitle": "Active Community",
+        "title": "Strength in unity",
+        "subtitle": "Join a community where you can share ideas, build projects, and grow together.",
+        "features": {
+          "0": "Team hackathons",
+          "1": "Collaborative (open-source) projects",
+          "2": "Expert webinars",
+          "3": "Networking and experience sharing"
+        }
+      }
+    }
+  },
+  "courseCards": {
+    "sectionTitle": "Our Courses",
+    "age": "years",
+    "students": "students",
+    "projects": "projects",
+    "months": "mo",
+    "details": "Learn more",
+    "goTo": "Explore",
+    "startLearning": "Start learning",
+    "years": "years",
+    "python": {
+      "title": "PYTHON",
+      "subtitle": "Programming the future",
+      "description": "Explore endless possibilities with the world's most popular language. Build AI, web apps, and analyze data.",
+      "features": ["Python basics", "OOP & algorithms", "Django/Flask", "Data Science"],
+      "badge": "Space hit"
+    },
+    "roblox": {
+      "title": "ROBLOX",
+      "subtitle": "Create games in Roblox Studio",
+      "description": "Dive into game design and scripting with Roblox Studio and Lua. Build worlds, mechanics, and publish your games.",
+      "features": ["Roblox Studio", "Lua", "Game design", "Publishing games"],
+      "badge": "Popular"
+    },
+    "gamedev": {
+      "title": "GAME DEV",
+      "subtitle": "Build your own games with Unity",
+      "description": "Develop exciting games in Unity — from simple 2D to advanced 3D projects.",
+      "features": ["C#", "Unity 3D", "Character design", "Gameplay logic"],
+      "badge": "Trend 2025"
+    },
+    "webdev": {
+      "title": "WEB DEV",
+      "subtitle": "Modern websites & apps",
+      "description": "Create responsive sites and web apps with HTML, CSS, JavaScript, and React — fast and beautifully designed.",
+      "features": ["HTML/CSS", "JavaScript", "React", "Node.js"],
+      "badge": "New"
+    }
+  },
+  "lessons": {
+    "badge": "One-on-one online lessons",
+    "title": "Lesson examples",
+    "titleAccent": " with a teacher on Zoom",
+    "description": "Every class is a live lesson: feedback, your own pace, and hands-on projects. Below are short clips so you can see how we teach.",
+    "playVideo": "Play video: {title}",
+    "knowledgeTest": "Test your knowledge",
+    "examples": {
+      "0": {
+        "title": "Sample lesson: Python for kids",
+        "description": "We explain core concepts and reinforce them in a mini-project right away."
+      },
+      "1": {
+        "title": "Sample lesson: Web development",
+        "description": "Step by step we build a first page and work on real tasks."
+      },
+      "2": {
+        "title": "Sample lesson: Roblox",
+        "description": "We cover Roblox basics and create a simple project."
+      }
+    }
+  },
+  "testimonials": {
+    "title": "Student",
+    "titleAccent": "reviews"
+  },
+  "projects": {
+    "title": "Our students' projects",
+    "titleAccent": "Projects",
+    "titleRest": "by our students",
+    "subtitle": "See the amazing work of our talented students. Every project is a step toward a bright future in tech!",
+    "loading": "Loading projects...",
+    "error": "Failed to load projects",
+    "viewCode": "View code",
+    "viewAll": "View all projects",
+    "noImage": "No image"
+  },
+  "social": {
+    "badge": "Social media",
+    "title": "Follow",
+    "titleAccent": "SmartCode Academy",
+    "subtitle": "Short lessons, student projects, and academy life on Instagram and TikTok",
+    "subscribe": "Follow",
+    "accounts": {
+      "tiktokMain": { "description": "Our courses and projects" },
+      "instagram": { "description": "Academy life and news" },
+      "ivan": { "name": "Ivan - Python", "description": "Python programming" },
+      "artem": { "name": "Artem - SmartCode", "description": "Educational content" }
+    }
+  },
+  "lms": {
+    "title": "WE BUILT A COMFORTABLE ENVIRONMENT",
+    "titleLine2": "FOR LEARNING AND PRACTICE",
+    "description": "Study from anywhere in Ukraine or the world. Lessons and all materials are one click away — in your personal online account in a <strong>convenient LMS built for our students</strong>.",
+    "goToDashboard": "Go to dashboard",
+    "login": "Sign in to your account",
+    "subtitle": "WHAT YOU CAN DO IN THE",
+    "subtitleLine2": "ONLINE ACCOUNT?",
+    "features": {
+      "0": "Attend online lessons with a teacher",
+      "1": "Use learning materials",
+      "2": "Track progress through the program",
+      "3": "Get and submit homework",
+      "4": "Pay for lessons",
+      "5": "Invite friends to courses and earn bonuses"
+    }
+  }
+}

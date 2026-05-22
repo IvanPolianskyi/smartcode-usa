@@ -1,68 +1,42 @@
 'use client'
-import Link from 'next/link'
+import { Link, usePathname } from '@/i18n/navigation'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { isHomePathname } from '@/lib/homeSectionScroll'
 import styles from './Logo.module.css'
 
 export default function Logo({ className = '', href = '/', hideText = false }) {
-  const pathname = usePathname()
+	const pathname = usePathname()
 
-  const handleClick = (e) => {
-    // Якщо вже на головній сторінці, скролимо до верху
-    if (pathname === '/') {
-      e.preventDefault()
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
-    // Якщо на іншій сторінці, Next.js Link автоматично перейде на головну
-    // і ми скролимо до верху після переходу
-  }
+	const handleClick = (e) => {
+		if (isHomePathname(pathname)) {
+			e.preventDefault()
+			window.scrollTo({ top: 0, behavior: 'smooth' })
+		}
+	}
 
-  return (
-    <Link 
-      href={href} 
-      className={`${styles.logo} ${className}`}
-      onClick={handleClick}
-      scroll={pathname !== '/'}
-    >
-      <div className={styles.logoIconWrapper}>
-        <Image
-          src="/logo.jpeg"
-          alt="SmartCode Academy Logo"
-          className={styles.logoImage}
-          width={56}
-          height={56}
-          priority
-        />
-      </div>
-      {!hideText && (
-        <div className={styles.logoText}>
-          <span className={styles.logoTitle}>SmartCode</span>
-          <span className={styles.logoSubtitle}>Academy</span>
-        </div>
-      )}
-    </Link>
-  )
+	return (
+		<Link
+			href={href}
+			className={`${styles.logo} ${className}`}
+			onClick={handleClick}
+			scroll={!isHomePathname(pathname)}
+		>
+			<div className={styles.logoIconWrapper}>
+				<Image
+					src='/logo.jpeg'
+					alt='SmartCode Academy Logo'
+					className={styles.logoImage}
+					width={56}
+					height={56}
+					priority
+				/>
+			</div>
+			{!hideText && (
+				<div className={styles.logoText}>
+					<span className={styles.logoTitle}>SmartCode</span>
+					<span className={styles.logoSubtitle}>Academy</span>
+				</div>
+			)}
+		</Link>
+	)
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

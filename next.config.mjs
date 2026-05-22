@@ -1,5 +1,12 @@
+import createNextIntlPlugin from 'next-intl/plugin'
+
+const withNextIntl = createNextIntlPlugin('./src/i18n/request.js')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Keep Node-only Telegram SDK out of the bundler (fixes "reading 'node'" crash)
+  serverExternalPackages: ['node-telegram-bot-api'],
+
   // Production optimizations
   compress: true,
   poweredByHeader: false,
@@ -60,4 +67,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

@@ -14,8 +14,9 @@ import {
 } from 'lucide-react'
 import styles from './Header.module.css'
 import gsap from 'gsap'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
+import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher'
 import Logo from '@/components/Logo/Logo'
 import { logout } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
@@ -28,6 +29,8 @@ import {
 } from '@/lib/homeSectionScroll'
 
 const Header = () => {
+	const t = useTranslations('header')
+	const tc = useTranslations('common')
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const [isScrolled, setIsScrolled] = useState(false)
 	const headerRef = useRef(null)
@@ -226,47 +229,48 @@ const Header = () => {
 	}
 
 	const navItems = [
-		{ label: 'Записатися', href: '/#trial-signup', ctaModal: true },
-		{ label: 'Курси', href: '/#our-courses' },
-		{ label: 'Приклади уроків', href: '/#courses' },
-		{ label: 'Ціни', href: '/tariff' },
-		{ label: 'Відгуки', href: '/#testimonials' },
-		{ label: 'Запроси друга', href: '/invite' },
+		{ label: t('nav.signUp'), href: '/#trial-signup', ctaModal: true },
+		{ label: t('nav.courses'), href: '/#our-courses' },
+		{ label: t('nav.lessons'), href: '/#courses', hideOnDesktop: true },
+		{ label: t('nav.prices'), href: '/tariff' },
+		{ label: t('nav.reviews'), href: '/#testimonials' },
+		{ label: t('nav.invite'), href: '/invite' },
 	]
+	const desktopNavItems = navItems.filter((item) => !item.hideOnDesktop)
 	const mobileNavItems = navItems
-	
+
 	const courses = [
 		{
 			icon: <Code size={24} />,
-			title: 'Python',
-			description: 'Основи програмування на Python',
-			link: "/python",
-			age: '10-16 років',
+			title: t('coursesDropdown.python.title'),
+			description: t('coursesDropdown.python.description'),
+			link: '/python',
+			age: t('coursesDropdown.python.age'),
 			theme: 'blue',
 			popular: true,
 		},
 		{
 			icon: <Gamepad2 size={24} />,
-			title: 'Розробка ігор',
-			description: 'C# та Unity',
-			link: "/Unity",
-			age: '8-17 років',
+			title: t('coursesDropdown.unity.title'),
+			description: t('coursesDropdown.unity.description'),
+			link: '/Unity',
+			age: t('coursesDropdown.unity.age'),
 			theme: 'green',
 		},
 		{
 			icon: <Box size={24} />,
-			title: 'Roblox Studio',
-			description: 'Створення ігор у Roblox Studio',
-			link: "/Roblox",
-			age: '8-16 років',
+			title: t('coursesDropdown.roblox.title'),
+			description: t('coursesDropdown.roblox.description'),
+			link: '/Roblox',
+			age: t('coursesDropdown.roblox.age'),
 			theme: 'green',
 		},
 		{
 			icon: <Monitor size={24} />,
-			title: 'Веб-розробка',
-			description: 'HTML, CSS, React, дизайн',
-			link: "/webDev",	
-			age: '12-18 років',
+			title: t('coursesDropdown.webDev.title'),
+			description: t('coursesDropdown.webDev.description'),
+			link: '/webDev',
+			age: t('coursesDropdown.webDev.age'),
 			theme: 'purple',
 		},
 	]
@@ -287,15 +291,15 @@ const Header = () => {
 							type='button'
 							className={styles.mobileTopCta}
 							onClick={handleCtaClick}
-							aria-label='Записатися на пробне заняття'
+							aria-label={t('signUpAria')}
 						>
-							Записатися
+							{t('nav.signUp')}
 						</button>
 					)}
 
 					{/* Навігація для десктопу */}
 					<nav className={styles.nav}>
-						{navItems.map((item, index) => (
+						{desktopNavItems.map((item) => (
 							<Link
 								key={item.label}
 								href={item.href}
@@ -310,6 +314,7 @@ const Header = () => {
 
 					{/* Права частина хедера */}
                     <div className={styles.headerRight}>
+						<LanguageSwitcher className={styles.langSwitcher} />
 						{userLoading ? (
 							<div className={`${styles.userButton} ${styles.skeletonButton}`} style={{ width: '100px', pointerEvents: 'none' }}>
 								<div className={styles.skeletonPulse} />
@@ -322,13 +327,13 @@ const Header = () => {
 								</Link>
 								<button onClick={handleLogout} className={styles.logoutButton}>
 									<LogOut size={18} />
-									Вийти
+									{tc('logout')}
 								</button>
 							</>
 						) : (
 							<Link href="/login" className={styles.userButton}>
 								<User size={18} />
-								<span className={styles.userName}>Увійти</span>
+								<span className={styles.userName}>{tc('login')}</span>
 							</Link>
 						)}
 						{/* Кнопка кабінету для мобільної версії */}
@@ -336,7 +341,7 @@ const Header = () => {
 							<Link
 								href="/dashboard"
 								className={styles.mobileCabinetButton}
-								aria-label="Мій профіль"
+								aria-label={tc('myProfile')}
 							>
 								<User size={20} />
 							</Link>
@@ -345,7 +350,7 @@ const Header = () => {
 							type="button"
 							className={styles.mobileMenuButton}
 							onClick={handleMobileMenuToggle}
-							aria-label={isMobileMenuOpen ? 'Закрити меню' : 'Відкрити меню'}
+							aria-label={isMobileMenuOpen ? tc('closeMenu') : tc('openMenu')}
 							aria-expanded={isMobileMenuOpen}
 							aria-controls="site-mobile-menu"
 						>
@@ -368,7 +373,7 @@ const Header = () => {
 				<button 
 					className={styles.mobileMenuClose}
 					onClick={handleMobileMenuClose}
-					aria-label="Закрити меню"
+					aria-label={tc('closeMenu')}
 				>
 					<X size={24} />
 				</button>
@@ -384,7 +389,7 @@ const Header = () => {
 					{/* Спочатку сторінки (видно без скролу), потім курси */}
 					<div className={styles.mobileMenuNav}>
 						<div className={styles.mobileMenuSection}>
-							<h3 className={styles.mobileMenuSectionTitle}>Сторінки</h3>
+							<h3 className={styles.mobileMenuSectionTitle}>{t('mobile.pages')}</h3>
 							{mobileNavItems.map((item) => {
 								const homeSectionId = parseHomeHashTarget(item.href)
 								if (homeSectionId) {
@@ -414,7 +419,7 @@ const Header = () => {
 						</div>
 
 						<div className={`${styles.mobileMenuSection} ${styles.mobileMenuCoursesSection}`}>
-							<h3 className={styles.mobileMenuSectionTitle}>Курси</h3>
+							<h3 className={styles.mobileMenuSectionTitle}>{t('mobile.courses')}</h3>
 							{courses.map((course, index) => (
 								<Link
 									key={course.link}
@@ -430,7 +435,7 @@ const Header = () => {
 											{course.title}
 											{course.popular && (
 												<span className={styles.mobilePopularBadge}>
-													<Star size={10} /> Топ
+													<Star size={10} /> {tc('popular')}
 												</span>
 											)}
 										</div>
@@ -461,7 +466,7 @@ const Header = () => {
 									onClick={handleMobileMenuClose}
 								>
 									<User size={18} />
-									Мій профіль
+									{tc('myProfile')}
 								</Link>
 								<button 
 									onClick={() => {
@@ -471,7 +476,7 @@ const Header = () => {
 									className={`${styles.mobileMenuItem} ${styles.mobileRegisterButton}`}
 								>
 									<LogOut size={18} />
-									Вийти
+									{tc('logout')}
 								</button>
 							</>
 						) : (
@@ -482,14 +487,14 @@ const Header = () => {
 									onClick={handleMobileMenuClose}
 								>
 									<User size={18} />
-									Увійти
+									{tc('login')}
 								</Link>
 								<Link 
 									href="/register" 
 									className={`${styles.mobileMenuItem} ${styles.mobileRegisterButton}`}
 									onClick={handleMobileMenuClose}
 								>
-									Реєстрація
+									{tc('register')}
 								</Link>
 							</>
 						)}
