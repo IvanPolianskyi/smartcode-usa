@@ -2,7 +2,6 @@
 
 import { useLocale } from 'next-intl'
 import { usePathname, useRouter } from '@/i18n/navigation'
-import { LOCALE_COOKIE } from '@/i18n/routing'
 import styles from './LanguageSwitcher.module.css'
 
 export default function LanguageSwitcher({ className = '' }) {
@@ -12,7 +11,6 @@ export default function LanguageSwitcher({ className = '' }) {
 
 	const switchTo = (nextLocale) => {
 		if (nextLocale === locale) return
-		document.cookie = `${LOCALE_COOKIE}=${nextLocale};path=/;max-age=${60 * 60 * 24 * 365};samesite=lax`
 		router.replace(pathname, { locale: nextLocale })
 	}
 

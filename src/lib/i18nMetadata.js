@@ -8,14 +8,39 @@ export function localePath(locale, path = '') {
 	return normalized === '/' ? '' : normalized
 }
 
-export function buildAlternates(locale, path = '') {
-	const ukPath = path || '/'
-	const enPath = localePath('en', path || '/')
+/** noindex для /en — лише прямий перехід, не індексація в Google */
+export function getSearchIndexingMetadata(locale) {
+	if (locale !== 'en') return {}
+
 	return {
-		canonical: `${BASE_URL}${locale === 'en' ? enPath : ukPath}`,
+		robots: {
+			index: false,
+			follow: true,
+			googleBot: {
+				index: false,
+				follow: true,
+			},
+		},
+	}
+}
+
+export function buildAlternates(locale, path = '') {
+	const normalized = path || '/'
+	const ukPath = normalized === '/' ? '' : normalized
+	const ukUrl = `${BASE_URL}${ukPath}`
+
+	if (locale === 'en') {
+		const enPath = localePath('en', normalized)
+		return {
+			canonical: `${BASE_URL}${enPath}`,
+		}
+	}
+
+	return {
+		canonical: ukUrl,
 		languages: {
-			'uk-UA': `${BASE_URL}${ukPath === '/' ? '' : ukPath}`,
-			'en-US': `${BASE_URL}${enPath}`,
+			'uk-UA': ukUrl,
+			'x-default': ukUrl,
 		},
 	}
 }
@@ -28,6 +53,7 @@ export async function getLocalizedMetadata(locale, pageKey) {
 	return {
 		title: t('title'),
 		description: t('description'),
+		...getSearchIndexingMetadata(locale),
 		openGraph: {
 			title: t('title'),
 			description: t('description'),

@@ -17,22 +17,11 @@ const paths = [
 
 export default function sitemap() {
 	const lastModified = new Date()
-	const entries = []
 
-	for (const { path, priority, changeFrequency } of paths) {
-		entries.push({
-			url: `${BASE}${path || ''}`,
-			lastModified,
-			changeFrequency,
-			priority,
-		})
-		entries.push({
-			url: `${BASE}/en${path}`,
-			lastModified,
-			changeFrequency,
-			priority: priority * 0.95,
-		})
-	}
-
-	return entries
+	return paths.map(({ path, priority, changeFrequency }) => ({
+		url: `${BASE}${path || ''}`,
+		lastModified,
+		changeFrequency,
+		priority,
+	}))
 }

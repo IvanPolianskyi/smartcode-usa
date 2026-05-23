@@ -4,10 +4,8 @@ export const routing = defineRouting({
 	locales: ['uk', 'en'],
 	defaultLocale: 'uk',
 	localePrefix: 'as-needed',
-	localeCookie: {
-		name: 'NEXT_LOCALE',
-		maxAge: 60 * 60 * 24 * 365,
-	},
+	// Локаль лише з URL (/en/...); без cookie та Accept-Language
+	localeCookie: false,
 })
 
 export const LOCALE_COOKIE = 'NEXT_LOCALE'
