@@ -87,32 +87,43 @@ export async function POST(request) {
       updatedAt: new Date(),
     })
 
+    let crmSync = { ok: false, skipped: false, reason: '' }
     try {
       const crmResult = await syncReceiptToCrm({
-        lmsPaymentId: insertResult.insertedId.toString(),
-        userId: userId,
-        studentName: user?.name || '',
-        studentEmail: user?.email || '',
-        crmStudentId: String(user?.studentProfile?.crmStudentId || ''),
+        lms_payment_id: insertResult.insertedId.toString(),
+        user_id: userId,
+        student_name: user?.name || '',
+        student_email: user?.email || '',
+        crm_student_id: String(user?.studentProfile?.crmStudentId || ''),
         amount,
         currency: 'UAH',
-        lessonPrice,
-        lessonFormat,
-        creditedLessons,
+        lesson_price: lessonPrice,
+        lesson_format: lessonFormat,
+        credited_lessons: creditedLessons,
         receipt: {
           fileName: file.name,
           mimeType: file.type,
           dataUrl,
         },
       })
-      if (crmResult?.id) {
+      if (crmResult?.skipped) {
+        crmSync = { ok: false, skipped: true, reason: crmResult.reason || 'CRM not configured' }
+      } else if (crmResult?.id) {
+        crmSync = { ok: true, skipped: false, reason: '' }
         await paymentsCollection.updateOne(
           { _id: insertResult.insertedId },
           { $set: { crmReceiptId: String(crmResult.id), updatedAt: new Date() } }
         )
+      } else {
+        crmSync = { ok: true, skipped: false, reason: '' }
       }
     } catch (crmError) {
       console.error('CRM receipt sync failed:', crmError)
+      crmSync = {
+        ok: false,
+        skipped: false,
+        reason: String(crmError?.message || crmError),
+      }
     }
 
     return NextResponse.json(
@@ -121,6 +132,7 @@ export async function POST(request) {
         creditedLessonsPreview: creditedLessons,
         lessonPrice,
         requiresApproval: true,
+        crmSync,
       },
       { status: 200 }
     )
