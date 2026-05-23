@@ -88,11 +88,25 @@ export async function POST(request, { params }) {
       usersCollection
     )
 
+    await usersCollection.updateOne(
+      { _id: new ObjectId(studentId) },
+      {
+        $set: {
+          'studentProfile.accountReady': true,
+          updatedAt: new Date(),
+        },
+      }
+    )
+    const finalProfile = {
+      ...(pulled.studentProfile || {}),
+      accountReady: true,
+    }
+
     return NextResponse.json(
       {
         ok: true,
         group: updatedGroup || null,
-        studentProfile: pulled.studentProfile,
+        studentProfile: finalProfile,
       },
       { status: 200 }
     )

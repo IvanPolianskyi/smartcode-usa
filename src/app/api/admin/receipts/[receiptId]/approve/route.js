@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
+import { approveReceiptPayment } from '@/lib/approveReceiptPayment'
+import { syncReceiptStatusToCrm } from '@/lib/syncReceiptToCrm'
 
 async function requireAdmin() {
   const userId = await getCurrentUser()
@@ -25,45 +27,19 @@ export async function POST(request, { params }) {
     }
 
     const paymentsCollection = await getCollection('payments')
-    const usersCollection = await getCollection('users')
-    const receiptObjectId = new ObjectId(receiptId)
-    const receipt = await paymentsCollection.findOne({ _id: receiptObjectId, paymentMethod: 'receipt_upload' })
-
-    if (!receipt) {
-      return NextResponse.json({ error: 'Receipt not found' }, { status: 404 })
-    }
-    if (receipt.approvalStatus === 'approved' || receipt.status === 'completed') {
-      return NextResponse.json({ ok: true, alreadyApproved: true }, { status: 200 })
-    }
-
-    const creditedLessons = Number(receipt.creditedLessons || 0)
-    const amount = Number(receipt.amount || 0)
-
-    await paymentsCollection.updateOne(
-      { _id: receiptObjectId },
-      {
-        $set: {
-          status: 'completed',
-          approvalStatus: 'approved',
-          approvedAt: new Date(),
-          approvedBy: guard.adminId,
-          updatedAt: new Date(),
-        },
+    const receipt = await paymentsCollection.findOne({
+      _id: new ObjectId(receiptId),
+      paymentMethod: 'receipt_upload',
+    })
+    const result = await approveReceiptPayment(receiptId, guard.adminId)
+    if (receipt?.crmReceiptId) {
+      try {
+        await syncReceiptStatusToCrm(receipt.crmReceiptId, 'approved')
+      } catch (e) {
+        console.error('CRM receipt status sync:', e)
       }
-    )
-
-    await usersCollection.updateOne(
-      { _id: receipt.userId },
-      {
-        $inc: {
-          'studentProfile.accountBalance': amount,
-          'studentProfile.lessonCredits': creditedLessons,
-        },
-        $set: { updatedAt: new Date() },
-      }
-    )
-
-    return NextResponse.json({ ok: true }, { status: 200 })
+    }
+    return NextResponse.json(result, { status: 200 })
   } catch (error) {
     console.error('Approve receipt POST error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })

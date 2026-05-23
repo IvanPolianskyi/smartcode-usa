@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
+import { syncReceiptToCrm } from '@/lib/syncReceiptToCrm'
 
 const MAX_RECEIPT_SIZE_BYTES = 5 * 1024 * 1024
 const GROUP_LESSON_PRICE_UAH = 350
@@ -65,7 +66,7 @@ export async function POST(request) {
 
     const creditedLessons = Math.floor(amount / lessonPrice)
 
-    await paymentsCollection.insertOne({
+    const insertResult = await paymentsCollection.insertOne({
       userId: userObjectId,
       courseId: 'manual-topup',
       amount,
@@ -85,6 +86,34 @@ export async function POST(request) {
       createdAt: new Date(),
       updatedAt: new Date(),
     })
+
+    try {
+      const crmResult = await syncReceiptToCrm({
+        lmsPaymentId: insertResult.insertedId.toString(),
+        userId: userId,
+        studentName: user?.name || '',
+        studentEmail: user?.email || '',
+        crmStudentId: String(user?.studentProfile?.crmStudentId || ''),
+        amount,
+        currency: 'UAH',
+        lessonPrice,
+        lessonFormat,
+        creditedLessons,
+        receipt: {
+          fileName: file.name,
+          mimeType: file.type,
+          dataUrl,
+        },
+      })
+      if (crmResult?.id) {
+        await paymentsCollection.updateOne(
+          { _id: insertResult.insertedId },
+          { $set: { crmReceiptId: String(crmResult.id), updatedAt: new Date() } }
+        )
+      }
+    } catch (crmError) {
+      console.error('CRM receipt sync failed:', crmError)
+    }
 
     return NextResponse.json(
       {

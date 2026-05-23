@@ -5,9 +5,11 @@ import { useTranslations, useLocale } from 'next-intl'
 import { Link, useRouter } from '@/i18n/navigation'
 import { logout, getUserProgress } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
+import { isStudentDashboardReady } from '@/lib/studentAccountReady'
 import { useDashboardCourses, DAY_KEY_MAP } from '@/hooks/useDashboardCourses'
 import EnStudentDashboard from '@/components/Dashboard/EnStudentDashboard'
 import MyCoursesSection from '@/components/Dashboard/MyCoursesSection'
+import StudentPaymentPanel from '@/components/Dashboard/StudentPaymentPanel'
 import styles from './Dashboard.module.css'
 import {
   User,
@@ -67,11 +69,6 @@ function AdminDashboard({ adminStats, t }) {
 
 function StudentDashboard({ user, progressData, paymentStats, refreshData, t, locale, getCourseInfo }) {
   const [activeTab, setActiveTab] = useState('overview')
-  const [showReceiptForm, setShowReceiptForm] = useState(false)
-  const [receiptAmount, setReceiptAmount] = useState('')
-  const [receiptFile, setReceiptFile] = useState(null)
-  const [receiptSubmitting, setReceiptSubmitting] = useState(false)
-  const [receiptMessage, setReceiptMessage] = useState('')
   const dateLocale = locale === 'uk' ? 'uk-UA' : 'en-US'
   const profile = user?.studentProfile || { regularSchedule: [], activeOnlineCourses: [], lessonFormat: 'group', zoomLink: '' }
   const lessonPrice = profile.lessonFormat === 'individual' ? 500 : 350
@@ -169,46 +166,6 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
     ? t('student.metrics.individual')
     : t('student.metrics.group')
 
-  const handleReceiptSubmit = async (event) => {
-    event.preventDefault()
-    setReceiptMessage('')
-    if (!receiptAmount || Number(receiptAmount) <= 0) {
-      setReceiptMessage(t('student.payments.errors.invalidAmount'))
-      return
-    }
-    if (Number(receiptAmount) % lessonPrice !== 0) {
-      setReceiptMessage(t('student.payments.errors.amountMultiple', { price: lessonPrice }))
-      return
-    }
-    if (!receiptFile) {
-      setReceiptMessage(t('student.payments.errors.noPhoto'))
-      return
-    }
-
-    setReceiptSubmitting(true)
-    try {
-      const formData = new FormData()
-      formData.append('amount', receiptAmount)
-      formData.append('receipt', receiptFile)
-      const response = await fetch('/api/payment/receipt', {
-        method: 'POST',
-        body: formData,
-      })
-      const data = await response.json()
-      if (!response.ok) {
-        throw new Error(data?.error || t('student.payments.errors.submitFailed'))
-      }
-      setReceiptMessage(t('student.payments.success', { count: data.creditedLessonsPreview || 0 }))
-      setReceiptAmount('')
-      setReceiptFile(null)
-      await refreshData()
-    } catch (error) {
-      setReceiptMessage(error.message || t('student.payments.errors.submitError'))
-    } finally {
-      setReceiptSubmitting(false)
-    }
-  }
-
   return (
     <>
       <div className={styles.heroCard}>
@@ -274,59 +231,13 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
           )) : <p className={styles.cardText}>{t('student.history.empty')}</p>}
         </div>
 
-        <div className={styles.card}>
-          <h3 className={styles.cardTitle}><CreditCard size={18} /> {t('student.payments.title')}</h3>
-          <div className={styles.listRow}><span>{t('student.payments.completed')}</span><strong>{paymentStats.completed}</strong></div>
-          <div className={styles.listRow}><span>{t('student.payments.pending')}</span><strong>{paymentStats.pending}</strong></div>
-          <div className={styles.listRow}><span>{t('student.payments.failed')}</span><strong>{paymentStats.failed}</strong></div>
-          <div className={styles.listRow}><span>{t('student.payments.totalAmount')}</span><strong>{paymentStats.totalAmount} {t('student.payments.currency')}</strong></div>
-          <div className={styles.listRow}><span>{t('student.payments.lessonCredits')}</span><strong>{paymentStats.lessonCredits || 0}</strong></div>
-          <div className={styles.listRow}><span>{t('student.payments.accountBalance')}</span><strong>{paymentStats.accountBalance || 0} {t('student.payments.currency')}</strong></div>
-          <div className={styles.paymentAccount}>
-            <strong>{t('student.payments.accountNumber')}</strong> 5408810042089184
-          </div>
-          <button
-            type="button"
-            className={styles.secondaryBtn}
-            onClick={() => setShowReceiptForm((prev) => !prev)}
-          >
-            {showReceiptForm ? t('student.payments.hideForm') : t('student.payments.attachReceipt')}
-          </button>
-          {showReceiptForm && (
-            <form className={styles.receiptForm} onSubmit={handleReceiptSubmit}>
-              <label className={styles.receiptLabel}>
-                {t('student.payments.amountLabel')}
-                <input
-                  type="number"
-                  min={lessonPrice}
-                  step={lessonPrice}
-                  value={receiptAmount}
-                  onChange={(e) => setReceiptAmount(e.target.value)}
-                  className={styles.receiptInput}
-                  placeholder={t('student.payments.amountPlaceholder', { amount: lessonPrice * 2 })}
-                  required
-                />
-              </label>
-              <p className={styles.receiptMessage} style={{ marginTop: '-0.15rem' }}>
-                {t('student.payments.amountHint', { price: lessonPrice, format: formatLabel.toLowerCase() })}
-              </p>
-              <label className={styles.receiptLabel}>
-                {t('student.payments.receiptPhoto')}
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setReceiptFile(e.target.files?.[0] || null)}
-                  className={styles.receiptInput}
-                  required
-                />
-              </label>
-              <button type="submit" className={styles.primaryBtn} disabled={receiptSubmitting}>
-                {receiptSubmitting ? t('student.payments.submitting') : t('student.payments.submit')}
-              </button>
-              {receiptMessage && <p className={styles.receiptMessage}>{receiptMessage}</p>}
-            </form>
-          )}
-        </div>
+        <StudentPaymentPanel
+          t={t}
+          lessonPrice={lessonPrice}
+          formatLabel={formatLabel}
+          paymentStats={paymentStats}
+          onRefresh={refreshData}
+        />
       </div>
       )}
 
@@ -399,7 +310,7 @@ export default function DashboardPage() {
   const accountPendingSetup =
     locale === 'uk' &&
     user?.role !== 'admin' &&
-    user?.studentProfile?.accountReady === false
+    !isStudentDashboardReady(user?.studentProfile)
 
   const refreshData = async () => {
     await refresh(false)

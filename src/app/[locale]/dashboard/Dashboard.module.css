@@ -364,6 +364,86 @@
   background: #fff;
 }
 
+.payPanel {
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.payModeRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.payModeBtn {
+  flex: 1;
+  min-width: 140px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 0.88rem;
+  cursor: pointer;
+  color: #334155;
+}
+
+.payModeBtnActive {
+  border-color: #4f46e5;
+  background: #eef2ff;
+  color: #312e81;
+  font-weight: 600;
+}
+
+.paySection {
+  margin-top: 0.5rem;
+}
+
+.bankBlock {
+  margin: 0.65rem 0 1rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.bankRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.bankLabel {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.bankValue {
+  font-size: 0.9rem;
+  color: #0f172a;
+  word-break: break-all;
+}
+
+.copyBtn {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  padding: 0.2rem;
+}
+
 .receiptMessage {
   margin: 0.15rem 0 0;
   color: #1e40af;

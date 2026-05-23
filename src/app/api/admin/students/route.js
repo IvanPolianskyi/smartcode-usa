@@ -8,6 +8,7 @@ import {
   resolveCrmToken,
   syncStudentToCrm,
 } from '@/lib/crmStudentSchedulePull'
+import { isStudentDashboardReady } from '@/lib/studentAccountReady'
 
 const COURSE_NAMES = {
   'python-developer-zero-to-junior': 'Пайтон',
@@ -319,6 +320,9 @@ export async function PATCH(request) {
 
     if (accountReadyBody !== undefined) {
       mergedProfile.accountReady = Boolean(accountReadyBody)
+    }
+    if (isStudentDashboardReady(mergedProfile)) {
+      mergedProfile.accountReady = true
     }
 
     const updateDoc = {

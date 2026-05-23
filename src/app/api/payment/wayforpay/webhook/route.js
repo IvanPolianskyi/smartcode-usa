@@ -48,6 +48,22 @@ export async function POST(request) {
           day: payment.scheduleDay,
           time: payment.scheduleTime,
         })
+      } else if (payment.paymentType === 'lesson_topup') {
+        const usersCollection = await getCollection('users')
+        const creditedLessons = Number(
+          payment.creditedLessons || Math.floor(Number(payment.amount) / Number(payment.lessonPrice || 1))
+        )
+        const paidAmount = Number(body.amount) || Number(payment.amount) || 0
+        await usersCollection.updateOne(
+          { _id: payment.userId },
+          {
+            $inc: {
+              'studentProfile.lessonCredits': creditedLessons,
+              'studentProfile.accountBalance': paidAmount,
+            },
+            $set: { updatedAt: new Date() },
+          }
+        )
       }
     }
 

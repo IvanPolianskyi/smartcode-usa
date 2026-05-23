@@ -4,6 +4,7 @@ import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { syncStudentScheduleAccess } from '@/lib/syncStudentScheduleAccess'
 import { maybePullCrmScheduleForStudent } from '@/lib/crmStudentSchedulePull'
+import { isStudentDashboardReady, shouldPersistAccountReady } from '@/lib/studentAccountReady'
 
 export async function GET() {
   try {
@@ -26,6 +27,20 @@ export async function GET() {
     }
     user = await maybePullCrmScheduleForStudent(user, usersCollection)
     user = await syncStudentScheduleAccess(user, usersCollection)
+
+    const profileAfterSync = user.studentProfile || {}
+    if (shouldPersistAccountReady(profileAfterSync)) {
+      await usersCollection.updateOne(
+        { _id: new ObjectId(userId) },
+        {
+          $set: {
+            'studentProfile.accountReady': true,
+            updatedAt: new Date(),
+          },
+        }
+      )
+      user = await usersCollection.findOne({ _id: new ObjectId(userId) })
+    }
 
     // Синхронізація: якщо є прогрес, але немає курсу в enrolledCourses, додати його
     const progressCollection = await getCollection('userProgress')
@@ -69,7 +84,7 @@ export async function GET() {
       role: user.role || 'user',
       studentProfile: {
         ...baseProfile,
-        accountReady: baseProfile.accountReady !== false,
+        accountReady: isStudentDashboardReady(baseProfile),
       },
       purchasedCourses: user.purchasedCourses || [],
       enrolledCourses: user.enrolledCourses || [],

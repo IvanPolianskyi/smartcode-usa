@@ -176,11 +176,13 @@ export function crmPayloadFromStudent(studentDoc) {
     onlineCourses.length > 0 ? `Онлайн-курси: ${onlineCourses.join(', ')}.` : '',
   ].filter(Boolean)
 
+  const lmsUserId = String(studentDoc?._id || studentDoc?.id || '').trim()
   return {
     full_name: String(studentDoc?.name || '').trim(),
     email: studentDoc?.email || null,
     notes: notesParts.join(' '),
     awaiting_teacher: !teacherName,
+    ...(lmsUserId ? { smartcode_user_id: lmsUserId } : {}),
   }
 }
 
@@ -338,6 +340,12 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
     crmTeacherId: teacherId || String(prev.crmTeacherId || ''),
     crmTeacherName: teacherName || String(prev.crmTeacherName || ''),
     crmScheduleSyncedAt: new Date().toISOString(),
+  }
+  if (
+    nextProfile.accountReady === false &&
+    (schedule.length > 0 || (nextProfile.activeOnlineCourses || []).length > 0)
+  ) {
+    nextProfile.accountReady = true
   }
 
   await usersCollection.updateOne(
