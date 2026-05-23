@@ -27,7 +27,7 @@
     "requirementsTitle": "Вимоги",
     "certificateTitle": "Сертифікат",
     "programTitle": "Програма курсу",
-    "programDescription": "{modules} модулів, {lessons} уроків — від основ до створення повноцінних проектів",
+    "programDescription": "{modules} модулів, {lessons} уроків - від основ до створення повноцінних проектів",
     "moduleLabel": "Модуль {order}",
     "moduleWeeks": "{count} тижні",
     "moduleLessons": "{count} уроків",
@@ -99,7 +99,7 @@
       "certificateRole": "веб-розробника"
     },
     "roblox": {
-      "valueProposition": "Roblox Studio: від першого Part до власної гри — 72 уроки, 12 блоків, онлайн-заняття з викладачем.",
+      "valueProposition": "Roblox Studio: від першого Part до власної гри - 72 уроки, 12 блоків, онлайн-заняття з викладачем.",
       "skills": [
         "Roblox Studio та 3D-сцени",
         "Скрипти на Luau",
@@ -121,7 +121,7 @@
         "Встановлений Roblox Studio",
         "Інтернет для встановлення та мультиплеєру"
       ],
-      "certificateText": "Після завершення курсу — сертифікат SmartCode Academy з Roblox game development.",
+      "certificateText": "Після завершення курсу - сертифікат SmartCode Academy з Roblox game development.",
       "certificateRole": "Roblox-розробника"
     }
   },
@@ -180,6 +180,7 @@
     "codePlaceholder": "Напишіть ваш код тут...",
     "runCode": "Запустити код",
     "running": "Виконання...",
+    "pyodideLoading": "Завантаження Python...",
     "executionResult": "Результат виконання:",
     "outputResult": "Вивід:",
     "errorLabel": "Помилка:",
@@ -219,12 +220,16 @@
       "dangerousCode": "Код містить небезпечні операції, які не дозволені для виконання. Будь ласка, використовуйте тільки безпечні Python конструкції для навчання.",
       "codeTooLong": "Код занадто довгий. Максимальна довжина: 50000 символів",
       "executionFailed": "Помилка виконання коду",
-      "connectionError": "Помилка підключення до сервера. Спробуйте ще раз."
+      "executionTimeout": "Перевищено час виконання (10 с)",
+      "workerError": "Помилка середовища виконання Python",
+      "workerStartFailed": "Не вдалося запустити Python у браузері",
+      "connectionError": "Помилка підключення до сервера. Спробуйте ще раз.",
+      "pyodideLoadFailed": "Не вдалося завантажити Python у браузері. Перевірте інтернет і спробуйте ще раз."
     },
     "roblox": {
       "lockedDescriptionEn": "This lesson is locked. Purchase the full course for $15, or book live lessons in your dashboard.",
-      "lockedDescriptionUk": "Цей урок доступний учням онлайн-груп SmartCode. Перше заняття (1.1) — для ознайомлення. Доступ до інших уроків відкриває викладач за розкладом.",
-      "purchaseFullCourse": "Придбати курс — {price}",
+      "lockedDescriptionUk": "Цей урок доступний учням онлайн-груп SmartCode. Перше заняття (1.1) - для ознайомлення. Доступ до інших уроків відкриває викладач за розкладом.",
+      "purchaseFullCourse": "Придбати курс - {price}",
       "onlineAccessHint": "Доступ для онлайн-учнів",
       "comingSoon": "Матеріал скоро з'явиться",
       "markComplete": "Позначити урок виконаним",
@@ -232,7 +237,7 @@
       "theoryDuration": "{minutes} хв теорія",
       "quizDuration": "{minutes} хв тест",
       "markPracticeComplete": "Практику в Studio завершено",
-      "practiceDone": "Практику завершено — тест розблоковано",
+      "practiceDone": "Практику завершено - тест розблоковано",
       "quizLockedHint": "Спочатку завершіть практику"
     }
   }

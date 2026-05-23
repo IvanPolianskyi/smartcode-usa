@@ -103,7 +103,7 @@ squared = map(lambda x: x ** 2, numbers)
 print(list(squared))  # [1, 4, 9, 16, 25]
 \`\`\`
 
-**Important:** \`map()\` returns an iterator — use \`list()\` to get a list.
+**Important:** \`map()\` returns an iterator - use \`list()\` to get a list.
 
 **More examples:**
 
@@ -213,8 +213,8 @@ result = list(map(lambda x: x ** 2, filter(lambda x: x % 2 == 0, numbers)))
 
 **When to use what:**
 
-- **map/filter + lambda** — functional style, passing functions as arguments
-- **List comprehensions** — often clearer for simple cases`
+- **map/filter + lambda** - functional style, passing functions as arguments
+- **List comprehensions** - often clearer for simple cases`
       },
       {
         title: "Lambda with multiple arguments",
@@ -349,15 +349,15 @@ sorted_users = sorted(users, key=lambda user: user["age"])
 
 **Key concepts:**
 
-1. **Lambda** — \`lambda args: expression\`, single expression only
-2. **map()** — apply a function to each element; returns an iterator
-3. **filter()** — keep items where the function returns True
-4. **Combining** — chain map and filter; use def for complex steps
-5. **Limits** — no return, no assignment, one expression
+1. **Lambda** - \`lambda args: expression\`, single expression only
+2. **map()** - apply a function to each element; returns an iterator
+3. **filter()** - keep items where the function returns True
+4. **Combining** - chain map and filter; use def for complex steps
+5. **Limits** - no return, no assignment, one expression
 
 **Next step:**
 
-In the next lesson we will learn about variable scope — how Python finds names in your code.`
+In the next lesson we will learn about variable scope - how Python finds names in your code.`
       }
     ]
   },
@@ -455,11 +455,11 @@ square = lambda x: x ** 2`
   
   summary: `In this lesson we learned lambda functions:
 
-1. Lambda — anonymous one-expression functions
-2. map() — transform each element (use list() for a list)
-3. filter() — keep items where the predicate is True
+1. Lambda - anonymous one-expression functions
+2. map() - transform each element (use list() for a list)
+3. filter() - keep items where the predicate is True
 4. Combining map and filter for pipelines
-5. Limits — one expression, no return, prefer def when complex
+5. Limits - one expression, no return, prefer def when complex
 
 Lambda functions are a useful tool for functional-style Python!`,
   
@@ -468,11 +468,11 @@ Lambda functions are a useful tool for functional-style Python!`,
     description: "Create functions that process data using lambda, map(), and filter()",
     problemStatement: `Write a program with these functions:
 
-1. **process_numbers** — square all numbers with map() and lambda
-2. **filter_even** — keep even numbers with filter() and lambda
-3. **process_names** — capitalize names with map() and lambda
-4. **filter_long_words** — words longer than min_length (default 5)
-5. **complex_processing** — filter evens, then square them
+1. **process_numbers** - square all numbers with map() and lambda
+2. **filter_even** - keep even numbers with filter() and lambda
+3. **process_names** - capitalize names with map() and lambda
+4. **filter_long_words** - words longer than min_length (default 5)
+5. **complex_processing** - filter evens, then square them
 
 **Important:** Do not use input(). Assign values in code.
 
@@ -542,7 +542,7 @@ print(f"Numbers > 15, doubled: {filtered_multiplied}")`,
       explanation: "Uses lambda with map() and filter() for squaring, filtering, formatting, and chained operations."
     },
     hints: [
-      "Assign values in code — do not use input()",
+      "Assign values in code - do not use input()",
       "Wrap map() and filter() with list() to get a list",
       "For complex_processing: filter first, then map",
       "filter() lambdas must return True or False",
@@ -637,8 +637,8 @@ print(f"Numbers > 15, doubled: {filtered_multiplied}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "Can you use return in a lambda function?",
         options: [
-          "No — the expression value is returned automatically",
-          "Yes — return is required",
+          "No - the expression value is returned automatically",
+          "Yes - return is required",
           "Only for complex lambdas",
           "Depends on Python version"
         ],

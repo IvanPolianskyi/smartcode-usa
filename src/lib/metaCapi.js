@@ -14,6 +14,7 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js'
 const CAPI_VERSION = 'v22.0'
 const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID
 const CAPI_TOKEN = process.env.META_CAPI_TOKEN
+const CAPI_TEST_EVENT_CODE = process.env.META_CAPI_TEST_EVENT_CODE || ''
 
 const CAPI_URL = PIXEL_ID
 	? `https://graph.facebook.com/${CAPI_VERSION}/${PIXEL_ID}/events`
@@ -136,10 +137,8 @@ export async function sendCapiEvent({
 	customData = {},
 }) {
 	if (!CAPI_TOKEN || !CAPI_URL) {
-		if (process.env.NODE_ENV !== 'production') {
-			console.warn('[CAPI] META_CAPI_TOKEN або NEXT_PUBLIC_META_PIXEL_ID не встановлено — подія не відправлена')
-		}
-		return
+		console.warn('[CAPI] META_CAPI_TOKEN або NEXT_PUBLIC_META_PIXEL_ID не встановлено — подія не відправлена')
+		return false
 	}
 
 	const hashedPhone = sha256(normalizePhone(phone))
@@ -176,6 +175,7 @@ export async function sendCapiEvent({
 
 	const body = {
 		data: [eventPayload],
+		...(CAPI_TEST_EVENT_CODE && { test_event_code: CAPI_TEST_EVENT_CODE }),
 	}
 
 	try {
@@ -185,15 +185,15 @@ export async function sendCapiEvent({
 			body: JSON.stringify(body),
 		})
 
-		if (!res.ok && process.env.NODE_ENV !== 'production') {
+		if (!res.ok) {
 			const text = await res.text().catch(() => '')
 			console.error('[CAPI] Помилка відправки:', res.status, text)
+			return false
 		}
+		return true
 	} catch (err) {
-		// Не кидаємо помилку далі — CAPI не блокує основний флоу
-		if (process.env.NODE_ENV !== 'production') {
-			console.error('[CAPI] Network error:', err)
-		}
+		console.error('[CAPI] Network error:', err)
+		return false
 	}
 }
 

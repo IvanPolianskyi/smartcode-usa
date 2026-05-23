@@ -7,7 +7,7 @@ export const ukLesson31 = {
   lessonId: "lesson-roblox-3-1",
   moduleId: "module-03",
   order: 1,
-  title: "3.1 — Монети на карті",
+  title: "3.1 - Монети на карті",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -21,14 +21,14 @@ export const ukLesson31 = {
     sections: [
       {
         title: "Ваш шлях сьогодні (близько 40 хвилин)",
-        content: `**Module 3 — A Game That Remembers You** starts the **coin simulator** genre — collect, grow, repeat.
+        content: `**Module 3 - A Game That Remembers You** starts the **coin simulator** genre - collect, grow, repeat.
 
 **Lesson flow:**
-1. **Theory (40 min)** — coin prefab + smart placement
-2. **Practice (~25 min)** — 30+ coins in three zones
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - coin prefab + smart placement
+2. **Practice (~25 min)** - 30+ coins in three zones
+3. **Quiz (10 min)** - **70%** pass
 
-Use your **Module 2 — Obby Ready** place or duplicate it as \`Lesson 3.1 — Coin World\`. Today is **building only** — scripts come in 3.2.`,
+Use your **Module 2 - Obby Ready** place or duplicate it as \`Lesson 3.1 - Coin World\`. Today is **building only** - scripts come in 3.2.`,
       },
       {
         title: "From obby to simulator",
@@ -59,18 +59,18 @@ Use your **Module 2 — Obby Ready** place or duplicate it as \`Lesson 3.1 — C
 
 **Polish:**
 - Raise Y slightly above ground (hover)
-- **PointLight** — yellow, Range 6
+- **PointLight** - yellow, Range 6
 - Optional slow spin later (Module 10)
 
-**Exercise (8 min):** Duplicate prefab 5 times in a line — spacing feels rhythmic, not random.`,
+**Exercise (8 min):** Duplicate prefab 5 times in a line - spacing feels rhythmic, not random.`,
       },
       {
         title: "Placement patterns",
-        content: `**Trail line** — coins along safe path (beginners follow)
+        content: `**Trail line** - coins along safe path (beginners follow)
 
-**Risk jump** — 3 coins over lava gap (skilled players)
+**Risk jump** - 3 coins over lava gap (skilled players)
 
-**Cluster zone** — 8 coins around a landmark (exploration reward)
+**Cluster zone** - 8 coins around a landmark (exploration reward)
 
 **Density guide:**
 | Zone | Coins | Difficulty |
@@ -96,7 +96,7 @@ Coins/
 - Leading zeros keep sort order in Explorer
 - One prefab duplicated, then rename each copy
 
-**Why folders matter:** Lesson 3.2 adds one script to **all** coins — clean trees = fast debugging.`,
+**Why folders matter:** Lesson 3.2 adds one script to **all** coins - clean trees = fast debugging.`,
       },
       {
         title: "Visibility and pacing",
@@ -109,7 +109,7 @@ Coins/
 - Coins inside terrain (hard to see)
 - Coins floating too high to jump
 
-**Sign at spawn:** \`Collect coins — scripts next lesson!\``,
+**Sign at spawn:** \`Collect coins - scripts next lesson!\``,
       },
       {
         title: "Rare coins (optional preview)",
@@ -118,7 +118,7 @@ Coins/
 - BrickColor **Cyan** or **Gold**
 - Brighter PointLight
 
-You will award **+5** in Lesson 3.3 — today only **build** them (5 rare max).
+You will award **+5** in Lesson 3.3 - today only **build** them (5 rare max).
 
 Label \`CoinRare_01\` … in \`Coins/Rare\`.`,
       },
@@ -128,7 +128,7 @@ Label \`CoinRare_01\` … in \`Coins/Rare\`.`,
 - [ ] Folder \`Coins/Common\` exists
 - [ ] **30+** coins placed in 3 zones
 - [ ] Every coin has unique name
-- [ ] Save: \`Lesson 3.1 — Coin Route\``,
+- [ ] Save: \`Lesson 3.1 - Coin Route\``,
       },
     ],
   },
@@ -136,7 +136,7 @@ Label \`CoinRare_01\` … in \`Coins/Rare\`.`,
     {
       mistake: "CanCollide true on coins",
       explanation: "Players bump and miss pickups later.",
-      correctApproach: "CanCollide false — walk through to collect in 3.2",
+      correctApproach: "CanCollide false - walk through to collect in 3.2",
     },
     {
       mistake: "All coins named Part",
@@ -154,32 +154,32 @@ Label \`CoinRare_01\` … in \`Coins/Rare\`.`,
       correctApproach: "Minimum 30 for practice requirement",
     },
   ],
-  summary: "You built a yellow coin prefab, placed 30+ coins in trail, risk, and cluster patterns, and organized Workspace folders — your map is ready for collection scripts.",
+  summary: "You built a yellow coin prefab, placed 30+ coins in trail, risk, and cluster patterns, and organized Workspace folders - your map is ready for collection scripts.",
   practiceTask: {
-    title: "Coin route — 30+ pickups (~25 min)",
+    title: "Coin route - 30+ pickups (~25 min)",
     difficulty: "beginner",
     description: `**Goal:** Three zones of coins, zero scripts yet.
 
-### Part A — Prefab (5 min)
+### Part A - Prefab (5 min)
 1. Build \`CoinPrefab\` (cylinder, neon yellow, CanCollide false)
 2. Add PointLight glow
 
-### Part B — Zones (15 min)
+### Part B - Zones (15 min)
 1. **Easy zone** near spawn: **12** coins in trail
 2. **Mid zone** toward obby/dock: **10** coins (one risk jump line)
 3. **Hard zone** far side: **8+** coins + optional **5 rare** cyan coins
 
-### Part C — Organize & save (5 min)
+### Part C - Organize & save (5 min)
 1. Move all into \`Coins/Common\` and \`Coins/Rare\`
 2. Rename \`Coin_001\` through \`Coin_030\`+
-3. **Save to Roblox** → \`Lesson 3.1 — Coin Route\`
+3. **Save to Roblox** → \`Lesson 3.1 - Coin Route\`
 4. **Practice complete**`,
     hints: [
-      "Ctrl+D duplicate along a path — then rename in Explorer",
-      "Stand at spawn in Play — you should see at least one coin immediately",
+      "Ctrl+D duplicate along a path - then rename in Explorer",
+      "Stand at spawn in Play - you should see at least one coin immediately",
       "Rare coins belong in harder-to-reach spots",
     ],
-    optionalChallenge: "Five hidden coins behind terrain or dock — reward explorers.",
+    optionalChallenge: "Five hidden coins behind terrain or dock - reward explorers.",
   },
   quiz: {
     passingScore: 70,
@@ -307,7 +307,7 @@ Label \`CoinRare_01\` … in \`Coins/Rare\`.`,
         type: "multiple_choice",
         question: "Lesson 3.1 save name…",
         options: [
-          "Lesson 3.1 — Coin Route",
+          "Lesson 3.1 - Coin Route",
           "Obby Ready",
           "Click Magic",
           "Untitled",
@@ -323,7 +323,7 @@ export const ukLesson32 = {
   lessonId: "lesson-roblox-3-2",
   moduleId: "module-03",
   order: 2,
-  title: "3.2 — Збираємо монети",
+  title: "3.2 - Збираємо монети",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -340,11 +340,11 @@ export const ukLesson32 = {
         content: `Your coins are decorations until **Touched** makes them gameplay.
 
 **Lesson flow:**
-1. **Theory (40 min)** — server pickup + debounce
-2. **Practice (~25 min)** — 15+ working collectors
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - server pickup + debounce
+2. **Practice (~25 min)** - 15+ working collectors
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 3.1 — Coin Route**.`,
+Open **Lesson 3.1 - Coin Route**.`,
       },
       {
         title: "Collection requirements",
@@ -392,7 +392,7 @@ coin.Touched:Connect(function(hit)
 end)
 \`\`\`
 
-**Exercise (8 min):** Test one coin in Play — touch once, coin vanishes, print once.`,
+**Exercise (8 min):** Test one coin in Play - touch once, coin vanishes, print once.`,
       },
       {
         title: "Debounce explained",
@@ -406,7 +406,7 @@ end)
 
 \`collected = true\` at the start of successful pickup blocks repeats.
 
-**Test:** Stand inside coin 3 seconds — Output should show **one** print.`,
+**Test:** Stand inside coin 3 seconds - Output should show **one** print.`,
       },
       {
         title: "Deploy to many coins fast",
@@ -414,12 +414,12 @@ end)
 
 **Method 2:** One working coin → **Ctrl+D** 15 times → rename.
 
-**Method 3 (advanced later):** Single server script loops all coins in folder — Lesson 3.4 functions help.
+**Method 3 (advanced later):** Single server script loops all coins in folder - Lesson 3.4 functions help.
 
 For today: **Method 1 or 2** on at least **15** coins in \`Coins/Common\`.`,
       },
       {
-        title: "Pickup feedback — sound and VFX",
+        title: "Pickup feedback - sound and VFX",
         content: `Add **Sound** child \`PickupSound\` on coin prefab:
 
 \`\`\`lua
@@ -431,7 +431,7 @@ end
 
 Place before hiding coin (Transparency = 1).
 
-**Optional:** small **ParticleEmitter** burst — disable after 0.5s.
+**Optional:** small **ParticleEmitter** burst - disable after 0.5s.
 
 Players **feel** the reward before the coin disappears.`,
       },
@@ -451,7 +451,7 @@ end)
 
 Put **after** hiding the coin. Test: wait 15s, coin returns, collect again.
 
-**Pick one** for practice: session-only **or** respawn — document in a comment.`,
+**Pick one** for practice: session-only **or** respawn - document in a comment.`,
       },
       {
         title: "Контрольний список перед тренуванням",
@@ -459,7 +459,7 @@ Put **after** hiding the coin. Test: wait 15s, coin returns, collect again.
 - [ ] Humanoid + GetPlayerFromCharacter checks present
 - [ ] Debounce tested with 3-second stand-on-coin
 - [ ] 15+ coins collect exactly once per cycle
-- [ ] Save: \`Lesson 3.2 — Collecting Coins\``,
+- [ ] Save: \`Lesson 3.2 - Collecting Coins\``,
       },
     ],
   },
@@ -470,7 +470,7 @@ Put **after** hiding the coin. Test: wait 15s, coin returns, collect again.
       correctApproach: "Server Script for world pickups",
     },
     {
-      mistake: "No debounce — score jumps +10",
+      mistake: "No debounce - score jumps +10",
       explanation: "Touched fires repeatedly.",
       correctApproach: "collected flag set true on first valid touch",
     },
@@ -485,27 +485,27 @@ Put **after** hiding the coin. Test: wait 15s, coin returns, collect again.
       correctApproach: "Same pattern as kill blocks and checkpoints",
     },
   ],
-  summary: "You wired server Touched pickup with debounce, hid coins on collect, added optional sound, and tested repeat touches — your coin route is now playable.",
+  summary: "You wired server Touched pickup with debounce, hid coins on collect, added optional sound, and tested repeat touches - your coin route is now playable.",
   practiceTask: {
-    title: "Stable pickup — 15+ coins (~25 min)",
+    title: "Stable pickup - 15+ coins (~25 min)",
     difficulty: "beginner",
     description: `**Goal:** Every coin collects once per cycle.
 
-### Part A — Template script (10 min)
+### Part A - Template script (10 min)
 1. Add pickup Script to \`CoinPrefab\` (debounce + hide + print)
-2. Test in Play — one coin, one print
+2. Test in Play - one coin, one print
 
-### Part B — Roll out (10 min)
+### Part B - Roll out (10 min)
 1. Apply to **15+** coins in \`Coins/Common\`
 2. Optional PickupSound on prefab
 3. Spam-touch test: no double prints
 
-### Part C — Respawn or save (5 min)
+### Part C - Respawn or save (5 min)
 1. Add 15s respawn on **3** coins OR keep one-time on rest
-2. **Save to Roblox** → \`Lesson 3.2 — Collecting Coins\`
+2. **Save to Roblox** → \`Lesson 3.2 - Collecting Coins\`
 3. **Practice complete**`,
     hints: [
-      "Duplicate coin that already has Script — fastest rollout",
+      "Duplicate coin that already has Script - fastest rollout",
       "Print to Output until all 15 work, then remove prints",
       "Rare folder coins can use same script with different name",
     ],
@@ -637,7 +637,7 @@ Put **after** hiding the coin. Test: wait 15s, coin returns, collect again.
         type: "multiple_choice",
         question: "Lesson 3.2 save name…",
         options: [
-          "Lesson 3.2 — Collecting Coins",
+          "Lesson 3.2 - Collecting Coins",
           "Coin Route",
           "Obby Timer",
           "Victory Screen",
@@ -653,7 +653,7 @@ export const ukLesson33 = {
   lessonId: "lesson-roblox-3-3",
   moduleId: "module-03",
   order: 3,
-  title: "3.3 — Рахунок на екрані + leaderstats",
+  title: "3.3 - Рахунок на екрані + leaderstats",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -670,11 +670,11 @@ export const ukLesson33 = {
         content: `Collecting coins is fun. Seeing the number **grow** is addictive.
 
 **Lesson flow:**
-1. **Theory (40 min)** — leaderstats + HUD
-2. **Practice (~25 min)** — live score on screen and tab list
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - leaderstats + HUD
+2. **Practice (~25 min)** - live score on screen and tab list
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 3.2 — Collecting Coins**.`,
+Open **Lesson 3.2 - Collecting Coins**.`,
       },
       {
         title: "What is leaderstats?",
@@ -684,12 +684,12 @@ Open **Lesson 3.2 — Collecting Coins**.`,
 |-------|----------|
 | \`Coins\` IntValue | Coins column |
 
-**Server creates** leaderstats — clients should not fake scores (cheating).
+**Server creates** leaderstats - clients should not fake scores (cheating).
 
-**Exercise (2 min):** Press Tab in any popular Roblox game — notice Coins, Time, Points columns.`,
+**Exercise (2 min):** Press Tab in any popular Roblox game - notice Coins, Time, Points columns.`,
       },
       {
-        title: "PlayerAdded — create stats once",
+        title: "PlayerAdded - create stats once",
         content: `**ServerScriptService** → new **Script** \`LeaderstatsSetup\`:
 
 \`\`\`lua
@@ -707,9 +707,9 @@ Players.PlayerAdded:Connect(function(player)
 end)
 \`\`\`
 
-**Play** — Tab list shows **Coins: 0** for you.
+**Play** - Tab list shows **Coins: 0** for you.
 
-**Why ServerScriptService?** Runs once on server when game starts — perfect for setup.`,
+**Why ServerScriptService?** Runs once on server when game starts - perfect for setup.`,
       },
       {
         title: "Award +1 on coin pickup",
@@ -738,7 +738,7 @@ end
 Pick clear rule: rare = **+5 total** per pickup.`,
       },
       {
-        title: "Coins HUD — ScreenGui",
+        title: "Coins HUD - ScreenGui",
         content: `**StarterGui** → \`ScreenGui\` \`CoinsHUD\`
 → \`TextLabel\` \`CoinsLabel\`
 
@@ -772,10 +772,10 @@ if player:FindFirstChild("leaderstats") then
 end
 \`\`\`
 
-**Exercise (10 min):** Collect 5 coins — HUD and Tab list both show 5.`,
+**Exercise (10 min):** Collect 5 coins - HUD and Tab list both show 5.`,
       },
       {
-        title: "Timing — WaitForChild",
+        title: "Timing - WaitForChild",
         content: `Scripts race at spawn:
 - Coin touched before leaderstats exists → no points
 - HUD loads before leaderstats → nil error
@@ -784,7 +784,7 @@ end
 - \`player:WaitForChild("leaderstats")\` in coin script if needed
 - HUD listens to \`ChildAdded\` and \`GetPropertyChangedSignal\`
 
-**Test:** Reset character (respawn) — Coins value should **stay** (same session).`,
+**Test:** Reset character (respawn) - Coins value should **stay** (same session).`,
       },
       {
         title: "Trusted server economy",
@@ -801,7 +801,7 @@ Later modules add **DataStore** to save Coins between sessions. Today = **in-ses
 - [ ] Coin script adds to Coins IntValue
 - [ ] CoinsHUD updates when collecting
 - [ ] Tab leaderboard matches HUD
-- [ ] Save: \`Lesson 3.3 — Coins HUD\``,
+- [ ] Save: \`Lesson 3.3 - Coins HUD\``,
       },
     ],
   },
@@ -827,25 +827,25 @@ Later modules add **DataStore** to save Coins between sessions. Today = **in-ses
       correctApproach: "GetPropertyChangedSignal(\"Value\") on Coins",
     },
   ],
-  summary: "You created leaderstats with Coins, incremented score from server pickups, and built a CoinsHUD that updates live — your simulator now shows progress on screen and in the player list.",
+  summary: "You created leaderstats with Coins, incremented score from server pickups, and built a CoinsHUD that updates live - your simulator now shows progress on screen and in the player list.",
   practiceTask: {
-    title: "Coins HUD — live score (~25 min)",
+    title: "Coins HUD - live score (~25 min)",
     difficulty: "beginner",
     description: `**Goal:** Pickup increases Tab list + HUD.
 
-### Part A — leaderstats (8 min)
+### Part A - leaderstats (8 min)
 1. \`LeaderstatsSetup\` in ServerScriptService
-2. Play — Tab shows Coins: 0
+2. Play - Tab shows Coins: 0
 
-### Part B — Wire pickups (10 min)
+### Part B - Wire pickups (10 min)
 1. Add \`coinsStat.Value += 1\` to coin scripts (15+ coins)
 2. Rare coins +5 if you built them in 3.1
-3. Collect 10 — Tab shows 10
+3. Collect 10 - Tab shows 10
 
-### Part C — HUD (7 min)
+### Part C - HUD (7 min)
 1. \`CoinsHUD\` + LocalScript mirror
-2. Collect coins — label updates instantly
-3. **Save to Roblox** → \`Lesson 3.3 — Coins HUD\`
+2. Collect coins - label updates instantly
+3. **Save to Roblox** → \`Lesson 3.3 - Coins HUD\`
 4. **Practice complete**`,
     hints: [
       "If HUD stuck at 0, check leaderstats exists under Player not Workspace",
@@ -980,7 +980,7 @@ Later modules add **DataStore** to save Coins between sessions. Today = **in-ses
         type: "multiple_choice",
         question: "Lesson 3.3 save name…",
         options: [
-          "Lesson 3.3 — Coins HUD",
+          "Lesson 3.3 - Coins HUD",
           "Collecting Coins",
           "Obby Ready",
           "Finish Grades",
@@ -996,7 +996,7 @@ export const ukLesson34 = {
   lessonId: "lesson-roblox-3-4",
   moduleId: "module-03",
   order: 4,
-  title: "3.4 — Функції",
+  title: "3.4 - Функції",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -1013,11 +1013,11 @@ export const ukLesson34 = {
         content: `You have **30 scripts** doing the same thing. One bug = fix 30 times. **Functions** fix that.
 
 **Lesson flow:**
-1. **Theory (40 min)** — functions + one \`CoinService\` script
-2. **Practice (~25 min)** — refactor pickups
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - functions + one \`CoinService\` script
+2. **Practice (~25 min)** - refactor pickups
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 3.3 — Coins HUD**. You will **remove** duplicate coin scripts and replace with **one** organized script.`,
+Open **Lesson 3.3 - Coins HUD**. You will **remove** duplicate coin scripts and replace with **one** organized script.`,
       },
       {
         title: "Why functions exist",
@@ -1027,7 +1027,7 @@ Open **Lesson 3.3 — Coins HUD**. You will **remove** duplicate coin scripts an
 | Fix bug in 30 files | Fix bug in one function |
 | Hard to read | Clear steps: validate → award → hide |
 
-**Real studios** use functions everywhere — you are learning pro habits early.`,
+**Real studios** use functions everywhere - you are learning pro habits early.`,
       },
       {
         title: "Function syntax in Luau",
@@ -1040,8 +1040,8 @@ local total = add(3, 5)  -- 8
 \`\`\`
 
 **Parts:**
-- \`local function name(...)\` — defines the function
-- \`return\` — sends a value back (optional)
+- \`local function name(...)\` - defines the function
+- \`return\` - sends a value back (optional)
 - Call with \`name(arguments)\`
 
 \`\`\`lua
@@ -1072,7 +1072,7 @@ local function awardCoins(player, amount)
 end
 \`\`\`
 
-**Early return** when something is missing — avoids nested \`if\` mess.
+**Early return** when something is missing - avoids nested \`if\` mess.
 
 Call: \`awardCoins(player, 1)\` for common, \`awardCoins(player, 5)\` for rare.`,
       },
@@ -1087,7 +1087,7 @@ local function getCoinValue(coinName)
 end
 \`\`\`
 
-\`string.find\` returns position if "Rare" appears in name — \`CoinRare_03\` gives 5.
+\`string.find\` returns position if "Rare" appears in name - \`CoinRare_03\` gives 5.
 
 **Exercise (3 min):** Predict values for \`Coin_001\` and \`CoinRare_01\`.`,
       },
@@ -1174,8 +1174,8 @@ Use in HUD later for **1,250 Coins** style text.
 **Before practice checklist:**
 - [ ] CoinCollector in ServerScriptService
 - [ ] Per-coin Scripts removed (no double awards)
-- [ ] Collect common + rare — correct amounts
-- [ ] Save: \`Lesson 3.4 — Coin Functions\``,
+- [ ] Collect common + rare - correct amounts
+- [ ] Save: \`Lesson 3.4 - Coin Functions\``,
       },
     ],
   },
@@ -1201,27 +1201,27 @@ Use in HUD later for **1,250 Coins** style text.
       correctApproach: "Put helper functions at top of CoinCollector",
     },
   ],
-  summary: "You wrote reusable functions for awarding, hiding, and valuing coins, then replaced dozens of duplicate scripts with one CoinCollector — scalable simulator architecture.",
+  summary: "You wrote reusable functions for awarding, hiding, and valuing coins, then replaced dozens of duplicate scripts with one CoinCollector - scalable simulator architecture.",
   practiceTask: {
     title: "Coin functions refactor (~25 min)",
     difficulty: "beginner",
     description: `**Goal:** One server script handles all coins via functions.
 
-### Part A — Helpers (10 min)
+### Part A - Helpers (10 min)
 1. Create \`CoinCollector\` in ServerScriptService
 2. Add \`awardCoins\`, \`getCoinValue\`, \`hideCoin\`, \`getPlayerFromHit\`
 
-### Part B — Connect all coins (10 min)
-1. Loop \`Workspace.Coins\` folders — connect every coin Part
+### Part B - Connect all coins (10 min)
+1. Loop \`Workspace.Coins\` folders - connect every coin Part
 2. Remove/disable old scripts inside coins
-3. Test 10 pickups — correct Tab + HUD
+3. Test 10 pickups - correct Tab + HUD
 
-### Part C — Save (5 min)
+### Part C - Save (5 min)
 1. Optional \`formatCoins\` for HUD
-2. **Save to Roblox** → \`Lesson 3.4 — Coin Functions\`
+2. **Save to Roblox** → \`Lesson 3.4 - Coin Functions\`
 3. **Practice complete**`,
     hints: [
-      "Test one coin before looping all — faster debug",
+      "Test one coin before looping all - faster debug",
       "Print getCoinValue(coin.Name) once to verify rare = 5",
       "If nothing happens, check coinsFolder path matches Explorer",
     ],
@@ -1242,7 +1242,7 @@ Use in HUD later for **1,250 Coins** style text.
           "Banning Tab",
         ],
         correctAnswer: 0,
-        explanation: "DRY — do not repeat yourself.",
+        explanation: "DRY - do not repeat yourself.",
       },
       {
         id: "q2",
@@ -1353,7 +1353,7 @@ Use in HUD later for **1,250 Coins** style text.
         type: "multiple_choice",
         question: "Lesson 3.4 save name…",
         options: [
-          "Lesson 3.4 — Coin Functions",
+          "Lesson 3.4 - Coin Functions",
           "Coins HUD",
           "Obby Ready",
           "DataStore",
@@ -1369,7 +1369,7 @@ export const ukLesson35 = {
   lessonId: "lesson-roblox-3-5",
   moduleId: "module-03",
   order: 5,
-  title: "3.5 — DataStore: пам'ять між сесіями",
+  title: "3.5 - DataStore: пам'ять між сесіями",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -1386,9 +1386,9 @@ export const ukLesson35 = {
         content: `Until now, leaving the game **erased** your Coins. **DataStore** remembers players between sessions.
 
 **Lesson flow:**
-1. **Theory (40 min)** — load/save with pcall
-2. **Practice (~25 min)** — persistent coins
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - load/save with pcall
+2. **Practice (~25 min)** - persistent coins
+3. **Quiz (10 min)** - **70%** pass
 
 **Important:** Enable **Game Settings → Security → Enable Studio Access to API Services** for DataStore tests in Studio.`,
       },
@@ -1401,7 +1401,7 @@ export const ukLesson35 = {
 
 Data is keyed by **UserId** (unique per Roblox account).
 
-**You cannot** test real saves in plain Edit mode only — use **Play** with API enabled or **Publish** test.`,
+**You cannot** test real saves in plain Edit mode only - use **Play** with API enabled or **Publish** test.`,
       },
       {
         title: "Create the DataStore",
@@ -1416,7 +1416,7 @@ local coinStore = DataStoreService:GetDataStore("CoinProgress_v1")
 
 **Version suffix \`_v1\`:** if you change save format later, create \`CoinProgress_v2\` without breaking old data.
 
-**Never** store passwords or personal info — only game stats like coin count.`,
+**Never** store passwords or personal info - only game stats like coin count.`,
       },
       {
         title: "loadCoins with pcall",
@@ -1438,7 +1438,7 @@ local function loadCoins(player)
 end
 \`\`\`
 
-**\`pcall\`** runs risky code safely — if Roblox API fails, game keeps running instead of crashing.
+**\`pcall\`** runs risky code safely - if Roblox API fails, game keeps running instead of crashing.
 
 **Exercise (5 min):** Print load result in Output when player joins.`,
       },
@@ -1457,10 +1457,10 @@ end
 \`\`\`
 
 **When to save:**
-- \`Players.PlayerRemoving\` — player leaves
+- \`Players.PlayerRemoving\` - player leaves
 - Optional: autosave every 60 seconds (advanced)
 
-**Do not** save every single coin pickup — too many API calls. Save **final total** on leave.`,
+**Do not** save every single coin pickup - too many API calls. Save **final total** on leave.`,
       },
       {
         title: "Wire PlayerAdded and PlayerRemoving",
@@ -1489,35 +1489,35 @@ Players.PlayerRemoving:Connect(function(player)
 end)
 \`\`\`
 
-**Merge** with your existing LeaderstatsSetup — one script owns join/leave.`,
+**Merge** with your existing LeaderstatsSetup - one script owns join/leave.`,
       },
       {
         title: "Test persistence correctly",
         content: `**Test steps:**
 1. Enable API Services in Studio settings
-2. **Play** (F5) — collect **20** coins
+2. **Play** (F5) - collect **20** coins
 3. **Stop** Play (player leaves → save fires)
-4. **Play** again — Coins should be **20**
+4. **Play** again - Coins should be **20**
 
 **If always 0:**
 - API not enabled
-- pcall failing — read yellow warnings in Output
+- pcall failing - read yellow warnings in Output
 - Saving in Edit without Play session
 
 **Publish test:** real players need published place for live DataStore (Studio works with API flag).`,
       },
       {
         title: "Safety rules",
-        content: `- Never trust **client** to send "I have 9999 coins" — server already owns leaderstats
+        content: `- Never trust **client** to send "I have 9999 coins" - server already owns leaderstats
 - Use \`pcall\` on GetAsync and SetAsync
-- Keep data **small** (numbers, short tables) — large saves fail
-- Rate limits exist — do not spam SetAsync in loops
+- Keep data **small** (numbers, short tables) - large saves fail
+- Rate limits exist - do not spam SetAsync in loops
 
 **Before practice checklist:**
 - [ ] API Services enabled
 - [ ] load on join, save on leave
 - [ ] Stop/Play test shows restored coins
-- [ ] Save: \`Lesson 3.5 — Saved Coins\``,
+- [ ] Save: \`Lesson 3.5 - Saved Coins\``,
       },
     ],
   },
@@ -1528,7 +1528,7 @@ end)
       correctApproach: "ServerScriptService only",
     },
     {
-      mistake: "No pcall — script errors on API fail",
+      mistake: "No pcall - script errors on API fail",
       explanation: "Temporary Roblox issues crash economy.",
       correctApproach: "Wrap GetAsync/SetAsync in pcall",
     },
@@ -1543,30 +1543,30 @@ end)
       correctApproach: "Save total on PlayerRemoving",
     },
   ],
-  summary: "You used DataStoreService with pcall to load coins when players join and save when they leave, integrated with leaderstats — your simulator now remembers progress between sessions.",
+  summary: "You used DataStoreService with pcall to load coins when players join and save when they leave, integrated with leaderstats - your simulator now remembers progress between sessions.",
   practiceTask: {
     title: "Persistent coins (~25 min)",
     difficulty: "beginner",
     description: `**Goal:** Coins survive Stop → Play again.
 
-### Part A — DataStore script (12 min)
+### Part A - DataStore script (12 min)
 1. \`CoinDataStore\` with GetDataStore \`CoinProgress_v1\`
 2. \`loadCoins\` / \`saveCoins\` with pcall
 3. Enable Studio API Services
 
-### Part B — Join / leave (8 min)
+### Part B - Join / leave (8 min)
 1. PlayerAdded: leaderstats + \`coins.Value = loadCoins(player)\`
 2. PlayerRemoving: \`saveCoins(player, coins.Value)\`
-3. Merge with CoinCollector / Leaderstats — no duplicate PlayerAdded
+3. Merge with CoinCollector / Leaderstats - no duplicate PlayerAdded
 
-### Part C — Persistence test (5 min)
-1. Play — earn 25+ coins — Stop
-2. Play again — still 25+
-3. **Save to Roblox** → \`Lesson 3.5 — Saved Coins\`
+### Part C - Persistence test (5 min)
+1. Play - earn 25+ coins - Stop
+2. Play again - still 25+
+3. **Save to Roblox** → \`Lesson 3.5 - Saved Coins\`
 4. **Practice complete**`,
     hints: [
       "Yellow warn in Output = read the pcall failure message",
-      "UserId key is automatic — do not use player.Name as key",
+      "UserId key is automatic - do not use player.Name as key",
       "Stop Play to trigger save before re-testing",
     ],
     optionalChallenge: "Also save BestCoins in same DataStore as a table {coins=, best=}.",
@@ -1684,7 +1684,7 @@ end)
         type: "multiple_choice",
         question: "Saving every 0.1 seconds is…",
         options: [
-          "Bad — rate limits",
+          "Bad - rate limits",
           "Required",
           "Same as never saving",
           "UI only",
@@ -1697,7 +1697,7 @@ end)
         type: "multiple_choice",
         question: "Lesson 3.5 save name…",
         options: [
-          "Lesson 3.5 — Saved Coins",
+          "Lesson 3.5 - Saved Coins",
           "Coin Functions",
           "Obby Ready",
           "Victory Screen",
@@ -1713,7 +1713,7 @@ export const ukLesson36 = {
   lessonId: "lesson-roblox-3-6",
   moduleId: "module-03",
   order: 6,
-  title: "3.6 — Checkpoint: Симулятор монет",
+  title: "3.6 - Checkpoint: Симулятор монет",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -1727,7 +1727,7 @@ export const ukLesson36 = {
     sections: [
       {
         title: "Module 3 checkpoint (about 40 minutes)",
-        content: `You ship **Coin Simulator** — a playable slice players understand in **10 seconds**:
+        content: `You ship **Coin Simulator** - a playable slice players understand in **10 seconds**:
 
 **"Collect coins. Number goes up. Comes back tomorrow still saved."**
 
@@ -1753,25 +1753,25 @@ export const ukLesson36 = {
       {
         title: "Spawn onboarding",
         content: `At spawn, player sees within 3 seconds:
-- **Sign:** \`Collect coins — explore the island!\`
+- **Sign:** \`Collect coins - explore the island!\`
 - **Visible coin trail** toward first zone
 - **CoinsHUD** top-left: \`Coins: 0\`
 
 **Optional:** arrow Parts pointing to coin dense area.
 
-No tutorial text wall — show, do not tell.`,
+No tutorial text wall - show, do not tell.`,
       },
       {
         title: "QA test matrix (required)",
         content: `| # | Test | Pass? |
 |---|------|-------|
-| 1 | Collect 10 fast — HUD + Tab = 10 | |
-| 2 | Stand on one coin 3s — still +1 only | |
+| 1 | Collect 10 fast - HUD + Tab = 10 | |
+| 2 | Stand on one coin 3s - still +1 only | |
 | 3 | Rare coin gives +5 (if built) | |
-| 4 | Stop Play at 30 coins, Play again — still 30 | |
+| 4 | Stop Play at 30 coins, Play again - still 30 | |
 | 5 | Output: no red errors on clean run | |
 
-**Multiplayer (if possible):** two players — coins do not cross accounts.`,
+**Multiplayer (if possible):** two players - coins do not cross accounts.`,
       },
       {
         title: "Feel like a game",
@@ -1780,28 +1780,28 @@ No tutorial text wall — show, do not tell.`,
 - At least **60 seconds** of coin route content
 - **No** broken floating coins inside terrain
 
-**Minimum map:** keep island hub + coin zones — obby optional side path.`,
+**Minimum map:** keep island hub + coin zones - obby optional side path.`,
       },
       {
         title: "Architecture checklist",
-        content: `- [ ] **One** CoinCollector — no scripts inside individual coins
+        content: `- [ ] **One** CoinCollector - no scripts inside individual coins
 - [ ] **One** join script path (leaderstats + load)
 - [ ] **One** save on PlayerRemoving
 - [ ] CoinsHUD uses GetPropertyChangedSignal
 - [ ] DataStore name \`CoinProgress_v1\`
 
-Future Module 4 adds **tycoon plots** — your coin code stays in ServerScriptService.`,
+Future Module 4 adds **tycoon plots** - your coin code stays in ServerScriptService.`,
       },
       {
         title: "Demo script (2 minutes)",
         content: `Show teacher/parents:
-1. Spawn — read sign, see HUD
-2. Collect 5 coins — number rises + sound
-3. Tab key — leaderboard matches
-4. Stop and Play — coins restored
+1. Spawn - read sign, see HUD
+2. Collect 5 coins - number rises + sound
+3. Tab key - leaderboard matches
+4. Stop and Play - coins restored
 5. Say: "DataStore saves UserId so progress returns"
 
-**Save:** \`Module 3 — Coin Simulator\``,
+**Save:** \`Module 3 - Coin Simulator\``,
       },
       {
         title: "Module 4 preview",
@@ -1838,31 +1838,31 @@ Module 4 turns passive income into a business sim on your island.`,
       correctApproach: "Sound + hide coin + HUD tick",
     },
   ],
-  summary: "You shipped Coin Simulator with organized scripts, live HUD, function-based collection, DataStore persistence, and passed QA tests — Module 4 tycoon building starts next.",
+  summary: "You shipped Coin Simulator with organized scripts, live HUD, function-based collection, DataStore persistence, and passed QA tests - Module 4 tycoon building starts next.",
   practiceTask: {
     title: "Ship Coin Simulator (~40 min)",
     difficulty: "beginner",
     description: `**Goal:** Pass all 5 QA tests + demo-ready place.
 
-### Part A — Cleanup (10 min)
+### Part A - Cleanup (10 min)
 1. Folders + names; remove stray scripts
 2. Spawn sign + coin trail visible
-3. CoinCollector only — delete per-coin Scripts
+3. CoinCollector only - delete per-coin Scripts
 
-### Part B — Systems (15 min)
+### Part B - Systems (15 min)
 1. leaderstats + load/save DataStore
 2. CoinsHUD live
 3. Pickup sound in awardCoins path
 
-### Part C — QA & save (15 min)
+### Part C - QA & save (15 min)
 1. Complete test matrix 1–5
 2. Fix any fail before marking done
-3. **Save to Roblox** → \`Module 3 — Coin Simulator\`
+3. **Save to Roblox** → \`Module 3 - Coin Simulator\`
 4. **Practice complete** + optional 2-min recording`,
     hints: [
-      "Fix double-award before testing save — wrong count saves wrong data",
+      "Fix double-award before testing save - wrong count saves wrong data",
       "API Services must stay enabled for DataStore",
-      "Run test 4 last — confirms whole module works",
+      "Run test 4 last - confirms whole module works",
     ],
     optionalChallenge: "Booster pad: double coins for 20 seconds after touch.",
   },
@@ -1992,7 +1992,7 @@ Module 4 turns passive income into a business sim on your island.`,
         type: "multiple_choice",
         question: "Final Module 3 save name…",
         options: [
-          "Module 3 — Coin Simulator",
+          "Module 3 - Coin Simulator",
           "Lesson 2.1",
           "Untitled",
           "Click Magic",

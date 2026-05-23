@@ -1,116 +1,55 @@
 /**
- * Дескриптори та property
- * Full educational content
+ * Параметри шляху, query та моделі Pydantic
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_15_2 = {
-  lessonId: "lesson-13-4",
+  lessonId: "lesson-15-2",
   moduleId: "module-15",
   order: 2,
-  title: "Дескриптори та property",
-  
+  title: "Параметри шляху, query та моделі Pydantic",
+
   learningObjectives: [
-    "Розуміти дескриптори",
-    "Створювати власні дескриптори",
-    "Використовувати property",
-    "Застосовувати для валідації",
-    "lesson-15-1",
-    "lesson-15-3",
-    "Протоколи та duck typing",
-    "Розуміти протоколи Python"
-],
-  
-  prerequisites: [
-    "lesson-15-1",
-    "lesson-15-3",
-    "Протоколи та duck typing"
-],
-  
+    "Використовувати path parameters /items/{id}",
+    "Додавати query параметри skip, limit",
+    "Описувати моделі BaseModel",
+    "Повертати типізовані відповіді"
+  ],
+
+  prerequisites: ["lesson-15-1"],
+
   videoUrl: "",
-  
+
   theory: {
     sections: [
-      {
-        title: "Вступ",
-        content: `Дескриптори та property
-
-На цьому уроці ми вивчимо основні концепції та навички, необхідні для розуміння та застосування матеріалу.
-
-**Що ви дізнаєтеся:**
-- Розуміти дескриптори
-- Створювати власні дескриптори
-- Використовувати property
-- Застосовувати для валідації
-- lesson-17-1
-- lesson-17-3
-- Протоколи та duck typing
-- Розуміти протоколи Python
-
-**Попередні вимоги:** lesson-17-1, lesson-17-3, Протоколи та duck typing
-`
-      }
+        {
+            "title": "Path і Query",
+            "content": "```python\nfrom fastapi import FastAPI\nfrom pydantic import BaseModel\n\napp = FastAPI()\n\nclass Item(BaseModel):\n    id: int\n    name: str\n    price: float\n\nitems_db: list[Item] = []\n\n@app.get(\"/items/{item_id}\")\ndef get_item(item_id: int):\n    for it in items_db:\n        if it.id == item_id:\n            return it\n    return {\"error\": \"not found\"}\n\n@app.get(\"/items\")\ndef list_items(skip: int = 0, limit: int = 10):\n    return items_db[skip : skip + limit]\n```"
+        }
     ]
   },
-  
-  codeExamples: [
-    {
-      title: "Приклад 1",
-      code: `# Приклад коду
-print("Привіт, світ!")`,
-      explanation: "Базовий приклад для розуміння концепції"
-    }
-  ],
-  
-  commonMistakes: [
-    {
-      mistake: "Типова помилка",
-      explanation: "Пояснення помилки",
-      correctApproach: "Правильний підхід"
-    }
-  ],
-  
-  summary: `Підсумок уроку "Дескриптори та property"
 
-На цьому уроці ми вивчили основні концепції та навички.`,
-  
-  practiceTask: {
-    title: "Практична задача",
-    description: "Застосуйте набуті знання на практиці",
-    problemStatement: "Створіть програму, яка демонструє вивчені концепції",
-    inputFormat: "",
-    outputFormat: "",
-    examples: [],
-    solution: {
-      code: `# Рішення
-# Ваш код тут`,
-      explanation: "Пояснення рішення"
-    },
-    hints: [
-      "Підказка 1",
-      "Підказка 2"
-    ],
-    difficulty: "beginner"
-  },
-  
+  codeExamples: [],
+
+  commonMistakes: [],
+
+  summary: "Маршрути з параметрами та Pydantic-моделі описують контракт API.",
+
+  practiceTask: null,
+
   quiz: {
     questions: [
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Питання про основні концепції?",
-        options: [
-          "Варіант 1",
-          "Варіант 2",
-          "Варіант 3",
-          "Варіант 4"
-        ],
+        question: "Для чого використовують BaseModel?",
+        options: ["Валідація та серіалізація даних","Малювання GUI","Відправка email","Скрапінг HTML"],
         correctAnswer: 0,
-        explanation: "Пояснення правильної відповіді"
+        explanation: "Pydantic перевіряє типи полів."
       }
     ],
-    timeLimit: 10,
+    timeLimit: 15,
     passingScore: 70
   }
 }

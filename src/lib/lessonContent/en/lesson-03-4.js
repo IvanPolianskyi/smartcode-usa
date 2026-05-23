@@ -101,7 +101,7 @@ print_numbers(10, 20, 30, 40, 50)
 
 **Important:**
 
-1. **The name "args" is a convention — you can use any name:**
+1. **The name "args" is a convention - you can use any name:**
 \`\`\`python
 def example(*numbers):  # Works too!
     return sum(numbers)
@@ -243,7 +243,7 @@ print_info(title="Developer", experience=5, language="Python")
 
 **Important:**
 
-1. **The name "kwargs" is a convention — you can use any name:**
+1. **The name "kwargs" is a convention - you can use any name:**
 \`\`\`python
 def example(**options):  # Works too!
     return options
@@ -557,12 +557,12 @@ result = wrapper_function(1, 2, c=20)  # Forwards arguments
 
 1. **\`*args\`**
    - Collects any number of positional arguments into a tuple
-   - The name "args" is a convention — any name works
+   - The name "args" is a convention - any name works
    - Lets you build flexible functions
 
 2. **\`**kwargs\`**
    - Collects any number of keyword arguments into a dictionary
-   - The name "kwargs" is a convention — any name works
+   - The name "kwargs" is a convention - any name works
    - Useful for optional parameters and settings
 
 3. **Combining**
@@ -577,13 +577,13 @@ result = wrapper_function(1, 2, c=20)  # Forwards arguments
 
 **When to use:**
 
-- \`*args\` — when the number of positional arguments is unknown
-- \`**kwargs\` — when you need optional keyword parameters
-- Combining both — for maximum flexibility
+- \`*args\` - when the number of positional arguments is unknown
+- \`**kwargs\` - when you need optional keyword parameters
+- Combining both - for maximum flexibility
 
 **Next step:**
 
-In the next lesson we will learn about object methods — how to work with string, list, and other object methods.`
+In the next lesson we will learn about object methods - how to work with string, list, and other object methods.`
       }
     ]
   },
@@ -719,13 +719,13 @@ def example(required_param, *args):
     {
       mistake: "Confusing *args and **kwargs",
       explanation: "Beginners often mix up when to use *args versus **kwargs.",
-      correctApproach: `# *args — positional arguments (collected in a tuple)
+      correctApproach: `# *args - positional arguments (collected in a tuple)
 def example(*args):
     print(args)  # (1, 2, 3)
 
 example(1, 2, 3)
 
-# **kwargs — keyword arguments (collected in a dict)
+# **kwargs - keyword arguments (collected in a dict)
 def example(**kwargs):
     print(kwargs)  # {'a': 1, 'b': 2}
 
@@ -734,7 +734,7 @@ example(a=1, b=2)`
     {
       mistake: "Forgetting that *args and **kwargs can be empty",
       explanation: "Sometimes beginners do not check whether arguments were passed, which can cause errors.",
-      correctApproach: `# Correct — check for arguments
+      correctApproach: `# Correct - check for arguments
 def example(*args, **kwargs):
     if len(args) == 0:
         print("No positional arguments passed")
@@ -750,17 +750,17 @@ example()  # Both messages about missing arguments`
     }
   ],
   
-  summary: `In this lesson we learned *args and **kwargs — powerful tools for working with arguments:
+  summary: `In this lesson we learned *args and **kwargs - powerful tools for working with arguments:
 
 1. \`*args\`
    - Collects any number of positional arguments into a tuple
    - Lets you build flexible functions
-   - The name "args" is a convention — any name works
+   - The name "args" is a convention - any name works
 
 2. \`**kwargs\`
    - Collects any number of keyword arguments into a dictionary
    - Useful for optional parameters and settings
-   - The name "kwargs" is a convention — any name works
+   - The name "kwargs" is a convention - any name works
 
 3. Combining
    - Both can be used in one function
@@ -779,18 +779,18 @@ These tools make functions more flexible and powerful!`,
     description: "Create a universal calculator that works with any number of values and options",
     problemStatement: `Write a program with functions for a universal calculator:
 
-1. **calculate** — main calculator function
+1. **calculate** - main calculator function
    - Parameters: operation (required), *numbers (any number of values), **options (optional settings)
    - Supported operations: "add", "multiply", "average"
    - Options: "round" (round the result), "format" ("int" or "float")
    - Returns the computed result
 
-2. **format_result** — formats the result
+2. **format_result** - formats the result
    - Parameters: result (number), **format_options (formatting options)
    - Options: "decimals" (decimal places), "prefix" (before the number), "suffix" (after the number)
    - Returns a formatted string
 
-3. **display_calculation** — prints calculation details
+3. **display_calculation** - prints calculation details
    - Parameters: operation, *numbers, result, **info (extra information)
    - Prints detailed information about the calculation
 
@@ -902,7 +902,7 @@ print(f"Formatted result: {formatted}")`,
       explanation: "The solution uses *args for any number of values, **kwargs for options, and combines both approaches. Functions work flexibly with different argument combinations."
     },
     hints: [
-      "Assign values directly in code — do not use input()",
+      "Assign values directly in code - do not use input()",
       "The calculate function should handle operations and options via **kwargs",
       "Use *numbers to accept any number of values",
       "Check for options in **kwargs before using them (e.g. 'round' in options)",

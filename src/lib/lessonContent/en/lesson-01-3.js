@@ -203,14 +203,14 @@ print(is_between)  # True`,
   
   summary: `In this lesson we:
 
-1. Reviewed comparison operators — ==, !=, <, >, <=, >=
-2. Reviewed logical operators — and, or, not
-3. Solved practical problems — age checks, discounts, ranges
-4. Learned to create complex conditions — combining operators
+1. Reviewed comparison operators - ==, !=, <, >, <=, >=
+2. Reviewed logical operators - and, or, not
+3. Solved practical problems - age checks, discounts, ranges
+4. Learned to create complex conditions - combining operators
 
 Now you know how to use comparison and logical operators to build conditions!
 
-Next module — conditional if/elif/else statements!`,
+Next module - conditional if/elif/else statements!`,
   
   practiceTask: {
     title: "Club access check system",

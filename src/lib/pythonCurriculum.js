@@ -9,7 +9,7 @@ import { QUIZ_QUESTION_TYPES } from './courseData'
 
 export const pythonCurriculum = {
   courseId: "python-developer-zero-to-junior",
-  title: "Повний курс Пайтон",
+  title: "Python: від першої програми до власних проєктів",
   
   modules: [
     {
@@ -79,7 +79,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-00-5",
-          order: 4,
+          order: 5,
           title: "Кортежі (tuple) та множини (set)",
           learningObjectives: [
             "Розуміти різницю між списками та кортежами",
@@ -92,7 +92,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-00-6",
-          order: 4,
+          order: 6,
           title: "Рядки (str): методи, форматування, індексація",
           learningObjectives: [
             "Маніпулювати рядками",
@@ -105,7 +105,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-00-7",
-          order: 4,
+          order: 7,
           title: "Вкладені структури даних",
           learningObjectives: [
             "Створювати вкладені списки та словники",
@@ -118,7 +118,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-00-8",
-          order: 4,
+          order: 8,
           title: "Практика: задачі з об'єктами та структурами даних",
           learningObjectives: [
             "Розв'язувати практичні задачі з об'єктами",
@@ -252,7 +252,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-02-5",
-          order: 4,
+          order: 5,
           title: "Вкладені цикли та умови",
           learningObjectives: [
             "Створювати вкладені цикли",
@@ -265,7 +265,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-02-6",
-          order: 4,
+          order: 6,
           title: "List comprehensions та генератори списків",
           learningObjectives: [
             "Створювати list comprehensions",
@@ -278,7 +278,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-02-7",
-          order: 4,
+          order: 7,
           title: "Практика: алгоритмічні задачі",
           learningObjectives: [
             "Розв'язувати алгоритмічні задачі",
@@ -291,7 +291,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-02-8",
-          order: 4,
+          order: 8,
           title: "Практика: додаткові задачі з операторами",
           learningObjectives: [
             "Закріпити знання з операторів",
@@ -371,7 +371,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-03-5",
-          order: 4,
+          order: 5,
           title: "Методи об'єктів: методи рядків, списків, словників",
           learningObjectives: [
             "Використовувати методи рядків",
@@ -384,7 +384,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-03-6",
-          order: 4,
+          order: 6,
           title: "Lambda-функції",
           learningObjectives: [
             "Створювати lambda функції",
@@ -397,7 +397,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-03-7",
-          order: 4,
+          order: 7,
           title: "Область видимості змінних (scope)",
           learningObjectives: [
             "Розуміти локальну та глобальну область видимості",
@@ -410,7 +410,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-03-8",
-          order: 4,
+          order: 8,
           title: "Рекурсія",
           learningObjectives: [
             "Розуміти концепцію рекурсії",
@@ -423,7 +423,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-03-9",
-          order: 4,
+          order: 9,
           title: "Функції вищого порядку: map, filter, reduce",
           learningObjectives: [
             "Використовувати map() для перетворення",
@@ -436,7 +436,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-03-10",
-          order: 4,
+          order: 10,
           title: "Практика: написання функцій",
           learningObjectives: [
             "Створювати складні функції",
@@ -916,7 +916,7 @@ export const pythonCurriculum = {
         {
           lessonId: "lesson-09-3",
           order: 3,
-          title: "Скrapінг веб-сайтів",
+          title: "Скрапінг веб-сайтів",
           learningObjectives: [
             "Створити скрапер для веб-сайту",
             "Обробляти динамічні сторінки",
@@ -1165,6 +1165,142 @@ export const pythonCurriculum = {
           ],
           estimatedTime: 150,
           prerequisites: ["lesson-13-4"],
+          isProject: true
+        }
+      ]
+    },
+    {
+      moduleId: "module-14",
+      order: 14,
+      title: "14 - Telegram-боти",
+      description: "Створення ботів: Bot API, python-telegram-bot, команди та практичний проєкт",
+      duration: { weeks: 2, lessons: 4 },
+      learningOutcomes: [
+        "Створювати бота через BotFather",
+        "Працювати з Telegram Bot API",
+        "Будувати бота на python-telegram-bot",
+        "Реалізувати корисного бота-асистента"
+      ],
+      lessons: [
+        {
+          lessonId: "lesson-14-1",
+          order: 1,
+          title: "Telegram Bot API: токен і перші запити",
+          learningObjectives: [
+            "Створити бота через @BotFather",
+            "Зберігати токен у змінних оточення",
+            "Надсилати повідомлення через HTTP API",
+            "Отримувати оновлення getUpdates"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-13-5"]
+        },
+        {
+          lessonId: "lesson-14-2",
+          order: 2,
+          title: "Бібліотека python-telegram-bot: echo-бот",
+          learningObjectives: [
+            "Встановити python-telegram-bot",
+            "Налаштувати Application та polling",
+            "Обробляти команду /start",
+            "Повторювати текст користувача"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-14-1"]
+        },
+        {
+          lessonId: "lesson-14-3",
+          order: 3,
+          title: "Команди, клавіатури та стан діалогу",
+          learningObjectives: [
+            "Додавати кастомні команди /help, /menu",
+            "Створювати ReplyKeyboardMarkup",
+            "Зберігати дані в context.user_data",
+            "Обробляти натискання кнопок"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-14-2"]
+        },
+        {
+          lessonId: "lesson-14-4",
+          order: 4,
+          title: "Практика: корисний Telegram-бот",
+          learningObjectives: [
+            "Зібрати бота з кількох команд",
+            "Підключити зовнішнє API",
+            "Логувати помилки",
+            "Оформити README з інструкцією запуску"
+          ],
+          estimatedTime: 150,
+          prerequisites: ["lesson-14-3"],
+          isProject: true
+        }
+      ]
+    },
+    {
+      moduleId: "module-15",
+      order: 15,
+      title: "15 - FastAPI та REST API",
+      description: "Сучасні веб-API на FastAPI: маршрути, Pydantic, CRUD та webhook для Telegram",
+      duration: { weeks: 2, lessons: 4 },
+      learningOutcomes: [
+        "Створювати REST API на FastAPI",
+        "Валідувати дані через Pydantic",
+        "Повертати коректні HTTP статуси",
+        "Поєднати API з Telegram webhook"
+      ],
+      lessons: [
+        {
+          lessonId: "lesson-15-1",
+          order: 1,
+          title: "FastAPI: перший REST endpoint",
+          learningObjectives: [
+            "Встановити fastapi та uvicorn",
+            "Створити app і маршрут GET /",
+            "Запустити сервер локально",
+            "Переглянути автодокументацію /docs"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-14-4"]
+        },
+        {
+          lessonId: "lesson-15-2",
+          order: 2,
+          title: "Параметри шляху, query та моделі Pydantic",
+          learningObjectives: [
+            "Використовувати path parameters",
+            "Додавати query параметри",
+            "Описувати моделі BaseModel",
+            "Повертати типізовані відповіді"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-15-1"]
+        },
+        {
+          lessonId: "lesson-15-3",
+          order: 3,
+          title: "POST, помилки HTTP та статус-коди",
+          learningObjectives: [
+            "Створювати POST з тілом JSON",
+            "Повертати статус 201 Created",
+            "Використовувати HTTPException",
+            "Оновлювати та видаляти ресурси"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-15-2"]
+        },
+        {
+          lessonId: "lesson-15-4",
+          order: 4,
+          title: "Практика: REST API + webhook для Telegram",
+          learningObjectives: [
+            "Зібрати CRUD API для списку задач",
+            "Додати endpoint webhook для Telegram",
+            "Зв'язати FastAPI з логікою бота",
+            "Описати деплой API"
+          ],
+          estimatedTime: 150,
+          prerequisites: ["lesson-15-3"],
           isProject: true
         }
       ]

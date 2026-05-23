@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 11 — lessons 11.1–11.3 */
+/** Rich EN content for Roblox Module 11 - lessons 11.1–11.3 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -7,7 +7,7 @@ export const enLesson111 = {
   lessonId: 'lesson-roblox-11-1',
   moduleId: 'module-11',
   order: 1,
-  title: '11.1 — Clean Explorer',
+  title: '11.1 - Clean Explorer',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -21,14 +21,14 @@ export const enLesson111 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `**Module 11 — Performance & Polish** — ship quality: organization, loading, sound, FPS, UX.
+        content: `**Module 11 - Performance & Polish** - ship quality: organization, loading, sound, FPS, UX.
 
 **Lesson flow:**
-1. **Theory (40 min)** — Explorer standards
-2. **Practice (~25 min)** — cleanup sprint on your best place
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - Explorer standards
+2. **Practice (~25 min)** - cleanup sprint on your best place
+3. **Quiz (10 min)** - **70%** pass
 
-Use **Module 10 — Puzzle World** or your largest place file.`,
+Use **Module 10 - Puzzle World** or your largest place file.`,
       },
       {
         title: 'Clean Explorer = faster shipping',
@@ -56,7 +56,7 @@ You fix bugs **where you expect** things to live.`,
 | \`Cli_\` | LocalScripts |
 | \`Mod_\` | ModuleScripts |
 
-**Remotes:** \`Shop_RequestPurchase\`, \`Quest_Update\` — domain first.`,
+**Remotes:** \`Shop_RequestPurchase\`, \`Quest_Update\` - domain first.`,
       },
       {
         title: 'Folder structure baseline',
@@ -83,14 +83,14 @@ Workspace/
 └── Map/
 \`\`\`
 
-**One folder per system** — not 200 scripts in root.`,
+**One folder per system** - not 200 scripts in root.`,
       },
       {
         title: 'Cleanup sprint process',
         content: `**Batch 1 (10 min):** Workspace map props → \`Map/\`
 **Batch 2 (10 min):** Rename scripts Srv_/Cli_
 **Batch 3 (10 min):** Remotes → \`ReplicatedStorage/Remotes\`
-**Test Play** after each batch — nothing breaks.
+**Test Play** after each batch - nothing breaks.
 
 **Delete:** unused default \`Part\`, empty Models, duplicate scripts.
 
@@ -111,7 +111,7 @@ for _, inst in ipairs(workspace:GetDescendants()) do
 end
 \`\`\`
 
-Run once after cleanup — warn should be near zero.`,
+Run once after cleanup - warn should be near zero.`,
       },
       {
         title: 'Before practice checklist',
@@ -119,7 +119,7 @@ Run once after cleanup — warn should be near zero.`,
 - [ ] Remotes folder exists
 - [ ] Systems + Modules under ServerScriptService
 - [ ] Play test passes after refactor
-- [ ] Save: \`Lesson 11.1 — Clean Explorer\``,
+- [ ] Save: \`Lesson 11.1 - Clean Explorer\``,
       },
     ],
   },
@@ -129,23 +129,23 @@ Run once after cleanup — warn should be near zero.`,
     { mistake: 'Inconsistent prefixes', explanation: 'Still hard to search.', correctApproach: 'Written style note' },
     { mistake: 'Deleting "unused" without check', explanation: 'Removes wired UI.', correctApproach: 'Search references first' },
   ],
-  summary: `You applied naming prefixes, grouped systems into predictable folders, and completed an Explorer cleanup sprint — your project is now maintainable for polish and publish phases.`,
+  summary: `You applied naming prefixes, grouped systems into predictable folders, and completed an Explorer cleanup sprint - your project is now maintainable for polish and publish phases.`,
   practiceTask: {
     title: 'Explorer cleanup sprint (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Professional hierarchy on main place.
 
-### Part A — Plan (5 min)
+### Part A - Plan (5 min)
 1. List systems: shop, quest, puzzle, inventory
 2. Write 5 naming rules in notes
 
-### Part B — Refactor (18 min)
+### Part B - Refactor (18 min)
 1. Workspace + SSS + ReplicatedStorage + StarterGui
 2. Rename remotes and key scripts
 3. Play test after each batch
 
-### Part C — Save (2 min)
-1. **Save to Roblox** → \`Lesson 11.1 — Clean Explorer\`
+### Part C - Save (2 min)
+1. **Save to Roblox** → \`Lesson 11.1 - Clean Explorer\`
 2. **Practice complete**`,
     hints: [
       'Search Explorer for "Script" and "Part" names',
@@ -167,7 +167,7 @@ Run once after cleanup — warn should be near zero.`,
       { id: 'q7', type: MC, question: 'UI_ prefix helps…', options: ['Find interface elements', 'Delete Humanoid', 'Remove quests', 'Ban players'], correctAnswer: 0, explanation: 'UI organization.' },
       { id: 'q8', type: MC, question: 'Lesson 11.2 adds…', options: ['Loading screen', 'Laser puzzle', 'DataStore only', 'Sword combat'], correctAnswer: 0, explanation: 'First impression.' },
       { id: 'q9', type: MC, question: 'Shop_RequestPurchase naming is…', options: ['Domain_action pattern', 'Random', 'Banned', 'Client-only'], correctAnswer: 0, explanation: 'Remote clarity.' },
-      { id: 'q10', type: MC, question: 'Lesson 11.1 save name…', options: ['Lesson 11.1 — Clean Explorer', 'Game Polished', 'Loading Screen', 'Sound Design'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 11.1 save name…', options: ['Lesson 11.1 - Clean Explorer', 'Game Polished', 'Loading Screen', 'Sound Design'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -176,7 +176,7 @@ export const enLesson112 = {
   lessonId: 'lesson-roblox-11-2',
   moduleId: 'module-11',
   order: 2,
-  title: '11.2 — Loading Screen',
+  title: '11.2 - Loading Screen',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -190,12 +190,12 @@ export const enLesson112 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `Loading is **first impression** — players judge polish in 3 seconds.
+        content: `Loading is **first impression** - players judge polish in 3 seconds.
 
 **Lesson flow:**
-1. **Theory (40 min)** — loading UI + preload
-2. **Practice (~25 min)** — pro loading sequence
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - loading UI + preload
+2. **Practice (~25 min)** - pro loading sequence
+3. **Quiz (10 min)** - **70%** pass
 
 Open cleaned place from **11.1**.`,
       },
@@ -219,13 +219,13 @@ Open cleaned place from **11.1**.`,
 \`\`\`
 LoadingGui
 ├── Background (Frame, full screen, dark)
-├── Logo (ImageLabel or TextLabel — game name)
+├── Logo (ImageLabel or TextLabel - game name)
 ├── TipsLabel (rotating hints)
 ├── StatusLabel ("Loading...")
 └── ProgressBar (Frame bar optional)
 \`\`\`
 
-**ZIndex** — loading on top of everything until dismissed.`,
+**ZIndex** - loading on top of everything until dismissed.`,
       },
       {
         title: 'Preload and status',
@@ -279,7 +279,7 @@ task.spawn(function()
 end)
 \`\`\`
 
-**Teen-friendly** short tips — one line each.`,
+**Teen-friendly** short tips - one line each.`,
       },
       {
         title: 'Teleport context',
@@ -294,7 +294,7 @@ TeleportService:TeleportAsync(placeId, {player})
 
 Destination place also shows LoadingGui on join.
 
-**Duration:** fade 0.4–1.0s — not too slow.`,
+**Duration:** fade 0.4–1.0s - not too slow.`,
       },
       {
         title: 'Before practice checklist',
@@ -302,33 +302,33 @@ Destination place also shows LoadingGui on join.
 - [ ] PreloadAsync runs without error
 - [ ] Fade out reveals spawn cleanly
 - [ ] ResetOnSpawn behavior tested
-- [ ] Save: \`Lesson 11.2 — Loading Screen\``,
+- [ ] Save: \`Lesson 11.2 - Loading Screen\``,
       },
     ],
   },
   commonMistakes: [
     { mistake: 'LoadingGui ResetOnSpawn true', explanation: 'Flashes again every respawn.', correctApproach: 'false for session load' },
-    { mistake: 'No preload — hitches after fade', explanation: 'Bad first second.', correctApproach: 'PreloadAsync key folders' },
+    { mistake: 'No preload - hitches after fade', explanation: 'Bad first second.', correctApproach: 'PreloadAsync key folders' },
     { mistake: 'Loading never disabled', explanation: 'Stuck overlay.', correctApproach: 'gui.Enabled = false after fade' },
     { mistake: '5 second black wait with no text', explanation: 'Feels broken.', correctApproach: 'StatusLabel updates' },
   ],
-  summary: `You built a branded loading screen with rotating tips, ContentProvider preload, status messages, and a smooth fade into gameplay — the first seconds of your game now feel professional.`,
+  summary: `You built a branded loading screen with rotating tips, ContentProvider preload, status messages, and a smooth fade into gameplay - the first seconds of your game now feel professional.`,
   practiceTask: {
     title: 'Pro loading sequence (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Polished join experience.
 
-### Part A — UI (10 min)
+### Part A - UI (10 min)
 1. LoadingGui full screen + logo + tips + status
 2. Optional progress bar stub
 
-### Part B — Sequence (12 min)
-1. Cli_LoadingSequence — preload, status steps, fade
+### Part B - Sequence (12 min)
+1. Cli_LoadingSequence - preload, status steps, fade
 2. Tip rotation loop
 3. Test join in Play
 
-### Part C — Save (3 min)
-1. **Save to Roblox** → \`Lesson 11.2 — Loading Screen\`
+### Part C - Save (3 min)
+1. **Save to Roblox** → \`Lesson 11.2 - Loading Screen\`
 2. **Practice complete**`,
     hints: [
       'Preload Remotes + main world folder',
@@ -350,7 +350,7 @@ Destination place also shows LoadingGui on join.
       { id: 'q7', type: MC, question: 'Lesson 11.2 builds on…', options: ['Lesson 11.1 clean place', 'Empty', 'Module 1 only', 'Publish'], correctAnswer: 0, explanation: 'Organized project.' },
       { id: 'q8', type: MC, question: 'Lesson 11.3 adds…', options: ['Sound design layers', 'Only Explorer', 'Only laser', 'Coins'], correctAnswer: 0, explanation: 'Audio polish.' },
       { id: 'q9', type: MC, question: 'Good fade duration about…', options: ['0.4–1.0 seconds', '10 seconds', '0 seconds', '60 seconds'], correctAnswer: 0, explanation: 'Snappy polish.' },
-      { id: 'q10', type: MC, question: 'Lesson 11.2 save name…', options: ['Lesson 11.2 — Loading Screen', 'Clean Explorer', 'Game Polished', 'Optimization'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 11.2 save name…', options: ['Lesson 11.2 - Loading Screen', 'Clean Explorer', 'Game Polished', 'Optimization'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -359,7 +359,7 @@ export const enLesson113 = {
   lessonId: 'lesson-roblox-11-3',
   moduleId: 'module-11',
   order: 3,
-  title: '11.3 — Sound Design',
+  title: '11.3 - Sound Design',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -373,12 +373,12 @@ export const enLesson113 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `Visuals attract — **audio** keeps players immersed.
+        content: `Visuals attract - **audio** keeps players immersed.
 
 **Lesson flow:**
-1. **Theory (40 min)** — three sound layers
-2. **Practice (~25 min)** — 8+ sounds balanced
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - three sound layers
+2. **Practice (~25 min)** - 8+ sounds balanced
+3. **Quiz (10 min)** - **70%** pass
 
 Open place with shop, quest, puzzle from prior modules.`,
       },
@@ -390,7 +390,7 @@ Open place with shop, quest, puzzle from prior modules.`,
 | **UI** | 0.5–0.7 | Click, open shop, close |
 | **Gameplay** | 0.7–1.0 | Coin, quest complete, puzzle solve, hit |
 
-**Critical cues** louder than ambience — players hear rewards.`,
+**Critical cues** louder than ambience - players hear rewards.`,
       },
       {
         title: 'Folder organization',
@@ -422,7 +422,7 @@ local function playSFX(soundTemplate, parent)
 end
 \`\`\`
 
-**UI click** — LocalScript on buttons:
+**UI click** - LocalScript on buttons:
 
 \`\`\`lua
 button.MouseButton1Click:Connect(function()
@@ -430,7 +430,7 @@ button.MouseButton1Click:Connect(function()
 end)
 \`\`\`
 
-**Quest complete** — server after reward:
+**Quest complete** - server after reward:
 
 \`\`\`lua
 playSFX(game.ReplicatedStorage.Audio.Gameplay.SFX_Quest_Complete, workspace)
@@ -447,7 +447,7 @@ ambient.Volume = 0.25
 ambient:Play()
 \`\`\`
 
-**Fade in** — start Volume 0, tween to 0.25 over 2s.
+**Fade in** - start Volume 0, tween to 0.25 over 2s.
 
 **Zone ambient (advanced):** volume up inside cave part region.`,
       },
@@ -461,7 +461,7 @@ s.PlaybackSpeed = 0.95 + math.random() * 0.1
 
 **Ducking:** lower ambient 0.1s when quest complete plays.
 
-**No** coin sound 50 times per second — debounce collect SFX.
+**No** coin sound 50 times per second - debounce collect SFX.
 
 | Event | Sound |
 |-------|-------|
@@ -477,7 +477,7 @@ s.PlaybackSpeed = 0.95 + math.random() * 0.1
 - [ ] Ambient + UI + gameplay layers balanced
 - [ ] Key events trigger correct SFX
 - [ ] Test headphones + speakers
-- [ ] Save: \`Lesson 11.3 — Sound Design\``,
+- [ ] Save: \`Lesson 11.3 - Sound Design\``,
       },
     ],
   },
@@ -487,27 +487,27 @@ s.PlaybackSpeed = 0.95 + math.random() * 0.1
     { mistake: 'Looped UI click on ambient', explanation: 'Annoying.', correctApproach: 'UI only on click' },
     { mistake: 'No sound on major reward', explanation: 'Flat experience.', correctApproach: 'Quest/puzzle SFX' },
   ],
-  summary: `You organized audio into ambient, UI, and gameplay layers, wired sounds to shop/quest/puzzle events, and balanced volumes — your game now feedbacks success and mood through sound.`,
+  summary: `You organized audio into ambient, UI, and gameplay layers, wired sounds to shop/quest/puzzle events, and balanced volumes - your game now feedbacks success and mood through sound.`,
   practiceTask: {
     title: 'Audio layer pass (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** 8 sounds, balanced layers.
 
-### Part A — Library (10 min)
-1. Audio folder — 2 ambient/UI/gameplay mins each
+### Part A - Library (10 min)
+1. Audio folder - 2 ambient/UI/gameplay mins each
 2. Name SFX_ prefix, set base Volume
 
-### Part B — Wire events (12 min)
+### Part B - Wire events (12 min)
 1. UI shop click + purchase + fail
 2. Quest complete + puzzle solve + coin
 3. Hub ambient loop fade in
 
-### Part C — Save (3 min)
+### Part C - Save (3 min)
 1. Play through golden path with sound
-2. **Save to Roblox** → \`Lesson 11.3 — Sound Design\`
+2. **Save to Roblox** → \`Lesson 11.3 - Sound Design\`
 3. **Practice complete**`,
     hints: [
-      'Roblox toolbox free SFX — check license',
+      'Roblox toolbox free SFX - check license',
       'Clone+Play+Debris pattern avoids overlap bugs',
       'Test mute ambient alone then full mix',
     ],
@@ -526,7 +526,7 @@ s.PlaybackSpeed = 0.95 + math.random() * 0.1
       { id: 'q7', type: MC, question: 'Lesson 11.3 wires to…', options: ['Shop quest puzzle events', 'Only car', 'Only terrain', 'Publish'], correctAnswer: 0, explanation: 'Existing systems.' },
       { id: 'q8', type: MC, question: 'Lesson 11.4 adds…', options: ['Optimization', 'Only loading', 'Only Explorer', 'NPC only'], correctAnswer: 0, explanation: 'Performance.' },
       { id: 'q9', type: MC, question: 'UI click sounds belong on…', options: ['Button interactions', 'Ambient loop', 'Terrain', 'Sky'], correctAnswer: 0, explanation: 'UI layer.' },
-      { id: 'q10', type: MC, question: 'Lesson 11.3 save name…', options: ['Lesson 11.3 — Sound Design', 'Loading Screen', 'Game Polished', 'Clean Explorer'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 11.3 save name…', options: ['Lesson 11.3 - Sound Design', 'Loading Screen', 'Game Polished', 'Clean Explorer'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -535,7 +535,7 @@ export const enLesson114 = {
   lessonId: 'lesson-roblox-11-4',
   moduleId: 'module-11',
   order: 4,
-  title: '11.4 — Optimization',
+  title: '11.4 - Optimization',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -549,12 +549,12 @@ export const enLesson114 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `Polish means **smooth** — not only pretty. If FPS drops, players leave.
+        content: `Polish means **smooth** - not only pretty. If FPS drops, players leave.
 
 **Lesson flow:**
-1. **Theory (40 min)** — optimization levers
-2. **Practice (~25 min)** — optimization pass
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - optimization levers
+2. **Practice (~25 min)** - optimization pass
+3. **Quiz (10 min)** - **70%** pass
 
 Audit **Puzzle World** or your largest hub.`,
       },
@@ -574,9 +574,9 @@ Audit **Puzzle World** or your largest hub.`,
 
 \`StreamingEnabled = true\`
 
-Large maps load **near player** only — less memory.
+Large maps load **near player** only - less memory.
 
-**StreamingMinRadius / TargetRadius** — tune in Game Settings for big worlds.
+**StreamingMinRadius / TargetRadius** - tune in Game Settings for big worlds.
 
 **Lesson hub:** enable if map > ~200 stud playable area with many parts.`,
       },
@@ -585,14 +585,14 @@ Large maps load **near player** only — less memory.
         content: `**Merge** tiny deco:
 
 - 20 grass Parts → 1 Union or larger tiles
-- Duplicate trees — use **MeshPart** instances sparingly
+- Duplicate trees - use **MeshPart** instances sparingly
 
 **VFX audit:**
 - Max 3–5 active ParticleEmitters near player
 - Disable emitters **Enabled = false** when far
 - No infinite spark spam in puzzle room
 
-**Transparency** stacking hurts GPU — fewer glass layers.`,
+**Transparency** stacking hurts GPU - fewer glass layers.`,
       },
       {
         title: 'Script efficiency',
@@ -612,7 +612,7 @@ end
 mirrorRotated.Event:Connect(recheckAllRays)
 \`\`\`
 
-**Ray puzzle** from 10.4 — do not raycast 60/sec if 2/sec enough.
+**Ray puzzle** from 10.4 - do not raycast 60/sec if 2/sec enough.
 
 \`\`\`lua
 local RunService = game:GetService("RunService")
@@ -649,7 +649,7 @@ end)
 - [ ] One merged deco cluster or removed junk parts
 - [ ] One loop refactored to events
 - [ ] VFX count reduced in puzzle area
-- [ ] Save: \`Lesson 11.4 — Optimization\``,
+- [ ] Save: \`Lesson 11.4 - Optimization\``,
       },
     ],
   },
@@ -659,28 +659,28 @@ end)
     { mistake: 'Optimize without measuring', explanation: 'Unknown impact.', correctApproach: 'Before/after notes' },
     { mistake: 'Disable all scripts to fix lag', explanation: 'Breaks game.', correctApproach: 'Target expensive loops' },
   ],
-  summary: `You enabled streaming where needed, cut part and VFX cost, refactored an expensive loop to event-driven updates, and measured performance — your game runs smoother on real devices.`,
+  summary: `You enabled streaming where needed, cut part and VFX cost, refactored an expensive loop to event-driven updates, and measured performance - your game runs smoother on real devices.`,
   practiceTask: {
     title: 'Performance optimization pass (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Measurable improvement in one area.
 
-### Part A — Audit (8 min)
+### Part A - Audit (8 min)
 1. Count parts in main play zone
 2. List scripts with while true do loops
 3. Note stutter locations
 
-### Part B — Fixes (15 min)
+### Part B - Fixes (15 min)
 1. StreamingEnabled if applicable
 2. Merge/remove 1 deco group + cut 2 VFX
 3. Refactor 1 loop (puzzle ray or patrol)
 
-### Part C — Save (2 min)
+### Part C - Save (2 min)
 1. Write before/after in notes
-2. **Save to Roblox** → \`Lesson 11.4 — Optimization\`
+2. **Save to Roblox** → \`Lesson 11.4 - Optimization\`
 3. **Practice complete**`,
     hints: [
-      'Server logic lean — client handles pure visuals',
+      'Server logic lean - client handles pure visuals',
       'Module 10 ray puzzle common bottleneck',
       'Patrol NPC ok at 0.5s MoveTo refresh not every frame',
     ],
@@ -699,7 +699,7 @@ end)
       { id: 'q7', type: MC, question: 'Lesson 11.5 adds…', options: ['UX and accessibility', 'Only sound', 'Only loading', 'Laser'], correctAnswer: 0, explanation: 'Accessibility.' },
       { id: 'q8', type: MC, question: 'Server scripts should stay…', options: ['Focused on game rules', 'All visual VFX', 'UI only', 'Terrain'], correctAnswer: 0, explanation: 'Authority lean.' },
       { id: 'q9', type: MC, question: 'Optimization is important because…', options: ['Stutter makes players leave', 'Required for badges', 'Replaces design', 'Removes quests'], correctAnswer: 0, explanation: 'Retention.' },
-      { id: 'q10', type: MC, question: 'Lesson 11.4 save name…', options: ['Lesson 11.4 — Optimization', 'Sound Design', 'Game Polished', 'Loading Screen'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 11.4 save name…', options: ['Lesson 11.4 - Optimization', 'Sound Design', 'Game Polished', 'Loading Screen'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -708,7 +708,7 @@ export const enLesson115 = {
   lessonId: 'lesson-roblox-11-5',
   moduleId: 'module-11',
   order: 5,
-  title: '11.5 — UX and Accessibility',
+  title: '11.5 - UX and Accessibility',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -722,12 +722,12 @@ export const enLesson115 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `**UX is respect** — players should never ask "What do I do now?" for more than 30 seconds.
+        content: `**UX is respect** - players should never ask "What do I do now?" for more than 30 seconds.
 
 **Lesson flow:**
-1. **Theory (40 min)** — accessibility checklist
-2. **Practice (~25 min)** — one journey upgrade
-3. **Quiz (10 min)** — **70%** pass`,
+1. **Theory (40 min)** - accessibility checklist
+2. **Practice (~25 min)** - one journey upgrade
+3. **Quiz (10 min)** - **70%** pass`,
       },
       {
         title: 'Accessibility basics',
@@ -735,11 +735,11 @@ export const enLesson115 = {
 |-------|--------|
 | Font size | 16–22 px equivalent on main labels |
 | Contrast | Light text on dark panel (or inverse) |
-| Colorblind | Don't use red/green only — add ✓ / ✗ icons |
+| Colorblind | Don't use red/green only - add ✓ / ✗ icons |
 | Motion | Optional reduce screen shake / flash |
 | Subtitles | Key NPC lines as text (dialogue already helps) |
 
-**Teen players** also benefit — small phones, bright rooms.`,
+**Teen players** also benefit - small phones, bright rooms.`,
       },
       {
         title: 'Onboarding clarity',
@@ -753,7 +753,7 @@ export const enLesson115 = {
 | Puzzle | Targets: 0/3 + arrow beams |
 | Shop | Prices readable, fail message clear |
 
-**Objective marker** — BillboardGui arrow on Maya or **Highlight** instance.`,
+**Objective marker** - BillboardGui arrow on Maya or **Highlight** instance.`,
       },
       {
         title: 'UI consistency',
@@ -782,7 +782,7 @@ Shop fail:
 - Icon: coin silhouette + red stroke
 
 Puzzle target:
-- **Neon color** + **checkmark** when done — not green alone
+- **Neon color** + **checkmark** when done - not green alone
 
 **Colorblind-safe** palette: blue/orange for states, not only red/green.`,
       },
@@ -796,7 +796,7 @@ Puzzle target:
 | Reduced motion | Shorter tweens, no camera shake |
 | SFX volume | Slider 0–1 (client) |
 
-Store in player attribute or client table — not security critical.
+Store in player attribute or client table - not security critical.
 
 \`\`\`lua
 player:SetAttribute("TextScale", 1.2)
@@ -808,7 +808,7 @@ player:SetAttribute("TextScale", 1.2)
 - [ ] Contrast passes squint test
 - [ ] Quest/puzzle state uses icon + text
 - [ ] Tested two screen sizes
-- [ ] Save: \`Lesson 11.5 — UX Accessibility\``,
+- [ ] Save: \`Lesson 11.5 - UX Accessibility\``,
       },
     ],
   },
@@ -818,27 +818,27 @@ player:SetAttribute("TextScale", 1.2)
     { mistake: 'No goal after spawn', explanation: 'Players wander.', correctApproach: 'Sign + quest HUD' },
     { mistake: 'Different button styles everywhere', explanation: 'Feels amateur.', correctApproach: 'Style guide' },
   ],
-  summary: `You improved onboarding clarity, contrast and font readability, colorblind-safe state indicators, and optional settings — the core loop is now understandable without teacher help.`,
+  summary: `You improved onboarding clarity, contrast and font readability, colorblind-safe state indicators, and optional settings - the core loop is now understandable without teacher help.`,
   practiceTask: {
     title: 'Accessibility + UX upgrade (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Clearer spawn-to-reward journey.
 
-### Part A — Audit (8 min)
-1. Friend or self play 5 min — note confusion points
+### Part A - Audit (8 min)
+1. Friend or self play 5 min - note confusion points
 2. List top 3 fixes
 
-### Part B — Implement (15 min)
+### Part B - Implement (15 min)
 1. Spawn sign + objective marker
 2. Contrast/font on QuestLabel + shop status
 3. Icon + text on one success and one fail state
 
-### Part C — Save (2 min)
+### Part C - Save (2 min)
 1. Retest golden path
-2. **Save to Roblox** → \`Lesson 11.5 — UX Accessibility\`
+2. **Save to Roblox** → \`Lesson 11.5 - UX Accessibility\`
 3. **Practice complete**`,
     hints: [
-      'Watch playtester — fix what they say first',
+      'Watch playtester - fix what they say first',
       'Highlight on Guide Maya is built-in easy win',
       'Module 8 dialogue already helps subtitles',
     ],
@@ -857,7 +857,7 @@ player:SetAttribute("TextScale", 1.2)
       { id: 'q7', type: MC, question: 'Lesson 11.5 builds on…', options: ['11.1-11.4 polished place', 'Empty', 'Module 12', 'Coins only'], correctAnswer: 0, explanation: 'Full slice.' },
       { id: 'q8', type: MC, question: 'Lesson 11.6 is…', options: ['Game Polished checkpoint', 'Publish', 'GDD only', 'Race'], correctAnswer: 0, explanation: 'Finale.' },
       { id: 'q9', type: MC, question: 'Objective marker helps…', options: ['Find Guide Maya', 'Fly', 'Swim', 'DataStore'], correctAnswer: 0, explanation: 'Wayfinding.' },
-      { id: 'q10', type: MC, question: 'Lesson 11.5 save name…', options: ['Lesson 11.5 — UX Accessibility', 'Optimization', 'Sound Design', 'Puzzle World'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 11.5 save name…', options: ['Lesson 11.5 - UX Accessibility', 'Optimization', 'Sound Design', 'Puzzle World'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -866,7 +866,7 @@ export const enLesson116 = {
   lessonId: 'lesson-roblox-11-6',
   moduleId: 'module-11',
   order: 6,
-  title: '11.6 — Checkpoint: Game Polished',
+  title: '11.6 - Checkpoint: Game Polished',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -874,7 +874,7 @@ export const enLesson116 = {
     'Pass polish rubric across readability, responsiveness, stability',
     'Integrate Explorer, loading, audio, optimization, UX from Module 11',
     'Prioritize fixes: blockers, UX, performance, then visuals',
-    'Ship Module 11 — Game Polished with blind playtest fixes',
+    'Ship Module 11 - Game Polished with blind playtest fixes',
   ],
   theory: {
     sections: [
@@ -889,11 +889,11 @@ export const enLesson116 = {
 - 11.4 Optimization
 - 11.5 UX/accessibility
 
-**Save:** \`Module 11 — Game Polished\``,
+**Save:** \`Module 11 - Game Polished\``,
       },
       {
         title: 'Final polish rubric (1–5)',
-        content: `Score each — fix anything **≤3** first:
+        content: `Score each - fix anything **≤3** first:
 
 | Area | Score 1–5 | Notes |
 |------|-----------|-------|
@@ -907,10 +907,10 @@ export const enLesson116 = {
       },
       {
         title: 'Fix priority order',
-        content: `1. **Blockers** — crash, soft-lock, data wipe
-2. **Unclear UX** — stuck players
-3. **Performance spikes** — stutter zones
-4. **Visual/audio** — volume, contrast, VFX
+        content: `1. **Blockers** - crash, soft-lock, data wipe
+2. **Unclear UX** - stuck players
+3. **Performance spikes** - stutter zones
+4. **Visual/audio** - volume, contrast, VFX
 
 **Issue tracker** (notes/table):
 
@@ -926,17 +926,17 @@ export const enLesson116 = {
 2. Note 3 confusion points **in their words**
 3. You fix top 3 before save
 
-**No hints** during test — watch only.
+**No hints** during test - watch only.
 
-Record short clip optional — portfolio proof.`,
+Record short clip optional - portfolio proof.`,
       },
       {
         title: '60-second demo script',
         content: `1. Loading screen + tip
 2. Spawn sign → talk to Maya
-3. Start quest — clear HUD
-4. One puzzle solve — SFX + feedback
-5. Shop buy — UI sound
+3. Start quest - clear HUD
+4. One puzzle solve - SFX + feedback
+5. Shop buy - UI sound
 6. Show Explorer folders briefly (teacher mode)
 
 **Module 12 next:** GDD, publish, showcase.`,
@@ -947,7 +947,7 @@ Record short clip optional — portfolio proof.`,
 - [ ] Blind playtest top 3 fixed
 - [ ] No red errors in 10 min session
 - [ ] Loading + audio + UX on golden path
-- [ ] **Save to Roblox** → \`Module 11 — Game Polished\``,
+- [ ] **Save to Roblox** → \`Module 11 - Game Polished\``,
       },
     ],
   },
@@ -957,24 +957,24 @@ Record short clip optional — portfolio proof.`,
     { mistake: 'Inconsistent new UI only on shop', explanation: 'Frankenstein UI.', correctApproach: 'Global style pass' },
     { mistake: 'No issue list', explanation: 'Forget fixes.', correctApproach: 'Tracker with status' },
   ],
-  summary: `You scored the polish rubric, fixed issues by priority, ran a blind playtest, and saved Game Polished — your core slice is ready for Module 12 release planning.`,
+  summary: `You scored the polish rubric, fixed issues by priority, ran a blind playtest, and saved Game Polished - your core slice is ready for Module 12 release planning.`,
   practiceTask: {
     title: 'Ship Game Polished (~40 min)',
     difficulty: 'beginner',
     description: `**Goal:** Professional-feeling build.
 
-### Part A — Rubric (10 min)
+### Part A - Rubric (10 min)
 1. Score 5 areas 1–5
 2. List fixes for any ≤3
 
-### Part B — Playtest + fixes (25 min)
-1. Blind 10 min test — 3 confusion points
+### Part B - Playtest + fixes (25 min)
+1. Blind 10 min test - 3 confusion points
 2. Fix blockers + UX first
 3. Quick pass loading/audio/performance
 
-### Part C — Demo save (5 min)
+### Part C - Demo save (5 min)
 1. 60s demo rehearsed
-2. **Save to Roblox** → \`Module 11 — Game Polished\`
+2. **Save to Roblox** → \`Module 11 - Game Polished\`
 3. **Practice complete**`,
     hints: [
       'Issue tracker: bug, priority, status',
@@ -991,7 +991,7 @@ Record short clip optional — portfolio proof.`,
       { id: 'q2', type: MC, question: 'Fix priority starts with…', options: ['Blockers and bugs', 'Music volume only', 'New feature', 'Terrain color'], correctAnswer: 0, explanation: 'Priority order.' },
       { id: 'q3', type: MC, question: 'Blind playtest finds…', options: ['Confusion you missed', 'Robux', 'Server IP', 'Version'], correctAnswer: 0, explanation: 'Fresh eyes.' },
       { id: 'q4', type: MC, question: 'Rubric fun factor asks…', options: ['Would players play again', 'Part count', 'Script count', 'Roblox fee'], correctAnswer: 0, explanation: 'Engagement.' },
-      { id: 'q5', type: MC, question: 'Module 11 save name…', options: ['Module 11 — Game Polished', 'Puzzle World', 'RPG Inventory', 'SHOWCASE DAY'], correctAnswer: 0, explanation: 'Checkpoint.' },
+      { id: 'q5', type: MC, question: 'Module 11 save name…', options: ['Module 11 - Game Polished', 'Puzzle World', 'RPG Inventory', 'SHOWCASE DAY'], correctAnswer: 0, explanation: 'Checkpoint.' },
       { id: 'q6', type: MC, question: 'Lesson 11.6 completes…', options: ['Module 11 Performance and Polish', 'Module 12', 'Course', 'UK translation'], correctAnswer: 0, explanation: 'End module 11.' },
       { id: 'q7', type: MC, question: 'Stability means…', options: ['No major errors in play session', 'No UI', 'No sound', 'No quests'], correctAnswer: 0, explanation: 'Reliability.' },
       { id: 'q8', type: MC, question: 'Module 12 is…', options: ['Release Day', 'Only racing', 'Only inventory', 'Empty'], correctAnswer: 0, explanation: 'Next module.' },

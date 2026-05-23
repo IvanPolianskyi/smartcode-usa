@@ -105,32 +105,36 @@ const Visit = () => {
 		</div>
 	)
 
-	const stats = [
+	const allStats = [
 		{
+			key: 'students',
 			number: t('stats.students.number'),
 			label: t('stats.students.label'),
 			icon: <Users />,
-			iconColor: '#3b82f6',
 		},
 		{
+			key: 'liveLessons',
 			number: t('stats.liveLessons.number'),
 			label: t('stats.liveLessons.label'),
 			icon: <Code />,
-			iconColor: '#3b82f6',
 		},
 		{
+			key: 'courses',
 			number: t('stats.courses.number'),
 			label: t('stats.courses.label'),
 			icon: <BookOpen />,
-			iconColor: '#3b82f6',
 		},
 		{
+			key: 'trial',
 			number: t('stats.trial.number'),
 			label: t('stats.trial.label'),
 			icon: <Trophy />,
-			iconColor: '#3b82f6',
 		},
 	]
+
+	const stats = isEn
+		? allStats.filter((stat) => stat.key === 'students')
+		: allStats
 
 	return (
 		<div className={styles.container}>
@@ -258,11 +262,13 @@ const Visit = () => {
 						))}
 					</div>
 
-					<div className={styles.pricesCtaSection}>
-						<Link href='/tariff' className={styles.secondaryButton}>
-							{t('cta.viewPrices')}
-						</Link>
-					</div>
+					{!isEn && (
+						<div className={styles.pricesCtaSection}>
+							<Link href='/tariff' className={styles.secondaryButton}>
+								{t('cta.viewPrices')}
+							</Link>
+						</div>
+					)}
 				</div>
 
 				{shouldRenderCards ? (

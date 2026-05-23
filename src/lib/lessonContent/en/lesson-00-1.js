@@ -41,8 +41,8 @@ export const lesson_00_1 = {
 4. **Free**: Python is completely free and open source
 
 **Where is Python used?**
-- YouTube, Instagram, Spotify — built with Python
-- Google, NASA, Netflix — use Python
+- YouTube, Instagram, Spotify - built with Python
+- Google, NASA, Netflix - use Python
 - Artificial intelligence and machine learning
 - Automation and scripting`
       },
@@ -73,9 +73,9 @@ You should see something like: \`Python 3.11.5\`
 **Step 3: Install a code editor**
 
 Recommended editors:
-- **VS Code** (Visual Studio Code) — free and popular
-- **PyCharm** — powerful IDE for Python
-- **Sublime Text** — lightweight and fast
+- **VS Code** (Visual Studio Code) - free and popular
+- **PyCharm** - powerful IDE for Python
+- **Sublime Text** - lightweight and fast
 
 For beginners we recommend VS Code.`
       },
@@ -116,7 +116,7 @@ Congratulations! You wrote your first Python program!`
       },
       {
         title: "Working with the Python interpreter",
-        content: `Python has an interactive mode (REPL — Read-Eval-Print Loop) where you can run code immediately without creating files.
+        content: `Python has an interactive mode (REPL - Read-Eval-Print Loop) where you can run code immediately without creating files.
 
 **Starting interactive mode:**
 
@@ -176,7 +176,7 @@ Or press \`Ctrl+Z\` (Windows) or \`Ctrl+D\` (Mac/Linux)
         content: `Let's look at the basic structure of a Python program:
 
 \`\`\`python
-# This is a comment — Python ignores everything after #
+# This is a comment - Python ignores everything after #
 
 # Importing modules (we'll learn more about this later)
 import math
@@ -193,7 +193,7 @@ print("Python is a great programming language!")
 
 **Key points:**
 
-1. **Comments** start with \`#\` — they help explain the code
+1. **Comments** start with \`#\` - they help explain the code
 2. **The print() function** displays information on the screen
 3. **Code runs top to bottom**, line by line
 
@@ -232,11 +232,11 @@ Python follows the philosophy that "beautiful code is readable code". It is impo
   
   summary: `In this lesson we learned:
 
-1. Python — a powerful and simple programming language
-2. Installing Python — download from python.org and add to PATH
-3. First program — print("Hello, World!")
-4. Interactive mode — quick code testing via python
-5. Program structure — comments and running code line by line
+1. Python - a powerful and simple programming language
+2. Installing Python - download from python.org and add to PATH
+3. First program - print("Hello, World!")
+4. Interactive mode - quick code testing via python
+5. Program structure - comments and running code line by line
 
 You are now ready to write your first Python programs! The next lesson covers variables and data types.`,
   
@@ -275,6 +275,16 @@ print("Goodbye!")`,
       "Each print() outputs text on a new line",
       "You can use single or double quotes"
     ],
+    validation: {
+      minLines: 4,
+      exactLineCount: true,
+      lineRules: [
+        { pattern: '^(hello|hi|hey)', flags: 'i' },
+        { minLength: 3 },
+        { pattern: 'python', flags: 'i' },
+        { pattern: '(goodbye|bye|see you)', flags: 'i' },
+      ],
+    },
     difficulty: "beginner"
   },
   

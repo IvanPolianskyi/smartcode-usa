@@ -359,7 +359,7 @@ display_menu()  # Just prints the menu, does not return a value
 
 - Functions with \`print()\` are useful for displaying information
 - Functions with \`return\` are useful for calculations and getting results
-- Both approaches are valid — it depends on the task`
+- Both approaches are valid - it depends on the task`
       },
       {
         title: "Function return types",
@@ -528,8 +528,8 @@ print(f"Even: {even}, Positive: {positive}, Square: {squared}")
 **Key concepts:**
 
 1. **Parameters vs Arguments**
-   - Parameters — in the function definition
-   - Arguments — when calling the function
+   - Parameters - in the function definition
+   - Arguments - when calling the function
 
 2. **Return**
    - Sends a value back from the function
@@ -684,8 +684,8 @@ def example():
   summary: `In this lesson we studied parameters, return, and None in detail:
 
 1. Parameters vs Arguments
-   - Parameters — variables in the function definition
-   - Arguments — values when calling the function
+   - Parameters - variables in the function definition
+   - Arguments - values when calling the function
 
 2. Return
    - Sends a value back from the function
@@ -709,10 +709,10 @@ This knowledge will help you create more effective and clear functions!`,
     description: "Create functions to calculate and analyze student grades",
     problemStatement: `Write a program that contains functions for:
 
-1. **Calculating the average score** — a function takes three grades and returns the average
-2. **Determining a letter grade** — a function takes the average score and returns a grade ("Excellent", "Good", "Satisfactory", "Unsatisfactory")
-3. **Checking whether a student passed** — a function takes the average score and returns True if >= 60, otherwise False
-4. **Student analysis** — a function takes three grades and returns a tuple: (average_score, letter_grade, passed)
+1. **Calculating the average score** - a function takes three grades and returns the average
+2. **Determining a letter grade** - a function takes the average score and returns a grade ("Excellent", "Good", "Satisfactory", "Unsatisfactory")
+3. **Checking whether a student passed** - a function takes the average score and returns True if >= 60, otherwise False
+4. **Student analysis** - a function takes three grades and returns a tuple: (average_score, letter_grade, passed)
 
 **Important:** Do not use the input() function. Enter values directly in the code (for example: grade1 = 85, grade2 = 90, grade3 = 88).
 
@@ -799,7 +799,7 @@ print(f"Analysis: {analysis}")`,
       explanation: "The solution creates four functions: calculating the average, determining the grade, checking whether the student passed, and full analysis. The analyze_student function demonstrates returning multiple values via a tuple."
     },
     hints: [
-      "Enter values directly in the code (grade1, grade2, grade3) — do not use input()",
+      "Enter values directly in the code (grade1, grade2, grade3) - do not use input()",
       "The calculate_average function should add three grades and divide by 3",
       "The get_letter_grade function should use if/elif/else to determine the grade",
       "The has_passed function should return True or False",
@@ -849,7 +849,7 @@ print(f"Analysis: {analysis}")`,
           "An error"
         ],
         correctAnswer: 0,
-        explanation: "A function without return automatically returns None — a special value that means 'nothing'."
+        explanation: "A function without return automatically returns None - a special value that means 'nothing'."
       },
       {
         id: "q3",

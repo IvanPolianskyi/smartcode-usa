@@ -24,6 +24,10 @@ import { useLocale, useTranslations } from 'next-intl'
 import { getCurriculum } from '@/lib/getCurriculum'
 import { lessonContentMap as lessonContentMapUk } from '@/lib/lessonContentMap.uk'
 import { lessonContentMap as lessonContentMapEn } from '@/lib/lessonContentMap.en'
+import { checkPracticeOutput } from '@/lib/practiceValidation'
+import { parsePracticeStdin } from '@/lib/parsePracticeStdin'
+import { hasBlockedPythonCode } from '@/lib/pythonCodeGuard'
+import { executePythonWithPyodide } from '@/lib/pyodideRunner'
 import styles from './LessonPage.module.css'
 
 // Функція для конвертації markdown в HTML
@@ -218,6 +222,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const [practiceCompleted, setPracticeCompleted] = useState(false)
   const [practiceChecked, setPracticeChecked] = useState(false)
   const [outputErrors, setOutputErrors] = useState([]) // Масив індексів рядків з помилками
+  const [isPyodideLoading, setIsPyodideLoading] = useState(false)
   
   // Sidebar state
   const [sidebarWidth, setSidebarWidth] = useState(() => {
@@ -649,56 +654,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   
   const isQuizPassed = quizScore !== null && quizScore >= (fullLesson.quiz?.passingScore || 60)
 
-  // Функція для перевірки правильності практичного завдання
-  const checkPracticeTask = (output) => {
-    if (!fullLesson.practiceTask || !fullLesson.practiceTask.examples || fullLesson.practiceTask.examples.length === 0) {
-      return { isCorrect: null, errors: [] } // Немає прикладів для перевірки
-    }
-
-    // Нормалізуємо вивід (видаляємо зайві пробіли, переводимо в нижній регістр для порівняння)
-    const normalizeOutput = (text) => {
-      return text.trim().toLowerCase().replace(/\s+/g, ' ')
-    }
-
-    // Отримуємо очікуваний та фактичний вивід
-    const expectedOutput = fullLesson.practiceTask.examples[0].output
-    const actualOutput = output
-
-    // Розбиваємо на рядки для порівняння (зберігаємо всі рядки, включаючи порожні)
-    const expectedLines = expectedOutput.split('\n')
-    const actualLines = actualOutput.split('\n')
-
-    // Знаходимо помилки - рядки, які не відповідають
-    const errors = []
-    const maxLines = Math.max(expectedLines.length, actualLines.length)
-    
-    for (let i = 0; i < maxLines; i++) {
-      const expectedLine = normalizeOutput(expectedLines[i] || '')
-      const actualLine = normalizeOutput(actualLines[i] || '')
-      
-      // Якщо рядки не співпадають або один з них відсутній
-      if (expectedLine !== actualLine) {
-        errors.push(i)
-      }
-    }
-
-    // Перевіряємо чи містить вивід ключові елементи очікуваного виводу
-    const normalizedExpected = normalizeOutput(expectedOutput)
-    const normalizedActual = normalizeOutput(actualOutput)
-
-    let isCorrect = false
-    if (normalizedExpected.length < 100) {
-      // Для коротких виводів - точне порівняння
-      isCorrect = normalizedActual === normalizedExpected
-    } else {
-      // Для довгих виводів - перевіряємо ключові фрази
-      const keyPhrases = normalizedExpected.split('\n').filter(line => line.trim().length > 10)
-      const matches = keyPhrases.filter(phrase => normalizedActual.includes(phrase))
-      isCorrect = matches.length >= keyPhrases.length * 0.7 // 70% співпадінь
-    }
-
-    return { isCorrect, errors }
-  }
+  const checkPracticeTask = (output) =>
+    checkPracticeOutput(output, fullLesson.practiceTask)
 
   const handleRunCode = async () => {
     if (!userCode.trim()) {
@@ -711,55 +668,9 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       return
     }
 
-    // Client-side security check (basic patterns)
-    const dangerousPatterns = [
-      /import\s+os\b/i,
-      /import\s+subprocess\b/i,
-      /import\s+requests\b/i,
-      /import\s+urllib\b/i,
-      /import\s+socket\b/i,
-      /__import__\s*\(/i,
-      /eval\s*\(/i,
-      /exec\s*\(/i,
-      /compile\s*\(/i,
-      /open\s*\(['"]\/etc/i,
-      /open\s*\(['"]\/proc/i,
-      /open\s*\(['"]\/sys/i,
-      /open\s*\(['"]\.\./i,
-    ]
-
-    // Normalize code for checking (remove comments and strings)
-    const normalizeCode = (code) => {
-      let normalized = code.replace(/#.*$/gm, '')
-      normalized = normalized.replace(/""".*?"""/gs, '')
-      normalized = normalized.replace(/'''.*?'''/gs, '')
-      normalized = normalized.replace(/"[^"]*"/g, '')
-      normalized = normalized.replace(/'[^']*'/g, '')
-      return normalized
-    }
-
-    const normalizedCode = normalizeCode(userCode)
-    
-    // Get moduleId to check if requests should be allowed
     const moduleId = fullLesson?.moduleId || curriculumLesson?.moduleId
-    
-    // Filter dangerous patterns - allow requests and bs4 for module-09, PIL for module-10
-    let filteredPatterns = dangerousPatterns
-    if (moduleId === 'module-09') {
-      // Remove requests and bs4 from blocked patterns for module-09
-      filteredPatterns = dangerousPatterns.filter(pattern => {
-        const patternStr = pattern.toString().toLowerCase()
-        return !patternStr.includes('requests')
-      })
-    } else if (moduleId === 'module-10') {
-      // Allow PIL/Pillow for module-10 - no specific blocking needed as PIL is not in dangerous patterns
-      // But we need to allow subprocess for installation (handled on server side)
-      filteredPatterns = dangerousPatterns
-    }
-    
-    const hasDangerousCode = filteredPatterns.some(pattern => pattern.test(normalizedCode))
 
-    if (hasDangerousCode) {
+    if (hasBlockedPythonCode(userCode, moduleId)) {
       setCodeExecution({
         isRunning: false,
         output: null,
@@ -788,98 +699,77 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     })
     setPracticeChecked(false)
     setOutputErrors([])
+    setIsPyodideLoading(true)
 
     try {
-      // Extract input data from examples if available
-      let inputData = null
-      if (fullLesson.practiceTask?.examples && fullLesson.practiceTask.examples.length > 0) {
+      let stdinData = ''
+      if (fullLesson.practiceTask?.examples?.length > 0) {
         const firstExample = fullLesson.practiceTask.examples[0]
         if (firstExample.input) {
-          inputData = firstExample.input
+          stdinData = parsePracticeStdin(firstExample.input)
         }
       }
 
-      // moduleId is already declared above, use it here
-      const response = await fetch('/api/code/execute', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const data = await executePythonWithPyodide(userCode, {
+        stdin: stdinData,
+        moduleId,
+        onLoading: () => setIsPyodideLoading(true),
+        messages: {
+          timeout: t('runCodeErrors.executionTimeout'),
+          workerError: t('runCodeErrors.workerError'),
+          workerStartFailed: t('runCodeErrors.workerStartFailed'),
         },
-        body: JSON.stringify({ 
-          code: userCode,
-          input: inputData,
-          moduleId: moduleId
-        })
       })
 
-      const data = await response.json()
+      setIsPyodideLoading(false)
 
-      if (response.ok) {
-        const output = data.output || ''
-        const checkResult = checkPracticeTask(output)
-        
-        setCodeExecution({
-          isRunning: false,
-          output: output,
-          error: data.errorOutput || null,
-          success: data.success
-        })
+      const output = data.output || ''
+      const checkResult = checkPracticeTask(output)
 
-        // Перевіряємо правильність практичного завдання
-        if (checkResult.isCorrect !== null) {
-          setPracticeChecked(true)
-          setOutputErrors(checkResult.errors)
-          if (checkResult.isCorrect) {
-            setPracticeCompleted(true)
-            // Зберігаємо статус виконання практичного завдання (API створить прогрес якщо потрібно)
-            try {
-              await updateProgress(courseId, {
-                action: 'completePracticeTask',
-                lessonId
-              })
-              // Оновити сторінку для відображення змін
-              router.refresh()
-            } catch (error) {
-              console.error('Error saving practice task completion:', error)
-            }
-          } else {
-            // Не встановлюємо false, якщо завдання вже було успішно виконано раніше
-            const wasAlreadyCompleted = userProgress?.completedPracticeTasks?.includes(lessonId)
-            if (!wasAlreadyCompleted) {
-              setPracticeCompleted(false)
-            }
+      setCodeExecution({
+        isRunning: false,
+        output,
+        error: data.errorOutput || null,
+        success: data.success,
+      })
+
+      if (checkResult.isCorrect !== null) {
+        setPracticeChecked(true)
+        setOutputErrors(checkResult.errors)
+        setPracticeCompleted(Boolean(checkResult.isCorrect))
+
+        if (checkResult.isCorrect) {
+          try {
+            await updateProgress(courseId, {
+              action: 'completePracticeTask',
+              lessonId,
+              practiceOutput: output,
+              locale,
+            })
+            router.refresh()
+          } catch (error) {
+            console.error('Error saving practice task completion:', error)
+            setPracticeCompleted(false)
           }
-        }
-      } else {
-        setCodeExecution({
-          isRunning: false,
-          output: data.output || '',
-          error: data.error || data.errorOutput || t('runCodeErrors.executionFailed'),
-          success: false
-        })
-        setPracticeChecked(false)
-        setOutputErrors([])
-        // Не встановлюємо false, якщо завдання вже було успішно виконано раніше
-        const wasAlreadyCompleted = userProgress?.completedPracticeTasks?.includes(lessonId)
-        if (!wasAlreadyCompleted) {
-          setPracticeCompleted(false)
         }
       }
     } catch (error) {
-      console.error('Error executing code:', error)
+      console.error('Error executing code with Pyodide:', error)
+      setIsPyodideLoading(false)
+      const isLoadError = error?.message === 'PYODIDE_LOAD_FAILED'
       setCodeExecution({
         isRunning: false,
         output: null,
-        error: t('runCodeErrors.connectionError'),
-        success: false
+        error: isLoadError
+          ? t('runCodeErrors.pyodideLoadFailed')
+          : t('runCodeErrors.executionFailed'),
+        success: false,
       })
       setPracticeChecked(false)
       setOutputErrors([])
-      // Не встановлюємо false, якщо завдання вже було успішно виконано раніше
-      const wasAlreadyCompleted = userProgress?.completedPracticeTasks?.includes(lessonId)
-      if (!wasAlreadyCompleted) {
-        setPracticeCompleted(false)
-      }
+      setPracticeCompleted(
+        Boolean(userProgress?.completedPracticeTasks?.includes(lessonId))
+      )
     }
   }
   
@@ -1445,7 +1335,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                       {codeExecution.isRunning ? (
                         <>
                           <Loader2 className="w-4 h-4 animate-spin" />
-                          {t('running')}
+                          {isPyodideLoading ? t('pyodideLoading') : t('running')}
                         </>
                       ) : (
                         <>

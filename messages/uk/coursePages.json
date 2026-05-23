@@ -34,7 +34,7 @@
     "hero": {
       "title": "PYTHON",
       "subtitle": "Програмування майбутнього",
-      "description": "Відкрий космос можливостей з найпопулярнішою мовою програмування світу. Створюй веб-додатки, аналізуй дані та будуй майбутнє разом з нами."
+      "description": "16 модулів і 80+ уроків: від основ Python до Telegram-ботів, FastAPI, скрапінгу та бонусного GUI на Tkinter. Багато практики на реальних проєктах."
     },
     "stats": {
       "items": [
@@ -45,56 +45,60 @@
       ]
     },
     "modules": {
-      "title": "Модулі курсу",
+      "title": "16 МОДУЛІВ = ВІД НУЛЯ ДО БОТІВ ТА API",
       "items": [
         {
-          "title": "Основи Python",
-          "duration": "4 тижні",
-          "topics": ["Змінні та типи даних", "Умови та цикли", "Функції", "Структури даних"]
+          "title": "Основи та синтаксис",
+          "topics": ["Структури даних", "Оператори", "if/for/while", "Comprehensions"]
         },
         {
-          "title": "ООП в Python",
-          "duration": "3 тижні",
-          "topics": ["Класи та об'єкти", "Наслідування", "Поліморфізм", "Інкапсуляція"]
+          "title": "Функції та ООП",
+          "topics": ["Функції", "Класи", "Наслідування", "Обробка помилок"]
         },
         {
-          "title": "Веб-розробка",
-          "duration": "5 тижнів",
-          "topics": ["Flask/Django", "REST API", "База даних", "Деплой проектів"]
+          "title": "Поглиблений Python",
+          "topics": ["Декоратори", "Генератори", "Модулі stdlib", "Файли CSV/JSON"]
         },
         {
-          "title": "Data Science",
-          "duration": "4 тижні",
-          "topics": ["NumPy/Pandas", "Matplotlib", "Машинне навчання", "Проекти"]
+          "title": "Веб та автоматизація",
+          "topics": ["Скрапінг", "Зображення", "PDF", "Email", "Tkinter GUI"]
+        },
+        {
+          "title": "Telegram-боти",
+          "topics": ["BotFather", "python-telegram-bot", "Команди", "Клавіатури"]
+        },
+        {
+          "title": "FastAPI",
+          "topics": ["REST API", "Pydantic", "CRUD", "Webhook для бота"]
         }
       ]
     },
     "projects": {
-      "title": "Твої майбутні проекти",
+      "title": "ПРАКТИЧНІ ПРОЄКТИ",
       "items": [
         {
-          "name": "Телеграм бот",
-          "difficulty": "Новачок",
+          "name": "Телеграм-бот",
+          "difficulty": "СЕРЕДНІЙ",
           "time": "2 тижні",
-          "description": "Створи розумного бота для автоматизації завдань"
+          "description": "Розумний бот з командами, кнопками та даними з зовнішнього API"
         },
         {
-          "name": "Веб-додаток",
-          "difficulty": "Середній",
-          "time": "3 тижні",
-          "description": "Повноцінний веб-сайт з базою даних"
+          "name": "REST API на FastAPI",
+          "difficulty": "СЕРЕДНІЙ",
+          "time": "2-3 тижні",
+          "description": "Власний бекенд з документацією /docs та CRUD для задач"
         },
         {
-          "name": "Аналіз даних",
-          "difficulty": "Просунутий",
-          "time": "4 тижні",
-          "description": "Візуалізація та прогнозування трендів"
+          "name": "Веб-скрапер",
+          "difficulty": "СЕРЕДНІЙ",
+          "time": "2 тижні",
+          "description": "Збір і збереження даних з сайтів через requests та BeautifulSoup"
         },
         {
-          "name": "AI чат-бот",
-          "difficulty": "Експерт",
-          "time": "5 тижнів",
-          "description": "Штучний інтелект з машинним навчанням"
+          "name": "Десктоп-додаток",
+          "difficulty": "ПРОСУНУТИЙ",
+          "time": "2-3 тижні",
+          "description": "Віконний інтерфейс на Tkinter - бонусний модуль"
         }
       ]
     },
@@ -300,31 +304,31 @@
       "description": "Навчайся створювати ігри в Roblox Studio: від перших скриптів на Lua до повноцінних симуляторів, тайкун-ігор та паркурів. Багато практики і візуальних ефектів."
     },
     "modules": {
-      "title": "МОДУЛІ КУРСУ",
+      "title": "12 МОДУЛІВ = 12 МІНІ-ІГОР",
       "items": [
         {
-          "title": "Lua Основи",
-          "topics": ["Змінні", "Функції", "Таблиці", "Події"]
+          "title": "Світ і Studio",
+          "topics": ["Острів", "Properties", "ClickDetector", "Звук"]
         },
         {
-          "title": "Roblox Studio",
-          "topics": ["Explorer", "Properties", "Workspace", "Toolbox"]
+          "title": "Obby",
+          "topics": ["Пастки", "Чекпоінти", "Таймер", "if/else"]
         },
         {
-          "title": "Parts & Models",
-          "topics": ["Куби та циліндри", "Anchored", "Collisions", "Materials"]
+          "title": "Симулятор + Tycoon",
+          "topics": ["Монети", "DataStore", "Дропер", "Апгрейди"]
         },
         {
-          "title": "Scripting & Events",
-          "topics": ["Touched", "Clicked", "RemoteEvents", "DataStore базово"]
+          "title": "Арена і гонки",
+          "topics": ["Зброя", "Урон", "Машина", "RemoteEvent"]
         },
         {
-          "title": "UI & FX",
-          "topics": ["ScreenGui", "TweenService", "Particles", "Billboards"]
+          "title": "Мережа і світ",
+          "topics": ["Клієнт/сервер", "Магазин", "NPC", "Квести"]
         },
         {
-          "title": "Фінальний проєкт",
-          "topics": ["Геймдизайн", "Оптимізація", "Публікація", "Аналітика"]
+          "title": "Реліз",
+          "topics": ["RPG-інвентар", "Поліш", "Тести", "Публікація"]
         }
       ]
     },

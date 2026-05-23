@@ -45,8 +45,8 @@ Whole numbers, positive or negative. Examples: 2, -2, 1000.
 Numbers with a decimal point or exponential notation (e). Examples: 2.0, -2.1, 4E2 (4 × 10²).
 
 **Number types:**
-1. Examples: 1, 2, -5, 1000 — type: int
-2. Examples: 1.2, -0.5, 2e2, 3E2 — type: float
+1. Examples: 1, 2, -5, 1000 - type: int
+2. Examples: 1.2, -0.5, 2e2, 3E2 - type: float
 
 Throughout this course we mainly work with integers or simple floats.`
       },
@@ -84,7 +84,7 @@ Throughout this course we mainly work with integers or simple floats.`
 # Result: 1
 \`\`\`
 
-**Note:** \`//\` is floor division — it drops the decimal part without rounding and returns an integer.
+**Note:** \`//\` is floor division - it drops the decimal part without rounding and returns an integer.
 
 **Modulo (%):**
 \`\`\`python
@@ -176,7 +176,7 @@ print(a)  # 6.0
    -  OK: name1, age_2
    -  Not OK: 1name, 2age
 
-# No spaces — use _
+# No spaces - use _
    -  OK: my_name, user_age
    -  Not OK: my name, user age
 
@@ -202,7 +202,7 @@ is_student = True
       },
       {
         title: "Dynamic typing",
-        content: `Python uses **dynamic typing** — you can reassign variables to different types. This is flexible compared to **static typing** in some other languages.
+        content: `Python uses **dynamic typing** - you can reassign variables to different types. This is flexible compared to **static typing** in some other languages.
 
 \`\`\`python
 x = 5
@@ -364,7 +364,7 @@ print("Number as string:", number_str)`,
     {
       mistake: "Invalid variable names",
       explanation: "Names cannot start with a digit or contain spaces.",
-      correctApproach: "Use user_name, age_1 — not 1age or user name."
+      correctApproach: "Use user_name, age_1 - not 1age or user name."
     },
     {
       mistake: "Confusing / and //",
@@ -380,15 +380,15 @@ print("Number as string:", number_str)`,
   
   summary: `In this lesson we covered:
 
-1. Number types — int and float
-2. Arithmetic — +, -, *, /, //, %, **
+1. Number types - int and float
+2. Arithmetic - +, -, *, /, //, %, **
 3. Variable assignment with =
 4. Naming rules
 5. Dynamic typing
 6. type() function
-7. Type conversion — int(), float(), str()
+7. Type conversion - int(), float(), str()
 
-Next lesson — lists.`,
+Next lesson - lists.`,
   
   practiceTask: {
     title: "Personal expense calculator",

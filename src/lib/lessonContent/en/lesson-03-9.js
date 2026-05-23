@@ -490,7 +490,7 @@ result = list(map(str.upper, filter(lambda x: len(x) > 2, map(str.strip, words))
 **Best to combine both:**
 
 \`\`\`python
-# Complex operations — imperative
+# Complex operations - imperative
 def process_data(data):
     result = []
     for item in data:
@@ -499,7 +499,7 @@ def process_data(data):
             result.append(processed)
     return result
 
-# Simple operations — functional
+# Simple operations - functional
 numbers = [1, 2, 3, 4, 5]
 squared = list(map(lambda x: x ** 2, numbers))
 \`\`\``
@@ -895,7 +895,7 @@ print(f"Alternative approach: {result2}")`,
       explanation: "The solution demonstrates using map(), filter(), and reduce() for different types of data processing. Each function shows different aspects of higher-order functions: transformation, filtering, and aggregation."
     },
     hints: [
-      "Enter values directly in the code — do not use input()",
+      "Enter values directly in the code - do not use input()",
       "Don't forget to import reduce from functools: from functools import reduce",
       "map() and filter() return iterators; use list() for lists",
       "reduce() folds a sequence into a single value",

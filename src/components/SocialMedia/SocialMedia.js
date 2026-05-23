@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState, useMemo } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { ExternalLink, Sparkles, Instagram } from 'lucide-react'
 import Image from 'next/image'
 import TikTokIcon from '@/components/Icons/TikTokIcon'
@@ -44,14 +44,26 @@ const ACCOUNT_META = [
 	},
 ]
 
+const EN_SOCIAL_IDS = new Set([5])
+
 const SocialMedia = () => {
+	const locale = useLocale()
+	const isEn = locale === 'en'
 	const t = useTranslations('homeSections.social')
 	const [avatars, setAvatars] = useState({})
 	const [avatarErrors, setAvatarErrors] = useState({})
 
+	const accountMeta = useMemo(
+		() =>
+			isEn
+				? ACCOUNT_META.filter((account) => EN_SOCIAL_IDS.has(account.id))
+				: ACCOUNT_META,
+		[isEn]
+	)
+
 	const socialAccounts = useMemo(
 		() =>
-			ACCOUNT_META.map(account => {
+			accountMeta.map((account) => {
 				if (account.accountKey) {
 					return {
 						...account,
@@ -64,14 +76,20 @@ const SocialMedia = () => {
 					description: t(`accounts.${account.descriptionKey}.description`),
 				}
 			}),
-		[t]
+		[t, accountMeta]
 	)
 
-	// Завантаження аватарок
+	const accountIdsKey = useMemo(
+		() => accountMeta.map((account) => account.id).join(','),
+		[accountMeta]
+	)
+
+	// Завантаження аватарок (стабільні залежності — без нескінченного циклу на EN)
 	useEffect(() => {
+		let cancelled = false
+
 		const loadAvatars = async () => {
-			const avatarPromises = socialAccounts.map(async (account) => {
-				// Якщо аватарка вказана безпосередньо в об'єкті, використовуємо її
+			const avatarPromises = accountMeta.map(async (account) => {
 				if (account.avatarUrl) {
 					return {
 						username: account.username,
@@ -79,10 +97,11 @@ const SocialMedia = () => {
 					}
 				}
 
-				// Інакше намагаємося завантажити через API
 				const username = account.username.replace('@', '')
 				try {
-					const response = await fetch(`/api/tiktok/avatar?username=${encodeURIComponent(username)}`)
+					const response = await fetch(
+						`/api/tiktok/avatar?username=${encodeURIComponent(username)}`
+					)
 					const data = await response.json()
 					return {
 						username: account.username,
@@ -98,6 +117,8 @@ const SocialMedia = () => {
 			})
 
 			const results = await Promise.all(avatarPromises)
+			if (cancelled) return
+
 			const avatarMap = {}
 			results.forEach((result) => {
 				avatarMap[result.username] = result.avatarUrl
@@ -106,7 +127,10 @@ const SocialMedia = () => {
 		}
 
 		loadAvatars()
-	}, [socialAccounts])
+		return () => {
+			cancelled = true
+		}
+	}, [accountIdsKey])
 
 	return (
 		<section id="social-media" className={styles.section}>

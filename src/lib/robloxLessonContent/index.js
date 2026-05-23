@@ -70,14 +70,13 @@ import { lesson_roblox_12_3 } from './lesson-roblox-12-3'
 import { lesson_roblox_12_4 } from './lesson-roblox-12-4'
 import { lesson_roblox_12_5 } from './lesson-roblox-12-5'
 import { lesson_roblox_12_6 } from './lesson-roblox-12-6'
-import { robloxEnLessons } from './en/allLessons'
 import { robloxCurriculum } from '../robloxCurriculum'
 
 function createPlaceholder(lessonId, title, locale = 'uk') {
   const ukContent =
-    'Контент цього уроку ще готується. Продовжуй попередні уроки або звернися до викладача на онлайн-занятті. Ти вже можеш відкрити наступні теми в програмі курсу — вони розблокуються за розкладом.'
+    'Контент цього уроку ще готується. Продовжуй попередні уроки або звернися до викладача на онлайн-занятті. Ти вже можеш відкрити наступні теми в програмі курсу - вони розблокуються за розкладом.'
   const enContent =
-    'This lesson is being prepared. Continue previous lessons or book a live class with your teacher. You can still browse the course outline — lessons unlock on your schedule.'
+    'This lesson is being prepared. Continue previous lessons or book a live class with your teacher. You can still browse the course outline - lessons unlock on your schedule.'
 
   return {
     lessonId,
@@ -226,20 +225,8 @@ function getUkTitle(lessonId) {
   return meta?.title || lessonId
 }
 
-/** Modules 2–12: full EN from generated bundle; UK stays placeholder until translated */
-const modules212Bilingual = Object.fromEntries(
-  Object.entries(robloxEnLessons).map(([lessonId, en]) => [
-    lessonId,
-    {
-      uk: createPlaceholder(lessonId, getUkTitle(lessonId), 'uk'),
-      en,
-    },
-  ])
-)
-
 const bilingual = {
   ...module01Bilingual,
-  ...modules212Bilingual,
   ...module02RichEn,
   ...module03RichEn,
   ...module04RichEn,

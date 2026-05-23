@@ -1,6 +1,6 @@
 'use client'
 import { Link, useRouter } from '@/i18n/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import styles from './footer.module.css'
 import { parseHomeHashTarget, navigateToHomeSection } from '@/lib/homeSectionScroll'
 import {
@@ -14,9 +14,12 @@ import {
 } from 'lucide-react'
 import TikTokIcon from '@/components/Icons/TikTokIcon'
 import Image from 'next/image'
+import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher'
 
 const Footer = () => {
 	const t = useTranslations('footer')
+	const locale = useLocale()
+	const isEn = locale === 'en'
 	const router = useRouter()
 	const currentYear = new Date().getFullYear()
 
@@ -35,15 +38,17 @@ const Footer = () => {
 	]
 
 	const quickLinks = [
-		{ name: t('quickLinks.about'), href: '/#about' },
+		...(!isEn ? [{ name: t('quickLinks.about'), href: '/#about' }] : []),
 		{ name: t('quickLinks.reviews'), href: '/#testimonials' },
-		{ name: t('quickLinks.contacts'), href: '/#Contactform', openModal: true },
+		...(isEn
+			? [{ name: t('quickLinks.courses'), href: '/#our-courses' }]
+			: [{ name: t('quickLinks.contacts'), href: '/#Contactform', openModal: true }]),
 		{ name: t('quickLinks.login'), href: '/login' },
 		{ name: t('quickLinks.register'), href: '/register' },
 	]
 
 	const supportLinks = [
-		{ name: t('supportLinks.faq'), href: '/#faq' },
+		...(!isEn ? [{ name: t('supportLinks.faq'), href: '/#faq' }] : []),
 		{ name: t('supportLinks.offer'), href: '/api/oferta-pdf', useAnchor: true },
 	]
 
@@ -65,7 +70,7 @@ const Footer = () => {
 		},
 	]
 
-	const socialLinks = [
+	const allSocialLinks = [
 		{
 			name: t('social.instagram'),
 			icon: Instagram,
@@ -92,6 +97,8 @@ const Footer = () => {
 			href: 'https://www.tiktok.com/@artem.smartcode',
 		},
 	]
+
+	const socialLinks = isEn ? allSocialLinks.slice(0, 1) : allSocialLinks
 
 	return (
 		<footer className={styles.footer}>
@@ -207,6 +214,7 @@ const Footer = () => {
 					<div className={styles.copyright}>
 						{t('copyright', { year: currentYear })}
 					</div>
+					<LanguageSwitcher className={styles.langSwitcher} />
 					<div className={styles.socialLinks}>
 						{socialLinks.map((social, index) => (
 							<a

@@ -40,20 +40,20 @@
     }
   },
   "courseCards": {
-    "sectionTitle": "Our Courses",
+    "sectionTitle": "Courses you can buy & start today",
     "age": "years",
     "students": "students",
     "projects": "projects",
     "months": "mo",
     "details": "Learn more",
     "goTo": "Explore",
-    "startLearning": "Start learning",
+    "startLearning": "View course & buy",
     "years": "years",
     "python": {
       "title": "PYTHON",
       "subtitle": "Programming the future",
-      "description": "Explore endless possibilities with the world's most popular language. Build AI, web apps, and analyze data.",
-      "features": ["Python basics", "OOP & algorithms", "Django/Flask", "Data Science"],
+      "description": "From basics to Telegram bots, FastAPI, and automation. Hands-on real projects.",
+      "features": ["Python basics", "OOP & algorithms", "Telegram bots", "FastAPI"],
       "badge": "Space hit"
     },
     "roblox": {
@@ -119,7 +119,7 @@
     "badge": "Social media",
     "title": "Follow",
     "titleAccent": "SmartCode Academy",
-    "subtitle": "Short lessons, student projects, and academy life on Instagram and TikTok",
+    "subtitle": "Student projects, course updates, and academy news on Instagram",
     "subscribe": "Follow",
     "accounts": {
       "tiktokMain": { "description": "Our courses and projects" },

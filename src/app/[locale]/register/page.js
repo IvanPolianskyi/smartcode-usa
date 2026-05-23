@@ -4,6 +4,9 @@ import React, { useState } from 'react'
 import { Link, useRouter } from '@/i18n/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { register } from '@/lib/authClient'
+import { usePhoneInput } from '@/lib/usePhoneInput'
+import PhoneField from '@/components/PhoneField/PhoneField'
+import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 import Logo from '@/components/Logo/Logo'
 import { Eye, EyeOff } from 'lucide-react'
 import styles from '../login/Auth.module.css'
@@ -12,35 +15,47 @@ export default function RegisterPage() {
   const t = useTranslations('auth.register')
   const locale = useLocale()
   const router = useRouter()
+  const phoneInput = usePhoneInput('UA')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
-    phone: '',
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-  const formatPhoneNumber = (digits) => {
-    if (!digits) return '+380 '
-    const part1 = digits.slice(0, 2)
-    const part2 = digits.slice(2, 5)
-    const part3 = digits.slice(5, 7)
-    const part4 = digits.slice(7, 9)
+  const hasPhoneInput =
+    Boolean(phoneInput.rawDigits) ||
+    Boolean(phoneInput.intlInputValue?.replace(/\D/g, ''))
 
-    let formatted = '+380 '
-    if (part1) formatted += `(${part1}`
-    if (part1.length === 2) formatted += ') '
-    if (part2) formatted += part2
-    if (part2.length === 3 && digits.length > 5) formatted += '-'
-    if (part3) formatted += part3
-    if (part3.length === 2 && digits.length > 7) formatted += '-'
-    if (part4) formatted += part4
-
-    return formatted
+  const phoneClasses = {
+    field: styles.formGroup,
+    fieldError: phoneStyles.fieldError,
+    label: styles.label,
+    phoneContainer: phoneStyles.phoneContainer,
+    countryBtn: phoneStyles.countryBtn,
+    flagEmoji: phoneStyles.flagEmoji,
+    dropdownArrow: phoneStyles.dropdownArrow,
+    divider: phoneStyles.divider,
+    phoneInputWrap: phoneStyles.phoneInputWrap,
+    phonePrefix: phoneStyles.phonePrefix,
+    phoneInput: phoneStyles.phoneInput,
+    dropdown: phoneStyles.dropdown,
+    dropdownPortal: phoneStyles.dropdownPortal,
+    dropdownSearchWrap: phoneStyles.dropdownSearchWrap,
+    dropdownSearch: phoneStyles.dropdownSearch,
+    dropdownList: phoneStyles.dropdownList,
+    dropdownEmpty: phoneStyles.dropdownEmpty,
+    dropdownItem: phoneStyles.dropdownItem,
+    dropdownItemActive: phoneStyles.dropdownItemActive,
+    dropdownItemFlag: phoneStyles.dropdownItemFlag,
+    dropdownItemName: phoneStyles.dropdownItemName,
+    dropdownItemCode: phoneStyles.dropdownItemCode,
+    dropdownItemDial: phoneStyles.dropdownItemDial,
+    error: phoneStyles.error,
   }
 
   const handleSubmit = async (e) => {
@@ -57,8 +72,7 @@ export default function RegisterPage() {
       return
     }
 
-    if (formData.phone && formData.phone.length !== 9) {
-      setError(t('errorPhone'))
+    if (hasPhoneInput && !phoneInput.validateOnSubmit()) {
       return
     }
 
@@ -69,7 +83,7 @@ export default function RegisterPage() {
         formData.email,
         formData.password,
         formData.name,
-        formData.phone ? `+380${formData.phone}` : undefined,
+        hasPhoneInput ? phoneInput.getFullNumber() : undefined,
         locale
       )
       window.dispatchEvent(new Event('auth:register'))
@@ -83,17 +97,6 @@ export default function RegisterPage() {
   }
 
   const handleChange = (e) => {
-    if (e.target.name === 'phone') {
-      const digits = e.target.value.replace(/\D/g, '')
-      const clean = digits.startsWith('380') ? digits.slice(3) : digits
-      setFormData({
-        ...formData,
-        phone: clean.slice(0, 9),
-      })
-      setError('')
-      return
-    }
-
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -153,20 +156,12 @@ export default function RegisterPage() {
               />
             </div>
 
-            <div className={styles.formGroup}>
-              <label htmlFor="phone" className={styles.label}>
-                {t('phone')}
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formatPhoneNumber(formData.phone)}
-                onChange={handleChange}
-                className={styles.input}
-                placeholder={t('phonePlaceholder')}
-              />
-            </div>
+            <PhoneField
+              phoneInput={phoneInput}
+              classes={phoneClasses}
+              id="phone"
+              labelText={t('phone')}
+            />
 
             <div className={styles.formGroup}>
               <label htmlFor="password" className={styles.label}>

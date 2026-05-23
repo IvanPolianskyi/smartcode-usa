@@ -40,10 +40,10 @@ while condition:
 
 **How it works:**
 1. Python checks the condition
-2. If the condition is True — it runs the code inside the loop
+2. If the condition is True - it runs the code inside the loop
 3. After running, it checks the condition again
 4. Repeats while the condition is True
-5. When the condition becomes False — it exits the loop`
+5. When the condition becomes False - it exits the loop`
       },
       {
         title: "Simple while example",
@@ -96,7 +96,7 @@ else:
 - To confirm successful completion`
       },
       {
-        title: "break — exiting the loop",
+        title: "break - exiting the loop",
         content: `**break** lets you exit the loop early, even if the condition is still True.
 
 \`\`\`python
@@ -130,7 +130,7 @@ After the loop
 - For early exit from a loop`
       },
       {
-        title: "continue — skipping an iteration",
+        title: "continue - skipping an iteration",
         content: `**continue** skips the current iteration and moves to the next condition check.
 
 \`\`\`python
@@ -331,17 +331,17 @@ print(f"Sum: {total}")`,
   
   summary: `In this lesson we learned:
 
-1. The while loop — repeats code while the condition is True
-2. while syntax — while condition: with indentation
-3. while with else — code that runs after normal completion
-4. break — early exit from a loop
-5. continue — skip the current iteration
-6. Infinite loops — how to avoid them
-7. Practical uses — counters, search, calculations
+1. The while loop - repeats code while the condition is True
+2. while syntax - while condition: with indentation
+3. while with else - code that runs after normal completion
+4. break - early exit from a loop
+5. continue - skip the current iteration
+6. Infinite loops - how to avoid them
+7. Practical uses - counters, search, calculations
 
 Now you know how to use while to repeat actions!
 
-Next lesson — the for loop for iterating over sequences!`,
+Next lesson - the for loop for iterating over sequences!`,
   
   practiceTask: {
     title: "Guess the Number game",

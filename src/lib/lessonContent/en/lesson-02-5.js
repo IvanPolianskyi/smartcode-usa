@@ -301,14 +301,14 @@ for i in range(3):
       explanation: "Shows that break exits only the nearest (inner) loop."
     },
     {
-      title: "Example 5: Optimization — avoiding duplicates",
+      title: "Example 5: Optimization - avoiding duplicates",
       code: `# Check only unique pairs
 numbers = [1, 2, 3, 4]
 
 for i in range(len(numbers)):
     for j in range(i + 1, len(numbers)):
         print(f"{numbers[i]}, {numbers[j]}")`,
-      explanation: "Demonstrates optimization — checking only unique pairs without repetition."
+      explanation: "Demonstrates optimization - checking only unique pairs without repetition."
     }
   ],
   
@@ -337,16 +337,16 @@ for i in range(len(numbers)):
   
   summary: `In this lesson we learned:
 
-1. Nested loops — loops inside loops
-2. Tables and matrices — processing two-dimensional structures
-3. Nested loops with conditions — complex checks
-4. break and continue — behavior in nested loops
-5. Optimization — how to reduce complexity
-6. Practical uses — search, filtering, data processing
+1. Nested loops - loops inside loops
+2. Tables and matrices - processing two-dimensional structures
+3. Nested loops with conditions - complex checks
+4. break and continue - behavior in nested loops
+5. Optimization - how to reduce complexity
+6. Practical uses - search, filtering, data processing
 
 Now you know how to work with complex data structures!
 
-Next lesson — list comprehensions for creating lists!`,
+Next lesson - list comprehensions for creating lists!`,
   
   practiceTask: {
     title: "Finding common elements",
@@ -386,7 +386,7 @@ print(f"Number of common elements: {len(common)}")`,
       explanation: "The solution uses nested loops to compare all elements from both lists and stores common ones."
     },
     hints: [
-      "Use two for loops — one for list1, one for list2",
+      "Use two for loops - one for list1, one for list2",
       "Compare element1 == element2",
       "Check whether the element is already in common before adding",
       "Use len() to count the number",
@@ -460,7 +460,7 @@ print(f"Number of common elements: {len(common)}")`,
           "O(1)"
         ],
         correctAnswer: 1,
-        explanation: "Nested loops have O(n²) complexity — for each element all others are checked."
+        explanation: "Nested loops have O(n²) complexity - for each element all others are checked."
       }
     ],
     timeLimit: 10,

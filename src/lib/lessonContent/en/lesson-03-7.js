@@ -46,10 +46,10 @@ print(printer())  # 50 (local)
 **How does Python find a variable?**
 
 Python uses the **LEGB** rule:
-- **L** — Local
-- **E** — Enclosing
-- **G** — Global
-- **B** — Built-in
+- **L** - Local
+- **E** - Enclosing
+- **G** - Global
+- **B** - Built-in
 
 Python searches in that order and stops at the first match.`
       },
@@ -159,7 +159,7 @@ def read_global():
 read_global()  # 50
 \`\`\`
 
-**Changing globals — use \`global\`:**
+**Changing globals - use \`global\`:**
 
 \`\`\`python
 x = 50
@@ -223,7 +223,7 @@ def outer():
 outer()  # "middle"
 \`\`\`
 
-**nonlocal — change enclosing variable:**
+**nonlocal - change enclosing variable:**
 
 \`\`\`python
 def outer():
@@ -332,16 +332,16 @@ print(double(5))  # 10
 
 **Key concepts:**
 
-1. **Scope** — where a name is visible; LEGB lookup order
-2. **Local** — inside functions; assignment creates locals
-3. **Global** — module level; use \`global\` to assign inside a function
-4. **Enclosing** — outer function names; use \`nonlocal\` to assign
-5. **Built-in** — do not shadow standard names
-6. **globals() / locals()** — inspect namespaces
+1. **Scope** - where a name is visible; LEGB lookup order
+2. **Local** - inside functions; assignment creates locals
+3. **Global** - module level; use \`global\` to assign inside a function
+4. **Enclosing** - outer function names; use \`nonlocal\` to assign
+5. **Built-in** - do not shadow standard names
+6. **globals() / locals()** - inspect namespaces
 
 **Next step:**
 
-In the next lesson we will learn about recursion — when a function calls itself.`
+In the next lesson we will learn about recursion - when a function calls itself.`
       }
     ]
   },
@@ -473,10 +473,10 @@ Understanding scope helps you write clearer, more predictable code!`,
     description: "Create functions that demonstrate local, global, nested, and closure scope",
     problemStatement: `Write a program demonstrating scope:
 
-1. **local_example** — local variable does not change global x
-2. **global_counter** — increment(), reset(), get_count() using global counter
-3. **nested_example** — outer() with inner() using enclosing variable
-4. **closure_example** — create_adder(n) returns a function that adds n
+1. **local_example** - local variable does not change global x
+2. **global_counter** - increment(), reset(), get_count() using global counter
+3. **nested_example** - outer() with inner() using enclosing variable
+4. **closure_example** - create_adder(n) returns a function that adds n
 
 **Important:** Do not use input(). Assign values in code.
 
@@ -572,7 +572,7 @@ print(f"Multiplier(4) with n=5: {multiplier_5(4)}")`,
       explanation: "Demonstrates local vs global, global counter, enclosing scope in nested functions, and closures."
     },
     hints: [
-      "Assign values in code — do not use input()",
+      "Assign values in code - do not use input()",
       "Use global counter inside increment and reset",
       "local_example's x is separate from module-level x",
       "Inner functions can read enclosing variables without nonlocal",
@@ -602,7 +602,7 @@ print(f"Multiplier(4) with n=5: {multiplier_5(4)}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What does LEGB stand for?",
         options: [
-          "Local, Enclosing, Global, Built-in — name lookup order",
+          "Local, Enclosing, Global, Built-in - name lookup order",
           "Linear, Exponential, Geometric, Binary variables",
           "Local, Export, Global, Base variables",
           "It is not an acronym"
@@ -615,8 +615,8 @@ print(f"Multiplier(4) with n=5: {multiplier_5(4)}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "Can you change a global variable inside a function without the global keyword?",
         options: [
-          "No — you need global to assign to a global name",
-          "Yes — always",
+          "No - you need global to assign to a global name",
+          "Yes - always",
           "Only for reading",
           "Only for some data types"
         ],

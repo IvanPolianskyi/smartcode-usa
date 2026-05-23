@@ -9,7 +9,7 @@ import { QUIZ_QUESTION_TYPES } from './courseData'
 
 export const pythonCurriculum = {
   courseId: "python-developer-zero-to-junior",
-  title: "Complete Python Course",
+  title: "Python: From Your First Program to Real Projects",
 
   modules: [
     {
@@ -79,7 +79,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-00-5",
-          order: 4,
+          order: 5,
           title: "Tuples and sets",
           learningObjectives: [
             "Understand the difference between lists and tuples",
@@ -92,7 +92,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-00-6",
-          order: 4,
+          order: 6,
           title: "Strings (str): methods, formatting, indexing",
           learningObjectives: [
             "Manipulate strings",
@@ -105,7 +105,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-00-7",
-          order: 4,
+          order: 7,
           title: "Nested data structures",
           learningObjectives: [
             "Create nested lists and dictionaries",
@@ -118,7 +118,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-00-8",
-          order: 4,
+          order: 8,
           title: "Practice: problems with objects and data structures",
           learningObjectives: [
             "Solve practical problems with objects",
@@ -252,7 +252,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-02-5",
-          order: 4,
+          order: 5,
           title: "Nested loops and conditions",
           learningObjectives: [
             "Create nested loops",
@@ -265,7 +265,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-02-6",
-          order: 4,
+          order: 6,
           title: "List comprehensions and generator expressions",
           learningObjectives: [
             "Create list comprehensions",
@@ -278,7 +278,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-02-7",
-          order: 4,
+          order: 7,
           title: "Practice: algorithmic problems",
           learningObjectives: [
             "Solve algorithmic problems",
@@ -291,7 +291,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-02-8",
-          order: 4,
+          order: 8,
           title: "Practice: additional problems with statements",
           learningObjectives: [
             "Reinforce knowledge of statements",
@@ -371,7 +371,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-03-5",
-          order: 4,
+          order: 5,
           title: "Object methods: string, list, and dictionary methods",
           learningObjectives: [
             "Use string methods",
@@ -384,7 +384,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-03-6",
-          order: 4,
+          order: 6,
           title: "Lambda functions",
           learningObjectives: [
             "Create lambda functions",
@@ -397,7 +397,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-03-7",
-          order: 4,
+          order: 7,
           title: "Variable scope",
           learningObjectives: [
             "Understand local and global scope",
@@ -410,7 +410,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-03-8",
-          order: 4,
+          order: 8,
           title: "Recursion",
           learningObjectives: [
             "Understand the concept of recursion",
@@ -423,7 +423,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-03-9",
-          order: 4,
+          order: 9,
           title: "Higher-order functions: map, filter, reduce",
           learningObjectives: [
             "Use map() for transformation",
@@ -436,7 +436,7 @@ export const pythonCurriculum = {
         },
         {
           lessonId: "lesson-03-10",
-          order: 4,
+          order: 10,
           title: "Practice: writing functions",
           learningObjectives: [
             "Create complex functions",
@@ -1165,6 +1165,142 @@ export const pythonCurriculum = {
           ],
           estimatedTime: 150,
           prerequisites: ["lesson-13-4"],
+          isProject: true
+        }
+      ]
+    },
+    {
+      moduleId: "module-14",
+      order: 14,
+      title: "14 - Telegram Bots",
+      description: "Building bots: Bot API, python-telegram-bot, commands, and a capstone project",
+      duration: { weeks: 2, lessons: 4 },
+      learningOutcomes: [
+        "Create a bot via BotFather",
+        "Work with the Telegram Bot API",
+        "Build a bot with python-telegram-bot",
+        "Ship a useful assistant bot"
+      ],
+      lessons: [
+        {
+          lessonId: "lesson-14-1",
+          order: 1,
+          title: "Telegram Bot API: token and first requests",
+          learningObjectives: [
+            "Create a bot via @BotFather",
+            "Store the token in environment variables",
+            "Send messages through the HTTP API",
+            "Fetch updates with getUpdates"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-13-5"]
+        },
+        {
+          lessonId: "lesson-14-2",
+          order: 2,
+          title: "python-telegram-bot library: echo bot",
+          learningObjectives: [
+            "Install python-telegram-bot",
+            "Configure Application and polling",
+            "Handle the /start command",
+            "Echo user text"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-14-1"]
+        },
+        {
+          lessonId: "lesson-14-3",
+          order: 3,
+          title: "Commands, keyboards, and dialog state",
+          learningObjectives: [
+            "Add custom commands /help, /menu",
+            "Build ReplyKeyboardMarkup",
+            "Store data in context.user_data",
+            "Handle button presses"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-14-2"]
+        },
+        {
+          lessonId: "lesson-14-4",
+          order: 4,
+          title: "Practice: a useful Telegram bot",
+          learningObjectives: [
+            "Combine multiple commands",
+            "Call an external API",
+            "Log errors properly",
+            "Write a README with run instructions"
+          ],
+          estimatedTime: 150,
+          prerequisites: ["lesson-14-3"],
+          isProject: true
+        }
+      ]
+    },
+    {
+      moduleId: "module-15",
+      order: 15,
+      title: "15 - FastAPI and REST APIs",
+      description: "Modern web APIs with FastAPI: routes, Pydantic, CRUD, and a Telegram webhook",
+      duration: { weeks: 2, lessons: 4 },
+      learningOutcomes: [
+        "Build REST APIs with FastAPI",
+        "Validate data with Pydantic",
+        "Return correct HTTP status codes",
+        "Connect an API to a Telegram webhook"
+      ],
+      lessons: [
+        {
+          lessonId: "lesson-15-1",
+          order: 1,
+          title: "FastAPI: your first REST endpoint",
+          learningObjectives: [
+            "Install fastapi and uvicorn",
+            "Create an app and GET / route",
+            "Run the server locally",
+            "Open auto docs at /docs"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-14-4"]
+        },
+        {
+          lessonId: "lesson-15-2",
+          order: 2,
+          title: "Path, query parameters, and Pydantic models",
+          learningObjectives: [
+            "Use path parameters",
+            "Add query parameters",
+            "Define BaseModel schemas",
+            "Return typed responses"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-15-1"]
+        },
+        {
+          lessonId: "lesson-15-3",
+          order: 3,
+          title: "POST, HTTP errors, and status codes",
+          learningObjectives: [
+            "Create POST with a JSON body",
+            "Return 201 Created",
+            "Use HTTPException",
+            "Update and delete resources"
+          ],
+          estimatedTime: 90,
+          prerequisites: ["lesson-15-2"]
+        },
+        {
+          lessonId: "lesson-15-4",
+          order: 4,
+          title: "Practice: REST API + Telegram webhook",
+          learningObjectives: [
+            "Build a CRUD API for tasks",
+            "Add a Telegram webhook endpoint",
+            "Connect FastAPI with bot logic",
+            "Document API deployment"
+          ],
+          estimatedTime: 150,
+          prerequisites: ["lesson-15-3"],
           isProject: true
         }
       ]

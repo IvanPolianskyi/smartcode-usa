@@ -466,6 +466,18 @@
   overflow-x: auto;
   margin: 0.75rem 0;
   font-size: 0.82rem;
+  line-height: 1.6;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+}
+
+.theoryBody :global(pre code),
+.theoryBody :global(pre.code-block code),
+.theoryBody :global(.code-block code) {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  border-radius: 0;
 }
 
 .mistakes,
@@ -557,6 +569,27 @@
   padding: 0.1rem 0.35rem;
   border-radius: 4px;
   font-size: 0.88em;
+}
+
+.challengeBody :global(pre) {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 1rem;
+  border-radius: 10px;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+}
+
+.challengeBody :global(pre code),
+.challengeBody :global(.code-block code) {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  border-radius: 0;
 }
 
 .footerActions {

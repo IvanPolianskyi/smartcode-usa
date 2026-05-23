@@ -77,12 +77,12 @@ for grade, weight in zip(grades, weights):
         title: "Problem 2: Finding prime numbers",
         content: `**Task:** Find all prime numbers up to n.
 
-**Prime number** — divisible only by 1 and itself.
+**Prime number** - divisible only by 1 and itself.
 
 **Algorithm:**
 1. For each number from 2 to n
 2. Check if it is divisible by any number from 2 to sqrt(n)
-3. If not — it is prime
+3. If not - it is prime
 
 **Solution:**
 \`\`\`python
@@ -300,7 +300,7 @@ print(groups)`,
   commonMistakes: [
     {
       mistake: "Not considering all edge cases",
-      explanation: "Empty lists, one element, identical values — all need to be checked.",
+      explanation: "Empty lists, one element, identical values - all need to be checked.",
       correctApproach: "Always test on different data, including edge cases"
     },
     {
@@ -322,15 +322,15 @@ print(groups)`,
   
   summary: `In this lesson we reinforced:
 
-1. Complex problems — combining different concepts
-2. Grade calculator — weighted average
-3. Prime numbers — search algorithms
-4. Password analysis — comprehensive checks
-5. Matrix processing — working with two-dimensional data
-6. Grouping data — organizing information
-7. Practical tips — improving skills
+1. Complex problems - combining different concepts
+2. Grade calculator - weighted average
+3. Prime numbers - search algorithms
+4. Password analysis - comprehensive checks
+5. Matrix processing - working with two-dimensional data
+6. Grouping data - organizing information
+7. Practical tips - improving skills
 
-Congratulations! You have completed module 02 — Python Operators!
+Congratulations! You have completed module 02 - Python Operators!
 
 Now you can:
 - Use conditional statements

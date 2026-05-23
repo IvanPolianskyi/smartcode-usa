@@ -28,7 +28,7 @@ export const lesson_02_4 = {
         title: "break and continue in for",
         content: `**break** and **continue** work the same way in for as in while.
 
-**break — exit the loop:**
+**break - exit the loop:**
 \`\`\`python
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -50,7 +50,7 @@ for number in numbers:
 Found 7, exiting!
 \`\`\`
 
-**continue — skip an iteration:**
+**continue - skip an iteration:**
 \`\`\`python
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -375,17 +375,17 @@ else:
   
   summary: `In this lesson we learned:
 
-1. break in for — early exit from a loop
-2. continue in for — skip the current iteration
-3. else in loops — code that runs after normal completion
-4. The in operator — check for presence of an element
-5. The not in operator — check for absence of an element
-6. min() and max() — find minimum and maximum values
-7. Combining tools — break, continue, else together
+1. break in for - early exit from a loop
+2. continue in for - skip the current iteration
+3. else in loops - code that runs after normal completion
+4. The in operator - check for presence of an element
+5. The not in operator - check for absence of an element
+6. min() and max() - find minimum and maximum values
+7. Combining tools - break, continue, else together
 
 Now you know how to control loop execution and use helpful operators!
 
-Next lesson — nested loops and conditions!`,
+Next lesson - nested loops and conditions!`,
   
   practiceTask: {
     title: "Password validation system",

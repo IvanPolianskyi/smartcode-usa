@@ -626,7 +626,7 @@ def complex_recursion(data):
 
 **Next step:**
 
-In the next lesson we will learn about higher-order functions — functions that take other functions as arguments or return functions.`
+In the next lesson we will learn about higher-order functions - functions that take other functions as arguments or return functions.`
       }
     ]
   },
@@ -658,7 +658,7 @@ countdown(5)`,
     return n * factorial(n - 1)  # Recursive case
 
 print(factorial(5))  # 120`,
-      explanation: "A classic recursion example — computing a factorial."
+      explanation: "A classic recursion example - computing a factorial."
     },
     {
       title: "Fibonacci numbers",

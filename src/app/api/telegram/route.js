@@ -4,7 +4,12 @@ import { cookies } from 'next/headers'
 import { sendCapiLead, getClientIp, getClientUserAgent, getFbCookies } from '@/lib/metaCapi'
 import { normalizePhoneE164 } from '@/lib/phoneE164'
 import { sanitizeAttribution } from '@/lib/attribution'
-import { API_ERRORS, isTrialCourseValue, resolveLocale } from '@/lib/localeStrings'
+import {
+  API_ERRORS,
+  getTrialGenericCourse,
+  isTrialCourseValue,
+  resolveLocale,
+} from '@/lib/localeStrings'
 
 function escapeHtml(input) {
   const str = String(input ?? '')
@@ -25,6 +30,19 @@ function buildLeadIdentity({ normalizedPhone, normalizedTelegram }) {
 
 function isUuidLike(value) {
   return typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)
+}
+
+function getMetaLeadSkipReason({
+  normalizedPhone,
+  hasValidEventId,
+  existingLead,
+  existingEvent,
+}) {
+  if (!normalizedPhone) return 'немає телефону'
+  if (!hasValidEventId) return 'немає event id (не пробна форма)'
+  if (existingEvent) return 'дубль event id'
+  if (existingLead) return 'дубль контакту'
+  return null
 }
 
 function detectTrafficType(attribution) {
@@ -106,8 +124,11 @@ export async function POST(request) {
     const normalizedTelegram = telegram ? (telegram.startsWith('@') ? telegram : '@' + telegram) : null
     const cleanAttribution = sanitizeAttribution(attribution)
     const preferredContactLabel = preferredContactMethod === 'telegram_phone' ? 'Написати в Telegram за цим номером' : 'Подзвонити'
-    const isTrialCourse = isTrialCourseValue(course)
     const hasValidEventId = isUuidLike(eventId)
+    const isTrialCourse = isTrialCourseValue(course)
+    const displayCourse =
+      course?.trim() ||
+      (hasValidEventId ? getTrialGenericCourse(loc) : '')
     const trafficType = detectTrafficType(cleanAttribution)
 
     // Читаємо cookies для реферальної системи
@@ -129,13 +150,49 @@ export async function POST(request) {
         ],
       })
       : null
+    // Пробні форми (hero, contact, trial block) завжди надсилають UUID eventId.
     const shouldTrackLead = Boolean(
       normalizedPhone &&
-      isTrialCourse &&
       hasValidEventId &&
       !existingLead &&
       !existingEvent
     )
+    const metaLeadSkipReason = getMetaLeadSkipReason({
+      normalizedPhone,
+      hasValidEventId,
+      existingLead,
+      existingEvent,
+    })
+
+    let metaLeadSent = false
+    if (shouldTrackLead) {
+      const clientIp = getClientIp(request)
+      const userAgent = getClientUserAgent(request)
+      const { fbc, fbp } = getFbCookies(request)
+      const { trialInterestToContentIds } = await import('@/lib/metaPixel')
+      const contentIds = isTrialCourse ? trialInterestToContentIds(course) : []
+
+      metaLeadSent = await sendCapiLead({
+        eventId,
+        sourceUrl: sourceUrl || 'https://smartcode-academy.com',
+        phone: normalizedPhone,
+        externalId: leadIdentity || (normalizedTelegram ? normalizedTelegram.replace(/^@/, '').toLowerCase() : undefined),
+        name: name || undefined,
+        clientIp,
+        userAgent,
+        fbc,
+        fbp,
+        fbclid: cleanAttribution.fbclid || undefined,
+        contentName: displayCourse || 'trial_lesson',
+        contentIds,
+      })
+    }
+
+    const metaLeadLine = metaLeadSent
+      ? '<b>Meta Lead Sent:</b> yes'
+      : shouldTrackLead
+        ? '<b>Meta Lead Sent:</b> no (помилка CAPI — перевірте META_CAPI_TOKEN)'
+        : `<b>Meta Lead Sent:</b> no (${escapeHtml(metaLeadSkipReason || 'невідомо')})`
 
     const lines = [
       '<b>Нова заявка зі сайту SmartCode Academy</b>',
@@ -145,10 +202,10 @@ export async function POST(request) {
         ? `<b>Телеграм:</b> ${escapeHtml(normalizedTelegram)}`
         : `<b>Телефон:</b> ${escapeHtml(normalizedPhone)}`,
       normalizedPhone ? `<b>Бажаний спосіб зв'язку:</b> ${escapeHtml(preferredContactLabel)}` : null,
-      course ? `<b>Курс:</b> ${escapeHtml(course)}` : null,
+      displayCourse ? `<b>Курс:</b> ${escapeHtml(displayCourse)}` : null,
       message ? `<b>Повідомлення:</b>\n${escapeHtml(message)}` : null,
       `<b>Трафік:</b> ${escapeHtml(trafficType)}`,
-      `<b>Meta Lead Sent:</b> ${shouldTrackLead ? 'yes' : 'no'}`,
+      metaLeadLine,
       cleanAttribution.utm_source ? `<b>UTM Source:</b> ${escapeHtml(cleanAttribution.utm_source)}` : null,
       cleanAttribution.utm_medium ? `<b>UTM Medium:</b> ${escapeHtml(cleanAttribution.utm_medium)}` : null,
       cleanAttribution.utm_campaign ? `<b>UTM Campaign:</b> ${escapeHtml(cleanAttribution.utm_campaign)}` : null,
@@ -189,7 +246,7 @@ export async function POST(request) {
           telegram: normalizedTelegram || '',
           eventId: hasValidEventId ? eventId : null,
           leadIdentity,
-          course: course || '',
+          course: displayCourse || '',
           message: message || '',
           contactMethod: contactMethod || 'phone',
           preferredContactMethod: preferredContactMethod || 'phone_call',
@@ -203,7 +260,7 @@ export async function POST(request) {
           name: name || '',
           phone: normalizedPhone || null,
           telegram: normalizedTelegram || null,
-          course: course || '',
+          course: displayCourse || '',
           message: message || '',
           contactMethod: contactMethod || 'phone',
           preferredContactMethod: preferredContactMethod || 'phone_call',
@@ -229,7 +286,7 @@ export async function POST(request) {
         telegram: normalizedTelegram || '',
         eventId: hasValidEventId ? eventId : null,
         leadIdentity,
-        course: course || '',
+        course: displayCourse || '',
         message: message || '',
         contactMethod: contactMethod || 'phone',
         preferredContactMethod: preferredContactMethod || 'phone_call',
@@ -237,13 +294,14 @@ export async function POST(request) {
         createdAt: new Date(),
         via: 'telegram',
         isUniqueLead: shouldTrackLead,
+        metaLeadSent,
       })
       await sendLeadToCrm({
         leadId: String(insertResult.insertedId),
         name: name || '',
         phone: normalizedPhone || null,
         telegram: normalizedTelegram || null,
-        course: course || '',
+        course: displayCourse || '',
         message: message || '',
         contactMethod: contactMethod || 'phone',
         preferredContactMethod: preferredContactMethod || 'phone_call',
@@ -256,34 +314,12 @@ export async function POST(request) {
       })
     } catch {}
 
-    // CAPI: відправляємо Lead лише для нового унікального контакту
-    if (eventId && shouldTrackLead) {
-      const clientIp = getClientIp(request)
-      const userAgent = getClientUserAgent(request)
-      const { fbc, fbp } = getFbCookies(request)
-      const { trialInterestToContentIds } = await import('@/lib/metaPixel')
-      const contentIds = trialInterestToContentIds(course)
-
-      try {
-        await sendCapiLead({
-          eventId,
-          sourceUrl: sourceUrl || 'https://smartcode-academy.com',
-          phone: normalizedPhone,
-          // external_id як стабільний ідентифікатор ліда для покращення matching
-          externalId: leadIdentity || (normalizedTelegram ? normalizedTelegram.replace(/^@/, '').toLowerCase() : undefined),
-          name: name || undefined,
-          clientIp,
-          userAgent,
-          fbc,
-          fbp,
-          fbclid: cleanAttribution.fbclid || undefined,
-          contentName: course || 'trial_lesson',
-          contentIds,
-        })
-      } catch {}
-    }
-
-    return NextResponse.json({ ok: true, trackLead: shouldTrackLead })
+    return NextResponse.json({
+      ok: true,
+      trackLead: shouldTrackLead,
+      metaLeadSent,
+      metaLeadSkipReason,
+    })
   } catch (error) {
     return NextResponse.json(
       { ok: false, error: 'Unexpected server error', detail: String(error?.message || error) },

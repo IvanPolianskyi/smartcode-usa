@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 05 — lessons 5.1–5.6 */
+/** Rich EN content for Roblox Module 05 - lessons 5.1–5.6 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -7,7 +7,7 @@ export const enLesson51 = {
   lessonId: 'lesson-roblox-5-1',
   moduleId: 'module-05',
   order: 1,
-  title: '5.1 — Humanoid and Health',
+  title: '5.1 - Humanoid and Health',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -21,17 +21,17 @@ export const enLesson51 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `**Module 5 — Fighting Club** — combat starts with **health**, not swords yet.
+        content: `**Module 5 - Fighting Club** - combat starts with **health**, not swords yet.
 
 **Lesson flow:**
-1. **Theory (40 min)** — Humanoid, damage, death
-2. **Practice (~25 min)** — health test arena
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - Humanoid, damage, death
+2. **Practice (~25 min)** - health test arena
+3. **Quiz (10 min)** - **70%** pass
 
-Use **Module 4 — Tycoon Works** place or new Baseplate \`Lesson 5.1 — Health Arena\`.`,
+Use **Module 4 - Tycoon Works** place or new Baseplate \`Lesson 5.1 - Health Arena\`.`,
       },
       {
-        title: 'Humanoid — the character brain',
+        title: 'Humanoid - the character brain',
         content: `Your character model contains:
 
 | Object | Role |
@@ -41,9 +41,9 @@ Use **Module 4 — Tycoon Works** place or new Baseplate \`Lesson 5.1 — Health
 | **Head, Torso, limbs** | Body parts |
 
 **Key properties:**
-- \`Health\` — current HP (100 default)
-- \`MaxHealth\` — maximum HP cap
-- \`WalkSpeed\` — move speed
+- \`Health\` - current HP (100 default)
+- \`MaxHealth\` - maximum HP cap
+- \`WalkSpeed\` - move speed
 
 **Exercise (3 min):** Play → expand your character in Explorer → watch Health while testing.`,
       },
@@ -71,7 +71,7 @@ humanoid.Health = math.min(humanoid.Health + 10, humanoid.MaxHealth)
       },
       {
         title: 'Damage zone script',
-        content: `Build red pad \`DamageZone_Lava\` — Anchored, Neon red.
+        content: `Build red pad \`DamageZone_Lava\` - Anchored, Neon red.
 
 **Server Script** inside pad:
 
@@ -94,7 +94,7 @@ zone.Touched:Connect(function(hit)
 end)
 \`\`\`
 
-**Exercise (8 min):** Touch zone 3 times — Health drops 15 each time until respawn.`,
+**Exercise (8 min):** Touch zone 3 times - Health drops 15 each time until respawn.`,
       },
       {
         title: 'Debounce damage zones',
@@ -123,7 +123,7 @@ zone.Touched:Connect(function(hit)
 end)
 \`\`\`
 
-Damage every **0.5s** while standing — fair lava feel.`,
+Damage every **0.5s** while standing - fair lava feel.`,
       },
       {
         title: 'Died event',
@@ -143,7 +143,7 @@ if player then
 end
 \`\`\`
 
-**Respawn:** Roblox auto-respawns by default — you customize later in 5.5.`,
+**Respawn:** Roblox auto-respawns by default - you customize later in 5.5.`,
       },
       {
         title: 'Heal zone (optional)',
@@ -153,7 +153,7 @@ end
 humanoid.Health = math.min(humanoid.Health + 10, humanoid.MaxHealth)
 \`\`\`
 
-Use same debounce pattern — heal every 0.5s max.
+Use same debounce pattern - heal every 0.5s max.
 
 **Arena layout:** spawn → damage zone A (10 dmg) → damage zone B (25 dmg) → heal zone.`,
       },
@@ -162,7 +162,7 @@ Use same debounce pattern — heal every 0.5s max.
         content: `- [ ] Damage zone uses server Script + Humanoid check
 - [ ] Debounce prevents instant melt
 - [ ] Died prints to Output on zero HP
-- [ ] Save: \`Lesson 5.1 — Health Arena\``,
+- [ ] Save: \`Lesson 5.1 - Health Arena\``,
       },
     ],
   },
@@ -172,24 +172,24 @@ Use same debounce pattern — heal every 0.5s max.
     { mistake: 'No debounce in lava', explanation: 'Instant death from one touch frame.', correctApproach: 'cooldown table per humanoid' },
     { mistake: 'Heal above MaxHealth', explanation: 'Overheal bugs.', correctApproach: 'math.min with MaxHealth' },
   ],
-  summary: `You learned Humanoid Health, applied TakeDamage with debounced zones, listened for Died, and built a heal pad — the foundation of every combat game on Roblox.`,
+  summary: `You learned Humanoid Health, applied TakeDamage with debounced zones, listened for Died, and built a heal pad - the foundation of every combat game on Roblox.`,
   practiceTask: {
     title: 'Health test arena (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Two damage zones + heal zone working.
 
-### Part A — Arena (5 min)
+### Part A - Arena (5 min)
 1. Room with spawn, walls, signs
 2. \`DamageZone_A\` (10 dmg) and \`DamageZone_B\` (25 dmg)
 
-### Part B — Scripts (12 min)
+### Part B - Scripts (12 min)
 1. Server damage scripts with 0.5s debounce
 2. Print on Died when Health hits 0
 3. Test walk through both zones
 
-### Part C — Heal & save (8 min)
+### Part C - Heal & save (8 min)
 1. Green \`HealZone\` restores 10 HP (capped)
-2. **Save to Roblox** → \`Lesson 5.1 — Health Arena\`
+2. **Save to Roblox** → \`Lesson 5.1 - Health Arena\`
 3. **Practice complete**`,
     hints: [
       'Print humanoid.Health after each damage while testing',
@@ -211,7 +211,7 @@ Use same debounce pattern — heal every 0.5s max.
       { id: 'q7', type: MC, question: 'Heal uses math.min to…', options: ['Cap at MaxHealth', 'Delete player', 'Remove tool', 'Publish'], correctAnswer: 0, explanation: 'Prevent overheal.' },
       { id: 'q8', type: MC, question: 'FindFirstChildOfClass Humanoid finds…', options: ['Humanoid in character', 'Only Part', 'Tool', 'SpawnLocation'], correctAnswer: 0, explanation: 'Character health component.' },
       { id: 'q9', type: MC, question: 'Module 5 focus is…', options: ['Combat', 'Only tycoon', 'Only terrain', 'Publishing only'], correctAnswer: 0, explanation: 'Fighting Club module.' },
-      { id: 'q10', type: MC, question: 'Lesson 5.1 save name…', options: ['Lesson 5.1 — Health Arena', 'Tycoon Works', 'Obby Ready', 'Coin Simulator'], correctAnswer: 0, explanation: 'Save arena lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 5.1 save name…', options: ['Lesson 5.1 - Health Arena', 'Tycoon Works', 'Obby Ready', 'Coin Simulator'], correctAnswer: 0, explanation: 'Save arena lesson.' },
     ],
   },
 }
@@ -220,7 +220,7 @@ export const enLesson52 = {
   lessonId: 'lesson-roblox-5-2',
   moduleId: 'module-05',
   order: 2,
-  title: '5.2 — Weapons — First Sword',
+  title: '5.2 - Weapons - First Sword',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -237,11 +237,11 @@ export const enLesson52 = {
         content: `Damage zones hurt passively. **Weapons** let the player **choose** to attack.
 
 **Lesson flow:**
-1. **Theory (40 min)** — Tool + Handle + Activated
-2. **Practice (~25 min)** — TrainingSword equip and swing
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - Tool + Handle + Activated
+2. **Practice (~25 min)** - TrainingSword equip and swing
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 5.1 — Health Arena** or fresh Baseplate.`,
+Open **Lesson 5.1 - Health Arena** or fresh Baseplate.`,
       },
       {
         title: 'Tool system overview',
@@ -271,7 +271,7 @@ Inside tool:
 **Exercise (5 min):** Play → equip sword → see it in character hand.`,
       },
       {
-        title: 'Activated — swing detection',
+        title: 'Activated - swing detection',
         content: `**LocalScript** inside \`TrainingSword\` (client input OK for swing start):
 
 \`\`\`lua
@@ -284,7 +284,7 @@ end)
 
 **Activated** = player clicked while tool equipped (PC: left click).
 
-**Exercise (5 min):** Swing 5 times — 5 prints in Output.`,
+**Exercise (5 min):** Swing 5 times - 5 prints in Output.`,
       },
       {
         title: 'Equip and Unequipped events',
@@ -305,13 +305,13 @@ Use for:
       },
       {
         title: 'Why damage stays on server (preview)',
-        content: `**Never** trust client-only damage — exploiters could one-shot everyone.
+        content: `**Never** trust client-only damage - exploiters could one-shot everyone.
 
 **Lesson 5.3 pattern:**
 - Client: swing animation + optional sound
 - Server: verify hit, apply TakeDamage
 
-Today: **no damage yet** — only reliable equip + Activated.`,
+Today: **no damage yet** - only reliable equip + Activated.`,
       },
       {
         title: 'Tool troubleshooting',
@@ -321,7 +321,7 @@ Today: **no damage yet** — only reliable equip + Activated.`,
 | Cannot equip | Missing part named \`Handle\` |
 | Activated never fires | Tool not equipped; click in 3D view |
 | Sword wrong angle | Adjust Tool Grip properties |
-| Script error | LocalScript vs Script — Activated works in LocalScript |
+| Script error | LocalScript vs Script - Activated works in LocalScript |
 
 **CanBeDropped false** on Tool prevents losing sword in obby.`,
       },
@@ -330,7 +330,7 @@ Today: **no damage yet** — only reliable equip + Activated.`,
         content: `- [ ] TrainingSword in StarterPack with Handle
 - [ ] Activated prints on click
 - [ ] Equipped / Unequipped optional sounds
-- [ ] Save: \`Lesson 5.2 — First Sword\``,
+- [ ] Save: \`Lesson 5.2 - First Sword\``,
       },
     ],
   },
@@ -340,24 +340,24 @@ Today: **no damage yet** — only reliable equip + Activated.`,
     { mistake: 'Server Script for Activated only', explanation: 'Activated often wired in LocalScript.', correctApproach: 'LocalScript inside Tool for input' },
     { mistake: 'Expect damage today', explanation: '5.2 is input only.', correctApproach: 'Print swing; damage in 5.3' },
   ],
-  summary: `You built a TrainingSword Tool with Handle, detected swings with Activated, and learned equip flow — ready to add fair server damage next lesson.`,
+  summary: `You built a TrainingSword Tool with Handle, detected swings with Activated, and learned equip flow - ready to add fair server damage next lesson.`,
   practiceTask: {
     title: 'Equip and swing (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Sword equips and logs every swing.
 
-### Part A — Build tool (10 min)
+### Part A - Build tool (10 min)
 1. \`TrainingSword\` in StarterPack + \`Handle\` part
 2. Style blade; fix Grip if needed
 3. CanBeDropped false optional
 
-### Part B — LocalScript (10 min)
+### Part B - LocalScript (10 min)
 1. Activated → print swing
 2. Equipped / Unequipped prints or sounds
 
-### Part C — Test & save (5 min)
-1. Play — equip — swing 10 times
-2. **Save to Roblox** → \`Lesson 5.2 — First Sword\`
+### Part C - Test & save (5 min)
+1. Play - equip - swing 10 times
+2. **Save to Roblox** → \`Lesson 5.2 - First Sword\`
 3. **Practice complete**`,
     hints: [
       'Handle must be direct child of Tool',
@@ -374,12 +374,12 @@ Today: **no damage yet** — only reliable equip + Activated.`,
       { id: 'q2', type: MC, question: 'StarterPack tools appear in…', options: ['Backpack on spawn', 'Terrain', 'Lighting', 'Output'], correctAnswer: 0, explanation: 'Default loadout.' },
       { id: 'q3', type: MC, question: 'Activated fires when…', options: ['Player clicks while equipped', 'Saving game', 'Touching lava', 'ClockTime'], correctAnswer: 0, explanation: 'Attack input.' },
       { id: 'q4', type: MC, question: 'LocalScript in Tool is OK for…', options: ['Swing input detection', 'Server economy', 'DataStore', 'Plot claim'], correctAnswer: 0, explanation: 'Client input layer.' },
-      { id: 'q5', type: MC, question: 'Damage in 5.2 lesson is…', options: ['Not yet — next lesson', 'Required today', 'On terrain', 'Via leaderstats'], correctAnswer: 0, explanation: '5.3 adds damage.' },
+      { id: 'q5', type: MC, question: 'Damage in 5.2 lesson is…', options: ['Not yet - next lesson', 'Required today', 'On terrain', 'Via leaderstats'], correctAnswer: 0, explanation: '5.3 adds damage.' },
       { id: 'q6', type: MC, question: 'Equipped event fires when…', options: ['Tool moves to character', 'Player dies', 'Coin touch', 'UI close'], correctAnswer: 0, explanation: 'Equip lifecycle.' },
       { id: 'q7', type: MC, question: 'Server should apply damage because…', options: ['Anti-cheat trust', 'UI color', 'Sky', 'Sound'], correctAnswer: 0, explanation: 'Server authority.' },
       { id: 'q8', type: MC, question: 'CanBeDropped false prevents…', options: ['Dropping tool on ground', 'Equipping', 'Jumping', 'Health'], correctAnswer: 0, explanation: 'Keep weapon on player.' },
       { id: 'q9', type: MC, question: 'Grip properties adjust…', options: ['How sword sits in hand', 'MaxHealth', 'Coins', 'Terrain'], correctAnswer: 0, explanation: 'Tool orientation.' },
-      { id: 'q10', type: MC, question: 'Lesson 5.2 save name…', options: ['Lesson 5.2 — First Sword', 'Health Arena', 'Damage System', 'Tycoon Works'], correctAnswer: 0, explanation: 'Save sword tool lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 5.2 save name…', options: ['Lesson 5.2 - First Sword', 'Health Arena', 'Damage System', 'Tycoon Works'], correctAnswer: 0, explanation: 'Save sword tool lesson.' },
     ],
   },
 }
@@ -388,7 +388,7 @@ export const enLesson53 = {
   lessonId: 'lesson-roblox-5-3',
   moduleId: 'module-05',
   order: 3,
-  title: '5.3 — Damage System',
+  title: '5.3 - Damage System',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -405,15 +405,15 @@ export const enLesson53 = {
         content: `Your sword **swings**. Now it **hurts**.
 
 **Lesson flow:**
-1. **Theory (40 min)** — server damage + cooldown + no self-hit
-2. **Practice (~25 min)** — fair PvP duels
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - server damage + cooldown + no self-hit
+2. **Practice (~25 min)** - fair PvP duels
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 5.2 — First Sword**.`,
+Open **Lesson 5.2 - First Sword**.`,
       },
       {
         title: 'Server damage on Handle',
-        content: `**Script** (server) inside \`TrainingSword\` — Roblox runs Tool scripts on server when equipped.
+        content: `**Script** (server) inside \`TrainingSword\` - Roblox runs Tool scripts on server when equipped.
 
 \`\`\`lua
 local tool = script.Parent
@@ -466,7 +466,7 @@ if attackerPlayer and victimPlayer and attackerPlayer == victimPlayer then
 end
 \`\`\`
 
-**NPCs later:** victimPlayer nil but humanoid exists — still damage NPC.`,
+**NPCs later:** victimPlayer nil but humanoid exists - still damage NPC.`,
       },
       {
         title: 'Hit cooldown (debounce)',
@@ -505,9 +505,9 @@ Prevents damage while idle bumping into friends.`,
         title: 'Duel test protocol',
         content: `**3 duel tests** with friend or Studio 2 players:
 
-1. **Trade hits** — both take damage, no self-hit
-2. **Spam click** — cooldown blocks machine-gun damage
-3. **Winner** — Died event fires, respawn works
+1. **Trade hits** - both take damage, no self-hit
+2. **Spam click** - cooldown blocks machine-gun damage
+3. **Winner** - Died event fires, respawn works
 
 **Log:** attacker name, victim name, damage amount.
 
@@ -517,7 +517,7 @@ Prevents damage while idle bumping into friends.`,
         title: 'NPC test dummy (optional)',
         content: `Insert **Rig** or dummy with Humanoid in arena \`Dummy_Target\`.
 
-Stand still — swing — Health drops — good for solo testing.
+Stand still - swing - Health drops - good for solo testing.
 
 **Anchor** dummy root; Humanoid still receives damage.`,
       },
@@ -527,7 +527,7 @@ Stand still — swing — Health drops — good for solo testing.
 - [ ] Self-hit blocked
 - [ ] Cooldown between hits
 - [ ] 3 duels completed
-- [ ] Save: \`Lesson 5.3 — Damage System\``,
+- [ ] Save: \`Lesson 5.3 - Damage System\``,
       },
     ],
   },
@@ -537,24 +537,24 @@ Stand still — swing — Health drops — good for solo testing.
     { mistake: 'No cooldown', explanation: 'One swing = 200 damage.', correctApproach: 'canHit flag + task.wait' },
     { mistake: 'Damage when tool in Backpack', explanation: 'Handle should not hit while unequipped.', correctApproach: 'Only equipped tool active' },
   ],
-  summary: `You added server TakeDamage on sword Handle with self-hit prevention and hit cooldown, and ran duel tests — your arena now has real PvP combat.`,
+  summary: `You added server TakeDamage on sword Handle with self-hit prevention and hit cooldown, and ran duel tests - your arena now has real PvP combat.`,
   practiceTask: {
     title: 'Fair sword combat (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Reliable duels with fair damage.
 
-### Part A — Server damage (12 min)
-1. Script on TrainingSword — DAMAGE 20, cooldown 0.45s
+### Part A - Server damage (12 min)
+1. Script on TrainingSword - DAMAGE 20, cooldown 0.45s
 2. Self-hit prevention
 3. Solo test on dummy OR friend
 
-### Part B — Duels (10 min)
-1. Three 1v1 rounds — log hits
+### Part B - Duels (10 min)
+1. Three 1v1 rounds - log hits
 2. Tune DAMAGE if fights too long/short
 
-### Part C — Save (3 min)
+### Part C - Save (3 min)
 1. Optional swing window with Activated
-2. **Save to Roblox** → \`Lesson 5.3 — Damage System\`
+2. **Save to Roblox** → \`Lesson 5.3 - Damage System\`
 3. **Practice complete**`,
     hints: [
       'Print victim name on each successful hit',
@@ -576,7 +576,7 @@ Stand still — swing — Health drops — good for solo testing.
       { id: 'q7', type: MC, question: 'Swing window with Activated…', options: ['Limits damage to active swings', 'Deletes tool', 'Adds coins', 'Claims plot'], correctAnswer: 0, explanation: 'Optional fairness layer.' },
       { id: 'q8', type: MC, question: 'Duel testing needs…', options: ['Humanoid targets', 'Only terrain', 'No Output', 'Publish first'], correctAnswer: 0, explanation: 'Characters to damage.' },
       { id: 'q9', type: MC, question: 'Lesson 5.2 added…', options: ['Tool equip and Activated', 'DataStore', 'Tycoon plots', 'Terrain'], correctAnswer: 0, explanation: 'Prerequisite sword setup.' },
-      { id: 'q10', type: MC, question: 'Lesson 5.3 save name…', options: ['Lesson 5.3 — Damage System', 'First Sword', 'Health Arena', 'Upgrade Tables'], correctAnswer: 0, explanation: 'Save combat lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 5.3 save name…', options: ['Lesson 5.3 - Damage System', 'First Sword', 'Health Arena', 'Upgrade Tables'], correctAnswer: 0, explanation: 'Save combat lesson.' },
     ],
   },
 }
@@ -585,7 +585,7 @@ export const enLesson54 = {
   lessonId: 'lesson-roblox-5-4',
   moduleId: 'module-05',
   order: 4,
-  title: '5.4 — TweenService: Smooth Effects',
+  title: '5.4 - TweenService: Smooth Effects',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -599,14 +599,14 @@ export const enLesson54 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `Numbers changing instantly feel like a spreadsheet. **TweenService** adds **motion** — games feel premium.
+        content: `Numbers changing instantly feel like a spreadsheet. **TweenService** adds **motion** - games feel premium.
 
 **Lesson flow:**
-1. **Theory (40 min)** — TweenInfo, easing, combat polish
-2. **Practice (~25 min)** — gate + hit flash
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - TweenInfo, easing, combat polish
+2. **Practice (~25 min)** - gate + hit flash
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 5.3 — Damage System** arena.`,
+Open **Lesson 5.3 - Damage System** arena.`,
       },
       {
         title: 'What TweenService does',
@@ -630,7 +630,7 @@ tween:Play()
 **Can tween:** Position, Size, Transparency, Color, CFrame, and more.`,
       },
       {
-        title: 'TweenInfo — pick the feel',
+        title: 'TweenInfo - pick the feel',
         content: `| EasingStyle | Feel |
 |-------------|------|
 | **Linear** | Robotic, constant speed |
@@ -648,7 +648,7 @@ tween:Play()
       },
       {
         title: 'Arena gate opens',
-        content: `Build \`ArenaGate\` — vertical slab blocking entrance.
+        content: `Build \`ArenaGate\` - vertical slab blocking entrance.
 
 \`\`\`lua
 local gate = workspace.Arena.Gate
@@ -695,7 +695,7 @@ Call \`flashHit(character)\` in sword script after \`TakeDamage\`.`,
       },
       {
         title: 'UI scale punch (optional)',
-        content: `**TextLabel** \`HitLabel\` in ScreenGui — shows \`HIT!\` on damage.
+        content: `**TextLabel** \`HitLabel\` in ScreenGui - shows \`HIT!\` on damage.
 
 \`\`\`lua
 label.Text = "HIT!"
@@ -713,7 +713,7 @@ punch.Completed:Wait()
 fade:Play()
 \`\`\`
 
-LocalScript can listen to RemoteEvent later — for lesson, server print is enough.`,
+LocalScript can listen to RemoteEvent later - for lesson, server print is enough.`,
       },
       {
         title: 'Performance and rules',
@@ -733,7 +733,7 @@ LocalScript can listen to RemoteEvent later — for lesson, server print is enou
         content: `- [ ] Gate open/close tweens work
 - [ ] Hit flash on successful damage
 - [ ] Durations under 1 second for combat FX
-- [ ] Save: \`Lesson 5.4 — Tween Polish\``,
+- [ ] Save: \`Lesson 5.4 - Tween Polish\``,
       },
     ],
   },
@@ -743,26 +743,26 @@ LocalScript can listen to RemoteEvent later — for lesson, server print is enou
     { mistake: 'Flash never resets Transparency', explanation: 'Character stays ghost.', correctApproach: 'Tween back to original value' },
     { mistake: '10 second hit tween', explanation: 'Blocks duel readability.', correctApproach: '0.1-0.2s flash total' },
   ],
-  summary: `You used TweenService with TweenInfo and easing to open arena gates and flash hits on damage — combat now feels responsive and polished, not instant and dry.`,
+  summary: `You used TweenService with TweenInfo and easing to open arena gates and flash hits on damage - combat now feels responsive and polished, not instant and dry.`,
   practiceTask: {
     title: 'Arena motion polish (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Two tween effects in your arena.
 
-### Part A — Gate (10 min)
+### Part A - Gate (10 min)
 1. \`ArenaGate\` + openGate / closeGate functions
 2. Trigger open when entering arena
 
-### Part B — Hit flash (12 min)
+### Part B - Hit flash (12 min)
 1. \`flashHit(character)\` after TakeDamage in sword script
-2. Test in duel — white flash on each hit
+2. Test in duel - white flash on each hit
 
-### Part C — Save (3 min)
+### Part C - Save (3 min)
 1. Optional HIT label scale tween
-2. **Save to Roblox** → \`Lesson 5.4 — Tween Polish\`
+2. **Save to Roblox** → \`Lesson 5.4 - Tween Polish\`
 3. **Practice complete**`,
     hints: [
-      'Start with Quad Out — easiest to tune',
+      'Start with Quad Out - easiest to tune',
       'Print tween.Completed once to debug stuck gate',
       'Flash UpperTorso for R15, Torso for R6',
     ],
@@ -781,7 +781,7 @@ LocalScript can listen to RemoteEvent later — for lesson, server print is enou
       { id: 'q7', type: MC, question: 'Store closedPos so gate can…', options: ['Close again', 'Never move', 'Delete player', 'Remove sword'], correctAnswer: 0, explanation: 'Return to start position.' },
       { id: 'q8', type: MC, question: 'Too many tweens cause…', options: ['Lag and clutter', 'Free Robux', 'Auto save', 'More health'], correctAnswer: 0, explanation: 'Use tweens sparingly.' },
       { id: 'q9', type: MC, question: 'flashHit goes after…', options: ['Successful TakeDamage', 'Player joins', 'Terrain paint', 'Publish'], correctAnswer: 0, explanation: 'Feedback on hit moment.' },
-      { id: 'q10', type: MC, question: 'Lesson 5.4 save name…', options: ['Lesson 5.4 — Tween Polish', 'Damage System', 'First Sword', 'Arena Ready'], correctAnswer: 0, explanation: 'Save tween lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 5.4 save name…', options: ['Lesson 5.4 - Tween Polish', 'Damage System', 'First Sword', 'Arena Ready'], correctAnswer: 0, explanation: 'Save tween lesson.' },
     ],
   },
 }
@@ -790,7 +790,7 @@ export const enLesson55 = {
   lessonId: 'lesson-roblox-5-5',
   moduleId: 'module-05',
   order: 5,
-  title: '5.5 — Death and Respawn',
+  title: '5.5 - Death and Respawn',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -807,11 +807,11 @@ export const enLesson55 = {
         content: `Winning a duel means someone **dies** and **comes back**. If that loop breaks, arena dies.
 
 **Lesson flow:**
-1. **Theory (40 min)** — Died, respawn, state reset
-2. **Practice (~25 min)** — stable 3-death test
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - Died, respawn, state reset
+2. **Practice (~25 min)** - stable 3-death test
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 5.4 — Tween Polish** arena.`,
+Open **Lesson 5.4 - Tween Polish** arena.`,
       },
       {
         title: 'Arena lifecycle',
@@ -840,17 +840,17 @@ Players.PlayerAdded:Connect(function(player)
 end)
 \`\`\`
 
-**CharacterAdded** runs **every respawn** — connect Died **inside** it each new life.`,
+**CharacterAdded** runs **every respawn** - connect Died **inside** it each new life.`,
       },
       {
         title: 'Arena SpawnLocation',
-        content: `**ArenaSpawn** — SpawnLocation on duel floor:
+        content: `**ArenaSpawn** - SpawnLocation on duel floor:
 - Size \`8, 1, 8\`
 - Neutral **true**
 - Bright color, Anchored
 - **Not** inside damage lava
 
-**RespawnLocation** from checkpoints does not apply here unless you set it — default Roblox respawn uses SpawnLocations in Workspace.
+**RespawnLocation** from checkpoints does not apply here unless you set it - default Roblox respawn uses SpawnLocations in Workspace.
 
 **Multiple spawns:** \`Spawn_Red\`, \`Spawn_Blue\` for team duels later.`,
       },
@@ -873,11 +873,11 @@ task.delay(0.45, function()
 end)
 \`\`\`
 
-Or simpler: **new character = new humanoid** — reconnect Touched each CharacterAdded if needed.`,
+Or simpler: **new character = new humanoid** - reconnect Touched each CharacterAdded if needed.`,
       },
       {
         title: 'Respawn timing options',
-        content: `**Default:** instant respawn — fine for training arena.
+        content: `**Default:** instant respawn - fine for training arena.
 
 **Delayed (optional):**
 
@@ -892,10 +892,10 @@ Or disable auto respawn and call \`player:LoadCharacter()\` after countdown UI.
       {
         title: 'Three-death stress test',
         content: `**Mandatory test:**
-1. Duel until death — respawn on ArenaSpawn
-2. Equip sword — damage still works
-3. Die again — repeat
-4. Die third time — still no Output errors
+1. Duel until death - respawn on ArenaSpawn
+2. Equip sword - damage still works
+3. Die again - repeat
+4. Die third time - still no Output errors
 
 **Log:** death count, respawn position OK, sword hits after each respawn.
 
@@ -905,8 +905,8 @@ Or disable auto respawn and call \`player:LoadCharacter()\` after countdown UI.
         title: 'Before practice checklist',
         content: `- [ ] Died connected inside CharacterAdded
 - [ ] ArenaSpawn works every respawn
-- [ ] 3 deaths — sword still damages
-- [ ] Save: \`Lesson 5.5 — Death Respawn\``,
+- [ ] 3 deaths - sword still damages
+- [ ] Save: \`Lesson 5.5 - Death Respawn\``,
       },
     ],
   },
@@ -916,28 +916,28 @@ Or disable auto respawn and call \`player:LoadCharacter()\` after countdown UI.
     { mistake: 'canHit stuck false after death', explanation: 'No damage after respawn.', correctApproach: 'Reset per humanoid or new character' },
     { mistake: 'CharacterAdded not used', explanation: 'One-life setup only.', correctApproach: 'Per-life listeners for combat' },
   ],
-  summary: `You wired Humanoid.Died on the server, set arena SpawnLocation, reset combat state each life, and passed the three-death stress test — the arena loop is stable for repeated duels.`,
+  summary: `You wired Humanoid.Died on the server, set arena SpawnLocation, reset combat state each life, and passed the three-death stress test - the arena loop is stable for repeated duels.`,
   practiceTask: {
     title: 'Stable respawn loop (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Fight → die → respawn → fight works 3 times.
 
-### Part A — Death handler (8 min)
-1. Server script — Died inside CharacterAdded
+### Part A - Death handler (8 min)
+1. Server script - Died inside CharacterAdded
 2. Print player name on defeat
 
-### Part B — Spawn (7 min)
-1. \`ArenaSpawn\` SpawnLocation — test respawn position
+### Part B - Spawn (7 min)
+1. \`ArenaSpawn\` SpawnLocation - test respawn position
 2. Optional RespawnTime = 3
 
-### Part C — Stress test (10 min)
-1. Three deaths in a row — sword works each life
+### Part C - Stress test (10 min)
+1. Three deaths in a row - sword works each life
 2. Fix any stuck cooldown
-3. **Save to Roblox** → \`Lesson 5.5 — Death Respawn\`
+3. **Save to Roblox** → \`Lesson 5.5 - Death Respawn\`
 4. **Practice complete**`,
     hints: [
       'If spawn wrong, move ArenaSpawn and test again',
-      'New character = new Humanoid — reconnect if scripts parent to old char',
+      'New character = new Humanoid - reconnect if scripts parent to old char',
       'Read Output on third death for red errors',
     ],
     optionalChallenge: 'Respawn countdown UI 3-2-1 on ScreenGui.',
@@ -955,7 +955,7 @@ Or disable auto respawn and call \`player:LoadCharacter()\` after countdown UI.
       { id: 'q7', type: MC, question: 'Three-death test checks…', options: ['Stability over multiple lives', 'Only one life', 'Publishing', 'Sky only'], correctAnswer: 0, explanation: 'Stress test loop.' },
       { id: 'q8', type: MC, question: 'Broken canHit after death causes…', options: ['No damage after respawn', 'More health', 'Faster gate', 'Auto win'], correctAnswer: 0, explanation: 'Cooldown state bug.' },
       { id: 'q9', type: MC, question: 'Death handler belongs on…', options: ['Server', 'Client only HUD', 'Terrain brush', 'Sound'], correctAnswer: 0, explanation: 'Authoritative game events.' },
-      { id: 'q10', type: MC, question: 'Lesson 5.5 save name…', options: ['Lesson 5.5 — Death Respawn', 'Tween Polish', 'First Sword', 'Tycoon Works'], correctAnswer: 0, explanation: 'Save respawn lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 5.5 save name…', options: ['Lesson 5.5 - Death Respawn', 'Tween Polish', 'First Sword', 'Tycoon Works'], correctAnswer: 0, explanation: 'Save respawn lesson.' },
     ],
   },
 }
@@ -964,7 +964,7 @@ export const enLesson56 = {
   lessonId: 'lesson-roblox-5-6',
   moduleId: 'module-05',
   order: 6,
-  title: '5.6 — Checkpoint: Arena Ready',
+  title: '5.6 - Checkpoint: Arena Ready',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -999,7 +999,7 @@ export const enLesson56 = {
         title: 'Duel QA matrix',
         content: `| # | Test |
 |---|------|
-| 1 | 1v1 — both take damage fairly |
+| 1 | 1v1 - both take damage fairly |
 | 2 | No self-sword damage |
 | 3 | Cooldown blocks spam kills |
 | 4 | Death → respawn on ArenaSpawn |
@@ -1041,21 +1041,21 @@ For checkpoint: **Wins** column in Tab is impressive in demo.`,
 - No lava in duel floor unless intentional hazard
 - Pickup sound + hit flash
 
-**Save:** \`Module 5 — Arena Ready\``,
+**Save:** \`Module 5 - Arena Ready\``,
       },
       {
         title: 'Module 6 preview',
-        content: `**Faster, Higher, Further** — build cars, race tracks, lap timers, client-server basics.
+        content: `**Faster, Higher, Further** - build cars, race tracks, lap timers, client-server basics.
 
 Combat skills (server authority, tweens, loops) transfer to **racing game feel** and **finish lines**.`,
       },
       {
         title: 'Demo script (2 min)',
-        content: `1. Spawn — show sword
+        content: `1. Spawn - show sword
 2. Open gate tween into arena
-3. Trade hits — flash feedback
-4. Win duel — Died message
-5. Loser respawns — fight again
+3. Trade hits - flash feedback
+4. Win duel - Died message
+5. Loser respawns - fight again
 6. Show Tab **Wins** if added`,
       },
     ],
@@ -1066,30 +1066,30 @@ Combat skills (server authority, tweens, loops) transfer to **racing game feel**
     { mistake: 'No combat feedback', explanation: 'Feels bland.', correctApproach: 'Tween flash or sound on hit' },
     { mistake: 'Client-only damage in final build', explanation: 'Exploits on publish.', correctApproach: 'Server TakeDamage' },
   ],
-  summary: `You integrated the full combat stack into Arena Ready, passed duel QA, tuned time-to-kill, and saved a demo-ready PvP slice — Module 6 racing begins next.`,
+  summary: `You integrated the full combat stack into Arena Ready, passed duel QA, tuned time-to-kill, and saved a demo-ready PvP slice - Module 6 racing begins next.`,
   practiceTask: {
     title: 'Ship Arena Ready (~40 min)',
     difficulty: 'beginner',
     description: `**Goal:** Pass QA matrix + demo-ready save.
 
-### Part A — Full audit (15 min)
+### Part A - Full audit (15 min)
 1. Run integration order checklist
 2. Fix any missing system from 5.1–5.5
 
-### Part B — QA duels (15 min)
+### Part B - QA duels (15 min)
 1. Complete tests 1–7 with friend or 2 Studio players
 2. Tune DAMAGE for 8–15s TTK
 
-### Part C — Save & demo (10 min)
+### Part C - Save & demo (10 min)
 1. Optional Wins in leaderstats
-2. **Save to Roblox** → \`Module 5 — Arena Ready\`
+2. **Save to Roblox** → \`Module 5 - Arena Ready\`
 3. **Practice complete** + 2-min recording`,
     hints: [
       'Balance before adding Wins stat',
       'Watch duel from both cameras for visibility',
       'Conservative damage > flashy broken combat',
     ],
-    optionalChallenge: 'Kill credit — last hitter gets +1 Wins on victim Died.',
+    optionalChallenge: 'Kill credit - last hitter gets +1 Wins on victim Died.',
   },
   quiz: {
     passingScore: 70,
@@ -1104,7 +1104,7 @@ Combat skills (server authority, tweens, loops) transfer to **racing game feel**
       { id: 'q7', type: MC, question: 'Module 6 theme is…', options: ['Racing / vehicles', 'Only obby', 'Only shop', 'Empty'], correctAnswer: 0, explanation: 'Faster Higher Further.' },
       { id: 'q8', type: MC, question: 'Red Output during duel means…', options: ['Fix before shipping', 'Perfect', 'Add lava', 'Publish now'], correctAnswer: 0, explanation: 'Errors = bugs.' },
       { id: 'q9', type: MC, question: 'Three-death test belongs to…', options: ['Lesson 5.5 respawn stability', 'Coin placement', 'Terrain only', 'Publishing'], correctAnswer: 0, explanation: 'Respawn stress test.' },
-      { id: 'q10', type: MC, question: 'Module 5 save name…', options: ['Module 5 — Arena Ready', 'Lesson 5.1', 'Tycoon Works', 'Untitled'], correctAnswer: 0, explanation: 'Checkpoint portfolio name.' },
+      { id: 'q10', type: MC, question: 'Module 5 save name…', options: ['Module 5 - Arena Ready', 'Lesson 5.1', 'Tycoon Works', 'Untitled'], correctAnswer: 0, explanation: 'Checkpoint portfolio name.' },
     ],
   },
 }

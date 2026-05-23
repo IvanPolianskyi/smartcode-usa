@@ -275,6 +275,16 @@ print("До побачення!")`,
       "Кожен print() виводить текст на новий рядок",
       "Можна використовувати різні лапки: одинарні або подвійні"
     ],
+    validation: {
+      minLines: 4,
+      exactLineCount: true,
+      lineRules: [
+        { pattern: '^(привіт|вітаю|hello|hi)', flags: 'i' },
+        { minLength: 3 },
+        { pattern: 'python', flags: 'i' },
+        { pattern: '(до побачення|бувай|goodbye|bye)', flags: 'i' },
+      ],
+    },
     difficulty: "beginner"
   },
   

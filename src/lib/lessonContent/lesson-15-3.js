@@ -1,116 +1,55 @@
 /**
- * Протоколи та duck typing
- * Full educational content
+ * POST, помилки HTTP та статус-коди
  */
 
 import { QUIZ_QUESTION_TYPES } from '../courseData'
 
 export const lesson_15_3 = {
-  lessonId: "lesson-13-5",
+  lessonId: "lesson-15-3",
   moduleId: "module-15",
   order: 3,
-  title: "Протоколи та duck typing",
-  
+  title: "POST, помилки HTTP та статус-коди",
+
   learningObjectives: [
-    "Розуміти протоколи Python",
-    "Застосовувати duck typing",
-    "Реалізовувати протоколи",
-    "Використовувати typing протоколи",
-    "lesson-15-2",
-    "lesson-15-4",
-    "Розширені структури даних",
-    "Використовувати спеціалізовані структури"
-],
-  
-  prerequisites: [
-    "lesson-15-2",
-    "lesson-15-4",
-    "Розширені структури даних"
-],
-  
+    "Створювати POST /items з тілом JSON",
+    "Повертати статус 201 Created",
+    "Використовувати HTTPException",
+    "Оновлювати та видаляти ресурси"
+  ],
+
+  prerequisites: ["lesson-15-2"],
+
   videoUrl: "",
-  
+
   theory: {
     sections: [
-      {
-        title: "Вступ",
-        content: `Протоколи та duck typing
-
-На цьому уроці ми вивчимо основні концепції та навички, необхідні для розуміння та застосування матеріалу.
-
-**Що ви дізнаєтеся:**
-- Розуміти протоколи Python
-- Застосовувати duck typing
-- Реалізовувати протоколи
-- Використовувати typing протоколи
-- lesson-17-2
-- lesson-17-4
-- Розширені структури даних
-- Використовувати спеціалізовані структури
-
-**Попередні вимоги:** lesson-17-2, lesson-17-4, Розширені структури даних
-`
-      }
+        {
+            "title": "POST і помилки",
+            "content": "```python\nfrom fastapi import FastAPI, HTTPException, status\nfrom pydantic import BaseModel\n\napp = FastAPI()\n\nclass ItemCreate(BaseModel):\n    name: str\n    price: float\n\n@app.post(\"/items\", status_code=status.HTTP_201_CREATED)\ndef create_item(payload: ItemCreate):\n    if payload.price < 0:\n        raise HTTPException(status_code=400, detail=\"Ціна не може бути від'ємною\")\n    new_id = len(items_db) + 1\n    item = {\"id\": new_id, **payload.model_dump()}\n    items_db.append(item)\n    return item\n```"
+        }
     ]
   },
-  
-  codeExamples: [
-    {
-      title: "Приклад 1",
-      code: `# Приклад коду
-print("Привіт, світ!")`,
-      explanation: "Базовий приклад для розуміння концепції"
-    }
-  ],
-  
-  commonMistakes: [
-    {
-      mistake: "Типова помилка",
-      explanation: "Пояснення помилки",
-      correctApproach: "Правильний підхід"
-    }
-  ],
-  
-  summary: `Підсумок уроку "Протоколи та duck typing"
 
-На цьому уроці ми вивчили основні концепції та навички.`,
-  
-  practiceTask: {
-    title: "Практична задача",
-    description: "Застосуйте набуті знання на практиці",
-    problemStatement: "Створіть програму, яка демонструє вивчені концепції",
-    inputFormat: "",
-    outputFormat: "",
-    examples: [],
-    solution: {
-      code: `# Рішення
-# Ваш код тут`,
-      explanation: "Пояснення рішення"
-    },
-    hints: [
-      "Підказка 1",
-      "Підказка 2"
-    ],
-    difficulty: "beginner"
-  },
-  
+  codeExamples: [],
+
+  commonMistakes: [],
+
+  summary: "POST створює ресурси, HTTPException повертає зрозумілі помилки клієнту.",
+
+  practiceTask: null,
+
   quiz: {
     questions: [
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Питання про основні концепції?",
-        options: [
-          "Варіант 1",
-          "Варіант 2",
-          "Варіант 3",
-          "Варіант 4"
-        ],
+        question: "Який код зазвичай означає успішне створення?",
+        options: ["201","404","500","301"],
         correctAnswer: 0,
-        explanation: "Пояснення правильної відповіді"
+        explanation: "201 Created - стандарт для POST."
       }
     ],
-    timeLimit: 10,
+    timeLimit: 15,
     passingScore: 70
   }
 }

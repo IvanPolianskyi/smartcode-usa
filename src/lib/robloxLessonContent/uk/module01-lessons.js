@@ -7,7 +7,7 @@ export const ukLesson11 = {
   lessonId: "lesson-roblox-1-1",
   moduleId: "module-01",
   order: 1,
-  title: "1.1 — Ласкаво просимо до Studio",
+  title: "1.1 - Ласкаво просимо до Studio",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -22,12 +22,12 @@ export const ukLesson11 = {
     sections: [
       {
         title: "Ваш шлях сьогодні (близько 40 хвилин)",
-        content: `Welcome to **Roblox Studio** — the tool behind obbies, simulators, tycoons, and roleplay worlds you play every day.
+        content: `Welcome to **Roblox Studio** - the tool behind obbies, simulators, tycoons, and roleplay worlds you play every day.
 
 **Lesson flow:**
-1. **Theory (40 min)** — read each section; try shortcuts in Studio as you go
-2. **Practice (~25 min in Studio)** — build three Parts and save your place
-3. **Quiz (10 min)** — 10 questions; pass with **70%** to unlock the next lesson
+1. **Theory (40 min)** - read each section; try shortcuts in Studio as you go
+2. **Practice (~25 min in Studio)** - build three Parts and save your place
+3. **Quiz (10 min)** - 10 questions; pass with **70%** to unlock the next lesson
 
 Keep Studio open beside this page. Learning game dev works best when you **build while you read**.`,
       },
@@ -40,12 +40,12 @@ A **developer** asks:
 - Which objects need to stay still?
 - What color tells the player "safe" vs "danger"?
 
-You are switching to developer mode. Every famous Roblox game started with someone placing their **first Part** — exactly what you will do today.`,
+You are switching to developer mode. Every famous Roblox game started with someone placing their **first Part** - exactly what you will do today.`,
       },
       {
         title: "Install Studio (step by step)",
         content: `1. Open **create.roblox.com** and sign in (parent approval required under 13)
-2. Click **Start Creating** — the Roblox Studio installer downloads
+2. Click **Start Creating** - the Roblox Studio installer downloads
 3. Run the installer; first launch may take a few minutes
 4. On the home screen choose **New** → **Baseplate**
 
@@ -54,7 +54,7 @@ You are switching to developer mode. Every famous Roblox game started with someo
 **Troubleshooting:** If Studio will not open, update graphics drivers and confirm you have at least 4 GB RAM and Windows 10 / macOS 10.13+.`,
       },
       {
-        title: "Studio layout — know your panels",
+        title: "Studio layout - know your panels",
         content: `| Area | Purpose |
 |------|---------|
 | **Viewport** (center) | 3D world you build in |
@@ -66,7 +66,7 @@ You are switching to developer mode. Every famous Roblox game started with someo
 **Exercise (3 min):** Click the Baseplate in the Viewport. Watch it highlight in Explorer. In Properties find **Name**, **Size**, **Anchored**.`,
       },
       {
-        title: "Camera controls — fly like a director",
+        title: "Camera controls - fly like a director",
         content: `| Action | Control |
 |--------|---------|
 | Move forward / back | **W** / **S** |
@@ -79,21 +79,21 @@ You are switching to developer mode. Every famous Roblox game started with someo
 **Exercise (5 min):** Circle the Baseplate from above, from the side, and from ground level. Use **F** after selecting the floor.`,
       },
       {
-        title: "Explorer — the family tree of your game",
+        title: "Explorer - the family tree of your game",
         content: `Everything in the game is an **Instance** in a parent-child tree.
 
 **Workspace** holds the 3D world. You will add Parts here.
 
 **Useful habits:**
-- **Single click** — select
-- **Double-click name** — rename (use real names: \`PurpleTower\`, not \`Part\`)
-- **Delete** — removes object
-- **Ctrl + D** — duplicate
+- **Single click** - select
+- **Double-click name** - rename (use real names: \`PurpleTower\`, not \`Part\`)
+- **Delete** - removes object
+- **Ctrl + D** - duplicate
 
 **Exercise (5 min):** Expand Workspace. Rename \`Baseplate\` to \`IslandFloor\` if you like.`,
       },
       {
-        title: "Properties — the passport of every object",
+        title: "Properties - the passport of every object",
         content: `When a **Part** is selected, Properties shows:
 
 | Property | Meaning |
@@ -120,14 +120,14 @@ You are switching to developer mode. Every famous Roblox game started with someo
 | **E** | Scale |
 | **R** | Rotate |
 
-**Exercise (10 min):** Add one Block. Scale it with **E**. Move it with **W**. Change BrickColor to a color you like. Set **Anchored = true**. Press **Play** (F5) — it should not fall.`,
+**Exercise (10 min):** Add one Block. Scale it with **E**. Move it with **W**. Change BrickColor to a color you like. Set **Anchored = true**. Press **Play** (F5) - it should not fall.`,
       },
       {
         title: "Materials and Neon glow",
         content: `**Material** changes how light hits the surface:
-- **SmoothPlastic** — clean default
-- **Metal** — shiny platforms
-- **Neon** — glows (great for signs and magic)
+- **SmoothPlastic** - clean default
+- **Metal** - shiny platforms
+- **Neon** - glows (great for signs and magic)
 
 Combine **Neon** + bright **BrickColor** for a sci-fi look.
 
@@ -139,9 +139,9 @@ Combine **Neon** + bright **BrickColor** for a sci-fi look.
         title: "Save to Roblox cloud",
         content: `**File → Save to Roblox** (not only Save to File on disk).
 
-Pick a name: \`Lesson 1.1 — My First Scene\`
+Pick a name: \`Lesson 1.1 - My First Scene\`
 
-Your place is stored on your account — you can open it from any computer with Studio.
+Your place is stored on your account - you can open it from any computer with Studio.
 
 **Before practice checklist:**
 - [ ] I can move the camera comfortably
@@ -170,30 +170,30 @@ Your place is stored on your account — you can open it from any computer with 
   ],
   summary: "You learned what Roblox Studio is, how to move the camera, how Explorer and Properties work, and how to add anchored Parts with color and material. Your practice scene is the first entry in your game developer portfolio.",
   practiceTask: {
-    title: "Studio practice — My First Scene (~25 min)",
+    title: "Studio practice - My First Scene (~25 min)",
     difficulty: "beginner",
     description: `**Goal:** Prove you can build and save a simple scene.
 
-### Part A — Purple tower (8 min)
+### Part A - Purple tower (8 min)
 1. Insert **Block** → Name: \`PurpleTower\`
 2. Size: \`8, 8, 8\` | BrickColor: purple | Material: SmoothPlastic
 3. Anchored: **true** | Place on the Baseplate
 
-### Part B — Red platform (8 min)
+### Part B - Red platform (8 min)
 1. Insert **Block** → Name: \`RedPlatform\`
 2. Size: \`20, 1, 4\` | BrickColor: Bright red | Material: Metal
 3. Anchored: **true** | Use **W** to position like a walkway
 
-### Part C — Neon sphere (5 min)
+### Part C - Neon sphere (5 min)
 1. Insert **Sphere** → Name: \`GlowOrb\`
 2. Size: \`3, 3, 3\` | Material: **Neon** | Anchored: **true**
 
 ### Test & save (4 min)
-1. Press **Play** — nothing should fall
-2. **File → Save to Roblox** → \`Lesson 1.1 — My First Scene\`
+1. Press **Play** - nothing should fall
+2. **File → Save to Roblox** → \`Lesson 1.1 - My First Scene\`
 3. Return here and click **Practice complete**`,
     hints: [
-      "Rename every Part — good names save hours later",
+      "Rename every Part - good names save hours later",
       "If something falls, Stop Play, select it, enable Anchored",
       "Use F to frame the object you are editing",
     ],
@@ -341,7 +341,7 @@ export const ukLesson12 = {
   lessonId: "lesson-roblox-1-2",
   moduleId: "module-01",
   order: 2,
-  title: "1.2 — Будуємо острів",
+  title: "1.2 - Будуємо острів",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -356,7 +356,7 @@ export const ukLesson12 = {
     sections: [
       {
         title: "Lesson plan (40 + 10 minutes)",
-        content: `Today you sculpt a real **island** with Roblox **Terrain** — not single blocks, but continuous land you can raise, dig, and paint.
+        content: `Today you sculpt a real **island** with Roblox **Terrain** - not single blocks, but continuous land you can raise, dig, and paint.
 
 **Flow:** Theory → 25 min island practice → 10 min quiz.
 
@@ -377,25 +377,25 @@ Many games use **both**: Terrain for the island, Parts for docks and signs.`,
         content: `**Home → Editor** (Terrain section)
 
 Three tabs you need today:
-1. **Generate** — create land from scratch
-2. **Sculpt** — Add / Subtract / Smooth
-3. **Paint** — grass, sand, rock, water
+1. **Generate** - create land from scratch
+2. **Sculpt** - Add / Subtract / Smooth
+3. **Paint** - grass, sand, rock, water
 
 If terrain already exists and looks wrong, select **Terrain** in Workspace → Delete → start fresh.`,
       },
       {
-        title: "Generate — island in one click",
+        title: "Generate - island in one click",
         content: `1. Open **Generate**
 2. Set size about **512 × 100 × 512**
 3. Biome: **Islands** (or Mountains for practice)
-4. Click **Generate** — wait 5–15 seconds
+4. Click **Generate** - wait 5–15 seconds
 
 Not happy? **Ctrl + Z** and generate again.
 
 **Seed** controls the shape. Write down the seed if you love a layout and want to recreate it.`,
       },
       {
-        title: "Sculpt — Add (build land)",
+        title: "Sculpt - Add (build land)",
         content: `**Add** raises land. Click and drag:
 - Pull hills out of the ocean
 - Widen the island
@@ -403,10 +403,10 @@ Not happy? **Ctrl + Z** and generate again.
 
 **Brush size:** large brush for shape, small brush for detail.
 
-**Exercise (8 min):** Add one clear hill on your island. Make it playable — not too steep for a character to walk.`,
+**Exercise (8 min):** Add one clear hill on your island. Make it playable - not too steep for a character to walk.`,
       },
       {
-        title: "Sculpt — Subtract (carve)",
+        title: "Sculpt - Subtract (carve)",
         content: `**Subtract** digs:
 - Lakes and ponds
 - Rivers
@@ -417,7 +417,7 @@ In **Add** mode, **Ctrl + click** acts as Subtract on many Studio versions.
 **Exercise (8 min):** Carve a bay or lake. Leave a beach strip between water and high land.`,
       },
       {
-        title: "Sculpt — Smooth (polish)",
+        title: "Sculpt - Smooth (polish)",
         content: `Raw terrain looks spiky. **Smooth** softens edges.
 
 **Workflow:** Add/Subtract for shape → **Smooth** entire playable area last.
@@ -425,7 +425,7 @@ In **Add** mode, **Ctrl + click** acts as Subtract on many Studio versions.
 **Exercise (5 min):** Run Smooth along shores and hilltops until slopes look natural.`,
       },
       {
-        title: "Paint — materials tell a story",
+        title: "Paint - materials tell a story",
         content: `| Material | Use on |
 |----------|--------|
 | **Grass** | Main land |
@@ -440,16 +440,16 @@ In **Add** mode, **Ctrl + click** acts as Subtract on many Studio versions.
       },
       {
         title: "Test in Play & save",
-        content: `Press **Play** — walk your character along the shore and up a hill.
+        content: `Press **Play** - walk your character along the shore and up a hill.
 
 **Check:**
 - No accidental holes through terrain
 - Slopes are walkable
 - Water areas look correct
 
-**File → Save to Roblox** → \`Lesson 1.2 — My Island\`
+**File → Save to Roblox** → \`Lesson 1.2 - My Island\`
 
-Terrain is heavy — save often.`,
+Terrain is heavy - save often.`,
       },
     ],
   },
@@ -470,17 +470,17 @@ Terrain is heavy — save often.`,
       correctApproach: "Press Play to preview water movement",
     },
   ],
-  summary: "You can generate an island, sculpt hills and lakes, smooth slopes, and paint realistic materials — the foundation of most Roblox outdoor maps.",
+  summary: "You can generate an island, sculpt hills and lakes, smooth slopes, and paint realistic materials - the foundation of most Roblox outdoor maps.",
   practiceTask: {
     title: "Island build challenge (~25 min)",
     difficulty: "beginner",
     description: `1. **Generate** biome Islands (512 area)
-2. **Add** — one mountain or hill
-3. **Subtract** — lake or bay
-4. **Smooth** — entire play area
-5. **Paint** — Grass, Sand at shore, Rock on peak
+2. **Add** - one mountain or hill
+3. **Subtract** - lake or bay
+4. **Smooth** - entire play area
+5. **Paint** - Grass, Sand at shore, Rock on peak
 6. **Play-test** walk path
-7. **Save to Roblox** as \`Lesson 1.2 — My Island\`
+7. **Save to Roblox** as \`Lesson 1.2 - My Island\`
 8. Mark **Practice complete** here`,
     hints: [
       "Large brush first, small brush last",
@@ -631,7 +631,7 @@ export const ukLesson13 = {
   lessonId: "lesson-roblox-1-3",
   moduleId: "module-01",
   order: 3,
-  title: "1.3 — Об'єкти та їх Properties",
+  title: "1.3 - Об'єкти та їх Properties",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -649,7 +649,7 @@ export const ukLesson13 = {
 
 At 50 objects, Explorer chaos slows you down. At 500, it breaks projects.
 
-Today you learn **Folders**, **Models**, and precise **Properties** — habits used in shipped Roblox games.`,
+Today you learn **Folders**, **Models**, and precise **Properties** - habits used in shipped Roblox games.`,
       },
       {
         title: "The Instance tree (review)",
@@ -660,7 +660,7 @@ Today you learn **Folders**, **Models**, and precise **Properties** — habits u
 Clicking a Part in the Viewport selects it in Explorer. Renaming is mandatory discipline.`,
       },
       {
-        title: "Folders — simple containers",
+        title: "Folders - simple containers",
         content: `**Insert → Folder** or right-click Workspace → Insert Folder.
 
 Examples:
@@ -668,13 +668,13 @@ Examples:
 - \`Dock\`
 - \`LightingProps\`
 
-Drag Parts into folders. Folders do not move as one unit — they only organize.`,
+Drag Parts into folders. Folders do not move as one unit - they only organize.`,
       },
       {
-        title: "Models — move groups together",
+        title: "Models - move groups together",
         content: `Select multiple Parts → **Ctrl + G** (Group) or right-click → **Group**.
 
-You get a **Model** — move it with Move tool and all children follow.
+You get a **Model** - move it with Move tool and all children follow.
 
 Rename: \`Dock_Main\`, \`Pier_Lamps\`.
 
@@ -684,7 +684,7 @@ Rename: \`Dock_Main\`, \`Pier_Lamps\`.
         title: "Position and Size numbers",
         content: `**Move (W)** is fast. **Properties → Position** is exact.
 
-Copy Position from one plank to the next — change only **X** or **Z** for a perfect row.
+Copy Position from one plank to the next - change only **X** or **Z** for a perfect row.
 
 **Size** \`20, 1, 4\` = wide flat plank.
 
@@ -727,7 +727,7 @@ Group planks into \`Dock_Platform\` Model inside \`Dock\` Folder.`,
 - [ ] No unanchored Parts fall
 - [ ] Explorer shows Folder → Model → Parts
 - [ ] Every Part has a unique useful name
-- [ ] Saved as \`Lesson 1.3 — Island Dock\``,
+- [ ] Saved as \`Lesson 1.3 - Island Dock\``,
       },
     ],
   },
@@ -748,7 +748,7 @@ Group planks into \`Dock_Platform\` Model inside \`Dock\` Folder.`,
       correctApproach: "Group again so Parts are children of Model",
     },
   ],
-  summary: "You organized a dock with Folders and Models, used Properties for exact placement, and kept collision rules consistent — professional Studio workflow.",
+  summary: "You organized a dock with Folders and Models, used Properties for exact placement, and kept collision rules consistent - professional Studio workflow.",
   practiceTask: {
     title: "Dock build (~25 min)",
     difficulty: "beginner",
@@ -759,7 +759,7 @@ Group planks into \`Dock_Platform\` Model inside \`Dock\` Folder.`,
 3. All **Anchored true**, walkable planks **CanCollide true**
 4. Group planks into Model \`Dock_Platform\`
 5. Align using Position (same Y for deck)
-6. **Save to Roblox** → \`Lesson 1.3 — Island Dock\`
+6. **Save to Roblox** → \`Lesson 1.3 - Island Dock\`
 7. **Practice complete**`,
     hints: [
       "Ctrl+D duplicates a selected plank",
@@ -894,7 +894,7 @@ Group planks into \`Dock_Platform\` Model inside \`Dock\` Folder.`,
         type: "multiple_choice",
         question: "Lesson 1.3 save name suggestion…",
         options: [
-          "Lesson 1.3 — Island Dock",
+          "Lesson 1.3 - Island Dock",
           "Untitled",
           "Test123",
           "asdf",
@@ -910,7 +910,7 @@ export const ukLesson14 = {
   lessonId: "lesson-roblox-1-4",
   moduleId: "module-01",
   order: 4,
-  title: "1.4 — Перша магія: ClickDetector",
+  title: "1.4 - Перша магія: ClickDetector",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -925,14 +925,14 @@ export const ukLesson14 = {
     sections: [
       {
         title: "Ваш шлях сьогодні (близько 40 хвилин)",
-        content: `Until now you **built** worlds. Today your world **reacts** to the player — that is real game development.
+        content: `Until now you **built** worlds. Today your world **reacts** to the player - that is real game development.
 
 **Lesson flow:**
-1. **Theory (40 min)** — ClickDetector + your first Luau script
-2. **Practice (~25 min)** — three clickable objects on your island
-3. **Quiz (10 min)** — 10 questions, **70%** to pass
+1. **Theory (40 min)** - ClickDetector + your first Luau script
+2. **Practice (~25 min)** - three clickable objects on your island
+3. **Quiz (10 min)** - 10 questions, **70%** to pass
 
-Open your **Lesson 1.3 — Island Dock** place. Keep **Output** visible (View → Output).`,
+Open your **Lesson 1.3 - Island Dock** place. Keep **Output** visible (View → Output).`,
       },
       {
         title: "Builder vs developer",
@@ -940,24 +940,24 @@ Open your **Lesson 1.3 — Island Dock** place. Keep **Output** visible (View �
 
 A **developer** asks:
 - What happens when the player clicks this button?
-- Who sees the change — everyone or only one player?
+- Who sees the change - everyone or only one player?
 - What message or sound confirms the click?
 
-**Luau** is Roblox's language (like Lua). Scripts on the **server** run once for the whole game — perfect for doors, buttons, and scores everyone shares.`,
+**Luau** is Roblox's language (like Lua). Scripts on the **server** run once for the whole game - perfect for doors, buttons, and scores everyone shares.`,
       },
       {
-        title: "Script types — use the right one",
+        title: "Script types - use the right one",
         content: `| Type | Where it runs | Use in Lesson 1.4 |
 |------|----------------|-------------------|
-| **Script** | Server | ✅ Yes — click buttons |
-| **LocalScript** | One player's device | ❌ Not yet — UI and camera later |
+| **Script** | Server | ✅ Yes - click buttons |
+| **LocalScript** | One player's device | ❌ Not yet - UI and camera later |
 
 **Rule today:** put a **Script** **inside the Part** you click (child of the Part).
 
-**Never** put gameplay logic only on your computer — other players would not see it.`,
+**Never** put gameplay logic only on your computer - other players would not see it.`,
       },
       {
-        title: "ClickDetector — turn a Part into a button",
+        title: "ClickDetector - turn a Part into a button",
         content: `1. Select a Part (golden cube on your dock works great)
 2. **Insert** → **ClickDetector** (must be a **child** of that Part)
 3. In Properties set **MaxActivationDistance** to \`32\` (studs)
@@ -969,10 +969,10 @@ A **developer** asks:
 
 The Part should be **Anchored**, visible, and named \`ClickButton_Red\` (not \`Part\`).
 
-**Exercise (5 min):** Add ClickDetector to one Part. Do not script yet — just confirm it appears under the Part in Explorer.`,
+**Exercise (5 min):** Add ClickDetector to one Part. Do not script yet - just confirm it appears under the Part in Explorer.`,
       },
       {
-        title: "Your first script — copy and understand",
+        title: "Your first script - copy and understand",
         content: `1. Select the same Part (with ClickDetector)
 2. **Insert** → **Script** (not LocalScript)
 3. Delete sample code. Paste:
@@ -988,15 +988,15 @@ end)
 \`\`\`
 
 **Line by line:**
-- \`local\` — create a variable
-- \`script.Parent\` — the Part holding this Script
-- \`WaitForChild\` — wait until ClickDetector exists (avoids errors on load)
-- \`Connect(function(player) ... end)\` — run code when someone clicks
-- \`print(...)\` — write to **Output**
-- \`BrickColor.new(...)\` — change Part color for everyone`,
+- \`local\` - create a variable
+- \`script.Parent\` - the Part holding this Script
+- \`WaitForChild\` - wait until ClickDetector exists (avoids errors on load)
+- \`Connect(function(player) ... end)\` - run code when someone clicks
+- \`print(...)\` - write to **Output**
+- \`BrickColor.new(...)\` - change Part color for everyone`,
       },
       {
-        title: "Test in Play — read Output",
+        title: "Test in Play - read Output",
         content: `Press **Play** (F5). Click your Part in the 3D view.
 
 **Output** should show:
@@ -1006,21 +1006,21 @@ The Part should turn **Bright green**.
 
 **Exercise (8 min):** Click 3 times. Confirm color stays green and Output shows your username each time.
 
-**Stop Play** before editing scripts again — live editing while playing is confusing at first.`,
+**Stop Play** before editing scripts again - live editing while playing is confusing at first.`,
       },
       {
         title: "Debug red errors in Output",
         content: `| Error message | Fix |
 |---------------|-----|
-| \`ClickDetector is not a valid member\` | ClickDetector missing or wrong name — must be exactly \`ClickDetector\` |
-| \`attempt to index nil\` | Script not inside the Part — move Script under the Part |
+| \`ClickDetector is not a valid member\` | ClickDetector missing or wrong name - must be exactly \`ClickDetector\` |
+| \`attempt to index nil\` | Script not inside the Part - move Script under the Part |
 | \`MouseClick is not a valid member\` | You used a Part without ClickDetector |
-| Nothing prints | Not in **Play** mode, or click too far — raise MaxActivationDistance |
+| Nothing prints | Not in **Play** mode, or click too far - raise MaxActivationDistance |
 
 **Habit:** read the **first line** of the error, then check Explorer tree: \`Part → ClickDetector\`, \`Part → Script\`.`,
       },
       {
-        title: "Upgrade — sound on click",
+        title: "Upgrade - sound on click",
         content: `1. Select the Part → **Insert** → **Sound**
 2. Name it \`ClickSound\`
 3. Set **SoundId** from Toolbox → Audio (or a known rbxassetid)
@@ -1040,7 +1040,7 @@ end
 **Exercise (5 min):** Click = green color + short sound. That combination is called **game feel**.`,
       },
       {
-        title: "Three buttons — one template",
+        title: "Three buttons - one template",
         content: `You will build **3 Parts**, each with its own ClickDetector + Script.
 
 Copy the template; only change:
@@ -1071,18 +1071,18 @@ Copy the template; only change:
     },
     {
       mistake: "Script is under Workspace, not Part",
-      explanation: "script.Parent becomes Workspace — wrong object.",
+      explanation: "script.Parent becomes Workspace - wrong object.",
       correctApproach: "Drag Script onto the Part so it is a child",
     },
     {
       mistake: "Color changes in Studio but not for friends",
-      explanation: "You tested in solo — server script is correct for everyone.",
+      explanation: "You tested in solo - server script is correct for everyone.",
       correctApproach: "Server Script on Part is the right pattern for shared buttons",
     },
   ],
-  summary: "You added ClickDetectors, wrote your first server Luau script, connected MouseClick to print and visual feedback, and debugged with Output — the moment your island became interactive.",
+  summary: "You added ClickDetectors, wrote your first server Luau script, connected MouseClick to print and visual feedback, and debugged with Output - the moment your island became interactive.",
   practiceTask: {
-    title: "Click magic — three island buttons (~25 min)",
+    title: "Click magic - three island buttons (~25 min)",
     difficulty: "beginner",
     description: `**Goal:** Three working clickables with different effects.
 
@@ -1090,26 +1090,26 @@ Copy the template; only change:
 1. Open your **Lesson 1.3** place (island + dock)
 2. Create Folder \`Interactives\` in Workspace
 
-### Part A — Red button (8 min)
+### Part A - Red button (8 min)
 1. Insert **Block** → Name: \`ClickButton_Red\` | BrickColor: Bright red | Anchored: **true**
 2. Insert **ClickDetector** + **Script** (template from theory)
 3. On click: turn **Bright green** + \`print\` player name
 
-### Part B — Blue crystal (8 min)
+### Part B - Blue crystal (8 min)
 1. Insert **Sphere** → Name: \`ClickCrystal_Blue\` | Material: **Neon** | Anchored: **true**
-2. ClickDetector + Script — on click: **Bright yellow** + print message
+2. ClickDetector + Script - on click: **Bright yellow** + print message
 3. Add **Sound** child optional
 
-### Part C — Wooden sign (6 min)
+### Part C - Wooden sign (6 min)
 1. Insert **Block** → Name: \`ClickSign_Wood\` | Size: \`1, 4, 0.3\` | Material: Wood
 2. On click: change **Size** to \`1.5, 6, 0.3\` (taller sign) + print
 
 ### Test & save (4 min)
-1. **Play** — click all three; screenshot **Output** with 3 different messages
-2. **File → Save to Roblox** → \`Lesson 1.4 — Click Magic\`
+1. **Play** - click all three; screenshot **Output** with 3 different messages
+2. **File → Save to Roblox** → \`Lesson 1.4 - Click Magic\`
 3. **Practice complete** here`,
     hints: [
-      "Copy one working Script — change only names and BrickColor strings",
+      "Copy one working Script - change only names and BrickColor strings",
       "MaxActivationDistance 32 if clicks feel too picky",
       "Stop Play before editing scripts",
     ],
@@ -1241,7 +1241,7 @@ Copy the template; only change:
         type: "multiple_choice",
         question: "Lesson 1.4 save name…",
         options: [
-          "Lesson 1.4 — Click Magic",
+          "Lesson 1.4 - Click Magic",
           "Untitled",
           "Part",
           "Test",
@@ -1257,7 +1257,7 @@ export const ukLesson15 = {
   lessonId: "lesson-roblox-1-5",
   moduleId: "module-01",
   order: 5,
-  title: "1.5 — Звук та атмосфера",
+  title: "1.5 - Звук та атмосфера",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -1274,11 +1274,11 @@ export const ukLesson15 = {
         content: `Players **feel** games through ears and eyes. A sunset island with wave sounds beats a silent grey map.
 
 **Lesson flow:**
-1. **Theory (40 min)** — Sound + Lighting + Atmosphere
-2. **Practice (~25 min)** — sunset mood on your island
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - Sound + Lighting + Atmosphere
+2. **Practice (~25 min)** - sunset mood on your island
+3. **Quiz (10 min)** - **70%** pass
 
-Use your **Lesson 1.4 — Click Magic** place. Test with **Play** — many audio and lighting changes are best heard in motion.`,
+Use your **Lesson 1.4 - Click Magic** place. Test with **Play** - many audio and lighting changes are best heard in motion.`,
       },
       {
         title: "Why sound matters",
@@ -1289,17 +1289,17 @@ Use your **Lesson 1.4 — Click Magic** place. Test with **Play** — many audio
 | Hard to know success | Audio confirms actions |
 
 **Two types today:**
-1. **Ambient** — looped background (waves, wind) — whole place
-2. **3D on Part** — louder when you walk close (dock creak, seagull)`,
+1. **Ambient** - looped background (waves, wind) - whole place
+2. **3D on Part** - louder when you walk close (dock creak, seagull)`,
       },
       {
-        title: "Sound object — properties",
+        title: "Sound object - properties",
         content: `**Insert → Sound** (Workspace for ambient, or inside a Part for 3D).
 
 | Property | Tip |
 |----------|-----|
 | **SoundId** | \`rbxassetid://...\` from Toolbox → Audio |
-| **Volume** | Ambient: \`0.25\`–\`0.45\` — clicks stay audible |
+| **Volume** | Ambient: \`0.25\`–\`0.45\` - clicks stay audible |
 | **Looped** | **true** for ocean/wind |
 | **Playing** | **true** to preview in Edit (optional) |
 | **RollOffMaxDistance** | How far 3D sound travels (try \`80\`) |
@@ -1309,7 +1309,7 @@ Name sounds clearly: \`Ambient_Waves\`, \`Dock_Creak\`, \`Click_Chime\`.
 **Exercise (6 min):** Add looped \`Ambient_Waves\` in Workspace. Press Play and listen while moving.`,
       },
       {
-        title: "Lighting — time of day",
+        title: "Lighting - time of day",
         content: `Select **Lighting** in Explorer.
 
 | Property | Effect |
@@ -1329,7 +1329,7 @@ Name sounds clearly: \`Ambient_Waves\`, \`Dock_Creak\`, \`Click_Chime\`.
 **Exercise (5 min):** Slide ClockTime from 12 → 17.5 → 0 while in Play. Pick your favorite mood.`,
       },
       {
-        title: "Atmosphere — cinematic haze",
+        title: "Atmosphere - cinematic haze",
         content: `Right-click **Lighting** → Insert **Atmosphere**.
 
 | Property | Starter values |
@@ -1339,16 +1339,16 @@ Name sounds clearly: \`Ambient_Waves\`, \`Dock_Creak\`, \`Click_Chime\`.
 | **Color** | Soft orange/pink at sunset |
 | **Decay** | Slightly purple/blue horizon |
 
-Atmosphere makes distant terrain softer — professional obbies use this on showcase maps.
+Atmosphere makes distant terrain softer - professional obbies use this on showcase maps.
 
-**Warning:** Density above \`0.6\` can lag on weak PCs — start low.`,
+**Warning:** Density above \`0.6\` can lag on weak PCs - start low.`,
       },
       {
-        title: "Sky — optional polish",
+        title: "Sky - optional polish",
         content: `**Lighting** may contain **Sky**.
 
-- **StarCount** — visible at night
-- **SunAngularSize** — sun disk size
+- **StarCount** - visible at night
+- **SunAngularSize** - sun disk size
 - Six **Skybox** faces (Bk, Ft, Lf, Rt, Up, Dn) for custom skies
 
 For Lesson 1.5, default Sky + Atmosphere is enough. Custom skyboxes come in Module 10 polish.
@@ -1373,18 +1373,18 @@ end)
 
 **Play()** restarts one-shot sounds. Ambient loops stay **Looped = true** and **Playing = true**.
 
-Do not stack 5 loud ambients — one loop + one 3D detail is enough.`,
+Do not stack 5 loud ambients - one loop + one 3D detail is enough.`,
       },
       {
-        title: "Mixing checklist — before practice",
+        title: "Mixing checklist - before practice",
         content: `**Balanced island audio:**
 - [ ] One ambient loop ≤ 0.45 Volume
 - [ ] Click sounds ≤ 0.6 Volume
 - [ ] 3D dock sound only audible when near dock
 - [ ] Lighting + Atmosphere match (sunset + warm haze)
-- [ ] Saved place name planned: \`Lesson 1.5 — Island Atmosphere\`
+- [ ] Saved place name planned: \`Lesson 1.5 - Island Atmosphere\`
 
-**FAQ:** No sound? — valid SoundId, Volume > 0, test in Play. Pink sky? — reset Sky or disable broken skybox faces.`,
+**FAQ:** No sound? - valid SoundId, Volume > 0, test in Play. Pink sky? - reset Sky or disable broken skybox faces.`,
       },
     ],
   },
@@ -1410,36 +1410,36 @@ Do not stack 5 loud ambients — one loop + one 3D detail is enough.`,
       correctApproach: "Play-test walk from spawn to dock at ClockTime 17.5",
     },
   ],
-  summary: "You layered ambient and 3D sound, tuned Lighting for sunset mood, added Atmosphere haze, and connected audio to your click scripts — your island now feels professional, not prototype.",
+  summary: "You layered ambient and 3D sound, tuned Lighting for sunset mood, added Atmosphere haze, and connected audio to your click scripts - your island now feels professional, not prototype.",
   practiceTask: {
     title: "Sunset island atmosphere (~25 min)",
     difficulty: "beginner",
     description: `**Goal:** One cohesive sunset mood with sound.
 
-### Part A — Ambient audio (7 min)
+### Part A - Ambient audio (7 min)
 1. Insert **Sound** in Workspace → Name: \`Ambient_Waves\`
 2. SoundId: ocean or nature from Toolbox | Volume: \`0.35\` | Looped: **true** | Playing: **true**
 
-### Part B — Lighting & Atmosphere (8 min)
+### Part B - Lighting & Atmosphere (8 min)
 1. Select **Lighting** → ClockTime: \`17.5\` | Brightness: \`2\` | GlobalShadows: **true**
 2. Insert **Atmosphere** under Lighting | Density: \`0.35\` | warm Color tint
-3. **Play** — walk spawn → dock → water line
+3. **Play** - walk spawn → dock → water line
 
-### Part C — 3D dock sound (6 min)
+### Part C - 3D dock sound (6 min)
 1. On dock Part: **Sound** \`Dock_Creak\` | Looped: **false** | RollOffMaxDistance: \`60\`
 2. Hook **Play()** from Lesson 1.4 click script OR touch Proximity later
 3. Volume quiet (\`0.4\`) so ambient stays primary
 
 ### Test & save (4 min)
-1. **Play** — ambient everywhere; dock sound louder when close
-2. **File → Save to Roblox** → \`Lesson 1.5 — Island Atmosphere\`
+1. **Play** - ambient everywhere; dock sound louder when close
+2. **File → Save to Roblox** → \`Lesson 1.5 - Island Atmosphere\`
 3. **Practice complete**`,
     hints: [
-      "Test ClockTime in Play while walking — mood changes feel real",
+      "Test ClockTime in Play while walking - mood changes feel real",
       "Lower ambient if click sounds are hard to hear",
       "Atmosphere Color should match sunset (orange/pink, not neon green)",
     ],
-    optionalChallenge: `Second ambient track (soft music) at Volume \`0.15\` — two loops together.`,
+    optionalChallenge: `Second ambient track (soft music) at Volume \`0.15\` - two loops together.`,
   },
   quiz: {
     passingScore: 70,
@@ -1552,7 +1552,7 @@ Do not stack 5 loud ambients — one loop + one 3D detail is enough.`,
       {
         id: "q9",
         type: "multiple_choice",
-        question: "No audio heard — first check…",
+        question: "No audio heard - first check…",
         options: [
           "Valid SoundId and Volume > 0",
           "Delete all scripts",
@@ -1567,7 +1567,7 @@ Do not stack 5 loud ambients — one loop + one 3D detail is enough.`,
         type: "multiple_choice",
         question: "Lesson 1.5 save name…",
         options: [
-          "Lesson 1.5 — Island Atmosphere",
+          "Lesson 1.5 - Island Atmosphere",
           "Click Magic",
           "Part3",
           "Module 12",
@@ -1583,7 +1583,7 @@ export const ukLesson16 = {
   lessonId: "lesson-roblox-1-6",
   moduleId: "module-01",
   order: 6,
-  title: "1.6 — Checkpoint: Острів живе",
+  title: "1.6 - Checkpoint: Острів живе",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -1592,19 +1592,20 @@ export const ukLesson16 = {
     "Add SpawnLocation and run a quality checklist",
     "Present Module 1 as a living island spawn area",
     "Prepare for Module 2 obby mechanics",
+    "Repeat classic programming ideas: variables, if, print, and event callbacks",
   ],
   theory: {
     sections: [
       {
         title: "Module 1 checkpoint (about 40 minutes)",
-        content: `This is your **portfolio milestone** — not a new topic dump, but **polish and proof** you can ship a small world.
+        content: `This is your **portfolio milestone** - not a new topic dump, but **polish and proof** you can ship a small world.
 
 **You already built:**
-- **1.1** — Parts, Studio, save
-- **1.2** — Terrain island
-- **1.3** — Dock, Folders, Models
-- **1.4** — ClickDetector scripts
-- **1.5** — Sound + sunset mood
+- **1.1** - Parts, Studio, save
+- **1.2** - Terrain island
+- **1.3** - Dock, Folders, Models
+- **1.4** - ClickDetector scripts
+- **1.5** - Sound + sunset mood
 
 **Today:** one **Living Island Hub** ready for Module 2's obby path.`,
       },
@@ -1619,9 +1620,9 @@ export const ukLesson16 = {
 Your job: fix anything that breaks that first impression.`,
       },
       {
-        title: "Master checklist — world",
+        title: "Master checklist - world",
         content: `**Terrain & space**
-- [ ] Island has grass, sand, rock — no accidental giant pits
+- [ ] Island has grass, sand, rock - no accidental giant pits
 - [ ] Water level looks intentional (not flooding spawn)
 - [ ] **SpawnLocation** on flat ground (not inside water)
 
@@ -1639,7 +1640,7 @@ Your job: fix anything that breaks that first impression.`,
 - [ ] Full walk loop tested in Play (spawn → dock → beach)`,
       },
       {
-        title: "SpawnLocation — where players appear",
+        title: "SpawnLocation - where players appear",
         content: `**Insert → SpawnLocation** on safe beach or dock platform.
 
 | Property | Suggested |
@@ -1648,12 +1649,12 @@ Your job: fix anything that breaks that first impression.`,
 | **BrickColor** | Bright green or cyan (visible) |
 | **Anchored** | true |
 | **Neutral** | true (any player can spawn) |
-| **Position Y** | Slightly above terrain — not clipping inside floor |
+| **Position Y** | Slightly above terrain - not clipping inside floor |
 
-**Exercise (8 min):** Place SpawnLocation, Play — character should appear on it. Move it until spawn feels natural facing the dock.`,
+**Exercise (8 min):** Place SpawnLocation, Play - character should appear on it. Move it until spawn feels natural facing the dock.`,
       },
       {
-        title: "Welcome sign — hub greeting",
+        title: "Welcome sign - hub greeting",
         content: `Near spawn, add **Sign_Welcome** Part + ClickDetector + Script + optional **WelcomeSound**:
 
 \`\`\`lua
@@ -1672,7 +1673,7 @@ end)
 Later modules replace \`print\` with on-screen GUI. For Module 1, Output proof is enough.`,
       },
       {
-        title: "Explorer hygiene — impress teachers",
+        title: "Explorer hygiene - impress teachers",
         content: `Search bad names: **Ctrl+Shift+F** → find \`Part\` without numbers.
 
 **Target tree:**
@@ -1689,24 +1690,92 @@ Delete empty Folders and duplicate test blocks.`,
       {
         title: "Play-test script (5 minutes)",
         content: `Press **Play** and do this in order:
-1. Spawn on **SpawnLocation** — not underwater
-2. Walk to dock — no falling through planks
-3. Click all 3 interactives — see/hear feedback
-4. Walk shoreline — ambient audible, not ear-bleeding loud
-5. **Stop** — fix one issue if anything failed
+1. Spawn on **SpawnLocation** - not underwater
+2. Walk to dock - no falling through planks
+3. Click all 3 interactives - see/hear feedback
+4. Walk shoreline - ambient audible, not ear-bleeding loud
+5. **Stop** - fix one issue if anything failed
 
 Repeat until all five pass. **Then** save.`,
       },
       {
+        title: "Основи програмування - міст до Модуля 2",
+        content: `У **1.4** ти вже писав код, але Module 2 додає **дотик (Touched)** і перевірки **if**. Перед складними скриптами - 5 класичних ідей, які повторюються в усіх мовах (Python, JavaScript, Luau).
+
+**1. Змінні (\`local\`)** - коробка з назвою:
+\`\`\`lua
+local playerName = "Alex"
+local jumpPower = 50
+\`\`\`
+- \`local\` = змінна лише в цьому скрипті
+- Назви змістовні: \`killBlock\`, не \`x\`
+- У Roblox часто зберігають об'єкт: \`local part = script.Parent\`
+
+**2. Текст і числа** - \`print\` і склеювання:
+\`\`\`lua
+print("Гра стартувала")
+print("Гравець: " .. playerName)
+\`\`\`
+- \`..\` з'єднує текст (як + для рядків у Python)
+
+**3. Умова \`if\`** - гра ставить питання «так/ні»:
+\`\`\`lua
+local health = 0
+
+if health <= 0 then
+    print("Гравець програв")
+end
+\`\`\`
+- \`if ... then\` - якщо умова істинна, виконай блок
+- \`end\` - закриває блок (завжди не забувай!)
+- Порівняння: \`<\`, \`>\`, \`==\`, \`<=\` (два знаки \`==\` для «дорівнює»)
+
+**4. Події (callbacks)** - «коли станеться X, зроби Y»:
+\`\`\`lua
+detector.MouseClick:Connect(function(player)
+    print(player.Name .. " натиснув")
+end)
+\`\`\`
+- \`Connect(function ... end)\` - функція, яку Studio викликає **сама** в потрібний момент
+- Ти не викликаєш її вручну - лише **підписуєшся** на подію
+
+**5. Безпечна перевірка (\`nil\`)** - «чи існує об'єкт?»:
+\`\`\`lua
+local sound = part:FindFirstChild("ClickSound")
+
+if sound then
+    sound:Play()
+end
+\`\`\`
+- Якщо дитини немає в Explorer, \`FindFirstChild\` повертає \`nil\`
+- \`if sound then\` захищає від червоних помилок у Output
+
+**Міні-вправа (7 хв):** у будь-якому Script з 1.4 додай \`print("Тест умови")\` і блок \`if true then print("if працює") end\`. Play → переконайся, що Output показує обидва рядки.`,
+      },
+      {
+        title: "Що зміниться в Module 2",
+        content: `| Урок 1.4 (клік) | Module 2 (дотик) |
+|-----------------|------------------|
+| \`MouseClick\` | \`Touched\` |
+| Ти клікаєш мишкою | Персонаж **наступає** на Part |
+| Змінюємо колір | Часто \`Humanoid.Health = 0\` |
+
+Складність зростає **поступово**:
+1. **2.1** - спочатку \`print\` при дотику, потім повний kill-скрипт
+2. **2.4** - офіційно вивчаємо \`if / elseif / else\` для рангів S/A/B
+
+Не треба «знати все» зараз. Достатньо розуміти **змінну**, **if**, **print** і що \`Connect\` = «зроби це при події».`,
+      },
+      {
         title: "Save, document, Module 2 preview",
-        content: `**File → Save to Roblox** → \`Module 1 — Living Island\`
+        content: `**File → Save to Roblox** → \`Module 1 - Living Island\`
 
 In a notebook (or comment in Studio):
 - One thing you are proud of
 - One bug you fixed today
 - One Module 2 idea (lava path? moving platform?)
 
-**Module 2 preview:** kill blocks, checkpoints, timers — your island becomes the **start** of an obby. Keep this place file — you will extend it.`,
+**Module 2 preview:** kill blocks, checkpoints, timers - your island becomes the **start** of an obby. Keep this place file - you will extend it.`,
       },
     ],
   },
@@ -1732,32 +1801,32 @@ In a notebook (or comment in Studio):
       correctApproach: "Sunset 17.5 or add Neon lamp from Lesson 1.3",
     },
   ],
-  summary: "You merged every Module 1 skill into one Living Island Hub with spawn, interactives, audio, lighting, and a clean Explorer tree — ready to build your first obby in Module 2.",
+  summary: "You merged every Module 1 skill into one Living Island Hub with spawn, interactives, audio, lighting, and a clean Explorer tree - ready to build your first obby in Module 2.",
   practiceTask: {
-    title: "Checkpoint — Living Island Hub (~40 min)",
+    title: "Checkpoint - Living Island Hub (~40 min)",
     difficulty: "beginner",
     description: `**Goal:** Pass every item on the master checklist.
 
-### Part A — Fix world (12 min)
-1. Run checklist — terrain, water, anchored Parts
+### Part A - Fix world (12 min)
+1. Run checklist - terrain, water, anchored Parts
 2. Insert **SpawnLocation** on safe ground | test spawn in Play
 3. Rename stray \`Part\` objects in Explorer
 
-### Part B — Interactives & dock (12 min)
+### Part B - Interactives & dock (12 min)
 1. Confirm **3 clickables** in Folder \`Interactives\`
 2. Confirm **Dock** Folder with Model and 6+ planks/props
 3. Fix any walk-through or floating planks
 
-### Part C — Mood & welcome (10 min)
+### Part C - Mood & welcome (10 min)
 1. Ambient + Lighting + Atmosphere from Lesson 1.5
 2. Add **Sign_Welcome** with click + print + optional sound
 3. Full **play-test script** from theory (5 steps)
 
 ### Finish (6 min)
-1. **File → Save to Roblox** → \`Module 1 — Living Island\`
-2. **Practice complete** — optional: 2-min screen recording tour for your teacher`,
+1. **File → Save to Roblox** → \`Module 1 - Living Island\`
+2. **Practice complete** - optional: 2-min screen recording tour for your teacher`,
     hints: [
-      "Fix spawn first — everything else is easier after that",
+      "Fix spawn first - everything else is easier after that",
       "Ctrl+D duplicates dock planks to add decorations fast",
       "One focused Play-test catches 90% of issues",
     ],
@@ -1876,7 +1945,7 @@ In a notebook (or comment in Studio):
         type: "multiple_choice",
         question: "Final save name for Module 1…",
         options: [
-          "Module 1 — Living Island",
+          "Module 1 - Living Island",
           "Untitled",
           "Lesson 1.1 only",
           "Test",

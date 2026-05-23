@@ -16,7 +16,6 @@ import styles from './Header.module.css'
 import gsap from 'gsap'
 import { Link, useRouter } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
-import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher'
 import Logo from '@/components/Logo/Logo'
 import { logout } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
@@ -26,6 +25,8 @@ import {
 	requestHomeSectionScroll,
 	setPendingHomeSectionScroll,
 	unlockBodyScrollLock,
+	isHomePathname,
+	getHomeBasePath,
 } from '@/lib/homeSectionScroll'
 
 const Header = () => {
@@ -98,7 +99,7 @@ const Header = () => {
 			const sectionAfterUnlock = pendingHomeSectionRef.current
 			const isHome =
 				typeof window !== 'undefined' &&
-				(window.location.pathname === '/' || window.location.pathname === '')
+				isHomePathname(window.location.pathname)
 
 			unlockBodyScrollLock(lockedY, { restorePosition: !sectionAfterUnlock })
 
@@ -176,14 +177,15 @@ const Header = () => {
 	const scrollToHomeSection = (sectionId) => {
 		const isHome =
 			typeof window !== 'undefined' &&
-			(window.location.pathname === '/' || window.location.pathname === '')
+			isHomePathname(window.location.pathname)
 
 		if (isMobileMenuOpen) {
 			pendingHomeSectionRef.current = sectionId
 			setIsMobileMenuOpen(false)
 			if (!isHome) {
 				setPendingHomeSectionScroll(sectionId)
-				router.push(`/#${sectionId}`)
+				const base = getHomeBasePath(window.location.pathname)
+				router.push(`${base}#${sectionId}`)
 			}
 			return
 		}
@@ -314,7 +316,6 @@ const Header = () => {
 
 					{/* Права частина хедера */}
                     <div className={styles.headerRight}>
-						<LanguageSwitcher className={styles.langSwitcher} />
 						{userLoading ? (
 							<div className={`${styles.userButton} ${styles.skeletonButton}`} style={{ width: '100px', pointerEvents: 'none' }}>
 								<div className={styles.skeletonPulse} />

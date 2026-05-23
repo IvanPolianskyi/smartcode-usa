@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 07 — lessons 7.1–7.3 */
+/** Rich EN content for Roblox Module 07 - lessons 7.1–7.3 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -7,7 +7,7 @@ export const enLesson71 = {
   lessonId: 'lesson-roblox-7-1',
   moduleId: 'module-07',
   order: 1,
-  title: '7.1 — Two Worlds: Client and Server',
+  title: '7.1 - Two Worlds: Client and Server',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -21,14 +21,14 @@ export const enLesson71 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `**Module 7 — Mail Between Worlds** — you learn how **client** and **server** talk safely. This powers shops, quests, and fair multiplayer.
+        content: `**Module 7 - Network & Shop** - you learn how **client** and **server** talk safely. This powers shops, quests, and fair multiplayer.
 
 **Lesson flow:**
-1. **Theory (40 min)** — two worlds + trust map
-2. **Practice (~25 min)** — ping demo + boundary map
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - two worlds + trust map
+2. **Practice (~25 min)** - ping demo + boundary map
+3. **Quiz (10 min)** - **70%** pass
 
-New place or hub: \`Lesson 7.1 — Two Worlds\`. You already used RemoteEvents in Module 6 racing — today we go deeper.`,
+New place or hub: \`Lesson 7.1 - Two Worlds\`. You already used RemoteEvents in Module 6 racing - today we go deeper.`,
       },
       {
         title: 'Two computers, one game',
@@ -37,7 +37,7 @@ New place or hub: \`Lesson 7.1 — Two Worlds\`. You already used RemoteEvents i
 | World | Where it runs | Who sees it |
 |-------|---------------|-------------|
 | **Client** | Player's device | That player only |
-| **Server** | Roblox game host | Everyone — shared truth |
+| **Server** | Roblox game host | Everyone - shared truth |
 
 **Client** = camera, keyboard, your ScreenGui, local sounds.
 
@@ -58,7 +58,7 @@ New place or hub: \`Lesson 7.1 — Two Worlds\`. You already used RemoteEvents i
 | Play footstep sound locally | Client | No need to network |
 | Kill player with lava | Server | Fair damage |
 
-**Exercise (8 min):** List 10 actions from your race place — label each Client / Server / Both.`,
+**Exercise (8 min):** List 10 actions from your race place - label each Client / Server / Both.`,
       },
       {
         title: 'Script placement',
@@ -95,7 +95,7 @@ print("Server: I validate and save shared data")
 If cheating would hurt balance → **server**.`,
       },
       {
-        title: 'First handshake — PingServer',
+        title: 'First handshake - PingServer',
         content: `**ReplicatedStorage** → **RemoteEvent** → \`PingServer\`
 
 **ServerScriptService** → Script \`PingHandler\`:
@@ -130,9 +130,9 @@ end)
       {
         title: 'Naming remotes for later lessons',
         content: `Good names (Module 7 shop path):
-- \`PingServer\` — test only
-- \`RequestPurchase\` — client → server buy
-- \`PurchaseResult\` — server → client feedback
+- \`PingServer\` - test only
+- \`RequestPurchase\` - client → server buy
+- \`PurchaseResult\` - server → client feedback
 
 **Bad names:** \`Event1\`, \`Remote\`, \`DoThing\`
 
@@ -144,7 +144,7 @@ Put remotes in **ReplicatedStorage**, not ServerStorage (clients cannot see Serv
 - [ ] PingServer RemoteEvent works in Play
 - [ ] Server prints player name + message
 - [ ] Client StatusLabel shows pong
-- [ ] Save: \`Lesson 7.1 — Two Worlds\``,
+- [ ] Save: \`Lesson 7.1 - Two Worlds\``,
       },
     ],
   },
@@ -154,28 +154,28 @@ Put remotes in **ReplicatedStorage**, not ServerStorage (clients cannot see Serv
     { mistake: 'LocalScript in ServerScriptService', explanation: 'Does not run on client.', correctApproach: 'LocalScript under StarterGui' },
     { mistake: 'Trusting client coin count', explanation: 'Infinite money exploit.', correctApproach: 'Server stores and changes coins' },
   ],
-  summary: `You mapped client vs server trust boundaries, placed scripts correctly, and built a PingServer handshake — the foundation for the shop and secure purchases in the rest of Module 7.`,
+  summary: `You mapped client vs server trust boundaries, placed scripts correctly, and built a PingServer handshake - the foundation for the shop and secure purchases in the rest of Module 7.`,
   practiceTask: {
     title: 'Trust map + ping demo (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Document boundaries + working remote ping.
 
-### Part A — Trust map (10 min)
+### Part A - Trust map (10 min)
 1. Paper or notes: 10 actions → Client / Server / Both
 2. At least 3 must be Server-only with reason
 
-### Part B — Ping demo (12 min)
+### Part B - Ping demo (12 min)
 1. PingServer RemoteEvent + PingHandler server script
 2. PingUI button + LocalScript + StatusLabel
-3. Play — verify Output and label
+3. Play - verify Output and label
 
-### Part C — Save (3 min)
-1. **Save to Roblox** → \`Lesson 7.1 — Two Worlds\`
+### Part C - Save (3 min)
+1. **Save to Roblox** → \`Lesson 7.1 - Two Worlds\`
 2. **Practice complete**`,
     hints: [
-      'Test with 2 players in Studio — both should ping separately',
+      'Test with 2 players in Studio - both should ping separately',
       'Return early if msg is not a string',
-      'Module 6 RaceEvent was the same pattern — reuse that mental model',
+      'Module 6 RaceEvent was the same pattern - reuse that mental model',
     ],
     optionalChallenge: 'Send os.clock() from client; show round-trip ms on StatusLabel.',
   },
@@ -189,10 +189,10 @@ Put remotes in **ReplicatedStorage**, not ServerStorage (clients cannot see Serv
       { id: 'q4', type: MC, question: 'Shared remotes go in…', options: ['ReplicatedStorage', 'ServerStorage only', 'Lighting', 'Terrain'], correctAnswer: 0, explanation: 'Both sides can access.' },
       { id: 'q5', type: MC, question: 'FireServer sends…', options: ['Client to server', 'Server to client only', 'Terrain edit', 'Weld'], correctAnswer: 0, explanation: 'Client request.' },
       { id: 'q6', type: MC, question: 'Shop coin deduction belongs on…', options: ['Server', 'Client only', 'StarterGui text', 'Sky'], correctAnswer: 0, explanation: 'Anti-cheat.' },
-      { id: 'q7', type: MC, question: 'Module 7 theme is…', options: ['Mail Between Worlds / networking', 'Only terrain', 'Only racing', 'Publishing'], correctAnswer: 0, explanation: 'Client-server communication.' },
+      { id: 'q7', type: MC, question: 'Module 7 theme is…', options: ['Network & Shop / networking', 'Only terrain', 'Only racing', 'Publishing'], correctAnswer: 0, explanation: 'Client-server communication.' },
       { id: 'q8', type: MC, question: 'Script in ServerScriptService runs on…', options: ['Server', 'Client HUD', 'Both', 'Neither'], correctAnswer: 0, explanation: 'Server scripts.' },
       { id: 'q9', type: MC, question: 'Ping demo proves…', options: ['Client and server can communicate', 'DataStore works', 'Terrain generates', 'NPC pathfinding'], correctAnswer: 0, explanation: 'Handshake test.' },
-      { id: 'q10', type: MC, question: 'Lesson 7.1 save name…', options: ['Lesson 7.1 — Two Worlds', 'Shop Works', 'Race Launched', 'Arena Ready'], correctAnswer: 0, explanation: 'Save lesson 7.1.' },
+      { id: 'q10', type: MC, question: 'Lesson 7.1 save name…', options: ['Lesson 7.1 - Two Worlds', 'Shop Works', 'Race Launched', 'Arena Ready'], correctAnswer: 0, explanation: 'Save lesson 7.1.' },
     ],
   },
 }
@@ -201,7 +201,7 @@ export const enLesson72 = {
   lessonId: 'lesson-roblox-7-2',
   moduleId: 'module-07',
   order: 2,
-  title: '7.2 — RemoteEvent',
+  title: '7.2 - RemoteEvent',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -218,11 +218,11 @@ export const enLesson72 = {
         content: `**RemoteEvent** = one-way **mail** between worlds. No instant return value (that is RemoteFunction in 7.5).
 
 **Lesson flow:**
-1. **Theory (40 min)** — events + validation
-2. **Practice (~25 min)** — message bus with two remotes
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - events + validation
+2. **Practice (~25 min)** - message bus with two remotes
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 7.1 — Two Worlds**.`,
+Open **Lesson 7.1 - Two Worlds**.`,
       },
       {
         title: 'RemoteEvent directions',
@@ -237,8 +237,8 @@ Open **Lesson 7.1 — Two Worlds**.`,
       {
         title: 'RequestAction + ActionResult pattern',
         content: `**ReplicatedStorage:**
-- \`RequestAction\` — client fires item id
-- \`ActionResult\` — server fires ok + message back
+- \`RequestAction\` - client fires item id
+- \`ActionResult\` - server fires ok + message back
 
 **Server** \`ShopBus\` in ServerScriptService:
 
@@ -333,7 +333,7 @@ if not VALID_ITEMS[itemId] then
 end
 \`\`\`
 
-Compare to Module 6 — same discipline for race events.`,
+Compare to Module 6 - same discipline for race events.`,
       },
       {
         title: 'Before practice checklist',
@@ -341,7 +341,7 @@ Compare to Module 6 — same discipline for race events.`,
 - [ ] Server validates string itemId
 - [ ] Client shows green/red status from ActionResult
 - [ ] Cooldown stops button spam
-- [ ] Save: \`Lesson 7.2 — RemoteEvent\``,
+- [ ] Save: \`Lesson 7.2 - RemoteEvent\``,
       },
     ],
   },
@@ -351,31 +351,31 @@ Compare to Module 6 — same discipline for race events.`,
     { mistake: 'FireServer from server script', explanation: 'Wrong direction.', correctApproach: 'FireServer from LocalScript only' },
     { mistake: 'Same RemoteEvent both directions confused', explanation: 'Hard to debug.', correctApproach: 'Separate request vs result remotes' },
   ],
-  summary: `You built a two-remote message bus with validated RequestAction payloads, ActionResult feedback to the UI, and per-player cooldown — ready to connect a full shop screen in the next lesson.`,
+  summary: `You built a two-remote message bus with validated RequestAction payloads, ActionResult feedback to the UI, and per-player cooldown - ready to connect a full shop screen in the next lesson.`,
   practiceTask: {
     title: 'Event message bus (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Request + result loop with validation.
 
-### Part A — Remotes (8 min)
+### Part A - Remotes (8 min)
 1. RequestAction + ActionResult in ReplicatedStorage
 2. ShopBus server script with stub valid ids
 
-### Part B — Client (12 min)
+### Part B - Client (12 min)
 1. TestBuy button + StatusLabel
 2. OnClientEvent colors success/fail
-3. 0.3s server cooldown — spam click test
+3. 0.3s server cooldown - spam click test
 
-### Part C — Save (5 min)
+### Part C - Save (5 min)
 1. Unknown id → fail message
-2. **Save to Roblox** → \`Lesson 7.2 — RemoteEvent\`
+2. **Save to Roblox** → \`Lesson 7.2 - RemoteEvent\`
 3. **Practice complete**`,
     hints: [
       'Print every OnServerEvent with player.Name and itemId',
       'Processing... text before FireServer feels responsive',
       'VALID_ITEMS table can be 2 items for now',
     ],
-    optionalChallenge: 'FireAllClients when someone buys — "X is shopping!"',
+    optionalChallenge: 'FireAllClients when someone buys - "X is shopping!"',
   },
   quiz: {
     passingScore: 70,
@@ -390,7 +390,7 @@ Compare to Module 6 — same discipline for race events.`,
       { id: 'q7', type: MC, question: 'Early return on bad data…', options: ['Keeps handlers readable', 'Deletes player', 'Publishes game', 'Removes UI'], correctAnswer: 0, explanation: 'Guard clauses.' },
       { id: 'q8', type: MC, question: 'Two remotes used because…', options: ['Request and result are separate flows', 'One is enough always', 'No networking', 'UI only'], correctAnswer: 0, explanation: 'Clear separation.' },
       { id: 'q9', type: MC, question: 'Lesson 7.2 builds on…', options: ['Lesson 7.1 ping', 'Only Module 1', 'Only coins Module 3', 'Publishing'], correctAnswer: 0, explanation: 'Continues networking.' },
-      { id: 'q10', type: MC, question: 'Lesson 7.2 save name…', options: ['Lesson 7.2 — RemoteEvent', 'Two Worlds', 'Shop Works', 'Race Timer'], correctAnswer: 0, explanation: 'Save lesson 7.2.' },
+      { id: 'q10', type: MC, question: 'Lesson 7.2 save name…', options: ['Lesson 7.2 - RemoteEvent', 'Two Worlds', 'Shop Works', 'Race Timer'], correctAnswer: 0, explanation: 'Save lesson 7.2.' },
     ],
   },
 }
@@ -399,7 +399,7 @@ export const enLesson73 = {
   lessonId: 'lesson-roblox-7-3',
   moduleId: 'module-07',
   order: 3,
-  title: '7.3 — Shop: UI Part',
+  title: '7.3 - Shop: UI Part',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -413,14 +413,14 @@ export const enLesson73 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `Today the **shop looks real** — UI only. Server pays out in **7.4**.
+        content: `Today the **shop looks real** - UI only. Server pays out in **7.4**.
 
 **Lesson flow:**
-1. **Theory (40 min)** — ScreenGui layout + UX
-2. **Practice (~25 min)** — 3-item shop panel
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - ScreenGui layout + UX
+2. **Practice (~25 min)** - 3-item shop panel
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 7.2 — RemoteEvent**. Rename \`RequestAction\` → \`RequestPurchase\` if you want shop naming (or keep both during migration).`,
+Open **Lesson 7.2 - RemoteEvent**. Rename \`RequestAction\` → \`RequestPurchase\` if you want shop naming (or keep both during migration).`,
       },
       {
         title: 'Shop UI hierarchy',
@@ -444,9 +444,9 @@ ShopGui
       {
         title: 'Item card layout',
         content: `Each \`Item_sword_basic\` Frame contains:
-- **NameLabel** — "Basic Sword"
-- **PriceLabel** — "50 coins" (display only for now)
-- **BuyButton** — Text "Buy"
+- **NameLabel** - "Basic Sword"
+- **PriceLabel** - "50 coins" (display only for now)
+- **BuyButton** - Text "Buy"
 
 **Single price table** in LocalScript (display source):
 
@@ -458,7 +458,7 @@ local DISPLAY_PRICES = {
 }
 \`\`\`
 
-Server will own real prices in 7.4 — display table is preview only.`,
+Server will own real prices in 7.4 - display table is preview only.`,
       },
       {
         title: 'Open and close panel',
@@ -517,7 +517,7 @@ Use **PurchaseResult** from 7.2 pattern (rename ActionResult if needed).`,
 | Green ✓ / red ✗ on result | Clear outcome |
 | Consistent price labels | Trust |
 
-**Do not** change coins on client — only show messages until 7.4.`,
+**Do not** change coins on client - only show messages until 7.4.`,
       },
       {
         title: 'Prepare for server shop (7.4)',
@@ -533,7 +533,7 @@ Server \`ShopItems\` table in 7.4 will match these ids exactly.
 - [ ] Open/close shop works
 - [ ] Each buy fires correct itemId
 - [ ] StatusLabel updates from PurchaseResult
-- [ ] Save: \`Lesson 7.3 — Shop UI\``,
+- [ ] Save: \`Lesson 7.3 - Shop UI\``,
       },
     ],
   },
@@ -543,25 +543,25 @@ Server \`ShopItems\` table in 7.4 will match these ids exactly.
     { mistake: 'Client changes Coins IntValue on buy', explanation: 'Exploit before 7.4.', correctApproach: 'UI message only until server deducts' },
     { mistake: 'Hard-coded price on button and label mismatch', explanation: 'Confusing shop.', correctApproach: 'One DISPLAY_PRICES table' },
   ],
-  summary: `You built a ScreenGui shop with three items, open/close panel, buy buttons firing RequestPurchase, and polished client feedback — ready for secure server checkout in Lesson 7.4.`,
+  summary: `You built a ScreenGui shop with three items, open/close panel, buy buttons firing RequestPurchase, and polished client feedback - ready for secure server checkout in Lesson 7.4.`,
   practiceTask: {
     title: 'Shop ScreenGui (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Full shop UI wired to remotes (stub server ok).
 
-### Part A — Layout (12 min)
+### Part A - Layout (12 min)
 1. ShopGui + ShopPanel + 3 item cards
 2. Name + price labels from DISPLAY_PRICES table
 3. OpenShopButton + CloseButton
 
-### Part B — Wiring (10 min)
+### Part B - Wiring (10 min)
 1. RequestPurchase + PurchaseResult (from 7.2 pattern)
 2. hookBuy for each item id
 3. Processing + button disable + status colors
 
-### Part C — Save (3 min)
-1. Play — buy each item once
-2. **Save to Roblox** → \`Lesson 7.3 — Shop UI\`
+### Part C - Save (3 min)
+1. Play - buy each item once
+2. **Save to Roblox** → \`Lesson 7.3 - Shop UI\`
 3. **Practice complete**`,
     hints: [
       'Button names Buy_sword_basic help debugging',
@@ -583,7 +583,7 @@ Server \`ShopItems\` table in 7.4 will match these ids exactly.
       { id: 'q7', type: MC, question: 'item ids should be…', options: ['Consistent strings like sword_basic', 'Random each click', 'Numbers only on client', 'Empty'], correctAnswer: 0, explanation: 'Match server table later.' },
       { id: 'q8', type: MC, question: 'Lesson 7.3 needs remotes from…', options: ['Lesson 7.2', 'Lesson 1.1 only', 'Module 6 only', 'No prior lessons'], correctAnswer: 0, explanation: 'Request/result pattern.' },
       { id: 'q9', type: MC, question: 'Server coin logic comes in…', options: ['Lesson 7.4', 'Lesson 7.1', 'Lesson 6.1', 'Lesson 12'], correctAnswer: 0, explanation: 'Next lesson.' },
-      { id: 'q10', type: MC, question: 'Lesson 7.3 save name…', options: ['Lesson 7.3 — Shop UI', 'Shop Works', 'RemoteEvent', 'Race Launched'], correctAnswer: 0, explanation: 'Save UI lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 7.3 save name…', options: ['Lesson 7.3 - Shop UI', 'Shop Works', 'RemoteEvent', 'Race Launched'], correctAnswer: 0, explanation: 'Save UI lesson.' },
     ],
   },
 }
@@ -592,7 +592,7 @@ export const enLesson74 = {
   lessonId: 'lesson-roblox-7-4',
   moduleId: 'module-07',
   order: 4,
-  title: '7.4 — Shop: Server Logic',
+  title: '7.4 - Shop: Server Logic',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -606,14 +606,14 @@ export const enLesson74 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `The UI from **7.3** asks to buy. Today the **server is the cashier** — real coins, real items.
+        content: `The UI from **7.3** asks to buy. Today the **server is the cashier** - real coins, real items.
 
 **Lesson flow:**
-1. **Theory (40 min)** — validation flow + locks
-2. **Practice (~25 min)** — secure server shop
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - validation flow + locks
+2. **Practice (~25 min)** - secure server shop
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 7.3 — Shop UI**.`,
+Open **Lesson 7.3 - Shop UI**.`,
       },
       {
         title: 'Server is the cashier',
@@ -623,7 +623,7 @@ Open **Lesson 7.3 — Shop UI**.`,
 - Approve or deny purchases
 - Put tools in **Backpack**
 
-Client sends **item id only** — never price, never "I have 999 coins".`,
+Client sends **item id only** - never price, never "I have 999 coins".`,
       },
       {
         title: 'ShopItems module',
@@ -653,11 +653,11 @@ ShopConfig.Items = {
 return ShopConfig
 \`\`\`
 
-**ReplicatedStorage** does not get prices — clients learn prices via catalog in 7.5 or PurchaseResult messages.`,
+**ReplicatedStorage** does not get prices - clients learn prices via catalog in 7.5 or PurchaseResult messages.`,
       },
       {
         title: 'Coins on join',
-        content: `**ShopServer** Script — PlayerAdded:
+        content: `**ShopServer** Script - PlayerAdded:
 
 \`\`\`lua
 local function setupCoins(player)
@@ -685,13 +685,13 @@ Reuse Module 3 leaderstats pattern.`,
         title: 'Validation flow (6 steps)',
         content: `On \`RequestPurchase.OnServerEvent\`:
 
-1. **Type check** — \`itemId\` is string
-2. **Exists** — \`ShopConfig.Items[itemId]\`
-3. **Lock** — skip if \`purchaseLock[player]\`
-4. **Balance** — \`coins.Value >= price\`
-5. **Deduct** — \`coins.Value -= price\`
-6. **Grant** — clone tool from \`ServerStorage/Tools\` → Backpack
-7. **Notify** — \`PurchaseResult:FireClient(player, true, msg, coins.Value)\`
+1. **Type check** - \`itemId\` is string
+2. **Exists** - \`ShopConfig.Items[itemId]\`
+3. **Lock** - skip if \`purchaseLock[player]\`
+4. **Balance** - \`coins.Value >= price\`
+5. **Deduct** - \`coins.Value -= price\`
+6. **Grant** - clone tool from \`ServerStorage/Tools\` → Backpack
+7. **Notify** - \`PurchaseResult:FireClient(player, true, msg, coins.Value)\`
 
 \`\`\`lua
 if not ShopConfig.Items[itemId] then
@@ -740,7 +740,7 @@ local tool = template:Clone()
 tool.Parent = player.Backpack
 \`\`\`
 
-**Already owns?** Optional: check Backpack/Character before grant — deny duplicate or allow stack per design.
+**Already owns?** Optional: check Backpack/Character before grant - deny duplicate or allow stack per design.
 
 **PurchaseResult payload:**
 \`(success: boolean, message: string, newBalance: number)\`
@@ -753,7 +753,7 @@ Client updates **CoinsLabel** from \`newBalance\`, not local math.`,
 - [ ] 0 coins → "Not enough coins"
 - [ ] Valid buy → tool in Backpack + coins reduced
 - [ ] Rapid clicks → only one purchase (lock)
-- [ ] Save: \`Lesson 7.4 — Server Shop\``,
+- [ ] Save: \`Lesson 7.4 - Server Shop\``,
       },
     ],
   },
@@ -763,29 +763,29 @@ Client updates **CoinsLabel** from \`newBalance\`, not local math.`,
     { mistake: 'Deduct coins after grant fails', explanation: 'Player pays, gets nothing.', correctApproach: 'Validate tool exists before deduct, or refund in pcall' },
     { mistake: 'ShopItems in ReplicatedStorage', explanation: 'Tampering risk.', correctApproach: 'ModuleScript server-only' },
   ],
-  summary: `You implemented server-side ShopConfig, coin validation, purchase locks, tool grants, and PurchaseResult with live balance — the shop economy is now secure and fair.`,
+  summary: `You implemented server-side ShopConfig, coin validation, purchase locks, tool grants, and PurchaseResult with live balance - the shop economy is now secure and fair.`,
   practiceTask: {
     title: 'Secure server shop (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Real purchases with server authority.
 
-### Part A — Config (8 min)
+### Part A - Config (8 min)
 1. ShopConfig ModuleScript with 3 items + prices
 2. Tools folder in ServerStorage (simple Tool parts ok)
 3. PlayerAdded → Coins = 100
 
-### Part B — ShopServer (15 min)
-1. RequestPurchase handler — full 6-step flow
+### Part B - ShopServer (15 min)
+1. RequestPurchase handler - full 6-step flow
 2. purchaseLock + pcall
 3. PurchaseResult with newBalance
 
-### Part C — Test & save (2 min)
-1. Buy sword — coins drop, tool appears
-2. Buy with 0 coins — denied
-3. **Save to Roblox** → \`Lesson 7.4 — Server Shop\`
+### Part C - Test & save (2 min)
+1. Buy sword - coins drop, tool appears
+2. Buy with 0 coins - denied
+3. **Save to Roblox** → \`Lesson 7.4 - Server Shop\`
 4. **Practice complete**`,
     hints: [
-      'Print analytics: player, itemId, success — helps balancing',
+      'Print analytics: player, itemId, success - helps balancing',
       'deny() helper fires PurchaseResult false + current balance',
       'Remove DISPLAY_PRICES authority from client labels in 7.5',
     ],
@@ -804,7 +804,7 @@ Client updates **CoinsLabel** from \`newBalance\`, not local math.`,
       { id: 'q7', type: MC, question: 'pcall around purchase helps…', options: ['Clear lock on errors', 'Skip validation', 'Remove UI', 'Publish'], correctAnswer: 0, explanation: 'Safe cleanup.' },
       { id: 'q8', type: MC, question: 'PurchaseResult should include…', options: ['success, message, new balance', 'Only color', 'Terrain id', 'Nothing'], correctAnswer: 0, explanation: 'Client updates UI.' },
       { id: 'q9', type: MC, question: 'Lesson 7.4 builds on…', options: ['Lesson 7.3 shop UI', 'Lesson 6 racing only', 'Lesson 1 terrain', 'Empty'], correctAnswer: 0, explanation: 'UI + server logic.' },
-      { id: 'q10', type: MC, question: 'Lesson 7.4 save name…', options: ['Lesson 7.4 — Server Shop', 'Shop UI', 'Shop Works', 'Two Worlds'], correctAnswer: 0, explanation: 'Save server lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 7.4 save name…', options: ['Lesson 7.4 - Server Shop', 'Shop UI', 'Shop Works', 'Two Worlds'], correctAnswer: 0, explanation: 'Save server lesson.' },
     ],
   },
 }
@@ -813,7 +813,7 @@ export const enLesson75 = {
   lessonId: 'lesson-roblox-7-5',
   moduleId: 'module-07',
   order: 5,
-  title: '7.5 — RemoteFunction',
+  title: '7.5 - RemoteFunction',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -832,11 +832,11 @@ export const enLesson75 = {
 Use when client needs data **now**: shop catalog, coin balance check.
 
 **Lesson flow:**
-1. **Theory (40 min)** — InvokeServer pattern
-2. **Practice (~25 min)** — dynamic catalog UI
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - InvokeServer pattern
+2. **Practice (~25 min)** - dynamic catalog UI
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 7.4 — Server Shop**.`,
+Open **Lesson 7.4 - Server Shop**.`,
       },
       {
         title: 'RemoteFunction vs RemoteEvent',
@@ -850,7 +850,7 @@ Open **Lesson 7.4 — Server Shop**.`,
 local catalog = GetShopCatalog:InvokeServer()
 \`\`\`
 
-**Do not** InvokeServer every frame — causes lag.`,
+**Do not** InvokeServer every frame - causes lag.`,
       },
       {
         title: 'GetShopCatalog server',
@@ -878,11 +878,11 @@ getCatalog.OnServerInvoke = function(player)
 end
 \`\`\`
 
-Return **only safe fields** — no secret admin flags, no tool instances.`,
+Return **only safe fields** - no secret admin flags, no tool instances.`,
       },
       {
         title: 'Client dynamic UI',
-        content: `\`ShopClient\` — on shop open:
+        content: `\`ShopClient\` - on shop open:
 
 \`\`\`lua
 local getCatalog = game.ReplicatedStorage:WaitForChild("GetShopCatalog")
@@ -911,7 +911,7 @@ for _, item in ipairs(catalog) do
 end
 \`\`\`
 
-**No hardcoded client prices** — labels from server catalog.`,
+**No hardcoded client prices** - labels from server catalog.`,
       },
       {
         title: 'Optional: GetCoinBalance',
@@ -926,7 +926,7 @@ end
 
 Client **CoinsLabel** updates on shop open + after each PurchaseResult.
 
-**RemoteEvent** still handles buy — Function only **reads** data.`,
+**RemoteEvent** still handles buy - Function only **reads** data.`,
       },
       {
         title: 'pcall and failures',
@@ -937,7 +937,7 @@ end)
 
 if not ok then
     warn("Catalog failed:", result)
-    StatusLabel.Text = "Shop offline — try again"
+    StatusLabel.Text = "Shop offline - try again"
     return
 end
 \`\`\`
@@ -950,7 +950,7 @@ Server errors, timeouts, or kicks should not break UI forever.`,
 - [ ] UI builds cards from server data
 - [ ] Changing ShopConfig price updates UI after reopen
 - [ ] Buy still uses RequestPurchase RemoteEvent
-- [ ] Save: \`Lesson 7.5 — RemoteFunction\``,
+- [ ] Save: \`Lesson 7.5 - RemoteFunction\``,
       },
     ],
   },
@@ -960,25 +960,25 @@ Server errors, timeouts, or kicks should not break UI forever.`,
     { mistake: 'No pcall on InvokeServer', explanation: 'UI breaks on error.', correctApproach: 'pcall + user message' },
     { mistake: 'Hardcoded buttons AND catalog', explanation: 'Duplicate drift.', correctApproach: 'Dynamic cards only' },
   ],
-  summary: `You added GetShopCatalog RemoteFunction so the server returns a sorted item list and the client builds shop cards dynamically — no more mismatched hardcoded prices.`,
+  summary: `You added GetShopCatalog RemoteFunction so the server returns a sorted item list and the client builds shop cards dynamically - no more mismatched hardcoded prices.`,
   practiceTask: {
     title: 'Dynamic catalog loader (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** UI from server catalog.
 
-### Part A — RemoteFunction (10 min)
+### Part A - RemoteFunction (10 min)
 1. GetShopCatalog in ReplicatedStorage
 2. OnServerInvoke builds list from ShopConfig
 3. Sort by price ascending
 
-### Part B — Dynamic UI (12 min)
+### Part B - Dynamic UI (12 min)
 1. Template card Frame (hidden)
-2. On shop open — pcall InvokeServer, clone cards
+2. On shop open - pcall InvokeServer, clone cards
 3. Each Buy fires RequestPurchase(item.id)
 
-### Part C — Save (3 min)
-1. Change one price in ShopConfig — reopen shop — UI matches
-2. **Save to Roblox** → \`Lesson 7.5 — RemoteFunction\`
+### Part C - Save (3 min)
+1. Change one price in ShopConfig - reopen shop - UI matches
+2. **Save to Roblox** → \`Lesson 7.5 - RemoteFunction\`
 3. **Practice complete**`,
     hints: [
       'Destroy old dynamic cards before rebuild',
@@ -1000,7 +1000,7 @@ Server errors, timeouts, or kicks should not break UI forever.`,
       { id: 'q7', type: MC, question: 'InvokeServer every frame is bad because…', options: ['Causes lag', 'Improves FPS', 'Required', 'Free Robux'], correctAnswer: 0, explanation: 'Blocking spam.' },
       { id: 'q8', type: MC, question: 'Dynamic UI means…', options: ['Cards built from server catalog', 'No scripts', 'Client-only prices', 'No shop'], correctAnswer: 0, explanation: 'No hardcoded drift.' },
       { id: 'q9', type: MC, question: 'Lesson 7.5 builds on…', options: ['Lesson 7.4 ShopConfig', 'Lesson 2 obby', 'Lesson 12 publish', 'Empty'], correctAnswer: 0, explanation: 'Server shop data.' },
-      { id: 'q10', type: MC, question: 'Lesson 7.5 save name…', options: ['Lesson 7.5 — RemoteFunction', 'Server Shop', 'Shop Works', 'Two Worlds'], correctAnswer: 0, explanation: 'Save function lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 7.5 save name…', options: ['Lesson 7.5 - RemoteFunction', 'Server Shop', 'Shop Works', 'Two Worlds'], correctAnswer: 0, explanation: 'Save function lesson.' },
     ],
   },
 }
@@ -1009,7 +1009,7 @@ export const enLesson76 = {
   lessonId: 'lesson-roblox-7-6',
   moduleId: 'module-07',
   order: 6,
-  title: '7.6 — Checkpoint: Shop Works',
+  title: '7.6 - Checkpoint: Shop Works',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -1017,7 +1017,7 @@ export const enLesson76 = {
     'Integrate UI, RemoteEvent purchases, and RemoteFunction catalog',
     'Pass two-player shop QA and exploit tests',
     'Use one ShopConfig ModuleScript as single source of truth',
-    'Ship Module 7 — Shop Works portfolio save',
+    'Ship Module 7 - Shop Works portfolio save',
   ],
   theory: {
     sections: [
@@ -1033,9 +1033,9 @@ export const enLesson76 = {
 - 7.5 Dynamic catalog via RemoteFunction
 
 **Lesson flow:**
-1. **Theory (40 min)** — integration checklist
-2. **Practice (~40 min)** — QA + final save
-3. **Quiz (10 min)** — **70%** pass`,
+1. **Theory (40 min)** - integration checklist
+2. **Practice (~40 min)** - QA + final save
+3. **Quiz (10 min)** - **70%** pass`,
       },
       {
         title: 'Architecture map',
@@ -1053,7 +1053,7 @@ StarterGui/ShopGui
 └── ShopClient (LocalScript)       → UI + Invoke + Fire
 \`\`\`
 
-**One config file** — no duplicate price tables on client.`,
+**One config file** - no duplicate price tables on client.`,
       },
       {
         title: 'Integration checklist',
@@ -1072,10 +1072,10 @@ StarterGui/ShopGui
         title: 'Two-player test protocol',
         content: `**Studio → Test → Start** with **2 Players**:
 
-1. Both open shop — catalogs match
-2. Player A buys sword — A's coins drop, B's unchanged
-3. Player B buys shield — independent inventories
-4. Rapid click buy — no double-spend
+1. Both open shop - catalogs match
+2. Player A buys sword - A's coins drop, B's unchanged
+3. Player B buys shield - independent inventories
+4. Rapid click buy - no double-spend
 5. **Exploit test:** client cannot FireServer fake price (server ignores)
 
 Optional: command bar cannot grant free items without server (verify no client coin scripts).`,
@@ -1088,29 +1088,29 @@ Optional: command bar cannot grant free items without server (verify no client c
 - **Shop reopen** → catalog rebuilds cleanly
 - **Disconnect mid-purchase** → lock released (pcall)
 
-**Remote naming:** prefix helps big games: \`Shop_RequestPurchase\` — optional polish.`,
+**Remote naming:** prefix helps big games: \`Shop_RequestPurchase\` - optional polish.`,
       },
       {
         title: '60-second demo script',
         content: `Record or rehearse:
 1. Show Coins on leaderboard (100 start)
-2. Open shop — 3 items from catalog
-3. Buy sword — Processing → success, tool equipped
+2. Open shop - 3 items from catalog
+3. Buy sword - Processing → success, tool equipped
 4. Show reduced coin balance
 5. Fail buy after spending all coins
 6. Close shop
 
-**Save:** \`Module 7 — Shop Works\``,
+**Save:** \`Module 7 - Shop Works\``,
       },
       {
         title: 'Module 8 preview',
-        content: `**Module 8 — Smart Game** adds **NPCs**, dialogue, and smarter worlds. Your shop can live in the same place as an NPC merchant later.
+        content: `**Module 8 - Smart Game** adds **NPCs**, dialogue, and smarter worlds. Your shop can live in the same place as an NPC merchant later.
 
 **Before practice:**
 - [ ] All 8 checklist rows pass
 - [ ] 2-player test done
 - [ ] Architecture sketch in notes (optional)
-- [ ] **Save to Roblox** → \`Module 7 — Shop Works\``,
+- [ ] **Save to Roblox** → \`Module 7 - Shop Works\``,
       },
     ],
   },
@@ -1120,32 +1120,32 @@ Optional: command bar cannot grant free items without server (verify no client c
     { mistake: 'ShopConfig copy on client', explanation: 'Exploit surface.', correctApproach: 'Server ModuleScript only' },
     { mistake: 'Many remotes with vague names', explanation: 'Debug nightmare.', correctApproach: 'Clear Shop_ prefix names' },
   ],
-  summary: `You integrated secure server shop logic, dynamic catalog loading, and multiplayer QA into Shop Works — Module 7 is complete and demo-ready.`,
+  summary: `You integrated secure server shop logic, dynamic catalog loading, and multiplayer QA into Shop Works - Module 7 is complete and demo-ready.`,
   practiceTask: {
     title: 'Ship Shop Works (~40 min)',
     difficulty: 'beginner',
     description: `**Goal:** Production-ready mini shop checkpoint.
 
-### Part A — Integrate (15 min)
-1. Single ShopConfig — wire ShopServer + ShopClient
+### Part A - Integrate (15 min)
+1. Single ShopConfig - wire ShopServer + ShopClient
 2. Remove leftover stub/hardcoded prices
 3. CoinsLabel + StatusLabel + dynamic cards
 
-### Part B — QA (20 min)
+### Part B - QA (20 min)
 1. Run 8-row checklist
 2. 2-player test + exploit attempts
 3. Fix failures one at a time
 
-### Part C — Demo save (5 min)
+### Part C - Demo save (5 min)
 1. 60-second walkthrough rehearsed
-2. **Save to Roblox** → \`Module 7 — Shop Works\`
+2. **Save to Roblox** → \`Module 7 - Shop Works\`
 3. **Practice complete**`,
     hints: [
       'One ModuleScript prevents config drift',
       'Log purchases: player, itemId, result',
       'Reliability beats extra items in checkpoint',
     ],
-    optionalChallenge: 'Session purchase history panel — last 5 buys.',
+    optionalChallenge: 'Session purchase history panel - last 5 buys.',
   },
   quiz: {
     passingScore: 70,
@@ -1157,8 +1157,8 @@ Optional: command bar cannot grant free items without server (verify no client c
       { id: 'q4', type: MC, question: 'Fake item id should…', options: ['Be denied by server', 'Grant free tool', 'Crash game', 'Publish'], correctAnswer: 0, explanation: 'Validation.' },
       { id: 'q5', type: MC, question: 'GetShopCatalog uses…', options: ['RemoteFunction', 'Only Terrain', 'Weld', 'Atmosphere'], correctAnswer: 0, explanation: 'Catalog fetch.' },
       { id: 'q6', type: MC, question: 'RequestPurchase uses…', options: ['RemoteEvent', 'RemoteFunction per frame', 'DataStore only', 'NPC only'], correctAnswer: 0, explanation: 'Buy action.' },
-      { id: 'q7', type: MC, question: 'Module 7 save name…', options: ['Module 7 — Shop Works', 'Race Launched', 'Arena Ready', 'Lesson 7.1'], correctAnswer: 0, explanation: 'Checkpoint save.' },
-      { id: 'q8', type: MC, question: 'Lesson 7.6 completes…', options: ['Module 7 Mail Between Worlds', 'Module 12', 'Module 1', 'UK translation'], correctAnswer: 0, explanation: 'End of module 7.' },
+      { id: 'q7', type: MC, question: 'Module 7 save name…', options: ['Module 7 - Shop Works', 'Race Launched', 'Arena Ready', 'Lesson 7.1'], correctAnswer: 0, explanation: 'Checkpoint save.' },
+      { id: 'q8', type: MC, question: 'Lesson 7.6 completes…', options: ['Module 7 Network & Shop', 'Module 12', 'Module 1', 'UK translation'], correctAnswer: 0, explanation: 'End of module 7.' },
       { id: 'q9', type: MC, question: 'Next module theme is…', options: ['Smart Game / NPCs', 'Only racing', 'Only publishing', 'Empty'], correctAnswer: 0, explanation: 'Module 8 preview.' },
       { id: 'q10', type: MC, question: 'Checkpoint prioritizes…', options: ['Reliability over extra features', 'Most items possible', 'No tests', 'Client-only economy'], correctAnswer: 0, explanation: 'QA mindset.' },
     ],

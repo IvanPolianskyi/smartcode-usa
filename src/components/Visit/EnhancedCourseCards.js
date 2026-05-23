@@ -12,8 +12,9 @@ import {
 } from 'lucide-react'
 import styles from './EnhancedCourseCards.module.css'
 import { Link, useRouter } from '@/i18n/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { useHomeCourseCards } from '@/hooks/useHomeCourseCards'
+import { formatPrice, getEnPurchasableFullCourses } from '@/lib/coursePrices'
 import Image from 'next/image'
 
 // Функція для генерації частинок з урахуванням теми
@@ -121,9 +122,36 @@ const ParticleBackground = React.memo(({ colors }) => {
 	return JSON.stringify(prevProps.colors) === JSON.stringify(nextProps.colors)
 })
 
+const EN_COURSE_HREFS = {
+	python: '/courses/python-developer-zero-to-junior',
+	roblox: '/courses/roblox-studio',
+}
+
 const EnhancedCourseCards = () => {
 	const t = useTranslations('homeSections.courseCards')
-	const courses = useHomeCourseCards()
+	const locale = useLocale()
+	const isEn = locale === 'en'
+	const allCourses = useHomeCourseCards()
+	const enPrices = useMemo(
+		() =>
+			Object.fromEntries(
+				getEnPurchasableFullCourses().map((c) => [c.courseId, c])
+			),
+		[]
+	)
+	const courses = useMemo(() => {
+		if (!isEn) return allCourses
+		return allCourses
+			.filter((c) => c.id === 'python' || c.id === 'roblox')
+			.map((c) => ({
+				...c,
+				href: EN_COURSE_HREFS[c.id] || c.href,
+				enPrice:
+					c.id === 'python'
+						? enPrices['python-developer-zero-to-junior']
+						: enPrices['roblox-studio'],
+			}))
+	}, [allCourses, isEn, enPrices])
 	const [hoveredCard, setHoveredCard] = useState(null)
 	const router = useRouter()
 	const isMobile = useIsMobile()
@@ -169,17 +197,25 @@ const EnhancedCourseCards = () => {
 						className={cardClasses}
                         onMouseEnter={() => handleMouseEnter(index)}
                         onMouseLeave={handleMouseLeave}
-                        onClick={() => {
-                            router.push(course.href)
-                        }}
-                        role={'link'}
-						tabIndex={0}
-						onKeyDown={e => {
-                            if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
-                                e.preventDefault()
-                                router.push(course.href)
-                            }
-						}}
+                        onClick={
+							isEn
+								? undefined
+								: () => {
+										router.push(course.href)
+									}
+						}
+                        role={isEn ? undefined : 'link'}
+						tabIndex={isEn ? undefined : 0}
+						onKeyDown={
+							isEn
+								? undefined
+								: (e) => {
+										if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+											e.preventDefault()
+											router.push(course.href)
+										}
+									}
+						}
 					>
                         {/* --- ФОН ТА ЕФЕКТИ --- */}
                         <div className={styles.cardBackground}></div>
@@ -360,6 +396,7 @@ const EnhancedCourseCards = () => {
                                     href={course.href} 
                                     className={styles.actionButton}
                                     onClick={(e) => {
+                                        if (isEn) return
                                         e.preventDefault();
                                         e.stopPropagation();
                                         window.dispatchEvent(new Event('openContactModal'))
@@ -367,7 +404,11 @@ const EnhancedCourseCards = () => {
                                     scroll={false}
                                 >
 									<PlayCircle className={styles.buttonIcon} />
-									<span>{t('startLearning')}</span>
+									<span>
+										{isEn && course.enPrice
+											? `${t('startLearning')} · ${formatPrice(course.enPrice.price, course.enPrice.currency, 'en')}`
+											: t('startLearning')}
+									</span>
 									<ArrowRight className={styles.buttonArrow} />
 								</Link>
 								{/* Кнопка "Перейти" для мобільної версії */}

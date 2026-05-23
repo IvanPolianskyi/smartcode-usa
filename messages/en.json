@@ -167,6 +167,7 @@
     },
     "quickLinks": {
       "about": "About Us",
+      "courses": "Courses",
       "reviews": "Reviews",
       "contacts": "Contact",
       "login": "Sign In",
@@ -202,7 +203,7 @@
   "home": {
     "titleMain": "SmartCode",
     "titleAccent": "Academy",
-    "subtitle": "Live lessons with teachers, a learning platform, and full courses you can buy online",
+    "subtitle": "Buy a full course online and learn at your own pace on our platform — Python and Roblox Studio",
     "lessonTypes": {
       "group": "Group classes",
       "individual": "one-on-one",
@@ -239,13 +240,13 @@
     "heroEnCta": {
       "title": "Start learning on",
       "titleAccent": "SmartCode Academy",
-      "lead": "Create an account, buy a full course for instant access, or book a live lesson with a teacher.",
+      "lead": "Create an account and buy a full course — get instant access to every lesson on the platform.",
       "createAccount": "Create free account",
       "goDashboard": "Go to my dashboard",
       "hasAccount": "Already have an account?",
-      "orBuy": "Get full access",
-      "bookLive": "Book a live lesson · from $10",
-      "hint": "Pay with card, Apple Pay, or Google Pay · instant access after purchase",
+      "orBuy": "Full courses on the platform",
+      "bookLive": "Optional: book a live lesson · from $10",
+      "hint": "Pay with card, Apple Pay, or Google Pay · start learning right after checkout",
       "courses": {
         "roblox-studio": {
           "name": "Roblox Studio",
@@ -401,14 +402,14 @@
       "email": "Email",
       "emailPlaceholder": "smartcode@gmail.com",
       "phone": "Phone number",
-      "phonePlaceholder": "+380 (50) 000-00-00",
+      "phonePlaceholder": "Phone number",
       "password": "Password",
       "confirmPassword": "Confirm password",
       "submit": "Register",
       "submitting": "Registering…",
       "errorPasswordMismatch": "Passwords do not match",
       "errorPasswordLength": "Password must be at least 6 characters",
-      "errorPhone": "Please enter the full phone number (9 digits after +380)",
+      "errorPhone": "Please enter the full phone number",
       "error": "Registration failed. Please try again.",
       "footer": "Already registered?",
       "footerLink": "Sign In"

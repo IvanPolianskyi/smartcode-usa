@@ -60,6 +60,16 @@ export function isTrialCourseValue(course) {
   return TRIAL_COURSE_VALUES.has(String(course || '').trim())
 }
 
+/** Generic trial labels (hero/contact forms without course picker). */
+export const TRIAL_GENERIC_COURSE = {
+  uk: 'Пробне заняття (заявка з сайту)',
+  en: 'Trial lesson (website inquiry)',
+}
+
+export function getTrialGenericCourse(locale) {
+  return resolveLocale(locale) === 'en' ? TRIAL_GENERIC_COURSE.en : TRIAL_GENERIC_COURSE.uk
+}
+
 export function paymentDescription(courseName, locale) {
   if (resolveLocale(locale) === 'en') {
     return `Course payment: ${courseName}`

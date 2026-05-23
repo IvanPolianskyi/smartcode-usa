@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 02 — lessons 2.1–2.6 */
+/** Rich EN content for Roblox Module 02 - lessons 2.1–2.6 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -7,7 +7,7 @@ export const enLesson21 = {
   lessonId: 'lesson-roblox-2-1',
   moduleId: 'module-02',
   order: 1,
-  title: '2.1 — Kill Blocks',
+  title: '2.1 - Kill Blocks',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -16,19 +16,20 @@ export const enLesson21 = {
     'Use Touched with Humanoid checks safely',
     'Tell safe platforms apart from kill blocks visually',
     'Debug kill scripts in Play mode and Output',
+    'Start with a simple touch + print script before the full kill-block logic',
   ],
   theory: {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `**Module 2 — Danger Zone** starts here. You turn your **Living Island Hub** into the beginning of an **obby** (obstacle course).
+        content: `**Module 2 - Danger Zone** starts here. You turn your **Living Island Hub** into the beginning of an **obby** (obstacle course).
 
 **Lesson flow:**
-1. **Theory (40 min)** — kill blocks with \`Touched\`
-2. **Practice (~25 min)** — lava lane with 4+ hazards
-3. **Quiz (10 min)** — **70%** to pass
+1. **Theory (40 min)** - kill blocks with \`Touched\`
+2. **Practice (~25 min)** - lava lane with 4+ hazards
+3. **Quiz (10 min)** - **70%** to pass
 
-Open **Module 1 — Living Island** (or duplicate it as \`Lesson 2.1 — Obby Start\`). You will add a jump path beside your dock.`,
+Open **Module 1 - Living Island** (or duplicate it as \`Lesson 2.1 - Obby Start\`). You will add a jump path beside your dock.`,
       },
       {
         title: 'What is a kill block?',
@@ -40,11 +41,11 @@ Open **Module 1 — Living Island** (or duplicate it as \`Lesson 2.1 — Obby St
 | Player walks safely | Touch = instant fail |
 
 **Fair design rules:**
-- Hazards look dangerous — never identical to safe floors
+- Hazards look dangerous - never identical to safe floors
 - Jump distances a beginner can make
 - No invisible thin kill strips (yet)
 
-**Exercise (3 min):** In your place, pick where the obby path leaves the spawn — flat area before first jump.`,
+**Exercise (3 min):** In your place, pick where the obby path leaves the spawn - flat area before first jump.`,
       },
       {
         title: 'Build the Hazards folder',
@@ -61,10 +62,55 @@ Open **Module 1 — Living Island** (or duplicate it as \`Lesson 2.1 — Obby St
 **Exercise (10 min):** Place **4** kill blocks between safe jumps. Player must be able to see all hazards before jumping.`,
       },
       {
-        title: 'Touched event — the core pattern',
+        title: 'Bridge from Lesson 1.4 - same ideas, new event',
+        content: `In **1.4** you already knew:
+- \`local\` variables
+- \`script.Parent\`
+- \`Connect(function ... end)\` - code on an event
+- \`print\` to Output
+
+Today only the **event name** changes:
+| Lesson 1.4 | Lesson 2.1 |
+|------------|------------|
+| \`MouseClick\` | \`Touched\` |
+| Mouse click | Body / foot touches a Part |
+
+**New variable \`hit\`** - the Part that touched lava (usually the character's foot).
+
+**New \`if\` checks** - do not hurt everything, only players with a **Humanoid**.
+
+We write a **simple** script first (no death), then the full one.`,
+      },
+      {
+        title: 'Step 1: warmup - touch and print (no death yet)',
+        content: `Before kill logic, prove **Touched** works at all.
+
+1. One kill Part → Insert **Script** inside it
+2. Paste **test-only** code:
+
+\`\`\`lua
+local block = script.Parent
+
+block.Touched:Connect(function(hit)
+    print("Something touched: " .. hit.Name)
+end)
+\`\`\`
+
+3. **Play (F5)** - step on the block
+4. **Output** should show e.g. \`Something touched: LeftFoot\`
+
+**What you learn:**
+- \`Touched\` can fire many times while contact lasts - normal at this stage
+- \`hit.Name\` - name of the touching Part
+- If Output stays empty - Script not inside Part, or not in Play mode
+
+**Exercise (5 min):** Stop Play. When warmup works, move to the full script below.`,
+      },
+      {
+        title: 'Step 2: full kill block - Touched + Humanoid',
         content: `**Touched** fires when something collides with the Part.
 
-Insert **Script** (server) **inside** the kill Part:
+Replace the warmup code with the **final** script (or add checks step by step):
 
 \`\`\`lua
 local killBlock = script.Parent
@@ -82,14 +128,18 @@ killBlock.Touched:Connect(function(hit)
 end)
 \`\`\`
 
-**Why each line:**
-- \`script.Parent\` = this kill Part
-- \`hit\` = the Part that touched (often player's foot)
-- \`hit.Parent\` = usually the **Character** model
-- \`Humanoid\` check = ignore random debris touching lava`,
+**Line by line (classic programming):**
+1. \`local killBlock = script.Parent\` - variable for our object
+2. \`Connect(function(hit)\` - on touch we get \`hit\`
+3. \`local character = hit.Parent\` - foot → character model
+4. \`if not character then return end\` - if no parent, exit (do nothing)
+5. \`FindFirstChildOfClass("Humanoid")\` - find the player's health
+6. \`if humanoid then\` - only if found → \`Health = 0\`
+
+**Why not this script on day one?** Without warmup it is hard to tell **what** broke - the event, the Part, or Humanoid.`,
       },
       {
-        title: 'Who gets hurt? — Humanoid only',
+        title: 'Who gets hurt? - Humanoid only',
         content: `Without the Humanoid check, touching with a tool handle might cause weird bugs.
 
 | Touching object | Usually has Humanoid? |
@@ -103,7 +153,7 @@ end)
 **Exercise (8 min):** Play-test one \`Kill_01\`. Touch lava → respawn. Check **Output** for red errors.`,
       },
       {
-        title: 'Copy scripts — duplicate smart',
+        title: 'Copy scripts - duplicate smart',
         content: `You do **not** need different code per block.
 
 **Fast workflow:**
@@ -135,12 +185,12 @@ If you duplicate only the Part without Script, copy-paste the Script into each k
 4. Stop Play before moving Parts`,
       },
       {
-        title: 'Polish — lava that feels fair',
+        title: 'Polish - lava that feels fair',
         content: `**Visual extras (optional):**
 - **PointLight** inside Neon block (red, Range 8)
 - Slight **Transparency** \`0.1\` on lava (still readable)
 
-**Sound:** insert **Sound** in kill Part, play on touch (short sizzle) — reuse Lesson 1.5 skills.
+**Sound:** insert **Sound** in kill Part, play on touch (short sizzle) - reuse Lesson 1.5 skills.
 
 **Before practice checklist:**
 - [ ] Folder \`Obby/Hazards\` exists
@@ -155,31 +205,31 @@ If you duplicate only the Part without Script, copy-paste the Script into each k
     { mistake: 'Safe and lava look identical', explanation: 'Players cannot learn the route.', correctApproach: 'Neon red lava vs matte grey/white safe platforms' },
     { mistake: 'Script under Workspace', explanation: 'script.Parent is wrong object.', correctApproach: 'Script must be direct child of the kill Part' },
   ],
-  summary: `You built a hazard lane with Neon kill blocks, connected Touched to Humanoid.Health = 0, and debugged fair obby deaths — the foundation of every Roblox obstacle course.`,
+  summary: `You built a hazard lane with Neon kill blocks, connected Touched to Humanoid.Health = 0, and debugged fair obby deaths - the foundation of every Roblox obstacle course.`,
   practiceTask: {
-    title: 'Lava lane — obby start (~25 min)',
+    title: 'Lava lane - obby start (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Safe jumps + obvious lava that kills on touch.
 
-### Part A — Path layout (8 min)
-1. In \`Module 1 — Living Island\`, add Folder \`Obby\`
+### Part A - Path layout (8 min)
+1. In \`Module 1 - Living Island\`, add Folder \`Obby\`
 2. Build **6** safe platforms in \`SafePath\` (Anchored, non-Neon)
-3. Gap jumps between platforms — testable on foot
+3. Gap jumps between platforms - testable on foot
 
-### Part B — Lava hazards (10 min)
+### Part B - Lava hazards (10 min)
 1. Add **4** kill blocks in \`Hazards\` (Neon Really red)
-2. Place between or beside jumps — at least one narrow lava strip
+2. Place between or beside jumps - at least one narrow lava strip
 3. Script each (duplicate working Script)
 
-### Part C — Test & save (7 min)
-1. **Play** — touch every lava once; all must respawn you
-2. Walk full lane without touching lava — possible route
-3. **File → Save to Roblox** → \`Lesson 2.1 — Lava Lane\`
+### Part C - Test & save (7 min)
+1. **Play** - touch every lava once; all must respawn you
+2. Walk full lane without touching lava - possible route
+3. **File → Save to Roblox** → \`Lesson 2.1 - Lava Lane\`
 4. **Practice complete**`,
     hints: [
       'Duplicate one working kill Part instead of rewriting scripts',
       'Make safe platforms wider than lava for the first jump',
-      'F5 Play — Edit mode never fires Touched for your character',
+      'F5 Play - Edit mode never fires Touched for your character',
     ],
     optionalChallenge: 'Brief burn: set Health to 10, wait 0.2s with task.wait, then Health = 0.',
   },
@@ -196,7 +246,7 @@ If you duplicate only the Part without Script, copy-paste the Script into each k
       { id: 'q7', type: MC, question: 'Fastest way to add 4 lava scripts…', options: ['Duplicate one working kill Part', 'Delete Workspace', 'Remove Humanoid', 'Only use Terrain'], correctAnswer: 0, explanation: 'Duplicate keeps the Script attached.' },
       { id: 'q8', type: MC, question: 'Touched is tested in…', options: ['Play mode', 'Only Publish window', 'Asset Manager', 'Team Create only'], correctAnswer: 0, explanation: 'Character collision happens during Play.' },
       { id: 'q9', type: MC, question: 'Kill blocks need Anchored…', options: ['true', 'false always', 'only for players', 'only at night'], correctAnswer: 0, explanation: 'Anchored keeps hazards in place.' },
-      { id: 'q10', type: MC, question: 'Lesson 2.1 save name…', options: ['Lesson 2.1 — Lava Lane', 'Module 1 — Living Island', 'Kill', 'Untitled'], correctAnswer: 0, explanation: 'Use lesson-based save names.' },
+      { id: 'q10', type: MC, question: 'Lesson 2.1 save name…', options: ['Lesson 2.1 - Lava Lane', 'Module 1 - Living Island', 'Kill', 'Untitled'], correctAnswer: 0, explanation: 'Use lesson-based save names.' },
     ],
   },
 }
@@ -205,7 +255,7 @@ export const enLesson22 = {
   lessonId: 'lesson-roblox-2-2',
   moduleId: 'module-02',
   order: 2,
-  title: '2.2 — Checkpoints',
+  title: '2.2 - Checkpoints',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -224,11 +274,11 @@ export const enLesson22 = {
 **Checkpoints** save progress **during one play session** (until you leave the game).
 
 **Lesson flow:**
-1. **Theory (40 min)** — SpawnLocation + RespawnLocation
-2. **Practice (~25 min)** — 3-stage obby with 3 checkpoints
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - SpawnLocation + RespawnLocation
+2. **Practice (~25 min)** - 3-stage obby with 3 checkpoints
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 2.1 — Lava Lane**.`,
+Open **Lesson 2.1 - Lava Lane**.`,
       },
       {
         title: 'Why checkpoints matter',
@@ -237,9 +287,9 @@ Open **Lesson 2.1 — Lava Lane**.`,
 | Die on lava → back to spawn | Die → respawn at last CP |
 | Players rage-quit | Players retry and improve |
 
-**Design rule:** place a checkpoint every **20–40 seconds** of jumping — end of each "stage."
+**Design rule:** place a checkpoint every **20–40 seconds** of jumping - end of each "stage."
 
-**Exercise (2 min):** Walk your lava lane in Play. Count seconds between start and first hard jump — that's stage 1.`,
+**Exercise (2 min):** Walk your lava lane in Play. Count seconds between start and first hard jump - that's stage 1.`,
       },
       {
         title: 'SpawnLocation as checkpoint',
@@ -256,12 +306,12 @@ Insert → **SpawnLocation** at the end of stage 1.
 | **Neutral** | true |
 | **AllowTeamChangeOnTouch** | false |
 
-Place **above** the platform — not inside lava.
+Place **above** the platform - not inside lava.
 
-**Start spawn:** keep your Module 1 \`SpawnLocation\` at the hub — rename \`Spawn_Start\`. Checkpoints are **extra** SpawnLocations.`,
+**Start spawn:** keep your Module 1 \`SpawnLocation\` at the hub - rename \`Spawn_Start\`. Checkpoints are **extra** SpawnLocations.`,
       },
       {
-        title: 'Script — save respawn point',
+        title: 'Script - save respawn point',
         content: `Insert **Script** inside \`CP_1\`:
 
 \`\`\`lua
@@ -288,12 +338,12 @@ checkpoint.Touched:Connect(function(hit)
 end)
 \`\`\`
 
-**GetPlayerFromCharacter** links the body to the account — only then change \`RespawnLocation\`.`,
+**GetPlayerFromCharacter** links the body to the account - only then change \`RespawnLocation\`.`,
       },
       {
         title: 'Test the checkpoint loop',
         content: `**Critical test (do not skip):**
-1. **Play** — run to \`CP_1\` — pad turns **green**
+1. **Play** - run to \`CP_1\` - pad turns **green**
 2. Jump into **lava** on purpose
 3. You should respawn on **CP_1**, NOT at island start
 
@@ -316,13 +366,13 @@ If you respawn at start:
 
 Duplicate \`CP_1\` Script into each checkpoint Part.
 
-**Color progression:** Yellow (waiting) → Green (saved) — players read progress instantly.`,
+**Color progression:** Yellow (waiting) → Green (saved) - players read progress instantly.`,
       },
       {
-        title: 'UX feedback — sound and glow',
+        title: 'UX feedback - sound and glow',
         content: `Optional polish from Module 1:
-- **Sound** child on checkpoint — short ping on touch
-- **PointLight** — green when active
+- **Sound** child on checkpoint - short ping on touch
+- **PointLight** - green when active
 
 \`\`\`lua
 local sound = checkpoint:FindFirstChild("CPSound")
@@ -333,14 +383,14 @@ end
 
 Add after setting RespawnLocation.
 
-**FAQ:** Touch fires many times — that's OK for this lesson; later you add debounce.`,
+**FAQ:** Touch fires many times - that's OK for this lesson; later you add debounce.`,
       },
       {
         title: 'Before practice checklist',
         content: `- [ ] I understand SpawnLocation vs normal Part
 - [ ] I passed the "die after CP_1" test
 - [ ] I will build CP_2 and CP_3 with copied scripts
-- [ ] Save name ready: \`Lesson 2.2 — Checkpoints\``,
+- [ ] Save name ready: \`Lesson 2.2 - Checkpoints\``,
       },
     ],
   },
@@ -350,26 +400,26 @@ Add after setting RespawnLocation.
     { mistake: 'Checkpoint inside kill block', explanation: 'Player dies before saving progress.', correctApproach: 'Place CP on safe platform past the hazard' },
     { mistake: 'No Humanoid check in checkpoint script', explanation: 'Random touches might fire early.', correctApproach: 'Keep the same Humanoid + GetPlayerFromCharacter pattern as kill blocks' },
   ],
-  summary: `You placed SpawnLocation checkpoints, set RespawnLocation on touch, turned pads green for feedback, and proved lava deaths respawn at the last checkpoint — real obby progression.`,
+  summary: `You placed SpawnLocation checkpoints, set RespawnLocation on touch, turned pads green for feedback, and proved lava deaths respawn at the last checkpoint - real obby progression.`,
   practiceTask: {
     title: 'Three-stage checkpoint obby (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** 3 stages, 3 checkpoints, lava death returns to last CP.
 
-### Part A — Stage 1 + CP_1 (7 min)
+### Part A - Stage 1 + CP_1 (7 min)
 1. End of stage 1 safe platform → **SpawnLocation** \`CP_1\`
 2. Script: RespawnLocation + green color
 3. Test: touch CP_1 → die on lava → respawn on CP_1
 
-### Part B — Stage 2 + CP_2 (9 min)
+### Part B - Stage 2 + CP_2 (9 min)
 1. Harder jumps + 2 lava blocks
 2. **SpawnLocation** \`CP_2\` with copied script
 3. Same death test from CP_2
 
-### Part C — Stage 3 + CP_Final (9 min)
+### Part C - Stage 3 + CP_Final (9 min)
 1. Short finale path to \`CP_Final\`
 2. Full run: Start → CP_1 → CP_2 → CP_Final → die → respawn at CP_Final
-3. **Save to Roblox** → \`Lesson 2.2 — Checkpoints\`
+3. **Save to Roblox** → \`Lesson 2.2 - Checkpoints\`
 4. **Practice complete**`,
     hints: [
       'Yellow pad = not saved yet, Green = saved',
@@ -391,7 +441,7 @@ Add after setting RespawnLocation.
       { id: 'q7', type: MC, question: 'Neutral true on SpawnLocation allows…', options: ['Any player to use it', 'No spawning ever', 'Only one color', 'Deleting scripts'], correctAnswer: 0, explanation: 'Neutral spawns work for all teams.' },
       { id: 'q8', type: MC, question: 'Checkpoint scripts are…', options: ['Server Scripts in the checkpoint', 'LocalScripts in Head', 'Inside Terrain', 'Only in chat'], correctAnswer: 0, explanation: 'Server sets RespawnLocation for all players.' },
       { id: 'q9', type: MC, question: 'Ideal spacing between checkpoints…', options: ['Every 20–40 seconds of play', 'Once per game ever', 'Every 2 hours', 'Never'], correctAnswer: 0, explanation: 'Regular saves reduce frustration.' },
-      { id: 'q10', type: MC, question: 'Lesson 2.2 save name…', options: ['Lesson 2.2 — Checkpoints', 'Lesson 2.1 — Lava Lane', 'Click Magic', 'Module 12'], correctAnswer: 0, explanation: 'Track obby progress with clear filenames.' },
+      { id: 'q10', type: MC, question: 'Lesson 2.2 save name…', options: ['Lesson 2.2 - Checkpoints', 'Lesson 2.1 - Lava Lane', 'Click Magic', 'Module 12'], correctAnswer: 0, explanation: 'Track obby progress with clear filenames.' },
     ],
   },
 }
@@ -400,7 +450,7 @@ export const enLesson23 = {
   lessonId: 'lesson-roblox-2-3',
   moduleId: 'module-02',
   order: 3,
-  title: '2.3 — Level Timer',
+  title: '2.3 - Level Timer',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -417,13 +467,13 @@ export const enLesson23 = {
         content: `Speed-runners love timers. Your obby will show **live seconds** and freeze on the finish pad.
 
 **Lesson flow:**
-1. **Theory (40 min)** — ScreenGui + LocalScript + \`os.clock\`
-2. **Practice (~25 min)** — timer on your checkpoint obby
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - ScreenGui + LocalScript + \`os.clock\`
+2. **Practice (~25 min)** - timer on your checkpoint obby
+3. **Quiz (10 min)** - **70%** pass
 
 **New idea:** **LocalScript** = runs on **your** screen (perfect for UI). Kill/checkpoint scripts stay **server** Scripts.
 
-Open **Lesson 2.2 — Checkpoints**.`,
+Open **Lesson 2.2 - Checkpoints**.`,
       },
       {
         title: 'Client UI vs server gameplay',
@@ -432,9 +482,9 @@ Open **Lesson 2.2 — Checkpoints**.`,
 | **Script** | Server | Lava, checkpoints |
 | **LocalScript** | Player's device | Timer text on screen |
 
-The timer is **only visual for you** in solo Play — that's fine for learning. Later modules sync time with RemoteEvents.
+The timer is **only visual for you** in solo Play - that's fine for learning. Later modules sync time with RemoteEvents.
 
-**Exercise (2 min):** In Explorer, expand **StarterGui** — see \`StarterPlayerScripts\` area where UI lives.`,
+**Exercise (2 min):** In Explorer, expand **StarterGui** - see \`StarterPlayerScripts\` area where UI lives.`,
       },
       {
         title: 'Build RunUI in StarterGui',
@@ -450,10 +500,10 @@ The timer is **only visual for you** in solo Play — that's fine for learning. 
 | **TextScaled** | true |
 | **Font** | GothamBold or FredokaOne |
 
-**ResetOnSpawn** on ScreenGui: leave default (timer may reset on death — acceptable for this lesson).`,
+**ResetOnSpawn** on ScreenGui: leave default (timer may reset on death - acceptable for this lesson).`,
       },
       {
-        title: 'LocalScript — live timer loop',
+        title: 'LocalScript - live timer loop',
         content: `Insert **LocalScript** inside \`RunUI\` (sibling of TimerLabel):
 
 \`\`\`lua
@@ -468,14 +518,14 @@ while running do
 end
 \`\`\`
 
-**\`os.clock()\`** returns seconds with high precision — great for speed runs.
+**\`os.clock()\`** returns seconds with high precision - great for speed runs.
 
-**\`task.wait(0.05)\`** updates ~20 times per second — smooth text without lag.
+**\`task.wait(0.05)\`** updates ~20 times per second - smooth text without lag.
 
-Press **Play** — timer should count up immediately.`,
+Press **Play** - timer should count up immediately.`,
       },
       {
-        title: 'FinishPad — stop the timer',
+        title: 'FinishPad - stop the timer',
         content: `In \`Obby\` folder, add **Part** \`FinishPad\`:
 - Size \`8, 1, 8\` | Neon green | Anchored true
 - Place after \`CP_Final\`
@@ -522,7 +572,7 @@ end)
 **LocalPlayer** check = only **you** finish the run in Play solo.`,
       },
       {
-        title: 'Improve display — minutes format',
+        title: 'Improve display - minutes format',
         content: `For times over 60 seconds:
 
 \`\`\`lua
@@ -538,7 +588,7 @@ end
 
 Use \`formatTime(elapsed)\` instead of raw seconds in \`label.Text\`.
 
-**Exercise (5 min):** Complete the obby once — screenshot the **Finished!** time.`,
+**Exercise (5 min):** Complete the obby once - screenshot the **Finished!** time.`,
       },
       {
         title: 'Timer + checkpoints together',
@@ -561,9 +611,9 @@ Use \`formatTime(elapsed)\` instead of raw seconds in \`label.Text\`.
 | No timer visible | ScreenGui under StarterGui, not Workspace |
 | Timer stays 0.00 | LocalScript disabled or wrong parent |
 | Finish does not stop | Wrong path to FinishPad; fix WaitForChild names |
-| Error on Play | Read Output — missing TimerLabel name |
+| Error on Play | Read Output - missing TimerLabel name |
 
-**FAQ:** Timer resets on death — normal now; Module 3+ can persist best times.`,
+**FAQ:** Timer resets on death - normal now; Module 3+ can persist best times.`,
       },
     ],
   },
@@ -573,31 +623,31 @@ Use \`formatTime(elapsed)\` instead of raw seconds in \`label.Text\`.
     { mistake: 'FinishPad path typo', explanation: 'WaitForChild infinite yield or nil.', correctApproach: 'Match folder names: Obby and FinishPad exactly' },
     { mistake: 'Timer never stops', explanation: 'Finish touch not detecting local character.', correctApproach: 'Compare Players.LocalPlayer.Character to hit.Parent' },
   ],
-  summary: `You built a ScreenGui timer with os.clock, updated it from a LocalScript, and froze the display on FinishPad — your checkpoint obby is now a speed-run challenge.`,
+  summary: `You built a ScreenGui timer with os.clock, updated it from a LocalScript, and froze the display on FinishPad - your checkpoint obby is now a speed-run challenge.`,
   practiceTask: {
     title: 'Beat your time (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Working timer from spawn to finish.
 
-### Part A — UI (8 min)
+### Part A - UI (8 min)
 1. \`RunUI\` + \`TimerLabel\` in StarterGui (styled, readable)
 2. LocalScript counting up with \`os.clock\`
-3. **Play** — confirm timer runs
+3. **Play** - confirm timer runs
 
-### Part B — Finish pad (8 min)
+### Part B - Finish pad (8 min)
 1. \`FinishPad\` at end of obby after \`CP_Final\`
-2. Add finish touch code — timer stops, shows \`Finished! XX.XXs\`
-3. Test solo Play — only your character stops timer
+2. Add finish touch code - timer stops, shows \`Finished! XX.XXs\`
+3. Test solo Play - only your character stops timer
 
-### Part C — Three runs (9 min)
-1. Run 1 — record time
-2. Run 2 — try 10% faster
-3. Run 3 — best attempt
-4. **Save to Roblox** → \`Lesson 2.3 — Obby Timer\`
+### Part C - Three runs (9 min)
+1. Run 1 - record time
+2. Run 2 - try 10% faster
+3. Run 3 - best attempt
+4. **Save to Roblox** → \`Lesson 2.3 - Obby Timer\`
 5. **Practice complete**`,
     hints: [
       'If FinishPad is not in Obby folder, change WaitForChild path in script',
-      'task.wait(0.05) is enough — do not use wait() with no argument',
+      'task.wait(0.05) is enough - do not use wait() with no argument',
       'TextScaled helps timer read on mobile',
     ],
     optionalChallenge: 'Use formatTime() for mm:ss display after 60 seconds.',
@@ -615,7 +665,7 @@ Use \`formatTime(elapsed)\` instead of raw seconds in \`label.Text\`.
       { id: 'q7', type: MC, question: 'task.wait(0.05) in the loop…', options: ['Updates text ~20 times per second', 'Deletes UI', 'Anchors Parts', 'Publishes game'], correctAnswer: 0, explanation: 'Short wait balances smooth and light.' },
       { id: 'q8', type: MC, question: 'Kill blocks use Script; timer uses…', options: ['LocalScript', 'Folder', 'Sound only', 'SpawnLocation'], correctAnswer: 0, explanation: 'UI timers are client-side here.' },
       { id: 'q9', type: MC, question: 'If timer missing, first check…', options: ['RunUI under StarterGui and label name', 'Delete Obby', 'Remove Humanoid', 'Change language'], correctAnswer: 0, explanation: 'Wrong GUI location is the top UI bug.' },
-      { id: 'q10', type: MC, question: 'Lesson 2.3 save name…', options: ['Lesson 2.3 — Obby Timer', 'Lesson 2.2 — Checkpoints', 'Module 1 — Living Island', 'Lava Lane'], correctAnswer: 0, explanation: 'Save after adding the timer.' },
+      { id: 'q10', type: MC, question: 'Lesson 2.3 save name…', options: ['Lesson 2.3 - Obby Timer', 'Lesson 2.2 - Checkpoints', 'Module 1 - Living Island', 'Lava Lane'], correctAnswer: 0, explanation: 'Save after adding the timer.' },
     ],
   },
 }
@@ -624,7 +674,7 @@ export const enLesson24 = {
   lessonId: 'lesson-roblox-2-4',
   moduleId: 'module-02',
   order: 4,
-  title: '2.4 — if/else Conditions',
+  title: '2.4 - if/else Conditions',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -638,14 +688,14 @@ export const enLesson24 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `Your obby already tracks time. Today the game **decides** how good that time is — **if/elseif/else**.
+        content: `Your obby already tracks time. Today the game **decides** how good that time is - **if/elseif/else**.
 
 **Lesson flow:**
-1. **Theory (40 min)** — conditions + rank grading
-2. **Practice (~25 min)** — S/A/B ranks on finish
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - conditions + rank grading
+2. **Practice (~25 min)** - S/A/B ranks on finish
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 2.3 — Obby Timer**. You will extend the **FinishPad** LocalScript.`,
+Open **Lesson 2.3 - Obby Timer**. You will extend the **FinishPad** LocalScript.`,
       },
       {
         title: 'Games think in questions',
@@ -658,7 +708,7 @@ Open **Lesson 2.3 — Obby Timer**. You will extend the **FinishPad** LocalScrip
 | Is time under 60 seconds? | **A Rank** |
 | Otherwise? | **B Rank** |
 
-**Conditions** turn questions into code. No AI needed — just clear rules you write.`,
+**Conditions** turn questions into code. No AI needed - just clear rules you write.`,
       },
       {
         title: 'if / elseif / else syntax',
@@ -678,12 +728,12 @@ print(rank)
 \`\`\`
 
 **Rules:**
-- Only **one** branch runs — the first true condition
+- Only **one** branch runs - the first true condition
 - Conditions use **comparison**: \`<\`, \`>\`, \`==\`, \`<=\`
 - Every block ends with \`end\`
 - Use \`elseif\` for extra steps between \`if\` and \`else\`
 
-**Exercise (5 min):** In Output, test \`elapsed = 34.9\`, \`35.0\`, \`59.9\`, \`60.0\` — predict rank before running.`,
+**Exercise (5 min):** In Output, test \`elapsed = 34.9\`, \`35.0\`, \`59.9\`, \`60.0\` - predict rank before running.`,
       },
       {
         title: 'Comparison operators you need',
@@ -695,10 +745,10 @@ print(rank)
 | \`==\` | equal | \`rank == "S Rank"\` |
 | \`~=\` | not equal | \`team ~= "Red"\` |
 
-**Common bug:** writing \`if elapsed = 35\` — single \`=\` **assigns**, it does not compare. Always use \`==\` for equality checks.`,
+**Common bug:** writing \`if elapsed = 35\` - single \`=\` **assigns**, it does not compare. Always use \`==\` for equality checks.`,
       },
       {
-        title: 'Rank function — clean code',
+        title: 'Rank function - clean code',
         content: `Put grading in a **function** so finish code stays readable:
 
 \`\`\`lua
@@ -728,19 +778,19 @@ print("You earned: " .. rank)
 
 \`\`\`lua
 local rank = getRank(elapsed)
-label.Text = string.format("Finished! %.2fs — %s", elapsed, rank)
+label.Text = string.format("Finished! %.2fs - %s", elapsed, rank)
 \`\`\`
 
-Players instantly see **time + grade** — motivates replay for S Rank.
+Players instantly see **time + grade** - motivates replay for S Rank.
 
 **Threshold tuning:** change \`35\` and \`60\` to match **your** obby length. Short obby → tighter times.`,
       },
       {
         title: 'Test every branch on purpose',
         content: `**Structured tests:**
-1. **S Rank** — sprint finish under 35s (or lower your thresholds temporarily)
-2. **A Rank** — normal careful run 35–59s
-3. **B Rank** — walk slowly / wait on a platform past 60s
+1. **S Rank** - sprint finish under 35s (or lower your thresholds temporarily)
+2. **A Rank** - normal careful run 35–59s
+3. **B Rank** - walk slowly / wait on a platform past 60s
 
 **Edge cases:**
 - Exactly \`35.00\` → goes to **A** (because \`< 35\` is false, \`< 60\` is true)
@@ -754,7 +804,7 @@ local A_TIME = 60
 \`\`\``,
       },
       {
-        title: 'Optional — deaths downgrade rank',
+        title: 'Optional - deaths downgrade rank',
         content: `Track deaths with a counter in the same LocalScript:
 
 \`\`\`lua
@@ -781,35 +831,35 @@ Full death tracking comes in later modules with server events.`,
         content: `- [ ] I can explain why \`elseif\` runs only when earlier tests fail
 - [ ] \`getRank\` returns a string used in the timer label
 - [ ] I tested at least two different finish times
-- [ ] Save name ready: \`Lesson 2.4 — Finish Grades\``,
+- [ ] Save name ready: \`Lesson 2.4 - Finish Grades\``,
       },
     ],
   },
   commonMistakes: [
     { mistake: 'Used = instead of == in if', explanation: 'Single equals assigns values.', correctApproach: 'Compare with == or < > <= >=' },
-    { mistake: 'elseif order wrong (60 before 35)', explanation: 'First match wins — wide condition catches everything.', correctApproach: 'Check strictest threshold first: S, then A, then else' },
+    { mistake: 'elseif order wrong (60 before 35)', explanation: 'First match wins - wide condition catches everything.', correctApproach: 'Check strictest threshold first: S, then A, then else' },
     { mistake: 'Rank always B Rank', explanation: 'elapsed never calculated before getRank.', correctApproach: 'Compute elapsed = os.clock() - startTime right before grading' },
     { mistake: 'Changed thresholds but not comments', explanation: 'Future you forgets the rules.', correctApproach: 'Keep S_TIME and A_TIME constants at top of script' },
   ],
-  summary: `You used if/elseif/else to grade finish times into S, A, and B ranks, tested boundary seconds, and connected rank text to your obby timer — your game now reacts with rules, not just numbers.`,
+  summary: `You used if/elseif/else to grade finish times into S, A, and B ranks, tested boundary seconds, and connected rank text to your obby timer - your game now reacts with rules, not just numbers.`,
   practiceTask: {
-    title: 'Finish grading — S / A / B (~25 min)',
+    title: 'Finish grading - S / A / B (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Finish shows time + rank from conditions.
 
-### Part A — getRank function (10 min)
+### Part A - getRank function (10 min)
 1. Open timer LocalScript from Lesson 2.3
 2. Add \`S_TIME = 35\`, \`A_TIME = 60\` and \`getRank(elapsed)\`
 3. Print rank to Output on FinishPad touch
 
-### Part B — Label display (8 min)
-1. Update \`TimerLabel\` text: \`Finished! XX.XXs — S Rank\`
+### Part B - Label display (8 min)
+1. Update \`TimerLabel\` text: \`Finished! XX.XXs - S Rank\`
 2. Test three runs targeting S, A, and B
 
-### Part C — Tune & save (7 min)
+### Part C - Tune & save (7 min)
 1. Adjust S_TIME / A_TIME if your obby is longer/shorter
 2. Document thresholds in a comment
-3. **Save to Roblox** → \`Lesson 2.4 — Finish Grades\`
+3. **Save to Roblox** → \`Lesson 2.4 - Finish Grades\`
 4. **Practice complete**`,
     hints: [
       'Test 34.99 vs 35.00 vs 59.99 vs 60.00 in Studio with temporary short obby',
@@ -831,7 +881,7 @@ Full death tracking comes in later modules with server events.`,
       { id: 'q7', type: MC, question: 'S_TIME constant at top makes…', options: ['Tuning thresholds easier', 'Scripts invisible', 'Parts unanchored', 'Sky pink'], correctAnswer: 0, explanation: 'Named constants document game rules.' },
       { id: 'q8', type: MC, question: 'Rank motivates players to…', options: ['Replay for better time', 'Delete Workspace', 'Disable Humanoid', 'Remove checkpoints'], correctAnswer: 0, explanation: 'Grades drive speed-run retries.' },
       { id: 'q9', type: MC, question: 'else runs when…', options: ['No earlier condition was true', 'Always first', 'Only in Play', 'Player has Robux'], correctAnswer: 0, explanation: 'else is the fallback branch.' },
-      { id: 'q10', type: MC, question: 'Lesson 2.4 save name…', options: ['Lesson 2.4 — Finish Grades', 'Lesson 2.3 — Obby Timer', 'Lava Lane', 'Module 3'], correctAnswer: 0, explanation: 'Save after adding rank logic.' },
+      { id: 'q10', type: MC, question: 'Lesson 2.4 save name…', options: ['Lesson 2.4 - Finish Grades', 'Lesson 2.3 - Obby Timer', 'Lava Lane', 'Module 3'], correctAnswer: 0, explanation: 'Save after adding rank logic.' },
     ],
   },
 }
@@ -840,7 +890,7 @@ export const enLesson25 = {
   lessonId: 'lesson-roblox-2-5',
   moduleId: 'module-02',
   order: 5,
-  title: '2.5 — Victory Screen',
+  title: '2.5 - Victory Screen',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -857,9 +907,9 @@ export const enLesson25 = {
         content: `A number on a timer label is good. A **victory screen** feels like winning a real game.
 
 **Lesson flow:**
-1. **Theory (40 min)** — VictoryGui layout + showVictory
-2. **Practice (~25 min)** — polished win panel
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - VictoryGui layout + showVictory
+2. **Practice (~25 min)** - polished win panel
+3. **Quiz (10 min)** - **70%** pass
 
 Keep your **Lesson 2.4** finish grading. Today you move results into a **center panel**.`,
       },
@@ -877,7 +927,7 @@ Keep your **Lesson 2.4** finish grading. Today you move results into a **center 
 **UX rules:**
 - Large readable text (**TextScaled**)
 - High contrast panel on blurred world behind
-- **Enabled = false** until finish — no spoilers at spawn`,
+- **Enabled = false** until finish - no spoilers at spawn`,
       },
       {
         title: 'Build VictoryGui hierarchy',
@@ -885,10 +935,10 @@ Keep your **Lesson 2.4** finish grading. Today you move results into a **center 
 
 \`ScreenGui\` → **VictoryGui** (ResetOnSpawn optional)
 └ \`Frame\` → **Panel** (center, Size ~ \`{0, 320}, {0, 280}\`)
-   ├ \`TextLabel\` → **TitleLabel** — "Level Complete!"
-   ├ \`TextLabel\` → **TimeLabel** — "Time: --"
-   ├ \`TextLabel\` → **RankLabel** — "Rank: --"
-   └ \`TextButton\` → **RetryButton** — "Play Again"
+   ├ \`TextLabel\` → **TitleLabel** - "Level Complete!"
+   ├ \`TextLabel\` → **TimeLabel** - "Time: --"
+   ├ \`TextLabel\` → **RankLabel** - "Rank: --"
+   └ \`TextButton\` → **RetryButton** - "Play Again"
 
 **Panel style:**
 - BackgroundColor3 dark blue/grey
@@ -922,7 +972,7 @@ If Script is sibling structure, use \`script.Parent\` paths that match **your** 
       },
       {
         title: 'Connect finish pad to victory UI',
-        content: `**Option A — one LocalScript** in RunUI handles timer + finish + victory.
+        content: `**Option A - one LocalScript** in RunUI handles timer + finish + victory.
 
 On FinishPad touch after computing \`elapsed\` and \`rank\`:
 
@@ -938,7 +988,7 @@ victoryGui.Panel.RankLabel.Text = "Rank: " .. rank
 victoryGui.Enabled = true
 \`\`\`
 
-**Exercise (10 min):** Finish obby — victory panel appears, timer stops underneath.`,
+**Exercise (10 min):** Finish obby - victory panel appears, timer stops underneath.`,
       },
       {
         title: 'Hide RunUI timer when victory shows',
@@ -974,9 +1024,9 @@ retryBtn.MouseButton1Click:Connect(function()
 end)
 \`\`\`
 
-**Note:** Full timer reset needs reloading startTime — for lesson, respawn + hide GUI is enough. Perfect reset merges in Module 6 polish.
+**Note:** Full timer reset needs reloading startTime - for lesson, respawn + hide GUI is enough. Perfect reset merges in Module 6 polish.
 
-**Exercise (5 min):** Click Retry — panel hides, you respawn.`,
+**Exercise (5 min):** Click Retry - panel hides, you respawn.`,
       },
       {
         title: 'Before practice checklist',
@@ -984,35 +1034,35 @@ end)
 - [ ] Exact names match script WaitForChild paths
 - [ ] Finish shows time **and** rank on panel
 - [ ] Retry hides panel
-- [ ] Save: \`Lesson 2.5 — Victory Screen\``,
+- [ ] Save: \`Lesson 2.5 - Victory Screen\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'Nil error on TitleLabel', explanation: 'Wrong path — Panel vs Frame name mismatch.', correctApproach: 'Match Explorer names exactly to WaitForChild strings' },
+    { mistake: 'Nil error on TitleLabel', explanation: 'Wrong path - Panel vs Frame name mismatch.', correctApproach: 'Match Explorer names exactly to WaitForChild strings' },
     { mistake: 'Victory visible at spawn', explanation: 'Enabled left true.', correctApproach: 'VictoryGui.Enabled = false until finish' },
     { mistake: 'Script in Workspace not StarterGui', explanation: 'UI does not clone to player.', correctApproach: 'LocalScript under VictoryGui in StarterGui' },
     { mistake: 'Looking for VictoryGui in StarterGui at runtime', explanation: 'After spawn it lives under PlayerGui.', correctApproach: 'Use LocalPlayer.PlayerGui:WaitForChild("VictoryGui")' },
   ],
-  summary: `You built a VictoryGui with title, time, rank, and retry, wired it to FinishPad logic, and learned Enabled plus PlayerGui paths — your obby now celebrates wins like a shipped mini-game.`,
+  summary: `You built a VictoryGui with title, time, rank, and retry, wired it to FinishPad logic, and learned Enabled plus PlayerGui paths - your obby now celebrates wins like a shipped mini-game.`,
   practiceTask: {
     title: 'Victory panel polish (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Professional win screen on finish.
 
-### Part A — Layout (10 min)
+### Part A - Layout (10 min)
 1. Create **VictoryGui** + **Panel** + 3 labels + **RetryButton**
 2. Style: corner, stroke, readable fonts, **Enabled false**
 3. Position panel center screen
 
-### Part B — Show on finish (10 min)
+### Part B - Show on finish (10 min)
 1. Connect FinishPad to fill labels + \`VictoryGui.Enabled = true\`
 2. Hide or disable **RunUI** while victory shows
 3. Test S, A, B ranks display correctly
 
-### Part C — Retry & save (5 min)
+### Part C - Retry & save (5 min)
 1. Retry button hides victory, enables RunUI, respawns player
-2. **Save to Roblox** → \`Lesson 2.5 — Victory Screen\`
+2. **Save to Roblox** → \`Lesson 2.5 - Victory Screen\`
 3. **Practice complete**`,
     hints: [
       'Use Explorer copy path to verify object names',
@@ -1034,7 +1084,7 @@ end)
       { id: 'q7', type: MC, question: 'UICorner on Panel…', options: ['Rounds corners for polish', 'Kills player', 'Adds lava', 'Saves to cloud'], correctAnswer: 0, explanation: 'UICorner is a visual modifier.' },
       { id: 'q8', type: MC, question: 'Retry should at minimum…', options: ['Hide victory GUI', 'Delete obby', 'Remove checkpoints', 'Publish game'], correctAnswer: 0, explanation: 'Hide UI before another attempt.' },
       { id: 'q9', type: MC, question: 'WaitForChild prevents…', options: ['Nil if UI loads late', 'All scripts', 'Playing sounds', 'Moving camera'], correctAnswer: 0, explanation: 'Waits for instances to exist.' },
-      { id: 'q10', type: MC, question: 'Lesson 2.5 save name…', options: ['Lesson 2.5 — Victory Screen', 'Finish Grades', 'Lava Lane', 'Coin Simulator'], correctAnswer: 0, explanation: 'Save the victory UI lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 2.5 save name…', options: ['Lesson 2.5 - Victory Screen', 'Finish Grades', 'Lava Lane', 'Coin Simulator'], correctAnswer: 0, explanation: 'Save the victory UI lesson.' },
     ],
   },
 }
@@ -1043,7 +1093,7 @@ export const enLesson26 = {
   lessonId: 'lesson-roblox-2-6',
   moduleId: 'module-02',
   order: 6,
-  title: '2.6 — Checkpoint: Obby Ready',
+  title: '2.6 - Checkpoint: Obby Ready',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -1057,7 +1107,7 @@ export const enLesson26 = {
     sections: [
       {
         title: 'Module 2 checkpoint (about 40 minutes)',
-        content: `You are shipping **Obby Ready** — a complete mini obby, not a homework file.
+        content: `You are shipping **Obby Ready** - a complete mini obby, not a homework file.
 
 **Required systems:**
 - Kill blocks (2.1)
@@ -1083,7 +1133,7 @@ export const enLesson26 = {
 \`StarterGui\` → RunUI, VictoryGui`,
       },
       {
-        title: 'Map clarity — players must not get lost',
+        title: 'Map clarity - players must not get lost',
         content: `Add **Neon arrow Parts** or sign Models pointing forward.
 
 | Sign | Text idea |
@@ -1098,22 +1148,22 @@ export const enLesson26 = {
 - CP inactive = yellow, active = green
 - Finish = Neon green pad
 
-**Exercise (8 min):** Stand at spawn in Play — can you see where to go without asking?`,
+**Exercise (8 min):** Stand at spawn in Play - can you see where to go without asking?`,
       },
       {
         title: 'Five playtests (mandatory)',
         content: `Run each case. Mark pass/fail in a note.
 
-1. **Early death** — touch lava before CP_1 → respawn at **start**
-2. **CP_1 death** — touch CP_1, die on lava → respawn **CP_1**
-3. **Full clear** — reach FinishPad → victory UI + correct rank
-4. **Slow finish** — intentional 60s+ run → **B Rank** on panel
-5. **Retry** — click Play Again → panel hides, can run again
+1. **Early death** - touch lava before CP_1 → respawn at **start**
+2. **CP_1 death** - touch CP_1, die on lava → respawn **CP_1**
+3. **Full clear** - reach FinishPad → victory UI + correct rank
+4. **Slow finish** - intentional 60s+ run → **B Rank** on panel
+5. **Retry** - click Play Again → panel hides, can run again
 
 **If any fail:** fix before calling the obby done.`,
       },
       {
-        title: 'Quality bar — feels shippable',
+        title: 'Quality bar - feels shippable',
         content: `- **60–120 seconds** of gameplay for average player
 - **No red Output spam** during a clean run
 - **8+** named Parts in obby (not generic Part)
@@ -1125,15 +1175,15 @@ export const enLesson26 = {
       },
       {
         title: 'Start hub connection',
-        content: `Your Module 1 **island spawn** can stay as flavor — connect obby start with a bridge or path from dock.
+        content: `Your Module 1 **island spawn** can stay as flavor - connect obby start with a bridge or path from dock.
 
 Players understand: **hub → obby start sign → course**.
 
-Save as **Module 2 — Obby Ready** (new name) or overwrite your 2.5 place with final name.`,
+Save as **Module 2 - Obby Ready** (new name) or overwrite your 2.5 place with final name.`,
       },
       {
         title: 'Module 3 preview',
-        content: `Module 3 builds a **coin simulator** — collecting, UI score, saving data.
+        content: `Module 3 builds a **coin simulator** - collecting, UI score, saving data.
 
 Your obby skills (touch, UI, conditions) transfer directly to coin pickups.
 
@@ -1142,8 +1192,8 @@ Your obby skills (touch, UI, conditions) transfer directly to coin pickups.
       {
         title: 'Demo script for teacher / parents',
         content: `Record or live-show **2 minutes:**
-1. Spawn — show start sign
-2. Die on lava once — show checkpoint save
+1. Spawn - show start sign
+2. Die on lava once - show checkpoint save
 3. Finish with rank on victory screen
 4. Click Retry
 
@@ -1157,33 +1207,33 @@ Your obby skills (touch, UI, conditions) transfer directly to coin pickups.
     { mistake: 'Generic Explorer names', explanation: 'Cannot debug 20 scripts named Part.', correctApproach: 'Rename everything before demo' },
     { mistake: 'Timer and victory both enabled at finish', explanation: 'Confusing double UI.', correctApproach: 'Disable RunUI when VictoryGui shows' },
   ],
-  summary: `You integrated every Module 2 system into Obby Ready, passed structured playtests, clarified the route with signs, and saved a demo-ready prototype — Module 3 coin games are next.`,
+  summary: `You integrated every Module 2 system into Obby Ready, passed structured playtests, clarified the route with signs, and saved a demo-ready prototype - Module 3 coin games are next.`,
   practiceTask: {
     title: 'Ship Obby Ready (~40 min)',
     difficulty: 'beginner',
     description: `**Goal:** Pass all 5 playtests + demo-ready place.
 
-### Part A — Cleanup (10 min)
+### Part A - Cleanup (10 min)
 1. Explorer: folders Hazards, SafePath, Checkpoints under Obby
 2. Rename stray Parts; add Start + Finish signs
 3. No unanchored obby Parts
 
-### Part B — Systems audit (15 min)
+### Part B - Systems audit (15 min)
 1. Re-test lava, CP_1/2/Final, FinishPad
 2. Timer + getRank + VictoryGui one clean flow
 3. Fix any Output errors
 
-### Part C — Playtests & save (15 min)
+### Part C - Playtests & save (15 min)
 1. Complete checklist cases 1–5 (note pass/fail)
 2. One full run for best rank attempt
-3. **Save to Roblox** → \`Module 2 — Obby Ready\`
+3. **Save to Roblox** → \`Module 2 - Obby Ready\`
 4. **Practice complete** + optional 2-min recording`,
     hints: [
       'Fix checkpoint bugs before touching victory colors',
       'Walk the route as if you never saw the map',
       'Thresholds S_TIME/A_TIME must match obby length',
     ],
-    optionalChallenge: 'Hidden skill shortcut route — faster but harder jumps.',
+    optionalChallenge: 'Hidden skill shortcut route - faster but harder jumps.',
   },
   quiz: {
     passingScore: 70,
@@ -1198,7 +1248,7 @@ Your obby skills (touch, UI, conditions) transfer directly to coin pickups.
       { id: 'q7', type: MC, question: 'Retry button should…', options: ['Hide victory and allow another run', 'Delete all checkpoints', 'Remove ranks', 'Close Studio'], correctAnswer: 0, explanation: 'Retry supports replay loop.' },
       { id: 'q8', type: MC, question: 'Red Output during clean run means…', options: ['Fix scripts before shipping', 'Perfect game', 'More lava needed', 'Publish now'], correctAnswer: 0, explanation: 'Errors mean bugs remain.' },
       { id: 'q9', type: MC, question: 'Module 3 topic is…', options: ['Coins and collecting', 'Only cars', 'Only publishing', 'Empty placeholders'], correctAnswer: 0, explanation: 'Module 3 starts coin simulator.' },
-      { id: 'q10', type: MC, question: 'Final Module 2 save name…', options: ['Module 2 — Obby Ready', 'Lesson 1.1', 'Untitled', 'Test Obby'], correctAnswer: 0, explanation: 'Checkpoint uses Module 2 portfolio name.' },
+      { id: 'q10', type: MC, question: 'Final Module 2 save name…', options: ['Module 2 - Obby Ready', 'Lesson 1.1', 'Untitled', 'Test Obby'], correctAnswer: 0, explanation: 'Checkpoint uses Module 2 portfolio name.' },
     ],
   },
 }

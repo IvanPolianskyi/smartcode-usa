@@ -27,7 +27,7 @@
     "requirementsTitle": "Requirements",
     "certificateTitle": "Certificate",
     "programTitle": "Course curriculum",
-    "programDescription": "{modules} modules, {lessons} lessons — from fundamentals to building full projects",
+    "programDescription": "{modules} modules, {lessons} lessons - from fundamentals to building full projects",
     "moduleLabel": "Module {order}",
     "moduleWeeks": "{count} weeks",
     "moduleLessons": "{count} lessons",
@@ -99,7 +99,7 @@
       "certificateRole": "web developer"
     },
     "roblox": {
-      "valueProposition": "Learn Roblox Studio from your first Part to publishing your own game — 72 lessons across 12 blocks.",
+      "valueProposition": "Learn Roblox Studio from your first Part to publishing your own game - 72 lessons across 12 blocks.",
       "skills": [
         "Roblox Studio and 3D scene building",
         "Luau scripting fundamentals",
@@ -180,6 +180,8 @@
     "codePlaceholder": "Write your code here...",
     "runCode": "Run code",
     "running": "Running...",
+    "pyodideLoading": "Loading Python...",
+    "pyodideLoading": "Loading Python...",
     "executionResult": "Execution result:",
     "outputResult": "Output:",
     "errorLabel": "Error:",
@@ -219,12 +221,16 @@
       "dangerousCode": "The code contains unsafe operations that are not allowed. Please use only safe Python constructs for learning.",
       "codeTooLong": "Code is too long. Maximum length: 50,000 characters",
       "executionFailed": "Code execution error",
-      "connectionError": "Failed to connect to the server. Please try again."
+      "executionTimeout": "Execution timed out (10 s)",
+      "workerError": "Python runtime error",
+      "workerStartFailed": "Could not start Python in the browser",
+      "connectionError": "Failed to connect to the server. Please try again.",
+      "pyodideLoadFailed": "Could not load Python in the browser. Check your connection and try again."
     },
     "roblox": {
       "lockedDescriptionEn": "This lesson is locked. Purchase the full course for $15, or book live lessons in your dashboard ($10 group / $15 individual). The first lesson is free to preview.",
       "lockedDescriptionUk": "Цей урок доступний учням онлайн-груп. Зверніться до адміністратора або викладача, щоб отримати доступ.",
-      "purchaseFullCourse": "Buy full course — {price}",
+      "purchaseFullCourse": "Buy full course - {price}",
       "onlineAccessHint": "Online student access",
       "comingSoon": "Content coming soon",
       "markComplete": "Mark lesson complete",
@@ -232,7 +238,7 @@
       "theoryDuration": "{minutes} min theory",
       "quizDuration": "{minutes} min quiz",
       "markPracticeComplete": "I've finished the practice in Studio",
-      "practiceDone": "Practice complete — quiz unlocked",
+      "practiceDone": "Practice complete - quiz unlocked",
       "quizLockedHint": "Complete the practice first"
     }
   }

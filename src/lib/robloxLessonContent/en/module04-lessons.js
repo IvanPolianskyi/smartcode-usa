@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 04 — lessons 4.1–4.6 */
+/** Rich EN content for Roblox Module 04 - lessons 4.1–4.6 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -7,7 +7,7 @@ export const enLesson41 = {
   lessonId: 'lesson-roblox-4-1',
   moduleId: 'module-04',
   order: 1,
-  title: '4.1 — Tycoon Architecture',
+  title: '4.1 - Tycoon Architecture',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -21,14 +21,14 @@ export const enLesson41 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `**Module 4 — Empire Builder** turns your coin skills into a **tycoon**: machines earn money while you expand.
+        content: `**Module 4 - Empire Builder** turns your coin skills into a **tycoon**: machines earn money while you expand.
 
 **Lesson flow:**
-1. **Theory (40 min)** — map blueprint + folders
-2. **Practice (~25 min)** — one starter plot layout
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - map blueprint + folders
+2. **Practice (~25 min)** - one starter plot layout
+3. **Quiz (10 min)** - **70%** pass
 
-Use **Module 3 — Coin Simulator** place or duplicate as \`Lesson 4.1 — Tycoon Plot\`. Today is **layout only** — droppers script in 4.2.`,
+Use **Module 3 - Coin Simulator** place or duplicate as \`Lesson 4.1 - Tycoon Plot\`. Today is **layout only** - droppers script in 4.2.`,
       },
       {
         title: 'Tycoon core loop',
@@ -38,7 +38,7 @@ Use **Module 3 — Coin Simulator** place or duplicate as \`Lesson 4.1 — Tycoo
 | 2 | Machine drops value |
 | 3 | Collector turns drops into **Coins** |
 | 4 | Buy next machine with Coins |
-| 5 | Income grows — repeat |
+| 5 | Income grows - repeat |
 
 **Different from manual coin running:** tycoon = **passive income** + **purchases**.`,
       },
@@ -58,7 +58,7 @@ TycoonAssets/     ← models you clone later
 \`\`\`
 
 **ReplicatedStorage** (optional this lesson):
-\`TycoonConfig\` — prices tables in Lesson 4.4
+\`TycoonConfig\` - prices tables in Lesson 4.4
 
 **ServerScriptService** (later):
 \`TycoonService\`, \`PurchaseService\`
@@ -66,7 +66,7 @@ TycoonAssets/     ← models you clone later
 **Exercise (5 min):** Create empty Folders with these exact names under Workspace.`,
       },
       {
-        title: 'Design Plot A — zones',
+        title: 'Design Plot A - zones',
         content: `Build one **40×40** stud base (or use island flat sand):
 
 | Zone | Color placeholder | Purpose |
@@ -94,17 +94,17 @@ For layout:
 
 **Signs:** \`Dropper →\` and \`Collector\` with Neon arrows.
 
-**Exercise (10 min):** Walk from dropper zone to collector in Play — path feels obvious.`,
+**Exercise (10 min):** Walk from dropper zone to collector in Play - path feels obvious.`,
       },
       {
         title: 'Spawn and ownership preview',
         content: `Each plot needs:
 - **SpawnLocation** on \`PlotA_Base\` (Neutral true)
-- Sign: \`Your Tycoon — Plot A\`
+- Sign: \`Your Tycoon - Plot A\`
 
 **Multiplayer later (4.5):** each player gets a plot. For 4.1–4.3, **one plot** is yours.
 
-Keep **Coin Simulator** coins elsewhere on island — tycoon plot is a **separate zone** (fence or bridge).`,
+Keep **Coin Simulator** coins elsewhere on island - tycoon plot is a **separate zone** (fence or bridge).`,
       },
       {
         title: 'Architecture rules',
@@ -122,7 +122,7 @@ Keep **Coin Simulator** coins elsewhere on island — tycoon plot is a **separat
         content: `- [ ] Plots/PlotA with 5 zone folders
 - [ ] Named pads for dropper, path, collector, buy area
 - [ ] Spawn on plot base
-- [ ] Save: \`Lesson 4.1 — Tycoon Plot\``,
+- [ ] Save: \`Lesson 4.1 - Tycoon Plot\``,
       },
     ],
   },
@@ -138,21 +138,21 @@ Keep **Coin Simulator** coins elsewhere on island — tycoon plot is a **separat
     difficulty: 'beginner',
     description: `**Goal:** One complete plot layout, no droppers yet.
 
-### Part A — Folders (5 min)
+### Part A - Folders (5 min)
 1. \`Workspace/Plots/PlotA\` + zone subfolders
 2. \`TycoonAssets\` empty folder for future models
 
-### Part B — Build zones (15 min)
+### Part B - Build zones (15 min)
 1. Base platform + SpawnLocation
 2. DropperZone, ConveyorPath, CollectorZone, BuyButtons pads
 3. Neon signs for direction
 
-### Part C — Save (5 min)
+### Part C - Save (5 min)
 1. Optional expansion wall
-2. **Save to Roblox** → \`Lesson 4.1 — Tycoon Plot\`
+2. **Save to Roblox** → \`Lesson 4.1 - Tycoon Plot\`
 3. **Practice complete**`,
     hints: [
-      'Color-code zones now — replace with machines later',
+      'Color-code zones now - replace with machines later',
       'Path width ≥ 2 studs for rolling coin parts',
       'Keep buy pads visible from spawn',
     ],
@@ -171,7 +171,7 @@ Keep **Coin Simulator** coins elsewhere on island — tycoon plot is a **separat
       { id: 'q7', type: MC, question: 'TycoonAssets folder stores…', options: ['Reusable models', 'Player passwords', 'Chat logs', 'Quiz answers'], correctAnswer: 0, explanation: 'Prefab models for cloning.' },
       { id: 'q8', type: MC, question: 'Server should own economy because…', options: ['Prevents cheating', 'UI looks nicer', 'Terrain requires it', 'No reason'], correctAnswer: 0, explanation: 'Trusted coin changes on server.' },
       { id: 'q9', type: MC, question: 'Spawn on plot helps…', options: ['Players start at their base', 'Delete coins', 'Remove leaderstats', 'Disable Play'], correctAnswer: 0, explanation: 'Clear start location.' },
-      { id: 'q10', type: MC, question: 'Lesson 4.1 save name…', options: ['Lesson 4.1 — Tycoon Plot', 'Coin Simulator', 'Obby Ready', 'Saved Coins'], correctAnswer: 0, explanation: 'Save layout before machines.' },
+      { id: 'q10', type: MC, question: 'Lesson 4.1 save name…', options: ['Lesson 4.1 - Tycoon Plot', 'Coin Simulator', 'Obby Ready', 'Saved Coins'], correctAnswer: 0, explanation: 'Save layout before machines.' },
     ],
   },
 }
@@ -180,7 +180,7 @@ export const enLesson42 = {
   lessonId: 'lesson-roblox-4-2',
   moduleId: 'module-04',
   order: 2,
-  title: '4.2 — Coin Dropper',
+  title: '4.2 - Coin Dropper',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -197,11 +197,11 @@ export const enLesson42 = {
         content: `The **dropper** prints money. The **collector** banks it.
 
 **Lesson flow:**
-1. **Theory (40 min)** — spawn loop + collector
-2. **Practice (~25 min)** — working starter machine
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - spawn loop + collector
+2. **Practice (~25 min)** - working starter machine
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 4.1 — Tycoon Plot**.`,
+Open **Lesson 4.1 - Tycoon Plot**.`,
       },
       {
         title: 'Dropper system parts',
@@ -216,7 +216,7 @@ Open **Lesson 4.1 — Tycoon Plot**.`,
 **SpawnPoint** Position = where coins appear (above machine).
 
 **Collector** in \`CollectorZone\`:
-- Part \`CollectorPad\` — green, Anchored, CanCollide true`,
+- Part \`CollectorPad\` - green, Anchored, CanCollide true`,
       },
       {
         title: 'Spawner loop',
@@ -245,7 +245,7 @@ while true do
 end
 \`\`\`
 
-**\`Debris:AddItem(part, 25)\`** deletes coin after 25s — prevents lag.`,
+**\`Debris:AddItem(part, 25)\`** deletes coin after 25s - prevents lag.`,
       },
       {
         title: 'Collector awards Coins',
@@ -267,7 +267,7 @@ collector.Touched:Connect(function(hit)
     end
 
     local Players = game:GetService("Players")
-    -- For solo plot: award to any player who owns tycoon — first player for now:
+    -- For solo plot: award to any player who owns tycoon - first player for now:
     local player = Players:GetPlayers()[1]
     if not player then return end
 
@@ -284,7 +284,7 @@ end)
 **Exercise (10 min):** Watch Coins rise without touching coins manually.`,
       },
       {
-        title: 'Improve collector — player from coin',
+        title: 'Improve collector - player from coin',
         content: `Better pattern: track plot owner IntValue later. For now, award **plot owner** only:
 
 Store \`OwnerUserId\` on PlotA folder (IntValue) set to your UserId in Studio test.
@@ -322,34 +322,34 @@ Or use **low friction** material on path (Ice, or custom physical properties lat
         content: `- [ ] Dropper spawns yellow TycoonCoin every 2s
 - [ ] Collector adds +1 Coins and destroys coin
 - [ ] Debris removes stray coins
-- [ ] Save: \`Lesson 4.2 — Coin Dropper\``,
+- [ ] Save: \`Lesson 4.2 - Coin Dropper\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'No Debris — hundreds of parts', explanation: 'Server slows down.', correctApproach: 'Debris:AddItem every spawn' },
+    { mistake: 'No Debris - hundreds of parts', explanation: 'Server slows down.', correctApproach: 'Debris:AddItem every spawn' },
     { mistake: 'Collector checks wrong Name', explanation: 'TycoonCoin must match exactly.', correctApproach: 'coin.Name = "TycoonCoin" in spawner' },
     { mistake: 'SpawnPoint missing', explanation: 'WaitForChild yields forever.', correctApproach: 'Child part named SpawnPoint under Dropper_01' },
     { mistake: 'Anchored true on drops', explanation: 'Coins never move to collector.', correctApproach: 'Anchored false on TycoonCoin' },
   ],
-  summary: `You built a dropper spawn loop with Debris cleanup and a collector that converts TycoonCoins into leaderstats Coins — your tycoon earns passive income.`,
+  summary: `You built a dropper spawn loop with Debris cleanup and a collector that converts TycoonCoins into leaderstats Coins - your tycoon earns passive income.`,
   practiceTask: {
     title: 'Starter dropper machine (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** AFK-style income on your plot.
 
-### Part A — Dropper (12 min)
+### Part A - Dropper (12 min)
 1. \`Dropper_01\` + \`SpawnPoint\` + spawn Script
 2. Debris 25s on each coin
-3. Play — coins appear every 2s
+3. Play - coins appear every 2s
 
-### Part B — Collector (10 min)
-1. \`CollectorPad\` Script — +1 Coins, Destroy coin
+### Part B - Collector (10 min)
+1. \`CollectorPad\` Script - +1 Coins, Destroy coin
 2. Tilt path so coins reach pad
-3. Stand 30s — Coins increase without manual collect
+3. Stand 30s - Coins increase without manual collect
 
-### Part C — Save (3 min)
-1. **Save to Roblox** → \`Lesson 4.2 — Coin Dropper\`
+### Part C - Save (3 min)
+1. **Save to Roblox** → \`Lesson 4.2 - Coin Dropper\`
 2. **Practice complete**`,
     hints: [
       'Print coins.Value every 5s to verify passive income',
@@ -371,7 +371,7 @@ Or use **low friction** material on path (Ice, or custom physical properties lat
       { id: 'q7', type: MC, question: 'hit.Name check ensures…', options: ['Only TycoonCoins count', 'All parts count', 'Terrain counts', 'Sky counts'], correctAnswer: 0, explanation: 'Filter by part name.' },
       { id: 'q8', type: MC, question: 'Spawn interval too fast causes…', options: ['Lag', 'Better graphics', 'Auto save', 'Free Robux'], correctAnswer: 0, explanation: 'Too many physics parts.' },
       { id: 'q9', type: MC, question: 'Dropper Script runs on…', options: ['Server', 'Client HUD only', 'StarterGui', 'Player Head'], correctAnswer: 0, explanation: 'Server spawns world parts.' },
-      { id: 'q10', type: MC, question: 'Lesson 4.2 save name…', options: ['Lesson 4.2 — Coin Dropper', 'Tycoon Plot', 'Coin Functions', 'Obby Timer'], correctAnswer: 0, explanation: 'Save working machine.' },
+      { id: 'q10', type: MC, question: 'Lesson 4.2 save name…', options: ['Lesson 4.2 - Coin Dropper', 'Tycoon Plot', 'Coin Functions', 'Obby Timer'], correctAnswer: 0, explanation: 'Save working machine.' },
     ],
   },
 }
@@ -380,7 +380,7 @@ export const enLesson43 = {
   lessonId: 'lesson-roblox-4-3',
   moduleId: 'module-04',
   order: 3,
-  title: '4.3 — Purchase Button',
+  title: '4.3 - Purchase Button',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -397,11 +397,11 @@ export const enLesson43 = {
         content: `Passive income is step one. **Spending** on upgrades is step two.
 
 **Lesson flow:**
-1. **Theory (40 min)** — buy button flow
-2. **Practice (~25 min)** — unlock Dropper_02 for 50 Coins
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - buy button flow
+2. **Practice (~25 min)** - unlock Dropper_02 for 50 Coins
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 4.2 — Coin Dropper**. Earn ~50 Coins from Dropper_01 before testing buy.`,
+Open **Lesson 4.2 - Coin Dropper**. Earn ~50 Coins from Dropper_01 before testing buy.`,
       },
       {
         title: 'Purchase flow (5 steps)',
@@ -413,7 +413,7 @@ Open **Lesson 4.2 — Coin Dropper**. Earn ~50 Coins from Dropper_01 before test
       },
       {
         title: 'Buy pad script',
-        content: `On \`BuyButtons/Buy_Dropper2_Pad\` — **Script**:
+        content: `On \`BuyButtons/Buy_Dropper2_Pad\` - **Script**:
 
 \`\`\`lua
 local button = script.Parent
@@ -474,7 +474,7 @@ end)
       },
       {
         title: 'Debounce purchased flag',
-        content: `\`purchased = true\` blocks repeat **Touched** spam — same idea as coin debounce.
+        content: `\`purchased = true\` blocks repeat **Touched** spam - same idea as coin debounce.
 
 Without it:
 - One touch might charge **3 times**
@@ -491,14 +491,14 @@ Without it:
 | Already bought | Ignore touch |
 
 **BillboardGui** on pad:
-\`Buy Dropper 2 — 50 Coins\`
+\`Buy Dropper 2 - 50 Coins\`
 After buy: destroy gui or text \`Purchased ✓\`
 
 **Exercise (5 min):** Touch with 10 Coins → red flash. Touch with 60 → success.`,
       },
       {
         title: 'Connect to DataStore',
-        content: `Purchases spend **saved** Coins if you finished Module 3.5 — good.
+        content: `Purchases spend **saved** Coins if you finished Module 3.5 - good.
 
 **Future:** save \`purchasedDropper2 = true\` in DataStore so buy persists between sessions (Lesson 4.6 area).
 
@@ -509,7 +509,7 @@ Today: in-session purchase is enough.`,
         content: `- [ ] Dropper_02 hidden at start
 - [ ] Buy costs 50, debounce works
 - [ ] Insufficient funds shows red flash
-- [ ] Save: \`Lesson 4.3 — Purchase Button\``,
+- [ ] Save: \`Lesson 4.3 - Purchase Button\``,
       },
     ],
   },
@@ -519,29 +519,29 @@ Today: in-session purchase is enough.`,
     { mistake: 'Dropper_02 visible from start', explanation: 'No reason to buy.', correctApproach: 'Parent nil or hidden until purchase' },
     { mistake: 'Wrong leaderstats path', explanation: 'Coins never deduct.', correctApproach: 'player.leaderstats.Coins on server' },
   ],
-  summary: `You scripted a purchase pad that checks Coins, deducts price once, reveals Dropper_02, and gives red/green feedback — the tycoon upgrade loop is alive.`,
+  summary: `You scripted a purchase pad that checks Coins, deducts price once, reveals Dropper_02, and gives red/green feedback - the tycoon upgrade loop is alive.`,
   practiceTask: {
     title: 'Unlock Dropper 2 (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** 50 Coins unlocks second machine.
 
-### Part A — Hidden machine (8 min)
+### Part A - Hidden machine (8 min)
 1. Clone \`Dropper_01\` → \`Dropper_02\` (hidden until buy)
 2. Buy pad \`Buy_Dropper2_Pad\` in BuyButtons zone
 
-### Part B — Purchase script (12 min)
+### Part B - Purchase script (12 min)
 1. PRICE 50, purchased flag, deduct Coins
 2. Reveal Dropper_02, hide button
 3. Red flash when broke
 
-### Part C — Test & save (5 min)
-1. Earn 50+ from Dropper_01 — buy — two droppers run
-2. **Save to Roblox** → \`Lesson 4.3 — Purchase Button\`
+### Part C - Test & save (5 min)
+1. Earn 50+ from Dropper_01 - buy - two droppers run
+2. **Save to Roblox** → \`Lesson 4.3 - Purchase Button\`
 3. **Practice complete**`,
     hints: [
       'Print coins.Value before/after purchase while testing',
       'Hide Dropper_02 with Parent = nil at script start',
-      'Touch buy pad with Humanoid — stand on pad',
+      'Touch buy pad with Humanoid - stand on pad',
     ],
     optionalChallenge: 'BillboardGui price label updates to Purchased.',
   },
@@ -558,7 +558,7 @@ Today: in-session purchase is enough.`,
       { id: 'q7', type: MC, question: 'GetPlayerFromCharacter links…', options: ['Touch to player account', 'Part to terrain', 'UI to sky', 'Sound to lava'], correctAnswer: 0, explanation: 'Who is buying.' },
       { id: 'q8', type: MC, question: 'After success, buy pad often…', options: ['Transparency 1 / hidden', 'Duplicates price', 'Spawns lava', 'Removes leaderstats'], correctAnswer: 0, explanation: 'Cannot buy again.' },
       { id: 'q9', type: MC, question: 'Tycoon upgrades use currency from…', options: ['leaderstats Coins', 'Only print()', 'Terrain', 'ClockTime'], correctAnswer: 0, explanation: 'Same Coins stat as Module 3.' },
-      { id: 'q10', type: MC, question: 'Lesson 4.3 save name…', options: ['Lesson 4.3 — Purchase Button', 'Coin Dropper', 'Tycoon Plot', 'Coin Simulator'], correctAnswer: 0, explanation: 'Save after unlock works.' },
+      { id: 'q10', type: MC, question: 'Lesson 4.3 save name…', options: ['Lesson 4.3 - Purchase Button', 'Coin Dropper', 'Tycoon Plot', 'Coin Simulator'], correctAnswer: 0, explanation: 'Save after unlock works.' },
     ],
   },
 }
@@ -567,7 +567,7 @@ export const enLesson44 = {
   lessonId: 'lesson-roblox-4-4',
   moduleId: 'module-04',
   order: 4,
-  title: '4.4 — Tables and Upgrades',
+  title: '4.4 - Tables and Upgrades',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -584,15 +584,15 @@ export const enLesson44 = {
         content: `Hard-coded \`if tier == 2 then wait(1.5)\` breaks when you have 10 tiers. **Tables** fix that.
 
 **Lesson flow:**
-1. **Theory (40 min)** — upgrade table + tier index
-2. **Practice (~25 min)** — 3-tier dropper upgrades
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - upgrade table + tier index
+2. **Practice (~25 min)** - 3-tier dropper upgrades
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 4.3 — Purchase Button**.`,
+Open **Lesson 4.3 - Purchase Button**.`,
       },
       {
         title: 'What is a config table?',
-        content: `A **table** in Luau is a collection of entries — like a spreadsheet in code.
+        content: `A **table** in Luau is a collection of entries - like a spreadsheet in code.
 
 \`\`\`lua
 local upgrades = {
@@ -602,7 +602,7 @@ local upgrades = {
 }
 \`\`\`
 
-**Change balance?** Edit numbers here — not 20 scripts.`,
+**Change balance?** Edit numbers here - not 20 scripts.`,
       },
       {
         title: 'Access table rows by index',
@@ -689,7 +689,7 @@ local value = hit:GetAttribute("CoinValue") or 1
 coins.Value += value
 \`\`\`
 
-Tier 3 coins worth **4** each — player feels power spike.
+Tier 3 coins worth **4** each - player feels power spike.
 
 **Upgrade buy pad** reads next tier price from table:
 
@@ -719,7 +719,7 @@ tierValue.Value = nextTier
 - [ ] DropperTier IntValue on PlotA
 - [ ] Dropper uses spawnWait from table
 - [ ] Collector uses CoinValue attribute
-- [ ] Save: \`Lesson 4.4 — Upgrade Tables\``,
+- [ ] Save: \`Lesson 4.4 - Upgrade Tables\``,
       },
     ],
   },
@@ -729,31 +729,31 @@ tierValue.Value = nextTier
     { mistake: 'Collector still +1 always', explanation: 'Attribute not read.', correctApproach: 'GetAttribute CoinValue on hit' },
     { mistake: 'Price in buy script != table price', explanation: 'Desync confuses players.', correctApproach: 'Always read upgrades[nextTier].price' },
   ],
-  summary: `You stored upgrade tiers in tables, drove spawn speed and coin value from data, and bought tiers with prices from the same config — professional tycoon balancing workflow.`,
+  summary: `You stored upgrade tiers in tables, drove spawn speed and coin value from data, and bought tiers with prices from the same config - professional tycoon balancing workflow.`,
   practiceTask: {
     title: 'Three-tier upgrades (~25 min)',
     difficulty: 'beginner',
-    description: `**Goal:** Buy tier 2 and 3 — faster drops, higher value.
+    description: `**Goal:** Buy tier 2 and 3 - faster drops, higher value.
 
-### Part A — Config (8 min)
+### Part A - Config (8 min)
 1. \`upgrades\` table (3 tiers) in dropper + buy scripts
 2. \`DropperTier\` IntValue = 1 on PlotA
 
-### Part B — Wire systems (12 min)
+### Part B - Wire systems (12 min)
 1. Dropper loop uses spawnWait from tier
 2. Collector adds GetAttribute CoinValue
 3. Buy pad upgrades tier (100, then 300 Coins)
 
-### Part C — Balance & save (5 min)
-1. Play-test time to tier 2 — adjust table if needed
-2. **Save to Roblox** → \`Lesson 4.4 — Upgrade Tables\`
+### Part C - Balance & save (5 min)
+1. Play-test time to tier 2 - adjust table if needed
+2. **Save to Roblox** → \`Lesson 4.4 - Upgrade Tables\`
 3. **Practice complete**`,
     hints: [
       'Print current tier after each purchase',
       'Clamp tier index so errors never break spawner',
-      'One shared upgrades table — copy to both scripts or use ModuleScript later',
+      'One shared upgrades table - copy to both scripts or use ModuleScript later',
     ],
-    optionalChallenge: 'Tier 4 prestige — price 1000, spawnWait 0.6, coinValue 10.',
+    optionalChallenge: 'Tier 4 prestige - price 1000, spawnWait 0.6, coinValue 10.',
   },
   quiz: {
     passingScore: 70,
@@ -768,7 +768,7 @@ tierValue.Value = nextTier
       { id: 'q7', type: MC, question: 'math.clamp prevents…', options: ['Invalid tier index', 'Saving', 'Publishing', 'Lighting'], correctAnswer: 0, explanation: 'Keeps tier in range.' },
       { id: 'q8', type: MC, question: 'Next tier price should come from…', options: ['upgrades table', 'Random()', 'Player age', 'Part color'], correctAnswer: 0, explanation: 'Single source of truth.' },
       { id: 'q9', type: MC, question: 'Tier 3 coinValue 4 means…', options: ['Each drop worth 4 Coins', '4 droppers', '4 players', '4 saves'], correctAnswer: 0, explanation: 'Value per collected coin.' },
-      { id: 'q10', type: MC, question: 'Lesson 4.4 save name…', options: ['Lesson 4.4 — Upgrade Tables', 'Purchase Button', 'Tycoon Plot', 'Coin Simulator'], correctAnswer: 0, explanation: 'Save tier system.' },
+      { id: 'q10', type: MC, question: 'Lesson 4.4 save name…', options: ['Lesson 4.4 - Upgrade Tables', 'Purchase Button', 'Tycoon Plot', 'Coin Simulator'], correctAnswer: 0, explanation: 'Save tier system.' },
     ],
   },
 }
@@ -777,7 +777,7 @@ export const enLesson45 = {
   lessonId: 'lesson-roblox-4-5',
   moduleId: 'module-04',
   order: 5,
-  title: '4.5 — A Plot for Every Player',
+  title: '4.5 - A Plot for Every Player',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -791,12 +791,12 @@ export const enLesson45 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `Solo plot was fine. **Multiplayer** needs **one base per player** — otherwise everyone steals each other's machines.
+        content: `Solo plot was fine. **Multiplayer** needs **one base per player** - otherwise everyone steals each other's machines.
 
 **Lesson flow:**
-1. **Theory (40 min)** — claim, ownsPlot, release
-2. **Practice (~25 min)** — PlotA + PlotB auto-assign
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - claim, ownsPlot, release
+2. **Practice (~25 min)** - PlotA + PlotB auto-assign
+3. **Quiz (10 min)** - **70%** pass
 
 Duplicate PlotA → **PlotB** with separate spawn and zones.`,
       },
@@ -829,7 +829,7 @@ local function ownsPlot(player, plot)
 end
 \`\`\`
 
-**UserId** is a number — StringValue stores \`tostring(player.UserId)\`.`,
+**UserId** is a number - StringValue stores \`tostring(player.UserId)\`.`,
       },
       {
         title: 'Claim plot on join',
@@ -924,38 +924,38 @@ New players can claim freed plots on next join.`,
 - [ ] PlotClaimService assigns on join
 - [ ] Buy/collector check ownsPlot
 - [ ] PlayerRemoving clears owner
-- [ ] Save: \`Lesson 4.5 — Player Plots\``,
+- [ ] Save: \`Lesson 4.5 - Player Plots\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'Compared number UserId to string Value', explanation: 'Never matches — everyone blocked.', correctApproach: 'tostring(player.UserId) both sides' },
+    { mistake: 'Compared number UserId to string Value', explanation: 'Never matches - everyone blocked.', correctApproach: 'tostring(player.UserId) both sides' },
     { mistake: 'No release on leave', explanation: 'Plot stuck forever empty or owned.', correctApproach: 'PlayerRemoving clears OwnerUserId' },
     { mistake: 'Forgot ownsPlot on collector', explanation: 'Stealing income.', correctApproach: 'Same check on all plot interactions' },
     { mistake: 'Only one plot in game', explanation: 'Second player has nowhere to go.', correctApproach: 'At least PlotA and PlotB' },
   ],
-  summary: `You auto-claimed plots with OwnerUserId, guarded purchases and collectors with ownsPlot, and released plots on leave — your tycoon is two-player ready.`,
+  summary: `You auto-claimed plots with OwnerUserId, guarded purchases and collectors with ownsPlot, and released plots on leave - your tycoon is two-player ready.`,
   practiceTask: {
     title: 'Auto-claim plots (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Two players, two plots, no cross-use.
 
-### Part A — PlotB + owners (8 min)
+### Part A - PlotB + owners (8 min)
 1. Duplicate PlotA → PlotB (rename all internals)
 2. OwnerUserId StringValue on both (empty default)
 
-### Part B — PlotClaimService (12 min)
+### Part B - PlotClaimService (12 min)
 1. PlayerAdded claims first free plot
 2. ownsPlot in buy + collector scripts
 3. PlayerRemoving releases plot
 
-### Part C — Two-player test (5 min)
+### Part C - Two-player test (5 min)
 1. Studio Test with 2 players
 2. Verify no cross-buy
-3. **Save to Roblox** → \`Lesson 4.5 — Player Plots\`
+3. **Save to Roblox** → \`Lesson 4.5 - Player Plots\`
 4. **Practice complete**`,
     hints: [
-      'Print owner.Value when touch fails — debug mismatch',
+      'Print owner.Value when touch fails - debug mismatch',
       'MoveTo spawn after claim so player sees their base',
       'Use FindFirstChild OwnerUserId on plot root',
     ],
@@ -972,9 +972,9 @@ New players can claim freed plots on next join.`,
       { id: 'q5', type: MC, question: 'Second player should get…', options: ['PlotB if PlotA taken', 'Same plot as first', 'No spawn', 'All plots'], correctAnswer: 0, explanation: 'Next free plot.' },
       { id: 'q6', type: MC, question: 'Collector without ownsPlot allows…', options: ['Stealing others income', 'Better graphics', 'Faster save', 'More terrain'], correctAnswer: 0, explanation: 'Must gate collection.' },
       { id: 'q7', type: MC, question: 'PlotClaimService lives in…', options: ['ServerScriptService', 'StarterGui', 'Player Head', 'Lighting'], correctAnswer: 0, explanation: 'Server assigns plots.' },
-      { id: 'q8', type: MC, question: 'Two plots minimum for 2 players…', options: ['True', 'False — one is enough', 'Only in Module 1', 'Never'], correctAnswer: 0, explanation: 'Each needs a base.' },
+      { id: 'q8', type: MC, question: 'Two plots minimum for 2 players…', options: ['True', 'False - one is enough', 'Only in Module 1', 'Never'], correctAnswer: 0, explanation: 'Each needs a base.' },
       { id: 'q9', type: MC, question: 'MoveTo spawn after claim helps…', options: ['Player see their plot', 'Delete coins', 'Remove HUD', 'Disable Play'], correctAnswer: 0, explanation: 'Clear onboarding.' },
-      { id: 'q10', type: MC, question: 'Lesson 4.5 save name…', options: ['Lesson 4.5 — Player Plots', 'Upgrade Tables', 'Coin Dropper', 'Obby Ready'], correctAnswer: 0, explanation: 'Save multiplayer plots.' },
+      { id: 'q10', type: MC, question: 'Lesson 4.5 save name…', options: ['Lesson 4.5 - Player Plots', 'Upgrade Tables', 'Coin Dropper', 'Obby Ready'], correctAnswer: 0, explanation: 'Save multiplayer plots.' },
     ],
   },
 }
@@ -983,7 +983,7 @@ export const enLesson46 = {
   lessonId: 'lesson-roblox-4-6',
   moduleId: 'module-04',
   order: 6,
-  title: '4.6 — Checkpoint: Tycoon Works',
+  title: '4.6 - Checkpoint: Tycoon Works',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -997,7 +997,7 @@ export const enLesson46 = {
     sections: [
       {
         title: 'Module 4 checkpoint (about 40 minutes)',
-        content: `Ship **Tycoon Works** — passive income + purchases + upgrades + **fair multiplayer**.
+        content: `Ship **Tycoon Works** - passive income + purchases + upgrades + **fair multiplayer**.
 
 **Required:**
 - Plot layout (4.1)
@@ -1017,7 +1017,7 @@ export const enLesson46 = {
 | 4 | 10 | Plot claim 2-player test |
 | 5 | 15 | QA matrix + polish signs |
 
-**Save:** \`Module 4 — Tycoon Works\``,
+**Save:** \`Module 4 - Tycoon Works\``,
       },
       {
         title: 'Progression pacing target',
@@ -1047,9 +1047,9 @@ If pacing too slow → lower prices in \`upgrades\` table only.`,
       },
       {
         title: 'Architecture final check',
-        content: `- [ ] \`PlotClaimService\` — join + leave
+        content: `- [ ] \`PlotClaimService\` - join + leave
 - [ ] \`ownsPlot\` on **every** plot touch script
-- [ ] \`upgrades\` table — single balance source
+- [ ] \`upgrades\` table - single balance source
 - [ ] \`DropperTier\` per plot (copy IntValue to PlotB!)
 - [ ] Debris on all droppers
 - [ ] DataStore still loads Coins (Module 3.5)`,
@@ -1065,9 +1065,9 @@ If pacing too slow → lower prices in \`upgrades\` table only.`,
       },
       {
         title: 'Module 5 preview',
-        content: `**Fighting Club** — Humanoid health, swords, damage, respawn in arena.
+        content: `**Fighting Club** - Humanoid health, swords, damage, respawn in arena.
 
-Your tycoon Coins and server scripts prepared you for **combat economies** and **server authority** — same patterns, different genre.`,
+Your tycoon Coins and server scripts prepared you for **combat economies** and **server authority** - same patterns, different genre.`,
       },
       {
         title: 'Before practice checklist',
@@ -1084,31 +1084,31 @@ Your tycoon Coins and server scripts prepared you for **combat economies** and *
     { mistake: 'Only tested solo', explanation: 'Multiplayer breaks on publish.', correctApproach: 'Studio 2-player Test required' },
     { mistake: 'Prices in GUI != table', explanation: 'Player confusion.', correctApproach: 'Billboard reads upgrades[nextTier].price' },
   ],
-  summary: `You integrated droppers, purchases, table upgrades, and per-player plots into Tycoon Works, passed multiplayer QA, and tuned early progression — Module 5 combat is next.`,
+  summary: `You integrated droppers, purchases, table upgrades, and per-player plots into Tycoon Works, passed multiplayer QA, and tuned early progression - Module 5 combat is next.`,
   practiceTask: {
     title: 'Ship Tycoon Works (~40 min)',
     difficulty: 'beginner',
     description: `**Goal:** Full Module 4 checkpoint passing QA.
 
-### Part A — Systems audit (15 min)
-1. Run architecture checklist — fix gaps
+### Part A - Systems audit (15 min)
+1. Run architecture checklist - fix gaps
 2. PlotA + PlotB complete with machines
 3. upgrades table + DropperTier on **each** plot
 
-### Part B — Multiplayer QA (15 min)
-1. Test matrix 1–7 — note pass/fail
+### Part B - Multiplayer QA (15 min)
+1. Test matrix 1–7 - note pass/fail
 2. Fix any cross-plot bug immediately
 
-### Part C — Demo & save (10 min)
+### Part C - Demo & save (10 min)
 1. Solo run: 0 → first upgrade under 10 min
-2. **Save to Roblox** → \`Module 4 — Tycoon Works\`
+2. **Save to Roblox** → \`Module 4 - Tycoon Works\`
 3. **Practice complete** + optional 2-player recording`,
     hints: [
       'Fix claim/ownsPlot before balancing prices',
       'Each plot needs its own DropperTier and OwnerUserId',
       'Print plot.Name in collector when debug needed',
     ],
-    optionalChallenge: 'Second buy path: faster dropper OR higher value — player choice.',
+    optionalChallenge: 'Second buy path: faster dropper OR higher value - player choice.',
   },
   quiz: {
     passingScore: 70,
@@ -1123,7 +1123,7 @@ Your tycoon Coins and server scripts prepared you for **combat economies** and *
       { id: 'q7', type: MC, question: 'Debris on droppers prevents…', options: ['Lag from part buildup', 'Saving', 'Leaderboard', 'Checkpoints'], correctAnswer: 0, explanation: 'Cleanup old coins.' },
       { id: 'q8', type: MC, question: 'Module 5 theme is…', options: ['Fighting / combat', 'Only coins again', 'Only publish', 'Empty'], correctAnswer: 0, explanation: 'Fighting Club module.' },
       { id: 'q9', type: MC, question: 'Red Output on idle run means…', options: ['Fix before shipping', 'Ready to publish', 'Add more lava', 'Remove plots'], correctAnswer: 0, explanation: 'Errors = bugs remain.' },
-      { id: 'q10', type: MC, question: 'Module 4 save name…', options: ['Module 4 — Tycoon Works', 'Lesson 3.1', 'Obby Ready', 'Untitled'], correctAnswer: 0, explanation: 'Checkpoint portfolio name.' },
+      { id: 'q10', type: MC, question: 'Module 4 save name…', options: ['Module 4 - Tycoon Works', 'Lesson 3.1', 'Obby Ready', 'Untitled'], correctAnswer: 0, explanation: 'Checkpoint portfolio name.' },
     ],
   },
 }

@@ -490,7 +490,7 @@ notif3 = send_notification("Message", recipient="user@example.com", urgent=True)
 
 **Next step:**
 
-In the next lesson we'll learn about *args and **kwargs — powerful tools for working with any number of arguments.`
+In the next lesson we'll learn about *args and **kwargs - powerful tools for working with any number of arguments.`
       }
     ]
   },

@@ -32,8 +32,8 @@ export const lesson_03_5 = {
 
 **Main difference between functions and methods:**
 
-- **Function:** \`function_name(argument)\` — called on its own
-- **Method:** \`object.method_name(argument)\` — called through an object
+- **Function:** \`function_name(argument)\` - called on its own
+- **Method:** \`object.method_name(argument)\` - called through an object
 
 **Method call syntax:**
 
@@ -64,68 +64,68 @@ result = text.upper()  # upper() is a string method
 
 **Common methods:**
 
-1. **\`upper()\`** — converts to uppercase
+1. **\`upper()\`** - converts to uppercase
 \`\`\`python
 text = "Hello, world!"
 result = text.upper()  # "HELLO, WORLD!"
 \`\`\`
 
-2. **\`lower()\`** — converts to lowercase
+2. **\`lower()\`** - converts to lowercase
 \`\`\`python
 text = "HELLO, WORLD!"
 result = text.lower()  # "hello, world!"
 \`\`\`
 
-3. **\`capitalize()\`** — makes the first letter uppercase
+3. **\`capitalize()\`** - makes the first letter uppercase
 \`\`\`python
 text = "hello, world!"
 result = text.capitalize()  # "Hello, world!"
 \`\`\`
 
-4. **\`title()\`** — capitalizes the first letter of each word
+4. **\`title()\`** - capitalizes the first letter of each word
 \`\`\`python
 text = "hello world python"
 result = text.title()  # "Hello World Python"
 \`\`\`
 
-5. **\`strip()\`** — removes leading and trailing whitespace
+5. **\`strip()\`** - removes leading and trailing whitespace
 \`\`\`python
 text = "  Hello, world!  "
 result = text.strip()  # "Hello, world!"
 \`\`\`
 
-6. **\`replace(old, new)\`** — replaces part of the string
+6. **\`replace(old, new)\`** - replaces part of the string
 \`\`\`python
 text = "Hello, world!"
 result = text.replace("world", "Python")  # "Hello, Python!"
 \`\`\`
 
-7. **\`split(separator)\`** — splits the string into a list
+7. **\`split(separator)\`** - splits the string into a list
 \`\`\`python
 text = "Hello, world, Python"
 result = text.split(", ")  # ["Hello", "world", "Python"]
 \`\`\`
 
-8. **\`join(iterable)\`** — joins list elements into a string
+8. **\`join(iterable)\`** - joins list elements into a string
 \`\`\`python
 words = ["Hello", "world", "Python"]
 result = ", ".join(words)  # "Hello, world, Python"
 \`\`\`
 
-9. **\`find(substring)\`** — finds substring position (returns -1 if not found)
+9. **\`find(substring)\`** - finds substring position (returns -1 if not found)
 \`\`\`python
 text = "Hello, world!"
 position = text.find("world")  # 7
 position = text.find("Python")  # -1 (not found)
 \`\`\`
 
-10. **\`count(substring)\`** — counts occurrences of a substring
+10. **\`count(substring)\`** - counts occurrences of a substring
 \`\`\`python
 text = "Hello, hello, world!"
 count = text.count("hello")  # 2
 \`\`\`
 
-**Important:** String methods do not change the original string — they return a new one!
+**Important:** String methods do not change the original string - they return a new one!
 \`\`\`python
 text = "Hello"
 text.upper()  # Does not change text
@@ -141,56 +141,56 @@ text = text.upper()  # Now text = "HELLO"
 
 **Common methods:**
 
-1. **\`append(item)\`** — adds an element at the end
+1. **\`append(item)\`** - adds an element at the end
 \`\`\`python
 numbers = [1, 2, 3]
 numbers.append(4)  # [1, 2, 3, 4]
 \`\`\`
 
-2. **\`insert(index, item)\`** — inserts at a position
+2. **\`insert(index, item)\`** - inserts at a position
 \`\`\`python
 numbers = [1, 2, 3]
 numbers.insert(1, 10)  # [1, 10, 2, 3]
 \`\`\`
 
-3. **\`remove(item)\`** — removes the first occurrence
+3. **\`remove(item)\`** - removes the first occurrence
 \`\`\`python
 numbers = [1, 2, 3, 2]
 numbers.remove(2)  # [1, 3, 2] (first 2 removed)
 \`\`\`
 
-4. **\`pop(index)\`** — removes and returns element by index (last by default)
+4. **\`pop(index)\`** - removes and returns element by index (last by default)
 \`\`\`python
 numbers = [1, 2, 3, 4]
 last = numbers.pop()  # last = 4, numbers = [1, 2, 3]
 first = numbers.pop(0)  # first = 1, numbers = [2, 3]
 \`\`\`
 
-5. **\`extend(iterable)\`** — adds all elements from another iterable
+5. **\`extend(iterable)\`** - adds all elements from another iterable
 \`\`\`python
 numbers = [1, 2, 3]
 numbers.extend([4, 5, 6])  # [1, 2, 3, 4, 5, 6]
 \`\`\`
 
-6. **\`count(item)\`** — counts occurrences
+6. **\`count(item)\`** - counts occurrences
 \`\`\`python
 numbers = [1, 2, 2, 3, 2]
 count = numbers.count(2)  # 3
 \`\`\`
 
-7. **\`index(item)\`** — index of first occurrence
+7. **\`index(item)\`** - index of first occurrence
 \`\`\`python
 numbers = [10, 20, 30, 20]
 index = numbers.index(20)  # 1
 \`\`\`
 
-8. **\`sort()\`** — sorts in place (changes the original list)
+8. **\`sort()\`** - sorts in place (changes the original list)
 \`\`\`python
 numbers = [3, 1, 4, 1, 5]
 numbers.sort()  # [1, 1, 3, 4, 5]
 \`\`\`
 
-9. **\`reverse()\`** — reverses order in place
+9. **\`reverse()\`** - reverses order in place
 \`\`\`python
 numbers = [1, 2, 3, 4]
 numbers.reverse()  # [4, 3, 2, 1]
@@ -204,51 +204,51 @@ numbers.reverse()  # [4, 3, 2, 1]
 
 **Common methods:**
 
-1. **\`keys()\`** — returns all keys
+1. **\`keys()\`** - returns all keys
 \`\`\`python
 person = {"name": "Alex", "age": 20, "city": "London"}
 keys = person.keys()  # dict_keys(['name', 'age', 'city'])
 keys_list = list(person.keys())  # ['name', 'age', 'city']
 \`\`\`
 
-2. **\`values()\`** — returns all values
+2. **\`values()\`** - returns all values
 \`\`\`python
 person = {"name": "Alex", "age": 20, "city": "London"}
 values = person.values()  # dict_values(['Alex', 20, 'London'])
 \`\`\`
 
-3. **\`items()\`** — returns key-value pairs
+3. **\`items()\`** - returns key-value pairs
 \`\`\`python
 person = {"name": "Alex", "age": 20, "city": "London"}
 items = person.items()  # dict_items([('name', 'Alex'), ('age', 20), ('city', 'London')])
 \`\`\`
 
-4. **\`get(key, default)\`** — gets value by key (no error if key missing)
+4. **\`get(key, default)\`** - gets value by key (no error if key missing)
 \`\`\`python
 person = {"name": "Alex", "age": 20}
 name = person.get("name")  # "Alex"
 email = person.get("email", "Not specified")  # "Not specified"
 \`\`\`
 
-5. **\`pop(key, default)\`** — removes and returns value by key
+5. **\`pop(key, default)\`** - removes and returns value by key
 \`\`\`python
 person = {"name": "Alex", "age": 20, "city": "London"}
 age = person.pop("age")  # age = 20, person = {"name": "Alex", "city": "London"}
 \`\`\`
 
-6. **\`update(other_dict)\`** — updates from another dictionary
+6. **\`update(other_dict)\`** - updates from another dictionary
 \`\`\`python
 person = {"name": "Alex", "age": 20}
 person.update({"city": "London", "age": 21})
 \`\`\`
 
-7. **\`clear()\`** — removes all items
+7. **\`clear()\`** - removes all items
 \`\`\`python
 person = {"name": "Alex", "age": 20}
 person.clear()  # {}
 \`\`\`
 
-8. **\`copy()\`** — creates a copy
+8. **\`copy()\`** - creates a copy
 \`\`\`python
 person = {"name": "Alex", "age": 20}
 person_copy = person.copy()
@@ -397,12 +397,12 @@ result = format_text(text)  # "Hello Python Programmer"
    - Call methods in sequence when each returns a suitable object
 
 6. **Help**
-   - \`help()\` — documentation for a method
-   - \`dir()\` — list methods on an object
+   - \`help()\` - documentation for a method
+   - \`dir()\` - list methods on an object
 
 **Next step:**
 
-In the next lesson we will learn about lambda functions — short anonymous functions for quick operations.`
+In the next lesson we will learn about lambda functions - short anonymous functions for quick operations.`
       }
     ]
   },
@@ -521,12 +521,12 @@ numbers.append(4)`
   
   summary: `In this lesson we learned about object methods:
 
-1. What methods are — functions bound to objects; syntax: \`object.method()\`
-2. String methods — return new strings; upper(), lower(), strip(), replace(), split(), join()
-3. List methods — many change the list in place; append(), insert(), remove(), pop(), sort(), reverse()
-4. Dictionary methods — keys(), values(), items(), get(), pop(), update()
-5. Method chaining — when each step returns a suitable object
-6. Help — help() and dir()
+1. What methods are - functions bound to objects; syntax: \`object.method()\`
+2. String methods - return new strings; upper(), lower(), strip(), replace(), split(), join()
+3. List methods - many change the list in place; append(), insert(), remove(), pop(), sort(), reverse()
+4. Dictionary methods - keys(), values(), items(), get(), pop(), update()
+5. Method chaining - when each step returns a suitable object
+6. Help - help() and dir()
 
 Methods are a powerful way to work with objects in Python!`,
   
@@ -535,10 +535,10 @@ Methods are a powerful way to work with objects in Python!`,
     description: "Create functions to process text using string, list, and dictionary methods",
     problemStatement: `Write a program to process user text data:
 
-1. **clean_text** — cleans text (strip, capitalize), returns cleaned text
-2. **process_words** — removes duplicates and sorts a list of words
-3. **create_word_count** — splits text into words and returns {word: count}
-4. **format_user_data** — capitalizes name, lowercases email, adds default fields
+1. **clean_text** - cleans text (strip, capitalize), returns cleaned text
+2. **process_words** - removes duplicates and sorts a list of words
+3. **create_word_count** - splits text into words and returns {word: count}
+4. **format_user_data** - capitalizes name, lowercases email, adds default fields
 
 **Important:** Do not use input(). Assign values directly in code.
 
@@ -625,12 +625,12 @@ print(f"Word count: {word_count2}")`,
       explanation: "Uses string methods (strip, capitalize, split, lower), list methods (append, sort), and dictionary methods (copy, get)."
     },
     hints: [
-      "Assign values directly in code — do not use input()",
+      "Assign values directly in code - do not use input()",
       "Use strip(), capitalize(), split(), lower() on strings",
       "Build a new list to remove duplicates",
       "Use append() and sort() on lists",
       "Use copy() so you do not mutate the original dict",
-      "String methods return new strings — assign the result"
+      "String methods return new strings - assign the result"
     ],
     difficulty: "intermediate",
     testCases: [

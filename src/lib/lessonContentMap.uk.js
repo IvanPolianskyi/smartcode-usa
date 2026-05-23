@@ -64,6 +64,14 @@ import { lesson_13_2 } from './lessonContent/lesson-13-2'
 import { lesson_13_3 } from './lessonContent/lesson-13-3'
 import { lesson_13_4 } from './lessonContent/lesson-13-4'
 import { lesson_13_5 } from './lessonContent/lesson-13-5'
+import { lesson_14_1 } from './lessonContent/lesson-14-1'
+import { lesson_14_2 } from './lessonContent/lesson-14-2'
+import { lesson_14_3 } from './lessonContent/lesson-14-3'
+import { lesson_14_4 } from './lessonContent/lesson-14-4'
+import { lesson_15_1 } from './lessonContent/lesson-15-1'
+import { lesson_15_2 } from './lessonContent/lesson-15-2'
+import { lesson_15_3 } from './lessonContent/lesson-15-3'
+import { lesson_15_4 } from './lessonContent/lesson-15-4'
 import { lesson_15_6 } from './lessonContent/lesson-15-6'
 
 export const lessonContentMap = {
@@ -142,5 +150,13 @@ export const lessonContentMap = {
 	"lesson-13-3": lesson_13_3,
 	"lesson-13-4": lesson_13_4,
 	"lesson-13-5": lesson_13_5,
+	"lesson-14-1": lesson_14_1,
+	"lesson-14-2": lesson_14_2,
+	"lesson-14-3": lesson_14_3,
+	"lesson-14-4": lesson_14_4,
+	"lesson-15-1": lesson_15_1,
+	"lesson-15-2": lesson_15_2,
+	"lesson-15-3": lesson_15_3,
+	"lesson-15-4": lesson_15_4,
 	"lesson-15-6": lesson_15_6,
 }

@@ -73,7 +73,7 @@ export const lesson_03_10 = {
       },
       {
         title: "Principles of writing good functions",
-        content: `**1. One function — one responsibility**
+        content: `**1. One function - one responsibility**
 
 A function should do one thing and do it well.
 
@@ -565,7 +565,7 @@ Next steps:
 
 Remember:
 
-- One function — one responsibility
+- One function - one responsibility
 - Clear function names
 - Documentation (docstrings)
 - Testing functions
@@ -790,7 +790,7 @@ def calculate_total_with_tax(price, quantity, tax_rate):
 
 Principles of good functions:
 
-1. One function — one responsibility
+1. One function - one responsibility
    - A function should do one thing well
 
 2. Clear names
@@ -831,33 +831,33 @@ Congratulations on completing module 03! You are now ready to build more complex
     description: "Create a library management system using all the concepts you learned",
     problemStatement: `Create a library management system with the following functions:
 
-1. **add_book** — adds a book to the library
+1. **add_book** - adds a book to the library
    - Parameters: library (dictionary), title, author, year, isbn
    - Validates data (title and author are required, year must be a number)
    - Adds the book to the library
    - Returns True if successful, False if an error
 
-2. **find_books** — finds books by criteria
+2. **find_books** - finds books by criteria
    - Parameters: library, **criteria (keyword arguments: author, year, min_year, max_year)
    - Uses filter() for search
    - Returns a list of found books
 
-3. **calculate_statistics** — calculates library statistics
+3. **calculate_statistics** - calculates library statistics
    - Parameters: library
    - Uses reduce() or other methods
    - Returns a dictionary: total number of books, number of authors, oldest book, newest book
 
-4. **format_book_info** — formats book information
+4. **format_book_info** - formats book information
    - Parameters: book (dictionary), format_type="short" (can be "short" or "full")
    - Uses string methods
    - Returns a formatted string
 
-5. **get_books_by_author** — gets books by author
+5. **get_books_by_author** - gets books by author
    - Parameters: library, author
    - Uses filter() and map()
    - Returns a list of book titles by the author
 
-6. **remove_book** — removes a book
+6. **remove_book** - removes a book
    - Parameters: library, isbn
    - Finds and removes the book by ISBN
    - Returns True if found and removed, False otherwise
@@ -1101,7 +1101,7 @@ print(f"Number of books after removal: {len(library['books'])}")`,
       explanation: "The solution demonstrates comprehensive use of all learned concepts: validation, keyword arguments, **kwargs, object methods, filter(), map(), reduce(), string formatting. The library management system shows practical application of functions in a real project."
     },
     hints: [
-      "Enter values directly in code — do not use input()",
+      "Enter values directly in code - do not use input()",
       "Use **criteria for flexible search by different criteria",
       "For validation, check required fields and data types",
       "Use filter() to search for books by criteria",
@@ -1135,13 +1135,13 @@ print(f"Number of books after removal: {len(library['books'])}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "Which principle is most important when writing functions?",
         options: [
-          "One function — one responsibility",
+          "One function - one responsibility",
           "A function should be as long as possible",
           "A function should do many things",
           "A function does not need documentation"
         ],
         correctAnswer: 0,
-        explanation: "One function — one responsibility is a key principle. A function should do one thing and do it well."
+        explanation: "One function - one responsibility is a key principle. A function should do one thing and do it well."
       },
       {
         id: "q2",

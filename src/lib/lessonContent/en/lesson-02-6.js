@@ -311,17 +311,17 @@ print(long_uppercase)  # ['APPLE', 'BANANA']`,
   
   summary: `In this lesson we learned:
 
-1. List comprehension — a compact way to create lists
-2. Basic syntax — [expression for element in sequence]
-3. With a condition (if) — filtering elements
-4. With if-else — conditional expressions
-5. Nested comprehensions — for complex structures
-6. Comparison with loops — when to use which
-7. Practical uses — transformation, filtering, creating structures
+1. List comprehension - a compact way to create lists
+2. Basic syntax - [expression for element in sequence]
+3. With a condition (if) - filtering elements
+4. With if-else - conditional expressions
+5. Nested comprehensions - for complex structures
+6. Comparison with loops - when to use which
+7. Practical uses - transformation, filtering, creating structures
 
 Now you can create lists efficiently and elegantly!
 
-Next lesson — practice with algorithmic problems!`,
+Next lesson - practice with algorithmic problems!`,
   
   practiceTask: {
     title: "Processing student grades",

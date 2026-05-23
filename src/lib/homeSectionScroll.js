@@ -8,6 +8,9 @@ export const SCROLL_HOME_SECTION_EVENT = 'sc:scroll-home-section'
 
 const HEADER_SCROLL_OFFSET = 88
 
+/** Cancels the previous in-flight scroll retry loop. */
+let activeScrollCleanup = null
+
 export function parseHomeHashTarget(href) {
 	if (typeof href !== 'string') return null
 	const m = href.match(/^(?:\/en)?\/#([\w-]+)$/)
@@ -64,10 +67,27 @@ export function scrollToHomeSectionId(id) {
 /** Retries until the element exists (dynamic sections) or maxMs elapsed. */
 export function scheduleScrollToHomeSectionId(id, options = {}) {
 	if (typeof window === 'undefined' || !id) return () => {}
+
+	if (activeScrollCleanup) {
+		activeScrollCleanup()
+		activeScrollCleanup = null
+	}
+
 	const intervalMs = options.intervalMs ?? 80
-	const maxMs = options.maxMs ?? 10000
+	const maxMs = options.maxMs ?? 2500
 	let timer = null
 	let cancelled = false
+
+	const cleanup = () => {
+		cancelled = true
+		if (timer != null) {
+			window.clearInterval(timer)
+			timer = null
+		}
+		if (activeScrollCleanup === cleanup) {
+			activeScrollCleanup = null
+		}
+	}
 
 	const tryScroll = () => {
 		if (cancelled) return
@@ -76,23 +96,23 @@ export function scheduleScrollToHomeSectionId(id, options = {}) {
 		timer = window.setInterval(() => {
 			if (cancelled) {
 				window.clearInterval(timer)
+				timer = null
 				return
 			}
 			if (scrollToHomeSectionId(id) || Date.now() - start > maxMs) {
 				window.clearInterval(timer)
+				timer = null
 			}
 		}, intervalMs)
 	}
 
-	// Після розблокування body / lazy-mount секцій — чекаємо layout
+	activeScrollCleanup = cleanup
+
 	requestAnimationFrame(() => {
 		requestAnimationFrame(tryScroll)
 	})
 
-	return () => {
-		cancelled = true
-		if (timer != null) window.clearInterval(timer)
-	}
+	return cleanup
 }
 
 /** Scroll on the current home page (also updates hash). */

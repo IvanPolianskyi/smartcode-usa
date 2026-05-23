@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 10 — lessons 10.1–10.3 */
+/** Rich EN content for Roblox Module 10 - lessons 10.1–10.3 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -7,7 +7,7 @@ export const enLesson101 = {
   lessonId: 'lesson-roblox-10-1',
   moduleId: 'module-10',
   order: 1,
-  title: '10.1 — Physical Constraints',
+  title: '10.1 - Physical Constraints',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -21,14 +21,14 @@ export const enLesson101 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `**Module 10 — Magic of Details** — polish through **physics**, **tweens**, and **raycasts**.
+        content: `**Module 10 - Magic of Details** - polish through **physics**, **tweens**, and **raycasts**.
 
 **Lesson flow:**
-1. **Theory (40 min)** — constraints
-2. **Practice (~25 min)** — hinge door + rope platform
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - constraints
+2. **Practice (~25 min)** - hinge door + rope platform
+3. **Quiz (10 min)** - **70%** pass
 
-New area: \`Lesson 10.1 — Constraints\`.`,
+New area: \`Lesson 10.1 - Constraints\`.`,
       },
       {
         title: 'Constraints bring worlds to life',
@@ -43,7 +43,7 @@ New area: \`Lesson 10.1 — Constraints\`.`,
 Without constraints, you animate every frame manually. With constraints, **Roblox physics** does the work.`,
       },
       {
-        title: 'Attachments — anchor points',
+        title: 'Attachments - anchor points',
         content: `Every constraint needs **two Attachments** (one per part):
 
 1. Select **Part A** (door) → Create **Attachment** \`Att_Door\`
@@ -109,7 +109,7 @@ Platform **swings** when players jump on it.
 | Rope stretches weird | Check attachment positions |
 | Platform spins | Add AlignOrientation or second constraint |
 
-**Exercise (5 min):** Walk through door while opening — readable motion?`,
+**Exercise (5 min):** Walk through door while opening - readable motion?`,
       },
       {
         title: 'Before practice checklist',
@@ -117,7 +117,7 @@ Platform **swings** when players jump on it.
 - [ ] Frame anchored, door unanchored
 - [ ] Rope platform swings under weight
 - [ ] Attachments aligned at hinge/rope points
-- [ ] Save: \`Lesson 10.1 — Physical Constraints\``,
+- [ ] Save: \`Lesson 10.1 - Physical Constraints\``,
       },
     ],
   },
@@ -127,30 +127,30 @@ Platform **swings** when players jump on it.
     { mistake: 'AngularVelocity 50', explanation: 'Chaotic door.', correctApproach: 'Start 1-2' },
     { mistake: 'No attachment on frame', explanation: 'Constraint incomplete.', correctApproach: 'Two attachments required' },
   ],
-  summary: `You built a motor-driven hinge door and a rope-suspended platform using Attachments and constraints — mechanical motion that feels physical instead of scripted every frame.`,
+  summary: `You built a motor-driven hinge door and a rope-suspended platform using Attachments and constraints - mechanical motion that feels physical instead of scripted every frame.`,
   practiceTask: {
     title: 'Mechanical door (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Hinge door + rope platform.
 
-### Part A — Hinge door (15 min)
-1. Folder Mechanics — DoorFrame + Door + HingeConstraint
+### Part A - Hinge door (15 min)
+1. Folder Mechanics - DoorFrame + Door + HingeConstraint
 2. ClickDetector or ProximityPrompt toggles open
 3. Limits 0–90 degrees
 
-### Part B — Rope platform (8 min)
+### Part B - Rope platform (8 min)
 1. Ceiling + platform + RopeConstraint
-2. Test jump — swing feels natural
+2. Test jump - swing feels natural
 
-### Part C — Save (2 min)
-1. **Save to Roblox** → \`Lesson 10.1 — Physical Constraints\`
+### Part C - Save (2 min)
+1. **Save to Roblox** → \`Lesson 10.1 - Physical Constraints\`
 2. **Practice complete**`,
     hints: [
       'Anchor support parts only',
-      'Module 5 used tweens — constraints are physics-based motion',
+      'Module 5 used tweens - constraints are physics-based motion',
       'Collision groups if door hits players hard',
     ],
-    optionalChallenge: 'Timed bridge swings on loop — cross timing challenge.',
+    optionalChallenge: 'Timed bridge swings on loop - cross timing challenge.',
   },
   quiz: {
     passingScore: 70,
@@ -165,7 +165,7 @@ Platform **swings** when players jump on it.
       { id: 'q7', type: MC, question: 'Too fast AngularVelocity…', options: ['Feels chaotic', 'Improves FPS', 'Required', 'Saves data'], correctAnswer: 0, explanation: 'Tuning.' },
       { id: 'q8', type: MC, question: 'Lesson 10.2 covers…', options: ['TweenService', 'DataStore only', 'NPC only', 'Coins only'], correctAnswer: 0, explanation: 'Next lesson.' },
       { id: 'q9', type: MC, question: 'Constraints used for…', options: ['Doors bridges lifts', 'Dialogue text only', 'Leaderstats', 'UK locale'], correctAnswer: 0, explanation: 'Mechanical motion.' },
-      { id: 'q10', type: MC, question: 'Lesson 10.1 save name…', options: ['Lesson 10.1 — Physical Constraints', 'Puzzle World', 'Tween Mastery', 'RPG Inventory'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 10.1 save name…', options: ['Lesson 10.1 - Physical Constraints', 'Puzzle World', 'Tween Mastery', 'RPG Inventory'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -174,7 +174,7 @@ export const enLesson102 = {
   lessonId: 'lesson-roblox-10-2',
   moduleId: 'module-10',
   order: 2,
-  title: '10.2 — TweenService Mastery',
+  title: '10.2 - TweenService Mastery',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -190,14 +190,14 @@ export const enLesson102 = {
         title: 'Your path today (about 40 minutes)',
         content: `**TweenService** = smooth animation without keyframes every frame.
 
-You used tweens in Module 5 polish — today you **master** patterns for UI and puzzles.
+You used tweens in Module 5 polish - today you **master** patterns for UI and puzzles.
 
 **Lesson flow:**
-1. **Theory (40 min)** — TweenInfo + chains
-2. **Practice (~25 min)** — 3 tween demos
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - TweenInfo + chains
+2. **Practice (~25 min)** - 3 tween demos
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 10.1 — Physical Constraints**.`,
+Open **Lesson 10.1 - Physical Constraints**.`,
       },
       {
         title: 'Why TweenService matters',
@@ -236,13 +236,13 @@ tween:Play()
       },
       {
         title: 'Three tween demos',
-        content: `**1 — UI panel open** (ShopPanel hidden off-screen):
+        content: `**1 - UI panel open** (ShopPanel hidden off-screen):
 
 \`\`\`lua
 -- from {Position = UDim2.fromScale(0.5, 1.2)} to center
 \`\`\`
 
-**2 — Sliding door** (Part CFrame — puzzle door):
+**2 - Sliding door** (Part CFrame - puzzle door):
 
 \`\`\`lua
 local door = workspace.Puzzle.DoorSlide
@@ -250,7 +250,7 @@ local openCF = door.CFrame * CFrame.new(0, 0, 8)
 TweenService:Create(door, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut), {CFrame = openCF}):Play()
 \`\`\`
 
-**3 — Collectible pulse** (crystal scale loop):
+**3 - Collectible pulse** (crystal scale loop):
 
 \`\`\`lua
 local crystal = workspace.QuestProps.Crystal
@@ -293,7 +293,7 @@ Store in config:
 local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 \`\`\`
 
-**Avoid** bounce on every UI element — looks unprofessional.`,
+**Avoid** bounce on every UI element - looks unprofessional.`,
       },
       {
         title: 'Before practice checklist',
@@ -301,7 +301,7 @@ local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDire
 - [ ] Door part slides with Linear tween
 - [ ] Crystal pulse loop
 - [ ] One Completed chain (2+ steps)
-- [ ] Save: \`Lesson 10.2 — Tween Mastery\``,
+- [ ] Save: \`Lesson 10.2 - Tween Mastery\``,
       },
     ],
   },
@@ -311,26 +311,26 @@ local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDire
     { mistake: 'Forgetting :Play()', explanation: 'Nothing happens.', correctApproach: 'tween:Play()' },
     { mistake: 'Conflicting constraint + position tween', explanation: 'Physics fights tween.', correctApproach: 'Pick one motion system' },
   ],
-  summary: `You mastered TweenInfo easing, UI and world object tweens, collectible pulse loops, and Completed chains — your game feedback now feels smooth and intentional.`,
+  summary: `You mastered TweenInfo easing, UI and world object tweens, collectible pulse loops, and Completed chains - your game feedback now feels smooth and intentional.`,
   practiceTask: {
     title: 'Tween polish pack (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** 3 tweens + 1 chain.
 
-### Part A — UI (8 min)
-1. Shop or puzzle panel — tween from off-screen
+### Part A - UI (8 min)
+1. Shop or puzzle panel - tween from off-screen
 2. Close reverses tween
 
-### Part B — World (10 min)
+### Part B - World (10 min)
 1. Sliding door CFrame tween
 2. Crystal pulse Repeat loop
 
-### Part C — Chain & save (7 min)
+### Part C - Chain & save (7 min)
 1. Door opens → panel → text (Completed)
-2. **Save to Roblox** → \`Lesson 10.2 — Tween Mastery\`
+2. **Save to Roblox** → \`Lesson 10.2 - Tween Mastery\`
 3. **Practice complete**`,
     hints: [
-      'Module 5.4 had TweenService — extend here',
+      'Module 5.4 had TweenService - extend here',
       'Cancel previous tween if spam-click open',
       'UDim2 for UI, CFrame for parts',
     ],
@@ -349,7 +349,7 @@ local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDire
       { id: 'q7', type: MC, question: 'Lesson 10.2 builds on…', options: ['Lesson 10.1 constraints', 'Module 1 only', 'Empty', 'Publish'], correctAnswer: 0, explanation: 'Same puzzle place.' },
       { id: 'q8', type: MC, question: 'Lesson 10.3 adds…', options: ['Raycasting', 'Only shop', 'Only inventory', 'Racing'], correctAnswer: 0, explanation: 'Sensors next.' },
       { id: 'q9', type: MC, question: ':Play() is required because…', options: ['Tween does not run until Play', 'Auto always', 'Server bans', 'UI deletes'], correctAnswer: 0, explanation: 'Start tween.' },
-      { id: 'q10', type: MC, question: 'Lesson 10.2 save name…', options: ['Lesson 10.2 — Tween Mastery', 'Physical Constraints', 'Puzzle World', 'Raycasting'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 10.2 save name…', options: ['Lesson 10.2 - Tween Mastery', 'Physical Constraints', 'Puzzle World', 'Raycasting'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -358,7 +358,7 @@ export const enLesson103 = {
   lessonId: 'lesson-roblox-10-3',
   moduleId: 'module-10',
   order: 3,
-  title: '10.3 — Raycasting',
+  title: '10.3 - Raycasting',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -377,11 +377,11 @@ export const enLesson103 = {
 Perfect for laser puzzles, line-of-sight, hit detection.
 
 **Lesson flow:**
-1. **Theory (40 min)** — Raycast API
-2. **Practice (~25 min)** — sensor ray unlock
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - Raycast API
+2. **Practice (~25 min)** - sensor ray unlock
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 10.2 — Tween Mastery**.`,
+Open **Lesson 10.2 - Tween Mastery**.`,
       },
       {
         title: 'Raycasting in plain English',
@@ -410,14 +410,14 @@ params.FilterDescendantsInstances = {
 params.IgnoreWater = true
 \`\`\`
 
-**Include** whitelist — only tagged targets count:
+**Include** whitelist - only tagged targets count:
 
 \`\`\`lua
 params.FilterType = Enum.RaycastFilterType.Include
 params.FilterDescendantsInstances = {workspace.Puzzle.Targets}
 \`\`\`
 
-**Server puzzle** — run raycast on **server** for trusted unlock.`,
+**Server puzzle** - run raycast on **server** for trusted unlock.`,
       },
       {
         title: 'Sensor puzzle logic',
@@ -480,7 +480,7 @@ Wrong: \`direction * 100\` with non-unit vector → wrong hit distance.
 - [ ] Wall between blocks unlock
 - [ ] Debug beam shows red/green state
 - [ ] Server script owns unlock (not client only)
-- [ ] Save: \`Lesson 10.3 — Raycasting\``,
+- [ ] Save: \`Lesson 10.3 - Raycasting\``,
       },
     ],
   },
@@ -490,25 +490,25 @@ Wrong: \`direction * 100\` with non-unit vector → wrong hit distance.
     { mistake: 'Forgot to exclude player character', explanation: 'Self-block.', correctApproach: 'FilterDescendantsInstances' },
     { mistake: 'Decorative part in ray path', explanation: 'Always blocked.', correctApproach: 'Exclude or move part' },
   ],
-  summary: `You implemented RaycastParams filtering, emitter-to-target sensor checks with debug beams, and server-side puzzle unlock logic — ready to combine with mirrors in the laser puzzle lesson.`,
+  summary: `You implemented RaycastParams filtering, emitter-to-target sensor checks with debug beams, and server-side puzzle unlock logic - ready to combine with mirrors in the laser puzzle lesson.`,
   practiceTask: {
     title: 'Sensor ray system (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Ray clear = unlock step.
 
-### Part A — Setup (10 min)
+### Part A - Setup (10 min)
 1. Emitter + TargetCrystal (tag PuzzleTarget)
 2. RaycastParams exclude player/debris
 3. Debug Beam visual
 
-### Part B — Logic (12 min)
+### Part B - Logic (12 min)
 1. Server checkBeam function
 2. Blocked → locked message; clear → activate target
 3. All targets → tween door open (10.2)
 
-### Part C — Save (3 min)
-1. Place wall — verify block; remove — verify unlock
-2. **Save to Roblox** → \`Lesson 10.3 — Raycasting\`
+### Part C - Save (3 min)
+1. Place wall - verify block; remove - verify unlock
+2. **Save to Roblox** → \`Lesson 10.3 - Raycasting\`
 3. **Practice complete**`,
     hints: [
       'Print result.Instance.Name when blocked',
@@ -530,7 +530,7 @@ Wrong: \`direction * 100\` with non-unit vector → wrong hit distance.
       { id: 'q7', type: MC, question: 'Lesson 10.3 builds on…', options: ['Lesson 10.2 tweens for door', 'Module 3 only', 'Empty', 'UK only'], correctAnswer: 0, explanation: 'Door open tween.' },
       { id: 'q8', type: MC, question: 'Lesson 10.4 combines…', options: ['Rays + mirrors + puzzle state', 'Only inventory', 'Only shop', 'Only race'], correctAnswer: 0, explanation: 'Laser puzzle.' },
       { id: 'q9', type: MC, question: 'CollectionService tags help…', options: ['Identify puzzle targets', 'Fly', 'Swim', 'Heal'], correctAnswer: 0, explanation: 'Valid targets.' },
-      { id: 'q10', type: MC, question: 'Lesson 10.3 save name…', options: ['Lesson 10.3 — Raycasting', 'Tween Mastery', 'Puzzle World', 'Constraints'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 10.3 save name…', options: ['Lesson 10.3 - Raycasting', 'Tween Mastery', 'Puzzle World', 'Constraints'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -539,7 +539,7 @@ export const enLesson104 = {
   lessonId: 'lesson-roblox-10-4',
   moduleId: 'module-10',
   order: 4,
-  title: '10.4 — Laser Puzzle',
+  title: '10.4 - Laser Puzzle',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -556,11 +556,11 @@ export const enLesson104 = {
         content: `Combine **raycasts (10.3)** + **tweens (10.2)** into a **multi-step laser room**.
 
 **Lesson flow:**
-1. **Theory (40 min)** — puzzle structure + state table
-2. **Practice (~25 min)** — 3 mirrors, 3 targets
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - puzzle structure + state table
+2. **Practice (~25 min)** - 3 mirrors, 3 targets
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 10.3 — Raycasting**.`,
+Open **Lesson 10.3 - Raycasting**.`,
       },
       {
         title: 'Laser puzzle structure',
@@ -602,11 +602,11 @@ local function tryOpenDoor()
 end
 \`\`\`
 
-**Server owns** targetState — client cannot FireServer(true, true, true).`,
+**Server owns** targetState - client cannot FireServer(true, true, true).`,
       },
       {
         title: 'Mirror rotation',
-        content: `Each mirror — **ClickDetector** or **ProximityPrompt** "Rotate":
+        content: `Each mirror - **ClickDetector** or **ProximityPrompt** "Rotate":
 
 \`\`\`lua
 local ROTATE_STEP = 45
@@ -675,7 +675,7 @@ When wrong rotation:
 - [ ] All 3 active opens door with tween + sound
 - [ ] Status shows X/3 progress
 - [ ] Reset works for replay
-- [ ] Save: \`Lesson 10.4 — Laser Puzzle\``,
+- [ ] Save: \`Lesson 10.4 - Laser Puzzle\``,
       },
     ],
   },
@@ -685,24 +685,24 @@ When wrong rotation:
     { mistake: 'Door opens on 2/3 targets', explanation: 'Logic bug.', correctApproach: 'allActive() check' },
     { mistake: 'No feedback on activate', explanation: 'Confusing puzzle.', correctApproach: 'Light + sound + counter' },
   ],
-  summary: `You built a three-target laser puzzle with server targetState, debounced mirror rotation, ray or angle checks, and a tween door reward — players understand and solve a multi-step challenge.`,
+  summary: `You built a three-target laser puzzle with server targetState, debounced mirror rotation, ray or angle checks, and a tween door reward - players understand and solve a multi-step challenge.`,
   practiceTask: {
     title: 'Laser puzzle room (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** 3 targets → open door.
 
-### Part A — Build (10 min)
-1. LaserPuzzle folder — emitter, 3 mirrors, 3 targets
+### Part A - Build (10 min)
+1. LaserPuzzle folder - emitter, 3 mirrors, 3 targets
 2. targetState + tryOpenDoor server script
 
-### Part B — Interaction (12 min)
-1. Rotate mirrors — recheck — update state
+### Part B - Interaction (12 min)
+1. Rotate mirrors - recheck - update state
 2. Feedback lights/sounds + Targets X/3 UI
 3. All active → door tween
 
-### Part C — Save (3 min)
+### Part C - Save (3 min)
 1. Full solve once; reset and solve again
-2. **Save to Roblox** → \`Lesson 10.4 — Laser Puzzle\`
+2. **Save to Roblox** → \`Lesson 10.4 - Laser Puzzle\`
 3. **Practice complete**`,
     hints: [
       'Start with angle-snap solution before real mirror bounce',
@@ -724,7 +724,7 @@ When wrong rotation:
       { id: 'q7', type: MC, question: 'PuzzleTarget tag identifies…', options: ['Valid crystal targets', 'Enemies', 'Shops', 'Cars'], correctAnswer: 0, explanation: 'Ray targets.' },
       { id: 'q8', type: MC, question: 'Lesson 10.5 adds…', options: ['Procedural variants', 'Only dialogue', 'DataStore', 'Publish'], correctAnswer: 0, explanation: 'Random layouts.' },
       { id: 'q9', type: MC, question: 'Anti-bypass means…', options: ['Server validates completion', 'Trust client', 'No checks', 'Skip puzzle'], correctAnswer: 0, explanation: 'Security.' },
-      { id: 'q10', type: MC, question: 'Lesson 10.4 save name…', options: ['Lesson 10.4 — Laser Puzzle', 'Raycasting', 'Puzzle World', 'Constraints'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 10.4 save name…', options: ['Lesson 10.4 - Laser Puzzle', 'Raycasting', 'Puzzle World', 'Constraints'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -733,7 +733,7 @@ export const enLesson105 = {
   lessonId: 'lesson-roblox-10-5',
   moduleId: 'module-10',
   order: 5,
-  title: '10.5 — Procedural Elements',
+  title: '10.5 - Procedural Elements',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -747,14 +747,14 @@ export const enLesson105 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `**Procedural** does not mean chaotic — it means **variety from templates** players can still beat.
+        content: `**Procedural** does not mean chaotic - it means **variety from templates** players can still beat.
 
 **Lesson flow:**
-1. **Theory (40 min)** — template + random pick
-2. **Practice (~25 min)** — 4 puzzle variants
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - template + random pick
+2. **Practice (~25 min)** - 4 puzzle variants
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 10.4 — Laser Puzzle**.`,
+Open **Lesson 10.4 - Laser Puzzle**.`,
       },
       {
         title: 'Procedural vs random mess',
@@ -838,7 +838,7 @@ local function pickWeighted()
 end
 \`\`\`
 
-**Fairness rule:** test each variant 5 times — all completable.`,
+**Fairness rule:** test each variant 5 times - all completable.`,
       },
       {
         title: 'Seeded random for testing',
@@ -851,9 +851,9 @@ if TEST_MODE then
 end
 \`\`\`
 
-Same seed → same variant sequence in Studio — reproduce bugs.
+Same seed → same variant sequence in Studio - reproduce bugs.
 
-**Never** seed in published live game from client input (predictable exploits) — server picks only.`,
+**Never** seed in published live game from client input (predictable exploits) - server picks only.`,
       },
       {
         title: 'Round reset flow',
@@ -871,7 +871,7 @@ Connects to future **round-based** games (Module 11+).`,
 - [ ] Round start picks random variant
 - [ ] VariantLabel shows current layout id
 - [ ] Reset + new variant after win works
-- [ ] Save: \`Lesson 10.5 — Procedural Elements\``,
+- [ ] Save: \`Lesson 10.5 - Procedural Elements\``,
       },
     ],
   },
@@ -881,31 +881,31 @@ Connects to future **round-based** games (Module 11+).`,
     { mistake: 'Only one layout', explanation: 'Not procedural lesson goal.', correctApproach: 'Minimum 4 templates' },
     { mistake: 'Client picks variant', explanation: 'Cherry-pick easy.', correctApproach: 'Server pickVariant' },
   ],
-  summary: `You added curated puzzle variants selected with math.random, metadata for difficulty, optional weighted picks, and round reset flow — the laser room now changes between plays while staying fair.`,
+  summary: `You added curated puzzle variants selected with math.random, metadata for difficulty, optional weighted picks, and round reset flow - the laser room now changes between plays while staying fair.`,
   practiceTask: {
     title: 'Procedural puzzle variants (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** 4 layouts, random each round.
 
-### Part A — Variants module (10 min)
+### Part A - Variants module (10 min)
 1. PuzzleVariants with 4 entries + mirrorAngles
-2. Playtest each — all solvable
+2. Playtest each - all solvable
 
-### Part B — Round manager (12 min)
+### Part B - Round manager (12 min)
 1. pickVariant + applyVariant on start
 2. After win → reset → new variant
 3. VariantLabel UI
 
-### Part C — Save (3 min)
-1. Play 4 rounds — see different ids in Output
-2. **Save to Roblox** → \`Lesson 10.5 — Procedural Elements\`
+### Part C - Save (3 min)
+1. Play 4 rounds - see different ids in Output
+2. **Save to Roblox** → \`Lesson 10.5 - Procedural Elements\`
 3. **Practice complete**`,
     hints: [
       'TEST_SEED for repeatable debug',
       'estimatedMinutes helps teachers balance',
       'Legendary variant 10% optional',
     ],
-    optionalChallenge: 'Weighted random — layout_delta 10% only.',
+    optionalChallenge: 'Weighted random - layout_delta 10% only.',
   },
   quiz: {
     passingScore: 70,
@@ -920,7 +920,7 @@ Connects to future **round-based** games (Module 11+).`,
       { id: 'q7', type: MC, question: 'Lesson 10.5 builds on…', options: ['Lesson 10.4 laser room', 'Module 1 only', 'Shop only', 'Empty'], correctAnswer: 0, explanation: 'Same puzzle base.' },
       { id: 'q8', type: MC, question: 'Lesson 10.6 is…', options: ['Puzzle World checkpoint', 'RPG only', 'Race only', 'NPC only'], correctAnswer: 0, explanation: 'Module finale.' },
       { id: 'q9', type: MC, question: 'difficulty field in variant…', options: ['Helps balance and label', 'Required by Roblox', 'Replaces Humanoid', 'Opens shop'], correctAnswer: 0, explanation: 'Metadata.' },
-      { id: 'q10', type: MC, question: 'Lesson 10.5 save name…', options: ['Lesson 10.5 — Procedural Elements', 'Laser Puzzle', 'Puzzle World', 'Tween Mastery'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 10.5 save name…', options: ['Lesson 10.5 - Procedural Elements', 'Laser Puzzle', 'Puzzle World', 'Tween Mastery'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -929,7 +929,7 @@ export const enLesson106 = {
   lessonId: 'lesson-roblox-10-6',
   moduleId: 'module-10',
   order: 6,
-  title: '10.6 — Checkpoint: Puzzle World',
+  title: '10.6 - Checkpoint: Puzzle World',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -943,7 +943,7 @@ export const enLesson106 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `**Puzzle World** = Module 10 portfolio — proves you blend **physics, polish, logic, and variety**.
+        content: `**Puzzle World** = Module 10 portfolio - proves you blend **physics, polish, logic, and variety**.
 
 **Required ingredients:**
 - Constraint mechanic (door or platform)
@@ -951,7 +951,7 @@ export const enLesson106 = {
 - Raycast or laser target logic
 - Procedural variant on round start
 
-**Save:** \`Module 10 — Puzzle World\``,
+**Save:** \`Module 10 - Puzzle World\``,
       },
       {
         title: 'World layout blueprint',
@@ -981,10 +981,10 @@ StarterGui/
 |------|------------|
 | 1 | Spawn → sign explains goal |
 | 2 | Optional: cross rope / open hinge demo |
-| 3 | Enter laser room — variant announced |
-| 4 | Solve 3 targets — feedback each |
-| 5 | Door tweens open — celebration SFX |
-| 6 | New round — different variant |
+| 3 | Enter laser room - variant announced |
+| 4 | Solve 3 targets - feedback each |
+| 5 | Door tweens open - celebration SFX |
+| 6 | New round - different variant |
 
 **Total time:** 5–8 minutes first try.`,
       },
@@ -1019,18 +1019,18 @@ StarterGui/
       {
         title: '60-second demo + Module 11 preview',
         content: `**Demo script:**
-1. Show Mechanics folder — quick hinge
-2. Enter puzzle — read variant label
-3. Solve one target — light + sound
-4. Complete puzzle — door tween
-5. New round — new variant name
+1. Show Mechanics folder - quick hinge
+2. Enter puzzle - read variant label
+3. Solve one target - light + sound
+4. Complete puzzle - door tween
+5. New round - new variant name
 
-**Module 11 — Performance & Polish:** Explorer cleanup, profiling, publish prep.
+**Module 11 - Performance & Polish:** Explorer cleanup, profiling, publish prep.
 
 **Before practice:**
 - [ ] Five playtests done
 - [ ] Polish checklist 7/7
-- [ ] **Save to Roblox** → \`Module 10 — Puzzle World\``,
+- [ ] **Save to Roblox** → \`Module 10 - Puzzle World\``,
       },
     ],
   },
@@ -1040,24 +1040,24 @@ StarterGui/
     { mistake: 'Messy Explorer', explanation: 'Hard to maintain.', correctApproach: 'PuzzleWorld folder structure' },
     { mistake: 'Unsolvable procedural variant', explanation: 'Bad reviews.', correctApproach: 'Test all 4 variants' },
   ],
-  summary: `You integrated constraints, tweens, laser puzzles, and procedural rounds into Puzzle World, passed playtest and polish QA, and saved a demo-ready checkpoint — Module 10 is complete.`,
+  summary: `You integrated constraints, tweens, laser puzzles, and procedural rounds into Puzzle World, passed playtest and polish QA, and saved a demo-ready checkpoint - Module 10 is complete.`,
   practiceTask: {
     title: 'Ship Puzzle World (~40 min)',
     difficulty: 'beginner',
     description: `**Goal:** Portfolio checkpoint.
 
-### Part A — Integrate (15 min)
+### Part A - Integrate (15 min)
 1. Merge 10.1–10.5 into PuzzleWorld
 2. One golden path signposted
 3. PuzzleUI complete
 
-### Part B — Playtests (20 min)
-1. Five runs — log stuck points — fix top 2
+### Part B - Playtests (20 min)
+1. Five runs - log stuck points - fix top 2
 2. Polish checklist all pass
 
-### Part C — Demo save (5 min)
+### Part C - Demo save (5 min)
 1. 60s rehearsed demo
-2. **Save to Roblox** → \`Module 10 — Puzzle World\`
+2. **Save to Roblox** → \`Module 10 - Puzzle World\`
 3. **Practice complete**`,
     hints: [
       'Tune tween timing after playtest 3',
@@ -1072,7 +1072,7 @@ StarterGui/
     questions: [
       { id: 'q1', type: MC, question: 'Puzzle World must include…', options: ['Constraint + tween + ray + procedural', 'Only terrain', 'Only shop', 'No scripts'], correctAnswer: 0, explanation: 'Four ingredients.' },
       { id: 'q2', type: MC, question: 'Five playtests find…', options: ['Where players get stuck', 'Robux', 'DataStore keys', 'Version'], correctAnswer: 0, explanation: 'UX validation.' },
-      { id: 'q3', type: MC, question: 'Module 10 save name…', options: ['Module 10 — Puzzle World', 'RPG Inventory', 'Living Location', 'Lesson 10.1'], correctAnswer: 0, explanation: 'Checkpoint.' },
+      { id: 'q3', type: MC, question: 'Module 10 save name…', options: ['Module 10 - Puzzle World', 'RPG Inventory', 'Living Location', 'Lesson 10.1'], correctAnswer: 0, explanation: 'Checkpoint.' },
       { id: 'q4', type: MC, question: 'Procedural round after win…', options: ['Picks new variant', 'Deletes player', 'Stops server', 'Publishes'], correctAnswer: 0, explanation: 'Replay loop.' },
       { id: 'q5', type: MC, question: 'No dead-ends means…', options: ['Players always have path forward', 'No puzzles', 'Kill zone', 'Empty map'], correctAnswer: 0, explanation: 'Fair design.' },
       { id: 'q6', type: MC, question: 'Lesson 10.6 completes…', options: ['Module 10 Magic of Details', 'Module 12', 'Module 1', 'UK translation'], correctAnswer: 0, explanation: 'End module 10.' },

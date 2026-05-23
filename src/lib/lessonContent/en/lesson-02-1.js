@@ -35,10 +35,10 @@ export const lesson_02_1 = {
 Python uses indentation instead of curly braces {}. This makes code more readable and cleaner.
 
 **Key differences from other languages:**
-1. No curly braces {} — use a colon : and indentation
+1. No curly braces {} - use a colon : and indentation
 2. No parentheses () around the condition (though you can use them)
 3. No semicolon ; at the end of lines
-4. Indentation matters — it defines the structure of the code`
+4. Indentation matters - it defines the structure of the code`
       },
       {
         title: "if/elif/else syntax",
@@ -59,7 +59,7 @@ else:
 **Important:**
 - A colon : always follows the condition
 - Code inside if/elif/else must be indented (usually 4 spaces)
-- elif and else are optional — you can use only if
+- elif and else are optional - you can use only if
 - You can have many elif blocks after one if
 
 **Example:**
@@ -78,13 +78,13 @@ else:
       },
       {
         title: "Types of conditional constructs",
-        content: `**1. Simple if** — only one check:
+        content: `**1. Simple if** - only one check:
 \`\`\`python
 if condition:
     action
 \`\`\`
 
-**2. if with else** — two alternatives:
+**2. if with else** - two alternatives:
 \`\`\`python
 if condition:
     action1
@@ -92,7 +92,7 @@ else:
     action2
 \`\`\`
 
-**3. if with elif and else** — many conditions:
+**3. if with elif and else** - many conditions:
 \`\`\`python
 if condition1:
     action1
@@ -294,17 +294,17 @@ else:
   
   summary: `In this lesson we learned:
 
-1. Conditional statements — if, elif, else for making decisions
-2. Python syntax — colon : and indentation instead of braces
-3. Simple if — for one condition
-4. if with else — for two alternatives
-5. if with elif — for many conditions
-6. Nested conditions — if inside if
-7. Indentation — the importance of correct indentation in Python
+1. Conditional statements - if, elif, else for making decisions
+2. Python syntax - colon : and indentation instead of braces
+3. Simple if - for one condition
+4. if with else - for two alternatives
+5. if with elif - for many conditions
+6. Nested conditions - if inside if
+7. Indentation - the importance of correct indentation in Python
 
 Now you can create programs that make decisions based on different conditions!
 
-Next lesson — the while loop for repeating actions!`,
+Next lesson - the while loop for repeating actions!`,
   
   practiceTask: {
     title: "Student grading system",

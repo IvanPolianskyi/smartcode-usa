@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 09 — lessons 9.1–9.3 */
+/** Rich EN content for Roblox Module 09 - lessons 9.1–9.3 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -7,7 +7,7 @@ export const enLesson91 = {
   lessonId: 'lesson-roblox-9-1',
   moduleId: 'module-09',
   order: 1,
-  title: '9.1 — ModuleScript: Shared Code',
+  title: '9.1 - ModuleScript: Shared Code',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -21,14 +21,14 @@ export const enLesson91 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `**Module 9 — Systems Architect** — you build an **RPG inventory** with clean, reusable code.
+        content: `**Module 9 - Systems Architect** - you build an **RPG inventory** with clean, reusable code.
 
 **Lesson flow:**
-1. **Theory (40 min)** — ModuleScript pattern
-2. **Practice (~25 min)** — RPG constants module
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - ModuleScript pattern
+2. **Practice (~25 min)** - RPG constants module
+3. **Quiz (10 min)** - **70%** pass
 
-Use **Module 8 — Living Location** or new: \`Lesson 9.1 — Modules\`.`,
+Use **Module 8 - Living Location** or new: \`Lesson 9.1 - Modules\`.`,
       },
       {
         title: 'Why ModuleScript is a superpower',
@@ -52,7 +52,7 @@ ServerScriptService
 │   ├── RPGConfig.lua      (ModuleScript)
 │   └── (later) Inventory.lua
 ├── InventoryService.lua   (Script)
-└── TestInventory.lua      (Script — dev only)
+└── TestInventory.lua      (Script - dev only)
 \`\`\`
 
 **ModuleScript** icon looks like a puzzle piece. **Script** runs; **ModuleScript** is **required**, not auto-run.`,
@@ -85,7 +85,7 @@ end
 return RPGConfig
 \`\`\`
 
-**Return one table** — that is your public API.`,
+**Return one table** - that is your public API.`,
       },
       {
         title: 'Require and use',
@@ -102,7 +102,7 @@ print("Valid fake?", RPGConfig.isValidRarity("legendary_plus"))
 
 **Path matters:** \`require\` uses instance path, not file names on disk.
 
-**Exercise (5 min):** Second script \`ShopBridge\` also requires \`RPGConfig\` — change \`STARTER_GOLD\` once, both see new value.`,
+**Exercise (5 min):** Second script \`ShopBridge\` also requires \`RPGConfig\` - change \`STARTER_GOLD\` once, both see new value.`,
       },
       {
         title: 'Config vs behavior modules',
@@ -114,14 +114,14 @@ print("Valid fake?", RPGConfig.isValidRarity("legendary_plus"))
 **Config** modules rarely change at runtime.
 **Behavior** modules create per-player objects.
 
-Do not put \`PlayerAdded\` in config modules — keep in Service scripts.`,
+Do not put \`PlayerAdded\` in config modules - keep in Service scripts.`,
       },
       {
         title: 'Before practice checklist',
         content: `- [ ] Modules/RPGConfig ModuleScript
 - [ ] Two scripts require it successfully
 - [ ] getMaxSlots and isValidRarity work in Output
-- [ ] Save: \`Lesson 9.1 — ModuleScript\``,
+- [ ] Save: \`Lesson 9.1 - ModuleScript\``,
       },
     ],
   },
@@ -131,28 +131,28 @@ Do not put \`PlayerAdded\` in config modules — keep in Service scripts.`,
     { mistake: 'Constants duplicated in Shop and Inventory', explanation: 'Drift when balancing.', correctApproach: 'Single RPGConfig' },
     { mistake: 'Returning nothing from module', explanation: 'require returns nil.', correctApproach: 'return RPGConfig at end' },
   ],
-  summary: `You created RPGConfig as a shared ModuleScript with constants and helper functions, required it from multiple scripts, and separated configuration from runtime services — the foundation for your RPG inventory system.`,
+  summary: `You created RPGConfig as a shared ModuleScript with constants and helper functions, required it from multiple scripts, and separated configuration from runtime services - the foundation for your RPG inventory system.`,
   practiceTask: {
     title: 'First shared module (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** RPG constants used in 2+ scripts.
 
-### Part A — RPGConfig (12 min)
+### Part A - RPGConfig (12 min)
 1. Modules/RPGConfig with gold, slots, rarity colors
 2. getMaxSlots(level) and isValidRarity(rarity)
 
-### Part B — Require test (10 min)
+### Part B - Require test (10 min)
 1. InventoryService prints values
 2. Second script (TestModules) requires same module
-3. Change STARTER_GOLD — both update
+3. Change STARTER_GOLD - both update
 
-### Part C — Save (3 min)
-1. **Save to Roblox** → \`Lesson 9.1 — ModuleScript\`
+### Part C - Save (3 min)
+1. **Save to Roblox** → \`Lesson 9.1 - ModuleScript\`
 2. **Practice complete**`,
     hints: [
       'Module name in Explorer = require path segment',
-      'Return only public API — local helpers stay local',
-      'Module 7 ShopConfig was same idea — now RPG-focused',
+      'Return only public API - local helpers stay local',
+      'Module 7 ShopConfig was same idea - now RPG-focused',
     ],
     optionalChallenge: 'Add getRarityColor(rarity) returning Color3 or nil.',
   },
@@ -169,7 +169,7 @@ Do not put \`PlayerAdded\` in config modules — keep in Service scripts.`,
       { id: 'q7', type: MC, question: 'Module 9 theme is…', options: ['Systems Architect / RPG inventory', 'Only racing', 'Only shop UI', 'Terrain only'], correctAnswer: 0, explanation: 'Module title.' },
       { id: 'q8', type: MC, question: 'Config vs behavior split means…', options: ['Data separate from runtime services', 'No scripts', 'Client-only', 'Delete modules'], correctAnswer: 0, explanation: 'Architecture.' },
       { id: 'q9', type: MC, question: 'Lesson 9.2 adds…', options: ['Inventory tables', 'Only NPC', 'Only car', 'Publish'], correctAnswer: 0, explanation: 'Next lesson.' },
-      { id: 'q10', type: MC, question: 'Lesson 9.1 save name…', options: ['Lesson 9.1 — ModuleScript', 'RPG Inventory', 'Living Location', 'Shop Works'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 9.1 save name…', options: ['Lesson 9.1 - ModuleScript', 'RPG Inventory', 'Living Location', 'Shop Works'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -178,7 +178,7 @@ export const enLesson92 = {
   lessonId: 'lesson-roblox-9-2',
   moduleId: 'module-09',
   order: 2,
-  title: '9.2 — Inventory with Tables',
+  title: '9.2 - Inventory with Tables',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -195,11 +195,11 @@ export const enLesson92 = {
         content: `Tables are Roblox's **spreadsheet** for inventory. Today you build **add / remove / count** safely.
 
 **Lesson flow:**
-1. **Theory (40 min)** — slot table model
-2. **Practice (~25 min)** — inventory operations module
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - slot table model
+2. **Practice (~25 min)** - inventory operations module
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 9.1 — ModuleScript**.`,
+Open **Lesson 9.1 - ModuleScript**.`,
       },
       {
         title: 'Inventory table model',
@@ -330,7 +330,7 @@ function InventoryOps.countItem(inventory, itemId)
 end
 \`\`\`
 
-**Return (success, reason)** — UI can show "Inventory full".`,
+**Return (success, reason)** - UI can show "Inventory full".`,
       },
       {
         title: 'Defensive coding',
@@ -342,14 +342,14 @@ if not inventory or not inventory.slots then
 end
 \`\`\`
 
-**Test script** calls add/remove in Output — no player needed for logic test.
+**Test script** calls add/remove in Output - no player needed for logic test.
 
 **Before practice checklist:**
 - [ ] addItem stacks potions to maxStack
 - [ ] addItem fails when full with reason
 - [ ] removeItem clears slot at qty 0
 - [ ] countItem accurate
-- [ ] Save: \`Lesson 9.2 — Inventory Tables\``,
+- [ ] Save: \`Lesson 9.2 - Inventory Tables\``,
       },
     ],
   },
@@ -359,23 +359,23 @@ end
     { mistake: 'Forgetting nil empty slots', explanation: 'Skips slots wrong.', correctApproach: 'Explicit nil for empty' },
     { mistake: 'Logic copy-pasted in 5 scripts', explanation: 'Drift.', correctApproach: 'InventoryOps module' },
   ],
-  summary: `You modeled inventory with slot tables, built addItem/removeItem/countItem with stack limits and clear fail reasons, and centralized item rules in ItemDatabase — ready to wrap in per-player objects next lesson.`,
+  summary: `You modeled inventory with slot tables, built addItem/removeItem/countItem with stack limits and clear fail reasons, and centralized item rules in ItemDatabase - ready to wrap in per-player objects next lesson.`,
   practiceTask: {
     title: 'Inventory table operations (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Working add/remove/count with tests.
 
-### Part A — Data (8 min)
+### Part A - Data (8 min)
 1. ItemDatabase with 3 items + maxStack
 2. InventoryOps module with helpers
 
-### Part B — Operations (15 min)
-1. addItem — stack + new slot + full fail
+### Part B - Operations (15 min)
+1. addItem - stack + new slot + full fail
 2. removeItem + countItem
 3. TestInventory script prints 6 test cases
 
-### Part C — Save (2 min)
-1. **Save to Roblox** → \`Lesson 9.2 — Inventory Tables\`
+### Part C - Save (2 min)
+1. **Save to Roblox** → \`Lesson 9.2 - Inventory Tables\`
 2. **Practice complete**`,
     hints: [
       'Print ok, reason from each call',
@@ -397,7 +397,7 @@ end
       { id: 'q7', type: MC, question: 'InventoryOps should be a…', options: ['ModuleScript', 'Terrain', 'Sound', 'ProximityPrompt'], correctAnswer: 0, explanation: 'Shared module.' },
       { id: 'q8', type: MC, question: 'Lesson 9.2 builds on…', options: ['Lesson 9.1 RPGConfig', 'Lesson 6 only', 'Empty', 'Publish'], correctAnswer: 0, explanation: 'Module path.' },
       { id: 'q9', type: MC, question: 'Lesson 9.3 adds…', options: ['Tables as objects with metatables', 'Only dialogue', 'Only race', 'Terrain'], correctAnswer: 0, explanation: 'OOP-style inventory.' },
-      { id: 'q10', type: MC, question: 'Lesson 9.2 save name…', options: ['Lesson 9.2 — Inventory Tables', 'ModuleScript', 'RPG Inventory', 'Shop UI'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 9.2 save name…', options: ['Lesson 9.2 - Inventory Tables', 'ModuleScript', 'RPG Inventory', 'Shop UI'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -406,7 +406,7 @@ export const enLesson93 = {
   lessonId: 'lesson-roblox-9-3',
   moduleId: 'module-09',
   order: 3,
-  title: '9.3 — Tables as Objects',
+  title: '9.3 - Tables as Objects',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -423,15 +423,15 @@ export const enLesson93 = {
         content: `Instead of passing \`inventory\` tables everywhere, each player gets an **Inventory object** with methods.
 
 **Lesson flow:**
-1. **Theory (40 min)** — metatable pattern
-2. **Practice (~25 min)** — Inventory.new per player
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - metatable pattern
+2. **Practice (~25 min)** - Inventory.new per player
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 9.2 — Inventory Tables**.`,
+Open **Lesson 9.2 - Inventory Tables**.`,
       },
       {
         title: 'Tables can act like objects',
-        content: `Lua has no classes — **metatables** mimic them:
+        content: `Lua has no classes - **metatables** mimic them:
 
 \`\`\`lua
 local Inventory = {}
@@ -450,7 +450,7 @@ end
       },
       {
         title: 'Methods with self',
-        content: `\`Modules/Inventory.lua\` — requires InventoryOps + ItemDatabase:
+        content: `\`Modules/Inventory.lua\` - requires InventoryOps + ItemDatabase:
 
 \`\`\`lua
 function Inventory:add(itemId, qty)
@@ -486,7 +486,7 @@ function Inventory.deserialize(data)
 end
 \`\`\`
 
-Lesson **9.5** saves this to DataStore — today just print JSON-like table.`,
+Lesson **9.5** saves this to DataStore - today just print JSON-like table.`,
       },
       {
         title: 'Per-player InventoryService',
@@ -520,7 +520,7 @@ local function giveTestItem(player, itemId, qty)
 end
 \`\`\`
 
-**Never** store Player instance inside Inventory object — use \`playerInventories[player]\` map.`,
+**Never** store Player instance inside Inventory object - use \`playerInventories[player]\` map.`,
       },
       {
         title: 'Why this scales',
@@ -543,7 +543,7 @@ Ready for **gear stats** in 9.4.`,
 - [ ] inv:add / inv:remove work in Play
 - [ ] serialize prints valid table
 - [ ] PlayerRemoving clears memory
-- [ ] Save: \`Lesson 9.3 — Inventory Object\``,
+- [ ] Save: \`Lesson 9.3 - Inventory Object\``,
       },
     ],
   },
@@ -559,18 +559,18 @@ Ready for **gear stats** in 9.4.`,
     difficulty: 'beginner',
     description: `**Goal:** Per-player Inventory objects.
 
-### Part A — Inventory module (12 min)
+### Part A - Inventory module (12 min)
 1. Inventory.new, __index, add, remove, count
 2. serialize + deserialize
 3. Wrap InventoryOps from 9.2
 
-### Part B — Service (10 min)
+### Part B - Service (10 min)
 1. InventoryService PlayerAdded/Removing
 2. Starter potions on join
-3. Play — print inv:count in command test
+3. Play - print inv:count in command test
 
-### Part C — Save (3 min)
-1. **Save to Roblox** → \`Lesson 9.3 — Inventory Object\`
+### Part C - Save (3 min)
+1. **Save to Roblox** → \`Lesson 9.3 - Inventory Object\`
 2. **Practice complete**`,
     hints: [
       'Colon : for methods, dot . only if you pass self manually',
@@ -592,7 +592,7 @@ Ready for **gear stats** in 9.4.`,
       { id: 'q7', type: MC, question: 'Avoid storing Player inside inventory because…', options: ['Cleaner map outside object', 'Required by Roblox', 'Blocks UI', 'Removes Humanoid'], correctAnswer: 0, explanation: 'Encapsulation.' },
       { id: 'q8', type: MC, question: 'Lesson 9.3 builds on…', options: ['Lesson 9.2 InventoryOps', 'Lesson 1.1 only', 'Module 6 only', 'Empty'], correctAnswer: 0, explanation: 'Refactor tables.' },
       { id: 'q9', type: MC, question: 'Lesson 9.4 adds…', options: ['Gear and stats', 'Only NPC', 'Only publish', 'Race timer'], correctAnswer: 0, explanation: 'Equipment.' },
-      { id: 'q10', type: MC, question: 'Lesson 9.3 save name…', options: ['Lesson 9.3 — Inventory Object', 'ModuleScript', 'Living Location', 'Race Launched'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 9.3 save name…', options: ['Lesson 9.3 - Inventory Object', 'ModuleScript', 'Living Location', 'Race Launched'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -601,7 +601,7 @@ export const enLesson94 = {
   lessonId: 'lesson-roblox-9-4',
   moduleId: 'module-09',
   order: 4,
-  title: '9.4 — Gear and Stats',
+  title: '9.4 - Gear and Stats',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -618,11 +618,11 @@ export const enLesson94 = {
         content: `Inventory holds items. **Gear** makes items change **how strong** you are.
 
 **Lesson flow:**
-1. **Theory (40 min)** — equip slots + stat engine
-2. **Practice (~25 min)** — 3 slots + HUD stats
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - equip slots + stat engine
+2. **Practice (~25 min)** - 3 slots + HUD stats
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 9.3 — Inventory Object**.`,
+Open **Lesson 9.3 - Inventory Object**.`,
       },
       {
         title: 'Gear stats in ItemDatabase',
@@ -745,7 +745,7 @@ end)
 
 **Module 5 combat:** sword damage uses \`totals.atk\` on server when hit lands.
 
-One equip → recalc → **StatsChanged** → UI + combat — three sync points.`,
+One equip → recalc → **StatsChanged** → UI + combat - three sync points.`,
       },
       {
         title: 'Before practice checklist',
@@ -753,7 +753,7 @@ One equip → recalc → **StatsChanged** → UI + combat — three sync points.
 - [ ] HUD updates on equip/unequip
 - [ ] Base stats unchanged in playerBaseStats table
 - [ ] Wrong slot item denied
-- [ ] Save: \`Lesson 9.4 — Gear Stats\``,
+- [ ] Save: \`Lesson 9.4 - Gear Stats\``,
       },
     ],
   },
@@ -763,24 +763,24 @@ One equip → recalc → **StatsChanged** → UI + combat — three sync points.
     { mistake: 'No slot field on items', explanation: 'Sword in armor slot.', correctApproach: 'meta.slot validation' },
     { mistake: 'Client sets atk IntValue', explanation: 'Exploit.', correctApproach: 'Server calcStats + FireClient' },
   ],
-  summary: `You added gear slots with ItemDatabase stats, dynamic totalAtk/hp/crit calculation, equip/unequip flow, and StatsChanged HUD updates — equipment now affects how players fight.`,
+  summary: `You added gear slots with ItemDatabase stats, dynamic totalAtk/hp/crit calculation, equip/unequip flow, and StatsChanged HUD updates - equipment now affects how players fight.`,
   practiceTask: {
     title: 'Gear + stat engine (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** 3 slots + live stat HUD.
 
-### Part A — Data (8 min)
+### Part A - Data (8 min)
 1. ItemDatabase atk/hp/crit + slot field
 2. playerEquipped + playerBaseStats tables
 
-### Part B — Equip (12 min)
+### Part B - Equip (12 min)
 1. equipItem server with calcStats
 2. StatsChanged → StatsUI labels
 3. Test weapon + armor + trinket
 
-### Part C — Save (5 min)
-1. Equip sword — verify ATK label
-2. **Save to Roblox** → \`Lesson 9.4 — Gear Stats\`
+### Part C - Save (5 min)
+1. Equip sword - verify ATK label
+2. **Save to Roblox** → \`Lesson 9.4 - Gear Stats\`
 3. **Practice complete**`,
     hints: [
       'Nil-safe: meta.atk or 0',
@@ -802,7 +802,7 @@ One equip → recalc → **StatsChanged** → UI + combat — three sync points.
       { id: 'q7', type: MC, question: 'Combat damage should read…', options: ['Server total atk', 'Client chat', 'Button text', 'Terrain'], correctAnswer: 0, explanation: 'Authority.' },
       { id: 'q8', type: MC, question: 'Lesson 9.4 builds on…', options: ['Lesson 9.3 inventory objects', 'Lesson 1 only', 'Module 6 only', 'Empty'], correctAnswer: 0, explanation: 'Needs inventory.' },
       { id: 'q9', type: MC, question: 'Lesson 9.5 adds…', options: ['DataStore serialization', 'Only NPC', 'Only race', 'Publish'], correctAnswer: 0, explanation: 'Persistence.' },
-      { id: 'q10', type: MC, question: 'Lesson 9.4 save name…', options: ['Lesson 9.4 — Gear Stats', 'Inventory Object', 'RPG Inventory', 'Shop Works'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 9.4 save name…', options: ['Lesson 9.4 - Gear Stats', 'Inventory Object', 'RPG Inventory', 'Shop Works'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -811,7 +811,7 @@ export const enLesson95 = {
   lessonId: 'lesson-roblox-9-5',
   moduleId: 'module-09',
   order: 5,
-  title: '9.5 — Inventory Serialization',
+  title: '9.5 - Inventory Serialization',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -830,9 +830,9 @@ export const enLesson95 = {
 Today: **serialize → save → load → deserialize**.
 
 **Lesson flow:**
-1. **Theory (40 min)** — save schema + pcall
-2. **Practice (~25 min)** — persistence on leave/join
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - save schema + pcall
+2. **Practice (~25 min)** - persistence on leave/join
+3. **Quiz (10 min)** - **70%** pass
 
 Reuse Module 3 **DataStore** basics.`,
       },
@@ -841,7 +841,7 @@ Reuse Module 3 **DataStore** basics.`,
         content: `DataStore cannot save:
 - Functions
 - Metatables
-- Instances (Tools in inventory — save **itemId + qty** only)
+- Instances (Tools in inventory - save **itemId + qty** only)
 
 **Save shape:**
 
@@ -916,7 +916,7 @@ local function loadPlayer(player)
 end
 \`\`\`
 
-**Validate** every field before trusting — corrupted data happens.`,
+**Validate** every field before trusting - corrupted data happens.`,
       },
       {
         title: 'Join and leave wiring',
@@ -951,7 +951,7 @@ end)
 | Log failures | Debug without stopping game |
 | version field | Future schema migrations |
 
-If save fails, player still had fun this session — log and retry next leave.
+If save fails, player still had fun this session - log and retry next leave.
 
 **Optional:** autosave every 5 min with debounce (challenge).`,
       },
@@ -961,7 +961,7 @@ If save fails, player still had fun this session — log and retry next leave.
 - [ ] Equipped gear still equipped after relog
 - [ ] New player gets starter inventory
 - [ ] Bad data falls back to defaults safely
-- [ ] Save: \`Lesson 9.5 — Inventory Save\``,
+- [ ] Save: \`Lesson 9.5 - Inventory Save\``,
       },
     ],
   },
@@ -971,29 +971,29 @@ If save fails, player still had fun this session — log and retry next leave.
     { mistake: 'Saving every item pickup', explanation: 'Rate limit ban.', correctApproach: 'Save on leave primarily' },
     { mistake: 'Trusting loaded data blindly', explanation: 'Exploit or crash.', correctApproach: 'version + type checks' },
   ],
-  summary: `You implemented versioned save payloads, pcall-safe DataStore load/save on join and leave, and validation before rebuilding inventory objects — player progress now survives relog.`,
+  summary: `You implemented versioned save payloads, pcall-safe DataStore load/save on join and leave, and validation before rebuilding inventory objects - player progress now survives relog.`,
   practiceTask: {
     title: 'Save-ready inventory (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Persist inventory + equipped after relog.
 
-### Part A — Serialize (10 min)
+### Part A - Serialize (10 min)
 1. buildSavePayload with version = 1
 2. savePlayer with pcall SetAsync
 3. loadPlayer with validation
 
-### Part B — Wire (12 min)
+### Part B - Wire (12 min)
 1. PlayerAdded load or defaults
 2. PlayerRemoving save then clear maps
 3. Enable Studio API services
 
-### Part C — Relog test (3 min)
-1. Add items, equip, leave, rejoin — verify
-2. **Save to Roblox** → \`Lesson 9.5 — Inventory Save\`
+### Part C - Relog test (3 min)
+1. Add items, equip, leave, rejoin - verify
+2. **Save to Roblox** → \`Lesson 9.5 - Inventory Save\`
 3. **Practice complete**`,
     hints: [
       'Print serialize table in Output before first save',
-      'UserId key — unique per player',
+      'UserId key - unique per player',
       'Module 3 DataStore lesson same patterns',
     ],
     optionalChallenge: 'Migrate version 1 → 2 if you add new fields.',
@@ -1011,7 +1011,7 @@ If save fails, player still had fun this session — log and retry next leave.
       { id: 'q7', type: MC, question: 'Key uses…', options: ['Player UserId', 'Player name only', 'Random', 'Terrain id'], correctAnswer: 0, explanation: 'Unique key.' },
       { id: 'q8', type: MC, question: 'Lesson 9.5 builds on…', options: ['9.3 serialize + 9.4 equipped', 'Lesson 1 terrain', 'Empty', 'Publish only'], correctAnswer: 0, explanation: 'Full RPG state.' },
       { id: 'q9', type: MC, question: 'Lesson 9.6 is…', options: ['RPG Inventory checkpoint', 'Shop only', 'Race only', 'NPC only'], correctAnswer: 0, explanation: 'Module finale.' },
-      { id: 'q10', type: MC, question: 'Lesson 9.5 save name…', options: ['Lesson 9.5 — Inventory Save', 'Gear Stats', 'ModuleScript', 'Living Location'], correctAnswer: 0, explanation: 'Save lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 9.5 save name…', options: ['Lesson 9.5 - Inventory Save', 'Gear Stats', 'ModuleScript', 'Living Location'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
 }
@@ -1020,7 +1020,7 @@ export const enLesson96 = {
   lessonId: 'lesson-roblox-9-6',
   moduleId: 'module-09',
   order: 6,
-  title: '9.6 — Checkpoint: RPG Inventory',
+  title: '9.6 - Checkpoint: RPG Inventory',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -1028,13 +1028,13 @@ export const enLesson96 = {
     'Integrate modules, inventory, gear stats, and DataStore persistence',
     'Pass relog scenario tests for items, equip, and slot order',
     'Document architecture diagram for expansion',
-    'Ship Module 9 — RPG Inventory portfolio save',
+    'Ship Module 9 - RPG Inventory portfolio save',
   ],
   theory: {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `**RPG Inventory** = Module 9 portfolio — proves you think like a **systems architect**.
+        content: `**RPG Inventory** = Module 9 portfolio - proves you think like a **systems architect**.
 
 **Required proof:**
 - Modular code (RPGConfig, ItemDatabase, Inventory, services)
@@ -1042,7 +1042,7 @@ export const enLesson96 = {
 - Stats affect HUD (and combat if linked)
 - Save/load after relog
 
-**Save:** \`Module 9 — RPG Inventory\``,
+**Save:** \`Module 9 - RPG Inventory\``,
       },
       {
         title: 'Architecture map',
@@ -1066,7 +1066,7 @@ StarterGui
 └── InventoryUI (optional simple list)
 \`\`\`
 
-**One ItemDatabase** — shop, quests, and drops all reference same ids.`,
+**One ItemDatabase** - shop, quests, and drops all reference same ids.`,
       },
       {
         title: 'Scenario tests (relog)',
@@ -1091,7 +1091,7 @@ end
 
 Use **Output** to verify serialize before blaming DataStore.
 
-**Architecture doc** (notes): 5 bullet points — what each module does.`,
+**Architecture doc** (notes): 5 bullet points - what each module does.`,
       },
       {
         title: 'Checkpoint quality bar',
@@ -1105,18 +1105,18 @@ Use **Output** to verify serialize before blaming DataStore.
 
 **60-second demo:**
 1. Show stats HUD
-2. Add potion, equip sword — ATK up
-3. Leave + rejoin — prove persistence
+2. Add potion, equip sword - ATK up
+3. Leave + rejoin - prove persistence
 4. Show Module folder structure`,
       },
       {
         title: 'Module 10 preview',
-        content: `**Module 10 — Magic of Details** adds **constraints**, physics polish, moving doors — your RPG hub can get mechanical traps and lifts.
+        content: `**Module 10 - Magic of Details** adds **constraints**, physics polish, moving doors - your RPG hub can get mechanical traps and lifts.
 
 **Before practice:**
 - [ ] All 6 scenario tests pass
 - [ ] Architecture notes written
-- [ ] **Save to Roblox** → \`Module 9 — RPG Inventory\``,
+- [ ] **Save to Roblox** → \`Module 9 - RPG Inventory\``,
       },
     ],
   },
@@ -1126,24 +1126,24 @@ Use **Output** to verify serialize before blaming DataStore.
     { mistake: 'Side effects in serialize', explanation: 'Mutates live inventory.', correctApproach: 'Read-only copy' },
     { mistake: 'Giant single Script 500 lines', explanation: 'Unmaintainable.', correctApproach: 'Split services + modules' },
   ],
-  summary: `You integrated modular RPG inventory, equipment stats, and DataStore persistence, passed relog scenario tests, and saved RPG Inventory — Module 9 is complete.`,
+  summary: `You integrated modular RPG inventory, equipment stats, and DataStore persistence, passed relog scenario tests, and saved RPG Inventory - Module 9 is complete.`,
   practiceTask: {
     title: 'Ship RPG Inventory (~40 min)',
     difficulty: 'beginner',
     description: `**Goal:** Portfolio checkpoint with persistence.
 
-### Part A — Integrate (15 min)
-1. Wire all Module 9 scripts — no duplicates
+### Part A - Integrate (15 min)
+1. Wire all Module 9 scripts - no duplicates
 2. StatsUI + optional inventory list UI
 3. Debug print save command
 
-### Part B — Scenario tests (20 min)
-1. Run 6-row relog table — fix failures
+### Part B - Scenario tests (20 min)
+1. Run 6-row relog table - fix failures
 2. 2-player separate save test
 
-### Part C — Demo save (5 min)
+### Part C - Demo save (5 min)
 1. 60s demo rehearsed
-2. **Save to Roblox** → \`Module 9 — RPG Inventory\`
+2. **Save to Roblox** → \`Module 9 - RPG Inventory\`
 3. **Practice complete**`,
     hints: [
       'Fix serialize before DataStore if load fails',
@@ -1160,7 +1160,7 @@ Use **Output** to verify serialize before blaming DataStore.
       { id: 'q2', type: MC, question: 'Relog equip test confirms…', options: ['Equipped persisted', 'UI only', 'Terrain', 'Random'], correctAnswer: 0, explanation: 'Scenario 2.' },
       { id: 'q3', type: MC, question: 'One ItemDatabase prevents…', options: ['ID drift between systems', 'Walking', 'NPC dialogue', 'Sound'], correctAnswer: 0, explanation: 'Single source.' },
       { id: 'q4', type: MC, question: 'serialize should be…', options: ['Read-only copy of state', 'Mutating live slots', 'Deleting player', 'Publishing'], correctAnswer: 0, explanation: 'No side effects.' },
-      { id: 'q5', type: MC, question: 'Module 9 save name…', options: ['Module 9 — RPG Inventory', 'Shop Works', 'Living Location', 'Lesson 9.1'], correctAnswer: 0, explanation: 'Checkpoint.' },
+      { id: 'q5', type: MC, question: 'Module 9 save name…', options: ['Module 9 - RPG Inventory', 'Shop Works', 'Living Location', 'Lesson 9.1'], correctAnswer: 0, explanation: 'Checkpoint.' },
       { id: 'q6', type: MC, question: 'Systems architect means…', options: ['Reusable modules and trustworthy state', 'One giant script', 'No tests', 'Copy paste'], correctAnswer: 0, explanation: 'Design mindset.' },
       { id: 'q7', type: MC, question: 'Lesson 9.6 completes…', options: ['Module 9', 'Module 12', 'Module 1', 'UK translation'], correctAnswer: 0, explanation: 'End module 9.' },
       { id: 'q8', type: MC, question: 'Two players need…', options: ['Separate save keys by UserId', 'One shared inventory', 'No DataStore', 'Same key'], correctAnswer: 0, explanation: 'Per-player data.' },

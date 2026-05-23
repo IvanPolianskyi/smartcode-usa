@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { useEffect } from 'react'
 import { Analytics } from "@vercel/analytics/next"
 import { usePathname } from 'next/navigation'
+import { useLocale } from 'next-intl'
 import {
 	readAndClearPendingHomeSectionScroll,
 	scheduleScrollToHomeSectionId,
@@ -39,6 +40,8 @@ const LMSPromo = dynamic(() => import('@/components/LMSPromo/LMSPromo'), {
 })
 
 export default function HomeClient() {
+  const locale = useLocale()
+  const isEn = locale === 'en'
   const pathname = usePathname()
 
   useEffect(() => {
@@ -51,21 +54,33 @@ export default function HomeClient() {
   }, [pathname])
 
   useEffect(() => {
+    let cancelScroll = null
     const onScrollRequest = (e) => {
       const id = e.detail?.id
-      if (id) scheduleScrollToHomeSectionId(id)
+      if (!id) return
+      cancelScroll?.()
+      cancelScroll = scheduleScrollToHomeSectionId(id)
     }
     window.addEventListener(SCROLL_HOME_SECTION_EVENT, onScrollRequest)
-    return () => window.removeEventListener(SCROLL_HOME_SECTION_EVENT, onScrollRequest)
+    return () => {
+      window.removeEventListener(SCROLL_HOME_SECTION_EVENT, onScrollRequest)
+      cancelScroll?.()
+    }
   }, [])
 
   useEffect(() => {
+    let cancelScroll = null
     const onHashChange = () => {
       const hashId = window.location.hash.replace(/^#/, '')
-      if (hashId) scheduleScrollToHomeSectionId(hashId)
+      if (!hashId) return
+      cancelScroll?.()
+      cancelScroll = scheduleScrollToHomeSectionId(hashId)
     }
     window.addEventListener('hashchange', onHashChange)
-    return () => window.removeEventListener('hashchange', onHashChange)
+    return () => {
+      window.removeEventListener('hashchange', onHashChange)
+      cancelScroll?.()
+    }
   }, [])
 
   useEffect(() => {
@@ -116,13 +131,13 @@ export default function HomeClient() {
   return (
     <>
       <Analytics />
-      <CoursesSection />
-      <TrialSignupBlock />
+      {!isEn && <CoursesSection />}
+      {!isEn && <TrialSignupBlock />}
       <Testimonials />
       <ProjectsShowcase />
       <SocialMedia />
       <LMSPromo />
-      <FAQ />
+      {!isEn && <FAQ />}
     </>
   )
 }

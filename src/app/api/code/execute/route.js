@@ -24,11 +24,24 @@ const CODE_RUNNER_SECRET =
   process.env.JWT_SECRET ||
   ''
 
-function runLocalPython(wrappedCode, stdinData) {
+const PISTON_API_KEY =
+  process.env.PISTON_API_KEY ||
+  process.env.CODE_RUNNER_API_KEY ||
+  ''
+
+const DEFAULT_PISTON_URL = 'https://emkc.org/api/v2/piston/execute'
+
+const LOCAL_PYTHON_COMMANDS = [
+  { command: 'python3', args: (code) => ['-c', code] },
+  { command: 'python', args: (code) => ['-c', code] },
+  { command: 'py', args: (code) => ['-3', '-c', code] },
+]
+
+function spawnPythonProcess(command, args, wrappedCode, stdinData) {
   return new Promise((resolve, reject) => {
     let stdout = ''
     let stderr = ''
-    const pythonProcess = spawn('python', ['-c', wrappedCode], {
+    const pythonProcess = spawn(command, args(wrappedCode), {
       shell: false,
       stdio: ['pipe', 'pipe', 'pipe'],
     })
@@ -63,6 +76,28 @@ function runLocalPython(wrappedCode, stdinData) {
       })
     })
   })
+}
+
+async function runLocalPython(wrappedCode, stdinData) {
+  let lastError = null
+  for (const { command, args } of LOCAL_PYTHON_COMMANDS) {
+    try {
+      return await spawnPythonProcess(command, args, wrappedCode, stdinData)
+    } catch (error) {
+      lastError = error
+      if (error?.message === 'LOCAL_TIMEOUT') {
+        throw error
+      }
+    }
+  }
+  throw lastError || new Error('Python interpreter not found')
+}
+
+function getRunnerUrls() {
+  if (CODE_RUNNER_URLS.length > 0) {
+    return CODE_RUNNER_URLS
+  }
+  return [DEFAULT_PISTON_URL]
 }
 
 export async function POST(request) {
@@ -386,13 +421,19 @@ ${code}`
     const backendResponse = await runViaBackend()
     if (backendResponse) return backendResponse
 
-    for (const runnerUrl of CODE_RUNNER_URLS) {
+    const runnerUrls = getRunnerUrls()
+
+    for (const runnerUrl of runnerUrls) {
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), EXECUTION_TIMEOUT)
       try {
+        const headers = { 'Content-Type': 'application/json' }
+        if (PISTON_API_KEY) {
+          headers.Authorization = PISTON_API_KEY
+        }
         const response = await fetch(runnerUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers,
           signal: controller.signal,
           body: JSON.stringify({
             language: 'python',
@@ -439,8 +480,8 @@ ${code}`
     }
 
     const guidance = isVercel
-      ? 'Сервіси виконання коду недоступні. Перевірте CRM_API_URL на Vercel і задеплойте оновлений backend на Railway.'
-      : 'Сервіси виконання коду недоступні і локальний Python fallback не спрацював.'
+      ? 'Сервіси виконання коду недоступні. На Vercel додайте CRM_API_URL (backend /code/execute) або PISTON_API_KEY для публічного runner.'
+      : 'Сервіси виконання коду недоступні і локальний Python fallback не спрацював. Встановіть Python 3 або налаштуйте CODE_RUNNER_URL.'
 
     return NextResponse.json(
       {

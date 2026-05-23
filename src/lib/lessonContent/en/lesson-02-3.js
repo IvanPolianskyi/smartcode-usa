@@ -91,21 +91,21 @@ for index, value in enumerate(numbers):
         content: `**range()** creates a sequence of numbers. It's most often used with for.
 
 **Syntax:**
-- \`range(stop)\` — from 0 to stop-1
-- \`range(start, stop)\` — from start to stop-1
-- \`range(start, stop, step)\` — from start to stop-1 with step
+- \`range(stop)\` - from 0 to stop-1
+- \`range(start, stop)\` - from start to stop-1
+- \`range(start, stop, step)\` - from start to stop-1 with step
 
 **Examples:**
 \`\`\`python
-# range(5) — 0, 1, 2, 3, 4
+# range(5) - 0, 1, 2, 3, 4
 for i in range(5):
     print(i)
 
-# range(2, 7) — 2, 3, 4, 5, 6
+# range(2, 7) - 2, 3, 4, 5, 6
 for i in range(2, 7):
     print(i)
 
-# range(0, 10, 2) — 0, 2, 4, 6, 8
+# range(0, 10, 2) - 0, 2, 4, 6, 8
 for i in range(0, 10, 2):
     print(i)
 \`\`\`
@@ -185,10 +185,10 @@ for key, value in student.items():
     print(f"{key}: {value}")
 \`\`\`
 
-**items()** returns key-value pairs — this is the most convenient way!`
+**items()** returns key-value pairs - this is the most convenient way!`
       },
       {
-        title: "enumerate() — index and value",
+        title: "enumerate() - index and value",
         content: `**enumerate()** adds indices to a sequence:
 
 \`\`\`python
@@ -217,7 +217,7 @@ for index, fruit in enumerate(fruits, start=1):
 - For tracking position`
       },
       {
-        title: "zip() — combining sequences",
+        title: "zip() - combining sequences",
         content: `**zip()** combines several sequences together:
 
 \`\`\`python
@@ -363,18 +363,18 @@ print(f"Sum: {total}")`,
   
   summary: `In this lesson we learned:
 
-1. The for loop — for iterating over sequences
-2. range() — creating sequences of numbers
-3. Iterating over lists — a simple way to process data
-4. Iterating over strings — character by character
-5. Iterating over dictionaries — over keys, values, and pairs
-6. enumerate() — getting index and value
-7. zip() — combining several sequences
-8. for with else — handling after loop completion
+1. The for loop - for iterating over sequences
+2. range() - creating sequences of numbers
+3. Iterating over lists - a simple way to process data
+4. Iterating over strings - character by character
+5. Iterating over dictionaries - over keys, values, and pairs
+6. enumerate() - getting index and value
+7. zip() - combining several sequences
+8. for with else - handling after loop completion
 
 Now you know how to iterate over data efficiently!
 
-Next lesson — break, continue, and else in loops!`,
+Next lesson - break, continue, and else in loops!`,
   
   practiceTask: {
     title: "Student grade analysis",

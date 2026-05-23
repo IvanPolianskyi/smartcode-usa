@@ -5,6 +5,9 @@ import { ObjectId } from 'mongodb'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { createProgressEntry } from '@/lib/courseUtils'
+import { lessonContentMap as lessonContentMapUk } from '@/lib/lessonContentMap.uk'
+import { lessonContentMap as lessonContentMapEn } from '@/lib/lessonContentMap.en'
+import { checkPracticeOutput } from '@/lib/practiceValidation'
 
 // Get user progress for a course
 export async function GET(request) {
@@ -75,7 +78,16 @@ export async function POST(request) {
     }
 
     const body = await request.json()
-    const { courseId, lessonId, quizScore, quizAnswers, practiceCompleted, action } = body
+    const {
+      courseId,
+      lessonId,
+      quizScore,
+      quizAnswers,
+      practiceCompleted,
+      practiceOutput,
+      locale,
+      action,
+    } = body
 
     if (!courseId) {
       return NextResponse.json(
@@ -127,6 +139,29 @@ export async function POST(request) {
     }
 
     if (action === 'completePracticeTask' && lessonId) {
+      const lessonMap = locale === 'en' ? lessonContentMapEn : lessonContentMapUk
+      const lesson = lessonMap[lessonId]
+      const practiceTask = lesson?.practiceTask
+
+      if (!practiceTask?.examples?.length) {
+        return NextResponse.json(
+          { error: 'Practice task not found for this lesson' },
+          { status: 400 }
+        )
+      }
+
+      const validation = checkPracticeOutput(
+        typeof practiceOutput === 'string' ? practiceOutput : '',
+        practiceTask
+      )
+
+      if (!validation.isCorrect) {
+        return NextResponse.json(
+          { error: 'Practice output does not match the task requirements' },
+          { status: 400 }
+        )
+      }
+
       if (!progress.completedPracticeTasks || !progress.completedPracticeTasks.includes(lessonId)) {
         addToSetOperations.completedPracticeTasks = lessonId
       }

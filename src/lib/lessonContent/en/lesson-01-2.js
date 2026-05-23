@@ -32,9 +32,9 @@ export const lesson_01_2 = {
 - "I do **NOT** want vegetables" (the opposite)
 
 **Three logical operators:**
-1. **and** — both conditions must be True
-2. **or** — at least one condition must be True
-3. **not** — flips True to False and vice versa
+1. **and** - both conditions must be True
+2. **or** - at least one condition must be True
+3. **not** - flips True to False and vice versa
 
 **What we'll learn:**
 1. The and operator
@@ -365,15 +365,15 @@ print(is_between)  # True`,
   
   summary: `In this lesson we learned:
 
-1. The and operator — returns True only if both conditions are True
-2. The or operator — returns True if at least one condition is True
-3. The not operator — inverts the value (True becomes False, False becomes True)
-4. Combining operators — you can join several operators together
-5. Chained comparisons — a shorter way to write code (3 < x < 10)
+1. The and operator - returns True only if both conditions are True
+2. The or operator - returns True if at least one condition is True
+3. The not operator - inverts the value (True becomes False, False becomes True)
+4. Combining operators - you can join several operators together
+5. Chained comparisons - a shorter way to write code (3 < x < 10)
 
 Logical operators help you create complex conditions for decision-making!
 
-Next lesson — practice with comparison and logical operators!`,
+Next lesson - practice with comparison and logical operators!`,
   
   practiceTask: {
     title: "Game access system",

@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 08 — lessons 8.1–8.3 */
+/** Rich EN content for Roblox Module 08 - lessons 8.1–8.3 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -7,7 +7,7 @@ export const enLesson81 = {
   lessonId: 'lesson-roblox-8-1',
   moduleId: 'module-08',
   order: 1,
-  title: '8.1 — Living NPC',
+  title: '8.1 - Living NPC',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -21,14 +21,14 @@ export const enLesson81 = {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `**Module 8 — Smart Game** — worlds feel alive with **NPCs**, dialogue, patrols, and quests.
+        content: `**Module 8 - Smart Game** - worlds feel alive with **NPCs**, dialogue, patrols, and quests.
 
 **Lesson flow:**
-1. **Theory (40 min)** — NPC rig + ProximityPrompt
-2. **Practice (~25 min)** — Guide NPC at spawn
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - NPC rig + ProximityPrompt
+2. **Practice (~25 min)** - Guide NPC at spawn
+3. **Quiz (10 min)** - **70%** pass
 
-Use **Module 7 — Shop Works** place or new hub: \`Lesson 8.1 — Living NPC\`.`,
+Use **Module 7 - Shop Works** place or new hub: \`Lesson 8.1 - Living NPC\`.`,
       },
       {
         title: 'From prop to character',
@@ -47,11 +47,11 @@ Players trust worlds that feel **populated**.`,
       },
       {
         title: 'Getting an NPC into your place',
-        content: `**Option A — Toolbox (lesson-friendly):**
+        content: `**Option A - Toolbox (lesson-friendly):**
 1. Avatar → **Rig Builder** or search "R15 NPC"
 2. Insert model → rename \`NPC_Guide_Maya\`
 
-**Option B — Starter character duplicate:**
+**Option B - Starter character duplicate:**
 1. Copy your character in Play (for learning only)
 2. Anchor NPC in place for static guide
 
@@ -113,7 +113,7 @@ For lesson: even **standing still** with name + prompt is OK if animation ID una
 
 **Visual consistency:**
 - Outfit matches hub theme (Module 1 island / shop area)
-- **BillboardGui** optional — "Quest Mentor" floating text
+- **BillboardGui** optional - "Quest Mentor" floating text
 - NPC **Anchored** false if walking later; **true** for static guide today
 
 **NPCs** folder keeps Workspace clean.`,
@@ -124,7 +124,7 @@ For lesson: even **standing still** with name + prompt is OK if animation ID una
 - [ ] Prompt shows Talk + NPC name
 - [ ] Triggered prints player name in Output
 - [ ] Role written in lesson notes
-- [ ] Save: \`Lesson 8.1 — Living NPC\``,
+- [ ] Save: \`Lesson 8.1 - Living NPC\``,
       },
     ],
   },
@@ -134,28 +134,28 @@ For lesson: even **standing still** with name + prompt is OK if animation ID una
     { mistake: 'No Humanoid on model', explanation: 'Not a character.', correctApproach: 'Rig with Humanoid' },
     { mistake: 'MaxActivationDistance 100', explanation: 'Talk from across map.', correctApproach: '8-12 studs' },
   ],
-  summary: `You placed Guide Maya with Humanoid, ProximityPrompt, and a server greeting handler — your hub now has a living NPC ready for dialogue in the next lesson.`,
+  summary: `You placed Guide Maya with Humanoid, ProximityPrompt, and a server greeting handler - your hub now has a living NPC ready for dialogue in the next lesson.`,
   practiceTask: {
     title: 'Create Guide NPC (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Interactable guide at spawn.
 
-### Part A — NPC model (10 min)
+### Part A - NPC model (10 min)
 1. Folder Workspace/NPCs
-2. NPC_Guide_Maya — rig + Humanoid
+2. NPC_Guide_Maya - rig + Humanoid
 3. Position near spawn or shop
 
-### Part B — Interaction (10 min)
+### Part B - Interaction (10 min)
 1. ProximityPrompt on HumanoidRootPart
 2. Server script prints welcome on Triggered
 3. Optional BillboardGui title
 
-### Part C — Save (5 min)
-1. Play — hold E / click prompt — see Output
-2. **Save to Roblox** → \`Lesson 8.1 — Living NPC\`
+### Part C - Save (5 min)
+1. Play - hold E / click prompt - see Output
+2. **Save to Roblox** → \`Lesson 8.1 - Living NPC\`
 3. **Practice complete**`,
     hints: [
-      'Rename everything — future you will thank you',
+      'Rename everything - future you will thank you',
       'Test prompt distance on foot and in car (should not trigger in car if only for walking)',
       'Module 7 shop NPC can reuse same rig later',
     ],
@@ -174,7 +174,7 @@ For lesson: even **standing still** with name + prompt is OK if animation ID una
       { id: 'q7', type: MC, question: 'NPCs folder in Workspace…', options: ['Organizes characters', 'Replaces server', 'Is required by Roblox', 'Blocks scripts'], correctAnswer: 0, explanation: 'Clean hierarchy.' },
       { id: 'q8', type: MC, question: 'ActionText "Talk" tells player…', options: ['What button does', 'Server IP', 'Robux price', 'Version'], correctAnswer: 0, explanation: 'UX label.' },
       { id: 'q9', type: MC, question: 'Lesson 8.2 adds…', options: ['Dialogue UI', 'Only car', 'Only timer', 'DataStore only'], correctAnswer: 0, explanation: 'Next step.' },
-      { id: 'q10', type: MC, question: 'Lesson 8.1 save name…', options: ['Lesson 8.1 — Living NPC', 'Living Location', 'Shop Works', 'Race Launched'], correctAnswer: 0, explanation: 'Save NPC lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 8.1 save name…', options: ['Lesson 8.1 - Living NPC', 'Living Location', 'Shop Works', 'Race Launched'], correctAnswer: 0, explanation: 'Save NPC lesson.' },
     ],
   },
 }
@@ -183,7 +183,7 @@ export const enLesson82 = {
   lessonId: 'lesson-roblox-8-2',
   moduleId: 'module-08',
   order: 2,
-  title: '8.2 — Dialogue System',
+  title: '8.2 - Dialogue System',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -200,11 +200,11 @@ export const enLesson82 = {
         content: `Your NPC can be **talked to**. Today they have **lines to say**.
 
 **Lesson flow:**
-1. **Theory (40 min)** — dialogue data + UI loop
-2. **Practice (~25 min)** — 4+ line conversation
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - dialogue data + UI loop
+2. **Practice (~25 min)** - 4+ line conversation
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 8.1 — Living NPC**.`,
+Open **Lesson 8.1 - Living NPC**.`,
       },
       {
         title: 'Dialogue as data',
@@ -218,7 +218,7 @@ local DialogueData = {
             "Welcome to the hub, builder!",
             "The shop behind me sells starter gear.",
             "Complete quests to earn more coins.",
-            "Good luck — tap Next to continue.",
+            "Good luck - tap Next to continue.",
         },
     },
 }
@@ -226,7 +226,7 @@ local DialogueData = {
 return DialogueData
 \`\`\`
 
-**Network sends key** (\`"guide_intro"\`), not full text arrays — smaller and safer.`,
+**Network sends key** (\`"guide_intro"\`), not full text arrays - smaller and safer.`,
       },
       {
         title: 'DialogueGui layout',
@@ -327,7 +327,7 @@ GetDialogue.OnServerInvoke = function(player, key)
 end
 \`\`\`
 
-Server owns dialogue text — client cannot inject fake quest lore easily.`,
+Server owns dialogue text - client cannot inject fake quest lore easily.`,
       },
       {
         title: 'UX rules',
@@ -346,7 +346,7 @@ Server owns dialogue text — client cannot inject fake quest lore easily.`,
 - [ ] Next advances, Close exits
 - [ ] Prompt opens dialogue panel
 - [ ] Speaker name shows
-- [ ] Save: \`Lesson 8.2 — Dialogue System\``,
+- [ ] Save: \`Lesson 8.2 - Dialogue System\``,
       },
     ],
   },
@@ -356,25 +356,25 @@ Server owns dialogue text — client cannot inject fake quest lore easily.`,
     { mistake: 'No active flag', explanation: 'Double panels.', correctApproach: 'Block while dialogue open' },
     { mistake: 'DialogueGui always visible', explanation: 'Blocks gameplay.', correctApproach: 'Hidden until open' },
   ],
-  summary: `You built data-driven dialogue with DialogueData, a Next/Close UI loop, and OpenDialogue from Guide Maya's ProximityPrompt — NPCs now speak in full conversations.`,
+  summary: `You built data-driven dialogue with DialogueData, a Next/Close UI loop, and OpenDialogue from Guide Maya's ProximityPrompt - NPCs now speak in full conversations.`,
   practiceTask: {
     title: 'Dialogue System v1 (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** 4-line conversation from NPC.
 
-### Part A — Data + remotes (10 min)
+### Part A - Data + remotes (10 min)
 1. DialogueData module with guide_intro
 2. OpenDialogue + GetDialogue in ReplicatedStorage
 3. Server handlers
 
-### Part B — UI (12 min)
+### Part B - UI (12 min)
 1. DialogueGui panel + labels + buttons
 2. DialogueClient loop
 3. Wire NPC prompt → FireClient guide_intro
 
-### Part C — Save (3 min)
+### Part C - Save (3 min)
 1. Play through all lines
-2. **Save to Roblox** → \`Lesson 8.2 — Dialogue System\`
+2. **Save to Roblox** → \`Lesson 8.2 - Dialogue System\`
 3. **Practice complete**`,
     hints: [
       'pcall InvokeServer like Module 7 catalog',
@@ -396,7 +396,7 @@ Server owns dialogue text — client cannot inject fake quest lore easily.`,
       { id: 'q7', type: MC, question: 'Lesson 8.2 builds on…', options: ['Lesson 8.1 NPC + prompt', 'Lesson 6 only', 'Empty', 'Publish only'], correctAnswer: 0, explanation: 'NPC trigger.' },
       { id: 'q8', type: MC, question: 'SpeakerLabel shows…', options: ['NPC name', 'Player password', 'Server IP', 'Robux'], correctAnswer: 0, explanation: 'Clarity.' },
       { id: 'q9', type: MC, question: 'Lesson 8.3 adds…', options: ['Walking patrol NPC', 'Only shop', 'Only race', 'DataStore'], correctAnswer: 0, explanation: 'MoveTo patrol.' },
-      { id: 'q10', type: MC, question: 'Lesson 8.2 save name…', options: ['Lesson 8.2 — Dialogue System', 'Living NPC', 'Living Location', 'Shop UI'], correctAnswer: 0, explanation: 'Save dialogue lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 8.2 save name…', options: ['Lesson 8.2 - Dialogue System', 'Living NPC', 'Living Location', 'Shop UI'], correctAnswer: 0, explanation: 'Save dialogue lesson.' },
     ],
   },
 }
@@ -405,7 +405,7 @@ export const enLesson83 = {
   lessonId: 'lesson-roblox-8-3',
   moduleId: 'module-08',
   order: 3,
-  title: '8.3 — NPC That Walks',
+  title: '8.3 - NPC That Walks',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -422,11 +422,11 @@ export const enLesson83 = {
         content: `Static guides are fine. **Walking NPCs** make hubs feel **alive**.
 
 **Lesson flow:**
-1. **Theory (40 min)** — waypoints + MoveTo loop
-2. **Practice (~25 min)** — 5-point patrol
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - waypoints + MoveTo loop
+2. **Practice (~25 min)** - 5-point patrol
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 8.2 — Dialogue System** — use second NPC or same Maya unanchored.`,
+Open **Lesson 8.2 - Dialogue System** - use second NPC or same Maya unanchored.`,
       },
       {
         title: 'Waypoint route design',
@@ -467,7 +467,7 @@ Sorting by number keeps route order correct.`,
       },
       {
         title: 'MoveTo patrol loop',
-        content: `**NPC_Patrol_Guard** — Server Script:
+        content: `**NPC_Patrol_Guard** - Server Script:
 
 \`\`\`lua
 local npc = script.Parent
@@ -489,9 +489,9 @@ end
 task.spawn(patrol, waypoints)
 \`\`\`
 
-**NPC must not be Anchored** — Humanoid needs to move.
+**NPC must not be Anchored** - Humanoid needs to move.
 
-Disable player controls on NPC — it's not a player character.`,
+Disable player controls on NPC - it's not a player character.`,
       },
       {
         title: 'Stuck NPC debugging',
@@ -501,8 +501,8 @@ Disable player controls on NPC — it's not a player character.`,
 |-----|-----|
 | Stuck on wall | Move waypoint away from geometry |
 | Falls through map | Check HipHeight, floor collision |
-| Never reaches point | Increase timeout — MoveToFinished still fires |
-| Spins in place | Widen turn angle — add midpoint waypoint |
+| Never reaches point | Increase timeout - MoveToFinished still fires |
+| Spins in place | Widen turn angle - add midpoint waypoint |
 
 **Debug:** leave WP parts visible (red neon) until route works.
 
@@ -511,8 +511,8 @@ Disable player controls on NPC — it's not a player character.`,
       {
         title: 'Patrol + dialogue together',
         content: `**Two NPCs** is OK for lesson:
-- **Guide Maya** — static + dialogue (8.1–8.2)
-- **Patrol Guard** — walks loop (8.3)
+- **Guide Maya** - static + dialogue (8.1–8.2)
+- **Patrol Guard** - walks loop (8.3)
 
 Or pause patrol while player talks (advanced):
 
@@ -529,7 +529,7 @@ Lesson 8.3 focuses on **continuous patrol**.`,
 - [ ] NPC walks full loop repeatedly
 - [ ] Pause ~0.7s at each point
 - [ ] No stuck on 3+ consecutive laps
-- [ ] Save: \`Lesson 8.3 — NPC Patrol\``,
+- [ ] Save: \`Lesson 8.3 - NPC Patrol\``,
       },
     ],
   },
@@ -539,24 +539,24 @@ Lesson 8.3 focuses on **continuous patrol**.`,
     { mistake: 'Unsorted WP_10 before WP_2', explanation: 'Weird route.', correctApproach: 'Numeric sort' },
     { mistake: 'Patrol script in LocalScript', explanation: 'AI must be server for all players.', correctApproach: 'Server Script on NPC' },
   ],
-  summary: `You built a five-waypoint patrol loop with Humanoid MoveTo, pauses, and sorted waypoints — your hub now has an NPC that walks instead of only standing at spawn.`,
+  summary: `You built a five-waypoint patrol loop with Humanoid MoveTo, pauses, and sorted waypoints - your hub now has an NPC that walks instead of only standing at spawn.`,
   practiceTask: {
     title: 'Patrol NPC route (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Endless 5-point patrol.
 
-### Part A — Waypoints (8 min)
+### Part A - Waypoints (8 min)
 1. Folder PatrolRoutes/Route_ShopLoop
-2. WP_1 .. WP_5 — visible for setup
+2. WP_1 .. WP_5 - visible for setup
 
-### Part B — Patrol NPC (15 min)
-1. NPC_Patrol_Guard — Humanoid WalkSpeed 10
-2. Server patrol script — sort + while true loop
-3. Play — watch 3 full loops
+### Part B - Patrol NPC (15 min)
+1. NPC_Patrol_Guard - Humanoid WalkSpeed 10
+2. Server patrol script - sort + while true loop
+3. Play - watch 3 full loops
 
-### Part C — Polish & save (2 min)
+### Part C - Polish & save (2 min)
 1. Hide waypoint transparency
-2. **Save to Roblox** → \`Lesson 8.3 — NPC Patrol\`
+2. **Save to Roblox** → \`Lesson 8.3 - NPC Patrol\`
 3. **Practice complete**`,
     hints: [
       'MoveToFinished:Wait() after each MoveTo',
@@ -578,7 +578,7 @@ Lesson 8.3 focuses on **continuous patrol**.`,
       { id: 'q7', type: MC, question: 'Stuck NPC fix includes…', options: ['Move waypoints away from walls', 'Delete Humanoid', 'Remove legs', 'Hide UI'], correctAnswer: 0, explanation: 'Path reliability.' },
       { id: 'q8', type: MC, question: 'Sorting waypoints by number…', options: ['Keeps route order', 'Removes NPC', 'Adds coins', 'Opens dialogue'], correctAnswer: 0, explanation: 'WP_2 before WP_10.' },
       { id: 'q9', type: MC, question: 'Lesson 8.4 adds…', options: ['Quest system', 'Only car', 'Only timer', 'Publish'], correctAnswer: 0, explanation: 'Quest tables next.' },
-      { id: 'q10', type: MC, question: 'Lesson 8.3 save name…', options: ['Lesson 8.3 — NPC Patrol', 'Dialogue System', 'Living NPC', 'Shop Works'], correctAnswer: 0, explanation: 'Save patrol lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 8.3 save name…', options: ['Lesson 8.3 - NPC Patrol', 'Dialogue System', 'Living NPC', 'Shop Works'], correctAnswer: 0, explanation: 'Save patrol lesson.' },
     ],
   },
 }
@@ -587,7 +587,7 @@ export const enLesson84 = {
   lessonId: 'lesson-roblox-8-4',
   moduleId: 'module-08',
   order: 4,
-  title: '8.4 — Quest System',
+  title: '8.4 - Quest System',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -604,11 +604,11 @@ export const enLesson84 = {
         content: `NPCs give **tasks**. Quests turn tasks into **progress + rewards**.
 
 **Lesson flow:**
-1. **Theory (40 min)** — quest tables + per-player state
-2. **Practice (~25 min)** — collect 5 crystals quest
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - quest tables + per-player state
+2. **Practice (~25 min)** - collect 5 crystals quest
+3. **Quiz (10 min)** - **70%** pass
 
-Open **Lesson 8.2 — Dialogue System** hub.`,
+Open **Lesson 8.2 - Dialogue System** hub.`,
       },
       {
         title: 'Quest system foundation',
@@ -649,7 +649,7 @@ local function getState(player, questId)
 end
 \`\`\`
 
-**Never** one global \`progress = 3\` for whole server — Player B would steal Player A's quest.`,
+**Never** one global \`progress = 3\` for whole server - Player B would steal Player A's quest.`,
       },
       {
         title: 'Accept quest flow',
@@ -671,7 +671,7 @@ end
       },
       {
         title: 'Increment progress',
-        content: `Crystal parts \`Crystal\` tag or name prefix — **Touched** server script:
+        content: `Crystal parts \`Crystal\` tag or name prefix - **Touched** server script:
 
 \`\`\`lua
 crystal.Touched:Connect(function(hit)
@@ -740,7 +740,7 @@ Display title from small client lookup table OR second arg from server message.`
 - [ ] Each crystal increments (max 5)
 - [ ] Complete grants coins once only
 - [ ] Second player has independent progress
-- [ ] Save: \`Lesson 8.4 — Quest System\``,
+- [ ] Save: \`Lesson 8.4 - Quest System\``,
       },
     ],
   },
@@ -750,29 +750,29 @@ Display title from small client lookup table OR second arg from server message.`
     { mistake: 'Progress on client only', explanation: 'Fake completion.', correctApproach: 'Server Touched + state' },
     { mistake: 'Crystals respawn instantly', explanation: 'Infinite progress.', correctApproach: 'Destroy or debounce per crystal' },
   ],
-  summary: `You built QuestConfig, per-player quest state, crystal collection progress, one-time coin rewards, and QuestUI updates — players now have a trackable objective in your hub.`,
+  summary: `You built QuestConfig, per-player quest state, crystal collection progress, one-time coin rewards, and QuestUI updates - players now have a trackable objective in your hub.`,
   practiceTask: {
     title: 'Build quest tables (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** Collect 5 crystals quest end-to-end.
 
-### Part A — Config (8 min)
+### Part A - Config (8 min)
 1. QuestConfig with collect_crystals_01
 2. QuestService + playerQuestState
 3. QuestUpdate RemoteEvent
 
-### Part B — Gameplay (12 min)
+### Part B - Gameplay (12 min)
 1. 5 crystal parts in plaza
 2. Start quest from Guide dialogue or prompt option
 3. Touch increments → complete at 5 → +50 coins
 
-### Part C — Save (5 min)
+### Part C - Save (5 min)
 1. QuestLabel updates live
-2. **Save to Roblox** → \`Lesson 8.4 — Quest System\`
+2. **Save to Roblox** → \`Lesson 8.4 - Quest System\`
 3. **Practice complete**`,
     hints: [
-      'Use quest id strings everywhere — collect_crystals_01',
-      'Test 2 players — separate progress',
+      'Use quest id strings everywhere - collect_crystals_01',
+      'Test 2 players - separate progress',
       'Module 7 Coins leaderstat for reward',
     ],
     optionalChallenge: 'Second quest unlocks only after first completed.',
@@ -790,7 +790,7 @@ Display title from small client lookup table OR second arg from server message.`
       { id: 'q7', type: MC, question: 'quest id keys like collect_crystals_01…', options: ['Stay consistent in code', 'Change every line', 'Are optional', 'Replace Humanoid'], correctAnswer: 0, explanation: 'Naming discipline.' },
       { id: 'q8', type: MC, question: 'Lesson 8.4 builds on…', options: ['8.1-8.3 NPC hub', 'Only racing', 'Only shop UI', 'Empty'], correctAnswer: 0, explanation: 'Hub systems.' },
       { id: 'q9', type: MC, question: 'Lesson 8.5 adds…', options: ['Enemy attack', 'Only dialogue', 'Only patrol', 'Publish'], correctAnswer: 0, explanation: 'Combat enemy.' },
-      { id: 'q10', type: MC, question: 'Lesson 8.4 save name…', options: ['Lesson 8.4 — Quest System', 'NPC Patrol', 'Living Location', 'Shop Works'], correctAnswer: 0, explanation: 'Save quest lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 8.4 save name…', options: ['Lesson 8.4 - Quest System', 'NPC Patrol', 'Living Location', 'Shop Works'], correctAnswer: 0, explanation: 'Save quest lesson.' },
     ],
   },
 }
@@ -799,7 +799,7 @@ export const enLesson85 = {
   lessonId: 'lesson-roblox-8-5',
   moduleId: 'module-08',
   order: 5,
-  title: '8.5 — Enemy That Attacks',
+  title: '8.5 - Enemy That Attacks',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -816,9 +816,9 @@ export const enLesson85 = {
         content: `A living location needs **danger**. Today one **enemy** chases and attacks fairly.
 
 **Lesson flow:**
-1. **Theory (40 min)** — states + server damage
-2. **Practice (~25 min)** — attack prototype
-3. **Quiz (10 min)** — **70%** pass
+1. **Theory (40 min)** - states + server damage
+2. **Practice (~25 min)** - attack prototype
+3. **Quiz (10 min)** - **70%** pass
 
 Reuse Module 5 **Humanoid** / **TakeDamage** knowledge.`,
       },
@@ -833,7 +833,7 @@ Reuse Module 5 **Humanoid** / **TakeDamage** knowledge.`,
 
 \`NPC_Enemy_Slime\` in \`Workspace/Enemies/\`
 
-**CollectionService** tag \`Enemy\` — one script handles all tagged models.`,
+**CollectionService** tag \`Enemy\` - one script handles all tagged models.`,
       },
       {
         title: 'Aggro and chase',
@@ -885,7 +885,7 @@ local function tryAttack(enemy, targetChar)
 end
 \`\`\`
 
-**Damage on server** — same rule as Module 5 arena.`,
+**Damage on server** - same rule as Module 5 arena.`,
       },
       {
         title: 'Telegraph and fairness',
@@ -894,9 +894,9 @@ end
 - **Flash** Part color or ParticleEmitter burst
 - **0.3–0.5s** wind-up delay
 
-Players learn to **dodge** during wind-up — feels skill-based.
+Players learn to **dodge** during wind-up - feels skill-based.
 
-**WalkSpeed** enemy ~14, player default 16 — player can run away.`,
+**WalkSpeed** enemy ~14, player default 16 - player can run away.`,
       },
       {
         title: 'Enemy setup checklist',
@@ -907,15 +907,15 @@ Players learn to **dodge** during wind-up — feels skill-based.
 | PrimaryPart | HumanoidRootPart |
 | Tag | Enemy (CollectionService) |
 
-**Spawn zone** near quest crystals — quest flow: collect → fight → return.`,
+**Spawn zone** near quest crystals - quest flow: collect → fight → return.`,
       },
       {
         title: 'Before practice checklist',
         content: `- [ ] Enemy chases within AGGRO_RANGE
 - [ ] Damage only within ATTACK_RANGE + cooldown
 - [ ] Telegraph visible before hit
-- [ ] 2-player test — targets nearest correctly
-- [ ] Save: \`Lesson 8.5 — Enemy Attack\``,
+- [ ] 2-player test - targets nearest correctly
+- [ ] Save: \`Lesson 8.5 - Enemy Attack\``,
       },
     ],
   },
@@ -925,23 +925,23 @@ Players learn to **dodge** during wind-up — feels skill-based.
     { mistake: 'No telegraph', explanation: 'Feels unfair.', correctApproach: 'Wind-up delay + VFX' },
     { mistake: 'Enemy anchored', explanation: 'Cannot chase.', correctApproach: 'Unanchored with Humanoid' },
   ],
-  summary: `You created an enemy with chase, telegraphed server-side attacks, cooldown damage, and CollectionService tagging — the hub now has combat that fits the quest loop.`,
+  summary: `You created an enemy with chase, telegraphed server-side attacks, cooldown damage, and CollectionService tagging - the hub now has combat that fits the quest loop.`,
   practiceTask: {
     title: 'Enemy attack prototype (~25 min)',
     difficulty: 'beginner',
     description: `**Goal:** One fair attacking enemy.
 
-### Part A — Enemy rig (8 min)
+### Part A - Enemy rig (8 min)
 1. NPC_Enemy_Slime + Humanoid + tag Enemy
 2. Place near quest area
 
-### Part B — AI script (15 min)
+### Part B - AI script (15 min)
 1. State loop: find nearest → chase → attack
 2. TakeDamage 12, cooldown 1.2s, 0.4s telegraph
 
-### Part C — Test & save (2 min)
+### Part C - Test & save (2 min)
 1. 2-player aggro test
-2. **Save to Roblox** → \`Lesson 8.5 — Enemy Attack\`
+2. **Save to Roblox** → \`Lesson 8.5 - Enemy Attack\`
 3. **Practice complete**`,
     hints: [
       'Module 5 respawn still works if player dies',
@@ -963,7 +963,7 @@ Players learn to **dodge** during wind-up — feels skill-based.
       { id: 'q7', type: MC, question: 'States include…', options: ['idle chase attack cooldown', 'Only idle', 'Only shop', 'Only race'], correctAnswer: 0, explanation: 'Behavior machine.' },
       { id: 'q8', type: MC, question: 'Lesson 8.5 uses skills from…', options: ['Module 5 Humanoid damage', 'Module 1 terrain only', 'Module 12 publish', 'None'], correctAnswer: 0, explanation: 'Combat foundation.' },
       { id: 'q9', type: MC, question: 'Lesson 8.6 is…', options: ['Living Location checkpoint', 'Shop only', 'Race only', 'Empty'], correctAnswer: 0, explanation: 'Module finale.' },
-      { id: 'q10', type: MC, question: 'Lesson 8.5 save name…', options: ['Lesson 8.5 — Enemy Attack', 'Quest System', 'Dialogue System', 'Arena Ready'], correctAnswer: 0, explanation: 'Save enemy lesson.' },
+      { id: 'q10', type: MC, question: 'Lesson 8.5 save name…', options: ['Lesson 8.5 - Enemy Attack', 'Quest System', 'Dialogue System', 'Arena Ready'], correctAnswer: 0, explanation: 'Save enemy lesson.' },
     ],
   },
 }
@@ -972,7 +972,7 @@ export const enLesson86 = {
   lessonId: 'lesson-roblox-8-6',
   moduleId: 'module-08',
   order: 6,
-  title: '8.6 — Checkpoint: Living Location',
+  title: '8.6 - Checkpoint: Living Location',
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -980,13 +980,13 @@ export const enLesson86 = {
     'Integrate guide NPC, patrol, dialogue, quest, and enemy',
     'Pass full player loop QA from spawn to reward',
     'Keep systems in separate modules for maintainability',
-    'Ship Module 8 — Living Location portfolio save',
+    'Ship Module 8 - Living Location portfolio save',
   ],
   theory: {
     sections: [
       {
         title: 'Your path today (about 40 minutes)',
-        content: `**Living Location** = Module 8 portfolio — a mini zone that feels **alive**.
+        content: `**Living Location** = Module 8 portfolio - a mini zone that feels **alive**.
 
 **Required:**
 - Guide NPC + dialogue (8.1–8.2)
@@ -995,7 +995,7 @@ export const enLesson86 = {
 - Attacking enemy (8.5)
 - Shop from Module 7 optional nearby
 
-**Save:** \`Module 8 — Living Location\``,
+**Save:** \`Module 8 - Living Location\``,
       },
       {
         title: 'Living location blueprint',
@@ -1026,11 +1026,11 @@ ServerScriptService
 | Step | Action | Pass? |
 |------|--------|-------|
 | 1 | Spawn in hub | |
-| 2 | Talk to Guide Maya — dialogue | |
+| 2 | Talk to Guide Maya - dialogue | |
 | 3 | Accept / start crystal quest | |
-| 4 | Collect 5 crystals — UI updates | |
-| 5 | Fight slime enemy — survive | |
-| 6 | Complete quest — coins reward | |
+| 4 | Collect 5 crystals - UI updates | |
+| 5 | Fight slime enemy - survive | |
+| 6 | Complete quest - coins reward | |
 | 7 | See patrol NPC walking | |
 
 If confused at any step → fix signposting (arrows, dialogue hint).`,
@@ -1039,7 +1039,7 @@ If confused at any step → fix signposting (arrows, dialogue hint).`,
         title: 'Multiplayer QA',
         content: `**2 players:**
 - Independent quest progress
-- Enemy targets nearest — no shared HP bugs
+- Enemy targets nearest - no shared HP bugs
 - Dialogue does not block other player's UI
 - Patrol visible to both
 
@@ -1059,24 +1059,24 @@ If confused at any step → fix signposting (arrows, dialogue hint).`,
       },
       {
         title: '60-second demo script',
-        content: `1. Spawn — pan hub (patrol + guide)
-2. Talk — 2 dialogue lines
+        content: `1. Spawn - pan hub (patrol + guide)
+2. Talk - 2 dialogue lines
 3. Quest appears 0/5
-4. Collect 2 crystals — counter updates
+4. Collect 2 crystals - counter updates
 5. Quick fight with slime
-6. Finish quest — coin popup / label
+6. Finish quest - coin popup / label
 7. Open shop optional
 
 Record for portfolio or teacher review.`,
       },
       {
         title: 'Module 9 preview',
-        content: `**Module 9** often covers **teams, rounds, match flow** — your living hub can become lobby between rounds.
+        content: `**Module 9** often covers **teams, rounds, match flow** - your living hub can become lobby between rounds.
 
 **Before practice:**
 - [ ] Golden path passes
 - [ ] 2-player QA passes
-- [ ] **Save to Roblox** → \`Module 8 — Living Location\``,
+- [ ] **Save to Roblox** → \`Module 8 - Living Location\``,
       },
     ],
   },
@@ -1086,30 +1086,30 @@ Record for portfolio or teacher review.`,
     { mistake: 'Skipping golden path test', explanation: 'Broken flow at demo.', correctApproach: 'Full loop before save' },
     { mistake: 'Enemy blocks quest crystals', explanation: 'Frustration.', correctApproach: 'Space crystals away from spawn camp' },
   ],
-  summary: `You integrated NPCs, dialogue, patrol, quests, and combat into Living Location, passed solo and multiplayer QA, and saved a demo-ready hub — Module 8 is complete.`,
+  summary: `You integrated NPCs, dialogue, patrol, quests, and combat into Living Location, passed solo and multiplayer QA, and saved a demo-ready hub - Module 8 is complete.`,
   practiceTask: {
     title: 'Ship Living Location (~40 min)',
     difficulty: 'beginner',
     description: `**Goal:** Complete living zone checkpoint.
 
-### Part A — Integrate (15 min)
+### Part A - Integrate (15 min)
 1. Merge 8.1–8.5 into one place
 2. Folder structure + separate server modules
 3. Signs/arrows if flow unclear
 
-### Part B — Golden path + 2P (20 min)
-1. Run experience flow table — fix fails
+### Part B - Golden path + 2P (20 min)
+1. Run experience flow table - fix fails
 2. Two-player independent quest test
 3. Clear Output errors
 
-### Part C — Demo save (5 min)
+### Part C - Demo save (5 min)
 1. Rehearse 60s demo
-2. **Save to Roblox** → \`Module 8 — Living Location\`
+2. **Save to Roblox** → \`Module 8 - Living Location\`
 3. **Practice complete**`,
     hints: [
       'Fix one system at a time',
       'Guide dialogue should mention crystals and danger',
-      'Patrol NPC is atmosphere — quest is goal',
+      'Patrol NPC is atmosphere - quest is goal',
     ],
     optionalChallenge: 'Lights flicker or banner when quest completes.',
   },
@@ -1122,11 +1122,11 @@ Record for portfolio or teacher review.`,
       { id: 'q3', type: MC, question: '2-player quest test checks…', options: ['Independent progress', 'Shared one quest', 'No server', 'UI only'], correctAnswer: 0, explanation: 'Per-player state.' },
       { id: 'q4', type: MC, question: 'Separate scripts help…', options: ['Maintainability', 'Lag only', 'Remove UI', 'Ban players'], correctAnswer: 0, explanation: 'Clean architecture.' },
       { id: 'q5', type: MC, question: 'Patrol NPC adds…', options: ['Alive atmosphere', 'Shop prices', 'DataStore', 'Publishing'], correctAnswer: 0, explanation: 'World feel.' },
-      { id: 'q6', type: MC, question: 'Module 8 save name…', options: ['Module 8 — Living Location', 'Shop Works', 'Race Launched', 'Lesson 8.1'], correctAnswer: 0, explanation: 'Checkpoint.' },
+      { id: 'q6', type: MC, question: 'Module 8 save name…', options: ['Module 8 - Living Location', 'Shop Works', 'Race Launched', 'Lesson 8.1'], correctAnswer: 0, explanation: 'Checkpoint.' },
       { id: 'q7', type: MC, question: 'Checkpoint prioritizes…', options: ['Clear flow and reliability', 'Most enemies possible', 'No tests', 'Client quests'], correctAnswer: 0, explanation: 'Quality bar.' },
       { id: 'q8', type: MC, question: 'Lesson 8.6 completes…', options: ['Module 8 Smart Game', 'Module 12', 'Module 1', 'UK only'], correctAnswer: 0, explanation: 'End module 8.' },
       { id: 'q9', type: MC, question: 'Guide should mention…', options: ['Quest objective in dialogue', 'Server IP', 'Robux', 'Version only'], correctAnswer: 0, explanation: 'UX signposting.' },
-      { id: 'q10', type: MC, question: 'Enemy near quest should be…', options: ['Fair spacing — not blocking all crystals', 'On every crystal', 'Removed', 'Invisible'], correctAnswer: 0, explanation: 'Fun pacing.' },
+      { id: 'q10', type: MC, question: 'Enemy near quest should be…', options: ['Fair spacing - not blocking all crystals', 'On every crystal', 'Removed', 'Invisible'], correctAnswer: 0, explanation: 'Fun pacing.' },
     ],
   },
 }

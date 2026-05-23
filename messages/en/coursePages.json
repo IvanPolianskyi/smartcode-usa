@@ -34,7 +34,7 @@
     "hero": {
       "title": "PYTHON",
       "subtitle": "Programming the future",
-      "description": "Unlock a universe of possibilities with the world's most popular programming language. Build web apps, analyze data, and shape the future with us."
+      "description": "16 modules and 80+ lessons: from Python basics to Telegram bots, FastAPI, web scraping, and a bonus Tkinter GUI. Hands-on work on real projects."
     },
     "stats": {
       "items": [
@@ -45,56 +45,60 @@
       ]
     },
     "modules": {
-      "title": "Course modules",
+      "title": "16 MODULES = ZERO TO BOTS AND APIs",
       "items": [
         {
-          "title": "Python fundamentals",
-          "duration": "4 weeks",
-          "topics": ["Variables and data types", "Conditionals and loops", "Functions", "Data structures"]
+          "title": "Core syntax",
+          "topics": ["Data structures", "Operators", "if/for/while", "Comprehensions"]
         },
         {
-          "title": "OOP in Python",
-          "duration": "3 weeks",
-          "topics": ["Classes and objects", "Inheritance", "Polymorphism", "Encapsulation"]
+          "title": "Functions & OOP",
+          "topics": ["Functions", "Classes", "Inheritance", "Error handling"]
         },
         {
-          "title": "Web development",
-          "duration": "5 weeks",
-          "topics": ["Flask/Django", "REST API", "Databases", "Project deployment"]
+          "title": "Advanced Python",
+          "topics": ["Decorators", "Generators", "Stdlib modules", "CSV/JSON files"]
         },
         {
-          "title": "Data Science",
-          "duration": "4 weeks",
-          "topics": ["NumPy/Pandas", "Matplotlib", "Machine learning", "Projects"]
+          "title": "Web & automation",
+          "topics": ["Scraping", "Images", "PDF", "Email", "Tkinter GUI"]
+        },
+        {
+          "title": "Telegram bots",
+          "topics": ["BotFather", "python-telegram-bot", "Commands", "Keyboards"]
+        },
+        {
+          "title": "FastAPI",
+          "topics": ["REST API", "Pydantic", "CRUD", "Bot webhook"]
         }
       ]
     },
     "projects": {
-      "title": "Your future projects",
+      "title": "HANDS-ON PROJECTS",
       "items": [
         {
           "name": "Telegram bot",
-          "difficulty": "Beginner",
+          "difficulty": "INTERMEDIATE",
           "time": "2 weeks",
-          "description": "Build a smart bot to automate everyday tasks"
+          "description": "A smart bot with commands, buttons, and data from an external API"
         },
         {
-          "name": "Web application",
-          "difficulty": "Intermediate",
-          "time": "3 weeks",
-          "description": "A full-featured website with a database"
+          "name": "FastAPI REST API",
+          "difficulty": "INTERMEDIATE",
+          "time": "2-3 weeks",
+          "description": "Your own backend with /docs and CRUD for tasks"
         },
         {
-          "name": "Data analysis",
-          "difficulty": "Advanced",
-          "time": "4 weeks",
-          "description": "Visualize data and forecast trends"
+          "name": "Web scraper",
+          "difficulty": "INTERMEDIATE",
+          "time": "2 weeks",
+          "description": "Collect and save site data with requests and BeautifulSoup"
         },
         {
-          "name": "AI chatbot",
-          "difficulty": "Expert",
-          "time": "5 weeks",
-          "description": "Artificial intelligence powered by machine learning"
+          "name": "Desktop app",
+          "difficulty": "ADVANCED",
+          "time": "2-3 weeks",
+          "description": "Tkinter windowed UI - bonus module"
         }
       ]
     },
@@ -144,7 +148,7 @@
     },
     "projects": {
       "title": "Your future projects",
-      "subtitle": "From simple to advanced — build real projects",
+      "subtitle": "From simple to advanced - build real projects",
       "items": [
         {
           "name": "Portfolio website",
@@ -206,7 +210,7 @@
       "titleLine2": "GAME DEVELOPMENT",
       "pressStart": "START LEARNING",
       "freeLesson": "FREE TRIAL LESSON",
-      "description": "Become a game developer from scratch! Learn C# programming and the Unity Engine — from your first lines of code to portfolio-ready projects."
+      "description": "Become a game developer from scratch! Learn C# programming and the Unity Engine - from your first lines of code to portfolio-ready projects."
     },
     "stats": {
       "progress": "PROGRESS",
@@ -300,31 +304,31 @@
       "description": "Learn to create games in Roblox Studio: from your first Lua scripts to full simulators, tycoon games, and obstacle courses. Lots of practice and visual effects."
     },
     "modules": {
-      "title": "COURSE MODULES",
+      "title": "12 MODULES = 12 MINI-GAMES",
       "items": [
         {
-          "title": "Lua fundamentals",
-          "topics": ["Variables", "Functions", "Tables", "Events"]
+          "title": "World & Studio",
+          "topics": ["Island", "Properties", "ClickDetector", "Sound"]
         },
         {
-          "title": "Roblox Studio",
-          "topics": ["Explorer", "Properties", "Workspace", "Toolbox"]
+          "title": "Obby",
+          "topics": ["Traps", "Checkpoints", "Timer", "if/else"]
         },
         {
-          "title": "Parts & Models",
-          "topics": ["Blocks and cylinders", "Anchored", "Collisions", "Materials"]
+          "title": "Simulator + Tycoon",
+          "topics": ["Coins", "DataStore", "Dropper", "Upgrades"]
         },
         {
-          "title": "Scripting & Events",
-          "topics": ["Touched", "Clicked", "RemoteEvents", "DataStore basics"]
+          "title": "Arena & Racing",
+          "topics": ["Weapons", "Damage", "Car", "RemoteEvent"]
         },
         {
-          "title": "UI & FX",
-          "topics": ["ScreenGui", "TweenService", "Particles", "Billboards"]
+          "title": "Network & World",
+          "topics": ["Client/server", "Shop", "NPCs", "Quests"]
         },
         {
-          "title": "Final project",
-          "topics": ["Game design", "Optimization", "Publishing", "Analytics"]
+          "title": "Release",
+          "topics": ["RPG inventory", "Polish", "Testing", "Publishing"]
         }
       ]
     },

@@ -1,4 +1,4 @@
-/** Rich UK content for Roblox Module 12 — AUTO from EN via gen-roblox-lessons-uk.mjs */
+/** Rich UK content for Roblox Module 12 - AUTO from EN via gen-roblox-lessons-uk.mjs */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -7,7 +7,7 @@ export const ukLesson121 = {
   lessonId: "lesson-roblox-12-1",
   moduleId: "module-12",
   order: 1,
-  title: "12.1 — Фінальний проект: план",
+  title: "12.1 - Фінальний проект: план",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -21,20 +21,20 @@ export const ukLesson121 = {
     sections: [
       {
         title: "Ваш шлях сьогодні (близько 40 хвилин)",
-        content: `**Модуль 12 — День випуску ** — ви * * відправляєте * * те, що ви побудували в 11 модулях.
+        content: `**Модуль 12 - День випуску ** - ви * * відправляєте * * те, що ви побудували в 11 модулях.
 
 ** Потік уроку:**
-1. **Теорія (40 хв)** — структура GDD
-2. **Практика (~25 хв)** — напишіть свій підсумковий проект GDD
-3. **Тест (10 хв)** — **70%** залік
+1. **Теорія (40 хв)** - структура GDD
+2. **Практика (~25 хв)** - напишіть свій підсумковий проект GDD
+3. **Тест (10 хв)** - **70%** залік
 
-Це планування — ще не студійне кодування.`,
+Це планування - ще не студійне кодування.`,
       },
       {
         title: "GDD для справжніх авторів",
         content: `** Документ дизайну гри ** зупиняє повзучість функцій.
 
-Коли ви збуджуєтеся, вам потрібно 50 систем. Сили GDD **MVP** — які кораблі вчасно.
+Коли ви збуджуєтеся, вам потрібно 50 систем. Сили GDD **MVP** - які кораблі вчасно.
 
 **Ваш остаточний проект** поєднує контрольні точки:
 - Хаб / острів (Модуль 1)
@@ -54,7 +54,7 @@ export const ukLesson121 = {
 | ** Список систем ** | 6–8 пунктів з курсу |
 | **Мистецький/аудіо настрій** | 3 прикметники |
 | ** Обсяг MVP ** | Потрібно відправити цього місяця |
-| ** Контрольний список для випуску ** | Публікація кроків |**Приклад подання:* * *"Перегони, квести та оновлення спорядження на живому острівному вузлі — самостійно або з друзями"*.`,
+| ** Контрольний список для випуску ** | Публікація кроків |**Приклад подання:* * *"Перегони, квести та оновлення спорядження на живому острівному вузлі - самостійно або з друзями"*.`,
       },
       {
         title: "Шаблон основного циклу",
@@ -89,7 +89,7 @@ Spawn → explore hub → talk to NPC / start quest
 | **Проміжний підсумок** | 22 | |
 | **+30% буфера** | ~29 | |
 
-Додайте 30% — завжди щось ламається.`,
+Додайте 30% - завжди щось ламається.`,
       },
       {
         title: "Контрольний список перед тренуванням",
@@ -97,13 +97,13 @@ Spawn → explore hub → talk to NPC / start quest
 - [ ] Схема основного контуру або маркери
 - [ ] Must-have list ≤ 8 items
 - [ ] Хронологія з буфером
-- [ ] Зберегти примітки:\`Lesson 12.1 — Final GDD\``,
+- [ ] Зберегти примітки:\`Lesson 12.1 - Final GDD\``,
       },
     ],
   },
   commonMistakes: [
     {
-      mistake: "Немає MVP — все обов 'язково",
+      mistake: "Немає MVP - все обов 'язково",
       explanation: "Ніколи не відправляйте.",
       correctApproach: "Вирізати приємно",
     },
@@ -123,25 +123,25 @@ Spawn → explore hub → talk to NPC / start quest
       correctApproach: "Один гачок речення",
     },
   ],
-  summary: "Ви склали практичний GDD з кроком, основним циклом, списком систем, обов 'язковим MVP та буферизованою часовою шкалою — ваш остаточний проект тепер має план корабля, а не невизначені амбіції.",
+  summary: "Ви склали практичний GDD з кроком, основним циклом, списком систем, обов 'язковим MVP та буферизованою часовою шкалою - ваш остаточний проект тепер має план корабля, а не невизначені амбіції.",
   practiceTask: {
     title: "Підсумковий GDD проекту (~25 хв)",
     difficulty: "beginner",
     description: `**Ціль:** Заповніть документ GDD (документ або примітки).
 
-### Частина A — Ідентифікація (10 хв)
+### Частина A - Ідентифікація (10 хв)
 1. Пітч + цільовий гравець
 2. Основна петля (5 кроків)
 3. Мистецтво/аудіо настрій
 
-### Частина B — Обсяг (12 хв)
+### Частина B - Обсяг (12 хв)
 1. Список систем з модулів курсу
 2. Стіл Must-have vs nice to have
 3. Часові години + 30% буфер
 
-### Частина C — Заощадження (3 хв)
+### Частина C - Заощадження (3 хв)
 1. Експорт/збереження GDD-файлу
-2. **Практика завершена** — готова до інтеграції 12.2`,
+2. **Практика завершена** - готова до інтеграції 12.2`,
     hints: [
       "Опис магазину Pitch like Roblox",
       "Must-have = те, що ви демонструєте в ДЕНЬ ДЕМОНСТРАЦІЇ",
@@ -291,7 +291,7 @@ export const ukLesson122 = {
   lessonId: "lesson-roblox-12-2",
   moduleId: "module-12",
   order: 2,
-  title: "12.2 — Збираємо все разом",
+  title: "12.2 - Збираємо все разом",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -341,7 +341,7 @@ end
       },
       {
         title: "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 56 MINUTES 22 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",
-        content: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 56 MINUTES 21 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`Lesson 12.2 — Final Integration\``,
+        content: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 56 MINUTES 21 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`Lesson 12.2 - Final Integration\``,
       },
     ],
   },
@@ -371,7 +371,7 @@ end
   practiceTask: {
     title: "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 56 MINUTES 15 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",
     difficulty: "beginner",
-    description: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 56 MINUTES 15 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`Lesson 12.2 — Final Integration\`MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 56 MINUTES 14 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE`,
+    description: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 56 MINUTES 15 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`Lesson 12.2 - Final Integration\`MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 56 MINUTES 14 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE`,
     hints: [
       "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 56 MINUTES 14 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",
       "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 56 MINUTES 13 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",
@@ -521,7 +521,7 @@ export const ukLesson123 = {
   lessonId: "lesson-roblox-12-3",
   moduleId: "module-12",
   order: 3,
-  title: "12.3 — Тестування",
+  title: "12.3 - Тестування",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -547,7 +547,7 @@ export const ukLesson123 = {
       },
       {
         title: "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 42 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",
-        content: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 42 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`04:20 — did not find shop\`MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 41 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE`,
+        content: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 42 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`04:20 - did not find shop\`MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 41 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE`,
       },
       {
         title: "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 41 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",
@@ -555,7 +555,7 @@ export const ukLesson123 = {
       },
       {
         title: "Контрольний список перед тренуванням",
-        content: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 40 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`Lesson 12.3 — Playtest Pass\``,
+        content: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 40 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`Lesson 12.3 - Playtest Pass\``,
       },
     ],
   },
@@ -585,7 +585,7 @@ export const ukLesson123 = {
   practiceTask: {
     title: "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 34 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",
     difficulty: "beginner",
-    description: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 33 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`Lesson 12.3 — Playtest Pass\`MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 56 MINUTES 14 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE`,
+    description: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 33 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`Lesson 12.3 - Playtest Pass\`MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 56 MINUTES 14 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE`,
     hints: [
       "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 33 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",
       "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 32 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",
@@ -735,7 +735,7 @@ export const ukLesson124 = {
   lessonId: "lesson-roblox-12-4",
   moduleId: "module-12",
   order: 4,
-  title: "12.4 — Публікація",
+  title: "12.4 - Публікація",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -784,7 +784,7 @@ Built in SmartCode Academy Roblox Studio course.
       },
       {
         title: "Контрольний список перед тренуванням",
-        content: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 03 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`Lesson 12.4 — Published\``,
+        content: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 55 MINUTES 03 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`Lesson 12.4 - Published\``,
       },
     ],
   },
@@ -964,7 +964,7 @@ export const ukLesson125 = {
   lessonId: "lesson-roblox-12-5",
   moduleId: "module-12",
   order: 5,
-  title: "12.5 — Портфоліо",
+  title: "12.5 - Портфоліо",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -998,7 +998,7 @@ export const ukLesson125 = {
       },
       {
         title: "Контрольний список перед тренуванням",
-        content: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 54 MINUTES 25 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`Lesson 12.5 — Portfolio Post\``,
+        content: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 54 MINUTES 25 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`Lesson 12.5 - Portfolio Post\``,
       },
     ],
   },
@@ -1178,7 +1178,7 @@ export const ukLesson126 = {
   lessonId: "lesson-roblox-12-6",
   moduleId: "module-12",
   order: 6,
-  title: "12.6 — SHOWCASE DAY",
+  title: "12.6 - SHOWCASE DAY",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
@@ -1212,7 +1212,7 @@ export const ukLesson126 = {
       },
       {
         title: "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 53 MINUTES 48 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",
-        content: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 53 MINUTES 48 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`SmartCode — Final Showcase\`MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 53 MINUTES 47 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE`,
+        content: `MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 53 MINUTES 48 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE\`SmartCode - Final Showcase\`MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 53 MINUTES 47 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE`,
       },
       {
         title: "MYMEMORY WARNING: YOU USED ALL AVAILABLE FREE TRANSLATIONS FOR TODAY. NEXT AVAILABLE IN  13 HOURS 53 MINUTES 47 SECONDS VISIT HTTPS://MYMEMORY.TRANSLATED.NET/DOC/USAGELIMITS.PHP TO TRANSLATE MORE",

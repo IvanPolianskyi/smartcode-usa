@@ -29,8 +29,8 @@ export const lesson_01_1 = {
         content: `Comparison operators let us compare values and get a result: **True** or **False**.
 
 This is a lot like math! For example:
-- 5 > 3 — this is true (True)
-- 2 < 1 — this is false (False)
+- 5 > 3 - this is true (True)
+- 2 < 1 - this is false (False)
 
 **Why does this matter?**
 Comparison operators help a program make decisions. For example:
@@ -318,16 +318,16 @@ print(name1 != name3)  # True (not equal)`,
   
   summary: `In this lesson we learned:
 
-1. The equality operator (==) — checks whether two values are equal
-2. The inequality operator (!=) — checks whether two values are NOT equal
-3. Greater than (>) — checks whether the first number is greater than the second
-4. Less than (<) — checks whether the first number is less than the second
-5. Greater than or equal to (>=) — checks whether the first number is greater than or equal to the second
-6. Less than or equal to (<=) — checks whether the first number is less than or equal to the second
+1. The equality operator (==) - checks whether two values are equal
+2. The inequality operator (!=) - checks whether two values are NOT equal
+3. Greater than (>) - checks whether the first number is greater than the second
+4. Less than (<) - checks whether the first number is less than the second
+5. Greater than or equal to (>=) - checks whether the first number is greater than or equal to the second
+6. Less than or equal to (<=) - checks whether the first number is less than or equal to the second
 
 All comparison operators return True or False.
 
-Next lesson — logical operators and, or, not!`,
+Next lesson - logical operators and, or, not!`,
   
   practiceTask: {
     title: "Checking age and score",

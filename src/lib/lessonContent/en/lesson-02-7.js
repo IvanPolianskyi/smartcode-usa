@@ -55,7 +55,7 @@ export const lesson_02_7 = {
 **Approach:**
 1. Store the first element as the current maximum
 2. Iterate over all elements
-3. If you find a larger one — update the maximum
+3. If you find a larger one - update the maximum
 
 **Solution:**
 \`\`\`python
@@ -112,7 +112,7 @@ for number in numbers:
 **Approach:**
 1. Compare characters from the start and end
 2. Move toward the center
-3. If all pairs match — it's a palindrome
+3. If all pairs match - it's a palindrome
 
 **Solution:**
 \`\`\`python
@@ -167,7 +167,7 @@ while len(fibonacci) < n:
 
 **Algorithm:**
 1. Compare adjacent elements
-2. If they are in the wrong order — swap them
+2. If they are in the wrong order - swap them
 3. Repeat until sorted
 
 **Solution:**
@@ -183,7 +183,7 @@ for i in range(n):
 print(numbers)  # [11, 12, 22, 25, 34, 64, 90]
 \`\`\`
 
-**Complexity:** O(n²) — not the most efficient, but easy to understand.`
+**Complexity:** O(n²) - not the most efficient, but easy to understand.`
       },
       {
         title: "Tips for practice",
@@ -282,7 +282,7 @@ print(numbers)`,
   commonMistakes: [
     {
       mistake: "Not considering edge cases",
-      explanation: "Empty list, one element, identical elements — all need to be checked.",
+      explanation: "Empty list, one element, identical elements - all need to be checked.",
       correctApproach: "Always test edge cases: [], [1], [1,1,1]"
     },
     {
@@ -304,17 +304,17 @@ print(numbers)`,
   
   summary: `In this lesson we practiced:
 
-1. Approach to problems — understand, plan, implement, optimize
-2. Finding the maximum — algorithm for the largest element
-3. Counting elements — using dictionaries for statistics
-4. Palindrome check — symmetry checking algorithm
-5. Fibonacci numbers — generating sequences
-6. Sorting — basic sorting algorithms
-7. Practical tips — how to improve your skills
+1. Approach to problems - understand, plan, implement, optimize
+2. Finding the maximum - algorithm for the largest element
+3. Counting elements - using dictionaries for statistics
+4. Palindrome check - symmetry checking algorithm
+5. Fibonacci numbers - generating sequences
+6. Sorting - basic sorting algorithms
+7. Practical tips - how to improve your skills
 
 Practice is the key to success in programming!
 
-Next lesson — additional practice problems!`,
+Next lesson - additional practice problems!`,
   
   practiceTask: {
     title: "Text analysis system",
