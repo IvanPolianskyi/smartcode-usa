@@ -1,18 +1,36 @@
 'use client'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { Award, ArrowRight, CheckCircle, Code, Gamepad2, Box, Monitor, Sparkles } from 'lucide-react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
 import styles from './KnowledgeTestSection.module.css'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const DIRECTION_META = [
+	{ id: 'python', icon: Code, color: '#3b82f6', nameKey: 'python' },
+	{ id: 'roblox', icon: Box, color: '#10b981', nameKey: 'roblox' },
+	{ id: 'webdev', icon: Monitor, color: '#8b5cf6', nameKey: 'webdev' },
+	{ id: 'unity', icon: Gamepad2, color: '#f59e0b', nameKey: 'unity' },
+]
+
 const KnowledgeTestSection = () => {
+	const t = useTranslations('pages.knowledgeTest.section')
+	const td = useTranslations('pages.knowledgeTest.directions')
 	const [isVisible, setIsVisible] = useState(false)
 	const sectionRef = useRef(null)
 	const router = useRouter()
+
+	const directions = useMemo(
+		() =>
+			DIRECTION_META.map((d) => ({
+				...d,
+				name: d.nameKey === 'webdev' ? t('directions.webdev') : td(`${d.nameKey}.name`),
+			})),
+		[t, td]
+	)
 
 	useEffect(() => {
 		setIsVisible(true)
@@ -55,33 +73,6 @@ const KnowledgeTestSection = () => {
 		}
 	}, [])
 
-	const directions = [
-		{
-			name: 'Python',
-			icon: Code,
-			color: '#3b82f6',
-			id: 'python',
-		},
-		{
-			name: 'Roblox Studio',
-			icon: Box,
-			color: '#10b981',
-			id: 'roblox',
-		},
-		{
-			name: 'Веб-розробка',
-			icon: Monitor,
-			color: '#8b5cf6',
-			id: 'webdev',
-		},
-		{
-			name: 'Unity',
-			icon: Gamepad2,
-			color: '#f59e0b',
-			id: 'unity',
-		},
-	]
-
 	const handleDirectionClick = (directionId) => {
 		router.push(`/knowledge-test?course=${directionId}`)
 	}
@@ -100,12 +91,8 @@ const KnowledgeTestSection = () => {
 						<Award className={styles.icon} />
 						<Sparkles className={styles.sparkleIcon} />
 					</div>
-					<h2 className={styles.title}>
-						Перевірте свої знання
-					</h2>
-					<p className={styles.subtitle}>
-						Пройдіть безкоштовний тест знань та дізнайтеся свій рівень у програмуванні
-					</p>
+					<h2 className={styles.title}>{t('title')}</h2>
+					<p className={styles.subtitle}>{t('subtitle')}</p>
 				</div>
 
 				<div className={styles.content}>
@@ -114,30 +101,24 @@ const KnowledgeTestSection = () => {
 							<div className={styles.featureIcon}>
 								<CheckCircle size={24} />
 							</div>
-							<h3 className={styles.featureTitle}>15 питань</h3>
-							<p className={styles.featureText}>
-								На кожен напрямок для всебічної перевірки знань
-							</p>
+							<h3 className={styles.featureTitle}>{t('features.questions.title')}</h3>
+							<p className={styles.featureText}>{t('features.questions.text')}</p>
 						</div>
 
 						<div className={`${styles.featureCard} animate-scale`}>
 							<div className={styles.featureIcon}>
 								<Award size={24} />
 							</div>
-							<h3 className={styles.featureTitle}>Миттєвий результат</h3>
-							<p className={styles.featureText}>
-								Отримайте детальну оцінку своїх знань одразу після тесту
-							</p>
+							<h3 className={styles.featureTitle}>{t('features.instant.title')}</h3>
+							<p className={styles.featureText}>{t('features.instant.text')}</p>
 						</div>
 
 						<div className={`${styles.featureCard} animate-scale`}>
 							<div className={styles.featureIcon}>
 								<Sparkles size={24} />
 							</div>
-							<h3 className={styles.featureTitle}>4 напрямки</h3>
-							<p className={styles.featureText}>
-								Python, Roblox Studio, веб-розробка та Unity
-							</p>
+							<h3 className={styles.featureTitle}>{t('features.directions.title')}</h3>
+							<p className={styles.featureText}>{t('features.directions.text')}</p>
 						</div>
 					</div>
 
@@ -146,7 +127,7 @@ const KnowledgeTestSection = () => {
 							const Icon = direction.icon
 							return (
 								<div
-									key={direction.name}
+									key={direction.id}
 									className={`${styles.directionCard} animate-scale`}
 									style={{
 										'--direction-color': direction.color,
@@ -157,7 +138,10 @@ const KnowledgeTestSection = () => {
 								>
 									<div
 										className={styles.directionIcon}
-										style={{ backgroundColor: `${direction.color}20`, color: direction.color }}
+										style={{
+											backgroundColor: `${direction.color}20`,
+											color: direction.color,
+										}}
 									>
 										<Icon size={28} />
 									</div>
@@ -169,7 +153,7 @@ const KnowledgeTestSection = () => {
 
 					<div className={`${styles.ctaContainer} animate-up`}>
 						<Link href="/knowledge-test" className={styles.ctaButton}>
-							<span>Пройдіть тест зараз</span>
+							<span>{t('cta')}</span>
 							<ArrowRight size={20} />
 						</Link>
 					</div>
@@ -180,26 +164,3 @@ const KnowledgeTestSection = () => {
 }
 
 export default KnowledgeTestSection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

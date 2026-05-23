@@ -1,59 +1,71 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 import { ExternalLink, Sparkles, Instagram } from 'lucide-react'
 import Image from 'next/image'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TikTokIcon from '@/components/Icons/TikTokIcon'
 import styles from './SocialMedia.module.css'
 
-gsap.registerPlugin(ScrollTrigger)
+const ACCOUNT_META = [
+	{
+		id: 2,
+		name: 'TikTok',
+		username: '@smartcode_academy',
+		url: 'https://www.tiktok.com/@smartcodeacademy',
+		color: 'purple',
+		avatarUrl: '/tiktoklogo/6265690dcda2f88f952abb3045e5604d~tplv-tiktokx-cropcenter_1080_1080.jpeg',
+		descriptionKey: 'tiktokMain',
+	},
+	{
+		id: 5,
+		name: 'Instagram',
+		username: '@smartcode_academy_official',
+		url: 'https://www.instagram.com/smartcode_academy_official/',
+		color: 'purple',
+		avatarUrl: '/logo.jpeg',
+		descriptionKey: 'instagram',
+	},
+	{
+		id: 3,
+		username: '@ivan_python_smart',
+		url: 'https://www.tiktok.com/@ivan_python_smart',
+		color: 'green',
+		avatarUrl: '/tiktoklogo/00687615ebad2fd100b5ab6dde0a9964~tplv-tiktokx-cropcenter_1080_1080.jpeg',
+		accountKey: 'ivan',
+	},
+	{
+		id: 4,
+		username: '@artem.smartcode',
+		url: 'https://www.tiktok.com/@artem.smartcode',
+		color: 'orange',
+		avatarUrl: '/tiktoklogo/15dac559b1a79f75d8c1284cc21348ef~tplv-tiktokx-cropcenter_1080_1080.jpeg',
+		accountKey: 'artem',
+	},
+]
 
 const SocialMedia = () => {
-	const sectionRef = useRef(null)
-	const cardsRef = useRef([])
+	const t = useTranslations('homeSections.social')
 	const [avatars, setAvatars] = useState({})
 	const [avatarErrors, setAvatarErrors] = useState({})
 
-	const socialAccounts = [
-		{
-			id: 2,
-			name: 'TikTok',
-			username: '@smartcode_academy',
-			url: 'https://www.tiktok.com/@smartcodeacademy',
-			description: 'Наші курси та проекти',
-			color: 'purple',
-			avatarUrl: '/tiktoklogo/6265690dcda2f88f952abb3045e5604d~tplv-tiktokx-cropcenter_1080_1080.jpeg',
-		},
-		{
-			id: 5,
-			name: 'Instagram',
-			username: '@smartcode_academy_official',
-			url: 'https://www.instagram.com/smartcode_academy_official/',
-			description: 'Життя академії та новини',
-			color: 'purple',
-			avatarUrl: '/logo.jpeg',
-		},
-		{
-			id: 3,
-			name: 'Іван - Python',
-			username: '@ivan_python_smart',
-			url: 'https://www.tiktok.com/@ivan_python_smart',
-			description: 'Python програмування',
-			color: 'green',
-			avatarUrl: '/tiktoklogo/00687615ebad2fd100b5ab6dde0a9964~tplv-tiktokx-cropcenter_1080_1080.jpeg',
-		},
-		{
-			id: 4,
-			name: 'Артем - SmartCode',
-			username: '@artem.smartcode',
-			url: 'https://www.tiktok.com/@artem.smartcode',
-			description: 'Навчальний контент',
-			color: 'orange',
-			avatarUrl: '/tiktoklogo/15dac559b1a79f75d8c1284cc21348ef~tplv-tiktokx-cropcenter_1080_1080.jpeg',
-		},
-	]
+	const socialAccounts = useMemo(
+		() =>
+			ACCOUNT_META.map(account => {
+				if (account.accountKey) {
+					return {
+						...account,
+						name: t(`accounts.${account.accountKey}.name`),
+						description: t(`accounts.${account.accountKey}.description`),
+					}
+				}
+				return {
+					...account,
+					description: t(`accounts.${account.descriptionKey}.description`),
+				}
+			}),
+		[t]
+	)
 
 	// Завантаження аватарок
 	useEffect(() => {
@@ -94,131 +106,20 @@ const SocialMedia = () => {
 		}
 
 		loadAvatars()
-	}, [])
-
-	// GSAP animations з оптимізацією для мобільних
-	useEffect(() => {
-		const section = sectionRef.current
-		if (!section) return
-
-		const isMobile = window.innerWidth <= 768
-		const cards = cardsRef.current.filter(Boolean)
-
-		// Анімація появи секції з оптимізацією для мобільних
-		if (isMobile) {
-			gsap.fromTo(
-				section.querySelector(`.${styles.title}`),
-				{
-					opacity: 0,
-					y: 20,
-				},
-				{
-					opacity: 1,
-					y: 0,
-					duration: 0.6,
-					ease: 'power2.out',
-					scrollTrigger: {
-						trigger: section,
-						start: 'top 90%',
-						toggleActions: 'play none none none',
-						markers: false,
-					},
-				}
-			)
-
-			// Спрощені анімації карток для мобільних
-			cards.forEach((card, index) => {
-				if (card) {
-					gsap.fromTo(
-						card,
-						{
-							opacity: 0,
-							y: 30,
-							scale: 0.95,
-						},
-						{
-							opacity: 1,
-							y: 0,
-							scale: 1,
-							duration: 0.5,
-							delay: index * 0.08,
-							ease: 'power2.out',
-							scrollTrigger: {
-								trigger: card,
-								start: 'top 90%',
-								toggleActions: 'play none none none',
-								markers: false,
-							},
-						}
-					)
-				}
-			})
-		} else {
-			gsap.fromTo(
-				section.querySelector(`.${styles.title}`),
-				{
-					opacity: 0,
-					y: 30,
-				},
-				{
-					opacity: 1,
-					y: 0,
-					duration: 0.8,
-					scrollTrigger: {
-						trigger: section,
-						start: 'top 80%',
-						toggleActions: 'play none none none',
-					},
-				}
-			)
-
-			// Анімація карток
-			cards.forEach((card, index) => {
-				if (card) {
-					gsap.fromTo(
-						card,
-						{
-							opacity: 0,
-							y: 50,
-							scale: 0.9,
-						},
-						{
-							opacity: 1,
-							y: 0,
-							scale: 1,
-							duration: 0.6,
-							delay: index * 0.1,
-							scrollTrigger: {
-								trigger: card,
-								start: 'top 85%',
-								toggleActions: 'play none none none',
-							},
-						}
-					)
-				}
-			})
-		}
-
-		return () => {
-			ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-		}
-	}, [])
+	}, [socialAccounts])
 
 	return (
-		<section id="social-media" ref={sectionRef} className={styles.section}>
+		<section id="social-media" className={styles.section}>
 			<div className={styles.container}>
 				<div className={styles.header}>
 					<div className={styles.badge}>
 						<Sparkles size={16} />
-						<span>Соціальні мережі</span>
+						<span>{t('badge')}</span>
 					</div>
 					<h2 className={styles.title}>
-						Ми в <span className={styles.titleAccent}>соцмережах</span>
+						{t('title')} <span className={styles.titleAccent}>{t('titleAccent')}</span>
 					</h2>
-					<p className={styles.subtitle}>
-						Підписуйтесь на наші профілі, щоб бути в курсі останніх новин,
-						навчальних матеріалів та цікавих проектів!
-					</p>
+					<p className={styles.subtitle}>{t('subtitle')}</p>
 				</div>
 
 				<div className={styles.grid}>
@@ -234,7 +135,6 @@ const SocialMedia = () => {
 								target="_blank"
 								rel="noopener noreferrer"
 								className={`${styles.card} ${styles[account.color]}`}
-								ref={el => (cardsRef.current[index] = el)}
 							>
 								<div className={styles.cardContent}>
 									<div className={styles.avatarWrapper}>

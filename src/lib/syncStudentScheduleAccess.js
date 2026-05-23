@@ -1,5 +1,6 @@
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
+import { robloxCurriculum } from '@/lib/robloxCurriculum'
 
 const DAY_MAP = {
   'Нд': 0,
@@ -14,6 +15,7 @@ const DAY_MAP = {
 const COURSE_CURRICULUM = {
   'python-developer-zero-to-junior': pythonCurriculum,
   'web-development': webDevCurriculum,
+  'roblox-studio': robloxCurriculum,
 }
 
 function getAllLessons(courseId) {

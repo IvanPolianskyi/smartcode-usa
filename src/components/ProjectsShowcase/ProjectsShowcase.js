@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
 	Code,
 	Eye,
@@ -10,23 +10,18 @@ import {
 	Loader2
 } from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
 import PhoneModal from '@/components/PhoneModal/PhoneModal'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './ProjectsShowcase.module.css'
 
-// Register ScrollTrigger
-gsap.registerPlugin(ScrollTrigger)
-
 const ProjectsShowcase = () => {
+	const t = useTranslations('pages.projects')
 	const [featuredProjects, setFeaturedProjects] = useState([])
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState(null)
 	const [showPhoneModal, setShowPhoneModal] = useState(false)
 	const [selectedProject, setSelectedProject] = useState(null)
-	const sectionRef = useRef(null)
-
 	// Fetch featured projects
 	useEffect(() => {
 		const fetchFeaturedProjects = async () => {
@@ -38,103 +33,18 @@ const ProjectsShowcase = () => {
 					// Take only the first 3 projects as featured
 					setFeaturedProjects(data.projects.slice(2, 5))
 				} else {
-					setError('Failed to load projects')
+					setError(t('errorLoad'))
 				}
 			} catch (err) {
 				console.error('Error fetching featured projects:', err)
-				setError('Failed to load projects')
+				setError(t('errorLoad'))
 			} finally {
 				setLoading(false)
 			}
 		}
 
 		fetchFeaturedProjects()
-	}, [])
-
-	// GSAP animations з оптимізацією для мобільних
-	useEffect(() => {
-		if (!sectionRef.current || featuredProjects.length === 0) return
-
-		const isMobile = window.innerWidth <= 768
-
-		const ctx = gsap.context(() => {
-			if (isMobile) {
-				// Спрощені анімації для мобільних
-				gsap.fromTo(
-					'.animate-up',
-					{ y: 30, opacity: 0 },
-					{
-						y: 0,
-						opacity: 1,
-						duration: 0.6,
-						ease: 'power2.out',
-						stagger: 0.1,
-						scrollTrigger: {
-							trigger: sectionRef.current,
-							start: 'top 90%',
-							toggleActions: 'play none none none',
-							markers: false,
-						},
-					}
-				)
-
-				gsap.fromTo(
-					'.animate-scale',
-					{ scale: 0.95, opacity: 0 },
-					{
-						scale: 1,
-						opacity: 1,
-						duration: 0.5,
-						ease: 'power2.out',
-						stagger: 0.08,
-						scrollTrigger: {
-							trigger: sectionRef.current,
-							start: 'top 88%',
-							toggleActions: 'play none none none',
-							markers: false,
-						},
-					}
-				)
-			} else {
-				gsap.fromTo(
-					'.animate-up',
-					{ y: 60, opacity: 0 },
-					{
-						y: 0,
-						opacity: 1,
-						duration: 0.8,
-						ease: 'power3.out',
-						stagger: 0.15,
-						scrollTrigger: {
-							trigger: sectionRef.current,
-							start: 'top 85%',
-							end: 'bottom 15%',
-							toggleActions: 'play none none reverse',
-						},
-					}
-				)
-
-				gsap.fromTo(
-					'.animate-scale',
-					{ scale: 0.8, opacity: 0 },
-					{
-						scale: 1,
-						opacity: 1,
-						duration: 0.6,
-						ease: 'back.out(1.7)',
-						stagger: 0.1,
-						scrollTrigger: {
-							trigger: sectionRef.current,
-							start: 'top 80%',
-							toggleActions: 'play none none reverse',
-						},
-					}
-				)
-			}
-		}, sectionRef)
-
-		return () => ctx.revert()
-	}, [featuredProjects])
+	}, [t])
 
 	const openProject = (project) => {
 		setSelectedProject(project)
@@ -152,13 +62,13 @@ const ProjectsShowcase = () => {
 
 	if (loading) {
 		return (
-			<div className={styles.container} ref={sectionRef}>
+			<div className={styles.container}>
 				<div className={styles.mainContainer}>
 					<div className={styles.header}>
-						<h2 className={styles.title}>Проєкти наших учнів</h2>
+						<h2 className={styles.title}>{t('title')}</h2>
 						<div className={styles.loadingContainer}>
 							<Loader2 className={styles.loader} />
-							<p>Завантаження проєктів...</p>
+							<p>{t('loading')}</p>
 						</div>
 					</div>
 				</div>
@@ -168,10 +78,12 @@ const ProjectsShowcase = () => {
 
 	if (error) {
 		return (
-			<div className={styles.container} ref={sectionRef}>
+			<div className={styles.container}>
 				<div className={styles.mainContainer}>
 					<div className={styles.header}>
-						<h2 className={styles.title}>Проєкти наших учнів</h2>
+						<h2 className={styles.title}>
+							<span className={styles.titleAccent}>{t('titleAccent')}</span> {t('titleSuffix')}
+						</h2>
 						<div className={styles.errorContainer}>
 							<p>❌ {error}</p>
 						</div>
@@ -182,7 +94,7 @@ const ProjectsShowcase = () => {
 	}
 
 	return (
-		<div className={styles.container} ref={sectionRef}>
+		<div className={styles.container}>
 			{/* Background elements */}
 			<div className={styles.backgroundElements}>
 				<div className={`${styles.floatingElement} ${styles.element1}`}></div>
@@ -194,13 +106,10 @@ const ProjectsShowcase = () => {
 				{/* Header */}
 				<div className={styles.header}>
 					<div className={styles.titleSection}>
-						<h2 className={`${styles.title} animate-up`}>
-							<span className={styles.titleAccent}>Проєкти</span> наших учнів
+						<h2 className={styles.title}>
+							<span className={styles.titleAccent}>{t('titleAccent')}</span> {t('titleSuffix')}
 						</h2>
-						<p className={`${styles.subtitle} animate-up`}>
-							Подивіться на чудові роботи наших талановитих студентів. 
-							Кожен проєкт - це крок до великого майбутнього в IT!
-						</p>
+						<p className={styles.subtitle}>{t('subtitle')}</p>
 					</div>
 				</div>
 
@@ -210,8 +119,7 @@ const ProjectsShowcase = () => {
 						{featuredProjects.map((project, index) => (
 							<div
 								key={project.id}
-								className={`${styles.projectCard} animate-scale`}
-								style={{ animationDelay: `${index * 0.1}s` }}
+								className={styles.projectCard}
 								onClick={() => openProject(project)}
 							>
 								<div className={styles.projectImageContainer}>
@@ -234,12 +142,12 @@ const ProjectsShowcase = () => {
 										style={{ display: project.image && project.image !== '/projects/default-project.svg' ? 'none' : 'flex' }}
 									>
 										<Code size={32} />
-										<span>Код проєкту</span>
+										<span>{t('codePlaceholder')}</span>
 									</div>
 									<div className={styles.projectOverlay}>
 										<div className={styles.viewButton}>
 											<Eye size={16} />
-											Переглянути
+											{t('view')}
 										</div>
 									</div>
 								</div>
@@ -256,21 +164,17 @@ const ProjectsShowcase = () => {
 				) : (
 					<div className={styles.emptyState}>
 						<Code size={48} />
-						<p>Перші проєкти з&apos;являться тут!</p>
+						<p>{t('empty')}</p>
 					</div>
 				)}
 
 				{/* CTA Section */}
-				<div className={`${styles.ctaSection} animate-up`}>
+				<div className={styles.ctaSection}>
 					<div className={styles.ctaContent}>
-						<h3 className={styles.ctaTitle}>
-							Хочете побачити більше проєктів?
-						</h3>
-						<p className={styles.ctaDescription}>
-							Перегляньте повну колекцію робіт наших учнів та надихніться їхніми досягненнями
-						</p>
+						<h3 className={styles.ctaTitle}>{t('cta.title')}</h3>
+						<p className={styles.ctaDescription}>{t('cta.description')}</p>
 						<Link href="/projects" className={styles.ctaButton}>
-							<span>Переглянути всі проєкти</span>
+							<span>{t('cta.button')}</span>
 							<ArrowRight className={styles.buttonIcon} />
 						</Link>
 					</div>

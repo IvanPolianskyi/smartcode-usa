@@ -22,13 +22,13 @@ export async function login(email, password) {
   return data
 }
 
-export async function register(email, password, name, phone) {
+export async function register(email, password, name, phone, locale = 'uk') {
   const response = await fetch('/api/auth/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ email, password, name, phone }),
+    body: JSON.stringify({ email, password, name, phone, locale }),
   })
 
   const data = await response.json()
@@ -150,14 +150,14 @@ export async function checkCoursePurchase(courseId) {
   }
 }
 
-export async function createPayment(courseId) {
+export async function createPayment(courseId, locale = 'uk') {
   const response = await fetch('/api/payment/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
-    body: JSON.stringify({ courseId }),
+    body: JSON.stringify({ courseId, locale }),
   })
 
   const data = await response.json()
@@ -166,6 +166,20 @@ export async function createPayment(courseId) {
     throw new Error(data.error || 'Failed to create payment')
   }
 
+  return data
+}
+
+export async function createEnLessonPayment({ courseId, lessonFormat, day, time }) {
+  const response = await fetch('/api/payment/en-lesson', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ courseId, lessonFormat, day, time }),
+  })
+  const data = await response.json()
+  if (!response.ok) {
+    throw new Error(data.error || 'Failed to create payment')
+  }
   return data
 }
 

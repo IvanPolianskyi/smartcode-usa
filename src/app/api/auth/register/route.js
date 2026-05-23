@@ -6,7 +6,8 @@ import { hashPassword, generateToken, setAuthCookie } from '@/lib/auth'
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { email, password, name, phone } = body
+    const { email, password, name, phone, locale = 'uk' } = body
+    const isEnLocale = locale === 'en'
 
     // Validation
     if (!email || !password || !name) {
@@ -55,7 +56,7 @@ export async function POST(request) {
         zoomLink: '',
         activeOnlineCourses: [],
         courseAccess: {},
-        accountReady: false,
+        accountReady: isEnLocale,
       },
       purchasedCourses: [], // Courses that user has paid for
       createdAt: new Date(),

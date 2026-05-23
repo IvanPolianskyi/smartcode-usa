@@ -10,8 +10,17 @@ const HEADER_SCROLL_OFFSET = 88
 
 export function parseHomeHashTarget(href) {
 	if (typeof href !== 'string') return null
-	const m = href.match(/^\/#([\w-]+)$/)
+	const m = href.match(/^(?:\/en)?\/#([\w-]+)$/)
 	return m ? m[1] : null
+}
+
+export function isHomePathname(pathname) {
+	if (!pathname) return false
+	return pathname === '/' || pathname === '/en'
+}
+
+export function getHomeBasePath(pathname) {
+	return pathname?.startsWith('/en') ? '/en' : '/'
 }
 
 export function setPendingHomeSectionScroll(id) {
@@ -91,7 +100,8 @@ export function requestHomeSectionScroll(sectionId) {
 	if (typeof window === 'undefined' || !sectionId) return () => {}
 	setPendingHomeSectionScroll(sectionId)
 	try {
-		window.history.replaceState(null, '', `/#${sectionId}`)
+		const base = getHomeBasePath(window.location.pathname)
+		window.history.replaceState(null, '', `${base}#${sectionId}`)
 	} catch {}
 	const cancel = scheduleScrollToHomeSectionId(sectionId)
 	window.dispatchEvent(
@@ -110,10 +120,11 @@ export function navigateToHomeSection(sectionId, router, options = {}) {
 	if (typeof window === 'undefined' || !sectionId) return
 	options.onBeforeNavigate?.()
 	const path = window.location.pathname
-	if (path === '/' || path === '') {
+	if (isHomePathname(path)) {
 		requestHomeSectionScroll(sectionId)
 		return
 	}
 	setPendingHomeSectionScroll(sectionId)
-	router.push(`/#${sectionId}`)
+	const base = getHomeBasePath(path)
+	router.push(`${base}#${sectionId}`)
 }

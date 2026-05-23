@@ -1,6 +1,7 @@
 'use client'
 import React, { useLayoutEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useTranslations, useLocale } from 'next-intl'
 
 /**
  * Shared phone input field with country selector.
@@ -10,9 +11,14 @@ export default function PhoneField({
 	phoneInput,
 	classes,
 	id = 'phone',
-	labelText = 'НОМЕР ТЕЛЕФОНУ',
+	labelText,
 	showLabel = true,
 }) {
+	const t = useTranslations('phoneField')
+	const locale = useLocale()
+	const displayLabel = labelText ?? t('label')
+	const countryName = (c) => (locale === 'en' ? c.nameEn : c.nameUk)
+
 	const {
 		country,
 		displayValue,
@@ -65,7 +71,7 @@ export default function PhoneField({
 		<div
 			className={`${classes.dropdown} ${classes.dropdownPortal || ''}`}
 			role="listbox"
-			aria-label="Оберіть країну"
+			aria-label={t('selectCountry')}
 			data-phone-country-dropdown
 			style={{
 				position: 'fixed',
@@ -79,11 +85,11 @@ export default function PhoneField({
 				<input
 					type="search"
 					className={classes.dropdownSearch}
-					placeholder="Країна або код (+48, Польща…)"
+					placeholder={t('searchPlaceholder')}
 					value={countryQuery}
 					onChange={(e) => setCountryQuery(e.target.value)}
 					autoComplete="off"
-					aria-label="Пошук країни"
+					aria-label={t('searchCountry')}
 					onKeyDown={(e) => {
 						if (e.key === 'Enter' && filteredCountries.length === 1) {
 							e.preventDefault()
@@ -94,7 +100,7 @@ export default function PhoneField({
 			</div>
 			<div className={classes.dropdownList}>
 				{filteredCountries.length === 0 ? (
-					<p className={classes.dropdownEmpty}>Країну не знайдено</p>
+					<p className={classes.dropdownEmpty}>{t('countryNotFound')}</p>
 				) : (
 					filteredCountries.map((c) => (
 						<button
@@ -112,7 +118,7 @@ export default function PhoneField({
 								width={20}
 								height={14}
 							/>
-							<span className={classes.dropdownItemName}>{c.nameUk}</span>
+							<span className={classes.dropdownItemName}>{countryName(c)}</span>
 							<span className={classes.dropdownItemCode}>{c.code}</span>
 							<span className={classes.dropdownItemDial}>{c.prefix}</span>
 						</button>
@@ -134,7 +140,7 @@ export default function PhoneField({
 					htmlFor={id}
 					style={{ textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}
 				>
-					{labelText}
+					{displayLabel}
 				</label>
 			)}
 			<div className={classes.phoneContainer} ref={dropdownRef}>
@@ -142,7 +148,7 @@ export default function PhoneField({
 					type="button"
 					className={classes.countryBtn}
 					onClick={() => (showDropdown ? setShowDropdown(false) : openDropdown())}
-					aria-label={`Країна: ${country.nameUk}`}
+					aria-label={t('countryAria', { name: countryName(country) })}
 					aria-expanded={showDropdown}
 				>
 					<img
@@ -198,7 +204,7 @@ export default function PhoneField({
 						className={classes.phoneInput}
 						inputMode="tel"
 						autoComplete={intlMode ? 'tel' : 'tel-national'}
-						placeholder={intlMode ? '+380…' : 'Номер телефону'}
+						placeholder={intlMode ? t('intlPlaceholder') : t('phonePlaceholder')}
 						aria-invalid={phoneError ? 'true' : undefined}
 						aria-describedby={phoneError ? `${id}-error` : undefined}
 					/>

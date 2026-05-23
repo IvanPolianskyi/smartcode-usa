@@ -98,8 +98,9 @@ html {
   scroll-behavior: smooth;
   /* Приховуємо скролбар для Firefox */
   scrollbar-width: none;
-  /* Фікс для Instagram/Facebook in-app browser: використовуємо svh який не змінюється при появі/зникненні UI панелі */
-  --app-height: 100svh;
+  /* Фікс для Instagram/Facebook in-app browser: JS оновлює --app-height з innerHeight */
+  --app-height: 100vh;
+  --visit-header-offset: 70px;
   /* Зберігаємо позицію скролу при зміні розміру viewport (Instagram toolbar) */
   overflow-anchor: auto;
 }

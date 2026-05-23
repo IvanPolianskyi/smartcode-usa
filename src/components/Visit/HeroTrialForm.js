@@ -12,8 +12,12 @@ import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 import styles from './HeroTrialForm.module.css'
+import { useTranslations, useLocale } from 'next-intl'
 
 export default function HeroTrialForm() {
+	const t = useTranslations('home.heroForm')
+	const tc = useTranslations('common')
+	const locale = useLocale()
 	const [name, setName] = useState('')
 	const [nameError, setNameError] = useState('')
 	const [submitting, setSubmitting] = useState(false)
@@ -57,7 +61,7 @@ export default function HeroTrialForm() {
 
 		let hasError = false
 		if (!name.trim()) {
-			setNameError("Введіть ваше ім'я")
+			setNameError(t('nameRequired'))
 			hasError = true
 		} else {
 			setNameError('')
@@ -83,11 +87,12 @@ export default function HeroTrialForm() {
 					eventId,
 					sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://smartcode-academy.com',
 					attribution: getClientAttribution(),
+					locale,
 				}),
 			})
 			const data = await response.json().catch(() => ({}))
 			if (!response.ok || !data?.ok) {
-				alert('На жаль, сталася помилка при відправці. Спробуйте ще раз.')
+				alert(tc('errorSubmit'))
 				return
 			}
 			if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -98,7 +103,7 @@ export default function HeroTrialForm() {
 			}
 			setDone(true)
 		} catch {
-			alert('Сталася помилка мережі.')
+			alert(tc('errorNetwork'))
 		} finally {
 			setSubmitting(false)
 		}
@@ -109,8 +114,8 @@ export default function HeroTrialForm() {
 			<div className={styles.card} id='trial-signup-hero'>
 				<div className={styles.success}>
 					<Sparkles size={26} className={styles.successIcon} aria-hidden />
-					<p className={styles.successTitle}>Заявку отримано!</p>
-					<p className={styles.successText}>Ми зв&apos;яжемося з вами найближчим часом.</p>
+					<p className={styles.successTitle}>{t('successTitle')}</p>
+					<p className={styles.successText}>{t('successText')}</p>
 				</div>
 			</div>
 		)
@@ -119,8 +124,8 @@ export default function HeroTrialForm() {
 	return (
 		<div className={styles.card} id='trial-signup-hero'>
 			<h2 className={styles.title}>
-				Запишіться на{' '}
-				<span className={styles.titleAccent}>безкоштовне пробне заняття</span>
+				{t('title')}{' '}
+				<span className={styles.titleAccent}>{t('titleAccent')}</span>
 			</h2>
 
 			<form
@@ -132,7 +137,7 @@ export default function HeroTrialForm() {
 				<div className={styles.formRow}>
 					<div className={styles.field}>
 						<label className={styles.srOnly} htmlFor='hero-trial-name'>
-							Ваше ім&apos;я
+							{t('nameLabel')}
 						</label>
 						<input
 							ref={nameRef}
@@ -140,7 +145,7 @@ export default function HeroTrialForm() {
 							type='text'
 							name='name'
 							className={`${styles.input} ${nameError ? styles.inputError : ''}`}
-							placeholder="Введіть своє ім'я"
+							placeholder={t('namePlaceholder')}
 							value={name}
 							onChange={(e) => {
 								setName(e.target.value)
@@ -160,10 +165,10 @@ export default function HeroTrialForm() {
 				</div>
 
 				<button type='submit' className={styles.submit} disabled={submitting}>
-					{submitting ? 'Відправка…' : 'Записатись'}
+					{submitting ? t('submitting') : t('submit')}
 				</button>
 
-				<p className={styles.hint}>0 грн · без зобов&apos;язань · відповімо протягом дня</p>
+				<p className={styles.hint}>{t('hint')}</p>
 			</form>
 		</div>
 	)

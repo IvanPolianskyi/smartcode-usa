@@ -3,7 +3,9 @@ import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { generatePaymentLink } from '@/lib/liqpay'
+import { createInvoice } from '@/lib/wayforpay'
 import { getCoursePrice } from '@/lib/coursePrices'
+import { paymentDescription } from '@/lib/localeStrings'
 
 /**
  * Create payment link for course purchase
@@ -20,7 +22,7 @@ export async function POST(request) {
     }
 
     const body = await request.json()
-    const { courseId } = body
+    const { courseId, locale = 'uk' } = body
 
     if (!courseId) {
       return NextResponse.json(
@@ -56,35 +58,68 @@ export async function POST(request) {
       )
     }
 
-    // Get course price
-    const courseInfo = getCoursePrice(courseId)
-    if (!courseInfo || courseInfo.price === 0) {
+    const courseInfo = getCoursePrice(courseId, locale)
+    if (!courseInfo || courseInfo.price === 0 || courseInfo.purchasable === false) {
       return NextResponse.json(
-        { error: 'Course price not configured' },
+        { error: 'Course price not configured or not available for purchase' },
         { status: 400 }
       )
     }
 
-    // Generate unique order ID
     const orderId = `course_${courseId}_${userId}_${Date.now()}`
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL ||
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
 
-    // Get base URL
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
-                   process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 
-                   'http://localhost:3000'
+    const paymentsCollection = await getCollection('payments')
 
-    // Create payment link
+    if (courseInfo.paymentProvider === 'wayforpay') {
+      const productName = courseInfo.nameEn || courseInfo.name
+      const { invoiceUrl } = await createInvoice({
+        orderReference: orderId,
+        amount: courseInfo.price,
+        currency: courseInfo.currency,
+        productName: [productName],
+        productPrice: [courseInfo.price],
+        productCount: [1],
+        language: locale === 'uk' ? 'UA' : 'EN',
+        serviceUrl: `${baseUrl}/api/payment/wayforpay/webhook`,
+        clientEmail: user.email,
+        clientFirstName: user.name?.split(' ')[0] || 'Student',
+        clientLastName: user.name?.split(' ').slice(1).join(' ') || '',
+        paymentSystems: 'card;googlePay;applePay',
+      })
+
+      await paymentsCollection.insertOne({
+        userId: userIdObj,
+        courseId,
+        orderId,
+        amount: courseInfo.price,
+        currency: courseInfo.currency,
+        status: 'pending',
+        paymentMethod: 'wayforpay',
+        paymentType: 'full_course',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+
+      return NextResponse.json({
+        paymentUrl: invoiceUrl,
+        orderId,
+        provider: 'wayforpay',
+      })
+    }
+
+    const productLabel = courseInfo.nameEn || courseInfo.name
     const paymentLink = generatePaymentLink({
       orderId,
       amount: courseInfo.price,
-      description: `Оплата курсу: ${courseInfo.name}`,
+      description: paymentDescription(productLabel, locale),
       resultUrl: `${baseUrl}/payment/success?orderId=${orderId}`,
       serverUrl: `${baseUrl}/api/payment/webhook`,
-      currency: courseInfo.currency
+      currency: courseInfo.currency,
     })
 
-    // Create pending payment record
-    const paymentsCollection = await getCollection('payments')
     await paymentsCollection.insertOne({
       userId: userIdObj,
       courseId,
@@ -92,20 +127,23 @@ export async function POST(request) {
       amount: courseInfo.price,
       currency: courseInfo.currency,
       status: 'pending',
+      paymentMethod: 'liqpay',
+      paymentType: 'full_course',
       paymentData: {
         data: paymentLink.data,
-        signature: paymentLink.signature
+        signature: paymentLink.signature,
       },
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     })
 
     return NextResponse.json({
       paymentUrl: paymentLink.url,
       data: paymentLink.data,
       signature: paymentLink.signature,
-      orderId
-    }, { status: 200 })
+      orderId,
+      provider: 'liqpay',
+    })
   } catch (error) {
     console.error('Create payment error:', error)
     return NextResponse.json(

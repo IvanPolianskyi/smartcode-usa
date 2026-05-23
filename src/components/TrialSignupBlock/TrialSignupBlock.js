@@ -13,16 +13,14 @@ import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 import styles from './TrialSignupBlock.module.css'
+import { useTranslations, useLocale } from 'next-intl'
 
-const COURSES = [
-	'Roblox Studio',
-	'Python',
-	'JavaScript та веб-розробка',
-	'Розробка ігор на Unity',
-	'Не впевнений(а), потрібна консультація',
-]
+const COURSE_KEYS = ['roblox', 'python', 'webDev', 'unity', 'unsure']
 
 export default function TrialSignupBlock() {
+	const t = useTranslations('trial')
+	const tc = useTranslations('common')
+	const locale = useLocale()
 	const [preferredContactMethod, setPreferredContactMethod] = useState('phone_call')
 	const [formData, setFormData] = useState({ course: '', message: '' })
 	const [touched, setTouched] = useState({ phone: false, course: false })
@@ -66,11 +64,12 @@ export default function TrialSignupBlock() {
 					eventId,
 					sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://smartcode-academy.com',
 					attribution: getClientAttribution(),
+					locale,
 				}),
 			})
 			const data = await response.json().catch(() => ({}))
 			if (!response.ok || !data?.ok) {
-				alert('На жаль, сталася помилка при відправці. Спробуйте ще раз.')
+				alert(tc('errorSubmit'))
 				return
 			}
 			if (data?.trackLead) {
@@ -81,7 +80,7 @@ export default function TrialSignupBlock() {
 			setPreferredContactMethod('phone_call')
 			phoneInput.reset()
 		} catch {
-			alert('Сталася помилка мережі.')
+			alert(tc('errorNetwork'))
 		} finally {
 			setSubmitting(false)
 		}
@@ -123,8 +122,8 @@ export default function TrialSignupBlock() {
 						<div className={styles.successIconWrap}>
 							<Sparkles size={28} className={styles.successIcon} />
 						</div>
-						<h2 className={styles.successTitle}>Заявку отримано</h2>
-						<p className={styles.successText}>Дякуємо! Ми зв&apos;яжемося з вами найближчим часом.</p>
+						<h2 className={styles.successTitle}>{t('successTitle')}</h2>
+						<p className={styles.successText}>{t('successText')}</p>
 					</div>
 				</div>
 			</section>
@@ -137,25 +136,23 @@ export default function TrialSignupBlock() {
 			<div className={styles.inner}>
 				<div className={styles.card}>
 					<div className={styles.cardHeader}>
-						<h2 className={styles.title}>ЗАПИС НА ПРОБНЕ ЗАНЯТТЯ</h2>
-						<p className={styles.subtitle}>
-							Оберіть зручний спосіб зв&apos;язку та напрямок - відповімо і підберемо час.
-						</p>
+						<h2 className={styles.title}>{t('title')}</h2>
+						<p className={styles.subtitle}>{t('subtitle')}</p>
 					</div>
 
 					<form className={styles.form} onSubmit={handleSubmit} onFocusCapture={handleFormFocusCapture}>
 						<PhoneField phoneInput={phoneInput} classes={phoneClasses} id="trial-phone" />
 
 						<div className={styles.field}>
-							<span className={styles.label}>Як вам зручно отримати контакт?</span>
-							<div className={styles.segment} role='group' aria-label="Спосіб зв'язку">
+							<span className={styles.label}>{t('contactMethodLabel')}</span>
+							<div className={styles.segment} role='group' aria-label={t('contactMethodAria')}>
 								<button
 									type='button'
 									className={`${styles.segmentBtn} ${preferredContactMethod === 'phone_call' ? styles.segmentBtnActive : ''}`}
 									onClick={() => setPreferredContactMethod('phone_call')}
 								>
 									<Phone size={16} aria-hidden />
-									Подзвонити вам
+									{t('phoneCall')}
 								</button>
 								<button
 									type='button'
@@ -163,7 +160,7 @@ export default function TrialSignupBlock() {
 									onClick={() => setPreferredContactMethod('telegram_phone')}
 								>
 									<MessageSquare size={16} aria-hidden />
-									в Telegram за номером
+									{t('telegram')}
 								</button>
 							</div>
 						</div>
@@ -172,7 +169,7 @@ export default function TrialSignupBlock() {
 							<label className={styles.label} htmlFor='trial-course'>
 								<span className={styles.labelInner}>
 									<Briefcase size={15} className={styles.labelIcon} aria-hidden />
-									Напрямок навчання
+									{t('courseLabel')}
 								</span>
 							</label>
 							<select
@@ -182,21 +179,23 @@ export default function TrialSignupBlock() {
 								value={formData.course}
 								onChange={handleInputChange}
 							>
-								<option value=''>Оберіть напрямок</option>
-								{COURSES.map((c) => (
-									<option key={c} value={c}>
-										{c}
+								<option value=''>{t('coursePlaceholder')}</option>
+								{COURSE_KEYS.map((key) => (
+									<option key={key} value={t(`courses.${key}`)}>
+										{t(`courses.${key}`)}
 									</option>
 								))}
 							</select>
-							{touched.course && !formData.course && <span className={styles.error}>Оберіть напрямок</span>}
+							{touched.course && !formData.course && (
+								<span className={styles.error}>{t('courseRequired')}</span>
+							)}
 						</div>
 
 						<div className={styles.field}>
 							<label className={styles.label} htmlFor='trial-msg'>
 								<span className={styles.labelInner}>
 									<MessageSquare size={15} className={styles.labelIcon} aria-hidden />
-									Коментар (за бажанням)
+									{t('messageLabel')}
 								</span>
 							</label>
 							<textarea
@@ -206,13 +205,13 @@ export default function TrialSignupBlock() {
 								value={formData.message}
 								onChange={handleInputChange}
 								rows={3}
-								placeholder='Вік дитини, зручний час, питання…'
+								placeholder={t('messagePlaceholder')}
 							/>
 						</div>
 
 						<button type='submit' className={styles.submit} disabled={submitting}>
 							<Send size={18} aria-hidden />
-							{submitting ? 'Відправка…' : 'Надіслати заявку'}
+							{submitting ? t('submitting') : t('submit')}
 						</button>
 					</form>
 				</div>

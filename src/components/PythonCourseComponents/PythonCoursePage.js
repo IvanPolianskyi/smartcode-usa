@@ -22,11 +22,13 @@ import {
   Database,
   BookOpen
 } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation'
 import { trackCourseLanding } from '@/lib/metaPixel'
+import { usePythonCourseData } from '@/hooks/usePythonCourseData'
 import styles from './PythonCoursePage.module.css'
 
 const PythonCoursePage = () => {
+  const { hero, stats, modules, projects, features, sections } = usePythonCourseData()
   const [activeModule, setActiveModule] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
   const [visibleSections, setVisibleSections] = useState([])
@@ -172,99 +174,6 @@ const PythonCoursePage = () => {
     }
   }, [])
 
-  const modules = [
-    {
-      id: 1,
-      title: "Основи Python",
-      duration: "4 тижні",
-      topics: ["Змінні та типи даних", "Умови та цикли", "Функції", "Структури даних"],
-      icon: <Cpu className="w-6 h-6" />,
-      color: "from-blue-500 to-purple-600"
-    },
-    {
-      id: 2,
-      title: "ООП в Python",
-      duration: "3 тижні", 
-      topics: ["Класи та об'єкти", "Наслідування", "Поліморфізм", "Інкапсуляція"],
-      icon: <Brain className="w-6 h-6" />,
-      color: "from-purple-500 to-pink-600"
-    },
-    {
-      id: 3,
-      title: "Веб-розробка",
-      duration: "5 тижнів",
-      topics: ["Flask/Django", "REST API", "База даних", "Деплой проектів"],
-      icon: <Globe className="w-6 h-6" />,
-      color: "from-green-500 to-blue-600"
-    },
-    {
-      id: 4,
-      title: "Data Science",
-      duration: "4 тижні",
-      topics: ["NumPy/Pandas", "Matplotlib", "Машинне навчання", "Проекти"],
-      icon: <Sparkles className="w-6 h-6" />,
-      color: "from-yellow-500 to-orange-600"
-    }
-  ]
-
-  const projects = [
-    { 
-      name: "Телеграм бот", 
-      difficulty: "Новачок", 
-      time: "2 тижні",
-      description: "Створи розумного бота для автоматизації завдань",
-      icon: <Terminal className="w-8 h-8" />
-    },
-    { 
-      name: "Веб-додаток", 
-      difficulty: "Середній", 
-      time: "3 тижні",
-      description: "Повноцінний веб-сайт з базою даних",
-      icon: <Globe className="w-8 h-8" />
-    },
-    { 
-      name: "Аналіз даних", 
-      difficulty: "Просунутий", 
-      time: "4 тижні",
-      description: "Візуалізація та прогнозування трендів",
-      icon: <Database className="w-8 h-8" />
-    },
-    { 
-      name: "AI чат-бот", 
-      difficulty: "Експерт", 
-      time: "5 тижнів",
-      description: "Штучний інтелект з машинним навчанням",
-      icon: <Brain className="w-8 h-8" />
-    }
-  ]
-
-  const features = [
-    { 
-      icon: <Users className="w-8 h-8" />, 
-      title: "Індивідуальне навчання", 
-      desc: "Персональний підхід",
-      color: "from-blue-400 to-purple-600"
-    },
-    { 
-      icon: <Clock className="w-8 h-8" />, 
-      title: "Гнучкий графік", 
-      desc: "Вечірні та вихідні",
-      color: "from-purple-400 to-pink-600"
-    },
-    { 
-      icon: <Award className="w-8 h-8" />, 
-      title: "Сертифікат", 
-      desc: "Міжнародного зразка",
-      color: "from-green-400 to-blue-600"
-    },
-    { 
-      icon: <Target className="w-8 h-8" />, 
-      title: "100% практики", 
-      desc: "Реальні проекти",
-      color: "from-yellow-400 to-orange-600"
-    }
-  ]
-
   return (
     <div className={styles.container}>
 
@@ -354,14 +263,13 @@ const PythonCoursePage = () => {
             </div>
 
             <h1 className={styles.mainTitle}>
-              PYTHON
+              {hero.title}
             </h1>
             <h2 className={styles.subtitle}>
-              Програмування майбутнього
+              {hero.subtitle}
             </h2>
             <p className={styles.description}>
-              Відкрий космос можливостей з найпопулярнішою мовою програмування світу. 
-              Створюй веб-додатки, аналізуй дані та будуй майбутнє разом з нами.
+              {hero.description}
             </p>
 
             {/* CTA Buttons */}
@@ -375,7 +283,7 @@ const PythonCoursePage = () => {
                 <div className={styles.buttonOverlay}></div>
                 <span className={styles.buttonContent}>
                   <Rocket className="w-6 h-6" />
-                  Почати навчання
+                  {sections.startLearning}
                   <ChevronRight className={styles.buttonArrow} />
                 </span>
               </Link> 
@@ -383,12 +291,7 @@ const PythonCoursePage = () => {
 
             {/* Stats */}
             <div className={styles.stats}>
-              {[
-                { number: "200+", label: "Випускників" },
-                { number: "300+", label: "Годин кодингу" },
-                { number: "4.9", label: "Середня оцінка" },
-                { number: "50+", label: "Проектів" }
-              ].map((stat, index) => (
+              {stats.map((stat, index) => (
                 <div key={index} className={styles.statItem}>
                   <div className={styles.statNumber}>{stat.number}</div>
                   <div className={styles.statLabel}>{stat.label}</div>
@@ -416,7 +319,7 @@ const PythonCoursePage = () => {
             <h2 className={`${styles.sectionTitle} ${
               visibleSections.includes('modules') ? styles.visible : ''
             }`}>
-              Модулі курсу
+              {sections.modulesTitle}
             </h2>
             
             <div className={styles.modulesGrid}>
@@ -469,7 +372,7 @@ const PythonCoursePage = () => {
             <h2 className={`${styles.sectionTitle} ${
               visibleSections.includes('projects') ? styles.visible : ''
             }`}>
-              Твої майбутні проекти
+              {sections.projectsTitle}
             </h2>
             
             <div className={styles.projectsGrid}>
@@ -488,7 +391,7 @@ const PythonCoursePage = () => {
                         {project.icon}
                       </div>
                     </div>
-                    <span className={`${styles.difficultyBadge} ${styles[project.difficulty.toLowerCase()]}`}>
+                    <span className={`${styles.difficultyBadge} ${styles[project.difficultySlug]}`}>
                       {project.difficulty}
                     </span>
                   </div>
@@ -502,7 +405,7 @@ const PythonCoursePage = () => {
                     </p>
                     <div className={styles.projectAction}>
                       <Star className={styles.projectStar} />
-                      <span>Вибрати</span>
+                      <span>{sections.selectProject}</span>
                     </div>
                   </div>
                   
@@ -520,7 +423,7 @@ const PythonCoursePage = () => {
             <h2 className={`${styles.sectionTitle} ${
               visibleSections.includes('features') ? styles.visible : ''
             }`}>
-              Чому обирають нас
+              {sections.featuresTitle}
             </h2>
             
             <div className={styles.featuresGrid}>
@@ -551,8 +454,7 @@ const PythonCoursePage = () => {
         <section className={styles.courseSection}>
           <div className={styles.courseSectionContainer}>
             <p className={styles.courseSectionDescription}>
-              Ви навчаєтесь на регулярних онлайн уроках з викладачем в Zoom, де поєднуються теорія, практика та робота над реальними проєктами. 
-              Усі матеріали та домашні завдання доступні в зручному форматі, щоб дитина могла повторювати та закріплювати знання у власному темпі.
+              {sections.courseDescription}
             </p>
             
             <div className={styles.courseSectionButtons}>
@@ -568,7 +470,7 @@ const PythonCoursePage = () => {
                 <div className={styles.buttonOverlay}></div>
                 <span className={styles.buttonContent}>
                   <Rocket className="w-6 h-6" />
-                  Почати навчання
+                  {sections.startLearning}
                   <ChevronRight className={styles.buttonArrow} />
                 </span>
               </Link>
