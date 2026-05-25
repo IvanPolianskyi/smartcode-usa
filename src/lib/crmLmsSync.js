@@ -5,6 +5,7 @@ import { hashPassword } from '@/lib/auth'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { robloxCurriculum } from '@/lib/robloxCurriculum'
+import { flattenCourseLessons } from '@/lib/courseLessonAccess'
 
 export const LMS_COURSE_CATALOG = [
   { id: 'python-developer-zero-to-junior', name: 'Python' },
@@ -149,11 +150,11 @@ export async function grantCourseAccessForCrmStudent(crmStudentId, courseId, { e
 
   const profile = { ...(user.studentProfile || defaultStudentProfile()) }
   const courseAccess = { ...(profile.courseAccess || {}) }
-  const existing = courseAccess[courseId] || {}
+  const lessonIds = flattenCourseLessons(courseId).map((l) => l.lessonId)
   courseAccess[courseId] = {
     enabled: Boolean(enabled),
-    fullAccess: enabled ? Boolean(existing.fullAccess) : false,
-    unlockedLessons: enabled && existing.fullAccess ? (existing.unlockedLessons || []) : [],
+    fullAccess: Boolean(enabled),
+    unlockedLessons: enabled ? lessonIds : [],
   }
 
   const activeOnline = new Set(profile.activeOnlineCourses || [])
@@ -179,6 +180,95 @@ export async function grantCourseAccessForCrmStudent(crmStudentId, courseId, { e
 
 export async function revokeCourseAccessForCrmStudent(crmStudentId, courseId) {
   return grantCourseAccessForCrmStudent(crmStudentId, courseId, { enabled: false })
+}
+
+function escapeRegex(value) {
+  return String(value || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+/**
+ * Список учнів LMS для CRM (привʼязки). linkedOnly / unlinkedOnly — взаємовиключні фільтри.
+ */
+export async function listLmsStudentsForCrm({
+  search = '',
+  linkedOnly = false,
+  unlinkedOnly = false,
+  userIds = '',
+  skip = 0,
+  limit = 40,
+} = {}) {
+  const usersCollection = await getCollection('users')
+  const q = { role: { $ne: 'admin' } }
+
+  const idList = String(userIds || '')
+    .split(',')
+    .map((x) => x.trim())
+    .filter((x) => ObjectId.isValid(x))
+  if (idList.length > 0) {
+    q._id = { $in: idList.map((id) => new ObjectId(id)) }
+    skip = 0
+    limit = Math.max(limit, idList.length)
+  }
+
+  if (unlinkedOnly) {
+    q.$or = [
+      { 'studentProfile.crmStudentId': { $exists: false } },
+      { 'studentProfile.crmStudentId': null },
+      { 'studentProfile.crmStudentId': '' },
+    ]
+  } else if (linkedOnly) {
+    q['studentProfile.crmStudentId'] = { $exists: true, $nin: [null, ''] }
+  }
+
+  const term = String(search || '').trim()
+  if (term) {
+    const esc = escapeRegex(term)
+    const searchClause = {
+      $or: [
+        { email: { $regex: esc, $options: 'i' } },
+        { name: { $regex: esc, $options: 'i' } },
+      ],
+    }
+    if (q.$or) {
+      q.$and = [{ $or: q.$or }, searchClause]
+      delete q.$or
+    } else {
+      Object.assign(q, searchClause)
+    }
+  }
+
+  const total = await usersCollection.countDocuments(q)
+  const users = await usersCollection
+    .find(q, {
+      projection: {
+        name: 1,
+        email: 1,
+        phone: 1,
+        createdAt: 1,
+        studentProfile: 1,
+      },
+    })
+    .sort({ name: 1, email: 1 })
+    .skip(skip)
+    .limit(limit)
+    .toArray()
+
+  const students = users.map((user) => {
+    const profile = user.studentProfile || {}
+    const crmId = String(profile.crmStudentId || '').trim()
+    return {
+      userId: user._id.toString(),
+      name: String(user.name || '').trim() || 'Без імені',
+      email: user.email || null,
+      phone: user.phone || null,
+      crmStudentId: crmId || null,
+      crmShortId: String(profile.crmShortId || '').trim() || null,
+      linked: Boolean(crmId),
+      createdAt: user.createdAt || null,
+    }
+  })
+
+  return { students, total, skip, limit, lmsConfigured: true }
 }
 
 export async function listCourseEnrollments(courseId) {
