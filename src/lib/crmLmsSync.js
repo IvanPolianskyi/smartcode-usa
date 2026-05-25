@@ -150,18 +150,10 @@ export async function grantCourseAccessForCrmStudent(crmStudentId, courseId, { e
   const profile = { ...(user.studentProfile || defaultStudentProfile()) }
   const courseAccess = { ...(profile.courseAccess || {}) }
   const existing = courseAccess[courseId] || {}
-  const unlocked = Array.isArray(existing.unlockedLessons)
-    ? [...existing.unlockedLessons]
-    : []
-  if (enabled && unlocked.length === 0) {
-    firstLessonIds(courseId, 1).forEach((id) => {
-      if (!unlocked.includes(id)) unlocked.push(id)
-    })
-  }
-
   courseAccess[courseId] = {
     enabled: Boolean(enabled),
-    unlockedLessons: enabled ? unlocked : [],
+    fullAccess: enabled ? Boolean(existing.fullAccess) : false,
+    unlockedLessons: enabled && existing.fullAccess ? (existing.unlockedLessons || []) : [],
   }
 
   const activeOnline = new Set(profile.activeOnlineCourses || [])

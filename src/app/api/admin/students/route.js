@@ -9,6 +9,7 @@ import {
   syncStudentToCrm,
 } from '@/lib/crmStudentSchedulePull'
 import { isStudentDashboardReady } from '@/lib/studentAccountReady'
+import { buildCourseAccessForOnlineCourses, flattenCourseLessons } from '@/lib/courseLessonAccess'
 
 const COURSE_NAMES = {
   'python-developer-zero-to-junior': 'Пайтон',
@@ -270,8 +271,7 @@ export async function PATCH(request) {
       regularSchedule = [],
       zoomLink = '',
       onlineCourseIds = [],
-      pythonAccessEnabled = false,
-      pythonUnlockedLessons = [],
+      courseFullAccess = {},
       crmTeacherId = '',
       crmTeacherName = '',
       accountReady: accountReadyBody,
@@ -297,22 +297,19 @@ export async function PATCH(request) {
       }))
 
     const prev = { ...DEFAULT_STUDENT_PROFILE, ...(existing.studentProfile || {}) }
-    const prevPython = prev.courseAccess?.['python-developer-zero-to-junior'] || {}
+    const onlineIds = (onlineCourseIds || []).filter(Boolean)
 
     const mergedProfile = {
       ...prev,
       lessonFormat: lessonFormat === 'individual' ? 'individual' : 'group',
       regularSchedule: sanitizedSchedule,
       zoomLink: String(zoomLink || '').trim(),
-      activeOnlineCourses: (onlineCourseIds || []).filter(Boolean),
-      courseAccess: {
-        ...(prev.courseAccess || {}),
-        'python-developer-zero-to-junior': {
-          ...prevPython,
-          enabled: Boolean(pythonAccessEnabled),
-          unlockedLessons: (pythonUnlockedLessons || []).filter(Boolean),
-        },
-      },
+      activeOnlineCourses: onlineIds,
+      courseAccess: buildCourseAccessForOnlineCourses(
+        prev.courseAccess || {},
+        onlineIds,
+        courseFullAccess || {}
+      ),
       scheduleSyncStartAt: new Date(),
       crmTeacherId: String(crmTeacherId || '').trim(),
       crmTeacherName: String(crmTeacherName || '').trim(),
@@ -332,8 +329,34 @@ export async function PATCH(request) {
 
     const result = await usersCollection.updateOne(
       { _id: new ObjectId(studentId), role: { $ne: 'admin' } },
-      { $set: updateDoc }
+      {
+        $set: updateDoc,
+        $addToSet: { enrolledCourses: { $each: onlineIds } },
+      }
     )
+
+    const progressCollection = await getCollection('userProgress')
+    for (const courseId of onlineIds) {
+      if (flattenCourseLessons(courseId).length === 0) continue
+      const existingProgress = await progressCollection.findOne({
+        userId: new ObjectId(studentId),
+        courseId,
+      })
+      if (!existingProgress) {
+        await progressCollection.insertOne({
+          userId: new ObjectId(studentId),
+          courseId,
+          enrolledAt: new Date(),
+          completedLessons: [],
+          completedQuizzes: {},
+          completedPracticeTasks: [],
+          currentModule: 0,
+          currentLesson: 0,
+          overallProgress: 0,
+          certificates: [],
+        })
+      }
+    }
 
     if (result.matchedCount === 0) {
       return NextResponse.json({ error: 'Student not found' }, { status: 404 })

@@ -224,33 +224,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const [outputErrors, setOutputErrors] = useState([]) // Масив індексів рядків з помилками
   const [isPyodideLoading, setIsPyodideLoading] = useState(false)
   
-  // Sidebar state
-  const [sidebarWidth, setSidebarWidth] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('lessonSidebarWidth')
-      return saved ? parseInt(saved, 10) : 320
-    }
-    return 320
-  })
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('lessonSidebarCollapsed')
-      return saved === 'true'
-    }
-    return false
-  })
+  // Sidebar state — fixed defaults for SSR; restored from localStorage after mount
+  const [sidebarWidth, setSidebarWidth] = useState(320)
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const [isResizing, setIsResizing] = useState(false)
-  const [isSidebarClosed, setIsSidebarClosed] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('lessonSidebarClosed')
-      if (saved !== null) {
-        return saved === 'true'
-      }
-      // На мобільних пристроях за замовчуванням закритий
-      return window.innerWidth <= 1024
-    }
-    return false
-  })
+  const [isSidebarClosed, setIsSidebarClosed] = useState(false)
+  const [sidebarPrefsHydrated, setSidebarPrefsHydrated] = useState(false)
   
   // Handle Tab key for indentation in code editor
   const handleCodeKeyDown = (e) => {
@@ -411,36 +390,56 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     }
   }, [isLoaded, lesson])
 
+  // Restore sidebar prefs after mount (avoids SSR/client hydration mismatch)
+  useEffect(() => {
+    const savedWidth = localStorage.getItem('lessonSidebarWidth')
+    if (savedWidth) {
+      const width = parseInt(savedWidth, 10)
+      if (!Number.isNaN(width) && width > 0) {
+        setSidebarWidth(width)
+      }
+    }
+
+    const savedCollapsed = localStorage.getItem('lessonSidebarCollapsed')
+    if (savedCollapsed === 'true') {
+      setIsSidebarCollapsed(true)
+    }
+
+    const savedClosed = localStorage.getItem('lessonSidebarClosed')
+    if (savedClosed !== null) {
+      setIsSidebarClosed(savedClosed === 'true')
+    } else if (window.innerWidth <= 1024) {
+      setIsSidebarClosed(true)
+      localStorage.setItem('lessonSidebarClosed', 'true')
+    }
+
+    setSidebarPrefsHydrated(true)
+  }, [])
+
   // Save sidebar width to localStorage when it changes
   useEffect(() => {
-    if (!isResizing && sidebarWidth) {
-      localStorage.setItem('lessonSidebarWidth', sidebarWidth.toString())
-    }
-  }, [sidebarWidth, isResizing])
+    if (!sidebarPrefsHydrated || isResizing || !sidebarWidth) return
+    localStorage.setItem('lessonSidebarWidth', sidebarWidth.toString())
+  }, [sidebarWidth, isResizing, sidebarPrefsHydrated])
 
-  // Handle window resize - auto-close sidebar on mobile
+  // Auto-close sidebar on mobile when viewport shrinks
   useEffect(() => {
+    if (!sidebarPrefsHydrated) return
+
     const handleResize = () => {
-      if (typeof window !== 'undefined') {
-        const isMobile = window.innerWidth <= 1024
-        if (isMobile && !isSidebarClosed) {
-          // На мобільних автоматично закриваємо sidebar
-          setIsSidebarClosed(true)
+      const isMobile = window.innerWidth <= 1024
+      if (isMobile) {
+        setIsSidebarClosed((closed) => {
+          if (closed) return closed
           localStorage.setItem('lessonSidebarClosed', 'true')
-        }
+          return true
+        })
       }
     }
-    
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', handleResize)
-      // Викликаємо один раз при монтуванні
-      handleResize()
-      
-      return () => {
-        window.removeEventListener('resize', handleResize)
-      }
-    }
-  }, [isSidebarClosed])
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [sidebarPrefsHydrated])
   
   // Cleanup on unmount
   useEffect(() => {
@@ -779,19 +778,9 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   }
 
   // Helper function to check if lesson is unlocked
-  const isLessonUnlocked = (lesson, lessonIndex, moduleIndex) => {
-    if (explicitAllowedSet.size > 0) {
-      return explicitAllowedSet.has(lesson.lessonId)
-    }
+  const isLessonUnlocked = (lesson) => {
     if (userRole === 'admin' || isPurchased) return true
-    if (moduleIndex === 0 && lesson.order === 1) return true
-    if (moduleIndex === 0) return true
-    // Check if previous lesson is completed
-    const allLessons = curriculum.modules.flatMap(m => m.lessons)
-    const currentIndex = allLessons.findIndex(l => l.lessonId === lesson.lessonId)
-    if (currentIndex === 0) return true
-    const previousLesson = allLessons[currentIndex - 1]
-    return isLessonCompleted(previousLesson.lessonId)
+    return explicitAllowedSet.has(lesson.lessonId)
   }
 
   // Handle sidebar resize
@@ -1014,7 +1003,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                   <div className={styles.lessonsList}>
                     {module.lessons.map((lesson, lessonIndex) => {
                       const isCompleted = isLessonCompleted(lesson.lessonId)
-                      const isUnlocked = isLessonUnlocked(lesson, lessonIndex, moduleIndex)
+                      const isUnlocked = isLessonUnlocked(lesson)
                       const isActive = lesson.lessonId === lessonId
                       
                       return (

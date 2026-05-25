@@ -3,18 +3,34 @@
 import React, { useMemo, useState } from 'react'
 import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
-import { BookOpen, CreditCard, CheckCircle2, ChevronRight } from 'lucide-react'
+import { BookOpen, CreditCard, CheckCircle2, Play, Lock } from 'lucide-react'
 import { createPayment } from '@/lib/authClient'
-import { formatPrice, getEnPurchasableFullCourses } from '@/lib/coursePrices'
+import { formatPrice, getCoursePrice, getEnPurchasableFullCourses } from '@/lib/coursePrices'
+import { DASHBOARD_COURSE_IDS } from '@/hooks/useDashboardCourses'
+import ProgressRing from './ProgressRing'
 import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
 
 const COURSE_PATHS = {
   'roblox-studio': '/courses/roblox-studio',
   'python-developer-zero-to-junior': '/courses/python-developer-zero-to-junior',
   'web-development': '/courses/web-development',
+  'unity-game-development': '/Unity',
 }
 
-export default function MyCoursesSection({ user, progressData, getCourseInfo, locale }) {
+function isCourseOwned(user, courseId) {
+  if ((user?.purchasedCourses || []).includes(courseId)) return true
+  if ((user?.studentProfile?.activeOnlineCourses || []).includes(courseId)) return true
+  if ((user?.enrolledCourses || []).includes(courseId)) return true
+  return false
+}
+
+export default function MyCoursesSection({
+  user,
+  progressData,
+  getCourseInfo,
+  locale,
+  onRequestAccess,
+}) {
   const t = useTranslations('dashboard.student.courses')
   const tStore = useTranslations('dashboard.enCourses')
   const [loadingId, setLoadingId] = useState(null)
@@ -25,16 +41,10 @@ export default function MyCoursesSection({ user, progressData, getCourseInfo, lo
     [user?.purchasedCourses]
   )
 
-  const ownedCourseIds = useMemo(() => {
-    const ids = new Set()
-    ;(user?.purchasedCourses || []).forEach((id) => ids.add(id))
-    ;(user?.studentProfile?.activeOnlineCourses || []).forEach((id) => ids.add(id))
-    ;(user?.enrolledCourses || []).forEach((id) => ids.add(id))
-    return [...ids]
-  }, [user])
-
-  const enStoreCourses = locale === 'en' ? getEnPurchasableFullCourses() : []
-  const coursesToBuy = enStoreCourses.filter((c) => !purchasedSet.has(c.courseId))
+  const enPurchasableIds = useMemo(
+    () => new Set(getEnPurchasableFullCourses().map((c) => c.courseId)),
+    []
+  )
 
   const handleBuy = async (courseId) => {
     setError('')
@@ -49,128 +59,111 @@ export default function MyCoursesSection({ user, progressData, getCourseInfo, lo
     }
   }
 
-  const renderOwnedCourse = (courseId) => {
+  const renderCourseCard = (courseId) => {
+    const owned = isCourseOwned(user, courseId)
     const course = getCourseInfo(courseId)
-    const progress = progressData?.[courseId]?.overallProgress || 0
-    const owned = purchasedSet.has(courseId)
+    const progress = owned ? progressData?.[courseId]?.overallProgress || 0 : 0
     const href = COURSE_PATHS[courseId] || course.link
+    const priceInfo = getCoursePrice(courseId, locale)
+    const canBuyOnline = locale === 'en' && enPurchasableIds.has(courseId)
+
+    if (!owned) {
+      return (
+        <article key={courseId} className={`${styles.courseCard} ${styles.courseCardLocked}`}>
+          <div className={styles.courseCardHero} style={{ background: course.bannerGradient }}>
+            <span className={styles.courseCardLockBadge}>
+              <Lock size={12} />
+              {t('locked')}
+            </span>
+            {course.bannerImage ? (
+              <img src={course.bannerImage} alt="" className={styles.courseCardImg} />
+            ) : (
+              <div className={styles.courseCardIconFallback}>{course.icon}</div>
+            )}
+          </div>
+          <div className={styles.courseCardBody}>
+            <div className={styles.courseCardTop}>
+              <h4>{course.title}</h4>
+              <ProgressRing value={0} size={56} stroke={5} muted />
+            </div>
+            <span className={styles.courseCardBadgeLocked}>{t('lockedHint')}</span>
+            {priceInfo?.price > 0 ? (
+              <p className={styles.courseCardPrice}>
+                {formatPrice(priceInfo.price, priceInfo.currency, locale)}
+              </p>
+            ) : null}
+            <div className={styles.courseCardActions}>
+              {canBuyOnline ? (
+                <button
+                  type="button"
+                  className={styles.resumeBtn}
+                  disabled={loadingId === courseId}
+                  onClick={() => handleBuy(courseId)}
+                >
+                  <CreditCard size={16} />
+                  {loadingId === courseId ? tStore('processing') : t('unlockCta')}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className={styles.resumeBtn}
+                  onClick={() => onRequestAccess?.()}
+                >
+                  <Lock size={16} />
+                  {t('unlockCta')}
+                </button>
+              )}
+            </div>
+          </div>
+        </article>
+      )
+    }
 
     return (
-      <Link key={courseId} href={href} className={styles.courseRow}>
-        <div className={styles.courseBanner} style={{ background: course.bannerGradient }}>
+      <article key={courseId} className={styles.courseCard}>
+        <div className={styles.courseCardHero} style={{ background: course.bannerGradient }}>
           {course.bannerImage ? (
-            <img src={course.bannerImage} alt={course.title} className={styles.courseBannerImage} />
+            <img src={course.bannerImage} alt="" className={styles.courseCardImg} />
           ) : (
-            <div className={styles.courseBannerFallbackIcon}>{course.icon}</div>
+            <div className={styles.courseCardIconFallback}>{course.icon}</div>
           )}
-          <div className={styles.courseBannerOverlay}>
-            <span className={styles.coursePill}>
-              {course.icon} {course.title}
-            </span>
-            <ChevronRight size={16} />
+        </div>
+        <div className={styles.courseCardBody}>
+          <div className={styles.courseCardTop}>
+            <h4>{course.title}</h4>
+            <ProgressRing value={progress} size={56} stroke={5} />
           </div>
-        </div>
-        <div className={styles.courseRowTop}>
-          <span className={styles.courseMeta}>
-            {owned ? t('purchased') : t('active')}
+          <span className={styles.courseCardBadge}>
+            <CheckCircle2 size={12} />
+            {purchasedSet.has(courseId) ? t('purchased') : t('active')}
           </span>
-          <span className={styles.courseMeta}>{t('goTo')}</span>
-        </div>
-        <div className={styles.goalBar}>
-          <span style={{ width: `${progress}%` }} />
-        </div>
-        <div className={styles.courseMeta}>{t('progress', { percent: progress })}</div>
-      </Link>
-    )
-  }
-
-  const renderBuyCard = (course) => {
-    const info = getCourseInfo(course.courseId)
-    const href = COURSE_PATHS[course.courseId] || `/courses/${course.courseId}`
-
-    return (
-      <div
-        key={course.courseId}
-        className={styles.courseRow}
-        style={{ cursor: 'default', textDecoration: 'none' }}
-      >
-        <div className={styles.courseBanner} style={{ background: info.bannerGradient }}>
-          {info.bannerImage ? (
-            <img src={info.bannerImage} alt={info.title} className={styles.courseBannerImage} />
-          ) : (
-            <div className={styles.courseBannerFallbackIcon}>{info.icon}</div>
-          )}
-          <div className={styles.courseBannerOverlay}>
-            <span className={styles.coursePill}>
-              {info.icon} {info.title}
-            </span>
+          <div className={styles.progressBarAnimated}>
+            <span style={{ width: `${progress}%` }} />
           </div>
-        </div>
-        <p className={styles.cardText} style={{ margin: '0.5rem 0' }}>
-          {tStore(`descriptions.${course.courseId}`)}
-        </p>
-        <div className={styles.courseRowTop}>
-          <span className={styles.metric} style={{ fontSize: '1.1rem', margin: 0 }}>
-            {formatPrice(course.price, course.currency, 'en')}
-          </span>
-        </div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
-          <button
-            type="button"
-            className={styles.primaryBtn}
-            disabled={loadingId === course.courseId}
-            onClick={() => handleBuy(course.courseId)}
-          >
-            <CreditCard size={16} />
-            {loadingId === course.courseId ? tStore('processing') : tStore('buyButton')}
-          </button>
-          <Link href={href} className={styles.secondaryBtn}>
-            {tStore('preview')}
+          <Link href={href} className={styles.resumeBtn}>
+            <Play size={16} />
+            {t('resume')}
           </Link>
         </div>
-      </div>
+      </article>
     )
   }
 
-  const hasOwned = ownedCourseIds.length > 0
-  const hasStore = coursesToBuy.length > 0
-
   return (
-    <div className={styles.card}>
-      <h3 className={styles.cardTitle}>
-        <BookOpen size={18} /> {t('title')}
-      </h3>
+    <section className={styles.coursesSection}>
+      <div className={styles.sectionHeader}>
+        <h3>
+          <BookOpen size={20} />
+          {t('title')}
+        </h3>
+        <p className={styles.sectionHint}>{t('subtitle')}</p>
+      </div>
 
-      {hasOwned && ownedCourseIds.map(renderOwnedCourse)}
+      <div className={styles.courseGrid}>
+        {DASHBOARD_COURSE_IDS.map(renderCourseCard)}
+      </div>
 
-      {locale === 'en' && hasStore && (
-        <div style={{ marginTop: hasOwned ? '1.25rem' : 0 }}>
-          {!hasOwned && <p className={styles.cardText}>{t('buyIntro')}</p>}
-          {hasOwned && (
-            <p className={styles.cardText} style={{ marginBottom: '0.75rem' }}>
-              {t('buyMore')}
-            </p>
-          )}
-          {coursesToBuy.map(renderBuyCard)}
-          <p className={styles.receiptMessage} style={{ marginTop: '0.75rem' }}>
-            {tStore('payMethods')}
-          </p>
-        </div>
-      )}
-
-      {!hasOwned && locale !== 'en' && (
-        <p className={styles.cardText}>{t('empty')}</p>
-      )}
-
-      {!hasOwned && locale === 'en' && !hasStore && (
-        <p className={styles.cardText}>{t('empty')}</p>
-      )}
-
-      {error && (
-        <p className={styles.receiptMessage} style={{ color: '#ef4444', marginTop: '0.5rem' }}>
-          {error}
-        </p>
-      )}
-    </div>
+      {error && <p className={styles.formError}>{error}</p>}
+    </section>
   )
 }

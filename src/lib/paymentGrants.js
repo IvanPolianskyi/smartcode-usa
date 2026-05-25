@@ -1,14 +1,4 @@
 import { getCollection } from '@/lib/mongodb'
-import { robloxCurriculum } from '@/lib/robloxCurriculum'
-import { pythonCurriculum } from '@/lib/pythonCurriculum'
-import { webDevCurriculum } from '@/lib/webDevCurriculum'
-
-const CURRICULA = {
-  'python-developer-zero-to-junior': pythonCurriculum,
-  'web-development': webDevCurriculum,
-  'roblox-studio': robloxCurriculum,
-}
-
 const EN_DAY_TO_UA = {
   sun: 'Нд',
   mon: 'Пн',
@@ -62,15 +52,6 @@ export async function grantEnLiveLessonAccess(userId, courseId, { lessonFormat, 
   const exists = schedule.some((s) => s.day === slot.day && s.time === slot.time)
   if (!exists) schedule.push(slot)
 
-  const curriculum = CURRICULA[courseId]
-  const allLessons = curriculum?.modules?.flatMap((m) => m.lessons) || []
-  const existingAccess = profile.courseAccess?.[courseId] || {}
-  const unlocked = Array.isArray(existingAccess.unlockedLessons) ? [...existingAccess.unlockedLessons] : []
-  const nextLesson = allLessons.find((l) => !unlocked.includes(l.lessonId))
-  if (nextLesson && !unlocked.includes(nextLesson.lessonId)) {
-    unlocked.push(nextLesson.lessonId)
-  }
-
   const lessonCredits = (profile.lessonCredits || 0) + 1
 
   await usersCollection.updateOne(
@@ -83,7 +64,8 @@ export async function grantEnLiveLessonAccess(userId, courseId, { lessonFormat, 
         'studentProfile.lessonCredits': lessonCredits,
         [`studentProfile.courseAccess.${courseId}`]: {
           enabled: true,
-          unlockedLessons: unlocked,
+          fullAccess: false,
+          unlockedLessons: [],
         },
         updatedAt: new Date(),
       },

@@ -21,7 +21,35 @@
     "completedPurchases": "Успішних покупок",
     "totalPaymentAttempts": "{count} всього спроб",
     "totalRevenue": "Загальний дохід",
-    "pendingPayments": "{count} в очікуванні"
+    "pendingPayments": "{count} в очікуванні",
+    "pendingPaymentsLink": "Переглянути оплати в очікуванні"
+  },
+  "pendingPayments": {
+    "title": "Оплати в очікуванні",
+    "subtitle": "Всього в очікуванні: {count}",
+    "backToAdmin": "Назад до адмін-панелі",
+    "refresh": "Оновити",
+    "loading": "Завантаження...",
+    "empty": "Немає оплат в очікуванні — все підтверджено.",
+    "receiptSection": "Квитанції на підтвердження",
+    "otherSection": "Інші очікувані оплати",
+    "otherHint": "Ці оплати обробляються автоматично або через зовнішній сервіс.",
+    "openStudent": "Профіль учня",
+    "openReceipt": "Відкрити квитанцію",
+    "lessons": "{count} урок(ів)",
+    "approve": "Підтвердити оплату",
+    "approving": "Підтвердження...",
+    "approvedSuccess": "Оплату підтверджено, уроки нараховано учню.",
+    "columns": {
+      "student": "Учень",
+      "amount": "Сума",
+      "method": "Спосіб",
+      "date": "Дата"
+    },
+    "errors": {
+      "load": "Не вдалося завантажити оплати",
+      "approve": "Не вдалося підтвердити оплату"
+    }
   },
   "enrollments": {
     "title": "Записи на курси",
@@ -87,15 +115,10 @@
       "time": "Час"
     },
     "onlineCoursesLabel": "Онлайн-курси учня",
-    "pythonAccessLabel": "Доступ до Python курсу",
-    "pythonAccessEnable": "Увімкнути доступ",
-    "pythonLessonsLabel": "Відкриті уроки Python",
-    "unlockFirst5": "Відкрити перші 5",
-    "lockAll": "Закрити все",
-    "pythonLessonsColumns": {
-      "unlock": "Відкрити",
-      "lesson": "Урок"
-    },
+    "onlineAccessLabel": "Доступ до онлайн-курсу",
+    "onlineAccessHint": "Уроки відкриваються по черзі після успішного завершення попереднього. Кнопка «Повний доступ» відкриває всі уроки одразу.",
+    "fullAccessOff": "Повний доступ",
+    "fullAccessOn": "Повний доступ увімкнено",
     "save": "Зберегти налаштування учня",
     "saving": "Збереження...",
     "saved": "Налаштування збережено",

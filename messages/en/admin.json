@@ -21,7 +21,35 @@
     "completedPurchases": "Successful purchases",
     "totalPaymentAttempts": "{count} total attempts",
     "totalRevenue": "Total revenue",
-    "pendingPayments": "{count} pending"
+    "pendingPayments": "{count} pending",
+    "pendingPaymentsLink": "View pending payments"
+  },
+  "pendingPayments": {
+    "title": "Pending payments",
+    "subtitle": "{count, plural, one {# payment needs attention} other {# payments need attention}}",
+    "backToAdmin": "Back to admin panel",
+    "refresh": "Refresh",
+    "loading": "Loading...",
+    "empty": "No pending payments — all caught up.",
+    "receiptSection": "Receipts to approve",
+    "otherSection": "Other pending payments",
+    "otherHint": "These payments are handled automatically or via an external provider.",
+    "openStudent": "Student profile",
+    "openReceipt": "Open receipt",
+    "lessons": "{count} lesson(s)",
+    "approve": "Approve payment",
+    "approving": "Approving...",
+    "approvedSuccess": "Payment approved and lessons credited.",
+    "columns": {
+      "student": "Student",
+      "amount": "Amount",
+      "method": "Method",
+      "date": "Date"
+    },
+    "errors": {
+      "load": "Failed to load payments",
+      "approve": "Failed to approve payment"
+    }
   },
   "enrollments": {
     "title": "Course enrollments",
@@ -87,15 +115,10 @@
       "time": "Time"
     },
     "onlineCoursesLabel": "Student online courses",
-    "pythonAccessLabel": "Python course access",
-    "pythonAccessEnable": "Enable access",
-    "pythonLessonsLabel": "Unlocked Python lessons",
-    "unlockFirst5": "Unlock first 5",
-    "lockAll": "Lock all",
-    "pythonLessonsColumns": {
-      "unlock": "Unlock",
-      "lesson": "Lesson"
-    },
+    "onlineAccessLabel": "Online course access",
+    "onlineAccessHint": "Lessons unlock one by one after the previous lesson is completed successfully. Use Full access to unlock all lessons at once.",
+    "fullAccessOff": "Full access",
+    "fullAccessOn": "Full access enabled",
     "save": "Save student settings",
     "saving": "Saving...",
     "saved": "Settings saved",

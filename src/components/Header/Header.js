@@ -238,8 +238,19 @@ const Header = () => {
 		{ label: t('nav.reviews'), href: '/#testimonials' },
 		{ label: t('nav.invite'), href: '/invite' },
 	]
-	const desktopNavItems = navItems.filter((item) => !item.hideOnDesktop)
-	const mobileNavItems = navItems
+	const desktopNavItems = navItems
+		.filter((item) => !item.hideOnDesktop)
+		.filter((item) => !(user && item.ctaModal))
+	const mobileNavItems = navItems.filter((item) => !(user && item.ctaModal))
+
+	const getUserInitials = (name) => {
+		if (!name) return '?'
+		const parts = name.trim().split(/\s+/).filter(Boolean)
+		if (parts.length >= 2) {
+			return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase()
+		}
+		return parts[0].slice(0, 2).toUpperCase()
+	}
 
 	const courses = [
 		{
@@ -321,16 +332,23 @@ const Header = () => {
 								<div className={styles.skeletonPulse} />
 							</div>
 						) : user ? (
-							<>
-								<Link href="/dashboard" className={styles.userButton}>
-									<User size={18} />
-									<span className={styles.userName}>{user.name}</span>
+							<div className={styles.profileWrap}>
+								<Link href="/dashboard" className={styles.profileChip} title={tc('myProfile')}>
+									<span className={styles.profileAvatar} aria-hidden="true">
+										{getUserInitials(user.name)}
+									</span>
+									<span className={styles.profileName}>{user.name}</span>
 								</Link>
-								<button onClick={handleLogout} className={styles.logoutButton}>
-									<LogOut size={18} />
-									{tc('logout')}
+								<button
+									type="button"
+									onClick={handleLogout}
+									className={styles.profileLogout}
+									aria-label={tc('logout')}
+									title={tc('logout')}
+								>
+									<LogOut size={16} aria-hidden />
 								</button>
-							</>
+							</div>
 						) : (
 							<Link href="/login" className={styles.userButton}>
 								<User size={18} />
@@ -344,7 +362,9 @@ const Header = () => {
 								className={styles.mobileCabinetButton}
 								aria-label={tc('myProfile')}
 							>
-								<User size={20} />
+								<span className={styles.mobileProfileAvatar} aria-hidden="true">
+									{getUserInitials(user.name)}
+								</span>
 							</Link>
 						)}
 						<button
@@ -463,11 +483,11 @@ const Header = () => {
 							<>
 								<Link 
 									href="/dashboard" 
-									className={`${styles.mobileMenuItem} ${styles.mobileLoginButton}`}
+									className={`${styles.mobileMenuItem} ${styles.mobileProfileLink}`}
 									onClick={handleMobileMenuClose}
 								>
-									<User size={18} />
-									{tc('myProfile')}
+									<span className={styles.mobileProfileAvatar}>{getUserInitials(user.name)}</span>
+									<span className={styles.mobileProfileName}>{user.name}</span>
 								</Link>
 								<button 
 									onClick={() => {

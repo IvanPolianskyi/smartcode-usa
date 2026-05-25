@@ -6,7 +6,7 @@ import { Link, useRouter } from '@/i18n/navigation'
 import { useParams } from 'next/navigation'
 import { ArrowLeft, Calendar, RefreshCw, User } from 'lucide-react'
 import { useAuthSession } from '@/components/AuthSessionProvider'
-import { pythonCurriculum } from '@/lib/pythonCurriculum'
+import { isCourseFullAccess } from '@/lib/courseLessonAccess'
 import styles from '../../AdminPanel.module.css'
 
 export default function AdminStudentPage() {
@@ -46,8 +46,7 @@ export default function AdminStudentPage() {
     crmTeacherId: '',
     crmTeacherName: '',
     onlineCourseIds: [],
-    pythonAccessEnabled: false,
-    pythonUnlockedLessons: [],
+    courseFullAccess: {},
     accountReady: true,
   })
   const [crmGroups, setCrmGroups] = useState([])
@@ -56,7 +55,6 @@ export default function AdminStudentPage() {
   const [joinLoading, setJoinLoading] = useState(false)
   const [showAdvancedGroup, setShowAdvancedGroup] = useState(false)
 
-  const pythonLessons = useMemo(() => pythonCurriculum.modules.flatMap((module) => module.lessons), [])
   const orderedRegularDays = useMemo(
     () => weekdayOptions.filter((day) => form.regularDays.includes(day)),
     [form.regularDays, weekdayOptions]
@@ -88,8 +86,10 @@ export default function AdminStudentPage() {
         if (item?.day) scheduleByDay[item.day] = item.time || ''
       })
       const onlineCourseIds = data.student?.profile?.activeOnlineCourses || []
-      const pythonAccess = data.student?.profile?.courseAccess?.['python-developer-zero-to-junior'] || {}
-      const unlockedLessons = pythonAccess.unlockedLessons || []
+      const courseFullAccess = {}
+      onlineCourseIds.forEach((courseId) => {
+        courseFullAccess[courseId] = isCourseFullAccess(data.student?.profile, courseId)
+      })
 
       setForm({
         lessonFormat: data.student?.profile?.lessonFormat || 'group',
@@ -99,8 +99,7 @@ export default function AdminStudentPage() {
         crmTeacherId: data.student?.profile?.crmTeacherId || '',
         crmTeacherName: data.student?.profile?.crmTeacherName || '',
         onlineCourseIds,
-        pythonAccessEnabled: Boolean(pythonAccess.enabled),
-        pythonUnlockedLessons: unlockedLessons,
+        courseFullAccess,
         accountReady: data.student?.profile?.accountReady !== false,
       })
       setJoinGroupId('')
@@ -152,6 +151,7 @@ export default function AdminStudentPage() {
       const list = prev[fieldName] || []
       const exists = list.includes(value)
       const nextScheduleByDay = { ...(prev.regularScheduleByDay || {}) }
+      const nextFullAccess = { ...(prev.courseFullAccess || {}) }
       if (fieldName === 'regularDays') {
         if (exists) {
           delete nextScheduleByDay[value]
@@ -159,10 +159,14 @@ export default function AdminStudentPage() {
           nextScheduleByDay[value] = ''
         }
       }
+      if (fieldName === 'onlineCourseIds' && exists) {
+        delete nextFullAccess[value]
+      }
       return {
         ...prev,
         [fieldName]: exists ? list.filter((item) => item !== value) : [...list, value],
         regularScheduleByDay: nextScheduleByDay,
+        courseFullAccess: nextFullAccess,
       }
     })
   }
@@ -184,8 +188,7 @@ export default function AdminStudentPage() {
           })),
           zoomLink: form.zoomLink,
           onlineCourseIds: form.onlineCourseIds,
-          pythonAccessEnabled: form.pythonAccessEnabled,
-          pythonUnlockedLessons: form.pythonUnlockedLessons,
+          courseFullAccess: form.courseFullAccess,
           crmTeacherId: form.crmTeacherId,
           crmTeacherName: form.crmTeacherName,
           accountReady: form.accountReady,
@@ -481,43 +484,38 @@ export default function AdminStudentPage() {
               </div>
             )}
 
-            <div className={styles.certFormRow}>
-              <div className={styles.certFormGroup}>
-                <label className={styles.certLabel}>
-                  <input
-                    type="checkbox"
-                    checked={form.pythonAccessEnabled}
-                    onChange={(e) => setForm((prev) => ({ ...prev, pythonAccessEnabled: e.target.checked }))}
-                    style={{ marginRight: '0.5rem' }}
-                  />
-                  {tPage('pythonAccessEnable')}
-                </label>
-                <div className={styles.usersTable} style={{ maxHeight: '260px', overflowY: 'auto' }}>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>{tStudents('pythonLessonsColumns.unlock')}</th>
-                        <th>{tStudents('pythonLessonsColumns.lesson')}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {pythonLessons.map((lesson) => (
-                        <tr key={lesson.lessonId}>
-                          <td>
-                            <input
-                              type="checkbox"
-                              checked={form.pythonUnlockedLessons.includes(lesson.lessonId)}
-                              onChange={() => toggleArray('pythonUnlockedLessons', lesson.lessonId)}
-                            />
-                          </td>
-                          <td>{lesson.lessonId} - {lesson.title}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+            {form.onlineCourseIds.length > 0 && (
+              <div className={styles.certFormRow}>
+                <div className={styles.certFormGroup}>
+                  <label className={styles.certLabel}>{tStudents('onlineAccessLabel')}</label>
+                  <p className={styles.noData}>{tStudents('onlineAccessHint')}</p>
+                  <div className={styles.coursesList} style={{ flexDirection: 'column', alignItems: 'stretch', gap: '0.5rem' }}>
+                    {form.onlineCourseIds.map((courseId) => (
+                      <div key={courseId} className={styles.certFormActions} style={{ justifyContent: 'space-between' }}>
+                        <span>{courseNames[courseId] || courseId}</span>
+                        <button
+                          type="button"
+                          className={form.courseFullAccess?.[courseId] ? styles.certSubmitButton : styles.certReloadButton}
+                          onClick={() =>
+                            setForm((prev) => ({
+                              ...prev,
+                              courseFullAccess: {
+                                ...(prev.courseFullAccess || {}),
+                                [courseId]: !prev.courseFullAccess?.[courseId],
+                              },
+                            }))
+                          }
+                        >
+                          {form.courseFullAccess?.[courseId]
+                            ? tStudents('fullAccessOn')
+                            : tStudents('fullAccessOff')}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             <div className={styles.certFormActions}>
               <button className={styles.certSubmitButton} type="submit" disabled={saving}>

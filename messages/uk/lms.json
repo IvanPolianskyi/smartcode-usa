@@ -42,8 +42,21 @@
     "ctaDescription": "Ти вже на {progress}% шляху до завершення курсу. Продовжуй вивчати нові уроки!",
     "ctaButton": "Перейти до уроків",
     "progressLabel": "Прогрес курсу",
+    "continueLearning": "ПРОДОВЖИТИ НАВЧАННЯ",
+    "progressStart": "Почни першу місію — і прогрес зросте!",
+    "statLearning": "Навчання",
+    "statMaterials": "Матеріалів",
+    "statKnowledge": "Знань",
+    "statCertHint": "Після завершення",
+    "formatVideoTitle": "ВІДЕО-УРОКИ",
+    "formatVideoSub": "з поясненнями",
+    "formatPracticeTitle": "ПРАКТИКА",
+    "formatPracticeSub": "та код-рев'ю",
     "python": {
-      "valueProposition": "Навчись створювати реальні проекти на Python та отримай навички, необхідні для початку кар'єри в IT.",
+      "valueProposition": "Твоя подорож у світ IT починається тут! Створюй реальні проекти на Python.",
+      "skillShort": ["Python", "Дані", "ООП", "Бази", "Flask", "Тести", "Git", "API", "Деплой"],
+      "requirementsShort": ["Англійська", "ПК + інтернет", "Мотивація"],
+      "certificateShort": "Міжнародний сертифікат SmartCode після всіх модулів та фінального проєкту.",
       "skills": [
         "Основи програмування на Python",
         "Робота з даними та файлами",
@@ -71,7 +84,10 @@
       "certificateRole": "Python розробника"
     },
     "webdev": {
-      "valueProposition": "Створюй сучасні веб-додатки з нуля. Навчись HTML, CSS, JavaScript, React та Node.js для повноцінної веб-розробки.",
+      "valueProposition": "Твоя подорож у веб-розробку починається тут! Створюй сучасні сайти та додатки.",
+      "skillShort": ["HTML", "CSS", "Адаптив", "JS", "DOM", "API", "React", "Next.js", "Деплой"],
+      "requirementsShort": ["Англійська", "ПК + інтернет", "Мотивація"],
+      "certificateShort": "Сертифікат SmartCode після всіх модулів та фінального веб-проєкту.",
       "skills": [
         "HTML5 та семантична розмітка",
         "CSS Flexbox та Grid",
@@ -99,7 +115,10 @@
       "certificateRole": "веб-розробника"
     },
     "roblox": {
-      "valueProposition": "Roblox Studio: від першого Part до власної гри - 72 уроки, 12 блоків, онлайн-заняття з викладачем.",
+      "valueProposition": "Твоя пригода в Roblox починається тут! Від першого Part до власної гри.",
+      "skillShort": ["Studio", "Luau", "Obby", "Мульти", "NPC", "Публікація"],
+      "requirementsShort": ["Windows/Mac", "Roblox", "Інтернет"],
+      "certificateShort": "Сертифікат SmartCode з Roblox game development після курсу.",
       "skills": [
         "Roblox Studio та 3D-сцени",
         "Скрипти на Luau",

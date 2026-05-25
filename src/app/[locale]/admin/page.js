@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { Link, useRouter } from '@/i18n/navigation'
 import { useAuthSession } from '@/components/AuthSessionProvider'
-import { pythonCurriculum } from '@/lib/pythonCurriculum'
+import { isCourseFullAccess } from '@/lib/courseLessonAccess'
 import styles from './AdminPanel.module.css'
 import {
   Users,
@@ -45,13 +45,11 @@ export default function AdminPanelPage() {
     crmTeacherId: '',
     crmTeacherName: '',
     onlineCourseIds: [],
-    pythonAccessEnabled: false,
-    pythonUnlockedLessons: [],
+    courseFullAccess: {},
     accountReady: true,
   })
   const studentEditorRef = useRef(null)
   const selectedStudent = students.find((student) => student.id === selectedStudentId) || null
-  const pythonLessons = pythonCurriculum.modules.flatMap((module) => module.lessons)
   const filteredStudents = useMemo(() => {
     const query = studentSearch.trim().toLowerCase()
     if (!query) return students
@@ -150,8 +148,10 @@ export default function AdminPanelPage() {
       if (item?.day) scheduleByDay[item.day] = item.time || ''
     })
     const onlineCourseIds = student.profile?.activeOnlineCourses || []
-    const pythonAccess = student.profile?.courseAccess?.['python-developer-zero-to-junior'] || {}
-    const unlockedLessons = pythonAccess.unlockedLessons || []
+    const courseFullAccess = {}
+    onlineCourseIds.forEach((courseId) => {
+      courseFullAccess[courseId] = isCourseFullAccess(student.profile, courseId)
+    })
 
     setSelectedStudentId(student.id)
     setStudentForm({
@@ -162,8 +162,7 @@ export default function AdminPanelPage() {
       crmTeacherId: student.profile?.crmTeacherId || '',
       crmTeacherName: student.profile?.crmTeacherName || '',
       onlineCourseIds,
-      pythonAccessEnabled: Boolean(pythonAccess.enabled),
-      pythonUnlockedLessons: unlockedLessons,
+      courseFullAccess,
       accountReady: student.profile?.accountReady !== false,
     })
     setTimeout(() => {
@@ -184,6 +183,7 @@ export default function AdminPanelPage() {
       const list = prev[fieldName] || []
       const exists = list.includes(value)
       const nextScheduleByDay = { ...(prev.regularScheduleByDay || {}) }
+      const nextFullAccess = { ...(prev.courseFullAccess || {}) }
       if (fieldName === 'regularDays') {
         if (exists) {
           delete nextScheduleByDay[value]
@@ -191,10 +191,14 @@ export default function AdminPanelPage() {
           nextScheduleByDay[value] = ''
         }
       }
+      if (fieldName === 'onlineCourseIds' && exists) {
+        delete nextFullAccess[value]
+      }
       return {
         ...prev,
         [fieldName]: exists ? list.filter((item) => item !== value) : [...list, value],
         regularScheduleByDay: nextScheduleByDay,
+        courseFullAccess: nextFullAccess,
       }
     })
   }
@@ -219,8 +223,7 @@ export default function AdminPanelPage() {
           })),
           zoomLink: studentForm.zoomLink,
           onlineCourseIds: studentForm.onlineCourseIds,
-          pythonAccessEnabled: studentForm.pythonAccessEnabled,
-          pythonUnlockedLessons: studentForm.pythonUnlockedLessons,
+          courseFullAccess: studentForm.courseFullAccess,
           crmTeacherId: studentForm.crmTeacherId,
           crmTeacherName: studentForm.crmTeacherName,
           accountReady: studentForm.accountReady,
@@ -361,7 +364,11 @@ export default function AdminPanelPage() {
               </div>
             </div>
 
-            <div className={styles.statCard}>
+            <Link
+              href="/admin/payments"
+              className={`${styles.statCard} ${styles.statCardLink}`}
+              aria-label={t('stats.pendingPaymentsLink')}
+            >
               <div className={styles.statIcon} style={{ backgroundColor: '#e0e7ff' }}>
                 <DollarSign size={24} color="#8b5cf6" />
               </div>
@@ -370,11 +377,17 @@ export default function AdminPanelPage() {
                   {formatCurrency(stats.payments?.totalRevenue || 0)}
                 </div>
                 <div className={styles.statLabel}>{t('stats.totalRevenue')}</div>
-                <div className={styles.statSubLabel}>
+                <div
+                  className={
+                    (stats.payments?.pending || 0) > 0
+                      ? styles.statSubLink
+                      : styles.statSubLabel
+                  }
+                >
                   {t('stats.pendingPayments', { count: stats.payments?.pending || 0 })}
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
 
           {/* Course Enrollments */}
@@ -729,67 +742,38 @@ export default function AdminPanelPage() {
                 </div>
               </div>
 
-              <div className={styles.certFormRow}>
-                <div className={styles.certFormGroup}>
-                  <label className={styles.certLabel}>{t('students.pythonAccessLabel')}</label>
-                  <label className={styles.certLabel}>
-                    <input
-                      type="checkbox"
-                      name="pythonAccessEnabled"
-                      checked={studentForm.pythonAccessEnabled}
-                      onChange={handleStudentFormChange}
-                      style={{ marginRight: '0.5rem' }}
-                    />
-                    {t('students.pythonAccessEnable')}
-                  </label>
-                </div>
-                <div className={styles.certFormGroup}>
-                  <label className={styles.certLabel}>{t('students.pythonLessonsLabel')}</label>
-                  <div className={styles.certFormActions}>
-                    <button
-                      type="button"
-                      className={styles.certReloadButton}
-                      onClick={() => {
-                        const firstFive = pythonLessons.slice(0, 5).map((lesson) => lesson.lessonId)
-                        setStudentForm((prev) => ({ ...prev, pythonUnlockedLessons: firstFive }))
-                      }}
-                    >
-                      {t('students.unlockFirst5')}
-                    </button>
-                    <button
-                      type="button"
-                      className={styles.certReloadButton}
-                      onClick={() => setStudentForm((prev) => ({ ...prev, pythonUnlockedLessons: [] }))}
-                    >
-                      {t('students.lockAll')}
-                    </button>
-                  </div>
-                  <div className={styles.usersTable} style={{ maxHeight: '260px', overflowY: 'auto' }}>
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>{t('students.pythonLessonsColumns.unlock')}</th>
-                          <th>{t('students.pythonLessonsColumns.lesson')}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {pythonLessons.map((lesson) => (
-                          <tr key={lesson.lessonId}>
-                            <td>
-                              <input
-                                type="checkbox"
-                                checked={studentForm.pythonUnlockedLessons.includes(lesson.lessonId)}
-                                onChange={() => toggleStudentArrayItem('pythonUnlockedLessons', lesson.lessonId)}
-                              />
-                            </td>
-                            <td>{lesson.lessonId} - {lesson.title}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+              {studentForm.onlineCourseIds.length > 0 && (
+                <div className={styles.certFormRow}>
+                  <div className={styles.certFormGroup}>
+                    <label className={styles.certLabel}>{t('students.onlineAccessLabel')}</label>
+                    <p className={styles.noData}>{t('students.onlineAccessHint')}</p>
+                    <div className={styles.coursesList} style={{ flexDirection: 'column', alignItems: 'stretch', gap: '0.5rem' }}>
+                      {studentForm.onlineCourseIds.map((courseId) => (
+                        <div key={courseId} className={styles.certFormActions} style={{ justifyContent: 'space-between' }}>
+                          <span>{courseNames[courseId] || courseId}</span>
+                          <button
+                            type="button"
+                            className={studentForm.courseFullAccess?.[courseId] ? styles.certSubmitButton : styles.certReloadButton}
+                            onClick={() =>
+                              setStudentForm((prev) => ({
+                                ...prev,
+                                courseFullAccess: {
+                                  ...(prev.courseFullAccess || {}),
+                                  [courseId]: !prev.courseFullAccess?.[courseId],
+                                },
+                              }))
+                            }
+                          >
+                            {studentForm.courseFullAccess?.[courseId]
+                              ? t('students.fullAccessOn')
+                              : t('students.fullAccessOff')}
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
 
               <div className={styles.certFormActions}>
                 <button

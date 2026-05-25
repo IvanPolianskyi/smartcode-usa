@@ -561,6 +561,104 @@
     transform: translateY(-1px);
 }
 
+.profileWrap {
+    display: none;
+    align-items: center;
+    gap: 0.35rem;
+}
+@media (min-width: 701px) { .profileWrap { display: flex; } }
+
+.profileChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.35rem 0.85rem 0.35rem 0.35rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    color: #1e293b;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1.5px solid rgba(99, 102, 241, 0.25);
+    box-shadow: 0 2px 12px rgba(99, 102, 241, 0.12);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    max-width: 220px;
+}
+.profileChip:hover {
+    border-color: #6366f1;
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
+    transform: translateY(-1px);
+}
+
+.profileAvatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #fff;
+    background: linear-gradient(145deg, #6366f1, #8b5cf6);
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+}
+
+.profileName {
+    font-size: 0.875rem;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.profileLogout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 1.5px solid rgba(239, 68, 68, 0.35);
+    background: transparent;
+    color: #ef4444;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    flex-shrink: 0;
+}
+.profileLogout:hover {
+    background: rgba(239, 68, 68, 0.08);
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.2);
+}
+
+.mobileProfileAvatar {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #fff;
+    background: linear-gradient(145deg, #6366f1, #8b5cf6);
+    letter-spacing: 0.02em;
+}
+
+.mobileProfileLink {
+    display: flex !important;
+    align-items: center;
+    gap: 0.75rem;
+    justify-content: flex-start;
+}
+
+.mobileProfileName {
+    font-weight: 700;
+    font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .skeletonButton {
     background: rgba(200, 200, 200, 0.2);
     border-color: transparent;

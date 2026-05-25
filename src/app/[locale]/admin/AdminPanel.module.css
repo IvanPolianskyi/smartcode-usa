@@ -138,6 +138,25 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.statCardLink {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.statCardLink:hover {
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.12);
+}
+
+.statCardLink .statSubLink {
+  color: #dc2626;
+  border-bottom-color: #fca5a5;
+}
+
+.statCardLink:hover .statSubLink {
+  color: #b91c1c;
+}
+
 .statIcon {
   width: 56px;
   height: 56px;
@@ -170,6 +189,167 @@
   font-size: 0.75rem;
   color: #9ca3af;
   margin-top: 0.25rem;
+}
+
+.statSubLink {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4f46e5;
+  text-decoration: none;
+  border-bottom: 1px dashed #a5b4fc;
+  transition: color 0.15s ease;
+}
+
+.statSubLink:hover {
+  color: #4338ca;
+  border-bottom-color: #6366f1;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #4f46e5;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+}
+
+.backLink:hover {
+  color: #4338ca;
+}
+
+.successNotice {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background: #ecfdf5;
+  border: 1px solid #86efac;
+  color: #047857;
+  font-weight: 600;
+}
+
+.pendingCards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pendingCard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+.pendingCardMain {
+  flex: 1;
+  min-width: min(100%, 280px);
+}
+
+.pendingCardHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.pendingCardHead h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #1f2937;
+}
+
+.pendingCardHead p {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.pendingAmount {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #1f2937;
+  white-space: nowrap;
+}
+
+.pendingMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  font-size: 0.82rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+}
+
+.pendingStudentLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4f46e5;
+  text-decoration: none;
+}
+
+.pendingReceiptImg {
+  max-width: 200px;
+  max-height: 140px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  display: block;
+}
+
+.pendingReceiptOpen {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.35rem;
+  font-size: 0.78rem;
+  color: #4f46e5;
+}
+
+.pendingCardActions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.approveBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.7rem 1.15rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.approveBtn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.approveBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .section {
