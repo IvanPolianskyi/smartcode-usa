@@ -202,7 +202,17 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
       <section className={styles.heroSection}>
         <div className={styles.particles} aria-hidden="true">
           {Array.from({ length: 18 }).map((_, i) => (
-            <span key={i} className={styles.particle} style={{ '--i': i }} />
+            <span
+              key={i}
+              className={styles.particle}
+              style={{
+                '--particle-size': `${4 + (i % 5) * 2}px`,
+                '--particle-left': `${(i * 17 + 7) % 100}%`,
+                '--particle-top': `${(i * 23 + 11) % 100}%`,
+                '--particle-duration': `${6 + (i % 4) * 2}s`,
+                '--particle-delay': `${i * -0.35}s`,
+              }}
+            />
           ))}
         </div>
 
