@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import { Code, Gamepad2, Monitor, Box, BookOpen } from 'lucide-react'
 
-const COURSE_IDS = [
+export const DASHBOARD_COURSE_IDS = [
 	'python-developer-zero-to-junior',
 	'unity-game-development',
 	'roblox-studio',
@@ -47,7 +47,7 @@ export function useDashboardCourses() {
 
 	return useMemo(() => {
 		const map = {}
-		COURSE_IDS.forEach((id) => {
+		DASHBOARD_COURSE_IDS.forEach((id) => {
 			const meta = COURSE_META[id]
 			const Icon = meta?.icon || BookOpen
 			map[id] = {

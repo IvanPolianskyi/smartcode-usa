@@ -42,8 +42,21 @@
     "ctaDescription": "You are already {progress}% through the course. Continue with new lessons!",
     "ctaButton": "Go to lessons",
     "progressLabel": "Course progress",
+    "continueLearning": "CONTINUE LEARNING",
+    "progressStart": "Start your first mission — progress will grow!",
+    "statLearning": "Learning",
+    "statMaterials": "Materials",
+    "statKnowledge": "Knowledge",
+    "statCertHint": "Upon completion",
+    "formatVideoTitle": "VIDEO LESSONS",
+    "formatVideoSub": "with explanations",
+    "formatPracticeTitle": "PRACTICE",
+    "formatPracticeSub": "& code review",
     "python": {
-      "valueProposition": "Learn to build real Python projects and gain the skills needed to start a career in tech.",
+      "valueProposition": "Your IT journey starts here! Build real Python projects.",
+      "skillShort": ["Python", "Data", "OOP", "DB", "Flask", "Tests", "Git", "API", "Deploy"],
+      "requirementsShort": ["English", "PC + internet", "Motivation"],
+      "certificateShort": "International SmartCode certificate after all modules and the final project.",
       "skills": [
         "Python programming fundamentals",
         "Working with data and files",
@@ -71,7 +84,10 @@
       "certificateRole": "Python developer"
     },
     "webdev": {
-      "valueProposition": "Build modern web applications from scratch. Learn HTML, CSS, JavaScript, React, and Node.js for full-stack web development.",
+      "valueProposition": "Your web dev journey starts here! Build modern sites and apps.",
+      "skillShort": ["HTML", "CSS", "Responsive", "JS", "DOM", "API", "React", "Next.js", "Deploy"],
+      "requirementsShort": ["English", "PC + internet", "Motivation"],
+      "certificateShort": "SmartCode certificate after all modules and the final web project.",
       "skills": [
         "HTML5 and semantic markup",
         "CSS Flexbox and Grid",
@@ -99,7 +115,10 @@
       "certificateRole": "web developer"
     },
     "roblox": {
-      "valueProposition": "Learn Roblox Studio from your first Part to publishing your own game - 72 lessons across 12 blocks.",
+      "valueProposition": "Your Roblox adventure starts here! From first Part to your own game.",
+      "skillShort": ["Studio", "Luau", "Obby", "Multi", "NPC", "Publish"],
+      "requirementsShort": ["Windows/Mac", "Roblox", "Internet"],
+      "certificateShort": "SmartCode Roblox game development certificate after the course.",
       "skills": [
         "Roblox Studio and 3D scene building",
         "Luau scripting fundamentals",

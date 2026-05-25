@@ -79,11 +79,9 @@ const RobloxLessonPage = ({
     }
   }, [quizRecord])
 
-  const isLessonUnlocked = (lesson, lessonIndex, moduleIndex) => {
+  const isLessonUnlocked = (lesson) => {
     if (userRole === 'admin' || isPurchased) return true
-    if (allowedSet.has(lesson.lessonId)) return true
-    if (moduleIndex === 0 && lesson.order === 1) return isAccessible
-    return false
+    return allowedSet.has(lesson.lessonId)
   }
 
   const handlePurchase = async () => {
@@ -215,7 +213,7 @@ const RobloxLessonPage = ({
   const lessonIndex = currentModule?.lessons.findIndex((l) => l.lessonId === lessonId) ?? 0
   const nextLesson = currentModule?.lessons[lessonIndex + 1]
   const nextLessonUnlocked =
-    nextLesson && isLessonUnlocked(nextLesson, lessonIndex + 1, lessonModuleIndex)
+    nextLesson && isLessonUnlocked(nextLesson)
 
   const stepLabels = {
     theory: t('tabs.theory'),

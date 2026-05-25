@@ -2,8 +2,8 @@ import dynamic from 'next/dynamic'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
-import { getCurriculum } from '@/lib/getCurriculum'
 import { syncStudentScheduleAccess } from '@/lib/syncStudentScheduleAccess'
+import { getUnlockedLessonSet, isLessonUnlockedInCourse } from '@/lib/courseLessonAccess'
 import { getLocalizedMetadata, buildAlternates } from '@/lib/i18nMetadata'
 import LessonPageLoading from '@/components/Lesson/LessonPageLoading'
 
@@ -32,14 +32,6 @@ export async function generateMetadata({ params }) {
 export default async function LessonPageRoute({ params }) {
   const { lessonId, courseId, locale } = await params
 
-  const curriculum = getCurriculum(courseId, locale)
-  const allLessons = curriculum.modules.flatMap(m => m.lessons)
-  const currentLesson = allLessons.find(l => l.lessonId === lessonId)
-  const lessonModuleIndex = curriculum.modules.findIndex(m => 
-    m.lessons.some(l => l.lessonId === lessonId)
-  )
-  const isFirstLesson = lessonModuleIndex === 0 && currentLesson?.order === 1
-  
   // Fetch user progress and purchase status if user is authenticated
   let userProgress = null
   let isPurchased = false
@@ -85,30 +77,28 @@ export default async function LessonPageRoute({ params }) {
     // Continue without progress if there's an error
   }
   
-  const explicitCourseAccess = studentProfile?.courseAccess?.[courseId]
-  const explicitUnlockedLessons = explicitCourseAccess?.unlockedLessons || []
-  const explicitEnabled = explicitCourseAccess?.enabled
-  const hasOnlineCourseAccess = (studentProfile?.activeOnlineCourses || []).includes(courseId)
-  const explicitUnlockedSet = new Set(explicitUnlockedLessons)
+  const isEnrolled = Boolean(userProgress)
+  const unlockedSet = getUnlockedLessonSet({
+    courseId,
+    profile: studentProfile,
+    progress: userProgress,
+    isAdmin: userRole === 'admin',
+    isPurchased,
+    isEnrolled,
+  })
 
-  const unlockedIndices = allLessons
-    .map((lesson, index) => (explicitUnlockedSet.has(lesson.lessonId) ? index : -1))
-    .filter(index => index >= 0)
-  const highestUnlockedIndex = unlockedIndices.length > 0 ? Math.max(...unlockedIndices) : -1
-  const nextLessonId = highestUnlockedIndex >= 0 && highestUnlockedIndex + 1 < allLessons.length
-    ? allLessons[highestUnlockedIndex + 1].lessonId
-    : null
-
-  const isExplicitlyAccessible = (hasOnlineCourseAccess || explicitEnabled) && (
-    explicitUnlockedSet.has(lessonId) || nextLessonId === lessonId
-  )
-
-  // Check if lesson is accessible
-  const isAccessible = userRole === 'admin' ||
+  const isAccessible =
+    userRole === 'admin' ||
     isPurchased ||
-    isExplicitlyAccessible ||
-    ((hasOnlineCourseAccess || explicitEnabled !== false) && isFirstLesson)
-  
+    isLessonUnlockedInCourse(lessonId, {
+      courseId,
+      profile: studentProfile,
+      progress: userProgress,
+      isAdmin: userRole === 'admin',
+      isPurchased,
+      isEnrolled,
+    })
+
   const sharedProps = {
     lessonId,
     courseId,
@@ -116,7 +106,7 @@ export default async function LessonPageRoute({ params }) {
     isPurchased,
     userRole,
     isAccessible,
-    allowedLessons: [...explicitUnlockedSet, ...(nextLessonId ? [nextLessonId] : [])],
+    allowedLessons: [...unlockedSet],
   }
 
   if (courseId === 'roblox-studio') {

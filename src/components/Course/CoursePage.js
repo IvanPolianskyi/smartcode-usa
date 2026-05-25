@@ -1,13 +1,14 @@
 "use client"
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
+import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import { useTranslations, useLocale } from 'next-intl'
-import { 
-  Clock, 
-  Award, 
-  Target, 
-  BookOpen, 
-  Play, 
+import {
+  Clock,
+  Award,
+  Target,
+  BookOpen,
+  Play,
   CheckCircle2,
   Lock,
   ChevronRight,
@@ -15,23 +16,14 @@ import {
   Code,
   Brain,
   Database,
-  Globe
+  Globe,
 } from 'lucide-react'
 import { getCurriculum } from '@/lib/getCurriculum'
 import { getRobloxCurriculum } from '@/lib/robloxCurriculumLocale'
 import { getUserProgress, checkCoursePurchase } from '@/lib/authClient'
+import { getUnlockedLessonSet } from '@/lib/courseLessonAccess'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import styles from './CoursePage.module.css'
-
-function normalizeRawList(raw) {
-  if (Array.isArray(raw)) return raw
-  if (raw && typeof raw === 'object') {
-    return Object.keys(raw)
-      .sort((a, b) => Number(a) - Number(b))
-      .map((k) => raw[k])
-  }
-  return []
-}
 
 const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress: initialProgress = null }) => {
   const locale = useLocale()
@@ -50,16 +42,12 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   const [userProgress, setUserProgress] = useState(initialProgress)
   const [user, setUser] = useState(null)
   const [isPurchased, setIsPurchased] = useState(false)
-  const [allowedLessons, setAllowedLessons] = useState(new Set())
 
-  const skills = useMemo(() => normalizeRawList(tVariant.raw('skills')), [tVariant])
-  const formatItems = useMemo(() => normalizeRawList(tVariant.raw('format')), [tVariant])
-  const requirements = useMemo(() => normalizeRawList(tVariant.raw('requirements')), [tVariant])
-  
   const course = useMemo(() => {
     if (courseId === 'roblox-studio') return getRobloxCurriculum(locale)
     return getCurriculum(courseId, locale)
   }, [courseId, locale])
+
   const isEnrolled = userProgress !== null
   const progress = userProgress?.overallProgress || 0
   const totalWeeks = course.modules.reduce((sum, m) => sum + m.duration.weeks, 0)
@@ -112,19 +100,6 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
     let cancelled = false
     ;(async () => {
       try {
-        const explicitAccess = sessionUser?.studentProfile?.courseAccess?.[courseId]
-        const explicitUnlocked = explicitAccess?.unlockedLessons || []
-        const unlockedSet = new Set(explicitUnlocked)
-        const allLessons = course.modules.flatMap(m => m.lessons)
-        const unlockedIndexes = allLessons
-          .map((lesson, index) => (unlockedSet.has(lesson.lessonId) ? index : -1))
-          .filter(index => index >= 0)
-        const highestUnlockedIndex = unlockedIndexes.length > 0 ? Math.max(...unlockedIndexes) : -1
-        if (highestUnlockedIndex >= 0 && highestUnlockedIndex + 1 < allLessons.length) {
-          unlockedSet.add(allLessons[highestUnlockedIndex + 1].lessonId)
-        }
-        setAllowedLessons(unlockedSet)
-
         const purchased = await checkCoursePurchase(courseId)
         if (cancelled) return
         setIsPurchased(purchased || sessionUser.role === 'admin')
@@ -138,8 +113,8 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
     return () => {
       cancelled = true
     }
-  }, [sessionLoading, sessionUser, courseId])
-  
+  }, [sessionLoading, sessionUser, courseId, course.modules])
+
   const getModuleIcon = (moduleOrder) => {
     const icons = [
       <Code className="w-6 h-6" />,
@@ -152,30 +127,49 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
     ]
     return icons[moduleOrder - 1] || <BookOpen className="w-6 h-6" />
   }
-  
+
   const isLessonCompleted = (lessonId) => {
     return userProgress?.completedLessons?.includes(lessonId) || false
   }
-  
-  const isLessonUnlocked = (lesson, moduleIndex) => {
-    const hasOnlineAccess = user?.studentProfile?.activeOnlineCourses?.includes(courseId)
-    if (allowedLessons.size > 0) {
-      return allowedLessons.has(lesson.lessonId)
+
+  const unlockedLessons = useMemo(
+    () =>
+      getUnlockedLessonSet({
+        courseId,
+        profile: user?.studentProfile,
+        progress: userProgress,
+        isAdmin: user?.role === 'admin',
+        isPurchased,
+        isEnrolled,
+      }),
+    [courseId, user?.studentProfile, user?.role, userProgress, isPurchased, isEnrolled]
+  )
+
+  const isLessonUnlocked = useCallback(
+    (lesson) => unlockedLessons.has(lesson.lessonId),
+    [unlockedLessons]
+  )
+
+  const continueLesson = useMemo(() => {
+    for (let moduleIndex = 0; moduleIndex < course.modules.length; moduleIndex++) {
+      for (const lesson of course.modules[moduleIndex].lessons) {
+        if (isLessonUnlocked(lesson) && !isLessonCompleted(lesson.lessonId)) {
+          return lesson
+        }
+      }
     }
-    const explicitEnabled = user?.studentProfile?.courseAccess?.[courseId]?.enabled
-    if (explicitEnabled === false) return false
-    if (hasOnlineAccess) {
-      return moduleIndex === 0 && lesson.order === 1
+    for (let moduleIndex = 0; moduleIndex < course.modules.length; moduleIndex++) {
+      for (const lesson of course.modules[moduleIndex].lessons) {
+        if (isLessonUnlocked(lesson)) return lesson
+      }
     }
-    if (user?.role === 'admin') return true
-    if (isPurchased) return true
-    if (!isEnrolled) {
-      return moduleIndex === 0 && lesson.order === 1
-    }
-    if (moduleIndex === 0 && lesson.order === 1) return true
-    return false
-  }
-  
+    return course.modules[0]?.lessons[0] ?? null
+  }, [course.modules, userProgress, isLessonUnlocked])
+
+  const continueHref = continueLesson
+    ? `/courses/${courseId}/lessons/${continueLesson.lessonId}`
+    : `#module-${course.modules[0]?.moduleId ?? 'start'}`
+
   const getLevelBadge = (level) => {
     const levelKey = level === 'Intermediate' ? 'intermediate' : level === 'Advanced' ? 'advanced' : 'beginner'
     const colors = {
@@ -185,7 +179,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
     }
     return { text: tCommon(`levels.${levelKey}`), color: colors[levelKey] }
   }
-  
+
   const courseLevel = courseId === "web-development" ? "Intermediate" : "Beginner"
   const courseAge = courseId === "web-development" ? "12-18" : "13-17"
   const levelBadge = getLevelBadge(courseLevel)
@@ -202,168 +196,141 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
     if (score >= 50) return 'yellow'
     return 'red'
   }
-  
+
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${isLoaded ? styles.loaded : ''}`}>
       <section className={styles.heroSection}>
+        <div className={styles.particles} aria-hidden="true">
+          {Array.from({ length: 18 }).map((_, i) => (
+            <span key={i} className={styles.particle} style={{ '--i': i }} />
+          ))}
+        </div>
+
         <div className={styles.heroContent}>
-          <div className={styles.breadcrumb}>
+          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
             <Link href="/">{tCommon('breadcrumb.home')}</Link>
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4" aria-hidden />
             <span>{tCommon('breadcrumb.courses')}</span>
-            <ChevronRight className="w-4 h-4" />
-            <span>{course.title}</span>
-          </div>
-          
-          <div className={styles.header}>
-            <div className={styles.titleSection}>
+            <ChevronRight className="w-4 h-4" aria-hidden />
+            <span className={styles.breadcrumbCurrent}>{course.title}</span>
+          </nav>
+
+          <div className={styles.heroMain}>
+            <div className={styles.heroLeft}>
               <div className={styles.badges}>
-                <span 
-                  className={styles.levelBadge}
-                  style={{ backgroundColor: levelBadge.color }}
-                >
+                <span className={styles.levelBadge} style={{ backgroundColor: levelBadge.color }}>
                   {levelBadge.text}
                 </span>
                 <span className={styles.ageBadge}>
                   {tCommon('age', { age: courseAge })}
                 </span>
               </div>
-              
+
               <h1 className={styles.title}>{course.title}</h1>
-              
-              <p className={styles.valueProposition}>
-                {tVariant('valueProposition')}
-              </p>
+              <p className={styles.valueProposition}>{tVariant('valueProposition')}</p>
+
+              <div className={styles.ctaRow}>
+                <Link href={continueHref} className={styles.continueBtn} prefetch={false}>
+                  <Play className="w-6 h-6" fill="currentColor" aria-hidden />
+                  {tCourse('continueLearning')}
+                </Link>
+                <div className={styles.mascotWrap} aria-hidden="true">
+                  <Image
+                    src="/images/mascot-elephant.svg"
+                    alt=""
+                    width={88}
+                    height={88}
+                    className={styles.mascotImg}
+                  />
+                </div>
+              </div>
             </div>
-            
-            {isEnrolled && (
+
+            <div className={styles.heroRight}>
               <div className={styles.progressCard}>
                 <div className={styles.progressHeader}>
                   <span>{tCourse('progressLabel')}</span>
                   <span className={styles.progressPercent}>{progress}%</span>
                 </div>
                 <div className={styles.progressBar}>
-                  <div 
-                    className={styles.progressFill}
-                    style={{ width: `${progress}%` }}
-                  />
+                  <div className={styles.progressFill} style={{ width: `${progress}%` }} />
                 </div>
-              </div>
-            )}
-          </div>
-          
-          <div className={styles.stats}>
-            <div className={styles.statItem}>
-              <Clock className="w-5 h-5" />
-              <div>
-                <div className={styles.statValue}>
-                  {totalWeeks} {tCommon('stats.weeks')}
-                </div>
-                <div className={styles.statLabel}>{tCommon('stats.duration')}</div>
-              </div>
-            </div>
-            <div className={styles.statItem}>
-              <BookOpen className="w-5 h-5" />
-              <div>
-                <div className={styles.statValue}>
-                  {totalLessons} {tCommon('stats.lessons')}
-                </div>
-                <div className={styles.statLabel}>{tCommon('stats.materials')}</div>
-              </div>
-            </div>
-            <div className={styles.statItem}>
-              <Target className="w-5 h-5" />
-              <div>
-                <div className={styles.statValue}>
-                  {course.modules.length} {tCommon('stats.modules')}
-                </div>
-                <div className={styles.statLabel}>{tCommon('stats.modulesLabel')}</div>
-              </div>
-            </div>
-            <div className={styles.statItem}>
-              <Award className="w-5 h-5" />
-              <div>
-                <div className={styles.statValue}>{tCommon('stats.certificate')}</div>
-                <div className={styles.statLabel}>{tCommon('stats.afterCompletion')}</div>
+                {progress === 0 && (
+                  <p className={styles.progressHint}>{tCourse('progressStart')}</p>
+                )}
               </div>
             </div>
           </div>
-          
-        </div>
-      </section>
-      
-      <section className={styles.infoSection}>
-        <div className={styles.infoGrid}>
-          <div className={styles.infoCard}>
-            <h3 className={styles.infoCardTitle}>
-              <Target className="w-5 h-5" />
-              {tCourse('skillsTitle')}
-            </h3>
-            <ul className={styles.skillsList}>
-              {skills.map((skill, index) => (
-                <li key={index} className={styles.skillItem}>
-                  <CheckCircle2 className="w-4 h-4" />
-                  {skill}
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          <div className={styles.infoCard}>
-            <h3 className={styles.infoCardTitle}>
-              <Play className="w-5 h-5" />
-              {tCourse('formatTitle')}
-            </h3>
-            <ul className={styles.formatList}>
-              {formatItems.map((item, index) => (
-                <li key={index}>
-                  <CheckCircle2 className="w-4 h-4" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          <div className={styles.infoCard}>
-            <h3 className={styles.infoCardTitle}>
-              <BookOpen className="w-5 h-5" />
-              {tCourse('requirementsTitle')}
-            </h3>
-            <ul className={styles.requirementsList}>
-              {requirements.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-          </div>
-          
-          <div className={styles.infoCard}>
-            <h3 className={styles.infoCardTitle}>
-              <Award className="w-5 h-5" />
-              {tCourse('certificateTitle')}
-            </h3>
-            <p className={styles.certificateInfo}>
-              {tVariant('certificateText')}
-            </p>
+
+          <div className={styles.statsGrid}>
+            <div className={styles.statCard}>
+              <div className={styles.statIconWrap} data-tone="blue">
+                <Clock className="w-6 h-6" aria-hidden />
+              </div>
+              <div className={styles.statText}>
+                <span className={styles.statNumber}>{totalWeeks}</span>
+                <span className={styles.statUnit}>{tCommon('stats.weeks')}</span>
+                <span className={styles.statCaption}>{tCourse('statLearning')}</span>
+              </div>
+            </div>
+            <div className={styles.statCard}>
+              <div className={styles.statIconWrap} data-tone="purple">
+                <BookOpen className="w-6 h-6" aria-hidden />
+              </div>
+              <div className={styles.statText}>
+                <span className={styles.statNumber}>{totalLessons}</span>
+                <span className={styles.statUnit}>{tCommon('stats.lessons')}</span>
+                <span className={styles.statCaption}>{tCourse('statMaterials')}</span>
+              </div>
+            </div>
+            <div className={styles.statCard}>
+              <div className={styles.statIconWrap} data-tone="pink">
+                <Target className="w-6 h-6" aria-hidden />
+              </div>
+              <div className={styles.statText}>
+                <span className={styles.statNumber}>{course.modules.length}</span>
+                <span className={styles.statUnit}>{tCommon('stats.modules')}</span>
+                <span className={styles.statCaption}>{tCourse('statKnowledge')}</span>
+              </div>
+            </div>
+            <div className={styles.statCard}>
+              <div className={styles.statIconWrap} data-tone="gold">
+                <Award className="w-6 h-6" aria-hidden />
+              </div>
+              <div className={styles.statText}>
+                <span className={styles.statNumber}>{tCommon('stats.certificate')}</span>
+                <span className={styles.statCaption}>{tCourse('statCertHint')}</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
-      
-      <section className={styles.roadmapSection}>
+
+      <section className={styles.roadmapSection} id="course-program">
         <h2 className={styles.sectionTitle}>{tCourse('programTitle')}</h2>
         <p className={styles.sectionDescription}>
           {tCourse('programDescription', { modules: course.modules.length, lessons: totalLessons })}
         </p>
-        
+
         <div className={styles.modulesList}>
           {course.modules.map((module, moduleIndex) => (
-            <div 
+            <div
               key={module.moduleId}
               id={`module-${module.moduleId}`}
               className={`${styles.moduleCard} ${expandedModule === moduleIndex ? styles.expanded : ''}`}
             >
-              <div 
+              <div
                 className={styles.moduleHeader}
                 onClick={() => setExpandedModule(expandedModule === moduleIndex ? null : moduleIndex)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    setExpandedModule(expandedModule === moduleIndex ? null : moduleIndex)
+                  }
+                }}
+                aria-expanded={expandedModule === moduleIndex}
               >
                 <div className={styles.moduleHeaderLeft}>
                   <div className={styles.moduleIcon}>
@@ -383,12 +350,13 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                     <span>•</span>
                     <span>{tCourse('moduleLessons', { count: module.lessons.length })}</span>
                   </div>
-                  <ChevronRight 
+                  <ChevronRight
                     className={`${styles.expandIcon} ${expandedModule === moduleIndex ? styles.expanded : ''}`}
+                    aria-hidden
                   />
                 </div>
               </div>
-              
+
               {expandedModule === moduleIndex && (
                 <div className={styles.moduleContent}>
                   <div className={styles.learningOutcomes}>
@@ -399,15 +367,15 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                       ))}
                     </ul>
                   </div>
-                  
+
                   <div className={styles.lessonsList}>
                     <h4>{tCourse('lessonsTitle')}</h4>
                     {module.lessons.map((lesson) => {
                       const completed = isLessonCompleted(lesson.lessonId)
-                      const unlocked = isLessonUnlocked(lesson, moduleIndex)
+                      const unlocked = isLessonUnlocked(lesson)
                       const lessonColor = getLessonColor(lesson.lessonId)
                       const quizScore = getQuizScore(lesson.lessonId)
-                      
+
                       return (
                         <Link
                           key={lesson.lessonId}
@@ -422,18 +390,16 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                             }`
                           } : {}}
                           onClick={(e) => {
-                            if (!unlocked) {
-                              e.preventDefault()
-                            }
+                            if (!unlocked) e.preventDefault()
                           }}
                         >
                           <div className={styles.lessonItemLeft}>
                             {completed ? (
-                              <CheckCircle2 className="w-5 h-5" />
+                              <CheckCircle2 className="w-5 h-5" aria-hidden />
                             ) : unlocked ? (
-                              <Play className="w-5 h-5" />
+                              <Play className="w-5 h-5" aria-hidden />
                             ) : (
-                              <Lock className="w-5 h-5" />
+                              <Lock className="w-5 h-5" aria-hidden />
                             )}
                             <div>
                               <div className={styles.lessonNumber}>
@@ -472,19 +438,19 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
           ))}
         </div>
       </section>
-      
+
       <section className={styles.ctaSection}>
         <div className={styles.ctaCard}>
+          <div className={styles.ctaMascot} aria-hidden="true">
+            <Image src="/images/mascot-elephant.svg" alt="" width={72} height={72} />
+          </div>
           <h2 className={styles.ctaTitle}>{tCourse('ctaTitle')}</h2>
           <p className={styles.ctaDescription}>
             {tCourse('ctaDescription', { progress })}
           </p>
-          <Link 
-            href={`/courses/${courseId}`}
-            className={styles.ctaButton}
-          >
-            <Play className="w-5 h-5" />
-            {tCourse('ctaButton')}
+          <Link href={continueHref} className={styles.ctaButton} prefetch={false}>
+            <Play className="w-5 h-5" fill="currentColor" aria-hidden />
+            {tCourse('continueLearning')}
           </Link>
         </div>
       </section>

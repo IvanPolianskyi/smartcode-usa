@@ -74,11 +74,23 @@ async function runPython({ requestId, code, stdin, moduleId, interruptBuffer, me
     instance.setInterruptBuffer(undefined)
   }
 
-  let stdout = ''
-  let stderr = ''
+  const streams = { stdout: '', stderr: '' }
+  const decoder = new TextDecoder('utf-8')
 
-  instance.setStdout({ batched: (text) => { stdout += text } })
-  instance.setStderr({ batched: (text) => { stderr += text } })
+  const decodeChunk = (chunk) => {
+    if (typeof chunk === 'string') return { text: chunk, length: chunk.length }
+    const bytes = chunk instanceof Uint8Array ? chunk : new Uint8Array(chunk)
+    return { text: decoder.decode(bytes), length: bytes.byteLength }
+  }
+
+  const streamWrite = (key) => (chunk) => {
+    const { text, length } = decodeChunk(chunk)
+    streams[key] += text
+    return length
+  }
+
+  instance.setStdout({ write: streamWrite('stdout') })
+  instance.setStderr({ write: streamWrite('stderr') })
 
   if (stdin) {
     const lines = stdin.replace(/\r\n/g, '\n').split('\n')
@@ -103,8 +115,8 @@ async function runPython({ requestId, code, stdin, moduleId, interruptBuffer, me
       type: 'result',
       requestId,
       success: true,
-      output: stdout,
-      errorOutput: stderr.trim(),
+      output: streams.stdout,
+      errorOutput: streams.stderr.trim(),
       exitCode: 0,
     })
   } catch (error) {
@@ -112,8 +124,8 @@ async function runPython({ requestId, code, stdin, moduleId, interruptBuffer, me
       type: 'result',
       requestId,
       success: false,
-      output: stdout,
-      errorOutput: formatError(error, stderr, messages),
+      output: streams.stdout,
+      errorOutput: formatError(error, streams.stderr, messages),
       exitCode: 1,
     })
   } finally {

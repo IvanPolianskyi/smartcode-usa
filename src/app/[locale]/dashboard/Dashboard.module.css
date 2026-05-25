@@ -1,9 +1,26 @@
 .container {
+  --dash-ivory: #faf8f5;
+  --dash-surface: #ffffff;
+  --dash-border: #e8e4df;
+  --dash-text: #1c1917;
+  --dash-muted: #78716c;
+  --dash-primary: #4f46e5;
+  --dash-primary-dark: #4338ca;
+  --dash-accent: #f59e0b;
+  --dash-radius: 18px;
+  --dash-radius-sm: 12px;
+  --dash-shadow: 0 1px 2px rgba(28, 25, 23, 0.04), 0 12px 32px rgba(28, 25, 23, 0.06);
+
   min-height: calc(100vh - 50px);
-  padding: 1.25rem 1.5rem 2rem;
+  padding: 1.25rem clamp(1rem, 2.5vw, 2.5rem) 2.5rem;
   width: 100%;
   max-width: none;
-  background: radial-gradient(circle at 10% 10%, #eef2ff 0%, #f8fafc 50%, #f1f5f9 100%);
+  margin: 0;
+  box-sizing: border-box;
+  background: var(--dash-ivory);
+  background-image:
+    radial-gradient(ellipse 70% 45% at 0% 0%, rgba(79, 70, 229, 0.07), transparent),
+    radial-gradient(ellipse 50% 40% at 100% 10%, rgba(245, 158, 11, 0.06), transparent);
 }
 
 .loading {
@@ -96,14 +113,18 @@
 }
 
 .heroCard {
+  position: relative;
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
-  background: linear-gradient(120deg, #4338ca, #2563eb);
+  align-items: stretch;
+  gap: 1.25rem;
+  background: linear-gradient(125deg, #4338ca 0%, #4f46e5 45%, #6366f1 100%);
   color: #fff;
-  border-radius: 14px;
-  padding: 1rem 1.1rem;
-  margin-bottom: 0.9rem;
+  border-radius: var(--dash-radius);
+  padding: 1.35rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 16px 40px rgba(67, 56, 202, 0.28);
+  overflow: hidden;
 }
 
 .heroLabel {
@@ -329,6 +350,8 @@
 .toolbar {
   display: flex;
   justify-content: flex-end;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .paymentAccount {
@@ -362,12 +385,324 @@
   border-radius: 10px;
   padding: 0.55rem 0.7rem;
   background: #fff;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .payPanel {
   margin-top: 0.85rem;
   padding-top: 0.85rem;
   border-top: 1px solid #e2e8f0;
+}
+
+/* Payment card v2 */
+.payCard {
+  background: var(--dash-surface);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-radius);
+  padding: 1.25rem 1.35rem;
+  box-shadow: var(--dash-shadow);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.payCardHead {
+  margin-bottom: 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--dash-border);
+}
+
+.payCardHead h3 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 1.1rem;
+  color: var(--dash-text);
+}
+
+.payCardHead p {
+  margin: 0.35rem 0 0;
+  font-size: 0.88rem;
+  color: var(--dash-muted);
+  line-height: 1.45;
+}
+
+.payCardInner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.paySummaryCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.payFormCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.payStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  width: 100%;
+}
+
+.payStatItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  background: #fafaf9;
+  border: 1px solid var(--dash-border);
+  font-size: 0.75rem;
+  color: var(--dash-muted);
+  min-height: 72px;
+}
+
+.payStatItem svg {
+  color: var(--dash-primary);
+  flex-shrink: 0;
+}
+
+.payStatItem span {
+  line-height: 1.3;
+}
+
+.payStatItem strong {
+  font-size: 1.15rem;
+  color: var(--dash-text);
+  margin-top: auto;
+}
+
+.debtRow {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--dash-border);
+  background: #f5f5f4;
+  box-sizing: border-box;
+}
+
+.debtRowActive {
+  background: linear-gradient(135deg, #fef2f2, #fff1f2);
+  border-color: #fca5a5;
+}
+
+.debtRowMain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.debtRowLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--dash-muted);
+}
+
+.debtRowActive .debtRowLabel {
+  color: #b91c1c;
+}
+
+.debtRowActive .debtRowLabel svg {
+  color: #dc2626;
+  flex-shrink: 0;
+}
+
+.debtRowValue {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #57534e;
+  white-space: nowrap;
+}
+
+.debtRowActive .debtRowValue {
+  color: #dc2626;
+}
+
+.debtRowHint {
+  margin: 0.5rem 0 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(252, 165, 165, 0.5);
+  font-size: 0.8rem;
+  color: #b91c1c;
+  line-height: 1.4;
+}
+
+.payStep {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.payStepNum {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--dash-primary), #6366f1);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.payStepBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.payStepTitle {
+  margin: 0 0 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--dash-text);
+}
+
+.payHint {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 0.8rem;
+  color: var(--dash-muted);
+  line-height: 1.45;
+}
+
+.amountChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.amountChip {
+  border: 1px solid var(--dash-border);
+  background: #fff;
+  color: var(--dash-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.amountChip:hover {
+  border-color: #a5b4fc;
+  background: #eef2ff;
+}
+
+.amountChipActive {
+  border-color: var(--dash-primary);
+  background: #eef2ff;
+  color: var(--dash-primary-dark);
+}
+
+.uploadZone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1.1rem 1rem;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  background: #fafaf9;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.uploadZone:hover {
+  border-color: #818cf8;
+  background: #eef2ff;
+}
+
+.uploadZone svg {
+  color: var(--dash-primary);
+}
+
+.uploadZoneTitle {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--dash-text);
+}
+
+.uploadZoneFile {
+  font-size: 0.78rem;
+  color: var(--dash-muted);
+  word-break: break-all;
+}
+
+.uploadInputHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.paySubmitBtn {
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 1rem 1.25rem;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #4338ca, #4f46e5 50%, #6366f1);
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(79, 70, 229, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.paySubmitBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(79, 70, 229, 0.42);
+}
+
+.paySubmitBtn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.payMessageSuccess {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.payMessageError {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 0.88rem;
+  line-height: 1.45;
 }
 
 .payModeRow {
@@ -405,14 +740,16 @@
 }
 
 .bankBlock {
-  margin: 0.65rem 0 1rem;
-  padding: 0.65rem 0.75rem;
-  border: 1px solid #e2e8f0;
+  margin: 0.5rem 0 0;
+  padding: 0.75rem;
+  border: 1px solid var(--dash-border);
   border-radius: 12px;
-  background: #f8fafc;
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
+  background: #fafaf9;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .bankRow {
@@ -420,6 +757,11 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 0.5rem;
+}
+
+.bankRowText {
+  flex: 1;
+  min-width: 0;
 }
 
 .bankLabel {
@@ -467,6 +809,749 @@
   color: #92400e;
 }
 
+/* ——— Student dashboard v2 ——— */
+.dashBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dashHeroGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.payBottomFull {
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.payBottomFull .payCardInner {
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+}
+
+.payBottomFull .payFormCol {
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--dash-border);
+}
+
+.payBottomFull .bankBlock {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.dashLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.dashMain {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 100%;
+}
+
+.dashAside {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 100%;
+  position: sticky;
+  top: 1rem;
+  align-self: stretch;
+}
+
+.metricCards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.metricCard {
+  background: var(--dash-surface);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-radius-sm);
+  padding: 0.9rem 1rem;
+  box-shadow: var(--dash-shadow);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.metricCardIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #eef2ff;
+  color: var(--dash-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.metricCard strong {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--dash-text);
+  line-height: 1.1;
+}
+
+.metricCard span {
+  font-size: 0.78rem;
+  color: var(--dash-muted);
+}
+
+.sectionHeader {
+  margin-bottom: 0.85rem;
+}
+
+.sectionHeader h3 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 1.05rem;
+  color: var(--dash-text);
+}
+
+.sectionHint {
+  margin: 0.35rem 0 0;
+  font-size: 0.84rem;
+  color: var(--dash-muted);
+  line-height: 1.45;
+}
+
+.coursesSection,
+.calendarCard,
+.achievementsCard,
+.historyCard {
+  background: var(--dash-surface);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-radius);
+  padding: 1.15rem 1.25rem;
+  box-shadow: var(--dash-shadow);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.coursesSection .courseGrid,
+.calendarCard .scheduleList {
+  flex: 1;
+}
+
+.courseGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.courseCard {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--dash-border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.courseCard:hover:not(.courseCardLocked) {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(28, 25, 23, 0.08);
+}
+
+.courseCardLocked {
+  opacity: 0.92;
+}
+
+.courseCardLocked .courseCardHero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+
+.courseCardLockBadge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.courseCardBadgeLocked {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--dash-muted);
+  line-height: 1.4;
+}
+
+.courseCardLocked .resumeBtn {
+  background: linear-gradient(135deg, #78716c, #57534e);
+  box-shadow: none;
+}
+
+.courseCardLocked .resumeBtn:hover:not(:disabled) {
+  box-shadow: 0 8px 20px rgba(87, 83, 78, 0.35);
+}
+
+.courseCardHero {
+  position: relative;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.courseCardImg {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25));
+}
+
+.courseCardIconFallback {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.courseCardBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.courseCardBody .resumeBtn,
+.courseCardBody .courseCardActions {
+  margin-top: auto;
+}
+
+.courseCardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.courseCardTop h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dash-text);
+}
+
+.courseCardBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #059669;
+  background: #ecfdf5;
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+}
+
+.courseCardDesc {
+  margin: 0.4rem 0 0;
+  font-size: 0.82rem;
+  color: var(--dash-muted);
+  line-height: 1.45;
+}
+
+.courseCardPrice {
+  margin: 0.5rem 0 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--dash-text);
+}
+
+.courseCardActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+}
+
+.progressBarAnimated {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: #f5f5f4;
+  overflow: hidden;
+  margin: 0.65rem 0 0.75rem;
+}
+
+.progressBarAnimated span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #4f46e5, #818cf8);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.resumeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--dash-primary), #6366f1);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.resumeBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35);
+}
+
+.resumeBtn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.progressRing {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.progressRingTrack {
+  stroke: #f5f5f4;
+}
+
+.progressRingFill {
+  stroke: url(#dashRingGrad);
+  stroke: #6366f1;
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progressRingValue {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--dash-text);
+}
+
+.progressRingMuted .progressRingFill {
+  stroke: #d6d3d1;
+}
+
+.progressRingMuted .progressRingValue {
+  color: var(--dash-muted);
+}
+
+.paymentBanner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.15rem;
+  border-radius: var(--dash-radius-sm);
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  border: 1px solid #fcd34d;
+  box-shadow: var(--dash-shadow);
+}
+
+.paymentBannerUrgent {
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  border-color: #fca5a5;
+}
+
+.paymentBannerIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(245, 158, 11, 0.2);
+  color: #b45309;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.paymentBannerUrgent .paymentBannerIcon {
+  background: rgba(239, 68, 68, 0.15);
+  color: #dc2626;
+}
+
+.paymentBannerBody {
+  flex: 1;
+  min-width: 200px;
+}
+
+.paymentBannerBody strong {
+  display: block;
+  color: #78350f;
+  margin-bottom: 0.2rem;
+}
+
+.paymentBannerUrgent .paymentBannerBody strong {
+  color: #991b1b;
+}
+
+.paymentBannerBody p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #92400e;
+  line-height: 1.45;
+}
+
+.paymentBannerUrgent .paymentBannerBody p {
+  color: #b91c1c;
+}
+
+.paymentBannerMeta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--dash-muted);
+}
+
+.paymentBannerCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.1rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ea580c, #f59e0b);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 8px 20px rgba(234, 88, 12, 0.3);
+}
+
+.paymentBannerUrgent .paymentBannerCta {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
+}
+
+.scheduleList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.scheduleRow {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: stretch;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--dash-border);
+  border-radius: 12px;
+  background: #fafaf9;
+}
+
+.scheduleRowToday {
+  border-color: #a5b4fc;
+  background: linear-gradient(90deg, #eef2ff 0%, #fafaf9 45%);
+  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.12);
+}
+
+.scheduleRowEmpty {
+  opacity: 0.72;
+}
+
+.scheduleRowDay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.25rem;
+  border-right: 1px solid var(--dash-border);
+}
+
+.scheduleRowToday .scheduleRowDay {
+  border-right-color: #c7d2fe;
+}
+
+.scheduleDayBadge {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--dash-text);
+  letter-spacing: 0.04em;
+}
+
+.scheduleTodayTag {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--dash-primary);
+  background: #e0e7ff;
+  padding: 0.15rem 0.4rem;
+  border-radius: 999px;
+}
+
+.scheduleRowBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
+  justify-content: center;
+}
+
+.scheduleRowFree {
+  font-size: 0.85rem;
+  color: var(--dash-muted);
+}
+
+.scheduleLesson {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  padding: 0.55rem 0.65rem;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--dash-border);
+}
+
+.scheduleLessonLive {
+  border-color: #86efac;
+  background: #f0fdf4;
+}
+
+.scheduleLessonInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.scheduleLessonTime {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--dash-text);
+}
+
+.scheduleLessonTopic {
+  font-size: 0.8rem;
+  color: var(--dash-muted);
+}
+
+.scheduleJoinBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  padding: 0.45rem 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: #e7e5e4;
+  color: #57534e;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.scheduleLessonLive .scheduleJoinBtn {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+}
+
+.scheduleJoinBtn:disabled {
+  opacity: 0.9;
+  cursor: not-allowed;
+}
+
+.pointsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+.pointsBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  background: #fafaf9;
+  border: 1px solid var(--dash-border);
+  color: var(--dash-primary);
+}
+
+.pointsBadge strong {
+  display: block;
+  font-size: 1.15rem;
+  color: var(--dash-text);
+  line-height: 1.1;
+}
+
+.pointsBadge span {
+  font-size: 0.72rem;
+  color: var(--dash-muted);
+}
+
+.badgeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.badgeItem {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 1px dashed var(--dash-border);
+  color: var(--dash-muted);
+}
+
+.badgeItemEarned {
+  border-style: solid;
+  border-color: #fcd34d;
+  background: linear-gradient(135deg, #fffbeb, #fef9c3);
+  color: #92400e;
+}
+
+.badgeItemLocked {
+  opacity: 0.55;
+}
+
+.emptyBlock {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  color: var(--dash-muted);
+}
+
+.emptyBlock svg {
+  opacity: 0.35;
+  margin-bottom: 0.5rem;
+}
+
+.formError {
+  margin-top: 0.5rem;
+  color: #dc2626;
+  font-size: 0.88rem;
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.historyItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 10px;
+  background: #fafaf9;
+  border: 1px solid var(--dash-border);
+  font-size: 0.86rem;
+  color: var(--dash-text);
+}
+
+.tabRowPill {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: #e7e5e4;
+  border-radius: 12px;
+  margin-bottom: 0.25rem;
+}
+
+@media (min-width: 900px) {
+  .payCardInner {
+    display: grid;
+    grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .payFormCol {
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--dash-border);
+  }
+
+  .bankBlock {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bankBlock .bankRow:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 981px) {
+  .dashLayout {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+  }
+}
+
+@media (max-width: 1100px) {
+  .dashLayout {
+    grid-template-columns: 1fr;
+  }
+  .dashAside {
+    position: static;
+  }
+}
+
 @media (max-width: 980px) {
   .gridThree { grid-template-columns: 1fr; }
   .gridTwo { grid-template-columns: 1fr; }
@@ -474,4 +1559,69 @@
   .headerRight { width: 100%; }
   .heroCard { flex-direction: column; }
   .goalBox { min-width: 0; }
+  .metricCards { grid-template-columns: 1fr; }
+  .courseGrid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .scheduleRow {
+    grid-template-columns: 56px minmax(0, 1fr);
+  }
+
+  .scheduleLesson {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .scheduleJoinBtn {
+    width: 100%;
+  }
+
+  .payBottomFull .payCardInner {
+    grid-template-columns: 1fr;
+  }
+
+  .payBottomFull .payFormCol {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .payBottomFull .bankBlock {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .paymentBanner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .paymentBannerCta {
+    width: 100%;
+    justify-content: center;
+  }
+  .payStatsGrid {
+    grid-template-columns: 1fr;
+  }
+  .payStatItem {
+    min-height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .payStatItem strong {
+    margin-top: 0;
+    margin-left: auto;
+  }
+  .payFormCol {
+    padding-left: 0;
+    border-left: none;
+  }
+  .paySubmitBtn {
+    font-size: 1.05rem;
+  }
+  .debtRowMain {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
