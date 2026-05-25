@@ -10,6 +10,7 @@ import {
 } from '@/lib/crmStudentSchedulePull'
 import { isStudentDashboardReady } from '@/lib/studentAccountReady'
 import { buildCourseAccessForOnlineCourses, flattenCourseLessons } from '@/lib/courseLessonAccess'
+import { kyivSlotSignature, nextKyivWeekdaySlot } from '@/lib/kyivTime'
 
 const COURSE_NAMES = {
   'python-developer-zero-to-junior': 'Пайтон',
@@ -54,24 +55,6 @@ function parseTimeToParts(raw) {
   return { hours, minutes }
 }
 
-function nextDateForWeekday(dayIndex, hours, minutes) {
-  const now = new Date()
-  const next = new Date(now)
-  const delta = (dayIndex - now.getDay() + 7) % 7
-  next.setDate(now.getDate() + delta)
-  next.setHours(hours, minutes, 0, 0)
-  if (next <= now) {
-    next.setDate(next.getDate() + 7)
-  }
-  return next
-}
-
-function regularSlotSignature(dateIso) {
-  const date = new Date(dateIso)
-  if (Number.isNaN(date.getTime())) return null
-  return `${date.getUTCDay()}-${date.getUTCHours()}:${String(date.getUTCMinutes()).padStart(2, '0')}`
-}
-
 async function fetchExistingIndividualLessons(base, token, studentId, teacherId) {
   const params = new URLSearchParams({
     kind: 'individual',
@@ -104,7 +87,7 @@ async function ensureCrmRegularLessons(studentDoc, crmStudent) {
   const existingLessons = await fetchExistingIndividualLessons(base, token, studentId, teacherId)
   const existingSignatures = new Set(
     existingLessons
-      .map((item) => regularSlotSignature(item?.start_at))
+      .map((item) => kyivSlotSignature(item?.start_at))
       .filter(Boolean)
   )
 
@@ -114,9 +97,9 @@ async function ensureCrmRegularLessons(studentDoc, crmStudent) {
     const weekday = WEEKDAY_INDEX[day]
     if (weekday == null || !timeParts) continue
 
-    const slotStart = nextDateForWeekday(weekday, timeParts.hours, timeParts.minutes)
+    const slotStart = nextKyivWeekdaySlot(weekday, timeParts.hours, timeParts.minutes)
     const slotEnd = new Date(slotStart.getTime() + DEFAULT_LESSON_DURATION_MINUTES * 60 * 1000)
-    const slotSignature = regularSlotSignature(slotStart.toISOString())
+    const slotSignature = kyivSlotSignature(slotStart.toISOString())
     if (slotSignature && existingSignatures.has(slotSignature)) {
       continue
     }

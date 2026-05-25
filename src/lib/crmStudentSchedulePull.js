@@ -12,7 +12,7 @@ const CRM_STATIC_TOKEN =
 const KYIV_TZ = 'Europe/Kyiv'
 
 /** Мінімальний інтервал між автоматичними підтягуваннями з CRM (клієнтський /api/auth/me). */
-const CRM_AUTO_PULL_MIN_MS = 12 * 60 * 1000
+const CRM_AUTO_PULL_MIN_MS = 2 * 60 * 1000
 
 function normalizeEmail(value) {
   return String(value || '').trim().toLowerCase()
@@ -186,14 +186,43 @@ export function crmPayloadFromStudent(studentDoc) {
   }
 }
 
+async function findCrmStudentByEmailOrLmsId(studentDoc) {
+  const email = normalizeEmail(studentDoc?.email)
+  const lmsId = String(studentDoc?._id || studentDoc?.id || '').trim()
+  if (!email && !lmsId) return null
+
+  const token = await resolveCrmToken()
+  const response = await fetch(`${CRM_BASE_URL.replace(/\/$/, '')}/students?limit=200&active_only=true`, {
+    headers: buildCrmHeaders(token),
+    cache: 'no-store',
+  })
+  if (!response.ok) return null
+  const list = await response.json()
+  if (!Array.isArray(list)) return null
+
+  if (lmsId) {
+    const byLms = list.find((item) => String(item?.smartcode_user_id || '') === lmsId)
+    if (byLms?.id) return byLms
+  }
+  if (email) {
+    return list.find((item) => normalizeEmail(item?.email) === email) || null
+  }
+  return null
+}
+
 /** Створює або оновлює картку учня в CRM; повертає об'єкт з полем id або null. */
 export async function syncStudentToCrm(studentDoc) {
   if (!CRM_BASE_URL) return null
   const profile = studentDoc?.studentProfile || {}
-  const crmStudentId = String(profile.crmStudentId || '').trim()
+  let crmStudentId = String(profile.crmStudentId || '').trim()
   const token = await resolveCrmToken()
   const body = crmPayloadFromStudent(studentDoc)
   const base = CRM_BASE_URL.replace(/\/$/, '')
+
+  if (!crmStudentId) {
+    const existing = await findCrmStudentByEmailOrLmsId(studentDoc)
+    if (existing?.id) crmStudentId = String(existing.id)
+  }
 
   if (crmStudentId) {
     const patchResponse = await fetch(`${base}/students/${crmStudentId}`, {
@@ -285,6 +314,40 @@ export function lessonFormatFromCrmLessons(lessons, fallbackProfile) {
   return fallbackProfile?.lessonFormat || 'group'
 }
 
+/** Групи CRM, де є учень — zoom і онлайн-курси для профілю LMS. */
+async function fetchCrmGroupsForStudent(crmStudentId) {
+  if (!CRM_BASE_URL || !crmStudentId) return []
+  try {
+    const groups = await crmJson('GET', 'groups?limit=200&active_only=true')
+    if (!Array.isArray(groups)) return []
+    return groups.filter((g) =>
+      (g.student_ids || []).some((sid) => String(sid) === String(crmStudentId))
+    )
+  } catch (e) {
+    console.error('CRM groups fetch for student failed:', e)
+    return []
+  }
+}
+
+function mergeGroupContextIntoProfile(prev, crmGroups) {
+  const next = { ...prev }
+  if (!crmGroups.length) return next
+
+  const zoom = crmGroups.map((g) => String(g.zoom_link || '').trim()).find(Boolean)
+  if (zoom) next.zoomLink = zoom
+
+  const courseIds = new Set(next.activeOnlineCourses || [])
+  for (const g of crmGroups) {
+    for (const cid of g.online_course_ids || []) {
+      if (cid) courseIds.add(String(cid))
+    }
+  }
+  if (courseIds.size > 0) {
+    next.activeOnlineCourses = [...courseIds]
+  }
+  return next
+}
+
 /**
  * Підтягує з CRM розклад і викладача, оновлює Mongo. Завжди викликати з серверних route (адмін).
  * @param {{ id: string, name?: string, email?: string, studentProfile?: object }} student
@@ -327,11 +390,12 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
     )
   }
 
+  const crmGroups = await fetchCrmGroupsForStudent(crmStudent.id)
   const prev = student?.studentProfile || {}
   const nextLessonFormat =
     rawLessons.length > 0 ? lessonFormatFromCrmLessons(rawLessons, prev) : prev.lessonFormat || 'group'
 
-  const nextProfile = {
+  let nextProfile = {
     ...prev,
     crmStudentId: String(crmStudent.id || ''),
     crmShortId: String(crmStudent.short_id || ''),
@@ -341,6 +405,7 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
     crmTeacherName: teacherName || String(prev.crmTeacherName || ''),
     crmScheduleSyncedAt: new Date().toISOString(),
   }
+  nextProfile = mergeGroupContextIntoProfile(nextProfile, crmGroups)
   if (
     nextProfile.accountReady === false &&
     (schedule.length > 0 || (nextProfile.activeOnlineCourses || []).length > 0)
@@ -354,6 +419,49 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
   )
 
   return { ...student, studentProfile: nextProfile }
+}
+
+/**
+ * Синхронізація розкладу LMS за CRM student id (виклик з internal API після змін у CRM).
+ */
+export async function syncScheduleFromCrmStudentId(crmStudentId) {
+  const id = String(crmStudentId || '').trim()
+  if (!id) throw new Error('crmStudentId is required')
+
+  const { getCollection } = await import('@/lib/mongodb')
+  const { findUserByCrmStudentId, grantCourseAccessForCrmStudent } = await import('@/lib/crmLmsSync')
+
+  const usersCollection = await getCollection('users')
+  const user = await findUserByCrmStudentId(id, usersCollection)
+  if (!user) {
+    return { ok: false, message: 'Користувача LMS не знайдено (спочатку привʼяжіть учня)' }
+  }
+
+  const pulled = await pullCrmScheduleToSmartcodeStudent(
+    {
+      id: user._id.toString(),
+      name: user.name,
+      email: user.email,
+      studentProfile: user.studentProfile || {},
+    },
+    usersCollection
+  )
+
+  const courseIds = pulled.studentProfile?.activeOnlineCourses || []
+  for (const courseId of courseIds) {
+    try {
+      await grantCourseAccessForCrmStudent(id, courseId, { enabled: true })
+    } catch (e) {
+      console.error('grant course after CRM schedule sync:', courseId, e)
+    }
+  }
+
+  return {
+    ok: true,
+    userId: user._id.toString(),
+    crmStudentId: id,
+    syncedAt: pulled.studentProfile?.crmScheduleSyncedAt || null,
+  }
 }
 
 /**

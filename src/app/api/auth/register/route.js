@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { getCollection } from '@/lib/mongodb'
 import { hashPassword, generateToken, setAuthCookie } from '@/lib/auth'
+import { syncStudentToCrm } from '@/lib/crmStudentSchedulePull'
 
 export async function POST(request) {
   try {
@@ -67,6 +68,29 @@ export async function POST(request) {
 
     const result = await usersCollection.insertOne(user)
     const userId = result.insertedId.toString()
+
+    try {
+      const crmStudent = await syncStudentToCrm({ ...user, _id: result.insertedId })
+      if (crmStudent?.id) {
+        await usersCollection.updateOne(
+          { _id: result.insertedId },
+          {
+            $set: {
+              'studentProfile.crmStudentId': String(crmStudent.id),
+              'studentProfile.crmShortId': String(crmStudent.short_id || ''),
+              updatedAt: new Date(),
+            },
+          }
+        )
+        user.studentProfile = {
+          ...user.studentProfile,
+          crmStudentId: String(crmStudent.id),
+          crmShortId: String(crmStudent.short_id || ''),
+        }
+      }
+    } catch (crmError) {
+      console.error('CRM link on register failed:', crmError)
+    }
 
     // Generate token
     const token = generateToken(userId)
