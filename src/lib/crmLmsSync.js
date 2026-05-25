@@ -182,6 +182,63 @@ export async function revokeCourseAccessForCrmStudent(crmStudentId, courseId) {
   return grantCourseAccessForCrmStudent(crmStudentId, courseId, { enabled: false })
 }
 
+/**
+ * Відвʼязати LMS-акаунт від CRM: скинути CRM-поля, доступ до курсів і весь прогрес.
+ */
+export async function unlinkUserFromCrm({ crmStudentId = '', smartcodeUserId = '' } = {}) {
+  const crmId = String(crmStudentId || '').trim()
+  const explicitUserId = String(smartcodeUserId || '').trim()
+  if (!crmId && !explicitUserId) {
+    throw new Error('crmStudentId або smartcodeUserId обовʼязковий')
+  }
+
+  const usersCollection = await getCollection('users')
+  let user = null
+  if (crmId) {
+    user = await findUserByCrmStudentId(crmId, usersCollection)
+  }
+  if (!user && explicitUserId && ObjectId.isValid(explicitUserId)) {
+    user = await usersCollection.findOne({ _id: new ObjectId(explicitUserId) })
+  }
+  if (!user) {
+    throw new Error('Користувача LMS не знайдено')
+  }
+
+  const userObjectId = user._id
+  const progressCollection = await getCollection('userProgress')
+  const progressResult = await progressCollection.deleteMany({ userId: userObjectId })
+
+  const catalogIds = new Set(LMS_COURSE_CATALOG.map((c) => c.id))
+  const prev = user.studentProfile || defaultStudentProfile()
+  const resetProfile = defaultStudentProfile()
+  if (prev.parentContact) {
+    resetProfile.parentContact = prev.parentContact
+  }
+
+  const enrolled = Array.isArray(user.enrolledCourses) ? user.enrolledCourses : []
+  const purchased = Array.isArray(user.purchasedCourses) ? user.purchasedCourses : []
+  const nextEnrolled = enrolled.filter((id) => !catalogIds.has(id))
+  const nextPurchased = purchased.filter((id) => !catalogIds.has(id))
+
+  await usersCollection.updateOne(
+    { _id: userObjectId },
+    {
+      $set: {
+        studentProfile: resetProfile,
+        enrolledCourses: nextEnrolled,
+        purchasedCourses: nextPurchased,
+        updatedAt: new Date(),
+      },
+    }
+  )
+
+  return {
+    userId: userObjectId.toString(),
+    progressDocumentsRemoved: progressResult.deletedCount || 0,
+    message: 'Відвʼязано від CRM: прогрес і доступ до курсів скинуто',
+  }
+}
+
 function escapeRegex(value) {
   return String(value || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
