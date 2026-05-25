@@ -1,67 +1,61 @@
-/** Rich EN content for Roblox Module 09 - lessons 9.1–9.3 */
+/** Rich UK content for Roblox Module 09 — AUTO from EN via gen-roblox-lessons-uk.mjs */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
 
 export const ukLesson91 = {
-  lessonId: 'lesson-roblox-9-1',
-  moduleId: 'module-09',
+  lessonId: "lesson-roblox-9-1",
+  moduleId: "module-09",
   order: 1,
-  title: '9.1 - ModuleScript: Shared Code',
+  title: "9.1 - ModuleScript: спільний код",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    'Create ModuleScript with config constants and helper functions',
-    'Require modules from multiple server scripts',
-    'Separate data/config from runtime behavior',
-    'Return a clean public API table from modules',
+    "Створіть ModuleScript із константами конфігурації та допоміжними функціями",
+    "Потрібні модулі з кількох server Scripts",
+    "Відокремте дані/конфігурацію від поведінки під час виконання",
+    "Повернути чисту публічну таблицю API із модулів",
   ],
   theory: {
     sections: [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `**Module 9 - Systems Architect** - you build an **RPG inventory** with clean, reusable code.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `**Модуль 9 – Системний архітектор** – ви створюєте **інвентар RPG** із чистим кодом, який можна багаторазово використовувати.
 
-**Lesson flow:**
-1. **Theory (40 min)** - ModuleScript pattern
-2. **Practice (~25 min)** - RPG constants module
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - шаблон ModuleScript
+2. **Практика (~25 хв)** - модуль констант RPG
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Use **Module 8 - Living Location** or new: \`Lesson 9.1 - Modules\`.`,
+Використовуйте **Модуль 8 - Місце проживання** або новий:\`Lesson 9.1 - Modules\`.`,
       },
       {
-        title: 'Why ModuleScript is a superpower',
-        content: `Without modules, you copy-paste the same numbers in 10 scripts.
+        title: "Чому ModuleScript — це суперсила",
+        content: `Без модулів ви копіюєте та вставляєте однакові числа в 10 Scripts.
 
-**With ModuleScript you can:**
-- Centralize rules (max slots, starter gold)
-- Reuse functions (\`getMaxSlots(level)\`)
-- Test one system in isolation
-- Scale the game without chaos
+**За допомогою ModuleScript ви можете:**
+- Централізація правил (максимум слотів, стартове золото)
+- Функції повторного використання (\`getMaxSlots(level)\`)
+- Перевірте одну систему окремо
+- Scaleуйте гру без хаосу
 
-**One source of truth** = fewer bugs when balancing.`,
+**Одне джерело правди** = менше помилок під час балансування.`,
       },
       {
-        title: 'Folder structure',
-        content: `**ServerScriptService** → **Modules** folder:
-
-\`\`\`
+        title: "Структура папок",
+        content: `**ServerScriptService** → Folder **Modules**:\`\`\`
 ServerScriptService
 ├── Modules/
-│   ├── RPGConfig.lua      (ModuleScript)
-│   └── (later) Inventory.lua
-├── InventoryService.lua   (Script)
-└── TestInventory.lua      (Script - dev only)
-\`\`\`
-
-**ModuleScript** icon looks like a puzzle piece. **Script** runs; **ModuleScript** is **required**, not auto-run.`,
+│ ├── RPGConfig.lua (ModuleScript)
+│ └── (later) Inventory.lua
+├── InventoryService.lua (Script)
+└── TestInventory.lua (Script - dev only)
+\`\`\`Піктограма **ModuleScript** виглядає як фрагмент пазла. **Script** виконується; **ModuleScript****потрібний**, а не автоматичний запуск.`,
       },
       {
-        title: 'Simple module API pattern',
-        content: `\`RPGConfig\` ModuleScript:
-
-\`\`\`lua
+        title: "Простий шаблон API модуля",
+        content: `\`RPGConfig\`ModuleScript:\`\`\`lua
 local RPGConfig = {}
 
 RPGConfig.STARTER_GOLD = 100
@@ -69,992 +63,1605 @@ RPGConfig.BASE_MAX_SLOTS = 12
 RPGConfig.SLOTS_PER_LEVEL = 2
 
 RPGConfig.RARITY_COLORS = {
-    common = Color3.fromRGB(200, 200, 200),
-    rare = Color3.fromRGB(80, 160, 255),
-    epic = Color3.fromRGB(180, 80, 255),
+ common = Color3.fromRGB(200, 200, 200),
+ rare = Color3.fromRGB(80, 160, 255),
+ epic = Color3.fromRGB(180, 80, 255),
 }
 
 function RPGConfig.getMaxSlots(playerLevel)
-    return RPGConfig.BASE_MAX_SLOTS + (playerLevel * RPGConfig.SLOTS_PER_LEVEL)
+ return RPGConfig.BASE_MAX_SLOTS + (playerLevel * RPGConfig.SLOTS_PER_LEVEL)
 end
 
 function RPGConfig.isValidRarity(rarity)
-    return RPGConfig.RARITY_COLORS[rarity] ~= nil
+ return RPGConfig.RARITY_COLORS[rarity] ~= nil
 end
 
 return RPGConfig
-\`\`\`
-
-**Return one table** - that is your public API.`,
+\`\`\`**Повернути одну таблицю** – це ваш публічний API.`,
       },
       {
-        title: 'Require and use',
-        content: `**InventoryService** Script:
-
-\`\`\`lua
+        title: "Вимагати і використовувати",
+        content: `Script **InventoryService**:\`\`\`lua
 local RPGConfig = require(script.Parent.Modules.RPGConfig)
 
 print("Starter gold:", RPGConfig.STARTER_GOLD)
 print("Level 3 slots:", RPGConfig.getMaxSlots(3))
 print("Valid rare?", RPGConfig.isValidRarity("rare"))
 print("Valid fake?", RPGConfig.isValidRarity("legendary_plus"))
-\`\`\`
+\`\`\`**Шлях має значення:**\`require\`використовує шлях екземпляра, а не імена файлів на диску.
 
-**Path matters:** \`require\` uses instance path, not file names on disk.
-
-**Exercise (5 min):** Second script \`ShopBridge\` also requires \`RPGConfig\` - change \`STARTER_GOLD\` once, both see new value.`,
+**Вправа (5 хв):** Другий Script\`ShopBridge\`також вимагає\`RPGConfig\`- зміна\`STARTER_GOLD\`один раз обидва бачать нове значення.`,
       },
       {
-        title: 'Config vs behavior modules',
-        content: `| Module type | Holds | Example |
+        title: "Config проти модулів поведінки",
+        content: `| Тип модуля | Тримає | Приклад |
 |-------------|-------|---------|
-| **Config** | Numbers, colors, item defs | RPGConfig, ItemDatabase |
-| **Behavior** | Functions with state logic | Inventory (lesson 9.2–9.3) |
+| **Конфігурація** | Числа, кольори, визначення елементів | RPGConfig, ItemDatabase |
+| **Поведінка** | Функції з логікою станів | Інвентар (заняття 9.2–9.3) |
 
-**Config** modules rarely change at runtime.
-**Behavior** modules create per-player objects.
+Модулі **Config** рідко змінюються під час виконання.
+Модулі **Поведінка** створюють об’єкти для кожного гравця.
 
-Do not put \`PlayerAdded\` in config modules - keep in Service scripts.`,
+Не ставити\`PlayerAdded\`in config modules - зберігати в Service Scripts.`,
       },
       {
-        title: 'Before practice checklist',
+        title: "Контрольний список перед початком практики",
         content: `- [ ] Modules/RPGConfig ModuleScript
-- [ ] Two scripts require it successfully
-- [ ] getMaxSlots and isValidRarity work in Output
-- [ ] Save: \`Lesson 9.1 - ModuleScript\``,
+- [ ] Два Scripts вимагають його успішно
+- [] getMaxSlots і isValidRarity працюють у Output
+- [ ] Зберегти:\`Lesson 9.1 - ModuleScript\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'Editing ModuleScript but wrong require path', explanation: 'Old module cached or wrong script.', correctApproach: 'require(script.Parent.Modules.RPGConfig)' },
-    { mistake: 'ModuleScript runs on its own at start', explanation: 'Only runs when required.', correctApproach: 'Require from a Script' },
-    { mistake: 'Constants duplicated in Shop and Inventory', explanation: 'Drift when balancing.', correctApproach: 'Single RPGConfig' },
-    { mistake: 'Returning nothing from module', explanation: 'require returns nil.', correctApproach: 'return RPGConfig at end' },
+    {
+      mistake: "Редагування ModuleScript, але неправильний потрібний шлях",
+      explanation: "Старий модуль кешується або неправильний Script.",
+      correctApproach: "вимагати (script.Parent.Modules.RPGConfig)",
+    },
+    {
+      mistake: "ModuleScript запускається самостійно під час запуску",
+      explanation: "Запускається лише за потреби.",
+      correctApproach: "Вимагати зі Script",
+    },
+    {
+      mistake: "Константи дублюються в магазині та інвентарі",
+      explanation: "Дрейф при балансуванні.",
+      correctApproach: "Один RPGConfig",
+    },
+    {
+      mistake: "Нічого не повертається з модуля",
+      explanation: "вимагати повернення нуль.",
+      correctApproach: "повернути RPGConfig наприкінці",
+    },
   ],
-  summary: `You created RPGConfig as a shared ModuleScript with constants and helper functions, required it from multiple scripts, and separated configuration from runtime services - the foundation for your RPG inventory system.`,
+  summary: "Ви створили RPGConfig як спільний ModuleScript із константами та допоміжними функціями, вимагали його від кількох Scripts і відокремили конфігурацію від служб виконання — основу вашої системи інвентаризації RPG.",
   practiceTask: {
-    title: 'First shared module (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** RPG constants used in 2+ scripts.
+    title: "Перший спільний модуль (~25 хв)",
+    difficulty: "beginner",
+    description: `**Мета:** Константи RPG, що використовуються в 2+ скриптах.
 
-### Part A - RPGConfig (12 min)
-1. Modules/RPGConfig with gold, slots, rarity colors
-2. getMaxSlots(level) and isValidRarity(rarity)
+### Part A - RPGConfig (12 хв)
+1. Модулі/RPGConfig із золотом, слотами, рідкісними кольорами
+2. getMaxSlots(рівень) і isValidRarity(рідкість)
 
-### Part B - Require test (10 min)
-1. InventoryService prints values
-2. Second script (TestModules) requires same module
-3. Change STARTER_GOLD - both update
+### Part B - Потрібен тест (10 хв)
+1. InventoryService друкує значення
+2. Для другого Script (TestModules) потрібен той самий модуль
+3. Змінити STARTER_GOLD - обидва оновлення
 
-### Part C - Save (3 min)
-1. **Save to Roblox** → \`Lesson 9.1 - ModuleScript\`
-2. **Practice complete**`,
+### Part C - Зберегти (3 хв)
+1. **Зберегти в Roblox** →\`Lesson 9.1 - ModuleScript\`2. **Практика завершена**`,
     hints: [
-      'Module name in Explorer = require path segment',
-      'Return only public API - local helpers stay local',
-      'Module 7 ShopConfig was same idea - now RPG-focused',
+      "Name модуля в Explorer = потрібен сегмент шляху",
+      "Повертає лише загальнодоступний API - локальні помічники залишаються локальними",
+      "Модуль 7 ShopConfig був такою ж ідеєю – тепер орієнтований на рольову гру",
     ],
-    optionalChallenge: 'Add getRarityColor(rarity) returning Color3 or nil.',
+    optionalChallenge: "Додайте getRarityColor(rarity), що повертає Color3 або nil.",
   },
   quiz: {
     passingScore: 70,
     timeLimit: 10,
     questions: [
-      { id: 'q1', type: MC, question: 'ModuleScript is loaded with…', options: ['require()', 'FireServer()', 'MoveTo()', 'TakeDamage()'], correctAnswer: 0, explanation: 'require loads module.' },
-      { id: 'q2', type: MC, question: 'Module should return…', options: ['A table API', 'Nothing always', 'Terrain', 'Player'], correctAnswer: 0, explanation: 'return module table.' },
-      { id: 'q3', type: MC, question: 'RPGConfig holds…', options: ['Constants and shared helpers', 'Only UI', 'Only sounds', 'Terrain'], correctAnswer: 0, explanation: 'Config module.' },
-      { id: 'q4', type: MC, question: 'One constant in one place prevents…', options: ['Copy-paste drift', 'Flying', 'NPC dialogue', 'Publishing'], correctAnswer: 0, explanation: 'Single source of truth.' },
-      { id: 'q5', type: MC, question: 'ModuleScript does not auto-run until…', options: ['Required by another script', 'Player joins', 'Terrain loads', 'UI opens'], correctAnswer: 0, explanation: 'Required not auto.' },
-      { id: 'q6', type: MC, question: 'getMaxSlots(level) belongs in…', options: ['Config or behavior module API', 'LocalScript only', 'Lighting', 'StarterGui'], correctAnswer: 0, explanation: 'Shared logic.' },
-      { id: 'q7', type: MC, question: 'Module 9 theme is…', options: ['Systems Architect / RPG inventory', 'Only racing', 'Only shop UI', 'Terrain only'], correctAnswer: 0, explanation: 'Module title.' },
-      { id: 'q8', type: MC, question: 'Config vs behavior split means…', options: ['Data separate from runtime services', 'No scripts', 'Client-only', 'Delete modules'], correctAnswer: 0, explanation: 'Architecture.' },
-      { id: 'q9', type: MC, question: 'Lesson 9.2 adds…', options: ['Inventory tables', 'Only NPC', 'Only car', 'Publish'], correctAnswer: 0, explanation: 'Next lesson.' },
-      { id: 'q10', type: MC, question: 'Lesson 9.1 save name…', options: ['Lesson 9.1 - ModuleScript', 'RPG Inventory', 'Living Location', 'Shop Works'], correctAnswer: 0, explanation: 'Save lesson.' },
+      {
+        id: "q1",
+        type: "multiple_choice",
+        question: "ModuleScript завантажується з…",
+        options: [
+          "вимагати()",
+          "FireServer()",
+          "MoveTo()",
+          "TakeDamage()",
+        ],
+        correctAnswer: 0,
+        explanation: "потрібен модуль навантажень.",
+      },
+      {
+        id: "q2",
+        type: "multiple_choice",
+        question: "Модуль має повернутися…",
+        options: [
+          "Таблиця API",
+          "Нічого завжди",
+          "Рельєф місцевості",
+          "гравець",
+        ],
+        correctAnswer: 0,
+        explanation: "таблиця повернення модулів.",
+      },
+      {
+        id: "q3",
+        type: "multiple_choice",
+        question: "RPGConfig містить…",
+        options: [
+          "Константи та спільні помічники",
+          "Тільки UI",
+          "Тільки звуки",
+          "Рельєф місцевості",
+        ],
+        correctAnswer: 0,
+        explanation: "Модуль конфігурації.",
+      },
+      {
+        id: "q4",
+        type: "multiple_choice",
+        question: "Одна константа в одному місці запобігає...",
+        options: [
+          "Копіювати-вставляти дрейф",
+          "політ",
+          "Діалог NPC",
+          "Видавництво",
+        ],
+        correctAnswer: 0,
+        explanation: "Єдине джерело правди.",
+      },
+      {
+        id: "q5",
+        type: "multiple_choice",
+        question: "ModuleScript не запускається автоматично, доки...",
+        options: [
+          "Потрібний для іншого Script",
+          "Гравець приєднується",
+          "Навантаження на місцевість",
+          "Відкриється інтерфейс користувача",
+        ],
+        correctAnswer: 0,
+        explanation: "Потрібно не автоматично.",
+      },
+      {
+        id: "q6",
+        type: "multiple_choice",
+        question: "getMaxSlots(рівень) належить до…",
+        options: [
+          "API конфігурації або модуля поведінки",
+          "Лише LocalScript",
+          "Освітлення",
+          "StarterGui",
+        ],
+        correctAnswer: 0,
+        explanation: "Спільна логіка.",
+      },
+      {
+        id: "q7",
+        type: "multiple_choice",
+        question: "Тема модуля 9…",
+        options: [
+          "Системний архітектор / Інвентар RPG",
+          "Тільки гонки",
+          "Лише інтерфейс магазину",
+          "Тільки місцевість",
+        ],
+        correctAnswer: 0,
+        explanation: "Name модуля.",
+      },
+      {
+        id: "q8",
+        type: "multiple_choice",
+        question: "Поділ конфігурації та поведінки означає…",
+        options: [
+          "Дані окремо від служб виконання",
+          "Жодних Scripts",
+          "Тільки для клієнта",
+          "Видалити модулі",
+        ],
+        correctAnswer: 0,
+        explanation: "Архітектура.",
+      },
+      {
+        id: "q9",
+        type: "multiple_choice",
+        question: "Урок 9.2 додає…",
+        options: [
+          "Інвентарні таблиці",
+          "Тільки NPC",
+          "Тільки автомобіль",
+          "Опублікувати",
+        ],
+        correctAnswer: 0,
+        explanation: "Наступний урок.",
+      },
+      {
+        id: "q10",
+        type: "multiple_choice",
+        question: "Урок 9.1 зберегти назву…",
+        options: [
+          "Урок 9.1 - ModuleScript",
+          "Інвентар RPG",
+          "Місце проживання",
+          "Магазин працює",
+        ],
+        correctAnswer: 0,
+        explanation: "Зберегти урок.",
+      },
     ],
   },
 }
 
 export const ukLesson92 = {
-  lessonId: 'lesson-roblox-9-2',
-  moduleId: 'module-09',
+  lessonId: "lesson-roblox-9-2",
+  moduleId: "module-09",
   order: 2,
-  title: '9.2 - Inventory with Tables',
+  title: "9.2 - Інвентар через таблицю",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    'Model inventory as slots table with itemId and qty',
-    'Implement addItem, removeItem, countItem with stack limits',
-    'Use ItemDatabase module for maxStack metadata',
-    'Return success/fail with reason strings from operations',
+    "Змоделюйте інвентар як таблицю слотів з itemId і кільк",
+    "Реалізація addItem, removeItem, countItem з обмеженнями стеку",
+    "Використовуйте модуль ItemDatabase для метаданих maxStack",
+    "Повернути успіх/невдачу з рядками причини з операцій",
   ],
   theory: {
     sections: [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Tables are Roblox's **spreadsheet** for inventory. Today you build **add / remove / count** safely.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `Таблиці — це **електронна таблиця** Roblox для інвентаризації. Сьогодні ви безпечно створюєте **додавання / видалення / підрахунок**.
 
-**Lesson flow:**
-1. **Theory (40 min)** - slot table model
-2. **Practice (~25 min)** - inventory operations module
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - model ігрового столу
+2. **Практика (~25 хв)** - модуль інвентарних операцій
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Open **Lesson 9.1 - ModuleScript**.`,
+Відкрийте **Урок 9.1 - ModuleScript**.`,
       },
       {
-        title: 'Inventory table model',
+        title: "Model інвентарного столу",
         content: `\`\`\`lua
 local inventory = {
-    slots = {
-        [1] = { itemId = "potion_small", qty = 3 },
-        [2] = { itemId = "sword_bronze", qty = 1 },
-        [3] = nil,  -- empty slot
-    },
-    maxSlots = 12,
+ slots = {
+ [1] = { itemId = "potion_small", qty = 3 },
+ [2] = { itemId = "sword_bronze", qty = 1 },
+ [3] = nil, -- empty slot
+ },
+ maxSlots = 12,
 }
-\`\`\`
-
-| Field | Meaning |
+\`\`\`| Поле | Значення |
 |-------|---------|
-| **slots** | Array-like table 1..maxSlots |
-| **itemId** | String key into ItemDatabase |
-| **qty** | Stack count |
-| **nil slot** | Empty |`,
+| **слоти** | Масивоподібна таблиця 1..maxSlots |
+| **itemId** | Ключ рядка в ItemDatabase |
+| **кількість** | Кількість стеків |
+| **нульовий слот** | Порожній |`,
       },
       {
-        title: 'ItemDatabase metadata',
-        content: `\`Modules/ItemDatabase\` ModuleScript:
-
-\`\`\`lua
+        title: "Метадані ItemDatabase",
+        content: `\`Modules/ItemDatabase\`ModuleScript:\`\`\`lua
 local ItemDatabase = {
-    potion_small = { name = "Small Potion", maxStack = 10, rarity = "common" },
-    sword_bronze = { name = "Bronze Sword", maxStack = 1, rarity = "common" },
-    gem_blue = { name = "Blue Gem", maxStack = 99, rarity = "rare" },
+ potion_small = { name = "Small Potion", maxStack = 10, rarity = "common" },
+ sword_bronze = { name = "Bronze Sword", maxStack = 1, rarity = "common" },
+ gem_blue = { name = "Blue Gem", maxStack = 99, rarity = "rare" },
 }
 
 function ItemDatabase.get(itemId)
-    return ItemDatabase[itemId]
+ return ItemDatabase[itemId]
 end
 
 return ItemDatabase
-\`\`\`
-
-**maxStack = 1** for gear, **10+** for consumables.`,
+\`\`\`**maxStack = 1** для спорядження, **10+** для витратних матеріалів.`,
       },
       {
-        title: 'findItemSlot helper',
+        title: "помічник findItemSlot",
         content: `\`\`\`lua
 local function findItemSlot(inventory, itemId)
-    if not inventory or not inventory.slots then
-        return nil, "invalid_inventory"
-    end
-    for i = 1, inventory.maxSlots do
-        local slot = inventory.slots[i]
-        if slot and slot.itemId == itemId then
-            return i
-        end
-    end
-    return nil
+ if not inventory or not inventory.slots then
+ return nil, "invalid_inventory"
+ end
+ for i = 1, inventory.maxSlots do
+ local slot = inventory.slots[i]
+ if slot and slot.itemId == itemId then
+ return i
+ end
+ end
+ return nil
 end
 
 local function findEmptySlot(inventory)
-    for i = 1, inventory.maxSlots do
-        if inventory.slots[i] == nil then
-            return i
-        end
-    end
-    return nil
+ for i = 1, inventory.maxSlots do
+ if inventory.slots[i] == nil then
+ return i
+ end
+ end
+ return nil
 end
 \`\`\``,
       },
       {
-        title: 'addItem function',
+        title: "функція addItem",
         content: `\`\`\`lua
 function InventoryOps.addItem(inventory, itemId, qty)
-    local meta = ItemDatabase.get(itemId)
-    if not meta then
-        return false, "unknown_item"
-    end
-    if type(qty) ~= "number" or qty <= 0 then
-        return false, "bad_qty"
-    end
+ local meta = ItemDatabase.get(itemId)
+ if not meta then
+ return false, "unknown_item"
+ end
+ if type(qty) ~= "number" or qty <= 0 then
+ return false, "bad_qty"
+ end
 
-    local slotIndex = findItemSlot(inventory, itemId)
-    if slotIndex then
-        local slot = inventory.slots[slotIndex]
-        local space = meta.maxStack - slot.qty
-        if space <= 0 then
-            return false, "stack_full"
-        end
-        local add = math.min(qty, space)
-        slot.qty += add
-        return true, "stacked", add
-    end
+ local slotIndex = findItemSlot(inventory, itemId)
+ if slotIndex then
+ local slot = inventory.slots[slotIndex]
+ local space = meta.maxStack - slot.qty
+ if space <= 0 then
+ return false, "stack_full"
+ end
+ local add = math.min(qty, space)
+ slot.qty += add
+ return true, "stacked", add
+ end
 
-    local empty = findEmptySlot(inventory)
-    if not empty then
-        return false, "inventory_full"
-    end
+ local empty = findEmptySlot(inventory)
+ if not empty then
+ return false, "inventory_full"
+ end
 
-    inventory.slots[empty] = {
-        itemId = itemId,
-        qty = math.min(qty, meta.maxStack),
-    }
-    return true, "new_slot"
+ inventory.slots[empty] = {
+ itemId = itemId,
+ qty = math.min(qty, meta.maxStack),
+ }
+ return true, "new_slot"
 end
 \`\`\``,
       },
       {
-        title: 'removeItem and countItem',
+        title: "removeItem і countItem",
         content: `\`\`\`lua
 function InventoryOps.removeItem(inventory, itemId, qty)
-    local slotIndex = findItemSlot(inventory, itemId)
-    if not slotIndex then
-        return false, "not_found"
-    end
-    local slot = inventory.slots[slotIndex]
-    if slot.qty < qty then
-        return false, "not_enough"
-    end
-    slot.qty -= qty
-    if slot.qty <= 0 then
-        inventory.slots[slotIndex] = nil
-    end
-    return true, "removed"
+ local slotIndex = findItemSlot(inventory, itemId)
+ if not slotIndex then
+ return false, "not_found"
+ end
+ local slot = inventory.slots[slotIndex]
+ if slot.qty < qty then
+ return false, "not_enough"
+ end
+ slot.qty -= qty
+ if slot.qty <= 0 then
+ inventory.slots[slotIndex] = nil
+ end
+ return true, "removed"
 end
 
 function InventoryOps.countItem(inventory, itemId)
-    local idx = findItemSlot(inventory, itemId)
-    if not idx then return 0 end
-    return inventory.slots[idx].qty
+ local idx = findItemSlot(inventory, itemId)
+ if not idx then return 0 end
+ return inventory.slots[idx].qty
 end
-\`\`\`
-
-**Return (success, reason)** - UI can show "Inventory full".`,
+\`\`\`**Повернення (успіх, причина)** – інтерфейс користувача може відображати «Інвентар повний».`,
       },
       {
-        title: 'Defensive coding',
-        content: `Always guard:
-
-\`\`\`lua
+        title: "Захисне кодування",
+        content: `Завжди охороняйте:\`\`\`lua
 if not inventory or not inventory.slots then
-    return false, "invalid_inventory"
+ return false, "invalid_inventory"
 end
-\`\`\`
+\`\`\`**Тестовий Script** викликає додавання/видалення у виводі - для перевірки логіки не потрібен програвач.
 
-**Test script** calls add/remove in Output - no player needed for logic test.
-
-**Before practice checklist:**
-- [ ] addItem stacks potions to maxStack
-- [ ] addItem fails when full with reason
-- [ ] removeItem clears slot at qty 0
+**Контрольний список перед тренуваннями:**
+- [ ] addItem накопичує зілля до maxStack
+- [ ] addItem завершується помилкою, коли заповнено з причиною
+- [ ] removeItem очищає слот із кількістю 0
 - [ ] countItem accurate
-- [ ] Save: \`Lesson 9.2 - Inventory Tables\``,
+- [ ] Зберегти:\`Lesson 9.2 - Inventory Tables\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'No check for unknown itemId', explanation: 'Nil errors.', correctApproach: 'ItemDatabase.get guard' },
-    { mistake: 'qty below 0 not blocked', explanation: 'Negative stacks.', correctApproach: 'qty <= 0 return false' },
-    { mistake: 'Forgetting nil empty slots', explanation: 'Skips slots wrong.', correctApproach: 'Explicit nil for empty' },
-    { mistake: 'Logic copy-pasted in 5 scripts', explanation: 'Drift.', correctApproach: 'InventoryOps module' },
+    {
+      mistake: "Немає перевірки на невідомий itemId",
+      explanation: "Нуль помилок.",
+      correctApproach: "ItemDatabase.get guard",
+    },
+    {
+      mistake: "кількість нижче 0 не заблоковано",
+      explanation: "Негативні стеки.",
+      correctApproach: "кількість <= 0 повертає false",
+    },
+    {
+      mistake: "Забувши про відсутність порожніх слотів",
+      explanation: "Неправильно пропускає слоти.",
+      correctApproach: "Явний nil для пустого",
+    },
+    {
+      mistake: "Копіювання логіки в 5 Scripts",
+      explanation: "Дрейф.",
+      correctApproach: "Модуль InventoryOps",
+    },
   ],
-  summary: `You modeled inventory with slot tables, built addItem/removeItem/countItem with stack limits and clear fail reasons, and centralized item rules in ItemDatabase - ready to wrap in per-player objects next lesson.`,
+  summary: "Ви змоделювали інвентар за допомогою таблиць слотів, створили addItem/removeItem/countItem із обмеженнями стеків і чіткими причинами помилок, а також централізовані правила щодо предметів у ItemDatabase — готові до об’єктів для кожного гравця наступного уроку.",
   practiceTask: {
-    title: 'Inventory table operations (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Working add/remove/count with tests.
+    title: "Операції з інвентарним столом (~25 хв)",
+    difficulty: "beginner",
+    description: `**Мета:** Робоче додавання/видалення/рахування за допомогою тестів.
 
-### Part A - Data (8 min)
-1. ItemDatabase with 3 items + maxStack
-2. InventoryOps module with helpers
+### Part A - Дані (8 хв)
+1. ItemDatabase з 3 елементами + maxStack
+2. Модуль InventoryOps з помічниками
 
-### Part B - Operations (15 min)
-1. addItem - stack + new slot + full fail
+### Part B – Операції (15 хв)
+1. addItem - стек + новий слот + повна помилка
 2. removeItem + countItem
-3. TestInventory script prints 6 test cases
+3. Script TestInventory друкує 6 тестів
 
-### Part C - Save (2 min)
-1. **Save to Roblox** → \`Lesson 9.2 - Inventory Tables\`
-2. **Practice complete**`,
+### Part C - Зберегти (2 хв)
+1. **Зберегти в Roblox** →\`Lesson 9.2 - Inventory Tables\`2. **Практика завершена**`,
     hints: [
-      'Print ok, reason from each call',
-      'Overflow challenge: spill to next slot when stack full',
-      'Use RPGConfig.getMaxSlots for maxSlots field',
+      "Друк ок, причина з кожного дзвінка",
+      "Завдання переповнення: перейдіть до наступного слота, коли стек заповнений",
+      "Використовуйте RPGConfig.getMaxSlots для поля maxSlots",
     ],
-    optionalChallenge: 'When stack full, auto-fill next empty slot with remainder.',
+    optionalChallenge: "Коли стек заповнений, автоматичне заповнення наступного порожнього слота залишком.",
   },
   quiz: {
     passingScore: 70,
     timeLimit: 10,
     questions: [
-      { id: 'q1', type: MC, question: 'Empty inventory slot is…', options: ['nil', '0', 'false string', 'Terrain'], correctAnswer: 0, explanation: 'nil = empty.' },
-      { id: 'q2', type: MC, question: 'maxStack comes from…', options: ['ItemDatabase', 'Client button', 'Sky', 'Random'], correctAnswer: 0, explanation: 'Item metadata.' },
-      { id: 'q3', type: MC, question: 'addItem returns false when…', options: ['Inventory full or invalid', 'Always', 'Never', 'On jump'], correctAnswer: 0, explanation: 'Fail with reason.' },
-      { id: 'q4', type: MC, question: 'findItemSlot searches by…', options: ['itemId match', 'Player name', 'Color only', 'Time'], correctAnswer: 0, explanation: 'Stack lookup.' },
-      { id: 'q5', type: MC, question: 'removeItem at qty 0 should…', options: ['Set slot to nil', 'Crash', 'Duplicate item', 'Publish'], correctAnswer: 0, explanation: 'Clear empty slot.' },
-      { id: 'q6', type: MC, question: 'Defensive checks prevent…', options: ['Runtime errors on bad data', 'Walking', 'UI', 'Sound'], correctAnswer: 0, explanation: 'Nil guards.' },
-      { id: 'q7', type: MC, question: 'InventoryOps should be a…', options: ['ModuleScript', 'Terrain', 'Sound', 'ProximityPrompt'], correctAnswer: 0, explanation: 'Shared module.' },
-      { id: 'q8', type: MC, question: 'Lesson 9.2 builds on…', options: ['Lesson 9.1 RPGConfig', 'Lesson 6 only', 'Empty', 'Publish'], correctAnswer: 0, explanation: 'Module path.' },
-      { id: 'q9', type: MC, question: 'Lesson 9.3 adds…', options: ['Tables as objects with metatables', 'Only dialogue', 'Only race', 'Terrain'], correctAnswer: 0, explanation: 'OOP-style inventory.' },
-      { id: 'q10', type: MC, question: 'Lesson 9.2 save name…', options: ['Lesson 9.2 - Inventory Tables', 'ModuleScript', 'RPG Inventory', 'Shop UI'], correctAnswer: 0, explanation: 'Save lesson.' },
+      {
+        id: "q1",
+        type: "multiple_choice",
+        question: "Порожнє місце для інвентарю – це…",
+        options: [
+          "нуль",
+          "0",
+          "помилковий рядок",
+          "Рельєф місцевості",
+        ],
+        correctAnswer: 0,
+        explanation: "nil = порожній.",
+      },
+      {
+        id: "q2",
+        type: "multiple_choice",
+        question: "maxStack походить від…",
+        options: [
+          "ItemDatabase",
+          "Кнопка клієнта",
+          "небо",
+          "Випадковий",
+        ],
+        correctAnswer: 0,
+        explanation: "Метадані елемента.",
+      },
+      {
+        id: "q3",
+        type: "multiple_choice",
+        question: "addItem повертає false, коли...",
+        options: [
+          "Інвентар повний або недійсний",
+          "Завжди",
+          "Ніколи",
+          "На стрибок",
+        ],
+        correctAnswer: 0,
+        explanation: "Невдача з причиною.",
+      },
+      {
+        id: "q4",
+        type: "multiple_choice",
+        question: "findItemSlot шукає за…",
+        options: [
+          "збіг itemId",
+          "Ім'я гравця",
+          "Тільки колір",
+          "час",
+        ],
+        correctAnswer: 0,
+        explanation: "Пошук стека.",
+      },
+      {
+        id: "q5",
+        type: "multiple_choice",
+        question: "removeItem у кількості 0 має…",
+        options: [
+          "Встановіть слот на нуль",
+          "Збій",
+          "Дубльований елемент",
+          "Опублікувати",
+        ],
+        correctAnswer: 0,
+        explanation: "Очистити порожній слот.",
+      },
+      {
+        id: "q6",
+        type: "multiple_choice",
+        question: "Захисні перевірки запобігають...",
+        options: [
+          "Помилки виконання через неправильні дані",
+          "ходьба",
+          "інтерфейс користувача",
+          "Звук",
+        ],
+        correctAnswer: 0,
+        explanation: "Нульова охорона.",
+      },
+      {
+        id: "q7",
+        type: "multiple_choice",
+        question: "InventoryOps має бути…",
+        options: [
+          "ModuleScript",
+          "Рельєф місцевості",
+          "Звук",
+          "ProximityPrompt",
+        ],
+        correctAnswer: 0,
+        explanation: "Спільний модуль.",
+      },
+      {
+        id: "q8",
+        type: "multiple_choice",
+        question: "Урок 9.2 базується на…",
+        options: [
+          "Урок 9.1 RPGConfig",
+          "Тільки урок 6",
+          "Порожній",
+          "Опублікувати",
+        ],
+        correctAnswer: 0,
+        explanation: "Шлях модуля.",
+      },
+      {
+        id: "q9",
+        type: "multiple_choice",
+        question: "Урок 9.3 додає…",
+        options: [
+          "Таблиці як об'єкти з метатаблицями",
+          "Тільки діалог",
+          "Тільки гонка",
+          "Рельєф місцевості",
+        ],
+        correctAnswer: 0,
+        explanation: "Інвентаризація в ООП-стилі.",
+      },
+      {
+        id: "q10",
+        type: "multiple_choice",
+        question: "Урок 9.2 зберегти назву…",
+        options: [
+          "Урок 9.2 – Інвентарні таблиці",
+          "ModuleScript",
+          "Інвентар RPG",
+          "Інтерфейс магазину",
+        ],
+        correctAnswer: 0,
+        explanation: "Зберегти урок.",
+      },
     ],
   },
 }
 
 export const ukLesson93 = {
-  lessonId: 'lesson-roblox-9-3',
-  moduleId: 'module-09',
+  lessonId: "lesson-roblox-9-3",
+  moduleId: "module-09",
   order: 3,
-  title: '9.3 - Tables as Objects',
+  title: "9.3 - Таблиці як об'єкти",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    'Create Inventory class with metatable and __index',
-    'Implement new, add, remove, serialize per player',
-    'Store playerInventories table in InventoryService',
-    'Use self method calls for readable OOP-style code',
+    "Створіть клас інвентаризації з метатаблицею та __index",
+    "Впроваджувати нові, додавати, видаляти, серіалізувати для кожного гравця",
+    "Зберігайте таблицю PlayerInventory в InventoryService",
+    "Використовуйте виклики самостійних методів для читабельного коду ООП",
   ],
   theory: {
     sections: [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Instead of passing \`inventory\` tables everywhere, each player gets an **Inventory object** with methods.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `Замість проходження\`inventory\`таблиці скрізь, кожен гравець отримує **Об’єкт інвентарю** з методами.
 
-**Lesson flow:**
-1. **Theory (40 min)** - metatable pattern
-2. **Practice (~25 min)** - Inventory.new per player
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - шаблон метатаблиці
+2. **Практика (~25 хв)** - Inventory.new на гравця
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Open **Lesson 9.2 - Inventory Tables**.`,
+Відкрийте **Урок 9.2 – Інвентарні таблиці**.`,
       },
       {
-        title: 'Tables can act like objects',
-        content: `Lua has no classes - **metatables** mimic them:
-
-\`\`\`lua
+        title: "Таблиці можуть діяти як об’єкти",
+        content: `Lua не має класів - **метатаблиці** імітують їх:\`\`\`lua
 local Inventory = {}
 Inventory.__index = Inventory
 
 function Inventory.new(maxSlots)
-    local self = setmetatable({
-        slots = {},
-        maxSlots = maxSlots,
-    }, Inventory)
-    return self
+ local self = setmetatable({
+ slots = {},
+ maxSlots = maxSlots,
+ }, Inventory)
+ return self
 end
 \`\`\`
 
-\`inv:add("potion_small", 2)\` reads cleaner than \`InventoryOps.addItem(inv, ...)\`.`,
+\`inv:add("potion_small", 2)\`читається чистіше, ніж\`InventoryOps.addItem(inv, ...)\`.`,
       },
       {
-        title: 'Methods with self',
-        content: `\`Modules/Inventory.lua\` - requires InventoryOps + ItemDatabase:
-
-\`\`\`lua
+        title: "Методи з собою",
+        content: `\`Modules/Inventory.lua\`- вимагає InventoryOps + ItemDatabase:\`\`\`lua
 function Inventory:add(itemId, qty)
-    local ok, reason = InventoryOps.addItem(self, itemId, qty)
-    return ok, reason
+ local ok, reason = InventoryOps.addItem(self, itemId, qty)
+ return ok, reason
 end
 
 function Inventory:remove(itemId, qty)
-    return InventoryOps.removeItem(self, itemId, qty)
+ return InventoryOps.removeItem(self, itemId, qty)
 end
 
 function Inventory:count(itemId)
-    return InventoryOps.countItem(self, itemId)
+ return InventoryOps.countItem(self, itemId)
 end
-\`\`\`
-
-**Colon syntax** \`inv:add()\` passes \`self\` automatically.`,
+\`\`\`**Синтаксис двокрапки**\`inv:add()\`проходить\`self\`автоматично.`,
       },
       {
-        title: 'serialize for saving later',
+        title: "серіалізувати для збереження пізніше",
         content: `\`\`\`lua
 function Inventory:serialize()
-    return {
-        slots = self.slots,
-        maxSlots = self.maxSlots,
-    }
+ return {
+ slots = self.slots,
+ maxSlots = self.maxSlots,
+ }
 end
 
 function Inventory.deserialize(data)
-    local inv = Inventory.new(data.maxSlots)
-    inv.slots = data.slots or {}
-    return inv
+ local inv = Inventory.new(data.maxSlots)
+ inv.slots = data.slots or {}
+ return inv
 end
-\`\`\`
-
-Lesson **9.5** saves this to DataStore - today just print JSON-like table.`,
+\`\`\`Урок **9.5** зберігає це в DataStore - сьогодні просто надрукуйте JSON-подібну таблицю.`,
       },
       {
-        title: 'Per-player InventoryService',
-        content: `\`InventoryService\` Script:
-
-\`\`\`lua
+        title: "InventoryService для кожного гравця",
+        content: `\`InventoryService\`Script:\`\`\`lua
 local Inventory = require(script.Parent.Modules.Inventory)
 local RPGConfig = require(script.Parent.Modules.RPGConfig)
 
 local playerInventories = {}
 
 game.Players.PlayerAdded:Connect(function(player)
-    local maxSlots = RPGConfig.getMaxSlots(1)
-    playerInventories[player] = Inventory.new(maxSlots)
+ local maxSlots = RPGConfig.getMaxSlots(1)
+ playerInventories[player] = Inventory.new(maxSlots)
 
-    -- Starter items
-    playerInventories[player]:add("potion_small", 3)
+ -- Starter items
+ playerInventories[player]:add("potion_small", 3)
 end)
 
 game.Players.PlayerRemoving:Connect(function(player)
-    playerInventories[player] = nil
+ playerInventories[player] = nil
 end)
 
 -- Example command for test:
 local function giveTestItem(player, itemId, qty)
-    local inv = playerInventories[player]
-    if inv then
-        local ok, reason = inv:add(itemId, qty)
-        print(ok, reason)
-    end
+ local inv = playerInventories[player]
+ if inv then
+ local ok, reason = inv:add(itemId, qty)
+ print(ok, reason)
+ end
 end
-\`\`\`
-
-**Never** store Player instance inside Inventory object - use \`playerInventories[player]\` map.`,
+\`\`\`**Ніколи** не зберігайте екземпляр Player в об’єкті Inventory – використовуйте\`playerInventories[player]\`карта.`,
       },
       {
-        title: 'Why this scales',
-        content: `| Approach | Problem |
+        title: "Чому це ваги",
+        content: `| Підхід | Проблема |
 |----------|---------|
-| One global inventory | All players share items |
-| Giant script | Unreadable |
-| **Per-player object** | Clean, testable |
-
-\`\`\`lua
+| Одна глобальна інвентаризація | Усі гравці діляться предметами |
+| Гігантський Script | Нечитабельний |
+| **Об’єкт для кожного гравця** | Чистий, перевірений |\`\`\`lua
 local inv = playerInventories[player]
 print("Potions:", inv:count("potion_small"))
-\`\`\`
-
-Ready for **gear stats** in 9.4.`,
+\`\`\`Готовий до **статистики спорядження** в 9.4.`,
       },
       {
-        title: 'Before practice checklist',
-        content: `- [ ] Inventory.new on PlayerAdded
-- [ ] inv:add / inv:remove work in Play
-- [ ] serialize prints valid table
-- [ ] PlayerRemoving clears memory
-- [ ] Save: \`Lesson 9.3 - Inventory Object\``,
+        title: "Контрольний список перед початком практики",
+        content: `- [ ] Inventory.new на PlayerAdded
+- [ ] inv:add / inv:remove працюють у Play
+- [ ] serialize друкує дійсну таблицю
+- [ ] PlayerRemoving очищає пам'ять
+- [ ] Зберегти:\`Lesson 9.3 - Inventory Object\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'Forgot Inventory.__index = Inventory', explanation: 'Methods missing.', correctApproach: 'Set __index before methods' },
-    { mistake: 'Dot instead of colon', explanation: 'self is nil.', correctApproach: 'inv:add() not inv.add()' },
-    { mistake: 'One global Inventory for all', explanation: 'Shared loot bug.', correctApproach: 'playerInventories[player]' },
-    { mistake: 'Storing Player inside inventory', explanation: 'Memory leak risk.', correctApproach: 'External map by player' },
+    {
+      mistake: "Забув інвентар.__index = Інвентар",
+      explanation: "Відсутні методи.",
+      correctApproach: "Встановіть __index перед методами",
+    },
+    {
+      mistake: "Крапка замість двокрапки",
+      explanation: "себе дорівнює нулю.",
+      correctApproach: "inv:add() не inv.add()",
+    },
+    {
+      mistake: "Один глобальний інвентар для всіх",
+      explanation: "Помилка спільного луту.",
+      correctApproach: "PlayerInventory[гравець]",
+    },
+    {
+      mistake: "Зберігання гравця в інвентарі",
+      explanation: "Ризик витоку пам'яті.",
+      correctApproach: "Зовнішня карта гравця",
+    },
   ],
-  summary: `You refactored inventory into an object-like module with new/add/remove/serialize, wired per-player instances in InventoryService, and prepared serialization for DataStore in later lessons.`,
+  summary: "Ви переробили інвентаризацію в об’єктно-подібний модуль із new/add/remove/serialize, підключеними екземплярами для кожного гравця в InventoryService та підготували серіалізацію для DataStore у наступних уроках.",
   practiceTask: {
-    title: 'Inventory as object (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Per-player Inventory objects.
+    title: "Інвентар як об'єкт (~25 хв)",
+    difficulty: "beginner",
+    description: `**Ціль:** Об’єкти інвентарю для кожного гравця.
 
-### Part A - Inventory module (12 min)
+### Part A - Модуль інвентаризації (12 хв)
 1. Inventory.new, __index, add, remove, count
-2. serialize + deserialize
-3. Wrap InventoryOps from 9.2
+2. серіалізація + десеріалізація
+3. Завершіть InventoryOps з 9.2
 
-### Part B - Service (10 min)
+### Part B - Обслуговування (10 хв)
 1. InventoryService PlayerAdded/Removing
-2. Starter potions on join
-3. Play - print inv:count in command test
+2. Стартові зілля при приєднанні
+3. Play - друкувати inv:count у тесті команди
 
-### Part C - Save (3 min)
-1. **Save to Roblox** → \`Lesson 9.3 - Inventory Object\`
-2. **Practice complete**`,
+### Part C - Зберегти (3 хв)
+1. **Зберегти в Roblox** →\`Lesson 9.3 - Inventory Object\`2. **Практика завершена**`,
     hints: [
-      'Colon : for methods, dot . only if you pass self manually',
-      'deserialize for testing saved data in Output',
-      'Optional getWeight() sums item weight from database',
+      "Двокрапка: для методів крапка. лише якщо ви передаєте себе вручну",
+      "десеріалізувати для тестування збережених даних у вихідних даних",
+      "Додатковий getWeight() підсумовує вагу елемента з бази даних",
     ],
-    optionalChallenge: 'getWeight() enforces max carry weight from RPGConfig.',
+    optionalChallenge: "getWeight() забезпечує максимальну вагу переносу з RPGConfig.",
   },
   quiz: {
     passingScore: 70,
     timeLimit: 10,
     questions: [
-      { id: 'q1', type: MC, question: 'setmetatable with __index enables…', options: ['Method calls on table', 'Terrain edit', 'FireServer', 'Welds only'], correctAnswer: 0, explanation: 'OOP-style.' },
-      { id: 'q2', type: MC, question: 'inv:add() passes…', options: ['self as first arg', 'Nothing', 'Terrain', 'Server IP'], correctAnswer: 0, explanation: 'Colon syntax.' },
-      { id: 'q3', type: MC, question: 'playerInventories[player] stores…', options: ['That player inventory object', 'Global shared loot', 'Terrain', 'UI only'], correctAnswer: 0, explanation: 'Per-player.' },
-      { id: 'q4', type: MC, question: 'serialize returns…', options: ['Table for saving', 'Player character', 'Tool instance only', 'Nil always'], correctAnswer: 0, explanation: 'DataStore prep.' },
-      { id: 'q5', type: MC, question: 'PlayerRemoving should…', options: ['Clear playerInventories entry', 'Delete all players', 'Stop server', 'Publish'], correctAnswer: 0, explanation: 'Memory cleanup.' },
-      { id: 'q6', type: MC, question: 'Inventory.new(maxSlots) is a…', options: ['Constructor', 'RemoteEvent', 'Terrain brush', 'Animation'], correctAnswer: 0, explanation: 'Creates instance.' },
-      { id: 'q7', type: MC, question: 'Avoid storing Player inside inventory because…', options: ['Cleaner map outside object', 'Required by Roblox', 'Blocks UI', 'Removes Humanoid'], correctAnswer: 0, explanation: 'Encapsulation.' },
-      { id: 'q8', type: MC, question: 'Lesson 9.3 builds on…', options: ['Lesson 9.2 InventoryOps', 'Lesson 1.1 only', 'Module 6 only', 'Empty'], correctAnswer: 0, explanation: 'Refactor tables.' },
-      { id: 'q9', type: MC, question: 'Lesson 9.4 adds…', options: ['Gear and stats', 'Only NPC', 'Only publish', 'Race timer'], correctAnswer: 0, explanation: 'Equipment.' },
-      { id: 'q10', type: MC, question: 'Lesson 9.3 save name…', options: ['Lesson 9.3 - Inventory Object', 'ModuleScript', 'Living Location', 'Race Launched'], correctAnswer: 0, explanation: 'Save lesson.' },
+      {
+        id: "q1",
+        type: "multiple_choice",
+        question: "setmetatable з __index дозволяє…",
+        options: [
+          "Виклики методів на столі",
+          "Редагування місцевості",
+          "FireServer",
+          "Тільки зварні шви",
+        ],
+        correctAnswer: 0,
+        explanation: "ООП-стиль.",
+      },
+      {
+        id: "q2",
+        type: "multiple_choice",
+        question: "inv:add() проходить...",
+        options: [
+          "self як перший аргумент",
+          "нічого",
+          "Рельєф місцевості",
+          "IP сервера",
+        ],
+        correctAnswer: 0,
+        explanation: "Синтаксис двокрапки.",
+      },
+      {
+        id: "q3",
+        type: "multiple_choice",
+        question: "playerInventory[player] stores…",
+        options: [
+          "Цей об’єкт інвентарю гравця",
+          "Глобальна спільна здобич",
+          "Рельєф місцевості",
+          "Лише інтерфейс користувача",
+        ],
+        correctAnswer: 0,
+        explanation: "На кожного гравця.",
+      },
+      {
+        id: "q4",
+        type: "multiple_choice",
+        question: "серіалізувати повернення…",
+        options: [
+          "Стіл для збереження",
+          "Характер гравця",
+          "Лише екземпляр інструменту",
+          "Нуль завжди",
+        ],
+        correctAnswer: 0,
+        explanation: "Підготовка DataStore",
+      },
+      {
+        id: "q5",
+        type: "multiple_choice",
+        question: "Вилучення гравця має…",
+        options: [
+          "Очистити запис Player Inventory",
+          "Видалити всіх гравців",
+          "Зупинити сервер",
+          "Опублікувати",
+        ],
+        correctAnswer: 0,
+        explanation: "Очищення пам'яті.",
+      },
+      {
+        id: "q6",
+        type: "multiple_choice",
+        question: "Inventory.new(maxSlots) — це…",
+        options: [
+          "Конструктор",
+          "RemoteEvent",
+          "Рельєфна щітка",
+          "Анімація",
+        ],
+        correctAnswer: 0,
+        explanation: "Створює екземпляр.",
+      },
+      {
+        id: "q7",
+        type: "multiple_choice",
+        question: "Уникайте зберігання Player в інвентарі, оскільки…",
+        options: [
+          "Чистіша карта зовнішнього об'єкта",
+          "Потрібен Roblox",
+          "Блокує інтерфейс користувача",
+          "Видаляє Humanoid",
+        ],
+        correctAnswer: 0,
+        explanation: "Інкапсуляція.",
+      },
+      {
+        id: "q8",
+        type: "multiple_choice",
+        question: "Урок 9.3 базується на...",
+        options: [
+          "Урок 9.2 InventoryOps",
+          "Тільки урок 1.1",
+          "Тільки модуль 6",
+          "Порожній",
+        ],
+        correctAnswer: 0,
+        explanation: "Рефакторинг таблиць.",
+      },
+      {
+        id: "q9",
+        type: "multiple_choice",
+        question: "Урок 9.4 додає…",
+        options: [
+          "Спорядження та статистика",
+          "Тільки NPC",
+          "Тільки публікувати",
+          "Таймер перегонів",
+        ],
+        correctAnswer: 0,
+        explanation: "Обладнання.",
+      },
+      {
+        id: "q10",
+        type: "multiple_choice",
+        question: "Урок 9.3 зберегти назву…",
+        options: [
+          "Урок 9.3 – Об’єкт інвентаризації",
+          "ModuleScript",
+          "Місце проживання",
+          "Гонка розпочата",
+        ],
+        correctAnswer: 0,
+        explanation: "Зберегти урок.",
+      },
     ],
   },
 }
 
 export const ukLesson94 = {
-  lessonId: 'lesson-roblox-9-4',
-  moduleId: 'module-09',
+  lessonId: "lesson-roblox-9-4",
+  moduleId: "module-09",
   order: 4,
-  title: '9.4 - Gear and Stats',
+  title: "9.4 - Екіпіровка та статистика",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    'Extend ItemDatabase with atk, hp, crit stat fields',
-    'Track equipped weapon, armor, trinket slots per player',
-    'Recalculate total stats from base + gear without mutating base',
-    'Fire StatsChanged to update HUD and combat damage',
+    "Розширте ItemDatabase полями atk, hp, crit stat",
+    "Відстежуйте слоти для зброї, броні та дрібничок на гравця",
+    "Перерахуйте загальну статистику з бази + спорядження без зміни бази",
+    "Статистику вогню змінено, щоб оновити HUD і бойову шкоду",
   ],
   theory: {
     sections: [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Inventory holds items. **Gear** makes items change **how strong** you are.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `Інвентар містить предмети. **Спорядження** змінює предмети, **наскільки ви сильні**.
 
-**Lesson flow:**
-1. **Theory (40 min)** - equip slots + stat engine
-2. **Practice (~25 min)** - 3 slots + HUD stats
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - обладнайте слоти + стат двигун
+2. **Практика (~25 хв)** - 3 слоти + статистика HUD
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Open **Lesson 9.3 - Inventory Object**.`,
+Відкрийте **Урок 9.3 – Об’єкт інвентаризації**.`,
       },
       {
-        title: 'Gear stats in ItemDatabase',
-        content: `Extend \`ItemDatabase\`:
-
-\`\`\`lua
+        title: "Статистика спорядження в ItemDatabase",
+        content: `Розширити\`ItemDatabase\`:\`\`\`lua
 sword_bronze = {
-    name = "Bronze Sword",
-    maxStack = 1,
-    slot = "weapon",
-    atk = 5,
-    crit = 0.02,
+ name = "Bronze Sword",
+ maxStack = 1,
+ slot = "weapon",
+ atk = 5,
+ crit = 0.02,
 },
 armor_cloth = {
-    name = "Cloth Armor",
-    maxStack = 1,
-    slot = "armor",
-    hp = 20,
+ name = "Cloth Armor",
+ maxStack = 1,
+ slot = "armor",
+ hp = 20,
 },
 ring_lucky = {
-    name = "Lucky Ring",
-    maxStack = 1,
-    slot = "trinket",
-    atk = 1,
-    crit = 0.05,
+ name = "Lucky Ring",
+ maxStack = 1,
+ slot = "trinket",
+ atk = 1,
+ crit = 0.05,
 },
-\`\`\`
-
-**slot** field tells equip system which slot item fits.`,
+\`\`\`Поле **slot** повідомляє системі оснащення, до якого слота підходить предмет.`,
       },
       {
-        title: 'Equipped table (separate from inventory)',
-        content: `\`playerEquipped[player]\`:
-
-\`\`\`lua
+        title: "Обладнаний стіл (окремо від інвентарю)",
+        content: `\`playerEquipped[player]\`:\`\`\`lua
 {
-    weapon = "sword_bronze",  -- itemId or nil
-    armor = "armor_cloth",
-    trinket = nil,
+ weapon = "sword_bronze", -- itemId or nil
+ armor = "armor_cloth",
+ trinket = nil,
 }
-\`\`\`
+\`\`\`**Спорядження** видаляє 1 з інвентарю (або переміщує зі слота) і встановлює ідентифікатор обладнання.
 
-**Equipping** removes 1 from inventory (or moves from slot) and sets equipped id.
-
-**Unequip** returns item to inventory if space.`,
+**Unequip** повертає предмет в інвентар, якщо є місце.`,
       },
       {
-        title: 'Base vs bonus stats',
-        content: `\`playerBaseStats[player]\`:
-
-\`\`\`lua
+        title: "Базова чи бонусна статистика",
+        content: `\`playerBaseStats[player]\`:\`\`\`lua
 { atk = 10, hp = 100, crit = 0 }
-\`\`\`
+\`\`\`**Ніколи** не роби\`baseAtk = baseAtk + 5\`постійно на екіпіровці.
 
-**Never** do \`baseAtk = baseAtk + 5\` permanently on equip.
-
-**Recalculate** each time:
-
-\`\`\`lua
+**Перераховувати** кожного разу:\`\`\`lua
 local function calcStats(player)
-    local base = playerBaseStats[player]
-    local eq = playerEquipped[player]
-    local total = { atk = base.atk, hp = base.hp, crit = base.crit }
+ local base = playerBaseStats[player]
+ local eq = playerEquipped[player]
+ local total = { atk = base.atk, hp = base.hp, crit = base.crit }
 
-    for _, slotName in ipairs({"weapon", "armor", "trinket"}) do
-        local itemId = eq[slotName]
-        if itemId then
-            local meta = ItemDatabase.get(itemId)
-            total.atk += meta.atk or 0
-            total.hp += meta.hp or 0
-            total.crit += meta.crit or 0
-        end
-    end
-    return total
+ for _, slotName in ipairs({"weapon", "armor", "trinket"}) do
+ local itemId = eq[slotName]
+ if itemId then
+ local meta = ItemDatabase.get(itemId)
+ total.atk += meta.atk or 0
+ total.hp += meta.hp or 0
+ total.crit += meta.crit or 0
+ end
+ end
+ return total
 end
 \`\`\``,
       },
       {
-        title: 'equipItem server function',
+        title: "функція сервера equipItem",
         content: `\`\`\`lua
 local function equipItem(player, itemId, slotName)
-    local meta = ItemDatabase.get(itemId)
-    if not meta or meta.slot ~= slotName then
-        return false, "wrong_slot"
-    end
+ local meta = ItemDatabase.get(itemId)
+ if not meta or meta.slot ~= slotName then
+ return false, "wrong_slot"
+ end
 
-    local inv = playerInventories[player]
-    if inv:count(itemId) < 1 then
-        return false, "not_owned"
-    end
+ local inv = playerInventories[player]
+ if inv:count(itemId) < 1 then
+ return false, "not_owned"
+ end
 
-    -- Unequip old in slot first (optional return to inv)
-    local old = playerEquipped[player][slotName]
-    if old then
-        inv:add(old, 1)
-    end
+ -- Unequip old in slot first (optional return to inv)
+ local old = playerEquipped[player][slotName]
+ if old then
+ inv:add(old, 1)
+ end
 
-    inv:remove(itemId, 1)
-    playerEquipped[player][slotName] = itemId
+ inv:remove(itemId, 1)
+ playerEquipped[player][slotName] = itemId
 
-    local totals = calcStats(player)
-    StatsChanged:FireClient(player, totals)
-    return true, "equipped"
+ local totals = calcStats(player)
+ StatsChanged:FireClient(player, totals)
+ return true, "equipped"
 end
-\`\`\`
-
-**StatsChanged** RemoteEvent → client updates HUD.`,
+\`\`\`**StatsChanged** RemoteEvent → клієнт оновлює HUD.`,
       },
       {
-        title: 'HUD and combat sync',
-        content: `**StarterGui** → \`StatsUI\`:
-
-\`\`\`lua
+        title: "HUD і бойова синхронізація",
+        content: `**StarterGui** →\`StatsUI\`:\`\`\`lua
 StatsChanged.OnClientEvent:Connect(function(totals)
-    AtkLabel.Text = "ATK: " .. totals.atk
-    HpLabel.Text = "HP+: " .. totals.hp
-    CritLabel.Text = "CRIT: " .. math.floor(totals.crit * 100) .. "%"
+ AtkLabel.Text = "ATK: " .. totals.atk
+ HpLabel.Text = "HP+: " .. totals.hp
+ CritLabel.Text = "CRIT: " .. math.floor(totals.crit * 100) .. "%"
 end)
-\`\`\`
+\`\`\`**Модуль 5 бойових дій:** використання пошкодження мечем\`totals.atk\`на сервері при попаданні.
 
-**Module 5 combat:** sword damage uses \`totals.atk\` on server when hit lands.
-
-One equip → recalc → **StatsChanged** → UI + combat - three sync points.`,
+Одне спорядження → recalc → **StatsChanged** → UI + бій - три точки синхронізації.`,
       },
       {
-        title: 'Before practice checklist',
-        content: `- [ ] 3 equip slots work from inventory
-- [ ] HUD updates on equip/unequip
-- [ ] Base stats unchanged in playerBaseStats table
-- [ ] Wrong slot item denied
-- [ ] Save: \`Lesson 9.4 - Gear Stats\``,
+        title: "Контрольний список перед початком практики",
+        content: `- [ ] 3 слоти для обладнання працюють з інвентарю
+- [ ] Оновлення HUD щодо екіпірування/зняття спорядження
+- [ ] Основна статистика не змінена в таблиці playerBaseStats
+- [ ] Неправильний елемент слота відхилено
+- [ ] Зберегти:\`Lesson 9.4 - Gear Stats\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'Permanently adding atk to base on equip', explanation: 'Double-count on re-equip.', correctApproach: 'Dynamic calcStats' },
-    { mistake: 'Equipped ids without inventory check', explanation: 'Equip ghost items.', correctApproach: 'count(itemId) >= 1' },
-    { mistake: 'No slot field on items', explanation: 'Sword in armor slot.', correctApproach: 'meta.slot validation' },
-    { mistake: 'Client sets atk IntValue', explanation: 'Exploit.', correctApproach: 'Server calcStats + FireClient' },
+    {
+      mistake: "Постійне додавання атаки до бази на спорядженні",
+      explanation: "Подвійний рахунок при переобладнанні.",
+      correctApproach: "Динамічний calcStats",
+    },
+    {
+      mistake: "Екіпіровані ідентифікатори без перевірки інвентарю",
+      explanation: "Одягайте предмети-привиди.",
+      correctApproach: "count(itemId) >= 1",
+    },
+    {
+      mistake: "Немає слот-поля на предметах",
+      explanation: "Слот для меча в броні.",
+      correctApproach: "Перевірка meta.slot",
+    },
+    {
+      mistake: "Клієнт встановлює atk IntValue",
+      explanation: "Експлойт.",
+      correctApproach: "Сервер calcStats + FireClient",
+    },
   ],
-  summary: `You added gear slots with ItemDatabase stats, dynamic totalAtk/hp/crit calculation, equip/unequip flow, and StatsChanged HUD updates - equipment now affects how players fight.`,
+  summary: "Ви додали слоти для спорядження зі статистикою ItemDatabase, динамічним обчисленням totalAtk/hp/crit, потоком спорядження/зняття спорядження та оновленнями StatsChanged HUD – тепер спорядження впливає на спосіб бою гравців.",
   practiceTask: {
-    title: 'Gear + stat engine (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** 3 slots + live stat HUD.
+    title: "Gear + стат двигун (~25 хв)",
+    difficulty: "beginner",
+    description: `**Ціль:** 3 слоти + живий HUD.
 
-### Part A - Data (8 min)
-1. ItemDatabase atk/hp/crit + slot field
-2. playerEquipped + playerBaseStats tables
+### Part A - Дані (8 хв)
+1. ItemDatabase atk/hp/crit + поле слота
+2. Таблиці playerEquipped + playerBaseStats
 
-### Part B - Equip (12 min)
-1. equipItem server with calcStats
-2. StatsChanged → StatsUI labels
-3. Test weapon + armor + trinket
+### Part B - Спорядження (12 хв)
+1. Обладнайте сервер calcStats
+2. StatsChanged → StatsUI мітки
+3. Випробування зброї + броні + дрібнички
 
-### Part C - Save (5 min)
-1. Equip sword - verify ATK label
-2. **Save to Roblox** → \`Lesson 9.4 - Gear Stats\`
-3. **Practice complete**`,
+### Part C - Зберегти (5 хв)
+1. Одягніть меч - перевірте мітку ATK
+2. **Зберегти в Roblox** →\`Lesson 9.4 - Gear Stats\`3. **Практика завершена**`,
     hints: [
-      'Nil-safe: meta.atk or 0',
-      'Unequip returns item to inventory before new equip',
-      'Optional epic rarity multiplier on stats',
+      "Безпечний: meta.atk або 0",
+      "Unequip повертає предмет в інвентар перед новим екіпіруванням",
+      "Додатковий множник епічної рідкості в статистиці",
     ],
-    optionalChallenge: 'Epic items multiply base item stats by 1.25.',
+    optionalChallenge: "Епічні предмети множать базову статистику предметів на 1,25.",
   },
   quiz: {
     passingScore: 70,
     timeLimit: 10,
     questions: [
-      { id: 'q1', type: MC, question: 'Total stats should be…', options: ['Base + gear bonuses recalculated', 'Only client guess', 'Terrain', 'Random'], correctAnswer: 0, explanation: 'Dynamic calc.' },
-      { id: 'q2', type: MC, question: 'Equipping should not permanently change…', options: ['playerBaseStats', 'ItemDatabase', 'Module name', 'Roblox version'], correctAnswer: 0, explanation: 'Base stays base.' },
-      { id: 'q3', type: MC, question: 'Equipped stored separately from…', options: ['Inventory slots', 'Terrain', 'Sky', 'Sound'], correctAnswer: 0, explanation: 'Two systems.' },
-      { id: 'q4', type: MC, question: 'meta.slot prevents…', options: ['Wrong slot equip', 'Walking', 'Dialogue', 'Patrol'], correctAnswer: 0, explanation: 'Validation.' },
-      { id: 'q5', type: MC, question: 'StatsChanged fires after…', options: ['Full recalculation', 'Random', 'Publish', 'Terrain gen'], correctAnswer: 0, explanation: 'Sync event.' },
-      { id: 'q6', type: MC, question: 'sword_bronze maxStack 1 means…', options: ['Gear not stackable', 'Infinite stack', 'Not in database', 'UI only'], correctAnswer: 0, explanation: 'Equipment rule.' },
-      { id: 'q7', type: MC, question: 'Combat damage should read…', options: ['Server total atk', 'Client chat', 'Button text', 'Terrain'], correctAnswer: 0, explanation: 'Authority.' },
-      { id: 'q8', type: MC, question: 'Lesson 9.4 builds on…', options: ['Lesson 9.3 inventory objects', 'Lesson 1 only', 'Module 6 only', 'Empty'], correctAnswer: 0, explanation: 'Needs inventory.' },
-      { id: 'q9', type: MC, question: 'Lesson 9.5 adds…', options: ['DataStore serialization', 'Only NPC', 'Only race', 'Publish'], correctAnswer: 0, explanation: 'Persistence.' },
-      { id: 'q10', type: MC, question: 'Lesson 9.4 save name…', options: ['Lesson 9.4 - Gear Stats', 'Inventory Object', 'RPG Inventory', 'Shop Works'], correctAnswer: 0, explanation: 'Save lesson.' },
+      {
+        id: "q1",
+        type: "multiple_choice",
+        question: "Загальна статистика має бути…",
+        options: [
+          "База + спорядження бонусів перераховано",
+          "Лише припущення клієнта",
+          "Рельєф місцевості",
+          "Випадковий",
+        ],
+        correctAnswer: 0,
+        explanation: "Динамічний розрах.",
+      },
+      {
+        id: "q2",
+        type: "multiple_choice",
+        question: "Екіпірування не повинно постійно змінюватися…",
+        options: [
+          "playerBaseStats",
+          "ItemDatabase",
+          "Name модуля",
+          "Версія Roblox",
+        ],
+        correctAnswer: 0,
+        explanation: "База залишається базою.",
+      },
+      {
+        id: "q3",
+        type: "multiple_choice",
+        question: "Обладнання зберігається окремо від…",
+        options: [
+          "Інвентарні слоти",
+          "Рельєф місцевості",
+          "небо",
+          "Звук",
+        ],
+        correctAnswer: 0,
+        explanation: "Дві системи.",
+      },
+      {
+        id: "q4",
+        type: "multiple_choice",
+        question: "meta.slot запобігає...",
+        options: [
+          "Неправильне обладнання слота",
+          "ходьба",
+          "Діалог",
+          "Патруль",
+        ],
+        correctAnswer: 0,
+        explanation: "Перевірка.",
+      },
+      {
+        id: "q5",
+        type: "multiple_choice",
+        question: "StatsChanged спрацьовує після...",
+        options: [
+          "Повний перерахунок",
+          "Випадковий",
+          "Опублікувати",
+          "Рельєф ген",
+        ],
+        correctAnswer: 0,
+        explanation: "Подія синхронізації.",
+      },
+      {
+        id: "q6",
+        type: "multiple_choice",
+        question: "sword_bronze maxStack 1 означає…",
+        options: [
+          "Спорядження не можна штабелювати",
+          "Нескінченний стек",
+          "Немає в базі даних",
+          "Лише інтерфейс користувача",
+        ],
+        correctAnswer: 0,
+        explanation: "Правило обладнання.",
+      },
+      {
+        id: "q7",
+        type: "multiple_choice",
+        question: "Бойові пошкодження мають читатися...",
+        options: [
+          "Загальна атака сервера",
+          "Клієнтський чат",
+          "Текст кнопки",
+          "Рельєф місцевості",
+        ],
+        correctAnswer: 0,
+        explanation: "Авторитет.",
+      },
+      {
+        id: "q8",
+        type: "multiple_choice",
+        question: "Урок 9.4 базується на...",
+        options: [
+          "Урок 9.3 інвентаризація предметів",
+          "Тільки урок 1",
+          "Тільки модуль 6",
+          "Порожній",
+        ],
+        correctAnswer: 0,
+        explanation: "Потрібен інвентар.",
+      },
+      {
+        id: "q9",
+        type: "multiple_choice",
+        question: "Урок 9.5 додає…",
+        options: [
+          "Серіалізація DataStore",
+          "Тільки NPC",
+          "Тільки гонка",
+          "Опублікувати",
+        ],
+        correctAnswer: 0,
+        explanation: "Наполегливість.",
+      },
+      {
+        id: "q10",
+        type: "multiple_choice",
+        question: "Урок 9.4 зберегти назву…",
+        options: [
+          "Урок 9.4 – Статистика спорядження",
+          "Об'єкт інвентаризації",
+          "Інвентар RPG",
+          "Магазин працює",
+        ],
+        correctAnswer: 0,
+        explanation: "Зберегти урок.",
+      },
     ],
   },
 }
 
 export const ukLesson95 = {
-  lessonId: 'lesson-roblox-9-5',
-  moduleId: 'module-09',
+  lessonId: "lesson-roblox-9-5",
+  moduleId: "module-09",
   order: 5,
-  title: '9.5 - Inventory Serialization',
+  title: "9.5 - Серіалізація інвентарю",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    'Serialize inventory and equipped tables for DataStore',
-    'Save on PlayerRemoving with pcall and schema version',
-    'Load on PlayerAdded and validate before reconstructing',
-    'Handle save failures without blocking gameplay',
+    "Серіалізуйте інвентаризацію та обладнані столи для DataStore",
+    "Заощаджуйте на PlayerRemoving за допомогою pcall і версії схеми",
+    "Завантажте на PlayerAdded і перевірте перед реконструкцією",
+    "Обробляйте помилки збереження, не блокуючи ігровий процес",
   ],
   theory: {
     sections: [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Objects have **methods**. DataStore saves **plain tables** only.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `Об’єкти мають **методи**. DataStore зберігає лише **прості таблиці**.
 
-Today: **serialize → save → load → deserialize**.
+Сьогодні: **серіалізація → збереження → завантаження → десеріалізація**.
 
-**Lesson flow:**
-1. **Theory (40 min)** - save schema + pcall
-2. **Practice (~25 min)** - persistence on leave/join
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - зберегти схему + pcall
+2. **Практика (~25 хв)** - наполегливість під час відпустки/приєднання
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Reuse Module 3 **DataStore** basics.`,
+Повторне використання модуля 3 Основи **DataStore**.`,
       },
       {
-        title: 'Why serialization matters',
-        content: `DataStore cannot save:
-- Functions
-- Metatables
-- Instances (Tools in inventory - save **itemId + qty** only)
+        title: "Чому серіалізація важлива",
+        content: `DataStore не може зберегти:
+- Функції
+- Метатаблиці
+- Екземпляри (Інструменти в інвентарі - зберегти лише **itemId + qty**)
 
-**Save shape:**
-
-\`\`\`lua
+**Зберегти форму:**\`\`\`lua
 {
-    version = 1,
-    inventory = { slots = {...}, maxSlots = 12 },
-    equipped = { weapon = "sword_bronze", armor = nil, trinket = nil },
+ version = 1,
+ inventory = { slots = {...}, maxSlots = 12 },
+ equipped = { weapon = "sword_bronze", armor = nil, trinket = nil },
 }
 \`\`\``,
       },
       {
-        title: 'SavePlayerData function',
-        content: `\`InventorySaveService\` Script:
-
-\`\`\`lua
+        title: "Функція SavePlayerData",
+        content: `\`InventorySaveService\`Script:\`\`\`lua
 local DataStoreService = game:GetService("DataStoreService")
 local store = DataStoreService:GetDataStore("PlayerRPG_v1")
 
 local function buildSavePayload(player)
-    local inv = playerInventories[player]
-    local eq = playerEquipped[player]
-    if not inv then return nil end
+ local inv = playerInventories[player]
+ local eq = playerEquipped[player]
+ if not inv then return nil end
 
-    return {
-        version = 1,
-        inventory = inv:serialize(),
-        equipped = eq or { weapon = nil, armor = nil, trinket = nil },
-    }
+ return {
+ version = 1,
+ inventory = inv:serialize(),
+ equipped = eq or { weapon = nil, armor = nil, trinket = nil },
+ }
 end
 
 local function savePlayer(player)
-    local key = "uid_" .. player.UserId
-    local payload = buildSavePayload(player)
-    if not payload then return end
+ local key = "uid_" .. player.UserId
+ local payload = buildSavePayload(player)
+ if not payload then return end
 
-    local ok, err = pcall(function()
-        store:SetAsync(key, payload)
-    end)
+ local ok, err = pcall(function()
+ store:SetAsync(key, payload)
+ end)
 
-    if not ok then
-        warn("Save failed:", player.Name, err)
-    else
-        print("Saved", player.Name)
-    end
+ if not ok then
+ warn("Save failed:", player.Name, err)
+ else
+ print("Saved", player.Name)
+ end
 end
 \`\`\``,
       },
       {
-        title: 'Load and validate',
+        title: "Завантажте та перевірте",
         content: `\`\`\`lua
 local function loadPlayer(player)
-    local key = "uid_" .. player.UserId
-    local ok, data = pcall(function()
-        return store:GetAsync(key)
-    end)
+ local key = "uid_" .. player.UserId
+ local ok, data = pcall(function()
+ return store:GetAsync(key)
+ end)
 
-    if not ok or not data then
-        return nil -- new player defaults
-    end
+ if not ok or not data then
+ return nil -- new player defaults
+ end
 
-    if type(data) ~= "table" or data.version ~= 1 then
-        warn("Bad save data for", player.Name)
-        return nil
-    end
+ if type(data) ~= "table" or data.version ~= 1 then
+ warn("Bad save data for", player.Name)
+ return nil
+ end
 
-    if type(data.inventory) ~= "table" then
-        return nil
-    end
+ if type(data.inventory) ~= "table" then
+ return nil
+ end
 
-    return data
+ return data
 end
-\`\`\`
-
-**Validate** every field before trusting - corrupted data happens.`,
+\`\`\`**Перевірте** кожне поле, перш ніж довіряти – трапляється пошкодження даних.`,
       },
       {
-        title: 'Join and leave wiring',
+        title: "Приєднатися та залишити проводку",
         content: `\`\`\`lua
 Players.PlayerAdded:Connect(function(player)
-    local data = loadPlayer(player)
-    if data then
-        playerInventories[player] = Inventory.deserialize(data.inventory)
-        playerEquipped[player] = data.equipped
-    else
-        -- default from 9.3
-    end
-    local totals = calcStats(player)
-    StatsChanged:FireClient(player, totals)
+ local data = loadPlayer(player)
+ if data then
+ playerInventories[player] = Inventory.deserialize(data.inventory)
+ playerEquipped[player] = data.equipped
+ else
+ -- default from 9.3
+ end
+ local totals = calcStats(player)
+ StatsChanged:FireClient(player, totals)
 end)
 
 Players.PlayerRemoving:Connect(function(player)
-    savePlayer(player)
-    playerInventories[player] = nil
-    playerEquipped[player] = nil
+ savePlayer(player)
+ playerInventories[player] = nil
+ playerEquipped[player] = nil
 end)
-\`\`\`
-
-**Studio:** Enable **Game Settings → Security → Enable Studio Access to API Services** for DataStore tests.`,
+\`\`\`**Studio:** Увімкніть **Game Settings → Security → Enable Studio Access to API Services** для тестів DataStore.`,
       },
       {
-        title: 'Throttle and graceful failure',
-        content: `| Rule | Why |
+        title: "Дросель і витончений провал",
+        content: `| Правило | Чому |
 |------|-----|
-| Save on leave, not every second | DataStore limits |
-| pcall on Get/Set | Errors do not crash server |
-| Log failures | Debug without stopping game |
-| version field | Future schema migrations |
+| Економте у відпустці, а не кожну секунду | Обмеження DataStore |
+| pcall на Get/Set | Помилки не призводять до збою сервера |
+| Журнали збоїв | Налагодження без зупинки гри |
+| поле версії | Майбутні міграції схем |
 
-If save fails, player still had fun this session - log and retry next leave.
+Якщо збереження не вдасться, гравець все одно отримав задоволення від цього сеансу - увійдіть і повторіть спробу наступного виходу.
 
-**Optional:** autosave every 5 min with debounce (challenge).`,
+**Необов’язково:** автозбереження кожні 5 хвилин із усуненням стрибків (завдання).`,
       },
       {
-        title: 'Before practice checklist',
-        content: `- [ ] Leave game → rejoin → same items in slots
-- [ ] Equipped gear still equipped after relog
-- [ ] New player gets starter inventory
-- [ ] Bad data falls back to defaults safely
-- [ ] Save: \`Lesson 9.5 - Inventory Save\``,
+        title: "Контрольний список перед початком практики",
+        content: `- [ ] Вийти з гри → знову приєднатися → ті самі предмети в слотах
+- [ ] Одягнене спорядження все ще є після повторного входу
+- [ ] Новий гравець отримує стартовий інвентар
+- [ ] Погані дані безпечно повертаються до стандартних значень
+- [ ] Зберегти:\`Lesson 9.5 - Inventory Save\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'Saving without serialize', explanation: 'Methods lost / error.', correctApproach: 'inv:serialize() plain table' },
-    { mistake: 'No pcall on SetAsync', explanation: 'Server error on fail.', correctApproach: 'pcall + warn' },
-    { mistake: 'Saving every item pickup', explanation: 'Rate limit ban.', correctApproach: 'Save on leave primarily' },
-    { mistake: 'Trusting loaded data blindly', explanation: 'Exploit or crash.', correctApproach: 'version + type checks' },
+    {
+      mistake: "Збереження без серіалізації",
+      explanation: "Методи втрачені / помилка.",
+      correctApproach: "inv:serialize() проста таблиця",
+    },
+    {
+      mistake: "Немає pcall на SetAsync",
+      explanation: "Помилка сервера під час збою.",
+      correctApproach: "pcall + попередження",
+    },
+    {
+      mistake: "Збереження кожного отриманого товару",
+      explanation: "Заборона обмеження тарифу.",
+      correctApproach: "Економте в першу чергу на відпустці",
+    },
+    {
+      mistake: "Сліпо довіряти завантаженим даним",
+      explanation: "Експлойт або збій.",
+      correctApproach: "перевірки версії + типу",
+    },
   ],
-  summary: `You implemented versioned save payloads, pcall-safe DataStore load/save on join and leave, and validation before rebuilding inventory objects - player progress now survives relog.`,
+  summary: "Ви реалізували версії збереження корисних навантажень, безпечне завантаження DataStore для pcall і збереження під час приєднання та виходу, а також перевірку перед перебудовою об’єктів інвентарю – прогрес гравця тепер зберігається після повторної реєстрації.",
   practiceTask: {
-    title: 'Save-ready inventory (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Persist inventory + equipped after relog.
+    title: "Готовий інвентар (~25 хв)",
+    difficulty: "beginner",
+    description: `**Мета:** Зберігати інвентар + обладнання після повторного входу.
 
-### Part A - Serialize (10 min)
-1. buildSavePayload with version = 1
-2. savePlayer with pcall SetAsync
-3. loadPlayer with validation
+### Part A - Серіалізація (10 хв)
+1. buildSavePayload з версією = 1
+2. savePlayer за допомогою pcall SetAsync
+3. loadPlayer з перевіркою
 
-### Part B - Wire (12 min)
-1. PlayerAdded load or defaults
-2. PlayerRemoving save then clear maps
-3. Enable Studio API services
+### Part B - Провід (12 хв)
+1. PlayerAdded навантаження або за замовчуванням
+2. PlayerRemoving зберегти потім очистити карти
+3. Увімкніть служби Studio API
 
-### Part C - Relog test (3 min)
-1. Add items, equip, leave, rejoin - verify
-2. **Save to Roblox** → \`Lesson 9.5 - Inventory Save\`
-3. **Practice complete**`,
+### Part C - Повторний тест (3 хв)
+1. Додати предмети, спорядити, залишити, знову приєднатися - перевірити
+2. **Зберегти в Roblox** →\`Lesson 9.5 - Inventory Save\`3. **Практика завершена**`,
     hints: [
-      'Print serialize table in Output before first save',
-      'UserId key - unique per player',
-      'Module 3 DataStore lesson same patterns',
+      "Роздрукуйте таблицю серіалізації у вихідних даних перед першим збереженням",
+      "Ключ UserId - унікальний для кожного гравця",
+      "Модуль 3 DataStore урок однакові шаблони",
     ],
-    optionalChallenge: 'Migrate version 1 → 2 if you add new fields.',
+    optionalChallenge: "Перенесіть версію 1 → 2, якщо ви додаєте нові поля.",
   },
   quiz: {
     passingScore: 70,
     timeLimit: 10,
     questions: [
-      { id: 'q1', type: MC, question: 'DataStore saves…', options: ['Plain Lua tables', 'Functions', 'Metatables', 'Full Tool instances'], correctAnswer: 0, explanation: 'Serializable data.' },
-      { id: 'q2', type: MC, question: 'serialize converts object to…', options: ['Save-safe table', 'Player character', 'Terrain', 'RemoteEvent'], correctAnswer: 0, explanation: 'Plain data.' },
-      { id: 'q3', type: MC, question: 'pcall on SetAsync…', options: ['Prevents crash on failure', 'Speeds up game', 'Removes UI', 'Bans players'], correctAnswer: 0, explanation: 'Error handling.' },
-      { id: 'q4', type: MC, question: 'version field in save helps…', options: ['Future schema migrations', 'Graphics', 'Sound only', 'NPC path'], correctAnswer: 0, explanation: 'Schema version.' },
-      { id: 'q5', type: MC, question: 'Save primarily on…', options: ['PlayerRemoving', 'Every heartbeat', 'Button click only', 'Terrain'], correctAnswer: 0, explanation: 'Throttle saves.' },
-      { id: 'q6', type: MC, question: 'Load should validate…', options: ['Types and version before use', 'Nothing', 'Client chat', 'Random'], correctAnswer: 0, explanation: 'Safe load.' },
-      { id: 'q7', type: MC, question: 'Key uses…', options: ['Player UserId', 'Player name only', 'Random', 'Terrain id'], correctAnswer: 0, explanation: 'Unique key.' },
-      { id: 'q8', type: MC, question: 'Lesson 9.5 builds on…', options: ['9.3 serialize + 9.4 equipped', 'Lesson 1 terrain', 'Empty', 'Publish only'], correctAnswer: 0, explanation: 'Full RPG state.' },
-      { id: 'q9', type: MC, question: 'Lesson 9.6 is…', options: ['RPG Inventory checkpoint', 'Shop only', 'Race only', 'NPC only'], correctAnswer: 0, explanation: 'Module finale.' },
-      { id: 'q10', type: MC, question: 'Lesson 9.5 save name…', options: ['Lesson 9.5 - Inventory Save', 'Gear Stats', 'ModuleScript', 'Living Location'], correctAnswer: 0, explanation: 'Save lesson.' },
+      {
+        id: "q1",
+        type: "multiple_choice",
+        question: "DataStore зберігає…",
+        options: [
+          "Прості таблиці Lua",
+          "Функції",
+          "Метатаблиці",
+          "Екземпляри повного інструменту",
+        ],
+        correctAnswer: 0,
+        explanation: "Серіалізовані дані.",
+      },
+      {
+        id: "q2",
+        type: "multiple_choice",
+        question: "serialize перетворює об'єкт на...",
+        options: [
+          "Таблиця збереження безпеки",
+          "Характер гравця",
+          "Рельєф місцевості",
+          "RemoteEvent",
+        ],
+        correctAnswer: 0,
+        explanation: "Прості дані.",
+      },
+      {
+        id: "q3",
+        type: "multiple_choice",
+        question: "pcall на SetAsync…",
+        options: [
+          "Запобігає збою в разі відмови",
+          "Прискорює гру",
+          "Видаляє інтерфейс користувача",
+          "Банить гравців",
+        ],
+        correctAnswer: 0,
+        explanation: "Обробка помилок.",
+      },
+      {
+        id: "q4",
+        type: "multiple_choice",
+        question: "поле версії під час збереження допомагає…",
+        options: [
+          "Майбутні міграції схем",
+          "Графіка",
+          "Тільки звук",
+          "шлях NPC",
+        ],
+        correctAnswer: 0,
+        explanation: "Версія схеми.",
+      },
+      {
+        id: "q5",
+        type: "multiple_choice",
+        question: "Економте в першу чергу на…",
+        options: [
+          "Вилучення гравця",
+          "Кожен удар серця",
+          "Тільки натискання кнопки",
+          "Рельєф місцевості",
+        ],
+        correctAnswer: 0,
+        explanation: "Дросель рятує.",
+      },
+      {
+        id: "q6",
+        type: "multiple_choice",
+        question: "Завантаження має підтвердити…",
+        options: [
+          "Типи та версія перед використанням",
+          "нічого",
+          "Клієнтський чат",
+          "Випадковий",
+        ],
+        correctAnswer: 0,
+        explanation: "Безпечне навантаження.",
+      },
+      {
+        id: "q7",
+        type: "multiple_choice",
+        question: "Ключове використання…",
+        options: [
+          "Player UserId",
+          "Лише ім'я гравця",
+          "Випадковий",
+          "Ідентифікатор місцевості",
+        ],
+        correctAnswer: 0,
+        explanation: "Унікальний ключ.",
+      },
+      {
+        id: "q8",
+        type: "multiple_choice",
+        question: "Урок 9.5 базується на...",
+        options: [
+          "9.3 серіалізація + 9.4 обладнаний",
+          "Урок 1 місцевість",
+          "Порожній",
+          "Тільки опублікувати",
+        ],
+        correctAnswer: 0,
+        explanation: "Повний стан RPG.",
+      },
+      {
+        id: "q9",
+        type: "multiple_choice",
+        question: "Урок 9.6 – це…",
+        options: [
+          "Рольова гра Контрольна точка інвентарю",
+          "Тільки магазин",
+          "Тільки перегони",
+          "Тільки NPC",
+        ],
+        correctAnswer: 0,
+        explanation: "Фінал модуля.",
+      },
+      {
+        id: "q10",
+        type: "multiple_choice",
+        question: "Урок 9.5 зберегти назву…",
+        options: [
+          "Урок 9.5 - Збереження інвентарю",
+          "Статистика спорядження",
+          "ModuleScript",
+          "Місце проживання",
+        ],
+        correctAnswer: 0,
+        explanation: "Зберегти урок.",
+      },
     ],
   },
 }
 
 export const ukLesson96 = {
-  lessonId: 'lesson-roblox-9-6',
-  moduleId: 'module-09',
+  lessonId: "lesson-roblox-9-6",
+  moduleId: "module-09",
   order: 6,
-  title: '9.6 - Checkpoint: RPG Inventory',
+  title: "9.6 - Checkpoint: RPG Inventory",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    'Integrate modules, inventory, gear stats, and DataStore persistence',
-    'Pass relog scenario tests for items, equip, and slot order',
-    'Document architecture diagram for expansion',
-    'Ship Module 9 - RPG Inventory portfolio save',
+    "Інтегруйте модулі, інвентар, статистику спорядження та постійність DataStore",
+    "Пройдіть тести Script повторної реєстрації для предметів, спорядження та порядку слотів",
+    "Схема архітектури документа для розширення",
+    "Корабельний модуль 9 - збереження портфоліо інвентарю RPG",
   ],
   theory: {
     sections: [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `**RPG Inventory** = Module 9 portfolio - proves you think like a **systems architect**.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `**Інвентар RPG** = Портфоліо модуля 9 – доводить, що ви мислите як **архітектор систем**.
 
-**Required proof:**
-- Modular code (RPGConfig, ItemDatabase, Inventory, services)
-- Stackable inventory + equip
-- Stats affect HUD (and combat if linked)
-- Save/load after relog
+**Необхідний доказ:**
+- Модульний код (RPGConfig, ItemDatabase, Inventory, services)
+- Складаний інвентар + спорядження
+- Статистика впливає на HUD (і бій, якщо пов'язано)
+- Зберегти/завантажити після повторного входу
 
-**Save:** \`Module 9 - RPG Inventory\``,
+**Зберегти:**\`Module 9 - RPG Inventory\``,
       },
       {
-        title: 'Architecture map',
+        title: "Карта архітектури",
         content: `\`\`\`
 ServerScriptService
 ├── Modules/
-│   ├── RPGConfig.lua
-│   ├── ItemDatabase.lua
-│   ├── InventoryOps.lua
-│   └── Inventory.lua
-├── InventoryService.lua    (PlayerAdded, give items)
-├── EquipmentService.lua    (equip, calcStats)
+│ ├── RPGConfig.lua
+│ ├── ItemDatabase.lua
+│ ├── InventoryOps.lua
+│ └── Inventory.lua
+├── InventoryService.lua (PlayerAdded, give items)
+├── EquipmentService.lua (equip, calcStats)
 └── InventorySaveService.lua (DataStore)
 
 ReplicatedStorage
@@ -1064,108 +1671,239 @@ ReplicatedStorage
 StarterGui
 ├── StatsUI
 └── InventoryUI (optional simple list)
-\`\`\`
-
-**One ItemDatabase** - shop, quests, and drops all reference same ids.`,
+\`\`\`**One ItemDatabase** - магазини, квести та скидання посилаються на однакові ідентифікатори.`,
       },
       {
-        title: 'Scenario tests (relog)',
-        content: `| # | Test | Pass |
+        title: "Сценарні тести (relog)",
+        content: `| # | Тест | Пройти |
 |---|------|------|
-| 1 | Pick up / add 3 potions → relog → still 3 | |
-| 2 | Equip sword → relog → still equipped, ATK correct | |
-| 3 | Fill inventory → relog → slot order preserved | |
-| 4 | Remove item → relog → removal persisted | |
-| 5 | New player → starter items, no errors | |
-| 6 | 2 players → separate saves | |`,
+| 1 | Візьміть / додайте 3 зілля → повторно ввійдіть → ще 3 | |
+| 2 | Одягнути меч → перереєструватися → все ще в комплекті, ATK правильна | |
+| 3 | Заповнити інвентар → повторний журнал → порядок слотів збережено | |
+| 4 | Видалити елемент → повторний журнал → видалення зберігається | |
+| 5 | Новий гравець → стартові елементи, без помилок | |
+| 6 | 2 гравці → окремі збереження | |`,
       },
       {
-        title: 'Debug command',
+        title: "Команда налагодження",
         content: `\`\`\`lua
 -- Admin test in Studio only
 local function debugPrintSave(player)
-    local payload = buildSavePayload(player)
-    print(game:GetService("HttpService"):JSONEncode(payload))
+ local payload = buildSavePayload(player)
+ print(game:GetService("HttpService"):JSONEncode(payload))
 end
-\`\`\`
+\`\`\`Використовуйте **Output**, щоб перевірити серіалізацію, перш ніж звинувачувати DataStore.
 
-Use **Output** to verify serialize before blaming DataStore.
-
-**Architecture doc** (notes): 5 bullet points - what each module does.`,
+**Архітектурний документ** (примітки): 5 пунктів – що робить кожен модуль.`,
       },
       {
-        title: 'Checkpoint quality bar',
-        content: `| Bar | Standard |
+        title: "Смужка якості КПП",
+        content: `| Бар | Стандарт |
 |-----|----------|
-| Modules | No duplicate item defs |
-| Inventory | add/remove reasons clear |
-| Gear | calcStats, not mutated base |
-| Save | pcall + version + validate |
-| Output | No red errors in 6 tests |
+| Модулі | Немає повторюваних визначень елементів |
+| Інвентар | додати/видалити причини ясно |
+| Механізм | calcStats, не мутована база |
+| Зберегти | pcall + версія + перевірка |
+| Output | Немає червоних помилок у 6 тестах |
 
-**60-second demo:**
-1. Show stats HUD
-2. Add potion, equip sword - ATK up
-3. Leave + rejoin - prove persistence
-4. Show Module folder structure`,
+**60-секундна демонстрація:**
+1. Показати статистику HUD
+2. Додати зілля, спорядити меч - ATK вгору
+3. Вийти + знову приєднатися - довести наполегливість
+4. Показати структуру папок модуля`,
       },
       {
-        title: 'Module 10 preview',
-        content: `**Module 10 - Magic of Details** adds **constraints**, physics polish, moving doors - your RPG hub can get mechanical traps and lifts.
+        title: "Попередній перегляд модуля 10",
+        content: `**Модуль 10 – Магія Parts** додає **обмеження**, фізику полірування, рухомі двері – ваш центр RPG може отримувати механічні пастки та підйомники.
 
-**Before practice:**
-- [ ] All 6 scenario tests pass
-- [ ] Architecture notes written
-- [ ] **Save to Roblox** → \`Module 9 - RPG Inventory\``,
+**Перед тренуванням:**
+- [ ] Усі 6 playtest-перевірок пройдені
+- [ ] Написані нотатки про архітектуру
+- [ ] **Зберегти в Roblox** →\`Module 9 - RPG Inventory\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'Item defs in shop AND separate inventory table', explanation: 'ID mismatch.', correctApproach: 'One ItemDatabase' },
-    { mistake: 'Skipping relog equip test', explanation: 'Broken checkpoint.', correctApproach: 'Test 2 is mandatory' },
-    { mistake: 'Side effects in serialize', explanation: 'Mutates live inventory.', correctApproach: 'Read-only copy' },
-    { mistake: 'Giant single Script 500 lines', explanation: 'Unmaintainable.', correctApproach: 'Split services + modules' },
+    {
+      mistake: "Визначення предметів у магазині ТА окрема таблиця інвентарю",
+      explanation: "ID невідповідність.",
+      correctApproach: "One ItemDatabase",
+    },
+    {
+      mistake: "Пропуск тесту спорядження для повторного входу",
+      explanation: "Зламаний КПП.",
+      correctApproach: "Тест 2 є обов'язковим",
+    },
+    {
+      mistake: "Побічні ефекти в серіалізації",
+      explanation: "Змінює живий інвентар.",
+      correctApproach: "Копія лише для читання",
+    },
+    {
+      mistake: "Giant single Script 500 рядків",
+      explanation: "Необслуговуваний.",
+      correctApproach: "Спліт сервіси + модулі",
+    },
   ],
-  summary: `You integrated modular RPG inventory, equipment stats, and DataStore persistence, passed relog scenario tests, and saved RPG Inventory - Module 9 is complete.`,
+  summary: "Ви інтегрували модульний інвентар RPG, статистику обладнання та постійність DataStore, пройшли тестування Script повторного входу та зберегли інвентар RPG – Модуль 9 завершено.",
   practiceTask: {
-    title: 'Ship RPG Inventory (~40 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Portfolio checkpoint with persistence.
+    title: "Інвентар корабельних RPG (~40 хв)",
+    difficulty: "beginner",
+    description: `**Мета:** Контрольна точка портфоліо з наполегливістю.
 
-### Part A - Integrate (15 min)
-1. Wire all Module 9 scripts - no duplicates
-2. StatsUI + optional inventory list UI
-3. Debug print save command
+### Part A - Інтеграція (15 хв)
+1. Підключіть усі Scripts Модуля 9 – жодних дублікатів
+2. StatsUI + додатковий інтерфейс списку інвентарю
+3. Налагодити команду збереження друку
 
-### Part B - Scenario tests (20 min)
-1. Run 6-row relog table - fix failures
-2. 2-player separate save test
+### Part B - Сценарні тести (20 хв)
+1. Запустіть 6-рядкову таблицю relog - виправте помилки
+2. Окремий тест збереження для двох гравців
 
-### Part C - Demo save (5 min)
-1. 60s demo rehearsed
-2. **Save to Roblox** → \`Module 9 - RPG Inventory\`
-3. **Practice complete**`,
+### Part C - Збереження демо (5 хв)
+1. Відрепетировано демо 60-х
+2. **Зберегти в Roblox** →\`Module 9 - RPG Inventory\`3. **Практика завершена**`,
     hints: [
-      'Fix serialize before DataStore if load fails',
-      'One source of truth for item ids',
-      'Reliability over drag-drop UI for checkpoint',
+      "Виправлено серіалізацію перед DataStore, якщо завантаження не вдається",
+      "Єдине джерело правди щодо ідентифікаторів товарів",
+      "Надійність інтерфейсу користувача з перетягуванням для контрольної точки",
     ],
-    optionalChallenge: 'Drag-drop slot swap with server-validated swap request.',
+    optionalChallenge: "Перетягування слотів із перевіреним сервером запитом на обмін.",
   },
   quiz: {
     passingScore: 70,
     timeLimit: 10,
     questions: [
-      { id: 'q1', type: MC, question: 'RPG Inventory checkpoint proves…', options: ['Modules + gear + save/load', 'Terrain only', 'No scripts', 'Client-only coins'], correctAnswer: 0, explanation: 'Full module 9.' },
-      { id: 'q2', type: MC, question: 'Relog equip test confirms…', options: ['Equipped persisted', 'UI only', 'Terrain', 'Random'], correctAnswer: 0, explanation: 'Scenario 2.' },
-      { id: 'q3', type: MC, question: 'One ItemDatabase prevents…', options: ['ID drift between systems', 'Walking', 'NPC dialogue', 'Sound'], correctAnswer: 0, explanation: 'Single source.' },
-      { id: 'q4', type: MC, question: 'serialize should be…', options: ['Read-only copy of state', 'Mutating live slots', 'Deleting player', 'Publishing'], correctAnswer: 0, explanation: 'No side effects.' },
-      { id: 'q5', type: MC, question: 'Module 9 save name…', options: ['Module 9 - RPG Inventory', 'Shop Works', 'Living Location', 'Lesson 9.1'], correctAnswer: 0, explanation: 'Checkpoint.' },
-      { id: 'q6', type: MC, question: 'Systems architect means…', options: ['Reusable modules and trustworthy state', 'One giant script', 'No tests', 'Copy paste'], correctAnswer: 0, explanation: 'Design mindset.' },
-      { id: 'q7', type: MC, question: 'Lesson 9.6 completes…', options: ['Module 9', 'Module 12', 'Module 1', 'UK translation'], correctAnswer: 0, explanation: 'End module 9.' },
-      { id: 'q8', type: MC, question: 'Two players need…', options: ['Separate save keys by UserId', 'One shared inventory', 'No DataStore', 'Same key'], correctAnswer: 0, explanation: 'Per-player data.' },
-      { id: 'q9', type: MC, question: 'Module 10 adds…', options: ['Constraints and physics details', 'Only dialogue', 'Only publish', 'Nothing'], correctAnswer: 0, explanation: 'Preview.' },
-      { id: 'q10', type: MC, question: 'Checkpoint prioritizes…', options: ['Persistence tests passing', 'Most items possible', 'No modules', 'Client-only save'], correctAnswer: 0, explanation: 'Relog QA.' },
+      {
+        id: "q1",
+        type: "multiple_choice",
+        question: "RPG Inventory checkpoint доводить…",
+        options: [
+          "Модулі + спорядження + збереження/завантаження",
+          "Тільки місцевість",
+          "Жодних Scripts",
+          "Клієнтські монети",
+        ],
+        correctAnswer: 0,
+        explanation: "Повний модуль 9.",
+      },
+      {
+        id: "q2",
+        type: "multiple_choice",
+        question: "Тест екіпірування Relog підтверджує…",
+        options: [
+          "Обладнаний зберігся",
+          "Лише інтерфейс користувача",
+          "Рельєф місцевості",
+          "Випадковий",
+        ],
+        correctAnswer: 0,
+        explanation: "Script 2.",
+      },
+      {
+        id: "q3",
+        type: "multiple_choice",
+        question: "One ItemDatabase запобігає...",
+        options: [
+          "Зміщення ID між системами",
+          "ходьба",
+          "Діалог NPC",
+          "Звук",
+        ],
+        correctAnswer: 0,
+        explanation: "Єдине джерело.",
+      },
+      {
+        id: "q4",
+        type: "multiple_choice",
+        question: "серіалізація повинна бути...",
+        options: [
+          "Копія стану лише для читання",
+          "Мутація живих слотів",
+          "Видалення гравця",
+          "Видавництво",
+        ],
+        correctAnswer: 0,
+        explanation: "Відсутність побічних ефектів.",
+      },
+      {
+        id: "q5",
+        type: "multiple_choice",
+        question: "Модуль 9 зберегти назву…",
+        options: [
+          "Модуль 9 - Інвентар RPG",
+          "Магазин працює",
+          "Місце проживання",
+          "Урок 9.1",
+        ],
+        correctAnswer: 0,
+        explanation: "КПП.",
+      },
+      {
+        id: "q6",
+        type: "multiple_choice",
+        question: "Архітектор системи означає…",
+        options: [
+          "Багаторазові модулі та надійний стан",
+          "Один гігантський Script",
+          "Жодних тестів",
+          "Копіювати вставити",
+        ],
+        correctAnswer: 0,
+        explanation: "Дизайн мислення.",
+      },
+      {
+        id: "q7",
+        type: "multiple_choice",
+        question: "Урок 9.6 завершується…",
+        options: [
+          "Модуль 9",
+          "Модуль 12",
+          "Модуль 1",
+          "Переклад з Великобританії",
+        ],
+        correctAnswer: 0,
+        explanation: "Кінцевий модуль 9.",
+      },
+      {
+        id: "q8",
+        type: "multiple_choice",
+        question: "Двоє гравців потребують…",
+        options: [
+          "Розділіть ключі збереження за UserId",
+          "Один спільний інвентар",
+          "Немає DataStore",
+          "Той самий ключ",
+        ],
+        correctAnswer: 0,
+        explanation: "Дані кожного гравця.",
+      },
+      {
+        id: "q9",
+        type: "multiple_choice",
+        question: "Модуль 10 додає…",
+        options: [
+          "Обмеження та фізичні деталі",
+          "Тільки діалог",
+          "Тільки публікувати",
+          "нічого",
+        ],
+        correctAnswer: 0,
+        explanation: "Попередній перегляд.",
+      },
+      {
+        id: "q10",
+        type: "multiple_choice",
+        question: "Контрольно-пропускний пункт має пріоритет…",
+        options: [
+          "Проходження тестів на стійкість",
+          "Більшість можливих елементів",
+          "Без модулів",
+          "Збереження лише для клієнта",
+        ],
+        correctAnswer: 0,
+        explanation: "Relog QA.",
+      },
     ],
   },
 }

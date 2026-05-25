@@ -7,6 +7,7 @@ import { logout, getUserProgress } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import { isStudentDashboardReady } from '@/lib/studentAccountReady'
 import { useDashboardCourses, DAY_KEY_MAP } from '@/hooks/useDashboardCourses'
+import { getStudentAccessibleCourseIds } from '@/lib/courseLessonAccess'
 import EnStudentDashboard from '@/components/Dashboard/EnStudentDashboard'
 import MyCoursesSection from '@/components/Dashboard/MyCoursesSection'
 import StudentPaymentPanel from '@/components/Dashboard/StudentPaymentPanel'
@@ -70,13 +71,10 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
   const lessonPrice = profile.lessonFormat === 'individual' ? 500 : 350
   const schedule = profile.regularSchedule || []
   const activeCourses = profile.activeOnlineCourses || []
-  const ownedCoursesCount = useMemo(() => {
-    const ids = new Set()
-    ;(user?.purchasedCourses || []).forEach((id) => ids.add(id))
-    ;(profile.activeOnlineCourses || []).forEach((id) => ids.add(id))
-    ;(user?.enrolledCourses || []).forEach((id) => ids.add(id))
-    return ids.size
-  }, [user, profile.activeOnlineCourses])
+  const ownedCoursesCount = useMemo(
+    () => getStudentAccessibleCourseIds(user).length,
+    [user, profile.activeOnlineCourses, user?.purchasedCourses]
+  )
   const zoomLink = profile.zoomLink || ''
   const completedLessonsTotal = Object.values(progressData || {}).reduce((sum, p) => sum + (p?.completedLessons?.length || 0), 0)
   const lessonHistory = Object.entries(progressData || {}).flatMap(([courseId, progress]) =>
@@ -313,9 +311,10 @@ export default function DashboardPage() {
         }
         return
       }
-      if (user.enrolledCourses?.length > 0) {
+      const accessibleCourseIds = getStudentAccessibleCourseIds(user)
+      if (accessibleCourseIds.length > 0) {
         const progressResults = await Promise.all(
-          user.enrolledCourses.map((courseId) =>
+          accessibleCourseIds.map((courseId) =>
             getUserProgress(courseId).then((progress) => ({ courseId, progress })).catch(() => ({ courseId, progress: null }))
           )
         )

@@ -1,4 +1,4 @@
-/** Rich UK content for Roblox Module 02 */
+/** Rich UK content for Roblox Module 02 — AUTO from EN via gen-roblox-lessons-uk.mjs */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -12,242 +12,222 @@ export const ukLesson21 = {
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    "Build neon hazard Parts that reset the player on touch",
-    "Use Touched with Humanoid checks safely",
-    "Tell safe platforms apart from kill blocks visually",
-    "Debug kill scripts in Play mode and Output",
-    "Start with a simple touch + print script before the full kill-block logic",
+    "Створити Neon hazard Parts, що скидають гравця при дотику",
+    "Безпечно використовувати Touched з перевіркою Humanoid",
+    "Візуально відрізняти безпечні платформи від kill blocks",
+    "Налагоджувати kill Scripts у Play mode та Output",
+    "Спочатку простий Touched + print, потім повна логіка kill block",
   ],
   theory: {
     sections: [
       {
-        title: "Ваш шлях сьогодні (близько 40 хвилин)",
-        content: `**Module 2 - Danger Zone** starts here. You turn your **Living Island Hub** into the beginning of an **obby** (obstacle course).
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `**Модуль 2 – Небезпечна зона** починається тут. Ви перетворюєте свій **Living Island Hub** на початок **obby** (obstacle course).
 
-**Lesson flow:**
-1. **Theory (40 min)** - kill blocks with \`Touched\`
-2. **Practice (~25 min)** - lava lane with 4+ hazards
-3. **Quiz (10 min)** - **70%** to pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - вбивати блоки за допомогою\`Touched\`2. **Практика (~25 хв)** - лавова смуга з 4+ небезпеками
+3. **Вікторина (10 хв)** - **70%** потрібно пройти
 
-Open **Module 1 - Living Island** (or duplicate it as \`Lesson 2.1 - Obby Start\`). You will add a jump path beside your dock.`,
+Відкрийте **Модуль 1 - Живий острів** (або скопіюйте його як\`Lesson 2.1 - Obby Start\`). Ви додасте доріжку для стрибків поруч із доком.`,
       },
       {
-        title: "What is a kill block?",
-        content: `A **kill block** (lava, spikes, acid) **touches** the player → **Humanoid.Health = 0** → respawn.
+        title: "Що таке блок знищення?",
+        content: `**Блок вбивства** (лава, шипи, кислота) **торкається** гравця → **Humanoid.Health = 0** → відродження.
 
-| Safe platform | Kill block |
-|---------------|------------|
-| Normal color, clear path | **Neon** + **Really red** (or orange) |
-| Player walks safely | Touch = instant fail |
+| Безпечна платформа | Вбити блок |
+|--------------|------------|
+| Нормальний колір, чіткий шлях | **Neon** + **Really red** (або помаранчевий) |
+| Гравець безпечно ходить | Дотик = миттєва помилка |
 
-**Fair design rules:**
-- Hazards look dangerous - never identical to safe floors
-- Jump distances a beginner can make
-- No invisible thin kill strips (yet)
+**Правила чесного дизайну:**
+- Небезпеки виглядають небезпечно - ніколи не ідентичні безпечним поверхам
+- Дистанції стрибків, які може зробити новачок
+- Немає невидимих тонких смужок убивства (поки що)
 
-**Exercise (3 min):** In your place, pick where the obby path leaves the spawn - flat area before first jump.`,
+**Вправа (3 хвилини):** На своєму місці виберіть місце, де шлях obby виходить із spawn — рівної області перед першим стрибком.`,
       },
       {
-        title: "Build the Hazards folder",
-        content: `1. **Workspace** → Insert **Folder** → \`Obby\`
-2. Inside \`Obby\`, Folder \`Hazards\`
-3. Also create Folder \`SafePath\` for white/grey platforms
+        title: "Створіть Folder «Небезпеки».",
+        content: `1. **Workspace** → Insert **Folder** →\`Obby\`2. Всередині\`Obby\`, Folder\`Hazards\`3. Також створіть Folder\`SafePath\`для білих/сірих платформ
 
-**Each kill Part:**
-- Insert **Block** → Name: \`Kill_01\`, \`Kill_02\`, …
-- Size: vary (\`4, 1, 4\` or thin \`8, 1, 2\`)
+**Кожна Part вбивства:**
+- Insert **Block** → Name:\`Kill_01\`,\`Kill_02\`, …
+- Size: різний (\`4, 1, 4\`або тонкий\`8, 1, 2\`)
 - Material: **Neon** | BrickColor: **Really red**
 - Anchored: **true** | CanCollide: **true**
 
-**Exercise (10 min):** Place **4** kill blocks between safe jumps. Player must be able to see all hazards before jumping.`,
+**Вправа (10 хв.):** Розмістіть **4** блоки вбивства між безпечними стрибками. Перш ніж стрибнути, гравець повинен бачити всі небезпеки.`,
       },
       {
-        title: "Міст з Уроку 1.4 - ті самі ідеї, нова подія",
-        content: `У **1.4** ти вже знав:
-- \`local\` змінні
-- \`script.Parent\`
-- \`Connect(function ... end)\` - код при події
-- \`print\` у Output
+        title: "Міст з уроку 1.4 - ті ж ідеї, нова подія",
+        content: `У **1.4** ви вже знали:
+-\`local\`змінні
+-\`script.Parent\`-\`Connect(function ... end)\`- event code
+-\`print\`to Output
 
 Сьогодні змінюється лише **назва події**:
 | Урок 1.4 | Урок 2.1 |
-|----------|----------|
-| \`MouseClick\` | \`Touched\` |
-| Клік мишкою | Дотик тіла / ноги до Part |
+|------------|------------|
+|\`MouseClick\`|\`Touched\`|
+| Клацання миші | Тіло / нога торкається Part |
 
-**Нова змінна \`hit\`** - Part, який торкнувся лави (зазвичай нога персонажа).
+**Нова змінна\`hit\`** - Part that touched лави (зазвичай ступня Character).
 
-**Нові перевірки \`if\`** - не вбивати «все підряд», а лише гравця з **Humanoid**.
+** Новий\`if\`перевірки** - не завдають шкоди всім, тільки гравцям з **Humanoid**.
 
-Спочатку напишемо **простий** скрипт без смерті - потім повний.`,
+Спочатку ми пишемо **простий** Script (без смерті), потім повний.`,
       },
       {
-        title: "Крок 1: розминка - дотик і print (без смерті)",
-        content: `Перед kill-логікою переконайся, що **Touched** взагалі працює.
+        title: "Крок 1: розминка - доторкніться та надрукуйте (ще немає смерті)",
+        content: `Перш ніж логіка вбивства, доведіть, що **Touched** взагалі працює.
 
-1. Один kill Part → Insert **Script** всередину
-2. Встав код **тільки для тесту**:
-
-\`\`\`lua
+1. У kill Part → Insert **Script**
+2. Insert **test** code:\`\`\`lua
 local block = script.Parent
 
 block.Touched:Connect(function(hit)
-    print("Щось торкнулось: " .. hit.Name)
+ print("Something touched: " .. hit.Name)
 end)
-\`\`\`
+\`\`\`3. **Play (F5)** - наступити на блок
+4. **Output** має показувати, наприклад,\`Something touched: LeftFoot\`**Чого ви дізналися:**
+-\`Touched\`може стріляти багато разів, поки триває контакт - нормально на цьому етапі
+-\`hit.Name\` — ім’я Part, що торкнувся
+- Якщо Output порожній — Script не всередині Part або ви не в Play mode
 
-3. **Play (F5)** - наступи на блок ногою
-4. У **Output** має з'явитись, наприклад: \`Щось торкнулось: LeftFoot\`
-
-**Що ти вчишся:**
-- \`Touched\` спрацьовує багато разів (кожен кадр контакту) - це нормально на цьому етапі
-- \`hit.Name\` - ім'я Part, що торкнувся
-- Якщо нічого в Output - Script не в Part, або не Play mode
-
-**Exercise (5 min):** Зупини Play. Коли розминка працює - переходь до повного скрипта нижче.`,
+**Вправа (5 хв):** Зупинити гру. Коли розминка запрацює, перейдіть до повного Script нижче.`,
       },
       {
-        title: "Крок 2: повний kill block - Touched + Humanoid",
-        content: `**Touched** спрацьовує, коли щось зіштовхується з Part.
+        title: "Крок 2: повний блок вбивств - Touched + Humanoid",
+        content: `**Торкнувся** спрацьовує, коли щось стикається з Part.
 
-Заміни код розминки на **фінальний** (або додай перевірки поступово):
-
-\`\`\`lua
+Замініть код розігріву Script **final** (або додайте перевірки крок за кроком):\`\`\`lua
 local killBlock = script.Parent
 
 killBlock.Touched:Connect(function(hit)
-    local character = hit.Parent
-    if not character then
-        return
-    end
+ local character = hit.Parent
+ if not character then
+ return
+ end
 
-    local humanoid = character:FindFirstChildOfClass("Humanoid")
-    if humanoid then
-        humanoid.Health = 0
-    end
+ local humanoid = character:FindFirstChildOfClass("Humanoid")
+ if humanoid then
+ humanoid.Health = 0
+ end
 end)
-\`\`\`
-
-**Рядок за рядком (класичне програмування):**
-1. \`local killBlock = script.Parent\` - змінна на наш об'єкт
-2. \`Connect(function(hit)\` - при дотику отримуємо \`hit\`
-3. \`local character = hit.Parent\` - нога → модель персонажа
-4. \`if not character then return end\` - якщо батька немає, виходимо (нічого не робимо)
-5. \`FindFirstChildOfClass("Humanoid")\` - шукаємо «здоров'я» гравця
-6. \`if humanoid then\` - лише якщо знайшли - \`Health = 0\`
-
-**Чому не одразу цей скрипт?** Бо без розминки важко зрозуміти, **що саме** зламалось - подія, Part чи Humanoid.`,
+\`\`\`**Рядок за рядком (класичне програмування):**
+1.\`local killBlock = script.Parent\`- змінна для нашого об'єкта
+2.\`Connect(function(hit)\`- на дотик отримуємо\`hit\`3.\`local character = hit.Parent\`- стопа → model Character
+4.\`if not character then return end\`- якщо батьків немає, вийти (нічого не робити)
+5.\`FindFirstChildOfClass("Humanoid")\`- знайти здоров'я гравця
+6.\`if humanoid then\`- тільки якщо знайдено →\`Health = 0\`**Чому не цей Script у перший день?** Без розминки важко сказати, **що** зламалося - подія, Part чи Humanoid.`,
       },
       {
-        title: "Who gets hurt? - Humanoid only",
-        content: `Without the Humanoid check, touching with a tool handle might cause weird bugs.
+        title: "Хто постраждає? - Тільки Humanoidи",
+        content: `Без перевірки Humanoid торкання рукояткою інструменту може викликати дивні помилки.
 
-| Touching object | Usually has Humanoid? |
+| Дотик до предмета | Зазвичай має Humanoid? |
 |-----------------|----------------------|
-| Player character | ✅ Yes |
-| Random Part falling | ❌ No |
-| Another player's accessory | ❌ Usually no |
+| Характер гравця | ✅ Так |
+| Випадкове падіння Parts | ❌ Ні |
+| Інший аксесуар гравця | ❌ Зазвичай ні |
 
-**Golden rule:** only set \`Health = 0\` when \`FindFirstChildOfClass("Humanoid")\` exists.
+**Золоте правило:** лише встановлено\`Health = 0\`коли\`FindFirstChildOfClass("Humanoid")\`існує.
 
-**Exercise (8 min):** Play-test one \`Kill_01\`. Touch lava → respawn. Check **Output** for red errors.`,
+**Вправа (8 хв.):** Перший тест\`Kill_01\`. Торкніться лави → відродження. Перевірте **Output** на червоні помилки.`,
       },
       {
-        title: "Copy scripts - duplicate smart",
-        content: `You do **not** need different code per block.
+        title: "Копіювати скрипти - копіювати смарт",
+        content: `Вам **не** потрібен інший код для кожного блоку.
 
-**Fast workflow:**
-1. Perfect **one** kill block + Script
-2. **Ctrl + D** duplicate the whole Part (script copies with it)
-3. Rename \`Kill_02\`, move into place
-4. Repeat for all hazards
+**Швидкий робочий процес:**
+1. Ідеальний **один** блок вбивства + скрипт
+2. **Ctrl + D** дублюйте всю Part (скрипт копіює разом з нею)
+3. Перейменувати\`Kill_02\`, перейти на місце
+4. Повторіть для всіх небезпек
 
-If you duplicate only the Part without Script, copy-paste the Script into each kill block.
+Якщо ви дублюєте лише Part без Script, скопіюйте та вставте Script у кожен блок ліквідації.
 
-**Organize Explorer:**
-\`Obby → Hazards → Kill_01 … Kill_04\`
+**Упорядкувати Explorer:**\`Obby → Hazards → Kill_01 … Kill_04\`
 \`Obby → SafePath → Platform_01 …\``,
       },
       {
-        title: "Debug checklist",
-        content: `| Problem | Fix |
+        title: "Контрольний список налагодження",
+        content: `| Проблема | Виправити |
 |---------|-----|
-| Touch does nothing | Use **Script**, not LocalScript |
-| Touch does nothing | Script must be **child of kill Part** |
-| Touch does nothing | Part needs **CanCollide true** |
-| You never die | Not in **Play** mode |
-| Random deaths | Missing Humanoid check |
+| Дотик нічого не робить | Використовуйте **Script**, а не LocalScript |
+| Дотик нічого не робить | Script має бути **дочірньою Part kill** |
+| Дотик нічого не робить | Part потребує **CanCollide true** |
+| Ти ніколи не помреш | Не в режимі **Play** |
+| Випадкові смерті | Відсутня перевірка Humanoid |
 
-**Play-test loop:**
+**Тестовий цикл:**
 1. F5 Play
-2. Touch each kill block once
-3. Confirm respawn at SpawnLocation
-4. Stop Play before moving Parts`,
+2. Торкніться кожного блоку вбивства один раз
+3. Підтвердьте відродження в SpawnLocation
+4. Зупиніть відтворення перед переміщенням Parts`,
       },
       {
-        title: "Polish - lava that feels fair",
-        content: `**Visual extras (optional):**
-- **PointLight** inside Neon block (red, Range 8)
-- Slight **Transparency** \`0.1\` on lava (still readable)
+        title: "Польський - лава, яка відчувається справедливо",
+        content: `**Візуальні додаткові функції (опціонально):**
+- **PointLight** всередині неонового блоку (червоний, діапазон 8)
+- Невелика **Прозорість**\`0.1\`на лаві (ще читається)
 
-**Sound:** insert **Sound** in kill Part, play on touch (short sizzle) - reuse Lesson 1.5 skills.
+**Звук:** вставте **Звук** у партію вбивства, відтворіть на дотик (коротке шипіння) – повторно використовуйте навички уроку 1.5.
 
-**Before practice checklist:**
-- [ ] Folder \`Obby/Hazards\` exists
-- [ ] At least one kill script tested in Play
-- [ ] Safe path is a different color than lava`,
+**Контрольний список перед тренуваннями:**
+- [ ] Folder\`Obby/Hazards\`існує
+- [ ] Принаймні один Script вбивства протестовано в Play
+- [ ] Безпечний шлях має інший колір, ніж лава`,
       },
     ],
   },
   commonMistakes: [
     {
-      mistake: "LocalScript on kill block",
-      explanation: "LocalScripts run per client; server kill is standard for obbies.",
-      correctApproach: "Use a server Script inside each kill Part",
+      mistake: "LocalScript у блоці знищення",
+      explanation: "LocalScript запускається на клієнта; знищення сервера є стандартним для obbies.",
+      correctApproach: "Використовуйте server Script у кожній Part вбивства",
     },
     {
-      mistake: "Kill block not Anchored",
-      explanation: "Unanchored lava falls away.",
-      correctApproach: "Anchored true on all hazards",
+      mistake: "Блок знищення не Anchored",
+      explanation: "Незакріплена лава відпадає.",
+      correctApproach: "Прив’язується до всіх небезпек",
     },
     {
-      mistake: "Safe and lava look identical",
-      explanation: "Players cannot learn the route.",
-      correctApproach: "Neon red lava vs matte grey/white safe platforms",
+      mistake: "Сейф і лава виглядають однаково",
+      explanation: "Гравці не можуть вивчити маршрут.",
+      correctApproach: "Неоново-червона лава проти матово-сіро-білих безпечних платформ",
     },
     {
-      mistake: "Script under Workspace",
-      explanation: "script.Parent is wrong object.",
-      correctApproach: "Script must be direct child of the kill Part",
+      mistake: "Script у робочій області",
+      explanation: "script.Parent є неправильним об'єктом.",
+      correctApproach: "Script має бути прямим дочірнім елементом убивства",
     },
   ],
-  summary: "You built a hazard lane with Neon kill blocks, connected Touched to Humanoid.Health = 0, and debugged fair obby deaths - the foundation of every Roblox obstacle course.",
+  summary: "Ви побудували небезпечну смугу з Neon блоками вбивств, підключили Touched до Humanoid.Health = 0 і налагодили справедливі смерті obby — основу кожної obstacle course Roblox.",
   practiceTask: {
-    title: "Lava lane - obby start (~25 min)",
+    title: "Lava lane - початок obby (~25 хв)",
     difficulty: "beginner",
-    description: `**Goal:** Safe jumps + obvious lava that kills on touch.
+    description: `**Мета:** Безпечні стрибки + очевидна лава, яка вбиває від дотику.
 
-### Part A - Path layout (8 min)
-1. In \`Module 1 - Living Island\`, add Folder \`Obby\`
-2. Build **6** safe platforms in \`SafePath\` (Anchored, non-Neon)
-3. Gap jumps between platforms - testable on foot
+### Part A – Схема шляху (8 хв)
+1. В\`Module 1 - Living Island\`, додайте Folder\`Obby\`2. Створіть **6** безпечних платформ\`SafePath\`(Anchored, neon)
+3. Стрибки на проміжки між платформами - можна перевірити пішки
 
-### Part B - Lava hazards (10 min)
-1. Add **4** kill blocks in \`Hazards\` (Neon Really red)
-2. Place between or beside jumps - at least one narrow lava strip
-3. Script each (duplicate working Script)
+### Part B - Небезпека лави (10 хв)
+1. Додайте **4** блоки вбивства\`Hazards\`(Neon дійсно червоний)
+2. Розташуйте між або біля стрибків - принаймні одну вузьку смужку лави
+3. Script кожного (дублікат робочого Script)
 
-### Part C - Test & save (7 min)
-1. **Play** - touch every lava once; all must respawn you
-2. Walk full lane without touching lava - possible route
-3. **File → Save to Roblox** → \`Lesson 2.1 - Lava Lane\`
-4. **Practice complete**`,
+### Part C - Перевірте та збережіть (7 хв)
+1. **Play** - торкніться кожної лави один раз; всі повинні відродити вас
+2. Пройдіть всю смугу, не торкаючись лави - можливий маршрут
+3. **Файл → Зберегти в Roblox** →\`Lesson 2.1 - Lava Lane\`4. **Практика завершена**`,
     hints: [
-      "Duplicate one working kill Part instead of rewriting scripts",
-      "Make safe platforms wider than lava for the first jump",
-      "F5 Play - Edit mode never fires Touched for your character",
+      "Дублюйте одну робочу Part знищення замість того, щоб переписувати Scripts",
+      "Робіть безпечні платформи ширші за лаву для першого стрибка",
+      "F5 Play - режим редагування ніколи не запускається Торкнувся для вашого Character",
     ],
-    optionalChallenge: "Brief burn: set Health to 10, wait 0.2s with task.wait, then Health = 0.",
+    optionalChallenge: "Коротке спалювання: встановіть Health на 10, зачекайте 0,2 секунди з task.wait, потім Health = 0.",
   },
   quiz: {
     passingScore: 70,
@@ -256,132 +236,132 @@ If you duplicate only the Part without Script, copy-paste the Script into each k
       {
         id: "q1",
         type: "multiple_choice",
-        question: "Kill blocks usually set…",
+        question: "Блоки знищення зазвичай встановлюються...",
         options: [
           "Humanoid.Health = 0",
           "Part.Anchored = false",
-          "Sky to night",
-          "Terrain to water",
+          "Небо до ночі",
+          "Рельєф до води",
         ],
         correctAnswer: 0,
-        explanation: "Zero health triggers respawn.",
+        explanation: "Нульове здоров'я викликає відродження.",
       },
       {
         id: "q2",
         type: "multiple_choice",
-        question: "Touched fires when…",
+        question: "Торкнувся вогню, коли…",
         options: [
-          "You save the game",
-          "Something collides with the Part",
-          "You rename Explorer",
-          "ClockTime changes",
+          "Ви зберігаєте гру",
+          "Щось стикається з Part",
+          "Ви змінюєте назву Explorer",
+          "ClockTime змінюється",
         ],
         correctAnswer: 1,
-        explanation: "Touched is a collision event.",
+        explanation: "Торкнутися - це подія зіткнення.",
       },
       {
         id: "q3",
         type: "multiple_choice",
-        question: "hit.Parent is usually…",
+        question: "hit.Parent зазвичай...",
         options: [
-          "The SoundService",
-          "The character model",
-          "Lighting",
-          "The script",
+          "СаундСервіс",
+          "Model Character",
+          "Освітлення",
+          "Script",
         ],
         correctAnswer: 1,
-        explanation: "Player body parts parent to Character.",
+        explanation: "Батьківські Parts тіла гравця до Character.",
       },
       {
         id: "q4",
         type: "multiple_choice",
-        question: "FindFirstChildOfClass(\"Humanoid\") prevents…",
+        question: "FindFirstChildOfClass(\"Humanoid\") запобігає...",
         options: [
-          "Lava from glowing",
-          "Killing non-characters",
-          "Saving the game",
-          "Terrain paint",
+          "Лава від світиться",
+          "Вбивство неCharacterв",
+          "Збереження гри",
+          "Фарба місцевості",
         ],
         correctAnswer: 1,
-        explanation: "Only characters should trigger kill logic.",
+        explanation: "Лише Character повинні запускати логіку вбивства.",
       },
       {
         id: "q5",
         type: "multiple_choice",
-        question: "Kill block scripts should be…",
+        question: "Scripts блокування блокування мають бути…",
         options: [
-          "LocalScript in StarterGui",
-          "Server Script in the Part",
-          "Inside Lighting",
-          "A Sound only",
+          "LocalScript у StarterGui",
+          "Серверний скрипт в Part",
+          "Внутрішнє освітлення",
+          "A Лише звук",
         ],
         correctAnswer: 1,
-        explanation: "Server Scripts handle world hazards.",
+        explanation: "Серверні Scripts справляються зі світовими небезпеками.",
       },
       {
         id: "q6",
         type: "multiple_choice",
-        question: "Lava should look different using…",
+        question: "Лава має виглядати інакше, використовуючи…",
         options: [
-          "Neon + red color",
-          "Same as safe floor",
-          "Transparency 1",
-          "No Anchored",
+          "Neon + червоний колір",
+          "Те саме, що безпечна підлога",
+          "Прозорість 1",
+          "Without Anchored",
         ],
         correctAnswer: 0,
-        explanation: "Visual contrast keeps obbies fair.",
+        explanation: "Візуальний контраст робить obby справедливими.",
       },
       {
         id: "q7",
         type: "multiple_choice",
-        question: "Fastest way to add 4 lava scripts…",
+        question: "Найшвидший спосіб додати 4 Scripts лави…",
         options: [
-          "Duplicate one working kill Part",
-          "Delete Workspace",
-          "Remove Humanoid",
-          "Only use Terrain",
+          "Дублюйте одну робочу Part вбивства",
+          "Видалити Workspace",
+          "Видаліть Humanoid",
+          "Використовуйте лише Terrain",
         ],
         correctAnswer: 0,
-        explanation: "Duplicate keeps the Script attached.",
+        explanation: "Дублікат зберігає Script прикріпленим.",
       },
       {
         id: "q8",
         type: "multiple_choice",
-        question: "Touched is tested in…",
+        question: "Touched перевірено в…",
         options: [
-          "Play mode",
-          "Only Publish window",
-          "Asset Manager",
-          "Team Create only",
+          "Режим відтворення",
+          "Тільки вікно публікації",
+          "Керуючий активами",
+          "Тільки створити команду",
         ],
         correctAnswer: 0,
-        explanation: "Character collision happens during Play.",
+        explanation: "Під час гри відбувається зіткнення Characterв.",
       },
       {
         id: "q9",
         type: "multiple_choice",
-        question: "Kill blocks need Anchored…",
+        question: "Блоки знищення потребують закріплення…",
         options: [
           "true",
           "false always",
-          "only for players",
-          "only at night",
+          "тільки для гравців",
+          "тільки вночі",
         ],
         correctAnswer: 0,
-        explanation: "Anchored keeps hazards in place.",
+        explanation: "Anchored утримує небезпеки на місці.",
       },
       {
         id: "q10",
         type: "multiple_choice",
-        question: "Lesson 2.1 save name…",
+        question: "Урок 2.1 зберегти назву…",
         options: [
-          "Lesson 2.1 - Lava Lane",
-          "Module 1 - Living Island",
-          "Kill",
-          "Untitled",
+          "Урок 2.1 - Lava Lane",
+          "Модуль 1 - Живий острів",
+          "вбити",
+          "Без назви",
         ],
         correctAnswer: 0,
-        explanation: "Use lesson-based save names.",
+        explanation: "Використовуйте імена збереження на основі уроків.",
       },
     ],
   },
@@ -396,189 +376,178 @@ export const ukLesson22 = {
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    "Place SpawnLocation checkpoints along an obby",
-    "Set player.RespawnLocation when a checkpoint is touched",
-    "Give clear visual feedback when a checkpoint activates",
-    "Test respawn after dying on lava",
+    "Розмістіть контрольні точки SpawnLocation уздовж obby",
+    "Установити player.RespawnLocation, коли торкається контрольної точки",
+    "Дайте чіткий візуальний зворотний зв'язок, коли контрольна точка активується",
+    "Тестове відродження після смерті на лаві",
   ],
   theory: {
     sections: [
       {
-        title: "Ваш шлях сьогодні (близько 40 хвилин)",
-        content: `Dying on lava is fair only if players **do not restart from zero** every time.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `Померти на лаві справедливо лише в тому випадку, якщо гравці **не починають щоразу з нуля**.
 
-**Checkpoints** save progress **during one play session** (until you leave the game).
+**Контрольні точки** зберігають прогрес **протягом однієї ігрової сесії** (поки ви не залишите гру).
 
-**Lesson flow:**
-1. **Theory (40 min)** - SpawnLocation + RespawnLocation
-2. **Practice (~25 min)** - 3-stage obby with 3 checkpoints
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - SpawnLocation + RespawnLocation
+2. **Практика (~25 хв)** - 3 етапи обі з 3 контрольними точками
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Open **Lesson 2.1 - Lava Lane**.`,
+Відкрийте **Урок 2.1 - Lava Lane**.`,
       },
       {
-        title: "Why checkpoints matter",
-        content: `| Without checkpoints | With checkpoints |
+        title: "Чому контрольно-пропускні пункти важливі",
+        content: `| Без КПП | З КПП |
 |---------------------|------------------|
-| Die on lava → back to spawn | Die → respawn at last CP |
-| Players rage-quit | Players retry and improve |
+| Померти на лаві → повернутися до появи | Померти → відродитися після останнього CP |
+| Гравці rage-quit | Гравці повторюють спроби та покращують |
 
-**Design rule:** place a checkpoint every **20–40 seconds** of jumping - end of each "stage."
+**Правило дизайну:** розміщуйте контрольну точку кожні **20–40 секунд** стрибка – кінець кожного «етапу».
 
-**Exercise (2 min):** Walk your lava lane in Play. Count seconds between start and first hard jump - that's stage 1.`,
+**Вправа (2 хв):** Пройдіться лавовою смугою в Play. Рахуйте секунди між стартом і першим важким стрибком - це етап 1.`,
       },
       {
-        title: "SpawnLocation as checkpoint",
-        content: `A **SpawnLocation** is a Part that can spawn characters **and** act as a respawn point.
+        title: "SpawnLocation як контрольна точка",
+        content: `**SpawnLocation** — це Part that може породжувати Characterв **і** виступати як точка відродження.
 
-Insert → **SpawnLocation** at the end of stage 1.
+Insert → **SpawnLocation** наприкінці етапу 1.
 
-| Property | Value |
+| Property | Значення |
 |----------|-------|
-| **Name** | \`CP_1\` (not SpawnLocation) |
+| **Ім'я** |\`CP_1\`(не SpawnLocation) |
 | **Anchored** | true |
-| **Size** | \`6, 1, 6\` visible pad |
-| **BrickColor** | New Yeller (inactive) |
-| **Neutral** | true |
+| **Size** |\`6, 1, 6\`видима колодка |
+| **BrickColor** | New Yeller (неактивний) |
+| **Нейтральний** | true |
 | **AllowTeamChangeOnTouch** | false |
 
-Place **above** the platform - not inside lava.
+Розмістіть **над** платформою - не всередині лави.
 
-**Start spawn:** keep your Module 1 \`SpawnLocation\` at the hub - rename \`Spawn_Start\`. Checkpoints are **extra** SpawnLocations.`,
+**Start Creating:** зберегти свій модуль 1\`SpawnLocation\`на хабі - перейменувати\`Spawn_Start\`. Контрольні точки є **додатковими** SpawnLocations.`,
       },
       {
-        title: "Script - save respawn point",
-        content: `Insert **Script** inside \`CP_1\`:
-
-\`\`\`lua
+        title: "Скрипт - збереження точки відродження",
+        content: `Insert всередину **Script**\`CP_1\`:\`\`\`lua
 local checkpoint = script.Parent
 
 checkpoint.Touched:Connect(function(hit)
-    local character = hit.Parent
-    if not character then
-        return
-    end
+ local character = hit.Parent
+ if not character then
+ return
+ end
 
-    local humanoid = character:FindFirstChildOfClass("Humanoid")
-    if not humanoid then
-        return
-    end
+ local humanoid = character:FindFirstChildOfClass("Humanoid")
+ if not humanoid then
+ return
+ end
 
-    local player = game:GetService("Players"):GetPlayerFromCharacter(character)
-    if not player then
-        return
-    end
+ local player = game:GetService("Players"):GetPlayerFromCharacter(character)
+ if not player then
+ return
+ end
 
-    player.RespawnLocation = checkpoint
-    checkpoint.BrickColor = BrickColor.new("Bright green")
+ player.RespawnLocation = checkpoint
+ checkpoint.BrickColor = BrickColor.new("Bright green")
 end)
-\`\`\`
-
-**GetPlayerFromCharacter** links the body to the account - only then change \`RespawnLocation\`.`,
+\`\`\`**GetPlayerFromCharacter** пов’язує тіло з обліковим записом – лише потім змінюйте\`RespawnLocation\`.`,
       },
       {
-        title: "Test the checkpoint loop",
-        content: `**Critical test (do not skip):**
-1. **Play** - run to \`CP_1\` - pad turns **green**
-2. Jump into **lava** on purpose
-3. You should respawn on **CP_1**, NOT at island start
+        title: "Перевірте петлю КПП",
+        content: `**Критичний тест (не пропускати):**
+1. **Play** - бігти до\`CP_1\`- панель стає **зеленою**
+2. Навмисно стрибнути в **лаву**
+3. Ви повинні відродитися на **CP_1**, а НЕ на початку острова
 
-If you respawn at start:
-- Did you touch \`CP_1\` before dying?
-- Is \`CP_1\` still a **SpawnLocation** class?
-- Any red errors in Output?
+Якщо ви відроджуєтеся на початку:
+- Ти торкався\`CP_1\`перед смертю?
+- Є\`CP_1\`все ще є класом **SpawnLocation**?
+- Є червоні помилки у вихідних даних?
 
-**Exercise (10 min):** Pass this test before building \`CP_2\`.`,
+**Вправа (10 хв):** Пройдіть цей тест перед побудовою\`CP_2\`.`,
       },
       {
-        title: "Three-stage layout",
-        content: `Extend your lava lane into **3 stages:**
+        title: "Триступеневе планування",
+        content: `Розширте свою смугу лави на **3 етапи:**
 
-| Stage | Content | Checkpoint |
+| Етап | Зміст | КПП |
 |-------|---------|------------|
-| 1 | Easy jumps + 1 lava | \`CP_1\` |
-| 2 | Longer gap + 2 lava | \`CP_2\` |
-| 3 | Narrow path + finale | \`CP_3\` or \`CP_Final\` |
+| 1 | Легкі стрибки + 1 лава |\`CP_1\`|
+| 2 | Довший розрив + 2 лави |\`CP_2\`|
+| 3 | Вузька стежка + фінал |\`CP_3\`або\`CP_Final\`|
 
-Duplicate \`CP_1\` Script into each checkpoint Part.
+дублікат\`CP_1\`Script у кожній Part контрольної точки.
 
-**Color progression:** Yellow (waiting) → Green (saved) - players read progress instantly.`,
+**Прогресування кольорів:** Жовтий (очікування) → Зелений (збережено) - гравці миттєво читають прогрес.`,
       },
       {
-        title: "UX feedback - sound and glow",
-        content: `Optional polish from Module 1:
-- **Sound** child on checkpoint - short ping on touch
-- **PointLight** - green when active
-
-\`\`\`lua
+        title: "UX відгук - звук і світіння",
+        content: `Додаткове полірування з модуля 1:
+- **Звук** дитина на контрольній точці - короткий пінг на дотик
+- **PointLight** - зелений, коли активний\`\`\`lua
 local sound = checkpoint:FindFirstChild("CPSound")
 if sound then
-    sound:Play()
+ sound:Play()
 end
-\`\`\`
+\`\`\`Додайте після налаштування RespawnLocation.
 
-Add after setting RespawnLocation.
-
-**FAQ:** Touch fires many times - that's OK for this lesson; later you add debounce.`,
+**Часті запитання:** Дотик спрацьовує багато разів – це нормально для цього уроку; пізніше ви додаєте усунення стрибків.`,
       },
       {
-        title: "Контрольний список перед тренуванням",
-        content: `- [ ] I understand SpawnLocation vs normal Part
-- [ ] I passed the "die after CP_1" test
-- [ ] I will build CP_2 and CP_3 with copied scripts
-- [ ] Save name ready: \`Lesson 2.2 - Checkpoints\``,
+        title: "Контрольний список перед початком практики",
+        content: `- [ ] Я розумію SpawnLocation проти звичайної Parts
+- [ ] Я пройшов тест "померти після CP_1".
+- [ ] Я створю CP_2 і CP_3 with copied Scripts
+- [ ] Зберегти ім'я готове:\`Lesson 2.2 - Checkpoints\``,
       },
     ],
   },
   commonMistakes: [
     {
-      mistake: "Used normal Part instead of SpawnLocation",
-      explanation: "RespawnLocation must be a SpawnLocation instance.",
-      correctApproach: "Insert → SpawnLocation, then rename to CP_1",
+      mistake: "Використовується звичайна Part замість SpawnLocation",
+      explanation: "RespawnLocation має бути екземпляром SpawnLocation.",
+      correctApproach: "Insert → SpawnLocation, потім перейменувати на CP_1",
     },
     {
-      mistake: "Respawn still at hub after CP_2",
-      explanation: "Never touched CP_2 before dying.",
-      correctApproach: "Walk onto each checkpoint pad before testing lava death",
+      mistake: "Відродження все ще в центрі після CP_2",
+      explanation: "Ніколи не торкався CP_2 перед смертю.",
+      correctApproach: "Пройдіть на кожну контрольну точку, перш ніж перевірити смерть лави",
     },
     {
-      mistake: "Checkpoint inside kill block",
-      explanation: "Player dies before saving progress.",
-      correctApproach: "Place CP on safe platform past the hazard",
+      mistake: "Контрольна точка всередині блоку вбивства",
+      explanation: "Гравець помирає, перш ніж зберегти прогрес.",
+      correctApproach: "Розмістіть CP на безпечній платформі позаду небезпеки",
     },
     {
-      mistake: "No Humanoid check in checkpoint script",
-      explanation: "Random touches might fire early.",
-      correctApproach: "Keep the same Humanoid + GetPlayerFromCharacter pattern as kill blocks",
+      mistake: "Немає перевірки Humanoid у скрипті контрольної точки",
+      explanation: "Випадкові дотики можуть спрацювати раніше.",
+      correctApproach: "Зберігайте той самий шаблон Humanoid + GetPlayerFromCharacter, що й блоки вбивства",
     },
   ],
-  summary: "You placed SpawnLocation checkpoints, set RespawnLocation on touch, turned pads green for feedback, and proved lava deaths respawn at the last checkpoint - real obby progression.",
+  summary: "Ви розмістили контрольні точки SpawnLocation, встановили RespawnLocation на дотик, пофарбували панелі в зелений колір для зворотного зв’язку та довели, що лавові смерті відроджуються на останній контрольній точці – реальний прогрес obby.",
   practiceTask: {
-    title: "Three-stage checkpoint obby (~25 min)",
+    title: "Триступенева контрольна точка обби (~25 хв)",
     difficulty: "beginner",
-    description: `**Goal:** 3 stages, 3 checkpoints, lava death returns to last CP.
+    description: `**Мета:** 3 етапи, 3 контрольні точки, лавова смерть повертається до останнього CP.
 
-### Part A - Stage 1 + CP_1 (7 min)
-1. End of stage 1 safe platform → **SpawnLocation** \`CP_1\`
-2. Script: RespawnLocation + green color
-3. Test: touch CP_1 → die on lava → respawn on CP_1
+### Part A - Етап 1 + CP_1 (7 хв)
+1. Кінець етапу 1 безпечної платформи → **SpawnLocation**\`CP_1\`2. Скрипт: RespawnLocation + зелений колір
+3. Тест: торкніться CP_1 → померти на лаві → відродитися на CP_1
 
-### Part B - Stage 2 + CP_2 (9 min)
-1. Harder jumps + 2 lava blocks
-2. **SpawnLocation** \`CP_2\` with copied script
-3. Same death test from CP_2
+### Part B - Етап 2 + CP_2 (9 хв)
+1. Складніші стрибки + 2 блоки лави
+2. **SpawnLocation**\`CP_2\`зі скопійованим Script
+3. Такий самий тест на смерть з КП_2
 
-### Part C - Stage 3 + CP_Final (9 min)
-1. Short finale path to \`CP_Final\`
-2. Full run: Start → CP_1 → CP_2 → CP_Final → die → respawn at CP_Final
-3. **Save to Roblox** → \`Lesson 2.2 - Checkpoints\`
-4. **Practice complete**`,
+### Part C - Етап 3 + CP_Final (9 хв)
+1. Короткий фінал шлях до\`CP_Final\`2. Повний пробіг: Початок → CP_1 → CP_2 → CP_Final → померти → відродитися на CP_Final
+3. **Зберегти в Roblox** →\`Lesson 2.2 - Checkpoints\`4. **Практика завершена**`,
     hints: [
-      "Yellow pad = not saved yet, Green = saved",
-      "Each checkpoint needs its own SpawnLocation object",
-      "Test death after EVERY new checkpoint before continuing",
+      "Жовта панель = ще не збережено, зелена = збережено",
+      "Для кожної контрольної точки потрібен власний об’єкт SpawnLocation",
+      "Перевірте смерть після КОЖНОЇ нової контрольної точки, перш ніж продовжувати",
     ],
-    optionalChallenge: `Add IntValue \`CheckpointNumber\` on character when CP is touched (for future UI).`,
+    optionalChallenge: `Додайте IntValue\`CheckpointNumber\`на Character, коли торкається CP (для майбутнього інтерфейсу користувача).`,
   },
   quiz: {
     passingScore: 70,
@@ -587,132 +556,132 @@ Add after setting RespawnLocation.
       {
         id: "q1",
         type: "multiple_choice",
-        question: "Checkpoints save progress…",
+        question: "Контрольні точки зберігають прогрес…",
         options: [
-          "During the play session",
-          "Forever on Roblox website",
-          "Only in Edit mode",
-          "Only for admins",
+          "Під час ігрового сеансу",
+          "Назавжди на веб-сайті Roblox",
+          "Тільки в режимі редагування",
+          "Тільки для адмінів",
         ],
         correctAnswer: 0,
-        explanation: "RespawnLocation lasts until the player leaves.",
+        explanation: "RespawnLocation триває, поки гравець не піде.",
       },
       {
         id: "q2",
         type: "multiple_choice",
-        question: "player.RespawnLocation should be a…",
+        question: "player.RespawnLocation має бути…",
         options: [
           "SpawnLocation",
-          "Sound",
-          "Terrain",
+          "Звук",
+          "Рельєф місцевості",
           "LocalScript",
         ],
         correctAnswer: 0,
-        explanation: "Respawn uses SpawnLocation instances.",
+        explanation: "Respawn використовує екземпляри SpawnLocation.",
       },
       {
         id: "q3",
         type: "multiple_choice",
-        question: "GetPlayerFromCharacter gets…",
+        question: "GetPlayerFromCharacter отримує…",
         options: [
-          "The Player from a character model",
-          "The Part color",
-          "The sky",
-          "The script name",
+          "Гравець з model Character",
+          "Колір Parts",
+          "Небо",
+          "Name Script",
         ],
         correctAnswer: 0,
-        explanation: "Links character touch to the player object.",
+        explanation: "Пов’язує дотик Character з об’єктом гравця.",
       },
       {
         id: "q4",
         type: "multiple_choice",
-        question: "Green checkpoint color means…",
+        question: "Зелений колір КПП означає...",
         options: [
-          "Lava is active",
-          "Player saved that respawn point",
-          "Game is published",
-          "Terrain deleted",
+          "Лава активна",
+          "Гравець зберіг цю точку відродження",
+          "Гра опублікована",
+          "Рельєф видалено",
         ],
         correctAnswer: 1,
-        explanation: "Green signals activation in this lesson.",
+        explanation: "Зелений колір сигналізує про активацію в цьому уроці.",
       },
       {
         id: "q5",
         type: "multiple_choice",
-        question: "After touching CP_2 and dying, spawn at…",
+        question: "Доторкнувшись до CP_2 і померши, з’являйтеся на…",
         options: [
-          "CP_2",
-          "Always world origin only",
-          "Toolbox",
-          "CP_1 only always",
+          "КП_2",
+          "Завжди тільки світове походження",
+          "Ящик інструментів",
+          "CP_1 тільки завжди",
         ],
         correctAnswer: 0,
-        explanation: "Last touched checkpoint wins.",
+        explanation: "Перемагає остання контрольна точка.",
       },
       {
         id: "q6",
         type: "multiple_choice",
-        question: "Checkpoints should be placed…",
+        question: "Контрольні пункти слід розмістити…",
         options: [
-          "On safe ground after hard jumps",
-          "Inside lava",
-          "Outside Workspace",
-          "In ServerScriptService",
+          "На безпечному місці після важких стрибків",
+          "Всередині лави",
+          "Поза робочим простором",
+          "У ServerScriptService",
         ],
         correctAnswer: 0,
-        explanation: "Safe pads let players register progress.",
+        explanation: "Безпечні панелі дозволяють гравцям реєструвати прогрес.",
       },
       {
         id: "q7",
         type: "multiple_choice",
-        question: "Neutral true on SpawnLocation allows…",
+        question: "Нейтральне значення true на SpawnLocation дозволяє...",
         options: [
-          "Any player to use it",
-          "No spawning ever",
-          "Only one color",
-          "Deleting scripts",
+          "Будь-який гравець може використовувати його",
+          "Жодного нересту ніколи",
+          "Лише один колір",
+          "Видалення скриптів",
         ],
         correctAnswer: 0,
-        explanation: "Neutral spawns work for all teams.",
+        explanation: "Нейтральні spawnи працюють для всіх команд.",
       },
       {
         id: "q8",
         type: "multiple_choice",
-        question: "Checkpoint scripts are…",
+        question: "Scripts контрольних точок є…",
         options: [
-          "Server Scripts in the checkpoint",
-          "LocalScripts in Head",
-          "Inside Terrain",
-          "Only in chat",
+          "Серверні скрипти в КПП",
+          "Локальні скрипти в Head",
+          "Внутрішня місцевість",
+          "Тільки в чаті",
         ],
         correctAnswer: 0,
-        explanation: "Server sets RespawnLocation for all players.",
+        explanation: "Сервер встановлює RespawnLocation для всіх гравців.",
       },
       {
         id: "q9",
         type: "multiple_choice",
-        question: "Ideal spacing between checkpoints…",
+        question: "Ідеальна відстань між контрольними точками…",
         options: [
-          "Every 20–40 seconds of play",
-          "Once per game ever",
-          "Every 2 hours",
-          "Never",
+          "Кожні 20–40 секунд гри",
+          "Один раз за гру",
+          "Кожні 2 години",
+          "Ніколи",
         ],
         correctAnswer: 0,
-        explanation: "Regular saves reduce frustration.",
+        explanation: "Регулярні збереження зменшують розчарування.",
       },
       {
         id: "q10",
         type: "multiple_choice",
-        question: "Lesson 2.2 save name…",
+        question: "Урок 2.2 зберегти назву…",
         options: [
-          "Lesson 2.2 - Checkpoints",
-          "Lesson 2.1 - Lava Lane",
-          "Click Magic",
-          "Module 12",
+          "Урок 2.2 - Контрольні точки",
+          "Урок 2.1 - Lava Lane",
+          "Натисніть Магія",
+          "Модуль 12",
         ],
         correctAnswer: 0,
-        explanation: "Track obby progress with clear filenames.",
+        explanation: "Відстежуйте прогрес obby за допомогою чітких імен файлів.",
       },
     ],
   },
@@ -727,84 +696,72 @@ export const ukLesson23 = {
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    "Build a ScreenGui timer with TextLabel",
-    "Update elapsed time using os.clock in a LocalScript",
-    "Stop the timer when the player touches FinishPad",
-    "Format time for speed-run style feedback",
+    "Створіть таймер ScreenGui за допомогою TextLabel",
+    "Оновіть час, що минув, за допомогою os.clock у LocalScript",
+    "Зупиніть таймер, коли гравець торкнеться FinishPad",
+    "Відформатуйте час для відгуків у стилі швидкісного бігу",
   ],
   theory: {
     sections: [
       {
-        title: "Ваш шлях сьогодні (близько 40 хвилин)",
-        content: `Speed-runners love timers. Your obby will show **live seconds** and freeze on the finish pad.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `Любителі швидкого бігу люблять таймери. Ваш obby відображатиме **живі секунди** і зависне на фінішній панелі.
 
-**Lesson flow:**
-1. **Theory (40 min)** - ScreenGui + LocalScript + \`os.clock\`
-2. **Practice (~25 min)** - timer on your checkpoint obby
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - ScreenGui + LocalScript +\`os.clock\`2. **Практика (~25 хв)** - таймер на вашій контрольній точці obby
+3. **Вікторина (10 хв)** - проходження **70%**
 
-**New idea:** **LocalScript** = runs on **your** screen (perfect for UI). Kill/checkpoint scripts stay **server** Scripts.
+**Нова ідея:****LocalScript** = працює на **вашому** екрані (ідеально підходить для інтерфейсу користувача). Scripts знищення/контрольної точки залишаються **серверними** Scripts.
 
-Open **Lesson 2.2 - Checkpoints**.`,
+Відкрийте **Урок 2.2 - Контрольні точки**.`,
       },
       {
-        title: "Client UI vs server gameplay",
-        content: `| Script type | Runs where | Lesson use |
+        title: "Геймплей клієнтського інтерфейсу проти сервера",
+        content: `| Тип Script | Бігає де | Урок використання |
 |-------------|------------|------------|
-| **Script** | Server | Lava, checkpoints |
-| **LocalScript** | Player's device | Timer text on screen |
+| **Script** | Сервер | Лава, КПП |
+| **LocalScript** | Пристрій гравця | Текст таймера на екрані |
 
-The timer is **only visual for you** in solo Play - that's fine for learning. Later modules sync time with RemoteEvents.
+Таймер є **тільки візуальним для вас** під час гри в одиночку – це добре для навчання. Більш пізні модулі синхронізують час із RemoteEvents.
 
-**Exercise (2 min):** In Explorer, expand **StarterGui** - see \`StarterPlayerScripts\` area where UI lives.`,
+**Вправа (2 хв):** У Explorer розгорніть **StarterGui** - див\`StarterPlayerScripts\`область, де живе UI.`,
       },
       {
-        title: "Build RunUI in StarterGui",
-        content: `1. **StarterGui** → Insert **ScreenGui** → Name: \`RunUI\`
-2. Inside \`RunUI\` → **TextLabel** → Name: \`TimerLabel\`
-
-| Property | Suggested |
+        title: "Створіть RunUI у StarterGui",
+        content: `1. **StarterGui** → Insert **ScreenGui** → Name:\`RunUI\`2. Всередині\`RunUI\`→ **TextLabel** → Name:\`TimerLabel\`| Property | Пропонований |
 |----------|-----------|
-| **Size** | \`{0, 240}, {0, 56}\` |
-| **Position** | top center \`{0.5, -120}, {0, 16}\` (AnchorPoint 0.5, 0) |
-| **BackgroundTransparency** | \`0.2\` dark bar |
-| **Text** | \`Time: 0.00\` |
+| **Size** |\`{0, 240}, {0, 56}\`|
+| **Position** | верхній центр\`{0.5, -120}, {0, 16}\`(AnchorPoint 0.5, 0) |
+| **Прозорість фону** |\`0.2\`темна смуга |
+| **Текст** |\`Time: 0.00\`|
 | **TextScaled** | true |
-| **Font** | GothamBold or FredokaOne |
+| **Шрифт** | GothamBold або FredokaOne |
 
-**ResetOnSpawn** on ScreenGui: leave default (timer may reset on death - acceptable for this lesson).`,
+**ResetOnSpawn** на ScreenGui: залишити за замовчуванням (таймер може скинутися після смерті – прийнятно для цього уроку).`,
       },
       {
-        title: "LocalScript - live timer loop",
-        content: `Insert **LocalScript** inside \`RunUI\` (sibling of TimerLabel):
-
-\`\`\`lua
+        title: "LocalScript - живий цикл таймера",
+        content: `Insert всередину **LocalScript**\`RunUI\`(сестра TimerLabel):\`\`\`lua
 local label = script.Parent:WaitForChild("TimerLabel")
 local startTime = os.clock()
 local running = true
 
 while running do
-    local elapsed = os.clock() - startTime
-    label.Text = string.format("Time: %.2f", elapsed)
-    task.wait(0.05)
+ local elapsed = os.clock() - startTime
+ label.Text = string.format("Time: %.2f", elapsed)
+ task.wait(0.05)
 end
-\`\`\`
+\`\`\`**\`os.clock()\`** повертає секунди з високою точністю - чудово підходить для швидкісних пробіжок.
 
-**\`os.clock()\`** returns seconds with high precision - great for speed runs.
+**\`task.wait(0.05)\`** оновлення ~20 разів на секунду - плавний текст без затримок.
 
-**\`task.wait(0.05)\`** updates ~20 times per second - smooth text without lag.
-
-Press **Play** - timer should count up immediately.`,
+Натисніть **Play** - таймер має відрахувати моментально.`,
       },
       {
-        title: "FinishPad - stop the timer",
-        content: `In \`Obby\` folder, add **Part** \`FinishPad\`:
-- Size \`8, 1, 8\` | Neon green | Anchored true
-- Place after \`CP_Final\`
-
-Extend LocalScript:
-
-\`\`\`lua
+        title: "FinishPad - зупинка таймера",
+        content: `в\`Obby\`folder, додайте **Part**\`FinishPad\`:
+- Розмір\`8, 1, 8\`| Neon зелений | Anchored true
+- Місце після\`CP_Final\`Розширити LocalScript:\`\`\`lua
 local Players = game:GetService("Players")
 local label = script.Parent:WaitForChild("TimerLabel")
 local finish = workspace:WaitForChild("Obby"):WaitForChild("FinishPad")
@@ -813,132 +770,121 @@ local startTime = os.clock()
 local running = true
 
 task.spawn(function()
-    while running do
-        local elapsed = os.clock() - startTime
-        label.Text = string.format("Time: %.2f", elapsed)
-        task.wait(0.05)
-    end
+ while running do
+ local elapsed = os.clock() - startTime
+ label.Text = string.format("Time: %.2f", elapsed)
+ task.wait(0.05)
+ end
 end)
 
 finish.Touched:Connect(function(hit)
-    if not running then
-        return
-    end
+ if not running then
+ return
+ end
 
-    local character = hit.Parent
-    local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-    if not humanoid then
-        return
-    end
+ local character = hit.Parent
+ local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+ if not humanoid then
+ return
+ end
 
-    if Players.LocalPlayer.Character ~= character then
-        return
-    end
+ if Players.LocalPlayer.Character ~= character then
+ return
+ end
 
-    running = false
-    local elapsed = os.clock() - startTime
-    label.Text = string.format("Finished! %.2fs", elapsed)
+ running = false
+ local elapsed = os.clock() - startTime
+ label.Text = string.format("Finished! %.2fs", elapsed)
 end)
-\`\`\`
-
-**LocalPlayer** check = only **you** finish the run in Play solo.`,
+\`\`\`Перевірка **LocalPlayer** = лише **ви** закінчуєте забіг у Play соло.`,
       },
       {
-        title: "Improve display - minutes format",
-        content: `For times over 60 seconds:
-
-\`\`\`lua
+        title: "Покращено формат відображення хвилин",
+        content: `Для часу понад 60 секунд:\`\`\`lua
 local function formatTime(seconds)
-    if seconds >= 60 then
-        local m = math.floor(seconds / 60)
-        local s = seconds % 60
-        return string.format("%02d:%05.2f", m, s)
-    end
-    return string.format("%.2f", seconds)
+ if seconds >= 60 then
+ local m = math.floor(seconds / 60)
+ local s = seconds % 60
+ return string.format("%02d:%05.2f", m, s)
+ end
+ return string.format("%.2f", seconds)
 end
-\`\`\`
+\`\`\`використання\`formatTime(elapsed)\`замість сирих секунд\`label.Text\`.
 
-Use \`formatTime(elapsed)\` instead of raw seconds in \`label.Text\`.
-
-**Exercise (5 min):** Complete the obby once - screenshot the **Finished!** time.`,
+**Вправа (5 хв):** Виконайте obby один раз – знімок екрана з часом **Finished!**.`,
       },
       {
-        title: "Timer + checkpoints together",
-        content: `**Expected behavior:**
-- Timer runs from spawn
-- Dying on lava → respawn at checkpoint → timer **keeps going** (OK for this lesson)
-- Touch \`FinishPad\` → timer **stops**
+        title: "Таймер + КПП разом",
+        content: `**Очікувана поведінка:**
+- Таймер запускається з ікру
+- Смерть на лаві → відродження на контрольній точці → таймер **продовжує йти** (добре для цього уроку)
+- Дотик\`FinishPad\`→ таймер **зупиняється**
 
-**Speed-run tip:** after finishing, note your time and try to beat it by 10%.
+**Порада щодо швидкісного бігу:** після фінішу запам’ятайте свій час і спробуйте перевершити його на 10%.
 
-**Before practice checklist:**
-- [ ] \`RunUI\` is under **StarterGui**
-- [ ] LocalScript is inside \`RunUI\`
-- [ ] \`FinishPad\` path matches script (\`workspace.Obby.FinishPad\`)`,
+**Контрольний список перед тренуваннями:**
+- [ ]\`RunUI\`знаходиться під **StarterGui**
+- [ ] LocalScript є всередині\`RunUI\`- [ ]\`FinishPad\`шлях відповідає Script (\`workspace.Obby.FinishPad\`)`,
       },
       {
-        title: "Debug UI issues",
-        content: `| Problem | Fix |
+        title: "Проблеми з налагодженням інтерфейсу користувача",
+        content: `| Проблема | Виправити |
 |---------|-----|
-| No timer visible | ScreenGui under StarterGui, not Workspace |
-| Timer stays 0.00 | LocalScript disabled or wrong parent |
-| Finish does not stop | Wrong path to FinishPad; fix WaitForChild names |
-| Error on Play | Read Output - missing TimerLabel name |
+| Таймер не видно | ScreenGui під StarterGui, а не Workspace |
+| Таймер залишається 0,00 | LocalScript вимкнено або неправильний батьківський |
+| Фініш не зупиняється | Неправильний шлях до FinishPad; виправити імена WaitForChild |
+| Помилка в Play | Прочитати Output - відсутня назва TimerLabel |
 
-**FAQ:** Timer resets on death - normal now; Module 3+ can persist best times.`,
+**Часті запитання:** Таймер скидається після смерті - зараз нормально; Модуль 3+ може зберігати найкращі часи.`,
       },
     ],
   },
   commonMistakes: [
     {
-      mistake: "ScreenGui in Workspace",
-      explanation: "UI will not show on player screen.",
-      correctApproach: "Create RunUI under StarterGui",
+      mistake: "ScreenGui у Workspace",
+      explanation: "Інтерфейс користувача не відображатиметься на екрані програвача.",
+      correctApproach: "Створіть RunUI у StarterGui",
     },
     {
-      mistake: "Server Script for timer label",
-      explanation: "Server cannot update your personal GUI easily.",
-      correctApproach: "Use LocalScript inside RunUI",
+      mistake: "Server Script для мітки таймера",
+      explanation: "Сервер не може легко оновити ваш персональний графічний інтерфейс.",
+      correctApproach: "Використовуйте LocalScript у RunUI",
     },
     {
-      mistake: "FinishPad path typo",
-      explanation: "WaitForChild infinite yield or nil.",
-      correctApproach: "Match folder names: Obby and FinishPad exactly",
+      mistake: "Помилка шляху FinishPad",
+      explanation: "WaitForChild нескінченний вихід або нуль.",
+      correctApproach: "Точно збігайте назви папок: Obby та FinishPad",
     },
     {
-      mistake: "Timer never stops",
-      explanation: "Finish touch not detecting local character.",
-      correctApproach: "Compare Players.LocalPlayer.Character to hit.Parent",
+      mistake: "Таймер ніколи не зупиняється",
+      explanation: "Фінішний штрих не виявляє локальний характер.",
+      correctApproach: "Порівняйте Players.LocalPlayer.Character з hit.Parent",
     },
   ],
-  summary: "You built a ScreenGui timer with os.clock, updated it from a LocalScript, and froze the display on FinishPad - your checkpoint obby is now a speed-run challenge.",
+  summary: "Ви створили таймер ScreenGui за допомогою os.clock, оновили його за допомогою LocalScript і заморозили дисплей на FinishPad — тепер ваш obby контрольної точки став швидкісним завданням.",
   practiceTask: {
-    title: "Beat your time (~25 min)",
+    title: "Перевищте свій час (~25 хв)",
     difficulty: "beginner",
-    description: `**Goal:** Working timer from spawn to finish.
+    description: `**Мета:** Робочий таймер від появи до кінця.
 
-### Part A - UI (8 min)
-1. \`RunUI\` + \`TimerLabel\` in StarterGui (styled, readable)
-2. LocalScript counting up with \`os.clock\`
-3. **Play** - confirm timer runs
+### Part A - Інтерфейс користувача (8 хв)
+1.\`RunUI\`+\`TimerLabel\`у StarterGui (стильований, читабельний)
+2. Підрахунок LocalScript\`os.clock\`3. **Play** - підтвердити роботу таймера
 
-### Part B - Finish pad (8 min)
-1. \`FinishPad\` at end of obby after \`CP_Final\`
-2. Add finish touch code - timer stops, shows \`Finished! XX.XXs\`
-3. Test solo Play - only your character stops timer
+### Part B - Фінішна панель (8 хв)
+1.\`FinishPad\`в кінці обби після\`CP_Final\`2. Додайте фінішний код - таймер зупиняється, показує\`Finished! XX.XXs\`3. Випробуйте сольну гру - тільки ваш character зупиняє таймер
 
-### Part C - Three runs (9 min)
-1. Run 1 - record time
-2. Run 2 - try 10% faster
-3. Run 3 - best attempt
-4. **Save to Roblox** → \`Lesson 2.3 - Obby Timer\`
-5. **Practice complete**`,
+### Part C - Три пробіжки (9 хв)
+1. Забіг 1 - рекорд часу
+2. Запустіть 2 - спробуйте на 10% швидше
+3. Запуск 3 - найкраща спроба
+4. **Зберегти в Roblox** →\`Lesson 2.3 - Obby Timer\`5. **Практика завершена**`,
     hints: [
-      "If FinishPad is not in Obby folder, change WaitForChild path in script",
-      "task.wait(0.05) is enough - do not use wait() with no argument",
-      "TextScaled helps timer read on mobile",
+      "Якщо FinishPad немає в папці Obby, змініть шлях WaitForChild у Scripts",
+      "task.wait(0,05) достатньо - не використовуйте wait() без аргументів",
+      "TextScaled допомагає читати таймер на мобільному телефоні",
     ],
-    optionalChallenge: "Use formatTime() for mm:ss display after 60 seconds.",
+    optionalChallenge: "Використовуйте formatTime() для відображення mm:ss через 60 секунд.",
   },
   quiz: {
     passingScore: 70,
@@ -947,132 +893,132 @@ Use \`formatTime(elapsed)\` instead of raw seconds in \`label.Text\`.
       {
         id: "q1",
         type: "multiple_choice",
-        question: "Timer UI belongs in…",
+        question: "Інтерфейс таймера належить до…",
         options: [
           "StarterGui",
-          "Terrain",
-          "Lighting only",
-          "ServerStorage only",
+          "Рельєф місцевості",
+          "Тільки освітлення",
+          "Тільки ServerStorage",
         ],
         correctAnswer: 0,
-        explanation: "StarterGui clones UI to players.",
+        explanation: "StarterGui клонує інтерфейс користувача для гравців.",
       },
       {
         id: "q2",
         type: "multiple_choice",
-        question: "Timer LocalScript runs on…",
+        question: "Таймер LocalScript працює на...",
         options: [
-          "The player client",
-          "Roblox website",
-          "Every server CPU only",
-          "Output window",
+          "Клієнт гравця",
+          "Веб-сайт Roblox",
+          "Лише для кожного серверного процесора",
+          "Вікно виводу",
         ],
         correctAnswer: 0,
-        explanation: "LocalScripts run per player device.",
+        explanation: "LocalScript запускається на пристрої гравця.",
       },
       {
         id: "q3",
         type: "multiple_choice",
-        question: "os.clock() measures…",
+        question: "os.clock() вимірює...",
         options: [
-          "Elapsed seconds",
-          "Player Robux",
-          "Part size",
-          "BrickColor index",
+          "Минули секунди",
+          "Гравець Robux",
+          "Size Parts",
+          "Індекс BrickColor",
         ],
         correctAnswer: 0,
-        explanation: "os.clock returns time for intervals.",
+        explanation: "os.clock повертає час для інтервалів.",
       },
       {
         id: "q4",
         type: "multiple_choice",
-        question: "string.format(\"%.2f\", n) shows…",
+        question: "string.format(\"%.2f\", n) показує…",
         options: [
-          "Two decimal places",
-          "Random color",
-          "Player name only",
-          "Terrain height",
+          "Два знаки після коми",
+          "Випадковий колір",
+          "Лише ім'я гравця",
+          "Висота місцевості",
         ],
         correctAnswer: 0,
-        explanation: "%.2f formats floats.",
+        explanation: "Плаваючі формати %.2f.",
       },
       {
         id: "q5",
         type: "multiple_choice",
-        question: "running = false stops…",
+        question: "біг = помилкові зупинки…",
         options: [
-          "The while loop updating the label",
-          "The entire game server",
-          "All checkpoints",
-          "Terrain generation",
+          "Цикл while, що оновлює мітку",
+          "Весь ігровий сервер",
+          "Всі КПП",
+          "Генерація рельєфу",
         ],
         correctAnswer: 0,
-        explanation: "Boolean flag ends the update loop.",
+        explanation: "Логічний прапор завершує цикл оновлення.",
       },
       {
         id: "q6",
         type: "multiple_choice",
-        question: "FinishPad should detect…",
+        question: "FinishPad має виявити…",
         options: [
-          "LocalPlayer character touch",
-          "Only lava",
-          "Sky changes",
-          "Save to file",
+          "Дотик Character LocalPlayer",
+          "Тільки лава",
+          "Небо змінюється",
+          "Зберегти у файл",
         ],
         correctAnswer: 0,
-        explanation: "LocalPlayer check targets you in solo Play.",
+        explanation: "Перевірка LocalPlayer націлена на вас у соло-грі.",
       },
       {
         id: "q7",
         type: "multiple_choice",
-        question: "task.wait(0.05) in the loop…",
+        question: "task.wait(0,05) у циклі…",
         options: [
-          "Updates text ~20 times per second",
-          "Deletes UI",
-          "Anchors Parts",
-          "Publishes game",
+          "Оновлює текст ~20 разів на секунду",
+          "Видаляє інтерфейс користувача",
+          "Деталі анкерів",
+          "Видає гру",
         ],
         correctAnswer: 0,
-        explanation: "Short wait balances smooth and light.",
+        explanation: "Коротке очікування врівноважує гладкість і легкість.",
       },
       {
         id: "q8",
         type: "multiple_choice",
-        question: "Kill blocks use Script; timer uses…",
+        question: "Знищення блоків за допомогою Script; таймер використовує...",
         options: [
           "LocalScript",
           "Folder",
-          "Sound only",
+          "Тільки звук",
           "SpawnLocation",
         ],
         correctAnswer: 0,
-        explanation: "UI timers are client-side here.",
+        explanation: "Тут таймери інтерфейсу користувача працюють на стороні клієнта.",
       },
       {
         id: "q9",
         type: "multiple_choice",
-        question: "If timer missing, first check…",
+        question: "Якщо таймер відсутній, спочатку перевірте…",
         options: [
-          "RunUI under StarterGui and label name",
-          "Delete Obby",
-          "Remove Humanoid",
-          "Change language",
+          "RunUI під StarterGui та назву мітки",
+          "Видалити Obby",
+          "Видаліть Humanoid",
+          "Змінити мову",
         ],
         correctAnswer: 0,
-        explanation: "Wrong GUI location is the top UI bug.",
+        explanation: "Неправильне розташування графічного інтерфейсу є головною помилкою інтерфейсу.",
       },
       {
         id: "q10",
         type: "multiple_choice",
-        question: "Lesson 2.3 save name…",
+        question: "Урок 2.3 зберегти назву…",
         options: [
-          "Lesson 2.3 - Obby Timer",
-          "Lesson 2.2 - Checkpoints",
-          "Module 1 - Living Island",
-          "Lava Lane",
+          "Урок 2.3 - Obby Timer",
+          "Урок 2.2 - Контрольні точки",
+          "Модуль 1 - Живий острів",
+          "Лавовий пров",
         ],
         correctAnswer: 0,
-        explanation: "Save after adding the timer.",
+        explanation: "Збережіть після додавання таймера.",
       },
     ],
   },
@@ -1087,210 +1033,179 @@ export const ukLesson24 = {
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    "Write if, elseif, and else branches in Luau",
-    "Assign S / A / B ranks from finish time",
-    "Test boundary values like 35.00 and 60.00 seconds",
-    "Connect rank logic to your timer finish flow",
+    "Напишіть if, elseif і else розгалуження в Luau",
+    "Призначте ранги S / A / B від часу фінішу",
+    "Перевірте граничні значення, наприклад 35,00 і 60,00 секунд",
+    "Підключіть логіку рангу до завершення потоку таймера",
   ],
   theory: {
     sections: [
       {
-        title: "Ваш шлях сьогодні (близько 40 хвилин)",
-        content: `Your obby already tracks time. Today the game **decides** how good that time is - **if/elseif/else**.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `Ваш obby вже відстежує час. Сьогодні гра **вирішує**, наскільки хороший цей час - **if/elseif/else**.
 
-**Lesson flow:**
-1. **Theory (40 min)** - conditions + rank grading
-2. **Practice (~25 min)** - S/A/B ranks on finish
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - умови + рангова оцінка
+2. **Практика (~25 хв)** - S/A/B займає місце на фініші
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Open **Lesson 2.3 - Obby Timer**. You will extend the **FinishPad** LocalScript.`,
+Відкрийте **Урок 2.3 - Obby Timer**. Ви розширите **FinishPad** LocalScript.`,
       },
       {
-        title: "Games think in questions",
-        content: `Every game asks yes/no questions:
+        title: "Ігри міркуйте в питаннях",
+        content: `У кожній грі ставлять запитання так/ні:
 
-| Question | Action |
+| Питання | Дія |
 |----------|--------|
-| Did player touch finish? | Stop timer |
-| Is time under 35 seconds? | **S Rank** |
-| Is time under 60 seconds? | **A Rank** |
-| Otherwise? | **B Rank** |
+| Гравець торкнувся фінішу? | Зупинити таймер |
+| Час менше 35 секунд? | **S Ранг** |
+| Час менше 60 секунд? | **Звання** |
+| інакше? | **B ранг** |
 
-**Conditions** turn questions into code. No AI needed - just clear rules you write.`,
+**Умови** перетворюють запитання на код. ШІ не потрібен – лише чіткі правила, які ви пишете.`,
       },
       {
-        title: "if / elseif / else syntax",
+        title: "синтаксис if / elseif / else",
         content: `\`\`\`lua
 local elapsed = 47.3
 local rank = "B Rank"
 
 if elapsed < 35 then
-    rank = "S Rank"
+ rank = "S Rank"
 elseif elapsed < 60 then
-    rank = "A Rank"
+ rank = "A Rank"
 else
-    rank = "B Rank"
+ rank = "B Rank"
 end
 
 print(rank)
-\`\`\`
-
-**Rules:**
-- Only **one** branch runs - the first true condition
-- Conditions use **comparison**: \`<\`, \`>\`, \`==\`, \`<=\`
-- Every block ends with \`end\`
-- Use \`elseif\` for extra steps between \`if\` and \`else\`
-
-**Exercise (5 min):** In Output, test \`elapsed = 34.9\`, \`35.0\`, \`59.9\`, \`60.0\` - predict rank before running.`,
+\`\`\`**Правила:**
+- Працює лише **одна** гілка - перша справжня умова
+- Умови використовують **порівняння**:\`<\`,\`>\`,\`==\`,\`<=\`- Кожен блок закінчується на\`end\`- Використовуйте\`elseif\`для додаткових кроків між\`if\`і\`else\`**Вправа (5 хв):** Output дані, тест\`elapsed = 34.9\`,\`35.0\`,\`59.9\`,\`60.0\`- передбачити ранг перед запуском.`,
       },
       {
-        title: "Comparison operators you need",
-        content: `| Operator | Meaning | Example |
+        title: "Вам потрібні оператори порівняння",
+        content: `| Оператор | Значення | Приклад |
 |----------|---------|---------|
-| \`<\` | less than | \`elapsed < 35\` |
-| \`<=\` | less or equal | \`deaths <= 3\` |
-| \`>\` | greater than | \`score > 10\` |
-| \`==\` | equal | \`rank == "S Rank"\` |
-| \`~=\` | not equal | \`team ~= "Red"\` |
+|\`<\`| менше |\`elapsed < 35\`|
+|\`<=\`| менше або дорівнює |\`deaths <= 3\`|
+|\`>\`| більше |\`score > 10\`|
+|\`==\`| рівний |\`rank == "S Rank"\`|
+|\`~=\`| не дорівнює |\`team ~= "Red"\`|
 
-**Common bug:** writing \`if elapsed = 35\` - single \`=\` **assigns**, it does not compare. Always use \`==\` for equality checks.`,
+**Поширена помилка:** написання\`if elapsed = 35\`- неодружений\`=\`**призначає**, не порівнює. Завжди використовуйте\`==\`для перевірки рівності.`,
       },
       {
-        title: "Rank function - clean code",
-        content: `Put grading in a **function** so finish code stays readable:
-
-\`\`\`lua
+        title: "Функція рангу - чистий код",
+        content: `Розмістіть оцінку у **функції**, щоб завершальний код залишався читабельним:\`\`\`lua
 local function getRank(elapsed)
-    if elapsed < 35 then
-        return "S Rank"
-    elseif elapsed < 60 then
-        return "A Rank"
-    else
-        return "B Rank"
-    end
+ if elapsed < 35 then
+ return "S Rank"
+ elseif elapsed < 60 then
+ return "A Rank"
+ else
+ return "B Rank"
+ end
 end
-\`\`\`
-
-**Call it** when FinishPad is touched:
-
-\`\`\`lua
+\`\`\`**Викличте його**, коли торкаєтеся FinishPad:\`\`\`lua
 local rank = getRank(elapsed)
 print("You earned: " .. rank)
-\`\`\`
-
-**Exercise (8 min):** Add \`getRank\` to your timer LocalScript. Print rank to Output on finish.`,
+\`\`\`**Вправа (8 хв):** Доп\`getRank\`до вашого таймера LocalScript. Роздрукуйте ранг to Output після закінчення.`,
       },
       {
-        title: "Wire rank to timer label",
-        content: `After \`running = false\`:
-
-\`\`\`lua
+        title: "Підключіть ряд до мітки таймера",
+        content: `після\`running = false\`:\`\`\`lua
 local rank = getRank(elapsed)
 label.Text = string.format("Finished! %.2fs - %s", elapsed, rank)
-\`\`\`
+\`\`\`Гравці миттєво бачать **час + оцінку** - це стимулює повторну гру для S Rank.
 
-Players instantly see **time + grade** - motivates replay for S Rank.
-
-**Threshold tuning:** change \`35\` and \`60\` to match **your** obby length. Short obby → tighter times.`,
+**Налаштування порогу:** зміна\`35\`і\`60\`щоб відповідати **вашій** довжині obby. Короткі обби → важчі часи.`,
       },
       {
-        title: "Test every branch on purpose",
-        content: `**Structured tests:**
-1. **S Rank** - sprint finish under 35s (or lower your thresholds temporarily)
-2. **A Rank** - normal careful run 35–59s
-3. **B Rank** - walk slowly / wait on a platform past 60s
+        title: "Тестуйте кожну гілку спеціально",
+        content: `**Структуровані тести:**
+1. **S Rank** - фініш спринту менше 35 с (або тимчасово знизити порогові значення)
+2. **А Ранг** - нормальний обережний біг 35–59 с
+3. **B Ранг** - йдіть повільно / чекайте на платформі за 60
 
-**Edge cases:**
-- Exactly \`35.00\` → goes to **A** (because \`< 35\` is false, \`< 60\` is true)
-- Exactly \`60.00\` → **B Rank**
+**Корпуси:**
+- Точно\`35.00\`→ переходить до **A** (тому що\`< 35\` is false, `< 60\` is true)
+- Точно\`60.00\`→ **B Ранг**
 
-Write thresholds as comments at top of script:
-
-\`\`\`lua
+Напишіть порогові значення у вигляді коментарів у верхній Part Script:\`\`\`lua
 local S_TIME = 35
 local A_TIME = 60
 \`\`\``,
       },
       {
-        title: "Optional - deaths downgrade rank",
-        content: `Track deaths with a counter in the same LocalScript:
-
-\`\`\`lua
+        title: "Необов'язково - смерть знижує ранг",
+        content: `Відстежуйте смерті за допомогою лічильника в тому самому LocalScript:\`\`\`lua
 local deaths = 0
 
 -- In lava: you cannot detect server death easily in LocalScript yet.
 -- For this lesson: manual test variable deaths = 3 before finish
-\`\`\`
-
-Challenge branch:
-
-\`\`\`lua
+\`\`\`Гілка виклику:\`\`\`lua
 if deaths >= 3 and rank == "S Rank" then
-    rank = "A Rank"
+ rank = "A Rank"
 elseif deaths >= 3 and rank == "A Rank" then
-    rank = "B Rank"
+ rank = "B Rank"
 end
-\`\`\`
-
-Full death tracking comes in later modules with server events.`,
+\`\`\`Повне відстеження смертей з’являється в наступних модулях із серверними подіями.`,
       },
       {
-        title: "Контрольний список перед тренуванням",
-        content: `- [ ] I can explain why \`elseif\` runs only when earlier tests fail
-- [ ] \`getRank\` returns a string used in the timer label
-- [ ] I tested at least two different finish times
-- [ ] Save name ready: \`Lesson 2.4 - Finish Grades\``,
+        title: "Контрольний список перед початком практики",
+        content: `- [ ] Я можу пояснити чому\`elseif\`запускається лише тоді, коли попередні тести виявляються невдалими
+- [ ]\`getRank\`повертає рядок, який використовується в мітці таймера
+- [ ] Я тестував принаймні два різні часи фінішу
+- [ ] Зберегти ім'я готове:\`Lesson 2.4 - Finish Grades\``,
       },
     ],
   },
   commonMistakes: [
     {
-      mistake: "Used = instead of == in if",
-      explanation: "Single equals assigns values.",
-      correctApproach: "Compare with == or < > <= >=",
+      mistake: "Використовується = замість == у if",
+      explanation: "Одинарне дорівнює призначає значення.",
+      correctApproach: "Порівняйте з == або < > <= >=",
     },
     {
-      mistake: "elseif order wrong (60 before 35)",
-      explanation: "First match wins - wide condition catches everything.",
-      correctApproach: "Check strictest threshold first: S, then A, then else",
+      mistake: "elseif порядок неправильний (60 перед 35)",
+      explanation: "Перший матч виграє - широка умова вловлює все.",
+      correctApproach: "Спочатку перевірте найсуворіший поріг: S, потім A, потім ще",
     },
     {
-      mistake: "Rank always B Rank",
-      explanation: "elapsed never calculated before getRank.",
-      correctApproach: "Compute elapsed = os.clock() - startTime right before grading",
+      mistake: "Ранг завжди B Ранг",
+      explanation: "минув ніколи не обчислювався до getRank.",
+      correctApproach: "Минув обчислення = os.clock() - час початку безпосередньо перед оцінкою",
     },
     {
-      mistake: "Changed thresholds but not comments",
-      explanation: "Future you forgets the rules.",
-      correctApproach: "Keep S_TIME and A_TIME constants at top of script",
+      mistake: "Змінено пороги, але не коментарі",
+      explanation: "Майбутнє ти забуває правила.",
+      correctApproach: "Зберігайте константи S_TIME та A_TIME у верхній Part Script",
     },
   ],
-  summary: "You used if/elseif/else to grade finish times into S, A, and B ranks, tested boundary seconds, and connected rank text to your obby timer - your game now reacts with rules, not just numbers.",
+  summary: "Ви використовували if/elseif/else, щоб класифікувати час фінішу за рангами S, A та B, перевірили граничні секунди та під’єднали текст рангу до свого таймера obby — ваша гра тепер реагує на правила, а не лише на числа.",
   practiceTask: {
-    title: "Finish grading - S / A / B (~25 min)",
+    title: "Завершити оцінювання - S / A / B (~25 хв)",
     difficulty: "beginner",
-    description: `**Goal:** Finish shows time + rank from conditions.
+    description: `**Ціль:** Фініш показує час + рейтинг з умов.
 
-### Part A - getRank function (10 min)
-1. Open timer LocalScript from Lesson 2.3
-2. Add \`S_TIME = 35\`, \`A_TIME = 60\` and \`getRank(elapsed)\`
-3. Print rank to Output on FinishPad touch
+### Part A - функція getRank (10 хв)
+1. Відкрийте таймер LocalScript з уроку 2.3
+2. Додайте\`S_TIME = 35\`,\`A_TIME = 60\`і\`getRank(elapsed)\`3. Надрукуйте рейтинг для виводу на FinishPad touch
 
-### Part B - Label display (8 min)
-1. Update \`TimerLabel\` text: \`Finished! XX.XXs - S Rank\`
-2. Test three runs targeting S, A, and B
+### Part B – Відображення етикетки (8 хв)
+1. Оновлення\`TimerLabel\`текст:\`Finished! XX.XXs - S Rank\`2. Випробуйте три запуски, націлені на S, A та B
 
-### Part C - Tune & save (7 min)
-1. Adjust S_TIME / A_TIME if your obby is longer/shorter
-2. Document thresholds in a comment
-3. **Save to Roblox** → \`Lesson 2.4 - Finish Grades\`
-4. **Practice complete**`,
+### Part C - Налаштувати та зберегти (7 хв)
+1. Налаштуйте S_TIME / A_TIME, якщо ваш obby довший/коротший
+2. Задокументуйте пороги в коментарях
+3. **Зберегти в Roblox** →\`Lesson 2.4 - Finish Grades\`4. **Практика завершена**`,
     hints: [
-      "Test 34.99 vs 35.00 vs 59.99 vs 60.00 in Studio with temporary short obby",
-      "Put getRank above the Touched connection so you can read it easily",
-      "Print to Output before changing label text if bugs appear",
+      "Перевірте 34,99 проти 35,00 проти 59,99 проти 60,00 у Studio з тимчасовим коротким obby",
+      "Розмістіть getRank над з’єднанням Touched, щоб ви могли його легко прочитати",
+      "У разі виявлення помилок перед зміною тексту етикетки друкувати to Output",
     ],
-    optionalChallenge: "If deaths >= 3, downgrade rank one tier (manual deaths variable for now).",
+    optionalChallenge: "Якщо смертей >= 3, понизити ранг на один рівень (наразі змінна смертей вручну).",
   },
   quiz: {
     passingScore: 70,
@@ -1299,33 +1214,33 @@ Full death tracking comes in later modules with server events.`,
       {
         id: "q1",
         type: "multiple_choice",
-        question: "if/elseif/else picks…",
+        question: "if/elseif/else вибирає…",
         options: [
-          "The first true branch only",
-          "Every branch at once",
-          "Random branch",
-          "No branch",
+          "Лише перша справжня гілка",
+          "Кожна гілка відразу",
+          "Випадкова гілка",
+          "Немає гілки",
         ],
         correctAnswer: 0,
-        explanation: "First match wins, then stops.",
+        explanation: "Спочатку матч виграє, потім зупиняється.",
       },
       {
         id: "q2",
         type: "multiple_choice",
-        question: "elseif elapsed < 60 runs when…",
+        question: "інакше, якщо минуло < 60 прогонів, коли...",
         options: [
-          "elapsed < 35 was false and time < 60",
-          "Always",
-          "Never after else",
-          "Only in Edit mode",
+          "elapsed < 35 було помилковим, а time < 60",
+          "Завжди",
+          "Ніколи інакше",
+          "Тільки в режимі редагування",
         ],
         correctAnswer: 0,
-        explanation: "Earlier false conditions allow elseif.",
+        explanation: "Попередні помилкові умови дозволяють elseif.",
       },
       {
         id: "q3",
         type: "multiple_choice",
-        question: "Compare equality uses…",
+        question: "Порівняти рівність використовує…",
         options: [
           "==",
           "=",
@@ -1333,98 +1248,98 @@ Full death tracking comes in later modules with server events.`,
           "<>",
         ],
         correctAnswer: 0,
-        explanation: "Luau uses == for equality.",
+        explanation: "Luau використовує == для рівності.",
       },
       {
         id: "q4",
         type: "multiple_choice",
-        question: "elapsed = 35.00 with if elapsed < 35 gets…",
+        question: "минуло = 35,00, якщо минуло < 35, отримує…",
         options: [
-          "A Rank (not S)",
-          "S Rank",
-          "Error",
-          "No rank",
+          "Ранг A (не S)",
+          "S ранг",
+          "Помилка",
+          "Без звання",
         ],
         correctAnswer: 0,
-        explanation: "35 is not less than 35.",
+        explanation: "35 не менше 35.",
       },
       {
         id: "q5",
         type: "multiple_choice",
-        question: "Functions like getRank help…",
+        question: "Такі функції, як getRank, допомагають…",
         options: [
-          "Reuse logic cleanly",
-          "Delete UI",
-          "Remove terrain",
-          "Ban players",
+          "Чисто повторно використовуйте логіку",
+          "Видалити інтерфейс користувача",
+          "Видалити місцевість",
+          "Банити гравців",
         ],
         correctAnswer: 0,
-        explanation: "Functions organize condition blocks.",
+        explanation: "Функції організовують блоки умов.",
       },
       {
         id: "q6",
         type: "multiple_choice",
-        question: "Strictest time check should be…",
+        question: "Найсуворіша перевірка часу повинна бути...",
         options: [
-          "First if",
-          "Last else only",
-          "Never used",
-          "Inside Sound",
+          "Спочатку якщо",
+          "Тільки останнє",
+          "Ніколи не використовувався",
+          "Внутрішній звук",
         ],
         correctAnswer: 0,
-        explanation: "Check S threshold before wider A threshold.",
+        explanation: "Перевірте поріг S перед ширшим порогом A.",
       },
       {
         id: "q7",
         type: "multiple_choice",
-        question: "S_TIME constant at top makes…",
+        question: "Константа S_TIME у верхній Part робить…",
         options: [
-          "Tuning thresholds easier",
-          "Scripts invisible",
-          "Parts unanchored",
-          "Sky pink",
+          "Налаштувати пороги простіше",
+          "Скрипти невидимі",
+          "Parts розкріплені",
+          "Небесно-рожевий",
         ],
         correctAnswer: 0,
-        explanation: "Named constants document game rules.",
+        explanation: "Іменовані константи документують правила гри.",
       },
       {
         id: "q8",
         type: "multiple_choice",
-        question: "Rank motivates players to…",
+        question: "Ранг мотивує гравців...",
         options: [
-          "Replay for better time",
-          "Delete Workspace",
-          "Disable Humanoid",
-          "Remove checkpoints",
+          "Повтор для кращого часу",
+          "Видалити Workspace",
+          "Вимкнути Humanoid",
+          "Видаліть контрольні точки",
         ],
         correctAnswer: 0,
-        explanation: "Grades drive speed-run retries.",
+        explanation: "Оцінки стимулюють повторні спроби пробігу.",
       },
       {
         id: "q9",
         type: "multiple_choice",
-        question: "else runs when…",
+        question: "інакше запускається, коли...",
         options: [
-          "No earlier condition was true",
-          "Always first",
-          "Only in Play",
-          "Player has Robux",
+          "Жодна попередня умова не була trueю",
+          "Завжди перший",
+          "Тільки в Play",
+          "Гравець має Robux",
         ],
         correctAnswer: 0,
-        explanation: "else is the fallback branch.",
+        explanation: "else є резервною гілкою.",
       },
       {
         id: "q10",
         type: "multiple_choice",
-        question: "Lesson 2.4 save name…",
+        question: "Урок 2.4 зберегти назву…",
         options: [
-          "Lesson 2.4 - Finish Grades",
-          "Lesson 2.3 - Obby Timer",
-          "Lava Lane",
-          "Module 3",
+          "Урок 2.4. Підсумкові оцінки",
+          "Урок 2.3 - Obby Timer",
+          "Лавовий пров",
+          "Модуль 3",
         ],
         correctAnswer: 0,
-        explanation: "Save after adding rank logic.",
+        explanation: "Збережіть після додавання логіки рангу.",
       },
     ],
   },
@@ -1439,63 +1354,59 @@ export const ukLesson25 = {
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    "Build a VictoryGui ScreenGui with Frame and labels",
-    "Show and hide UI with Enabled property",
-    "Display dynamic time and rank from finish logic",
-    "Add a Retry button that resets the run feel",
+    "Створіть VictoryGui ScreenGui з рамкою та мітками",
+    "Показати та приховати інтерфейс користувача з властивістю Enabled",
+    "Відображати динамічний час і ранг від логіки фінішу",
+    "Додайте кнопку «Повторити», яка скидає відчуття запуску",
   ],
   theory: {
     sections: [
       {
-        title: "Ваш шлях сьогодні (близько 40 хвилин)",
-        content: `A number on a timer label is good. A **victory screen** feels like winning a real game.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `Число на етикетці таймера – це добре. **Екран перемоги** схожий на перемогу в справжній грі.
 
-**Lesson flow:**
-1. **Theory (40 min)** - VictoryGui layout + showVictory
-2. **Practice (~25 min)** - polished win panel
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - макет VictoryGui + showVictory
+2. **Практика (~25 хв)** - полірована виграшна панель
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Keep your **Lesson 2.4** finish grading. Today you move results into a **center panel**.`,
+Продовжуйте оцінювати свій **Урок 2.4**. Сьогодні ви переміщуєте результати на **центральну панель**.`,
       },
       {
-        title: "What players expect when they win",
-        content: `Strong victory screens show:
+        title: "Чого очікують гравці, коли виграють",
+        content: `Сильні екрани перемоги показують:
 
-| Element | Purpose |
+| Елемент | Призначення |
 |---------|---------|
-| **Title** | "Level Complete!" celebration |
-| **Time** | Proof of performance |
-| **Rank** | S / A / B from Lesson 2.4 |
-| **Retry** | One-click play again |
+| **Name** | "Рівень пройдено!" святкування |
+| **Час** | Підтвердження виконання |
+| **Звання** | S / A / B з уроку 2.4 |
+| **Повторити** | Повторне відтворення в один клік |
 
-**UX rules:**
-- Large readable text (**TextScaled**)
-- High contrast panel on blurred world behind
-- **Enabled = false** until finish - no spoilers at spawn`,
+**Правила UX:**
+- Великий читабельний текст (**TextScaled**)
+- Висококонтрастна панель на розмитому світі позаду
+- **Enabled = false** до завершення - без спойлерів під час появи`,
       },
       {
-        title: "Build VictoryGui hierarchy",
-        content: `In **StarterGui**:
+        title: "Створення ієрархії VictoryGui",
+        content: `У **StarterGui**:\`ScreenGui\`→ **VictoryGui** (ResetOnSpawn необов’язково)
+└\`Frame\`→ **Панель** (у центрі, розмір ~\`{0, 320}, {0, 280}\`)
+ ├\`TextLabel\`→ **TitleLabel** - "Рівень завершено!"
+ ├\`TextLabel\`→ **TimeLabel** - "Час: --"
+ ├\`TextLabel\`→ **RankLabel** - "Ранг: --"
+ └\`TextButton\`→ **RetryButton** - "Play ще раз"
 
-\`ScreenGui\` → **VictoryGui** (ResetOnSpawn optional)
-└ \`Frame\` → **Panel** (center, Size ~ \`{0, 320}, {0, 280}\`)
-   ├ \`TextLabel\` → **TitleLabel** - "Level Complete!"
-   ├ \`TextLabel\` → **TimeLabel** - "Time: --"
-   ├ \`TextLabel\` → **RankLabel** - "Rank: --"
-   └ \`TextButton\` → **RetryButton** - "Play Again"
+**Стиль панелі:**
+- BackgroundColor3 темно-синій/сірий
+- UIC Радіус кута 12
+- UIStroke біла тонка рамка
 
-**Panel style:**
-- BackgroundColor3 dark blue/grey
-- UICorner radius 12
-- UIStroke white thin border
-
-Set **VictoryGui.Enabled = false** in Properties before scripting.`,
+Встановіть **VictoryGui.Enabled = false** у Properties перед створенням Script.`,
       },
       {
-        title: "showVictory function",
-        content: `LocalScript inside **VictoryGui** (or inside RunUI if you merge files):
-
-\`\`\`lua
+        title: "функція showVictory",
+        content: `LocalScript у **VictoryGui** (або всередині RunUI, якщо ви об’єднуєте файли):\`\`\`lua
 local gui = script.Parent
 local panel = gui:WaitForChild("Panel")
 local titleLabel = panel:WaitForChild("TitleLabel")
@@ -1503,24 +1414,20 @@ local timeLabel = panel:WaitForChild("TimeLabel")
 local rankLabel = panel:WaitForChild("RankLabel")
 
 local function showVictory(finalTime, rank)
-    titleLabel.Text = "Level Complete!"
-    timeLabel.Text = string.format("Time: %.2fs", finalTime)
-    rankLabel.Text = "Rank: " .. rank
-    gui.Enabled = true
+ titleLabel.Text = "Level Complete!"
+ timeLabel.Text = string.format("Time: %.2fs", finalTime)
+ rankLabel.Text = "Rank: " .. rank
+ gui.Enabled = true
 end
 
 return showVictory
-\`\`\`
-
-If Script is sibling structure, use \`script.Parent\` paths that match **your** tree exactly.`,
+\`\`\`Якщо Script є братньою структурою, використовуйте\`script.Parent\`шляхи, які точно відповідають **вашому** дереву.`,
       },
       {
-        title: "Connect finish pad to victory UI",
-        content: `**Option A - one LocalScript** in RunUI handles timer + finish + victory.
+        title: "Підключіть фінішну панель до інтерфейсу користувача",
+        content: `**Варіант A – один LocalScript** у RunUI обробляє таймер + фініш + перемогу.
 
-On FinishPad touch after computing \`elapsed\` and \`rank\`:
-
-\`\`\`lua
+Торкніться FinishPad після обчислення\`elapsed\`і\`rank\`:\`\`\`lua
 -- Stop timer loop (running = false)
 local victoryGui = playerGui:WaitForChild("VictoryGui")
 -- OR if VictoryGui is in StarterGui it clones to PlayerGui:
@@ -1530,106 +1437,96 @@ victoryGui.Panel.TitleLabel.Text = "Level Complete!"
 victoryGui.Panel.TimeLabel.Text = string.format("Time: %.2fs", elapsed)
 victoryGui.Panel.RankLabel.Text = "Rank: " .. rank
 victoryGui.Enabled = true
-\`\`\`
-
-**Exercise (10 min):** Finish obby - victory panel appears, timer stops underneath.`,
+\`\`\`**Вправа (10 хв):** Завершити obby - з'являється панель перемоги, таймер зупиняється під нею.`,
       },
       {
-        title: "Hide RunUI timer when victory shows",
-        content: `Optional polish:
-
-\`\`\`lua
+        title: "Приховати таймер RunUI, коли відображається перемога",
+        content: `Додатковий лак:\`\`\`lua
 local runUI = playerGui:FindFirstChild("RunUI")
 if runUI then
-    runUI.Enabled = false
+ runUI.Enabled = false
 end
 victoryGui.Enabled = true
-\`\`\`
+\`\`\`Гравці зосереджуються на картці виграшу, а не на повторюваних числах.
 
-Players focus on the win card, not duplicate numbers.
-
-Restore RunUI when retrying.`,
+Відновіть RunUI під час повторної спроби.`,
       },
       {
-        title: "Retry button behavior",
+        title: "Поведінка кнопки повторити",
         content: `\`\`\`lua
 local retryBtn = panel:WaitForChild("RetryButton")
 
 retryBtn.MouseButton1Click:Connect(function()
-    gui.Enabled = false
-    local runUI = playerGui:FindFirstChild("RunUI")
-    if runUI then
-        runUI.Enabled = true
-    end
-    local char = Players.LocalPlayer.Character
-    if char and char:FindFirstChild("Humanoid") then
-        char.Humanoid.Health = 0  -- respawn to restart run feel
-    end
+ gui.Enabled = false
+ local runUI = playerGui:FindFirstChild("RunUI")
+ if runUI then
+ runUI.Enabled = true
+ end
+ local char = Players.LocalPlayer.Character
+ if char and char:FindFirstChild("Humanoid") then
+ char.Humanoid.Health = 0 -- respawn to restart run feel
+ end
 end)
-\`\`\`
+\`\`\`**Примітка:** Для повного скидання таймера потрібно перезавантажити startTime - для уроку достатньо відновити + приховати GUI. Ідеальне скидання зливається в модулі 6 polish.
 
-**Note:** Full timer reset needs reloading startTime - for lesson, respawn + hide GUI is enough. Perfect reset merges in Module 6 polish.
-
-**Exercise (5 min):** Click Retry - panel hides, you respawn.`,
+**Вправа (5 хв):** Натисніть «Повторити» - панель ховається, ви знову з’являєтьсяте.`,
       },
       {
-        title: "Контрольний список перед тренуванням",
-        content: `- [ ] VictoryGui starts **Enabled false**
-- [ ] Exact names match script WaitForChild paths
-- [ ] Finish shows time **and** rank on panel
-- [ ] Retry hides panel
-- [ ] Save: \`Lesson 2.5 - Victory Screen\``,
+        title: "Контрольний список перед початком практики",
+        content: `- [ ] VictoryGui запускає **Enabled false**
+- [ ] Точні назви відповідають Script WaitForChild
+- [ ] Finish показує час **і** ранг на панелі
+- [ ] Повторна спроба приховує панель
+- [ ] Зберегти:\`Lesson 2.5 - Victory Screen\``,
       },
     ],
   },
   commonMistakes: [
     {
-      mistake: "Nil error on TitleLabel",
-      explanation: "Wrong path - Panel vs Frame name mismatch.",
-      correctApproach: "Match Explorer names exactly to WaitForChild strings",
+      mistake: "Нульова помилка на TitleLabel",
+      explanation: "Неправильний шлях - невідповідність імен панелі та рами.",
+      correctApproach: "Точно збігайте імена Explorer із рядками WaitForChild",
     },
     {
-      mistake: "Victory visible at spawn",
-      explanation: "Enabled left true.",
-      correctApproach: "VictoryGui.Enabled = false until finish",
+      mistake: "Перемога, видима на спауні",
+      explanation: "Увімкнено, залишилося вірним.",
+      correctApproach: "VictoryGui.Enabled = false до завершення",
     },
     {
-      mistake: "Script in Workspace not StarterGui",
-      explanation: "UI does not clone to player.",
-      correctApproach: "LocalScript under VictoryGui in StarterGui",
+      mistake: "Script у Workspace, а не StarterGui",
+      explanation: "Інтерфейс користувача не клонується до плеєра.",
+      correctApproach: "LocalScript у VictoryGui у StarterGui",
     },
     {
-      mistake: "Looking for VictoryGui in StarterGui at runtime",
-      explanation: "After spawn it lives under PlayerGui.",
-      correctApproach: "Use LocalPlayer.PlayerGui:WaitForChild(\"VictoryGui\")",
+      mistake: "Шукаємо VictoryGui у StarterGui під час виконання",
+      explanation: "Після появи він живе під PlayerGui.",
+      correctApproach: "Використовуйте LocalPlayer.PlayerGui:WaitForChild(\"VictoryGui\")",
     },
   ],
-  summary: "You built a VictoryGui with title, time, rank, and retry, wired it to FinishPad logic, and learned Enabled plus PlayerGui paths - your obby now celebrates wins like a shipped mini-game.",
+  summary: "Ви створили VictoryGui із заголовком, часом, рангом і повторними спробами, підключили його до логіки FinishPad і вивчили шляхи Enabled плюс PlayerGui — ваш obby тепер святкує перемоги, як відправлена ​​міні-гра.",
   practiceTask: {
-    title: "Victory panel polish (~25 min)",
+    title: "Полірування панелі Victory (~25 хв)",
     difficulty: "beginner",
-    description: `**Goal:** Professional win screen on finish.
+    description: `**Ціль:** Екран професійної перемоги на фініші.
 
-### Part A - Layout (10 min)
-1. Create **VictoryGui** + **Panel** + 3 labels + **RetryButton**
-2. Style: corner, stroke, readable fonts, **Enabled false**
-3. Position panel center screen
+### Part A - Макет (10 хв)
+1. Створіть **VictoryGui** + **Panel** + 3 мітки + **RetryButton**
+2. Стиль: кут, обведення, читабельні шрифти, **Увімкнено false**
+3. Розташуйте центральний екран панелі
 
-### Part B - Show on finish (10 min)
-1. Connect FinishPad to fill labels + \`VictoryGui.Enabled = true\`
-2. Hide or disable **RunUI** while victory shows
-3. Test S, A, B ranks display correctly
+### Part B - Показ після закінчення (10 хв)
+1. Підключіть FinishPad для заповнення етикеток +\`VictoryGui.Enabled = true\`2. Приховайте або вимикайте **RunUI**, поки відображається перемога
+3. Ранги тесту S, A, B відображаються правильно
 
-### Part C - Retry & save (5 min)
-1. Retry button hides victory, enables RunUI, respawns player
-2. **Save to Roblox** → \`Lesson 2.5 - Victory Screen\`
-3. **Practice complete**`,
+### Part C - Повторити та зберегти (5 хв)
+1. Кнопка «Повторити» приховує перемогу, вмикає RunUI, відроджує гравця
+2. **Зберегти в Roblox** →\`Lesson 2.5 - Victory Screen\`3. **Практика завершена**`,
     hints: [
-      "Use Explorer copy path to verify object names",
-      "If panel nil, print script.Parent:GetFullName() in Output",
-      "Test Retry once before saving",
+      "Використовуйте шлях копіювання Explorerа, щоб перевірити імена об’єктів",
+      "Якщо панель нуль, надрукувати script.Parent:GetFullName() у вихідних даних",
+      "Перевірте Повторіть один раз перед збереженням",
     ],
-    optionalChallenge: "TweenService slide Panel from top when Enabled (Module 5 preview).",
+    optionalChallenge: "TweenService пересунути панель зверху, коли ввімкнено (попередній перегляд модуля 5).",
   },
   quiz: {
     passingScore: 70,
@@ -1638,132 +1535,132 @@ end)
       {
         id: "q1",
         type: "multiple_choice",
-        question: "VictoryGui should start with Enabled…",
+        question: "VictoryGui має починатися з Enabled…",
         options: [
-          "false",
+          "помилковий",
           "true always",
-          "nil",
-          "random",
+          "нуль",
+          "випадковий",
         ],
         correctAnswer: 0,
-        explanation: "Hidden until the player finishes.",
+        explanation: "Приховано, доки гравець не закінчить.",
       },
       {
         id: "q2",
         type: "multiple_choice",
-        question: "After spawn, VictoryGui is under…",
+        question: "Після спауну VictoryGui знаходиться під...",
         options: [
           "PlayerGui",
-          "Terrain",
-          "Lighting",
-          "ServerScriptService only",
+          "Рельєф місцевості",
+          "Освітлення",
+          "Лише ServerScriptService",
         ],
         correctAnswer: 0,
-        explanation: "StarterGui clones into PlayerGui.",
+        explanation: "StarterGui клонується в PlayerGui.",
       },
       {
         id: "q3",
         type: "multiple_choice",
-        question: "showVictory updates…",
+        question: "showVictory оновлення…",
         options: [
-          "Label Text properties",
-          "Terrain water",
-          "SpawnLocation class",
-          "Kill blocks",
+          "Properties тексту мітки",
+          "Місцева вода",
+          "Клас SpawnLocation",
+          "Вбивати блоки",
         ],
         correctAnswer: 0,
-        explanation: "Dynamic text goes on labels.",
+        explanation: "Динамічний текст розміщується на етикетках.",
       },
       {
         id: "q4",
         type: "multiple_choice",
-        question: "TextButton click uses…",
+        question: "Натискання TextButton використовує…",
         options: [
           "MouseButton1Click",
-          "Touched",
+          "Зворушений",
           "BrickColor",
-          "Anchored",
+          "Якір",
         ],
         correctAnswer: 0,
-        explanation: "GUI buttons use mouse events.",
+        explanation: "Кнопки GUI використовують події миші.",
       },
       {
         id: "q5",
         type: "multiple_choice",
-        question: "Victory screen LocalScript runs on…",
+        question: "Екран перемоги LocalScript працює на...",
         options: [
-          "Client",
-          "Server only",
-          "Roblox API site",
+          "Клієнт",
+          "Тільки сервер",
+          "Сайт Roblox API",
           "Output",
         ],
         correctAnswer: 0,
-        explanation: "GUI is client-side.",
+        explanation: "Графічний інтерфейс клієнта.",
       },
       {
         id: "q6",
         type: "multiple_choice",
-        question: "RankLabel should show…",
+        question: "RankLabel має показувати…",
         options: [
-          "S/A/B from conditions",
-          "Only player age",
-          "Terrain seed",
-          "Script errors",
+          "S/A/B від умов",
+          "Тільки вік гравця",
+          "Насіння місцевості",
+          "Помилки Script",
         ],
         correctAnswer: 0,
-        explanation: "Rank comes from Lesson 2.4 logic.",
+        explanation: "Ранг отримано з логіки уроку 2.4.",
       },
       {
         id: "q7",
         type: "multiple_choice",
-        question: "UICorner on Panel…",
+        question: "UICorner на панелі…",
         options: [
-          "Rounds corners for polish",
-          "Kills player",
-          "Adds lava",
-          "Saves to cloud",
+          "Заокруглює кути для полірування",
+          "Вбиває гравця",
+          "Додає лаву",
+          "Зберігає в хмарі",
         ],
         correctAnswer: 0,
-        explanation: "UICorner is a visual modifier.",
+        explanation: "UICorner — візуальний модифікатор.",
       },
       {
         id: "q8",
         type: "multiple_choice",
-        question: "Retry should at minimum…",
+        question: "Повторна спроба має принаймні…",
         options: [
-          "Hide victory GUI",
-          "Delete obby",
-          "Remove checkpoints",
-          "Publish game",
+          "Приховати графічний інтерфейс перемоги",
+          "Видалити obby",
+          "Видаліть контрольні точки",
+          "Опублікувати гру",
         ],
         correctAnswer: 0,
-        explanation: "Hide UI before another attempt.",
+        explanation: "Сховати інтерфейс користувача перед наступною спробою.",
       },
       {
         id: "q9",
         type: "multiple_choice",
-        question: "WaitForChild prevents…",
+        question: "WaitForChild запобігає...",
         options: [
-          "Nil if UI loads late",
-          "All scripts",
-          "Playing sounds",
-          "Moving camera",
+          "Нуль, якщо інтерфейс користувача завантажується із запізненням",
+          "Всі скрипти",
+          "Відтворення звуків",
+          "Рухома камера",
         ],
         correctAnswer: 0,
-        explanation: "Waits for instances to exist.",
+        explanation: "Чекає на існування екземплярів.",
       },
       {
         id: "q10",
         type: "multiple_choice",
-        question: "Lesson 2.5 save name…",
+        question: "Урок 2.5 зберегти назву…",
         options: [
-          "Lesson 2.5 - Victory Screen",
-          "Finish Grades",
-          "Lava Lane",
-          "Coin Simulator",
+          "Урок 2.5 - Екран перемоги",
+          "Завершити оцінки",
+          "Лавовий пров",
+          "Симулятор монет",
         ],
         correctAnswer: 0,
-        explanation: "Save the victory UI lesson.",
+        explanation: "Збережіть урок інтерфейсу користувача перемоги.",
       },
     ],
   },
@@ -1778,158 +1675,155 @@ export const ukLesson26 = {
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    "Integrate lava, checkpoints, timer, ranks, and victory UI",
-    "Run a five-case playtest checklist",
-    "Polish map clarity with signs and consistent naming",
-    "Ship Module 2 prototype: Obby Ready",
+    "Інтегруйте лаву, контрольні точки, таймер, звання та інтерфейс перемоги",
+    "Виконайте контрольний список із п’ятьма випадками відтворення",
+    "Зрозуміла карта Польщі зі знаками та узгодженими назвами",
+    "Прототип корабельного модуля 2: Obby Ready",
   ],
   theory: {
     sections: [
       {
-        title: "Module 2 checkpoint (about 40 minutes)",
-        content: `You are shipping **Obby Ready** - a complete mini obby, not a homework file.
+        title: "Контрольна точка модуля 2 (близько 40 хвилин)",
+        content: `Ви відправляєте **Obby Ready** - повний міні-obby, а не файл домашнього завдання.
 
-**Required systems:**
-- Kill blocks (2.1)
-- Checkpoints (2.2)
-- Timer (2.3)
-- S/A/B ranks (2.4)
-- Victory screen (2.5)
+**Потрібні системи:**
+- Вбивство блоків (2.1)
+- Контрольно-пропускні пункти (2.2)
+- Таймер (2.3)
+- Звання S/A/B (2,4)
+- Екран перемоги (2.5)
 
-**Lesson flow:** polish + playtest + quiz. Less new code, more **quality bar**.`,
+**Хід уроку:** навчання + тест + вікторина. Менше нового коду, більше **панелі якості**.`,
       },
       {
-        title: "60-minute sprint plan",
-        content: `| Phase | Minutes | Task |
+        title: "План спринту на 60 хвилин",
+        content: `| Фаза | протокол | Завдання |
 |-------|---------|------|
-| 1 | 10 | Explorer cleanup + signs |
-| 2 | 15 | Lava + checkpoints retest |
-| 3 | 15 | Timer → rank → victory flow |
-| 4 | 10 | Visual polish (colors, lights) |
-| 5 | 10 | Five playtests + fixes |
+| 1 | 10 | Explorer очищення + знаки |
+| 2 | 15 | Лава + повторний тест контрольних точок |
+| 3 | 15 | Таймер → звання → потік перемог |
+| 4 | 10 | Візуальний полір (кольори, світло) |
+| 5 | 10 | П'ять ігрових тестів + ​​виправлення |
 
-**Folder target:**
-\`Workspace/Obby\` → Hazards, SafePath, Checkpoints, FinishPad
-\`StarterGui\` → RunUI, VictoryGui`,
+**Цільова folder:**\`Workspace/Obby\`→ Небезпеки, SafePath, Контрольні точки, FinishPad\`StarterGui\`→ RunUI, VictoryGui`,
       },
       {
-        title: "Map clarity - players must not get lost",
-        content: `Add **Neon arrow Parts** or sign Models pointing forward.
+        title: "Чіткість карти - гравці не повинні заблукати",
+        content: `Додайте **Neonові Parts зі стрілками** або підпишіть model, спрямовані вперед.
 
-| Sign | Text idea |
+| Знак | Ідея тексту |
 |------|-----------|
-| Start | "Obby Start →" |
-| Mid | "Checkpoint ahead" |
-| End | "Finish!" |
+| Почати | «Obby Start →» |
+| Середина | «КПП попереду» |
+| Кінець | "Кінець!" |
 
-**Color language:**
-- Safe = grey/white wood
-- Lava = Neon red
-- CP inactive = yellow, active = green
-- Finish = Neon green pad
+**Мова кольорів:**
+- Безпечний = сіре/біле дерево
+- Lava = неоново-червоний
+- CP неактивний = жовтий, активний = зелений
+- Оздоблення = неонова зелена подушечка
 
-**Exercise (8 min):** Stand at spawn in Play - can you see where to go without asking?`,
+**Вправа (8 хв.):** Станьте на spawn у Play – чи можете ви побачити, куди йти, не запитуючи?`,
       },
       {
-        title: "Five playtests (mandatory)",
-        content: `Run each case. Mark pass/fail in a note.
+        title: "П'ять ігрових тестів (обов'язково)",
+        content: `Проведіть кожен випадок. Позначте в примітці «склав/не склав».
 
-1. **Early death** - touch lava before CP_1 → respawn at **start**
-2. **CP_1 death** - touch CP_1, die on lava → respawn **CP_1**
-3. **Full clear** - reach FinishPad → victory UI + correct rank
-4. **Slow finish** - intentional 60s+ run → **B Rank** on panel
-5. **Retry** - click Play Again → panel hides, can run again
+1. **Рання смерть** - торкніться лави до CP_1 → відродження на **початку**
+2. **Смерть CP_1** - торкніться CP_1, померти на лаві → відродитися **CP_1**
+3. **Повне очищення** - досягти FinishPad → інтерфейс перемоги + правильний ранг
+4. **Повільний фініш** - навмисний біг 60 с+ → **Ранґ B** на панелі
+5. **Повторити** - натисніть Play знову → панель ховається, можна запустити знову
 
-**If any fail:** fix before calling the obby done.`,
+**Якщо будь-який збій:** виправте перед викликом obby done.`,
       },
       {
-        title: "Quality bar - feels shippable",
-        content: `- **60–120 seconds** of gameplay for average player
-- **No red Output spam** during a clean run
-- **8+** named Parts in obby (not generic Part)
-- **3+** checkpoints working
-- **3+** lava blocks
-- Victory + timer never show wrong text at same time
+        title: "Якісний батончик – відчувається, що його можна транспортувати",
+        content: `- **60–120 секунд** ігрового процесу для середнього гравця
+- **Немає червоного виведення спаму** під час чистого запуску
+- **8+** іменовані Parts в obby (не загальна Part)
+- **3+** КПП працюють
+- **3+** блоки лави
+- Перемога + таймер ніколи не показують неправильний текст одночасно
 
-**Audio optional:** quiet ambient + checkpoint ping (Module 1 skills).`,
+**Аудіо необов’язково:** тихе середовище + пінг контрольної точки (навички модуля 1).`,
       },
       {
-        title: "Start hub connection",
-        content: `Your Module 1 **island spawn** can stay as flavor - connect obby start with a bridge or path from dock.
+        title: "Розпочати з'єднання концентратора",
+        content: `Ваш модуль 1 **острів** може залишитися в якості смаку - з'єднайте obby, починаючи з моста або шляху від доку.
 
-Players understand: **hub → obby start sign → course**.
+Гравці розуміють: **центр → стартовий знак obby → курс**.
 
-Save as **Module 2 - Obby Ready** (new name) or overwrite your 2.5 place with final name.`,
+Збережіть як **Module 2 - Obby Ready** (нова назва) або замініть своє місце 2.5 остаточною назвою.`,
       },
       {
-        title: "Module 3 preview",
-        content: `Module 3 builds a **coin simulator** - collecting, UI score, saving data.
+        title: "Попередній перегляд модуля 3",
+        content: `Модуль 3 створює **симулятор монет** – збір, оцінка інтерфейсу користувача, збереження даних.
 
-Your obby skills (touch, UI, conditions) transfer directly to coin pickups.
+Ваші навички obby (дотик, інтерфейс користувача, умови) передаються безпосередньо до підбору монет.
 
-**Celebrate:** you now own a playable loop millions of Roblox games use: **try → fail → respawn → improve → win**.`,
+**Святкуйте:** тепер у вас є цикл, який використовують мільйони ігор Roblox: **спробувати → невдача → відродитися → покращити → виграти**.`,
       },
       {
-        title: "Demo script for teacher / parents",
-        content: `Record or live-show **2 minutes:**
-1. Spawn - show start sign
-2. Die on lava once - show checkpoint save
-3. Finish with rank on victory screen
-4. Click Retry
+        title: "Демонстраційний Script для вчителя/батьків",
+        content: `Запис або пряме шоу **2 хвилини:**
+1. Spawn - показати стартовий знак
+2. Померти на лаві один раз - показати збереження контрольної точки
+3. Закінчити з рейтингом на екрані перемоги
+4. Натисніть Повторити
 
-**Say out loud:** what S Rank time threshold is and why you picked it.`,
+**Скажіть вголос:** що таке поріг часу S Rank і чому ви його обрали.`,
       },
     ],
   },
   commonMistakes: [
     {
-      mistake: "Victory shows but checkpoints broken",
-      explanation: "Rushed polish without retest.",
-      correctApproach: "Run all 5 playtests after every big change",
+      mistake: "Показує перемогу, але розбиті контрольні точки",
+      explanation: "Поспішне полірування без повторної перевірки.",
+      correctApproach: "Запускайте всі 5 ігрових тестів після кожної великої зміни",
     },
     {
-      mistake: "Obby too short (< 30s)",
-      explanation: "Not enough stages.",
-      correctApproach: "Add stage 4 or harder jumps before finish",
+      mistake: "Obby занадто короткий (< 30 с)",
+      explanation: "Недостатньо етапів.",
+      correctApproach: "До фінішу додайте етап 4 або складніші стрибки",
     },
     {
-      mistake: "Generic Explorer names",
-      explanation: "Cannot debug 20 scripts named Part.",
-      correctApproach: "Rename everything before demo",
+      mistake: "Загальні імена Explorer",
+      explanation: "Неможливо налагодити 20 Scripts із назвою Part.",
+      correctApproach: "Перейменувати все перед демонстрацією",
     },
     {
-      mistake: "Timer and victory both enabled at finish",
-      explanation: "Confusing double UI.",
-      correctApproach: "Disable RunUI when VictoryGui shows",
+      mistake: "Таймер і перемога включені на фініші",
+      explanation: "Збентежений подвійний інтерфейс.",
+      correctApproach: "Вимкніть RunUI, коли відображається VictoryGui",
     },
   ],
-  summary: "You integrated every Module 2 system into Obby Ready, passed structured playtests, clarified the route with signs, and saved a demo-ready prototype - Module 3 coin games are next.",
+  summary: "Ви інтегрували кожну систему Module 2 в Obby Ready, пройшли структуровані ігрові тести, уточнили маршрут за допомогою знаків і зберегли прототип, готовий до демо-версії – на черзі ігри з монетами Module 3.",
   practiceTask: {
-    title: "Ship Obby Ready (~40 min)",
+    title: "Готовий корабель Obby (~40 хв)",
     difficulty: "beginner",
-    description: `**Goal:** Pass all 5 playtests + demo-ready place.
+    description: `**Мета:** Пройти всі 5 ігрових тестів + ​​демо-готове місце.
 
-### Part A - Cleanup (10 min)
-1. Explorer: folders Hazards, SafePath, Checkpoints under Obby
-2. Rename stray Parts; add Start + Finish signs
-3. No unanchored obby Parts
+### Part A - Очищення (10 хв)
+1. Explorer: Folders Hazards, SafePath, Checkpoints під Obby
+2. Перейменувати сторонні Parts; додати знаки Старт + Кінець
+3. Немає незакріплених Parts obby
 
-### Part B - Systems audit (15 min)
-1. Re-test lava, CP_1/2/Final, FinishPad
-2. Timer + getRank + VictoryGui one clean flow
-3. Fix any Output errors
+### Part B – Аудит систем (15 хв)
+1. Перетестуйте лаву, CP_1/2/Final, FinishPad
+2. Таймер + getRank + VictoryGui один чистий потік
+3. Виправте будь-які помилки виводу
 
-### Part C - Playtests & save (15 min)
-1. Complete checklist cases 1–5 (note pass/fail)
-2. One full run for best rank attempt
-3. **Save to Roblox** → \`Module 2 - Obby Ready\`
-4. **Practice complete** + optional 2-min recording`,
+### Part C - Тести відтворення та збереження (15 хв)
+1. Заповніть контрольні випадки 1–5 (зазначте «склав/не склав»)
+2. Один повний пробіг для кращої спроби рангу
+3. **Зберегти в Roblox** →\`Module 2 - Obby Ready\`4. **Практика завершена** + додатковий 2-хвилинний запис`,
     hints: [
-      "Fix checkpoint bugs before touching victory colors",
-      "Walk the route as if you never saw the map",
-      "Thresholds S_TIME/A_TIME must match obby length",
+      "Виправте помилки контрольних точок, перш ніж торкатися кольорів перемоги",
+      "Пройдіть маршрут так, ніби ви ніколи не бачили карти",
+      "Порогові значення S_TIME/A_TIME мають відповідати довжині obby",
     ],
-    optionalChallenge: "Hidden skill shortcut route - faster but harder jumps.",
+    optionalChallenge: "Швидкий шлях прихованих навичок - швидші, але складніші стрибки.",
   },
   quiz: {
     passingScore: 70,
@@ -1938,132 +1832,132 @@ Your obby skills (touch, UI, conditions) transfer directly to coin pickups.
       {
         id: "q1",
         type: "multiple_choice",
-        question: "Obby Ready requires…",
+        question: "Obby Ready вимагає…",
         options: [
-          "Lava + CP + timer + victory",
-          "Only terrain",
-          "Only clicks from 1.4",
-          "No scripts",
+          "Лава + CP + таймер + перемога",
+          "Тільки місцевість",
+          "Лише кліки з 1.4",
+          "Жодних Scripts",
         ],
         correctAnswer: 0,
-        explanation: "Module 2 checkpoint merges all systems.",
+        explanation: "Контрольна точка модуля 2 об’єднує всі системи.",
       },
       {
         id: "q2",
         type: "multiple_choice",
-        question: "After CP_2 then death, spawn at…",
+        question: "Після CP_2, потім смерть, поява в...",
         options: [
-          "CP_2",
-          "World origin only",
+          "КП_2",
+          "Лише світове походження",
           "FinishPad",
-          "Toolbox",
+          "Ящик інструментів",
         ],
         correctAnswer: 0,
-        explanation: "Last checkpoint touched wins.",
+        explanation: "Виграє остання контрольна точка, якої торкнувся.",
       },
       {
         id: "q3",
         type: "multiple_choice",
-        question: "VictoryGui appears when…",
+        question: "VictoryGui з’являється, коли…",
         options: [
-          "Player touches FinishPad",
-          "Studio opens",
-          "Terrain generates",
-          "Saving file",
+          "Гравець торкається FinishPad",
+          "Студія відкривається",
+          "Рельєф породжує",
+          "Збереження файлу",
         ],
         correctAnswer: 0,
-        explanation: "Finish triggers victory UI.",
+        explanation: "Завершення запускає інтерфейс користувача перемоги.",
       },
       {
         id: "q4",
         type: "multiple_choice",
-        question: "Playtest 4 checks…",
+        question: "Перевірки Playtest 4…",
         options: [
-          "B Rank on slow finish",
-          "Deleting island",
-          "UK translation",
-          "Publishing",
+          "B Місце на повільному фініші",
+          "Видалення острова",
+          "Переклад з Великобританії",
+          "Видавництво",
         ],
         correctAnswer: 0,
-        explanation: "Slow run should hit B branch.",
+        explanation: "Повільний хід має вдарити по гілці B.",
       },
       {
         id: "q5",
         type: "multiple_choice",
-        question: "Good obby length is about…",
+        question: "Хороша довжина обби приблизно...",
         options: [
-          "60–120 seconds",
-          "2 seconds",
-          "1 hour minimum",
-          "No jumping",
+          "60–120 секунд",
+          "2 секунди",
+          "1 година мінімум",
+          "Без стрибків",
         ],
         correctAnswer: 0,
-        explanation: "Mini obby targets about a minute.",
+        explanation: "Міні обби цілі близько хвилини.",
       },
       {
         id: "q6",
         type: "multiple_choice",
-        question: "Start signs help…",
+        question: "Початкові знаки допомагають…",
         options: [
-          "Players find the route",
-          "Increase lava damage",
-          "Remove Humanoid",
-          "Disable UI",
+          "Гравці знаходять маршрут",
+          "Збільшити пошкодження лави",
+          "Видаліть Humanoid",
+          "Вимкнути інтерфейс користувача",
         ],
         correctAnswer: 0,
-        explanation: "Wayfinding reduces confusion.",
+        explanation: "Пошук шляху зменшує плутанину.",
       },
       {
         id: "q7",
         type: "multiple_choice",
-        question: "Retry button should…",
+        question: "Кнопка повторити має…",
         options: [
-          "Hide victory and allow another run",
-          "Delete all checkpoints",
-          "Remove ranks",
-          "Close Studio",
+          "Приховати перемогу та дозволити ще один біг",
+          "Видалити всі контрольні точки",
+          "Зняти звання",
+          "Закрити студію",
         ],
         correctAnswer: 0,
-        explanation: "Retry supports replay loop.",
+        explanation: "Повторна спроба підтримує цикл повторного відтворення.",
       },
       {
         id: "q8",
         type: "multiple_choice",
-        question: "Red Output during clean run means…",
+        question: "Червоний вихід під час чистого запуску означає…",
         options: [
-          "Fix scripts before shipping",
-          "Perfect game",
-          "More lava needed",
-          "Publish now",
+          "Виправте Scripts перед відправкою",
+          "Ідеальна гра",
+          "Потрібно більше лави",
+          "Опублікувати зараз",
         ],
         correctAnswer: 0,
-        explanation: "Errors mean bugs remain.",
+        explanation: "Помилки означають, що помилки залишаються.",
       },
       {
         id: "q9",
         type: "multiple_choice",
-        question: "Module 3 topic is…",
+        question: "Тема модуля 3…",
         options: [
-          "Coins and collecting",
-          "Only cars",
-          "Only publishing",
-          "Empty placeholders",
+          "Монети та колекціонування",
+          "Тільки автомобілі",
+          "Тільки видавництво",
+          "Порожні заповнювачі",
         ],
         correctAnswer: 0,
-        explanation: "Module 3 starts coin simulator.",
+        explanation: "Модуль 3 запускає симулятор монет.",
       },
       {
         id: "q10",
         type: "multiple_choice",
-        question: "Final Module 2 save name…",
+        question: "Name збереження останнього модуля 2…",
         options: [
-          "Module 2 - Obby Ready",
-          "Lesson 1.1",
-          "Untitled",
-          "Test Obby",
+          "Модуль 2 - Obby Ready",
+          "Заняття 1.1",
+          "Без назви",
+          "Тест Obby",
         ],
         correctAnswer: 0,
-        explanation: "Checkpoint uses Module 2 portfolio name.",
+        explanation: "Checkpoint використовує назву портфоліо Module 2.",
       },
     ],
   },

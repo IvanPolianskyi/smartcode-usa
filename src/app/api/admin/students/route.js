@@ -9,7 +9,11 @@ import {
   syncStudentToCrm,
 } from '@/lib/crmStudentSchedulePull'
 import { isStudentDashboardReady } from '@/lib/studentAccountReady'
-import { buildCourseAccessForOnlineCourses, flattenCourseLessons } from '@/lib/courseLessonAccess'
+import {
+  buildCourseAccessForOnlineCourses,
+  flattenCourseLessons,
+  getRemovedOnlineCourseIds,
+} from '@/lib/courseLessonAccess'
 
 const COURSE_NAMES = {
   'python-developer-zero-to-junior': 'Пайтон',
@@ -322,20 +326,45 @@ export async function PATCH(request) {
       mergedProfile.accountReady = true
     }
 
-    const updateDoc = {
-      studentProfile: mergedProfile,
-      updatedAt: new Date(),
+    const removedOnline = getRemovedOnlineCourseIds(
+      prev.activeOnlineCourses || [],
+      onlineIds,
+      existing.purchasedCourses || []
+    )
+
+    const progressCollection = await getCollection('userProgress')
+
+    let nextEnrolled = [...(existing.enrolledCourses || [])]
+    if (removedOnline.length > 0) {
+      const removedSet = new Set(removedOnline)
+      nextEnrolled = nextEnrolled.filter((id) => !removedSet.has(id))
+    }
+    if (onlineIds.length > 0) {
+      const merged = new Set(nextEnrolled)
+      onlineIds.forEach((id) => merged.add(id))
+      nextEnrolled = [...merged]
+    }
+
+    const dbUpdate = {
+      $set: {
+        studentProfile: mergedProfile,
+        enrolledCourses: nextEnrolled,
+        updatedAt: new Date(),
+      },
     }
 
     const result = await usersCollection.updateOne(
       { _id: new ObjectId(studentId), role: { $ne: 'admin' } },
-      {
-        $set: updateDoc,
-        $addToSet: { enrolledCourses: { $each: onlineIds } },
-      }
+      dbUpdate
     )
 
-    const progressCollection = await getCollection('userProgress')
+    if (removedOnline.length > 0) {
+      await progressCollection.deleteMany({
+        userId: new ObjectId(studentId),
+        courseId: { $in: removedOnline },
+      })
+    }
+
     for (const courseId of onlineIds) {
       if (flattenCourseLessons(courseId).length === 0) continue
       const existingProgress = await progressCollection.findOne({

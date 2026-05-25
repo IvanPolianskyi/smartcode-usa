@@ -176,7 +176,7 @@ const RobloxLessonPage = ({
                 <Link href={`/courses/${courseId}`} className={styles.btnPrimary}>
                   {t('returnToCourse')}
                 </Link>
-                {locale === 'en' && (
+                {coursePrice?.price > 0 && coursePrice.purchasable !== false && (
                   <button
                     type="button"
                     className={styles.btnSecondary}

@@ -78,6 +78,10 @@
       "motivationDone": "На цьому тижні уроків більше немає. Наступний: {next}",
       "timePending": "час уточнюється"
     },
+    "courseDescriptions": {
+      "roblox-studio": "72 уроки — від першого Part у Roblox Studio до публікації власної гри.",
+      "python-developer-zero-to-junior": "96 уроків — Python від нуля до реальних проєктів."
+    },
     "courses": {
       "title": "Мої курси",
       "subtitle": "Обирай курс і продовжуй навчання в один клік",

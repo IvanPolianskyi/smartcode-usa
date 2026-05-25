@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl'
 import { BookOpen, CreditCard, CheckCircle2, ArrowRight, Loader2 } from 'lucide-react'
 import { createPayment } from '@/lib/authClient'
 import { formatPrice, getEnPurchasableFullCourses } from '@/lib/coursePrices'
+import { getStudentAccessibleCourseIds } from '@/lib/courseLessonAccess'
 import styles from './EnDashboard.module.css'
 
 const COURSE_PATHS = {
@@ -29,13 +30,7 @@ export default function EnCourseStore({ user, progressData, getCourseInfo }) {
     [user?.purchasedCourses]
   )
 
-  const ownedIds = useMemo(() => {
-    const ids = new Set()
-    ;(user?.purchasedCourses || []).forEach((id) => ids.add(id))
-    ;(user?.studentProfile?.activeOnlineCourses || []).forEach((id) => ids.add(id))
-    ;(user?.enrolledCourses || []).forEach((id) => ids.add(id))
-    return [...ids]
-  }, [user])
+  const ownedIds = useMemo(() => getStudentAccessibleCourseIds(user), [user])
 
   const storeCourses = getEnPurchasableFullCourses()
   const toBuy = storeCourses.filter((c) => !purchasedSet.has(c.courseId))

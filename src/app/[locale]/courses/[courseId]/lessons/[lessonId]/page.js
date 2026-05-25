@@ -3,7 +3,11 @@ import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { syncStudentScheduleAccess } from '@/lib/syncStudentScheduleAccess'
-import { getUnlockedLessonSet, isLessonUnlockedInCourse } from '@/lib/courseLessonAccess'
+import {
+  getUnlockedLessonSet,
+  hasStudentCourseAccess,
+  isLessonUnlockedInCourse,
+} from '@/lib/courseLessonAccess'
 import { getLocalizedMetadata, buildAlternates } from '@/lib/i18nMetadata'
 import LessonPageLoading from '@/components/Lesson/LessonPageLoading'
 
@@ -50,12 +54,15 @@ export default async function LessonPageRoute({ params }) {
         isPurchased = user.role === 'admin' || (user.purchasedCourses || []).includes(courseId)
         studentProfile = user.studentProfile || null
       }
-      
+
+      const hasAccess = user ? hasStudentCourseAccess(user, courseId) : false
       const progressCollection = await getCollection('userProgress')
-      const progress = await progressCollection.findOne({
-        userId: new ObjectId(userId),
-        courseId
-      })
+      const progress = hasAccess
+        ? await progressCollection.findOne({
+            userId: new ObjectId(userId),
+            courseId,
+          })
+        : null
       
       if (progress) {
         userProgress = {
@@ -87,7 +94,11 @@ export default async function LessonPageRoute({ params }) {
     isEnrolled,
   })
 
+  const isFreePreviewLesson =
+    courseId === 'roblox-studio' && lessonId === 'lesson-roblox-1-1'
+
   const isAccessible =
+    isFreePreviewLesson ||
     userRole === 'admin' ||
     isPurchased ||
     isLessonUnlockedInCourse(lessonId, {

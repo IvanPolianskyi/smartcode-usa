@@ -3,6 +3,7 @@ import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { syncStudentScheduleAccess } from '@/lib/syncStudentScheduleAccess'
+import { getStudentAccessibleCourseIds } from '@/lib/courseLessonAccess'
 import { maybePullCrmScheduleForStudent } from '@/lib/crmStudentSchedulePull'
 import { isStudentDashboardReady, shouldPersistAccountReady } from '@/lib/studentAccountReady'
 
@@ -25,8 +26,16 @@ export async function GET() {
         { status: 404 }
       )
     }
-    user = await maybePullCrmScheduleForStudent(user, usersCollection)
-    user = await syncStudentScheduleAccess(user, usersCollection)
+    try {
+      user = await maybePullCrmScheduleForStudent(user, usersCollection)
+    } catch (crmErr) {
+      console.error('CRM schedule auto-pull failed:', crmErr)
+    }
+    try {
+      user = await syncStudentScheduleAccess(user, usersCollection)
+    } catch (syncErr) {
+      console.error('syncStudentScheduleAccess failed:', syncErr)
+    }
 
     const profileAfterSync = user.studentProfile || {}
     if (shouldPersistAccountReady(profileAfterSync)) {
@@ -42,25 +51,47 @@ export async function GET() {
       user = await usersCollection.findOne({ _id: new ObjectId(userId) })
     }
 
-    // Синхронізація: якщо є прогрес, але немає курсу в enrolledCourses, додати його
     const progressCollection = await getCollection('userProgress')
-    const userProgresses = await progressCollection.find({ userId: new ObjectId(userId) }).toArray()
-    const progressCourseIds = userProgresses.map(p => p.courseId)
-    const currentEnrolledCourses = user.enrolledCourses || []
-    
-    // Знайти курси які є в прогресі, але немає в enrolledCourses
-    const missingCourses = progressCourseIds.filter(courseId => !currentEnrolledCourses.includes(courseId))
-    
+    const allowedCourseIds = new Set(getStudentAccessibleCourseIds(user))
+    let currentEnrolledCourses = user.enrolledCourses || []
+
+    const staleEnrolled = currentEnrolledCourses.filter((id) => !allowedCourseIds.has(id))
+    if (staleEnrolled.length > 0) {
+      await usersCollection.updateOne(
+        { _id: new ObjectId(userId) },
+        {
+          $pull: { enrolledCourses: { $in: staleEnrolled } },
+          $set: { updatedAt: new Date() },
+        }
+      )
+      currentEnrolledCourses = currentEnrolledCourses.filter((id) => allowedCourseIds.has(id))
+      user.enrolledCourses = currentEnrolledCourses
+    }
+
+    const userProgresses = await progressCollection
+      .find({ userId: new ObjectId(userId) })
+      .toArray()
+    const progressCourseIds = userProgresses.map((p) => p.courseId)
+    const orphanProgress = progressCourseIds.filter((id) => !allowedCourseIds.has(id))
+    if (orphanProgress.length > 0) {
+      await progressCollection.deleteMany({
+        userId: new ObjectId(userId),
+        courseId: { $in: orphanProgress },
+      })
+    }
+
+    const missingCourses = progressCourseIds.filter(
+      (courseId) =>
+        allowedCourseIds.has(courseId) && !currentEnrolledCourses.includes(courseId)
+    )
     if (missingCourses.length > 0) {
-      console.log('Syncing enrolledCourses: adding missing courses', missingCourses)
       await usersCollection.updateOne(
         { _id: new ObjectId(userId) },
         {
           $addToSet: { enrolledCourses: { $each: missingCourses } },
-          $set: { updatedAt: new Date() }
+          $set: { updatedAt: new Date() },
         }
       )
-      // Оновити дані користувача
       const updatedUser = await usersCollection.findOne({ _id: new ObjectId(userId) })
       user.enrolledCourses = updatedUser.enrolledCourses || []
     }

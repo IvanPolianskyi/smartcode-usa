@@ -3,9 +3,9 @@
 import React, { useMemo, useState } from 'react'
 import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
-import { BookOpen, CreditCard, CheckCircle2, Play, Lock } from 'lucide-react'
+import { BookOpen, CheckCircle2, Play, Lock } from 'lucide-react'
 import { createPayment } from '@/lib/authClient'
-import { formatPrice, getCoursePrice, getEnPurchasableFullCourses } from '@/lib/coursePrices'
+import { getCoursePrice, getEnPurchasableFullCourses } from '@/lib/coursePrices'
 import { DASHBOARD_COURSE_IDS } from '@/hooks/useDashboardCourses'
 import ProgressRing from './ProgressRing'
 import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
@@ -20,7 +20,6 @@ const COURSE_PATHS = {
 function isCourseOwned(user, courseId) {
   if ((user?.purchasedCourses || []).includes(courseId)) return true
   if ((user?.studentProfile?.activeOnlineCourses || []).includes(courseId)) return true
-  if ((user?.enrolledCourses || []).includes(courseId)) return true
   return false
 }
 
@@ -50,7 +49,7 @@ export default function MyCoursesSection({
     setError('')
     setLoadingId(courseId)
     try {
-      const { paymentUrl } = await createPayment(courseId, 'en')
+      const { paymentUrl } = await createPayment(courseId, locale)
       if (paymentUrl) window.location.href = paymentUrl
     } catch (err) {
       setError(err.message || tStore('errors.failed'))
@@ -65,7 +64,10 @@ export default function MyCoursesSection({
     const progress = owned ? progressData?.[courseId]?.overallProgress || 0 : 0
     const href = COURSE_PATHS[courseId] || course.link
     const priceInfo = getCoursePrice(courseId, locale)
-    const canBuyOnline = locale === 'en' && enPurchasableIds.has(courseId)
+    const canBuyOnline =
+      locale === 'en'
+        ? enPurchasableIds.has(courseId)
+        : Boolean(priceInfo?.price > 0 && priceInfo.purchasable !== false)
 
     if (!owned) {
       return (
@@ -86,33 +88,20 @@ export default function MyCoursesSection({
               <h4>{course.title}</h4>
               <ProgressRing value={0} size={56} stroke={5} muted />
             </div>
-            <span className={styles.courseCardBadgeLocked}>{t('lockedHint')}</span>
-            {priceInfo?.price > 0 ? (
-              <p className={styles.courseCardPrice}>
-                {formatPrice(priceInfo.price, priceInfo.currency, locale)}
-              </p>
-            ) : null}
             <div className={styles.courseCardActions}>
-              {canBuyOnline ? (
-                <button
-                  type="button"
-                  className={styles.resumeBtn}
-                  disabled={loadingId === courseId}
-                  onClick={() => handleBuy(courseId)}
-                >
-                  <CreditCard size={16} />
-                  {loadingId === courseId ? tStore('processing') : t('unlockCta')}
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className={styles.resumeBtn}
-                  onClick={() => onRequestAccess?.()}
-                >
-                  <Lock size={16} />
-                  {t('unlockCta')}
-                </button>
-              )}
+              <button
+                type="button"
+                className={styles.resumeBtn}
+                disabled={canBuyOnline && loadingId === courseId}
+                onClick={() =>
+                  canBuyOnline ? handleBuy(courseId) : onRequestAccess?.()
+                }
+              >
+                <Lock size={16} />
+                {canBuyOnline && loadingId === courseId
+                  ? tStore('processing')
+                  : t('unlockCta')}
+              </button>
             </div>
           </div>
         </article>

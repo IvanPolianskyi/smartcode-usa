@@ -17,7 +17,7 @@ const COURSE_CONFIG = [
 	{
 		id: 'roblox',
 		theme: 'themeRoblox',
-		href: '/Roblox',
+		href: '/courses/roblox-studio',
 		icon: '/logos/roblox.svg',
 		iconType: 'image',
 		rating: 4.8,

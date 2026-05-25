@@ -16,8 +16,8 @@ export const coursePrices = {
     nameEn: 'Web Development Course',
   },
   'roblox-studio': {
-    price: 15,
-    currency: 'USD',
+    price: 2000,
+    currency: 'UAH',
     name: 'Roblox Studio',
     nameEn: 'Roblox Studio Course',
   },
@@ -68,9 +68,6 @@ export function getCoursePrice(courseId, locale = 'uk') {
     }
   }
 
-  if (courseId === 'roblox-studio' && locale === 'uk') {
-    return { ...info, purchasable: false }
-  }
   return info
 }
 

@@ -10,6 +10,7 @@
     "setup:webhook": "node scripts/setup-webhook.js",
     "gen:roblox-en": "node scripts/gen-roblox-lessons-en.mjs",
     "gen:roblox-uk": "node scripts/gen-roblox-lessons-uk.mjs",
+    "fix:roblox-uk-terms": "node scripts/fix-roblox-uk-terms.mjs",
     "wire:roblox-uk": "node scripts/wire-roblox-lessons-uk.mjs"
   },
   "dependencies": {

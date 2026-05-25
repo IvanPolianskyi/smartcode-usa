@@ -12,6 +12,7 @@ import {
   BookOpen,
 } from 'lucide-react'
 import { DAY_KEY_MAP } from '@/hooks/useDashboardCourses'
+import { getStudentAccessibleCourseIds } from '@/lib/courseLessonAccess'
 import EnCourseStore from './EnCourseStore'
 import EnLiveLessonBooking from './EnLiveLessonBooking'
 import styles from './EnDashboard.module.css'
@@ -50,13 +51,10 @@ export default function EnStudentDashboard({
     0
   )
 
-  const ownedCount = useMemo(() => {
-    const ids = new Set()
-    ;(user?.purchasedCourses || []).forEach((id) => ids.add(id))
-    ;(profile.activeOnlineCourses || []).forEach((id) => ids.add(id))
-    ;(user?.enrolledCourses || []).forEach((id) => ids.add(id))
-    return ids.size
-  }, [user, profile.activeOnlineCourses])
+  const ownedCount = useMemo(
+    () => getStudentAccessibleCourseIds(user).length,
+    [user, profile.activeOnlineCourses, user?.purchasedCourses]
+  )
 
   const lessonHistory = Object.entries(progressData || {}).flatMap(([courseId, progress]) =>
     (progress?.completedLessons || []).map((lessonId) => ({ courseId, lessonId }))
