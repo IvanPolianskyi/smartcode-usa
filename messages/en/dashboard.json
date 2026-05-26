@@ -137,8 +137,11 @@
       "hideForm": "Hide form",
       "attachReceipt": "Attach receipt",
       "amountLabel": "Payment amount (UAH)",
-      "amountPlaceholder": "e.g. {amount}",
-      "amountHint": "Only amounts divisible by {price} UAH ({format} plan).",
+      "amountPlaceholder": "e.g. 700",
+      "lessonsLabel": "Number of lessons paid",
+      "lessonsHint": "Default is 1 — change if you paid for several lessons in one transfer.",
+      "debtLessons": "{count} lesson(s)",
+      "debtHint": "We suggest entering {lessons} lesson(s) in the field below",
       "receiptPhoto": "Tap to choose a receipt photo",
       "receiptAttached": "Receipt attached",
       "receiptPreviewAlt": "Receipt preview",
@@ -149,12 +152,12 @@
       "submit": "Submit receipt",
       "errors": {
         "invalidAmount": "Enter a valid payment amount",
-        "amountMultiple": "Amount must be a multiple of {price} UAH for your plan",
+        "invalidLessons": "Enter the number of lessons (at least 1)",
         "noPhoto": "Add a receipt photo",
         "submitFailed": "Failed to submit receipt",
         "submitError": "Error submitting receipt"
       },
-      "success": "Receipt submitted. After admin approval, lessons credited: {count}"
+      "success": "Payment accepted. Lessons credited: {count}"
     },
     "refresh": "Refresh data"
   },

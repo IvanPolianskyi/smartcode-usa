@@ -31,14 +31,13 @@ function CopyRow({ label, value }) {
 
 export default function StudentPaymentPanel({
   t,
-  lessonPrice,
-  formatLabel,
   paymentStats,
   scheduleCount = 0,
   onRefresh,
   defaultOpen = false,
 }) {
   const [amount, setAmount] = useState('')
+  const [lessonCount, setLessonCount] = useState('1')
   const [receiptFile, setReceiptFile] = useState(null)
   const [receiptPreviewUrl, setReceiptPreviewUrl] = useState(null)
   const receiptInputRef = useRef(null)
@@ -48,7 +47,6 @@ export default function StudentPaymentPanel({
 
   const bank = UK_BANK_PAYMENT_DETAILS
   const lessonCredits = Number(paymentStats?.lessonCredits || 0)
-  const currency = t('student.payments.currency')
 
   const debtLessons = useMemo(() => {
     if (scheduleCount > 0) {
@@ -58,15 +56,6 @@ export default function StudentPaymentPanel({
   }, [scheduleCount, lessonCredits])
 
   const hasDebt = debtLessons > 0
-  const debtAmount = debtLessons * lessonPrice
-
-  const quickAmounts = useMemo(() => {
-    const base = [1, 2, 3, 4].map((n) => n * lessonPrice)
-    if (debtAmount > 0 && !base.includes(debtAmount)) {
-      return [debtAmount, ...base].slice(0, 4)
-    }
-    return base
-  }, [lessonPrice, debtAmount])
 
   useEffect(() => {
     if (defaultOpen) {
@@ -75,10 +64,10 @@ export default function StudentPaymentPanel({
   }, [defaultOpen])
 
   useEffect(() => {
-    if (debtAmount > 0) {
-      setAmount(String(debtAmount))
+    if (debtLessons > 0) {
+      setLessonCount(String(debtLessons))
     }
-  }, [debtAmount])
+  }, [debtLessons])
 
   useEffect(() => {
     if (!receiptFile) {
@@ -95,26 +84,27 @@ export default function StudentPaymentPanel({
     if (receiptInputRef.current) receiptInputRef.current.value = ''
   }
 
-  const validateAmount = () => {
+  const validateForm = () => {
     const num = Number(amount)
     if (!num || num <= 0) {
       setMessage(t('student.payments.errors.invalidAmount'))
       setMessageType('error')
       return null
     }
-    if (num % lessonPrice !== 0) {
-      setMessage(t('student.payments.errors.amountMultiple', { price: lessonPrice }))
+    const lessons = Math.floor(Number(lessonCount))
+    if (!lessons || lessons < 1) {
+      setMessage(t('student.payments.errors.invalidLessons'))
       setMessageType('error')
       return null
     }
-    return num
+    return { amount: num, lessons }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setMessage('')
-    const num = validateAmount()
-    if (num == null) return
+    const validated = validateForm()
+    if (!validated) return
     if (!receiptFile) {
       setMessage(t('student.payments.errors.noPhoto'))
       setMessageType('error')
@@ -123,14 +113,16 @@ export default function StudentPaymentPanel({
     setBusy(true)
     try {
       const formData = new FormData()
-      formData.append('amount', String(num))
+      formData.append('amount', String(validated.amount))
+      formData.append('creditedLessons', String(validated.lessons))
       formData.append('receipt', receiptFile)
       const res = await fetch('/api/payment/receipt', { method: 'POST', body: formData })
       const data = await res.json()
       if (!res.ok) throw new Error(data?.error || t('student.payments.errors.submitFailed'))
       setMessage(t('student.payments.success', { count: data.creditedLessonsPreview || 0 }))
       setMessageType('success')
-      setAmount(debtAmount > 0 ? String(debtAmount) : '')
+      setAmount('')
+      setLessonCount('1')
       clearReceipt()
       await onRefresh?.()
     } catch (err) {
@@ -181,13 +173,13 @@ export default function StudentPaymentPanel({
               </div>
               <strong className={styles.debtRowValue}>
                 {hasDebt
-                  ? t('student.payments.debtAmount', { amount: debtAmount, currency })
+                  ? t('student.payments.debtLessons', { count: debtLessons })
                   : t('student.payments.noDebt')}
               </strong>
             </div>
             {hasDebt ? (
               <p className={styles.debtRowHint}>
-                {t('student.payments.debtHint', { lessons: debtLessons, price: lessonPrice, currency })}
+                {t('student.payments.debtHint', { lessons: debtLessons })}
               </p>
             ) : null}
           </div>
@@ -203,28 +195,26 @@ export default function StudentPaymentPanel({
               <input
                 id="pay-amount"
                 type="number"
-                min={lessonPrice}
-                step={lessonPrice}
+                min={1}
+                step={1}
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 className={styles.receiptInput}
-                placeholder={t('student.payments.amountPlaceholder', { amount: lessonPrice * 2 })}
+                placeholder={t('student.payments.amountPlaceholder')}
               />
-              <p className={styles.payHint}>
-                {t('student.payments.amountHint', { price: lessonPrice, format: formatLabel.toLowerCase() })}
-              </p>
-              <div className={styles.amountChips}>
-                {quickAmounts.map((chip) => (
-                  <button
-                    key={chip}
-                    type="button"
-                    className={`${styles.amountChip} ${Number(amount) === chip ? styles.amountChipActive : ''}`}
-                    onClick={() => setAmount(String(chip))}
-                  >
-                    {chip} {currency}
-                  </button>
-                ))}
-              </div>
+              <label className={`${styles.receiptLabel} ${styles.payFieldSpaced}`} htmlFor="pay-lessons">
+                {t('student.payments.lessonsLabel')}
+              </label>
+              <input
+                id="pay-lessons"
+                type="number"
+                min={1}
+                step={1}
+                value={lessonCount}
+                onChange={(e) => setLessonCount(e.target.value)}
+                className={styles.receiptInput}
+              />
+              <p className={styles.payHint}>{t('student.payments.lessonsHint')}</p>
             </div>
           </div>
 

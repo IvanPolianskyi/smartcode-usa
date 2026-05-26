@@ -177,8 +177,6 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
     <div id="payment-panel">
       <StudentPaymentPanel
         t={t}
-        lessonPrice={lessonPrice}
-        formatLabel={formatLabel}
         paymentStats={paymentStats}
         scheduleCount={schedule.length}
         onRefresh={refreshData}

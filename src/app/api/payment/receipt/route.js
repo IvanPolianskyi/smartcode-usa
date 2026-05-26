@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
-import { syncReceiptToCrm } from '@/lib/syncReceiptToCrm'
+import { approveReceiptPayment } from '@/lib/approveReceiptPayment'
+import { syncReceiptToCrm, syncReceiptStatusToCrm } from '@/lib/syncReceiptToCrm'
 
 const MAX_RECEIPT_SIZE_BYTES = 5 * 1024 * 1024
 const GROUP_LESSON_PRICE_UAH = 350
@@ -14,10 +15,10 @@ function toSafeAmount(value) {
   return Math.round(parsed * 100) / 100
 }
 
-function isMultipleOf(amount, step) {
-  if (!step) return false
-  const quotient = amount / step
-  return Number.isInteger(quotient)
+function parseLessonCount(value) {
+  const parsed = Math.floor(Number(value))
+  if (!Number.isFinite(parsed) || parsed < 1) return 0
+  return parsed
 }
 
 export async function POST(request) {
@@ -29,10 +30,15 @@ export async function POST(request) {
 
     const formData = await request.formData()
     const amount = toSafeAmount(formData.get('amount'))
+    const creditedLessons = parseLessonCount(formData.get('creditedLessons'))
     const file = formData.get('receipt')
 
     if (!amount || amount <= 0) {
       return NextResponse.json({ error: 'Вкажіть коректну суму оплати' }, { status: 400 })
+    }
+
+    if (!creditedLessons) {
+      return NextResponse.json({ error: 'Вкажіть кількість оплачених уроків (мінімум 1)' }, { status: 400 })
     }
 
     if (!(file instanceof File)) {
@@ -53,18 +59,10 @@ export async function POST(request) {
     const user = await usersCollection.findOne({ _id: userObjectId })
     const lessonFormat = user?.studentProfile?.lessonFormat === 'individual' ? 'individual' : 'group'
     const lessonPrice = lessonFormat === 'individual' ? INDIVIDUAL_LESSON_PRICE_UAH : GROUP_LESSON_PRICE_UAH
-    if (!isMultipleOf(amount, lessonPrice)) {
-      return NextResponse.json(
-        { error: `Сума має бути кратною ${lessonPrice} грн для вашого плану` },
-        { status: 400 }
-      )
-    }
 
     const bytes = await file.arrayBuffer()
     const base64 = Buffer.from(bytes).toString('base64')
     const dataUrl = `data:${file.type};base64,${base64}`
-
-    const creditedLessons = Math.floor(amount / lessonPrice)
 
     const insertResult = await paymentsCollection.insertOne({
       userId: userObjectId,
@@ -87,10 +85,13 @@ export async function POST(request) {
       updatedAt: new Date(),
     })
 
+    const paymentId = insertResult.insertedId.toString()
+    await approveReceiptPayment(paymentId)
+
     let crmSync = { ok: false, skipped: false, reason: '' }
     try {
       const crmResult = await syncReceiptToCrm({
-        lms_payment_id: insertResult.insertedId.toString(),
+        lms_payment_id: paymentId,
         user_id: userId,
         student_name: user?.name || '',
         student_email: user?.email || '',
@@ -110,10 +111,16 @@ export async function POST(request) {
         crmSync = { ok: false, skipped: true, reason: crmResult.reason || 'CRM not configured' }
       } else if (crmResult?.id) {
         crmSync = { ok: true, skipped: false, reason: '' }
+        const crmReceiptId = String(crmResult.id)
         await paymentsCollection.updateOne(
           { _id: insertResult.insertedId },
-          { $set: { crmReceiptId: String(crmResult.id), updatedAt: new Date() } }
+          { $set: { crmReceiptId, updatedAt: new Date() } }
         )
+        try {
+          await syncReceiptStatusToCrm(crmReceiptId, 'approved')
+        } catch (statusErr) {
+          console.error('CRM receipt status sync:', statusErr)
+        }
       } else {
         crmSync = { ok: true, skipped: false, reason: '' }
       }
@@ -131,7 +138,8 @@ export async function POST(request) {
         ok: true,
         creditedLessonsPreview: creditedLessons,
         lessonPrice,
-        requiresApproval: true,
+        requiresApproval: false,
+        autoApproved: true,
         crmSync,
       },
       { status: 200 }
