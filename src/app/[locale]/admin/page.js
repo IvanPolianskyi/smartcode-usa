@@ -388,6 +388,19 @@ export default function AdminPanelPage() {
                 </div>
               </div>
             </Link>
+
+            <div className={styles.statCard}>
+              <div className={styles.statIcon} style={{ backgroundColor: '#fee2e2' }}>
+                <ShoppingCart size={24} color="#ef4444" />
+              </div>
+              <div className={styles.statContent}>
+                <div className={styles.statValue}>{stats.comingSoonClicks || 0}</div>
+                <div className={styles.statLabel}>EN Buy Clicks</div>
+                <div className={styles.statSubLabel}>
+                  Interest in EN courses
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Course Enrollments */}

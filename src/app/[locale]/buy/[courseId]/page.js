@@ -66,7 +66,26 @@ export default function BuyCoursePage({ params }) {
 		setError('')
 		setLoading(true)
 		try {
-			const { paymentUrl } = await createPayment(courseId, 'en', guestEmail, guestName)
+			// Redirect English users to coming soon state
+			const currentLocale = window.location.pathname.startsWith('/en/') ? 'en' : 'uk'
+			if (currentLocale === 'en') {
+				try {
+					await fetch('/api/metrics/clicks', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ courseId, source: 'guest_checkout' })
+					})
+				} catch (err) {
+					console.error('Failed to track click', err)
+				}
+				
+				import('react-toastify').then(({ toast }) => {
+					toast.info(t('comingSoon') || 'Coming soon')
+				})
+				return
+			}
+
+			const { paymentUrl } = await createPayment(courseId, 'uk', guestEmail, guestName)
 			if (paymentUrl) window.location.href = paymentUrl
 		} catch (err) {
 			setError(err.message || t('errors.failed'))

@@ -809,7 +809,25 @@ Formatted: 60`,
 Operation: add
 Numbers: 10, 20, 30
 Result: 60
-Formatted: 60`,
+Formatted: 60
+
+=== Calculation ===
+Operation: multiply
+Numbers: 2, 3, 4
+Result: 24
+Additional information:
+  note: Multiplying three numbers
+Formatted: 24
+
+=== Calculation ===
+Operation: average
+Numbers: 10, 20, 30, 40
+Result: 25
+Additional information:
+  description: Arithmetic mean
+Formatted: 25
+
+Formatted result: Sum: 75 units`,
         explanation: "Demonstrates adding numbers with rounding option."
       }
     ],

@@ -212,24 +212,7 @@ const Footer = () => {
 					</div>
 				</div>
 
-				<div className={styles.complianceSection}>
-					<div className={styles.merchantInfo}>
-						<h4>{t('merchantDetails.title')}</h4>
-						<p><strong>{t('merchantDetails.name')}</strong> FOP Ivan Polianskyi</p>
-						<p><strong>{t('merchantDetails.taxId')}</strong> 1234567890</p>
-						<p><strong>{t('merchantDetails.email')}</strong> support@smartcode-academy.com</p>
-						<p><strong>{t('merchantDetails.phone')}</strong> +380 99 123 45 67</p>
-					</div>
-					<div className={styles.trustBadges}>
-						<div className={styles.mascotWrapper} style={{ borderRadius: '8px', overflow: 'hidden', display: 'flex' }}>
-							<Image src='/elephant_mascot.png' alt='SmartCode Mascot' width={60} height={60} style={{ objectFit: 'cover' }} />
-						</div>
-						<div className={styles.paymentLogos}>
-							<img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className={styles.paymentLogo} />
-							<img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className={styles.paymentLogo} />
-						</div>
-					</div>
-				</div>
+
 
 				<div className={styles.divider}></div>
 

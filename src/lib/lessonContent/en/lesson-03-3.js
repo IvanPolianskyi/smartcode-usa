@@ -696,17 +696,38 @@ Font size: 16`,
       {
         output: `=== User Settings (short format) ===
 User: user1
+Theme: light
+Language: en
+Notifications: Enabled
+Font size: 14
+
+=== User Settings (short format) ===
+User: user2
 Theme: dark
 Language: en
 Notifications: Enabled
-Font size: 16
+Font size: 14
 
 === User Settings (full format) ===
-User: user1
+User: user3
 Interface theme: dark
 Interface language: en
+Notifications: Disabled
+Font size: 16
+
+=== User Settings (short format) ===
+User: user4
+Theme: dark
+Language: en
+Notifications: Disabled
+Font size: 18
+
+=== Updated Settings ===
+User: user2
+Theme: light
+Language: en
 Notifications: Enabled
-Font size: 16`,
+Font size: 20`,
         explanation: "Demonstrates creating settings with different parameters and displaying in different formats."
       }
     ],

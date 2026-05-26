@@ -875,9 +875,23 @@ Book removed: True`,
     examples: [
       {
         output: `Book added: True
-Found books: [{'title': 'Python for Beginners', 'author': 'Alex', 'year': 2023}]
-Statistics: {'total_books': 1, 'total_authors': 1, 'oldest_year': 2023, 'newest_year': 2023}
-Formatting: Python for Beginners (2023)`,
+Books found by author 'Alex': 2
+- Python for Beginners (2023)
+- Advanced Python (2024)
+Library statistics:
+Total books: 3
+Number of authors: 2
+Oldest book: 2020
+Newest book: 2024
+Short format: Python for Beginners (2023)
+Full format:
+Title: Python for Beginners
+Author: Alex
+Year: 2023
+ISBN: 978-1234567890
+Alex's books: ['Python for Beginners', 'Advanced Python']
+Book removed: True
+Number of books after removal: 2`,
         explanation: "Demonstrates adding a book, search, statistics calculation, and formatting."
       }
     ],

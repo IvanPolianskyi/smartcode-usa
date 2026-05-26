@@ -38,7 +38,7 @@ export async function GET() {
     }
 
     // Get all statistics
-    const [visits, payments, users, progress] = await Promise.all([
+    const [visits, payments, users, progress, comingSoonClicks] = await Promise.all([
       // Total visits
       getCollection('logs').then(collection => 
         collection.countDocuments({ type: 'visit' })
@@ -81,7 +81,6 @@ export async function GET() {
           courseEnrollments
         }
       }),
-      // Progress statistics
       getCollection('userProgress').then(async collection => {
         const allProgress = await collection.find({}).toArray()
         
@@ -118,6 +117,11 @@ export async function GET() {
         })
         
         return courseStats
+      }),
+      // Coming Soon Clicks
+      getCollection('comingSoonClicks').then(async collection => {
+        const doc = await collection.findOne({ id: 'en_purchase_clicks' })
+        return doc ? doc.count : 0
       })
     ])
 
@@ -185,6 +189,7 @@ export async function GET() {
         withPurchases: users.withPurchases,
         courseEnrollments: formattedCourseEnrollments
       },
+      comingSoonClicks,
       courseProgress: formattedCourseProgress,
       detailedUsers: detailedUsers
     }, { status: 200 })

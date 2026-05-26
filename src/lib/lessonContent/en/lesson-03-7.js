@@ -494,9 +494,19 @@ Adder(5) with n=3: 8`,
       {
         output: `Local variable: 20
 Global variable: 10
+
 Counter: 0
 Counter after increment: 1
-Counter after reset: 0`,
+Counter after another increment: 2
+Counter after reset: 0
+
+Outer: outer_value
+Inner: outer_value
+
+Adder(5) with n=3: 8
+Adder(5) with n=7: 12
+Multiplier(4) with n=2: 8
+Multiplier(4) with n=5: 20`,
         explanation: "Local vs global and counter behavior."
       }
     ],

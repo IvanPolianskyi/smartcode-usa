@@ -809,13 +809,19 @@ Adder(10): 13`,
       {
         output: `Локальна змінна: 20
 Глобальна змінна: 10
+
 Лічильник: 0
 Лічильник після increment: 1
+Лічильник після ще одного increment: 2
 Лічильник після reset: 0
+
 Outer: outer_value
 Inner: outer_value
-Adder(5): 8
-Adder(10): 13`,
+
+Adder(5) з n=3: 8
+Adder(5) з n=7: 12
+Multiplier(4) з n=2: 8
+Multiplier(4) з n=5: 20`,
         explanation: "Демонструє роботу з локальними, глобальними та вкладеними змінними."
       }
     ],

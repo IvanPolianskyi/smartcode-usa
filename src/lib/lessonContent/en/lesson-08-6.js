@@ -411,11 +411,10 @@ Furniture: UAH 5,000
 Data exported to sales_report.csv and sales_report.xlsx`,
     examples: [
       {
-        output: `5 sales uploaded
-The most popular products:
+        output: `Loaded 5 sales
+\\nMost popular products:
 1. Laptop: 2 sales
-
-Total amount: UAH 50,000`,
+\\nTotal amount: 50000 UAH`,
         explanation: "We use all studied modules for comprehensive analysis."
       }
     ],

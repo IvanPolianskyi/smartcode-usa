@@ -856,6 +856,9 @@ Occurrences of 2 in [1,2,3,2,4,2]: 3
       {
         output: `Factorial of 5: 120
 Sum of digits of 12345: 15
+Occurrences of 2 in [1, 2, 3, 2, 4, 2]: 3
+"radar" is a palindrome: True
+"hello" is a palindrome: False
 2^5 = 32`,
         explanation: "Demonstrates computing a factorial, sum of digits, and exponentiation."
       }

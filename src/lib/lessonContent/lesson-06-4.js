@@ -468,6 +468,23 @@ print(p)  # Person(name=Олександр, age=15)`,
 [10:30:47] Викликається get_public_data
 [10:30:47] get_public_data завершено
 Результат: Публічні дані`,
+    validation: {
+      exactLineCount: true,
+      lineRules: [
+        { pattern: /=== тест 1: без авторизації ===/ },
+        { pattern: /\[\d{2}:\d{2}:\d{2}\] викликається get_secret_data/ },
+        { pattern: /потрібна авторизація!/ },
+        { pattern: /результат: none/ },
+        { pattern: /=== тест 2: з авторизацією ===/ },
+        { pattern: /\[\d{2}:\d{2}:\d{2}\] викликається get_secret_data/ },
+        { pattern: /\[\d{2}:\d{2}:\d{2}\] get_secret_data завершено/ },
+        { pattern: /результат: секретні дані/ },
+        { pattern: /=== тест 3: публічна функція ===/ },
+        { pattern: /\[\d{2}:\d{2}:\d{2}\] викликається get_public_data/ },
+        { pattern: /\[\d{2}:\d{2}:\d{2}\] get_public_data завершено/ },
+        { pattern: /результат: публічні дані/ }
+      ]
+    },
     examples: [
       {
         output: `=== Тест 1: Без авторизації ===

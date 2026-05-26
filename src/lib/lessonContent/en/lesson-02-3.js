@@ -409,7 +409,7 @@ Grade 4: 88
 Grade 5: 75
 Grade 6: 90
 Number of grades: 7
-Average grade: 86.57
+Average grade: 86.29
 Maximum grade: 96
 Minimum grade: 75`,
         explanation: "The program analyzes all grades and calculates statistics"

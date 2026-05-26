@@ -32,7 +32,24 @@ What we learned:
 1. Introduction to decorators - what are decorators and how to use them
 2. Creating your own decorators - functools.wraps, decorators with parameters
 3. Decorators of classes and methods - @property, @staticmethod, @classmethod
-4. Practical examples - logging, time measurement, validation
+4. Practical validation: {
+      exactLineCount: true,
+      lineRules: [
+        { pattern: /=== test 1: without authorization ===/i },
+        { pattern: /\[\d{2}:\d{2}:\d{2}\] calling get_secret_data/i },
+        { pattern: /authorization required!/i },
+        { pattern: /result: none/i },
+        { pattern: /=== test 2: with authorization ===/i },
+        { pattern: /\[\d{2}:\d{2}:\d{2}\] calling get_secret_data/i },
+        { pattern: /\[\d{2}:\d{2}:\d{2}\] get_secret_data completed/i },
+        { pattern: /result: secret data/i },
+        { pattern: /=== test 3: public function ===/i },
+        { pattern: /\[\d{2}:\d{2}:\d{2}\] calling get_public_data/i },
+        { pattern: /\[\d{2}:\d{2}:\d{2}\] get_public_data completed/i },
+        { pattern: /result: public data/i }
+      ]
+    },
+    examples - logging, time measurement, validation
 
 The purpose of this lesson:
 - Combine all concepts

@@ -795,8 +795,11 @@ Average of squares of numbers > 10: 169.0`,
     examples: [
       {
         output: `Sum of squares of even numbers: 220
+Adult users: ['Alex', 'Maria']
 Statistics: {'sum': 55, 'product': 3628800, 'max': 10}
-Average of squares of numbers > 10: 0.0`,
+Processed texts: ['HELLO', 'WORLD', 'PYTHON']
+Average of squares of numbers > 10: 256.3333333333333
+Alternative approach: 220`,
         explanation: "Demonstrates number processing: filtering, transforming, and aggregating."
       }
     ],

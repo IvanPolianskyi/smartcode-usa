@@ -551,8 +551,14 @@ User data: {'name': 'Alex', 'email': 'user@example.com', 'role': 'user'}`,
     examples: [
       {
         output: `Cleaned text: Hello world hello python
-Processed words: ['hello', 'python', 'world']
-Word count: {'hello': 2, 'world': 1, 'python': 1}`,
+Processed words: ['Hello', 'hello', 'python', 'world']
+Word count: {'hello': 2, 'world': 1, 'python': 1}
+
+User data: {'name': 'Alex', 'email': 'user@example.com', 'role': 'user', 'status': 'active'}
+
+Cleaned text: Python python developer developer engineer
+Processed words: ['Python', 'developer', 'engineer', 'python']
+Word count: {'Python': 2, 'developer': 2, 'engineer': 1}`,
         explanation: "Demonstrates cleaning, deduplication, and word counting."
       }
     ],

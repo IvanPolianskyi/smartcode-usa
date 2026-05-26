@@ -476,6 +476,24 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const handlePurchase = async () => {
     setIsPurchasing(true)
     try {
+      if (locale === 'en') {
+        try {
+          await fetch('/api/metrics/clicks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ courseId, source: 'lesson_page' })
+          })
+        } catch (err) {
+          console.error('Failed to track click', err)
+        }
+        
+        import('react-toastify').then(({ toast }) => {
+          toast.info(t('comingSoon') || 'Coming soon')
+        })
+        setIsPurchasing(false)
+        return
+      }
+
       // Create payment and redirect to payment page
       const paymentData = await createPayment(courseId)
 

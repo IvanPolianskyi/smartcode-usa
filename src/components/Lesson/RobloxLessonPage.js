@@ -88,6 +88,24 @@ const RobloxLessonPage = ({
     setPaymentError('')
     setIsPurchasing(true)
     try {
+      if (locale === 'en') {
+        try {
+          await fetch('/api/metrics/clicks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ courseId, source: 'roblox_lesson_page' })
+          })
+        } catch (err) {
+          console.error('Failed to track click', err)
+        }
+        
+        import('react-toastify').then(({ toast }) => {
+          toast.info(t('comingSoon') || 'Coming soon')
+        })
+        setIsPurchasing(false)
+        return
+      }
+
       const { paymentUrl } = await createPayment(courseId, locale)
       if (paymentUrl) window.location.href = paymentUrl
     } catch (e) {

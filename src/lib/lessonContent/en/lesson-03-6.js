@@ -486,7 +486,14 @@ Squared evens: [4, 16, 36, 64, 100]`,
       {
         output: `Squared numbers: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 Even numbers: [2, 4, 6, 8, 10]
-Squared evens: [4, 16, 36, 64, 100]`,
+Squared evens: [4, 16, 36, 64, 100]
+
+Formatted names: ['Alex', 'Maria', 'John', 'Anna']
+Long names (min_length=5): ['Maria']
+
+Long words (min_length=4): ['Python', 'great', 'programming']
+
+Numbers > 15, doubled: [40, 50, 60]`,
         explanation: "Squaring, filtering evens, and combined processing."
       }
     ],

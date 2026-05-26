@@ -8,7 +8,7 @@ function normalizeLine(line) {
 }
 
 function splitOutputLines(text) {
-  return String(text ?? '').replace(/\r\n/g, '\n').split('\n')
+  return String(text ?? '').replace(/\r\n/g, '\n').trimEnd().split('\n')
 }
 
 function validateWithLineRules(actualLines, lineRules) {
