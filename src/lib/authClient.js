@@ -22,13 +22,13 @@ export async function login(email, password) {
   return data
 }
 
-export async function register(email, password, name, phone, locale = 'uk') {
+export async function register(email, password, name, phone, locale = 'uk', claimOrder) {
   const response = await fetch('/api/auth/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ email, password, name, phone, locale }),
+    body: JSON.stringify({ email, password, name, phone, locale, claimOrder }),
   })
 
   const data = await response.json()
@@ -150,14 +150,14 @@ export async function checkCoursePurchase(courseId) {
   }
 }
 
-export async function createPayment(courseId, locale = 'uk') {
+export async function createPayment(courseId, locale = 'uk', guestEmail, guestName) {
   const response = await fetch('/api/payment/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
-    body: JSON.stringify({ courseId, locale }),
+    body: JSON.stringify({ courseId, locale, guestEmail, guestName }),
   })
 
   const data = await response.json()
@@ -169,12 +169,12 @@ export async function createPayment(courseId, locale = 'uk') {
   return data
 }
 
-export async function createEnLessonPayment({ courseId, lessonFormat, day, time }) {
+export async function createEnLessonPayment({ courseId, lessonFormat, day, time, guestEmail, guestName }) {
   const response = await fetch('/api/payment/en-lesson', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
-    body: JSON.stringify({ courseId, lessonFormat, day, time }),
+    body: JSON.stringify({ courseId, lessonFormat, day, time, guestEmail, guestName }),
   })
   const data = await response.json()
   if (!response.ok) {

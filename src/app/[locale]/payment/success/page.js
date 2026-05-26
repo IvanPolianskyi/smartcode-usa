@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Link } from '@/i18n/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 import { CheckCircle2, XCircle, Loader } from 'lucide-react'
 import styles from './PaymentSuccess.module.css'
@@ -10,6 +10,7 @@ import styles from './PaymentSuccess.module.css'
 function PaymentSuccessContent() {
 	const t = useTranslations('pages.paymentSuccess')
 	const searchParams = useSearchParams()
+	const router = useRouter()
 	const [status, setStatus] = useState('loading')
 	const [message, setMessage] = useState('')
 	const orderId = searchParams.get('orderId')
@@ -35,6 +36,11 @@ function PaymentSuccessContent() {
 
 				const data = await response.json()
 
+				if (data.requiresRegistration) {
+					router.push(`/register?claimOrder=${orderId}&email=${encodeURIComponent(data.guestEmail || '')}`)
+					return
+				}
+
 				if (data.purchased) {
 					setStatus('success')
 					setMessage(t('success.message'))
@@ -50,7 +56,7 @@ function PaymentSuccessContent() {
 		}
 
 		checkPayment()
-	}, [orderId, t])
+	}, [orderId, t, router])
 
 	return (
 		<div className={styles.container}>

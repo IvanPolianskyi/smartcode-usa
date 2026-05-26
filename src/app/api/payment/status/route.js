@@ -10,13 +10,6 @@ export async function GET(request) {
   try {
     const userId = await getCurrentUser()
 
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Not authenticated' },
-        { status: 401 }
-      )
-    }
-
     const { searchParams } = new URL(request.url)
     const orderId = searchParams.get('orderId')
 
@@ -37,8 +30,8 @@ export async function GET(request) {
       )
     }
 
-    // Verify payment belongs to user
-    if (payment.userId.toString() !== userId) {
+    // If it's a registered user payment, verify ownership
+    if (payment.userId && payment.userId.toString() !== userId) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 403 }
@@ -46,6 +39,7 @@ export async function GET(request) {
     }
 
     const isPurchased = payment.status === 'completed'
+    const isGuest = !!payment.isGuest
 
     return NextResponse.json({
       orderId: payment.orderId,
@@ -53,7 +47,9 @@ export async function GET(request) {
       purchased: isPurchased,
       courseId: payment.courseId,
       amount: payment.amount,
-      currency: payment.currency
+      currency: payment.currency,
+      requiresRegistration: isGuest && isPurchased,
+      guestEmail: payment.guestEmail,
     }, { status: 200 })
   } catch (error) {
     console.error('Check payment status error:', error)

@@ -14,12 +14,12 @@ const VALID_COURSES = ['roblox-studio', 'python-developer-zero-to-junior', 'web-
 export async function POST(request) {
   try {
     const userId = await getCurrentUser()
-    if (!userId) {
-      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
-    }
-
     const body = await request.json()
-    const { courseId, lessonFormat, day, time } = body
+    const { courseId, lessonFormat, day, time, guestEmail, guestName } = body
+
+    if (!userId && (!guestEmail || !guestName)) {
+      return NextResponse.json({ error: 'Authentication or guest details required' }, { status: 401 })
+    }
 
     if (!VALID_COURSES.includes(courseId)) {
       return NextResponse.json({ error: 'Invalid course' }, { status: 400 })
@@ -35,15 +35,21 @@ export async function POST(request) {
     }
 
     const priceInfo = getLessonPrice(lessonFormat, 'en')
-    const userIdObj = new ObjectId(userId)
-    const usersCollection = await getCollection('users')
-    const user = await usersCollection.findOne({ _id: userIdObj })
+    let user = null
 
-    if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
+    if (userId) {
+      const usersCollection = await getCollection('users')
+      user = await usersCollection.findOne({ _id: new ObjectId(userId) })
+      if (!user) {
+        return NextResponse.json({ error: 'User not found' }, { status: 404 })
+      }
     }
 
-    const orderId = `lesson_${courseId}_${lessonFormat}_${userId}_${Date.now()}`
+    const customerEmail = user ? user.email : guestEmail
+    const customerName = user ? user.name : guestName
+    const orderIdPrefix = userId ? userId.toString() : `guest_${customerEmail.replace(/[^a-zA-Z0-9]/g, '')}`
+    const orderId = `lesson_${courseId}_${lessonFormat}_${orderIdPrefix}_${Date.now()}`
+    
     const baseUrl =
       process.env.NEXT_PUBLIC_BASE_URL ||
       (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
@@ -62,15 +68,15 @@ export async function POST(request) {
       productCount: [1],
       language: 'EN',
       serviceUrl: `${baseUrl}/api/payment/wayforpay/webhook`,
-      clientEmail: user.email,
-      clientFirstName: user.name?.split(' ')[0] || 'Student',
-      clientLastName: user.name?.split(' ').slice(1).join(' ') || '',
+      clientEmail: customerEmail,
+      clientFirstName: customerName?.split(' ')[0] || 'Student',
+      clientLastName: customerName?.split(' ').slice(1).join(' ') || '',
       paymentSystems: 'card;googlePay;applePay',
     })
 
     const paymentsCollection = await getCollection('payments')
-    await paymentsCollection.insertOne({
-      userId: userIdObj,
+    
+    const paymentRecord = {
       courseId,
       orderId,
       amount: priceInfo.price,
@@ -83,7 +89,17 @@ export async function POST(request) {
       scheduleTime: time,
       createdAt: new Date(),
       updatedAt: new Date(),
-    })
+    }
+
+    if (userId) {
+      paymentRecord.userId = new ObjectId(userId)
+    } else {
+      paymentRecord.isGuest = true
+      paymentRecord.guestEmail = guestEmail
+      paymentRecord.guestName = guestName
+    }
+
+    await paymentsCollection.insertOne(paymentRecord)
 
     return NextResponse.json({ paymentUrl: invoiceUrl, orderId })
   } catch (error) {

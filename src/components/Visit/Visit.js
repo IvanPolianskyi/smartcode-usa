@@ -169,9 +169,11 @@ const Visit = () => {
 								<span className={styles.titleAccent}>Academy</span>
 							</h1>
 
-							<p className={styles.subtitle}>
-								{t('subtitle')}
-							</p>
+							{!isEn && (
+								<p className={styles.subtitle}>
+									{t('subtitle')}
+								</p>
+							)}
 							{!isEn && (
 								<div className={styles.lessonTypesWrap}>
 									<div className={styles.lessonTypes}>

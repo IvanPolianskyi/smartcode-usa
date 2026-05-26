@@ -6,7 +6,7 @@ import { hashPassword, generateToken, setAuthCookie } from '@/lib/auth'
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { email, password, name, phone, locale = 'uk' } = body
+    const { email, password, name, phone, locale = 'uk', claimOrder } = body
     const isEnLocale = locale === 'en'
 
     // Validation
@@ -67,6 +67,38 @@ export async function POST(request) {
 
     const result = await usersCollection.insertOne(user)
     const userId = result.insertedId.toString()
+    const userObjectId = result.insertedId
+
+    // Handle claimOrder for guest checkout
+    if (claimOrder) {
+      const paymentsCollection = await getCollection('payments')
+      const payment = await paymentsCollection.findOne({ orderId: claimOrder })
+      if (payment && payment.isGuest && payment.status === 'completed') {
+        await paymentsCollection.updateOne(
+          { orderId: claimOrder },
+          { $set: { userId: userObjectId }, $unset: { isGuest: "", guestEmail: "", guestName: "" } }
+        )
+        
+        // Grant access
+        const { grantFullCourseAccess, grantEnLiveLessonAccess } = await import('@/lib/paymentGrants')
+        if (payment.paymentType === 'full_course') {
+          await grantFullCourseAccess(userObjectId, payment.courseId)
+        } else if (payment.paymentType === 'live_lesson_en') {
+          await grantEnLiveLessonAccess(userObjectId, payment.courseId, {
+            lessonFormat: payment.lessonFormat,
+            day: payment.scheduleDay,
+            time: payment.scheduleTime,
+          })
+        }
+        
+        // Reload user to get updated fields after grants
+        const updatedUser = await usersCollection.findOne({ _id: userObjectId })
+        if (updatedUser) {
+          user.purchasedCourses = updatedUser.purchasedCourses
+          user.studentProfile = updatedUser.studentProfile
+        }
+      }
+    }
 
     // Generate token
     const token = generateToken(userId)

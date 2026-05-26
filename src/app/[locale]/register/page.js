@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useRouter } from '@/i18n/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { register } from '@/lib/authClient'
 import { usePhoneInput } from '@/lib/usePhoneInput'
@@ -15,10 +16,15 @@ export default function RegisterPage() {
   const t = useTranslations('auth.register')
   const locale = useLocale()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const phoneInput = usePhoneInput('UA')
+  
+  const initialEmail = searchParams.get('email') || ''
+  const claimOrder = searchParams.get('claimOrder')
+
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
+    email: initialEmail,
     password: '',
     confirmPassword: '',
   })
@@ -84,10 +90,12 @@ export default function RegisterPage() {
         formData.password,
         formData.name,
         hasPhoneInput ? phoneInput.getFullNumber() : undefined,
-        locale
+        locale,
+        claimOrder
       )
       window.dispatchEvent(new Event('auth:register'))
-      router.push('/dashboard')
+      const redirectUrl = new URLSearchParams(window.location.search).get('redirect') || '/dashboard'
+      router.push(redirectUrl)
       router.refresh()
     } catch (err) {
       setError(err.message || t('error'))

@@ -40,30 +40,32 @@ export async function POST(request) {
     )
 
     if (approved) {
-      if (payment.paymentType === 'full_course') {
-        await grantFullCourseAccess(payment.userId, payment.courseId)
-      } else if (payment.paymentType === 'live_lesson_en') {
-        await grantEnLiveLessonAccess(payment.userId, payment.courseId, {
-          lessonFormat: payment.lessonFormat,
-          day: payment.scheduleDay,
-          time: payment.scheduleTime,
-        })
-      } else if (payment.paymentType === 'lesson_topup') {
-        const usersCollection = await getCollection('users')
-        const creditedLessons = Number(
-          payment.creditedLessons || Math.floor(Number(payment.amount) / Number(payment.lessonPrice || 1))
-        )
-        const paidAmount = Number(body.amount) || Number(payment.amount) || 0
-        await usersCollection.updateOne(
-          { _id: payment.userId },
-          {
-            $inc: {
-              'studentProfile.lessonCredits': creditedLessons,
-              'studentProfile.accountBalance': paidAmount,
-            },
-            $set: { updatedAt: new Date() },
-          }
-        )
+      if (payment.userId) {
+        if (payment.paymentType === 'full_course') {
+          await grantFullCourseAccess(payment.userId, payment.courseId)
+        } else if (payment.paymentType === 'live_lesson_en') {
+          await grantEnLiveLessonAccess(payment.userId, payment.courseId, {
+            lessonFormat: payment.lessonFormat,
+            day: payment.scheduleDay,
+            time: payment.scheduleTime,
+          })
+        } else if (payment.paymentType === 'lesson_topup') {
+          const usersCollection = await getCollection('users')
+          const creditedLessons = Number(
+            payment.creditedLessons || Math.floor(Number(payment.amount) / Number(payment.lessonPrice || 1))
+          )
+          const paidAmount = Number(body.amount) || Number(payment.amount) || 0
+          await usersCollection.updateOne(
+            { _id: payment.userId },
+            {
+              $inc: {
+                'studentProfile.lessonCredits': creditedLessons,
+                'studentProfile.accountBalance': paidAmount,
+              },
+              $set: { updatedAt: new Date() },
+            }
+          )
+        }
       }
     }
 
