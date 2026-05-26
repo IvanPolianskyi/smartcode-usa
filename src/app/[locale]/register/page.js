@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { Suspense, useState } from 'react'
 import { Link, useRouter } from '@/i18n/navigation'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
@@ -12,7 +12,7 @@ import Logo from '@/components/Logo/Logo'
 import { Eye, EyeOff } from 'lucide-react'
 import styles from '../login/Auth.module.css'
 
-export default function RegisterPage() {
+function RegisterPageContent() {
   const t = useTranslations('auth.register')
   const locale = useLocale()
   const router = useRouter()
@@ -246,4 +246,27 @@ export default function RegisterPage() {
   )
 }
 
+export default function RegisterPage() {
+  const t = useTranslations('auth.register')
+
+  return (
+    <Suspense
+      fallback={
+        <div className={styles.container}>
+          <div className={styles.content}>
+            <div className={styles.logoWrapper}>
+              <Logo href="/" className={styles.logo} />
+            </div>
+            <div className={styles.card}>
+              <h1 className={styles.title}>{t('title')}</h1>
+              <p className={styles.label}>{t('submitting')}</p>
+            </div>
+          </div>
+        </div>
+      }
+    >
+      <RegisterPageContent />
+    </Suspense>
+  )
+}
 
