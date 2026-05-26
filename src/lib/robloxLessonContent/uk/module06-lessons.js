@@ -1,889 +1,1350 @@
-/** Rich EN content for Roblox Module 06 - lessons 6.1–6.3 */
+/** Rich UK content for Roblox Module 06 — AUTO from EN via gen-roblox-lessons-uk.mjs */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
 
 export const ukLesson61 = {
-  lessonId: 'lesson-roblox-6-1',
-  moduleId: 'module-06',
+  lessonId: "lesson-roblox-6-1",
+  moduleId: "module-06",
   order: 1,
-  title: '6.1 - Car from Scratch',
+  title: "6.1 - Машина з нуля",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    'Build a StarterCar model with chassis, wheels, and VehicleSeat',
-    'Attach parts with WeldConstraint',
-    'Tune MaxSpeed, Torque, and TurnSpeed for beginners',
-    'Test drive stability on flat ground',
+    "Створіть model StarterCar із шасі, колесами та VehicleSeat",
+    "Приєднайте Parts за допомогою WeldConstraint",
+    "Налаштуйте MaxSpeed, Torque і TurnSpeed ​​для початківців",
+    "Випробуйте стійкість на рівному місці",
   ],
   theory: {
     sections: [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `**Module 6 - Faster, Higher, Further** - you build a **drivable car**, then a track, then a timer.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `**Модуль 6 – Швидше, вище, далі** – ви створюєте **керований автомобіль**, потім трасу, потім таймер.
 
-**Lesson flow:**
-1. **Theory (40 min)** - VehicleSeat + welds
-2. **Practice (~25 min)** - StarterCar you can drive
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - Сидіння автомобіля + зварні шви
+2. **Практика (~25 хв)** - StarterCar, яким ви можете керувати
+3. **Вікторина (10 хв)** - проходження **70%**
 
-New place: **Baseplate** or flat area on your island → \`Lesson 6.1 - Starter Car\`.`,
+Нове місце: **Baseplate** або рівна зона на вашому острові →\`Lesson 6.1 - Starter Car\`.`,
       },
       {
-        title: 'Car parts you need',
-        content: `| Part | Role |
+        title: "Потрібні автозапParts",
+        content: `| Part | Роль |
 |------|------|
-| **Chassis** | Main body (heavy, low) |
-| **4 Wheels** | Touch ground, visual |
-| **VehicleSeat** | Player sits here - drives the car |
+| **Шасі** | Основний корпус (важкий, низький) |
+| **4 колеса** | Дотик до землі, зоровий |
+| **VehicleSeat** | Гравець сидить тут - керує машиною |
 
-**Model** \`StarterCar\` in Workspace (later move to \`ReplicatedStorage\` for spawning).
+**Model**\`StarterCar\`у Workspace (пізніше перейдіть до\`ReplicatedStorage\`для нересту).
 
-**Not a normal Seat** - VehicleSeat has throttle and steering built in.`,
+**Не звичайне сидіння** – VehicleSeat має вбудовану дросельну заслінку та кермо.`,
       },
       {
-        title: 'Build the chassis and wheels',
-        content: `**Chassis:**
-- Block \`6, 1, 10\` studs
-- Material Metal, grey
-- Name \`Chassis\`
+        title: "Побудуйте шасі та колеса",
+        content: `**Шасі:**
+- Блокувати\`6, 1, 10\`шпильки
+- Material Метал, сірий
+- Ім'я\`Chassis\`**Колеса (4):**
+- Розмір\`2, 2, 1\`- Форма циліндра (поворот на 90°) або блок
+- Імена\`Wheel_FL\`,\`Wheel_FR\`,\`Wheel_RL\`,\`Wheel_RR\`- Розмістіть по кутах, трохи нижче шасі
 
-**Wheels (4):**
-- Size \`2, 2, 1\`
-- Cylinder shape (rotate 90°) or block
-- Names \`Wheel_FL\`, \`Wheel_FR\`, \`Wheel_RL\`, \`Wheel_RR\`
-- Place at corners, slightly below chassis
-
-**Exercise (10 min):** Group all parts into Model \`StarterCar\` - Move tool on whole model.`,
+**Вправа (10 хв):** Згрупуйте всі Parts в model\`StarterCar\`- Move tool на всю model.`,
       },
       {
-        title: 'WeldConstraint - glue parts',
-        content: `Each wheel → **WeldConstraint** to chassis:
+        title: "WeldConstraint - склеюємо деталі",
+        content: `Кожне колесо → **WeldConstraint** до шасі:
 
-1. Select wheel + chassis
-2. **Create** → WeldConstraint (or Constraint menu)
-3. Repeat for all 4 wheels
-4. **VehicleSeat** on top of chassis - weld to chassis
-
-\`\`\`lua
+1. Виберіть колесо + шасі
+2. **Створити** → WeldConstraint (або меню Constraint)
+3. Повторіть для всіх 4 коліс
+4. **VehicleSeat** у верхній Part шасі - приварити до шасі\`\`\`lua
 -- Optional: script verifies welds exist
 for _, w in ipairs(car:GetDescendants()) do
-    if w:IsA("WeldConstraint") then
-        print("Weld ok:", w.Parent.Name)
-    end
+ if w:IsA("WeldConstraint") then
+ print("Weld ok:", w.Parent.Name)
+ end
 end
-\`\`\`
-
-**Before driving:** unanchor **wheels and chassis** (VehicleSeat unanchors car when occupied).`,
+\`\`\`**Перед поїздкою:** від’єднайте **колеса та шасі** (VehicleSeat від’єднає автомобіль, коли він зайнятий).`,
       },
       {
-        title: 'VehicleSeat tuning',
-        content: `Select **VehicleSeat** - Properties:
+        title: "Тюнінг сидінь автомобіля",
+        content: `Виберіть **VehicleSeat** - Properties:
 
-| Property | Beginner start |
+| Property | Початковий старт |
 |----------|----------------|
 | **MaxSpeed** | 40–60 |
-| **Torque** | 2–4 |
-| **TurnSpeed** | 1–2 |
-| **SeatMaterial** | Fabric or Plastic |
+| **Крутний момент** | 2–4 |
+| **Швидкість повороту** | 1–2 |
+| **Material сидіння** | Тканина або пластик |
 
-**Too fast** = crashes into walls. **Too slow** = boring track.
+**Занадто швидко** = врізається в стіни. **Занадто повільно** = нудна траса.
 
-**Exercise (5 min):** Play → sit in seat (click seat or walk into car) → WASD or arrow keys to drive.`,
+**Вправа (5 хв):** Play → сядьте на місце (натисніть на сидіння або зайдіть у машину) → WASD або клавіші зі стрілками, щоб керувати.`,
       },
       {
-        title: 'Stability tips',
-        content: `**Flips?**
-- Lower chassis (wide and flat)
-- Spread wheels wider
-- Lower **CenterOfMass** - insert Attachment + set in chassis (advanced) or keep mass low on top
+        title: "Поради щодо стабільності",
+        content: `**Перевертається?**
+- Нижнє шасі (широке та плоске)
+- Розставте колеса ширше
+- Опустіть **CenterOfMass** - вставте Attachment + set у шасі (розширений) або зберігайте низьку масу зверху
 
-**Wheels fall off?**
-- Missing WeldConstraint
-- Parts still anchored separately wrong
+**Колеса відпадають?**
+- Відсутнє WeldConstraint
+- Parts все ще Anchored окремо неправильно
 
-**Cannot enter seat?**
-- Seat not welded / floating
-- Another part blocking seat
+**Не можете зайняти місце?**
+- Сидіння не зварене / плаває
+- Інша Part блокує сидіння
 
-**Test drive checklist:**
-- [ ] Forward and reverse
-- [ ] Left/right turn
-- [ ] Brake (S or down throttle)`,
+**Контрольний список тест-драйву:**
+- [ ] Вперед і назад
+- [ ] Поворот ліворуч/праворуч
+- [ ] Гальмо (S або нижній дросель)`,
       },
       {
-        title: 'Prefab for later',
-        content: `When car works:
-1. Move \`StarterCar\` to **ReplicatedStorage**
-2. Clone to track start on Lesson 6.2
+        title: "Збірний на потім",
+        content: `Коли автомобіль працює:
+1. Рухатися\`StarterCar\`до **ReplicatedStorage**
+2. Клонуйте для початку відстеження на Уроці 6.2
 
-Or leave in Workspace at spawn for now.
+Або поки що залиште в робочій області під час появи.
 
-**CanCollide** on wheels true; chassis true.
+**CanCollide** на колесах true; шасі справжнє.
 
-**Before practice checklist:**
-- [ ] Model StarterCar with 6 parts + welds
-- [ ] Drivable in Play without parts falling off
-- [ ] Save: \`Lesson 6.1 - Starter Car\``,
+**Контрольний список перед тренуваннями:**
+- [ ] Model StarterCar з 6 деталей + зварні шви
+- [ ] Можна керувати в Play без відпадання деталей
+- [ ] Зберегти:\`Lesson 6.1 - Starter Car\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'Using Seat instead of VehicleSeat', explanation: 'Seat does not drive wheels.', correctApproach: 'VehicleSeat for cars' },
-    { mistake: 'Forgot to weld wheels', explanation: 'Wheels roll away when car moves.', correctApproach: 'WeldConstraint each wheel to chassis' },
-    { mistake: 'Everything anchored true', explanation: 'Car cannot move.', correctApproach: 'Unanchor car parts for physics drive' },
-    { mistake: 'MaxSpeed 200 for first test', explanation: 'Uncontrollable for learners.', correctApproach: 'Start 40-60 MaxSpeed' },
+    {
+      mistake: "Використання Seat замість VehicleSeat",
+      explanation: "Сидіння не приводить в рух колеса.",
+      correctApproach: "VehicleSeat для авто",
+    },
+    {
+      mistake: "Забув зварити колеса",
+      explanation: "Колеса відкочуються під час руху автомобіля.",
+      correctApproach: "WeldConstraint кожне колесо до шасі",
+    },
+    {
+      mistake: "Все Anchored true",
+      explanation: "Автомобіль не може рухатися.",
+      correctApproach: "Від’єднайте Parts автомобіля для фізики",
+    },
+    {
+      mistake: "MaxSpeed ​​200 для першого тесту",
+      explanation: "Неконтрольоване для учнів.",
+      correctApproach: "Почніть 40-60 MaxSpeed",
+    },
   ],
-  summary: `You built StarterCar with chassis, four welded wheels, and a tuned VehicleSeat - your first drivable vehicle ready for the race track in the next lesson.`,
+  summary: "Ви створили StarterCar із шасі, чотирма звареними колесами та налаштованим VehicleSeat — вашим першим керованим транспортним засобом, готовим до гоночної траси на наступному уроці.",
   practiceTask: {
-    title: 'Build StarterCar (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** One stable drivable car.
+    title: "Збірка StarterCar (~25 хв)",
+    difficulty: "beginner",
+    description: `**Мета:** Один стабільний автомобіль, яким можна керувати.
 
-### Part A - Body (10 min)
-1. Model \`StarterCar\` - chassis + 4 wheels positioned
-2. VehicleSeat on top, welded
+### Part A - Тіло (10 хв)
+1. Model\`StarterCar\`- шасі + 4 колеса розташовані
+2. Сидіння транспортного засобу зверху, приварене
 
-### Part B - Tune (10 min)
-1. MaxSpeed ~50, Torque ~3, TurnSpeed ~1.5
-2. Play - drive 30 seconds on baseplate
-3. Fix flips / detached wheels
+### Part B - Налаштування (10 хв)
+1. Максимальна швидкість ~50, Крутний момент ~3, Швидкість повороту ~1,5
+2. Грайте - проведіть 30 секунд на опорній плиті
+3. Виправити перекидання / від’єднання коліс
 
-### Part C - Save (5 min)
-1. Move to ReplicatedStorage optional
-2. **Save to Roblox** → \`Lesson 6.1 - Starter Car\`
-3. **Practice complete**`,
+### Part C - Зберегти (5 хв)
+1. Перейдіть до ReplicatedStorage за бажанням
+2. **Зберегти в Roblox** →\`Lesson 6.1 - Starter Car\`3. **Практика завершена**`,
     hints: [
-      'Weld before unanchoring for final test',
-      'If wild physics, halve MaxSpeed first',
-      'Sit in VehicleSeat by clicking it in Play',
+      "Зваріть перед роз’єднанням для остаточного випробування",
+      "Якщо дика фізика, спочатку зменшіть MaxSpeed ​​наполовину",
+      "Сядьте в VehicleSeat, клацнувши його в Play",
     ],
-    optionalChallenge: 'Script toggles Safe (slow) vs Fast seat presets.',
+    optionalChallenge: "Script перемикає безпечні (повільні) та швидкі налаштування сидінь.",
   },
   quiz: {
     passingScore: 70,
     timeLimit: 10,
     questions: [
-      { id: 'q1', type: MC, question: 'Drivable cars use…', options: ['VehicleSeat', 'SpawnLocation only', 'ClickDetector', 'Terrain'], correctAnswer: 0, explanation: 'VehicleSeat has drive inputs.' },
-      { id: 'q2', type: MC, question: 'WeldConstraint…', options: ['Joins parts rigidly', 'Adds coins', 'Saves DataStore', 'Kills player'], correctAnswer: 0, explanation: 'Keeps wheels on chassis.' },
-      { id: 'q3', type: MC, question: 'MaxSpeed controls…', options: ['Top driving speed', 'Jump height', 'Coin value', 'Sky color'], correctAnswer: 0, explanation: 'Seat property for speed cap.' },
-      { id: 'q4', type: MC, question: 'Anchored true on driving car…', options: ['Prevents movement', 'Required always', 'Adds HP', 'Opens UI'], correctAnswer: 0, explanation: 'Physics needs unanchored parts.' },
-      { id: 'q5', type: MC, question: 'StarterCar should be a…', options: ['Model', 'Script only', 'Sound only', 'Atmosphere'], correctAnswer: 0, explanation: 'Grouped vehicle prefab.' },
-      { id: 'q6', type: MC, question: 'Wide low chassis helps…', options: ['Prevent flipping', 'Delete track', 'Remove seat', 'Ban players'], correctAnswer: 0, explanation: 'Stability.' },
-      { id: 'q7', type: MC, question: 'Module 6 focus is…', options: ['Racing', 'Only combat', 'Only tycoon', 'Publishing'], correctAnswer: 0, explanation: 'Racing module.' },
-      { id: 'q8', type: MC, question: 'Four wheels are for…', options: ['Stability and look', 'Flying only', 'Swimming', 'UI'], correctAnswer: 0, explanation: 'Car layout.' },
-      { id: 'q9', type: MC, question: 'Torque affects…', options: ['Acceleration power', 'Leaderboard', 'Lap count', 'Heal amount'], correctAnswer: 0, explanation: 'Seat drive property.' },
-      { id: 'q10', type: MC, question: 'Lesson 6.1 save name…', options: ['Lesson 6.1 - Starter Car', 'Arena Ready', 'Race Track', 'Tycoon Works'], correctAnswer: 0, explanation: 'Save car lesson.' },
+      {
+        id: "q1",
+        type: "multiple_choice",
+        question: "Керовані автомобілі використовують…",
+        options: [
+          "VehicleSeat",
+          "Тільки SpawnLocation",
+          "ClickDetector",
+          "Рельєф місцевості",
+        ],
+        correctAnswer: 0,
+        explanation: "VehicleSeat має входи приводу.",
+      },
+      {
+        id: "q2",
+        type: "multiple_choice",
+        question: "WeldConstraint…",
+        options: [
+          "Жорстко з’єднує Parts",
+          "Додає монети",
+          "Зберігає DataStore",
+          "Вбиває гравця",
+        ],
+        correctAnswer: 0,
+        explanation: "Зберігає колеса на шасі.",
+      },
+      {
+        id: "q3",
+        type: "multiple_choice",
+        question: "Управління MaxSpeed…",
+        options: [
+          "Максимальна швидкість водіння",
+          "Висота стрибка",
+          "Вартість монети",
+          "Колір неба",
+        ],
+        correctAnswer: 0,
+        explanation: "Property сидіння для обмеження швидкості.",
+      },
+      {
+        id: "q4",
+        type: "multiple_choice",
+        question: "Anchored правду на водінні автомобіля...",
+        options: [
+          "Перешкоджає руху",
+          "Потрібний завжди",
+          "Додає HP",
+          "Відкриває інтерфейс користувача",
+        ],
+        correctAnswer: 0,
+        explanation: "Фізиці потрібні unAnchored Parts.",
+      },
+      {
+        id: "q5",
+        type: "multiple_choice",
+        question: "StarterCar має бути…",
+        options: [
+          "Model",
+          "Лише Script",
+          "Тільки звук",
+          "атмосфера",
+        ],
+        correctAnswer: 0,
+        explanation: "Збірний збірний автомобіль.",
+      },
+      {
+        id: "q6",
+        type: "multiple_choice",
+        question: "Широке низьке шасі допомагає…",
+        options: [
+          "Запобігання перевертання",
+          "Видалити трек",
+          "Зняти сидіння",
+          "Банити гравців",
+        ],
+        correctAnswer: 0,
+        explanation: "Стабільність.",
+      },
+      {
+        id: "q7",
+        type: "multiple_choice",
+        question: "Модуль 6 фокусується на…",
+        options: [
+          "Перегони",
+          "Тільки бойові",
+          "Тільки магнат",
+          "Видавництво",
+        ],
+        correctAnswer: 0,
+        explanation: "Модуль гонок.",
+      },
+      {
+        id: "q8",
+        type: "multiple_choice",
+        question: "Чотири колеса для…",
+        options: [
+          "Стійкість і зовнішній вигляд",
+          "Тільки політ",
+          "Плавання",
+          "інтерфейс користувача",
+        ],
+        correctAnswer: 0,
+        explanation: "Компонування автомобіля.",
+      },
+      {
+        id: "q9",
+        type: "multiple_choice",
+        question: "Крутний момент впливає на...",
+        options: [
+          "Потужність прискорення",
+          "Таблиця лідерів",
+          "Підрахунок кіл",
+          "Сума лікування",
+        ],
+        correctAnswer: 0,
+        explanation: "Property приводу сидінь.",
+      },
+      {
+        id: "q10",
+        type: "multiple_choice",
+        question: "Урок 6.1 зберегти назву…",
+        options: [
+          "Урок 6.1 - Стартер автомобіля",
+          "Арена готова",
+          "гоночна траса",
+          "Tycoon Works",
+        ],
+        correctAnswer: 0,
+        explanation: "Урок збереження автомобіля.",
+      },
     ],
   },
 }
 
 export const ukLesson62 = {
-  lessonId: 'lesson-roblox-6-2',
-  moduleId: 'module-06',
+  lessonId: "lesson-roblox-6-2",
+  moduleId: "module-06",
   order: 2,
-  title: '6.2 - Race Track',
+  title: "6.2 - Траса",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    'Design a readable circuit with start line and barriers',
-    'Build modular track segments with consistent lane width',
-    'Place checkpoint gates and direction signs',
-    'Playtest five laps for driveability',
+    "Створіть зрозумілу схему зі стартовою лінією та бар’єрами",
+    "Створюйте модульні сегменти колії з постійною шириною смуги",
+    "Розмістіть ворота КПП і вказівники",
+    "Перевірте п’ять кіл на керованість",
   ],
   theory: {
     sections: [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `A car without a track is a parking lot. Today you build a **circuit** your StarterCar can lap.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `Машина без колії – стоянка. Сьогодні ви будуєте **ланцюг**, який ваш StarterCar може проїхати.
 
-**Lesson flow:**
-1. **Theory (40 min)** - track design
-2. **Practice (~25 min)** - first circuit
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - проектування доріжки
+2. **Практика (~25 хв)** - перший контур
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Open **Lesson 6.1 - Starter Car**.`,
+Відкрийте **Урок 6.1 - Стартер автомобіля**.`,
       },
       {
-        title: 'Readable track design',
-        content: `Good teen-friendly tracks have:
+        title: "Зрозумілий дизайн доріжки",
+        content: `Хороші треки для підлітків мають:
 
-| Feature | Why |
+| Особливість | Чому |
 |---------|-----|
-| **Wide lanes** | Recovery from mistakes |
-| **Clear start** | Everyone knows where to begin |
-| **Guard rails** | No falling off island |
-| **Gentle turns** | Match car TurnSpeed |
+| **Широкі смуги** | Відновлення після помилок |
+| **Очистити початок** | Кожен знає, з чого почати |
+| **Огородження** | Без падіння з острова |
+| **М’які повороти** | Матч автомобіля TurnSpeed ​​|
 
-**Avoid:** hairpin at MaxSpeed 60, narrow bridges first version.`,
+**Уникайте:** шпильки на MaxSpeed ​​60, вузькі мости перша версія.`,
       },
       {
-        title: 'Modular segments',
-        content: `Folder \`Track\`:
+        title: "Модульні сегменти",
+        content: `Folder\`Track\`:\`Straight_32\`- 32 stud Part дороги\`Turn_45\`- Вигин 45°\`Turn_90\`- Вигин 90°
 
-\`Straight_32\` - 32 stud road part
-\`Turn_45\` - 45° bend
-\`Turn_90\` - 90° bend
+**Дублювати** сегменти - прив’язати за допомогою сітки переміщення **4 шпильки**.
 
-**Duplicate** segments - snap with Move grid **4 studs**.
+**Дорога:** темний колір асфальту,\`Anchored true\`, невеликий підйом по краях для бордюрів.
 
-**Road:** dark asphalt color, \`Anchored true\`, slight rise on edges for curbs.
-
-**Lane width:** **16–20 studs** minimum for StarterCar.`,
+**Ширина смуги:****16–20 шпильок** мінімум для StarterCar.`,
       },
       {
-        title: 'Start line and barriers',
-        content: `**StartLine** - white neon parts across track width.
+        title: "Стартова лінія та бар'єри",
+        content: `**StartLine** - білі неонові Parts по ширині колії.
 
-**Barriers:**
-- Red neon walls on **outside** edges only
+**Бар'єри:**
+- Червоні неонові стіни лише на **зовнішніх** краях
 - **Anchored true**, CanCollide true
-- Height \`3–4 studs\` - stops cars leaving track
+- Висота\`3–4 studs\`- зупиняє автомобілі, що з'їжджають з колії
 
-**Recovery zone:** extra flat asphalt outside sharp turns.
+**Зона відновлення: ** дуже рівний асфальт поза крутими поворотами.
 
-**Exercise (8 min):** Place StarterCar on StartLine - drive one lap slowly.`,
+**Вправа (8 хв):** Поставте StarterCar на StartLine — проїдьте одне коло повільно.`,
       },
       {
-        title: 'Checkpoints and signs',
-        content: `Place **3–4** gate parts \`CP_1\`, \`CP_2\`, \`CP_3\` around the lap:
-- Neon arches over track
-- Numbered on sign
-- **CanCollide false** (drive through)
+        title: "КПП і знаки",
+        content: `Розмістіть **3–4** Parts воріт\`CP_1\`,\`CP_2\`,\`CP_3\`навколо колін:
+- Neon арки над доріжкою
+- Пронумеровано на знаку
+- **CanCollide false** (проїзд)
 
-**Arrows** on ground before confusing turns.
+**Стрілки** на землі перед заплутаними поворотами.
 
-These prepare **Lesson 6.5** lap validation - today visual only.
+Вони готують **Урок 6.5** перевірку кола - сьогодні лише візуально.
 
-**Wrong-way sign** optional at one-way sections.`,
+**Знак неправильного шляху** необов’язковий на ділянках з одностороннім рухом.`,
       },
       {
-        title: 'Five-lap playtest',
-        content: `**You** drive 5 laps:
+        title: "Ігровий тест із п’яти кіл",
+        content: `**Ви** проїжджаєте 5 кіл:
 
-| Check | Pass? |
+| Перевірте | Пас? |
 |-------|-------|
-| Complete lap without leaving track | |
-| No getting stuck on seams | |
-| Turns fair at current MaxSpeed | |
-| Barriers stop flying off map | |
-| Fun to drive repeated laps | |
+| Повне коло без виходу з траси | |
+| Ніяких застрягань на швах | |
+| Справедливо працює на поточній MaxSpeed ​​| |
+| Бар'єри перестають злітати з карти | |
+| Весело їздити на повторних колах | |
 
-**Fix geometry** before timers in 6.3 - do not tune timer on broken track.`,
+**Виправте геометрію** перед таймерами в 6.3 - не налаштовуйте таймер на несправну доріжку.`,
       },
       {
-        title: 'Car placement on track',
-        content: `Park \`StarterCar\` on StartLine:
-- Facing first turn
-- Slightly before line (fair start)
+        title: "Розміщення автомобіля на трасі",
+        content: `Парк\`StarterCar\`на StartLine:
+- Обличчям до першої черги
+- Трохи перед лінією (чесний старт)
 
-Later: clone from ReplicatedStorage at race start.
+Пізніше: клонувати з ReplicatedStorage на старті гонки.
 
-**Folder structure:**
-\`Workspace/Track/\` - all road parts
-\`Workspace/Track/Props/\` - signs, CP gates`,
+**Структура папок:**\`Workspace/Track/\`- всі Parts дороги\`Workspace/Track/Props/\`- знаки, ворота КП`,
       },
       {
-        title: 'Before practice checklist',
-        content: `- [ ] Full loop circuit (no dead ends)
-- [ ] StartLine + 3 checkpoints visible
-- [ ] 5-lap test done, notes written
-- [ ] Save: \`Lesson 6.2 - Race Track\``,
+        title: "Контрольний список перед початком практики",
+        content: `- [] Повний контур (без тупиків)
+- [ ] StartLine + 3 видимі контрольні точки
+- [ ] Тест із 5 кіл зроблено, нотатки написані
+- [ ] Зберегти:\`Lesson 6.2 - Race Track\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'Lane too narrow', explanation: 'Frustrating for new drivers.', correctApproach: '16+ studs wide' },
-    { mistake: 'Gaps between road parts', explanation: 'Car launches or snags.', correctApproach: 'Snap grid, overlap slightly' },
-    { mistake: 'No barriers on cliff edge', explanation: 'Cars fall forever.', correctApproach: 'Walls on dangerous sides' },
-    { mistake: 'Track not closed loop', explanation: 'No lap concept.', correctApproach: 'Circuit returns to start' },
+    {
+      mistake: "Доріжка занадто вузька",
+      explanation: "Розчарування для нових водіїв.",
+      correctApproach: "Шпильки шириною 16+",
+    },
+    {
+      mistake: "Розриви між Partми дороги",
+      explanation: "Розлітається або зачіпляється автомобіль.",
+      correctApproach: "Прив'язка сітки, злегка перекриття",
+    },
+    {
+      mistake: "Жодних перешкод на краю скелі",
+      explanation: "Машини падають назавжди.",
+      correctApproach: "Стіни на небезпечних сторонах",
+    },
+    {
+      mistake: "Колія незамкнута",
+      explanation: "Немає концепції колін.",
+      correctApproach: "Схема повертається до початку",
+    },
   ],
-  summary: `You designed a modular race circuit with start line, barriers, checkpoint gates, and passed a five-lap drive test - the track is ready for race timers next lesson.`,
+  summary: "Ви спроектували модульну гоночну трасу зі стартовою лінією, бар’єрами, воротами контрольно-пропускних пунктів і пройшли п’ятиколовий тест драйву – траса готова до наступного уроку.",
   practiceTask: {
-    title: 'First circuit (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Drivable closed loop with guides.
+    title: "Перший контур (~25 хв)",
+    difficulty: "beginner",
+    description: `**Мета:** замкнутий цикл із напрямними, який можна проїхати.
 
-### Part A - Layout (12 min)
-1. Folder \`Track\` - straight + 2 turn types
-2. Closed loop ~60–120 stud perimeter
-3. StartLine at start/finish area
+### Part A – Макет (12 хв)
+1. Folder\`Track\`- пряма + 2 поворотні види
+2. Замкнутий контур ~60–120 периметр шпильки
+3. Лінія старту в зоні старту/фінішу
 
-### Part B - Safety & guides (8 min)
-1. Outside barriers on risky edges
-2. CP_1, CP_2, CP_3 gates + 2 arrow signs
+### Part B - Безпека та посібники (8 хв)
+1. Зовнішні бар'єри на небезпечних краях
+2. Ворота КП_1, КП_2, КП_3 + 2 знаки-стрілки
 
-### Part C - Playtest & save (5 min)
-1. Five laps - fix stuck spots
-2. **Save to Roblox** → \`Lesson 6.2 - Race Track\`
-3. **Practice complete**`,
+### Part C - Перевірка та збереження (5 хв)
+1. П'ять кіл - виправте застряглі місця
+2. **Зберегти в Roblox** →\`Lesson 6.2 - Race Track\`3. **Практика завершена**`,
     hints: [
-      'Drive slow first lap to feel width',
-      'Elevated curbs help see track edges',
-      'Same road height for all segments',
+      "Перше коло проїдьте повільно, щоб відчути ширину",
+      "Підняті бордюри допомагають бачити краю колії",
+      "Однакова висота дороги для всіх сегментів",
     ],
-    optionalChallenge: 'Risky shortcut path - faster but narrower.',
+    optionalChallenge: "Ризикований швидкий шлях - швидший, але вужчий.",
   },
   quiz: {
     passingScore: 70,
     timeLimit: 10,
     questions: [
-      { id: 'q1', type: MC, question: 'Race track should be…', options: ['A closed loop circuit', 'One straight only', 'Empty baseplate', 'Underwater'], correctAnswer: 0, explanation: 'Laps need a loop.' },
-      { id: 'q2', type: MC, question: 'Wide lanes help…', options: ['Recovery from mistakes', 'Deleting car', 'More lava', 'No UI'], correctAnswer: 0, explanation: 'Forgiving design.' },
-      { id: 'q3', type: MC, question: 'Barriers on outside edges…', options: ['Stop cars leaving track', 'Block start', 'Remove seat', 'Disable drive'], correctAnswer: 0, explanation: 'Safety walls.' },
-      { id: 'q4', type: MC, question: 'Checkpoints prepare for…', options: ['Lap order validation later', 'Terrain only', 'Combat', 'Shop'], correctAnswer: 0, explanation: 'Used in lap systems.' },
-      { id: 'q5', type: MC, question: 'Five-lap test finds…', options: ['Stuck spots and unfair turns', 'Robux', 'DataStore bugs', 'Skybox'], correctAnswer: 0, explanation: 'QA before timers.' },
-      { id: 'q6', type: MC, question: 'StartLine shows…', options: ['Where races begin', 'Shop location', 'Spawn only', 'Kill zone'], correctAnswer: 0, explanation: 'Clear race start.' },
-      { id: 'q7', type: MC, question: 'Track parts should be…', options: ['Anchored true', 'Unanchored all', 'Invisible', 'Scripts only'], correctAnswer: 0, explanation: 'Road does not move.' },
-      { id: 'q8', type: MC, question: 'Modular segments allow…', options: ['Consistent reuse and edits', 'Random sizes', 'No turns', 'Flying'], correctAnswer: 0, explanation: 'Build efficiently.' },
-      { id: 'q9', type: MC, question: 'Lesson 6.2 builds on…', options: ['Lesson 6.1 car', 'Only obby', 'Only coins', 'NPC only'], correctAnswer: 0, explanation: 'Need drivable car.' },
-      { id: 'q10', type: MC, question: 'Lesson 6.2 save name…', options: ['Lesson 6.2 - Race Track', 'Starter Car', 'Race Timer', 'Arena Ready'], correctAnswer: 0, explanation: 'Save track lesson.' },
+      {
+        id: "q1",
+        type: "multiple_choice",
+        question: "Гоночна траса має бути…",
+        options: [
+          "Замкнене коло",
+          "Тільки один прямий",
+          "Порожня Baseplate",
+          "Під водою",
+        ],
+        correctAnswer: 0,
+        explanation: "Круги потребують петлі.",
+      },
+      {
+        id: "q2",
+        type: "multiple_choice",
+        question: "Широкі смуги допомагають...",
+        options: [
+          "Відновлення від помилок",
+          "Видалення автомобіля",
+          "Більше лави",
+          "Немає інтерфейсу користувача",
+        ],
+        correctAnswer: 0,
+        explanation: "Пробачливий дизайн.",
+      },
+      {
+        id: "q3",
+        type: "multiple_choice",
+        question: "Бар'єри на зовнішніх краях…",
+        options: [
+          "Зупиніть автомобілі, що з'їжджають з колії",
+          "Запуск блоку",
+          "Зняти сидіння",
+          "Вимкнути диск",
+        ],
+        correctAnswer: 0,
+        explanation: "Стіни безпеки.",
+      },
+      {
+        id: "q4",
+        type: "multiple_choice",
+        question: "Пункти пропуску готуються до…",
+        options: [
+          "Перевірка замовлення на колінах пізніше",
+          "Тільки місцевість",
+          "Бойовий",
+          "Магазин",
+        ],
+        correctAnswer: 0,
+        explanation: "Використовується в накладних системах.",
+      },
+      {
+        id: "q5",
+        type: "multiple_choice",
+        question: "Тест на п’ять кіл показує…",
+        options: [
+          "Застрягання та несправедливі повороти",
+          "Robux",
+          "Помилки DataStore",
+          "Skybox",
+        ],
+        correctAnswer: 0,
+        explanation: "QA перед таймерами.",
+      },
+      {
+        id: "q6",
+        type: "multiple_choice",
+        question: "StartLine показує…",
+        options: [
+          "Де починаються гонки",
+          "Розташування магазину",
+          "Тільки нерест",
+          "Зона вбивства",
+        ],
+        correctAnswer: 0,
+        explanation: "Чіткий старт гонки.",
+      },
+      {
+        id: "q7",
+        type: "multiple_choice",
+        question: "Parts колії повинні бути…",
+        options: [
+          "Anchored true",
+          "Розкріплено все",
+          "Невидимий",
+          "Лише Scripts",
+        ],
+        correctAnswer: 0,
+        explanation: "Дорога не рухається.",
+      },
+      {
+        id: "q8",
+        type: "multiple_choice",
+        question: "Модульні сегменти дозволяють…",
+        options: [
+          "Послідовне повторне використання та редагування",
+          "Випадкові розміри",
+          "Без поворотів",
+          "політ",
+        ],
+        correctAnswer: 0,
+        explanation: "Будуйте ефективно.",
+      },
+      {
+        id: "q9",
+        type: "multiple_choice",
+        question: "Урок 6.2 базується на...",
+        options: [
+          "Урок 6.1 автомобіль",
+          "Тільки обби",
+          "Тільки монети",
+          "Тільки NPC",
+        ],
+        correctAnswer: 0,
+        explanation: "Потрібен їздовий автомобіль.",
+      },
+      {
+        id: "q10",
+        type: "multiple_choice",
+        question: "Урок 6.2 зберегти назву…",
+        options: [
+          "Урок 6.2 – Іподром",
+          "Стартер автомобіля",
+          "Таймер перегонів",
+          "Арена готова",
+        ],
+        correctAnswer: 0,
+        explanation: "Зберегти трек урок.",
+      },
     ],
   },
 }
 
 export const ukLesson63 = {
-  lessonId: 'lesson-roblox-6-3',
-  moduleId: 'module-06',
+  lessonId: "lesson-roblox-6-3",
+  moduleId: "module-06",
   order: 3,
-  title: '6.3 - Race Timer',
+  title: "6.3 - Таймер гонки",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    'Start race timer on RaceStart touch',
-    'Stop timer on RaceFinish and show elapsed time',
-    'Display live lap time on ScreenGui HUD',
-    'Track session best time per player',
+    "Запустіть таймер перегонів на дотику RaceStart",
+    "Зупинити таймер на RaceFinish і показати час, що минув",
+    "Відображайте живий час кола на екрані ScreenGui HUD",
+    "Відстежуйте найкращий час сесії на гравця",
   ],
   theory: {
     sections: [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Fast driving is fun. **Timed driving** is a game.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `Швидка їзда - це весело. **Водіння на час** — це гра.
 
-**Lesson flow:**
-1. **Theory (40 min)** - start/finish + os.clock + HUD
-2. **Practice (~25 min)** - timed circuit with best lap
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - старт/фініш + os.clock + HUD
+2. **Практика (~25 хв)** - траса на час із найкращим колом
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Open **Lesson 6.2 - Race Track** with StarterCar.`,
+Відкрийте **Урок 6.2 - гоночна траса** за допомогою StarterCar.`,
       },
       {
-        title: 'Race timer flow',
-        content: `| Step | What happens |
+        title: "Потік таймера перегонів",
+        content: `| Крок | Що відбувається |
 |------|----------------|
-| 1 | Player crosses **RaceStart** → save \`startTime\` |
-| 2 | Timer runs - HUD updates |
-| 3 | Cross **RaceFinish** → compute elapsed |
-| 4 | Compare to **session best** |
+| 1 | Гравець перетинає **RaceStart** → зберегти\`startTime\`|
+| 2 | Таймер працює - оновлення HUD |
+| 3 | Хрест **RaceFinish** → обчислення, що минуло |
+| 4 | Порівняти з **кращим сеансом** |
 
-**One lap** = start to finish on same line (simple circuit).`,
+**Одне коло** = початок і фініш на одній лінії (просте коло).`,
       },
       {
-        title: 'RaceStart and RaceFinish parts',
-        content: `Parts on track (CanCollide false, thin neon):
+        title: "Parts RaceStart і RaceFinish",
+        content: `Parts на шляху (CanCollide false, тонкий неон):\`RaceStart\`- зелений, на лінії старту\`RaceFinish\`- картатий візерунок або червоний, **та сама лінія** для кола 1
 
-\`RaceStart\` - green, at start line
-\`RaceFinish\` - checkered pattern or red, **same line** for lap 1
+Для вимірювання часу на одному колі, старт і фініш можуть бути **одними панелями** з двома Scripts АБО однією панеллю, яка перемикає стан.
 
-For single lap timing, Start and Finish can be **same pad** with two scripts OR one pad that toggles state.
-
-**Simpler:** one pad \`StartFinish\` - first touch starts, second touch stops (same lap).`,
+**Простіше:** одна панель\`StartFinish\`- перший дотик починається, другий дотик зупиняється (те саме коло).`,
       },
       {
-        title: 'Server timing script',
-        content: `\`RaceStart\` - **Script**:
-
-\`\`\`lua
+        title: "Script синхронізації сервера",
+        content: `\`RaceStart\`- **Script**:\`\`\`lua
 local startPad = script.Parent
 local racing = {} -- [player] = startTime
 
 startPad.Touched:Connect(function(hit)
-    local seat = hit.Parent:FindFirstChildWhichIsA("VehicleSeat", true)
-    if not seat then return end
+ local seat = hit.Parent:FindFirstChildWhichIsA("VehicleSeat", true)
+ if not seat then return end
 
-    local character = seat.Parent
-    local player = game:GetService("Players"):GetPlayerFromCharacter(character)
-    if not player then return end
+ local character = seat.Parent
+ local player = game:GetService("Players"):GetPlayerFromCharacter(character)
+ if not player then return end
 
-    if racing[player] then return end -- already racing
+ if racing[player] then return end -- already racing
 
-    racing[player] = os.clock()
-    print(player.Name .. " race started")
+ racing[player] = os.clock()
+ print(player.Name .. " race started")
 end)
-\`\`\`
-
-Detect **VehicleSeat** touch so only cars trigger, not walking players.`,
+\`\`\`Визначайте дотик **VehicleSeat**, щоб запускати лише автомобілі, а не ходячих гравців.`,
       },
       {
-        title: 'RaceFinish stop logic',
-        content: `\`RaceFinish\` Script:
-
-\`\`\`lua
+        title: "Логіка зупинки RaceFinish",
+        content: `\`RaceFinish\`Script:\`\`\`lua
 local finishPad = script.Parent
 local racing = -- shared or _G / module; lesson: find start script state
 
 finishPad.Touched:Connect(function(hit)
-    local seat = hit.Parent:FindFirstChildWhichIsA("VehicleSeat", true)
-    if not seat then return end
+ local seat = hit.Parent:FindFirstChildWhichIsA("VehicleSeat", true)
+ if not seat then return end
 
-    local player = game.Players:GetPlayerFromCharacter(seat.Parent)
-    if not player then return end
+ local player = game.Players:GetPlayerFromCharacter(seat.Parent)
+ if not player then return end
 
-    local startTime = racing[player]
-    if not startTime then
-        print("Finish ignored - race not started")
-        return
-    end
+ local startTime = racing[player]
+ if not startTime then
+ print("Finish ignored - race not started")
+ return
+ end
 
-    local elapsed = os.clock() - startTime
-    racing[player] = nil
+ local elapsed = os.clock() - startTime
+ racing[player] = nil
 
-    print(player.Name .. " finished: " .. string.format("%.2f", elapsed) .. "s")
-    -- Fire to client for HUD / best time
+ print(player.Name .. " finished: " .. string.format("%.2f", elapsed) .. "s")
+ -- Fire to client for HUD / best time
 end)
-\`\`\`
-
-**Better:** one **RaceService** script in ServerScriptService holds \`racing\` table for both pads.`,
+\`\`\`**Краще:** підтримується один Script **RaceService** у ServerScriptService\`racing\`стіл для обох колодок.`,
       },
       {
-        title: 'HUD - live timer LocalScript',
-        content: `**StarterGui** → \`RaceUI\` → \`TimeLabel\`
+        title: "HUD - живий таймер LocalScript",
+        content: `**StarterGui** →\`RaceUI\`→\`TimeLabel\`LocalScript (спрощено – пізніше використовує атрибут або RemoteEvent):
 
-LocalScript (simplified - uses attribute or RemoteEvent later):
+Для уроку **LocalScript** опитує **NumberValue**\`RaceTime\`у програвачі, реплікованому сервером, АБО чистий локальний таймер після запуску торкніться копії клієнтської панелі.
 
-For lesson, **LocalScript** polls a **NumberValue** \`RaceTime\` in player replicated by server, OR pure local timer after start touch on client pad copy.
-
-**Simple local-only practice** (solo):
-
-\`\`\`lua
+**Проста локальна практика** (соло):\`\`\`lua
 local label = script.Parent
 local running = false
 local startTime = 0
 
 -- Connect to start/finish via BindableEvent in ReplicatedStorage for lesson bridge
-\`\`\`
-
-**Minimum:** server prints time; add \`TimeLabel\` updated from server via \`player:SetAttribute("RaceElapsed", elapsed)\` each 0.05s in server loop.
-
-\`\`\`lua
+\`\`\`**Мінімум:** час друку сервера; додати\`TimeLabel\`оновлено з сервера через\`player:SetAttribute("RaceElapsed", elapsed)\`кожні 0,05 с у циклі сервера.\`\`\`lua
 -- Server after start:
 task.spawn(function()
-    while racing[player] do
-        player:SetAttribute("RaceElapsed", os.clock() - racing[player])
-        task.wait(0.05)
-    end
+ while racing[player] do
+ player:SetAttribute("RaceElapsed", os.clock() - racing[player])
+ task.wait(0.05)
+ end
 end)
-\`\`\`
-
-Client reads attribute - updates label.`,
+\`\`\`Клієнт читає атрибут - оновлює мітку.`,
       },
       {
-        title: 'Session best time',
+        title: "Найкращий час сесії",
         content: `\`\`\`lua
 local best = player:GetAttribute("RaceBest") or math.huge
 if elapsed < best then
-    player:SetAttribute("RaceBest", elapsed)
-    print("New best lap!")
+ player:SetAttribute("RaceBest", elapsed)
+ print("New best lap!")
 end
-\`\`\`
-
-**BestLabel:** \`Best: 42.35s\`
-
-**Prevent finish before start:** if no \`racing[player]\`, ignore finish touch.`,
+\`\`\`**BestLabel:**\`Best: 42.35s\`**Запобігти фініш перед стартом:** якщо ні\`racing[player]\`, ігнорувати штрих.`,
       },
       {
-        title: 'Before practice checklist',
-        content: `- [ ] Start only fires once per lap attempt
-- [ ] Finish ignored if race not started
-- [ ] HUD or Output shows elapsed time
-- [ ] Best time updates when beaten
-- [ ] Save: \`Lesson 6.3 - Race Timer\``,
+        title: "Контрольний список перед початком практики",
+        content: `- [ ] Старт випалює лише один раз за спробу кола
+- [ ] Фініш ігнорується, якщо гонка не розпочата
+- [ ] HUD або Output показує час, що минув
+- [ ] Оновлення найкращого часу при побитті
+- [ ] Зберегти:\`Lesson 6.3 - Race Timer\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'Finish fires before start', explanation: 'elapsed nonsense.', correctApproach: 'Require racing[player] exists' },
-    { mistake: 'Walking player starts race', explanation: 'Not in car.', correctApproach: 'Detect VehicleSeat in hit' },
-    { mistake: 'Timer never stops', explanation: 'racing[player] not cleared.', correctApproach: 'nil after finish' },
-    { mistake: 'Client-only trusted time', explanation: 'Exploitable.', correctApproach: 'Server os.clock for official time' },
+    {
+      mistake: "Закінчити багаття до початку",
+      explanation: "минула нісенітниця.",
+      correctApproach: "Вимагати перегонів [гравець] існує",
+    },
+    {
+      mistake: "Ідучий гравець починає гонку",
+      explanation: "Не в машині.",
+      correctApproach: "Виявлення VehicleSeat у зверненні",
+    },
+    {
+      mistake: "Таймер ніколи не зупиняється",
+      explanation: "гонки [гравець] не очищено.",
+      correctApproach: "нуль після закінчення",
+    },
+    {
+      mistake: "Довірений час лише для клієнтів",
+      explanation: "Можна використовувати.",
+      correctApproach: "Сервер os.clock для офіційного часу",
+    },
   ],
-  summary: `You wired RaceStart and RaceFinish with server os.clock timing, live HUD via attributes, and session best lap tracking - your circuit is now a timed race.`,
+  summary: "Ви зв’язали RaceStart і RaceFinish із серверним хронометражем os.clock, живим HUD через атрибути та відстеженням найкращого кола сеансу – ваша траса тепер є гонкою на час.",
   practiceTask: {
-    title: 'Timed circuit (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Start → drive lap → finish time + best.
+    title: "Схема за часом (~25 хв)",
+    difficulty: "beginner",
+    description: `**Ціль:** Старт → коло → фініш + найкращий час.
 
-### Part A - Start/Finish pads (8 min)
-1. RaceStart + RaceFinish (or combined flow)
-2. Server racing table + VehicleSeat detection
+### Part A - Старт/Фініш колодок (8 хв)
+1. RaceStart + RaceFinish (або комбінований потік)
+2. Таблиця гонок на сервері + виявлення VehicleSeat
 
-### Part B - Timing (12 min)
-1. Finish computes elapsed, clears state
-2. Attribute RaceElapsed for HUD
-3. RaceBest updates on new record
+### Part B - Хронометраж (12 хв)
+1. Завершити обчислення, що минули, очищає стан
+2. Атрибут RaceElapsed для HUD
+3. RaceBest оновлює новий рекорд
 
-### Part C - Test & save (5 min)
-1. Three laps - beat your best once
-2. **Save to Roblox** → \`Lesson 6.3 - Race Timer\`
-3. **Practice complete**`,
+### Part C - Перевірте та збережіть (5 хв)
+1. Три кола - один раз побий свого кращого
+2. **Зберегти в Roblox** →\`Lesson 6.3 - Race Timer\`3. **Практика завершена**`,
     hints: [
-      'One RaceService script beats two disconnected tables',
-      'Print "finish ignored" when testing order',
-      'Use same start/finish line for first lap simplicity',
+      "Один Script RaceService перемагає дві відключені таблиці",
+      "Під час перевірки порядку друкувати «фініш ігнорується».",
+      "Використовуйте одну лінію старту/фінішу для спрощення першого кола",
     ],
-    optionalChallenge: 'Split pad at halfway shows split time.',
+    optionalChallenge: "Розділена панель на півдорозі показує проміжний час.",
   },
   quiz: {
     passingScore: 70,
     timeLimit: 10,
     questions: [
-      { id: 'q1', type: MC, question: 'Race timer uses…', options: ['os.clock on server', 'BrickColor only', 'Terrain paint', 'Atmosphere'], correctAnswer: 0, explanation: 'Elapsed time measurement.' },
-      { id: 'q2', type: MC, question: 'Finish ignored if…', options: ['Race never started', 'Car is fast', 'Track is long', 'UI exists'], correctAnswer: 0, explanation: 'No startTime saved.' },
-      { id: 'q3', type: MC, question: 'VehicleSeat detection ensures…', options: ['Car crossed line not walking', 'Flying', 'Swimming', 'Shop'], correctAnswer: 0, explanation: 'Car-only triggers.' },
-      { id: 'q4', type: MC, question: 'Session best updates when…', options: ['New time is lower', 'Always', 'Never', 'On death'], correctAnswer: 0, explanation: 'Lower is faster.' },
-      { id: 'q5', type: MC, question: 'racing[player] = nil after finish…', options: ['Allows next race start', 'Deletes player', 'Removes car', 'Publishes'], correctAnswer: 0, explanation: 'Reset state.' },
-      { id: 'q6', type: MC, question: 'Live HUD can read…', options: ['Player attributes from server', 'Only chat', 'Terrain', 'Kill blocks'], correctAnswer: 0, explanation: 'Replicated attributes.' },
-      { id: 'q7', type: MC, question: 'RaceStart saves…', options: ['startTime with os.clock', 'Robux', 'Lap count', 'Weapon damage'], correctAnswer: 0, explanation: 'Timestamp at start.' },
-      { id: 'q8', type: MC, question: 'Official race time should be…', options: ['Calculated on server', 'Client chat only', 'Random', 'Guess'], correctAnswer: 0, explanation: 'Server authority.' },
-      { id: 'q9', type: MC, question: 'Lesson 6.3 needs…', options: ['Track from 6.2 and car from 6.1', 'Only sword', 'Only coins', 'Empty'], correctAnswer: 0, explanation: 'Full race setup.' },
-      { id: 'q10', type: MC, question: 'Lesson 6.3 save name…', options: ['Lesson 6.3 - Race Timer', 'Race Track', 'Starter Car', 'Obby Ready'], correctAnswer: 0, explanation: 'Save timer lesson.' },
+      {
+        id: "q1",
+        type: "multiple_choice",
+        question: "Таймер перегонів використовує…",
+        options: [
+          "os.clock на сервері",
+          "Тільки BrickColor",
+          "Фарба місцевості",
+          "атмосфера",
+        ],
+        correctAnswer: 0,
+        explanation: "Вимірювання витраченого часу.",
+      },
+      {
+        id: "q2",
+        type: "multiple_choice",
+        question: "Завершення ігнорується, якщо…",
+        options: [
+          "Гонка так і не почалася",
+          "Машина швидка",
+          "Траса довга",
+          "Інтерфейс користувача існує",
+        ],
+        correctAnswer: 0,
+        explanation: "Час початку не збережено.",
+      },
+      {
+        id: "q3",
+        type: "multiple_choice",
+        question: "Виявлення VehicleSeat забезпечує...",
+        options: [
+          "Автомобіль перетнув лінію без руху",
+          "політ",
+          "Плавання",
+          "Магазин",
+        ],
+        correctAnswer: 0,
+        explanation: "Тригери лише для автомобіля.",
+      },
+      {
+        id: "q4",
+        type: "multiple_choice",
+        question: "Найкраще оновлення сесії, коли…",
+        options: [
+          "Новий час нижче",
+          "Завжди",
+          "Ніколи",
+          "На смерть",
+        ],
+        correctAnswer: 0,
+        explanation: "Нижче – швидше.",
+      },
+      {
+        id: "q5",
+        type: "multiple_choice",
+        question: "racing[player] = нуль після фінішу...",
+        options: [
+          "Дозволяє наступний старт гонки",
+          "Видаляє гравця",
+          "Знімає автомобіль",
+          "Публікує",
+        ],
+        correctAnswer: 0,
+        explanation: "Скинути стан.",
+      },
+      {
+        id: "q6",
+        type: "multiple_choice",
+        question: "Live HUD може читати...",
+        options: [
+          "Атрибути гравця з сервера",
+          "Тільки чат",
+          "Рельєф місцевості",
+          "Вбивати блоки",
+        ],
+        correctAnswer: 0,
+        explanation: "Тиражовані атрибути.",
+      },
+      {
+        id: "q7",
+        type: "multiple_choice",
+        question: "RaceStart зберігає…",
+        options: [
+          "startTime з os.clock",
+          "Robux",
+          "Підрахунок кіл",
+          "Пошкодження зброєю",
+        ],
+        correctAnswer: 0,
+        explanation: "Позначка часу на початку.",
+      },
+      {
+        id: "q8",
+        type: "multiple_choice",
+        question: "Офіційний час перегонів має бути…",
+        options: [
+          "Розраховується на сервері",
+          "Лише клієнтський чат",
+          "Випадковий",
+          "Вгадай",
+        ],
+        correctAnswer: 0,
+        explanation: "Повноваження сервера.",
+      },
+      {
+        id: "q9",
+        type: "multiple_choice",
+        question: "Урок 6.3 потребує…",
+        options: [
+          "Трек від 6.2 і авто від 6.1",
+          "Тільки меч",
+          "Тільки монети",
+          "Порожній",
+        ],
+        correctAnswer: 0,
+        explanation: "Повне налаштування гонки.",
+      },
+      {
+        id: "q10",
+        type: "multiple_choice",
+        question: "Урок 6.3 зберегти назву…",
+        options: [
+          "Урок 6.3 - Таймер перегонів",
+          "гоночна траса",
+          "Стартер автомобіля",
+          "Obby готовий",
+        ],
+        correctAnswer: 0,
+        explanation: "Зберегти урок таймера.",
+      },
     ],
   },
 }
 
 export const ukLesson64 = {
-  lessonId: 'lesson-roblox-6-4',
-  moduleId: 'module-06',
+  lessonId: "lesson-roblox-6-4",
+  moduleId: "module-06",
   order: 4,
-  title: '6.4 - Client-Server: First Look',
+  title: "6.4 - Client-Server: перше знайомство",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    'Explain client vs server roles in a racing game',
-    'Create RaceEvent RemoteEvent in ReplicatedStorage',
-    'FireServer from client and validate on server',
-    'Use FireClient for trusted UI updates from server',
+    "Поясніть ролі клієнта та сервера в гоночній грі",
+    "Створіть RaceEvent RemoteEvent у ReplicatedStorage",
+    "FireServer з клієнта та перевірка на сервері",
+    "Використовуйте FireClient для надійних оновлень інтерфейсу користувача з сервера",
   ],
   theory: {
     sections: [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Until now, timing lived mostly on the **server**. Today you connect **client UI** and **server truth** with **RemoteEvents**.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `Дотепер хронометраж жив переважно на **сервері**. Сьогодні ви об’єднуєте **інтерфейс клієнта** та **істину сервера** за допомогою **RemoteEvents**.
 
-**Lesson flow:**
-1. **Theory (40 min)** - two worlds + RaceEvent
-2. **Practice (~25 min)** - event-driven race flow
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - два світи + RaceEvent
+2. **Практика (~25 хв)** - перегони, керовані подіями
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Open **Lesson 6.3 - Race Timer**.`,
+Відкрийте **Урок 6.3 - Таймер перегонів**.`,
       },
       {
-        title: 'Two worlds in Roblox',
-        content: `| Side | Runs on | Good for |
+        title: "Два світи в Roblox",
+        content: `| Сторона | Працює на | Підходить для |
 |------|---------|----------|
-| **Client** | Player device | HUD, input, camera, sounds |
-| **Server** | Roblox host | Rules, scoring, anti-cheat |
+| **Клієнт** | Пристрій плеєра | HUD, вхід, камера, звуки |
+| **Сервер** | Хост Roblox | Правила, підрахунок очок, античіт |
 
-**Racing rule:** client may **request** "I crossed finish" - server **decides** if it is true and what the time is.
+**Правило перегонів:** клієнт може **запитувати** «Я перетнув фініш» — сервер **вирішує**, чи це правда та який час.
 
-**Never** let client set official lap time with \`FireServer(1.0)\` as the final score.`,
+**Ніколи** не дозволяйте клієнту встановлювати офіційний час кола\`FireServer(1.0)\`як остаточний рахунок.`,
       },
       {
-        title: 'What each side owns',
-        content: `**Client owns:**
-- Updating \`TimeLabel\` every frame
-- Button "Ready to race"
-- Showing "Final Lap!" banner
+        title: "Чим володіє кожна сторона",
+        content: `**Клієнт володіє:**
+- Оновлення\`TimeLabel\`кожен кадр
+- Кнопка «Готовий до перегонів»
+- Показ "Final Lap!" банер
 
-**Server owns:**
-- \`racing[player]\` start time
-- Checkpoint order validation
-- Winner announcement
-- Leaderstats \`Laps\` value
+**Сервер володіє:**
+-\`racing[player]\`час початку
+- Перевірка замовлення на КПП
+- Оголошення переможця
+- Лідерська статистика\`Laps\`значення
 
-If client and server disagree, **server wins**.`,
+Якщо клієнт і сервер не погоджуються, **перемагає сервер**.`,
       },
       {
-        title: 'RemoteEvent setup',
-        content: `**ReplicatedStorage** → insert **RemoteEvent** → rename \`RaceEvent\`
+        title: "Налаштування RemoteEvent",
+        content: `**ReplicatedStorage** → вставити **RemoteEvent** → перейменувати\`RaceEvent\`І клієнт, і сервер можуть бачити його після реплікації.
 
-Both client and server can see it after replication.
+**Назви дій** (рядки):
+-\`"StartRace"\`-\`"FinishRace"\`-\`"UpdateHUD"\`(сервер → клієнт)
 
-**Naming actions** (strings):
-- \`"StartRace"\`
-- \`"FinishRace"\`
-- \`"UpdateHUD"\` (server → client)
-
-Keep names short and **exact** - typos break games silently.`,
+Зберігайте назви короткими та **точними** - помилки мовчки ламають гру.`,
       },
       {
-        title: 'Client → server: FireServer',
-        content: `**StarterGui** → \`RaceUI\` → **LocalScript**:
-
-\`\`\`lua
+        title: "Клієнт → сервер: FireServer",
+        content: `**StarterGui** →\`RaceUI\`→ **LocalScript**:\`\`\`lua
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local raceEvent = ReplicatedStorage:WaitForChild("RaceEvent")
 
 local readyButton = script.Parent:WaitForChild("ReadyButton")
 
 readyButton.MouseButton1Click:Connect(function()
-    raceEvent:FireServer("StartRace")
+ raceEvent:FireServer("StartRace")
 end)
-\`\`\`
-
-**ServerScriptService** → \`RaceServer\` Script:
-
-\`\`\`lua
+\`\`\`**ServerScriptService** →\`RaceServer\`Script:\`\`\`lua
 local raceEvent = game.ReplicatedStorage:WaitForChild("RaceEvent")
 local racing = {}
 
 raceEvent.OnServerEvent:Connect(function(player, action)
-    print("[RaceEvent]", player.Name, action)
+ print("[RaceEvent]", player.Name, action)
 
-    if action == "StartRace" then
-        if racing[player] then return end
-        racing[player] = os.clock()
-        raceEvent:FireClient(player, "RaceStarted")
-    end
+ if action == "StartRace" then
+ if racing[player] then return end
+ racing[player] = os.clock()
+ raceEvent:FireClient(player, "RaceStarted")
+ end
 end)
-\`\`\`
-
-Server **logs** every action while you build.`,
+\`\`\`Сервер **реєструє** кожну дію під час створення.`,
       },
       {
-        title: 'Server → client: FireClient',
-        content: `After server validates finish:
-
-\`\`\`lua
+        title: "Сервер → клієнт: FireClient",
+        content: `Після завершення перевірки сервера:\`\`\`lua
 raceEvent:FireClient(player, "RaceFinished", elapsed, isNewBest)
-\`\`\`
-
-Client LocalScript:
-
-\`\`\`lua
+\`\`\`Клієнт LocalScript:\`\`\`lua
 raceEvent.OnClientEvent:Connect(function(action, ...)
-    if action == "RaceStarted" then
-        script.Parent.TimeLabel.Text = "GO!"
-    elseif action == "RaceFinished" then
-        local elapsed, isNewBest = ...
-        script.Parent.TimeLabel.Text = string.format("Time: %.2fs", elapsed)
-        if isNewBest then
-            script.Parent.BestLabel.Text = "NEW BEST!"
-        end
-    end
+ if action == "RaceStarted" then
+ script.Parent.TimeLabel.Text = "GO!"
+ elseif action == "RaceFinished" then
+ local elapsed, isNewBest = ...
+ script.Parent.TimeLabel.Text = string.format("Time: %.2fs", elapsed)
+ if isNewBest then
+ script.Parent.BestLabel.Text = "NEW BEST!"
+ end
+ end
 end)
-\`\`\`
-
-**Display only** - numbers came from server, not guessed on client.`,
+\`\`\`**Лише відображення** - числа надійшли з сервера, а не вгадані клієнтом.`,
       },
       {
-        title: 'Security mindset',
-        content: `**Bad (exploitable):**
-\`\`\`lua
+        title: "Менталітет безпеки",
+        content: `**Погано (можна використовувати):**\`\`\`lua
 -- Server blindly trusts client time
 raceEvent.OnServerEvent:Connect(function(player, action, clientTime)
-    if action == "FinishRace" then
-        saveBest(clientTime) -- HACK: player sends 0.01
-    end
+ if action == "FinishRace" then
+ saveBest(clientTime) -- HACK: player sends 0.01
+ end
 end)
-\`\`\`
-
-**Good:**
-- Server detects pad touch OR server tracks checkpoints
-- Server computes \`os.clock() - start\`
-- Client only shows result via \`FireClient\`
-
-**Teen rule:** *Client suggests. Server decides.*`,
+\`\`\`**Добре:**
+- Сервер виявляє дотик панелі АБО сервер відстежує контрольні точки
+- Серверні обчислення\`os.clock() - start\`- Клієнт показує результат лише через\`FireClient\`**Правило підлітків:***Клієнт пропонує. Сервер вирішує.*`,
       },
       {
-        title: 'Refactor Lesson 6.3 timer',
-        content: `Move \`racing\` table to **RaceServer** in ServerScriptService.
+        title: "Рефакторинг таймера уроку 6.3",
+        content: `рухатися\`racing\`таблиці до **RaceServer** у ServerScriptService.
 
-Pads call internal functions - not separate disconnected tables.
+Панелі викликають внутрішні функції, а не окремі відключені таблиці.
 
-Flow:
-1. Pad touch → server starts timer
-2. Finish touch → server computes time → \`FireClient\` with result
-3. Client updates labels
+Потік:
+1. Торкніться панелі → сервер запускає таймер
+2. Доторкніться → сервер обчислює час →\`FireClient\`з результатом
+3. Клієнт оновлює мітки
 
-**Before practice checklist:**
-- [ ] RaceEvent in ReplicatedStorage
-- [ ] Server prints all incoming actions
-- [ ] Finish time never sent from client as authority
-- [ ] Save: \`Lesson 6.4 - Client Server Race\``,
+**Контрольний список перед тренуваннями:**
+- [ ] RaceEvent у ReplicatedStorage
+- [ ] Сервер друкує всі вхідні дії
+- [ ] Час завершення ніколи не надсилався від клієнта як повноваження
+- [ ] Зберегти:\`Lesson 6.4 - Client Server Race\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'RemoteEvent in Workspace only', explanation: 'Clients may not see it reliably.', correctApproach: 'ReplicatedStorage for shared events' },
-    { mistake: 'Trusting client finish time', explanation: 'Exploiters fake fast times.', correctApproach: 'Server os.clock on validated touch' },
-    { mistake: 'Typo in action string', explanation: 'Server ignores event.', correctApproach: 'Constants table for action names' },
-    { mistake: 'LocalScript in ServerScriptService', explanation: 'Never runs for players.', correctApproach: 'LocalScript under StarterGui' },
+    {
+      mistake: "RemoteEvent лише в Workspace",
+      explanation: "Клієнти можуть не побачити це надійно.",
+      correctApproach: "ReplicatedStorage для спільних подій",
+    },
+    {
+      mistake: "Час завершення роботи довірливого клієнта",
+      explanation: "Експлуататори підробляють швидкими часами.",
+      correctApproach: "OS.clock сервера при підтвердженому дотику",
+    },
+    {
+      mistake: "Друкарська помилка в рядку дії",
+      explanation: "Сервер ігнорує подію.",
+      correctApproach: "Таблиця констант для імен дій",
+    },
+    {
+      mistake: "LocalScript у ServerScriptService",
+      explanation: "Ніколи не працює замість гравців.",
+      correctApproach: "LocalScript під StarterGui",
+    },
   ],
-  summary: `You connected RaceEvent RemoteEvent so clients request race actions, the server validates and owns timing, and FireClient pushes trusted results to the HUD - the foundation for fair multiplayer racing.`,
+  summary: "Ви підключили RaceEvent RemoteEvent, щоб клієнти надсилали запити на перегонові дії, сервер перевіряв і володів хронометражем, а FireClient надсилав надійні результати в HUD — основу для чесних багатокористувацьких перегонів.",
   practiceTask: {
-    title: 'Event-driven race flow (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** RemoteEvent path with server authority.
+    title: "Потік перегонів на основі подій (~25 хв)",
+    difficulty: "beginner",
+    description: `**Ціль:** шлях RemoteEvent із повноваженнями сервера.
 
-### Part A - Setup (8 min)
-1. \`RaceEvent\` in ReplicatedStorage
-2. \`RaceServer\` script with \`racing\` table
+### Part A - Налаштування (8 хв)
+1.\`RaceEvent\`у ReplicatedStorage
+2.\`RaceServer\`Script с\`racing\`стіл
 3. ReadyButton → FireServer("StartRace")
 
-### Part B - Two-way events (12 min)
-1. Server starts timer on valid StartRace
-2. Finish pad → server computes time → FireClient("RaceFinished", elapsed)
-3. Client updates TimeLabel / BestLabel from server data
+### Part B - Двосторонні події (12 хв)
+1. Сервер запускає таймер на дійсному StartRace
+2. Фінішна панель → сервер обчислює час → FireClient("RaceFinished", пройшло)
+3. Клієнт оновлює TimeLabel / BestLabel з даних сервера
 
-### Part C - Test & save (5 min)
-1. Output shows server logs for each action
-2. **Save to Roblox** → \`Lesson 6.4 - Client Server Race\`
-3. **Practice complete**`,
+### Part C - Перевірте та збережіть (5 хв)
+1. Output дані показують серверні журнали для кожної дії
+2. **Зберегти в Roblox** →\`Lesson 6.4 - Client Server Race\`3. **Практика завершена**`,
     hints: [
-      'Print player + action on every OnServerEvent',
-      'Keep Lesson 6.3 pad logic but centralize in RaceServer',
-      'FireClient only after server computed elapsed',
+      "Друк гравця + дії для кожної події OnServerEvent",
+      "Зберігайте логіку блокування уроку 6.3, але централізуйте його на RaceServer",
+      "FireClient лише після завершення обчислень сервера",
     ],
-    optionalChallenge: 'Broadcast "Player X finished" to all clients with FireAllClients.',
+    optionalChallenge: "Трансляція «Гравець X завершив роботу» всім клієнтам із FireAllClients.",
   },
   quiz: {
     passingScore: 70,
     timeLimit: 10,
     questions: [
-      { id: 'q1', type: MC, question: 'Server is trusted for…', options: ['Final race rules and scores', 'Only graphics', 'Only music', 'Camera only'], correctAnswer: 0, explanation: 'Authoritative game logic.' },
-      { id: 'q2', type: MC, question: 'RemoteEvent lives in…', options: ['ReplicatedStorage', 'Lighting only', 'Terrain', 'StarterPack'], correctAnswer: 0, explanation: 'Replicated to client and server.' },
-      { id: 'q3', type: MC, question: 'FireServer sends…', options: ['Client request to server', 'Server to all clients only', 'Terrain data', 'Welds'], correctAnswer: 0, explanation: 'Client → server.' },
-      { id: 'q4', type: MC, question: 'FireClient sends…', options: ['Server message to one player', 'Exploit', 'Delete car', 'Save place'], correctAnswer: 0, explanation: 'Server → specific client.' },
-      { id: 'q5', type: MC, question: 'Client should not send…', options: ['Trusted official lap time as fact', 'Button clicks', 'UI requests', 'Ready signal'], correctAnswer: 0, explanation: 'Server calculates time.' },
-      { id: 'q6', type: MC, question: 'LocalScript runs on…', options: ['Player client', 'Server only', 'Roblox website', 'DataStore'], correctAnswer: 0, explanation: 'Client-side scripts.' },
-      { id: 'q7', type: MC, question: 'OnServerEvent runs on…', options: ['Server', 'Client HUD only', 'Both equally', 'Terrain'], correctAnswer: 0, explanation: 'Server handles FireServer.' },
-      { id: 'q8', type: MC, question: 'Racing games need both sides because…', options: ['Fast UI + trusted rules', 'No scripts', 'Only welds', 'Only coins'], correctAnswer: 0, explanation: 'Client display + server truth.' },
-      { id: 'q9', type: MC, question: 'Lesson 6.4 builds on…', options: ['Lesson 6.3 timer', 'Only obby', 'Only tycoon', 'Empty place'], correctAnswer: 0, explanation: 'Adds networking layer.' },
-      { id: 'q10', type: MC, question: 'Lesson 6.4 save name…', options: ['Lesson 6.4 - Client Server Race', 'Race Timer', 'Starter Car', 'Arena Ready'], correctAnswer: 0, explanation: 'Save networking lesson.' },
+      {
+        id: "q1",
+        type: "multiple_choice",
+        question: "Сервер надійний для…",
+        options: [
+          "Правила фінального заїзду та результати",
+          "Тільки графіка",
+          "Тільки музика",
+          "Тільки камера",
+        ],
+        correctAnswer: 0,
+        explanation: "Авторитетна ігрова логіка.",
+      },
+      {
+        id: "q2",
+        type: "multiple_choice",
+        question: "RemoteEvent живе в…",
+        options: [
+          "ReplicatedStorage",
+          "Тільки освітлення",
+          "Рельєф місцевості",
+          "StarterPack",
+        ],
+        correctAnswer: 0,
+        explanation: "Тиражується на клієнта та сервер.",
+      },
+      {
+        id: "q3",
+        type: "multiple_choice",
+        question: "FireServer надсилає…",
+        options: [
+          "Запит клієнта на сервер",
+          "Сервер лише для всіх клієнтів",
+          "Дані про місцевість",
+          "Зварні шви",
+        ],
+        correctAnswer: 0,
+        explanation: "Клієнт → сервер.",
+      },
+      {
+        id: "q4",
+        type: "multiple_choice",
+        question: "FireClient надсилає…",
+        options: [
+          "Повідомлення сервера одному гравцеві",
+          "Експлойт",
+          "Видалити автомобіль",
+          "Зберегти місце",
+        ],
+        correctAnswer: 0,
+        explanation: "Сервер → конкретний клієнт.",
+      },
+      {
+        id: "q5",
+        type: "multiple_choice",
+        question: "Клієнт не повинен надсилати…",
+        options: [
+          "Довірений офіційний час кола як факт",
+          "Клацання кнопок",
+          "запити інтерфейсу користувача",
+          "Сигнал готовності",
+        ],
+        correctAnswer: 0,
+        explanation: "Сервер розраховує час.",
+      },
+      {
+        id: "q6",
+        type: "multiple_choice",
+        question: "LocalScript працює на...",
+        options: [
+          "Клієнт гравця",
+          "Тільки сервер",
+          "Веб-сайт Roblox",
+          "DataStore",
+        ],
+        correctAnswer: 0,
+        explanation: "Скрипти на стороні клієнта.",
+      },
+      {
+        id: "q7",
+        type: "multiple_choice",
+        question: "OnServerEvent працює на...",
+        options: [
+          "Сервер",
+          "Лише клієнтський HUD",
+          "Обидва однаково",
+          "Рельєф місцевості",
+        ],
+        correctAnswer: 0,
+        explanation: "Сервер обслуговує FireServer.",
+      },
+      {
+        id: "q8",
+        type: "multiple_choice",
+        question: "Перегони потребують обох сторін, тому що...",
+        options: [
+          "Швидкий інтерфейс + надійні правила",
+          "Жодних Scripts",
+          "Тільки зварні шви",
+          "Тільки монети",
+        ],
+        correctAnswer: 0,
+        explanation: "Відображення клієнта + server authority.",
+      },
+      {
+        id: "q9",
+        type: "multiple_choice",
+        question: "Урок 6.4 базується на...",
+        options: [
+          "Таймер уроку 6.3",
+          "Тільки обби",
+          "Тільки магнат",
+          "Порожнє місце",
+        ],
+        correctAnswer: 0,
+        explanation: "Додає мережевий рівень.",
+      },
+      {
+        id: "q10",
+        type: "multiple_choice",
+        question: "Урок 6.4 зберегти назву…",
+        options: [
+          "Урок 6.4 – Гонка клієнт-сервер",
+          "Таймер перегонів",
+          "Стартер автомобіля",
+          "Арена готова",
+        ],
+        correctAnswer: 0,
+        explanation: "Зберегти урок мереж.",
+      },
     ],
   },
 }
 
 export const ukLesson65 = {
-  lessonId: 'lesson-roblox-6-5',
-  moduleId: 'module-06',
+  lessonId: "lesson-roblox-6-5",
+  moduleId: "module-06",
   order: 5,
-  title: '6.5 - Laps and Leaderboard',
+  title: "6.5 - Кола та лідерборд",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    'Track ordered checkpoints CP_1 → CP_2 → CP_3 → Finish',
-    'Increment Laps leaderstat only on valid full lap',
-    'Show lap progress on HUD and leaderboard',
-    'Declare winner at target laps with time tie-breaker',
+    "Відстежити контрольні точки CP_1 → CP_2 → CP_3 → Finish",
+    "Збільшуйте статистику лідера кіл лише на дійсному повному колі",
+    "Показувати прогрес кола на HUD і таблиці лідерів",
+    "Оголошення переможця на цільових колах із тай-брейком",
   ],
   theory: {
     sections: [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `One timed lap is a sprint. **Three laps with checkpoint order** is a real race.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `Одне коло з вимірюванням часу є спринтом. **Три кола з порядком контрольних точок** — це справжня гонка.
 
-**Lesson flow:**
-1. **Theory (40 min)** - lap rules + leaderstats
-2. **Practice (~25 min)** - 3-lap race logic
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - правила кола + статистика лідерів
+2. **Практика (~25 хв)** - логіка гонки на 3 кола
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Open **Lesson 6.4 - Client Server Race**.`,
+Відкрийте **Урок 6.4 - Перегони клієнт-серверів**.`,
       },
       {
-        title: 'Fair lap rules',
-        content: `Without order, players skip half the track.
+        title: "Правила чесного кола",
+        content: `Без порядку гравці пропускають половину доріжки.
 
-**Required:**
-| Rule | Why |
+**Обов’язково:**
+| Правило | Чому |
 |------|-----|
-| Checkpoints in order | No shortcuts |
-| Finish only after last CP | Valid lap completion |
-| Reset CP index after lap | Next lap starts clean |
-| Target laps (e.g. 3) | Clear win condition |
+| Пункти пропуску в порядку | Жодних ярликів |
+| Завершити лише після останнього CP | Дійсне завершення кола |
+| Скинути індекс CP після кола | Наступне коло починається чисто |
+| Цільові кола (наприклад, 3) | Очистити умову виграшу |
 
-**Track from 6.2:** \`CP_1\`, \`CP_2\`, \`CP_3\` → then \`RaceFinish\`.`,
+**Трек з 6.2:**\`CP_1\`,\`CP_2\`,\`CP_3\`→ потім\`RaceFinish\`.`,
       },
       {
-        title: 'Per-player checkpoint state',
-        content: `In **RaceServer**:
-
-\`\`\`lua
+        title: "Стан контрольної точки для кожного гравця",
+        content: `У **RaceServer**:\`\`\`lua
 local progress = {} -- [player] = nextCheckpointIndex
 
 local ORDER = {
-    [1] = workspace.Track.CP_1,
-    [2] = workspace.Track.CP_2,
-    [3] = workspace.Track.CP_3,
-    [4] = workspace.Track.RaceFinish,
+ [1] = workspace.Track.CP_1,
+ [2] = workspace.Track.CP_2,
+ [3] = workspace.Track.CP_3,
+ [4] = workspace.Track.RaceFinish,
 }
 
 local function resetProgress(player)
-    progress[player] = 1
+ progress[player] = 1
 end
-\`\`\`
+\`\`\`На старті гонки →\`resetProgress(player)\`.
 
-On race start → \`resetProgress(player)\`.
-
-Wrong CP touched → print warning, **no advance**.`,
+Торкнувся неправильний CP → надрукувати попередження, **немає передавання**.`,
       },
       {
-        title: 'Checkpoint touch handler',
-        content: `For each CP part, **Script** or one central loop:
-
-\`\`\`lua
+        title: "Сенсорний обробник КПП",
+        content: `Для each Part CP, **Script** або один центральний цикл:\`\`\`lua
 cp.Touched:Connect(function(hit)
-    local seat = hit.Parent:FindFirstChildWhichIsA("VehicleSeat", true)
-    if not seat then return end
+ local seat = hit.Parent:FindFirstChildWhichIsA("VehicleSeat", true)
+ if not seat then return end
 
-    local player = game.Players:GetPlayerFromCharacter(seat.Parent)
-    if not player then return end
+ local player = game.Players:GetPlayerFromCharacter(seat.Parent)
+ if not player then return end
 
-    local expected = progress[player]
-    if not expected then return end
+ local expected = progress[player]
+ if not expected then return end
 
-    local expectedPart = ORDER[expected]
-    if hit:IsDescendantOf(expectedPart) or hit.Parent == expectedPart then
-        print(player.Name, "hit CP", expected)
-        progress[player] = expected + 1
-    else
-        print(player.Name, "wrong checkpoint order")
-    end
+ local expectedPart = ORDER[expected]
+ if hit:IsDescendantOf(expectedPart) or hit.Parent == expectedPart then
+ print(player.Name, "hit CP", expected)
+ progress[player] = expected + 1
+ else
+ print(player.Name, "wrong checkpoint order")
+ end
 end)
-\`\`\`
-
-When \`progress[player]\` becomes **5** (past finish index), you incremented lap - see next section.`,
+\`\`\`Коли\`progress[player]\`стає **5** (індекс минулого фінішу), ви збільшили коло - див. наступний розділ.`,
       },
       {
-        title: 'Increment laps on finish',
-        content: `When player crosses **RaceFinish** and \`expected == 4\`:
-
-\`\`\`lua
+        title: "Збільште кількість кіл після фінішу",
+        content: `Коли гравець перетинає **RaceFinish** і\`expected == 4\`:\`\`\`lua
 local leaderstats = player:FindFirstChild("leaderstats")
 local laps = leaderstats and leaderstats:FindFirstChild("Laps")
 if laps then
-    laps.Value += 1
+ laps.Value += 1
 end
 
 local TARGET_LAPS = 3
 if laps.Value >= TARGET_LAPS then
-    print(player.Name .. " WINS!")
-    raceEvent:FireClient(player, "YouWin")
+ print(player.Name .. " WINS!")
+ raceEvent:FireClient(player, "YouWin")
 end
 
 resetProgress(player) -- next lap if race continues
-\`\`\`
-
-Create **leaderstats** on join if missing:
-
-\`\`\`lua
+\`\`\`Створіть **лідерську статистику** під час приєднання, якщо її немає:\`\`\`lua
 local ls = Instance.new("Folder")
 ls.Name = "leaderstats"
 ls.Parent = player
@@ -894,261 +1355,522 @@ laps.Parent = ls
 \`\`\``,
       },
       {
-        title: 'HUD lap display',
-        content: `**RaceUI** labels:
-- \`LapLabel\` → \`Lap 2 / 3\`
-- \`CPHint\` → \`Next: CP_2\`
+        title: "Дисплей кола HUD",
+        content: `Мітки **RaceUI**:
+-\`LapLabel\`→\`Lap 2 / 3\`-\`CPHint\`→\`Next: CP_2\`Оновлення з:
+-\`GetPropertyChangedSignal\`on Laps IntValue (клієнт)
+- Або\`FireClient("LapUpdate", current, target)\`з сервера
 
-Update from:
-- \`GetPropertyChangedSignal\` on Laps IntValue (client)
-- Or \`FireClient("LapUpdate", current, target)\` from server
+**Таблиця лідерів** відображається автоматично\`Laps\`коли в лідерах.
 
-**Leaderboard** automatically shows \`Laps\` when in leaderstats.
-
-**Final Lap banner:** when \`laps.Value == TARGET_LAPS - 1\` and new lap starts → show "FINAL LAP!"`,
+**Банер останнього кола:** коли\`laps.Value == TARGET_LAPS - 1\`і новий старт кола → показати "FINAL LAP!"`,
       },
       {
-        title: 'Winner and tie-breaker',
-        content: `**Win condition:** first to \`TARGET_LAPS\` (3).
+        title: "Переможець і нічия",
+        content: `**Умова виграшу:** першим\`TARGET_LAPS\`(3).
 
-**Tie at same lap count?**
-- Compare **total race time** (server tracked from first StartRace)
-- Lower total time wins
-
-\`\`\`lua
+**Така ж кількість кіл?**
+- Порівняйте **загальний час гонки** (сервер відстежується з першої StartRace)
+- Менший загальний час перемог\`\`\`lua
 -- Optional total timer per player
 local raceStartTotal = {} -- on first StartRace of match
-\`\`\`
-
-Announce winner in **StatusLabel** for all players via \`FireAllClients\`.`,
+\`\`\`Оголосити переможця в **StatusLabel** для всіх гравців через\`FireAllClients\`.`,
       },
       {
-        title: 'Before practice checklist',
-        content: `- [ ] Skipping CP_2 does not count lap
-- [ ] Laps leaderstat increments only on valid finish
-- [ ] HUD shows lap X / 3
-- [ ] Winner prints at 3 laps
-- [ ] Save: \`Lesson 6.5 - Laps Leaderboard\``,
+        title: "Контрольний список перед початком практики",
+        content: `- [ ] Пропуск CP_2 не зараховує коло
+- [ ] Статистика лідера кіл збільшується лише після дійсного фінішу
+- [ ] HUD показує коло X / 3
+- [ ] Переможець друкує на 3 колах
+- [ ] Зберегти:\`Lesson 6.5 - Laps Leaderboard\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'Finish without CP_3', explanation: 'Lap skip exploit.', correctApproach: 'Require expected == finish index' },
-    { mistake: 'Never reset progress after lap', explanation: 'Stuck on finish index.', correctApproach: 'resetProgress after each lap' },
-    { mistake: 'Laps on client only', explanation: 'Not on leaderboard.', correctApproach: 'leaderstats on server' },
-    { mistake: 'Walking player triggers CP', explanation: 'False progress.', correctApproach: 'VehicleSeat check' },
+    {
+      mistake: "Фініш без CP_3",
+      explanation: "Пропуск кола.",
+      correctApproach: "Вимагати очікуваний == індекс завершення",
+    },
+    {
+      mistake: "Ніколи не скидайте прогрес після кола",
+      explanation: "Застряг на фінішному індексі.",
+      correctApproach: "resetProgress після кожного кола",
+    },
+    {
+      mistake: "Кола тільки на клієнта",
+      explanation: "Не в таблиці лідерів.",
+      correctApproach: "лідерська статистика на сервері",
+    },
+    {
+      mistake: "Ідучий гравець запускає CP",
+      explanation: "Помилковий прогрес.",
+      correctApproach: "Перевірка VehicleSeat",
+    },
   ],
-  summary: `You implemented ordered checkpoint lap tracking with Laps leaderstats, HUD progress, and a three-lap winner rule - players can no longer skip the track to cheat a victory.`,
+  summary: "Ви запровадили впорядковане відстеження кіл контрольних точок із статистикою лідерів кіл, прогресом HUD і правилом переможця трьох кіл — гравці більше не можуть пропускати трасу, щоб схитрити перемогу.",
   practiceTask: {
-    title: '3-lap race logic (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Fair multi-lap race with leaderboard.
+    title: "Логіка гонки на 3 кола (~25 хв)",
+    difficulty: "beginner",
+    description: `**Мета:** Чесна багатоколійна гонка з таблицею лідерів.
 
-### Part A - State (10 min)
-1. progress[player] + ORDER table in RaceServer
-2. leaderstats.Laps on PlayerAdded
-3. Touch handlers on CP_1..3 and RaceFinish
+### Part A - Стан (10 хв)
+1. прогрес[гравець] + таблиця ORDER на RaceServer
+2. Лідерська статистика. Кола на PlayerAdded
+3. Сенсорні обробники на CP_1..3 і RaceFinish
 
-### Part B - Rules (10 min)
-1. Wrong order → no advance
-2. Valid finish → Laps += 1, reset progress
-3. LapLabel shows current / 3
+### Part B - Правила (10 хв)
+1. Неправильне замовлення → відсутність авансу
+2. Дійсний фініш → Кола += 1, скинути прогрес
+3. LapLabel показує поточний / 3
 
-### Part C - Win test (5 min)
-1. Drive 3 valid laps - see winner message
-2. Try skip CP_2 - lap must not count
-3. **Save to Roblox** → \`Lesson 6.5 - Laps Leaderboard\`
-4. **Practice complete**`,
+### Part C - Тест на перемогу (5 хв)
+1. Проїдьте 3 дійсні кола - дивіться повідомлення переможця
+2. Спробуйте пропустити CP_2 - коло не повинно зараховуватися
+3. **Зберегти в Roblox** →\`Lesson 6.5 - Laps Leaderboard\`4. **Практика завершена**`,
     hints: [
-      'Test wrong-order touch before celebrating lap logic',
-      'Print expected index on every CP touch',
-      'TARGET_LAPS = 3 keeps scope small',
+      "Перш ніж відзначати логіку колін, перевірте дотик у неправильному порядку",
+      "Друк очікуваного індексу при кожному дотику CP",
+      "TARGET_LAPS = 3 зберігає область невеликою",
     ],
-    optionalChallenge: '"FINAL LAP!" banner when starting lap 3.',
+    optionalChallenge: "\"ФІНАЛЬНЕ КОЛО!\" банер на початку третього кола.",
   },
   quiz: {
     passingScore: 70,
     timeLimit: 10,
     questions: [
-      { id: 'q1', type: MC, question: 'Checkpoint order prevents…', options: ['Lap skipping exploits', 'Driving', 'Welds', 'Sound'], correctAnswer: 0, explanation: 'Fair path enforcement.' },
-      { id: 'q2', type: MC, question: 'Laps stored in…', options: ['leaderstats IntValue', 'Terrain', 'Sky', 'Weld only'], correctAnswer: 0, explanation: 'Leaderboard integration.' },
-      { id: 'q3', type: MC, question: 'After valid lap, progress resets to…', options: ['CP_1 (index 1)', 'Finish only', '999', 'nil forever'], correctAnswer: 0, explanation: 'Next lap starts at first CP.' },
-      { id: 'q4', type: MC, question: 'Wrong checkpoint touch should…', options: ['Not advance progress', 'Win instantly', 'Delete car', 'Publish'], correctAnswer: 0, explanation: 'Ignore invalid order.' },
-      { id: 'q5', type: MC, question: 'TARGET_LAPS = 3 means…', options: ['Win after three valid laps', 'Three players only', 'Three cars', 'Three tracks'], correctAnswer: 0, explanation: 'Win condition.' },
-      { id: 'q6', type: MC, question: 'Tie-breaker can use…', options: ['Lower total race time', 'Random Robux', 'Jump height', 'BrickColor'], correctAnswer: 0, explanation: 'Faster total time wins.' },
-      { id: 'q7', type: MC, question: 'VehicleSeat check ensures…', options: ['Car triggers CP not walking', 'Flying', 'Swim', 'Shop'], correctAnswer: 0, explanation: 'Racing context.' },
-      { id: 'q8', type: MC, question: 'Leaderboard shows Laps because…', options: ['It is in leaderstats folder', 'It is in Lighting', 'Client only text', 'No folder'], correctAnswer: 0, explanation: 'Roblox leaderboard convention.' },
-      { id: 'q9', type: MC, question: 'Lesson 6.5 needs track CPs from…', options: ['Lesson 6.2', 'Lesson 1.1 only', 'Coin sim', 'Arena'], correctAnswer: 0, explanation: 'Checkpoint gates on track.' },
-      { id: 'q10', type: MC, question: 'Lesson 6.5 save name…', options: ['Lesson 6.5 - Laps Leaderboard', 'Race Timer', 'Starter Car', 'Tycoon Works'], correctAnswer: 0, explanation: 'Save laps lesson.' },
+      {
+        id: "q1",
+        type: "multiple_choice",
+        question: "Порядок КПП запобігає...",
+        options: [
+          "Подвиги пропускання кола",
+          "Водіння",
+          "Зварні шви",
+          "Звук",
+        ],
+        correctAnswer: 0,
+        explanation: "Забезпечення справедливого шляху.",
+      },
+      {
+        id: "q2",
+        type: "multiple_choice",
+        question: "Кола зберігаються в…",
+        options: [
+          "leaderstats IntValue",
+          "Рельєф місцевості",
+          "небо",
+          "Тільки зварювання",
+        ],
+        correctAnswer: 0,
+        explanation: "Інтеграція таблиці лідерів.",
+      },
+      {
+        id: "q3",
+        type: "multiple_choice",
+        question: "Після правильного кола прогрес скидається до…",
+        options: [
+          "CP_1 (індекс 1)",
+          "Тільки фініш",
+          "999",
+          "нуль назавжди",
+        ],
+        correctAnswer: 0,
+        explanation: "Наступне коло починається з першого CP.",
+      },
+      {
+        id: "q4",
+        type: "multiple_choice",
+        question: "Неправильний дотик контрольної точки має…",
+        options: [
+          "Не просування вперед",
+          "Перемагайте миттєво",
+          "Видалити автомобіль",
+          "Опублікувати",
+        ],
+        correctAnswer: 0,
+        explanation: "Ігнорувати недійсне замовлення.",
+      },
+      {
+        id: "q5",
+        type: "multiple_choice",
+        question: "TARGET_LAPS = 3 означає…",
+        options: [
+          "Перемога після трьох дійсних кіл",
+          "Тільки три гравці",
+          "Три машини",
+          "Три треки",
+        ],
+        correctAnswer: 0,
+        explanation: "Умова перемоги.",
+      },
+      {
+        id: "q6",
+        type: "multiple_choice",
+        question: "Тай-брейк може використовувати…",
+        options: [
+          "Менший загальний час гонки",
+          "Випадковий Robux",
+          "Висота стрибка",
+          "BrickColor",
+        ],
+        correctAnswer: 0,
+        explanation: "Виграє швидший загальний час.",
+      },
+      {
+        id: "q7",
+        type: "multiple_choice",
+        question: "Перевірка VehicleSeat гарантує…",
+        options: [
+          "Автомобіль запускає CP не ходить",
+          "політ",
+          "Плавати",
+          "Магазин",
+        ],
+        correctAnswer: 0,
+        explanation: "Контекст гонок.",
+      },
+      {
+        id: "q8",
+        type: "multiple_choice",
+        question: "Таблиця лідерів показує кола, тому що…",
+        options: [
+          "Він знаходиться в папці leaderstats",
+          "Це в освітленні",
+          "Лише текст клієнта",
+          "Немає folders",
+        ],
+        correctAnswer: 0,
+        explanation: "Конвенція таблиці лідерів Roblox.",
+      },
+      {
+        id: "q9",
+        type: "multiple_choice",
+        question: "Урок 6.5 потребує відстеження CP від…",
+        options: [
+          "Урок 6.2",
+          "Тільки урок 1.1",
+          "Симулятор монети",
+          "Арена",
+        ],
+        correctAnswer: 0,
+        explanation: "Ворота КПП на трасі.",
+      },
+      {
+        id: "q10",
+        type: "multiple_choice",
+        question: "Урок 6.5 зберегти назву…",
+        options: [
+          "Урок 6.5 – Таблиця лідерів за колами",
+          "Таймер перегонів",
+          "Стартер автомобіля",
+          "Tycoon Works",
+        ],
+        correctAnswer: 0,
+        explanation: "Зберегти уроки кіл.",
+      },
     ],
   },
 }
 
 export const ukLesson66 = {
-  lessonId: 'lesson-roblox-6-6',
-  moduleId: 'module-06',
+  lessonId: "lesson-roblox-6-6",
+  moduleId: "module-06",
   order: 6,
-  title: '6.6 - Checkpoint: Race Launched',
+  title: "6.6 - Checkpoint: Гонка запущена",
   theoryMinutes: 40,
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    'Ship Race Launched with car, track, timer, laps, and RemoteEvents',
-    'Pass multiplayer QA: timer, checkpoints, winner, UI',
-    'Tune car handling and race length for fair fun',
-    'Deliver a demo-ready racing prototype',
+    "Гонку запущено: авто, трек, таймер, кола та RemoteEvents",
+    "Пройдіть багатокористувацьку перевірку якості: таймер, контрольні точки, переможець, інтерфейс",
+    "Налаштуйте керованість автомобіля та довжину перегонів для справедливого задоволення",
+    "Поставте гоночний прототип, готовий до демонстрації",
   ],
   theory: {
     sections: [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `**Race Launched** = full Module 6 portfolio in one place.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `**Запуск гонки** = повне портфоліо модуля 6 в одному місці.
 
-**Required stack:**
+**Потрібний стек:**
 - 6.1 StarterCar
-- 6.2 Track + barriers
-- 6.3 Timer + session best
-- 6.4 RaceEvent client/server
-- 6.5 Three-lap checkpoints + Laps leaderboard
+- 6.2 Колія + шлагбауми
+- 6.3 Таймер + сеанс найкраще
+- 6.4 RaceEvent клієнт/сервер
+- 6.5 Контрольні точки на три кола + Таблиця лідерів за колами
 
-**Lesson flow:**
-1. **Theory (40 min)** - launch checklist
-2. **Practice (~40 min)** - QA + final save
-3. **Quiz (10 min)** - **70%** pass`,
+**Хід уроку:**
+1. **Теорія (40 хв)** - контрольний список для запуску
+2. **Практика (~40 хв)** - QA + остаточне збереження
+3. **Вікторина (10 хв)** - проходження **70%**`,
       },
       {
-        title: 'Race Launched scope',
-        content: `Folder \`RaceSystems\` in ServerScriptService:
-- \`RaceServer\` - timing, checkpoints, winner
-- \`CarSpawner\` - clone StarterCar to StartLine
+        title: "Race Запущений приціл",
+        content: `Folder\`RaceSystems\`у ServerScriptService:
+-\`RaceServer\`- хронометраж, контрольні точки, переможець
+-\`CarSpawner\`- клонувати StarterCar до StartLine
 
 **ReplicatedStorage:**
-- \`StarterCar\` model
-- \`RaceEvent\`
+-\`StarterCar\`model
+-\`RaceEvent\`**Робочий простір:**
+-\`Track\`повна схема
+-\`RaceUI\`через StarterGui
 
-**Workspace:**
-- \`Track\` complete circuit
-- \`RaceUI\` via StarterGui
-
-**Save name:** \`Module 6 - Race Launched\``,
+**Зберегти назву:**\`Module 6 - Race Launched\``,
       },
       {
-        title: 'Launch readiness checklist',
-        content: `| # | Test | Pass |
+        title: "Контрольний список готовності до запуску",
+        content: `| # | Тест | Пройти |
 |---|------|------|
-| 1 | Car spawns, drives from StartLine | |
-| 2 | Timer starts on race start, stops on valid finish | |
-| 3 | CP order enforced - skip fails | |
-| 4 | 3 laps → winner message | |
-| 5 | 2 players - both see Laps on leaderboard | |
-| 6 | UI readable (time, lap, best) | |
+| 1 | Автомобіль створюється, їздить від StartLine | |
+| 2 | Таймер запускається на початку гонки, зупиняється на дійсному фініші | |
+| 3 | Наказ CP виконано – пропуск не вдається | |
+| 4 | 3 кола → повідомлення переможця | |
+| 5 | 2 гравці - обидва бачать кола в таблиці лідерів | |
+| 6 | Інтерфейс читається (час, коло, найкраще) | |
 
-Fix **reliability** before optional polish.`,
+Виправте **надійність** перед додатковим поліруванням.`,
       },
       {
-        title: 'QA matrix - play like a studio',
-        content: `**Solo onboarding (5 min):**
-- New player sits in car within 30 seconds
-- First lap completes without confusion
+        title: "QA matrix - грайте як студія",
+        content: `**Індивідуальне навчання (5 хв):**
+- Новий гравець сідає в машину протягом 30 секунд
+- Перше коло завершується без плутанини
 
-**2-player race (10 min):**
-- Both can race without breaking each other's state
-- Winner only when 3 valid laps
+**Гонка на 2 гравці (10 хв):**
+- Обидва можуть змагатися, не порушуючи стан один одного
+- Переможець лише за 3 дійсних кіл
 
-**Exploit test (5 min):**
-- Walk through CPs on foot - no lap gain
-- Touch finish first - ignored
-- FireServer fake time - server ignores
+**Тест експлойту (5 хв):**
+- Проходьте через CP пішки - без збільшення кола
+- Торкніться закінчити першим - ігнорується
+- Підроблений час FireServer - сервер ігнорує
 
-**Stress (5 min):**
-- 5 races back-to-back - no stuck \`racing[player]\``,
+**Стрес (5 хв):**
+- 5 гонок поспіль - без застряг\`racing[player]\``,
       },
       {
-        title: 'Tuning for fun',
-        content: `| Knob | Sweet spot |
+        title: "Тюнінг для задоволення",
+        content: `| Ручка | Солодке місце |
 |------|------------|
-| MaxSpeed | 45–55 for this track |
+| Максимальна швидкість | 45–55 для цього треку |
 | TARGET_LAPS | 3 |
-| Track width | 16–20 studs |
-| Race length | ~60–90 sec per lap |
+| Ширина колії | 16–20 шпильки |
+| Довжина гонки | ~60–90 секунд на коло |
 
-**Too long** = boredom. **Too short** = no skill expression.
+**Занадто довго** = нудьга. **Занадто короткий** = відсутність вираження навичок.
 
-Ask: *Would I race again immediately?*`,
+Запитайте: *Чи хотів би я знову брати участь у гонках негайно?*`,
       },
       {
-        title: 'Sellable classroom quality',
-        content: `Demo-ready means:
-- Systems work **every** test run
-- Learning visible (checkpoints, timer, laps on screen)
-- Clear win moment
-- No scripts spamming errors in Output
+        title: "Продається якість класу",
+        content: `Демо-готовий означає:
+- Системи працюють **кожного** тестового запуску
+- Видимість навчання (контрольні точки, таймер, кола на екрані)
+- Явний виграшний момент
+— Немає помилок Scripts, що надсилають спам у виводі
 
-**2-minute demo script:**
-1. Spawn → enter car
-2. Show HUD timer running
-3. Complete one lap - lap counter updates
-4. Show leaderboard Laps
-5. Win on lap 3 - celebration UI`,
+**2-хвилинний демонстраційний Script:**
+1. Спаун → увійти в машину
+2. Показати запущений таймер HUD
+3. Пройдіть одне коло – оновлення лічильника кіл
+4. Показати кола лідерів
+5. Перемога на колі 3 - інтерфейс для святкування`,
       },
       {
-        title: 'Що далі: Модуль 8',
-        content: `Далі - **NPC, діалоги та квести** (Модуль 8). Твоя гоночна арена може лишитися окремим хабом або ти почнеш нове місце для наступних уроків.
+        title: "Далі: Модуль 8",
+        content: `Далі – **NPC, діалоги та квести** (Модуль 8). Ваша гоночна арена може залишитися стороннім центром або створити нове місце для наступних уроків.
 
-**Before practice:**
-- [ ] All 6 checklist rows pass
-- [ ] One full recording from spawn to winner
-- [ ] **Save to Roblox** → \`Module 6 - Race Launched\``,
+**Перед тренуванням:**
+- [ ] Усі 6 рядків контрольного списку пройдені
+- [ ] Один повний запис від появи до переможця
+- [ ] **Зберегти в Roblox** →\`Module 6 - Race Launched\``,
       },
     ],
   },
   commonMistakes: [
-    { mistake: 'Shipping with broken CP order', explanation: 'Unfair races.', correctApproach: 'Exploit test before save' },
-    { mistake: 'Only tested solo once', explanation: 'Multiplayer bugs missed.', correctApproach: '2-player + stress tests' },
-    { mistake: 'Too many features, broken core', explanation: 'Checkpoint fails QA.', correctApproach: 'Reliability first' },
-    { mistake: 'Car still in Workspace not ReplicatedStorage', explanation: 'Spawn issues for all players.', correctApproach: 'Clone from ReplicatedStorage' },
+    {
+      mistake: "Відправка зі зламаним замовленням CP",
+      explanation: "Нечесні перегони.",
+      correctApproach: "Перед збереженням перевірте експлойт",
+    },
+    {
+      mistake: "Перевірено соло лише один раз",
+      explanation: "Багатокористувацькі помилки відсутні.",
+      correctApproach: "2 гравці + стрес-тести",
+    },
+    {
+      mistake: "Забагато функцій, зламане ядро",
+      explanation: "Контрольна точка не пройшла перевірку якості.",
+      correctApproach: "Надійність перш за все",
+    },
+    {
+      mistake: "Автомобіль усе ще в робочій області, а не в ReplicatedStorage",
+      explanation: "Проблеми зі спауном для всіх гравців.",
+      correctApproach: "Клон із ReplicatedStorage",
+    },
   ],
-  summary: `You integrated the full racing stack into Race Launched, passed solo and multiplayer QA, tuned lap pacing, and saved a demo-ready prototype - Module 6 is complete.`,
+  summary: "Ви інтегрували повний стек перегонів у Race Launched, пройшли перевірку якості для соло та кількох гравців, налаштували темп на колах і зберегли готовий до демо-версії прототип – Модуль 6 завершено.",
   practiceTask: {
-    title: 'Ship Race Launched (~40 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Pass QA + portfolio save.
+    title: "Запуск перегонів кораблів (~40 хв)",
+    difficulty: "beginner",
+    description: `**Мета:** Пройти перевірку якості + зберегти портфоліо.
 
-### Part A - Integrate (15 min)
-1. Merge 6.1–6.5 into one place
+### Part A - Інтеграція (15 хв)
+1. Об’єднати 6.1–6.5 в одне місце
 2. RaceServer + CarSpawner + RaceUI
-3. Clear folder structure
+3. Чітка структура папок
 
-### Part B - QA matrix (20 min)
-1. Run all 6 checklist tests
-2. 2-player race + exploit test
-3. Fix any fail before continuing
+### Part B - матриця контролю якості (20 хв)
+1. Виконайте всі 6 контрольних тестів
+2. Гонка на 2 гравці + тест на експлойт
+3. Перш ніж продовжити, виправте всі помилки
 
-### Part C - Demo save (5 min)
-1. Tune MaxSpeed / track if lap too hard
-2. **Save to Roblox** → \`Module 6 - Race Launched\`
-3. **Practice complete** + optional 2-min recording`,
+### Part C - Збереження демо (5 хв)
+1. Налаштуйте MaxSpeed / трек, якщо коло занадто важке
+2. **Зберегти в Roblox** →\`Module 6 - Race Launched\`3. **Практика завершена** + додатковий 2-хвилинний запис`,
     hints: [
-      'One bug at a time - retest after each fix',
-      'Print statements beat guessing in Output',
-      'Prioritize 3-lap win over podium extras',
+      "Одна помилка за раз - повторюйте перевірку після кожного виправлення",
+      "Оператори друку перевершують вгадування у виводі",
+      "Надавайте пріоритет перемогі на трьох колах, а не подіуму",
     ],
-    optionalChallenge: 'Podium zone teleports top 3 after race with standings board.',
+    optionalChallenge: "Зона подіуму телепортує трійку найкращих після гонки з табличкою турнірної таблиці.",
   },
   quiz: {
     passingScore: 70,
     timeLimit: 10,
     questions: [
-      { id: 'q1', type: MC, question: 'Race Launched includes…', options: ['Car + track + timer + laps + events', 'Only car', 'Only terrain', 'No scripts'], correctAnswer: 0, explanation: 'Full Module 6.' },
-      { id: 'q2', type: MC, question: 'Exploit test checks…', options: ['Checkpoint skip fails', 'Sky color', 'Music volume', 'Font size'], correctAnswer: 0, explanation: 'Anti-shortcut.' },
-      { id: 'q3', type: MC, question: 'Winner at…', options: ['3 valid laps', '1 touch', '0 time', '10 deaths'], correctAnswer: 0, explanation: 'TARGET_LAPS.' },
-      { id: 'q4', type: MC, question: 'StarterCar should spawn from…', options: ['ReplicatedStorage clone', 'Terrain only', 'Chat', 'Kill brick'], correctAnswer: 0, explanation: 'Prefab pattern.' },
-      { id: 'q5', type: MC, question: 'Server owns official…', options: ['Time and lap count', 'Only UI color', 'Client guesses', 'Camera'], correctAnswer: 0, explanation: 'Authority.' },
-      { id: 'q6', type: MC, question: '2-player test finds…', options: ['Shared state bugs', 'Robux', 'DataStore only', 'Publishing'], correctAnswer: 0, explanation: 'Multiplayer QA.' },
-      { id: 'q7', type: MC, question: 'Reliability before extras means…', options: ['Core loop works first', 'Add podium first', 'Skip QA', 'Remove track'], correctAnswer: 0, explanation: 'Checkpoint mindset.' },
-      { id: 'q8', type: MC, question: 'Module 6 save name…', options: ['Module 6 - Race Launched', 'Arena Ready', 'Obby Ready', 'Coin Simulator'], correctAnswer: 0, explanation: 'Portfolio checkpoint.' },
-      { id: 'q9', type: MC, question: 'Lesson 6.6 completes…', options: ['Module 6 racing', 'Module 1 only', 'Publishing only', 'UK translation'], correctAnswer: 0, explanation: 'End of module 6.' },
-      { id: 'q10', type: MC, question: 'Demo should show…', options: ['Spawn to winner in ~2 min', 'Only Explorer', 'Only terrain edit', 'Empty baseplate'], correctAnswer: 0, explanation: 'Sellable demo.' },
+      {
+        id: "q1",
+        type: "multiple_choice",
+        question: "Race Launched включає…",
+        options: [
+          "Автомобіль + траса + таймер + кола + події",
+          "Тільки автомобіль",
+          "Тільки місцевість",
+          "Жодних Scripts",
+        ],
+        correctAnswer: 0,
+        explanation: "Повний модуль 6.",
+      },
+      {
+        id: "q2",
+        type: "multiple_choice",
+        question: "Перевірки тесту на використання…",
+        options: [
+          "Пропуск контрольної точки не вдається",
+          "Колір неба",
+          "Гучність музики",
+          "Size шрифту",
+        ],
+        correctAnswer: 0,
+        explanation: "Анти-ярлик.",
+      },
+      {
+        id: "q3",
+        type: "multiple_choice",
+        question: "Переможець на…",
+        options: [
+          "3 дійсних кола",
+          "1 дотик",
+          "0 разів",
+          "10 смертей",
+        ],
+        correctAnswer: 0,
+        explanation: "TARGET_LAPS.",
+      },
+      {
+        id: "q4",
+        type: "multiple_choice",
+        question: "StarterCar має породжуватися з…",
+        options: [
+          "Клон ReplicatedStorage",
+          "Тільки місцевість",
+          "Чат",
+          "Вбити цеглу",
+        ],
+        correctAnswer: 0,
+        explanation: "Збірний візерунок.",
+      },
+      {
+        id: "q5",
+        type: "multiple_choice",
+        question: "Сервер володіє офіційним…",
+        options: [
+          "Підрахунок часу та кола",
+          "Тільки колір інтерфейсу",
+          "Припущення клієнта",
+          "Камера",
+        ],
+        correctAnswer: 0,
+        explanation: "Авторитет.",
+      },
+      {
+        id: "q6",
+        type: "multiple_choice",
+        question: "Тест для двох гравців показує…",
+        options: [
+          "Спільні помилки стану",
+          "Robux",
+          "Тільки DataStore",
+          "Видавництво",
+        ],
+        correctAnswer: 0,
+        explanation: "Багатокористувацька перевірка якості.",
+      },
+      {
+        id: "q7",
+        type: "multiple_choice",
+        question: "Надійність перед екстрами означає…",
+        options: [
+          "Основний цикл працює першим",
+          "Спочатку додайте подіум",
+          "Пропустити QA",
+          "Видалити трек",
+        ],
+        correctAnswer: 0,
+        explanation: "Контрольно-пропускний настрій.",
+      },
+      {
+        id: "q8",
+        type: "multiple_choice",
+        question: "Модуль 6 зберегти назву…",
+        options: [
+          "Модуль 6 - Гонка розпочата",
+          "Арена готова",
+          "Obby готовий",
+          "Симулятор монет",
+        ],
+        correctAnswer: 0,
+        explanation: "КПП портфоліо.",
+      },
+      {
+        id: "q9",
+        type: "multiple_choice",
+        question: "Урок 6.6 завершується…",
+        options: [
+          "Модуль 6 гонки",
+          "Тільки модуль 1",
+          "Тільки видавництво",
+          "Переклад з Великобританії",
+        ],
+        correctAnswer: 0,
+        explanation: "Кінець модуля 6.",
+      },
+      {
+        id: "q10",
+        type: "multiple_choice",
+        question: "Демо має показати…",
+        options: [
+          "Відродження переможця за ~2 хв",
+          "Тільки Explorer",
+          "Редагувати лише місцевість",
+          "Порожня Baseplate",
+        ],
+        correctAnswer: 0,
+        explanation: "Продається демо.",
+      },
     ],
   },
 }

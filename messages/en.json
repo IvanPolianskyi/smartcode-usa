@@ -203,7 +203,7 @@
   "home": {
     "titleMain": "SmartCode",
     "titleAccent": "Academy",
-    "subtitle": "Buy a full course online and learn at your own pace on our platform — Python and Roblox Studio",
+    "subtitle": "Live coding lessons on Zoom in English — one-on-one or in small groups. Python, Roblox Studio & more for ages 8–17",
     "lessonTypes": {
       "group": "Group classes",
       "individual": "one-on-one",
@@ -238,19 +238,23 @@
       "viewPrices": "View Pricing"
     },
     "heroEnCta": {
-      "title": "Start learning on",
-      "titleAccent": "SmartCode Academy",
-      "lead": "Create an account and buy a full course — get instant access to every lesson on the platform.",
-      "createAccount": "Create free account",
-      "goDashboard": "Go to my dashboard",
-      "hasAccount": "Already have an account?",
-      "orBuy": "Full courses on the platform",
-      "bookLive": "Optional: book a live lesson · from $10",
-      "hint": "Pay with card, Apple Pay, or Google Pay · start learning right after checkout",
+      "badge": "Live online lessons worldwide",
+      "title": "Learn to Code with a Live Teacher on Zoom",
+      "lead": "Regular one-on-one or group lessons in English. Python, Roblox Studio, and more — for kids & teens aged 8–17.",
+      "benefitZoom": "Live on Zoom",
+      "benefitEnglish": "Taught in English",
+      "benefitFlexible": "Flexible schedule",
+      "benefitCertificate": "Certificate",
+      "liveCtaTitle": "Book a Live Zoom Lesson",
+      "liveCtaSub": "Choose a time and pay instantly",
+      "groupPrice": "Group from $10",
+      "individualPrice": "1-on-1 from $15",
+      "orBuy": "Or buy a self-paced course",
+      "hint": "Pay with card, Apple Pay, or Google Pay · instant access after checkout",
       "courses": {
         "roblox-studio": {
           "name": "Roblox Studio",
-          "desc": "72 lessons · platform access"
+          "desc": "72 lessons · learn at your own pace"
         },
         "python-developer-zero-to-junior": {
           "name": "Python",
@@ -482,6 +486,66 @@
       "title": "Start risk-free this week",
       "text": "Book a trial lesson, meet your teacher, and get a personalized learning plan for your child.",
       "cta": "Book a Free Trial"
+    }
+  },
+  "bookLesson": {
+    "title": "Book a Live Zoom Lesson",
+    "subtitle": "Choose your course, format, day, and time — then pay securely with Apple Pay, Google Pay, or card.",
+    "courseLabel": "Course",
+    "formatLabel": "Lesson format",
+    "group": "Group lesson",
+    "individual": "1-on-1 lesson",
+    "perLesson": "per lesson",
+    "dayLabel": "Preferred day",
+    "timeLabel": "Preferred time",
+    "days": {
+      "mon": "Monday",
+      "tue": "Tuesday",
+      "wed": "Wednesday",
+      "thu": "Thursday",
+      "fri": "Friday",
+      "sat": "Saturday",
+      "sun": "Sunday"
+    },
+    "payMethods": "Secure payment via WayForPay · Apple Pay · Google Pay · Visa / Mastercard",
+    "payButton": "Pay {price} and book",
+    "processing": "Processing…",
+    "authTitle": "Create an account to continue",
+    "authText": "You need to sign in or register before booking a lesson. It only takes a minute.",
+    "authRegister": "Register",
+    "authLogin": "Sign In",
+    "errors": {
+      "failed": "Payment failed. Please try again."
+    }
+  },
+  "buyCourse": {
+    "buyButton": "Buy for {price}",
+    "processing": "Processing…",
+    "oneTime": "One-time payment · lifetime access",
+    "payMethods": "Secure payment via WayForPay · Apple Pay · Google Pay · Visa / Mastercard",
+    "authTitle": "Create an account to continue",
+    "authText": "Register or sign in to purchase this course. After payment, it will appear in your dashboard.",
+    "authRegister": "Register",
+    "authLogin": "Sign In",
+    "alreadyOwned": "You already own this course",
+    "goToCourse": "Go to course",
+    "courses": {
+      "roblox-studio": {
+        "title": "Roblox Studio — Full Course",
+        "description": "72 video lessons covering Lua scripting, Obby, Tycoon, and Simulator games. Build and publish real Roblox games. Learn at your own pace on our platform.",
+        "lessons": "72 lessons",
+        "access": "Lifetime access"
+      },
+      "python-developer-zero-to-junior": {
+        "title": "Python — Full Course",
+        "description": "96 lessons from zero to confident Python developer. Covers fundamentals, data structures, web apps, and more. Self-paced learning on our platform.",
+        "lessons": "96 lessons",
+        "access": "Lifetime access"
+      }
+    },
+    "errors": {
+      "notFound": "Course not found",
+      "failed": "Payment failed. Please try again."
     }
   }
 }

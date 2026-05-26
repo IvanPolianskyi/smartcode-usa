@@ -5,6 +5,7 @@ import { ObjectId } from 'mongodb'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { createProgressEntry } from '@/lib/courseUtils'
+import { hasStudentCourseAccess } from '@/lib/courseLessonAccess'
 import { lessonContentMap as lessonContentMapUk } from '@/lib/lessonContentMap.uk'
 import { lessonContentMap as lessonContentMapEn } from '@/lib/lessonContentMap.en'
 import { checkPracticeOutput } from '@/lib/practiceValidation'
@@ -29,6 +30,12 @@ export async function GET(request) {
         { error: 'Course ID is required' },
         { status: 400 }
       )
+    }
+
+    const usersCollection = await getCollection('users')
+    const user = await usersCollection.findOne({ _id: new ObjectId(userId) })
+    if (!user || !hasStudentCourseAccess(user, courseId)) {
+      return NextResponse.json({ progress: null }, { status: 200 })
     }
 
     const progressCollection = await getCollection('userProgress')

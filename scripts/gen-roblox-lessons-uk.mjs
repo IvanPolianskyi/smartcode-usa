@@ -20,8 +20,11 @@ const force = args.includes('--force')
 const moduleArg = args.find((a) => a.startsWith('--module='))
 const onlyModule = moduleArg ? moduleArg.split('=')[1].padStart(2, '0') : null
 
-const DELAY_MS = 400
-const MAX_CHUNK = 420
+const DELAY_MS = 200
+const MAX_CHUNK = 800
+const MAX_RETRIES = 5
+const GOOGLE_TRANSLATE =
+  'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=uk&dt=t&q='
 
 let cache = {}
 if (fs.existsSync(cachePath) && !force) {
@@ -36,21 +39,47 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms))
 }
 
+function isBadCacheEntry(value) {
+  return (
+    !value ||
+    value.includes('MYMEMORY WARNING') ||
+    value.includes('NEXT AVAILABLE IN')
+  )
+}
+
 async function translateChunk(text) {
   const key = `en|uk::${text}`
-  if (cache[key]) return cache[key]
+  if (!force && cache[key] && !isBadCacheEntry(cache[key])) return cache[key]
 
-  const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|uk`
-  const res = await fetch(url)
-  const json = await res.json()
-  if (json.quotaFinished) {
-    throw new Error('MyMemory quota finished — rerun later or use --force after clearing cache')
+  let lastErr
+  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+    try {
+      const res = await fetch(GOOGLE_TRANSLATE + encodeURIComponent(text))
+      if (!res.ok) {
+        lastErr = new Error(`Google Translate HTTP ${res.status}`)
+        await sleep(DELAY_MS * (attempt + 2))
+        continue
+      }
+      const data = await res.json()
+      const out = data[0]?.map((part) => part[0]).join('') || text
+      if (!out.trim()) {
+        lastErr = new Error('Empty translation')
+        await sleep(DELAY_MS * (attempt + 2))
+        continue
+      }
+      cache[key] = out
+      saveCache()
+      await sleep(DELAY_MS)
+      return out
+    } catch (e) {
+      lastErr = e
+      await sleep(DELAY_MS * (attempt + 2))
+    }
   }
-  const out = json.responseData?.translatedText || text
-  cache[key] = out
+  console.warn('Translation fallback to source:', (lastErr?.message || 'failed').slice(0, 80))
+  cache[key] = text
   saveCache()
-  await sleep(DELAY_MS)
-  return out
+  return text
 }
 
 /** Split markdown-ish text; keep ``` fences and `inline` intact */

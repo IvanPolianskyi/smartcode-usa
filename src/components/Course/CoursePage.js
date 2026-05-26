@@ -21,7 +21,7 @@ import {
 import { getCurriculum } from '@/lib/getCurriculum'
 import { getRobloxCurriculum } from '@/lib/robloxCurriculumLocale'
 import { getUserProgress, checkCoursePurchase } from '@/lib/authClient'
-import { getUnlockedLessonSet } from '@/lib/courseLessonAccess'
+import { getUnlockedLessonSet, hasStudentCourseAccess } from '@/lib/courseLessonAccess'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import styles from './CoursePage.module.css'
 
@@ -48,7 +48,11 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
     return getCurriculum(courseId, locale)
   }, [courseId, locale])
 
-  const isEnrolled = userProgress !== null
+  const hasCourseAccess = useMemo(
+    () => hasStudentCourseAccess(user, courseId) || isPurchased,
+    [user, courseId, isPurchased]
+  )
+  const isEnrolled = hasCourseAccess && userProgress !== null
   const progress = userProgress?.overallProgress || 0
   const totalWeeks = course.modules.reduce((sum, m) => sum + m.duration.weeks, 0)
   const totalLessons = course.modules.reduce((sum, m) => sum + m.lessons.length, 0)
@@ -103,9 +107,18 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
         const purchased = await checkCoursePurchase(courseId)
         if (cancelled) return
         setIsPurchased(purchased || sessionUser.role === 'admin')
+        const canLoadProgress =
+          sessionUser.role === 'admin' ||
+          purchased ||
+          hasStudentCourseAccess(sessionUser, courseId)
+        if (!canLoadProgress) {
+          setUserProgress(null)
+          return
+        }
         const progressData = await getUserProgress(courseId)
         if (cancelled) return
         if (progressData) setUserProgress(progressData)
+        else setUserProgress(null)
       } catch {
         if (!cancelled) setIsPurchased(false)
       }
@@ -202,7 +215,17 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
       <section className={styles.heroSection}>
         <div className={styles.particles} aria-hidden="true">
           {Array.from({ length: 18 }).map((_, i) => (
-            <span key={i} className={styles.particle} style={{ '--i': i }} />
+            <span
+              key={i}
+              className={styles.particle}
+              style={{
+                '--particle-size': `${4 + (i % 5) * 2}px`,
+                '--particle-left': `${(i * 17 + 7) % 100}%`,
+                '--particle-top': `${(i * 23 + 11) % 100}%`,
+                '--particle-duration': `${6 + (i % 4) * 2}s`,
+                '--particle-delay': `${i * -0.35}s`,
+              }}
+            />
           ))}
         </div>
 

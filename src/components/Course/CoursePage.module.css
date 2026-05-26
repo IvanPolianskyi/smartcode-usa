@@ -43,15 +43,15 @@
 
 .particle {
   position: absolute;
-  width: calc(4px + (var(--i) % 5) * 2px);
-  height: calc(4px + (var(--i) % 5) * 2px);
+  width: var(--particle-size, 6px);
+  height: var(--particle-size, 6px);
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.35);
   box-shadow: 0 0 12px rgba(129, 140, 248, 0.6);
-  left: calc((var(--i) * 17 + 7) % 100%);
-  top: calc((var(--i) * 23 + 11) % 100%);
-  animation: floatParticle calc(6s + (var(--i) % 4) * 2s) ease-in-out infinite;
-  animation-delay: calc(var(--i) * -0.35s);
+  left: var(--particle-left, 0%);
+  top: var(--particle-top, 0%);
+  animation: floatParticle var(--particle-duration, 6s) ease-in-out infinite;
+  animation-delay: var(--particle-delay, 0s);
 }
 
 @keyframes floatParticle {

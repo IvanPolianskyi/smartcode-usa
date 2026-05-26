@@ -253,10 +253,20 @@ const RobloxCoursePage = () => {
             <p className={styles.description}>{t('hero.description')}</p>
 
             <div className={styles.ctaButtons}>
-              <Link href='/#Contactform' className={styles.startButton} onClick={(e)=>{e.preventDefault(); window.dispatchEvent(new Event('openContactModal'))}} scroll={false}>
+              <Link href='/courses/roblox-studio' className={styles.startButton}>
                 <span className={styles.buttonPixel}>
                   <Play className='w-6 h-6' />
                   {t('cta.startCourse')}
+                  <ChevronRight className={styles.buttonArrow} />
+                </span>
+              </Link>
+              <Link
+                href='/courses/roblox-studio/lessons/lesson-roblox-1-1'
+                className={styles.startButton}
+                style={{ marginLeft: '0.75rem' }}
+              >
+                <span className={styles.buttonPixel}>
+                  {t('hero.freeLesson')}
                   <ChevronRight className={styles.buttonArrow} />
                 </span>
               </Link>

@@ -2,8 +2,10 @@ import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { robloxCurriculum } from '@/lib/robloxCurriculum'
 
+export const PYTHON_COURSE_ID = 'python-developer-zero-to-junior'
+
 export const ONLINE_COURSE_CURRICULA = {
-  'python-developer-zero-to-junior': pythonCurriculum,
+  [PYTHON_COURSE_ID]: pythonCurriculum,
   'web-development': webDevCurriculum,
   'roblox-studio': robloxCurriculum,
 }
@@ -18,6 +20,14 @@ export function hasActiveOnlineCourse(profile, courseId) {
   return (profile?.activeOnlineCourses || []).includes(courseId)
 }
 
+export function hasStudentCourseAccess(user, courseId) {
+  if (!courseId) return false
+  if (!user) return false
+  if (user.role === 'admin') return true
+  if ((user.purchasedCourses || []).includes(courseId)) return true
+  return hasActiveOnlineCourse(user.studentProfile, courseId)
+}
+
 export function isCourseFullAccess(profile, courseId) {
   const access = profile?.courseAccess?.[courseId]
   if (!access) return false
@@ -28,7 +38,8 @@ export function isCourseFullAccess(profile, courseId) {
 }
 
 /**
- * Побудова множини відкритих уроків: повний доступ адміна, інакше перший урок + наступні після завершення попереднього.
+ * Побудова множини відкритих уроків: повний доступ адміна/покупки; Python — усі уроки для онлайн-учнів;
+ * інші курси — перший урок + наступні після завершення попереднього.
  */
 export function getUnlockedLessonSet({
   courseId,
@@ -41,6 +52,10 @@ export function getUnlockedLessonSet({
   const allLessons = flattenCourseLessons(courseId)
   const allIds = allLessons.map((l) => l.lessonId)
   if (allIds.length === 0) return new Set()
+
+  const freePreview = new Set(
+    courseId === 'roblox-studio' ? ['lesson-roblox-1-1'] : []
+  )
 
   if (isAdmin || isPurchased) {
     return new Set(allIds)
@@ -55,14 +70,15 @@ export function getUnlockedLessonSet({
     profile?.courseAccess?.[courseId]?.enabled === true
 
   if (!hasOnline) {
-    if (isEnrolled && allIds.length > 0) {
-      return new Set([allIds[0]])
-    }
-    return new Set()
+    return freePreview
+  }
+
+  if (courseId === PYTHON_COURSE_ID) {
+    return new Set(allIds)
   }
 
   const completed = new Set(progress?.completedLessons || [])
-  const unlocked = new Set()
+  const unlocked = new Set(freePreview)
   unlocked.add(allIds[0])
   for (let i = 1; i < allIds.length; i++) {
     if (completed.has(allIds[i - 1])) {
@@ -76,8 +92,22 @@ export function isLessonUnlockedInCourse(lessonId, ctx) {
   return getUnlockedLessonSet(ctx).has(lessonId)
 }
 
-export function buildCourseAccessForOnlineCourses(prevAccess = {}, onlineCourseIds = [], courseFullAccess = {}) {
-  const next = { ...(prevAccess || {}) }
+/** Курси, до яких учень має доступ у кабінеті (CRM/онлайн + куплені). */
+export function getStudentAccessibleCourseIds(user) {
+  const ids = new Set()
+  ;(user?.purchasedCourses || []).forEach((id) => ids.add(id))
+  ;(user?.studentProfile?.activeOnlineCourses || []).forEach((id) => ids.add(id))
+  return [...ids]
+}
+
+export function getRemovedOnlineCourseIds(prevOnlineIds = [], nextOnlineIds = [], purchasedCourses = []) {
+  const purchased = new Set(purchasedCourses || [])
+  const nextSet = new Set((nextOnlineIds || []).filter(Boolean))
+  return (prevOnlineIds || []).filter((id) => id && !nextSet.has(id) && !purchased.has(id))
+}
+
+export function buildCourseAccessForOnlineCourses(_prevAccess = {}, onlineCourseIds = [], courseFullAccess = {}) {
+  const next = {}
   const ids = (onlineCourseIds || []).filter(Boolean)
 
   ids.forEach((courseId) => {

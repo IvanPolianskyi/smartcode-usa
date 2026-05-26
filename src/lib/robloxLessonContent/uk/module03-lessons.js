@@ -1,4 +1,4 @@
-/** Rich UK content for Roblox Module 03 */
+/** Rich UK content for Roblox Module 03 — AUTO from EN via gen-roblox-lessons-uk.mjs */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -12,174 +12,166 @@ export const ukLesson31 = {
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    "Design coin placement that guides player movement",
-    "Build a reusable coin prefab Part",
-    "Organize coins in folders with clear names",
-    "Prepare a map for simulator-style collecting",
+    "Дизайн монети, який направляє рух гравця",
+    "Створіть багаторазову збірну Part для монет",
+    "Розмістіть монети в folderх із чіткими назвами",
+    "Підготуйте карту для колекціонування в стилі симулятора",
   ],
   theory: {
     sections: [
       {
-        title: "Ваш шлях сьогодні (близько 40 хвилин)",
-        content: `**Module 3 - A Game That Remembers You** starts the **coin simulator** genre - collect, grow, repeat.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `**Модуль 3 – Гра, яка пам’ятає про вас** відкриває жанр **симулятор монет** – збирайте, вирощуйте, повторюйте.
 
-**Lesson flow:**
-1. **Theory (40 min)** - coin prefab + smart placement
-2. **Practice (~25 min)** - 30+ coins in three zones
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв.)** - збірна монета + розумне розміщення
+2. **Практика (~25 хв)** - 30+ монет у трьох зонах
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Use your **Module 2 - Obby Ready** place or duplicate it as \`Lesson 3.1 - Coin World\`. Today is **building only** - scripts come in 3.2.`,
+Використовуйте своє місце **Module 2 - Obby Ready** або скопіюйте його як\`Lesson 3.1 - Coin World\`. Сьогодні **лише збірка** - Scripts надходять у версії 3.2.`,
       },
       {
-        title: "From obby to simulator",
-        content: `| Obby (Module 2) | Simulator (Module 3) |
-|-----------------|------------------------|
-| Reach finish | Collect resources |
-| Avoid lava | Chase glowing coins |
-| Speed rank | Growing number |
+        title: "Від обби до симулятора",
+        content: `| Obby (Модуль 2) | Тренажер (Модуль 3) |
+|-----------------|-----------------------|
+| Досягти фінішу | Збирайте ресурси |
+| Уникайте лави | Погоня за світяться монетами |
+| Ранг швидкості | Зростаюча кількість |
 
-**Good coin maps teach route:**
-- Where to go next without a giant arrow
-- Risk vs reward paths
-- Exploration secrets`,
+**Хороші монетні карти вчать маршрут:**
+- Куди далі без гігантської стріли
+- Шляхи ризику проти винагороди
+- Секрети дослідження`,
       },
       {
-        title: "Build the coin prefab",
-        content: `Create one master coin:
+        title: "Побудуйте збірну монету",
+        content: `Створіть одну головну монету:
 
-| Property | Value |
+| Property | Значення |
 |----------|-------|
-| Shape | **Cylinder** (coin look) |
-| Size | \`2, 0.4, 2\` |
-| Material | **Neon** or Metal |
-| BrickColor | **New Yeller** or Bright yellow |
+| Форма | **Циліндр** (вигляд монети) |
+| Size |\`2, 0.4, 2\`|
+| Material | **Neon** або метал |
+| BrickColor | **New Yeller** або Bright yellow |
 | Anchored | **true** |
-| CanCollide | **false** (walk through) |
-| Name | \`CoinPrefab\` |
+| CanCollide | **false** (пройти) |
+| Ім'я |\`CoinPrefab\`|
 
-**Polish:**
-- Raise Y slightly above ground (hover)
-- **PointLight** - yellow, Range 6
-- Optional slow spin later (Module 10)
+**Польська:**
+- Трохи підніміть Y над землею (наведіть курсор)
+- **PointLight** - жовтий, діапазон 6
+- Додаткове повільне обертання пізніше (Модуль 10)
 
-**Exercise (8 min):** Duplicate prefab 5 times in a line - spacing feels rhythmic, not random.`,
+**Вправа (8 хв):** Скопіюйте префаб 5 разів у рядку – інтервали здаються ритмічними, а не випадковими.`,
       },
       {
-        title: "Placement patterns",
-        content: `**Trail line** - coins along safe path (beginners follow)
+        title: "Шаблони розміщення",
+        content: `**Лінія стежки** - монети вздовж безпечного шляху (початківці слідують)
 
-**Risk jump** - 3 coins over lava gap (skilled players)
+**Стрибок ризику** - 3 монети над лавовою щілиною (кваліфіковані гравці)
 
-**Cluster zone** - 8 coins around a landmark (exploration reward)
+**Кластерна зона** - 8 монет навколо орієнтира (нагорода за дослідження)
 
-**Density guide:**
-| Zone | Coins | Difficulty |
+**Довідник щільності:**
+| Зона | Монети | Складність |
 |------|-------|------------|
-| Spawn area | 10–12 | Easy |
-| Mid island | 10–12 | Medium |
-| Far / high | 8+ | Harder jumps |
+| Зона нересту | 10–12 | Легко |
+| Середній острів | 10–12 | Середній |
+| Далеко / високо | 8+ | Важкі стрибки |
 
-**Exercise (10 min):** Place **15** coins using all three patterns before continuing.`,
+**Вправа (10 хв):** Перш ніж продовжити, розмістіть **15** монет, використовуючи всі три шаблони.`,
       },
       {
-        title: "Folder organization",
-        content: `**Workspace** structure:
-
-\`\`\`
+        title: "Організація папок",
+        content: `Структура **Workspace**:\`\`\`
 Coins/
-  Common/     ← Coin_001 … Coin_030
-  Rare/       ← optional CoinRare_01 (cyan, bigger)
-\`\`\`
+ Common/ ← Coin_001 … Coin_030
+ Rare/ ← optional CoinRare_01 (cyan, bigger)
+\`\`\`**Правила іменування:**
+-\`Coin_001\`ні\`Part\`— Початкові нулі зберігають порядок сортування в Explorer
+- Дубльований один префаб, потім перейменуйте кожну копію
 
-**Naming rules:**
-- \`Coin_001\` not \`Part\`
-- Leading zeros keep sort order in Explorer
-- One prefab duplicated, then rename each copy
-
-**Why folders matter:** Lesson 3.2 adds one script to **all** coins - clean trees = fast debugging.`,
+**Чому Folders важливі:** Урок 3.2 додає один Script до **всіх** монет - чисті дерева = швидке налагодження.`,
       },
       {
-        title: "Visibility and pacing",
-        content: `Players need an **instant goal** at spawn:
-- First coin visible within **5 seconds** of walking
-- Last coin in zone 3 should take **60+ seconds** to reach
+        title: "Видимість і темп",
+        content: `Гравцям потрібен **миттєвий гол** під час появи:
+- Перша монета, видима протягом **5 секунд** ходьби
+- Для досягнення останньої монети в зоні 3 потрібно **60+ секунд**
 
-**Avoid:**
-- All 30 coins in one flat cluster (boring)
-- Coins inside terrain (hard to see)
-- Coins floating too high to jump
+**Уникайте:**
+- Усі 30 монет в одному плоскому кластері (нудно)
+- Монети всередині місцевості (важко побачити)
+- Монети плавають занадто високо, щоб стрибнути
 
-**Sign at spawn:** \`Collect coins - scripts next lesson!\``,
+**Підписатися на spawn:**\`Collect coins - scripts next lesson!\``,
       },
       {
-        title: "Rare coins (optional preview)",
-        content: `Duplicate prefab for **Rare** folder:
-- Size \`2.5, 0.5, 2.5\`
-- BrickColor **Cyan** or **Gold**
-- Brighter PointLight
+        title: "Рідкісні монети (необов'язковий попередній перегляд)",
+        content: `Дубльований префаб для Folders **Rare**:
+- Розмір\`2.5, 0.5, 2.5\`- BrickColor **Cyan** або **Gold**
+- Яскравіше PointLight
 
-You will award **+5** in Lesson 3.3 - today only **build** them (5 rare max).
+Ви отримаєте **+5** в Уроці 3.3 - сьогодні лише **будуйте** їх (максимум 5 рідкісних).
 
-Label \`CoinRare_01\` … in \`Coins/Rare\`.`,
+Мітка\`CoinRare_01\`… в\`Coins/Rare\`.`,
       },
       {
-        title: "Контрольний список перед тренуванням",
-        content: `- [ ] CoinPrefab: cylinder, yellow, CanCollide false
-- [ ] Folder \`Coins/Common\` exists
-- [ ] **30+** coins placed in 3 zones
-- [ ] Every coin has unique name
-- [ ] Save: \`Lesson 3.1 - Coin Route\``,
+        title: "Контрольний список перед початком практики",
+        content: `- [ ] CoinPrefab: циліндр, жовтий, CanCollide false
+- [ ] Folder\`Coins/Common\`існує
+- [ ] **30+** монети, розміщені в 3 зонах
+- [ ] Кожна монета має унікальну назву
+- [ ] Зберегти:\`Lesson 3.1 - Coin Route\``,
       },
     ],
   },
   commonMistakes: [
     {
-      mistake: "CanCollide true on coins",
-      explanation: "Players bump and miss pickups later.",
-      correctApproach: "CanCollide false - walk through to collect in 3.2",
+      mistake: "CanCollide true на монетах",
+      explanation: "Пізніше гравці стикаються та пропускають пікапи.",
+      correctApproach: "CanCollide false - пройдіть, щоб зібрати в 3.2",
     },
     {
-      mistake: "All coins named Part",
-      explanation: "Cannot find broken coin in 30 copies.",
-      correctApproach: "Coin_001 style names immediately",
+      mistake: "Усі монети під назвою Part",
+      explanation: "Неможливо знайти зламану монету в 30 копіях.",
+      correctApproach: "Одразу назви стилю Coin_001",
     },
     {
-      mistake: "Coins buried in terrain",
-      explanation: "Invisible collectibles frustrate players.",
-      correctApproach: "Raise Y; test camera angle from spawn",
+      mistake: "Монети, закопані в місцевість",
+      explanation: "Невидимі предмети колекціонування розчаровують гравців.",
+      correctApproach: "Підніміть Y; перевірте ракурс камери від spawn",
     },
     {
-      mistake: "Only 5 coins total",
-      explanation: "Not enough for simulator feel.",
-      correctApproach: "Minimum 30 for practice requirement",
+      mistake: "Всього всього 5 монет",
+      explanation: "Недостатньо для відчуття симулятора.",
+      correctApproach: "Мінімум 30 для вимог до практики",
     },
   ],
-  summary: "You built a yellow coin prefab, placed 30+ coins in trail, risk, and cluster patterns, and organized Workspace folders - your map is ready for collection scripts.",
+  summary: "Ви створили збірну жовту монету, розмістили понад 30 монет у шаблонах слідів, ризиків і кластерів, а також упорядкували Folders Workspace – ваша карта готова для Scripts збору.",
   practiceTask: {
-    title: "Coin route - 30+ pickups (~25 min)",
+    title: "Маршрут за монети - 30+ пікапів (~25 хв)",
     difficulty: "beginner",
-    description: `**Goal:** Three zones of coins, zero scripts yet.
+    description: `**Мета:** Три зони монет, ще нуль скриптів.
 
-### Part A - Prefab (5 min)
-1. Build \`CoinPrefab\` (cylinder, neon yellow, CanCollide false)
-2. Add PointLight glow
+### Part A - збірні (5 хв)
+1. Будувати\`CoinPrefab\`(циліндр, неоново-жовтий, CanCollide false)
+2. Додайте сяйво PointLight
 
-### Part B - Zones (15 min)
-1. **Easy zone** near spawn: **12** coins in trail
-2. **Mid zone** toward obby/dock: **10** coins (one risk jump line)
-3. **Hard zone** far side: **8+** coins + optional **5 rare** cyan coins
+### Part B - Зони (15 хв)
+1. **Легка зона** біля відродження: **12** монет на шляху
+2. **Середня зона** в бік obby/dock: **10** монет (одна лінія стрибка ризику)
+3. **Жорстка зона** дальній бік: **8+** монет + опціонально **5 рідкісних** блакитних монет
 
-### Part C - Organize & save (5 min)
-1. Move all into \`Coins/Common\` and \`Coins/Rare\`
-2. Rename \`Coin_001\` through \`Coin_030\`+
-3. **Save to Roblox** → \`Lesson 3.1 - Coin Route\`
-4. **Practice complete**`,
+### Part C - Упорядкування та збереження (5 хв)
+1. Move все в\`Coins/Common\`і\`Coins/Rare\`2. Перейменувати\`Coin_001\`через\`Coin_030\`+
+3. **Зберегти в Roblox** →\`Lesson 3.1 - Coin Route\`4. **Практика завершена**`,
     hints: [
-      "Ctrl+D duplicate along a path - then rename in Explorer",
-      "Stand at spawn in Play - you should see at least one coin immediately",
-      "Rare coins belong in harder-to-reach spots",
+      "Ctrl+D дублюйте вздовж шляху - потім перейменуйте в Explorer",
+      "Станьте на spawn у Play - ви повинні негайно побачити принаймні одну монету",
+      "Рідкісні монети знаходяться у важкодоступних місцях",
     ],
-    optionalChallenge: "Five hidden coins behind terrain or dock - reward explorers.",
+    optionalChallenge: "П'ять прихованих монет за місцевістю або доком - винагорода дослідників.",
   },
   quiz: {
     passingScore: 70,
@@ -188,132 +180,132 @@ Label \`CoinRare_01\` … in \`Coins/Rare\`.`,
       {
         id: "q1",
         type: "multiple_choice",
-        question: "Module 3 focus is…",
+        question: "Модуль 3 фокусується на…",
         options: [
-          "Collecting economy",
-          "Only terrain",
-          "Publishing only",
-          "No Parts",
+          "Збирацьке господарство",
+          "Тільки місцевість",
+          "Тільки видавництво",
+          "Без Parts",
         ],
         correctAnswer: 0,
-        explanation: "Module 3 is coin simulator style.",
+        explanation: "Модуль 3 — це стиль симулятора монет.",
       },
       {
         id: "q2",
         type: "multiple_choice",
-        question: "Coin CanCollide should be…",
+        question: "Coin CanCollide має бути…",
         options: [
-          "false",
+          "помилковий",
           "true always",
-          "nil",
-          "only for lava",
+          "нуль",
+          "тільки для лави",
         ],
         correctAnswer: 0,
-        explanation: "Players walk through to collect.",
+        explanation: "Гравці проходять, щоб зібрати.",
       },
       {
         id: "q3",
         type: "multiple_choice",
-        question: "CoinPrefab shape is usually…",
+        question: "Форма CoinPrefab зазвичай…",
         options: [
-          "Cylinder",
+          "Циліндр",
           "SpawnLocation",
-          "Sky",
+          "небо",
           "Script",
         ],
         correctAnswer: 0,
-        explanation: "Cylinder reads as a coin disc.",
+        explanation: "Циліндр читається як монетний диск.",
       },
       {
         id: "q4",
         type: "multiple_choice",
-        question: "Trail line placement…",
+        question: "Розташування траси…",
         options: [
-          "Guides beginner route",
-          "Deletes coins",
-          "Adds lava",
-          "Removes UI",
+          "Веде маршрут для початківців",
+          "Видаляє монети",
+          "Додає лаву",
+          "Видаляє інтерфейс користувача",
         ],
         correctAnswer: 0,
-        explanation: "Lines teach where to go.",
+        explanation: "Лінії вчать, куди йти.",
       },
       {
         id: "q5",
         type: "multiple_choice",
-        question: "Coins folder helps…",
+        question: "Folder монет допомагає...",
         options: [
-          "Organize before scripting",
-          "Ban players",
-          "Change language",
-          "Remove Humanoid",
+          "Організуйте перед створенням Script",
+          "Банити гравців",
+          "Змінити мову",
+          "Видаліть Humanoid",
         ],
         correctAnswer: 0,
-        explanation: "Folders keep Explorer clean.",
+        explanation: "Folders забезпечують чистоту Explorerа.",
       },
       {
         id: "q6",
         type: "multiple_choice",
-        question: "Practice requires at least…",
+        question: "Практика вимагає як мінімум…",
         options: [
-          "30 coins",
-          "1 coin",
-          "0 coins",
-          "1000 scripts",
+          "30 монет",
+          "1 монета",
+          "0 монет",
+          "1000 Scripts",
         ],
         correctAnswer: 0,
-        explanation: "30+ coins for simulator density.",
+        explanation: "30+ монет для щільності симулятора.",
       },
       {
         id: "q7",
         type: "multiple_choice",
-        question: "Good coin names look like…",
+        question: "Хороші назви монет виглядають як...",
         options: [
-          "Coin_001",
+          "Монета_001",
           "Part, Part, Part",
           "asdf",
           "Script1",
         ],
         correctAnswer: 0,
-        explanation: "Numbered names sort and debug easily.",
+        explanation: "Пронумеровані імена легко сортуються та виправляються.",
       },
       {
         id: "q8",
         type: "multiple_choice",
-        question: "Scripts for pickup come in…",
+        question: "Scripts для отримання надходять…",
         options: [
-          "Lesson 3.2",
-          "Lesson 1.1 only",
-          "Never",
-          "Module 12 only",
+          "Урок 3.2",
+          "Тільки урок 1.1",
+          "Ніколи",
+          "Тільки модуль 12",
         ],
         correctAnswer: 0,
-        explanation: "3.1 is layout only.",
+        explanation: "3.1 є лише макетом.",
       },
       {
         id: "q9",
         type: "multiple_choice",
-        question: "Rare coins are often…",
+        question: "Рідкісні монети часто...",
         options: [
-          "Harder to reach + different color",
-          "Invisible",
-          "Under SpawnLocation",
-          "Scripts only",
+          "Важче дістатися + інший колір",
+          "Невидимий",
+          "У розділі SpawnLocation",
+          "Лише Scripts",
         ],
         correctAnswer: 0,
-        explanation: "Rare = reward + visual difference.",
+        explanation: "Рідкість = нагорода + візуальна відмінність.",
       },
       {
         id: "q10",
         type: "multiple_choice",
-        question: "Lesson 3.1 save name…",
+        question: "Урок 3.1 зберегти назву…",
         options: [
-          "Lesson 3.1 - Coin Route",
-          "Obby Ready",
-          "Click Magic",
-          "Untitled",
+          "Урок 3.1 - Маршрут монет",
+          "Obby готовий",
+          "Натисніть Магія",
+          "Без назви",
         ],
         correctAnswer: 0,
-        explanation: "Save after placing coins.",
+        explanation: "Збережіть після розміщення монет.",
       },
     ],
   },
@@ -328,188 +320,172 @@ export const ukLesson32 = {
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    "Detect coin collection with Touched on the server",
-    "Use a debounce flag to prevent double collection",
-    "Hide coins after pickup with Transparency",
-    "Optionally respawn coins after a delay",
+    "Виявляйте колекцію монет за допомогою Touched на сервері",
+    "Щоб запобігти подвійному збору, використовуйте позначку усунення дребезгу",
+    "Сховайте монети після отримання за допомогою прозорості",
+    "Додатково відродити монети після затримки",
   ],
   theory: {
     sections: [
       {
-        title: "Ваш шлях сьогодні (близько 40 хвилин)",
-        content: `Your coins are decorations until **Touched** makes them gameplay.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `Ваші монети є прикрасами, доки **Touched** не зробить їх ігровими.
 
-**Lesson flow:**
-1. **Theory (40 min)** - server pickup + debounce
-2. **Practice (~25 min)** - 15+ working collectors
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - підхоплення сервера + дебоунс
+2. **Практика (~25 хв)** - 15+ працюючих збирачів
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Open **Lesson 3.1 - Coin Route**.`,
+Відкрийте **Урок 3.1 - Маршрут монет**.`,
       },
       {
-        title: "Collection requirements",
-        content: `A fair coin system must:
-- Count **once** per touch cycle
-- Feel instant (no laggy delay)
-- Work for **every** player in the server
-- Not spam **Touched** events
+        title: "Вимоги до колекції",
+        content: `Справедлива монетна система повинна:
+- Порахуйте **один раз** за цикл дотику
+- Миттєве відчуття (без затримки)
+- Робота для **кожного** гравця на сервері
+- Не спам подій **Touched**
 
-**Server Script** inside each coin (same pattern as lava, different result).`,
+**Server Script** всередині кожної монети (такий самий шаблон, що й лава, інший результат).`,
       },
       {
-        title: "Basic pickup script",
-        content: `Insert **Script** inside \`CoinPrefab\` (or one coin), then duplicate coin **with** script:
-
-\`\`\`lua
+        title: "Базовий скрипт пікапу",
+        content: `Insert всередину **Script**\`CoinPrefab\`(або одну монету), потім дублюйте монету **з** скриптом:\`\`\`lua
 local coin = script.Parent
 local collected = false
 
 coin.Touched:Connect(function(hit)
-    if collected then
-        return
-    end
+ if collected then
+ return
+ end
 
-    local character = hit.Parent
-    if not character then
-        return
-    end
+ local character = hit.Parent
+ if not character then
+ return
+ end
 
-    local humanoid = character:FindFirstChildOfClass("Humanoid")
-    if not humanoid then
-        return
-    end
+ local humanoid = character:FindFirstChildOfClass("Humanoid")
+ if not humanoid then
+ return
+ end
 
-    local player = game:GetService("Players"):GetPlayerFromCharacter(character)
-    if not player then
-        return
-    end
+ local player = game:GetService("Players"):GetPlayerFromCharacter(character)
+ if not player then
+ return
+ end
 
-    collected = true
-    coin.Transparency = 1
-    coin.CanCollide = false
+ collected = true
+ coin.Transparency = 1
+ coin.CanCollide = false
 
-    print(player.Name .. " collected " .. coin.Name)
+ print(player.Name .. " collected " .. coin.Name)
 end)
-\`\`\`
-
-**Exercise (8 min):** Test one coin in Play - touch once, coin vanishes, print once.`,
+\`\`\`**Вправа (8 хв):** Перевірте одну монету в Play - торкніться один раз, монета зникне, надрукуйте один раз.`,
       },
       {
-        title: "Debounce explained",
-        content: `\`Touched\` can fire **many times per second** while you stand inside the coin.
+        title: "Дебоунс пояснив",
+        content: `\`Touched\`може стріляти **багато разів на секунду**, поки ви стоїте всередині монети.
 
-| Without debounce | With debounce |
-|------------------|---------------|
-| +10 fake pickups | Exactly 1 pickup |
-| Sound spam | One sound |
-| Future score bugs | Stable Coins value |
+| Без дребезгу | З дебоунсом |
+|------------------|--------------|
+| +10 фальшивих пікапів | Рівно 1 пікап |
+| Звуковий спам | Один звук |
+| Майбутні помилки оцінки | Вартість стабільних монет |\`collected = true\`на початку успішного підхоплення блоки повторюються.
 
-\`collected = true\` at the start of successful pickup blocks repeats.
-
-**Test:** Stand inside coin 3 seconds - Output should show **one** print.`,
+**Тест:** Постійте всередині монети 3 секунди – на виході має бути **один** відбиток.`,
       },
       {
-        title: "Deploy to many coins fast",
-        content: `**Method 1:** Build script in \`CoinPrefab\` → duplicate coin+script to all slots.
+        title: "Швидке розгортання на багатьох монетах",
+        content: `**Спосіб 1:** Вбудуйте Script\`CoinPrefab\`→ дублювати монету+скрипт до всіх слотів.
 
-**Method 2:** One working coin → **Ctrl+D** 15 times → rename.
+**Спосіб 2:** Одна робоча монета → **Ctrl+D** 15 разів → перейменувати.
 
-**Method 3 (advanced later):** Single server script loops all coins in folder - Lesson 3.4 functions help.
+**Спосіб 3 (розширений пізніше):** Script єдиного сервера зациклює всі монети в папці – допомога з функціями уроку 3.4.
 
-For today: **Method 1 or 2** on at least **15** coins in \`Coins/Common\`.`,
+На сьогодні: **Метод 1 або 2** принаймні **15** монет\`Coins/Common\`.`,
       },
       {
-        title: "Pickup feedback - sound and VFX",
-        content: `Add **Sound** child \`PickupSound\` on coin prefab:
-
-\`\`\`lua
+        title: "Зворотний зв'язок звукозапису - звук і VFX",
+        content: `Додайте дочірній елемент **Звук**\`PickupSound\`на збірних монетах:\`\`\`lua
 local sound = coin:FindFirstChild("PickupSound")
 if sound then
-    sound:Play()
+ sound:Play()
 end
-\`\`\`
+\`\`\`Помістіть перед тим, як сховати монету (Прозорість = 1).
 
-Place before hiding coin (Transparency = 1).
+**Необов’язково:** невеликий сплеск **ParticleEmitter** - вимкнути через 0,5 с.
 
-**Optional:** small **ParticleEmitter** burst - disable after 0.5s.
-
-Players **feel** the reward before the coin disappears.`,
+Гравці **відчувають** винагороду до того, як монета зникне.`,
       },
       {
-        title: "Respawn coins (simulator style)",
-        content: `One-time coins = empty map after full clear.
+        title: "Відродження монет (стиль симулятора)",
+        content: `Одноразові монети = порожня карта після повного очищення.
 
-**Respawn** after 15 seconds:
-
-\`\`\`lua
+**Відродження** через 15 секунд:\`\`\`lua
 task.delay(15, function()
-    collected = false
-    coin.Transparency = 0
-    -- CanCollide stays false
+ collected = false
+ coin.Transparency = 0
+ -- CanCollide stays false
 end)
-\`\`\`
+\`\`\`Поставте **після** сховання монети. Тест: почекайте 15 секунд, монета повертається, збирайте знову.
 
-Put **after** hiding the coin. Test: wait 15s, coin returns, collect again.
-
-**Pick one** for practice: session-only **or** respawn - document in a comment.`,
+**Виберіть один** для практики: лише сеанс **або** відродження – задокументуйте в коментарях.`,
       },
       {
-        title: "Контрольний список перед тренуванням",
-        content: `- [ ] Script is server Script, child of coin
-- [ ] Humanoid + GetPlayerFromCharacter checks present
-- [ ] Debounce tested with 3-second stand-on-coin
-- [ ] 15+ coins collect exactly once per cycle
-- [ ] Save: \`Lesson 3.2 - Collecting Coins\``,
+        title: "Контрольний список перед початком практики",
+        content: `- [ ] Script є серверним Script, нащадком coin
+- [] Присутні перевірки Humanoid + GetPlayerFromCharacter
+- [ ] Усунення стрибків протестовано за допомогою 3-секундного стояння на монеті
+- [] 15+ монет збираються рівно один раз за цикл
+- [ ] Зберегти:\`Lesson 3.2 - Collecting Coins\``,
       },
     ],
   },
   commonMistakes: [
     {
-      mistake: "LocalScript on coin",
-      explanation: "Other players may not see same behavior.",
-      correctApproach: "Server Script for world pickups",
+      mistake: "LocalScript на монеті",
+      explanation: "Інші гравці можуть не бачити такої поведінки.",
+      correctApproach: "Серверний скрипт для світових пікапів",
     },
     {
-      mistake: "No debounce - score jumps +10",
-      explanation: "Touched fires repeatedly.",
-      correctApproach: "collected flag set true on first valid touch",
+      mistake: "Без відскоку - оцінка стрибків +10",
+      explanation: "Неодноразово торкався вогню.",
+      correctApproach: "прапор збирання встановлюється істинним після першого дійсного дотику",
     },
     {
-      mistake: "Destroy coin with :Destroy()",
-      explanation: "Harder to respawn; breaks references.",
-      correctApproach: "Transparency 1 hide for respawn lessons",
+      mistake: "Знищити монету за допомогою :Destroy()",
+      explanation: "Важче відродитися; розриває посилання.",
+      correctApproach: "Приховування прозорості 1 для уроків відновлення",
     },
     {
-      mistake: "Forgot Humanoid check",
-      explanation: "Random parts trigger pickup.",
-      correctApproach: "Same pattern as kill blocks and checkpoints",
+      mistake: "Забув перевірку Humanoid",
+      explanation: "Випадкові Parts викликають підхоплення.",
+      correctApproach: "Той самий шаблон, що й блоки вбивства та контрольні точки",
     },
   ],
-  summary: "You wired server Touched pickup with debounce, hid coins on collect, added optional sound, and tested repeat touches - your coin route is now playable.",
+  summary: "Ваш дротовий сервер доторкнувся до підйому з усуненням відскоку, сховав монети під час збору, додав необов’язковий звук і перевірив повторні дотики – ваш маршрут монет тепер можна грати.",
   practiceTask: {
-    title: "Stable pickup - 15+ coins (~25 min)",
+    title: "Стабільний підбір - 15+ монет (~25 хв)",
     difficulty: "beginner",
-    description: `**Goal:** Every coin collects once per cycle.
+    description: `**Мета:** кожна монета збирається один раз за цикл.
 
-### Part A - Template script (10 min)
-1. Add pickup Script to \`CoinPrefab\` (debounce + hide + print)
-2. Test in Play - one coin, one print
+### Part A – Script шаблону (10 хв)
+1. Додайте Script підйому до\`CoinPrefab\`(усунення стрибків + приховування + друк)
+2. Тест у Play - одна монета, один відбиток
 
-### Part B - Roll out (10 min)
-1. Apply to **15+** coins in \`Coins/Common\`
-2. Optional PickupSound on prefab
-3. Spam-touch test: no double prints
+### Part B - Розгортання (10 хв)
+1. Застосуйте до **15+** монет\`Coins/Common\`2. Додатковий PickupSound на збірному пристрої
+3. Тест на спам: немає подвійних відбитків
 
-### Part C - Respawn or save (5 min)
-1. Add 15s respawn on **3** coins OR keep one-time on rest
-2. **Save to Roblox** → \`Lesson 3.2 - Collecting Coins\`
-3. **Practice complete**`,
+### Part C - Відродження або збереження (5 хв)
+1. Додайте 15 с відродження на **3** монетах АБО залиште одноразове відпочинок
+2. **Зберегти в Roblox** →\`Lesson 3.2 - Collecting Coins\`3. **Практика завершена**`,
     hints: [
-      "Duplicate coin that already has Script - fastest rollout",
-      "Print to Output until all 15 work, then remove prints",
-      "Rare folder coins can use same script with different name",
+      "Копія монети, яка вже має скрипт - найшвидший розгортання",
+      "Print to Output, доки всі 15 не запрацюють, а потім видаліть відбитки",
+      "Монети рідкісної Folders можуть використовувати той самий Script з різною назвою",
     ],
-    optionalChallenge: "PickupSound only plays on successful first collect.",
+    optionalChallenge: "PickupSound відтворюється лише після успішного першого збору.",
   },
   quiz: {
     passingScore: 70,
@@ -518,132 +494,132 @@ Put **after** hiding the coin. Test: wait 15s, coin returns, collect again.
       {
         id: "q1",
         type: "multiple_choice",
-        question: "Coin pickup should use…",
+        question: "Для отримання монет слід використовувати…",
         options: [
-          "Server Script in coin",
-          "LocalScript only in Head",
-          "Terrain brush",
-          "Sky",
+          "Серверний скрипт в монеті",
+          "LocalScript лише в Head",
+          "Рельєфна щітка",
+          "небо",
         ],
         correctAnswer: 0,
-        explanation: "Server handles world pickups.",
+        explanation: "Сервер обробляє світові пікапи.",
       },
       {
         id: "q2",
         type: "multiple_choice",
-        question: "Debounce uses a variable like…",
+        question: "Debounce використовує змінну на зразок…",
         options: [
-          "collected = true",
-          "Transparency = 5",
-          "Anchored false",
-          "Delete Workspace",
+          "зібрано = true",
+          "Прозорість = 5",
+          "Anchored помилковий",
+          "Видалити Workspace",
         ],
         correctAnswer: 0,
-        explanation: "Flag blocks repeat touches.",
+        explanation: "Блоки прапорів повторюють дотики.",
       },
       {
         id: "q3",
         type: "multiple_choice",
-        question: "After pickup, hide with…",
+        question: "Після отримання сховайтеся за допомогою…",
         options: [
-          "Transparency = 1",
-          "Rename to Part",
-          "Remove Humanoid",
-          "Publish",
+          "Прозорість = 1",
+          "Перейменувати на Part",
+          "Видаліть Humanoid",
+          "Опублікувати",
         ],
         correctAnswer: 0,
-        explanation: "Invisible but respawnable.",
+        explanation: "Невидимий, але відроджується.",
       },
       {
         id: "q4",
         type: "multiple_choice",
-        question: "GetPlayerFromCharacter needs…",
+        question: "GetPlayerFromCharacter потребує…",
         options: [
-          "Valid character touch",
-          "Only lava",
+          "Дійсне дотик символу",
+          "Тільки лава",
           "ClockTime",
-          "Atmosphere",
+          "атмосфера",
         ],
         correctAnswer: 0,
-        explanation: "Links body to player account.",
+        explanation: "Посилає тіло на обліковий запис гравця.",
       },
       {
         id: "q5",
         type: "multiple_choice",
-        question: "Touched fires many times if…",
+        question: "Багато разів торкався вогню, якщо…",
         options: [
-          "Player stays overlapping coin",
-          "Game is saved",
-          "Coin is anchored",
-          "Sky is blue",
+          "Гравець перекриває монету",
+          "Гра збережена",
+          "Монета закріплена",
+          "Небо блакитне",
         ],
         correctAnswer: 0,
-        explanation: "Overlap causes repeat events.",
+        explanation: "Перекриття викликає повторення подій.",
       },
       {
         id: "q6",
         type: "multiple_choice",
-        question: "task.delay(15, ...) can…",
+        question: "task.delay(15, ...) може...",
         options: [
-          "Respawn coin after 15 seconds",
-          "Delete player",
-          "Remove UI",
-          "Change language",
+          "Відродження монети через 15 секунд",
+          "Видалити гравця",
+          "Видалити інтерфейс користувача",
+          "Змінити мову",
         ],
         correctAnswer: 0,
-        explanation: "Delayed respawn pattern.",
+        explanation: "Схема відкладеного відродження.",
       },
       {
         id: "q7",
         type: "multiple_choice",
-        question: "print on collect helps…",
+        question: "print on collect допомагає...",
         options: [
-          "Debug before leaderstats",
-          "Publish game",
-          "Add terrain",
-          "Remove checkpoints",
+          "Налагодження перед статистикою лідерів",
+          "Опублікувати гру",
+          "Додайте місцевість",
+          "Видаліть контрольні точки",
         ],
         correctAnswer: 0,
-        explanation: "Output verifies pickups.",
+        explanation: "Output перевіряє підйоми.",
       },
       {
         id: "q8",
         type: "multiple_choice",
-        question: "PickupSound should play…",
+        question: "PickupSound повинен грати…",
         options: [
-          "Once per successful collect",
-          "Every frame",
-          "Never",
-          "Only in Edit",
+          "Один раз за успішний збір",
+          "Кожен кадр",
+          "Ніколи",
+          "Тільки в Edit",
         ],
         correctAnswer: 0,
-        explanation: "Debounce prevents sound spam.",
+        explanation: "Debounce запобігає звуковому спаму.",
       },
       {
         id: "q9",
         type: "multiple_choice",
-        question: "Lesson 3.2 builds on…",
+        question: "Урок 3.2 базується на...",
         options: [
-          "Lesson 3.1 coin placement",
-          "Only Module 1",
-          "Empty map",
-          "Web dev",
+          "Урок 3.1 Розміщення монет",
+          "Тільки модуль 1",
+          "Порожня карта",
+          "веб-розробник",
         ],
         correctAnswer: 0,
-        explanation: "Scripts attach to 3.1 coins.",
+        explanation: "Скрипти додаються до монет 3.1.",
       },
       {
         id: "q10",
         type: "multiple_choice",
-        question: "Lesson 3.2 save name…",
+        question: "Урок 3.2 зберегти назву…",
         options: [
-          "Lesson 3.2 - Collecting Coins",
-          "Coin Route",
+          "Урок 3.2 - Збирання монет",
+          "Маршрут монет",
           "Obby Timer",
-          "Victory Screen",
+          "Екран перемоги",
         ],
         correctAnswer: 0,
-        explanation: "Save after pickup works.",
+        explanation: "Збережіть після самовивозу роботи.",
       },
     ],
   },
@@ -658,201 +634,177 @@ export const ukLesson33 = {
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    "Create leaderstats with Coins IntValue on PlayerAdded",
-    "Increment Coins from coin pickup scripts on the server",
-    "Mirror score in a ScreenGui HUD with LocalScript",
-    "Use GetPropertyChangedSignal for live UI updates",
+    "Створіть лідерську статистику за допомогою Coins IntValue на PlayerAdded",
+    "Збільшуйте монети зі скриптів отримання монет на сервері",
+    "Дзеркальна оцінка в HUD ScreenGui за допомогою LocalScript",
+    "Використовуйте GetPropertyChangedSignal для поточних оновлень інтерфейсу користувача",
   ],
   theory: {
     sections: [
       {
-        title: "Ваш шлях сьогодні (близько 40 хвилин)",
-        content: `Collecting coins is fun. Seeing the number **grow** is addictive.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `Збирати монети весело. Бачити, як число **зростає**, викликає залежність.
 
-**Lesson flow:**
-1. **Theory (40 min)** - leaderstats + HUD
-2. **Practice (~25 min)** - live score on screen and tab list
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - лідерська статистика + HUD
+2. **Практика (~25 хв)** - живий рахунок на екрані та в списку вкладок
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Open **Lesson 3.2 - Collecting Coins**.`,
+Відкрийте **Урок 3.2 - Збирання монет**.`,
       },
       {
-        title: "What is leaderstats?",
-        content: `Roblox shows a **leaderboard** (Tab key) when players have a folder named exactly \`leaderstats\` with **IntValue** stats inside.
+        title: "Що таке лідерська статистика?",
+        content: `Roblox показує **таблицю лідерів** (клавіша Tab), коли гравці мають Folder з точною назвою\`leaderstats\`зі статистикою **IntValue** всередині.
 
-| Child | Shows as |
+| Дитина | Відображається як |
 |-------|----------|
-| \`Coins\` IntValue | Coins column |
+|\`Coins\`IntValue | Колонка монет |
 
-**Server creates** leaderstats - clients should not fake scores (cheating).
+**Сервер створює** лідерську статистику - клієнти не повинні підробляти результати (шахрайство).
 
-**Exercise (2 min):** Press Tab in any popular Roblox game - notice Coins, Time, Points columns.`,
+**Вправа (2 хв):** Натисніть Tab у будь-якій популярній грі Roblox — зверніть увагу на стовпці Монети, Час, Очки.`,
       },
       {
-        title: "PlayerAdded - create stats once",
-        content: `**ServerScriptService** → new **Script** \`LeaderstatsSetup\`:
-
-\`\`\`lua
+        title: "PlayerAdded - створити статистику один раз",
+        content: `**ServerScriptService** → новий **Script**\`LeaderstatsSetup\`:\`\`\`lua
 local Players = game:GetService("Players")
 
 Players.PlayerAdded:Connect(function(player)
-    local leaderstats = Instance.new("Folder")
-    leaderstats.Name = "leaderstats"
-    leaderstats.Parent = player
+ local leaderstats = Instance.new("Folder")
+ leaderstats.Name = "leaderstats"
+ leaderstats.Parent = player
 
-    local coins = Instance.new("IntValue")
-    coins.Name = "Coins"
-    coins.Value = 0
-    coins.Parent = leaderstats
+ local coins = Instance.new("IntValue")
+ coins.Name = "Coins"
+ coins.Value = 0
+ coins.Parent = leaderstats
 end)
-\`\`\`
+\`\`\`**Play** - список вкладок показує **Монети: 0** для вас.
 
-**Play** - Tab list shows **Coins: 0** for you.
-
-**Why ServerScriptService?** Runs once on server when game starts - perfect for setup.`,
+**Чому ServerScriptService?** Запускається один раз на сервері під час запуску гри – ідеально підходить для налаштування.`,
       },
       {
-        title: "Award +1 on coin pickup",
-        content: `Inside your coin Script, after \`collected = true\`:
-
-\`\`\`lua
+        title: "Нагорода +1 за отримання монет",
+        content: `Всередині вашої монети Скрипт, після\`collected = true\`:\`\`\`lua
 local stats = player:FindFirstChild("leaderstats")
 if stats then
-    local coinsStat = stats:FindFirstChild("Coins")
-    if coinsStat then
-        coinsStat.Value += 1
-    end
+ local coinsStat = stats:FindFirstChild("Coins")
+ if coinsStat then
+ coinsStat.Value += 1
+ end
 end
-\`\`\`
+\`\`\`**\`+= 1\`** додає рівно один за кожне успішне підхоплення (усунення стрибків захищає це).
 
-**\`+= 1\`** adds exactly one per successful pickup (debounce protects this).
-
-**Rare coin bonus:**
-
-\`\`\`lua
+**Бонус рідкісна монета:**\`\`\`lua
 if string.find(coin.Name, "Rare") then
-    coinsStat.Value += 4  -- +5 total if you already added 1, or set +5 only
+ coinsStat.Value += 4 -- +5 total if you already added 1, or set +5 only
 end
-\`\`\`
-
-Pick clear rule: rare = **+5 total** per pickup.`,
+\`\`\`Оберіть чітке правило: рідкісні = **+5 всього** за підхоплення.`,
       },
       {
-        title: "Coins HUD - ScreenGui",
-        content: `**StarterGui** → \`ScreenGui\` \`CoinsHUD\`
-→ \`TextLabel\` \`CoinsLabel\`
-
-Style: top-left, dark background, **TextScaled**, text \`Coins: 0\`
-
-**LocalScript** in \`CoinsHUD\`:
-
-\`\`\`lua
+        title: "HUD монет - ScreenGui",
+        content: `**StarterGui** →\`ScreenGui\` \`CoinsHUD\`→\`TextLabel\` \`CoinsLabel\`Стиль: верхній ліворуч, темний фон, **TextScaled**, текст\`Coins: 0\`**LocalScript** в\`CoinsHUD\`:\`\`\`lua
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local label = script.Parent:WaitForChild("CoinsLabel")
 
 local function updateDisplay()
-    local stats = player:FindFirstChild("leaderstats")
-    if not stats then return end
-    local coins = stats:WaitForChild("Coins")
-    label.Text = "Coins: " .. coins.Value
+ local stats = player:FindFirstChild("leaderstats")
+ if not stats then return end
+ local coins = stats:WaitForChild("Coins")
+ label.Text = "Coins: " .. coins.Value
 end
 
 player.ChildAdded:Connect(function(child)
-    if child.Name == "leaderstats" then
-        updateDisplay()
-        child:WaitForChild("Coins"):GetPropertyChangedSignal("Value"):Connect(updateDisplay)
-    end
+ if child.Name == "leaderstats" then
+ updateDisplay()
+ child:WaitForChild("Coins"):GetPropertyChangedSignal("Value"):Connect(updateDisplay)
+ end
 end)
 
 -- If leaderstats already exists (late join script fix):
 if player:FindFirstChild("leaderstats") then
-    updateDisplay()
-    player.leaderstats.Coins:GetPropertyChangedSignal("Value"):Connect(updateDisplay)
+ updateDisplay()
+ player.leaderstats.Coins:GetPropertyChangedSignal("Value"):Connect(updateDisplay)
 end
-\`\`\`
-
-**Exercise (10 min):** Collect 5 coins - HUD and Tab list both show 5.`,
+\`\`\`**Вправа (10 хв.):** Зберіть 5 монет – HUD і список вкладок показують 5.`,
       },
       {
-        title: "Timing - WaitForChild",
-        content: `Scripts race at spawn:
-- Coin touched before leaderstats exists → no points
-- HUD loads before leaderstats → nil error
+        title: "Час - WaitForChild",
+        content: `Гонка скриптів на spawn:
+- Монета торкнулась до того, як з’явилася статистика лідера → немає очок
+- HUD завантажується перед статистикою лідера → помилка нуль
 
-**Fixes:**
-- \`player:WaitForChild("leaderstats")\` in coin script if needed
-- HUD listens to \`ChildAdded\` and \`GetPropertyChangedSignal\`
-
-**Test:** Reset character (respawn) - Coins value should **stay** (same session).`,
+**Виправлення:**
+-\`player:WaitForChild("leaderstats")\`у скрипті монет, якщо потрібно
+- HUD слухає\`ChildAdded\`і\`GetPropertyChangedSignal\`**Тест:** Скинути Character (відродження) - вартість монет має **залишитися** (той самий сеанс).`,
       },
       {
-        title: "Trusted server economy",
-        content: `| Do on server | Do NOT on client for score |
+        title: "Економіка надійного сервера",
+        content: `| Робити на сервері | НЕ на клієнті для оцінки |
 |-------------|------------------------------|
-| Create leaderstats | Fake +9999 in LocalScript |
-| Increment Coins | Trust client touch alone |
+| Створити статистику лідерів | Підробка +9999 у LocalScript |
+| Приріст монет | Довіряйте лише дотику клієнта |
 
-Later modules add **DataStore** to save Coins between sessions. Today = **in-session** score only.`,
+Пізніші модулі додають **DataStore** для збереження монет між сеансами. Сьогодні = лише **оцінка під час сесії**.`,
       },
       {
-        title: "Контрольний список перед тренуванням",
-        content: `- [ ] LeaderstatsSetup in ServerScriptService
-- [ ] Coin script adds to Coins IntValue
-- [ ] CoinsHUD updates when collecting
-- [ ] Tab leaderboard matches HUD
-- [ ] Save: \`Lesson 3.3 - Coins HUD\``,
+        title: "Контрольний список перед початком практики",
+        content: `- [ ] Налаштування Leaderstats у ServerScriptService
+- [ ] Скрипт Coin додає Coins IntValue
+- [] CoinsHUD оновлюється під час збору
+- [ ] Таблиця лідерів вкладки відповідає HUD
+- [ ] Зберегти:\`Lesson 3.3 - Coins HUD\``,
       },
     ],
   },
   commonMistakes: [
     {
-      mistake: "leaderstats typo",
-      explanation: "Must be exact name for Tab UI.",
-      correctApproach: "Folder name leaderstats lowercase, child Coins",
+      mistake: "друкарська помилка лідерів",
+      explanation: "Має бути точна назва інтерфейсу вкладки.",
+      correctApproach: "Ім'я Folders leaderstats малим регістром, дочірні монети",
     },
     {
-      mistake: "IntValue named Coin not Coins",
-      explanation: "Script looks for wrong child.",
-      correctApproach: "Match names in all scripts",
+      mistake: "IntValue названо Coin, а не Coins",
+      explanation: "Script шукає неправильну дитину.",
+      correctApproach: "Збіг імен у всіх Scripts",
     },
     {
-      mistake: "Client adds to Coins",
-      explanation: "Exploiters can cheat scores.",
-      correctApproach: "Only server coin Script increments Value",
+      mistake: "Клієнт додає монети",
+      explanation: "Експлуататори можуть обманювати рахунки.",
+      correctApproach: "Лише Script монети сервера збільшує значення",
     },
     {
-      mistake: "HUD never updates",
-      explanation: "No Changed signal connected.",
-      correctApproach: "GetPropertyChangedSignal(\"Value\") on Coins",
+      mistake: "HUD ніколи не оновлюється",
+      explanation: "Немає зміненого сигналу.",
+      correctApproach: "GetPropertyChangedSignal(\"Value\") на монетах",
     },
   ],
-  summary: "You created leaderstats with Coins, incremented score from server pickups, and built a CoinsHUD that updates live - your simulator now shows progress on screen and in the player list.",
+  summary: "Ви створили статистику лідерів за допомогою монет, збільшили кількість очок за результатами отримання сервером і створили CoinsHUD, який оновлюється в реальному часі – ваш симулятор тепер показує прогрес на екрані та в списку гравців.",
   practiceTask: {
-    title: "Coins HUD - live score (~25 min)",
+    title: "Coins HUD - результати в реальному часі (~25 хв)",
     difficulty: "beginner",
-    description: `**Goal:** Pickup increases Tab list + HUD.
+    description: `**Ціль:** Пікап збільшує список вкладок + HUD.
 
-### Part A - leaderstats (8 min)
-1. \`LeaderstatsSetup\` in ServerScriptService
-2. Play - Tab shows Coins: 0
+### Part A - статистика лідерів (8 хв)
+1.\`LeaderstatsSetup\`у ServerScriptService
+2. Play - вкладка показує Монети: 0
 
-### Part B - Wire pickups (10 min)
-1. Add \`coinsStat.Value += 1\` to coin scripts (15+ coins)
-2. Rare coins +5 if you built them in 3.1
-3. Collect 10 - Tab shows 10
+### Part B - Знімання проводів (10 хв)
+1. Додайте\`coinsStat.Value += 1\`до монетних скриптів (15+ монет)
+2. Рідкісні монети +5, якщо ви створили їх у 3.1
+3. Зберіть 10 – вкладка показує 10
 
-### Part C - HUD (7 min)
-1. \`CoinsHUD\` + LocalScript mirror
-2. Collect coins - label updates instantly
-3. **Save to Roblox** → \`Lesson 3.3 - Coins HUD\`
-4. **Practice complete**`,
+### Part C - HUD (7 хв)
+1.\`CoinsHUD\`+ Дзеркало LocalScript
+2. Збирайте монети - мітки оновлюються миттєво
+3. **Зберегти в Roblox** →\`Lesson 3.3 - Coins HUD\`4. **Практика завершена**`,
     hints: [
-      "If HUD stuck at 0, check leaderstats exists under Player not Workspace",
-      "WaitForChild(\"Coins\") after leaderstats exists",
-      "Server print coin.Value after pickup to verify increment",
+      "Якщо HUD застряг на 0, перевірте наявність лідерських статистичних даних у Player not Workspace",
+      "WaitForChild(\"Монети\") після того, як існує статистика лідера",
+      "Сервер друкує монети. Значення після отримання для перевірки приросту",
     ],
-    optionalChallenge: "Second stat IntValue \"Gems\" for rare coins only.",
+    optionalChallenge: "Друга характеристика IntValue «Дорогоцінні камені» лише для рідкісних монет.",
   },
   quiz: {
     passingScore: 70,
@@ -861,132 +813,132 @@ Later modules add **DataStore** to save Coins between sessions. Today = **in-ses
       {
         id: "q1",
         type: "multiple_choice",
-        question: "leaderstats folder name must be…",
+        question: "Ім'я Folders leaderstats має бути…",
         options: [
-          "leaderstats exactly",
+          "лідерська статистика точно",
           "LeaderStats",
-          "stats",
-          "coins",
+          "статистика",
+          "монети",
         ],
         correctAnswer: 0,
-        explanation: "Roblox expects exact spelling.",
+        explanation: "Roblox очікує точного написання.",
       },
       {
         id: "q2",
         type: "multiple_choice",
-        question: "Coins stat type is…",
+        question: "Тип статистики монет:…",
         options: [
           "IntValue",
           "StringValue",
           "BoolValue",
-          "Terrain",
+          "Рельєф місцевості",
         ],
         correctAnswer: 0,
-        explanation: "Whole numbers use IntValue.",
+        explanation: "Для цілих чисел використовується IntValue.",
       },
       {
         id: "q3",
         type: "multiple_choice",
-        question: "PlayerAdded fires when…",
+        question: "PlayerAdded запускається, коли…",
         options: [
-          "A player joins",
-          "Coin touches lava",
-          "UI clicks",
-          "Terrain paints",
+          "Приєднується гравець",
+          "Монета торкається лави",
+          "Клацання інтерфейсу",
+          "Фарби місцевості",
         ],
         correctAnswer: 0,
-        explanation: "Setup runs per joining player.",
+        explanation: "Налаштування виконується для кожного приєднаного гравця.",
       },
       {
         id: "q4",
         type: "multiple_choice",
-        question: "coins.Value += 1 should run on…",
+        question: "монети. Значення += 1 має працювати на…",
         options: [
-          "Server coin Script",
-          "LocalScript only HUD",
-          "Client chat",
-          "Sky",
+          "Серверний скрипт монети",
+          "Тільки LocalScript HUD",
+          "Клієнтський чат",
+          "небо",
         ],
         correctAnswer: 0,
-        explanation: "Server trusts economy.",
+        explanation: "Сервер довіряє економіці.",
       },
       {
         id: "q5",
         type: "multiple_choice",
-        question: "GetPropertyChangedSignal(\"Value\")…",
+        question: "GetPropertyChangedSignal(\"Значення\")…",
         options: [
-          "Updates HUD when Coins change",
-          "Deletes player",
-          "Adds terrain",
-          "Publishes",
+          "Оновлює HUD при зміні монет",
+          "Видаляє гравця",
+          "Додає місцевість",
+          "Публікує",
         ],
         correctAnswer: 0,
-        explanation: "Signal fires on stat changes.",
+        explanation: "Сигнал спрацьовує при зміні характеристик.",
       },
       {
         id: "q6",
         type: "multiple_choice",
-        question: "Tab key shows…",
+        question: "Клавіша Tab показує…",
         options: [
-          "Leaderboard with leaderstats",
+          "Таблиця лідерів зі статистикою лідерів",
           "Explorer",
           "Properties",
-          "Toolbox",
+          "Ящик інструментів",
         ],
         correctAnswer: 0,
-        explanation: "Tab opens player list stats.",
+        explanation: "Вкладка відкриває статистику списку гравців.",
       },
       {
         id: "q7",
         type: "multiple_choice",
-        question: "CoinsHUD LocalScript belongs in…",
+        question: "CoinsHUD LocalScript належить до…",
         options: [
           "StarterGui",
           "Workspace lava",
-          "Terrain",
-          "Kill block",
+          "Рельєф місцевості",
+          "Убити блок",
         ],
         correctAnswer: 0,
-        explanation: "UI clones from StarterGui.",
+        explanation: "Клони інтерфейсу користувача від StarterGui.",
       },
       {
         id: "q8",
         type: "multiple_choice",
-        question: "Debounce still matters because…",
+        question: "Усунення стрибків все ще має значення, тому що...",
         options: [
-          "Prevents double increment",
-          "Changes sky",
-          "Removes obby",
-          "Disables Tab",
+          "Запобігає подвійному збільшенню",
+          "Змінює небо",
+          "Видаляє обби",
+          "Відключає вкладку",
         ],
         correctAnswer: 0,
-        explanation: "Multiple Touched would add too many.",
+        explanation: "Multiple Touched додасть забагато.",
       },
       {
         id: "q9",
         type: "multiple_choice",
-        question: "Between sessions, Coins reset until…",
+        question: "Між сесіями монети скидаються до...",
         options: [
-          "DataStore in later lesson",
-          "Saving rbxl only",
-          "Changing color",
-          "F key",
+          "DataStore у наступному уроці",
+          "Збереження лише rbxl",
+          "Зміна кольору",
+          "Клавіша F",
         ],
         correctAnswer: 0,
-        explanation: "Module 3.5 adds persistence.",
+        explanation: "Модуль 3.5 додає наполегливість.",
       },
       {
         id: "q10",
         type: "multiple_choice",
-        question: "Lesson 3.3 save name…",
+        question: "Урок 3.3 зберегти назву…",
         options: [
-          "Lesson 3.3 - Coins HUD",
-          "Collecting Coins",
-          "Obby Ready",
-          "Finish Grades",
+          "Урок 3.3 - Монети HUD",
+          "Збирання монет",
+          "Obby готовий",
+          "Завершити оцінки",
         ],
         correctAnswer: 0,
-        explanation: "Save after HUD works.",
+        explanation: "Збережіть після роботи HUD.",
       },
     ],
   },
@@ -1001,231 +953,212 @@ export const ukLesson34 = {
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    "Write local functions with parameters and return values",
-    "Refactor coin pickup into reusable helper functions",
-    "Use one server script for all coins in a folder",
-    "Apply readable naming and early-return patterns",
+    "Напишіть локальні функції з параметрами та значеннями, що повертаються",
+    "Рефакторинг підбору монет у багаторазові допоміжні функції",
+    "Використовуйте один серверний скрипт для всіх монет у папці",
+    "Застосуйте шаблони іменування та раннього повернення",
   ],
   theory: {
     sections: [
       {
-        title: "Ваш шлях сьогодні (близько 40 хвилин)",
-        content: `You have **30 scripts** doing the same thing. One bug = fix 30 times. **Functions** fix that.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `У вас є **30 Scripts**, які виконують те саме. Одна помилка = виправити 30 разів. **Функції** це виправляють.
 
-**Lesson flow:**
-1. **Theory (40 min)** - functions + one \`CoinService\` script
-2. **Practice (~25 min)** - refactor pickups
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - функції + один\`CoinService\`Script
+2. **Практика (~25 хв)** - рефактор пікапів
+3. **Вікторина (10 хв)** - проходження **70%**
 
-Open **Lesson 3.3 - Coins HUD**. You will **remove** duplicate coin scripts and replace with **one** organized script.`,
+Відкрийте **Урок 3.3 - HUD монет**. Ви **видалите** повторювані Scripts монет і заміните **одним** організованим скриптом.`,
       },
       {
-        title: "Why functions exist",
-        content: `| Without functions | With functions |
-|-------------------|----------------|
-| Copy-paste 30 blocks | Write once, call many times |
-| Fix bug in 30 files | Fix bug in one function |
-| Hard to read | Clear steps: validate → award → hide |
+        title: "Чому існують функції",
+        content: `| Без функцій | З функціями |
+|------------------|----------------|
+| Копіювати-вставляти 30 блоків | Напиши один раз, подзвони багато разів |
+| Виправити помилку в 30 файлах | Виправити помилку в одній функції |
+| Важко читати | Очистити кроки: підтвердити → нагородити → приховати |
 
-**Real studios** use functions everywhere - you are learning pro habits early.`,
+**Справжні студії** використовують функції скрізь - ви засвоюєте професійні звички рано.`,
       },
       {
-        title: "Function syntax in Luau",
+        title: "Синтаксис функції мовою Луау",
         content: `\`\`\`lua
 local function add(a, b)
-    return a + b
+ return a + b
 end
 
-local total = add(3, 5)  -- 8
-\`\`\`
-
-**Parts:**
-- \`local function name(...)\` - defines the function
-- \`return\` - sends a value back (optional)
-- Call with \`name(arguments)\`
+local total = add(3, 5) -- 8
+\`\`\`**Parts:**
+-\`local function name(...)\`- визначає функцію
+-\`return\`- повертає значення (необов'язково)
+- Подзвонити с\`name(arguments)\`
 
 \`\`\`lua
 local function sayHello(playerName)
-    print("Hello, " .. playerName)
+ print("Hello, " .. playerName)
 end
 
 sayHello("Alex")
-\`\`\`
-
-**Exercise (5 min):** Make \`double(n)\` that returns n * 2. Print \`double(10)\` in Output.`,
+\`\`\`**Вправа (5 хв):** Зробіть\`double(n)\`що повертає n * 2. Вивести\`double(10)\`у Output.`,
       },
       {
-        title: "awardCoins(player, amount)",
+        title: "нагородні монети (гравець, сума)",
         content: `\`\`\`lua
 local function awardCoins(player, amount)
-    local stats = player:FindFirstChild("leaderstats")
-    if not stats then
-        return
-    end
+ local stats = player:FindFirstChild("leaderstats")
+ if not stats then
+ return
+ end
 
-    local coinsStat = stats:FindFirstChild("Coins")
-    if not coinsStat then
-        return
-    end
+ local coinsStat = stats:FindFirstChild("Coins")
+ if not coinsStat then
+ return
+ end
 
-    coinsStat.Value += amount
+ coinsStat.Value += amount
 end
-\`\`\`
+\`\`\`**Дострокове повернення**, коли чогось не вистачає – уникає вкладених\`if\`безлад.
 
-**Early return** when something is missing - avoids nested \`if\` mess.
-
-Call: \`awardCoins(player, 1)\` for common, \`awardCoins(player, 5)\` for rare.`,
+Телефонуйте:\`awardCoins(player, 1)\`для загального,\`awardCoins(player, 5)\`для рідкісних.`,
       },
       {
         title: "getCoinValue(coinName)",
         content: `\`\`\`lua
 local function getCoinValue(coinName)
-    if string.find(coinName, "Rare") then
-        return 5
-    end
-    return 1
+ if string.find(coinName, "Rare") then
+ return 5
+ end
+ return 1
 end
 \`\`\`
 
-\`string.find\` returns position if "Rare" appears in name - \`CoinRare_03\` gives 5.
+\`string.find\`повертає позицію, якщо в назві є "Рідкісні" -\`CoinRare_03\`дає 5.
 
-**Exercise (3 min):** Predict values for \`Coin_001\` and \`CoinRare_01\`.`,
+**Вправа (3 хв):** Передбачте значення для\`Coin_001\`і\`CoinRare_01\`.`,
       },
       {
-        title: "hideCoin(coin) and resetCoin(coin)",
+        title: "hideCoin(coin) і resetCoin(coin)",
         content: `\`\`\`lua
 local function hideCoin(coin)
-    coin.Transparency = 1
-    coin.CanCollide = false
+ coin.Transparency = 1
+ coin.CanCollide = false
 end
 
 local function resetCoin(coin, collectedFlags)
-    task.delay(15, function()
-        collectedFlags[coin] = nil
-        coin.Transparency = 0
-    end)
+ task.delay(15, function()
+ collectedFlags[coin] = nil
+ coin.Transparency = 0
+ end)
 end
-\`\`\`
-
-Use a **table** \`collectedFlags = {}\` keyed by coin instead of one variable per script:
-
-\`\`\`lua
+\`\`\`Використовуйте **таблицю**\`collectedFlags = {}\`з ключем coin замість однієї змінної на Script:\`\`\`lua
 if collectedFlags[coin] then return end
 collectedFlags[coin] = true
 \`\`\``,
       },
       {
-        title: "One script for all coins",
-        content: `**ServerScriptService** → Script \`CoinCollector\`:
-
-\`\`\`lua
+        title: "Один скрипт для всіх монет",
+        content: `**ServerScriptService** → Script\`CoinCollector\`:\`\`\`lua
 local Players = game:GetService("Players")
 local coinsFolder = workspace:WaitForChild("Coins")
 local collectedFlags = {}
 
 local function getPlayerFromHit(hit)
-    local character = hit.Parent
-    if not character then return nil end
-    local humanoid = character:FindFirstChildOfClass("Humanoid")
-    if not humanoid then return nil end
-    return Players:GetPlayerFromCharacter(character)
+ local character = hit.Parent
+ if not character then return nil end
+ local humanoid = character:FindFirstChildOfClass("Humanoid")
+ if not humanoid then return nil end
+ return Players:GetPlayerFromCharacter(character)
 end
 
 -- awardCoins, getCoinValue, hideCoin here ...
 
 local function connectCoin(coin)
-    coin.Touched:Connect(function(hit)
-        if collectedFlags[coin] then return end
-        local player = getPlayerFromHit(hit)
-        if not player then return end
+ coin.Touched:Connect(function(hit)
+ if collectedFlags[coin] then return end
+ local player = getPlayerFromHit(hit)
+ if not player then return end
 
-        collectedFlags[coin] = true
-        hideCoin(coin)
-        awardCoins(player, getCoinValue(coin.Name))
-    end)
+ collectedFlags[coin] = true
+ hideCoin(coin)
+ awardCoins(player, getCoinValue(coin.Name))
+ end)
 end
 
-for _, folder in coinsFolder:GetChildren() do
-    if folder:IsA("Folder") then
-        for _, coin in folder:GetDescendants() do
-            if coin:IsA("BasePart") and coin.Name:find("Coin") then
-                connectCoin(coin)
-            end
-        end
-    end
+for _, Folder in coinsFolder:GetChildren() do
+ if folder:IsA("Folder") then
+ for _, coin in folder:GetDescendants() do
+ if coin:IsA("BasePart") and coin.Name:find("Coin") then
+ connectCoin(coin)
+ end
+ end
+ end
 end
-\`\`\`
-
-**Delete** old per-coin Scripts after this works.`,
+\`\`\`**Видалити** старі Scripts монет після того, як це спрацює.`,
       },
       {
-        title: "formatCoins for UI (optional)",
+        title: "formatCoins для інтерфейсу користувача (необов'язково)",
         content: `\`\`\`lua
 local function formatCoins(value)
-    if value >= 1000 then
-        return string.format("%d Coins", value)
-    end
-    return "Coins: " .. value
+ if value >= 1000 then
+ return string.format("%d Coins", value)
+ end
+ return "Coins: " .. value
 end
-\`\`\`
+\`\`\`Використовуйте в HUD пізніше для тексту в стилі **1250 монет**.
 
-Use in HUD later for **1,250 Coins** style text.
-
-**Before practice checklist:**
-- [ ] CoinCollector in ServerScriptService
-- [ ] Per-coin Scripts removed (no double awards)
-- [ ] Collect common + rare - correct amounts
-- [ ] Save: \`Lesson 3.4 - Coin Functions\``,
+**Контрольний список перед тренуваннями:**
+- [ ] CoinCollector у ServerScriptService
+- [ ] Скрипти монет вилучено (без подвійних нагород)
+- [ ] Збирайте звичайні + рідкісні - правильні суми
+- [ ] Зберегти:\`Lesson 3.4 - Coin Functions\``,
       },
     ],
   },
   commonMistakes: [
     {
-      mistake: "Left old scripts AND new CoinCollector",
-      explanation: "Double pickup and double coins.",
-      correctApproach: "Disable or delete per-coin Scripts after testing new one",
+      mistake: "Залишено старі скрипти І новий CoinCollector",
+      explanation: "Подвійний пікап і подвійні монети.",
+      correctApproach: "Вимкніть або видаліть Scripts для кожної монети після тестування нового",
     },
     {
-      mistake: "Forgot return in awardCoins",
-      explanation: "Code falls through and errors.",
-      correctApproach: "Early return when leaderstats missing",
+      mistake: "Забули повернення в нагородних монетах",
+      explanation: "Код провалюється та помилки.",
+      correctApproach: "Раннє повернення, коли відсутні характеристики лідера",
     },
     {
-      mistake: "connectedFlags uses coin name string only",
-      explanation: "Two coins named same would conflict.",
-      correctApproach: "Use collectedFlags[coin] with coin instance as key",
+      mistake: "ConnectedFlags використовує лише рядок назви монети",
+      explanation: "Дві монети з однаковими назвами конфліктували б.",
+      correctApproach: "Використовуйте collectedFlags[coin] із екземпляром монети як ключем",
     },
     {
-      mistake: "Functions defined after they are called",
-      explanation: "Local functions must exist before use in same script.",
-      correctApproach: "Put helper functions at top of CoinCollector",
+      mistake: "Функції, визначені після їх виклику",
+      explanation: "Локальні функції повинні існувати перед використанням у тому самому Scripts.",
+      correctApproach: "Розмістіть допоміжні функції у верхній Part CoinCollector",
     },
   ],
-  summary: "You wrote reusable functions for awarding, hiding, and valuing coins, then replaced dozens of duplicate scripts with one CoinCollector - scalable simulator architecture.",
+  summary: "Ви написали багаторазові функції для нагородження, приховування та оцінки монет, а потім замінили десятки дублікатів Scripts одним CoinCollector — масштабованою архітектурою симулятора.",
   practiceTask: {
-    title: "Coin functions refactor (~25 min)",
+    title: "Рефакторинг функцій монет (~25 хв)",
     difficulty: "beginner",
-    description: `**Goal:** One server script handles all coins via functions.
+    description: `**Мета:** Один серверний скрипт обробляє всі монети за допомогою функцій.
 
-### Part A - Helpers (10 min)
-1. Create \`CoinCollector\` in ServerScriptService
-2. Add \`awardCoins\`, \`getCoinValue\`, \`hideCoin\`, \`getPlayerFromHit\`
+### Part A - Помічники (10 хв)
+1. Творити\`CoinCollector\`у ServerScriptService
+2. Додайте\`awardCoins\`,\`getCoinValue\`,\`hideCoin\`,\`getPlayerFromHit\`### Part B - З'єднайте всі монети (10 хв)
+1. Петля\`Workspace.Coins\`Folders - з'єднати кожну монету Part
+2. Видаліть/вимкніть старі скрипти в монетах
+3. Перевірте 10 звукознімачів - правильний Tab + HUD
 
-### Part B - Connect all coins (10 min)
-1. Loop \`Workspace.Coins\` folders - connect every coin Part
-2. Remove/disable old scripts inside coins
-3. Test 10 pickups - correct Tab + HUD
-
-### Part C - Save (5 min)
-1. Optional \`formatCoins\` for HUD
-2. **Save to Roblox** → \`Lesson 3.4 - Coin Functions\`
-3. **Practice complete**`,
+### Part C - Зберегти (5 хв)
+1. Додатково\`formatCoins\`для HUD
+2. **Зберегти в Roblox** →\`Lesson 3.4 - Coin Functions\`3. **Практика завершена**`,
     hints: [
-      "Test one coin before looping all - faster debug",
-      "Print getCoinValue(coin.Name) once to verify rare = 5",
-      "If nothing happens, check coinsFolder path matches Explorer",
+      "Перевірте одну монету, перш ніж зациклювати всі - швидше налагодження",
+      "Виведіть getCoinValue(coin.Name) один раз, щоб перевірити, що rare = 5",
+      "Якщо нічого не відбувається, перевірте, чи шлях до Folders coins відповідає Explorer",
     ],
-    optionalChallenge: "Add resetCoin respawn for Common folder only.",
+    optionalChallenge: "Додайте відродження resetCoin лише для Folders Common.",
   },
   quiz: {
     passingScore: 70,
@@ -1234,132 +1167,132 @@ Use in HUD later for **1,250 Coins** style text.
       {
         id: "q1",
         type: "multiple_choice",
-        question: "Functions help by…",
+        question: "Функції допомагають…",
         options: [
-          "Reusing logic in one place",
-          "Deleting UI",
-          "Removing terrain",
-          "Banning Tab",
+          "Повторне використання логіки в одному місці",
+          "Видалення інтерфейсу користувача",
+          "Видалення місцевості",
+          "Заборона вкладки",
         ],
         correctAnswer: 0,
-        explanation: "DRY - do not repeat yourself.",
+        explanation: "СУХИЙ - не повторюйся.",
       },
       {
         id: "q2",
         type: "multiple_choice",
-        question: "return in a function…",
+        question: "повернення у функції…",
         options: [
-          "Sends a value back to caller",
-          "Deletes player",
-          "Publishes game",
-          "Anchors Parts",
+          "Надсилає значення абоненту",
+          "Видаляє гравця",
+          "Видає гру",
+          "Деталі анкерів",
         ],
         correctAnswer: 0,
-        explanation: "return exits with optional value.",
+        explanation: "повернення виходів із необов’язковим значенням.",
       },
       {
         id: "q3",
         type: "multiple_choice",
-        question: "awardCoins(player, 5) adds…",
+        question: "awardCoins(player, 5) додає…",
         options: [
-          "5 to Coins stat",
+          "Статистика від 5 до монет",
           "5 Parts",
-          "5 scripts",
-          "5 terrains",
+          "5 Scripts",
+          "5 місцевостей",
         ],
         correctAnswer: 0,
-        explanation: "Second argument is amount.",
+        explanation: "Другий аргумент — сума.",
       },
       {
         id: "q4",
         type: "multiple_choice",
-        question: "Early return when stats missing…",
+        question: "Раннє повернення, коли статистика відсутня…",
         options: [
-          "Stops function safely",
-          "Adds 1000 coins",
-          "Opens VictoryGui",
-          "Spawns lava",
+          "Зупинки функціонують безпечно",
+          "Додає 1000 монет",
+          "Відкриває VictoryGui",
+          "Створює лаву",
         ],
         correctAnswer: 0,
-        explanation: "Guard clauses prevent errors.",
+        explanation: "Охоронні положення запобігають помилкам.",
       },
       {
         id: "q5",
         type: "multiple_choice",
-        question: "collectedFlags[coin] uses…",
+        question: "collectedFlags[coin] використовує…",
         options: [
-          "Coin instance as table key",
-          "Only player name",
-          "Sky color",
+          "Instance монети як ключ таблиці",
+          "Тільки ім'я гравця",
+          "Колір неба",
           "ClockTime",
         ],
         correctAnswer: 0,
-        explanation: "Instance keys track each coin.",
+        explanation: "Ключі екземплярів відстежують кожну монету.",
       },
       {
         id: "q6",
         type: "multiple_choice",
-        question: "getCoinValue checks name for…",
+        question: "getCoinValue перевіряє назву для…",
         options: [
-          "\"Rare\" substring",
-          "Player age",
-          "Terrain",
-          "Spawn",
+          "«Рідкісний» підрядок",
+          "Вік гравця",
+          "Рельєф місцевості",
+          "Спаун",
         ],
         correctAnswer: 0,
-        explanation: "Rare in name triggers higher value.",
+        explanation: "Рідкість у назві викликає вищу цінність.",
       },
       {
         id: "q7",
         type: "multiple_choice",
-        question: "CoinCollector should live in…",
+        question: "CoinCollector повинен жити в...",
         options: [
           "ServerScriptService",
-          "StarterGui only",
-          "Player Head",
-          "Lighting",
+          "Тільки StarterGui",
+          "Голова гравця",
+          "Освітлення",
         ],
         correctAnswer: 0,
-        explanation: "Server handles economy.",
+        explanation: "Сервер справляється з економією.",
       },
       {
         id: "q8",
         type: "multiple_choice",
-        question: "After refactor, per-coin Scripts should be…",
+        question: "Після рефакторингу Scripts для кожної монети мають бути…",
         options: [
-          "Removed to avoid double award",
-          "Duplicated 30 times",
-          "LocalScripts only",
-          "In Terrain",
+          "Видалено, щоб уникнути подвійного нагородження",
+          "Продубльовано 30 разів",
+          "Лише локальні скрипти",
+          "У місцевості",
         ],
         correctAnswer: 0,
-        explanation: "One script replaces many.",
+        explanation: "Один Script замінює багато.",
       },
       {
         id: "q9",
         type: "multiple_choice",
-        question: "Verb function names like hideCoin…",
+        question: "Назви дієслівних функцій, наприклад hideCoin…",
         options: [
-          "Read like actions",
-          "Hide code forever",
-          "Remove Humanoid",
-          "Disable save",
+          "Читайте як дії",
+          "Приховати код назавжди",
+          "Видаліть Humanoid",
+          "Вимкнути збереження",
         ],
         correctAnswer: 0,
-        explanation: "Clear naming is studio standard.",
+        explanation: "Чіткі імена є стандартом студії.",
       },
       {
         id: "q10",
         type: "multiple_choice",
-        question: "Lesson 3.4 save name…",
+        question: "Урок 3.4 зберегти назву…",
         options: [
-          "Lesson 3.4 - Coin Functions",
-          "Coins HUD",
-          "Obby Ready",
+          "Урок 3.4 - Функції монети",
+          "Монети HUD",
+          "Obby готовий",
           "DataStore",
         ],
         correctAnswer: 0,
-        explanation: "Save after refactor works.",
+        explanation: "Збережіть після роботи рефактору.",
       },
     ],
   },
@@ -1374,202 +1307,188 @@ export const ukLesson35 = {
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    "Understand DataStoreService for saving player data",
-    "Load coins on join and save on leave with pcall",
-    "Integrate saved data with leaderstats Coins value",
-    "Handle API errors without crashing the game",
+    "Зрозумійте DataStoreService для збереження даних гравців",
+    "Завантажуйте монети під час приєднання та економте під час відпустки за допомогою pcall",
+    "Інтегруйте збережені дані з вартістю монет Leaderstats",
+    "Обробляйте помилки API без збою гри",
   ],
   theory: {
     sections: [
       {
-        title: "Ваш шлях сьогодні (близько 40 хвилин)",
-        content: `Until now, leaving the game **erased** your Coins. **DataStore** remembers players between sessions.
+        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+        content: `До цього моменту вихід із гри **стирав** ваші монети. **DataStore** запам’ятовує гравців між сесіями.
 
-**Lesson flow:**
-1. **Theory (40 min)** - load/save with pcall
-2. **Practice (~25 min)** - persistent coins
-3. **Quiz (10 min)** - **70%** pass
+**Хід уроку:**
+1. **Теорія (40 хв)** - завантажити/зберегти за допомогою pcall
+2. **Практика (~25 хв)** - постійні монети
+3. **Вікторина (10 хв)** - проходження **70%**
 
-**Important:** Enable **Game Settings → Security → Enable Studio Access to API Services** for DataStore tests in Studio.`,
+**Важливо:** Увімкніть **Налаштування гри → Безпека → Увімкнути Studio Access to API Services** для тестів DataStore у Studio.`,
       },
       {
-        title: "What DataStore does",
-        content: `| Session only (before) | With DataStore |
+        title: "Що робить DataStore",
+        content: `| Лише сеанс (перед) | З DataStore |
 |-----------------------|----------------|
-| Quit → Coins = 0 | Quit → Coins saved |
-| No progression feel | Real simulator retention |
+| Вийти → Монети = 0 | Вийти → Монети збережено |
+| Немає відчуття прогресування | Реальне утримання тренажера |
 
-Data is keyed by **UserId** (unique per Roblox account).
+Ключем даних є **UserId** (унікальний для кожного облікового запису Roblox).
 
-**You cannot** test real saves in plain Edit mode only - use **Play** with API enabled or **Publish** test.`,
+**Ви не можете** перевірити реальні збереження лише в простому режимі редагування - використовуйте **Play** з увімкненим API або **Опублікувати** тест.`,
       },
       {
-        title: "Create the DataStore",
-        content: `**ServerScriptService** → Script \`CoinDataStore\` (or merge into Leaderstats setup):
-
-\`\`\`lua
+        title: "Створіть DataStore",
+        content: `**ServerScriptService** → Script\`CoinDataStore\`(або об’єднати в налаштування Leaderstats):\`\`\`lua
 local DataStoreService = game:GetService("DataStoreService")
 local Players = game:GetService("Players")
 
 local coinStore = DataStoreService:GetDataStore("CoinProgress_v1")
-\`\`\`
+\`\`\`**Суфікс версії\`_v1\`:** якщо ви зміните формат збереження пізніше, створіть\`CoinProgress_v2\`без пошкодження старих даних.
 
-**Version suffix \`_v1\`:** if you change save format later, create \`CoinProgress_v2\` without breaking old data.
-
-**Never** store passwords or personal info - only game stats like coin count.`,
+**Ніколи** не зберігайте паролі чи особисту інформацію – враховується лише статистика гри, як-от монети.`,
       },
       {
-        title: "loadCoins with pcall",
+        title: "loadCoins з pcall",
         content: `\`\`\`lua
 local function loadCoins(player)
-    local success, data = pcall(function()
-        return coinStore:GetAsync(player.UserId)
-    end)
+ local success, data = pcall(function()
+ return coinStore:GetAsync(player.UserId)
+ end)
 
-    if success and typeof(data) == "number" then
-        return data
-    end
+ if success and typeof(data) == "number" then
+ return data
+ end
 
-    if not success then
-        warn("Load failed for " .. player.Name)
-    end
+ if not success then
+ warn("Load failed for " .. player.Name)
+ end
 
-    return 0
+ return 0
 end
-\`\`\`
+\`\`\`**\`pcall\`** безпечно запускає ризикований код - якщо Roblox API дає збій, гра продовжує працювати замість збою.
 
-**\`pcall\`** runs risky code safely - if Roblox API fails, game keeps running instead of crashing.
-
-**Exercise (5 min):** Print load result in Output when player joins.`,
+**Вправа (5 хв):** Друкувати результат завантаження у виводі, коли гравець приєднується.`,
       },
       {
-        title: "saveCoins with pcall",
+        title: "saveCoins за допомогою pcall",
         content: `\`\`\`lua
 local function saveCoins(player, amount)
-    local success, err = pcall(function()
-        coinStore:SetAsync(player.UserId, amount)
-    end)
+ local success, err = pcall(function()
+ coinStore:SetAsync(player.UserId, amount)
+ end)
 
-    if not success then
-        warn("Save failed for " .. player.Name .. ": " .. tostring(err))
-    end
+ if not success then
+ warn("Save failed for " .. player.Name .. ": " .. tostring(err))
+ end
 end
-\`\`\`
+\`\`\`**Коли зберігати:**
+-\`Players.PlayerRemoving\`- гравець йде
+- Додатково: автозбереження кожні 60 секунд (додатково)
 
-**When to save:**
-- \`Players.PlayerRemoving\` - player leaves
-- Optional: autosave every 60 seconds (advanced)
-
-**Do not** save every single coin pickup - too many API calls. Save **final total** on leave.`,
+**Не** зберігайте кожну окрему монету — занадто багато викликів API. Збережіть **кінцеву суму** під час відпустки.`,
       },
       {
-        title: "Wire PlayerAdded and PlayerRemoving",
+        title: "Провід PlayerAdded і PlayerRemoving",
         content: `\`\`\`lua
 Players.PlayerAdded:Connect(function(player)
-    local leaderstats = Instance.new("Folder")
-    leaderstats.Name = "leaderstats"
-    leaderstats.Parent = player
+ local leaderstats = Instance.new("Folder")
+ leaderstats.Name = "leaderstats"
+ leaderstats.Parent = player
 
-    local coins = Instance.new("IntValue")
-    coins.Name = "Coins"
-    coins.Parent = leaderstats
+ local coins = Instance.new("IntValue")
+ coins.Name = "Coins"
+ coins.Parent = leaderstats
 
-    local saved = loadCoins(player)
-    coins.Value = saved
+ local saved = loadCoins(player)
+ coins.Value = saved
 end)
 
 Players.PlayerRemoving:Connect(function(player)
-    local stats = player:FindFirstChild("leaderstats")
-    if stats then
-        local coins = stats:FindFirstChild("Coins")
-        if coins then
-            saveCoins(player, coins.Value)
-        end
-    end
+ local stats = player:FindFirstChild("leaderstats")
+ if stats then
+ local coins = stats:FindFirstChild("Coins")
+ if coins then
+ saveCoins(player, coins.Value)
+ end
+ end
 end)
-\`\`\`
-
-**Merge** with your existing LeaderstatsSetup - one script owns join/leave.`,
+\`\`\`**Об’єднайте** з існуючими налаштуваннями LeaderstatsSetup – один Script володіє приєднанням/виходом.`,
       },
       {
-        title: "Test persistence correctly",
-        content: `**Test steps:**
-1. Enable API Services in Studio settings
-2. **Play** (F5) - collect **20** coins
-3. **Stop** Play (player leaves → save fires)
-4. **Play** again - Coins should be **20**
+        title: "Перевірте стійкість правильно",
+        content: `**Кроки тесту:**
+1. Увімкніть служби API у налаштуваннях Studio
+2. **Play** (F5) - зібрати **20** монет
+3. **Stop** Play (гравець виходить → зберегти вогонь)
+4. **Зіграйте** знову - монет має бути **20**
 
-**If always 0:**
-- API not enabled
-- pcall failing - read yellow warnings in Output
-- Saving in Edit without Play session
+**Якщо завжди 0:**
+- API не ввімкнено
+- pcall failing - читання жовтих попереджень у вихідних даних
+- Збереження в сеансі «Редагувати без відтворення».
 
-**Publish test:** real players need published place for live DataStore (Studio works with API flag).`,
+**Тест публікації:** справжнім гравцям потрібне опубліковане місце для Live DataStore (Studio працює з прапорцем API).`,
       },
       {
-        title: "Safety rules",
-        content: `- Never trust **client** to send "I have 9999 coins" - server already owns leaderstats
-- Use \`pcall\` on GetAsync and SetAsync
-- Keep data **small** (numbers, short tables) - large saves fail
-- Rate limits exist - do not spam SetAsync in loops
+        title: "Правила техніки безпеки",
+        content: `- Ніколи не довіряйте **клієнту**, щоб надіслати "Я маю 9999 монет" - сервер уже володіє лідерською статистикою
+- Використовуйте\`pcall\`на GetAsync і SetAsync
+- Зберігайте дані **маленькими** (числа, короткі таблиці) - великі збереження не вдаються
+- Існують обмеження швидкості - не спаміть SetAsync у циклах
 
-**Before practice checklist:**
-- [ ] API Services enabled
-- [ ] load on join, save on leave
-- [ ] Stop/Play test shows restored coins
-- [ ] Save: \`Lesson 3.5 - Saved Coins\``,
+**Контрольний список перед тренуваннями:**
+- [ ] Служби API увімкнено
+- [ ] завантаження під час приєднання, збереження під час відпустки
+- [ ] Тест Stop/Play показує відновлені монети
+- [ ] Зберегти:\`Lesson 3.5 - Saved Coins\``,
       },
     ],
   },
   commonMistakes: [
     {
-      mistake: "DataStore in LocalScript",
-      explanation: "Clients cannot save trusted global data.",
-      correctApproach: "ServerScriptService only",
+      mistake: "DataStore в LocalScript",
+      explanation: "Клієнти не можуть зберігати надійні глобальні дані.",
+      correctApproach: "Лише ServerScriptService",
     },
     {
-      mistake: "No pcall - script errors on API fail",
-      explanation: "Temporary Roblox issues crash economy.",
-      correctApproach: "Wrap GetAsync/SetAsync in pcall",
+      mistake: "Немає pcall - помилки Script в API",
+      explanation: "Тимчасові проблеми Roblox з аварійною економікою.",
+      correctApproach: "Загорніть GetAsync/SetAsync у pcall",
     },
     {
-      mistake: "Expect save in Edit mode without Play",
-      explanation: "PlayerRemoving never fires.",
-      correctApproach: "Test with Play then Stop",
+      mistake: "Очікуйте збереження в режимі редагування без відтворення",
+      explanation: "PlayerRemoving ніколи не запускається.",
+      correctApproach: "Перевірте за допомогою «Відтворення», а потім «Стоп».",
     },
     {
-      mistake: "Save on every coin touch",
-      explanation: "Hits rate limits, lag.",
-      correctApproach: "Save total on PlayerRemoving",
+      mistake: "Економте на кожному торканні монети",
+      explanation: "Переступає межі швидкості, затримка.",
+      correctApproach: "Заощадити на PlayerRemoving",
     },
   ],
-  summary: "You used DataStoreService with pcall to load coins when players join and save when they leave, integrated with leaderstats - your simulator now remembers progress between sessions.",
+  summary: "Ви використовували DataStoreService з pcall для завантаження монет, коли гравці приєднуються, і збереження, коли вони виходять, інтегровано зі статистикою лідерів - ваш симулятор тепер запам’ятовує прогрес між сесіями.",
   practiceTask: {
-    title: "Persistent coins (~25 min)",
+    title: "Постійні монети (~25 хв)",
     difficulty: "beginner",
-    description: `**Goal:** Coins survive Stop → Play again.
+    description: `**Мета:** Монети вижили Зупинити → Play знову.
 
-### Part A - DataStore script (12 min)
-1. \`CoinDataStore\` with GetDataStore \`CoinProgress_v1\`
-2. \`loadCoins\` / \`saveCoins\` with pcall
-3. Enable Studio API Services
+### Part A - Script DataStore (12 хв)
+1.\`CoinDataStore\`за допомогою GetDataStore\`CoinProgress_v1\`2.\`loadCoins\`/\`saveCoins\`з pcall
+3. Увімкніть служби API Studio
 
-### Part B - Join / leave (8 min)
-1. PlayerAdded: leaderstats + \`coins.Value = loadCoins(player)\`
-2. PlayerRemoving: \`saveCoins(player, coins.Value)\`
-3. Merge with CoinCollector / Leaderstats - no duplicate PlayerAdded
+### Part B - Приєднатися / вийти (8 хв)
+1. PlayerAdded: leaderstats +\`coins.Value = loadCoins(player)\`2. Видалення гравця:\`saveCoins(player, coins.Value)\`3. Об’єднайтеся з CoinCollector / Leaderstats - немає дублікатів PlayerAdded
 
-### Part C - Persistence test (5 min)
-1. Play - earn 25+ coins - Stop
-2. Play again - still 25+
-3. **Save to Roblox** → \`Lesson 3.5 - Saved Coins\`
-4. **Practice complete**`,
+### Part C - Тест на стійкість (5 хв)
+1. Грайте - заробіть 25+ монет - Стоп
+2. Грайте знову - все ще 25+
+3. **Зберегти в Roblox** →\`Lesson 3.5 - Saved Coins\`4. **Практика завершена**`,
     hints: [
-      "Yellow warn in Output = read the pcall failure message",
-      "UserId key is automatic - do not use player.Name as key",
-      "Stop Play to trigger save before re-testing",
+      "Жовте попередження у вихідних даних = прочитайте повідомлення про помилку pcall",
+      "Ключ UserId автоматичний - не використовуйте player.Name як ключ",
+      "Зупиніть відтворення, щоб запустити збереження перед повторним тестуванням",
     ],
-    optionalChallenge: "Also save BestCoins in same DataStore as a table {coins=, best=}.",
+    optionalChallenge: "Також збережіть BestCoins у тому ж DataStore як таблицю {coins=, best=}.",
   },
   quiz: {
     passingScore: 70,
@@ -1578,132 +1497,132 @@ end)
       {
         id: "q1",
         type: "multiple_choice",
-        question: "DataStore saves data…",
+        question: "DataStore зберігає дані…",
         options: [
-          "Between play sessions",
-          "Only in one Play minute",
-          "Inside Part color",
-          "In LocalScript UI",
+          "Між ігровими сесіями",
+          "Лише за одну ігрову хвилину",
+          "Колір внутрішньої Parts",
+          "В інтерфейсі користувача LocalScript",
         ],
         correctAnswer: 0,
-        explanation: "Persists after player leaves.",
+        explanation: "Зберігається після виходу гравця.",
       },
       {
         id: "q2",
         type: "multiple_choice",
-        question: "Player data key is usually…",
+        question: "Ключ даних гравця зазвичай…",
         options: [
           "player.UserId",
-          "player.Name only",
+          "гравець. Тільки ім'я",
           "Part.Name",
           "ClockTime",
         ],
         correctAnswer: 0,
-        explanation: "UserId is unique and stable.",
+        explanation: "UserId унікальний і стабільний.",
       },
       {
         id: "q3",
         type: "multiple_choice",
-        question: "pcall protects against…",
+        question: "pcall захищає від...",
         options: [
-          "API errors crashing the script",
-          "Lava kills",
-          "UI color",
-          "Terrain paint",
+          "Помилки API, що призводять до збою Script",
+          "Лава вбиває",
+          "колір інтерфейсу",
+          "Фарба місцевості",
         ],
         correctAnswer: 0,
-        explanation: "pcall catches failures safely.",
+        explanation: "pcall безпечно виявляє збої.",
       },
       {
         id: "q4",
         type: "multiple_choice",
-        question: "GetAsync loads…",
+        question: "GetAsync завантажує…",
         options: [
-          "Saved data when player joins",
+          "Збережені дані, коли гравець приєднується",
           "Skybox",
-          "All scripts",
-          "Terrain",
+          "Всі скрипти",
+          "Рельєф місцевості",
         ],
         correctAnswer: 0,
-        explanation: "Load on join pattern.",
+        explanation: "Завантажити шаблон з’єднання.",
       },
       {
         id: "q5",
         type: "multiple_choice",
-        question: "SetAsync should run when…",
+        question: "SetAsync має запускатися, коли…",
         options: [
-          "Player leaves (PlayerRemoving)",
-          "Every frame",
-          "Only in lobby",
-          "Never",
+          "Гравець йде (PlayerRemoving)",
+          "Кожен кадр",
+          "Тільки в холі",
+          "Ніколи",
         ],
         correctAnswer: 0,
-        explanation: "Save on leave is standard.",
+        explanation: "Економія у відпустці є стандартною.",
       },
       {
         id: "q6",
         type: "multiple_choice",
-        question: "CoinProgress_v1 naming helps…",
+        question: "Назви CoinProgress_v1 допомагають…",
         options: [
-          "Future data migrations",
-          "Delete players",
-          "Remove UI",
-          "Disable sound",
+          "Майбутні переміщення даних",
+          "Видалити гравців",
+          "Видалити інтерфейс користувача",
+          "Вимкнути звук",
         ],
         correctAnswer: 0,
-        explanation: "Versioned store names.",
+        explanation: "Версійні назви магазинів.",
       },
       {
         id: "q7",
         type: "multiple_choice",
-        question: "Studio DataStore needs…",
+        question: "Studio DataStore потребує…",
         options: [
-          "Enable API Services",
-          "Delete Workspace",
-          "LocalScript only",
-          "No leaderstats",
+          "Увімкнути служби API",
+          "Видалити Workspace",
+          "Лише LocalScript",
+          "Без статистики лідерів",
         ],
         correctAnswer: 0,
-        explanation: "Security setting required.",
+        explanation: "Потрібне налаштування безпеки.",
       },
       {
         id: "q8",
         type: "multiple_choice",
-        question: "Trusted coin total lives on…",
+        question: "Загальна кількість довірених монет триває...",
         options: [
-          "Server leaderstats",
-          "Client TextLabel only",
-          "Chat message",
-          "Decal",
+          "Статистика лідерів серверів",
+          "Лише клієнт TextLabel",
+          "Повідомлення в чаті",
+          "Декаль",
         ],
         correctAnswer: 0,
-        explanation: "Server owns economy.",
+        explanation: "Сервер володіє економікою.",
       },
       {
         id: "q9",
         type: "multiple_choice",
-        question: "Saving every 0.1 seconds is…",
+        question: "Збереження кожні 0,1 секунди – це…",
         options: [
-          "Bad - rate limits",
-          "Required",
-          "Same as never saving",
-          "UI only",
+          "Погано - обмеження швидкості",
+          "Обов'язковий",
+          "Те саме, що ніколи не економити",
+          "Лише інтерфейс користувача",
         ],
         correctAnswer: 0,
-        explanation: "Too many API calls.",
+        explanation: "Забагато викликів API.",
       },
       {
         id: "q10",
         type: "multiple_choice",
-        question: "Lesson 3.5 save name…",
+        question: "Урок 3.5 зберегти назву…",
         options: [
-          "Lesson 3.5 - Saved Coins",
-          "Coin Functions",
-          "Obby Ready",
-          "Victory Screen",
+          "Урок 3.5 - Збережені монети",
+          "Функції монет",
+          "Obby готовий",
+          "Екран перемоги",
         ],
         correctAnswer: 0,
-        explanation: "Save after persistence test.",
+        explanation: "Зберегти після тесту стійкості.",
       },
     ],
   },
@@ -1718,153 +1637,146 @@ export const ukLesson36 = {
   quizMinutes: 10,
   estimatedTime: 50,
   learningObjectives: [
-    "Ship a complete coin simulator with map, collection, UI, functions, and save",
-    "Run a four-player QA test matrix",
-    "Polish feedback and onboarding at spawn",
-    "Prepare for Module 4 tycoon systems",
+    "Надішліть повний симулятор монет із картою, колекцією, інтерфейсом користувача, функціями та збереженням",
+    "Виконайте тестову матрицю для чотирьох гравців",
+    "Польський відгук і адаптація на spawn",
+    "Підготуйтеся до модуля 4 Tycoon Systems",
   ],
   theory: {
     sections: [
       {
-        title: "Module 3 checkpoint (about 40 minutes)",
-        content: `You ship **Coin Simulator** - a playable slice players understand in **10 seconds**:
+        title: "Контрольна точка модуля 3 (близько 40 хвилин)",
+        content: `Ви надсилаєте **Coin Simulator** - ігровий фрагмент, який гравці розуміють за **10 секунд**:
 
-**"Collect coins. Number goes up. Comes back tomorrow still saved."**
+**"Збирайте монети. Кількість зростає. Повернеться завтра, але збереже."**
 
-**Required systems:**
-- 30+ coin map (3.1)
-- CoinCollector + functions (3.4)
-- leaderstats + CoinsHUD (3.3)
-- DataStore save/load (3.5)`,
+**Потрібні системи:**
+- Карта 30+ монет (3.1)
+- CoinCollector + функції (3.4)
+- лідерська статистика + CoinsHUD (3.3)
+- Збереження/завантаження DataStore (3.5)`,
       },
       {
-        title: "60-minute sprint",
-        content: `| Phase | Min | Task |
+        title: "60-хвилинний спринт",
+        content: `| Фаза | Мін | Завдання |
 |-------|-----|------|
-| 1 | 10 | Explorer cleanup, spawn sign |
-| 2 | 15 | CoinCollector + no duplicate scripts |
-| 3 | 15 | DataStore leave/rejoin test |
-| 4 | 10 | Sound + HUD polish |
-| 5 | 10 | QA matrix + fix bugs |
+| 1 | 10 | Очищення дослідника, знак появи |
+| 2 | 15 | CoinCollector + відсутність дублікатів скриптів |
+| 3 | 15 | Тест виходу/повторного приєднання DataStore |
+| 4 | 10 | Звук + полірування HUD |
+| 5 | 10 | QA матриця + виправлення помилок |
 
-**Target folders:**
-\`Workspace/Coins/\`, \`ServerScriptService/\` (CoinCollector, CoinDataStore), \`StarterGui/CoinsHUD\``,
+**Цільові folders:**\`Workspace/Coins/\`,\`ServerScriptService/\`(CoinCollector, CoinDataStore),\`StarterGui/CoinsHUD\``,
       },
       {
-        title: "Spawn onboarding",
-        content: `At spawn, player sees within 3 seconds:
-- **Sign:** \`Collect coins - explore the island!\`
-- **Visible coin trail** toward first zone
-- **CoinsHUD** top-left: \`Coins: 0\`
+        title: "Реєстрація на борту",
+        content: `Під час появи гравець протягом 3 секунд бачить:
+- **Знак:**\`Collect coins - explore the island!\`- **Видимий слід монети** до першої зони
+- **CoinsHUD** вгорі зліва:\`Coins: 0\`**Необов’язково:** стрілка Деталі, що вказують на щільну зону монет.
 
-**Optional:** arrow Parts pointing to coin dense area.
-
-No tutorial text wall - show, do not tell.`,
+No tutorial text wall - показуй, ​​не розповідай.`,
       },
       {
-        title: "QA test matrix (required)",
-        content: `| # | Test | Pass? |
+        title: "Тестова матриця QA (обов’язково)",
+        content: `| # | Тест | Пас? |
 |---|------|-------|
-| 1 | Collect 10 fast - HUD + Tab = 10 | |
-| 2 | Stand on one coin 3s - still +1 only | |
-| 3 | Rare coin gives +5 (if built) | |
-| 4 | Stop Play at 30 coins, Play again - still 30 | |
-| 5 | Output: no red errors on clean run | |
+| 1 | Зберіть 10 швидко - HUD + Tab = 10 | |
+| 2 | Стійте на одній монеті 3s - усе ще лише +1 | |
+| 3 | Рідкісна монета дає +5 (якщо побудована) | |
+| 4 | Зупиніть гру на 30 монетах, зіграйте знову - все ще 30 | |
+| 5 | Результат: немає червоних помилок під час чистого запуску | |
 
-**Multiplayer (if possible):** two players - coins do not cross accounts.`,
+**Мультиплеер (якщо можливо):** два гравці - монети не перетинаються між обліковими записами.`,
       },
       {
-        title: "Feel like a game",
-        content: `- Pickup **sound** on CoinCollector (one sound, Play on award)
-- **PointLight** on coins (from 3.1)
-- At least **60 seconds** of coin route content
-- **No** broken floating coins inside terrain
+        title: "Відчуйте себе як гра",
+        content: `- **Звук** підхоплення на CoinCollector (один звук, грати за нагородою)
+- **PointLight** на монетах (з 3.1)
+- Принаймні **60 секунд** вмісту маршруту монет
+- **Без** розбитих плаваючих монет всередині місцевості
 
-**Minimum map:** keep island hub + coin zones - obby optional side path.`,
+**Мінімальна карта:** збережіть центр острова + монетні зони - необов'язковий бічний шлях.`,
       },
       {
-        title: "Architecture checklist",
-        content: `- [ ] **One** CoinCollector - no scripts inside individual coins
-- [ ] **One** join script path (leaderstats + load)
-- [ ] **One** save on PlayerRemoving
-- [ ] CoinsHUD uses GetPropertyChangedSignal
-- [ ] DataStore name \`CoinProgress_v1\`
-
-Future Module 4 adds **tycoon plots** - your coin code stays in ServerScriptService.`,
+        title: "Контрольний список архітектури",
+        content: `- [ ] **One** CoinCollector - жодних скриптів в окремих монетах
+- [ ] **Один** шлях Script приєднання (лідерська статистика + завантаження)
+- [ ] **Один** збереження на PlayerRemoving
+- [ ] CoinsHUD використовує GetPropertyChangedSignal
+- [ ] Name сховища даних\`CoinProgress_v1\`Майбутній модуль 4 додає **змови магнатів** - ваш код монети залишається в ServerScriptService.`,
       },
       {
-        title: "Demo script (2 minutes)",
-        content: `Show teacher/parents:
-1. Spawn - read sign, see HUD
-2. Collect 5 coins - number rises + sound
-3. Tab key - leaderboard matches
-4. Stop and Play - coins restored
-5. Say: "DataStore saves UserId so progress returns"
+        title: "Демонстраційний Script (2 хвилини)",
+        content: `Показати вчителю/батькам:
+1. Спаун - читайте знак, див. HUD
+2. Зберіть 5 монет - кількість зростає + звук
+3. Клавіша Tab - збіги таблиці лідерів
+4. Stop and Play - монети відновлені
+5. Скажіть: «DataStore зберігає UserId, тому прогрес повертається»
 
-**Save:** \`Module 3 - Coin Simulator\``,
+**Зберегти:**\`Module 3 - Coin Simulator\``,
       },
       {
-        title: "Module 4 preview",
-        content: `**Tycoon** games = coins **automatically** from droppers + buy upgrades + your own plot.
+        title: "Попередній перегляд модуля 4",
+        content: `Ігри **Tycoon** = монети **автоматично** з дропперів + купуйте оновлення + власний сюжет.
 
-You already know:
-- Server economy
-- UI counters
-- Saving progress
+Ви вже знаєте:
+- Серверна економіка
+- Лічильники інтерфейсу користувача
+- Збереження прогресу
 
-Module 4 turns passive income into a business sim on your island.`,
+Модуль 4 перетворює пасивний дохід у бізнес-симулятор на вашому острові.`,
       },
     ],
   },
   commonMistakes: [
     {
-      mistake: "Duplicate PlayerAdded in two scripts",
-      explanation: "Double leaderstats or wrong load order.",
-      correctApproach: "Single script handles join: stats + load + connect coins",
+      mistake: "Дубльований програвач, доданий у двох Scripts",
+      explanation: "Подвійна лідерська статистика або неправильний порядок завантаження.",
+      correctApproach: "Єдиний скрипт об’єднує: статистика + завантаження + підключення монет",
     },
     {
-      mistake: "Persistence not tested with Stop",
-      explanation: "Thinking Save to File saves DataStore.",
-      correctApproach: "Stop Play triggers PlayerRemoving save",
+      mistake: "Стійкість не перевірялася за допомогою Stop",
+      explanation: "Мислення про збереження у файл зберігає DataStore.",
+      correctApproach: "Зупинка відтворення запускає збереження PlayerRemoving",
     },
     {
-      mistake: "Map has 5 coins only",
-      explanation: "Does not feel like simulator.",
-      correctApproach: "Keep 30+ from Lesson 3.1 or add more",
+      mistake: "На карті лише 5 монет",
+      explanation: "Не схоже на симулятор.",
+      correctApproach: "Збережіть 30+ з уроку 3.1 або додайте більше",
     },
     {
-      mistake: "No pickup feedback",
-      explanation: "Collecting feels boring.",
-      correctApproach: "Sound + hide coin + HUD tick",
+      mistake: "Немає відгуків про отримання",
+      explanation: "Збирати нудно.",
+      correctApproach: "Звук + сховати монету + галочка HUD",
     },
   ],
-  summary: "You shipped Coin Simulator with organized scripts, live HUD, function-based collection, DataStore persistence, and passed QA tests - Module 4 tycoon building starts next.",
+  summary: "Ви надіслали Coin Simulator із organized Scripts, живим HUD, збором даних на основі функцій, стійкістю DataStore та пройшли тести QA. Далі почнеться створення магната за модулем 4.",
   practiceTask: {
-    title: "Ship Coin Simulator (~40 min)",
+    title: "Симулятор корабельних монет (~40 хв)",
     difficulty: "beginner",
-    description: `**Goal:** Pass all 5 QA tests + demo-ready place.
+    description: `**Мета:** Пройти всі 5 тестів якості + демо-готове місце.
 
-### Part A - Cleanup (10 min)
-1. Folders + names; remove stray scripts
-2. Spawn sign + coin trail visible
-3. CoinCollector only - delete per-coin Scripts
+### Part A - Очищення (10 хв)
+1. Folders + імена; видалити помилкові Scripts
+2. Видно знак spawn + слід монети
+3. Лише CoinCollector - видалення Scripts для кожної монети
 
-### Part B - Systems (15 min)
-1. leaderstats + load/save DataStore
+### Part B – Системи (15 хв)
+1. leaderstats + завантажити/зберегти DataStore
 2. CoinsHUD live
-3. Pickup sound in awardCoins path
+3. Звук підйому на шляху нагородних монет
 
-### Part C - QA & save (15 min)
-1. Complete test matrix 1–5
-2. Fix any fail before marking done
-3. **Save to Roblox** → \`Module 3 - Coin Simulator\`
-4. **Practice complete** + optional 2-min recording`,
+### Part C - ЗК та збереження (15 хв)
+1. Заповніть тестову матрицю 1–5
+2. Виправте будь-яку помилку, перш ніж позначити її як виконану
+3. **Зберегти в Roblox** →\`Module 3 - Coin Simulator\`4. **Практика завершена** + додатковий 2-хвилинний запис`,
     hints: [
-      "Fix double-award before testing save - wrong count saves wrong data",
-      "API Services must stay enabled for DataStore",
-      "Run test 4 last - confirms whole module works",
+      "Виправте подвійне нагородження перед тестуванням збереження - неправильний підрахунок зберігає неправильні дані",
+      "Служби API мають залишатися ввімкненими для DataStore",
+      "Запустіть тест 4 останнім - підтверджує роботу всього модуля",
     ],
-    optionalChallenge: "Booster pad: double coins for 20 seconds after touch.",
+    optionalChallenge: "Бустерна панель: подвійні монети протягом 20 секунд після дотику.",
   },
   quiz: {
     passingScore: 70,
@@ -1873,132 +1785,132 @@ Module 4 turns passive income into a business sim on your island.`,
       {
         id: "q1",
         type: "multiple_choice",
-        question: "Coin Simulator checkpoint needs…",
+        question: "КПП Coin Simulator потребує…",
         options: [
-          "Map + collect + HUD + save",
-          "Only terrain",
-          "Only obby timer",
-          "No scripts",
+          "Карта + збір + HUD + збереження",
+          "Тільки місцевість",
+          "Тільки obby таймер",
+          "Жодних Scripts",
         ],
         correctAnswer: 0,
-        explanation: "All Module 3 systems together.",
+        explanation: "Усі системи модуля 3 разом.",
       },
       {
         id: "q2",
         type: "multiple_choice",
-        question: "Test 2 verifies…",
+        question: "Тест 2 підтверджує…",
         options: [
-          "Debounce still works",
-          "Sky color",
-          "Terrain only",
-          "Publishing",
+          "Debounce все ще працює",
+          "Колір неба",
+          "Тільки місцевість",
+          "Видавництво",
         ],
         correctAnswer: 0,
-        explanation: "Stand-on-coin should not spam +",
+        explanation: "Stand-on-coin не повинен спамити +",
       },
       {
         id: "q3",
         type: "multiple_choice",
-        question: "Test 4 verifies…",
+        question: "Тест 4 підтверджує…",
         options: [
-          "DataStore persistence",
-          "Neon material",
-          "Kill blocks",
+          "Постійність DataStore",
+          "Neon матеріал",
+          "Вбивати блоки",
           "VictoryGui",
         ],
         correctAnswer: 0,
-        explanation: "Stop/Play restores coins.",
+        explanation: "Stop/Play відновлює монети.",
       },
       {
         id: "q4",
         type: "multiple_choice",
-        question: "CoinCollector should be the…",
+        question: "CoinCollector має бути…",
         options: [
-          "Only pickup script",
-          "One of 30 duplicate scripts",
-          "Client chat script",
-          "Terrain tool",
+          "Лише Script підбору",
+          "Один із 30 дублюючих скриптів",
+          "Скрипт клієнтського чату",
+          "Інструмент рельєфу",
         ],
         correctAnswer: 0,
-        explanation: "Single server collector.",
+        explanation: "Колектор єдиного сервера.",
       },
       {
         id: "q5",
         type: "multiple_choice",
-        question: "Save key uses…",
+        question: "Зберегти використання ключа…",
         options: [
           "player.UserId",
-          "Player display name only",
+          "Лише відображуване ім'я гравця",
           "Coin Part name",
-          "Random",
+          "Випадковий",
         ],
         correctAnswer: 0,
-        explanation: "UserId is unique per account.",
+        explanation: "UserId є унікальним для кожного облікового запису.",
       },
       {
         id: "q6",
         type: "multiple_choice",
-        question: "Module 4 topic is…",
+        question: "Тема модуля 4…",
         options: [
-          "Tycoon / passive income",
-          "Only publishing",
-          "Only cars",
-          "Empty",
+          "Магнат / пасивний дохід",
+          "Тільки видавництво",
+          "Тільки автомобілі",
+          "Порожній",
         ],
         correctAnswer: 0,
-        explanation: "Tycoon builds on coin systems.",
+        explanation: "Tycoon будує систему монет.",
       },
       {
         id: "q7",
         type: "multiple_choice",
-        question: "Onboarding at spawn needs…",
+        question: "Потрібна адаптація на spawn…",
         options: [
-          "Clear goal + visible first coin",
-          "No coins",
-          "Hidden UI",
-          "Only lava",
+          "Чистий гол + видима перша монета",
+          "Без монет",
+          "Прихований інтерфейс користувача",
+          "Тільки лава",
         ],
         correctAnswer: 0,
-        explanation: "Players need immediate direction.",
+        explanation: "Гравці потребують негайного керівництва.",
       },
       {
         id: "q8",
         type: "multiple_choice",
-        question: "Red Output on clean run means…",
+        question: "Червоний вихід під час чистого запуску означає…",
         options: [
-          "Fix before shipping",
-          "Perfect",
-          "Add more lava",
-          "Delete DataStore",
+          "Виправити перед відправкою",
+          "ідеально",
+          "Додайте більше лави",
+          "Видалити DataStore",
         ],
         correctAnswer: 0,
-        explanation: "Errors = bugs remain.",
+        explanation: "Помилки = помилки залишаються.",
       },
       {
         id: "q9",
         type: "multiple_choice",
-        question: "Rare coins should award…",
+        question: "Рідкісні монети повинні нагороджувати...",
         options: [
-          "More than common (+5)",
-          "Zero",
-          "Delete save",
-          "Remove HUD",
+          "Більш ніж часто (+5)",
+          "Нуль",
+          "Видалити збереження",
+          "Видаліть HUD",
         ],
         correctAnswer: 0,
-        explanation: "Rare = higher value if implemented.",
+        explanation: "Рідкісне = більше значення, якщо реалізовано.",
       },
       {
         id: "q10",
         type: "multiple_choice",
-        question: "Final Module 3 save name…",
+        question: "Останній модуль 3 зберегти назву…",
         options: [
-          "Module 3 - Coin Simulator",
-          "Lesson 2.1",
-          "Untitled",
-          "Click Magic",
+          "Модуль 3 - Симулятор монет",
+          "Заняття 2.1",
+          "Без назви",
+          "Натисніть Магія",
         ],
         correctAnswer: 0,
-        explanation: "Checkpoint portfolio name.",
+        explanation: "Name портфоліо Checkpoint.",
       },
     ],
   },

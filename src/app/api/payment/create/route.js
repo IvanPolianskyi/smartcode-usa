@@ -13,16 +13,8 @@ import { paymentDescription } from '@/lib/localeStrings'
 export async function POST(request) {
   try {
     const userId = await getCurrentUser()
-
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Not authenticated' },
-        { status: 401 }
-      )
-    }
-
     const body = await request.json()
-    const { courseId, locale = 'uk' } = body
+    const { courseId, locale = 'uk', guestEmail, guestName } = body
 
     if (!courseId) {
       return NextResponse.json(
@@ -31,31 +23,27 @@ export async function POST(request) {
       )
     }
 
-    const userIdObj = new ObjectId(userId)
+    if (!userId && (!guestEmail || !guestName)) {
+      return NextResponse.json(
+        { error: 'Authentication or guest details required' },
+        { status: 401 }
+      )
+    }
+
+    let user = null
     const usersCollection = await getCollection('users')
-    const user = await usersCollection.findOne({ _id: userIdObj })
 
-    if (!user) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      )
-    }
-
-    // Admin has access to all courses
-    if (user.role === 'admin') {
-      return NextResponse.json(
-        { error: 'Admin has access to all courses' },
-        { status: 400 }
-      )
-    }
-
-    // Check if already purchased
-    if ((user.purchasedCourses || []).includes(courseId)) {
-      return NextResponse.json(
-        { error: 'Course already purchased' },
-        { status: 400 }
-      )
+    if (userId) {
+      user = await usersCollection.findOne({ _id: new ObjectId(userId) })
+      if (!user) {
+        return NextResponse.json({ error: 'User not found' }, { status: 404 })
+      }
+      if (user.role === 'admin') {
+        return NextResponse.json({ error: 'Admin has access to all courses' }, { status: 400 })
+      }
+      if ((user.purchasedCourses || []).includes(courseId)) {
+        return NextResponse.json({ error: 'Course already purchased' }, { status: 400 })
+      }
     }
 
     const courseInfo = getCoursePrice(courseId, locale)
@@ -66,12 +54,36 @@ export async function POST(request) {
       )
     }
 
-    const orderId = `course_${courseId}_${userId}_${Date.now()}`
+    const customerEmail = user ? user.email : guestEmail
+    const customerName = user ? user.name : guestName
+    const orderIdPrefix = userId ? userId.toString() : `guest_${customerEmail.replace(/[^a-zA-Z0-9]/g, '')}`
+    const orderId = `course_${courseId}_${orderIdPrefix}_${Date.now()}`
+    
     const baseUrl =
       process.env.NEXT_PUBLIC_BASE_URL ||
       (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
 
     const paymentsCollection = await getCollection('payments')
+
+    const paymentRecord = {
+      courseId,
+      orderId,
+      amount: courseInfo.price,
+      currency: courseInfo.currency,
+      status: 'pending',
+      paymentMethod: courseInfo.paymentProvider || 'liqpay',
+      paymentType: 'full_course',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+
+    if (userId) {
+      paymentRecord.userId = new ObjectId(userId)
+    } else {
+      paymentRecord.isGuest = true
+      paymentRecord.guestEmail = guestEmail
+      paymentRecord.guestName = guestName
+    }
 
     if (courseInfo.paymentProvider === 'wayforpay') {
       const productName = courseInfo.nameEn || courseInfo.name
@@ -84,24 +96,13 @@ export async function POST(request) {
         productCount: [1],
         language: locale === 'uk' ? 'UA' : 'EN',
         serviceUrl: `${baseUrl}/api/payment/wayforpay/webhook`,
-        clientEmail: user.email,
-        clientFirstName: user.name?.split(' ')[0] || 'Student',
-        clientLastName: user.name?.split(' ').slice(1).join(' ') || '',
+        clientEmail: customerEmail,
+        clientFirstName: customerName?.split(' ')[0] || 'Student',
+        clientLastName: customerName?.split(' ').slice(1).join(' ') || '',
         paymentSystems: 'card;googlePay;applePay',
       })
 
-      await paymentsCollection.insertOne({
-        userId: userIdObj,
-        courseId,
-        orderId,
-        amount: courseInfo.price,
-        currency: courseInfo.currency,
-        status: 'pending',
-        paymentMethod: 'wayforpay',
-        paymentType: 'full_course',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      })
+      await paymentsCollection.insertOne(paymentRecord)
 
       return NextResponse.json({
         paymentUrl: invoiceUrl,
@@ -120,22 +121,12 @@ export async function POST(request) {
       currency: courseInfo.currency,
     })
 
-    await paymentsCollection.insertOne({
-      userId: userIdObj,
-      courseId,
-      orderId,
-      amount: courseInfo.price,
-      currency: courseInfo.currency,
-      status: 'pending',
-      paymentMethod: 'liqpay',
-      paymentType: 'full_course',
-      paymentData: {
-        data: paymentLink.data,
-        signature: paymentLink.signature,
-      },
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    })
+    paymentRecord.paymentData = {
+      data: paymentLink.data,
+      signature: paymentLink.signature,
+    }
+
+    await paymentsCollection.insertOne(paymentRecord)
 
     return NextResponse.json({
       paymentUrl: paymentLink.url,
@@ -152,24 +143,3 @@ export async function POST(request) {
     )
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
