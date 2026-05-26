@@ -20,6 +20,7 @@ export const coursePrices = {
 /** Full-course prices on English site (WayForPay, USD) */
 export const EN_FULL_COURSE_PRICES = {
   'python-developer-zero-to-junior': { price: 15, currency: 'USD' },
+  'roblox-studio': { price: 15, currency: 'USD' },
 }
 
 /** Live lesson prices for English site (WayForPay) */
