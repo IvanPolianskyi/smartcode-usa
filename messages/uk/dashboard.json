@@ -1,9 +1,7 @@
 {
   "courses": {
     "python-developer-zero-to-junior": { "title": "Пайтон" },
-    "unity-game-development": { "title": "Розробка ігор на Unity" },
-    "roblox-studio": { "title": "Roblox Studio" },
-    "web-development": { "title": "Веб-розробка" }
+    "roblox-studio": { "title": "Roblox Studio" }
   },
   "days": {
     "sun": "Нд",

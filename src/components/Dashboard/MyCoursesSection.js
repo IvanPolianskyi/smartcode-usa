@@ -5,7 +5,7 @@ import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 import { BookOpen, CheckCircle2, Play, Lock } from 'lucide-react'
 import { createPayment } from '@/lib/authClient'
-import { getCoursePrice, getEnPurchasableFullCourses } from '@/lib/coursePrices'
+import { formatPrice, getCoursePrice, getEnPurchasableFullCourses } from '@/lib/coursePrices'
 import { DASHBOARD_COURSE_IDS } from '@/hooks/useDashboardCourses'
 import ProgressRing from './ProgressRing'
 import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
@@ -13,8 +13,6 @@ import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
 const COURSE_PATHS = {
   'roblox-studio': '/courses/roblox-studio',
   'python-developer-zero-to-junior': '/courses/python-developer-zero-to-junior',
-  'web-development': '/courses/web-development',
-  'unity-game-development': '/Unity',
 }
 
 function isCourseOwned(user, courseId) {
@@ -88,6 +86,12 @@ export default function MyCoursesSection({
               <h4>{course.title}</h4>
               <ProgressRing value={0} size={56} stroke={5} muted />
             </div>
+            <p className={styles.courseCardDesc}>{t('lockedHint')}</p>
+            {canBuyOnline && priceInfo?.price > 0 ? (
+              <p className={styles.courseCardPrice}>
+                {formatPrice(priceInfo.price, priceInfo.currency, locale)}
+              </p>
+            ) : null}
             <div className={styles.courseCardActions}>
               <button
                 type="button"

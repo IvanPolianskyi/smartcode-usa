@@ -9,12 +9,6 @@ export const coursePrices = {
     name: 'Пайтон',
     nameEn: 'Python Developer Course',
   },
-  'web-development': {
-    price: 2000,
-    currency: 'UAH',
-    name: 'Веб-розробка: Від основ до просунутого рівня',
-    nameEn: 'Web Development Course',
-  },
   'roblox-studio': {
     price: 2000,
     currency: 'UAH',
@@ -25,7 +19,6 @@ export const coursePrices = {
 
 /** Full-course prices on English site (WayForPay, USD) */
 export const EN_FULL_COURSE_PRICES = {
-  'roblox-studio': { price: 15, currency: 'USD' },
   'python-developer-zero-to-junior': { price: 15, currency: 'USD' },
 }
 
