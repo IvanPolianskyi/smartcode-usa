@@ -54,6 +54,18 @@ export async function findUserByCrmStudentId(crmStudentId, usersCollection) {
   return coll.findOne({ 'studentProfile.crmStudentId': String(crmStudentId) })
 }
 
+/** Placeholder when CRM/LMS has no display name yet — must not overwrite a real name on sync. */
+export const DEFAULT_LMS_STUDENT_NAME = 'Учень SmartCode'
+
+export function isPlaceholderStudentName(name) {
+  const value = String(name || '').trim()
+  return !value || value === DEFAULT_LMS_STUDENT_NAME
+}
+
+function resolveNameFromCrmPayload(payload) {
+  return String(payload?.fullName || payload?.name || '').trim()
+}
+
 export async function upsertUserFromCrm(payload) {
   const crmStudentId = String(payload.crmStudentId || '').trim()
   if (!crmStudentId) {
@@ -63,7 +75,7 @@ export async function upsertUserFromCrm(payload) {
   const usersCollection = await getCollection('users')
   const explicitUserId = String(payload.smartcodeUserId || '').trim()
   const email = normalizeEmail(payload.email)
-  const name = String(payload.fullName || payload.name || '').trim() || 'Учень SmartCode'
+  const crmName = resolveNameFromCrmPayload(payload)
   const phone = payload.phone ? String(payload.phone).trim() : null
 
   let user = null
@@ -90,16 +102,19 @@ export async function upsertUserFromCrm(payload) {
 
   if (user) {
     const prev = user.studentProfile || defaultStudentProfile()
+    const setFields = {
+      phone: phone ?? user.phone,
+      studentProfile: { ...prev, ...profilePatch },
+      updatedAt: new Date(),
+    }
+    if (crmName) {
+      setFields.name = crmName
+    } else if (!user.name) {
+      setFields.name = DEFAULT_LMS_STUDENT_NAME
+    }
     await usersCollection.updateOne(
       { _id: user._id },
-      {
-        $set: {
-          name: name || user.name,
-          phone: phone ?? user.phone,
-          studentProfile: { ...prev, ...profilePatch },
-          updatedAt: new Date(),
-        },
-      }
+      { $set: setFields }
     )
     user = await usersCollection.findOne({ _id: user._id })
   } else {
@@ -112,6 +127,7 @@ export async function upsertUserFromCrm(payload) {
     }
     const randomPassword = crypto.randomBytes(24).toString('hex')
     const hashedPassword = await hashPassword(randomPassword)
+    const name = crmName || DEFAULT_LMS_STUDENT_NAME
     const doc = {
       email,
       password: hashedPassword,

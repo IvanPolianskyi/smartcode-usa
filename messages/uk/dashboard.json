@@ -166,6 +166,10 @@
       "amountPlaceholder": "Наприклад: {amount}",
       "amountHint": "Сума кратна {price} грн ({format} формат).",
       "receiptPhoto": "Натисніть, щоб вибрати фото квитанції",
+      "receiptAttached": "Квитанцію прикріплено",
+      "receiptPreviewAlt": "Попередній перегляд квитанції",
+      "changeReceipt": "Змінити фото",
+      "removeReceipt": "Прибрати квитанцію",
       "submitting": "Відправляємо…",
       "submit": "Надіслати квитанцію",
       "errors": {

@@ -656,6 +656,96 @@
   height: 1px;
   opacity: 0;
   overflow: hidden;
+  pointer-events: none;
+}
+
+.receiptPreviewCard {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.75rem;
+  border: 2px solid #c7d2fe;
+  border-radius: 12px;
+  background: #f5f3ff;
+}
+
+.receiptPreviewHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.receiptPreviewBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--dash-primary-dark);
+}
+
+.receiptPreviewRemove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  color: #64748b;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.receiptPreviewRemove:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.receiptPreviewImageWrap {
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  max-height: 220px;
+}
+
+.receiptPreviewImage {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+}
+
+.receiptPreviewFileName {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+  color: var(--dash-muted);
+  word-break: break-all;
+  text-align: center;
+}
+
+.receiptPreviewChangeBtn {
+  display: block;
+  width: 100%;
+  margin-top: 0.65rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #c7d2fe;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--dash-primary);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.receiptPreviewChangeBtn:hover {
+  background: #eef2ff;
+  border-color: var(--dash-primary);
 }
 
 .paySubmitBtn {

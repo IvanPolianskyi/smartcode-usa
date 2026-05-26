@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb'
+import { DEFAULT_LMS_STUDENT_NAME, isPlaceholderStudentName } from '@/lib/crmLmsSync'
 
 const CRM_BASE_URL = process.env.CRM_API_URL || process.env.SMARTCODE_CRM_API_URL || ''
 const CRM_NICKNAME = process.env.CRM_ACCOUNT_NICKNAME || process.env.ACCOUNT_NICKNAME || ''
@@ -413,12 +414,20 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
     nextProfile.accountReady = true
   }
 
+  const crmFullName = String(crmStudent.full_name || '').trim()
+  const profileSet = { studentProfile: nextProfile, updatedAt: new Date() }
+  let nextName = student.name
+  if (crmFullName && isPlaceholderStudentName(student.name)) {
+    profileSet.name = crmFullName
+    nextName = crmFullName
+  }
+
   await usersCollection.updateOne(
     { _id: new ObjectId(student.id) },
-    { $set: { studentProfile: nextProfile, updatedAt: new Date() } }
+    { $set: profileSet }
   )
 
-  return { ...student, studentProfile: nextProfile }
+  return { ...student, name: nextName, studentProfile: nextProfile }
 }
 
 /**
@@ -488,7 +497,11 @@ export async function maybePullCrmScheduleForStudent(user, usersCollection) {
       },
       usersCollection
     )
-    return { ...user, studentProfile: pulled.studentProfile }
+    return {
+      ...user,
+      name: pulled.name ?? user.name,
+      studentProfile: pulled.studentProfile,
+    }
   } catch (e) {
     console.error('CRM schedule auto-pull failed:', e)
     return user

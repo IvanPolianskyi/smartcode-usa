@@ -139,7 +139,12 @@
       "amountLabel": "Payment amount (UAH)",
       "amountPlaceholder": "e.g. {amount}",
       "amountHint": "Only amounts divisible by {price} UAH ({format} plan).",
-      "receiptPhoto": "Receipt photo",
+      "receiptPhoto": "Tap to choose a receipt photo",
+      "receiptAttached": "Receipt attached",
+      "receiptPreviewAlt": "Receipt preview",
+      "changeReceipt": "Change photo",
+      "removeReceipt": "Remove receipt",
+      "noFile": "No file selected",
       "submitting": "Sending...",
       "submit": "Submit receipt",
       "errors": {

@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
-import { Wallet, Copy, Check, Upload, AlertTriangle, CircleCheck, Clock, BookOpen } from 'lucide-react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { Wallet, Copy, Check, Upload, AlertTriangle, CircleCheck, Clock, BookOpen, X, ImageIcon } from 'lucide-react'
 import { UK_BANK_PAYMENT_DETAILS } from '@/lib/paymentBankDetails'
 import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
 
@@ -40,6 +40,8 @@ export default function StudentPaymentPanel({
 }) {
   const [amount, setAmount] = useState('')
   const [receiptFile, setReceiptFile] = useState(null)
+  const [receiptPreviewUrl, setReceiptPreviewUrl] = useState(null)
+  const receiptInputRef = useRef(null)
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState('info')
@@ -78,6 +80,21 @@ export default function StudentPaymentPanel({
     }
   }, [debtAmount])
 
+  useEffect(() => {
+    if (!receiptFile) {
+      setReceiptPreviewUrl(null)
+      return undefined
+    }
+    const url = URL.createObjectURL(receiptFile)
+    setReceiptPreviewUrl(url)
+    return () => URL.revokeObjectURL(url)
+  }, [receiptFile])
+
+  const clearReceipt = () => {
+    setReceiptFile(null)
+    if (receiptInputRef.current) receiptInputRef.current.value = ''
+  }
+
   const validateAmount = () => {
     const num = Number(amount)
     if (!num || num <= 0) {
@@ -114,9 +131,7 @@ export default function StudentPaymentPanel({
       setMessage(t('student.payments.success', { count: data.creditedLessonsPreview || 0 }))
       setMessageType('success')
       setAmount(debtAmount > 0 ? String(debtAmount) : '')
-      setReceiptFile(null)
-      const input = document.getElementById('receipt-upload')
-      if (input) input.value = ''
+      clearReceipt()
       await onRefresh?.()
     } catch (err) {
       setMessage(err.message || t('student.payments.errors.submitError'))
@@ -126,7 +141,7 @@ export default function StudentPaymentPanel({
     }
   }
 
-  const fileLabel = receiptFile ? receiptFile.name : t('student.payments.noFile')
+  const hasReceiptPreview = Boolean(receiptFile && receiptPreviewUrl)
 
   return (
     <section className={styles.payCard}>
@@ -233,13 +248,50 @@ export default function StudentPaymentPanel({
             <span className={styles.payStepNum}>3</span>
             <div className={styles.payStepBody}>
               <p className={styles.payStepTitle}>{t('student.payments.stepReceipt')}</p>
-              <label className={styles.uploadZone} htmlFor="receipt-upload">
-                <Upload size={22} />
-                <span className={styles.uploadZoneTitle}>{t('student.payments.receiptPhoto')}</span>
-                <span className={styles.uploadZoneFile}>{fileLabel}</span>
-              </label>
+              {hasReceiptPreview ? (
+                <div className={styles.receiptPreviewCard}>
+                  <div className={styles.receiptPreviewHead}>
+                    <span className={styles.receiptPreviewBadge}>
+                      <ImageIcon size={14} aria-hidden />
+                      {t('student.payments.receiptAttached')}
+                    </span>
+                    <button
+                      type="button"
+                      className={styles.receiptPreviewRemove}
+                      onClick={clearReceipt}
+                      aria-label={t('student.payments.removeReceipt')}
+                    >
+                      <X size={18} />
+                    </button>
+                  </div>
+                  <div className={styles.receiptPreviewImageWrap}>
+                    <img
+                      src={receiptPreviewUrl}
+                      alt={t('student.payments.receiptPreviewAlt')}
+                      className={styles.receiptPreviewImage}
+                    />
+                  </div>
+                  <p className={styles.receiptPreviewFileName} title={receiptFile.name}>
+                    {receiptFile.name}
+                  </p>
+                  <button
+                    type="button"
+                    className={styles.receiptPreviewChangeBtn}
+                    onClick={() => receiptInputRef.current?.click()}
+                  >
+                    {t('student.payments.changeReceipt')}
+                  </button>
+                </div>
+              ) : (
+                <label className={styles.uploadZone} htmlFor="receipt-upload">
+                  <Upload size={22} />
+                  <span className={styles.uploadZoneTitle}>{t('student.payments.receiptPhoto')}</span>
+                  <span className={styles.uploadZoneFile}>{t('student.payments.noFile')}</span>
+                </label>
+              )}
               <input
                 id="receipt-upload"
+                ref={receiptInputRef}
                 type="file"
                 accept="image/*"
                 className={styles.uploadInputHidden}
