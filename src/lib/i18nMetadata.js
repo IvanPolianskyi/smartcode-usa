@@ -1,5 +1,7 @@
 const BASE_URL = 'https://smartcode-academy.com'
 
+export const SITE_URL = new URL(BASE_URL)
+
 export function localePath(locale, path = '') {
 	const normalized = path.startsWith('/') ? path : `/${path}`
 	if (locale === 'en') {
@@ -51,9 +53,17 @@ export async function getLocalizedMetadata(locale, pageKey) {
 	const ogLocale = locale === 'uk' ? 'uk_UA' : 'en_US'
 
 	return {
+		metadataBase: SITE_URL,
 		title: t('title'),
 		description: t('description'),
 		...getSearchIndexingMetadata(locale),
+		...(locale === 'uk'
+			? {
+					other: {
+						'content-language': 'uk-UA',
+					},
+				}
+			: {}),
 		openGraph: {
 			title: t('title'),
 			description: t('description'),
