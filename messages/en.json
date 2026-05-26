@@ -175,7 +175,16 @@
     },
     "supportLinks": {
       "faq": "FAQ",
-      "offer": "Terms of Service"
+      "offer": "Terms of Service",
+      "refund": "Refund Policy",
+      "privacy": "Privacy Policy"
+    },
+    "merchantDetails": {
+      "title": "Merchant Details",
+      "name": "Merchant Name:",
+      "taxId": "Tax ID (RNKPP/INN):",
+      "email": "Support Email:",
+      "phone": "Contact Phone:"
     },
     "achievements": {
       "graduates": {
@@ -301,12 +310,12 @@
         "answer": "For full programming lessons we recommend using a computer or laptop. A tablet can be used to watch video lessons or review theory."
       },
       "3": {
-        "question": "Class format",
-        "answer": "We offer one-on-one online lessons on Zoom. This format lets us give maximum attention to each child and adapt the pace and curriculum to their level and interests."
+        "question": "What class formats are available?",
+        "answer": "We offer live online lessons via Zoom (both 1-on-1 and small groups), as well as comprehensive self-paced video courses on our interactive platform."
       },
       "4": {
-        "question": "How often are classes and what is the format?",
-        "answer": "Standard format: 2 sessions per week, 1 hour each. Classes include theory, practice, and project work (20%). Intensive courses are also available."
+        "question": "How do payments work for international students?",
+        "answer": "We accept secure online payments globally via Visa, Mastercard, Apple Pay, and Google Pay. Prices are transparent with no hidden fees."
       },
       "5": {
         "question": "How is a child's progress tracked?",
@@ -317,8 +326,8 @@
         "answer": "After successful completion, students receive an official certificate, a personal portfolio with 3–5 real projects, a recommendation letter, and access to the alumni community."
       },
       "7": {
-        "question": "Do you help with employment?",
-        "answer": "Yes! For graduates aged 16+, we provide resume preparation and interview coaching."
+        "question": "What language are the classes taught in?",
+        "answer": "All our international live Zoom classes, platform interface, and self-paced course materials are provided entirely in English."
       },
       "8": {
         "question": "Can learning continue at the next level?",
@@ -330,7 +339,7 @@
       },
       "10": {
         "question": "How does technical support work?",
-        "answer": "Technical support is available 24/7 via in-platform chat, Telegram, and a hotline. Average response time is 15 minutes."
+        "answer": "Technical support is available via email and our platform's chat. We ensure issues are resolved as quickly as possible, regardless of your time zone."
       }
     },
     "cta": {
@@ -532,13 +541,13 @@
     "courses": {
       "roblox-studio": {
         "title": "Roblox Studio — Full Course",
-        "description": "72 video lessons covering Lua scripting, Obby, Tycoon, and Simulator games. Build and publish real Roblox games. Learn at your own pace on our platform.",
+        "description": "72 comprehensive video lessons. Format: Self-paced learning on our dedicated interactive platform. Duration: Approx. 6 months. Syllabus Highlights: Introduction to Lua scripting, variables and functions, game mechanics, creating Obby, Tycoon, and Simulator games, UI design, monetization strategies, and final publishing to the Roblox platform. Start building real games today!",
         "lessons": "72 lessons",
         "access": "Lifetime access"
       },
       "python-developer-zero-to-junior": {
         "title": "Python — Full Course",
-        "description": "96 lessons from zero to confident Python developer. Covers fundamentals, data structures, web apps, and more. Self-paced learning on our platform.",
+        "description": "96 detailed video lessons taking you from absolute beginner to confident junior developer. Format: Self-paced online learning. Duration: Approx. 8 months. Syllabus Highlights: Python fundamentals, data types and structures, Object-Oriented Programming (OOP), web development basics with Flask/Django, working with databases, building Telegram bots, and final portfolio projects. Master one of the world's most popular programming languages!",
         "lessons": "96 lessons",
         "access": "Lifetime access"
       }

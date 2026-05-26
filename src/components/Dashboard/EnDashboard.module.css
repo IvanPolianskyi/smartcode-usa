@@ -1,7 +1,7 @@
 .shell {
   --en-bg: #f1f5f9;
   --en-surface: #ffffff;
-  --en-border: #e2e8f0;
+  --en-border: #cbd5e1;
   --en-text: #0f172a;
   --en-muted: #64748b;
   --en-primary: #4f46e5;
@@ -441,7 +441,7 @@
   width: 100%;
   max-width: 100%;
   padding: 0.6rem 0.75rem;
-  border: 1px solid var(--en-border);
+  border: 2px solid var(--en-border);
   border-radius: var(--en-radius-sm);
   font-size: 0.9rem;
   color: var(--en-text);
@@ -470,19 +470,20 @@
   padding: 0.85rem 1rem;
   border: 2px solid var(--en-border);
   border-radius: 12px;
-  background: #fff;
+  background: #f8fafc;
   cursor: pointer;
   text-align: left;
-  transition: border-color 0.15s, background 0.15s;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
 }
 
 .formatOption:hover {
-  border-color: #cbd5e1;
+  border-color: #94a3b8;
 }
 
 .formatActive {
   border-color: var(--en-primary);
-  background: #eef2ff;
+  background: #e0e7ff;
+  box-shadow: 0 0 0 1px var(--en-primary);
 }
 
 .formatOption strong {

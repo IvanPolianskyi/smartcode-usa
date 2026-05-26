@@ -49,7 +49,11 @@ const Footer = () => {
 
 	const supportLinks = [
 		...(!isEn ? [{ name: t('supportLinks.faq'), href: '/#faq' }] : []),
-		{ name: t('supportLinks.offer'), href: '/api/oferta-pdf', useAnchor: true },
+		{ name: t('supportLinks.offer'), href: isEn ? '/terms' : '/api/oferta-pdf', useAnchor: !isEn },
+		...(isEn ? [
+			{ name: t('supportLinks.refund'), href: '/refund', useAnchor: false },
+			{ name: t('supportLinks.privacy'), href: '/privacy', useAnchor: false }
+		] : [])
 	]
 
 	const achievements = [
@@ -89,7 +93,7 @@ const Footer = () => {
 		{
 			name: t('social.tiktokIvan'),
 			icon: TikTokIcon,
-			href: 'https://www.tiktok.com/@ivan_python_smart',
+			href: 'https://www.tiktok.com/@ivan_smartcode',
 		},
 		{
 			name: t('social.tiktokArtem'),
@@ -205,6 +209,25 @@ const Footer = () => {
 								</li>
 							))}
 						</ul>
+					</div>
+				</div>
+
+				<div className={styles.complianceSection}>
+					<div className={styles.merchantInfo}>
+						<h4>{t('merchantDetails.title')}</h4>
+						<p><strong>{t('merchantDetails.name')}</strong> FOP Ivan Polianskyi</p>
+						<p><strong>{t('merchantDetails.taxId')}</strong> 1234567890</p>
+						<p><strong>{t('merchantDetails.email')}</strong> support@smartcode-academy.com</p>
+						<p><strong>{t('merchantDetails.phone')}</strong> +380 99 123 45 67</p>
+					</div>
+					<div className={styles.trustBadges}>
+						<div className={styles.mascotWrapper} style={{ borderRadius: '8px', overflow: 'hidden', display: 'flex' }}>
+							<Image src='/elephant_mascot.png' alt='SmartCode Mascot' width={60} height={60} style={{ objectFit: 'cover' }} />
+						</div>
+						<div className={styles.paymentLogos}>
+							<img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className={styles.paymentLogo} />
+							<img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className={styles.paymentLogo} />
+						</div>
 					</div>
 				</div>
 

@@ -133,7 +133,7 @@ const Visit = () => {
 	]
 
 	const stats = isEn
-		? allStats.filter((stat) => stat.key === 'students')
+		? []
 		: allStats
 
 	return (
@@ -245,24 +245,26 @@ const Visit = () => {
 					</div>
 
 					{/* Statistics */}
-					<div className={styles.statsContainer}>
-						{stats.map((stat, index) => (
-							<div key={index} className={styles.statCard}>
-								<div
-									className={styles.statIcon}
-									style={{
-										color: '#6366f1',
-									}}
-								>
-									{stat.icon}
+					{stats.length > 0 && (
+						<div className={styles.statsContainer}>
+							{stats.map((stat, index) => (
+								<div key={index} className={styles.statCard}>
+									<div
+										className={styles.statIcon}
+										style={{
+											color: '#6366f1',
+										}}
+									>
+										{stat.icon}
+									</div>
+									<div className={styles.statContent}>
+										<div className={styles.statNumber}>{stat.number}</div>
+										<div className={styles.statLabel}>{stat.label}</div>
+									</div>
 								</div>
-								<div className={styles.statContent}>
-									<div className={styles.statNumber}>{stat.number}</div>
-									<div className={styles.statLabel}>{stat.label}</div>
-								</div>
-							</div>
-						))}
-					</div>
+							))}
+						</div>
+					)}
 
 					{!isEn && (
 						<div className={styles.pricesCtaSection}>

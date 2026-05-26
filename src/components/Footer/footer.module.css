@@ -148,7 +148,59 @@
 }
 .linkIcon { color: var(--primary-blue); }
 
-/* --- РОЗДІЛЮВАЧ ТА НИЖНЯ СЕКЦІЯ --- */
+/* --- РОЗДІЛЮВАЧ, COMPLIANCE ТА НИЖНЯ СЕКЦІЯ --- */
+.complianceSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+.merchantInfo h4 {
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 0.75rem;
+}
+.merchantInfo p {
+    font-size: 0.875rem;
+    color: var(--text-secondary-dark);
+    margin-bottom: 0.25rem;
+    margin-top: 0;
+}
+.merchantInfo strong {
+    color: white;
+}
+.trustBadges {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: #FFFFF0; /* Ivory color palette */
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2), inset 0 2px 4px rgba(255,255,255,0.5);
+}
+.mascotWrapper {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.paymentLogos {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.paymentLogo {
+    height: 28px;
+    object-fit: contain;
+}
+
 .divider {
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
@@ -208,6 +260,7 @@
 @media (max-width: 768px) {
     .container { padding: 4rem 1rem 2rem; }
     .mainContent { grid-template-columns: 1fr; gap: 2.5rem; }
+    .complianceSection { flex-direction: column; align-items: flex-start; }
     .bottomSection { flex-direction: column; text-align: center; }
     .langSwitcher { order: -2; }
     .socialLinks { order: -1; }

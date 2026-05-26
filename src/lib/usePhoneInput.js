@@ -8,6 +8,7 @@ import {
 } from 'libphonenumber-js'
 import {
 	EUROPEAN_PHONE_COUNTRIES,
+	GLOBAL_PHONE_COUNTRIES,
 	getPhoneCountry,
 	DIAL_CODES_DESC,
 	filterPhoneCountries,
@@ -133,7 +134,7 @@ function validateNational(nationalDigits, country, rawInput = '', opts = {}, t, 
 		return t('checkDigitCount')
 	}
 
-	if (!parsed.country || !EUROPE_COUNTRY.has(parsed.country)) {
+	if (locale !== 'en' && (!parsed.country || !EUROPE_COUNTRY.has(parsed.country))) {
 		return t('europeOnly')
 	}
 
@@ -144,7 +145,7 @@ function validateNational(nationalDigits, country, rawInput = '', opts = {}, t, 
  * @param {string} value
  * @returns {{ country: import('@/lib/phoneCountries').PhoneCountry, nationalDigits: string } | null}
  */
-function detectFromPaste(value) {
+function detectFromPaste(value, locale) {
 	const trimmed = String(value ?? '').trim()
 	if (!trimmed) return null
 
@@ -153,12 +154,16 @@ function detectFromPaste(value) {
 		: `+${trimmed.replace(/\D/g, '')}`
 
 	const parsed = parsePhoneNumberFromString(candidate)
-	if (parsed?.country && EUROPE_COUNTRY.has(parsed.country)) {
-		const country = getPhoneCountry(parsed.country)
-		if (country) {
-			return {
-				country,
-				nationalDigits: String(parsed.nationalNumber || ''),
+	if (parsed?.country) {
+		if (locale !== 'en' && !EUROPE_COUNTRY.has(parsed.country)) {
+			// ignore non-europe in non-en locale
+		} else {
+			const country = getPhoneCountry(parsed.country)
+			if (country) {
+				return {
+					country,
+					nationalDigits: String(parsed.nationalNumber || ''),
+				}
 			}
 		}
 	}
@@ -168,7 +173,8 @@ function detectFromPaste(value) {
 
 	for (const dialCode of DIAL_CODES_DESC) {
 		if (digits.startsWith(dialCode)) {
-			const matches = EUROPEAN_PHONE_COUNTRIES.filter((c) => c.dialCode === dialCode)
+			const sourceList = locale === 'en' ? GLOBAL_PHONE_COUNTRIES : EUROPEAN_PHONE_COUNTRIES
+			const matches = sourceList.filter((c) => c.dialCode === dialCode)
 			const country = matches.find((c) => c.code === 'UA') || matches[0]
 			if (country) {
 				return {
@@ -200,8 +206,8 @@ export function usePhoneInput(initialCountryCode = 'UA') {
 	const dropdownRef = useRef(null)
 
 	const filteredCountries = useMemo(
-		() => filterPhoneCountries(countryQuery),
-		[countryQuery]
+		() => filterPhoneCountries(countryQuery, locale),
+		[countryQuery, locale]
 	)
 
 	useEffect(() => {
@@ -241,7 +247,7 @@ export function usePhoneInput(initialCountryCode = 'UA') {
 					return
 				}
 
-				const detected = detectFromPaste(intlRaw)
+				const detected = detectFromPaste(intlRaw, locale)
 				if (detected) {
 					setIntlMode(false)
 					setIntlInputValue('')
@@ -264,7 +270,7 @@ export function usePhoneInput(initialCountryCode = 'UA') {
 			const capped = normalizeNationalDigits(allDigits, country).slice(0, 15)
 			applyDigits(capped, country, value)
 		},
-		[country, applyDigits, intlMode]
+		[country, applyDigits, intlMode, locale]
 	)
 
 	const handlePhoneKeyDown = useCallback(
@@ -314,7 +320,7 @@ export function usePhoneInput(initialCountryCode = 'UA') {
 
 	const validateOnSubmit = useCallback(() => {
 		if (intlMode && intlInputValue) {
-			const detected = detectFromPaste(intlInputValue)
+			const detected = detectFromPaste(intlInputValue, locale)
 			if (detected) {
 				setIntlMode(false)
 				setIntlInputValue('')
@@ -335,7 +341,7 @@ export function usePhoneInput(initialCountryCode = 'UA') {
 
 	const getFullNumber = useCallback(() => {
 		if (intlMode && intlInputValue) {
-			const detected = detectFromPaste(intlInputValue)
+			const detected = detectFromPaste(intlInputValue, locale)
 			if (detected) {
 				const e164 = `${detected.country.prefix}${detected.nationalDigits}`
 				const parsed = parsePhoneNumberFromString(e164, detected.country.code)
@@ -348,7 +354,7 @@ export function usePhoneInput(initialCountryCode = 'UA') {
 		const parsed = parsePhoneNumberFromString(e164, country.code)
 		if (parsed?.isValid()) return parsed.format('E.164')
 		return e164
-	}, [rawDigits, country, intlMode, intlInputValue])
+	}, [rawDigits, country, intlMode, intlInputValue, locale])
 
 	const reset = useCallback(() => {
 		setRawDigits('')

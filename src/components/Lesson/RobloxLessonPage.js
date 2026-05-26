@@ -494,21 +494,28 @@ const RobloxLessonPage = ({
 
                   <div className={styles.footerActions}>
                     {!quizSubmitted ? (
-                      <button
-                        type="button"
-                        className={styles.btnPrimary}
-                        onClick={handleQuizSubmit}
-                        disabled={
-                          quizSubmitting ||
-                          Object.keys(quizAnswers).length <
-                            fullLesson.quiz.questions.length
-                        }
-                      >
-                        {quizSubmitting ? (
-                          <Loader2 size={18} className="animate-spin" />
-                        ) : null}
-                        {t('submitQuiz')}
-                      </button>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', width: '100%' }}>
+                        <button
+                          type="button"
+                          className={styles.btnPrimary}
+                          onClick={handleQuizSubmit}
+                          disabled={
+                            quizSubmitting ||
+                            Object.keys(quizAnswers).length <
+                              fullLesson.quiz.questions.length
+                          }
+                        >
+                          {quizSubmitting ? (
+                            <Loader2 size={18} className="animate-spin" />
+                          ) : null}
+                          {t('submitQuiz')}
+                        </button>
+                        {Object.keys(quizAnswers).length < fullLesson.quiz.questions.length && (
+                          <span style={{ fontSize: '0.875rem', color: '#64748b' }}>
+                            ({Object.keys(quizAnswers).length}/{fullLesson.quiz.questions.length})
+                          </span>
+                        )}
+                      </div>
                     ) : (
                       <div className={styles.scoreCard} style={{ width: '100%' }}>
                         <p>{t('yourScore')}</p>

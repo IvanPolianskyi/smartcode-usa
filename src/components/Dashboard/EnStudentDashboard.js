@@ -2,35 +2,21 @@
 
 import React, { useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { Link } from '@/i18n/navigation'
 import {
-  LogOut,
-  CalendarDays,
-  Clock,
-  Video,
-  RefreshCw,
   BookOpen,
+  Clock,
+  TrendingUp,
+  LogOut,
+  Sparkles,
+  Trophy,
+  Users,
 } from 'lucide-react'
 import { DAY_KEY_MAP } from '@/hooks/useDashboardCourses'
 import { getStudentAccessibleCourseIds } from '@/lib/courseLessonAccess'
 import EnCourseStore from './EnCourseStore'
 import EnLiveLessonBooking from './EnLiveLessonBooking'
-import styles from './EnDashboard.module.css'
-
-function formatScheduleDay(day, t) {
-  const key = DAY_KEY_MAP[day]
-  return key ? t(`days.${key}`) : day
-}
-
-function getInitials(name) {
-  if (!name) return '?'
-  return name
-    .split(/\s+/)
-    .map((w) => w[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase()
-}
+import WeeklyScheduleCalendar from './WeeklyScheduleCalendar'
+import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
 
 export default function EnStudentDashboard({
   user,
@@ -42,181 +28,187 @@ export default function EnStudentDashboard({
   const t = useTranslations('dashboard')
   const [activeTab, setActiveTab] = useState('overview')
 
+  const dateLocale = 'en-US'
   const profile = user?.studentProfile || {}
   const schedule = profile.regularSchedule || []
   const zoomLink = profile.zoomLink || ''
-
-  const completedTotal = Object.values(progressData || {}).reduce(
-    (sum, p) => sum + (p?.completedLessons?.length || 0),
-    0
-  )
 
   const ownedCount = useMemo(
     () => getStudentAccessibleCourseIds(user).length,
     [user, profile.activeOnlineCourses, user?.purchasedCourses]
   )
 
+  const completedTotal = Object.values(progressData || {}).reduce(
+    (sum, p) => sum + (p?.completedLessons?.length || 0),
+    0
+  )
+
   const lessonHistory = Object.entries(progressData || {}).flatMap(([courseId, progress]) =>
     (progress?.completedLessons || []).map((lessonId) => ({ courseId, lessonId }))
   )
 
-  const nextLessonText = useMemo(() => {
-    if (schedule.length === 0) return t('enLayout.noUpcoming')
-    const slot = schedule[0]
-    return `${formatScheduleDay(slot.day, t)} · ${slot.time || '—'}`
-  }, [schedule, t])
+  const scheduleInfo = useMemo(() => {
+    const slots = (schedule || [])
+      .map((item) => {
+        const dayIndex = DAY_KEY_MAP[item?.day] !== undefined
+          ? ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'].indexOf(DAY_KEY_MAP[item.day])
+          : undefined
+        const [hh, mm] = String(item?.time || '').split(':')
+        const hours = Number(hh)
+        const minutes = Number(mm)
+        if (dayIndex === undefined || dayIndex < 0 || !Number.isFinite(hours) || !Number.isFinite(minutes)) return null
+        return { dayIndex, hours, minutes }
+      })
+      .filter(Boolean)
+
+    if (slots.length === 0) {
+      return {
+        weeklyTotal: 0,
+        weeklyCompleted: 0,
+        weeklyRemaining: 0,
+        nextLessonText: t('student.schedule.noLessons'),
+      }
+    }
+
+    const now = new Date()
+    const currentDay = now.getDay()
+    const endOfWeek = new Date(now)
+    endOfWeek.setDate(now.getDate() + (7 - currentDay))
+    endOfWeek.setHours(0, 0, 0, 0)
+    const startOfWeek = new Date(endOfWeek)
+    startOfWeek.setDate(endOfWeek.getDate() - 6)
+    startOfWeek.setHours(0, 0, 0, 0)
+
+    const upcomingThisWeek = []
+    const upcomingAll = []
+    const thisWeekAll = []
+
+    slots.forEach((slot) => {
+      const next = new Date(now)
+      const diff = (slot.dayIndex - now.getDay() + 7) % 7
+      next.setDate(now.getDate() + diff)
+      next.setHours(slot.hours, slot.minutes, 0, 0)
+      if (next <= now) next.setDate(next.getDate() + 7)
+      upcomingAll.push(next)
+      if (next < endOfWeek) {
+        upcomingThisWeek.push(next)
+      }
+
+      const currentWeekSlot = new Date(startOfWeek)
+      const weekDiff = (slot.dayIndex - startOfWeek.getDay() + 7) % 7
+      currentWeekSlot.setDate(startOfWeek.getDate() + weekDiff)
+      currentWeekSlot.setHours(slot.hours, slot.minutes, 0, 0)
+      if (currentWeekSlot >= startOfWeek && currentWeekSlot < endOfWeek) {
+        thisWeekAll.push(currentWeekSlot)
+      }
+    })
+
+    const nextLesson = upcomingAll.sort((a, b) => a.getTime() - b.getTime())[0]
+    const nextLessonText = nextLesson
+      ? nextLesson.toLocaleString(dateLocale, { weekday: 'short', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
+      : t('student.schedule.noLessons')
+
+    return {
+      weeklyTotal: thisWeekAll.length,
+      weeklyCompleted: Math.max(0, thisWeekAll.length - upcomingThisWeek.length),
+      weeklyRemaining: upcomingThisWeek.length,
+      nextLessonText,
+    }
+  }, [schedule, dateLocale, t])
+
+  const weeklyGoal = Math.max(1, scheduleInfo.weeklyTotal || 0)
+  const weekProgress = Math.min(scheduleInfo.weeklyCompleted || 0, weeklyGoal)
+
+  const motivationalText = scheduleInfo.weeklyRemaining > 0
+    ? t('student.schedule.motivationRemaining', { count: scheduleInfo.weeklyRemaining, next: scheduleInfo.nextLessonText })
+    : t('student.schedule.motivationDone', { next: scheduleInfo.nextLessonText })
+
+  const formatLabel = profile.lessonFormat === 'individual'
+    ? t('student.metrics.individual')
+    : t('student.metrics.group')
+
+  const firstName = user.name?.split(/\s+/)[0] || user.name
 
   return (
-    <div className={styles.shell}>
-      <div className={styles.inner}>
-        <header className={styles.topBar}>
-          <div className={styles.brand}>
-            <div className={styles.avatar}>{getInitials(user.name)}</div>
-            <div className={styles.userMeta}>
-              <h1>{user.name}</h1>
-              <p>{user.email}</p>
-            </div>
-          </div>
-          <div className={styles.topActions}>
-            <button type="button" className={styles.btnGhost} onClick={refreshData}>
-              <RefreshCw size={16} />
-              {t('enLayout.refresh')}
-            </button>
-            <button type="button" className={styles.btnGhost} onClick={onLogout}>
-              <LogOut size={16} />
-              {t('logout')}
-            </button>
-          </div>
-        </header>
-
-        <div className={styles.welcome}>
+    <div className={styles.dashBody}>
+      <div className={styles.dashHeroGroup}>
+        <div className={styles.heroCard}>
           <div>
-            <div className={styles.welcomeLabel}>{t('enLayout.welcomeLabel')}</div>
-            <h2 className={styles.welcomeTitle}>
-              {t('student.greeting', { name: user.name.split(' ')[0] })}
-            </h2>
-            <p className={styles.welcomeSub}>{t('enLayout.welcomeSub')}</p>
+            <div className={styles.heroLabel}><Sparkles size={16} /> {t('student.heroLabel')}</div>
+            <h2 className={styles.heroTitle}>{t('student.greeting', { name: firstName })}</h2>
+            <p className={styles.heroText}>{motivationalText}</p>
           </div>
-          <div className={styles.statsRow}>
-            <div className={styles.statChip}>
-              <strong>{ownedCount}</strong>
-              <span>{t('student.metrics.activeCourses')}</span>
-            </div>
-            <div className={styles.statChip}>
-              <strong>{completedTotal}</strong>
-              <span>{t('student.metrics.completedLessons')}</span>
-            </div>
-            <div className={styles.statChip}>
-              <strong>{schedule.length}</strong>
-              <span>{t('enLayout.scheduledSlots')}</span>
-            </div>
+          <div className={styles.goalBox}>
+            <div className={styles.goalTop}><Trophy size={16} /> {t('student.goalTitle')}</div>
+            <div className={styles.goalProgress}>{weekProgress}/{weeklyGoal}</div>
+            <div className={styles.goalBar}><span style={{ width: `${(weekProgress / weeklyGoal) * 100}%` }} /></div>
           </div>
         </div>
+      </div>
 
-        <nav className={styles.tabs} aria-label="Dashboard sections">
-          <button
-            type="button"
-            className={`${styles.tab} ${activeTab === 'overview' ? styles.tabActive : ''}`}
-            onClick={() => setActiveTab('overview')}
-          >
-            {t('student.tabs.overview')}
-          </button>
-          <button
-            type="button"
-            className={`${styles.tab} ${activeTab === 'history' ? styles.tabActive : ''}`}
-            onClick={() => setActiveTab('history')}
-          >
-            {t('student.tabs.history')}
-          </button>
-        </nav>
+      <div className={styles.tabRowPill}>
+        <button className={`${styles.tabBtn} ${activeTab === 'overview' ? styles.tabBtnActive : ''}`} onClick={() => setActiveTab('overview')}>{t('student.tabs.overview')}</button>
+        <button className={`${styles.tabBtn} ${activeTab === 'history' ? styles.tabBtnActive : ''}`} onClick={() => setActiveTab('history')}>{t('student.tabs.history')}</button>
+      </div>
 
-        {activeTab === 'overview' ? (
-          <div className={styles.layout}>
-            <div className={styles.mainCol}>
-              <EnCourseStore
-                user={user}
-                progressData={progressData}
-                getCourseInfo={getCourseInfo}
-              />
-              <EnLiveLessonBooking />
-            </div>
+      <div className={styles.metricCards}>
+        <div className={styles.metricCard}>
+          <div className={styles.metricCardIcon}><BookOpen size={18} /></div>
+          <div><strong>{ownedCount}</strong><span>{t('student.metrics.activeCourses')}</span></div>
+        </div>
+        <div className={styles.metricCard}>
+          <div className={styles.metricCardIcon}><Trophy size={18} /></div>
+          <div><strong>{completedTotal}</strong><span>{t('student.metrics.completedLessons')}</span></div>
+        </div>
+        <div className={styles.metricCard}>
+          <div className={styles.metricCardIcon}><Users size={18} /></div>
+          <div><strong>{formatLabel}</strong><span>{t('student.metrics.formatLabel')}</span></div>
+        </div>
+      </div>
 
-            <aside className={styles.sideCol}>
-              <section className={styles.section}>
-                <div className={styles.sectionHead}>
-                  <h2>
-                    <CalendarDays size={20} />
-                    {t('student.zoom.title')}
-                  </h2>
-                  <p>{t('enLayout.scheduleHint')}</p>
-                </div>
-                {schedule.length > 0 ? (
-                  <ul className={styles.scheduleList}>
-                    {schedule.map((item, i) => (
-                      <li key={`${item.day}-${item.time}-${i}`} className={styles.scheduleItem}>
-                        <span className={styles.scheduleDay}>
-                          {formatScheduleDay(item.day, t)}
-                        </span>
-                        <span className={styles.scheduleTime}>
-                          {item.time || t('student.schedule.timePending')}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <div className={styles.emptyState}>
-                    <CalendarDays size={32} />
-                    <p>{t('student.zoom.empty')}</p>
-                    <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>
-                      {t('enLayout.bookToSchedule')}
-                    </p>
-                  </div>
-                )}
-                <button
-                  type="button"
-                  className={`${styles.btnPrimary} ${styles.btnBlock}`}
-                  style={{ marginTop: '1rem' }}
-                  disabled={!zoomLink}
-                  onClick={() => zoomLink && window.open(zoomLink, '_blank', 'noopener,noreferrer')}
-                >
-                  <Video size={18} />
-                  {zoomLink ? t('student.zoom.join') : t('student.zoom.waiting')}
-                </button>
-                <p className={styles.payNote} style={{ marginTop: '0.75rem' }}>
-                  {t('enLayout.nextSlot')}: {nextLessonText}
-                </p>
-              </section>
-            </aside>
+      {activeTab === 'overview' ? (
+        <div className={styles.dashLayout}>
+          <div className={styles.dashMain}>
+            <EnCourseStore user={user} progressData={progressData} getCourseInfo={getCourseInfo} />
+            <EnLiveLessonBooking />
           </div>
-        ) : (
-          <section className={styles.section}>
-            <div className={styles.sectionHead}>
-              <h2>
-                <Clock size={20} />
-                {t('student.history.title')}
-              </h2>
+          <aside className={styles.dashAside}>
+            <WeeklyScheduleCalendar
+              schedule={schedule}
+              zoomLink={zoomLink}
+              t={t}
+              dateLocale={dateLocale}
+            />
+          </aside>
+        </div>
+      ) : (
+        <section className={styles.historyCard}>
+          <div className={styles.sectionHeader}>
+            <h3><Clock size={20} /> {t('student.history.title')}</h3>
+          </div>
+          {lessonHistory.length > 0 ? (
+            <div className={styles.historyList}>
+              {lessonHistory.slice(0, 30).map((entry, idx) => (
+                <div key={`${entry.lessonId}-${idx}`} className={styles.historyItem}>
+                  <span>{getCourseInfo(entry.courseId).title}</span>
+                  <span>{entry.lessonId}</span>
+                </div>
+              ))}
             </div>
-            {lessonHistory.length > 0 ? (
-              <div className={styles.historyList}>
-                {lessonHistory.slice(0, 50).map((entry, idx) => (
-                  <div key={`${entry.lessonId}-${idx}`} className={styles.historyItem}>
-                    <span>{getCourseInfo(entry.courseId).title}</span>
-                    <span>{entry.lessonId}</span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className={styles.emptyState}>
-                <BookOpen size={32} />
-                <p>{t('student.history.empty')}</p>
-                <Link href="/courses" className={styles.btnPrimary} style={{ marginTop: '1rem', display: 'inline-flex' }}>
-                  {t('enLayout.browseCourses')}
-                </Link>
-              </div>
-            )}
-          </section>
-        )}
+          ) : (
+            <div className={styles.emptyBlock}>
+              <Clock size={36} strokeWidth={1.25} />
+              <p>{t('student.history.empty')}</p>
+            </div>
+          )}
+        </section>
+      )}
+
+      <div className={styles.toolbar}>
+        <button className={styles.secondaryBtn} onClick={refreshData}><TrendingUp size={16} /> {t('student.refresh')}</button>
+        <button className={styles.secondaryBtn} onClick={onLogout}><LogOut size={16} /> {t('logout')}</button>
       </div>
     </div>
   )
 }
+

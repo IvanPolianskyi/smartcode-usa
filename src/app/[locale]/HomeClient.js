@@ -137,7 +137,7 @@ export default function HomeClient() {
       <ProjectsShowcase />
       <SocialMedia />
       <LMSPromo />
-      {!isEn && <FAQ />}
+      <FAQ />
     </>
   )
 }
