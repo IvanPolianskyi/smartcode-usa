@@ -105,6 +105,15 @@
       "buyIntro": "Choose a course and get instant access to all lessons after payment.",
       "buyMore": "Add another course:"
     },
+    "calendar": {
+      "title": "Weekly Schedule",
+      "next": "Next lesson",
+      "today": "Today",
+      "noLesson": "Free day",
+      "liveLesson": "Live lesson",
+      "joinNow": "Join now",
+      "joinSoon": "Opening soon"
+    },
     "zoom": {
       "title": "Schedule & Zoom",
       "empty": "Schedule not configured yet.",
@@ -182,7 +191,7 @@
       "sun": "Sunday"
     },
     "payMethods": "Accepted: Visa/Mastercard, Apple Pay, Google Pay (via WayForPay).",
-    "payButton": "Pay {price} and book",
+    "payButton": "Buy lesson for {price}",
     "processing": "Redirecting to payment…",
     "errors": {
       "failed": "Could not start payment. Try again or contact support."

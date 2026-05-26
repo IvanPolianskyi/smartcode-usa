@@ -85,6 +85,16 @@ export async function createInvoice({
   paymentSystems = 'card;googlePay;applePay',
 }) {
   if (!MERCHANT_ACCOUNT || !MERCHANT_SECRET) {
+    if (language === 'EN') {
+      console.warn('WayForPay keys not configured. Simulating successful payment for EN.')
+      const baseUrl =
+        process.env.NEXT_PUBLIC_BASE_URL ||
+        (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
+      return {
+        invoiceUrl: `${baseUrl}/api/payment/wayforpay/mock-success?orderReference=${orderReference}&amount=${amount}&currency=${currency}&locale=en`,
+        reasonCode: 1100,
+      }
+    }
     throw new Error('WayForPay keys are not configured')
   }
 

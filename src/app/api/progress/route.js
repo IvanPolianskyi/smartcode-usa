@@ -146,27 +146,29 @@ export async function POST(request) {
     }
 
     if (action === 'completePracticeTask' && lessonId) {
-      const lessonMap = locale === 'en' ? lessonContentMapEn : lessonContentMapUk
-      const lesson = lessonMap[lessonId]
-      const practiceTask = lesson?.practiceTask
+      if (courseId !== 'roblox-studio') {
+        const lessonMap = locale === 'en' ? lessonContentMapEn : lessonContentMapUk
+        const lesson = lessonMap[lessonId]
+        const practiceTask = lesson?.practiceTask
 
-      if (!practiceTask?.examples?.length) {
-        return NextResponse.json(
-          { error: 'Practice task not found for this lesson' },
-          { status: 400 }
+        if (!practiceTask?.examples?.length) {
+          return NextResponse.json(
+            { error: 'Practice task not found for this lesson' },
+            { status: 400 }
+          )
+        }
+
+        const validation = checkPracticeOutput(
+          typeof practiceOutput === 'string' ? practiceOutput : '',
+          practiceTask
         )
-      }
 
-      const validation = checkPracticeOutput(
-        typeof practiceOutput === 'string' ? practiceOutput : '',
-        practiceTask
-      )
-
-      if (!validation.isCorrect) {
-        return NextResponse.json(
-          { error: 'Practice output does not match the task requirements' },
-          { status: 400 }
-        )
+        if (!validation.isCorrect) {
+          return NextResponse.json(
+            { error: 'Practice output does not match the task requirements' },
+            { status: 400 }
+          )
+        }
       }
 
       if (!progress.completedPracticeTasks || !progress.completedPracticeTasks.includes(lessonId)) {

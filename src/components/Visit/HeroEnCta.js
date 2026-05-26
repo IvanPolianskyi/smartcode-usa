@@ -20,13 +20,9 @@ import styles from './HeroEnCta.module.css'
 const COURSE_META = {
 	'roblox-studio': {
 		href: '/buy/roblox-studio',
-		icon: '/logos/roblox.svg',
-		theme: 'linear-gradient(135deg, #b91c1c, #dc2626)',
 	},
 	'python-developer-zero-to-junior': {
 		href: '/buy/python-developer-zero-to-junior',
-		icon: '/python-logo.png',
-		theme: 'linear-gradient(135deg, #1d4ed8, #3b82f6)',
 	},
 }
 
@@ -62,7 +58,6 @@ export default function HeroEnCta() {
 
 			{/* ── Primary CTA — Live Zoom lessons ── */}
 			<div className={styles.liveCta}>
-				<div className={styles.liveCtaGlow} aria-hidden />
 				<Link href="/book-lesson" className={styles.primaryBtn}>
 					<div className={styles.primaryBtnInner}>
 						<Video size={22} className={styles.primaryBtnIcon} />
@@ -101,27 +96,19 @@ export default function HeroEnCta() {
 							className={styles.offerRow}
 						>
 							<div className={styles.offerLeft}>
-								<div
-									className={styles.offerIcon}
-									style={{ background: meta.theme || '#e2e8f0' }}
-								>
-									{meta.icon ? (
-										<img src={meta.icon} alt="" />
-									) : (
-										<BookOpen size={20} color="#fff" />
-									)}
-								</div>
 								<div className={styles.offerText}>
 									<strong>{t(`courses.${course.courseId}.name`)}</strong>
 									<span>{t(`courses.${course.courseId}.desc`)}</span>
 								</div>
 							</div>
-							<span className={styles.offerPrice}>
-								{formatPrice(course.price, course.currency, 'en')}
-							</span>
-							<span className={styles.offerChevron} aria-hidden>
-								<ChevronRight size={18} color="#94a3b8" />
-							</span>
+							<div className={styles.offerRight}>
+								<span className={styles.offerPrice}>
+									{formatPrice(course.price, course.currency, 'en')}
+								</span>
+								<span className={styles.offerChevron} aria-hidden>
+									<ChevronRight size={18} />
+								</span>
+							</div>
 						</Link>
 					)
 				})}

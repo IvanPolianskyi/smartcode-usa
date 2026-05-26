@@ -33,7 +33,7 @@
 }
 
 .icon.pending {
-  color: var(--accent-blue);
+  color: var(--primary-blue);
   animation: spin 1s linear infinite;
 }
 
@@ -88,7 +88,7 @@
 .button {
   display: inline-block;
   padding: 0.75rem 2rem;
-  background: var(--accent-blue);
+  background: var(--primary-blue);
   color: white;
   text-decoration: none;
   border-radius: 0.5rem;
@@ -97,7 +97,7 @@
 }
 
 .button:hover {
-  background: var(--accent-blue-dark);
+  background: #1d4ed8;
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }

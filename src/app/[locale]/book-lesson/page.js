@@ -35,7 +35,7 @@ export default function BookLessonPage() {
 	const { user, loading: authLoading } = useAuthSession()
 
 	const [courseId, setCourseId] = useState('roblox-studio')
-	const [lessonFormat, setLessonFormat] = useState('group')
+	const [lessonFormat, setLessonFormat] = useState('individual')
 	const [day, setDay] = useState('mon')
 	const [time, setTime] = useState('18:00')
 	const [guestName, setGuestName] = useState('')

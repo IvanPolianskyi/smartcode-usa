@@ -1576,14 +1576,21 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                 
                 <div className={styles.quizActions}>
                   {!quizSubmitted ? (
-                    <button
-                      type="button"
-                      className={styles.submitButton}
-                      onClick={handleQuizSubmit}
-                      disabled={Object.keys(quizAnswers).length < fullLesson.quiz.questions.length}
-                    >
-                      {t('submitQuiz')}
-                    </button>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', width: '100%' }}>
+                      <button
+                        type="button"
+                        className={styles.submitButton}
+                        onClick={handleQuizSubmit}
+                        disabled={Object.keys(quizAnswers).length < fullLesson.quiz.questions.length}
+                      >
+                        {t('submitQuiz')}
+                      </button>
+                      {Object.keys(quizAnswers).length < fullLesson.quiz.questions.length && (
+                        <span style={{ fontSize: '0.875rem', color: '#64748b' }}>
+                          ({Object.keys(quizAnswers).length}/{fullLesson.quiz.questions.length})
+                        </span>
+                      )}
+                    </div>
                   ) : (
                     <div id="quiz-results" className={styles.quizResults}>
                       <div className={styles.scoreCard}>

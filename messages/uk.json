@@ -176,6 +176,13 @@
       "faq": "Часті питання",
       "offer": "Публічна оферта"
     },
+    "merchantDetails": {
+      "title": "Реквізити",
+      "name": "ФОП:",
+      "taxId": "РНОКПП:",
+      "email": "Email підтримки:",
+      "phone": "Телефон:"
+    },
     "achievements": {
       "graduates": {
         "number": "500+",

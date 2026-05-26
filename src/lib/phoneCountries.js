@@ -1,4 +1,4 @@
-import { getCountryCallingCode } from 'libphonenumber-js'
+import { getCountryCallingCode, getCountries } from 'libphonenumber-js'
 import { EUROPE_COUNTRY } from './phoneEurope'
 
 /** @typedef {{ code: string, dialCode: string, prefix: string, flag: string, nameUk: string, nameEn: string, search: string }} PhoneCountry */
@@ -58,19 +58,31 @@ const NAMES = {
 	XK: { nameUk: 'Косово', nameEn: 'Kosovo', extra: 'kosova' },
 }
 
+const enNames = new Intl.DisplayNames(['en'], { type: 'region' });
+const ukNames = new Intl.DisplayNames(['uk'], { type: 'region' });
+
 function buildCountry(iso) {
-	const meta = NAMES[iso]
-	if (!meta) return null
 	let dialCode
 	try {
 		dialCode = getCountryCallingCode(iso)
 	} catch {
 		return null
 	}
+	
+	const meta = NAMES[iso] || {}
+	let nameUk = meta.nameUk
+	let nameEn = meta.nameEn
+	try {
+		if (!nameUk) nameUk = ukNames.of(iso)
+		if (!nameEn) nameEn = enNames.of(iso)
+	} catch {}
+	if (!nameUk) nameUk = iso
+	if (!nameEn) nameEn = iso
+
 	const search = [
 		iso,
-		meta.nameUk,
-		meta.nameEn,
+		nameUk,
+		nameEn,
 		meta.extra || '',
 		dialCode,
 		`+${dialCode}`,
@@ -81,51 +93,48 @@ function buildCountry(iso) {
 		dialCode,
 		prefix: `+${dialCode}`,
 		flag: `https://flagcdn.com/w40/${iso.toLowerCase()}.png`,
-		nameUk: meta.nameUk,
-		nameEn: meta.nameEn,
+		nameUk,
+		nameEn,
 		search,
 	}
 }
 
-/** Усі європейські країни для селектора (UA першою). */
-export const EUROPEAN_PHONE_COUNTRIES = Array.from(EUROPE_COUNTRY)
+export const GLOBAL_PHONE_COUNTRIES = getCountries()
 	.map(buildCountry)
 	.filter(Boolean)
+	.sort((a, b) => {
+		if (a.code === 'UA') return -1
+		if (b.code === 'UA') return 1
+		return a.nameEn.localeCompare(b.nameEn, 'en')
+	})
+
+export const EUROPEAN_PHONE_COUNTRIES = GLOBAL_PHONE_COUNTRIES.filter(c => EUROPE_COUNTRY.has(c.code))
 	.sort((a, b) => {
 		if (a.code === 'UA') return -1
 		if (b.code === 'UA') return 1
 		return a.nameUk.localeCompare(b.nameUk, 'uk')
 	})
 
-/** @type {Map<string, PhoneCountry>} */
 export const PHONE_COUNTRY_BY_CODE = new Map(
-	EUROPEAN_PHONE_COUNTRIES.map((c) => [c.code, c])
+	GLOBAL_PHONE_COUNTRIES.map((c) => [c.code, c])
 )
 
-/** Найдовші коди спочатку — для розпізнавання вставленого номера. */
-export const DIAL_CODES_DESC = [...new Set(EUROPEAN_PHONE_COUNTRIES.map((c) => c.dialCode))].sort(
+export const DIAL_CODES_DESC = [...new Set(GLOBAL_PHONE_COUNTRIES.map((c) => c.dialCode))].sort(
 	(a, b) => b.length - a.length
 )
 
-/**
- * @param {string} query
- * @returns {PhoneCountry[]}
- */
-export function filterPhoneCountries(query) {
+export function filterPhoneCountries(query, locale = 'uk') {
+	const sourceList = locale === 'en' ? GLOBAL_PHONE_COUNTRIES : EUROPEAN_PHONE_COUNTRIES
 	const q = String(query ?? '').trim().toLowerCase()
-	if (!q) return EUROPEAN_PHONE_COUNTRIES
+	if (!q) return sourceList
 	const digits = q.replace(/\D/g, '')
-	return EUROPEAN_PHONE_COUNTRIES.filter((c) => {
+	return sourceList.filter((c) => {
 		if (c.search.includes(q)) return true
 		if (digits && (c.dialCode.includes(digits) || c.dialCode.startsWith(digits))) return true
 		return false
 	})
 }
 
-/**
- * @param {string} iso
- * @returns {PhoneCountry | undefined}
- */
 export function getPhoneCountry(iso) {
 	return PHONE_COUNTRY_BY_CODE.get(String(iso ?? '').toUpperCase())
 }

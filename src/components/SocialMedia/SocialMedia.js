@@ -28,8 +28,8 @@ const ACCOUNT_META = [
 	},
 	{
 		id: 3,
-		username: '@ivan_python_smart',
-		url: 'https://www.tiktok.com/@ivan_python_smart',
+		username: '@ivan_smartcode',
+		url: 'https://www.tiktok.com/@ivan_smartcode',
 		color: 'green',
 		avatarUrl: '/tiktoklogo/00687615ebad2fd100b5ab6dde0a9964~tplv-tiktokx-cropcenter_1080_1080.jpeg',
 		accountKey: 'ivan',
