@@ -162,6 +162,10 @@
     "collapseMenu": "Згорнути меню",
     "openMenu": "Відкрити меню",
     "resizeMenu": "Змінити розмір меню",
+    "prevTab": "Попередня вкладка",
+    "prevSection": "Попередній розділ",
+    "nextTab": "Наступна вкладка",
+    "nextSection": "Наступний розділ",
     "breadcrumb": {
       "home": "Головна",
       "course": "Курс",

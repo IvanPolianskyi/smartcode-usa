@@ -29,6 +29,7 @@ import { parsePracticeStdin } from '@/lib/parsePracticeStdin'
 import { hasBlockedPythonCode } from '@/lib/pythonCodeGuard'
 import { executePythonWithPyodide } from '@/lib/pyodideRunner'
 import styles from './LessonPage.module.css'
+import FloatingNavArrows from './FloatingNavArrows'
 
 // Функція для конвертації markdown в HTML
 const markdownToHtml = (text) => {
@@ -948,8 +949,47 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     }
   }
 
+  const handleNextAction = () => {
+    if (activeTab === 'theory') {
+      if (fullLesson.practiceTask) {
+        setActiveTab('practice')
+      } else if (fullLesson.quiz && fullLesson.quiz.questions && fullLesson.quiz.questions.length > 0) {
+        setActiveTab('quiz')
+      } else if (nextLesson) {
+        router.push(`/courses/${courseId}/lessons/${nextLesson.lessonId}`)
+      }
+    } else if (activeTab === 'practice') {
+      if (fullLesson.quiz && fullLesson.quiz.questions && fullLesson.quiz.questions.length > 0) {
+        const isPracticeCompleted = practiceCompleted || userProgress?.completedPracticeTasks?.includes(lessonId)
+        if (!isPracticeCompleted) {
+          alert(t('practiceRequiredAlert'))
+        } else {
+          setActiveTab('quiz')
+        }
+      } else if (nextLesson) {
+        router.push(`/courses/${courseId}/lessons/${nextLesson.lessonId}`)
+      }
+    } else if (activeTab === 'quiz') {
+      if (nextLesson && isQuizPassed) {
+        router.push(`/courses/${courseId}/lessons/${nextLesson.lessonId}`)
+      }
+    }
+  }
+
+  const handlePrevAction = () => {
+    if (activeTab === 'quiz') {
+      if (fullLesson.practiceTask) {
+        setActiveTab('practice')
+      } else {
+        setActiveTab('theory')
+      }
+    } else if (activeTab === 'practice') {
+      setActiveTab('theory')
+    }
+  }
+
   return (
-    <div className={`${styles.pageWrapper} ${isResizing ? styles.resizing : ''}`}>
+    <>
       {/* Edge drag area when sidebar is closed */}
       {isSidebarClosed && (
         <div 
@@ -958,43 +998,50 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           title={t('dragOpenMenu')}
         />
       )}
-      
-      {/* Sidebar Navigation */}
+
+      {/* Toggle button when closed */}
+      {isSidebarClosed && (
+        <button 
+          className={styles.sidebarToggleClosed}
+          onClick={toggleSidebar}
+          title={t('openMenu')}
+        >
+          <ChevronRight className={styles.toggleIcon} />
+        </button>
+      )}
+
+      {/* Toggle button when open */}
+      {!isSidebarClosed && (
+        <button 
+          className={styles.sidebarToggle}
+          style={{ left: isSidebarCollapsed ? '45px' : `calc(${sidebarWidth}px - 25px)` }}
+          onClick={toggleSidebar}
+          title={isSidebarCollapsed ? t('expandMenu') : t('collapseMenu')}
+        >
+          {isSidebarCollapsed ? (
+            <ChevronRight className={styles.toggleIcon} />
+          ) : (
+            <ChevronLeft className={styles.toggleIcon} />
+          )}
+        </button>
+      )}
+
+      <FloatingNavArrows 
+        onNextAction={handleNextAction} 
+        onPrevAction={handlePrevAction} 
+      />
+      <div className={`${styles.pageWrapper} ${isResizing ? styles.resizing : ''}`}>
+        
+        {/* Sidebar Navigation */}
       <aside 
         className={`${styles.sidebar} ${isSidebarCollapsed ? styles.collapsed : ''} ${isSidebarClosed ? styles.closed : ''}`}
         style={{ 
           width: isSidebarClosed ? '0px' : (isSidebarCollapsed ? '60px' : `${sidebarWidth}px`),
           '--sidebar-width': `${sidebarWidth}px`
         }}
-      >
-        {/* Collapse/Expand Button */}
-        {!isSidebarClosed && (
-          <button 
-            className={styles.sidebarToggle}
-            onClick={toggleSidebar}
-            title={isSidebarCollapsed ? t('expandMenu') : t('collapseMenu')}
-          >
-            {isSidebarCollapsed ? (
-              <ChevronRight className={styles.toggleIcon} />
-            ) : (
-              <ChevronLeft className={styles.toggleIcon} />
-            )}
-          </button>
-        )}
-        
-        {/* Toggle button when closed */}
-        {isSidebarClosed && (
-          <button 
-            className={styles.sidebarToggleClosed}
-            onClick={toggleSidebar}
-            title={t('openMenu')}
-          >
-            <ChevronRight className={styles.toggleIcon} />
-          </button>
-        )}
-
-        {/* Resize Handle */}
-        {!isSidebarCollapsed && (
+        >
+          {/* Resize Handle */}
+          {!isSidebarCollapsed && (
           <div 
             className={styles.resizeHandle}
             onMouseDown={handleResizeStart}
@@ -1181,7 +1228,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
             
             {/* Theory Sections */}
             {fullLesson.theory?.sections?.map((section, index) => (
-              <div key={index} className={styles.theorySection}>
+              <div key={index} className={`${styles.theorySection} navigable-block`}>
                 <h3 className={styles.theorySectionTitle}>{section.title}</h3>
                 <div 
                   className={styles.theoryContent}
@@ -1194,7 +1241,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
             
             {/* Code Examples */}
             {fullLesson.codeExamples && fullLesson.codeExamples.length > 0 && (
-              <div className={styles.codeExamplesSection}>
+              <div className={`${styles.codeExamplesSection} navigable-block`}>
                 <h3 className={styles.sectionTitle}>
                   <Code className="w-5 h-5" />
                   {t('codeExamplesTitle')}
@@ -1213,7 +1260,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
             
             {/* Common Mistakes */}
             {fullLesson.commonMistakes && fullLesson.commonMistakes.length > 0 && (
-              <div className={styles.mistakesSection}>
+              <div className={`${styles.mistakesSection} navigable-block`}>
                 <h3 className={styles.sectionTitle}>
                   <AlertCircle className="w-5 h-5" />
                   {t('mistakesTitle')}
@@ -1236,7 +1283,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
             
             {/* Summary */}
             {fullLesson.summary && (
-              <div className={styles.summarySection}>
+              <div className={`${styles.summarySection} navigable-block`}>
                 <h3 className={styles.sectionTitle}>
                   <Lightbulb className="w-5 h-5" />
                   {t('summaryTitle')}
@@ -1256,7 +1303,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           <div className={styles.tabContent}>
             {fullLesson.practiceTask ? (
               <>
-                <div className={styles.practiceTask}>
+                <div className={`${styles.practiceTask} navigable-block`}>
                   <h3 className={styles.sectionTitle}>
                     <Code className="w-5 h-5" />
                     {t('practiceTitle')}
@@ -1486,7 +1533,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
               </div>
             ) : fullLesson.quiz && fullLesson.quiz.questions && fullLesson.quiz.questions.length > 0 ? (
               <>
-                <div className={styles.quizHeader}>
+                <div className={`${styles.quizHeader} navigable-block`}>
                   <h3 className={styles.sectionTitle}>
                     <Target className="w-5 h-5" />
                     {t('quizTitle')}
@@ -1509,7 +1556,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                     return (
                       <div 
                         key={question.id}
-                        className={`${styles.quizQuestion} ${
+                        className={`${styles.quizQuestion} navigable-block ${
                           showAnswer ? (isCorrect ? styles.correct : styles.incorrect) : ''
                         }`}
                       >
@@ -1665,6 +1712,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         </div>
       </div>
     </div>
+    </>
   )
 }
 

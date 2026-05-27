@@ -29,6 +29,7 @@ export async function GET(request) {
       .find(query)
       .sort({ createdAt: -1 })
       .limit(300)
+      .project({ 'receipt.dataUrl': 0 })
       .toArray()
 
     const userIds = [...new Set(payments.map((item) => item.userId?.toString()).filter(Boolean))]
@@ -58,7 +59,7 @@ export async function GET(request) {
           lessonFormat: item.lessonFormat || 'group',
           courseId: item.courseId || null,
           createdAt: item.createdAt,
-          receipt: item.receipt || null,
+          receipt: item.receipt ? { hasImage: true } : null,
         }
       }),
     }, { status: 200 })

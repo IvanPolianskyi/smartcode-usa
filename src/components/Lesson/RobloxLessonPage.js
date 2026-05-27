@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useMemo } from 'react'
-import { Link } from '@/i18n/navigation'
+import { Link, useRouter } from '@/i18n/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import {
   ArrowLeft,
@@ -23,6 +23,7 @@ import { markdownToHtml } from '@/lib/markdownToHtml'
 import { createPayment, updateProgress } from '@/lib/authClient'
 import { formatPrice, getCoursePrice } from '@/lib/coursePrices'
 import styles from './RobloxLessonPage.module.css'
+import FloatingNavArrows from './FloatingNavArrows'
 
 const STEPS = ['theory', 'practice', 'quiz']
 
@@ -38,6 +39,7 @@ const RobloxLessonPage = ({
   const t = useTranslations('lms.lesson')
   const tRoblox = useTranslations('lms.lesson.roblox')
   const locale = useLocale()
+  const router = useRouter()
   const [activeStep, setActiveStep] = useState('theory')
   const [isPurchasing, setIsPurchasing] = useState(false)
   const [paymentError, setPaymentError] = useState('')
@@ -244,9 +246,52 @@ const RobloxLessonPage = ({
     setActiveStep(step)
   }
 
+  const handleNextAction = () => {
+    if (activeStep === 'theory') {
+      if (hasPractice) {
+        setActiveStep('practice')
+      } else if (hasQuiz) {
+        setActiveStep('quiz')
+      } else if (nextLesson) {
+        router.push(`/courses/${courseId}/lessons/${nextLesson.lessonId}`)
+      }
+    } else if (activeStep === 'practice') {
+      if (hasQuiz) {
+        if (!practiceDone) {
+          alert(tRoblox('quizLockedHint'))
+        } else {
+          setActiveStep('quiz')
+        }
+      } else if (nextLesson) {
+        router.push(`/courses/${courseId}/lessons/${nextLesson.lessonId}`)
+      }
+    } else if (activeStep === 'quiz') {
+      if (nextLesson && quizPassed) {
+        router.push(`/courses/${courseId}/lessons/${nextLesson.lessonId}`)
+      }
+    }
+  }
+
+  const handlePrevAction = () => {
+    if (activeStep === 'quiz') {
+      if (hasPractice) {
+        setActiveStep('practice')
+      } else {
+        setActiveStep('theory')
+      }
+    } else if (activeStep === 'practice') {
+      setActiveStep('theory')
+    }
+  }
+
   return (
-    <div className={styles.page}>
-      <div className={styles.shell}>
+    <>
+      <FloatingNavArrows 
+        onNextAction={handleNextAction} 
+        onPrevAction={handlePrevAction} 
+      />
+      <div className={styles.page}>
+        <div className={styles.shell}>
         <Link href={`/courses/${courseId}`} className={styles.backLink}>
           <ArrowLeft size={18} />
           {t('backToCourse')}
@@ -312,7 +357,7 @@ const RobloxLessonPage = ({
 
         <div className={styles.panel}>
           {fullLesson.learningObjectives?.length > 0 && activeStep === 'theory' && (
-            <section className={styles.objectives}>
+            <section className={`${styles.objectives} navigable-block`}>
               <h2>
                 <Target size={18} />
                 {t('objectivesTitle')}
@@ -327,7 +372,7 @@ const RobloxLessonPage = ({
 
           {activeStep === 'theory' &&
             fullLesson.theory?.sections?.map((section, index) => (
-              <article key={index} className={styles.theoryBlock}>
+              <article key={index} className={`${styles.theoryBlock} navigable-block`}>
                 <h3 className={styles.theoryTitle}>{section.title}</h3>
                 <div
                   className={styles.theoryBody}
@@ -337,7 +382,7 @@ const RobloxLessonPage = ({
             ))}
 
           {activeStep === 'theory' && fullLesson.commonMistakes?.length > 0 && (
-            <div className={styles.mistakes}>
+            <div className={`${styles.mistakes} navigable-block`}>
               <h3>{t('mistakesTitle')}</h3>
               {fullLesson.commonMistakes.map((m, i) => (
                 <div key={i} className={styles.mistakeItem}>
@@ -352,14 +397,14 @@ const RobloxLessonPage = ({
           )}
 
           {activeStep === 'theory' && fullLesson.summary && (
-            <div className={styles.summary}>
+            <div className={`${styles.summary} navigable-block`}>
               <h3>{t('summaryTitle')}</h3>
               <p>{fullLesson.summary}</p>
             </div>
           )}
 
           {activeStep === 'practice' && hasPractice && (
-            <>
+            <div className="navigable-block">
               <h3 className={styles.practiceTitle}>{fullLesson.practiceTask.title}</h3>
               <div
                 className={styles.theoryBody}
@@ -414,13 +459,13 @@ const RobloxLessonPage = ({
                   {tRoblox('practiceDone')}
                 </p>
               )}
-            </>
+            </div>
           )}
 
           {activeStep === 'quiz' && hasQuiz && (
             <>
               {!practiceDone && hasPractice ? (
-                <div className={styles.lockedBox}>
+                <div className={`${styles.lockedBox} navigable-block`}>
                   <Lock size={32} />
                   <p>{t('quizLockedDescription')}</p>
                   <button
@@ -433,7 +478,7 @@ const RobloxLessonPage = ({
                 </div>
               ) : (
                 <>
-                  <div className={styles.quizHeader}>
+                  <div className={`${styles.quizHeader} navigable-block`}>
                     <h3>{t('quizTitle')}</h3>
                     <p className={styles.quizInfo}>
                       {t('quizInfo', {
@@ -455,7 +500,7 @@ const RobloxLessonPage = ({
                     return (
                       <div
                         key={question.id}
-                        className={`${styles.quizQuestion} ${show ? (isCorrect ? styles.quizQuestionCorrect : styles.quizQuestionWrong) : ''}`}
+                        className={`${styles.quizQuestion} navigable-block ${show ? (isCorrect ? styles.quizQuestionCorrect : styles.quizQuestionWrong) : ''}`}
                       >
                         <div className={styles.questionHead}>
                           <span>{t('questionNumber', { number: index + 1 })}</span>
@@ -581,6 +626,7 @@ const RobloxLessonPage = ({
         </div>
       </div>
     </div>
+    </>
   )
 }
 

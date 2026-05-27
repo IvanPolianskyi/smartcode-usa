@@ -162,6 +162,10 @@
     "collapseMenu": "Collapse menu",
     "openMenu": "Open menu",
     "resizeMenu": "Resize menu",
+    "prevTab": "Previous tab",
+    "prevSection": "Previous section",
+    "nextTab": "Next tab",
+    "nextSection": "Next section",
     "breadcrumb": {
       "home": "Home",
       "course": "Course",

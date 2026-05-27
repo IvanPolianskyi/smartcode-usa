@@ -21,6 +21,7 @@ export async function GET() {
       .find({ paymentMethod: 'receipt_upload' })
       .sort({ createdAt: -1 })
       .limit(300)
+      .project({ 'receipt.dataUrl': 0 })
       .toArray()
 
     const userIds = [...new Set(receipts.map((item) => item.userId?.toString()).filter(Boolean))]
@@ -43,7 +44,7 @@ export async function GET() {
           lessonPrice: Number(item.lessonPrice || 0),
           lessonFormat: item.lessonFormat || 'group',
           createdAt: item.createdAt,
-          receipt: item.receipt || null,
+          receipt: item.receipt ? { hasImage: true } : null,
         }
       }),
     }, { status: 200 })

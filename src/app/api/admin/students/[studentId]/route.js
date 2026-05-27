@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
-import { fetchCrmTeachers, pullCrmScheduleToSmartcodeStudent } from '@/lib/crmStudentSchedulePull'
+import { fetchCrmTeachers, maybePullCrmScheduleForStudent } from '@/lib/crmStudentSchedulePull'
 
 const COURSE_NAMES = {
   'python-developer-zero-to-junior': 'Пайтон',
@@ -42,15 +42,8 @@ export async function GET(request, { params }) {
     if (!studentDoc) {
       return NextResponse.json({ error: 'Student not found' }, { status: 404 })
     }
-    const syncedStudent = await pullCrmScheduleToSmartcodeStudent(
-      {
-        id: studentDoc._id.toString(),
-        name: studentDoc.name || 'Без імені',
-        email: studentDoc.email,
-        studentProfile: studentDoc.studentProfile || {},
-      },
-      usersCollection
-    )
+    const syncedUserDoc = await maybePullCrmScheduleForStudent(studentDoc, usersCollection)
+    const syncedProfile = syncedUserDoc.studentProfile || studentDoc.studentProfile || {}
 
     const progressDocs = await progressCollection.find({ userId: studentObjectId }).toArray()
     const perCourse = progressDocs.map((doc) => ({
@@ -66,6 +59,7 @@ export async function GET(request, { params }) {
 
     const receipts = await paymentsCollection
       .find({ userId: studentObjectId, paymentMethod: 'receipt_upload' })
+      .project({ 'receipt.dataUrl': 0 })
       .sort({ createdAt: -1 })
       .toArray()
 
@@ -87,7 +81,7 @@ export async function GET(request, { params }) {
         id: studentDoc._id.toString(),
         name: studentDoc.name || 'Без імені',
         email: studentDoc.email,
-        profile: syncedStudent.studentProfile || studentDoc.studentProfile || {},
+        profile: syncedProfile,
       },
       courseNames: COURSE_NAMES,
       analytics: {
@@ -107,7 +101,7 @@ export async function GET(request, { params }) {
         creditedLessons: Number(item.creditedLessons || 0),
         createdAt: item.createdAt,
         approvedAt: item.approvedAt || null,
-        receipt: item.receipt || null,
+        receipt: item.receipt ? { hasImage: true } : null,
       })),
     }
 

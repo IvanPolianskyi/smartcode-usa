@@ -31,6 +31,7 @@ export default function AdminPanelPage() {
   const [students, setStudents] = useState([])
   const [receipts, setReceipts] = useState([])
   const [receiptsLoading, setReceiptsLoading] = useState(false)
+  const [receiptsTab, setReceiptsTab] = useState('pending')
   const [slots, setSlots] = useState([])
   const [slotsLoading, setSlotsLoading] = useState(false)
   const [slotCreating, setSlotCreating] = useState(false)
@@ -48,6 +49,7 @@ export default function AdminPanelPage() {
   const [studentSaving, setStudentSaving] = useState(false)
   const [studentSaveNotice, setStudentSaveNotice] = useState('')
   const [studentSearch, setStudentSearch] = useState('')
+  const [showDebtOnly, setShowDebtOnly] = useState(false)
   const [studentForm, setStudentForm] = useState({
     lessonFormat: 'group',
     regularDays: [],
@@ -62,13 +64,23 @@ export default function AdminPanelPage() {
   const studentEditorRef = useRef(null)
   const selectedStudent = students.find((student) => student.id === selectedStudentId) || null
   const filteredStudents = useMemo(() => {
+    let result = students
+    if (showDebtOnly) {
+      result = result.filter(student => {
+        const balance = student.profile?.accountBalance || 0;
+        const credits = student.profile?.lessonCredits || 0;
+        const completed = student.analytics?.totalCompletedLessons || 0;
+        const hasSchedule = (student.profile?.regularSchedule || []).length > 0;
+        return balance < 0 || (credits < 1 && (completed > 0 || hasSchedule));
+      })
+    }
     const query = studentSearch.trim().toLowerCase()
-    if (!query) return students
-    return students.filter((student) =>
+    if (!query) return result
+    return result.filter((student) =>
       (student.name || '').toLowerCase().includes(query) ||
       (student.email || '').toLowerCase().includes(query)
     )
-  }, [students, studentSearch])
+  }, [students, studentSearch, showDebtOnly])
 
   useEffect(() => {
     if (sessionLoading) return
@@ -152,6 +164,25 @@ export default function AdminPanelPage() {
     }
   }
 
+  const updateReceiptLessons = async (receiptId, newLessons) => {
+    try {
+      const response = await fetch(`/api/admin/receipts/${receiptId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ creditedLessons: parseInt(newLessons, 10) })
+      })
+      if (!response.ok) {
+        throw new Error('Failed to update lessons')
+      }
+      setReceipts(prev => prev.map(r => 
+        r.id === receiptId ? { ...r, creditedLessons: parseInt(newLessons, 10) } : r
+      ))
+    } catch (error) {
+      console.error(error)
+      alert(error.message)
+    }
+  }
+
   const loadSlots = async () => {
     try {
       setSlotsLoading(true)
@@ -197,6 +228,19 @@ export default function AdminPanelPage() {
       })
       if (!response.ok) throw new Error('Failed to delete slot')
       loadSlots()
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+
+  const handleDeleteStudent = async (id, name) => {
+    if (!confirm(`Are you sure you want to delete account for ${name}?`)) return
+    try {
+      const response = await fetch(`/api/admin/students?id=${id}`, {
+        method: 'DELETE',
+      })
+      if (!response.ok) throw new Error('Failed to delete student')
+      loadStudents()
     } catch (error) {
       alert(error.message)
     }
@@ -532,7 +576,25 @@ export default function AdminPanelPage() {
               <DollarSign size={24} />
               {t('receipts.title')}
             </h2>
-            <div className={styles.certFormActions} style={{ marginBottom: '1rem' }}>
+            <div className={styles.certFormActions} style={{ marginBottom: '1rem', display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button
+                  type="button"
+                  className={receiptsTab === 'pending' ? styles.certSubmitButton : styles.certReloadButton}
+                  onClick={() => setReceiptsTab('pending')}
+                  style={receiptsTab === 'pending' ? { padding: '0.5rem 1rem', margin: 0 } : { padding: '0.5rem 1rem' }}
+                >
+                  Очікують підтвердження
+                </button>
+                <button
+                  type="button"
+                  className={receiptsTab === 'history' ? styles.certSubmitButton : styles.certReloadButton}
+                  onClick={() => setReceiptsTab('history')}
+                  style={receiptsTab === 'history' ? { padding: '0.5rem 1rem', margin: 0 } : { padding: '0.5rem 1rem' }}
+                >
+                  Історія
+                </button>
+              </div>
               <button
                 type="button"
                 className={styles.certReloadButton}
@@ -543,54 +605,76 @@ export default function AdminPanelPage() {
                 {t('receipts.refresh')}
               </button>
             </div>
-            {receiptsLoading ? (
-              <p className={styles.emptyState}>{t('receipts.loading')}</p>
-            ) : receipts.length === 0 ? (
-              <p className={styles.emptyState}>{t('receipts.empty')}</p>
-            ) : (
-              <div className={styles.usersTable}>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>{t('receipts.columns.student')}</th>
-                      <th>{t('receipts.columns.amount')}</th>
-                      <th>{t('receipts.columns.formatPrice')}</th>
-                      <th>{t('receipts.columns.lessons')}</th>
-                      <th>{t('receipts.columns.date')}</th>
-                      <th>{t('receipts.columns.receipt')}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {receipts.map((receipt) => (
-                      <tr key={receipt.id}>
-                        <td>{receipt.studentName}<br />{receipt.studentEmail}</td>
-                        <td>{formatCurrency(receipt.amount)}</td>
-                        <td>
-                          {receipt.lessonFormat === 'individual' ? t('receipts.individual') : t('receipts.group')}
-                          <br />
-                          {t('receipts.pricePerLesson', { price: receipt.lessonPrice })}
-                        </td>
-                        <td>{receipt.creditedLessons}</td>
-                        <td>{formatDate(receipt.createdAt)}</td>
-                        <td>
-                          {receipt.receipt?.dataUrl ? (
-                            <a href={receipt.receipt.dataUrl} target="_blank" rel="noreferrer" className={styles.receiptLink}>
-                              <img
-                                src={receipt.receipt.dataUrl}
-                                alt={t('receipts.receiptAlt', { name: receipt.studentName })}
-                                className={styles.receiptThumb}
-                              />
-                            </a>
-                          ) : (
-                            <span className={styles.noData}>{t('receipts.noFile')}</span>
-                          )}
-                        </td>
+            {(() => {
+              const filteredReceipts = receipts.filter(r => receiptsTab === 'pending' ? r.status === 'pending' : r.status !== 'pending');
+              if (receiptsLoading) {
+                return <p className={styles.emptyState}>{t('receipts.loading')}</p>
+              }
+              if (filteredReceipts.length === 0) {
+                return <p className={styles.emptyState}>{t('receipts.empty')}</p>
+              }
+              return (
+                <div className={styles.usersTable}>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>{t('receipts.columns.student')}</th>
+                        <th>{t('receipts.columns.amount')}</th>
+                        <th>{t('receipts.columns.formatPrice')}</th>
+                        <th>{t('receipts.columns.lessons')}</th>
+                        <th>{t('receipts.columns.date')}</th>
+                        <th>{t('receipts.columns.receipt')}</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+                    </thead>
+                    <tbody>
+                      {filteredReceipts.map((receipt) => (
+                        <tr key={receipt.id}>
+                          <td>{receipt.studentName}<br />{receipt.studentEmail}</td>
+                          <td>{formatCurrency(receipt.amount)}</td>
+                          <td>
+                            {receipt.lessonFormat === 'individual' ? t('receipts.individual') : t('receipts.group')}
+                            <br />
+                            {t('receipts.pricePerLesson', { price: receipt.lessonPrice })}
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              min="0"
+                              className={styles.certInput}
+                              style={{ width: '70px', padding: '0.25rem', textAlign: 'center' }}
+                              value={receipt.creditedLessons}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setReceipts(prev => prev.map(r => r.id === receipt.id ? { ...r, creditedLessons: val } : r));
+                              }}
+                              onBlur={(e) => {
+                                if (e.target.value !== '') {
+                                  updateReceiptLessons(receipt.id, e.target.value);
+                                }
+                              }}
+                            />
+                          </td>
+                          <td>{formatDate(receipt.createdAt)}</td>
+                          <td>
+                            {receipt.receipt?.hasImage ? (
+                              <a href={`/api/admin/receipts/${receipt.id}/image`} target="_blank" rel="noreferrer" className={styles.receiptLink}>
+                                <img
+                                  src={`/api/admin/receipts/${receipt.id}/image`}
+                                  alt={t('receipts.receiptAlt', { name: receipt.studentName })}
+                                  className={styles.receiptThumb}
+                                />
+                              </a>
+                            ) : (
+                              <span className={styles.noData}>{t('receipts.noFile')}</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )
+            })()}
           </div>
 
           <div className={styles.section}>
@@ -740,12 +824,23 @@ export default function AdminPanelPage() {
                   placeholder={t('students.searchPlaceholder')}
                 />
               </div>
+              <div className={styles.certFormGroup} style={{ flexDirection: 'row', alignItems: 'center', gap: '0.5rem', marginTop: '1.5rem' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                  <input
+                    type="checkbox"
+                    checked={showDebtOnly}
+                    onChange={(e) => setShowDebtOnly(e.target.checked)}
+                  />
+                  Тільки боржники (Баланс &lt; 0 або Кредити &lt; 1)
+                </label>
+              </div>
             </div>
             <div className={styles.usersTable}>
               <table>
                 <thead>
                   <tr>
                     <th>{t('students.columns.student')}</th>
+                    <th>Баланс</th>
                     <th>{t('students.columns.format')}</th>
                     <th>{t('students.columns.onlineCourses')}</th>
                     <th>{t('students.columns.progress')}</th>
@@ -761,6 +856,10 @@ export default function AdminPanelPage() {
                       }}
                     >
                       <td>{student.name}<br />{student.email}</td>
+                      <td style={{ color: ((student.profile?.accountBalance || 0) < 0 || (student.profile?.lessonCredits || 0) < 1) ? '#ef4444' : 'inherit' }}>
+                        {student.profile?.accountBalance || 0} грн<br/>
+                        <span style={{ fontSize: '0.85em', color: '#6b7280' }}>Кредити: {student.profile?.lessonCredits || 0}</span>
+                      </td>
                       <td>{student.profile?.lessonFormat === 'individual' ? t('students.individual') : t('students.group')}</td>
                       <td>
                         {(student.profile?.activeOnlineCourses || []).length > 0
@@ -778,8 +877,17 @@ export default function AdminPanelPage() {
                           type="button"
                           className={styles.certReloadButton}
                           onClick={() => router.push(`/admin/students/${student.id}`)}
+                          style={{ marginBottom: '0.5rem', display: 'block', width: '100%' }}
                         >
                           {t('students.openProfile')}
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.certReloadButton}
+                          onClick={() => handleDeleteStudent(student.id, student.name)}
+                          style={{ color: '#ef4444', borderColor: '#ef4444', display: 'block', width: '100%' }}
+                        >
+                          Видалити
                         </button>
                       </td>
                     </tr>
