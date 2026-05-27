@@ -265,10 +265,8 @@ export default function BookLessonPage() {
 							{t('timezoneNote')}
 						</p>
 
-						{/* Pay note */}
 						<p className={styles.payNote}>{t('payMethods')}</p>
 
-						{/* Submit */}
 						<button
 							type="submit"
 							className={`${styles.submitBtn} ${loading ? styles.loadingBtn : ''}`}
