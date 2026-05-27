@@ -1,16 +1,18 @@
-.container {
-  --dash-ivory: #faf8f5;
-  --dash-surface: #ffffff;
-  --dash-border: #e8e4df;
-  --dash-text: #1c1917;
-  --dash-muted: #78716c;
+:global(:root) {
+  --dash-ivory: #f8fafc;
+  --dash-surface: rgba(255, 255, 255, 0.85);
+  --dash-border: rgba(226, 232, 240, 0.8);
+  --dash-text: #0f172a;
+  --dash-muted: #64748b;
   --dash-primary: #4f46e5;
-  --dash-primary-dark: #4338ca;
+  --dash-primary-dark: #3730a3;
   --dash-accent: #f59e0b;
-  --dash-radius: 18px;
-  --dash-radius-sm: 12px;
-  --dash-shadow: 0 1px 2px rgba(28, 25, 23, 0.04), 0 12px 32px rgba(28, 25, 23, 0.06);
+  --dash-radius: 20px;
+  --dash-radius-sm: 14px;
+  --dash-shadow: 0 4px 24px -2px rgba(15, 23, 42, 0.05), 0 0 1px rgba(15, 23, 42, 0.1);
+}
 
+.container {
   min-height: calc(100vh - 50px);
   padding: 1.25rem clamp(1rem, 2.5vw, 2.5rem) 2.5rem;
   width: 100%;
@@ -19,8 +21,8 @@
   box-sizing: border-box;
   background: var(--dash-ivory);
   background-image:
-    radial-gradient(ellipse 70% 45% at 0% 0%, rgba(79, 70, 229, 0.07), transparent),
-    radial-gradient(ellipse 50% 40% at 100% 10%, rgba(245, 158, 11, 0.06), transparent);
+    radial-gradient(ellipse 60% 50% at 10% 0%, rgba(79, 70, 229, 0.06), transparent),
+    radial-gradient(ellipse 50% 40% at 90% 10%, rgba(245, 158, 11, 0.04), transparent);
 }
 
 .loading {
@@ -118,70 +120,103 @@
   justify-content: space-between;
   align-items: stretch;
   gap: 1.25rem;
-  background: linear-gradient(125deg, #4338ca 0%, #4f46e5 45%, #6366f1 100%);
+  background: linear-gradient(135deg, #3730a3 0%, #4f46e5 45%, #818cf8 100%);
   color: #fff;
   border-radius: var(--dash-radius);
-  padding: 1.35rem 1.5rem;
+  padding: 2rem 2.25rem;
   margin-bottom: 1rem;
-  box-shadow: 0 16px 40px rgba(67, 56, 202, 0.28);
+  box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.35);
   overflow: hidden;
+}
+
+.heroCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  pointer-events: none;
 }
 
 .heroLabel {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.82rem;
-  opacity: 0.95;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
 }
 
 .heroTitle {
-  margin: 0.45rem 0 0.2rem;
-  font-size: 1.18rem;
+  margin: 1rem 0 0.4rem;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .heroText {
   margin: 0;
-  font-size: 0.9rem;
-  opacity: 0.92;
+  font-size: 1rem;
+  opacity: 0.9;
+  line-height: 1.5;
+  max-width: 480px;
 }
 
 .goalBox {
-  min-width: 180px;
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 12px;
-  padding: 0.7rem;
+  min-width: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 1.25rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .goalTop {
   display: inline-flex;
-  gap: 0.3rem;
+  gap: 0.4rem;
   align-items: center;
-  font-size: 0.8rem;
-  opacity: 0.95;
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .goalProgress {
-  margin-top: 0.2rem;
-  font-size: 1.15rem;
+  margin-top: 0.4rem;
+  font-size: 1.5rem;
   font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .goalBar {
   width: 100%;
-  height: 8px;
+  height: 10px;
   border-radius: 999px;
-  background: #e2e8f0;
+  background: rgba(255, 255, 255, 0.2);
   overflow: hidden;
-  margin-top: 0.45rem;
+  margin-top: 0.5rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .goalBar span {
   display: block;
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, #22c55e, #10b981);
+  background: linear-gradient(90deg, #4ade80, #10b981);
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tabRow {
@@ -191,19 +226,28 @@
 }
 
 .tabBtn {
-  border: 1px solid #cbd5e1;
-  background: #fff;
-  color: #334155;
-  border-radius: 999px;
-  padding: 0.45rem 0.8rem;
+  border: none;
+  background: transparent;
+  color: var(--dash-muted);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+}
+
+.tabBtn:hover:not(.tabBtnActive) {
+  color: var(--dash-text);
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .tabBtnActive {
-  background: #1d4ed8;
-  color: #fff;
-  border-color: #1d4ed8;
+  background: var(--dash-surface);
+  color: var(--dash-primary-dark);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
 }
 
 .cardTitle {
@@ -961,42 +1005,55 @@
 .metricCards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .metricCard {
   background: var(--dash-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--dash-border);
   border-radius: var(--dash-radius-sm);
-  padding: 0.9rem 1rem;
+  padding: 1.25rem 1.5rem;
   box-shadow: var(--dash-shadow);
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+}
+
+.metricCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px -4px rgba(15, 23, 42, 0.08), 0 0 2px rgba(15, 23, 42, 0.1);
 }
 
 .metricCardIcon {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: #eef2ff;
-  color: var(--dash-primary);
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+  color: var(--dash-primary-dark);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.5);
 }
 
 .metricCard strong {
   display: block;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: var(--dash-text);
   line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .metricCard span {
-  font-size: 0.78rem;
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 500;
   color: var(--dash-muted);
 }
 
@@ -1025,14 +1082,23 @@
 .achievementsCard,
 .historyCard {
   background: var(--dash-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--dash-border);
   border-radius: var(--dash-radius);
-  padding: 1.15rem 1.25rem;
+  padding: 1.5rem;
   box-shadow: var(--dash-shadow);
   height: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  transition: box-shadow 0.2s ease;
+}
+
+.coursesSection:hover,
+.calendarCard:hover,
+.historyCard:hover {
+  box-shadow: 0 12px 32px -4px rgba(15, 23, 42, 0.08), 0 0 2px rgba(15, 23, 42, 0.1);
 }
 
 .coursesSection .courseGrid,
@@ -1603,10 +1669,12 @@
 .tabRowPill {
   display: inline-flex;
   gap: 0.25rem;
-  padding: 0.25rem;
-  background: #e7e5e4;
-  border-radius: 12px;
-  margin-bottom: 0.25rem;
+  padding: 0.35rem;
+  background: rgba(226, 232, 240, 0.6);
+  backdrop-filter: blur(8px);
+  border-radius: 14px;
+  margin-bottom: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 @media (min-width: 900px) {

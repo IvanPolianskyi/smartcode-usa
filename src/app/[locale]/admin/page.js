@@ -16,6 +16,7 @@ import {
   Calendar,
   RefreshCw,
   LogOut,
+  Clock,
 } from 'lucide-react'
 
 export default function AdminPanelPage() {
@@ -30,6 +31,16 @@ export default function AdminPanelPage() {
   const [students, setStudents] = useState([])
   const [receipts, setReceipts] = useState([])
   const [receiptsLoading, setReceiptsLoading] = useState(false)
+  const [slots, setSlots] = useState([])
+  const [slotsLoading, setSlotsLoading] = useState(false)
+  const [slotCreating, setSlotCreating] = useState(false)
+  const [slotForm, setSlotForm] = useState({
+    courseId: 'roblox-studio',
+    lessonFormat: 'individual',
+    day: 'mon',
+    time: '18:00',
+    zoomLink: ''
+  })
   const [courseNames, setCourseNames] = useState({})
   const [crmTeachers, setCrmTeachers] = useState([])
   const [crmTeachersError, setCrmTeachersError] = useState('')
@@ -72,6 +83,7 @@ export default function AdminPanelPage() {
     loadStatistics()
     loadStudents()
     loadReceipts()
+    loadSlots()
   }, [sessionLoading, user?.id, user?.role, router])
 
   const loadStatistics = async () => {
@@ -137,6 +149,56 @@ export default function AdminPanelPage() {
       alert(t('errors.loadReceipts'))
     } finally {
       setReceiptsLoading(false)
+    }
+  }
+
+  const loadSlots = async () => {
+    try {
+      setSlotsLoading(true)
+      const response = await fetch('/api/admin/lesson-slots')
+      if (response.ok) {
+        const data = await response.json()
+        setSlots(data.slots || [])
+      }
+    } catch (error) {
+      console.error('Error loading slots:', error)
+    } finally {
+      setSlotsLoading(false)
+    }
+  }
+
+  const handleCreateSlot = async (e) => {
+    e.preventDefault()
+    setSlotCreating(true)
+    try {
+      const response = await fetch('/api/admin/lesson-slots', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(slotForm),
+      })
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error || 'Failed to create slot')
+      }
+      setSlotForm({ courseId: 'roblox-studio', lessonFormat: 'individual', day: 'mon', time: '18:00', zoomLink: '' })
+      loadSlots()
+    } catch (error) {
+      alert(error.message)
+    } finally {
+      setSlotCreating(false)
+    }
+  }
+
+  const handleDeleteSlot = async (id) => {
+    if (!confirm('Are you sure you want to delete this slot?')) return
+    try {
+      const response = await fetch(`/api/admin/lesson-slots?id=${id}`, {
+        method: 'DELETE',
+      })
+      if (!response.ok) throw new Error('Failed to delete slot')
+      loadSlots()
+    } catch (error) {
+      alert(error.message)
     }
   }
 
@@ -531,6 +593,136 @@ export default function AdminPanelPage() {
             )}
           </div>
 
+          <div className={styles.section}>
+            <h2 className={styles.sectionTitle}>
+              <Clock size={24} />
+              Lesson Slots
+            </h2>
+            <div className={styles.certFormRow} style={{ marginBottom: '1rem' }}>
+              <div className={styles.certFormGroup} style={{ flex: 1 }}>
+                <p className={styles.emptyState} style={{ textAlign: 'left', marginBottom: '1rem', padding: 0 }}>
+                  Manage recurring weekly slots for live lessons.
+                </p>
+                <form onSubmit={handleCreateSlot} className={styles.certFormRow} style={{ alignItems: 'flex-end', gap: '1rem' }}>
+                  <div className={styles.certFormGroup}>
+                    <label className={styles.certLabel}>Course</label>
+                    <select
+                      className={styles.certInput}
+                      value={slotForm.courseId}
+                      onChange={(e) => setSlotForm({ ...slotForm, courseId: e.target.value })}
+                    >
+                      <option value="roblox-studio">Roblox Studio</option>
+                      <option value="python-developer-zero-to-junior">Python</option>
+                      <option value="web-development">Web Development</option>
+                    </select>
+                  </div>
+                  <div className={styles.certFormGroup}>
+                    <label className={styles.certLabel}>Format</label>
+                    <select
+                      className={styles.certInput}
+                      value={slotForm.lessonFormat}
+                      onChange={(e) => setSlotForm({ ...slotForm, lessonFormat: e.target.value })}
+                    >
+                      <option value="group">Group</option>
+                      <option value="individual">Individual</option>
+                    </select>
+                  </div>
+                  <div className={styles.certFormGroup}>
+                    <label className={styles.certLabel}>Day</label>
+                    <select
+                      className={styles.certInput}
+                      value={slotForm.day}
+                      onChange={(e) => setSlotForm({ ...slotForm, day: e.target.value })}
+                    >
+                      {weekdayOptions.map(d => {
+                        const val = d === 'Пн' ? 'mon' : d === 'Вт' ? 'tue' : d === 'Ср' ? 'wed' : d === 'Чт' ? 'thu' : d === 'Пт' ? 'fri' : d === 'Сб' ? 'sat' : d === 'Нд' ? 'sun' : String(d).toLowerCase().substring(0,3)
+                        return <option key={d} value={val}>{d}</option>
+                      })}
+                    </select>
+                  </div>
+                  <div className={styles.certFormGroup}>
+                    <label className={styles.certLabel}>Time (Kyiv)</label>
+                    <input
+                      type="time"
+                      className={styles.certInput}
+                      value={slotForm.time}
+                      onChange={(e) => setSlotForm({ ...slotForm, time: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className={styles.certFormGroup}>
+                    <label className={styles.certLabel}>Zoom Link</label>
+                    <input
+                      type="url"
+                      className={styles.certInput}
+                      value={slotForm.zoomLink}
+                      onChange={(e) => setSlotForm({ ...slotForm, zoomLink: e.target.value })}
+                      placeholder="https://zoom.us/j/..."
+                    />
+                  </div>
+                  <button type="submit" className={styles.certSubmitButton} disabled={slotCreating}>
+                    {slotCreating ? 'Adding...' : 'Add Slot'}
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            {slotsLoading ? (
+              <p className={styles.emptyState}>Loading slots...</p>
+            ) : slots.length === 0 ? (
+              <p className={styles.emptyState}>No slots available.</p>
+            ) : (
+              <div className={styles.usersTable}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Course</th>
+                      <th>Format</th>
+                      <th>Day</th>
+                      <th>Time (Kyiv)</th>
+                      <th>Zoom Link</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {slots.map((slot) => (
+                      <tr key={slot._id}>
+                        <td>{slot.courseId}</td>
+                        <td>{slot.lessonFormat}</td>
+                        <td>{slot.day}</td>
+                        <td>{slot.time}</td>
+                        <td>
+                          {slot.zoomLink ? (
+                            <a href={slot.zoomLink} target="_blank" rel="noreferrer" style={{ color: '#3b82f6', textDecoration: 'underline' }}>
+                              Link
+                            </a>
+                          ) : '-'}
+                        </td>
+                        <td>
+                          {slot.isBooked ? (
+                            <span style={{ color: '#ef4444', fontWeight: 500 }}>Booked ({slot.bookedBy})</span>
+                          ) : (
+                            <span style={{ color: '#10b981', fontWeight: 500 }}>Available</span>
+                          )}
+                        </td>
+                        <td>
+                          <button
+                            type="button"
+                            className={styles.certReloadButton}
+                            style={{ color: '#ef4444', borderColor: '#ef4444' }}
+                            onClick={() => handleDeleteSlot(slot._id)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
 
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>

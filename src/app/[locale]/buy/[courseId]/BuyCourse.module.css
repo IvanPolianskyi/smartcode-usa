@@ -381,10 +381,28 @@
 	transform: translateY(-1px);
 }
 
+.legalNote {
+	font-size: 0.75rem;
+	line-height: 1.5;
+	color: rgba(148, 163, 184, 0.95);
+	margin-top: 0.75rem;
+	text-align: center;
+}
+
+.legalNote a {
+	color: #60a5fa;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
 	.page {
-		padding: 5rem 1rem 3rem;
+		padding: 5rem 0.75rem 3rem;
+	}
+
+	.container {
+		max-width: 100%;
 	}
 
 	.authCard,
@@ -393,18 +411,37 @@
 	}
 
 	.hero {
-		padding: 2.5rem 1.5rem;
+		padding: 2rem 1.25rem;
 	}
 
 	.body {
-		padding: 2rem 1.5rem;
+		padding: 1.75rem 1.25rem;
 	}
 
 	.title {
-		font-size: 1.5rem;
+		font-size: 1.35rem;
 	}
 
 	.price {
 		font-size: 2rem;
+	}
+
+	.fieldRow {
+		grid-template-columns: 1fr;
+	}
+
+	.input {
+		font-size: 0.9rem;
+		padding: 0.7rem 0.85rem;
+	}
+
+	.submitBtn {
+		font-size: 1rem;
+		padding: 1rem 1.25rem;
+		border-radius: 14px;
+	}
+
+	.description {
+		font-size: 0.92rem;
 	}
 }

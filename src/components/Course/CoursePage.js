@@ -257,15 +257,6 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                   <Play className="w-6 h-6" fill="currentColor" aria-hidden />
                   {tCourse('continueLearning')}
                 </Link>
-                <div className={styles.mascotWrap} aria-hidden="true">
-                  <Image
-                    src="/images/mascot-elephant.svg"
-                    alt=""
-                    width={88}
-                    height={88}
-                    className={styles.mascotImg}
-                  />
-                </div>
               </div>
             </div>
 
@@ -464,9 +455,6 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
 
       <section className={styles.ctaSection}>
         <div className={styles.ctaCard}>
-          <div className={styles.ctaMascot} aria-hidden="true">
-            <Image src="/images/mascot-elephant.svg" alt="" width={72} height={72} />
-          </div>
           <h2 className={styles.ctaTitle}>{tCourse('ctaTitle')}</h2>
           <p className={styles.ctaDescription}>
             {tCourse('ctaDescription', { progress })}

@@ -33,7 +33,7 @@ export default function EnCourseStore({ user, progressData, getCourseInfo }) {
   const ownedIds = useMemo(() => getStudentAccessibleCourseIds(user), [user])
 
   const storeCourses = getEnPurchasableFullCourses()
-  const toBuy = storeCourses.filter((c) => !purchasedSet.has(c.courseId))
+  const toBuy = storeCourses.filter((c) => !ownedIds.includes(c.courseId))
 
   const handleBuy = async (courseId) => {
     setError('')

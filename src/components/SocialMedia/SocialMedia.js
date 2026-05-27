@@ -133,7 +133,7 @@ const SocialMedia = () => {
 	}, [accountIdsKey])
 
 	return (
-		<section id="social-media" className={styles.section}>
+		<section id="social-media" className={`${styles.section} ${isEn ? styles.hideOnDesktopEn : ''}`}>
 			<div className={styles.container}>
 				<div className={styles.header}>
 					<div className={styles.badge}>

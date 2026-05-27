@@ -15,7 +15,7 @@ function parseSlot(item) {
   const hours = Number(hh)
   const minutes = Number(mm)
   if (!Number.isFinite(hours) || !Number.isFinite(minutes)) return null
-  return { dayKey, dayIndex: DAY_INDEX[dayKey], hours, minutes, time: item.time }
+  return { dayKey, dayIndex: DAY_INDEX[dayKey], hours, minutes, time: item.time, zoomLink: item.zoomLink }
 }
 
 function getNextOccurrence(slot, from = new Date()) {
@@ -70,8 +70,9 @@ export default function WeeklyScheduleCalendar({
       const enriched = daySlots
         .map((slot) => {
           const lessonAt = getNextOccurrence(slot, now)
-          const joinActive = Boolean(zoomLink) && isJoinWindow(lessonAt, now)
-          return { ...slot, lessonAt, joinActive }
+          const slotZoomLink = slot.zoomLink || zoomLink
+          const joinActive = Boolean(slotZoomLink) && isJoinWindow(lessonAt, now)
+          return { ...slot, lessonAt, joinActive, slotZoomLink }
         })
         .sort((a, b) => a.hours * 60 + a.minutes - (b.hours * 60 + b.minutes))
 
@@ -146,13 +147,13 @@ export default function WeeklyScheduleCalendar({
                       <button
                         type="button"
                         className={styles.scheduleJoinBtn}
-                        disabled={!slot.joinActive}
+                        disabled={!slot.slotZoomLink}
                         onClick={() =>
-                          zoomLink && window.open(zoomLink, '_blank', 'noopener,noreferrer')
+                          slot.slotZoomLink && window.open(slot.slotZoomLink, '_blank', 'noopener,noreferrer')
                         }
                       >
                         <Video size={15} />
-                        {slot.joinActive
+                        {slot.slotZoomLink
                           ? t('student.calendar.joinNow')
                           : t('student.calendar.joinSoon')}
                       </button>

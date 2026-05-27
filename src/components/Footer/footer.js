@@ -15,6 +15,8 @@ import {
 import TikTokIcon from '@/components/Icons/TikTokIcon'
 import Image from 'next/image'
 import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher'
+import FooterMerchantInfo from '@/components/Legal/FooterMerchantInfo'
+import PaymentLogos from './PaymentLogos'
 
 const Footer = () => {
 	const t = useTranslations('footer')
@@ -49,7 +51,7 @@ const Footer = () => {
 
 	const supportLinks = [
 		...(!isEn ? [{ name: t('supportLinks.faq'), href: '/#faq' }] : []),
-		{ name: t('supportLinks.offer'), href: isEn ? '/terms' : '/api/oferta-pdf', useAnchor: !isEn },
+		{ name: t('supportLinks.offer'), href: isEn ? '/oferta' : '/api/oferta-pdf', useAnchor: !isEn },
 		...(isEn ? [
 			{ name: t('supportLinks.refund'), href: '/refund', useAnchor: false },
 			{ name: t('supportLinks.privacy'), href: '/privacy', useAnchor: false }
@@ -214,11 +216,16 @@ const Footer = () => {
 
 
 
+				{isEn ? <FooterMerchantInfo /> : null}
+
 				<div className={styles.divider}></div>
 
 				<div className={styles.bottomSection}>
-					<div className={styles.copyright}>
-						{t('copyright', { year: currentYear })}
+					<div className={styles.copyrightContainer}>
+						<div className={styles.copyright}>
+							{t('copyright', { year: currentYear })}
+						</div>
+						<PaymentLogos />
 					</div>
 					<LanguageSwitcher className={styles.langSwitcher} />
 					<div className={styles.socialLinks}>

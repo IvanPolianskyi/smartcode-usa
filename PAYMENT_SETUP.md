@@ -40,6 +40,29 @@ https://yourdomain.com/api/payment/webhook
 https://your-project.vercel.app/api/payment/webhook
 ```
 
+## Юридичні сторінки для WayForPay (EN)
+
+На `/en` мають бути доступні (вимоги WayForPay):
+
+- `/en/oferta` — публічна оферта (Terms of Service)
+- `/en/privacy` — політика конфіденційності
+- `/en/refund` — політика повернення коштів
+- Контакти продавця у футері та на юридичних сторінках
+
+Реквізити задаються через `.env` (див. нижче). Без `NEXT_PUBLIC_MERCHANT_TAX_ID` та адрес заявка в WayForPay може бути відхилена.
+
+```env
+NEXT_PUBLIC_MERCHANT_LEGAL_NAME_UK=ФОП Полянський Іван Іванович
+NEXT_PUBLIC_MERCHANT_LEGAL_NAME_EN=Private Entrepreneur Ivan Ivanovych Polyanskyi (FOP)
+NEXT_PUBLIC_MERCHANT_TAX_ID=3923908357
+NEXT_PUBLIC_MERCHANT_LEGAL_ADDRESS=79000, м. Львів, вул. Пасічна, буд. 162 (офісний центр IQ Park)
+NEXT_PUBLIC_MERCHANT_ACTUAL_ADDRESS=79000, м. Львів, вул. Пасічна, буд. 162 (офісний центр IQ Park)
+NEXT_PUBLIC_MERCHANT_PHONE=+380951457248
+NEXT_PUBLIC_MERCHANT_EMAIL=smartcodeacadem@gmail.com
+NEXT_PUBLIC_MERCHANT_WEBSITE=https://smartcode-academy.com
+NEXT_PUBLIC_MERCHANT_IBAN=UA123220010000026002380006329
+```
+
 ## WayForPay (англійська версія сайту)
 
 Для курсу **Roblox Studio** та бронювання живих уроків на `/en` використовується **WayForPay** (USD, Apple Pay, Google Pay).

@@ -40,32 +40,34 @@ export async function POST(request) {
     )
 
     if (approved) {
-      if (payment.userId) {
-        if (payment.paymentType === 'full_course') {
-          await grantFullCourseAccess(payment.userId, payment.courseId)
-        } else if (payment.paymentType === 'live_lesson_en') {
-          await grantEnLiveLessonAccess(payment.userId, payment.courseId, {
+      if (payment.paymentType === 'full_course' && payment.userId) {
+        await grantFullCourseAccess(payment.userId, payment.courseId)
+      } else if (payment.paymentType === 'live_lesson_en') {
+        // Handle both logged-in and guest checkouts for live lessons
+        const identifier = payment.userId || payment.guestEmail
+        if (identifier) {
+          await grantEnLiveLessonAccess(identifier, payment.courseId, {
             lessonFormat: payment.lessonFormat,
             day: payment.scheduleDay,
             time: payment.scheduleTime,
           })
-        } else if (payment.paymentType === 'lesson_topup') {
-          const usersCollection = await getCollection('users')
-          const creditedLessons = Number(
-            payment.creditedLessons || Math.floor(Number(payment.amount) / Number(payment.lessonPrice || 1))
-          )
-          const paidAmount = Number(body.amount) || Number(payment.amount) || 0
-          await usersCollection.updateOne(
-            { _id: payment.userId },
-            {
-              $inc: {
-                'studentProfile.lessonCredits': creditedLessons,
-                'studentProfile.accountBalance': paidAmount,
-              },
-              $set: { updatedAt: new Date() },
-            }
-          )
         }
+      } else if ((payment.paymentType === 'lesson_topup' || payment.paymentType === 'lesson_topup_en') && payment.userId) {
+        const usersCollection = await getCollection('users')
+        const creditedLessons = Number(
+          payment.creditedLessons || Math.floor(Number(payment.amount) / Number(payment.lessonPrice || 1))
+        )
+        const paidAmount = Number(body.amount) || Number(payment.amount) || 0
+        await usersCollection.updateOne(
+          { _id: payment.userId },
+          {
+            $inc: {
+              'studentProfile.lessonCredits': creditedLessons,
+              'studentProfile.accountBalance': paidAmount,
+            },
+            $set: { updatedAt: new Date() },
+          }
+        )
       }
     }
 
