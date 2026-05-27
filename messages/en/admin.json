@@ -22,7 +22,10 @@
     "totalPaymentAttempts": "{count} total attempts",
     "totalRevenue": "Total revenue",
     "pendingPayments": "{count} pending",
-    "pendingPaymentsLink": "View pending payments"
+    "pendingPaymentsLink": "View pending payments",
+    "wayforpayCompleted": "WayForPay: completed",
+    "wayforpayBreakdown": "Pending: {pending} · Failed: {failed}",
+    "wayforpayRevenue": "Revenue (by currency): {amount}"
   },
   "pendingPayments": {
     "title": "Pending payments",

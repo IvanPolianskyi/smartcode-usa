@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import { getCollection } from '@/lib/mongodb'
 import { hashPassword, generateToken, setAuthCookie } from '@/lib/auth'
 import { syncStudentToCrm } from '@/lib/crmStudentSchedulePull'
+import { notifyCrmStudentLinksRefresh } from '@/lib/notifyCrmStudentLinks'
 
 export async function POST(request) {
   try {
@@ -69,6 +70,12 @@ export async function POST(request) {
     const result = await usersCollection.insertOne(user)
     const userId = result.insertedId.toString()
     const userObjectId = result.insertedId
+
+    notifyCrmStudentLinksRefresh({
+      userId,
+      email: user.email,
+      name: user.name,
+    }).catch(() => {})
 
     // Handle claimOrder for guest checkout
     if (claimOrder) {

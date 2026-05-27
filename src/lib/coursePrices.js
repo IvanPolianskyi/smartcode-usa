@@ -62,7 +62,7 @@ export function getCoursePrice(courseId, locale = 'uk') {
     }
   }
 
-  return info
+  return { ...info, purchasable: false }
 }
 
 export function getLessonPrice(format, locale = 'uk') {

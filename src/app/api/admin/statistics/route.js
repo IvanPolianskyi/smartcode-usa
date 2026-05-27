@@ -48,13 +48,49 @@ export async function GET() {
         const allPayments = await collection.find({}).toArray()
         const completed = allPayments.filter(p => p.status === 'completed')
         const totalRevenue = completed.reduce((sum, p) => sum + (p.amount || 0), 0)
+        const byMethod = allPayments.reduce((acc, payment) => {
+          const method = payment.paymentMethod || 'unknown'
+          if (!acc[method]) {
+            acc[method] = {
+              total: 0,
+              completed: 0,
+              pending: 0,
+              failed: 0,
+              totalRevenue: 0,
+              currencies: {},
+            }
+          }
+          const bucket = acc[method]
+          bucket.total += 1
+          if (payment.status === 'completed') {
+            bucket.completed += 1
+            bucket.totalRevenue += Number(payment.amount || 0)
+            const currency = payment.currency || 'UNKNOWN'
+            bucket.currencies[currency] =
+              (bucket.currencies[currency] || 0) + Number(payment.amount || 0)
+          } else if (payment.status === 'pending') {
+            bucket.pending += 1
+          } else {
+            bucket.failed += 1
+          }
+          return acc
+        }, {})
         
         return {
           total: allPayments.length,
           completed: completed.length,
           pending: allPayments.filter(p => p.status === 'pending').length,
           failed: allPayments.filter(p => p.status === 'failed').length,
-          totalRevenue: totalRevenue
+          totalRevenue: totalRevenue,
+          byMethod,
+          wayforpay: byMethod.wayforpay || {
+            total: 0,
+            completed: 0,
+            pending: 0,
+            failed: 0,
+            totalRevenue: 0,
+            currencies: {},
+          },
         }
       }),
       // User statistics

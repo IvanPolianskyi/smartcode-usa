@@ -1,5 +1,9 @@
 import { ObjectId } from 'mongodb'
-import { DEFAULT_LMS_STUDENT_NAME, isPlaceholderStudentName } from '@/lib/crmLmsSync'
+import {
+  DEFAULT_LMS_STUDENT_NAME,
+  isPlaceholderStudentName,
+  isReliableStudentDisplayName,
+} from '@/lib/crmLmsSync'
 
 const CRM_BASE_URL = process.env.CRM_API_URL || process.env.SMARTCODE_CRM_API_URL || ''
 const CRM_NICKNAME = process.env.CRM_ACCOUNT_NICKNAME || process.env.ACCOUNT_NICKNAME || ''
@@ -417,7 +421,11 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
   const crmFullName = String(crmStudent.full_name || '').trim()
   const profileSet = { studentProfile: nextProfile, updatedAt: new Date() }
   let nextName = student.name
-  if (crmFullName && isPlaceholderStudentName(student.name)) {
+  if (
+    crmFullName &&
+    isReliableStudentDisplayName(crmFullName) &&
+    isPlaceholderStudentName(student.name)
+  ) {
     profileSet.name = crmFullName
     nextName = crmFullName
   }

@@ -1,15 +1,12 @@
 import { readFile } from 'fs/promises'
 import { join } from 'path'
 import { NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
 import { ofertaDownloadFilename } from '@/lib/localeStrings'
 
 const SOURCE_FILE = 'oferta.pdf'
 
 export async function GET() {
-  const cookieStore = await cookies()
-  const locale = cookieStore.get('NEXT_LOCALE')?.value
-  const downloadName = ofertaDownloadFilename(locale)
+  const downloadName = ofertaDownloadFilename()
   const filePath = join(process.cwd(), SOURCE_FILE)
   try {
     const buf = await readFile(filePath)

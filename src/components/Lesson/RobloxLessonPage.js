@@ -98,12 +98,6 @@ const RobloxLessonPage = ({
         } catch (err) {
           console.error('Failed to track click', err)
         }
-        
-        import('react-toastify').then(({ toast }) => {
-          toast.info(t('comingSoon') || 'Coming soon')
-        })
-        setIsPurchasing(false)
-        return
       }
 
       const { paymentUrl } = await createPayment(courseId, locale)
@@ -194,7 +188,9 @@ const RobloxLessonPage = ({
                 <Link href={`/courses/${courseId}`} className={styles.btnPrimary}>
                   {t('returnToCourse')}
                 </Link>
-                {coursePrice?.price > 0 && coursePrice.purchasable !== false && (
+                {locale === 'en' &&
+                  coursePrice?.price > 0 &&
+                  coursePrice.purchasable !== false && (
                   <button
                     type="button"
                     className={styles.btnSecondary}

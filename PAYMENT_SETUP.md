@@ -44,7 +44,7 @@ https://your-project.vercel.app/api/payment/webhook
 
 На `/en` мають бути доступні (вимоги WayForPay):
 
-- `/en/oferta` — публічна оферта (Terms of Service)
+- `/oferta` та `/en/oferta` — **єдина** двомовна публічна оферта (UA + EN на одній сторінці; вимога WayForPay)
 - `/en/privacy` — політика конфіденційності
 - `/en/refund` — політика повернення коштів
 - Контакти продавця у футері та на юридичних сторінках

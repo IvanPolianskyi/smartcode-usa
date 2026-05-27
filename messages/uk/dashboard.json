@@ -87,6 +87,8 @@
       "purchased": "Повний доступ",
       "locked": "Заблоковано",
       "lockedHint": "Придбайте курс, щоб відкрити всі уроки",
+      "lockedViaLessonsRoblox": "Щоб отримати доступ до курсу, відвідуйте уроки з Roblox Studio в онлайн-групі SmartCode.",
+      "lockedViaLessonsPython": "Щоб отримати доступ до курсу, відвідуйте уроки з Python в онлайн-групі SmartCode.",
       "unlockCta": "Отримати доступ",
       "preview": "Дізнатися більше",
       "goTo": "Перейти",

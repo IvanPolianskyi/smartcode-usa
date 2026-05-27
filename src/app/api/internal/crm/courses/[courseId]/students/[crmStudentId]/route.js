@@ -18,8 +18,20 @@ export async function PUT(request, { params }) {
       body = {}
     }
     const enabled = body.enabled !== false
-    await upsertUserFromCrm({ crmStudentId }).catch(() => {})
-    const result = await grantCourseAccessForCrmStudent(crmStudentId, courseId, { enabled })
+    const smartcodeUserId = String(
+      body.smartcodeUserId || body.smartcode_user_id || ''
+    ).trim()
+    const email = String(body.email || '').trim()
+    await upsertUserFromCrm({
+      crmStudentId,
+      smartcodeUserId: smartcodeUserId || undefined,
+      email: email || undefined,
+    }).catch(() => {})
+    const result = await grantCourseAccessForCrmStudent(crmStudentId, courseId, {
+      enabled,
+      smartcodeUserId,
+      email,
+    })
     return NextResponse.json({ ok: true, ...result })
   } catch (error) {
     return NextResponse.json({ error: String(error.message || error) }, { status: 400 })

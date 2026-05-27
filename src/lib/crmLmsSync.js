@@ -54,12 +54,116 @@ export async function findUserByCrmStudentId(crmStudentId, usersCollection) {
   return coll.findOne({ 'studentProfile.crmStudentId': String(crmStudentId) })
 }
 
+/**
+ * Знайти LMS-учня для відкриття курсу з CRM (crmStudentId, smartcode_user_id або email).
+ * Якщо знайдено за ObjectId сайту — дописує crmStudentId у профіль.
+ */
+export async function findUserForCrmGrant(
+  crmStudentId,
+  { smartcodeUserId = '', email = '' } = {},
+  usersCollection
+) {
+  const coll = usersCollection || (await getCollection('users'))
+  const crmId = String(crmStudentId || '').trim()
+
+  if (crmId) {
+    const byCrm = await findUserByCrmStudentId(crmId, coll)
+    if (byCrm) return byCrm
+  }
+
+  const scUid = String(smartcodeUserId || '').trim()
+  if (scUid && ObjectId.isValid(scUid)) {
+    const bySite = await coll.findOne({ _id: new ObjectId(scUid) })
+    if (bySite) {
+      if (crmId && String(bySite.studentProfile?.crmStudentId || '') !== crmId) {
+        const prev = bySite.studentProfile || defaultStudentProfile()
+        await coll.updateOne(
+          { _id: bySite._id },
+          {
+            $set: {
+              studentProfile: { ...prev, crmStudentId: crmId, accountReady: true },
+              updatedAt: new Date(),
+            },
+          }
+        )
+        return coll.findOne({ _id: bySite._id })
+      }
+      return bySite
+    }
+  }
+
+  const em = normalizeEmail(email)
+  if (em) {
+    const byEmail = await coll.findOne({ email: em })
+    if (byEmail) {
+      if (crmId && String(byEmail.studentProfile?.crmStudentId || '') !== crmId) {
+        const prev = byEmail.studentProfile || defaultStudentProfile()
+        await coll.updateOne(
+          { _id: byEmail._id },
+          {
+            $set: {
+              studentProfile: { ...prev, crmStudentId: crmId, accountReady: true },
+              updatedAt: new Date(),
+            },
+          }
+        )
+        return coll.findOne({ _id: byEmail._id })
+      }
+      return byEmail
+    }
+  }
+
+  return null
+}
+
+async function ensureCourseProgressRecord(userObjectId, courseId) {
+  const progressCollection = await getCollection('userProgress')
+  const existing = await progressCollection.findOne({
+    userId: userObjectId,
+    courseId,
+  })
+  if (existing) return
+  await progressCollection.insertOne({
+    userId: userObjectId,
+    courseId,
+    enrolledAt: new Date(),
+    completedLessons: [],
+    completedQuizzes: {},
+    completedPracticeTasks: {},
+    currentModule: 0,
+    currentLesson: 0,
+    overallProgress: 0,
+    certificates: [],
+  })
+}
+
 /** Placeholder when CRM/LMS has no display name yet — must not overwrite a real name on sync. */
 export const DEFAULT_LMS_STUDENT_NAME = 'Учень SmartCode'
 
+/** CRM default for trial lessons without a real name (see lessons.py). */
+export const CRM_TRIAL_PLACEHOLDER_NAME = 'Пробний урок'
+
 export function isPlaceholderStudentName(name) {
   const value = String(name || '').trim()
-  return !value || value === DEFAULT_LMS_STUDENT_NAME
+  return (
+    !value ||
+    value === DEFAULT_LMS_STUDENT_NAME ||
+    value === CRM_TRIAL_PLACEHOLDER_NAME
+  )
+}
+
+/** Назва як у Google Calendar (ПУ · код · …), не справжнє імʼя. */
+export function isCalendarEventStyleName(name) {
+  const value = String(name || '').trim()
+  if (!value) return false
+  if (value.includes(' · ')) return true
+  if (/^(ПУ|ІУ|ГУ)\b/.test(value)) return true
+  if (/^Вільні години/i.test(value)) return true
+  return false
+}
+
+export function isReliableStudentDisplayName(name) {
+  return !isPlaceholderStudentName(name) && !isCalendarEventStyleName(name)
 }
 
 function resolveNameFromCrmPayload(payload) {
@@ -107,10 +211,16 @@ export async function upsertUserFromCrm(payload) {
       studentProfile: { ...prev, ...profilePatch },
       updatedAt: new Date(),
     }
-    if (crmName) {
-      setFields.name = crmName
-    } else if (!user.name) {
-      setFields.name = DEFAULT_LMS_STUDENT_NAME
+    // При ручній привʼязці — імʼя з реєстрації LMS, не з CRM/календаря.
+    const isLinkingExistingLmsUser = Boolean(explicitUserId)
+    if (!isLinkingExistingLmsUser) {
+      if (crmName && isReliableStudentDisplayName(crmName)) {
+        if (!user.name || isPlaceholderStudentName(user.name)) {
+          setFields.name = crmName
+        }
+      } else if (!user.name || isPlaceholderStudentName(user.name)) {
+        setFields.name = DEFAULT_LMS_STUDENT_NAME
+      }
     }
     await usersCollection.updateOne(
       { _id: user._id },
@@ -152,16 +262,26 @@ export async function upsertUserFromCrm(payload) {
   }
 }
 
-export async function grantCourseAccessForCrmStudent(crmStudentId, courseId, { enabled = true } = {}) {
+export async function grantCourseAccessForCrmStudent(
+  crmStudentId,
+  courseId,
+  { enabled = true, smartcodeUserId = '', email = '' } = {}
+) {
   const catalogIds = LMS_COURSE_CATALOG.map((c) => c.id)
   if (!catalogIds.includes(courseId)) {
     throw new Error('Unknown courseId')
   }
 
   const usersCollection = await getCollection('users')
-  let user = await findUserByCrmStudentId(crmStudentId, usersCollection)
+  const user = await findUserForCrmGrant(
+    crmStudentId,
+    { smartcodeUserId, email },
+    usersCollection
+  )
   if (!user) {
-    throw new Error('Користувача LMS не знайдено. Спочатку синхронізуйте учня з CRM')
+    throw new Error(
+      'Користувача SmartCode не знайдено. Спочатку привʼяжіть акаунт на сторінці «Звʼязки» або додайте email учню в CRM.'
+    )
   }
 
   const profile = { ...(user.studentProfile || defaultStudentProfile()) }
@@ -190,6 +310,10 @@ export async function grantCourseAccessForCrmStudent(crmStudentId, courseId, { e
       $addToSet: { enrolledCourses: courseId },
     }
   )
+
+  if (enabled) {
+    await ensureCourseProgressRecord(user._id, courseId)
+  }
 
   return { userId: user._id.toString(), courseId, enabled }
 }

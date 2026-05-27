@@ -334,6 +334,21 @@ export default function AdminPanelPage() {
     }).format(amount)
   }
 
+  const formatWayforpayRevenue = (currencies) => {
+    if (!currencies || Object.keys(currencies).length === 0) return '0'
+    return Object.entries(currencies)
+      .filter(([, amount]) => Number(amount) > 0)
+      .map(([currency, amount]) =>
+        new Intl.NumberFormat(dateLocale, {
+          style: 'currency',
+          currency,
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        }).format(Number(amount))
+      )
+      .join(' / ')
+  }
+
   const formatDate = (date) => {
     if (!date) return t('notAvailable')
     return new Date(date).toLocaleDateString(dateLocale, {
@@ -460,6 +475,31 @@ export default function AdminPanelPage() {
                 <div className={styles.statLabel}>EN Buy Clicks</div>
                 <div className={styles.statSubLabel}>
                   Interest in EN courses
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.statCard}>
+              <div className={styles.statIcon} style={{ backgroundColor: '#ede9fe' }}>
+                <DollarSign size={24} color="#7c3aed" />
+              </div>
+              <div className={styles.statContent}>
+                <div className={styles.statValue}>
+                  {stats.payments?.wayforpay?.completed || 0}
+                </div>
+                <div className={styles.statLabel}>{t('stats.wayforpayCompleted')}</div>
+                <div className={styles.statSubLabel}>
+                  {t('stats.wayforpayBreakdown', {
+                    pending: stats.payments?.wayforpay?.pending || 0,
+                    failed: stats.payments?.wayforpay?.failed || 0,
+                  })}
+                </div>
+                <div className={styles.statSubLabel}>
+                  {t('stats.wayforpayRevenue', {
+                    amount: formatWayforpayRevenue(
+                      stats.payments?.wayforpay?.currencies || {}
+                    ),
+                  })}
                 </div>
               </div>
             </div>

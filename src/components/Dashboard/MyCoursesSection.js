@@ -15,6 +15,11 @@ const COURSE_PATHS = {
   'python-developer-zero-to-junior': '/courses/python-developer-zero-to-junior',
 }
 
+const UK_LOCKED_HINT_KEYS = {
+  'roblox-studio': 'lockedViaLessonsRoblox',
+  'python-developer-zero-to-junior': 'lockedViaLessonsPython',
+}
+
 function isCourseOwned(user, courseId) {
   if ((user?.purchasedCourses || []).includes(courseId)) return true
   if ((user?.studentProfile?.activeOnlineCourses || []).includes(courseId)) return true
@@ -62,10 +67,13 @@ export default function MyCoursesSection({
     const progress = owned ? progressData?.[courseId]?.overallProgress || 0 : 0
     const href = COURSE_PATHS[courseId] || course.link
     const priceInfo = getCoursePrice(courseId, locale)
+    const isUkLocale = locale === 'uk'
     const canBuyOnline =
-      locale === 'en'
+      !isUkLocale &&
+      (locale === 'en'
         ? enPurchasableIds.has(courseId)
-        : Boolean(priceInfo?.price > 0 && priceInfo.purchasable !== false)
+        : Boolean(priceInfo?.price > 0 && priceInfo.purchasable !== false))
+    const lockedHintKey = UK_LOCKED_HINT_KEYS[courseId]
 
     if (!owned) {
       return (
@@ -86,26 +94,40 @@ export default function MyCoursesSection({
               <h4>{course.title}</h4>
               <ProgressRing value={0} size={56} stroke={5} muted />
             </div>
-            <p className={styles.courseCardDesc}>{t('lockedHint')}</p>
+            <p className={styles.courseCardDesc}>
+              {isUkLocale && lockedHintKey ? t(lockedHintKey) : t('lockedHint')}
+            </p>
             {canBuyOnline && priceInfo?.price > 0 ? (
               <p className={styles.courseCardPrice}>
                 {formatPrice(priceInfo.price, priceInfo.currency, locale)}
               </p>
             ) : null}
             <div className={styles.courseCardActions}>
-              <button
-                type="button"
-                className={styles.resumeBtn}
-                disabled={canBuyOnline && loadingId === courseId}
-                onClick={() =>
-                  canBuyOnline ? handleBuy(courseId) : onRequestAccess?.()
-                }
-              >
-                <Lock size={16} />
-                {canBuyOnline && loadingId === courseId
-                  ? tStore('processing')
-                  : t('unlockCta')}
-              </button>
+              {canBuyOnline ? (
+                <button
+                  type="button"
+                  className={styles.resumeBtn}
+                  disabled={loadingId === courseId}
+                  onClick={() => handleBuy(courseId)}
+                >
+                  <Lock size={16} />
+                  {loadingId === courseId ? tStore('processing') : t('unlockCta')}
+                </button>
+              ) : isUkLocale ? (
+                <Link href={href} className={styles.resumeBtn}>
+                  <BookOpen size={16} />
+                  {t('preview')}
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  className={styles.resumeBtn}
+                  onClick={() => onRequestAccess?.()}
+                >
+                  <Lock size={16} />
+                  {t('unlockCta')}
+                </button>
+              )}
             </div>
           </div>
         </article>

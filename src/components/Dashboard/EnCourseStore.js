@@ -49,9 +49,8 @@ export default function EnCourseStore({ user, progressData, getCourseInfo }) {
         console.error('Failed to track click', err)
       }
 
-      import('react-toastify').then(({ toast }) => {
-        toast.info(tStore('comingSoon') || 'Coming soon')
-      })
+      const { paymentUrl } = await createPayment(courseId, 'en')
+      if (paymentUrl) window.location.href = paymentUrl
     } catch (err) {
       setError(err.message || tStore('errors.failed'))
     } finally {

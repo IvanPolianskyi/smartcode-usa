@@ -77,6 +77,6 @@ export function paymentDescription(courseName, locale) {
   return `Оплата курсу: ${courseName}`
 }
 
-export function ofertaDownloadFilename(locale) {
-  return resolveLocale(locale) === 'en' ? 'Terms-of-Service.pdf' : 'Публічна оферта.pdf'
+export function ofertaDownloadFilename() {
+  return 'SmartCode-Academy-Public-Offer.pdf'
 }

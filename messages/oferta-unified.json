@@ -1,0 +1,458 @@
+{
+  "metadata": {
+    "title": "Публічна оферта / Public offer - SmartCode Academy",
+    "description": "Єдина публічна оферта SmartCode Academy (українська та англійська версії). Умови оплати через WayForPay, повернення коштів, контакти продавця."
+  },
+  "title": "Публічна оферта / Public offer",
+  "subtitle": "Єдиний договір публічної оферти про надання освітніх послуг (українська та англійська мови)",
+  "languageNote": "Документ має однакову юридичну силу українською та англійською мовами. У разі розбіжностей пріоритет має українська версія.",
+  "downloadPdf": "Завантажити PDF / Download PDF",
+  "sections": {
+    "1": {
+      "uk": {
+        "title": "1. Загальні положення",
+        "paragraphs": {
+          "0": "Цей документ є публічною офертою (далі — «Оферта») про надання освітніх послуг у сфері програмування та інформаційних технологій (далі — «Послуги») відповідно до статей 633, 641, 642 Цивільного кодексу України.",
+          "1": "Виконавець: SmartCode Academy (далі — «Виконавець») надає послуги з навчання програмуванню через онлайн-уроки та навчальні курси на сайті smartcode-academy.com.",
+          "2": "Акцептом (прийняттям) цієї Оферти є здійснення Замовником оплати Послуг, що означає повну згоду Замовника з умовами цієї Оферти.",
+          "3": "ВАЖЛИВО: SmartCode Academy обслуговує учнів віком 8–17 років. Усі покупки, договори та платіжні зобов'язання оформлює батько або законний опікун як Замовник. Неповнолітні не можуть самостійно здійснювати оплату на цьому сайті."
+        }
+      },
+      "en": {
+        "title": "1. General provisions",
+        "paragraphs": {
+          "0": "This document is a public offer (the \"Offer\") for the provision of educational services in programming and information technology (the \"Services\") in accordance with Articles 633, 641, and 642 of the Civil Code of Ukraine.",
+          "1": "Provider: SmartCode Academy (the \"Provider\") offers programming education through online lessons and training courses at smartcode-academy.com.",
+          "2": "Acceptance of this Offer occurs when the Customer pays for the Services, which constitutes full agreement with the terms of this Offer.",
+          "3": "IMPORTANT: SmartCode Academy serves students aged 8–17. All purchases, contracts, and payment obligations are entered into by a parent or legal guardian acting as the Customer. Minors may not complete purchases on this website."
+        }
+      }
+    },
+    "2": {
+      "uk": {
+        "title": "2. Предмет договору",
+        "intro": "Виконавець зобов'язується надати Замовнику освітні послуги у вигляді:",
+        "list": {
+          "onlineLessons": {
+            "title": "Онлайн-уроків з програмування",
+            "text": "індивідуальні та групові заняття в режимі реального часу через інтернет (Zoom або інша узгоджена платформа)"
+          },
+          "courses": {
+            "title": "Навчальних курсів",
+            "text": "структуровані програми навчання, зокрема:",
+            "sublist": {
+              "0": "Курси з Python",
+              "1": "Курси з веб-розробки (JavaScript, HTML, CSS)",
+              "2": "Курси з Unity",
+              "3": "Курси з Roblox Studio",
+              "4": "Інші курси, зазначені на сайті"
+            }
+          },
+          "materials": {
+            "title": "Додаткові матеріали",
+            "text": "навчальні матеріали, завдання, проєкти, доступ до платформи навчання"
+          }
+        }
+      },
+      "en": {
+        "title": "2. Subject of the agreement",
+        "intro": "The Provider undertakes to provide the Customer with educational services in the form of:",
+        "list": {
+          "onlineLessons": {
+            "title": "Online programming lessons",
+            "text": "individual and small-group sessions conducted in real time over the internet (Zoom or another agreed platform)"
+          },
+          "courses": {
+            "title": "Training courses",
+            "text": "structured learning programs, including:",
+            "sublist": {
+              "0": "Python programming courses",
+              "1": "Web development courses (JavaScript, HTML, CSS)",
+              "2": "Unity game development courses",
+              "3": "Roblox Studio game development courses",
+              "4": "Other courses listed on the website"
+            }
+          },
+          "materials": {
+            "title": "Additional materials",
+            "text": "learning materials, assignments, projects, and access to the learning platform"
+          }
+        }
+      }
+    },
+    "3": {
+      "uk": {
+        "title": "3. Правила і умови надання послуг",
+        "subsections": {
+          "order": {
+            "title": "3.1. Порядок надання послуг",
+            "items": {
+              "0": "Замовник обирає курс або формат навчання на smartcode-academy.com",
+              "1": "Замовник здійснює оплату одним із способів, зазначених у п. 3.3",
+              "2": "Після підтвердження оплати Виконавець надає доступ до навчальних матеріалів та платформи",
+              "3": "Онлайн-уроки проводяться за узгодженим розкладом",
+              "4": "Доступ до матеріалів — на період, зазначений в описі курсу"
+            }
+          },
+          "terms": {
+            "title": "3.2. Терміни надання послуг",
+            "items": {
+              "0": "Тривалість курсу вказана в описі кожного курсу на сайті",
+              "1": "Онлайн-уроки — за розкладом, узгодженим між Замовником і Виконавцем",
+              "2": "Доступ до матеріалів — з моменту підтвердження оплати до завершення курсу"
+            }
+          },
+          "payment": {
+            "title": "3.3. Способи оплати (WayForPay та інші)",
+            "intro": "Замовник може оплатити Послуги такими способами:",
+            "items": {
+              "wayforpay": {
+                "title": "Онлайн-оплата через WayForPay",
+                "text": "банківські картки Visa та Mastercard через платіжний шлюз WayForPay; на англійській версії сайту — у доларах США (USD), на українській — у гривнях (UAH) або іншій валюті, зазначеній на сторінці оплати"
+              },
+              "appleGoogle": {
+                "title": "Apple Pay та Google Pay",
+                "text": "доступні в checkout WayForPay, якщо підтримуються пристроєм та банком-емітентом картки"
+              },
+              "bank": {
+                "title": "Банківський переказ / квитанція",
+                "text": "для окремих форматів навчання на українській версії сайту — за реквізитами Виконавця, зазначеними в особистому кабінеті або узгодженими з Виконавцем"
+              }
+            },
+            "note": "Актуальні ціни відображаються на сторінці оформлення замовлення до підтвердження платежу. Оплата через WayForPay на міжнародній (англійській) версії сайту здійснюється в USD."
+          },
+          "delivery": {
+            "title": "3.4. Надання послуг (доставка)",
+            "text": "Послуги надаються виключно в електронному вигляді — фізична доставка товарів не здійснюється.",
+            "items": {
+              "0": "Регіони: Україна та інші країни, де є стабільний інтернет",
+              "1": "Самостійні курси: доступ через платформу smartcode-academy.com",
+              "2": "Живі уроки: дистанційно через Zoom (або іншу узгоджену платформу)",
+              "3": "Типовий термін активації доступу: до 24 годин після успішного підтвердження оплати WayForPay або іншим узгодженим способом"
+            }
+          },
+          "absences": {
+            "title": "3.5. Пропуски занять",
+            "text": "Якщо Замовник пропустив два (2) заплановані заняття без попереднього повідомлення Виконавця (месенджер або email), оплата за ці заняття може бути знята з балансу передоплати без повернення, оскільки час викладача було зарезервовано."
+          }
+        }
+      },
+      "en": {
+        "title": "3. Rules and terms of service",
+        "subsections": {
+          "order": {
+            "title": "3.1. Service delivery procedure",
+            "items": {
+              "0": "The Customer selects a course or learning format on smartcode-academy.com",
+              "1": "The Customer pays using one of the methods listed in section 3.3",
+              "2": "After payment confirmation, the Provider grants access to materials and the platform",
+              "3": "Online lessons are conducted according to an agreed schedule",
+              "4": "Access to materials is granted for the period stated in the course description"
+            }
+          },
+          "terms": {
+            "title": "3.2. Service duration",
+            "items": {
+              "0": "Course duration is specified in each course description on the website",
+              "1": "Online lessons follow a schedule agreed between the Customer and the Provider",
+              "2": "Access to materials is granted from payment confirmation until course completion"
+            }
+          },
+          "payment": {
+            "title": "3.3. Payment methods (WayForPay and others)",
+            "intro": "The Customer may pay using the following methods:",
+            "items": {
+              "wayforpay": {
+                "title": "Online payment via WayForPay",
+                "text": "Visa and Mastercard through the WayForPay payment gateway; USD on the English version of the website, UAH or other currency as shown on the checkout page on the Ukrainian version"
+              },
+              "appleGoogle": {
+                "title": "Apple Pay and Google Pay",
+                "text": "available in the WayForPay checkout where supported by the Customer's device and card issuer"
+              },
+              "bank": {
+                "title": "Bank transfer / receipt",
+                "text": "for certain lesson formats on the Ukrainian version — to the Provider's bank details shown in the dashboard or as agreed with the Provider"
+              }
+            },
+            "note": "Prices are displayed on the checkout page before payment is confirmed. WayForPay payments on the English (international) version of the website are processed in USD."
+          },
+          "delivery": {
+            "title": "3.4. Service delivery",
+            "text": "Services are provided electronically only — there is no physical shipping of goods.",
+            "items": {
+              "0": "Service regions: worldwide where the Customer has a stable internet connection",
+              "1": "Self-paced courses: access via the smartcode-academy.com learning platform",
+              "2": "Live lessons: delivered remotely via Zoom or another agreed platform",
+              "3": "Typical access activation: within 24 hours of successful WayForPay or other agreed payment confirmation"
+            }
+          },
+          "absences": {
+            "title": "3.5. Missed lessons",
+            "text": "If the Customer misses two (2) scheduled lessons without prior notice to the Provider (via messenger or email), payment for those lessons may be deducted from the prepaid balance and is non-refundable, as the instructor's time was reserved."
+          }
+        }
+      }
+    },
+    "4": {
+      "uk": {
+        "title": "4. Правила повернення коштів",
+        "subsections": {
+          "conditions": {
+            "title": "4.1. Умови повернення",
+            "intro": "Замовник має право відмовитися від послуг та повернути кошти у таких випадках:",
+            "items": {
+              "beforeStart": {
+                "title": "До початку надання послуг",
+                "text": "повне повернення до отримання доступу до курсу або до першого уроку"
+              },
+              "14days": {
+                "title": "У перші 14 днів",
+                "text": "повне повернення, якщо послуги не відповідають заявленій якості або опису"
+              },
+              "technical": {
+                "title": "Технічні проблеми",
+                "text": "повернення, якщо послуги неможливо надати з вини Виконавця"
+              }
+            }
+          },
+          "procedure": {
+            "title": "4.2. Порядок повернення",
+            "items": {
+              "0": "Письмова заявка на email Виконавця з причиною повернення",
+              "1": "Розгляд протягом 5 робочих днів",
+              "2": "Повернення на той самий спосіб оплати протягом 14 робочих днів",
+              "3": "Для банківського переказу — реквізити Замовника"
+            }
+          },
+          "noRefund": {
+            "title": "4.3. Випадки без повернення",
+            "items": {
+              "0": "Доступ до понад 30% матеріалів або понад 30% уроків відвідано",
+              "1": "Минуло понад 14 днів і послуги надані повністю",
+              "2": "Відмова з особистих причин, не пов'язаних з якістю послуг",
+              "3": "Порушення правил використання платформи"
+            }
+          },
+          "cancellation": {
+            "title": "4.4. Скасування транзакції",
+            "text": "Скасування можливе у випадках вище або за згодою сторін. При технічних помилках оплати Виконавець вирішує питання в найкоротші терміни."
+          }
+        }
+      },
+      "en": {
+        "title": "4. Refund policy",
+        "subsections": {
+          "conditions": {
+            "title": "4.1. Refund conditions",
+            "intro": "The Customer may cancel services and receive a refund in the following cases:",
+            "items": {
+              "beforeStart": {
+                "title": "Before services begin",
+                "text": "full refund if cancellation occurs before access to the course or the first lesson"
+              },
+              "14days": {
+                "title": "Within the first 14 days",
+                "text": "full refund if services do not match the stated quality or description"
+              },
+              "technical": {
+                "title": "Technical issues",
+                "text": "refund if services cannot be provided due to the Provider's fault"
+              }
+            }
+          },
+          "procedure": {
+            "title": "4.2. Refund procedure",
+            "items": {
+              "0": "Written refund request to the Provider's email stating the reason",
+              "1": "Review within 5 business days",
+              "2": "Refund to the same payment method within 14 business days",
+              "3": "For bank transfers, the Customer provides bank details"
+            }
+          },
+          "noRefund": {
+            "title": "4.3. Cases where refunds are not provided",
+            "items": {
+              "0": "More than 30% of course materials accessed or more than 30% of lessons attended",
+              "1": "More than 14 days have passed and services were fully provided",
+              "2": "Cancellation due to personal circumstances unrelated to service quality",
+              "3": "Violation of platform usage terms"
+            }
+          },
+          "cancellation": {
+            "title": "4.4. Transaction cancellation",
+            "text": "Cancellation is possible in the cases above or by mutual agreement. Technical payment errors are resolved as quickly as possible."
+          }
+        }
+      }
+    },
+    "5": {
+      "uk": {
+        "title": "5. Контактна інформація продавця (Виконавця)",
+        "fields": {
+          "companyName": { "label": "Повне найменування (UA):" },
+          "companyNameEn": { "label": "Legal name (EN):" },
+          "taxId": { "label": "ІПН / TIN:" },
+          "legalAddress": { "label": "Юридична адреса:" },
+          "actualAddress": { "label": "Фактична адреса:" },
+          "phone": { "label": "Телефон:" },
+          "email": { "label": "Email:" },
+          "website": { "label": "Веб-сайт (оферта):" },
+          "iban": { "label": "IBAN:" },
+          "bank": { "label": "Банк:" }
+        },
+        "publishedDate": "Дата публікації:"
+      },
+      "en": {
+        "title": "5. Seller contact information",
+        "fields": {
+          "companyName": { "label": "Legal name (UA):" },
+          "companyNameEn": { "label": "Legal name (EN):" },
+          "taxId": { "label": "Tax ID (TIN):" },
+          "legalAddress": { "label": "Legal address:" },
+          "actualAddress": { "label": "Physical address:" },
+          "phone": { "label": "Phone:" },
+          "email": { "label": "Email:" },
+          "website": { "label": "Website (this offer):" },
+          "iban": { "label": "IBAN:" },
+          "bank": { "label": "Bank:" }
+        },
+        "publishedDate": "Publication date:"
+      }
+    },
+    "6": {
+      "uk": {
+        "title": "6. Права та обов'язки сторін",
+        "subsections": {
+          "provider": {
+            "title": "6.1. Виконавець",
+            "items": {
+              "0": "Надавати послуги відповідно до Оферти та опису на сайті",
+              "1": "Забезпечувати доступ до матеріалів і платформи",
+              "2": "Проводити уроки за розкладом",
+              "3": "Зберігати конфіденційність персональних даних",
+              "4": "Може змінювати розклад за попереднім повідомленням",
+              "5": "Може відмовити в послугах при порушенні правил платформи"
+            }
+          },
+          "customer": {
+            "title": "6.2. Замовник",
+            "items": {
+              "0": "Своєчасно оплачувати послуги",
+              "1": "Дотримуватися правил платформи",
+              "2": "Не поширювати матеріали без дозволу",
+              "3": "Надавати достовірні дані при реєстрації",
+              "4": "Має право на послуги згідно з обраним курсом",
+              "5": "Має право на повернення згідно з розділом 4"
+            }
+          }
+        }
+      },
+      "en": {
+        "title": "6. Rights and obligations",
+        "subsections": {
+          "provider": {
+            "title": "6.1. Provider",
+            "items": {
+              "0": "Provide services per this Offer and the website description",
+              "1": "Ensure access to materials and the platform",
+              "2": "Conduct lessons per the agreed schedule",
+              "3": "Maintain confidentiality of personal data",
+              "4": "May change the schedule with prior notice",
+              "5": "May refuse services if platform terms are violated"
+            }
+          },
+          "customer": {
+            "title": "6.2. Customer",
+            "items": {
+              "0": "Pay for services on time",
+              "1": "Comply with platform rules",
+              "2": "Not distribute materials without permission",
+              "3": "Provide accurate registration information",
+              "4": "Has the right to receive services per the selected course",
+              "5": "Has the right to refunds per section 4"
+            }
+          }
+        }
+      }
+    },
+    "7": {
+      "uk": {
+        "title": "7. Відповідальність сторін",
+        "items": {
+          "0": "Виконавець не відповідає за проблеми інтернету або обладнання Замовника",
+          "1": "Виконавець не гарантує конкретний навчальний результат — він залежить від зусиль Замовника",
+          "2": "Замовник відповідає за збереження логіну та пароля",
+          "3": "При порушенні правил Виконавець може припинити послуги без повернення"
+        }
+      },
+      "en": {
+        "title": "7. Liability",
+        "items": {
+          "0": "The Provider is not liable for the Customer's internet or equipment issues",
+          "1": "Learning outcomes depend on the Customer's effort; specific results are not guaranteed",
+          "2": "The Customer is responsible for keeping login credentials secure",
+          "3": "The Provider may terminate services without refund if terms are violated"
+        }
+      }
+    },
+    "8": {
+      "uk": {
+        "title": "8. Зміни до Оферти",
+        "paragraphs": {
+          "0": "Виконавець може змінювати Оферту. Нова редакція діє з моменту публікації на smartcode-academy.com/oferta.",
+          "1": "Продовження користування послугами після змін означає прийняття нової редакції."
+        }
+      },
+      "en": {
+        "title": "8. Changes to the Offer",
+        "paragraphs": {
+          "0": "The Provider may amend this Offer. The new version takes effect upon publication at smartcode-academy.com/oferta.",
+          "1": "Continued use of services after changes constitutes acceptance of the new terms."
+        }
+      }
+    },
+    "9": {
+      "uk": {
+        "title": "9. Вирішення спорів",
+        "text": "Спори вирішуються переговорами; за відсутності згоди — відповідно до законодавства України в судовому порядку."
+      },
+      "en": {
+        "title": "9. Dispute resolution",
+        "text": "Disputes shall be resolved through negotiation; failing agreement, under the laws of Ukraine in the courts."
+      }
+    },
+    "10": {
+      "uk": {
+        "title": "10. Заключні положення",
+        "paragraphs": {
+          "0": "Оферта діє з моменту публікації на сайті до її відкликання Виконавцем.",
+          "1": "Оплата Послуг означає повну згоду Замовника з умовами цієї Оферти."
+        }
+      },
+      "en": {
+        "title": "10. Final provisions",
+        "paragraphs": {
+          "0": "This Offer remains in force from publication until withdrawn by the Provider.",
+          "1": "Payment for Services confirms the Customer's full agreement with this Offer."
+        }
+      }
+    },
+    "11": {
+      "uk": {
+        "title": "11. Захист персональних даних",
+        "paragraphs": {
+          "0": "Виконавець дотримується Закону України «Про захист персональних даних» та GDPR (для міжнародних клієнтів), де застосовно.",
+          "1": "Деталі — у Політиці конфіденційності на сайті."
+        }
+      },
+      "en": {
+        "title": "11. Personal data protection",
+        "paragraphs": {
+          "0": "The Provider complies with the Law of Ukraine \"On Personal Data Protection\" and the GDPR where applicable for international customers.",
+          "1": "Details are provided in the Privacy Policy on the website."
+        }
+      }
+    }
+  }
+}

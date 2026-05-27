@@ -51,7 +51,7 @@ const Footer = () => {
 
 	const supportLinks = [
 		...(!isEn ? [{ name: t('supportLinks.faq'), href: '/#faq' }] : []),
-		{ name: t('supportLinks.offer'), href: isEn ? '/oferta' : '/api/oferta-pdf', useAnchor: !isEn },
+		{ name: t('supportLinks.offer'), href: '/oferta', useAnchor: false },
 		...(isEn ? [
 			{ name: t('supportLinks.refund'), href: '/refund', useAnchor: false },
 			{ name: t('supportLinks.privacy'), href: '/privacy', useAnchor: false }

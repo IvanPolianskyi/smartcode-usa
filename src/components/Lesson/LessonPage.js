@@ -473,6 +473,13 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   // Find current module
   const currentModule = lessonModuleIndex >= 0 ? curriculum.modules[lessonModuleIndex] : null
   
+  const lockedDescription =
+    locale === 'uk'
+      ? courseId === 'roblox-studio'
+        ? t('lockedDescriptionRoblox')
+        : t('lockedDescriptionPython')
+      : t('lockedDescription')
+
   const handlePurchase = async () => {
     setIsPurchasing(true)
     try {
@@ -486,36 +493,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         } catch (err) {
           console.error('Failed to track click', err)
         }
-        
-        import('react-toastify').then(({ toast }) => {
-          toast.info(t('comingSoon') || 'Coming soon')
-        })
-        setIsPurchasing(false)
-        return
       }
 
-      // Create payment and redirect to payment page
-      const paymentData = await createPayment(courseId)
-
-      // Create form and submit to LiqPay
-      const form = document.createElement('form')
-      form.method = 'POST'
-      form.action = paymentData.paymentUrl
-      
-      const dataInput = document.createElement('input')
-      dataInput.type = 'hidden'
-      dataInput.name = 'data'
-      dataInput.value = paymentData.data
-      form.appendChild(dataInput)
-      
-      const signatureInput = document.createElement('input')
-      signatureInput.type = 'hidden'
-      signatureInput.name = 'signature'
-      signatureInput.value = paymentData.signature
-      form.appendChild(signatureInput)
-      
-      document.body.appendChild(form)
-      form.submit()
+      const paymentData = await createPayment(courseId, locale)
+      if (paymentData.paymentUrl) {
+        window.location.href = paymentData.paymentUrl
+      }
     } catch (error) {
       console.error('Purchase error:', error)
       alert(t('paymentError'))
@@ -540,7 +523,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           <Lock className="w-16 h-16" style={{ marginBottom: '1rem', opacity: 0.5 }} />
           <h2>{t('lockedTitle')}</h2>
           <p style={{ marginBottom: '2rem', textAlign: 'center', maxWidth: '500px' }}>
-            {t('lockedDescription')}
+            {lockedDescription}
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
             <Link 
@@ -549,7 +532,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
             >
               {t('returnToCourse')}
             </Link>
-            {userProgress && (
+            {locale === 'en' && userProgress && (
               <button
                 onClick={handlePurchase}
                 disabled={isPurchasing}
