@@ -33,11 +33,13 @@ export default function StudentPaymentPanel({
   t,
   paymentStats,
   scheduleCount = 0,
+  lessonPrice = 350,
   onRefresh,
   defaultOpen = false,
 }) {
   const [amount, setAmount] = useState('')
   const [lessonCount, setLessonCount] = useState('1')
+  const [lessonCountTouched, setLessonCountTouched] = useState(false)
   const [receiptFile, setReceiptFile] = useState(null)
   const [receiptPreviewUrl, setReceiptPreviewUrl] = useState(null)
   const receiptInputRef = useRef(null)
@@ -63,11 +65,27 @@ export default function StudentPaymentPanel({
     }
   }, [defaultOpen])
 
-  useEffect(() => {
-    if (debtLessons > 0) {
-      setLessonCount(String(debtLessons))
+  const lessonsFromAmount = useMemo(() => {
+    const num = Number(amount)
+    const price = Number(lessonPrice)
+    if (!Number.isFinite(num) || num <= 0 || !Number.isFinite(price) || price <= 0) {
+      return null
     }
-  }, [debtLessons])
+    return Math.floor(num / price)
+  }, [amount, lessonPrice])
+
+  useEffect(() => {
+    if (lessonsFromAmount && lessonsFromAmount >= 1 && !lessonCountTouched) {
+      setLessonCount(String(lessonsFromAmount))
+    }
+  }, [lessonsFromAmount, lessonCountTouched])
+
+  useEffect(() => {
+    if (debtLessons > 0 && !amount) {
+      setAmount(String(lessonPrice))
+      if (!lessonCountTouched) setLessonCount('1')
+    }
+  }, [debtLessons, lessonPrice, amount, lessonCountTouched])
 
   useEffect(() => {
     if (!receiptFile) {
@@ -91,13 +109,19 @@ export default function StudentPaymentPanel({
       setMessageType('error')
       return null
     }
-    const lessons = Math.floor(Number(lessonCount))
-    if (!lessons || lessons < 1) {
-      setMessage(t('student.payments.errors.invalidLessons'))
+    const price = Number(lessonPrice)
+    const lessonsFromSum =
+      price > 0 ? Math.floor(num / price) : Math.floor(Number(lessonCount))
+    if (!lessonsFromSum || lessonsFromSum < 1) {
+      setMessage(
+        price > 0
+          ? t('student.payments.errors.amountTooLow', { price })
+          : t('student.payments.errors.invalidLessons')
+      )
       setMessageType('error')
       return null
     }
-    return { amount: num, lessons }
+    return { amount: num, lessons: lessonsFromSum }
   }
 
   const handleSubmit = async (e) => {
@@ -211,10 +235,20 @@ export default function StudentPaymentPanel({
                 min={1}
                 step={1}
                 value={lessonCount}
-                onChange={(e) => setLessonCount(e.target.value)}
+                onChange={(e) => {
+                  setLessonCountTouched(true)
+                  setLessonCount(e.target.value)
+                }}
                 className={styles.receiptInput}
               />
-              <p className={styles.payHint}>{t('student.payments.lessonsHint')}</p>
+              <p className={styles.payHint}>
+                {lessonsFromAmount && lessonsFromAmount >= 1
+                  ? t('student.payments.lessonsFromAmount', {
+                      count: lessonsFromAmount,
+                      price: lessonPrice,
+                    })
+                  : t('student.payments.lessonsHint', { price: lessonPrice })}
+              </p>
             </div>
           </div>
 

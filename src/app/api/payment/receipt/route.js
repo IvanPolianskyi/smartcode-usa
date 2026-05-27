@@ -3,6 +3,7 @@ import { ObjectId } from 'mongodb'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { approveReceiptPayment } from '@/lib/approveReceiptPayment'
+import { computeCreditedLessonsFromAmount } from '@/lib/lessonCreditsFromAmount'
 import { syncReceiptToCrm, syncReceiptStatusToCrm } from '@/lib/syncReceiptToCrm'
 
 const MAX_RECEIPT_SIZE_BYTES = 5 * 1024 * 1024
@@ -15,12 +16,6 @@ function toSafeAmount(value) {
   return Math.round(parsed * 100) / 100
 }
 
-function parseLessonCount(value) {
-  const parsed = Math.floor(Number(value))
-  if (!Number.isFinite(parsed) || parsed < 1) return 0
-  return parsed
-}
-
 export async function POST(request) {
   try {
     const userId = await getCurrentUser()
@@ -30,15 +25,11 @@ export async function POST(request) {
 
     const formData = await request.formData()
     const amount = toSafeAmount(formData.get('amount'))
-    const creditedLessons = parseLessonCount(formData.get('creditedLessons'))
+    const requestedLessons = formData.get('creditedLessons')
     const file = formData.get('receipt')
 
     if (!amount || amount <= 0) {
       return NextResponse.json({ error: 'Вкажіть коректну суму оплати' }, { status: 400 })
-    }
-
-    if (!creditedLessons) {
-      return NextResponse.json({ error: 'Вкажіть кількість оплачених уроків (мінімум 1)' }, { status: 400 })
     }
 
     if (!(file instanceof File)) {
@@ -59,6 +50,24 @@ export async function POST(request) {
     const user = await usersCollection.findOne({ _id: userObjectId })
     const lessonFormat = user?.studentProfile?.lessonFormat === 'individual' ? 'individual' : 'group'
     const lessonPrice = lessonFormat === 'individual' ? INDIVIDUAL_LESSON_PRICE_UAH : GROUP_LESSON_PRICE_UAH
+
+    const creditCalc = computeCreditedLessonsFromAmount(
+      amount,
+      lessonPrice,
+      requestedLessons
+    )
+    if (creditCalc.error === 'amount_too_low') {
+      return NextResponse.json(
+        {
+          error: `Мінімальна сума для одного уроку — ${lessonPrice} грн`,
+        },
+        { status: 400 }
+      )
+    }
+    if (!creditCalc.creditedLessons) {
+      return NextResponse.json({ error: 'Вкажіть коректну суму оплати' }, { status: 400 })
+    }
+    const creditedLessons = creditCalc.creditedLessons
 
     const bytes = await file.arrayBuffer()
     const base64 = Buffer.from(bytes).toString('base64')

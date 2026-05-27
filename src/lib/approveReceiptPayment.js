@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb'
+import { computeCreditedLessonsFromAmount } from '@/lib/lessonCreditsFromAmount'
 import { getCollection } from '@/lib/mongodb'
 
 export async function approveReceiptPayment(receiptId, approvedBy = null) {
@@ -20,8 +21,14 @@ export async function approveReceiptPayment(receiptId, approvedBy = null) {
     return { ok: true, alreadyApproved: true }
   }
 
-  const creditedLessons = Number(receipt.creditedLessons || 0)
   const amount = Number(receipt.amount || 0)
+  const lessonPrice = Number(receipt.lessonPrice || 0)
+  const storedLessons = Number(receipt.creditedLessons || 0)
+  const creditCalc =
+    lessonPrice > 0
+      ? computeCreditedLessonsFromAmount(amount, lessonPrice, storedLessons)
+      : { creditedLessons: storedLessons }
+  const creditedLessons = creditCalc.creditedLessons || storedLessons
 
   await paymentsCollection.updateOne(
     { _id: receiptObjectId },

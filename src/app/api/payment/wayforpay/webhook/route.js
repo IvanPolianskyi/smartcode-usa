@@ -54,9 +54,10 @@ export async function POST(request) {
         }
       } else if ((payment.paymentType === 'lesson_topup' || payment.paymentType === 'lesson_topup_en') && payment.userId) {
         const usersCollection = await getCollection('users')
-        const creditedLessons = Number(
-          payment.creditedLessons || Math.floor(Number(payment.amount) / Number(payment.lessonPrice || 1))
-        )
+        const lessonPrice = Number(payment.lessonPrice || 1)
+        const fromAmount = Math.floor(Number(payment.amount) / lessonPrice)
+        const creditedLessons =
+          fromAmount > 0 ? fromAmount : Number(payment.creditedLessons || 0)
         const paidAmount = Number(body.amount) || Number(payment.amount) || 0
         await usersCollection.updateOne(
           { _id: payment.userId },

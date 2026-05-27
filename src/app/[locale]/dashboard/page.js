@@ -179,6 +179,7 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
         t={t}
         paymentStats={paymentStats}
         scheduleCount={schedule.length}
+        lessonPrice={lessonPrice}
         onRefresh={refreshData}
         defaultOpen={payPanelOpen}
       />
