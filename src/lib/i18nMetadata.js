@@ -1,6 +1,15 @@
+import { routing } from '@/i18n/routing'
+
 const BASE_URL = 'https://smartcode-academy.com'
 
 export const SITE_URL = new URL(BASE_URL)
+
+function resolveLocale(locale) {
+	if (locale && routing.locales.includes(locale)) {
+		return locale
+	}
+	return routing.defaultLocale
+}
 
 export function localePath(locale, path = '') {
 	const normalized = path.startsWith('/') ? path : `/${path}`
@@ -48,16 +57,20 @@ export function buildAlternates(locale, path = '') {
 }
 
 export async function getLocalizedMetadata(locale, pageKey) {
+	const resolvedLocale = resolveLocale(locale)
 	const { getTranslations } = await import('next-intl/server')
-	const t = await getTranslations({ locale, namespace: `metadata.${pageKey}` })
-	const ogLocale = locale === 'uk' ? 'uk_UA' : 'en_US'
+	const t = await getTranslations({
+		locale: resolvedLocale,
+		namespace: `metadata.${pageKey}`,
+	})
+	const ogLocale = resolvedLocale === 'uk' ? 'uk_UA' : 'en_US'
 
 	return {
 		metadataBase: SITE_URL,
 		title: t('title'),
 		description: t('description'),
-		...getSearchIndexingMetadata(locale),
-		...(locale === 'uk'
+		...getSearchIndexingMetadata(resolvedLocale),
+		...(resolvedLocale === 'uk'
 			? {
 					other: {
 						'content-language': 'uk-UA',
