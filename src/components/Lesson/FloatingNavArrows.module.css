@@ -1,0 +1,58 @@
+.container {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+
+.navButton {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0);
+  color: var(--text-primary, #1e293b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+}
+
+.navButton:hover {
+  background-color: var(--accent-blue-light, #eff6ff);
+  color: var(--accent-blue, #3b82f6);
+  border-color: var(--accent-blue, #3b82f6);
+  transform: scale(1.05);
+}
+
+.nextButton {
+  background-color: var(--accent-blue, #3b82f6);
+  color: white;
+  border-color: var(--accent-blue, #3b82f6);
+}
+
+.nextButton:hover {
+  background-color: var(--accent-blue-hover, #2563eb);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .container {
+    right: 10px;
+    bottom: 20px;
+    top: auto;
+    transform: none;
+    flex-direction: row;
+  }
+  
+  .navButton {
+    width: 40px;
+    height: 40px;
+  }
+}

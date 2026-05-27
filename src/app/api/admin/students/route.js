@@ -157,6 +157,7 @@ export async function GET() {
     const studentIds = students.map((student) => student._id)
     const progressDocs = await progressCollection
       .find({ userId: { $in: studentIds } })
+      .project({ certificates: 0 })
       .toArray()
 
     const progressByUserId = new Map()
@@ -436,6 +437,38 @@ export async function PATCH(request) {
     )
   } catch (error) {
     console.error('Admin students PATCH error:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}
+
+export async function DELETE(request) {
+  try {
+    const guard = await requireAdmin()
+    if (guard.error) return guard.error
+    const usersCollection = guard.usersCollection
+
+    const { searchParams } = new URL(request.url)
+    const studentId = searchParams.get('id')
+
+    if (!studentId) {
+      return NextResponse.json({ error: 'studentId is required' }, { status: 400 })
+    }
+
+    const progressCollection = await getCollection('userProgress')
+    
+    // Delete user
+    const result = await usersCollection.deleteOne({ _id: new ObjectId(studentId), role: { $ne: 'admin' } })
+    
+    if (result.deletedCount === 0) {
+      return NextResponse.json({ error: 'Student not found' }, { status: 404 })
+    }
+
+    // Delete progress
+    await progressCollection.deleteMany({ userId: new ObjectId(studentId) })
+
+    return NextResponse.json({ ok: true }, { status: 200 })
+  } catch (error) {
+    console.error('Admin students DELETE error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

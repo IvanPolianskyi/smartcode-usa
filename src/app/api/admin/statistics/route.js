@@ -45,7 +45,7 @@ export async function GET() {
       ),
       // Payment statistics
       getCollection('payments').then(async collection => {
-        const allPayments = await collection.find({}).toArray()
+        const allPayments = await collection.find({}).project({ 'receipt.dataUrl': 0 }).toArray()
         const completed = allPayments.filter(p => p.status === 'completed')
         const totalRevenue = completed.reduce((sum, p) => sum + (p.amount || 0), 0)
         const byMethod = allPayments.reduce((acc, payment) => {
@@ -114,11 +114,12 @@ export async function GET() {
         return {
           total: totalUsers,
           withPurchases: usersWithPurchases,
-          courseEnrollments
+          courseEnrollments,
+          allUsers
         }
       }),
       getCollection('userProgress').then(async collection => {
-        const allProgress = await collection.find({}).toArray()
+        const allProgress = await collection.find({}).project({ certificates: 0 }).toArray()
         
         // Group by course
         const courseStats = {}
@@ -195,7 +196,7 @@ export async function GET() {
     }))
 
     // Get detailed user list with their courses
-    const usersWithCourses = await usersCollection.find({}).toArray()
+    const usersWithCourses = users.allUsers
     const detailedUsers = usersWithCourses
       .filter(u => u.enrolledCourses && u.enrolledCourses.length > 0)
       .map(u => ({

@@ -264,6 +264,25 @@ export default function AdminStudentPage() {
     }
   }
 
+  const updateReceiptLessons = async (receiptId, newLessons) => {
+    try {
+      const response = await fetch(`/api/admin/receipts/${receiptId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ creditedLessons: parseInt(newLessons, 10) })
+      })
+      if (!response.ok) {
+        throw new Error('Failed to update lessons')
+      }
+      setReceipts(prev => prev.map(r => 
+        r.id === receiptId ? { ...r, creditedLessons: parseInt(newLessons, 10) } : r
+      ))
+    } catch (error) {
+      console.error(error)
+      alert(error.message)
+    }
+  }
+
   if (sessionLoading || loading) {
     return <div className={styles.container}><div className={styles.loading}>{tPage('loading')}</div></div>
   }
@@ -547,13 +566,30 @@ export default function AdminStudentPage() {
                   {receipts.map((receipt) => (
                     <tr key={receipt.id}>
                       <td>{formatCurrency(receipt.amount)}</td>
-                      <td>{receipt.creditedLessons}</td>
+                      <td>
+                        <input
+                          type="number"
+                          min="0"
+                          className={styles.certInput}
+                          style={{ width: '70px', padding: '0.25rem', textAlign: 'center' }}
+                          value={receipt.creditedLessons}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setReceipts(prev => prev.map(r => r.id === receipt.id ? { ...r, creditedLessons: val } : r));
+                          }}
+                          onBlur={(e) => {
+                            if (e.target.value !== '') {
+                              updateReceiptLessons(receipt.id, e.target.value);
+                            }
+                          }}
+                        />
+                      </td>
                       <td>{receipt.approvalStatus === 'approved' ? tPage('approved') : tPage('pending')}</td>
                       <td>{new Date(receipt.createdAt).toLocaleDateString(dateLocale)}</td>
                       <td>
-                        {receipt.receipt?.dataUrl ? (
-                          <a href={receipt.receipt.dataUrl} target="_blank" rel="noreferrer" className={styles.receiptLink}>
-                            <img src={receipt.receipt.dataUrl} alt={tPage('receiptAlt')} className={styles.receiptThumb} />
+                        {receipt.receipt?.hasImage ? (
+                          <a href={`/api/admin/receipts/${receipt.id}/image`} target="_blank" rel="noreferrer" className={styles.receiptLink}>
+                            <img src={`/api/admin/receipts/${receipt.id}/image`} alt={tPage('receiptAlt')} className={styles.receiptThumb} />
                           </a>
                         ) : tReceipts('noFile')}
                       </td>

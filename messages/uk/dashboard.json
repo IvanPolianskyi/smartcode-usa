@@ -163,7 +163,7 @@
       "payCta": "ОПЛАТИТИ",
       "noFile": "Файл не вибрано",
       "amountLabel": "Сума оплати (грн)",
-      "amountPlaceholder": "Наприклад: 700",
+      "amountPlaceholder": "Наприклад: ціна одного уроку",
       "lessonsLabel": "Кількість оплачених уроків",
       "lessonsHint": "За сумою {price} грн зараховується 1 урок. Для кількох уроків вкажіть суму кратною {price} грн.",
       "lessonsFromAmount": "За цією сумою буде зараховано {count} {count, plural, one {урок} few {уроки} other {уроків}} (тариф {price} грн/урок).",

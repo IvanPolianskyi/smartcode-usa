@@ -29,6 +29,20 @@ export function buildCrmHeaders(token) {
   return headers
 }
 
+export async function fetchCrmWithTimeout(url, options = {}) {
+  const { timeout = 8000, ...fetchOptions } = options
+  const controller = new AbortController()
+  const id = setTimeout(() => controller.abort(), timeout)
+  try {
+    const response = await fetch(url, { ...fetchOptions, signal: controller.signal })
+    clearTimeout(id)
+    return response
+  } catch (error) {
+    clearTimeout(id)
+    throw error
+  }
+}
+
 function formatCrmError(status, data) {
   if (data == null) return `CRM ${status}`
   if (typeof data === 'string') return data
@@ -54,12 +68,16 @@ export async function crmJson(method, pathAndQuery, jsonBody) {
   const init = {
     method,
     headers: buildCrmHeaders(token),
-    cache: 'no-store',
+  }
+  if (method === 'GET' || method === 'HEAD') {
+    init.next = { revalidate: 60 }
+  } else {
+    init.cache = 'no-store'
   }
   if (jsonBody !== undefined && method !== 'GET' && method !== 'HEAD') {
     init.body = JSON.stringify(jsonBody)
   }
-  const res = await fetch(url, init)
+  const res = await fetchCrmWithTimeout(url, init)
   const text = await res.text()
   let data = null
   if (text) {
@@ -75,11 +93,18 @@ export async function crmJson(method, pathAndQuery, jsonBody) {
   return data
 }
 
+let cachedCrmToken = null
+let crmTokenExpiresAt = 0
+
 export async function resolveCrmToken() {
   if (CRM_STATIC_TOKEN) return CRM_STATIC_TOKEN
   if (!CRM_BASE_URL || !CRM_NICKNAME || !CRM_PASSWORD) return ''
 
-  const loginResponse = await fetch(`${CRM_BASE_URL.replace(/\/$/, '')}/auth/crm-login`, {
+  if (cachedCrmToken && Date.now() < crmTokenExpiresAt) {
+    return cachedCrmToken
+  }
+
+  const loginResponse = await fetchCrmWithTimeout(`${CRM_BASE_URL.replace(/\/$/, '')}/auth/crm-login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -92,15 +117,20 @@ export async function resolveCrmToken() {
     throw new Error(message || `CRM login failed (${loginResponse.status})`)
   }
   const loginData = await loginResponse.json()
-  return String(loginData?.access_token || '')
+  const token = String(loginData?.access_token || '')
+  if (token) {
+    cachedCrmToken = token
+    crmTokenExpiresAt = Date.now() + 55 * 60 * 1000 // 55 minutes
+  }
+  return token
 }
 
 export async function fetchCrmTeachers() {
   if (!CRM_BASE_URL) return []
   const token = await resolveCrmToken()
-  const response = await fetch(`${CRM_BASE_URL.replace(/\/$/, '')}/staff?limit=200&active_only=true`, {
+  const response = await fetchCrmWithTimeout(`${CRM_BASE_URL.replace(/\/$/, '')}/staff?limit=200&active_only=true`, {
     headers: buildCrmHeaders(token),
-    cache: 'no-store',
+    next: { revalidate: 300 },
   })
   if (!response.ok) {
     const message = await response.text()
@@ -123,9 +153,9 @@ export async function fetchCrmTeachers() {
 async function fetchCrmStudentById(studentId) {
   if (!studentId) return null
   const token = await resolveCrmToken()
-  const response = await fetch(`${CRM_BASE_URL.replace(/\/$/, '')}/students/${studentId}`, {
+  const response = await fetchCrmWithTimeout(`${CRM_BASE_URL.replace(/\/$/, '')}/students/${studentId}`, {
     headers: buildCrmHeaders(token),
-    cache: 'no-store',
+    next: { revalidate: 60 },
   })
   if (!response.ok) return null
   return response.json()
@@ -145,9 +175,9 @@ async function resolveCrmStudentForSmartcode(student) {
   if (!email && !fullName) return null
 
   const token = await resolveCrmToken()
-  const response = await fetch(`${CRM_BASE_URL.replace(/\/$/, '')}/students?limit=200&active_only=true`, {
+  const response = await fetchCrmWithTimeout(`${CRM_BASE_URL.replace(/\/$/, '')}/students?limit=200&active_only=true`, {
     headers: buildCrmHeaders(token),
-    cache: 'no-store',
+    next: { revalidate: 60 },
   })
   if (!response.ok) return null
   const list = await response.json()
@@ -197,9 +227,9 @@ async function findCrmStudentByEmailOrLmsId(studentDoc) {
   if (!email && !lmsId) return null
 
   const token = await resolveCrmToken()
-  const response = await fetch(`${CRM_BASE_URL.replace(/\/$/, '')}/students?limit=200&active_only=true`, {
+  const response = await fetchCrmWithTimeout(`${CRM_BASE_URL.replace(/\/$/, '')}/students?limit=200&active_only=true`, {
     headers: buildCrmHeaders(token),
-    cache: 'no-store',
+    next: { revalidate: 60 },
   })
   if (!response.ok) return null
   const list = await response.json()
@@ -230,7 +260,7 @@ export async function syncStudentToCrm(studentDoc) {
   }
 
   if (crmStudentId) {
-    const patchResponse = await fetch(`${base}/students/${crmStudentId}`, {
+    const patchResponse = await fetchCrmWithTimeout(`${base}/students/${crmStudentId}`, {
       method: 'PATCH',
       headers: buildCrmHeaders(token),
       body: JSON.stringify(body),
@@ -240,7 +270,7 @@ export async function syncStudentToCrm(studentDoc) {
     }
   }
 
-  const createResponse = await fetch(`${base}/students`, {
+  const createResponse = await fetchCrmWithTimeout(`${base}/students`, {
     method: 'POST',
     headers: buildCrmHeaders(token),
     body: JSON.stringify(body),
@@ -368,13 +398,16 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
     student_id: String(crmStudent.id),
     limit: '500',
   })
-  const lessonsResponse = await fetch(
-    `${CRM_BASE_URL.replace(/\/$/, '')}/lessons?${lessonsParams}`,
-    {
+
+  const [lessonsResponse, teachers, crmGroups] = await Promise.all([
+    fetchCrmWithTimeout(`${CRM_BASE_URL.replace(/\/$/, '')}/lessons?${lessonsParams}`, {
       headers: buildCrmHeaders(token),
-      cache: 'no-store',
-    }
-  )
+      next: { revalidate: 60 },
+    }),
+    fetchCrmTeachers().catch(() => []),
+    fetchCrmGroupsForStudent(crmStudent.id)
+  ])
+
   const lessons = lessonsResponse.ok ? await lessonsResponse.json() : []
   const rawLessons = Array.isArray(lessons) ? lessons : []
   const schedule = scheduleFromCrmLessons(rawLessons)
@@ -387,15 +420,12 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
 
   let teacherName = ''
   if (teacherId) {
-    const teachers = await fetchCrmTeachers().catch(() => [])
     teacherName = String(
       teachers.find((item) => item.id === teacherId)?.fullName ||
         student?.studentProfile?.crmTeacherName ||
         ''
     )
   }
-
-  const crmGroups = await fetchCrmGroupsForStudent(crmStudent.id)
   const prev = student?.studentProfile || {}
   const nextLessonFormat =
     rawLessons.length > 0 ? lessonFormatFromCrmLessons(rawLessons, prev) : prev.lessonFormat || 'group'

@@ -350,7 +350,7 @@ const Header = () => {
 								</button>
 							</div>
 						) : (
-							<Link href="/login" className={styles.userButton}>
+							<Link href="/register" className={styles.userButton}>
 								<User size={18} />
 								<span className={styles.userName}>{tc('login')}</span>
 							</Link>

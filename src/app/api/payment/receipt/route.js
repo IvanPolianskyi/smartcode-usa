@@ -95,7 +95,6 @@ export async function POST(request) {
     })
 
     const paymentId = insertResult.insertedId.toString()
-    await approveReceiptPayment(paymentId)
 
     let crmSync = { ok: false, skipped: false, reason: '' }
     try {
@@ -125,11 +124,6 @@ export async function POST(request) {
           { _id: insertResult.insertedId },
           { $set: { crmReceiptId, updatedAt: new Date() } }
         )
-        try {
-          await syncReceiptStatusToCrm(crmReceiptId, 'approved')
-        } catch (statusErr) {
-          console.error('CRM receipt status sync:', statusErr)
-        }
       } else {
         crmSync = { ok: true, skipped: false, reason: '' }
       }
@@ -147,8 +141,8 @@ export async function POST(request) {
         ok: true,
         creditedLessonsPreview: creditedLessons,
         lessonPrice,
-        requiresApproval: false,
-        autoApproved: true,
+        requiresApproval: true,
+        autoApproved: false,
         crmSync,
       },
       { status: 200 }
