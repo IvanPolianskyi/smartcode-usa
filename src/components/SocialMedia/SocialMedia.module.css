@@ -11,6 +11,12 @@
 	will-change: scroll-position;
 }
 
+@media (min-width: 769px) {
+	.hideOnDesktopEn {
+		display: none !important;
+	}
+}
+
 .section::before {
 	content: '';
 	position: absolute;

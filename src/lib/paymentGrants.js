@@ -40,10 +40,33 @@ export async function grantFullCourseAccess(userId, courseId) {
   }
 }
 
-export async function grantEnLiveLessonAccess(userId, courseId, { lessonFormat, day, time }) {
+export async function grantEnLiveLessonAccess(identifier, courseId, { lessonFormat, day, time }) {
   const usersCollection = await getCollection('users')
-  const user = await usersCollection.findOne({ _id: userId })
-  if (!user) return
+  
+  // Identifier could be an ObjectId (string or actual) or an email
+  let userQuery
+  if (identifier && typeof identifier === 'string' && identifier.includes('@')) {
+    userQuery = { email: identifier }
+  } else {
+    try {
+      userQuery = { _id: typeof identifier === 'string' ? new ObjectId(identifier) : identifier }
+    } catch (e) {
+      userQuery = { _id: identifier }
+    }
+  }
+
+  const user = await usersCollection.findOne(userQuery)
+  
+  // We still book the exact slot even if the user hasn't registered yet
+  const slotsCollection = await getCollection('availableSlots')
+  const dayRegex = new RegExp(`^${day}$`, 'i')
+  const matchedSlot = await slotsCollection.findOneAndUpdate(
+    { courseId, day: dayRegex, time, isBooked: false },
+    { $set: { isBooked: true, bookedBy: user ? user._id : identifier, updatedAt: new Date() } }
+  )
+
+  if (!user) return // If they are a guest who hasn't registered, we just booked the slot for them.
+
 
   const profile = user.studentProfile || {}
   const schedule = Array.isArray(profile.regularSchedule) ? [...profile.regularSchedule] : []
@@ -55,7 +78,7 @@ export async function grantEnLiveLessonAccess(userId, courseId, { lessonFormat, 
   const lessonCredits = (profile.lessonCredits || 0) + 1
 
   await usersCollection.updateOne(
-    { _id: userId },
+    { _id: user._id },
     {
       $set: {
         'studentProfile.regularSchedule': schedule,
@@ -77,10 +100,10 @@ export async function grantEnLiveLessonAccess(userId, courseId, { lessonFormat, 
   )
 
   const progressCollection = await getCollection('userProgress')
-  const existing = await progressCollection.findOne({ userId, courseId })
+  const existing = await progressCollection.findOne({ userId: user._id, courseId })
   if (!existing) {
     await progressCollection.insertOne({
-      userId,
+      userId: user._id,
       courseId,
       enrolledAt: new Date(),
       completedLessons: [],

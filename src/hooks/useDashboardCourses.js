@@ -63,4 +63,11 @@ export const DAY_KEY_MAP = {
 	Чт: 'thu',
 	Пт: 'fri',
 	Сб: 'sat',
+	sun: 'sun',
+	mon: 'mon',
+	tue: 'tue',
+	wed: 'wed',
+	thu: 'thu',
+	fri: 'fri',
+	sat: 'sat',
 }

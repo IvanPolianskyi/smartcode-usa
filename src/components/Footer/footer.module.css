@@ -213,6 +213,7 @@
     flex-wrap: wrap;
     gap: 1.5rem;
 }
+.copyrightContainer { display: flex; flex-direction: column; gap: 8px; }
 .copyright { font-size: 0.875rem; color: var(--text-secondary-dark); }
 .langSwitcher {
     background: rgba(255, 255, 255, 0.06) !important;
@@ -243,6 +244,36 @@
     transform: translateY(-3px) scale(1.1);
     box-shadow: 0 8px 15px rgba(37, 99, 235, 0.2);
 }
+.merchantBlock {
+    margin-top: 2rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    max-width: 720px;
+}
+.merchantTitle {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #93c5fd;
+    margin: 0 0 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.merchantLine {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text-secondary-dark, #94a3b8);
+    margin: 0;
+}
+.merchantLine a {
+    color: #60a5fa;
+    text-decoration: none;
+}
+.merchantLine a:hover {
+    text-decoration: underline;
+}
+
 .legalLinks { display: flex; gap: 1.5rem; }
 .legalLink {
     font-size: 0.875rem;

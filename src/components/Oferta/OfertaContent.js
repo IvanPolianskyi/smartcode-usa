@@ -3,6 +3,7 @@
 import { useTranslations, useLocale } from 'next-intl'
 import { Download } from 'lucide-react'
 import styles from '@/app/[locale]/oferta/OfertaPage.module.css'
+import { getMerchantInfo, getOfertaContactFields } from '@/lib/merchantInfo'
 
 function sortNumericKeys(obj) {
 	return Object.keys(obj).sort((a, b) => Number(a) - Number(b))
@@ -34,10 +35,21 @@ function renderListItems(items, keyOrder) {
 
 const SECTION2_LIST_ORDER = ['onlineLessons', 'courses', 'materials']
 const SECTION3_SUBSECTION_ORDER = ['order', 'terms', 'payment', 'delivery', 'absences']
-const SECTION3_PAYMENT_ITEMS_ORDER = ['wayforpay', 'bank', 'other']
+const SECTION3_PAYMENT_ITEMS_ORDER = ['wayforpay', 'appleGoogle']
 const SECTION4_SUBSECTION_ORDER = ['conditions', 'procedure', 'noRefund', 'cancellation']
 const SECTION4_CONDITIONS_ITEMS_ORDER = ['beforeStart', '14days', 'technical']
 const SECTION6_SUBSECTION_ORDER = ['provider', 'customer']
+function mergeOfertaContactSection(section5, merchantFields) {
+	const fields = { ...section5.fields }
+	for (const [key, override] of Object.entries(merchantFields)) {
+		if (!fields[key] || !override) continue
+		if (override.value) {
+			fields[key] = { ...fields[key], value: override.value }
+		}
+	}
+	return { ...section5, fields }
+}
+
 const SECTION5_FIELDS_ORDER = [
 	'companyName',
 	'taxId',
@@ -63,7 +75,14 @@ export default function OfertaContent() {
 	const section2 = t.raw('sections.2')
 	const section3 = t.raw('sections.3')
 	const section4 = t.raw('sections.4')
-	const section5 = t.raw('sections.5')
+	const section5Raw = t.raw('sections.5')
+	const section5 =
+		locale === 'en' || locale === 'uk'
+			? mergeOfertaContactSection(
+					section5Raw,
+					getOfertaContactFields(getMerchantInfo(locale))
+				)
+			: section5Raw
 	const section6 = t.raw('sections.6')
 	const section7 = t.raw('sections.7')
 	const section8 = t.raw('sections.8')
@@ -127,9 +146,17 @@ export default function OfertaContent() {
 											<p>{sub.note}</p>
 										</>
 									) : null}
-									{subKey === 'delivery' || subKey === 'absences' ? (
-										<p>{sub.text}</p>
+									{subKey === 'delivery' ? (
+										<>
+											<p>{sub.text}</p>
+											{sub.items ? (
+												<ul className={styles.list}>
+													{renderListItems(sub.items)}
+												</ul>
+											) : null}
+										</>
 									) : null}
+									{subKey === 'absences' ? <p>{sub.text}</p> : null}
 								</div>
 							)
 						})}

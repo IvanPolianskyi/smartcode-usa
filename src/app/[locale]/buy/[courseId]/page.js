@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react'
 import { Link, useRouter } from '@/i18n/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import {
 	BookOpen,
 	CreditCard,
@@ -36,6 +36,7 @@ const COURSE_META = {
 export default function BuyCoursePage({ params }) {
 	const { courseId } = React.use(params)
 	const t = useTranslations('buyCourse')
+	const locale = useLocale()
 	const router = useRouter()
 	const { user, loading: authLoading } = useAuthSession()
 
@@ -66,26 +67,7 @@ export default function BuyCoursePage({ params }) {
 		setError('')
 		setLoading(true)
 		try {
-			// Redirect English users to coming soon state
-			const currentLocale = window.location.pathname.startsWith('/en/') ? 'en' : 'uk'
-			if (currentLocale === 'en') {
-				try {
-					await fetch('/api/metrics/clicks', {
-						method: 'POST',
-						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify({ courseId, source: 'guest_checkout' })
-					})
-				} catch (err) {
-					console.error('Failed to track click', err)
-				}
-				
-				import('react-toastify').then(({ toast }) => {
-					toast.info(t('comingSoon') || 'Coming soon')
-				})
-				return
-			}
-
-			const { paymentUrl } = await createPayment(courseId, 'uk', guestEmail, guestName)
+			const { paymentUrl } = await createPayment(courseId, locale, guestEmail, guestName)
 			if (paymentUrl) window.location.href = paymentUrl
 		} catch (err) {
 			setError(err.message || t('errors.failed'))
@@ -214,6 +196,22 @@ export default function BuyCoursePage({ params }) {
 								</button>
 
 								<p className={styles.payNote}>{t('payMethods')}</p>
+
+								{locale === 'en' ? (
+									<p className={styles.legalNote}>
+										{t.rich('legalAgree', {
+											oferta: (chunks) => (
+												<Link href="/oferta">{chunks}</Link>
+											),
+											privacy: (chunks) => (
+												<Link href="/privacy">{chunks}</Link>
+											),
+											refund: (chunks) => (
+												<Link href="/refund">{chunks}</Link>
+											),
+										})}
+									</p>
+								) : null}
 
 								{error && <p className={styles.errorText}>{error}</p>}
 							</div>

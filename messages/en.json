@@ -45,6 +45,14 @@
       "title": "Terms of Service - SmartCode Academy",
       "description": "Public offer and terms of service for SmartCode Academy educational services"
     },
+    "privacy": {
+      "title": "Privacy Policy - SmartCode Academy",
+      "description": "How SmartCode Academy collects, uses, and protects personal data for students and parents"
+    },
+    "refund": {
+      "title": "Refund Policy - SmartCode Academy",
+      "description": "Refund conditions, cancellation procedure, and transaction policies for SmartCode Academy"
+    },
     "projects": {
       "title": "Student Projects - SmartCode Academy",
       "description": "Explore real student projects from SmartCode Academy: games, websites, and apps built with Python, Unity, Roblox, and web development."
@@ -519,6 +527,9 @@
     "payMethods": "Secure payment via WayForPay · Apple Pay · Google Pay · Visa / Mastercard",
     "payButton": "Pay {price} and book",
     "processing": "Processing…",
+    "loading": "Loading...",
+    "timezoneNote": "All times are shown in Kyiv timezone (UTC+3)",
+    "noSlots": "No available slots right now. Check back later or contact support.",
     "authTitle": "Create an account to continue",
     "authText": "You need to sign in or register before booking a lesson. It only takes a minute.",
     "authRegister": "Register",
@@ -531,7 +542,9 @@
     "buyButton": "Buy for {price}",
     "processing": "Processing…",
     "oneTime": "One-time payment · lifetime access",
+    "comingSoon": "Coming soon! We'll notify you when this course is available for purchase.",
     "payMethods": "Secure payment via WayForPay · Apple Pay · Google Pay · Visa / Mastercard",
+    "legalAgree": "By completing payment you agree to our <oferta>Terms of Service</oferta>, <privacy>Privacy Policy</privacy>, and <refund>Refund Policy</refund>.",
     "authTitle": "Create an account to continue",
     "authText": "Register or sign in to purchase this course. After payment, it will appear in your dashboard.",
     "authRegister": "Register",

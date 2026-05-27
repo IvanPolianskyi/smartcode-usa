@@ -27,11 +27,20 @@ export async function POST(request) {
     if (!['group', 'individual'].includes(lessonFormat)) {
       return NextResponse.json({ error: 'Invalid lesson format' }, { status: 400 })
     }
-    if (!VALID_DAYS.includes(day)) {
-      return NextResponse.json({ error: 'Invalid day' }, { status: 400 })
-    }
-    if (!/^\d{2}:\d{2}$/.test(time || '')) {
-      return NextResponse.json({ error: 'Invalid time (use HH:MM)' }, { status: 400 })
+    let slot = null
+    if (day && time) {
+      const slotsCollection = await getCollection('availableSlots')
+      slot = await slotsCollection.findOne({
+        courseId,
+        lessonFormat,
+        day,
+        time,
+        isBooked: false
+      })
+
+      if (!slot) {
+        return NextResponse.json({ error: 'This time slot is no longer available' }, { status: 400 })
+      }
     }
 
     const priceInfo = getLessonPrice(lessonFormat, 'en')
@@ -48,7 +57,8 @@ export async function POST(request) {
     const customerEmail = user ? user.email : guestEmail
     const customerName = user ? user.name : guestName
     const orderIdPrefix = userId ? userId.toString() : `guest_${customerEmail.replace(/[^a-zA-Z0-9]/g, '')}`
-    const orderId = `lesson_${courseId}_${lessonFormat}_${orderIdPrefix}_${Date.now()}`
+    const orderIdSuffix = (day && time) ? `${day}_${time.replace(':', '')}` : 'topup'
+    const orderId = `lesson_${courseId}_${lessonFormat}_${orderIdSuffix}_${orderIdPrefix}_${Date.now()}`
     
     const baseUrl =
       process.env.NEXT_PUBLIC_BASE_URL ||
@@ -83,10 +93,12 @@ export async function POST(request) {
       currency: priceInfo.currency,
       status: 'pending',
       paymentMethod: 'wayforpay',
-      paymentType: 'live_lesson_en',
-      lessonFormat,
-      scheduleDay: day,
-      scheduleTime: time,
+      paymentType: (day && time) ? 'live_lesson_en' : 'lesson_topup_en',
+      lessonFormat: lessonFormat || null,
+      lessonPrice: priceInfo.price,
+      creditedLessons: 1,
+      scheduleDay: day || null,
+      scheduleTime: time || null,
       createdAt: new Date(),
       updatedAt: new Date(),
     }
@@ -100,6 +112,20 @@ export async function POST(request) {
     }
 
     await paymentsCollection.insertOne(paymentRecord)
+
+    if (slot && day && time) {
+      const slotsCollection = await getCollection('availableSlots')
+      await slotsCollection.updateOne(
+        { _id: slot._id },
+        { 
+          $set: { 
+            reservedAt: new Date(),
+            reservedBy: userId ? userId.toString() : customerEmail,
+            updatedAt: new Date()
+          } 
+        }
+      )
+    }
 
     return NextResponse.json({ paymentUrl: invoiceUrl, orderId })
   } catch (error) {

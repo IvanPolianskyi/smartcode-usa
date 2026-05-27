@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/navigation'
 import {
   BookOpen,
   Clock,
@@ -10,6 +11,7 @@ import {
   Sparkles,
   Trophy,
   Users,
+  Video,
 } from 'lucide-react'
 import { DAY_KEY_MAP } from '@/hooks/useDashboardCourses'
 import { getStudentAccessibleCourseIds } from '@/lib/courseLessonAccess'
@@ -30,8 +32,28 @@ export default function EnStudentDashboard({
 
   const dateLocale = 'en-US'
   const profile = user?.studentProfile || {}
-  const schedule = profile.regularSchedule || []
-  const zoomLink = profile.zoomLink || ''
+  const fallbackSchedule = profile.regularSchedule || []
+  const fallbackZoomLink = profile.zoomLink || ''
+
+  const [bookedSlots, setBookedSlots] = useState([])
+
+  useEffect(() => {
+    fetch('/api/student/en-slots')
+      .then(r => r.ok ? r.json() : { slots: [] })
+      .then(data => {
+        if (data.slots) {
+          setBookedSlots(data.slots)
+        }
+      })
+      .catch(err => console.error('Failed to load slots', err))
+  }, [])
+
+  // Override schedule with explicitly booked slots for EN version
+  const schedule = bookedSlots.length > 0 
+    ? bookedSlots.map(s => ({ day: String(s.day).toLowerCase().substring(0,3), time: s.time, zoomLink: s.zoomLink }))
+    : fallbackSchedule
+  
+  const zoomLink = bookedSlots.length > 0 ? (bookedSlots.find(s => s.zoomLink)?.zoomLink || fallbackZoomLink) : fallbackZoomLink
 
   const ownedCount = useMemo(
     () => getStudentAccessibleCourseIds(user).length,
@@ -138,10 +160,15 @@ export default function EnStudentDashboard({
             <h2 className={styles.heroTitle}>{t('student.greeting', { name: firstName })}</h2>
             <p className={styles.heroText}>{motivationalText}</p>
           </div>
-          <div className={styles.goalBox}>
+          <div className={styles.goalBox} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             <div className={styles.goalTop}><Trophy size={16} /> {t('student.goalTitle')}</div>
             <div className={styles.goalProgress}>{weekProgress}/{weeklyGoal}</div>
             <div className={styles.goalBar}><span style={{ width: `${(weekProgress / weeklyGoal) * 100}%` }} /></div>
+            
+            <Link href="/book-lesson" className={styles.secondaryBtn} style={{ marginTop: '0.5rem', justifyContent: 'center' }}>
+              <Video size={16} />
+              Book a Lesson
+            </Link>
           </div>
         </div>
       </div>

@@ -20,12 +20,39 @@ export default function EnLiveLessonBooking() {
   const tCourses = useTranslations('dashboard.courses')
   const [courseId, setCourseId] = useState('roblox-studio')
   const [lessonFormat, setLessonFormat] = useState('group')
-  const [day, setDay] = useState('mon')
-  const [time, setTime] = useState('18:00')
+  const [day, setDay] = useState('')
+  const [time, setTime] = useState('')
+  const [slots, setSlots] = useState([])
+  const [slotsLoading, setSlotsLoading] = useState(true)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   const priceInfo = getLessonPrice(lessonFormat, 'en')
+
+  React.useEffect(() => {
+    const fetchSlots = async () => {
+      setSlotsLoading(true)
+      try {
+        const res = await fetch(`/api/lesson-slots?courseId=${courseId}&lessonFormat=${lessonFormat}`)
+        if (res.ok) {
+          const data = await res.json()
+          setSlots(data.slots || [])
+          if (data.slots && data.slots.length > 0) {
+            setDay(data.slots[0].day)
+            setTime(data.slots[0].time)
+          } else {
+            setDay('')
+            setTime('')
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch slots', err)
+      } finally {
+        setSlotsLoading(false)
+      }
+    }
+    fetchSlots()
+  }, [courseId, lessonFormat])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -40,6 +67,9 @@ export default function EnLiveLessonBooking() {
       setLoading(false)
     }
   }
+
+  const availableDays = [...new Set(slots.map(s => s.day))]
+  const availableTimes = slots.filter(s => s.day === day).map(s => s.time)
 
   return (
     <section className={styles.section}>
@@ -93,46 +123,62 @@ export default function EnLiveLessonBooking() {
             </div>
           </div>
 
-          <div className={styles.field}>
-            <label htmlFor="en-day">{t('dayLabel')}</label>
-            <select
-              id="en-day"
-              className={styles.select}
-              value={day}
-              onChange={(e) => setDay(e.target.value)}
-            >
-              {DAYS.map((d) => (
-                <option key={d} value={d}>
-                  {t(`days.${d}`)}
-                </option>
-              ))}
-            </select>
+        {slotsLoading ? (
+          <div className={styles.fieldRow}>
+            <p className={styles.payNote}>{t('loading')}</p>
           </div>
+        ) : availableDays.length === 0 ? (
+          <div className={styles.emptySlotsAlert} style={{ margin: '1rem 0', color: '#64748b', textAlign: 'center', backgroundColor: '#f8fafc', padding: '1rem', borderRadius: '8px' }}>
+            {t('noSlots')}
+          </div>
+        ) : (
+          <>
+            <div className={styles.field}>
+              <label htmlFor="en-day">{t('dayLabel')}</label>
+              <select
+                id="en-day"
+                className={styles.select}
+                value={day}
+                onChange={(e) => {
+                  setDay(e.target.value)
+                  const timesForNewDay = slots.filter(s => s.day === e.target.value).map(s => s.time)
+                  if (timesForNewDay.length > 0) setTime(timesForNewDay[0])
+                }}
+              >
+                {availableDays.map((d) => (
+                  <option key={d} value={d}>
+                    {t(`days.${d}`)}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div className={styles.field}>
-            <label htmlFor="en-time">{t('timeLabel')}</label>
-            <select
-              id="en-time"
-              className={styles.select}
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-            >
-              {TIMES.map((slot) => (
-                <option key={slot} value={slot}>
-                  {slot}
-                </option>
-              ))}
-            </select>
-          </div>
+            <div className={styles.field}>
+              <label htmlFor="en-time">{t('timeLabel')}</label>
+              <select
+                id="en-time"
+                className={styles.select}
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+              >
+                {availableTimes.map((slotTime) => (
+                  <option key={slotTime} value={slotTime}>
+                    {slotTime}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </>
+        )}
         </div>
 
-        <p className={styles.payNote}>{t('payMethods')}</p>
+        <p className={styles.payNote} style={{ marginBottom: '0.25rem' }}>{t('payMethods')}</p>
+        <p className={styles.payNote} style={{ marginTop: '0', color: '#64748b' }}>{t('timezoneNote')}</p>
 
         <button
           type="submit"
-          className={`${styles.btnPrimary} ${styles.btnBlock}`}
-          style={{ marginTop: '1rem' }}
-          disabled={loading}
+          className={`${styles.btnSuccess} ${styles.btnBlock}`}
+          disabled={loading || slotsLoading || availableDays.length === 0}
         >
           {loading ? <Loader2 size={18} className="animate-spin" /> : <CreditCard size={18} />}
           {loading ? t('processing') : t('payButton', { price: formatPrice(priceInfo.price, priceInfo.currency, 'en') })}

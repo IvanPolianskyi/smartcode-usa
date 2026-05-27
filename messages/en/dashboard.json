@@ -199,6 +199,9 @@
     "payMethods": "Accepted: Visa/Mastercard, Apple Pay, Google Pay (via WayForPay).",
     "payButton": "Buy lesson for {price}",
     "processing": "Redirecting to payment…",
+    "loading": "Loading...",
+    "timezoneNote": "All times are shown in Kyiv timezone (UTC+3)",
+    "noSlots": "No available slots right now. Check back later or contact support.",
     "errors": {
       "failed": "Could not start payment. Try again or contact support."
     }

@@ -107,6 +107,44 @@ export async function GET() {
       lessonCredits: 0,
       scheduleSyncStartAt: null,
     }
+
+    try {
+      if (baseProfile.regularSchedule && baseProfile.regularSchedule.length > 0) {
+        const slotsCollection = await getCollection('availableSlots')
+        
+        // Find any slot that matches the day/time in the student's schedule
+        const scheduleQueries = baseProfile.regularSchedule.map(item => ({
+          day: item.day,
+          time: item.time
+        }))
+
+        const matchingSlots = await slotsCollection.find({ 
+          $or: scheduleQueries
+        }).toArray()
+
+        // Give priority to slots specifically booked by this user, or just matching day/time
+        baseProfile.regularSchedule = baseProfile.regularSchedule.map(item => {
+          const slotsForThisTime = matchingSlots.filter(s => s.day === item.day && s.time === item.time)
+          
+          let bestSlot = slotsForThisTime.find(s => 
+            (s.bookedBy && s.bookedBy.toString() === userId.toString()) || 
+            s.bookedBy === user.email
+          )
+          
+          if (!bestSlot) {
+            bestSlot = slotsForThisTime.find(s => s.zoomLink) // just grab any that has a zoom link
+          }
+
+          return {
+            ...item,
+            zoomLink: bestSlot?.zoomLink || null
+          }
+        })
+      }
+    } catch (err) {
+      console.error('Error fetching booked slots for zoom links:', err)
+    }
+
     const userResponse = {
       id: user._id.toString(),
       email: user.email,
