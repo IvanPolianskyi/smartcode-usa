@@ -141,10 +141,10 @@
       "lessonsFromAmount": "This amount credits {count} lesson(s) at {price} UAH each.",
       "debtLessons": "{count} lesson(s)",
       "debtHint": "We suggest entering {lessons} lesson(s) in the field below",
-      "receiptPhoto": "Tap to choose a receipt photo",
+      "receiptPhoto": "Tap to choose a receipt file",
       "receiptAttached": "Receipt attached",
       "receiptPreviewAlt": "Receipt preview",
-      "changeReceipt": "Change photo",
+      "changeReceipt": "Change file",
       "removeReceipt": "Remove receipt",
       "noFile": "No file selected",
       "submitting": "Sending...",
@@ -152,8 +152,12 @@
       "errors": {
         "invalidAmount": "Enter a valid payment amount",
         "invalidLessons": "Enter the number of lessons (at least 1)",
+<<<<<<< HEAD
         "amountTooLow": "Minimum amount for one lesson is {price} UAH",
         "noPhoto": "Add a receipt photo",
+=======
+        "noPhoto": "Add a receipt file",
+>>>>>>> 162db2d1c102388d883a2e2d3c7e28fb17b37810
         "submitFailed": "Failed to submit receipt",
         "submitError": "Error submitting receipt"
       },
