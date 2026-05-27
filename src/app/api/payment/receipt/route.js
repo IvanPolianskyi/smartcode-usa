@@ -42,11 +42,7 @@ export async function POST(request) {
     }
 
     if (!(file instanceof File)) {
-      return NextResponse.json({ error: 'Додайте фото квитанції' }, { status: 400 })
-    }
-
-    if (!file.type.startsWith('image/')) {
-      return NextResponse.json({ error: 'Квитанція має бути зображенням' }, { status: 400 })
+      return NextResponse.json({ error: 'Додайте файл квитанції' }, { status: 400 })
     }
 
     if (file.size > MAX_RECEIPT_SIZE_BYTES) {

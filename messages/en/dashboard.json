@@ -140,10 +140,10 @@
       "lessonsHint": "Default is 1 — change if you paid for several lessons in one transfer.",
       "debtLessons": "{count} lesson(s)",
       "debtHint": "We suggest entering {lessons} lesson(s) in the field below",
-      "receiptPhoto": "Tap to choose a receipt photo",
+      "receiptPhoto": "Tap to choose a receipt file",
       "receiptAttached": "Receipt attached",
       "receiptPreviewAlt": "Receipt preview",
-      "changeReceipt": "Change photo",
+      "changeReceipt": "Change file",
       "removeReceipt": "Remove receipt",
       "noFile": "No file selected",
       "submitting": "Sending...",
@@ -151,7 +151,7 @@
       "errors": {
         "invalidAmount": "Enter a valid payment amount",
         "invalidLessons": "Enter the number of lessons (at least 1)",
-        "noPhoto": "Add a receipt photo",
+        "noPhoto": "Add a receipt file",
         "submitFailed": "Failed to submit receipt",
         "submitError": "Error submitting receipt"
       },

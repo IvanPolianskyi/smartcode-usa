@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { Wallet, Copy, Check, Upload, AlertTriangle, CircleCheck, Clock, BookOpen, X, ImageIcon } from 'lucide-react'
+import { Wallet, Copy, Check, Upload, AlertTriangle, CircleCheck, Clock, BookOpen, X, ImageIcon, FileText } from 'lucide-react'
 import { UK_BANK_PAYMENT_DETAILS } from '@/lib/paymentBankDetails'
 import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
 
@@ -134,6 +134,7 @@ export default function StudentPaymentPanel({
   }
 
   const hasReceiptPreview = Boolean(receiptFile && receiptPreviewUrl)
+  const isImage = receiptFile?.type.startsWith('image/')
 
   return (
     <section className={styles.payCard}>
@@ -255,11 +256,17 @@ export default function StudentPaymentPanel({
                     </button>
                   </div>
                   <div className={styles.receiptPreviewImageWrap}>
-                    <img
-                      src={receiptPreviewUrl}
-                      alt={t('student.payments.receiptPreviewAlt')}
-                      className={styles.receiptPreviewImage}
-                    />
+                    {isImage ? (
+                      <img
+                        src={receiptPreviewUrl}
+                        alt={t('student.payments.receiptPreviewAlt')}
+                        className={styles.receiptPreviewImage}
+                      />
+                    ) : (
+                      <div className={styles.receiptPreviewGeneric}>
+                        <FileText size={48} className={styles.receiptGenericIcon} />
+                      </div>
+                    )}
                   </div>
                   <p className={styles.receiptPreviewFileName} title={receiptFile.name}>
                     {receiptFile.name}
@@ -283,7 +290,7 @@ export default function StudentPaymentPanel({
                 id="receipt-upload"
                 ref={receiptInputRef}
                 type="file"
-                accept="image/*"
+                accept="*/*"
                 className={styles.uploadInputHidden}
                 onChange={(e) => setReceiptFile(e.target.files?.[0] || null)}
               />
