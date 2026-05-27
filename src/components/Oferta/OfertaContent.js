@@ -10,9 +10,13 @@ function sortNumericKeys(obj) {
 }
 
 function renderListItems(items, keyOrder) {
-	const keys = keyOrder ?? sortNumericKeys(items)
+	if (!items || typeof items !== 'object') return null
+	const keys = keyOrder
+		? keyOrder.filter((key) => items[key] !== undefined)
+		: sortNumericKeys(items)
 	return keys.map((key) => {
 		const item = items[key]
+		if (item === undefined || item === null) return null
 		if (typeof item === 'string') {
 			return <li key={key}>{item}</li>
 		}
