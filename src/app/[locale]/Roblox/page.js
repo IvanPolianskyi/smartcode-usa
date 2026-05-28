@@ -51,14 +51,18 @@ const RobloxCoursePage = () => {
   const [currentVideo, setCurrentVideo] = useState(null)
   const videoRef = useRef(null)
   const [fireworks, setFireworks] = useState([])
+  const getRawArray = (key) => {
+    const value = t.raw(key)
+    return Array.isArray(value) ? value : []
+  }
 
   const modules = useMemo(() => {
-    const items = t.raw('modules.items')
+    const items = getRawArray('modules.items')
     return items.map((m, index) => ({ ...m, ...MODULE_META[index] }))
   }, [t])
 
   const projects = useMemo(() => {
-    const items = t.raw('projects.items')
+    const items = getRawArray('projects.items')
     return items.map((p, index) => {
       const meta = PROJECT_META[index]
       return {
@@ -72,7 +76,7 @@ const RobloxCoursePage = () => {
   }, [t])
 
   const features = useMemo(() => {
-    const items = t.raw('features.items')
+    const items = getRawArray('features.items')
     return items.map((f, index) => ({ ...f, ...FEATURE_META[index] }))
   }, [t])
 

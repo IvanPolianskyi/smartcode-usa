@@ -45,6 +45,7 @@ export default function BuyCoursePage({ params }) {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState('')
 	const [isOwned, setIsOwned] = useState(false)
+	const [legalAccepted, setLegalAccepted] = useState(false)
 
 	const meta = COURSE_META[courseId] || {}
 	const priceInfo = getCoursePrice(courseId, 'en')
@@ -61,6 +62,10 @@ export default function BuyCoursePage({ params }) {
 	const handleBuy = async () => {
 		if (!user && (!guestName || !guestEmail)) {
 			setError('Please enter your name and email to continue.')
+			return
+		}
+		if (locale === 'en' && !legalAccepted) {
+			setError(t('errors.acceptLegal'))
 			return
 		}
 		
@@ -182,7 +187,7 @@ export default function BuyCoursePage({ params }) {
 								<button
 									type="button"
 									className={styles.submitBtn}
-									disabled={loading}
+									disabled={loading || (locale === 'en' && !legalAccepted)}
 									onClick={handleBuy}
 								>
 									{loading ? (
@@ -198,19 +203,44 @@ export default function BuyCoursePage({ params }) {
 								<p className={styles.payNote}>{t('payMethods')}</p>
 
 								{locale === 'en' ? (
-									<p className={styles.legalNote}>
-										{t.rich('legalAgree', {
-											oferta: (chunks) => (
-												<Link href="/oferta">{chunks}</Link>
-											),
-											privacy: (chunks) => (
-												<Link href="/privacy">{chunks}</Link>
-											),
-											refund: (chunks) => (
-												<Link href="/refund">{chunks}</Link>
-											),
-										})}
-									</p>
+									<>
+										<label className={styles.legalCheckboxRow}>
+											<input
+												type="checkbox"
+												checked={legalAccepted}
+												onChange={(e) => {
+													setLegalAccepted(e.target.checked)
+													if (error) setError('')
+												}}
+											/>
+											<span>
+												{t.rich('legalCheckbox', {
+													oferta: (chunks) => (
+														<Link href="/oferta">{chunks}</Link>
+													),
+													privacy: (chunks) => (
+														<Link href="/privacy">{chunks}</Link>
+													),
+													refund: (chunks) => (
+														<Link href="/refund">{chunks}</Link>
+													),
+												})}
+											</span>
+										</label>
+										<p className={styles.legalNote}>
+											{t.rich('legalAgree', {
+												oferta: (chunks) => (
+													<Link href="/oferta">{chunks}</Link>
+												),
+												privacy: (chunks) => (
+													<Link href="/privacy">{chunks}</Link>
+												),
+												refund: (chunks) => (
+													<Link href="/refund">{chunks}</Link>
+												),
+											})}
+										</p>
+									</>
 								) : null}
 
 								{error && <p className={styles.errorText}>{error}</p>}

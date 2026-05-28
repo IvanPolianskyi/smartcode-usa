@@ -54,8 +54,11 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   )
   const isEnrolled = hasCourseAccess && userProgress !== null
   const progress = userProgress?.overallProgress || 0
-  const totalWeeks = course.modules.reduce((sum, m) => sum + m.duration.weeks, 0)
-  const totalLessons = course.modules.reduce((sum, m) => sum + m.lessons.length, 0)
+  const totalWeeks = course.modules.reduce((sum, m) => sum + (m?.duration?.weeks || 0), 0)
+  const totalLessons = course.modules.reduce(
+    (sum, m) => sum + (Array.isArray(m?.lessons) ? m.lessons.length : 0),
+    0
+  )
 
   useEffect(() => {
     setIsLoaded(true)
@@ -376,7 +379,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                   <div className={styles.learningOutcomes}>
                     <h4>{tCourse('learnTitle')}</h4>
                     <ul>
-                      {module.learningOutcomes.map((outcome, idx) => (
+                      {(Array.isArray(module.learningOutcomes) ? module.learningOutcomes : []).map((outcome, idx) => (
                         <li key={idx}>{outcome}</li>
                       ))}
                     </ul>

@@ -37,7 +37,7 @@
     "steps": {
       "badge": "How it works",
       "title": "Three simple steps",
-      "subtitle": "Inviting a friend is easy — just three steps to your discount",
+      "subtitle": "Inviting a friend is easy - just three steps to your discount",
       "items": {
         "0": {
           "number": "01",
@@ -47,7 +47,7 @@
         "1": {
           "number": "02",
           "title": "Share the link with a friend",
-          "description": "Send the link to a friend — let them follow it and enroll in a course."
+          "description": "Send the link to a friend - let them follow it and enroll in a course."
         },
         "2": {
           "number": "03",
@@ -59,7 +59,7 @@
     "benefits": {
       "badge": "Benefits",
       "title": "What you get",
-      "subtitle": "Great for you and your friend — you both receive a discount",
+      "subtitle": "Great for you and your friend - you both receive a discount",
       "items": {
         "0": {
           "title": "500 UAH discount for you",
@@ -67,11 +67,11 @@
         },
         "1": {
           "title": "500 UAH discount for your friend",
-          "description": "Your friend also gets a bonus — a discount on their first month at SmartCode Academy."
+          "description": "Your friend also gets a bonus - a discount on their first month at SmartCode Academy."
         },
         "2": {
           "title": "No limit on referrals",
-          "description": "Invite as many friends as you like — every invitation brings a discount for both of you!"
+          "description": "Invite as many friends as you like - every invitation brings a discount for both of you!"
         },
         "3": {
           "title": "Learn together",
@@ -107,7 +107,7 @@
     },
     "cta": {
       "title": "Ready to invite a friend?",
-      "subtitle": "Create your referral link and share it with a friend — you both receive a 500 UAH discount!",
+      "subtitle": "Create your referral link and share it with a friend - you both receive a 500 UAH discount!",
       "button": "Get my link"
     }
   },
@@ -254,7 +254,7 @@
       "unity": {
         "title": "Unity game development",
         "shortDescription": "Create engaging games in Unity using C#",
-        "description": "Build exciting games in Unity — from simple 2D to advanced 3D projects.",
+        "description": "Build exciting games in Unity - from simple 2D to advanced 3D projects.",
         "age": "Ages 8–17",
         "skills": {
           "0": "C# programming",
@@ -324,7 +324,8 @@
           "0": "This document is a public offer (the \"Offer\") for the provision of educational services in programming and information technology (the \"Services\") in accordance with Articles 633, 641, and 642 of the Civil Code of Ukraine.",
           "1": "Provider: SmartCode Academy (the \"Provider\") offers programming education through online lessons and training courses.",
           "2": "Acceptance of this Offer occurs when the Customer pays for the Services, which constitutes full agreement with the terms of this Offer.",
-          "3": "IMPORTANT: SmartCode Academy serves students aged 8–17. All purchases, contracts, and payment obligations are entered into by a parent or legal guardian acting as the Customer. Minors may not complete purchases on this website."
+          "3": "IMPORTANT: SmartCode Academy serves students aged 8–17. All purchases, contracts, and payment obligations are entered into by a parent or legal guardian acting as the Customer. Minors may not complete purchases on this website.",
+          "4": "This English Public Offer applies to all customers who are not citizens of Ukraine."
         }
       },
       "2": {
@@ -390,10 +391,10 @@
           },
           "delivery": {
             "title": "3.4. Service delivery and coverage",
-            "text": "Services are provided electronically only — there is no physical shipping of goods. After payment is confirmed, access to the learning platform and course materials is granted online. Live lessons are delivered in real time via Zoom (or another agreed video platform) at a schedule agreed with the Provider.",
+            "text": "Services are provided electronically only - there is no physical shipping of goods. After payment is confirmed, access to the learning platform and course materials is granted online. Live lessons are delivered in real time via Zoom (or another agreed video platform) at a schedule agreed with the Provider.",
             "items": {
               "0": "Service regions: worldwide, wherever the Customer has a stable internet connection",
-              "1": "Self-paced video courses: access via smartcode-academy.com learning platform",
+              "1": "Courses on the platform: access via smartcode-academy.com learning platform",
               "2": "Live online lessons: conducted remotely via Zoom; no in-person classes unless separately agreed in writing",
               "3": "Typical access activation time: within 24 hours of successful payment confirmation"
             }
@@ -417,7 +418,7 @@
               },
               "14days": {
                 "title": "Within the first 14 days",
-                "text": "after payment and access — full refund if services do not match the stated quality or description"
+                "text": "after payment and access - full refund if services do not match the stated quality or description"
               },
               "technical": {
                 "title": "Technical issues",
@@ -576,7 +577,8 @@
         "paragraphs": {
           "0": "This Privacy Policy explains how SmartCode Academy (the \"Provider\", \"we\", \"us\") processes personal data when you use smartcode-academy.com, our learning platform, and related educational services.",
           "1": "This Policy applies to parents and legal guardians who register or pay on behalf of students, to adult students where applicable, and to visitors who submit inquiries through our website.",
-          "2": "We process personal data in accordance with the Law of Ukraine \"On Personal Data Protection\" and, where applicable, the EU General Data Protection Regulation (GDPR) for international customers."
+          "2": "We process personal data in accordance with the Law of Ukraine \"On Personal Data Protection\" and, where applicable, the EU General Data Protection Regulation (GDPR) for international customers.",
+          "3": "This English Privacy Policy applies to all customers who are not citizens of Ukraine."
         }
       },
       "2": {
@@ -595,11 +597,11 @@
           },
           "1": {
             "title": "Payment-related data",
-            "text": "transaction identifiers, payment amount, currency, and payment status — card numbers and CVV are processed only by WayForPay and are not stored on our servers"
+            "text": "transaction identifiers, payment amount, currency, and payment status - card numbers and CVV are processed only by WayForPay and are not stored on our servers"
           },
           "2": {
             "title": "Student data",
-            "text": "student name, age or grade level where provided, assignments, quiz results, and platform activity — collected with parental consent for minors"
+            "text": "student name, age or grade level where provided, assignments, quiz results, and platform activity - collected with parental consent for minors"
           },
           "3": {
             "title": "Technical data",
@@ -640,7 +642,7 @@
         "title": "5. Sharing with third parties",
         "paragraphs": {
           "0": "We do not sell personal data. We share data only with trusted processors necessary to operate our services:",
-          "1": "WayForPay — payment processing (Visa, Mastercard, Apple Pay, Google Pay); MongoDB Atlas or equivalent — database hosting; Vercel or equivalent — website hosting; Zoom — live online lessons; email and analytics providers — as configured for our operations.",
+          "1": "WayForPay - payment processing (Visa, Mastercard, Apple Pay, Google Pay); MongoDB Atlas or equivalent - database hosting; Vercel or equivalent - website hosting; Zoom - live online lessons; email and analytics providers - as configured for our operations.",
           "2": "Processors are required to protect data under contractual obligations. We may disclose data if required by law or to protect our legal rights."
         }
       },
@@ -732,52 +734,30 @@
         "title": "1. Overview",
         "paragraphs": {
           "0": "At SmartCode Academy we aim for your complete satisfaction with our educational services. This Refund Policy describes when and how you may request a refund or cancel a payment transaction.",
-          "1": "This Policy supplements Section 4 of our Public Offer. In case of conflict, the Public Offer prevails for contractual matters; this page provides a clear summary for customers and payment partners."
+          "1": "This Policy supplements Section 4 of our Public Offer. In case of conflict, the Public Offer prevails for contractual matters; this page provides a clear summary for customers and payment partners.",
+          "2": "Important: after purchase confirmation, payments are non-refundable except where the course product was delivered incorrectly or not delivered in full.",
+          "3": "This English Refund Policy applies to all customers who are not citizens of Ukraine."
         }
       },
       "2": {
-        "title": "2. Eligible refund situations",
+        "title": "2. The only refund reason",
         "items": {
           "0": {
-            "title": "Before services begin",
-            "text": "100% refund if you cancel at least 24 hours before the first live lesson or before accessing self-paced course materials"
+            "title": "General rule",
+            "text": "Refunds are not provided after purchase confirmation."
           },
           "1": {
-            "title": "Within 14 days of purchase",
-            "text": "full refund if the service materially does not match the description on the website (subject to verification)"
-          },
-          "2": {
-            "title": "Provider technical failure",
-            "text": "full or proportional refund if we cannot provide access or lessons due to platform outage or our fault"
-          },
-          "3": {
-            "title": "Interrupted live lessons",
-            "text": "proportional refund for unused prepaid live lessons if you stop studying after the course has started"
-          },
-          "4": {
-            "title": "Self-paced video courses",
-            "text": "refund within 14 days of purchase if less than 20% of course content has been viewed or completed"
+            "title": "Allowed case",
+            "text": "A refund is allowed only if the purchased course product was delivered incorrectly or not delivered in full."
           }
         }
       },
       "3": {
-        "title": "3. Non-refundable situations",
+        "title": "3. No other refund reasons",
         "items": {
           "0": {
-            "title": "Substantial use",
-            "text": "no refund if more than 30% of course materials were accessed or more than 30% of scheduled live lessons were attended"
-          },
-          "1": {
-            "title": "Late cancellation",
-            "text": "no refund for missed live lessons without at least 24 hours prior notice — the instructor's time was reserved (see Public Offer §3.5)"
-          },
-          "2": {
-            "title": "Personal reasons",
-            "text": "no refund solely due to change of mind after the 14-day period or after substantial use, unless required by mandatory law"
-          },
-          "3": {
-            "title": "Terms violation",
-            "text": "no refund if access was terminated due to violation of platform rules or misuse of learning materials"
+            "title": "Exclusive rule",
+            "text": "No refund is provided for any reason other than incorrect or incomplete product delivery."
           }
         }
       },
@@ -793,15 +773,15 @@
       "5": {
         "title": "5. Transaction cancellation",
         "paragraphs": {
-          "0": "If a payment was made in error (duplicate charge, wrong amount), contact us immediately. We will cancel or refund erroneous transactions as quickly as possible.",
-          "1": "Chargebacks should be a last resort — please contact us first so we can resolve the issue directly."
+          "0": "Transaction cancellation requests are reviewed under the same rule - only incorrect or incomplete product delivery is eligible for a refund.",
+          "1": "Chargebacks should be a last resort - please contact us first so we can resolve the issue directly."
         }
       },
       "6": {
         "title": "6. Digital services notice",
         "paragraphs": {
           "0": "Educational services are digital services delivered online. By purchasing, you acknowledge that delivery begins upon granting platform access or scheduling live lessons.",
-          "1": "Where applicable law grants a cooling-off period for distance contracts, your statutory rights remain unaffected by this Policy."
+          "1": "Educational services are digital content delivered online. By purchasing and accessing the course materials, you explicitly consent to the immediate performance of the contract and acknowledge that you will lose your right of withdrawal (cooling-off period) once the access to the digital content is granted."
         }
       }
     }
