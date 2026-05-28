@@ -6,7 +6,8 @@ import { Link, useRouter } from '@/i18n/navigation'
 import { logout, getUserProgress } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import { isStudentDashboardReady } from '@/lib/studentAccountReady'
-import { useDashboardCourses, DAY_KEY_MAP } from '@/hooks/useDashboardCourses'
+import { useDashboardCourses } from '@/hooks/useDashboardCourses'
+import { computeScheduleStats } from '@/lib/studentScheduleStats'
 import { getStudentAccessibleCourseIds } from '@/lib/courseLessonAccess'
 import EnStudentDashboard from '@/components/Dashboard/EnStudentDashboard'
 import MyCoursesSection from '@/components/Dashboard/MyCoursesSection'
@@ -80,74 +81,10 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
   const lessonHistory = Object.entries(progressData || {}).flatMap(([courseId, progress]) =>
     (progress?.completedLessons || []).map((lessonId) => ({ courseId, lessonId }))
   )
-  const scheduleInfo = useMemo(() => {
-    const slots = (schedule || [])
-      .map((item) => {
-        const dayIndex = DAY_KEY_MAP[item?.day] !== undefined
-          ? ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'].indexOf(DAY_KEY_MAP[item.day])
-          : undefined
-        const [hh, mm] = String(item?.time || '').split(':')
-        const hours = Number(hh)
-        const minutes = Number(mm)
-        if (dayIndex === undefined || dayIndex < 0 || !Number.isFinite(hours) || !Number.isFinite(minutes)) return null
-        return { dayIndex, hours, minutes }
-      })
-      .filter(Boolean)
-
-    if (slots.length === 0) {
-      return {
-        weeklyTotal: 0,
-        weeklyCompleted: 0,
-        weeklyRemaining: 0,
-        nextLessonText: t('student.schedule.noLessons'),
-      }
-    }
-
-    const now = new Date()
-    const currentDay = now.getDay()
-    const endOfWeek = new Date(now)
-    endOfWeek.setDate(now.getDate() + (7 - currentDay))
-    endOfWeek.setHours(0, 0, 0, 0)
-    const startOfWeek = new Date(endOfWeek)
-    startOfWeek.setDate(endOfWeek.getDate() - 6)
-    startOfWeek.setHours(0, 0, 0, 0)
-
-    const upcomingThisWeek = []
-    const upcomingAll = []
-    const thisWeekAll = []
-
-    slots.forEach((slot) => {
-      const next = new Date(now)
-      const diff = (slot.dayIndex - now.getDay() + 7) % 7
-      next.setDate(now.getDate() + diff)
-      next.setHours(slot.hours, slot.minutes, 0, 0)
-      if (next <= now) next.setDate(next.getDate() + 7)
-      upcomingAll.push(next)
-      if (next < endOfWeek) {
-        upcomingThisWeek.push(next)
-      }
-
-      const currentWeekSlot = new Date(startOfWeek)
-      const weekDiff = (slot.dayIndex - startOfWeek.getDay() + 7) % 7
-      currentWeekSlot.setDate(startOfWeek.getDate() + weekDiff)
-      currentWeekSlot.setHours(slot.hours, slot.minutes, 0, 0)
-      if (currentWeekSlot >= startOfWeek && currentWeekSlot < endOfWeek) {
-        thisWeekAll.push(currentWeekSlot)
-      }
-    })
-
-    const nextLesson = upcomingAll.sort((a, b) => a.getTime() - b.getTime())[0]
-    const nextLessonText = nextLesson
-      ? nextLesson.toLocaleString(dateLocale, { weekday: 'short', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
-      : t('student.schedule.noLessons')
-
-    return {
-      weeklyTotal: thisWeekAll.length,
-      weeklyCompleted: Math.max(0, thisWeekAll.length - upcomingThisWeek.length),
-      weeklyRemaining: upcomingThisWeek.length,
-      nextLessonText,
-    }
-  }, [schedule, dateLocale, t])
+  const scheduleInfo = useMemo(
+    () => computeScheduleStats(schedule, { t, dateLocale }),
+    [schedule, dateLocale, t]
+  )
 
   const weeklyGoal = Math.max(1, scheduleInfo.weeklyTotal || 0)
   const weekProgress = Math.min(scheduleInfo.weeklyCompleted || 0, weeklyGoal)
