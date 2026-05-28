@@ -1,7 +1,6 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Download } from 'lucide-react'
 import styles from '@/app/[locale]/oferta/OfertaPage.module.css'
 import MerchantContactBlock from '@/components/Legal/MerchantContactBlock'
 
@@ -121,10 +120,6 @@ export default function OfertaContent() {
 				<div className={styles.header}>
 					<h1 className={styles.title}>{t('title')}</h1>
 					<p className={styles.subtitle}>{t('subtitle')}</p>
-					<a href='/api/oferta-pdf' className={styles.pdfLink}>
-						<Download size={20} />
-						{t('downloadPdf')}
-					</a>
 				</div>
 
 				{/* Section 1 */}
