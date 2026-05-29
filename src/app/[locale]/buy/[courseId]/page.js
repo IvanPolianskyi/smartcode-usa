@@ -16,12 +16,9 @@ import {
 	Infinity,
 } from 'lucide-react'
 import { useAuthSession } from '@/components/AuthSessionProvider'
-import { createPayment, createTestPythonCoursePayment, checkCoursePurchase } from '@/lib/authClient'
+import { createPayment, checkCoursePurchase } from '@/lib/authClient'
 import { formatPrice, getCoursePrice } from '@/lib/coursePrices'
 import styles from './BuyCourse.module.css'
-import { useSearchParams } from 'next/navigation'
-
-const TEST_CHECKOUT_AMOUNT = 5
 
 const COURSE_META = {
 	'roblox-studio': {
@@ -42,10 +39,6 @@ export default function BuyCoursePage({ params }) {
 	const locale = useLocale()
 	const router = useRouter()
 	const { user, loading: authLoading } = useAuthSession()
-	const searchParams = useSearchParams()
-	const isTestCheckout =
-		searchParams.get('test') === '1' &&
-		courseId === 'python-developer-zero-to-junior'
 
 	const [guestName, setGuestName] = useState('')
 	const [guestEmail, setGuestEmail] = useState('')
@@ -79,9 +72,7 @@ export default function BuyCoursePage({ params }) {
 		setError('')
 		setLoading(true)
 		try {
-			const { paymentUrl } = isTestCheckout
-				? await createTestPythonCoursePayment(locale, guestEmail, guestName)
-				: await createPayment(courseId, locale, guestEmail, guestName)
+			const { paymentUrl } = await createPayment(courseId, locale, guestEmail, guestName)
 			if (paymentUrl) window.location.href = paymentUrl
 		} catch (err) {
 			setError(err.message || t('errors.failed'))
@@ -140,7 +131,7 @@ export default function BuyCoursePage({ params }) {
 							</div>
 						</div>
 
-						{isOwned && !isTestCheckout ? (
+						{isOwned ? (
 							<div className={styles.ownedState}>
 								<div className={styles.ownedAlert}>
 									<CheckCircle2 size={20} className={styles.successIcon} />
@@ -153,14 +144,9 @@ export default function BuyCoursePage({ params }) {
 							</div>
 						) : (
 							<div className={styles.buyState}>
-								{isTestCheckout ? (
-									<p className={styles.priceNote}>{t('testCheckoutNote')}</p>
-								) : null}
 								<div className={styles.priceWrap}>
 									<span className={styles.price}>
-										{isTestCheckout
-											? formatPrice(TEST_CHECKOUT_AMOUNT, 'UAH', locale)
-											: formatPrice(priceInfo.price, priceInfo.currency, 'en')}
+										{formatPrice(priceInfo.price, priceInfo.currency, 'en')}
 									</span>
 									<span className={styles.priceNote}>{t('oneTime')}</span>
 								</div>
@@ -211,13 +197,7 @@ export default function BuyCoursePage({ params }) {
 									)}
 									{loading
 										? t('processing')
-										: isTestCheckout
-											? t('testBuyButton', {
-													price: formatPrice(TEST_CHECKOUT_AMOUNT, 'UAH', locale),
-												})
-											: t('buyButton', {
-													price: formatPrice(priceInfo.price, priceInfo.currency, 'en'),
-												})}
+										: t('buyButton', { price: formatPrice(priceInfo.price, priceInfo.currency, 'en') })}
 								</button>
 
 								<p className={styles.payNote}>{t('payMethods')}</p>

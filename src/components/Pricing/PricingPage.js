@@ -15,6 +15,7 @@ import {
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+import { Link } from '@/i18n/navigation'
 import styles from './PricingPage.module.css'
 import { useTranslations, useLocale } from 'next-intl'
 import { formatPrice, getLessonPrice } from '@/lib/coursePrices'
@@ -144,10 +145,17 @@ const PricingPage = () => {
 					</h1>
 					<p className={styles.subtitle}>{t('hero.subtitle')}</p>
 					<div className={styles.heroActions}>
-						<button onClick={handleContactClick} className={styles.heroCta}>
-							{t('hero.cta')}
-							<ArrowRight size={18} />
-						</button>
+						{locale === 'en' ? (
+							<Link href="/book-lesson" className={styles.heroCta}>
+								{t('hero.cta')}
+								<ArrowRight size={18} />
+							</Link>
+						) : (
+							<button onClick={handleContactClick} className={styles.heroCta}>
+								{t('hero.cta')}
+								<ArrowRight size={18} />
+							</button>
+						)}
 					</div>
 				</div>
 			</section>
@@ -199,13 +207,23 @@ const PricingPage = () => {
 									))}
 								</ul>
 
-								<button
-									onClick={handleContactClick}
-									className={`${styles.ctaButton} ${plan.popular ? styles.ctaPopular : ''}`}
-								>
-									<span>{plan.cta}</span>
-									<ArrowRight size={18} />
-								</button>
+								{locale === 'en' ? (
+									<Link
+										href="/book-lesson"
+										className={`${styles.ctaButton} ${plan.popular ? styles.ctaPopular : ''}`}
+									>
+										<span>{plan.cta}</span>
+										<ArrowRight size={18} />
+									</Link>
+								) : (
+									<button
+										onClick={handleContactClick}
+										className={`${styles.ctaButton} ${plan.popular ? styles.ctaPopular : ''}`}
+									>
+										<span>{plan.cta}</span>
+										<ArrowRight size={18} />
+									</button>
+								)}
 							</div>
 						))}
 					</div>
@@ -250,10 +268,17 @@ const PricingPage = () => {
 						<p className={styles.finalCtaText}>
 							{t('finalCta.text')}
 						</p>
-						<button onClick={handleContactClick} className={styles.finalCtaButton}>
-							<span>{t('finalCta.cta')}</span>
-							<ArrowRight size={20} />
-						</button>
+						{locale === 'en' ? (
+							<Link href="/book-lesson" className={styles.finalCtaButton}>
+								<span>{t('finalCta.cta')}</span>
+								<ArrowRight size={18} />
+							</Link>
+						) : (
+							<button onClick={handleContactClick} className={styles.finalCtaButton}>
+								<span>{t('finalCta.cta')}</span>
+								<ArrowRight size={18} />
+							</button>
+						)}
 					</div>
 				</div>
 			</section>

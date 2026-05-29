@@ -15,7 +15,7 @@ import {
 import styles from './Header.module.css'
 import gsap from 'gsap'
 import { Link, useRouter } from '@/i18n/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import Logo from '@/components/Logo/Logo'
 import { logout } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
@@ -32,6 +32,8 @@ import {
 const Header = () => {
 	const t = useTranslations('header')
 	const tc = useTranslations('common')
+	const locale = useLocale()
+	const isEn = locale === 'en'
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const [isScrolled, setIsScrolled] = useState(false)
 	const headerRef = useRef(null)
@@ -167,12 +169,17 @@ const Header = () => {
 	}
 
 	const handleCtaClick = (e) => {
-        e.preventDefault()
-        if (typeof window !== 'undefined') {
-            window.dispatchEvent(new Event('openContactModal'))
-        }
-        setIsMobileMenuOpen(false)
-    }
+		if (e?.preventDefault) e.preventDefault()
+		if (isEn) {
+			router.push('/book-lesson')
+			setIsMobileMenuOpen(false)
+			return
+		}
+		if (typeof window !== 'undefined') {
+			window.dispatchEvent(new Event('openContactModal'))
+		}
+		setIsMobileMenuOpen(false)
+	}
 
 	const scrollToHomeSection = (sectionId) => {
 		const isHome =
@@ -231,7 +238,9 @@ const Header = () => {
 	}
 
 	const navItems = [
-		{ label: t('nav.signUp'), href: '/#trial-signup', ctaModal: true },
+		isEn
+			? { label: t('nav.signUp'), href: '/book-lesson' }
+			: { label: t('nav.signUp'), href: '/#trial-signup', ctaModal: true },
 		{ label: t('nav.courses'), href: '/#our-courses' },
 		{ label: t('nav.lessons'), href: '/#courses', hideOnDesktop: true },
 		{ label: t('nav.prices'), href: '/tariff' },

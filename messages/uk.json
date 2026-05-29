@@ -200,10 +200,6 @@
       }
     },
     "copyright": "© {year} SmartCode Academy. Усі права захищені.",
-    "testPythonPayment": "Test Python · 5 грн",
-    "testPythonPaymentLoading": "Створення оплати…",
-    "testPythonPaymentHint": "Тестовий флоу покупки Python курсу за 5 грн",
-    "testPythonPaymentError": "Не вдалося створити тестову оплату",
     "social": {
       "instagram": "Instagram",
       "tiktokMain": "TikTok - SmartCode Academy",
@@ -510,8 +506,6 @@
   },
   "buyCourse": {
     "buyButton": "Придбати за {price}",
-    "testBuyButton": "Тестова покупка · {price}",
-    "testCheckoutNote": "Тестовий checkout — той самий флоу, що й реальна покупка, але лише 5 грн.",
     "processing": "Обробка…",
     "oneTime": "Одноразова оплата · довічний доступ",
     "comingSoon": "Незабаром! Ми повідомимо вас, коли цей курс стане доступним для покупки.",

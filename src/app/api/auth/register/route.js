@@ -149,10 +149,11 @@ export async function POST(request) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            phone: phone || '',
+            telegram: email,
+            name,
             course: 'Реферальне посилання',
             message: `Новий користувач зареєструвався по реферальному посиланню ID: ${referralId}\nІм'я: ${name}\nEmail: ${email}`,
-            contactMethod: 'phone',
+            contactMethod: 'telegram',
           }),
         })
       } catch (telegramError) {

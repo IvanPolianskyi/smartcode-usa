@@ -5,9 +5,6 @@ import { Link, useRouter } from '@/i18n/navigation'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { register } from '@/lib/authClient'
-import { usePhoneInput } from '@/lib/usePhoneInput'
-import PhoneField from '@/components/PhoneField/PhoneField'
-import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 import Logo from '@/components/Logo/Logo'
 import { Eye, EyeOff } from 'lucide-react'
 import styles from '../login/Auth.module.css'
@@ -17,8 +14,7 @@ function RegisterPageContent() {
   const locale = useLocale()
   const router = useRouter()
   const searchParams = useSearchParams()
-  const phoneInput = usePhoneInput('UA')
-  
+
   const initialEmail = searchParams.get('email') || ''
   const claimOrder = searchParams.get('claimOrder')
 
@@ -32,37 +28,6 @@ function RegisterPageContent() {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-
-  const hasPhoneInput =
-    Boolean(phoneInput.rawDigits) ||
-    Boolean(phoneInput.intlInputValue?.replace(/\D/g, ''))
-
-  const phoneClasses = {
-    field: styles.formGroup,
-    fieldError: phoneStyles.fieldError,
-    label: styles.label,
-    phoneContainer: phoneStyles.phoneContainer,
-    countryBtn: phoneStyles.countryBtn,
-    flagEmoji: phoneStyles.flagEmoji,
-    dropdownArrow: phoneStyles.dropdownArrow,
-    divider: phoneStyles.divider,
-    phoneInputWrap: phoneStyles.phoneInputWrap,
-    phonePrefix: phoneStyles.phonePrefix,
-    phoneInput: phoneStyles.phoneInput,
-    dropdown: phoneStyles.dropdown,
-    dropdownPortal: phoneStyles.dropdownPortal,
-    dropdownSearchWrap: phoneStyles.dropdownSearchWrap,
-    dropdownSearch: phoneStyles.dropdownSearch,
-    dropdownList: phoneStyles.dropdownList,
-    dropdownEmpty: phoneStyles.dropdownEmpty,
-    dropdownItem: phoneStyles.dropdownItem,
-    dropdownItemActive: phoneStyles.dropdownItemActive,
-    dropdownItemFlag: phoneStyles.dropdownItemFlag,
-    dropdownItemName: phoneStyles.dropdownItemName,
-    dropdownItemCode: phoneStyles.dropdownItemCode,
-    dropdownItemDial: phoneStyles.dropdownItemDial,
-    error: phoneStyles.error,
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -78,10 +43,6 @@ function RegisterPageContent() {
       return
     }
 
-    if (hasPhoneInput && !phoneInput.validateOnSubmit()) {
-      return
-    }
-
     setLoading(true)
 
     try {
@@ -89,7 +50,6 @@ function RegisterPageContent() {
         formData.email,
         formData.password,
         formData.name,
-        hasPhoneInput ? phoneInput.getFullNumber() : undefined,
         locale,
         claimOrder
       )
@@ -163,13 +123,6 @@ function RegisterPageContent() {
                 placeholder={t('emailPlaceholder')}
               />
             </div>
-
-            <PhoneField
-              phoneInput={phoneInput}
-              classes={phoneClasses}
-              id="phone"
-              labelText={t('phone')}
-            />
 
             <div className={styles.formGroup}>
               <label htmlFor="password" className={styles.label}>

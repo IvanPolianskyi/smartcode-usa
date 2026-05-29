@@ -22,13 +22,13 @@ export async function login(email, password) {
   return data
 }
 
-export async function register(email, password, name, phone, locale = 'uk', claimOrder) {
+export async function register(email, password, name, locale = 'uk', claimOrder) {
   const response = await fetch('/api/auth/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ email, password, name, phone, locale, claimOrder }),
+    body: JSON.stringify({ email, password, name, locale, claimOrder }),
   })
 
   const data = await response.json()
@@ -164,26 +164,6 @@ export async function createPayment(courseId, locale = 'uk', guestEmail, guestNa
 
   if (!response.ok) {
     throw new Error(data.error || 'Failed to create payment')
-  }
-
-  return data
-}
-
-/** Тестова покупка Python курсу (5 грн) — повний флоу Monobank + доступ до курсу */
-export async function createTestPythonCoursePayment(locale = 'uk', guestEmail, guestName) {
-  const response = await fetch('/api/payment/test-python-course', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    body: JSON.stringify({ locale, guestEmail, guestName }),
-  })
-
-  const data = await response.json()
-
-  if (!response.ok) {
-    throw new Error(data.error || 'Failed to create test payment')
   }
 
   return data

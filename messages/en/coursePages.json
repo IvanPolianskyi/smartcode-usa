@@ -2,7 +2,7 @@
   "common": {
     "backToHome": "Back to home",
     "startLearning": "Start learning",
-    "bookTrial": "Free trial lesson",
+    "bookTrial": "Book a live lesson",
     "modulesTitle": "Course modules",
     "projectsTitle": "Your future projects",
     "featuresTitle": "Why choose us",
@@ -201,7 +201,7 @@
     "cta": {
       "startLearning": "Start learning",
       "goToCourse": "Go to course",
-      "freeLesson": "Free trial lesson"
+      "freeLesson": "Preview lesson 1"
     }
   },
   "unity": {
@@ -209,7 +209,7 @@
       "titleLine1": "C# & UNITY",
       "titleLine2": "GAME DEVELOPMENT",
       "pressStart": "START LEARNING",
-      "freeLesson": "FREE TRIAL LESSON",
+      "freeLesson": "PREVIEW LESSON 1",
       "description": "Become a game developer from scratch! Learn C# programming and the Unity Engine - from your first lines of code to portfolio-ready projects."
     },
     "stats": {
@@ -300,7 +300,7 @@
       "titleLine1": "LUA & ROBLOX",
       "titleLine2": "GAME DEVELOPMENT",
       "ctaCaption": "LET'S START BUILDING",
-      "freeLesson": "FREE TRIAL LESSON",
+      "freeLesson": "PREVIEW LESSON 1",
       "description": "Learn to create games in Roblox Studio: from your first Lua scripts to full simulators, tycoon games, and obstacle courses. Lots of practice and visual effects."
     },
     "modules": {

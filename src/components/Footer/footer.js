@@ -1,11 +1,8 @@
 'use client'
 import { Link, useRouter } from '@/i18n/navigation'
 import { useTranslations, useLocale } from 'next-intl'
-import { useState } from 'react'
 import styles from './footer.module.css'
 import { parseHomeHashTarget, navigateToHomeSection } from '@/lib/homeSectionScroll'
-import { useAuthSession } from '@/components/AuthSessionProvider'
-import { createTestPythonCoursePayment } from '@/lib/authClient'
 import {
 	Code,
 	Gamepad2,
@@ -26,29 +23,7 @@ const Footer = () => {
 	const locale = useLocale()
 	const isEn = locale === 'en'
 	const router = useRouter()
-	const { user } = useAuthSession()
-	const [testPaymentLoading, setTestPaymentLoading] = useState(false)
-	const [testPaymentError, setTestPaymentError] = useState('')
 	const currentYear = new Date().getFullYear()
-
-	const handleTestPythonPayment = async () => {
-		setTestPaymentError('')
-		if (!user) {
-			router.push('/buy/python-developer-zero-to-junior?test=1')
-			return
-		}
-		setTestPaymentLoading(true)
-		try {
-			const { paymentUrl } = await createTestPythonCoursePayment(locale)
-			if (paymentUrl) {
-				window.location.href = paymentUrl
-			}
-		} catch (err) {
-			setTestPaymentError(err.message || t('testPythonPaymentError'))
-		} finally {
-			setTestPaymentLoading(false)
-		}
-	}
 
 	const handleHashLinkClick = (e, href) => {
 		const id = parseHomeHashTarget(href)
@@ -235,25 +210,7 @@ const Footer = () => {
 									)}
 								</li>
 							))}
-							<li>
-								<button
-									type="button"
-									className={styles.testPaymentLink}
-									onClick={handleTestPythonPayment}
-									disabled={testPaymentLoading}
-									title={t('testPythonPaymentHint')}
-								>
-									{testPaymentLoading
-										? t('testPythonPaymentLoading')
-										: t('testPythonPayment')}
-								</button>
-							</li>
 						</ul>
-						{testPaymentError ? (
-							<p className={styles.testPaymentError} role="alert">
-								{testPaymentError}
-							</p>
-						) : null}
 					</div>
 				</div>
 

@@ -3,7 +3,7 @@
     "siteName": "SmartCode Academy",
     "home": {
       "title": "SmartCode Academy - Programming School for Kids & Teens",
-      "description": "Live Zoom lessons, an online learning platform, and a free trial class. Python, Unity, Roblox, and web development for ages 8–17."
+      "description": "Live Zoom lessons and self-paced courses on our learning platform. Python, Unity, Roblox, and web development for ages 8–17."
     },
     "tariff": {
       "title": "Pricing & Plans - SmartCode Academy",
@@ -78,7 +78,7 @@
   "common": {
     "siteName": "SmartCode Academy",
     "signUp": "Sign Up",
-    "signUpTrial": "Book a Free Trial",
+    "signUpTrial": "Book a Live Lesson",
     "login": "Sign In",
     "register": "Register",
     "dashboard": "Dashboard",
@@ -95,7 +95,7 @@
     "nameRequired": "Please enter your name",
     "phone": "Phone",
     "message": "Comment",
-    "freeTrial": "free trial lesson",
+    "freeTrial": "live Zoom lesson",
     "langUk": "UA",
     "langEn": "EN",
     "myProfile": "My Profile",
@@ -124,14 +124,14 @@
   },
   "header": {
     "nav": {
-      "signUp": "Sign Up",
+      "signUp": "Book a Lesson",
       "courses": "Courses",
       "lessons": "Sample Lessons",
       "prices": "Pricing",
       "reviews": "Reviews",
       "invite": "Invite a Friend"
     },
-    "signUpAria": "Book a free trial lesson",
+    "signUpAria": "Book a live Zoom lesson",
     "mobile": {
       "pages": "Pages",
       "courses": "Courses"
@@ -209,10 +209,6 @@
       }
     },
     "copyright": "© {year} SmartCode Academy. All rights reserved.",
-    "testPythonPayment": "Test Python · 5 UAH",
-    "testPythonPaymentLoading": "Creating payment…",
-    "testPythonPaymentHint": "Test the full Python course purchase flow for 5 UAH",
-    "testPythonPaymentError": "Failed to create test payment",
     "social": {
       "instagram": "Instagram",
       "tiktokMain": "TikTok - SmartCode Academy",
@@ -255,7 +251,7 @@
       }
     },
     "cta": {
-      "signUpTrial": "Book a Free Trial",
+      "signUpTrial": "Book a Live Lesson",
       "viewPrices": "View Pricing"
     },
     "heroEnCta": {
@@ -285,13 +281,13 @@
     },
     "heroForm": {
       "title": "Book your",
-      "titleAccent": "free trial lesson",
+      "titleAccent": "live Zoom lesson",
       "nameLabel": "Your name",
       "namePlaceholder": "Enter your name",
       "nameRequired": "Please enter your name",
       "submit": "Sign Up",
       "submitting": "Sending…",
-      "hint": "0 UAH · no commitment · we'll reply within a day",
+      "hint": "Paid lessons · flexible schedule",
       "successTitle": "Request received!",
       "successText": "We'll contact you shortly."
     }
@@ -361,8 +357,8 @@
   },
   "contact": {
     "closeAria": "Close form",
-    "title": "Book a trial lesson",
-    "subtitle": "Leave your contact details",
+    "title": "Get in touch",
+    "subtitle": "Leave your contact details and we'll reply soon",
     "nameLabel": "Your name",
     "namePlaceholder": "Child's or parent's name",
     "nameRequired": "Please enter your name",
@@ -371,7 +367,7 @@
     "messagePlaceholder": "Preferred contact method, child's age, questions…",
     "submit": "Submit Request",
     "submitting": "Sending…",
-    "note": "First lesson is free. We'll call you within 15 minutes.",
+    "note": "We'll reply within one business day.",
     "successTitle": "Thank you!",
     "successText": "Our manager will contact you shortly.",
     "errorSubmit": "Sorry, something went wrong while sending. Please try again or message us on Telegram.",
@@ -446,7 +442,7 @@
       "titleAccent": "per lesson",
       "titleLine2": "no prepayment",
       "subtitle": "Choose a learning format that fits your goals and budget. Pay only for completed lessons-no hidden terms, no risk, with real progress for your child.",
-      "cta": "Book a Free Trial"
+      "cta": "Book a Live Lesson"
     },
     "plans": {
       "group": {
@@ -505,8 +501,8 @@
     },
     "finalCta": {
       "title": "Start risk-free this week",
-      "text": "Book a trial lesson, meet your teacher, and get a personalized learning plan for your child.",
-      "cta": "Book a Free Trial"
+      "text": "Book a live Zoom lesson or buy a full course on our platform — we'll help you choose the best option for your child.",
+      "cta": "Book a Live Lesson"
     }
   },
   "bookLesson": {
@@ -544,8 +540,6 @@
   },
   "buyCourse": {
     "buyButton": "Buy for {price}",
-    "testBuyButton": "Test buy · {price}",
-    "testCheckoutNote": "Test checkout — same flow as a real purchase, charged 5 UAH only.",
     "processing": "Processing…",
     "oneTime": "One-time payment · lifetime access",
     "comingSoon": "Coming soon! We'll notify you when this course is available for purchase.",

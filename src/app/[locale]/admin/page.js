@@ -50,8 +50,6 @@ export default function AdminPanelPage() {
   const [studentSaveNotice, setStudentSaveNotice] = useState('')
   const [studentSearch, setStudentSearch] = useState('')
   const [showDebtOnly, setShowDebtOnly] = useState(false)
-  const [testPaymentLoading, setTestPaymentLoading] = useState(false)
-  const [testPaymentError, setTestPaymentError] = useState('')
   const [studentForm, setStudentForm] = useState({
     lessonFormat: 'group',
     regularDays: [],
@@ -360,33 +358,6 @@ export default function AdminPanelPage() {
     }
   }
 
-  const handleTestPythonPayment = async () => {
-    setTestPaymentError('')
-    setTestPaymentLoading(true)
-    try {
-      const response = await fetch('/api/admin/monobank-test-python', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ locale }),
-      })
-      const data = await response.json()
-      if (!response.ok) {
-        throw new Error(data.error || t('testPythonPaymentError'))
-      }
-      if (data.paymentUrl) {
-        window.location.href = data.paymentUrl
-        return
-      }
-      throw new Error(t('testPythonPaymentError'))
-    } catch (error) {
-      console.error('Test python payment error:', error)
-      setTestPaymentError(error.message || t('testPythonPaymentError'))
-    } finally {
-      setTestPaymentLoading(false)
-    }
-  }
-
   const handleLogout = async () => {
     try {
       const { logout } = await import('@/lib/authClient')
@@ -463,26 +434,12 @@ export default function AdminPanelPage() {
             <Link href="/admin/groups" className={styles.certReloadButton}>
               {t('crmGroups')}
             </Link>
-            <button
-              type="button"
-              onClick={handleTestPythonPayment}
-              className={styles.certReloadButton}
-              disabled={testPaymentLoading}
-              title={t('testPythonPayment')}
-            >
-              {testPaymentLoading ? t('testPythonPaymentLoading') : t('testPythonPayment')}
-            </button>
             <button onClick={handleLogout} className={styles.logoutButton}>
               <LogOut size={20} />
               {t('logout')}
             </button>
           </div>
         </div>
-        {testPaymentError ? (
-          <p className={styles.inlineError} role="alert">
-            {testPaymentError}
-          </p>
-        ) : null}
       </div>
 
       {stats && (

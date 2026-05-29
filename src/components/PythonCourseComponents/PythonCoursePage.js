@@ -24,10 +24,14 @@ import {
 } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
 import { trackCourseLanding } from '@/lib/metaPixel'
+import { useLocale } from 'next-intl'
 import { usePythonCourseData } from '@/hooks/usePythonCourseData'
 import styles from './PythonCoursePage.module.css'
 
 const PythonCoursePage = () => {
+  const locale = useLocale()
+  const isEn = locale === 'en'
+  const primaryCtaHref = isEn ? '/buy/python-developer-zero-to-junior' : '/#Contactform'
   const { hero, stats, modules, projects, features, sections } = usePythonCourseData()
   const [activeModule, setActiveModule] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -275,9 +279,9 @@ const PythonCoursePage = () => {
             {/* CTA Buttons */}
             <div className={styles.ctaButtons}>
               <Link 
-                href="/#Contactform" 
+                href={primaryCtaHref}
                 className={styles.primaryButton}
-                onClick={(e)=>{e.preventDefault(); window.dispatchEvent(new Event('openContactModal'))}}
+                onClick={isEn ? undefined : (e)=>{e.preventDefault(); window.dispatchEvent(new Event('openContactModal'))}}
                 scroll={false}
               >
                 <div className={styles.buttonOverlay}></div>
@@ -459,9 +463,9 @@ const PythonCoursePage = () => {
             
             <div className={styles.courseSectionButtons}>
               <Link 
-                href="/#Contactform" 
+                href={primaryCtaHref}
                 className={styles.coursePrimaryButton}
-                onClick={(e) => {
+                onClick={isEn ? undefined : (e) => {
                   e.preventDefault()
                   window.dispatchEvent(new Event('openContactModal'))
                 }}
