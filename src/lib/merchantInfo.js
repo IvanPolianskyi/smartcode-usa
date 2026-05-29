@@ -1,5 +1,5 @@
 /**
- * Merchant / seller details for WayForPay, legal pages, and footer.
+ * Merchant / seller details for legal pages and footer.
  * Override via NEXT_PUBLIC_MERCHANT_* in .env when needed.
  */
 

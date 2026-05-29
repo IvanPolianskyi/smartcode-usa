@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
-import { createInvoice } from '@/lib/wayforpay'
+import { startMonobankPayment } from '@/lib/createMonobankPayment'
 
 const GROUP_LESSON_PRICE_UAH = 350
 const INDIVIDUAL_LESSON_PRICE_UAH = 500
@@ -49,26 +49,16 @@ export async function POST(request) {
 
     const creditedLessons = Math.floor(amount / lessonPrice)
     const orderId = `topup_${userId}_${Date.now()}`
-    const baseUrl =
-      process.env.NEXT_PUBLIC_BASE_URL ||
-      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
 
     const formatLabel = lessonFormat === 'individual' ? 'індивідуальний' : 'груповий'
-    const productName = `Оплата уроків SmartCode (${formatLabel}, ${creditedLessons} шт.)`
+    const description = `Оплата уроків SmartCode (${formatLabel}, ${creditedLessons} шт.)`
 
-    const { invoiceUrl } = await createInvoice({
-      orderReference: orderId,
-      amount,
-      currency: 'UAH',
-      productName: [productName],
-      productPrice: [amount],
-      productCount: [1],
-      language: 'UA',
-      serviceUrl: `${baseUrl}/api/payment/wayforpay/webhook`,
-      clientEmail: user.email,
-      clientFirstName: user.name?.split(' ')[0] || 'Учень',
-      clientLastName: user.name?.split(' ').slice(1).join(' ') || '',
-      paymentSystems: 'card;googlePay;applePay',
+    const { invoiceId, paymentUrl } = await startMonobankPayment({
+      orderId,
+      amountUah: amount,
+      description,
+      locale: 'uk',
+      basketName: description,
     })
 
     const paymentsCollection = await getCollection('payments')
@@ -76,10 +66,11 @@ export async function POST(request) {
       userId: userIdObj,
       courseId: 'manual-topup',
       orderId,
+      invoiceId,
       amount,
       currency: 'UAH',
       status: 'pending',
-      paymentMethod: 'wayforpay',
+      paymentMethod: 'monobank',
       paymentType: 'lesson_topup',
       lessonPrice,
       lessonFormat,
@@ -89,12 +80,13 @@ export async function POST(request) {
     })
 
     return NextResponse.json({
-      paymentUrl: invoiceUrl,
+      paymentUrl,
       orderId,
-      provider: 'wayforpay',
+      invoiceId,
+      provider: 'monobank',
     })
   } catch (error) {
-    console.error('WayForPay topup error:', error)
+    console.error('Monobank topup error:', error)
     return NextResponse.json(
       { error: error.message || 'Internal server error' },
       { status: 500 }

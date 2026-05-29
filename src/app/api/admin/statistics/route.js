@@ -83,7 +83,7 @@ export async function GET() {
           failed: allPayments.filter(p => p.status === 'failed').length,
           totalRevenue: totalRevenue,
           byMethod,
-          wayforpay: byMethod.wayforpay || {
+          monobank: byMethod.monobank || {
             total: 0,
             completed: 0,
             pending: 0,

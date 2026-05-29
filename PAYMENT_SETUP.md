@@ -40,16 +40,14 @@ https://yourdomain.com/api/payment/webhook
 https://your-project.vercel.app/api/payment/webhook
 ```
 
-## Юридичні сторінки для WayForPay (EN)
+## Юридичні сторінки та реквізити продавця
 
-На `/en` мають бути доступні (вимоги WayForPay):
+На сайті мають бути доступні:
 
-- `/oferta` та `/en/oferta` — публічна оферта (кожна мовна версія окремо)
-- `/privacy` та `/en/privacy` — політика конфіденційності (окремий документ)
+- `/oferta` та `/en/oferta` — публічна оферта
+- `/privacy` та `/en/privacy` — політика конфіденційності
 - `/en/refund` — політика повернення коштів
 - Контакти продавця у футері та на юридичних сторінках
-
-Реквізити задаються через `.env` (див. нижче). Без `NEXT_PUBLIC_MERCHANT_TAX_ID` та адрес заявка в WayForPay може бути відхилена.
 
 ```env
 NEXT_PUBLIC_MERCHANT_LEGAL_NAME_UK=ФОП Полянський Іван Іванович
@@ -63,32 +61,42 @@ NEXT_PUBLIC_MERCHANT_WEBSITE=https://smartcode-academy.com
 NEXT_PUBLIC_MERCHANT_IBAN=UA123220010000026002380006329
 ```
 
-## WayForPay (англійська версія сайту)
+## Monobank (онлайн-оплата карткою, UAH)
 
-Для курсу **Roblox Studio** та бронювання живих уроків на `/en` використовується **WayForPay** (USD, Apple Pay, Google Pay).
+Для курсів на `/en`, поповнення уроків та тестових платежів використовується **Monobank Acquiring**.
 
 Додайте до `.env`:
 
 ```env
-WAYFORPAY_MERCHANT_ACCOUNT=your_merchant_account
-WAYFORPAY_MERCHANT_SECRET=your_secret_key
-WAYFORPAY_MERCHANT_DOMAIN=smartcode-academy.com
+MONOBANK_TOKEN=your_merchant_token_from_web_monobank_ua
+# опційно:
+MONOBANK_API_URL=https://api.monobank.ua
+MONOBANK_REDIRECT_URL=https://mysite.com/payment-result
+NEXT_PUBLIC_BASE_URL=https://yourdomain.com
+# лише для локальної розробки без перевірки підпису webhook:
+# MONOBANK_SKIP_WEBHOOK_VERIFY=true
 ```
 
-Webhook URL у кабінеті WayForPay:
+Webhook URL (POST, перевірка заголовка `X-Sign`):
 
 ```
-https://yourdomain.com/api/payment/wayforpay/webhook
+https://yourdomain.com/api/payment/monobank/webhook
 ```
+
+Тестовий платіж (1000 грн, «Тестова оплата»):
+
+```bash
+curl -X POST https://yourdomain.com/api/payment/monobank/test \
+  -H "Content-Type: application/json" \
+  -d '{"amountKopiyky":100000,"description":"Тестова оплата","redirectUrl":"https://mysite.com/payment-result"}'
+```
+
+Після оплати користувач повертається на `MONOBANK_REDIRECT_URL` або `/{locale}/payment-result?orderId=...`.
 
 Ціни (див. `src/lib/coursePrices.js`):
-- Повний курс Roblox (EN): **$15**
-- Повний курс Python (EN): **$15**
-- Повний курс Roblox Studio (EN): **72 уроки** — теорія + практика на платформі (`/en/courses/roblox-studio`)
-- Групове заняття (EN): **$10**
-- Індивідуальне заняття (EN): **$15**
-
-На українській версії курс Roblox доступний **лише онлайн-учням** (без самообслуговування оплати на сайті).
+- Повний курс (EN): **1000 грн**
+- Групове заняття (EN): **350 грн**
+- Індивідуальне заняття (EN): **500 грн**
 
 ## Ціни курсів
 
@@ -97,18 +105,18 @@ https://yourdomain.com/api/payment/wayforpay/webhook
 ```javascript
 export const coursePrices = {
   'python-developer-zero-to-junior': {
-    price: 2000, // UAH
+    price: 1000, // UAH
     currency: 'UAH',
     name: 'Python Developer: From Zero to Confident Junior'
   },
   'web-development': {
-    price: 2000, // UAH
+    price: 1000, // UAH
     currency: 'UAH',
     name: 'Веб-розробка: Від основ до просунутого рівня'
   },
   'roblox-studio': {
-    price: 15, // USD (WayForPay, EN site only)
-    currency: 'USD',
+    price: 1000, // UAH
+    currency: 'UAH',
     name: 'Roblox Studio'
   }
 }

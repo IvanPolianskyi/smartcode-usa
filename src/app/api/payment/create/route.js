@@ -3,9 +3,10 @@ import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { generatePaymentLink } from '@/lib/liqpay'
-import { createInvoice } from '@/lib/wayforpay'
+import { startMonobankPayment } from '@/lib/createMonobankPayment'
 import { getCoursePrice } from '@/lib/coursePrices'
 import { paymentDescription } from '@/lib/localeStrings'
+import { getPaymentBaseUrl } from '@/lib/paymentUrls'
 
 /**
  * Create payment link for course purchase
@@ -55,14 +56,10 @@ export async function POST(request) {
     }
 
     const customerEmail = user ? user.email : guestEmail
-    const customerName = user ? user.name : guestName
     const orderIdPrefix = userId ? userId.toString() : `guest_${customerEmail.replace(/[^a-zA-Z0-9]/g, '')}`
     const orderId = `course_${courseId}_${orderIdPrefix}_${Date.now()}`
-    
-    const baseUrl =
-      process.env.NEXT_PUBLIC_BASE_URL ||
-      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
 
+    const baseUrl = getPaymentBaseUrl()
     const paymentsCollection = await getCollection('payments')
 
     const paymentRecord = {
@@ -85,29 +82,27 @@ export async function POST(request) {
       paymentRecord.guestName = guestName
     }
 
-    if (courseInfo.paymentProvider === 'wayforpay') {
+    if (courseInfo.paymentProvider === 'monobank') {
       const productName = courseInfo.nameEn || courseInfo.name
-      const { invoiceUrl } = await createInvoice({
-        orderReference: orderId,
-        amount: courseInfo.price,
-        currency: courseInfo.currency,
-        productName: [productName],
-        productPrice: [courseInfo.price],
-        productCount: [1],
-        language: locale === 'uk' ? 'UA' : 'EN',
-        serviceUrl: `${baseUrl}/api/payment/wayforpay/webhook`,
-        clientEmail: customerEmail,
-        clientFirstName: customerName?.split(' ')[0] || 'Student',
-        clientLastName: customerName?.split(' ').slice(1).join(' ') || '',
-        paymentSystems: 'card;googlePay;applePay',
+      const description = paymentDescription(productName, locale)
+
+      const { invoiceId, paymentUrl } = await startMonobankPayment({
+        orderId,
+        amountUah: courseInfo.price,
+        description,
+        locale,
+        basketName: productName,
       })
 
+      paymentRecord.invoiceId = invoiceId
+      paymentRecord.paymentMethod = 'monobank'
       await paymentsCollection.insertOne(paymentRecord)
 
       return NextResponse.json({
-        paymentUrl: invoiceUrl,
+        paymentUrl,
         orderId,
-        provider: 'wayforpay',
+        invoiceId,
+        provider: 'monobank',
       })
     }
 

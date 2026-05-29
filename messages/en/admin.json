@@ -23,9 +23,9 @@
     "totalRevenue": "Total revenue",
     "pendingPayments": "{count} pending",
     "pendingPaymentsLink": "View pending payments",
-    "wayforpayCompleted": "WayForPay: completed",
-    "wayforpayBreakdown": "Pending: {pending} · Failed: {failed}",
-    "wayforpayRevenue": "Revenue (by currency): {amount}"
+    "monobankCompleted": "Monobank: completed",
+    "monobankBreakdown": "Pending: {pending} · Failed: {failed}",
+    "monobankRevenue": "Revenue (by currency): {amount}"
   },
   "pendingPayments": {
     "title": "Pending payments",

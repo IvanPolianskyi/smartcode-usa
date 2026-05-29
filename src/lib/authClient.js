@@ -183,6 +183,21 @@ export async function createEnLessonPayment({ courseId, lessonFormat, day, time,
   return data
 }
 
+/** Тестовий платіж Monobank (100 грн за замовчуванням) */
+export async function createMonobankTestPayment(options = {}) {
+  const response = await fetch('/api/payment/monobank/test', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(options),
+  })
+  const data = await response.json()
+  if (!response.ok) {
+    throw new Error(data.error || 'Failed to create test payment')
+  }
+  return data
+}
+
 // Legacy function for backward compatibility
 export async function purchaseCourse(courseId, paymentMethod = 'manual', paymentData = {}) {
   // This should not be called directly anymore - use createPayment instead

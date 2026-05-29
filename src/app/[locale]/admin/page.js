@@ -378,7 +378,7 @@ export default function AdminPanelPage() {
     }).format(amount)
   }
 
-  const formatWayforpayRevenue = (currencies) => {
+  const formatPaymentRevenue = (currencies) => {
     if (!currencies || Object.keys(currencies).length === 0) return '0'
     return Object.entries(currencies)
       .filter(([, amount]) => Number(amount) > 0)
@@ -529,19 +529,19 @@ export default function AdminPanelPage() {
               </div>
               <div className={styles.statContent}>
                 <div className={styles.statValue}>
-                  {stats.payments?.wayforpay?.completed || 0}
+                  {stats.payments?.monobank?.completed || 0}
                 </div>
-                <div className={styles.statLabel}>{t('stats.wayforpayCompleted')}</div>
+                <div className={styles.statLabel}>{t('stats.monobankCompleted')}</div>
                 <div className={styles.statSubLabel}>
-                  {t('stats.wayforpayBreakdown', {
-                    pending: stats.payments?.wayforpay?.pending || 0,
-                    failed: stats.payments?.wayforpay?.failed || 0,
+                  {t('stats.monobankBreakdown', {
+                    pending: stats.payments?.monobank?.pending || 0,
+                    failed: stats.payments?.monobank?.failed || 0,
                   })}
                 </div>
                 <div className={styles.statSubLabel}>
-                  {t('stats.wayforpayRevenue', {
-                    amount: formatWayforpayRevenue(
-                      stats.payments?.wayforpay?.currencies || {}
+                  {t('stats.monobankRevenue', {
+                    amount: formatPaymentRevenue(
+                      stats.payments?.monobank?.currencies || {}
                     ),
                   })}
                 </div>

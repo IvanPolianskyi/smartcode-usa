@@ -169,7 +169,7 @@
     "openCourse": "Open course",
     "preview": "Preview",
     "processing": "Redirecting…",
-    "payMethods": "Visa/Mastercard, Apple Pay, Google Pay via WayForPay.",
+    "payMethods": "Visa/Mastercard, Apple Pay, Google Pay via Monobank.",
     "oneTime": "One-time · full access",
     "descriptions": {
       "roblox-studio": "72 lessons — from your first Part in Roblox Studio to publishing your own game.",
@@ -198,11 +198,11 @@
       "sat": "Saturday",
       "sun": "Sunday"
     },
-    "payMethods": "Accepted: Visa/Mastercard, Apple Pay, Google Pay (via WayForPay).",
+    "payMethods": "Accepted: Visa/Mastercard, Apple Pay, Google Pay (via Monobank).",
     "payButton": "Buy lesson for {price}",
     "processing": "Redirecting to payment…",
     "loading": "Loading...",
-    "timezoneNote": "All times are shown in Kyiv timezone (UTC+3)",
+    "timezoneNote": "All times are shown in Kyiv time (UTC+2)",
     "noSlots": "No available slots right now. Check back later or contact support.",
     "errors": {
       "failed": "Could not start payment. Try again or contact support."

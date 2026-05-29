@@ -377,9 +377,9 @@
             "title": "3.3. Способи оплати",
             "intro": "Замовник може здійснити оплату наступними способами:",
             "items": {
-              "wayforpay": {
-                "title": "Онлайн-оплата через платіжну систему WayForPay",
-                "text": "оплата банківськими картками Visa/MasterCard через платіжну систему WayForPay"
+              "monobank": {
+                "title": "Онлайн-оплата через Monobank",
+                "text": "оплата банківськими картками Visa/MasterCard через платіжну систему Monobank"
               },
               "bank": {
                 "title": "Банківський переказ",
@@ -582,7 +582,8 @@
     "success": {
       "title": "Оплата успішна!",
       "message": "Оплата успішна! Курс тепер доступний.",
-      "goToCourses": "Перейти до курсів"
+      "goToCourses": "Перейти до курсів",
+      "goToCourse": "Перейти до курсу"
     },
     "pending": {
       "title": "Обробка оплати",
@@ -635,7 +636,7 @@
           },
           "1": {
             "title": "Payment-related data",
-            "text": "transaction identifiers, payment amount, currency, and payment status - card numbers and CVV are processed only by WayForPay and are not stored on our servers"
+            "text": "transaction identifiers, payment amount, currency, and payment status - card numbers and CVV are processed only by Monobank and are not stored on our servers"
           },
           "2": {
             "title": "Student data",
@@ -660,7 +661,7 @@
           },
           "1": {
             "title": "Payment processing",
-            "text": "to process purchases through WayForPay and prevent fraud"
+            "text": "to process purchases through Monobank and prevent fraud"
           },
           "2": {
             "title": "Legitimate interests",
@@ -680,7 +681,7 @@
         "title": "5. Sharing with third parties",
         "paragraphs": {
           "0": "We do not sell personal data. We share data only with trusted processors necessary to operate our services:",
-          "1": "WayForPay - payment processing (Visa, Mastercard, Apple Pay, Google Pay); MongoDB Atlas or equivalent - database hosting; Vercel or equivalent - website hosting; Zoom - live online lessons; email and analytics providers - as configured for our operations.",
+          "1": "Monobank - payment processing (Visa, Mastercard, Apple Pay, Google Pay); MongoDB Atlas or equivalent - database hosting; Vercel or equivalent - website hosting; Zoom - live online lessons; email and analytics providers - as configured for our operations.",
           "2": "Processors are required to protect data under contractual obligations. We may disclose data if required by law or to protect our legal rights."
         }
       },
@@ -701,7 +702,7 @@
       "8": {
         "title": "8. Security",
         "paragraphs": {
-          "0": "We use encryption (HTTPS), access controls, and secure authentication to protect personal data. Payment card data is handled exclusively by WayForPay in PCI-DSS compliant infrastructure.",
+          "0": "We use encryption (HTTPS), access controls, and secure authentication to protect personal data. Payment card data is handled exclusively by Monobank in PCI-DSS compliant infrastructure.",
           "1": "No method of transmission over the internet is 100% secure; we encourage strong passwords and prompt reporting of suspected unauthorized access."
         }
       },
@@ -805,7 +806,7 @@
           "0": "Send a written request to our support email (see Seller contact information below) with your full name, order reference or payment date, course name, and reason for the refund",
           "1": "We acknowledge requests within 2 business days and review them within 5 business days",
           "2": "If approved, the refund is processed to the original payment method within 14 business days",
-          "3": "For card payments via WayForPay, refunds appear on your statement according to your bank's processing time (typically 5–10 business days after we initiate the refund)"
+          "3": "For card payments via Monobank, refunds appear on your statement according to your bank's processing time (typically 5–10 business days after we initiate the refund)"
         }
       },
       "5": {

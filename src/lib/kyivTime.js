@@ -1,6 +1,11 @@
-/** Утиліти «настінного» часу Europe/Kyiv ↔ UTC (сервер може бути в UTC). */
+/** Утиліти «настінного» часу Києва (UTC+2) ↔ UTC. Однакова логіка з smartcode_manager. */
 
 export const KYIV_TZ = 'Europe/Kyiv'
+
+/** Постійний зсув Києва від UTC (хв), Україна з 2024. */
+export const KYIV_UTC_OFFSET_MINUTES = 120
+
+const KYIV_OFFSET_MS = KYIV_UTC_OFFSET_MINUTES * 60 * 1000
 
 const WEEKDAY_SHORT_TO_INDEX = {
   Sun: 0,
@@ -16,31 +21,18 @@ function pad2(n) {
   return String(n).padStart(2, '0')
 }
 
-/** Компоненти календарного часу в Києві для миттєвості UTC `ts`. */
+/** UTC-миттєвість → календарний час у Києві (UTC+2). */
 export function kyivPartsFromInstant(ts) {
-  const parts = new Intl.DateTimeFormat('en-GB', {
-    timeZone: KYIV_TZ,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    weekday: 'short',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false,
-  }).formatToParts(new Date(ts))
-
-  const get = (type) => parts.find((p) => p.type === type)?.value || ''
-  const weekdayShort = get('weekday')
-  return {
-    year: parseInt(get('year'), 10),
-    month: parseInt(get('month'), 10),
-    day: parseInt(get('day'), 10),
-    hour: parseInt(get('hour'), 10),
-    minute: parseInt(get('minute'), 10),
-    second: parseInt(get('second'), 10),
-    weekdayIndex: WEEKDAY_SHORT_TO_INDEX[weekdayShort] ?? 0,
-  }
+  const ms = typeof ts === 'number' ? ts : new Date(ts).getTime()
+  const shifted = new Date(ms + KYIV_OFFSET_MS)
+  const year = shifted.getUTCFullYear()
+  const month = shifted.getUTCMonth() + 1
+  const day = shifted.getUTCDate()
+  const hour = shifted.getUTCHours()
+  const minute = shifted.getUTCMinutes()
+  const second = shifted.getUTCSeconds()
+  const weekdayIndex = new Date(Date.UTC(year, month - 1, day)).getUTCDay()
+  return { year, month, day, hour, minute, second, weekdayIndex }
 }
 
 export function kyivDateKeyFromParts(p) {
@@ -48,27 +40,14 @@ export function kyivDateKeyFromParts(p) {
 }
 
 /**
- * UTC-момент для дати yyyy-MM-dd і години:хвилин у Києві.
+ * UTC-момент для yyyy-MM-dd і год:хв у Києві (UTC+2).
  */
 export function kyivWallToUtc(dateKey, hours, minutes, seconds = 0) {
   const [year, month, day] = dateKey.split('-').map((x) => parseInt(x, 10))
-  const targetMin = hours * 60 + minutes
-
-  let lo = Date.UTC(year, month - 1, day, 0, 0, 0)
-  let hi = Date.UTC(year, month - 1, day + 1, 0, 0, 0) - 1
-
-  while (lo <= hi) {
-    const mid = Math.floor((lo + hi) / 2)
-    const p = kyivPartsFromInstant(mid)
-    const curMin = p.hour * 60 + p.minute
-    if (curMin < targetMin) lo = mid + 60_000
-    else if (curMin > targetMin) hi = mid - 60_000
-    else return new Date(mid - p.second * 1000 + seconds * 1000)
-  }
-  return new Date(lo)
+  return new Date(Date.UTC(year, month - 1, day, hours - 2, minutes, seconds))
 }
 
-/** Додати календарні дні до yyyy-MM-dd (без зсуву TZ). */
+/** Додати календарні дні до yyyy-MM-dd. */
 export function addDaysToDateKey(dateKey, days) {
   const [y, m, d] = dateKey.split('-').map((x) => parseInt(x, 10))
   const dt = new Date(Date.UTC(y, m - 1, d + days))
@@ -94,7 +73,7 @@ export function nextKyivWeekdaySlot(weekdayIndex, hours, minutes) {
   return candidate
 }
 
-/** Підпис слота для порівняння з CRM: «деньТижня-ГГ:хв» у Києві. */
+/** Підпис слота для порівняння з CRM. */
 export function kyivSlotSignature(dateIso) {
   const date = new Date(dateIso)
   if (Number.isNaN(date.getTime())) return null
@@ -102,11 +81,12 @@ export function kyivSlotSignature(dateIso) {
   return `${p.weekdayIndex}-${pad2(p.hour)}:${pad2(p.minute)}`
 }
 
-/** Форматування дати/часу для UI — завжди Europe/Kyiv (UTC+3). */
+/** Форматування дати/часу для UI — київський настінний час (UTC+2). */
 export function formatKyivLocale(date, locale, options = {}) {
   const d = date instanceof Date ? date : new Date(date)
   if (Number.isNaN(d.getTime())) return ''
-  return d.toLocaleString(locale, { timeZone: KYIV_TZ, ...options })
+  const shifted = new Date(d.getTime() + KYIV_OFFSET_MS)
+  return shifted.toLocaleString(locale, { timeZone: 'UTC', ...options })
 }
 
 /** Поточний київський тиждень: понеділок 00:00 — наступний понеділок 00:00. */
@@ -124,16 +104,11 @@ export function kyivWeekRange(now = new Date()) {
   }
 }
 
-/** Чи збігається yyyy-MM-dd з сьогоднішнім днем у Києві. */
 export function isKyivDateKeyToday(dateKey) {
   const p = kyivPartsFromInstant(Date.now())
   return kyivDateKeyFromParts(p) === dateKey
 }
 
-/**
- * Час слота в поточному київському тижні (пн–нд) або null, якщо поза межами.
- * weekdayIndex: 0=Нд … 6=Сб (як Date.getDay()).
- */
 export function kyivSlotInCurrentWeek(weekdayIndex, hours, minutes, now = new Date()) {
   const { start, end, mondayKey } = kyivWeekRange(now)
   const daysFromMonday = weekdayIndex === 0 ? 6 : weekdayIndex - 1

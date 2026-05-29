@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb'
 import { getCollection } from '@/lib/mongodb'
 const EN_DAY_TO_UA = {
   sun: 'Нд',
@@ -10,9 +11,11 @@ const EN_DAY_TO_UA = {
 }
 
 export async function grantFullCourseAccess(userId, courseId) {
+  const userObjectId =
+    userId instanceof ObjectId ? userId : new ObjectId(String(userId))
   const usersCollection = await getCollection('users')
   await usersCollection.updateOne(
-    { _id: userId },
+    { _id: userObjectId },
     {
       $addToSet: {
         purchasedCourses: courseId,
@@ -23,10 +26,10 @@ export async function grantFullCourseAccess(userId, courseId) {
   )
 
   const progressCollection = await getCollection('userProgress')
-  const existing = await progressCollection.findOne({ userId, courseId })
+  const existing = await progressCollection.findOne({ userId: userObjectId, courseId })
   if (!existing) {
     await progressCollection.insertOne({
-      userId,
+      userId: userObjectId,
       courseId,
       enrolledAt: new Date(),
       completedLessons: [],

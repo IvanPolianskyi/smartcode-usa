@@ -23,9 +23,9 @@
     "totalRevenue": "Загальний дохід",
     "pendingPayments": "{count} в очікуванні",
     "pendingPaymentsLink": "Переглянути оплати в очікуванні",
-    "wayforpayCompleted": "WayForPay: успішні",
-    "wayforpayBreakdown": "Очікує: {pending} · Помилки: {failed}",
-    "wayforpayRevenue": "Сума (по валютах): {amount}"
+    "monobankCompleted": "Monobank: успішні",
+    "monobankBreakdown": "Очікує: {pending} · Помилки: {failed}",
+    "monobankRevenue": "Сума (по валютах): {amount}"
   },
   "pendingPayments": {
     "title": "Оплати в очікуванні",

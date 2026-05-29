@@ -2,14 +2,14 @@ import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
-import { createInvoice } from '@/lib/wayforpay'
+import { startMonobankPayment } from '@/lib/createMonobankPayment'
 import { getLessonPrice } from '@/lib/coursePrices'
 
 const VALID_DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
 const VALID_COURSES = ['roblox-studio', 'python-developer-zero-to-junior', 'web-development']
 
 /**
- * English site: book a live lesson ($10 group / $15 individual) via WayForPay
+ * English site: book a live lesson via Monobank (UAH)
  */
 export async function POST(request) {
   try {
@@ -35,7 +35,7 @@ export async function POST(request) {
         lessonFormat,
         day,
         time,
-        isBooked: false
+        isBooked: false,
       })
 
       if (!slot) {
@@ -55,45 +55,34 @@ export async function POST(request) {
     }
 
     const customerEmail = user ? user.email : guestEmail
-    const customerName = user ? user.name : guestName
     const orderIdPrefix = userId ? userId.toString() : `guest_${customerEmail.replace(/[^a-zA-Z0-9]/g, '')}`
-    const orderIdSuffix = (day && time) ? `${day}_${time.replace(':', '')}` : 'topup'
+    const orderIdSuffix = day && time ? `${day}_${time.replace(':', '')}` : 'topup'
     const orderId = `lesson_${courseId}_${lessonFormat}_${orderIdSuffix}_${orderIdPrefix}_${Date.now()}`
-    
-    const baseUrl =
-      process.env.NEXT_PUBLIC_BASE_URL ||
-      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
 
     const productLabel =
       lessonFormat === 'individual'
         ? `Individual live lesson — ${courseId}`
         : `Group live lesson — ${courseId}`
 
-    const { invoiceUrl } = await createInvoice({
-      orderReference: orderId,
-      amount: priceInfo.price,
-      currency: priceInfo.currency,
-      productName: [productLabel],
-      productPrice: [priceInfo.price],
-      productCount: [1],
-      language: 'EN',
-      serviceUrl: `${baseUrl}/api/payment/wayforpay/webhook`,
-      clientEmail: customerEmail,
-      clientFirstName: customerName?.split(' ')[0] || 'Student',
-      clientLastName: customerName?.split(' ').slice(1).join(' ') || '',
-      paymentSystems: 'card;googlePay;applePay',
+    const { invoiceId, paymentUrl } = await startMonobankPayment({
+      orderId,
+      amountUah: priceInfo.price,
+      description: productLabel,
+      locale: 'en',
+      basketName: productLabel,
     })
 
     const paymentsCollection = await getCollection('payments')
-    
+
     const paymentRecord = {
       courseId,
       orderId,
+      invoiceId,
       amount: priceInfo.price,
       currency: priceInfo.currency,
       status: 'pending',
-      paymentMethod: 'wayforpay',
-      paymentType: (day && time) ? 'live_lesson_en' : 'lesson_topup_en',
+      paymentMethod: 'monobank',
+      paymentType: day && time ? 'live_lesson_en' : 'lesson_topup_en',
       lessonFormat: lessonFormat || null,
       lessonPrice: priceInfo.price,
       creditedLessons: 1,
@@ -117,17 +106,17 @@ export async function POST(request) {
       const slotsCollection = await getCollection('availableSlots')
       await slotsCollection.updateOne(
         { _id: slot._id },
-        { 
-          $set: { 
+        {
+          $set: {
             reservedAt: new Date(),
             reservedBy: userId ? userId.toString() : customerEmail,
-            updatedAt: new Date()
-          } 
+            updatedAt: new Date(),
+          },
         }
       )
     }
 
-    return NextResponse.json({ paymentUrl: invoiceUrl, orderId })
+    return NextResponse.json({ paymentUrl, orderId, invoiceId, provider: 'monobank' })
   } catch (error) {
     console.error('EN lesson payment error:', error)
     return NextResponse.json(

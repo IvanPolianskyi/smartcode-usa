@@ -43,7 +43,7 @@
     },
     "oferta": {
       "title": "Публічна оферта / Public offer - SmartCode Academy",
-      "description": "Єдина публічна оферта SmartCode Academy (UA/EN). WayForPay, повернення коштів, контакти продавця."
+      "description": "Єдина публічна оферта SmartCode Academy (UA/EN). Monobank, повернення коштів, контакти продавця."
     },
     "projects": {
       "title": "Проєкти учнів SmartCode Academy",
@@ -490,11 +490,11 @@
       "sat": "Субота",
       "sun": "Неділя"
     },
-    "payMethods": "Безпечна оплата через WayForPay · Apple Pay · Google Pay · Visa / Mastercard",
+    "payMethods": "Безпечна оплата через Monobank · Apple Pay · Google Pay · Visa / Mastercard",
     "payButton": "Оплатити {price} та забронювати",
     "processing": "Обробка…",
     "loading": "Завантаження...",
-    "timezoneNote": "Увесь час вказано за київським часом (UTC+3)",
+    "timezoneNote": "Увесь час вказано за київським часом (UTC+2)",
     "noSlots": "Зараз немає вільних слотів. Спробуйте пізніше або зверніться до підтримки.",
     "authTitle": "Створіть акаунт для продовження",
     "authText": "Вам потрібно увійти або зареєструватися перед бронюванням уроку. Це займе лише хвилину.",
@@ -509,7 +509,7 @@
     "processing": "Обробка…",
     "oneTime": "Одноразова оплата · довічний доступ",
     "comingSoon": "Незабаром! Ми повідомимо вас, коли цей курс стане доступним для покупки.",
-    "payMethods": "Безпечна оплата через WayForPay · Apple Pay · Google Pay · Visa / Mastercard",
+    "payMethods": "Безпечна оплата через Monobank · Apple Pay · Google Pay · Visa / Mastercard",
     "legalCheckbox": "Підтверджую, що ознайомився(лась) і погоджуюсь з <oferta>Публічною офертою</oferta>, <privacy>Політикою конфіденційності</privacy> та <refund>Політикою повернення</refund>.",
     "legalAgree": "Здійснюючи оплату, ви погоджуєтеся з нашою <oferta>Публічною офертою</oferta>, <privacy>Політикою конфіденційності</privacy> та <refund>Політикою повернення</refund>.",
     "authTitle": "Створіть акаунт для продовження",

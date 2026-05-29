@@ -55,7 +55,7 @@ export function parseScheduleSlots(schedule) {
 }
 
 /**
- * Статистика розкладу: усі «настінні» години — Europe/Kyiv (UTC+3).
+ * Статистика розкладу: усі «настінні» години — Київ (UTC+2).
  */
 export function computeScheduleStats(schedule, { t, dateLocale }) {
   const slots = parseScheduleSlots(schedule)

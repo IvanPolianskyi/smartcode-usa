@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Публічна оферта / Public offer - SmartCode Academy",
-    "description": "Єдина публічна оферта SmartCode Academy (українська та англійська версії). Умови оплати через WayForPay, повернення коштів, контакти продавця."
+    "description": "Єдина публічна оферта SmartCode Academy (українська та англійська версії). Умови оплати через Monobank, повернення коштів, контакти продавця."
   },
   "title": "Публічна оферта / Public offer",
   "subtitle": "Єдиний договір публічної оферти про надання освітніх послуг (українська та англійська мови)",
@@ -103,23 +103,23 @@
             }
           },
           "payment": {
-            "title": "3.3. Способи оплати (WayForPay та інші)",
+            "title": "3.3. Способи оплати (Monobank та інші)",
             "intro": "Замовник може оплатити Послуги такими способами:",
             "items": {
-              "wayforpay": {
-                "title": "Онлайн-оплата через WayForPay",
-                "text": "банківські картки Visa та Mastercard через платіжний шлюз WayForPay; на англійській версії сайту — у доларах США (USD), на українській — у гривнях (UAH) або іншій валюті, зазначеній на сторінці оплати"
+              "monobank": {
+                "title": "Онлайн-оплата через Monobank",
+                "text": "банківські картки Visa та Mastercard через платіжний шлюз Monobank у гривнях (UAH)"
               },
               "appleGoogle": {
                 "title": "Apple Pay та Google Pay",
-                "text": "доступні в checkout WayForPay, якщо підтримуються пристроєм та банком-емітентом картки"
+                "text": "доступні на сторінці оплати Monobank, якщо підтримуються пристроєм та банком-емітентом картки"
               },
               "bank": {
                 "title": "Банківський переказ / квитанція",
                 "text": "для окремих форматів навчання на українській версії сайту — за реквізитами Виконавця, зазначеними в особистому кабінеті або узгодженими з Виконавцем"
               }
             },
-            "note": "Актуальні ціни відображаються на сторінці оформлення замовлення до підтвердження платежу. Оплата через WayForPay на міжнародній (англійській) версії сайту здійснюється в USD."
+            "note": "Актуальні ціни відображаються на сторінці оформлення замовлення до підтвердження платежу. Оплата здійснюється в гривнях (UAH)."
           },
           "delivery": {
             "title": "3.4. Надання послуг (доставка)",
@@ -128,7 +128,7 @@
               "0": "Регіони: Україна та інші країни, де є стабільний інтернет",
               "1": "Самостійні курси: доступ через платформу smartcode-academy.com",
               "2": "Живі уроки: дистанційно через Zoom (або іншу узгоджену платформу)",
-              "3": "Типовий термін активації доступу: до 24 годин після успішного підтвердження оплати WayForPay або іншим узгодженим способом"
+              "3": "Типовий термін активації доступу: до 24 годин після успішного підтвердження оплати Monobank або іншим узгодженим способом"
             }
           },
           "absences": {
@@ -159,23 +159,23 @@
             }
           },
           "payment": {
-            "title": "3.3. Payment methods (WayForPay and others)",
+            "title": "3.3. Payment methods (Monobank and others)",
             "intro": "The Customer may pay using the following methods:",
             "items": {
-              "wayforpay": {
-                "title": "Online payment via WayForPay",
-                "text": "Visa and Mastercard through the WayForPay payment gateway; USD on the English version of the website, UAH or other currency as shown on the checkout page on the Ukrainian version"
+              "monobank": {
+                "title": "Online payment via Monobank",
+                "text": "Visa and Mastercard through the Monobank payment gateway in Ukrainian hryvnia (UAH)"
               },
               "appleGoogle": {
                 "title": "Apple Pay and Google Pay",
-                "text": "available in the WayForPay checkout where supported by the Customer's device and card issuer"
+                "text": "available on the Monobank checkout page where supported by the Customer's device and card issuer"
               },
               "bank": {
                 "title": "Bank transfer / receipt",
                 "text": "for certain lesson formats on the Ukrainian version — to the Provider's bank details shown in the dashboard or as agreed with the Provider"
               }
             },
-            "note": "Prices are displayed on the checkout page before payment is confirmed. WayForPay payments on the English (international) version of the website are processed in USD."
+            "note": "Prices are displayed on the checkout page before payment is confirmed. Payment is processed in UAH."
           },
           "delivery": {
             "title": "3.4. Service delivery",
@@ -184,7 +184,7 @@
               "0": "Service regions: worldwide where the Customer has a stable internet connection",
               "1": "Self-paced courses: access via the smartcode-academy.com learning platform",
               "2": "Live lessons: delivered remotely via Zoom or another agreed platform",
-              "3": "Typical access activation: within 24 hours of successful WayForPay or other agreed payment confirmation"
+              "3": "Typical access activation: within 24 hours of successful Monobank or other agreed payment confirmation"
             }
           },
           "absences": {

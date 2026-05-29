@@ -4,6 +4,7 @@ import {
   isPlaceholderStudentName,
   isReliableStudentDisplayName,
 } from '@/lib/crmLmsSync'
+import { kyivPartsFromInstant } from '@/lib/kyivTime'
 
 const CRM_BASE_URL = process.env.CRM_API_URL || process.env.SMARTCODE_CRM_API_URL || ''
 const CRM_NICKNAME = process.env.CRM_ACCOUNT_NICKNAME || process.env.ACCOUNT_NICKNAME || ''
@@ -14,10 +15,12 @@ const CRM_STATIC_TOKEN =
   process.env.JWT_SECRET ||
   ''
 
-const KYIV_TZ = 'Europe/Kyiv'
+const KYIV_WEEKDAY_UK = ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
 
-/** Мінімальний інтервал між автоматичними підтягуваннями з CRM (клієнтський /api/auth/me). */
-const CRM_AUTO_PULL_MIN_MS = 2 * 60 * 1000
+/** Мінімальний інтервал між auto-pull з CRM на /api/auth/me (секунди). */
+const CRM_AUTO_PULL_MIN_MS = 15 * 1000
+
+const CRM_FETCH_NO_STORE = { cache: 'no-store' }
 
 function normalizeEmail(value) {
   return String(value || '').trim().toLowerCase()
@@ -70,7 +73,7 @@ export async function crmJson(method, pathAndQuery, jsonBody) {
     headers: buildCrmHeaders(token),
   }
   if (method === 'GET' || method === 'HEAD') {
-    init.next = { revalidate: 60 }
+    init.cache = 'no-store'
   } else {
     init.cache = 'no-store'
   }
@@ -297,30 +300,10 @@ export function scheduleFromCrmLessons(lessons) {
     if (String(lesson?.status || '') === 'cancelled') continue
     const start = new Date(lesson.start_at)
     if (Number.isNaN(start.getTime())) continue
-    const parts = new Intl.DateTimeFormat('en-GB', {
-      timeZone: KYIV_TZ,
-      weekday: 'short',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    }).formatToParts(start)
-    const weekdayShort = parts.find((part) => part.type === 'weekday')?.value || ''
-    const hour = parts.find((part) => part.type === 'hour')?.value || ''
-    const minute = parts.find((part) => part.type === 'minute')?.value || ''
-    const weekdayByShort = {
-      Mon: 'Пн',
-      Tue: 'Вт',
-      Wed: 'Ср',
-      Thu: 'Чт',
-      Fri: 'Пт',
-      Sat: 'Сб',
-      Sun: 'Нд',
-    }
-    const day = weekdayByShort[weekdayShort]
+    const p = kyivPartsFromInstant(start.getTime())
+    const day = KYIV_WEEKDAY_UK[p.weekdayIndex]
     if (!day) continue
-    const hh = String(hour).padStart(2, '0')
-    const mm = String(minute).padStart(2, '0')
-    const time = `${hh}:${mm}`
+    const time = `${String(p.hour).padStart(2, '0')}:${String(p.minute).padStart(2, '0')}`
     if (!byDay.has(day)) byDay.set(day, new Set())
     byDay.get(day).add(time)
   }
@@ -402,7 +385,7 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
   const [lessonsResponse, teachers, crmGroups] = await Promise.all([
     fetchCrmWithTimeout(`${CRM_BASE_URL.replace(/\/$/, '')}/lessons?${lessonsParams}`, {
       headers: buildCrmHeaders(token),
-      next: { revalidate: 60 },
+      ...CRM_FETCH_NO_STORE,
     }),
     fetchCrmTeachers().catch(() => []),
     fetchCrmGroupsForStudent(crmStudent.id)
@@ -518,9 +501,13 @@ export async function maybePullCrmScheduleForStudent(user, usersCollection) {
   if (!user || user.role === 'admin' || !CRM_BASE_URL) return user
   const profile = user.studentProfile || {}
   const last = profile.crmScheduleSyncedAt
+  const hasSchedule = (profile.regularSchedule || []).length > 0
+  const linkedCrm = Boolean(String(profile.crmStudentId || '').trim())
   if (last) {
     const ts = new Date(last).getTime()
-    if (Number.isFinite(ts) && Date.now() - ts < CRM_AUTO_PULL_MIN_MS) {
+    const throttled =
+      Number.isFinite(ts) && Date.now() - ts < CRM_AUTO_PULL_MIN_MS
+    if (throttled && (hasSchedule || !linkedCrm)) {
       return user
     }
   }
