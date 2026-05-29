@@ -212,7 +212,7 @@
     "testPythonPayment": "Test Python · 5 UAH",
     "testPythonPaymentLoading": "Creating payment…",
     "testPythonPaymentHint": "Test the full Python course purchase flow for 5 UAH",
-    "testPythonPaymentError": "Failed to create test payment"
+    "testPythonPaymentError": "Failed to create test payment",
     "social": {
       "instagram": "Instagram",
       "tiktokMain": "TikTok - SmartCode Academy",
