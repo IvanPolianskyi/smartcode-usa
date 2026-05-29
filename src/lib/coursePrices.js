@@ -17,6 +17,15 @@ export const coursePrices = {
   },
 }
 
+/** Ціна на EN-сайті (відображення) */
+export const EN_FULL_COURSE_DISPLAY = {
+  price: 23,
+  currency: 'USD',
+}
+
+/** Сума списання через Monobank (UAH) */
+export const EN_FULL_COURSE_CHARGE_UAH = 1000
+
 /** Live lesson prices for English site (Monobank, UAH) */
 export const enLessonPrices = {
   group: { price: 350, currency: 'UAH', label: 'Group lesson' },
@@ -29,14 +38,24 @@ export const ukLessonPrices = {
   individual: { price: 500, currency: 'UAH' },
 }
 
-/** Full courses sold on EN site via Monobank (UAH) */
-export function getEnPurchasableFullCourses() {
-  return Object.entries(coursePrices).map(([courseId, info]) => ({
-    courseId,
+function withEnCoursePricing(info) {
+  return {
     ...info,
+    price: EN_FULL_COURSE_DISPLAY.price,
+    currency: EN_FULL_COURSE_DISPLAY.currency,
+    chargePrice: EN_FULL_COURSE_CHARGE_UAH,
+    chargeCurrency: 'UAH',
     paymentProvider: 'monobank',
     purchasable: true,
     name: info.nameEn || info.name,
+  }
+}
+
+/** Full courses sold on EN site via Monobank */
+export function getEnPurchasableFullCourses() {
+  return Object.entries(coursePrices).map(([courseId, info]) => ({
+    courseId,
+    ...withEnCoursePricing(info),
   }))
 }
 
@@ -45,16 +64,16 @@ export function getCoursePrice(courseId, locale = 'uk') {
   if (!info) return { price: 0, currency: 'UAH', name: 'Unknown Course' }
 
   if (locale === 'en') {
-    return {
-      ...info,
-      currency: 'UAH',
-      paymentProvider: 'monobank',
-      name: info.nameEn || info.name,
-      purchasable: true,
-    }
+    return withEnCoursePricing(info)
   }
 
   return { ...info, purchasable: false }
+}
+
+/** Сума для Monobank (копійки рахуються з chargePrice або price). */
+export function getCourseChargeAmount(courseInfo) {
+  if (!courseInfo) return 0
+  return Number(courseInfo.chargePrice ?? courseInfo.price) || 0
 }
 
 export function getLessonPrice(format, locale = 'uk') {
@@ -67,6 +86,8 @@ export function formatPrice(price, currency = 'UAH', locale = 'uk') {
     return new Intl.NumberFormat(locale === 'uk' ? 'uk-UA' : 'en-US', {
       style: 'currency',
       currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
     }).format(price)
   }
 

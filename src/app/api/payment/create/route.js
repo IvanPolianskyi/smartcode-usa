@@ -4,7 +4,7 @@ import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { generatePaymentLink } from '@/lib/liqpay'
 import { startMonobankPayment } from '@/lib/createMonobankPayment'
-import { getCoursePrice } from '@/lib/coursePrices'
+import { getCoursePrice, getCourseChargeAmount } from '@/lib/coursePrices'
 import { paymentDescription } from '@/lib/localeStrings'
 import { getPaymentBaseUrl } from '@/lib/paymentUrls'
 
@@ -65,8 +65,8 @@ export async function POST(request) {
     const paymentRecord = {
       courseId,
       orderId,
-      amount: courseInfo.price,
-      currency: courseInfo.currency,
+      amount: getCourseChargeAmount(courseInfo),
+      currency: courseInfo.chargeCurrency || courseInfo.currency,
       status: 'pending',
       paymentMethod: courseInfo.paymentProvider || 'liqpay',
       paymentType: 'full_course',
@@ -88,7 +88,7 @@ export async function POST(request) {
 
       const { invoiceId, paymentUrl } = await startMonobankPayment({
         orderId,
-        amountUah: courseInfo.price,
+        amountUah: getCourseChargeAmount(courseInfo),
         description,
         locale,
         basketName: productName,

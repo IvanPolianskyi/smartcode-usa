@@ -252,7 +252,7 @@
       "pyodideLoadFailed": "Не вдалося завантажити Python у браузері. Перевірте інтернет і спробуйте ще раз."
     },
     "roblox": {
-      "lockedDescriptionEn": "This lesson is locked. Purchase the full course for 1000 UAH, or book live lessons in your dashboard.",
+      "lockedDescriptionEn": "This lesson is locked. Purchase the full course for $23, or book live lessons in your dashboard.",
       "lockedDescriptionUk": "Щоб отримати доступ до курсу, відвідуйте уроки з Roblox Studio в онлайн-групі SmartCode. Перше заняття (1.1) — для ознайомлення.",
       "purchaseFullCourse": "Придбати курс - {price}",
       "onlineAccessHint": "Доступ для онлайн-учнів",
