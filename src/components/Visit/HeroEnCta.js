@@ -14,7 +14,7 @@ import {
 	GraduationCap,
 } from 'lucide-react'
 import { useAuthSession } from '@/components/AuthSessionProvider'
-import { formatPrice, getEnPurchasableFullCourses } from '@/lib/coursePrices'
+import { formatPrice, getEnPurchasableFullCourses, getLessonPrice } from '@/lib/coursePrices'
 import styles from './HeroEnCta.module.css'
 
 const COURSE_META = {
@@ -30,6 +30,8 @@ export default function HeroEnCta() {
 	const t = useTranslations('home.heroEnCta')
 	const { user, loading } = useAuthSession()
 	const courses = getEnPurchasableFullCourses()
+	const groupLesson = getLessonPrice('group', 'en')
+	const individualLesson = getLessonPrice('individual', 'en')
 
 	return (
 		<div className={styles.card} id="hero-en-cta">
@@ -72,12 +74,18 @@ export default function HeroEnCta() {
 				<div className={styles.priceRow}>
 					<div className={styles.priceItem}>
 						<Users size={14} />
-						<span>{t('groupPrice')}</span>
+						<span>
+							{t('groupFrom')}{' '}
+							{formatPrice(groupLesson.price, groupLesson.currency, 'en')}
+						</span>
 					</div>
 					<span className={styles.priceDot}>•</span>
 					<div className={styles.priceItem}>
 						<Sparkles size={14} />
-						<span>{t('individualPrice')}</span>
+						<span>
+							{t('individualFrom')}{' '}
+							{formatPrice(individualLesson.price, individualLesson.currency, 'en')}
+						</span>
 					</div>
 				</div>
 			</div>

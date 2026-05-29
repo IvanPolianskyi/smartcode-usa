@@ -16,7 +16,8 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import styles from './PricingPage.module.css'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { formatPrice, getLessonPrice } from '@/lib/coursePrices'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -25,7 +26,9 @@ const TRUST_ICONS = [CreditCard, Clock, Video, Shield]
 
 const PricingPage = () => {
 	const t = useTranslations('pricing')
-	const tc = useTranslations('common')
+	const locale = useLocale()
+	const groupInfo = getLessonPrice('group', locale)
+	const individualInfo = getLessonPrice('individual', locale)
 	const sectionRef = useRef(null)
 	const cardsRef = useRef([])
 	const [isLoaded, setIsLoaded] = useState(false)
@@ -90,7 +93,7 @@ const PricingPage = () => {
 			id: 'group',
 			name: t('plans.group.name'),
 			icon: <Users size={28} />,
-			price: 350,
+			priceLabel: formatPrice(groupInfo.price, groupInfo.currency, locale),
 			period: t('plans.group.period'),
 			subtitle: t('plans.group.subtitle'),
 			description: t('plans.group.description'),
@@ -103,7 +106,7 @@ const PricingPage = () => {
 			id: 'individual',
 			name: t('plans.individual.name'),
 			icon: <User size={28} />,
-			price: 500,
+			priceLabel: formatPrice(individualInfo.price, individualInfo.currency, locale),
 			period: t('plans.individual.period'),
 			subtitle: t('plans.individual.subtitle'),
 			description: t('plans.individual.description'),
@@ -178,9 +181,8 @@ const PricingPage = () => {
 
 								<div className={styles.priceSection}>
 									<div className={styles.price}>
-										<span className={styles.priceAmount}>{plan.price}</span>
+										<span className={styles.priceAmount}>{plan.priceLabel}</span>
 										<div className={styles.priceLabel}>
-											<span className={styles.priceCurrency}>{tc('currency')}</span>
 											<span className={styles.pricePeriod}>{plan.period}</span>
 										</div>
 									</div>

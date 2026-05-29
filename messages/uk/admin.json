@@ -5,6 +5,9 @@
   "subtitle": "Бізнес статистика",
   "refresh": "Оновити",
   "crmGroups": "Групи CRM",
+  "testPythonPayment": "Test Python · 5 грн",
+  "testPythonPaymentLoading": "Створення…",
+  "testPythonPaymentError": "Не вдалося створити тестову оплату",
   "logout": "Вийти",
   "errors": {
     "loadStatistics": "Помилка завантаження статистики",

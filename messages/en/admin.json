@@ -5,6 +5,9 @@
   "subtitle": "Business statistics",
   "refresh": "Refresh",
   "crmGroups": "CRM groups",
+  "testPythonPayment": "Test Python · 5 UAH",
+  "testPythonPaymentLoading": "Creating…",
+  "testPythonPaymentError": "Failed to create test payment",
   "logout": "Log out",
   "errors": {
     "loadStatistics": "Failed to load statistics",
