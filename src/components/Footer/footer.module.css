@@ -215,6 +215,32 @@
 }
 .copyrightContainer { display: flex; flex-direction: column; gap: 8px; }
 .copyright { font-size: 0.875rem; color: var(--text-secondary-dark); }
+.testPaymentButton {
+    align-self: flex-start;
+    margin-top: 0.25rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fde68a;
+    background: rgba(251, 191, 36, 0.12);
+    border: 1px dashed rgba(251, 191, 36, 0.45);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+.testPaymentButton:hover:not(:disabled) {
+    background: rgba(251, 191, 36, 0.22);
+    color: #fef3c7;
+}
+.testPaymentButton:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+.testPaymentError {
+    margin: 0;
+    font-size: 0.75rem;
+    color: #fca5a5;
+}
 .langSwitcher {
     background: rgba(255, 255, 255, 0.06) !important;
     border-color: rgba(255, 255, 255, 0.12) !important;

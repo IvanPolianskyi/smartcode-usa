@@ -169,6 +169,26 @@ export async function createPayment(courseId, locale = 'uk', guestEmail, guestNa
   return data
 }
 
+/** Тестова покупка Python курсу (5 грн) — повний флоу Monobank + доступ до курсу */
+export async function createTestPythonCoursePayment(locale = 'uk', guestEmail, guestName) {
+  const response = await fetch('/api/payment/test-python-course', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ locale, guestEmail, guestName }),
+  })
+
+  const data = await response.json()
+
+  if (!response.ok) {
+    throw new Error(data.error || 'Failed to create test payment')
+  }
+
+  return data
+}
+
 export async function createEnLessonPayment({ courseId, lessonFormat, day, time, guestEmail, guestName }) {
   const response = await fetch('/api/payment/en-lesson', {
     method: 'POST',

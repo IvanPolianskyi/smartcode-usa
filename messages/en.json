@@ -209,6 +209,10 @@
       }
     },
     "copyright": "© {year} SmartCode Academy. All rights reserved.",
+    "testPythonPayment": "Test Python · 5 UAH",
+    "testPythonPaymentLoading": "Creating payment…",
+    "testPythonPaymentHint": "Test the full Python course purchase flow for 5 UAH",
+    "testPythonPaymentError": "Failed to create test payment"
     "social": {
       "instagram": "Instagram",
       "tiktokMain": "TikTok - SmartCode Academy",
@@ -540,6 +544,8 @@
   },
   "buyCourse": {
     "buyButton": "Buy for {price}",
+    "testBuyButton": "Test buy · {price}",
+    "testCheckoutNote": "Test checkout — same flow as a real purchase, charged 5 UAH only.",
     "processing": "Processing…",
     "oneTime": "One-time payment · lifetime access",
     "comingSoon": "Coming soon! We'll notify you when this course is available for purchase.",
