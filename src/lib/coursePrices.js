@@ -17,19 +17,31 @@ export const coursePrices = {
   },
 }
 
-/** Ціна на EN-сайті (відображення) */
+/** Ціна курсу на EN-сайті (відображення) */
 export const EN_FULL_COURSE_DISPLAY = {
-  price: 23,
+  price: 30,
   currency: 'USD',
 }
 
-/** Сума списання через Monobank (UAH) */
-export const EN_FULL_COURSE_CHARGE_UAH = 1000
+/** Списання за курс через Monobank (UAH) */
+export const EN_FULL_COURSE_CHARGE_UAH = 1300
 
-/** Live lesson prices for English site (Monobank, UAH) */
+/** Live lesson prices for English site — display USD, charge UAH */
 export const enLessonPrices = {
-  group: { price: 350, currency: 'UAH', label: 'Group lesson' },
-  individual: { price: 500, currency: 'UAH', label: 'Individual lesson' },
+  group: {
+    price: 15,
+    currency: 'USD',
+    chargePrice: 665,
+    chargeCurrency: 'UAH',
+    label: 'Group lesson',
+  },
+  individual: {
+    price: 20,
+    currency: 'USD',
+    chargePrice: 800,
+    chargeCurrency: 'UAH',
+    label: 'Individual lesson',
+  },
 }
 
 /** Live lesson prices for Ukrainian site (bank receipt) */
@@ -70,7 +82,7 @@ export function getCoursePrice(courseId, locale = 'uk') {
   return { ...info, purchasable: false }
 }
 
-/** Сума для Monobank (копійки рахуються з chargePrice або price). */
+/** Сума для Monobank (UAH). */
 export function getCourseChargeAmount(courseInfo) {
   if (!courseInfo) return 0
   return Number(courseInfo.chargePrice ?? courseInfo.price) || 0
@@ -79,6 +91,11 @@ export function getCourseChargeAmount(courseInfo) {
 export function getLessonPrice(format, locale = 'uk') {
   const table = locale === 'en' ? enLessonPrices : ukLessonPrices
   return table[format] || table.group
+}
+
+export function getLessonChargeAmount(priceInfo) {
+  if (!priceInfo) return 0
+  return Number(priceInfo.chargePrice ?? priceInfo.price) || 0
 }
 
 export function formatPrice(price, currency = 'UAH', locale = 'uk') {

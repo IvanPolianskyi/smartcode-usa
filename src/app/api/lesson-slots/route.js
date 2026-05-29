@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/mongodb'
+import { buildAvailableSlotQuery, reservationCutoffDate } from '@/lib/lessonSlotReserve'
 
 export async function GET(request) {
   try {
@@ -7,19 +8,7 @@ export async function GET(request) {
     const courseId = url.searchParams.get('courseId')
     const lessonFormat = url.searchParams.get('lessonFormat')
 
-    const fifteenMinsAgo = new Date(Date.now() - 15 * 60 * 1000)
-    
-    const query = { 
-      isBooked: false,
-      $or: [
-        { reservedAt: { $exists: false } },
-        { reservedAt: null },
-        { reservedAt: { $lt: fifteenMinsAgo } }
-      ]
-    }
-    
-    if (courseId) query.courseId = courseId
-    if (lessonFormat) query.lessonFormat = lessonFormat
+    const query = buildAvailableSlotQuery({ courseId, lessonFormat })
 
     const slotsCollection = await getCollection('availableSlots')
     const slots = await slotsCollection.find(query).sort({ day: 1, time: 1 }).toArray()

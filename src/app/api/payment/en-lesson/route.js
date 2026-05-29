@@ -3,13 +3,13 @@ import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { startMonobankPayment } from '@/lib/createMonobankPayment'
-import { getLessonPrice } from '@/lib/coursePrices'
+import { getLessonPrice, getLessonChargeAmount } from '@/lib/coursePrices'
+import { reserveLessonSlot } from '@/lib/lessonSlotReserve'
 
-const VALID_DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
 const VALID_COURSES = ['roblox-studio', 'python-developer-zero-to-junior', 'web-development']
 
 /**
- * English site: book a live lesson via Monobank (UAH)
+ * English site: book a live lesson via Monobank
  */
 export async function POST(request) {
   try {
@@ -27,25 +27,11 @@ export async function POST(request) {
     if (!['group', 'individual'].includes(lessonFormat)) {
       return NextResponse.json({ error: 'Invalid lesson format' }, { status: 400 })
     }
-    let slot = null
-    if (day && time) {
-      const slotsCollection = await getCollection('availableSlots')
-      slot = await slotsCollection.findOne({
-        courseId,
-        lessonFormat,
-        day,
-        time,
-        isBooked: false,
-      })
-
-      if (!slot) {
-        return NextResponse.json({ error: 'This time slot is no longer available' }, { status: 400 })
-      }
+    if (!day || !time) {
+      return NextResponse.json({ error: 'Please select a time slot' }, { status: 400 })
     }
 
-    const priceInfo = getLessonPrice(lessonFormat, 'en')
     let user = null
-
     if (userId) {
       const usersCollection = await getCollection('users')
       user = await usersCollection.findOne({ _id: new ObjectId(userId) })
@@ -55,9 +41,26 @@ export async function POST(request) {
     }
 
     const customerEmail = user ? user.email : guestEmail
+    const reservedBy = userId ? userId.toString() : customerEmail
+
+    const slotsCollection = await getCollection('availableSlots')
+    const slot = await reserveLessonSlot(slotsCollection, {
+      courseId,
+      lessonFormat,
+      day,
+      time,
+      reservedBy,
+    })
+
+    if (!slot) {
+      return NextResponse.json({ error: 'This time slot is no longer available' }, { status: 400 })
+    }
+
+    const priceInfo = getLessonPrice(lessonFormat, 'en')
+    const chargeUah = getLessonChargeAmount(priceInfo)
+
     const orderIdPrefix = userId ? userId.toString() : `guest_${customerEmail.replace(/[^a-zA-Z0-9]/g, '')}`
-    const orderIdSuffix = day && time ? `${day}_${time.replace(':', '')}` : 'topup'
-    const orderId = `lesson_${courseId}_${lessonFormat}_${orderIdSuffix}_${orderIdPrefix}_${Date.now()}`
+    const orderId = `lesson_${courseId}_${lessonFormat}_${day}_${time.replace(':', '')}_${orderIdPrefix}_${Date.now()}`
 
     const productLabel =
       lessonFormat === 'individual'
@@ -66,7 +69,7 @@ export async function POST(request) {
 
     const { invoiceId, paymentUrl } = await startMonobankPayment({
       orderId,
-      amountUah: priceInfo.price,
+      amountUah: chargeUah,
       description: productLabel,
       locale: 'en',
       basketName: productLabel,
@@ -78,16 +81,17 @@ export async function POST(request) {
       courseId,
       orderId,
       invoiceId,
-      amount: priceInfo.price,
-      currency: priceInfo.currency,
+      amount: chargeUah,
+      currency: priceInfo.chargeCurrency || 'UAH',
       status: 'pending',
       paymentMethod: 'monobank',
-      paymentType: day && time ? 'live_lesson_en' : 'lesson_topup_en',
-      lessonFormat: lessonFormat || null,
-      lessonPrice: priceInfo.price,
+      paymentType: 'live_lesson_en',
+      lessonFormat,
+      lessonPrice: chargeUah,
       creditedLessons: 1,
-      scheduleDay: day || null,
-      scheduleTime: time || null,
+      scheduleDay: day,
+      scheduleTime: time,
+      slotId: slot._id,
       createdAt: new Date(),
       updatedAt: new Date(),
     }
@@ -101,20 +105,6 @@ export async function POST(request) {
     }
 
     await paymentsCollection.insertOne(paymentRecord)
-
-    if (slot && day && time) {
-      const slotsCollection = await getCollection('availableSlots')
-      await slotsCollection.updateOne(
-        { _id: slot._id },
-        {
-          $set: {
-            reservedAt: new Date(),
-            reservedBy: userId ? userId.toString() : customerEmail,
-            updatedAt: new Date(),
-          },
-        }
-      )
-    }
 
     return NextResponse.json({ paymentUrl, orderId, invoiceId, provider: 'monobank' })
   } catch (error) {

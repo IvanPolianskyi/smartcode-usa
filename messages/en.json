@@ -264,8 +264,8 @@
       "benefitCertificate": "Certificate",
       "liveCtaTitle": "Book a Live Zoom Lesson",
       "liveCtaSub": "Choose a time and pay instantly",
-      "groupPrice": "Group from 350 UAH",
-      "individualPrice": "1-on-1 from 500 UAH",
+      "groupPrice": "Group from $15",
+      "individualPrice": "1-on-1 from $20",
       "orBuy": "Or buy a full course",
       "hint": "Pay with card, Apple Pay, or Google Pay · instant access after checkout",
       "courses": {

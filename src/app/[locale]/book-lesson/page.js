@@ -47,6 +47,8 @@ export default function BookLessonPage() {
 	const [error, setError] = useState('')
 
 	const priceInfo = getLessonPrice(lessonFormat, 'en')
+	const groupPrice = getLessonPrice('group', 'en')
+	const individualPrice = getLessonPrice('individual', 'en')
 
 	React.useEffect(() => {
 		const fetchSlots = async () => {
@@ -75,10 +77,10 @@ export default function BookLessonPage() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		if (!day || !time) {
-			setError(t('noSlots'))
-			return
-		}
+    if (!day || !time) {
+      setError(t('noSlots'))
+      return
+    }
 		setError('')
 		setLoading(true)
 		try {
@@ -193,7 +195,7 @@ export default function BookLessonPage() {
 								>
 									<Users size={20} />
 									<strong>{t('group')}</strong>
-									<span>{formatPrice(10, 'USD', 'en')} / {t('perLesson')}</span>
+									<span>{formatPrice(groupPrice.price, groupPrice.currency, 'en')} / {t('perLesson')}</span>
 								</button>
 								<button
 									type="button"
@@ -202,7 +204,7 @@ export default function BookLessonPage() {
 								>
 									<User size={20} />
 									<strong>{t('individual')}</strong>
-									<span>{formatPrice(15, 'USD', 'en')} / {t('perLesson')}</span>
+									<span>{formatPrice(individualPrice.price, individualPrice.currency, 'en')} / {t('perLesson')}</span>
 								</button>
 							</div>
 						</div>

@@ -94,9 +94,9 @@ curl -X POST https://yourdomain.com/api/payment/monobank/test \
 Після оплати користувач повертається на `MONOBANK_REDIRECT_URL` або `/{locale}/payment-result?orderId=...`.
 
 Ціни (див. `src/lib/coursePrices.js`):
-- Повний курс (EN): **1000 грн**
-- Групове заняття (EN): **350 грн**
-- Індивідуальне заняття (EN): **500 грн**
+- Повний курс (EN): **$30** → Monobank **1300 грн**
+- Групове заняття (EN): **$15** → Monobank **665 грн**
+- Індивідуальне заняття (EN): **$20** → Monobank **800 грн**
 
 ## Ціни курсів
 

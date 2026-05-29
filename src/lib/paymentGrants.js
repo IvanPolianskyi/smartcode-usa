@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb'
 import { getCollection } from '@/lib/mongodb'
+import { bookLessonSlot } from '@/lib/lessonSlotReserve'
 const EN_DAY_TO_UA = {
   sun: 'Нд',
   mon: 'Пн',
@@ -60,16 +61,19 @@ export async function grantEnLiveLessonAccess(identifier, courseId, { lessonForm
 
   const user = await usersCollection.findOne(userQuery)
   
-  // We still book the exact slot even if the user hasn't registered yet
+  // Бронюємо слот після оплати (з урахуванням формату заняття)
   const slotsCollection = await getCollection('availableSlots')
-  const dayRegex = new RegExp(`^${day}$`, 'i')
-  const matchedSlot = await slotsCollection.findOneAndUpdate(
-    { courseId, day: dayRegex, time, isBooked: false },
-    { $set: { isBooked: true, bookedBy: user ? user._id : identifier, updatedAt: new Date() } }
-  )
+  if (day && time && lessonFormat) {
+    await bookLessonSlot(slotsCollection, {
+      courseId,
+      lessonFormat,
+      day,
+      time,
+      bookedBy: user ? user._id : identifier,
+    })
+  }
 
-  if (!user) return // If they are a guest who hasn't registered, we just booked the slot for them.
-
+  if (!user) return // Гість без акаунта — слот заброньовано, доступ після реєстрації
 
   const profile = user.studentProfile || {}
   const schedule = Array.isArray(profile.regularSchedule) ? [...profile.regularSchedule] : []
