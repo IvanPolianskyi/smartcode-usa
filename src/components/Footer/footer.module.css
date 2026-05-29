@@ -215,24 +215,24 @@
 }
 .copyrightContainer { display: flex; flex-direction: column; gap: 8px; }
 .copyright { font-size: 0.875rem; color: var(--text-secondary-dark); }
-.testPaymentButton {
-    align-self: flex-start;
-    margin-top: 0.25rem;
-    padding: 0.35rem 0.75rem;
-    font-size: 0.75rem;
+.testPaymentLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0;
+    font: inherit;
     font-weight: 600;
     color: #fde68a;
-    background: rgba(251, 191, 36, 0.12);
-    border: 1px dashed rgba(251, 191, 36, 0.45);
-    border-radius: 999px;
+    background: none;
+    border: none;
     cursor: pointer;
-    transition: all var(--transition-base);
+    text-decoration: none;
+    transition: color var(--transition-base);
 }
-.testPaymentButton:hover:not(:disabled) {
-    background: rgba(251, 191, 36, 0.22);
+.testPaymentLink:hover:not(:disabled) {
     color: #fef3c7;
 }
-.testPaymentButton:disabled {
+.testPaymentLink:disabled {
     opacity: 0.65;
     cursor: wait;
 }

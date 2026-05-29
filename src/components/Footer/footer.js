@@ -235,7 +235,25 @@ const Footer = () => {
 									)}
 								</li>
 							))}
+							<li>
+								<button
+									type="button"
+									className={styles.testPaymentLink}
+									onClick={handleTestPythonPayment}
+									disabled={testPaymentLoading}
+									title={t('testPythonPaymentHint')}
+								>
+									{testPaymentLoading
+										? t('testPythonPaymentLoading')
+										: t('testPythonPayment')}
+								</button>
+							</li>
 						</ul>
+						{testPaymentError ? (
+							<p className={styles.testPaymentError} role="alert">
+								{testPaymentError}
+							</p>
+						) : null}
 					</div>
 				</div>
 
@@ -250,22 +268,6 @@ const Footer = () => {
 						<div className={styles.copyright}>
 							{t('copyright', { year: currentYear })}
 						</div>
-						<button
-							type="button"
-							className={styles.testPaymentButton}
-							onClick={handleTestPythonPayment}
-							disabled={testPaymentLoading}
-							title={t('testPythonPaymentHint')}
-						>
-							{testPaymentLoading
-								? t('testPythonPaymentLoading')
-								: t('testPythonPayment')}
-						</button>
-						{testPaymentError ? (
-							<p className={styles.testPaymentError} role="alert">
-								{testPaymentError}
-							</p>
-						) : null}
 						<PaymentLogos />
 					</div>
 					<LanguageSwitcher className={styles.langSwitcher} />
