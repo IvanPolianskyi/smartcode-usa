@@ -405,47 +405,6 @@
           }
         }
       },
-      "4": {
-        "title": "4. Refund policy",
-        "subsections": {
-          "conditions": {
-            "title": "4.1. Reference to Refund Policy",
-            "intro": "Detailed refund terms are governed exclusively by the standalone Refund Policy page.",
-            "items": {
-              "beforeStart": {
-                "title": "Single source",
-                "text": "All refund grounds, limitations, and exceptions are defined only in Refund Policy."
-              },
-              "14days": {
-                "title": "Priority",
-                "text": "If there is any discrepancy, Refund Policy prevails for refund-related matters."
-              },
-              "technical": {
-                "title": "How to review",
-                "text": "Please read the Refund Policy before purchasing and before submitting a refund request."
-              }
-            }
-          },
-          "procedure": {
-            "title": "4.2. Procedure",
-            "items": {
-              "0": "The refund request procedure is defined in the standalone Refund Policy.",
-              "1": "The Customer must follow only the process and deadlines stated in Refund Policy."
-            }
-          },
-          "noRefund": {
-            "title": "4.3. Non-refundability",
-            "items": {
-              "0": "No additional refund grounds are created by this Public Offer.",
-              "1": "Refund decisions are made strictly under Refund Policy."
-            }
-          },
-          "cancellation": {
-            "title": "4.4. Transaction cancellation",
-            "text": "Transaction cancellation terms are provided in Refund Policy."
-          }
-        }
-      },
       "5": {
         "title": "5. Contact information",
         "fields": {
@@ -501,8 +460,7 @@
               "1": "Comply with the learning platform and materials usage rules",
               "2": "Not distribute learning materials to third parties without the Provider's permission",
               "3": "Provide accurate information during registration and ordering",
-              "4": "Has the right to receive services according to the selected course",
-              "5": "Has the right to request a refund only under the standalone Refund Policy"
+              "4": "Has the right to receive services according to the selected course"
             }
           }
         }
@@ -513,7 +471,7 @@
           "0": "The Provider is not liable for inability to provide services due to the Customer's internet connection or equipment issues",
           "1": "The Provider is not liable for learning outcomes that depend on the Customer's individual abilities and effort",
           "2": "The Customer is responsible for keeping their platform login credentials confidential",
-          "3": "If the Customer violates platform usage terms, the Provider may terminate services without a refund"
+          "3": "If the Customer violates platform usage terms, the Provider may terminate services in accordance with this Offer"
         }
       },
       "8": {

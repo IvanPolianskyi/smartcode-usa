@@ -251,7 +251,7 @@
       "pyodideLoadFailed": "Could not load Python in the browser. Check your connection and try again."
     },
     "roblox": {
-      "lockedDescriptionEn": "This lesson is locked. Purchase the full course for $30, or book live lessons in your dashboard ($15 group / $20 individual). The first lesson is free to preview.",
+      "lockedDescriptionEn": "This lesson is locked. Purchase the full course for $15, or book live lessons in your dashboard ($15 group / $20 individual). The first lesson is free to preview.",
       "lockedDescriptionUk": "Цей урок доступний учням онлайн-груп. Зверніться до адміністратора або викладача, щоб отримати доступ.",
       "purchaseFullCourse": "Buy full course - {price}",
       "onlineAccessHint": "Online student access",

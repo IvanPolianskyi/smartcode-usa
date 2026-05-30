@@ -19,12 +19,12 @@ export const coursePrices = {
 
 /** Ціна курсу на EN-сайті (відображення) */
 export const EN_FULL_COURSE_DISPLAY = {
-  price: 30,
+  price: 15,
   currency: 'USD',
 }
 
 /** Списання за курс через Monobank (UAH) */
-export const EN_FULL_COURSE_CHARGE_UAH = 1300
+export const EN_FULL_COURSE_CHARGE_UAH = 650
 
 /** Live lesson prices for English site — display USD, charge UAH */
 export const enLessonPrices = {

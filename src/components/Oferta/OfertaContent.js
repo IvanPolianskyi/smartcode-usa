@@ -1,6 +1,6 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import styles from '@/app/[locale]/oferta/OfertaPage.module.css'
 import MerchantContactBlock from '@/components/Legal/MerchantContactBlock'
 
@@ -101,11 +101,12 @@ function renderSection4(subsections) {
 }
 
 export default function OfertaContent() {
+	const locale = useLocale()
 	const t = useTranslations('pages.oferta')
 	const section1 = t.raw('sections.1')
 	const section2 = t.raw('sections.2')
 	const section3 = t.raw('sections.3')
-	const section4 = t.raw('sections.4')
+	const section4 = locale !== 'en' ? t.raw('sections.4') : null
 	const section5 = t.raw('sections.5')
 	const section6 = t.raw('sections.6')
 	const section7 = t.raw('sections.7')
@@ -149,11 +150,12 @@ export default function OfertaContent() {
 					<div className={styles.text}>{renderSection3(section3.subsections)}</div>
 				</div>
 
-				{/* Section 4 */}
-				<div className={styles.section}>
-					<h2 className={styles.sectionTitle}>{section4.title}</h2>
-					<div className={styles.text}>{renderSection4(section4.subsections)}</div>
-				</div>
+				{locale !== 'en' && section4?.subsections ? (
+					<div className={styles.section}>
+						<h2 className={styles.sectionTitle}>{section4.title}</h2>
+						<div className={styles.text}>{renderSection4(section4.subsections)}</div>
+					</div>
+				) : null}
 
 				{/* Section 5 */}
 				<div className={styles.section}>
