@@ -1,57 +1,44 @@
-/** Утиліти «настінного» часу Києва (UTC+2) ↔ UTC. Однакова логіка з smartcode_manager. */
+/** Київський «настінний» час ↔ UTC. Та сама логіка, що в smartcode_manager (Europe/Kyiv). */
+
+import { addDays } from 'date-fns'
+import { fromZonedTime, toZonedTime } from 'date-fns-tz'
 
 export const KYIV_TZ = 'Europe/Kyiv'
-
-/** Постійний зсув Києва від UTC (хв), Україна з 2024. */
-export const KYIV_UTC_OFFSET_MINUTES = 120
-
-const KYIV_OFFSET_MS = KYIV_UTC_OFFSET_MINUTES * 60 * 1000
-
-const WEEKDAY_SHORT_TO_INDEX = {
-  Sun: 0,
-  Mon: 1,
-  Tue: 2,
-  Wed: 3,
-  Thu: 4,
-  Fri: 5,
-  Sat: 6,
-}
 
 function pad2(n) {
   return String(n).padStart(2, '0')
 }
 
-/** UTC-миттєвість → календарний час у Києві (UTC+2). */
+/** UTC-миттєвість → календарний час у Києві. */
 export function kyivPartsFromInstant(ts) {
-  const ms = typeof ts === 'number' ? ts : new Date(ts).getTime()
-  const shifted = new Date(ms + KYIV_OFFSET_MS)
-  const year = shifted.getUTCFullYear()
-  const month = shifted.getUTCMonth() + 1
-  const day = shifted.getUTCDate()
-  const hour = shifted.getUTCHours()
-  const minute = shifted.getUTCMinutes()
-  const second = shifted.getUTCSeconds()
-  const weekdayIndex = new Date(Date.UTC(year, month - 1, day)).getUTCDay()
-  return { year, month, day, hour, minute, second, weekdayIndex }
+  const d = typeof ts === 'number' ? new Date(ts) : new Date(ts)
+  const z = toZonedTime(d, KYIV_TZ)
+  return {
+    year: z.getFullYear(),
+    month: z.getMonth() + 1,
+    day: z.getDate(),
+    hour: z.getHours(),
+    minute: z.getMinutes(),
+    second: z.getSeconds(),
+    weekdayIndex: z.getDay(),
+  }
 }
 
 export function kyivDateKeyFromParts(p) {
   return `${p.year}-${pad2(p.month)}-${pad2(p.day)}`
 }
 
-/**
- * UTC-момент для yyyy-MM-dd і год:хв у Києві (UTC+2).
- */
+/** yyyy-MM-dd + год:хв у Києві → UTC Date. */
 export function kyivWallToUtc(dateKey, hours, minutes, seconds = 0) {
-  const [year, month, day] = dateKey.split('-').map((x) => parseInt(x, 10))
-  return new Date(Date.UTC(year, month - 1, day, hours - 2, minutes, seconds))
+  const wall = `${dateKey} ${pad2(hours)}:${pad2(minutes)}:${pad2(seconds)}`
+  return fromZonedTime(wall, KYIV_TZ)
 }
 
-/** Додати календарні дні до yyyy-MM-dd. */
+/** +N календарних днів у київській даті. */
 export function addDaysToDateKey(dateKey, days) {
-  const [y, m, d] = dateKey.split('-').map((x) => parseInt(x, 10))
-  const dt = new Date(Date.UTC(y, m - 1, d + days))
-  return `${dt.getUTCFullYear()}-${pad2(dt.getUTCMonth() + 1)}-${pad2(dt.getUTCDate())}`
+  const anchor = kyivWallToUtc(dateKey, 12, 0)
+  const p = kyivPartsFromInstant(addDays(anchor, days))
+  return kyivDateKeyFromParts(p)
 }
 
 /**
@@ -81,12 +68,11 @@ export function kyivSlotSignature(dateIso) {
   return `${p.weekdayIndex}-${pad2(p.hour)}:${pad2(p.minute)}`
 }
 
-/** Форматування дати/часу для UI — київський настінний час (UTC+2). */
+/** Форматування для UI — київський час (Intl, Europe/Kyiv). */
 export function formatKyivLocale(date, locale, options = {}) {
   const d = date instanceof Date ? date : new Date(date)
   if (Number.isNaN(d.getTime())) return ''
-  const shifted = new Date(d.getTime() + KYIV_OFFSET_MS)
-  return shifted.toLocaleString(locale, { timeZone: 'UTC', ...options })
+  return d.toLocaleString(locale, { timeZone: KYIV_TZ, ...options })
 }
 
 /** Поточний київський тиждень: понеділок 00:00 — наступний понеділок 00:00. */

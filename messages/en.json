@@ -528,7 +528,7 @@
     "payButton": "Pay {price} and book",
     "processing": "Processing…",
     "loading": "Loading...",
-    "timezoneNote": "All times are shown in Kyiv time (UTC+2)",
+    "timezoneNote": "All times are shown in Kyiv time",
     "noSlots": "No available slots right now. Check back later or contact support.",
     "authTitle": "Create an account to continue",
     "authText": "You need to sign in or register before booking a lesson. It only takes a minute.",
