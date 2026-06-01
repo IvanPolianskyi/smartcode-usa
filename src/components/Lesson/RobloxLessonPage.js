@@ -62,8 +62,7 @@ const RobloxLessonPage = ({
   const currentModule = curriculum.modules[lessonModuleIndex]
   const allowedSet = useMemo(() => new Set(allowedLessons || []), [allowedLessons])
 
-  const practiceDone =
-    userProgress?.completedPracticeTasks?.includes(lessonId) || false
+  const practiceDone = (Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false) || false
   const quizRecord = userProgress?.completedQuizzes?.[lessonId]
   const lessonComplete = userProgress?.completedLessons?.includes(lessonId) || false
 
