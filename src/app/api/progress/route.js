@@ -171,7 +171,7 @@ export async function POST(request) {
         }
       }
 
-      if (!progress.completedPracticeTasks || !progress.completedPracticeTasks.includes(lessonId)) {
+      if (!Array.isArray(progress.completedPracticeTasks) || !progress.completedPracticeTasks.includes(lessonId)) {
         addToSetOperations.completedPracticeTasks = lessonId
       }
     }

@@ -354,7 +354,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     setIsLoaded(true)
     
     // Завантажити стан практичного завдання при завантаженні сторінки
-    if (userProgress?.completedPracticeTasks?.includes(lessonId)) {
+    if ((Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false)) {
       setPracticeCompleted(true)
     }
     
@@ -769,7 +769,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       setPracticeChecked(false)
       setOutputErrors([])
       setPracticeCompleted(
-        Boolean(userProgress?.completedPracticeTasks?.includes(lessonId))
+        Boolean((Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false))
       )
     }
   }
@@ -943,7 +943,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       }
     } else if (activeTab === 'practice') {
       if (fullLesson.quiz && fullLesson.quiz.questions && fullLesson.quiz.questions.length > 0) {
-        const isPracticeCompleted = practiceCompleted || userProgress?.completedPracticeTasks?.includes(lessonId)
+        const isPracticeCompleted = practiceCompleted || (Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false)
         if (!isPracticeCompleted) {
           alert(t('practiceRequiredAlert'))
         } else {
@@ -1175,9 +1175,9 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           {t('tabs.practice')}
         </button>
         <button
-          className={`${styles.tab} ${activeTab === 'quiz' ? styles.active : ''} ${!practiceCompleted && !userProgress?.completedPracticeTasks?.includes(lessonId) && fullLesson.practiceTask ? styles.disabled : ''}`}
+          className={`${styles.tab} ${activeTab === 'quiz' ? styles.active : ''} ${!practiceCompleted && !(Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false) && fullLesson.practiceTask ? styles.disabled : ''}`}
           onClick={() => {
-            const isPracticeCompleted = practiceCompleted || userProgress?.completedPracticeTasks?.includes(lessonId)
+            const isPracticeCompleted = practiceCompleted || (Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false)
             if (!isPracticeCompleted && fullLesson.practiceTask) {
               alert(t('practiceRequiredAlert'))
               setActiveTab('practice')
@@ -1185,12 +1185,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
               setActiveTab('quiz')
             }
           }}
-          disabled={!practiceCompleted && !userProgress?.completedPracticeTasks?.includes(lessonId) && fullLesson.practiceTask}
-          title={!practiceCompleted && !userProgress?.completedPracticeTasks?.includes(lessonId) && fullLesson.practiceTask ? t('practiceRequiredTitle') : ''}
+          disabled={!practiceCompleted && !(Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false) && fullLesson.practiceTask}
+          title={!practiceCompleted && !(Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false) && fullLesson.practiceTask ? t('practiceRequiredTitle') : ''}
         >
           <Target className="w-4 h-4" />
           {t('tabs.quiz')}
-          {!practiceCompleted && !userProgress?.completedPracticeTasks?.includes(lessonId) && fullLesson.practiceTask && <Lock className="w-3 h-3" />}
+          {!practiceCompleted && !(Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false) && fullLesson.practiceTask && <Lock className="w-3 h-3" />}
         </button>
       </div>
       
