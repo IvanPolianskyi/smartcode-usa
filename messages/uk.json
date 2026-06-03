@@ -45,6 +45,14 @@
       "title": "Публічна оферта / Public offer - SmartCode Academy",
       "description": "Єдина публічна оферта SmartCode Academy (UA/EN). Monobank, повернення коштів, контакти продавця."
     },
+    "privacy": {
+      "title": "Політика конфіденційності - SmartCode Academy",
+      "description": "Як SmartCode Academy збирає, використовує та захищає персональні дані учнів і батьків"
+    },
+    "refund": {
+      "title": "Політика повернення коштів - SmartCode Academy",
+      "description": "Умови повернення коштів, скасування транзакцій та порядок подання заявок"
+    },
     "projects": {
       "title": "Проєкти учнів SmartCode Academy",
       "description": "Подивіться на реальні проєкти учнів SmartCode Academy: ігри, веб-сайти та застосунки, створені дітьми на Python, Unity, Roblox та веб-розробці."

@@ -46,7 +46,7 @@ https://your-project.vercel.app/api/payment/webhook
 
 - `/oferta` та `/en/oferta` — публічна оферта
 - `/privacy` та `/en/privacy` — політика конфіденційності
-- `/en/refund` — політика повернення коштів
+- `/refund` та `/en/refund` — політика повернення коштів
 - Контакти продавця у футері та на юридичних сторінках
 
 ```env

@@ -4,7 +4,8 @@ import { routing } from './i18n/routing'
 
 const intlMiddleware = createMiddleware(routing)
 
-const SKIP_PREFIXES = ['/api', '/uploads', '/logos', '/comments', '/projects', '/tiktoklogo', '/referral']
+// Static assets under these paths are skipped via pathname.includes('.')
+const SKIP_PREFIXES = ['/api', '/uploads', '/logos', '/comments', '/tiktoklogo', '/referral']
 
 function shouldSkip(pathname) {
 	if (SKIP_PREFIXES.some((p) => pathname.startsWith(p))) return true

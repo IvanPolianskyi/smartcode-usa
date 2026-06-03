@@ -37,7 +37,7 @@ function renderListItems(items, keyOrder) {
 }
 
 const SECTION2_LIST_ORDER = ['onlineLessons', 'courses', 'materials']
-const SECTION3_SUBSECTION_ORDER = ['order', 'terms', 'payment', 'delivery', 'absences']
+const SECTION3_SUBSECTION_ORDER = ['order', 'terms', 'payment', 'perLesson', 'delivery', 'absences']
 const SECTION3_PAYMENT_ITEMS_ORDER = ['monobank', 'appleGoogle', 'bank']
 const SECTION4_SUBSECTION_ORDER = ['conditions', 'procedure', 'noRefund', 'cancellation']
 const SECTION4_CONDITIONS_ITEMS_ORDER = ['beforeStart', '14days', 'technical']
@@ -62,6 +62,7 @@ function renderSection3(subsections) {
 						<p>{sub.note}</p>
 					</>
 				) : null}
+				{subKey === 'perLesson' ? <p>{sub.text}</p> : null}
 				{subKey === 'delivery' ? (
 					<>
 						<p>{sub.text}</p>

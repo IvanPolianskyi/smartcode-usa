@@ -143,11 +143,14 @@ export async function POST(request) {
         const baseUrl =
           process.env.API_BASE_URL || new URL(request.url).origin
 
+        const internalHeaders = { 'Content-Type': 'application/json' }
+        if (process.env.INTERNAL_LEAD_SECRET) {
+          internalHeaders['x-internal-lead'] = process.env.INTERNAL_LEAD_SECRET
+        }
+
         await fetch(`${baseUrl}/api/telegram`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: internalHeaders,
           body: JSON.stringify({
             telegram: email,
             name,

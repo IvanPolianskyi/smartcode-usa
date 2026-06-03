@@ -10,6 +10,8 @@ const paths = [
 	{ path: '/tariff', priority: 0.8, changeFrequency: 'monthly' },
 	{ path: '/projects', priority: 0.8, changeFrequency: 'weekly' },
 	{ path: '/oferta', priority: 0.5, changeFrequency: 'yearly' },
+	{ path: '/privacy', priority: 0.5, changeFrequency: 'yearly' },
+	{ path: '/refund', priority: 0.5, changeFrequency: 'yearly' },
 	{ path: '/en/oferta', priority: 0.5, changeFrequency: 'yearly' },
 	{ path: '/en/privacy', priority: 0.5, changeFrequency: 'yearly' },
 	{ path: '/en/refund', priority: 0.5, changeFrequency: 'yearly' },

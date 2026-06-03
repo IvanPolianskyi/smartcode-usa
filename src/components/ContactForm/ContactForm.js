@@ -5,9 +5,9 @@ import { Phone, Send, CheckCircle, X, User } from 'lucide-react'
 import {
 	trackTrialInitiateCheckoutOnce,
 	trackTrialLeadOnce,
-	generateEventId,
 } from '@/lib/metaPixel'
 import { getClientAttribution } from '@/lib/attribution'
+import { acquireLeadIntent, clearLeadIntentCache } from '@/lib/leadFormClient'
 import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
@@ -40,6 +40,7 @@ const ContactForm = () => {
                     window.gtag('event', 'click_trial_button')
                 }
                 trackTrialInitiateCheckoutOnce()
+                acquireLeadIntent().catch(() => {})
             })
         }
         const close = () => {
@@ -119,7 +120,7 @@ const ContactForm = () => {
 
         setSubmitting(true)
         try {
-            const eventId = generateEventId()
+            const { eventId, leadToken } = await acquireLeadIntent()
             const submitData = {
                 name: formData.name.trim(),
                 phone: phoneInput.getFullNumber(),
@@ -128,6 +129,7 @@ const ContactForm = () => {
                 contactMethod: 'phone',
                 preferredContactMethod: 'phone_call',
                 eventId,
+                leadToken,
                 sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://smartcode-academy.com',
                 attribution: getClientAttribution(),
                 locale,
@@ -151,6 +153,7 @@ const ContactForm = () => {
             if (data?.trackLead) {
                 trackTrialLeadOnce('', [], eventId)
             }
+            clearLeadIntentCache()
             setIsSubmitted(true)
             
             // Auto-close after success

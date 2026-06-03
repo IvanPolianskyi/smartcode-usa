@@ -10,6 +10,13 @@ import {
   isTrialCourseValue,
   resolveLocale,
 } from '@/lib/localeStrings'
+import {
+  isUuidLike,
+  isInternalLeadRequest,
+  validatePublicLeadSubmission,
+  markLeadTokenUsed,
+  recordLeadSubmitAttempt,
+} from '@/lib/leadFormSecurity'
 
 function escapeHtml(input) {
   const str = String(input ?? '')
@@ -26,10 +33,6 @@ function buildLeadIdentity({ normalizedPhone, normalizedTelegram }) {
   if (normalizedPhone) return `phone:${normalizedPhone}`
   if (normalizedTelegram) return `telegram:${normalizedTelegram.toLowerCase()}`
   return null
-}
-
-function isUuidLike(value) {
-  return typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)
 }
 
 function getMetaLeadSkipReason({
@@ -98,10 +101,12 @@ export async function POST(request) {
       contactMethod,
       preferredContactMethod,
       name,
-      eventId,
+      eventId: rawEventId,
+      leadToken,
       sourceUrl,
       attribution,
       locale: bodyLocale,
+      company: honeypot,
     } = body || {}
     const loc = resolveLocale(bodyLocale)
     const apiErr = API_ERRORS[loc]
@@ -112,6 +117,35 @@ export async function POST(request) {
         { status: 400 }
       )
     }
+
+    const internalLead = isInternalLeadRequest(request)
+    let verifiedEventId = null
+    let tokenHash = null
+    let submitIp = getClientIp(request) || 'unknown'
+
+    if (!internalLead) {
+      const security = await validatePublicLeadSubmission({
+        request,
+        leadToken,
+        honeypot,
+      })
+      if (!security.ok) {
+        if (security.silent) {
+          return NextResponse.json({ ok: true, trackLead: false, metaLeadSent: false })
+        }
+        return NextResponse.json(
+          { ok: false, error: 'Request rejected' },
+          { status: security.status || 403 }
+        )
+      }
+      verifiedEventId = security.eventId
+      tokenHash = security.tokenHash
+      submitIp = security.ip || submitIp
+    }
+
+    const eventId = internalLead
+      ? (isUuidLike(rawEventId) ? rawEventId : null)
+      : verifiedEventId
 
     const createdAt = new Date().toLocaleString('uk-UA', { timeZone: 'Europe/Kyiv' })
     const normalizedPhone = phone ? normalizePhoneE164(phone, loc) : null
@@ -124,14 +158,13 @@ export async function POST(request) {
     const normalizedTelegram = telegram ? (telegram.startsWith('@') ? telegram : '@' + telegram) : null
     const cleanAttribution = sanitizeAttribution(attribution)
     const preferredContactLabel = preferredContactMethod === 'telegram_phone' ? 'Написати в Telegram за цим номером' : 'Подзвонити'
-    const hasValidEventId = isUuidLike(eventId)
+    const hasValidEventId = Boolean(eventId)
     const isTrialCourse = isTrialCourseValue(course)
     const displayCourse =
       course?.trim() ||
       (hasValidEventId ? getTrialGenericCourse(loc) : '')
     const trafficType = detectTrafficType(cleanAttribution)
 
-    // Читаємо cookies для реферальної системи
     const cookieStore = await cookies()
     const referralIdCookie = cookieStore.get('referralId')
     const referralId = referralIdCookie?.value || null
@@ -150,19 +183,34 @@ export async function POST(request) {
         ],
       })
       : null
-    // Пробні форми (hero, contact, trial block) завжди надсилають UUID eventId.
+
     const shouldTrackLead = Boolean(
       normalizedPhone &&
       hasValidEventId &&
       !existingLead &&
       !existingEvent
     )
+    const shouldNotifyTelegram = Boolean(
+      shouldTrackLead || internalLead || (!hasValidEventId && !existingLead)
+    )
+
     const metaLeadSkipReason = getMetaLeadSkipReason({
       normalizedPhone,
       hasValidEventId,
       existingLead,
       existingEvent,
     })
+
+    if (!shouldNotifyTelegram) {
+      await recordLeadSubmitAttempt(submitIp, { blocked: false })
+      return NextResponse.json({
+        ok: true,
+        trackLead: false,
+        metaLeadSent: false,
+        metaLeadSkipReason: metaLeadSkipReason || 'дубль заявки',
+        duplicate: true,
+      })
+    }
 
     let metaLeadSent = false
     if (shouldTrackLead) {
@@ -238,7 +286,6 @@ export async function POST(request) {
     const tgData = await telegramResponse.json().catch(() => null)
 
     if (!telegramResponse.ok || !tgData?.ok) {
-      // Even if Telegram fails, still attempt to store submission for auditing
       try {
         const insertResult = await submissions.insertOne({
           name: name || '',
@@ -278,7 +325,6 @@ export async function POST(request) {
       )
     }
 
-    // Store successful submission as well
     try {
       const insertResult = await submissions.insertOne({
         name: name || '',
@@ -296,6 +342,10 @@ export async function POST(request) {
         isUniqueLead: shouldTrackLead,
         metaLeadSent,
       })
+      if (tokenHash) {
+        await markLeadTokenUsed(tokenHash)
+      }
+      await recordLeadSubmitAttempt(submitIp, { blocked: false })
       await sendLeadToCrm({
         leadId: String(insertResult.insertedId),
         name: name || '',
@@ -327,5 +377,3 @@ export async function POST(request) {
     )
   }
 }
-
-

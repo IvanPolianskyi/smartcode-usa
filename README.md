@@ -58,6 +58,10 @@ TELEGRAM_BOT_TOKEN=your_bot_token_here
 TELEGRAM_CHAT_ID=your_chat_id_here
 TELEGRAM_AUTHORIZED_USERS=user_id_1,user_id_2
 API_BASE_URL=http://localhost:3000
+# Захист пробних форм (обов'язково на проді): openssl rand -hex 32
+LEAD_FORM_SIGNING_SECRET=your_random_secret_here
+# Для серверних викликів /api/telegram (реєстрація по рефералу)
+INTERNAL_LEAD_SECRET=another_random_secret_here
 ```
 
 3. Start the application: `npm run start` (bot starts automatically)

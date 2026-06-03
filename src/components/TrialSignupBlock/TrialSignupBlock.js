@@ -6,9 +6,9 @@ import {
 	trackTrialInitiateCheckoutOnce,
 	trackTrialLeadOnce,
 	trialInterestToContentIds,
-	generateEventId,
 } from '@/lib/metaPixel'
 import { getClientAttribution } from '@/lib/attribution'
+import { acquireLeadIntent, clearLeadIntentCache } from '@/lib/leadFormClient'
 import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
@@ -33,6 +33,7 @@ export default function TrialSignupBlock() {
 		const t = e.target
 		if (t instanceof HTMLInputElement || t instanceof HTMLSelectElement || t instanceof HTMLTextAreaElement || t instanceof HTMLButtonElement) {
 			trackTrialInitiateCheckoutOnce()
+			acquireLeadIntent().catch(() => {})
 		}
 	}
 
@@ -51,7 +52,7 @@ export default function TrialSignupBlock() {
 
 		setSubmitting(true)
 		try {
-			const eventId = generateEventId()
+			const { eventId, leadToken } = await acquireLeadIntent()
 			const response = await fetch('/api/telegram', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -62,6 +63,7 @@ export default function TrialSignupBlock() {
 					contactMethod: 'phone',
 					preferredContactMethod,
 					eventId,
+					leadToken,
 					sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://smartcode-academy.com',
 					attribution: getClientAttribution(),
 					locale,
@@ -75,6 +77,7 @@ export default function TrialSignupBlock() {
 			if (data?.trackLead) {
 				trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course), eventId)
 			}
+			clearLeadIntentCache()
 			setDone(true)
 			setFormData({ course: '', message: '' })
 			setPreferredContactMethod('phone_call')
