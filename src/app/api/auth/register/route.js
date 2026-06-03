@@ -8,13 +8,24 @@ import { notifyCrmStudentLinksRefresh } from '@/lib/notifyCrmStudentLinks'
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { email, password, name, phone, locale = 'uk', claimOrder } = body
+    const { email, password, name, phone, locale = 'uk', claimOrder, privacyAccepted } = body
     const isEnLocale = locale === 'en'
 
     // Validation
     if (!email || !password || !name) {
       return NextResponse.json(
         { error: 'Email, password, and name are required' },
+        { status: 400 }
+      )
+    }
+
+    if (!privacyAccepted) {
+      return NextResponse.json(
+        {
+          error: isEnLocale
+            ? 'Please confirm that you have read the Privacy Policy'
+            : 'Підтвердіть, що ви ознайомилися з Політикою конфіденційності',
+        },
         { status: 400 }
       )
     }

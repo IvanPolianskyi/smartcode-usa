@@ -28,6 +28,34 @@ export function hasStudentCourseAccess(user, courseId) {
   return hasActiveOnlineCourse(user.studentProfile, courseId)
 }
 
+/** Читання прогресу: куплений/онлайн курс або Roblox (прев’ю 1.1 і платформа). */
+export function canReadCourseProgress(user, courseId) {
+  if (!user || !courseId) return false
+  if (hasStudentCourseAccess(user, courseId)) return true
+  if (courseId === 'roblox-studio') return true
+  return false
+}
+
+/** Запис прогресу по уроку — лише якщо урок відкритий (прев’ю, покупка, онлайн-група). */
+export function canUpdateLessonProgress(user, courseId, lessonId, progress = null) {
+  if (!user || !courseId || !lessonId) return false
+  if (user.role === 'admin') return true
+
+  const isPurchased = (user.purchasedCourses || []).includes(courseId)
+  if (isPurchased) return true
+
+  const unlocked = getUnlockedLessonSet({
+    courseId,
+    profile: user.studentProfile,
+    progress,
+    isAdmin: user.role === 'admin',
+    isPurchased,
+    isEnrolled: Boolean(progress),
+  })
+
+  return unlocked.has(lessonId)
+}
+
 export function isCourseFullAccess(profile, courseId) {
   const access = profile?.courseAccess?.[courseId]
   if (!access) return false

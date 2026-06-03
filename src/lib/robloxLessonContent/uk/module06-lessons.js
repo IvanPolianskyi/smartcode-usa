@@ -175,7 +175,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "Керовані автомобілі використовують…",
+ question: "Керовані автомобілі використовують...",
  options: [
  "VehicleSeat",
  "Тільки SpawnLocation",
@@ -188,7 +188,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "WeldConstraint…",
+ question: "WeldConstraint...",
  options: [
  "Жорстко з’єднує Parts",
  "Додає монети",
@@ -201,7 +201,7 @@ end
  {
  id: "q3",
  type: "multiple_choice",
- question: "Управління MaxSpeed…",
+ question: "Управління MaxSpeed...",
  options: [
  "Максимальна швидкість водіння",
  "Висота стрибка",
@@ -227,7 +227,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "StarterCar має бути…",
+ question: "StarterCar має бути...",
  options: [
  "Model",
  "Лише Script",
@@ -235,12 +235,12 @@ end
  "атмосфера",
  ],
  correctAnswer: 0,
- explanation: "Збірний збірний автомобіль.",
+ explanation: "Згрупований префаб автомобіля (Model).",
  },
  {
  id: "q6",
  type: "multiple_choice",
- question: "Широке низьке шасі допомагає…",
+ question: "Широке низьке шасі допомагає...",
  options: [
  "Запобігання перевертання",
  "Видалити трек",
@@ -253,7 +253,7 @@ end
  {
  id: "q7",
  type: "multiple_choice",
- question: "Модуль 6 фокусується на…",
+ question: "Модуль 6 фокусується на...",
  options: [
  "Перегони",
  "Тільки бойові",
@@ -266,7 +266,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "Чотири колеса для…",
+ question: "Чотири колеса для...",
  options: [
  "Стійкість і зовнішній вигляд",
  "Тільки політ",
@@ -292,7 +292,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 6.1 зберегти назву…",
+ question: "Урок 6.1 зберегти назву...",
  options: [
  "Урок 6.1 - Стартер автомобіля",
  "Арена готова",
@@ -469,7 +469,7 @@ export const ukLesson62 = {
  {
  id: "q1",
  type: "multiple_choice",
- question: "Гоночна траса має бути…",
+ question: "Гоночна траса має бути...",
  options: [
  "Замкнене коло",
  "Тільки один прямий",
@@ -495,7 +495,7 @@ export const ukLesson62 = {
  {
  id: "q3",
  type: "multiple_choice",
- question: "Бар'єри на зовнішніх краях…",
+ question: "Бар'єри на зовнішніх краях...",
  options: [
  "Зупиніть автомобілі, що з'їжджають з колії",
  "Запуск блоку",
@@ -508,7 +508,7 @@ export const ukLesson62 = {
  {
  id: "q4",
  type: "multiple_choice",
- question: "Пункти пропуску готуються до…",
+ question: "Пункти пропуску готуються до...",
  options: [
  "Перевірка замовлення на колінах пізніше",
  "Тільки місцевість",
@@ -521,7 +521,7 @@ export const ukLesson62 = {
  {
  id: "q5",
  type: "multiple_choice",
- question: "Тест на п’ять кіл показує…",
+ question: "Тест на п’ять кіл показує...",
  options: [
  "Застрягання та несправедливі повороти",
  "Robux",
@@ -534,7 +534,7 @@ export const ukLesson62 = {
  {
  id: "q6",
  type: "multiple_choice",
- question: "StartLine показує…",
+ question: "StartLine показує...",
  options: [
  "Де починаються гонки",
  "Розташування магазину",
@@ -547,7 +547,7 @@ export const ukLesson62 = {
  {
  id: "q7",
  type: "multiple_choice",
- question: "Parts колії повинні бути…",
+ question: "Parts колії повинні бути...",
  options: [
  "Anchored true",
  "Розкріплено все",
@@ -560,7 +560,7 @@ export const ukLesson62 = {
  {
  id: "q8",
  type: "multiple_choice",
- question: "Модульні сегменти дозволяють…",
+ question: "Модульні сегменти дозволяють...",
  options: [
  "Послідовне повторне використання та редагування",
  "Випадкові розміри",
@@ -586,7 +586,7 @@ export const ukLesson62 = {
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 6.2 зберегти назву…",
+ question: "Урок 6.2 зберегти назву...",
  options: [
  "Урок 6.2 - Іподром",
  "Стартер автомобіля",
@@ -790,7 +790,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "Таймер перегонів використовує…",
+ question: "Таймер перегонів використовує...",
  options: [
  "os.clock на сервері",
  "Тільки BrickColor",
@@ -803,7 +803,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "Завершення ігнорується, якщо…",
+ question: "Завершення ігнорується, якщо...",
  options: [
  "Гонка так і не почалася",
  "Машина швидка",
@@ -829,7 +829,7 @@ end
  {
  id: "q4",
  type: "multiple_choice",
- question: "Найкраще оновлення сесії, коли…",
+ question: "Найкраще оновлення сесії, коли...",
  options: [
  "Новий час нижче",
  "Завжди",
@@ -868,7 +868,7 @@ end
  {
  id: "q7",
  type: "multiple_choice",
- question: "RaceStart зберігає…",
+ question: "RaceStart зберігає...",
  options: [
  "startTime з os.clock",
  "Robux",
@@ -881,7 +881,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "Офіційний час перегонів має бути…",
+ question: "Офіційний час перегонів має бути...",
  options: [
  "Розраховується на сервері",
  "Лише клієнтський чат",
@@ -894,7 +894,7 @@ end
  {
  id: "q9",
  type: "multiple_choice",
- question: "Урок 6.3 потребує…",
+ question: "Урок 6.3 потребує...",
  options: [
  "Трек від 6.2 і авто від 6.1",
  "Тільки меч",
@@ -907,7 +907,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 6.3 зберегти назву…",
+ question: "Урок 6.3 зберегти назву...",
  options: [
  "Урок 6.3 - Таймер перегонів",
  "гоночна траса",
@@ -1114,7 +1114,7 @@ end)
  {
  id: "q1",
  type: "multiple_choice",
- question: "Сервер надійний для…",
+ question: "Сервер надійний для...",
  options: [
  "Правила фінального заїзду та результати",
  "Тільки графіка",
@@ -1127,7 +1127,7 @@ end)
  {
  id: "q2",
  type: "multiple_choice",
- question: "RemoteEvent живе в…",
+ question: "RemoteEvent живе в...",
  options: [
  "ReplicatedStorage",
  "Тільки освітлення",
@@ -1140,7 +1140,7 @@ end)
  {
  id: "q3",
  type: "multiple_choice",
- question: "FireServer надсилає…",
+ question: "FireServer надсилає...",
  options: [
  "Запит клієнта на сервер",
  "Сервер лише для всіх клієнтів",
@@ -1153,7 +1153,7 @@ end)
  {
  id: "q4",
  type: "multiple_choice",
- question: "FireClient надсилає…",
+ question: "FireClient надсилає...",
  options: [
  "Повідомлення сервера одному гравцеві",
  "Експлойт",
@@ -1166,7 +1166,7 @@ end)
  {
  id: "q5",
  type: "multiple_choice",
- question: "Клієнт не повинен надсилати…",
+ question: "Клієнт не повинен надсилати...",
  options: [
  "Довірений офіційний час кола як факт",
  "Клацання кнопок",
@@ -1231,7 +1231,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 6.4 зберегти назву…",
+ question: "Урок 6.4 зберегти назву...",
  options: [
  "Урок 6.4 - Гонка клієнт-сервер",
  "Таймер перегонів",
@@ -1455,7 +1455,7 @@ local raceStartTotal = {} -- on first StartRace of match
  {
  id: "q2",
  type: "multiple_choice",
- question: "Кола зберігаються в…",
+ question: "Кола зберігаються в...",
  options: [
  "leaderstats IntValue",
  "Рельєф місцевості",
@@ -1468,7 +1468,7 @@ local raceStartTotal = {} -- on first StartRace of match
  {
  id: "q3",
  type: "multiple_choice",
- question: "Після правильного кола прогрес скидається до…",
+ question: "Після правильного кола прогрес скидається до...",
  options: [
  "CP_1 (індекс 1)",
  "Тільки фініш",
@@ -1481,7 +1481,7 @@ local raceStartTotal = {} -- on first StartRace of match
  {
  id: "q4",
  type: "multiple_choice",
- question: "Неправильний дотик контрольної точки має…",
+ question: "Неправильний дотик контрольної точки має...",
  options: [
  "Не просування вперед",
  "Перемагайте миттєво",
@@ -1494,7 +1494,7 @@ local raceStartTotal = {} -- on first StartRace of match
  {
  id: "q5",
  type: "multiple_choice",
- question: "TARGET_LAPS = 3 означає…",
+ question: "TARGET_LAPS = 3 означає...",
  options: [
  "Перемога після трьох дійсних кіл",
  "Тільки три гравці",
@@ -1507,7 +1507,7 @@ local raceStartTotal = {} -- on first StartRace of match
  {
  id: "q6",
  type: "multiple_choice",
- question: "Тай-брейк може використовувати…",
+ question: "Тай-брейк може використовувати...",
  options: [
  "Менший загальний час гонки",
  "Випадковий Robux",
@@ -1520,7 +1520,7 @@ local raceStartTotal = {} -- on first StartRace of match
  {
  id: "q7",
  type: "multiple_choice",
- question: "Перевірка VehicleSeat гарантує…",
+ question: "Перевірка VehicleSeat гарантує...",
  options: [
  "Автомобіль запускає CP не ходить",
  "політ",
@@ -1533,7 +1533,7 @@ local raceStartTotal = {} -- on first StartRace of match
  {
  id: "q8",
  type: "multiple_choice",
- question: "Таблиця лідерів показує кола, тому що…",
+ question: "Таблиця лідерів показує кола, тому що...",
  options: [
  "Він знаходиться в папці leaderstats",
  "Це в освітленні",
@@ -1546,7 +1546,7 @@ local raceStartTotal = {} -- on first StartRace of match
  {
  id: "q9",
  type: "multiple_choice",
- question: "Урок 6.5 потребує відстеження CP від…",
+ question: "Урок 6.5 потребує відстеження CP від...",
  options: [
  "Урок 6.2",
  "Тільки урок 1.1",
@@ -1559,7 +1559,7 @@ local raceStartTotal = {} -- on first StartRace of match
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 6.5 зберегти назву…",
+ question: "Урок 6.5 зберегти назву...",
  options: [
  "Урок 6.5 - Таблиця лідерів за колами",
  "Таймер перегонів",
@@ -1744,7 +1744,7 @@ export const ukLesson66 = {
  {
  id: "q1",
  type: "multiple_choice",
- question: "Race Launched включає…",
+ question: "Race Launched включає...",
  options: [
  "Автомобіль + траса + таймер + кола + події",
  "Тільки автомобіль",
@@ -1757,7 +1757,7 @@ export const ukLesson66 = {
  {
  id: "q2",
  type: "multiple_choice",
- question: "Перевірки тесту на використання…",
+ question: "Перевірки тесту на використання...",
  options: [
  "Пропуск контрольної точки не вдається",
  "Колір неба",
@@ -1770,7 +1770,7 @@ export const ukLesson66 = {
  {
  id: "q3",
  type: "multiple_choice",
- question: "Переможець на…",
+ question: "Переможець на...",
  options: [
  "3 дійсних кола",
  "1 дотик",
@@ -1783,7 +1783,7 @@ export const ukLesson66 = {
  {
  id: "q4",
  type: "multiple_choice",
- question: "StarterCar має породжуватися з…",
+ question: "StarterCar має породжуватися з...",
  options: [
  "Клон ReplicatedStorage",
  "Тільки місцевість",
@@ -1796,7 +1796,7 @@ export const ukLesson66 = {
  {
  id: "q5",
  type: "multiple_choice",
- question: "Сервер володіє офіційним…",
+ question: "Сервер володіє офіційним...",
  options: [
  "Підрахунок часу та кола",
  "Тільки колір інтерфейсу",
@@ -1809,7 +1809,7 @@ export const ukLesson66 = {
  {
  id: "q6",
  type: "multiple_choice",
- question: "Тест для двох гравців показує…",
+ question: "Тест для двох гравців показує...",
  options: [
  "Спільні помилки стану",
  "Robux",
@@ -1822,7 +1822,7 @@ export const ukLesson66 = {
  {
  id: "q7",
  type: "multiple_choice",
- question: "Надійність перед екстрами означає…",
+ question: "Надійність перед екстрами означає...",
  options: [
  "Основний цикл працює першим",
  "Спочатку додайте подіум",
@@ -1835,7 +1835,7 @@ export const ukLesson66 = {
  {
  id: "q8",
  type: "multiple_choice",
- question: "Модуль 6 зберегти назву…",
+ question: "Модуль 6 зберегти назву...",
  options: [
  "Модуль 6 - Гонка розпочата",
  "Арена готова",
@@ -1848,7 +1848,7 @@ export const ukLesson66 = {
  {
  id: "q9",
  type: "multiple_choice",
- question: "Урок 6.6 завершується…",
+ question: "Урок 6.6 завершується...",
  options: [
  "Модуль 6 гонки",
  "Тільки модуль 1",
@@ -1861,7 +1861,7 @@ export const ukLesson66 = {
  {
  id: "q10",
  type: "multiple_choice",
- question: "Демо має показати…",
+ question: "Демо має показати...",
  options: [
  "Відродження переможця за ~2 хв",
  "Тільки Explorer",

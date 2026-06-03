@@ -28,10 +28,16 @@ function RegisterPageContent() {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [privacyAccepted, setPrivacyAccepted] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+
+    if (!privacyAccepted) {
+      setError(t('errorAcceptPrivacy'))
+      return
+    }
 
     if (formData.password !== formData.confirmPassword) {
       setError(t('errorPasswordMismatch'))
@@ -51,7 +57,8 @@ function RegisterPageContent() {
         formData.password,
         formData.name,
         locale,
-        claimOrder
+        claimOrder,
+        true
       )
       window.dispatchEvent(new Event('auth:register'))
       const redirectUrl = new URLSearchParams(window.location.search).get('redirect') || '/dashboard'
@@ -176,9 +183,30 @@ function RegisterPageContent() {
               </div>
             </div>
 
+            <label className={styles.legalCheckboxRow}>
+              <input
+                type="checkbox"
+                checked={privacyAccepted}
+                onChange={(e) => {
+                  setPrivacyAccepted(e.target.checked)
+                  if (error) setError('')
+                }}
+                required
+              />
+              <span>
+                {t.rich('privacyCheckbox', {
+                  privacy: (chunks) => (
+                    <Link href="/privacy" className={styles.legalLink}>
+                      {chunks}
+                    </Link>
+                  ),
+                })}
+              </span>
+            </label>
+
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || !privacyAccepted}
               className={styles.submitButton}
             >
               {loading ? t('submitting') : t('submit')}

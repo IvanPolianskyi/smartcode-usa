@@ -171,7 +171,7 @@ Folder **NPCs** забезпечує чистоту робочого прост�
  {
  id: "q1",
  type: "multiple_choice",
- question: "ProximityPrompt дозволяє гравцям…",
+ question: "ProximityPrompt дозволяє гравцям...",
  options: [
  "Взаємодійте, коли поруч",
  "Літати",
@@ -197,7 +197,7 @@ Folder **NPCs** забезпечує чистоту робочого прост�
  {
  id: "q3",
  type: "multiple_choice",
- question: "NPC потребує…",
+ question: "NPC потребує...",
  options: [
  "Humanoid",
  "Лише Part",
@@ -210,7 +210,7 @@ Folder **NPCs** забезпечує чистоту робочого прост�
  {
  id: "q4",
  type: "multiple_choice",
- question: "HumanoidRootPart містить…",
+ question: "HumanoidRootPart містить...",
  options: [
  "Якір ProximityPrompt",
  "Тільки монети",
@@ -236,7 +236,7 @@ Folder **NPCs** забезпечує чистоту робочого прост�
  {
  id: "q6",
  type: "multiple_choice",
- question: "Модуль 8 фокусується на…",
+ question: "Модуль 8 фокусується на...",
  options: [
  "Розумна гра / NPC і квести",
  "Тільки гонки",
@@ -249,7 +249,7 @@ Folder **NPCs** забезпечує чистоту робочого прост�
  {
  id: "q7",
  type: "multiple_choice",
- question: "Folder NPC у Workspace…",
+ question: "Folder NPC у Workspace...",
  options: [
  "Керує Character",
  "Замінює сервер",
@@ -262,7 +262,7 @@ Folder **NPCs** забезпечує чистоту робочого прост�
  {
  id: "q8",
  type: "multiple_choice",
- question: "ActionText \"Talk\" повідомляє гравцеві…",
+ question: "ActionText \"Talk\" повідомляє гравцеві...",
  options: [
  "Що робить кнопка",
  "IP сервера",
@@ -275,7 +275,7 @@ Folder **NPCs** забезпечує чистоту робочого прост�
  {
  id: "q9",
  type: "multiple_choice",
- question: "Урок 8.2 додає…",
+ question: "Урок 8.2 додає...",
  options: [
  "Інтерфейс діалогу",
  "Тільки автомобіль",
@@ -288,7 +288,7 @@ Folder **NPCs** забезпечує чистоту робочого прост�
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 8.1 зберегти назву…",
+ question: "Урок 8.1 зберегти назву...",
  options: [
  "Урок 8.1 - Живий NPC",
  "Місце проживання",
@@ -510,7 +510,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "Репліки діалогу зберігаються як…",
+ question: "Репліки діалогу зберігаються як...",
  options: [
  "Таблиця Lua за ключем",
  "Рельєф місцевості",
@@ -523,7 +523,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "OpenDialogue надсилає…",
+ question: "OpenDialogue надсилає...",
  options: [
  "Ключ до діалогу з клієнтом",
  "Повне збереження гри",
@@ -536,7 +536,7 @@ end
  {
  id: "q3",
  type: "multiple_choice",
- question: "Далі кнопка…",
+ question: "Далі кнопка...",
  options: [
  "Авансовий індекс рядка",
  "Видаляє NPC",
@@ -549,7 +549,7 @@ end
  {
  id: "q4",
  type: "multiple_choice",
- question: "DialogueGui - це…",
+ question: "DialogueGui - це...",
  options: [
  "ScreenGui на клієнті",
  "Лише сервер",
@@ -562,7 +562,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "GetDialogue має працювати на…",
+ question: "GetDialogue має працювати на...",
  options: [
  "Server OnServerInvoke",
  "Тільки клієнт",
@@ -601,7 +601,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "SpeakerLabel показує…",
+ question: "SpeakerLabel показує...",
  options: [
  "Ім'я NPC",
  "Пароль гравця",
@@ -614,7 +614,7 @@ end
  {
  id: "q9",
  type: "multiple_choice",
- question: "Урок 8.3 додає…",
+ question: "Урок 8.3 додає...",
  options: [
  "Піший патруль NPC",
  "Тільки магазин",
@@ -627,7 +627,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 8.2 зберегти назву…",
+ question: "Урок 8.2 зберегти назву...",
  options: [
  "Урок 8.2 - Діалогічна система",
  "Живий NPC",
@@ -817,7 +817,7 @@ local patrolling = true
  {
  id: "q1",
  type: "multiple_choice",
- question: "NPC ходить за допомогою…",
+ question: "NPC ходить за допомогою...",
  options: [
  "Humanoid: MoveTo",
  "Фарба місцевості",
@@ -830,7 +830,7 @@ local patrolling = true
  {
  id: "q2",
  type: "multiple_choice",
- question: "MoveToFinished:Wait()…",
+ question: "MoveToFinished:Wait()...",
  options: [
  "Чекає, поки крок буде виконано",
  "Видаляє NPC",
@@ -843,7 +843,7 @@ local patrolling = true
  {
  id: "q3",
  type: "multiple_choice",
- question: "Пункти патрулювання під назвою…",
+ question: "Пункти патрулювання під назвою...",
  options: [
  "WP_1, WP_2, ...",
  "Випадковий",
@@ -856,7 +856,7 @@ local patrolling = true
  {
  id: "q4",
  type: "multiple_choice",
- question: "Patrol NPC має бути…",
+ question: "Patrol NPC має бути...",
  options: [
  "Without Anchored",
  "Anchored true",
@@ -869,7 +869,7 @@ local patrolling = true
  {
  id: "q5",
  type: "multiple_choice",
- question: "while true do loop…",
+ question: "while true do loop...",
  options: [
  "Вічно повторює патруль",
  "Запускається один раз",
@@ -895,7 +895,7 @@ local patrolling = true
  {
  id: "q7",
  type: "multiple_choice",
- question: "Виправлення застряглих NPC включає…",
+ question: "Виправлення застряглих NPC включає...",
  options: [
  "Перенесіть маршрутні точки подалі від стін",
  "Видалити Humanoid",
@@ -908,7 +908,7 @@ local patrolling = true
  {
  id: "q8",
  type: "multiple_choice",
- question: "Сортування маршрутних точок за номером…",
+ question: "Сортування маршрутних точок за номером...",
  options: [
  "Зберігає порядок маршруту",
  "Видаляє NPC",
@@ -921,7 +921,7 @@ local patrolling = true
  {
  id: "q9",
  type: "multiple_choice",
- question: "Урок 8.4 додає…",
+ question: "Урок 8.4 додає...",
  options: [
  "Система квестів",
  "Тільки автомобіль",
@@ -934,7 +934,7 @@ local patrolling = true
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 8.3 зберегти назву…",
+ question: "Урок 8.3 зберегти назву...",
  options: [
  "Урок 8.3 - Патруль NPC",
  "Система діалогу",
@@ -1145,7 +1145,7 @@ end)
  {
  id: "q1",
  type: "multiple_choice",
- question: "Перебіг квесту зберігається за…",
+ question: "Перебіг квесту зберігається за...",
  options: [
  "Гравець на сервері",
  "Весь сервер по всьому світу",
@@ -1171,7 +1171,7 @@ end)
  {
  id: "q3",
  type: "multiple_choice",
- question: "QuestConfig містить…",
+ question: "QuestConfig містить...",
  options: [
  "ціль і нагородні монети",
  "Паролі гравців",
@@ -1184,7 +1184,7 @@ end)
  {
  id: "q4",
  type: "multiple_choice",
- question: "Crystal Touch має працювати на…",
+ question: "Crystal Touch має працювати на...",
  options: [
  "Сервер",
  "Лише LocalScript",
@@ -1197,7 +1197,7 @@ end)
  {
  id: "q5",
  type: "multiple_choice",
- question: "QuestUpdate надсилає…",
+ question: "QuestUpdate надсилає...",
  options: [
  "прогрес і мета до інтерфейсу користувача",
  "Безкоштовний Robux",
@@ -1210,7 +1210,7 @@ end)
  {
  id: "q6",
  type: "multiple_choice",
- question: "Порядок виконання квесту…",
+ question: "Порядок виконання квесту...",
  options: [
  "Прийняти → прогрес → завершити → винагорода",
  "Нагорода спочатку",
@@ -1223,7 +1223,7 @@ end)
  {
  id: "q7",
  type: "multiple_choice",
- question: "ключі ідентифікатора квесту, наприклад collect_crystals_01…",
+ question: "ключі ідентифікатора квесту, наприклад collect_crystals_01...",
  options: [
  "Залишайтеся послідовними в коді",
  "Змініть кожен рядок",
@@ -1249,7 +1249,7 @@ end)
  {
  id: "q9",
  type: "multiple_choice",
- question: "Урок 8.5 додає…",
+ question: "Урок 8.5 додає...",
  options: [
  "Атака ворога",
  "Тільки діалог",
@@ -1262,7 +1262,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 8.4 зберегти назву…",
+ question: "Урок 8.4 зберегти назву...",
  options: [
  "Урок 8.4 - Система квестів",
  "NPC Патруль",
@@ -1484,7 +1484,7 @@ end
  {
  id: "q4",
  type: "multiple_choice",
- question: "Чейз використовує…",
+ question: "Чейз використовує...",
  options: [
  "Humanoid: MoveTo",
  "Фарба місцевості",
@@ -1497,7 +1497,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "Тег CollectionService Ворог…",
+ question: "Тег CollectionService Ворог...",
  options: [
  "Групує ворогів для скриптів",
  "Видаляє гравців",
@@ -1510,7 +1510,7 @@ end
  {
  id: "q6",
  type: "multiple_choice",
- question: "ATTACK_RANGE 6 означає…",
+ question: "ATTACK_RANGE 6 означає...",
  options: [
  "Пошкодження тільки впритул",
  "Шкода від по всій карті",
@@ -1523,7 +1523,7 @@ end
  {
  id: "q7",
  type: "multiple_choice",
- question: "Штати включають…",
+ question: "Штати включають...",
  options: [
  "перезарядка атаки бездіяльної погоні",
  "Тільки простою",
@@ -1536,7 +1536,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 8.5 використовує навички з…",
+ question: "Урок 8.5 використовує навички з...",
  options: [
  "Модуль 5 Пошкодження від Humanoid",
  "Модуль 1 лише місцевість",
@@ -1549,7 +1549,7 @@ end
  {
  id: "q9",
  type: "multiple_choice",
- question: "Урок 8.6 - це…",
+ question: "Урок 8.6 - це...",
  options: [
  "Житлова локація КПП",
  "Тільки магазин",
@@ -1562,7 +1562,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 8.5 зберегти назву…",
+ question: "Урок 8.5 зберегти назву...",
  options: [
  "Урок 8.5 - Атака ворога",
  "Система квестів",
@@ -1743,7 +1743,7 @@ ServerScriptService
  {
  id: "q1",
  type: "multiple_choice",
- question: "Місце проживання включає…",
+ question: "Місце проживання включає...",
  options: [
  "NPC + діалог + квест + ворог",
  "Тільки місцевість",
@@ -1756,7 +1756,7 @@ ServerScriptService
  {
  id: "q2",
  type: "multiple_choice",
- question: "Золотий шлях закінчується…",
+ question: "Золотий шлях закінчується...",
  options: [
  "Отримано винагороду за квест",
  "Тільки опублікувати",
@@ -1769,7 +1769,7 @@ ServerScriptService
  {
  id: "q3",
  type: "multiple_choice",
- question: "Перевірки квестів для двох гравців…",
+ question: "Перевірки квестів для двох гравців...",
  options: [
  "Самостійне просування",
  "Поділився одним квестом",
@@ -1782,7 +1782,7 @@ ServerScriptService
  {
  id: "q4",
  type: "multiple_choice",
- question: "Окремі Scripts допомагають…",
+ question: "Окремі Scripts допомагають...",
  options: [
  "Ремонтопридатність",
  "Лише відставання",
@@ -1795,7 +1795,7 @@ ServerScriptService
  {
  id: "q5",
  type: "multiple_choice",
- question: "Patrol NPC додає…",
+ question: "Patrol NPC додає...",
  options: [
  "Жива атмосфера",
  "Ціни магазину",
@@ -1808,7 +1808,7 @@ ServerScriptService
  {
  id: "q6",
  type: "multiple_choice",
- question: "Модуль 8 зберегти назву…",
+ question: "Модуль 8 зберегти назву...",
  options: [
  "Модуль 8 - Місце проживання",
  "Магазин працює",
@@ -1821,7 +1821,7 @@ ServerScriptService
  {
  id: "q7",
  type: "multiple_choice",
- question: "Контрольна точка має пріоритет…",
+ question: "Контрольна точка має пріоритет...",
  options: [
  "Чіткий потік і надійність",
  "Більшість можливих ворогів",
@@ -1834,7 +1834,7 @@ ServerScriptService
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 8.6 завершується…",
+ question: "Урок 8.6 завершується...",
  options: [
  "Модуль 8 Розумна гра",
  "Модуль 12",
@@ -1847,7 +1847,7 @@ ServerScriptService
  {
  id: "q9",
  type: "multiple_choice",
- question: "Довідник повинен згадати…",
+ question: "Довідник повинен згадати...",
  options: [
  "Мета квесту в діалозі",
  "IP сервера",
@@ -1860,7 +1860,7 @@ ServerScriptService
  {
  id: "q10",
  type: "multiple_choice",
- question: "Ворог поблизу квесту має бути…",
+ question: "Ворог поблизу квесту має бути...",
  options: [
  "Справедлива відстань - не блокує всі кристали",
  "На кожному кристалі",

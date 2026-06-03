@@ -22,7 +22,7 @@ export const ukLesson11 = {
  sections: [
  {
  title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `Ласкаво просимо до **Roblox Studio** - інструменту, який стоїть за обі, симуляторами, магнатами та світами рольових ігор, у які ви граєте щодня.
+ content: `Ласкаво просимо до **Roblox Studio** - інструменту, який стоїть за Obby, симуляторами, магнатами та світами рольових ігор, у які ви граєте щодня.
 
 **Хід уроку:**
 1. **Теорія (40 хв)** - прочитати кожен розділ; спробуйте ярлики в Studio під час роботи
@@ -98,10 +98,10 @@ export const ukLesson11 = {
 
 | Property | Значення |
 |----------|---------|
-| **Size** | Ширина X, висота Y, глибина Z (шипи) |
+| **Size** | Ширина X, висота Y, глибина Z (studs) |
 | **Position** | Розташування у світі |
 | **BrickColor** | Попередньо встановлені кольори |
-| **Material** | Візуальний стиль (метал, неон, дерево…) |
+| **Material** | Візуальний стиль (метал, неон, дерево...) |
 | **Anchored** | Якщо true, об’єкт ігнорує гравітацію |
 | **CanCollide** | Якщо true, гравці стикаються з ним |
 
@@ -133,7 +133,7 @@ export const ukLesson11 = {
 
 **Прозорість** (0-1): 0 = суцільний, 1 = невидимий. Використовуйте 0,3 для скла пізніше.
 
-**Вправа (5 хв):** Зробіть one Part **Neon** блакитного. Press Play в темному ClockTime, щоб побачити, як він світиться (Освітлення → ClockTime).`,
+**Вправа (5 хв):** Зробіть одну Part **Neon** блакитного кольору. Натисніть Play при темному ClockTime, щоб побачити, як вона світиться (Lighting → ClockTime).`,
  },
  {
  title: "Зберегти в хмарі Roblox",
@@ -174,14 +174,14 @@ export const ukLesson11 = {
 
 ### Part A - Фіолетова вежа (8 хв)
 1. Insert **Block** → Name:\`PurpleTower\` 2. Size:\` 8, 8, 8\`| BrickColor: фіолетовий | Material: гладкий пластик
-3. Якір: **true** | Розмістіть на опорній плиті
+3. Anchored: **true** | Розмістіть на опорній плиті
 
 ### Part B - Червона платформа (8 хв)
 1. Insert **Block** → Name:\`RedPlatform\` 2. Size:\` 20, 1, 4\`| BrickColor: яскраво-червоний | Material: Метал
-3. Якір: **true** | Використовуйте **W**, щоб позиціонувати як доріжку
+3. Anchored: **true** | Використовуйте **W**, щоб позиціонувати як доріжку
 
 ### Part C - Neon сфера (5 хв)
-1. Insert **Сфера** → Name:\`GlowOrb\` 2. Size:\` 3, 3, 3\`| Material: **Neon** | Якір: **true**
+1. Insert **Sphere** → Name:\`GlowOrb\` 2. Size:\` 3, 3, 3\`| Material: **Neon** | Anchored: **true**
 
 ### Перевірте та збережіть (4 хв)
 1. Натисніть **Play** - нічого не повинно впасти
@@ -304,7 +304,7 @@ export const ukLesson11 = {
  {
  id: "q9",
  type: "multiple_choice",
- question: "Червоний текст у виводі зазвичай означає…",
+ question: "Червоний текст у виводі зазвичай означає...",
  options: [
  "Помилка Script",
  "Повідомлення про успіх",
@@ -317,7 +317,7 @@ export const ukLesson11 = {
  {
  id: "q10",
  type: "multiple_choice",
- question: "Перед грою підлога та стіни зазвичай повинні бути…",
+ question: "Перед грою підлога та стіни зазвичай повинні бути...",
  options: [
  "Anchored помилковий",
  "Anchored true",
@@ -397,7 +397,7 @@ export const ukLesson12 = {
 
 **Size пензля:** великий пензель для форми, маленький пензель для деталей.
 
-**Вправа (8 хв):** Додайте один чистий пагорб на своєму острові. Зробіть його зручним для гри - не надто крутим, щоб character міг ходити.`,
+**Вправа (8 хв):** Додайте один чистий пагорб на своєму острові. Зробіть його зручним для гри - не надто крутим, щоб персонаж міг ходити.`,
  },
  {
  title: "Ліпити - Віднімати (вирізати)",
@@ -452,14 +452,14 @@ export const ukLesson12 = {
  correctApproach: "Видалити Terrain у Workspace, створити знову",
  },
  {
- mistake: "Місцевість виглядає як шипи",
+ mistake: "Рельєф виглядає занадто гострим",
  explanation: "Відніміть/додайте без згладжування.",
  correctApproach: "Використовуйте Smooth Brush по всьому острову",
  },
  {
  mistake: "У режимі редагування вода виглядає статично",
  explanation: "Анімація часто відображається лише в Play.",
- correctApproach: "Press Play, щоб переглянути рух води",
+ correctApproach: "Натисніть Play, щоб переглянути рух води",
  },
  ],
  summary: "Ви можете створювати острів, ліпити пагорби й озера, плавні схили та малювати реалістичні матеріали - основу більшості відкритих карт Roblox.",
@@ -487,7 +487,7 @@ export const ukLesson12 = {
  {
  id: "q1",
  type: "multiple_choice",
- question: "Місцевість найкраща для…",
+ question: "Місцевість найкраща для...",
  options: [
  "Меню інтерфейсу користувача",
  "Природні пагорби та озера",
@@ -526,7 +526,7 @@ export const ukLesson12 = {
  {
  id: "q4",
  type: "multiple_choice",
- question: "Гладкий допомагає…",
+ question: "Гладкий допомагає...",
  options: [
  "Додайте Scripts",
  "Пом'якшити нерівні краї",
@@ -539,7 +539,7 @@ export const ukLesson12 = {
  {
  id: "q5",
  type: "multiple_choice",
- question: "Піщаний матеріал зазвичай укладається…",
+ question: "Піщаний матеріал зазвичай укладається...",
  options: [
  "На гірських вершинах",
  "На пляжах і берегах",
@@ -552,7 +552,7 @@ export const ukLesson12 = {
  {
  id: "q6",
  type: "multiple_choice",
- question: "Рекомендований біом для уроку 1.2…",
+ question: "Рекомендований біом для уроку 1.2...",
  options: [
  "Тільки печери",
  "острови",
@@ -565,7 +565,7 @@ export const ukLesson12 = {
  {
  id: "q7",
  type: "multiple_choice",
- question: "Якщо Generate не вдається, спочатку спробуйте…",
+ question: "Якщо Generate не вдається, спочатку спробуйте...",
  options: [
  "Перевстановіть Windows",
  "Видалити стару місцевість",
@@ -591,7 +591,7 @@ export const ukLesson12 = {
  {
  id: "q9",
  type: "multiple_choice",
- question: "Ctrl+Z після невдалого створення…",
+ question: "Ctrl+Z після невдалого створення...",
  options: [
  "Видаляє ваш обліковий запис",
  "Скасовує генерацію",
@@ -779,7 +779,7 @@ export const ukLesson13 = {
  {
  id: "q3",
  type: "multiple_choice",
- question: "Ctrl+G зазвичай…",
+ question: "Ctrl+G зазвичай...",
  options: [
  "Групує виділення в model",
  "Видаляє Workspace",
@@ -792,7 +792,7 @@ export const ukLesson13 = {
  {
  id: "q4",
  type: "multiple_choice",
- question: "Точні координати редагуються в…",
+ question: "Точні координати редагуються в...",
  options: [
  "Output",
  "Properties",
@@ -805,7 +805,7 @@ export const ukLesson13 = {
  {
  id: "q5",
  type: "multiple_choice",
- question: "Прохідні дошки зазвичай мають…",
+ question: "Прохідні дошки зазвичай мають...",
  options: [
  "Anchored true, CanCollide true",
  "Тільки прив’язаний false",
@@ -844,7 +844,7 @@ export const ukLesson13 = {
  {
  id: "q8",
  type: "multiple_choice",
- question: "Parts всередині model є…",
+ question: "Parts всередині model є...",
  options: [
  "Діти model",
  "Поза робочим простором",
@@ -870,7 +870,7 @@ export const ukLesson13 = {
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 1.3 зберегти пропозицію імені…",
+ question: "Урок 1.3 зберегти пропозицію імені...",
  options: [
  "Урок 1.3 - Острівний док",
  "Без назви",
@@ -1053,12 +1053,12 @@ end
 2. Створити Folder\`Interactives\`у Workspace
 
 ### Part A - Червона кнопка (8 хв)
-1. Insert **Block** → Name:\`ClickButton_Red\`| BrickColor: яскраво-червоний | Якір: **true**
+1. Insert **Block** → Name:\`ClickButton_Red\`| BrickColor: яскраво-червоний | Anchored: **true**
 2. Insert **ClickDetector** + **Script** (шаблон із теорії)
 3. Після натискання: увімкніть **Яскраво-зелений** +\`print\`ім'я гравця
 
 ### Part B - Синій кристал (8 хв)
-1. Insert **Сфера** → Name:\`ClickCrystal_Blue\`| Material: **Neon** | Якір: **true**
+1. Insert **Sphere** → Name:\`ClickCrystal_Blue\`| Material: **Neon** | Anchored: **true**
 2. ClickDetector + Script - при натисканні: **Яскраво-жовтий** + друк повідомлення
 3. Додайте дочірній елемент **Звук** за бажанням
 
@@ -1083,7 +1083,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "Для кнопки, яку бачать усі, використовуйте…",
+ question: "Для кнопки, яку бачать усі, використовуйте...",
  options: [
  "LocalScript у StarterPlayer",
  "Script всередині Parts",
@@ -1096,7 +1096,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "ClickDetector має бути…",
+ question: "ClickDetector має бути...",
  options: [
  "Дочірній елемент Parts, яку ви клацаєте",
  "Дитина освітлення",
@@ -1122,7 +1122,7 @@ end
  {
  id: "q4",
  type: "multiple_choice",
- question: "MouseClick запускається, коли…",
+ question: "MouseClick запускається, коли...",
  options: [
  "Ви зберігаєте гру",
  "Гравець натискає партію в грі",
@@ -1161,7 +1161,7 @@ end
  {
  id: "q7",
  type: "multiple_choice",
- question: "Керує MaxActivationDistance…",
+ question: "Керує MaxActivationDistance...",
  options: [
  "Колір Parts",
  "Як далеко працюють кліки",
@@ -1174,7 +1174,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "Червоний вихідний текст зазвичай означає…",
+ question: "Червоний вихідний текст зазвичай означає...",
  options: [
  "Успіх",
  "Помилка Script",
@@ -1187,7 +1187,7 @@ end
  {
  id: "q9",
  type: "multiple_choice",
- question: "BrickColor.new(\"Яскраво-зелений\")…",
+ question: "BrickColor.new(\"Яскраво-зелений\")...",
  options: [
  "Видаляє Part",
  "Встановлює колір Parts",
@@ -1200,7 +1200,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 1.4 зберегти назву…",
+ question: "Урок 1.4 зберегти назву...",
  options: [
  "Урок 1.4 - Магія клацання",
  "Без назви",
@@ -1267,7 +1267,7 @@ export const ukLesson15 = {
 
 Name звучить чітко:\`Ambient_Waves\`,\`Dock_Creak\`,\`Click_Chime\`.
 
-**Вправа (6 хв):** Додавання петлі\`Ambient_Waves\`у Workspace. Press Play і слухайте під час руху.`,
+**Вправа (6 хв):** Додавання петлі\`Ambient_Waves\`у Workspace. Натисніть Play і слухайте під час руху.`,
  },
  {
  title: "Освітлення - час доби",
@@ -1289,7 +1289,7 @@ Name звучить чітко:\`Ambient_Waves\`,\`Dock_Creak\`,\`Click_Chime\`.
  },
  {
  title: "Атмосфера - кінематографічний серпанок",
- content: `Клацніть правою кнопкою миші **Освітлення** → Insert **Атмосфера**.
+ content: `Клацніть правою кнопкою миші **Освітлення** → Insert **Atmosphere**.
 
 | Property | Стартові значення |
 |----------|----------------|
@@ -1298,7 +1298,7 @@ Name звучить чітко:\`Ambient_Waves\`,\`Dock_Creak\`,\`Click_Chime\`.
 | **Колір** | Ніжний помаранчевий/рожевий на заході |
 | **Розпад** | Злегка фіолетовий/блакитний горизонт |
 
-Атмосфера робить віддалену місцевість м’якшою - професійні обі використовують це на демонстраційних картах.
+Атмосфера робить віддалену місцевість м’якшою - професійні Obby використовують це на демо-картах.
 
 **Попередження: ** щільність вище\`0.6\`може лагати на слабких ПК - починайте з низького.`,
  },
@@ -1370,11 +1370,11 @@ end)
  description: `**Мета:** Єдиний цілісний настрій заходу сонця зі звуком.
 
 ### Part A - Навколишнє аудіо (7 хв)
-1. Insert **Звук** у Робочу область → Name:\`Ambient_Waves\` 2. SoundId: океан або природа з Toolbox | обсяг:\` 0.35\`| Зациклено: **true** | Грає: **true**
+1. Insert **Sound** у Workspace → Name:\`Ambient_Waves\` 2. SoundId: океан або природа з Toolbox | обсяг:\` 0.35\`| Зациклено: **true** | Грає: **true**
 
 ### Part B - Освітлення та атмосфера (8 хв)
 1. Виберіть **Освітлення** → Час:\`17.5\`| Яскравість:\` 2\`| GlobalShadows: **true**
-2. Insert **Атмосферу** під Освітлення | Щільність:\`0.35\`| теплий відтінок кольору
+2. Insert **Atmosphere** під Lighting | Щільність:\`0.35\`| теплий відтінок кольору
 3. **Play** - ікру → док → ватерлінія
 
 ### Part C - 3D звук док-станції (6 хв)
@@ -1411,7 +1411,7 @@ end)
  {
  id: "q2",
  type: "multiple_choice",
- question: "ClockTime 17.5 найближче до…",
+ question: "ClockTime 17.5 найближче до...",
  options: [
  "опівночі",
  "Захід сонця",
@@ -1424,7 +1424,7 @@ end)
  {
  id: "q3",
  type: "multiple_choice",
- question: "Керує щільністю атмосфери…",
+ question: "Керує щільністю атмосфери...",
  options: [
  "Швидкість скрипта",
  "Товщина туману/серпанку",
@@ -1450,7 +1450,7 @@ end)
  {
  id: "q5",
  type: "multiple_choice",
- question: "GlobalShadows true дає…",
+ question: "GlobalShadows true дає...",
  options: [
  "Голосніше аудіо",
  "Більш реалістичні тіні",
@@ -1463,7 +1463,7 @@ end)
  {
  id: "q6",
  type: "multiple_choice",
- question: "Гучність навколишнього середовища зазвичай має бути…",
+ question: "Гучність навколишнього середовища зазвичай має бути...",
  options: [
  "1.0 завжди",
  "Низький (0,25-0,45)",
@@ -1489,7 +1489,7 @@ end)
  {
  id: "q8",
  type: "multiple_choice",
- question: "Освітлення живе в Explorer під…",
+ question: "Освітлення живе в Explorer під...",
  options: [
  "Тільки робочий простір",
  "Служба освітлення",
@@ -1502,7 +1502,7 @@ end)
  {
  id: "q9",
  type: "multiple_choice",
- question: "Немає звуку - спочатку перевірте…",
+ question: "Немає звуку - спочатку перевірте...",
  options: [
  "Дійсний ідентифікатор звуку та гучність > 0",
  "Видалити всі Scripts",
@@ -1515,7 +1515,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 1.5 зберегти назву…",
+ question: "Урок 1.5 зберегти назву...",
  options: [
  "Урок 1.5 - Атмосфера острова",
  "Натисніть Магія",
@@ -1582,7 +1582,7 @@ export const ukLesson16 = {
 - [ ] Усі статичні Parts **Anchored true**
 
 **Взаємодія**
-- [ ] **3** інтерактивні елементи з різними ефектами (колір, розмір, звук…)
+- [ ] **3** інтерактивні елементи з різними ефектами (колір, розмір, звук...)
 - [ ] **Output** показує ім’я гравця принаймні за один клік
 
 **Настрій**
@@ -1676,7 +1676,7 @@ local sound = part:FindFirstChild("ClickSound")
 if sound then
  sound:Play()
 end
-\`\`\`- Якщо дитина пропала в Explorer,\`FindFirstChild\`повертається\`nil\`-\`if sound then\`запобігає червоним помилкам у виводі
+\`\`\`- Якщо дочірній об'єкт зник у Explorer, \`FindFirstChild\` повертає \`nil\` - \`if sound then\` запобігає червоним помилкам у Output
 
 **Міні-вправа (7 хв):** у будь-якому Scripts від 1.4 дод\`print("Condition test")\`і\`if true then print("if works") end\`. Play → підтвердити. Результат показує обидва рядки.`,
  },
@@ -1763,7 +1763,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "Основна мета контрольної точки модуля 1 - це…",
+ question: "Основна мета контрольної точки модуля 1 - це...",
  options: [
  "Вивчайте лише ландшафт",
  "Відполіруйте один повний острівний центр",
@@ -1776,7 +1776,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "SpawnLocation має бути розміщено…",
+ question: "SpawnLocation має бути розміщено...",
  options: [
  "Під водою",
  "На безпечній рівній землі",
@@ -1789,7 +1789,7 @@ end
  {
  id: "q3",
  type: "multiple_choice",
- question: "Нейтральне значення true на SpawnLocation означає…",
+ question: "Нейтральне значення true на SpawnLocation означає...",
  options: [
  "Відсутність нересту",
  "Будь-яка команда може породжуватися",
@@ -1815,7 +1815,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "Організований док використовує…",
+ question: "Організований док використовує...",
  options: [
  "Folder і model",
  "Лише Parts без назв",
@@ -1828,7 +1828,7 @@ end
  {
  id: "q6",
  type: "multiple_choice",
- question: "Навколишній звук має бути…",
+ question: "Навколишній звук має бути...",
  options: [
  "Дуже тихий і зациклений",
  "Том 2.0 тільки один раз",
@@ -1841,7 +1841,7 @@ end
  {
  id: "q7",
  type: "multiple_choice",
- question: "Перш ніж позначити завершення, ви повинні…",
+ question: "Перш ніж позначити завершення, ви повинні...",
  options: [
  "Повна петля ходьби",
  "Видалити місцевість",
@@ -1854,7 +1854,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "Модуль 2 додасть переважно…",
+ question: "Модуль 2 додасть переважно...",
  options: [
  "Обби небезпеки і контрольні точки",
  "Тільки скайбокси",
@@ -1867,7 +1867,7 @@ end
  {
  id: "q9",
  type: "multiple_choice",
- question: "Остаточна назва збереження для модуля 1…",
+ question: "Остаточна назва збереження для модуля 1...",
  options: [
  "Модуль 1 - Живий острів",
  "Без назви",
@@ -1880,7 +1880,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Ctrl+Shift+F у Explorer допомагає…",
+ question: "Ctrl+Shift+F у Explorer допомагає...",
  options: [
  "Знайди предмети за назвами",
  "Летіть швидше",

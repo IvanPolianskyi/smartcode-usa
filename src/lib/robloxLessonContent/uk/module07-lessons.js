@@ -185,7 +185,7 @@ end)
  {
  id: "q1",
  type: "multiple_choice",
- question: "Сервер є авторитетним для…",
+ question: "Сервер є авторитетним для...",
  options: [
  "Спільний ігровий стан, як монети",
  "Тільки камера",
@@ -211,7 +211,7 @@ end)
  {
  id: "q3",
  type: "multiple_choice",
- question: "Клієнт запитує, сервер вирішує, означає…",
+ question: "Клієнт запитує, сервер вирішує, означає...",
  options: [
  "Сервер перевіряє запити",
  "Клієнт завжди у виграші",
@@ -224,7 +224,7 @@ end)
  {
  id: "q4",
  type: "multiple_choice",
- question: "Спільні пульти дистанційного керування входять…",
+ question: "Спільні пульти дистанційного керування входять...",
  options: [
  "ReplicatedStorage",
  "Тільки ServerStorage",
@@ -237,7 +237,7 @@ end)
  {
  id: "q5",
  type: "multiple_choice",
- question: "FireServer надсилає…",
+ question: "FireServer надсилає...",
  options: [
  "Від клієнта до сервера",
  "Лише сервер для клієнта",
@@ -263,7 +263,7 @@ end)
  {
  id: "q7",
  type: "multiple_choice",
- question: "Тема модуля 7…",
+ question: "Тема модуля 7...",
  options: [
  "Мережа та магазин / мережа",
  "Тільки місцевість",
@@ -276,7 +276,7 @@ end)
  {
  id: "q8",
  type: "multiple_choice",
- question: "Script у ServerScriptService працює на…",
+ question: "Script у ServerScriptService працює на...",
  options: [
  "Сервер",
  "Клієнтський HUD",
@@ -289,7 +289,7 @@ end)
  {
  id: "q9",
  type: "multiple_choice",
- question: "Демонстрація Ping доводить…",
+ question: "Демонстрація Ping доводить...",
  options: [
  "Клієнт і сервер можуть спілкуватися",
  "DataStore працює",
@@ -302,7 +302,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 7.1 зберегти назву…",
+ question: "Урок 7.1 зберегти назву...",
  options: [
  "Урок 7.1 - Два світи",
  "Магазин працює",
@@ -503,7 +503,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "RemoteEvent - це…",
+ question: "RemoteEvent - це...",
  options: [
  "Односторонній обмін повідомленнями",
  "Лише синхронне повернення",
@@ -516,7 +516,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "Цілі FireClient…",
+ question: "Цілі FireClient...",
  options: [
  "Один конкретний гравець",
  "Тільки сервер",
@@ -529,7 +529,7 @@ end
  {
  id: "q3",
  type: "multiple_choice",
- question: "Перевірте itemId за допомогою…",
+ question: "Перевірте itemId за допомогою...",
  options: [
  "type(itemId) == \"рядок\"",
  "Довірений клієнт",
@@ -542,7 +542,7 @@ end
  {
  id: "q4",
  type: "multiple_choice",
- question: "ActionResult має бути запущено з…",
+ question: "ActionResult має бути запущено з...",
  options: [
  "Сервер після обробки",
  "Клієнт перед сервером",
@@ -568,7 +568,7 @@ end
  {
  id: "q6",
  type: "multiple_choice",
- question: "FireServer викликається з…",
+ question: "FireServer викликається з...",
  options: [
  "LocalScript",
  "Лише server Script",
@@ -581,7 +581,7 @@ end
  {
  id: "q7",
  type: "multiple_choice",
- question: "Передчасне повернення через погані дані…",
+ question: "Передчасне повернення через погані дані...",
  options: [
  "Зберігає обробники читабельними",
  "Видаляє гравця",
@@ -594,7 +594,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "Використано два пульти, тому що…",
+ question: "Використано два пульти, тому що...",
  options: [
  "Запит і результат є окремими потоками",
  "Одного завжди достатньо",
@@ -620,7 +620,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 7.2 зберегти назву…",
+ question: "Урок 7.2 зберегти назву...",
  options: [
  "Урок 7.2 - RemoteEvent",
  "Два світи",
@@ -811,7 +811,7 @@ hookBuy(script.Parent.ItemList.Item_sword_basic.BuyButton, "sword_basic")
  {
  id: "q1",
  type: "multiple_choice",
- question: "Інтерфейс магазину живе в…",
+ question: "Інтерфейс магазину живе в...",
  options: [
  "StarterGui ScreenGui",
  "ServerStorage",
@@ -824,7 +824,7 @@ hookBuy(script.Parent.ItemList.Item_sword_basic.BuyButton, "sword_basic")
  {
  id: "q2",
  type: "multiple_choice",
- question: "Кнопка «Купити» повинна FireServer з…",
+ question: "Кнопка «Купити» повинна FireServer з...",
  options: [
  "рядок ідентифікатора елемента",
  "Лише ім'я гравця",
@@ -837,7 +837,7 @@ hookBuy(script.Parent.ItemList.Item_sword_basic.BuyButton, "sword_basic")
  {
  id: "q3",
  type: "multiple_choice",
- question: "Відображати ціни на інтерфейсі користувача в 7.3…",
+ question: "Відображати ціни на інтерфейсі користувача в 7.3...",
  options: [
  "Попередній перегляд до перевірки сервера в 7.4",
  "Остаточний авторитет",
@@ -863,7 +863,7 @@ hookBuy(script.Parent.ItemList.Item_sword_basic.BuyButton, "sword_basic")
  {
  id: "q5",
  type: "multiple_choice",
- question: "Ненадовго вимкніть кнопку, щоб…",
+ question: "Ненадовго вимкніть кнопку, щоб...",
  options: [
  "Зменште подвійне клацання спаму",
  "Видалити елемент",
@@ -876,7 +876,7 @@ hookBuy(script.Parent.ItemList.Item_sword_basic.BuyButton, "sword_basic")
  {
  id: "q6",
  type: "multiple_choice",
- question: "LocalScript обробляє…",
+ question: "LocalScript обробляє...",
  options: [
  "Кліки та оновлення міток",
  "Монетний відрахування",
@@ -889,7 +889,7 @@ hookBuy(script.Parent.ItemList.Item_sword_basic.BuyButton, "sword_basic")
  {
  id: "q7",
  type: "multiple_choice",
- question: "ідентифікатори елементів мають бути…",
+ question: "ідентифікатори елементів мають бути...",
  options: [
  "Послідовні рядки, такі як sword_basic",
  "Випадкове кожне клацання",
@@ -902,7 +902,7 @@ hookBuy(script.Parent.ItemList.Item_sword_basic.BuyButton, "sword_basic")
  {
  id: "q8",
  type: "multiple_choice",
- question: "Для уроку 7.3 потрібні пульти від…",
+ question: "Для уроку 7.3 потрібні пульти від...",
  options: [
  "Урок 7.2",
  "Тільки урок 1.1",
@@ -915,7 +915,7 @@ hookBuy(script.Parent.ItemList.Item_sword_basic.BuyButton, "sword_basic")
  {
  id: "q9",
  type: "multiple_choice",
- question: "Серверна логіка coin з’являється…",
+ question: "Серверна логіка coin з’являється...",
  options: [
  "Урок 7.4",
  "Урок 7.1",
@@ -928,7 +928,7 @@ hookBuy(script.Parent.ItemList.Item_sword_basic.BuyButton, "sword_basic")
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 7.3 зберегти назву…",
+ question: "Урок 7.3 зберегти назву...",
  options: [
  "Урок 7.3 - Інтерфейс користувача магазину",
  "Магазин працює",
@@ -1160,7 +1160,7 @@ tool.Parent = player.Backpack
  {
  id: "q2",
  type: "multiple_choice",
- question: "Клієнт повинен надіслати…",
+ question: "Клієнт повинен надіслати...",
  options: [
  "лише ідентифікатор товару",
  "Ціна і монети",
@@ -1186,7 +1186,7 @@ tool.Parent = player.Backpack
  {
  id: "q4",
  type: "multiple_choice",
- question: "Монети IntValue належать до…",
+ question: "Монети IntValue належать до...",
  options: [
  "лідерська статистика на сервері",
  "Освітлення",
@@ -1199,7 +1199,7 @@ tool.Parent = player.Backpack
  {
  id: "q5",
  type: "multiple_choice",
- question: "Інструмент надання означає клонування до…",
+ question: "Інструмент надання означає клонування до...",
  options: [
  "плеєр.Рюкзак",
  "Рельєф місцевості",
@@ -1238,7 +1238,7 @@ tool.Parent = player.Backpack
  {
  id: "q8",
  type: "multiple_choice",
- question: "PurchaseResult має містити…",
+ question: "PurchaseResult має містити...",
  options: [
  "успіх, повідомлення, новий баланс",
  "Тільки колір",
@@ -1264,7 +1264,7 @@ tool.Parent = player.Backpack
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 7.4 зберегти назву…",
+ question: "Урок 7.4 зберегти назву...",
  options: [
  "Урок 7.4 - Магазин серверів",
  "Інтерфейс магазину",
@@ -1458,7 +1458,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "RemoteFunction призначений для…",
+ question: "RemoteFunction призначений для...",
  options: [
  "Заявка з негайним поверненням",
  "Вогонь і забудь тільки",
@@ -1471,7 +1471,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "InvokeServer викликається з…",
+ question: "InvokeServer викликається з...",
  options: [
  "LocalScript",
  "Серверний скрипт",
@@ -1497,7 +1497,7 @@ end
  {
  id: "q4",
  type: "multiple_choice",
- question: "При покупці варто використовувати…",
+ question: "При покупці варто використовувати...",
  options: [
  "RemoteEvent RequestPurchase",
  "RemoteFunction кожен клік",
@@ -1510,7 +1510,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "Каталог має повернутися…",
+ question: "Каталог має повернутися...",
  options: [
  "тільки id, назва, ціна",
  "Повні адмін ключі",
@@ -1523,7 +1523,7 @@ end
  {
  id: "q6",
  type: "multiple_choice",
- question: "pcall навколо InvokeServer…",
+ question: "pcall навколо InvokeServer...",
  options: [
  "Витончено ставиться до невдач",
  "Видаляє сервер",
@@ -1536,7 +1536,7 @@ end
  {
  id: "q7",
  type: "multiple_choice",
- question: "Кожен фрейм InvokeServer поганий, оскільки…",
+ question: "Кожен фрейм InvokeServer поганий, оскільки...",
  options: [
  "Викликає відставання",
  "Покращує FPS",
@@ -1575,7 +1575,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 7.5 зберегти назву…",
+ question: "Урок 7.5 зберегти назву...",
  options: [
  "Урок 7.5 - RemoteFunction",
  "Магазин серверів",
@@ -1751,7 +1751,7 @@ StarterGui/ShopGui
  {
  id: "q1",
  type: "multiple_choice",
- question: "Shop Works включає…",
+ question: "Shop Works включає...",
  options: [
  "Інтерфейс користувача + події + серверний магазин + функція каталогу",
  "Лише інтерфейс користувача",
@@ -1764,7 +1764,7 @@ StarterGui/ShopGui
  {
  id: "q2",
  type: "multiple_choice",
- question: "Тест для двох гравців підтверджує…",
+ question: "Тест для двох гравців підтверджує...",
  options: [
  "Незалежні баланси монет",
  "Поділився одним гаманцем",
@@ -1790,7 +1790,7 @@ StarterGui/ShopGui
  {
  id: "q4",
  type: "multiple_choice",
- question: "Підроблений ідентифікатор товару повинен…",
+ question: "Підроблений ідентифікатор товару повинен...",
  options: [
  "Бути відхилено сервером",
  "Безкоштовний інструмент",
@@ -1803,7 +1803,7 @@ StarterGui/ShopGui
  {
  id: "q5",
  type: "multiple_choice",
- question: "GetShopCatalog використовує…",
+ question: "GetShopCatalog використовує...",
  options: [
  "RemoteFunction",
  "Тільки місцевість",
@@ -1816,7 +1816,7 @@ StarterGui/ShopGui
  {
  id: "q6",
  type: "multiple_choice",
- question: "RequestPurchase використовує…",
+ question: "RequestPurchase використовує...",
  options: [
  "RemoteEvent",
  "RemoteFunction на кадр",
@@ -1829,7 +1829,7 @@ StarterGui/ShopGui
  {
  id: "q7",
  type: "multiple_choice",
- question: "Модуль 7 зберегти назву…",
+ question: "Модуль 7 зберегти назву...",
  options: [
  "Модуль 7 - Цехові роботи",
  "Гонка розпочата",
@@ -1842,7 +1842,7 @@ StarterGui/ShopGui
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 7.6 завершується…",
+ question: "Урок 7.6 завершується...",
  options: [
  "Модуль 7 Мережа та магазин",
  "Модуль 12",
@@ -1855,7 +1855,7 @@ StarterGui/ShopGui
  {
  id: "q9",
  type: "multiple_choice",
- question: "Тема наступного модуля…",
+ question: "Тема наступного модуля...",
  options: [
  "Розумна гра / NPC",
  "Тільки гонки",
@@ -1868,7 +1868,7 @@ StarterGui/ShopGui
  {
  id: "q10",
  type: "multiple_choice",
- question: "Контрольна точка має пріоритет…",
+ question: "Контрольна точка має пріоритет...",
  options: [
  "Надійність над додатковими функціями",
  "Більшість можливих елементів",

@@ -431,6 +431,8 @@
       "errorPasswordMismatch": "Passwords do not match",
       "errorPasswordLength": "Password must be at least 6 characters",
       "errorPhone": "Please enter the full phone number",
+      "errorAcceptPrivacy": "Please confirm that you have read the Privacy Policy",
+      "privacyCheckbox": "I confirm that I have read the <privacy>Privacy Policy</privacy>",
       "error": "Registration failed. Please try again.",
       "footer": "Already registered?",
       "footerLink": "Sign In"

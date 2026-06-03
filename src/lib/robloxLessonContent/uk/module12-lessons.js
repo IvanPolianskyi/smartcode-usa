@@ -184,7 +184,7 @@ Spawn → explore hub → talk to NPC / start quest
  {
  id: "q3",
  type: "multiple_choice",
- question: "Основний цикл описує…",
+ question: "Основний цикл описує...",
  options: [
  "Повторіть дії гравця",
  "IP сервера",
@@ -197,7 +197,7 @@ Spawn → explore hub → talk to NPC / start quest
  {
  id: "q4",
  type: "multiple_choice",
- question: "30% буфер для…",
+ question: "30% буфер для...",
  options: [
  "Несподівані затримки",
  "Видалення GDD",
@@ -210,7 +210,7 @@ Spawn → explore hub → talk to NPC / start quest
  {
  id: "q5",
  type: "multiple_choice",
- question: "Необхідне проти того, що приємно мати…",
+ question: "Необхідне проти того, що приємно мати...",
  options: [
  "Надає пріоритет доставці",
  "Те саме",
@@ -223,7 +223,7 @@ Spawn → explore hub → talk to NPC / start quest
  {
  id: "q6",
  type: "multiple_choice",
- question: "Модуль 12 - це…",
+ question: "Модуль 12 - це...",
  options: [
  "День випуску",
  "Тільки місцевість",
@@ -236,7 +236,7 @@ Spawn → explore hub → talk to NPC / start quest
  {
  id: "q7",
  type: "multiple_choice",
- question: "Висота має бути…",
+ question: "Висота має бути...",
  options: [
  "Одне захоплююче речення",
  "50 сторінок",
@@ -249,7 +249,7 @@ Spawn → explore hub → talk to NPC / start quest
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 12.2 - це…",
+ question: "Урок 12.2 - це...",
  options: [
  "Складання систем разом",
  "Тільки публікувати",
@@ -262,7 +262,7 @@ Spawn → explore hub → talk to NPC / start quest
  {
  id: "q9",
  type: "multiple_choice",
- question: "Закінчена невелика гра перемагає…",
+ question: "Закінчена невелика гра перемагає...",
  options: [
  "Гігантський недобудова",
  "Без плану",
@@ -275,7 +275,7 @@ Spawn → explore hub → talk to NPC / start quest
  {
  id: "q10",
  type: "multiple_choice",
- question: "Результатом уроку 12.1 є…",
+ question: "Результатом уроку 12.1 є...",
  options: [
  "Фінальний проект GDD",
  "Опублікована гра",
@@ -433,7 +433,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "Порядок інтеграції починається з…",
+ question: "Порядок інтеграції починається з...",
  options: [
  "Завантаження та чиста структура",
  "Опублікуйте спочатку",
@@ -446,7 +446,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "Заморожування функції означає…",
+ question: "Заморожування функції означає...",
  options: [
  "Немає нових функцій під час злиття",
  "Видалити всі Scripts",
@@ -459,7 +459,7 @@ end
  {
  id: "q3",
  type: "multiple_choice",
- question: "One ItemDatabase запобігає...",
+ question: "Один ItemDatabase запобігає...",
  options: [
  "Дрейф ідентифікатора магазину/інвентаризації",
  "відставання",
@@ -472,7 +472,7 @@ end
  {
  id: "q4",
  type: "multiple_choice",
- question: "resetProfile допомагає…",
+ question: "resetProfile допомагає...",
  options: [
  "Повторіть інтеграційні тести",
  "Банити гравців",
@@ -485,7 +485,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "Виправлення налагодження конфліктів…",
+ question: "Виправлення налагодження конфліктів...",
  options: [
  "Основна причина, а не симптом",
  "нічого",
@@ -498,7 +498,7 @@ end
  {
  id: "q6",
  type: "multiple_choice",
- question: "Випробування золотого шляху…",
+ question: "Випробування золотого шляху...",
  options: [
  "Поява повного циклу для винагороди",
  "Тільки Explorer",
@@ -524,7 +524,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 12.3 - це…",
+ question: "Урок 12.3 - це...",
  options: [
  "Ігрове тестування",
  "Опублікувати",
@@ -537,7 +537,7 @@ end
  {
  id: "q9",
  type: "multiple_choice",
- question: "Тест повторного приєднання підтверджує…",
+ question: "Тест повторного приєднання підтверджує...",
  options: [
  "Наполегливість працює",
  "колір інтерфейсу",
@@ -550,7 +550,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 12.2 зберегти назву…",
+ question: "Урок 12.2 зберегти назву...",
  options: [
  "Урок 12.2 - Остаточне інтегрування",
  "ДЕНЬ ВІТРИНИ",
@@ -700,7 +700,7 @@ export const ukLesson123 = {
  {
  id: "q1",
  type: "multiple_choice",
- question: "Проблеми P0 є…",
+ question: "Проблеми P0 є...",
  options: [
  "Критичні блокувальники запуску",
  "Тільки косметика",
@@ -726,7 +726,7 @@ export const ukLesson123 = {
  {
  id: "q3",
  type: "multiple_choice",
- question: "Три сеанси знаходять…",
+ question: "Три сеанси знаходять...",
  options: [
  "Повторювані візерунки",
  "нічого",
@@ -752,7 +752,7 @@ export const ukLesson123 = {
  {
  id: "q5",
  type: "multiple_choice",
- question: "Виправити пріоритет перед косметичним…",
+ question: "Виправити пріоритет перед косметичним...",
  options: [
  "Критичні та UX",
  "Перш за все кольори",
@@ -765,7 +765,7 @@ export const ukLesson123 = {
  {
  id: "q6",
  type: "multiple_choice",
- question: "Урок 12.3 готує до…",
+ question: "Урок 12.3 готує до...",
  options: [
  "Опублікувати в 12.4",
  "Лише GDD",
@@ -791,7 +791,7 @@ export const ukLesson123 = {
  {
  id: "q8",
  type: "multiple_choice",
- question: "Золотий шлях після виправлень…",
+ question: "Золотий шлях після виправлень...",
  options: [
  "Має пройти",
  "Додатково",
@@ -804,7 +804,7 @@ export const ukLesson123 = {
  {
  id: "q9",
  type: "multiple_choice",
- question: "Урок 12.4 охоплює…",
+ question: "Урок 12.4 охоплює...",
  options: [
  "Публікація в Roblox",
  "Тільки тестування",
@@ -817,7 +817,7 @@ export const ukLesson123 = {
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 12.3 зберегти назву…",
+ question: "Урок 12.3 зберегти назву...",
  options: [
  "Урок 12.3 - Playtest Pass",
  "Опубліковано",
@@ -979,7 +979,7 @@ Built in SmartCode Academy Roblox Studio course.
  {
  id: "q1",
  type: "multiple_choice",
- question: "Публікація включає…",
+ question: "Публікація включає...",
  options: [
  "Налаштування мініатюр піктограм метаданих",
  "Тільки код",
@@ -992,7 +992,7 @@ Built in SmartCode Academy Roblox Studio course.
  {
  id: "q2",
  type: "multiple_choice",
- question: "Опис повинен…",
+ question: "Опис повинен...",
  options: [
  "Відповідайте реальному геймплею",
  "Обіцяйте підроблені функції",
@@ -1005,7 +1005,7 @@ Built in SmartCode Academy Roblox Studio course.
  {
  id: "q3",
  type: "multiple_choice",
- question: "Значок повинен добре читатися…",
+ question: "Значок повинен добре читатися...",
  options: [
  "При невеликому розмірі телефону",
  "Тільки 4K",
@@ -1018,7 +1018,7 @@ Built in SmartCode Academy Roblox Studio course.
  {
  id: "q4",
  type: "multiple_choice",
- question: "Тест альтернативного облікового запису знаходить…",
+ question: "Тест альтернативного облікового запису знаходить...",
  options: [
  "Лише живі помилки",
  "нічого",
@@ -1031,7 +1031,7 @@ Built in SmartCode Academy Roblox Studio course.
  {
  id: "q5",
  type: "multiple_choice",
- question: "Ігри DataStore потребують…",
+ question: "Ігри DataStore потребують...",
  options: [
  "Служби API увімкнено",
  "Немає публікації",
@@ -1057,7 +1057,7 @@ Built in SmartCode Academy Roblox Studio course.
  {
  id: "q7",
  type: "multiple_choice",
- question: "Урок 12.5 - це…",
+ question: "Урок 12.5 - це...",
  options: [
  "Пост портфоліо",
  "Більше кодування",
@@ -1070,7 +1070,7 @@ Built in SmartCode Academy Roblox Studio course.
  {
  id: "q8",
  type: "multiple_choice",
- question: "Публічна публікація, коли…",
+ question: "Публічна публікація, коли...",
  options: [
  "Готовий до незнайомців",
  "Ніколи не тестувався",
@@ -1083,7 +1083,7 @@ Built in SmartCode Academy Roblox Studio course.
  {
  id: "q9",
  type: "multiple_choice",
- question: "Сервер перевіряє віддалені пристрої, оскільки…",
+ question: "Сервер перевіряє віддалені пристрої, оскільки...",
  options: [
  "Живі експлуататори існують",
  "Не потрібно",
@@ -1096,7 +1096,7 @@ Built in SmartCode Academy Roblox Studio course.
  {
  id: "q10",
  type: "multiple_choice",
- question: "Результатом уроку 12.4 є…",
+ question: "Результатом уроку 12.4 є...",
  options: [
  "Посилання на живу гру Roblox",
  "Лише GDD",
@@ -1261,7 +1261,7 @@ export const ukLesson125 = {
  {
  id: "q1",
  type: "multiple_choice",
- question: "Потужне портфоліо показує…",
+ question: "Потужне портфоліо показує...",
  options: [
  "Процес і системи не тільки скріншоти",
  "Тільки ажіотаж",
@@ -1274,7 +1274,7 @@ export const ukLesson125 = {
  {
  id: "q2",
  type: "multiple_choice",
- question: "У розділі «Найважче завдання» показано…",
+ question: "У розділі «Найважче завдання» показано...",
  options: [
  "Зростання та вирішення проблем",
  "нічого",
@@ -1287,7 +1287,7 @@ export const ukLesson125 = {
  {
  id: "q3",
  type: "multiple_choice",
- question: "Посилання для відтворення має…",
+ question: "Посилання для відтворення має...",
  options: [
  "Працює при натисканні",
  "Бути прихованим",
@@ -1300,7 +1300,7 @@ export const ukLesson125 = {
  {
  id: "q4",
  type: "multiple_choice",
- question: "Голос Devforum - це…",
+ question: "Голос Devforum - це...",
  options: [
  "Чіткий конкретний скромний",
  "Ажіотаж великими літерами",
@@ -1313,7 +1313,7 @@ export const ukLesson125 = {
  {
  id: "q5",
  type: "multiple_choice",
- question: "Виділіть 3 системи, щоб…",
+ question: "Виділіть 3 системи, щоб...",
  options: [
  "Показати технічну глибину",
  "Збентежити читача",
@@ -1339,7 +1339,7 @@ export const ukLesson125 = {
  {
  id: "q7",
  type: "multiple_choice",
- question: "Урок 12.6 - це…",
+ question: "Урок 12.6 - це...",
  options: [
  "ДЕНЬ ВІТРИНИ",
  "GDD",
@@ -1352,7 +1352,7 @@ export const ukLesson125 = {
  {
  id: "q8",
  type: "multiple_choice",
- question: "До/після допомагає…",
+ question: "До/після допомагає...",
  options: [
  "Показати прогрес",
  "відставання",
@@ -1365,7 +1365,7 @@ export const ukLesson125 = {
  {
  id: "q9",
  type: "multiple_choice",
- question: "Попросіть відгук наприкінці…",
+ question: "Попросіть відгук наприкінці...",
  options: [
  "Запрошує спільноту",
  "Потрібен Roblox",
@@ -1378,7 +1378,7 @@ export const ukLesson125 = {
  {
  id: "q10",
  type: "multiple_choice",
- question: "Результатом уроку 12.5 є…",
+ question: "Результатом уроку 12.5 є...",
  options: [
  "Проект допису портфоліо",
  "Нова гра",
@@ -1550,7 +1550,7 @@ export const ukLesson126 = {
  {
  id: "q2",
  type: "multiple_choice",
- question: "Резервне копіювання відео, якщо…",
+ question: "Резервне копіювання відео, якщо...",
  options: [
  "Жива демонстрація не вдається",
  "Ніколи",
@@ -1563,7 +1563,7 @@ export const ukLesson126 = {
  {
  id: "q3",
  type: "multiple_choice",
- question: "Три репетиції будують…",
+ question: "Три репетиції будують...",
  options: [
  "впевненість",
  "відставання",
@@ -1576,7 +1576,7 @@ export const ukLesson126 = {
  {
  id: "q4",
  type: "multiple_choice",
- question: "Системи глибокого занурення охоплюють…",
+ question: "Системи глибокого занурення охоплюють...",
  options: [
  "3 технічні моменти",
  "нічого",
@@ -1589,7 +1589,7 @@ export const ukLesson126 = {
  {
  id: "q5",
  type: "multiple_choice",
- question: "Дорожня карта ділиться…",
+ question: "Дорожня карта ділиться...",
  options: [
  "Майбутні оновлення",
  "Лише минуле",
@@ -1602,7 +1602,7 @@ export const ukLesson126 = {
  {
  id: "q6",
  type: "multiple_choice",
- question: "Курс має…",
+ question: "Курс має...",
  options: [
  "12 модулів 72 уроки",
  "1 урок",
@@ -1615,7 +1615,7 @@ export const ukLesson126 = {
  {
  id: "q7",
  type: "multiple_choice",
- question: "Завершіть чітким запитом про…",
+ question: "Завершіть чітким запитом про...",
  options: [
  "Відгуки або тестери",
  "Тільки гроші",
@@ -1628,7 +1628,7 @@ export const ukLesson126 = {
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 12.6 завершується…",
+ question: "Урок 12.6 завершується...",
  options: [
  "Весь курс Roblox EN rich path",
  "Тільки модуль 11",
@@ -1641,7 +1641,7 @@ export const ukLesson126 = {
  {
  id: "q9",
  type: "multiple_choice",
- question: "Історія виклику показує…",
+ question: "Історія виклику показує...",
  options: [
  "Ріст вирішення проблем",
  "Тільки хайп",
@@ -1654,7 +1654,7 @@ export const ukLesson126 = {
  {
  id: "q10",
  type: "multiple_choice",
- question: "Після демонстрації ви…",
+ question: "Після демонстрації ви...",
  options: [
  "Мислення творця, готового до запуску",
  "Зроблено назавжди без оновлень",

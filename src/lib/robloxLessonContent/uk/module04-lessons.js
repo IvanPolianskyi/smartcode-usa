@@ -167,7 +167,7 @@ TycoonAssets/ ← models you clone later
  {
  id: "q1",
  type: "multiple_choice",
- question: "Tycoon loop - це заробити → купити →…",
+ question: "Tycoon loop - це заробити → купити →...",
  options: [
  "Оновлення та розширення",
  "Видалити лише місцевість",
@@ -180,7 +180,7 @@ TycoonAssets/ ← models you clone later
  {
  id: "q2",
  type: "multiple_choice",
- question: "Folder PlotA містить…",
+ question: "Folder PlotA містить...",
  options: [
  "Макет магната для одного гравця",
  "Тільки небо",
@@ -193,7 +193,7 @@ TycoonAssets/ ← models you clone later
  {
  id: "q3",
  type: "multiple_choice",
- question: "CollectorZone перетворює…",
+ question: "CollectorZone перетворює...",
  options: [
  "Падіння до валюти",
  "Гравці на місцевості",
@@ -219,7 +219,7 @@ TycoonAssets/ ← models you clone later
  {
  id: "q5",
  type: "multiple_choice",
- question: "Зона BuyButtons для…",
+ question: "Зона BuyButtons для...",
  options: [
  "Придбання оновлень",
  "Вбивати блоки",
@@ -232,7 +232,7 @@ TycoonAssets/ ← models you clone later
  {
  id: "q6",
  type: "multiple_choice",
- question: "Конвеєрний шлях з’єднує…",
+ question: "Конвеєрний шлях з’єднує...",
  options: [
  "Крапельниця до колектора",
  "Tab to Output",
@@ -245,7 +245,7 @@ TycoonAssets/ ← models you clone later
  {
  id: "q7",
  type: "multiple_choice",
- question: "Зберігає Folders TycoonAssets…",
+ question: "Зберігає Folders TycoonAssets...",
  options: [
  "Багаторазові model",
  "Паролі гравців",
@@ -258,7 +258,7 @@ TycoonAssets/ ← models you clone later
  {
  id: "q8",
  type: "multiple_choice",
- question: "Сервер повинен володіти економікою, тому що…",
+ question: "Сервер повинен володіти економікою, тому що...",
  options: [
  "Запобігає обману",
  "Інтерфейс виглядає краще",
@@ -284,7 +284,7 @@ TycoonAssets/ ← models you clone later
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 4.1 зберегти назву…",
+ question: "Урок 4.1 зберегти назву...",
  options: [
  "Урок 4.1 - Змова магната",
  "Симулятор монет",
@@ -490,7 +490,7 @@ local ownerId = plot:FindFirstChild("OwnerUserId")
  {
  id: "q1",
  type: "multiple_choice",
- question: "TycoonCoin має бути Anchored…",
+ question: "TycoonCoin має бути Anchored...",
  options: [
  "помилковий",
  "true always",
@@ -529,7 +529,7 @@ local ownerId = plot:FindFirstChild("OwnerUserId")
  {
  id: "q4",
  type: "multiple_choice",
- question: "цикл while із task.wait…",
+ question: "цикл while із task.wait...",
  options: [
  "Повторює породження вічно",
  "Запускається один раз",
@@ -542,7 +542,7 @@ local ownerId = plot:FindFirstChild("OwnerUserId")
  {
  id: "q5",
  type: "multiple_choice",
- question: "SpawnPoint - це…",
+ question: "SpawnPoint - це...",
  options: [
  "Де з'являються монети",
  "Тільки породження гравців",
@@ -555,7 +555,7 @@ local ownerId = plot:FindFirstChild("OwnerUserId")
  {
  id: "q6",
  type: "multiple_choice",
- question: "COIN_VALUE = 1 означає…",
+ question: "COIN_VALUE = 1 означає...",
  options: [
  "Кожна монета дає 1 характеристику монети",
  "Видаляється 1 Part",
@@ -568,7 +568,7 @@ local ownerId = plot:FindFirstChild("OwnerUserId")
  {
  id: "q7",
  type: "multiple_choice",
- question: "Перевірка hit.Name гарантує…",
+ question: "Перевірка hit.Name гарантує...",
  options: [
  "Враховуються лише монети TycoonCoins",
  "Усі Parts враховані",
@@ -607,7 +607,7 @@ local ownerId = plot:FindFirstChild("OwnerUserId")
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 4.2 зберегти назву…",
+ question: "Урок 4.2 зберегти назву...",
  options: [
  "Урок 4.2. Монетник",
  "Змова магната",
@@ -828,7 +828,7 @@ end)
  {
  id: "q3",
  type: "multiple_choice",
- question: "монети.Вартість -= ціна, коли…",
+ question: "монети.Вартість -= ціна, коли...",
  options: [
  "Монети >= ціна",
  "Завжди",
@@ -841,7 +841,7 @@ end)
  {
  id: "q4",
  type: "multiple_choice",
- question: "Відгук про брак коштів…",
+ question: "Відгук про брак коштів...",
  options: [
  "Червоний спалах + повідомлення",
  "Безкоштовна машина",
@@ -854,7 +854,7 @@ end)
  {
  id: "q5",
  type: "multiple_choice",
- question: "Dropper_02 прихований за допомогою…",
+ question: "Dropper_02 прихований за допомогою...",
  options: [
  "Батьківський = нуль до покупки",
  "Видалити назавжди",
@@ -880,7 +880,7 @@ end)
  {
  id: "q7",
  type: "multiple_choice",
- question: "Посилання GetPlayerFromCharacter…",
+ question: "Посилання GetPlayerFromCharacter...",
  options: [
  "Торкніться до облікового запису гравця",
  "Part місцевості",
@@ -906,7 +906,7 @@ end)
  {
  id: "q9",
  type: "multiple_choice",
- question: "Покращення Tycoon використовують валюту з…",
+ question: "Покращення Tycoon використовують валюту з...",
  options: [
  "leaderstatsс Монети",
  "Тільки print()",
@@ -919,7 +919,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 4.3 зберегти назву…",
+ question: "Урок 4.3 зберегти назву...",
  options: [
  "Урок 4.3 - Кнопка \"Купити\".",
  "Монетник",
@@ -1126,7 +1126,7 @@ tierValue.Value = nextTier
  {
  id: "q1",
  type: "multiple_choice",
- question: "Таблиці конфігурації допомога…",
+ question: "Таблиці конфігурації допомога...",
  options: [
  "Баланс без редагування багатьох скриптів",
  "Видалити місцевість",
@@ -1139,7 +1139,7 @@ tierValue.Value = nextTier
  {
  id: "q2",
  type: "multiple_choice",
- question: "оновлення[2] отримує…",
+ question: "оновлення[2] отримує...",
  options: [
  "Ряд другого ярусу",
  "Два гравці",
@@ -1152,7 +1152,7 @@ tierValue.Value = nextTier
  {
  id: "q3",
  type: "multiple_choice",
- question: "DropperTier IntValue зберігає…",
+ question: "DropperTier IntValue зберігає...",
  options: [
  "Поточний рівень оновлення",
  "Ім'я гравця",
@@ -1165,7 +1165,7 @@ tierValue.Value = nextTier
  {
  id: "q4",
  type: "multiple_choice",
- question: "spawnWait в елементах керування таблицею…",
+ question: "spawnWait в елементах керування таблицею...",
  options: [
  "Секунди між spawnами",
  "Стрибок гравця",
@@ -1178,7 +1178,7 @@ tierValue.Value = nextTier
  {
  id: "q5",
  type: "multiple_choice",
- question: "SetAttribute CoinValue дозволяє…",
+ question: "SetAttribute CoinValue дозволяє...",
  options: [
  "Зчитування колекціонерів за монету",
  "видалити UI",
@@ -1191,7 +1191,7 @@ tierValue.Value = nextTier
  {
  id: "q6",
  type: "multiple_choice",
- question: "цикли ipairs(upgrades)…",
+ question: "цикли ipairs(upgrades)...",
  options: [
  "Кожен ярусний ряд",
  "Кожен гравець",
@@ -1230,7 +1230,7 @@ tierValue.Value = nextTier
  {
  id: "q9",
  type: "multiple_choice",
- question: "coinValue 4 рівня 3 означає…",
+ question: "coinValue 4 рівня 3 означає...",
  options: [
  "Кожна крапля коштує 4 монети",
  "4 крапельниці",
@@ -1243,7 +1243,7 @@ tierValue.Value = nextTier
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 4.4 зберегти назву…",
+ question: "Урок 4.4 зберегти назву...",
  options: [
  "Урок 4.4 - Оновлення таблиць",
  "Кнопка покупки",
@@ -1454,7 +1454,7 @@ end)
  {
  id: "q1",
  type: "multiple_choice",
- question: "Порожній OwnerUserId означає…",
+ question: "Порожній OwnerUserId означає...",
  options: [
  "Ділянка незатребувана",
  "Ділянку видалено",
@@ -1467,7 +1467,7 @@ end)
  {
  id: "q2",
  type: "multiple_choice",
- question: "ownsPlot порівнює…",
+ question: "ownsPlot порівнює...",
  options: [
  "player.UserId на OwnerUserId",
  "Колір Parts",
@@ -1493,7 +1493,7 @@ end)
  {
  id: "q4",
  type: "multiple_choice",
- question: "Вилучення гравця має…",
+ question: "Вилучення гравця має...",
  options: [
  "Явний власник ділянки",
  "Видалити гру",
@@ -1519,7 +1519,7 @@ end)
  {
  id: "q6",
  type: "multiple_choice",
- question: "Колекціонер без ownsPlot дозволяє…",
+ question: "Колекціонер без ownsPlot дозволяє...",
  options: [
  "Крадіжка чужого доходу",
  "Краща графіка",
@@ -1532,7 +1532,7 @@ end)
  {
  id: "q7",
  type: "multiple_choice",
- question: "PlotClaimService живе в…",
+ question: "PlotClaimService живе в...",
  options: [
  "ServerScriptService",
  "StarterGui",
@@ -1545,7 +1545,7 @@ end)
  {
  id: "q8",
  type: "multiple_choice",
- question: "Мінімум дві ділянки для 2 гравців…",
+ question: "Мінімум дві ділянки для 2 гравців...",
  options: [
  "Правда",
  "Неправда - достатньо одного",
@@ -1571,7 +1571,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 4.5 зберегти назву…",
+ question: "Урок 4.5 зберегти назву...",
  options: [
  "Урок 4.5 - Сюжети гравців",
  "Столи оновлення",
@@ -1737,7 +1737,7 @@ export const ukLesson46 = {
  {
  id: "q1",
  type: "multiple_choice",
- question: "Tycoon Works потребує…",
+ question: "Tycoon Works потребує...",
  options: [
  "Дохід + покупка + апгрейд + ділянки",
  "Тільки місцевість",
@@ -1750,7 +1750,7 @@ export const ukLesson46 = {
  {
  id: "q2",
  type: "multiple_choice",
- question: "Тест 3 підтверджує…",
+ question: "Тест 3 підтверджує...",
  options: [
  "Без купівлі між ділянками",
  "Колір неба",
@@ -1763,7 +1763,7 @@ export const ukLesson46 = {
  {
  id: "q3",
  type: "multiple_choice",
- question: "Кожна ділянка потребує свого…",
+ question: "Кожна ділянка потребує свого...",
  options: [
  "DropperTier та OwnerUserId",
  "Лише одне SpawnLocation у світі",
@@ -1776,7 +1776,7 @@ export const ukLesson46 = {
  {
  id: "q4",
  type: "multiple_choice",
- question: "Зміни балансу слід редагувати…",
+ question: "Зміни балансу слід редагувати...",
  options: [
  "таблиця оновлень",
  "Тільки цегляні кольори",
@@ -1789,7 +1789,7 @@ export const ukLesson46 = {
  {
  id: "q5",
  type: "multiple_choice",
- question: "Цільовий час першого оновлення…",
+ question: "Цільовий час першого оновлення...",
  options: [
  "Менше ~10 хвилин",
  "Ніколи",
@@ -1802,7 +1802,7 @@ export const ukLesson46 = {
  {
  id: "q6",
  type: "multiple_choice",
- question: "Гравець залишає…",
+ question: "Гравець залишає...",
  options: [
  "Звільнити їх ділянку",
  "Видалити всі DataStore",
@@ -1815,7 +1815,7 @@ export const ukLesson46 = {
  {
  id: "q7",
  type: "multiple_choice",
- question: "Сміття на крапельницях заважає…",
+ question: "Сміття на крапельницях заважає...",
  options: [
  "Відставання від нарощування Parts",
  "Збереження",
@@ -1828,7 +1828,7 @@ export const ukLesson46 = {
  {
  id: "q8",
  type: "multiple_choice",
- question: "Тема модуля 5…",
+ question: "Тема модуля 5...",
  options: [
  "Боротьба / боротьба",
  "Знову тільки монети",
@@ -1841,7 +1841,7 @@ export const ukLesson46 = {
  {
  id: "q9",
  type: "multiple_choice",
- question: "Червоний вихід на холостому ході означає…",
+ question: "Червоний вихід на холостому ході означає...",
  options: [
  "Виправити перед публікацією",
  "Готовий до публікації",
@@ -1854,7 +1854,7 @@ export const ukLesson46 = {
  {
  id: "q10",
  type: "multiple_choice",
- question: "Модуль 4 зберегти назву…",
+ question: "Модуль 4 зберегти назву...",
  options: [
  "Модуль 4 - Tycoon Works",
  "Заняття 3.1",

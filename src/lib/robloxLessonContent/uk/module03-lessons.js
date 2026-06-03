@@ -85,7 +85,7 @@ export const ukLesson31 = {
  title: "Організація папок",
  content: `Структура **Workspace**:\`\`\`
 Coins/
- Common/ ← Coin_001 … Coin_030
+ Common/ ← Coin_001 ... Coin_030
  Rare/ ← optional CoinRare_01 (cyan, bigger)
 \`\`\`**Правила іменування:**
 -\`Coin_001\`ні\`Part\`- Початкові нулі зберігають порядок сортування в Explorer
@@ -114,7 +114,7 @@ Coins/
 
 Ви отримаєте **+5** в Уроці 3.3 - сьогодні лише **будуйте** їх (максимум 5 рідкісних).
 
-Мітка\`CoinRare_01\`… в\`Coins/Rare\`.`,
+Мітка\`CoinRare_01\`... в\`Coins/Rare\`.`,
  },
  {
  title: "Контрольний список перед початком практики",
@@ -180,7 +180,7 @@ Coins/
  {
  id: "q1",
  type: "multiple_choice",
- question: "Модуль 3 фокусується на…",
+ question: "Модуль 3 фокусується на...",
  options: [
  "Збирацьке господарство",
  "Тільки місцевість",
@@ -193,7 +193,7 @@ Coins/
  {
  id: "q2",
  type: "multiple_choice",
- question: "Coin CanCollide має бути…",
+ question: "Coin CanCollide має бути...",
  options: [
  "помилковий",
  "true always",
@@ -206,7 +206,7 @@ Coins/
  {
  id: "q3",
  type: "multiple_choice",
- question: "Форма CoinPrefab зазвичай…",
+ question: "Форма CoinPrefab зазвичай...",
  options: [
  "Циліндр",
  "SpawnLocation",
@@ -219,7 +219,7 @@ Coins/
  {
  id: "q4",
  type: "multiple_choice",
- question: "Розташування траси…",
+ question: "Розташування траси...",
  options: [
  "Веде маршрут для початківців",
  "Видаляє монети",
@@ -245,7 +245,7 @@ Coins/
  {
  id: "q6",
  type: "multiple_choice",
- question: "Практика вимагає як мінімум…",
+ question: "Практика вимагає як мінімум...",
  options: [
  "30 монет",
  "1 монета",
@@ -271,7 +271,7 @@ Coins/
  {
  id: "q8",
  type: "multiple_choice",
- question: "Scripts для отримання надходять…",
+ question: "Scripts для отримання надходять...",
  options: [
  "Урок 3.2",
  "Тільки урок 1.1",
@@ -297,7 +297,7 @@ Coins/
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 3.1 зберегти назву…",
+ question: "Урок 3.1 зберегти назву...",
  options: [
  "Урок 3.1 - Маршрут монет",
  "Obby готовий",
@@ -494,7 +494,7 @@ end)
  {
  id: "q1",
  type: "multiple_choice",
- question: "Для отримання монет слід використовувати…",
+ question: "Для отримання монет слід використовувати...",
  options: [
  "Серверний скрипт в монеті",
  "LocalScript лише в Head",
@@ -507,7 +507,7 @@ end)
  {
  id: "q2",
  type: "multiple_choice",
- question: "Debounce використовує змінну на зразок…",
+ question: "Debounce використовує змінну на зразок...",
  options: [
  "зібрано = true",
  "Прозорість = 5",
@@ -520,7 +520,7 @@ end)
  {
  id: "q3",
  type: "multiple_choice",
- question: "Після отримання сховайтеся за допомогою…",
+ question: "Після отримання сховайтеся за допомогою...",
  options: [
  "Прозорість = 1",
  "Перейменувати на Part",
@@ -533,7 +533,7 @@ end)
  {
  id: "q4",
  type: "multiple_choice",
- question: "GetPlayerFromCharacter потребує…",
+ question: "GetPlayerFromCharacter потребує...",
  options: [
  "Дійсне дотик символу",
  "Тільки лава",
@@ -546,7 +546,7 @@ end)
  {
  id: "q5",
  type: "multiple_choice",
- question: "Багато разів торкався вогню, якщо…",
+ question: "Багато разів торкався вогню, якщо...",
  options: [
  "Гравець перекриває монету",
  "Гра збережена",
@@ -585,7 +585,7 @@ end)
  {
  id: "q8",
  type: "multiple_choice",
- question: "PickupSound повинен грати…",
+ question: "PickupSound повинен грати...",
  options: [
  "Один раз за успішний збір",
  "Кожен кадр",
@@ -611,7 +611,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 3.2 зберегти назву…",
+ question: "Урок 3.2 зберегти назву...",
  options: [
  "Урок 3.2 - Збирання монет",
  "Маршрут монет",
@@ -813,7 +813,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "Ім'я Folders leaderstats має бути…",
+ question: "Ім'я Folders leaderstats має бути...",
  options: [
  "лідерська статистика точно",
  "LeaderStats",
@@ -826,7 +826,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "Тип статистики монет:…",
+ question: "Тип статистики монет:...",
  options: [
  "IntValue",
  "StringValue",
@@ -839,7 +839,7 @@ end
  {
  id: "q3",
  type: "multiple_choice",
- question: "PlayerAdded запускається, коли…",
+ question: "PlayerAdded запускається, коли...",
  options: [
  "Приєднується гравець",
  "Монета торкається лави",
@@ -852,7 +852,7 @@ end
  {
  id: "q4",
  type: "multiple_choice",
- question: "монети. Значення += 1 має працювати на…",
+ question: "монети. Значення += 1 має працювати на...",
  options: [
  "Серверний скрипт монети",
  "Тільки LocalScript HUD",
@@ -865,7 +865,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "GetPropertyChangedSignal(\"Значення\")…",
+ question: "GetPropertyChangedSignal(\"Значення\")...",
  options: [
  "Оновлює HUD при зміні монет",
  "Видаляє гравця",
@@ -878,7 +878,7 @@ end
  {
  id: "q6",
  type: "multiple_choice",
- question: "Клавіша Tab показує…",
+ question: "Клавіша Tab показує...",
  options: [
  "Таблиця лідерів зі статистикою лідерів",
  "Explorer",
@@ -891,7 +891,7 @@ end
  {
  id: "q7",
  type: "multiple_choice",
- question: "CoinsHUD LocalScript належить до…",
+ question: "CoinsHUD LocalScript належить до...",
  options: [
  "StarterGui",
  "Workspace lava",
@@ -930,7 +930,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 3.3 зберегти назву…",
+ question: "Урок 3.3 зберегти назву...",
  options: [
  "Урок 3.3 - Монети HUD",
  "Збирання монет",
@@ -1167,7 +1167,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "Функції допомагають…",
+ question: "Функції допомагають...",
  options: [
  "Повторне використання логіки в одному місці",
  "Видалення інтерфейсу користувача",
@@ -1180,7 +1180,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "повернення у функції…",
+ question: "повернення у функції...",
  options: [
  "Надсилає значення абоненту",
  "Видаляє гравця",
@@ -1193,7 +1193,7 @@ end
  {
  id: "q3",
  type: "multiple_choice",
- question: "awardCoins(player, 5) додає…",
+ question: "awardCoins(player, 5) додає...",
  options: [
  "Статистика від 5 до монет",
  "5 Parts",
@@ -1206,7 +1206,7 @@ end
  {
  id: "q4",
  type: "multiple_choice",
- question: "Раннє повернення, коли статистика відсутня…",
+ question: "Раннє повернення, коли статистика відсутня...",
  options: [
  "Зупинки функціонують безпечно",
  "Додає 1000 монет",
@@ -1219,7 +1219,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "collectedFlags[coin] використовує…",
+ question: "collectedFlags[coin] використовує...",
  options: [
  "Instance монети як ключ таблиці",
  "Тільки ім'я гравця",
@@ -1232,7 +1232,7 @@ end
  {
  id: "q6",
  type: "multiple_choice",
- question: "getCoinValue перевіряє назву для…",
+ question: "getCoinValue перевіряє назву для...",
  options: [
  "«Рідкісний» підрядок",
  "Вік гравця",
@@ -1258,7 +1258,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "Після рефакторингу Scripts для кожної монети мають бути…",
+ question: "Після рефакторингу Scripts для кожної монети мають бути...",
  options: [
  "Видалено, щоб уникнути подвійного нагородження",
  "Продубльовано 30 разів",
@@ -1271,7 +1271,7 @@ end
  {
  id: "q9",
  type: "multiple_choice",
- question: "Назви дієслівних функцій, наприклад hideCoin…",
+ question: "Назви дієслівних функцій, наприклад hideCoin...",
  options: [
  "Читайте як дії",
  "Приховати код назавжди",
@@ -1284,7 +1284,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 3.4 зберегти назву…",
+ question: "Урок 3.4 зберегти назву...",
  options: [
  "Урок 3.4 - Функції монети",
  "Монети HUD",
@@ -1497,7 +1497,7 @@ end)
  {
  id: "q1",
  type: "multiple_choice",
- question: "DataStore зберігає дані…",
+ question: "DataStore зберігає дані...",
  options: [
  "Між ігровими сесіями",
  "Лише за одну ігрову хвилину",
@@ -1510,7 +1510,7 @@ end)
  {
  id: "q2",
  type: "multiple_choice",
- question: "Ключ даних гравця зазвичай…",
+ question: "Ключ даних гравця зазвичай...",
  options: [
  "player.UserId",
  "гравець. Тільки ім'я",
@@ -1536,7 +1536,7 @@ end)
  {
  id: "q4",
  type: "multiple_choice",
- question: "GetAsync завантажує…",
+ question: "GetAsync завантажує...",
  options: [
  "Збережені дані, коли гравець приєднується",
  "Skybox",
@@ -1549,7 +1549,7 @@ end)
  {
  id: "q5",
  type: "multiple_choice",
- question: "SetAsync має запускатися, коли…",
+ question: "SetAsync має запускатися, коли...",
  options: [
  "Гравець йде (PlayerRemoving)",
  "Кожен кадр",
@@ -1562,7 +1562,7 @@ end)
  {
  id: "q6",
  type: "multiple_choice",
- question: "Назви CoinProgress_v1 допомагають…",
+ question: "Назви CoinProgress_v1 допомагають...",
  options: [
  "Майбутні переміщення даних",
  "Видалити гравців",
@@ -1575,7 +1575,7 @@ end)
  {
  id: "q7",
  type: "multiple_choice",
- question: "Studio DataStore потребує…",
+ question: "Studio DataStore потребує...",
  options: [
  "Увімкнути служби API",
  "Видалити Workspace",
@@ -1601,7 +1601,7 @@ end)
  {
  id: "q9",
  type: "multiple_choice",
- question: "Збереження кожні 0,1 секунди - це…",
+ question: "Збереження кожні 0,1 секунди - це...",
  options: [
  "Погано - обмеження швидкості",
  "Обов'язковий",
@@ -1614,7 +1614,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 3.5 зберегти назву…",
+ question: "Урок 3.5 зберегти назву...",
  options: [
  "Урок 3.5 - Збережені монети",
  "Функції монет",
@@ -1785,7 +1785,7 @@ export const ukLesson36 = {
  {
  id: "q1",
  type: "multiple_choice",
- question: "КПП Coin Simulator потребує…",
+ question: "КПП Coin Simulator потребує...",
  options: [
  "Карта + збір + HUD + збереження",
  "Тільки місцевість",
@@ -1798,7 +1798,7 @@ export const ukLesson36 = {
  {
  id: "q2",
  type: "multiple_choice",
- question: "Тест 2 підтверджує…",
+ question: "Тест 2 підтверджує...",
  options: [
  "Debounce все ще працює",
  "Колір неба",
@@ -1811,7 +1811,7 @@ export const ukLesson36 = {
  {
  id: "q3",
  type: "multiple_choice",
- question: "Тест 4 підтверджує…",
+ question: "Тест 4 підтверджує...",
  options: [
  "Постійність DataStore",
  "Neon матеріал",
@@ -1824,7 +1824,7 @@ export const ukLesson36 = {
  {
  id: "q4",
  type: "multiple_choice",
- question: "CoinCollector має бути…",
+ question: "CoinCollector має бути...",
  options: [
  "Лише Script підбору",
  "Один із 30 дублюючих скриптів",
@@ -1837,7 +1837,7 @@ export const ukLesson36 = {
  {
  id: "q5",
  type: "multiple_choice",
- question: "Зберегти використання ключа…",
+ question: "Зберегти використання ключа...",
  options: [
  "player.UserId",
  "Лише відображуване ім'я гравця",
@@ -1850,7 +1850,7 @@ export const ukLesson36 = {
  {
  id: "q6",
  type: "multiple_choice",
- question: "Тема модуля 4…",
+ question: "Тема модуля 4...",
  options: [
  "Магнат / пасивний дохід",
  "Тільки видавництво",
@@ -1863,7 +1863,7 @@ export const ukLesson36 = {
  {
  id: "q7",
  type: "multiple_choice",
- question: "Потрібна адаптація на spawn…",
+ question: "Потрібна адаптація на spawn...",
  options: [
  "Чистий гол + видима перша монета",
  "Без монет",
@@ -1876,7 +1876,7 @@ export const ukLesson36 = {
  {
  id: "q8",
  type: "multiple_choice",
- question: "Червоний вихід під час чистого запуску означає…",
+ question: "Червоний вихід під час чистого запуску означає...",
  options: [
  "Виправити перед публікацією",
  "ідеально",
@@ -1902,7 +1902,7 @@ export const ukLesson36 = {
  {
  id: "q10",
  type: "multiple_choice",
- question: "Останній модуль 3 зберегти назву…",
+ question: "Останній модуль 3 зберегти назву...",
  options: [
  "Модуль 3 - Симулятор монет",
  "Заняття 2.1",

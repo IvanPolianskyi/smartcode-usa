@@ -5,7 +5,11 @@ import { ObjectId } from 'mongodb'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { createProgressEntry } from '@/lib/courseUtils'
-import { hasStudentCourseAccess } from '@/lib/courseLessonAccess'
+import {
+  canReadCourseProgress,
+  canUpdateLessonProgress,
+} from '@/lib/courseLessonAccess'
+import { robloxCurriculum } from '@/lib/robloxCurriculum'
 import { lessonContentMap as lessonContentMapUk } from '@/lib/lessonContentMap.uk'
 import { lessonContentMap as lessonContentMapEn } from '@/lib/lessonContentMap.en'
 import { checkPracticeOutput } from '@/lib/practiceValidation'
@@ -34,7 +38,7 @@ export async function GET(request) {
 
     const usersCollection = await getCollection('users')
     const user = await usersCollection.findOne({ _id: new ObjectId(userId) })
-    if (!user || !hasStudentCourseAccess(user, courseId)) {
+    if (!user || !canReadCourseProgress(user, courseId)) {
       return NextResponse.json({ progress: null }, { status: 200 })
     }
 
@@ -105,7 +109,14 @@ export async function POST(request) {
 
     const usersCollection = await getCollection('users')
     const user = await usersCollection.findOne({ _id: new ObjectId(userId) })
-    if (!user || !hasStudentCourseAccess(user, courseId)) {
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Not authenticated' },
+        { status: 401 }
+      )
+    }
+
+    if (!canReadCourseProgress(user, courseId)) {
       return NextResponse.json(
         { error: 'No access to this course' },
         { status: 403 }
@@ -132,6 +143,16 @@ export async function POST(request) {
       const { ensureUserEnrolled } = await import('@/lib/courseUtils')
       const enrollResult = await ensureUserEnrolled(userIdObj, courseId)
       console.log('Ensured user enrolled (existing progress):', enrollResult.modifiedCount > 0 ? 'updated' : 'already enrolled')
+    }
+
+    const lessonScopedActions = ['completeLesson', 'completeQuiz', 'completePracticeTask', 'updateCurrentLesson']
+    if (lessonScopedActions.includes(action) && lessonId) {
+      if (!canUpdateLessonProgress(user, courseId, lessonId, progress)) {
+        return NextResponse.json(
+          { error: 'Lesson is locked' },
+          { status: 403 }
+        )
+      }
     }
 
     // Update based on action
@@ -180,8 +201,11 @@ export async function POST(request) {
         }
       }
 
-      if (!Array.isArray(progress.completedPracticeTasks) || !progress.completedPracticeTasks.includes(lessonId)) {
-        addToSetOperations.completedPracticeTasks = lessonId
+      const practiceTasks = Array.isArray(progress.completedPracticeTasks)
+        ? progress.completedPracticeTasks
+        : []
+      if (!practiceTasks.includes(lessonId)) {
+        update.$set.completedPracticeTasks = [...practiceTasks, lessonId]
       }
     }
 
@@ -196,12 +220,9 @@ export async function POST(request) {
 
     // Calculate overall progress using actual course data
     const getTotalLessons = (courseId) => {
-      let curriculum
-      if (courseId === "web-development") {
-        curriculum = webDevCurriculum
-      } else {
-        curriculum = pythonCurriculum
-      }
+      let curriculum = pythonCurriculum
+      if (courseId === 'web-development') curriculum = webDevCurriculum
+      else if (courseId === 'roblox-studio') curriculum = robloxCurriculum
       return curriculum.modules.reduce((sum, m) => sum + m.lessons.length, 0)
     }
     

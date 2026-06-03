@@ -170,7 +170,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "Префікс Srv_ означає…",
+ question: "Префікс Srv_ означає...",
  options: [
  "Серверний скрипт",
  "Інтерфейс клієнта",
@@ -183,7 +183,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "Віддалені повинні жити в…",
+ question: "Віддалені повинні жити в...",
  options: [
  "ReplicatedStorage/Remotes",
  "Тільки робочий простір",
@@ -196,7 +196,7 @@ end
  {
  id: "q3",
  type: "multiple_choice",
- question: "Part загальної назви погана, оскільки…",
+ question: "Part загальної назви погана, оскільки...",
  options: [
  "Важко знайти в Explorer",
  "Обов'язковий",
@@ -209,7 +209,7 @@ end
  {
  id: "q4",
  type: "multiple_choice",
- question: "Очищення партіями дозволяє уникнути…",
+ question: "Очищення партіями дозволяє уникнути...",
  options: [
  "Злам багатьох систем одночасно",
  "Видавництво",
@@ -222,7 +222,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "Префікс NPC_ для…",
+ question: "Префікс NPC_ для...",
  options: [
  "Моделі Character",
  "кнопки інтерфейсу користувача",
@@ -235,7 +235,7 @@ end
  {
  id: "q6",
  type: "multiple_choice",
- question: "Модуль 11 фокусується на…",
+ question: "Модуль 11 фокусується на...",
  options: [
  "Продуктивність і полірування",
  "Тільки гонки",
@@ -248,7 +248,7 @@ end
  {
  id: "q7",
  type: "multiple_choice",
- question: "Префікс UI_ допомагає…",
+ question: "Префікс UI_ допомагає...",
  options: [
  "Знайдіть елементи інтерфейсу",
  "Видалити Humanoid",
@@ -261,7 +261,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 11.2 додає…",
+ question: "Урок 11.2 додає...",
  options: [
  "Екран завантаження",
  "Лазерна головоломка",
@@ -274,7 +274,7 @@ end
  {
  id: "q9",
  type: "multiple_choice",
- question: "Найменування Shop_RequestPurchase…",
+ question: "Найменування Shop_RequestPurchase...",
  options: [
  "Шаблон дії домену",
  "Випадковий",
@@ -287,7 +287,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 11.1 зберегти назву…",
+ question: "Урок 11.1 зберегти назву...",
  options: [
  "Урок 11.1 - Чистий Explorer",
  "Гра Полірований",
@@ -476,7 +476,7 @@ TeleportService:TeleportAsync(placeId, {player})
  {
  id: "q1",
  type: "multiple_choice",
- question: "ContentProvider:PreloadAsync…",
+ question: "ContentProvider:PreloadAsync...",
  options: [
  "Завантажує активи раніше",
  "Видаляє гравця",
@@ -489,7 +489,7 @@ TeleportService:TeleportAsync(placeId, {player})
  {
  id: "q2",
  type: "multiple_choice",
- question: "Завантаження зникнення використовує…",
+ question: "Завантаження зникнення використовує...",
  options: [
  "TweenService",
  "Рельєф місцевості",
@@ -502,7 +502,7 @@ TeleportService:TeleportAsync(placeId, {player})
  {
  id: "q3",
  type: "multiple_choice",
- question: "StatusLabel повідомляє гравцеві…",
+ question: "StatusLabel повідомляє гравцеві...",
  options: [
  "Що відбувається",
  "Пароль сервера",
@@ -528,7 +528,7 @@ TeleportService:TeleportAsync(placeId, {player})
  {
  id: "q5",
  type: "multiple_choice",
- question: "Після затухання графічний інтерфейс має…",
+ question: "Після затухання графічний інтерфейс має...",
  options: [
  "Вимкнути або приховати",
  "Залишайся назавжди",
@@ -541,7 +541,7 @@ TeleportService:TeleportAsync(placeId, {player})
  {
  id: "q6",
  type: "multiple_choice",
- question: "TeleportAsync потребує…",
+ question: "TeleportAsync потребує...",
  options: [
  "Очистити повідомлення про завантаження",
  "Немає інтерфейсу користувача",
@@ -567,7 +567,7 @@ TeleportService:TeleportAsync(placeId, {player})
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 11.3 додає…",
+ question: "Урок 11.3 додає...",
  options: [
  "Шари звукового дизайну",
  "Тільки Explorer",
@@ -580,7 +580,7 @@ TeleportService:TeleportAsync(placeId, {player})
  {
  id: "q9",
  type: "multiple_choice",
- question: "Хороша тривалість згасання приблизно…",
+ question: "Хороша тривалість згасання приблизно...",
  options: [
  "0,4-1,0 секунди",
  "10 секунд",
@@ -593,7 +593,7 @@ TeleportService:TeleportAsync(placeId, {player})
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 11.2 зберегти назву…",
+ question: "Урок 11.2 зберегти назву...",
  options: [
  "Урок 11.2 - Екран завантаження",
  "Очистити Explorer",
@@ -767,7 +767,7 @@ s.PlaybackSpeed = 0.95 + math.random() * 0.1
  {
  id: "q1",
  type: "multiple_choice",
- question: "Ембіентний шар призначений для…",
+ question: "Ембіентний шар призначений для...",
  options: [
  "Настрій локації",
  "Лише натискання інтерфейсу",
@@ -780,7 +780,7 @@ s.PlaybackSpeed = 0.95 + math.random() * 0.1
  {
  id: "q2",
  type: "multiple_choice",
- question: "Геймплей SFX має бути…",
+ question: "Геймплей SFX має бути...",
  options: [
  "Голосніше, ніж навколишній",
  "Мовчазний",
@@ -793,7 +793,7 @@ s.PlaybackSpeed = 0.95 + math.random() * 0.1
  {
  id: "q3",
  type: "multiple_choice",
- question: "Префікс SFX_ відповідає…",
+ question: "Префікс SFX_ відповідає...",
  options: [
  "Урок 11.1 іменування",
  "Тільки місцевість",
@@ -819,7 +819,7 @@ s.PlaybackSpeed = 0.95 + math.random() * 0.1
  {
  id: "q5",
  type: "multiple_choice",
- question: "Повний квест потребує…",
+ question: "Повний квест потребує...",
  options: [
  "Чіткий геймплей SFX",
  "Ні звуку",
@@ -832,7 +832,7 @@ s.PlaybackSpeed = 0.95 + math.random() * 0.1
  {
  id: "q6",
  type: "multiple_choice",
- question: "Clone Play Debris pattern…",
+ question: "Clone Play Debris pattern...",
  options: [
  "Очищає готові звуки",
  "Видаляє гравця",
@@ -845,7 +845,7 @@ s.PlaybackSpeed = 0.95 + math.random() * 0.1
  {
  id: "q7",
  type: "multiple_choice",
- question: "Урок 11.3 дроти до…",
+ question: "Урок 11.3 дроти до...",
  options: [
  "Події головоломки магазинного квесту",
  "Тільки автомобіль",
@@ -858,7 +858,7 @@ s.PlaybackSpeed = 0.95 + math.random() * 0.1
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 11.4 додає…",
+ question: "Урок 11.4 додає...",
  options: [
  "Оптимізація",
  "Тільки завантаження",
@@ -871,7 +871,7 @@ s.PlaybackSpeed = 0.95 + math.random() * 0.1
  {
  id: "q9",
  type: "multiple_choice",
- question: "Звуки натискання інтерфейсу користувача належать до…",
+ question: "Звуки натискання інтерфейсу користувача належать до...",
  options: [
  "Взаємодія кнопок",
  "Навколишній цикл",
@@ -884,7 +884,7 @@ s.PlaybackSpeed = 0.95 + math.random() * 0.1
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 11.3 зберегти назву…",
+ question: "Урок 11.3 зберегти назву...",
  options: [
  "Урок 11.3 - Звукове оформлення",
  "Екран завантаження",
@@ -1059,7 +1059,7 @@ end)
  {
  id: "q1",
  type: "multiple_choice",
- question: "StreamingEnabled допомагає…",
+ question: "StreamingEnabled допомагає...",
  options: [
  "Великі світи завантажуються ефективно",
  "Видалити Scripts",
@@ -1072,7 +1072,7 @@ end)
  {
  id: "q2",
  type: "multiple_choice",
- question: "Об’єднання дрібних Parts зменшує…",
+ question: "Об’єднання дрібних Parts зменшує...",
  options: [
  "Завантаження візуалізації",
  "Гравець HP",
@@ -1085,7 +1085,7 @@ end)
  {
  id: "q3",
  type: "multiple_choice",
- question: "Орієнтовані на події ритми…",
+ question: "Орієнтовані на події ритми...",
  options: [
  "Raycast кожен кадр завжди",
  "Жодних Scripts",
@@ -1137,7 +1137,7 @@ end)
  {
  id: "q7",
  type: "multiple_choice",
- question: "Урок 11.5 додає…",
+ question: "Урок 11.5 додає...",
  options: [
  "UX і доступність",
  "Тільки звук",
@@ -1150,7 +1150,7 @@ end)
  {
  id: "q8",
  type: "multiple_choice",
- question: "Серверні Scripts мають залишатися…",
+ question: "Серверні Scripts мають залишатися...",
  options: [
  "Зосереджено на правилах гри",
  "Усі візуальні VFX",
@@ -1163,7 +1163,7 @@ end)
  {
  id: "q9",
  type: "multiple_choice",
- question: "Оптимізація важлива, оскільки…",
+ question: "Оптимізація важлива, оскільки...",
  options: [
  "Заїкання змушує гравців йти",
  "Необхідний для значків",
@@ -1176,7 +1176,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 11.4 зберегти назву…",
+ question: "Урок 11.4 зберегти назву...",
  options: [
  "Урок 11.4 - Оптимізація",
  "Звуковий дизайн",
@@ -1346,7 +1346,7 @@ player:SetAttribute("TextScale", 1.2)
  {
  id: "q1",
  type: "multiple_choice",
- question: "Захищений від дальтоніків інтерфейс користувача використовує…",
+ question: "Захищений від дальтоніків інтерфейс користувача використовує...",
  options: [
  "Піктограми та текст не лише кольори",
  "Тільки червоно-зелений",
@@ -1385,7 +1385,7 @@ player:SetAttribute("TextScale", 1.2)
  {
  id: "q4",
  type: "multiple_choice",
- question: "Послідовний стиль інтерфейсу…",
+ question: "Послідовний стиль інтерфейсу...",
  options: [
  "Відчуває себе професійно",
  "Потрібен Roblox",
@@ -1398,7 +1398,7 @@ player:SetAttribute("TextScale", 1.2)
  {
  id: "q5",
  type: "multiple_choice",
- question: "Перевірте кілька дозволів, щоб…",
+ question: "Перевірте кілька дозволів, щоб...",
  options: [
  "Ловити розриви макета",
  "Видалити збереження",
@@ -1411,7 +1411,7 @@ player:SetAttribute("TextScale", 1.2)
  {
  id: "q6",
  type: "multiple_choice",
- question: "Варіант обмеженого руху…",
+ question: "Варіант обмеженого руху...",
  options: [
  "Допомагає чутливим гравцям",
  "Видаляє гру",
@@ -1437,7 +1437,7 @@ player:SetAttribute("TextScale", 1.2)
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 11.6 - це…",
+ question: "Урок 11.6 - це...",
  options: [
  "Гра Полірований КПП",
  "Опублікувати",
@@ -1463,7 +1463,7 @@ player:SetAttribute("TextScale", 1.2)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 11.5 зберегти назву…",
+ question: "Урок 11.5 зберегти назву...",
  options: [
  "Урок 11.5 - Доступність UX",
  "Оптимізація",
@@ -1620,7 +1620,7 @@ export const ukLesson116 = {
  {
  id: "q1",
  type: "multiple_choice",
- question: "Game Polished містить модуль 11…",
+ question: "Game Polished містить модуль 11...",
  options: [
  "Усі уроки модуля 11 інтегровані",
  "Тільки Explorer",
@@ -1633,7 +1633,7 @@ export const ukLesson116 = {
  {
  id: "q2",
  type: "multiple_choice",
- question: "Пріоритет виправлення починається з…",
+ question: "Пріоритет виправлення починається з...",
  options: [
  "Блокувальники та баги",
  "Тільки гучність музики",
@@ -1646,7 +1646,7 @@ export const ukLesson116 = {
  {
  id: "q3",
  type: "multiple_choice",
- question: "Тест наосліп знайшов…",
+ question: "Тест наосліп знайшов...",
  options: [
  "Плутанина, яку ви пропустили",
  "Robux",
@@ -1659,7 +1659,7 @@ export const ukLesson116 = {
  {
  id: "q4",
  type: "multiple_choice",
- question: "Рубрика Fun Factor запитує…",
+ question: "Рубрика Fun Factor запитує...",
  options: [
  "Чи зіграли б гравці знову",
  "Підрахунок Parts",
@@ -1672,7 +1672,7 @@ export const ukLesson116 = {
  {
  id: "q5",
  type: "multiple_choice",
- question: "Модуль 11 зберегти назву…",
+ question: "Модуль 11 зберегти назву...",
  options: [
  "Модуль 11 - Game Polished",
  "Світ головоломок",
@@ -1685,7 +1685,7 @@ export const ukLesson116 = {
  {
  id: "q6",
  type: "multiple_choice",
- question: "Урок 11.6 завершується…",
+ question: "Урок 11.6 завершується...",
  options: [
  "Модуль 11 - полірування та продуктивність",
  "Модуль 12",
@@ -1698,7 +1698,7 @@ export const ukLesson116 = {
  {
  id: "q7",
  type: "multiple_choice",
- question: "Стабільність означає…",
+ question: "Стабільність означає...",
  options: [
  "Жодних суттєвих помилок під час ігрового сеансу",
  "Немає інтерфейсу користувача",
@@ -1711,7 +1711,7 @@ export const ukLesson116 = {
  {
  id: "q8",
  type: "multiple_choice",
- question: "Модуль 12 - це…",
+ question: "Модуль 12 - це...",
  options: [
  "День випуску",
  "Тільки гонки",
@@ -1724,7 +1724,7 @@ export const ukLesson116 = {
  {
  id: "q9",
  type: "multiple_choice",
- question: "Консистенція охоплює…",
+ question: "Консистенція охоплює...",
  options: [
  "Назви кольорів аудіоінтерфейсу",
  "Тільки скрипти",
@@ -1737,7 +1737,7 @@ export const ukLesson116 = {
  {
  id: "q10",
  type: "multiple_choice",
- question: "полірування означає…",
+ question: "полірування означає...",
  options: [
  "Працює і відчуває себе професійно",
  "Лише додаткові функції",

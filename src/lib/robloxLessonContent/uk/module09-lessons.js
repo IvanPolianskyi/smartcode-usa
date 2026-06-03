@@ -166,7 +166,7 @@ print("Valid fake?", RPGConfig.isValidRarity("legendary_plus"))
  {
  id: "q1",
  type: "multiple_choice",
- question: "ModuleScript завантажується з…",
+ question: "ModuleScript завантажується з...",
  options: [
  "вимагати()",
  "FireServer()",
@@ -179,7 +179,7 @@ print("Valid fake?", RPGConfig.isValidRarity("legendary_plus"))
  {
  id: "q2",
  type: "multiple_choice",
- question: "Модуль має повернутися…",
+ question: "Модуль має повернутися...",
  options: [
  "Таблиця API",
  "Нічого завжди",
@@ -192,7 +192,7 @@ print("Valid fake?", RPGConfig.isValidRarity("legendary_plus"))
  {
  id: "q3",
  type: "multiple_choice",
- question: "RPGConfig містить…",
+ question: "RPGConfig містить...",
  options: [
  "Константи та спільні помічники",
  "Тільки UI",
@@ -231,7 +231,7 @@ print("Valid fake?", RPGConfig.isValidRarity("legendary_plus"))
  {
  id: "q6",
  type: "multiple_choice",
- question: "getMaxSlots(рівень) належить до…",
+ question: "getMaxSlots(рівень) належить до...",
  options: [
  "API конфігурації або модуля поведінки",
  "Лише LocalScript",
@@ -244,7 +244,7 @@ print("Valid fake?", RPGConfig.isValidRarity("legendary_plus"))
  {
  id: "q7",
  type: "multiple_choice",
- question: "Тема модуля 9…",
+ question: "Тема модуля 9...",
  options: [
  "Системний архітектор / Інвентар RPG",
  "Тільки гонки",
@@ -257,7 +257,7 @@ print("Valid fake?", RPGConfig.isValidRarity("legendary_plus"))
  {
  id: "q8",
  type: "multiple_choice",
- question: "Поділ конфігурації та поведінки означає…",
+ question: "Поділ конфігурації та поведінки означає...",
  options: [
  "Дані окремо від служб виконання",
  "Жодних Scripts",
@@ -270,7 +270,7 @@ print("Valid fake?", RPGConfig.isValidRarity("legendary_plus"))
  {
  id: "q9",
  type: "multiple_choice",
- question: "Урок 9.2 додає…",
+ question: "Урок 9.2 додає...",
  options: [
  "Інвентарні таблиці",
  "Тільки NPC",
@@ -283,7 +283,7 @@ print("Valid fake?", RPGConfig.isValidRarity("legendary_plus"))
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 9.1 зберегти назву…",
+ question: "Урок 9.1 зберегти назву...",
  options: [
  "Урок 9.1 - ModuleScript",
  "Інвентар RPG",
@@ -517,7 +517,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "Порожнє місце для інвентарю - це…",
+ question: "Порожнє місце для інвентарю - це...",
  options: [
  "нуль",
  "0",
@@ -530,7 +530,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "maxStack походить від…",
+ question: "maxStack походить від...",
  options: [
  "ItemDatabase",
  "Кнопка клієнта",
@@ -556,7 +556,7 @@ end
  {
  id: "q4",
  type: "multiple_choice",
- question: "findItemSlot шукає за…",
+ question: "findItemSlot шукає за...",
  options: [
  "збіг itemId",
  "Ім'я гравця",
@@ -569,7 +569,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "removeItem у кількості 0 має…",
+ question: "removeItem у кількості 0 має...",
  options: [
  "Встановіть слот на нуль",
  "Збій",
@@ -595,7 +595,7 @@ end
  {
  id: "q7",
  type: "multiple_choice",
- question: "InventoryOps має бути…",
+ question: "InventoryOps має бути...",
  options: [
  "ModuleScript",
  "Рельєф місцевості",
@@ -608,7 +608,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 9.2 базується на…",
+ question: "Урок 9.2 базується на...",
  options: [
  "Урок 9.1 RPGConfig",
  "Тільки урок 6",
@@ -621,7 +621,7 @@ end
  {
  id: "q9",
  type: "multiple_choice",
- question: "Урок 9.3 додає…",
+ question: "Урок 9.3 додає...",
  options: [
  "Таблиці як об'єкти з метатаблицями",
  "Тільки діалог",
@@ -634,7 +634,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 9.2 зберегти назву…",
+ question: "Урок 9.2 зберегти назву...",
  options: [
  "Урок 9.2 - Інвентарні таблиці",
  "ModuleScript",
@@ -831,7 +831,7 @@ print("Potions:", inv:count("potion_small"))
  {
  id: "q1",
  type: "multiple_choice",
- question: "setmetatable з __index дозволяє…",
+ question: "setmetatable з __index дозволяє...",
  options: [
  "Виклики методів на столі",
  "Редагування місцевості",
@@ -857,7 +857,7 @@ print("Potions:", inv:count("potion_small"))
  {
  id: "q3",
  type: "multiple_choice",
- question: "playerInventory[player] stores…",
+ question: "playerInventory[player] зберігає...",
  options: [
  "Цей об’єкт інвентарю гравця",
  "Глобальна спільна здобич",
@@ -870,7 +870,7 @@ print("Potions:", inv:count("potion_small"))
  {
  id: "q4",
  type: "multiple_choice",
- question: "серіалізувати повернення…",
+ question: "серіалізувати повернення...",
  options: [
  "Стіл для збереження",
  "Характер гравця",
@@ -883,7 +883,7 @@ print("Potions:", inv:count("potion_small"))
  {
  id: "q5",
  type: "multiple_choice",
- question: "Вилучення гравця має…",
+ question: "Вилучення гравця має...",
  options: [
  "Очистити запис Player Inventory",
  "Видалити всіх гравців",
@@ -896,7 +896,7 @@ print("Potions:", inv:count("potion_small"))
  {
  id: "q6",
  type: "multiple_choice",
- question: "Inventory.new(maxSlots) - це…",
+ question: "Inventory.new(maxSlots) - це...",
  options: [
  "Конструктор",
  "RemoteEvent",
@@ -909,7 +909,7 @@ print("Potions:", inv:count("potion_small"))
  {
  id: "q7",
  type: "multiple_choice",
- question: "Уникайте зберігання Player в інвентарі, оскільки…",
+ question: "Уникайте зберігання Player в інвентарі, оскільки...",
  options: [
  "Чистіша карта зовнішнього об'єкта",
  "Потрібен Roblox",
@@ -935,7 +935,7 @@ print("Potions:", inv:count("potion_small"))
  {
  id: "q9",
  type: "multiple_choice",
- question: "Урок 9.4 додає…",
+ question: "Урок 9.4 додає...",
  options: [
  "Спорядження та статистика",
  "Тільки NPC",
@@ -948,7 +948,7 @@ print("Potions:", inv:count("potion_small"))
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 9.3 зберегти назву…",
+ question: "Урок 9.3 зберегти назву...",
  options: [
  "Урок 9.3 - Об’єкт інвентаризації",
  "ModuleScript",
@@ -1156,7 +1156,7 @@ end)
  {
  id: "q1",
  type: "multiple_choice",
- question: "Загальна статистика має бути…",
+ question: "Загальна статистика має бути...",
  options: [
  "База + спорядження бонусів перераховано",
  "Лише припущення клієнта",
@@ -1169,7 +1169,7 @@ end)
  {
  id: "q2",
  type: "multiple_choice",
- question: "Екіпірування не повинно постійно змінюватися…",
+ question: "Екіпірування не повинно постійно змінюватися...",
  options: [
  "playerBaseStats",
  "ItemDatabase",
@@ -1182,7 +1182,7 @@ end)
  {
  id: "q3",
  type: "multiple_choice",
- question: "Обладнання зберігається окремо від…",
+ question: "Обладнання зберігається окремо від...",
  options: [
  "Інвентарні слоти",
  "Рельєф місцевості",
@@ -1221,7 +1221,7 @@ end)
  {
  id: "q6",
  type: "multiple_choice",
- question: "sword_bronze maxStack 1 означає…",
+ question: "sword_bronze maxStack 1 означає...",
  options: [
  "Спорядження не можна штабелювати",
  "Нескінченний стек",
@@ -1260,7 +1260,7 @@ end)
  {
  id: "q9",
  type: "multiple_choice",
- question: "Урок 9.5 додає…",
+ question: "Урок 9.5 додає...",
  options: [
  "Серіалізація DataStore",
  "Тільки NPC",
@@ -1273,7 +1273,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 9.4 зберегти назву…",
+ question: "Урок 9.4 зберегти назву...",
  options: [
  "Урок 9.4 - Статистика спорядження",
  "Об'єкт інвентаризації",
@@ -1492,7 +1492,7 @@ end)
  {
  id: "q1",
  type: "multiple_choice",
- question: "DataStore зберігає…",
+ question: "DataStore зберігає...",
  options: [
  "Прості таблиці Lua",
  "Функції",
@@ -1518,7 +1518,7 @@ end)
  {
  id: "q3",
  type: "multiple_choice",
- question: "pcall на SetAsync…",
+ question: "pcall на SetAsync...",
  options: [
  "Запобігає збою в разі відмови",
  "Прискорює гру",
@@ -1531,7 +1531,7 @@ end)
  {
  id: "q4",
  type: "multiple_choice",
- question: "поле версії під час збереження допомагає…",
+ question: "поле версії під час збереження допомагає...",
  options: [
  "Майбутні міграції схем",
  "Графіка",
@@ -1544,7 +1544,7 @@ end)
  {
  id: "q5",
  type: "multiple_choice",
- question: "Економте в першу чергу на…",
+ question: "Економте в першу чергу на...",
  options: [
  "Вилучення гравця",
  "Кожен удар серця",
@@ -1557,7 +1557,7 @@ end)
  {
  id: "q6",
  type: "multiple_choice",
- question: "Завантаження має підтвердити…",
+ question: "Завантаження має підтвердити...",
  options: [
  "Типи та версія перед використанням",
  "нічого",
@@ -1570,7 +1570,7 @@ end)
  {
  id: "q7",
  type: "multiple_choice",
- question: "Ключове використання…",
+ question: "Ключове використання...",
  options: [
  "Player UserId",
  "Лише ім'я гравця",
@@ -1596,7 +1596,7 @@ end)
  {
  id: "q9",
  type: "multiple_choice",
- question: "Урок 9.6 - це…",
+ question: "Урок 9.6 - це...",
  options: [
  "Рольова гра Контрольна точка інвентарю",
  "Тільки магазин",
@@ -1609,7 +1609,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 9.5 зберегти назву…",
+ question: "Урок 9.5 зберегти назву...",
  options: [
  "Урок 9.5 - Збереження інвентарю",
  "Статистика спорядження",
@@ -1777,7 +1777,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "RPG Inventory checkpoint доводить…",
+ question: "RPG Inventory checkpoint доводить...",
  options: [
  "Модулі + спорядження + збереження/завантаження",
  "Тільки місцевість",
@@ -1790,7 +1790,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "Тест екіпірування Relog підтверджує…",
+ question: "Тест екіпірування Relog підтверджує...",
  options: [
  "Обладнаний зберігся",
  "Лише інтерфейс користувача",
@@ -1803,7 +1803,7 @@ end
  {
  id: "q3",
  type: "multiple_choice",
- question: "One ItemDatabase запобігає...",
+ question: "Один ItemDatabase запобігає...",
  options: [
  "Зміщення ID між системами",
  "ходьба",
@@ -1829,7 +1829,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "Модуль 9 зберегти назву…",
+ question: "Модуль 9 зберегти назву...",
  options: [
  "Модуль 9 - Інвентар RPG",
  "Магазин працює",
@@ -1842,7 +1842,7 @@ end
  {
  id: "q6",
  type: "multiple_choice",
- question: "Архітектор системи означає…",
+ question: "Архітектор системи означає...",
  options: [
  "Багаторазові модулі та надійний стан",
  "Один гігантський Script",
@@ -1855,7 +1855,7 @@ end
  {
  id: "q7",
  type: "multiple_choice",
- question: "Урок 9.6 завершується…",
+ question: "Урок 9.6 завершується...",
  options: [
  "Модуль 9",
  "Модуль 12",
@@ -1868,7 +1868,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "Двоє гравців потребують…",
+ question: "Двоє гравців потребують...",
  options: [
  "Розділіть ключі збереження за UserId",
  "Один спільний інвентар",
@@ -1881,7 +1881,7 @@ end
  {
  id: "q9",
  type: "multiple_choice",
- question: "Модуль 10 додає…",
+ question: "Модуль 10 додає...",
  options: [
  "Обмеження та фізичні деталі",
  "Тільки діалог",
@@ -1894,7 +1894,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Контрольна точка має пріоритет…",
+ question: "Контрольна точка має пріоритет...",
  options: [
  "Проходження тестів на стійкість",
  "Більшість можливих елементів",

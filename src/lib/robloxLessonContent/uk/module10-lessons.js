@@ -168,7 +168,7 @@ end)
  {
  id: "q1",
  type: "multiple_choice",
- question: "HingeConstraint потребує…",
+ question: "HingeConstraint потребує...",
  options: [
  "Два вкладення",
  "Тільки місцевість",
@@ -181,7 +181,7 @@ end)
  {
  id: "q2",
  type: "multiple_choice",
- question: "Дверна рама повинна бути…",
+ question: "Дверна рама повинна бути...",
  options: [
  "Anchored true",
  "Завжди без прив’язки",
@@ -194,7 +194,7 @@ end)
  {
  id: "q3",
  type: "multiple_choice",
- question: "Обмеження RopeConstraint…",
+ question: "Обмеження RopeConstraint...",
  options: [
  "Відстань між Parts",
  "Монети гравців",
@@ -207,7 +207,7 @@ end)
  {
  id: "q4",
  type: "multiple_choice",
- question: "ActuatorType Двигун обертається…",
+ question: "ActuatorType Двигун обертається...",
  options: [
  "Шарнір зі швидкістю",
  "Рельєф місцевості",
@@ -220,7 +220,7 @@ end)
  {
  id: "q5",
  type: "multiple_choice",
- question: "Рухома Part дверей - це…",
+ question: "Рухома Part дверей - це...",
  options: [
  "Без прив'язки",
  "Anchored true",
@@ -233,7 +233,7 @@ end)
  {
  id: "q6",
  type: "multiple_choice",
- question: "Тема модуля 10…",
+ question: "Тема модуля 10...",
  options: [
  "Магія деталей",
  "Тільки інвентар",
@@ -246,7 +246,7 @@ end)
  {
  id: "q7",
  type: "multiple_choice",
- question: "Занадто швидка кутова швидкість…",
+ question: "Занадто швидка кутова швидкість...",
  options: [
  "Почувається хаотично",
  "Покращує FPS",
@@ -259,7 +259,7 @@ end)
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 10.2 охоплює…",
+ question: "Урок 10.2 охоплює...",
  options: [
  "TweenService",
  "Тільки DataStore",
@@ -272,7 +272,7 @@ end)
  {
  id: "q9",
  type: "multiple_choice",
- question: "Обмеження, які використовуються для…",
+ question: "Обмеження, які використовуються для...",
  options: [
  "Двері мости підйомники",
  "Лише текст діалогу",
@@ -285,7 +285,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 10.1 зберегти назву…",
+ question: "Урок 10.1 зберегти назву...",
  options: [
  "Урок 10.1 - Фізичні обмеження",
  "Світ головоломок",
@@ -465,7 +465,7 @@ local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDire
  {
  id: "q1",
  type: "multiple_choice",
- question: "TweenService анімує…",
+ question: "TweenService анімує...",
  options: [
  "Properties в часі",
  "Тільки місцевість",
@@ -478,7 +478,7 @@ local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDire
  {
  id: "q2",
  type: "multiple_choice",
- question: "Перший аргумент TweenInfo.new - це…",
+ question: "Перший аргумент TweenInfo.new - це...",
  options: [
  "Тривалість у секундах",
  "Ім'я гравця",
@@ -491,7 +491,7 @@ local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDire
  {
  id: "q3",
  type: "multiple_choice",
- question: "Завершена подія запускається, коли…",
+ question: "Завершена подія запускається, коли...",
  options: [
  "Твін закінчується",
  "Гравець приєднується",
@@ -504,7 +504,7 @@ local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDire
  {
  id: "q4",
  type: "multiple_choice",
- question: "Quad Out підходить для…",
+ question: "Quad Out підходить для...",
  options: [
  "Панелі інтерфейсу користувача",
  "Повноваження сервера",
@@ -517,7 +517,7 @@ local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDire
  {
  id: "q5",
  type: "multiple_choice",
- question: "Повторення -1 у TweenInfo означає…",
+ question: "Повторення -1 у TweenInfo означає...",
  options: [
  "Петля назавжди",
  "Грайте один раз",
@@ -530,7 +530,7 @@ local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDire
  {
  id: "q6",
  type: "multiple_choice",
- question: "Лінійне послаблення для відчуття дверей…",
+ question: "Лінійне послаблення для відчуття дверей...",
  options: [
  "Механічний стійкий",
  "Стрибкий",
@@ -556,7 +556,7 @@ local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDire
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 10.3 додає…",
+ question: "Урок 10.3 додає...",
  options: [
  "Raycasting",
  "Тільки магазин",
@@ -569,7 +569,7 @@ local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDire
  {
  id: "q9",
  type: "multiple_choice",
- question: ":Play() потрібен, оскільки…",
+ question: ":Play() потрібен, оскільки...",
  options: [
  "Tween не запускається до Play",
  "Авто завжди",
@@ -582,7 +582,7 @@ local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDire
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 10.2 зберегти назву…",
+ question: "Урок 10.2 зберегти назву...",
  options: [
  "Урок 10.2 - Майстерність анімації",
  "Фізичні обмеження",
@@ -770,7 +770,7 @@ local result = workspace:Raycast(origin, dir.Unit * dir.Magnitude, params)
  {
  id: "q2",
  type: "multiple_choice",
- question: "FilterDescendantsInstances…",
+ question: "FilterDescendantsInstances...",
  options: [
  "Включіть або виключіть Parts",
  "Видалити місцевість",
@@ -783,7 +783,7 @@ local result = workspace:Raycast(origin, dir.Unit * dir.Magnitude, params)
  {
  id: "q3",
  type: "multiple_choice",
- question: "Напрямок повинен використовувати…",
+ question: "Напрямок повинен використовувати...",
  options: [
  "Одиничний вектор, помножений на відстань",
  "Випадковий",
@@ -809,7 +809,7 @@ local result = workspace:Raycast(origin, dir.Unit * dir.Magnitude, params)
  {
  id: "q5",
  type: "multiple_choice",
- question: "результат. Instance є…",
+ question: "результат. Instance є...",
  options: [
  "Хіт першої Parts",
  "Тільки гравець",
@@ -822,7 +822,7 @@ local result = workspace:Raycast(origin, dir.Unit * dir.Magnitude, params)
  {
  id: "q6",
  type: "multiple_choice",
- question: "Налагодження променя допомагає…",
+ question: "Налагодження променя допомагає...",
  options: [
  "Дивіться шлях променя",
  "Опублікувати гру",
@@ -848,7 +848,7 @@ local result = workspace:Raycast(origin, dir.Unit * dir.Magnitude, params)
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 10.4 поєднує…",
+ question: "Урок 10.4 поєднує...",
  options: [
  "Промені + дзеркала + стан пазла",
  "Тільки інвентар",
@@ -861,7 +861,7 @@ local result = workspace:Raycast(origin, dir.Unit * dir.Magnitude, params)
  {
  id: "q9",
  type: "multiple_choice",
- question: "Теги CollectionService допомагають…",
+ question: "Теги CollectionService допомагають...",
  options: [
  "Визначте цілі головоломки",
  "Літати",
@@ -874,7 +874,7 @@ local result = workspace:Raycast(origin, dir.Unit * dir.Magnitude, params)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 10.3 зберегти назву…",
+ question: "Урок 10.3 зберегти назву...",
  options: [
  "Урок 10.3 - Raycasting",
  "Tween Mastery",
@@ -1085,7 +1085,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "allActive() перевіряє…",
+ question: "allActive() перевіряє...",
  options: [
  "Усі цілі вірні",
  "Одна ціль",
@@ -1111,7 +1111,7 @@ end
  {
  id: "q4",
  type: "multiple_choice",
- question: "Двері відкриваються за допомогою…",
+ question: "Двері відкриваються за допомогою...",
  options: [
  "TweenService після головоломки",
  "Клієнтський чат",
@@ -1137,7 +1137,7 @@ end
  {
  id: "q6",
  type: "multiple_choice",
- question: "Урок 10.4 використовує…",
+ question: "Урок 10.4 використовує...",
  options: [
  "Промені та стан головоломки",
  "Тільки інвентар",
@@ -1150,7 +1150,7 @@ end
  {
  id: "q7",
  type: "multiple_choice",
- question: "Тег PuzzleTarget ідентифікує…",
+ question: "Тег PuzzleTarget ідентифікує...",
  options: [
  "Дійсні кристалічні цілі",
  "Вороги",
@@ -1163,7 +1163,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 10.5 додає…",
+ question: "Урок 10.5 додає...",
  options: [
  "Процесуальні варіанти",
  "Тільки діалог",
@@ -1176,7 +1176,7 @@ end
  {
  id: "q9",
  type: "multiple_choice",
- question: "Антибайпас означає…",
+ question: "Антибайпас означає...",
  options: [
  "Сервер підтверджує завершення",
  "Довірений клієнт",
@@ -1189,7 +1189,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 10.4 зберегти назву…",
+ question: "Урок 10.4 зберегти назву...",
  options: [
  "Урок 10.4 - Лазерна головоломка",
  "Raycasting",
@@ -1391,7 +1391,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "Добре процедурне використання…",
+ question: "Добре процедурне використання...",
  options: [
  "Підібрані шаблони",
  "Чистий хаос",
@@ -1404,7 +1404,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "math.random picks…",
+ question: "math.random picks...",
  options: [
  "Індекс варіанта",
  "Гравець HP",
@@ -1417,7 +1417,7 @@ end
  {
  id: "q3",
  type: "multiple_choice",
- question: "Журналування ідентифікаторів варіантів допомагає…",
+ question: "Журналування ідентифікаторів варіантів допомагає...",
  options: [
  "Складність балансування",
  "Видалення збереження",
@@ -1443,7 +1443,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "випадкове насіння в TEST_MODE…",
+ question: "випадкове насіння в TEST_MODE...",
  options: [
  "Відтворювані запуски налагодження",
  "Живі подвиги",
@@ -1456,7 +1456,7 @@ end
  {
  id: "q6",
  type: "multiple_choice",
- question: "Кожен варіант має бути…",
+ question: "Кожен варіант має бути...",
  options: [
  "Вирішуваний і перевірений",
  "Неможливо",
@@ -1482,7 +1482,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "Урок 10.6 - це…",
+ question: "Урок 10.6 - це...",
  options: [
  "КПП Puzzle World",
  "Тільки RPG",
@@ -1495,7 +1495,7 @@ end
  {
  id: "q9",
  type: "multiple_choice",
- question: "поле складності у варіанті…",
+ question: "поле складності у варіанті...",
  options: [
  "Допомагає балансувати та маркувати",
  "Потрібен Roblox",
@@ -1508,7 +1508,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 10.5 зберегти назву…",
+ question: "Урок 10.5 зберегти назву...",
  options: [
  "Урок 10.5 - Елементи процедури",
  "Лазерна головоломка",
@@ -1685,7 +1685,7 @@ StarterGui/
  {
  id: "q1",
  type: "multiple_choice",
- question: "Puzzle World має включати…",
+ question: "Puzzle World має включати...",
  options: [
  "Обмеження + анімація + промінь + процедурний",
  "Тільки місцевість",
@@ -1711,7 +1711,7 @@ StarterGui/
  {
  id: "q3",
  type: "multiple_choice",
- question: "Модуль 10 зберегти назву…",
+ question: "Модуль 10 зберегти назву...",
  options: [
  "Модуль 10 - Світ пазлів",
  "Інвентар RPG",
@@ -1724,7 +1724,7 @@ StarterGui/
  {
  id: "q4",
  type: "multiple_choice",
- question: "Процедурний раунд після перемоги…",
+ question: "Процедурний раунд після перемоги...",
  options: [
  "Вибирає новий варіант",
  "Видаляє гравця",
@@ -1750,7 +1750,7 @@ StarterGui/
  {
  id: "q6",
  type: "multiple_choice",
- question: "Урок 10.6 завершується…",
+ question: "Урок 10.6 завершується...",
  options: [
  "Модуль 10 Магія деталей",
  "Модуль 12",
@@ -1763,7 +1763,7 @@ StarterGui/
  {
  id: "q7",
  type: "multiple_choice",
- question: "Чисті Folders допомагають…",
+ question: "Чисті Folders допомагають...",
  options: [
  "Утримання команди",
  "Лише відставання",
@@ -1776,7 +1776,7 @@ StarterGui/
  {
  id: "q8",
  type: "multiple_choice",
- question: "Нагорода за двері використовує…",
+ question: "Нагорода за двері використовує...",
  options: [
  "Твін з 10.2",
  "Тільки чат",
@@ -1789,7 +1789,7 @@ StarterGui/
  {
  id: "q9",
  type: "multiple_choice",
- question: "Попередній перегляд модуля 11…",
+ question: "Попередній перегляд модуля 11...",
  options: [
  "Продуктивність і полірування",
  "Тільки NPC",
@@ -1802,7 +1802,7 @@ StarterGui/
  {
  id: "q10",
  type: "multiple_choice",
- question: "Контрольна точка має пріоритет…",
+ question: "Контрольна точка має пріоритет...",
  options: [
  "Послідовна подорож гравця",
  "Більшість можливих Scripts",

@@ -194,7 +194,7 @@ humanoid.Health = math.min(humanoid.Health + 10, humanoid.MaxHealth)
  {
  id: "q1",
  type: "multiple_choice",
- question: "Humanoid керує…",
+ question: "Humanoid керує...",
  options: [
  "Здоров'я і рух",
  "Тільки місцевість",
@@ -246,7 +246,7 @@ humanoid.Health = math.min(humanoid.Health + 10, humanoid.MaxHealth)
  {
  id: "q5",
  type: "multiple_choice",
- question: "Зона пошкодження повинна використовувати…",
+ question: "Зона пошкодження повинна використовувати...",
  options: [
  "Серверний скрипт",
  "Лише LocalScript",
@@ -285,7 +285,7 @@ humanoid.Health = math.min(humanoid.Health + 10, humanoid.MaxHealth)
  {
  id: "q8",
  type: "multiple_choice",
- question: "FindFirstChildOfClass Humanoid знаходить…",
+ question: "FindFirstChildOfClass Humanoid знаходить...",
  options: [
  "Humanoid за характером",
  "Лише Part",
@@ -298,7 +298,7 @@ humanoid.Health = math.min(humanoid.Health + 10, humanoid.MaxHealth)
  {
  id: "q9",
  type: "multiple_choice",
- question: "Модуль 5 фокусується на…",
+ question: "Модуль 5 фокусується на...",
  options: [
  "Бойовий",
  "Тільки магнат",
@@ -311,7 +311,7 @@ humanoid.Health = math.min(humanoid.Health + 10, humanoid.MaxHealth)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 5.1 зберегти назву…",
+ question: "Урок 5.1 зберегти назву...",
  options: [
  "Урок 5.1 - Арена здоров'я",
  "Tycoon Works",
@@ -489,7 +489,7 @@ end)
  {
  id: "q1",
  type: "multiple_choice",
- question: "Для інструмента потрібен дочірній елемент із назвою…",
+ question: "Для інструмента потрібен дочірній елемент із назвою...",
  options: [
  "Ручка",
  "Лезо",
@@ -515,7 +515,7 @@ end)
  {
  id: "q3",
  type: "multiple_choice",
- question: "Активували пожежі, коли…",
+ question: "Активували пожежі, коли...",
  options: [
  "Гравець клацає під час спорядження",
  "Гра збереження",
@@ -528,7 +528,7 @@ end)
  {
  id: "q4",
  type: "multiple_choice",
- question: "LocalScript в інструменті підходить для…",
+ question: "LocalScript в інструменті підходить для...",
  options: [
  "Виявлення коливань входу",
  "Серверна економіка",
@@ -567,7 +567,7 @@ end)
  {
  id: "q7",
  type: "multiple_choice",
- question: "Сервер повинен завдати шкоди, оскільки…",
+ question: "Сервер повинен завдати шкоди, оскільки...",
  options: [
  "Античіт-довіра",
  "колір інтерфейсу",
@@ -593,7 +593,7 @@ end)
  {
  id: "q9",
  type: "multiple_choice",
- question: "Регулювання Properties зчеплення…",
+ question: "Регулювання Properties зчеплення...",
  options: [
  "Як меч сидить в руці",
  "MaxHealth",
@@ -606,7 +606,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 5.2 зберегти назву…",
+ question: "Урок 5.2 зберегти назву...",
  options: [
  "Урок 5.2 - Перший меч",
  "Арена здоров'я",
@@ -739,7 +739,7 @@ end)
  },
  {
  title: "Тестовий манекен NPC (опціонально)",
- content: `Insert **Ріг** або манекен з Humanoid на арену\`Dummy_Target\`.
+ content: `Insert **Rig** або манекен з Humanoid на арену\`Dummy_Target\`.
 
 Стій на місці - гойдайся - здоров'я падає - добре для сольного тестування.
 
@@ -848,7 +848,7 @@ end)
  {
  id: "q4",
  type: "multiple_choice",
- question: "TakeDamage(20) на 100 HP потребує…",
+ question: "TakeDamage(20) на 100 HP потребує...",
  options: [
  "5 ударів без лікування",
  "1 удар",
@@ -861,7 +861,7 @@ end)
  {
  id: "q5",
  type: "multiple_choice",
- question: "Доторкнута ручка виявляє…",
+ question: "Доторкнута ручка виявляє...",
  options: [
  "Якої Parts торкається лезо",
  "ClockTime",
@@ -874,7 +874,7 @@ end)
  {
  id: "q6",
  type: "multiple_choice",
- question: "Перевірка Humanoid ігнорує…",
+ question: "Перевірка Humanoid ігнорує...",
  options: [
  "Стіни та не-персонажа",
  "Гравці",
@@ -887,7 +887,7 @@ end)
  {
  id: "q7",
  type: "multiple_choice",
- question: "Поворотне вікно з активованою…",
+ question: "Поворотне вікно з активованою...",
  options: [
  "Обмежує пошкодження активних коливань",
  "Видаляє інструмент",
@@ -900,7 +900,7 @@ end)
  {
  id: "q8",
  type: "multiple_choice",
- question: "Дуельне тестування потребує…",
+ question: "Дуельне тестування потребує...",
  options: [
  "Humanoid цілі",
  "Тільки місцевість",
@@ -913,7 +913,7 @@ end)
  {
  id: "q9",
  type: "multiple_choice",
- question: "Додано урок 5.2…",
+ question: "Додано урок 5.2...",
  options: [
  "Інструмент оснащено та активовано",
  "DataStore",
@@ -926,7 +926,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 5.3 зберегти назву…",
+ question: "Урок 5.3 зберегти назву...",
  options: [
  "Урок 5.3 - Система пошкоджень",
  "Перший меч",
@@ -1133,7 +1133,7 @@ fade:Play()
  {
  id: "q1",
  type: "multiple_choice",
- question: "TweenService анімує Properties…",
+ question: "TweenService анімує Properties...",
  options: [
  "Плавно протягом часу",
  "Тільки миттєво",
@@ -1159,7 +1159,7 @@ fade:Play()
  {
  id: "q3",
  type: "multiple_choice",
- question: "EasingDirection.Out означає…",
+ question: "EasingDirection.Out означає...",
  options: [
  "Повільно в кінці",
  "Ніколи не зупиняється",
@@ -1185,7 +1185,7 @@ fade:Play()
  {
  id: "q5",
  type: "multiple_choice",
- question: "Створити (Part, інформація, ціль) потреби…",
+ question: "Створити (Part, інформація, ціль) потреби...",
  options: [
  "Instance до анімації + таблиця цілей",
  "Тільки друк",
@@ -1198,7 +1198,7 @@ fade:Play()
  {
  id: "q6",
  type: "multiple_choice",
- question: "Quad EasingStyle - це…",
+ question: "Quad EasingStyle - це...",
  options: [
  "Гладкі загального призначення",
  "Тільки для UI",
@@ -1211,7 +1211,7 @@ fade:Play()
  {
  id: "q7",
  type: "multiple_choice",
- question: "Зберігайте закрито, щоб ворота могли…",
+ question: "Зберігайте закрито, щоб ворота могли...",
  options: [
  "Знову закрийте",
  "Ніколи не рухайся",
@@ -1250,7 +1250,7 @@ fade:Play()
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 5.4 зберегти назву…",
+ question: "Урок 5.4 зберегти назву...",
  options: [
  "Урок 5.4 - Tween Polish",
  "Система пошкоджень",
@@ -1444,7 +1444,7 @@ player.RespawnTime = 3
  {
  id: "q2",
  type: "multiple_choice",
- question: "CharacterAdded працює…",
+ question: "CharacterAdded працює...",
  options: [
  "Кожне нове життя/відродження",
  "Одного разу",
@@ -1457,7 +1457,7 @@ player.RespawnTime = 3
  {
  id: "q3",
  type: "multiple_choice",
- question: "Connect Died всередині CharacterAdded через…",
+ question: "Connect Died всередині CharacterAdded через...",
  options: [
  "Кожне життя потребує нового слухача",
  "Лише інтерфейс користувача",
@@ -1470,7 +1470,7 @@ player.RespawnTime = 3
  {
  id: "q4",
  type: "multiple_choice",
- question: "ArenaSpawn має бути…",
+ question: "ArenaSpawn має бути...",
  options: [
  "На безпечному підлозі арени",
  "У лаві",
@@ -1483,7 +1483,7 @@ player.RespawnTime = 3
  {
  id: "q5",
  type: "multiple_choice",
- question: "RespawnTime = 3 додавання…",
+ question: "RespawnTime = 3 додавання...",
  options: [
  "Затримка перед відродженням",
  "Більше пошкоджень",
@@ -1496,7 +1496,7 @@ player.RespawnTime = 3
  {
  id: "q6",
  type: "multiple_choice",
- question: "Після відродження меч повинен…",
+ question: "Після відродження меч повинен...",
  options: [
  "Все одно завдавати шкоди",
  "Ніколи не споряджайте",
@@ -1535,7 +1535,7 @@ player.RespawnTime = 3
  {
  id: "q9",
  type: "multiple_choice",
- question: "Розпорядник смерті належить до…",
+ question: "Розпорядник смерті належить до...",
  options: [
  "Сервер",
  "Тільки клієнтський HUD",
@@ -1548,7 +1548,7 @@ player.RespawnTime = 3
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 5.5 зберегти назву…",
+ question: "Урок 5.5 зберегти назву...",
  options: [
  "Урок 5.5 - Відродження смерті",
  "Tween Polish",
@@ -1713,7 +1713,7 @@ wins.Parent = leaderstats
  {
  id: "q1",
  type: "multiple_choice",
- question: "Arena Ready включає…",
+ question: "Arena Ready включає...",
  options: [
  "Меч + пошкодження + відродження + полірування",
  "Тільки місцевість",
@@ -1726,7 +1726,7 @@ wins.Parent = leaderstats
  {
  id: "q2",
  type: "multiple_choice",
- question: "Тест 4 підтверджує…",
+ question: "Тест 4 підтверджує...",
  options: [
  "Відродження на арені",
  "DataStore",
@@ -1739,7 +1739,7 @@ wins.Parent = leaderstats
  {
  id: "q3",
  type: "multiple_choice",
- question: "Хороший TTK - це про…",
+ question: "Хороший TTK - це про...",
  options: [
  "8-15 секунд",
  "0,1 секунди",
@@ -1778,7 +1778,7 @@ wins.Parent = leaderstats
  {
  id: "q6",
  type: "multiple_choice",
- question: "Перемагає в рейтингу лідерів…",
+ question: "Перемагає в рейтингу лідерів...",
  options: [
  "Кількість вбивств у табл",
  "Тільки здоров'я",
@@ -1791,7 +1791,7 @@ wins.Parent = leaderstats
  {
  id: "q7",
  type: "multiple_choice",
- question: "Тема модуля 6…",
+ question: "Тема модуля 6...",
  options: [
  "Гонки / транспортні засоби",
  "Тільки обби",
@@ -1804,7 +1804,7 @@ wins.Parent = leaderstats
  {
  id: "q8",
  type: "multiple_choice",
- question: "Червоний вихід під час дуелі означає…",
+ question: "Червоний вихід під час дуелі означає...",
  options: [
  "Виправити перед публікацією",
  "ідеально",
@@ -1817,7 +1817,7 @@ wins.Parent = leaderstats
  {
  id: "q9",
  type: "multiple_choice",
- question: "Тест на три смерті належить…",
+ question: "Тест на три смерті належить...",
  options: [
  "Урок 5.5 Стабільність відродження",
  "Розміщення монет",
@@ -1830,7 +1830,7 @@ wins.Parent = leaderstats
  {
  id: "q10",
  type: "multiple_choice",
- question: "Модуль 5 зберегти назву…",
+ question: "Модуль 5 зберегти назву...",
  options: [
  "Модуль 5 - Арена готова",
  "Заняття 5.1",

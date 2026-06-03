@@ -4,8 +4,8 @@ import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { syncStudentScheduleAccess } from '@/lib/syncStudentScheduleAccess'
 import {
+  canReadCourseProgress,
   getUnlockedLessonSet,
-  hasStudentCourseAccess,
   isLessonUnlockedInCourse,
 } from '@/lib/courseLessonAccess'
 import { getLocalizedMetadata, buildAlternates } from '@/lib/i18nMetadata'
@@ -55,9 +55,9 @@ export default async function LessonPageRoute({ params }) {
         studentProfile = user.studentProfile || null
       }
 
-      const hasAccess = user ? hasStudentCourseAccess(user, courseId) : false
+      const canLoadProgress = user ? canReadCourseProgress(user, courseId) : false
       const progressCollection = await getCollection('userProgress')
-      const progress = hasAccess
+      const progress = canLoadProgress
         ? await progressCollection.findOne({
             userId: new ObjectId(userId),
             courseId,

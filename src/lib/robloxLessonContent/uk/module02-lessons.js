@@ -51,7 +51,7 @@ export const ukLesson21 = {
  content: `1. **Workspace** → Insert **Folder** →\`Obby\` 2. Всередині\`Obby\`, Folder\`Hazards\` 3. Також створіть Folder\`SafePath\`для білих/сірих платформ
 
 **Кожна Part вбивства:**
-- Insert **Block** → Name:\`Kill_01\`,\`Kill_02\`, …
+- Insert **Block** → Name:\`Kill_01\`,\`Kill_02\`, ...
 - Size: різний (\`4, 1, 4\`або тонкий\` 8, 1, 2\`)
 - Material: **Neon** | BrickColor: **Really red**
 - Anchored: **true** | CanCollide: **true**
@@ -82,7 +82,7 @@ export const ukLesson21 = {
  content: `Перш ніж логіка вбивства, доведіть, що **Touched** взагалі працює.
 
 1. У kill Part → Insert **Script**
-2. Insert **test** code:\`\`\`lua
+2. Вставте тестовий код:\`\`\`lua
 local block = script.Parent
 
 block.Touched:Connect(function(hit)
@@ -147,8 +147,8 @@ end)
 
 Якщо ви дублюєте лише Part без Script, скопіюйте та вставте Script у кожен блок ліквідації.
 
-**Упорядкувати Explorer:**\`Obby → Hazards → Kill_01 … Kill_04\`
-\`Obby → SafePath → Platform_01 …\``,
+**Упорядкувати Explorer:**\`Obby → Hazards → Kill_01 ... Kill_04\`
+\`Obby → SafePath → Platform_01 ...\``,
  },
  {
  title: "Контрольний список налагодження",
@@ -249,7 +249,7 @@ end)
  {
  id: "q2",
  type: "multiple_choice",
- question: "Торкнувся вогню, коли…",
+ question: "Торкнувся вогню, коли...",
  options: [
  "Ви зберігаєте гру",
  "Щось стикається з Part",
@@ -288,12 +288,12 @@ end)
  {
  id: "q5",
  type: "multiple_choice",
- question: "Scripts блокування блокування мають бути…",
+ question: "Scripts блоку вбивства мають бути...",
  options: [
  "LocalScript у StarterGui",
  "Серверний скрипт в Part",
  "Внутрішнє освітлення",
- "A Лише звук",
+ "Лише звук",
  ],
  correctAnswer: 1,
  explanation: "Серверні Scripts справляються зі світовими небезпеками.",
@@ -301,7 +301,7 @@ end)
  {
  id: "q6",
  type: "multiple_choice",
- question: "Лава має виглядати інакше, використовуючи…",
+ question: "Лава має виглядати інакше, використовуючи...",
  options: [
  "Neon + червоний колір",
  "Те саме, що безпечна підлога",
@@ -314,7 +314,7 @@ end)
  {
  id: "q7",
  type: "multiple_choice",
- question: "Найшвидший спосіб додати 4 Scripts лави…",
+ question: "Найшвидший спосіб додати 4 Scripts лави...",
  options: [
  "Дублюйте одну робочу Part вбивства",
  "Видалити Workspace",
@@ -327,7 +327,7 @@ end)
  {
  id: "q8",
  type: "multiple_choice",
- question: "Touched перевірено в…",
+ question: "Touched перевірено в...",
  options: [
  "Режим відтворення",
  "Тільки вікно публікації",
@@ -340,7 +340,7 @@ end)
  {
  id: "q9",
  type: "multiple_choice",
- question: "Блоки знищення потребують закріплення…",
+ question: "Блоки знищення потребують закріплення...",
  options: [
  "true",
  "false always",
@@ -353,7 +353,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 2.1 зберегти назву…",
+ question: "Урок 2.1 зберегти назву...",
  options: [
  "Урок 2.1 - Lava Lane",
  "Модуль 1 - Живий острів",
@@ -391,7 +391,7 @@ export const ukLesson22 = {
 
 **Хід уроку:**
 1. **Теорія (40 хв)** - SpawnLocation + RespawnLocation
-2. **Практика (~25 хв)** - 3 етапи обі з 3 контрольними точками
+2. **Практика (~25 хв)** - 3 етапи Obby з 3 контрольними точками
 3. **Вікторина (10 хв)** - проходження **70%**
 
 Відкрийте **Урок 2.1 - Lava Lane**.`,
@@ -556,7 +556,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "Контрольні точки зберігають прогрес…",
+ question: "Контрольні точки зберігають прогрес...",
  options: [
  "Під час ігрового сеансу",
  "Назавжди на веб-сайті Roblox",
@@ -569,7 +569,7 @@ end
  {
  id: "q2",
  type: "multiple_choice",
- question: "player.RespawnLocation має бути…",
+ question: "player.RespawnLocation має бути...",
  options: [
  "SpawnLocation",
  "Звук",
@@ -582,7 +582,7 @@ end
  {
  id: "q3",
  type: "multiple_choice",
- question: "GetPlayerFromCharacter отримує…",
+ question: "GetPlayerFromCharacter отримує...",
  options: [
  "Гравець з model Character",
  "Колір Parts",
@@ -608,7 +608,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "Доторкнувшись до CP_2 і померши, з’являйтеся на…",
+ question: "Доторкнувшись до CP_2 і померши, з’являйтеся на...",
  options: [
  "КП_2",
  "Завжди тільки світове походження",
@@ -621,7 +621,7 @@ end
  {
  id: "q6",
  type: "multiple_choice",
- question: "Контрольні пункти слід розмістити…",
+ question: "Контрольні пункти слід розмістити...",
  options: [
  "На безпечному місці після важких стрибків",
  "Всередині лави",
@@ -647,7 +647,7 @@ end
  {
  id: "q8",
  type: "multiple_choice",
- question: "Scripts контрольних точок є…",
+ question: "Scripts контрольних точок є...",
  options: [
  "Серверні скрипти в КПП",
  "Локальні скрипти в Head",
@@ -660,7 +660,7 @@ end
  {
  id: "q9",
  type: "multiple_choice",
- question: "Ідеальна відстань між контрольними точками…",
+ question: "Ідеальна відстань між контрольними точками...",
  options: [
  "Кожні 20-40 секунд гри",
  "Один раз за гру",
@@ -673,7 +673,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 2.2 зберегти назву…",
+ question: "Урок 2.2 зберегти назву...",
  options: [
  "Урок 2.2 - Контрольні точки",
  "Урок 2.1 - Lava Lane",
@@ -893,7 +893,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "Інтерфейс таймера належить до…",
+ question: "Інтерфейс таймера належить до...",
  options: [
  "StarterGui",
  "Рельєф місцевості",
@@ -932,7 +932,7 @@ end
  {
  id: "q4",
  type: "multiple_choice",
- question: "string.format(\"%.2f\", n) показує…",
+ question: "string.format(\"%.2f\", n) показує...",
  options: [
  "Два знаки після коми",
  "Випадковий колір",
@@ -945,7 +945,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "біг = помилкові зупинки…",
+ question: "біг = помилкові зупинки...",
  options: [
  "Цикл while, що оновлює мітку",
  "Весь ігровий сервер",
@@ -958,7 +958,7 @@ end
  {
  id: "q6",
  type: "multiple_choice",
- question: "FinishPad має виявити…",
+ question: "FinishPad має виявити...",
  options: [
  "Дотик Character LocalPlayer",
  "Тільки лава",
@@ -971,7 +971,7 @@ end
  {
  id: "q7",
  type: "multiple_choice",
- question: "task.wait(0,05) у циклі…",
+ question: "task.wait(0,05) у циклі...",
  options: [
  "Оновлює текст ~20 разів на секунду",
  "Видаляє інтерфейс користувача",
@@ -997,7 +997,7 @@ end
  {
  id: "q9",
  type: "multiple_choice",
- question: "Якщо таймер відсутній, спочатку перевірте…",
+ question: "Якщо таймер відсутній, спочатку перевірте...",
  options: [
  "RunUI під StarterGui та назву мітки",
  "Видалити Obby",
@@ -1010,7 +1010,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 2.3 зберегти назву…",
+ question: "Урок 2.3 зберегти назву...",
  options: [
  "Урок 2.3 - Obby Timer",
  "Урок 2.2 - Контрольні точки",
@@ -1214,7 +1214,7 @@ end
  {
  id: "q1",
  type: "multiple_choice",
- question: "if/elseif/else вибирає…",
+ question: "if/elseif/else вибирає...",
  options: [
  "Лише перша справжня гілка",
  "Кожна гілка відразу",
@@ -1240,7 +1240,7 @@ end
  {
  id: "q3",
  type: "multiple_choice",
- question: "Порівняти рівність використовує…",
+ question: "Порівняти рівність використовує...",
  options: [
  "==",
  "=",
@@ -1253,7 +1253,7 @@ end
  {
  id: "q4",
  type: "multiple_choice",
- question: "минуло = 35,00, якщо минуло < 35, отримує…",
+ question: "минуло = 35,00, якщо минуло < 35, отримує...",
  options: [
  "Ранг A (не S)",
  "S ранг",
@@ -1266,7 +1266,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "Такі функції, як getRank, допомагають…",
+ question: "Такі функції, як getRank, допомагають...",
  options: [
  "Чисто повторно використовуйте логіку",
  "Видалити інтерфейс користувача",
@@ -1292,7 +1292,7 @@ end
  {
  id: "q7",
  type: "multiple_choice",
- question: "Константа S_TIME у верхній Script у Part робить…",
+ question: "Константа S_TIME у верхній Script у Part робить...",
  options: [
  "Налаштувати пороги простіше",
  "Скрипти невидимі",
@@ -1331,7 +1331,7 @@ end
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 2.4 зберегти назву…",
+ question: "Урок 2.4 зберегти назву...",
  options: [
  "Урок 2.4. Підсумкові оцінки",
  "Урок 2.3 - Obby Timer",
@@ -1535,7 +1535,7 @@ end)
  {
  id: "q1",
  type: "multiple_choice",
- question: "VictoryGui має починатися з Enabled…",
+ question: "VictoryGui має починатися з Enabled...",
  options: [
  "помилковий",
  "true always",
@@ -1561,7 +1561,7 @@ end)
  {
  id: "q3",
  type: "multiple_choice",
- question: "showVictory оновлення…",
+ question: "showVictory оновлення...",
  options: [
  "Properties тексту мітки",
  "Місцева вода",
@@ -1574,7 +1574,7 @@ end)
  {
  id: "q4",
  type: "multiple_choice",
- question: "Натискання TextButton використовує…",
+ question: "Натискання TextButton використовує...",
  options: [
  "MouseButton1Click",
  "Зворушений",
@@ -1600,7 +1600,7 @@ end)
  {
  id: "q6",
  type: "multiple_choice",
- question: "RankLabel має показувати…",
+ question: "RankLabel має показувати...",
  options: [
  "S/A/B від умов",
  "Тільки вік гравця",
@@ -1613,7 +1613,7 @@ end)
  {
  id: "q7",
  type: "multiple_choice",
- question: "UICorner на панелі…",
+ question: "UICorner на панелі...",
  options: [
  "Заокруглює кути для полірування",
  "Вбиває гравця",
@@ -1626,7 +1626,7 @@ end)
  {
  id: "q8",
  type: "multiple_choice",
- question: "Повторна спроба має принаймні…",
+ question: "Повторна спроба має принаймні...",
  options: [
  "Приховати графічний інтерфейс перемоги",
  "Видалити obby",
@@ -1652,7 +1652,7 @@ end)
  {
  id: "q10",
  type: "multiple_choice",
- question: "Урок 2.5 зберегти назву…",
+ question: "Урок 2.5 зберегти назву...",
  options: [
  "Урок 2.5 - Екран перемоги",
  "Завершити оцінки",
@@ -1832,7 +1832,7 @@ export const ukLesson26 = {
  {
  id: "q1",
  type: "multiple_choice",
- question: "Obby Ready вимагає…",
+ question: "Obby Ready вимагає...",
  options: [
  "Лава + CP + таймер + перемога",
  "Тільки місцевість",
@@ -1858,7 +1858,7 @@ export const ukLesson26 = {
  {
  id: "q3",
  type: "multiple_choice",
- question: "VictoryGui з’являється, коли…",
+ question: "VictoryGui з’являється, коли...",
  options: [
  "Гравець торкається FinishPad",
  "Студія відкривається",
@@ -1871,7 +1871,7 @@ export const ukLesson26 = {
  {
  id: "q4",
  type: "multiple_choice",
- question: "Перевірки Playtest 4…",
+ question: "Перевірки Playtest 4...",
  options: [
  "B Місце на повільному фініші",
  "Видалення острова",
@@ -1897,7 +1897,7 @@ export const ukLesson26 = {
  {
  id: "q6",
  type: "multiple_choice",
- question: "Початкові знаки допомагають…",
+ question: "Початкові знаки допомагають...",
  options: [
  "Гравці знаходять маршрут",
  "Збільшити пошкодження лави",
@@ -1910,7 +1910,7 @@ export const ukLesson26 = {
  {
  id: "q7",
  type: "multiple_choice",
- question: "Кнопка повторити має…",
+ question: "Кнопка повторити має...",
  options: [
  "Приховати перемогу та дозволити ще один біг",
  "Видалити всі контрольні точки",
@@ -1923,7 +1923,7 @@ export const ukLesson26 = {
  {
  id: "q8",
  type: "multiple_choice",
- question: "Червоний вихід під час чистого запуску означає…",
+ question: "Червоний вихід під час чистого запуску означає...",
  options: [
  "Виправте Scripts перед публікацією",
  "Ідеальна гра",
@@ -1936,7 +1936,7 @@ export const ukLesson26 = {
  {
  id: "q9",
  type: "multiple_choice",
- question: "Тема модуля 3…",
+ question: "Тема модуля 3...",
  options: [
  "Монети та колекціонування",
  "Тільки автомобілі",
@@ -1949,7 +1949,7 @@ export const ukLesson26 = {
  {
  id: "q10",
  type: "multiple_choice",
- question: "Name збереження останнього модуля 2…",
+ question: "Name збереження останнього модуля 2...",
  options: [
  "Модуль 2 - Obby Ready",
  "Заняття 1.1",
