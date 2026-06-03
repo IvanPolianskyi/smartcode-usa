@@ -1,6 +1,13 @@
 import { NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/requireAdmin'
+import { blockUnlessDevOrAdminEnabled } from '@/lib/requireAdminRoute'
 
 export async function POST() {
+  const blocked = blockUnlessDevOrAdminEnabled()
+  if (blocked) return blocked
+  const guard = await requireAdmin()
+  if (guard.error) return guard.error
+
   try {
     const botToken = process.env.TELEGRAM_BOT_TOKEN_PROJECTS || process.env.TELEGRAM_BOT_TOKEN
     
@@ -58,6 +65,11 @@ export async function POST() {
 }
 
 export async function DELETE() {
+  const blocked = blockUnlessDevOrAdminEnabled()
+  if (blocked) return blocked
+  const guard = await requireAdmin()
+  if (guard.error) return guard.error
+
   try {
     const botToken = process.env.TELEGRAM_BOT_TOKEN_PROJECTS || process.env.TELEGRAM_BOT_TOKEN
     
@@ -97,6 +109,11 @@ export async function DELETE() {
 }
 
 export async function GET() {
+  const blocked = blockUnlessDevOrAdminEnabled()
+  if (blocked) return blocked
+  const guard = await requireAdmin()
+  if (guard.error) return guard.error
+
   try {
     const botToken = process.env.TELEGRAM_BOT_TOKEN_PROJECTS || process.env.TELEGRAM_BOT_TOKEN
     

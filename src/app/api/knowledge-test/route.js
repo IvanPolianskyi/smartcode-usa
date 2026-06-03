@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/mongodb'
 import { normalizePhoneE164 } from '@/lib/phoneE164'
 import { API_ERRORS, resolveLocale } from '@/lib/localeStrings'
+import { requireAdmin } from '@/lib/requireAdmin'
 
 // Helper function to escape HTML for Telegram
 function escapeHtml(input) {
@@ -172,8 +173,11 @@ export async function POST(request) {
   }
 }
 
-// GET endpoint to retrieve test results (for admin use)
+// GET — admin only (PII)
 export async function GET() {
+  const guard = await requireAdmin()
+  if (guard.error) return guard.error
+
   try {
     const testResults = await getCollection('knowledge_test_results')
     const allResults = await testResults

@@ -4,6 +4,7 @@ import { getCollection } from '@/lib/mongodb'
 import { getMonobankInvoiceStatus } from '@/lib/monobank'
 import { applyPaymentProviderUpdate } from '@/lib/fulfillPayment'
 import { getPaymentRedirectPath } from '@/lib/paymentRedirect'
+import { paymentStatusTokenMatches } from '@/lib/paymentStatusToken'
 
 /**
  * Check payment status by orderId (optional Monobank sync with ?sync=1)
@@ -33,10 +34,30 @@ export async function GET(request) {
       )
     }
 
-    if (payment.userId && payment.userId.toString() !== userId) {
+    const statusToken = searchParams.get('token')
+
+    if (payment.userId) {
+      if (!userId || payment.userId.toString() !== userId) {
+        return NextResponse.json(
+          { error: 'Unauthorized' },
+          { status: 403 }
+        )
+      }
+    } else if (paymentStatusTokenMatches(payment, statusToken)) {
+      // guest checkout — token from redirect URL
+    } else if (payment.isGuest) {
+      const guestEmail = searchParams.get('guestEmail')?.toLowerCase().trim()
+      const storedGuest = payment.guestEmail?.toLowerCase().trim()
+      if (!guestEmail || !storedGuest || guestEmail !== storedGuest) {
+        return NextResponse.json(
+          { error: 'Unauthorized' },
+          { status: 403 }
+        )
+      }
+    } else {
       return NextResponse.json(
         { error: 'Unauthorized' },
-        { status: 403 }
+        { status: 401 }
       )
     }
 

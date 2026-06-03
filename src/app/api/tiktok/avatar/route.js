@@ -119,8 +119,13 @@ export async function GET(request) {
 			)
 		}
 
-		// Видаляємо @ якщо є
-		const cleanUsername = username.replace('@', '')
+		const cleanUsername = username.replace('@', '').trim()
+		if (!/^[a-zA-Z0-9._]{1,64}$/.test(cleanUsername)) {
+			return NextResponse.json(
+				{ error: 'Invalid username' },
+				{ status: 400 }
+			)
+		}
 		
 		// Отримуємо аватарку
 		const avatarUrl = await getTikTokAvatar(cleanUsername)

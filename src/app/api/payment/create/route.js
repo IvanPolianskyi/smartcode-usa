@@ -7,6 +7,7 @@ import { startMonobankPayment } from '@/lib/createMonobankPayment'
 import { getCoursePrice, getCourseChargeAmount } from '@/lib/coursePrices'
 import { paymentDescription } from '@/lib/localeStrings'
 import { getPaymentBaseUrl } from '@/lib/paymentUrls'
+import { createPaymentStatusToken } from '@/lib/paymentStatusToken'
 
 /**
  * Create payment link for course purchase
@@ -58,6 +59,7 @@ export async function POST(request) {
     const customerEmail = user ? user.email : guestEmail
     const orderIdPrefix = userId ? userId.toString() : `guest_${customerEmail.replace(/[^a-zA-Z0-9]/g, '')}`
     const orderId = `course_${courseId}_${orderIdPrefix}_${Date.now()}`
+    const statusToken = createPaymentStatusToken()
 
     const baseUrl = getPaymentBaseUrl()
     const paymentsCollection = await getCollection('payments')
@@ -65,6 +67,7 @@ export async function POST(request) {
     const paymentRecord = {
       courseId,
       orderId,
+      statusToken,
       amount: getCourseChargeAmount(courseInfo),
       currency: courseInfo.chargeCurrency || courseInfo.currency,
       status: 'pending',
@@ -92,6 +95,7 @@ export async function POST(request) {
         description,
         locale,
         basketName: productName,
+        statusToken,
       })
 
       paymentRecord.invoiceId = invoiceId
@@ -111,7 +115,7 @@ export async function POST(request) {
       orderId,
       amount: courseInfo.price,
       description: paymentDescription(productLabel, locale),
-      resultUrl: `${baseUrl}/payment/success?orderId=${orderId}`,
+      resultUrl: `${baseUrl}/${locale}/payment-result?orderId=${encodeURIComponent(orderId)}&token=${encodeURIComponent(statusToken)}`,
       serverUrl: `${baseUrl}/api/payment/webhook`,
       currency: courseInfo.currency,
     })

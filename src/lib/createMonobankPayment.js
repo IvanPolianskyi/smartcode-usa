@@ -10,6 +10,7 @@ export async function startMonobankPayment({
   description,
   locale = 'uk',
   basketName,
+  statusToken,
 }) {
   const amountKop = uahToKopiyky(amountUah)
   if (amountKop <= 0) {
@@ -20,7 +21,7 @@ export async function startMonobankPayment({
     amount: amountKop,
     reference: orderId,
     destination: description,
-    redirectUrl: monobankRedirectUrl(orderId, locale),
+    redirectUrl: monobankRedirectUrl(orderId, locale, statusToken),
     webHookUrl: monobankWebhookUrl(),
     basketOrder: [
       {

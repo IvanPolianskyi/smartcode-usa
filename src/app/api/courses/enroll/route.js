@@ -3,6 +3,7 @@ import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { createProgressEntry, ensureUserEnrolled } from '@/lib/courseUtils'
+import { hasStudentCourseAccess } from '@/lib/courseLessonAccess'
 
 export async function POST(request) {
   try {
@@ -26,6 +27,14 @@ export async function POST(request) {
     }
 
     const userIdObj = new ObjectId(userId)
+    const usersCollection = await getCollection('users')
+    const user = await usersCollection.findOne({ _id: userIdObj })
+    if (!user || !hasStudentCourseAccess(user, courseId)) {
+      return NextResponse.json(
+        { error: 'No access to this course' },
+        { status: 403 }
+      )
+    }
 
     // Перевірити чи вже є прогрес
     const progressCollection = await getCollection('userProgress')

@@ -6,15 +6,18 @@ export function getPaymentBaseUrl() {
   )
 }
 
-export function monobankRedirectUrl(orderId, locale = 'uk') {
+export function monobankRedirectUrl(orderId, locale = 'uk', statusToken) {
   const override = process.env.MONOBANK_REDIRECT_URL?.trim()
-  if (override) {
-    const url = new URL(override)
-    url.searchParams.set('orderId', orderId)
-    return url.toString()
+  const url = override
+    ? new URL(override)
+    : new URL(
+        `${getPaymentBaseUrl().replace(/\/$/, '')}/${locale}/payment-result`
+      )
+  url.searchParams.set('orderId', orderId)
+  if (statusToken) {
+    url.searchParams.set('token', statusToken)
   }
-  const base = getPaymentBaseUrl().replace(/\/$/, '')
-  return `${base}/${locale}/payment-result?orderId=${encodeURIComponent(orderId)}`
+  return url.toString()
 }
 
 export function monobankWebhookUrl() {

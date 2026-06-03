@@ -2,8 +2,15 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production'
 const JWT_EXPIRES_IN = '7d'
+
+function getJwtSecret() {
+  const secret = process.env.JWT_SECRET || ''
+  if (!secret && process.env.NODE_ENV === 'production') {
+    throw new Error('JWT_SECRET must be set in production')
+  }
+  return secret || 'dev-only-change-jwt-secret'
+}
 
 /**
  * Hash a password
@@ -23,7 +30,7 @@ export async function comparePassword(password, hash) {
  * Generate JWT token
  */
 export function generateToken(userId) {
-  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN })
+  return jwt.sign({ userId }, getJwtSecret(), { expiresIn: JWT_EXPIRES_IN })
 }
 
 /**
@@ -31,7 +38,7 @@ export function generateToken(userId) {
  */
 export function verifyToken(token) {
   try {
-    return jwt.verify(token, JWT_SECRET)
+    return jwt.verify(token, getJwtSecret())
   } catch (error) {
     return null
   }

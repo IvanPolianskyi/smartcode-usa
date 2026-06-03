@@ -3,6 +3,7 @@ import { ObjectId } from 'mongodb'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { startMonobankPayment } from '@/lib/createMonobankPayment'
+import { createPaymentStatusToken } from '@/lib/paymentStatusToken'
 
 const GROUP_LESSON_PRICE_UAH = 350
 const INDIVIDUAL_LESSON_PRICE_UAH = 500
@@ -49,6 +50,7 @@ export async function POST(request) {
 
     const creditedLessons = Math.floor(amount / lessonPrice)
     const orderId = `topup_${userId}_${Date.now()}`
+    const statusToken = createPaymentStatusToken()
 
     const formatLabel = lessonFormat === 'individual' ? 'індивідуальний' : 'груповий'
     const description = `Оплата уроків SmartCode (${formatLabel}, ${creditedLessons} шт.)`
@@ -59,6 +61,7 @@ export async function POST(request) {
       description,
       locale: 'uk',
       basketName: description,
+      statusToken,
     })
 
     const paymentsCollection = await getCollection('payments')
@@ -66,6 +69,7 @@ export async function POST(request) {
       userId: userIdObj,
       courseId: 'manual-topup',
       orderId,
+      statusToken,
       invoiceId,
       amount,
       currency: 'UAH',

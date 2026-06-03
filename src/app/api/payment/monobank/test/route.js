@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server'
-import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
+import { requireAdmin } from '@/lib/requireAdmin'
 import { ObjectId } from 'mongodb'
 import { getPaymentBaseUrl } from '@/lib/paymentUrls'
 import { createMonobankInvoice } from '@/lib/monobank'
+import { createPaymentStatusToken } from '@/lib/paymentStatusToken'
 
 const DEFAULT_AMOUNT_KOPIYKY = 100000
 const DEFAULT_DESCRIPTION = 'Тестова оплата'
@@ -14,8 +15,10 @@ const DEFAULT_REDIRECT = 'https://mysite.com/payment-result'
  * POST /api/payment/monobank/test
  */
 export async function POST(request) {
+  const guard = await requireAdmin()
+  if (guard.error) return guard.error
+
   try {
-    const userId = await getCurrentUser()
     let body = {}
     try {
       body = await request.json()
@@ -32,6 +35,7 @@ export async function POST(request) {
     const locale = body.locale || 'uk'
 
     const orderId = body.orderId || `test_mono_${Date.now()}`
+    const statusToken = createPaymentStatusToken()
 
     const { invoiceId, pageUrl } = await createMonobankInvoice({
       amount: amountKopiyky,
@@ -53,6 +57,7 @@ export async function POST(request) {
     const paymentRecord = {
       courseId: 'monobank-test',
       orderId,
+      statusToken,
       invoiceId,
       amount: amountKopiyky / 100,
       currency: 'UAH',
@@ -64,9 +69,7 @@ export async function POST(request) {
       updatedAt: new Date(),
     }
 
-    if (userId) {
-      paymentRecord.userId = new ObjectId(userId)
-    }
+    paymentRecord.userId = new ObjectId(guard.userId)
 
     await paymentsCollection.insertOne(paymentRecord)
 

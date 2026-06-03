@@ -23,6 +23,7 @@ export default function PaymentResultFlow({ syncMonobank = true }) {
   const [message, setMessage] = useState('')
   const [redirectTo, setRedirectTo] = useState(null)
   const orderId = searchParams.get('orderId')
+  const statusToken = searchParams.get('token')
 
   useEffect(() => {
     setMessage(t('loading.message'))
@@ -41,8 +42,11 @@ export default function PaymentResultFlow({ syncMonobank = true }) {
           if (cancelled) return
 
           const syncParam = syncMonobank ? '&sync=1' : ''
+          const tokenParam = statusToken
+            ? `&token=${encodeURIComponent(statusToken)}`
+            : ''
           const response = await fetch(
-            `/api/payment/status?orderId=${encodeURIComponent(orderId)}${syncParam}`,
+            `/api/payment/status?orderId=${encodeURIComponent(orderId)}${syncParam}${tokenParam}`,
             { credentials: 'include' }
           )
 
@@ -104,7 +108,7 @@ export default function PaymentResultFlow({ syncMonobank = true }) {
     return () => {
       cancelled = true
     }
-  }, [orderId, t, router, syncMonobank])
+  }, [orderId, statusToken, t, router, syncMonobank])
 
   const fallbackHref = redirectTo || '/dashboard'
 

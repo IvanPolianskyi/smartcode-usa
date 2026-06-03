@@ -103,6 +103,15 @@ export async function POST(request) {
       )
     }
 
+    const usersCollection = await getCollection('users')
+    const user = await usersCollection.findOne({ _id: new ObjectId(userId) })
+    if (!user || !hasStudentCourseAccess(user, courseId)) {
+      return NextResponse.json(
+        { error: 'No access to this course' },
+        { status: 403 }
+      )
+    }
+
     const progressCollection = await getCollection('userProgress')
     const userIdObj = new ObjectId(userId)
 

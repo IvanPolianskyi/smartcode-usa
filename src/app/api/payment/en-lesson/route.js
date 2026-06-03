@@ -3,6 +3,7 @@ import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { startMonobankPayment } from '@/lib/createMonobankPayment'
+import { createPaymentStatusToken } from '@/lib/paymentStatusToken'
 import { getLessonPrice, getLessonChargeAmount } from '@/lib/coursePrices'
 import { reserveLessonSlot } from '@/lib/lessonSlotReserve'
 
@@ -61,6 +62,7 @@ export async function POST(request) {
 
     const orderIdPrefix = userId ? userId.toString() : `guest_${customerEmail.replace(/[^a-zA-Z0-9]/g, '')}`
     const orderId = `lesson_${courseId}_${lessonFormat}_${day}_${time.replace(':', '')}_${orderIdPrefix}_${Date.now()}`
+    const statusToken = createPaymentStatusToken()
 
     const productLabel =
       lessonFormat === 'individual'
@@ -73,6 +75,7 @@ export async function POST(request) {
       description: productLabel,
       locale: 'en',
       basketName: productLabel,
+      statusToken,
     })
 
     const paymentsCollection = await getCollection('payments')
@@ -80,6 +83,7 @@ export async function POST(request) {
     const paymentRecord = {
       courseId,
       orderId,
+      statusToken,
       invoiceId,
       amount: chargeUah,
       currency: priceInfo.chargeCurrency || 'UAH',

@@ -19,9 +19,11 @@ const ALL_COURSE_IDS = [
 
 async function main() {
   const email = (process.argv[2] || 'smartcodeacademy3@gmail.com').toLowerCase().trim()
-  const mongoUri =
-    process.env.MONGODB_URI ||
-    'mongodb+srv://artemonyshchuk123:20032007Art@cluster0.vfkxida.mongodb.net/'
+  const mongoUri = process.env.MONGODB_URI
+  if (!mongoUri) {
+    console.error('Set MONGODB_URI in .env.local')
+    process.exit(1)
+  }
   const databaseName = process.env.MONGODB_DB || 'SmartCodeLogs'
 
   const client = new MongoClient(mongoUri)
