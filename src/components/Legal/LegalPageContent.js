@@ -29,7 +29,7 @@ function renderListItems(items) {
 		return (
 			<li key={key}>
 				{title ? <strong>{title}</strong> : null}
-				{title && text ? ' — ' : null}
+				{title && text ? ' - ' : null}
 				{text || null}
 			</li>
 		)

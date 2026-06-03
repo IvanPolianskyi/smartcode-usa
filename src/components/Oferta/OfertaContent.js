@@ -23,7 +23,7 @@ function renderListItems(items, keyOrder) {
 		return (
 			<li key={key}>
 				<strong>{title}</strong>
-				{text ? <> – {text}</> : null}
+				{text ? <> - {text}</> : null}
 				{sublist ? (
 					<ul className={styles.sublist}>
 						{sortNumericKeys(sublist).map((sk) => (

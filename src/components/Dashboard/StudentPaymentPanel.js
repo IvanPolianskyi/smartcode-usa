@@ -1,10 +1,12 @@
 'use client'
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { Wallet, Copy, Check, Upload, AlertTriangle, CircleCheck, Clock, BookOpen, X, ImageIcon, FileText } from 'lucide-react'
-import { UK_BANK_PAYMENT_DETAILS } from '@/lib/paymentBankDetails'
+import { Wallet, Upload, AlertTriangle, CircleCheck, Clock, BookOpen, X, ImageIcon, FileText } from 'lucide-react'
+// import { Copy, Check } from 'lucide-react' // step 2 bank details (CopyRow)
+// import { UK_BANK_PAYMENT_DETAILS } from '@/lib/paymentBankDetails'
 import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
 
+/* Step 2 — bank transfer details (temporarily hidden)
 function CopyRow({ label, value }) {
   const [copied, setCopied] = useState(false)
   const copy = async () => {
@@ -13,7 +15,7 @@ function CopyRow({ label, value }) {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {
-      /* ignore */
+      // ignore
     }
   }
   return (
@@ -28,6 +30,7 @@ function CopyRow({ label, value }) {
     </div>
   )
 }
+*/
 
 export default function StudentPaymentPanel({
   t,
@@ -47,7 +50,7 @@ export default function StudentPaymentPanel({
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState('info')
 
-  const bank = UK_BANK_PAYMENT_DETAILS
+  // const bank = UK_BANK_PAYMENT_DETAILS
   const lessonCredits = Number(paymentStats?.lessonCredits || 0)
 
   const debtLessons = useMemo(() => {
@@ -253,6 +256,7 @@ export default function StudentPaymentPanel({
             </div>
           </div>
 
+          {/* Step 2 — Перекажіть кошти (bank requisites)
           <div className={styles.payStep}>
             <span className={styles.payStepNum}>2</span>
             <div className={styles.payStepBody}>
@@ -268,9 +272,10 @@ export default function StudentPaymentPanel({
               </div>
             </div>
           </div>
+          */}
 
           <div className={styles.payStep}>
-            <span className={styles.payStepNum}>3</span>
+            <span className={styles.payStepNum}>2</span>
             <div className={styles.payStepBody}>
               <p className={styles.payStepTitle}>{t('student.payments.stepReceipt')}</p>
               {hasReceiptPreview ? (

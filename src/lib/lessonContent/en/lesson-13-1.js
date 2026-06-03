@@ -25,61 +25,85 @@ export const lesson_13_1 = {
   theory: {
     sections: [
       {
-        title: "Introduction to GUI",
-        content: `**GUI (Graphical User Interface)** is a graphical user interface that allows you to interact with a program through windows, buttons, input fields, and other visual elements instead of a text-based command-line interface.
+        title: "What is a GUI?",
+        content: `A **GUI** uses windows, buttons, and fields instead of typing commands in a terminal.
 
-**Advantages of GUI:**
-- Ease of use - intuitive interface
-- Visual appeal - a pleasant appearance
-- Accessibility - easier for beginners
-- Interactivity - instant response to user actions
+**Good fits:** desktop utilities, internal tools, learning demos after CLI and web modules.
 
-**What is Tkinter?**
+| CLI | GUI |
+|-----|-----|
+| Scripts, servers | Desktop apps |
+| Fast automation | Click-friendly UX |
 
-**Tkinter** is a standard Python library for creating graphical user interfaces. It comes with Python, so you don't need to install any additional packages.
+Tkinter is a solid **first GUI step** in Python; many products later move to web or mobile UI.`
+      },
+      {
+        title: "Tkinter in the Python ecosystem",
+        content: `**Tkinter** ships with Python (Tcl/Tk binding).
 
-**Benefits of Tkinter:**
-- Built in Python - no need to install
-- Ease of use - easy for beginners
-- Cross-platform - works on Windows, macOS, Linux
-- Large community - lots of examples and documentation
+- No pip install on Windows/macOS
+- Low learning curve
+- Single \`main.py\` can show a window
 
-**Application GUI Architecture:**
-
-1. **Main window (Root Window)** - the basic container for all elements
-2. **Widgets** - interface elements (buttons, input fields, labels, etc.)
-3. **Events** - user actions (click, key press)
-4. **Event Handlers** - functions that are executed upon events
-
-**Basic Tkinter Widgets:**
-- **Label** - for text display
-- **Button** - a button for performing actions
-- **Entry** - text input field
-- **Text** - multi-line text field
-- **Frame** - a container for grouping widgets
-- **Canvas** - for drawing graphics
-
-**Environment preparation:**
-
-Tkinter is already installed with Python, so no additional installation is required. Just import the module:
-
-\`\`\`python
-from tkinter import *
-\`\`\`
-
-or
+Alternatives: PyQt/PySide (richer), Kivy (touch), Dear PyGui. Module 13 stays with Tkinter.`
+      },
+      {
+        title: "GUI application architecture",
+        content: `1. **Root** (\`Tk()\`) — main window
+2. **Widgets** — Label, Button, Entry…
+3. **Layout** — pack / grid / place (lesson 13-4)
+4. **mainloop()** — event loop
+5. **Callbacks** — event handlers (lesson 13-5)
 
 \`\`\`python
 import tkinter as tk
+
+def on_click():
+    label.config(text="Clicked!")
+
+root = tk.Tk()
+label = tk.Label(root, text="Hello")
+label.pack()
+tk.Button(root, text="OK", command=on_click).pack()
+root.mainloop()
 \`\`\`
 
-**Note:** On some Linux systems, you may need to install the \`\`python3-tk\` package:
+Code after \`mainloop()\` runs only after the window closes.`
+      },
+      {
+        title: "Core widgets",
+        content: `| Widget | Role |
+|--------|------|
+| Label | Text or image |
+| Button | Action, \`command=\` |
+| Entry | Single-line input |
+| Text | Multi-line input |
+| Frame | Grouping |
+| Canvas | Drawing |
 
-\`\`\`bash
-sudo apt-get install python3-tk
+Lessons 13-3–13-5 cover widgets and events in depth.`
+      },
+      {
+        title: "Imports and Linux",
+        content: `Prefer:
+
+\`\`\`python
+import tkinter as tk
+from tkinter import ttk
 \`\`\`
 
-Now you are ready to build your first GUI applications!`
+Avoid \`from tkinter import *\` in large projects.
+
+Linux: \`sudo apt install python3-tk\` if import fails.
+
+\`\`\`python
+import tkinter
+print(tkinter.TkVersion)
+\`\`\``
+      },
+      {
+        title: "Summary",
+        content: `Next: \`Tk()\`, \`mainloop()\`, and window setup in lesson 13-2.`
       }
     ]
   },
@@ -210,6 +234,19 @@ In the next lesson, we will create our first window!`,
         ],
         correctAnswer: 0,
         explanation: "A widget is an interface element such as a button, input field, label, etc."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "What does mainloop() do?",
+        options: [
+          "Runs the GUI event loop",
+          "Closes the window",
+          "Sets the window title",
+          "Compiles Python to exe"
+        ],
+        correctAnswer: 0,
+        explanation: "mainloop() keeps the window open and processes clicks and input."
       }
     ],
     timeLimit: 15,

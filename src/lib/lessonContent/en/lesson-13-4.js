@@ -1,5 +1,5 @@
 /**
- * Lesson 13-4: Menus and Dialogs in Tkinter
+ * Lesson 13-4: Layout: pack, grid, place
  * Full educational content
  */
 
@@ -9,12 +9,12 @@ export const lesson_13_4 = {
   lessonId: "lesson-13-4",
   moduleId: "module-13",
   order: 4,
-  title: "Placement of elements: pack, grid, place",
+  title: "Layout: pack, grid, place",
   
   learningObjectives: [
-    "Use pack for placement",
+    "Use pack for layout",
     "Apply grid for tables",
-    "Use place for point placement",
+    "Use place for absolute positioning",
     "Choose the right method"
   ],
   
@@ -25,12 +25,22 @@ export const lesson_13_4 = {
   theory: {
     sections: [
       {
-        title: "Placement of elements: pack, grid, place",
-        content: `Tkinter has three methods for placing widgets in a window: **pack**, **grid**, and **place**. Each has its advantages and is used in different situations.
+        title: "Three geometry managers",
+        content: `In Tkinter widgets do not sit on their own — a **geometry manager** places them:
 
-**1. pack() - automatic placement**
+| Method | Idea |
+|-------|------|
+| \`pack()\` | Stack top/bottom/side |
+| \`grid()\` | Table row × column |
+| \`place()\` | Coordinates x, y |
 
-\`pack()\` places the widgets automatically, one by one. This is the simplest method.
+**Rule:** in **one parent** widget (Frame or root) use only **one** manager type.`
+      },
+      {
+        title: "pack() — widget stack",
+        content: `**1. pack() - automatic layout**
+
+\`pack()\` places widgets automatically, one after another. This is the simplest method.
 
 \`\`\`python
 from tkinter import *
@@ -50,12 +60,16 @@ root.mainloop()
 
 **pack() parameters:**
 - \`side\` - TOP (default), BOTTOM, LEFT, RIGHT
-- \`fill\` - X, Y, BOTH - space filling
-- \`padx\`, \`pady\` - indents
+- \`fill\` - X, Y, BOTH - fill available space
+- \`padx\`, \`pady\` - padding
 
-**2. grid() - tabular arrangement**
+**Frame + pack:** nested Frames let you build a panel on the left (LEFT) and right (RIGHT).`
+      },
+      {
+        title: "grid() — forms and tables",
+        content: `**2. grid() - table layout**
 
-\`grid()\` places widgets as a table with rows and columns. Ideal for forms.
+\`grid()\` places widgets in a table with rows and columns. Ideal for forms.
 
 \`\`\`python
 from tkinter import *
@@ -75,13 +89,17 @@ root.mainloop()
 
 **grid() parameters:**
 - \`row\`, \`column\` - position in the table
-- \`rowspan\`, \`columnspan\` - combining cells
+- \`rowspan\`, \`columnspan\` - merge cells
 - \`sticky\` - alignment (N, S, E, W)
-- \`padx\`, \`pady\` - indents
+- \`padx\`, \`pady\` - padding
 
-**3. place() - point placement**
+**Column weight:** \`columnconfigure(0, weight=1)\` — stretch when the window is resized.`
+      },
+      {
+        title: "place() — absolute coordinates",
+        content: `**3. place() - absolute positioning**
 
-\`place()\` places widgets by absolute coordinates. It is rarely used.
+\`place()\` places widgets at absolute coordinates. Used rarely.
 
 \`\`\`python
 from tkinter import *
@@ -89,7 +107,7 @@ from tkinter import *
 root = Tk()
 root.geometry("300x200")
 
-label = Label(root, text="Point Placement")
+label = Label(root, text="Absolute placement")
 label.place(x=50, y=50)
 
 button = Button(root, text="Button")
@@ -103,15 +121,17 @@ root.mainloop()
 - \`relx\`, \`rely\` - relative coordinates (0.0 to 1.0)
 - \`anchor\` - anchor point
 
-**Important:**
+\`relx=0.5, rely=0.5, anchor=CENTER\` — center when the window is resized (rare in practice).`
+      },
+      {
+        title: "What to choose",
+        content: `**Do not mix** pack and grid in one container — Tkinter may error or break the layout.
 
-Don't mix \`pack()\` and \`grid()\` in the same container! Use one method for all widgets in a container.
+- **pack** — toolbars, simple button lists
+- **grid** — login forms, calculators, tables
+- **place** — animations, overlapping elements
 
-**When to use:**
-
-- **pack()** - for simple vertical or horizontal placement
-- **grid()** - for forms, tables, complex layouts
-- **place()** - for point positioning (rare)`
+**Tip:** start with grid for forms; pack for quick prototypes.`
       }
     ]
   },
@@ -122,7 +142,7 @@ Don't mix \`pack()\` and \`grid()\` in the same container! Use one method for al
       code: `from tkinter import *
 
 root = Tk()
-root.title("Example pack()")
+root.title("pack() example")
 
 label1 = Label(root, text="First", bg="lightblue")
 label1.pack(fill=X, padx=10, pady=5)
@@ -134,14 +154,14 @@ label3 = Label(root, text="Third", bg="lightyellow")
 label3.pack(fill=X, padx=10, pady=5)
 
 root.mainloop()`,
-      explanation: "pack() automatically places widgets one after the other with width padding."
+      explanation: "pack() automatically stacks widgets with horizontal fill."
     },
     {
       title: "Example 2: grid()",
       code: `from tkinter import *
 
 root = Tk()
-root.title("Example grid()")
+root.title("grid() example")
 
 Label(root, text="Name:").grid(row=0, column=0, padx=5, pady=5)
 Entry(root, width=30).grid(row=0, column=1, padx=5, pady=5)
@@ -152,38 +172,38 @@ Entry(root, width=30).grid(row=1, column=1, padx=5, pady=5)
 Button(root, text="Submit").grid(row=2, column=0, columnspan=2, pady=10)
 
 root.mainloop()`,
-      explanation: "grid() creates a tabular layout, perfect for forms."
+      explanation: "grid() creates a table layout, ideal for forms."
     },
     {
       title: "Example 3: place()",
       code: `from tkinter import *
 
 root = Tk()
-root.title("Example place()")
+root.title("place() example")
 root.geometry("300x200")
 
-label = Label(root, text="Point placement", bg="lightblue")
+label = Label(root, text="Absolute placement", bg="lightblue")
 label.place(x=50, y=50)
 
 button = Button(root, text="Button")
 button.place(x=100, y=100)
 
 root.mainloop()`,
-      explanation: "place() places widgets by absolute coordinates."
+      explanation: "place() positions widgets at absolute coordinates."
     },
     {
-      title: "Example 4: Combination of grid() with sticky",
+      title: "Example 4: grid() with sticky",
       code: `from tkinter import *
 
 root = Tk()
 root.title("Grid with sticky")
 
-Label(root, text="Left aligned").grid(row=0, column=0, sticky=W, padx=5, pady=5)
-Label(root, text="Right aligned").grid(row=0, column=1, sticky=E, padx=5, pady=5)
-Label(root, text="Fills all space").grid(row=1, column=0, columnspan=2, sticky=EW, padx=5, pady=5)
+Label(root, text="Aligned left").grid(row=0, column=0, sticky=W, padx=5, pady=5)
+Label(root, text="Aligned right").grid(row=0, column=1, sticky=E, padx=5, pady=5)
+Label(root, text="Fills entire cell").grid(row=1, column=0, columnspan=2, sticky=EW, padx=5, pady=5)
 
 root.mainloop()`,
-      explanation: "sticky is used to align and fill space in grid()."
+      explanation: "sticky is used for alignment and filling space in grid()."
     }
   ],
   
@@ -194,29 +214,29 @@ root.mainloop()`,
       correctApproach: "Use one method (pack, grid, or place) for all widgets in a container."
     },
     {
-      mistake: "Do not specify row and column for grid()",
-      explanation: "Without specifying row and column widgets may be placed incorrectly.",
+      mistake: "Not specifying row and column for grid()",
+      explanation: "Without row and column widgets may be placed incorrectly.",
       correctApproach: "Always specify row and column for widgets in grid()."
     },
     {
       mistake: "Using place() for complex layouts",
-      explanation: "place() is difficult to maintain and adapt to different window sizes.",
-      correctApproach: "Use grid() for complex layouts, place() only for point positioning."
+      explanation: "place() is hard to maintain and adapt for different window sizes.",
+      correctApproach: "Use grid() for complex layouts; place() only for precise positioning."
     }
   ],
   
-  summary: `In this lesson, we learned three methods of placing widgets:
+  summary: `In this lesson we learned three layout methods:
 
-1. pack() - automatic placement, the simplest method
-2. grid() - tabular arrangement, ideal for forms
-3. place() - point placement by coordinates
+1. pack() - automatic layout, the simplest method
+2. grid() - table layout, ideal for forms
+3. place() - absolute positioning by coordinates
 
-It is important to remember:
-- Don't mix pack() and grid() in the same container
-- grid() is best for complex layouts
-- pack() is the easiest for basic placement
+Remember:
+- Do not mix pack() and grid() in one container
+- grid() works best for complex layouts
+- pack() is simplest for basic layout
 
-In the next lesson, we'll learn how to handle events and create full-fledged GUI applications!`,
+In the next lesson we will learn event handling and build full GUI applications!`,
   
   practiceTask: null,
   
@@ -225,7 +245,7 @@ In the next lesson, we'll learn how to handle events and create full-fledged GUI
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Which placement method is best for forms?",
+        question: "Which layout method works best for forms?",
         options: [
           "grid()",
           "pack()",
@@ -233,25 +253,25 @@ In the next lesson, we'll learn how to handle events and create full-fledged GUI
           "layout()"
         ],
         correctAnswer: 0,
-        explanation: "grid() is ideal for forms because it creates a tabular layout with rows and columns."
+        explanation: "grid() is ideal for forms because it creates a table with rows and columns."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Is it possible to mix pack() and grid() in the same container?",
+        question: "Can you mix pack() and grid() in one container?",
         options: [
-          "No, you can't",
+          "No, you cannot",
           "Yes, you can",
-          "Only for different types of widgets",
-          "Only if you use place()"
+          "Only for different widget types",
+          "Only if you also use place()"
         ],
         correctAnswer: 0,
-        explanation: "You cannot mix pack() and grid() in the same container. Use one method for all widgets."
+        explanation: "You cannot mix pack() and grid() in one container. Use one method for all widgets."
       },
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "What parameter of grid() is used to merge cells?",
+        question: "Which grid() parameter merges cells?",
         options: [
           "columnspan or rowspan",
           "merge",
@@ -267,7 +287,20 @@ In the next lesson, we'll learn how to handle events and create full-fledged GUI
         question: "place() is best for complex layouts with many widgets.",
         options: ["True", "False"],
         correctAnswer: 1,
-        explanation: "False. place() is difficult to maintain for complex layouts. Use grid() for complex layouts."
+        explanation: "False. place() is hard to maintain for complex layouts. Use grid() instead."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "What does grid(sticky='ew') do?",
+        options: [
+          "Stretches the widget horizontally in the cell",
+          "Removes the widget",
+          "Changes the font",
+          "Calls mainloop"
+        ],
+        correctAnswer: 0,
+        explanation: "sticky=E+W (or 'ew') anchors the widget to the east and west sides of the cell."
       }
     ],
     timeLimit: 15,

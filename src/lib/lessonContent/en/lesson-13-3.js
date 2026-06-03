@@ -1,5 +1,5 @@
 /**
- * Lesson 13-3: Layout Management in Tkinter
+ * Lesson 13-3: Widgets: Label, Button, Entry, Text
  * Full educational content
  */
 
@@ -12,10 +12,10 @@ export const lesson_13_3 = {
   title: "Widgets: Label, Button, Entry, Text",
   
   learningObjectives: [
-    "Use Label for text",
-    "Create buttons from Button",
-    "Receive input via Entry and Text",
-    "Customize widgets"
+    "Use Label for text display",
+    "Create buttons with Button",
+    "Get input through Entry and Text",
+    "Configure widgets"
   ],
   
   prerequisites: ["lesson-13-2"],
@@ -25,38 +25,45 @@ export const lesson_13_3 = {
   theory: {
     sections: [
       {
-        title: "Widgets: Label, Button, Entry, Text",
-        content: `In this tutorial, we'll learn the basic Tkinter widgets for creating a graphical user interface.
+        title: "Overview of four widgets",
+        content: `**Label** — displays text or an image (not editable by the user).
 
-**Label** - a widget for displaying text or an image
-**Button** - a button for performing actions
-**Entry** - input field for one-line text
-**Text** - multi-line text field
+**Button** — a button; when clicked, calls \`command\`.
 
-These widgets are the basis for creating interactive GUI applications.
+**Entry** — a single-line input field.
 
-**Label:**
+**Text** — a multi-line field (notes, logs).
 
-Label is used to display text or image. It does not interact with the user, but can display information.
+Together they cover 90% of simple forms before moving to \`ttk\` or a web interface.`
+      },
+      {
+        title: "Label",
+        content: `**Label:**
+
+Label is used to display text or an image. It does not interact with the user, but can show information.
 
 \`\`\`python
 from tkinter import *
 
 root = Tk()
-label = Label(root, text="Hello world!")
+label = Label(root, text="Hello, world!")
 label.pack()
 root.mainloop()
 \`\`\`
 
-**Button:**
+**Useful options:** \`font=("Arial", 14)\`, \`fg\` (text color), \`bg\` (background), \`padx\` / \`pady\` with \`pack()\`.`
+      },
+      {
+        title: "Button",
+        content: `**Button:**
 
-Button creates a clickable button. When pressed, the function is executed.
+Button creates a clickable button. When clicked, a function runs.
 
 \`\`\`python
 from tkinter import *
 
 def button_clicked():
-    print("Button pressed!")
+    print("Button clicked!")
 
 root = Tk()
 button = Button(root, text="Click me", command=button_clicked)
@@ -64,9 +71,13 @@ button.pack()
 root.mainloop()
 \`\`\`
 
-**Entry (Input field):**
+**Button state:** \`state=DISABLED\` — gray inactive button; \`state=NORMAL\` — active again.`
+      },
+      {
+        title: "Entry and StringVar",
+        content: `**Entry:**
 
-Entry creates a single-line text input field.
+Entry creates a single-line field for text input.
 
 \`\`\`python
 from tkinter import *
@@ -84,9 +95,25 @@ button.pack()
 root.mainloop()
 \`\`\`
 
-**Text (Multi-line field):**
+**StringVar** — bind Entry to a variable for automatic Label updates:
 
-Text creates a multiline text field for entering or displaying text.
+\`\`\`python
+from tkinter import *
+
+root = Tk()
+name = StringVar()
+Entry(root, textvariable=name, width=30).pack()
+Label(root, textvariable=name).pack()
+root.mainloop()
+\`\`\`
+
+**Entry methods:** \`get()\`, \`insert(0, text)\`, \`delete(0, END)\`.`
+      },
+      {
+        title: "Text (multi-line field)",
+        content: `**Text:**
+
+Text creates a multi-line text field for input or display.
 
 \`\`\`python
 from tkinter import *
@@ -104,14 +131,13 @@ button.pack()
 root.mainloop()
 \`\`\`
 
-**Widget settings:**
+Line indices: \`"1.0"\` — line 1, character 0; \`END\` — end of content. **Scrollbar** is often added to Text for long logs.
 
-All widgets have parameters to configure:
-- \`text\` - text to display
-- \`width\`, \`height\` - dimensions
-- \`bg\`, \`fg\` - background and text color
-- \`font\` - font
-- \`command\` - function to execute (for Button)`
+**Configuration (all widgets):** \`text\`, \`width\`, \`height\`, \`bg\`, \`fg\`, \`font\`; for Button — \`command\`.`
+      },
+      {
+        title: "Summary",
+        content: `Label — display; Entry/Text — input; Button — action. \`StringVar\` is handy for “field + caption” forms. Next — pack/grid layout (lesson 13-4).`
       }
     ]
   },
@@ -124,18 +150,18 @@ All widgets have parameters to configure:
 root = Tk()
 root.title("Label example")
 
-label = Label(root, text="Hello world!", font=("Arial", 16))
+label = Label(root, text="Hello, world!", font=("Arial", 16))
 label.pack()
 
 root.mainloop()`,
-      explanation: "We create a simple Label with text and a customized font."
+      explanation: "Create a simple Label with text and a custom font."
     },
     {
       title: "Example 2: Button",
       code: `from tkinter import *
 
 def on_button_click():
-    print("Button pressed!")
+    print("Button clicked!")
 
 root = Tk()
 root.title("Button example")
@@ -144,7 +170,7 @@ button = Button(root, text="Click me", command=on_button_click)
 button.pack()
 
 root.mainloop()`,
-      explanation: "We create a button that performs a function when pressed."
+      explanation: "Create a button that runs a function when clicked."
     },
     {
       title: "Example 3: Entry",
@@ -155,7 +181,7 @@ def show_text():
     label.config(text=f"You entered: {text}")
 
 root = Tk()
-root.title("Example Entry")
+root.title("Entry example")
 
 entry = Entry(root, width=30)
 entry.pack()
@@ -167,7 +193,7 @@ label = Label(root, text="")
 label.pack()
 
 root.mainloop()`,
-      explanation: "We create an input field and a button to receive the entered text."
+      explanation: "Create an input field and a button to read the entered text."
     },
     {
       title: "Example 4: Text",
@@ -178,7 +204,7 @@ def show_text():
     print(f"Entered text:\\n{content}")
 
 root = Tk()
-root.title("Example Text")
+root.title("Text example")
 
 text_widget = Text(root, width=40, height=10)
 text_widget.pack()
@@ -187,36 +213,36 @@ button = Button(root, text="Show text", command=show_text)
 button.pack()
 
 root.mainloop()`,
-      explanation: "We create a multi-line text field for entering text."
+      explanation: "Create a multi-line text field for input."
     }
   ],
   
   commonMistakes: [
     {
       mistake: "Forgetting to call mainloop()",
-      explanation: "Without mainloop(), the window will not be displayed or will be closed immediately.",
+      explanation: "Without mainloop() the window will not appear or closes immediately.",
       correctApproach: "Always call root.mainloop() at the end of the program to display the window."
     },
     {
-      mistake: "Incorrectly retrieving text from Text",
-      explanation: "For Text you need to use get() with string indices, not just get().",
-      correctApproach: "Use text_widget.get('1.0', END) to get all the text."
+      mistake: "Incorrect way to get text from Text",
+      explanation: "For Text you must use get() with line indices, not plain get().",
+      correctApproach: "Use text_widget.get('1.0', END) to get all text."
     },
     {
-      mistake: "Do not specify command for Button",
-      explanation: "Button without command will not perform any action when pressed.",
-      correctApproach: "Always specify the command=function parameter for a Button if interaction is required."
+      mistake: "Not setting command for Button",
+      explanation: "A Button without command does nothing when clicked.",
+      correctApproach: "Always set command=function for Button when you need interaction."
     }
   ],
   
-  summary: `In this lesson, we learned the main Tkinter widgets:
+  summary: `In this lesson we learned the main Tkinter widgets:
 
-1. Label - to display text or image
-2. Button - a button for performing actions when pressed
-3. Entry - a one-line field for entering text
+1. Label - for displaying text or images
+2. Button - performs actions when clicked
+3. Entry - single-line text input
 4. Text - multi-line text field
 
-These widgets are the basis for creating interactive GUI applications. In the next lesson, we will learn how to place these widgets in a window.`,
+These widgets are the foundation for interactive GUI applications. In the next lesson we will learn how to place them in the window.`,
   
   practiceTask: null,
   
@@ -225,7 +251,7 @@ These widgets are the basis for creating interactive GUI applications. In the ne
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "What widget is used to display text?",
+        question: "Which widget is used to display text?",
         options: [
           "Label",
           "Button",
@@ -233,12 +259,12 @@ These widgets are the basis for creating interactive GUI applications. In the ne
           "Text"
         ],
         correctAnswer: 0,
-        explanation: "Label is used to display text or image."
+        explanation: "Label is used to display text or images."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Which widget creates a single line input field?",
+        question: "Which widget creates a single-line input field?",
         options: [
           "Entry",
           "Text",
@@ -246,12 +272,12 @@ These widgets are the basis for creating interactive GUI applications. In the ne
           "Button"
         ],
         correctAnswer: 0,
-        explanation: "Entry creates a single-line text input field."
+        explanation: "Entry creates a single-line field for text input."
       },
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "How to get all text from Text widget?",
+        question: "How do you get all text from a Text widget?",
         options: [
           "text_widget.get('1.0', END)",
           "text_widget.get()",
@@ -259,15 +285,28 @@ These widgets are the basis for creating interactive GUI applications. In the ne
           "text_widget.value"
         ],
         correctAnswer: 0,
-        explanation: "For Text you need to use get() with indices '1.0' (start) and END (end)."
+        explanation: "For Text use get() with indices '1.0' (start) and END (end)."
       },
       {
         id: "q4",
         type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
-        question: "Button can work without a command parameter.",
+        question: "A Button can work without a command parameter.",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True. Button can be created without command, but it will not perform any action when clicked."
+        explanation: "True. A Button can be created without command, but it will not perform any action when clicked."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Why use StringVar with Entry?",
+        options: [
+          "Automatically update other widgets when text changes",
+          "Speed up mainloop",
+          "Replace pack()",
+          "Send email"
+        ],
+        correctAnswer: 0,
+        explanation: "textvariable links Entry to Label or other widgets through one variable."
       }
     ],
     timeLimit: 15,

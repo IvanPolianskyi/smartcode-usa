@@ -3,7 +3,7 @@
     "siteName": "SmartCode Academy",
     "home": {
       "title": "SmartCode Academy - Programming School for Kids & Teens",
-      "description": "Self-paced online programming courses on our learning platform. Python and Roblox for international students aged 8–17."
+      "description": "Self-paced online programming courses on our learning platform. Python and Roblox for international students aged 8-17."
     },
     "tariff": {
       "title": "Course Pricing - SmartCode Academy",
@@ -19,15 +19,15 @@
     },
     "courses": {
       "title": "Programming Courses for Kids & Teens - SmartCode Academy",
-      "description": "Online programming courses for ages 8–17: Python and Roblox on our self-paced platform. Real projects and structured lessons in English."
+      "description": "Online programming courses for ages 8-17: Python and Roblox on our self-paced platform. Real projects and structured lessons in English."
     },
     "python": {
       "title": "Python Course for Kids - SmartCode Academy",
-      "description": "Learn Python from scratch to a confident level. Build web apps, analyze data, and explore AI. For ages 10–17."
+      "description": "Learn Python from scratch to a confident level. Build web apps, analyze data, and explore AI. For ages 10-17."
     },
     "webDev": {
       "title": "Web Development Course for Kids & Teens - SmartCode Academy",
-      "description": "Online web development for ages 12–18: HTML, CSS, JavaScript, React, and Next.js. Hands-on projects, modern design, and mentor support."
+      "description": "Online web development for ages 12-18: HTML, CSS, JavaScript, React, and Next.js. Hands-on projects, modern design, and mentor support."
     },
     "unity": {
       "title": "Unity Game Development Course for Kids - SmartCode Academy",
@@ -35,7 +35,7 @@
     },
     "roblox": {
       "title": "Roblox Studio Course for Kids - SmartCode Academy",
-      "description": "Online Roblox Studio course for ages 8–16: Lua programming, Obby, Tycoon, and Simulator games, plus publishing and monetization."
+      "description": "Online Roblox Studio course for ages 8-16: Lua programming, Obby, Tycoon, and Simulator games, plus publishing and monetization."
     },
     "invite": {
       "title": "Invite a Friend - SmartCode Academy | 500 UAH Off",
@@ -140,22 +140,22 @@
       "python": {
         "title": "Python",
         "description": "Programming fundamentals in Python",
-        "age": "Ages 10–16"
+        "age": "Ages 10-16"
       },
       "unity": {
         "title": "Game Development",
         "description": "C# and Unity",
-        "age": "Ages 8–17"
+        "age": "Ages 8-17"
       },
       "roblox": {
         "title": "Roblox Studio",
         "description": "Create games in Roblox Studio",
-        "age": "Ages 8–16"
+        "age": "Ages 8-16"
       },
       "webDev": {
         "title": "Web Development",
         "description": "HTML, CSS, React, design",
-        "age": "Ages 12–18"
+        "age": "Ages 12-18"
       },
       "popular": "Popular"
     }
@@ -163,7 +163,7 @@
   "footer": {
     "schoolName": "SmartCode",
     "schoolSubtitle": "Academy",
-    "description": "A leading programming school for ages 8–17. We teach through practice and build the future together!",
+    "description": "A leading programming school for ages 8-17. We teach through practice and build the future together!",
     "coursesTitle": "Our Courses",
     "navigationTitle": "Navigation",
     "supportTitle": "Support",
@@ -220,7 +220,7 @@
   "home": {
     "titleMain": "SmartCode",
     "titleAccent": "Academy",
-    "subtitle": "Live coding lessons on Zoom in English - one-on-one or in small groups. Python, Roblox Studio & more for ages 8–17",
+    "subtitle": "Live coding lessons on Zoom in English - one-on-one or in small groups. Python, Roblox Studio & more for ages 8-17",
     "lessonTypes": {
       "group": "Group classes",
       "individual": "one-on-one",
@@ -228,7 +228,7 @@
       "platform": "online platform"
     },
     "features": {
-      "age": "Ages 8–17",
+      "age": "Ages 8-17",
       "online": "Online lessons",
       "certificate": "International certificate"
     },
@@ -257,7 +257,7 @@
     "heroEnCta": {
       "badge": "Self-paced courses worldwide",
       "title": "Learn to Code on Our Online Platform",
-      "lead": "Full Python and Roblox Studio courses in English. Study at your own pace with structured lessons, practice, and quizzes — for kids & teens aged 8–17.",
+      "lead": "Full Python and Roblox Studio courses in English. Study at your own pace with structured lessons, practice, and quizzes - for kids & teens aged 8-17.",
       "benefitPlatform": "Full platform access",
       "benefitEnglish": "In English",
       "benefitPace": "Learn at your pace",
@@ -328,7 +328,7 @@
       },
       "6": {
         "question": "What does a child get after completing a course?",
-        "answer": "After successful completion, students receive an official certificate, a personal portfolio with 3–5 real projects, a recommendation letter, and access to the alumni community."
+        "answer": "After successful completion, students receive an official certificate, a personal portfolio with 3-5 real projects, a recommendation letter, and access to the alumni community."
       },
       "7": {
         "question": "What language are the classes taught in?",
@@ -369,7 +369,7 @@
     "successText": "Our manager will contact you shortly.",
     "errorSubmit": "Sorry, something went wrong while sending. Please try again or message us on Telegram.",
     "errorNetwork": "A network error occurred. Check your connection and try again.",
-    "errorTelegramConfig": "The form is not configured on the server (Telegram). Message us on Telegram or call — contacts are on the site.",
+    "errorTelegramConfig": "The form is not configured on the server (Telegram). Message us on Telegram or call - contacts are on the site.",
     "errorLeadConfig": "Form security is not configured on the server (LEAD_FORM_SIGNING_SECRET). Please contact the site administrator.",
     "errorRateLimit": "Too many attempts. Wait 15 minutes or message us on Telegram."
   },
@@ -493,7 +493,7 @@
         },
         "selfPaced": {
           "title": "Self-paced learning",
-          "text": "Your child studies when it suits your schedule — no fixed live slots."
+          "text": "Your child studies when it suits your schedule - no fixed live slots."
         },
         "noHidden": {
           "title": "No hidden fees",
@@ -565,7 +565,7 @@
     },
     "finalCta": {
       "title": "Start risk-free this week",
-      "text": "Book a trial lesson or choose a live lesson format — we'll help you pick the best option for your child.",
+      "text": "Book a trial lesson or choose a live lesson format - we'll help you pick the best option for your child.",
       "cta": "Contact us"
     }
   },

@@ -517,7 +517,7 @@ export const ukLesson12 = {
  options: [
  "Додайте дерева",
  "Копати ями та озера",
- "Change sky",
+ "Змінює Sky",
  "Відродження гравців",
  ],
  correctAnswer: 1,
@@ -530,7 +530,7 @@ export const ukLesson12 = {
  options: [
  "Додайте Scripts",
  "Пом'якшити нерівні краї",
- "Delete the game",
+ "Видаляє гру",
  "Змінити шрифт",
  ],
  correctAnswer: 1,
@@ -568,7 +568,7 @@ export const ukLesson12 = {
  question: "Якщо Generate не вдається, спочатку спробуйте...",
  options: [
  "Перевстановіть Windows",
- "Delete old Terrain",
+ "Видаляє старий Terrain",
  "Видалити всі Scripts",
  "Змінити мову",
  ],
@@ -608,7 +608,7 @@ export const ukLesson12 = {
  options: [
  "File → Save to Roblox",
  "Тільки скріншот",
- "Delete Terrain",
+ "Видаляє Terrain",
  "нічого",
  ],
  correctAnswer: 0,
@@ -769,7 +769,7 @@ export const ukLesson13 = {
  question: "Model дозволяє...",
  options: [
  "Перемістіть кілька Parts разом",
- "Delete Terrain",
+ "Видаляє Terrain",
  "Змінити мову",
  "Банити гравців",
  ],
@@ -1087,8 +1087,8 @@ end
  options: [
  "LocalScript у StarterPlayer",
  "Script всередині Parts",
- "Sound only",
- "Terrain brush",
+ "Лише Sound",
+ "Кисть Terrain",
  ],
  correctAnswer: 1,
  explanation: "Server Script на Part працює для всіх гравців.",
@@ -1111,7 +1111,7 @@ end
  type: "multiple_choice",
  question: "script.Parent посилається на...",
  options: [
- "The player",
+ "Гравець",
  "Об’єкт, усередині якого знаходиться скрипт",
  "Sky",
  "Веб-сайт Roblox",
@@ -1150,10 +1150,10 @@ end
  type: "multiple_choice",
  question: "WaitForChild(\"ClickDetector\") допомагає...",
  options: [
- "Change sky color",
+ "Змінює колір Sky",
  "Уникайте помилок, якщо дитина завантажується із запізненням",
- "Delete Terrain",
- "Spawn enemies",
+ "Видаляє Terrain",
+ "Породжує ворогів",
  ],
  correctAnswer: 1,
  explanation: "WaitForChild чекає, поки дитина існуватиме.",
@@ -1428,7 +1428,7 @@ end)
  options: [
  "Швидкість скрипта",
  "Товщина туману/серпанку",
- "Size Parts",
+ "Розмір Parts",
  "Висота стрибка",
  ],
  correctAnswer: 1,
@@ -1442,7 +1442,7 @@ end)
  "Гравець далеко",
  "Гравець знаходиться біля Parts",
  "Гра збережена",
- "Sky removed",
+ "Sky прибрано",
  ],
  correctAnswer: 1,
  explanation: "RollOff робить обсяг на основі відстані.",
@@ -1768,9 +1768,9 @@ end
  type: "multiple_choice",
  question: "Основна мета контрольної точки модуля 1 - це...",
  options: [
- "Learn Terrain only",
+ "Лише Terrain",
  "Відполіруйте один повний острівний центр",
- "Publish to marketplace",
+ "Публікує на маркетплейсі",
  "Видалити всі Scripts",
  ],
  correctAnswer: 1,
@@ -1820,9 +1820,9 @@ end
  type: "multiple_choice",
  question: "Організований док використовує...",
  options: [
- "Folder і model",
+ "Folder і Model",
  "Лише Parts без назв",
- "Without Anchored",
+ "Без Anchored",
  "Тільки SoundService",
  ],
  correctAnswer: 0,
@@ -1835,7 +1835,7 @@ end
  options: [
  "Дуже тихий і зациклений",
  "Том 2.0 тільки один раз",
- "Всередині each Part на макс",
+ "У кожній Part на макс",
  "Вимкнено",
  ],
  correctAnswer: 0,
@@ -1847,7 +1847,7 @@ end
  question: "Перш ніж позначити завершення, ви повинні...",
  options: [
  "Повна петля ходьби",
- "Delete Terrain",
+ "Видаляє Terrain",
  "Видалити SpawnLocation",
  "Ніколи не економте",
  ],

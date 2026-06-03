@@ -1,0 +1,490 @@
+0 seconds
+0.4-1.0 seconds
+1 lesson
+10 seconds
+11.1-11.4 поліруванняed place
+12 modules 72 lessons
+12.1 only
+12.3 playtest pass
+12.4 published game
+20-second pitch
+3 technical highlights
+50 modules
+50 pages
+60 seconds
+API services enabled
+Add Robux
+Add coins
+Adds lag
+All caps hype
+All targets true
+All visual VFX
+All полірування lessons integrated
+Ambient loop
+Anchored true
+As paragraph
+At small phone size
+Atmosphere
+Atmosphere only
+Audio fatigue
+Auto always
+Balancing difficulty
+Ban
+Ban players
+Banned
+Banning
+Bans
+Be empty
+Be hidden
+Better FPS
+Block all input forever
+Blockers and bugs
+Bouncy
+Breaking many systems at once
+Broken
+Bugs
+Button interactions
+Cars
+Catch layout breaks
+Character models
+Clean Explorer
+Cleans up finished sounds
+Clear gameplay SFX
+Clear loading message
+Clear specific humble
+Client UI
+Client chat
+Client cherry-picking easy
+Client exploits
+Client only
+Client-only
+Code only
+Coherent player journey
+Coins
+Coins only
+Colors first
+Confidence
+Confuse reader
+Confusion you missed
+Constraint + tween + ray + procedural
+Constraints
+Copy paste
+Cosmetic only
+Course
+Critical and UX
+Critical launch blockers
+Curated templates
+DataStore
+DataStore keys
+DataStore only
+Delete
+Delete Humanoid
+Delete all scripts
+Delete part
+Delete player
+Delete saves
+Delete scripts
+Delete terrain
+Delete tests
+Deleted
+Deletes UI
+Deletes game
+Deletes player
+Deleting GDD
+Deleting saves
+Dialogue
+Dialogue text only
+Disable or hide
+Distance between parts
+Domain_action pattern
+Done forever no updates
+Doors bridges lifts
+Duration in seconds
+Empty
+Empty map
+Empty place
+Enemies
+Entire Roblox course EN rich path
+Explorer only
+FPS
+Fake
+Faster
+Feature
+Feedback or testers
+Feels chaotic
+Feels professional
+Final Project GDD
+Find Guide Maya
+Find interface elements
+First part hit
+Fly
+Focused on game rules
+Font size
+Free Robux
+Full loop spawn to reward
+Future
+Future updates
+GDD
+GDD bugs
+GDD only
+GPU stress
+Game Polished
+Game Polished checkpoint
+Giant unfinished project
+Growth and problem solving
+Guess
+Hard to find in Explorer
+Heal
+Helps balance and label
+Helps sensitive players
+Hide controls
+Hides real onboarding
+Hinge with velocity
+Hour of code
+Humanoid
+Humanoid only
+Hype only
+Icons and text not color alone
+Identify puzzle targets
+Ignore
+Impossible
+Improves FPS
+Include or exclude parts
+Invisible
+Invisible UI
+Invisible only
+Invites community
+Item id
+Jump
+Kill zone
+Lag
+Lag game
+Lag only
+Laps
+Large worlds load efficiently
+Laser
+Laser Puzzle
+Laser puzzle
+Launch-ready creator mindset
+Leaderstats
+Lesson 10.1
+Lesson 10.1 - Physical Constraints
+Lesson 10.1 constraints
+Lesson 10.2 - Tween Mastery
+Lesson 10.2 tweens for door
+Lesson 10.3 - Raycasting
+Lesson 10.4 - Laser Puzzle
+Lesson 10.4 laser room
+Lesson 10.5 - Procedural Elements
+Lesson 11.1 - Clean Explorer
+Lesson 11.1 clean place
+Lesson 11.1 naming
+Lesson 11.2 - Loading Screen
+Lesson 11.3 - Sound Design
+Lesson 11.4 - Optimization
+Lesson 11.5 - UX Accessibility
+Lesson 12.1 GDD plan
+Lesson 12.2 - Final Integration
+Lesson 12.3 - Playtest Pass
+Lighting
+Live Roblox game link
+Live demo fails
+Live exploiters exist
+Live exploits
+Live-only bugs
+Living Location
+Loading Screen
+Loading and clean structure
+Loading screen
+Loads assets early
+Location mood
+Loop forever
+Louder than ambient
+Magic of Details
+Match real gameplay
+Maximum everything
+Mechanical steady
+Metadata icon thumbnails settings
+Minimum viable shippable scope
+Module 1
+Module 1 only
+Module 10 - Puzzle World
+Module 10 Magic of Details
+Module 11 - Game Polished
+Module 11 Performance and Polish
+Module 11 only
+Module 12
+Module 3 only
+Money only
+More coding
+More coins
+More features only
+Most scripts possible
+Music volume only
+Must pass
+NPC
+NPC AI
+NPC name
+NPC only
+Naming colors audio UI
+Never
+Never tested
+New feature
+New game
+No UI
+No checks
+No features
+No labels
+No link
+No major errors in play session
+No modules
+No new features during merge
+No plan
+No publish
+No puzzles
+No quests
+No scripts
+No sound
+No test
+No testing
+No work
+Non-coder
+Not needed
+Notes only
+Nothing
+Nothing hit along ray
+One catchy sentence
+One target
+Only 4K
+Only Explorer
+Only GDD
+Only Humanoid
+Only NPC
+Only ambient
+Only art
+Only audio
+Only bugs
+Only car
+Only chat
+Only code
+Only coins
+Only dialogue
+Only hype
+Only icon
+Only inventory
+Only inventory tables
+Only laser
+Only loading
+Only music
+Only name
+Only publish
+Only race
+Only racing
+Only red green
+Only scripts
+Only shop
+Only sound
+Only terrain
+Only testing
+Opens shop
+Optimization
+Optional
+Optional always
+P0 critical
+P3 cosmetic
+Part count
+Passwords
+Past only
+Performance and полірування
+Persistence works
+Physical Constraints
+Picks new variant
+Play once
+Player HP
+Player coins
+Player joins
+Player name
+Player only
+Player wins
+Players always have path forward
+Players understand progress
+Playtesting
+Polished place from 11.1-11.3
+Portfolio
+Portfolio post
+Portfolio post draft
+Prioritizes shipping
+Problem solving growth
+Procedural variants
+Process and systems not only screenshots
+Promise fake features
+Properties over time
+Prove optimization worked
+Publish
+Publish again
+Publish first
+Publish game
+Publish in 12.4
+Published
+Published game
+Publishes
+Publishing
+Publishing to Roblox
+Pure chaos
+Putting systems together
+Puzzle World
+Puzzle World checkpoint
+Quest progress
+RPG Inventory
+RPG only
+Race
+Race only
+Racing
+Random
+Random colors
+Random only
+Raycast every frame always
+Raycasting
+Rays + mirrors + puzzle state
+Rays and puzzle state
+Readable text on background
+Ready for strangers
+Release Day
+Remove Humanoid
+Remove NPCs
+Remove UI
+Remove audio
+Remove game
+Remove quests
+Removed
+Removes
+Removes puzzles
+Removes quests
+Removes sound
+Render load
+Repeat integration tests
+Repeat player actions
+Repeated patterns
+Replaces Humanoid
+Replaces design
+ReplicatedStorage/Remotes
+Reproducible debug runs
+Required
+Required Roblox
+Required always
+Required by Roblox
+Required for badges
+Road parts
+Roblox fee
+Robux
+Robux cut
+Root cause not symptom
+Rude
+Rules
+SHOWCASE
+SHOWCASE DAY
+Same as ambient
+Same thing
+Save DataStore
+Save data
+Saves DataStore
+Saves data
+Saves game
+Script
+Script count
+Script only
+Secrets
+See ray path
+Server
+Server IP
+Server authority
+Server bans
+Server password
+Server script
+Server scripts
+Server validates completion
+Shop
+Shop only
+Shop opens
+Shop quest puzzle events
+Shop/inventory ID drift
+Shops
+Show progress
+Show technical depth
+Silent
+Skip
+Skip UX
+Skip course
+Skip puzzle
+Skip work
+Skipping test
+Sky
+Solvable and tested
+Sound
+Sound Design
+Sound design layers
+Sound only
+Spam rotation jitter
+Spawn NPC
+Stay forever
+Stop server
+Stop testing
+Stops server
+Stutter makes players leave
+Swim
+Sword combat
+Teach while waiting
+Team maintenance
+Terrain
+Terrain bugs
+Terrain color
+Terrain edit
+Terrain gen
+Terrain loads
+Terrain only
+Test only
+Tester only
+Thumbnail
+Tiny fonts
+Trailer
+Trailer first
+Trailer only
+Trust client
+Tween Mastery
+Tween does not run until Play
+Tween finishes
+Tween from 10.2
+TweenService
+TweenService after puzzle
+Two attachments
+UI
+UI buttons
+UI clicks only
+UI color
+UI deletes
+UI only
+UI opens
+UI panels
+UI size
+UK locale
+UX and accessibility
+UX confusion
+Unanchored
+Unanchored always
+Uncontrolled scope creep
+Unexpected delays
+Unit vector times distance
+Valid crystal targets
+Variant index
+Version
+Version only
+Walking
+Weld
+Welds
+What do I do confusion
+What is happening
+Where players get stuck
+Work when clicked
+Works and feels professional
+Workspace only
+Would players play again

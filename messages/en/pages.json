@@ -241,7 +241,7 @@
         "title": "Complete Python course",
         "shortDescription": "A complete Python programming course in one-on-one online lessons",
         "description": "Learn to build real Python projects and gain the skills needed to start a career in tech.",
-        "age": "Ages 13–17",
+        "age": "Ages 13-17",
         "skills": {
           "0": "Python programming fundamentals",
           "1": "OOP and algorithms",
@@ -255,7 +255,7 @@
         "title": "Unity game development",
         "shortDescription": "Create engaging games in Unity using C#",
         "description": "Build exciting games in Unity - from simple 2D to advanced 3D projects.",
-        "age": "Ages 8–17",
+        "age": "Ages 8-17",
         "skills": {
           "0": "C# programming",
           "1": "Unity 3D",
@@ -269,7 +269,7 @@
         "title": "Roblox Studio",
         "shortDescription": "Game creation in Roblox Studio",
         "description": "Learn to create your own games in Roblox Studio and publish them for millions of players.",
-        "age": "Ages 8–16",
+        "age": "Ages 8-16",
         "skills": {
           "0": "Lua programming",
           "1": "Roblox Studio",
@@ -283,7 +283,7 @@
         "title": "Web development",
         "shortDescription": "HTML, CSS, React, design",
         "description": "Build modern websites and apps using the latest technologies.",
-        "age": "Ages 12–18",
+        "age": "Ages 12-18",
         "skills": {
           "0": "HTML & CSS",
           "1": "JavaScript",
@@ -324,7 +324,7 @@
           "0": "This document is a public offer (the \"Offer\") for the provision of educational services in programming and information technology (the \"Services\") in accordance with Articles 633, 641, and 642 of the Civil Code of Ukraine.",
           "1": "Provider: SmartCode Academy (the \"Provider\") offers self-paced programming training courses on smartcode-academy.com for international customers. Live instructor-led Zoom lessons are offered separately on the Ukrainian locale of the website.",
           "2": "Acceptance of this Offer occurs when the Customer pays for the Services, which constitutes full agreement with the terms of this Offer.",
-          "3": "IMPORTANT: SmartCode Academy serves students aged 8–17. All purchases, contracts, and payment obligations are entered into by a parent or legal guardian acting as the Customer. Minors may not complete purchases on this website.",
+          "3": "IMPORTANT: SmartCode Academy serves students aged 8-17. All purchases, contracts, and payment obligations are entered into by a parent or legal guardian acting as the Customer. Minors may not complete purchases on this website.",
           "4": "This English Public Offer applies to all customers who are not citizens of Ukraine."
         }
       },
@@ -385,7 +385,7 @@
           },
           "delivery": {
             "title": "3.4. Service delivery and coverage",
-            "text": "Services are provided electronically only — there is no physical shipping of goods. After payment is confirmed, access to the learning platform and the purchased course materials is granted online.",
+            "text": "Services are provided electronically only - there is no physical shipping of goods. After payment is confirmed, access to the learning platform and the purchased course materials is granted online.",
             "items": {
               "0": "Service regions: worldwide, wherever the Customer has a stable internet connection",
               "1": "Delivery method: access via the smartcode-academy.com learning platform",
@@ -627,7 +627,7 @@
         "title": "5. Sharing with third parties",
         "paragraphs": {
           "0": "We do not sell personal data. We share data only with trusted processors necessary to operate our services:",
-          "1": "Monobank — payment processing (Visa, Mastercard, Apple Pay, Google Pay); MongoDB Atlas or equivalent — database hosting; Vercel or equivalent — website hosting; email and analytics providers — as configured for our operations. Zoom is used only for live lessons offered on the Ukrainian locale, not for self-paced course purchases on the English site.",
+          "1": "Monobank - payment processing (Visa, Mastercard, Apple Pay, Google Pay); MongoDB Atlas or equivalent - database hosting; Vercel or equivalent - website hosting; email and analytics providers - as configured for our operations. Zoom is used only for live lessons offered on the Ukrainian locale, not for self-paced course purchases on the English site.",
           "2": "Processors are required to protect data under contractual obligations. We may disclose data if required by law or to protect our legal rights."
         }
       },
@@ -655,7 +655,7 @@
       "9": {
         "title": "9. Children's privacy",
         "paragraphs": {
-          "0": "Our services are designed for students aged 8–17. We collect student information only with verifiable parental or guardian consent and limit collection to what is necessary for education.",
+          "0": "Our services are designed for students aged 8-17. We collect student information only with verifiable parental or guardian consent and limit collection to what is necessary for education.",
           "1": "Parents and guardians may review, correct, or request deletion of their child's personal data by contacting us, subject to legal exceptions."
         }
       },
@@ -752,7 +752,7 @@
           "0": "Send a written request to our support email (see Seller contact information below) with your full name, order reference or payment date, course name, and reason for the refund",
           "1": "We acknowledge requests within 2 business days and review them within 5 business days",
           "2": "If approved, the refund is processed to the original payment method within 14 business days",
-          "3": "For card payments via Monobank, refunds appear on your statement according to your bank's processing time (typically 5–10 business days after we initiate the refund)"
+          "3": "For card payments via Monobank, refunds appear on your statement according to your bank's processing time (typically 5-10 business days after we initiate the refund)"
         }
       },
       "5": {

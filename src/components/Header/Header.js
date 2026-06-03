@@ -244,8 +244,12 @@ const Header = () => {
 		{ label: t('nav.courses'), href: '/#our-courses' },
 		{ label: t('nav.lessons'), href: '/#courses', hideOnDesktop: true },
 		{ label: t('nav.prices'), href: '/tariff' },
-		{ label: t('nav.reviews'), href: '/#testimonials' },
-		{ label: t('nav.invite'), href: '/invite' },
+		...(!isEn
+			? [
+					{ label: t('nav.reviews'), href: '/#testimonials' },
+					{ label: t('nav.invite'), href: '/invite' },
+				]
+			: []),
 	]
 	const desktopNavItems = navItems
 		.filter((item) => !item.hideOnDesktop)

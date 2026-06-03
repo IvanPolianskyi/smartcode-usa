@@ -1,6 +1,6 @@
 /**
- * Lesson 12-5: Email Automation and Best Practices
- * Full educational content
+ * Lesson 12-5: Working with CSV Files
+ * Full educational content (supplementary lesson)
  */
 
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
@@ -8,135 +8,179 @@ import { QUIZ_QUESTION_TYPES } from '../../courseData'
 export const lesson_12_5 = {
   lessonId: "lesson-12-5",
   moduleId: "module-12",
-  order: 3,
-  title: "00 Working With Csv Files",
-  
+  order: 5,
+  title: "Working with CSV Files",
+
   learningObjectives: [
-    "Learn basic concepts",
-    "Apply knowledge in practice",
-    "Solve practical problems"
+    "Understand the CSV format",
+    "Read and write CSV using the csv module",
+    "Handle utf-8 encoding",
+    "Prepare data for email and PDF reports"
   ],
-  
-  prerequisites: [],
-  
+
+  prerequisites: ["lesson-12-3"],
+
   videoUrl: "",
-  
+
   theory: {
     sections: [
       {
-        title: "Working with CSV Files",
-        content: `Welcome back! Let's discuss how to work with CSV files in Python. A file with the CSV file extension is a Comma Separated Values file. All CSV files are plain text, contain alphanumeric characters, and structure the data contained within them in a tabular form. Don't confuse Excel Files with csv files, while csv files are formatted very similarly to excel files, they don't have data types for their values, they are all strings with no font or color. They also don't have worksheets the way an excel file does. Python does have several libraries for working with Excel files, you can check them out [here](http://www.python-excel.org/) and [here](https://www.xlwings.org/).
+        title: "What is CSV",
+        content: `**CSV (Comma-Separated Values)** — a text-based tabular format: rows = records, commas (or \`;\`) = column separators.
 
-Files in the CSV format are generally used to exchange data, usually when there's a large amount, between different applications. Database programs, analytical software, and other applications that store massive amounts of information (like contacts and customer data), will usually support the CSV format.
+**Where it is used:**
 
-Let's explore how we can open a csv file with Python's built-in csv library.
+- Export from Excel / Google Sheets
+- Logs and reports
+- Data for automation scripts
 
-____
-## Notebook Location. 
+**Built-in module** \`csv\` — no pip required:
 
-Run **pwd** inside a notebook cell to find out where your notebook is located
+\`\`\`python
+import csv
+\`\`\`
 
-____
-## Reading CSV Files
-
-When passing in the file path, make sure to include the extension if it has one, you should be able to Tab Autocomplete the file name. If you can't Tab autocomplete, that is a good indicator your file is not in the same location as your notebook. You can always type in the entire file path (it will look similar in formatting to the output of **pwd**.`
+The first row is often **column headers**.`
       },
       {
-        title: "Encoding",
-        content: `Often csv files may contain characters that you can't interpret with standard python, this could be something like an **@** symbol, or even foreign characters. Let's view an example of this sort of error ([its pretty common, so its important to go over](https://stackoverflow.com/questions/9233027/unicodedecodeerror-charmap-codec-cant-decode-byte-x-in-position-y-character)).
+        title: "Reading CSV",
+        content: `\`\`\`python
+import csv
 
-Cast to a list may give an error, note the **can't decode** line in the error, this is a giveaway that we have an encoding problem!
+with open("sales.csv", newline="", encoding="utf-8") as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        print(row["product"], row["amount"])
+\`\`\`
 
-Let's not try reading it with a \"utf-8\" encoding.
+\`DictReader\` returns each row as a **dictionary** — convenient access by column name.
 
-Note the first item in the list is the header line, this contains the information about what each column represents. Let's format our printing just a bit:
+**Regular reader** (lists):
 
-Let's imagine we wanted a list of  all the emails. For demonstration, since there are 1000 items plus the header, we will only do a few rows.
+\`\`\`python
+with open("data.csv", newline="", encoding="utf-8") as f:
+    reader = csv.reader(f)
+    header = next(reader)
+    for row in reader:
+        print(row)  # list of values
+\`\`\`
 
-What if we wanted a list of full names?`
+**Encoding:** on Windows, \`utf-8-sig\` is often needed (BOM from Excel):
+
+\`\`\`python
+open("file.csv", encoding="utf-8-sig")
+\`\`\``
       },
       {
-        title: "Writing to CSV Files",
-        content: `We can also write csv files, either new ones or add on to existing ones.`
+        title: "Writing CSV",
+        content: `\`\`\`python
+import csv
+
+rows = [
+    {"name": "Товар A", "qty": 10},
+    {"name": "Товар B", "qty": 5},
+]
+
+with open("out.csv", "w", newline="", encoding="utf-8") as f:
+    writer = csv.DictWriter(f, fieldnames=["name", "qty"])
+    writer.writeheader()
+    writer.writerows(rows)
+\`\`\`
+
+\`newline=""\` — required when writing CSV in Python 3 (otherwise extra blank lines appear).`
       },
       {
-        title: "New File",
-        content: `**This will also overwrite any exisiting file with the same name, so be careful with this!**
+        title: "Connection with email and PDF",
+        content: `Typical report pipeline:
 
-____
-### Existing File
+1. Collect data → list of dictionaries
+2. Save **CSV** for archiving
+3. With **reportlab** (lesson 11) — PDF for the manager
+4. Via **smtplib** (lesson 12) — send PDF as an attachment
 
-That is all for the basics! If you believe you will be working with CSV files often, you may want to check out the powerful [pandas library](https://pandas.pydata.org/).`
+CSV is an intermediate format that opens in Excel without additional code.`
+      },
+      {
+        title: "Summary",
+        content: `csv.DictReader / DictWriter — the standard for tabular data. Always specify encoding and newline="". Next — report automation recap (lesson 12-6).`
       }
     ]
   },
-  
+
   codeExamples: [
     {
-      title: "Code example",
-      code: `pwd`,
-      explanation: "Code example from the course"
-    },
-    {
-      title: "Code example",
-      code: `import csv`,
-      explanation: "Code example from the course"
-    },
-    {
-      title: "Code example",
-      code: `data = open('example.csv')`,
-      explanation: "Code example from the course"
-    },
-    {
-      title: "Code example",
-      code: `data`,
-      explanation: "Code example from the course"
-    },
-    {
-      title: "Code example",
-      code: `csv_data = csv.reader(data)`,
-      explanation: "Code example from the course"
-    },
-    {
-      title: "Code example",
-      code: `data_lines = list(csv_data)`,
-      explanation: "Code example from the course"
-    },
-    {
-      title: "Code example",
-      code: `data = open('example.csv',encoding=\"utf-8\")
-csv_data = csv.reader(data)
-data_lines = list(csv_data)`,
-      explanation: "Code example from the course"
-    },
-    {
-      title: "Looks like it worked!",
-      code: `# Looks like it worked!
-data_lines[:3]`,
-      explanation: "Code example from the course"
-    },
-    {
-      title: "Code example",
-      code: `for line in data_lines[:5]:
-    print(line)`,
-      explanation: "Code example from the course"
-    },
-    {
-      title: "Code example",
-      code: `len(data_lines)`,
-      explanation: "Code example from the course"
+      title: "Summing values from CSV",
+      code: `import csv
+total = 0
+with open("sales.csv", encoding="utf-8") as f:
+    for row in csv.DictReader(f):
+        total += float(row["amount"])
+print(total)`,
+      explanation: "DictReader gives access to columns by name."
     }
   ],
-  
-  commonMistakes: [],
-  
-  summary: "Summary of the lesson",
-  
+
+  commonMistakes: [
+    {
+      mistake: "Forgetting encoding=utf-8",
+      explanation: "Cyrillic text turns into garbled characters.",
+      correctApproach: "utf-8 or utf-8-sig for files from Excel."
+    },
+    {
+      mistake: "Missing newline='' when writing",
+      explanation: "Double line breaks appear.",
+      correctApproach: "open(..., newline='') with csv.writer."
+    }
+  ],
+
+  summary: `CSV — simple exchange of tabular data; the csv module reads and writes rows for reports and automation.`,
+
   practiceTask: null,
-  
+
   quiz: {
-    questions: [],
-    timeLimit: 10,
+    questions: [
+      {
+        id: "q1",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Which Python module reads CSV without installation?",
+        options: ["csv", "pandas only", "openpyxl", "json"],
+        correctAnswer: 0,
+        explanation: "csv is part of the standard library."
+      },
+      {
+        id: "q2",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "What does csv.DictReader return for each row?",
+        options: ["dict", "tuple only", "set", "bytes"],
+        correctAnswer: 0,
+        explanation: "Keys are column names from the header."
+      },
+      {
+        id: "q3",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Which open() parameter is important when writing CSV on Windows?",
+        options: ["newline=''", "binary=True", "append only", "buffering=0"],
+        correctAnswer: 0,
+        explanation: "newline='' prevents extra \\r\\n."
+      },
+      {
+        id: "q4",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "Which encoding is often needed for CSV from Excel with non-ASCII text?",
+        options: ["utf-8-sig", "ascii", "latin1 only", "cp437"],
+        correctAnswer: 0,
+        explanation: "utf-8-sig fixes BOM issues."
+      },
+      {
+        id: "q5",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "CSV and Excel .xlsx are the same format.",
+        options: ["True", "False"],
+        correctAnswer: 1,
+        explanation: "False — xlsx is binary; CSV is text."
+      }
+    ],
+    timeLimit: 15,
     passingScore: 70
   }
 }
