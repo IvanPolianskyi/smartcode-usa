@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 05 - lessons 5.1–5.6 */
+/** Rich EN content for Roblox Module 05 - lessons 5.1-5.6 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -472,7 +472,7 @@ end
         title: 'Hit cooldown (debounce)',
         content: `One swing can touch **arm + torso** in same frame = double damage.
 
-\`canHit = false\` for **0.4–0.6 seconds** after successful hit.
+\`canHit = false\` for **0.4-0.6 seconds** after successful hit.
 
 | Setting | Feel |
 |---------|------|
@@ -644,7 +644,7 @@ tween:Play()
 | **In** | Slow start, fast end |
 | **InOut** | Smooth both ends |
 
-**Action games:** durations **0.15 – 0.8** seconds for feedback.`,
+**Action games:** durations **0.15 - 0.8** seconds for feedback.`,
       },
       {
         title: 'Arena gate opens',
@@ -819,7 +819,7 @@ Open **Lesson 5.4 - Tween Polish** arena.`,
 
 | Broken loop | Good loop |
 |-------------|-----------|
-| Stuck on death screen | Back in arena in 2–4 sec |
+| Stuck on death screen | Back in arena in 2-4 sec |
 | Sword stops working | Tool + damage reset each life |
 | Spawn in lava | Spawn on ArenaSpawn pad |`,
       },
@@ -982,7 +982,7 @@ export const enLesson56 = {
 
 **Required systems:**
 - Health + damage zones (5.1)
-- TrainingSword + damage (5.2–5.3)
+- TrainingSword + damage (5.2-5.3)
 - Tween gate or hit flash (5.4)
 - Death + respawn loop (5.5)`,
       },
@@ -993,7 +993,7 @@ export const enLesson56 = {
 3. Self-hit block
 4. Died + ArenaSpawn
 5. Tween polish
-6. Balance pass (DAMAGE 15–25, cooldown 0.4–0.5)`,
+6. Balance pass (DAMAGE 15-25, cooldown 0.4-0.5)`,
       },
       {
         title: 'Duel QA matrix',
@@ -1009,7 +1009,7 @@ export const enLesson56 = {
       },
       {
         title: 'Balance targets',
-        content: `**Time to kill:** ~8–15 seconds for equal skill (100 HP, 20 damage, 0.45 cd)
+        content: `**Time to kill:** ~8-15 seconds for equal skill (100 HP, 20 damage, 0.45 cd)
 
 **First 2 minutes** new player:
 - See arena sign
@@ -1074,11 +1074,11 @@ Combat skills (server authority, tweens, loops) transfer to **racing game feel**
 
 ### Part A - Full audit (15 min)
 1. Run integration order checklist
-2. Fix any missing system from 5.1–5.5
+2. Fix any missing system from 5.1-5.5
 
 ### Part B - QA duels (15 min)
-1. Complete tests 1–7 with friend or 2 Studio players
-2. Tune DAMAGE for 8–15s TTK
+1. Complete tests 1-7 with friend or 2 Studio players
+2. Tune DAMAGE for 8-15s TTK
 
 ### Part C - Save & demo (10 min)
 1. Optional Wins in leaderstats
@@ -1097,7 +1097,7 @@ Combat skills (server authority, tweens, loops) transfer to **racing game feel**
     questions: [
       { id: 'q1', type: MC, question: 'Arena Ready includes…', options: ['Sword + damage + respawn + polish', 'Only terrain', 'Only coins', 'No scripts'], correctAnswer: 0, explanation: 'Full Module 5 stack.' },
       { id: 'q2', type: MC, question: 'Test 4 verifies…', options: ['Respawn at arena spawn', 'DataStore', 'Tycoon plot', 'Terrain gen'], correctAnswer: 0, explanation: 'Death loop.' },
-      { id: 'q3', type: MC, question: 'Good TTK is about…', options: ['8–15 seconds', '0.1 seconds', '5 minutes', 'No combat'], correctAnswer: 0, explanation: 'Readable duel length.' },
+      { id: 'q3', type: MC, question: 'Good TTK is about…', options: ['8-15 seconds', '0.1 seconds', '5 minutes', 'No combat'], correctAnswer: 0, explanation: 'Readable duel length.' },
       { id: 'q4', type: MC, question: 'Server damage prevents…', options: ['Client exploits', 'Jumping', 'UI', 'Sound'], correctAnswer: 0, explanation: 'Trusted combat.' },
       { id: 'q5', type: MC, question: 'Tween hit flash should not…', options: ['Block vision for seconds', 'Exist', 'Use TweenService', 'Help feedback'], correctAnswer: 0, explanation: 'Short FX only.' },
       { id: 'q6', type: MC, question: 'Wins leaderstat shows…', options: ['Kill count in Tab', 'Health only', 'Terrain', 'ClockTime'], correctAnswer: 0, explanation: 'Optional arena stat.' },

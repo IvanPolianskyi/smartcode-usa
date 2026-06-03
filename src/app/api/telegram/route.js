@@ -17,6 +17,11 @@ import {
   markLeadTokenUsed,
   recordLeadSubmitAttempt,
 } from '@/lib/leadFormSecurity'
+import {
+  sanitizeLeadName,
+  sanitizeLeadCourse,
+  sanitizeLeadMessage,
+} from '@/lib/sanitizeLeadText'
 
 function escapeHtml(input) {
   const str = String(input ?? '')
@@ -114,6 +119,9 @@ export async function POST(request) {
     } = body || {}
     const loc = resolveLocale(bodyLocale)
     const apiErr = API_ERRORS[loc]
+    const safeName = sanitizeLeadName(name)
+    const safeMessage = sanitizeLeadMessage(message)
+    const safeCourseInput = sanitizeLeadCourse(course)
 
     if (!phone && !telegram) {
       return NextResponse.json(
@@ -167,9 +175,9 @@ export async function POST(request) {
     const cleanAttribution = sanitizeAttribution(attribution)
     const preferredContactLabel = preferredContactMethod === 'telegram_phone' ? 'Написати в Telegram за цим номером' : 'Подзвонити'
     const hasValidEventId = Boolean(eventId)
-    const isTrialCourse = isTrialCourseValue(course)
+    const isTrialCourse = isTrialCourseValue(safeCourseInput)
     const displayCourse =
-      course?.trim() ||
+      safeCourseInput ||
       (hasValidEventId ? getTrialGenericCourse(loc) : '')
     const trafficType = detectTrafficType(cleanAttribution)
 
@@ -233,7 +241,7 @@ export async function POST(request) {
         sourceUrl: sourceUrl || 'https://smartcode-academy.com',
         phone: normalizedPhone,
         externalId: leadIdentity || (normalizedTelegram ? normalizedTelegram.replace(/^@/, '').toLowerCase() : undefined),
-        name: name || undefined,
+        name: safeName || undefined,
         clientIp,
         userAgent,
         fbc,
@@ -253,13 +261,13 @@ export async function POST(request) {
     const lines = [
       '<b>Нова заявка зі сайту SmartCode Academy</b>',
       '',
-      name ? `<b>Ім'я:</b> ${escapeHtml(name)}` : null,
+      safeName ? `<b>Ім'я:</b> ${escapeHtml(safeName)}` : null,
       contactMethod === 'telegram'
         ? `<b>Телеграм:</b> ${escapeHtml(normalizedTelegram)}`
         : `<b>Телефон:</b> ${escapeHtml(normalizedPhone)}`,
       normalizedPhone ? `<b>Бажаний спосіб зв'язку:</b> ${escapeHtml(preferredContactLabel)}` : null,
       displayCourse ? `<b>Курс:</b> ${escapeHtml(displayCourse)}` : null,
-      message ? `<b>Повідомлення:</b>\n${escapeHtml(message)}` : null,
+      safeMessage ? `<b>Повідомлення:</b>\n${escapeHtml(safeMessage)}` : null,
       `<b>Трафік:</b> ${escapeHtml(trafficType)}`,
       metaLeadLine,
       cleanAttribution.utm_source ? `<b>UTM Source:</b> ${escapeHtml(cleanAttribution.utm_source)}` : null,
@@ -298,13 +306,13 @@ export async function POST(request) {
       let savedOffline = false
       try {
         const insertResult = await submissions.insertOne({
-          name: name || '',
+          name: safeName,
           phone: normalizedPhone || '',
           telegram: normalizedTelegram || '',
           eventId: hasValidEventId ? eventId : null,
           leadIdentity,
           course: displayCourse || '',
-          message: message || '',
+          message: safeMessage,
           contactMethod: contactMethod || 'phone',
           preferredContactMethod: preferredContactMethod || 'phone_call',
           attribution: cleanAttribution,
@@ -319,11 +327,11 @@ export async function POST(request) {
         await recordLeadSubmitAttempt(submitIp, { blocked: false })
         await sendLeadToCrm({
           leadId: String(insertResult.insertedId),
-          name: name || '',
+          name: safeName,
           phone: normalizedPhone || null,
           telegram: normalizedTelegram || null,
           course: displayCourse || '',
-          message: message || '',
+          message: safeMessage,
           contactMethod: contactMethod || 'phone',
           preferredContactMethod: preferredContactMethod || 'phone_call',
           sourceUrl: sourceUrl || null,
@@ -355,13 +363,13 @@ export async function POST(request) {
 
     try {
       const insertResult = await submissions.insertOne({
-        name: name || '',
+        name: safeName,
         phone: normalizedPhone || '',
         telegram: normalizedTelegram || '',
         eventId: hasValidEventId ? eventId : null,
         leadIdentity,
         course: displayCourse || '',
-        message: message || '',
+        message: safeMessage,
         contactMethod: contactMethod || 'phone',
         preferredContactMethod: preferredContactMethod || 'phone_call',
         attribution: cleanAttribution,
@@ -376,11 +384,11 @@ export async function POST(request) {
       await recordLeadSubmitAttempt(submitIp, { blocked: false })
       await sendLeadToCrm({
         leadId: String(insertResult.insertedId),
-        name: name || '',
+        name: safeName,
         phone: normalizedPhone || null,
         telegram: normalizedTelegram || null,
         course: displayCourse || '',
-        message: message || '',
+        message: safeMessage,
         contactMethod: contactMethod || 'phone',
         preferredContactMethod: preferredContactMethod || 'phone_call',
         sourceUrl: sourceUrl || null,

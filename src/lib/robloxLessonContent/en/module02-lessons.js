@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 02 - lessons 2.1–2.6 */
+/** Rich EN content for Roblox Module 02 - lessons 2.1-2.6 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -287,7 +287,7 @@ Open **Lesson 2.1 - Lava Lane**.`,
 | Die on lava → back to spawn | Die → respawn at last CP |
 | Players rage-quit | Players retry and improve |
 
-**Design rule:** place a checkpoint every **20–40 seconds** of jumping - end of each "stage."
+**Design rule:** place a checkpoint every **20-40 seconds** of jumping - end of each "stage."
 
 **Exercise (2 min):** Walk your lava lane in Play. Count seconds between start and first hard jump - that's stage 1.`,
       },
@@ -440,7 +440,7 @@ Add after setting RespawnLocation.
       { id: 'q6', type: MC, question: 'Checkpoints should be placed…', options: ['On safe ground after hard jumps', 'Inside lava', 'Outside Workspace', 'In ServerScriptService'], correctAnswer: 0, explanation: 'Safe pads let players register progress.' },
       { id: 'q7', type: MC, question: 'Neutral true on SpawnLocation allows…', options: ['Any player to use it', 'No spawning ever', 'Only one color', 'Deleting scripts'], correctAnswer: 0, explanation: 'Neutral spawns work for all teams.' },
       { id: 'q8', type: MC, question: 'Checkpoint scripts are…', options: ['Server Scripts in the checkpoint', 'LocalScripts in Head', 'Inside Terrain', 'Only in chat'], correctAnswer: 0, explanation: 'Server sets RespawnLocation for all players.' },
-      { id: 'q9', type: MC, question: 'Ideal spacing between checkpoints…', options: ['Every 20–40 seconds of play', 'Once per game ever', 'Every 2 hours', 'Never'], correctAnswer: 0, explanation: 'Regular saves reduce frustration.' },
+      { id: 'q9', type: MC, question: 'Ideal spacing between checkpoints…', options: ['Every 20-40 seconds of play', 'Once per game ever', 'Every 2 hours', 'Never'], correctAnswer: 0, explanation: 'Regular saves reduce frustration.' },
       { id: 'q10', type: MC, question: 'Lesson 2.2 save name…', options: ['Lesson 2.2 - Checkpoints', 'Lesson 2.1 - Lava Lane', 'Click Magic', 'Module 12'], correctAnswer: 0, explanation: 'Track obby progress with clear filenames.' },
     ],
   },
@@ -789,7 +789,7 @@ Players instantly see **time + grade** - motivates replay for S Rank.
         title: 'Test every branch on purpose',
         content: `**Structured tests:**
 1. **S Rank** - sprint finish under 35s (or lower your thresholds temporarily)
-2. **A Rank** - normal careful run 35–59s
+2. **A Rank** - normal careful run 35-59s
 3. **B Rank** - walk slowly / wait on a platform past 60s
 
 **Edge cases:**
@@ -1164,7 +1164,7 @@ export const enLesson26 = {
       },
       {
         title: 'Quality bar - feels shippable',
-        content: `- **60–120 seconds** of gameplay for average player
+        content: `- **60-120 seconds** of gameplay for average player
 - **No red Output spam** during a clean run
 - **8+** named Parts in obby (not generic Part)
 - **3+** checkpoints working
@@ -1224,7 +1224,7 @@ Your obby skills (touch, UI, conditions) transfer directly to coin pickups.
 3. Fix any Output errors
 
 ### Part C - Playtests & save (15 min)
-1. Complete checklist cases 1–5 (note pass/fail)
+1. Complete checklist cases 1-5 (note pass/fail)
 2. One full run for best rank attempt
 3. **Save to Roblox** → \`Module 2 - Obby Ready\`
 4. **Practice complete** + optional 2-min recording`,
@@ -1243,7 +1243,7 @@ Your obby skills (touch, UI, conditions) transfer directly to coin pickups.
       { id: 'q2', type: MC, question: 'After CP_2 then death, spawn at…', options: ['CP_2', 'World origin only', 'FinishPad', 'Toolbox'], correctAnswer: 0, explanation: 'Last checkpoint touched wins.' },
       { id: 'q3', type: MC, question: 'VictoryGui appears when…', options: ['Player touches FinishPad', 'Studio opens', 'Terrain generates', 'Saving file'], correctAnswer: 0, explanation: 'Finish triggers victory UI.' },
       { id: 'q4', type: MC, question: 'Playtest 4 checks…', options: ['B Rank on slow finish', 'Deleting island', 'UK translation', 'Publishing'], correctAnswer: 0, explanation: 'Slow run should hit B branch.' },
-      { id: 'q5', type: MC, question: 'Good obby length is about…', options: ['60–120 seconds', '2 seconds', '1 hour minimum', 'No jumping'], correctAnswer: 0, explanation: 'Mini obby targets about a minute.' },
+      { id: 'q5', type: MC, question: 'Good obby length is about…', options: ['60-120 seconds', '2 seconds', '1 hour minimum', 'No jumping'], correctAnswer: 0, explanation: 'Mini obby targets about a minute.' },
       { id: 'q6', type: MC, question: 'Start signs help…', options: ['Players find the route', 'Increase lava damage', 'Remove Humanoid', 'Disable UI'], correctAnswer: 0, explanation: 'Wayfinding reduces confusion.' },
       { id: 'q7', type: MC, question: 'Retry button should…', options: ['Hide victory and allow another run', 'Delete all checkpoints', 'Remove ranks', 'Close Studio'], correctAnswer: 0, explanation: 'Retry supports replay loop.' },
       { id: 'q8', type: MC, question: 'Red Output during clean run means…', options: ['Fix scripts before shipping', 'Perfect game', 'More lava needed', 'Publish now'], correctAnswer: 0, explanation: 'Errors mean bugs remain.' },

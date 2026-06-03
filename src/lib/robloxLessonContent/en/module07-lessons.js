@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 07 - lessons 7.1–7.3 */
+/** Rich EN content for Roblox Module 07 - lessons 7.1-7.3 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE

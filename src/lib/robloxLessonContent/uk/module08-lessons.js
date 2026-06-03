@@ -1,27 +1,27 @@
-/** Rich UK content for Roblox Module 08 — AUTO from EN via gen-roblox-lessons-uk.mjs */
+/** Rich UK content for Roblox Module 08 - AUTO from EN via gen-roblox-lessons-uk.mjs */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
 
 export const ukLesson81 = {
-  lessonId: "lesson-roblox-8-1",
-  moduleId: "module-08",
-  order: 1,
-  title: "8.1 - Живий NPC",
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    "Розмістіть model NPC з Humanoid і чіткою роллю",
-    "Додайте ProximityPrompt для взаємодії з гравцем",
-    "Налаштуйте текст підказки та тривалість утримання",
-    "Надайте NPC неактивну анімацію та читабельне ім’я",
-  ],
-  theory: {
-    sections: [
-      {
-        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
-        content: `**Модуль 8 – Розумна гра** – світи оживають завдяки **NPC**, діалогам, патрулям і квестам.
+ lessonId: "lesson-roblox-8-1",
+ moduleId: "module-08",
+ order: 1,
+ title: "8.1 - Живий NPC",
+ theoryMinutes: 40,
+ quizMinutes: 10,
+ estimatedTime: 50,
+ learningObjectives: [
+ "Розмістіть Model NPC з Humanoid і чіткою роллю",
+ "Додайте ProximityPrompt для взаємодії з гравцем",
+ "Налаштуйте текст підказки та тривалість утримання",
+ "Надайте NPC неактивну анімацію та читабельне ім’я",
+ ],
+ theory: {
+ sections: [
+ {
+ title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+ content: `**Модуль 8 - Розумна гра** - світи оживають завдяки **NPC**, діалогам, патрулям і квестам.
 
 **Хід уроку:**
 1. **Теорія (40 хв)** - установка NPC + ProximityPrompt
@@ -29,10 +29,10 @@ export const ukLesson81 = {
 3. **Вікторина (10 хв)** - проходження **70%**
 
 Використовуйте місце **Module 7 - Shop Works** або новий центр:\`Lesson 8.1 - Living NPC\`.`,
-      },
-      {
-        title: "Від опори до характеру",
-        content: `Хороший NPC має:
+ },
+ {
+ title: "Від опори до характеру",
+ content: `Хороший NPC має:
 
 | Шматок | Призначення |
 |-------|---------|
@@ -44,28 +44,28 @@ export const ukLesson81 = {
 **Statue NPC** = немає Humanoid, немає підказки. **Живий NPC** = гравці можуть взаємодіяти.
 
 Гравці довіряють світам, які здаються **населеними**.`,
-      },
-      {
-        title: "Отримання NPC на вашому місці",
-        content: `**Варіант A - Toolbox (зручний для уроку):**
+ },
+ {
+ title: "Отримання NPC на вашому місці",
+ content: `**Варіант A - Toolbox (зручний для уроку):**
 1. Аватар → **Rig Builder** або знайдіть "R15 NPC"
-2. Insert Model → перейменувати\`NPC_Guide_Maya\`**Варіант B – дублікат початкового символу:**
+2. Insert Model → перейменувати\`NPC_Guide_Maya\`**Варіант B - дублікат початкового символу:**
 1. Скопіюйте свого Character в Play (лише для навчання)
 2. Закріпіть NPC на місці для статичної напрямної
 
 **Folder:**\`Workspace/NPCs/NPC_Guide_Maya\`**Вправа (5 хв):** Встановіть Humanoid\`DisplayDistanceType\`тому ім'я відображається, коли поруч.`,
-      },
-      {
-        title: "Налаштування ProximityPrompt",
-        content: `Всередині **HumanoidRootPart** → вставте **ProximityPrompt**:
+ },
+ {
+ title: "Налаштування ProximityPrompt",
+ content: `Всередині **HumanoidRootPart** → вставте **ProximityPrompt**:
 
 | Property | Пропонований |
 |----------|-----------|
 | **ActionText** | Розмова |
 | **Текст об’єкта** | Гід Майя |
 | **HoldDuration** | 0 (миттєво) або 0,5 |
-| **MaxActivationDistance** | 8–12 |
-| **RequiresLineOfSight** | false (легше для підлітків) |
+| **MaxActivationDistance** | 8-12 |
+| **RequiresLineOfSight** | false (простіше для NPC) |
 
 **Server Script** в NPC (або NPCService):\`\`\`lua
 local prompt = script.Parent:WaitForChild("HumanoidRootPart")
@@ -76,10 +76,10 @@ prompt.Triggered:Connect(function(player)
  -- Lesson 8.2: OpenDialogue:FireClient(player, "guide_intro")
 end)
 \`\`\`**Triggered** запускається на **сервері**, коли гравець активує підказку.`,
-      },
-      {
-        title: "Неробоча анімація",
-        content: `Скрипт **Animate** (часто всередині NPC) або вручну:
+ },
+ {
+ title: "Неробоча анімація",
+ content: `Скрипт **Animate** (часто всередині NPC) або вручну:
 
 1. **Редактор анімації** → створити idle
 2. Або використовуйте за замовчуванням режим простою з установки\`\`\`lua
@@ -93,10 +93,10 @@ if animator then
  track:Play()
 end
 \`\`\`Для уроку: навіть **стояти на місці** з назвою + підказкою можна, якщо ідентифікатор анімації недоступний.`,
-      },
-      {
-        title: "Розробка ролей і візуалізація",
-        content: `Запишіть роль одного речення:
+ },
+ {
+ title: "Розробка ролей і візуалізація",
+ content: `Запишіть роль одного речення:
 *"Гід Майя вітає нових гравців і направляє їх до магазину."*
 
 **Візуальна узгодженість:**
@@ -105,222 +105,222 @@ end
 - NPC **Anchored** false якщо йде пізніше; **true** для статичного посібника сьогодні
 
 Folder **NPCs** забезпечує чистоту робочого простору.`,
-      },
-      {
-        title: "Контрольний список перед початком практики",
-        content: `- [ ] NPC_Guide_Maya з Humanoid + ProximityPrompt
+ },
+ {
+ title: "Контрольний список перед початком практики",
+ content: `- [ ] NPC_Guide_Maya з Humanoid + ProximityPrompt
 - [ ] Підказка показує Talk + ім'я NPC
 - [ ] Тригер друкує ім'я гравця у вихідних даних
 - [ ] Роль записана в конспектах уроків
 - [ ] Зберегти:\`Lesson 8.1 - Living NPC\``,
-      },
-    ],
-  },
-  commonMistakes: [
-    {
-      mistake: "ProximityPrompt у неправильній Part",
-      explanation: "Важко викликати.",
-      correctApproach: "HumanoidRootPart",
-    },
-    {
-      mistake: "LocalScript увімкнено",
-      explanation: "Ініціюється подія сервера.",
-      correctApproach: "Скрипт на сервері",
-    },
-    {
-      mistake: "На model немає Humanoid",
-      explanation: "Не character.",
-      correctApproach: "Риг з Humanoid",
-    },
-    {
-      mistake: "Максимальна відстань активації 100",
-      explanation: "Розмова з усієї карти.",
-      correctApproach: "8-12 шпильок",
-    },
-  ],
-  summary: "Ви розмістили Guide Maya з Humanoid, ProximityPrompt і серверним обробником привітань - тепер у вашому центрі є живий NPC, готовий до діалогу в наступному уроці.",
-  practiceTask: {
-    title: "Створення керівництва NPC (~25 хв)",
-    difficulty: "beginner",
-    description: `**Мета:** Взаємодіючий путівник на спауні.
+ },
+ ],
+ },
+ commonMistakes: [
+ {
+ mistake: "ProximityPrompt у неправильній Part",
+ explanation: "Важко викликати.",
+ correctApproach: "HumanoidRootPart",
+ },
+ {
+ mistake: "LocalScript увімкнено",
+ explanation: "Ініціюється подія сервера.",
+ correctApproach: "Скрипт на сервері",
+ },
+ {
+ mistake: "На model немає Humanoid",
+ explanation: "Не character.",
+ correctApproach: "Риг з Humanoid",
+ },
+ {
+ mistake: "Максимальна відстань активації 100",
+ explanation: "Розмова з усієї карти.",
+ correctApproach: "8-12 стадів",
+ },
+ ],
+ summary: "Ви розмістили Guide Maya з Humanoid, ProximityPrompt і серверним обробником привітань - тепер у вашому центрі є живий NPC, готовий до діалогу в наступному уроці.",
+ practiceTask: {
+ title: "Створення керівництва NPC (~25 хв)",
+ difficulty: "beginner",
+ description: `**Мета:** Взаємодіючий путівник на спауні.
 
-### Part A - model NPC (10 хв)
+### Part A - Model NPC (10 хв)
 1. Folder Workspace/NPCs
 2. NPC_Guide_Maya - установка + Humanoid
 3. Позиція біля нереста або магазину
 
-### Part B – Взаємодія (10 хв)
+### Part B - Взаємодія (10 хв)
 1. ProximityPrompt на HumanoidRootPart
 2. Server Script друкує привітання на Triggered
 3. Додаткова назва BillboardGui
 
 ### Part C - Зберегти (5 хв)
 1. Play - утримувати E / клацнути підказку - див. Вивід
-2. **Зберегти в Roblox** →\`Lesson 8.1 - Living NPC\`3. **Практика завершена**`,
-    hints: [
-      "Перейменуйте все - майбутнє вам віддячить",
-      "Перевірте оперативну відстань пішки та в автомобілі (не має спрацьовувати в автомобілі, якщо лише для ходьби)",
-      "NPC магазину Module 7 може повторно використовувати те саме обладнання пізніше",
-    ],
-    optionalChallenge: "BillboardGui «Quest Mentor» над головою.",
-  },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      {
-        id: "q1",
-        type: "multiple_choice",
-        question: "ProximityPrompt дозволяє гравцям…",
-        options: [
-          "Взаємодійте, коли поруч",
-          "Літати",
-          "Редагувати місцевість",
-          "Опублікувати",
-        ],
-        correctAnswer: 0,
-        explanation: "Контекстна дія.",
-      },
-      {
-        id: "q2",
-        type: "multiple_choice",
-        question: "Ініційована подія виконується на...",
-        options: [
-          "Сервер",
-          "Тільки клієнт",
-          "Рельєф місцевості",
-          "DataStore",
-        ],
-        correctAnswer: 0,
-        explanation: "Підказка на стороні сервера.",
-      },
-      {
-        id: "q3",
-        type: "multiple_choice",
-        question: "NPC потребує…",
-        options: [
-          "Humanoid",
-          "Лише Part",
-          "Тільки небо",
-          "Тільки звук",
-        ],
-        correctAnswer: 0,
-        explanation: "Characterна установка.",
-      },
-      {
-        id: "q4",
-        type: "multiple_choice",
-        question: "HumanoidRootPart містить…",
-        options: [
-          "Якір ProximityPrompt",
-          "Тільки монети",
-          "Рельєф місцевості",
-          "атмосфера",
-        ],
-        correctAnswer: 0,
-        explanation: "Точка взаємодії.",
-      },
-      {
-        id: "q5",
-        type: "multiple_choice",
-        question: "Чітка роль NPC допомагає...",
-        options: [
-          "Дизайн і код залишаються зосередженими",
-          "відставання",
-          "Видалити інтерфейс користувача",
-          "Видалити магазин",
-        ],
-        correctAnswer: 0,
-        explanation: "Дизайн гри.",
-      },
-      {
-        id: "q6",
-        type: "multiple_choice",
-        question: "Модуль 8 фокусується на…",
-        options: [
-          "Розумна гра / NPC і квести",
-          "Тільки гонки",
-          "Тільки код магазину",
-          "Тільки видавництво",
-        ],
-        correctAnswer: 0,
-        explanation: "Живі світи.",
-      },
-      {
-        id: "q7",
-        type: "multiple_choice",
-        question: "Folder NPC у Workspace…",
-        options: [
-          "Організовує Characterв",
-          "Замінює сервер",
-          "Потрібен Roblox",
-          "Блокує скрипти",
-        ],
-        correctAnswer: 0,
-        explanation: "Чиста ієрархія.",
-      },
-      {
-        id: "q8",
-        type: "multiple_choice",
-        question: "ActionText \"Talk\" повідомляє гравцеві…",
-        options: [
-          "Що робить кнопка",
-          "IP сервера",
-          "Ціна Robux",
-          "Версія",
-        ],
-        correctAnswer: 0,
-        explanation: "Мітка UX.",
-      },
-      {
-        id: "q9",
-        type: "multiple_choice",
-        question: "Урок 8.2 додає…",
-        options: [
-          "Інтерфейс діалогу",
-          "Тільки автомобіль",
-          "Тільки таймер",
-          "Тільки DataStore",
-        ],
-        correctAnswer: 0,
-        explanation: "Наступний крок.",
-      },
-      {
-        id: "q10",
-        type: "multiple_choice",
-        question: "Урок 8.1 зберегти назву…",
-        options: [
-          "Урок 8.1 - Живий NPC",
-          "Місце проживання",
-          "Магазин працює",
-          "Гонка розпочата",
-        ],
-        correctAnswer: 0,
-        explanation: "Зберегти урок NPC.",
-      },
-    ],
-  },
+2. **Зберегти в Roblox** →\`Lesson 8.1 - Living NPC\` 3. **Практика завершена**`,
+ hints: [
+ "Перейменуйте все - майбутнє вам віддячить",
+ "Перевірте оперативну відстань пішки та в автомобілі (не має спрацьовувати в автомобілі, якщо лише для ходьби)",
+ "NPC магазину Module 7 може повторно використовувати те саме обладнання пізніше",
+ ],
+ optionalChallenge: "BillboardGui «Quest Mentor» над головою.",
+ },
+ quiz: {
+ passingScore: 70,
+ timeLimit: 10,
+ questions: [
+ {
+ id: "q1",
+ type: "multiple_choice",
+ question: "ProximityPrompt дозволяє гравцям…",
+ options: [
+ "Взаємодійте, коли поруч",
+ "Літати",
+ "Редагувати місцевість",
+ "Опублікувати",
+ ],
+ correctAnswer: 0,
+ explanation: "Контекстна дія.",
+ },
+ {
+ id: "q2",
+ type: "multiple_choice",
+ question: "Ініційована подія виконується на...",
+ options: [
+ "Сервер",
+ "Тільки клієнт",
+ "Рельєф місцевості",
+ "DataStore",
+ ],
+ correctAnswer: 0,
+ explanation: "Підказка на стороні сервера.",
+ },
+ {
+ id: "q3",
+ type: "multiple_choice",
+ question: "NPC потребує…",
+ options: [
+ "Humanoid",
+ "Лише Part",
+ "Тільки небо",
+ "Тільки звук",
+ ],
+ correctAnswer: 0,
+ explanation: "Налаштування Character.",
+ },
+ {
+ id: "q4",
+ type: "multiple_choice",
+ question: "HumanoidRootPart містить…",
+ options: [
+ "Якір ProximityPrompt",
+ "Тільки монети",
+ "Рельєф місцевості",
+ "атмосфера",
+ ],
+ correctAnswer: 0,
+ explanation: "Точка взаємодії.",
+ },
+ {
+ id: "q5",
+ type: "multiple_choice",
+ question: "Чітка роль NPC допомагає...",
+ options: [
+ "Дизайн і код залишаються зосередженими",
+ "відставання",
+ "Видалити інтерфейс користувача",
+ "Видалити магазин",
+ ],
+ correctAnswer: 0,
+ explanation: "Дизайн гри.",
+ },
+ {
+ id: "q6",
+ type: "multiple_choice",
+ question: "Модуль 8 фокусується на…",
+ options: [
+ "Розумна гра / NPC і квести",
+ "Тільки гонки",
+ "Тільки код магазину",
+ "Тільки видавництво",
+ ],
+ correctAnswer: 0,
+ explanation: "Живі світи.",
+ },
+ {
+ id: "q7",
+ type: "multiple_choice",
+ question: "Folder NPC у Workspace…",
+ options: [
+ "Керує Character",
+ "Замінює сервер",
+ "Потрібен Roblox",
+ "Блокує скрипти",
+ ],
+ correctAnswer: 0,
+ explanation: "Чиста ієрархія.",
+ },
+ {
+ id: "q8",
+ type: "multiple_choice",
+ question: "ActionText \"Talk\" повідомляє гравцеві…",
+ options: [
+ "Що робить кнопка",
+ "IP сервера",
+ "Ціна Robux",
+ "Версія",
+ ],
+ correctAnswer: 0,
+ explanation: "Мітка UX.",
+ },
+ {
+ id: "q9",
+ type: "multiple_choice",
+ question: "Урок 8.2 додає…",
+ options: [
+ "Інтерфейс діалогу",
+ "Тільки автомобіль",
+ "Тільки таймер",
+ "Тільки DataStore",
+ ],
+ correctAnswer: 0,
+ explanation: "Наступний крок.",
+ },
+ {
+ id: "q10",
+ type: "multiple_choice",
+ question: "Урок 8.1 зберегти назву…",
+ options: [
+ "Урок 8.1 - Живий NPC",
+ "Місце проживання",
+ "Магазин працює",
+ "Гонка розпочата",
+ ],
+ correctAnswer: 0,
+ explanation: "Зберегти урок NPC.",
+ },
+ ],
+ },
 }
 
 export const ukLesson82 = {
-  lessonId: "lesson-roblox-8-2",
-  moduleId: "module-08",
-  order: 2,
-  title: "8.2 - Система діалогів",
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    "Зберігайте рядки діалогу в таблиці Lua за ключем",
-    "Створіть DialogueGui з динаміком, текстом, наступним, закрити",
-    "Відкрийте діалог із NPC ProximityPrompt через OpenDialogue RemoteEvent",
-    "Запобігання накладання сеансів діалогу на клієнті",
-  ],
-  theory: {
-    sections: [
-      {
-        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
-        content: `З вашим NPC можна **поговорити**. Сьогодні вони мають **слова сказати**.
+ lessonId: "lesson-roblox-8-2",
+ moduleId: "module-08",
+ order: 2,
+ title: "8.2 - Система діалогів",
+ theoryMinutes: 40,
+ quizMinutes: 10,
+ estimatedTime: 50,
+ learningObjectives: [
+ "Зберігайте рядки діалогу в таблиці Lua за ключем",
+ "Створіть DialogueGui з динаміком, текстом, наступним, закрити",
+ "Відкрийте діалог із NPC ProximityPrompt через OpenDialogue RemoteEvent",
+ "Запобігання накладання сеансів діалогу на клієнті",
+ ],
+ theory: {
+ sections: [
+ {
+ title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+ content: `З вашим NPC можна **поговорити**. Сьогодні вони мають **слова сказати**.
 
 **Хід уроку:**
 1. **Теорія (40 хв)** - дані діалогу + UI цикл
@@ -328,10 +328,10 @@ export const ukLesson82 = {
 3. **Вікторина (10 хв)** - проходження **70%**
 
 Відкрийте **Урок 8.1 - Живий NPC**.`,
-      },
-      {
-        title: "Діалог як дані",
-        content: `**ServerScriptService** → ModuleScript\`DialogueData\`:\`\`\`lua
+ },
+ {
+ title: "Діалог як дані",
+ content: `**ServerScriptService** → ModuleScript\`DialogueData\`:\`\`\`lua
 local DialogueData = {
  guide_intro = {
  speaker = "Guide Maya",
@@ -339,17 +339,17 @@ local DialogueData = {
  "Ласкаво просимо на хаб, будівничий!",
  "Магазин за мною продає стартове спорядження.",
  "Виконуй квести, щоб заробити більше монет.",
- "Удачі — натисни Next, щоб продовжити.",
+ "Удачі - натисни Next, щоб продовжити.",
  },
  },
 }
 
 return DialogueData
-\`\`\`**Мережа надсилає ключ** (\`"guide_intro"\`), а не повні текстові масиви – менші та безпечніші.`,
-      },
-      {
-        title: "Макет DialogueGui",
-        content: `**StarterGui** →\`DialogueGui\`(ScreenGui)\`\`\`
+\`\`\`**Мережа надсилає ключ** (\`"guide_intro"\`), а не повні текстові масиви - менші та безпечніші.`,
+ },
+ {
+ title: "Макет DialogueGui",
+ content: `**StarterGui** →\`DialogueGui\`(ScreenGui)\`\`\`
 DialogueGui
 └── Panel (Frame, bottom center)
  ├── SpeakerLabel
@@ -358,11 +358,11 @@ DialogueGui
  └── CloseButton
 \`\`\`**Panel.Visible = false**, доки не відкриється діалогове вікно.
 
-**Доступність:** великий шрифт (18–22), висококонтрастне тло.`,
-      },
-      {
-        title: "Цикл діалогу клієнта",
-        content: `\`DialogueClient\`LocalScript:\`\`\`lua
+**Доступність:** великий шрифт (18-22), висококонтрастне тло.`,
+ },
+ {
+ title: "Цикл діалогу клієнта",
+ content: `\`DialogueClient\`LocalScript:\`\`\`lua
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local openDialogue = ReplicatedStorage:WaitForChild("OpenDialogue")
 local getLines = ReplicatedStorage:WaitForChild("GetDialogue") -- RemoteFunction 8.2
@@ -412,10 +412,10 @@ openDialogue.OnClientEvent:Connect(function(key)
  open(key)
 end)
 \`\`\``,
-      },
-      {
-        title: "Серверний міст",
-        content: `**ReplicatedStorage:**
+ },
+ {
+ title: "Серверний міст",
+ content: `**ReplicatedStorage:**
 -\`OpenDialogue\`RemoteEvent
 -\`GetDialogue\`RemoteFunction
 
@@ -433,10 +433,10 @@ GetDialogue.OnServerInvoke = function(player, key)
  return DialogueData[key]
 end
 \`\`\`Сервер володіє текстом діалогу - клієнт не може легко вставити підроблені знання квесту.`,
-      },
-      {
-        title: "Правила UX",
-        content: `| Правило | Чому |
+ },
+ {
+ title: "Правила UX",
+ content: `| Правило | Чому |
 |------|-----|
 | Блок другий відкритий під час активності | Без панелей, що перекриваються |
 | Закрити завжди працює | Втеча гравця |
@@ -444,44 +444,44 @@ end
 | Короткі рядки | Читається на мобільному |
 
 **Запобігання спаму:** час відновлення після підказки, активовано (0,5 с) необов’язково.`,
-      },
-      {
-        title: "Контрольний список перед початком практики",
-        content: `- [ ] 4+ рядки у guide_intro
+ },
+ {
+ title: "Контрольний список перед початком практики",
+ content: `- [ ] 4+ рядки у guide_intro
 - [ ] Далі просувається, закриває виходи
 - [ ] Підказка відкриває діалогову панель
 - [ ] Показується ім’я динаміка
 - [ ] Зберегти:\`Lesson 8.2 - Dialogue System\``,
-      },
-    ],
-  },
-  commonMistakes: [
-    {
-      mistake: "Жорстко закодовані рядки лише в LocalScript",
-      explanation: "Клієнт може підробляти / дрейфувати.",
-      correctApproach: "DialogueData на сервері",
-    },
-    {
-      mistake: "Надсилання повного рядкового масиву у FireClient",
-      explanation: "важкий; важче оновити.",
-      correctApproach: "Надіслати рядок ключа діалогу",
-    },
-    {
-      mistake: "Немає активного прапора",
-      explanation: "Подвійні панелі.",
-      correctApproach: "Блокувати під час відкритого діалогу",
-    },
-    {
-      mistake: "DialogueGui завжди видимий",
-      explanation: "Блокує ігровий процес.",
-      correctApproach: "Приховано, поки не буде відкрито",
-    },
-  ],
-  summary: "Ви створили діалог на основі даних за допомогою DialogueData, циклу інтерфейсу користувача Next/Close і OpenDialogue із ProximityPrompt Guide Maya – NPC тепер говорять у повних розмовах.",
-  practiceTask: {
-    title: "Система діалогу v1 (~25 хв)",
-    difficulty: "beginner",
-    description: `**Мета:** 4-строкова розмова від NPC.
+ },
+ ],
+ },
+ commonMistakes: [
+ {
+ mistake: "Жорстко закодовані рядки лише в LocalScript",
+ explanation: "Клієнт може підробляти / дрейфувати.",
+ correctApproach: "DialogueData на сервері",
+ },
+ {
+ mistake: "Надсилання повного рядкового масиву у FireClient",
+ explanation: "важкий; важче оновити.",
+ correctApproach: "Надіслати рядок ключа діалогу",
+ },
+ {
+ mistake: "Немає активного прапора",
+ explanation: "Подвійні панелі.",
+ correctApproach: "Блокувати під час відкритого діалогу",
+ },
+ {
+ mistake: "DialogueGui завжди видимий",
+ explanation: "Блокує ігровий процес.",
+ correctApproach: "Приховано, поки не буде відкрито",
+ },
+ ],
+ summary: "Ви створили діалог на основі даних за допомогою DialogueData, циклу інтерфейсу користувача Next/Close і OpenDialogue із ProximityPrompt Guide Maya - NPC тепер говорять у повних розмовах.",
+ practiceTask: {
+ title: "Система діалогу v1 (~25 хв)",
+ difficulty: "beginner",
+ description: `**Мета:** 4-строкова розмова від NPC.
 
 ### Part A - Дані + пульти (10 хв)
 1. Модуль DialogueData з guide_intro
@@ -495,171 +495,171 @@ end
 
 ### Part C - Зберегти (3 хв)
 1. Грайте по всіх лініях
-2. **Зберегти в Roblox** →\`Lesson 8.2 - Dialogue System\`3. **Практика завершена**`,
-    hints: [
-      "pcall InvokeServer, як каталог Module 7",
-      "UIGradient додаткове полірування панелі",
-      "Тест Закрити в середині розмови",
-    ],
-    optionalChallenge: "Так/Ні вибір гілок до різних рядкових таблиць.",
-  },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      {
-        id: "q1",
-        type: "multiple_choice",
-        question: "Репліки діалогу зберігаються як…",
-        options: [
-          "Таблиця Lua за ключем",
-          "Рельєф місцевості",
-          "Випадкові рядки в інтерфейсі користувача",
-          "Зварні шви",
-        ],
-        correctAnswer: 0,
-        explanation: "Керований даними.",
-      },
-      {
-        id: "q2",
-        type: "multiple_choice",
-        question: "OpenDialogue надсилає…",
-        options: [
-          "Ключ до діалогу з клієнтом",
-          "Повне збереження гри",
-          "Ідентифікатор місцевості",
-          "Екземпляр інструменту",
-        ],
-        correctAnswer: 0,
-        explanation: "Пошук ключів.",
-      },
-      {
-        id: "q3",
-        type: "multiple_choice",
-        question: "Далі кнопка…",
-        options: [
-          "Авансовий індекс рядка",
-          "Видаляє NPC",
-          "Публікує",
-          "Створює автомобіль",
-        ],
-        correctAnswer: 0,
-        explanation: "потік інтерфейсу користувача.",
-      },
-      {
-        id: "q4",
-        type: "multiple_choice",
-        question: "DialogueGui – це…",
-        options: [
-          "ScreenGui на клієнті",
-          "Лише сервер",
-          "Шар місцевості",
-          "Звук",
-        ],
-        correctAnswer: 0,
-        explanation: "Інтерфейс клієнта.",
-      },
-      {
-        id: "q5",
-        type: "multiple_choice",
-        question: "GetDialogue має працювати на…",
-        options: [
-          "Server OnServerInvoke",
-          "Тільки клієнт",
-          "Освітлення",
-          "Workspace",
-        ],
-        correctAnswer: 0,
-        explanation: "Сервер повертає рядки.",
-      },
-      {
-        id: "q6",
-        type: "multiple_choice",
-        question: "активний прапор запобігає...",
-        options: [
-          "Діалоги, що перекриваються",
-          "ходьба",
-          "Стрибок",
-          "Магазин",
-        ],
-        correctAnswer: 0,
-        explanation: "Одна розмова.",
-      },
-      {
-        id: "q7",
-        type: "multiple_choice",
-        question: "Урок 8.2 базується на...",
-        options: [
-          "Урок 8.1 NPC + підказка",
-          "Тільки урок 6",
-          "Порожній",
-          "Тільки опублікувати",
-        ],
-        correctAnswer: 0,
-        explanation: "Тригер NPC.",
-      },
-      {
-        id: "q8",
-        type: "multiple_choice",
-        question: "SpeakerLabel показує…",
-        options: [
-          "Ім'я NPC",
-          "Пароль гравця",
-          "IP сервера",
-          "Robux",
-        ],
-        correctAnswer: 0,
-        explanation: "Ясність.",
-      },
-      {
-        id: "q9",
-        type: "multiple_choice",
-        question: "Урок 8.3 додає…",
-        options: [
-          "Піший патруль NPC",
-          "Тільки магазин",
-          "Тільки гонка",
-          "DataStore",
-        ],
-        correctAnswer: 0,
-        explanation: "Перейти до патруля.",
-      },
-      {
-        id: "q10",
-        type: "multiple_choice",
-        question: "Урок 8.2 зберегти назву…",
-        options: [
-          "Урок 8.2 – Діалогічна система",
-          "Живий NPC",
-          "Місце проживання",
-          "Інтерфейс магазину",
-        ],
-        correctAnswer: 0,
-        explanation: "Зберегти урок діалогу.",
-      },
-    ],
-  },
+2. **Зберегти в Roblox** →\`Lesson 8.2 - Dialogue System\` 3. **Практика завершена**`,
+ hints: [
+ "pcall InvokeServer, як каталог Module 7",
+ "UIGradient додаткове полірування панелі",
+ "Тест Закрити в середині розмови",
+ ],
+ optionalChallenge: "Так/Ні вибір гілок до різних рядкових таблиць.",
+ },
+ quiz: {
+ passingScore: 70,
+ timeLimit: 10,
+ questions: [
+ {
+ id: "q1",
+ type: "multiple_choice",
+ question: "Репліки діалогу зберігаються як…",
+ options: [
+ "Таблиця Lua за ключем",
+ "Рельєф місцевості",
+ "Випадкові рядки в інтерфейсі користувача",
+ "Зварні шви",
+ ],
+ correctAnswer: 0,
+ explanation: "Керований даними.",
+ },
+ {
+ id: "q2",
+ type: "multiple_choice",
+ question: "OpenDialogue надсилає…",
+ options: [
+ "Ключ до діалогу з клієнтом",
+ "Повне збереження гри",
+ "Ідентифікатор місцевості",
+ "Екземпляр інструменту",
+ ],
+ correctAnswer: 0,
+ explanation: "Пошук ключів.",
+ },
+ {
+ id: "q3",
+ type: "multiple_choice",
+ question: "Далі кнопка…",
+ options: [
+ "Авансовий індекс рядка",
+ "Видаляє NPC",
+ "Публікує",
+ "Створює автомобіль",
+ ],
+ correctAnswer: 0,
+ explanation: "потік інтерфейсу користувача.",
+ },
+ {
+ id: "q4",
+ type: "multiple_choice",
+ question: "DialogueGui - це…",
+ options: [
+ "ScreenGui на клієнті",
+ "Лише сервер",
+ "Шар місцевості",
+ "Звук",
+ ],
+ correctAnswer: 0,
+ explanation: "Інтерфейс клієнта.",
+ },
+ {
+ id: "q5",
+ type: "multiple_choice",
+ question: "GetDialogue має працювати на…",
+ options: [
+ "Server OnServerInvoke",
+ "Тільки клієнт",
+ "Освітлення",
+ "Workspace",
+ ],
+ correctAnswer: 0,
+ explanation: "Сервер повертає рядки.",
+ },
+ {
+ id: "q6",
+ type: "multiple_choice",
+ question: "активний прапор запобігає...",
+ options: [
+ "Діалоги, що перекриваються",
+ "ходьба",
+ "Стрибок",
+ "Магазин",
+ ],
+ correctAnswer: 0,
+ explanation: "Одна розмова.",
+ },
+ {
+ id: "q7",
+ type: "multiple_choice",
+ question: "Урок 8.2 базується на...",
+ options: [
+ "Урок 8.1 NPC + підказка",
+ "Тільки урок 6",
+ "Порожній",
+ "Тільки опублікувати",
+ ],
+ correctAnswer: 0,
+ explanation: "Тригер NPC.",
+ },
+ {
+ id: "q8",
+ type: "multiple_choice",
+ question: "SpeakerLabel показує…",
+ options: [
+ "Ім'я NPC",
+ "Пароль гравця",
+ "IP сервера",
+ "Robux",
+ ],
+ correctAnswer: 0,
+ explanation: "Ясність.",
+ },
+ {
+ id: "q9",
+ type: "multiple_choice",
+ question: "Урок 8.3 додає…",
+ options: [
+ "Піший патруль NPC",
+ "Тільки магазин",
+ "Тільки гонка",
+ "DataStore",
+ ],
+ correctAnswer: 0,
+ explanation: "Перейти до патруля.",
+ },
+ {
+ id: "q10",
+ type: "multiple_choice",
+ question: "Урок 8.2 зберегти назву…",
+ options: [
+ "Урок 8.2 - Діалогічна система",
+ "Живий NPC",
+ "Місце проживання",
+ "Інтерфейс магазину",
+ ],
+ correctAnswer: 0,
+ explanation: "Зберегти урок діалогу.",
+ },
+ ],
+ },
 }
 
 export const ukLesson83 = {
-  lessonId: "lesson-roblox-8-3",
-  moduleId: "module-08",
-  order: 3,
-  title: "8.3 - NPC що ходить",
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    "Створіть Parts маршрутних точок від WP_1 до WP_5 для маршруту патрулювання",
-    "Патруль із Humanoid:MoveTo і MoveToFinished:Wait",
-    "Кольцевий маршрут з паузами в кожній точці",
-    "Налагодження застряглих NPC з інтервалом шляху та перешкодами",
-  ],
-  theory: {
-    sections: [
-      {
-        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
-        content: `Статичні напрямні в порядку. **Ходячі NPC** змушують центри відчувати себе **живими**.
+ lessonId: "lesson-roblox-8-3",
+ moduleId: "module-08",
+ order: 3,
+ title: "8.3 - NPC що ходить",
+ theoryMinutes: 40,
+ quizMinutes: 10,
+ estimatedTime: 50,
+ learningObjectives: [
+ "Створіть Parts маршрутних точок від WP_1 до WP_5 для маршруту патрулювання",
+ "Патруль із Humanoid:MoveTo і MoveToFinished:Wait",
+ "Кольцевий маршрут з паузами в кожній точці",
+ "Налагодження застряглих NPC з інтервалом шляху та перешкодами",
+ ],
+ theory: {
+ sections: [
+ {
+ title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+ content: `Статичні напрямні в порядку. **Ходячі NPC** змушують центри відчувати себе **живими**.
 
 **Хід уроку:**
 1. **Теорія (40 хв)** - шляхові точки + цикл MoveTo
@@ -667,10 +667,10 @@ export const ukLesson83 = {
 3. **Вікторина (10 хв)** - проходження **70%**
 
 Відкрийте **Урок 8.2 - Система діалогів** - використовуйте другого NPC або ту саму Maya без прив’язки.`,
-      },
-      {
-        title: "Проект маршруту маршрутної точки",
-        content: `Folder\`Workspace/PatrolRoutes/Route_ShopLoop\`:
+ },
+ {
+ title: "Проект маршруту маршрутної точки",
+ content: `Folder\`Workspace/PatrolRoutes/Route_ShopLoop\`:
 
 | Part | Ім'я | Примітки |
 |------|------|-------|
@@ -682,11 +682,11 @@ export const ukLesson83 = {
 
 **Properties:** Anchored true, CanCollide false, прозорість 0,5 (налагодження), потім 1 невидимий.
 
-**Відстань:** 8–15 шпильок одна від одної, без різких 90° через стіни.`,
-      },
-      {
-        title: "Збирайте шляхові точки по порядку",
-        content: `\`\`\`lua
+**Відстань:** 8-15 стадів одна від одної, без різких 90° через стіни.`,
+ },
+ {
+ title: "Збирайте шляхові точки по порядку",
+ content: `\`\`\`lua
 local routeFolder = workspace.PatrolRoutes.Route_ShopLoop
 local waypoints = {}
 
@@ -702,10 +702,10 @@ table.sort(waypoints, function(a, b)
  return na < nb
 end)
 \`\`\`Сортування за номерами підтримує правильний порядок маршруту.`,
-      },
-      {
-        title: "Петля патрулювання MoveTo",
-        content: `**NPC_Patrol_Guard** - серверний скрипт:\`\`\`lua
+ },
+ {
+ title: "Петля патрулювання MoveTo",
+ content: `**NPC_Patrol_Guard** - серверний скрипт:\`\`\`lua
 local npc = script.Parent
 local humanoid = npc:WaitForChild("Humanoid")
 humanoid.WalkSpeed = 10
@@ -723,73 +723,73 @@ local function patrol(waypoints)
 end
 
 task.spawn(patrol, waypoints)
-\`\`\`**NPC не має бути закріпленим** – Humanoidу потрібно рухатися.
+\`\`\`**NPC не має бути закріпленим** - Humanoidу потрібно рухатися.
 
 Вимкніть елементи керування гравця на NPC - це не character гравця.`,
-      },
-      {
-        title: "Застрягла налагодження NPC",
-        content: `Якщо NPC зупиняється назавжди:
+ },
+ {
+ title: "Застрягла налагодження NPC",
+ content: `Якщо NPC зупиняється назавжди:
 
 | Виправити | Try |
 |-----|-----|
 | Застряг на стіні | Move waypoint away from geometry |
 | Падає через карту | Check HipHeight, floor collision |
-| Ніколи не досягає точки | Збільште час очікування – MoveToFinished усе ще запускається |
+| Ніколи не досягає точки | Збільште час очікування - MoveToFinished усе ще запускається |
 | Обертається на місці | Розширити кут повороту - додати середню точку |
 
 **Налагодження:** залишайте Parts WP видимими (червоний неон), доки маршрут не запрацює.
 
 **Друкувати** назву маршрутної точки після досягнення, видаляти відбитки, коли закінчите.`,
-      },
-      {
-        title: "Патруль + діалог разом",
-        content: `**Два NPC** цілком допустимо для уроку:
-- **Guide Maya** - статичний + діалог (8.1–8.2)
+ },
+ {
+ title: "Патруль + діалог разом",
+ content: `**Два NPC** цілком допустимо для уроку:
+- **Guide Maya** - статичний + діалог (8.1-8.2)
 - **Patrol Guard** - ходить петля (8.3)
 
 Або призупинити патрулювання під час розмови гравця (додатково):\`\`\`lua
 local patrolling = true
 -- on prompt: patrolling = false, humanoid:MoveTo(npc.PrimaryPart.Position)
 \`\`\`Урок 8.3 присвячений **безперервному патрулюванню**.`,
-      },
-      {
-        title: "Контрольний список перед початком практики",
-        content: `- [ ] 5 шляхових точок WP_1..WP_5 відсортовано
+ },
+ {
+ title: "Контрольний список перед початком практики",
+ content: `- [ ] 5 шляхових точок WP_1..WP_5 відсортовано
 - [ ] NPC повторює повну петлю
 - [ ] Пауза ~0,7 с у кожній точці
 - [ ] Немає застряг на 3+ послідовних колах
 - [ ] Зберегти:\`Lesson 8.3 - NPC Patrol\``,
-      },
-    ],
-  },
-  commonMistakes: [
-    {
-      mistake: "NPC Anchored true",
-      explanation: "Не може ходити.",
-      correctApproach: "Відкріпіть model NPC для патрулювання",
-    },
-    {
-      mistake: "Шляхові точки всередині стін",
-      explanation: "MoveTo застряг.",
-      correctApproach: "Чистий відстань між шляхами",
-    },
-    {
-      mistake: "Не відсортовано WP_10 перед WP_2",
-      explanation: "Дивний маршрут.",
-      correctApproach: "Числове сортування",
-    },
-    {
-      mistake: "Скрипт патрулювання на LocalScript",
-      explanation: "AI повинен бути сервером для всіх гравців.",
-      correctApproach: "Серверний скрипт на NPC",
-    },
-  ],
-  summary: "Ви побудували петлю патрулювання з п’ятьма маршрутними точками за допомогою Humanoid MoveTo, пауз і відсортованих маршрутних точок – тепер у вашому центрі є NPC, який ходить, а не просто стоїть на спауні.",
-  practiceTask: {
-    title: "Маршрут патрулювання NPC (~25 хв)",
-    difficulty: "beginner",
-    description: `**Мета:** Нескінченне 5-точкове патрулювання.
+ },
+ ],
+ },
+ commonMistakes: [
+ {
+ mistake: "NPC Anchored true",
+ explanation: "Не може ходити.",
+ correctApproach: "Відкріпіть Model NPC для патрулювання",
+ },
+ {
+ mistake: "Шляхові точки всередині стін",
+ explanation: "MoveTo застряг.",
+ correctApproach: "Чистий відстань між шляхами",
+ },
+ {
+ mistake: "Не відсортовано WP_10 перед WP_2",
+ explanation: "Дивний маршрут.",
+ correctApproach: "Числове сортування",
+ },
+ {
+ mistake: "Скрипт патрулювання на LocalScript",
+ explanation: "AI повинен бути сервером для всіх гравців.",
+ correctApproach: "Серверний скрипт на NPC",
+ },
+ ],
+ summary: "Ви побудували петлю патрулювання з п’ятьма маршрутними точками за допомогою Humanoid MoveTo, пауз і відсортованих маршрутних точок - тепер у вашому центрі є NPC, який ходить, а не просто стоїть на спауні.",
+ practiceTask: {
+ title: "Маршрут патрулювання NPC (~25 хв)",
+ difficulty: "beginner",
+ description: `**Мета:** Нескінченне 5-точкове патрулювання.
 
 ### Part A - Пункти (8 хв)
 1. Folder PatrolRoutes/Route_ShopLoop
@@ -802,171 +802,171 @@ local patrolling = true
 
 ### Part C - відшліфувати та зберегти (2 хв)
 1. Приховати прозорість точки маршруту
-2. **Зберегти в Roblox** →\`Lesson 8.3 - NPC Patrol\`3. **Практика завершена**`,
-    hints: [
-      "MoveToFinished:Wait() після кожного MoveTo",
-      "task.spawn, щоб Script не блокував інші системи",
-      "Додатково: друк випадкових рядків на кожній WP",
-    ],
-    optionalChallenge: "Відтворювати короткий звук при досягненні кожної маршрутної точки.",
-  },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      {
-        id: "q1",
-        type: "multiple_choice",
-        question: "NPC ходить за допомогою…",
-        options: [
-          "Humanoid: MoveTo",
-          "Фарба місцевості",
-          "Лише ClickDetector",
-          "атмосфера",
-        ],
-        correctAnswer: 0,
-        explanation: "Крок пошуку шляху.",
-      },
-      {
-        id: "q2",
-        type: "multiple_choice",
-        question: "MoveToFinished:Wait()…",
-        options: [
-          "Чекає, поки крок буде виконано",
-          "Видаляє NPC",
-          "Відкриває магазин",
-          "Зберігає DataStore",
-        ],
-        correctAnswer: 0,
-        explanation: "Синхронізація послідовності.",
-      },
-      {
-        id: "q3",
-        type: "multiple_choice",
-        question: "Пункти патрулювання під назвою…",
-        options: [
-          "WP_1, WP_2, ...",
-          "Випадковий",
-          "Лише Part",
-          "SpawnLocation",
-        ],
-        correctAnswer: 0,
-        explanation: "Замовлений маршрут.",
-      },
-      {
-        id: "q4",
-        type: "multiple_choice",
-        question: "Patrol NPC має бути…",
-        options: [
-          "Without Anchored",
-          "Anchored true",
-          "Тільки невидимі",
-          "Жодного Humanoid",
-        ],
-        correctAnswer: 0,
-        explanation: "Для руху потрібна фізика.",
-      },
-      {
-        id: "q5",
-        type: "multiple_choice",
-        question: "while true do loop…",
-        options: [
-          "Вічно повторює патруль",
-          "Запускається один раз",
-          "Зупиняє гру",
-          "Публікує",
-        ],
-        correctAnswer: 0,
-        explanation: "Безперервне патрулювання.",
-      },
-      {
-        id: "q6",
-        type: "multiple_choice",
-        question: "Скрипт Patrol працює на...",
-        options: [
-          "Сервер",
-          "Лише клієнт LocalScript",
-          "StarterGui",
-          "Освітлення",
-        ],
-        correctAnswer: 0,
-        explanation: "Усі гравці бачать одного NPC.",
-      },
-      {
-        id: "q7",
-        type: "multiple_choice",
-        question: "Виправлення застряглих NPC включає…",
-        options: [
-          "Перенесіть маршрутні точки подалі від стін",
-          "Видалити Humanoid",
-          "Видаліть ніжки",
-          "Приховати інтерфейс користувача",
-        ],
-        correctAnswer: 0,
-        explanation: "Надійність шляху.",
-      },
-      {
-        id: "q8",
-        type: "multiple_choice",
-        question: "Сортування маршрутних точок за номером…",
-        options: [
-          "Зберігає порядок маршруту",
-          "Видаляє NPC",
-          "Додає монети",
-          "Відкриває діалог",
-        ],
-        correctAnswer: 0,
-        explanation: "WP_2 перед WP_10.",
-      },
-      {
-        id: "q9",
-        type: "multiple_choice",
-        question: "Урок 8.4 додає…",
-        options: [
-          "Система квестів",
-          "Тільки автомобіль",
-          "Тільки таймер",
-          "Опублікувати",
-        ],
-        correctAnswer: 0,
-        explanation: "Далі таблиці квестів.",
-      },
-      {
-        id: "q10",
-        type: "multiple_choice",
-        question: "Урок 8.3 зберегти назву…",
-        options: [
-          "Урок 8.3 - Патруль NPC",
-          "Система діалогу",
-          "Живий NPC",
-          "Магазин працює",
-        ],
-        correctAnswer: 0,
-        explanation: "Збережи патрульний урок.",
-      },
-    ],
-  },
+2. **Зберегти в Roblox** →\`Lesson 8.3 - NPC Patrol\` 3. **Практика завершена**`,
+ hints: [
+ "MoveToFinished:Wait() після кожного MoveTo",
+ "task.spawn, щоб Script не блокував інші системи",
+ "Додатково: друк випадкових рядків на кожній WP",
+ ],
+ optionalChallenge: "Відтворювати короткий звук при досягненні кожної маршрутної точки.",
+ },
+ quiz: {
+ passingScore: 70,
+ timeLimit: 10,
+ questions: [
+ {
+ id: "q1",
+ type: "multiple_choice",
+ question: "NPC ходить за допомогою…",
+ options: [
+ "Humanoid: MoveTo",
+ "Фарба місцевості",
+ "Лише ClickDetector",
+ "атмосфера",
+ ],
+ correctAnswer: 0,
+ explanation: "Крок пошуку шляху.",
+ },
+ {
+ id: "q2",
+ type: "multiple_choice",
+ question: "MoveToFinished:Wait()…",
+ options: [
+ "Чекає, поки крок буде виконано",
+ "Видаляє NPC",
+ "Відкриває магазин",
+ "Зберігає DataStore",
+ ],
+ correctAnswer: 0,
+ explanation: "Синхронізація послідовності.",
+ },
+ {
+ id: "q3",
+ type: "multiple_choice",
+ question: "Пункти патрулювання під назвою…",
+ options: [
+ "WP_1, WP_2, ...",
+ "Випадковий",
+ "Лише Part",
+ "SpawnLocation",
+ ],
+ correctAnswer: 0,
+ explanation: "Замовлений маршрут.",
+ },
+ {
+ id: "q4",
+ type: "multiple_choice",
+ question: "Patrol NPC має бути…",
+ options: [
+ "Without Anchored",
+ "Anchored true",
+ "Тільки невидимі",
+ "Жодного Humanoid",
+ ],
+ correctAnswer: 0,
+ explanation: "Для руху потрібна фізика.",
+ },
+ {
+ id: "q5",
+ type: "multiple_choice",
+ question: "while true do loop…",
+ options: [
+ "Вічно повторює патруль",
+ "Запускається один раз",
+ "Зупиняє гру",
+ "Публікує",
+ ],
+ correctAnswer: 0,
+ explanation: "Безперервне патрулювання.",
+ },
+ {
+ id: "q6",
+ type: "multiple_choice",
+ question: "Скрипт Patrol працює на...",
+ options: [
+ "Сервер",
+ "Лише клієнт LocalScript",
+ "StarterGui",
+ "Освітлення",
+ ],
+ correctAnswer: 0,
+ explanation: "Усі гравці бачать одного NPC.",
+ },
+ {
+ id: "q7",
+ type: "multiple_choice",
+ question: "Виправлення застряглих NPC включає…",
+ options: [
+ "Перенесіть маршрутні точки подалі від стін",
+ "Видалити Humanoid",
+ "Видаліть ніжки",
+ "Приховати інтерфейс користувача",
+ ],
+ correctAnswer: 0,
+ explanation: "Надійність шляху.",
+ },
+ {
+ id: "q8",
+ type: "multiple_choice",
+ question: "Сортування маршрутних точок за номером…",
+ options: [
+ "Зберігає порядок маршруту",
+ "Видаляє NPC",
+ "Додає монети",
+ "Відкриває діалог",
+ ],
+ correctAnswer: 0,
+ explanation: "WP_2 перед WP_10.",
+ },
+ {
+ id: "q9",
+ type: "multiple_choice",
+ question: "Урок 8.4 додає…",
+ options: [
+ "Система квестів",
+ "Тільки автомобіль",
+ "Тільки таймер",
+ "Опублікувати",
+ ],
+ correctAnswer: 0,
+ explanation: "Далі таблиці квестів.",
+ },
+ {
+ id: "q10",
+ type: "multiple_choice",
+ question: "Урок 8.3 зберегти назву…",
+ options: [
+ "Урок 8.3 - Патруль NPC",
+ "Система діалогу",
+ "Живий NPC",
+ "Магазин працює",
+ ],
+ correctAnswer: 0,
+ explanation: "Збережи патрульний урок.",
+ },
+ ],
+ },
 }
 
 export const ukLesson84 = {
-  lessonId: "lesson-roblox-8-4",
-  moduleId: "module-08",
-  order: 4,
-  title: "8.4 - Квест-система",
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    "Визначте квести в таблиці QuestConfig із метою та винагородою",
-    "Відстежуйте стан квестів кожного гравця на сервері",
-    "Прийміть квест із діалогу та збільште прогрес у збиранні кристалів",
-    "Синхронізувати статус квесту з QuestUI через QuestUpdate RemoteEvent",
-  ],
-  theory: {
-    sections: [
-      {
-        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
-        content: `NPC дають **завдання**. Квести перетворюють завдання на **прогрес + нагороди**.
+ lessonId: "lesson-roblox-8-4",
+ moduleId: "module-08",
+ order: 4,
+ title: "8.4 - Квест-система",
+ theoryMinutes: 40,
+ quizMinutes: 10,
+ estimatedTime: 50,
+ learningObjectives: [
+ "Визначте квести в таблиці QuestConfig із метою та винагородою",
+ "Відстежуйте стан квестів кожного гравця на сервері",
+ "Прийміть квест із діалогу та збільште прогрес у збиранні кристалів",
+ "Синхронізувати статус квесту з QuestUI через QuestUpdate RemoteEvent",
+ ],
+ theory: {
+ sections: [
+ {
+ title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+ content: `NPC дають **завдання**. Квести перетворюють завдання на **прогрес + нагороди**.
 
 **Хід уроку:**
 1. **Теорія (40 хв)** - таблиці квестів + стан кожного гравця
@@ -974,10 +974,10 @@ export const ukLesson84 = {
 3. **Вікторина (10 хв)** - проходження **70%**
 
 Відкрийте центр **Урок 8.2 - Система діалогу**.`,
-      },
-      {
-        title: "Основа системи квестів",
-        content: `**ServerScriptService** → ModuleScript\`QuestConfig\`:\`\`\`lua
+ },
+ {
+ title: "Основа системи квестів",
+ content: `**ServerScriptService** → ModuleScript\`QuestConfig\`:\`\`\`lua
 local QuestConfig = {
  collect_crystals_01 = {
  title = "Crystal Run",
@@ -989,10 +989,10 @@ local QuestConfig = {
 
 return QuestConfig
 \`\`\`**Один стіл** = легке балансування. Зміна\`goal\`або\`rewardCoins\`в одному місці.`,
-      },
-      {
-        title: "Прогрес кожного гравця",
-        content: `Script **QuestService**:\`\`\`lua
+ },
+ {
+ title: "Прогрес кожного гравця",
+ content: `Script **QuestService**:\`\`\`lua
 local playerQuestState = {} -- [player] = { [questId] = state }
 
 local function getState(player, questId)
@@ -1007,10 +1007,10 @@ local function getState(player, questId)
  return playerQuestState[player][questId]
 end
 \`\`\`**Ніколи** один глобальний\`progress = 3\`для всього сервера - гравець Б вкраде квест гравця А.`,
-      },
-      {
-        title: "Прийняти квест",
-        content: `Останній рядок діалогу Guide Maya → кнопка **Прийняти** АБО автоматичний запуск на клавіші діалогу\`guide_quest\`:\`\`\`lua
+ },
+ {
+ title: "Прийняти квест",
+ content: `Останній рядок діалогу Guide Maya → кнопка **Прийняти** АБО автоматичний запуск на клавіші діалогу\`guide_quest\`:\`\`\`lua
 local function startQuest(player, questId)
  local cfg = QuestConfig[questId]
  if not cfg then return end
@@ -1020,10 +1020,10 @@ local function startQuest(player, questId)
  QuestUpdate:FireClient(player, questId, state.progress, cfg.goal, false)
 end
 \`\`\`**QuestUpdate** RemoteEvent → оновлення клієнта\`QuestUI\`етикетка:\`Crystal Run: 0 / 5\``,
-      },
-      {
-        title: "Збільшити прогрес",
-        content: `Кришталеві Parts\`Crystal\`тег або префікс імені - server Script **Touched**:\`\`\`lua
+ },
+ {
+ title: "Збільшити прогрес",
+ content: `Кришталеві Parts\`Crystal\`тег або префікс імені - server Script **Touched**:\`\`\`lua
 crystal.Touched:Connect(function(hit)
  local character = hit.Parent
  local player = game.Players:GetPlayerFromCharacter(character)
@@ -1044,10 +1044,10 @@ crystal.Touched:Connect(function(hit)
  crystal:Destroy() -- or debounce per crystal
 end)
 \`\`\``,
-      },
-      {
-        title: "Завершіть і винагородіть один раз",
-        content: `\`\`\`lua
+ },
+ {
+ title: "Завершіть і винагородіть один раз",
+ content: `\`\`\`lua
 local function completeQuest(player, questId)
  local state = getState(player, questId)
  if state.completed then return end -- no double reward
@@ -1065,10 +1065,10 @@ local function completeQuest(player, questId)
  print(player.Name, "completed", questId)
 end
 \`\`\`**completed** boolean blocks exploit re-claim.`,
-      },
-      {
-        title: "QuestUI на клієнті",
-        content: `**StarterGui** →\`QuestUI\`→\`QuestLabel\`
+ },
+ {
+ title: "QuestUI на клієнті",
+ content: `**StarterGui** →\`QuestUI\`→\`QuestLabel\`
 
 \`\`\`lua
 QuestUpdate.OnClientEvent:Connect(function(questId, progress, goal, done)
@@ -1079,44 +1079,44 @@ QuestUpdate.OnClientEvent:Connect(function(questId, progress, goal, done)
  end
 end)
 \`\`\`Відображення заголовка з маленької клієнтської таблиці пошуку АБО другого аргументу з повідомлення сервера.`,
-      },
-      {
-        title: "Контрольний список перед початком практики",
-        content: `- [ ] Прийняти квест → UI показує 0/5
+ },
+ {
+ title: "Контрольний список перед початком практики",
+ content: `- [ ] Прийняти квест → UI показує 0/5
 - [ ] Кожен кристал збільшується (макс. 5)
 - [ ] Complete дає монети лише один раз
 - [ ] Другий гравець має незалежний прогрес
 - [ ] Зберегти:\`Lesson 8.4 - Quest System\``,
-      },
-    ],
-  },
-  commonMistakes: [
-    {
-      mistake: "Глобальна змінна прогресу квесту",
-      explanation: "Усі гравці діляться прогресом.",
-      correctApproach: "playerQuestState[гравець]",
-    },
-    {
-      mistake: "Нагорода без виконаної охорони",
-      explanation: "Експлойт подвійних монет.",
-      correctApproach: "якщо state.completed тоді повертається",
-    },
-    {
-      mistake: "Прогрес лише на клієнті",
-      explanation: "Фальшиве завершення.",
-      correctApproach: "Сервер торкнувся + стан",
-    },
-    {
-      mistake: "Кристали відроджуються миттєво",
-      explanation: "Нескінченний прогрес.",
-      correctApproach: "Знищення або усунення відскоку за кристал",
-    },
-  ],
-  summary: "Ви створили QuestConfig, стан квесту для кожного гравця, прогрес у зборі кристалів, одноразові винагороди монетами та оновлення QuestUI – тепер гравці мають відстежувану мету у вашому центрі.",
-  practiceTask: {
-    title: "Створення квестових столів (~25 хв)",
-    difficulty: "beginner",
-    description: `**Мета:** Зібрати 5 кристалів у квесті від кінця до кінця.
+ },
+ ],
+ },
+ commonMistakes: [
+ {
+ mistake: "Глобальна змінна прогресу квесту",
+ explanation: "Усі гравці діляться прогресом.",
+ correctApproach: "playerQuestState[гравець]",
+ },
+ {
+ mistake: "Нагорода без виконаної охорони",
+ explanation: "Експлойт подвійних монет.",
+ correctApproach: "якщо state.completed тоді повертається",
+ },
+ {
+ mistake: "Прогрес лише на клієнті",
+ explanation: "Фальшиве завершення.",
+ correctApproach: "Сервер торкнувся + стан",
+ },
+ {
+ mistake: "Кристали відроджуються миттєво",
+ explanation: "Нескінченний прогрес.",
+ correctApproach: "Знищення або усунення відскоку за кристал",
+ },
+ ],
+ summary: "Ви створили QuestConfig, стан квесту для кожного гравця, прогрес у зборі кристалів, одноразові винагороди монетами та оновлення QuestUI - тепер гравці мають відстежувану мету у вашому центрі.",
+ practiceTask: {
+ title: "Створення квестових столів (~25 хв)",
+ difficulty: "beginner",
+ description: `**Мета:** Зібрати 5 кристалів у квесті від кінця до кінця.
 
 ### Part A - Конфігурація (8 хв)
 1. QuestConfig з collect_crystals_01
@@ -1130,171 +1130,171 @@ end)
 
 ### Part C - Зберегти (5 хв)
 1. QuestLabel оновлюється в реальному часі
-2. **Зберегти в Roblox** →\`Lesson 8.4 - Quest System\`3. **Практика завершена**`,
-    hints: [
-      "Скрізь використовуйте рядки ідентифікатора квесту - collect_crystals_01",
-      "Тест 2 гравців - окремий прогрес",
-      "Модуль 7 Монети leaderstats для винагороди",
-    ],
-    optionalChallenge: "Другий квест відкривається лише після виконання першого.",
-  },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      {
-        id: "q1",
-        type: "multiple_choice",
-        question: "Перебіг квесту зберігається за…",
-        options: [
-          "Гравець на сервері",
-          "Весь сервер по всьому світу",
-          "Тільки клієнт",
-          "Рельєф місцевості",
-        ],
-        correctAnswer: 0,
-        explanation: "Багатокористувацька безпека.",
-      },
-      {
-        id: "q2",
-        type: "multiple_choice",
-        question: "завершений прапор запобігає...",
-        options: [
-          "Подвійна винагорода",
-          "ходьба",
-          "інтерфейс користувача",
-          "Звук",
-        ],
-        correctAnswer: 0,
-        explanation: "Одноразова претензія.",
-      },
-      {
-        id: "q3",
-        type: "multiple_choice",
-        question: "QuestConfig містить…",
-        options: [
-          "ціль і нагородні монети",
-          "Паролі гравців",
-          "Рельєф місцевості",
-          "Камера",
-        ],
-        correctAnswer: 0,
-        explanation: "Центральний балансовий стіл.",
-      },
-      {
-        id: "q4",
-        type: "multiple_choice",
-        question: "Crystal Touch має працювати на…",
-        options: [
-          "Сервер",
-          "Лише LocalScript",
-          "StarterGui",
-          "Освітлення",
-        ],
-        correctAnswer: 0,
-        explanation: "Надійний прогрес.",
-      },
-      {
-        id: "q5",
-        type: "multiple_choice",
-        question: "QuestUpdate надсилає…",
-        options: [
-          "прогрес і мета до інтерфейсу користувача",
-          "Безкоштовний Robux",
-          "Рельєф місцевості",
-          "Тільки інструмент",
-        ],
-        correctAnswer: 0,
-        explanation: "Відображення клієнта.",
-      },
-      {
-        id: "q6",
-        type: "multiple_choice",
-        question: "Порядок виконання квесту…",
-        options: [
-          "Прийняти → прогрес → завершити → винагорода",
-          "Нагорода спочатку",
-          "Ні прийняти",
-          "Видалити гравця",
-        ],
-        correctAnswer: 0,
-        explanation: "Стандартна петля.",
-      },
-      {
-        id: "q7",
-        type: "multiple_choice",
-        question: "ключі ідентифікатора квесту, наприклад collect_crystals_01…",
-        options: [
-          "Залишайтеся послідовними в коді",
-          "Змініть кожен рядок",
-          "Є необов'язковими",
-          "Замініть Humanoid",
-        ],
-        correctAnswer: 0,
-        explanation: "Дисципліна іменування.",
-      },
-      {
-        id: "q8",
-        type: "multiple_choice",
-        question: "Урок 8.4 базується на...",
-        options: [
-          "8.1-8.3 NPC хаб",
-          "Тільки гонки",
-          "Лише інтерфейс магазину",
-          "Порожній",
-        ],
-        correctAnswer: 0,
-        explanation: "Концентраційні системи.",
-      },
-      {
-        id: "q9",
-        type: "multiple_choice",
-        question: "Урок 8.5 додає…",
-        options: [
-          "Атака ворога",
-          "Тільки діалог",
-          "Тільки патруль",
-          "Опублікувати",
-        ],
-        correctAnswer: 0,
-        explanation: "Бойовий ворог.",
-      },
-      {
-        id: "q10",
-        type: "multiple_choice",
-        question: "Урок 8.4 зберегти назву…",
-        options: [
-          "Урок 8.4 - Система квестів",
-          "NPC Патруль",
-          "Місце проживання",
-          "Магазин працює",
-        ],
-        correctAnswer: 0,
-        explanation: "Зберегти квестовий урок.",
-      },
-    ],
-  },
+2. **Зберегти в Roblox** →\`Lesson 8.4 - Quest System\` 3. **Практика завершена**`,
+ hints: [
+ "Скрізь використовуйте рядки ідентифікатора квесту - collect_crystals_01",
+ "Тест 2 гравців - окремий прогрес",
+ "Модуль 7 Монети leaderstats для винагороди",
+ ],
+ optionalChallenge: "Другий квест відкривається лише після виконання першого.",
+ },
+ quiz: {
+ passingScore: 70,
+ timeLimit: 10,
+ questions: [
+ {
+ id: "q1",
+ type: "multiple_choice",
+ question: "Перебіг квесту зберігається за…",
+ options: [
+ "Гравець на сервері",
+ "Весь сервер по всьому світу",
+ "Тільки клієнт",
+ "Рельєф місцевості",
+ ],
+ correctAnswer: 0,
+ explanation: "Багатокористувацька безпека.",
+ },
+ {
+ id: "q2",
+ type: "multiple_choice",
+ question: "завершений прапор запобігає...",
+ options: [
+ "Подвійна винагорода",
+ "ходьба",
+ "інтерфейс користувача",
+ "Звук",
+ ],
+ correctAnswer: 0,
+ explanation: "Одноразова претензія.",
+ },
+ {
+ id: "q3",
+ type: "multiple_choice",
+ question: "QuestConfig містить…",
+ options: [
+ "ціль і нагородні монети",
+ "Паролі гравців",
+ "Рельєф місцевості",
+ "Камера",
+ ],
+ correctAnswer: 0,
+ explanation: "Центральний балансовий стіл.",
+ },
+ {
+ id: "q4",
+ type: "multiple_choice",
+ question: "Crystal Touch має працювати на…",
+ options: [
+ "Сервер",
+ "Лише LocalScript",
+ "StarterGui",
+ "Освітлення",
+ ],
+ correctAnswer: 0,
+ explanation: "Надійний прогрес.",
+ },
+ {
+ id: "q5",
+ type: "multiple_choice",
+ question: "QuestUpdate надсилає…",
+ options: [
+ "прогрес і мета до інтерфейсу користувача",
+ "Безкоштовний Robux",
+ "Рельєф місцевості",
+ "Тільки інструмент",
+ ],
+ correctAnswer: 0,
+ explanation: "Відображення клієнта.",
+ },
+ {
+ id: "q6",
+ type: "multiple_choice",
+ question: "Порядок виконання квесту…",
+ options: [
+ "Прийняти → прогрес → завершити → винагорода",
+ "Нагорода спочатку",
+ "Ні прийняти",
+ "Видалити гравця",
+ ],
+ correctAnswer: 0,
+ explanation: "Стандартна петля.",
+ },
+ {
+ id: "q7",
+ type: "multiple_choice",
+ question: "ключі ідентифікатора квесту, наприклад collect_crystals_01…",
+ options: [
+ "Залишайтеся послідовними в коді",
+ "Змініть кожен рядок",
+ "Є необов'язковими",
+ "Замініть Humanoid",
+ ],
+ correctAnswer: 0,
+ explanation: "Дисципліна іменування.",
+ },
+ {
+ id: "q8",
+ type: "multiple_choice",
+ question: "Урок 8.4 базується на...",
+ options: [
+ "8.1-8.3 NPC хаб",
+ "Тільки гонки",
+ "Лише інтерфейс магазину",
+ "Порожній",
+ ],
+ correctAnswer: 0,
+ explanation: "Концентраційні системи.",
+ },
+ {
+ id: "q9",
+ type: "multiple_choice",
+ question: "Урок 8.5 додає…",
+ options: [
+ "Атака ворога",
+ "Тільки діалог",
+ "Тільки патруль",
+ "Опублікувати",
+ ],
+ correctAnswer: 0,
+ explanation: "Бойовий ворог.",
+ },
+ {
+ id: "q10",
+ type: "multiple_choice",
+ question: "Урок 8.4 зберегти назву…",
+ options: [
+ "Урок 8.4 - Система квестів",
+ "NPC Патруль",
+ "Місце проживання",
+ "Магазин працює",
+ ],
+ correctAnswer: 0,
+ explanation: "Зберегти квестовий урок.",
+ },
+ ],
+ },
 }
 
 export const ukLesson85 = {
-  lessonId: "lesson-roblox-8-5",
-  moduleId: "module-08",
-  order: 5,
-  title: "8.5 - Ворог що атакує",
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    "Створіть ворога за допомогою станів простою, погоні, атаки та відновлення",
-    "Переслідуйте найближчого гравця в діапазоні на сервері",
-    "Застосуйте TakeDamage із кулдауном атаки та телеграфом",
-    "Позначайте ворогів за допомогою CollectionService для чистих Scripts",
-  ],
-  theory: {
-    sections: [
-      {
-        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
-        content: `Місце проживання потребує **небезпеки**. Сьогодні один **ворог** неабияк ганяється і нападає.
+ lessonId: "lesson-roblox-8-5",
+ moduleId: "module-08",
+ order: 5,
+ title: "8.5 - Ворог що атакує",
+ theoryMinutes: 40,
+ quizMinutes: 10,
+ estimatedTime: 50,
+ learningObjectives: [
+ "Створіть ворога за допомогою станів простою, погоні, атаки та відновлення",
+ "Переслідуйте найближчого гравця в діапазоні на сервері",
+ "Застосуйте TakeDamage із кулдауном атаки та телеграфом",
+ "Позначайте ворогів за допомогою CollectionService для чистих Scripts",
+ ],
+ theory: {
+ sections: [
+ {
+ title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+ content: `Місце проживання потребує **небезпеки**. Сьогодні один **ворог** неабияк ганяється і нападає.
 
 **Хід уроку:**
 1. **Теорія (40 хв)** - стани + пошкодження сервера
@@ -1302,19 +1302,19 @@ export const ukLesson85 = {
 3. **Вікторина (10 хв)** - проходження **70%**
 
 Повторне використання знань модуля 5 **Humanoid** / **TakeDamage**.`,
-      },
-      {
-        title: "Стани поведінки ворога",
-        content: `| Держава | Поведінка |
+ },
+ {
+ title: "Стани поведінки ворога",
+ content: `| Держава | Поведінка |
 |-------|----------|
 | **неактивний** | Стоять або патрулюють невелику територію |
 | **погоня** | Перейти до найближчого гравця в діапазоні агро |
 | **атака** | Телеграф → пошкодження |
 | **відновлення** | Зачекайте до наступної атаки |\`NPC_Enemy_Slime\`в\`Workspace/Enemies/\`Тег **CollectionService**\`Enemy\`- один скрипт обробляє всі model з тегами.`,
-      },
-      {
-        title: "Агро і погоня",
-        content: `\`\`\`lua
+ },
+ {
+ title: "Агро і погоня",
+ content: `\`\`\`lua
 local AGGRO_RANGE = 40
 local ATTACK_RANGE = 6
 
@@ -1333,10 +1333,10 @@ local function getNearestPlayer(position)
  return nearest
 end
 \`\`\`**Чейз:**\`humanoid:MoveTo(targetRoot.Position)\`кожні 0,5 с під час агро.`,
-      },
-      {
-        title: "Атака з перезарядкою",
-        content: `\`\`\`lua
+ },
+ {
+ title: "Атака з перезарядкою",
+ content: `\`\`\`lua
 local DAMAGE = 12
 local COOLDOWN = 1.2
 local onCooldown = false
@@ -1358,67 +1358,67 @@ local function tryAttack(enemy, targetChar)
  onCooldown = false
  end)
 end
-\`\`\`**Пошкодження на сервері** – те саме правило, що й на арені Модуля 5.`,
-      },
-      {
-        title: "Телеграф і справедливість",
-        content: `До пошкодження:
+\`\`\`**Пошкодження на сервері** - те саме правило, що й на арені Модуля 5.`,
+ },
+ {
+ title: "Телеграф і справедливість",
+ content: `До пошкодження:
 - **Play** короткий звук
-- **Спалах** Колір Parts або вибух Partsок
-- **0,3–0,5 с** затримка намотування
+- **Спалах** Колір Parts або вибух Parts
+- **0,3-0,5 с** затримка намотування
 
 Гравці вчаться **ухилятися** під час заводу - відчувається, що залежить від навичок.
 
 **Швидкість ходьби** ворог ~14, гравець за умовчанням 16 - гравець може втекти.`,
-      },
-      {
-        title: "Контрольний список налаштування противника",
-        content: `| Шматок | Налаштування |
+ },
+ {
+ title: "Контрольний список налаштування противника",
+ content: `| Шматок | Налаштування |
 |-------|---------|
 | Humanoid | MaxHealth 80 |
-| Швидкість ходьби | 12–14 |
+| Швидкість ходьби | 12-14 |
 | Первинна Part | HumanoidRootPart |
 | Тег | Ворог (CollectionService) |
 
 **Зона появи** біля квестових кристалів - хід виконання квесту: збір → боротьба → повернення.`,
-      },
-      {
-        title: "Контрольний список перед початком практики",
-        content: `- [ ] Ворожі погоні в межах AGGRO_RANGE
+ },
+ {
+ title: "Контрольний список перед початком практики",
+ content: `- [ ] Ворожі погоні в межах AGGRO_RANGE
 - [ ] Пошкодження лише в межах ATTACK_RANGE + час відновлення
 - [ ] Телеграф видно перед ударом
 - [ ] Тест для 2 гравців - правильні цілі найближчі
 - [ ] Зберегти:\`Lesson 8.5 - Enemy Attack\``,
-      },
-    ],
-  },
-  commonMistakes: [
-    {
-      mistake: "Пошкодження в LocalScript",
-      explanation: "Можна використовувати.",
-      correctApproach: "Сервер TakeDamage",
-    },
-    {
-      mistake: "Немає перезарядки",
-      explanation: "Миттєве танення.",
-      correctApproach: "1,2 с+ між ударами",
-    },
-    {
-      mistake: "Без телеграфу",
-      explanation: "Здається несправедливим.",
-      correctApproach: "Затримка згортання + VFX",
-    },
-    {
-      mistake: "Ворог став на якір",
-      explanation: "Не можна переслідувати.",
-      correctApproach: "Знято з якоря Humanoid",
-    },
-  ],
-  summary: "Ви створили ворога за допомогою погоні, телеграфних атак на стороні сервера, шкоди від часу перезарядки та тегів CollectionService — тепер у центрі є бій, який відповідає циклу квесту.",
-  practiceTask: {
-    title: "Прототип ворожої атаки (~25 хв)",
-    difficulty: "beginner",
-    description: `**Мета:** Один чесно атакуючий ворог.
+ },
+ ],
+ },
+ commonMistakes: [
+ {
+ mistake: "Пошкодження в LocalScript",
+ explanation: "Можна використовувати.",
+ correctApproach: "Сервер TakeDamage",
+ },
+ {
+ mistake: "Немає перезарядки",
+ explanation: "Миттєве танення.",
+ correctApproach: "1,2 с+ між ударами",
+ },
+ {
+ mistake: "Без телеграфу",
+ explanation: "Здається несправедливим.",
+ correctApproach: "Затримка згортання + VFX",
+ },
+ {
+ mistake: "Ворог став на якір",
+ explanation: "Не можна переслідувати.",
+ correctApproach: "Знято з якоря Humanoid",
+ },
+ ],
+ summary: "Ви створили ворога за допомогою погоні, телеграфних атак на стороні сервера, шкоди від часу перезарядки та тегів CollectionService - тепер у центрі є бій, який відповідає циклу квесту.",
+ practiceTask: {
+ title: "Прототип ворожої атаки (~25 хв)",
+ difficulty: "beginner",
+ description: `**Мета:** Один чесно атакуючий ворог.
 
 ### Part A - Вороже обладнання (8 хв)
 1. NPC_Enemy_Slime + Humanoid + тег Enemy
@@ -1430,184 +1430,184 @@ end
 
 ### Part C - Перевірте та збережіть (2 хв)
 1. Агротест для двох гравців
-2. **Зберегти в Roblox** →\`Lesson 8.5 - Enemy Attack\`3. **Практика завершена**`,
-    hints: [
-      "Відродження модуля 5 все ще працює, якщо гравець помирає",
-      "CollectionService:GetTagged(\"Enemy\") масштабується до багатьох ворогів",
-      "Стан друку змінюється під час налагодження",
-    ],
-    optionalChallenge: "Стрибок під час телеграфу → половина шкоди.",
-  },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      {
-        id: "q1",
-        type: "multiple_choice",
-        question: "Пошкодження противника використовує...",
-        options: [
-          "Humanoid:TakeDamage на сервері",
-          "Друк клієнта",
-          "Рельєф місцевості",
-          "Монети",
-        ],
-        correctAnswer: 0,
-        explanation: "Повноваження сервера.",
-      },
-      {
-        id: "q2",
-        type: "multiple_choice",
-        question: "Перезарядка запобігає...",
-        options: [
-          "Пошкодити кожен кадр",
-          "ходьба",
-          "Квест",
-          "Діалог",
-        ],
-        correctAnswer: 0,
-        explanation: "Чесна швидкість атаки.",
-      },
-      {
-        id: "q3",
-        type: "multiple_choice",
-        question: "Telegraph дає гравцеві час...",
-        options: [
-          "Реагуйте та ухиляйтеся",
-          "Літати",
-          "Магазин",
-          "Опублікувати",
-        ],
-        correctAnswer: 0,
-        explanation: "Справедливість.",
-      },
-      {
-        id: "q4",
-        type: "multiple_choice",
-        question: "Чейз використовує…",
-        options: [
-          "Humanoid: MoveTo",
-          "Фарба місцевості",
-          "Лише RemoteFunction",
-          "атмосфера",
-        ],
-        correctAnswer: 0,
-        explanation: "Рух NPC.",
-      },
-      {
-        id: "q5",
-        type: "multiple_choice",
-        question: "Тег CollectionService Ворог…",
-        options: [
-          "Групує ворогів для скриптів",
-          "Видаляє гравців",
-          "Зберігає дані",
-          "Відкриває інтерфейс користувача",
-        ],
-        correctAnswer: 0,
-        explanation: "Чиста архітектура.",
-      },
-      {
-        id: "q6",
-        type: "multiple_choice",
-        question: "ATTACK_RANGE 6 означає…",
-        options: [
-          "Пошкодження тільки впритул",
-          "Шкода від по всій карті",
-          "Жодного пошкодження",
-          "Вилікувати гравця",
-        ],
-        correctAnswer: 0,
-        explanation: "Дальність ближнього бою.",
-      },
-      {
-        id: "q7",
-        type: "multiple_choice",
-        question: "Штати включають…",
-        options: [
-          "перезарядка атаки бездіяльної погоні",
-          "Тільки простою",
-          "Тільки магазин",
-          "Тільки гонка",
-        ],
-        correctAnswer: 0,
-        explanation: "Машина поведінки.",
-      },
-      {
-        id: "q8",
-        type: "multiple_choice",
-        question: "Урок 8.5 використовує навички з…",
-        options: [
-          "Модуль 5 Пошкодження від Humanoidів",
-          "Модуль 1 лише місцевість",
-          "Опублікувати модуль 12",
-          "Жодного",
-        ],
-        correctAnswer: 0,
-        explanation: "Бойовий фундамент.",
-      },
-      {
-        id: "q9",
-        type: "multiple_choice",
-        question: "Урок 8.6 – це…",
-        options: [
-          "Житлова локація КПП",
-          "Тільки магазин",
-          "Тільки перегони",
-          "Порожній",
-        ],
-        correctAnswer: 0,
-        explanation: "Фінал модуля.",
-      },
-      {
-        id: "q10",
-        type: "multiple_choice",
-        question: "Урок 8.5 зберегти назву…",
-        options: [
-          "Урок 8.5 – Атака ворога",
-          "Система квестів",
-          "Система діалогу",
-          "Арена готова",
-        ],
-        correctAnswer: 0,
-        explanation: "Зберегти урок ворога.",
-      },
-    ],
-  },
+2. **Зберегти в Roblox** →\`Lesson 8.5 - Enemy Attack\` 3. **Практика завершена**`,
+ hints: [
+ "Відродження модуля 5 все ще працює, якщо гравець помирає",
+ "CollectionService:GetTagged(\"Enemy\") масштабується до багатьох ворогів",
+ "Стан друку змінюється під час налагодження",
+ ],
+ optionalChallenge: "Стрибок під час телеграфу → половина шкоди.",
+ },
+ quiz: {
+ passingScore: 70,
+ timeLimit: 10,
+ questions: [
+ {
+ id: "q1",
+ type: "multiple_choice",
+ question: "Пошкодження противника використовує...",
+ options: [
+ "Humanoid:TakeDamage на сервері",
+ "Друк клієнта",
+ "Рельєф місцевості",
+ "Монети",
+ ],
+ correctAnswer: 0,
+ explanation: "Повноваження сервера.",
+ },
+ {
+ id: "q2",
+ type: "multiple_choice",
+ question: "Перезарядка запобігає...",
+ options: [
+ "Пошкодити кожен кадр",
+ "ходьба",
+ "Квест",
+ "Діалог",
+ ],
+ correctAnswer: 0,
+ explanation: "Чесна швидкість атаки.",
+ },
+ {
+ id: "q3",
+ type: "multiple_choice",
+ question: "Telegraph дає гравцеві час...",
+ options: [
+ "Реагуйте та ухиляйтеся",
+ "Літати",
+ "Магазин",
+ "Опублікувати",
+ ],
+ correctAnswer: 0,
+ explanation: "Справедливість.",
+ },
+ {
+ id: "q4",
+ type: "multiple_choice",
+ question: "Чейз використовує…",
+ options: [
+ "Humanoid: MoveTo",
+ "Фарба місцевості",
+ "Лише RemoteFunction",
+ "атмосфера",
+ ],
+ correctAnswer: 0,
+ explanation: "Рух NPC.",
+ },
+ {
+ id: "q5",
+ type: "multiple_choice",
+ question: "Тег CollectionService Ворог…",
+ options: [
+ "Групує ворогів для скриптів",
+ "Видаляє гравців",
+ "Зберігає дані",
+ "Відкриває інтерфейс користувача",
+ ],
+ correctAnswer: 0,
+ explanation: "Чиста архітектура.",
+ },
+ {
+ id: "q6",
+ type: "multiple_choice",
+ question: "ATTACK_RANGE 6 означає…",
+ options: [
+ "Пошкодження тільки впритул",
+ "Шкода від по всій карті",
+ "Жодного пошкодження",
+ "Вилікувати гравця",
+ ],
+ correctAnswer: 0,
+ explanation: "Дальність ближнього бою.",
+ },
+ {
+ id: "q7",
+ type: "multiple_choice",
+ question: "Штати включають…",
+ options: [
+ "перезарядка атаки бездіяльної погоні",
+ "Тільки простою",
+ "Тільки магазин",
+ "Тільки гонка",
+ ],
+ correctAnswer: 0,
+ explanation: "Машина поведінки.",
+ },
+ {
+ id: "q8",
+ type: "multiple_choice",
+ question: "Урок 8.5 використовує навички з…",
+ options: [
+ "Модуль 5 Пошкодження від Humanoid",
+ "Модуль 1 лише місцевість",
+ "Опублікувати модуль 12",
+ "Жодного",
+ ],
+ correctAnswer: 0,
+ explanation: "Бойовий фундамент.",
+ },
+ {
+ id: "q9",
+ type: "multiple_choice",
+ question: "Урок 8.6 - це…",
+ options: [
+ "Житлова локація КПП",
+ "Тільки магазин",
+ "Тільки перегони",
+ "Порожній",
+ ],
+ correctAnswer: 0,
+ explanation: "Фінал модуля.",
+ },
+ {
+ id: "q10",
+ type: "multiple_choice",
+ question: "Урок 8.5 зберегти назву…",
+ options: [
+ "Урок 8.5 - Атака ворога",
+ "Система квестів",
+ "Система діалогу",
+ "Арена готова",
+ ],
+ correctAnswer: 0,
+ explanation: "Зберегти урок ворога.",
+ },
+ ],
+ },
 }
 
 export const ukLesson86 = {
-  lessonId: "lesson-roblox-8-6",
-  moduleId: "module-08",
-  order: 6,
-  title: "8.6 - Checkpoint: Жива локація",
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    "Інтегруйте NPC-гіда, патруль, діалог, квест і ворога",
-    "Пройдіть повну перевірку якості гравця від появи до нагороди",
-    "Зберігайте системи в окремих модулях для ремонтопридатності",
-    "Корабельний модуль 8 – збереження портфоліо Living Location",
-  ],
-  theory: {
-    sections: [
-      {
-        title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
-        content: `**Житлова локація** = портфоліо модуля 8 - міні-зона, яка відчуває себе **живою**.
+ lessonId: "lesson-roblox-8-6",
+ moduleId: "module-08",
+ order: 6,
+ title: "8.6 - Checkpoint: Жива локація",
+ theoryMinutes: 40,
+ quizMinutes: 10,
+ estimatedTime: 50,
+ learningObjectives: [
+ "Інтегруйте NPC-гіда, патруль, діалог, квест і ворога",
+ "Пройдіть повну перевірку якості гравця від появи до нагороди",
+ "Зберігайте системи в окремих модулях для ремонтопридатності",
+ "Збережіть модуль 8 - Living Location у портфоліо",
+ ],
+ theory: {
+ sections: [
+ {
+ title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
+ content: `**Житлова локація** = портфоліо модуля 8 - міні-зона, яка відчуває себе **живою**.
 
 **Обов’язково:**
-- Керівництво NPC + діалог (8.1–8.2)
+- Керівництво NPC + діалог (8.1-8.2)
 - Патруль NPC (8.3)
 - Квест збирати кристали (8.4)
 - Атакуючий ворог (8.5)
 - Купуйте з модуля 7 за бажанням поблизу
 
 **Зберегти:**\`Module 8 - Living Location\``,
-      },
-      {
-        title: "План житлового приміщення",
-        content: `\`\`\`
+ },
+ {
+ title: "План житлового приміщення",
+ content: `\`\`\`
 Workspace
 ├── NPCs/
 │ ├── NPC_Guide_Maya (dialogue + quest giver)
@@ -1626,10 +1626,10 @@ ServerScriptService
 ├── ShopConfig (optional)
 └── EnemyAI / NPC scripts
 \`\`\``,
-      },
-      {
-        title: "Досвід потокового тесту",
-        content: `**Золотий шлях** (один гравець, ~3 хв):
+ },
+ {
+ title: "Досвід потокового тесту",
+ content: `**Золотий шлях** (один гравець, ~3 хв):
 
 | Крок | Дія | Пас? |
 |------|--------|-------|
@@ -1642,33 +1642,33 @@ ServerScriptService
 | 7 | Дивіться патрульний NPC, що йде | |
 
 Якщо ви заплуталися на будь-якому кроці → виправте покажчики (стрілки, діалогові підказки).`,
-      },
-      {
-        title: "Багатокористувацька перевірка якості",
-        content: `**2 гравці:**
+ },
+ {
+ title: "Багатокористувацька перевірка якості",
+ content: `**2 гравці:**
 - Самостійний прогрес квесту
 - Ворожі цілі найближчі - немає спільних помилок HP
 - Діалог не блокує інтерфейс іншого гравця
 - Патруль видно обом
 
 **Output:** нуль червоних помилок під час золотого шляху × 2.`,
-      },
-      {
-        title: "Смужка якості КПП",
-        content: `| Бар | Стандарт |
+ },
+ {
+ title: "Смужка якості КПП",
+ content: `| Бар | Стандарт |
 |-----|----------|
 | Scripts | Розділені за системою (Квест, Діалог, Ворог) |
 | Текст інтерфейсу користувача | Читається, без перекриття |
 | Квест | Прогрес точний, винагорода один раз |
 | Бойовий | Телеграф + перезарядка |
-| польська | Без налагодження друкує спам |
+| Полірування | Без налагодження друкує спам |
 
 **Надійність > додаткові функції** для КПП.`,
-      },
-      {
-        title: "60-секундний демонстраційний Script",
-        content: `1. Spawn - пан хаб (патруль + гід)
-2. Бесіда – 2 діалогічні репліки
+ },
+ {
+ title: "60-секундний демонстраційний Script",
+ content: `1. Spawn - пан хаб (патруль + гід)
+2. Бесіда - 2 діалогічні репліки
 3. Квест з'являється 0/5
 4. Зберіть 2 кристали - лічильник оновлень
 5. Швидка боротьба зі слизом
@@ -1676,200 +1676,200 @@ ServerScriptService
 7. Відкрити магазин необов'язково
 
 Запис для перегляду портфоліо або вчителя.`,
-      },
-      {
-        title: "Попередній перегляд модуля 9",
-        content: `**Модуль 9** часто охоплює **команди, раунди, перебіг матчу** – ваш живий центр може стати лобі між раундами.
+ },
+ {
+ title: "Попередній перегляд модуля 9",
+ content: `**Модуль 9** часто охоплює **команди, раунди, перебіг матчу** - ваш живий центр може стати лобі між раундами.
 
 **Перед тренуванням:**
 - [ ] Золотий шлях минає
 - [ ] пропуски для 2 гравців
 - [ ] **Зберегти в Roblox** →\`Module 8 - Living Location\``,
-      },
-    ],
-  },
-  commonMistakes: [
-    {
-      mistake: "Весь код в одному гігантському Scripts",
-      explanation: "Необслуговуваний.",
-      correctApproach: "QuestService, DialogueData, EnemyAI окремо",
-    },
-    {
-      mistake: "Ідентифікатори квесту та діалогу не збігаються",
-      explanation: "Квест ніколи не починається.",
-      correctApproach: "Модуль спільних констант",
-    },
-    {
-      mistake: "Пропуск випробування золотого шляху",
-      explanation: "Порушений потік на демонстрації.",
-      correctApproach: "Повний цикл перед збереженням",
-    },
-    {
-      mistake: "Ворог блокує квестові кристали",
-      explanation: "розчарування.",
-      correctApproach: "Космічні кристали подалі від табору появи",
-    },
-  ],
-  summary: "Ви інтегрували NPC, діалоги, патрулювання, квести та бойові дії в Living Location, пройшли перевірку якості для соло та кількох гравців і зберегли готовий до демо-версії хаб — Модуль 8 завершено.",
-  practiceTask: {
-    title: "Здати Living Location (~40 хв)",
-    difficulty: "beginner",
-    description: `**Мета:** завершити контрольно-пропускний пункт житлової зони.
+ },
+ ],
+ },
+ commonMistakes: [
+ {
+ mistake: "Весь код в одному гігантському Scripts",
+ explanation: "Необслуговуваний.",
+ correctApproach: "QuestService, DialogueData, EnemyAI окремо",
+ },
+ {
+ mistake: "Ідентифікатори квесту та діалогу не збігаються",
+ explanation: "Квест ніколи не починається.",
+ correctApproach: "Модуль спільних констант",
+ },
+ {
+ mistake: "Пропуск випробування золотого шляху",
+ explanation: "Порушений потік на демонстрації.",
+ correctApproach: "Повний цикл перед збереженням",
+ },
+ {
+ mistake: "Ворог блокує квестові кристали",
+ explanation: "розчарування.",
+ correctApproach: "Космічні кристали подалі від табору появи",
+ },
+ ],
+ summary: "Ви інтегрували NPC, діалоги, патрулювання, квести та бойові дії в Living Location, пройшли перевірку якості для соло та кількох гравців і зберегли готовий до демо-версії хаб - Модуль 8 завершено.",
+ practiceTask: {
+ title: "Здати Living Location (~40 хв)",
+ difficulty: "beginner",
+ description: `**Мета:** завершити контрольну точку Living Location.
 
 ### Part A - Інтеграція (15 хв)
-1. Об’єднати 8.1–8.5 в одне місце
+1. Об’єднати 8.1-8.5 в одне місце
 2. Структура папок + окремі серверні модулі
 3. Знаки/стрілки, якщо потік нечіткий
 
 ### Part B - Золотий шлях + 2P (20 хв)
-1. Запустіть таблицю потоків досвіду – помилка виправлення
+1. Запустіть таблицю потоків досвіду - помилка виправлення
 2. Тест незалежного квесту для двох гравців
 3. Очистіть помилки виведення
 
 ### Part C - Збереження демо (5 хв)
 1. Відрепетируйте демо 60-х
-2. **Зберегти в Roblox** →\`Module 8 - Living Location\`3. **Практика завершена**`,
-    hints: [
-      "Виправляйте одну систему за раз",
-      "Наставник діалогу повинен згадувати кристали і небезпеку",
-      "Patrol NPC це атмосфера - квест це мета",
-    ],
-    optionalChallenge: "Після завершення квесту мерехтять вогні або банер.",
-  },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      {
-        id: "q1",
-        type: "multiple_choice",
-        question: "Місце проживання включає…",
-        options: [
-          "NPC + діалог + квест + ворог",
-          "Тільки місцевість",
-          "Тільки магазин",
-          "Жодних Scripts",
-        ],
-        correctAnswer: 0,
-        explanation: "Повний модуль 8.",
-      },
-      {
-        id: "q2",
-        type: "multiple_choice",
-        question: "Золотий шлях закінчується…",
-        options: [
-          "Отримано винагороду за квест",
-          "Тільки опублікувати",
-          "Видалити NPC",
-          "Порожня Baseplate",
-        ],
-        correctAnswer: 0,
-        explanation: "Повний цикл.",
-      },
-      {
-        id: "q3",
-        type: "multiple_choice",
-        question: "Перевірки квестів для двох гравців…",
-        options: [
-          "Самостійне просування",
-          "Поділився одним квестом",
-          "Немає сервера",
-          "Лише інтерфейс користувача",
-        ],
-        correctAnswer: 0,
-        explanation: "Стан кожного гравця.",
-      },
-      {
-        id: "q4",
-        type: "multiple_choice",
-        question: "Окремі Scripts допомагають…",
-        options: [
-          "Ремонтопридатність",
-          "Лише відставання",
-          "Видалити інтерфейс користувача",
-          "Банити гравців",
-        ],
-        correctAnswer: 0,
-        explanation: "Чиста архітектура.",
-      },
-      {
-        id: "q5",
-        type: "multiple_choice",
-        question: "Patrol NPC додає…",
-        options: [
-          "Жива атмосфера",
-          "Ціни магазину",
-          "DataStore",
-          "Видавництво",
-        ],
-        correctAnswer: 0,
-        explanation: "Відчуття світу.",
-      },
-      {
-        id: "q6",
-        type: "multiple_choice",
-        question: "Модуль 8 зберегти назву…",
-        options: [
-          "Модуль 8 - Місце проживання",
-          "Магазин працює",
-          "Гонка розпочата",
-          "Урок 8.1",
-        ],
-        correctAnswer: 0,
-        explanation: "КПП.",
-      },
-      {
-        id: "q7",
-        type: "multiple_choice",
-        question: "Контрольно-пропускний пункт має пріоритет…",
-        options: [
-          "Чіткий потік і надійність",
-          "Більшість можливих ворогів",
-          "Жодних тестів",
-          "Клієнтські квести",
-        ],
-        correctAnswer: 0,
-        explanation: "Якісний бар.",
-      },
-      {
-        id: "q8",
-        type: "multiple_choice",
-        question: "Урок 8.6 завершується…",
-        options: [
-          "Модуль 8 Розумна гра",
-          "Модуль 12",
-          "Модуль 1",
-          "лише Великобританія",
-        ],
-        correctAnswer: 0,
-        explanation: "Кінцевий модуль 8.",
-      },
-      {
-        id: "q9",
-        type: "multiple_choice",
-        question: "Довідник повинен згадати…",
-        options: [
-          "Мета квесту в діалозі",
-          "IP сервера",
-          "Robux",
-          "Лише версія",
-        ],
-        correctAnswer: 0,
-        explanation: "UX покажчики.",
-      },
-      {
-        id: "q10",
-        type: "multiple_choice",
-        question: "Ворог поблизу квесту має бути…",
-        options: [
-          "Справедлива відстань - не блокує всі кристали",
-          "На кожному кристалі",
-          "Видалено",
-          "Невидимий",
-        ],
-        correctAnswer: 0,
-        explanation: "Весела ходьба.",
-      },
-    ],
-  },
+2. **Зберегти в Roblox** →\`Module 8 - Living Location\` 3. **Практика завершена**`,
+ hints: [
+ "Виправляйте одну систему за раз",
+ "Наставник діалогу повинен згадувати кристали і небезпеку",
+ "Patrol NPC це атмосфера - квест це мета",
+ ],
+ optionalChallenge: "Після завершення квесту мерехтять вогні або банер.",
+ },
+ quiz: {
+ passingScore: 70,
+ timeLimit: 10,
+ questions: [
+ {
+ id: "q1",
+ type: "multiple_choice",
+ question: "Місце проживання включає…",
+ options: [
+ "NPC + діалог + квест + ворог",
+ "Тільки місцевість",
+ "Тільки магазин",
+ "Жодних Scripts",
+ ],
+ correctAnswer: 0,
+ explanation: "Повний модуль 8.",
+ },
+ {
+ id: "q2",
+ type: "multiple_choice",
+ question: "Золотий шлях закінчується…",
+ options: [
+ "Отримано винагороду за квест",
+ "Тільки опублікувати",
+ "Видалити NPC",
+ "Порожня Baseplate",
+ ],
+ correctAnswer: 0,
+ explanation: "Повний цикл.",
+ },
+ {
+ id: "q3",
+ type: "multiple_choice",
+ question: "Перевірки квестів для двох гравців…",
+ options: [
+ "Самостійне просування",
+ "Поділився одним квестом",
+ "Немає сервера",
+ "Лише інтерфейс користувача",
+ ],
+ correctAnswer: 0,
+ explanation: "Стан кожного гравця.",
+ },
+ {
+ id: "q4",
+ type: "multiple_choice",
+ question: "Окремі Scripts допомагають…",
+ options: [
+ "Ремонтопридатність",
+ "Лише відставання",
+ "Видалити інтерфейс користувача",
+ "Банити гравців",
+ ],
+ correctAnswer: 0,
+ explanation: "Чиста архітектура.",
+ },
+ {
+ id: "q5",
+ type: "multiple_choice",
+ question: "Patrol NPC додає…",
+ options: [
+ "Жива атмосфера",
+ "Ціни магазину",
+ "DataStore",
+ "Видавництво",
+ ],
+ correctAnswer: 0,
+ explanation: "Відчуття світу.",
+ },
+ {
+ id: "q6",
+ type: "multiple_choice",
+ question: "Модуль 8 зберегти назву…",
+ options: [
+ "Модуль 8 - Місце проживання",
+ "Магазин працює",
+ "Гонка розпочата",
+ "Урок 8.1",
+ ],
+ correctAnswer: 0,
+ explanation: "КПП.",
+ },
+ {
+ id: "q7",
+ type: "multiple_choice",
+ question: "Контрольна точка має пріоритет…",
+ options: [
+ "Чіткий потік і надійність",
+ "Більшість можливих ворогів",
+ "Жодних тестів",
+ "Клієнтські квести",
+ ],
+ correctAnswer: 0,
+ explanation: "Якісний бар.",
+ },
+ {
+ id: "q8",
+ type: "multiple_choice",
+ question: "Урок 8.6 завершується…",
+ options: [
+ "Модуль 8 Розумна гра",
+ "Модуль 12",
+ "Модуль 1",
+ "лише Великобританія",
+ ],
+ correctAnswer: 0,
+ explanation: "Кінцевий модуль 8.",
+ },
+ {
+ id: "q9",
+ type: "multiple_choice",
+ question: "Довідник повинен згадати…",
+ options: [
+ "Мета квесту в діалозі",
+ "IP сервера",
+ "Robux",
+ "Лише версія",
+ ],
+ correctAnswer: 0,
+ explanation: "UX покажчики.",
+ },
+ {
+ id: "q10",
+ type: "multiple_choice",
+ question: "Ворог поблизу квесту має бути…",
+ options: [
+ "Справедлива відстань - не блокує всі кристали",
+ "На кожному кристалі",
+ "Видалено",
+ "Невидимий",
+ ],
+ correctAnswer: 0,
+ explanation: "Весела ходьба.",
+ },
+ ],
+ },
 }

@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 11 - lessons 11.1–11.3 */
+/** Rich EN content for Roblox Module 11 - lessons 11.1-11.3 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -294,7 +294,7 @@ TeleportService:TeleportAsync(placeId, {player})
 
 Destination place also shows LoadingGui on join.
 
-**Duration:** fade 0.4–1.0s - not too slow.`,
+**Duration:** fade 0.4-1.0s - not too slow.`,
       },
       {
         title: 'Before practice checklist',
@@ -349,7 +349,7 @@ Destination place also shows LoadingGui on join.
       { id: 'q6', type: MC, question: 'TeleportAsync needs…', options: ['Clear loading message', 'No UI', 'Terrain edit', 'Atmosphere only'], correctAnswer: 0, explanation: 'Seamless travel.' },
       { id: 'q7', type: MC, question: 'Lesson 11.2 builds on…', options: ['Lesson 11.1 clean place', 'Empty', 'Module 1 only', 'Publish'], correctAnswer: 0, explanation: 'Organized project.' },
       { id: 'q8', type: MC, question: 'Lesson 11.3 adds…', options: ['Sound design layers', 'Only Explorer', 'Only laser', 'Coins'], correctAnswer: 0, explanation: 'Audio polish.' },
-      { id: 'q9', type: MC, question: 'Good fade duration about…', options: ['0.4–1.0 seconds', '10 seconds', '0 seconds', '60 seconds'], correctAnswer: 0, explanation: 'Snappy polish.' },
+      { id: 'q9', type: MC, question: 'Good fade duration about…', options: ['0.4-1.0 seconds', '10 seconds', '0 seconds', '60 seconds'], correctAnswer: 0, explanation: 'Snappy polish.' },
       { id: 'q10', type: MC, question: 'Lesson 11.2 save name…', options: ['Lesson 11.2 - Loading Screen', 'Clean Explorer', 'Game Polished', 'Optimization'], correctAnswer: 0, explanation: 'Save lesson.' },
     ],
   },
@@ -386,9 +386,9 @@ Open place with shop, quest, puzzle from prior modules.`,
         title: 'Three key layers',
         content: `| Layer | Volume | Examples |
 |-------|--------|----------|
-| **Ambient** | 0.2–0.4 | Wind, hub hum, cave drip |
-| **UI** | 0.5–0.7 | Click, open shop, close |
-| **Gameplay** | 0.7–1.0 | Coin, quest complete, puzzle solve, hit |
+| **Ambient** | 0.2-0.4 | Wind, hub hum, cave drip |
+| **UI** | 0.5-0.7 | Click, open shop, close |
+| **Gameplay** | 0.7-1.0 | Coin, quest complete, puzzle solve, hit |
 
 **Critical cues** louder than ambience - players hear rewards.`,
       },
@@ -588,7 +588,7 @@ Large maps load **near player** only - less memory.
 - Duplicate trees - use **MeshPart** instances sparingly
 
 **VFX audit:**
-- Max 3–5 active ParticleEmitters near player
+- Max 3-5 active ParticleEmitters near player
 - Disable emitters **Enabled = false** when far
 - No infinite spark spam in puzzle room
 
@@ -733,7 +733,7 @@ export const enLesson115 = {
         title: 'Accessibility basics',
         content: `| Check | Target |
 |-------|--------|
-| Font size | 16–22 px equivalent on main labels |
+| Font size | 16-22 px equivalent on main labels |
 | Contrast | Light text on dark panel (or inverse) |
 | Colorblind | Don't use red/green only - add ✓ / ✗ icons |
 | Motion | Optional reduce screen shake / flash |
@@ -759,7 +759,7 @@ export const enLesson115 = {
         title: 'UI consistency',
         content: `**One style guide:**
 - Primary button color same across shop, dialogue, puzzle
-- **UICorner** radius consistent (8–12 px)
+- **UICorner** radius consistent (8-12 px)
 - **UIStroke** on panels for readability
 - Status messages same position (bottom center)
 
@@ -794,7 +794,7 @@ Puzzle target:
 |--------|--------|
 | Text size | Small / Medium / Large scale on QuestLabel |
 | Reduced motion | Shorter tweens, no camera shake |
-| SFX volume | Slider 0–1 (client) |
+| SFX volume | Slider 0-1 (client) |
 
 Store in player attribute or client table - not security critical.
 
@@ -892,10 +892,10 @@ export const enLesson116 = {
 **Save:** \`Module 11 - Game Polished\``,
       },
       {
-        title: 'Final polish rubric (1–5)',
+        title: 'Final polish rubric (1-5)',
         content: `Score each - fix anything **≤3** first:
 
-| Area | Score 1–5 | Notes |
+| Area | Score 1-5 | Notes |
 |------|-----------|-------|
 | **Readability** | | UI, signs, dialogue |
 | **Responsiveness** | | Input, tweens, loading |
@@ -964,7 +964,7 @@ Record short clip optional - portfolio proof.`,
     description: `**Goal:** Professional-feeling build.
 
 ### Part A - Rubric (10 min)
-1. Score 5 areas 1–5
+1. Score 5 areas 1-5
 2. List fixes for any ≤3
 
 ### Part B - Playtest + fixes (25 min)

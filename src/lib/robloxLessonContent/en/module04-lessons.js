@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 04 - lessons 4.1–4.6 */
+/** Rich EN content for Roblox Module 04 - lessons 4.1-4.6 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -102,7 +102,7 @@ For layout:
 - **SpawnLocation** on \`PlotA_Base\` (Neutral true)
 - Sign: \`Your Tycoon - Plot A\`
 
-**Multiplayer later (4.5):** each player gets a plot. For 4.1–4.3, **one plot** is yours.
+**Multiplayer later (4.5):** each player gets a plot. For 4.1-4.3, **one plot** is yours.
 
 Keep **Coin Simulator** coins elsewhere on island - tycoon plot is a **separate zone** (fence or bridge).`,
       },
@@ -300,7 +300,7 @@ Lesson 4.5 adds full multi-plot ownership. Solo: use \`Players:GetPlayers()[1]\`
       },
       {
         title: 'Conveyor tilt trick',
-        content: `Angle **ConveyorPath** parts **2–5 degrees** toward collector so balls roll.
+        content: `Angle **ConveyorPath** parts **2-5 degrees** toward collector so balls roll.
 
 Or use **low friction** material on path (Ice, or custom physical properties later).
 
@@ -311,7 +311,7 @@ Or use **low friction** material on path (Ice, or custom physical properties lat
         content: `| Rule | Why |
 |------|-----|
 | Spawn every **≥ 1s** | Too fast = hundreds of parts |
-| Debris cleanup **20–30s** | Safety net |
+| Debris cleanup **20-30s** | Safety net |
 | Destroy on collect | Instant free memory |
 | Keep coins inside plot fence | Less world clutter |
 
@@ -707,7 +707,7 @@ tierValue.Value = nextTier
         content: `| Test | Target feel |
 |------|-------------|
 | Tier 2 reachable | ~2 minutes of Dropper_01 |
-| Tier 3 meaningful | ~5–8 minutes total |
+| Tier 3 meaningful | ~5-8 minutes total |
 | spawnWait change | Noticeably faster drops |
 | coinValue change | Bigger number jumps on HUD |
 
@@ -1027,7 +1027,7 @@ export const enLesson46 = {
 - HUD Coins rising without clicking
 - Understand yellow **buy** pad label
 
-**By minute 8–10:**
+**By minute 8-10:**
 - Afford **Dropper_02** OR **tier 2** upgrade
 - Notice faster income
 
@@ -1096,7 +1096,7 @@ Your tycoon Coins and server scripts prepared you for **combat economies** and *
 3. upgrades table + DropperTier on **each** plot
 
 ### Part B - Multiplayer QA (15 min)
-1. Test matrix 1–7 - note pass/fail
+1. Test matrix 1-7 - note pass/fail
 2. Fix any cross-plot bug immediately
 
 ### Part C - Demo & save (10 min)

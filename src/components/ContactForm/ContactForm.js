@@ -12,6 +12,7 @@ import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 import styles from './ContactForm.module.css'
+import { LEAD_MESSAGE_MAX_LENGTH } from '@/lib/sanitizeLeadText'
 
 const ContactForm = () => {
 	const t = useTranslations('contact')
@@ -100,7 +101,9 @@ const ContactForm = () => {
             else setNameError('')
             return
         }
-        setFormData(prev => ({ ...prev, [name]: value }))
+        const next =
+            name === 'message' ? value.slice(0, LEAD_MESSAGE_MAX_LENGTH) : value
+        setFormData((prev) => ({ ...prev, [name]: next }))
     }
 
     const handleSubmit = async (e) => {
@@ -299,6 +302,7 @@ const ContactForm = () => {
                                             value={formData.message}
                                             onChange={handleInputChange}
                                             rows={2}
+                                            maxLength={LEAD_MESSAGE_MAX_LENGTH}
                                             placeholder={t('messagePlaceholder')}
                                             className={styles.modalTextarea}
                                         />

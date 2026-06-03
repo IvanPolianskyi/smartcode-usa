@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 06 - lessons 6.1–6.3 */
+/** Rich EN content for Roblox Module 06 - lessons 6.1-6.3 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -83,9 +83,9 @@ end
 
 | Property | Beginner start |
 |----------|----------------|
-| **MaxSpeed** | 40–60 |
-| **Torque** | 2–4 |
-| **TurnSpeed** | 1–2 |
+| **MaxSpeed** | 40-60 |
+| **Torque** | 2-4 |
+| **TurnSpeed** | 1-2 |
 | **SeatMaterial** | Fabric or Plastic |
 
 **Too fast** = crashes into walls. **Too slow** = boring track.
@@ -231,7 +231,7 @@ Open **Lesson 6.1 - Starter Car**.`,
 
 **Road:** dark asphalt color, \`Anchored true\`, slight rise on edges for curbs.
 
-**Lane width:** **16–20 studs** minimum for StarterCar.`,
+**Lane width:** **16-20 studs** minimum for StarterCar.`,
       },
       {
         title: 'Start line and barriers',
@@ -240,7 +240,7 @@ Open **Lesson 6.1 - Starter Car**.`,
 **Barriers:**
 - Red neon walls on **outside** edges only
 - **Anchored true**, CanCollide true
-- Height \`3–4 studs\` - stops cars leaving track
+- Height \`3-4 studs\` - stops cars leaving track
 
 **Recovery zone:** extra flat asphalt outside sharp turns.
 
@@ -248,7 +248,7 @@ Open **Lesson 6.1 - Starter Car**.`,
       },
       {
         title: 'Checkpoints and signs',
-        content: `Place **3–4** gate parts \`CP_1\`, \`CP_2\`, \`CP_3\` around the lap:
+        content: `Place **3-4** gate parts \`CP_1\`, \`CP_2\`, \`CP_3\` around the lap:
 - Neon arches over track
 - Numbered on sign
 - **CanCollide false** (drive through)
@@ -308,7 +308,7 @@ Later: clone from ReplicatedStorage at race start.
 
 ### Part A - Layout (12 min)
 1. Folder \`Track\` - straight + 2 turn types
-2. Closed loop ~60–120 stud perimeter
+2. Closed loop ~60-120 stud perimeter
 3. StartLine at start/finish area
 
 ### Part B - Safety & guides (8 min)
@@ -1067,10 +1067,10 @@ Fix **reliability** before optional polish.`,
         title: 'Tuning for fun',
         content: `| Knob | Sweet spot |
 |------|------------|
-| MaxSpeed | 45–55 for this track |
+| MaxSpeed | 45-55 for this track |
 | TARGET_LAPS | 3 |
-| Track width | 16–20 studs |
-| Race length | ~60–90 sec per lap |
+| Track width | 16-20 studs |
+| Race length | ~60-90 sec per lap |
 
 **Too long** = boredom. **Too short** = no skill expression.
 
@@ -1115,7 +1115,7 @@ Ask: *Would I race again immediately?*`,
     description: `**Goal:** Pass QA + portfolio save.
 
 ### Part A - Integrate (15 min)
-1. Merge 6.1–6.5 into one place
+1. Merge 6.1-6.5 into one place
 2. RaceServer + CarSpawner + RaceUI
 3. Clear folder structure
 

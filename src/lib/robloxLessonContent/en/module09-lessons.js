@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 09 - lessons 9.1–9.3 */
+/** Rich EN content for Roblox Module 09 - lessons 9.1-9.3 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -109,7 +109,7 @@ print("Valid fake?", RPGConfig.isValidRarity("legendary_plus"))
         content: `| Module type | Holds | Example |
 |-------------|-------|---------|
 | **Config** | Numbers, colors, item defs | RPGConfig, ItemDatabase |
-| **Behavior** | Functions with state logic | Inventory (lesson 9.2–9.3) |
+| **Behavior** | Functions with state logic | Inventory (lesson 9.2-9.3) |
 
 **Config** modules rarely change at runtime.
 **Behavior** modules create per-player objects.

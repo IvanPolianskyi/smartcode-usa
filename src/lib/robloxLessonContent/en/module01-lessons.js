@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 01 - lessons 1.1–1.3 */
+/** Rich EN content for Roblox Module 01 - lessons 1.1-1.3 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -131,7 +131,7 @@ You are switching to developer mode. Every famous Roblox game started with someo
 
 Combine **Neon** + bright **BrickColor** for a sci-fi look.
 
-**Transparency** (0–1): 0 = solid, 1 = invisible. Use 0.3 for glass later.
+**Transparency** (0-1): 0 = solid, 1 = invisible. Use 0.3 for glass later.
 
 **Exercise (5 min):** Make one Part **Neon** cyan. Press Play in a dark ClockTime to see it glow (Lighting → ClockTime).`,
       },
@@ -268,7 +268,7 @@ If terrain already exists and looks wrong, select **Terrain** in Workspace → D
         content: `1. Open **Generate**
 2. Set size about **512 × 100 × 512**
 3. Biome: **Islands** (or Mountains for practice)
-4. Click **Generate** - wait 5–15 seconds
+4. Click **Generate** - wait 5-15 seconds
 
 Not happy? **Ctrl + Z** and generate again.
 
@@ -458,7 +458,7 @@ Future you (and teammates) will search by name in Explorer.`,
         content: `Place dock on **flat sand** near water from Lesson 1.2.
 
 Suggested layout:
-- 5–8 plank Parts (Wood material)
+- 5-8 plank Parts (Wood material)
 - 2 vertical posts
 - 1 Neon lamp Part for visibility
 
@@ -771,7 +771,7 @@ Use your **Lesson 1.4 - Click Magic** place. Test with **Play** - many audio and
 | Property | Tip |
 |----------|-----|
 | **SoundId** | \`rbxassetid://...\` from Toolbox → Audio |
-| **Volume** | Ambient: \`0.25\`–\`0.45\` - clicks stay audible |
+| **Volume** | Ambient: \`0.25\`-\`0.45\` - clicks stay audible |
 | **Looped** | **true** for ocean/wind |
 | **Playing** | **true** to preview in Edit (optional) |
 | **RollOffMaxDistance** | How far 3D sound travels (try \`80\`) |
@@ -786,8 +786,8 @@ Name sounds clearly: \`Ambient_Waves\`, \`Dock_Creak\`, \`Click_Chime\`.
 
 | Property | Effect |
 |----------|--------|
-| **ClockTime** | Hour 0–24 (\`14\` = afternoon, \`17.5\` = sunset, \`0\` = midnight) |
-| **Brightness** | Overall light (\`2\`–\`3\` daytime) |
+| **ClockTime** | Hour 0-24 (\`14\` = afternoon, \`17.5\` = sunset, \`0\` = midnight) |
+| **Brightness** | Overall light (\`2\`-\`3\` daytime) |
 | **GlobalShadows** | **true** = realistic shadows |
 | **OutdoorAmbient** | Color tint in shadow areas |
 | **Technology** | **Future** or **ShadowMap** for modern look |
@@ -806,7 +806,7 @@ Name sounds clearly: \`Ambient_Waves\`, \`Dock_Creak\`, \`Click_Chime\`.
 
 | Property | Starter values |
 |----------|----------------|
-| **Density** | \`0.3\`–\`0.4\` (light haze) |
+| **Density** | \`0.3\`-\`0.4\` (light haze) |
 | **Offset** | \`0.25\` |
 | **Color** | Soft orange/pink at sunset |
 | **Decay** | Slightly purple/blue horizon |
@@ -863,7 +863,7 @@ Do not stack 5 loud ambients - one loop + one 3D detail is enough.`,
   commonMistakes: [
     { mistake: 'Five ambient tracks at full volume', explanation: 'Layers clip and sound muddy.', correctApproach: 'One ambient loop + optional quiet music at 0.15 Volume' },
     { mistake: 'SoundId is empty or broken', explanation: 'Invalid asset ID plays nothing.', correctApproach: 'Pick audio from Toolbox or paste a known rbxassetid number' },
-    { mistake: 'Atmosphere makes game laggy', explanation: 'Density too high for device.', correctApproach: 'Lower Density to 0.25–0.35' },
+    { mistake: 'Atmosphere makes game laggy', explanation: 'Density too high for device.', correctApproach: 'Lower Density to 0.25-0.35' },
     { mistake: 'Changed ClockTime only in Edit, never in Play', explanation: 'Some students forget to walk test at sunset.', correctApproach: 'Play-test walk from spawn to dock at ClockTime 17.5' },
   ],
   summary: `You layered ambient and 3D sound, tuned Lighting for sunset mood, added Atmosphere haze, and connected audio to your click scripts - your island now feels professional, not prototype.`,
@@ -902,11 +902,11 @@ Do not stack 5 loud ambients - one loop + one 3D detail is enough.`,
     timeLimit: 10,
     questions: [
       { id: 'q1', type: MC, question: 'Looped ambient sounds usually go in…', options: ['Workspace', 'Only inside player head', 'Output window', 'Terrain'], correctAnswer: 0, explanation: 'World ambient often lives in Workspace.' },
-      { id: 'q2', type: MC, question: 'ClockTime 17.5 is closest to…', options: ['Midnight', 'Sunset', 'Noon', 'Dawn only'], correctAnswer: 1, explanation: '17–18 hours looks like late afternoon/sunset.' },
+      { id: 'q2', type: MC, question: 'ClockTime 17.5 is closest to…', options: ['Midnight', 'Sunset', 'Noon', 'Dawn only'], correctAnswer: 1, explanation: '17-18 hours looks like late afternoon/sunset.' },
       { id: 'q3', type: MC, question: 'Atmosphere Density controls…', options: ['Script speed', 'Fog/haze thickness', 'Part size', 'Jump height'], correctAnswer: 1, explanation: 'Density adds atmospheric haze.' },
       { id: 'q4', type: MC, question: '3D sound on a Part is louder when…', options: ['Player is far away', 'Player is near the Part', 'Game is saved', 'Sky is removed'], correctAnswer: 1, explanation: 'RollOff makes volume distance-based.' },
       { id: 'q5', type: MC, question: 'GlobalShadows true gives…', options: ['Louder audio', 'More realistic shadows', 'Free Robux', 'No terrain'], correctAnswer: 1, explanation: 'GlobalShadows enables shadow rendering.' },
-      { id: 'q6', type: MC, question: 'Ambient Volume should usually be…', options: ['1.0 always', 'Low (0.25–0.45)', 'Zero', 'Negative'], correctAnswer: 1, explanation: 'Quiet ambient leaves room for effects.' },
+      { id: 'q6', type: MC, question: 'Ambient Volume should usually be…', options: ['1.0 always', 'Low (0.25-0.45)', 'Zero', 'Negative'], correctAnswer: 1, explanation: 'Quiet ambient leaves room for effects.' },
       { id: 'q7', type: MC, question: 'Sound:Play() is used for…', options: ['One-shot or restarting a sound', 'Deleting Parts', 'Anchoring', 'Publishing'], correctAnswer: 0, explanation: 'Play starts playback on a Sound instance.' },
       { id: 'q8', type: MC, question: 'Lighting lives in Explorer under…', options: ['Workspace only', 'Lighting service', 'Players', 'ReplicatedStorage'], correctAnswer: 1, explanation: 'Lighting is its own top-level service.' },
       { id: 'q9', type: MC, question: 'No audio heard - first check…', options: ['Valid SoundId and Volume > 0', 'Delete all scripts', 'Remove Atmosphere', 'Change language'], correctAnswer: 0, explanation: 'Broken or empty SoundId is the top cause.' },

@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 10 - lessons 10.1–10.3 */
+/** Rich EN content for Roblox Module 10 - lessons 10.1-10.3 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -136,7 +136,7 @@ Platform **swings** when players jump on it.
 ### Part A - Hinge door (15 min)
 1. Folder Mechanics - DoorFrame + Door + HingeConstraint
 2. ClickDetector or ProximityPrompt toggles open
-3. Limits 0–90 degrees
+3. Limits 0-90 degrees
 
 ### Part B - Rope platform (8 min)
 1. Ceiling + platform + RopeConstraint
@@ -282,10 +282,10 @@ end
         title: 'Timing guidelines',
         content: `| Action | Duration |
 |--------|----------|
-| Button feedback | 0.15–0.25s |
-| Panel open | 0.4–0.6s |
-| Dramatic door | 0.8–1.2s |
-| Ambient pulse | 0.5–1s loop |
+| Button feedback | 0.15-0.25s |
+| Panel open | 0.4-0.6s |
+| Dramatic door | 0.8-1.2s |
+| Ambient pulse | 0.5-1s loop |
 
 Store in config:
 
@@ -986,7 +986,7 @@ StarterGui/
 | 5 | Door tweens open - celebration SFX |
 | 6 | New round - different variant |
 
-**Total time:** 5–8 minutes first try.`,
+**Total time:** 5-8 minutes first try.`,
       },
       {
         title: 'Five playtest protocol',
@@ -1047,7 +1047,7 @@ StarterGui/
     description: `**Goal:** Portfolio checkpoint.
 
 ### Part A - Integrate (15 min)
-1. Merge 10.1–10.5 into PuzzleWorld
+1. Merge 10.1-10.5 into PuzzleWorld
 2. One golden path signposted
 3. PuzzleUI complete
 

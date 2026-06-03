@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 08 - lessons 8.1–8.3 */
+/** Rich EN content for Roblox Module 08 - lessons 8.1-8.3 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -68,7 +68,7 @@ Players trust worlds that feel **populated**.`,
 | **ActionText** | Talk |
 | **ObjectText** | Guide Maya |
 | **HoldDuration** | 0 (instant) or 0.5 |
-| **MaxActivationDistance** | 8–12 |
+| **MaxActivationDistance** | 8-12 |
 | **RequiresLineOfSight** | false (easier for teens) |
 
 **Server Script** in NPC (or NPCService):
@@ -243,7 +243,7 @@ DialogueGui
 
 **Panel.Visible = false** until dialogue opens.
 
-**Accessibility:** large font (18–22), high contrast background.`,
+**Accessibility:** large font (18-22), high contrast background.`,
       },
       {
         title: 'Client dialogue loop',
@@ -442,7 +442,7 @@ Open **Lesson 8.2 - Dialogue System** - use second NPC or same Maya unanchored.`
 
 **Properties:** Anchored true, CanCollide false, Transparency 0.5 (debug), then 1 invisible.
 
-**Spacing:** 8–15 studs apart, no sharp 90° through walls.`,
+**Spacing:** 8-15 studs apart, no sharp 90° through walls.`,
       },
       {
         title: 'Collect waypoints in order',
@@ -511,7 +511,7 @@ Disable player controls on NPC - it's not a player character.`,
       {
         title: 'Patrol + dialogue together',
         content: `**Two NPCs** is OK for lesson:
-- **Guide Maya** - static + dialogue (8.1–8.2)
+- **Guide Maya** - static + dialogue (8.1-8.2)
 - **Patrol Guard** - walks loop (8.3)
 
 Or pause patrol while player talks (advanced):
@@ -892,7 +892,7 @@ end
         content: `Before damage:
 - **Play** short sound
 - **Flash** Part color or ParticleEmitter burst
-- **0.3–0.5s** wind-up delay
+- **0.3-0.5s** wind-up delay
 
 Players learn to **dodge** during wind-up - feels skill-based.
 
@@ -903,7 +903,7 @@ Players learn to **dodge** during wind-up - feels skill-based.
         content: `| Piece | Setting |
 |-------|---------|
 | Humanoid | MaxHealth 80 |
-| WalkSpeed | 12–14 |
+| WalkSpeed | 12-14 |
 | PrimaryPart | HumanoidRootPart |
 | Tag | Enemy (CollectionService) |
 
@@ -989,7 +989,7 @@ export const enLesson86 = {
         content: `**Living Location** = Module 8 portfolio - a mini zone that feels **alive**.
 
 **Required:**
-- Guide NPC + dialogue (8.1–8.2)
+- Guide NPC + dialogue (8.1-8.2)
 - Patrol NPC (8.3)
 - Quest collect crystals (8.4)
 - Attacking enemy (8.5)
@@ -1093,7 +1093,7 @@ Record for portfolio or teacher review.`,
     description: `**Goal:** Complete living zone checkpoint.
 
 ### Part A - Integrate (15 min)
-1. Merge 8.1–8.5 into one place
+1. Merge 8.1-8.5 into one place
 2. Folder structure + separate server modules
 3. Signs/arrows if flow unclear
 

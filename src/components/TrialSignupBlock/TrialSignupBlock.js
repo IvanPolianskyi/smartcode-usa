@@ -13,6 +13,7 @@ import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 import styles from './TrialSignupBlock.module.css'
+import { LEAD_MESSAGE_MAX_LENGTH } from '@/lib/sanitizeLeadText'
 import { useTranslations, useLocale } from 'next-intl'
 
 const COURSE_KEYS = ['roblox', 'python', 'webDev', 'unity', 'unsure']
@@ -39,7 +40,9 @@ export default function TrialSignupBlock() {
 
 	const handleInputChange = (e) => {
 		const { name: field, value } = e.target
-		setFormData((prev) => ({ ...prev, [field]: value }))
+		const next =
+			field === 'message' ? value.slice(0, LEAD_MESSAGE_MAX_LENGTH) : value
+		setFormData((prev) => ({ ...prev, [field]: next }))
 	}
 
 	const handleSubmit = async (e) => {
@@ -208,6 +211,7 @@ export default function TrialSignupBlock() {
 								value={formData.message}
 								onChange={handleInputChange}
 								rows={3}
+								maxLength={LEAD_MESSAGE_MAX_LENGTH}
 								placeholder={t('messagePlaceholder')}
 							/>
 						</div>

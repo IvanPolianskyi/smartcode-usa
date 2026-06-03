@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 12 - lessons 12.1–12.6 */
+/** Rich EN content for Roblox Module 12 - lessons 12.1-12.6 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -51,7 +51,7 @@ When excited, you want 50 systems. GDD forces **MVP** - what ships in time.
 | **Pitch** | 1 sentence store blurb |
 | **Target player** | Age, skill, why fun |
 | **Core loop** | Do → reward → repeat |
-| **Systems list** | 6–8 bullets from course |
+| **Systems list** | 6-8 bullets from course |
 | **Art/audio mood** | 3 adjectives |
 | **MVP scope** | Must ship this month |
 | **Release checklist** | Publish steps |
@@ -350,7 +350,7 @@ Use **Lesson 12.2 - Final Integration** build.`,
 | **P2 Balance** | Too hard slime | Soon |
 | **P3 Cosmetic** | Wrong sign color | Later |
 
-**Launch fixes P0–P1** before P3.`,
+**Launch fixes P0-P1** before P3.`,
       },
       {
         title: 'Session protocol',
@@ -634,7 +634,7 @@ Strong portfolio shows:
 
 **Play:** [Roblox link]
 
-**Screenshots:** 3–5 images or GIFs`,
+**Screenshots:** 3-5 images or GIFs`,
       },
       {
         title: 'Three systems to highlight',
@@ -745,15 +745,15 @@ export const enLesson126 = {
 
 This is the **course finale** - celebrate 72 lessons of work.
 
-**Presentation time:** ~5–8 minutes + Q&A`,
+**Presentation time:** ~5-8 minutes + Q&A`,
       },
       {
         title: 'Presentation blueprint',
         content: `| # | Segment | Time |
 |---|---------|------|
 | 1 | **Pitch** - hook sentence | 20 sec |
-| 2 | **Live demo** - golden path | 2–3 min |
-| 3 | **Systems deep dive** - 3 highlights | 1–2 min |
+| 2 | **Live demo** - golden path | 2-3 min |
+| 3 | **Systems deep dive** - 3 highlights | 1-2 min |
 | 4 | **Challenge + solution** - one story | 1 min |
 | 5 | **Lessons learned** - 3 bullets | 30 sec |
 | 6 | **Roadmap** - next update | 30 sec |
@@ -793,12 +793,12 @@ This is the **course finale** - celebrate 72 lessons of work.
 
 | Module | You shipped |
 |--------|-------------|
-| 1–2 | World + obby |
-| 3–4 | Economy + tycoon |
-| 5–6 | Combat + racing |
-| 7–8 | Shop + living world |
-| 9–10 | RPG + puzzles |
-| 11–12 | Polish + release |
+| 1-2 | World + obby |
+| 3-4 | Economy + tycoon |
+| 5-6 | Combat + racing |
+| 7-8 | Shop + living world |
+| 9-10 | RPG + puzzles |
+| 11-12 | Polish + release |
 
 **Save:** \`SmartCode - Final Showcase\` + celebrate.`,
       },
@@ -822,7 +822,7 @@ This is the **course finale** - celebrate 72 lessons of work.
   practiceTask: {
     title: 'SHOWCASE DAY presentation (~40 min)',
     difficulty: 'beginner',
-    description: `**Goal:** Confident 5–8 min presentation.
+    description: `**Goal:** Confident 5-8 min presentation.
 
 ### Part A - Prep (15 min)
 1. Write cue card - blueprint segments

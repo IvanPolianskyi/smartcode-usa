@@ -1,4 +1,4 @@
-/** Rich EN content for Roblox Module 03 - lessons 3.1–3.6 */
+/** Rich EN content for Roblox Module 03 - lessons 3.1-3.6 */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -75,8 +75,8 @@ Use your **Module 2 - Obby Ready** place or duplicate it as \`Lesson 3.1 - Coin 
 **Density guide:**
 | Zone | Coins | Difficulty |
 |------|-------|------------|
-| Spawn area | 10–12 | Easy |
-| Mid island | 10–12 | Medium |
+| Spawn area | 10-12 | Easy |
+| Mid island | 10-12 | Medium |
 | Far / high | 8+ | Harder jumps |
 
 **Exercise (10 min):** Place **15** coins using all three patterns before continuing.`,
@@ -1159,7 +1159,7 @@ Module 4 turns passive income into a business sim on your island.`,
 3. Pickup sound in awardCoins path
 
 ### Part C - QA & save (15 min)
-1. Complete test matrix 1–5
+1. Complete test matrix 1-5
 2. Fix any fail before marking done
 3. **Save to Roblox** → \`Module 3 - Coin Simulator\`
 4. **Practice complete** + optional 2-min recording`,
