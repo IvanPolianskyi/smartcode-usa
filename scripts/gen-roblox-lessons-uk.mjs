@@ -7,6 +7,7 @@ import fs from 'fs'
 import path from 'path'
 import vm from 'vm'
 import { fileURLToPath } from 'url'
+import { applyRobloxUkTerms } from './lib/robloxUkEnglishTerms.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const root = path.join(__dirname, '..')
@@ -99,14 +100,16 @@ function splitProtected(text) {
 }
 
 function cleanupUk(text) {
-  return text
-    .replace(/\* \*/g, '**')
-    .replace(/ \*\*/g, ' **')
-    .replace(/\*\* /g, '** ')
-    .replace(/обов 'язков/g, "обов'язков")
-    .replace(/(\p{L}) '(\p{L})/gu, "$1'$2")
-    .replace(/  +/g, ' ')
-    .replace(/\n{3,}/g, '\n\n')
+  return applyRobloxUkTerms(
+    text
+      .replace(/\* \*/g, '**')
+      .replace(/ \*\*/g, ' **')
+      .replace(/\*\* /g, '** ')
+      .replace(/обов 'язков/g, "обов'язков")
+      .replace(/(\p{L}) '(\p{L})/gu, "$1'$2")
+      .replace(/  +/g, ' ')
+      .replace(/\n{3,}/g, '\n\n')
+  )
 }
 
 async function translateText(text) {
@@ -150,6 +153,7 @@ const SKIP_KEYS = new Set([
 
 async function translateValue(key, val) {
   if (SKIP_KEYS.has(key)) return val
+  if (key === 'options' && Array.isArray(val)) return val
   if (typeof val === 'string') return translateText(val)
   if (Array.isArray(val)) {
     const out = []

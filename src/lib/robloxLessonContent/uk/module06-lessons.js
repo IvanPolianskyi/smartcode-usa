@@ -180,7 +180,7 @@ end
  "VehicleSeat",
  "Тільки SpawnLocation",
  "ClickDetector",
- "Рельєф місцевості",
+ "Terrain",
  ],
  correctAnswer: 0,
  explanation: "VehicleSeat має входи приводу.",
@@ -231,8 +231,8 @@ end
  options: [
  "Model",
  "Лише Script",
- "Тільки звук",
- "атмосфера",
+ "Sound only",
+ "Atmosphere",
  ],
  correctAnswer: 0,
  explanation: "Згрупований префаб автомобіля (Model).",
@@ -317,7 +317,7 @@ export const ukLesson62 = {
  learningObjectives: [
  "Створіть зрозумілу схему зі стартовою лінією та бар’єрами",
  "Створюйте модульні сегменти колії з постійною шириною смуги",
- "Розмістіть ворота КПП і вказівники",
+ "Розмістіть ворота checkpoint і вказівники",
  "Перевірте п’ять кіл на керованість",
  ],
  theory: {
@@ -350,7 +350,7 @@ export const ukLesson62 = {
  title: "Модульні сегменти",
  content: `Folder\`Track\`:\`Straight_32\`- 32 stud Part дороги\`Turn_45\`- Вигин 45°\`Turn_90\`- Вигин 90°
 
-**Дублювати** сегменти - прив’язати за допомогою сітки переміщення **4 стади**.
+**Duplicate** сегменти — snap із **Move** grid **4 studs**.
 
 **Дорога:** темний колір асфальту,\`Anchored true\`, невеликий підйом по краях для бордюрів.
 
@@ -370,7 +370,7 @@ export const ukLesson62 = {
 **Вправа (8 хв):** Поставте StarterCar на StartLine - проїдьте одне коло повільно.`,
  },
  {
- title: "КПП і знаки",
+ title: "checkpoint і знаки",
  content: `Розмістіть **3-4** Parts воріт\`CP_1\`,\`CP_2\`,\`CP_3\`навколо колін:
 - Neon арки над доріжкою
 - Пронумеровано на знаку
@@ -450,7 +450,7 @@ export const ukLesson62 = {
 
 ### Part B - Безпека та посібники (8 хв)
 1. Зовнішні бар'єри на небезпечних краях
-2. Ворота КП_1, КП_2, КП_3 + 2 знаки-стрілки
+2. Ворота CP_1, CP_2, CP_3 + 2 знаки-стрілки
 
 ### Part C - Перевірка та збереження (5 хв)
 1. П'ять кіл - виправте застряглі місця
@@ -794,8 +794,8 @@ end
  options: [
  "os.clock на сервері",
  "Тільки BrickColor",
- "Фарба місцевості",
- "атмосфера",
+ "Terrain Paint",
+ "Atmosphere",
  ],
  correctAnswer: 0,
  explanation: "Вимірювання витраченого часу.",
@@ -859,7 +859,7 @@ end
  options: [
  "Атрибути гравця з сервера",
  "Тільки чат",
- "Рельєф місцевості",
+ "Terrain",
  "Вбивати блоки",
  ],
  correctAnswer: 0,
@@ -968,7 +968,7 @@ export const ukLesson64 = {
 
 **Сервер володіє:**
 -\`racing[player]\`час початку
-- Перевірка замовлення на КПП
+- Перевірка замовлення на checkpoint
 - Оголошення переможця
 - Лідерська статистика\`Laps\`значення
 
@@ -1130,8 +1130,8 @@ end)
  question: "RemoteEvent живе в...",
  options: [
  "ReplicatedStorage",
- "Тільки освітлення",
- "Рельєф місцевості",
+ "Lighting only",
+ "Terrain",
  "StarterPack",
  ],
  correctAnswer: 0,
@@ -1197,7 +1197,7 @@ end)
  "Сервер",
  "Лише клієнтський HUD",
  "Обидва однаково",
- "Рельєф місцевості",
+ "Terrain",
  ],
  correctAnswer: 0,
  explanation: "Сервер обслуговує FireServer.",
@@ -1303,10 +1303,10 @@ local function resetProgress(player)
 end
 \`\`\`На старті гонки →\`resetProgress(player)\`.
 
-Торкнувся неправильний CP → надрукувати попередження, **немає передавання**.`,
+**Touched** неправильного checkpoint → print warning, **без зарахування**.`,
  },
  {
- title: "Сенсорний обробник КПП",
+ title: "Сенсорний обробник checkpoint",
  content: `Для each Part CP, **Script** або один центральний цикл:\`\`\`lua
 cp.Touched:Connect(function(hit)
  local seat = hit.Parent:FindFirstChildWhichIsA("VehicleSeat", true)
@@ -1442,12 +1442,12 @@ local raceStartTotal = {} -- on first StartRace of match
  {
  id: "q1",
  type: "multiple_choice",
- question: "Порядок КПП запобігає...",
+ question: "Порядок checkpoint запобігає...",
  options: [
  "Подвиги пропускання кола",
  "Водіння",
  "Зварні шви",
- "Звук",
+ "Sound",
  ],
  correctAnswer: 0,
  explanation: "Забезпечення справедливого шляху.",
@@ -1458,8 +1458,8 @@ local raceStartTotal = {} -- on first StartRace of match
  question: "Кола зберігаються в...",
  options: [
  "leaderstats IntValue",
- "Рельєф місцевості",
- "небо",
+ "Terrain",
+ "Sky",
  "Тільки зварювання",
  ],
  correctAnswer: 0,
@@ -1554,7 +1554,7 @@ local raceStartTotal = {} -- on first StartRace of match
  "Арена",
  ],
  correctAnswer: 0,
- explanation: "Ворота КПП на трасі.",
+ explanation: "Ворота checkpoint на трасі.",
  },
  {
  id: "q10",
@@ -1787,7 +1787,7 @@ export const ukLesson66 = {
  options: [
  "Клон ReplicatedStorage",
  "Тільки місцевість",
- "Чат",
+ "Chat",
  "Вбити цеглу",
  ],
  correctAnswer: 0,
@@ -1843,7 +1843,7 @@ export const ukLesson66 = {
  "Симулятор монет",
  ],
  correctAnswer: 0,
- explanation: "КПП портфоліо.",
+ explanation: "checkpoint портфоліо.",
  },
  {
  id: "q9",
