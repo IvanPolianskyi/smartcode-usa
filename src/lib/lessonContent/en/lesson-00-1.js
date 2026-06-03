@@ -277,12 +277,11 @@ print("Goodbye!")`,
     ],
     validation: {
       minLines: 4,
-      exactLineCount: true,
       lineRules: [
-        { pattern: '^(hello|hi|hey)', flags: 'i' },
-        { minLength: 3 },
+        { pattern: '^(hello|hi|hey|привіт|вітаю)', flags: 'i' },
+        { pattern: '(my name is|мене звати|ім.?я)', flags: 'i' },
         { pattern: 'python', flags: 'i' },
-        { pattern: '(goodbye|bye|see you)', flags: 'i' },
+        { pattern: '(goodbye|bye|see you|до побачення|бувай)', flags: 'i' },
       ],
     },
     difficulty: "beginner"

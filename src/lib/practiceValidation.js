@@ -3,12 +3,41 @@
  * Used on client (LessonPage) and server (/api/progress).
  */
 
+const INVISIBLE_CHARS = /[\u200b-\u200d\ufeff]/g
+
 function normalizeLine(line) {
-  return String(line ?? '').trim().toLowerCase().replace(/\s+/g, ' ')
+  return String(line ?? '')
+    .replace(/\r/g, '')
+    .replace(INVISIBLE_CHARS, '')
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
 }
 
 function splitOutputLines(text) {
-  return String(text ?? '').replace(/\r\n/g, '\n').trimEnd().split('\n')
+  return String(text ?? '')
+    .replace(/^\uFEFF/, '')
+    .replace(/\r\n/g, '\n')
+    .trimEnd()
+    .split('\n')
+}
+
+function getNonEmptyLines(actualLines) {
+  const lines = []
+  const sourceIndices = []
+
+  actualLines.forEach((line, index) => {
+    if (normalizeLine(line).length > 0) {
+      lines.push(line)
+      sourceIndices.push(index)
+    }
+  })
+
+  return { lines, sourceIndices }
+}
+
+function mapRuleErrorsToSourceIndices(ruleErrors, sourceIndices) {
+  return [...new Set(ruleErrors.map((i) => sourceIndices[i] ?? i))]
 }
 
 function validateWithLineRules(actualLines, lineRules) {
@@ -95,35 +124,54 @@ export function checkPracticeOutput(output, practiceTask) {
 
   const actualLines = splitOutputLines(output).map((line) => line.trimEnd())
   const validation = practiceTask.validation
+  const { lines: nonEmptyLines, sourceIndices } = getNonEmptyLines(actualLines)
+
+  const failWithRuleErrors = (ruleErrors) => ({
+    isCorrect: false,
+    errors: mapRuleErrorsToSourceIndices(ruleErrors, sourceIndices),
+  })
 
   if (validation?.lineRules?.length) {
     const minLines = validation.minLines ?? validation.lineRules.length
-    const nonEmptyLines = actualLines.filter((line) => normalizeLine(line).length > 0)
 
     if (nonEmptyLines.length < minLines) {
       const errors = []
       for (let i = nonEmptyLines.length; i < minLines; i++) {
-        errors.push(i)
+        errors.push(sourceIndices[i] ?? i)
       }
       return { isCorrect: false, errors }
     }
 
-    if (validation.exactLineCount && nonEmptyLines.length !== validation.lineRules.length) {
-      const errors = []
-      for (let i = 0; i < Math.max(nonEmptyLines.length, validation.lineRules.length); i++) {
-        errors.push(i)
+    const linesToCheck = nonEmptyLines.slice(0, validation.lineRules.length)
+    const lineRuleResult = validateWithLineRules(linesToCheck, validation.lineRules)
+
+    if (lineRuleResult.isCorrect) {
+      if (
+        validation.exactLineCount &&
+        nonEmptyLines.length > validation.lineRules.length
+      ) {
+        const extraErrors = nonEmptyLines
+          .slice(validation.lineRules.length)
+          .map((_, offset) => sourceIndices[offset + validation.lineRules.length])
+        return { isCorrect: false, errors: extraErrors }
       }
-      return { isCorrect: false, errors }
+      return lineRuleResult
     }
 
-    return validateWithLineRules(
-      nonEmptyLines.slice(0, validation.lineRules.length),
-      validation.lineRules
-    )
+    const expectedOutput = practiceTask.examples[0]?.output
+    if (expectedOutput) {
+      const expectedLines = splitOutputLines(expectedOutput).map((line) => line.trimEnd())
+      const exactResult = validateExactExample(nonEmptyLines, expectedLines)
+      if (exactResult.isCorrect) {
+        return { isCorrect: true, errors: [] }
+      }
+    }
+
+    return failWithRuleErrors(lineRuleResult.errors)
   }
 
   const expectedOutput = practiceTask.examples[0].output
   const expectedLines = splitOutputLines(expectedOutput).map((line) => line.trimEnd())
 
-  return validateExactExample(actualLines, expectedLines)
+  return validateExactExample(nonEmptyLines, expectedLines)
 }

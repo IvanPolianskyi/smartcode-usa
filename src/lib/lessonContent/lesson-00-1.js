@@ -277,12 +277,11 @@ print("До побачення!")`,
     ],
     validation: {
       minLines: 4,
-      exactLineCount: true,
       lineRules: [
-        { pattern: '^(привіт|вітаю|hello|hi)', flags: 'i' },
-        { minLength: 3 },
+        { pattern: '^(привіт|вітаю|hello|hi|hey)', flags: 'i' },
+        { pattern: '(мене звати|my name is|ім.?я)', flags: 'i' },
         { pattern: 'python', flags: 'i' },
-        { pattern: '(до побачення|бувай|goodbye|bye)', flags: 'i' },
+        { pattern: '(до побачення|бувай|goodbye|bye|see you)', flags: 'i' },
       ],
     },
     difficulty: "beginner"
