@@ -262,10 +262,13 @@ class TelegramBotService {
         console.log('📤 Uploading to API...');
         
         // Upload to our API
+        const uploadHeaders = { ...formData.getHeaders() }
+        if (process.env.INTERNAL_UPLOAD_SECRET) {
+          uploadHeaders['x-internal-upload-secret'] = process.env.INTERNAL_UPLOAD_SECRET
+        }
+
         const uploadResponse = await axios.post(`${this.API_BASE_URL}/api/upload`, formData, {
-          headers: {
-            ...formData.getHeaders(),
-          },
+          headers: uploadHeaders,
           timeout: 30000 // 30 second timeout
         });
         

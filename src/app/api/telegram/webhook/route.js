@@ -67,13 +67,29 @@ async function downloadTelegramFile(filePath) {
   return await response.arrayBuffer()
 }
 
-// Helper function to upload image to our API
+function getSiteBaseUrl() {
+  if (process.env.NEXT_PUBLIC_BASE_URL) {
+    return process.env.NEXT_PUBLIC_BASE_URL.replace(/\/$/, '')
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`
+  }
+  return 'http://localhost:3000'
+}
+
+// Helper function to upload image to our API (server-to-server, requires INTERNAL_UPLOAD_SECRET)
 async function uploadImageToAPI(imageBuffer, filename) {
   const formData = new FormData()
   formData.append('image', new Blob([imageBuffer]), filename)
-  
-  const response = await fetch(`${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}/api/upload`, {
+
+  const headers = {}
+  if (process.env.INTERNAL_UPLOAD_SECRET) {
+    headers['x-internal-upload-secret'] = process.env.INTERNAL_UPLOAD_SECRET
+  }
+
+  const response = await fetch(`${getSiteBaseUrl()}/api/upload`, {
     method: 'POST',
+    headers,
     body: formData,
   })
   
@@ -120,6 +136,14 @@ const userStates = new Map()
 
 export async function POST(request) {
   try {
+    const webhookSecret = process.env.TELEGRAM_WEBHOOK_SECRET
+    if (webhookSecret) {
+      const headerSecret = request.headers.get('x-telegram-bot-api-secret-token')
+      if (headerSecret !== webhookSecret) {
+        return NextResponse.json({ ok: false }, { status: 401 })
+      }
+    }
+
     const body = await request.json()
     const { message } = body
 
