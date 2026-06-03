@@ -3,12 +3,16 @@ import { getCollection } from '@/lib/mongodb'
 
 const TOKEN_VERSION = 1
 const TOKEN_TTL_MS = 30 * 60 * 1000
-const MIN_TOKEN_AGE_MS = 3000
+// Anti-bot: signed one-time token + rate limit (не блокуємо швидку відправку після відкриття модалки)
+const MIN_TOKEN_AGE_MS = 0
 const RATE_WINDOW_MS = 15 * 60 * 1000
-const RATE_MAX_PER_IP = 3
+/** Отримання leadToken (відкриття модалки) — окремий, м’якший ліміт */
+const RATE_MAX_INTENT_PER_IP = 40
+/** Відправка форми — жорстіший, але не 3/15 хв (легко вичерпати при тестах) */
+const RATE_MAX_SUBMIT_PER_IP = 12
 
 function getSigningSecret() {
-  const secret = process.env.LEAD_FORM_SIGNING_SECRET
+  const secret = String(process.env.LEAD_FORM_SIGNING_SECRET || '').trim()
   if (secret) return secret
   if (process.env.NODE_ENV === 'development') {
     return 'dev-only-insecure-lead-secret'
@@ -132,28 +136,36 @@ export async function markLeadTokenUsed(tokenHash) {
 }
 
 /**
- * Ліміт спроб з одного IP (успішних і заблокованих).
+ * Ліміт спроб з одного IP.
+ * @param {'intent'|'submit'} kind
  */
-export async function checkLeadSubmitRateLimit(ip) {
+export async function checkLeadSubmitRateLimit(ip, kind = 'submit') {
   if (!ip) {
     return { ok: false, reason: 'missing_ip' }
   }
 
+  const max =
+    kind === 'intent' ? RATE_MAX_INTENT_PER_IP : RATE_MAX_SUBMIT_PER_IP
   const attempts = await getCollection('lead_submit_attempts')
   const since = new Date(Date.now() - RATE_WINDOW_MS)
-  const count = await attempts.countDocuments({ ip, createdAt: { $gte: since } })
+  const count = await attempts.countDocuments({
+    ip,
+    kind,
+    createdAt: { $gte: since },
+  })
 
-  if (count >= RATE_MAX_PER_IP) {
+  if (count >= max) {
     return { ok: false, reason: 'rate_limited' }
   }
   return { ok: true }
 }
 
-export async function recordLeadSubmitAttempt(ip, { blocked }) {
+export async function recordLeadSubmitAttempt(ip, { blocked, kind = 'submit' }) {
   if (!ip) return
   const attempts = await getCollection('lead_submit_attempts')
   await attempts.insertOne({
     ip,
+    kind,
     blocked: Boolean(blocked),
     createdAt: new Date(),
   })
@@ -169,22 +181,37 @@ export async function validatePublicLeadSubmission({ request, leadToken, honeypo
     request.headers.get('x-real-ip') ||
     'unknown'
 
-  const rate = await checkLeadSubmitRateLimit(ip)
+  const rate = await checkLeadSubmitRateLimit(ip, 'submit')
   if (!rate.ok) {
-    await recordLeadSubmitAttempt(ip, { blocked: true })
-    return { ok: false, reason: rate.reason, status: 429 }
+    await recordLeadSubmitAttempt(ip, { blocked: true, kind: 'submit' })
+    return {
+      ok: false,
+      reason: rate.reason,
+      code: 'rate_limited',
+      status: 429,
+    }
   }
 
   const verified = verifyLeadFormToken(leadToken)
   if (!verified.ok) {
-    await recordLeadSubmitAttempt(ip, { blocked: true })
-    return { ok: false, reason: verified.reason, status: 403 }
+    await recordLeadSubmitAttempt(ip, { blocked: true, kind: 'submit' })
+    return {
+      ok: false,
+      reason: verified.reason,
+      code: 'invalid_token',
+      status: 403,
+    }
   }
 
   const unused = await assertLeadTokenUnused(verified.tokenHash)
   if (!unused.ok) {
-    await recordLeadSubmitAttempt(ip, { blocked: true })
-    return { ok: false, reason: unused.reason, status: 403 }
+    await recordLeadSubmitAttempt(ip, { blocked: true, kind: 'submit' })
+    return {
+      ok: false,
+      reason: unused.reason,
+      code: 'invalid_token',
+      status: 403,
+    }
   }
 
   return {

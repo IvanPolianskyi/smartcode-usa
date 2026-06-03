@@ -371,7 +371,10 @@
     "successTitle": "Thank you!",
     "successText": "Our manager will contact you shortly.",
     "errorSubmit": "Sorry, something went wrong while sending. Please try again or message us on Telegram.",
-    "errorNetwork": "A network error occurred. Check your connection and try again."
+    "errorNetwork": "A network error occurred. Check your connection and try again.",
+    "errorTelegramConfig": "The form is not configured on the server (Telegram). Message us on Telegram or call — contacts are on the site.",
+    "errorLeadConfig": "Form security is not configured on the server (LEAD_FORM_SIGNING_SECRET). Please contact the site administrator.",
+    "errorRateLimit": "Too many attempts. Wait 15 minutes or message us on Telegram."
   },
   "trial": {
     "title": "BOOK A FREE TRIAL",

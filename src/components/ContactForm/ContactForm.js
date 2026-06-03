@@ -120,8 +120,7 @@ const ContactForm = () => {
 
         setSubmitting(true)
         try {
-            const { eventId, leadToken } = await acquireLeadIntent()
-            const submitData = {
+            const submitPayload = (eventId, leadToken) => ({
                 name: formData.name.trim(),
                 phone: phoneInput.getFullNumber(),
                 message: formData.message,
@@ -133,15 +132,45 @@ const ContactForm = () => {
                 sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://smartcode-academy.com',
                 attribution: getClientAttribution(),
                 locale,
-            }
-            const response = await fetch('/api/telegram', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(submitData),
             })
-            const data = await response.json().catch(() => ({}))
+
+            const postLead = async (eventId, leadToken) => {
+                const response = await fetch('/api/telegram', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(submitPayload(eventId, leadToken)),
+                })
+                const data = await response.json().catch(() => ({}))
+                return { response, data }
+            }
+
+            clearLeadIntentCache()
+            let { eventId, leadToken } = await acquireLeadIntent()
+            let { response, data } = await postLead(eventId, leadToken)
+
+            if (
+                !response.ok &&
+                (response.status === 403 || data?.code === 'invalid_token')
+            ) {
+                clearLeadIntentCache()
+                ;({ eventId, leadToken } = await acquireLeadIntent())
+                ;({ response, data } = await postLead(eventId, leadToken))
+            }
+
             if (!response.ok || !data?.ok) {
-                console.error('Failed to send telegram message', data)
+                console.error('Failed to send telegram message', response.status, data)
+                if (
+                    response.status === 503 &&
+                    (data?.code === 'telegram_not_configured' ||
+                        String(data?.error || '').includes('TELEGRAM'))
+                ) {
+                    alert(t('errorTelegramConfig'))
+                    return
+                }
+                if (response.status === 429 || data?.code === 'rate_limited') {
+                    alert(t('errorRateLimit'))
+                    return
+                }
                 alert(t('errorSubmit'))
                 return
             }
@@ -166,6 +195,14 @@ const ContactForm = () => {
             }, 2500)
         } catch (err) {
             console.error(err)
+            if (err?.message === 'Lead form signing is not configured' || err?.status === 503) {
+                alert(t('errorLeadConfig'))
+                return
+            }
+            if (err?.status === 429) {
+                alert(t('errorRateLimit'))
+                return
+            }
             alert(t('errorNetwork'))
         } finally {
             setSubmitting(false)

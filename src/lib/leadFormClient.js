@@ -14,7 +14,9 @@ export async function acquireLeadIntent() {
   const response = await fetch('/api/lead-intent', { method: 'GET', cache: 'no-store' })
   const data = await response.json().catch(() => ({}))
   if (!response.ok || !data?.ok || !data.leadToken || !data.eventId) {
-    throw new Error(data?.error || 'lead_intent_failed')
+    const err = new Error(data?.error || 'lead_intent_failed')
+    err.status = response.status
+    throw err
   }
 
   cachedIntent = {

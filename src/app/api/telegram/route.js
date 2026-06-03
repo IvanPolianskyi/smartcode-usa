@@ -87,8 +87,12 @@ export async function POST(request) {
 
     if (!telegramBotToken || !telegramChatId) {
       return NextResponse.json(
-        { ok: false, error: 'Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID' },
-        { status: 500 }
+        {
+          ok: false,
+          error: 'Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID',
+          code: 'telegram_not_configured',
+        },
+        { status: 503 }
       )
     }
 
@@ -134,7 +138,11 @@ export async function POST(request) {
           return NextResponse.json({ ok: true, trackLead: false, metaLeadSent: false })
         }
         return NextResponse.json(
-          { ok: false, error: 'Request rejected' },
+          {
+            ok: false,
+            error: 'Request rejected',
+            code: security.code || security.reason || 'rejected',
+          },
           { status: security.status || 403 }
         )
       }
@@ -286,6 +294,8 @@ export async function POST(request) {
     const tgData = await telegramResponse.json().catch(() => null)
 
     if (!telegramResponse.ok || !tgData?.ok) {
+      console.error('Telegram sendMessage failed:', tgData)
+      let savedOffline = false
       try {
         const insertResult = await submissions.insertOne({
           name: name || '',
@@ -302,6 +312,11 @@ export async function POST(request) {
           via: 'telegram-api-failed',
           isUniqueLead: shouldTrackLead,
         })
+        savedOffline = true
+        if (tokenHash) {
+          await markLeadTokenUsed(tokenHash)
+        }
+        await recordLeadSubmitAttempt(submitIp, { blocked: false })
         await sendLeadToCrm({
           leadId: String(insertResult.insertedId),
           name: name || '',
@@ -318,7 +333,20 @@ export async function POST(request) {
         }).catch((error) => {
           console.error('CRM lead sync failed after telegram error:', error)
         })
-      } catch {}
+      } catch (dbErr) {
+        console.error('Failed to save submission after telegram error:', dbErr)
+      }
+
+      if (savedOffline) {
+        return NextResponse.json({
+          ok: true,
+          trackLead: shouldTrackLead,
+          metaLeadSent,
+          metaLeadSkipReason,
+          telegramDelivered: false,
+        })
+      }
+
       return NextResponse.json(
         { ok: false, error: 'Telegram API error', detail: tgData },
         { status: 500 }

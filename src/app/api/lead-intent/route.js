@@ -8,11 +8,11 @@ import { getClientIp } from '@/lib/metaCapi'
 
 export async function GET(request) {
   const ip = getClientIp(request) || 'unknown'
-  const rate = await checkLeadSubmitRateLimit(ip)
+  const rate = await checkLeadSubmitRateLimit(ip, 'intent')
   if (!rate.ok) {
-    await recordLeadSubmitAttempt(ip, { blocked: true })
+    await recordLeadSubmitAttempt(ip, { blocked: true, kind: 'intent' })
     return NextResponse.json(
-      { ok: false, error: 'Too many requests' },
+      { ok: false, error: 'Too many requests', code: 'rate_limited' },
       { status: 429 }
     )
   }
