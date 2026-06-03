@@ -171,7 +171,7 @@ const Header = () => {
 	const handleCtaClick = (e) => {
 		if (e?.preventDefault) e.preventDefault()
 		if (isEn) {
-			router.push('/book-lesson')
+			router.push('/register')
 			setIsMobileMenuOpen(false)
 			return
 		}
@@ -239,7 +239,7 @@ const Header = () => {
 
 	const navItems = [
 		isEn
-			? { label: t('nav.signUp'), href: '/book-lesson' }
+			? { label: t('nav.signUp'), href: '/register' }
 			: { label: t('nav.signUp'), href: '/#trial-signup', ctaModal: true },
 		{ label: t('nav.courses'), href: '/#our-courses' },
 		{ label: t('nav.lessons'), href: '/#courses', hideOnDesktop: true },

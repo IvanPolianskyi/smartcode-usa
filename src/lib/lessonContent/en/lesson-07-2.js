@@ -125,7 +125,7 @@ print(max_value) # 18
       },
       {
         title: "yield from - delegation of generators",
-        content: `\\\`yield from\\\` allows you to delegate the generation of values ​​to another generator. This is useful for composing generators.
+        content: `\`yield from\` allows you to delegate the generation of values to another generator. This is useful for composing generators.
 
 **Syntax:**
 
@@ -194,7 +194,7 @@ for num in full_range():
       },
       {
         title: "Infinite generators",
-        content: `Generators can generate values ​​infinitely! This is one of their most powerful capabilities.
+        content: `Generators can generate values infinitely! This is one of their most powerful capabilities.
 
 **Example 1: An infinite counter**
 
@@ -511,11 +511,11 @@ Generator expressions and yield from make working with generators even more powe
    - Use the syntax: (x**3 for x in range(1, 11))
 
 2. **Create a generator function** using yield from:
-   - The function \\\`combine_ranges(start1, end1, start2, end2)\\\` should generate numbers from two ranges
+   - The function \`combine_ranges(start1, end1, start2, end2)\` should generate numbers from two ranges
    - Use yield from to delegate range() generation
 
 3. **Create an infinite generator** of even numbers:
-   - The \\\`infinite_evens()\\\` function should generate even numbers infinitely
+   - The \`infinite_evens()\` function should generate even numbers infinitely
    - Limit the output to the first 10 values
 
 4. **Use a generator expression** to calculate the sum of the squares of the numbers from 1 to 20
@@ -671,7 +671,7 @@ print(total)`,
           "Causes an error"
         ],
         correctAnswer: 0,
-        explanation: "yield from delegates the generation of values ​​to another generator or iterable object."
+        explanation: "yield from delegates the generation of values to another generator or iterable object."
       },
       {
         id: "q3",

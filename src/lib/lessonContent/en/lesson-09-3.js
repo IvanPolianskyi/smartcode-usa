@@ -59,12 +59,12 @@ BeautifulSoup is a powerful Python library for parsing HTML and XML. It allows y
 
 **Main methods of BeautifulSoup:**
 
-- \\\`soup.find('tag')\\\` - find the first element
-- \\\`soup.find_all('tag')\\\` - find all elements
-- \\\`soup.find('div', class_='content')\\\` - search by class
-- \\\`element.get_text()\\\` - get the text from the element
+- \`soup.find('tag')\` - find the first element
+- \`soup.find_all('tag')\` - find all elements
+- \`soup.find('div', class_='content')\` - search by class
+- \`element.get_text()\` - get the text from the element
 
-**Note:** BeautifulSoup needs to be installed (\\\`pip install beautifulsoup4\\\`). In this course, we show examples from BeautifulSoup for demonstration purposes, but for practical tasks we recommend using the JSON API through requests, which is simpler and does not require additional libraries.`
+**Note:** BeautifulSoup needs to be installed (\`pip install beautifulsoup4\`). In this course, we show examples from BeautifulSoup for demonstration purposes, but for practical tasks we recommend using the JSON API through requests, which is simpler and does not require additional libraries.`
       },
       {
         title: "Scraper structure",

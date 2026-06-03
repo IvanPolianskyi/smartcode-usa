@@ -616,23 +616,23 @@
     },
     "sections": {
       "1": {
-        "title": "1. Introduction and scope",
+        "title": "1. Загальні положення",
         "paragraphs": {
-          "0": "This Privacy Policy explains how SmartCode Academy (the \"Provider\", \"we\", \"us\") processes personal data when you use smartcode-academy.com, our learning platform, and related educational services.",
-          "1": "This Policy applies to parents and legal guardians who register or pay on behalf of students, to adult students where applicable, and to visitors who submit inquiries through our website.",
-          "2": "We process personal data in accordance with the Law of Ukraine \"On Personal Data Protection\" and, where applicable, the EU General Data Protection Regulation (GDPR) for international customers.",
-          "3": "Ця українська версія Privacy Policy застосовується до громадян України."
+          "0": "Ця Політика конфіденційності пояснює, як SmartCode Academy (далі — «Виконавець», «ми») обробляє персональні дані під час використання smartcode-academy.com, навчальної платформи та пов’язаних освітніх послуг.",
+          "1": "Політика застосовується до батьків і законних представників, які реєструються або оплачують послуги за учнів, а також до відвідувачів, які надсилають звернення через сайт.",
+          "2": "Ми обробляємо персональні дані відповідно до Закону України «Про захист персональних даних» та, за потреби, GDPR для міжнародних клієнтів.",
+          "3": "Ця українська версія Політики конфіденційності застосовується до громадян України."
         }
       },
       "2": {
-        "title": "2. Data controller",
+        "title": "2. Контролер даних",
         "paragraphs": {
-          "0": "The data controller is the legal entity or sole proprietor identified in the Public Offer and in the Seller contact information section at the end of this Policy.",
-          "1": "For privacy-related requests, contact us at the email address listed in the Seller contact information section."
+          "0": "Контролером даних є суб’єкт господарювання, зазначений у Публічній оферті та в блоці контактів продавця в кінці цієї Політики.",
+          "1": "З питань конфіденційності звертайтеся на електронну адресу, вказану в блоці контактів продавця."
         }
       },
       "3": {
-        "title": "3. Personal data we collect",
+        "title": "3. Які персональні дані ми збираємо",
         "items": {
           "0": {
             "title": "Account and profile data",
@@ -652,16 +652,16 @@
           },
           "4": {
             "title": "Communications",
-            "text": "messages sent to support, feedback forms, and scheduling information for live lessons"
+            "text": "повідомлення до підтримки, зворотний зв’язок та дані розкладу живих онлайн-уроків у Zoom"
           }
         }
       },
       "4": {
-        "title": "4. Purposes and legal bases of processing",
+        "title": "4. Цілі та правові підстави обробки",
         "items": {
           "0": {
-            "title": "Contract performance",
-            "text": "to provide courses, platform access, live lessons, certificates, and customer support"
+            "title": "Виконання договору",
+            "text": "надання курсів, доступу до платформи, живих уроків, сертифікатів та підтримки клієнтів"
           },
           "1": {
             "title": "Payment processing",
@@ -682,10 +682,10 @@
         }
       },
       "5": {
-        "title": "5. Sharing with third parties",
+        "title": "5. Передача третім особам",
         "paragraphs": {
-          "0": "We do not sell personal data. We share data only with trusted processors necessary to operate our services:",
-          "1": "Monobank - payment processing (Visa, Mastercard, Apple Pay, Google Pay); MongoDB Atlas or equivalent - database hosting; Vercel or equivalent - website hosting; Zoom - live online lessons; email and analytics providers - as configured for our operations.",
+          "0": "Ми не продаємо персональні дані. Передаємо дані лише перевіреним обробникам, необхідним для роботи сервісу:",
+          "1": "Monobank — оплата (Visa, Mastercard, Apple Pay, Google Pay); MongoDB Atlas або аналог — хостинг бази даних; Vercel або аналог — хостинг сайту; Zoom — живі онлайн-уроки; поштові та аналітичні сервіси — згідно з налаштуваннями.",
           "2": "Processors are required to protect data under contractual obligations. We may disclose data if required by law or to protect our legal rights."
         }
       },
@@ -823,7 +823,7 @@
       "6": {
         "title": "6. Digital services notice",
         "paragraphs": {
-          "0": "Educational services are digital services delivered online. By purchasing, you acknowledge that delivery begins upon granting platform access or scheduling live lessons.",
+          "0": "Освітні послуги надаються в електронному вигляді. Оплачуючи послуги, Замовник погоджується, що надання починається з моменту надання доступу до платформи та/або узгодження розкладу живих уроків.",
           "1": "Educational services are digital content delivered online. By purchasing and accessing the course materials, you explicitly consent to the immediate performance of the contract and acknowledge that you will lose your right of withdrawal (cooling-off period) once the access to the digital content is granted."
         }
       }

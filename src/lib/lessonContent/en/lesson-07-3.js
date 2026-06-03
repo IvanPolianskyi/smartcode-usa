@@ -52,17 +52,17 @@ print(next(iterator)) # StopIteration
 
 **Built-in iterable objects:**
 
-- Lists: \\\`[1, 2, 3]\\\`
-- Strings: \\\`"hello"\\\`
-- Dictionaries: \\\`{'a': 1, 'b': 2}\\\`
-- range: \\\`range(10)\\\`
-- Files: \\\`open('file.txt')\\\`
+- Lists: \`[1, 2, 3]\`
+- Strings: \`"hello"\`
+- Dictionaries: \`{'a': 1, 'b': 2}\`
+- range: \`range(10)\`
+- Files: \`open('file.txt')\`
 
 **For loop automatically:**
 
-1. Calls \\\`iter()\\\` to get an iterator
-2. Calls \\\`next()\\\` to get the values
-3. Handles \\\`StopIteration\\\` to terminate`
+1. Calls \`iter()\` to get an iterator
+2. Calls \`next()\` to get the values
+3. Handles \`StopIteration\` to terminate`
       },
       {
         title: "Iteration protocol",
@@ -98,11 +98,11 @@ for num in counter:
 
 **How it works:**
 
-1. \\\`for num in counter:\\\` calls \\\`iter(counter)\\\`
-2. \\\`iter(counter)\\\` calls \\\`counter.__iter__()\\\`
-3. Each iteration calls \\\`next(counter)\\\`
-4. \\\`next(counter)\\\` calls \\\`counter.__next__()\\\`
-5. When \\\`__next__()\\\` calls \\\`StopIteration\\\`, the loop ends`
+1. \`for num in counter:\` calls \`iter(counter)\`
+2. \`iter(counter)\` calls \`counter.__iter__()\`
+3. Each iteration calls \`next(counter)\`
+4. \`next(counter)\` calls \`counter.__next__()\`
+5. When \`__next__()\` calls \`StopIteration\`, the loop ends`
       },
       {
         title: "Creating your own iterator",
@@ -194,7 +194,7 @@ for num in rev:
 
 **Iterable object (Iterable):**
 
-- Has the \\\`__iter__()\\\` method
+- Has the \`__iter__()\` method
 - Can create many iterators
 - Can be used in a for loop many times
 
@@ -215,7 +215,7 @@ for number in numbers:
 
 **Iterator:**
 
-- Has methods \\\`__iter__()\\\` and \\\`__next__()\\\`
+- Has methods \`__iter__()\` and \`__next__()\`
 - Usually runs out after one use
 - Stores iteration state
 
@@ -424,8 +424,8 @@ class MyIterator:
 
 **Features:**
 
-- \\\`iter(obj)\\\` - get an iterator
-- \\\`next(iterator)\\\` - get the next value
+- \`iter(obj)\` - get an iterator
+- \`next(iterator)\` - get the next value
 
 **Next step:**
 
@@ -790,7 +790,7 @@ for num in reverse:
           "Data type"
         ],
         correctAnswer: 0,
-        explanation: "StopIteration is an exception that is thrown when an iterator has no more values ​​to return."
+        explanation: "StopIteration is an exception that is thrown when an iterator has no more values to return."
       },
       {
         id: "q5",

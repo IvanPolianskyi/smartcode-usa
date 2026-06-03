@@ -26,7 +26,7 @@ export const lesson_08_2 = {
     sections: [
       {
         title: "Introduction to the itertools module",
-        content: `The \\\`itertools\\\` module provides a set of functions for creating and working with iterators. It helps you write efficient sequence processing code.
+        content: `The \`itertools\` module provides a set of functions for creating and working with iterators. It helps you write efficient sequence processing code.
 
 **Why itertools?**
 
@@ -195,7 +195,7 @@ for pwd in list(passwords)[:5]: # First 5
       },
       {
         title: "Grouping: groupby",
-        content: `\\\`groupby()\\\` groups consecutive elements with the same key.
+        content: `\`groupby()\` groups consecutive elements with the same key.
 
 **Important:** Items must be sorted by key!
 

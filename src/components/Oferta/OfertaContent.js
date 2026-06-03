@@ -36,15 +36,17 @@ function renderListItems(items, keyOrder) {
 	})
 }
 
-const SECTION2_LIST_ORDER = ['onlineLessons', 'courses', 'materials']
-const SECTION3_SUBSECTION_ORDER = ['order', 'terms', 'payment', 'perLesson', 'delivery', 'absences']
+const SECTION2_LIST_ORDER_UK = ['onlineLessons', 'courses', 'materials']
+const SECTION2_LIST_ORDER_EN = ['courses', 'materials']
+const SECTION3_SUBSECTION_ORDER_UK = ['order', 'terms', 'payment', 'perLesson', 'delivery', 'absences']
+const SECTION3_SUBSECTION_ORDER_EN = ['order', 'terms', 'payment', 'delivery']
 const SECTION3_PAYMENT_ITEMS_ORDER = ['monobank', 'appleGoogle', 'bank']
 const SECTION4_SUBSECTION_ORDER = ['conditions', 'procedure', 'noRefund', 'cancellation']
 const SECTION4_CONDITIONS_ITEMS_ORDER = ['beforeStart', '14days', 'technical']
 const SECTION6_SUBSECTION_ORDER = ['provider', 'customer']
 
-function renderSection3(subsections) {
-	return SECTION3_SUBSECTION_ORDER.map((subKey) => {
+function renderSection3(subsections, subsectionOrder) {
+	return subsectionOrder.map((subKey) => {
 		const sub = subsections[subKey]
 		if (!sub) return null
 		return (
@@ -107,7 +109,9 @@ export default function OfertaContent() {
 	const section1 = t.raw('sections.1')
 	const section2 = t.raw('sections.2')
 	const section3 = t.raw('sections.3')
-	const section4 = locale !== 'en' ? t.raw('sections.4') : null
+	const section4 = t.raw('sections.4')
+	const section2ListOrder = locale === 'en' ? SECTION2_LIST_ORDER_EN : SECTION2_LIST_ORDER_UK
+	const section3SubOrder = locale === 'en' ? SECTION3_SUBSECTION_ORDER_EN : SECTION3_SUBSECTION_ORDER_UK
 	const section5 = t.raw('sections.5')
 	const section6 = t.raw('sections.6')
 	const section7 = t.raw('sections.7')
@@ -140,7 +144,7 @@ export default function OfertaContent() {
 					<div className={styles.text}>
 						<p>{section2.intro}</p>
 						<ul className={styles.list}>
-							{renderListItems(section2.list, SECTION2_LIST_ORDER)}
+							{renderListItems(section2.list, section2ListOrder)}
 						</ul>
 					</div>
 				</div>
@@ -148,10 +152,10 @@ export default function OfertaContent() {
 				{/* Section 3 */}
 				<div className={styles.section}>
 					<h2 className={styles.sectionTitle}>{section3.title}</h2>
-					<div className={styles.text}>{renderSection3(section3.subsections)}</div>
+					<div className={styles.text}>{renderSection3(section3.subsections, section3SubOrder)}</div>
 				</div>
 
-				{locale !== 'en' && section4?.subsections ? (
+				{section4?.subsections ? (
 					<div className={styles.section}>
 						<h2 className={styles.sectionTitle}>{section4.title}</h2>
 						<div className={styles.text}>{renderSection4(section4.subsections)}</div>

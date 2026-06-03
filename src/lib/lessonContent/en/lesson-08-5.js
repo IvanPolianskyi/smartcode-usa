@@ -137,7 +137,7 @@ with open('output.csv', 'w', encoding='utf-8', newline='') as f:
     writer.writerrows(data)
 \`\`\`
 
-**Important:** Use \\\`newline=''\\\` when opening a file for writing to avoid empty lines.
+**Important:** Use \`newline=''\` when opening a file for writing to avoid empty lines.
 
 **Different separators:**
 
@@ -229,7 +229,7 @@ for row in ws.iter_rows(values_only=True):
       },
       {
         title: "Working with pandas for tables",
-        content: `\\\`pandas\\\` is a powerful library for working with data. It simplifies work with CSV and Excel.
+        content: `\`pandas\` is a powerful library for working with data. It simplifies work with CSV and Excel.
 
 **Installation:**
 
@@ -407,8 +407,8 @@ def process_chunk(chunk):
 
 **Important:**
 
-- Use \\\`encoding='utf-8'\\\` for Ukrainian text
-- Use \\\`newline=''\\\` when writing CSV
+- Use \`encoding='utf-8'\` for Ukrainian text
+- Use \`newline=''\` when writing CSV
 - Pandas simplifies working with big data
 
 **Next step:**
@@ -607,7 +607,7 @@ print(f'Average score: {avg:.1f}')`,
           "Code-Separated Values"
         ],
         correctAnswer: 0,
-        explanation: "CSV stands for Comma-Separated Values ​​- values ​​separated by commas."
+        explanation: "CSV stands for Comma-Separated Values - values separated by commas."
       },
       {
         id: "q2",

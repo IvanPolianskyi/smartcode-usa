@@ -3,11 +3,11 @@
     "siteName": "SmartCode Academy",
     "home": {
       "title": "SmartCode Academy - Programming School for Kids & Teens",
-      "description": "Live Zoom lessons and self-paced courses on our learning platform. Python, Unity, Roblox, and web development for ages 8–17."
+      "description": "Self-paced online programming courses on our learning platform. Python and Roblox for international students aged 8–17."
     },
     "tariff": {
-      "title": "Pricing & Plans - SmartCode Academy",
-      "description": "Online programming lessons for children. One-on-one classes on Zoom. Access to our learning platform."
+      "title": "Course Pricing - SmartCode Academy",
+      "description": "Full online programming courses for kids and teens. One-time purchase, instant platform access."
     },
     "login": {
       "title": "Sign In - SmartCode Academy",
@@ -19,7 +19,7 @@
     },
     "courses": {
       "title": "Programming Courses for Kids & Teens - SmartCode Academy",
-      "description": "Online programming courses for ages 8–17: Python, web development, Unity, and Roblox. One-on-one lessons with a teacher, real projects, and mentor support."
+      "description": "Online programming courses for ages 8–17: Python and Roblox on our self-paced platform. Real projects and structured lessons in English."
     },
     "python": {
       "title": "Python Course for Kids - SmartCode Academy",
@@ -78,7 +78,7 @@
   "common": {
     "siteName": "SmartCode Academy",
     "signUp": "Sign Up",
-    "signUpTrial": "Book a Live Lesson",
+    "signUpTrial": "Get started",
     "login": "Sign In",
     "register": "Register",
     "dashboard": "Dashboard",
@@ -95,7 +95,7 @@
     "nameRequired": "Please enter your name",
     "phone": "Phone",
     "message": "Comment",
-    "freeTrial": "live Zoom lesson",
+    "freeTrial": "full course access",
     "langUk": "UA",
     "langEn": "EN",
     "myProfile": "My Profile",
@@ -251,22 +251,19 @@
       }
     },
     "cta": {
-      "signUpTrial": "Book a Live Lesson",
+      "signUpTrial": "Browse courses",
       "viewPrices": "View Pricing"
     },
     "heroEnCta": {
-      "badge": "Live online lessons worldwide",
-      "title": "Learn to Code with a Live Teacher on Zoom",
-      "lead": "Regular one-on-one or group lessons in English. Python, Roblox Studio, and more - for kids & teens aged 8–17.",
-      "benefitZoom": "Live on Zoom",
-      "benefitEnglish": "Taught in English",
-      "benefitFlexible": "Flexible schedule",
+      "badge": "Self-paced courses worldwide",
+      "title": "Learn to Code on Our Online Platform",
+      "lead": "Full Python and Roblox Studio courses in English. Study at your own pace with structured lessons, practice, and quizzes — for kids & teens aged 8–17.",
+      "benefitPlatform": "Full platform access",
+      "benefitEnglish": "In English",
+      "benefitPace": "Learn at your pace",
       "benefitCertificate": "Certificate",
-      "liveCtaTitle": "Book a Live Zoom Lesson",
-      "liveCtaSub": "Choose a time and pay instantly",
-      "groupFrom": "Group from",
-      "individualFrom": "1-on-1 from",
-      "orBuy": "Or buy a full course",
+      "primaryCtaTitle": "Create a free account",
+      "primaryCtaSub": "Then buy a course and start learning",
       "hint": "Pay with card, Apple Pay, or Google Pay · instant access after checkout",
       "courses": {
         "roblox-studio": {
@@ -307,7 +304,7 @@
     "items": {
       "0": {
         "question": "How does a lesson work? What do you need?",
-        "answer": "Lessons take place online via Zoom. For online learning you need a computer or laptop with a webcam (recommended), a microphone, and a stable internet connection. We provide all necessary materials and platform access."
+        "answer": "After you purchase a course, all lessons, practice tasks, and quizzes are available on our learning platform. You need a computer or laptop and a stable internet connection. Live Zoom lessons with a teacher are offered on the Ukrainian version of the site only."
       },
       "1": {
         "question": "Do you need a powerful laptop for learning?",
@@ -319,7 +316,7 @@
       },
       "3": {
         "question": "What class formats are available?",
-        "answer": "We offer live online lessons via Zoom (both 1-on-1 and small groups), as well as full courses with materials and assignments on our interactive platform."
+        "answer": "On the English site we sell full self-paced courses (Python and Roblox Studio) with instant access to all lessons on our platform. Live Zoom lessons with a teacher are available for customers in Ukraine on the Ukrainian locale."
       },
       "4": {
         "question": "How do payments work for international students?",
@@ -335,7 +332,7 @@
       },
       "7": {
         "question": "What language are the classes taught in?",
-        "answer": "All our international live Zoom classes, platform interface, and course materials are provided entirely in English."
+        "answer": "The English site, platform interface, and purchased course materials are provided entirely in English."
       },
       "8": {
         "question": "Can learning continue at the next level?",
@@ -440,6 +437,68 @@
     }
   },
   "pricing": {
+    "en": {
+      "hero": {
+        "title": "Full",
+        "titleAccent": "online courses",
+        "subtitle": "One-time purchase · instant access to every lesson, practice task, and quiz on our platform. Pay securely with card, Apple Pay, or Google Pay.",
+        "cta": "View courses"
+      },
+      "courses": {
+        "badge": "Popular",
+        "period": "one-time",
+        "cta": "Buy course",
+        "roblox-studio": {
+          "name": "Roblox Studio",
+          "subtitle": "72 lessons · game development",
+          "description": "From your first Part in Studio to publishing your own Roblox game.",
+          "features": [
+            "Full course on the platform",
+            "Theory, practice, and quizzes",
+            "Learn at your own pace",
+            "Certificate after completion"
+          ]
+        },
+        "python-developer-zero-to-junior": {
+          "name": "Python",
+          "subtitle": "96 lessons · zero to junior",
+          "description": "Structured Python path with real projects and hands-on practice.",
+          "features": [
+            "Full course on the platform",
+            "Interactive code practice",
+            "Progress tracking in your dashboard",
+            "Certificate after completion"
+          ]
+        }
+      },
+      "finalCta": {
+        "title": "Start learning this week",
+        "text": "Create an account, choose Python or Roblox Studio, and get instant access after checkout.",
+        "cta": "Create account"
+      }
+    },
+    "enTrust": {
+      "badge": "Why families choose us",
+      "title": "Simple, transparent pricing",
+      "items": {
+        "fullAccess": {
+          "title": "Full course access",
+          "text": "One payment unlocks all modules and lessons on the platform."
+        },
+        "securePay": {
+          "title": "Secure checkout",
+          "text": "Visa, Mastercard, Apple Pay, and Google Pay via Monobank."
+        },
+        "selfPaced": {
+          "title": "Self-paced learning",
+          "text": "Your child studies when it suits your schedule — no fixed live slots."
+        },
+        "noHidden": {
+          "title": "No hidden fees",
+          "text": "The price shown at checkout is the full course price."
+        }
+      }
+    },
     "hero": {
       "title": "Pay",
       "titleAccent": "per lesson",
@@ -504,8 +563,8 @@
     },
     "finalCta": {
       "title": "Start risk-free this week",
-      "text": "Book a live Zoom lesson or buy a full course on our platform — we'll help you choose the best option for your child.",
-      "cta": "Book a Live Lesson"
+      "text": "Book a trial lesson or choose a live lesson format — we'll help you pick the best option for your child.",
+      "cta": "Contact us"
     }
   },
   "bookLesson": {

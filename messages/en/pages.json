@@ -322,7 +322,7 @@
         "title": "1. General provisions",
         "paragraphs": {
           "0": "This document is a public offer (the \"Offer\") for the provision of educational services in programming and information technology (the \"Services\") in accordance with Articles 633, 641, and 642 of the Civil Code of Ukraine.",
-          "1": "Provider: SmartCode Academy (the \"Provider\") offers programming education through online lessons and training courses.",
+          "1": "Provider: SmartCode Academy (the \"Provider\") offers self-paced programming training courses on smartcode-academy.com for international customers. Live instructor-led Zoom lessons are offered separately on the Ukrainian locale of the website.",
           "2": "Acceptance of this Offer occurs when the Customer pays for the Services, which constitutes full agreement with the terms of this Offer.",
           "3": "IMPORTANT: SmartCode Academy serves students aged 8–17. All purchases, contracts, and payment obligations are entered into by a parent or legal guardian acting as the Customer. Minors may not complete purchases on this website.",
           "4": "This English Public Offer applies to all customers who are not citizens of Ukraine."
@@ -332,10 +332,6 @@
         "title": "2. Subject of the agreement",
         "intro": "The Provider undertakes to provide the Customer with educational services in the form of:",
         "list": {
-          "onlineLessons": {
-            "title": "Online programming lessons",
-            "text": "individual sessions conducted in real time over the internet"
-          },
           "courses": {
             "title": "Training courses",
             "text": "structured learning programs with a defined duration and curriculum, including:",
@@ -361,17 +357,15 @@
             "items": {
               "0": "The Customer selects a course or learning format on smartcode-academy.com",
               "1": "The Customer pays for the services using one of the available payment methods",
-              "2": "After payment confirmation, the Provider grants the Customer access to learning materials and the learning platform",
-              "3": "Online lessons are conducted according to a pre-agreed schedule",
-              "4": "Access to learning materials is granted for the period specified in the course description"
+              "2": "After payment confirmation, the Provider grants the Customer access to the purchased course on the learning platform",
+              "3": "Access to learning materials is granted for the period specified in the course description"
             }
           },
           "terms": {
             "title": "3.2. Service duration",
             "items": {
               "0": "Course duration is specified in the description of each course on the website",
-              "1": "Online lessons are conducted according to a schedule agreed between the Customer and the Provider",
-              "2": "Access to learning materials is granted from payment confirmation until course completion"
+              "1": "Access to learning materials is granted from payment confirmation until course completion or the period stated in the course description"
             }
           },
           "payment": {
@@ -387,21 +381,58 @@
                 "text": "available through the Monobank checkout where supported by the Customer's device and card issuer"
               }
             },
-            "note": "Payment is made in Ukrainian hryvnia (UAH). Prices for each course or lesson format are displayed on the relevant checkout pages before payment."
+            "note": "Payment is made in Ukrainian hryvnia (UAH) at checkout. The full course price is displayed on the purchase page before payment. This English offer covers self-paced course purchases only, not live Zoom lessons (see the Ukrainian Public Offer for live lessons)."
           },
           "delivery": {
             "title": "3.4. Service delivery and coverage",
-            "text": "Services are provided electronically only - there is no physical shipping of goods. After payment is confirmed, access to the learning platform and course materials is granted online. Live lessons are delivered in real time via Zoom (or another agreed video platform) at a schedule agreed with the Provider.",
+            "text": "Services are provided electronically only — there is no physical shipping of goods. After payment is confirmed, access to the learning platform and the purchased course materials is granted online.",
             "items": {
               "0": "Service regions: worldwide, wherever the Customer has a stable internet connection",
-              "1": "Courses on the platform: access via smartcode-academy.com learning platform",
-              "2": "Live online lessons: conducted remotely via Zoom; no in-person classes unless separately agreed in writing",
-              "3": "Typical access activation time: within 24 hours of successful payment confirmation"
+              "1": "Delivery method: access via the smartcode-academy.com learning platform",
+              "2": "Typical access activation time: within 24 hours of successful payment confirmation",
+              "3": "Live Zoom lessons with an instructor are not included in course purchases on the English site unless separately agreed in writing"
+            }
+          }
+        }
+      },
+      "4": {
+        "title": "4. Refund policy",
+        "subsections": {
+          "conditions": {
+            "title": "4.1. Reference to Refund Policy",
+            "intro": "Detailed refund terms are set out exclusively in the standalone Refund Policy.",
+            "items": {
+              "beforeStart": {
+                "title": "Single source",
+                "text": "All grounds, limits, and exceptions for refunds are defined only in the Refund Policy."
+              },
+              "14days": {
+                "title": "Priority of documents",
+                "text": "If there is any discrepancy regarding refunds, the Refund Policy prevails."
+              },
+              "technical": {
+                "title": "Before payment",
+                "text": "The Customer must read the Refund Policy before paying and before submitting a refund request."
+              }
             }
           },
-          "absences": {
-            "title": "3.5. Missed lessons",
-            "text": "If the Customer misses two (2) scheduled lessons without prior notice to the Provider (in the manner agreed between the parties, including via messenger or email), payment for those missed lessons is deducted from the Customer's prepaid balance and is non-refundable, as the instructor's time was reserved for those sessions."
+          "procedure": {
+            "title": "4.2. Procedure",
+            "items": {
+              "0": "The procedure for submitting and reviewing refund requests is defined in the Refund Policy.",
+              "1": "The Customer must follow only the procedure and timelines stated in the Refund Policy."
+            }
+          },
+          "noRefund": {
+            "title": "4.3. No additional grounds",
+            "items": {
+              "0": "This Public Offer does not create additional refund grounds beyond the Refund Policy.",
+              "1": "Refund decisions are made solely in accordance with the Refund Policy."
+            }
+          },
+          "cancellation": {
+            "title": "4.4. Transaction cancellation",
+            "text": "Transaction cancellation terms are defined in the Refund Policy."
           }
         }
       },
@@ -446,10 +477,10 @@
             "title": "6.1. Provider's rights and obligations",
             "items": {
               "0": "Provide services in accordance with this Offer and the website description",
-              "1": "Ensure access to learning materials and the learning platform",
-              "2": "Conduct online lessons according to the agreed schedule",
+              "1": "Ensure access to learning materials and the learning platform for purchased courses",
+              "2": "Activate course access within the timeframe stated in section 3.4",
               "3": "Maintain confidentiality of the Customer's personal data",
-              "4": "May change the lesson schedule with prior notice to the Customer",
+              "4": "May update course content or platform features with reasonable notice when required",
               "5": "May refuse to provide services if the Customer violates platform usage terms"
             }
           },
@@ -563,7 +594,7 @@
           },
           "4": {
             "title": "Communications",
-            "text": "messages sent to support, feedback forms, and scheduling information for live lessons"
+            "text": "messages sent to support and feedback forms"
           }
         }
       },
@@ -572,7 +603,7 @@
         "items": {
           "0": {
             "title": "Contract performance",
-            "text": "to provide courses, platform access, live lessons, certificates, and customer support"
+            "text": "to provide purchased courses, platform access, certificates, and customer support"
           },
           "1": {
             "title": "Payment processing",
@@ -596,7 +627,7 @@
         "title": "5. Sharing with third parties",
         "paragraphs": {
           "0": "We do not sell personal data. We share data only with trusted processors necessary to operate our services:",
-          "1": "Monobank - payment processing (Visa, Mastercard, Apple Pay, Google Pay); MongoDB Atlas or equivalent - database hosting; Vercel or equivalent - website hosting; Zoom - live online lessons; email and analytics providers - as configured for our operations.",
+          "1": "Monobank — payment processing (Visa, Mastercard, Apple Pay, Google Pay); MongoDB Atlas or equivalent — database hosting; Vercel or equivalent — website hosting; email and analytics providers — as configured for our operations. Zoom is used only for live lessons offered on the Ukrainian locale, not for self-paced course purchases on the English site.",
           "2": "Processors are required to protect data under contractual obligations. We may disclose data if required by law or to protect our legal rights."
         }
       },
@@ -734,7 +765,7 @@
       "6": {
         "title": "6. Digital services notice",
         "paragraphs": {
-          "0": "Educational services are digital services delivered online. By purchasing, you acknowledge that delivery begins upon granting platform access or scheduling live lessons.",
+          "0": "Educational services are digital services delivered online. By purchasing a course, you acknowledge that delivery begins when platform access to the purchased course is granted.",
           "1": "Educational services are digital content delivered online. By purchasing and accessing the course materials, you explicitly consent to the immediate performance of the contract and acknowledge that you will lose your right of withdrawal (cooling-off period) once the access to the digital content is granted."
         }
       }

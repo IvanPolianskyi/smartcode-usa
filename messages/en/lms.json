@@ -128,8 +128,8 @@
         "Publishing and portfolio projects"
       ],
       "format": [
-        "Live online lessons with a teacher",
-        "Self-paced lesson materials on the platform",
+        "Self-paced lessons on the platform",
+        "Theory, practice, and quizzes in English",
         "Hands-on practice every class",
         "Checkpoint projects each block",
         "Portfolio of .rbxl projects"
@@ -255,7 +255,7 @@
       "serverUnavailable": "Server-side Python is temporarily unavailable. Contact support."
     },
     "roblox": {
-      "lockedDescriptionEn": "This lesson is locked. Purchase the full course for $15, or book live lessons in your dashboard ($15 group / $20 individual). The first lesson is free to preview.",
+      "lockedDescriptionEn": "This lesson is locked. Purchase the full course for $15 to unlock all lessons. The first lesson of the first module is free to preview.",
       "lockedDescriptionUk": "Цей урок доступний учням онлайн-груп. Зверніться до адміністратора або викладача, щоб отримати доступ.",
       "purchaseFullCourse": "Buy full course - {price}",
       "onlineAccessHint": "Online student access",

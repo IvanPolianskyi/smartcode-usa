@@ -40,7 +40,7 @@ numbers = [x for x in range(1000000)]
 
 **Solutions - generators:**
 
-Generators do not create all values at once. They generate values ​​"on the fly" (lazy evaluation) when they are needed.
+Generators do not create all values at once. They generate values "on the fly" (lazy evaluation) when they are needed.
 
 **Advantages of generators:**
 
@@ -178,7 +178,7 @@ for number in gen:
 
 | Normal function | Generator |
 |------------------|-----------|
-| Creates all values ​​at once | Generates values ​​one at a time |
+| Creates all values at once | Generates values one at a time |
 | Takes up a lot of memory Saves memory |
 | Returns a list of | Returns the generator |
 | Uses return | Uses yield |
@@ -300,9 +300,9 @@ def generator_function():
 
 **Usage:**
 
-- \\\`next(gen)\\\` - get the next value
-- \\\`for value in gen:\\\` - iterate over the generator
-- \\\`list(gen)\\\` - convert to a list (loses benefits)
+- \`next(gen)\` - get the next value
+- \`for value in gen:\` - iterate over the generator
+- \`list(gen)\` - convert to a list (loses benefits)
 
 **Next step:**
 
@@ -466,7 +466,7 @@ Generators are a powerful tool for working with large amounts of data and creati
 - Each function must have a docstring with a description
 - Test each generator by outputting the value through a for loop
 
-**Note:** Do not use input(). Enter values ​​directly in the code for testing.`,
+**Note:** Do not use input(). Enter values directly in the code for testing.`,
     outputFormat: `Output example:
 
 === Squares of numbers ===
@@ -553,7 +553,7 @@ print()
 print("=== Multiple numbers ===")
 for num in multiples_of(3, 20):
     print(num)`,
-      explanation: "The solution creates three generator functions using yield. Each function generates values ​​one at a time, saving memory. We use the for loop to iterate through the generators."
+      explanation: "The solution creates three generator functions using yield. Each function generates values one at a time, saving memory. We use the for loop to iterate through the generators."
     },
     hints: [
       "Use yield instead of return to create generators",
@@ -572,13 +572,13 @@ for num in multiples_of(3, 20):
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is a generator in Python?",
         options: [
-          "A special type of function that generates values ​​one at a time",
+          "A special type of function that generates values one at a time",
           "List with all values",
           "A variable that stores a value",
           "Operator for loops"
         ],
         correctAnswer: 0,
-        explanation: "A generator is a special type of function that uses yield to generate values ​​one at a time without generating all the values ​​at once."
+        explanation: "A generator is a special type of function that uses yield to generate values one at a time without generating all the values at once."
       },
       {
         id: "q2",
@@ -617,7 +617,7 @@ for num in multiples_of(3, 20):
           "Nothing"
         ],
         correctAnswer: 0,
-        explanation: "The generator generates values ​​one at a time. The first next() will return 1, the second next() will return 2."
+        explanation: "The generator generates values one at a time. The first next() will return 1, the second next() will return 2."
       },
       {
         id: "q5",
@@ -643,7 +643,7 @@ for num in multiples_of(3, 20):
           "Will continue from the first value"
         ],
         correctAnswer: 0,
-        explanation: "When the generator is exhausted (all values ​​have been generated), calling next() will throw a StopIteration exception."
+        explanation: "When the generator is exhausted (all values have been generated), calling next() will throw a StopIteration exception."
       },
       {
         id: "q7",

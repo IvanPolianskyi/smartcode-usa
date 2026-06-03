@@ -1,7 +1,6 @@
 /* ═══════════════════════════════════════
    HeroEnCta — English hero CTA card
-   Priority: live Zoom lessons in English
-   Secondary: self-paced Python & Roblox
+   Self-paced full courses (Python & Roblox)
    ═══════════════════════════════════════ */
 
 .card {
@@ -22,8 +21,16 @@
 }
 
 /* Title */
+.lead {
+	margin: 0 0 1.25rem;
+	text-align: center;
+	font-size: 0.95rem;
+	line-height: 1.5;
+	color: #64748b;
+}
+
 .title {
-	margin: 0 0 1.5rem;
+	margin: 0 0 1rem;
 	text-align: center;
 	font-size: clamp(1.25rem, 4vw, 1.5rem);
 	font-weight: 800;

@@ -77,8 +77,8 @@
       "timePending": "час уточнюється"
     },
     "courseDescriptions": {
-      "roblox-studio": "72 уроки — від першого Part у Roblox Studio до публікації власної гри.",
-      "python-developer-zero-to-junior": "96 уроків — Python від нуля до реальних проєктів."
+      "roblox-studio": "72 уроки - від першого Part у Roblox Studio до публікації власної гри.",
+      "python-developer-zero-to-junior": "96 уроків - Python від нуля до реальних проєктів."
     },
     "courses": {
       "title": "Мої курси",
@@ -177,7 +177,7 @@
       "errors": {
         "invalidAmount": "Вкажіть коректну суму оплати",
         "invalidLessons": "Вкажіть кількість уроків (мінімум 1)",
-        "amountTooLow": "Мінімальна сума для одного уроку — {price} грн",
+        "amountTooLow": "Мінімальна сума для одного уроку - {price} грн",
         "noPhoto": "Додайте фото квитанції",
         "submitFailed": "Не вдалося відправити квитанцію",
         "submitError": "Помилка відправки квитанції",

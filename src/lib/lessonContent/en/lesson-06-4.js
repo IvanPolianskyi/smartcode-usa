@@ -26,7 +26,7 @@ export const lesson_06_4 = {
     sections: [
       {
         title: "Overview of the studied",
-        content: `In this lesson, we will consolidate all the knowledge from module 08 about decorators:
+        content: `In this lesson, we will consolidate all the knowledge from module 06 about decorators:
 
 What we learned:
 1. Introduction to decorators - what are decorators and how to use them
@@ -316,7 +316,7 @@ result2 = expensive_calculation(1000000) # Uses cache, logs
 
 **Best practices:**
 
- Always use \\\`@wraps(func)\\\` to save metadata
+ Always use \`@wraps(func)\` to save metadata
  Document decorators
  Handle errors in decorators
  Use *args and **kwargs for flexibility

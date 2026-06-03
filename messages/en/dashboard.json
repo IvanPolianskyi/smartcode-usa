@@ -31,7 +31,7 @@
   "logout": "Sign out",
   "enLayout": {
     "welcomeLabel": "Your learning space",
-    "welcomeSub": "Buy a full course for instant platform access, or book a live lesson with a teacher. Pay securely with card, Apple Pay, or Google Pay.",
+    "welcomeSub": "Buy a full course for instant access to all lessons on the platform. Pay securely with card, Apple Pay, or Google Pay.",
     "refresh": "Refresh",
     "scheduledSlots": "Weekly slots",
     "scheduleHint": "Your recurring lesson times appear here after you book.",
@@ -172,8 +172,8 @@
     "payMethods": "Visa/Mastercard, Apple Pay, Google Pay via Monobank.",
     "oneTime": "One-time · full access",
     "descriptions": {
-      "roblox-studio": "72 lessons — from your first Part in Roblox Studio to publishing your own game.",
-      "python-developer-zero-to-junior": "96 lessons — Python from zero to building real projects and junior-level skills."
+      "roblox-studio": "72 lessons - from your first Part in Roblox Studio to publishing your own game.",
+      "python-developer-zero-to-junior": "96 lessons - Python from zero to building real projects and junior-level skills."
     },
     "errors": {
       "failed": "Payment could not be started. Try again."

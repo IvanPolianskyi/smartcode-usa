@@ -48,7 +48,7 @@ from collections import namedtuple, deque, Counter, defaultdict, OrderedDict
       },
       {
         title: "namedtuple - named tuples",
-        content: `\\\`namedtuple\\\` allows you to create a tuple with named fields. This is more convenient than ordinary tuples, where you need to remember indexes.
+        content: `\`namedtuple\` allows you to create a tuple with named fields. This is more convenient than ordinary tuples, where you need to remember indexes.
 
 **Creating a namedtuple:**
 
@@ -107,7 +107,7 @@ print(p2) # Point(x=10, y=4)
       },
       {
         title: "deque - two-way queue",
-        content: `\\\`deque\\\` (double-ended queue) is an optimized queue that allows adding and removing elements from both ends.
+        content: `\`deque\` (double-ended queue) is an optimized queue that allows adding and removing elements from both ends.
 
 **Why deque instead of list?**
 
@@ -181,7 +181,7 @@ while tasks:
       },
       {
         title: "Counter - count of elements",
-        content: `\\\`Counter\\\` is a dictionary for counting hashed objects. It automatically counts the number of occurrences of each element.
+        content: `\`Counter\` is a dictionary for counting hashed objects. It automatically counts the number of occurrences of each element.
 
 **Creating a Counter:**
 
@@ -257,7 +257,7 @@ print(c1 | c2) # Counter({'a': 1, 'b': 2, 'c': 1})
       },
       {
         title: "defaultdict - dictionary with default values",
-        content: `\\\`defaultdict\\\` is a dictionary that automatically creates new entries with a default value if the key does not exist.
+        content: `\`defaultdict\` is a dictionary that automatically creates new entries with a default value if the key does not exist.
 
 **Problem with normal dict:**
 
@@ -344,9 +344,9 @@ print(dict(courses))
       },
       {
         title: "OrderedDict - an ordered dictionary",
-        content: `\\\`OrderedDict\\\` is a dictionary that stores the order in which elements are inserted.
+        content: `\`OrderedDict\` is a dictionary that stores the order in which elements are inserted.
 
-**Important:** In Python 3.7+, the regular \\\`dict\\\` also preserves the order, so the \\\`OrderedDict\\\` is less relevant, but still useful for compatibility and extra methods.
+**Important:** In Python 3.7+, the regular \`dict\` also preserves the order, so the \`OrderedDict\` is less relevant, but still useful for compatibility and extra methods.
 
 **Create and use:**
 
@@ -604,7 +604,7 @@ for region, votes in regional_votes.items():
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What does defaultdict do?",
         options: [
-          "Automatically creates default values ​​for new keys",
+          "Automatically creates default values for new keys",
           "Preserves the insertion order",
           "Counts elements",
           "Creates named tuples"

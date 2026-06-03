@@ -43,7 +43,7 @@ from functools import partial, reduce, lru_cache, wraps
       },
       {
         title: "partial - partial application",
-        content: `\\\`partial\\\` allows you to "fix" part of the function's arguments by creating a new function with fewer parameters.
+        content: `\`partial\` allows you to "fix" part of the function's arguments by creating a new function with fewer parameters.
 
 **Base example:**
 
@@ -101,7 +101,7 @@ print(big_numbers) # [15, 20, 12]
       },
       {
         title: "reduce - sequence convolution",
-        content: `\\\`reduce\\\` collapses a sequence to a single value by applying the function sequentially to the elements.
+        content: `\`reduce\` collapses a sequence to a single value by applying the function sequentially to the elements.
 
 **Syntax:**
 
@@ -178,7 +178,7 @@ print(factorial(5)) # 120 (1 * 2 * 3 * 4 * 5)
       },
       {
         title: "lru_cache - caching of results",
-        content: `\\\`lru_cache\\\` (Least Recently Used cache) - decorator for caching function results. This avoids repeated calculations.
+        content: `\`lru_cache\` (Least Recently Used cache) - decorator for caching function results. This avoids repeated calculations.
 
 **Base example:**
 
@@ -259,7 +259,7 @@ cached_function.cache_clear() # Clear the cache
       },
       {
         title: "wraps - save metadata",
-        content: `\\\`wraps\\\` - decorator for saving metadata of the original function when creating decorators.
+        content: `\`wraps\` - decorator for saving metadata of the original function when creating decorators.
 
 **Problem without wraps:**
 

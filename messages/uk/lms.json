@@ -256,7 +256,7 @@
       "serverUnavailable": "Серверне виконання Python тимчасово недоступне. Зверніться до підтримки."
     },
     "roblox": {
-      "lockedDescriptionEn": "This lesson is locked. Purchase the full course for $15, or book live lessons in your dashboard ($15 group / $20 individual).",
+      "lockedDescriptionEn": "This lesson is locked. Purchase the full course for $15 to unlock all lessons. The first lesson of the first module is free to preview.",
       "lockedDescriptionUk": "Щоб отримати доступ до курсу, відвідуйте уроки з Roblox Studio в онлайн-групі SmartCode. Перше заняття (1.1) — для ознайомлення.",
       "purchaseFullCourse": "Придбати курс - {price}",
       "onlineAccessHint": "Доступ для онлайн-учнів",

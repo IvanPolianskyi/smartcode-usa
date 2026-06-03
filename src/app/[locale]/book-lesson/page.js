@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
-import { Link } from '@/i18n/navigation'
-import { useTranslations } from 'next-intl'
+import React, { useEffect, useState } from 'react'
+import { Link, useRouter } from '@/i18n/navigation'
+import { useTranslations, useLocale } from 'next-intl'
 import {
 	Video,
 	CreditCard,
@@ -30,9 +30,21 @@ const COURSES = [
 ]
 
 export default function BookLessonPage() {
+	const locale = useLocale()
+	const router = useRouter()
 	const t = useTranslations('bookLesson')
 	const tCourses = useTranslations('dashboard.courses')
 	const { user, loading: authLoading } = useAuthSession()
+
+	useEffect(() => {
+		if (locale === 'en') {
+			router.replace('/')
+		}
+	}, [locale, router])
+
+	if (locale === 'en') {
+		return null
+	}
 
 	const [courseId, setCourseId] = useState('roblox-studio')
 	const [lessonFormat, setLessonFormat] = useState('individual')
