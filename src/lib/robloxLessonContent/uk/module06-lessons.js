@@ -1042,7 +1042,7 @@ end)
  },
  {
  title: "Рефакторинг таймера уроку 6.3",
- content: `Перенесіть таблицю `racing` до **RaceServer** у ServerScriptService.
+ content: `Перенесіть таблицю \`racing\` до **RaceServer** у ServerScriptService.
 
 Панелі викликають внутрішні функції, а не окремі відключені таблиці.
 
