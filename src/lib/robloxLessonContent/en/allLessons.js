@@ -203,7 +203,7 @@ export const robloxEnLessons = {
         },
         {
           "title": "Button Interactions and Flow",
-          "content": "Basic retry behavior:\n- Respawn character\n- Hide victory UI\n- Restart timer\n\nBest practices for teen-friendly UX:\n- Large readable text\n- Strong contrast colors\n- One clear primary action\n- Keep button labels short and obvious"
+          "content": "Basic retry behavior:\n- Respawn character\n- Hide victory UI\n- Restart timer\n\nBest practices for player-friendly UX:\n- Large readable text\n- Strong contrast colors\n- One clear primary action\n- Keep button labels short and obvious"
         }
       ]
     },
@@ -1396,7 +1396,7 @@ export const robloxEnLessons = {
           "content": "Use a LocalScript inside UI to fire server events.\n\n```lua\nlocal ReplicatedStorage = game:GetService(\"ReplicatedStorage\")\nlocal RequestPurchase = ReplicatedStorage:WaitForChild(\"RequestPurchase\")\n\nBuySwordButton.MouseButton1Click:Connect(function()\n    RequestPurchase:FireServer(\"sword_basic\")\nend)\n```"
         },
         {
-          "title": "Teen-friendly polish",
+          "title": "Player-friendly polish",
           "content": "Good UX wins:\n- disable button briefly after click\n- show \"Processing...\" then success/fail\n- color-code status text\n- keep prices readable and consistent\n\nTiny polish makes your game feel premium, not prototype."
         }
       ]

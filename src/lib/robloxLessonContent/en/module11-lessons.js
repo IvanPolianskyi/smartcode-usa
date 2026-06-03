@@ -279,7 +279,7 @@ task.spawn(function()
 end)
 \`\`\`
 
-**Teen-friendly** short tips - one line each.`,
+**Short friendly** tips - one line each.`,
       },
       {
         title: 'Teleport context',
@@ -695,7 +695,7 @@ end)
       { id: 'q3', type: MC, question: 'Event-driven beats…', options: ['Raycast every frame always', 'No scripts', 'Terrain only', 'Publishing'], correctAnswer: 0, explanation: 'Efficiency.' },
       { id: 'q4', type: MC, question: 'VFX spam causes…', options: ['GPU stress', 'More coins', 'Better FPS', 'DataStore'], correctAnswer: 0, explanation: 'Overdraw.' },
       { id: 'q5', type: MC, question: 'Measure before/after to…', options: ['Prove optimization worked', 'Guess', 'Skip work', 'Remove audio'], correctAnswer: 0, explanation: 'Evidence.' },
-      { id: 'q6', type: MC, question: 'Lesson 11.4 builds on…', options: ['Polished place from 11.1-11.3', 'Empty', 'Module 1 only', 'UK only'], correctAnswer: 0, explanation: 'Full project.' },
+      { id: 'q6', type: MC, question: 'Lesson 11.4 builds on…', options: ['Polished place from 11.1-11.3', 'Empty', 'Module 1 only', 'Coins only'], correctAnswer: 0, explanation: 'Full project.' },
       { id: 'q7', type: MC, question: 'Lesson 11.5 adds…', options: ['UX and accessibility', 'Only sound', 'Only loading', 'Laser'], correctAnswer: 0, explanation: 'Accessibility.' },
       { id: 'q8', type: MC, question: 'Server scripts should stay…', options: ['Focused on game rules', 'All visual VFX', 'UI only', 'Terrain'], correctAnswer: 0, explanation: 'Authority lean.' },
       { id: 'q9', type: MC, question: 'Optimization is important because…', options: ['Stutter makes players leave', 'Required for badges', 'Replaces design', 'Removes quests'], correctAnswer: 0, explanation: 'Retention.' },
@@ -992,7 +992,7 @@ Record short clip optional - portfolio proof.`,
       { id: 'q3', type: MC, question: 'Blind playtest finds…', options: ['Confusion you missed', 'Robux', 'Server IP', 'Version'], correctAnswer: 0, explanation: 'Fresh eyes.' },
       { id: 'q4', type: MC, question: 'Rubric fun factor asks…', options: ['Would players play again', 'Part count', 'Script count', 'Roblox fee'], correctAnswer: 0, explanation: 'Engagement.' },
       { id: 'q5', type: MC, question: 'Module 11 save name…', options: ['Module 11 - Game Polished', 'Puzzle World', 'RPG Inventory', 'SHOWCASE DAY'], correctAnswer: 0, explanation: 'Checkpoint.' },
-      { id: 'q6', type: MC, question: 'Lesson 11.6 completes…', options: ['Module 11 Performance and Polish', 'Module 12', 'Course', 'UK translation'], correctAnswer: 0, explanation: 'End module 11.' },
+      { id: 'q6', type: MC, question: 'Lesson 11.6 completes…', options: ['Module 11 Performance and Polish', 'Module 12', 'Course', 'Coins only'], correctAnswer: 0, explanation: 'End module 11.' },
       { id: 'q7', type: MC, question: 'Stability means…', options: ['No major errors in play session', 'No UI', 'No sound', 'No quests'], correctAnswer: 0, explanation: 'Reliability.' },
       { id: 'q8', type: MC, question: 'Module 12 is…', options: ['Release Day', 'Only racing', 'Only inventory', 'Empty'], correctAnswer: 0, explanation: 'Next module.' },
       { id: 'q9', type: MC, question: 'Consistency covers…', options: ['Naming colors audio UI', 'Only scripts', 'Only terrain', 'Only NPC'], correctAnswer: 0, explanation: 'Unified feel.' },

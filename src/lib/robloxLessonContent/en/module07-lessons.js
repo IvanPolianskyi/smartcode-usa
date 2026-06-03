@@ -509,7 +509,7 @@ hookBuy(script.Parent.ItemList.Item_sword_basic.BuyButton, "sword_basic")
 Use **PurchaseResult** from 7.2 pattern (rename ActionResult if needed).`,
       },
       {
-        title: 'Teen-friendly UX polish',
+        title: 'Clear shop UX polish',
         content: `| UX trick | Effect |
 |----------|--------|
 | Disable button 0.5s after click | No double-fire feel |
@@ -1158,7 +1158,7 @@ Optional: command bar cannot grant free items without server (verify no client c
       { id: 'q5', type: MC, question: 'GetShopCatalog uses…', options: ['RemoteFunction', 'Only Terrain', 'Weld', 'Atmosphere'], correctAnswer: 0, explanation: 'Catalog fetch.' },
       { id: 'q6', type: MC, question: 'RequestPurchase uses…', options: ['RemoteEvent', 'RemoteFunction per frame', 'DataStore only', 'NPC only'], correctAnswer: 0, explanation: 'Buy action.' },
       { id: 'q7', type: MC, question: 'Module 7 save name…', options: ['Module 7 - Shop Works', 'Race Launched', 'Arena Ready', 'Lesson 7.1'], correctAnswer: 0, explanation: 'Checkpoint save.' },
-      { id: 'q8', type: MC, question: 'Lesson 7.6 completes…', options: ['Module 7 Network & Shop', 'Module 12', 'Module 1', 'UK translation'], correctAnswer: 0, explanation: 'End of module 7.' },
+      { id: 'q8', type: MC, question: 'Lesson 7.6 completes…', options: ['Module 7 Network & Shop', 'Module 12', 'Module 1', 'Coins only'], correctAnswer: 0, explanation: 'End of module 7.' },
       { id: 'q9', type: MC, question: 'Next module theme is…', options: ['Smart Game / NPCs', 'Only racing', 'Only publishing', 'Empty'], correctAnswer: 0, explanation: 'Module 8 preview.' },
       { id: 'q10', type: MC, question: 'Checkpoint prioritizes…', options: ['Reliability over extra features', 'Most items possible', 'No tests', 'Client-only economy'], correctAnswer: 0, explanation: 'QA mindset.' },
     ],

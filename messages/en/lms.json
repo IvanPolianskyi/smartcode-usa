@@ -248,7 +248,11 @@
       "workerError": "Python runtime error",
       "workerStartFailed": "Could not start Python in the browser",
       "connectionError": "Failed to connect to the server. Please try again.",
-      "pyodideLoadFailed": "Could not load Python in the browser. Check your connection and try again."
+      "pyodideLoadFailed": "Could not load Python in the browser. Check your connection and try again.",
+      "loginRequired": "Sign in to run code on the protected SmartCode server.",
+      "noCourseAccess": "You do not have access to this course.",
+      "rateLimit": "Too many code runs. Please wait a few minutes.",
+      "serverUnavailable": "Server-side Python is temporarily unavailable. Contact support."
     },
     "roblox": {
       "lockedDescriptionEn": "This lesson is locked. Purchase the full course for $15, or book live lessons in your dashboard ($15 group / $20 individual). The first lesson is free to preview.",

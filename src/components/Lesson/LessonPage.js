@@ -755,15 +755,16 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         }
       }
     } catch (error) {
-      console.error('Error executing code with Pyodide:', error)
+      console.error('Error executing student Python:', error)
       setIsPyodideLoading(false)
-      const isLoadError = error?.message === 'PYODIDE_LOAD_FAILED'
+      let message = t('runCodeErrors.executionFailed')
+      if (error?.message === 'PYODIDE_LOAD_FAILED') {
+        message = t('runCodeErrors.pyodideLoadFailed')
+      }
       setCodeExecution({
         isRunning: false,
         output: null,
-        error: isLoadError
-          ? t('runCodeErrors.pyodideLoadFailed')
-          : t('runCodeErrors.executionFailed'),
+        error: message,
         success: false,
       })
       setPracticeChecked(false)

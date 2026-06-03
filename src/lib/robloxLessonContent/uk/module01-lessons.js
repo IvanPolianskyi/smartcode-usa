@@ -173,15 +173,15 @@ export const ukLesson11 = {
  description: `**Мета:** Довести, що ти можеш створити та зберегти просту сцену.
 
 ### Part A - Фіолетова вежа (8 хв)
-1. Insert **Block** → Name:\`PurpleTower\` 2. Size:\`8, 8, 8\`| BrickColor: фіолетовий | Material: гладкий пластик
+1. Insert **Block** → Name:\`PurpleTower\` 2. Size:\` 8, 8, 8\`| BrickColor: фіолетовий | Material: гладкий пластик
 3. Якір: **true** | Розмістіть на опорній плиті
 
 ### Part B - Червона платформа (8 хв)
-1. Insert **Block** → Name:\`RedPlatform\` 2. Size:\`20, 1, 4\`| BrickColor: яскраво-червоний | Material: Метал
+1. Insert **Block** → Name:\`RedPlatform\` 2. Size:\` 20, 1, 4\`| BrickColor: яскраво-червоний | Material: Метал
 3. Якір: **true** | Використовуйте **W**, щоб позиціонувати як доріжку
 
 ### Part C - Neon сфера (5 хв)
-1. Insert **Сфера** → Name:\`GlowOrb\` 2. Size:\`3, 3, 3\`| Material: **Neon** | Якір: **true**
+1. Insert **Сфера** → Name:\`GlowOrb\` 2. Size:\` 3, 3, 3\`| Material: **Neon** | Якір: **true**
 
 ### Перевірте та збережіть (4 хв)
 1. Натисніть **Play** - нічого не повинно впасти
@@ -1370,7 +1370,7 @@ end)
  description: `**Мета:** Єдиний цілісний настрій заходу сонця зі звуком.
 
 ### Part A - Навколишнє аудіо (7 хв)
-1. Insert **Звук** у Робочу область → Name:\`Ambient_Waves\` 2. SoundId: океан або природа з Toolbox | обсяг:\`0.35\`| Зациклено: **true** | Грає: **true**
+1. Insert **Звук** у Робочу область → Name:\`Ambient_Waves\` 2. SoundId: океан або природа з Toolbox | обсяг:\` 0.35\`| Зациклено: **true** | Грає: **true**
 
 ### Part B - Освітлення та атмосфера (8 хв)
 1. Виберіть **Освітлення** → Час:\`17.5\`| Яскравість:\` 2\`| GlobalShadows: **true**
@@ -1378,7 +1378,7 @@ end)
 3. **Play** - ікру → док → ватерлінія
 
 ### Part C - 3D звук док-станції (6 хв)
-1. На док-станції Part: **Звук**\`Dock_Creak\`| Зациклений: **false** | RollOffMaxDistance:\` 60\`2. Підключіть **Play()** зі Script клацання уроку 1.4 АБО торкніться Proximity пізніше
+1. На док-станції Part: **Звук**\`Dock_Creak\`| Зациклений: **false** | RollOffMaxDistance:\` 60\` 2. Підключіть **Play()** зі Script клацання уроку 1.4 АБО торкніться Proximity пізніше
 3. Тиха гучність (\`0.4\`), тому навколишнє середовище залишається основним
 
 ### Перевірте та збережіть (4 хв)

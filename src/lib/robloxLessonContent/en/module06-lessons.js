@@ -208,7 +208,7 @@ Open **Lesson 6.1 - Starter Car**.`,
       },
       {
         title: 'Readable track design',
-        content: `Good teen-friendly tracks have:
+        content: `Good beginner-friendly tracks have:
 
 | Feature | Why |
 |---------|-----|
@@ -698,7 +698,7 @@ end)
 - Server computes \`os.clock() - start\`
 - Client only shows result via \`FireClient\`
 
-**Teen rule:** *Client suggests. Server decides.*`,
+**Golden rule:** *Client suggests. Server decides.*`,
       },
       {
         title: 'Refactor Lesson 6.3 timer',
@@ -1147,7 +1147,7 @@ Ask: *Would I race again immediately?*`,
       { id: 'q6', type: MC, question: '2-player test finds…', options: ['Shared state bugs', 'Robux', 'DataStore only', 'Publishing'], correctAnswer: 0, explanation: 'Multiplayer QA.' },
       { id: 'q7', type: MC, question: 'Reliability before extras means…', options: ['Core loop works first', 'Add podium first', 'Skip QA', 'Remove track'], correctAnswer: 0, explanation: 'Checkpoint mindset.' },
       { id: 'q8', type: MC, question: 'Module 6 save name…', options: ['Module 6 - Race Launched', 'Arena Ready', 'Obby Ready', 'Coin Simulator'], correctAnswer: 0, explanation: 'Portfolio checkpoint.' },
-      { id: 'q9', type: MC, question: 'Lesson 6.6 completes…', options: ['Module 6 racing', 'Module 1 only', 'Publishing only', 'UK translation'], correctAnswer: 0, explanation: 'End of module 6.' },
+      { id: 'q9', type: MC, question: 'Lesson 6.6 completes…', options: ['Module 6 racing', 'Module 1 only', 'Publishing only', 'Coins only'], correctAnswer: 0, explanation: 'End of module 6.' },
       { id: 'q10', type: MC, question: 'Demo should show…', options: ['Spawn to winner in ~2 min', 'Only Explorer', 'Only terrain edit', 'Empty baseplate'], correctAnswer: 0, explanation: 'Sellable demo.' },
     ],
   },

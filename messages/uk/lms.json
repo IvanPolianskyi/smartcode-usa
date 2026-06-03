@@ -249,7 +249,11 @@
       "workerError": "Помилка середовища виконання Python",
       "workerStartFailed": "Не вдалося запустити Python у браузері",
       "connectionError": "Помилка підключення до сервера. Спробуйте ще раз.",
-      "pyodideLoadFailed": "Не вдалося завантажити Python у браузері. Перевірте інтернет і спробуйте ще раз."
+      "pyodideLoadFailed": "Не вдалося завантажити Python у браузері. Перевірте інтернет і спробуйте ще раз.",
+      "loginRequired": "Увійдіть в акаунт, щоб запускати код на захищеному сервері SmartCode.",
+      "noCourseAccess": "Немає доступу до цього курсу.",
+      "rateLimit": "Забагато запусків коду. Зачекайте кілька хвилин.",
+      "serverUnavailable": "Серверне виконання Python тимчасово недоступне. Зверніться до підтримки."
     },
     "roblox": {
       "lockedDescriptionEn": "This lesson is locked. Purchase the full course for $15, or book live lessons in your dashboard ($15 group / $20 individual).",

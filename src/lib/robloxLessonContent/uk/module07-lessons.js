@@ -732,7 +732,7 @@ hookBuy(script.Parent.ItemList.Item_sword_basic.BuyButton, "sword_basic")
 \`\`\`Використовуйте **PurchaseResult** із шаблону 7.2 (за потреби перейменуйте ActionResult).`,
  },
  {
- title: "Підлітковий UX лак",
+ title: "UX-полірування магазину",
  content: `| Трюк UX | Ефект |
 |----------|--------|
 | Вимкнути кнопку через 0,5 с після натискання | Немає відчуття подвійного вогню |

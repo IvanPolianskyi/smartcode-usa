@@ -1162,7 +1162,7 @@ Use **Output** to verify serialize before blaming DataStore.
       { id: 'q4', type: MC, question: 'serialize should be…', options: ['Read-only copy of state', 'Mutating live slots', 'Deleting player', 'Publishing'], correctAnswer: 0, explanation: 'No side effects.' },
       { id: 'q5', type: MC, question: 'Module 9 save name…', options: ['Module 9 - RPG Inventory', 'Shop Works', 'Living Location', 'Lesson 9.1'], correctAnswer: 0, explanation: 'Checkpoint.' },
       { id: 'q6', type: MC, question: 'Systems architect means…', options: ['Reusable modules and trustworthy state', 'One giant script', 'No tests', 'Copy paste'], correctAnswer: 0, explanation: 'Design mindset.' },
-      { id: 'q7', type: MC, question: 'Lesson 9.6 completes…', options: ['Module 9', 'Module 12', 'Module 1', 'UK translation'], correctAnswer: 0, explanation: 'End module 9.' },
+      { id: 'q7', type: MC, question: 'Lesson 9.6 completes…', options: ['Module 9', 'Module 12', 'Module 1', 'Coins only'], correctAnswer: 0, explanation: 'End module 9.' },
       { id: 'q8', type: MC, question: 'Two players need…', options: ['Separate save keys by UserId', 'One shared inventory', 'No DataStore', 'Same key'], correctAnswer: 0, explanation: 'Per-player data.' },
       { id: 'q9', type: MC, question: 'Module 10 adds…', options: ['Constraints and physics details', 'Only dialogue', 'Only publish', 'Nothing'], correctAnswer: 0, explanation: 'Preview.' },
       { id: 'q10', type: MC, question: 'Checkpoint prioritizes…', options: ['Persistence tests passing', 'Most items possible', 'No modules', 'Client-only save'], correctAnswer: 0, explanation: 'Relog QA.' },

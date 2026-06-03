@@ -419,7 +419,7 @@ export const ukLesson62 = {
  {
  mistake: "Доріжка занадто вузька",
  explanation: "Розчарування для нових водіїв.",
- correctApproach: "Шпильки шириною 16+",
+ correctApproach: "Колія шириною 16+ стадів",
  },
  {
  mistake: "Розриви між Parts дороги",
@@ -1830,7 +1830,7 @@ export const ukLesson66 = {
  "Видалити трек",
  ],
  correctAnswer: 0,
- explanation: "Контрольно-пропускний настрій.",
+ explanation: "Пріоритет надійного ядра.",
  },
  {
  id: "q8",
