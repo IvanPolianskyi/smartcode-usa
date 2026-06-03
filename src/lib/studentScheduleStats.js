@@ -74,7 +74,7 @@ export function computeScheduleStats(schedule, { t, dateLocale }) {
   const thisWeekAll = []
 
   slots.forEach((slot) => {
-    const next = nextKyivWeekdaySlot(slot.dayIndex, slot.hours, slot.minutes)
+    const next = nextKyivWeekdaySlot(slot.dayIndex, slot.hours, slot.minutes, now)
     upcomingAll.push(next)
 
     const thisWeekOcc = kyivSlotInCurrentWeek(

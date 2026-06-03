@@ -44,8 +44,7 @@ export function addDaysToDateKey(dateKey, days) {
 /**
  * Найближчий майбутній слот: день тижня (0=Нд…6=Сб) + год:хв у Києві.
  */
-export function nextKyivWeekdaySlot(weekdayIndex, hours, minutes) {
-  const now = new Date()
+export function nextKyivWeekdaySlot(weekdayIndex, hours, minutes, now = new Date()) {
   const nowKyiv = kyivPartsFromInstant(now.getTime())
   const todayKey = kyivDateKeyFromParts(nowKyiv)
 

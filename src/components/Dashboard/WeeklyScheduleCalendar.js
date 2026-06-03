@@ -7,6 +7,7 @@ import {
   addDaysToDateKey,
   formatKyivLocale,
   isKyivDateKeyToday,
+  kyivWallToUtc,
   kyivWeekRange,
   nextKyivWeekdaySlot,
 } from '@/lib/kyivTime'
@@ -66,8 +67,8 @@ export default function WeeklyScheduleCalendar({
 
       const enriched = daySlots
         .map((slot) => {
-          const lessonAt = nextKyivWeekdaySlot(
-            slot.dayIndex,
+          const lessonAt = kyivWallToUtc(
+            cellDateKey,
             slot.hours,
             slot.minutes
           )
@@ -89,10 +90,10 @@ export default function WeeklyScheduleCalendar({
   const nextLesson = useMemo(() => {
     const all = slots.map((s) => ({
       slot: s,
-      at: nextKyivWeekdaySlot(s.dayIndex, s.hours, s.minutes),
+      at: nextKyivWeekdaySlot(s.dayIndex, s.hours, s.minutes, now),
     }))
-    return all.sort((a, b) => a.at - b.at)[0]
-  }, [slots])
+    return all.sort((a, b) => a.at.getTime() - b.at.getTime())[0]
+  }, [slots, now])
 
   return (
     <section className={styles.calendarCard}>
