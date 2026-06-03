@@ -3,6 +3,13 @@ import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { robloxCurriculum } from '@/lib/robloxCurriculum'
 
 export const PYTHON_COURSE_ID = 'python-developer-zero-to-junior'
+export const ROBLOX_COURSE_ID = 'roblox-studio'
+
+export const KNOWN_COURSE_IDS = new Set([
+  PYTHON_COURSE_ID,
+  'web-development',
+  ROBLOX_COURSE_ID,
+])
 
 export const ONLINE_COURSE_CURRICULA = {
   [PYTHON_COURSE_ID]: pythonCurriculum,
@@ -14,6 +21,15 @@ export function flattenCourseLessons(courseId) {
   const curriculum = ONLINE_COURSE_CURRICULA[courseId]
   if (!curriculum?.modules) return []
   return curriculum.modules.flatMap((module) => module.lessons || [])
+}
+
+export function isKnownCourseId(courseId) {
+  return KNOWN_COURSE_IDS.has(courseId)
+}
+
+export function isLessonInCourse(courseId, lessonId) {
+  if (!courseId || !lessonId) return false
+  return flattenCourseLessons(courseId).some((l) => l.lessonId === lessonId)
 }
 
 export function hasActiveOnlineCourse(profile, courseId) {
@@ -28,17 +44,18 @@ export function hasStudentCourseAccess(user, courseId) {
   return hasActiveOnlineCourse(user.studentProfile, courseId)
 }
 
-/** Читання прогресу: куплений/онлайн курс або Roblox (прев’ю 1.1 і платформа). */
+/** Читання/запис прогресу: оплачений/онлайн курс або Roblox-прев’ю (урок 1.1). */
 export function canReadCourseProgress(user, courseId) {
-  if (!user || !courseId) return false
+  if (!user || !courseId || !isKnownCourseId(courseId)) return false
   if (hasStudentCourseAccess(user, courseId)) return true
-  if (courseId === 'roblox-studio') return true
+  if (courseId === ROBLOX_COURSE_ID) return true
   return false
 }
 
 /** Запис прогресу по уроку — лише якщо урок відкритий (прев’ю, покупка, онлайн-група). */
 export function canUpdateLessonProgress(user, courseId, lessonId, progress = null) {
   if (!user || !courseId || !lessonId) return false
+  if (!isKnownCourseId(courseId) || !isLessonInCourse(courseId, lessonId)) return false
   if (user.role === 'admin') return true
 
   const isPurchased = (user.purchasedCourses || []).includes(courseId)
@@ -82,7 +99,7 @@ export function getUnlockedLessonSet({
   if (allIds.length === 0) return new Set()
 
   const freePreview = new Set(
-    courseId === 'roblox-studio' ? ['lesson-roblox-1-1'] : []
+    courseId === ROBLOX_COURSE_ID ? ['lesson-roblox-1-1'] : []
   )
 
   if (isAdmin || isPurchased) {

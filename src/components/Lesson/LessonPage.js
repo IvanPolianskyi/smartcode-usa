@@ -594,8 +594,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       const quizResult = await updateProgress(courseId, {
         action: 'completeQuiz',
         lessonId,
-        quizScore: score,
-        quizAnswers: quizAnswers // Зберігаємо відповіді
+        quizAnswers: quizAnswers,
+        locale,
       })
       
       // Mark lesson as completed ONLY if quiz passed (score >= passingScore)
@@ -603,7 +603,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       if (score >= passingScore) {
         await updateProgress(courseId, {
           action: 'completeLesson',
-          lessonId
+          lessonId,
+          locale,
         })
       }
       

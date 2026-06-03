@@ -72,7 +72,9 @@ export async function GET() {
       .find({ userId: new ObjectId(userId) })
       .toArray()
     const progressCourseIds = userProgresses.map((p) => p.courseId)
-    const orphanProgress = progressCourseIds.filter((id) => !allowedCourseIds.has(id))
+    const orphanProgress = progressCourseIds.filter(
+      (id) => !allowedCourseIds.has(id) && id !== 'roblox-studio'
+    )
     if (orphanProgress.length > 0) {
       await progressCollection.deleteMany({
         userId: new ObjectId(userId),

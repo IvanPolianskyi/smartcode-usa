@@ -49,7 +49,7 @@ export const ukLesson81 = {
  title: "Отримання NPC на вашому місці",
  content: `**Варіант A - Toolbox (зручний для уроку):**
 1. Аватар → **Rig Builder** або знайдіть "R15 NPC"
-2. Insert Model → перейменувати\`NPC_Guide_Maya\`**Варіант B - дублікат початкового символу:**
+2. Insert Model → перейменувати\`NPC_Guide_Maya\`**Варіант B — Duplicate стартового character:**
 1. Скопіюйте свого Character в Play (лише для навчання)
 2. Закріпіть NPC на місці для статичної напрямної
 

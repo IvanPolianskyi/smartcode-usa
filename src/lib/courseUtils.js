@@ -33,7 +33,7 @@ export async function ensureUserEnrolled(userIdObj, courseId) {
  * Створює новий запис прогресу для користувача
  * Також автоматично додає курс до enrolledCourses
  */
-export async function createProgressEntry(userIdObj, courseId) {
+export async function createProgressEntry(userIdObj, courseId, { enroll = true } = {}) {
   const progressCollection = await getCollection('userProgress')
   
   const progress = {
@@ -51,8 +51,9 @@ export async function createProgressEntry(userIdObj, courseId) {
   
   await progressCollection.insertOne(progress)
   
-  // Автоматично додати курс до enrolledCourses користувача
-  await ensureUserEnrolled(userIdObj, courseId)
+  if (enroll) {
+    await ensureUserEnrolled(userIdObj, courseId)
+  }
   
   return progress
 }

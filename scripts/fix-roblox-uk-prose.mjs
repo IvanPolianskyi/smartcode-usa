@@ -194,6 +194,55 @@ const PROSE_FIXES = [
   ['question: "польська означає', 'question: "Полірування означає'],
 ]
 
+/** Roblox Studio UI / API names stay English in UK lessons */
+const ROBLOX_EN_TERMS = [
+  ['інструментом «Переміщення»', 'інструментом **Move**'],
+  ['інструменту відкриває Переміщення', 'інструменту відкриває Move'],
+  ['робить **Part** світним', 'робить Part світним'],
+  ['використовуйте Переміщення з', 'використовуйте **Move** з'],
+  ['Переміщення вгору/вниз', 'Move up/down (камера)'],
+  ['Переміщення розривів Scripts', 'перенесення Scripts'],
+  ['Інструменти переміщення/масштабування', 'інструменти **Move** / **Scale**'],
+  ['W = переміщення, E = масштабування, R = обертання', 'W = Move, E = Scale, R = Rotate'],
+  ['змушує деталь світитися', 'робить **Part** світним'],
+  ['Клацнувши деталь у Viewport', 'Клацнувши **Part** у Viewport'],
+  ['перетворити деталь на кнопку', 'перетворити **Part** на кнопку'],
+  ['зробити деталь доступною', 'зробити **Part** доступною'],
+  ['клацніть свою деталь', 'клацніть свою **Part**'],
+  ['деталь без ClickDetector', '**Part** без ClickDetector'],
+  ['Гравець натискає партію в грі', 'Гравець клікає **Part** у грі'],
+  ['Material: гладкий пластик', 'Material: **SmoothPlastic**'],
+  ['Material: Метал', 'Material: **Metal**'],
+  ['- **Метал**', '- **Metal**'],
+  ['| **Трава** |', '| **Grass** |'],
+  ['| **Пісок** |', '| **Sand** |'],
+  ['Трав\'яна основа → Пісок', '**Grass** → **Sand**'],
+  ['Neon матеріал', 'Material **Neon**'],
+  ['question: "Віднімання використовується', 'question: "**Subtract** використовується'],
+  ['question: "Гладкий допомагає', 'question: "**Smooth** допомагає'],
+  ['question: "Піщаний матеріал', 'question: "**Sand** material'],
+  ['question: "Зазвичай траву малюють', 'question: "Зазвичай **Grass** малюють'],
+  ['"Ящик інструментів"', '"Toolbox"'],
+  ['"Деревина"', '"Wood"'],
+  ['"Трава"', '"Grass"'],
+  ['"Неон"', '"Neon"'],
+  ['"Пісок"', '"Sand"'],
+  ['"Фарба"', '"Paint"'],
+  ['"Генерувати"', '"Generate"'],
+  ['"Виберіть"', '"Select"'],
+  ['"грати"', '"Play"'],
+  ['"острови"', '"Islands"'],
+  [' "П",', ' "P",'],
+  [' "Ф",', ' "F",'],
+  [' "Г",', ' "G",'],
+  [' "Х",', ' "H",'],
+  [' "В",', ' "W",'],
+  [' "Р",', ' "R",'],
+  [' "Т",', ' "T",'],
+]
+
+const ALL_FIXES = [...PROSE_FIXES, ...ROBLOX_EN_TERMS]
+
 function fixSpacing(text) {
   return text
     .replace(/\*\*([^*]+)\*\*\*\*([^*]+)\*\*/g, '**$1** **$2**')
@@ -210,7 +259,7 @@ function fixSpacing(text) {
 
 function fixContent(text) {
   let out = text
-  for (const [from, to] of PROSE_FIXES) {
+  for (const [from, to] of ALL_FIXES) {
     out = out.split(from).join(to)
   }
   return fixSpacing(out)

@@ -46,7 +46,7 @@ export const ukLesson61 = {
  title: "Побудуйте шасі та колеса",
  content: `**Шасі:**
 - Блокувати\`6, 1, 10\`стадів
-- Material Метал, сірий
+- Material Metal, сірий
 - Ім'я\`Chassis\`**Колеса (4):**
 - Розмір\`2, 2, 1\`- Форма циліндра (поворот на 90°) або блок
 - Імена\`Wheel_FL\`,\`Wheel_FR\`,\`Wheel_RL\`,\`Wheel_RR\`- Розмістіть по кутах, трохи нижче шасі
@@ -54,7 +54,7 @@ export const ukLesson61 = {
 **Вправа (10 хв):** Згрупуйте всі Parts в model\`StarterCar\`- Move tool на всю model.`,
  },
  {
- title: "WeldConstraint - склеюємо деталі",
+ title: "WeldConstraint — зварюємо Parts",
  content: `Кожне колесо → **WeldConstraint** до шасі:
 
 1. Виберіть колесо + шасі
@@ -231,8 +231,8 @@ end
  options: [
  "Model",
  "Лише Script",
- "Sound only",
- "Atmosphere",
+ "Тільки звук",
+ "атмосфера",
  ],
  correctAnswer: 0,
  explanation: "Згрупований префаб автомобіля (Model).",
@@ -317,7 +317,7 @@ export const ukLesson62 = {
  learningObjectives: [
  "Створіть зрозумілу схему зі стартовою лінією та бар’єрами",
  "Створюйте модульні сегменти колії з постійною шириною смуги",
- "Розмістіть ворота checkpoint і вказівники",
+ "Розмістіть ворота КПП і вказівники",
  "Перевірте п’ять кіл на керованість",
  ],
  theory: {
@@ -350,7 +350,7 @@ export const ukLesson62 = {
  title: "Модульні сегменти",
  content: `Folder\`Track\`:\`Straight_32\`- 32 stud Part дороги\`Turn_45\`- Вигин 45°\`Turn_90\`- Вигин 90°
 
-**Duplicate** сегменти — snap із **Move** grid **4 studs**.
+**Дублювати** сегменти - прив’язати за допомогою сітки переміщення **4 стади**.
 
 **Дорога:** темний колір асфальту,\`Anchored true\`, невеликий підйом по краях для бордюрів.
 
@@ -370,7 +370,7 @@ export const ukLesson62 = {
 **Вправа (8 хв):** Поставте StarterCar на StartLine - проїдьте одне коло повільно.`,
  },
  {
- title: "checkpoint і знаки",
+ title: "КПП і знаки",
  content: `Розмістіть **3-4** Parts воріт\`CP_1\`,\`CP_2\`,\`CP_3\`навколо колін:
 - Neon арки над доріжкою
 - Пронумеровано на знаку
@@ -450,7 +450,7 @@ export const ukLesson62 = {
 
 ### Part B - Безпека та посібники (8 хв)
 1. Зовнішні бар'єри на небезпечних краях
-2. Ворота CP_1, CP_2, CP_3 + 2 знаки-стрілки
+2. Ворота КП_1, КП_2, КП_3 + 2 знаки-стрілки
 
 ### Part C - Перевірка та збереження (5 хв)
 1. П'ять кіл - виправте застряглі місця
@@ -794,8 +794,8 @@ end
  options: [
  "os.clock на сервері",
  "Тільки BrickColor",
- "Terrain Paint",
- "Atmosphere",
+ "Terrain paint",
+ "атмосфера",
  ],
  correctAnswer: 0,
  explanation: "Вимірювання витраченого часу.",
@@ -899,7 +899,7 @@ end
  "Трек від 6.2 і авто від 6.1",
  "Тільки меч",
  "Тільки монети",
- "Порожній",
+ "Empty",
  ],
  correctAnswer: 0,
  explanation: "Повне налаштування гонки.",
@@ -968,7 +968,7 @@ export const ukLesson64 = {
 
 **Сервер володіє:**
 -\`racing[player]\`час початку
-- Перевірка замовлення на checkpoint
+- Перевірка замовлення на КПП
 - Оголошення переможця
 - Лідерська статистика\`Laps\`значення
 
@@ -1130,7 +1130,7 @@ end)
  question: "RemoteEvent живе в...",
  options: [
  "ReplicatedStorage",
- "Lighting only",
+ "Тільки освітлення",
  "Terrain",
  "StarterPack",
  ],
@@ -1303,10 +1303,10 @@ local function resetProgress(player)
 end
 \`\`\`На старті гонки →\`resetProgress(player)\`.
 
-**Touched** неправильного checkpoint → print warning, **без зарахування**.`,
+Торкнувся неправильний CP → надрукувати попередження, **немає передавання**.`,
  },
  {
- title: "Сенсорний обробник checkpoint",
+ title: "Сенсорний обробник КПП",
  content: `Для each Part CP, **Script** або один центральний цикл:\`\`\`lua
 cp.Touched:Connect(function(hit)
  local seat = hit.Parent:FindFirstChildWhichIsA("VehicleSeat", true)
@@ -1442,7 +1442,7 @@ local raceStartTotal = {} -- on first StartRace of match
  {
  id: "q1",
  type: "multiple_choice",
- question: "Порядок checkpoint запобігає...",
+ question: "Порядок КПП запобігає...",
  options: [
  "Подвиги пропускання кола",
  "Водіння",
@@ -1485,8 +1485,8 @@ local raceStartTotal = {} -- on first StartRace of match
  options: [
  "Не просування вперед",
  "Перемагайте миттєво",
- "Видалити автомобіль",
- "Опублікувати",
+ "Delete car",
+ "Publish",
  ],
  correctAnswer: 0,
  explanation: "Ігнорувати недійсне замовлення.",
@@ -1554,7 +1554,7 @@ local raceStartTotal = {} -- on first StartRace of match
  "Арена",
  ],
  correctAnswer: 0,
- explanation: "Ворота checkpoint на трасі.",
+ explanation: "Ворота КПП на трасі.",
  },
  {
  id: "q10",
@@ -1787,7 +1787,7 @@ export const ukLesson66 = {
  options: [
  "Клон ReplicatedStorage",
  "Тільки місцевість",
- "Chat",
+ "Чат",
  "Вбити цеглу",
  ],
  correctAnswer: 0,
@@ -1843,7 +1843,7 @@ export const ukLesson66 = {
  "Симулятор монет",
  ],
  correctAnswer: 0,
- explanation: "checkpoint портфоліо.",
+ explanation: "КПП портфоліо.",
  },
  {
  id: "q9",

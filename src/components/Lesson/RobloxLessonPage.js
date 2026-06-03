@@ -116,6 +116,7 @@ const RobloxLessonPage = ({
       await updateProgress(courseId, {
         action: 'completePracticeTask',
         lessonId,
+        locale,
       })
       window.location.reload()
     } catch {
@@ -148,13 +149,14 @@ const RobloxLessonPage = ({
       await updateProgress(courseId, {
         action: 'completeQuiz',
         lessonId,
-        quizScore: score,
         quizAnswers,
+        locale,
       })
       if (score >= passing) {
         await updateProgress(courseId, {
           action: 'completeLesson',
           lessonId,
+          locale,
         })
       }
       window.location.reload()
