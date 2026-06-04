@@ -5,6 +5,18 @@ import { robloxCurriculum } from '@/lib/robloxCurriculum'
 export const PYTHON_COURSE_ID = 'python-developer-zero-to-junior'
 export const ROBLOX_COURSE_ID = 'roblox-studio'
 
+/** LMS course pages (EN home / dashboard). */
+export const EN_COURSE_PAGE_PATHS = {
+  [PYTHON_COURSE_ID]: '/courses/python-developer-zero-to-junior',
+  [ROBLOX_COURSE_ID]: '/courses/roblox-studio',
+}
+
+/** Checkout pages for EN purchasable courses. */
+export const EN_COURSE_BUY_PATHS = {
+  [PYTHON_COURSE_ID]: '/buy/python-developer-zero-to-junior',
+  [ROBLOX_COURSE_ID]: '/buy/roblox-studio',
+}
+
 export const KNOWN_COURSE_IDS = new Set([
   PYTHON_COURSE_ID,
   'web-development',
@@ -143,6 +155,15 @@ export function getStudentAccessibleCourseIds(user) {
   ;(user?.purchasedCourses || []).forEach((id) => ids.add(id))
   ;(user?.studentProfile?.activeOnlineCourses || []).forEach((id) => ids.add(id))
   return [...ids]
+}
+
+/** Home/pricing CTA: course page if the student already has access, otherwise buy. */
+export function getEnHomeCourseHref(courseId, user) {
+  const owned = user ? new Set(getStudentAccessibleCourseIds(user)) : new Set()
+  if (owned.has(courseId)) {
+    return EN_COURSE_PAGE_PATHS[courseId] || `/courses/${courseId}`
+  }
+  return EN_COURSE_BUY_PATHS[courseId] || `/buy/${courseId}`
 }
 
 export function getRemovedOnlineCourseIds(prevOnlineIds = [], nextOnlineIds = [], purchasedCourses = []) {

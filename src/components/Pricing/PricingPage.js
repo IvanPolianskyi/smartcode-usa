@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react'
+import { useAuthSession } from '@/components/AuthSessionProvider'
+import { getEnHomeCourseHref } from '@/lib/courseLessonAccess'
 import {
 	Users,
 	User,
@@ -29,15 +31,11 @@ const TRUST_ICONS_UK = [CreditCard, Clock, Video, Shield]
 const TRUST_KEYS_EN = ['fullAccess', 'securePay', 'selfPaced', 'noHidden']
 const TRUST_ICONS_EN = [BookOpen, CreditCard, Clock, Shield]
 
-const EN_BUY_PATHS = {
-	'roblox-studio': '/buy/roblox-studio',
-	'python-developer-zero-to-junior': '/buy/python-developer-zero-to-junior',
-}
-
 const PricingPage = () => {
 	const t = useTranslations('pricing')
 	const locale = useLocale()
 	const isEn = locale === 'en'
+	const { user } = useAuthSession()
 	const groupInfo = getLessonPrice('group', locale)
 	const individualInfo = getLessonPrice('individual', locale)
 	const enCourses = getEnPurchasableFullCourses()
@@ -194,7 +192,7 @@ const PricingPage = () => {
 						{isEn
 							? enCourses.map((course, index) => {
 									const features = t.raw(`en.courses.${course.courseId}.features`)
-									const href = EN_BUY_PATHS[course.courseId] || `/buy/${course.courseId}`
+									const href = getEnHomeCourseHref(course.courseId, user)
 									return (
 										<div
 											key={course.courseId}

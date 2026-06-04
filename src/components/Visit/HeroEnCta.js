@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 import {
@@ -11,21 +11,22 @@ import {
   Clock,
   GraduationCap,
 } from 'lucide-react'
+import { useAuthSession } from '@/components/AuthSessionProvider'
 import { formatPrice, getEnPurchasableFullCourses } from '@/lib/coursePrices'
+import { getEnHomeCourseHref } from '@/lib/courseLessonAccess'
 import styles from './HeroEnCta.module.css'
-
-const COURSE_META = {
-  'roblox-studio': {
-    href: '/buy/roblox-studio',
-  },
-  'python-developer-zero-to-junior': {
-    href: '/buy/python-developer-zero-to-junior',
-  },
-}
 
 export default function HeroEnCta() {
   const t = useTranslations('home.heroEnCta')
+  const { user } = useAuthSession()
   const courses = getEnPurchasableFullCourses()
+  const courseHrefs = useMemo(
+    () =>
+      Object.fromEntries(
+        courses.map((c) => [c.courseId, getEnHomeCourseHref(c.courseId, user)])
+      ),
+    [courses, user]
+  )
 
   return (
     <div className={styles.card} id="hero-en-cta">
@@ -53,11 +54,10 @@ export default function HeroEnCta() {
 
       <div className={styles.offers}>
         {courses.map((course) => {
-          const meta = COURSE_META[course.courseId] || {}
           return (
             <Link
               key={course.courseId}
-              href={meta.href || `/buy/${course.courseId}`}
+              href={courseHrefs[course.courseId]}
               className={styles.offerRow}
             >
               <div className={styles.offerLeft}>
