@@ -12,6 +12,7 @@ import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 import styles from './ContactForm.module.css'
+import DataProcessingConsentNote from '@/components/Legal/DataProcessingConsentNote'
 import { LEAD_MESSAGE_MAX_LENGTH } from '@/lib/sanitizeLeadText'
 
 const ContactForm = () => {
@@ -307,6 +308,8 @@ const ContactForm = () => {
                                             className={styles.modalTextarea}
                                         />
                                     </div>
+
+                                    <DataProcessingConsentNote className={styles.modalConsent} />
 
                                     <button type='submit' className={styles.modalSubmit} disabled={submitting}>
                                         <Send size={18} aria-hidden />

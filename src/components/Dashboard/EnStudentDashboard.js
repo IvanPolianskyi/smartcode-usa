@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { getStudentAccessibleCourseIds } from '@/lib/courseLessonAccess'
 import EnCourseStore from './EnCourseStore'
+import ProfileAccountSection from './ProfileAccountSection'
 import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
 
 export default function EnStudentDashboard({
@@ -129,6 +130,8 @@ export default function EnStudentDashboard({
           )}
         </section>
       )}
+
+      <ProfileAccountSection user={user} onDeleted={onLogout} />
 
       <div className={styles.toolbar}>
         <button className={styles.secondaryBtn} onClick={refreshData}>

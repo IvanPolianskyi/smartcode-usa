@@ -14,6 +14,7 @@ import MyCoursesSection from '@/components/Dashboard/MyCoursesSection'
 import StudentPaymentPanel from '@/components/Dashboard/StudentPaymentPanel'
 import PaymentReminderBanner from '@/components/Dashboard/PaymentReminderBanner'
 import WeeklyScheduleCalendar from '@/components/Dashboard/WeeklyScheduleCalendar'
+import ProfileAccountSection from '@/components/Dashboard/ProfileAccountSection'
 import styles from './Dashboard.module.css'
 import {
   User,
@@ -216,6 +217,8 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
 
       <div className={styles.payBottomFull}>{paymentPanel}</div>
 
+      <ProfileAccountSection user={user} onDeleted={onLogout} />
+
       <div className={styles.toolbar}>
         <button className={styles.secondaryBtn} onClick={refreshData}><TrendingUp size={16} /> {t('student.refresh')}</button>
         <button className={styles.secondaryBtn} onClick={onLogout}><LogOut size={16} /> {t('logout')}</button>
@@ -355,8 +358,21 @@ export default function DashboardPage() {
       {isAdmin
         ? <AdminDashboard adminStats={adminStats} t={t} />
         : accountPendingSetup
-          ? null
-          : <StudentDashboard user={user} progressData={progressData} paymentStats={paymentStats} refreshData={refreshData} t={t} locale={locale} getCourseInfo={getCourseInfo} onLogout={handleLogout} />}
+          ? (
+              <ProfileAccountSection user={user} onDeleted={handleLogout} />
+            )
+          : (
+              <StudentDashboard
+                user={user}
+                progressData={progressData}
+                paymentStats={paymentStats}
+                refreshData={refreshData}
+                t={t}
+                locale={locale}
+                getCourseInfo={getCourseInfo}
+                onLogout={handleLogout}
+              />
+            )}
     </div>
   )
 }

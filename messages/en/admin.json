@@ -23,7 +23,7 @@
     "totalRevenue": "Total revenue",
     "pendingPayments": "{count} pending",
     "pendingPaymentsLink": "View pending payments",
-    "monobankCompleted": "Monobank: completed",
+    "monobankCompleted": "Online payments: completed",
     "monobankBreakdown": "Pending: {pending} · Failed: {failed}",
     "monobankRevenue": "Revenue (by currency): {amount}"
   },

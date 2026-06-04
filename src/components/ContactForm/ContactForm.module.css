@@ -306,6 +306,20 @@
 	cursor: not-allowed;
 }
 
+.modalConsent {
+	margin: 0.25rem 0 0.5rem;
+	padding: 0.65rem 0.75rem;
+	background: rgba(59, 130, 246, 0.08);
+	border: 1px solid rgba(59, 130, 246, 0.2);
+	border-radius: 10px;
+	color: #475569;
+	font-size: 0.78rem;
+}
+
+.modalConsent a {
+	color: #2563eb;
+}
+
 /* Bottom note */
 .modalNote {
 	text-align: center;

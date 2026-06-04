@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Публічна оферта / Public offer - SmartCode Academy",
-    "description": "Єдина публічна оферта SmartCode Academy (українська та англійська версії). Умови оплати через Monobank, повернення коштів, контакти продавця."
+    "description": "Єдина публічна оферта SmartCode Academy (українська та англійська версії). Умови оплати, повернення коштів, контакти продавця."
   },
   "title": "Публічна оферта / Public offer",
   "subtitle": "Єдиний договір публічної оферти про надання освітніх послуг (українська та англійська мови)",
@@ -103,16 +103,16 @@
             }
           },
           "payment": {
-            "title": "3.3. Способи оплати (Monobank та інші)",
+            "title": "3.3. Способи оплати",
             "intro": "Замовник може оплатити Послуги такими способами:",
             "items": {
               "monobank": {
-                "title": "Онлайн-оплата через Monobank",
-                "text": "банківські картки Visa та Mastercard через платіжний шлюз Monobank у гривнях (UAH)"
+                "title": "Онлайн-оплата",
+                "text": "банківські картки Visa та Mastercard, Apple Pay, Google Pay через платіжний сервіс у гривнях (UAH)"
               },
               "appleGoogle": {
                 "title": "Apple Pay та Google Pay",
-                "text": "доступні на сторінці оплати Monobank, якщо підтримуються пристроєм та банком-емітентом картки"
+                "text": "доступні на сторінці оплати, якщо підтримуються пристроєм та банком-емітентом картки"
               },
               "bank": {
                 "title": "Банківський переказ / квитанція",
@@ -128,7 +128,7 @@
               "0": "Регіони: Україна та інші країни, де є стабільний інтернет",
               "1": "Самостійні курси: доступ через платформу smartcode-academy.com",
               "2": "Живі уроки: дистанційно через Zoom (або іншу узгоджену платформу)",
-              "3": "Типовий термін активації доступу: до 24 годин після успішного підтвердження оплати Monobank або іншим узгодженим способом"
+              "3": "Типовий термін активації доступу: до 24 годин після успішного підтвердження оплати"
             }
           },
           "absences": {
@@ -159,16 +159,16 @@
             }
           },
           "payment": {
-            "title": "3.3. Payment methods (Monobank and others)",
+            "title": "3.3. Payment methods",
             "intro": "The Customer may pay using the following methods:",
             "items": {
               "monobank": {
-                "title": "Online payment via Monobank",
-                "text": "Visa and Mastercard through the Monobank payment gateway in Ukrainian hryvnia (UAH)"
+                "title": "Online payment",
+                "text": "Visa and Mastercard, Apple Pay, and Google Pay through the payment provider in Ukrainian hryvnia (UAH)"
               },
               "appleGoogle": {
                 "title": "Apple Pay and Google Pay",
-                "text": "available on the Monobank checkout page where supported by the Customer's device and card issuer"
+                "text": "available at checkout where supported by the Customer's device and card issuer"
               },
               "bank": {
                 "title": "Bank transfer / receipt",
@@ -184,7 +184,7 @@
               "0": "Service regions: worldwide where the Customer has a stable internet connection",
               "1": "Self-paced courses: access via the smartcode-academy.com learning platform",
               "2": "Live lessons: delivered remotely via Zoom or another agreed platform",
-              "3": "Typical access activation: within 24 hours of successful Monobank or other agreed payment confirmation"
+              "3": "Typical access activation: within 24 hours of successful payment confirmation"
             }
           },
           "absences": {

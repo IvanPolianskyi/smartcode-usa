@@ -169,7 +169,7 @@
     "openCourse": "Open course",
     "preview": "Preview",
     "processing": "Redirecting…",
-    "payMethods": "Visa/Mastercard, Apple Pay, Google Pay via Monobank.",
+    "payMethods": "Visa/Mastercard, Apple Pay, Google Pay via our payment provider.",
     "oneTime": "One-time · full access",
     "descriptions": {
       "roblox-studio": "72 lessons - from your first Part in Roblox Studio to publishing your own game.",
@@ -198,7 +198,7 @@
       "sat": "Saturday",
       "sun": "Sunday"
     },
-    "payMethods": "Accepted: Visa/Mastercard, Apple Pay, Google Pay (via Monobank).",
+    "payMethods": "Accepted: Visa/Mastercard, Apple Pay, Google Pay.",
     "payButton": "Buy lesson for {price}",
     "processing": "Redirecting to payment…",
     "loading": "Loading...",
@@ -207,5 +207,13 @@
     "errors": {
       "failed": "Could not start payment. Try again or contact support."
     }
+  },
+  "profile": {
+    "title": "Profile",
+    "dataLossWarning": "Deleting your account permanently removes all your data: learning progress, course access, schedule, dashboard history, and profile settings. This cannot be undone.",
+    "deleteButton": "Delete account",
+    "deleting": "Deleting…",
+    "confirmMessage": "Are you sure you want to delete your account?\n\nAll your data will be lost permanently: progress, courses, schedule, and dashboard information.\n\nThis action cannot be undone.",
+    "errorGeneric": "Could not delete your account. Please try again later or contact support."
   }
 }

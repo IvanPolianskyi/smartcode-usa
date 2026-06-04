@@ -208,6 +208,20 @@
 	color: #dc2626;
 }
 
+.consentNote {
+	margin: 0.35rem 0 0.15rem;
+	padding: 0.7rem 0.85rem;
+	background: rgba(99, 102, 241, 0.08);
+	border: 1px solid rgba(99, 102, 241, 0.18);
+	border-radius: 10px;
+	color: #64748b;
+	font-size: 0.8rem;
+}
+
+.consentNote a {
+	color: #6366f1;
+}
+
 .submit {
 	display: inline-flex;
 	align-items: center;

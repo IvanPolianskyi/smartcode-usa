@@ -13,6 +13,7 @@ import PhoneField from '@/components/PhoneField/PhoneField'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 import styles from './HeroTrialForm.module.css'
 import { useTranslations, useLocale } from 'next-intl'
+import DataProcessingConsentNote from '@/components/Legal/DataProcessingConsentNote'
 
 export default function HeroTrialForm() {
 	const t = useTranslations('home.heroForm')
@@ -166,6 +167,8 @@ export default function HeroTrialForm() {
 						showLabel={false}
 					/>
 				</div>
+
+				<DataProcessingConsentNote className={styles.consentNote} />
 
 				<button type='submit' className={styles.submit} disabled={submitting}>
 					{submitting ? t('submitting') : t('submit')}

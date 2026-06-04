@@ -15,6 +15,7 @@ import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 import styles from './TrialSignupBlock.module.css'
 import { LEAD_MESSAGE_MAX_LENGTH } from '@/lib/sanitizeLeadText'
 import { useTranslations, useLocale } from 'next-intl'
+import DataProcessingConsentNote from '@/components/Legal/DataProcessingConsentNote'
 
 const COURSE_KEYS = ['roblox', 'python', 'webDev', 'unity', 'unsure']
 
@@ -215,6 +216,8 @@ export default function TrialSignupBlock() {
 								placeholder={t('messagePlaceholder')}
 							/>
 						</div>
+
+						<DataProcessingConsentNote className={styles.consentNote} />
 
 						<button type='submit' className={styles.submit} disabled={submitting}>
 							<Send size={18} aria-hidden />

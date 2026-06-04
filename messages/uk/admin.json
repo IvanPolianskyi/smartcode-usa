@@ -23,7 +23,7 @@
     "totalRevenue": "Загальний дохід",
     "pendingPayments": "{count} в очікуванні",
     "pendingPaymentsLink": "Переглянути оплати в очікуванні",
-    "monobankCompleted": "Monobank: успішні",
+    "monobankCompleted": "Онлайн-оплата: успішні",
     "monobankBreakdown": "Очікує: {pending} · Помилки: {failed}",
     "monobankRevenue": "Сума (по валютах): {amount}"
   },

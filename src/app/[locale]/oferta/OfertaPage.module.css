@@ -138,6 +138,16 @@
 	font-weight: 600;
 }
 
+.policyLink {
+	color: #a78bfa;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.policyLink:hover {
+	color: #c4b5fd;
+}
+
 .list {
 	list-style: none;
 	padding-left: 0;

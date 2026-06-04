@@ -373,12 +373,12 @@
             "intro": "The Customer may pay using the following methods:",
             "items": {
               "monobank": {
-                "title": "Online payment via Monobank",
-                "text": "Visa and Mastercard bank cards through the Monobank payment gateway"
+                "title": "Online payment",
+                "text": "Visa and Mastercard, Apple Pay, and Google Pay through the payment provider"
               },
               "appleGoogle": {
                 "title": "Apple Pay and Google Pay",
-                "text": "available through the Monobank checkout where supported by the Customer's device and card issuer"
+                "text": "available at checkout where supported by the Customer's device and card issuer"
               }
             },
             "note": "Payment is made in Ukrainian hryvnia (UAH) at checkout. The full course price is displayed on the purchase page before payment. This English offer covers self-paced course purchases only, not live Zoom lessons (see the Ukrainian Public Offer for live lessons)."
@@ -437,7 +437,7 @@
         }
       },
       "5": {
-        "title": "5. Contact information",
+        "title": "12. Contact information",
         "fields": {
           "companyName": {
             "label": "Full legal name:",
@@ -582,7 +582,7 @@
           },
           "1": {
             "title": "Payment-related data",
-            "text": "transaction identifiers, payment amount, currency, and payment status - card numbers and CVV are processed only by Monobank and are not stored on our servers"
+            "text": "transaction identifiers, payment amount, currency, and payment status - card details are processed only by the payment provider and are not stored on our servers"
           },
           "2": {
             "title": "Student data",
@@ -607,7 +607,7 @@
           },
           "1": {
             "title": "Payment processing",
-            "text": "to process purchases through Monobank and prevent fraud"
+            "text": "to process purchases through the payment provider and prevent fraud"
           },
           "2": {
             "title": "Legitimate interests",
@@ -627,7 +627,7 @@
         "title": "5. Sharing with third parties",
         "paragraphs": {
           "0": "We do not sell personal data. We share data only with trusted processors necessary to operate our services:",
-          "1": "Monobank - payment processing (Visa, Mastercard, Apple Pay, Google Pay); MongoDB Atlas or equivalent - database hosting; Vercel or equivalent - website hosting; email and analytics providers - as configured for our operations. Zoom is used only for live lessons offered on the Ukrainian locale, not for self-paced course purchases on the English site.",
+          "1": "payment provider; Zoom for live online lessons where applicable; website and database hosting; email and analytics services - as needed to deliver our services.",
           "2": "Processors are required to protect data under contractual obligations. We may disclose data if required by law or to protect our legal rights."
         }
       },
@@ -648,7 +648,7 @@
       "8": {
         "title": "8. Security",
         "paragraphs": {
-          "0": "We use encryption (HTTPS), access controls, and secure authentication to protect personal data. Payment card data is handled exclusively by Monobank in PCI-DSS compliant infrastructure.",
+          "0": "We use encryption (HTTPS), access controls, and secure authentication to protect personal data. Payment card data is handled exclusively by the payment provider in PCI-DSS compliant infrastructure.",
           "1": "No method of transmission over the internet is 100% secure; we encourage strong passwords and prompt reporting of suspected unauthorized access."
         }
       },
@@ -720,46 +720,44 @@
         "paragraphs": {
           "0": "At SmartCode Academy we aim for your complete satisfaction with our educational services. This Refund Policy describes when and how you may request a refund or cancel a payment transaction.",
           "1": "This Policy supplements Section 4 of our Public Offer. In case of conflict, the Public Offer prevails for contractual matters; this page provides a clear summary for customers and payment partners.",
-          "2": "Important: after purchase confirmation, payments are non-refundable except where the course product was delivered incorrectly or not delivered in full.",
+          "2": "Important: SmartCode Academy does not provide refunds after payment is confirmed and access to services is granted.",
           "3": "This English Refund Policy applies to all customers who are not citizens of Ukraine."
         }
       },
       "2": {
-        "title": "2. The only refund reason",
+        "title": "2. No refunds",
         "items": {
           "0": {
             "title": "General rule",
-            "text": "Refunds are not provided after purchase confirmation."
+            "text": "After payment is confirmed, no refunds are provided — full or partial."
           },
           "1": {
-            "title": "Allowed case",
-            "text": "A refund is allowed only if the purchased course product was delivered incorrectly or not delivered in full."
+            "title": "Live lessons and courses",
+            "text": "This applies to live online lessons, platform access, course materials, and all other paid services."
           }
         }
       },
       "3": {
-        "title": "3. No other refund reasons",
+        "title": "3. Other grounds",
         "items": {
           "0": {
-            "title": "Exclusive rule",
-            "text": "No refund is provided for any reason other than incorrect or incomplete product delivery."
+            "title": "No exceptions",
+            "text": "Refunds are not provided for any other reason, including change of plans, dissatisfaction with learning outcomes, missed lessons, or technical issues on the Customer's side."
           }
         }
       },
       "4": {
-        "title": "4. How to request a refund",
+        "title": "4. Payment inquiries",
         "items": {
-          "0": "Send a written request to our support email (see Seller contact information below) with your full name, order reference or payment date, course name, and reason for the refund",
-          "1": "We acknowledge requests within 2 business days and review them within 5 business days",
-          "2": "If approved, the refund is processed to the original payment method within 14 business days",
-          "3": "For card payments via Monobank, refunds appear on your statement according to your bank's processing time (typically 5-10 business days after we initiate the refund)"
+          "0": "If you have questions about a charge or a duplicate payment, email support (see Seller contact information below) with your name, payment date, and a description of the issue.",
+          "1": "We will review reports of erroneous or duplicate charges, but this does not mean automatic refunds in all cases."
         }
       },
       "5": {
         "title": "5. Transaction cancellation",
         "paragraphs": {
-          "0": "Transaction cancellation requests are reviewed under the same rule - only incorrect or incomplete product delivery is eligible for a refund.",
-          "1": "Chargebacks should be a last resort - please contact us first so we can resolve the issue directly."
+          "0": "Cancellation of a completed payment and refunds after access to services has been granted are not provided.",
+          "1": "Please review your selected course, format, and amount before paying. Contact us directly first if you have any concerns."
         }
       },
       "6": {

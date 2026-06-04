@@ -43,7 +43,7 @@
     },
     "oferta": {
       "title": "Public offer / Публічна оферта - SmartCode Academy",
-      "description": "Unified public offer (English and Ukrainian). Monobank, seller contact details."
+      "description": "Unified public offer (English and Ukrainian). Payment, seller contact details."
     },
     "privacy": {
       "title": "Privacy Policy - SmartCode Academy",
@@ -102,7 +102,8 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "popular": "Top",
-    "currency": "UAH"
+    "currency": "UAH",
+    "dataProcessingConsent": "By submitting this form, you consent to the processing of your personal data in accordance with our <privacy>Privacy Policy</privacy>."
   },
   "phoneField": {
     "label": "PHONE NUMBER",
@@ -489,7 +490,7 @@
         },
         "securePay": {
           "title": "Secure checkout",
-          "text": "Visa, Mastercard, Apple Pay, and Google Pay via Monobank."
+          "text": "Visa, Mastercard, Apple Pay, and Google Pay via our payment provider."
         },
         "selfPaced": {
           "title": "Self-paced learning",
@@ -588,7 +589,7 @@
       "sat": "Saturday",
       "sun": "Sunday"
     },
-    "payMethods": "Secure payment via Monobank · Apple Pay · Google Pay · Visa / Mastercard",
+    "payMethods": "Secure payment · Apple Pay · Google Pay · Visa / Mastercard",
     "payButton": "Pay {price} and book",
     "processing": "Processing…",
     "loading": "Loading...",
@@ -607,7 +608,7 @@
     "processing": "Processing…",
     "oneTime": "One-time payment · lifetime access",
     "comingSoon": "Coming soon! We'll notify you when this course is available for purchase.",
-    "payMethods": "Secure payment via Monobank · Apple Pay · Google Pay · Visa / Mastercard",
+    "payMethods": "Secure payment · Apple Pay · Google Pay · Visa / Mastercard",
     "legalCheckbox": "I confirm that I have read and accept the <oferta>Terms of Service</oferta>, <privacy>Privacy Policy</privacy>, and <refund>Refund Policy</refund>.",
     "legalAgree": "By completing payment you agree to our <oferta>Terms of Service</oferta>, <privacy>Privacy Policy</privacy>, and <refund>Refund Policy</refund>.",
     "authTitle": "Create an account to continue",

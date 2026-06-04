@@ -3,9 +3,14 @@
 import { useLocale, useTranslations } from 'next-intl'
 import styles from '@/app/[locale]/oferta/OfertaPage.module.css'
 import MerchantContactBlock from '@/components/Legal/MerchantContactBlock'
+import { linkifyLegalReferences } from '@/components/Oferta/linkifyLegalReferences'
 
 function sortNumericKeys(obj) {
 	return Object.keys(obj).sort((a, b) => Number(a) - Number(b))
+}
+
+function renderLegalText(text) {
+	return linkifyLegalReferences(text, styles.policyLink)
 }
 
 function renderListItems(items, keyOrder) {
@@ -17,17 +22,17 @@ function renderListItems(items, keyOrder) {
 		const item = items[key]
 		if (item === undefined || item === null) return null
 		if (typeof item === 'string') {
-			return <li key={key}>{item}</li>
+			return <li key={key}>{renderLegalText(item)}</li>
 		}
 		const { title, text, sublist } = item
 		return (
 			<li key={key}>
 				<strong>{title}</strong>
-				{text ? <> - {text}</> : null}
+				{text ? <> - {renderLegalText(text)}</> : null}
 				{sublist ? (
 					<ul className={styles.sublist}>
 						{sortNumericKeys(sublist).map((sk) => (
-							<li key={sk}>{sublist[sk]}</li>
+							<li key={sk}>{renderLegalText(sublist[sk])}</li>
 						))}
 					</ul>
 				) : null}
@@ -38,7 +43,7 @@ function renderListItems(items, keyOrder) {
 
 const SECTION2_LIST_ORDER_UK = ['onlineLessons', 'courses', 'materials']
 const SECTION2_LIST_ORDER_EN = ['courses', 'materials']
-const SECTION3_SUBSECTION_ORDER_UK = ['order', 'terms', 'payment', 'perLesson', 'delivery', 'absences']
+const SECTION3_SUBSECTION_ORDER_UK = ['order', 'terms', 'payment', 'prepayment', 'delivery', 'absences']
 const SECTION3_SUBSECTION_ORDER_EN = ['order', 'terms', 'payment', 'delivery']
 const SECTION3_PAYMENT_ITEMS_ORDER = ['monobank', 'appleGoogle', 'bank']
 const SECTION4_SUBSECTION_ORDER = ['conditions', 'procedure', 'noRefund', 'cancellation']
@@ -57,23 +62,23 @@ function renderSection3(subsections, subsectionOrder) {
 				) : null}
 				{subKey === 'payment' ? (
 					<>
-						<p>{sub.intro}</p>
+						<p>{renderLegalText(sub.intro)}</p>
 						<ul className={styles.list}>
 							{renderListItems(sub.items, SECTION3_PAYMENT_ITEMS_ORDER)}
 						</ul>
-						<p>{sub.note}</p>
+						<p>{renderLegalText(sub.note)}</p>
 					</>
 				) : null}
-				{subKey === 'perLesson' ? <p>{sub.text}</p> : null}
+				{subKey === 'prepayment' ? <p>{renderLegalText(sub.text)}</p> : null}
 				{subKey === 'delivery' ? (
 					<>
-						<p>{sub.text}</p>
+						<p>{renderLegalText(sub.text)}</p>
 						{sub.items ? (
 							<ul className={styles.list}>{renderListItems(sub.items)}</ul>
 						) : null}
 					</>
 				) : null}
-				{subKey === 'absences' ? <p>{sub.text}</p> : null}
+				{subKey === 'absences' ? <p>{renderLegalText(sub.text)}</p> : null}
 			</div>
 		)
 	})
@@ -88,7 +93,7 @@ function renderSection4(subsections) {
 				<h3 className={styles.subsectionTitle}>{sub.title}</h3>
 				{subKey === 'conditions' ? (
 					<>
-						<p>{sub.intro}</p>
+						<p>{renderLegalText(sub.intro)}</p>
 						<ul className={styles.list}>
 							{renderListItems(sub.items, SECTION4_CONDITIONS_ITEMS_ORDER)}
 						</ul>
@@ -97,7 +102,7 @@ function renderSection4(subsections) {
 				{subKey === 'procedure' || subKey === 'noRefund' ? (
 					<ul className={styles.list}>{renderListItems(sub.items)}</ul>
 				) : null}
-				{subKey === 'cancellation' ? <p>{sub.text}</p> : null}
+				{subKey === 'cancellation' ? <p>{renderLegalText(sub.text)}</p> : null}
 			</div>
 		)
 	})
@@ -119,6 +124,7 @@ export default function OfertaContent() {
 	const section9 = t.raw('sections.9')
 	const section10 = t.raw('sections.10')
 	const section11 = t.raw('sections.11')
+	const localeTag = locale === 'en' ? 'en-US' : 'uk-UA'
 
 	return (
 		<div className={styles.container}>
@@ -128,52 +134,46 @@ export default function OfertaContent() {
 					<p className={styles.subtitle}>{t('subtitle')}</p>
 				</div>
 
-				{/* Section 1 */}
 				<div className={styles.section}>
 					<h2 className={styles.sectionTitle}>{section1.title}</h2>
 					<div className={styles.text}>
 						{sortNumericKeys(section1.paragraphs).map((key) => (
-							<p key={key}>{section1.paragraphs[key]}</p>
+							<p key={key}>{renderLegalText(section1.paragraphs[key])}</p>
 						))}
 					</div>
 				</div>
 
-				{/* Section 2 */}
 				<div className={styles.section}>
 					<h2 className={styles.sectionTitle}>{section2.title}</h2>
 					<div className={styles.text}>
-						<p>{section2.intro}</p>
+						<p>{renderLegalText(section2.intro)}</p>
 						<ul className={styles.list}>
 							{renderListItems(section2.list, section2ListOrder)}
 						</ul>
 					</div>
 				</div>
 
-				{/* Section 3 */}
 				<div className={styles.section}>
 					<h2 className={styles.sectionTitle}>{section3.title}</h2>
 					<div className={styles.text}>{renderSection3(section3.subsections, section3SubOrder)}</div>
 				</div>
 
-				{section4?.subsections ? (
+				{section4 ? (
 					<div className={styles.section}>
 						<h2 className={styles.sectionTitle}>{section4.title}</h2>
-						<div className={styles.text}>{renderSection4(section4.subsections)}</div>
+						<div className={styles.text}>
+							{section4.paragraphs
+								? sortNumericKeys(section4.paragraphs).map((key) => (
+										<p key={key}>{renderLegalText(section4.paragraphs[key])}</p>
+								  ))
+								: null}
+							{section4.subsections
+								? renderSection4(section4.subsections)
+								: null}
+						</div>
 					</div>
 				) : null}
 
-				{/* Section 5 */}
-				<div className={styles.section}>
-					<h2 className={styles.sectionTitle}>{section5.title}</h2>
-					<MerchantContactBlock />
-					{section5.publishedDate ? (
-						<p className={styles.date}>
-							{section5.publishedDate} {new Date().toLocaleDateString()}
-						</p>
-					) : null}
-				</div>
-
-				{/* Section 6 */}
 				<div className={styles.section}>
 					<h2 className={styles.sectionTitle}>{section6.title}</h2>
 					<div className={styles.text}>
@@ -190,7 +190,6 @@ export default function OfertaContent() {
 					</div>
 				</div>
 
-				{/* Sections 7–11 */}
 				{[
 					{ id: '7', data: section7, type: 'items' },
 					{ id: '8', data: section8, type: 'paragraphs' },
@@ -206,13 +205,28 @@ export default function OfertaContent() {
 							) : null}
 							{type === 'paragraphs'
 								? sortNumericKeys(data.paragraphs).map((key) => (
-										<p key={key}>{data.paragraphs[key]}</p>
+										<p key={key}>{renderLegalText(data.paragraphs[key])}</p>
 								  ))
 								: null}
-							{type === 'text' ? <p>{data.text}</p> : null}
+							{type === 'text' ? <p>{renderLegalText(data.text)}</p> : null}
 						</div>
 					</div>
 				))}
+
+				<div className={styles.section}>
+					<h2 className={styles.sectionTitle}>{section5.title}</h2>
+					<MerchantContactBlock />
+					{section5.publishedDate ? (
+						<p className={styles.date}>
+							{section5.publishedDate}{' '}
+							{new Date().toLocaleDateString(localeTag, {
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric',
+							})}
+						</p>
+					) : null}
+				</div>
 			</div>
 		</div>
 	)

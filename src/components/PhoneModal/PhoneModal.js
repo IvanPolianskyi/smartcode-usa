@@ -4,7 +4,6 @@ import { useTranslations, useLocale } from 'next-intl'
 import {
 	X,
 	Code,
-	Lock,
 	CheckCircle,
 	AlertCircle,
 	Loader2,
@@ -16,6 +15,7 @@ import styles from './PhoneModal.module.css'
 import { validateEuropeanPhone } from '@/lib/phoneEurope'
 import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
+import DataProcessingConsentNote from '@/components/Legal/DataProcessingConsentNote'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 
 const PhoneModal = ({ 
@@ -195,10 +195,10 @@ const PhoneModal = ({
 								</div>
 							)}
 
-							<div className={styles.privacyNote}>
-								<Lock className={styles.privacyIcon} />
-								<span>{t('privacy')}</span>
-							</div>
+							<DataProcessingConsentNote
+								className={styles.privacyNote}
+								iconClassName={styles.privacyIcon}
+							/>
 
 							<button
 								type="submit"

@@ -59,6 +59,20 @@ export async function logout() {
   return true
 }
 
+export async function deleteAccount() {
+  const response = await fetch('/api/auth/delete-account', {
+    method: 'POST',
+  })
+
+  const data = await response.json().catch(() => ({}))
+
+  if (!response.ok) {
+    throw new Error(data.error || 'Failed to delete account')
+  }
+
+  return data
+}
+
 export async function getCurrentUser() {
   try {
     const response = await fetch('/api/auth/me', {

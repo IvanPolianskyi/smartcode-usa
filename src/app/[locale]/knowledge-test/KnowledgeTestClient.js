@@ -1,9 +1,10 @@
 'use client'
 import { useState, useMemo, useCallback, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Code, Gamepad2, Box, Monitor, Phone, CheckCircle, Award, ArrowRight, Loader2, AlertCircle, Lock } from 'lucide-react'
+import { Code, Gamepad2, Box, Monitor, Phone, CheckCircle, Award, ArrowRight, Loader2, AlertCircle } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
 import styles from './KnowledgeTestClient.module.css'
+import DataProcessingConsentNote from '@/components/Legal/DataProcessingConsentNote'
 import { useTestQuestions } from '@/hooks/useTestQuestions'
 import { validateEuropeanPhone } from '@/lib/phoneEurope'
 import { usePhoneInput } from '@/lib/usePhoneInput'
@@ -320,10 +321,10 @@ export default function KnowledgeTestClient() {
 							</div>
 						)}
 
-						<div className={styles.privacyNote}>
-							<Lock className={styles.privacyIcon} />
-							<span>{t('phoneForm.privacy')}</span>
-						</div>
+						<DataProcessingConsentNote
+							className={styles.privacyNote}
+							iconClassName={styles.privacyIcon}
+						/>
 
 						<button
 							type="submit"

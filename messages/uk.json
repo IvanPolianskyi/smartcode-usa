@@ -43,7 +43,7 @@
     },
     "oferta": {
       "title": "Публічна оферта / Public offer - SmartCode Academy",
-      "description": "Єдина публічна оферта SmartCode Academy (UA/EN). Monobank, повернення коштів, контакти продавця."
+      "description": "Єдина публічна оферта SmartCode Academy (UA/EN). Оплата, повернення коштів, контакти продавця."
     },
     "privacy": {
       "title": "Політика конфіденційності - SmartCode Academy",
@@ -102,7 +102,8 @@
     "openMenu": "Відкрити меню",
     "closeMenu": "Закрити меню",
     "popular": "Топ",
-    "currency": "грн"
+    "currency": "грн",
+    "dataProcessingConsent": "Надсилаючи форму, ви надаєте згоду на обробку персональних даних відповідно до <privacy>Політики конфіденційності</privacy>."
   },
   "phoneField": {
     "label": "НОМЕР ТЕЛЕФОНУ",
@@ -503,7 +504,7 @@
       "sat": "Субота",
       "sun": "Неділя"
     },
-    "payMethods": "Безпечна оплата через Monobank · Apple Pay · Google Pay · Visa / Mastercard",
+    "payMethods": "Безпечна оплата · Apple Pay · Google Pay · Visa / Mastercard",
     "payButton": "Оплатити {price} та забронювати",
     "processing": "Обробка…",
     "loading": "Завантаження...",
@@ -522,7 +523,7 @@
     "processing": "Обробка…",
     "oneTime": "Одноразова оплата · довічний доступ",
     "comingSoon": "Незабаром! Ми повідомимо вас, коли цей курс стане доступним для покупки.",
-    "payMethods": "Безпечна оплата через Monobank · Apple Pay · Google Pay · Visa / Mastercard",
+    "payMethods": "Безпечна оплата · Apple Pay · Google Pay · Visa / Mastercard",
     "legalCheckbox": "Підтверджую, що ознайомився(лась) і погоджуюсь з <oferta>Публічною офертою</oferta>, <privacy>Політикою конфіденційності</privacy> та <refund>Політикою повернення</refund>.",
     "legalAgree": "Здійснюючи оплату, ви погоджуєтеся з нашою <oferta>Публічною офертою</oferta>, <privacy>Політикою конфіденційності</privacy> та <refund>Політикою повернення</refund>.",
     "authTitle": "Створіть акаунт для продовження",
