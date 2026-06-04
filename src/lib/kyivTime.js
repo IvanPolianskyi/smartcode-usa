@@ -1,7 +1,7 @@
 /** Київський «настінний» час ↔ UTC. Та сама логіка, що в smartcode_manager (Europe/Kyiv). */
 
 import { addDays } from 'date-fns'
-import { fromZonedTime, toZonedTime } from 'date-fns-tz'
+import { formatInTimeZone, fromZonedTime } from 'date-fns-tz'
 
 export const KYIV_TZ = 'Europe/Kyiv'
 
@@ -9,18 +9,28 @@ function pad2(n) {
   return String(n).padStart(2, '0')
 }
 
-/** UTC-миттєвість → календарний час у Києві. */
+/** UTC-миттєвість → календарний час у Києві (Intl/formatInTimeZone, не фіксований UTC+2). */
 export function kyivPartsFromInstant(ts) {
   const d = typeof ts === 'number' ? new Date(ts) : new Date(ts)
-  const z = toZonedTime(d, KYIV_TZ)
+  if (Number.isNaN(d.getTime())) {
+    return {
+      year: 0,
+      month: 0,
+      day: 0,
+      hour: 0,
+      minute: 0,
+      second: 0,
+      weekdayIndex: 0,
+    }
+  }
   return {
-    year: z.getFullYear(),
-    month: z.getMonth() + 1,
-    day: z.getDate(),
-    hour: z.getHours(),
-    minute: z.getMinutes(),
-    second: z.getSeconds(),
-    weekdayIndex: z.getDay(),
+    year: Number(formatInTimeZone(d, KYIV_TZ, 'yyyy')),
+    month: Number(formatInTimeZone(d, KYIV_TZ, 'M')),
+    day: Number(formatInTimeZone(d, KYIV_TZ, 'd')),
+    hour: Number(formatInTimeZone(d, KYIV_TZ, 'H')),
+    minute: Number(formatInTimeZone(d, KYIV_TZ, 'm')),
+    second: Number(formatInTimeZone(d, KYIV_TZ, 's')),
+    weekdayIndex: Number(formatInTimeZone(d, KYIV_TZ, 'i')) % 7,
   }
 }
 

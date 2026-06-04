@@ -55,7 +55,7 @@ export async function findUserByCrmStudentId(crmStudentId, usersCollection) {
 }
 
 /**
- * Знайти LMS-учня для відкриття курсу з CRM (crmStudentId, smartcode_user_id або email).
+ * Знайти LMS-учня для відкриття курсу з CRM (вже привʼязаний crmStudentId або smartcode_user_id).
  * Якщо знайдено за ObjectId сайту — дописує crmStudentId у профіль.
  */
 export async function findUserForCrmGrant(
@@ -89,27 +89,6 @@ export async function findUserForCrmGrant(
         return coll.findOne({ _id: bySite._id })
       }
       return bySite
-    }
-  }
-
-  const em = normalizeEmail(email)
-  if (em) {
-    const byEmail = await coll.findOne({ email: em })
-    if (byEmail) {
-      if (crmId && String(byEmail.studentProfile?.crmStudentId || '') !== crmId) {
-        const prev = byEmail.studentProfile || defaultStudentProfile()
-        await coll.updateOne(
-          { _id: byEmail._id },
-          {
-            $set: {
-              studentProfile: { ...prev, crmStudentId: crmId, accountReady: true },
-              updatedAt: new Date(),
-            },
-          }
-        )
-        return coll.findOne({ _id: byEmail._id })
-      }
-      return byEmail
     }
   }
 

@@ -164,33 +164,16 @@ async function fetchCrmStudentById(studentId) {
   return response.json()
 }
 
+/** Розклад LMS ↔ CRM лише після явної привʼязки (studentProfile.crmStudentId). */
 async function resolveCrmStudentForSmartcode(student) {
   if (!CRM_BASE_URL) return null
   const profile = student?.studentProfile || {}
   const linkedCrmStudentId = String(profile.crmStudentId || '').trim()
-  if (linkedCrmStudentId) {
-    const direct = await fetchCrmStudentById(linkedCrmStudentId)
-    if (direct?.id) return direct
-  }
+  if (!linkedCrmStudentId) return null
 
-  const email = normalizeEmail(student?.email)
-  const fullName = String(student?.name || '').trim().toLowerCase()
-  if (!email && !fullName) return null
-
-  const token = await resolveCrmToken()
-  const response = await fetchCrmWithTimeout(`${CRM_BASE_URL.replace(/\/$/, '')}/students?limit=200&active_only=true`, {
-    headers: buildCrmHeaders(token),
-    next: { revalidate: 60 },
-  })
-  if (!response.ok) return null
-  const list = await response.json()
-  if (!Array.isArray(list)) return null
-
-  return (
-    list.find((item) => normalizeEmail(item?.email) && normalizeEmail(item?.email) === email) ||
-    list.find((item) => String(item?.full_name || '').trim().toLowerCase() === fullName) ||
-    null
-  )
+  const direct = await fetchCrmStudentById(linkedCrmStudentId)
+  if (direct?.id) return direct
+  return null
 }
 
 export function crmPayloadFromStudent(studentDoc) {
