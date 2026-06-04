@@ -718,53 +718,59 @@
       "1": {
         "title": "1. Overview",
         "paragraphs": {
-          "0": "At SmartCode Academy we aim for your complete satisfaction with our educational services. This Refund Policy describes when and how you may request a refund or cancel a payment transaction.",
-          "1": "This Policy supplements Section 4 of our Public Offer. In case of conflict, the Public Offer prevails for contractual matters; this page provides a clear summary for customers and payment partners.",
-          "2": "Important: SmartCode Academy does not provide refunds after payment is confirmed and access to services is granted.",
+          "0": "This Refund Policy explains SmartCode Academy rules for refunding payments for educational services on smartcode-academy.com.",
+          "1": "A refund is available only before the purchased course is opened on the website (access to course materials on the platform is granted) or before the first paid lesson takes place — whichever applies first to the service you purchased.",
+          "2": "After the course is opened on the website or after the first paid lesson, refunds are not provided.",
           "3": "This English Refund Policy applies to all customers who are not citizens of Ukraine."
         }
       },
       "2": {
-        "title": "2. No refunds",
+        "title": "2. When a refund is available",
         "items": {
           "0": {
-            "title": "General rule",
-            "text": "After payment is confirmed, no refunds are provided — full or partial."
+            "title": "Self-paced courses on the platform",
+            "text": "a full refund if the Customer submits a request before the course is opened on the website (before access to course materials is granted)"
           },
           "1": {
-            "title": "Live lessons and courses",
-            "text": "This applies to live online lessons, platform access, course materials, and all other paid services."
+            "title": "Live online lessons",
+            "text": "a full refund if the Customer submits a request before the first paid lesson is conducted"
           }
         }
       },
       "3": {
-        "title": "3. Other grounds",
+        "title": "3. When a refund is not available",
         "items": {
           "0": {
-            "title": "No exceptions",
-            "text": "Refunds are not provided for any other reason, including change of plans, dissatisfaction with learning outcomes, missed lessons, or technical issues on the Customer's side."
+            "title": "After service delivery starts",
+            "text": "after the course is opened on the website or after the first paid lesson — no refund is provided"
+          },
+          "1": {
+            "title": "Other reasons",
+            "text": "no refund for change of plans, dissatisfaction with outcomes, missed lessons, or technical issues on the Customer's side after those milestones"
           }
         }
       },
       "4": {
-        "title": "4. Payment inquiries",
+        "title": "4. How to request a refund",
         "items": {
-          "0": "If you have questions about a charge or a duplicate payment, email support (see Seller contact information below) with your name, payment date, and a description of the issue.",
-          "1": "We will review reports of erroneous or duplicate charges, but this does not mean automatic refunds in all cases."
+          "0": "Send a written request to our support email (see Seller contact information below) with your full name, payment date, course or service name, and reason for the refund",
+          "1": "We acknowledge requests within 2 business days and review them within 5 business days if this Policy's conditions are met",
+          "2": "If approved, the refund is processed using the same payment method (online course payment or bank transfer for live lessons) within 14 business days",
+          "3": "For card payments via the payment provider, refunds appear on your statement according to your bank's processing time (typically 5-10 business days after we initiate the refund)"
         }
       },
       "5": {
         "title": "5. Transaction cancellation",
         "paragraphs": {
-          "0": "Cancellation of a completed payment and refunds after access to services has been granted are not provided.",
-          "1": "Please review your selected course, format, and amount before paying. Contact us directly first if you have any concerns."
+          "0": "Payment cancellation and refunds are handled under this Policy — before the course is opened on the website or before the first paid lesson.",
+          "1": "Please review your selected course, format, and amount before paying. Contact us directly with any questions."
         }
       },
       "6": {
         "title": "6. Digital services notice",
         "paragraphs": {
-          "0": "Educational services are digital services delivered online. By purchasing a course, you acknowledge that delivery begins when platform access to the purchased course is granted.",
-          "1": "Educational services are digital content delivered online. By purchasing and accessing the course materials, you explicitly consent to the immediate performance of the contract and acknowledge that you will lose your right of withdrawal (cooling-off period) once the access to the digital content is granted."
+          "0": "Educational services are delivered online. Before the course is opened or before the first paid lesson, the Customer may request a refund under this Policy.",
+          "1": "After the course is opened or the first paid lesson is conducted, service delivery is considered to have started and refunds are not available."
         }
       }
     }
