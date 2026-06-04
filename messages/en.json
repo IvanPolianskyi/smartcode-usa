@@ -293,7 +293,7 @@
     "badge": "FAQ",
     "title": "Answers to everything",
     "titleAccent": "you're wondering about",
-    "subtitle": "We've collected the most popular questions from parents and answers from our experts.",
+    "subtitle": "Common questions about our self-paced courses on the learning platform.",
     "sidebarTitle": "Categories",
     "categories": {
       "general": "General Questions",
@@ -303,8 +303,8 @@
     },
     "items": {
       "0": {
-        "question": "How does a lesson work? What do you need?",
-        "answer": "After you purchase a course, all lessons, practice tasks, and quizzes are available on our learning platform. You need a computer or laptop and a stable internet connection. Live Zoom lessons with a teacher are offered on the Ukrainian version of the site only."
+        "question": "How does learning work? What do you need?",
+        "answer": "After you purchase a course, you get instant access to all lessons, practice tasks, and quizzes on our learning platform. Study at your own pace whenever it suits you. You need a computer or laptop and a stable internet connection."
       },
       "1": {
         "question": "Do you need a powerful laptop for learning?",
@@ -315,41 +315,41 @@
         "answer": "For full programming lessons we recommend using a computer or laptop. A tablet can be used for reading theory and completing light practice tasks."
       },
       "3": {
-        "question": "What class formats are available?",
-        "answer": "On the English site we sell full self-paced courses (Python and Roblox Studio) with instant access to all lessons on our platform. Live Zoom lessons with a teacher are available for customers in Ukraine on the Ukrainian locale."
+        "question": "What course formats are available?",
+        "answer": "On the English site we offer full self-paced courses: Python Developer (zero to junior) and Roblox Studio. After payment you can start immediately and work through modules in any order allowed by the course path."
       },
       "4": {
-        "question": "How do payments work for international students?",
-        "answer": "We accept secure online payments globally via Visa, Mastercard, Apple Pay, and Google Pay. Prices are transparent with no hidden fees."
+        "question": "How do payments work?",
+        "answer": "We accept secure online payments via Visa, Mastercard, Apple Pay, and Google Pay. The full course price is shown on the checkout page before you pay, with no hidden fees."
       },
       "5": {
-        "question": "How is a child's progress tracked?",
-        "answer": "We use a comprehensive system: mentors assess projects and student success, and students can optionally give feedback. Parents receive detailed reports every month."
+        "question": "How is progress tracked?",
+        "answer": "The platform records completed lessons, quiz scores, and practice progress automatically. After sign-in, the student (or parent using the same account) can see status and the next unlocked lesson in the personal dashboard."
       },
       "6": {
-        "question": "What does a child get after completing a course?",
-        "answer": "After successful completion, students receive an official certificate, a personal portfolio with 3-5 real projects, a recommendation letter, and access to the alumni community."
+        "question": "What does a student get after completing a course?",
+        "answer": "After finishing the course path and meeting completion requirements, students receive a certificate and a portfolio of projects built during practice tasks. Course materials remain available in the account according to your purchase terms."
       },
       "7": {
-        "question": "What language are the classes taught in?",
-        "answer": "The English site, platform interface, and purchased course materials are provided entirely in English."
+        "question": "What language is the course in?",
+        "answer": "On the English site, the platform interface and all purchased course content (lessons, quizzes, and instructions) are in English."
       },
       "8": {
-        "question": "Can learning continue at the next level?",
-        "answer": "Absolutely! We have a multi-level system (Beginner → Intermediate → Advanced). If a student already has basics, they can start at the intermediate level. After each course, they can move to the next level."
+        "question": "Can a student take another course after finishing one?",
+        "answer": "Yes. Python and Roblox Studio are separate courses on the platform. After completing one, you can purchase another and continue learning at your own pace."
       },
       "9": {
-        "question": "What if a child can't attend a lesson?",
-        "answer": "We understand different situations and allow rescheduling to another day. However, this shouldn't be overused, as it can affect the child's progress."
+        "question": "Can we pause and continue later?",
+        "answer": "Yes. Self-paced courses have no fixed class times. Stop anytime and resume from your dashboard - progress is saved as you complete lessons and quizzes."
       },
       "10": {
-        "question": "How does technical support work?",
-        "answer": "Technical support is available via email and our platform's chat. We ensure issues are resolved as quickly as possible, regardless of your time zone."
+        "question": "How does support work?",
+        "answer": "For account, payment, or platform issues, contact us by email or the contact options on the site. We help with access and technical problems; course content is designed to be followed step by step in the lessons."
       }
     },
     "cta": {
       "title": "Didn't find your answer?",
-      "text": "Our consultants are ready to answer any questions and help you choose the best course. Message us on Instagram."
+      "text": "Send us a message via the contact form or Instagram - we'll help you choose a course and explain how the platform works."
     }
   },
   "contact": {

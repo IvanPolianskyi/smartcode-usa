@@ -635,23 +635,23 @@
         "title": "3. Які персональні дані ми збираємо",
         "items": {
           "0": {
-            "title": "Account and profile data",
-            "text": "name, email address, phone number, login credentials, course enrollments, and learning progress"
+            "title": "Дані облікового запису та профілю",
+            "text": "ім'я, адреса електронної пошти, номер телефону, облікові дані для входу, записи на курси та прогрес навчання"
           },
           "1": {
-            "title": "Payment-related data",
-            "text": "transaction identifiers, payment amount, currency, and payment status - card numbers and CVV are processed only by Monobank and are not stored on our servers"
+            "title": "Платіжні дані",
+            "text": "ідентифікатори транзакцій, сума платежу, валюта та статус оплати — номери карток і CVV обробляються лише Monobank і не зберігаються на наших серверах"
           },
           "2": {
-            "title": "Student data",
-            "text": "student name, age or grade level where provided, assignments, quiz results, and platform activity - collected with parental consent for minors"
+            "title": "Дані учня",
+            "text": "ім'я учня, вік або клас за наявності, завдання, результати тестів та активність на платформі — збираються за згодою батьків для неповнолітніх"
           },
           "3": {
-            "title": "Technical data",
-            "text": "IP address, browser type, device information, cookies, and analytics events used to secure and improve the service"
+            "title": "Технічні дані",
+            "text": "IP-адреса, тип браузера, інформація про пристрій, файли cookie та події аналітики для забезпечення безпеки й покращення сервісу"
           },
           "4": {
-            "title": "Communications",
+            "title": "Комунікації",
             "text": "повідомлення до підтримки, зворотний зв’язок та дані розкладу живих онлайн-уроків у Zoom"
           }
         }
@@ -664,20 +664,20 @@
             "text": "надання курсів, доступу до платформи, живих уроків, сертифікатів та підтримки клієнтів"
           },
           "1": {
-            "title": "Payment processing",
-            "text": "to process purchases through Monobank and prevent fraud"
+            "title": "Обробка платежів",
+            "text": "обробка покупок через Monobank і запобігання шахрайству"
           },
           "2": {
-            "title": "Legitimate interests",
-            "text": "to improve our platform, ensure security, and send service-related notifications"
+            "title": "Законний інтерес",
+            "text": "покращення платформи, забезпечення безпеки та надсилання повідомлень, пов’язаних із сервісом"
           },
           "3": {
-            "title": "Legal obligations",
-            "text": "to comply with tax, accounting, and regulatory requirements"
+            "title": "Юридичні зобов’язання",
+            "text": "виконання податкових, бухгалтерських та регуляторних вимог"
           },
           "4": {
-            "title": "Consent",
-            "text": "for optional marketing communications and non-essential cookies, where required"
+            "title": "Згода",
+            "text": "необов’язкові маркетингові повідомлення та необов’язкові cookie, де це потрібно"
           }
         }
       },
@@ -686,79 +686,79 @@
         "paragraphs": {
           "0": "Ми не продаємо персональні дані. Передаємо дані лише перевіреним обробникам, необхідним для роботи сервісу:",
           "1": "Monobank — оплата (Visa, Mastercard, Apple Pay, Google Pay); MongoDB Atlas або аналог — хостинг бази даних; Vercel або аналог — хостинг сайту; Zoom — живі онлайн-уроки; поштові та аналітичні сервіси — згідно з налаштуваннями.",
-          "2": "Processors are required to protect data under contractual obligations. We may disclose data if required by law or to protect our legal rights."
+          "2": "Обробники зобов’язані захищати дані за договірними зобов’язаннями. Ми можемо розкрити дані, якщо це вимагає закон або для захисту наших правових інтересів."
         }
       },
       "6": {
-        "title": "6. International transfers",
+        "title": "6. Міжнародна передача даних",
         "paragraphs": {
-          "0": "Some processors may store or process data outside Ukraine or the European Economic Area. Where required, we rely on appropriate safeguards such as standard contractual clauses or equivalent mechanisms."
+          "0": "Деякі обробники можуть зберігати або обробляти дані за межами України або Європейського економічного простору. За потреби ми застосовуємо належні гарантії, зокрема стандартні договірні положення або еквівалентні механізми."
         }
       },
       "7": {
-        "title": "7. Data retention",
+        "title": "7. Зберігання даних",
         "paragraphs": {
-          "0": "We retain account and course data for as long as your account is active and for a reasonable period thereafter to comply with legal obligations and resolve disputes.",
-          "1": "Payment records are retained as required by tax and accounting law (typically at least 3 years unless a longer period is mandated).",
-          "2": "You may request deletion of data that is no longer required, subject to legal retention limits."
+          "0": "Ми зберігаємо дані облікового запису та курсів, поки ваш обліковий запис активний, і протягом розумного періоду після цього — для виконання юридичних зобов’язань і вирішення спорів.",
+          "1": "Платіжні записи зберігаються відповідно до податкового та бухгалтерського законодавства (зазвичай щонайменше 3 роки, якщо закон не вимагає довший термін).",
+          "2": "Ви можете подати запит на видалення даних, які більше не потрібні, з урахуванням обмежень законодавства щодо зберігання."
         }
       },
       "8": {
-        "title": "8. Security",
+        "title": "8. Безпека",
         "paragraphs": {
-          "0": "We use encryption (HTTPS), access controls, and secure authentication to protect personal data. Payment card data is handled exclusively by Monobank in PCI-DSS compliant infrastructure.",
-          "1": "No method of transmission over the internet is 100% secure; we encourage strong passwords and prompt reporting of suspected unauthorized access."
+          "0": "Ми використовуємо шифрування (HTTPS), контроль доступу та безпечну автентифікацію для захисту персональних даних. Дані платіжних карток обробляються виключно Monobank у інфраструктурі, що відповідає PCI-DSS.",
+          "1": "Жоден спосіб передачі даних через інтернет не є на 100% безпечним; рекомендуємо надійні паролі та негайно повідомляти про підозрілий несанкціонований доступ."
         }
       },
       "9": {
-        "title": "9. Children's privacy",
+        "title": "9. Конфіденційність дітей",
         "paragraphs": {
-          "0": "Our services are designed for students aged 8–17. We collect student information only with verifiable parental or guardian consent and limit collection to what is necessary for education.",
-          "1": "Parents and guardians may review, correct, or request deletion of their child's personal data by contacting us, subject to legal exceptions."
+          "0": "Наші послуги розраховані на учнів віком 8–17 років. Ми збираємо інформацію про учнів лише за наявності підтвердженої згоди батьків або законних представників і обмежуємо збір даними, необхідними для навчання.",
+          "1": "Батьки та законні представники можуть переглянути, виправити або подати запит на видалення персональних даних дитини, звернувшись до нас, з урахуванням винятків, передбачених законом."
         }
       },
       "10": {
-        "title": "10. Cookies and analytics",
+        "title": "10. Файли cookie та аналітика",
         "paragraphs": {
-          "0": "We use essential cookies for authentication and session management. Analytics cookies may be used to understand how visitors use our site; you can control non-essential cookies through your browser settings.",
-          "1": "Third-party payment and video platforms may set their own cookies when you use their services."
+          "0": "Ми використовуємо необхідні cookie для автентифікації та керування сесією. Аналітичні cookie можуть застосовуватися, щоб зрозуміти, як відвідувачі користуються сайтом; необов’язкові cookie можна налаштувати в браузері.",
+          "1": "Сторонні платіжні та відеоплатформи можуть встановлювати власні cookie під час використання їхніх сервісів."
         }
       },
       "11": {
-        "title": "11. Your rights",
+        "title": "11. Ваші права",
         "items": {
           "0": {
-            "title": "Access",
-            "text": "request a copy of personal data we hold about you"
+            "title": "Доступ",
+            "text": "отримати копію персональних даних, які ми зберігаємо про вас"
           },
           "1": {
-            "title": "Rectification",
-            "text": "correct inaccurate or incomplete data"
+            "title": "Виправлення",
+            "text": "виправити неточні або неповні дані"
           },
           "2": {
-            "title": "Erasure",
-            "text": "request deletion where there is no overriding legal basis to retain data"
+            "title": "Видалення",
+            "text": "подати запит на видалення, якщо немає переважаючої правової підстави для зберігання"
           },
           "3": {
-            "title": "Restriction and objection",
-            "text": "restrict or object to certain processing based on legitimate interests"
+            "title": "Обмеження та заперечення",
+            "text": "обмежити або заперечити певну обробку на підставі законного інтересу"
           },
           "4": {
-            "title": "Data portability",
-            "text": "receive data you provided in a structured, commonly used format where applicable"
+            "title": "Переносимість даних",
+            "text": "отримати надані вами дані у структурованому, загальноприйнятому форматі, де це застосовно"
           },
           "5": {
-            "title": "Complaint",
-            "text": "lodge a complaint with the Ukrainian Commissioner for Human Rights or your local supervisory authority"
+            "title": "Скарга",
+            "text": "подати скаргу до Уповноваженого ВРУ з прав людини або до місцевого наглядового органу"
           }
         },
-        "text": "We respond to verified requests within 30 calendar days unless a longer period is permitted by law."
+        "text": "Ми відповідаємо на підтверджені запити протягом 30 календарних днів, якщо закон не дозволяє довший термін."
       },
       "12": {
-        "title": "12. Changes to this Policy",
+        "title": "12. Зміни до цієї Політики",
         "paragraphs": {
-          "0": "We may update this Privacy Policy from time to time. The current version is always published on this page with an updated date.",
-          "1": "Continued use of our services after changes take effect constitutes acceptance of the updated Policy."
+          "0": "Ми можемо час від часу оновлювати цю Політику конфіденційності. Актуальна версія завжди опублікована на цій сторінці з датою оновлення.",
+          "1": "Продовження користування нашими послугами після набуття чинності змін означає прийняття оновленої Політики."
         }
       }
     }
