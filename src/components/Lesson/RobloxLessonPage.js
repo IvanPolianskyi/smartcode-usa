@@ -24,6 +24,7 @@ import { createPayment, updateProgress } from '@/lib/authClient'
 import { formatPrice, getCoursePrice } from '@/lib/coursePrices'
 import styles from './RobloxLessonPage.module.css'
 import FloatingNavArrows from './FloatingNavArrows'
+import LessonPageWithSidebar from './LessonPageWithSidebar'
 
 const STEPS = ['theory', 'practice', 'quiz']
 
@@ -84,6 +85,9 @@ const RobloxLessonPage = ({
     if (userRole === 'admin' || isPurchased) return true
     return allowedSet.has(lesson.lessonId)
   }
+
+  const isLessonCompleted = (id) =>
+    userProgress?.completedLessons?.includes(id) || false
 
   const handlePurchase = async () => {
     setPaymentError('')
@@ -283,12 +287,20 @@ const RobloxLessonPage = ({
 
   return (
     <>
-      <FloatingNavArrows 
-        onNextAction={handleNextAction} 
-        onPrevAction={handlePrevAction} 
+      <FloatingNavArrows
+        onNextAction={handleNextAction}
+        onPrevAction={handlePrevAction}
       />
-      <div className={styles.page}>
-        <div className={styles.shell}>
+      <LessonPageWithSidebar
+        courseId={courseId}
+        curriculum={curriculum}
+        currentLessonId={lessonId}
+        lessonModuleIndex={lessonModuleIndex}
+        isLessonUnlocked={isLessonUnlocked}
+        isLessonCompleted={isLessonCompleted}
+      >
+        <div className={styles.page}>
+          <div className={styles.shell}>
         <Link href={`/courses/${courseId}`} className={styles.backLink}>
           <ArrowLeft size={18} />
           {t('backToCourse')}
@@ -621,8 +633,9 @@ const RobloxLessonPage = ({
             </Link>
           )}
         </div>
-      </div>
-    </div>
+          </div>
+        </div>
+      </LessonPageWithSidebar>
     </>
   )
 }
