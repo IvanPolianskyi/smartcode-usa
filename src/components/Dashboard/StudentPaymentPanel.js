@@ -1,36 +1,8 @@
 'use client'
 
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { Wallet, Upload, AlertTriangle, CircleCheck, Clock, BookOpen, X, ImageIcon, FileText } from 'lucide-react'
-// import { Copy, Check } from 'lucide-react' // step 2 bank details (CopyRow)
-// import { UK_BANK_PAYMENT_DETAILS } from '@/lib/paymentBankDetails'
+import { Wallet, Upload, AlertTriangle, CircleCheck, Clock, BookOpen, X, ImageIcon } from 'lucide-react'
 import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
-
-/* Step 2 — bank transfer details (temporarily hidden)
-function CopyRow({ label, value }) {
-  const [copied, setCopied] = useState(false)
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(value)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch {
-      // ignore
-    }
-  }
-  return (
-    <div className={styles.bankRow}>
-      <div className={styles.bankRowText}>
-        <div className={styles.bankLabel}>{label}</div>
-        <div className={styles.bankValue}>{value}</div>
-      </div>
-      <button type="button" className={styles.copyBtn} onClick={copy} aria-label="Копіювати">
-        {copied ? <Check size={16} /> : <Copy size={16} />}
-      </button>
-    </div>
-  )
-}
-*/
 
 export default function StudentPaymentPanel({
   t,
@@ -50,7 +22,6 @@ export default function StudentPaymentPanel({
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState('info')
 
-  // const bank = UK_BANK_PAYMENT_DETAILS
   const lessonCredits = Number(paymentStats?.lessonCredits || 0)
 
   const debtLessons = useMemo(() => {
@@ -161,7 +132,6 @@ export default function StudentPaymentPanel({
   }
 
   const hasReceiptPreview = Boolean(receiptFile && receiptPreviewUrl)
-  const isImage = receiptFile?.type.startsWith('image/')
 
   return (
     <section className={styles.payCard}>
@@ -256,28 +226,11 @@ export default function StudentPaymentPanel({
             </div>
           </div>
 
-          {/* Step 2 — Перекажіть кошти (bank requisites)
-          <div className={styles.payStep}>
-            <span className={styles.payStepNum}>2</span>
-            <div className={styles.payStepBody}>
-              <p className={styles.payStepTitle}>{t('student.payments.stepTransfer')}</p>
-              <p className={styles.payHint}>{t('student.payments.ibanHint')}</p>
-              <div className={styles.bankBlock}>
-                <CopyRow label={t('student.payments.bankRecipient')} value={bank.recipient} />
-                <CopyRow label="IBAN" value={bank.iban} />
-                <CopyRow label={t('student.payments.bankTaxId')} value={bank.taxId} />
-                <CopyRow label={t('student.payments.bankName')} value={bank.bankName} />
-                <CopyRow label={t('student.payments.bankMfo')} value={bank.mfo} />
-                <CopyRow label={t('student.payments.bankEdrpou')} value={bank.bankEdrpou} />
-              </div>
-            </div>
-          </div>
-          */}
-
           <div className={styles.payStep}>
             <span className={styles.payStepNum}>2</span>
             <div className={styles.payStepBody}>
               <p className={styles.payStepTitle}>{t('student.payments.stepReceipt')}</p>
+              <p className={styles.payHint}>{t('student.payments.receiptHint')}</p>
               {hasReceiptPreview ? (
                 <div className={styles.receiptPreviewCard}>
                   <div className={styles.receiptPreviewHead}>
@@ -295,17 +248,11 @@ export default function StudentPaymentPanel({
                     </button>
                   </div>
                   <div className={styles.receiptPreviewImageWrap}>
-                    {isImage ? (
-                      <img
-                        src={receiptPreviewUrl}
-                        alt={t('student.payments.receiptPreviewAlt')}
-                        className={styles.receiptPreviewImage}
-                      />
-                    ) : (
-                      <div className={styles.receiptPreviewGeneric}>
-                        <FileText size={48} className={styles.receiptGenericIcon} />
-                      </div>
-                    )}
+                    <img
+                      src={receiptPreviewUrl}
+                      alt={t('student.payments.receiptPreviewAlt')}
+                      className={styles.receiptPreviewImage}
+                    />
                   </div>
                   <p className={styles.receiptPreviewFileName} title={receiptFile.name}>
                     {receiptFile.name}
@@ -329,7 +276,7 @@ export default function StudentPaymentPanel({
                 id="receipt-upload"
                 ref={receiptInputRef}
                 type="file"
-                accept="*/*"
+                accept="image/*"
                 className={styles.uploadInputHidden}
                 onChange={(e) => setReceiptFile(e.target.files?.[0] || null)}
               />
@@ -337,7 +284,7 @@ export default function StudentPaymentPanel({
           </div>
 
           <button type="submit" className={styles.paySubmitBtn} disabled={busy}>
-            {busy ? t('student.payments.submitting') : t('student.payments.payCta')}
+            {busy ? t('student.payments.submitting') : t('student.payments.submit')}
           </button>
 
           {message ? (

@@ -182,7 +182,7 @@ markup = ReplyKeyboardMarkup(kb, resize_keyboard=True)`,
     {
       title: "Крок await_city",
       code: `context.user_data["step"] = "await_city"
-# у on_text перевіряємо step і скидаємо pop`
+# у on_text перевіряємо step і скидаємо pop`,
       explanation: "Простий state machine без окремої бібліотеки."
     }
   ],
