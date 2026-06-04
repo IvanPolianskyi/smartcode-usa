@@ -59,7 +59,7 @@ logging.basicConfig(level=logging.INFO)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
-        "Привіт! Напиши текст — я повторю (echo)."
+        "Привіт! Напиши текст - я повторю (echo)."
     )
 
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -83,27 +83,27 @@ if __name__ == "__main__":
 **Ключові частини:**
 
 - \`Application.builder().token(...).build()\`
-- \`CommandHandler("start", start)\` — лише \`/start\`
-- \`MessageHandler(filters.TEXT & ~filters.COMMAND, echo)\` — текст без команд
-- \`run_polling()\` — нескінченний цикл отримання Update`
+- \`CommandHandler("start", start)\` - лише \`/start\`
+- \`MessageHandler(filters.TEXT & ~filters.COMMAND, echo)\` - текст без команд
+- \`run_polling()\` - нескінченний цикл отримання Update`
       },
       {
         title: "Async handlers",
-        content: `Handlers у PTB v21 — **async def**. Всередині використовуйте \`await\` для мережевих викликів Telegram:
+        content: `Handlers у PTB v21 - **async def**. Всередині використовуйте \`await\` для мережевих викликів Telegram:
 
 \`\`\`python
 async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = (
         "Доступні команди:\\n"
-        "/start — початок\\n"
-        "/help — ця довідка"
+        "/start - початок\\n"
+        "/help - ця довідка"
     )
     await update.message.reply_text(text)
 \`\`\`
 
 **Чому async:** поки бот чекає відповідь Telegram, event loop може обробляти інші оновлення (корисно при навантаженні).
 
-**Помилка:** звичайний \`def\` без async у v21 — handler не спрацює коректно.`
+**Помилка:** звичайний \`def\` без async у v21 - handler не спрацює коректно.`
       },
       {
         title: "Фільтри та кілька handlers",
@@ -149,7 +149,7 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> N
 app.add_error_handler(error_handler)
 \`\`\`
 
-Користувачу показуйте **коротке** повідомлення, деталі — у лог:
+Користувачу показуйте **коротке** повідомлення, деталі - у лог:
 
 \`\`\`python
 try:
@@ -160,7 +160,7 @@ except Exception:
       },
       {
         title: "Підсумок",
-        content: `Echo-бот на PTB: Application + CommandHandler + MessageHandler + \`run_polling()\`. Далі — клавіатури та \`context.user_data\` (урок 14-3).`
+        content: `Echo-бот на PTB: Application + CommandHandler + MessageHandler + \`run_polling()\`. Далі - клавіатури та \`context.user_data\` (урок 14-3).`
       }
     ]
   },
@@ -203,7 +203,7 @@ app.run_polling()`,
     }
   ],
 
-  summary: `python-telegram-bot спрощує polling: Application, async handlers, фільтри. Echo-бот — основа для команд і меню в наступному уроці.`,
+  summary: `python-telegram-bot спрощує polling: Application, async handlers, фільтри. Echo-бот - основа для команд і меню в наступному уроці.`,
 
   practiceTask: null,
 
@@ -220,7 +220,7 @@ app.run_polling()`,
           "Компілює Python у bytecode"
         ],
         correctAnswer: 0,
-        explanation: "Polling — цикл getUpdates всередині бібліотеки."
+        explanation: "Polling - цикл getUpdates всередині бібліотеки."
       },
       {
         id: "q2",
@@ -259,7 +259,7 @@ app.run_polling()`,
           "requests.post вручну"
         ],
         correctAnswer: 0,
-        explanation: "Методи PTB v21 — асинхронні, потрібен await."
+        explanation: "Методи PTB v21 - асинхронні, потрібен await."
       },
       {
         id: "q5",
@@ -267,7 +267,7 @@ app.run_polling()`,
         question: "У PTB v21 handlers зазвичай оголошують як async def.",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True — це стандарт для версії 21+."
+        explanation: "True - це стандарт для версії 21+."
       }
     ],
     timeLimit: 15,

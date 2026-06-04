@@ -49,11 +49,11 @@ Alternatives: PyQt/PySide (richer), Kivy (touch), Dear PyGui. Module 13 stays wi
       },
       {
         title: "GUI application architecture",
-        content: `1. **Root** (\`Tk()\`) — main window
-2. **Widgets** — Label, Button, Entry…
-3. **Layout** — pack / grid / place (lesson 13-4)
-4. **mainloop()** — event loop
-5. **Callbacks** — event handlers (lesson 13-5)
+        content: `1. **Root** (\`Tk()\`) - main window
+2. **Widgets** - Label, Button, Entry…
+3. **Layout** - pack / grid / place (lesson 13-4)
+4. **mainloop()** - event loop
+5. **Callbacks** - event handlers (lesson 13-5)
 
 \`\`\`python
 import tkinter as tk
@@ -81,7 +81,7 @@ Code after \`mainloop()\` runs only after the window closes.`
 | Frame | Grouping |
 | Canvas | Drawing |
 
-Lessons 13-3–13-5 cover widgets and events in depth.`
+Lessons 13-3, 13-4, and 13-5 cover widgets and events in depth.`
       },
       {
         title: "Imports and Linux",

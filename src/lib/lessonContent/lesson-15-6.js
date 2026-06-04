@@ -33,7 +33,7 @@ export const lesson_15_6 = {
 - Без \`--reload\`
 - Процес-менеджер: systemd, Docker, хмарний PaaS
 - HTTPS (обов'язково для Telegram webhook)
-- Секрети: \`TELEGRAM_BOT_TOKEN\`, ключі БД — у панелі хостингу`
+- Секрети: \`TELEGRAM_BOT_TOKEN\`, ключі БД - у панелі хостингу`
       },
       {
         title: "Варіанти хостингу",
@@ -102,7 +102,7 @@ def health():
     }
   ],
 
-  summary: `Після модуля 15 ви вмієте будувати API та webhook; деплой і секрети визначають, чи проєкт працює 24/7. Далі — база даних і авторизація.`,
+  summary: `Після модуля 15 ви вмієте будувати API та webhook; деплой і секрети визначають, чи проєкт працює 24/7. Далі - база даних і авторизація.`,
 
   practiceTask: null,
 
@@ -127,7 +127,7 @@ def health():
         question: "Що не варто увімкнути на продакшен-сервері?",
         options: ["uvicorn --reload", "HTTPS", "health endpoint", "environment variables"],
         correctAnswer: 0,
-        explanation: "reload — лише для локальної розробки."
+        explanation: "reload - лише для локальної розробки."
       },
       {
         id: "q3",
@@ -140,7 +140,7 @@ def health():
           "У /docs Swagger"
         ],
         correctAnswer: 0,
-        explanation: "Секрети — в конфігурації сервера, не в коді."
+        explanation: "Секрети - в конфігурації сервера, не в коді."
       },
       {
         id: "q4",
@@ -156,7 +156,7 @@ def health():
         question: "Docker допомагає однаково запускати API на різних машинах.",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True — образ фіксує залежності."
+        explanation: "True - образ фіксує залежності."
       }
     ],
     timeLimit: 15,

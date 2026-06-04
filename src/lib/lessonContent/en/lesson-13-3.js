@@ -26,13 +26,13 @@ export const lesson_13_3 = {
     sections: [
       {
         title: "Overview of four widgets",
-        content: `**Label** — displays text or an image (not editable by the user).
+        content: `**Label** - displays text or an image (not editable by the user).
 
-**Button** — a button; when clicked, calls \`command\`.
+**Button** - a button; when clicked, calls \`command\`.
 
-**Entry** — a single-line input field.
+**Entry** - a single-line input field.
 
-**Text** — a multi-line field (notes, logs).
+**Text** - a multi-line field (notes, logs).
 
 Together they cover 90% of simple forms before moving to \`ttk\` or a web interface.`
       },
@@ -71,7 +71,7 @@ button.pack()
 root.mainloop()
 \`\`\`
 
-**Button state:** \`state=DISABLED\` — gray inactive button; \`state=NORMAL\` — active again.`
+**Button state:** \`state=DISABLED\` - gray inactive button; \`state=NORMAL\` - active again.`
       },
       {
         title: "Entry and StringVar",
@@ -95,7 +95,7 @@ button.pack()
 root.mainloop()
 \`\`\`
 
-**StringVar** — bind Entry to a variable for automatic Label updates:
+**StringVar** - bind Entry to a variable for automatic Label updates:
 
 \`\`\`python
 from tkinter import *
@@ -131,13 +131,13 @@ button.pack()
 root.mainloop()
 \`\`\`
 
-Line indices: \`"1.0"\` — line 1, character 0; \`END\` — end of content. **Scrollbar** is often added to Text for long logs.
+Line indices: \`"1.0"\` - line 1, character 0; \`END\` - end of content. **Scrollbar** is often added to Text for long logs.
 
-**Configuration (all widgets):** \`text\`, \`width\`, \`height\`, \`bg\`, \`fg\`, \`font\`; for Button — \`command\`.`
+**Configuration (all widgets):** \`text\`, \`width\`, \`height\`, \`bg\`, \`fg\`, \`font\`; for Button - \`command\`.`
       },
       {
         title: "Summary",
-        content: `Label — display; Entry/Text — input; Button — action. \`StringVar\` is handy for “field + caption” forms. Next — pack/grid layout (lesson 13-4).`
+        content: `Label - display; Entry/Text - input; Button - action. \`StringVar\` is handy for “field + caption” forms. Next - pack/grid layout (lesson 13-4).`
       }
     ]
   },

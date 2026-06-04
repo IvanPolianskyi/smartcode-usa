@@ -26,7 +26,7 @@ export const lesson_15_4 = {
     sections: [
       {
         title: "Architecture: API + webhook",
-        content: `**Polling** (module 14) — your script asks Telegram. **Webhook** — Telegram sends POST to your URL on each new message.
+        content: `**Polling** (module 14) - your script asks Telegram. **Webhook** - Telegram sends POST to your URL on each new message.
 
 \`\`\`
 User → Telegram → HTTPS POST → your FastAPI /telegram/webhook
@@ -96,7 +96,7 @@ async def telegram_webhook(request: Request):
     return {"ok": True}
 \`\`\`
 
-Telegram **expects a quick response** (~60 s). Move heavy work to the background (for the course — keep logic short).`
+Telegram **expects a quick response** (~60 s). Move heavy work to the background (for the course - keep logic short).`
       },
       {
         title: "setWebhook and HTTPS",
@@ -119,11 +119,11 @@ requests.post(
 )
 \`\`\`
 
-First: \`deleteWebhook\` if you used polling. On hosting (Railway, Render, VPS) — same idea with permanent HTTPS.`
+First: \`deleteWebhook\` if you used polling. On hosting (Railway, Render, VPS) - same idea with permanent HTTPS.`
       },
       {
         title: "Webhook security (overview)",
-        content: `- Bot token — only in .env
+        content: `- Bot token - only in .env
 - Do not log full Updates with personal data to public services
 - Optional: secret_token in setWebhook and check header \`X-Telegram-Bot-Api-Secret-Token\`
 
@@ -134,9 +134,9 @@ For a learning project HTTPS + private ngrok URL is enough.`
         content: `1. Start uvicorn
 2. ngrok http 8000
 3. setWebhook to the https URL
-4. Message the bot — server logs should show POST /telegram/webhook
+4. Message the bot - server logs should show POST /telegram/webhook
 
-If 404 — check the path; if 502 — server not running.`
+If 404 - check the path; if 502 - server not running.`
       },
       {
         title: "Python course summary",
@@ -176,7 +176,7 @@ async def telegram_webhook(request: Request):
     {
       mistake: "Not returning {\"ok\": True} quickly",
       explanation: "Telegram retries requests.",
-      correctApproach: "Quick response; heavy work — async/background."
+      correctApproach: "Quick response; heavy work - async/background."
     }
   ],
 
@@ -247,7 +247,7 @@ async def telegram_webhook(request: Request):
         question: "After setting up webhook the bot can receive messages without run_polling().",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True — the server receives POST from Telegram on the webhook URL."
+        explanation: "True - the server receives POST from Telegram on the webhook URL."
       }
     ],
     timeLimit: 15,

@@ -28,13 +28,13 @@ export const lesson_15_3 = {
         title: "HTTP status codes (basics)",
         content: `| Code | Meaning |
 |-----|----------|
-| 200 | OK — successful GET/PUT |
-| 201 | Created — resource created (POST) |
-| 204 | No Content — success with no body (DELETE) |
-| 400 | Bad Request — client error |
-| 404 | Not Found — resource missing |
-| 422 | Validation Error — Pydantic |
-| 500 | Internal Server Error — server error |
+| 200 | OK - successful GET/PUT |
+| 201 | Created - resource created (POST) |
+| 204 | No Content - success with no body (DELETE) |
+| 400 | Bad Request - client error |
+| 404 | Not Found - resource missing |
+| 422 | Validation Error - Pydantic |
+| 500 | Internal Server Error - server error |
 
 The client (bot, frontend) **must** check the status code, not only JSON.`
       },
@@ -110,13 +110,13 @@ def delete_item(item_id: int):
     raise HTTPException(404, detail="Not found")
 \`\`\`
 
-\`exclude_unset=True\` — update only fields the client sent (PATCH-like PUT).`
+\`exclude_unset=True\` - update only fields the client sent (PATCH-like PUT).`
       },
       {
         title: "Testing in /docs",
         content: `In Swagger:
 
-1. POST /items — Try it out → Execute → check 201
+1. POST /items - Try it out → Execute → check 201
 2. GET /items/{id} with missing id → 404
 3. POST with price=-1 → 422 from Pydantic or 400 from your code
 
@@ -128,15 +128,15 @@ curl -X POST http://127.0.0.1:8000/items -H "Content-Type: application/json" -d 
       },
       {
         title: "Idempotency (overview)",
-        content: `**GET, PUT, DELETE** are often considered idempotent — repeating the request does not change the outcome extra times.
+        content: `**GET, PUT, DELETE** are often considered idempotent - repeating the request does not change the outcome extra times.
 
-**POST** creates a new resource each time — not idempotent.
+**POST** creates a new resource each time - not idempotent.
 
 In the learning API \`items_db\` is an in-memory list; data is lost after a server restart.`
       },
       {
         title: "Summary",
-        content: `In-memory CRUD: POST (201), GET, PUT, DELETE (204), errors via HTTPException. Lesson 15-4 — connecting to a Telegram webhook.`
+        content: `In-memory CRUD: POST (201), GET, PUT, DELETE (204), errors via HTTPException. Lesson 15-4 - connecting to a Telegram webhook.`
       }
     ]
   },
@@ -184,7 +184,7 @@ In the learning API \`items_db\` is an in-memory list; data is lost after a serv
         question: "Which code usually means successful resource creation?",
         options: ["201", "404", "500", "301"],
         correctAnswer: 0,
-        explanation: "201 Created — standard for successful POST."
+        explanation: "201 Created - standard for successful POST."
       },
       {
         id: "q2",
@@ -205,7 +205,7 @@ In the learning API \`items_db\` is an in-memory list; data is lost after a serv
         question: "Which code for successful DELETE with no response body?",
         options: ["204", "201", "200", "422"],
         correctAnswer: 0,
-        explanation: "204 No Content — typical for DELETE."
+        explanation: "204 No Content - typical for DELETE."
       },
       {
         id: "q4",
@@ -226,7 +226,7 @@ In the learning API \`items_db\` is an in-memory list; data is lost after a serv
         question: "Pydantic validation errors in FastAPI usually return status 422.",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True — Unprocessable Entity for invalid request body."
+        explanation: "True - Unprocessable Entity for invalid request body."
       }
     ],
     timeLimit: 15,

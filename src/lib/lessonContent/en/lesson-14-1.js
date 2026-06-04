@@ -32,14 +32,14 @@ export const lesson_14_1 = {
 **Creating a bot:**
 
 1. Open [@BotFather](https://t.me/BotFather) in Telegram
-2. Command \`/newbot\` — a display name for people and a **username** (must end with \`bot\`, e.g. \`my_helper_bot\`)
-3. BotFather will issue a **token** like \`123456789:AAH...\` — this is the secret key to the API
+2. Command \`/newbot\` - a display name for people and a **username** (must end with \`bot\`, e.g. \`my_helper_bot\`)
+3. BotFather will issue a **token** like \`123456789:AAH...\` - this is the secret key to the API
 
 **BotFather commands you will need:**
 
-- \`/mybots\` — list your bots, change description, avatar
-- \`/setcommands\` — command menu in the Telegram client
-- \`/revoke\` — revoke the token if it was exposed
+- \`/mybots\` - list your bots, change description, avatar
+- \`/setcommands\` - command menu in the Telegram client
+- \`/revoke\` - revoke the token if it was exposed
 
 **Never publish the token** on GitHub, screenshots, or chats. Whoever has the token has full control of the bot.`
       },
@@ -58,7 +58,7 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 if not TOKEN:
-    raise RuntimeError("Задайте TELEGRAM_BOT_TOKEN у .env")
+    raise RuntimeError("Set TELEGRAM_BOT_TOKEN in .env")
 \`\`\`
 
 \`\`\`bash
@@ -95,11 +95,11 @@ or on error:
 
 **Two ways to receive Updates:**
 
-1. **Polling** — your script periodically calls \`getUpdates\` (simpler for learning)
-2. **Webhook** — Telegram sends POST to your HTTPS server (module 15)`
+1. **Polling** - your script periodically calls \`getUpdates\` (simpler for learning)
+2. **Webhook** - Telegram sends POST to your HTTPS server (module 15)`
       },
       {
-        title: "sendMessage — first message",
+        title: "sendMessage - first message",
         content: `\`\`\`python
 import os
 import requests
@@ -120,14 +120,14 @@ def api(method: str, **params):
 # CHAT_ID we get from getUpdates (next section)
 CHAT_ID = 123456789
 
-api("sendMessage", chat_id=CHAT_ID, text="Привіт з Python!")
+api("sendMessage", chat_id=CHAT_ID, text="Hello from Python!")
 \`\`\`
 
 **Useful sendMessage parameters:**
 
-- \`parse_mode\` — \`"HTML"\` or \`"MarkdownV2"\` for formatting
-- \`reply_markup\` — keyboard (lesson 14-3)
-- \`disable_notification\` — silent message`
+- \`parse_mode\` - \`"HTML"\` or \`"MarkdownV2"\` for formatting
+- \`reply_markup\` - keyboard (lesson 14-3)
+- \`disable_notification\` - silent message`
       },
       {
         title: "getUpdates and chat_id",
@@ -147,7 +147,7 @@ for u in updates:
     msg = u.get("message") or u.get("edited_message")
     if msg:
         chat = msg["chat"]
-        print("chat_id:", chat["id"], "ім'я:", chat.get("first_name"))
+        print("chat_id:", chat["id"], "name:", chat.get("first_name"))
 \`\`\`
 
 **Offset (important for polling):** after processing an update pass \`offset = update_id + 1\` so you do not receive the same update again:
@@ -175,8 +175,8 @@ api("deleteWebhook")
 
 # Set command menu
 api("setMyCommands", commands=[
-    {"command": "start", "description": "Початок"},
-    {"command": "help", "description": "Допомога"},
+    {"command": "start", "description": "Start"},
+    {"command": "help", "description": "Help"},
 ])
 \`\`\`
 
@@ -184,7 +184,7 @@ api("setMyCommands", commands=[
 
 - No more than ~30 messages per second in one chat
 - Text length up to 4096 characters
-- Files — separate methods (\`sendDocument\`, \`sendPhoto\`)
+- Files - separate methods (\`sendDocument\`, \`sendPhoto\`)
 
 Full list: [Bot API documentation](https://core.telegram.org/bots/api).`
       },
@@ -192,7 +192,7 @@ Full list: [Bot API documentation](https://core.telegram.org/bots/api).`
         title: "Summary",
         content: `You created a bot in BotFather, learned to store the token in \`.env\`, and call \`sendMessage\` and \`getUpdates\` via \`requests\`.
 
-**Next:** lesson 14-2 — python-telegram-bot with async handlers and \`run_polling()\`, without a manual getUpdates loop.`
+**Next:** lesson 14-2 - python-telegram-bot with async handlers and \`run_polling()\`, without a manual getUpdates loop.`
       }
     ]
   },
@@ -209,7 +209,7 @@ r = requests.get(
     timeout=30,
 )
 print(r.json())`,
-      explanation: "Shows recent messages from users to the bot — use this to get chat_id."
+      explanation: "Shows recent messages from users to the bot - use this to get chat_id."
     },
     {
       title: "api() wrapper",
@@ -227,7 +227,7 @@ print(r.json())`,
     {
       mistake: "Token in code or README",
       explanation: "It ends up in git history forever.",
-      correctApproach: "Only .env / secrets; if leaked — /revoke in BotFather."
+      correctApproach: "Only .env / secrets; if leaked - /revoke in BotFather."
     },
     {
       mistake: "Calling sendMessage without chat_id",
@@ -246,7 +246,7 @@ print(r.json())`,
     }
   ],
 
-  summary: `Bot API — HTTP JSON to api.telegram.org. Store the BotFather token in .env. sendMessage sends text; getUpdates + offset receives events. Next — python-telegram-bot.`,
+  summary: `Bot API - HTTP JSON to api.telegram.org. Store the BotFather token in .env. sendMessage sends text; getUpdates + offset receives events. Next - python-telegram-bot.`,
 
   practiceTask: null,
 
@@ -300,7 +300,7 @@ print(r.json())`,
         question: "It is safe to publish the bot token on social media.",
         options: ["True", "False"],
         correctAnswer: 1,
-        explanation: "False — the token gives full control of the bot; if leaked, revoke it."
+        explanation: "False - the token gives full control of the bot; if leaked, revoke it."
       }
     ],
     timeLimit: 15,

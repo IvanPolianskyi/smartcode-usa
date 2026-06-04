@@ -33,7 +33,7 @@ export const lesson_15_6 = {
 - Without \`--reload\`
 - Process manager: systemd, Docker, cloud PaaS
 - HTTPS (required for Telegram webhook)
-- Secrets: \`TELEGRAM_BOT_TOKEN\`, DB keys — in the hosting panel`
+- Secrets: \`TELEGRAM_BOT_TOKEN\`, DB keys - in the hosting panel`
       },
       {
         title: "Hosting options",
@@ -102,7 +102,7 @@ def health():
     }
   ],
 
-  summary: `After module 15 you can build an API and webhook; deployment and secrets determine whether the project runs 24/7. Next — database and authorization.`,
+  summary: `After module 15 you can build an API and webhook; deployment and secrets determine whether the project runs 24/7. Next - database and authorization.`,
 
   practiceTask: null,
 
@@ -127,7 +127,7 @@ def health():
         question: "What should not be enabled on a production server?",
         options: ["uvicorn --reload", "HTTPS", "health endpoint", "environment variables"],
         correctAnswer: 0,
-        explanation: "reload — only for local development."
+        explanation: "reload - only for local development."
       },
       {
         id: "q3",
@@ -140,7 +140,7 @@ def health():
           "In /docs Swagger"
         ],
         correctAnswer: 0,
-        explanation: "Secrets — in server configuration, not in code."
+        explanation: "Secrets - in server configuration, not in code."
       },
       {
         id: "q4",
@@ -156,7 +156,7 @@ def health():
         question: "Docker helps run the API the same way on different machines.",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True — the image pins dependencies."
+        explanation: "True - the image pins dependencies."
       }
     ],
     timeLimit: 15,

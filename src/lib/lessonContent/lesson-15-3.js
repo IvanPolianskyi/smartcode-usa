@@ -28,13 +28,13 @@ export const lesson_15_3 = {
         title: "HTTP статус-коди (основні)",
         content: `| Код | Значення |
 |-----|----------|
-| 200 | OK — успішний GET/PUT |
-| 201 | Created — ресурс створено (POST) |
-| 204 | No Content — успіх без тіла (DELETE) |
-| 400 | Bad Request — помилка клієнта |
-| 404 | Not Found — ресурс не знайдено |
-| 422 | Validation Error — Pydantic |
-| 500 | Internal Server Error — помилка сервера |
+| 200 | OK - успішний GET/PUT |
+| 201 | Created - ресурс створено (POST) |
+| 204 | No Content - успіх без тіла (DELETE) |
+| 400 | Bad Request - помилка клієнта |
+| 404 | Not Found - ресурс не знайдено |
+| 422 | Validation Error - Pydantic |
+| 500 | Internal Server Error - помилка сервера |
 
 Клієнт (бот, фронтенд) **повинен** перевіряти код, а не лише JSON.`
       },
@@ -83,7 +83,7 @@ def create_item(payload: ItemCreate):
     ...
 \`\`\`
 
-**detail** — JSON \`{"detail": "..."}\` у відповіді. Не показуйте внутрішні traceback клієнту.`
+**detail** - JSON \`{"detail": "..."}\` у відповіді. Не показуйте внутрішні traceback клієнту.`
       },
       {
         title: "PUT та DELETE",
@@ -110,13 +110,13 @@ def delete_item(item_id: int):
     raise HTTPException(404, detail="Not found")
 \`\`\`
 
-\`exclude_unset=True\` — оновлює лише передані поля (частковий PATCH-подібний PUT).`
+\`exclude_unset=True\` - оновлює лише передані поля (частковий PATCH-подібний PUT).`
       },
       {
         title: "Тестування в /docs",
         content: `У Swagger:
 
-1. POST /items — Try it out → Execute → перевірте 201
+1. POST /items - Try it out → Execute → перевірте 201
 2. GET /items/{id} з неіснуючим id → 404
 3. POST з price=-1 → 422 від Pydantic або 400 від вашого коду
 
@@ -128,15 +128,15 @@ curl -X POST http://127.0.0.1:8000/items -H "Content-Type: application/json" -d 
       },
       {
         title: "Ідемпотентність (огляд)",
-        content: `**GET, PUT, DELETE** часто вважають ідемпотентними — повторний запит не змінює результат зайвий раз.
+        content: `**GET, PUT, DELETE** часто вважають ідемпотентними - повторний запит не змінює результат зайвий раз.
 
-**POST** створює новий ресурс кожного разу — не ідемпотентний.
+**POST** створює новий ресурс кожного разу - не ідемпотентний.
 
-У навчальному API \`items_db\` — список у пам'яті; після перезапуску сервера дані зникають.`
+У навчальному API \`items_db\` - список у пам'яті; після перезапуску сервера дані зникають.`
       },
       {
         title: "Підсумок",
-        content: `CRUD у пам'яті: POST (201), GET, PUT, DELETE (204), помилки через HTTPException. Урок 15-4 — з'єднання з Telegram webhook.`
+        content: `CRUD у пам'яті: POST (201), GET, PUT, DELETE (204), помилки через HTTPException. Урок 15-4 - з'єднання з Telegram webhook.`
       }
     ]
   },
@@ -172,7 +172,7 @@ curl -X POST http://127.0.0.1:8000/items -H "Content-Type: application/json" -d 
     }
   ],
 
-  summary: `POST створює ресурси (201), HTTPException — контрольовані помилки, PUT/DELETE завершують CRUD у навчальному API.`,
+  summary: `POST створює ресурси (201), HTTPException - контрольовані помилки, PUT/DELETE завершують CRUD у навчальному API.`,
 
   practiceTask: null,
 
@@ -184,7 +184,7 @@ curl -X POST http://127.0.0.1:8000/items -H "Content-Type: application/json" -d 
         question: "Який код зазвичай означає успішне створення ресурсу?",
         options: ["201", "404", "500", "301"],
         correctAnswer: 0,
-        explanation: "201 Created — стандарт для успішного POST."
+        explanation: "201 Created - стандарт для успішного POST."
       },
       {
         id: "q2",
@@ -205,7 +205,7 @@ curl -X POST http://127.0.0.1:8000/items -H "Content-Type: application/json" -d 
         question: "Який код для успішного DELETE без тіла відповіді?",
         options: ["204", "201", "200", "422"],
         correctAnswer: 0,
-        explanation: "204 No Content — типово для DELETE."
+        explanation: "204 No Content - типово для DELETE."
       },
       {
         id: "q4",
@@ -226,7 +226,7 @@ curl -X POST http://127.0.0.1:8000/items -H "Content-Type: application/json" -d 
         question: "Помилки валідації Pydantic у FastAPI зазвичай дають статус 422.",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True — Unprocessable Entity для невалідного тіла запиту."
+        explanation: "True - Unprocessable Entity для невалідного тіла запиту."
       }
     ],
     timeLimit: 15,

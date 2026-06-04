@@ -35,20 +35,20 @@ from telegram import BotCommand
 
 async def post_init(app):
     await app.bot.set_my_commands([
-        BotCommand("start", "Початок роботи"),
-        BotCommand("help", "Допомога"),
-        BotCommand("menu", "Головне меню"),
+        BotCommand("start", "Get started"),
+        BotCommand("help", "Help"),
+        BotCommand("menu", "Main menu"),
     ])
 
 app = Application.builder().token(token).post_init(post_init).build()
 \`\`\`
 
-**/help handler** — short text without a keyboard:
+**/help handler** - short text without a keyboard:
 
 \`\`\`python
 async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
-        "/start — старт\\n/menu — кнопки\\n/help — ця довідка"
+        "/start - begin\\n/menu - buttons\\n/help - this help"
     )
 \`\`\``
       },
@@ -59,8 +59,8 @@ from telegram import ReplyKeyboardMarkup, KeyboardButton
 
 async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     keyboard = [
-        [KeyboardButton("Погода"), KeyboardButton("Курс USD")],
-        [KeyboardButton("Допомога")],
+        [KeyboardButton("Weather"), KeyboardButton("USD rate")],
+        [KeyboardButton("Help")],
     ]
     markup = ReplyKeyboardMarkup(
         keyboard,
@@ -68,32 +68,32 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         one_time_keyboard=False,
     )
     await update.message.reply_text(
-        "Обери дію кнопкою:",
+        "Choose an action with a button:",
         reply_markup=markup,
     )
 \`\`\`
 
 **Parameters:**
 
-- \`resize_keyboard=True\` — compact buttons on phone
-- \`one_time_keyboard=True\` — keyboard hides after a press
+- \`resize_keyboard=True\` - compact buttons on phone
+- \`one_time_keyboard=True\` - keyboard hides after a press
 
-Button text arrives as a **regular message** — handle it with the same MessageHandler:
+Button text arrives as a **regular message** - handle it with the same MessageHandler:
 
 \`\`\`python
 async def on_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = update.message.text
-    if text == "Курс USD":
-        await update.message.reply_text("Запит курсу…")
-    elif text == "Погода":
-        await update.message.reply_text("Введіть місто:")
+    if text == "USD rate":
+        await update.message.reply_text("Fetching rate…")
+    elif text == "Weather":
+        await update.message.reply_text("Enter a city:")
         context.user_data["step"] = "await_city"
     else:
-        await update.message.reply_text("Натисніть /menu")
+        await update.message.reply_text("Press /menu")
 \`\`\``
       },
       {
-        title: "context.user_data — dialog state",
+        title: "context.user_data - dialog state",
         content: `\`context.user_data\` is a dictionary **per user in this chat**. Handy for steps like "asked for city → waiting for reply".
 
 \`\`\`python
@@ -103,12 +103,12 @@ async def on_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if step == "await_city":
         city = update.message.text
         context.user_data.pop("step", None)
-        await update.message.reply_text(f"Погода для {city}: …")
+        await update.message.reply_text(f"Weather for {city}: …")
         return
 
-    if update.message.text == "Погода":
+    if update.message.text == "Weather":
         context.user_data["step"] = "await_city"
-        await update.message.reply_text("Яке місто?")
+        await update.message.reply_text("Which city?")
         return
 \`\`\`
 
@@ -124,7 +124,7 @@ For a learning bot, \`user_data\` is enough.`
       },
       {
         title: "Inline buttons (brief)",
-        content: `**Reply** — buttons replace the keyboard (text in chat). **Inline** — buttons under a message; callback is not visible in the input field:
+        content: `**Reply** - buttons replace the keyboard (text in chat). **Inline** - buttons under a message; callback is not visible in the input field:
 
 \`\`\`python
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
@@ -134,7 +134,7 @@ async def rates(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         [InlineKeyboardButton("USD", callback_data="cur_usd")],
         [InlineKeyboardButton("EUR", callback_data="cur_eur")],
     ])
-    await update.message.reply_text("Оберіть валюту:", reply_markup=kb)
+    await update.message.reply_text("Choose a currency:", reply_markup=kb)
 \`\`\`
 
 Handler:
@@ -149,7 +149,7 @@ async def on_button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await query.edit_message_text("USD: 41.2")
 \`\`\`
 
-\`CallbackQueryHandler(on_button)\` — for the project in 14-4 you can combine Reply + Inline.`
+\`CallbackQueryHandler(on_button)\` - for the project in 14-4 you can combine Reply + Inline.`
       },
       {
         title: "Removing the keyboard",
@@ -157,7 +157,7 @@ async def on_button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 from telegram import ReplyKeyboardRemove
 
 await update.message.reply_text(
-    "Діалог завершено.",
+    "Dialog finished.",
     reply_markup=ReplyKeyboardRemove(),
 )
 \`\`\`
@@ -166,7 +166,7 @@ Useful after a "survey" flow so old buttons do not stay visible.`
       },
       {
         title: "Summary",
-        content: `Commands — CommandHandler + set_my_commands. Reply keyboard — ReplyKeyboardMarkup; a press = text. Step state — \`context.user_data['step']\`. Next — building a full assistant bot (14-4).`
+        content: `Commands - CommandHandler + set_my_commands. Reply keyboard - ReplyKeyboardMarkup; a press = text. Step state - \`context.user_data['step']\`. Next - building a full assistant bot (14-4).`
       }
     ]
   },
@@ -175,9 +175,9 @@ Useful after a "survey" flow so old buttons do not stay visible.`
     {
       title: "Menu with two rows",
       code: `kb = [[KeyboardButton("A"), KeyboardButton("B")],
-      [KeyboardButton("Допомога")]]
+      [KeyboardButton("Help")]]
 markup = ReplyKeyboardMarkup(kb, resize_keyboard=True)`,
-      explanation: "List of lists — rows of buttons."
+      explanation: "List of lists - rows of buttons."
     },
     {
       title: "await_city step",
@@ -205,7 +205,7 @@ markup = ReplyKeyboardMarkup(kb, resize_keyboard=True)`,
     },
     {
       mistake: "Forgetting CommandHandler for /menu",
-      explanation: "User types /menu — needs its own handler.",
+      explanation: "User types /menu - needs its own handler.",
       correctApproach: "CommandHandler('menu', menu) plus an optional Menu button."
     }
   ],
@@ -227,9 +227,9 @@ markup = ReplyKeyboardMarkup(kb, resize_keyboard=True)`,
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "What does the bot receive when the Reply button «Погода» is pressed?",
+        question: "What does the bot receive when the Reply button \"Weather\" is pressed?",
         options: [
-          "A regular message with text «Погода»",
+          "A regular message with text \"Weather\"",
           "callback_data=pogoda",
           "Only an update without message",
           "A .json file"
@@ -248,7 +248,7 @@ markup = ReplyKeyboardMarkup(kb, resize_keyboard=True)`,
           "KeyboardRemove only"
         ],
         correctAnswer: 0,
-        explanation: "Reply — below input; Inline — under a message."
+        explanation: "Reply - below input; Inline - under a message."
       },
       {
         id: "q4",
@@ -269,7 +269,7 @@ markup = ReplyKeyboardMarkup(kb, resize_keyboard=True)`,
         question: "For Inline buttons you must call await query.answer().",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True — otherwise the Telegram client hangs on the press."
+        explanation: "True - otherwise the Telegram client hangs on the press."
       }
     ],
     timeLimit: 15,

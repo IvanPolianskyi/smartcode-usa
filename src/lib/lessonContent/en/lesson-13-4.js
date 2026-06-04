@@ -26,7 +26,7 @@ export const lesson_13_4 = {
     sections: [
       {
         title: "Three geometry managers",
-        content: `In Tkinter widgets do not sit on their own — a **geometry manager** places them:
+        content: `In Tkinter widgets do not sit on their own - a **geometry manager** places them:
 
 | Method | Idea |
 |-------|------|
@@ -37,7 +37,7 @@ export const lesson_13_4 = {
 **Rule:** in **one parent** widget (Frame or root) use only **one** manager type.`
       },
       {
-        title: "pack() — widget stack",
+        title: "pack() - widget stack",
         content: `**1. pack() - automatic layout**
 
 \`pack()\` places widgets automatically, one after another. This is the simplest method.
@@ -66,7 +66,7 @@ root.mainloop()
 **Frame + pack:** nested Frames let you build a panel on the left (LEFT) and right (RIGHT).`
       },
       {
-        title: "grid() — forms and tables",
+        title: "grid() - forms and tables",
         content: `**2. grid() - table layout**
 
 \`grid()\` places widgets in a table with rows and columns. Ideal for forms.
@@ -93,10 +93,10 @@ root.mainloop()
 - \`sticky\` - alignment (N, S, E, W)
 - \`padx\`, \`pady\` - padding
 
-**Column weight:** \`columnconfigure(0, weight=1)\` — stretch when the window is resized.`
+**Column weight:** \`columnconfigure(0, weight=1)\` - stretch when the window is resized.`
       },
       {
-        title: "place() — absolute coordinates",
+        title: "place() - absolute coordinates",
         content: `**3. place() - absolute positioning**
 
 \`place()\` places widgets at absolute coordinates. Used rarely.
@@ -121,15 +121,15 @@ root.mainloop()
 - \`relx\`, \`rely\` - relative coordinates (0.0 to 1.0)
 - \`anchor\` - anchor point
 
-\`relx=0.5, rely=0.5, anchor=CENTER\` — center when the window is resized (rare in practice).`
+\`relx=0.5, rely=0.5, anchor=CENTER\` - center when the window is resized (rare in practice).`
       },
       {
         title: "What to choose",
-        content: `**Do not mix** pack and grid in one container — Tkinter may error or break the layout.
+        content: `**Do not mix** pack and grid in one container - Tkinter may error or break the layout.
 
-- **pack** — toolbars, simple button lists
-- **grid** — login forms, calculators, tables
-- **place** — animations, overlapping elements
+- **pack** - toolbars, simple button lists
+- **grid** - login forms, calculators, tables
+- **place** - animations, overlapping elements
 
 **Tip:** start with grid for forms; pack for quick prototypes.`
       }

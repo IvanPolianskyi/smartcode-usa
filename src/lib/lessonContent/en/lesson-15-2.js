@@ -63,7 +63,7 @@ def list_items(skip: int = 0, limit: int = 10):
 \`\`\`
 
 - Default values make a parameter **optional**
-- Without a default — required
+- Without a default - required
 
 \`\`\`python
 from typing import Optional
@@ -103,7 +103,7 @@ def get_item(item_id: int):
       },
       {
         title: "Request body (POST overview)",
-        content: `POST accepts JSON in the body — parameter typed as BaseModel:
+        content: `POST accepts JSON in the body - parameter typed as BaseModel:
 
 \`\`\`python
 items_db: list[Item] = []
@@ -116,7 +116,7 @@ def create_item(payload: ItemCreate):
     return item
 \`\`\`
 
-Invalid JSON (e.g. \`price: "free"\`) → **422 Unprocessable Entity** with validation details — easy to test in /docs.`
+Invalid JSON (e.g. \`price: "free"\`) → **422 Unprocessable Entity** with validation details - easy to test in /docs.`
       },
       {
         title: "In-memory pagination",
@@ -126,19 +126,19 @@ def list_items(skip: int = 0, limit: int = 10):
     return items_db[skip : skip + limit]
 \`\`\`
 
-**skip** — how many to skip, **limit** — how many to return. In production skip/limit map to SQL OFFSET/LIMIT.`
+**skip** - how many to skip, **limit** - how many to return. In production skip/limit map to SQL OFFSET/LIMIT.`
       },
       {
         title: "Optional and defaults",
-        content: `\`Optional[str] = None\` — field may be omitted in JSON.
+        content: `\`Optional[str] = None\` - field may be omitted in JSON.
 
-\`limit: int = Query(10, le=100)\` — limit query via \`Query\` from fastapi (max 100).
+\`limit: int = Query(10, le=100)\` - limit query via \`Query\` from fastapi (max 100).
 
-Validation runs **before** the handler body — fewer if checks inside the function.`
+Validation runs **before** the handler body - fewer if checks inside the function.`
       },
       {
         title: "Summary",
-        content: `Path — resource id, query — filters and pagination, Pydantic — data contract. Lesson 15-3 — status codes and HTTPException.`
+        content: `Path - resource id, query - filters and pagination, Pydantic - data contract. Lesson 15-3 - status codes and HTTPException.`
       }
     ]
   },
@@ -168,7 +168,7 @@ def user(user_id: int, active: bool = True):
     },
     {
       mistake: "Returning dict with extra fields when using response_model",
-      explanation: "They get filtered — sometimes unexpectedly.",
+      explanation: "They get filtered - sometimes unexpectedly.",
       correctApproach: "Return a model instance or dict with the expected keys."
     },
     {
@@ -203,7 +203,7 @@ def user(user_id: int, active: bool = True):
         question: "Where is skip passed in GET /items?skip=5?",
         options: ["Query parameter", "Path parameter", "Header only", "Cookie"],
         correctAnswer: 0,
-        explanation: "After ? — query parameters."
+        explanation: "After ? - query parameters."
       },
       {
         id: "q3",
@@ -211,7 +211,7 @@ def user(user_id: int, active: bool = True):
         question: "Which status code for an invalid field type in JSON?",
         options: ["422", "200", "301", "418"],
         correctAnswer: 0,
-        explanation: "422 Unprocessable Entity — standard for validation errors."
+        explanation: "422 Unprocessable Entity - standard for validation errors."
       },
       {
         id: "q4",
@@ -232,7 +232,7 @@ def user(user_id: int, active: bool = True):
         question: "Path parameter item_id: int is automatically converted from the URL string.",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True — FastAPI parses types from annotations."
+        explanation: "True - FastAPI parses types from annotations."
       }
     ],
     timeLimit: 15,

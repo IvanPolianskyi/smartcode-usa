@@ -26,7 +26,7 @@ export const lesson_12_5 = {
     sections: [
       {
         title: "Що таке CSV",
-        content: `**CSV (Comma-Separated Values)** — текстовий табличний формат: рядки = записи, коми (або \`;\`) = роздільники колонок.
+        content: `**CSV (Comma-Separated Values)** - текстовий табличний формат: рядки = записи, коми (або \`;\`) = роздільники колонок.
 
 **Де використовується:**
 
@@ -34,13 +34,13 @@ export const lesson_12_5 = {
 - Логи та звіти
 - Дані для скриптів автоматизації
 
-**Вбудований модуль** \`csv\` — без pip:
+**Вбудований модуль** \`csv\` - без pip:
 
 \`\`\`python
 import csv
 \`\`\`
 
-Перший рядок часто — **заголовки** колонок.`
+Перший рядок часто - **заголовки** колонок.`
       },
       {
         title: "Читання CSV",
@@ -53,7 +53,7 @@ with open("sales.csv", newline="", encoding="utf-8") as f:
         print(row["product"], row["amount"])
 \`\`\`
 
-\`DictReader\` повертає кожний рядок як **словник** — зручно за іменем колонки.
+\`DictReader\` повертає кожний рядок як **словник** - зручно за іменем колонки.
 
 **Звичайний reader** (списки):
 
@@ -87,7 +87,7 @@ with open("out.csv", "w", newline="", encoding="utf-8") as f:
     writer.writerows(rows)
 \`\`\`
 
-\`newline=""\` — обов'язково при записі CSV в Python 3 (інакше зайві порожні рядки).`
+\`newline=""\` - обов'язково при записі CSV в Python 3 (інакше зайві порожні рядки).`
       },
       {
         title: "Зв'язок з email і PDF",
@@ -95,14 +95,14 @@ with open("out.csv", "w", newline="", encoding="utf-8") as f:
 
 1. Зібрати дані → список словників
 2. Зберегти **CSV** для архіву
-3. З **reportlab** (урок 11) — PDF для керівника
-4. Через **smtplib** (урок 12) — надіслати PDF вкладенням
+3. З **reportlab** (урок 11) - PDF для керівника
+4. Через **smtplib** (урок 12) - надіслати PDF вкладенням
 
-CSV — проміжний формат, який відкривають у Excel без додаткового коду.`
+CSV - проміжний формат, який відкривають у Excel без додаткового коду.`
       },
       {
         title: "Підсумок",
-        content: `csv.DictReader / DictWriter — стандарт для табличних даних. Завжди вказуйте encoding та newline="". Далі — узагальнення звітів (урок 12-6).`
+        content: `csv.DictReader / DictWriter - стандарт для табличних даних. Завжди вказуйте encoding та newline="". Далі - узагальнення звітів (урок 12-6).`
       }
     ]
   },
@@ -133,7 +133,7 @@ print(total)`,
     }
   ],
 
-  summary: `CSV — простий обмін табличними даними; модуль csv читає та пише рядки для звітів і автоматизації.`,
+  summary: `CSV - простий обмін табличними даними; модуль csv читає та пише рядки для звітів і автоматизації.`,
 
   practiceTask: null,
 
@@ -145,7 +145,7 @@ print(total)`,
         question: "Який модуль Python читає CSV без встановлення?",
         options: ["csv", "pandas only", "openpyxl", "json"],
         correctAnswer: 0,
-        explanation: "csv — стандартна бібліотека."
+        explanation: "csv - стандартна бібліотека."
       },
       {
         id: "q2",
@@ -153,7 +153,7 @@ print(total)`,
         question: "Що повертає csv.DictReader для кожного рядка?",
         options: ["dict", "tuple only", "set", "bytes"],
         correctAnswer: 0,
-        explanation: "Ключі — назви колонок з заголовка."
+        explanation: "Ключі - назви колонок з заголовка."
       },
       {
         id: "q3",
@@ -174,10 +174,10 @@ print(total)`,
       {
         id: "q5",
         type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
-        question: "CSV і Excel .xlsx — це один і той самий формат.",
+        question: "CSV і Excel .xlsx - це один і той самий формат.",
         options: ["True", "False"],
         correctAnswer: 1,
-        explanation: "False — xlsx бінарний; CSV — текстовий."
+        explanation: "False - xlsx бінарний; CSV - текстовий."
       }
     ],
     timeLimit: 15,

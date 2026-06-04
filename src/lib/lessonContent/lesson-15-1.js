@@ -26,7 +26,7 @@ export const lesson_15_1 = {
     sections: [
       {
         title: "Що таке REST API",
-        content: `**REST API** — спосіб обміну даними через HTTP: клієнт (браузер, бот, мобільний застосунок) надсилає запит, сервер повертає **JSON**.
+        content: `**REST API** - спосіб обміну даними через HTTP: клієнт (браузер, бот, мобільний застосунок) надсилає запит, сервер повертає **JSON**.
 
 | Метод | Типова дія |
 |-------|------------|
@@ -35,11 +35,11 @@ export const lesson_15_1 = {
 | PUT/PATCH | Оновити |
 | DELETE | Видалити |
 
-**FastAPI** — сучасний фреймворк для Python:
+**FastAPI** - сучасний фреймворк для Python:
 
 - Швидкий (Starlette + uvicorn)
 - Автоматична документація OpenAPI (Swagger)
-- Валідація типів (Pydantic) — уроки 15-2–15-3
+- Валідація типів (Pydantic) - уроки 15-2 і 15-3
 
 \`\`\`bash
 pip install "fastapi[standard]" uvicorn
@@ -73,14 +73,14 @@ def health():
 uvicorn main:app --reload --host 127.0.0.1 --port 8000
 \`\`\`
 
-- \`main:app\` — модуль \`main\`, об'єкт \`app\`
-- \`--reload\` — перезапуск при зміні коду (лише для розробки)
+- \`main:app\` - модуль \`main\`, об'єкт \`app\`
+- \`--reload\` - перезапуск при зміні коду (лише для розробки)
 
 Відкрийте:
 
-- http://127.0.0.1:8000/ — JSON відповідь
-- http://127.0.0.1:8000/docs — Swagger UI
-- http://127.0.0.1:8000/redoc — альтернативна документація`
+- http://127.0.0.1:8000/ - JSON відповідь
+- http://127.0.0.1:8000/docs - Swagger UI
+- http://127.0.0.1:8000/redoc - альтернативна документація`
       },
       {
         title: "Маршрути та типи відповіді",
@@ -98,11 +98,11 @@ def greet(name: str):
 
 FastAPI автоматично серіалізує dict/list у JSON. Для явної схеми відповіді пізніше додамо Pydantic-моделі.
 
-**Статус-код за замовчуванням** для GET — 200 OK.`
+**Статус-код за замовчуванням** для GET - 200 OK.`
       },
       {
         title: "Async endpoints (огляд)",
-        content: `Можна оголошувати \`async def\` — корисно при роботі з БД або HTTP-клієнтами:
+        content: `Можна оголошувати \`async def\` - корисно при роботі з БД або HTTP-клієнтами:
 
 \`\`\`python
 @app.get("/slow")
@@ -126,9 +126,9 @@ async def slow():
 2. **Try it out** → **Execute**
 3. Перевірте Response body та Status 200
 
-Для POST (урок 15-2+) з’явиться форма JSON — можна надсилати тестові дані без Postman.
+Для POST (урок 15-2+) з’явиться форма JSON - можна надсилати тестові дані без Postman.
 
-**OpenAPI JSON:** \`/openapi.json\` — схема для генераторів клієнтів.`
+**OpenAPI JSON:** \`/openapi.json\` - схема для генераторів клієнтів.`
       },
       {
         title: "Структура навчального проєкту",
@@ -143,7 +143,7 @@ my_api/
       },
       {
         title: "Підсумок",
-        content: `FastAPI + uvicorn дають локальний REST-сервер і інтерактивну документацію. Наступний урок — path/query параметри та Pydantic-моделі.`
+        content: `FastAPI + uvicorn дають локальний REST-сервер і інтерактивну документацію. Наступний урок - path/query параметри та Pydantic-моделі.`
       }
     ]
   },
@@ -156,7 +156,7 @@ app = FastAPI()
 @app.get("/")
 def root():
     return {"ok": True}`,
-      explanation: "Три рядки — вже працюючий API."
+      explanation: "Три рядки - вже працюючий API."
     },
     {
       title: "Запуск uvicorn",
@@ -168,7 +168,7 @@ def root():
   commonMistakes: [
     {
       mistake: "Запускати python main.py без uvicorn",
-      explanation: "FastAPI — ASGI-додаток, потрібен сервер.",
+      explanation: "FastAPI - ASGI-додаток, потрібен сервер.",
       correctApproach: "uvicorn main:app --reload."
     },
     {
@@ -179,11 +179,11 @@ def root():
     {
       mistake: "--reload на продакшені",
       explanation: "Небезпечно та повільно.",
-      correctApproach: "reload лише локально; на сервері — процес-менеджер без reload."
+      correctApproach: "reload лише локально; на сервері - процес-менеджер без reload."
     }
   ],
 
-  summary: `Ви запустили FastAPI, створили GET-маршрути та відкрили Swagger на /docs. Далі — параметри шляху, query та Pydantic.`,
+  summary: `Ви запустили FastAPI, створили GET-маршрути та відкрили Swagger на /docs. Далі - параметри шляху, query та Pydantic.`,
 
   practiceTask: null,
 
@@ -200,7 +200,7 @@ def root():
           "flask run only"
         ],
         correctAnswer: 0,
-        explanation: "uvicorn — ASGI-сервер для FastAPI."
+        explanation: "uvicorn - ASGI-сервер для FastAPI."
       },
       {
         id: "q2",
@@ -216,7 +216,7 @@ def root():
         question: "Що повертає типовий GET endpoint у прикладах курсу?",
         options: ["JSON (dict/list)", "HTML-сторінку", "ZIP-архів", "Тільки plain text"],
         correctAnswer: 0,
-        explanation: "REST API в курсі — JSON-відповіді."
+        explanation: "REST API в курсі - JSON-відповіді."
       },
       {
         id: "q4",
@@ -229,7 +229,7 @@ def root():
           "Порт main"
         ],
         correctAnswer: 0,
-        explanation: "module:variable — стандартний формат uvicorn."
+        explanation: "module:variable - стандартний формат uvicorn."
       },
       {
         id: "q5",
@@ -237,7 +237,7 @@ def root():
         question: "Для FastAPI обов'язково встановлювати Django.",
         options: ["True", "False"],
         correctAnswer: 1,
-        explanation: "False — FastAPI працює самостійно з uvicorn."
+        explanation: "False - FastAPI працює самостійно з uvicorn."
       }
     ],
     timeLimit: 15,

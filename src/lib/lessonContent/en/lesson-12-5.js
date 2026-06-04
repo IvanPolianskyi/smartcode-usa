@@ -26,7 +26,7 @@ export const lesson_12_5 = {
     sections: [
       {
         title: "What is CSV",
-        content: `**CSV (Comma-Separated Values)** — a text-based tabular format: rows = records, commas (or \`;\`) = column separators.
+        content: `**CSV (Comma-Separated Values)** - a text-based tabular format: rows = records, commas (or \`;\`) = column separators.
 
 **Where it is used:**
 
@@ -34,7 +34,7 @@ export const lesson_12_5 = {
 - Logs and reports
 - Data for automation scripts
 
-**Built-in module** \`csv\` — no pip required:
+**Built-in module** \`csv\` - no pip required:
 
 \`\`\`python
 import csv
@@ -53,7 +53,7 @@ with open("sales.csv", newline="", encoding="utf-8") as f:
         print(row["product"], row["amount"])
 \`\`\`
 
-\`DictReader\` returns each row as a **dictionary** — convenient access by column name.
+\`DictReader\` returns each row as a **dictionary** - convenient access by column name.
 
 **Regular reader** (lists):
 
@@ -77,8 +77,8 @@ open("file.csv", encoding="utf-8-sig")
 import csv
 
 rows = [
-    {"name": "Товар A", "qty": 10},
-    {"name": "Товар B", "qty": 5},
+    {"name": "Product A", "qty": 10},
+    {"name": "Product B", "qty": 5},
 ]
 
 with open("out.csv", "w", newline="", encoding="utf-8") as f:
@@ -87,7 +87,7 @@ with open("out.csv", "w", newline="", encoding="utf-8") as f:
     writer.writerows(rows)
 \`\`\`
 
-\`newline=""\` — required when writing CSV in Python 3 (otherwise extra blank lines appear).`
+\`newline=""\` - required when writing CSV in Python 3 (otherwise extra blank lines appear).`
       },
       {
         title: "Connection with email and PDF",
@@ -95,14 +95,14 @@ with open("out.csv", "w", newline="", encoding="utf-8") as f:
 
 1. Collect data → list of dictionaries
 2. Save **CSV** for archiving
-3. With **reportlab** (lesson 11) — PDF for the manager
-4. Via **smtplib** (lesson 12) — send PDF as an attachment
+3. With **reportlab** (lesson 11) - PDF for the manager
+4. Via **smtplib** (lesson 12) - send PDF as an attachment
 
 CSV is an intermediate format that opens in Excel without additional code.`
       },
       {
         title: "Summary",
-        content: `csv.DictReader / DictWriter — the standard for tabular data. Always specify encoding and newline="". Next — report automation recap (lesson 12-6).`
+        content: `csv.DictReader / DictWriter - the standard for tabular data. Always specify encoding and newline="". Next - report automation recap (lesson 12-6).`
       }
     ]
   },
@@ -133,7 +133,7 @@ print(total)`,
     }
   ],
 
-  summary: `CSV — simple exchange of tabular data; the csv module reads and writes rows for reports and automation.`,
+  summary: `CSV - simple exchange of tabular data; the csv module reads and writes rows for reports and automation.`,
 
   practiceTask: null,
 
@@ -177,7 +177,7 @@ print(total)`,
         question: "CSV and Excel .xlsx are the same format.",
         options: ["True", "False"],
         correctAnswer: 1,
-        explanation: "False — xlsx is binary; CSV is text."
+        explanation: "False - xlsx is binary; CSV is text."
       }
     ],
     timeLimit: 15,

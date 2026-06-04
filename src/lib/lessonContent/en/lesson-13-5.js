@@ -82,7 +82,7 @@ This makes it easier to test logic separately from \`mainloop()\`.`
       },
       {
         title: "Example: calculator with grid",
-        content: `**Building a full application** — a simple calculator:
+        content: `**Building a full application** - a simple calculator:
 
 \`\`\`python
 from tkinter import *
@@ -156,7 +156,7 @@ root.mainloop()
         title: "Module 13 summary",
         content: `You covered: Tk() / mainloop → widgets → pack/grid/place → events.
 
-Next **module 14** — Telegram bots; a GUI can be combined with a bot as a local admin panel.
+Next **module 14** - Telegram bots; a GUI can be combined with a bot as a local admin panel.
 
 **GUI project checklist:** one geometry manager per container, \`mainloop()\` at the end, try/except in calculate, clear button labels.`
       }
@@ -251,7 +251,7 @@ class SimpleCalculator:
 root = Tk()
 calc = SimpleCalculator(root)
 root.mainloop()`,
-      explanation: "A full GUI application — a simple calculator with event handling."
+      explanation: "A full GUI application - a simple calculator with event handling."
     }
   ],
   
@@ -352,7 +352,7 @@ You can now create graphical user interfaces in Python!`,
           "It requires pip install"
         ],
         correctAnswer: 0,
-        explanation: "eval runs a string as code — never use it on untrusted input."
+        explanation: "eval runs a string as code - never use it on untrusted input."
       }
     ],
     timeLimit: 15,

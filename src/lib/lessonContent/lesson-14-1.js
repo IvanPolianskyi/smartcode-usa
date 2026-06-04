@@ -27,21 +27,21 @@ export const lesson_14_1 = {
     sections: [
       {
         title: "Що таке Telegram-бот",
-        content: `**Telegram-бот** — спеціальний акаунт, яким керує ваш код через **Bot API**, а не людина вручну.
+        content: `**Telegram-бот** - спеціальний акаунт, яким керує ваш код через **Bot API**, а не людина вручну.
 
 **Створення бота:**
 
 1. Відкрийте [@BotFather](https://t.me/BotFather) у Telegram
-2. Команда \`/newbot\` — ім'я для людей та **username** (обов'язково закінчується на \`bot\`, наприклад \`my_helper_bot\`)
-3. BotFather видасть **токен** виду \`123456789:AAH...\` — це секретний ключ до API
+2. Команда \`/newbot\` - ім'я для людей та **username** (обов'язково закінчується на \`bot\`, наприклад \`my_helper_bot\`)
+3. BotFather видасть **токен** виду \`123456789:AAH...\` - це секретний ключ до API
 
 **Команди BotFather, які знадобляться:**
 
-- \`/mybots\` — список ваших ботів, зміна опису, аватара
-- \`/setcommands\` — меню команд у клієнті Telegram
-- \`/revoke\` — скасувати токен, якщо він засвітився
+- \`/mybots\` - список ваших ботів, зміна опису, аватара
+- \`/setcommands\` - меню команд у клієнті Telegram
+- \`/revoke\` - скасувати токен, якщо він засвітився
 
-**Ніколи не публікуйте токен** у GitHub, скріншотах чи чатах. Хто має токен — керує ботом повністю.`
+**Ніколи не публікуйте токен** у GitHub, скріншотах чи чатах. Хто має токен - керує ботом повністю.`
       },
       {
         title: "Безпечне зберігання токена",
@@ -69,7 +69,7 @@ pip install python-dotenv requests
       },
       {
         title: "Як працює Bot API",
-        content: `Усі методи — **HTTPS-запити** до:
+        content: `Усі методи - **HTTPS-запити** до:
 
 \`https://api.telegram.org/bot<TOKEN>/<METHOD>\`
 
@@ -95,11 +95,11 @@ pip install python-dotenv requests
 
 **Два способи отримувати Update:**
 
-1. **Polling** — ваш скрипт періодично викликає \`getUpdates\` (простіше для навчання)
-2. **Webhook** — Telegram сам надсилає POST на ваш HTTPS-сервер (модуль 15)`
+1. **Polling** - ваш скрипт періодично викликає \`getUpdates\` (простіше для навчання)
+2. **Webhook** - Telegram сам надсилає POST на ваш HTTPS-сервер (модуль 15)`
       },
       {
-        title: "sendMessage — перше повідомлення",
+        title: "sendMessage - перше повідомлення",
         content: `\`\`\`python
 import os
 import requests
@@ -125,9 +125,9 @@ api("sendMessage", chat_id=CHAT_ID, text="Привіт з Python!")
 
 **Параметри sendMessage (корисні):**
 
-- \`parse_mode\` — \`"HTML"\` або \`"MarkdownV2"\` для форматування
-- \`reply_markup\` — клавіатура (урок 14-3)
-- \`disable_notification\` — тихе повідомлення`
+- \`parse_mode\` - \`"HTML"\` або \`"MarkdownV2"\` для форматування
+- \`reply_markup\` - клавіатура (урок 14-3)
+- \`disable_notification\` - тихе повідомлення`
       },
       {
         title: "getUpdates та chat_id",
@@ -184,7 +184,7 @@ api("setMyCommands", commands=[
 
 - Не більше ~30 повідомлень на секунду в один чат
 - Довжина тексту до 4096 символів
-- Файли — окремі методи (\`sendDocument\`, \`sendPhoto\`)
+- Файли - окремі методи (\`sendDocument\`, \`sendPhoto\`)
 
 Повний список: [документація Bot API](https://core.telegram.org/bots/api).`
       },
@@ -192,7 +192,7 @@ api("setMyCommands", commands=[
         title: "Підсумок",
         content: `Ви створили бота в BotFather, навчилися зберігати токен у \`.env\`, викликати \`sendMessage\` та \`getUpdates\` через \`requests\`.
 
-**Далі:** урок 14-2 — бібліотека python-telegram-bot з async handlers і \`run_polling()\`, без ручного циклу getUpdates.`
+**Далі:** урок 14-2 - бібліотека python-telegram-bot з async handlers і \`run_polling()\`, без ручного циклу getUpdates.`
       }
     ]
   },
@@ -209,7 +209,7 @@ r = requests.get(
     timeout=30,
 )
 print(r.json())`,
-      explanation: "Показує останні повідомлення користувачів боту — звідси беруть chat_id."
+      explanation: "Показує останні повідомлення користувачів боту - звідси беруть chat_id."
     },
     {
       title: "Обгортка api()",
@@ -227,7 +227,7 @@ print(r.json())`,
     {
       mistake: "Токен у коді або в README",
       explanation: "Потрапляє в git історію назавжди.",
-      correctApproach: "Тільки .env / secrets; при витоку — /revoke у BotFather."
+      correctApproach: "Тільки .env / secrets; при витоку - /revoke у BotFather."
     },
     {
       mistake: "Викликати sendMessage без chat_id",
@@ -246,7 +246,7 @@ print(r.json())`,
     }
   ],
 
-  summary: `Bot API — HTTP JSON до api.telegram.org. Токен з BotFather зберігають у .env. sendMessage надсилає текст, getUpdates + offset отримує події. Далі — python-telegram-bot.`,
+  summary: `Bot API - HTTP JSON до api.telegram.org. Токен з BotFather зберігають у .env. sendMessage надсилає текст, getUpdates + offset отримує події. Далі - python-telegram-bot.`,
 
   practiceTask: null,
 
@@ -258,7 +258,7 @@ print(r.json())`,
         question: "Де безпечно зберігати токен бота?",
         options: ["У .env файлі (не в git)", "У README", "У коментарі коду", "У назві змінної в коді"],
         correctAnswer: 0,
-        explanation: "Секрети — лише в оточенні або .env з .gitignore."
+        explanation: "Секрети - лише в оточенні або .env з .gitignore."
       },
       {
         id: "q2",
@@ -300,7 +300,7 @@ print(r.json())`,
         question: "Токен бота можна безпечно публікувати в соцмережах.",
         options: ["True", "False"],
         correctAnswer: 1,
-        explanation: "False — токен дає повний контроль над ботом; при витоку зробіть revoke."
+        explanation: "False - токен дає повний контроль над ботом; при витоку зробіть revoke."
       }
     ],
     timeLimit: 15,

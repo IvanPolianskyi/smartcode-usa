@@ -39,7 +39,7 @@ export const lesson_15_1 = {
 
 - Fast (Starlette + uvicorn)
 - Automatic OpenAPI docs (Swagger)
-- Type validation (Pydantic) — lessons 15-2–15-3
+- Type validation (Pydantic) - lessons 15-2 and 15-3
 
 \`\`\`bash
 pip install "fastapi[standard]" uvicorn
@@ -73,14 +73,14 @@ def health():
 uvicorn main:app --reload --host 127.0.0.1 --port 8000
 \`\`\`
 
-- \`main:app\` — module \`main\`, object \`app\`
-- \`--reload\` — restart on code change (development only)
+- \`main:app\` - module \`main\`, object \`app\`
+- \`--reload\` - restart on code change (development only)
 
 Open:
 
-- http://127.0.0.1:8000/ — JSON response
-- http://127.0.0.1:8000/docs — Swagger UI
-- http://127.0.0.1:8000/redoc — alternative docs`
+- http://127.0.0.1:8000/ - JSON response
+- http://127.0.0.1:8000/docs - Swagger UI
+- http://127.0.0.1:8000/redoc - alternative docs`
       },
       {
         title: "Routes and response types",
@@ -102,7 +102,7 @@ FastAPI serializes dict/list to JSON automatically. We will add Pydantic models 
       },
       {
         title: "Async endpoints (overview)",
-        content: `You can declare \`async def\` — useful with databases or HTTP clients:
+        content: `You can declare \`async def\` - useful with databases or HTTP clients:
 
 \`\`\`python
 @app.get("/slow")
@@ -126,9 +126,9 @@ For now you build the foundation: local API + /docs to test requests.`
 2. **Try it out** → **Execute**
 3. Check Response body and Status 200
 
-For POST (lesson 15-2+) you get a JSON form — test data without Postman.
+For POST (lesson 15-2+) you get a JSON form - test data without Postman.
 
-**OpenAPI JSON:** \`/openapi.json\` — schema for client generators.`
+**OpenAPI JSON:** \`/openapi.json\` - schema for client generators.`
       },
       {
         title: "Learning project structure",
@@ -143,7 +143,7 @@ One \`main.py\` is enough for the course; large projects move routes to \`router
       },
       {
         title: "Summary",
-        content: `FastAPI + uvicorn give you a local REST server and interactive docs. Next lesson — path/query parameters and Pydantic models.`
+        content: `FastAPI + uvicorn give you a local REST server and interactive docs. Next lesson - path/query parameters and Pydantic models.`
       }
     ]
   },
@@ -156,7 +156,7 @@ app = FastAPI()
 @app.get("/")
 def root():
     return {"ok": True}`,
-      explanation: "Three lines — already a working API."
+      explanation: "Three lines - already a working API."
     },
     {
       title: "Running uvicorn",
@@ -183,7 +183,7 @@ def root():
     }
   ],
 
-  summary: `You started FastAPI, created GET routes, and opened Swagger at /docs. Next — path parameters, query, and Pydantic.`,
+  summary: `You started FastAPI, created GET routes, and opened Swagger at /docs. Next - path parameters, query, and Pydantic.`,
 
   practiceTask: null,
 
@@ -229,7 +229,7 @@ def root():
           "Port main"
         ],
         correctAnswer: 0,
-        explanation: "module:variable — standard uvicorn format."
+        explanation: "module:variable - standard uvicorn format."
       },
       {
         id: "q5",
@@ -237,7 +237,7 @@ def root():
         question: "FastAPI requires Django to be installed.",
         options: ["True", "False"],
         correctAnswer: 1,
-        explanation: "False — FastAPI works on its own with uvicorn."
+        explanation: "False - FastAPI works on its own with uvicorn."
       }
     ],
     timeLimit: 15,

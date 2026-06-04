@@ -44,7 +44,7 @@ README.md        # як запустити
 | «Курс USD» | GET до публічного API (НБУ, exchangerate.host) |
 | «Нагадати …» | Зберегти текст у user_data, відповісти підтвердженням |
 
-Розділяйте **handlers** за відповідальністю: \`handlers/commands.py\`, \`handlers/menu.py\` — необов'язково, але зручно для README.`
+Розділяйте **handlers** за відповідальністю: \`handlers/commands.py\`, \`handlers/menu.py\` - необов'язково, але зручно для README.`
       },
       {
         title: "Підключення зовнішнього API",
@@ -74,9 +74,9 @@ async def on_usd_button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         await update.message.reply_text(str(e))
 \`\`\`
 
-\`asyncio.to_thread\` — щоб не блокувати event loop під час \`requests\` (у v21 це важливо).
+\`asyncio.to_thread\` - щоб не блокувати event loop під час \`requests\` (у v21 це важливо).
 
-**Альтернатива:** \`httpx\` з async-клієнтом — для поглибленого рівня.`
+**Альтернатива:** \`httpx\` з async-клієнтом - для поглибленого рівня.`
       },
       {
         title: "Нагадування через user_data",
@@ -96,7 +96,7 @@ async def on_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # інші кнопки...
 \`\`\`
 
-Повноцінні нагадування з таймером потребують **JobQueue** PTB або окремого планувальника — для курсу достатньо збереження в пам'яті (після перезапуску дані зникнуть — це нормально для демо).`
+Повноцінні нагадування з таймером потребують **JobQueue** PTB або окремого планувальника - для курсу достатньо збереження в пам'яті (після перезапуску дані зникнуть - це нормально для демо).`
       },
       {
         title: "Логування та UX помилок",
@@ -135,7 +135,7 @@ async def on_usd_button(update, context):
 - [ ] Бот відповідає в приватному чаті з вами
 - [ ] README з кроками запуску
 
-Далі модуль 15 — **FastAPI** і webhook замість polling для деплою.`
+Далі модуль 15 - **FastAPI** і webhook замість polling для деплою.`
       }
     ]
   },
@@ -189,7 +189,7 @@ app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, on_text))`,
         question: "Помилки API варто показувати користувачу як stack trace.",
         options: ["True", "False"],
         correctAnswer: 1,
-        explanation: "False — коротке зрозуміле повідомлення без технічних деталей."
+        explanation: "False - коротке зрозуміле повідомлення без технічних деталей."
       },
       {
         id: "q2",

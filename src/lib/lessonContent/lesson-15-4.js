@@ -26,7 +26,7 @@ export const lesson_15_4 = {
     sections: [
       {
         title: "Архітектура: API + webhook",
-        content: `**Polling** (модуль 14) — ваш скрипт питає Telegram. **Webhook** — Telegram надсилає POST на ваш URL при новому повідомленні.
+        content: `**Polling** (модуль 14) - ваш скрипт питає Telegram. **Webhook** - Telegram надсилає POST на ваш URL при новому повідомленні.
 
 \`\`\`
 Користувач → Telegram → HTTPS POST → ваш FastAPI /telegram/webhook
@@ -84,7 +84,7 @@ from fastapi import Request
 @app.post("/telegram/webhook")
 async def telegram_webhook(request: Request):
     data = await request.json()
-    # data — об'єкт Update від Telegram
+    # data - об'єкт Update від Telegram
     message = data.get("message")
     if message and "text" in message:
         text = message["text"]
@@ -96,7 +96,7 @@ async def telegram_webhook(request: Request):
     return {"ok": True}
 \`\`\`
 
-Telegram **очікує швидку відповідь** (до ~60 с). Важку роботу виносьте у фон (для курсу — коротка логіка).`
+Telegram **очікує швидку відповідь** (до ~60 с). Важку роботу виносьте у фон (для курсу - коротка логіка).`
       },
       {
         title: "setWebhook та HTTPS",
@@ -119,11 +119,11 @@ requests.post(
 )
 \`\`\`
 
-Перед цим: \`deleteWebhook\` якщо був polling. На хостингу (Railway, Render, VPS) — той самий принцип з постійним HTTPS.`
+Перед цим: \`deleteWebhook\` якщо був polling. На хостингу (Railway, Render, VPS) - той самий принцип з постійним HTTPS.`
       },
       {
         title: "Безпека webhook (огляд)",
-        content: `- Токен бота — лише в .env
+        content: `- Токен бота - лише в .env
 - Не логуйте повний Update з персональними даними у публічні сервіси
 - Опційно: secret_token у setWebhook і перевірка заголовка \`X-Telegram-Bot-Api-Secret-Token\`
 
@@ -134,9 +134,9 @@ requests.post(
         content: `1. Запустіть uvicorn
 2. ngrok http 8000
 3. setWebhook на https URL
-4. Напишіть боту — у логах сервера має з’явитися POST /telegram/webhook
+4. Напишіть боту - у логах сервера має з’явитися POST /telegram/webhook
 
-Якщо 404 — перевірте шлях; якщо 502 — сервер не запущений.`
+Якщо 404 - перевірте шлях; якщо 502 - сервер не запущений.`
       },
       {
         title: "Підсумок курсу Python",
@@ -176,11 +176,11 @@ async def telegram_webhook(request: Request):
     {
       mistake: "Не повертати {\"ok\": True} швидко",
       explanation: "Telegram повторює запити.",
-      correctApproach: "Швидка відповідь; важка робота — async/background."
+      correctApproach: "Швидка відповідь; важка робота - async/background."
     }
   ],
 
-  summary: `FastAPI обслуговує CRUD і приймає Telegram webhook. ngrok дає HTTPS для локальної розробки; на продакшені — постійний домен.`,
+  summary: `FastAPI обслуговує CRUD і приймає Telegram webhook. ngrok дає HTTPS для локальної розробки; на продакшені - постійний домен.`,
 
   practiceTask: {
     title: "Tasks API + webhook",
@@ -247,7 +247,7 @@ async def telegram_webhook(request: Request):
         question: "Після налаштування webhook бот може отримувати повідомлення без run_polling().",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True — сервер приймає POST від Telegram на webhook URL."
+        explanation: "True - сервер приймає POST від Telegram на webhook URL."
       }
     ],
     timeLimit: 15,

@@ -41,10 +41,10 @@ README.md        # how to run
 |------------------|-----|
 | /start | Greeting + show menu |
 | /help | List of capabilities |
-| «Курс USD» | GET to a public API (NBU, exchangerate.host) |
-| «Нагадати …» | Save text in user_data, confirm to user |
+| "USD rate" | GET to a public API (NBU, exchangerate.host) |
+| "Remind me …" | Save text in user_data, confirm to user |
 
-Split **handlers** by responsibility: \`handlers/commands.py\`, \`handlers/menu.py\` — optional but handy for the README.`
+Split **handlers** by responsibility: \`handlers/commands.py\`, \`handlers/menu.py\` - optional but handy for the README.`
       },
       {
         title: "Connecting an external API",
@@ -60,7 +60,7 @@ async def fetch_usd_rate() -> str:
         rate = data["rates"]["UAH"]
         return f"1 USD ≈ {rate:.2f} UAH"
     except requests.RequestException:
-        raise RuntimeError("Сервіс курсу тимчасово недоступний")
+        raise RuntimeError("Exchange rate service is temporarily unavailable")
 \`\`\`
 
 In the handler:
@@ -74,16 +74,16 @@ async def on_usd_button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         await update.message.reply_text(str(e))
 \`\`\`
 
-\`asyncio.to_thread\` — so \`requests\` does not block the event loop (important in v21).
+\`asyncio.to_thread\` - so \`requests\` does not block the event loop (important in v21).
 
-**Alternative:** \`httpx\` with an async client — for advanced level.`
+**Alternative:** \`httpx\` with an async client - for advanced level.`
       },
       {
         title: "Reminders via user_data",
         content: `\`\`\`python
 async def remind_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     context.user_data["step"] = "await_reminder"
-    await update.message.reply_text("Напишіть текст нагадування:")
+    await update.message.reply_text("Type your reminder text:")
 
 async def on_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if context.user_data.get("step") == "await_reminder":
@@ -91,12 +91,12 @@ async def on_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         context.user_data["reminders"] = context.user_data.get("reminders", [])
         context.user_data["reminders"].append(note)
         context.user_data.pop("step", None)
-        await update.message.reply_text(f"Збережено: {note}")
+        await update.message.reply_text(f"Saved: {note}")
         return
     # other buttons...
 \`\`\`
 
-Full reminders with timers need PTB **JobQueue** or a separate scheduler — for the course, storing in memory is enough (data disappears after restart — fine for a demo).`
+Full reminders with timers need PTB **JobQueue** or a separate scheduler - for the course, storing in memory is enough (data disappears after restart - fine for a demo).`
       },
       {
         title: "Logging and error UX",
@@ -110,7 +110,7 @@ async def on_usd_button(update, context):
     except Exception as e:
         logger.exception("USD rate failed")
         await update.message.reply_text(
-            "Не вдалося отримати курс. Спробуйте пізніше."
+            "Could not fetch the rate. Please try again later."
         )
         return
     await update.message.reply_text(text)
@@ -135,7 +135,7 @@ async def on_usd_button(update, context):
 - [ ] Bot responds in a private chat with you
 - [ ] README with run steps
 
-Next module 15 — **FastAPI** and webhook instead of polling for deployment.`
+Next module 15 - **FastAPI** and webhook instead of polling for deployment.`
       }
     ]
   },
@@ -189,7 +189,7 @@ app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, on_text))`,
         question: "API errors should be shown to the user as a stack trace.",
         options: ["True", "False"],
         correctAnswer: 1,
-        explanation: "False — a short clear message without technical details."
+        explanation: "False - a short clear message without technical details."
       },
       {
         id: "q2",

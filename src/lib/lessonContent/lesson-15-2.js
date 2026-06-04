@@ -26,7 +26,7 @@ export const lesson_15_2 = {
     sections: [
       {
         title: "Path parameters",
-        content: `Сегменти URL у фігурних дужках — **path parameters**:
+        content: `Сегменти URL у фігурних дужках - **path parameters**:
 
 \`\`\`python
 from fastapi import FastAPI
@@ -38,7 +38,7 @@ def get_item(item_id: int):
     return {"item_id": item_id}
 \`\`\`
 
-Запит \`GET /items/42\` → \`item_id=42\`. FastAPI **конвертує тип**; якщо передати \`/items/abc\` — помилка 422 з поясненням у /docs.
+Запит \`GET /items/42\` → \`item_id=42\`. FastAPI **конвертує тип**; якщо передати \`/items/abc\` - помилка 422 з поясненням у /docs.
 
 **Порядок:** статичні шляхи вище динамічних:
 
@@ -52,7 +52,7 @@ def get_item(item_id: int): ...
       },
       {
         title: "Query parameters",
-        content: `Параметри після \`?\` у URL — **query**:
+        content: `Параметри після \`?\` у URL - **query**:
 
 \`GET /items?skip=0&limit=10\`
 
@@ -63,7 +63,7 @@ def list_items(skip: int = 0, limit: int = 10):
 \`\`\`
 
 - Значення за замовчуванням роблять параметр **необов'язковим**
-- Без default — параметр обов'язковий
+- Без default - параметр обов'язковий
 
 \`\`\`python
 from typing import Optional
@@ -103,7 +103,7 @@ def get_item(item_id: int):
       },
       {
         title: "Тіло запиту (огляд POST)",
-        content: `POST приймає JSON у тіло — параметр типу BaseModel:
+        content: `POST приймає JSON у тіло - параметр типу BaseModel:
 
 \`\`\`python
 items_db: list[Item] = []
@@ -116,7 +116,7 @@ def create_item(payload: ItemCreate):
     return item
 \`\`\`
 
-Невірний JSON (наприклад \`price: "free"\`) → **422 Unprocessable Entity** з деталями валідації — зручно тестувати в /docs.`
+Невірний JSON (наприклад \`price: "free"\`) → **422 Unprocessable Entity** з деталями валідації - зручно тестувати в /docs.`
       },
       {
         title: "Пагінація в пам'яті",
@@ -126,19 +126,19 @@ def list_items(skip: int = 0, limit: int = 10):
     return items_db[skip : skip + limit]
 \`\`\`
 
-**skip** — скільки пропустити, **limit** — скільки повернути. У реальному проєкті skip/limit перетворюють на SQL OFFSET/LIMIT.`
+**skip** - скільки пропустити, **limit** - скільки повернути. У реальному проєкті skip/limit перетворюють на SQL OFFSET/LIMIT.`
       },
       {
         title: "Optional та значення за замовчуванням",
-        content: `\`Optional[str] = None\` — поле можна не надсилати в JSON.
+        content: `\`Optional[str] = None\` - поле можна не надсилати в JSON.
 
-\`limit: int = Query(10, le=100)\` — обмеження query через \`Query\` з fastapi (максимум 100).
+\`limit: int = Query(10, le=100)\` - обмеження query через \`Query\` з fastapi (максимум 100).
 
-Валідація спрацьовує **до** входу в тіло функції — менше if у handler.`
+Валідація спрацьовує **до** входу в тіло функції - менше if у handler.`
       },
       {
         title: "Підсумок",
-        content: `Path — ідентифікатор ресурсу, query — фільтри та пагінація, Pydantic — контракт даних. Урок 15-3 — статус-коди та HTTPException.`
+        content: `Path - ідентифікатор ресурсу, query - фільтри та пагінація, Pydantic - контракт даних. Урок 15-3 - статус-коди та HTTPException.`
       }
     ]
   },
@@ -168,7 +168,7 @@ def user(user_id: int, active: bool = True):
     },
     {
       mistake: "Повертати dict з зайвими полями при response_model",
-      explanation: "Вони будуть відфільтровані — інколи неочікувано.",
+      explanation: "Вони будуть відфільтровані - інколи неочікувано.",
       correctApproach: "Повертайте екземпляр моделі або dict з потрібними ключами."
     },
     {
@@ -203,7 +203,7 @@ def user(user_id: int, active: bool = True):
         question: "Де передається параметр skip у GET /items?skip=5?",
         options: ["Query parameter", "Path parameter", "Header only", "Cookie"],
         correctAnswer: 0,
-        explanation: "Після ? — query parameters."
+        explanation: "Після ? - query parameters."
       },
       {
         id: "q3",
@@ -211,7 +211,7 @@ def user(user_id: int, active: bool = True):
         question: "Який статус при невалідному типі поля в JSON?",
         options: ["422", "200", "301", "418"],
         correctAnswer: 0,
-        explanation: "422 Unprocessable Entity — стандарт для помилок валідації."
+        explanation: "422 Unprocessable Entity - стандарт для помилок валідації."
       },
       {
         id: "q4",
@@ -232,7 +232,7 @@ def user(user_id: int, active: bool = True):
         question: "Path parameter item_id: int автоматично конвертується з рядка URL.",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True — FastAPI парсить типи з анотацій."
+        explanation: "True - FastAPI парсить типи з анотацій."
       }
     ],
     timeLimit: 15,

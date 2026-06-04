@@ -43,12 +43,12 @@ async def post_init(app):
 app = Application.builder().token(token).post_init(post_init).build()
 \`\`\`
 
-**Handler /help** — короткий текст без клавіатури:
+**Handler /help** - короткий текст без клавіатури:
 
 \`\`\`python
 async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
-        "/start — старт\\n/menu — кнопки\\n/help — ця довідка"
+        "/start - старт\\n/menu - кнопки\\n/help - ця довідка"
     )
 \`\`\``
       },
@@ -75,10 +75,10 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 **Параметри:**
 
-- \`resize_keyboard=True\` — компактні кнопки на телефоні
-- \`one_time_keyboard=True\` — клавіатура ховається після натискання
+- \`resize_keyboard=True\` - компактні кнопки на телефоні
+- \`one_time_keyboard=True\` - клавіатура ховається після натискання
 
-Текст кнопки приходить як **звичайне повідомлення** — обробляйте тим самим MessageHandler:
+Текст кнопки приходить як **звичайне повідомлення** - обробляйте тим самим MessageHandler:
 
 \`\`\`python
 async def on_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -93,8 +93,8 @@ async def on_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 \`\`\``
       },
       {
-        title: "context.user_data — стан діалогу",
-        content: `\`context.user_data\` — словник **на одного користувача в цьому чаті**. Зручно для кроків «запитали місто → чекаємо відповідь».
+        title: "context.user_data - стан діалогу",
+        content: `\`context.user_data\` - словник **на одного користувача в цьому чаті**. Зручно для кроків «запитали місто → чекаємо відповідь».
 
 \`\`\`python
 async def on_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -124,7 +124,7 @@ async def on_text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
       },
       {
         title: "Inline-кнопки (коротко)",
-        content: `**Reply** — кнопки замість клавіатури (текст у чат). **Inline** — кнопки під повідомленням, callback не видно в полі вводу:
+        content: `**Reply** - кнопки замість клавіатури (текст у чат). **Inline** - кнопки під повідомленням, callback не видно в полі вводу:
 
 \`\`\`python
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
@@ -149,7 +149,7 @@ async def on_button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await query.edit_message_text("USD: 41.2")
 \`\`\`
 
-\`CallbackQueryHandler(on_button)\` — для проєкту в 14-4 можна поєднати Reply + Inline.`
+\`CallbackQueryHandler(on_button)\` - для проєкту в 14-4 можна поєднати Reply + Inline.`
       },
       {
         title: "Прибрати клавіатуру",
@@ -166,7 +166,7 @@ await update.message.reply_text(
       },
       {
         title: "Підсумок",
-        content: `Команди — CommandHandler + set_my_commands. Reply-клавіатура — ReplyKeyboardMarkup; натискання = текст. Стан кроків — \`context.user_data['step']\`. Далі — збір повноцінного бота-асистента (14-4).`
+        content: `Команди - CommandHandler + set_my_commands. Reply-клавіатура - ReplyKeyboardMarkup; натискання = текст. Стан кроків - \`context.user_data['step']\`. Далі - збір повноцінного бота-асистента (14-4).`
       }
     ]
   },
@@ -177,7 +177,7 @@ await update.message.reply_text(
       code: `kb = [[KeyboardButton("A"), KeyboardButton("B")],
       [KeyboardButton("Допомога")]]
 markup = ReplyKeyboardMarkup(kb, resize_keyboard=True)`,
-      explanation: "Список списків — рядки кнопок."
+      explanation: "Список списків - рядки кнопок."
     },
     {
       title: "Крок await_city",
@@ -205,12 +205,12 @@ markup = ReplyKeyboardMarkup(kb, resize_keyboard=True)`,
     },
     {
       mistake: "Забути CommandHandler для /menu",
-      explanation: "Користувач пише /menu текстом — потрібен окремий handler.",
+      explanation: "Користувач пише /menu текстом - потрібен окремий handler.",
       correctApproach: "CommandHandler('menu', menu) + кнопка «Меню» за бажанням."
     }
   ],
 
-  summary: `Команди оформлюють через BotCommand. ReplyKeyboardMarkup дає кнопки внизу; стан діалогу — у user_data. Inline-кнопки — через CallbackQueryHandler.`,
+  summary: `Команди оформлюють через BotCommand. ReplyKeyboardMarkup дає кнопки внизу; стан діалогу - у user_data. Inline-кнопки - через CallbackQueryHandler.`,
 
   practiceTask: null,
 
@@ -222,7 +222,7 @@ markup = ReplyKeyboardMarkup(kb, resize_keyboard=True)`,
         question: "Де зберігати тимчасові дані сесії одного користувача?",
         options: ["context.user_data", "globals()", "sys.argv", "open('state.txt')"],
         correctAnswer: 0,
-        explanation: "user_data — стандартне сховище PTB на user+chat."
+        explanation: "user_data - стандартне сховище PTB на user+chat."
       },
       {
         id: "q2",
@@ -248,7 +248,7 @@ markup = ReplyKeyboardMarkup(kb, resize_keyboard=True)`,
           "KeyboardRemove only"
         ],
         correctAnswer: 0,
-        explanation: "Reply — під полем вводу; Inline — під повідомленням."
+        explanation: "Reply - під полем вводу; Inline - під повідомленням."
       },
       {
         id: "q4",
@@ -269,7 +269,7 @@ markup = ReplyKeyboardMarkup(kb, resize_keyboard=True)`,
         question: "Для Inline-кнопок обов'язково викликати await query.answer().",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True — інакше клієнт Telegram «висить» на натисканні."
+        explanation: "True - інакше клієнт Telegram «висить» на натисканні."
       }
     ],
     timeLimit: 15,

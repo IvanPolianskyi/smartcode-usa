@@ -59,7 +59,7 @@ logging.basicConfig(level=logging.INFO)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
-        "Привіт! Напиши текст — я повторю (echo)."
+        "Hi! Send any text - I will echo it back."
     )
 
 async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -83,9 +83,9 @@ if __name__ == "__main__":
 **Key parts:**
 
 - \`Application.builder().token(...).build()\`
-- \`CommandHandler("start", start)\` — only \`/start\`
-- \`MessageHandler(filters.TEXT & ~filters.COMMAND, echo)\` — text without commands
-- \`run_polling()\` — endless loop receiving Updates`
+- \`CommandHandler("start", start)\` - only \`/start\`
+- \`MessageHandler(filters.TEXT & ~filters.COMMAND, echo)\` - text without commands
+- \`run_polling()\` - endless loop receiving Updates`
       },
       {
         title: "Async handlers",
@@ -94,16 +94,16 @@ if __name__ == "__main__":
 \`\`\`python
 async def help_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = (
-        "Доступні команди:\\n"
-        "/start — початок\\n"
-        "/help — ця довідка"
+        "Available commands:\\n"
+        "/start - begin\\n"
+        "/help - this help"
     )
     await update.message.reply_text(text)
 \`\`\`
 
 **Why async:** while the bot waits for Telegram's response, the event loop can handle other updates (useful under load).
 
-**Mistake:** a plain \`def\` without async in v21 — the handler will not work correctly.`
+**Mistake:** a plain \`def\` without async in v21 - the handler will not work correctly.`
       },
       {
         title: "Filters and multiple handlers",
@@ -115,9 +115,9 @@ app.add_handler(CommandHandler("help", help_cmd))
 # Photos only
 app.add_handler(MessageHandler(filters.PHOTO, photo_handler))
 
-# Text starting with "Привіт"
+# Text starting with "Hi"
 app.add_handler(
-    MessageHandler(filters.Regex(r"^Привіт"), greet_handler)
+    MessageHandler(filters.Regex(r"^Hi"), greet_handler)
 )
 \`\`\`
 
@@ -155,12 +155,12 @@ Show the user a **short** message; put details in the log:
 try:
     await update.message.reply_text(result)
 except Exception:
-    await update.message.reply_text("Щось пішло не так. Спробуйте пізніше.")
+    await update.message.reply_text("Something went wrong. Please try again later.")
 \`\`\``
       },
       {
         title: "Summary",
-        content: `Echo bot on PTB: Application + CommandHandler + MessageHandler + \`run_polling()\`. Next — keyboards and \`context.user_data\` (lesson 14-3).`
+        content: `Echo bot on PTB: Application + CommandHandler + MessageHandler + \`run_polling()\`. Next - keyboards and \`context.user_data\` (lesson 14-3).`
       }
     ]
   },
@@ -267,7 +267,7 @@ app.run_polling()`,
         question: "In PTB v21 handlers are usually declared as async def.",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True — that is the standard for version 21+."
+        explanation: "True - that is the standard for version 21+."
       }
     ],
     timeLimit: 15,
