@@ -9,6 +9,7 @@ export async function approveReceiptPayment(receiptId, approvedBy = null) {
   const paymentsCollection = await getCollection('payments')
   const usersCollection = await getCollection('users')
   const receiptObjectId = new ObjectId(receiptId)
+
   const receipt = await paymentsCollection.findOne({
     _id: receiptObjectId,
     paymentMethod: 'receipt_upload',
@@ -16,9 +17,6 @@ export async function approveReceiptPayment(receiptId, approvedBy = null) {
 
   if (!receipt) {
     throw new Error('Receipt not found')
-  }
-  if (receipt.approvalStatus === 'approved' || receipt.status === 'completed') {
-    return { ok: true, alreadyApproved: true }
   }
 
   const amount = Number(receipt.amount || 0)
@@ -30,8 +28,13 @@ export async function approveReceiptPayment(receiptId, approvedBy = null) {
       : { creditedLessons: storedLessons }
   const creditedLessons = creditCalc.creditedLessons || storedLessons
 
-  await paymentsCollection.updateOne(
-    { _id: receiptObjectId },
+  const claimed = await paymentsCollection.findOneAndUpdate(
+    {
+      _id: receiptObjectId,
+      paymentMethod: 'receipt_upload',
+      approvalStatus: { $ne: 'approved' },
+      status: { $ne: 'completed' },
+    },
     {
       $set: {
         status: 'completed',
@@ -40,11 +43,16 @@ export async function approveReceiptPayment(receiptId, approvedBy = null) {
         ...(approvedBy ? { approvedBy } : {}),
         updatedAt: new Date(),
       },
-    }
+    },
+    { returnDocument: 'after' }
   )
 
+  if (!claimed) {
+    return { ok: true, alreadyApproved: true }
+  }
+
   await usersCollection.updateOne(
-    { _id: receipt.userId },
+    { _id: claimed.userId },
     {
       $inc: {
         'studentProfile.accountBalance': amount,

@@ -359,7 +359,14 @@ export default function DashboardPage() {
         ? <AdminDashboard adminStats={adminStats} t={t} />
         : accountPendingSetup
           ? (
-              <ProfileAccountSection user={user} onDeleted={handleLogout} />
+              <>
+                <ProfileAccountSection user={user} onDeleted={handleLogout} />
+                <div className={styles.toolbar}>
+                  <button className={styles.secondaryBtn} onClick={handleLogout}>
+                    <LogOut size={16} /> {t('logout')}
+                  </button>
+                </div>
+              </>
             )
           : (
               <StudentDashboard

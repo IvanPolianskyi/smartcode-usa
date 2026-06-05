@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { sendCapiPurchase } from '@/lib/metaCapi'
 import { sanitizeAttribution } from '@/lib/attribution'
+import { assertCrmInternalRequest } from '@/lib/crmInternalAuth'
 
 function normalizeExternalId(value) {
 	if (!value) return undefined
@@ -9,6 +10,9 @@ function normalizeExternalId(value) {
 
 export async function POST(request) {
 	try {
+		const authError = assertCrmInternalRequest(request)
+		if (authError) return authError
+
 		const body = await request.json().catch(() => ({}))
 		const {
 			eventId,

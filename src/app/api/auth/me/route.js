@@ -124,22 +124,23 @@ export async function GET() {
           $or: scheduleQueries
         }).toArray()
 
-        // Give priority to slots specifically booked by this user, or just matching day/time
-        baseProfile.regularSchedule = baseProfile.regularSchedule.map(item => {
-          const slotsForThisTime = matchingSlots.filter(s => s.day === item.day && s.time === item.time)
-          
-          let bestSlot = slotsForThisTime.find(s => 
-            (s.bookedBy && s.bookedBy.toString() === userId.toString()) || 
-            s.bookedBy === user.email
+        const profileZoom = String(baseProfile.zoomLink || '').trim() || null
+        baseProfile.regularSchedule = baseProfile.regularSchedule.map((item) => {
+          const slotsForThisTime = matchingSlots.filter(
+            (s) => s.day === item.day && s.time === item.time
           )
-          
-          if (!bestSlot) {
-            bestSlot = slotsForThisTime.find(s => s.zoomLink) // just grab any that has a zoom link
-          }
+          const bookedSlot = slotsForThisTime.find(
+            (s) =>
+              (s.bookedBy && s.bookedBy.toString() === userId.toString()) ||
+              s.bookedBy === user.email
+          )
+          const slotZoom = bookedSlot?.zoomLink
+            ? String(bookedSlot.zoomLink).trim()
+            : null
 
           return {
             ...item,
-            zoomLink: bestSlot?.zoomLink || null
+            zoomLink: slotZoom || profileZoom,
           }
         })
       }

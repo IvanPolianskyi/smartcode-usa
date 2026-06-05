@@ -3,11 +3,21 @@ import { cookies } from 'next/headers'
 import { getCollection } from '@/lib/mongodb'
 import { hashPassword, generateToken, setAuthCookie } from '@/lib/auth'
 import { notifyCrmStudentLinksRefresh } from '@/lib/notifyCrmStudentLinks'
+import { claimGuestPayment } from '@/lib/claimGuestPayment'
 
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { email, password, name, phone, locale = 'uk', claimOrder, privacyAccepted } = body
+    const {
+      email,
+      password,
+      name,
+      phone,
+      locale = 'uk',
+      claimOrder,
+      claimOrderToken,
+      privacyAccepted,
+    } = body
     const isEnLocale = locale === 'en'
 
     // Validation
@@ -87,29 +97,15 @@ export async function POST(request) {
       name: user.name,
     }).catch(() => {})
 
-    // Handle claimOrder for guest checkout
     if (claimOrder) {
-      const paymentsCollection = await getCollection('payments')
-      const payment = await paymentsCollection.findOne({ orderId: claimOrder })
-      if (payment && payment.isGuest && payment.status === 'completed') {
-        await paymentsCollection.updateOne(
-          { orderId: claimOrder },
-          { $set: { userId: userObjectId }, $unset: { isGuest: "", guestEmail: "", guestName: "" } }
-        )
-        
-        // Grant access
-        const { grantFullCourseAccess, grantEnLiveLessonAccess } = await import('@/lib/paymentGrants')
-        if (payment.paymentType === 'full_course') {
-          await grantFullCourseAccess(userObjectId, payment.courseId)
-        } else if (payment.paymentType === 'live_lesson_en') {
-          await grantEnLiveLessonAccess(userObjectId, payment.courseId, {
-            lessonFormat: payment.lessonFormat,
-            day: payment.scheduleDay,
-            time: payment.scheduleTime,
-          })
-        }
-        
-        // Reload user to get updated fields after grants
+      const claimResult = await claimGuestPayment({
+        orderId: claimOrder,
+        userId: userObjectId,
+        email: user.email,
+        statusToken: claimOrderToken,
+      })
+
+      if (claimResult.ok) {
         const updatedUser = await usersCollection.findOne({ _id: userObjectId })
         if (updatedUser) {
           user.purchasedCourses = updatedUser.purchasedCourses

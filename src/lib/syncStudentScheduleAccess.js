@@ -1,6 +1,7 @@
 import {
   buildCourseAccessForOnlineCourses,
   getStudentAccessibleCourseIds,
+  ROBLOX_COURSE_ID,
 } from '@/lib/courseLessonAccess'
 import { getCollection } from '@/lib/mongodb'
 
@@ -57,7 +58,7 @@ export async function syncStudentScheduleAccess(user, usersCollection) {
     .toArray()
   const orphanProgressIds = progressRows
     .map((row) => row.courseId)
-    .filter((id) => id && !allowed.has(id))
+    .filter((id) => id && !allowed.has(id) && id !== ROBLOX_COURSE_ID)
 
   if (orphanProgressIds.length > 0) {
     await progressCollection.deleteMany({

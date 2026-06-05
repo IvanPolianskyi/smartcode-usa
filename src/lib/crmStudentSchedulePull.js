@@ -9,11 +9,7 @@ import { kyivPartsFromInstant, parseUtcInstant } from '@/lib/kyivTime'
 const CRM_BASE_URL = process.env.CRM_API_URL || process.env.SMARTCODE_CRM_API_URL || ''
 const CRM_NICKNAME = process.env.CRM_ACCOUNT_NICKNAME || process.env.ACCOUNT_NICKNAME || ''
 const CRM_PASSWORD = process.env.CRM_ACCOUNT_PASSWORD || process.env.ACCOUNT_PASSWORD || ''
-const CRM_STATIC_TOKEN =
-  process.env.CRM_BEARER_TOKEN ||
-  process.env.CRM_JWT_SECRET ||
-  process.env.JWT_SECRET ||
-  ''
+const CRM_STATIC_TOKEN = process.env.CRM_BEARER_TOKEN || ''
 
 const KYIV_WEEKDAY_UK = ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
 
@@ -100,32 +96,34 @@ let cachedCrmToken = null
 let crmTokenExpiresAt = 0
 
 export async function resolveCrmToken() {
-  if (CRM_STATIC_TOKEN) return CRM_STATIC_TOKEN
-  if (!CRM_BASE_URL || !CRM_NICKNAME || !CRM_PASSWORD) return ''
-
   if (cachedCrmToken && Date.now() < crmTokenExpiresAt) {
     return cachedCrmToken
   }
 
-  const loginResponse = await fetchCrmWithTimeout(`${CRM_BASE_URL.replace(/\/$/, '')}/auth/crm-login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      nickname: CRM_NICKNAME,
-      password: CRM_PASSWORD,
-    }),
-  })
-  if (!loginResponse.ok) {
-    const message = await loginResponse.text()
-    throw new Error(message || `CRM login failed (${loginResponse.status})`)
+  if (CRM_BASE_URL && CRM_NICKNAME && CRM_PASSWORD) {
+    const loginResponse = await fetchCrmWithTimeout(`${CRM_BASE_URL.replace(/\/$/, '')}/auth/crm-login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nickname: CRM_NICKNAME,
+        password: CRM_PASSWORD,
+      }),
+    })
+    if (!loginResponse.ok) {
+      const message = await loginResponse.text()
+      throw new Error(message || `CRM login failed (${loginResponse.status})`)
+    }
+    const loginData = await loginResponse.json()
+    const token = String(loginData?.access_token || '')
+    if (token) {
+      cachedCrmToken = token
+      crmTokenExpiresAt = Date.now() + 55 * 60 * 1000 // 55 minutes
+      return token
+    }
   }
-  const loginData = await loginResponse.json()
-  const token = String(loginData?.access_token || '')
-  if (token) {
-    cachedCrmToken = token
-    crmTokenExpiresAt = Date.now() + 55 * 60 * 1000 // 55 minutes
-  }
-  return token
+
+  if (CRM_STATIC_TOKEN) return CRM_STATIC_TOKEN
+  return ''
 }
 
 export async function fetchCrmTeachers() {
@@ -450,7 +448,7 @@ function mergeGroupContextIntoProfile(prev, crmGroups, { apply = true } = {}) {
   const next = { ...prev }
   if (!apply) return next
 
-  const courseIds = new Set()
+  const courseIds = new Set((prev.activeOnlineCourses || []).map(String))
   for (const g of crmGroups) {
     for (const cid of g.online_course_ids || []) {
       if (cid) courseIds.add(String(cid))
@@ -531,14 +529,19 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
   const nextLessonFormat = lessonsFetchedOk
     ? futureLessons.length > 0
       ? lessonFormatFromCrmLessons(futureLessons, prev)
-      : 'group'
+      : prev.lessonFormat || 'group'
     : prev.lessonFormat || 'group'
+
+  const nextSchedule =
+    lessonsFetchedOk && schedule.length > 0
+      ? schedule
+      : prev.regularSchedule || []
 
   let nextProfile = {
     ...prev,
     crmStudentId: String(crmStudent.id || ''),
     crmShortId: String(crmStudent.short_id || ''),
-    regularSchedule: lessonsFetchedOk ? schedule : prev.regularSchedule || [],
+    regularSchedule: nextSchedule,
     lessonFormat: nextLessonFormat,
     crmTeacherId: lessonsFetchedOk ? teacherId : String(prev.crmTeacherId || ''),
     crmTeacherName: lessonsFetchedOk ? teacherName : String(prev.crmTeacherName || ''),
@@ -550,7 +553,7 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
   })
   if (
     nextProfile.accountReady === false &&
-    (schedule.length > 0 || (nextProfile.activeOnlineCourses || []).length > 0)
+    (nextSchedule.length > 0 || (nextProfile.activeOnlineCourses || []).length > 0)
   ) {
     nextProfile.accountReady = true
   }
@@ -680,6 +683,7 @@ export async function maybePullCrmScheduleForStudent(user, usersCollection) {
   }
 
   try {
+    const prevCourses = profile.activeOnlineCourses || []
     const pulled = await pullCrmScheduleToSmartcodeStudent(
       {
         id: user._id.toString(),
@@ -689,6 +693,29 @@ export async function maybePullCrmScheduleForStudent(user, usersCollection) {
       },
       usersCollection
     )
+    const crmStudentId = String(
+      pulled.studentProfile?.crmStudentId || profile.crmStudentId || ''
+    ).trim()
+    if (crmStudentId) {
+      const userForCourses = {
+        ...user,
+        ...pulled,
+        studentProfile: {
+          ...(pulled.studentProfile || {}),
+          activeOnlineCourses: prevCourses,
+        },
+      }
+      const finalUser = await syncCoursesAfterCrmSchedulePull(
+        crmStudentId,
+        userForCourses,
+        usersCollection
+      )
+      return {
+        ...user,
+        name: finalUser?.name ?? pulled.name ?? user.name,
+        studentProfile: finalUser?.studentProfile ?? pulled.studentProfile,
+      }
+    }
     return {
       ...user,
       name: pulled.name ?? user.name,

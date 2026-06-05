@@ -28,14 +28,23 @@ export async function register(
   name,
   locale = 'uk',
   claimOrder,
-  privacyAccepted = false
+  privacyAccepted = false,
+  claimOrderToken = null
 ) {
   const response = await fetch('/api/auth/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ email, password, name, locale, claimOrder, privacyAccepted }),
+    body: JSON.stringify({
+      email,
+      password,
+      name,
+      locale,
+      claimOrder,
+      claimOrderToken,
+      privacyAccepted,
+    }),
   })
 
   const data = await response.json()

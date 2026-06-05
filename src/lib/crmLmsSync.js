@@ -286,7 +286,9 @@ export async function grantCourseAccessForCrmStudent(
         'studentProfile.accountReady': true,
         updatedAt: new Date(),
       },
-      $addToSet: { enrolledCourses: courseId },
+      ...(enabled
+        ? { $addToSet: { enrolledCourses: courseId } }
+        : { $pull: { enrolledCourses: courseId } }),
     }
   )
 

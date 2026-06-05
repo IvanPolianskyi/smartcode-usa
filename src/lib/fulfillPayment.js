@@ -4,55 +4,10 @@ import { grantFullCourseAccess, grantEnLiveLessonAccess } from '@/lib/paymentGra
 import { isMonobankSuccessStatus, mapMonobankStatusToPayment } from '@/lib/monobank'
 
 /**
- * Оновлює запис платежу і надає доступ після успішної оплати.
- * Використовується Monobank webhook і poll status.
+ * Надає доступ / кредити після підтвердження оплати.
+ * Гостьовий full_course очікує claim через реєстрацію.
  */
-export async function applyPaymentProviderUpdate(payment, providerPayload) {
-  const paymentsCollection = await getCollection('payments')
-  const orderReference =
-    providerPayload?.reference ||
-    providerPayload?.orderReference ||
-    payment.orderId
-
-  const approved =
-    providerPayload?.transactionStatus === 'Approved' ||
-    isMonobankSuccessStatus(providerPayload?.status)
-
-  const status = providerPayload?.transactionStatus
-    ? approved
-      ? 'completed'
-      : String(providerPayload.transactionStatus).toLowerCase()
-    : mapMonobankStatusToPayment(providerPayload?.status)
-
-  const amountFromProvider =
-    providerPayload?.finalAmount != null
-      ? Number(providerPayload.finalAmount) / 100
-      : providerPayload?.amount != null
-        ? Number(providerPayload.amount) / 100
-        : Number(providerPayload?.amount) || payment.amount
-
-  await paymentsCollection.updateOne(
-    { orderId: payment.orderId },
-    {
-      $set: {
-        status,
-        paymentData: providerPayload,
-        amount: amountFromProvider || payment.amount,
-        currency: payment.currency || 'UAH',
-        invoiceId: providerPayload?.invoiceId || payment.invoiceId || null,
-        updatedAt: new Date(),
-      },
-    }
-  )
-
-  if (!approved && status !== 'completed') {
-    return { orderReference, status, fulfilled: false }
-  }
-
-  if (payment.status === 'completed') {
-    return { orderReference, status: 'completed', fulfilled: false, alreadyDone: true }
-  }
-
+export async function fulfillCompletedPayment(payment, { amountFromProvider } = {}) {
   if (payment.paymentType === 'full_course' && payment.userId) {
     await grantFullCourseAccess(payment.userId, payment.courseId)
   } else if (payment.paymentType === 'live_lesson_en') {
@@ -86,6 +41,68 @@ export async function applyPaymentProviderUpdate(payment, providerPayload) {
       }
     )
   }
+}
 
+/**
+ * Оновлює запис платежу і надає доступ після успішної оплати.
+ * Використовується Monobank webhook і poll status.
+ */
+export async function applyPaymentProviderUpdate(payment, providerPayload) {
+  const paymentsCollection = await getCollection('payments')
+  const orderReference =
+    providerPayload?.reference ||
+    providerPayload?.orderReference ||
+    payment.orderId
+
+  const approved =
+    providerPayload?.transactionStatus === 'Approved' ||
+    isMonobankSuccessStatus(providerPayload?.status)
+
+  const status = providerPayload?.transactionStatus
+    ? approved
+      ? 'completed'
+      : String(providerPayload.transactionStatus).toLowerCase()
+    : mapMonobankStatusToPayment(providerPayload?.status)
+
+  const amountFromProvider =
+    providerPayload?.finalAmount != null
+      ? Number(providerPayload.finalAmount) / 100
+      : providerPayload?.amount != null
+        ? Number(providerPayload.amount) / 100
+        : Number(providerPayload?.amount) || payment.amount
+
+  const setFields = {
+    status,
+    paymentData: providerPayload,
+    amount: amountFromProvider || payment.amount,
+    currency: payment.currency || 'UAH',
+    invoiceId: providerPayload?.invoiceId || payment.invoiceId || null,
+    updatedAt: new Date(),
+  }
+
+  if (!approved && status !== 'completed') {
+    await paymentsCollection.updateOne(
+      { orderId: payment.orderId },
+      { $set: setFields }
+    )
+    return { orderReference, status, fulfilled: false }
+  }
+
+  const claimed = await paymentsCollection.findOneAndUpdate(
+    { orderId: payment.orderId, status: { $ne: 'completed' } },
+    { $set: { ...setFields, status: 'completed' } },
+    { returnDocument: 'after' }
+  )
+
+  if (!claimed) {
+    return {
+      orderReference,
+      status: 'completed',
+      fulfilled: false,
+      alreadyDone: true,
+    }
+  }
+
+  await fulfillCompletedPayment(claimed, { amountFromProvider })
   return { orderReference, status: 'completed', fulfilled: true }
 }

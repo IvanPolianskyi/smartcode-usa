@@ -65,6 +65,9 @@ export default function PaymentResultFlow({ syncMonobank = true }) {
               claimOrder: orderId,
               email: data.guestEmail || '',
             })
+            if (statusToken) {
+              registerUrl.set('claimOrderToken', statusToken)
+            }
             if (coursePath && coursePath !== '/dashboard') {
               registerUrl.set('redirect', coursePath)
             }

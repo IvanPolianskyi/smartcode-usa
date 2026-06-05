@@ -17,6 +17,7 @@ function RegisterPageContent() {
 
   const initialEmail = searchParams.get('email') || ''
   const claimOrder = searchParams.get('claimOrder')
+  const claimOrderToken = searchParams.get('claimOrderToken')
 
   const [formData, setFormData] = useState({
     name: '',
@@ -58,7 +59,8 @@ function RegisterPageContent() {
         formData.name,
         locale,
         claimOrder,
-        true
+        true,
+        claimOrderToken
       )
       window.dispatchEvent(new Event('auth:register'))
       const redirectUrl = new URLSearchParams(window.location.search).get('redirect') || '/dashboard'

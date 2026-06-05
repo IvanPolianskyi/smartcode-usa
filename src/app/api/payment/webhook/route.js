@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/mongodb'
-import { ObjectId } from 'mongodb'
 import { verifySignature, decodeData } from '@/lib/liqpay'
+import { fulfillCompletedPayment } from '@/lib/fulfillPayment'
 
 /**
  * LiqPay webhook handler
@@ -53,55 +53,33 @@ export async function POST(request) {
       )
     }
 
-    // Update payment status
-    await paymentsCollection.updateOne(
-      { orderId: order_id },
-      {
-        $set: {
-          status: status === 'success' ? 'completed' : status,
-          paymentData: paymentData,
-          updatedAt: new Date()
-        }
-      }
-    )
-
-    // If payment is successful, grant access to course
     if (status === 'success') {
-      const usersCollection = await getCollection('users')
-      
-      // Add course to purchased courses
-      await usersCollection.updateOne(
-        { _id: payment.userId },
+      const claimed = await paymentsCollection.findOneAndUpdate(
+        { orderId: order_id, status: { $ne: 'completed' } },
         {
-          $addToSet: { 
-            purchasedCourses: payment.courseId,
-            enrolledCourses: payment.courseId
+          $set: {
+            status: 'completed',
+            paymentData: paymentData,
+            updatedAt: new Date(),
           },
-          $set: { updatedAt: new Date() }
-        }
+        },
+        { returnDocument: 'after' }
       )
 
-      // Create or update progress entry
-      const progressCollection = await getCollection('userProgress')
-      const existingProgress = await progressCollection.findOne({
-        userId: payment.userId,
-        courseId: payment.courseId
-      })
-
-      if (!existingProgress) {
-        await progressCollection.insertOne({
-          userId: payment.userId,
-          courseId: payment.courseId,
-          enrolledAt: new Date(),
-          completedLessons: [],
-          completedQuizzes: {},
-          completedPracticeTasks: [],
-          currentModule: 0,
-          currentLesson: 0,
-          overallProgress: 0,
-          certificates: []
-        })
+      if (claimed) {
+        await fulfillCompletedPayment(claimed)
       }
+    } else {
+      await paymentsCollection.updateOne(
+        { orderId: order_id },
+        {
+          $set: {
+            status,
+            paymentData: paymentData,
+            updatedAt: new Date(),
+          },
+        }
+      )
     }
 
     return NextResponse.json({ success: true }, { status: 200 })
