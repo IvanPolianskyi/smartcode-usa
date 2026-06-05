@@ -149,6 +149,7 @@ export async function fetchCrmTeachers() {
       id: String(item.id || ''),
       fullName: String(item.full_name || '').trim(),
       role: String(item.role || ''),
+      zoomLink: String(item.zoom_link || '').trim(),
     }))
     .filter((item) => item.id && item.fullName)
 }
@@ -270,6 +271,7 @@ export async function syncStudentToCrm(studentDoc) {
 
 /** Груповий слот у CRM зберігається як kind=individual + series_id group:… або нотатка GROUP_LESSON. */
 export function isCrmGroupLessonSlot(lesson) {
+  if (lesson?.is_group_slot === true) return true
   const series = String(lesson?.series_id || '')
   if (series.startsWith('group:')) return true
   if (String(lesson?.notes_internal || '').trim() === 'GROUP_LESSON') return true
@@ -277,67 +279,6 @@ export function isCrmGroupLessonSlot(lesson) {
 }
 
 const SCHEDULE_SLOT_GRACE_MS = 60 * 60 * 1000
-
-function collectScheduleSlotsByDay(lessons, { futureOnly }) {
-  const now = Date.now()
-  const byDay = new Map()
-
-  for (const lesson of lessons) {
-    if (String(lesson?.kind || '') !== 'individual') continue
-    if (String(lesson?.status || '') !== 'scheduled') continue
-
-    const start = parseUtcInstant(lesson.start_at)
-    if (Number.isNaN(start.getTime())) continue
-    if (futureOnly && start.getTime() < now - SCHEDULE_SLOT_GRACE_MS) continue
-
-    const p = kyivPartsFromInstant(start.getTime())
-    const day = KYIV_WEEKDAY_UK[p.weekdayIndex]
-    if (!day) continue
-    const time = `${String(p.hour).padStart(2, '0')}:${String(p.minute).padStart(2, '0')}`
-    const timeKey = `${p.weekdayIndex}-${p.hour}-${p.minute}`
-    const isGroup = isCrmGroupLessonSlot(lesson)
-
-    if (!byDay.has(day)) byDay.set(day, new Map())
-    const daySlots = byDay.get(day)
-    const createdMs = parseUtcInstant(lesson.created_at).getTime()
-    const prev = daySlots.get(timeKey) || {
-      time,
-      count: 0,
-      latestStart: 0,
-      newestCreated: 0,
-      hasIndividual: false,
-      hasGroup: false,
-    }
-    prev.count += 1
-    prev.latestStart = Math.max(prev.latestStart, start.getTime())
-    if (Number.isFinite(createdMs)) {
-      prev.newestCreated = Math.max(prev.newestCreated, createdMs)
-    }
-    if (isGroup) prev.hasGroup = true
-    else prev.hasIndividual = true
-    daySlots.set(timeKey, prev)
-  }
-
-  return byDay
-}
-
-function pickAllSlotsForDay(daySlots) {
-  if (!daySlots || daySlots.size === 0) return []
-  const ranked = [...daySlots.values()].sort((a, b) => {
-    if (a.hasIndividual !== b.hasIndividual) return a.hasIndividual ? -1 : 1
-    if (b.newestCreated !== a.newestCreated) return b.newestCreated - a.newestCreated
-    if (b.count !== a.count) return b.count - a.count
-    return b.latestStart - a.latestStart
-  })
-  const seen = new Set()
-  const times = []
-  for (const slot of ranked) {
-    if (!slot?.time || seen.has(slot.time)) continue
-    seen.add(slot.time)
-    times.push(slot.time)
-  }
-  return times.sort()
-}
 
 /** Майбутні scheduled ІУ/групові слоти — лише вони формують regularSchedule в LMS. */
 export function filterFutureScheduledLessons(lessons) {
@@ -350,18 +291,85 @@ export function filterFutureScheduledLessons(lessons) {
   })
 }
 
-export function scheduleFromCrmLessons(lessons) {
-  const list = Array.isArray(lessons) ? lessons : []
-  // Не підставляємо минулі уроки: після видалення майбутніх слотів розклад має стати порожнім.
-  const byDay = collectScheduleSlotsByDay(list, { futureOnly: true })
+/** Найближчий майбутній урок на кожну series_id (без дублювання серії). */
+function nearestFutureLessonBySeries(lessons) {
+  const bySeries = new Map()
+  for (const lesson of lessons) {
+    const seriesKey = String(lesson?.series_id || lesson?.id || '').trim()
+    const start = parseUtcInstant(lesson.start_at).getTime()
+    if (!seriesKey || Number.isNaN(start)) continue
+    const prev = bySeries.get(seriesKey)
+    if (!prev || start < prev.start) {
+      bySeries.set(seriesKey, { lesson, start })
+    }
+  }
+  return [...bySeries.values()].map((item) => item.lesson)
+}
 
+function kyivDayTimeFromLesson(lesson) {
+  const start = parseUtcInstant(lesson?.start_at)
+  if (Number.isNaN(start.getTime())) return null
+  const p = kyivPartsFromInstant(start.getTime())
+  const day = KYIV_WEEKDAY_UK[p.weekdayIndex]
+  if (!day) return null
+  const time = `${String(p.hour).padStart(2, '0')}:${String(p.minute).padStart(2, '0')}`
+  return { day, time }
+}
+
+/**
+ * Регулярний розклад LMS з CRM.
+ * - Для учнів у групах: час береться з group.schedule (як у CRM «Групові»), не з UTC уроків.
+ * - Індивідуальні (не групові) серії — один слот на series_id.
+ */
+export function scheduleFromCrmLessons(lessons, crmGroups = []) {
   const orderedDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд']
+  const slotMap = new Map()
+
+  const addSlot = (day, time, priority = 1) => {
+    const d = String(day || '').trim()
+    const t = String(time || '').trim()
+    if (!d || !t) return
+    const key = `${d}|${t}`
+    const prev = slotMap.get(key)
+    if (!prev || priority > prev.priority) {
+      slotMap.set(key, { day: d, time: t, priority })
+    }
+  }
+
+  const groups = Array.isArray(crmGroups) ? crmGroups : []
+  const hasGroupSchedule = groups.some((g) => (g.schedule || []).length > 0)
+
+  for (const g of groups) {
+    for (const slot of g.schedule || []) {
+      addSlot(slot.day, slot.time, 100)
+    }
+  }
+
+  const future = filterFutureScheduledLessons(lessons)
+
+  for (const lesson of nearestFutureLessonBySeries(
+    future.filter((l) => !isCrmGroupLessonSlot(l))
+  )) {
+    const dt = kyivDayTimeFromLesson(lesson)
+    if (dt) addSlot(dt.day, dt.time, 50)
+  }
+
+  if (!hasGroupSchedule) {
+    for (const lesson of nearestFutureLessonBySeries(
+      future.filter((l) => isCrmGroupLessonSlot(l))
+    )) {
+      const dt = kyivDayTimeFromLesson(lesson)
+      if (dt) addSlot(dt.day, dt.time, 10)
+    }
+  }
+
   const out = []
   for (const day of orderedDays) {
-    const times = pickAllSlotsForDay(byDay.get(day))
-    for (const time of times) {
-      out.push({ day, time })
-    }
+    const times = [...slotMap.values()]
+      .filter((s) => s.day === day)
+      .map((s) => s.time)
+      .sort()
+    for (const time of times) out.push({ day, time })
   }
   return out
 }
@@ -391,11 +399,19 @@ function resolveTeacherFromCrmData(rawLessons, crmGroups, teachers) {
   }
 
   let teacherName = ''
+  let zoomLink = ''
   if (teacherId) {
-    teacherName = String(teachers.find((item) => item.id === teacherId)?.fullName || '')
+    const teacher = teachers.find((item) => item.id === teacherId)
+    teacherName = String(teacher?.fullName || '')
+    zoomLink = String(teacher?.zoomLink || '').trim()
   }
 
-  return { teacherId, teacherName }
+  if (!zoomLink && crmGroups.length > 0) {
+    zoomLink =
+      crmGroups.map((g) => String(g.zoom_link || '').trim()).find(Boolean) || ''
+  }
+
+  return { teacherId, teacherName, zoomLink }
 }
 
 export function lessonFormatFromCrmLessons(lessons, fallbackProfile) {
@@ -433,9 +449,6 @@ async function fetchCrmGroupsForStudent(crmStudentId) {
 function mergeGroupContextIntoProfile(prev, crmGroups, { apply = true } = {}) {
   const next = { ...prev }
   if (!apply) return next
-
-  const zoom = crmGroups.map((g) => String(g.zoom_link || '').trim()).find(Boolean) || ''
-  next.zoomLink = zoom
 
   const courseIds = new Set()
   for (const g of crmGroups) {
@@ -502,17 +515,18 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
   const lessonsFetchedOk = lessonsResponse.ok
   const lessons = lessonsFetchedOk ? await lessonsResponse.json() : []
   const rawLessons = Array.isArray(lessons) ? lessons : []
-  const futureLessons = filterFutureScheduledLessons(rawLessons)
-  const schedule = scheduleFromCrmLessons(rawLessons)
   const crmGroups = crmGroupsResult.groups
   const crmGroupsFetchedOk = crmGroupsResult.ok
+  const futureLessons = filterFutureScheduledLessons(rawLessons)
+  const schedule = scheduleFromCrmLessons(rawLessons, crmGroups)
   const prev = student?.studentProfile || {}
 
-  const { teacherId, teacherName } = lessonsFetchedOk
+  const { teacherId, teacherName, zoomLink } = lessonsFetchedOk
     ? resolveTeacherFromCrmData(rawLessons, crmGroups, teachers)
     : {
         teacherId: String(prev.crmTeacherId || ''),
         teacherName: String(prev.crmTeacherName || ''),
+        zoomLink: String(prev.zoomLink || ''),
       }
   const nextLessonFormat = lessonsFetchedOk
     ? futureLessons.length > 0
@@ -528,6 +542,7 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
     lessonFormat: nextLessonFormat,
     crmTeacherId: lessonsFetchedOk ? teacherId : String(prev.crmTeacherId || ''),
     crmTeacherName: lessonsFetchedOk ? teacherName : String(prev.crmTeacherName || ''),
+    zoomLink: lessonsFetchedOk ? zoomLink : String(prev.zoomLink || ''),
     crmScheduleSyncedAt: new Date().toISOString(),
   }
   nextProfile = mergeGroupContextIntoProfile(nextProfile, crmGroups, {
