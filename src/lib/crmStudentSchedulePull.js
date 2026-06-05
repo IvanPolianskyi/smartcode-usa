@@ -4,7 +4,7 @@ import {
   isPlaceholderStudentName,
   isReliableStudentDisplayName,
 } from '@/lib/crmLmsSync'
-import { kyivPartsFromInstant } from '@/lib/kyivTime'
+import { kyivPartsFromInstant, parseUtcInstant } from '@/lib/kyivTime'
 
 const CRM_BASE_URL = process.env.CRM_API_URL || process.env.SMARTCODE_CRM_API_URL || ''
 const CRM_NICKNAME = process.env.CRM_ACCOUNT_NICKNAME || process.env.ACCOUNT_NICKNAME || ''
@@ -276,27 +276,75 @@ export function isCrmGroupLessonSlot(lesson) {
   return false
 }
 
-export function scheduleFromCrmLessons(lessons) {
+const SCHEDULE_SLOT_GRACE_MS = 60 * 60 * 1000
+
+function collectScheduleSlotsByDay(lessons, { futureOnly }) {
+  const now = Date.now()
   const byDay = new Map()
+
   for (const lesson of lessons) {
     if (String(lesson?.kind || '') !== 'individual') continue
-    if (String(lesson?.status || '') === 'cancelled') continue
-    const start = new Date(lesson.start_at)
+    if (String(lesson?.status || '') !== 'scheduled') continue
+
+    const start = parseUtcInstant(lesson.start_at)
     if (Number.isNaN(start.getTime())) continue
+    if (futureOnly && start.getTime() < now - SCHEDULE_SLOT_GRACE_MS) continue
+
     const p = kyivPartsFromInstant(start.getTime())
     const day = KYIV_WEEKDAY_UK[p.weekdayIndex]
     if (!day) continue
     const time = `${String(p.hour).padStart(2, '0')}:${String(p.minute).padStart(2, '0')}`
-    if (!byDay.has(day)) byDay.set(day, new Set())
-    byDay.get(day).add(time)
+    const timeKey = `${p.weekdayIndex}-${p.hour}-${p.minute}`
+    const isGroup = isCrmGroupLessonSlot(lesson)
+
+    if (!byDay.has(day)) byDay.set(day, new Map())
+    const daySlots = byDay.get(day)
+    const createdMs = parseUtcInstant(lesson.created_at).getTime()
+    const prev = daySlots.get(timeKey) || {
+      time,
+      count: 0,
+      latestStart: 0,
+      newestCreated: 0,
+      hasIndividual: false,
+      hasGroup: false,
+    }
+    prev.count += 1
+    prev.latestStart = Math.max(prev.latestStart, start.getTime())
+    if (Number.isFinite(createdMs)) {
+      prev.newestCreated = Math.max(prev.newestCreated, createdMs)
+    }
+    if (isGroup) prev.hasGroup = true
+    else prev.hasIndividual = true
+    daySlots.set(timeKey, prev)
   }
+
+  return byDay
+}
+
+function pickBestSlotForDay(daySlots) {
+  if (!daySlots || daySlots.size === 0) return null
+  const ranked = [...daySlots.values()].sort((a, b) => {
+    if (a.hasIndividual !== b.hasIndividual) return a.hasIndividual ? -1 : 1
+    if (b.newestCreated !== a.newestCreated) return b.newestCreated - a.newestCreated
+    if (b.count !== a.count) return b.count - a.count
+    return b.latestStart - a.latestStart
+  })
+  return ranked[0]?.time || null
+}
+
+export function scheduleFromCrmLessons(lessons) {
+  const list = Array.isArray(lessons) ? lessons : []
+  let byDay = collectScheduleSlotsByDay(list, { futureOnly: true })
+  const hasFutureSlots = [...byDay.values()].some((m) => m.size > 0)
+  if (!hasFutureSlots) {
+    byDay = collectScheduleSlotsByDay(list, { futureOnly: false })
+  }
+
   const orderedDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд']
   const out = []
   for (const day of orderedDays) {
-    const times = [...(byDay.get(day) || [])].sort()
-    if (times.length > 0) {
-      out.push({ day, time: times[0] })
-    }
+    const time = pickBestSlotForDay(byDay.get(day))
+    if (time) out.push({ day, time })
   }
   return out
 }

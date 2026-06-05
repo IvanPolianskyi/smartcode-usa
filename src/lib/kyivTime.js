@@ -1,7 +1,7 @@
 /** Київський «настінний» час ↔ UTC. Та сама логіка, що в smartcode_manager (Europe/Kyiv). */
 
 import { addDays } from 'date-fns'
-import { formatInTimeZone, fromZonedTime } from 'date-fns-tz'
+import { formatInTimeZone, fromZonedTime, toZonedTime } from 'date-fns-tz'
 
 export const KYIV_TZ = 'Europe/Kyiv'
 
@@ -9,9 +9,26 @@ function pad2(n) {
   return String(n).padStart(2, '0')
 }
 
-/** UTC-миттєвість → календарний час у Києві (Intl/formatInTimeZone, не фіксований UTC+2). */
+/**
+ * CRM API зберігає start_at як UTC; без суфікса Z `new Date()` на сервері в Europe/Kyiv
+ * читає рядок як локальний час — зсув на 1–3 години.
+ */
+export function parseUtcInstant(iso) {
+  const s = String(iso ?? '').trim()
+  if (!s) return new Date(Number.NaN)
+  if (
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(s) &&
+    !/[zZ]$/.test(s) &&
+    !/[+-]\d{2}:?\d{2}$/.test(s)
+  ) {
+    return new Date(`${s}Z`)
+  }
+  return new Date(s)
+}
+
+/** UTC-миттєвість → календарний час у Києві (Europe/Kyiv, літо/зима). */
 export function kyivPartsFromInstant(ts) {
-  const d = typeof ts === 'number' ? new Date(ts) : new Date(ts)
+  const d = typeof ts === 'number' ? new Date(ts) : parseUtcInstant(ts)
   if (Number.isNaN(d.getTime())) {
     return {
       year: 0,
@@ -23,14 +40,15 @@ export function kyivPartsFromInstant(ts) {
       weekdayIndex: 0,
     }
   }
+  const z = toZonedTime(d, KYIV_TZ)
   return {
-    year: Number(formatInTimeZone(d, KYIV_TZ, 'yyyy')),
-    month: Number(formatInTimeZone(d, KYIV_TZ, 'M')),
-    day: Number(formatInTimeZone(d, KYIV_TZ, 'd')),
-    hour: Number(formatInTimeZone(d, KYIV_TZ, 'H')),
-    minute: Number(formatInTimeZone(d, KYIV_TZ, 'm')),
-    second: Number(formatInTimeZone(d, KYIV_TZ, 's')),
-    weekdayIndex: Number(formatInTimeZone(d, KYIV_TZ, 'i')) % 7,
+    year: z.getFullYear(),
+    month: z.getMonth() + 1,
+    day: z.getDate(),
+    hour: z.getHours(),
+    minute: z.getMinutes(),
+    second: z.getSeconds(),
+    weekdayIndex: z.getDay(),
   }
 }
 
@@ -71,7 +89,7 @@ export function nextKyivWeekdaySlot(weekdayIndex, hours, minutes, now = new Date
 
 /** Підпис слота для порівняння з CRM. */
 export function kyivSlotSignature(dateIso) {
-  const date = new Date(dateIso)
+  const date = parseUtcInstant(dateIso)
   if (Number.isNaN(date.getTime())) return null
   const p = kyivPartsFromInstant(date.getTime())
   return `${p.weekdayIndex}-${pad2(p.hour)}:${pad2(p.minute)}`
