@@ -2,7 +2,12 @@ import { NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
-import { crmJson, pullCrmScheduleToSmartcodeStudent, syncStudentToCrm } from '@/lib/crmStudentSchedulePull'
+import {
+  crmJson,
+  pullCrmScheduleToSmartcodeStudent,
+  syncCoursesAfterCrmSchedulePull,
+  syncStudentToCrm,
+} from '@/lib/crmStudentSchedulePull'
 
 async function requireAdmin() {
   const userId = await getCurrentUser()
@@ -74,17 +79,29 @@ export async function POST(request, { params }) {
       updatedGroup = await crmJson('POST', `groups/${groupId}/students/add`, { student_id: crmSid })
     }
 
+    const profileBeforePull = {
+      ...(studentDoc.studentProfile || {}),
+      crmStudentId: crmSid,
+      lessonFormat: 'group',
+    }
     const pulled = await pullCrmScheduleToSmartcodeStudent(
       {
         id: studentId,
         name: studentDoc.name,
         email: studentDoc.email,
-        studentProfile: {
-          ...(studentDoc.studentProfile || {}),
-          crmStudentId: crmSid,
-          lessonFormat: 'group',
-        },
+        studentProfile: profileBeforePull,
       },
+      usersCollection
+    )
+
+    const userForCourses = {
+      ...studentDoc,
+      _id: new ObjectId(studentId),
+      studentProfile: profileBeforePull,
+    }
+    const afterCourses = await syncCoursesAfterCrmSchedulePull(
+      crmSid,
+      userForCourses,
       usersCollection
     )
 
@@ -98,7 +115,7 @@ export async function POST(request, { params }) {
       }
     )
     const finalProfile = {
-      ...(pulled.studentProfile || {}),
+      ...(afterCourses?.studentProfile || pulled.studentProfile || {}),
       accountReady: true,
     }
 

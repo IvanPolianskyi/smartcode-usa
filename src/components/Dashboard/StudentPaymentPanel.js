@@ -215,14 +215,6 @@ export default function StudentPaymentPanel({
                 }}
                 className={styles.receiptInput}
               />
-              <p className={styles.payHint}>
-                {lessonsFromAmount && lessonsFromAmount >= 1
-                  ? t('student.payments.lessonsFromAmount', {
-                      count: lessonsFromAmount,
-                      price: lessonPrice,
-                    })
-                  : t('student.payments.lessonsHint', { price: lessonPrice })}
-              </p>
             </div>
           </div>
 

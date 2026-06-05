@@ -4,6 +4,7 @@ import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import {
   buildCrmHeaders,
+  clearCrmSmartcodeLinkForDeletedUser,
   fetchCrmTeachers,
   resolveCrmToken,
   syncStudentToCrm,
@@ -455,8 +456,21 @@ export async function DELETE(request) {
     }
 
     const progressCollection = await getCollection('userProgress')
-    
-    // Delete user
+
+    const userToDelete = await usersCollection.findOne({
+      _id: new ObjectId(studentId),
+      role: { $ne: 'admin' },
+    })
+    if (!userToDelete) {
+      return NextResponse.json({ error: 'Student not found' }, { status: 404 })
+    }
+
+    try {
+      await clearCrmSmartcodeLinkForDeletedUser(userToDelete)
+    } catch (e) {
+      console.error('CRM unlink before LMS student delete:', e)
+    }
+
     const result = await usersCollection.deleteOne({ _id: new ObjectId(studentId), role: { $ne: 'admin' } })
     
     if (result.deletedCount === 0) {

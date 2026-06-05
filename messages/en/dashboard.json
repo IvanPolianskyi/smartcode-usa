@@ -137,8 +137,6 @@
       "amountLabel": "Payment amount (UAH)",
       "amountPlaceholder": "e.g. 700",
       "lessonsLabel": "Number of lessons paid",
-      "lessonsHint": "At {price} UAH per lesson, enter the total amount (e.g. {price} for 1 lesson, {price}×2 for 2).",
-      "lessonsFromAmount": "This amount credits {count} lesson(s) at {price} UAH each.",
       "debtLessons": "{count} lesson(s)",
       "debtHint": "We suggest entering {lessons} lesson(s) in the field below",
       "receiptPhoto": "Tap to choose a receipt file",

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { getCurrentUser, removeAuthCookie } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
+import { clearCrmSmartcodeLinkForDeletedUser } from '@/lib/crmStudentSchedulePull'
 
 export async function POST() {
   try {
@@ -28,6 +29,12 @@ export async function POST() {
     const userObjectId = new ObjectId(userId)
     const progressCollection = await getCollection('userProgress')
     const paymentsCollection = await getCollection('payments')
+
+    try {
+      await clearCrmSmartcodeLinkForDeletedUser(user)
+    } catch (e) {
+      console.error('CRM unlink before self-delete:', e)
+    }
 
     await Promise.all([
       progressCollection.deleteMany({ userId: userObjectId }),

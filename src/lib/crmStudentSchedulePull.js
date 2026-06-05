@@ -321,32 +321,81 @@ function collectScheduleSlotsByDay(lessons, { futureOnly }) {
   return byDay
 }
 
-function pickBestSlotForDay(daySlots) {
-  if (!daySlots || daySlots.size === 0) return null
+function pickAllSlotsForDay(daySlots) {
+  if (!daySlots || daySlots.size === 0) return []
   const ranked = [...daySlots.values()].sort((a, b) => {
     if (a.hasIndividual !== b.hasIndividual) return a.hasIndividual ? -1 : 1
     if (b.newestCreated !== a.newestCreated) return b.newestCreated - a.newestCreated
     if (b.count !== a.count) return b.count - a.count
     return b.latestStart - a.latestStart
   })
-  return ranked[0]?.time || null
+  const seen = new Set()
+  const times = []
+  for (const slot of ranked) {
+    if (!slot?.time || seen.has(slot.time)) continue
+    seen.add(slot.time)
+    times.push(slot.time)
+  }
+  return times.sort()
+}
+
+/** Майбутні scheduled ІУ/групові слоти — лише вони формують regularSchedule в LMS. */
+export function filterFutureScheduledLessons(lessons) {
+  const now = Date.now()
+  return (Array.isArray(lessons) ? lessons : []).filter((lesson) => {
+    if (String(lesson?.kind || '') !== 'individual') return false
+    if (String(lesson?.status || '') !== 'scheduled') return false
+    const start = parseUtcInstant(lesson.start_at).getTime()
+    return Number.isFinite(start) && start >= now - SCHEDULE_SLOT_GRACE_MS
+  })
 }
 
 export function scheduleFromCrmLessons(lessons) {
   const list = Array.isArray(lessons) ? lessons : []
-  let byDay = collectScheduleSlotsByDay(list, { futureOnly: true })
-  const hasFutureSlots = [...byDay.values()].some((m) => m.size > 0)
-  if (!hasFutureSlots) {
-    byDay = collectScheduleSlotsByDay(list, { futureOnly: false })
-  }
+  // Не підставляємо минулі уроки: після видалення майбутніх слотів розклад має стати порожнім.
+  const byDay = collectScheduleSlotsByDay(list, { futureOnly: true })
 
   const orderedDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд']
   const out = []
   for (const day of orderedDays) {
-    const time = pickBestSlotForDay(byDay.get(day))
-    if (time) out.push({ day, time })
+    const times = pickAllSlotsForDay(byDay.get(day))
+    for (const time of times) {
+      out.push({ day, time })
+    }
   }
   return out
+}
+
+function resolveTeacherFromCrmData(rawLessons, crmGroups, teachers) {
+  const now = Date.now()
+  const scheduled = (Array.isArray(rawLessons) ? rawLessons : []).filter(
+    (l) => String(l?.status || '') === 'scheduled' && String(l?.kind || '') === 'individual'
+  )
+  const future = scheduled
+    .map((lesson) => ({
+      lesson,
+      start: parseUtcInstant(lesson.start_at).getTime(),
+    }))
+    .filter((item) => !Number.isNaN(item.start) && item.start >= now - SCHEDULE_SLOT_GRACE_MS)
+    .sort((a, b) => a.start - b.start)
+
+  let teacherId = ''
+  if (future.length > 0) {
+    const pick =
+      future.find((item) => String(item.lesson?.teacher_id || '').trim()) || future[0]
+    teacherId = String(pick.lesson?.teacher_id || '').trim()
+  }
+
+  if (!teacherId && crmGroups.length > 0) {
+    teacherId = String(crmGroups[0]?.teacher_id || '').trim()
+  }
+
+  let teacherName = ''
+  if (teacherId) {
+    teacherName = String(teachers.find((item) => item.id === teacherId)?.fullName || '')
+  }
+
+  return { teacherId, teacherName }
 }
 
 export function lessonFormatFromCrmLessons(lessons, fallbackProfile) {
@@ -365,36 +414,64 @@ export function lessonFormatFromCrmLessons(lessons, fallbackProfile) {
 
 /** Групи CRM, де є учень — zoom і онлайн-курси для профілю LMS. */
 async function fetchCrmGroupsForStudent(crmStudentId) {
-  if (!CRM_BASE_URL || !crmStudentId) return []
+  if (!CRM_BASE_URL || !crmStudentId) return { groups: [], ok: false }
   try {
     const groups = await crmJson('GET', 'groups?limit=200&active_only=true')
-    if (!Array.isArray(groups)) return []
-    return groups.filter((g) =>
-      (g.student_ids || []).some((sid) => String(sid) === String(crmStudentId))
-    )
+    if (!Array.isArray(groups)) return { groups: [], ok: false }
+    return {
+      groups: groups.filter((g) =>
+        (g.student_ids || []).some((sid) => String(sid) === String(crmStudentId))
+      ),
+      ok: true,
+    }
   } catch (e) {
     console.error('CRM groups fetch for student failed:', e)
-    return []
+    return { groups: [], ok: false }
   }
 }
 
-function mergeGroupContextIntoProfile(prev, crmGroups) {
+function mergeGroupContextIntoProfile(prev, crmGroups, { apply = true } = {}) {
   const next = { ...prev }
-  if (!crmGroups.length) return next
+  if (!apply) return next
 
-  const zoom = crmGroups.map((g) => String(g.zoom_link || '').trim()).find(Boolean)
-  if (zoom) next.zoomLink = zoom
+  const zoom = crmGroups.map((g) => String(g.zoom_link || '').trim()).find(Boolean) || ''
+  next.zoomLink = zoom
 
-  const courseIds = new Set(next.activeOnlineCourses || [])
+  const courseIds = new Set()
   for (const g of crmGroups) {
     for (const cid of g.online_course_ids || []) {
       if (cid) courseIds.add(String(cid))
     }
   }
-  if (courseIds.size > 0) {
-    next.activeOnlineCourses = [...courseIds]
-  }
+  next.activeOnlineCourses = [...courseIds]
   return next
+}
+
+/** Зняти привʼязку smartcode_user_id у CRM після видалення акаунта LMS. */
+export async function clearCrmSmartcodeLinkForDeletedUser(user) {
+  if (!CRM_BASE_URL || !user) return { skipped: true }
+  const profile = user.studentProfile || {}
+  let crmStudentId = String(profile.crmStudentId || '').trim()
+  if (!crmStudentId) {
+    const found = await findCrmStudentByEmailOrLmsId(user)
+    if (found?.id) crmStudentId = String(found.id)
+  }
+  if (!crmStudentId) return { skipped: true, reason: 'no_crm_student' }
+
+  const token = await resolveCrmToken()
+  const base = CRM_BASE_URL.replace(/\/$/, '')
+  const response = await fetchCrmWithTimeout(`${base}/students/${crmStudentId}`, {
+    method: 'PATCH',
+    headers: buildCrmHeaders(token),
+    body: JSON.stringify({ smartcode_user_id: null }),
+    cache: 'no-store',
+  })
+  if (!response.ok) {
+    const message = await response.text()
+    console.error('CRM clear smartcode link failed:', message || response.status)
+    return { ok: false, crmStudentId }
+  }
+  return { ok: true, crmStudentId }
 }
 
 /**
@@ -410,51 +487,52 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
   const lessonsParams = new URLSearchParams({
     kind: 'individual',
     student_id: String(crmStudent.id),
-    limit: '500',
+    limit: '2000',
   })
 
-  const [lessonsResponse, teachers, crmGroups] = await Promise.all([
+  const [lessonsResponse, teachers, crmGroupsResult] = await Promise.all([
     fetchCrmWithTimeout(`${CRM_BASE_URL.replace(/\/$/, '')}/lessons?${lessonsParams}`, {
       headers: buildCrmHeaders(token),
       ...CRM_FETCH_NO_STORE,
     }),
     fetchCrmTeachers().catch(() => []),
-    fetchCrmGroupsForStudent(crmStudent.id)
+    fetchCrmGroupsForStudent(crmStudent.id),
   ])
 
-  const lessons = lessonsResponse.ok ? await lessonsResponse.json() : []
+  const lessonsFetchedOk = lessonsResponse.ok
+  const lessons = lessonsFetchedOk ? await lessonsResponse.json() : []
   const rawLessons = Array.isArray(lessons) ? lessons : []
+  const futureLessons = filterFutureScheduledLessons(rawLessons)
   const schedule = scheduleFromCrmLessons(rawLessons)
-
-  let teacherId = ''
-  if (rawLessons.length > 0) {
-    const firstLesson = rawLessons.find((item) => String(item?.teacher_id || '').trim())
-    teacherId = String(firstLesson?.teacher_id || '').trim()
-  }
-
-  let teacherName = ''
-  if (teacherId) {
-    teacherName = String(
-      teachers.find((item) => item.id === teacherId)?.fullName ||
-        student?.studentProfile?.crmTeacherName ||
-        ''
-    )
-  }
+  const crmGroups = crmGroupsResult.groups
+  const crmGroupsFetchedOk = crmGroupsResult.ok
   const prev = student?.studentProfile || {}
-  const nextLessonFormat =
-    rawLessons.length > 0 ? lessonFormatFromCrmLessons(rawLessons, prev) : prev.lessonFormat || 'group'
+
+  const { teacherId, teacherName } = lessonsFetchedOk
+    ? resolveTeacherFromCrmData(rawLessons, crmGroups, teachers)
+    : {
+        teacherId: String(prev.crmTeacherId || ''),
+        teacherName: String(prev.crmTeacherName || ''),
+      }
+  const nextLessonFormat = lessonsFetchedOk
+    ? futureLessons.length > 0
+      ? lessonFormatFromCrmLessons(futureLessons, prev)
+      : 'group'
+    : prev.lessonFormat || 'group'
 
   let nextProfile = {
     ...prev,
     crmStudentId: String(crmStudent.id || ''),
     crmShortId: String(crmStudent.short_id || ''),
-    regularSchedule: schedule.length > 0 ? schedule : prev.regularSchedule || [],
+    regularSchedule: lessonsFetchedOk ? schedule : prev.regularSchedule || [],
     lessonFormat: nextLessonFormat,
-    crmTeacherId: teacherId || String(prev.crmTeacherId || ''),
-    crmTeacherName: teacherName || String(prev.crmTeacherName || ''),
+    crmTeacherId: lessonsFetchedOk ? teacherId : String(prev.crmTeacherId || ''),
+    crmTeacherName: lessonsFetchedOk ? teacherName : String(prev.crmTeacherName || ''),
     crmScheduleSyncedAt: new Date().toISOString(),
   }
-  nextProfile = mergeGroupContextIntoProfile(nextProfile, crmGroups)
+  nextProfile = mergeGroupContextIntoProfile(nextProfile, crmGroups, {
+    apply: crmGroupsFetchedOk,
+  })
   if (
     nextProfile.accountReady === false &&
     (schedule.length > 0 || (nextProfile.activeOnlineCourses || []).length > 0)
@@ -483,6 +561,52 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
 }
 
 /**
+ * Після pull з CRM: відкликати зняті курси, видати нові, підчистити enrolled/progress.
+ */
+export async function syncCoursesAfterCrmSchedulePull(crmStudentId, user, usersCollection) {
+  const id = String(crmStudentId || '').trim()
+  if (!id || !user) return user
+
+  const { grantCourseAccessForCrmStudent, revokeCourseAccessForCrmStudent } = await import(
+    '@/lib/crmLmsSync'
+  )
+  const { getRemovedOnlineCourseIds } = await import('@/lib/courseLessonAccess')
+  const { syncStudentScheduleAccess } = await import('@/lib/syncStudentScheduleAccess')
+
+  const prevCourses = user.studentProfile?.activeOnlineCourses || []
+  const refreshed = await usersCollection.findOne({ _id: user._id })
+  const nextCourses = refreshed?.studentProfile?.activeOnlineCourses || []
+
+  const removed = getRemovedOnlineCourseIds(
+    prevCourses,
+    nextCourses,
+    refreshed?.purchasedCourses || user.purchasedCourses || []
+  )
+  for (const courseId of removed) {
+    try {
+      await revokeCourseAccessForCrmStudent(id, courseId)
+    } catch (e) {
+      console.error('revoke course after CRM schedule sync:', courseId, e)
+    }
+  }
+
+  for (const courseId of nextCourses) {
+    try {
+      await grantCourseAccessForCrmStudent(id, courseId, { enabled: true })
+    } catch (e) {
+      console.error('grant course after CRM schedule sync:', courseId, e)
+    }
+  }
+
+  const afterGrants = await usersCollection.findOne({ _id: user._id })
+  if (afterGrants) {
+    await syncStudentScheduleAccess(afterGrants, usersCollection)
+    return afterGrants
+  }
+  return refreshed || user
+}
+
+/**
  * Синхронізація розкладу LMS за CRM student id (виклик з internal API після змін у CRM).
  */
 export async function syncScheduleFromCrmStudentId(crmStudentId) {
@@ -490,7 +614,7 @@ export async function syncScheduleFromCrmStudentId(crmStudentId) {
   if (!id) throw new Error('crmStudentId is required')
 
   const { getCollection } = await import('@/lib/mongodb')
-  const { findUserByCrmStudentId, grantCourseAccessForCrmStudent } = await import('@/lib/crmLmsSync')
+  const { findUserByCrmStudentId } = await import('@/lib/crmLmsSync')
 
   const usersCollection = await getCollection('users')
   const user = await findUserByCrmStudentId(id, usersCollection)
@@ -498,6 +622,7 @@ export async function syncScheduleFromCrmStudentId(crmStudentId) {
     return { ok: false, message: 'Користувача LMS не знайдено (спочатку привʼяжіть учня)' }
   }
 
+  const prevCourses = user.studentProfile?.activeOnlineCourses || []
   const pulled = await pullCrmScheduleToSmartcodeStudent(
     {
       id: user._id.toString(),
@@ -508,20 +633,20 @@ export async function syncScheduleFromCrmStudentId(crmStudentId) {
     usersCollection
   )
 
-  const courseIds = pulled.studentProfile?.activeOnlineCourses || []
-  for (const courseId of courseIds) {
-    try {
-      await grantCourseAccessForCrmStudent(id, courseId, { enabled: true })
-    } catch (e) {
-      console.error('grant course after CRM schedule sync:', courseId, e)
-    }
+  const userForCourses = {
+    ...user,
+    studentProfile: {
+      ...(user.studentProfile || {}),
+      activeOnlineCourses: prevCourses,
+    },
   }
+  const finalUser = await syncCoursesAfterCrmSchedulePull(id, userForCourses, usersCollection)
 
   return {
     ok: true,
     userId: user._id.toString(),
     crmStudentId: id,
-    syncedAt: pulled.studentProfile?.crmScheduleSyncedAt || null,
+    syncedAt: finalUser?.studentProfile?.crmScheduleSyncedAt || pulled.studentProfile?.crmScheduleSyncedAt || null,
   }
 }
 
@@ -532,13 +657,9 @@ export async function maybePullCrmScheduleForStudent(user, usersCollection) {
   if (!user || user.role === 'admin' || !CRM_BASE_URL) return user
   const profile = user.studentProfile || {}
   const last = profile.crmScheduleSyncedAt
-  const hasSchedule = (profile.regularSchedule || []).length > 0
-  const linkedCrm = Boolean(String(profile.crmStudentId || '').trim())
   if (last) {
     const ts = new Date(last).getTime()
-    const throttled =
-      Number.isFinite(ts) && Date.now() - ts < CRM_AUTO_PULL_MIN_MS
-    if (throttled && (hasSchedule || !linkedCrm)) {
+    if (Number.isFinite(ts) && Date.now() - ts < CRM_AUTO_PULL_MIN_MS) {
       return user
     }
   }
