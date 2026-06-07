@@ -230,41 +230,27 @@ async function findCrmStudentByEmailOrLmsId(studentDoc) {
   return null
 }
 
-/** Створює або оновлює картку учня в CRM; повертає об'єкт з полем id або null. */
+/** Оновлює картку учня в CRM лише якщо вже є привʼязка (crmStudentId). Без автопошуку/створення. */
 export async function syncStudentToCrm(studentDoc) {
   if (!CRM_BASE_URL) return null
   const profile = studentDoc?.studentProfile || {}
-  let crmStudentId = String(profile.crmStudentId || '').trim()
+  const crmStudentId = String(profile.crmStudentId || '').trim()
+  if (!crmStudentId) return null
+
   const token = await resolveCrmToken()
   const body = crmPayloadFromStudent(studentDoc)
   const base = CRM_BASE_URL.replace(/\/$/, '')
 
-  if (!crmStudentId) {
-    const existing = await findCrmStudentByEmailOrLmsId(studentDoc)
-    if (existing?.id) crmStudentId = String(existing.id)
-  }
-
-  if (crmStudentId) {
-    const patchResponse = await fetchCrmWithTimeout(`${base}/students/${crmStudentId}`, {
-      method: 'PATCH',
-      headers: buildCrmHeaders(token),
-      body: JSON.stringify(body),
-    })
-    if (patchResponse.ok) {
-      return patchResponse.json()
-    }
-  }
-
-  const createResponse = await fetchCrmWithTimeout(`${base}/students`, {
-    method: 'POST',
+  const patchResponse = await fetchCrmWithTimeout(`${base}/students/${crmStudentId}`, {
+    method: 'PATCH',
     headers: buildCrmHeaders(token),
     body: JSON.stringify(body),
   })
-  if (!createResponse.ok) {
-    const message = await createResponse.text()
-    throw new Error(message || `CRM student sync failed (${createResponse.status})`)
+  if (patchResponse.ok) {
+    return patchResponse.json()
   }
-  return createResponse.json()
+  const message = await patchResponse.text()
+  throw new Error(message || `CRM student sync failed (${patchResponse.status})`)
 }
 
 /** Груповий слот у CRM зберігається як kind=individual + series_id group:… або нотатка GROUP_LESSON. */

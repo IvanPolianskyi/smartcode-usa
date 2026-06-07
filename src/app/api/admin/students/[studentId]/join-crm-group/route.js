@@ -6,7 +6,6 @@ import {
   crmJson,
   pullCrmScheduleToSmartcodeStudent,
   syncCoursesAfterCrmSchedulePull,
-  syncStudentToCrm,
 } from '@/lib/crmStudentSchedulePull'
 
 async function requireAdmin() {
@@ -43,22 +42,13 @@ export async function POST(request, { params }) {
       return NextResponse.json({ error: 'Student not found' }, { status: 404 })
     }
 
-    const crmStudent = await syncStudentToCrm(studentDoc)
-    const crmSid = String(crmStudent?.id || studentDoc.studentProfile?.crmStudentId || '').trim()
+    const crmSid = String(studentDoc.studentProfile?.crmStudentId || '').trim()
     if (!crmSid) {
-      return NextResponse.json({ error: 'Не вдалося створити або знайти учня в CRM' }, { status: 502 })
+      return NextResponse.json(
+        { error: 'Спочатку привʼяжіть учня в CRM на сторінці «Звʼязки»' },
+        { status: 400 }
+      )
     }
-
-    await usersCollection.updateOne(
-      { _id: new ObjectId(studentId) },
-      {
-        $set: {
-          'studentProfile.crmStudentId': crmSid,
-          'studentProfile.crmShortId': String(crmStudent?.short_id || ''),
-          updatedAt: new Date(),
-        },
-      }
-    )
 
     const allGroups = (await crmJson('GET', 'groups?limit=400&active_only=true')) || []
     const list = Array.isArray(allGroups) ? allGroups : []

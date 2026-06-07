@@ -170,9 +170,6 @@ export async function upsertUserFromCrm(payload) {
   if (!user) {
     user = await findUserByCrmStudentId(crmStudentId, usersCollection)
   }
-  if (!user && email) {
-    user = await usersCollection.findOne({ email })
-  }
 
   const profilePatch = {
     crmStudentId,
@@ -212,6 +209,15 @@ export async function upsertUserFromCrm(payload) {
         userId: null,
         created: false,
         message: 'Потрібен email для створення акаунта LMS',
+      }
+    }
+    const existingByEmail = await usersCollection.findOne({ email })
+    if (existingByEmail) {
+      return {
+        userId: null,
+        created: false,
+        message:
+          'Акаунт з таким email вже є на сайті. Привʼяжіть вручну на сторінці «Звʼязки».',
       }
     }
     const randomPassword = crypto.randomBytes(24).toString('hex')
