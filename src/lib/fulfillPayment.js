@@ -25,11 +25,8 @@ export async function fulfillCompletedPayment(payment, { amountFromProvider } = 
     payment.userId
   ) {
     const usersCollection = await getCollection('users')
-    const lessonPrice = Number(payment.lessonPrice || 1)
     const paidAmount = amountFromProvider || Number(payment.amount) || 0
-    const fromAmount = Math.floor(paidAmount / lessonPrice)
-    const creditedLessons =
-      fromAmount > 0 ? fromAmount : Number(payment.creditedLessons || 0)
+    const creditedLessons = Math.max(1, Math.floor(Number(payment.creditedLessons || 0)))
     await usersCollection.updateOne(
       { _id: new ObjectId(payment.userId) },
       {

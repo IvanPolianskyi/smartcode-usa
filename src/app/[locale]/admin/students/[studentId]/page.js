@@ -39,7 +39,6 @@ export default function AdminStudentPage() {
   const [analytics, setAnalytics] = useState(null)
   const [receipts, setReceipts] = useState([])
   const [form, setForm] = useState({
-    lessonFormat: 'group',
     regularDays: [],
     regularScheduleByDay: {},
     zoomLink: '',
@@ -92,7 +91,6 @@ export default function AdminStudentPage() {
       })
 
       setForm({
-        lessonFormat: data.student?.profile?.lessonFormat || 'group',
         regularDays: dayList,
         regularScheduleByDay: scheduleByDay,
         zoomLink: data.student?.profile?.zoomLink || '',
@@ -126,7 +124,7 @@ export default function AdminStudentPage() {
   }, [sessionLoading, user?.id, user?.role, studentId])
 
   useEffect(() => {
-    if (!studentId || form.lessonFormat !== 'group') return
+    if (!studentId) return
     let cancelled = false
     const run = async () => {
       setGroupsLoading(true)
@@ -144,7 +142,7 @@ export default function AdminStudentPage() {
     return () => {
       cancelled = true
     }
-  }, [studentId, form.lessonFormat])
+  }, [studentId])
 
   const toggleArray = (fieldName, value) => {
     setForm((prev) => {
@@ -181,7 +179,6 @@ export default function AdminStudentPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           studentId,
-          lessonFormat: form.lessonFormat,
           regularSchedule: form.regularDays.map((day) => ({
             day,
             time: form.regularScheduleByDay?.[day] || '',
@@ -233,7 +230,6 @@ export default function AdminStudentPage() {
         })
         setForm((prev) => ({
           ...prev,
-          lessonFormat: data.studentProfile?.lessonFormat || 'group',
           regularDays: dayList,
           regularScheduleByDay: scheduleByDay,
           zoomLink: data.studentProfile?.zoomLink || '',
@@ -333,20 +329,9 @@ export default function AdminStudentPage() {
                   {tPage('accountReadyHint')}
                 </p>
               </div>
-              <div className={styles.certFormGroup}>
-                <label className={styles.certLabel}>{tStudents('lessonFormatLabel')}</label>
-                <select
-                  className={styles.certInput}
-                  value={form.lessonFormat}
-                  onChange={(e) => setForm((prev) => ({ ...prev, lessonFormat: e.target.value }))}
-                >
-                  <option value="group">{tStudents('lessonFormatGroup')}</option>
-                  <option value="individual">{tStudents('lessonFormatIndividual')}</option>
-                </select>
-              </div>
             </div>
 
-            {form.lessonFormat === 'group' && (
+            {student?.profile?.crmStudentId ? (
               <div className={styles.progressCard} style={{ marginBottom: '1rem' }}>
                 <h3 className={styles.scheduleEditorTitle}>{tPage('crmGroupTitle')}</h3>
                 <p className={styles.cardText}>
@@ -382,17 +367,9 @@ export default function AdminStudentPage() {
                     </button>
                   </div>
                 </div>
-                <button
-                  type="button"
-                  className={styles.certReloadButton}
-                  onClick={() => setShowAdvancedGroup((v) => !v)}
-                >
-                  {showAdvancedGroup ? tPage('hideManual') : tPage('showManual')}
-                </button>
               </div>
-            )}
+            ) : null}
 
-            {(form.lessonFormat === 'individual' || showAdvancedGroup) && (
             <>
             <div className={styles.certFormRow}>
               <div className={styles.certFormGroup}>
@@ -460,7 +437,6 @@ export default function AdminStudentPage() {
               </div>
             </div>
             </>
-            )}
 
             <div className={styles.certFormRow}>
               <div className={styles.certFormGroup}>
@@ -481,7 +457,7 @@ export default function AdminStudentPage() {
               </div>
             </div>
 
-            {orderedRegularDays.length > 0 && (form.lessonFormat === 'individual' || showAdvancedGroup) && (
+            {orderedRegularDays.length > 0 && (
               <div className={styles.scheduleEditor}>
                 <h3 className={styles.scheduleEditorTitle}>{tPage('scheduleTitle')}</h3>
                 <div className={styles.scheduleEditorGrid}>

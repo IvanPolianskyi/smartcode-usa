@@ -27,7 +27,6 @@ import {
   Sparkles,
   Trophy,
   BarChart3,
-  Users,
   DollarSign,
   Eye,
 } from 'lucide-react'
@@ -69,8 +68,7 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
   const [activeTab, setActiveTab] = useState('overview')
   const [payPanelOpen, setPayPanelOpen] = useState(false)
   const dateLocale = locale === 'uk' ? 'uk-UA' : 'en-US'
-  const profile = user?.studentProfile || { regularSchedule: [], activeOnlineCourses: [], lessonFormat: 'group', zoomLink: '' }
-  const lessonPrice = profile.lessonFormat === 'individual' ? 500 : 350
+  const profile = user?.studentProfile || { regularSchedule: [], activeOnlineCourses: [], zoomLink: '' }
   const schedule = profile.regularSchedule || []
   const activeCourses = profile.activeOnlineCourses || []
   const ownedCoursesCount = useMemo(
@@ -94,10 +92,6 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
     ? t('student.schedule.motivationRemaining', { count: scheduleInfo.weeklyRemaining, next: scheduleInfo.nextLessonText })
     : t('student.schedule.motivationDone', { next: scheduleInfo.nextLessonText })
 
-  const formatLabel = profile.lessonFormat === 'individual'
-    ? t('student.metrics.individual')
-    : t('student.metrics.group')
-
   const lessonCredits = Number(paymentStats?.lessonCredits ?? user?.studentProfile?.lessonCredits ?? 0)
   const showPaymentReminder =
     schedule.length > 0 && (lessonCredits < 1 || (paymentStats?.pending || 0) > 0)
@@ -117,7 +111,6 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
         t={t}
         paymentStats={paymentStats}
         scheduleCount={schedule.length}
-        lessonPrice={lessonPrice}
         onRefresh={refreshData}
         defaultOpen={payPanelOpen}
       />
@@ -142,7 +135,6 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
 
         <PaymentReminderBanner
           visible={showPaymentReminder}
-          amount={lessonPrice}
           currency={t('student.payments.currency')}
           deadlineText={scheduleInfo.nextLessonText}
           lessonCredits={lessonCredits}
@@ -165,10 +157,6 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
         <div className={styles.metricCard}>
           <div className={styles.metricCardIcon}><Trophy size={18} /></div>
           <div><strong>{completedLessonsTotal}</strong><span>{t('student.metrics.completedLessons')}</span></div>
-        </div>
-        <div className={styles.metricCard}>
-          <div className={styles.metricCardIcon}><Users size={18} /></div>
-          <div><strong>{formatLabel}</strong><span>{t('student.metrics.formatLabel')}</span></div>
         </div>
       </div>
 

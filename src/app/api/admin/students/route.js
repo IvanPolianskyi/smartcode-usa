@@ -25,7 +25,6 @@ const COURSE_NAMES = {
 }
 
 const DEFAULT_STUDENT_PROFILE = {
-  lessonFormat: 'group',
   regularSchedule: [],
   zoomLink: '',
   activeOnlineCourses: [],
@@ -80,9 +79,8 @@ async function ensureCrmRegularLessons(studentDoc, crmStudent) {
   if (!CRM_BASE_URL) return
   const profile = studentDoc?.studentProfile || {}
   const teacherId = String(profile.crmTeacherId || '').trim()
-  const lessonFormat = String(profile.lessonFormat || '').trim()
   const schedule = Array.isArray(profile.regularSchedule) ? profile.regularSchedule : []
-  if (!teacherId || lessonFormat !== 'individual' || schedule.length === 0) return
+  if (!teacherId || schedule.length === 0) return
 
   const studentId = String(crmStudent?.id || profile.crmStudentId || '').trim()
   if (!studentId) return
@@ -202,7 +200,6 @@ export async function GET() {
         createdAt: student.createdAt,
         enrolledCourses: student.enrolledCourses || [],
         profile: {
-          lessonFormat: profile.lessonFormat || 'group',
           regularSchedule: profile.regularSchedule || [],
           zoomLink: profile.zoomLink || '',
           activeOnlineCourses: profile.activeOnlineCourses || [],
@@ -256,7 +253,6 @@ export async function PATCH(request) {
     const body = await request.json()
     const {
       studentId,
-      lessonFormat = 'group',
       regularSchedule = [],
       zoomLink = '',
       onlineCourseIds = [],
@@ -290,7 +286,6 @@ export async function PATCH(request) {
 
     const mergedProfile = {
       ...prev,
-      lessonFormat: lessonFormat === 'individual' ? 'individual' : 'group',
       regularSchedule: sanitizedSchedule,
       zoomLink: String(zoomLink || '').trim(),
       activeOnlineCourses: onlineIds,

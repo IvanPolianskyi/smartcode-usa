@@ -6,7 +6,6 @@ import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
 
 export default function PaymentReminderBanner({
   visible,
-  amount,
   currency = 'грн',
   deadlineText,
   lessonCredits,
@@ -30,7 +29,6 @@ export default function PaymentReminderBanner({
         <strong>{t('student.paymentReminder.title')}</strong>
         <p>
           {t('student.paymentReminder.text', {
-            amount,
             currency,
             deadline: deadlineText,
           })}

@@ -4,19 +4,12 @@ import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { startMonobankPayment } from '@/lib/createMonobankPayment'
 import { createPaymentStatusToken } from '@/lib/paymentStatusToken'
-
-const GROUP_LESSON_PRICE_UAH = 350
-const INDIVIDUAL_LESSON_PRICE_UAH = 500
+import { resolveCreditedLessons } from '@/lib/lessonCreditsFromAmount'
 
 function toSafeAmount(value) {
   const parsed = Number(value)
   if (!Number.isFinite(parsed)) return 0
   return Math.round(parsed * 100) / 100
-}
-
-function isMultipleOf(amount, step) {
-  if (!step) return false
-  return Number.isInteger(amount / step)
 }
 
 export async function POST(request) {
@@ -28,8 +21,12 @@ export async function POST(request) {
 
     const body = await request.json()
     const amount = toSafeAmount(body.amount)
+    const creditCalc = resolveCreditedLessons(body.creditedLessons)
     if (!amount || amount <= 0) {
       return NextResponse.json({ error: 'Вкажіть коректну суму оплати' }, { status: 400 })
+    }
+    if (!creditCalc.creditedLessons) {
+      return NextResponse.json({ error: 'Вкажіть кількість уроків (мінімум 1)' }, { status: 400 })
     }
 
     const usersCollection = await getCollection('users')
@@ -39,21 +36,10 @@ export async function POST(request) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
-    const lessonFormat = user?.studentProfile?.lessonFormat === 'individual' ? 'individual' : 'group'
-    const lessonPrice = lessonFormat === 'individual' ? INDIVIDUAL_LESSON_PRICE_UAH : GROUP_LESSON_PRICE_UAH
-    if (!isMultipleOf(amount, lessonPrice)) {
-      return NextResponse.json(
-        { error: `Сума має бути кратною ${lessonPrice} грн для вашого плану` },
-        { status: 400 }
-      )
-    }
-
-    const creditedLessons = Math.floor(amount / lessonPrice)
+    const creditedLessons = creditCalc.creditedLessons
     const orderId = `topup_${userId}_${Date.now()}`
     const statusToken = createPaymentStatusToken()
-
-    const formatLabel = lessonFormat === 'individual' ? 'індивідуальний' : 'груповий'
-    const description = `Оплата уроків SmartCode (${formatLabel}, ${creditedLessons} шт.)`
+    const description = `Оплата уроків SmartCode (${creditedLessons} шт.)`
 
     const { invoiceId, paymentUrl } = await startMonobankPayment({
       orderId,
@@ -76,8 +62,8 @@ export async function POST(request) {
       status: 'pending',
       paymentMethod: 'monobank',
       paymentType: 'lesson_topup',
-      lessonPrice,
-      lessonFormat,
+      lessonPrice: 0,
+      lessonFormat: 'manual',
       creditedLessons,
       createdAt: new Date(),
       updatedAt: new Date(),

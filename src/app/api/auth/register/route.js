@@ -74,7 +74,6 @@ export async function POST(request) {
       phone: phone || null,
       role: 'student',
       studentProfile: {
-        lessonFormat: 'group',
         regularSchedule: [],
         zoomLink: '',
         activeOnlineCourses: [],

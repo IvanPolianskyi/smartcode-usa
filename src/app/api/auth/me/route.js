@@ -101,7 +101,6 @@ export async function GET() {
 
     // Return user (without password)
     const baseProfile = user.studentProfile || {
-      lessonFormat: 'group',
       regularSchedule: [],
       zoomLink: '',
       activeOnlineCourses: [],

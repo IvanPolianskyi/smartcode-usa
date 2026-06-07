@@ -96,7 +96,7 @@ export async function GET(request, { params }) {
         amount: Number(item.amount || 0),
         status: item.status || 'pending',
         approvalStatus: item.approvalStatus || (item.status === 'completed' ? 'approved' : 'pending'),
-        lessonFormat: item.lessonFormat || 'group',
+        lessonFormat: item.lessonFormat || 'manual',
         lessonPrice: Number(item.lessonPrice || 0),
         creditedLessons: Number(item.creditedLessons || 0),
         createdAt: item.createdAt,

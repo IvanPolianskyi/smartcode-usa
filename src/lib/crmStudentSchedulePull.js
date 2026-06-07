@@ -177,14 +177,12 @@ export function crmPayloadFromStudent(studentDoc) {
     .map((item) => `${item.day}${item.time ? ` ${item.time}` : ''}`)
     .join(', ')
   const scheduleText = normalizedSchedule || 'Не задано'
-  const formatText = profile.lessonFormat === 'individual' ? 'Індивідуальні' : 'Групові'
   const zoom = String(profile.zoomLink || '').trim()
   const onlineCourses = (profile.activeOnlineCourses || []).filter(Boolean)
   const teacherName = String(profile.crmTeacherName || '').trim()
 
   const notesParts = [
     'Синхронізовано з SmartCode admin.',
-    `Формат: ${formatText}.`,
     `Регулярний розклад: ${scheduleText}.`,
     teacherName ? `Викладач: ${teacherName}.` : '',
     zoom ? `Zoom: ${zoom}.` : '',
@@ -393,20 +391,6 @@ function resolveTeacherFromCrmData(rawLessons, crmGroups, teachers) {
   return { teacherId, teacherName, zoomLink }
 }
 
-export function lessonFormatFromCrmLessons(lessons, fallbackProfile) {
-  const list = Array.isArray(lessons) ? lessons : []
-  const active = list.filter((l) => String(l?.status || '') !== 'cancelled')
-  const hasPureIndividual = active.some(
-    (l) => String(l?.kind || '') === 'individual' && !isCrmGroupLessonSlot(l)
-  )
-  if (hasPureIndividual) return 'individual'
-  const hasGroupSlot = active.some(
-    (l) => String(l?.kind || '') === 'individual' && isCrmGroupLessonSlot(l)
-  )
-  if (hasGroupSlot) return 'group'
-  return fallbackProfile?.lessonFormat || 'group'
-}
-
 /** Групи CRM, де є учень — zoom і онлайн-курси для профілю LMS. */
 async function fetchCrmGroupsForStudent(crmStudentId) {
   if (!CRM_BASE_URL || !crmStudentId) return { groups: [], ok: false }
@@ -496,7 +480,6 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
   const rawLessons = Array.isArray(lessons) ? lessons : []
   const crmGroups = crmGroupsResult.groups
   const crmGroupsFetchedOk = crmGroupsResult.ok
-  const futureLessons = filterFutureScheduledLessons(rawLessons)
   const schedule = scheduleFromCrmLessons(rawLessons, crmGroups)
   const prev = student?.studentProfile || {}
 
@@ -507,12 +490,6 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
         teacherName: String(prev.crmTeacherName || ''),
         zoomLink: String(prev.zoomLink || ''),
       }
-  const nextLessonFormat = lessonsFetchedOk
-    ? futureLessons.length > 0
-      ? lessonFormatFromCrmLessons(futureLessons, prev)
-      : prev.lessonFormat || 'group'
-    : prev.lessonFormat || 'group'
-
   const nextSchedule =
     lessonsFetchedOk && schedule.length > 0
       ? schedule
@@ -523,7 +500,6 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
     crmStudentId: String(crmStudent.id || ''),
     crmShortId: String(crmStudent.short_id || ''),
     regularSchedule: nextSchedule,
-    lessonFormat: nextLessonFormat,
     crmTeacherId: lessonsFetchedOk ? teacherId : String(prev.crmTeacherId || ''),
     crmTeacherName: lessonsFetchedOk ? teacherName : String(prev.crmTeacherName || ''),
     zoomLink: lessonsFetchedOk ? zoomLink : String(prev.zoomLink || ''),

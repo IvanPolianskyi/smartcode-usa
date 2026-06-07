@@ -72,7 +72,6 @@ export async function POST(request, { params }) {
     const profileBeforePull = {
       ...(studentDoc.studentProfile || {}),
       crmStudentId: crmSid,
-      lessonFormat: 'group',
     }
     const pulled = await pullCrmScheduleToSmartcodeStudent(
       {

@@ -51,7 +51,6 @@ export default function AdminPanelPage() {
   const [studentSearch, setStudentSearch] = useState('')
   const [showDebtOnly, setShowDebtOnly] = useState(false)
   const [studentForm, setStudentForm] = useState({
-    lessonFormat: 'group',
     regularDays: [],
     regularScheduleByDay: {},
     zoomLink: '',
@@ -261,7 +260,6 @@ export default function AdminPanelPage() {
 
     setSelectedStudentId(student.id)
     setStudentForm({
-      lessonFormat: student.profile?.lessonFormat || 'group',
       regularDays: dayList,
       regularScheduleByDay: scheduleByDay,
       zoomLink: student.profile?.zoomLink || '',
@@ -322,7 +320,6 @@ export default function AdminPanelPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           studentId: selectedStudentId,
-          lessonFormat: studentForm.lessonFormat,
           regularSchedule: studentForm.regularDays.map((day) => ({
             day,
             time: studentForm.regularScheduleByDay?.[day] || '',
@@ -881,7 +878,6 @@ export default function AdminPanelPage() {
                   <tr>
                     <th>{t('students.columns.student')}</th>
                     <th>Баланс</th>
-                    <th>{t('students.columns.format')}</th>
                     <th>{t('students.columns.onlineCourses')}</th>
                     <th>{t('students.columns.progress')}</th>
                     <th>{t('students.columns.action')}</th>
@@ -900,7 +896,6 @@ export default function AdminPanelPage() {
                         {student.profile?.accountBalance || 0} грн<br/>
                         <span style={{ fontSize: '0.85em', color: '#6b7280' }}>Кредити: {student.profile?.lessonCredits || 0}</span>
                       </td>
-                      <td>{student.profile?.lessonFormat === 'individual' ? t('students.individual') : t('students.group')}</td>
                       <td>
                         {(student.profile?.activeOnlineCourses || []).length > 0
                           ? student.profile.activeOnlineCourses.map((courseId) => courseNames[courseId] || courseId).join(', ')
@@ -933,7 +928,7 @@ export default function AdminPanelPage() {
                     </tr>
                   )) : (
                     <tr>
-                      <td colSpan={5} style={{ textAlign: 'center', color: '#6b7280' }}>
+                      <td colSpan={4} style={{ textAlign: 'center', color: '#6b7280' }}>
                         {t('students.noResults')}
                       </td>
                     </tr>
@@ -960,18 +955,6 @@ export default function AdminPanelPage() {
                     />
                     {t('students.accountReady')}
                   </label>
-                </div>
-                <div className={styles.certFormGroup}>
-                  <label className={styles.certLabel}>{t('students.lessonFormatLabel')}</label>
-                  <select
-                    name="lessonFormat"
-                    value={studentForm.lessonFormat}
-                    onChange={handleStudentFormChange}
-                    className={styles.certInput}
-                  >
-                    <option value="group">{t('students.lessonFormatGroup')}</option>
-                    <option value="individual">{t('students.lessonFormatIndividual')}</option>
-                  </select>
                 </div>
                 <div className={styles.certFormGroup}>
                   <label className={styles.certLabel}>{t('students.weekdaysLabel')}</label>

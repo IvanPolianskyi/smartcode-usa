@@ -2,13 +2,10 @@ import { NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
-import { approveReceiptPayment } from '@/lib/approveReceiptPayment'
-import { computeCreditedLessonsFromAmount } from '@/lib/lessonCreditsFromAmount'
-import { syncReceiptToCrm, syncReceiptStatusToCrm } from '@/lib/syncReceiptToCrm'
+import { resolveCreditedLessons } from '@/lib/lessonCreditsFromAmount'
+import { syncReceiptToCrm } from '@/lib/syncReceiptToCrm'
 
 const MAX_RECEIPT_SIZE_BYTES = 5 * 1024 * 1024
-const GROUP_LESSON_PRICE_UAH = 350
-const INDIVIDUAL_LESSON_PRICE_UAH = 500
 
 function toSafeAmount(value) {
   const parsed = Number(value)
@@ -40,30 +37,16 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Максимальний розмір файлу 5MB' }, { status: 400 })
     }
 
+    const creditCalc = resolveCreditedLessons(requestedLessons)
+    if (!creditCalc.creditedLessons) {
+      return NextResponse.json({ error: 'Вкажіть кількість уроків (мінімум 1)' }, { status: 400 })
+    }
+    const creditedLessons = creditCalc.creditedLessons
+
     const usersCollection = await getCollection('users')
     const paymentsCollection = await getCollection('payments')
     const userObjectId = new ObjectId(userId)
     const user = await usersCollection.findOne({ _id: userObjectId })
-    const lessonFormat = user?.studentProfile?.lessonFormat === 'individual' ? 'individual' : 'group'
-    const lessonPrice = lessonFormat === 'individual' ? INDIVIDUAL_LESSON_PRICE_UAH : GROUP_LESSON_PRICE_UAH
-
-    const creditCalc = computeCreditedLessonsFromAmount(
-      amount,
-      lessonPrice,
-      requestedLessons
-    )
-    if (creditCalc.error === 'amount_too_low') {
-      return NextResponse.json(
-        {
-          error: `Мінімальна сума для одного уроку — ${lessonPrice} грн`,
-        },
-        { status: 400 }
-      )
-    }
-    if (!creditCalc.creditedLessons) {
-      return NextResponse.json({ error: 'Вкажіть коректну суму оплати' }, { status: 400 })
-    }
-    const creditedLessons = creditCalc.creditedLessons
 
     const bytes = await file.arrayBuffer()
     const base64 = Buffer.from(bytes).toString('base64')
@@ -82,8 +65,8 @@ export async function POST(request) {
         size: file.size,
         dataUrl,
       },
-      lessonPrice,
-      lessonFormat,
+      lessonPrice: 0,
+      lessonFormat: 'manual',
       creditedLessons,
       approvalStatus: 'pending',
       createdAt: new Date(),
@@ -102,8 +85,8 @@ export async function POST(request) {
         crm_student_id: String(user?.studentProfile?.crmStudentId || ''),
         amount,
         currency: 'UAH',
-        lesson_price: lessonPrice,
-        lesson_format: lessonFormat,
+        lesson_price: 0,
+        lesson_format: 'manual',
         credited_lessons: creditedLessons,
         receipt: {
           fileName: file.name,
@@ -136,7 +119,6 @@ export async function POST(request) {
       {
         ok: true,
         creditedLessonsPreview: creditedLessons,
-        lessonPrice,
         requiresApproval: true,
         autoApproved: false,
         crmSync,
@@ -148,4 +130,3 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
-

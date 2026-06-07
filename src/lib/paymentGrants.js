@@ -89,7 +89,6 @@ export async function grantEnLiveLessonAccess(identifier, courseId, { lessonForm
     {
       $set: {
         'studentProfile.regularSchedule': schedule,
-        'studentProfile.lessonFormat': lessonFormat,
         'studentProfile.accountReady': true,
         'studentProfile.lessonCredits': lessonCredits,
         [`studentProfile.courseAccess.${courseId}`]: {

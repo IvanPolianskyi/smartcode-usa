@@ -1,5 +1,4 @@
 import { ObjectId } from 'mongodb'
-import { computeCreditedLessonsFromAmount } from '@/lib/lessonCreditsFromAmount'
 import { getCollection } from '@/lib/mongodb'
 
 export async function approveReceiptPayment(receiptId, approvedBy = null, creditedLessonsOverride = null) {
@@ -20,16 +19,18 @@ export async function approveReceiptPayment(receiptId, approvedBy = null, credit
   }
 
   const amount = Number(receipt.amount || 0)
-  const lessonPrice = Number(receipt.lessonPrice || 0)
   const storedLessons = Number(receipt.creditedLessons || 0)
   const override = Number(creditedLessonsOverride)
-  const creditCalc =
-    Number.isFinite(override) && override >= 0
-      ? { creditedLessons: Math.floor(override) }
-      : lessonPrice > 0
-        ? computeCreditedLessonsFromAmount(amount, lessonPrice, storedLessons)
-        : { creditedLessons: storedLessons }
-  const creditedLessons = creditCalc.creditedLessons || storedLessons
+  const creditedLessons =
+    Number.isFinite(override) && override >= 1
+      ? Math.floor(override)
+      : storedLessons >= 1
+        ? Math.floor(storedLessons)
+        : 0
+
+  if (!creditedLessons) {
+    throw new Error('Invalid credited lessons')
+  }
 
   const claimed = await paymentsCollection.findOneAndUpdate(
     {
