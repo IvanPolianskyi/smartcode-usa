@@ -452,12 +452,16 @@ export async function listLmsStudentsForCrm({
   const term = String(search || '').trim()
   if (term) {
     const esc = escapeRegex(term)
-    const searchClause = {
-      $or: [
-        { email: { $regex: esc, $options: 'i' } },
-        { name: { $regex: esc, $options: 'i' } },
-      ],
+    const searchOr = [
+      { email: { $regex: esc, $options: 'i' } },
+      { name: { $regex: esc, $options: 'i' } },
+      { phone: { $regex: esc, $options: 'i' } },
+      { 'studentProfile.crmShortId': { $regex: esc, $options: 'i' } },
+    ]
+    if (ObjectId.isValid(term)) {
+      searchOr.push({ _id: new ObjectId(term) })
     }
+    const searchClause = { $or: searchOr }
     if (q.$or) {
       q.$and = [{ $or: q.$or }, searchClause]
       delete q.$or

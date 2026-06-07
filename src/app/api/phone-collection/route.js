@@ -3,6 +3,14 @@ import { getCollection } from '@/lib/mongodb'
 import { normalizePhoneE164 } from '@/lib/phoneE164'
 import { API_ERRORS, resolveLocale } from '@/lib/localeStrings'
 import { requireAdmin } from '@/lib/requireAdmin'
+import { getClientIp } from '@/lib/metaCapi'
+import {
+  isInternalLeadRequest,
+  validatePublicLeadSubmission,
+  markLeadTokenUsed,
+  recordLeadSubmitAttempt,
+} from '@/lib/leadFormSecurity'
+import { sanitizeLeadName } from '@/lib/sanitizeLeadText'
 
 // Helper function to escape HTML for Telegram
 function escapeHtml(input) {
@@ -65,15 +73,62 @@ async function sendTelegramNotification({ phone, name, projectTitle }) {
   }
 }
 
+function projectAlreadyRequested(existingLead, projectId) {
+  if (!existingLead?.interestedProjects?.length || projectId == null) return false
+  const id = String(projectId)
+  return existingLead.interestedProjects.some((p) => String(p.projectId) === id)
+}
+
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { phone, name, projectId, projectTitle, timestamp, locale: bodyLocale } = body
+    const {
+      phone,
+      name,
+      projectId,
+      projectTitle,
+      timestamp,
+      locale: bodyLocale,
+      leadToken,
+      company: honeypot,
+    } = body
     const loc = resolveLocale(bodyLocale)
     const apiErr = API_ERRORS[loc]
 
+    const internalLead = isInternalLeadRequest(request)
+    let tokenHash = null
+    let submitIp = getClientIp(request) || 'unknown'
+
+    if (!internalLead) {
+      const security = await validatePublicLeadSubmission({
+        request,
+        leadToken,
+        honeypot,
+      })
+      if (!security.ok) {
+        if (security.silent) {
+          return NextResponse.json({
+            success: true,
+            message: 'Phone number collected successfully',
+          })
+        }
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'Request rejected',
+            code: security.code || security.reason || 'rejected',
+          },
+          { status: security.status || 403 }
+        )
+      }
+      tokenHash = security.tokenHash
+      submitIp = security.ip || submitIp
+    }
+
+    const safeName = sanitizeLeadName(name)
+
     // Validate required fields
-    if (!phone || !name) {
+    if (!phone || !safeName) {
       return NextResponse.json(
         { success: false, error: apiErr.phoneAndNameRequired },
         { status: 400 }
@@ -92,6 +147,15 @@ export async function POST(request) {
     const leads = await getCollection('leads')
     const existingLead = await leads.findOne({ phone: normalizedPhone })
 
+    if (projectAlreadyRequested(existingLead, projectId)) {
+      if (tokenHash) await markLeadTokenUsed(tokenHash)
+      await recordLeadSubmitAttempt(submitIp, { blocked: false })
+      return NextResponse.json({
+        success: true,
+        message: 'Phone number collected successfully',
+      })
+    }
+
     if (existingLead) {
       // Update existing lead with new project interest
       const updatedProjects = [...(existingLead.interestedProjects || []), {
@@ -104,19 +168,19 @@ export async function POST(request) {
         { phone: normalizedPhone },
         {
           $set: {
-            name: name.trim(),
+            name: safeName,
             lastActivity: new Date(),
             interestedProjects: updatedProjects
           }
         }
       )
 
-      console.log('Updated existing lead:', { phone: normalizedPhone, name, projectTitle })
+      console.log('Updated existing lead:', { phone: normalizedPhone, name: safeName, projectTitle })
     } else {
       // Create new lead
       const lead = {
         phone: normalizedPhone,
-        name: name.trim(),
+        name: safeName,
         interestedProjects: [{
           projectId,
           projectTitle,
@@ -129,11 +193,14 @@ export async function POST(request) {
       }
 
       await leads.insertOne(lead)
-      console.log('Created new lead:', { phone: normalizedPhone, name, projectTitle })
+      console.log('Created new lead:', { phone: normalizedPhone, name: safeName, projectTitle })
     }
 
     // Send telegram notification to admin
-    await sendTelegramNotification({ phone: normalizedPhone, name, projectTitle })
+    await sendTelegramNotification({ phone: normalizedPhone, name: safeName, projectTitle })
+
+    if (tokenHash) await markLeadTokenUsed(tokenHash)
+    await recordLeadSubmitAttempt(submitIp, { blocked: false })
 
     return NextResponse.json({
       success: true,

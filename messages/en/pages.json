@@ -785,6 +785,7 @@
     "phoneLabel": "Phone number *",
     "nameRequired": "Please enter your name",
     "submitError": "Submission failed. Please try again.",
+    "errorRateLimit": "Too many attempts. Wait 15 minutes or message us on Telegram.",
     "privacy": "Your data is protected and will not be shared with third parties",
     "submitting": "Submitting...",
     "submit": "Get code",

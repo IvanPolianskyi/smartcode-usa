@@ -17,6 +17,7 @@ import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
 import DataProcessingConsentNote from '@/components/Legal/DataProcessingConsentNote'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
+import { acquireLeadIntent, clearLeadIntentCache } from '@/lib/leadFormClient'
 
 const PhoneModal = ({ 
 	isOpen, 
@@ -25,6 +26,7 @@ const PhoneModal = ({
 	onSuccess 
 }) => {
 	const t = useTranslations('pages.phoneModal')
+	const tc = useTranslations('contact')
 	const locale = useLocale()
 	const [name, setName] = useState('')
 	const phoneInput = usePhoneInput('UA')
@@ -38,6 +40,7 @@ const PhoneModal = ({
 			setName('')
 			setError('')
 			setSuccess(false)
+			acquireLeadIntent().catch(() => {})
 		}
 	}, [isOpen])
 
@@ -65,31 +68,59 @@ const PhoneModal = ({
 		}
 
 		try {
-			const response = await fetch('/api/phone-collection', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					phone: phoneR.e164,
-					name: name.trim(),
-					projectId: project?.id,
-					projectTitle: project?.title,
-					timestamp: new Date().toISOString(),
-					locale,
+			const postRequest = async (leadToken) => {
+				return fetch('/api/phone-collection', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						phone: phoneR.e164,
+						name: name.trim(),
+						projectId: project?.id,
+						projectTitle: project?.title,
+						timestamp: new Date().toISOString(),
+						locale,
+						leadToken,
+					}),
 				})
-			})
+			}
 
-			if (response.ok) {
-				setSuccess(true)
-				if (onSuccess) {
-					onSuccess({ phone: phoneR.e164, name, project })
-				}
-			} else {
-				throw new Error('Failed to submit phone number')
+			clearLeadIntentCache()
+			let { leadToken } = await acquireLeadIntent()
+			let response = await postRequest(leadToken)
+			let data = await response.json().catch(() => ({}))
+
+			if (
+				!response.ok &&
+				(response.status === 403 || data?.code === 'invalid_token')
+			) {
+				clearLeadIntentCache()
+				;({ leadToken } = await acquireLeadIntent())
+				response = await postRequest(leadToken)
+				data = await response.json().catch(() => ({}))
+			}
+
+			if (response.status === 429 || data?.code === 'rate_limited') {
+				setError(t('errorRateLimit'))
+				return
+			}
+
+			if (!response.ok || !data?.success) {
+				throw new Error(data?.error || 'Failed to submit phone number')
+			}
+
+			clearLeadIntentCache()
+			setSuccess(true)
+			if (onSuccess) {
+				onSuccess({ phone: phoneR.e164, name, project })
 			}
 		} catch (err) {
 			console.error('Error submitting phone number:', err)
+			if (err?.message === 'Lead form signing is not configured' || err?.status === 503) {
+				setError(tc('errorLeadConfig'))
+				return
+			}
 			setError(t('submitError'))
 		} finally {
 			setIsSubmitting(false)
