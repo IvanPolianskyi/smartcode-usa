@@ -190,7 +190,8 @@
       "submit": "See results",
       "submitting": "Submitting...",
       "nameRequired": "Please enter your name",
-      "submitError": "Submission failed. Please try again."
+      "submitError": "Submission failed. Please try again.",
+      "errorRateLimit": "Too many attempts. Wait 15 minutes or message us on Telegram."
     },
     "results": {
       "title": "Test results",

@@ -3,6 +3,15 @@ import { getCollection } from '@/lib/mongodb'
 import { normalizePhoneE164 } from '@/lib/phoneE164'
 import { API_ERRORS, resolveLocale } from '@/lib/localeStrings'
 import { requireAdmin } from '@/lib/requireAdmin'
+import { getClientIp } from '@/lib/metaCapi'
+import {
+  isInternalLeadRequest,
+  validatePublicLeadSubmission,
+  markLeadTokenUsed,
+  recordLeadSubmitAttempt,
+} from '@/lib/leadFormSecurity'
+import { sanitizeLeadName } from '@/lib/sanitizeLeadText'
+import { scoreKnowledgeTest } from '@/lib/knowledgeTestScore'
 
 // Helper function to escape HTML for Telegram
 function escapeHtml(input) {
@@ -66,17 +75,69 @@ async function sendTelegramNotification({ phone, name, direction, directionName,
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { phone, name, direction, directionName, score, totalQuestions, percentage, answers, timestamp, locale: bodyLocale } = body
+    const {
+      phone,
+      name,
+      direction,
+      directionName,
+      answers,
+      timestamp,
+      locale: bodyLocale,
+      leadToken,
+      company: honeypot,
+    } = body
     const loc = resolveLocale(bodyLocale)
     const apiErr = API_ERRORS[loc]
 
+    const internalLead = isInternalLeadRequest(request)
+    let tokenHash = null
+    let submitIp = getClientIp(request) || 'unknown'
+
+    if (!internalLead) {
+      const security = await validatePublicLeadSubmission({
+        request,
+        leadToken,
+        honeypot,
+      })
+      if (!security.ok) {
+        if (security.silent) {
+          return NextResponse.json({
+            success: true,
+            message: 'Test result saved successfully',
+          })
+        }
+        return NextResponse.json(
+          {
+            success: false,
+            error: 'Request rejected',
+            code: security.code || security.reason || 'rejected',
+          },
+          { status: security.status || 403 }
+        )
+      }
+      tokenHash = security.tokenHash
+      submitIp = security.ip || submitIp
+    }
+
+    const safeName = sanitizeLeadName(name)
+    const computed = scoreKnowledgeTest(direction, answers)
+
     // Validate required fields
-    if (!phone || !name || !direction) {
+    if (!phone || !safeName || !direction) {
       return NextResponse.json(
         { success: false, error: apiErr.phoneNameDirectionRequired },
         { status: 400 }
       )
     }
+
+    if (!computed) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid test submission', code: 'invalid_test' },
+        { status: 400 }
+      )
+    }
+
+    const { score, totalQuestions, percentage } = computed
 
     const normalizedPhone = normalizePhoneE164(phone, loc)
     if (!normalizedPhone) {
@@ -86,16 +147,24 @@ export async function POST(request) {
       )
     }
 
+    const leads = await getCollection('leads')
+    const existingLead = await leads.findOne({ phone: normalizedPhone })
+    const sameRecentTest =
+      existingLead?.lastKnowledgeTest?.direction === direction &&
+      existingLead?.lastKnowledgeTest?.timestamp &&
+      Date.now() - new Date(existingLead.lastKnowledgeTest.timestamp).getTime() <
+        15 * 60 * 1000
+
     // Save test result to database
     const testResults = await getCollection('knowledge_test_results')
     const testResult = {
       phone: normalizedPhone,
-      name: name.trim(),
+      name: safeName,
       direction,
       directionName: directionName || direction,
-      score: score || 0,
-      totalQuestions: totalQuestions || 0,
-      percentage: percentage || 0,
+      score,
+      totalQuestions,
+      percentage,
       answers: answers || {},
       createdAt: new Date(timestamp || new Date()),
       lastActivity: new Date(),
@@ -103,28 +172,24 @@ export async function POST(request) {
 
     await testResults.insertOne(testResult)
 
-    // Send telegram notification to admin
-    await sendTelegramNotification({
-      phone: normalizedPhone,
-      name,
-      direction,
-      directionName: directionName || direction,
-      score,
-      totalQuestions,
-      percentage
-    })
-
-    // Also update or create lead in leads collection
-    const leads = await getCollection('leads')
-    const existingLead = await leads.findOne({ phone: normalizedPhone })
+    if (!sameRecentTest) {
+      await sendTelegramNotification({
+        phone: normalizedPhone,
+        name: safeName,
+        direction,
+        directionName: directionName || direction,
+        score,
+        totalQuestions,
+        percentage,
+      })
+    }
 
     if (existingLead) {
-      // Update existing lead with test result
       await leads.updateOne(
         { phone: normalizedPhone },
         {
           $set: {
-            name: name.trim(),
+            name: safeName,
             lastActivity: new Date(),
             lastKnowledgeTest: {
               direction,
@@ -132,36 +197,41 @@ export async function POST(request) {
               score,
               totalQuestions,
               percentage,
-              timestamp: new Date(timestamp || new Date())
-            }
-          }
+              timestamp: new Date(timestamp || new Date()),
+            },
+          },
         }
       )
     } else {
-      // Create new lead
       const lead = {
         phone: normalizedPhone,
-        name: name.trim(),
+        name: safeName,
         lastKnowledgeTest: {
           direction,
           directionName: directionName || direction,
           score,
           totalQuestions,
           percentage,
-          timestamp: new Date(timestamp || new Date())
+          timestamp: new Date(timestamp || new Date()),
         },
         createdAt: new Date(),
         lastActivity: new Date(),
         status: 'new',
-        source: 'knowledge_test'
+        source: 'knowledge_test',
       }
 
       await leads.insertOne(lead)
     }
 
+    if (tokenHash) await markLeadTokenUsed(tokenHash)
+    await recordLeadSubmitAttempt(submitIp, { blocked: false })
+
     return NextResponse.json({
       success: true,
-      message: 'Test result saved successfully'
+      message: 'Test result saved successfully',
+      score,
+      totalQuestions,
+      percentage,
     })
 
   } catch (error) {

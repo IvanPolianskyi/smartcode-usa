@@ -10,6 +10,7 @@ import { validateEuropeanPhone } from '@/lib/phoneEurope'
 import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
+import { acquireLeadIntent, clearLeadIntentCache } from '@/lib/leadFormClient'
 
 const DIRECTION_META = [
 	{ id: 'python', icon: Code, color: '#3b82f6', key: 'python' },
@@ -20,6 +21,7 @@ const DIRECTION_META = [
 
 export default function KnowledgeTestClient() {
 	const t = useTranslations('pages.knowledgeTest')
+	const tc = useTranslations('contact')
 	const locale = useLocale()
 	const testQuestions = useTestQuestions()
 	const searchParams = useSearchParams()
@@ -43,6 +45,12 @@ export default function KnowledgeTestClient() {
 			})),
 		[t]
 	)
+
+	useEffect(() => {
+		if (showPhoneForm) {
+			acquireLeadIntent().catch(() => {})
+		}
+	}, [showPhoneForm])
 
 	useEffect(() => {
 		const courseParam = searchParams.get('course')
@@ -139,35 +147,64 @@ export default function KnowledgeTestClient() {
 
 		try {
 			const score = calculateScore()
-			const response = await fetch('/api/knowledge-test', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					phone: phoneR.e164,
-					name: name.trim(),
-					direction: selectedDirection.id,
-					directionName: selectedDirection.name,
-					score: score.correct,
-					totalQuestions: score.total,
-					percentage: score.percentage,
-					answers: answers,
-					timestamp: new Date().toISOString(),
-					locale,
-				}),
-			})
 
-			if (response.ok) {
-				setTestResult(score)
-				setShowPhoneForm(false)
-				setShowResults(true)
-			} else {
-				const data = await response.json()
-				throw new Error(data.error || 'Failed to submit test results')
+			const postResults = async (leadToken) =>
+				fetch('/api/knowledge-test', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						phone: phoneR.e164,
+						name: name.trim(),
+						direction: selectedDirection.id,
+						directionName: selectedDirection.name,
+						answers,
+						timestamp: new Date().toISOString(),
+						locale,
+						leadToken,
+					}),
+				})
+
+			clearLeadIntentCache()
+			let { leadToken } = await acquireLeadIntent()
+			let response = await postResults(leadToken)
+			let data = await response.json().catch(() => ({}))
+
+			if (
+				!response.ok &&
+				(response.status === 403 || data?.code === 'invalid_token')
+			) {
+				clearLeadIntentCache()
+				;({ leadToken } = await acquireLeadIntent())
+				response = await postResults(leadToken)
+				data = await response.json().catch(() => ({}))
 			}
+
+			if (response.status === 429 || data?.code === 'rate_limited') {
+				setError(t('phoneForm.errorRateLimit'))
+				return
+			}
+
+			if (!response.ok || !data?.success) {
+				throw new Error(data?.error || 'Failed to submit test results')
+			}
+
+			clearLeadIntentCache()
+			const result = {
+				correct: data.score ?? score.correct,
+				total: data.totalQuestions ?? score.total,
+				percentage: data.percentage ?? score.percentage,
+			}
+			setTestResult(result)
+			setShowPhoneForm(false)
+			setShowResults(true)
 		} catch (err) {
 			console.error('Error submitting test results:', err)
+			if (err?.message === 'Lead form signing is not configured' || err?.status === 503) {
+				setError(tc('errorLeadConfig'))
+				return
+			}
 			setError(t('phoneForm.submitError'))
 		} finally {
 			setIsSubmitting(false)
