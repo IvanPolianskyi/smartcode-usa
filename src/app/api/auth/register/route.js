@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import { getCollection } from '@/lib/mongodb'
 import { hashPassword, generateToken, setAuthCookie } from '@/lib/auth'
 import { notifyCrmStudentLinksRefresh } from '@/lib/notifyCrmStudentLinks'
+import { toAuthUserResponse } from '@/lib/crmLmsSync'
 import { claimGuestPayment } from '@/lib/claimGuestPayment'
 
 export async function POST(request) {
@@ -147,21 +148,15 @@ export async function POST(request) {
       }
     }
 
-    // Return user (without password)
-    const userResponse = {
-      id: userId,
-      email: user.email,
-      name: user.name,
-      phone: user.phone,
-      role: user.role,
-      studentProfile: user.studentProfile,
-      purchasedCourses: user.purchasedCourses,
-      enrolledCourses: user.enrolledCourses,
-      referralId: user.referralId || null
-    }
-
     return NextResponse.json(
-      { user: userResponse, token },
+      {
+        user: toAuthUserResponse({
+          ...user,
+          _id: userObjectId,
+          id: userId,
+        }),
+        token,
+      },
       { status: 201 }
     )
   } catch (error) {

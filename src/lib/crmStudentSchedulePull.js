@@ -1,9 +1,4 @@
 import { ObjectId } from 'mongodb'
-import {
-  DEFAULT_LMS_STUDENT_NAME,
-  isPlaceholderStudentName,
-  isReliableStudentDisplayName,
-} from '@/lib/crmLmsSync'
 import { kyivPartsFromInstant, parseUtcInstant } from '@/lib/kyivTime'
 
 const CRM_BASE_URL = process.env.CRM_API_URL || process.env.SMARTCODE_CRM_API_URL || ''
@@ -544,24 +539,12 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
     nextProfile.accountReady = true
   }
 
-  const crmFullName = String(crmStudent.full_name || '').trim()
-  const profileSet = { studentProfile: nextProfile, updatedAt: new Date() }
-  let nextName = student.name
-  if (
-    crmFullName &&
-    isReliableStudentDisplayName(crmFullName) &&
-    isPlaceholderStudentName(student.name)
-  ) {
-    profileSet.name = crmFullName
-    nextName = crmFullName
-  }
-
   await usersCollection.updateOne(
     { _id: new ObjectId(student.id) },
-    { $set: profileSet }
+    { $set: { studentProfile: nextProfile, updatedAt: new Date() } }
   )
 
-  return { ...student, name: nextName, studentProfile: nextProfile }
+  return { ...student, studentProfile: nextProfile }
 }
 
 /**
@@ -698,13 +681,11 @@ export async function maybePullCrmScheduleForStudent(user, usersCollection) {
       )
       return {
         ...user,
-        name: finalUser?.name ?? pulled.name ?? user.name,
         studentProfile: finalUser?.studentProfile ?? pulled.studentProfile,
       }
     }
     return {
       ...user,
-      name: pulled.name ?? user.name,
       studentProfile: pulled.studentProfile,
     }
   } catch (e) {

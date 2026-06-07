@@ -145,8 +145,68 @@ export function isReliableStudentDisplayName(name) {
   return !isPlaceholderStudentName(name) && !isCalendarEventStyleName(name)
 }
 
-function resolveNameFromCrmPayload(payload) {
-  return String(payload?.fullName || payload?.name || '').trim()
+/** Поля профілю лише для синхронізації з CRM — не віддавати учню в API. */
+const CRM_INTERNAL_PROFILE_KEYS = [
+  'crmStudentId',
+  'crmShortId',
+  'crmTeacherId',
+  'crmTeacherName',
+  'crmScheduleSyncedAt',
+]
+
+/** Імʼя для UI учня: ніколи не показувати назви з календаря/CRM. */
+export function displayNameForStudent(user) {
+  const name = String(user?.name || '').trim()
+  if (name && !isPlaceholderStudentName(name) && !isCalendarEventStyleName(name)) {
+    return name
+  }
+  const local = String(user?.email || '').split('@')[0]?.trim()
+  return local || DEFAULT_LMS_STUDENT_NAME
+}
+
+export function studentProfileForClient(profile) {
+  const src = profile && typeof profile === 'object' ? profile : {}
+  const out = { ...src }
+  for (const key of CRM_INTERNAL_PROFILE_KEYS) {
+    delete out[key]
+  }
+  return out
+}
+
+const DEFAULT_CLIENT_STUDENT_PROFILE = {
+  lessonFormat: 'group',
+  regularSchedule: [],
+  zoomLink: '',
+  activeOnlineCourses: [],
+  courseAccess: {},
+  accountBalance: 0,
+  lessonCredits: 0,
+  scheduleSyncStartAt: null,
+  accountReady: false,
+}
+
+/** Відповідь /api/auth/* для клієнта: без CRM-імʼі та внутрішніх полів профілю. */
+export function toAuthUserResponse(user) {
+  const role = user?.role || 'user'
+  const profile = user?.studentProfile || DEFAULT_CLIENT_STUDENT_PROFILE
+  const base = {
+    id: user?._id?.toString?.() || String(user?.id || ''),
+    email: user?.email,
+    phone: user?.phone ?? null,
+    role,
+    purchasedCourses: user?.purchasedCourses || [],
+    enrolledCourses: user?.enrolledCourses || [],
+    createdAt: user?.createdAt ?? null,
+    referralId: user?.referralId ?? null,
+  }
+  if (role === 'admin') {
+    return { ...base, name: user?.name, studentProfile: profile }
+  }
+  return {
+    ...base,
+    name: displayNameForStudent(user),
+    studentProfile: studentProfileForClient(profile),
+  }
 }
 
 export async function upsertUserFromCrm(payload) {
@@ -158,7 +218,6 @@ export async function upsertUserFromCrm(payload) {
   const usersCollection = await getCollection('users')
   const explicitUserId = String(payload.smartcodeUserId || '').trim()
   const email = normalizeEmail(payload.email)
-  const crmName = resolveNameFromCrmPayload(payload)
   const phone = payload.phone ? String(payload.phone).trim() : null
 
   let user = null
@@ -187,17 +246,6 @@ export async function upsertUserFromCrm(payload) {
       studentProfile: { ...prev, ...profilePatch },
       updatedAt: new Date(),
     }
-    // При ручній привʼязці — імʼя з реєстрації LMS, не з CRM/календаря.
-    const isLinkingExistingLmsUser = Boolean(explicitUserId)
-    if (!isLinkingExistingLmsUser) {
-      if (crmName && isReliableStudentDisplayName(crmName)) {
-        if (!user.name || isPlaceholderStudentName(user.name)) {
-          setFields.name = crmName
-        }
-      } else if (!user.name || isPlaceholderStudentName(user.name)) {
-        setFields.name = DEFAULT_LMS_STUDENT_NAME
-      }
-    }
     await usersCollection.updateOne(
       { _id: user._id },
       { $set: setFields }
@@ -222,11 +270,10 @@ export async function upsertUserFromCrm(payload) {
     }
     const randomPassword = crypto.randomBytes(24).toString('hex')
     const hashedPassword = await hashPassword(randomPassword)
-    const name = crmName || DEFAULT_LMS_STUDENT_NAME
     const doc = {
       email,
       password: hashedPassword,
-      name,
+      name: DEFAULT_LMS_STUDENT_NAME,
       phone,
       role: 'student',
       studentProfile: { ...defaultStudentProfile(), ...profilePatch },

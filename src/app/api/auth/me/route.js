@@ -6,6 +6,7 @@ import { syncStudentScheduleAccess } from '@/lib/syncStudentScheduleAccess'
 import { getStudentAccessibleCourseIds } from '@/lib/courseLessonAccess'
 import { maybePullCrmScheduleForStudent } from '@/lib/crmStudentSchedulePull'
 import { isStudentDashboardReady, shouldPersistAccountReady } from '@/lib/studentAccountReady'
+import { toAuthUserResponse } from '@/lib/crmLmsSync'
 
 export async function GET() {
   try {
@@ -148,22 +149,15 @@ export async function GET() {
       console.error('Error fetching booked slots for zoom links:', err)
     }
 
-    const userResponse = {
-      id: user._id.toString(),
-      email: user.email,
-      name: user.name,
-      phone: user.phone,
-      role: user.role || 'user',
+    const userForClient = {
+      ...user,
       studentProfile: {
         ...baseProfile,
         accountReady: isStudentDashboardReady(baseProfile),
       },
-      purchasedCourses: user.purchasedCourses || [],
-      enrolledCourses: user.enrolledCourses || [],
-      createdAt: user.createdAt
     }
 
-    return NextResponse.json({ user: userResponse }, { status: 200 })
+    return NextResponse.json({ user: toAuthUserResponse(userForClient) }, { status: 200 })
   } catch (error) {
     console.error('Get current user error:', error)
     return NextResponse.json(

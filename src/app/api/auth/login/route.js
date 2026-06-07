@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getCollection } from '@/lib/mongodb'
 import { comparePassword, generateToken, setAuthCookie } from '@/lib/auth'
+import { toAuthUserResponse } from '@/lib/crmLmsSync'
 
 export async function POST(request) {
   try {
@@ -43,26 +44,8 @@ export async function POST(request) {
     // Set cookie
     await setAuthCookie(token)
 
-    // Return user (without password)
-    const userResponse = {
-      id: userId,
-      email: user.email,
-      name: user.name,
-      phone: user.phone,
-      role: user.role || 'user',
-      studentProfile: user.studentProfile || {
-        lessonFormat: 'group',
-        regularSchedule: [],
-        zoomLink: '',
-        activeOnlineCourses: [],
-        courseAccess: {},
-      },
-      purchasedCourses: user.purchasedCourses || [],
-      enrolledCourses: user.enrolledCourses || []
-    }
-
     return NextResponse.json(
-      { user: userResponse, token },
+      { user: toAuthUserResponse(user), token },
       { status: 200 }
     )
   } catch (error) {
