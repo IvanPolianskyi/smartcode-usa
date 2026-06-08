@@ -21,6 +21,8 @@ export default function StudentPaymentPanel({
   const [messageType, setMessageType] = useState('info')
 
   const lessonCredits = Number(paymentStats?.lessonCredits || 0)
+  const hasPendingReceiptReview = Boolean(paymentStats?.hasPendingReceiptReview)
+  const hasRejectedReceipt = Boolean(paymentStats?.hasRejectedReceipt)
 
   const debtLessons = useMemo(() => {
     if (scheduleCount > 0) {
@@ -29,7 +31,7 @@ export default function StudentPaymentPanel({
     return lessonCredits < 1 ? 1 : 0
   }, [scheduleCount, lessonCredits])
 
-  const hasDebt = debtLessons > 0
+  const hasDebt = debtLessons > 0 && !hasPendingReceiptReview
 
   useEffect(() => {
     if (defaultOpen) {
@@ -133,21 +135,41 @@ export default function StudentPaymentPanel({
             </div>
           </div>
 
-          <div className={`${styles.debtRow} ${hasDebt ? styles.debtRowActive : ''}`}>
+          <div
+            className={`${styles.debtRow} ${
+              hasPendingReceiptReview
+                ? styles.debtRowPending
+                : hasDebt
+                  ? styles.debtRowActive
+                  : ''
+            }`}
+          >
             <div className={styles.debtRowMain}>
               <div className={styles.debtRowLabel}>
-                {hasDebt ? <AlertTriangle size={18} /> : <CircleCheck size={18} />}
+                {hasPendingReceiptReview ? (
+                  <Clock size={18} />
+                ) : hasDebt ? (
+                  <AlertTriangle size={18} />
+                ) : (
+                  <CircleCheck size={18} />
+                )}
                 <span>{t('student.payments.debt')}</span>
               </div>
               <strong className={styles.debtRowValue}>
-                {hasDebt
-                  ? t('student.payments.debtLessons', { count: debtLessons })
-                  : t('student.payments.noDebt')}
+                {hasPendingReceiptReview
+                  ? t('student.payments.receiptPendingReview')
+                  : hasDebt
+                    ? t('student.payments.debtLessons', { count: debtLessons })
+                    : t('student.payments.noDebt')}
               </strong>
             </div>
-            {hasDebt ? (
+            {hasPendingReceiptReview ? (
+              <p className={styles.debtRowHint}>{t('student.payments.receiptPendingHint')}</p>
+            ) : hasDebt ? (
               <p className={styles.debtRowHint}>
-                {t('student.payments.debtHint', { lessons: debtLessons })}
+                {hasRejectedReceipt
+                  ? t('student.payments.debtRejectedHint', { lessons: debtLessons })
+                  : t('student.payments.debtHint', { lessons: debtLessons })}
               </p>
             ) : null}
           </div>

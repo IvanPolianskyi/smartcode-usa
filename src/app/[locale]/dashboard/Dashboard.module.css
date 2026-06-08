@@ -606,6 +606,29 @@
   border-color: #fca5a5;
 }
 
+.debtRowPending {
+  background: linear-gradient(135deg, #eff6ff, #f0f9ff);
+  border-color: #93c5fd;
+}
+
+.debtRowPending .debtRowLabel {
+  color: #1d4ed8;
+}
+
+.debtRowPending .debtRowLabel svg {
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+.debtRowPending .debtRowValue {
+  color: #1d4ed8;
+}
+
+.debtRowPending .debtRowHint {
+  border-top-color: rgba(147, 197, 253, 0.5);
+  color: #1e40af;
+}
+
 .debtRowMain {
   display: flex;
   align-items: center;
@@ -1431,6 +1454,24 @@
 .paymentBannerUrgent {
   background: linear-gradient(135deg, #fef2f2, #fee2e2);
   border-color: #fca5a5;
+}
+
+.paymentBannerPending {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border-color: #93c5fd;
+}
+
+.paymentBannerPending .paymentBannerIcon {
+  background: rgba(37, 99, 235, 0.12);
+  color: #2563eb;
+}
+
+.paymentBannerPending .paymentBannerBody strong {
+  color: #1e3a8a;
+}
+
+.paymentBannerPending .paymentBannerBody p {
+  color: #1d4ed8;
 }
 
 .paymentBannerIcon {

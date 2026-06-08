@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
+import { getStudentReceiptReviewState } from '@/lib/studentPaymentReceiptStatus'
 
 export async function GET() {
   try {
@@ -40,6 +41,15 @@ export async function GET() {
       .filter((p) => p.status === 'completed')
       .reduce((sum, p) => sum + Number(p.creditedLessons || 0), 0)
 
+    const receiptReview = getStudentReceiptReviewState(
+      payments.map((p) => ({
+        paymentMethod: p.paymentMethod,
+        status: p.status,
+        approvalStatus: p.approvalStatus,
+        createdAt: p.createdAt,
+      }))
+    )
+
     return NextResponse.json(
       {
         stats: {
@@ -50,6 +60,9 @@ export async function GET() {
           creditedLessons,
           accountBalance: Number(user?.studentProfile?.accountBalance || 0),
           lessonCredits: Number(user?.studentProfile?.lessonCredits || 0),
+          hasPendingReceiptReview: receiptReview.hasPendingReceiptReview,
+          hasRejectedReceipt: receiptReview.hasRejectedReceipt,
+          pendingReceiptUploadCount: receiptReview.pendingReceiptUploadCount,
         },
         payments: payments.map((p) => ({
           id: p._id.toString(),
@@ -57,6 +70,8 @@ export async function GET() {
           amount: p.amount || 0,
           currency: p.currency || 'UAH',
           status: p.status || 'pending',
+          paymentMethod: p.paymentMethod || null,
+          approvalStatus: p.approvalStatus || null,
           createdAt: p.createdAt,
         })),
       },

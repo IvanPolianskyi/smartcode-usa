@@ -6,6 +6,7 @@ import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
 
 export default function PaymentReminderBanner({
   visible,
+  pendingReceiptReview = false,
   currency = 'грн',
   deadlineText,
   lessonCredits,
@@ -13,6 +14,20 @@ export default function PaymentReminderBanner({
   onPayClick,
   t,
 }) {
+  if (pendingReceiptReview) {
+    return (
+      <aside className={`${styles.paymentBanner} ${styles.paymentBannerPending}`} role="status">
+        <div className={styles.paymentBannerIcon}>
+          <Clock size={22} />
+        </div>
+        <div className={styles.paymentBannerBody}>
+          <strong>{t('student.paymentReminder.pendingTitle')}</strong>
+          <p>{t('student.paymentReminder.pendingText')}</p>
+        </div>
+      </aside>
+    )
+  }
+
   if (!visible) return null
 
   const urgent = lessonCredits === 0 && pendingCount === 0

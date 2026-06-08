@@ -94,8 +94,11 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
     : t('student.schedule.motivationDone', { next: scheduleInfo.nextLessonText })
 
   const lessonCredits = Number(paymentStats?.lessonCredits ?? user?.studentProfile?.lessonCredits ?? 0)
+  const hasPendingReceiptReview = Boolean(paymentStats?.hasPendingReceiptReview)
   const showPaymentReminder =
-    schedule.length > 0 && (lessonCredits < 1 || (paymentStats?.pending || 0) > 0)
+    schedule.length > 0 &&
+    lessonCredits < 1 &&
+    !hasPendingReceiptReview
 
   const scrollToPayment = () => {
     setPayPanelOpen(true)
@@ -136,6 +139,7 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
 
         <PaymentReminderBanner
           visible={showPaymentReminder}
+          pendingReceiptReview={hasPendingReceiptReview}
           currency={t('student.payments.currency')}
           deadlineText={scheduleInfo.nextLessonText}
           lessonCredits={lessonCredits}

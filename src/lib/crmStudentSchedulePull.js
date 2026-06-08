@@ -255,12 +255,49 @@ export function isCrmGroupLessonSlot(lesson) {
   return false
 }
 
+/** Пробний урок (ПУ) у CRM — не показувати в regularSchedule учня на сайті. */
+export function isCrmTrialLesson(lesson) {
+  return String(lesson?.kind || '') === 'trial'
+}
+
 const SCHEDULE_SLOT_GRACE_MS = 60 * 60 * 1000
+
+/** ІУ згруповані за series_id (як у CRM). */
+export function groupIndividualBySeries(lessons) {
+  const map = new Map()
+  for (const lesson of Array.isArray(lessons) ? lessons : []) {
+    const key =
+      String(lesson?.series_id || '').trim() ||
+      `lesson:${String(lesson?.id || lesson?._id || '')}`
+    const arr = map.get(key) || []
+    arr.push(lesson)
+    map.set(key, arr)
+  }
+  return [...map.entries()].map(([seriesKey, seriesLessons]) => ({
+    seriesKey,
+    lessons: seriesLessons,
+  }))
+}
+
+/**
+ * Для regularSchedule беремо лише регулярні серії ІУ (2+ уроки в серії).
+ * Одноразові ІУ (часто залишок після ПУ) не показуємо, якщо є хоча б одна регулярна серія.
+ */
+export function pickIndividualLessonsForRegularSchedule(lessons) {
+  const individuals = (Array.isArray(lessons) ? lessons : []).filter(
+    (lesson) => String(lesson?.kind || '') === 'individual' && !isCrmTrialLesson(lesson)
+  )
+  const groups = groupIndividualBySeries(individuals)
+  const recurring = groups.filter((group) => group.lessons.length >= 2)
+  const sourceGroups = recurring.length > 0 ? recurring : groups
+  return sourceGroups.flatMap((group) => group.lessons)
+}
 
 /** Майбутні scheduled ІУ/групові слоти — лише вони формують regularSchedule в LMS. */
 export function filterFutureScheduledLessons(lessons) {
   const now = Date.now()
   return (Array.isArray(lessons) ? lessons : []).filter((lesson) => {
+    if (isCrmTrialLesson(lesson)) return false
     if (String(lesson?.kind || '') !== 'individual') return false
     if (String(lesson?.status || '') !== 'scheduled') return false
     const start = parseUtcInstant(lesson.start_at).getTime()
@@ -323,10 +360,11 @@ export function scheduleFromCrmLessons(lessons, crmGroups = []) {
   }
 
   const future = filterFutureScheduledLessons(lessons)
-
-  for (const lesson of nearestFutureLessonBySeries(
+  const regularIndividuals = pickIndividualLessonsForRegularSchedule(
     future.filter((l) => !isCrmGroupLessonSlot(l))
-  )) {
+  )
+
+  for (const lesson of nearestFutureLessonBySeries(regularIndividuals)) {
     const dt = kyivDayTimeFromLesson(lesson)
     if (dt) addSlot(dt.day, dt.time, 50)
   }
