@@ -27,6 +27,7 @@ import {
   Sparkles,
   Trophy,
   BarChart3,
+  Users,
   DollarSign,
   Eye,
 } from 'lucide-react'
