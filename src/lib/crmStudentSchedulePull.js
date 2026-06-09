@@ -360,13 +360,16 @@ export function scheduleFromCrmLessons(lessons, crmGroups = []) {
   }
 
   const future = filterFutureScheduledLessons(lessons)
-  const regularIndividuals = pickIndividualLessonsForRegularSchedule(
-    future.filter((l) => !isCrmGroupLessonSlot(l))
-  )
 
-  for (const lesson of nearestFutureLessonBySeries(regularIndividuals)) {
-    const dt = kyivDayTimeFromLesson(lesson)
-    if (dt) addSlot(dt.day, dt.time, 50)
+  // Учень у групі з розкладом — лише групові слоти (ПУ/ІУ іншого викладача не змішуємо).
+  if (!hasGroupSchedule) {
+    const regularIndividuals = pickIndividualLessonsForRegularSchedule(
+      future.filter((l) => !isCrmGroupLessonSlot(l))
+    )
+    for (const lesson of nearestFutureLessonBySeries(regularIndividuals)) {
+      const dt = kyivDayTimeFromLesson(lesson)
+      if (dt) addSlot(dt.day, dt.time, 50)
+    }
   }
 
   if (!hasGroupSchedule) {
@@ -390,6 +393,24 @@ export function scheduleFromCrmLessons(lessons, crmGroups = []) {
 }
 
 function resolveTeacherFromCrmData(rawLessons, crmGroups, teachers) {
+  const groups = Array.isArray(crmGroups) ? crmGroups : []
+
+  // Груповий учень: викладач і Zoom з групи (ПУ з іншим викладачем не впливає).
+  if (groups.length > 0) {
+    const teacherId = String(groups[0]?.teacher_id || '').trim()
+    let zoomLink =
+      groups.map((g) => String(g.zoom_link || '').trim()).find(Boolean) || ''
+    let teacherName = ''
+    if (teacherId) {
+      const teacher = teachers.find((item) => item.id === teacherId)
+      teacherName = String(teacher?.fullName || '')
+      if (!zoomLink) {
+        zoomLink = String(teacher?.zoomLink || '').trim()
+      }
+    }
+    return { teacherId, teacherName, zoomLink }
+  }
+
   const now = Date.now()
   const scheduled = (Array.isArray(rawLessons) ? rawLessons : []).filter(
     (l) => String(l?.status || '') === 'scheduled' && String(l?.kind || '') === 'individual'
@@ -409,21 +430,12 @@ function resolveTeacherFromCrmData(rawLessons, crmGroups, teachers) {
     teacherId = String(pick.lesson?.teacher_id || '').trim()
   }
 
-  if (!teacherId && crmGroups.length > 0) {
-    teacherId = String(crmGroups[0]?.teacher_id || '').trim()
-  }
-
   let teacherName = ''
   let zoomLink = ''
   if (teacherId) {
     const teacher = teachers.find((item) => item.id === teacherId)
     teacherName = String(teacher?.fullName || '')
     zoomLink = String(teacher?.zoomLink || '').trim()
-  }
-
-  if (!zoomLink && crmGroups.length > 0) {
-    zoomLink =
-      crmGroups.map((g) => String(g.zoom_link || '').trim()).find(Boolean) || ''
   }
 
   return { teacherId, teacherName, zoomLink }
