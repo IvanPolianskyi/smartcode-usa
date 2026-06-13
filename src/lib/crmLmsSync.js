@@ -151,6 +151,8 @@ const CRM_INTERNAL_PROFILE_KEYS = [
   'crmTeacherId',
   'crmTeacherName',
   'crmScheduleSyncedAt',
+  'parentContact',
+  'notes',
 ]
 
 /** Імʼя для UI учня: ніколи не показувати назви з календаря/CRM. */
@@ -244,6 +246,12 @@ export async function upsertUserFromCrm(payload) {
       studentProfile: { ...prev, ...profilePatch },
       updatedAt: new Date(),
     }
+    const tgUid = String(payload.telegramUserId || payload.telegram_user_id || '').trim()
+    const tgChat = String(payload.telegramChatId || payload.telegram_chat_id || '').trim()
+    const tgUser = String(payload.telegramUsername || payload.telegram_username || '').trim()
+    if (tgUid) setFields.telegramUserId = tgUid
+    if (tgChat) setFields.telegramChatId = tgChat
+    if (tgUser) setFields.telegramUsername = tgUser
     await usersCollection.updateOne(
       { _id: user._id },
       { $set: setFields }
@@ -451,17 +459,24 @@ export async function listLmsStudentsForCrm({
 
   const term = String(search || '').trim()
   if (term) {
-    const esc = escapeRegex(term)
-    const searchOr = [
-      { email: { $regex: esc, $options: 'i' } },
-      { name: { $regex: esc, $options: 'i' } },
-      { phone: { $regex: esc, $options: 'i' } },
-      { 'studentProfile.crmShortId': { $regex: esc, $options: 'i' } },
-    ]
-    if (ObjectId.isValid(term)) {
-      searchOr.push({ _id: new ObjectId(term) })
+    const tokens = term.split(/\s+/).filter(Boolean)
+    const tokenClause = (token) => {
+      const esc = escapeRegex(token)
+      const searchOr = [
+        { email: { $regex: esc, $options: 'i' } },
+        { name: { $regex: esc, $options: 'i' } },
+        { phone: { $regex: esc, $options: 'i' } },
+        { 'studentProfile.crmShortId': { $regex: esc, $options: 'i' } },
+      ]
+      if (ObjectId.isValid(token)) {
+        searchOr.push({ _id: new ObjectId(token) })
+      }
+      return { $or: searchOr }
     }
-    const searchClause = { $or: searchOr }
+    const searchClause =
+      tokens.length <= 1
+        ? tokenClause(tokens[0] || term)
+        : { $and: tokens.map((token) => tokenClause(token)) }
     if (q.$or) {
       q.$and = [{ $or: q.$or }, searchClause]
       delete q.$or
