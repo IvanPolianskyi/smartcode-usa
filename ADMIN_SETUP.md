@@ -8,16 +8,19 @@
 node scripts/create-admin.js
 ```
 
-Або встановіть змінні середовища:
-- `MONGODB_URI` - URI підключення до MongoDB
-- `MONGODB_DB` - назва бази даних (за замовчуванням: SmartCodeLogs)
+Обовʼязкові змінні середовища (наприклад у `.env.local`):
+- `MONGODB_URI` — URI підключення до MongoDB
+- `MONGODB_DB` — назва бази даних (за замовчуванням: SmartCodeLogs)
+- `ADMIN_EMAIL` — email адміністратора
+- `ADMIN_PASSWORD` — пароль адміністратора (мінімум 12 символів)
+- `ADMIN_NAME` — (необовʼязково) відображуване імʼя
+
+> Ніколи не зберігайте реальні паролі в репозиторії. Див. `.env.example`.
 
 ## Дані для входу адміністратора
 
-- **Email/Username**: `smartcodeacademy`
-- **Password**: `CodeSmartAcademy24`
-
-> Примітка: Система підтримує вхід як за email, так і за username. Адмін акаунт використовує "smartcodeacademy" як email.
+Задаються через `ADMIN_EMAIL` та `ADMIN_PASSWORD` під час запуску скрипта.
+Після створення акаунту увійдіть на сайт з цими даними.
 
 ## Права адміністратора
 

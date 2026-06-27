@@ -10,15 +10,21 @@ try {
   // dotenv is optional if env vars are already set
 }
 
-const { MongoClient, ObjectId } = require('mongodb')
+const { MongoClient } = require('mongodb')
 const bcrypt = require('bcryptjs')
 
 async function createAdmin() {
-  const mongoUri = process.env.MONGODB_URI || "mongodb+srv://artemonyshchuk123:20032007Art@cluster0.vfkxida.mongodb.net/"
+  const mongoUri = process.env.MONGODB_URI
   const databaseName = process.env.MONGODB_DB || 'SmartCodeLogs'
+  const adminEmail = process.env.ADMIN_EMAIL?.trim()
+  const adminPassword = process.env.ADMIN_PASSWORD
 
   if (!mongoUri) {
     console.error('Missing MONGODB_URI environment variable')
+    process.exit(1)
+  }
+  if (!adminEmail || !adminPassword) {
+    console.error('Missing ADMIN_EMAIL and/or ADMIN_PASSWORD environment variables')
     process.exit(1)
   }
 
@@ -29,9 +35,7 @@ async function createAdmin() {
     const db = client.db(databaseName)
     const usersCollection = db.collection('users')
 
-    const adminEmail = 'smartcodeacademy@gmail.com' // Username used as email
-    const adminPassword = 'CodeSmartAcademy24'
-    const adminName = 'SmartCode Academy Admin'
+    const adminName = process.env.ADMIN_NAME?.trim() || 'SmartCode Academy Admin'
 
     // Check if admin already exists
     const existingAdmin = await usersCollection.findOne({ 
@@ -54,7 +58,6 @@ async function createAdmin() {
       )
       console.log('✅ Admin account updated successfully!')
       console.log(`   Email: ${adminEmail}`)
-      console.log(`   Password: ${adminPassword}`)
     } else {
       // Create new admin
       const hashedPassword = await bcrypt.hash(adminPassword, 10)
@@ -70,7 +73,6 @@ async function createAdmin() {
       })
       console.log('✅ Admin account created successfully!')
       console.log(`   Email: ${adminEmail}`)
-      console.log(`   Password: ${adminPassword}`)
     }
   } catch (error) {
     console.error('❌ Error creating admin:', error)

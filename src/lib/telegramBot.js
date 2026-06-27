@@ -12,16 +12,24 @@ class TelegramBotService {
     this.isRunning = false;
     this.userStates = new Map();
     
-    // Configuration
-    this.BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN_PROJECTS || "8112933065:AAGSPHlzAmuwJ2Kvul84E6kci-JY6nLpqW0";
+    const token = (
+      process.env.TELEGRAM_BOT_TOKEN_PROJECTS ||
+      process.env.TELEGRAM_BOT_TOKEN ||
+      ''
+    ).trim();
+    if (!token) {
+      throw new Error('TELEGRAM_BOT_TOKEN_PROJECTS or TELEGRAM_BOT_TOKEN must be set');
+    }
+    this.BOT_TOKEN = token;
     this.API_BASE_URL = process.env.API_BASE_URL;
     this.AUTHORIZED_USERS = process.env.TELEGRAM_AUTHORIZED_USERS?.split(',') || [];
   }
 
-  // Helper function to check if user is authorized
   isAuthorized(userId) {
-    return true;
-    // return this.AUTHORIZED_USERS.length === 0 || this.AUTHORIZED_USERS.includes(userId.toString());
+    if (this.AUTHORIZED_USERS.length === 0) {
+      return process.env.NODE_ENV !== 'production';
+    }
+    return this.AUTHORIZED_USERS.includes(userId.toString());
   }
 
   // Helper function to send API request

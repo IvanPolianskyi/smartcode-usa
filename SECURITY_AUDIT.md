@@ -30,6 +30,9 @@
 | 13 | `MONOBANK_SKIP_WEBHOOK_VERIFY=true` | Ніколи на production |
 | 14 | `INTERNAL_UPLOAD_SECRET`, `TELEGRAM_WEBHOOK_SECRET` | Додати в Vercel після деплою |
 | 15 | `scripts/grant-all-courses.js` | У репозиторії був fallback URI з паролем — прибрати, ротувати пароль Atlas |
+| 15b | `src/lib/telegramBot.js` fallback токен бота | ✅ Прибрано; токен лише з env |
+| 15c | `scripts/create-admin.js` пароль/MongoDB у коді | ✅ Лише через env |
+| 15d | `smartcode_manager_backend/.env` у git | ✅ Вилучено з індексу; додано `.gitignore` |
 | 16 | `POST /api/crm/purchase` без auth | Meta CAPI — додати HMAC/secret або rate limit (спам подій) |
 | 17 | `POST /api/submissions`, `POST /api/phone-collection` | Публічні форми — додати captcha / підпис lead token (як у lead-intent) |
 
@@ -72,6 +75,7 @@ TELEGRAM_WEBHOOK_SECRET=<from BotFather>
 1. Задеплоїти всі зміни безпеки  
 2. Ротувати `JWT_SECRET` (усі сесії скинуться)  
 3. Ротувати пароль MongoDB Atlas  
+3b. Ротувати **усі** ключі, що колись були в git (Telegram, Google OAuth, Meta CAPI, JWT, service account)  
 4. Перевірити Network Access Atlas (лише Vercel IP / 0.0.0.0 з обережністю)  
 5. `node scripts/remove-spam-projects.js` — якщо з’явиться новий спам  
 6. Логи Vercel: `POST /api/projects` 401 після фіксу  
