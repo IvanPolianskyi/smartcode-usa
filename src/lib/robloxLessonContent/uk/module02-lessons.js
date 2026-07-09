@@ -78,11 +78,11 @@ export const ukLesson21 = {
 Спочатку ми пишемо **простий** Script (без смерті), потім повний.`,
  },
  {
- title: "Крок 1: розминка - доторкніться та надрукуйте (ще немає смерті)",
+ title: "Крок 1: розминка - доторкніться та виведіть (print) (ще немає смерті)",
  content: `Перш ніж логіка вбивства, доведіть, що **Touched** взагалі працює.
 
 1. У kill Part → Insert **Script**
-2. Вставте тестовий код:\`\`\`lua
+2. Insert тестовий код:\`\`\`lua
 local block = script.Parent
 
 block.Touched:Connect(function(hit)
@@ -266,7 +266,7 @@ end)
  question: "hit.Parent зазвичай...",
  options: [
  "SoundService",
- "Model персонажа",
+ "Model Character",
  "Освітлення",
  "Script",
  ],
@@ -585,10 +585,10 @@ end
  type: "multiple_choice",
  question: "GetPlayerFromCharacter отримує...",
  options: [
- "Player з Model персонажа",
+ "Player з Model Character",
  "Колір Parts",
  "Sky",
- "Назва Script",
+ "Name Script",
  ],
  correctAnswer: 0,
  explanation: "Пов’язує дотик Character з об’єктом гравця.",
@@ -924,7 +924,7 @@ end
  options: [
  "Минули секунди",
  "Гравець Robux",
- "Розмір Parts",
+ "Size Parts",
  "Індекс BrickColor",
  ],
  correctAnswer: 0,
@@ -946,7 +946,7 @@ end
  {
  id: "q5",
  type: "multiple_choice",
- question: "біг = помилкові зупинки...",
+ question: "running = false зупиняє...",
  options: [
  "Цикл while, що оновлює мітку",
  "Весь ігровий сервер",
@@ -976,7 +976,7 @@ end
  options: [
  "Оновлює текст ~20 разів на секунду",
  "Видаляє інтерфейс користувача",
- "Деталі анкерів",
+ "Закріплені Parts",
  "Видає гру",
  ],
  correctAnswer: 0,
@@ -1111,7 +1111,7 @@ end
 \`\`\`**Викличте його**, коли торкаєтеся FinishPad:\`\`\`lua
 local rank = getRank(elapsed)
 print("You earned: " .. rank)
-\`\`\`**Вправа (8 хв):** Доп\`getRank\`до вашого таймера LocalScript. Роздрукуйте ранг to Output після закінчення.`,
+\`\`\`**Вправа (8 хв):** Доп\`getRank\`до вашого таймера LocalScript. Виведіть (print) ранг в Output після закінчення.`,
  },
  {
  title: "Підключіть ряд до мітки таймера",
@@ -1192,7 +1192,7 @@ end
 
 ### Part A - функція getRank (10 хв)
 1. Відкрийте таймер LocalScript з уроку 2.3
-2. Додайте\`S_TIME = 35\`,\`A_TIME = 60\`і\`getRank(elapsed)\` 3. Надрукуйте рейтинг для виводу на FinishPad touch
+2. Додайте\`S_TIME = 35\`,\`A_TIME = 60\`і\`getRank(elapsed)\` 3. Виведіть (print) рейтинг для виводу на FinishPad touch
 
 ### Part B - Відображення етикетки (8 хв)
 1. Оновлення\`TimerLabel\`текст:\`Finished! XX.XXs - S Rank\` 2. Випробуйте три запуски, націлені на S, A та B
@@ -1204,7 +1204,7 @@ end
  hints: [
  "Перевірте 34,99 проти 35,00 проти 59,99 проти 60,00 у Studio з тимчасовим коротким obby",
  "Розмістіть getRank над з’єднанням Touched, щоб ви могли його легко прочитати",
- "У разі виявлення помилок перед зміною тексту етикетки друкувати to Output",
+ "У разі виявлення помилок перед зміною тексту етикетки виводити в Output",
  ],
  optionalChallenge: "Якщо смертей >= 3, понизити ранг на один рівень (наразі змінна смертей вручну).",
  },
@@ -1230,13 +1230,13 @@ end
  type: "multiple_choice",
  question: "інакше, якщо минуло < 60 прогонів, коли...",
  options: [
- "elapsed < 35 було помилковим, а time < 60",
+ "elapsed < 35 було false, а time < 60",
  "Завжди",
  "Ніколи інакше",
  "Тільки в режимі редагування",
  ],
  correctAnswer: 0,
- explanation: "Попередні помилкові умови дозволяють elseif.",
+ explanation: "Попередні умови, що є false, дозволяють elseif.",
  },
  {
  id: "q3",
@@ -1524,7 +1524,7 @@ end)
 2. **Зберегти в Roblox** →\`Lesson 2.5 - Victory Screen\` 3. **Практика завершена**`,
  hints: [
  "Використовуйте шлях копіювання Explorerа, щоб перевірити імена об’єктів",
- "Якщо панель нуль, надрукувати script.Parent:GetFullName() у вихідних даних",
+ "Якщо панель нуль, вивести (print) script.Parent:GetFullName() у вихідних даних",
  "Перевірте Повторіть один раз перед збереженням",
  ],
  optionalChallenge: "TweenService пересунути панель зверху, коли ввімкнено (попередній перегляд модуля 5).",
@@ -1538,7 +1538,7 @@ end)
  type: "multiple_choice",
  question: "VictoryGui має починатися з Enabled...",
  options: [
- "помилковий",
+ "false",
  "true завжди",
  "нуль",
  "випадковий",

@@ -380,10 +380,6 @@ const EnhancedCourseCards = () => {
 								</div>
 								<div className={styles.statsGrid}>
 									<div className={styles.statItem}>
-										<Users className={styles.statIcon} />
-										<span>{course.stats.age} {t('years')}</span>
-									</div>
-									<div className={styles.statItem}>
 										<Eye className={styles.statIcon} />
 										<span>{course.stats.students} {t('students')}</span>
 									</div>

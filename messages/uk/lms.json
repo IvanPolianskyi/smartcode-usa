@@ -116,7 +116,7 @@
     },
     "roblox": {
       "valueProposition": "Твоя пригода в Roblox починається тут! Від першого Part до власної гри.",
-      "skillShort": ["Studio", "Luau", "Obby", "Мульти", "NPC", "Публікація"],
+      "skillShort": ["Studio", "Luau", "Obby", "Мультиплеєр", "NPC", "Публікація"],
       "requirementsShort": ["Windows/Mac", "Roblox", "Інтернет"],
       "certificateShort": "Сертифікат SmartCode з Roblox game development після курсу.",
       "skills": [
@@ -124,7 +124,7 @@
         "Скрипти на Luau",
         "Obby, симулятори, tycoon",
         "Мультиплеєр client-server",
-        "NPC, квести, polish",
+        "NPC, квести, візуальні ефекти",
         "Публікація ігор"
       ],
       "format": [

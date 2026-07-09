@@ -3,7 +3,7 @@
     "siteName": "SmartCode Academy",
     "home": {
       "title": "SmartCode Academy - Programming School for Kids & Teens",
-      "description": "Self-paced online programming courses on our learning platform. Python and Roblox for international students aged 8-17."
+      "description": "Self-paced online programming courses on our learning platform. Python and Roblox for international students."
     },
     "tariff": {
       "title": "Course Pricing - SmartCode Academy",
@@ -19,15 +19,15 @@
     },
     "courses": {
       "title": "Programming Courses for Kids & Teens - SmartCode Academy",
-      "description": "Online programming courses for ages 8-17: Python and Roblox on our self-paced platform. Real projects and structured lessons in English."
+      "description": "Online programming courses: Python and Roblox on our self-paced platform. Real projects and structured lessons in English."
     },
     "python": {
       "title": "Python Course for Kids - SmartCode Academy",
-      "description": "Learn Python from scratch to a confident level. Build web apps, analyze data, and explore AI. For ages 10-17."
+      "description": "Learn Python from scratch to a confident level. Build web apps, analyze data, and explore AI."
     },
     "webDev": {
       "title": "Web Development Course for Kids & Teens - SmartCode Academy",
-      "description": "Online web development for ages 12-18: HTML, CSS, JavaScript, React, and Next.js. Hands-on projects, modern design, and mentor support."
+      "description": "Online web development: HTML, CSS, JavaScript, React, and Next.js. Hands-on projects, modern design, and mentor support."
     },
     "unity": {
       "title": "Unity Game Development Course for Kids - SmartCode Academy",
@@ -35,7 +35,7 @@
     },
     "roblox": {
       "title": "Roblox Studio Course for Kids - SmartCode Academy",
-      "description": "Online Roblox Studio course for ages 8-16: Lua programming, Obby, Tycoon, and Simulator games, plus publishing and monetization."
+      "description": "Online Roblox Studio course: Lua programming, Obby, Tycoon, and Simulator games, plus publishing and monetization."
     },
     "invite": {
       "title": "Invite a Friend - SmartCode Academy | 500 UAH Off",
@@ -141,22 +141,22 @@
       "python": {
         "title": "Python",
         "description": "Programming fundamentals in Python",
-        "age": "Ages 10-16"
+        "age": ""
       },
       "unity": {
         "title": "Game Development",
         "description": "C# and Unity",
-        "age": "Ages 8-17"
+        "age": ""
       },
       "roblox": {
         "title": "Roblox Studio",
         "description": "Create games in Roblox Studio",
-        "age": "Ages 8-16"
+        "age": ""
       },
       "webDev": {
         "title": "Web Development",
         "description": "HTML, CSS, React, design",
-        "age": "Ages 12-18"
+        "age": ""
       },
       "popular": "Popular"
     }
@@ -164,7 +164,7 @@
   "footer": {
     "schoolName": "SmartCode",
     "schoolSubtitle": "Academy",
-    "description": "A leading programming school for ages 8-17. We teach through practice and build the future together!",
+    "description": "A leading programming school. We teach through practice and build the future together!",
     "coursesTitle": "Our Courses",
     "navigationTitle": "Navigation",
     "supportTitle": "Support",
@@ -221,7 +221,7 @@
   "home": {
     "titleMain": "SmartCode",
     "titleAccent": "Academy",
-    "subtitle": "Live coding lessons on Zoom in English - one-on-one or in small groups. Python, Roblox Studio & more for ages 8-17",
+    "subtitle": "Live coding lessons on Zoom in English - one-on-one or in small groups. Python, Roblox Studio & more",
     "lessonTypes": {
       "group": "Group classes",
       "individual": "one-on-one",
@@ -229,7 +229,7 @@
       "platform": "online platform"
     },
     "features": {
-      "age": "Ages 8-17",
+      "age": "",
       "online": "Online lessons",
       "certificate": "International certificate"
     },
@@ -258,7 +258,7 @@
     "heroEnCta": {
       "badge": "Self-paced courses worldwide",
       "title": "Learn to Code on Our Online Platform",
-      "lead": "Full Python and Roblox Studio courses in English. Study at your own pace with structured lessons, practice, and quizzes - for kids & teens aged 8-17.",
+      "lead": "Full Python and Roblox Studio courses in English. Study at your own pace with structured lessons, practice, and quizzes - for kids & teens.",
       "benefitPlatform": "Full platform access",
       "benefitEnglish": "In English",
       "benefitPace": "Learn at your pace",

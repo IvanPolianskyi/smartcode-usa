@@ -21,7 +21,7 @@ export const ukLesson101 = {
  sections: [
  {
  title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**Модуль 10 - Магія деталей** - вдосконалюйте **фізику**, **Constraints** та **промені**.
+ content: `**Модуль 10 - Магія Parts** - вдосконалюйте **фізику**, **Constraints** та **промені**.
 
 **Хід уроку:**
 1. **Теорія (40 хв)** - обмеження
@@ -199,7 +199,7 @@ end)
  "Відстань між Parts",
  "Монети гравця",
  "Прогрес квесту",
- "Розмір UI",
+ "Size UI",
  ],
  correctAnswer: 0,
  explanation: "Довжина мотузки.",
@@ -367,7 +367,7 @@ tween:Play()
 local door = workspace.Puzzle.DoorSlide
 local openCF = door.CFrame * CFrame.new(0, 0, 8)
 TweenService:Create(door, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut), {CFrame = openCF}):Play()
-\`\`\`**3 - Колекційний імпульс** (петля кристалічної шкали):\`\`\`lua
+\`\`\`**3 - Колекційний імпульс** (цикл зміни розміру кристалу):\`\`\`lua
 local crystal = workspace.QuestProps.Crystal
 local big = TweenService:Create(crystal, TweenInfo.new(0.6, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Size = crystal.Size * 1.15})
 big:Play()
@@ -406,7 +406,7 @@ local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDire
  title: "Контрольний список перед початком практики",
  content: `- [] Панель інтерфейсу користувача між відкриттям/закриттям
 - [ ] Двері розсуваються з лінійною анімацією
-- [ ] Кристалічна імпульсна петля
+- [ ] Імпульсний цикл кристалу
 - [ ] Один завершений ланцюжок (2+ кроки)
 - [ ] Зберегти:\`Lesson 10.2 - Tween Mastery\``,
  },
@@ -525,7 +525,7 @@ local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDire
  "Видалити Part",
  ],
  correctAnswer: 0,
- explanation: "Імпульсна петля.",
+ explanation: "Імпульсний цикл.",
  },
  {
  id: "q6",

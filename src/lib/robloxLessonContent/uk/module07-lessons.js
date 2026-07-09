@@ -126,7 +126,7 @@ end)
  title: "Контрольний список перед початком практики",
  content: `- [ ] Карта довіри: позначені 10 дій
 - [ ] PingServer RemoteEvent працює в Play
-- [ ] Сервер друкує ім'я гравця + повідомлення
+- [ ] Сервер виводить ім'я гравця + повідомлення
 - [ ] Client StatusLabel показує pong
 - [ ] Зберегти:\`Lesson 7.1 - Two Worlds\``,
  },
@@ -1138,7 +1138,7 @@ tool.Parent = player.Backpack
  "Помічник deny() запускає PurchaseResult false + поточний баланс",
  "Видаліть повноваження DISPLAY_PRICES з міток клієнта в 7.5",
  ],
- optionalChallenge: "Рядок друку сервера для кожної спроби покупки з результатом.",
+ optionalChallenge: "Рядок виводу (print) сервера для кожної спроби покупки з результатом.",
  },
  quiz: {
  passingScore: 70,

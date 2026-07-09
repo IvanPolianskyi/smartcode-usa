@@ -146,7 +146,7 @@ print("Valid fake?", RPGConfig.isValidRarity("legendary_plus"))
 2. getMaxSlots(рівень) і isValidRarity(рідкість)
 
 ### Part B - Потрібен тест (10 хв)
-1. InventoryService друкує значення
+1. InventoryService виводить значення
 2. Для другого Script (TestModules) потрібен той самий модуль
 3. Змінити STARTER_GOLD - обидва оновлення
 
@@ -499,7 +499,7 @@ end
 ### Part B - Операції (15 хв)
 1. addItem - стек + новий слот + повна помилка
 2. removeItem + countItem
-3. Script TestInventory друкує 6 тестів
+3. Script TestInventory виводить результати 6 тестів
 
 ### Part C - Зберегти (2 хв)
 1. **Зберегти в Roblox** →\`Lesson 9.2 - Inventory Tables\` 2. **Практика завершена**`,
@@ -724,7 +724,7 @@ function Inventory.deserialize(data)
  inv.slots = data.slots or {}
  return inv
 end
-\`\`\`Урок **9.5** зберігає це в DataStore - сьогодні просто надрукуйте JSON-подібну таблицю.`,
+\`\`\`Урок **9.5** зберігає це в DataStore - сьогодні просто виведіть (print) JSON-подібну таблицю.`,
  },
  {
  title: "InventoryService для кожного гравця",
@@ -771,7 +771,7 @@ print("Potions:", inv:count("potion_small"))
  title: "Контрольний список перед початком практики",
  content: `- [ ] Inventory.new на PlayerAdded
 - [ ] inv:add / inv:remove працюють у Play
-- [ ] serialize друкує дійсну таблицю
+- [ ] serialize виводить валідну таблицю
 - [ ] PlayerRemoving очищає пам'ять
 - [ ] Зберегти:\`Lesson 9.3 - Inventory Object\``,
  },
@@ -813,7 +813,7 @@ print("Potions:", inv:count("potion_small"))
 ### Part B - Обслуговування (10 хв)
 1. InventoryService PlayerAdded/Removing
 2. Стартові зілля при приєднанні
-3. Play - друкувати inv:count у тесті команди
+3. Play - вивести inv:count у тесті команди
 
 ### Part C - Зберегти (3 хв)
 1. **Зберегти в Roblox** →\`Lesson 9.3 - Inventory Object\` 2. **Практика завершена**`,
@@ -1015,7 +1015,7 @@ ring_lucky = {
 \`\`\`Поле **slot** повідомляє системі оснащення, до якого слота підходить предмет.`,
  },
  {
- title: "Обладнаний стіл (окремо від інвентарю)",
+ title: "Таблиця екіпірованих предметів (окремо від інвентарю)",
  content: `\`playerEquipped[player]\`:\`\`\`lua
 {
  weapon = "sword_bronze", -- itemId or nil
@@ -1479,7 +1479,7 @@ end)
 1. Додати предмети, спорядити, залишити, знову приєднатися - перевірити
 2. **Зберегти в Roblox** →\`Lesson 9.5 - Inventory Save\` 3. **Практика завершена**`,
  hints: [
- "Роздрукуйте таблицю серіалізації у вихідних даних перед першим збереженням",
+ "Виведіть таблицю (print) серіалізації у вихідних даних перед першим збереженням",
  "Ключ UserId - унікальний для кожного гравця",
  "Модуль 3 DataStore урок однакові шаблони",
  ],
@@ -1714,7 +1714,7 @@ end
  },
  {
  title: "Попередній перегляд модуля 10",
- content: `**Модуль 10 - Магія деталей** додає **обмеження**, фізику полірування, рухомі двері - ваш центр RPG може отримувати механічні пастки та підйомники.
+ content: `**Модуль 10 - Магія Parts** додає **обмеження**, фізику полірування, рухомі двері - ваш центр RPG може отримувати механічні пастки та підйомники.
 
 **Перед тренуванням:**
 - [ ] Усі 6 playtest-перевірок пройдені
@@ -1883,7 +1883,7 @@ end
  type: "multiple_choice",
  question: "Модуль 10 додає...",
  options: [
- "Constraints і деталі фізики",
+ "Constraints і Parts фізики",
  "Лише dialogue",
  "Лише publish",
  "Нічого",

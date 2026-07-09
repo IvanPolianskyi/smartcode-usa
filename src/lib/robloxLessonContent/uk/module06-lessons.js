@@ -31,7 +31,7 @@ export const ukLesson61 = {
 Нове місце: **Baseplate** або рівна зона на вашому острові →\`Lesson 6.1 - Starter Car\`.`,
  },
  {
- title: "Потрібні Деталі машини, які потрібні",
+ title: "Потрібні Parts машини, які потрібні",
  content: `| Part | Роль |
 |------|------|
 | **Шасі** | Основний корпус (важкий, низький) |
@@ -222,7 +222,7 @@ end
  "Відкриває інтерфейс користувача",
  ],
  correctAnswer: 0,
- explanation: "Фізиці потрібні unAnchored Parts.",
+ explanation: "Фізиці потрібні незакріплені Parts.",
  },
  {
  id: "q5",
@@ -706,7 +706,7 @@ local running = false
 local startTime = 0
 
 -- Connect to start/finish via BindableEvent in ReplicatedStorage for lesson bridge
-\`\`\`**Мінімум:** час друку сервера; додати\`TimeLabel\`оновлено з сервера через\`player:SetAttribute("RaceElapsed", elapsed)\`кожні 0,05 с у циклі сервера.\`\`\`lua
+\`\`\`**Мінімум:** час виводу (print) сервера; додати\`TimeLabel\`оновлено з сервера через\`player:SetAttribute("RaceElapsed", elapsed)\`кожні 0,05 с у циклі сервера.\`\`\`lua
 -- Server after start:
 task.spawn(function()
  while racing[player] do
@@ -778,7 +778,7 @@ end
 2. **Зберегти в Roblox** →\`Lesson 6.3 - Race Timer\` 3. **Практика завершена**`,
  hints: [
  "Один Script RaceService перемагає дві відключені таблиці",
- "Під час перевірки порядку друкувати «фініш ігнорується».",
+ "Під час перевірки порядку вивести (print) «фініш ігнорується».",
  "Використовуйте одну лінію старту/фінішу для спрощення першого кола",
  ],
  optionalChallenge: "Розділена панель на півдорозі показує проміжний час.",
@@ -1053,7 +1053,7 @@ end)
 
 **Контрольний список перед тренуваннями:**
 - [ ] RaceEvent у ReplicatedStorage
-- [ ] Сервер друкує всі вхідні дії
+- [ ] Сервер виводить (print) всі вхідні дії
 - [ ] Час завершення ніколи не надсилався від клієнта як повноваження
 - [ ] Зберегти:\`Lesson 6.4 - Client Server Race\``,
  },
@@ -1303,7 +1303,7 @@ local function resetProgress(player)
 end
 \`\`\`На старті гонки →\`resetProgress(player)\`.
 
-Торкнувся неправильний CP → надрукувати попередження, **немає передавання**.`,
+Торкнувся неправильний CP → вивести (print) попередження, **немає передавання**.`,
  },
  {
  title: "Сенсорний обробник КПП",
@@ -1381,7 +1381,7 @@ local raceStartTotal = {} -- on first StartRace of match
  content: `- [ ] Пропуск CP_2 не зараховує коло
 - [ ] Статистика лідера кіл збільшується лише після дійсного фінішу
 - [ ] HUD показує коло X / 3
-- [ ] Переможець друкує на 3 колах
+- [ ] Переможець виводить (print) на 3 колах
 - [ ] Зберегти:\`Lesson 6.5 - Laps Leaderboard\``,
  },
  ],
@@ -1404,7 +1404,7 @@ local raceStartTotal = {} -- on first StartRace of match
  },
  {
  mistake: "Ідучий гравець запускає CP",
- explanation: "Помилковий прогрес.",
+ explanation: "Фальшивий прогрес.",
  correctApproach: "Перевірка VehicleSeat",
  },
  ],
@@ -1535,7 +1535,7 @@ local raceStartTotal = {} -- on first StartRace of match
  type: "multiple_choice",
  question: "Таблиця лідерів показує кола, тому що...",
  options: [
- "Знаходиться в folder leaderstats",
+ "Знаходиться в Folder leaderstats",
  "У Lighting",
  "Лише текст клієнта",
  "Немає folder",
@@ -1732,7 +1732,7 @@ export const ukLesson66 = {
 2. **Зберегти в Roblox** →\`Module 6 - Race Launched\` 3. **Практика завершена** + додатковий 2-хвилинний запис`,
  hints: [
  "Одна помилка за раз - повторюйте перевірку після кожного виправлення",
- "Оператори друку перевершують вгадування у виводі",
+ "Виклики print перевершують вгадування у виводі",
  "Надавайте пріоритет перемогі на трьох колах, а не подіуму",
  ],
  optionalChallenge: "Зона подіуму телепортує трійку найкращих після гонки з табличкою турнірної таблиці.",
@@ -1762,7 +1762,7 @@ export const ukLesson66 = {
  "Пропуск КП не зараховується",
  "Колір неба",
  "Гучність музики",
- "Розмір шрифту",
+ "Size шрифту",
  ],
  correctAnswer: 0,
  explanation: "Анти-ярлик.",

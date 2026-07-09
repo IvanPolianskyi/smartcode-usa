@@ -151,8 +151,8 @@ export const ukLesson11 = {
  },
  commonMistakes: [
  {
- mistake: "Parts fall на підлогу, коли я press Play.",
- explanation: "Сила тяжіння тягне unAnchored Parts вниз.",
+ mistake: "Parts падають на підлогу, коли я натисніть Play.",
+ explanation: "Сила тяжіння тягне незакріплені Parts вниз.",
  correctApproach: "Виберіть Part → Properties → Anchored ✓",
  },
  {
@@ -319,13 +319,13 @@ export const ukLesson11 = {
  type: "multiple_choice",
  question: "Перед грою підлога та стіни зазвичай повинні бути...",
  options: [
- "Anchored помилковий",
+ "Anchored false",
  "Anchored true",
  "Прозорість 1",
  "CanCollide false",
  ],
  correctAnswer: 1,
- explanation: "Anchored справжній утримує Parts будівлі стабільними.",
+ explanation: "Anchored true утримує Parts будівлі стабільними.",
  },
  ],
  },
@@ -397,7 +397,7 @@ export const ukLesson12 = {
 
 **Size пензля:** великий пензель для форми, маленький пензель для деталей.
 
-**Вправа (8 хв):** Додайте один чистий пагорб на своєму острові. Зробіть його зручним для гри - не надто крутим, щоб персонаж міг ходити.`,
+**Вправа (8 хв):** Додайте один чистий пагорб на своєму острові. Зробіть його зручним для гри - не надто крутим, щоб character міг ходити.`,
  },
  {
  title: "Sculpt — Subtract (вирізати)",
@@ -449,7 +449,7 @@ export const ukLesson12 = {
  {
  mistake: "Generate зависає або нічого не показує",
  explanation: "Старі дані місцевості можуть конфліктувати.",
- correctApproach: "Delete Terrain у Workspace, згенеруйте знову",
+ correctApproach: "Видаліть Terrain у Workspace, згенеруйте знову",
  },
  {
  mistake: "Terrain виглядає занадто гострим",
@@ -704,7 +704,7 @@ export const ukLesson13 = {
  title: "Перевірка якості перед вікториною",
  content: `**Контрольний список тестування гри:**
 - [ ] Character ходить по дошках, не провалюючись
-- [ ] Ніякі unAnchored Parts не падають
+- [ ] Ніякі незакріплені Parts не падають
 - [ ] Explorer показує Folder → Model → Parts
 - [ ] Кожна Part має унікальну корисну назву
 - [ ] Збережено як\`Lesson 1.3 - Island Dock\``,
@@ -724,7 +724,7 @@ export const ukLesson13 = {
  },
  {
  mistake: "Model рухається, а дошки залишаються",
- explanation: "Parts, не наділені model.",
+ explanation: "Parts, не прикріплені до model.",
  correctApproach: "Згрупуйте знову, щоб Parts були нащадками model",
  },
  ],
@@ -895,7 +895,7 @@ export const ukLesson14 = {
  learningObjectives: [
  "Додайте ClickDetector, щоб зробити **Part** доступною для кліку",
  "Напишіть свій перший серверний скрипт мовою Luau",
- "Підключіть MouseClick, щоб змінити колір і надрукувати to Output",
+ "Підключіть MouseClick, щоб змінити колір і навиводити в Output",
  "Виправляйте типові помилки Script за допомогою вікна виведення",
  "Зрозумійте порівняння Script проти LocalScript для цього уроку",
  ],
@@ -953,7 +953,7 @@ Part має бути **прив’язаною**, видимою та мати �
  title: "Ваш перший Script - копіюйте і розумійте",
  content: `1. Виберіть ту саму Part (за допомогою ClickDetector)
 2. **Insert** → **Script** (не LocalScript)
-3. Видаліть зразок коду. Вставте:\`\`\`lua
+3. Видаліть зразок коду. Insert:\`\`\`lua
 local part = script.Parent
 local detector = part:WaitForChild("ClickDetector")
 
@@ -986,7 +986,7 @@ end)
 |\`ClickDetector is not a valid member\`| Name ClickDetector відсутня або неправильна - має бути точно\`ClickDetector\`|
 |\`attempt to index nil\`| Script не всередині Part - перемістіть Script під Part |
 |\`MouseClick is not a valid member\`| Ви використали **Part** без ClickDetector |
-| Нічого не друкується | Не в режимі **Play** або клацніть занадто далеко - підвищте MaxActivationDistance |
+| Нічого не виводиться в Output | Не в режимі **Play** або клацніть занадто далеко - підвищте MaxActivationDistance |
 
 **Звичка:** прочитайте **перший рядок** помилки, а потім перевірте дерево Explorer:\`Part → ClickDetector\`,\`Part → Script\`.`,
  },
@@ -1015,7 +1015,7 @@ end
 
 **Упорядкуйте в Explorer:**\`Folder Interactives\`→\`ClickButton_Red\`,\`ClickCrystal_Blue\`,\`ClickSign_Wood\`**Контрольний список перед тренуваннями:**
 - [ ] Я знаю, що Script міститься в Part
-- [ ] Я можу відкрити Output та прочитати друковані повідомлення
+- [ ] Я можу відкрити Output та прочитати виведені повідомлення
 - [ ] Я успішно протестував одну кнопку в Play`,
  },
  ],
@@ -1042,7 +1042,7 @@ end
  correctApproach: "Server Script у Part - правильний шаблон для спільних кнопок",
  },
  ],
- summary: "Ви додали ClickDetectors, написали свій перший server Script Luau, підключили MouseClick до друку та візуального зворотного зв’язку та налагодили Output - у той момент, коли ваш острів став інтерактивним.",
+ summary: "Ви додали ClickDetectors, написали свій перший server Script Luau, підключили MouseClick до виводу (print) та візуального зворотного зв’язку та налагодили Output - у той момент, коли ваш острів став інтерактивним.",
  practiceTask: {
  title: "Click magic - три острівні кнопки (~25 хв)",
  difficulty: "beginner",
@@ -1059,7 +1059,7 @@ end
 
 ### Part B - Синій кристал (8 хв)
 1. Insert **Sphere** → Name:\`ClickCrystal_Blue\`| Material: **Neon** | Anchored: **true**
-2. ClickDetector + Script - при натисканні: **Яскраво-жовтий** + друк повідомлення
+2. ClickDetector + Script - при натисканні: **Яскраво-жовтий** + вивід повідомлення
 3. Додайте дочірній **Sound** за бажанням
 
 ### Part C - Дерев'яний знак (6 хв)
@@ -1143,7 +1143,7 @@ end
  "Toolbox",
  ],
  correctAnswer: 1,
- explanation: "Output дані показують друк і помилки.",
+ explanation: "Output дані показують вивід (print) і помилки.",
  },
  {
  id: "q6",
@@ -1378,7 +1378,7 @@ end)
 3. **Play** - ікру → док → ватерлінія
 
 ### Part C - 3D звук док-станції (6 хв)
-1. На док-станції Part: **Sound** \`Dock_Creak\` | Looped: **false** | RollOffMaxDistance: \`60\` 2. Підключіть **Play()** зі Script клацання уроку 1.4 АБО торкніться Proximity пізніше
+1. На док-станції Part: **Sound** \`Dock_Creak\` | Looped: **false** | RollOffMaxDistance: \` 60\` 2. Підключіть **Play()** зі Script клацання уроку 1.4 АБО торкніться Proximity пізніше
 3. Тиха гучність (\`0.4\`), тому навколишнє середовище залишається основним
 
 ### Перевірте та збережіть (4 хв)
@@ -1428,7 +1428,7 @@ end)
  options: [
  "Швидкість скрипта",
  "Товщина туману/серпанку",
- "Розмір Parts",
+ "Size Parts",
  "Висота стрибка",
  ],
  correctAnswer: 1,
@@ -1746,7 +1746,7 @@ end
 
 ### Part C - Настрій і привітання (10 хв)
 1. Навколишнє середовище + Освітлення + Атмосфера з уроку 1.5
-2. Додайте **Sign_Welcome** із клацанням + друк + додатковий звук
+2. Додайте **Sign_Welcome** із клацанням + print + додатковий звук
 3. Повний **тестовий скрипт** з теорії (5 кроків)
 
 ### Фініш (6 хв)
@@ -1846,7 +1846,7 @@ end
  type: "multiple_choice",
  question: "Перш ніж позначити завершення, ви повинні...",
  options: [
- "Повна петля ходьби",
+ "Повний цикл ходьби",
  "Видаляє Terrain",
  "Видалити SpawnLocation",
  "Ніколи не економте",
