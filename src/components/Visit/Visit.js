@@ -27,25 +27,6 @@ const Visit = () => {
 	const t = useTranslations('home')
 	const [shouldRenderCards, setShouldRenderCards] = useState(false)
 
-	// Стабільна висота hero на телефоні (Instagram / iOS toolbar) — дублює layout.js
-	useEffect(() => {
-		const setAppHeight = () => {
-			const h = window.visualViewport?.height ?? window.innerHeight
-			document.documentElement.style.setProperty('--app-height', `${h}px`)
-		}
-		setAppHeight()
-		window.addEventListener('resize', setAppHeight, { passive: true })
-		window.addEventListener('orientationchange', setAppHeight, { passive: true })
-		window.visualViewport?.addEventListener('resize', setAppHeight, {
-			passive: true,
-		})
-		return () => {
-			window.removeEventListener('resize', setAppHeight)
-			window.removeEventListener('orientationchange', setAppHeight)
-			window.visualViewport?.removeEventListener('resize', setAppHeight)
-		}
-	}, [])
-
 	useEffect(() => {
 		let idleId = null
 		let timeoutId = null

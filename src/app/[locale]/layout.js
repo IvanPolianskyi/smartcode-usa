@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import Footer from '@/components/Footer/footer'
-import ContactForm from '@/components/ContactForm/ContactForm'
+import ContactFormLoader from '@/components/ContactForm/ContactFormLoader'
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop'
 import { Geist, Geist_Mono } from 'next/font/google'
 import Header from '@/components/Header/Header'
@@ -80,7 +80,7 @@ export default async function LocaleLayout({ children, params }) {
 						<div className='min-h-screen flex flex-col'>
 							<main className='flex-1 relative main-content'>{children}</main>
 							<Footer />
-							<ContactForm />
+							<ContactFormLoader />
 						</div>
 					</AuthSessionProvider>
 				</NextIntlClientProvider>

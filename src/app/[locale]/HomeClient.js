@@ -1,7 +1,7 @@
 "use client"
 
 import dynamic from 'next/dynamic'
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Analytics } from "@vercel/analytics/next"
 import { usePathname } from 'next/navigation'
 import { useLocale } from 'next-intl'
@@ -9,14 +9,13 @@ import {
 	readAndClearPendingHomeSectionScroll,
 	scheduleScrollToHomeSectionId,
 	SCROLL_HOME_SECTION_EVENT,
+	HOME_SECTION_SCROLL_STORAGE_KEY,
 } from '@/lib/homeSectionScroll'
 
-// Lightweight skeletons to keep layout stable while chunks load
 const SectionSkeleton = ({ height = '60vh' }) => (
   <div style={{ minHeight: height, width: '100%' }} />
 )
 
-// Below-fold sections — all lazy loaded to keep initial bundle small
 const Testimonials = dynamic(() => import('@/components/Testimonials/Testimonials'), {
   loading: () => <SectionSkeleton height='800px' />,
 })
@@ -38,6 +37,63 @@ const SocialMedia = dynamic(() => import('@/components/SocialMedia/SocialMedia')
 const LMSPromo = dynamic(() => import('@/components/LMSPromo/LMSPromo'), {
   loading: () => <SectionSkeleton height='600px' />,
 })
+
+function LazySection({ children, height, sectionId, rootMargin = '300px 0px' }) {
+  const ref = useRef(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    if (!sectionId || typeof window === 'undefined') return undefined
+
+    const hashId = window.location.hash.replace(/^#/, '')
+    if (hashId === sectionId) {
+      setVisible(true)
+    }
+
+    try {
+      const pending = sessionStorage.getItem(HOME_SECTION_SCROLL_STORAGE_KEY)
+      if (pending === sectionId) {
+        setVisible(true)
+      }
+    } catch {}
+
+    const onScrollRequest = (e) => {
+      if (e.detail?.id === sectionId) {
+        setVisible(true)
+      }
+    }
+    window.addEventListener(SCROLL_HOME_SECTION_EVENT, onScrollRequest)
+    return () => window.removeEventListener(SCROLL_HOME_SECTION_EVENT, onScrollRequest)
+  }, [sectionId])
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return undefined
+
+    if (typeof IntersectionObserver === 'undefined') {
+      setVisible(true)
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div ref={ref}>
+      {visible ? children : <SectionSkeleton height={height} />}
+    </div>
+  )
+}
 
 export default function HomeClient() {
   const locale = useLocale()
@@ -84,7 +140,6 @@ export default function HomeClient() {
   }, [])
 
   useEffect(() => {
-    // Fire-and-forget visit log (deferred to idle to reduce startup TBT)
     let idleId = null
     let timeoutId = null
     const sendVisit = () => {
@@ -131,14 +186,31 @@ export default function HomeClient() {
   return (
     <>
       <Analytics />
-      {!isEn && <CoursesSection />}
-      {!isEn && <TrialSignupBlock />}
-      <Testimonials />
-      <ProjectsShowcase />
-      <SocialMedia />
-      <LMSPromo />
-      <FAQ />
+      {!isEn && (
+        <LazySection height="1000px" sectionId="courses">
+          <CoursesSection />
+        </LazySection>
+      )}
+      {!isEn && (
+        <LazySection height="420px" sectionId="trial-signup">
+          <TrialSignupBlock />
+        </LazySection>
+      )}
+      <LazySection height="800px" sectionId="testimonials">
+        <Testimonials />
+      </LazySection>
+      <LazySection height="1000px">
+        <ProjectsShowcase />
+      </LazySection>
+      <LazySection height="600px">
+        <SocialMedia />
+      </LazySection>
+      <LazySection height="600px">
+        <LMSPromo />
+      </LazySection>
+      <LazySection height="800px">
+        <FAQ />
+      </LazySection>
     </>
   )
 }
-
