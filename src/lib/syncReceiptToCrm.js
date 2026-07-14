@@ -37,6 +37,39 @@ export async function syncReceiptToCrm(payload) {
   return data
 }
 
+/**
+ * Повідомляє CRM про успішний онлайн-topup уроків (ідемпотентно за orderId).
+ * До 3 спроб; кидає помилку після останньої невдачі.
+ */
+export async function syncTopupToCrm(payload, { attempts = 3 } = {}) {
+  const apiKey = getIntegrationApiKey()
+  if (!CRM_BASE_URL || !apiKey) {
+    return { skipped: true, reason: 'CRM not configured' }
+  }
+  const base = CRM_BASE_URL.replace(/\/$/, '')
+  let lastError = null
+  for (let i = 0; i < attempts; i += 1) {
+    try {
+      const res = await fetch(`${base}/integrations/lms/topups`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+        },
+        body: JSON.stringify(payload),
+        cache: 'no-store',
+      })
+      if (res.ok) {
+        return res.json()
+      }
+      lastError = new Error(`CRM topup sync ${res.status}: ${await res.text()}`)
+    } catch (error) {
+      lastError = error
+    }
+  }
+  throw lastError || new Error('CRM topup sync failed')
+}
+
 export async function syncReceiptStatusToCrm(crmReceiptId, status) {
   const apiKey = getIntegrationApiKey()
   if (!CRM_BASE_URL || !apiKey || !crmReceiptId) return { skipped: true }
@@ -56,6 +89,30 @@ export async function syncReceiptStatusToCrm(crmReceiptId, status) {
   if (!res.ok) {
     const text = await res.text()
     throw new Error(text || `CRM status sync ${res.status}`)
+  }
+  return res.json()
+}
+
+/** Підкрутити creditedLessons у CRM (після PATCH на LMS для crm-linked учнів). */
+export async function syncReceiptCreditedLessonsToCrm(crmReceiptId, creditedLessons) {
+  const apiKey = getIntegrationApiKey()
+  if (!CRM_BASE_URL || !apiKey || !crmReceiptId) return { skipped: true }
+  const base = CRM_BASE_URL.replace(/\/$/, '')
+  const res = await fetch(
+    `${base}/integrations/lms/receipts/${encodeURIComponent(crmReceiptId)}`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+      },
+      body: JSON.stringify({ creditedLessons: Number(creditedLessons) }),
+      cache: 'no-store',
+    }
+  )
+  if (!res.ok) {
+    const text = await res.text()
+    throw new Error(text || `CRM creditedLessons sync ${res.status}`)
   }
   return res.json()
 }

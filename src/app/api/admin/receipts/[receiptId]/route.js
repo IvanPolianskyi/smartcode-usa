@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
+import { syncReceiptCreditedLessonsToCrm } from '@/lib/syncReceiptToCrm'
 
 async function requireAdmin() {
   const userId = await getCurrentUser()
@@ -47,10 +48,36 @@ export async function PATCH(request, { params }) {
       const diff = creditedLessons - (receipt.creditedLessons || 0);
       if (receipt.userId) {
         const usersCollection = await getCollection('users')
-        await usersCollection.updateOne(
+        // Для привʼязаних до CRM учнів баланс веде CRM-ledger.
+        const user = await usersCollection.findOne(
           { _id: receipt.userId },
-          { $inc: { 'studentProfile.lessonCredits': diff } }
+          { projection: { 'studentProfile.crmStudentId': 1 } }
         )
+        const crmLinked = Boolean(
+          String(user?.studentProfile?.crmStudentId || '').trim()
+        )
+        if (!crmLinked) {
+          await usersCollection.updateOne(
+            { _id: receipt.userId },
+            { $inc: { 'studentProfile.lessonCredits': diff } }
+          )
+        } else if (receipt.crmReceiptId) {
+          try {
+            await syncReceiptCreditedLessonsToCrm(
+              String(receipt.crmReceiptId),
+              creditedLessons
+            )
+          } catch (e) {
+            console.error('CRM creditedLessons sync:', e)
+            return NextResponse.json(
+              {
+                error: 'CRM creditedLessons sync failed',
+                detail: e instanceof Error ? e.message : String(e),
+              },
+              { status: 502 }
+            )
+          }
+        }
       }
     }
 

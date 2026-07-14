@@ -40,10 +40,23 @@ export async function PATCH(request, { params }) {
     ) {
       const diff = creditedLessons - (receipt.creditedLessons || 0)
       const usersCollection = await getCollection('users')
-      await usersCollection.updateOne(
+      // Для привʼязаних до CRM учнів баланс веде CRM-ledger — локальні
+      // lessonCredits не коригуємо, щоб не дублювати нарахування.
+      const user = await usersCollection.findOne(
         { _id: receipt.userId },
-        { $inc: { 'studentProfile.lessonCredits': diff }, $set: { updatedAt: new Date() } }
+        { projection: { 'studentProfile.crmStudentId': 1 } }
       )
+      const crmLinked = Boolean(
+        String(user?.studentProfile?.crmStudentId || '').trim()
+      )
+      if (!crmLinked) {
+        await usersCollection.updateOne(
+          { _id: receipt.userId },
+          { $inc: { 'studentProfile.lessonCredits': diff }, $set: { updatedAt: new Date() } }
+        )
+      }
+      // crmLinked: баланс уже змінює CRM (цей PATCH викликається з CRM) —
+      // зворотний sync сюди не робимо, щоб не подвоїти adjust.
     }
 
     return NextResponse.json({ success: true, creditedLessons })
