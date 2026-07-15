@@ -50,55 +50,31 @@
 /* --- Карусель --- */
 .carouselWrapper {
 	position: relative;
-	overflow: hidden;
-	mask-image: linear-gradient(
-		to right,
-		transparent 0%,
-		black 5%,
-		black 95%,
-		transparent 100%
-	);
-	-webkit-mask-image: linear-gradient(
-		to right,
-		transparent 0%,
-		black 5%,
-		black 95%,
-		transparent 100%
-	);
+	width: 100%;
 }
 
 .carouselContainer {
-	overflow: hidden;
 	width: 100%;
 }
 
 .carousel {
 	display: flex;
-	width: fit-content;
-	will-change: transform;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: none; /* Firefox */
+	gap: 1.5rem;
+	padding: 1rem;
 }
 
-/* CSS marquee — runs on compositor thread, zero JS/main-thread cost */
-@keyframes marquee {
-	from { transform: translateX(0); }
-	to   { transform: translateX(-50%); }
-}
-
-.carouselAnimated {
-	animation: marquee 45s linear infinite;
-}
-
-/* Hover pause removed — carousel always scrolls */
-
-/* Pause on touch (injected via class toggle in JS) */
-.paused {
-	animation-play-state: paused !important;
+.carousel::-webkit-scrollbar {
+	display: none; /* Chrome/Safari */
 }
 
 .card {
+	scroll-snap-align: center;
 	flex: 0 0 auto;
 	width: 320px;
-	padding: 0 1rem;
 	box-sizing: border-box;
 }
 

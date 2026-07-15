@@ -1,11 +1,10 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Send, Phone, MessageSquare, Briefcase, Sparkles } from 'lucide-react'
+import { Sparkles, Check } from 'lucide-react'
 import {
 	trackTrialInitiateCheckoutOnce,
 	trackTrialLeadOnce,
-	trialInterestToContentIds,
 } from '@/lib/metaPixel'
 import { getClientAttribution } from '@/lib/attribution'
 import { acquireLeadIntent, clearLeadIntentCache } from '@/lib/leadFormClient'
@@ -13,27 +12,18 @@ import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 import styles from './TrialSignupBlock.module.css'
-import { LEAD_MESSAGE_MAX_LENGTH } from '@/lib/sanitizeLeadText'
-import { useTranslations, useLocale } from 'next-intl'
-import DataProcessingConsentNote from '@/components/Legal/DataProcessingConsentNote'
-
-const COURSE_KEYS = ['roblox', 'python', 'webDev', 'unity', 'unsure']
+import { useLocale } from 'next-intl'
 
 export default function TrialSignupBlock() {
-	const t = useTranslations('trial')
-	const tc = useTranslations('common')
 	const locale = useLocale()
-	const [preferredContactMethod, setPreferredContactMethod] = useState('phone_call')
-	const [formData, setFormData] = useState({ course: '', message: '' })
-	const [touched, setTouched] = useState({ phone: false, course: false })
+	const [formData, setFormData] = useState({ name: '', email: '' })
 	const [submitting, setSubmitting] = useState(false)
 	const [done, setDone] = useState(false)
-
 	const phoneInput = usePhoneInput('UA')
 
 	const handleFormFocusCapture = (e) => {
 		const t = e.target
-		if (t instanceof HTMLInputElement || t instanceof HTMLSelectElement || t instanceof HTMLTextAreaElement || t instanceof HTMLButtonElement) {
+		if (t instanceof HTMLInputElement || t instanceof HTMLButtonElement) {
 			trackTrialInitiateCheckoutOnce()
 			acquireLeadIntent().catch(() => {})
 		}
@@ -41,18 +31,20 @@ export default function TrialSignupBlock() {
 
 	const handleInputChange = (e) => {
 		const { name: field, value } = e.target
-		const next =
-			field === 'message' ? value.slice(0, LEAD_MESSAGE_MAX_LENGTH) : value
-		setFormData((prev) => ({ ...prev, [field]: next }))
+		setFormData((prev) => ({ ...prev, [field]: value }))
 	}
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		setTouched({ phone: true, course: true })
-		if (!phoneInput.validateOnSubmit()) {
+		if (!phoneInput.validateOnSubmit()) return
+		if (!formData.name.trim()) {
+			alert('Введіть ваше ім\'я')
 			return
 		}
-		if (!formData.course) return
+		if (!formData.email.trim()) {
+			alert('Введіть email')
+			return
+		}
 
 		setSubmitting(true)
 		try {
@@ -61,11 +53,12 @@ export default function TrialSignupBlock() {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
+					name: formData.name,
 					phone: phoneInput.getFullNumber(),
-					course: formData.course,
-					message: formData.message,
+					course: 'Пробне заняття (з блоку реєстрації)',
+					message: `Email: ${formData.email}`, // Pass email as message
 					contactMethod: 'phone',
-					preferredContactMethod,
+					preferredContactMethod: 'phone_call',
 					eventId,
 					leadToken,
 					sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://smartcode-academy.com',
@@ -75,25 +68,23 @@ export default function TrialSignupBlock() {
 			})
 			const data = await response.json().catch(() => ({}))
 			if (!response.ok || !data?.ok) {
-				alert(tc('errorSubmit'))
+				alert('Помилка відправки, спробуйте пізніше.')
 				return
 			}
 			if (data?.trackLead) {
-				trackTrialLeadOnce(formData.course, trialInterestToContentIds(formData.course), eventId)
+				trackTrialLeadOnce('trial_lesson', [], eventId)
 			}
 			clearLeadIntentCache()
 			setDone(true)
-			setFormData({ course: '', message: '' })
-			setPreferredContactMethod('phone_call')
+			setFormData({ name: '', email: '' })
 			phoneInput.reset()
 		} catch {
-			alert(tc('errorNetwork'))
+			alert('Помилка мережі, перевірте з\'єднання.')
 		} finally {
 			setSubmitting(false)
 		}
 	}
 
-	// Map shared PhoneField classes using TrialSignupBlock styles where possible
 	const phoneClasses = {
 		field: styles.field,
 		fieldError: phoneStyles.fieldError,
@@ -103,7 +94,7 @@ export default function TrialSignupBlock() {
 		flagEmoji: phoneStyles.flagEmoji,
 		dropdownArrow: phoneStyles.dropdownArrow,
 		divider: phoneStyles.divider,
-		phoneInputWrap: phoneStyles.phoneInputWrap,
+		phoneInputWrap: `${phoneStyles.phoneInputWrap} ${styles.customPhoneWrap}`,
 		phonePrefix: phoneStyles.phonePrefix,
 		phoneInput: phoneStyles.phoneInput,
 		dropdown: phoneStyles.dropdown,
@@ -123,14 +114,13 @@ export default function TrialSignupBlock() {
 	if (done) {
 		return (
 			<section className={styles.section} id='trial-signup'>
-				<div className={styles.decor} aria-hidden />
 				<div className={styles.inner}>
 					<div className={`${styles.card} ${styles.cardSuccess}`}>
 						<div className={styles.successIconWrap}>
 							<Sparkles size={28} className={styles.successIcon} />
 						</div>
-						<h2 className={styles.successTitle}>{t('successTitle')}</h2>
-						<p className={styles.successText}>{t('successText')}</p>
+						<h2 className={styles.successTitle}>Заявку отримано!</h2>
+						<p className={styles.successText}>Дякуємо. Ми зв'яжемося з вами найближчим часом.</p>
 					</div>
 				</div>
 			</section>
@@ -139,91 +129,77 @@ export default function TrialSignupBlock() {
 
 	return (
 		<section className={styles.section} id='trial-signup'>
-			<div className={styles.decor} aria-hidden />
 			<div className={styles.inner}>
-				<div className={styles.card}>
-					<div className={styles.cardHeader}>
-						<h2 className={styles.title}>{t('title')}</h2>
-						<p className={styles.subtitle}>{t('subtitle')}</p>
+				{/* Left Content */}
+				<div className={styles.leftContent}>
+					<h2 className={styles.title}>
+						ЗАПИШІТЬ ВАШОГО МАЙБУТНЬОГО ПРОГРАМІСТА НА <span className={styles.titleAccent}>БЕЗКОШТОВНЕ</span> ПРОБНЕ ЗАНЯТТЯ
+					</h2>
+					<div className={styles.benefits}>
+						<div className={styles.benefitItem}>
+							<span>- Знайомство з майбутнім викладачем та платформою</span>
+						</div>
+						<div className={styles.benefitItem}>
+							<span>- <strong>Дорогий ПК не потрібен</strong> - підійде звичайний ноутбук</span>
+						</div>
+						<div className={styles.benefitItem}>
+							<span>- За один урок покажемо як створити власну гру</span>
+						</div>
+						<div className={styles.benefitItem}>
+							<span>- Зрозуміємо рівень знань Вашої дитини та запропонуємо індивідуальний план навчання</span>
+						</div>
 					</div>
+				</div>
 
-					<form className={styles.form} onSubmit={handleSubmit} onFocusCapture={handleFormFocusCapture}>
-						<PhoneField phoneInput={phoneInput} classes={phoneClasses} id="trial-phone" />
-
-						<div className={styles.field}>
-							<span className={styles.label}>{t('contactMethodLabel')}</span>
-							<div className={styles.segment} role='group' aria-label={t('contactMethodAria')}>
-								<button
-									type='button'
-									className={`${styles.segmentBtn} ${preferredContactMethod === 'phone_call' ? styles.segmentBtnActive : ''}`}
-									onClick={() => setPreferredContactMethod('phone_call')}
-								>
-									<Phone size={16} aria-hidden />
-									{t('phoneCall')}
-								</button>
-								<button
-									type='button'
-									className={`${styles.segmentBtn} ${preferredContactMethod === 'telegram_phone' ? styles.segmentBtnActive : ''}`}
-									onClick={() => setPreferredContactMethod('telegram_phone')}
-								>
-									<MessageSquare size={16} aria-hidden />
-									{t('telegram')}
-								</button>
+				{/* Right Form */}
+				<div className={styles.rightForm}>
+					<div className={styles.card}>
+						<form className={styles.form} onSubmit={handleSubmit} onFocusCapture={handleFormFocusCapture}>
+							<div className={styles.field}>
+								<label className={styles.label} htmlFor="name">Ім'я *</label>
+								<input
+									id="name"
+									name="name"
+									type="text"
+									className={styles.input}
+									placeholder="Введіть ім'я та прізвище"
+									value={formData.name}
+									onChange={handleInputChange}
+									required
+								/>
 							</div>
-						</div>
 
-						<div className={styles.field}>
-							<label className={styles.label} htmlFor='trial-course'>
-								<span className={styles.labelInner}>
-									<Briefcase size={15} className={styles.labelIcon} aria-hidden />
-									{t('courseLabel')}
-								</span>
-							</label>
-							<select
-								id='trial-course'
-								className={styles.select}
-								name='course'
-								value={formData.course}
-								onChange={handleInputChange}
-							>
-								<option value=''>{t('coursePlaceholder')}</option>
-								{COURSE_KEYS.map((key) => (
-									<option key={key} value={t(`courses.${key}`)}>
-										{t(`courses.${key}`)}
-									</option>
-								))}
-							</select>
-							{touched.course && !formData.course && (
-								<span className={styles.error}>{t('courseRequired')}</span>
-							)}
-						</div>
+							<div className={styles.field}>
+								<label className={styles.label} htmlFor="trial-phone">
+									Номер телефону (Viber, Telegram, WhatsApp) *
+								</label>
+								<PhoneField
+									phoneInput={phoneInput}
+									classes={phoneClasses}
+									id="trial-phone"
+									showLabel={false}
+								/>
+							</div>
 
-						<div className={styles.field}>
-							<label className={styles.label} htmlFor='trial-msg'>
-								<span className={styles.labelInner}>
-									<MessageSquare size={15} className={styles.labelIcon} aria-hidden />
-									{t('messageLabel')}
-								</span>
-							</label>
-							<textarea
-								id='trial-msg'
-								className={styles.textarea}
-								name='message'
-								value={formData.message}
-								onChange={handleInputChange}
-								rows={3}
-								maxLength={LEAD_MESSAGE_MAX_LENGTH}
-								placeholder={t('messagePlaceholder')}
-							/>
-						</div>
+							<div className={styles.field}>
+								<label className={styles.label} htmlFor="email">E-mail *</label>
+								<input
+									id="email"
+									name="email"
+									type="email"
+									className={styles.input}
+									placeholder="Введіть електронну пошту"
+									value={formData.email}
+									onChange={handleInputChange}
+									required
+								/>
+							</div>
 
-						<DataProcessingConsentNote className={styles.consentNote} />
-
-						<button type='submit' className={styles.submit} disabled={submitting}>
-							<Send size={18} aria-hidden />
-							{submitting ? t('submitting') : t('submit')}
-						</button>
-					</form>
+							<button type="submit" className={styles.submit} disabled={submitting}>
+								{submitting ? 'Відправка...' : 'Записатися на пробне заняття ↗'}
+							</button>
+						</form>
+					</div>
 				</div>
 			</div>
 		</section>

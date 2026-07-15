@@ -214,7 +214,6 @@ const Header = () => {
 			: { label: t('nav.signUp'), href: '/#trial-signup', ctaModal: true },
 		{ label: t('nav.courses'), href: '/#our-courses' },
 		{ label: t('nav.lessons'), href: '/#courses', hideOnDesktop: true },
-		{ label: t('nav.prices'), href: '/tariff' },
 		...(!isEn
 			? [
 					{ label: t('nav.reviews'), href: '/#testimonials' },
@@ -311,6 +310,18 @@ const Header = () => {
 
 					{/* Права частина хедера */}
                     <div className={styles.headerRight}>
+						{/* Кнопка "Записатися" — йде ПЕРШОЮ */}
+						{!userLoading && !user && (
+							<button
+								type='button'
+								className={styles.registerButton}
+								onClick={handleCtaClick}
+								aria-label={t('signUpAria')}
+							>
+								{t('nav.signUp')}
+							</button>
+						)}
+						{/* Кнопка "Увійти" — йде ДРУГОЮ */}
 						{userLoading ? (
 							<div className={`${styles.userButton} ${styles.skeletonButton}`} style={{ width: '100px', pointerEvents: 'none' }}>
 								<div className={styles.skeletonPulse} />
@@ -334,7 +345,7 @@ const Header = () => {
 								</button>
 							</div>
 						) : (
-							<Link href="/register" className={styles.userButton}>
+							<Link href="/login" className={styles.loginButton}>
 								<User size={18} />
 								<span className={styles.userName}>{tc('login')}</span>
 							</Link>

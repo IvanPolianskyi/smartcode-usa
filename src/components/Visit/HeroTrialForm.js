@@ -13,7 +13,6 @@ import PhoneField from '@/components/PhoneField/PhoneField'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
 import styles from './HeroTrialForm.module.css'
 import { useTranslations, useLocale } from 'next-intl'
-import DataProcessingConsentNote from '@/components/Legal/DataProcessingConsentNote'
 
 export default function HeroTrialForm() {
 	const t = useTranslations('home.heroForm')
@@ -28,16 +27,16 @@ export default function HeroTrialForm() {
 
 	const phoneClasses = {
 		field: styles.phoneField,
-		fieldError: phoneStyles.fieldError,
+		fieldError: styles.fieldError,
 		label: styles.srOnly,
 		phoneContainer: styles.phoneContainer,
 		countryBtn: `${phoneStyles.countryBtn} ${styles.countryBtn}`,
 		flagEmoji: phoneStyles.flagEmoji,
-		dropdownArrow: phoneStyles.dropdownArrow,
-		divider: phoneStyles.divider,
-		phoneInputWrap: phoneStyles.phoneInputWrap,
-		phonePrefix: phoneStyles.phonePrefix,
-		phoneInput: phoneStyles.phoneInput,
+		dropdownArrow: `${phoneStyles.dropdownArrow} ${styles.dropdownArrow}`,
+		divider: `${phoneStyles.divider} ${styles.divider}`,
+		phoneInputWrap: `${phoneStyles.phoneInputWrap} ${styles.phoneInputWrap}`,
+		phonePrefix: `${phoneStyles.phonePrefix} ${styles.phonePrefix}`,
+		phoneInput: `${phoneStyles.phoneInput} ${styles.phoneInput}`,
 		dropdown: phoneStyles.dropdown,
 		dropdownSearchWrap: phoneStyles.dropdownSearchWrap,
 		dropdownSearch: phoneStyles.dropdownSearch,
@@ -168,10 +167,10 @@ export default function HeroTrialForm() {
 					/>
 				</div>
 
-				<DataProcessingConsentNote className={styles.consentNote} />
-
 				<button type='submit' className={styles.submit} disabled={submitting}>
-					{submitting ? t('submitting') : t('submit')}
+					<span className={styles.submitLabel}>
+						{submitting ? t('submitting') : t('submit')}
+					</span>
 				</button>
 
 				<p className={styles.hint}>{t('hint')}</p>
