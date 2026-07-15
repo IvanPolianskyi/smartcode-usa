@@ -311,6 +311,18 @@ const Header = () => {
 
 					{/* Права частина хедера */}
                     <div className={styles.headerRight}>
+						{/* Кнопка "Записатися" — йде ПЕРШОЮ */}
+						{!userLoading && !user && (
+							<button
+								type='button'
+								className={styles.registerButton}
+								onClick={handleCtaClick}
+								aria-label={t('signUpAria')}
+							>
+								{t('nav.signUp')}
+							</button>
+						)}
+						{/* Кнопка "Увійти" — йде ДРУГОЮ */}
 						{userLoading ? (
 							<div className={`${styles.userButton} ${styles.skeletonButton}`} style={{ width: '100px', pointerEvents: 'none' }}>
 								<div className={styles.skeletonPulse} />
@@ -334,7 +346,7 @@ const Header = () => {
 								</button>
 							</div>
 						) : (
-							<Link href="/register" className={styles.userButton}>
+							<Link href="/login" className={styles.loginButton}>
 								<User size={18} />
 								<span className={styles.userName}>{tc('login')}</span>
 							</Link>

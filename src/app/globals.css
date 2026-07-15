@@ -1,41 +1,49 @@
 @import "tailwindcss";
 
 :root {
+  /* Brand — SmartCode Academy dark purple */
+  --brand-accent: #a100ff;
+  --brand-accent-hot: #c44bff;
+  --brand-accent-deep: #7a00c8;
+  --brand-glow: rgba(161, 0, 255, 0.45);
+
   /* Primary Colors */
-  --primary-blue: #2563eb;
-  --primary-purple: #8b5cf6;
+  --primary-blue: #7c3aed;
+  --primary-purple: #a100ff;
   --primary-orange: #ff6b35;
   --primary-red: #ef4444;
   --primary-green: #10b981;
 
   /* Neon Colors */
   --neon-yellow: #ffcc00;
-  --neon-pink: #ff0066;
-  --neon-blue: #00ccff;
+  --neon-pink: #ff4dcc;
+  --neon-blue: #b24bff;
   --neon-green: #00ff00;
   --neon-orange: #ff6600;
-  --neon-purple: #cc00ff;
+  --neon-purple: #a100ff;
 
   /* Background Colors */
-  --background: #ffffff;
-  --background-secondary: #f8fafc;
-  --background-accent: #f0f4ff;
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-glass: rgba(255, 255, 255, 0.95);
-  --dark-bg: #0a0a0a;
+  --background: #000000;
+  --background-secondary: #050508;
+  --background-accent: #0c0614;
+  --bg-primary: #000000;
+  --bg-secondary: #0a0a0f;
+  --bg-elevated: #121218;
+  --bg-glass: rgba(12, 6, 20, 0.85);
+  --dark-bg: #000000;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-accent: rgba(161, 0, 255, 0.45);
 
   /* Text Colors */
-  --foreground: #1a1a1a;
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
-  --text-tertiary: #94a3b8;
-  --text-secondary-alt: #4b5563;
-  --text-tertiary-alt: #6b7280;
-  /* Text Colors for dark backgrounds */
-  --text-primary-dark: #e5e7eb; /* slate-200 */
-  --text-secondary-dark: #cbd5e1; /* slate-300 */
-  --text-tertiary-dark: #94a3b8; /* slate-400 */
+  --foreground: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: #c4c4d4;
+  --text-tertiary: #8b8b9a;
+  --text-secondary-alt: #b0b0c0;
+  --text-tertiary-alt: #7a7a8c;
+  --text-primary-dark: #ffffff;
+  --text-secondary-dark: #c4c4d4;
+  --text-tertiary-dark: #8b8b9a;
 
   /* Accent Colors */
   --accent-green: #10b981;
@@ -43,16 +51,18 @@
   --accent-red: #ef4444;
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-purple) 100%);
-  --gradient-secondary: linear-gradient(135deg, var(--primary-orange) 0%, #e55a2b 100%);
-  --gradient-background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%);
+  --gradient-primary: linear-gradient(135deg, #7a00c8 0%, #a100ff 50%, #c44bff 100%);
+  --gradient-secondary: linear-gradient(135deg, #a100ff 0%, #7a00c8 100%);
+  --gradient-background: radial-gradient(ellipse at 70% 40%, rgba(161, 0, 255, 0.22), transparent 55%),
+    #000000;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 24px -3px rgba(0, 0, 0, 0.55);
+  --shadow-xl: 0 20px 40px -5px rgba(0, 0, 0, 0.6);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 32px rgba(161, 0, 255, 0.35);
 
   /* Border Radius */
   --radius-sm: 0.375rem;
@@ -76,17 +86,60 @@
   --transition-slow: 500ms ease;
 
   /* Pixel Art / Grid Style */
-  --grid-color: rgba(0, 204, 255, 0.1);
+  --grid-color: rgba(161, 0, 255, 0.22);
   --pixel-size: 8px;
-  --gradient-pink-purple: linear-gradient(135deg, #ec4899, #a855f7);
-  --gradient-purple-blue: linear-gradient(135deg, #a855f7, #3b82f6);
-  --gradient-blue-cyan: linear-gradient(135deg, #3b82f6, #06b6d4);
-  --gradient-multicolor: linear-gradient(135deg, #ec4899, #a855f7, #3b82f6, #06b6d4);
+  --gradient-pink-purple: linear-gradient(135deg, #c44bff, #a100ff);
+  --gradient-purple-blue: linear-gradient(135deg, #a100ff, #7a00c8);
+  --gradient-blue-cyan: linear-gradient(135deg, #7a00c8, #a100ff);
+  --gradient-multicolor: linear-gradient(135deg, #7a00c8, #a100ff, #c44bff);
 }
 
+.accent-text {
+  color: var(--brand-accent);
+}
 
+.btn-pill-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--brand-accent);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--shadow-glow);
+  transition: var(--transition-base);
+  cursor: pointer;
+}
 
+.btn-pill-primary:hover {
+  background: var(--brand-accent-hot);
+  box-shadow: 0 0 40px rgba(161, 0, 255, 0.55);
+}
 
+.btn-pill-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.35rem;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--brand-accent);
+  background: transparent;
+  color: var(--brand-accent-hot);
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition-base);
+  cursor: pointer;
+}
+
+.btn-pill-outline:hover {
+  background: rgba(161, 0, 255, 0.12);
+  color: #fff;
+}
 
 * {
   box-sizing: border-box;
@@ -96,33 +149,28 @@
 
 html {
   scroll-behavior: smooth;
-  /* Приховуємо скролбар для Firefox */
   scrollbar-width: none;
-  /* Фікс для Instagram/Facebook in-app browser: JS оновлює --app-height з innerHeight */
   --app-height: 100vh;
   --visit-header-offset: 70px;
-  /* Зберігаємо позицію скролу при зміні розміру viewport (Instagram toolbar) */
   overflow-anchor: auto;
+  background: #000;
 }
 
 html::-webkit-scrollbar {
-  /* Приховуємо скролбар для Chrome, Safari, Edge */
   display: none;
 }
 
 body {
-  background: transparent;
+  background: #000;
   color: var(--foreground);
-  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-geist-sans), var(--font-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.6;
-  /* Приховуємо скролбар для Firefox */
   scrollbar-width: none;
-  /* Зберігаємо позицію скролу при зміні розміру viewport (Instagram toolbar) */
   overflow-anchor: auto;
 }
 
 body::-webkit-scrollbar {
-  /* Приховуємо скролбар для Chrome, Safari, Edge */
   display: none;
 }
 
@@ -137,16 +185,16 @@ body::-webkit-scrollbar {
   scroll-margin-top: 96px;
 }
 
-/* Prevent horizontal overflow on mobile and ensure full-width layout */
-html, body {
+html,
+body {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
 }
 
-/* Padding-top для main: десктоп — fixed header; телефон — fixed 70px; планшет — sticky header у потоці, відступ не потрібен */
 main.main-content {
   padding-top: 80px;
+  background: #000;
 }
 
 @media (max-width: 1024px) and (min-width: 701px) {
@@ -155,7 +203,6 @@ main.main-content {
   }
 }
 
-/* На мобільних пристроях (до 700px) хедер фіксований з висотою 70px */
 @media (max-width: 700px) {
   main.main-content {
     padding-top: 70px;
@@ -163,8 +210,6 @@ main.main-content {
   }
 }
 
-
-/* iPhone island background для головної сторінки на мобільних пристроях */
 @media (max-width: 1024px) {
   .home-page-wrapper::before {
     content: '';
@@ -173,11 +218,12 @@ main.main-content {
     left: 0;
     right: 0;
     height: env(safe-area-inset-top, 0px);
-    background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+    background: #000;
     z-index: 10000;
     pointer-events: none;
   }
 }
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -186,19 +232,19 @@ main.main-content {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   .followingSun {
     animation: none;
     transition: none;
   }
-  
+
   .sunPetal {
     animation: none;
     opacity: 0.7;
   }
 
   .starPurple,
-  .starBlue, 
+  .starBlue,
   .starPink,
   .starGold,
   .starTwinkle,
@@ -207,4 +253,42 @@ main.main-content {
     animation: none;
     opacity: 0.6;
   }
+}
+
+/* Markdown code blocks — copy affordance (LMS lessons) */
+.md-code-wrap {
+  position: relative;
+  margin: 0.75rem 0;
+}
+
+.md-code-wrap > .code-block,
+.md-code-wrap > pre {
+  margin: 0;
+}
+
+.md-code-copy {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  z-index: 2;
+  padding: 0.3rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(18, 18, 24, 0.92);
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.md-code-copy:hover {
+  color: #fff;
+  border-color: var(--border-accent);
+  background: rgba(161, 0, 255, 0.28);
+}
+
+.md-code-copy[data-state='copied'] {
+  color: #6ee7b7;
+  border-color: rgba(16, 185, 129, 0.45);
 }

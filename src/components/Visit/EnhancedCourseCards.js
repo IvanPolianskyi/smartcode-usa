@@ -3,7 +3,6 @@ import React, { useState, useEffect, useMemo, useRef } from 'react'
 import {
 	Star,
 	Users,
-	Clock,
 	PlayCircle,
 	ArrowRight,
 	Target,
@@ -220,77 +219,8 @@ const EnhancedCourseCards = () => {
                         {/* --- ФОН ТА ЕФЕКТИ --- */}
                         <div className={styles.cardBackground}></div>
                         {!isMobile && <div className={styles.cardEffects}></div>}
-                        {!isMobile && (
-							<ParticleBackground 
-								colors={course.particleColors}
-							/>
-						)}
 
 						{/* --- ІНТЕРАКТИВНІ ЕЛЕМЕНТИ (завжди видимі) --- */}
-                        {!isMobile && (
-                        <div
-							className={`${styles.hoverElements} ${styles.hoverElementsVisible}`}
-						>
-							{course.id === 'python' && (
-								<>
-									<div className={`${styles.hoverElement} ${styles.pythonEl1}`}>
-										⭐
-									</div>
-									<div className={`${styles.hoverElement} ${styles.pythonEl2}`}>
-										🚀
-									</div>
-									<div className={`${styles.hoverElement} ${styles.pythonEl3}`}>
-										🌌
-									</div>
-								</>
-							)}
-							{course.id === 'gamedev' && (
-								<>
-									<div
-										className={`${styles.hoverElement} ${styles.gamedevEl1}`}
-									>
-										🎯
-									</div>
-									<div
-										className={`${styles.hoverElement} ${styles.gamedevEl2}`}
-									>
-										💎
-									</div>
-									<div
-										className={`${styles.hoverElement} ${styles.gamedevEl3}`}
-									>
-										⚡
-									</div>
-								</>
-							)}
-							{course.id === 'webdev' && (
-								<>
-									<div className={`${styles.hoverElement} ${styles.webdevEl1}`}>
-										&lt;div&gt;
-									</div>
-									<div className={`${styles.hoverElement} ${styles.webdevEl2}`}>
-										{'{...}'}
-									</div>
-									<div className={`${styles.hoverElement} ${styles.webdevEl3}`}>
-										⚙️
-									</div>
-								</>
-							)}
-                            {course.id === 'roblox' && (
-                                <>
-                                    <div className={`${styles.hoverElement} ${styles.robloxEl1}`}>
-                                        🧱
-                                    </div>
-                                    <div className={`${styles.hoverElement} ${styles.robloxEl2}`}>
-                                        🎮
-                                    </div>
-                                    <div className={`${styles.hoverElement} ${styles.robloxEl3}`}>
-                                        🛠️
-                                    </div>
-                                </>
-                            )}
-                        </div>
-                        )}
 
 						{/* --- ВЕРХНЯ ЧАСТИНА (РЕЙТИНГ) --- */}
 						<div className={styles.topSection}>
@@ -388,17 +318,17 @@ const EnhancedCourseCards = () => {
 										<span>{course.stats.projects} {t('projects')}</span>
 									</div>
 								</div>
-                                <Link 
-                                    href={course.href} 
-                                    className={styles.actionButton}
-                                    onClick={(e) => {
-                                        if (isEn) return
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        window.dispatchEvent(new Event('openContactModal'))
-                                    }}
-                                    scroll={false}
-                                >
+								<Link
+									href={course.href}
+									className={styles.actionButton}
+									onClick={(e) => {
+										if (isEn) return
+										e.preventDefault()
+										e.stopPropagation()
+										window.dispatchEvent(new Event('openContactModal'))
+									}}
+									scroll={false}
+								>
 									<PlayCircle className={styles.buttonIcon} />
 									<span>
 										{isEn && course.enPrice
@@ -407,11 +337,10 @@ const EnhancedCourseCards = () => {
 									</span>
 									<ArrowRight className={styles.buttonArrow} />
 								</Link>
-								{/* Кнопка "Перейти" для мобільної версії */}
 								<Link
 									href={course.href}
 									className={styles.mobileGoButton}
-									onClick={e => e.stopPropagation()}
+									onClick={(e) => e.stopPropagation()}
 								>
 									<span>{t('goTo')}</span>
 									<ArrowRight className={styles.buttonArrow} />

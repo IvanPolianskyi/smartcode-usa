@@ -119,25 +119,16 @@ const Visit = () => {
 
 	return (
 		<div className={styles.container}>
-			{/* Floating background elements */}
-			<div className={styles.backgroundElements}>
-				{/* Верхні елементи */}
-				<div className={`${styles.floatingElement} ${styles.element1}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element2}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element3}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element4}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element5}`}></div>
-				{/* Середні елементи */}
-				<div className={`${styles.floatingElement} ${styles.element6}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element7}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element8}`}></div>
-				{/* Нижні елементи */}
-				<div className={`${styles.floatingElement} ${styles.element9}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element10}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element11}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element12}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element13}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element14}`}></div>
+			<div className={styles.backgroundElements} aria-hidden>
+				<div className={styles.dotGrid} />
+				<div className={`${styles.floatingElement} ${styles.element1}`} />
+				<div className={`${styles.floatingElement} ${styles.element2}`} />
+				<div className={styles.orbitDecor}>
+					<span className={styles.orbitRing} />
+					<span className={`${styles.orbitRing} ${styles.orbitRing2}`} />
+					<span className={`${styles.orbitRing} ${styles.orbitRing3}`} />
+					<span className={styles.orbitCore} />
+				</div>
 			</div>
 
 			<div className={styles.mainContainer}>
@@ -152,7 +143,11 @@ const Visit = () => {
 
 							{!isEn && (
 								<p className={styles.subtitle}>
-									{t('subtitle')}
+									{t.rich('subtitleRich', {
+										accent: (chunks) => (
+											<span className={styles.subtitleAccent}>{chunks}</span>
+										),
+									})}
 								</p>
 							)}
 							{!isEn && (
@@ -233,7 +228,7 @@ const Visit = () => {
 									<div
 										className={styles.statIcon}
 										style={{
-											color: '#6366f1',
+											color: 'var(--brand-accent)',
 										}}
 									>
 										{stat.icon}
