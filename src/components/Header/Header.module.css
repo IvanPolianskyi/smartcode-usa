@@ -11,24 +11,11 @@
     margin: 0;
     padding: 0;
     border-radius: 0;
-    background: 
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 1px,
-            rgba(255, 255, 255, 0.02) 1px,
-            rgba(255, 255, 255, 0.02) 2px
-        ),
-        linear-gradient(
-            to right,
-            #e0f2fe 0%,
-            #e9d5ff 50%,
-            #f3e8ff 100%
-        );
+    background: #080810;
     backdrop-filter: none;
     border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     transition: all var(--transition-base);
     transform: translateY(0);
     will-change: transform;
@@ -49,21 +36,8 @@
 .header.scrolled {
     top: 0;
     margin: 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    background: 
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 1px,
-            rgba(255, 255, 255, 0.02) 1px,
-            rgba(255, 255, 255, 0.02) 2px
-        ),
-        linear-gradient(
-            to right,
-            rgba(224, 242, 254, 0.85) 0%,
-            rgba(233, 213, 255, 0.85) 50%,
-            rgba(243, 232, 255, 0.85) 100%
-        );
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background: rgba(8, 8, 16, 0.85);
     backdrop-filter: blur(10px);
 }
 .container {
@@ -105,13 +79,13 @@
 .logoTitle {
     font-size: 1.75rem;
     font-weight: 800;
-    color: var(--text-primary);
+    color: #f0f0ff;
     letter-spacing: -0.01em;
 }
 .logoSubtitle {
     font-size: 0.9375rem;
     font-weight: 700;
-    color: var(--primary-purple);
+    color: #f0f0ff;
     letter-spacing: 0.5px;
 }
 
@@ -143,7 +117,7 @@
     padding: 0.5rem 1rem;
     font-size: 0.9375rem;
     font-weight: 500;
-    color: #1e293b;
+    color: #f0f0ff;
     text-decoration: none;
     background: none;
     border: none;
@@ -165,8 +139,8 @@
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .navLink:hover {
-    color: #6366f1;
-    background: rgba(99, 102, 241, 0.05);
+    color: #a0a0cc;
+    background: rgba(99, 102, 241, 0.1);
     transform: translateY(-1px);
 }
 .navLink:hover::before {
@@ -178,24 +152,24 @@
     position: relative; 
 }
 .navItemDropdown .navLink:hover {
-    background: rgba(99, 102, 241, 0.08);
+    background: rgba(99, 102, 241, 0.15);
 }
 .chevron { 
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
     margin-left: 0.25rem;
-    color: #64748b;
+    color: #a0a0cc;
 }
 .navLink:hover .chevron {
-    color: #6366f1;
+    color: #f0f0ff;
 }
 
 .navLinkCta {
-    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    background: #cc00ff;
     color: #ffffff !important;
-    font-weight: 700;
+    font-weight: 800;
     padding: 0.5rem 1.15rem;
     border-radius: 999px;
-    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+    box-shadow: 0 4px 16px rgba(204, 0, 255, 0.35);
 }
 
 .navLinkCta::before {
@@ -204,9 +178,9 @@
 
 .navLinkCta:hover {
     color: #ffffff !important;
-    background: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 100%);
+    background: #a300cc;
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.42);
+    box-shadow: 0 6px 20px rgba(204, 0, 255, 0.42);
 }
 
 .navLinkReferral {
@@ -234,9 +208,20 @@
     display: flex !important;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%) !important;
-    color: #ffffff !important;
-    font-weight: 700;
+    background: linear-gradient(
+        270deg,
+        #c8860a,
+        #f5d020,
+        #f7b731,
+        #ffe066,
+        #f5d020,
+        #c8860a
+    ) !important;
+    background-size: 300% 300% !important;
+    animation: goldShimmerHeader 3s ease infinite;
+    color: #2d1a00 !important;
+    text-shadow: 0 1px 2px rgba(255, 220, 80, 0.3);
+    font-weight: 800;
     border-radius: 12px;
     margin-top: 0.25rem;
 }
@@ -465,7 +450,7 @@
 .loginButton {
     border-radius: 50px;
     background: transparent;
-    color: #6366f1;
+    color: #cc00ff;
     padding: 0.5rem 1.25rem;
     font-weight: 600;
     font-size: 0.9375rem;
@@ -474,7 +459,7 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1.5px solid #6366f1;
+    border: 1.5px solid #cc00ff;
     white-space: nowrap;
     position: relative;
     overflow: hidden;
@@ -487,36 +472,56 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(204, 0, 255, 0.1), transparent);
     transition: left 0.5s ease;
 }
 .loginButton:hover {
-    background: rgba(99, 102, 241, 0.1);
-    border-color: #6366f1;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+    background: rgba(204, 0, 255, 0.1);
+    border-color: #cc00ff;
+    box-shadow: 0 4px 12px rgba(204, 0, 255, 0.2);
     transform: scale(1.02);
 }
 .loginButton:hover::before {
     left: 100%;
 }
 
+@keyframes goldShimmerHeader {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
 .registerButton {
     border-radius: 50px;
-    background: #6366f1;
-    color: white;
-    padding: 0.5rem 1.25rem;
-    font-weight: 600;
+    background: linear-gradient(
+        270deg,
+        #c8860a,
+        #f5d020,
+        #f7b731,
+        #ffe066,
+        #f5d020,
+        #c8860a
+    );
+    background-size: 300% 300%;
+    animation: goldShimmerHeader 3s ease infinite;
+    color: #2d1a00;
+    text-shadow: 0 1px 2px rgba(255, 220, 80, 0.3);
+    padding: 0.55rem 1.35rem;
+    font-weight: 800;
     font-size: 0.9375rem;
     text-decoration: none;
     display: none;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1.5px solid #6366f1;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    border: none;
     white-space: nowrap;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+    box-shadow:
+        0 4px 16px rgba(245, 208, 32, 0.45),
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    cursor: pointer;
 }
 @media (min-width: 701px) { .registerButton { display: flex; } }
 .registerButton::before {
@@ -526,14 +531,14 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
     transition: left 0.5s ease;
 }
 .registerButton:hover {
-    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-    border-color: #4f46e5;
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-    transform: scale(1.03);
+    filter: brightness(1.1);
+    box-shadow: 0 6px 24px rgba(245, 208, 32, 0.6);
+    transform: translateY(-1px);
+    animation: goldShimmerHeader 1.5s ease infinite;
 }
 .registerButton:hover::before {
     left: 100%;

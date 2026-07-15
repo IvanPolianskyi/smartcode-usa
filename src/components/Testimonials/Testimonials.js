@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React from 'react'
 import { useTranslations } from 'next-intl'
 import styles from './Testimonials.module.css'
 
@@ -15,16 +15,6 @@ const testimonials = [
 
 const Testimonials = () => {
 	const t = useTranslations('homeSections.testimonials')
-	const carouselRef = useRef(null)
-
-	const handleTouchStart = () => {
-		carouselRef.current?.classList.add(styles.paused)
-	}
-	const handleTouchEnd = () => {
-		carouselRef.current?.classList.remove(styles.paused)
-	}
-
-	const duplicatedTestimonials = [...testimonials, ...testimonials]
 
 	return (
 		<section id='testimonials' className={styles.testimonialsSection}>
@@ -37,18 +27,13 @@ const Testimonials = () => {
 
 				<div className={styles.carouselWrapper}>
 					<div className={styles.carouselContainer}>
-						<div
-							ref={carouselRef}
-							className={`${styles.carousel} ${styles.carouselAnimated}`}
-							onTouchStart={handleTouchStart}
-							onTouchEnd={handleTouchEnd}
-						>
-							{duplicatedTestimonials.map((testimonial, index) => (
+						<div className={styles.carousel}>
+							{testimonials.map((testimonial, index) => (
 								<div key={`${testimonial.id}-${index}`} className={styles.card}>
 									<div className={styles.cardContent}>
 										<img
 											src={testimonial.src}
-											alt=''
+											alt='Відгук'
 											className={styles.media}
 											loading='lazy'
 											decoding='async'

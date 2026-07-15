@@ -13,9 +13,8 @@ import {
 	LogOut,
 } from 'lucide-react'
 import styles from './Header.module.css'
-import gsap from 'gsap'
 import { Link, useRouter } from '@/i18n/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import Logo from '@/components/Logo/Logo'
 import { logout } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
@@ -32,9 +31,14 @@ import {
 const Header = () => {
 	const t = useTranslations('header')
 	const tc = useTranslations('common')
+	const locale = useLocale()
+	const isEn = locale === 'en'
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+	const [menuMounted, setMenuMounted] = useState(false)
+	const [menuAnimatedOpen, setMenuAnimatedOpen] = useState(false)
 	const [isScrolled, setIsScrolled] = useState(false)
 	const headerRef = useRef(null)
+	const mobileMenuRef = useRef(null)
     const scrollLockYRef = useRef(0)
 	const pendingHomeSectionRef = useRef(null)
 	const router = useRouter()
@@ -49,97 +53,66 @@ const Header = () => {
 		return () => window.removeEventListener('scroll', handleScroll, { passive: true })
 	}, [])
 
-	// ПОВНОЕКРАННА анімація мобільного меню + Scroll Lock як у модального вікна
+	// Scroll lock + відкриття мобільного меню
 	useEffect(() => {
-		const mobileMenu = headerRef.current?.querySelector(`.${styles.mobileMenu}`)
-		if (!mobileMenu) return
+		if (!isMobileMenuOpen) {
+			setMenuAnimatedOpen(false)
+			return undefined
+		}
 
-		if (isMobileMenuOpen) {
-            // Блокуємо скрол сторінки (навіть на iOS)
-            scrollLockYRef.current = window.scrollY || window.pageYOffset || 0
-            document.body.style.position = 'fixed'
-            document.body.style.top = `-${scrollLockYRef.current}px`
-            document.body.style.left = '0'
-            document.body.style.right = '0'
-            document.body.style.width = '100%'
-			
-			// Показуємо меню
-			gsap.set(mobileMenu, { 
-				display: 'flex', 
-				opacity: 0,
-				scale: 0.95
-			})
-			
-			// Анімація входу (fade + scale)
-			gsap.to(mobileMenu, { 
-				opacity: 1,
-				scale: 1,
-				duration: 0.3, 
-				ease: 'power2.out' 
-			})
-			
-			// Легкий зсув без приховування opacity — пункти одразу видно, можна скролити
-			gsap.fromTo(
-				mobileMenu.querySelectorAll(`.${styles.mobileMenuItem}`),
-				{ opacity: 1, y: 10 },
-				{
-					opacity: 1,
-					y: 0,
-					stagger: 0.04,
-					duration: 0.32,
-					ease: 'power2.out',
-					delay: 0.08,
-				}
-			)
-		} else {
-			const lockedY =
-				scrollLockYRef.current ||
-				Math.abs(parseInt(document.body.style.top || '0', 10)) ||
-				0
-			const sectionAfterUnlock = pendingHomeSectionRef.current
-			const isHome =
-				typeof window !== 'undefined' &&
-				isHomePathname(window.location.pathname)
+		setMenuMounted(true)
+		scrollLockYRef.current = window.scrollY || window.pageYOffset || 0
+		document.body.style.position = 'fixed'
+		document.body.style.top = `-${scrollLockYRef.current}px`
+		document.body.style.left = '0'
+		document.body.style.right = '0'
+		document.body.style.width = '100%'
 
-			unlockBodyScrollLock(lockedY, { restorePosition: !sectionAfterUnlock })
+		const raf = requestAnimationFrame(() => {
+			requestAnimationFrame(() => setMenuAnimatedOpen(true))
+		})
+		return () => cancelAnimationFrame(raf)
+	}, [isMobileMenuOpen])
 
-			const runSectionScroll = () => {
-				if (!sectionAfterUnlock) return
-				if (!isHome) {
-					pendingHomeSectionRef.current = null
-					return
-				}
+	// Закриття мобільного меню + розблокування скролу
+	useEffect(() => {
+		if (isMobileMenuOpen || !menuMounted) return undefined
+
+		const mobileMenu = mobileMenuRef.current
+		const lockedY =
+			scrollLockYRef.current ||
+			Math.abs(parseInt(document.body.style.top || '0', 10)) ||
+			0
+		const sectionAfterUnlock = pendingHomeSectionRef.current
+		const isHome =
+			typeof window !== 'undefined' &&
+			isHomePathname(window.location.pathname)
+
+		unlockBodyScrollLock(lockedY, { restorePosition: !sectionAfterUnlock })
+
+		const runSectionScroll = () => {
+			if (!sectionAfterUnlock) return
+			if (!isHome) {
 				pendingHomeSectionRef.current = null
-				requestAnimationFrame(() => {
-					requestHomeSectionScroll(sectionAfterUnlock)
-				})
+				return
 			}
-
-			runSectionScroll()
-
-			// Анімація виходу
-			gsap.to(mobileMenu, {
-				opacity: 0,
-				scale: 0.95,
-				duration: 0.25,
-				ease: 'power2.in',
-				onComplete: () => {
-					gsap.set(mobileMenu, { display: 'none' })
-				},
+			pendingHomeSectionRef.current = null
+			requestAnimationFrame(() => {
+				requestHomeSectionScroll(sectionAfterUnlock)
 			})
 		}
 
-		// Cleanup функція
-        return () => {
-            if (!isMobileMenuOpen) {
-                document.body.style.position = ''
-                document.body.style.top = ''
-                document.body.style.left = ''
-                document.body.style.right = ''
-                document.body.style.width = ''
-            }
-        }
-	}, [isMobileMenuOpen])
+		runSectionScroll()
+
+		const handleTransitionEnd = (e) => {
+			if (e.target !== mobileMenu) return
+			if (e.propertyName !== 'opacity' && e.propertyName !== 'transform') return
+			setMenuMounted(false)
+		}
+
+		mobileMenu?.addEventListener('transitionend', handleTransitionEnd)
+		return () => mobileMenu?.removeEventListener('transitionend', handleTransitionEnd)
+	}, [isMobileMenuOpen, menuMounted])
 
 	// Закриття мобільного меню по ESC
 	useEffect(() => {
@@ -167,12 +140,17 @@ const Header = () => {
 	}
 
 	const handleCtaClick = (e) => {
-        e.preventDefault()
-        if (typeof window !== 'undefined') {
-            window.dispatchEvent(new Event('openContactModal'))
-        }
-        setIsMobileMenuOpen(false)
-    }
+		if (e?.preventDefault) e.preventDefault()
+		if (isEn) {
+			router.push('/register')
+			setIsMobileMenuOpen(false)
+			return
+		}
+		if (typeof window !== 'undefined') {
+			window.dispatchEvent(new Event('openContactModal'))
+		}
+		setIsMobileMenuOpen(false)
+	}
 
 	const scrollToHomeSection = (sectionId) => {
 		const isHome =
@@ -231,12 +209,17 @@ const Header = () => {
 	}
 
 	const navItems = [
-		{ label: t('nav.signUp'), href: '/#trial-signup', ctaModal: true },
+		isEn
+			? { label: t('nav.signUp'), href: '/register' }
+			: { label: t('nav.signUp'), href: '/#trial-signup', ctaModal: true },
 		{ label: t('nav.courses'), href: '/#our-courses' },
 		{ label: t('nav.lessons'), href: '/#courses', hideOnDesktop: true },
-		{ label: t('nav.prices'), href: '/tariff' },
-		{ label: t('nav.reviews'), href: '/#testimonials' },
-		{ label: t('nav.invite'), href: '/invite' },
+		...(!isEn
+			? [
+					{ label: t('nav.reviews'), href: '/#testimonials' },
+					{ label: t('nav.invite'), href: '/invite' },
+				]
+			: []),
 	]
 	const desktopNavItems = navItems
 		.filter((item) => !item.hideOnDesktop)
@@ -327,6 +310,18 @@ const Header = () => {
 
 					{/* Права частина хедера */}
                     <div className={styles.headerRight}>
+						{/* Кнопка "Записатися" — йде ПЕРШОЮ */}
+						{!userLoading && !user && (
+							<button
+								type='button'
+								className={styles.registerButton}
+								onClick={handleCtaClick}
+								aria-label={t('signUpAria')}
+							>
+								{t('nav.signUp')}
+							</button>
+						)}
+						{/* Кнопка "Увійти" — йде ДРУГОЮ */}
 						{userLoading ? (
 							<div className={`${styles.userButton} ${styles.skeletonButton}`} style={{ width: '100px', pointerEvents: 'none' }}>
 								<div className={styles.skeletonPulse} />
@@ -350,7 +345,7 @@ const Header = () => {
 								</button>
 							</div>
 						) : (
-							<Link href="/register" className={styles.userButton}>
+							<Link href="/login" className={styles.loginButton}>
 								<User size={18} />
 								<span className={styles.userName}>{tc('login')}</span>
 							</Link>
@@ -384,7 +379,8 @@ const Header = () => {
 			{/* Повноекранне мобільне меню */}
             <div 
                 id="site-mobile-menu"
-                className={styles.mobileMenu}
+                ref={mobileMenuRef}
+                className={`${styles.mobileMenu} ${menuMounted ? styles.mobileMenuMounted : ''} ${menuAnimatedOpen ? styles.mobileMenuOpen : ''}`}
                 role="dialog" 
                 aria-modal="true" 
                 aria-hidden={!isMobileMenuOpen}
@@ -411,14 +407,16 @@ const Header = () => {
 					<div className={styles.mobileMenuNav}>
 						<div className={styles.mobileMenuSection}>
 							<h3 className={styles.mobileMenuSectionTitle}>{t('mobile.pages')}</h3>
-							{mobileNavItems.map((item) => {
+							{mobileNavItems.map((item, index) => {
 								const homeSectionId = parseHomeHashTarget(item.href)
+								const itemStyle = { '--item-index': index }
 								if (homeSectionId) {
 									return (
 										<button
 											key={item.label}
 											type="button"
 											className={`${styles.mobileMenuItem} ${styles.mobileNavItem}`}
+											style={itemStyle}
 											onClick={(e) => handleMobileNavClick(e, item)}
 										>
 											{item.label}
@@ -430,6 +428,7 @@ const Header = () => {
 										key={item.label}
 										href={item.href}
 										className={`${styles.mobileMenuItem} ${styles.mobileNavItem} ${item.ctaModal ? styles.mobileNavCta : ''}`}
+										style={itemStyle}
 										scroll={item.ctaModal ? false : undefined}
 										onClick={(e) => handleMobileNavClick(e, item)}
 									>
@@ -446,6 +445,7 @@ const Header = () => {
 									key={course.link}
 									href={course.link}
 									className={`${styles.mobileMenuItem} ${styles.mobileCourseItem}`}
+									style={{ '--item-index': mobileNavItems.length + index }}
 									onClick={handleMobileMenuClose}
 								>
 									<div className={`${styles.mobileCourseIcon} ${styles[course.theme]}`}>
