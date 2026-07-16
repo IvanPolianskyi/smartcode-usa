@@ -300,8 +300,8 @@ export async function upsertUserFromCrm(payload) {
       studentProfile: { ...prev, ...profilePatch },
       updatedAt: new Date(),
     }
-    // Не перетираємо існуючий логін, якщо не передали новий email.
-    if (email && !user.email) {
+    // Не перетираємо існуючий логін; порожній email доповнюємо з CRM/short_id.
+    if (email && !String(user.email || '').trim()) {
       setFields.email = email
     }
     const tgUid = String(payload.telegramUserId || payload.telegram_user_id || '').trim()
@@ -311,7 +311,8 @@ export async function upsertUserFromCrm(payload) {
     if (tgChat) setFields.telegramChatId = tgChat
     if (tgUser) setFields.telegramUsername = tgUser
 
-    if (issueCredentials) {
+    // Пароль: reset лише за issueCredentials; якщо пароля немає — один раз при login-link.
+    if (issueCredentials || (!user.password && createLoginLinkOnly)) {
       tempPassword = requestedPassword || generateStudentPassword()
       setFields.password = await hashPassword(tempPassword)
     }
@@ -362,7 +363,7 @@ export async function upsertUserFromCrm(payload) {
           studentProfile: { ...prev, ...profilePatch },
           updatedAt: new Date(),
         }
-        if (issueCredentials || !user.password) {
+        if (issueCredentials || (!user.password && createLoginLinkOnly)) {
           tempPassword = requestedPassword || generateStudentPassword()
           setFields.password = await hashPassword(tempPassword)
         }
@@ -449,14 +450,18 @@ export async function upsertUserFromCrm(payload) {
     }
   }
 
-  // На створенні завжди повертаємо пароль; на update — лише якщо reset.
-  const passwordOut = created || issueCredentials ? tempPassword : null
+  // Повертаємо plaintext лише якщо пароль згенеровано в цьому запиті (1 раз / reset).
+  const passwordOut = tempPassword || null
+  const login =
+    String(user?.email || '').trim() ||
+    email ||
+    (shortId ? syntheticStudentLogin(shortId) : '')
 
   return {
     userId: user._id.toString(),
     created,
-    login: user.email,
-    email: user.email,
+    login,
+    email: login,
     tempPassword: passwordOut,
     loginPath,
     loginUrl,
