@@ -371,7 +371,15 @@ export async function upsertUserFromCrm(payload) {
       const { createLoginToken } = await import('@/lib/loginTokens')
       const link = await createLoginToken(user._id, { purpose: 'crm_issue' })
       loginPath = link.loginPath
-      const base = String(process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/$/, '')
+      const rawBase = String(
+        process.env.NEXT_PUBLIC_SITE_URL ||
+          process.env.NEXT_PUBLIC_BASE_URL ||
+          'https://smartcode-academy.com'
+      ).replace(/\/$/, '')
+      const base = rawBase.replace(
+        /^https?:\/\/www\.smartcode-academy\.com/i,
+        'https://smartcode-academy.com'
+      )
       loginUrl = base ? `${base}${link.loginPath}` : link.loginPath
     } catch (e) {
       console.error('createLoginToken failed', e)
