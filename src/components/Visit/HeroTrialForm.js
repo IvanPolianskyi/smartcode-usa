@@ -5,9 +5,9 @@ import { Sparkles } from 'lucide-react'
 import {
 	trackTrialInitiateCheckoutOnce,
 	trackTrialLeadOnce,
-	generateEventId,
 } from '@/lib/metaPixel'
 import { getClientAttribution } from '@/lib/attribution'
+import { acquireLeadIntent, clearLeadIntentCache } from '@/lib/leadFormClient'
 import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
@@ -53,6 +53,7 @@ export default function HeroTrialForm() {
 
 	const handleFocusCapture = () => {
 		trackTrialInitiateCheckoutOnce()
+		acquireLeadIntent().catch(() => {})
 	}
 
 	const handleSubmit = async (e) => {
@@ -73,25 +74,51 @@ export default function HeroTrialForm() {
 
 		setSubmitting(true)
 		try {
-			const eventId = generateEventId()
-			const response = await fetch('/api/telegram', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					name: name.trim(),
-					phone: phoneInput.getFullNumber(),
-					message: '',
-					course: '',
-					contactMethod: 'phone',
-					preferredContactMethod: 'phone_call',
-					eventId,
-					sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://smartcode-academy.com',
-					attribution: getClientAttribution(),
-					locale,
-				}),
+			const submitPayload = (eventId, leadToken) => ({
+				name: name.trim(),
+				phone: phoneInput.getFullNumber(),
+				message: '',
+				course: '',
+				contactMethod: 'phone',
+				preferredContactMethod: 'phone_call',
+				eventId,
+				leadToken,
+				sourceUrl:
+					typeof window !== 'undefined'
+						? window.location.href
+						: 'https://smartcode-academy.com',
+				attribution: getClientAttribution(),
+				locale,
 			})
-			const data = await response.json().catch(() => ({}))
+
+			const postLead = async (eventId, leadToken) => {
+				const response = await fetch('/api/telegram', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(submitPayload(eventId, leadToken)),
+				})
+				const data = await response.json().catch(() => ({}))
+				return { response, data }
+			}
+
+			clearLeadIntentCache()
+			let { eventId, leadToken } = await acquireLeadIntent()
+			let { response, data } = await postLead(eventId, leadToken)
+
+			if (
+				!response.ok &&
+				(response.status === 403 || data?.code === 'invalid_token')
+			) {
+				clearLeadIntentCache()
+				;({ eventId, leadToken } = await acquireLeadIntent())
+				;({ response, data } = await postLead(eventId, leadToken))
+			}
+
 			if (!response.ok || !data?.ok) {
+				if (response.status === 429 || data?.code === 'rate_limited') {
+					alert(tc('errorRateLimit') || tc('errorSubmit'))
+					return
+				}
 				alert(tc('errorSubmit'))
 				return
 			}
@@ -101,8 +128,17 @@ export default function HeroTrialForm() {
 			if (data?.trackLead) {
 				trackTrialLeadOnce('', [], eventId)
 			}
+			clearLeadIntentCache()
 			setDone(true)
-		} catch {
+		} catch (err) {
+			if (err?.status === 429) {
+				alert(tc('errorRateLimit') || tc('errorSubmit'))
+				return
+			}
+			if (err?.status === 503) {
+				alert(tc('errorLeadConfig') || tc('errorSubmit'))
+				return
+			}
 			alert(tc('errorNetwork'))
 		} finally {
 			setSubmitting(false)
