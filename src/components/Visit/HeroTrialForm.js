@@ -115,10 +115,6 @@ export default function HeroTrialForm() {
 			}
 
 			if (!response.ok || !data?.ok) {
-				if (response.status === 429 || data?.code === 'rate_limited') {
-					alert(tc('errorRateLimit') || tc('errorSubmit'))
-					return
-				}
 				alert(tc('errorSubmit'))
 				return
 			}
@@ -130,15 +126,7 @@ export default function HeroTrialForm() {
 			}
 			clearLeadIntentCache()
 			setDone(true)
-		} catch (err) {
-			if (err?.status === 429) {
-				alert(tc('errorRateLimit') || tc('errorSubmit'))
-				return
-			}
-			if (err?.status === 503) {
-				alert(tc('errorLeadConfig') || tc('errorSubmit'))
-				return
-			}
+		} catch {
 			alert(tc('errorNetwork'))
 		} finally {
 			setSubmitting(false)
