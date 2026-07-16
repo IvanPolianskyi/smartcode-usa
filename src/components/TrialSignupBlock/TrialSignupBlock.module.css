@@ -1,6 +1,11 @@
 .section {
 	padding: 5rem 1rem;
-	background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+	background: linear-gradient(
+		135deg,
+		var(--brand-accent-deep, #7a00c8) 0%,
+		var(--brand-accent, #a100ff) 45%,
+		var(--brand-accent-hot, #c44bff) 100%
+	);
 	position: relative;
 	overflow: hidden;
 	color: #ffffff;
@@ -55,7 +60,7 @@
 
 .titleAccent {
 	background: #ffd500;
-	color: #1e3a8a;
+	color: #4a007a;
 	padding: 0.2rem 1rem;
 	border-radius: 12px;
 	display: inline-block;
@@ -133,9 +138,9 @@
 
 .input:focus {
 	outline: none;
-	border-color: #3b82f6;
+	border-color: var(--brand-accent, #a100ff);
 	background: #ffffff;
-	box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+	box-shadow: 0 0 0 4px rgba(161, 0, 255, 0.15);
 }
 
 /* Phone field — light theme to match other inputs */
@@ -160,9 +165,9 @@
 }
 
 .phoneContainer:focus-within {
-	border-color: #3b82f6;
+	border-color: var(--brand-accent, #a100ff);
 	background: #ffffff;
-	box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+	box-shadow: 0 0 0 4px rgba(161, 0, 255, 0.15);
 }
 
 .fieldError .phoneContainer {
@@ -179,7 +184,7 @@
 }
 
 .countryBtn:hover {
-	background: rgba(59, 130, 246, 0.08);
+	background: rgba(161, 0, 255, 0.08);
 }
 
 .dropdownArrow {
@@ -221,7 +226,7 @@
 
 .successIconWrap {
 	text-align: center;
-	color: #3b82f6;
+	color: var(--brand-accent, #a100ff);
 	margin-bottom: 1rem;
 }
 
