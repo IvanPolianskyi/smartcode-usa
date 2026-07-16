@@ -52,7 +52,7 @@ export default async function LocaleLayout({ children, params }) {
 				<link rel='icon' href='/logo.jpeg' />
 				<script
 					dangerouslySetInnerHTML={{
-						__html: `(function(){function setAppHeight(){var h=window.visualViewport?window.visualViewport.height:window.innerHeight;document.documentElement.style.setProperty('--app-height',h+'px')}setAppHeight();window.addEventListener('resize',setAppHeight,{passive:true});window.addEventListener('orientationchange',setAppHeight,{passive:true});if(window.visualViewport){window.visualViewport.addEventListener('resize',setAppHeight,{passive:true})}})();`,
+						__html: `(function(){function setAppHeight(){var h=window.innerHeight;document.documentElement.style.setProperty('--app-height',h+'px')}setAppHeight();window.addEventListener('orientationchange',function(){setTimeout(setAppHeight,150)},{passive:true})})();`,
 					}}
 				/>
 			</head>

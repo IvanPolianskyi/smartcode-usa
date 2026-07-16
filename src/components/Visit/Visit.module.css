@@ -9,9 +9,6 @@
 	position: relative;
 	font-family: var(--font-geist-sans), Arial, sans-serif;
 	overflow-x: hidden;
-	contain: layout style paint;
-	transform: translateZ(0);
-	will-change: scroll-position;
 }
 
 .bgStack {
@@ -91,8 +88,6 @@
 	padding: 0 2rem 4rem;
 	position: relative;
 	z-index: 10;
-	contain: layout style;
-	transform: translateZ(0);
 }
 
 /* --- СЕКЦІЯ HERO --- */
@@ -907,9 +902,7 @@
 	}
 
 	.schoolLabel {
-		font-size: 0.75rem;
-		letter-spacing: 0.06em;
-		padding: 0.35rem 0.85rem;
+		display: none;
 	}
 
 	.socialProof {
