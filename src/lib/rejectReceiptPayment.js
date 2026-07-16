@@ -19,7 +19,20 @@ export async function rejectReceiptPayment(receiptId) {
   }
 
   if (receipt.approvalStatus === 'approved' || receipt.status === 'completed') {
-    throw new Error('Cannot reject an approved receipt')
+    // CRM unapprove: дозволяємо відхилити вже approved, щоб статуси не розʼїжджались.
+    await paymentsCollection.updateOne(
+      { _id: receiptObjectId },
+      {
+        $set: {
+          status: 'failed',
+          approvalStatus: 'rejected',
+          rejectedAt: new Date(),
+          unapprovedAt: new Date(),
+          updatedAt: new Date(),
+        },
+      }
+    )
+    return { ok: true, alreadyRejected: false, wasApproved: true }
   }
 
   if (receipt.approvalStatus === 'rejected' || receipt.status === 'failed') {
