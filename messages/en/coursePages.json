@@ -13,6 +13,7 @@
     "weeksFew": "weeks",
     "weeksMany": "weeks",
     "moduleBadge": "Module {number}",
+    "phaseBadge": "Phase {phase}",
     "selectProject": "Select",
     "difficulty": "Difficulty",
     "difficultyPercent": "Difficulty: {percent}%",
@@ -299,36 +300,50 @@
     "hero": {
       "titleLine1": "LUA & ROBLOX",
       "titleLine2": "GAME DEVELOPMENT",
-      "ctaCaption": "LET'S START BUILDING",
+      "ctaCaption": "FROM PARTS TO RELEASE",
       "freeLesson": "PREVIEW LESSON 1",
-      "description": "Learn to create games in Roblox Studio: from your first Lua scripts to full simulators, tycoon games, and obstacle courses. Lots of practice and visual effects."
+      "description": "92 LMS lessons for ages 9–13: modeling first, then ready-code sparks, serious Lua, and genres (Obby, simulator, Tycoon) — ending with a published Showcase game. Groups of up to 5 or 1:1."
+    },
+    "stats": {
+      "items": [
+        { "number": "92", "label": "lessons × 60 min" },
+        { "number": "13", "label": "modules in 5 phases" },
+        { "number": "≤5", "label": "students per group" },
+        { "number": "9–13", "label": "years old" }
+      ]
     },
     "modules": {
-      "title": "12 MODULES = 12 MINI-GAMES",
+      "title": "5 PHASES = ZERO TO SHOWCASE",
       "items": [
         {
-          "title": "World & Studio",
-          "topics": ["Island", "Properties", "ClickDetector", "Sound"]
+          "phase": "A",
+          "lessons": "22 lessons",
+          "title": "Studio & models",
+          "topics": ["Parts & Explorer", "Models & Union", "Terrain & mood", "M1–M3"]
         },
         {
-          "title": "Obby",
-          "topics": ["Traps", "Checkpoints", "Timer", "if/else"]
+          "phase": "B",
+          "lessons": "10 lessons",
+          "title": "Ready-code sparks",
+          "topics": ["Ready scripts", "Touch / Click", "Mini mechanics", "M4"]
         },
         {
-          "title": "Simulator + Tycoon",
-          "topics": ["Coins", "DataStore", "Dropper", "Upgrades"]
+          "phase": "C",
+          "lessons": "26 lessons",
+          "title": "Serious Lua",
+          "topics": ["Variables", "if / else", "Loops", "Functions & tables"]
         },
         {
-          "title": "Arena & Racing",
-          "topics": ["Weapons", "Damage", "Car", "RemoteEvent"]
+          "phase": "D",
+          "lessons": "28 lessons",
+          "title": "Genre mechanics",
+          "topics": ["Obby", "Simulator", "Tycoon", "Tools & GUI"]
         },
         {
-          "title": "Network & World",
-          "topics": ["Client/server", "Shop", "NPCs", "Quests"]
-        },
-        {
-          "title": "Release",
-          "topics": ["RPG inventory", "Polish", "Testing", "Publishing"]
+          "phase": "E",
+          "lessons": "6 lessons",
+          "title": "Release & Showcase",
+          "topics": ["Pitch & polish", "Publishing", "GamePass", "Final game"]
         }
       ]
     },
@@ -336,40 +351,47 @@
       "title": "HANDS-ON PROJECTS",
       "items": [
         {
-          "name": "Obby Course",
+          "name": "World & models",
           "difficulty": "BEGINNER",
-          "time": "2 weeks",
-          "description": "A dynamic obstacle course with traps and checkpoints",
-          "points": 1200
+          "time": "phases A–B",
+          "description": "Your yard / location with models, terrain, and first code sparks",
+          "points": 900
         },
         {
-          "name": "Tycoon",
+          "name": "Obby Course",
           "difficulty": "MIDDLE",
-          "time": "3 weeks",
-          "description": "An economic mini-game with upgrades, buttons, and collectors",
-          "points": 2800
+          "time": "phase D",
+          "description": "An obstacle course with traps, checkpoints, and a timer",
+          "points": 1800
         },
         {
           "name": "Simulator",
           "difficulty": "SENIOR",
-          "time": "5 weeks",
+          "time": "phase D",
           "description": "A simulator with progression, boosters, and data persistence",
-          "points": 4200,
+          "points": 3200,
           "videoTitle": "SIMULATOR - GAMEPLAY"
+        },
+        {
+          "name": "Tycoon → Showcase",
+          "difficulty": "SENIOR",
+          "time": "phases D–E",
+          "description": "Economy with upgrades, Tools/GUI, and a published final game",
+          "points": 4500
         }
       ]
     },
     "features": {
       "title": "COURSE BENEFITS",
       "items": [
-        { "title": "Certificate", "desc": "Official skills verification" },
-        { "title": "Community", "desc": "Like-minded peers and events" },
-        { "title": "Hands-on practice", "desc": "Real mechanics and scripts" },
-        { "title": "Portfolio", "desc": "Projects you can be proud of" }
+        { "title": "Small groups", "desc": "Up to 5 students or 1:1 — more attention for everyone" },
+        { "title": "Quiz every lesson", "desc": "10 questions, 70% pass — knowledge sticks right away" },
+        { "title": "Artifact every class", "desc": "Not just theory: something real in the place after each lesson" },
+        { "title": "Game portfolio", "desc": "Obby, simulator, Tycoon, and a published finale" }
       ]
     },
     "sections": {
-      "videoDescription": "🎮 Live effects, scripts, and gameplay"
+      "videoDescription": "Live effects, scripts, and gameplay"
     },
     "cta": {
       "startCourse": "START COURSE",

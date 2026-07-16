@@ -95,10 +95,11 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
 
   const lessonCredits = Number(paymentStats?.lessonCredits ?? user?.studentProfile?.lessonCredits ?? 0)
   const hasPendingReceiptReview = Boolean(paymentStats?.hasPendingReceiptReview)
+  // Як у CRM: should_request_payment = борг > 0 і немає pending-квитанції.
   const showPaymentReminder =
-    schedule.length > 0 &&
-    lessonCredits < 1 &&
-    !hasPendingReceiptReview
+    paymentStats?.shouldRequestPayment != null
+      ? Boolean(paymentStats.shouldRequestPayment)
+      : schedule.length > 0 && lessonCredits < 1 && !hasPendingReceiptReview
 
   const scrollToPayment = () => {
     setPayPanelOpen(true)
@@ -272,17 +273,23 @@ export default function DashboardPage() {
       router.push('/login')
       return
     }
+    if (user.role === 'teacher') {
+      router.replace('/teacher')
+      return
+    }
     loadData()
   }, [sessionLoading, user, router, loadData])
 
   const loading = sessionLoading || progressLoading
-  const roleLabel = useMemo(
-    () => (user?.role === 'admin' ? t('roles.admin') : t('roles.student')),
-    [user?.role, t]
-  )
+  const roleLabel = useMemo(() => {
+    if (user?.role === 'admin') return t('roles.admin')
+    if (user?.role === 'teacher') return t('roles.teacher')
+    return t('roles.student')
+  }, [user?.role, t])
   const accountPendingSetup =
     locale === 'uk' &&
     user?.role !== 'admin' &&
+    user?.role !== 'teacher' &&
     !isStudentDashboardReady(user?.studentProfile)
 
   const refreshData = async () => {
@@ -299,7 +306,7 @@ export default function DashboardPage() {
     } catch {}
   }
 
-  if (loading) {
+  if (loading || user?.role === 'teacher') {
     return (
       <div className={locale === 'en' ? '' : styles.container}>
         <div className={locale === 'en' ? '' : styles.loading} style={locale === 'en' ? { minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b' } : undefined}>
@@ -310,7 +317,7 @@ export default function DashboardPage() {
   }
   if (!user) return null
 
-  if (locale === 'en' && user.role !== 'admin') {
+  if (locale === 'en' && user.role !== 'admin' && user.role !== 'teacher') {
     return (
       <EnStudentDashboard
         user={user}

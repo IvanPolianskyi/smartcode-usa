@@ -3,7 +3,9 @@
 .container {
     min-height: 100vh;
     min-height: 100svh;
-    background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #e0e7ff 100%);
+    background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(161, 0, 255, 0.22), transparent 55%),
+    var(--bg-primary);
     padding: 2rem 0;
     contain: layout style paint;
     transform: translateZ(0);
@@ -27,7 +29,7 @@
 }
 
 .gradientText {
-    background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+    background: linear-gradient(135deg, var(--brand-accent-deep), var(--brand-accent), var(--brand-accent-hot));
     background-size: 200% 200%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -58,13 +60,13 @@
 
 /* --- КАРТКА ПРОЄКТУ --- */
 .projectCard {
-    background: white;
+    background: var(--bg-elevated);
     border-radius: 1rem;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
     transition: all 0.3s ease;
     cursor: pointer;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-subtle);
 }
 
 .projectCard:hover {
@@ -75,7 +77,7 @@
 .projectImageContainer {
     position: relative;
     height: 350px;
-    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-elevated));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -116,7 +118,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: var(--primary-blue);
+    background: var(--brand-accent);
     color: white;
     padding: 0.75rem 1.5rem;
     border-radius: 2rem;
@@ -148,7 +150,7 @@
     justify-content: space-between;
     margin-bottom: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .authorInfo,
@@ -176,8 +178,8 @@
 }
 
 .categoryBadge {
-    background: rgba(59, 130, 246, 0.1);
-    color: var(--primary-blue);
+    background: rgba(161, 0, 255, 0.1);
+    color: var(--brand-accent);
     padding: 0.25rem 0.75rem;
     border-radius: 1rem;
     font-size: 0.75rem;
@@ -197,7 +199,7 @@
 }
 
 .modalContent {
-    background: white;
+    background: var(--bg-elevated);
     border-radius: 1rem;
     width: 100%;
     max-width: 800px;
@@ -213,7 +215,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--border-subtle);
     background: var(--bg-secondary);
 }
 
@@ -241,7 +243,7 @@
 }
 
 .closeButton:hover {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .modalBody {
@@ -262,7 +264,7 @@
     aspect-ratio: 16/9;
     border-radius: 0.75rem;
     overflow: hidden;
-    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-elevated));
 }
 
 .modalImage {
@@ -279,7 +281,7 @@
     max-height: 250px;
     height: auto;
     aspect-ratio: 16/9;
-    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-elevated));
     border-radius: 0.75rem;
     color: var(--text-secondary);
     font-weight: 600;
@@ -304,7 +306,8 @@
 
 /* --- КОД --- */
 .codeContainer {
-    background: #1e293b;
+    background: #0a0a0f;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 0.75rem;
     overflow: hidden;
 }
@@ -314,18 +317,18 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 1.5rem;
-    background: #334155;
-    border-bottom: 1px solid #475569;
+    background: var(--bg-elevated);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .codeHeader span {
-    color: #e2e8f0;
+    color: #c4c4d4;
     font-weight: 600;
     font-size: 0.9rem;
 }
 
 .copyButton {
-    background: var(--primary-blue);
+    background: var(--brand-accent);
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -337,12 +340,12 @@
 }
 
 .copyButton:hover {
-    background: #2563eb;
+    background: var(--brand-accent-hot);
 }
 
 .codeBlock {
-    background: #1e293b;
-    color: #e2e8f0;
+    background: #000000;
+    color: #c4c4d4;
     font-family: 'Monaco', 'Consolas', monospace;
     font-size: 0.9rem;
     line-height: 1.6;
@@ -369,7 +372,7 @@
 
 .loader {
     animation: spin 1s linear infinite;
-    color: var(--primary-blue);
+    color: var(--brand-accent);
 }
 
 @keyframes spin {
@@ -393,7 +396,7 @@
 }
 
 .retryButton {
-    background: var(--primary-blue);
+    background: var(--brand-accent);
     color: white;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -404,7 +407,7 @@
 }
 
 .retryButton:hover {
-    background: #2563eb;
+    background: var(--brand-accent-hot);
 }
 
 .emptyState {

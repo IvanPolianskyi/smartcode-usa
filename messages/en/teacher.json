@@ -1,0 +1,45 @@
+{
+  "title": "Teacher desk",
+  "subtitle": "Full course access. Students are shown by CRM code only — no names or contacts.",
+  "loading": "Loading...",
+  "logout": "Log out",
+  "tabs": {
+    "courses": "Courses",
+    "students": "Students",
+    "materials": "Materials"
+  },
+  "courses": {
+    "title": "Programs",
+    "open": "Open course",
+    "python": "Python",
+    "roblox": "Roblox Studio",
+    "web": "Web development",
+    "fullAccess": "All lessons unlocked"
+  },
+  "students": {
+    "title": "My students",
+    "empty": "No CRM-coded students linked to your staff id.",
+    "code": "Code",
+    "courses": "Courses",
+    "progress": "Progress",
+    "actions": "Actions",
+    "viewProgress": "Details",
+    "unlockLesson": "Unlock lesson",
+    "resetLesson": "Reset lesson",
+    "resetCourse": "Reset course",
+    "selectCourse": "Course",
+    "lessonId": "Lesson ID (e.g. lesson-roblox-1-2)",
+    "apply": "Apply",
+    "close": "Close",
+    "privacyNote": "Names, emails and phones are hidden. Use student codes only.",
+    "notLinked": "Account is not linked to CRM staff. Ask an admin.",
+    "error": "Failed to load",
+    "saved": "Saved"
+  },
+  "materials": {
+    "title": "Teacher materials",
+    "empty": "No materials yet.",
+    "guides": "Guides",
+    "starter": "Starter Place"
+  }
+}

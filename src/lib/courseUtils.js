@@ -4,6 +4,7 @@
  */
 
 import { getCollection } from './mongodb'
+import { ROBLOX_CURRICULUM_REVISION } from './robloxProgressMigrate'
 
 /**
  * Додає курс до enrolledCourses користувача (якщо ще не додано)
@@ -46,7 +47,10 @@ export async function createProgressEntry(userIdObj, courseId, { enroll = true }
     currentModule: 0,
     currentLesson: 0,
     overallProgress: 0,
-    certificates: []
+    certificates: [],
+    ...(courseId === 'roblox-studio'
+      ? { robloxCurriculumRevision: ROBLOX_CURRICULUM_REVISION }
+      : {}),
   }
   
   await progressCollection.insertOne(progress)

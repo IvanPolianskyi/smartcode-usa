@@ -2,9 +2,11 @@
   min-height: calc(100vh - 50px);
   min-height: calc(100svh - 50px);
   padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: none;
+  width: 100%;
+  margin: 0;
   background: #f9fafb;
+  color: #111827;
   contain: layout style paint;
   transform: translateZ(0);
   will-change: scroll-position;

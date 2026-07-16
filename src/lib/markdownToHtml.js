@@ -72,7 +72,11 @@ export function markdownToHtml(text) {
     if (codeContent) {
       codeBlocks.push({
         placeholder,
-        html: `<pre class="code-block"><code class="language-${language}">${escapeHtml(codeContent)}</code></pre>`,
+        html:
+          `<div class="md-code-wrap">` +
+          `<button type="button" class="md-code-copy" data-copy-code aria-label="Copy code">Copy</button>` +
+          `<pre class="code-block"><code class="language-${language}">${escapeHtml(codeContent)}</code></pre>` +
+          `</div>`,
       })
       codeBlockIndex++
       return placeholder

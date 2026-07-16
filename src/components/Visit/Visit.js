@@ -1,19 +1,10 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import {
-	Users,
-	User,
-	Monitor,
-	Code,
-	Play,
-	Award,
-	BookOpen,
-	Trophy,
-} from 'lucide-react'
+import Image from 'next/image'
+import { Star } from 'lucide-react'
 import styles from './Visit.module.css'
-import { Link } from '@/i18n/navigation'
-import { useTranslations, useLocale } from 'next-intl'
+import { useLocale } from 'next-intl'
 import HeroTrialForm from './HeroTrialForm'
 import HeroEnCta from './HeroEnCta'
 
@@ -24,8 +15,26 @@ const EnhancedCourseCards = dynamic(() => import('./EnhancedCourseCards'), {
 const Visit = () => {
 	const locale = useLocale()
 	const isEn = locale === 'en'
-	const t = useTranslations('home')
 	const [shouldRenderCards, setShouldRenderCards] = useState(false)
+
+	// Стабільна висота hero на телефоні (Instagram / iOS toolbar) — дублює layout.js
+	useEffect(() => {
+		const setAppHeight = () => {
+			const h = window.visualViewport?.height ?? window.innerHeight
+			document.documentElement.style.setProperty('--app-height', `${h}px`)
+		}
+		setAppHeight()
+		window.addEventListener('resize', setAppHeight, { passive: true })
+		window.addEventListener('orientationchange', setAppHeight, { passive: true })
+		window.visualViewport?.addEventListener('resize', setAppHeight, {
+			passive: true,
+		})
+		return () => {
+			window.removeEventListener('resize', setAppHeight)
+			window.removeEventListener('orientationchange', setAppHeight)
+			window.visualViewport?.removeEventListener('resize', setAppHeight)
+		}
+	}, [])
 
 	useEffect(() => {
 		let idleId = null
@@ -58,204 +67,88 @@ const Visit = () => {
 		}
 	}, [])
 
-	const handleTrialCtaClick = e => {
-		e.preventDefault()
-		window.dispatchEvent(new Event('openContactModal'))
-	}
-
-	const heroFeatures = (
-		<div className={styles.heroFeatures}>
-			<div className={styles.feature}>
-				<div className={styles.featureIcon}>
-					<Users className={styles.icon} />
-				</div>
-				<span>{t('features.age')}</span>
-			</div>
-			<div className={styles.feature}>
-				<div className={styles.featureIcon}>
-					<Monitor className={styles.icon} />
-				</div>
-				<span>{t('features.online')}</span>
-			</div>
-			<div className={styles.feature}>
-				<div className={styles.featureIcon}>
-					<Award className={styles.icon} />
-				</div>
-				<span>{t('features.certificate')}</span>
-			</div>
-		</div>
-	)
-
-	const allStats = [
-		{
-			key: 'students',
-			number: t('stats.students.number'),
-			label: t('stats.students.label'),
-			icon: <Users />,
-		},
-		{
-			key: 'liveLessons',
-			number: t('stats.liveLessons.number'),
-			label: t('stats.liveLessons.label'),
-			icon: <Code />,
-		},
-		{
-			key: 'courses',
-			number: t('stats.courses.number'),
-			label: t('stats.courses.label'),
-			icon: <BookOpen />,
-		},
-		{
-			key: 'trial',
-			number: t('stats.trial.number'),
-			label: t('stats.trial.label'),
-			icon: <Trophy />,
-		},
-	]
-
-	const stats = isEn
-		? []
-		: allStats
-
 	return (
 		<div className={styles.container}>
-			<div className={styles.backgroundElements} aria-hidden>
-				<div className={styles.dotGrid} />
-				<div className={`${styles.floatingElement} ${styles.element1}`} />
-				<div className={`${styles.floatingElement} ${styles.element2}`} />
-				<div className={styles.orbitDecor}>
-					<span className={styles.orbitRing} />
-					<span className={`${styles.orbitRing} ${styles.orbitRing2}`} />
-					<span className={`${styles.orbitRing} ${styles.orbitRing3}`} />
-					<span className={styles.orbitCore} />
-				</div>
+			{/* Background — exact match to black + purple glow + right neon arcs */}
+			<div className={styles.bgStack} aria-hidden='true'>
+				<div className={styles.bgGlowTopLeft} />
+				<div className={styles.bgGlowRight} />
+				<div className={styles.bgGlowBottomRight} />
+				<div className={styles.bgArcs} />
 			</div>
 
 			<div className={styles.mainContainer}>
-				{/* Hero Header */}
+				{/* Hero Header — двоколонковий лейаут */}
 				<div className={styles.hero}>
-					<div className={styles.heroContent}>
-						<div className={styles.heroIntro}>
-							<h1 className={`${styles.title} ${styles.titleCritical}`}>
-								<span className={styles.titleMain}>SmartCode</span>
-								<span className={styles.titleAccent}>Academy</span>
-							</h1>
+					{/* Ліва колонка — текст */}
+					<div className={styles.heroLeft}>
+						{/* Підзаголовок школи */}
+						{!isEn && (
+							<p className={styles.schoolLabel}>
+								Онлайн школа програмування для дітей 7–17 років
+							</p>
+						)}
 
-							{!isEn && (
-								<p className={styles.subtitle}>
-									{t.rich('subtitleRich', {
-										accent: (chunks) => (
-											<span className={styles.subtitleAccent}>{chunks}</span>
-										),
-									})}
-								</p>
-							)}
-							{!isEn && (
-								<div className={styles.lessonTypesWrap}>
-									<div className={styles.lessonTypes}>
-										<span className={styles.lessonTypeBadge}>
-											<span className={styles.lessonTypeIcon} aria-hidden>
-												<Users size={18} />
-											</span>
-											{t('lessonTypes.group')}
-										</span>
-										<span className={styles.lessonTypeBadge}>
-											<span className={styles.lessonTypeIcon} aria-hidden>
-												<User size={18} />
-											</span>
-											{t('lessonTypes.individual')}
-										</span>
-									</div>
-									<div
-										className={`${styles.lessonTypes} ${styles.lessonTypesSecondRow}`}
-									>
-										<span className={styles.lessonTypeBadge}>
-											<span className={styles.lessonTypeIcon} aria-hidden>
-												<Trophy size={18} />
-											</span>
-											{t('lessonTypes.students')}
-										</span>
-										<span className={styles.lessonTypeBadge}>
-											<span className={styles.lessonTypeIcon} aria-hidden>
-												<Monitor size={18} />
-											</span>
-											{t('lessonTypes.platform')}
-										</span>
-									</div>
+						{/* Головний оффер */}
+						<h1 className={styles.title}>
+							<span className={styles.titleMain}>З хобі -</span>
+							<span className={styles.titleAccent}> у професію майбутнього</span>
+						</h1>
+
+						{/* Під-оффер */}
+						{!isEn && (
+							<p className={styles.subtitle}>
+								Перетворіть інтерес вашої дитини до ігор - на навичку, яка відкриє двері в IT вже сьогодні
+							</p>
+						)}
+
+						{/* Соціальний доказ */}
+						{!isEn && (
+							<div className={styles.socialProof}>
+								<div className={styles.starsRow}>
+									{[1,2,3,4,5].map(i => (
+										<Star key={i} size={16} className={styles.starIcon} />
+									))}
+									<span className={styles.ratingText}>4.9</span>
+									<span className={styles.ratingDivider}>·</span>
+									<span className={styles.socialProofText}>700+ студентів</span>
+									<span className={styles.ratingDivider}>·</span>
+									<span className={styles.socialProofText}>5 років</span>
 								</div>
-							)}
-						</div>
+							</div>
+						)}
 
-						<div
-							className={`${styles.ctaDesktop} ${isEn ? styles.ctaDesktopEn : ''}`}
-						>
-							{isEn ? (
-								<HeroEnCta />
-							) : (
-								<>
-									{heroFeatures}
-									<div className={styles.ctaButtons}>
-										<Link
-											href='/#Contactform'
-											className={styles.primaryButton}
-											onClick={handleTrialCtaClick}
-											scroll={false}
-										>
-											<span className={styles.primaryButtonIcon} aria-hidden>
-												<Play size={18} />
-											</span>
-											<span className={styles.primaryButtonText}>
-												{t('cta.signUpTrial')}
-											</span>
-										</Link>
-									</div>
-								</>
-							)}
-						</div>
-
-						<div className={styles.ctaMobile}>
+						{/* CTA: форма ім'я + телефон (десктоп і мобільний) */}
+						<div className={styles.heroCta}>
 							<div className={styles.ctaButtons}>
 								{isEn ? <HeroEnCta /> : <HeroTrialForm />}
 							</div>
 						</div>
 					</div>
 
-					{/* Statistics */}
-					{stats.length > 0 && (
-						<div className={styles.statsContainer}>
-							{stats.map((stat, index) => (
-								<div key={index} className={styles.statCard}>
-									<div
-										className={styles.statIcon}
-										style={{
-											color: 'var(--brand-accent)',
-										}}
-									>
-										{stat.icon}
-									</div>
-									<div className={styles.statContent}>
-										<div className={styles.statNumber}>{stat.number}</div>
-										<div className={styles.statLabel}>{stat.label}</div>
-									</div>
-								</div>
-							))}
-						</div>
-					)}
-
+					{/* Права колонка — зображення */}
 					{!isEn && (
-						<div className={styles.pricesCtaSection}>
-							<Link href='/tariff' className={styles.secondaryButton}>
-								{t('cta.viewPrices')}
-							</Link>
+						<div className={styles.heroRight}>
+							<div className={styles.heroImageWrap}>
+								<Image
+									src='/hero-teachers-v2.jpg'
+									alt='Викладачі SmartCode Academy'
+									fill
+									className={styles.heroImage}
+									priority
+									sizes='(max-width: 1024px) 100vw, 50vw'
+								/>
+							</div>
 						</div>
 					)}
 				</div>
 
+				{/* Course Cards */}
 				{shouldRenderCards ? (
 					<EnhancedCourseCards />
 				) : (
 					<div
-						style={{ minHeight: '980px', width: '100%' }}
+						style={{ minHeight: '980px', marginTop: 240, width: '100%' }}
 						aria-hidden='true'
 					/>
 				)}

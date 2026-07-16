@@ -20,23 +20,12 @@ export async function fulfillCompletedPayment(payment, { amountFromProvider } = 
       })
     }
   } else if (
-    (payment.paymentType === 'lesson_topup' ||
-      payment.paymentType === 'lesson_topup_en') &&
-    payment.userId
+    payment.paymentType === 'lesson_topup' ||
+    payment.paymentType === 'lesson_topup_en'
   ) {
-    const usersCollection = await getCollection('users')
-    const paidAmount = amountFromProvider || Number(payment.amount) || 0
-    const creditedLessons = Math.max(1, Math.floor(Number(payment.creditedLessons || 0)))
-    await usersCollection.updateOne(
-      { _id: new ObjectId(payment.userId) },
-      {
-        $inc: {
-          'studentProfile.lessonCredits': creditedLessons,
-          'studentProfile.accountBalance': paidAmount,
-        },
-        $set: { updatedAt: new Date() },
-      }
-    )
+    // Monobank lesson_topup вимкнено. Щоб не створювати розсинхрон у календарі,
+    // нічого не кредитуємо ні в LMS, ні в CRM.
+    return { skipped: true, reason: 'topup_disabled' }
   }
 }
 

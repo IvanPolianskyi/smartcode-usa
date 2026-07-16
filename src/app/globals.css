@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  /* Brand — SmartCode Academy dark purple */
+  /* Brand - SmartCode Academy dark purple */
   --brand-accent: #a100ff;
   --brand-accent-hot: #c44bff;
   --brand-accent-deep: #7a00c8;
@@ -151,9 +151,16 @@ html {
   scroll-behavior: smooth;
   scrollbar-width: none;
   --app-height: 100vh;
-  --visit-header-offset: 70px;
+  /* Висота фіксованого хедера — для центрування hero у першому екрані */
+  --visit-header-offset: 80px;
   overflow-anchor: auto;
   background: #000;
+}
+
+@media (max-width: 700px) {
+  html {
+    --visit-header-offset: 70px;
+  }
 }
 
 html::-webkit-scrollbar {
@@ -255,7 +262,7 @@ main.main-content {
   }
 }
 
-/* Markdown code blocks — copy affordance (LMS lessons) */
+/* Markdown code blocks ? copy affordance (LMS lessons) */
 .md-code-wrap {
   position: relative;
   margin: 0.75rem 0;

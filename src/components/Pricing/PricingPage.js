@@ -341,7 +341,7 @@ const PricingPage = () => {
 						<h2 className={styles.finalCtaTitle}>{finalTitle}</h2>
 						<p className={styles.finalCtaText}>{finalText}</p>
 						{isEn ? (
-							<Link href="/register" className={styles.finalCtaButton}>
+							<Link href="/login" className={styles.finalCtaButton}>
 								<span>{finalCtaLabel}</span>
 								<ArrowRight size={18} />
 							</Link>

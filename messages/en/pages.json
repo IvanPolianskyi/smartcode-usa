@@ -269,14 +269,14 @@
       "roblox": {
         "title": "Roblox Studio",
         "shortDescription": "Game creation in Roblox Studio",
-        "description": "Learn to create your own games in Roblox Studio and publish them for millions of players.",
-        "age": "Ages 8-16",
+        "description": "92 lessons: modeling → Lua → Obby/simulator/Tycoon → Showcase publish. Groups of up to 5 or 1:1.",
+        "age": "Ages 9-13",
         "skills": {
-          "0": "Lua programming",
-          "1": "Roblox Studio",
-          "2": "3D modeling",
-          "3": "Game design",
-          "4": "Monetization",
+          "0": "Roblox Studio",
+          "1": "Models & Terrain",
+          "2": "Lua programming",
+          "3": "Obby / Tycoon / Sim",
+          "4": "Tools & GUI",
           "5": "Publishing games"
         }
       },

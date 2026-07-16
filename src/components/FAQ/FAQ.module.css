@@ -2,7 +2,7 @@
 
 /* --- ОСНОВНА СЕКЦІЯ --- */
 .faqSection {
-    background: #f8fafc;
+    background: var(--bg-secondary);
     padding: 6rem 0;
     position: relative;
     overflow: hidden;
@@ -25,8 +25,8 @@
     opacity: 0.5;
     filter: blur(120px);
 }
-.element1 { top: 10%; left: 5%; width: 300px; height: 300px; background: var(--primary-blue); animation: float 12s ease-in-out infinite; }
-.element2 { bottom: 10%; right: 5%; width: 350px; height: 350px; background: var(--primary-purple); animation: float 14s ease-in-out infinite reverse; }
+.element1 { top: 10%; left: 5%; width: 300px; height: 300px; background: var(--brand-accent); animation: float 12s ease-in-out infinite; }
+.element2 { bottom: 10%; right: 5%; width: 350px; height: 350px; background: var(--brand-accent-hot); animation: float 14s ease-in-out infinite reverse; }
 
 .container {
     max-width: 1400px;
@@ -42,13 +42,13 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: #eef2ff;
-    color: var(--primary-blue);
+    background: rgba(161, 0, 255, 0.12);
+    color: var(--brand-accent-hot);
     padding: 0.5rem 1rem;
     border-radius: var(--radius-full);
     font-weight: 600;
     margin-bottom: 1.5rem;
-    border: 1px solid #e0e7ff;
+    border: 1px solid rgba(161, 0, 255, 0.3);
 }
 .title {
     font-size: clamp(2.5rem, 4vw, 3.5rem);
@@ -59,7 +59,7 @@
 }
 .titleAccent {
     display: block;
-    background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+    background: linear-gradient(135deg, var(--brand-accent), var(--brand-accent-hot));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -84,10 +84,10 @@
 .sidebar {
     position: sticky;
     top: 8rem;
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--bg-glass);
     backdrop-filter: blur(15px);
     border-radius: var(--radius-xl);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-subtle);
     padding: 1.5rem;
 }
 .sidebarTitle {
@@ -98,7 +98,7 @@
     letter-spacing: 1px;
     margin: 0 0 1rem 0;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--border-subtle);
 }
 .categoryButton {
     width: 100%;
@@ -117,16 +117,16 @@
     transition: all var(--transition-base);
 }
 .categoryButton:hover {
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(161, 0, 255, 0.08);
     color: var(--text-primary);
 }
 .categoryButtonActive {
-    background: var(--primary-blue);
+    background: var(--brand-accent);
     color: white;
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+    box-shadow: 0 8px 20px rgba(161, 0, 255, 0.3);
 }
 .categoryButtonActive:hover {
-    background: var(--primary-blue);
+    background: var(--brand-accent-hot);
     color: white;
 }
 
@@ -137,20 +137,20 @@
     gap: 1rem;
 }
 .questionItem {
-    background: white;
+    background: var(--bg-elevated);
     border-radius: var(--radius-xl);
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     transition: all var(--transition-base);
 }
 .questionItem:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
-    border-color: #d1d5db;
+    box-shadow: 0 10px 25px rgba(161, 0, 255, 0.15);
+    border-color: rgba(161, 0, 255, 0.3);
 }
 .questionItemOpen {
-    border-color: var(--primary-blue);
-    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1);
+    border-color: var(--brand-accent);
+    box-shadow: 0 10px 25px rgba(161, 0, 255, 0.2);
 }
 .questionButton {
     width: 100%;
@@ -173,7 +173,7 @@
 .questionIcon {
     width: 2.25rem;
     height: 2.25rem;
-    background: #f1f5f9;
+    background: rgba(255, 255, 255, 0.06);
     border-radius: 50%;
     display: grid;
     place-items: center;
@@ -181,7 +181,7 @@
     flex-shrink: 0;
 }
 .questionItemOpen .questionIcon {
-    background: var(--primary-blue);
+    background: var(--brand-accent);
     transform: rotate(180deg);
 }
 .chevron {
@@ -205,24 +205,24 @@
     line-height: 1.7;
     margin: 0;
     padding-top: 1rem;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--border-subtle);
 }
 
 /* --- CTA СЕКЦІЯ --- */
 .ctaSection {
-    background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+    background: linear-gradient(135deg, var(--brand-accent-deep), var(--brand-accent));
     border-radius: var(--radius-2xl);
     padding: 3rem;
     text-align: center;
     color: white;
     margin-top: 4rem;
-    box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 25px 50px -12px rgba(161, 0, 255, 0.35);
 }
 .ctaTitle { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
 .ctaText { font-size: 1.125rem; line-height: 1.6; margin: 0 auto 2rem; opacity: 0.9; max-width: 50ch; }
 .primaryCtaBtn {
     background: white;
-    color: var(--primary-blue);
+    color: var(--brand-accent);
     border: none;
     padding: 1rem 2rem;
     border-radius: var(--radius-full);

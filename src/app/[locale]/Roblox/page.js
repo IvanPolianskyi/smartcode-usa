@@ -13,9 +13,7 @@ import {
   Users,
   Clock,
   Wrench,
-  Puzzle,
   Hammer,
-  Cpu,
   Play,
   ChevronRight,
 } from 'lucide-react'
@@ -23,21 +21,21 @@ import { trackCourseLanding } from '@/lib/metaPixel'
 import styles from './RobloxCoursePage.module.css'
 
 const MODULE_META = [
-  { id: 1, icon: <Code className='w-6 h-6' />, powerUp: '🧩' },
-  { id: 2, icon: <Monitor className='w-6 h-6' />, powerUp: '🧰' },
-  { id: 3, icon: <Layers className='w-6 h-6' />, powerUp: '🧱' },
-  { id: 4, icon: <Zap className='w-6 h-6' />, powerUp: '⚙️' },
-  { id: 5, icon: <Cpu className='w-6 h-6' />, powerUp: '✨' },
-  { id: 6, icon: <Rocket className='w-6 h-6' />, powerUp: '🚀' },
+  { id: 'A', icon: <Monitor className='w-6 h-6' />, powerUp: '🧱' },
+  { id: 'B', icon: <Zap className='w-6 h-6' />, powerUp: '✨' },
+  { id: 'C', icon: <Code className='w-6 h-6' />, powerUp: '🧩' },
+  { id: 'D', icon: <Layers className='w-6 h-6' />, powerUp: '⚙️' },
+  { id: 'E', icon: <Rocket className='w-6 h-6' />, powerUp: '🚀' },
 ]
 const PROJECT_META = [
   { icon: '🟥' },
-  { icon: '🏦' },
+  { icon: '🏃' },
   { icon: '⚙️', video: { src: '/videos/roblox_simulator.mp4' } },
+  { icon: '🏦' },
 ]
 const FEATURE_META = [
-  { icon: <GraduationCap className='w-8 h-8' />, powerUp: '📜' },
   { icon: <Users className='w-8 h-8' />, powerUp: '👥' },
+  { icon: <GraduationCap className='w-8 h-8' />, powerUp: '📋' },
   { icon: <Wrench className='w-8 h-8' />, powerUp: '🛠️' },
   { icon: <Hammer className='w-8 h-8' />, powerUp: '🏆' },
 ]
@@ -61,10 +59,12 @@ const RobloxCoursePage = () => {
     return items.map((m, index) => ({ ...m, ...MODULE_META[index] }))
   }, [t])
 
+  const stats = useMemo(() => getRawArray('stats.items'), [t])
+
   const projects = useMemo(() => {
     const items = getRawArray('projects.items')
     return items.map((p, index) => {
-      const meta = PROJECT_META[index]
+      const meta = PROJECT_META[index] || { icon: '🎮' }
       return {
         ...p,
         ...meta,
@@ -256,6 +256,17 @@ const RobloxCoursePage = () => {
 
             <p className={styles.description}>{t('hero.description')}</p>
 
+            {stats.length > 0 && (
+              <div className={`${styles.statsRow} ${isLoaded ? styles.visible : ''}`}>
+                {stats.map((stat, index) => (
+                  <div key={index} className={styles.statChip}>
+                    <span className={styles.statNumber}>{stat.number}</span>
+                    <span className={styles.statLabel}>{stat.label}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
             <div className={styles.ctaButtons}>
               <Link href='/courses/roblox-studio' className={styles.startButton}>
                 <span className={styles.buttonPixel}>
@@ -278,7 +289,7 @@ const RobloxCoursePage = () => {
           </div>
         </section>
 
-        {/* Modules */}
+        {/* Phases */}
         <section className={styles.modulesSection} id='modules' data-scroll-section>
           <div className={styles.sectionContainer}>
             <h2 className={`${styles.sectionTitle} ${visibleSections.includes('modules') ? styles.visible : ''}`}>
@@ -292,9 +303,14 @@ const RobloxCoursePage = () => {
                   className={`${styles.moduleCard} ${visibleSections.includes('modules') ? styles.visible : ''}`}
                   style={{ animationDelay: `${index * 120}ms` }}
                 >
-                  <div className={styles.levelBadge}>{tc('moduleBadge', { number: index + 1 })}</div>
+                  <div className={styles.levelBadge}>
+                    {tc('phaseBadge', { phase: module.phase || module.id })}
+                  </div>
                   <div className={styles.moduleIcon}>{module.icon}</div>
                   <h3 className={styles.moduleTitle}>{module.title}</h3>
+                  {module.lessons && (
+                    <div className={styles.moduleLessons}>{module.lessons}</div>
+                  )}
                   <div className={styles.moduleTopics}>
                     {module.topics.map((topic, i) => (
                       <div key={i} className={styles.topicItem}>
@@ -333,7 +349,7 @@ const RobloxCoursePage = () => {
                   <div className={styles.difficultyBar}>
                     <span className={styles.difficultyLabel}>{project.difficulty}</span>
                     <div className={styles.difficultyProgress}>
-                      <div className={styles.difficultyFill} style={{ width: `${(index + 1) * 25}%` }} />
+                      <div className={styles.difficultyFill} style={{ width: `${((index + 1) / projects.length) * 100}%` }} />
                     </div>
                   </div>
                   <p className={styles.projectDescription}>{project.description}</p>

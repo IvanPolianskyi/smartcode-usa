@@ -27,15 +27,17 @@ export async function GET() {
         { status: 404 }
       )
     }
-    try {
-      user = await maybePullCrmScheduleForStudent(user, usersCollection)
-    } catch (crmErr) {
-      console.error('CRM schedule auto-pull failed:', crmErr)
-    }
-    try {
-      user = await syncStudentScheduleAccess(user, usersCollection)
-    } catch (syncErr) {
-      console.error('syncStudentScheduleAccess failed:', syncErr)
+    if (user.role !== 'teacher' && user.role !== 'admin') {
+      try {
+        user = await maybePullCrmScheduleForStudent(user, usersCollection)
+      } catch (crmErr) {
+        console.error('CRM schedule auto-pull failed:', crmErr)
+      }
+      try {
+        user = await syncStudentScheduleAccess(user, usersCollection)
+      } catch (syncErr) {
+        console.error('syncStudentScheduleAccess failed:', syncErr)
+      }
     }
 
     const profileAfterSync = user.studentProfile || {}

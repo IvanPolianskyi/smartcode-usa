@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import Footer from '@/components/Footer/footer'
-import ContactFormLoader from '@/components/ContactForm/ContactFormLoader'
+import ContactForm from '@/components/ContactForm/ContactForm'
 import ScrollToTop from '@/components/ScrollToTop/ScrollToTop'
 import { Geist, Geist_Mono } from 'next/font/google'
 import Header from '@/components/Header/Header'
@@ -13,7 +13,6 @@ import MetaPixelRouteTracker from '@/components/MetaPixel/MetaPixelRouteTracker'
 import AuthSessionProvider from '@/components/AuthSessionProvider'
 import { META_PIXEL_ID } from '@/lib/metaPixel'
 import { routing } from '@/i18n/routing'
-import { getSearchIndexingMetadata, SITE_URL } from '@/lib/i18nMetadata'
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -31,14 +30,6 @@ const geistMono = Geist_Mono({
 
 export function generateStaticParams() {
 	return routing.locales.map((locale) => ({ locale }))
-}
-
-export async function generateMetadata({ params }) {
-	const { locale } = await params
-	return {
-		metadataBase: SITE_URL,
-		...getSearchIndexingMetadata(locale),
-	}
 }
 
 export default async function LocaleLayout({ children, params }) {
@@ -80,7 +71,7 @@ export default async function LocaleLayout({ children, params }) {
 						<div className='min-h-screen flex flex-col'>
 							<main className='flex-1 relative main-content'>{children}</main>
 							<Footer />
-							<ContactFormLoader />
+							<ContactForm />
 						</div>
 					</AuthSessionProvider>
 				</NextIntlClientProvider>

@@ -5,13 +5,14 @@
 	margin: 0;
 	font-size: 0.8125rem;
 	line-height: 1.45;
-	color: inherit;
+	color: #c4c4d4;
 }
 
 .icon {
 	flex-shrink: 0;
 	margin-top: 0.15rem;
-	opacity: 0.85;
+	opacity: 0.9;
+	color: #c44bff;
 }
 
 .text {
@@ -19,12 +20,13 @@
 }
 
 .policyLink {
-	color: inherit;
+	color: #c44bff;
 	font-weight: 600;
 	text-decoration: underline;
 	text-underline-offset: 2px;
 }
 
 .policyLink:hover {
-	opacity: 0.9;
+	color: #a100ff;
+	opacity: 1;
 }

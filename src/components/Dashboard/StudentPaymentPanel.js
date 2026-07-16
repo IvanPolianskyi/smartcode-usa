@@ -24,14 +24,24 @@ export default function StudentPaymentPanel({
   const hasPendingReceiptReview = Boolean(paymentStats?.hasPendingReceiptReview)
   const hasRejectedReceipt = Boolean(paymentStats?.hasRejectedReceipt)
 
+  // CRM-linked: debt/balance з ledger (як у CRM). Без CRM — локальний fallback.
   const debtLessons = useMemo(() => {
+    if (paymentStats?.debtLessons != null) {
+      return Math.max(0, Number(paymentStats.debtLessons) || 0)
+    }
     if (scheduleCount > 0) {
       return Math.max(0, scheduleCount - lessonCredits)
     }
     return lessonCredits < 1 ? 1 : 0
-  }, [scheduleCount, lessonCredits])
+  }, [paymentStats?.debtLessons, scheduleCount, lessonCredits])
 
-  const hasDebt = debtLessons > 0 && !hasPendingReceiptReview
+  const hasDebt =
+    paymentStats?.hasDebt != null
+      ? Boolean(paymentStats.hasDebt) && !hasPendingReceiptReview
+      : debtLessons > 0 && !hasPendingReceiptReview
+
+  const balanceStrongClass =
+    lessonCredits < 0 ? styles.payStatNegative : undefined
 
   useEffect(() => {
     if (defaultOpen) {
@@ -131,7 +141,7 @@ export default function StudentPaymentPanel({
             <div className={styles.payStatItem}>
               <BookOpen size={16} />
               <span>{t('student.payments.lessonCredits')}</span>
-              <strong>{lessonCredits}</strong>
+              <strong className={balanceStrongClass}>{lessonCredits}</strong>
             </div>
           </div>
 

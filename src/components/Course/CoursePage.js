@@ -20,6 +20,7 @@ import {
 } from 'lucide-react'
 import { getCurriculum } from '@/lib/getCurriculum'
 import { getRobloxCurriculum } from '@/lib/robloxCurriculumLocale'
+import { ROBOX_PHASES } from '@/lib/robloxModuleMeta'
 import { getUserProgress, checkCoursePurchase } from '@/lib/authClient'
 import { getUnlockedLessonSet, hasStudentCourseAccess } from '@/lib/courseLessonAccess'
 import { useAuthSession } from '@/components/AuthSessionProvider'
@@ -39,6 +40,8 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   const { user: sessionUser, loading: sessionLoading } = useAuthSession()
   const [isLoaded, setIsLoaded] = useState(false)
   const [expandedModule, setExpandedModule] = useState(null)
+  const [hasAutoExpanded, setHasAutoExpanded] = useState(false)
+  const [lockedTip, setLockedTip] = useState('')
   const [userProgress, setUserProgress] = useState(initialProgress)
   const [user, setUser] = useState(null)
   const [isPurchased, setIsPurchased] = useState(false)
@@ -155,7 +158,8 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
         profile: user?.studentProfile,
         progress: userProgress,
         isAdmin: user?.role === 'admin',
-        isPurchased,
+        isTeacher: user?.role === 'teacher',
+        isPurchased: isPurchased || user?.role === 'teacher',
         isEnrolled,
       }),
     [courseId, user?.studentProfile, user?.role, userProgress, isPurchased, isEnrolled]
@@ -186,6 +190,21 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
     ? `/courses/${courseId}/lessons/${continueLesson.lessonId}`
     : `#module-${course.modules[0]?.moduleId ?? 'start'}`
 
+  useEffect(() => {
+    if (!isLoaded || hasAutoExpanded || !continueLesson) return
+    if (typeof window !== 'undefined' && window.location.hash?.startsWith('#module-')) {
+      setHasAutoExpanded(true)
+      return
+    }
+    const idx = course.modules.findIndex((mod) =>
+      (mod.lessons || []).some((l) => l.lessonId === continueLesson.lessonId)
+    )
+    if (idx >= 0) {
+      setExpandedModule(idx)
+      setHasAutoExpanded(true)
+    }
+  }, [isLoaded, hasAutoExpanded, continueLesson, course.modules])
+
   const getLevelBadge = (level) => {
     const levelKey = level === 'Intermediate' ? 'intermediate' : level === 'Advanced' ? 'advanced' : 'beginner'
     const colors = {
@@ -197,8 +216,46 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   }
 
   const courseLevel = courseId === "web-development" ? "Intermediate" : "Beginner"
-  const courseAge = courseId === "web-development" ? "12-18" : "13-17"
+  const courseAge =
+    courseId === 'web-development'
+      ? '12-18'
+      : courseId === 'roblox-studio'
+        ? '9-13'
+        : '13-17'
   const levelBadge = getLevelBadge(courseLevel)
+  const isRoblox = courseId === 'roblox-studio'
+
+  const moduleProgress = useMemo(() => {
+    return course.modules.map((mod) => {
+      const lessons = mod.lessons || []
+      const done = lessons.filter((l) => isLessonCompleted(l.lessonId)).length
+      return {
+        moduleId: mod.moduleId,
+        done,
+        total: lessons.length,
+        pct: lessons.length ? Math.round((done / lessons.length) * 100) : 0,
+        phase: mod.phase || null,
+        tagline: mod.tagline || '',
+      }
+    })
+  }, [course.modules, userProgress])
+
+  const phaseStats = useMemo(() => {
+    if (!isRoblox) return []
+    const map = new Map()
+    course.modules.forEach((mod, idx) => {
+      const phase = mod.phase || 'A'
+      if (!map.has(phase)) {
+        map.set(phase, { phase, done: 0, total: 0, moduleIndexes: [] })
+      }
+      const row = map.get(phase)
+      const mp = moduleProgress[idx]
+      row.done += mp.done
+      row.total += mp.total
+      row.moduleIndexes.push(idx)
+    })
+    return Array.from(map.values())
+  }, [isRoblox, course.modules, moduleProgress])
 
   const getQuizScore = (lessonId) => {
     const quizData = userProgress?.completedQuizzes?.[lessonId]
@@ -260,6 +317,11 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                   <Play className="w-6 h-6" fill="currentColor" aria-hidden />
                   {tCourse('continueLearning')}
                 </Link>
+                {continueLesson && (
+                  <p className={styles.continueHint}>
+                    {tCourse('continueHint', { title: continueLesson.title })}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -272,9 +334,14 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                 <div className={styles.progressBar}>
                   <div className={styles.progressFill} style={{ width: `${progress}%` }} />
                 </div>
-                {progress === 0 && (
-                  <p className={styles.progressHint}>{tCourse('progressStart')}</p>
-                )}
+                <p className={styles.progressHint}>
+                  {progress === 0
+                    ? tCourse('progressStart')
+                    : tCourse('progressLessons', {
+                        done: userProgress?.completedLessons?.length || 0,
+                        total: totalLessons,
+                      })}
+                </p>
               </div>
             </div>
           </div>
@@ -329,6 +396,59 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
           {tCourse('programDescription', { modules: course.modules.length, lessons: totalLessons })}
         </p>
 
+        {isRoblox && phaseStats.length > 0 && (
+          <div className={styles.phaseRoadmap} aria-label={tCourse('phaseRoadmapLabel')}>
+            {phaseStats.map((p) => {
+              const phaseInfo = ROBOX_PHASES.find((x) => x.id === p.phase)
+              const phaseTitle =
+                locale === 'en' ? phaseInfo?.titleEn : phaseInfo?.titleUk
+              return (
+                <button
+                  key={p.phase}
+                  type="button"
+                  className={styles.phaseChip}
+                  title={phaseTitle || p.phase}
+                  onClick={() => {
+                    const first = p.moduleIndexes[0]
+                    if (first != null) {
+                      setExpandedModule(first)
+                      const id = course.modules[first]?.moduleId
+                      if (id) {
+                        document.getElementById(`module-${id}`)?.scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'start',
+                        })
+                      }
+                    }
+                  }}
+                >
+                  <span className={styles.phaseLetter}>
+                    {p.phase}
+                    {phaseTitle ? (
+                      <span className={styles.phaseName}> · {phaseTitle}</span>
+                    ) : null}
+                  </span>
+                  <span className={styles.phaseMeta}>
+                    {p.done}/{p.total}
+                  </span>
+                  <span
+                    className={styles.phaseBar}
+                    style={{
+                      '--phase-pct': `${p.total ? Math.round((p.done / p.total) * 100) : 0}%`,
+                    }}
+                  />
+                </button>
+              )
+            })}
+          </div>
+        )}
+
+        {lockedTip && (
+          <p className={styles.lockedTip} role="status">
+            {lockedTip}
+          </p>
+        )}
+
         <div className={styles.modulesList}>
           {course.modules.map((module, moduleIndex) => (
             <div
@@ -355,10 +475,26 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                   </div>
                   <div>
                     <div className={styles.moduleNumber}>
-                      {tCourse('moduleLabel', { order: module.order })}
+                      {tCourse('moduleLabel', { order: moduleIndex + 1 })}
+                      {module.tagline ? (
+                        <span className={styles.moduleTagline}> · {module.tagline}</span>
+                      ) : null}
                     </div>
                     <h3 className={styles.moduleTitle}>{module.title}</h3>
                     <p className={styles.moduleDescription}>{module.description}</p>
+                    {moduleProgress[moduleIndex] && (
+                      <div className={styles.moduleProgressRow}>
+                        <div className={styles.moduleProgressTrack}>
+                          <div
+                            className={styles.moduleProgressFill}
+                            style={{ width: `${moduleProgress[moduleIndex].pct}%` }}
+                          />
+                        </div>
+                        <span className={styles.moduleProgressLabel}>
+                          {moduleProgress[moduleIndex].done}/{moduleProgress[moduleIndex].total}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className={styles.moduleHeaderRight}>
@@ -406,8 +542,13 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                               '#ef4444'
                             }`
                           } : {}}
+                          title={!unlocked ? tCourse('lockedLessonHint') : undefined}
                           onClick={(e) => {
-                            if (!unlocked) e.preventDefault()
+                            if (!unlocked) {
+                              e.preventDefault()
+                              setLockedTip(tCourse('lockedLessonHint'))
+                              window.setTimeout(() => setLockedTip(''), 4000)
+                            }
                           }}
                         >
                           <div className={styles.lessonItemLeft}>
@@ -423,6 +564,11 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                                 {tCourse('lessonLabel', { order: lesson.order })}
                               </div>
                               <div className={styles.lessonTitle}>{lesson.title}</div>
+                              {lesson.isCheckpoint && (
+                                <span className={styles.checkpointBadge}>
+                                  {tCourse('checkpointBadge')}
+                                </span>
+                              )}
                               {lesson.isProject && (
                                 <span className={styles.projectBadge}>{tCourse('projectBadge')}</span>
                               )}

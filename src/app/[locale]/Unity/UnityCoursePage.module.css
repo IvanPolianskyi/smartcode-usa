@@ -420,7 +420,7 @@
   box-shadow: 
     0 0 25px var(--neon-blue),
     inset 0 0 15px rgba(255, 255, 255, 0.15),
-    inset 0 0 30px rgba(0, 204, 255, 0.3);
+    inset 0 0 30px rgba(161, 0, 255, 0.3);
 }
 
 .ghost.clyde::before {
@@ -443,7 +443,7 @@
 .ghostEye {
   width: 12px;
   height: 15px;
-  background: white;
+  background: var(--bg-elevated);
   border-radius: 0; /* Square for pixelated look */
   position: relative;
   box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
@@ -538,14 +538,14 @@
 
 /* Scared ghost state with pixelated effect */
 .ghost.scared::before {
-  background: #4169e1 !important;
-  box-shadow: 0 0 25px #4169e1 !important;
+  background: var(--brand-accent-deep) !important;
+  box-shadow: 0 0 25px var(--brand-accent-deep) !important;
   animation: ghostScaredFlash 0.2s infinite;
 }
 
 .ghost.scared .ghostWave::before {
-  background: #4169e1 !important;
-  box-shadow: 0 0 15px #4169e1 !important;
+  background: var(--brand-accent-deep) !important;
+  box-shadow: 0 0 15px var(--brand-accent-deep) !important;
 }
 
 /* === PAC-MAN CURSOR === */
@@ -645,7 +645,7 @@
   position: relative;
   overflow: hidden;
   box-shadow: 
-    0 0 50px rgba(0, 204, 255, 0.5),
+    0 0 50px rgba(161, 0, 255, 0.5),
     inset 0 0 50px rgba(0, 0, 0, 0.8);
 }
 
@@ -653,7 +653,7 @@
   position: absolute;
   inset: -20px;
   background: radial-gradient(ellipse at center, 
-    rgba(0, 204, 255, 0.3) 0%, 
+    rgba(161, 0, 255, 0.3) 0%, 
     transparent 70%);
   animation: pulse 2s infinite;
 }
@@ -666,7 +666,7 @@
   align-items: center;
   justify-content: center;
   background: radial-gradient(ellipse at center, 
-    rgba(0, 204, 255, 0.05) 0%, 
+    rgba(161, 0, 255, 0.05) 0%, 
     transparent 70%);
 }
 

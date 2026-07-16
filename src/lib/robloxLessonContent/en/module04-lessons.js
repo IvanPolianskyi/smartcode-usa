@@ -1,1129 +1,2121 @@
-/** Rich EN content for Roblox Module 04 - lessons 4.1-4.6 */
+/** Roblox v2 Module 04 EN — AUTO gen-roblox-v2.mjs */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
+void MC
 
 export const enLesson41 = {
-  lessonId: 'lesson-roblox-4-1',
-  moduleId: 'module-04',
-  order: 1,
-  title: '4.1 - Tycoon Architecture',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Plan a tycoon plot with clear machine zones',
-    'Organize Workspace folders for plots and assets',
-    'Name objects for dropper, collector, and buy-button systems',
-    'Prepare architecture for multiplayer plots later',
+  "lessonId": "lesson-roblox-4-1",
+  "moduleId": "module-04",
+  "order": 1,
+  "title": "4.1 — Output, Script and print",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "побачити Output; запустити найпростіший скрипт; не боятись червоного тексту.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `**Module 4 - Empire Builder** turns your coin skills into a **tycoon**: machines earn money while you expand.
-
-**Lesson flow:**
-1. **Theory (40 min)** - map blueprint + folders
-2. **Practice (~25 min)** - one starter plot layout
-3. **Quiz (10 min)** - **70%** pass
-
-Use **Module 3 - Coin Simulator** place or duplicate as \`Lesson 4.1 - Tycoon Plot\`. Today is **layout only** - droppers script in 4.2.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** побачити Output; запустити найпростіший скрипт; не боятись червоного тексту.\n\nCourse phase: **Sparks & Ready Code**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'Tycoon core loop',
-        content: `| Step | Player feeling |
-|------|----------------|
-| 1 | Stand on my plot |
-| 2 | Machine drops value |
-| 3 | Collector turns drops into **Coins** |
-| 4 | Buy next machine with Coins |
-| 5 | Income grows - repeat |
-
-**Different from manual coin running:** tycoon = **passive income** + **purchases**.`,
+        "title": "What you will build",
+        "content": "`Script` у `ServerScriptService` з іменем `HelloStudio`, який друкує імʼя учня в Output."
       },
       {
-        title: 'Folder blueprint',
-        content: `**Workspace:**
-
-\`\`\`
-Plots/
-  PlotA/
-    Base/
-    DropperZone/
-    ConveyorPath/
-    CollectorZone/
-    BuyButtons/
-TycoonAssets/     ← models you clone later
-\`\`\`
-
-**ReplicatedStorage** (optional this lesson):
-\`TycoonConfig\` - prices tables in Lesson 4.4
-
-**ServerScriptService** (later):
-\`TycoonService\`, \`PurchaseService\`
-
-**Exercise (5 min):** Create empty Folders with these exact names under Workspace.`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M4_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'Design Plot A - zones',
-        content: `Build one **40×40** stud base (or use island flat sand):
-
-| Zone | Color placeholder | Purpose |
-|------|-------------------|---------|
-| **Base** | Grey platform | Player stands here |
-| **DropperZone** | Blue pad | Machine spawns coins |
-| **ConveyorPath** | Dark grey line | Coins slide toward collector |
-| **CollectorZone** | Green pad | Converts drops to Coins |
-| **BuyButtons** | Yellow pads | Unlock upgrades |
-
-**Name examples:**
-- \`PlotA_Base\`
-- \`PlotA_DropperSlot\`
-- \`PlotA_CollectorPad\`
-- \`Buy_Dropper2_Pad\` (empty until 4.3)`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Conveyor path (visual only today)',
-        content: `Use **low-friction** parts or slight **tilt** so coins slide (Lesson 4.2 adds real drops).
-
-For layout:
-- Dropper at **high** end
-- Collector at **low** end
-- Path **2 studs** wide minimum
-
-**Signs:** \`Dropper →\` and \`Collector\` with Neon arrows.
-
-**Exercise (10 min):** Walk from dropper zone to collector in Play - path feels obvious.`,
+        "title": "Code template (paste into Studio)",
+        "content": "Tap **Copy** → paste into a **Script** or **LocalScript** in Studio. Change **numbers, strings, colors** first — do not delete lines you do not understand yet.\n\n### Шаблон коду (готові рядки)\n\n```lua\nprint(\"Привіт від будівельника!\")\nprint(\"Мій двір готовий до магії\")\n```"
       },
       {
-        title: 'Spawn and ownership preview',
-        content: `Each plot needs:
-- **SpawnLocation** on \`PlotA_Base\` (Neutral true)
-- Sign: \`Your Tycoon - Plot A\`
-
-**Multiplayer later (4.5):** each player gets a plot. For 4.1-4.3, **one plot** is yours.
-
-Keep **Coin Simulator** coins elsewhere on island - tycoon plot is a **separate zone** (fence or bridge).`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Architecture rules',
-        content: `| Good habit | Bad habit |
-|------------|-----------|
-| One folder per system | 50 scripts named Script |
-| Config in tables (4.4) | Price hard-coded in 20 files |
-| Server owns money | Client buys for free |
-| Debris cleanup (4.2) | Infinite parts lag server |
-
-**Coming Soon gate:** optional neon wall + sign \`Expansion Zone\` for future tiers.`,
-      },
-      {
-        title: 'Before practice checklist',
-        content: `- [ ] Plots/PlotA with 5 zone folders
-- [ ] Named pads for dropper, path, collector, buy area
-- [ ] Spawn on plot base
-- [ ] Save: \`Lesson 4.1 - Tycoon Plot\``,
-      },
-    ],
+        "title": "Homework",
+        "content": "Додати 4-й print з назвою біому. Скрін Output."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'No folder structure', explanation: 'Scripts scatter across Workspace.', correctApproach: 'Plots/PlotA subfolders before coding' },
-    { mistake: 'Dropper and collector same spot', explanation: 'No gameplay flow.', correctApproach: 'Separate zones with visible path' },
-    { mistake: 'Buy button inside lava/obby', explanation: 'Accidental deaths block purchases.', correctApproach: 'Safe flat BuyButtons zone' },
-    { mistake: 'Generic Part names only', explanation: 'Cannot wire scripts in 4.2.', correctApproach: 'PlotA_DropperSlot style names' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You planned the tycoon core loop, created Plots/PlotA folder zones, and built a labeled starter plot ready for droppers, collectors, and purchase pads.`,
-  practiceTask: {
-    title: 'Tycoon skeleton plot (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** One complete plot layout, no droppers yet.
-
-### Part A - Folders (5 min)
-1. \`Workspace/Plots/PlotA\` + zone subfolders
-2. \`TycoonAssets\` empty folder for future models
-
-### Part B - Build zones (15 min)
-1. Base platform + SpawnLocation
-2. DropperZone, ConveyorPath, CollectorZone, BuyButtons pads
-3. Neon signs for direction
-
-### Part C - Save (5 min)
-1. Optional expansion wall
-2. **Save to Roblox** → \`Lesson 4.1 - Tycoon Plot\`
-3. **Practice complete**`,
-    hints: [
-      'Color-code zones now - replace with machines later',
-      'Path width ≥ 2 studs for rolling coin parts',
-      'Keep buy pads visible from spawn',
+  "summary": "**4.1 — Output, Script and print** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Output, Script and print",
+    "difficulty": "intermediate",
+    "description": "### Task\n`Script` у `ServerScriptService` з іменем `HelloStudio`, який друкує імʼя учня в Output.\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'Second empty plot PlotB for future multiplayer.',
+    "optionalChallenge": "Челендж: 3 різні print підряд"
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'Tycoon loop is earn → buy →...', options: ['Upgrade and expand', 'Delete terrain only', 'Remove UI', 'Never save'], correctAnswer: 0, explanation: 'Repeat growth cycle.' },
-      { id: 'q2', type: MC, question: 'PlotA folder holds...', options: ['One player tycoon layout', 'Only sky', 'All Module 1 lessons', 'DataStore files'], correctAnswer: 0, explanation: 'Per-plot organization.' },
-      { id: 'q3', type: MC, question: 'CollectorZone converts...', options: ['Drops to currency', 'Players to terrain', 'UI to parts', 'Lava to water'], correctAnswer: 0, explanation: 'Collector awards Coins.' },
-      { id: 'q4', type: MC, question: 'Lesson 4.1 is mostly...', options: ['Layout and naming', 'Full DataStore', 'Publishing', 'NPC quests'], correctAnswer: 0, explanation: 'Architecture before scripts.' },
-      { id: 'q5', type: MC, question: 'BuyButtons zone is for...', options: ['Purchasing upgrades', 'Kill blocks', 'Spawn only', 'Sound only'], correctAnswer: 0, explanation: 'Unlock machines with Coins.' },
-      { id: 'q6', type: MC, question: 'Conveyor path connects...', options: ['Dropper to collector', 'Tab to Output', 'Sky to Terrain', 'HUD to lava'], correctAnswer: 0, explanation: 'Physical flow of drops.' },
-      { id: 'q7', type: MC, question: 'TycoonAssets folder stores...', options: ['Reusable models', 'Player passwords', 'Chat logs', 'Quiz answers'], correctAnswer: 0, explanation: 'Prefab models for cloning.' },
-      { id: 'q8', type: MC, question: 'Server should own economy because...', options: ['Prevents cheating', 'UI looks nicer', 'Terrain requires it', 'No reason'], correctAnswer: 0, explanation: 'Trusted coin changes on server.' },
-      { id: 'q9', type: MC, question: 'Spawn on plot helps...', options: ['Players start at their base', 'Delete coins', 'Remove leaderstats', 'Disable Play'], correctAnswer: 0, explanation: 'Clear start location.' },
-      { id: 'q10', type: MC, question: 'Lesson 4.1 save name...', options: ['Lesson 4.1 - Tycoon Plot', 'Coin Simulator', 'Obby Ready', 'Saved Coins'], correctAnswer: 0, explanation: 'Save layout before machines.' },
-    ],
-  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Output потрібен щоб…",
+        "options": [
+          "Бачити повідомлення й помилки скриптів",
+          "Малювати terrain",
+          "Крутити Lighting",
+          "Купувати одяг"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Бачити повідомлення й помилки скриптів"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "`print` у Lua…",
+        "options": [
+          "Виводить текст у Output",
+          "Видаляє House",
+          "Створює вікно Negate",
+          "Зберігає Place автоматично завжди"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Виводить текст у Output"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Script у ServerScriptService виконується…",
+        "options": [
+          "На сервері (у типовому навчальному Play)",
+          "Лише на телефоні гравця завжди без винятку",
+          "Лише в Blender",
+          "Лише офлайн без Studio"
+        ],
+        "correctAnswer": 0,
+        "explanation": "На сервері (у типовому навчальному Play)"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Червоний текст у Output часто означає…",
+        "options": [
+          "Помилку в коді",
+          "Що все ідеально завжди",
+          "Безкоштовні Robux",
+          "Новий Material"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Помилку в коді"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Навіщо навмисно ламати дужку на уроці?",
+        "options": [
+          "Навчитись читати помилку і чинити",
+          "Знищити курс",
+          "Видалити акаунт",
+          "Вимкнути Snap"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Навчитись читати помилку і чинити"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Артефакт 4.1?",
+        "options": [
+          "HelloStudio з print",
+          "Повний Tycoon",
+          "DataStore гра",
+          "Анімація NPC"
+        ],
+        "correctAnswer": 0,
+        "explanation": "HelloStudio з print"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Чи М4 одразу вимагає знати всі типи даних?",
+        "options": [
+          "Ні — спочатку шаблони й параметри",
+          "Так, увесь Lua за 10 хв",
+          "Так, лише таблиці",
+          "Так, лише OOP"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні — спочатку шаблони й параметри"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Імʼя скрипта `HelloStudio` потрібне щоб…",
+        "options": [
+          "Легко знайти в Explorer",
+          "Інакше print не працює фізично ніколи",
+          "Інакше немає камери",
+          "Інакше немає Path"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Легко знайти в Explorer"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Play Mode для перевірки скрипта…",
+        "options": [
+          "Потрібен (або Run — за домовленістю викладача)",
+          "Заборонений",
+          "Видаляє код",
+          "Замінює Save"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Потрібен (або Run — за домовленістю викладача)"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Kill brick на готовому шаблоні",
+          "Blender face",
+          "НМТ історія",
+          "Повний MMO"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Kill brick на готовому шаблоні"
+      }
+    ]
+  }
 }
 
 export const enLesson42 = {
-  lessonId: 'lesson-roblox-4-2',
-  moduleId: 'module-04',
-  order: 2,
-  title: '4.2 - Coin Dropper',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Spawn TycoonCoin parts from a dropper on a timer',
-    'Award Coins when drops touch the collector pad',
-    'Use Debris for automatic part cleanup',
-    'Balance spawn rate for performance',
+  "lessonId": "lesson-roblox-4-2",
+  "moduleId": "module-04",
+  "order": 2,
+  "title": "4.2 — Kill brick (ready Touched)",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "вставити готовий скрипт смерті на Part; змінити повідомлення / зрозуміти Touched.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `The **dropper** prints money. The **collector** banks it.
-
-**Lesson flow:**
-1. **Theory (40 min)** - spawn loop + collector
-2. **Practice (~25 min)** - working starter machine
-3. **Quiz (10 min)** - **70%** pass
-
-Open **Lesson 4.1 - Tycoon Plot**.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** вставити готовий скрипт смерті на Part; змінити повідомлення / зрозуміти Touched.\n\nCourse phase: **Sparks & Ready Code**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'Dropper system parts',
-        content: `In \`PlotA/DropperZone\`:
-
-| Object | Name |
-|--------|------|
-| Machine body | \`Dropper_01\` |
-| Spawn point | \`SpawnPoint\` (small invisible or neon part) |
-| Script parent | \`Dropper_01\` |
-
-**SpawnPoint** Position = where coins appear (above machine).
-
-**Collector** in \`CollectorZone\`:
-- Part \`CollectorPad\` - green, Anchored, CanCollide true`,
+        "title": "What you will build",
+        "content": "Part `KillBrick` на доріжці (збоку або пастка). Гравець торкається → Reset/смерть (Humanoid.Health = 0)."
       },
       {
-        title: 'Spawner loop',
-        content: `**Script** inside \`Dropper_01\`:
-
-\`\`\`lua
-local dropper = script.Parent
-local spawnPoint = dropper:WaitForChild("SpawnPoint")
-local Debris = game:GetService("Debris")
-
-while true do
-    local coin = Instance.new("Part")
-    coin.Name = "TycoonCoin"
-    coin.Size = Vector3.new(1.2, 1.2, 1.2)
-    coin.Shape = Enum.PartType.Ball
-    coin.BrickColor = BrickColor.new("Bright yellow")
-    coin.Material = Enum.Material.Neon
-    coin.Position = spawnPoint.Position + Vector3.new(0, 2, 0)
-    coin.Anchored = false
-    coin.CanCollide = true
-    coin.Parent = workspace
-
-    Debris:AddItem(coin, 25)
-
-    task.wait(2)
-end
-\`\`\`
-
-**\`Debris:AddItem(part, 25)\`** deletes coin after 25s - prevents lag.`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M4_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'Collector awards Coins',
-        content: `**Script** in \`CollectorPad\`:
-
-\`\`\`lua
-local collector = script.Parent
-local COIN_VALUE = 1
-
-collector.Touched:Connect(function(hit)
-    if hit.Name ~= "TycoonCoin" then
-        return
-    end
-
-    local character = hit.Parent
-    local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-    if not humanoid then
-        -- Coin touched collector, not player foot
-    end
-
-    local Players = game:GetService("Players")
-    -- For solo plot: award to any player who owns tycoon - first player for now:
-    local player = Players:GetPlayers()[1]
-    if not player then return end
-
-    local stats = player:FindFirstChild("leaderstats")
-    local coins = stats and stats:FindFirstChild("Coins")
-    if coins then
-        coins.Value += COIN_VALUE
-    end
-
-    hit:Destroy()
-end)
-\`\`\`
-
-**Exercise (10 min):** Watch Coins rise without touching coins manually.`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Improve collector - player from coin',
-        content: `Better pattern: track plot owner IntValue later. For now, award **plot owner** only:
-
-Store \`OwnerUserId\` on PlotA folder (IntValue) set to your UserId in Studio test.
-
-\`\`\`lua
-local plot = workspace.Plots.PlotA
-local ownerId = plot:FindFirstChild("OwnerUserId")
-
--- find player where player.UserId == ownerId.Value
-\`\`\`
-
-Lesson 4.5 adds full multi-plot ownership. Solo: use \`Players:GetPlayers()[1]\` if alone.`,
+        "title": "Code template (paste into Studio)",
+        "content": "Tap **Copy** → paste into a **Script** or **LocalScript** in Studio. Change **numbers, strings, colors** first — do not delete lines you do not understand yet.\n\n### Шаблон (всередині KillBrick → Script)\n\n```lua\nlocal brick = script.Parent\n\nbrick.Touched:Connect(function(hit)\n\tlocal character = hit.Parent\n\tlocal humanoid = character:FindFirstChild(\"Humanoid\")\n\tif humanoid then\n\t\thumanoid.Health = 0\n\tend\nend)\n```"
       },
       {
-        title: 'Conveyor tilt trick',
-        content: `Angle **ConveyorPath** parts **2-5 degrees** toward collector so balls roll.
-
-Or use **low friction** material on path (Ice, or custom physical properties later).
-
-**Test:** Coin should reach collector within **10 seconds** of spawn.`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Performance rules',
-        content: `| Rule | Why |
-|------|-----|
-| Spawn every **≥ 1s** | Too fast = hundreds of parts |
-| Debris cleanup **20-30s** | Safety net |
-| Destroy on collect | Instant free memory |
-| Keep coins inside plot fence | Less world clutter |
-
-**If laggy:** increase \`task.wait\` to 3 seconds.`,
-      },
-      {
-        title: 'Before practice checklist',
-        content: `- [ ] Dropper spawns yellow TycoonCoin every 2s
-- [ ] Collector adds +1 Coins and destroys coin
-- [ ] Debris removes stray coins
-- [ ] Save: \`Lesson 4.2 - Coin Dropper\``,
-      },
-    ],
+        "title": "Homework",
+        "content": "Третя пастка. Імена `Kill_01`… у Folder `Hazards`."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'No Debris - hundreds of parts', explanation: 'Server slows down.', correctApproach: 'Debris:AddItem every spawn' },
-    { mistake: 'Collector checks wrong Name', explanation: 'TycoonCoin must match exactly.', correctApproach: 'coin.Name = "TycoonCoin" in spawner' },
-    { mistake: 'SpawnPoint missing', explanation: 'WaitForChild yields forever.', correctApproach: 'Child part named SpawnPoint under Dropper_01' },
-    { mistake: 'Anchored true on drops', explanation: 'Coins never move to collector.', correctApproach: 'Anchored false on TycoonCoin' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You built a dropper spawn loop with Debris cleanup and a collector that converts TycoonCoins into leaderstats Coins - your tycoon earns passive income.`,
-  practiceTask: {
-    title: 'Starter dropper machine (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** AFK-style income on your plot.
-
-### Part A - Dropper (12 min)
-1. \`Dropper_01\` + \`SpawnPoint\` + spawn Script
-2. Debris 25s on each coin
-3. Play - coins appear every 2s
-
-### Part B - Collector (10 min)
-1. \`CollectorPad\` Script - +1 Coins, Destroy coin
-2. Tilt path so coins reach pad
-3. Stand 30s - Coins increase without manual collect
-
-### Part C - Save (3 min)
-1. **Save to Roblox** → \`Lesson 4.2 - Coin Dropper\`
-2. **Practice complete**`,
-    hints: [
-      'Print coins.Value every 5s to verify passive income',
-      'If coins stuck, check Anchored false and path slope',
-      'Collector must be server Script',
+  "summary": "**4.2 — Kill brick (ready Touched)** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Kill brick (ready Touched)",
+    "difficulty": "intermediate",
+    "description": "### Task\nPart `KillBrick` на доріжці (збоку або пастка). Гравець торкається → Reset/смерть (Humanoid.Health = 0).\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'Bronze/silver/gold coin colors worth 1/2/5 (random spawn).',
+    "optionalChallenge": "Челендж: пройти Path не наступивши (рівень-пастка)"
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'TycoonCoin should be Anchored...', options: ['false', 'true always', 'only for UI', 'only in Terrain'], correctAnswer: 0, explanation: 'Unanchored parts roll.' },
-      { id: 'q2', type: MC, question: 'Debris:AddItem prevents...', options: ['Part buildup lag', 'Saving data', 'UI display', 'Checkpoints'], correctAnswer: 0, explanation: 'Auto-destroy old drops.' },
-      { id: 'q3', type: MC, question: 'Collector destroys coin after...', options: ['Awarding currency', 'Changing sky', 'Publishing', 'Renaming'], correctAnswer: 0, explanation: 'Destroy prevents double collect.' },
-      { id: 'q4', type: MC, question: 'while true loop with task.wait...', options: ['Repeats spawn forever', 'Runs once', 'Deletes player', 'Removes HUD'], correctAnswer: 0, explanation: 'Loop = continuous production.' },
-      { id: 'q5', type: MC, question: 'SpawnPoint is...', options: ['Where coins appear', 'Player spawn only', 'DataStore', 'VictoryGui'], correctAnswer: 0, explanation: 'Spawn position reference.' },
-      { id: 'q6', type: MC, question: 'COIN_VALUE = 1 means...', options: ['Each coin gives 1 Coin stat', 'Deletes 1 part', 'Waits 1 second', 'Spawns 1 player'], correctAnswer: 0, explanation: 'Value per collected drop.' },
-      { id: 'q7', type: MC, question: 'hit.Name check ensures...', options: ['Only TycoonCoins count', 'All parts count', 'Terrain counts', 'Sky counts'], correctAnswer: 0, explanation: 'Filter by part name.' },
-      { id: 'q8', type: MC, question: 'Spawn interval too fast causes...', options: ['Lag', 'Better graphics', 'Auto save', 'Free Robux'], correctAnswer: 0, explanation: 'Too many physics parts.' },
-      { id: 'q9', type: MC, question: 'Dropper Script runs on...', options: ['Server', 'Client HUD only', 'StarterGui', 'Player Head'], correctAnswer: 0, explanation: 'Server spawns world parts.' },
-      { id: 'q10', type: MC, question: 'Lesson 4.2 save name...', options: ['Lesson 4.2 - Coin Dropper', 'Tycoon Plot', 'Coin Functions', 'Obby Timer'], correctAnswer: 0, explanation: 'Save working machine.' },
-    ],
-  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "`Touched` спрацьовує коли…",
+        "options": [
+          "Щось торкається Part",
+          "Натискають Publish",
+          "Міняють Sky",
+          "Відкривають Toolbox"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Щось торкається Part"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "`script.Parent` у скрипті всередині Part — це…",
+        "options": [
+          "Цей самий Part",
+          "Завжди Lighting",
+          "Завжди гравець",
+          "Завжди Terrain"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Цей самий Part"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "`Humanoid` потрібен щоб…",
+        "options": [
+          "Керувати здоровʼям/станом персонажа",
+          "Малювати Decal",
+          "Робіти Union",
+          "Крутити Snap"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Керувати здоровʼям/станом персонажа"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "`if humanoid then` захищає від…",
+        "options": [
+          "Смерті коли торкнулись не персонажа (інший Part)",
+          "Збереження Place",
+          "Наявності камери",
+          "Наявності Path"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Смерті коли торкнулись не персонажа (інший Part)"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Артефакт уроку?",
+        "options": [
+          "Робочий KillBrick",
+          "Повний магазин GUI",
+          "DataStore",
+          "Raycast снайпер"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Робочий KillBrick"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Чому пастки в Folder `Hazards`?",
+        "options": [
+          "Порядок у Explorer",
+          "Інакше Touched не працює",
+          "Інакше немає Output",
+          "Інакше немає Print"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Порядок у Explorer"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Якщо скрипт лежить не в Part, а «в повітрі» без Parent…",
+        "options": [
+          "Шаблон очікує Parent-Part — треба покласти правильно",
+          "Завжди краще",
+          "Автоматично стає Sky",
+          "Дає Badge"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Шаблон очікує Parent-Part — треба покласти правильно"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Зміна лише кольору KillBrick…",
+        "options": [
+          "Дозволена і бажана на М4",
+          "Ламає Roblox назавжди",
+          "Видаляє акаунт",
+          "Заборонена політикою Studio"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Дозволена і бажана на М4"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "`Health = 0` означає…",
+        "options": [
+          "Персонаж гине",
+          "Персонаж літає",
+          "Part стає Model",
+          "Terrain зникає"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Персонаж гине"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Checkpoint шаблоном",
+          "Тільки Lighting",
+          "Тільки Negate",
+          "Тільки відеомонтаж"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Checkpoint шаблоном"
+      }
+    ]
+  }
 }
 
 export const enLesson43 = {
-  lessonId: 'lesson-roblox-4-3',
-  moduleId: 'module-04',
-  order: 3,
-  title: '4.3 - Purchase Button',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Build a purchase pad that deducts Coins',
-    'Use a purchased flag to prevent double buys',
-    'Reveal a second dropper after successful purchase',
-    'Give clear feedback for success and insufficient funds',
+  "lessonId": "lesson-roblox-4-3",
+  "moduleId": "module-04",
+  "order": 3,
+  "title": "4.3 — Checkpoint",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "готовий чекпоінт змінює Spawn / точку відродження (шаблон викладача під рівень групи).",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Passive income is step one. **Spending** on upgrades is step two.
-
-**Lesson flow:**
-1. **Theory (40 min)** - buy button flow
-2. **Practice (~25 min)** - unlock Dropper_02 for 50 Coins
-3. **Quiz (10 min)** - **70%** pass
-
-Open **Lesson 4.2 - Coin Dropper**. Earn ~50 Coins from Dropper_01 before testing buy.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** готовий чекпоінт змінює Spawn / точку відродження (шаблон викладача під рівень групи).\n\nCourse phase: **Sparks & Ready Code**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'Purchase flow (5 steps)',
-        content: `1. Player touches **buy pad**
-2. Verify **not already purchased**
-3. Read **leaderstats.Coins**
-4. If **Coins >= price** → subtract price
-5. **Reveal** new machine + hide button`,
+        "title": "What you will build",
+        "content": "Part `Checkpoint_1` на середині Path: після дотику смерть на KillBrick повертає сюди (або оновлює SpawnLocation — за обраним шаблоном школи)."
       },
       {
-        title: 'Buy pad script',
-        content: `On \`BuyButtons/Buy_Dropper2_Pad\` - **Script**:
-
-\`\`\`lua
-local button = script.Parent
-local PRICE = 50
-local purchased = false
-
-local dropper2 = workspace.Plots.PlotA.DropperZone:WaitForChild("Dropper_02")
-local revealFolder = dropper2 -- hidden until buy
-
--- Start hidden:
-dropper2.Parent = nil  -- or Transparency 1 on all parts + disabled script
-
-button.Touched:Connect(function(hit)
-    if purchased then
-        return
-    end
-
-    local character = hit.Parent
-    if not character then return end
-    local humanoid = character:FindFirstChildOfClass("Humanoid")
-    if not humanoid then return end
-
-    local player = game:GetService("Players"):GetPlayerFromCharacter(character)
-    if not player then return end
-
-    local coins = player:FindFirstChild("leaderstats")
-    coins = coins and coins:FindFirstChild("Coins")
-    if not coins then return end
-
-    if coins.Value < PRICE then
-        print(player.Name .. " needs more coins!")
-        button.BrickColor = BrickColor.new("Really red")
-        task.wait(0.3)
-        button.BrickColor = BrickColor.new("New Yeller")
-        return
-    end
-
-    coins.Value -= PRICE
-    purchased = true
-
-    dropper2.Parent = workspace.Plots.PlotA.DropperZone
-    button.Transparency = 1
-    button.CanCollide = false
-
-    print(player.Name .. " bought Dropper 2!")
-end)
-\`\`\``,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M4_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'Hide Dropper_02 until purchase',
-        content: `**Before Play:**
-1. Build \`Dropper_02\` clone of Dropper_01 (same SpawnPoint + Script)
-2. Set \`dropper2.Parent = nil\` in Script **once** at top, OR store in \`ReplicatedStorage\`
-
-**On purchase:** \`dropper2.Parent = workspace.Plots.PlotA.DropperZone\`
-
-**Test:** Only one Dropper_01 at start; after buy, two machines spawning.`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Debounce purchased flag',
-        content: `\`purchased = true\` blocks repeat **Touched** spam - same idea as coin debounce.
-
-Without it:
-- One touch might charge **3 times**
-- Coins go negative (bad)
-
-**Always** set \`purchased = true\` **before** revealing machine.`,
+        "title": "Code template (paste into Studio)",
+        "content": "Tap **Copy** → paste into a **Script** or **LocalScript** in Studio. Change **numbers, strings, colors** first — do not delete lines you do not understand yet.\n\n### Template 1\n\n```lua\n-- ШАБЛОН: Checkpoint оновлює SpawnLocation\nlocal checkpoint = script.Parent\nlocal spawn = workspace:FindFirstChild(\"SpawnLocation\")\n\ncheckpoint.Touched:Connect(function(hit)\n\tlocal character = hit.Parent\n\tlocal player = game.Players:GetPlayerFromCharacter(character)\n\tif player and spawn then\n\t\tspawn.CFrame = checkpoint.CFrame + Vector3.new(0, 3, 0)\n\t\tprint(player.Name .. \" досяг чекпоінта!\")\n\tend\nend)\n```"
       },
       {
-        title: 'UX feedback',
-        content: `| Result | Feedback |
-|--------|----------|
-| Success | Button hides, Dropper_02 appears, print sound |
-| Not enough Coins | Red flash 0.3s, print message |
-| Already bought | Ignore touch |
-
-**BillboardGui** on pad:
-\`Buy Dropper 2 - 50 Coins\`
-After buy: destroy gui or text \`Purchased ✓\`
-
-**Exercise (5 min):** Touch with 10 Coins → red flash. Touch with 60 → success.`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Connect to DataStore',
-        content: `Purchases spend **saved** Coins if you finished Module 3.5 - good.
-
-**Future:** save \`purchasedDropper2 = true\` in DataStore so buy persists between sessions (Lesson 4.6 area).
-
-Today: in-session purchase is enough.`,
-      },
-      {
-        title: 'Before practice checklist',
-        content: `- [ ] Dropper_02 hidden at start
-- [ ] Buy costs 50, debounce works
-- [ ] Insufficient funds shows red flash
-- [ ] Save: \`Lesson 4.3 - Purchase Button\``,
-      },
-    ],
+        "title": "Homework",
+        "content": "Третій чекпоінт біля дверей будинку."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'coins.Value -= price on client', explanation: 'Exploiters free upgrades.', correctApproach: 'Server Script on buy pad' },
-    { mistake: 'No purchased flag', explanation: 'Triple charge on one touch.', correctApproach: 'purchased = true after success' },
-    { mistake: 'Dropper_02 visible from start', explanation: 'No reason to buy.', correctApproach: 'Parent nil or hidden until purchase' },
-    { mistake: 'Wrong leaderstats path', explanation: 'Coins never deduct.', correctApproach: 'player.leaderstats.Coins on server' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You scripted a purchase pad that checks Coins, deducts price once, reveals Dropper_02, and gives red/green feedback - the tycoon upgrade loop is alive.`,
-  practiceTask: {
-    title: 'Unlock Dropper 2 (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** 50 Coins unlocks second machine.
-
-### Part A - Hidden machine (8 min)
-1. Clone \`Dropper_01\` → \`Dropper_02\` (hidden until buy)
-2. Buy pad \`Buy_Dropper2_Pad\` in BuyButtons zone
-
-### Part B - Purchase script (12 min)
-1. PRICE 50, purchased flag, deduct Coins
-2. Reveal Dropper_02, hide button
-3. Red flash when broke
-
-### Part C - Test & save (5 min)
-1. Earn 50+ from Dropper_01 - buy - two droppers run
-2. **Save to Roblox** → \`Lesson 4.3 - Purchase Button\`
-3. **Practice complete**`,
-    hints: [
-      'Print coins.Value before/after purchase while testing',
-      'Hide Dropper_02 with Parent = nil at script start',
-      'Touch buy pad with Humanoid - stand on pad',
+  "summary": "**4.3 — Checkpoint** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Checkpoint",
+    "difficulty": "intermediate",
+    "description": "### Task\nPart `Checkpoint_1` на середині Path: після дотику смерть на KillBrick повертає сюди (або оновлює SpawnLocation — за обраним шаблоном школи).\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'BillboardGui price label updates to Purchased.',
+    "optionalChallenge": "Челендж: пройти маршрут Kill→Checkpoint логікою"
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'Purchase script should run on...', options: ['Server', 'LocalScript only', 'Terrain', 'Sky'], correctAnswer: 0, explanation: 'Server deducts Coins safely.' },
-      { id: 'q2', type: MC, question: 'purchased = true prevents...', options: ['Buying twice', 'Spawning coins', 'Saving data', 'Moving camera'], correctAnswer: 0, explanation: 'Debounce for buy pad.' },
-      { id: 'q3', type: MC, question: 'coins.Value -= price when...', options: ['Coins >= price', 'Always', 'Never', 'In Edit only'], correctAnswer: 0, explanation: 'Only charge if affordable.' },
-      { id: 'q4', type: MC, question: 'Insufficient funds feedback...', options: ['Red flash + message', 'Free machine', 'Delete plot', 'Reset DataStore'], correctAnswer: 0, explanation: 'Clear fail feedback.' },
-      { id: 'q5', type: MC, question: 'Dropper_02 hidden using...', options: ['Parent = nil until buy', 'Delete forever', 'LocalScript', 'Atmosphere'], correctAnswer: 0, explanation: 'Reveal by reparenting.' },
-      { id: 'q6', type: MC, question: 'PRICE = 50 means...', options: ['Costs 50 Coins', 'Spawns 50 parts', '50 players', '50 seconds only'], correctAnswer: 0, explanation: 'Currency cost.' },
-      { id: 'q7', type: MC, question: 'GetPlayerFromCharacter links...', options: ['Touch to player account', 'Part to terrain', 'UI to sky', 'Sound to lava'], correctAnswer: 0, explanation: 'Who is buying.' },
-      { id: 'q8', type: MC, question: 'After success, buy pad often...', options: ['Transparency 1 / hidden', 'Duplicates price', 'Spawns lava', 'Removes leaderstats'], correctAnswer: 0, explanation: 'Cannot buy again.' },
-      { id: 'q9', type: MC, question: 'Tycoon upgrades use currency from...', options: ['leaderstats Coins', 'Only print()', 'Terrain', 'ClockTime'], correctAnswer: 0, explanation: 'Same Coins stat as Module 3.' },
-      { id: 'q10', type: MC, question: 'Lesson 4.3 save name...', options: ['Lesson 4.3 - Purchase Button', 'Coin Dropper', 'Tycoon Plot', 'Coin Simulator'], correctAnswer: 0, explanation: 'Save after unlock works.' },
-    ],
-  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Checkpoint потрібен щоб…",
+        "options": [
+          "Зберігати прогрес позиції на рівні",
+          "Малювати Sky",
+          "Робити Union",
+          "Купувати Plugin"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зберігати прогрес позиції на рівні"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "`GetPlayerFromCharacter` допомагає…",
+        "options": [
+          "Зрозуміти який гравець торкнувся",
+          "Змінити Material terrain",
+          "Видалити Lighting",
+          "Зробити Negate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зрозуміти який гравець торкнувся"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Навіщо `if player and spawn then`?",
+        "options": [
+          "Не виконувати код якщо когось немає",
+          "Щоб завжди була помилка",
+          "Щоб видалити Path",
+          "Щоб вимкнути Output"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Не виконувати код якщо когось немає"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Артефакт уроку?",
+        "options": [
+          "Робочі чекпоінти на Path",
+          "Повний RPG прокачка",
+          "Система ребіртів Tycoon",
+          "Blender персонаж"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Робочі чекпоінти на Path"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Після checkpoint смерть на KillBrick має…",
+        "options": [
+          "Повертати ближче до прогресу",
+          "Видаляти будинок",
+          "Вимикати звук назавжди",
+          "Ламати Explorer"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Повертати ближче до прогресу"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Зміна тексту в `print`…",
+        "options": [
+          "Безпечний спосіб кастомізації на М4",
+          "Ламає фізику світу завжди",
+          "Видаляє Spawn",
+          "Заборонена"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Безпечний спосіб кастомізації на М4"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Скрипт чекпоінта кладемо…",
+        "options": [
+          "За шаблоном — зазвичай у Part Checkpoint",
+          "У випадковий Part на іншій карті",
+          "У файл Word",
+          "У Discord тільки"
+        ],
+        "correctAnswer": 0,
+        "explanation": "За шаблоном — зазвичай у Part Checkpoint"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Два чекпоінти потрібні щоб…",
+        "options": [
+          "Тренувати довщий маршрут",
+          "Замінити Foundation",
+          "Видалити KillBrick",
+          "Вимкнути Play"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Тренувати довщий маршрут"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Якщо після смерті знову на старті…",
+        "options": [
+          "Перевірити чи спрацював Touched і чи знайдено SpawnLocation",
+          "Купити Robux",
+          "Видалити акаунт",
+          "Змінити нік"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Перевірити чи спрацював Touched і чи знайдено SpawnLocation"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Монета + leaderstats шаблон",
+          "Тільки Decal",
+          "Тільки Atmosphere",
+          "Тільки відео"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Монета + leaderstats шаблон"
+      }
+    ]
+  }
 }
 
 export const enLesson44 = {
-  lessonId: 'lesson-roblox-4-4',
-  moduleId: 'module-04',
-  order: 4,
-  title: '4.4 - Tables and Upgrades',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Store upgrade tiers in Luau tables',
-    'Change dropper speed and coin value from config data',
-    'Buy upgrades with a tier index instead of hard-coded scripts',
-    'Rebalance the economy by editing table numbers only',
+  "lessonId": "lesson-roblox-4-4",
+  "moduleId": "module-04",
+  "order": 4,
+  "title": "4.4 — Coins and leaderstats",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "зібрати монету; побачити рахунок у списку гравців (leaderstats).",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Hard-coded \`if tier == 2 then wait(1.5)\` breaks when you have 10 tiers. **Tables** fix that.
-
-**Lesson flow:**
-1. **Theory (40 min)** - upgrade table + tier index
-2. **Practice (~25 min)** - 3-tier dropper upgrades
-3. **Quiz (10 min)** - **70%** pass
-
-Open **Lesson 4.3 - Purchase Button**.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** зібрати монету; побачити рахунок у списку гравців (leaderstats).\n\nCourse phase: **Sparks & Ready Code**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'What is a config table?',
-        content: `A **table** in Luau is a collection of entries - like a spreadsheet in code.
-
-\`\`\`lua
-local upgrades = {
-    { tier = 1, price = 0,   spawnWait = 2.0, coinValue = 1 },
-    { tier = 2, price = 100, spawnWait = 1.5, coinValue = 2 },
-    { tier = 3, price = 300, spawnWait = 1.0, coinValue = 4 },
-}
-\`\`\`
-
-**Change balance?** Edit numbers here - not 20 scripts.`,
+        "title": "What you will build",
+        "content": "`Coin` Part + скрипт: +1 до `Coins`, монета зникає (`:Destroy()`). У `ServerScriptService` — шаблон створення leaderstats."
       },
       {
-        title: 'Access table rows by index',
-        content: `\`\`\`lua
-local currentTier = 2
-local data = upgrades[currentTier]
-
-print(data.spawnWait)   -- 1.5
-print(data.coinValue)   -- 2
-\`\`\`
-
-**\`#upgrades\`** = how many tiers exist.
-
-**Loop all tiers:**
-
-\`\`\`lua
-for i, row in ipairs(upgrades) do
-    print(i, row.price, row.spawnWait)
-end
-\`\`\`
-
-**Exercise (5 min):** Print all three tiers to Output.`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M4_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'Tier IntValue on the plot',
-        content: `Inside \`PlotA\` add **IntValue** \`DropperTier\` starting at **1**.
-
-When player buys upgrade pad:
-1. Check \`Coins >= upgrades[currentTier + 1].price\`
-2. Deduct price
-3. \`DropperTier.Value += 1\`
-
-Dropper script reads tier each spawn:
-
-\`\`\`lua
-local plot = workspace.Plots.PlotA
-local tierValue = plot:WaitForChild("DropperTier")
-local tier = tierValue.Value
-local data = upgrades[tier] or upgrades[1]
-
-task.wait(data.spawnWait)
--- spawn coin, collector uses data.coinValue
-\`\`\``,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Refactor dropper loop',
-        content: `\`\`\`lua
-local upgrades = {
-    { tier = 1, price = 0,   spawnWait = 2.0, coinValue = 1 },
-    { tier = 2, price = 100, spawnWait = 1.5, coinValue = 2 },
-    { tier = 3, price = 300, spawnWait = 1.0, coinValue = 4 },
-}
-
-local plot = workspace.Plots.PlotA
-local spawnPoint = script.Parent:WaitForChild("SpawnPoint")
-local tierValue = plot:WaitForChild("DropperTier")
-local Debris = game:GetService("Debris")
-
-while true do
-    local tier = math.clamp(tierValue.Value, 1, #upgrades)
-    local data = upgrades[tier]
-
-    local coin = Instance.new("Part")
-    coin.Name = "TycoonCoin"
-    coin.Size = Vector3.new(1.2, 1.2, 1.2)
-    coin.Shape = Enum.PartType.Ball
-    coin.BrickColor = BrickColor.new("Bright yellow")
-    coin.Position = spawnPoint.Position + Vector3.new(0, 2, 0)
-    coin.Anchored = false
-    coin:SetAttribute("CoinValue", data.coinValue)
-    coin.Parent = workspace
-    Debris:AddItem(coin, 25)
-
-    task.wait(data.spawnWait)
-end
-\`\`\`
-
-**SetAttribute** stores value on the part for collector to read.`,
+        "title": "Code template (paste into Studio)",
+        "content": "Tap **Copy** → paste into a **Script** or **LocalScript** in Studio. Change **numbers, strings, colors** first — do not delete lines you do not understand yet.\n\n### Шаблон leaderstats (SSS)\n\n```lua\ngame.Players.PlayerAdded:Connect(function(player)\n\tlocal leaderstats = Instance.new(\"Folder\")\n\tleaderstats.Name = \"leaderstats\"\n\tleaderstats.Parent = player\n\n\tlocal coins = Instance.new(\"IntValue\")\n\tcoins.Name = \"Coins\"\n\tcoins.Value = 0\n\tcoins.Parent = leaderstats\nend)\n```\n\n### Шаблон монети (у Part Coin)\n\n```lua\nlocal coin = script.Parent\nlocal DEBOUNCE = false\n\ncoin.Touched:Connect(function(hit)\n\tlocal character = hit.Parent\n\tlocal player = game.Players:GetPlayerFromCharacter(character)\n\tif player and not DEBOUNCE then\n\t\tDEBOUNCE = true\n\t\tlocal coins = player:FindFirstChild(\"leaderstats\")\n\t\t\tand player.leaderstats:FindFirstChild(\"Coins\")\n\t\tif coins then\n\t\t\tcoins.Value = coins.Value + 1\n\t\tend\n\t\tcoin:Destroy()\n\tend\nend)\n```"
       },
       {
-        title: 'Collector reads attribute',
-        content: `\`\`\`lua
-local value = hit:GetAttribute("CoinValue") or 1
-coins.Value += value
-\`\`\`
-
-Tier 3 coins worth **4** each - player feels power spike.
-
-**Upgrade buy pad** reads next tier price from table:
-
-\`\`\`lua
-local nextTier = tierValue.Value + 1
-local nextData = upgrades[nextTier]
-if not nextData then return end -- max tier
-if coins.Value < nextData.price then return end
-coins.Value -= nextData.price
-tierValue.Value = nextTier
-\`\`\``,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Balancing workflow',
-        content: `| Test | Target feel |
-|------|-------------|
-| Tier 2 reachable | ~2 minutes of Dropper_01 |
-| Tier 3 meaningful | ~5-8 minutes total |
-| spawnWait change | Noticeably faster drops |
-| coinValue change | Bigger number jumps on HUD |
-
-**Only edit table** → Play → repeat. Real game designers work this way.`,
-      },
-      {
-        title: 'Before practice checklist',
-        content: `- [ ] upgrades table with 3 rows
-- [ ] DropperTier IntValue on PlotA
-- [ ] Dropper uses spawnWait from table
-- [ ] Collector uses CoinValue attribute
-- [ ] Save: \`Lesson 4.4 - Upgrade Tables\``,
-      },
-    ],
+        "title": "Homework",
+        "content": "Ще 3 монети біля будинку. Folder `Coins`."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'tier index out of range', explanation: 'Tier 4 when table has 3 rows.', correctApproach: 'math.clamp(tier, 1, #upgrades)' },
-    { mistake: 'Hard-coded wait(2) still in loop', explanation: 'Table ignored.', correctApproach: 'task.wait(data.spawnWait) only' },
-    { mistake: 'Collector still +1 always', explanation: 'Attribute not read.', correctApproach: 'GetAttribute CoinValue on hit' },
-    { mistake: 'Price in buy script != table price', explanation: 'Desync confuses players.', correctApproach: 'Always read upgrades[nextTier].price' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You stored upgrade tiers in tables, drove spawn speed and coin value from data, and bought tiers with prices from the same config - professional tycoon balancing workflow.`,
-  practiceTask: {
-    title: 'Three-tier upgrades (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Buy tier 2 and 3 - faster drops, higher value.
-
-### Part A - Config (8 min)
-1. \`upgrades\` table (3 tiers) in dropper + buy scripts
-2. \`DropperTier\` IntValue = 1 on PlotA
-
-### Part B - Wire systems (12 min)
-1. Dropper loop uses spawnWait from tier
-2. Collector adds GetAttribute CoinValue
-3. Buy pad upgrades tier (100, then 300 Coins)
-
-### Part C - Balance & save (5 min)
-1. Play-test time to tier 2 - adjust table if needed
-2. **Save to Roblox** → \`Lesson 4.4 - Upgrade Tables\`
-3. **Practice complete**`,
-    hints: [
-      'Print current tier after each purchase',
-      'Clamp tier index so errors never break spawner',
-      'One shared upgrades table - copy to both scripts or use ModuleScript later',
+  "summary": "**4.4 — Coins and leaderstats** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Coins and leaderstats",
+    "difficulty": "intermediate",
+    "description": "### Task\n`Coin` Part + скрипт: +1 до `Coins`, монета зникає (`:Destroy()`). У `ServerScriptService` — шаблон створення leaderstats.\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'Tier 4 prestige - price 1000, spawnWait 0.6, coinValue 10.',
+    "optionalChallenge": "Polish the artifact a bit and be ready to show it for 20 seconds."
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'Config tables help...', options: ['Balance without editing many scripts', 'Delete terrain', 'Remove UI', 'Disable save'], correctAnswer: 0, explanation: 'Data-driven design.' },
-      { id: 'q2', type: MC, question: 'upgrades[2] gets...', options: ['Second tier row', 'Two players', '2 coins always', 'Error always'], correctAnswer: 0, explanation: 'Numeric index into table.' },
-      { id: 'q3', type: MC, question: 'DropperTier IntValue stores...', options: ['Current upgrade level', 'Player name', 'Sky color', 'Terrain seed'], correctAnswer: 0, explanation: 'Tier index on plot.' },
-      { id: 'q4', type: MC, question: 'spawnWait in table controls...', options: ['Seconds between spawns', 'Player jump', 'Save file', 'Tab menu'], correctAnswer: 0, explanation: 'Spawn interval per tier.' },
-      { id: 'q5', type: MC, question: 'SetAttribute CoinValue lets...', options: ['Collector read per-coin worth', 'UI delete', 'Lava kill', 'Spawn NPC'], correctAnswer: 0, explanation: 'Per-part metadata.' },
-      { id: 'q6', type: MC, question: 'ipairs(upgrades) loops...', options: ['Each tier row', 'Every player', 'All terrain', 'Only errors'], correctAnswer: 0, explanation: 'Iterate table entries.' },
-      { id: 'q7', type: MC, question: 'math.clamp prevents...', options: ['Invalid tier index', 'Saving', 'Publishing', 'Lighting'], correctAnswer: 0, explanation: 'Keeps tier in range.' },
-      { id: 'q8', type: MC, question: 'Next tier price should come from...', options: ['upgrades table', 'Random()', 'Player age', 'Part color'], correctAnswer: 0, explanation: 'Single source of truth.' },
-      { id: 'q9', type: MC, question: 'Tier 3 coinValue 4 means...', options: ['Each drop worth 4 Coins', '4 droppers', '4 players', '4 saves'], correctAnswer: 0, explanation: 'Value per collected coin.' },
-      { id: 'q10', type: MC, question: 'Lesson 4.4 save name...', options: ['Lesson 4.4 - Upgrade Tables', 'Purchase Button', 'Tycoon Plot', 'Coin Simulator'], correctAnswer: 0, explanation: 'Save tier system.' },
-    ],
-  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "`leaderstats` у Roblox часто показує…",
+        "options": [
+          "Рахунок гравця в списку",
+          "Небо",
+          "Union",
+          "Terrain матеріал"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Рахунок гравця в списку"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "`IntValue` зберігає…",
+        "options": [
+          "Ціле число",
+          "Модель будинку",
+          "Звук Looped",
+          "Sky текстуру"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ціле число"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "`PlayerAdded` реагує на…",
+        "options": [
+          "Вхід гравця в гру/сесію",
+          "Клік по Decal",
+          "Зміну Snap",
+          "Rotate паркану"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Вхід гравця в гру/сесію"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "`Destroy()` з монетою…",
+        "options": [
+          "Прибирає монету зі світу",
+          "Видаляє весь Place",
+          "Видаляє акаунт",
+          "Вимикає інтернет"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Прибирає монету зі світу"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "`DEBOUNCE` у шаблоні допомагає…",
+        "options": [
+          "Не нарахувати багато разів за одне торкання",
+          "Зробити Part більшим",
+          "Увімкнути Lighting",
+          "Зробити Negate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Не нарахувати багато разів за одне торкання"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Зміна `+ 1` на `+ 5` — це…",
+        "options": [
+          "Кастомізація параметра",
+          "Нова мова програмування",
+          "Видалення leaderstats",
+          "Помилка завжди"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Кастомізація параметра"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Артефакт уроку?",
+        "options": [
+          "Монети + Coins у leaderstats",
+          "Повний шутер",
+          "Blender",
+          "Clipchamp"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Монети + Coins у leaderstats"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Якщо Coins не зʼявляються в списку…",
+        "options": [
+          "Перевірити скрипт leaderstats у SSS і Play з початку",
+          "Купити Robux",
+          "Видалити House",
+          "Змінити нік"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Перевірити скрипт leaderstats у SSS і Play з початку"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Монети складаємо в Folder щоб…",
+        "options": [
+          "Тримати порядок",
+          "Інакше IntValue не існує",
+          "Інакше немає камери",
+          "Інакше немає Output"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Тримати порядок"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Двері на ClickDetector",
+          "Тільки Sky",
+          "Тільки Atmosphere",
+          "Тільки відеомонтаж"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Двері на ClickDetector"
+      }
+    ]
+  }
 }
 
 export const enLesson45 = {
-  lessonId: 'lesson-roblox-4-5',
-  moduleId: 'module-04',
-  order: 5,
-  title: '4.5 - A Plot for Every Player',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Assign unclaimed plots when players join',
-    'Store OwnerUserId on each plot for ownership checks',
-    'Block purchases and collection on other players plots',
-    'Release plots when players leave the game',
+  "lessonId": "lesson-roblox-4-5",
+  "moduleId": "module-04",
+  "order": 5,
+  "title": "4.5 — Doors with ClickDetector",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "клікнути на двері → відкрити/зсунути Part (готовий шаблон).",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Solo plot was fine. **Multiplayer** needs **one base per player** - otherwise everyone steals each other's machines.
-
-**Lesson flow:**
-1. **Theory (40 min)** - claim, ownsPlot, release
-2. **Practice (~25 min)** - PlotA + PlotB auto-assign
-3. **Quiz (10 min)** - **70%** pass
-
-Duplicate PlotA → **PlotB** with separate spawn and zones.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** клікнути на двері → відкрити/зсунути Part (готовий шаблон).\n\nCourse phase: **Sparks & Ready Code**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'The multiplayer problem',
-        content: `| Shared plot | Per-player plot |
-|-------------|-----------------|
-| Player B buys on A's button | Each has own DropperTier |
-| A earns B's coins | A only earns on Plot A |
-| Chaos in 2-player server | Fair tycoon servers |
-
-**OwnerUserId** = who controls this plot.`,
+        "title": "What you will build",
+        "content": "`GateDoor` з ClickDetector: після кліка двері зʼїжджають / роблять CanCollide false + Transparency (обрати 1 простий шаблон і не міняти на уроці)."
       },
       {
-        title: 'OwnerUserId setup',
-        content: `Inside **each** plot (PlotA, PlotB):
-
-**StringValue** named \`OwnerUserId\`
-- Default \`""\` (empty = unclaimed)
-
-\`\`\`lua
-local function isPlotFree(plot)
-    local owner = plot:FindFirstChild("OwnerUserId")
-    return owner and owner.Value == ""
-end
-
-local function ownsPlot(player, plot)
-    local owner = plot:FindFirstChild("OwnerUserId")
-    return owner and owner.Value == tostring(player.UserId)
-end
-\`\`\`
-
-**UserId** is a number - StringValue stores \`tostring(player.UserId)\`.`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M4_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'Claim plot on join',
-        content: `**ServerScriptService** → \`PlotClaimService\`:
-
-\`\`\`lua
-local Players = game:GetService("Players")
-local plotsFolder = workspace.Plots
-
-local function claimPlot(player)
-    for _, plot in plotsFolder:GetChildren() do
-        if plot:IsA("Folder") or plot:IsA("Model") then
-            local owner = plot:FindFirstChild("OwnerUserId")
-            if owner and owner.Value == "" then
-                owner.Value = tostring(player.UserId)
-                local spawn = plot:FindFirstChild("SpawnLocation", true)
-                if spawn and player.Character then
-                    player.Character:MoveTo(spawn.Position + Vector3.new(0, 3, 0))
-                end
-                print(player.Name .. " claimed " .. plot.Name)
-                return plot
-            end
-        end
-    end
-    warn("No free plot for " .. player.Name)
-end
-
-Players.PlayerAdded:Connect(function(player)
-    player.CharacterAdded:Connect(function()
-        task.wait(0.5)
-        claimPlot(player)
-    end)
-end)
-\`\`\``,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Gate purchases and collector',
-        content: `**Every** buy pad and collector must check:
-
-\`\`\`lua
-local plot = workspace.Plots.PlotA -- or find parent plot
-
-local function ownsPlot(player, plot)
-    local owner = plot:FindFirstChild("OwnerUserId")
-    return owner and owner.Value == tostring(player.UserId)
-end
-
--- In Touched:
-if not ownsPlot(player, plot) then
-    return
-end
-\`\`\`
-
-**Find plot from button:** \`button.Parent.Parent\` or store plot reference in attribute \`PlotName\`.
-
-**Exercise (10 min):** Second player cannot buy on first player's plot.`,
+        "title": "Code template (paste into Studio)",
+        "content": "Tap **Copy** → paste into a **Script** or **LocalScript** in Studio. Change **numbers, strings, colors** first — do not delete lines you do not understand yet.\n\n### Шаблон (зсув по осі)\n\n```lua\nlocal door = script.Parent\nlocal click = door:FindFirstChild(\"ClickDetector\")\nlocal open = false\n\nif not click then\n\tclick = Instance.new(\"ClickDetector\")\n\tclick.Parent = door\nend\n\nclick.MouseClick:Connect(function(player)\n\tif open then return end\n\topen = true\n\tdoor.Position = door.Position + Vector3.new(0, 0, 4)\n\tprint(player.Name .. \" відкрив двері!\")\nend)\n```"
       },
       {
-        title: 'Release on PlayerRemoving',
-        content: `\`\`\`lua
-Players.PlayerRemoving:Connect(function(player)
-    for _, plot in plotsFolder:GetChildren() do
-        local owner = plot:FindFirstChild("OwnerUserId")
-        if owner and owner.Value == tostring(player.UserId) then
-            owner.Value = ""
-            -- Optional: reset DropperTier, hide Dropper_02, clear buttons
-            print("Released " .. plot.Name)
-        end
-    end
-end)
-\`\`\`
-
-New players can claim freed plots on next join.`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Test with 2 players in Studio',
-        content: `**Test** → **Players** tab → add second player.
-
-| Test | Expected |
-|------|----------|
-| P1 joins | Claims PlotA |
-| P2 joins | Claims PlotB |
-| P2 touches P1 buy pad | Nothing / message |
-| P1 leaves | PlotA freed |
-| P3 joins | Can claim PlotA |
-
-**BillboardGui** on plot: \`Owner: PlayerName\` after claim.`,
-      },
-      {
-        title: 'Before practice checklist',
-        content: `- [ ] PlotA and PlotB with OwnerUserId
-- [ ] PlotClaimService assigns on join
-- [ ] Buy/collector check ownsPlot
-- [ ] PlayerRemoving clears owner
-- [ ] Save: \`Lesson 4.5 - Player Plots\``,
-      },
-    ],
+        "title": "Homework",
+        "content": "Підпис `print` українською з імʼям гравця залишити. Скрін Output після кліку."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'Compared number UserId to string Value', explanation: 'Never matches - everyone blocked.', correctApproach: 'tostring(player.UserId) both sides' },
-    { mistake: 'No release on leave', explanation: 'Plot stuck forever empty or owned.', correctApproach: 'PlayerRemoving clears OwnerUserId' },
-    { mistake: 'Forgot ownsPlot on collector', explanation: 'Stealing income.', correctApproach: 'Same check on all plot interactions' },
-    { mistake: 'Only one plot in game', explanation: 'Second player has nowhere to go.', correctApproach: 'At least PlotA and PlotB' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You auto-claimed plots with OwnerUserId, guarded purchases and collectors with ownsPlot, and released plots on leave - your tycoon is two-player ready.`,
-  practiceTask: {
-    title: 'Auto-claim plots (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Two players, two plots, no cross-use.
-
-### Part A - PlotB + owners (8 min)
-1. Duplicate PlotA → PlotB (rename all internals)
-2. OwnerUserId StringValue on both (empty default)
-
-### Part B - PlotClaimService (12 min)
-1. PlayerAdded claims first free plot
-2. ownsPlot in buy + collector scripts
-3. PlayerRemoving releases plot
-
-### Part C - Two-player test (5 min)
-1. Studio Test with 2 players
-2. Verify no cross-buy
-3. **Save to Roblox** → \`Lesson 4.5 - Player Plots\`
-4. **Practice complete**`,
-    hints: [
-      'Print owner.Value when touch fails - debug mismatch',
-      'MoveTo spawn after claim so player sees their base',
-      'Use FindFirstChild OwnerUserId on plot root',
+  "summary": "**4.5 — Doors with ClickDetector** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Doors with ClickDetector",
+    "difficulty": "intermediate",
+    "description": "### Task\n`GateDoor` з ClickDetector: після кліка двері зʼїжджають / роблять CanCollide false + Transparency (обрати 1 простий шаблон і не міняти на уроці).\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'BillboardGui shows owner display name on plot sign.',
+    "optionalChallenge": "Челендж: відкрити й зайти в будинок"
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'Empty OwnerUserId means...', options: ['Plot is unclaimed', 'Plot deleted', 'Game published', 'Max tier'], correctAnswer: 0, explanation: 'Free plot available.' },
-      { id: 'q2', type: MC, question: 'ownsPlot compares...', options: ['player.UserId to OwnerUserId', 'Part color', 'ClockTime', 'Terrain'], correctAnswer: 0, explanation: 'Ownership verification.' },
-      { id: 'q3', type: MC, question: 'tostring(UserId) is needed when...', options: ['Owner stored in StringValue', 'Using IntValue only', 'Never', 'UI only'], correctAnswer: 0, explanation: 'Type must match.' },
-      { id: 'q4', type: MC, question: 'PlayerRemoving should...', options: ['Clear plot owner', 'Delete game', 'Ban everyone', 'Remove DataStore'], correctAnswer: 0, explanation: 'Free plot for next join.' },
-      { id: 'q5', type: MC, question: 'Second player should get...', options: ['PlotB if PlotA taken', 'Same plot as first', 'No spawn', 'All plots'], correctAnswer: 0, explanation: 'Next free plot.' },
-      { id: 'q6', type: MC, question: 'Collector without ownsPlot allows...', options: ['Stealing others income', 'Better graphics', 'Faster save', 'More terrain'], correctAnswer: 0, explanation: 'Must gate collection.' },
-      { id: 'q7', type: MC, question: 'PlotClaimService lives in...', options: ['ServerScriptService', 'StarterGui', 'Player Head', 'Lighting'], correctAnswer: 0, explanation: 'Server assigns plots.' },
-      { id: 'q8', type: MC, question: 'Two plots minimum for 2 players...', options: ['True', 'False - one is enough', 'Only in Module 1', 'Never'], correctAnswer: 0, explanation: 'Each needs a base.' },
-      { id: 'q9', type: MC, question: 'MoveTo spawn after claim helps...', options: ['Player see their plot', 'Delete coins', 'Remove HUD', 'Disable Play'], correctAnswer: 0, explanation: 'Clear onboarding.' },
-      { id: 'q10', type: MC, question: 'Lesson 4.5 save name...', options: ['Lesson 4.5 - Player Plots', 'Upgrade Tables', 'Coin Dropper', 'Obby Ready'], correctAnswer: 0, explanation: 'Save multiplayer plots.' },
-    ],
-  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "ClickDetector потрібен щоб…",
+        "options": [
+          "Реагувати на клік миші по обʼєкту",
+          "Малювати terrain",
+          "Робити Union",
+          "Міняти Sky автоматично"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Реагувати на клік миші по обʼєкту"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "`MouseClick` — це…",
+        "options": [
+          "Подія кліку",
+          "Тип Material",
+          "Папка Storage",
+          "Інструмент Rotate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Подія кліку"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Змінна `open` у шаблоні…",
+        "options": [
+          "Не дає відкривати двері нескінченно одним кліком знову й знову без логіки",
+          "Видаляє Path",
+          "Вимикає Sound",
+          "Створює Negate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Не дає відкривати двері нескінченно одним кліком знову й знову без логіки"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "`Vector3.new(0,0,4)` змінює…",
+        "options": [
+          "Зсув у просторі",
+          "Імʼя гравця",
+          "Мову Studio",
+          "Ціну Robux"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зсув у просторі"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "Двері що відкриваються кліком",
+          "Повний DataStore сейв",
+          "AI NPC бос",
+          "Кіберспорт ліга"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Двері що відкриваються кліком"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Якщо клік не працює…",
+        "options": [
+          "Перевірити наявність ClickDetector і чи Part клікабельний",
+          "Видалити акаунт",
+          "Купити Plugin обовʼязково",
+          "Вимкнути компʼютер"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Перевірити наявність ClickDetector і чи Part клікабельний"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Чи обовʼязково розуміти кожен рядок на 100% уже зараз?",
+        "options": [
+          "Ні — головне змінити параметр і пояснити ідею",
+          "Так, інакше курс стоп",
+          "Так, лише Assembly",
+          "Так, лише C++"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні — головне змінити параметр і пояснити ідею"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Двері повʼязані з будинком М2 бо…",
+        "options": [
+          "Механіка сідає на вже зроблену геометрію",
+          "Будинок треба видалити",
+          "Negate заборонений",
+          "Path більше не потрібен"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Механіка сідає на вже зроблену геометрію"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "`Instance.new(\"ClickDetector\")` у шаблоні…",
+        "options": [
+          "Створює детектор якщо його ще немає",
+          "Створює нову гру",
+          "Видаляє Place",
+          "Малює Decal"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Створює детектор якщо його ще немає"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Телепорт шаблоном",
+          "Тільки Decal урок",
+          "Тільки паркан",
+          "Тільки математика"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Телепорт шаблоном"
+      }
+    ]
+  }
 }
 
 export const enLesson46 = {
-  lessonId: 'lesson-roblox-4-6',
-  moduleId: 'module-04',
-  order: 6,
-  title: '4.6 - Checkpoint: Tycoon Works',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Ship a two-plot tycoon with income, buys, upgrades, and ownership',
-    'Pass multiplayer and progression QA checklists',
-    'Tune first 5 minutes of player experience',
-    'Deliver Module 4 portfolio build Tycoon Works',
+  "lessonId": "lesson-roblox-4-6",
+  "moduleId": "module-04",
+  "order": 6,
+  "title": "4.6 — Teleport",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "стати на Part → перенестись до маркера `TeleportTarget`.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Module 4 checkpoint (about 40 minutes)',
-        content: `Ship **Tycoon Works** - passive income + purchases + upgrades + **fair multiplayer**.
-
-**Required:**
-- Plot layout (4.1)
-- Dropper + collector (4.2)
-- Buy unlock (4.3)
-- Table tiers (4.4)
-- Plot claim (4.5)
-- Module 3 **Coins** + optional **DataStore**`,
+        "title": "Today’s goal",
+        "content": "**Goal:** стати на Part → перенестись до маркера `TeleportTarget`.\n\nCourse phase: **Sparks & Ready Code**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: '60-minute assembly sprint',
-        content: `| Phase | Min | Task |
-|-------|-----|------|
-| 1 | 10 | Folder + naming audit |
-| 2 | 15 | Dropper + collector + attributes |
-| 3 | 10 | Buy Dropper_02 + tier upgrades |
-| 4 | 10 | Plot claim 2-player test |
-| 5 | 15 | QA matrix + polish signs |
-
-**Save:** \`Module 4 - Tycoon Works\``,
+        "title": "What you will build",
+        "content": "`Teleporter` + невидимий/видимий `TeleportTarget` біля даху/двору/маяка біому."
       },
       {
-        title: 'Progression pacing target',
-        content: `**First 5 minutes** new player:
-- Spawn on **their** plot
-- See dropper producing coins
-- HUD Coins rising without clicking
-- Understand yellow **buy** pad label
-
-**By minute 8-10:**
-- Afford **Dropper_02** OR **tier 2** upgrade
-- Notice faster income
-
-If pacing too slow → lower prices in \`upgrades\` table only.`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M4_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'Multiplayer QA matrix',
-        content: `| # | Test |
-|---|------|
-| 1 | Player A claims PlotA only |
-| 2 | Player B claims PlotB only |
-| 3 | B cannot buy on A's pad |
-| 4 | A cannot collect on B's collector |
-| 5 | A leaves → PlotA free → C can claim |
-| 6 | Tier upgrade changes spawn speed |
-| 7 | No red Output on 2-min idle run |`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Architecture final check',
-        content: `- [ ] \`PlotClaimService\` - join + leave
-- [ ] \`ownsPlot\` on **every** plot touch script
-- [ ] \`upgrades\` table - single balance source
-- [ ] \`DropperTier\` per plot (copy IntValue to PlotB!)
-- [ ] Debris on all droppers
-- [ ] DataStore still loads Coins (Module 3.5)`,
+        "title": "Code template (paste into Studio)",
+        "content": "Tap **Copy** → paste into a **Script** or **LocalScript** in Studio. Change **numbers, strings, colors** first — do not delete lines you do not understand yet.\n\n### Шаблон\n\n```lua\nlocal pad = script.Parent\nlocal target = workspace:FindFirstChild(\"TeleportTarget\")\n\npad.Touched:Connect(function(hit)\n\tlocal character = hit.Parent\n\tlocal root = character:FindFirstChild(\"HumanoidRootPart\")\n\tif root and target then\n\t\troot.CFrame = target.CFrame + Vector3.new(0, 3, 0)\n\tend\nend)\n```"
       },
       {
-        title: 'Presentation standards',
-        content: `- Signs: \`Your Tycoon\`, \`Buy Upgrade\`, \`Collector\`
-- Neon path still visible
-- Tab leaderboard shows Coins
-- Optional pickup sound on collector
-
-**Demo (2 min):** claim plot → watch income → buy upgrade → show Tab score.`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Module 5 preview',
-        content: `**Fighting Club** - Humanoid health, swords, damage, respawn in arena.
-
-Your tycoon Coins and server scripts prepared you for **combat economies** and **server authority** - same patterns, different genre.`,
-      },
-      {
-        title: 'Before practice checklist',
-        content: `- [ ] All 7 QA tests pass
-- [ ] Two plots for two players
-- [ ] Progression to first upgrade < 10 min
-- [ ] **Practice complete** on platform`,
-      },
-    ],
+        "title": "Homework",
+        "content": "Підписати pads Decal або кольором «IN/OUT»."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'PlotB missing DropperTier', explanation: 'B uses A tier or zero.', correctApproach: 'Each plot has own IntValues' },
-    { mistake: 'Skipped ownsPlot after adding claim', explanation: 'Exploit: steal upgrades.', correctApproach: 'Re-audit every Touched script' },
-    { mistake: 'Only tested solo', explanation: 'Multiplayer breaks on publish.', correctApproach: 'Studio 2-player Test required' },
-    { mistake: 'Prices in GUI != table', explanation: 'Player confusion.', correctApproach: 'Billboard reads upgrades[nextTier].price' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You integrated droppers, purchases, table upgrades, and per-player plots into Tycoon Works, passed multiplayer QA, and tuned early progression - Module 5 combat is next.`,
-  practiceTask: {
-    title: 'Ship Tycoon Works (~40 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Full Module 4 checkpoint passing QA.
-
-### Part A - Systems audit (15 min)
-1. Run architecture checklist - fix gaps
-2. PlotA + PlotB complete with machines
-3. upgrades table + DropperTier on **each** plot
-
-### Part B - Multiplayer QA (15 min)
-1. Test matrix 1-7 - note pass/fail
-2. Fix any cross-plot bug immediately
-
-### Part C - Demo & save (10 min)
-1. Solo run: 0 → first upgrade under 10 min
-2. **Save to Roblox** → \`Module 4 - Tycoon Works\`
-3. **Practice complete** + optional 2-player recording`,
-    hints: [
-      'Fix claim/ownsPlot before balancing prices',
-      'Each plot needs its own DropperTier and OwnerUserId',
-      'Print plot.Name in collector when debug needed',
+  "summary": "**4.6 — Teleport** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Teleport",
+    "difficulty": "intermediate",
+    "description": "### Task\n`Teleporter` + невидимий/видимий `TeleportTarget` біля даху/двору/маяка біому.\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'Second buy path: faster dropper OR higher value - player choice.',
+    "optionalChallenge": "Челендж: маршрут монета→телепорт→будинок за час"
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'Tycoon Works needs...', options: ['Income + buy + upgrade + plots', 'Only terrain', 'Only obby', 'No server scripts'], correctAnswer: 0, explanation: 'Full Module 4 integration.' },
-      { id: 'q2', type: MC, question: 'Test 3 verifies...', options: ['No cross-plot buying', 'Sky color', 'Terrain only', 'Publishing'], correctAnswer: 0, explanation: 'Ownership isolation.' },
-      { id: 'q3', type: MC, question: 'Each plot needs its own...', options: ['DropperTier and OwnerUserId', 'Only one SpawnLocation in world', 'Same owner always', 'No collector'], correctAnswer: 0, explanation: 'Per-plot state.' },
-      { id: 'q4', type: MC, question: 'Balance changes should edit...', options: ['upgrades table', 'Only brick colors', 'Player name', 'Roblox URL'], correctAnswer: 0, explanation: 'Config-driven balance.' },
-      { id: 'q5', type: MC, question: 'First upgrade target time...', options: ['Under ~10 minutes', 'Never', '1 second', '1 hour minimum'], correctAnswer: 0, explanation: 'Early hook for retention.' },
-      { id: 'q6', type: MC, question: 'Player leaves should...', options: ['Free their plot', 'Delete all DataStore', 'Ban others', 'Remove UI forever'], correctAnswer: 0, explanation: 'Release for new players.' },
-      { id: 'q7', type: MC, question: 'Debris on droppers prevents...', options: ['Lag from part buildup', 'Saving', 'Leaderboard', 'Checkpoints'], correctAnswer: 0, explanation: 'Cleanup old coins.' },
-      { id: 'q8', type: MC, question: 'Module 5 theme is...', options: ['Fighting / combat', 'Only coins again', 'Only publish', 'Empty'], correctAnswer: 0, explanation: 'Fighting Club module.' },
-      { id: 'q9', type: MC, question: 'Red Output on idle run means...', options: ['Fix before shipping', 'Ready to publish', 'Add more lava', 'Remove plots'], correctAnswer: 0, explanation: 'Errors = bugs remain.' },
-      { id: 'q10', type: MC, question: 'Module 4 save name...', options: ['Module 4 - Tycoon Works', 'Lesson 3.1', 'Obby Ready', 'Untitled'], correctAnswer: 0, explanation: 'Checkpoint portfolio name.' },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Телепорт у шаблоні змінює…",
+        "options": [
+          "CFrame персонажа до цілі",
+          "Material неба назавжди випадково",
+          "Версію Windows",
+          "Ціну телефону"
+        ],
+        "correctAnswer": 0,
+        "explanation": "CFrame персонажа до цілі"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "`HumanoidRootPart` — це…",
+        "options": [
+          "Центральна Part персонажа для позиції",
+          "Назва Sound",
+          "Тип Union",
+          "Folder Coins"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Центральна Part персонажа для позиції"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "`TeleportTarget` має…",
+        "options": [
+          "Існувати в Workspace з точним імʼям",
+          "Жити лише в Discord",
+          "Бути без імені завжди",
+          "Бути в Blender"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Існувати в Workspace з точним імʼям"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "`+ Vector3.new(0,3,0)` щоб…",
+        "options": [
+          "Не застрягти в підлозі",
+          "Видалити House",
+          "Вимкнути Ambient",
+          "Зробити Negate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Не застрягти в підлозі"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "Робочий телепорт туди-назад",
+          "Повний симулятор ребіртів",
+          "ModuleScript AI",
+          "Відео 20 хв"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Робочий телепорт туди-назад"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Два телепорти з різними target…",
+        "options": [
+          "Ок, якщо імена не плутаються",
+          "Заборонено в Roblox",
+          "Ламають Snap",
+          "Видаляють leaderstats"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ок, якщо імена не плутаються"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Якщо телепорт не працює…",
+        "options": [
+          "Перевірити імена FindFirstChild і чи є RootPart",
+          "Купити Robux",
+          "Видалити акаунт",
+          "Змінити біом словами без Studio"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Перевірити імена FindFirstChild і чи є RootPart"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Колір pad допомагає…",
+        "options": [
+          "Гравець зрозумів «сюди стань»",
+          "Замінити скрипт повністю",
+          "Видалити Output",
+          "Вимкнути Play"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Гравець зрозумів «сюди стань»"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "М4 телепорт — це вже повний TeleportService між places?",
+        "options": [
+          "Ні — локальний перенос на карті",
+          "Так обовʼязково",
+          "Так і в інші ігри Roblox одразу",
+          "Так тільки в Python"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні — локальний перенос на карті"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "«Лава» що зникає (Tween або простий таймер-шаблон)",
+          "Тільки PrimaryPart теорія",
+          "Тільки Folder теорія",
+          "Тільки НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "«Лава» що зникає (Tween або простий таймер-шаблон)"
+      }
+    ]
+  }
+}
+
+export const enLesson47 = {
+  "lessonId": "lesson-roblox-4-7",
+  "moduleId": "module-04",
+  "order": 7,
+  "title": "4.7 — Fading platform",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "стати на Part → через N секунд Part зникає/падає (шаблон на `task.wait` + Destroy або Transparency/CanCollide).",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Today’s goal",
+        "content": "**Goal:** стати на Part → через N секунд Part зникає/падає (шаблон на `task.wait` + Destroy або Transparency/CanCollide).\n\nCourse phase: **Sparks & Ready Code**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
+      },
+      {
+        "title": "What you will build",
+        "content": "`FadePlatform` на Path: встигни пройти."
+      },
+      {
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M4_YourName`  \n3. Do all lesson steps in that Place"
+      },
+      {
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
+      },
+      {
+        "title": "Code template (paste into Studio)",
+        "content": "Tap **Copy** → paste into a **Script** or **LocalScript** in Studio. Change **numbers, strings, colors** first — do not delete lines you do not understand yet.\n\n### Шаблон (простий, без TweenService — стабільніше для М4)\n\n```lua\nlocal platform = script.Parent\nlocal busy = false\n\nplatform.Touched:Connect(function(hit)\n\tlocal character = hit.Parent\n\tif not character:FindFirstChild(\"Humanoid\") then return end\n\tif busy then return end\n\tbusy = true\n\ttask.wait(1.5)\n\tplatform.CanCollide = false\n\tplatform.Transparency = 1\n\ttask.wait(3)\n\tplatform.CanCollide = true\n\tplatform.Transparency = 0\n\tbusy = false\nend)\n```"
+      },
+      {
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
+      },
+      {
+        "title": "Homework",
+        "content": "Підписати платформи числами часу (Decal або імʼя `Fade_1s`)."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
+  ],
+  "summary": "**4.7 — Fading platform** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Fading platform",
+    "difficulty": "intermediate",
+    "description": "### Task\n`FadePlatform` на Path: встигни пройти.\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
+    "optionalChallenge": "Челендж-паркour 30 сек"
   },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "`task.wait(1.5)` робить…",
+        "options": [
+          "Паузу ≈1.5 сек у скрипті",
+          "Видалення акаунта",
+          "Створення Sky",
+          "Union автоматично"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Паузу ≈1.5 сек у скрипті"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Спочатку `CanCollide = false` щоб…",
+        "options": [
+          "Гравець провалився",
+          "Part став Model",
+          "Звук став гучнішим",
+          "Path видалився"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Гравець провалився"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Повернення Transparency = 0…",
+        "options": [
+          "Платформа знову видима",
+          "Видаляє Coins",
+          "Вимикає Spawn",
+          "Ламає Negate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Платформа знову видима"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Прапорець `busy` потрібен щоб…",
+        "options": [
+          "Не запустити сотні таймерів від спаму Touched",
+          "Змінити біом",
+          "Зробити PrimaryPart",
+          "Відкрити Toolbox"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Не запустити сотні таймерів від спаму Touched"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "Зникаючі платформи з різним таймінгом",
+          "Повний Tycoon",
+          "RPG діалоги",
+          "Відеомонтаж"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зникаючі платформи з різним таймінгом"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Зміна `1.5` на `0.5` зробить платформу…",
+        "options": [
+          "Підступнішою (швидше зникає)",
+          "Вічною завжди",
+          "Невидимою назавжди без повернення обовʼязково",
+          "Музичною"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Підступнішою (швидше зникає)"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Чи це вже повний інженерний Tween-курс?",
+        "options": [
+          "Ні — простий шаблон таймера",
+          "Так",
+          "Так і Blender",
+          "Так і C#"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні — простий шаблон таймера"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Паркур з Kill + Fade + Checkpoint…",
+        "options": [
+          "Комбінує іскри М4",
+          "Заборонений",
+          "Видаляє leaderstats",
+          "Потребує DataStore обовʼязково"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Комбінує іскри М4"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Якщо платформа не відновлюється…",
+        "options": [
+          "Перевірити другий task.wait і скидання busy",
+          "Купити Robux",
+          "Видалити Place",
+          "Змінити нік"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Перевірити другий task.wait і скидання busy"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Звук зони кодом або GUI-меню шаблон",
+          "Тільки паркан",
+          "Тільки Folder теорія без практики",
+          "НМТ географія"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Звук зони кодом або GUI-меню шаблон"
+      }
+    ]
+  }
+}
+
+export const enLesson48 = {
+  "lessonId": "lesson-roblox-4-8",
+  "moduleId": "module-04",
+  "order": 8,
+  "title": "4.8 — Simple ScreenGui menu",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "вставити готове GUI: кнопка «Почати» ховає меню (LocalScript шаблон).",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Today’s goal",
+        "content": "**Goal:** вставити готове GUI: кнопка «Почати» ховає меню (LocalScript шаблон).\n\nCourse phase: **Sparks & Ready Code**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
+      },
+      {
+        "title": "What you will build",
+        "content": "`StarterGui` → `ScreenGui` `StartMenu` з TextLabel + TextButton. Клік → `StartMenu.Enabled = false`."
+      },
+      {
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M4_YourName`  \n3. Do all lesson steps in that Place"
+      },
+      {
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
+      },
+      {
+        "title": "Code template (paste into Studio)",
+        "content": "Tap **Copy** → paste into a **Script** or **LocalScript** in Studio. Change **numbers, strings, colors** first — do not delete lines you do not understand yet.\n\n### Шаблон LocalScript у кнопці\n\n```lua\nlocal button = script.Parent\nlocal menu = button.Parent\n\nbutton.MouseButton1Click:Connect(function()\n\tmenu.Enabled = false\nend)\n```"
+      },
+      {
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
+      },
+      {
+        "title": "Homework",
+        "content": "Підзаголовок з назвою біому в TextLabel."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
+  ],
+  "summary": "**4.8 — Simple ScreenGui menu** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Simple ScreenGui menu",
+    "difficulty": "intermediate",
+    "description": "### Task\n`StarterGui` → `ScreenGui` `StartMenu` з TextLabel + TextButton. Клік → `StartMenu.Enabled = false`.\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
+    ],
+    "optionalChallenge": "Polish the artifact a bit and be ready to show it for 20 seconds."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "ScreenGui показує…",
+        "options": [
+          "Інтерфейс на екрані",
+          "Terrain під землею",
+          "Union у Storage",
+          "Небо лише в Blender"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Інтерфейс на екрані"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "LocalScript часто ставлять у UI бо…",
+        "options": [
+          "UI працює на клієнті гравця",
+          "LocalScript малює гори",
+          "LocalScript робить Negate",
+          "LocalScript зберігає DataStore сам"
+        ],
+        "correctAnswer": 0,
+        "explanation": "UI працює на клієнті гравця"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "`MouseButton1Click` — це…",
+        "options": [
+          "Клік лівою кнопкою по GUI кнопці",
+          "Смерть гравця",
+          "Зміна Snap",
+          "Створення Part"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Клік лівою кнопкою по GUI кнопці"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "`menu.Enabled = false`…",
+        "options": [
+          "Ховає меню",
+          "Видаляє Place",
+          "Вимикає компʼютер",
+          "Робіть Union"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ховає меню"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "Стартове меню з кнопкою",
+          "Повний магазин з DataStore",
+          "PvP killfeed",
+          "Blender анімація"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Стартове меню з кнопкою"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "TextLabel потрібен щоб…",
+        "options": [
+          "Показати заголовок/текст",
+          "Зробити KillBrick",
+          "Зробити Checkpoint",
+          "Зробити Terrain воду"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Показати заголовок/текст"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Чи це вже повний курс UI верстки?",
+        "options": [
+          "Ні — тільки іскровий старт",
+          "Так, увесь UX курс",
+          "Так, і Photoshop",
+          "Так, і Figma обовʼязково"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні — тільки іскровий старт"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Якщо кнопка не реагує…",
+        "options": [
+          "Перевірити LocalScript місце і Active/Visible ієрархію",
+          "Видалити House",
+          "Купити Robux",
+          "Змінити біом словами"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Перевірити LocalScript місце і Active/Visible ієрархію"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Різниця Script vs LocalScript на М4…",
+        "options": [
+          "Пояснюємо практично: світ vs екран",
+          "Не згадуємо ніколи",
+          "Вимагаємо есе на 5 сторінок",
+          "Вимагаємо C++"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Пояснюємо практично: світ vs екран"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Збираємо всі іскри в один маршрут",
+          "Видаляємо всі скрипти",
+          "Починаємо М1 знову",
+          "Лише теорія без Play"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Збираємо всі іскри в один маршрут"
+      }
+    ]
+  }
+}
+
+export const enLesson49 = {
+  "lessonId": "lesson-roblox-4-9",
+  "moduleId": "module-04",
+  "order": 9,
+  "title": "4.9 — Build: Spark yard",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "зібрати маршрут з мінімум 5 механік М4 у цілісний playable loop.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Today’s goal",
+        "content": "**Goal:** зібрати маршрут з мінімум 5 механік М4 у цілісний playable loop.\n\nCourse phase: **Sparks & Ready Code**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
+      },
+      {
+        "title": "What you will build",
+        "content": "Build a **visible result** in your Place and Save to Roblox."
+      },
+      {
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M4_YourName`  \n3. Do all lesson steps in that Place"
+      },
+      {
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
+      },
+      {
+        "title": "Practice steps",
+        "content": "KillBrick · Checkpoint · Coins · Door Click · Teleport · FadePlatform · StartMenu"
+      },
+      {
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
+      },
+      {
+        "title": "Homework",
+        "content": "Polish your result for 15–20 min and save the Place. Next time, show a short 20–30s demo."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
+  ],
+  "summary": "**4.9 — Build: Spark yard** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Build: Spark yard",
+    "difficulty": "intermediate",
+    "description": "### Task\nComplete the steps for “Build: Spark yard” in your Place.\n\n\n### Steps\nKillBrick · Checkpoint · Coins · Door Click · Teleport · FadePlatform · StartMenu\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
+    ],
+    "optionalChallenge": "Polish the artifact a bit and be ready to show it for 20 seconds."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Іскровий двір — це…",
+        "options": [
+          "Світ М1–М3 + кілька готових механік",
+          "Повний AAA онлайн на 1 млн гравців",
+          "Лише Baseplate без нічого",
+          "Лише PDF теорія"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Світ М1–М3 + кілька готових механік"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Парний playtest допомагає…",
+        "options": [
+          "Побачити баги очима іншого",
+          "Видалити Output",
+          "Вимкнути Explorer",
+          "Замінити Save"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Побачити баги очима іншого"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Мінімум механік на здачу маршруту…",
+        "options": [
+          "5 з списку іскор",
+          "0",
+          "100 обовʼязково унікальних мов",
+          "Тільки Sky"
+        ],
+        "correctAnswer": 0,
+        "explanation": "5 з списку іскор"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Якщо меню блокує все і не зникає…",
+        "options": [
+          "Фіксимо кнопку LocalScript",
+          "Видаляємо будинок",
+          "Ігноруємо назавжди",
+          "Купуємо новий ПК обовʼязково"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Фіксимо кнопку LocalScript"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Checkpoint + Kill разом дають…",
+        "options": [
+          "Чесний parkour loop",
+          "DataStore",
+          "Negate вікно",
+          "Atmosphere"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Чесний parkour loop"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Coins на маршруті…",
+        "options": [
+          "Мотивують досліджувати",
+          "Ламають камеру завжди",
+          "Видаляють Path",
+          "Замінюють Spawn обовʼязково"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Мотивують досліджувати"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Телепорт варто ставити…",
+        "options": [
+          "З розумінням куди веде гравця",
+          "У випадкову чорну діру під картою завжди",
+          "У ServerStorage тільки",
+          "У Lighting"
+        ],
+        "correctAnswer": 0,
+        "explanation": "З розумінням куди веде гравця"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Найчастіший баг інтеграції…",
+        "options": [
+          "Зайві скрипти/дублікати або чужий Parent",
+          "Надто гарний Decal",
+          "Правильні імена",
+          "Чистий Explorer"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зайві скрипти/дублікати або чужий Parent"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "М4 ще не є…",
+        "options": [
+          "Повним курсом змінних/if/циклів з нуля",
+          "Початком інтересу до коду",
+          "Практикою Output",
+          "Збіркою механік"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Повним курсом змінних/if/циклів з нуля"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Урок 4.10 — це…",
+        "options": [
+          "Презентації іскрового двору",
+          "Видалення всіх Places",
+          "Скасування курсу",
+          "Тільки математика"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Презентації іскрового двору"
+      }
+    ]
+  }
+}
+
+export const enLesson410 = {
+  "lessonId": "lesson-roblox-4-10",
+  "moduleId": "module-04",
+  "order": 10,
+  "title": "4.10 — Presentation: living game",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "показати групі playable двір; отримати фідбек; закрити фазу B.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Today’s goal",
+        "content": "**Goal:** показати групі playable двір; отримати фідбек; закрити фазу B.\n\nCourse phase: **Sparks & Ready Code**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
+      },
+      {
+        "title": "What you will build",
+        "content": "Build a **visible result** in your Place and Save to Roblox."
+      },
+      {
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M4_YourName`  \n3. Do all lesson steps in that Place"
+      },
+      {
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
+      },
+      {
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
+      },
+      {
+        "title": "Homework",
+        "content": "Polish your result for 15–20 min and save the Place. Next time, show a short 20–30s demo."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
+  ],
+  "summary": "**4.10 — Presentation: living game** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Presentation: living game",
+    "difficulty": "intermediate",
+    "description": "### Task\nComplete the steps for “Presentation: living game” in your Place.\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
+    ],
+    "optionalChallenge": "Polish the artifact a bit and be ready to show it for 20 seconds."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Головний підсумок М4…",
+        "options": [
+          "Код може оживити вже збудований світ",
+          "Моделювання більше не потрібне",
+          "Lua вивчено повністю",
+          "Roblox — лише чат"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Код може оживити вже збудований світ"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "На М4 ми переважно…",
+        "options": [
+          "Вставляли шаблони й змінювали параметри",
+          "Писали свій компілятор",
+          "Вивчали C# Unity",
+          "Робили лише теорію без Play"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Вставляли шаблони й змінювали параметри"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Output потрібен і далі бо…",
+        "options": [
+          "Помилки будуть завжди в навчанні",
+          "Output видаляють після М4",
+          "Output лише для дорослих",
+          "Output замінює Explorer"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Помилки будуть завжди в навчанні"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Пояснити скрипт своїми словами важливо бо…",
+        "options": [
+          "Це місток до справжнього Lua в М5",
+          "Це замінює Save",
+          "Це дає Robux",
+          "Це видаляє баги магічно"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Це місток до справжнього Lua в М5"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Script vs LocalScript ми розрізняємо як…",
+        "options": [
+          "Світ/сервер vs UI/клієнт (спростили)",
+          "Немає різниці ніколи",
+          "LocalScript тільки для Terrain",
+          "Script тільки для кнопок UI завжди"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Світ/сервер vs UI/клієнт (спростили)"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Наступний модуль М5 про…",
+        "options": [
+          "Змінні й типи — серйозний Lua",
+          "Тільки Decals",
+          "Тільки Sky",
+          "Тільки відеомонтаж"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Змінні й типи — серйозний Lua"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Якщо на презентації все зламалось…",
+        "options": [
+          "Спокійно відкрити Output / запасний Place",
+          "Кричати й закривати Studio",
+          "Видаляти акаунт",
+          "Ображати групу"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Спокійно відкрити Output / запасний Place"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Кастомізація `+1` → `+5` / таймерів — це…",
+        "options": [
+          "Вже програмування параметрами",
+          "Не має цінності",
+          "Заборона",
+          "Лише для вчителя"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Вже програмування параметрами"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Фаза B завершена коли…",
+        "options": [
+          "Є живий playable двір з іскрами",
+          "Є лише порожній Baseplate",
+          "Є лише PDF",
+          "Є лише акаунт без Place"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Є живий playable двір з іскрами"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Найкраща підготовка до М5…",
+        "options": [
+          "Не боятись Output і розуміти «скрипт реагує на подію»",
+          "Вивчити весь Unicode напамʼять",
+          "Видалити всі скрипти М4",
+          "Кинути моделювання"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Не боятись Output і розуміти «скрипт реагує на подію»"
+      }
+    ]
+  }
 }

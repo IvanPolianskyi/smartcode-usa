@@ -269,14 +269,14 @@
       "roblox": {
         "title": "Roblox Studio",
         "shortDescription": "Створення ігор у Roblox Studio",
-        "description": "Навчись створювати власні ігри в Roblox Studio та публікувати їх для мільйонів гравців.",
-        "age": "8-16 років",
+        "description": "92 уроки: моделі → Lua → Obby/симулятор/Tycoon → публікація на Showcase. Групи до 5 або індивідуал.",
+        "age": "9-13 років",
         "skills": {
-          "0": "Lua програмування",
-          "1": "Roblox Studio",
-          "2": "3D моделювання",
-          "3": "Геймдизайн",
-          "4": "Монетизація",
+          "0": "Roblox Studio",
+          "1": "Моделі та Terrain",
+          "2": "Lua програмування",
+          "3": "Obby / Tycoon / Sim",
+          "4": "Tools і GUI",
           "5": "Публікація ігор"
         }
       },

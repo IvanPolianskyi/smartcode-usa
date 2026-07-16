@@ -13,6 +13,7 @@
     "weeksFew": "тижні",
     "weeksMany": "тижнів",
     "moduleBadge": "Модуль {number}",
+    "phaseBadge": "Фаза {phase}",
     "selectProject": "Вибрати",
     "difficulty": "Складність",
     "difficultyPercent": "Складність: {percent}%",
@@ -299,36 +300,50 @@
     "hero": {
       "titleLine1": "LUA & ROBLOX",
       "titleLine2": "РОЗРОБКА",
-      "ctaCaption": "ПОЧНИ СТВОРЮВАТИ",
+      "ctaCaption": "ВІД PARTS ДО РЕЛІЗУ",
       "freeLesson": "БЕЗКОШТОВНИЙ УРОК",
-      "description": "Навчайся створювати ігри в Roblox Studio: від перших скриптів на Lua до повноцінних симуляторів, тайкун-ігор та оббі (obby). Багато практики і візуальних ефектів."
+      "description": "92 уроки у LMS для віку 9–13: спочатку світ і моделі, потім іскри з готовим кодом, серйозний Lua і жанри (Obby, симулятор, Tycoon) — до власної опублікованої гри на Showcase. Групи до 5 або індивідуал."
+    },
+    "stats": {
+      "items": [
+        { "number": "92", "label": "уроки × 60 хв" },
+        { "number": "13", "label": "модулів у 5 фазах" },
+        { "number": "≤5", "label": "учнів у групі" },
+        { "number": "9–13", "label": "років" }
+      ]
     },
     "modules": {
-      "title": "6 МОДУЛІВ = 6 ВЕЛИКИХ ПРОЄКТІВ",
+      "title": "5 ФАЗ = ШЛЯХ ВІД НУЛЯ ДО SHOWCASE",
       "items": [
         {
-          "title": "Основи Roblox Studio та Lua",
-          "topics": ["Інтерфейс", "Properties", "ClickDetector", "Звук"]
+          "phase": "A",
+          "lessons": "22 уроки",
+          "title": "Студія і моделі",
+          "topics": ["Parts і Explorer", "Models і Union", "Terrain і атмосфера", "М1–М3"]
         },
         {
-          "title": "Створення Obby (Паркур)",
-          "topics": ["Змінні", "Умови (if/else)", "Пастки", "Чекпоінти"]
+          "phase": "B",
+          "lessons": "10 уроків",
+          "title": "Іскри з готовим кодом",
+          "topics": ["Готові скрипти", "Touch / Click", "Міні-механіки", "М4"]
         },
         {
-          "title": "Симулятор і Збереження Даних",
-          "topics": ["DataStore", "Лідерборд", "GUI", "Магазин"]
+          "phase": "C",
+          "lessons": "26 уроків",
+          "title": "Серйозний Lua",
+          "topics": ["Змінні", "if / else", "Цикли", "Функції і таблиці"]
         },
         {
-          "title": "Tycoon",
-          "topics": ["Дропери", "Апгрейди", "Цикли (while/for)", "Гроші"]
+          "phase": "D",
+          "lessons": "28 уроків",
+          "title": "Механіки жанрів",
+          "topics": ["Obby", "Симулятор", "Tycoon", "Tools і GUI"]
         },
         {
-          "title": "RPG та Взаємодія",
-          "topics": ["NPC", "Квести", "Інвентар", "Зброя"]
-        },
-        {
-          "title": "Публікація та Монетизація",
-          "topics": ["Gamepasses", "Ефекти", "Тести", "Публікація"]
+          "phase": "E",
+          "lessons": "6 уроків",
+          "title": "Реліз і Showcase",
+          "topics": ["Pitch і polish", "Публікація", "GamePass", "Фінальна гра"]
         }
       ]
     },
@@ -336,40 +351,47 @@
       "title": "ПРАКТИЧНІ ПРОЄКТИ",
       "items": [
         {
-          "name": "Obby Course",
+          "name": "Світ і моделі",
           "difficulty": "BEGINNER",
-          "time": "2 тижні",
-          "description": "Динамічний оббі (obby) з перешкодами, пастками і чекпоінтами",
-          "points": 1200
+          "time": "фаза A–B",
+          "description": "Свій двір / локація з моделями, terrain і першими «іскрами» коду",
+          "points": 900
         },
         {
-          "name": "Tycoon",
+          "name": "Obby Course",
           "difficulty": "MIDDLE",
-          "time": "3 тижні",
-          "description": "Економічна міні-гра з апгрейдами, кнопками і колекторами",
-          "points": 2800
+          "time": "фаза D",
+          "description": "Паркур з пастками, чекпоінтами і таймером",
+          "points": 1800
         },
         {
           "name": "Simulator",
           "difficulty": "SENIOR",
-          "time": "5 тижнів",
+          "time": "фаза D",
           "description": "Симулятор з прогресією, бустерами та збереженням даних",
-          "points": 4200,
+          "points": 3200,
           "videoTitle": "SIMULATOR - ГЕЙМПЛЕЙ"
+        },
+        {
+          "name": "Tycoon → Showcase",
+          "difficulty": "SENIOR",
+          "time": "фаза D–E",
+          "description": "Економіка з апгрейдами, Tools/GUI і фінальний реліз власної гри",
+          "points": 4500
         }
       ]
     },
     "features": {
       "title": "ПЕРЕВАГИ КУРСУ",
       "items": [
-        { "title": "Сертифікат", "desc": "Офіційне підтвердження навичок" },
-        { "title": "Комʼюніті", "desc": "Команда однодумців та івенти" },
-        { "title": "Практика", "desc": "Реальні механіки та скрипти" },
-        { "title": "Портфоліо", "desc": "Проєкти, якими можна пишатись" }
+        { "title": "Малі групи", "desc": "До 5 учнів або індивідуал — більше уваги кожному" },
+        { "title": "Тест після уроку", "desc": "10 питань, прохід 70% — знання закріплюються одразу" },
+        { "title": "Артефакт щоуроку", "desc": "Не просто теорія: результат у place після кожного заняття" },
+        { "title": "Портфоліо ігор", "desc": "Obby, симулятор, Tycoon і опублікована фіналка" }
       ]
     },
     "sections": {
-      "videoDescription": "🎮 Живі ефекти, скрипти і геймплей"
+      "videoDescription": "Живі ефекти, скрипти і геймплей"
     },
     "cta": {
       "startCourse": "ПОЧАТИ КУРС",

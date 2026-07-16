@@ -142,7 +142,7 @@ const Header = () => {
 	const handleCtaClick = (e) => {
 		if (e?.preventDefault) e.preventDefault()
 		if (isEn) {
-			router.push('/register')
+			router.push('/login')
 			setIsMobileMenuOpen(false)
 			return
 		}
@@ -210,11 +210,10 @@ const Header = () => {
 
 	const navItems = [
 		isEn
-			? { label: t('nav.signUp'), href: '/register' }
+			? { label: t('nav.signUp'), href: '/login' }
 			: { label: t('nav.signUp'), href: '/#trial-signup', ctaModal: true },
 		{ label: t('nav.courses'), href: '/#our-courses' },
 		{ label: t('nav.lessons'), href: '/#courses', hideOnDesktop: true },
-		{ label: t('nav.prices'), href: '/tariff' },
 		...(!isEn
 			? [
 					{ label: t('nav.reviews'), href: '/#testimonials' },
@@ -510,13 +509,6 @@ const Header = () => {
 								>
 									<User size={18} />
 									{tc('login')}
-								</Link>
-								<Link 
-									href="/register" 
-									className={`${styles.mobileMenuItem} ${styles.mobileRegisterButton}`}
-									onClick={handleMobileMenuClose}
-								>
-									{tc('register')}
 								</Link>
 							</>
 						)}

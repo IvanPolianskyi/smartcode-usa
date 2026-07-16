@@ -469,7 +469,13 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   )
   const isFirstLesson = lessonModuleIndex === 0 && currentLesson?.order === 1
   const explicitAllowedSet = new Set(allowedLessons || [])
-  const hasAccess = userRole === 'admin' || isPurchased || isAccessible || explicitAllowedSet.has(lessonId) || isFirstLesson
+  const hasAccess =
+    userRole === 'admin' ||
+    userRole === 'teacher' ||
+    isPurchased ||
+    isAccessible ||
+    explicitAllowedSet.has(lessonId) ||
+    isFirstLesson
   
   // Find current module
   const currentModule = lessonModuleIndex >= 0 ? curriculum.modules[lessonModuleIndex] : null
@@ -783,7 +789,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
 
   // Helper function to check if lesson is unlocked
   const isLessonUnlocked = (lesson) => {
-    if (userRole === 'admin' || isPurchased) return true
+    if (userRole === 'admin' || userRole === 'teacher' || isPurchased) return true
     return explicitAllowedSet.has(lesson.lessonId)
   }
 

@@ -1,1171 +1,1681 @@
-/** Rich EN content for Roblox Module 01 - lessons 1.1-1.3 */
+/** Roblox v2 Module 01 EN — AUTO gen-roblox-v2.mjs */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
+void MC
 
 export const enLesson11 = {
-  lessonId: 'lesson-roblox-1-1',
-  moduleId: 'module-01',
-  order: 1,
-  title: '1.1 - Welcome to Studio',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Install Roblox Studio and open the Baseplate template',
-    'Navigate the Viewport with W/A/S/D and mouse controls',
-    'Use Explorer and Properties to inspect and edit objects',
-    'Create Parts with color, size, material, and Anchored',
-    'Save your first place to Roblox cloud',
+  "lessonId": "lesson-roblox-1-1",
+  "moduleId": "module-01",
+  "order": 1,
+  "title": "1.1 — Welcome to Studio",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "відкрити Studio, зробити перший Part і зберегти свій Place.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Welcome to **Roblox Studio** - the tool behind obbies, simulators, tycoons, and roleplay worlds you play every day.
-
-**Lesson flow:**
-1. **Theory (40 min)** - read each section; try shortcuts in Studio as you go
-2. **Practice (~25 min in Studio)** - build three Parts and save your place
-3. **Quiz (10 min)** - 10 questions; pass with **70%** to unlock the next lesson
-
-Keep Studio open beside this page. Learning game dev works best when you **build while you read**.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** відкрити Studio, зробити перший Part і зберегти свій Place.\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'Player vs developer mindset',
-        content: `A **player** asks: "How do I win this level?"
-
-A **developer** asks:
-- What should happen when the player jumps here?
-- Which objects need to stay still?
-- What color tells the player "safe" vs "danger"?
-
-You are switching to developer mode. Every famous Roblox game started with someone placing their **first Part** - exactly what you will do today.`,
+        "title": "What you will build",
+        "content": "Place з іменем `M1_Dvir_Імʼя` + один Part `Foundation` (підлога двору) на сітці."
       },
       {
-        title: 'Install Studio (step by step)',
-        content: `1. Open **create.roblox.com** and sign in (parent approval required under 13)
-2. Click **Start Creating** - the Roblox Studio installer downloads
-3. Run the installer; first launch may take a few minutes
-4. On the home screen choose **New** → **Baseplate**
-
-**Baseplate** = flat floor + sky. Perfect for Lesson 1.
-
-**Troubleshooting:** If Studio will not open, update graphics drivers and confirm you have at least 4 GB RAM and Windows 10 / macOS 10.13+.`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M1_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'Studio layout - know your panels',
-        content: `| Area | Purpose |
-|------|---------|
-| **Viewport** (center) | 3D world you build in |
-| **Ribbon / Home** (top) | Part, Move, Scale, Play |
-| **Explorer** (right) | Tree of every object |
-| **Properties** (right, below) | Settings for selected object |
-| **Output** (bottom) | Errors from scripts (later) |
-
-**Exercise (3 min):** Click the Baseplate in the Viewport. Watch it highlight in Explorer. In Properties find **Name**, **Size**, **Anchored**.`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Camera controls - fly like a director',
-        content: `| Action | Control |
-|--------|---------|
-| Move forward / back | **W** / **S** |
-| Strafe left / right | **A** / **D** |
-| Move up / down | **E** / **Q** |
-| Rotate view | **Right mouse** + drag |
-| Zoom | **Mouse wheel** |
-| Focus selection | Select object → **F** |
-
-**Exercise (5 min):** Circle the Baseplate from above, from the side, and from ground level. Use **F** after selecting the floor.`,
+        "title": "Practice steps",
+        "content": "1. New → Baseplate 2. Part → перейменувати на `Foundation` 3. Anchored = ✓ 4. Save to Roblox → назва `M1_Dvir_Імʼя`"
       },
       {
-        title: 'Explorer - the family tree of your game',
-        content: `Everything in the game is an **Instance** in a parent-child tree.
-
-**Workspace** holds the 3D world. You will add Parts here.
-
-**Useful habits:**
-- **Single click** - select
-- **Double-click name** - rename (use real names: \`PurpleTower\`, not \`Part\`)
-- **Delete** - removes object
-- **Ctrl + D** - duplicate
-
-**Exercise (5 min):** Expand Workspace. Rename \`Baseplate\` to \`IslandFloor\` if you like.`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Properties - the passport of every object',
-        content: `When a **Part** is selected, Properties shows:
-
-| Property | Meaning |
-|----------|---------|
-| **Size** | X width, Y height, Z depth (studs) |
-| **Position** | Location in the world |
-| **BrickColor** | Preset colors |
-| **Material** | Visual style (Metal, Neon, Wood...) |
-| **Anchored** | If true, object ignores gravity |
-| **CanCollide** | If true, players bump into it |
-
-**Golden rule for Lesson 1:** floors and decoration → **Anchored = true**.`,
-      },
-      {
-        title: 'Create your first Parts',
-        content: `**Insert a Part:**
-- Home → **Part** → Block (or Sphere / Cylinder)
-- Shortcut: **Ctrl + Shift + P** (Windows)
-
-**Transform tools:**
-| Key | Tool |
-|-----|------|
-| **W** | Move |
-| **E** | Scale |
-| **R** | Rotate |
-
-**Exercise (10 min):** Add one Block. Scale it with **E**. Move it with **W**. Change BrickColor to a color you like. Set **Anchored = true**. Press **Play** (F5) - it should not fall.`,
-      },
-      {
-        title: 'Materials and Neon glow',
-        content: `**Material** changes how light hits the surface:
-- **SmoothPlastic** - clean default
-- **Metal** - shiny platforms
-- **Neon** - glows (great for signs and magic)
-
-Combine **Neon** + bright **BrickColor** for a sci-fi look.
-
-**Transparency** (0-1): 0 = solid, 1 = invisible. Use 0.3 for glass later.
-
-**Exercise (5 min):** Make one Part **Neon** cyan. Press Play in a dark ClockTime to see it glow (Lighting → ClockTime).`,
-      },
-      {
-        title: 'Save to Roblox cloud',
-        content: `**File → Save to Roblox** (not only Save to File on disk).
-
-Pick a name: \`Lesson 1.1 - My First Scene\`
-
-Your place is stored on your account - you can open it from any computer with Studio.
-
-**Before practice checklist:**
-- [ ] I can move the camera comfortably
-- [ ] I found Explorer and Properties
-- [ ] I inserted at least one Part and set Anchored
-- [ ] I know how to press Play and Stop`,
-      },
-    ],
+        "title": "Homework",
+        "content": "Відкрити свій Place вдома, додати Part `TestBlock`, зберегти. Скрін Explorer на наступний урок."
+      }
+    ]
   },
-  commonMistakes: [
+  "commonMistakes": [
     {
-      mistake: 'Parts fall through the floor when I press Play',
-      explanation: 'Gravity pulls unanchored Parts down.',
-      correctApproach: 'Select the Part → Properties → Anchored ✓',
+      "mistake": "Не зберегли Place (після перезапуску все зникло)",
+      "explanation": "This often breaks the lesson — fix it and check Play.",
+      "correctApproach": "Repeat the practice steps, then customize."
     },
     {
-      mistake: 'I cannot find Explorer',
-      explanation: 'Panels can be closed accidentally.',
-      correctApproach: 'View tab → enable Explorer and Properties',
+      "mistake": "Part провалився / не Anchored",
+      "explanation": "This often breaks the lesson — fix it and check Play.",
+      "correctApproach": "Repeat the practice steps, then customize."
     },
     {
-      mistake: 'Changes disappear after closing Studio',
-      explanation: 'Only saved places persist to your account.',
-      correctApproach: 'File → Save to Roblox after every practice session',
-    },
+      "mistake": "Пишуть українською в іменах обʼєктів з пробілами без системи — домовитись: `PascalCase` або `snake` латиницею",
+      "explanation": "This often breaks the lesson — fix it and check Play.",
+      "correctApproach": "Repeat the practice steps, then customize."
+    }
   ],
-  summary: `You learned what Roblox Studio is, how to move the camera, how Explorer and Properties work, and how to add anchored Parts with color and material. Your practice scene is the first entry in your game developer portfolio.`,
-  practiceTask: {
-    title: 'Studio practice - My First Scene (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Prove you can build and save a simple scene.
-
-### Part A - Purple tower (8 min)
-1. Insert **Block** → Name: \`PurpleTower\`
-2. Size: \`8, 8, 8\` | BrickColor: purple | Material: SmoothPlastic
-3. Anchored: **true** | Place on the Baseplate
-
-### Part B - Red platform (8 min)
-1. Insert **Block** → Name: \`RedPlatform\`
-2. Size: \`20, 1, 4\` | BrickColor: Bright red | Material: Metal
-3. Anchored: **true** | Use **W** to position like a walkway
-
-### Part C - Neon sphere (5 min)
-1. Insert **Sphere** → Name: \`GlowOrb\`
-2. Size: \`3, 3, 3\` | Material: **Neon** | Anchored: **true**
-
-### Test & save (4 min)
-1. Press **Play** - nothing should fall
-2. **File → Save to Roblox** → \`Lesson 1.1 - My First Scene\`
-3. Return here and click **Practice complete**`,
-    hints: [
-      'Rename every Part - good names save hours later',
-      'If something falls, Stop Play, select it, enable Anchored',
-      'Use F to frame the object you are editing',
+  "summary": "**1.1 — Welcome to Studio** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Welcome to Studio",
+    "difficulty": "beginner",
+    "description": "### Task\nPlace з іменем `M1_Dvir_Імʼя` + один Part `Foundation` (підлога двору) на сітці.\n\n\n### Steps\n1. New → Baseplate 2. Part → перейменувати на `Foundation` 3. Anchored = ✓ 4. Save to Roblox → назва `M1_Dvir_Імʼя`\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'Add **Atmosphere** under Lighting and set ClockTime to 17 for a sunset screenshot.',
+    "optionalChallenge": "Челендж: хто швидше і акуратніше збереже + надішле скрін Explorer у your teacher"
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'What template should you use for Lesson 1?', options: ['Obby', 'Baseplate', 'Flat Terrain', 'Empty'], correctAnswer: 1, explanation: 'Baseplate gives a simple floor to build on.' },
-      { id: 'q2', type: MC, question: 'Which key focuses the camera on the selected object?', options: ['P', 'F', 'G', 'H'], correctAnswer: 1, explanation: 'F frames the selection in the Viewport.' },
-      { id: 'q3', type: MC, question: 'Where do you see the list of all objects?', options: ['Properties', 'Explorer', 'Output', 'Toolbox'], correctAnswer: 1, explanation: 'Explorer shows the instance tree.' },
-      { id: 'q4', type: MC, question: 'What does Anchored = true do?', options: ['Makes Part invisible', 'Stops gravity on that Part', 'Deletes the Part', 'Adds sound'], correctAnswer: 1, explanation: 'Anchored Parts stay in place during Play.' },
-      { id: 'q5', type: MC, question: 'Which tool key opens Move?', options: ['W', 'E', 'R', 'T'], correctAnswer: 0, explanation: 'W = Move, E = Scale, R = Rotate.' },
-      { id: 'q6', type: MC, question: 'Which Material makes a Part glow?', options: ['Wood', 'Grass', 'Neon', 'Sand'], correctAnswer: 2, explanation: 'Neon material emits light.' },
-      { id: 'q7', type: MC, question: 'Size uses three numbers. What do they mean?', options: ['RGB colors', 'X width, Y height, Z depth', 'Rotation angles', 'Player speed'], correctAnswer: 1, explanation: 'Size is measured in studs on X, Y, Z.' },
-      { id: 'q8', type: MC, question: 'How do you save to your Roblox account?', options: ['File → Save to File only', 'File → Save to Roblox', 'Edit → Copy', 'Home → Publish'], correctAnswer: 1, explanation: 'Save to Roblox uploads the place to your account.' },
-      { id: 'q9', type: MC, question: 'Red text in Output usually means...', options: ['A script error', 'Success message', 'Network lag', 'New Part added'], correctAnswer: 0, explanation: 'Output shows errors when scripts break.' },
-      { id: 'q10', type: MC, question: 'Before Play, floors and walls should usually be...', options: ['Anchored false', 'Anchored true', 'Transparency 1', 'CanCollide false'], correctAnswer: 1, explanation: 'Anchored true keeps building parts stable.' },
-    ],
-  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Для чого потрібен Roblox Studio?",
+        "options": [
+          "Лише грати в чужі ігри",
+          "Створювати й редагувати ігри/світи",
+          "Завантажувати фільми",
+          "Писати повідомлення друзям"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Створювати й редагувати ігри/світи"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Що таке Place у Roblox?",
+        "options": [
+          "Скін аватара",
+          "Файл/світ твоєї гри",
+          "Група друзів",
+          "Магазин Robux"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Файл/світ твоєї гри"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Яка кнопка зберігає проєкт у хмару Roblox?",
+        "options": [
+          "Play",
+          "Save to Roblox / Publish",
+          "Toolbox",
+          "Terrain"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Save to Roblox / Publish"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Навіщо Part на початку уроку називаємо `Foundation`?",
+        "options": [
+          "Щоб Studio швидше працювало",
+          "Щоб легко знаходити обʼєкт в Explorer",
+          "Бо інакше Part не зʼявиться",
+          "Це обовʼязкова назва від Roblox"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Щоб легко знаходити обʼєкт в Explorer"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Що робить властивість Anchored = true?",
+        "options": [
+          "Робить Part невидимим",
+          "Фіксує Part, щоб не падав від гравітації",
+          "Збільшує Part удвічі",
+          "Вмикає звук"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Фіксує Part, щоб не падав від гравітації"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Що станеться, якщо Part не закріпити (Anchored = false) на Baseplate-світі з гравітацією?",
+        "options": [
+          "Нічого",
+          "Може впасти / зʼїхати",
+          "Автоматично стане моделлю",
+          "Стане золотим"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Може впасти / зʼїхати"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Де краще дивитися список усіх обʼєктів у світі?",
+        "options": [
+          "У чаті",
+          "В Explorer",
+          "У Avatar Editor",
+          "У магазині"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: В Explorer"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Навіщо на уроці домовились іменувати обʼєкти латиницею/PascalCase?",
+        "options": [
+          "Бо українська заборонена в Studio",
+          "Щоб імена були зрозумілі й зручні для роботи в команді/коді пізніше",
+          "Щоб Part став більшим",
+          "Це потрібно для Robux"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Щоб імена були зрозумілі й зручні для роботи в команді/коді пізніше"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Що робити першим після створення важливих змін у світі?",
+        "options": [
+          "Видалити Baseplate",
+          "Зберегти Place",
+          "Відкрити Toolbox",
+          "Увімкнути музику"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Зберегти Place"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Який артефакт ми зробили на уроці 1.1?",
+        "options": [
+          "Готову гру з монстрами",
+          "Place + Part Foundation",
+          "Скрипт на Lua",
+          "Анімацію персонажа"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Place + Part Foundation"
+      }
+    ]
+  }
 }
 
 export const enLesson12 = {
-  lessonId: 'lesson-roblox-1-2',
-  moduleId: 'module-01',
-  order: 2,
-  title: '1.2 - Building an Island',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Tell Terrain apart from Parts',
-    'Generate an island with the Terrain Editor',
-    'Sculpt land with Add, Subtract, and Smooth',
-    'Paint grass, sand, rock, and water materials',
-    'Save terrain work to Roblox',
+  "lessonId": "lesson-roblox-1-2",
+  "moduleId": "module-01",
+  "order": 2,
+  "title": "1.2 — Camera and first path",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "вільно крутити камеру й зібрати рівнішу доріжку з кількох Part на сітці.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Lesson plan (40 + 10 minutes)',
-        content: `Today you sculpt a real **island** with Roblox **Terrain** - not single blocks, but continuous land you can raise, dig, and paint.
-
-**Flow:** Theory → 25 min island practice → 10 min quiz.
-
-Open your **Lesson 1.1** place or start a new Baseplate. Terrain edits are easier on a dedicated place file.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** вільно крутити камеру й зібрати рівнішу доріжку з кількох Part на сітці.\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'Parts vs Terrain',
-        content: `| | **Parts** | **Terrain** |
-|---|-----------|-------------|
-| Shape | Blocks, spheres, wedges | Hills, lakes, beaches |
-| Best for | Buildings, buttons, props | Natural worlds |
-| Edit | Move / Scale tools | Generate, Sculpt, Paint |
-
-Many games use **both**: Terrain for the island, Parts for docks and signs.`,
+        "title": "What you will build",
+        "content": "Доріжка `Path` з 8–12 блоків від краю `Foundation` до «воріт» (позначити двома стовпами)."
       },
       {
-        title: 'Open Terrain Editor',
-        content: `**Home → Editor** (Terrain section)
-
-Three tabs you need today:
-1. **Generate** - create land from scratch
-2. **Sculpt** - Add / Subtract / Smooth
-3. **Paint** - grass, sand, rock, water
-
-If terrain already exists and looks wrong, select **Terrain** in Workspace → Delete → start fresh.`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M1_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'Generate - island in one click',
-        content: `1. Open **Generate**
-2. Set size about **512 × 100 × 512**
-3. Biome: **Islands** (or Mountains for practice)
-4. Click **Generate** - wait 5-15 seconds
-
-Not happy? **Ctrl + Z** and generate again.
-
-**Seed** controls the shape. Write down the seed if you love a layout and want to recreate it.`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Sculpt - Add (build land)',
-        content: `**Add** raises land. Click and drag:
-- Pull hills out of the ocean
-- Widen the island
-- Connect two land masses
-
-**Brush size:** large brush for shape, small brush for detail.
-
-**Exercise (8 min):** Add one clear hill on your island. Make it playable - not too steep for a character to walk.`,
+        "title": "Practice steps",
+        "content": "1. Разом — 4 блоки 2. Самі — ще 4–8 + ворота 3. Челендж — Play Mode тест «чи рівні»"
       },
       {
-        title: 'Sculpt - Subtract (carve)',
-        content: `**Subtract** digs:
-- Lakes and ponds
-- Rivers
-- Caves and cliffs
-
-In **Add** mode, **Ctrl + click** acts as Subtract on many Studio versions.
-
-**Exercise (8 min):** Carve a bay or lake. Leave a beach strip between water and high land.`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Sculpt - Smooth (polish)',
-        content: `Raw terrain looks spiky. **Smooth** softens edges.
-
-**Workflow:** Add/Subtract for shape → **Smooth** entire playable area last.
-
-**Exercise (5 min):** Run Smooth along shores and hilltops until slopes look natural.`,
-      },
-      {
-        title: 'Paint - materials tell a story',
-        content: `| Material | Use on |
-|----------|--------|
-| **Grass** | Main land |
-| **Sand** | Beaches |
-| **Rock** | Cliffs and peaks |
-| **Water** | Low areas / sea |
-| **Snow** | Mountain tops (optional) |
-
-**Order:** Grass base → Sand near water → Rock on peaks.
-
-**Exercise (8 min):** Paint at least three material types on your island.`,
-      },
-      {
-        title: 'Test in Play & save',
-        content: `Press **Play** - walk your character along the shore and up a hill.
-
-**Check:**
-- No accidental holes through terrain
-- Slopes are walkable
-- Water areas look correct
-
-**File → Save to Roblox** → \`Lesson 1.2 - My Island\`
-
-Terrain is heavy - save often.`,
-      },
-    ],
+        "title": "Homework",
+        "content": "Додати збоку маленьку «клумбу» з 3 Part іншого кольору. Не ламати доріжку."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'Generate freezes or shows nothing', explanation: 'Old terrain data can conflict.', correctApproach: 'Delete Terrain in Workspace, generate again' },
-    { mistake: 'Terrain looks like spikes', explanation: 'Subtract/Add without smoothing.', correctApproach: 'Use Smooth brush over the whole island' },
-    { mistake: 'Water looks static in edit mode', explanation: 'Animation often shows only in Play.', correctApproach: 'Press Play to preview water movement' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You can generate an island, sculpt hills and lakes, smooth slopes, and paint realistic materials - the foundation of most Roblox outdoor maps.`,
-  practiceTask: {
-    title: 'Island build challenge (~25 min)',
-    difficulty: 'beginner',
-    description: `1. **Generate** biome Islands (512 area)
-2. **Add** - one mountain or hill
-3. **Subtract** - lake or bay
-4. **Smooth** - entire play area
-5. **Paint** - Grass, Sand at shore, Rock on peak
-6. **Play-test** walk path
-7. **Save to Roblox** as \`Lesson 1.2 - My Island\`
-8. Mark **Practice complete** here`,
-    hints: ['Large brush first, small brush last', 'Save immediately after sculpting', 'Smooth before Paint for cleaner blends'],
-    optionalChallenge: 'Shape the island like your first initial when viewed from above.',
-  },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'Terrain is best for...', options: ['UI menus', 'Natural hills and lakes', 'Scripts only', 'Sound effects'], correctAnswer: 1, explanation: 'Terrain is for organic landscapes.' },
-      { id: 'q2', type: MC, question: 'Which tab creates land from a seed?', options: ['Paint', 'Generate', 'Select', 'Play'], correctAnswer: 1, explanation: 'Generate builds initial terrain.' },
-      { id: 'q3', type: MC, question: 'Subtract is used to...', options: ['Add trees', 'Dig holes and lakes', 'Change sky', 'Spawn players'], correctAnswer: 1, explanation: 'Subtract removes terrain volume.' },
-      { id: 'q4', type: MC, question: 'Smooth helps...', options: ['Add scripts', 'Soften jagged edges', 'Delete the game', 'Change font'], correctAnswer: 1, explanation: 'Smooth polishes terrain surfaces.' },
-      { id: 'q5', type: MC, question: 'Sand material is usually placed...', options: ['On mountain peaks', 'On beaches and shores', 'Inside scripts', 'On SpawnLocation'], correctAnswer: 1, explanation: 'Sand fits coastlines.' },
-      { id: 'q6', type: MC, question: 'Recommended biome for Lesson 1.2 is...', options: ['Caves only', 'Islands', 'City', 'Empty'], correctAnswer: 1, explanation: 'Islands biome fits the lesson goal.' },
-      { id: 'q7', type: MC, question: 'If Generate fails, first try...', options: ['Reinstall Windows', 'Delete old Terrain', 'Remove all scripts', 'Change language'], correctAnswer: 1, explanation: 'Clear broken terrain then regenerate.' },
-      { id: 'q8', type: MC, question: 'Grass is typically painted on...', options: ['Underwater only', 'Main flat and hilly land', 'Skybox', 'Output window'], correctAnswer: 1, explanation: 'Grass covers general land areas.' },
-      { id: 'q9', type: MC, question: 'Ctrl+Z after a bad Generate...', options: ['Deletes your account', 'Undoes the generation', 'Publishes game', 'Adds paywall'], correctAnswer: 1, explanation: 'Undo lets you try another seed.' },
-      { id: 'q10', type: MC, question: 'Terrain work should be saved with...', options: ['File → Save to Roblox', 'Only screenshot', 'Delete Terrain', 'Nothing'], correctAnswer: 0, explanation: 'Save to Roblox stores terrain in the place.' },
+  "summary": "**1.2 — Camera and first path** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Camera and first path",
+    "difficulty": "beginner",
+    "description": "### Task\nДоріжка `Path` з 8–12 блоків від краю `Foundation` до «воріт» (позначити двома стовпами).\n\n\n### Steps\n1. Разом — 4 блоки 2. Самі — ще 4–8 + ворота 3. Челендж — Play Mode тест «чи рівні»\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
+    "optionalChallenge": "Челендж: пройти доріжку в Play Mode без зістрибування (Anchored?)"
   },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Яка клавіша/дія зазвичай допомагає крутити огляд камери навколо світу?",
+        "options": [
+          "Тільки Enter",
+          "ПКМ + рух миші (або подібне керування камерою)",
+          "Delete",
+          "Publish"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: ПКМ + рух миші (або подібне керування камерою)"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Навіщо вмикати Snap to Grid при будівництві доріжки?",
+        "options": [
+          "Щоб Part світився",
+          "Щоб блоки вставали рівніше один до одного",
+          "Щоб пришвидшити інтернет",
+          "Щоб увімкнути скрипти"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Щоб блоки вставали рівніше один до одного"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Що робить Duplicate (Ctrl+D)?",
+        "options": [
+          "Видаляє Part",
+          "Створює копію виділеного обʼєкта",
+          "Зберігає Place",
+          "Відкриває Toolbox"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Створює копію виділеного обʼєкта"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Якщо блоки доріжки «східцями» різної висоти — що перевірити першим?",
+        "options": [
+          "Колір неба",
+          "Position.Y / вирівнювання",
+          "Імʼя акаунта",
+          "Кількість друзів"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Position.Y / вирівнювання"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Навіщо тестувати доріжку через Play?",
+        "options": [
+          "Щоб опублікувати одразу",
+          "Щоб відчути як гравець: чи зручно йти, чи немає дірок",
+          "Щоб видалити Explorer",
+          "Це обовʼязково для збереження"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Щоб відчути як гравець: чи зручно йти, чи немає дірок"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Чому стовпам дали імена `GateL` і `GateR`?",
+        "options": [
+          "Випадково",
+          "Щоб розрізняти лівий і правий в Explorer",
+          "Інакше не видно в грі",
+          "Так вимагає Roblox"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Щоб розрізняти лівий і правий в Explorer"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Якщо Part доріжки падає під час Play — ймовірна причина?",
+        "options": [
+          "Anchored вимкнено",
+          "Занадто гарний Material",
+          "Довге імʼя",
+          "Увімкнений Snap"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Anchored вимкнено"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Скільки блоків мінімум ми цілимо на доріжку на уроці?",
+        "options": [
+          "1",
+          "8–12",
+          "100",
+          "0"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: 8–12"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Що таке «шар разом → самі → челендж»?",
+        "options": [
+          "Три спроби видалити Baseplate",
+          "Три рівні складності практики на одному навику",
+          "Три акаунти Roblox",
+          "Три мови програмування"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Три рівні складності практики на одному навику"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Який артефакт уроку 1.2?",
+        "options": [
+          "Скрипт телепорта",
+          "Доріжка + ворота",
+          "UI меню",
+          "NPC охоронець"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Доріжка + ворота"
+      }
+    ]
+  }
 }
 
 export const enLesson13 = {
-  lessonId: 'lesson-roblox-1-3',
-  moduleId: 'module-01',
-  order: 3,
-  title: '1.3 - Objects and Properties',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Organize objects with Folders and Models',
-    'Edit Position, Size, and Orientation precisely',
-    'Use CanCollide and Anchored together correctly',
-    'Build a dock scene with named Parts on your island',
+  "lessonId": "lesson-roblox-1-3",
+  "moduleId": "module-01",
+  "order": 3,
+  "title": "1.3 — Explorer: world order",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "навчитись знаходити, перейменовувати, ховати й складати обʼєкти в Folder.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Why organization matters',
-        content: `After terrain, your island needs **props**: docks, signs, lamps, trees.
-
-At 50 objects, Explorer chaos slows you down. At 500, it breaks projects.
-
-Today you learn **Folders**, **Models**, and precise **Properties** - habits used in shipped Roblox games.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** навчитись знаходити, перейменовувати, ховати й складати обʼєкти в Folder.\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'The Instance tree (review)',
-        content: `Every object has a **Parent** and optional **Children**.
-
-\`Workspace\` → \`Folder\` → \`Model\` → \`Part\`
-
-Clicking a Part in the Viewport selects it in Explorer. Renaming is mandatory discipline.`,
+        "title": "What you will build",
+        "content": "Структура: ``` Workspace Yard (Folder) Foundation Path (Folder) → блоки доріжки GateL, GateR ```"
       },
       {
-        title: 'Folders - simple containers',
-        content: `**Insert → Folder** or right-click Workspace → Insert Folder.
-
-Examples:
-- \`Environment\`
-- \`Dock\`
-- \`LightingProps\`
-
-Drag Parts into folders. Folders do not move as one unit - they only organize.`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M1_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'Models - move groups together',
-        content: `Select multiple Parts → **Ctrl + G** (Group) or right-click → **Group**.
-
-You get a **Model** - move it with Move tool and all children follow.
-
-Rename: \`Dock_Main\`, \`Pier_Lamps\`.
-
-**Exercise (10 min):** Build 4 planks as one Model walkway.`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Position and Size numbers',
-        content: `**Move (W)** is fast. **Properties → Position** is exact.
-
-Copy Position from one plank to the next - change only **X** or **Z** for a perfect row.
-
-**Size** \`20, 1, 4\` = wide flat plank.
-
-**Orientation** rotates in degrees (0, 90, 0) for turned planks.`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'CanCollide and Anchored matrix',
-        content: `| Anchored | CanCollide | Typical use |
-|----------|------------|-------------|
-| true | true | Walls, floors, dock |
-| true | false | Fireflies, fog cards |
-| false | true | Physics crates (later) |
-
-For static builds: **both true** on walkable surfaces.`,
-      },
-      {
-        title: 'Naming convention',
-        content: `Use **PascalCase** or **snake_case** consistently:
-
-Good: \`Dock_Plank_01\`, \`Lamp_Post_A\`
-Bad: \`Part\`, \`Part\`, \`Part\`
-
-Future you (and teammates) will search by name in Explorer.`,
-      },
-      {
-        title: 'Build a dock on your island',
-        content: `Place dock on **flat sand** near water from Lesson 1.2.
-
-Suggested layout:
-- 5-8 plank Parts (Wood material)
-- 2 vertical posts
-- 1 Neon lamp Part for visibility
-
-Group planks into \`Dock_Platform\` Model inside \`Dock\` Folder.`,
-      },
-      {
-        title: 'Quality check before quiz',
-        content: `**Play-test checklist:**
-- [ ] Character walks on planks without falling through
-- [ ] No unanchored Parts fall
-- [ ] Explorer shows Folder → Model → Parts
-- [ ] Every Part has a unique useful name
-- [ ] Saved as \`Lesson 1.3 - Island Dock\``,
-      },
-    ],
+        "title": "Homework",
+        "content": "Прибрати всі Part з іменами за замовчуванням. Скрін фінального Explorer."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'Parts float above ground', explanation: 'Position Y not aligned.', correctApproach: 'Set same Y on all planks; use Move with grid snap' },
-    { mistake: 'Cannot select one plank in Model', explanation: 'Double-click or expand Model in Explorer.', correctApproach: 'Expand Model tree or use Drill-down select' },
-    { mistake: 'Model moves but planks stay', explanation: 'Parts not parented to Model.', correctApproach: 'Group again so Parts are children of Model' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You organized a dock with Folders and Models, used Properties for exact placement, and kept collision rules consistent - professional Studio workflow.`,
-  practiceTask: {
-    title: 'Dock build (~25 min)',
-    difficulty: 'beginner',
-    description: `On your Lesson 1.2 island:
-
-1. Create Folder \`Dock\` in Workspace
-2. Add **6+ Parts** (planks, posts, lamp)
-3. All **Anchored true**, walkable planks **CanCollide true**
-4. Group planks into Model \`Dock_Platform\`
-5. Align using Position (same Y for deck)
-6. **Save to Roblox** → \`Lesson 1.3 - Island Dock\`
-7. **Practice complete**`,
-    hints: ['Ctrl+D duplicates a selected plank', 'Copy Position X/Z with small steps for spacing', 'Neon lamp helps find dock at night'],
-    optionalChallenge: 'Add a sign Part with your game name in bright Neon letters.',
-  },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'A Folder is mainly for...', options: ['Running scripts', 'Organizing objects', 'Playing music', 'Spawning enemies'], correctAnswer: 1, explanation: 'Folders group objects in Explorer.' },
-      { id: 'q2', type: MC, question: 'A Model lets you...', options: ['Move multiple parts together', 'Delete terrain', 'Change language', 'Ban players'], correctAnswer: 0, explanation: 'Models act as one movable group.' },
-      { id: 'q3', type: MC, question: 'Ctrl+G typically...', options: ['Groups selection into a Model', 'Deletes workspace', 'Opens shop', 'Saves game'], correctAnswer: 0, explanation: 'Group creates a Model from selection.' },
-      { id: 'q4', type: MC, question: 'Exact coordinates are edited in...', options: ['Output', 'Properties', 'Chat', 'Avatar'], correctAnswer: 1, explanation: 'Position lives in Properties.' },
-      { id: 'q5', type: MC, question: 'Walkable dock planks should usually have...', options: ['Anchored true, CanCollide true', 'Anchored false only', 'Transparency 1', 'No name'], correctAnswer: 0, explanation: 'Static walkable parts use both.' },
-      { id: 'q6', type: MC, question: 'Size 20, 1, 4 means...', options: ['20 wide, 1 tall, 4 deep', '20 players', '20 scripts', 'RGB 20,1,4'], correctAnswer: 0, explanation: 'Size is X, Y, Z in studs.' },
-      { id: 'q7', type: MC, question: 'Bad naming looks like...', options: ['Dock_Plank_03', 'Part, Part, Part', 'Lamp_Post', 'Pier_Main'], correctAnswer: 1, explanation: 'Generic names cause confusion.' },
-      { id: 'q8', type: MC, question: 'Parts inside a Model are...', options: ['Children of the Model', 'Outside Workspace', 'Always invisible', 'Scripts only'], correctAnswer: 0, explanation: 'Grouped parts parent to the Model.' },
-      { id: 'q9', type: MC, question: 'Ctrl+D is useful to...', options: ['Duplicate selected object', 'Delete account', 'Debug Lua', 'Paint terrain'], correctAnswer: 0, explanation: 'Duplicate speeds building repeated planks.' },
-      { id: 'q10', type: MC, question: 'Lesson 1.3 save name suggestion...', options: ['Lesson 1.3 - Island Dock', 'Untitled', 'Test123', 'asdf'], correctAnswer: 0, explanation: 'Clear names help track course progress.' },
+  "summary": "**1.3 — Explorer: world order** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Explorer: world order",
+    "difficulty": "beginner",
+    "description": "### Task\nСтруктура: ``` Workspace Yard (Folder) Foundation Path (Folder) → блоки доріжки GateL, GateR ```\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
+    "optionalChallenge": "Polish the artifact a bit and be ready to show it for 20 seconds."
   },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Explorer показує…",
+        "options": [
+          "Тільки гравців онлайн",
+          "Дерево обʼєктів у місці/сервісах",
+          "Ціну Robux",
+          "Список YouTube"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Дерево обʼєктів у місці/сервісах"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Folder у Workspace потрібен щоб…",
+        "options": [
+          "Пришвидшити Wi-Fi",
+          "Групувати обʼєкти для порядку",
+          "Замінити Material",
+          "Увімкнути гравітацію"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Групувати обʼєкти для порядку"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Якщо Part лежить «всередині» Folder у дереві — це…",
+        "options": [
+          "Parent/child звʼязок у ієрархії",
+          "Помилка Studio",
+          "Видалений Part",
+          "Окрема гра"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Parent/child звʼязок у ієрархії"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Навіщо перейменовувати `Part` → `Path_01`?",
+        "options": [
+          "Щоб швидше шукати й розуміти світ",
+          "Бо Part не працює без імені Path",
+          "Щоб стати адміном",
+          "Це вмикає звук"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Щоб швидше шукати й розуміти світ"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Що робити з зайвими тестовими кубами після експериментів?",
+        "options": [
+          "Залишити як є назавжди",
+          "Видалити або скласти в Folder `Trash` і потім прибрати",
+          "Опублікувати гру одразу",
+          "Змінити небо"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Видалити або скласти в Folder `Trash` і потім прибрати"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Пошук у Explorer допомагає коли…",
+        "options": [
+          "Обʼєктів мало і всі видно",
+          "Обʼєктів багато / треба швидко знайти за імʼям",
+          "Немає інтернету",
+          "Вимкнено Snap"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Обʼєктів багато / треба швидко знайти за імʼям"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Чи змінює Folder сам по собі вигляд Part у грі?",
+        "options": [
+          "Так, завжди робить синім",
+          "Ні, це організаційна «коробка»",
+          "Видаляє Anchored",
+          "Додає скрипт"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Ні, це організаційна «коробка»"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Яка структура була ціллю уроку?",
+        "options": [
+          "Усі Parts у випадковому порядку без імен",
+          "`Yard` → Foundation / Path / Gate",
+          "Тільки ServerStorage",
+          "Тільки Lighting"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: `Yard` → Foundation / Path / Gate"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "«Сищик» на уроці тренує…",
+        "options": [
+          "Стрільбу",
+          "Навичку орієнтуватися в Explorer",
+          "Математику множення",
+          "Монтаж відео"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Навичку орієнтуватися в Explorer"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Що здаємо як доказ порядку?",
+        "options": [
+          "Скрін аватара",
+          "Скрін Explorer після прибирання",
+          "Номер телефону",
+          "Відео з TikTok"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Скрін Explorer після прибирання"
+      }
+    ]
+  }
 }
 
 export const enLesson14 = {
-  lessonId: 'lesson-roblox-1-4',
-  moduleId: 'module-01',
-  order: 4,
-  title: '1.4 - First Magic: ClickDetector',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Add a ClickDetector to make a Part clickable',
-    'Write your first server Script in Luau',
-    'Connect MouseClick to change color and print to Output',
-    'Debug common script errors with the Output window',
-    'Understand Script vs LocalScript for this lesson',
+  "lessonId": "lesson-roblox-1-4",
+  "moduleId": "module-01",
+  "order": 4,
+  "title": "1.4 — Parts and Properties",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "свідомо змінювати Size, Color, Material, Transparency, CanCollide, Anchored.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Until now you **built** worlds. Today your world **reacts** to the player - that is real game development.
-
-**Lesson flow:**
-1. **Theory (40 min)** - ClickDetector + your first Luau script
-2. **Practice (~25 min)** - three clickable objects on your island
-3. **Quiz (10 min)** - 10 questions, **70%** to pass
-
-Open your **Lesson 1.3 - Island Dock** place. Keep **Output** visible (View → Output).`,
+        "title": "Today’s goal",
+        "content": "**Goal:** свідомо змінювати Size, Color, Material, Transparency, CanCollide, Anchored.\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'Builder vs developer',
-        content: `A **builder** asks: "Does this dock look good?"
-
-A **developer** asks:
-- What happens when the player clicks this button?
-- Who sees the change - everyone or only one player?
-- What message or sound confirms the click?
-
-**Luau** is Roblox's language (like Lua). Scripts on the **server** run once for the whole game - perfect for doors, buttons, and scores everyone shares.`,
+        "title": "What you will build",
+        "content": "`Bench` (лавка): сидіння + 2 ніжки. Окремо `GlassPanel` з Transparency."
       },
       {
-        title: 'Script types - use the right one',
-        content: `| Type | Where it runs | Use in Lesson 1.4 |
-|------|----------------|-------------------|
-| **Script** | Server | ✅ Yes - click buttons |
-| **LocalScript** | One player's device | ❌ Not yet - UI and camera later |
-
-**Rule today:** put a **Script** **inside the Part** you click (child of the Part).
-
-**Never** put gameplay logic only on your computer - other players would not see it.`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M1_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'ClickDetector - turn a Part into a button',
-        content: `1. Select a Part (golden cube on your dock works great)
-2. **Insert** → **ClickDetector** (must be a **child** of that Part)
-3. In Properties set **MaxActivationDistance** to \`32\` (studs)
-
-| Property | Meaning |
-|----------|---------|
-| **MaxActivationDistance** | How far away a click still works |
-| **MaxActivationDistance** | Too low = hard to click; too high = clicks from far away |
-
-The Part should be **Anchored**, visible, and named \`ClickButton_Red\` (not \`Part\`).
-
-**Exercise (5 min):** Add ClickDetector to one Part. Do not script yet - just confirm it appears under the Part in Explorer.`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Your first script - copy and understand',
-        content: `1. Select the same Part (with ClickDetector)
-2. **Insert** → **Script** (not LocalScript)
-3. Delete sample code. Paste:
-
-\`\`\`lua
-local part = script.Parent
-local detector = part:WaitForChild("ClickDetector")
-
-detector.MouseClick:Connect(function(player)
-    print(player.Name .. " clicked the button!")
-    part.BrickColor = BrickColor.new("Bright green")
-end)
-\`\`\`
-
-**Line by line:**
-- \`local\` - create a variable
-- \`script.Parent\` - the Part holding this Script
-- \`WaitForChild\` - wait until ClickDetector exists (avoids errors on load)
-- \`Connect(function(player) ... end)\` - run code when someone clicks
-- \`print(...)\` - write to **Output**
-- \`BrickColor.new(...)\` - change Part color for everyone`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Test in Play - read Output',
-        content: `Press **Play** (F5). Click your Part in the 3D view.
-
-**Output** should show:
-\`YourName clicked the button!\`
-
-The Part should turn **Bright green**.
-
-**Exercise (8 min):** Click 3 times. Confirm color stays green and Output shows your username each time.
-
-**Stop Play** before editing scripts again - live editing while playing is confusing at first.`,
-      },
-      {
-        title: 'Debug red errors in Output',
-        content: `| Error message | Fix |
-|---------------|-----|
-| \`ClickDetector is not a valid member\` | ClickDetector missing or wrong name - must be exactly \`ClickDetector\` |
-| \`attempt to index nil\` | Script not inside the Part - move Script under the Part |
-| \`MouseClick is not a valid member\` | You used a Part without ClickDetector |
-| Nothing prints | Not in **Play** mode, or click too far - raise MaxActivationDistance |
-
-**Habit:** read the **first line** of the error, then check Explorer tree: \`Part → ClickDetector\`, \`Part → Script\`.`,
-      },
-      {
-        title: 'Upgrade - sound on click',
-        content: `1. Select the Part → **Insert** → **Sound**
-2. Name it \`ClickSound\`
-3. Set **SoundId** from Toolbox → Audio (or a known rbxassetid)
-4. **Volume** \`0.5\`, **Looped** false
-
-Add after the color line in your script:
-
-\`\`\`lua
-local sound = part:FindFirstChild("ClickSound")
-if sound then
-    sound:Play()
-end
-\`\`\`
-
-**FindFirstChild** is safer than WaitForChild when sound is optional.
-
-**Exercise (5 min):** Click = green color + short sound. That combination is called **game feel**.`,
-      },
-      {
-        title: 'Three buttons - one template',
-        content: `You will build **3 Parts**, each with its own ClickDetector + Script.
-
-Copy the template; only change:
-- Part name and starting **BrickColor**
-- Target color in \`BrickColor.new("...")\`
-- Optional: change **Size** instead of color on the third button
-
-**Organize in Explorer:**
-\`Folder Interactives\` → \`ClickButton_Red\`, \`ClickCrystal_Blue\`, \`ClickSign_Wood\`
-
-**Before practice checklist:**
-- [ ] I know Script goes inside the Part
-- [ ] I can open Output and read print messages
-- [ ] I tested one button in Play successfully`,
-      },
-    ],
+        "title": "Homework",
+        "content": "Стілець `Chair` (сидіння + спинка + 4 ніжки або спрощено 2). У Folder `Yard/Furniture`."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'Click does nothing in Edit mode', explanation: 'ClickDetector only fires during Play.', correctApproach: 'Press F5 (Play), then click the Part in the Viewport' },
-    { mistake: 'Used LocalScript instead of Script', explanation: 'LocalScripts do not run in Part the same way for this lesson.', correctApproach: 'Delete LocalScript; Insert → Script under the Part' },
-    { mistake: 'Script is under Workspace, not Part', explanation: 'script.Parent becomes Workspace - wrong object.', correctApproach: 'Drag Script onto the Part so it is a child' },
-    { mistake: 'Color changes in Studio but not for friends', explanation: 'You tested in solo - server script is correct for everyone.', correctApproach: 'Server Script on Part is the right pattern for shared buttons' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You added ClickDetectors, wrote your first server Luau script, connected MouseClick to print and visual feedback, and debugged with Output - the moment your island became interactive.`,
-  practiceTask: {
-    title: 'Click magic - three island buttons (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Three working clickables with different effects.
-
-### Setup (3 min)
-1. Open your **Lesson 1.3** place (island + dock)
-2. Create Folder \`Interactives\` in Workspace
-
-### Part A - Red button (8 min)
-1. Insert **Block** → Name: \`ClickButton_Red\` | BrickColor: Bright red | Anchored: **true**
-2. Insert **ClickDetector** + **Script** (template from theory)
-3. On click: turn **Bright green** + \`print\` player name
-
-### Part B - Blue crystal (8 min)
-1. Insert **Sphere** → Name: \`ClickCrystal_Blue\` | Material: **Neon** | Anchored: **true**
-2. ClickDetector + Script - on click: **Bright yellow** + print message
-3. Add **Sound** child optional
-
-### Part C - Wooden sign (6 min)
-1. Insert **Block** → Name: \`ClickSign_Wood\` | Size: \`1, 4, 0.3\` | Material: Wood
-2. On click: change **Size** to \`1.5, 6, 0.3\` (taller sign) + print
-
-### Test & save (4 min)
-1. **Play** - click all three; screenshot **Output** with 3 different messages
-2. **File → Save to Roblox** → \`Lesson 1.4 - Click Magic\`
-3. **Practice complete** here`,
-    hints: [
-      'Copy one working Script - change only names and BrickColor strings',
-      'MaxActivationDistance 32 if clicks feel too picky',
-      'Stop Play before editing scripts',
+  "summary": "**1.4 — Parts and Properties** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Parts and Properties",
+    "difficulty": "beginner",
+    "description": "### Task\n`Bench` (лавка): сидіння + 2 ніжки. Окремо `GlassPanel` з Transparency.\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'After any button is clicked 3 times total, set Lighting ClockTime to 0 (night).',
+    "optionalChallenge": "Челендж: «невидима стіна» (Transparency 1, CanCollide true) — друзі натрапляють у Play"
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'For a button everyone sees, use...', options: ['LocalScript in StarterPlayer', 'Script inside the Part', 'Sound only', 'Terrain brush'], correctAnswer: 1, explanation: 'Server Script on the Part runs for all players.' },
-      { id: 'q2', type: MC, question: 'ClickDetector must be a...', options: ['Child of the Part you click', 'Child of Lighting', 'Sibling of Workspace', 'Inside ServerScriptService'], correctAnswer: 0, explanation: 'ClickDetector parents to the clickable Part.' },
-      { id: 'q3', type: MC, question: 'script.Parent refers to...', options: ['The player', 'The object the Script is inside', 'The sky', 'Roblox website'], correctAnswer: 1, explanation: 'Parent is the Part containing the Script.' },
-      { id: 'q4', type: MC, question: 'MouseClick fires when...', options: ['You save the game', 'A player clicks the Part in Play', 'You insert Terrain', 'Studio opens'], correctAnswer: 1, explanation: 'Clicks are detected during Play mode.' },
-      { id: 'q5', type: MC, question: 'print() writes to...', options: ['Explorer', 'Output', 'Properties', 'Toolbox'], correctAnswer: 1, explanation: 'Output shows print and errors.' },
-      { id: 'q6', type: MC, question: 'WaitForChild("ClickDetector") helps...', options: ['Change sky color', 'Avoid errors if child loads late', 'Delete terrain', 'Spawn enemies'], correctAnswer: 1, explanation: 'WaitForChild waits for the child to exist.' },
-      { id: 'q7', type: MC, question: 'MaxActivationDistance controls...', options: ['Part color', 'How far away clicks work', 'Sound volume', 'Terrain size'], correctAnswer: 1, explanation: 'Distance limit for click activation.' },
-      { id: 'q8', type: MC, question: 'Red Output text usually means...', options: ['Success', 'A script error', 'New Part added', 'Game published'], correctAnswer: 1, explanation: 'Errors appear in red in Output.' },
-      { id: 'q9', type: MC, question: 'BrickColor.new("Bright green")...', options: ['Deletes the Part', 'Sets the Part color', 'Opens Roblox', 'Adds terrain'], correctAnswer: 1, explanation: 'BrickColor.new assigns a preset color.' },
-      { id: 'q10', type: MC, question: 'Lesson 1.4 save name...', options: ['Lesson 1.4 - Click Magic', 'Untitled', 'Part', 'Test'], correctAnswer: 0, explanation: 'Use clear lesson names for your portfolio.' },
-    ],
-  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Properties — це…",
+        "options": [
+          "Список друзів",
+          "Панель властивостей виділеного обʼєкта",
+          "Магазин моделей",
+          "Чат"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Панель властивостей виділеного обʼєкта"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Size впливає на…",
+        "options": [
+          "Імʼя акаунта",
+          "Розміри Part (довжина/висота/глибина)",
+          "Гучність музики",
+          "FPS телефону"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Розміри Part (довжина/висота/глибина)"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Material Brick і Glass відрізняються…",
+        "options": [
+          "Тільки ціною Robux",
+          "Візуалом (і іноді відчуттям поверхні)",
+          "Тим, що Glass не можна Anchored",
+          "Нічим"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Візуалом (і іноді відчуттям поверхні)"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Transparency = 1 означає…",
+        "options": [
+          "Part повністю видимий",
+          "Part повністю прозорий (невидимий)",
+          "Part видалено",
+          "Part завжди падає"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Part повністю прозорий (невидимий)"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "CanCollide = false означає…",
+        "options": [
+          "Крізь Part можна пройти",
+          "Part стає червоним",
+          "Part не можна виділити",
+          "Part стає Folder"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Крізь Part можна пройти"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Для підлоги двору зазвичай ставлять…",
+        "options": [
+          "Anchored = true",
+          "Anchored = false завжди",
+          "Transparency = 1 обовʼязково",
+          "CanCollide = false"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Anchored = true"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "«Невидима стіна» на челенджі поєднує…",
+        "options": [
+          "Transparency 1 + CanCollide true",
+          "Anchored false + Size 0",
+          "Material Neon + CanCollide false",
+          "Видалення Foundation"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Transparency 1 + CanCollide true"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Навіщо однакові ніжки лавки робити Duplicate?",
+        "options": [
+          "Щоб розміри й стиль збігались швидше",
+          "Бо Studio дозволяє лише одну ніжку",
+          "Щоб вимкнути Snap",
+          "Це додає скрипт"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Щоб розміри й стиль збігались швидше"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Де шукати Color / Material у Studio?",
+        "options": [
+          "У Properties (або відповідних інструментах Home)",
+          "Тільки в телефоні",
+          "У налаштуваннях Windows",
+          "У Discord"
+        ],
+        "correctAnswer": 0,
+        "explanation": "У Properties (або відповідних інструментах Home)"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Артефакт уроку 1.4?",
+        "options": [
+          "Лавка + скляна панель",
+          "Повний Tycoon",
+          "DataStore",
+          "Анімація бігу"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Лавка + скляна панель"
+      }
+    ]
+  }
 }
 
 export const enLesson15 = {
-  lessonId: 'lesson-roblox-1-5',
-  moduleId: 'module-01',
-  order: 5,
-  title: '1.5 - Sound and Atmosphere',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Add looped ambient Sounds and one-shot 3D sounds',
-    'Tune Lighting: ClockTime, Brightness, and shadows',
-    'Use Atmosphere and Sky for cinematic mood',
-    'Combine audio and lighting for a polished island',
+  "lessonId": "lesson-roblox-1-5",
+  "moduleId": "module-01",
+  "order": 5,
+  "title": "1.5 — Move, Scale, Rotate + Snap",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "точно ставити обʼєкти інструментами трансформації, без «кривого хаосу».",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Players **feel** games through ears and eyes. A sunset island with wave sounds beats a silent grey map.
-
-**Lesson flow:**
-1. **Theory (40 min)** - Sound + Lighting + Atmosphere
-2. **Practice (~25 min)** - sunset mood on your island
-3. **Quiz (10 min)** - **70%** pass
-
-Use your **Lesson 1.4 - Click Magic** place. Test with **Play** - many audio and lighting changes are best heard in motion.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** точно ставити обʼєкти інструментами трансформації, без «кривого хаосу».\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'Why sound matters',
-        content: `| Without sound | With sound |
-|---------------|------------|
-| Clicks feel flat | Clicks feel satisfying |
-| Island feels empty | Island feels alive |
-| Hard to know success | Audio confirms actions |
-
-**Two types today:**
-1. **Ambient** - looped background (waves, wind) - whole place
-2. **3D on Part** - louder when you walk close (dock creak, seagull)`,
+        "title": "What you will build",
+        "content": "Паркан `Fence` з 6–10 секцій по периметру частини двору + вирівняна лавка біля доріжки."
       },
       {
-        title: 'Sound object - properties',
-        content: `**Insert → Sound** (Workspace for ambient, or inside a Part for 3D).
-
-| Property | Tip |
-|----------|-----|
-| **SoundId** | \`rbxassetid://...\` from Toolbox → Audio |
-| **Volume** | Ambient: \`0.25\`-\`0.45\` - clicks stay audible |
-| **Looped** | **true** for ocean/wind |
-| **Playing** | **true** to preview in Edit (optional) |
-| **RollOffMaxDistance** | How far 3D sound travels (try \`80\`) |
-
-Name sounds clearly: \`Ambient_Waves\`, \`Dock_Creak\`, \`Click_Chime\`.
-
-**Exercise (6 min):** Add looped \`Ambient_Waves\` in Workspace. Press Play and listen while moving.`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M1_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'Lighting - time of day',
-        content: `Select **Lighting** in Explorer.
-
-| Property | Effect |
-|----------|--------|
-| **ClockTime** | Hour 0-24 (\`14\` = afternoon, \`17.5\` = sunset, \`0\` = midnight) |
-| **Brightness** | Overall light (\`2\`-\`3\` daytime) |
-| **GlobalShadows** | **true** = realistic shadows |
-| **OutdoorAmbient** | Color tint in shadow areas |
-| **Technology** | **Future** or **ShadowMap** for modern look |
-
-**Sunset preset (copy these):**
-- ClockTime: \`17.5\`
-- Brightness: \`2\`
-- GlobalShadows: **true**
-- OutdoorAmbient: warm peach/orange tone
-
-**Exercise (5 min):** Slide ClockTime from 12 → 17.5 → 0 while in Play. Pick your favorite mood.`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Atmosphere - cinematic haze',
-        content: `Right-click **Lighting** → Insert **Atmosphere**.
-
-| Property | Starter values |
-|----------|----------------|
-| **Density** | \`0.3\`-\`0.4\` (light haze) |
-| **Offset** | \`0.25\` |
-| **Color** | Soft orange/pink at sunset |
-| **Decay** | Slightly purple/blue horizon |
-
-Atmosphere makes distant terrain softer - professional obbies use this on showcase maps.
-
-**Warning:** Density above \`0.6\` can lag on weak PCs - start low.`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Sky - optional polish',
-        content: `**Lighting** may contain **Sky**.
-
-- **StarCount** - visible at night
-- **SunAngularSize** - sun disk size
-- Six **Skybox** faces (Bk, Ft, Lf, Rt, Up, Dn) for custom skies
-
-For Lesson 1.5, default Sky + Atmosphere is enough. Custom skyboxes come in Module 10 polish.
-
-**Exercise (3 min):** Set ClockTime \`0\`, check stars. Return to \`17.5\` for practice.`,
-      },
-      {
-        title: 'Link sound to your click script',
-        content: `From Lesson 1.4, extend a click Script:
-
-\`\`\`lua
-local part = script.Parent
-local detector = part:WaitForChild("ClickDetector")
-local sound = part:FindFirstChild("ClickSound")
-
-detector.MouseClick:Connect(function(player)
-    if sound then
-        sound:Play()
-    end
-end)
-\`\`\`
-
-**Play()** restarts one-shot sounds. Ambient loops stay **Looped = true** and **Playing = true**.
-
-Do not stack 5 loud ambients - one loop + one 3D detail is enough.`,
-      },
-      {
-        title: 'Mixing checklist - before practice',
-        content: `**Balanced island audio:**
-- [ ] One ambient loop ≤ 0.45 Volume
-- [ ] Click sounds ≤ 0.6 Volume
-- [ ] 3D dock sound only audible when near dock
-- [ ] Lighting + Atmosphere match (sunset + warm haze)
-- [ ] Saved place name planned: \`Lesson 1.5 - Island Atmosphere\`
-
-**FAQ:** No sound? - valid SoundId, Volume > 0, test in Play. Pink sky? - reset Sky or disable broken skybox faces.`,
-      },
-    ],
+        "title": "Homework",
+        "content": "Додати хвіртку `GateDoor` (1 Part у прорізі між GateL/GateR), поки без скрипта — просто модельна двері."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'Five ambient tracks at full volume', explanation: 'Layers clip and sound muddy.', correctApproach: 'One ambient loop + optional quiet music at 0.15 Volume' },
-    { mistake: 'SoundId is empty or broken', explanation: 'Invalid asset ID plays nothing.', correctApproach: 'Pick audio from Toolbox or paste a known rbxassetid number' },
-    { mistake: 'Atmosphere makes game laggy', explanation: 'Density too high for device.', correctApproach: 'Lower Density to 0.25-0.35' },
-    { mistake: 'Changed ClockTime only in Edit, never in Play', explanation: 'Some students forget to walk test at sunset.', correctApproach: 'Play-test walk from spawn to dock at ClockTime 17.5' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You layered ambient and 3D sound, tuned Lighting for sunset mood, added Atmosphere haze, and connected audio to your click scripts - your island now feels professional, not prototype.`,
-  practiceTask: {
-    title: 'Sunset island atmosphere (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** One cohesive sunset mood with sound.
-
-### Part A - Ambient audio (7 min)
-1. Insert **Sound** in Workspace → Name: \`Ambient_Waves\`
-2. SoundId: ocean or nature from Toolbox | Volume: \`0.35\` | Looped: **true** | Playing: **true**
-
-### Part B - Lighting & Atmosphere (8 min)
-1. Select **Lighting** → ClockTime: \`17.5\` | Brightness: \`2\` | GlobalShadows: **true**
-2. Insert **Atmosphere** under Lighting | Density: \`0.35\` | warm Color tint
-3. **Play** - walk spawn → dock → water line
-
-### Part C - 3D dock sound (6 min)
-1. On dock Part: **Sound** \`Dock_Creak\` | Looped: **false** | RollOffMaxDistance: \`60\`
-2. Hook **Play()** from Lesson 1.4 click script OR touch Proximity later
-3. Volume quiet (\`0.4\`) so ambient stays primary
-
-### Test & save (4 min)
-1. **Play** - ambient everywhere; dock sound louder when close
-2. **File → Save to Roblox** → \`Lesson 1.5 - Island Atmosphere\`
-3. **Practice complete**`,
-    hints: [
-      'Test ClockTime in Play while walking - mood changes feel real',
-      'Lower ambient if click sounds are hard to hear',
-      'Atmosphere Color should match sunset (orange/pink, not neon green)',
+  "summary": "**1.5 — Move, Scale, Rotate + Snap** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Move, Scale, Rotate + Snap",
+    "difficulty": "beginner",
+    "description": "### Task\nПаркан `Fence` з 6–10 секцій по периметру частини двору + вирівняна лавка біля доріжки.\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'Second ambient track (soft music) at Volume \`0.15\` - two loops together.',
+    "optionalChallenge": "Челендж на час: 4 рівні секції без наїзду одна на одну"
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'Looped ambient sounds usually go in...', options: ['Workspace', 'Only inside player head', 'Output window', 'Terrain'], correctAnswer: 0, explanation: 'World ambient often lives in Workspace.' },
-      { id: 'q2', type: MC, question: 'ClockTime 17.5 is closest to...', options: ['Midnight', 'Sunset', 'Noon', 'Dawn only'], correctAnswer: 1, explanation: '17-18 hours looks like late afternoon/sunset.' },
-      { id: 'q3', type: MC, question: 'Atmosphere Density controls...', options: ['Script speed', 'Fog/haze thickness', 'Part size', 'Jump height'], correctAnswer: 1, explanation: 'Density adds atmospheric haze.' },
-      { id: 'q4', type: MC, question: '3D sound on a Part is louder when...', options: ['Player is far away', 'Player is near the Part', 'Game is saved', 'Sky is removed'], correctAnswer: 1, explanation: 'RollOff makes volume distance-based.' },
-      { id: 'q5', type: MC, question: 'GlobalShadows true gives...', options: ['Louder audio', 'More realistic shadows', 'Free Robux', 'No terrain'], correctAnswer: 1, explanation: 'GlobalShadows enables shadow rendering.' },
-      { id: 'q6', type: MC, question: 'Ambient Volume should usually be...', options: ['1.0 always', 'Low (0.25-0.45)', 'Zero', 'Negative'], correctAnswer: 1, explanation: 'Quiet ambient leaves room for effects.' },
-      { id: 'q7', type: MC, question: 'Sound:Play() is used for...', options: ['One-shot or restarting a sound', 'Deleting Parts', 'Anchoring', 'Publishing'], correctAnswer: 0, explanation: 'Play starts playback on a Sound instance.' },
-      { id: 'q8', type: MC, question: 'Lighting lives in Explorer under...', options: ['Workspace only', 'Lighting service', 'Players', 'ReplicatedStorage'], correctAnswer: 1, explanation: 'Lighting is its own top-level service.' },
-      { id: 'q9', type: MC, question: 'No audio heard - first check...', options: ['Valid SoundId and Volume > 0', 'Delete all scripts', 'Remove Atmosphere', 'Change language'], correctAnswer: 0, explanation: 'Broken or empty SoundId is the top cause.' },
-      { id: 'q10', type: MC, question: 'Lesson 1.5 save name...', options: ['Lesson 1.5 - Island Atmosphere', 'Click Magic', 'Part3', 'Module 12'], correctAnswer: 0, explanation: 'Match the lesson portfolio naming scheme.' },
-    ],
-  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Інструмент Move потрібен щоб…",
+        "options": [
+          "Змінити колір неба",
+          "Перемістити обʼєкт у просторі",
+          "Написати код",
+          "Купити GamePass"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Перемістити обʼєкт у просторі"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Scale змінює…",
+        "options": [
+          "Розмір обʼєкта",
+          "Імʼя гравця",
+          "Час доби в реальному світі",
+          "Мову Studio"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Розмір обʼєкта"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Rotate на 90° зручний для…",
+        "options": [
+          "Випадкового хаосу",
+          "Рівних поворотів стін/паркану",
+          "Видалення Anchored",
+          "Публікації"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Рівних поворотів стін/паркану"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Snap допомагає…",
+        "options": [
+          "Стрибати вище в грі",
+          "Рухати/ масштаб з кроком сітки",
+          "Автоматично писати скрипти",
+          "Ховати Explorer"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Рухати/ масштаб з кроком сітки"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Якщо секції паркану наїжджають одна на одну…",
+        "options": [
+          "Це завжди добре",
+          "Варто підігнати Move/Size і перевірити стики",
+          "Треба видалити Foundation",
+          "Треба вимкнути інтернет"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Варто підігнати Move/Size і перевірити стики"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Чому лавку «підганяють» до доріжки?",
+        "options": [
+          "Щоб виглядало природно і гравець розумів простір",
+          "Бо інакше Play не запускається",
+          "Це вимога Roblox",
+          "Щоб зʼявились Robux"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Щоб виглядало природно і гравець розумів простір"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Який артефакт уроку?",
+        "options": [
+          "Паркан + вирівняна лавка",
+          "Шутер",
+          "Магазин UI",
+          "Бейджі"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Паркан + вирівняна лавка"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Гарячі клавіші інструментів варто вчити бо…",
+        "options": [
+          "Прискорюють будівництво",
+          "Без них Studio закривається",
+          "Вони видаляють помилки коду",
+          "Вони платні"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Прискорюють будівництво"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Якщо Rotate зробив «діагональний хаос», що зробити?",
+        "options": [
+          "Панікувати",
+          "Undo / виставити рівні кути (0/90/180…)",
+          "Видалити акаунт",
+          "Відкрити новий курс Python"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Undo / виставити рівні кути (0/90/180…)"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Хвіртка в ДЗ на цьому етапі — це…",
+        "options": [
+          "Скрипт з Touched",
+          "Модельний Part у прорізі воріт",
+          "TeleportService",
+          "DataStore"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Модельний Part у прорізі воріт"
+      }
+    ]
+  }
 }
 
 export const enLesson16 = {
-  lessonId: 'lesson-roblox-1-6',
-  moduleId: 'module-01',
-  order: 6,
-  title: '1.6 - Checkpoint: The Island Lives',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Merge terrain, dock, scripts, sound, and lighting in one hub',
-    'Add SpawnLocation and run a quality checklist',
-    'Present Module 1 as a living island spawn area',
-    'Prepare for Module 2 obby mechanics',
-    'Repeat classic programming ideas: variables, if, print, and event callbacks',
+  "lessonId": "lesson-roblox-1-6",
+  "moduleId": "module-01",
+  "order": 6,
+  "title": "1.6 — Building the yard: composition",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "зібрати цілісну маленьку локацію за чеклістом геймдизайну lite.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Module 1 checkpoint (about 40 minutes)',
-        content: `This is your **portfolio milestone** - not a new topic dump, but **polish and proof** you can ship a small world.
-
-**You already built:**
-- **1.1** - Parts, Studio, save
-- **1.2** - Terrain island
-- **1.3** - Dock, Folders, Models
-- **1.4** - ClickDetector scripts
-- **1.5** - Sound + sunset mood
-
-**Today:** one **Living Island Hub** ready for Module 2's obby path.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** зібрати цілісну маленьку локацію за чеклістом геймдизайну lite.\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'What "done" looks like',
-        content: `A visitor presses Play and thinks:
-- "I know where to spawn."
-- "I can walk without falling through the floor."
-- "Something reacts when I click."
-- "This place has a mood (sound + light)."
-
-Your job: fix anything that breaks that first impression.`,
+        "title": "What you will build",
+        "content": "Двір, у якому видно **шлях гравця**: Spawn → Path → Gate → зона лавки. Додати `SpawnLocation` (якщо ще немає)."
       },
       {
-        title: 'Master checklist - world',
-        content: `**Terrain & space**
-- [ ] Island has grass, sand, rock - no accidental giant pits
-- [ ] Water level looks intentional (not flooding spawn)
-- [ ] **SpawnLocation** on flat ground (not inside water)
-
-**Building**
-- [ ] Folder \`Dock\` (or similar) with named Models/Parts
-- [ ] **8+** decorative Parts total (planks, lamps, signs, trees)
-- [ ] All static Parts **Anchored true**
-
-**Interaction**
-- [ ] **3** clickables with different effects (color, size, sound...)
-- [ ] **Output** shows player name on at least one click
-
-**Mood**
-- [ ] Ambient loop + Lighting ClockTime + Atmosphere
-- [ ] Full walk loop tested in Play (spawn → dock → beach)`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M1_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'SpawnLocation - where players appear',
-        content: `**Insert → SpawnLocation** on safe beach or dock platform.
-
-| Property | Suggested |
-|----------|-----------|
-| **Size** | \`6, 1, 6\` |
-| **BrickColor** | Bright green or cyan (visible) |
-| **Anchored** | true |
-| **Neutral** | true (any player can spawn) |
-| **Position Y** | Slightly above terrain - not clipping inside floor |
-
-**Exercise (8 min):** Place SpawnLocation, Play - character should appear on it. Move it until spawn feels natural facing the dock.`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Welcome sign - hub greeting',
-        content: `Near spawn, add **Sign_Welcome** Part + ClickDetector + Script + optional **WelcomeSound**:
-
-\`\`\`lua
-local part = script.Parent
-local detector = part:WaitForChild("ClickDetector")
-local sound = part:FindFirstChild("WelcomeSound")
-
-detector.MouseClick:Connect(function(player)
-    print("Welcome to " .. player.Name .. "'s island hub!")
-    if sound then
-        sound:Play()
-    end
-end)
-\`\`\`
-
-Later modules replace \`print\` with on-screen GUI. For Module 1, Output proof is enough.`,
+        "title": "Practice steps",
+        "content": "- [ ] Є старт (Spawn) - [ ] Є шлях - [ ] Є мета/ворота - [ ] Є місце «посидіти» (лавка) - [ ] Немає безіменних Part"
       },
       {
-        title: 'Explorer hygiene - impress teachers',
-        content: `Search bad names: **Ctrl+Shift+F** → find \`Part\` without numbers.
-
-**Target tree:**
-\`Workspace\`
-- \`Terrain\`
-- \`SpawnLocation\`
-- \`Dock\` (Folder)
-- \`Interactives\` (Folder)
-- \`Ambient_Waves\` (Sound)
-- \`Lighting\` (with Atmosphere)
-
-Delete empty Folders and duplicate test blocks.`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Play-test script (5 minutes)',
-        content: `Press **Play** and do this in order:
-1. Spawn on **SpawnLocation** - not underwater
-2. Walk to dock - no falling through planks
-3. Click all 3 interactives - see/hear feedback
-4. Walk shoreline - ambient audible, not ear-bleeding loud
-5. **Stop** - fix one issue if anything failed
-
-Repeat until all five pass. **Then** save.`,
-      },
-      {
-        title: 'Programming basics - bridge to Module 2',
-        content: `In **1.4** you already wrote code, but Module 2 adds **touch (Touched)** and **if** checks. Before complex scripts - 5 classic ideas that appear in every language (Python, JavaScript, Luau).
-
-**1. Variables (\`local\`)** - a named box:
-\`\`\`lua
-local playerName = "Alex"
-local jumpPower = 50
-\`\`\`
-- \`local\` = variable only in this script
-- Meaningful names: \`killBlock\`, not \`x\`
-- In Roblox you often store an object: \`local part = script.Parent\`
-
-**2. Text and numbers** - \`print\` and concatenation:
-\`\`\`lua
-print("Game started")
-print("Player: " .. playerName)
-\`\`\`
-- \`..\` joins text (like + for strings in Python)
-
-**3. \`if\` conditions** - the game asks yes/no:
-\`\`\`lua
-local health = 0
-
-if health <= 0 then
-    print("Player lost")
-end
-\`\`\`
-- \`if ... then\` - if true, run the block
-- \`end\` closes the block (do not forget it!)
-- Comparisons: \`<\`, \`>\`, \`==\`, \`<=\` (two \`==\` for equality)
-
-**4. Events (callbacks)** - "when X happens, do Y":
-\`\`\`lua
-detector.MouseClick:Connect(function(player)
-    print(player.Name .. " clicked")
-end)
-\`\`\`
-- \`Connect(function ... end)\` - Studio calls this **for you** at the right time
-- You do not call it manually - you **subscribe** to the event
-
-**5. Safe checks (\`nil\`)** - "does this object exist?":
-\`\`\`lua
-local sound = part:FindFirstChild("ClickSound")
-
-if sound then
-    sound:Play()
-end
-\`\`\`
-- If the child is missing in Explorer, \`FindFirstChild\` returns \`nil\`
-- \`if sound then\` prevents red errors in Output
-
-**Mini exercise (7 min):** in any Script from 1.4 add \`print("Condition test")\` and \`if true then print("if works") end\`. Play → confirm Output shows both lines.`,
-      },
-      {
-        title: 'What changes in Module 2',
-        content: `| Lesson 1.4 (click) | Module 2 (touch) |
-|--------------------|------------------|
-| \`MouseClick\` | \`Touched\` |
-| You click with the mouse | Character **steps on** a Part |
-| Change color | Often \`Humanoid.Health = 0\` |
-
-Difficulty grows **step by step**:
-1. **2.1** - first \`print\` on touch, then the full kill script
-2. **2.4** - official \`if / elseif / else\` for S/A/B ranks
-
-You do not need to "know everything" now. Enough to understand **variables**, **if**, **print**, and that \`Connect\` means "run this on an event".`,
-      },
-      {
-        title: 'Save, document, Module 2 preview',
-        content: `**File → Save to Roblox** → \`Module 1 - Living Island\`
-
-In a notebook (or comment in Studio):
-- One thing you are proud of
-- One bug you fixed today
-- One Module 2 idea (lava path? moving platform?)
-
-**Module 2 preview:** kill blocks, checkpoints, timers - your island becomes the **start** of an obby. Keep this place file - you will extend it.`,
-      },
-    ],
+        "title": "Homework",
+        "content": "Додати `SignBoard` (табличка-блок) біля входу. Текст поки можна Decal пізніше або просто яскравий колір."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'Spawn in water or void', explanation: 'SpawnLocation Y too low or inside terrain water.', correctApproach: 'Raise SpawnLocation; test in Play after each move' },
-    { mistake: 'Forgot to save after checkpoint polish', explanation: 'Lost work from earlier lessons.', correctApproach: 'Save to Roblox with Module 1 name before marking complete' },
-    { mistake: 'Only one clickable still works', explanation: 'Scripts copied but Parent wrong after grouping.', correctApproach: 'Each Script must be child of its own Part with ClickDetector' },
-    { mistake: 'Too dark to see dock', explanation: 'ClockTime 0 with no lamp.', correctApproach: 'Sunset 17.5 or add Neon lamp from Lesson 1.3' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You merged every Module 1 skill into one Living Island Hub with spawn, interactives, audio, lighting, and a clean Explorer tree - ready to build your first obby in Module 2.`,
-  practiceTask: {
-    title: 'Checkpoint - Living Island Hub (~40 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Pass every item on the master checklist.
-
-### Part A - Fix world (12 min)
-1. Run checklist - terrain, water, anchored Parts
-2. Insert **SpawnLocation** on safe ground | test spawn in Play
-3. Rename stray \`Part\` objects in Explorer
-
-### Part B - Interactives & dock (12 min)
-1. Confirm **3 clickables** in Folder \`Interactives\`
-2. Confirm **Dock** Folder with Model and 6+ planks/props
-3. Fix any walk-through or floating planks
-
-### Part C - Mood & welcome (10 min)
-1. Ambient + Lighting + Atmosphere from Lesson 1.5
-2. Add **Sign_Welcome** with click + print + optional sound
-3. Full **play-test script** from theory (5 steps)
-
-### Finish (6 min)
-1. **File → Save to Roblox** → \`Module 1 - Living Island\`
-2. **Practice complete** - optional: 2-min screen recording tour for your teacher`,
-    hints: [
-      'Fix spawn first - everything else is easier after that',
-      'Ctrl+D duplicates dock planks to add decorations fast',
-      'One focused Play-test catches 90% of issues',
+  "summary": "**1.6 — Building the yard: composition** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Building the yard: composition",
+    "difficulty": "beginner",
+    "description": "### Task\nДвір, у якому видно **шлях гравця**: Spawn → Path → Gate → зона лавки. Додати `SpawnLocation` (якщо ще немає).\n\n\n### Steps\n- [ ] Є старт (Spawn) - [ ] Є шлях - [ ] Є мета/ворота - [ ] Є місце «посидіти» (лавка) - [ ] Немає безіменних Part\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'Bridge of 5+ Parts to a small secondary hill (Subtract terrain for a mini island).',
+    "optionalChallenge": "Polish the artifact a bit and be ready to show it for 20 seconds."
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'Module 1 checkpoint main goal is...', options: ['Learn Terrain only', 'Polish one complete island hub', 'Publish to marketplace', 'Delete all scripts'], correctAnswer: 1, explanation: 'Lesson 1.6 merges all Module 1 skills.' },
-      { id: 'q2', type: MC, question: 'SpawnLocation should be placed...', options: ['Underwater', 'On safe flat ground', 'In the sky only', 'Inside a script'], correctAnswer: 1, explanation: 'Players need a valid spawn point.' },
-      { id: 'q3', type: MC, question: 'Neutral true on SpawnLocation means...', options: ['No spawning', 'Any team can spawn', 'Deletes terrain', 'Adds paywall'], correctAnswer: 1, explanation: 'Neutral allows all players to use it.' },
-      { id: 'q4', type: MC, question: 'Module 1 should include how many clickables?', options: ['0', '1', '3', '50'], correctAnswer: 2, explanation: 'Three interactives were built in 1.4 and checked here.' },
-      { id: 'q5', type: MC, question: 'Organized dock uses...', options: ['Folder and Model', 'Only unnamed Parts', 'No Anchored', 'Only SoundService'], correctAnswer: 0, explanation: 'Folders and Models keep Explorer clean.' },
-      { id: 'q6', type: MC, question: 'Ambient sound should be...', options: ['Very quiet and looped', 'Volume 2.0 only once', 'Inside every Part at max', 'Disabled'], correctAnswer: 0, explanation: 'Low looped ambient is standard.' },
-      { id: 'q7', type: MC, question: 'Before marking complete you should...', options: ['Play-test full walk loop', 'Delete Terrain', 'Remove SpawnLocation', 'Never save'], correctAnswer: 0, explanation: 'Play-test verifies the hub works.' },
-      { id: 'q8', type: MC, question: 'Module 2 will add mostly...', options: ['Obby danger and checkpoints', 'Only skyboxes', 'Account billing', 'Video editing'], correctAnswer: 0, explanation: 'Module 2 introduces obby mechanics.' },
-      { id: 'q9', type: MC, question: 'Final save name for Module 1...', options: ['Module 1 - Living Island', 'Untitled', 'Lesson 1.1 only', 'Test'], correctAnswer: 0, explanation: 'Checkpoint uses the Module 1 portfolio name.' },
-      { id: 'q10', type: MC, question: 'Ctrl+Shift+F in Explorer helps...', options: ['Find objects by name', 'Fly faster', 'Change BrickColor', 'Add Robux'], correctAnswer: 0, explanation: 'Search finds badly named instances.' },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "SpawnLocation потрібен щоб…",
+        "options": [
+          "Гравець зʼявлявся в потрібному місці",
+          "Малювати небо",
+          "Зберігати Robux",
+          "Видаляти Tools"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Гравець зʼявлявся в потрібному місці"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "«Шлях гравця» у level design означає…",
+        "options": [
+          "GPS у телефоні",
+          "Зрозумілий маршрут, куди вести гравця полем зору й простором",
+          "Список друзів",
+          "Версію Studio"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Зрозумілий маршрут, куди вести гравця полем зору й простором"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Навіщо контраст кольору доріжки й трави/підлоги?",
+        "options": [
+          "Щоб шлях читався швидше",
+          "Щоб Part падав",
+          "Щоб вимкнути Snap",
+          "Це заборонено"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Щоб шлях читався швидше"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Playtest у групі допомагає…",
+        "options": [
+          "Побачити світ очима гравця",
+          "Видалити Explorer",
+          "Обійти збереження",
+          "Нарахувати оцінку вчителю математики"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Побачити світ очима гравця"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Якщо гравець не розуміє куди йти — що покращити?",
+        "options": [
+          "Додати орієнтири: доріжка, ворота, контраст, Spawn",
+          "Видалити всі Parts",
+          "Вимкнути Anchored у підлоги",
+          "Змінити нік"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Додати орієнтири: доріжка, ворота, контраст, Spawn"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Артефакт уроку 1.6?",
+        "options": [
+          "Цілісний двір зі шляхом",
+          "Повний RPG",
+          "Raycasting",
+          "Blender-модель"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Цілісний двір зі шляхом"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Безіменні Part у фіналі локації — це…",
+        "options": [
+          "Ознака акуратної роботи",
+          "Технічний борг / поганий тон",
+          "Секретний буст швидкості",
+          "Обовʼязкова вимога"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Технічний борг / поганий тон"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Лавка в дворі виконує роль…",
+        "options": [
+          "Точки інтересу / атмосфера",
+          "Єдиного способу зберегти гру",
+          "Заміни Spawn",
+          "Серверного скрипта"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Точки інтересу / атмосфера"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Чому перевіряємо респавн?",
+        "options": [
+          "Щоб після смерті/входу гравець не зʼявлявся в дірці/поза картою",
+          "Це потрібно лише для UI",
+          "Без цього не працює Material",
+          "Це для анімації обличчя"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Щоб після смерті/входу гравець не зʼявлявся в дірці/поза картою"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "SignBoard у ДЗ — це…",
+        "options": [
+          "Орієнтир біля входу",
+          "Система монетизації",
+          "ModuleScript",
+          "Terrain water"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Орієнтир біля входу"
+      }
+    ]
+  }
+}
+
+export const enLesson17 = {
+  "lessonId": "lesson-roblox-1-7",
+  "moduleId": "module-01",
+  "order": 7,
+  "title": "1.7 — Workspace and Storage",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "зрозуміти різницю Workspace / ServerStorage / ReplicatedStorage на пальцях (без скриптів).",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Today’s goal",
+        "content": "**Goal:** зрозуміти різницю Workspace / ServerStorage / ReplicatedStorage на пальцях (без скриптів).\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
+      },
+      {
+        "title": "What you will build",
+        "content": "У `ServerStorage` лежить запасна копія моделі лавки `Bench_Backup` (Group поки можна як Model або просто скопійовані Parts у Folder). У Workspace — тільки те, що має бути видно в грі."
+      },
+      {
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M1_YourName`  \n3. Do all lesson steps in that Place"
+      },
+      {
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
+      },
+      {
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
+      },
+      {
+        "title": "Homework",
+        "content": "1 зайвий декор перенести в ServerStorage. У Workspace лишити «чисту сцену»."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
+  ],
+  "summary": "**1.7 — Workspace and Storage** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Workspace and Storage",
+    "difficulty": "beginner",
+    "description": "### Task\nУ `ServerStorage` лежить запасна копія моделі лавки `Bench_Backup` (Group поки можна як Model або просто скопійовані Parts у Folder). У Workspace — тільки те, що має бути видно в грі.\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
+    "optionalChallenge": "Polish the artifact a bit and be ready to show it for 20 seconds."
   },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Workspace — це місце де…",
+        "options": [
+          "Лежать обʼєкти ігрового світу, які зазвичай видно/активні в сцені",
+          "Зберігаються лише паролі",
+          "Живуть лише скрипти UI",
+          "Вимикається камера"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Лежать обʼєкти ігрового світу, які зазвичай видно/активні в сцені"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "ServerStorage більше схожий на…",
+        "options": [
+          "Склад за лаштунками",
+          "Небо",
+          "Чат",
+          "Магазин одягу аватара"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Склад за лаштунками"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Якщо Part тільки в ServerStorage, гравець у Play його…",
+        "options": [
+          "Завжди бачить посеред карти",
+          "Зазвичай не бачить, доки не перенесуть у Workspace (чи не заспавнять кодом)",
+          "Чує як музику",
+          "Отримує як Badge"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Зазвичай не бачить, доки не перенесуть у Workspace (чи не заспавнять кодом)"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Навіщо тримати Backup лавки в Storage?",
+        "options": [
+          "Щоб мати запасну копію / шаблон",
+          "Щоб лавка стрибала сама",
+          "Щоб видалити Anchored",
+          "Це єдиний спосіб зберегти Place"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Щоб мати запасну копію / шаблон"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "ReplicatedStorage на цьому уроці ми згадуємо як…",
+        "options": [
+          "«Спільну валізу» на майбутнє зі скриптами",
+          "Єдине місце для Terrain",
+          "Заміну Explorer",
+          "Інструмент Rotate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "«Спільну валізу» на майбутнє зі скриптами"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Чи варто валити всі тестові куби в Workspace назавжди?",
+        "options": [
+          "Так",
+          "Ні, краще прибрати або на склад",
+          "Обовʼязково",
+          "Тільки по понеділках"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Ні, краще прибрати або на склад"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Експеримент «переніс у Workspace → видно» показує…",
+        "options": [
+          "Звʼязок місця зберігання і видимості/активності у світі",
+          "Що Snap зламаний",
+          "Що треба купити Robux",
+          "Що Studio англійською гірше"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Звʼязок місця зберігання і видимості/активності у світі"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Артефакт уроку 1.7?",
+        "options": [
+          "Backup у ServerStorage + чистіша сцена",
+          "Готовий шутер",
+          "Система діалогів NPC",
+          "Публікація в топ ігор"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Backup у ServerStorage + чистіша сцена"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Яка аналогія для Workspace?",
+        "options": [
+          "Сцена спектаклю",
+          "Підводний кабель",
+          "Калькулятор",
+          "Принтер"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Сцена спектаклю"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "На М1 ми пишемо складні скрипти для Storage?",
+        "options": [
+          "Так, обовʼязково RemoteEvent",
+          "Ні, лише розуміємо місця зберігання",
+          "Тільки на Python",
+          "Тільки голосом"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Ні, лише розуміємо місця зберігання"
+      }
+    ]
+  }
+}
+
+export const enLesson18 = {
+  "lessonId": "lesson-roblox-1-8",
+  "moduleId": "module-01",
+  "order": 8,
+  "title": "1.8 — Checkpoint: My first yard",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "show локацію against the lesson checklist.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Today’s goal",
+        "content": "**Goal:** show локацію against the lesson checklist.\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
+      },
+      {
+        "title": "What you will build",
+        "content": "Готовий двір against the lesson checklist."
+      },
+      {
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M1_YourName`  \n3. Do all lesson steps in that Place"
+      },
+      {
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
+      },
+      {
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
+      },
+      {
+        "title": "Homework",
+        "content": "Нічого не ламати. Зберегти Place. Придумати назву свого двору (слово)."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
+  ],
+  "summary": "**1.8 — Checkpoint: My first yard** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Checkpoint: My first yard",
+    "difficulty": "beginner",
+    "description": "### Task\nГотовий двір against the lesson checklist.\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
+    ],
+    "optionalChallenge": "Polish the artifact a bit and be ready to show it for 20 seconds."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Що з цього ми свідомо НЕ вивчали в М1?",
+        "options": [
+          "Explorer",
+          "Properties",
+          "Цикли for у Lua",
+          "Anchored"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Правильна відповідь: Цикли for у Lua"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Який порядок найлогічніший для старту будови?",
+        "options": [
+          "Одразу 100 Toolbox моделей без імен",
+          "Place → Foundation → шлях → декор → порядок у Folder",
+          "Спочатку GamePass",
+          "Спочатку Blender"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Place → Foundation → шлях → декор → порядок у Folder"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Навіщо рубрика на чекпоінті?",
+        "options": [
+          "Щоб розуміти критерії якісної здачі",
+          "Щоб зайвий раз налякати",
+          "Щоб замінити збереження",
+          "Це для дорослих розробників Unity лише"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Щоб розуміти критерії якісної здачі"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Найважливіший доказ що двір «готовий до показу»?",
+        "options": [
+          "Випадковий хаос Parts",
+          "Читабельний шлях + порядок у Explorer + Playtest",
+          "Тільки гарний колір неба",
+          "Великий ник"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Читабельний шлях + порядок у Explorer + Playtest"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Folder `Yard` допомагає…",
+        "options": [
+          "Організувати обʼєкти двору",
+          "Замінити SpawnLocation",
+          "Дати Robux",
+          "Вимкнути гравітацію глобально"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Організувати обʼєкти двору"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Backup у ServerStorage — це…",
+        "options": [
+          "Запасна копія/шаблон",
+          "Обовʼязковий ворог NPC",
+          "Тип Material",
+          "Кнопка Rotate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Запасна копія/шаблон"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Якщо на презентації друзі не розуміють куди йти — що покращити до М2?",
+        "options": [
+          "Контраст шляху, Spawn, орієнтири",
+          "Видалити доріжку",
+          "Вимкнути Anchored у підлоги",
+          "Прибрати імена"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Контраст шляху, Spawn, орієнтири"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Snap + Duplicate ми використовували щоб…",
+        "options": [
+          "Швидко й рівніше будувати повторювані елементи",
+          "Писати цикли",
+          "Публікувати гру в топ",
+          "Робити анімацію обличчя"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Швидко й рівніше будувати повторювані елементи"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "CanCollide = false корисно коли…",
+        "options": [
+          "Треба пройти крізь декор-обʼєм",
+          "Завжди для підлоги",
+          "Завжди для Foundation",
+          "Ніколи"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Треба пройти крізь декор-обʼєм"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Наступний модуль логічно про…",
+        "options": [
+          "Models, групування, Union/Negate",
+          "Квантову фізику без Studio",
+          "Лише відеомонтаж",
+          "Повний MMO на 100 гравців за 1 урок"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Models, групування, Union/Negate"
+      }
+    ]
+  }
 }

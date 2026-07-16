@@ -185,6 +185,11 @@ const DEFAULT_CLIENT_STUDENT_PROFILE = {
   accountReady: false,
 }
 
+/** Курси, які відкриваємо викладачу при привʼязці. */
+export const KNOWN_TEACHER_COURSE_IDS = LMS_COURSE_CATALOG.filter((c) =>
+  ['python-developer-zero-to-junior', 'web-development', 'roblox-studio'].includes(c.id)
+).map((c) => c.id)
+
 /** Відповідь /api/auth/* для клієнта: без CRM-імʼі та внутрішніх полів профілю. */
 export function toAuthUserResponse(user) {
   const role = user?.role || 'user'
@@ -202,6 +207,23 @@ export function toAuthUserResponse(user) {
   if (role === 'admin') {
     return { ...base, name: user?.name, studentProfile: profile }
   }
+  if (role === 'teacher') {
+    const tp = user?.teacherProfile || {}
+    return {
+      ...base,
+      name: String(user?.name || '').trim() || String(user?.email || '').split('@')[0] || 'Teacher',
+      phone: null,
+      teacherProfile: {
+        crmStaffId: String(tp.crmStaffId || '').trim(),
+        crmStaffName: String(tp.crmStaffName || '').trim(),
+      },
+      studentProfile: {
+        activeOnlineCourses: [...KNOWN_TEACHER_COURSE_IDS],
+        courseAccess: {},
+        accountReady: true,
+      },
+    }
+  }
   return {
     ...base,
     name: displayNameForStudent(user),
@@ -217,11 +239,19 @@ export async function upsertUserFromCrm(payload) {
 
   const usersCollection = await getCollection('users')
   const explicitUserId = String(payload.smartcodeUserId || '').trim()
-  const email = normalizeEmail(payload.email)
+  const shortId = String(payload.crmShortId || '').trim().toLowerCase()
+  let email = normalizeEmail(payload.email)
+  // Якщо email немає — логін з коду учня (поле email у users = логін).
+  if (!email && shortId) {
+    email = syntheticStudentLogin(shortId)
+  }
   const phone = payload.phone ? String(payload.phone).trim() : null
+  const issueCredentials = Boolean(payload.issueCredentials || payload.resetPassword)
+  const requestedPassword = String(payload.password || '').trim()
 
   let user = null
   let created = false
+  let tempPassword = null
 
   if (explicitUserId && ObjectId.isValid(explicitUserId)) {
     user = await usersCollection.findOne({ _id: new ObjectId(explicitUserId) })
@@ -232,7 +262,7 @@ export async function upsertUserFromCrm(payload) {
 
   const profilePatch = {
     crmStudentId,
-    crmShortId: String(payload.crmShortId || '').trim(),
+    crmShortId: shortId,
     accountReady: true,
   }
   if (payload.parentContact) {
@@ -246,58 +276,139 @@ export async function upsertUserFromCrm(payload) {
       studentProfile: { ...prev, ...profilePatch },
       updatedAt: new Date(),
     }
+    // Не перетираємо існуючий логін, якщо не передали новий email.
+    if (email && !user.email) {
+      setFields.email = email
+    }
     const tgUid = String(payload.telegramUserId || payload.telegram_user_id || '').trim()
     const tgChat = String(payload.telegramChatId || payload.telegram_chat_id || '').trim()
     const tgUser = String(payload.telegramUsername || payload.telegram_username || '').trim()
     if (tgUid) setFields.telegramUserId = tgUid
     if (tgChat) setFields.telegramChatId = tgChat
     if (tgUser) setFields.telegramUsername = tgUser
-    await usersCollection.updateOne(
-      { _id: user._id },
-      { $set: setFields }
-    )
+
+    if (issueCredentials) {
+      tempPassword = requestedPassword || generateStudentPassword()
+      setFields.password = await hashPassword(tempPassword)
+    }
+
+    await usersCollection.updateOne({ _id: user._id }, { $set: setFields })
     user = await usersCollection.findOne({ _id: user._id })
   } else {
     if (!email) {
       return {
         userId: null,
         created: false,
-        message: 'Потрібен email для створення акаунта LMS',
+        message:
+          'Потрібен email або код учня (short_id) для створення акаунта LMS',
       }
     }
     const existingByEmail = await usersCollection.findOne({ email })
     if (existingByEmail) {
-      return {
-        userId: null,
-        created: false,
-        message:
-          'Акаунт з таким email вже є на сайті. Привʼяжіть вручну на сторінці «Звʼязки».',
+      // Якщо це вже наш CRM-учень — оновимо; інакше конфлікт.
+      const existingCrm = String(
+        existingByEmail.studentProfile?.crmStudentId || ''
+      ).trim()
+      if (existingCrm && existingCrm !== crmStudentId) {
+        return {
+          userId: null,
+          created: false,
+          message:
+            'Акаунт з таким логіном уже є на сайті. Привʼяжіть вручну на сторінці «Звʼязки».',
+        }
+      }
+      if (!existingCrm || existingCrm === crmStudentId) {
+        user = existingByEmail
+        const prev = user.studentProfile || defaultStudentProfile()
+        const setFields = {
+          phone: phone ?? user.phone,
+          studentProfile: { ...prev, ...profilePatch },
+          updatedAt: new Date(),
+        }
+        if (issueCredentials || !user.password) {
+          tempPassword = requestedPassword || generateStudentPassword()
+          setFields.password = await hashPassword(tempPassword)
+        }
+        await usersCollection.updateOne({ _id: user._id }, { $set: setFields })
+        user = await usersCollection.findOne({ _id: user._id })
       }
     }
-    const randomPassword = crypto.randomBytes(24).toString('hex')
-    const hashedPassword = await hashPassword(randomPassword)
-    const doc = {
-      email,
-      password: hashedPassword,
-      name: DEFAULT_LMS_STUDENT_NAME,
-      phone,
-      role: 'student',
-      studentProfile: { ...defaultStudentProfile(), ...profilePatch },
-      purchasedCourses: [],
-      enrolledCourses: [],
-      createdAt: new Date(),
-      updatedAt: new Date(),
+
+    if (!user) {
+      tempPassword = requestedPassword || generateStudentPassword()
+      const hashedPassword = await hashPassword(tempPassword)
+      const displayName = String(payload.name || '').trim()
+      const doc = {
+        email,
+        password: hashedPassword,
+        name: isReliableStudentDisplayName(displayName)
+          ? displayName
+          : DEFAULT_LMS_STUDENT_NAME,
+        phone,
+        role: 'student',
+        studentProfile: { ...defaultStudentProfile(), ...profilePatch },
+        purchasedCourses: [],
+        enrolledCourses: [],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
+      const tgUid = String(payload.telegramUserId || payload.telegram_user_id || '').trim()
+      const tgChat = String(payload.telegramChatId || payload.telegram_chat_id || '').trim()
+      const tgUser = String(payload.telegramUsername || payload.telegram_username || '').trim()
+      if (tgUid) doc.telegramUserId = tgUid
+      if (tgChat) doc.telegramChatId = tgChat
+      if (tgUser) doc.telegramUsername = tgUser
+      const result = await usersCollection.insertOne(doc)
+      created = true
+      user = { ...doc, _id: result.insertedId }
     }
-    const result = await usersCollection.insertOne(doc)
-    created = true
-    user = { ...doc, _id: result.insertedId }
   }
+
+  let loginUrl = null
+  let loginPath = null
+  if (issueCredentials || created || payload.createLoginLink) {
+    try {
+      const { createLoginToken } = await import('@/lib/loginTokens')
+      const link = await createLoginToken(user._id, { purpose: 'crm_issue' })
+      loginPath = link.loginPath
+      const base = String(process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/$/, '')
+      loginUrl = base ? `${base}${link.loginPath}` : link.loginPath
+    } catch (e) {
+      console.error('createLoginToken failed', e)
+    }
+  }
+
+  // На створенні завжди повертаємо пароль; на update — лише якщо reset.
+  const passwordOut = created || issueCredentials ? tempPassword : null
 
   return {
     userId: user._id.toString(),
     created,
-    message: created ? 'Створено акаунт LMS' : 'Оновлено акаунт LMS',
+    login: user.email,
+    email: user.email,
+    tempPassword: passwordOut,
+    loginPath,
+    loginUrl,
+    message: created
+      ? 'Створено акаунт LMS'
+      : passwordOut
+        ? 'Оновлено пароль LMS'
+        : 'Оновлено акаунт LMS',
   }
+}
+
+/** Логін учня без особистого email: sc-{shortId}@students.smartcode */
+export function syntheticStudentLogin(shortId) {
+  const sid = String(shortId || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '')
+  if (!sid) return ''
+  return `sc-${sid}@students.smartcode`
+}
+
+export function generateStudentPassword() {
+  return `Sc-${crypto.randomBytes(4).toString('hex')}`
 }
 
 export async function grantCourseAccessForCrmStudent(

@@ -25,7 +25,7 @@ function enrolledListsEqual(a, b) {
  * Підтримує courseAccess для активних онлайн-курсів і прибирає застарілі записи enrolledCourses.
  */
 export async function syncStudentScheduleAccess(user, usersCollection) {
-  if (!user || user.role === 'admin') return user
+  if (!user || user.role === 'admin' || user.role === 'teacher') return user
 
   const profile = user.studentProfile || {}
   const activeOnlineCourses = Array.isArray(profile.activeOnlineCourses)

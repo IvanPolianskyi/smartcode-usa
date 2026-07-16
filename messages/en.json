@@ -269,7 +269,7 @@
       "courses": {
         "roblox-studio": {
           "name": "Roblox Studio",
-          "desc": "72 lessons · learn at your own pace"
+          "desc": "92 lessons · learn at your own pace"
         },
         "python-developer-zero-to-junior": {
           "name": "Python",
@@ -453,7 +453,7 @@
         "cta": "Buy course",
         "roblox-studio": {
           "name": "Roblox Studio",
-          "subtitle": "72 lessons · game development",
+          "subtitle": "92 lessons · game development",
           "description": "From your first Part in Studio to publishing your own Roblox game.",
           "features": [
             "Full course on the platform",
@@ -620,8 +620,8 @@
     "courses": {
       "roblox-studio": {
         "title": "Roblox Studio - Full Course",
-        "description": "72 structured lessons on our dedicated interactive platform. Duration: Approx. 6 months. Syllabus Highlights: Introduction to Lua scripting, variables and functions, game mechanics, creating Obby, Tycoon, and Simulator games, UI design, monetization strategies, and final publishing to the Roblox platform. Start building real games today!",
-        "lessons": "72 lessons",
+        "description": "92 LMS lessons: modeling → ready-code sparks → serious Lua → Obby/simulator/Tycoon/Tools → release & Showcase. Groups of up to 5 or 1:1. About 8–10 months at 2 lessons/week.",
+        "lessons": "92 lessons",
         "access": "Lifetime access"
       },
       "python-developer-zero-to-junior": {

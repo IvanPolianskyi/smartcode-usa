@@ -221,6 +221,7 @@
     "titleMain": "SmartCode",
     "titleAccent": "Academy",
     "subtitle": "Живі уроки в Zoom, онлайн платформа та безкоштовне пробне заняття",
+    "subtitleRich": "Живі уроки в Zoom, <accent>онлайн платформа</accent> та безкоштовне пробне заняття",
     "lessonTypes": {
       "group": "Групові заняття",
       "individual": "індивідуальні",
@@ -535,8 +536,8 @@
     "courses": {
       "roblox-studio": {
         "title": "Roblox Studio - Повний курс",
-        "description": "72 структуровані уроки на нашій платформі. Тривалість: ~6 місяців. Включає основи Lua, створення Obby та Tycoon.",
-        "lessons": "72 уроки",
+        "description": "92 уроки у LMS: моделі → іскри з готовим кодом → серйозний Lua → Obby/симулятор/Tycoon/Tools → реліз і Showcase. Групи до 5 або індивідуал. Тривалість ~8–10 місяців при 2 уроках на тиждень.",
+        "lessons": "92 уроки",
         "access": "Довічний доступ"
       },
       "python-developer-zero-to-junior": {
