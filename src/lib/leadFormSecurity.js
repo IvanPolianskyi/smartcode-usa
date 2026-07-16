@@ -7,9 +7,9 @@ const TOKEN_TTL_MS = 30 * 60 * 1000
 const MIN_TOKEN_AGE_MS = 0
 const RATE_WINDOW_MS = 15 * 60 * 1000
 /** Отримання leadToken (відкриття модалки) — окремий, м’якший ліміт */
-const RATE_MAX_INTENT_PER_IP = 40
-/** Відправка форми — жорстіший, але не 3/15 хв (легко вичерпати при тестах) */
-const RATE_MAX_SUBMIT_PER_IP = 12
+const RATE_MAX_INTENT_PER_IP = 60
+/** Відправка форми — ліміт на успішні/реальні submit, не на кожну помилку токена */
+const RATE_MAX_SUBMIT_PER_IP = 30
 
 function getSigningSecret() {
   const secret = String(process.env.LEAD_FORM_SIGNING_SECRET || '').trim()
@@ -148,11 +148,12 @@ export async function checkLeadSubmitRateLimit(ip, kind = 'submit') {
     kind === 'intent' ? RATE_MAX_INTENT_PER_IP : RATE_MAX_SUBMIT_PER_IP
   const attempts = await getCollection('lead_submit_attempts')
   const since = new Date(Date.now() - RATE_WINDOW_MS)
-  const count = await attempts.countDocuments({
-    ip,
-    kind,
-    createdAt: { $gte: since },
-  })
+  // Для submit рахуємо лише успішні відправки — помилки токена не блокують клієнта.
+  const filter =
+    kind === 'submit'
+      ? { ip, kind, blocked: false, createdAt: { $gte: since } }
+      : { ip, kind, createdAt: { $gte: since } }
+  const count = await attempts.countDocuments(filter)
 
   if (count >= max) {
     return { ok: false, reason: 'rate_limited' }
@@ -183,7 +184,7 @@ export async function validatePublicLeadSubmission({ request, leadToken, honeypo
 
   const rate = await checkLeadSubmitRateLimit(ip, 'submit')
   if (!rate.ok) {
-    await recordLeadSubmitAttempt(ip, { blocked: true, kind: 'submit' })
+    // Не пишемо ще одну спробу — інакше бан подовжується при кожному ретраї.
     return {
       ok: false,
       reason: rate.reason,
@@ -194,7 +195,7 @@ export async function validatePublicLeadSubmission({ request, leadToken, honeypo
 
   const verified = verifyLeadFormToken(leadToken)
   if (!verified.ok) {
-    await recordLeadSubmitAttempt(ip, { blocked: true, kind: 'submit' })
+    // Невірний/старий токен не спалить ліміт відправки (часто буває після деплою/кешу).
     return {
       ok: false,
       reason: verified.reason,
@@ -205,7 +206,6 @@ export async function validatePublicLeadSubmission({ request, leadToken, honeypo
 
   const unused = await assertLeadTokenUnused(verified.tokenHash)
   if (!unused.ok) {
-    await recordLeadSubmitAttempt(ip, { blocked: true, kind: 'submit' })
     return {
       ok: false,
       reason: unused.reason,

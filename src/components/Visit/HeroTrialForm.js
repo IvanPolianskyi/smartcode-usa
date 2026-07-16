@@ -115,6 +115,18 @@ export default function HeroTrialForm() {
 			}
 
 			if (!response.ok || !data?.ok) {
+				if (response.status === 429 || data?.code === 'rate_limited') {
+					alert(tc('errorRateLimit'))
+					return
+				}
+				if (
+					response.status === 503 &&
+					(data?.code === 'telegram_not_configured' ||
+						String(data?.error || '').includes('TELEGRAM'))
+				) {
+					alert(tc('errorLeadConfig'))
+					return
+				}
 				alert(tc('errorSubmit'))
 				return
 			}
@@ -126,7 +138,15 @@ export default function HeroTrialForm() {
 			}
 			clearLeadIntentCache()
 			setDone(true)
-		} catch {
+		} catch (err) {
+			if (err?.status === 429) {
+				alert(tc('errorRateLimit'))
+				return
+			}
+			if (err?.status === 503) {
+				alert(tc('errorLeadConfig'))
+				return
+			}
 			alert(tc('errorNetwork'))
 		} finally {
 			setSubmitting(false)
