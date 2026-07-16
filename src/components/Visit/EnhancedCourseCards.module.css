@@ -70,14 +70,18 @@
 }
 
 .cardExpanded {
-    transform: scale(1.04) translateY(-10px);
+    transform: scale(1.06) translateY(-12px);
     z-index: 10;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.55),
+        0 0 40px rgba(255, 255, 255, 0.18),
+        0 30px 60px rgba(0, 0, 0, 0.45);
 }
 
 .cardShrunk {
-    transform: scale(0.98);
-    opacity: 0.6;
+    transform: scale(0.96);
+    opacity: 0.45;
+    filter: saturate(0.7);
 }
 
 /* --- ТЕМІЗАЦІЯ КАРТОК --- */
@@ -218,46 +222,10 @@
 .robloxEl3 { bottom: 22%; left: 45%; font-size: 1.75rem; color: #fca5a5; animation-name: spin-slow; animation-duration: 6s; animation-delay: 0.4s; }
 
 
-/* --- ВЕРХНЯ ЧАСТИНА --- */
-.topSection {
-    position: absolute;
-    top: 2rem;
-    left: 2rem;
-    right: 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    z-index: 20;
-}
-.rating {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(4px);
-    padding: 0.375rem 0.75rem;
-    border-radius: 9999px;
-    border: 1px solid rgba(255,255,255,0.2);
-    will-change: auto;
-}
-.ratingIcon { width: 1rem; height: 1rem; color: #facc15; fill: currentColor; }
-.ratingValue { color: white; font-weight: 700; font-size: 0.875rem; }
-.badge {
-    padding: 0.375rem 1rem;
-    border-radius: 9999px;
-    font-weight: 700;
-    font-size: 0.75rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    animation: pulse 3s infinite;
-    border: 1px solid rgba(255,255,255,0.3);
-    color: white;
-    background-image: var(--badge-gradient);
-}
-
 /* --- ЦЕНТРАЛЬНА ІКОНКА --- */
 .centerIconWrapper {
     position: absolute;
-    top: 50%;
+    top: 42%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 20;
@@ -306,188 +274,50 @@
     animation: icon-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* --- НИЖНІЙ КОНТЕНТ --- */
-.bottomContent {
+/* --- ВЕЛИКИЙ ТЕКСТ «ПЕРЕЙТИ» --- */
+.goLabel {
     position: absolute;
-    bottom: 0;
     left: 0;
     right: 0;
-    /* Left padding clears the rotated side label so text is not clipped */
-    padding: 2rem 1.5rem 2rem 3.25rem;
-    background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.7), transparent);
-    z-index: 20;
-}
-.titleWrapper { margin-bottom: 1.5rem; }
-.title {
-    font-size: 2.75rem;
-    font-weight: 900;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.025em;
-    color: white;
-    transition: color 0.5s ease;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-}
-.titleCosmic {
-    background-image: linear-gradient(135deg, #c084fc, #fbcfe8, #fef08a);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: cosmic-text-anim 5s ease-in-out infinite;
-}
-.subtitle {
-    font-size: 1.125rem;
-    font-weight: 500;
-    color: var(--subtitle-color);
-    transition: color 0.5s ease;
-}
-
-/* --- ДЕТАЛІ --- */
-.details {
-    transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-}
-.detailsVisible { max-height: 28rem; opacity: 1; }
-.description {
-    font-size: 0.875rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    color: var(--details-text-color);
-    overflow-wrap: anywhere;
-    word-break: break-word;
-}
-.featuresGrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem 0.75rem;
-    margin-bottom: 1rem;
-}
-.featureItem {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.4rem;
-    font-size: 0.8125rem;
-    line-height: 1.35;
-    color: var(--details-text-color);
-    min-width: 0;
-}
-.featureItem span {
-    overflow-wrap: anywhere;
-    word-break: break-word;
-}
-.featureIcon { width: 1rem; height: 1rem; color: #4ade80; flex-shrink: 0; }
-.statsGrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    font-size: 0.75rem;
-    color: var(--subtitle-color);
-}
-.statItem { display: flex; align-items: center; gap: 0.5rem; }
-.statIcon { width: 1rem; height: 1rem; }
-.actionButton {
-    width: 100%;
-    padding: 1rem 1.5rem;
-    backdrop-filter: blur(4px);
-    border: 1px solid;
-    border-radius: 1.5rem;
-    font-weight: 700;
-    color: white;
-    transition: all 0.3s ease;
+    bottom: 12%;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
-    cursor: pointer;
-    background-color: var(--button-bg);
-    border-color: var(--button-border);
-    text-decoration: none;
-}
-.actionButton:hover {
-    background-color: var(--button-hover-bg);
-    box-shadow: 0 0 20px var(--button-border);
-}
-.buttonIcon { width: 1.25rem; height: 1.25rem; }
-.buttonArrow {
-    width: 1rem;
-    height: 1rem;
-    transition: transform 0.3s ease;
-}
-.actionButton:hover .buttonArrow { transform: translateX(4px); }
-
-/* Постійна кнопка переходу */
-.ctaRow {
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 0.75rem;
-}
-.ctaButton {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 1rem;
-    border-radius: 12px;
-    background-color: rgba(255,255,255,0.16);
-    border: 1px solid rgba(255,255,255,0.3);
-    color: white;
-    font-weight: 700;
-    text-decoration: none;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-    position: relative;
-    will-change: transform;
-    margin-top: 1px;
-    margin-bottom: 1px;
-}
-.ctaButton:hover {
-    background-color: rgba(255,255,255,0.22);
-    transform: translateY(-1px);
-}
-
-/* Кнопка "Перейти" для мобільної версії */
-.mobileGoButton {
-    display: none;
-}
-
-/* --- БІЧНА НАЗВА --- */
-.sideLabel {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%) rotate(-90deg);
-    transform-origin: top left;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(4px);
-    padding: 0.75rem 1.5rem;
-    border-top-right-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-    z-index: 15;
-    will-change: transform;
+    z-index: 25;
+    opacity: 0.35;
+    transform: translateY(8px) scale(0.92);
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     pointer-events: none;
 }
-.cardExpanded .sideLabel {
-    opacity: 0;
-    visibility: hidden;
+
+.goLabelVisible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
 }
-.sideLabelHovered { transform: translateY(-50%) rotate(-90deg) translateX(-0.5rem) scale(1.1); }
-.sideLabelText {
-    color: white;
+
+.goText {
+    font-size: clamp(2rem, 3.2vw, 3.25rem);
     font-weight: 900;
-    font-size: 1rem;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
+    color: white;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+}
+
+.goArrow {
+    width: clamp(1.75rem, 2.5vw, 2.5rem);
+    height: clamp(1.75rem, 2.5vw, 2.5rem);
+    color: white;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+    transition: transform 0.3s ease;
+}
+
+.cardExpanded .goArrow {
+    transform: translateX(6px);
 }
 
 /* --- АНІМАЦІЇ --- */
-@keyframes cosmic-text-anim {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-}
 @keyframes icon-pop {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.25); }
@@ -545,25 +375,18 @@
     .card {
         flex: unset;
         height: auto;
-        min-height: 0;
+        min-height: 220px;
         border-radius: 12px;
         transform: none !important;
         opacity: 1 !important;
+        filter: none !important;
         margin: 0;
         overflow: hidden;
         transition: none;
         contain: none;
         display: flex;
         flex-direction: column;
-    }
-
-    .topSection {
-        position: relative;
-        top: auto;
-        left: auto;
-        right: auto;
-        padding: 1rem 1rem 0;
-        z-index: 20;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
     }
 
     .centerIconWrapper {
@@ -571,7 +394,7 @@
         top: auto;
         left: auto;
         transform: none;
-        margin: 0.75rem auto 0.25rem;
+        margin: 1.5rem auto 0.5rem;
         z-index: 10;
     }
 
@@ -591,96 +414,17 @@
         min-height: 96px;
     }
 
-    .bottomContent {
+    .goLabel {
         position: relative;
         bottom: auto;
-        left: auto;
-        right: auto;
-        margin-top: auto;
-        padding: 1rem 1rem 1.15rem;
-        background: linear-gradient(to top, rgba(0,0,0,0.92), rgba(0,0,0,0.45), transparent);
+        margin: auto 0 1.25rem;
+        opacity: 1;
+        transform: none;
     }
 
-    .titleWrapper {
-        margin-bottom: 0.75rem;
+    .goText {
+        font-size: clamp(1.75rem, 7vw, 2.25rem);
     }
-
-    .title { 
-        font-size: 1.55rem; 
-        margin-bottom: 0.35rem;
-        line-height: 1.15;
-    }
-    .subtitle { 
-        font-size: 0.95rem; 
-        margin-bottom: 0;
-        line-height: 1.35;
-    }
-
-    .featuresGrid { 
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.45rem 0.65rem;
-        margin-bottom: 0.75rem;
-    }
-
-    .featureItem {
-        font-size: 0.78rem;
-    }
-
-    .statsGrid { 
-        grid-template-columns: 1fr 1fr; 
-        gap: 0.5rem;
-        margin-bottom: 0.75rem;
-        padding-top: 0.75rem;
-    }
-
-    /* Деталі завжди видимі на мобільних */
-    .details {
-        max-height: none !important;
-        opacity: 1 !important;
-        overflow: visible;
-    }
-
-    .description {
-        font-size: 0.875rem;
-        line-height: 1.45;
-        margin-bottom: 0.75rem;
-    }
-
-    /* Приховуємо малу кнопку "Перейти" біля заголовка */
-    .ctaRow {
-        display: none;
-    }
-
-    /* На мобільних — кнопка "Перейти" замість "Почати навчання" */
-    .actionButton {
-        display: none;
-    }
-
-    .mobileGoButton {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        width: 100%;
-        padding: 0.875rem 1.25rem;
-        margin-top: 0.5rem;
-        border-radius: 12px;
-        background-color: rgba(255,255,255,0.16);
-        border: 1px solid rgba(255,255,255,0.3);
-        color: white;
-        font-weight: 700;
-        font-size: 0.95rem;
-        text-decoration: none;
-        transition: background-color 0.2s ease, transform 0.2s ease;
-    }
-    .mobileGoButton:active {
-        background-color: rgba(255,255,255,0.22);
-        transform: scale(0.98);
-    }
-
-    /* Приховуємо бічну вертикальну назву на мобільних */
-    .sideLabel { display: none; }
 
     @media (max-width: 430px) {
         .wrapper {
@@ -688,16 +432,8 @@
             gap: 0.75rem;
         }
 
-        .title {
-            font-size: 1.35rem;
-        }
-
-        .subtitle {
-            font-size: 0.9rem;
-        }
-
-        .featuresGrid {
-            grid-template-columns: 1fr;
+        .card {
+            min-height: 200px;
         }
 
         .centerIcon { font-size: 3rem; }
@@ -716,36 +452,25 @@
             min-height: 80px;
         }
     }
-
-    /* Вимикаємо декоративні анімації */
-    .badge { animation: none; }
-    .titleCosmic { animation: none; }
-    .rating { backdrop-filter: none; }
 }
 
 /* Вузькі картки в рядку (desktop до планшета) */
 @media (min-width: 1025px) and (max-width: 1400px) {
-    .bottomContent {
-        padding: 1.5rem 1.25rem 1.5rem 1.25rem;
+    .goText {
+        font-size: clamp(1.5rem, 2.4vw, 2.25rem);
     }
 
-    .sideLabel {
-        display: none;
+    .centerIconImage {
+        width: 140px;
+        height: 140px;
     }
 
-    .title {
-        font-size: 2rem;
-    }
-
-    .subtitle {
-        font-size: 1rem;
-    }
-
-    .description {
-        font-size: 0.8125rem;
-    }
-
-    .featuresGrid {
-        grid-template-columns: 1fr;
+    .centerIconImage img,
+    .centerIconImage .logoImage,
+    .centerIconImage img.logoImage {
+        max-width: 140px;
+        max-height: 140px;
+        min-width: 120px;
+        min-height: 120px;
     }
 }

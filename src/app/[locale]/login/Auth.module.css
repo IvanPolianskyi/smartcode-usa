@@ -216,13 +216,6 @@
   line-height: 1.45;
 }
 
-.fieldHint {
-  margin: 0.35rem 0 0;
-  font-size: 0.75rem;
-  line-height: 1.4;
-  color: #8b8b9a;
-}
-
 .bannerInfo,
 .bannerWarn {
   margin-bottom: 1rem;
@@ -242,33 +235,6 @@
   background: rgba(251, 191, 36, 0.12);
   border: 1px solid rgba(251, 191, 36, 0.4);
   color: #fde68a;
-}
-
-.helpBox {
-  margin-top: 1.5rem;
-  padding: 1rem 1.1rem;
-  border-radius: 12px;
-  background: rgba(161, 0, 255, 0.08);
-  border: 1px solid rgba(161, 0, 255, 0.22);
-}
-
-.helpTitle {
-  margin: 0 0 0.55rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #e9d5ff;
-}
-
-.helpList {
-  margin: 0;
-  padding-left: 1.1rem;
-  color: #c4c4d4;
-  font-size: 0.8125rem;
-  line-height: 1.5;
-}
-
-.helpList li + li {
-  margin-top: 0.35rem;
 }
 
 .forgotPassword {

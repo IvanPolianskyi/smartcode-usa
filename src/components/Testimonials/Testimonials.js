@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import styles from './Testimonials.module.css'
 
@@ -16,10 +17,32 @@ const testimonials = [
 const Testimonials = () => {
 	const t = useTranslations('homeSections.testimonials')
 	const carouselRef = useRef(null)
+	const [canPrev, setCanPrev] = useState(false)
+	const [canNext, setCanNext] = useState(true)
+
+	const updateNavState = useCallback(() => {
+		const el = carouselRef.current
+		if (!el) return
+		const maxScroll = el.scrollWidth - el.clientWidth
+		setCanPrev(el.scrollLeft > 4)
+		setCanNext(el.scrollLeft < maxScroll - 4)
+	}, [])
+
+	const scrollByCard = (direction) => {
+		const el = carouselRef.current
+		if (!el) return
+		const card = el.querySelector(`.${styles.card}`)
+		const amount = card ? card.offsetWidth + 24 : el.clientWidth * 0.8
+		el.scrollBy({ left: direction * amount, behavior: 'smooth' })
+	}
 
 	useEffect(() => {
 		const el = carouselRef.current
 		if (!el) return undefined
+
+		updateNavState()
+		el.addEventListener('scroll', updateNavState, { passive: true })
+		window.addEventListener('resize', updateNavState)
 
 		let isDown = false
 		let startX = 0
@@ -48,6 +71,7 @@ const Testimonials = () => {
 			try {
 				el.releasePointerCapture?.(e.pointerId)
 			} catch {}
+			updateNavState()
 		}
 
 		const onClickCapture = (e) => {
@@ -65,13 +89,15 @@ const Testimonials = () => {
 		el.addEventListener('click', onClickCapture, true)
 
 		return () => {
+			el.removeEventListener('scroll', updateNavState)
+			window.removeEventListener('resize', updateNavState)
 			el.removeEventListener('pointerdown', onPointerDown)
 			el.removeEventListener('pointermove', onPointerMove)
 			el.removeEventListener('pointerup', onPointerUp)
 			el.removeEventListener('pointercancel', onPointerUp)
 			el.removeEventListener('click', onClickCapture, true)
 		}
-	}, [])
+	}, [updateNavState])
 
 	return (
 		<section id='testimonials' className={styles.testimonialsSection}>
@@ -83,6 +109,16 @@ const Testimonials = () => {
 				</div>
 
 				<div className={styles.carouselWrapper}>
+					<button
+						type='button'
+						className={`${styles.navButton} ${styles.navPrev}`}
+						onClick={() => scrollByCard(-1)}
+						disabled={!canPrev}
+						aria-label='Попередній відгук'
+					>
+						<ChevronLeft size={24} />
+					</button>
+
 					<div className={styles.carouselContainer}>
 						<div ref={carouselRef} className={styles.carousel}>
 							{testimonials.map((testimonial, index) => (
@@ -101,6 +137,16 @@ const Testimonials = () => {
 							))}
 						</div>
 					</div>
+
+					<button
+						type='button'
+						className={`${styles.navButton} ${styles.navNext}`}
+						onClick={() => scrollByCard(1)}
+						disabled={!canNext}
+						aria-label='Наступний відгук'
+					>
+						<ChevronRight size={24} />
+					</button>
 				</div>
 			</div>
 		</section>

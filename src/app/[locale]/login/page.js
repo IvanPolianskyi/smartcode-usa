@@ -109,7 +109,6 @@ function LoginForm() {
             className={styles.input}
             placeholder={t('emailPlaceholder')}
           />
-          <p className={styles.fieldHint}>{t('emailHint')}</p>
         </div>
 
         <div className={styles.formGroup}>
@@ -147,15 +146,6 @@ function LoginForm() {
           {loading ? t('submitting') : t('submit')}
         </button>
       </form>
-
-      <div className={styles.helpBox}>
-        <p className={styles.helpTitle}>{t('helpTitle')}</p>
-        <ul className={styles.helpList}>
-          <li>{t('helpTelegram')}</li>
-          <li>{t('helpManager')}</li>
-          <li>{t('helpMagic')}</li>
-        </ul>
-      </div>
 
       <div className={styles.footer}>
         <p>{t('footer')}</p>

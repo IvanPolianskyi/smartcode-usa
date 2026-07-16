@@ -16,7 +16,7 @@ import { useLocale } from 'next-intl'
 
 export default function TrialSignupBlock() {
 	const locale = useLocale()
-	const [formData, setFormData] = useState({ name: '', email: '' })
+	const [formData, setFormData] = useState({ name: '' })
 	const [submitting, setSubmitting] = useState(false)
 	const [done, setDone] = useState(false)
 	const phoneInput = usePhoneInput('UA')
@@ -41,10 +41,6 @@ export default function TrialSignupBlock() {
 			alert('Введіть ваше ім\'я')
 			return
 		}
-		if (!formData.email.trim()) {
-			alert('Введіть email')
-			return
-		}
 
 		setSubmitting(true)
 		try {
@@ -56,7 +52,6 @@ export default function TrialSignupBlock() {
 					name: formData.name,
 					phone: phoneInput.getFullNumber(),
 					course: 'Пробне заняття (з блоку реєстрації)',
-					message: `Email: ${formData.email}`, // Pass email as message
 					contactMethod: 'phone',
 					preferredContactMethod: 'phone_call',
 					eventId,
@@ -76,7 +71,7 @@ export default function TrialSignupBlock() {
 			}
 			clearLeadIntentCache()
 			setDone(true)
-			setFormData({ name: '', email: '' })
+			setFormData({ name: '' })
 			phoneInput.reset()
 		} catch {
 			alert('Помилка мережі, перевірте з\'єднання.')
@@ -178,20 +173,6 @@ export default function TrialSignupBlock() {
 									classes={phoneClasses}
 									id="trial-phone"
 									showLabel={false}
-								/>
-							</div>
-
-							<div className={styles.field}>
-								<label className={styles.label} htmlFor="email">E-mail *</label>
-								<input
-									id="email"
-									name="email"
-									type="email"
-									className={styles.input}
-									placeholder="Введіть електронну пошту"
-									value={formData.email}
-									onChange={handleInputChange}
-									required
 								/>
 							</div>
 

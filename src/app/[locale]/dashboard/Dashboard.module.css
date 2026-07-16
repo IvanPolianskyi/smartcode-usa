@@ -415,9 +415,9 @@
   padding: 0.75rem 0.85rem;
   margin-bottom: 1rem;
   border-radius: var(--dash-radius-sm);
-  background: #fffbeb;
-  border: 1px solid #fde68a;
-  color: #92400e;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  color: #fcd34d;
   font-size: 0.88rem;
   line-height: 1.45;
 }
@@ -428,7 +428,7 @@
 
 .profileError {
   margin: 0 0 0.75rem;
-  color: #dc2626;
+  color: #f87171;
   font-size: 0.88rem;
 }
 
@@ -436,9 +436,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  border: 1px solid #fecaca;
-  background: #fef2f2;
-  color: #b91c1c;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.12);
+  color: #fca5a5;
   border-radius: 10px;
   padding: 0.55rem 0.9rem;
   font-weight: 600;
@@ -446,7 +446,7 @@
 }
 
 .deleteAccountBtn:hover:not(:disabled) {
-  background: #fee2e2;
+  background: rgba(239, 68, 68, 0.22);
 }
 
 .deleteAccountBtn:disabled {
@@ -572,7 +572,7 @@
   gap: 0.2rem;
   padding: 0.65rem 0.75rem;
   border-radius: 10px;
-  background: #fafaf9;
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--dash-border);
   font-size: 0.75rem;
   color: var(--dash-muted);
@@ -595,7 +595,7 @@
 }
 
 .payStatNegative {
-  color: #dc2626 !important;
+  color: #f87171 !important;
 }
 
 .debtRow {
@@ -603,36 +603,36 @@
   padding: 0.85rem 1rem;
   border-radius: 12px;
   border: 1px solid var(--dash-border);
-  background: #f5f5f4;
+  background: rgba(255, 255, 255, 0.04);
   box-sizing: border-box;
 }
 
 .debtRowActive {
-  background: linear-gradient(135deg, #fef2f2, #fff1f2);
-  border-color: #fca5a5;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.4);
 }
 
 .debtRowPending {
-  background: linear-gradient(135deg, #eff6ff, #f0f9ff);
-  border-color: #93c5fd;
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(96, 165, 250, 0.4);
 }
 
 .debtRowPending .debtRowLabel {
-  color: #1d4ed8;
+  color: #93c5fd;
 }
 
 .debtRowPending .debtRowLabel svg {
-  color: #2563eb;
+  color: #60a5fa;
   flex-shrink: 0;
 }
 
 .debtRowPending .debtRowValue {
-  color: #1d4ed8;
+  color: #93c5fd;
 }
 
 .debtRowPending .debtRowHint {
-  border-top-color: rgba(147, 197, 253, 0.5);
-  color: #1e40af;
+  border-top-color: rgba(96, 165, 250, 0.35);
+  color: #93c5fd;
 }
 
 .debtRowMain {
@@ -653,31 +653,31 @@
 }
 
 .debtRowActive .debtRowLabel {
-  color: #b91c1c;
+  color: #fca5a5;
 }
 
 .debtRowActive .debtRowLabel svg {
-  color: #dc2626;
+  color: #f87171;
   flex-shrink: 0;
 }
 
 .debtRowValue {
   font-size: 1.4rem;
   font-weight: 800;
-  color: #57534e;
+  color: var(--dash-text);
   white-space: nowrap;
 }
 
 .debtRowActive .debtRowValue {
-  color: #dc2626;
+  color: #f87171;
 }
 
 .debtRowHint {
   margin: 0.5rem 0 0;
   padding-top: 0.5rem;
-  border-top: 1px solid rgba(252, 165, 165, 0.5);
+  border-top: 1px solid rgba(239, 68, 68, 0.35);
   font-size: 0.8rem;
-  color: #b91c1c;
+  color: #fca5a5;
   line-height: 1.4;
 }
 
@@ -740,14 +740,14 @@
 }
 
 .amountChip:hover {
-  border-color: #a5b4fc;
-  background: #eef2ff;
+  border-color: rgba(161, 0, 255, 0.5);
+  background: rgba(161, 0, 255, 0.15);
 }
 
 .amountChipActive {
   border-color: var(--dash-primary);
-  background: #eef2ff;
-  color: var(--dash-primary-dark);
+  background: rgba(161, 0, 255, 0.2);
+  color: #e9d5ff;
 }
 
 .uploadZone {
@@ -761,7 +761,7 @@
   padding: 1.1rem 1rem;
   border: 2px dashed rgba(255, 255, 255, 0.12);
   border-radius: 12px;
-  background: #fafaf9;
+  background: rgba(255, 255, 255, 0.03);
   cursor: pointer;
   text-align: center;
   transition: border-color 0.15s ease, background 0.15s ease;
@@ -769,7 +769,7 @@
 
 .uploadZone:hover {
   border-color: #c44bff;
-  background: #eef2ff;
+  background: rgba(161, 0, 255, 0.12);
 }
 
 .uploadZone svg {
@@ -801,9 +801,9 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0.75rem;
-  border: 2px solid #c7d2fe;
+  border: 2px solid rgba(161, 0, 255, 0.4);
   border-radius: 12px;
-  background: #f5f3ff;
+  background: rgba(161, 0, 255, 0.1);
 }
 
 .receiptPreviewHead {
@@ -820,7 +820,7 @@
   gap: 0.35rem;
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--dash-primary-dark);
+  color: #e9d5ff;
 }
 
 .receiptPreviewRemove {
@@ -839,8 +839,8 @@
 }
 
 .receiptPreviewRemove:hover {
-  background: #fee2e2;
-  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
 }
 
 .receiptPreviewImageWrap {
@@ -884,7 +884,7 @@
   width: 100%;
   margin-top: 0.65rem;
   padding: 0.55rem 0.75rem;
-  border: 1px solid #c7d2fe;
+  border: 1px solid rgba(161, 0, 255, 0.35);
   border-radius: 10px;
   background: #121218;
   font-size: 0.85rem;
@@ -895,7 +895,7 @@
 }
 
 .receiptPreviewChangeBtn:hover {
-  background: #eef2ff;
+  background: rgba(161, 0, 255, 0.15);
   border-color: var(--dash-primary);
 }
 
@@ -930,8 +930,8 @@
   margin: 0;
   padding: 0.65rem 0.75rem;
   border-radius: 10px;
-  background: #ecfdf5;
-  color: #047857;
+  background: rgba(16, 185, 129, 0.12);
+  color: #6ee7b7;
   font-size: 0.88rem;
   line-height: 1.45;
 }
@@ -940,8 +940,8 @@
   margin: 0;
   padding: 0.65rem 0.75rem;
   border-radius: 10px;
-  background: #fef2f2;
-  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.12);
+  color: #fca5a5;
   font-size: 0.88rem;
   line-height: 1.45;
 }
@@ -971,8 +971,8 @@
 
 .payModeBtnActive {
   border-color: #a100ff;
-  background: #eef2ff;
-  color: #7a00c8;
+  background: rgba(161, 0, 255, 0.2);
+  color: #e9d5ff;
   font-weight: 600;
 }
 
@@ -985,7 +985,7 @@
   padding: 0.75rem;
   border: 1px solid var(--dash-border);
   border-radius: 12px;
-  background: #fafaf9;
+  background: rgba(255, 255, 255, 0.03);
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.5rem;
@@ -1029,17 +1029,17 @@
 
 .receiptMessage {
   margin: 0.15rem 0 0;
-  color: #1e40af;
+  color: #93c5fd;
   font-size: 0.88rem;
 }
 
 .pendingNotice {
-  background: linear-gradient(135deg, #fef3c7, #fde68a);
-  border: 1px solid #c44bff;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.35);
   border-radius: 14px;
   padding: 1rem 1.25rem;
   margin-bottom: 1rem;
-  color: #78350f;
+  color: #fcd34d;
   font-size: 0.95rem;
   line-height: 1.5;
 }
@@ -1047,7 +1047,7 @@
 .pendingNotice strong {
   display: block;
   margin-bottom: 0.35rem;
-  color: #92400e;
+  color: #fbbf24;
 }
 
 /* ——— Student dashboard v2 ——— */
@@ -1127,20 +1127,20 @@
 
 .metricCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.45), 0 0 2px rgba(161, 0, 255, 0.2);
 }
 
 .metricCardIcon {
   width: 48px;
   height: 48px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
-  color: var(--dash-primary-dark);
+  background: linear-gradient(135deg, rgba(161, 0, 255, 0.35), rgba(196, 75, 255, 0.25));
+  color: #e9d5ff;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .metricCard strong {
@@ -1201,7 +1201,7 @@
 .coursesSection:hover,
 .calendarCard:hover,
 .historyCard:hover {
-  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.45), 0 0 2px rgba(161, 0, 255, 0.2);
 }
 
 .coursesSection .courseGrid,
@@ -1239,7 +1239,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.45);
   pointer-events: none;
 }
 
@@ -1359,8 +1359,8 @@
   margin-top: 0.45rem;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #059669;
-  background: #ecfdf5;
+  color: #6ee7b7;
+  background: rgba(16, 185, 129, 0.15);
   border-radius: 999px;
   padding: 0.2rem 0.55rem;
 }
@@ -1390,7 +1390,7 @@
   width: 100%;
   height: 8px;
   border-radius: 999px;
-  background: #f5f5f4;
+  background: rgba(255, 255, 255, 0.08);
   overflow: hidden;
   margin: 0.65rem 0 0.75rem;
 }
@@ -1439,7 +1439,7 @@
 }
 
 .progressRingTrack {
-  stroke: #f5f5f4;
+  stroke: rgba(255, 255, 255, 0.1);
 }
 
 .progressRingFill {
@@ -1460,7 +1460,7 @@
 }
 
 .progressRingMuted .progressRingFill {
-  stroke: #d6d3d1;
+  stroke: #4b5563;
 }
 
 .progressRingMuted .progressRingValue {
@@ -1474,40 +1474,40 @@
   gap: 1rem;
   padding: 1rem 1.15rem;
   border-radius: var(--dash-radius-sm);
-  background: linear-gradient(135deg, #fffbeb, #fef3c7);
-  border: 1px solid #fcd34d;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.4);
   box-shadow: var(--dash-shadow);
 }
 
 .paymentBannerUrgent {
-  background: linear-gradient(135deg, #fef2f2, #fee2e2);
-  border-color: #fca5a5;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.4);
 }
 
 .paymentBannerPending {
-  background: linear-gradient(135deg, #eff6ff, #dbeafe);
-  border-color: #93c5fd;
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(96, 165, 250, 0.4);
 }
 
 .paymentBannerPending .paymentBannerIcon {
-  background: rgba(37, 99, 235, 0.12);
-  color: #2563eb;
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
 }
 
 .paymentBannerPending .paymentBannerBody strong {
-  color: #1e3a8a;
+  color: #93c5fd;
 }
 
 .paymentBannerPending .paymentBannerBody p {
-  color: #1d4ed8;
+  color: #bfdbfe;
 }
 
 .paymentBannerIcon {
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: rgba(196, 75, 255, 0.2);
-  color: #b45309;
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1515,8 +1515,8 @@
 }
 
 .paymentBannerUrgent .paymentBannerIcon {
-  background: rgba(239, 68, 68, 0.15);
-  color: #dc2626;
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
 }
 
 .paymentBannerBody {
@@ -1526,23 +1526,23 @@
 
 .paymentBannerBody strong {
   display: block;
-  color: #78350f;
+  color: #fcd34d;
   margin-bottom: 0.2rem;
 }
 
 .paymentBannerUrgent .paymentBannerBody strong {
-  color: #991b1b;
+  color: #fca5a5;
 }
 
 .paymentBannerBody p {
   margin: 0;
   font-size: 0.88rem;
-  color: #92400e;
+  color: #fde68a;
   line-height: 1.45;
 }
 
 .paymentBannerUrgent .paymentBannerBody p {
-  color: #b91c1c;
+  color: #fecaca;
 }
 
 .paymentBannerMeta {
@@ -1592,13 +1592,13 @@
   padding: 0.65rem 0.75rem;
   border: 1px solid var(--dash-border);
   border-radius: 12px;
-  background: #fafaf9;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .scheduleRowToday {
-  border-color: #a5b4fc;
-  background: linear-gradient(90deg, #eef2ff 0%, #fafaf9 45%);
-  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.12);
+  border-color: rgba(161, 0, 255, 0.45);
+  background: linear-gradient(90deg, rgba(161, 0, 255, 0.18) 0%, rgba(255, 255, 255, 0.03) 45%);
+  box-shadow: 0 0 0 1px rgba(161, 0, 255, 0.15);
 }
 
 .scheduleRowEmpty {
@@ -1616,7 +1616,7 @@
 }
 
 .scheduleRowToday .scheduleRowDay {
-  border-right-color: #c7d2fe;
+  border-right-color: rgba(161, 0, 255, 0.35);
 }
 
 .scheduleDayBadge {
@@ -1630,8 +1630,8 @@
   font-size: 0.62rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--dash-primary);
-  background: #e0e7ff;
+  color: #e9d5ff;
+  background: rgba(161, 0, 255, 0.25);
   padding: 0.15rem 0.4rem;
   border-radius: 999px;
 }
@@ -1662,8 +1662,8 @@
 }
 
 .scheduleLessonLive {
-  border-color: #86efac;
-  background: #f0fdf4;
+  border-color: rgba(34, 197, 94, 0.45);
+  background: rgba(16, 185, 129, 0.12);
 }
 
 .scheduleLessonInfo {
@@ -1698,8 +1698,8 @@
   border-radius: 8px;
   font-size: 0.78rem;
   font-weight: 700;
-  background: #e7e5e4;
-  color: #57534e;
+  background: rgba(255, 255, 255, 0.08);
+  color: #c4c4d4;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -1728,7 +1728,7 @@
   gap: 0.55rem;
   padding: 0.65rem 0.75rem;
   border-radius: 10px;
-  background: #fafaf9;
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--dash-border);
   color: var(--dash-primary);
 }
@@ -1765,9 +1765,9 @@
 
 .badgeItemEarned {
   border-style: solid;
-  border-color: #fcd34d;
-  background: linear-gradient(135deg, #fffbeb, #fef9c3);
-  color: #92400e;
+  border-color: rgba(251, 191, 36, 0.45);
+  background: rgba(251, 191, 36, 0.12);
+  color: #fcd34d;
 }
 
 .badgeItemLocked {
@@ -1803,7 +1803,7 @@
   gap: 0.75rem;
   padding: 0.55rem 0.65rem;
   border-radius: 10px;
-  background: #fafaf9;
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--dash-border);
   font-size: 0.86rem;
   color: var(--dash-text);
@@ -1813,11 +1813,11 @@
   display: inline-flex;
   gap: 0.25rem;
   padding: 0.35rem;
-  background: rgba(226, 232, 240, 0.6);
+  background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(8px);
   border-radius: 14px;
   margin-bottom: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @media (min-width: 900px) {
