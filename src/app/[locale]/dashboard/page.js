@@ -69,6 +69,7 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
   const dateLocale = 'uk-UA'
   const profile = user?.studentProfile || { regularSchedule: [], activeOnlineCourses: [], zoomLink: '' }
   const schedule = profile.regularSchedule || []
+  const upcomingLessons = profile.upcomingLessons
   const activeCourses = profile.activeOnlineCourses || []
   const ownedCoursesCount = useMemo(
     () => getStudentAccessibleCourseIds(user).length,
@@ -80,8 +81,8 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
     (progress?.completedLessons || []).map((lessonId) => ({ courseId, lessonId }))
   )
   const scheduleInfo = useMemo(
-    () => computeScheduleStats(schedule, { t, dateLocale }),
-    [schedule, dateLocale, t]
+    () => computeScheduleStats(schedule, { t, dateLocale, upcomingLessons }),
+    [schedule, upcomingLessons, dateLocale, t]
   )
 
   const weeklyGoal = Math.max(1, scheduleInfo.weeklyTotal || 0)
@@ -176,6 +177,7 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
           <aside className={styles.dashAside}>
             <WeeklyScheduleCalendar
               schedule={schedule}
+              upcomingLessons={upcomingLessons}
               zoomLink={zoomLink}
               t={t}
               dateLocale={dateLocale}

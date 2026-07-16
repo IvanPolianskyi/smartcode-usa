@@ -7,9 +7,12 @@ import {
   addDaysToDateKey,
   formatKyivLocale,
   isKyivDateKeyToday,
+  kyivDateKeyFromParts,
+  kyivPartsFromInstant,
   kyivWallToUtc,
   kyivWeekRange,
   nextKyivWeekdaySlot,
+  parseUtcInstant,
 } from '@/lib/kyivTime'
 import { normalizeScheduleDay } from '@/lib/studentScheduleStats'
 import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
@@ -43,14 +46,20 @@ function isJoinWindow(lessonDate, now = new Date()) {
   return t >= openFrom && t <= openUntil
 }
 
+/**
+ * Тижневий календар: пріоритет — реальні уроки CRM (upcomingLessons), як у Telegram-боті.
+ * regularSchedule лише як fallback для старих профілів без upcomingLessons.
+ */
 export default function WeeklyScheduleCalendar({
   schedule,
+  upcomingLessons,
   zoomLink,
   t,
   dateLocale,
 }) {
   const now = new Date()
   const kyivWeek = kyivWeekRange(now)
+  const useInstances = Array.isArray(upcomingLessons)
 
   const slots = useMemo(
     () => (schedule || []).map(parseSlot).filter(Boolean),
@@ -58,7 +67,51 @@ export default function WeeklyScheduleCalendar({
   )
 
   const weekRows = useMemo(() => {
-    const { mondayKey } = kyivWeek
+    const { mondayKey, start, end } = kyivWeek
+
+    if (useInstances) {
+      const byDateKey = new Map()
+      for (const item of upcomingLessons) {
+        const at = parseUtcInstant(item?.startAt)
+        if (Number.isNaN(at.getTime())) continue
+        if (at < start || at >= end) continue
+        const dateKey = kyivDateKeyFromParts(kyivPartsFromInstant(at.getTime()))
+        const list = byDateKey.get(dateKey) || []
+        const [hh, mm] = String(item?.time || '').split(':')
+        list.push({
+          time: item.time,
+          hours: Number(hh),
+          minutes: Number(mm),
+          lessonAt: at,
+          slotZoomLink: item.zoomLink || zoomLink,
+        })
+        byDateKey.set(dateKey, list)
+      }
+
+      return WEEK_DAYS.map((dayKey) => {
+        const daysFromMonday = DAY_INDEX[dayKey] === 0 ? 6 : DAY_INDEX[dayKey] - 1
+        const cellDateKey = addDaysToDateKey(mondayKey, daysFromMonday)
+        const isToday = isKyivDateKeyToday(cellDateKey)
+        const enriched = (byDateKey.get(cellDateKey) || [])
+          .map((slot) => ({
+            ...slot,
+            joinActive: Boolean(slot.slotZoomLink) && isJoinWindow(slot.lessonAt, now),
+          }))
+          .sort(
+            (a, b) =>
+              a.lessonAt.getTime() - b.lessonAt.getTime() ||
+              (a.hours || 0) * 60 + (a.minutes || 0) - ((b.hours || 0) * 60 + (b.minutes || 0))
+          )
+
+        return {
+          dayKey,
+          label: t(`days.${dayKey}`),
+          isToday,
+          slots: enriched,
+        }
+      })
+    }
+
     return WEEK_DAYS.map((dayKey) => {
       const daySlots = slots.filter((s) => s.dayKey === dayKey)
       const daysFromMonday = DAY_INDEX[dayKey] === 0 ? 6 : DAY_INDEX[dayKey] - 1
@@ -67,11 +120,7 @@ export default function WeeklyScheduleCalendar({
 
       const enriched = daySlots
         .map((slot) => {
-          const lessonAt = kyivWallToUtc(
-            cellDateKey,
-            slot.hours,
-            slot.minutes
-          )
+          const lessonAt = kyivWallToUtc(cellDateKey, slot.hours, slot.minutes)
           const slotZoomLink = slot.zoomLink || zoomLink
           const joinActive = Boolean(slotZoomLink) && isJoinWindow(lessonAt, now)
           return { ...slot, lessonAt, joinActive, slotZoomLink }
@@ -85,15 +134,23 @@ export default function WeeklyScheduleCalendar({
         slots: enriched,
       }
     })
-  }, [slots, kyivWeek, now, zoomLink, t])
+  }, [useInstances, upcomingLessons, slots, kyivWeek, now, zoomLink, t])
 
   const nextLesson = useMemo(() => {
+    if (useInstances) {
+      const future = upcomingLessons
+        .map((item) => parseUtcInstant(item?.startAt))
+        .filter((at) => !Number.isNaN(at.getTime()) && at.getTime() >= now.getTime() - 60 * 60 * 1000)
+        .sort((a, b) => a.getTime() - b.getTime())
+      return future[0] ? { at: future[0] } : null
+    }
+
     const all = slots.map((s) => ({
       slot: s,
       at: nextKyivWeekdaySlot(s.dayIndex, s.hours, s.minutes, now),
     }))
     return all.sort((a, b) => a.at.getTime() - b.at.getTime())[0]
-  }, [slots, now])
+  }, [useInstances, upcomingLessons, slots, now])
 
   return (
     <section className={styles.calendarCard}>

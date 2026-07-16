@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
-import { kyivPartsFromInstant, parseUtcInstant } from '@/lib/kyivTime'
+import { kyivPartsFromInstant, kyivWeekRange, parseUtcInstant } from '@/lib/kyivTime'
 
 const CRM_BASE_URL = process.env.CRM_API_URL || process.env.SMARTCODE_CRM_API_URL || ''
 const CRM_NICKNAME = process.env.CRM_ACCOUNT_NICKNAME || process.env.ACCOUNT_NICKNAME || ''
@@ -298,11 +298,48 @@ export function filterFutureScheduledLessons(lessons) {
   const now = Date.now()
   return (Array.isArray(lessons) ? lessons : []).filter((lesson) => {
     if (isCrmTrialLesson(lesson)) return false
+    if (String(lesson?.kind || '') === 'availability') return false
     if (String(lesson?.kind || '') !== 'individual') return false
     if (String(lesson?.status || '') !== 'scheduled') return false
+    if (lesson?.group_calendar_removed === true) return false
     const start = parseUtcInstant(lesson.start_at).getTime()
     return Number.isFinite(start) && start >= now - SCHEDULE_SLOT_GRACE_MS
   })
+}
+
+/**
+ * Реальні уроки для календаря тижня (як у Telegram-боті):
+ * поточний київський тиждень + горизонт на «наступний урок».
+ */
+export function upcomingLessonsFromCrmLessons(
+  lessons,
+  { now = new Date(), horizonDays = 21 } = {}
+) {
+  const week = kyivWeekRange(now)
+  const from = week.start.getTime()
+  const to = now.getTime() + horizonDays * 24 * 60 * 60 * 1000
+  const out = []
+
+  for (const lesson of Array.isArray(lessons) ? lessons : []) {
+    if (isCrmTrialLesson(lesson)) continue
+    if (String(lesson?.kind || '') === 'availability') continue
+    if (String(lesson?.kind || '') !== 'individual') continue
+    if (String(lesson?.status || '') !== 'scheduled') continue
+    if (lesson?.group_calendar_removed === true) continue
+    const start = parseUtcInstant(lesson.start_at)
+    const startMs = start.getTime()
+    if (!Number.isFinite(startMs) || startMs < from || startMs >= to) continue
+    const p = kyivPartsFromInstant(startMs)
+    const day = KYIV_WEEKDAY_UK[p.weekdayIndex]
+    if (!day) continue
+    out.push({
+      startAt: start.toISOString(),
+      day,
+      time: `${String(p.hour).padStart(2, '0')}:${String(p.minute).padStart(2, '0')}`,
+    })
+  }
+
+  return out.sort((a, b) => String(a.startAt).localeCompare(String(b.startAt)))
 }
 
 /** Найближчий майбутній урок на кожну series_id (без дублювання серії). */
@@ -540,16 +577,20 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
         teacherName: String(prev.crmTeacherName || ''),
         zoomLink: String(prev.zoomLink || ''),
       }
-  const nextSchedule =
-    lessonsFetchedOk && schedule.length > 0
-      ? schedule
-      : prev.regularSchedule || []
+  // CRM відповів — беремо фактичний розклад (порожній теж), без застарілого шаблону.
+  const nextSchedule = lessonsFetchedOk ? schedule : prev.regularSchedule || []
+  const nextUpcoming = lessonsFetchedOk
+    ? upcomingLessonsFromCrmLessons(rawLessons)
+    : Array.isArray(prev.upcomingLessons)
+      ? prev.upcomingLessons
+      : []
 
   let nextProfile = {
     ...prev,
     crmStudentId: String(crmStudent.id || ''),
     crmShortId: String(crmStudent.short_id || ''),
     regularSchedule: nextSchedule,
+    upcomingLessons: nextUpcoming,
     crmTeacherId: lessonsFetchedOk ? teacherId : String(prev.crmTeacherId || ''),
     crmTeacherName: lessonsFetchedOk ? teacherName : String(prev.crmTeacherName || ''),
     zoomLink: lessonsFetchedOk ? zoomLink : String(prev.zoomLink || ''),

@@ -2,7 +2,9 @@ import { DAY_KEY_MAP } from '@/hooks/useDashboardCourses'
 import {
   formatKyivLocale,
   kyivSlotInCurrentWeek,
+  kyivWeekRange,
   nextKyivWeekdaySlot,
+  parseUtcInstant,
 } from '@/lib/kyivTime'
 
 const WEEKDAY_KEYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
@@ -56,8 +58,48 @@ export function parseScheduleSlots(schedule) {
 
 /**
  * Статистика розкладу: усі «настінні» години — київський час (Europe/Kyiv).
+ * Якщо є upcomingLessons (реальні CRM-уроки) — рахуємо по них, як у боті.
  */
-export function computeScheduleStats(schedule, { t, dateLocale }) {
+export function computeScheduleStats(schedule, { t, dateLocale, upcomingLessons } = {}) {
+  const now = new Date()
+
+  if (Array.isArray(upcomingLessons)) {
+    const { start, end } = kyivWeekRange(now)
+    const thisWeekAll = []
+    const upcomingThisWeek = []
+    const upcomingAll = []
+
+    for (const item of upcomingLessons) {
+      const at = parseUtcInstant(item?.startAt)
+      if (Number.isNaN(at.getTime())) continue
+      if (at >= start && at < end) {
+        thisWeekAll.push(at)
+        if (at > now) upcomingThisWeek.push(at)
+      }
+      if (at.getTime() >= now.getTime() - 60 * 60 * 1000) {
+        upcomingAll.push(at)
+      }
+    }
+
+    const nextLesson = upcomingAll.sort((a, b) => a.getTime() - b.getTime())[0]
+    const nextLessonText = nextLesson
+      ? formatKyivLocale(nextLesson, dateLocale, {
+          weekday: 'short',
+          day: '2-digit',
+          month: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+        })
+      : t('student.schedule.noLessons')
+
+    return {
+      weeklyTotal: thisWeekAll.length,
+      weeklyCompleted: Math.max(0, thisWeekAll.length - upcomingThisWeek.length),
+      weeklyRemaining: upcomingThisWeek.length,
+      nextLessonText,
+    }
+  }
+
   const slots = parseScheduleSlots(schedule)
   if (slots.length === 0) {
     return {
@@ -68,7 +110,6 @@ export function computeScheduleStats(schedule, { t, dateLocale }) {
     }
   }
 
-  const now = new Date()
   const upcomingThisWeek = []
   const upcomingAll = []
   const thisWeekAll = []
