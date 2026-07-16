@@ -333,8 +333,8 @@ export async function upsertUserFromCrm(payload) {
       const blocked = rejectPrivileged(existingByEmail)
       if (blocked) return blocked
 
-      // Claim by email only when already linked to this CRM student (or unset crm id).
-      // Never auto-claim accounts that already have a password and no crmStudentId.
+      // Claim by email when already linked to this CRM student.
+      // Синтетичний sc-{shortId}@… без crmStudentId — теж можна привʼязати автоматично.
       const existingCrm = String(
         existingByEmail.studentProfile?.crmStudentId || ''
       ).trim()
@@ -347,15 +347,32 @@ export async function upsertUserFromCrm(payload) {
         }
       }
       if (!existingCrm) {
-        // Unlinked account with same email — require manual link in CRM.
-        return {
-          userId: null,
-          created: false,
-          message:
-            'Логін уже зайнятий на сайті без привʼязки CRM. Привʼяжіть вручну на сторінці «Звʼязки».',
+        // Синтетичний логін sc-{shortId}@… — можна безпечно привʼязати до цього учня.
+        const synthetic = shortId ? syntheticStudentLogin(shortId) : ''
+        const canClaimSynthetic =
+          Boolean(synthetic) && email === synthetic
+        if (!canClaimSynthetic) {
+          return {
+            userId: null,
+            created: false,
+            message:
+              'Логін уже зайнятий на сайті без привʼязки CRM. Привʼяжіть вручну на сторінці «Звʼязки».',
+          }
         }
-      }
-      if (existingCrm === crmStudentId) {
+        user = existingByEmail
+        const prev = user.studentProfile || defaultStudentProfile()
+        const setFields = {
+          phone: phone ?? user.phone,
+          studentProfile: { ...prev, ...profilePatch },
+          updatedAt: new Date(),
+        }
+        if (issueCredentials || (!user.password && createLoginLinkOnly)) {
+          tempPassword = requestedPassword || generateStudentPassword()
+          setFields.password = await hashPassword(tempPassword)
+        }
+        await usersCollection.updateOne({ _id: user._id }, { $set: setFields })
+        user = await usersCollection.findOne({ _id: user._id })
+      } else if (existingCrm === crmStudentId) {
         user = existingByEmail
         const prev = user.studentProfile || defaultStudentProfile()
         const setFields = {
