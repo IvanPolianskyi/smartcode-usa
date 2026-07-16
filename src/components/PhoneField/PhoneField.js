@@ -40,8 +40,8 @@ export default function PhoneField({
 
 	const [dropdownPos, setDropdownPos] = useState(null)
 
-	const nationalDisplay = displayValue.replace(country.prefix, '').trim()
-	const inputValue = intlMode ? intlInputValue : nationalDisplay
+	// Повний рядок у одному інпуті: "+380 (95) 145…" — пробіли з маски, одна базова лінія.
+	const inputValue = intlMode ? intlInputValue : displayValue
 
 	useLayoutEffect(() => {
 		if (!showDropdown || !dropdownRef.current) {
@@ -182,11 +182,11 @@ export default function PhoneField({
 
 				<div className={classes.divider} />
 				<div className={classes.phoneInputWrap}>
-					{showCountryPrefix && (
+					{showCountryPrefix ? (
 						<span className={classes.phonePrefix} aria-hidden>
 							{country.prefix}
 						</span>
-					)}
+					) : null}
 					<input
 						id={id}
 						type="tel"
@@ -196,15 +196,15 @@ export default function PhoneField({
 						onKeyDown={handlePhoneKeyDown}
 						onPaste={(e) => {
 							const text = e.clipboardData?.getData('text') || ''
-							if (text.includes('+') || text.replace(/\D/g, '').length > 9) {
+							if (text.includes('+') || /\s/.test(text) || text.replace(/\D/g, '').length > 6) {
 								e.preventDefault()
 								handlePhoneChange(text)
 							}
 						}}
 						className={classes.phoneInput}
 						inputMode="tel"
-						autoComplete={intlMode ? 'tel' : 'tel-national'}
-						placeholder={intlMode ? t('intlPlaceholder') : t('phonePlaceholder')}
+						autoComplete="tel"
+						placeholder={intlMode ? t('intlPlaceholder') : `${country.prefix} `}
 						aria-invalid={phoneError ? 'true' : undefined}
 						aria-describedby={phoneError ? `${id}-error` : undefined}
 					/>

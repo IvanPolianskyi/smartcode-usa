@@ -153,17 +153,29 @@
 
 .phoneInputWrap {
 	min-width: 0;
+	flex: 1;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	padding: 0 1rem;
 }
 
 .phonePrefix {
 	color: rgba(255, 255, 255, 0.72);
-	font-weight: 600;
+	font-weight: 500;
+	font-size: 0.95rem;
+	line-height: 1.25;
 }
 
 .phoneInput {
 	color: #fff;
 	caret-color: #fde68a;
 	min-width: 0;
+	font-size: 0.95rem;
+	font-weight: 500;
+	line-height: 1.25;
+	height: 100%;
+	padding: 0;
 }
 
 .phoneInput::placeholder {

@@ -233,6 +233,18 @@ export function usePhoneInput(initialCountryCode = 'UA') {
 		(value) => {
 			const raw = String(value ?? '')
 			const trimmed = raw.trim()
+			const prefix = country.prefix // e.g. "+380"
+
+			// Той самий інпут містить і код країни, і номер — не зриваємось у intl-режим.
+			if (!intlMode && (raw.startsWith(prefix) || trimmed.startsWith(prefix))) {
+				const rest = raw.startsWith(prefix)
+					? raw.slice(prefix.length)
+					: trimmed.slice(prefix.length)
+				const allDigits = rest.replace(/\D/g, '')
+				const capped = normalizeNationalDigits(allDigits, country).slice(0, 15)
+				applyDigits(capped, country, raw)
+				return
+			}
 
 			if (trimmed.startsWith('+') || intlMode) {
 				const intlRaw = trimmed.startsWith('+')
@@ -264,20 +276,40 @@ export function usePhoneInput(initialCountryCode = 'UA') {
 				return
 			}
 
+			// Національний набір / вставка з пробілами без «+»
 			setIntlMode(false)
 			setIntlInputValue('')
-			const allDigits = value.replace(/\D/g, '')
+			const allDigits = raw.replace(/\D/g, '')
 			const capped = normalizeNationalDigits(allDigits, country).slice(0, 15)
-			applyDigits(capped, country, value)
+			applyDigits(capped, country, raw)
 		},
 		[country, applyDigits, intlMode, locale]
 	)
 
 	const handlePhoneKeyDown = useCallback(
 		(event) => {
-			if (event.key !== 'Backspace') return
 			const target = event.target
 			if (!(target instanceof HTMLInputElement)) return
+
+			if (!intlMode) {
+				// Не даємо стерти код країни (+380 )
+				const prefixLen = country.prefix.length + 1
+				const start = target.selectionStart ?? 0
+				const end = target.selectionEnd ?? 0
+				if (
+					(event.key === 'Backspace' && start === end && start <= prefixLen) ||
+					(event.key === 'Backspace' && start < prefixLen) ||
+					(event.key === 'Delete' && start < prefixLen)
+				) {
+					event.preventDefault()
+					if (start < prefixLen || end <= prefixLen) {
+						target.setSelectionRange(prefixLen, prefixLen)
+					}
+					return
+				}
+			}
+
+			if (event.key !== 'Backspace') return
 			if (target.selectionStart !== target.selectionEnd) return
 			if (target.selectionStart !== target.value.length) return
 
@@ -374,7 +406,8 @@ export function usePhoneInput(initialCountryCode = 'UA') {
 		displayValue,
 		intlMode,
 		intlInputValue,
-		showCountryPrefix: !intlMode,
+		// Код країни в тому ж інпуті, що й номер — без окремого span (вирівнювання).
+		showCountryPrefix: false,
 		phoneError,
 		showDropdown,
 		dropdownRef,
