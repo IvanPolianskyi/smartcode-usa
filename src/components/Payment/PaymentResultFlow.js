@@ -71,7 +71,7 @@ export default function PaymentResultFlow({ syncMonobank = true }) {
             if (coursePath && coursePath !== '/dashboard') {
               registerUrl.set('redirect', coursePath)
             }
-            router.replace(`/register?${registerUrl.toString()}`)
+            router.replace(`/login?claimOrder=${encodeURIComponent(orderId)}`)
             return
           }
 

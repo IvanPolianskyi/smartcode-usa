@@ -1,6 +1,6 @@
 /* --- Основна секція --- */
 .section {
-	background: linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%);
+	background: linear-gradient(to bottom, var(--bg-primary) 0%, var(--bg-secondary) 100%);
 	padding: 6rem 2rem;
 	scroll-margin-top: 5.5rem;
 	position: relative;
@@ -24,7 +24,7 @@
 	left: 0;
 	right: 0;
 	height: 1px;
-	background: linear-gradient(to right, transparent, #e5e7eb, transparent);
+	background: linear-gradient(to right, transparent, var(--border-subtle), transparent);
 }
 
 .container {
@@ -43,8 +43,8 @@
 	align-items: center;
 	gap: 0.5rem;
 	padding: 0.5rem 1rem;
-	background: linear-gradient(135deg, #667eea15, #764ba215);
-	color: #667eea;
+	background: linear-gradient(135deg, rgba(161, 0, 255, 0.15), rgba(196, 75, 255, 0.12));
+	color: var(--brand-accent-hot);
 	border-radius: 50px;
 	font-size: 0.875rem;
 	font-weight: 600;
@@ -54,7 +54,7 @@
 .title {
 	font-size: 2.5rem;
 	font-weight: 900;
-	color: #1f2937;
+	color: var(--text-primary);
 	margin: 0 0 1rem 0;
 	line-height: 1.2;
 }
@@ -66,7 +66,7 @@
 }
 
 .titleAccent {
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	background: linear-gradient(135deg, var(--brand-accent) 0%, var(--brand-accent-hot) 100%);
 	background-clip: text;
 	-webkit-background-clip: text;
 	color: transparent;
@@ -74,7 +74,7 @@
 
 .subtitle {
 	font-size: 1.125rem;
-	color: #6b7280;
+	color: var(--text-secondary);
 	max-width: 700px;
 	margin: 0 auto;
 	line-height: 1.7;
@@ -102,10 +102,10 @@
 /* --- Картка --- */
 .card {
 	position: relative;
-	background: white;
+	background: var(--bg-elevated);
 	border-radius: 20px;
 	padding: 2rem;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 	transition: all 0.3s ease;
 	border: 2px solid transparent;
 	text-decoration: none;
@@ -129,7 +129,7 @@
 
 .card:hover {
 	transform: translateY(-8px);
-	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+	box-shadow: 0 12px 24px rgba(161, 0, 255, 0.2);
 	border-color: currentColor;
 }
 
@@ -196,20 +196,20 @@
 .cardName {
 	font-size: 1.25rem;
 	font-weight: 700;
-	color: #1f2937;
+	color: var(--text-primary);
 	margin: 0 0 0.5rem 0;
 }
 
 .cardUsername {
 	font-size: 0.875rem;
-	color: #6b7280;
+	color: var(--text-secondary);
 	margin: 0 0 0.75rem 0;
 	font-weight: 500;
 }
 
 .cardDescription {
 	font-size: 0.875rem;
-	color: #9ca3af;
+	color: var(--text-tertiary);
 	line-height: 1.5;
 	margin: 0;
 }
@@ -221,7 +221,7 @@
 	width: 40px;
 	height: 40px;
 	border-radius: 10px;
-	background: rgba(0, 0, 0, 0.05);
+	background: rgba(255, 255, 255, 0.06);
 	color: currentColor;
 	transition: all 0.3s ease;
 	margin-top: auto;
@@ -255,11 +255,11 @@
 
 /* --- Кольорові теми --- */
 .blue {
-	color: #3b82f6;
+	color: var(--brand-accent-hot);
 }
 
 .purple {
-	color: #8b5cf6;
+	color: var(--brand-accent);
 }
 
 .green {

@@ -1,6 +1,6 @@
 .lmsSection {
 	padding: 6rem 2rem;
-	background: #fafafa;
+	background: var(--bg-secondary);
 	font-family: 'Manrope', sans-serif;
 	overflow: hidden;
 }
@@ -38,7 +38,7 @@
 .title {
 	font-size: 2rem;
 	font-weight: 800;
-	color: #1e293b;
+	color: var(--text-primary);
 	line-height: 1.3;
 	margin: 0 0 1.5rem;
 	text-transform: uppercase;
@@ -54,7 +54,7 @@
 
 .description {
 	font-size: 1.125rem;
-	color: #475569;
+	color: var(--text-secondary);
 	line-height: 1.7;
 	margin: 0;
 }
@@ -75,19 +75,19 @@
 	align-items: center;
 	justify-content: center;
 	padding: 1rem 2.5rem;
-	background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+	background: linear-gradient(135deg, var(--brand-accent) 0%, var(--brand-accent-hot) 100%);
 	color: #ffffff;
 	font-weight: 700;
 	font-size: 1.125rem;
 	border-radius: 12px;
 	text-decoration: none;
-	box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+	box-shadow: 0 4px 15px rgba(161, 0, 255, 0.35);
 	transition: all 0.3s ease;
 }
 
 .loginBtn:hover {
 	transform: translateY(-2px);
-	box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+	box-shadow: 0 6px 20px rgba(161, 0, 255, 0.45);
 }
 
 @media (max-width: 768px) {
@@ -105,11 +105,11 @@
 
 /* Right Column */
 .rightCol {
-	background: #ffffff;
+	background: var(--bg-elevated);
 	border-radius: 24px;
 	padding: 3rem;
-	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
-	border: 1px solid rgba(0, 0, 0, 0.04);
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+	border: 1px solid var(--border-subtle);
 }
 
 @media (max-width: 768px) {
@@ -122,7 +122,7 @@
 .subtitle {
 	font-size: 1.25rem;
 	font-weight: 800;
-	color: #1e293b;
+	color: var(--text-primary);
 	line-height: 1.4;
 	margin: 0 0 2rem;
 	text-transform: uppercase;
@@ -162,7 +162,7 @@
 
 .featureText {
 	font-size: 1rem;
-	color: #475569;
+	color: var(--text-secondary);
 	font-weight: 500;
 	line-height: 1.4;
 }
@@ -173,21 +173,21 @@
 	}
 }
 
-/* Colors for icons matching the design */
-.bgRed { background: #fee2e2; }
+/* Colors for icons matching the design — darkened for dark theme */
+.bgRed { background: rgba(239, 68, 68, 0.15); }
 .iconRed { color: #ef4444; }
 
-.bgYellow { background: #fef3c7; }
+.bgYellow { background: rgba(245, 158, 11, 0.15); }
 .iconYellow { color: #f59e0b; }
 
-.bgGreen { background: #dcfce7; }
+.bgGreen { background: rgba(34, 197, 94, 0.15); }
 .iconGreen { color: #22c55e; }
 
-.bgBlue { background: #e0f2fe; }
-.iconBlue { color: #0ea5e9; }
+.bgBlue { background: rgba(161, 0, 255, 0.15); }
+.iconBlue { color: var(--brand-accent-hot); }
 
-.bgPurple { background: #e0e7ff; }
-.iconPurple { color: #6366f1; }
+.bgPurple { background: rgba(161, 0, 255, 0.18); }
+.iconPurple { color: var(--brand-accent); }
 
-.bgPink { background: #fce7f3; }
+.bgPink { background: rgba(236, 72, 153, 0.15); }
 .iconPink { color: #ec4899; }

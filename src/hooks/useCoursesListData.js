@@ -40,7 +40,7 @@ const COURSE_CONFIG = [
 		link: '/Roblox',
 		courseLink: '/courses/roblox-studio',
 		level: 'Beginner',
-		duration: { weeks: 36, lessons: 72, hours: 72 },
+		duration: { weeks: 46, lessons: 92, hours: 92 },
 		popular: false,
 		rating: 4.7,
 	},

@@ -48,10 +48,14 @@ export function hasActiveOnlineCourse(profile, courseId) {
   return (profile?.activeOnlineCourses || []).includes(courseId)
 }
 
+export function isTeacherRole(user) {
+  return user?.role === 'teacher'
+}
+
 export function hasStudentCourseAccess(user, courseId) {
   if (!courseId) return false
   if (!user) return false
-  if (user.role === 'admin') return true
+  if (user.role === 'admin' || user.role === 'teacher') return true
   if ((user.purchasedCourses || []).includes(courseId)) return true
   return hasActiveOnlineCourse(user.studentProfile, courseId)
 }
@@ -68,7 +72,7 @@ export function canReadCourseProgress(user, courseId) {
 export function canUpdateLessonProgress(user, courseId, lessonId, progress = null) {
   if (!user || !courseId || !lessonId) return false
   if (!isKnownCourseId(courseId) || !isLessonInCourse(courseId, lessonId)) return false
-  if (user.role === 'admin') return true
+  if (user.role === 'admin' || user.role === 'teacher') return true
 
   const isPurchased = (user.purchasedCourses || []).includes(courseId)
   if (isPurchased) return true
@@ -78,6 +82,7 @@ export function canUpdateLessonProgress(user, courseId, lessonId, progress = nul
     profile: user.studentProfile,
     progress,
     isAdmin: user.role === 'admin',
+    isTeacher: user.role === 'teacher',
     isPurchased,
     isEnrolled: Boolean(progress),
   })
@@ -103,6 +108,7 @@ export function getUnlockedLessonSet({
   profile,
   progress,
   isAdmin = false,
+  isTeacher = false,
   isPurchased = false,
   isEnrolled = false,
 }) {
@@ -114,7 +120,7 @@ export function getUnlockedLessonSet({
     courseId === ROBLOX_COURSE_ID ? ['lesson-roblox-1-1'] : []
   )
 
-  if (isAdmin || isPurchased) {
+  if (isAdmin || isTeacher || isPurchased) {
     return new Set(allIds)
   }
 
@@ -126,8 +132,14 @@ export function getUnlockedLessonSet({
     hasActiveOnlineCourse(profile, courseId) ||
     profile?.courseAccess?.[courseId]?.enabled === true
 
+  const manualUnlocked = new Set(
+    (profile?.courseAccess?.[courseId]?.unlockedLessons || []).filter((id) =>
+      allIds.includes(id)
+    )
+  )
+
   if (!hasOnline) {
-    return freePreview
+    return new Set([...freePreview, ...manualUnlocked])
   }
 
   if (courseId === PYTHON_COURSE_ID) {
@@ -142,6 +154,9 @@ export function getUnlockedLessonSet({
       unlocked.add(allIds[i])
     }
   }
+  for (const id of manualUnlocked) {
+    unlocked.add(id)
+  }
   return unlocked
 }
 
@@ -151,6 +166,9 @@ export function isLessonUnlockedInCourse(lessonId, ctx) {
 
 /** Курси, до яких учень має доступ у кабінеті (CRM/онлайн + куплені). */
 export function getStudentAccessibleCourseIds(user) {
+  if (user?.role === 'admin' || user?.role === 'teacher') {
+    return [...KNOWN_COURSE_IDS]
+  }
   const ids = new Set()
   ;(user?.purchasedCourses || []).forEach((id) => ids.add(id))
   ;(user?.studentProfile?.activeOnlineCourses || []).forEach((id) => ids.add(id))

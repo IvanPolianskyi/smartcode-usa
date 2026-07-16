@@ -4,8 +4,8 @@
 	gap: 2px;
 	padding: 3px;
 	border-radius: 999px;
-	background: rgba(99, 102, 241, 0.08);
-	border: 1px solid rgba(99, 102, 241, 0.15);
+	background: rgba(161, 0, 255, 0.12);
+	border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .btn {
@@ -16,16 +16,16 @@
 	border: none;
 	border-radius: 999px;
 	background: transparent;
-	color: #64748b;
+	color: #c4c4d4;
 	cursor: pointer;
 	transition: background 0.2s, color 0.2s;
 }
 
 .btn:hover {
-	color: #4338ca;
+	color: #c44bff;
 }
 
 .btn.active {
-	background: #6366f1;
+	background: linear-gradient(135deg, #a100ff, #7a00c8);
 	color: #fff;
 }

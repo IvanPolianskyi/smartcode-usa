@@ -25,9 +25,11 @@
   "title": "Dashboard",
   "roles": {
     "admin": "Administrator",
+    "teacher": "Teacher",
     "student": "Student"
   },
   "adminPanelLink": "Admin panel",
+  "teacherPanelLink": "Teacher desk",
   "logout": "Sign out",
   "enLayout": {
     "welcomeLabel": "Your learning space",
@@ -170,7 +172,7 @@
     "payMethods": "Visa/Mastercard, Apple Pay, Google Pay via our payment provider.",
     "oneTime": "One-time · full access",
     "descriptions": {
-      "roblox-studio": "72 lessons - from your first Part in Roblox Studio to publishing your own game.",
+      "roblox-studio": "92 lessons - modeling, Lua, Obby/Tycoon, and a Showcase release.",
       "python-developer-zero-to-junior": "96 lessons - Python from zero to building real projects and junior-level skills."
     },
     "errors": {

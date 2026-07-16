@@ -941,24 +941,6 @@
     overflow: hidden;
 }
 
-.mobileMenuMounted {
-    display: flex;
-}
-
-.mobileMenuOpen {
-    opacity: 1;
-    transform: scale(1);
-    transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.mobileMenuMounted:not(.mobileMenuOpen) {
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.25s cubic-bezier(0.55, 0.06, 0.68, 0.19),
-        transform 0.25s cubic-bezier(0.55, 0.06, 0.68, 0.19);
-}
-
 .mobileMenuClose {
     position: absolute;
     top: calc(env(safe-area-inset-top, 0px) + 0.75rem);
@@ -1092,21 +1074,11 @@
     margin-bottom: 0.25rem;
 }
 
-/* Видимість за замовчуванням — CSS-анімація при відкритті; без JS пункти все одно клікабельні */
+/* Видимість за замовчуванням — анімація GSAP поверх; без JS пункти все одно клікабельні */
 .mobileMenuItem {
     display: block;
     opacity: 1;
     transform: none;
-}
-
-.mobileMenuOpen .mobileMenuItem {
-    animation: mobileMenuItemEnter 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-    animation-delay: calc(0.08s + var(--item-index, 0) * 0.04s);
-}
-
-@keyframes mobileMenuItemEnter {
-    from { transform: translateY(10px); }
-    to { transform: translateY(0); }
 }
 
 /* Стилі для курсів */

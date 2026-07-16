@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background: #f8fafc;
+  background: #000000;
   position: relative;
   overflow: hidden;
   contain: layout style paint;
@@ -21,11 +21,8 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 90% 30%, rgba(168, 85, 247, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 50% 10%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 30% 40%, rgba(249, 115, 22, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 70% 15%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 80% 30%, rgba(161, 0, 255, 0.28) 0%, transparent 50%),
+    radial-gradient(circle at 15% 70%, rgba(122, 0, 200, 0.15) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
 }
@@ -38,11 +35,8 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 15% 80%, rgba(34, 211, 238, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 85% 70%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 50% 90%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 25% 85%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 75% 95%, rgba(236, 72, 153, 0.08) 0%, transparent 50%);
+    radial-gradient(circle at 15% 80%, rgba(122, 0, 200, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 85% 70%, rgba(161, 0, 255, 0.15) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
 }
@@ -89,17 +83,18 @@
 }
 
 .card {
-  background: transparent;
-  border-radius: 0;
-  padding: 0;
+  background: #121218;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 2rem 1.75rem 1.75rem;
   width: 100%;
-  box-shadow: none;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45), 0 0 40px rgba(161, 0, 255, 0.1);
 }
 
 .title {
   font-size: 1.875rem;
   font-weight: 700;
-  color: #1f2937;
+  color: #ffffff;
   margin: 0 0 1rem 0;
   text-align: center;
 }
@@ -117,10 +112,10 @@
   justify-content: center;
   text-decoration: none;
   padding: 0.7rem 0.9rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
-  color: #475569;
-  background: #f8fafc;
+  color: #c4c4d4;
+  background: #0a0a0f;
   font-weight: 600;
   font-size: 0.95rem;
   transition: all 0.2s ease;
@@ -128,20 +123,22 @@
 }
 
 .authSwitchBtn:hover {
-  background: #f1f5f9;
-  color: #334155;
+  background: rgba(161, 0, 255, 0.12);
+  color: #ffffff;
+  border-color: rgba(161, 0, 255, 0.35);
 }
 
 .authSwitchBtnActive {
-  background: #eff6ff;
-  border-color: #3b82f6;
-  color: #2563eb;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12);
+  background: rgba(161, 0, 255, 0.2);
+  border-color: #a100ff;
+  color: #c44bff;
+  box-shadow: 0 4px 16px rgba(161, 0, 255, 0.2);
 }
 
 .error {
-  background-color: #fee2e2;
-  color: #dc2626;
+  background-color: rgba(248, 113, 113, 0.12);
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.3);
   padding: 0.75rem 1rem;
   border-radius: 8px;
   margin-bottom: 1.5rem;
@@ -163,7 +160,7 @@
 
 .label {
   font-weight: 500;
-  color: #374151;
+  color: #ffffff;
   font-size: 0.875rem;
   margin-bottom: 0;
 }
@@ -181,10 +178,10 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.875rem;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: #0a0a0f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-  color: #64748b;
+  color: #c4c4d4;
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
@@ -192,15 +189,16 @@
 }
 
 .roleBtn:hover {
-  background: #f1f5f9;
-  color: #334155;
+  background: rgba(161, 0, 255, 0.12);
+  color: #ffffff;
+  border-color: rgba(161, 0, 255, 0.35);
 }
 
 .roleBtnActive {
-  background: #eff6ff;
-  border-color: #3b82f6;
-  color: #2563eb;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12);
+  background: rgba(161, 0, 255, 0.2);
+  border-color: #a100ff;
+  color: #c44bff;
+  box-shadow: 0 4px 16px rgba(161, 0, 255, 0.2);
 }
 
 
@@ -211,7 +209,7 @@
 }
 
 .forgotPassword {
-  color: #3b82f6;
+  color: #c44bff;
   font-size: 0.875rem;
   text-decoration: none;
   font-weight: 500;
@@ -219,7 +217,7 @@
 }
 
 .forgotPassword:hover {
-  color: #2563eb;
+  color: #a100ff;
   text-decoration: underline;
 }
 
@@ -231,24 +229,24 @@
 
 .input {
   padding: 0.875rem 1rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.2s;
   width: 100%;
-  background: white;
-  color: #1f2937;
+  background: #0a0a0f;
+  color: #ffffff;
   box-sizing: border-box;
 }
 
 .input::placeholder {
-  color: #9ca3af;
+  color: #8b8b9a;
 }
 
 .input:focus {
   outline: none;
-  border-color: #d1d5db;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+  border-color: #a100ff;
+  box-shadow: 0 0 0 3px rgba(161, 0, 255, 0.2);
 }
 
 .passwordInputWrapper .input {
@@ -261,7 +259,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #6b7280;
+  color: #8b8b9a;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -270,7 +268,7 @@
 }
 
 .passwordToggle:hover {
-  color: #374151;
+  color: #c44bff;
 }
 
 .legalCheckboxRow {
@@ -279,7 +277,7 @@
   gap: 0.55rem;
   font-size: 0.875rem;
   line-height: 1.45;
-  color: #4b5563;
+  color: #c4c4d4;
   margin-top: 0.25rem;
   cursor: pointer;
 }
@@ -287,24 +285,24 @@
 .legalCheckboxRow input[type='checkbox'] {
   margin-top: 0.15rem;
   flex-shrink: 0;
-  accent-color: #6366f1;
+  accent-color: #a100ff;
   cursor: pointer;
 }
 
 .legalLink {
-  color: #3b82f6;
+  color: #c44bff;
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .legalLink:hover {
-  color: #2563eb;
+  color: #a100ff;
 }
 
 .termsText {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: #c4c4d4;
   text-align: center;
   line-height: 1.6;
   margin: 1rem 0 0.5rem 0;
@@ -317,19 +315,19 @@
 }
 
 .termsLink {
-  color: #3b82f6;
+  color: #c44bff;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s;
 }
 
 .termsLink:hover {
-  color: #2563eb;
+  color: #a100ff;
   text-decoration: underline;
 }
 
 .submitButton {
-  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  background: linear-gradient(135deg, #a100ff 0%, #7a00c8 100%);
   color: white;
   padding: 1rem 2rem;
   border: none;
@@ -340,13 +338,13 @@
   transition: all 0.2s;
   margin-top: 0.5rem;
   width: 100%;
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 16px rgba(161, 0, 255, 0.35);
 }
 
 .submitButton:hover:not(:disabled) {
-  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+  background: linear-gradient(135deg, #c44bff 0%, #a100ff 100%);
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 6px 20px rgba(161, 0, 255, 0.45);
 }
 
 .submitButton:disabled {
@@ -357,19 +355,19 @@
 .footer {
   margin-top: 2rem;
   text-align: center;
-  color: #6b7280;
+  color: #c4c4d4;
   font-size: 0.875rem;
 }
 
 .link {
-  color: #3b82f6;
+  color: #c44bff;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .link:hover {
-  color: #2563eb;
+  color: #a100ff;
   text-decoration: underline;
 }
 
@@ -388,13 +386,6 @@
   }
 
   .card {
-    padding: 0;
+    padding: 1.5rem 1.25rem 1.25rem;
   }
 }
-
-
-
-
-
-
-

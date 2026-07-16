@@ -1,1845 +1,1249 @@
-/** Rich UK content for Roblox Module 05 */
+/** Roblox v2 Module 05 UK — AUTO gen-roblox-v2.mjs */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
-const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
+const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE // reserved
+void MC
 
 export const ukLesson51 = {
- lessonId: "lesson-roblox-5-1",
- moduleId: "module-05",
- order: 1,
- title: "5.1 - Humanoid і здоров'я",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Зрозумійте Humanoid Health і MaxHealth",
- "Нанесіть шкоду за допомогою TakeDamage на сервері",
- "Реагуйте на смерть подією «Помер».",
- "Створюйте зони пошкодження та лікування на тестовій арені",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**Модуль 5 - Бійцівський клуб** - бій починається з **здоров’я**, а не з мечів.
-
-**Хід уроку:**
-1. **Теорія (40 хв)** - Humanoid, пошкодження, смерть
-2. **Практика (~25 хв)** - арена перевірки здоров'я
-3. **Вікторина (10 хв)** - проходження **70%**
-
-Використовуйте місце **Module 4 - Tycoon Works** або нову базову плиту\`Lesson 5.1 - Health Arena\`.`,
- },
- {
- title: "Humanoid - головний мозок Character",
- content: `Ваша model Character містить:
-
-| Об'єкт | Роль |
-|--------|------|
-| **Humanoid** | Здоров'я, стрибок, швидкість ходьби |
-| **HumanoidRootPart** | Центр фізики |
-| **Голова, тулуб, кінцівки** | Parts тіла |
-
-**Ключові Properties:**
--\`Health\`- поточний HP (100 за замовчуванням)
--\`MaxHealth\`- максимальна потужність HP
--\`WalkSpeed\`- швидкість руху
-
-**Вправа (3 хв):** Play → розширюйте свого Character в Explorer → дивіться Здоров'я під час тестування.`,
- },
- {
- title: "TakeDamage проти віднімання Health",
- content: `**Бажано:**\`\`\`lua
-humanoid:TakeDamage(15)
-\`\`\`**Уникайте уроків:**\`\`\`lua
-humanoid.Health -= 15 -- works but hides game rules
-\`\`\`
-
-\`TakeDamage\`може поважати майбутню броню, щити та командні правила.
-
-**Зцілити:**\`\`\`lua
-humanoid.Health = math.min(humanoid.Health + 10, humanoid.MaxHealth)
-\`\`\``,
- },
- {
- title: "Скрипт зони пошкоджень",
- content: `Побудуйте червону площадку\`DamageZone_Lava\`- Anchored, neon червоний.
-
-**Server Script** всередині панелі:\`\`\`lua
-local zone = script.Parent
-local DAMAGE = 15
-
-zone.Touched:Connect(function(hit)
- local character = hit.Parent
- if not character then
- return
- end
-
- local humanoid = character:FindFirstChildOfClass("Humanoid")
- if not humanoid then
- return
- end
-
- humanoid:TakeDamage(DAMAGE)
-end)
-\`\`\`**Вправа (8 хв):** Доторкніться до зони 3 рази - Здоров’я падає на 15 кожного разу до відродження.`,
- },
- {
- title: "Зони ушкодження від відскоку",
- content: `\`Touched\`спам, перебуваючи всередині зони.\`\`\`lua
-local zone = script.Parent
-local DAMAGE = 10
-local cooldown = {}
-
-zone.Touched:Connect(function(hit)
- local character = hit.Parent
- if not character then return end
-
- local humanoid = character:FindFirstChildOfClass("Humanoid")
- if not humanoid then return end
-
- if cooldown[humanoid] then return end
- cooldown[humanoid] = true
-
- humanoid:TakeDamage(DAMAGE)
-
- task.delay(0.5, function()
- cooldown[humanoid] = nil
- end)
-end)
-\`\`\`Пошкодження кожні **0,5 с**, стоячи - відчуття справжньої лави.`,
- },
- {
- title: "Померла подія",
- content: `\`\`\`lua
-humanoid.Died:Connect(function()
- print("Character defeated!")
-end)
-\`\`\`Помістіть тестовий скрипт **ServerScriptService** або в зону після того, як знайдете гравця:\`\`\`lua
-local Players = game:GetService("Players")
-local player = Players:GetPlayerFromCharacter(character)
-if player then
- print(player.Name .. " died in arena")
-end
-\`\`\`**Відродження:** Roblox автоматично відроджується за замовчуванням - ви налаштуєте пізніше в 5.5.`,
- },
- {
- title: "Зона лікування (необов'язково)",
- content: `Зелена колодка\`HealZone\`:\`\`\`lua
-humanoid.Health = math.min(humanoid.Health + 10, humanoid.MaxHealth)
-\`\`\`Використовуйте той самий шаблон усунення стрибків - зцілюйте кожні 0,5 с максимум.
-
-**Розташування арени:** породження → зона пошкодження A (10 dmg) → зона пошкодження B (25 dmg) → зона лікування.`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Зона пошкодження використовує серверний скрипт + перевірку Humanoid
-- [ ] Debounce запобігає миттєвому розплавленню
-- [ ] Померлі відбитки to Output на нуль HP
-- [ ] Зберегти:\`Lesson 5.1 - Health Arena\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "LocalScript на зоні пошкодження",
- explanation: "Пошкодження можуть не застосовуватися однаково для всіх гравців.",
- correctApproach: "Серверний скрипт для world hazards",
- },
- {
- mistake: "Без перевірки Humanoid",
- explanation: "Parts викликають помилки або дивну поведінку.",
- correctApproach: "FindFirstChildOfClass Humanoid",
- },
- {
- mistake: "Відсутність відскоку в лаві",
- explanation: "Миттєва смерть від кадру в один дотик.",
- correctApproach: "Таблиця перезарядки на Humanoid",
- },
- {
- mistake: "Зцілення вище MaxHealth",
- explanation: "Вилікувати помилки.",
- correctApproach: "math.min з MaxHealth",
- },
- ],
- summary: "Ви навчилися Humanoid Health, застосували TakeDamage із зонами усунення стрибків, прослуховували Died і створили лікувальну панель - основу кожної бойової гри на Roblox.",
- practiceTask: {
- title: "Арена для перевірки здоров'я (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** діють дві зони пошкодження + зона лікування.
-
-### Part A - Арена (5 хв)
-1. Кімната з нерестом, стінами, знаками
-2.\`DamageZone_A\`(10 dmg) і\`DamageZone_B\`(25 dmg)
-
-### Part B - Scripts (12 хв)
-1. Скрипти пошкодження сервера з дебоунсом 0,5 с
-2. Виведіть (print) на «Померли», коли здоров’я досягає 0
-3. Тестовий прохід по обох зонах
-
-### Part C - Лікуй і рятуй (8 хв)
-1. Зелений\`HealZone\`відновлює 10 HP (обмежено)
-2. **Зберегти в Roblox** →\`Lesson 5.1 - Health Arena\` 3. **Практика завершена**`,
- hints: [
- "Друк humanoid.Health після кожного пошкодження під час тестування",
- "Використовуйте TakeDamage, а не прямий хак Health, якщо не вчите, чому",
- "Встаньте в зону 2, щоб перевірити час усунення дребезгу",
- ],
- optionalChallenge: "Панель здоров’я HUD LocalScript читає Humanoid.Health (попередній перегляд інтерфейсу користувача модуля 5).",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "Humanoid керує...",
- options: [
- "Здоров'я та рух",
- "Лише Terrain",
- "DataStore",
- "Лише Skybox",
- ],
- correctAnswer: 0,
- explanation: "Humanoid - контролер Character.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "TakeDamage(15) зменшує...",
- options: [
- "Health зменшується на 15",
- "MaxHealth назавжди",
- "Монети",
- "Terrain",
- ],
- correctAnswer: 0,
- explanation: "Стандартний API пошкоджень.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Здоров'я за 0 причин...",
- options: [
- "Смерть / respawn",
- "Більше монет",
- "Швидша ходьба",
- "Файл збереження",
- ],
- correctAnswer: 0,
- explanation: "Нуль здоров'я = поразка.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "Загинула подія, коли...",
- options: [
- "Humanoid помирає",
- "Tool екіпіровано",
- "Монету зібрано",
- "Відкривається UI",
- ],
- correctAnswer: 0,
- explanation: "Слухач смерті.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Зона пошкодження повинна використовувати...",
- options: [
- "Server Script",
- "Лише LocalScript",
- "Лише звук",
- "Atmosphere",
- ],
- correctAnswer: 0,
- explanation: "Повноваження сервера для бою.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Відбиття лави запобігає...",
- options: [
- "Миттєве багаторазове пошкодження",
- "Стрибки",
- "Збереження",
- "Spawn",
- ],
- correctAnswer: 0,
- explanation: "Багато разів торкався пожеж.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Heal використовує math.min для...",
- options: [
- "Обмеження MaxHealth",
- "Видаляє гравця",
- "Прибирає Tool",
- "Публікація",
- ],
- correctAnswer: 0,
- explanation: "Запобігайте загоєнню.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "FindFirstChildOfClass Humanoid знаходить...",
- options: [
- "Humanoid у Character",
- "Лише Part",
- "Tool",
- "SpawnLocation",
- ],
- correctAnswer: 0,
- explanation: "Склад здоров'я Character.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Модуль 5 фокусується на...",
- options: [
- "Бій",
- "Лише tycoon",
- "Лише Terrain",
- "Лише публікація",
- ],
- correctAnswer: 0,
- explanation: "Модуль «Бійцівський клуб».",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Урок 5.1 зберегти назву...",
- options: [
- "Lesson 5.1 - Health Arena",
- "Tycoon Works",
- "Obby Ready",
- "Coin Simulator",
- ],
- correctAnswer: 0,
- explanation: "Зберегти урок арени.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-5-1",
+  "moduleId": "module-05",
+  "order": 1,
+  "title": "5.1 — Що таке змінна",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "зрозуміти змінну як «іменовану коробку»; створити `local` і вивести в Output.",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** зрозуміти змінну як «іменовану коробку»; створити `local` і вивести в Output.\n\nФаза курсу: **Серйозний Lua**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "Script `Vars_01` у SSS: ```lua local playerName = \"Оля\" local score = 0 print(playerName) print(score) ``` (імʼя своє)"
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Шаблон коду (встав у Studio)",
+        "content": "Натисни **Копіювати** → вклей у **Script** або **LocalScript** у Studio. Спочатку міняй **числа, рядки, кольори** — не видаляй рядки «бо не розумію».\n\n### Шаблон 1\n\n```lua\nlocal playerName = \"Оля\"\nlocal score = 0\nprint(playerName)\nprint(score)\n```"
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Змінна `biome` з назвою біому з М3 + print."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **5.1 — Що таке змінна** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Що таке змінна",
+    "difficulty": "intermediate",
+    "description": "### Завдання\nScript `Vars_01` у SSS: ```lua local playerName = \"Оля\" local score = 0 print(playerName) print(score) ``` (імʼя своє)\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Шаблон коду — у вкладці «Теорія», кнопка «Копіювати»."
+    ],
+    "optionalChallenge": "Челендж: змінити score 3 рази і надрукувати кожен раз"
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Змінна — це…",
+        "options": [
+          "Іменоване місце для значення",
+          "Кнопка Terrain",
+          "Тип неба",
+          "Плагін Snap"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Іменоване місце для значення"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "`local` у Lua на цьому рівні означає…",
+        "options": [
+          "Локальна змінна в цьому скрипті/блоці",
+          "Видалення Place",
+          "Створення Union",
+          "Покупка Robux"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Локальна змінна в цьому скрипті/блоці"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "`playerName = \"Оля\"` зберігає…",
+        "options": [
+          "Текст (рядок)",
+          "Part",
+          "Sound",
+          "Terrain"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Текст (рядок)"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "`print(score)` покаже…",
+        "options": [
+          "Поточне значення score",
+          "Видалення House",
+          "Новий Material",
+          "Sky"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Поточне значення score"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Якщо написати `print(scor)` з помилкою в імені…",
+        "options": [
+          "Буде помилка / nil — вчимось читати Output",
+          "Studio видалить акаунт",
+          "Автоматично виправиться завжди мовчки без сліду",
+          "Дасть Badge"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Буде помилка / nil — вчимось читати Output"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Артефакт уроку?",
+        "options": [
+          "Свої змінні + print",
+          "Повний Tycoon",
+          "DataStore сейв",
+          "Blender"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Свої змінні + print"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Зміну значення score роблять щоб…",
+        "options": [
+          "Побачити що змінна може змінюватись",
+          "Зламати камеру",
+          "Видалити Path",
+          "Вимкнути Play"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Побачити що змінна може змінюватись"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Чи змінна = Part у Workspace?",
+        "options": [
+          "Ні — змінна може *посилатись* на Part пізніше",
+          "Так завжди",
+          "Так і на небо",
+          "Так тільки на Spawn"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні — змінна може *посилатись* на Part пізніше"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Навіщо `local` перед імʼям на старті курсу?",
+        "options": [
+          "Хороша звичка області видимості",
+          "Інакше print заборонений",
+          "Інакше немає Explorer",
+          "Інакше немає Anchored"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Хороша звичка області видимості"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Типи: number, string, boolean",
+          "Тільки Negate",
+          "Тільки Decal",
+          "НМТ історія"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Типи: number, string, boolean"
+      }
+    ]
+  }
 }
 
 export const ukLesson52 = {
- lessonId: "lesson-roblox-5-2",
- moduleId: "module-05",
- order: 2,
- title: "5.2 - Зброя - перший меч",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Створіть інструментальний меч із Part ручки в StarterPack",
- "Використовуйте «Активовано», щоб розпізнавати натискання гравців, щоб замахнутися",
- "Зрозумійте перехід спорядження від рюкзака до Character",
- "Підготуйте архітектуру виявлення звернень на стороні сервера",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `Зони пошкодження болять пасивно. **Зброя** дозволяє гравцеві **вибирати** атаку.
-
-**Хід уроку:**
-1. **Теорія (40 хв)** - Інструмент + ручка + активовано
-2. **Практика (~25 хв)** - Тренування Озброєння та розмах меча
-3. **Вікторина (10 хв)** - проходження **70%**
-
-Відкрийте **Урок 5.1 - Health Arena** або свіжу базову плиту.`,
- },
- {
- title: "Огляд системи інструментів",
- content: `| Шматок | Вимога |
-|-------|-------------|
-| **Інструмент** | Батьківський об’єкт у StarterPack |
-| **Ручка** | Part названа точно\`Handle\`|
-| **Script** | У Tool (LocalScript для input) |
-
-**Потік:**
-1. Інструмент у **StarterPack** → з’являється в **Рюкзаку** під час появи
-2. Гравець натискає **1** або натискає інструмент → **озброєний** для Character
-3. **Натисніть** під час спорядження →\`Activated\`пожежі`,
- },
- {
- title: "Побудуйте TrainingSword",
- content: `**StarterPack** → Insert **Tool** → перейменувати\`TrainingSword\`. Усередині Tool:
-- **Part** name\`Handle\`(обов'язкове ім'я)
-- Size форми леза\`0.3, 4, 0.8\`або скористайтеся MeshPart
-- **CanCollide false** на ручці під час спорядження (поведінка інструмента за замовчуванням)
-- Neon металевий колір
-
-**Grip:** установіть Properties інструмента **Grip**, якщо меч вказує неправильно (обертайте GripPos/GripForward).
-
-**Вправа (5 хв):** Play → одягніть меч → побачите його в руці Character.`,
- },
- {
- title: "Активовано - виявлення гойдання",
- content: `**LocalScript** всередині\`TrainingSword\`(клієнт вводить ОК для запуску розмаху):\`\`\`lua
-local tool = script.Parent
-
-tool.Activated:Connect(function()
- print("Sword swing!")
-end)
-\`\`\`**Активовано** = гравець клацнув, коли є інструмент (ПК: клацніть лівою кнопкою миші).
-
-**Вправа (5 хв):** Зробіть 5 помахів - 5 відбитків на виході.`,
- },
- {
- title: "Екіпіровані та неекіпіровані події",
- content: `\`\`\`lua
-tool.Equipped:Connect(function()
- print("Sword equipped")
-end)
-
-tool.Unequipped:Connect(function()
- print("Sword stored")
-end)
-\`\`\`Використовуйте для:
-- Відтворення звуку обладнання
-- Увімкнути ефект сліду
-- Зупинити ефекти на неекіпірованому`,
- },
- {
- title: "Чому пошкодження залишаються на сервері (попередній перегляд)",
- content: `**Ніколи** не довіряйте пошкодженням, завданим лише клієнтам - експлуататори можуть вбити кожного.
-
-**Шаблон уроку 5.3:**
-- Клієнт: анімація гойдалок + опціональний звук
-- Сервер: перевірити попадання, застосувати TakeDamage
-
-Сьогодні: **ще немає пошкоджень** - лише надійне спорядження + активовано.`,
- },
- {
- title: "Усунення несправностей інструменту",
- content: `| Проблема | Виправити |
-|---------|-----|
-| Інструмента немає в рюкзаку | Має бути в StarterPack |
-| Не можна обладнати | Name відсутньої Parts\`Handle\`|
-| Активований ніколи не спрацьовує | Інструмент не обладнаний; клацніть у 3D-виді |
-| Меч неправильний кут | Налаштуйте Properties ручки інструменту |
-| Помилка Script | LocalScript проти Script - активовані працюють у LocalScript |
-
-**CanBeDropped false** на інструменті запобігає втраті меча в obby.`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] TrainingSword у StarterPack із ручкою
-- [ ] Вивід (print) при активації після натискання
-- [ ] Обладнані/Необладнані додаткові звуки
-- [ ] Зберегти:\`Lesson 5.2 - First Sword\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Part під назвою Blade not Handle",
- explanation: "Інструмент не буде оснащений.",
- correctApproach: "Потрібна точна назва",
- },
- {
- mistake: "Інструмент у Workspace, а не StarterPack",
- explanation: "Гравці не отримують його під час появи.",
- correctApproach: "StarterPack для стандартного завантаження",
- },
- {
- mistake: "Server Script лише для активованих",
- explanation: "Активація часто підключається до LocalScript.",
- correctApproach: "LocalScript всередині інструменту для введення",
- },
- {
- mistake: "Сьогодні очікуйте збитків",
- explanation: "5.2 є лише вхідним.",
- correctApproach: "Друк гойдалки; пошкодження в 5.3",
- },
- ],
- summary: "Ви створили TrainingSword Tool із рукояткою, виявили коливання за допомогою Activated і навчилися ходу екіпірування - готові додати справедливу шкоду серверу наступного уроку.",
- practiceTask: {
- title: "Обладнайся та гойдайся (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** Меч споряджає та фіксує кожен помах.
-
-### Part A - Інструмент для створення (10 хв)
-1.\`TrainingSword\`у StarterPack +\`Handle\`Part
-2. Стильне лезо; виправте Grip, якщо потрібно
-3. CanBeDropped false необов'язковий
-
-### Part B - LocalScript (10 хв)
-1. Активовано → вивід (print) Swing
-2. Обладнаний / Необладнаний відбитки або звуки
-
-### Part C - Перевірте та збережіть (5 хв)
-1. Play - споряджатися - качатися 10 разів
-2. **Зберегти в Roblox** →\`Lesson 5.2 - First Sword\` 3. **Практика завершена**`,
- hints: [
- "Дескриптор має бути прямим дочірнім елементом інструмента",
- "Клацніть, коли інструмент у комплекті, а не в рюкзаку",
- "Звук екіпірування підтверджує потік перед додаванням шкоди",
- ],
- optionalChallenge: "Екіпіруйте звук + звук гойдання, різні ідентифікатори аудіо.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "Для інструмента потрібен дочірній елемент із назвою...",
- options: [
- "Handle",
- "Blade",
- "Humanoid",
- "Spawn",
- ],
- correctAnswer: 0,
- explanation: "Конвенція інструментів Roblox.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "Інструменти StarterPack з’являються в...",
- options: [
- "Backpack при spawn",
- "Terrain",
- "Lighting",
- "Output",
- ],
- correctAnswer: 0,
- explanation: "Завантаження за замовчуванням.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Активували пожежі, коли...",
- options: [
- "Гравець клікає під час екіпіровки",
- "Збереження гри",
- "Дотик до лави",
- "ClockTime",
- ],
- correctAnswer: 0,
- explanation: "Атака введення.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "LocalScript в інструменті підходить для...",
- options: [
- "Виявлення введення для замаху",
- "Економіка на сервері",
- "DataStore",
- "Захоплення ділянки",
- ],
- correctAnswer: 0,
- explanation: "Вхідний рівень клієнта.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Пошкодження в уроці 5.2...",
- options: [
- "Ще ні — наступний урок",
- "Потрібно сьогодні",
- "На Terrain",
- "Через leaderstats",
- ],
- correctAnswer: 0,
- explanation: "5.3 додає шкоди.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Споряджена подія запускається, коли...",
- options: [
- "Tool переміщується до Character",
- "Гравець помирає",
- "Дотик монети",
- "Закриття UI",
- ],
- correctAnswer: 0,
- explanation: "Обладнайте життєвий цикл.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Сервер повинен завдати шкоди, оскільки...",
- options: [
- "Довіра anti-cheat",
- "Колір UI",
- "Небо",
- "Звук",
- ],
- correctAnswer: 0,
- explanation: "Повноваження сервера.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "CanBeDropped false запобігає...",
- options: [
- "Скидання Tool на землю",
- "Екіпірування",
- "Стрибки",
- "Health",
- ],
- correctAnswer: 0,
- explanation: "Тримайте зброю на гравці.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Регулювання Properties зчеплення...",
- options: [
- "Як меч сидить у руці",
- "MaxHealth",
- "Монети",
- "Terrain",
- ],
- correctAnswer: 0,
- explanation: "Орієнтація інструменту.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Урок 5.2 зберегти назву...",
- options: [
- "Lesson 5.2 - First Sword",
- "Health Arena",
- "Damage System",
- "Tycoon Works",
- ],
- correctAnswer: 0,
- explanation: "Урок збереження знарядь меча.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-5-2",
+  "moduleId": "module-05",
+  "order": 2,
+  "title": "5.2 — Типи: number, string, boolean",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "розпізнати три базові типи; навмисно змішати й побачити дивну поведінку / помилку.",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** розпізнати три базові типи; навмисно змішати й побачити дивну поведінку / помилку.\n\nФаза курсу: **Серйозний Lua**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "```lua local lives = 3 local title = \"Гравець\" local isAlive = true print(typeof(lives), typeof(title), typeof(isAlive)) ``` Плюс експеримент `print(lives + 1)` і спроба `print(title + 1)` (обговорити)."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Шаблон коду (встав у Studio)",
+        "content": "Натисни **Копіювати** → вклей у **Script** або **LocalScript** у Studio. Спочатку міняй **числа, рядки, кольори** — не видаляй рядки «бо не розумію».\n\n### Артефакт\n\n```lua\nlocal lives = 3\nlocal title = \"Гравець\"\nlocal isAlive = true\nprint(typeof(lives), typeof(title), typeof(isAlive))\n```"
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Картка героя: `speed` number, `heroName` string, `hasKey` boolean."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **5.2 — Типи: number, string, boolean** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Типи: number, string, boolean",
+    "difficulty": "intermediate",
+    "description": "### Завдання\n```lua local lives = 3 local title = \"Гравець\" local isAlive = true print(typeof(lives), typeof(title), typeof(isAlive)) ``` Плюс експеримент `print(lives + 1)` і спроба `print(title + 1)` (обговорити).\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Шаблон коду — у вкладці «Теорія», кнопка «Копіювати»."
+    ],
+    "optionalChallenge": "Челендж: знайти яка змінна «не той тип» у коді викладача на екрані"
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "`3` — це переважно…",
+        "options": [
+          "number",
+          "ScreenGui",
+          "Model",
+          "Sound"
+        ],
+        "correctAnswer": 0,
+        "explanation": "number"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "`\"Привіт\"` — це…",
+        "options": [
+          "string",
+          "boolean",
+          "Part",
+          "Folder"
+        ],
+        "correctAnswer": 0,
+        "explanation": "string"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "`true` / `false` — це…",
+        "options": [
+          "boolean",
+          "Vector3",
+          "Sky",
+          "Terrain"
+        ],
+        "correctAnswer": 0,
+        "explanation": "boolean"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "`typeof` допомагає…",
+        "options": [
+          "Дізнатись тип значення",
+          "Зробити Union",
+          "Намалювати Decal",
+          "Відкрити Toolbox"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Дізнатись тип значення"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Додавати число до тексту через `+`…",
+        "options": [
+          "Часто помилка / не те що очікували — типи важливі",
+          "Завжди ідеально",
+          "Видаляє Place",
+          "Дає Robux"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Часто помилка / не те що очікували — типи важливі"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Артефакт? a) Картка героя з різними типами b) Повний шутер с) Clipchamp d) Blender face **Відповідь: a** 7. `isAlive = false` означає…",
+        "options": [
+          "Логічне «ні / вимкнено»",
+          "Новий Material",
+          "Видалення SSS",
+          "Новий Spawn колір обовʼязково"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Логічне «ні / вимкнено»"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Навіщо вчити типи перед if?",
+        "options": [
+          "Умови працюють з boolean і порівняннями чисел/рядків",
+          "Типи замінюють Explorer",
+          "Типи малюють Sky",
+          "Типи роблять Negate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Умови працюють з boolean і порівняннями чисел/рядків"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Рядок пишемо в…",
+        "options": [
+          "Лапках `\"...\"`",
+          "Без нічого завжди як Part",
+          "Лише в Lighting",
+          "Лише в Discord"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Лапках `\"...\"`"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Звʼязок змінних з Part Properties",
+          "Тільки Atmosphere",
+          "Тільки паркан",
+          "Тільки відео"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Звʼязок змінних з Part Properties"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Мета курсу SmartCode Roblox…",
+        "options": [
+          "Створювати ігри, а не лише грати",
+          "Лише дивитись меми",
+          "Лише фарбувати Part без імен",
+          "Видалити Studio"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Створювати ігри, а не лише грати"
+      }
+    ]
+  }
 }
 
 export const ukLesson53 = {
- lessonId: "lesson-roblox-5-3",
- moduleId: "module-05",
- order: 3,
- title: "5.3 - Система пошкоджень",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Застосуйте пошкодження мечем через Handle.Touched на сервері",
- "Запобігайте самопошкодженню та спаму за допомогою відновлення",
- "Визначте ворогів із Humanoid",
- "Проведіть чесні випробування дуелі 1 на 1 на арені",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `Ваш меч **розмахується**. Тепер **болить**.
-
-**Хід уроку:**
-1. **Теорія (40 хв)** - пошкодження сервера + перезарядка + без самоударів
-2. **Практика (~25 хв)** - чесні PvP дуелі
-3. **Вікторина (10 хв)** - проходження **70%**
-
-Відкрийте **Урок 5.2 - Перший меч**.`,
- },
- {
- title: "Пошкодження сервера на Handle",
- content: `**Script** (сервер) всередині\`TrainingSword\`- Roblox запускає Scripts інструментів на сервері, якщо є.\`\`\`lua
-local tool = script.Parent
-local handle = tool:WaitForChild("Handle")
-local DAMAGE = 20
-local canHit = true
-
-handle.Touched:Connect(function(hit)
- if not canHit then
- return
- end
-
- local character = hit.Parent
- if not character then
- return
- end
-
- -- No self damage: when equipped, tool.Parent IS the character
- if character == tool.Parent then
- return
- end
-
- local humanoid = character:FindFirstChildOfClass("Humanoid")
- if not humanoid then
- return
- end
-
- canHit = false
- humanoid:TakeDamage(DAMAGE)
- print("Hit for " .. DAMAGE)
-
- task.wait(0.45)
- canHit = true
-end)
-\`\`\``,
- },
- {
- title: "Пояснення щодо запобігання самоударам",
- content: `Коли **обладнаний**,\`tool.Parent\`= **Model Character**.
-
-Якщо ручка торкнеться вашої ноги,\`hit.Parent\`може дорівнювати\`tool.Parent\`→ **пропустити**.
-
-**Також перевірити гравця:**\`\`\`lua
-local attackerPlayer = game.Players:GetPlayerFromCharacter(tool.Parent)
-local victimPlayer = game.Players:GetPlayerFromCharacter(character)
-if attackerPlayer and victimPlayer and attackerPlayer == victimPlayer then
- return
-end
-\`\`\`**NPCs пізніше:** victimPlayer nil, але Humanoid існує - все одно завдає шкоди NPC.`,
- },
- {
- title: "Перезарядка ударів (усунення стрибків)",
- content: `Один удар може торкнутися **руки + тулуба** в одному кадрі = подвійна шкода.\`canHit = false\`протягом **0,4-0,6 секунди** після успішного попадання.
-
-| Налаштування | Відчути |
-|---------|------|
-| ШКОДА 15, почекайте 0,5 | Початківець двобій |
-| ШКОДА 25, почекайте 0,35 | Швидші бої |
-| ШКОДА 10, почекайте 0,6 | Довші дуелі |
-
-**Баланс:** 5 ударів, щоб перемогти 100 HP → ШКОДА 20, без броні.`,
- },
- {
- title: "Поєднати з активованим (необов’язково)",
- content: `Тільки пошкодження під час «вікна повороту»:\`\`\`lua
-local swinging = false
-
-tool.Activated:Connect(function()
- swinging = true
- task.delay(0.35, function()
- swinging = false
- end)
-end)
-
--- In Touched: if not swinging then return end
-\`\`\`Запобігає пошкодженню під час простою, натикаючись на друзів.`,
- },
- {
- title: "Протокол дуельної перевірки",
- content: `**3 дуельні випробування** з друзями або гравцями Studio 2:
-
-1. **Trade hits** - обидва отримують пошкодження, без самоудару
-2. **Спам-клацання** - час відновлення блокує пошкодження кулемета
-3. **Переможець** - загинула подія, відродження працює
-
-**Журнал:** ім’я зловмисника, ім’я жертви, сума збитку.
-
-**Арена:** рівна підлога, створюються дві площадки, відсутність перешкод лави.`,
- },
- {
- title: "Тестовий манекен NPC (опціонально)",
- content: `Insert **Rig** або манекен з Humanoid на арену\`Dummy_Target\`.
-
-Стій на місці - гойдайся - здоров'я падає - добре для сольного тестування.
-
-**Anchored** на dummy; Humanoid все ще отримує пошкодження.`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Пошкодження сервера на Handle з перевіркою Humanoid
-- [ ] Самоудар заблоковано
-- [ ] Зарядка між ударами
-- [ ] 3 дуелі завершено
-- [ ] Зберегти:\`Lesson 5.3 - Damage System\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Пошкодження LocalScript лише для клієнта",
- explanation: "Експлуататори і непослідовність.",
- correctApproach: "Серверний скрипт на інструменті для TakeDamage",
- },
- {
- mistake: "Без перевірки самопопадання",
- explanation: "Меч завдає шкоди власнику.",
- correctApproach: "символ == інструмент. Батьківський повернення",
- },
- {
- mistake: "Немає перезарядки",
- explanation: "Один удар = 200 пошкоджень.",
- correctApproach: "прапор canHit + task.wait",
- },
- {
- mistake: "Пошкодження, коли інструмент у рюкзаку",
- explanation: "Рукоятка не повинна вдарятися без спорядження.",
- correctApproach: "Активний лише обладнаний інструмент",
- },
- ],
- summary: "Ви додали сервер TakeDamage на Sword Handle із запобіганням самоударів і час відновлення ударів, а також провели тести на дуелі - тепер на вашій арені є справжні бої PvP.",
- practiceTask: {
- title: "Чесний бій на мечах (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** Надійні поєдинки з справедливою шкодою.
-
-### Part A - Пошкодження сервера (12 хв)
-1. Скрипт на TrainingSword - ШКОДА 20, час відновлення 0,45 с
-2. Профілактика самоударів
-3. Індивідуальний тест на манекені АБО товариші
-
-### Part B - Дуелі (10 хв)
-1. Три раунди 1 на 1 - реєстрація влучень
-2. Налаштуйте ШКОДУ, якщо бої надто довгі/короткі
-
-### Part C - Зберегти (3 хв)
-1. Додаткове поворотне вікно з активованим
-2. **Зберегти в Roblox** →\`Lesson 5.3 - Damage System\` 3. **Практика завершена**`,
- hints: [
- "Друкуйте ім'я жертви на кожному вдалому ударі",
- "Якщо пошкоджень немає, переконайтеся, що Script серверний і оснащений інструментами",
- "Знизьте ШКОДУ до 15, щоб довше практикуватися в поєдинках",
- ],
- optionalChallenge: "Звук удару на сервері, коли TakeDamage вдається.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "Шкода від меча повинна працювати на...",
- options: [
- "Сервер",
- "Лише клієнт",
- "Terrain",
- "StarterGui",
- ],
- correctAnswer: 0,
- explanation: "Надійний бій.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "символ == інструмент. Батько запобігає...",
- options: [
- "Самопошкодження",
- "Стрибки",
- "Збереження",
- "Монети",
- ],
- correctAnswer: 0,
- explanation: "Такий самий character.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "може бити помилкові блоки...",
- options: [
- "Спам пошкодження між ударами",
- "Екіпірування",
- "Respawn",
- "Меню Tab",
- ],
- correctAnswer: 0,
- explanation: "Натисніть час відновлення.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "TakeDamage(20) на 100 HP потребує...",
- options: [
- "5 ударів без лікування",
- "1 удар",
- "100 ударів",
- "0 ударів",
- ],
- correctAnswer: 0,
- explanation: "Проста математика TTK.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Доторкнута ручка виявляє...",
- options: [
- "Яку Part торкається лезо",
- "ClockTime",
- "DataStore",
- "Atmosphere",
- ],
- correctAnswer: 0,
- explanation: "Виявлення зіткнення.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Перевірка Humanoid ігнорує...",
- options: [
- "Стіна та не-Character",
- "Гравці",
- "NPC",
- "Health",
- ],
- correctAnswer: 0,
- explanation: "Тільки Character мають Humanoid.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Поворотне вікно з активованою...",
- options: [
- "Обмежує пошкодження активними замахами",
- "Видаляє Tool",
- "Додає монети",
- "Захоплює ділянку",
- ],
- correctAnswer: 0,
- explanation: "Додатковий рівень справедливості.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Дуельне тестування потребує...",
- options: [
- "Цілі з Humanoid",
- "Лише Terrain",
- "Без Output",
- "Спочатку публікація",
- ],
- correctAnswer: 0,
- explanation: "Characterі для пошкодження.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Додано урок 5.2...",
- options: [
- "Екіпірування Tool і Activated",
- "DataStore",
- "Ділянки tycoon",
- "Terrain",
- ],
- correctAnswer: 0,
- explanation: "Попереднє налаштування меча.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Урок 5.3 зберегти назву...",
- options: [
- "Lesson 5.3 - Damage System",
- "First Sword",
- "Health Arena",
- "Upgrade Tables",
- ],
- correctAnswer: 0,
- explanation: "Зберегти бойовий урок.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-5-3",
+  "moduleId": "module-05",
+  "order": 3,
+  "title": "5.3 — Змінна вказує на Part",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "`local part = workspace.Foundation` (або FindFirstChild); змінити `part.BrickColor` / `Color` / `Transparency` з коду.",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** `local part = workspace.Foundation` (або FindFirstChild); змінити `part.BrickColor` / `Color` / `Transparency` з коду.\n\nФаза курсу: **Серйозний Lua**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "Script змінює колір існуючого Part у дворі на зелений, потім друкує імʼя Part. ```lua local part = workspace:FindFirstChild(\"Foundation\") if part then part.Color = Color3.fromRGB(80, 200, 120) print(\"Перефарбували:\", part.Name) end ``` > `if part then` тут як страховка; глибокий if — у М6. Пояснити одним реченням."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Шаблон коду (встав у Studio)",
+        "content": "Натисни **Копіювати** → вклей у **Script** або **LocalScript** у Studio. Спочатку міняй **числа, рядки, кольори** — не видаляй рядки «бо не розумію».\n\n### Шаблон 1\n\n```lua\nlocal part = workspace:FindFirstChild(\"Foundation\")\nif part then\n\tpart.Color = Color3.fromRGB(80, 200, 120)\n\tprint(\"Перефарбували:\", part.Name)\nend\n```"
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Скрипт `Paint_Sign` фарбує SignBoard у яскравий колір."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **5.3 — Змінна вказує на Part** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Змінна вказує на Part",
+    "difficulty": "intermediate",
+    "description": "### Завдання\nScript змінює колір існуючого Part у дворі на зелений, потім друкує імʼя Part. ```lua local part = workspace:FindFirstChild(\"Foundation\") if part then part.Color = Color3.fromRGB(80, 200, 120) print(\"Перефарбували:\", part.Name) end ``` > `if part then` тут як страховка; глибокий if — у М6. Пояснити одним реченням.\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Шаблон коду — у вкладці «Теорія», кнопка «Копіювати»."
+    ],
+    "optionalChallenge": "Челендж: 2 Parts різними кольорами з одного скрипта"
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "`workspace:FindFirstChild(\"Foundation\")` шукає…",
+        "options": [
+          "Дочірній обʼєкт з таким імʼям",
+          "Файл Windows",
+          "Плагін Photoshop",
+          "Акаунт Discord"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Дочірній обʼєкт з таким імʼям"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Змінна `part` після пошуку…",
+        "options": [
+          "Посилається на обʼєкт (або nil)",
+          "Завжди створює нову гру",
+          "Видаляє Sky",
+          "Робіть Negate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Посилається на обʼєкт (або nil)"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "`Color3.fromRGB` задає…",
+        "options": [
+          "Колір",
+          "Звук",
+          "HP",
+          "Badge"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Колір"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Якщо імʼя Part неправильне…",
+        "options": [
+          "Отримаємо nil / спрацює захист if",
+          "Studio видалить Roblox",
+          "Автоматично створить материк",
+          "Дасть IntValue"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Отримаємо nil / спрацює захист if"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "Код що фарбує Part через змінну",
+          "Повний GUI магазин",
+          "DataStore",
+          "Raycast"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Код що фарбує Part через змінну"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "`part.Name` читає…",
+        "options": [
+          "Імʼя обʼєкта",
+          "Volume Sound завжди",
+          "ClockTime",
+          "Pivot даху обовʼязково"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Імʼя обʼєкта"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Чому імена Parts важливі для коду?",
+        "options": [
+          "Шукаємо за рядком імені",
+          "Код читає лише колір ніку",
+          "Код читає лише IP",
+          "Імена непотрібні ніколи"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Шукаємо за рядком імені"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Transparency = 0.5 з коду…",
+        "options": [
+          "Робить напівпрозорим",
+          "Видаляє скрипт",
+          "Вимикає Output",
+          "Зберігає Place"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Робить напівпрозорим"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "М5 відрізняється від М4 тим що…",
+        "options": [
+          "Пишемо і розуміємо свої змінні",
+          "Забороняємо Output",
+          "Видаляємо всі Parts",
+          "Працюємо лише в Word"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Пишемо і розуміємо свої змінні"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Числа: рахунок, математика змінних",
+          "Тільки ClickDetector копіпаст без змінних",
+          "Тільки Negate",
+          "НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Числа: рахунок, математика змінних"
+      }
+    ]
+  }
 }
 
 export const ukLesson54 = {
- lessonId: "lesson-roblox-5-4",
- moduleId: "module-05",
- order: 4,
- title: "5.4 - TweenService: плавні ефекти",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Створюйте твіни (tween) з TweenInfo за допомогою TweenInfo для синхронізації та полегшення",
- "Анімуйте ворота арени та натисніть флеш-відгук",
- "Використовуйте короткі терміни для екшн-ігор",
- "Покращте відчуття бою без важких засобів",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `Числа, що змінюються миттєво, нагадують електронну таблицю. **TweenService** додає **рух** - ігри виглядають преміум-класу.
-
-**Хід уроку:**
-1. **Теорія (40 хв)** - TweenInfo, easing, полірування бою
-2. **Практика (~25 хв)** - ворота + удар спалахом
-3. **Вікторина (10 хв)** - проходження **70%**
-
-Відкрийте арену **Урок 5.3 - Система пошкоджень**.`,
- },
- {
- title: "Що робить TweenService",
- content: `**Tween** = плавна зміна **поточного** Properties → **цільового** значення з часом.\`\`\`lua
-local TweenService = game:GetService("TweenService")
-local part = workspace.Arena.Gate
-
-local info = TweenInfo.new(
- 1.2, -- duration (seconds)
- Enum.EasingStyle.Quad, -- curve shape
- Enum.EasingDirection.Out -- slow at end
-)
-
-local goal = { Position = part.Position + Vector3.new(0, 10, 0) }
-local tween = TweenService:Create(part, info, goal)
-tween:Play()
-\`\`\`**Можна анімація:** положення, розмір, прозорість, колір, CFrame тощо.`,
- },
- {
- title: "TweenInfo - виберіть відчуття",
- content: `| EasingStyle | Відчути |
-|-------------|------|
-| **Лінійний** | Роботизований, постійна швидкість |
-| **Квадроцикл** | Гладкі загального призначення |
-| **Синус** | Плавний старт/стоп |
-| **Назад** | Невелике перевищення (стрибучі двері) |
-
-| Напрям | Відчути |
-|-----------|------|
-| **Поза** | Швидкий старт, м'яка посадка |
-| **В** | Повільний початок, швидкий кінець |
-| **InOut** | Згладьте обидва кінці |
-
-**Екшн-ігри:** тривалість **0,15 - 0,8** секунд для зворотного зв’язку.`,
- },
- {
- title: "Ворота арени відкриваються",
- content: `Будувати\`ArenaGate\`- вертикальна плита блокування входу.\`\`\`lua
-local gate = workspace.Arena.Gate
-local closedPos = gate.Position
-local openPos = closedPos + Vector3.new(0, 12, 0)
-
-local function openGate()
- local tween = TweenService:Create(gate, TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
- Position = openPos,
- })
- tween:Play()
-end
-
-local function closeGate()
- local tween = TweenService:Create(gate, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
- Position = closedPos,
- })
- tween:Play()
-end
-\`\`\`**Сенсорна панель** під час дзвінків на арені\`openGate()\`один раз.`,
- },
- {
- title: "Натисніть спалах на пошкодження",
- content: `Коли меч влучає, **тулуб** жертви коротко блимайте:\`\`\`lua
-local function flashHit(character)
- local torso = character:FindFirstChild("UpperTorso") or character:FindFirstChild("Torso")
- if not torso then return end
-
- local original = torso.Transparency
- local flashIn = TweenService:Create(torso, TweenInfo.new(0.08), { Transparency = 0.5 })
- local flashOut = TweenService:Create(torso, TweenInfo.new(0.12), { Transparency = original })
-
- flashIn:Play()
- flashIn.Completed:Wait()
- flashOut:Play()
-end
-\`\`\`Телефонуйте\`flashHit(character)\`у Scripts меча після\`TakeDamage\`.`,
- },
- {
- title: "Шкала інтерфейсу користувача (необов’язково)",
- content: `**Текстова мітка**\`HitLabel\`в ScreenGui - показує\`HIT!\`на пошкодження.\`\`\`lua
-label.Text = "HIT!"
-label.TextTransparency = 0
-label.Size = UDim2.fromScale(0.2, 0.1)
-
-local punch = TweenService:Create(label, TweenInfo.new(0.2, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
- Size = UDim2.fromScale(0.28, 0.14),
-})
-
-local fade = TweenService:Create(label, TweenInfo.new(0.3), { TextTransparency = 1 })
-
-punch:Play()
-punch.Completed:Wait()
-fade:Play()
-\`\`\`LocalScript може прослухати RemoteEvent пізніше - для уроку достатньо серверного виводу (print).`,
- },
- {
- title: "Продуктивність і правила",
- content: `**Роби:**
-- Короткі анімації ключових моментів
-- Повторне використання тих самих деталей/ярликів
-
-**Уникайте:**
-- 50 одночасних твінів
-- Твінування кожної монети назавжди
-- 3+ секунди бойового зворотного зв'язку (блокує бачення)
-
-**Скасувати анімацію:**\`tween:Cancel()\`якщо гравець помирає в середині анімації.`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Constraints відкриття/закриття воріт працюють
-- [ ] Удар спалахом при успішному пошкодженні
-- [ ] Тривалість менше 1 секунди для бойових ефектів
-- [ ] Зберегти:\`Lesson 5.4 - Tween Polish\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Закріплені ворота Tweening з фізикою",
- explanation: "Бореться з фізичним двигуном.",
- correctApproach: "Anchored true на воротах",
- },
- {
- mistake: "Забув зберегти ClosePos",
- explanation: "Ворота не можуть повернутися.",
- correctApproach: "Зберегти позицію перед першим відкриттям",
- },
- {
- mistake: "Flash ніколи не скидає прозорість",
- explanation: "Character залишається привидом.",
- correctApproach: "Повернення анімації до початкового значення",
- },
- {
- mistake: "10-секундна анімація",
- explanation: "Блокує читабельність дуелі.",
- correctApproach: "0,1-0,2 с спалах всього",
- },
- ],
- summary: "Ви використовували TweenService з TweenInfo та easing для відкриття воріт арени та миттєвих ударів у разі пошкодження - тепер бій відчуває себе чуйним і відшліфованим, а не миттєвим і сухим.",
- practiceTask: {
- title: "Полірування арени (~25 хв)",
- difficulty: "beginner",
- description: `**Ціль:** Два анімаційні ефекти на вашій арені.
-
-### Part A - Ворота (10 хв)
-1.\`ArenaGate\`+ функції openGate / closeGate
-2. Тригер відкрито при вході на арену
-
-### Part B - Hit flash (12 хв)
-1.\`flashHit(character)\`після TakeDamage у Scripts меча
-2. Тест у поєдинку - спалах білого кольору при кожному ударі
-
-### Part C - Зберегти (3 хв)
-1. Додаткова анімація шкали міток HIT
-2. **Зберегти в Roblox** →\`Lesson 5.4 - Tween Polish\` 3. **Практика завершена**`,
- hints: [
- "Почніть з Quad Out - найпростіший для налаштування",
- "Друк анімації. Завершено один раз, щоб налагодити застряглий шлюз",
- "Flash UpperTorso для R15, торс для R6",
- ],
- optionalChallenge: "Комбінована мітка збільшується після 3 звернень за 5 секунд.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "TweenService анімує Properties...",
- options: [
- "Плавно з часом",
- "Миттєво лише",
- "Ніколи",
- "Лише звук",
- ],
- correctAnswer: 0,
- explanation: "Інтерполяція між значеннями.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "Перше число TweenInfo.new...",
- options: [
- "Тривалість у секундах",
- "Кількість пошкодження",
- "ID гравця",
- "Вартість монети",
- ],
- correctAnswer: 0,
- explanation: "Скільки триває анімація.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "EasingDirection.Out означає...",
- options: [
- "Повільно на фініші",
- "Ніколи не зупиняється",
- "Видаляє Part",
- "Додає монети",
- ],
- correctAnswer: 0,
- explanation: "Уповільнення на фініші.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "Хіт спалах має бути...",
- options: [
- "Дуже коротко (~0.2 с загалом)",
- "10 секунд",
- "Назавжди",
- "Лише в Edit",
- ],
- correctAnswer: 0,
- explanation: "Швидкий бойовий відгук.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Створити (Part, інформація, ціль) потреби...",
- options: [
- "Instance для tween + таблиця goal",
- "Лише print",
- "Terrain",
- "DataStore",
- ],
- correctAnswer: 0,
- explanation: "Стандартний шаблон анімації.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Quad EasingStyle - це...",
- options: [
- "Плавне універсальне",
- "Лише для UI",
- "Зламане",
- "Лише лава",
- ],
- correctAnswer: 0,
- explanation: "Хороше послаблення за замовчуванням.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Зберігайте закрито, щоб ворота могли...",
- options: [
- "Закрити знову",
- "Ніколи не рухати",
- "Видаляє гравця",
- "Прибирає меч",
- ],
- correctAnswer: 0,
- explanation: "Поверніться у вихідне положення.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Забагато твінів викликає...",
- options: [
- "Лаг і візуальний шум",
- "Безкоштовні Robux",
- "Автозбереження",
- "Більше Health",
- ],
- correctAnswer: 0,
- explanation: "Використовуйте Constraints економно.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "flashHit йде після...",
- options: [
- "Успішного TakeDamage",
- "Приєднання гравця",
- "Фарбування Terrain",
- "Публікація",
- ],
- correctAnswer: 0,
- explanation: "Відгук про влучний момент.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Урок 5.4 зберегти назву...",
- options: [
- "Lesson 5.4 - Tween Polish",
- "Damage System",
- "First Sword",
- "Arena Ready",
- ],
- correctAnswer: 0,
- explanation: "Зберегти анімаційний урок.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-5-4",
+  "moduleId": "module-05",
+  "order": 4,
+  "title": "5.4 — Числова логіка і рахунок",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "`+ - * /`; нарахувати очки в змінній; звʼязати з leaderstats Value (писати оновлення Value через змінну).",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** `+ - * /`; нарахувати очки в змінній; звʼязати з leaderstats Value (писати оновлення Value через змінну).\n\nФаза курсу: **Серйозний Lua**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "```lua local coins = 0 coins = coins + 5 coins = coins * 2 print(\"Монет:\", coins) ``` Плюс міні-скрипт: при Join виставити `Coins.Value` зі змінної старту (або кнопка/Part дає +n через змінну `reward`)."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Шаблон коду (встав у Studio)",
+        "content": "Натисни **Копіювати** → вклей у **Script** або **LocalScript** у Studio. Спочатку міняй **числа, рядки, кольори** — не видаляй рядки «бо не розумію».\n\n### Артефакт\n\n```lua\nlocal coins = 0\ncoins = coins + 5\ncoins = coins * 2\nprint(\"Монет:\", coins)\n```"
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Придумати формулу старту: `base = 3`, `bonus = 2`, print суми."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **5.4 — Числова логіка і рахунок** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Числова логіка і рахунок",
+    "difficulty": "intermediate",
+    "description": "### Завдання\n```lua local coins = 0 coins = coins + 5 coins = coins * 2 print(\"Монет:\", coins) ``` Плюс міні-скрипт: при Join виставити `Coins.Value` зі змінної старту (або кнопка/Part дає +n через змінну `reward`).\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Шаблон коду — у вкладці «Теорія», кнопка «Копіювати»."
+    ],
+    "optionalChallenge": "Челендж: кінцеве число має дорівнювати секрету викладача"
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "`coins = coins + 5` означає…",
+        "options": [
+          "Збільшити coins на 5",
+          "Видалити coins",
+          "Зробити Part",
+          "Змінити Sky"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Збільшити coins на 5"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "`*` це…",
+        "options": [
+          "Множення",
+          "Видалення Model",
+          "Negate",
+          "Publish"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Множення"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Чому пишемо `coins = coins + 1`, а не лише `coins + 1`?",
+        "options": [
+          "Треба зберегти новий результат у змінну",
+          "Lua забороняє плюс",
+          "Інакше немає камери",
+          "Інакше немає Path"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Треба зберегти новий результат у змінну"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Звʼязок змінної і `IntValue`…",
+        "options": [
+          "Value можна читати/писати з коду",
+          "Value ніколи не змінюється з коду",
+          "Value — це Sky",
+          "Value — це Terrain"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Value можна читати/писати з коду"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "Рахунок через операції + нагорода змінною",
+          "Повний MMO",
+          "Blender",
+          "Clipchamp"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Рахунок через операції + нагорода змінною"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "`/` це…",
+        "options": [
+          "Ділення",
+          "Folder",
+          "Union",
+          "SoundId"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ділення"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Секретне число викладача тренує…",
+        "options": [
+          "Уважність до порядку операцій",
+          "Видалення акаунта",
+          "Покупку Robux",
+          "Вимкнення Wi-Fi"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Уважність до порядку операцій"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "`reward` як змінна краще ніж магічне число в 10 місцях бо…",
+        "options": [
+          "Легко змінити в одному місці",
+          "Roblox так вимагає законом",
+          "Інакше немає Play",
+          "Інакше немає Explorer"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Легко змінити в одному місці"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Чи це вже цикл for?",
+        "options": [
+          "Ні — поки операції зі змінними",
+          "Так",
+          "Так і while",
+          "Так і UI Grid"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні — поки операції зі змінними"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Vector3 і Size/Position",
+          "Тільки Decal",
+          "Тільки Ambient",
+          "Тільки відео"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Vector3 і Size/Position"
+      }
+    ]
+  }
 }
 
 export const ukLesson55 = {
- lessonId: "lesson-roblox-5-5",
- moduleId: "module-05",
- order: 5,
- title: "5.5 - Смерть та Respawn",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Обробляти Humanoid. Загинув на сервері за кожне життя",
- "Налаштуйте відродження SpawnLocation на арені",
- "Скинути стан бою на CharacterAdded",
- "Створіть стабільну петлю бій-поразка-відродження",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `Перемога в дуелі означає, що хтось **вмирає** і **повертається**. Якщо цей цикл розривається, арена гине.
-
-**Хід уроку:**
-1. **Теорія (40 хв.)** - смерть, відродження, відновлення стану
-2. **Практика (~25 хв)** - стабільний тест на 3 смерті
-3. **Вікторина (10 хв)** - проходження **70%**
-
-Відкрийте арену **Урок 5.4 - Tween Polish**.`,
- },
- {
- title: "Життєвий цикл арени",
- content: `**Бій** → **Поразка** (Здоров'я = 0) → **Відродження** → **Бій знову**
-
-| Перерваний цикл | Хороший цикл |
-|-------------|-----------|
-| Застряг на екрані смерті | Повернення на арену через 2-4 секунди |
-| Меч перестає працювати | Інструмент + скидання шкоди кожне життя |
-| Спаун в лаві | Спаун на ArenaSpawn pad |`,
- },
- {
- title: "Померла подія на сервері",
- content: `\`\`\`lua
-local Players = game:GetService("Players")
-
-Players.PlayerAdded:Connect(function(player)
- player.CharacterAdded:Connect(function(character)
- local humanoid = character:WaitForChild("Humanoid")
-
- humanoid.Died:Connect(function()
- print(player.Name .. " was defeated in the arena")
- -- Later: +1 Wins to leaderstats for killer
- end)
- end)
-end)
-\`\`\`**CharacterAdded** запускає **кожне відродження** - підключайте Померлих **всередині** кожного нового життя.`,
- },
- {
- title: "Розташування арени Spawn",
- content: `**ArenaSpawn** - SpawnLocation на майданчику для поєдинку:
-- Розмір\`8, 1, 8\`- Нейтрально **true**
-- Яскравий колір, **Anchored true**
-- **Не** внутрішня пошкодження лави
-
-**RespawnLocation** із контрольних точок не застосовується тут, якщо ви його не встановите - за умовчанням відродження Roblox використовує SpawnLocations у робочій області.
-
-**Кілька spawnів:**\`Spawn_Red\`,\`Spawn_Blue\`для командних дуелей пізніше.`,
- },
- {
- title: "Скидання бойового стану за життя",
- content: `меч\`canHit\`прапор може залишатися false, якщо гравець помер під час відновлення.
-
-**Шаблон:** зберігати час відновлення на Character або скидати в CharacterAdded:\`\`\`lua
--- In sword script, use humanoid as key:
-local canHitByHumanoid = {}
-
--- On successful hit setup:
-canHitByHumanoid[humanoid] = false
-task.delay(0.45, function()
- if humanoid.Parent then
- canHitByHumanoid[humanoid] = nil
- end
-end)
-\`\`\`Або простіше: **новий character = новий Humanoid** - повторно підключити **Touched** на кожному **CharacterAdded**, якщо потрібно.`,
- },
- {
- title: "Параметри часу відродження",
- content: `**За замовчуванням:** миттєве відродження - добре для тренувальних арен.
-
-**Відкладено (необов’язково):**\`\`\`lua
-player.RespawnTime = 3
-\`\`\`Або вимкніть автоматичне відродження та виклик\`player:LoadCharacter()\`після інтерфейсу зворотного відліку.
-
-**Для уроку:** продовжуйте швидке відродження; необов'язкові 3с\`RespawnTime\`для драми.`,
- },
- {
- title: "Стрес-тест на три смерті",
- content: `**Обов'язковий тест:**
-1. Дуель до смерті - респаун на ArenaSpawn
-2. Одягніть меч - шкода все ще діє
-3. Померти знову - повторити
-4. Померти втретє - помилки виведення все одно відсутні
-
-**Журнал:** кількість смертей, позиція відродження в порядку, удари мечем після кожного відродження.
-
-**Виключити попередній перегляд:** друк\`"[Victim] was defeated"\``,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Помер підключений всередині CharacterAdded
-- [ ] ArenaSpawn працює при кожному відродженні
-- [ ] 3 смерті - меч усе ще завдає шкоди
-- [ ] Зберегти:\`Lesson 5.5 - Death Respawn\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Підключення померло лише один раз під час приєднання",
- explanation: "Пропуски відродження життя.",
- correctApproach: "Померли всередині кожного доданого Character",
- },
- {
- mistake: "Поява всередині зони пошкодження",
- explanation: "Петля смерті при відродженні.",
- correctApproach: "ArenaSpawn на безпечній підлозі",
- },
- {
- mistake: "canHit застряг false після смерті",
- explanation: "Жодної шкоди після відродження.",
- correctApproach: "Скидання для Humanoid або нового Character",
- },
- {
- mistake: "CharacterAdded не використовується",
- explanation: "Налаштування лише на одне життя.",
- correctApproach: "Довічні слухачі для бою",
- },
- ],
- summary: "Ви підключили Humanoid.Died на сервері, встановили розташування арени SpawnLocation, скинули стан бою для кожного життя та пройшли стрес-тест із трьома смертями - цикл арени стабільний для повторних дуелей.",
- practiceTask: {
- title: "Стабільний цикл відродження (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** Бій → померти → відродитися → бій працює 3 рази.
-
-### Part A - Помічник смерті (8 хв)
-1. Server Script - загинув у CharacterAdded
-2. Виведіть (print) ім'я гравця у випадку поразки
-
-### Part B - Спаун (7 хв)
-1.\`ArenaSpawn\`SpawnLocation - перевірити позицію відродження
-2. Додатковий RespawnTime = 3
-
-### Part C - Стрес-тест (10 хв)
-1. Три смерті поспіль - меч діє на кожне життя
-2. Виправте будь-які завислі часи відновлення
-3. **Зберегти в Roblox** →\`Lesson 5.5 - Death Respawn\` 4. **Практика завершена**`,
- hints: [
- "Якщо відродження неправильне, перемістіть ArenaSpawn і перевірте знову",
- "Новий character = новий Humanoid - повторно підключіться, якщо Scripts є батьківськими для старого символу",
- "Прочитайте Вивід при третій смерті для червоних помилок",
- ],
- optionalChallenge: "Інтерфейс користувача 3-2-1 на екрані ScreenGui.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "Загинули пожежі, коли...",
- options: [
- "Health Humanoid досягає 0",
- "Tool екіпіровано",
- "Дотик монети",
- "Ворота відкриваються",
- ],
- correctAnswer: 0,
- explanation: "Подія смерті.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "CharacterAdded працює...",
- options: [
- "Кожне нове життя / respawn",
- "Лише один раз",
- "Лише в Edit",
- "При збереженні",
- ],
- correctAnswer: 0,
- explanation: "Поява кожного Character.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Connect Died всередині CharacterAdded через...",
- options: [
- "Кожне життя потребує нового слухача",
- "Лише UI",
- "Terrain",
- "Atmosphere",
- ],
- correctAnswer: 0,
- explanation: "Кожне відродження нового Humanoid.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "ArenaSpawn має бути...",
- options: [
- "На безпечній підлозі арени",
- "У лаві",
- "Поза Workspace",
- "У StarterGui",
- ],
- correctAnswer: 0,
- explanation: "Чесна точка відродження.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "RespawnTime = 3 додавання...",
- options: [
- "Затримка перед respawn",
- "Більше пошкодження",
- "Монети",
- "Terrain",
- ],
- correctAnswer: 0,
- explanation: "Секунди до відродження.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Після відродження меч повинен...",
- options: [
- "Досі завдає пошкодження",
- "Ніколи не екіпірується",
- "Видаляє DataStore",
- "Прибирає ділянки",
- ],
- correctAnswer: 0,
- explanation: "Тест скидання стану.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Три перевірки на смерть...",
- options: [
- "Стабільність на кількох життях",
- "Лише одне життя",
- "Публікація",
- "Лише небо",
- ],
- correctAnswer: 0,
- explanation: "Петля стрес-тесту.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Зламаний може вдарити після смерті викликає...",
- options: [
- "Немає пошкодження після respawn",
- "Більше Health",
- "Швидші ворота",
- "Автоперемога",
- ],
- correctAnswer: 0,
- explanation: "Помилка стану відновлення.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Розпорядник смерті належить до...",
- options: [
- "Сервер",
- "Лише HUD клієнта",
- "Пензель Terrain",
- "Звук",
- ],
- correctAnswer: 0,
- explanation: "Авторитетні ігрові події.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Урок 5.5 зберегти назву...",
- options: [
- "Lesson 5.5 - Death Respawn",
- "Tween Polish",
- "First Sword",
- "Tycoon Works",
- ],
- correctAnswer: 0,
- explanation: "Зберегти урок відродження.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-5-5",
+  "moduleId": "module-05",
+  "order": 5,
+  "title": "5.5 — Vector3: розмір і позиція",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "змінити `Size` і `Position` через `Vector3.new`.",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** змінити `Size` і `Position` через `Vector3.new`.\n\nФаза курсу: **Серйозний Lua**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "«Пульт» частина 1: Part `TargetBlock` збільшується і підстрибує вгору на Y+ з коду. ```lua local block = workspace:FindFirstChild(\"TargetBlock\") local newSize = Vector3.new(4, 4, 4) local lift = Vector3.new(0, 5, 0) if block then block.Size = newSize block.Position = block.Position + lift end ```"
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Шаблон коду (встав у Studio)",
+        "content": "Натисни **Копіювати** → вклей у **Script** або **LocalScript** у Studio. Спочатку міняй **числа, рядки, кольори** — не видаляй рядки «бо не розумію».\n\n### Шаблон 1\n\n```lua\nlocal block = workspace:FindFirstChild(\"TargetBlock\")\nlocal newSize = Vector3.new(4, 4, 4)\nlocal lift = Vector3.new(0, 5, 0)\n\nif block then\n\tblock.Size = newSize\n\tblock.Position = block.Position + lift\nend\n```"
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Підготувати Part `ColorOrb` для фіналки 5.6 (сфера/куб)."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **5.5 — Vector3: розмір і позиція** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Vector3: розмір і позиція",
+    "difficulty": "intermediate",
+    "description": "### Завдання\n«Пульт» частина 1: Part `TargetBlock` збільшується і підстрибує вгору на Y+ з коду. ```lua local block = workspace:FindFirstChild(\"TargetBlock\") local newSize = Vector3.new(4, 4, 4) local lift = Vector3.new(0, 5, 0) if block then block.Size = newSize block.Position = block.Position + lift end ```\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Шаблон коду — у вкладці «Теорія», кнопка «Копіювати»."
+    ],
+    "optionalChallenge": "Челендж: блок став «вежею» (високий Y size)"
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Vector3 зберігає…",
+        "options": [
+          "Три числа (X, Y, Z)",
+          "Лише текст",
+          "Лише boolean",
+          "Лише Sound"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Три числа (X, Y, Z)"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "`Size = Vector3.new(4,1,2)` задає…",
+        "options": [
+          "Розмір Part",
+          "Імʼя гравця",
+          "Volume ambient",
+          "ClockTime"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Розмір Part"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Додати до Position `(0,5,0)`…",
+        "options": [
+          "Піднімає обʼєкт угору",
+          "Видаляє скрипт",
+          "Вимикає Output",
+          "Робіть Negate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Піднімає обʼєкт угору"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Змінні width/height/depth потрібні щоб…",
+        "options": [
+          "Збирати Vector3 зрозуміло",
+          "Малювати Sky",
+          "Створювати Folder автоматично",
+          "Купувати GamePass"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Збирати Vector3 зрозуміло"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "Блок змінює Size/Position з коду",
+          "Повний Tycoon",
+          "AI бос",
+          "Відеомонтаж"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Блок змінює Size/Position з коду"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Y у Roblox зазвичай…",
+        "options": [
+          "Висота / вгору-вниз",
+          "Мова інтерфейсу",
+          "Кількість друзів",
+          "Номер уроку Discord"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Висота / вгору-вниз"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Чи Vector3 = string?",
+        "options": [
+          "Ні",
+          "Так",
+          "Так завжди",
+          "Тільки вночі"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Якщо TargetBlock не знайдено…",
+        "options": [
+          "Перевірити імʼя в Explorer",
+          "Купити Robux",
+          "Видалити акаунт",
+          "Змінити біом словами"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Перевірити імʼя в Explorer"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "CFrame на М5…",
+        "options": [
+          "Згадуємо пізніше / обережно; база — Position/Size",
+          "Обовʼязковий увесь API",
+          "Замінює всі змінні",
+          "Видаляє Vector3"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Згадуємо пізніше / обережно; база — Position/Size"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Фінал модуля — Пульт кольору",
+          "Видалення SSS",
+          "Скасування Lua",
+          "Лише теорія PDF"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Фінал модуля — Пульт кольору"
+      }
+    ]
+  }
 }
 
 export const ukLesson56 = {
- lessonId: "lesson-roblox-5-6",
- moduleId: "module-05",
- order: 6,
- title: "5.6 - Checkpoint: Arena готова",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Здайте Arena Ready з мечем, пошкодженнями, Constraints та відродженням",
- "Пройдіть тести QA на чесність поєдинків і стабільність",
- "Додайте необов’язкову статистику перемоги лідера при вбивствах",
- "Підготуйтеся до гоночних систем модуля 6",
- ],
- theory: {
- sections: [
- {
- title: "Контрольна точка модуля 5 (близько 40 хвилин)",
- content: `**Арена готова** = міні-арена PvP, яку можна продемонструвати за 2 хвилини.
-
-**Потрібні системи:**
-- Здоров'я + зони шкоди (5.1)
-- TrainingSword + пошкодження (5.2-5.3)
-- Tween gate або hit flash (5.4)
-- Смерть + цикл відродження (5.5)`,
- },
- {
- title: "Порядок збірки інтеграції",
- content: `1. Spawn + схема арени
-2. Екіпірування меча + пошкодження сервера + відновлення
-3. Самоударний блок
-4. Загинув + ArenaSpawn
-5. Твін-полір
-6. Передача балансу (ШКОДА 15-25, час відновлення 0,4-0,5)`,
- },
- {
- title: "Дуель QA матриця",
- content: `| # | Тест |
-|---|------|
-| 1 | 1v1 - обидва отримують досить шкоди |
-| 2 | Немає шкоди самому мечу |
-| 3 | Перезарядка блокує спам, вбиває |
-| 4 | Смерть → відродження на ArenaSpawn |
-| 5 | Після відродження бойові роботи |
-| 6 | Hit Flash видимий, не блокує перегляд |
-| 7 | Немає червоного виходу протягом 2-хвилинної дуелі |`,
- },
- {
- title: "Цілі балансу",
- content: `**Час на вбивство:** ~8-15 секунд для рівних навичок (100 HP, 20 пошкоджень, 0,45 кд)
-
-**Перші 2 хвилини** новий гравець:
-- Дивіться знак арени
-- Дістань меч із рюкзака
-- Наземні удари зі зворотним зв'язком
-- Зрозумійте відродження
-
-Зменшіть ШКОДУ, якщо бої здаються занадто швидкими.`,
- },
- {
- title: "Додаткова статистика перемог",
- content: `\`\`\`lua
--- In leaderstats setup:
-local wins = Instance.new("IntValue")
-wins.Name = "Wins"
-wins.Value = 0
-wins.Parent = leaderstats
-
--- On Died (track last attacker later); simple version:
--- increment winner when implementing kill credit
-\`\`\`Для контрольної точки: колонка **Перемоги** на вкладці вражає в демоверсії.`,
- },
- {
- title: "Презентація",
- content: `- Знак назви арени: **SmartCode Arena**
-- Сповни командного кольору необов'язкові
-- Немає лави в дуельній підлозі, якщо не навмисна небезпека
-- Звук підхоплення + спалах
-
-**Зберегти:**\`Module 5 - Arena Ready\``,
- },
- {
- title: "Попередній перегляд модуля 6",
- content: `**Швидше, вище, далі** - будуйте автомобілі, гоночні траси, хронометри кіл, основи клієнт-сервер.
-
-Бойові навички (авторитет сервера, Constraints, цикли) передаються на **відчуття перегонів** і **фінішні прямі**.`,
- },
- {
- title: "Демонстраційний Script (2 хв)",
- content: `1. Spawn - показати меч
-2. Відкрийте ворота на арену
-3. Торгові хіти - миттєвий відгук
-4. Виграти дуель - повідомлення про смерть
-5. Невдаха відроджується - бийтеся знову
-6. Показати вкладку **Виграші**, якщо додано`,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Пропущений стрес-тест відродження",
- explanation: "Перерви на друге життя в публікації.",
- correctApproach: "Три смерті мінімум",
- },
- {
- mistake: "Один постріл 100 пошкоджень",
- explanation: "Дуелі не весело.",
- correctApproach: "Збалансуйте ШКОДУ та час відновлення",
- },
- {
- mistake: "Відсутність бойового відгуку",
- explanation: "Відчувається м'яким.",
- correctApproach: "Спалах або звук під час удару",
- },
- {
- mistake: "Пошкодження лише для клієнта в остаточній збірці",
- explanation: "Експлойти при публікації.",
- correctApproach: "Сервер TakeDamage",
- },
- ],
- summary: "Ви інтегрували повний бойовий стек у Arena Ready, пройшли дуельну перевірку якості, налаштували час на вбивство та зберегли готовий до демо-версії фрагмент PvP - перегони за модулем 6 починаються далі.",
- practiceTask: {
- title: "Здайте Arena Ready (~40 хв)",
- difficulty: "beginner",
- description: `**Мета:** Пройти QA матрицю + готове до демонстрації збереження.
-
-### Part A - Повний аудит (15 хв)
-1. Запустіть контрольний список порядку інтеграції
-2. Виправте будь-яку відсутню систему з 5.1-5.5
-
-### Part B - QA дуелі (15 хв)
-1. Виконайте тести 1-7 з другом або двома гравцями Studio
-2. Налаштуйте DAMAGE на 8-15 с TTK
-
-### Part C - Зберегти та продемонструвати (10 хв)
-1. Додаткові перемоги в статистиці лідерів
-2. **Зберегти в Roblox** →\`Module 5 - Arena Ready\` 3. **Практика завершена** + 2-хвилинний запис`,
- hints: [
- "Баланс перед додаванням статистики перемог",
- "Дивіться дуель з обох камер для видимості",
- "Консервативна шкода > кричущий зламаний бій",
- ],
- optionalChallenge: "Кредит за вбивство - останній гравець отримує +1 перемоги за смерть жертви.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "Arena Ready включає...",
- options: [
- "Меч + пошкодження + respawn + полірування",
- "Лише Terrain",
- "Лише монети",
- "Без Scripts",
- ],
- correctAnswer: 0,
- explanation: "Повний стек Module 5.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "Тест 4 підтверджує...",
- options: [
- "Respawn на spawn арени",
- "DataStore",
- "Ділянка tycoon",
- "Генерація Terrain",
- ],
- correctAnswer: 0,
- explanation: "Цикл смерті.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Хороший TTK - це про...",
- options: [
- "Приблизно 8–15 секунд",
- "0.1 секунди",
- "5 хвилин",
- "Без бою",
- ],
- correctAnswer: 0,
- explanation: "Читальна довжина дуелі.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "Пошкодження сервера запобігає...",
- options: [
- "Експлойти клієнта",
- "Стрибки",
- "UI",
- "Звук",
- ],
- correctAnswer: 0,
- explanation: "Надійний бій.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Tween hit flash не повинен...",
- options: [
- "Блокувати огляд на секунди",
- "Не існує",
- "Використовує TweenService",
- "Допомагає зворотному зв'язку",
- ],
- correctAnswer: 0,
- explanation: "Тільки короткі FX.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Перемагає в рейтингу лідерів...",
- options: [
- "Кількість вбивств у Tab",
- "Лише Health",
- "Terrain",
- "ClockTime",
- ],
- correctAnswer: 0,
- explanation: "Додаткова статистика арени.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Тема модуля 6...",
- options: [
- "Перегони / транспорт",
- "Лише obby",
- "Лише магазин",
- "Порожньо",
- ],
- correctAnswer: 0,
- explanation: "Швидше Вище Далі.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Червоний вихід під час дуелі означає...",
- options: [
- "Виправити перед релізом",
- "Ідеально",
- "Додати лаву",
- "Публікувати зараз",
- ],
- correctAnswer: 0,
- explanation: "Помилки = помилки.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Тест на три смерті належить...",
- options: [
- "Стабільність respawn уроку 5.5",
- "Розміщення монет",
- "Лише Terrain",
- "Публікація",
- ],
- correctAnswer: 0,
- explanation: "Стрес-тест Respawn.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Модуль 5 зберегти назву...",
- options: [
- "Module 5 - Arena Ready",
- "Lesson 5.1",
- "Tycoon Works",
- "Untitled",
- ],
- correctAnswer: 0,
- explanation: "Name портфоліо Checkpoint.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-5-6",
+  "moduleId": "module-05",
+  "order": 6,
+  "title": "5.6 — Проєкт: Пульт кольору",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "зібрати скрипт з 5+ змінними, який налаштовує `ColorOrb` (колір, розмір, прозорість, anchorage message).",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** зібрати скрипт з 5+ змінними, який налаштовує `ColorOrb` (колір, розмір, прозорість, anchorage message).\n\nФаза курсу: **Серйозний Lua**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "Зроби **видимий результат** у своєму Place і збережи його (Save to Roblox)."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Попрацюй над результатом ще 15–20 хв і збережи Place. Наступного разу покажи короткий демо 20–30 сек."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **5.6 — Проєкт: Пульт кольору** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Проєкт: Пульт кольору",
+    "difficulty": "intermediate",
+    "description": "### Завдання\nВиконай кроки уроку «Проєкт: Пульт кольору» у своєму Place.\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Якщо щось зникло — перевір, чи зберіг Place."
+    ],
+    "optionalChallenge": "Зроби артефакт трохи крутішим і будь готовий показати 20 секунд."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Пульт кольору показує що…",
+        "options": [
+          "Змінні керують виглядом світу",
+          "Змінні непотрібні",
+          "Lua лише для чату",
+          "Parts не існують"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Змінні керують виглядом світу"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Boolean для Transparency…",
+        "options": [
+          "Можна трактувати як «увімкнути напівпрозорість» у логіці уроку",
+          "Заборонений",
+          "Видаляє orb",
+          "Створює TeleportService"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Можна трактувати як «увімкнути напівпрозорість» у логіці уроку"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Після М5 ми готові до…",
+        "options": [
+          "Умов if",
+          "Повного DataStore курсу лише",
+          "Тільки Blender",
+          "Тільки відео"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Умов if"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "`local` змінні в пульті…",
+        "options": [
+          "Зручно крутити параметри зверху скрипта",
+          "Заборонені",
+          "Працюють лише в Terrain",
+          "Працюють лише в Discord"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зручно крутити параметри зверху скрипта"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "FindFirstChild + перевірка…",
+        "options": [
+          "Захищає від nil",
+          "Видаляє Output",
+          "Вимикає Play",
+          "Робіть Union"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Захищає від nil"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Чи М5 = повний Lua?",
+        "options": [
+          "Ні — фундамент змінних",
+          "Так увесь язык",
+          "Так і C++",
+          "Так і HTML"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні — фундамент змінних"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Різниця М4 і М5…",
+        "options": [
+          "Від шаблонів до свідомих змінних",
+          "Відміна Studio",
+          "Відміна тестів",
+          "Відміна Parts"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Від шаблонів до свідомих змінних"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Color3 можна тримати…",
+        "options": [
+          "У змінній",
+          "Лише в Word",
+          "Лише в ніку",
+          "Лише в Sky обовʼязково без Part"
+        ],
+        "correctAnswer": 0,
+        "explanation": "У змінній"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "print звіту потрібен щоб…",
+        "options": [
+          "Підтвердити виконання в Output",
+          "Видалити orb",
+          "Зберегти PDF",
+          "Купити Plugin"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Підтвердити виконання в Output"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "М6 почнеться з…",
+        "options": [
+          "if / else",
+          "Negate only",
+          "Atmosphere only",
+          "НМТ only"
+        ],
+        "correctAnswer": 0,
+        "explanation": "if / else"
+      }
+    ]
+  }
 }

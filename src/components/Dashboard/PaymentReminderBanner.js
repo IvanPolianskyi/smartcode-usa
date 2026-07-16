@@ -30,7 +30,7 @@ export default function PaymentReminderBanner({
 
   if (!visible) return null
 
-  const urgent = lessonCredits === 0 && pendingCount === 0
+  const urgent = lessonCredits <= 0 && pendingCount === 0
 
   return (
     <aside

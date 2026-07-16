@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react'
 import {
 	Star,
+	Users,
 	PlayCircle,
 	ArrowRight,
 	Target,
@@ -308,6 +309,10 @@ const EnhancedCourseCards = () => {
 									))}
 								</div>
 								<div className={styles.statsGrid}>
+									<div className={styles.statItem}>
+										<Users className={styles.statIcon} />
+										<span>{course.stats.age} {t('years')}</span>
+									</div>
 									<div className={styles.statItem}>
 										<Eye className={styles.statIcon} />
 										<span>{course.stats.students} {t('students')}</span>

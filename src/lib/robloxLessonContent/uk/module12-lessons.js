@@ -1,1669 +1,1245 @@
-/** Rich UK content for Roblox Module 12 */
+/** Roblox v2 Module 12 UK — AUTO gen-roblox-v2.mjs */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
-const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
+const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE // reserved
+void MC
 
 export const ukLesson121 = {
- lessonId: "lesson-roblox-12-1",
- moduleId: "module-12",
- order: 1,
- title: "12.1 - Фінальний проект: план",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Напишіть подачу гри одним реченням і націлюйте профіль гравця",
- "Визначте основний цикл і список систем із модулів курсу",
- "Розділіть обов’язковий і приємний обсяг MVP",
- "Створіть часову шкалу з приблизними годинами та 30% буфером",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**Модуль 12 - День випуску** - ви **здаєте** те, що створили в 11 модулях.
-
-**Хід уроку:**
-1. **Теорія (40 хв)** - структура GDD
-2. **Практика (~25 хв)** - напишіть GDD остаточного проекту
-3. **Вікторина (10 хв)** - проходження **70%**
-
-Це планується, а не кодування Studio.`,
- },
- {
- title: "GDD для справжніх творців",
- content: `**Документ щодо дизайну гри** зупиняє роздування фіч (feature creep).
-
-У захваті вам потрібно 50 систем. GDD форсує **MVP** - що потрібно здати вчасно.
-
-**Ваш остаточний проект** поєднує контрольні точки:
-- Хаб / острів (Модуль 1)
-- Obby або гоночний шматок (2 або 6)
-- Магазин (7) + живі NPC (8)
-- Інвентар RPG (9)
-- Світ головоломок (10)
-- Полірування (11)`,
- },
- {
- title: "Обов'язкові розділи GDD",
- content: `| Розділ | Ваша відповідь |
-|---------|-------------|
-| **Pitch (подача)** | 1 речення для опису в Store |
-| **Цільовий гравець** | Вік, уміння, чому весело |
-| **Основний цикл** | Зробити → винагорода → повторити |
-| **Список систем** | 6-8 систем із модулів курсу |
-| **Арт/аудіо настрій** | 3 прикметники |
-| **Обсяг MVP** | Має увійти в MVP цього місяця |
-| **Контрольний список випуску** | Publish steps |
-
-**Приклад пропозиції:***«Змагайтеся, виконуйте квести та вдосконалюйте своє спорядження в живому центрі острова - поодинці або з друзями».*`,
- },
- {
- title: "Шаблон основної петлі",
- content: `\`\`\`
-Spawn → explore hub → talk to NPC / start quest
-→ complete challenge (obby / puzzle / combat)
-→ earn coins + items → shop upgrade
-→ repeat stronger → showcase win
-\`\`\`**30-секундний цикл** гравці можуть пояснити другу.`,
- },
- {
- title: "Необхідне проти того, що приємно мати",
- content: `| Обов'язково (must-have) (MVP) | Приємно мати |
-|-----------------|-------------|
-| Відродження + гід NPC | 10 варіантів головоломки |
-| 1 квест завершений цикл | Повна гонка на 3 кола |
-| Магазин купити 1 шт. | DataStore домашніх тварин |
-| Зберегти інвентар | Озвучка |
-| Завантаження + базовий SFX | Трейлер відео |
-
-**Завершена маленька гра** перемагає гігантську незавершену мрію.`,
- },
- {
- title: "Таймлайн з буфером",
- content: `| Віха | Години | Виконано |
-|-----------|-------|------|
-| GDD + план | 2 | |
-| Інтеграція | 8 | |
-| Playtest виправлення | 6 | |
-| Publish + portfolio | 4 | |
-| Підготовка вітрини | 2 | |
-| **Проміжний підсумок** | 22 | |
-| **+30% буфера** | ~29 | |
-
-Додайте 30% - завжди щось ламається.`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Написано 1 речення
-- [ ] Схема основного циклу або маркери
-- [ ] Список обов'язкових речей ≤ 8 предметів
-- [] Часова шкала з буфером
-- [ ] Зберегти нотатки:\`Lesson 12.1 - Final GDD\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Немає MVP - все обов'язково",
- explanation: "Ніколи не публікується.",
- correctApproach: "Вирізати приємно мати",
- },
- {
- mistake: "Розмите ядро гри (core loop)",
- explanation: "Командна плутанина.",
- correctApproach: "Поява, щоб винагороджувати кроки",
- },
- {
- mistake: "Нульові оцінки часу",
- explanation: "Пропустіть термін.",
- correctApproach: "Години + буфер",
- },
- {
- mistake: "Висота 1 абзац",
- explanation: "Не готовий до зберігання.",
- correctApproach: "Гачок одним реченням",
- },
- ],
- summary: "Ви розробили практичний GDD із подачею, основним циклом, списком систем, обов’язковими елементами MVP і буферизованою хронологією - ваш остаточний проект тепер має план проєкту замість розпливчастих амбіцій.",
- practiceTask: {
- title: "Фінальний проект GDD (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** Повний документ GDD (документ або примітки).
-
-### Part A - Ідентичність (10 хв)
-1. Подача + цільовий гравець
-2. Основний цикл (5 кроків)
-3. Арт/аудіо настрій
-
-### Part B - Обсяг (12 хв)
-1. Перелік систем з модулів курсу
-2. Стіл, який необхідно мати проти того, що потрібно мати
-3. Часова шкала годин + 30% буфера
-
-### Part C - Зберегти (3 хв)
-1. Експорт/збереження файлу GDD
-2. **Практика завершена** - готовий до інтеграції 12.2`,
- hints: [
- "Подавайте як опис магазину Roblox",
- "Must-have = те, що ви демонструєте в SHOWCASE DAY",
- "Необов’язково: примітка про справедливу монетизацію",
- ],
- optionalChallenge: "Чесна концепція монетизації (лише косметика, без оплати за виграш).",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "GDD допомагає запобігти...",
- options: [
- "Неконтрольований scope creep",
- "Ходьба",
- "Генерація Terrain",
- "Welds",
- ],
- correctAnswer: 0,
- explanation: "Фокус.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "MVP означає...",
- options: [
- "Мінімальний scope для релізу",
- "Максимум усього",
- "Без фіч",
- "Випадково",
- ],
- correctAnswer: 0,
- explanation: "Готовий.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Основний цикл описує...",
- options: [
- "Повторювані дії гравця",
- "IP сервера",
- "Частка Robux",
- "Size шрифту",
- ],
- correctAnswer: 0,
- explanation: "Ігровий цикл.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "30% буфер для...",
- options: [
- "Несподівані затримки",
- "Видалення GDD",
- "Пропуск тесту",
- "Без плану",
- ],
- correctAnswer: 0,
- explanation: "Реальність.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Необхідне проти того, що приємно мати...",
- options: [
- "Пріоритет релізу",
- "Те саме",
- "Заборонено",
- "Лише UI",
- ],
- correctAnswer: 0,
- explanation: "Сфера вирізання.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Модуль 12 - це...",
- options: [
- "Release Day",
- "Лише Terrain",
- "Лише Sound",
- "Module 1",
- ],
- correctAnswer: 0,
- explanation: "Підсумковий модуль.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Висота має бути...",
- options: [
- "Одне яскраве речення",
- "50 сторінок",
- "Лише код",
- "Порожньо",
- ],
- correctAnswer: 0,
- explanation: "Зберігати рекламу.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Урок 12.2 - це...",
- options: [
- "Збирання систем разом",
- "Лише Publish",
- "Лише GDD",
- "Порожньо",
- ],
- correctAnswer: 0,
- explanation: "Інтеграція.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Закінчена невелика гра перемагає...",
- options: [
- "Гігантський незавершений проєкт",
- "Без плану",
- "Без тесту",
- "Без UI",
- ],
- correctAnswer: 0,
- explanation: "Сфера дисципліни.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Результатом уроку 12.1 є...",
- options: [
- "Final Project GDD",
- "Опублікована гра",
- "Лише trailer",
- "Порожнє місце",
- ],
- correctAnswer: 0,
- explanation: "Планування док.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-12-1",
+  "moduleId": "module-12",
+  "order": 1,
+  "title": "12.1 — Що таке Tool",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "створити Tool з Handle; покласти в StarterPack; зрозуміти Equipped/Unequipped.",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** створити Tool з Handle; покласти в StarterPack; зрозуміти Equipped/Unequipped.\n\nФаза курсу: **Ігрові механіки**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "Tool `Hammer` або `Sword` (Part Handle + модель); зʼявляється в хотбарі."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Шаблон коду (встав у Studio)",
+        "content": "Натисни **Копіювати** → вклей у **Script** або **LocalScript** у Studio. Спочатку міняй **числа, рядки, кольори** — не видаляй рядки «бо не розумію».\n\n### Шаблон (LocalScript у Tool)\n\n```lua\nlocal tool = script.Parent\n\ntool.Equipped:Connect(function()\n\tprint(tool.Name .. \" equipped\")\nend)\n\ntool.Unequipped:Connect(function()\n\tprint(tool.Name .. \" unequipped\")\nend)\n```"
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Попрацюй над результатом ще 15–20 хв і збережи Place. Наступного разу покажи короткий демо 20–30 сек."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **12.1 — Що таке Tool** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Що таке Tool",
+    "difficulty": "advanced",
+    "description": "### Завдання\nTool `Hammer` або `Sword` (Part Handle + модель); зʼявляється в хотбарі.\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Шаблон коду — у вкладці «Теорія», кнопка «Копіювати»."
+    ],
+    "optionalChallenge": "Зроби артефакт трохи крутішим і будь готовий показати 20 секунд."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Tool у Roblox — це…",
+        "options": [
+          "Предмет який гравець тримає в хотбарі/руці",
+          "Тип Sky",
+          "NegatePart",
+          "Terrain brush"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Предмет який гравець тримає в хотбарі/руці"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Handle потрібен щоб…",
+        "options": [
+          "Tool коректно еквіпився (база)",
+          "Видалити Workspace",
+          "Вимкнути Output",
+          "Зробити DataStore"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Tool коректно еквіпився (база)"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "StarterPack…",
+        "options": [
+          "Дає Tool гравцю при старті",
+          "Малює небо",
+          "Робіть Union",
+          "Відкриває Avatar Editor обовʼязково"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Дає Tool гравцю при старті"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Equipped подія…",
+        "options": [
+          "Коли взяли Tool у руки",
+          "Коли купили Robux",
+          "Коли видалили Place",
+          "Коли змінили біом словами"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Коли взяли Tool у руки"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "Свій Tool у хотбарі",
+          "Повний Tycoon",
+          "Blender face",
+          "Відеомонтаж"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Свій Tool у хотбарі"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Без Handle типові проблеми…",
+        "options": [
+          "Tool може некоректно працювати",
+          "Завжди ідеально",
+          "Дає Badge",
+          "Зберігає Cash"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Tool може некоректно працювати"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Unequipped…",
+        "options": [
+          "Сховали/прибрали Tool",
+          "Видалили акаунт",
+          "Вимкнули Wi-Fi",
+          "Зробили Negate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Сховали/прибрали Tool"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Tool vs звичайний Part у Workspace…",
+        "options": [
+          "Tool має lifecycle екіпірування",
+          "Немає різниці ніколи",
+          "Part завжди в хотбарі",
+          "Tool невидимо завжди"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Tool має lifecycle екіпірування"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "ДЗ прикрасити Tool…",
+        "options": [
+          "Колір/декор без поломки Handle",
+          "Видалити Handle",
+          "Видалити StarterPack",
+          "Скасувати print"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Колір/декор без поломки Handle"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Активація Tool (клік)",
+          "Тільки Ambient",
+          "Тільки Decal",
+          "НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Активація Tool (клік)"
+      }
+    ]
+  }
 }
 
 export const ukLesson122 = {
- lessonId: "lesson-roblox-12-2",
- moduleId: "module-12",
- order: 2,
- title: "12.2 - Збираємо все разом",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Інтегруйте завантаження, інвентар, квести, магазин, головоломки та полірування в одному місці",
- "Дотримуйтеся порядку інтеграції, щоб зменшити конфлікти",
- "Створіть команду скидання профілю для тестування",
- "Функції заморожування під час спринту інтеграції",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `День архітектури - системи повинні працювати **разом**, а не тільки окремо.
-
-**Хід уроку:**
-1. **Теорія (40 хв)** - порядок інтегрування
-2. **Практика (~25 хв)** - перейдіть у місце остаточної збірки
-3. **Вікторина (10 хв)** - проходження **70%**
-
-Використовуйте найкраще контрольну точку як базу: **Модуль 11 - відшліфована гра**.`,
- },
- {
- title: "Порядок інтеграції",
- content: `| Крок | Система | Чому цей порядок |
-|------|--------|----------------|
-| 1 | Завантаження + Explorer чистий | Фонд |
-| 2 | Профіль / DataStore зберегти | Дані перед економікою |
-| 3 | Інвентар + спорядження + магазин | Економ стек |
-| 4 | Квести + діалог NPC | Прогресія |
-| 5 | Головоломка / obby / combat slice | Виклик |
-| 6 | Аудіо + пропуск UX | Полірування останнє |
-
-**Не** додавайте нові функції під час інтеграції - **заморозьте** область.`,
- },
- {
- title: "Структура одного місця",
- content: `\`\`\`
-FinalProject (place)
-├── ReplicatedStorage/Remotes + Audio
-├── ServerScriptService/Systems + Modules
-├── StarterGui (Loading, Shop, Quest, Stats, Puzzle)
-├── Workspace (Hub, NPCs, PuzzleWorld, Shop)
-└── ServerStorage/Tools
-\`\`\`Копіювання систем із збереження контрольних точок - **одна ItemDatabase**, **один RPGConfig**.`,
- },
- {
- title: "Налагодження конфлікту",
- content: `Коли відбувається зіткнення:
-
-1. **Потік подій у журналі** - вивід у консоль після завершення квесту, покупки в магазині, виграшу головоломки
-2. **Ізолювати** - відключити одну систему, повторно перевірити
-3. **Усуньте першопричину**, а не симптом
-
-| Загальне зіткнення | Виправити |
-|--------------|-----|
-| Монети не зберігають | Збереження запасів після покупки |
-| Квест + діалог застряг | Очистити активний прапор під час закриття |
-| Подвійний екран завантаження | Прапори ResetOnSpawn |
-| Невідповідність віддаленого імені | Аудит Folders Remotes |`,
- },
- {
- title: "Перевірити команду скидання",
- content: `\`\`\`lua
--- Studio admin command only
-local function resetProfile(player)
- playerInventories[player] = Inventory.new(12)
- playerEquipped[player] = { weapon=nil, armor=nil, trinket=nil }
- -- clear quest state
- savePlayer(player) -- or wipe DataStore key in test
- print("Reset", player.Name)
-end
-\`\`\`Повторні тести інтеграції без нових облікових записів.`,
- },
- {
- title: "Контрольний список інтеграції",
- content: `- [ ] Приєднання → завантаження → породження (немає помилок)
-- [ ] Обговорення NPC → початок квесту → оновлення HUD
-- [ ] Виконати ціль → монети/предмети
-- [ ] Купити в магазині → інвентар + статистика
-- [ ] Головоломка/obby один раз → винагорода
-- [ ] Вийти → знову приєднатися → прогрес продовжується
-- [ ] Зберегти:\`Lesson 12.2 - Final Integration\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Додавання функцій під час інтеграції",
- explanation: "Ніколи не стабілізується.",
- correctApproach: "Заморожування функції",
- },
- {
- mistake: "Дві копії бази даних ItemDatabase",
- explanation: "ID дрейф.",
- correctApproach: "Один модуль",
- },
- {
- mistake: "Пропустити тест повторного приєднання",
- explanation: "Зафіксуйте баги перед релізом.",
- correctApproach: "Вийти/знову приєднатися до кожної системи",
- },
- {
- mistake: "Об'єднайте місця без очищення",
- explanation: "Дубльовані Scripts.",
- correctApproach: "Одна Folder Systems",
- },
- ],
- summary: "Ви об’єднали завантаження, економіку, квести, виклики та доопрацювання в одну фінальну збірку, дотримуючись суворого порядку, із налагодженням конфліктів і скиданням тесту - гра є єдиним узгодженим досвідом.",
- practiceTask: {
- title: "Спринт системної інтеграції (~25 хв)",
- difficulty: "beginner",
- description: `**Ціль:** Один золотий шлях, який можна грати, без червоних помилок.
-
-### Part A - Об'єднання (15 хв)
-1. Базове місце з Game Polished
-2. Провід контрольного листа 6 рядів - галочки в кожному
-3. Заморожування функцій - жодних нових ідей
-
-### Part B - Налагодження (8 хв)
-1. Виправте головне зіткнення інтеграції з виводу
-2. команда resetProfile для QA
-
-### Part C - Зберегти (2 хв)
-1. **Зберегти в Roblox** →\`Lesson 12.2 - Final Integration\` 2. **Практика завершена**`,
- hints: [
- "Вивести потік подій (print), якщо заплутався",
- "Один віддалений іменування",
- "Запасний інтерфейс користувача, якщо DataStore не працює (завдання)",
- ],
- optionalChallenge: "Витончений інтерфейс користувача, якщо не вдається завантажити профіль.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "Порядок інтеграції починається з...",
- options: [
- "Завантаження й чиста структура",
- "Спочатку Publish",
- "Trailer",
- "Випадково",
- ],
- correctAnswer: 0,
- explanation: "фундамент.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "Заморожування функції означає...",
- options: [
- "Без нових фіч під час merge",
- "Видалити всі скрипти",
- "Припинити тестування",
- "Видалити UI",
- ],
- correctAnswer: 0,
- explanation: "Стабільність.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Один ItemDatabase запобігає...",
- options: [
- "Розбіжність ID shop/inventory",
- "Лаг",
- "Terrain",
- "Sound",
- ],
- correctAnswer: 0,
- explanation: "Єдина правда.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "resetProfile допомагає...",
- options: [
- "Повторювати інтеграційні тести",
- "Банити гравців",
- "Publish",
- "Видалити NPC",
- ],
- correctAnswer: 0,
- explanation: "Інструмент контролю якості.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Виправлення налагодження конфліктів...",
- options: [
- "Причина, не симптом",
- "Нічого",
- "Лише арт",
- "Лише audio",
- ],
- correctAnswer: 0,
- explanation: "Правильне виправлення.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Випробування золотого шляху...",
- options: [
- "Повний цикл: spawn до нагороди",
- "Лише Explorer",
- "Лише GDD",
- "Thumbnail",
- ],
- correctAnswer: 0,
- explanation: "Наскрізний.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Урок 12.2 базується на...",
- options: [
- "План GDD 12.1",
- "Порожньо",
- "Лише Module 1",
- "Лише монети",
- ],
- correctAnswer: 0,
- explanation: "Плануйте, потім будуйте.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Урок 12.3 - це...",
- options: [
- "Playtesting",
- "Publish",
- "Portfolio",
- "SHOWCASE",
- ],
- correctAnswer: 0,
- explanation: "Тестування.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Тест повторного приєднання підтверджує...",
- options: [
- "Persistence працює",
- "Колір UI",
- "Ім'я NPC",
- "Sky",
- ],
- correctAnswer: 0,
- explanation: "Зберегти/завантажити.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Урок 12.2 зберегти назву...",
- options: [
- "Lesson 12.2 - Final Integration",
- "SHOWCASE DAY",
- "Published",
- "GDD",
- ],
- correctAnswer: 0,
- explanation: "Зберегти інтеграцію.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-12-2",
+  "moduleId": "module-12",
+  "order": 2,
+  "title": "12.2 — Activated: інструмент діє",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "`Tool.Activated` → функція дії (хитання: print + короткий debounce + опційно анімація пізніше).",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** `Tool.Activated` → функція дії (хитання: print + короткий debounce + опційно анімація пізніше).\n\nФаза курсу: **Ігрові механіки**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "Hammer «бʼє»: якщо Raycast/ Touched під час удару по Part з тегом Breakable — Part Destroy або HP--. Для простоти: **клік Activated → print + звук + cooldown**."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Шаблон коду (встав у Studio)",
+        "content": "Натисни **Копіювати** → вклей у **Script** або **LocalScript** у Studio. Спочатку міняй **числа, рядки, кольори** — не видаляй рядки «бо не розумію».\n\n### Шаблон (Script або LocalScript у Tool — старт без урану)\n\n```lua\nlocal tool = script.Parent\nlocal cooldown = false\nlocal COOLDOWN_SEC = 0.6\n\ntool.Activated:Connect(function()\n\tif cooldown then\n\t\treturn\n\tend\n\tcooldown = true\n\tprint(tool.Name .. \" swing!\")\n\t-- TODO 12.3: тут викликати серверний урон\n\ttask.wait(COOLDOWN_SEC)\n\tcooldown = false\nend)\n```"
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Попрацюй над результатом ще 15–20 хв і збережи Place. Наступного разу покажи короткий демо 20–30 сек."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **12.2 — Activated: інструмент діє** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Activated: інструмент діє",
+    "difficulty": "advanced",
+    "description": "### Завдання\nHammer «бʼє»: якщо Raycast/ Touched під час удару по Part з тегом Breakable — Part Destroy або HP--. Для простоти: **клік Activated → print + звук + cooldown**.\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Шаблон коду — у вкладці «Теорія», кнопка «Копіювати»."
+    ],
+    "optionalChallenge": "Зроби артефакт трохи крутішим і будь готовий показати 20 секунд."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Activated спрацьовує коли…",
+        "options": [
+          "Гравець клікає з екіпованим Tool",
+          "Відкриває Toolbox",
+          "Міняє Sky",
+          "Робить Negate сам по собі"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Гравець клікає з екіпованим Tool"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Cooldown потрібен щоб…",
+        "options": [
+          "Не спамити дію",
+          "Видалити Tool",
+          "Вимкнути Play",
+          "Зберегти PDF"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Не спамити дію"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "Tool з дією Activated",
+          "Повний DataStore galaxy",
+          "Blender",
+          "Clipchamp"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Tool з дією Activated"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Звук удару…",
+        "options": [
+          "Фідбек",
+          "Заміна Handle",
+          "Заміна StarterPack",
+          "DataStore"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Фідбек"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "LocalScript vs Script на Tool…",
+        "options": [
+          "Обережно: урон краще підтверджувати на сервері (далі)",
+          "Все завжди лише локально й нараховувати HP всім світом без сервера",
+          "Script заборонений у Tool назавжди",
+          "LocalScript видаляє Tool"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Обережно: урон краще підтверджувати на сервері (далі)"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Без debounce Activated…",
+        "options": [
+          "Спам подій",
+          "Кращий DPS всегда етичний",
+          "Дає Robux",
+          "Відкриває Badge"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Спам подій"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "ДЗ Breakable…",
+        "options": [
+          "Parts для наступного уроку урону",
+          "Видалити Tool",
+          "Видалити Handle",
+          "Скасувати Activated"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Parts для наступного уроку урону"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "print на Activated на старті…",
+        "options": [
+          "Доводить що подія жива",
+          "Заборонений",
+          "Ламає хотбар",
+          "Вимикає камеру"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Доводить що подія жива"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "М12 будує на подіях М8…",
+        "options": [
+          "Так",
+          "Ні",
+          "Лише на Negate",
+          "Лише на Atmosphere"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Так"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Урон / ламання з серверною перевіркою",
+          "Тільки Sky",
+          "Тільки паркан",
+          "НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Урон / ламання з серверною перевіркою"
+      }
+    ]
+  }
 }
 
 export const ukLesson123 = {
- lessonId: "lesson-roblox-12-3",
- moduleId: "module-12",
- order: 3,
- title: "12.3 - Тестування",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Проведіть три структуровані тестові сесії з контрольним списком",
- "Класифікуйте проблеми як критичні, UX, баланс, косметичні",
- "Створити пріоритетний список виправлень із серйозністю",
- "Виправте повторювані больові точки перед одноразовими думками",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**Тестування гри з метою** - а не «спостерігати, як друзі випадково клацають».
-
-**Хід уроку:**
-1. **Теорія (40 хв)** - контрольний список + пріоритети
-2. **Практика (~25 хв)** - 3 заняття + список виправлень
-3. **Вікторина (10 хв)** - проходження **70%**
-
-Використовуйте збірку **Урок 12.2 - Остаточна інтеграція**.`,
- },
- {
- title: "Контрольний список Playtest",
- content: `| # | Спостереження | Пас? | Примітки |
-|---|-------------|-------|-------|
-| 1 | Ясна адаптація в 60-х | | |
-| 2 | Перша винагорода протягом 10 хвилин | | |
-| 3 | Без програмного блокування | | |
-| 4 | Магазин/квест/головоломка зрозуміло | | |
-| 5 | Зберегти роботи після повторного приєднання | | |
-| 6 | Немає серйозних помилок виведення | | |
-| 7 | Продуктивність прийнятна | | |
-| 8 | Аудіо не втомлює слух | | |
-| 9 | Інтерфейс користувача для читання мобільного розміру | | |
-| 10 | Весело - грали б знову? | | |`,
- },
- {
- title: "Категорії тяжкості",
- content: `| Категорія | Приклади | Запуск? |
-|----------|----------|---------|
-| **P0 Критичний** | Збій, втрата даних, програмне блокування | Виправити зараз |
-| **P1 UX** | Заплутана мета, крихітний текст | Виправити зараз |
-| **P2 Баланс** | Занадто жорсткий слиз | Незабаром |
-| **P3 Cosmetic** | Неправильний колір знака | Пізніше |
-
-**Запуск виправляє P0-P1** перед P3.`,
- },
- {
- title: "Протокол сесії",
- content: `**За сеанс (15 хвилин гри):**
-1. Тестер не отримує **підказок** перші 5 хв
-2. **Думай вголос** заохочується
-3. **Дивишся** - не тренуєш
-4. Проблеми з часовими мітками:\`04:20 - did not find shop\` 5. Розкажіть про 3 запитання:
- - Що було весело?
- - Що збентежило?
- - Що зламалося?
-
-**3 різні тестери**, якщо можливо - шаблони мають значення.`,
- },
- {
- title: "Виправити шаблон списку",
- content: `| ID | Випуск | Тяжкість | Власник | Статус |
-|----|-------|----------|-------|--------|
-| 1 | Квест HUD приховано | P1 | Ви | фіксований |
-| 2 | Помилка збереження монет | P0 | Ви | відкрити |
-
-Виправте **повторювані** проблеми - якщо 2/3 тестувальників застрягли в магазині, виправте вивіску магазину.`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Виконано 3 ігрові тести
-- [ ] Список виправлень із адресою P0/P1
-- [ ] Золотий шлях проходить після виправлень
-- [ ] Зберегти:\`Lesson 12.3 - Playtest Pass\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Інструктаж під час іспиту",
- explanation: "Приховує помилки UX.",
- correctApproach: "Дивіться спочатку тихо",
- },
- {
- mistake: "Тільки один тестер",
- explanation: "Міс візерунки.",
- correctApproach: "Три сеанси",
- },
- {
- mistake: "Фіксація косметики перед софтлоком",
- explanation: "Неправильний пріоритет.",
- correctApproach: "P0 перший",
- },
- {
- mistake: "Немає письмового списку виправлень",
- explanation: "Забудьте про проблеми.",
- correctApproach: "Стіл трекера",
- },
- ],
- summary: "Ви провели три структуровані ігрові тести зі списком виправлень на основі серйозності, визначили пріоритетність критичних проблем і проблем UX і перевірили золотий шлях після виправлень - збірка відповідає якості кандидата на запуск.",
- practiceTask: {
- title: "Запуск контрольного списку тестування гри (~25 хв)",
- difficulty: "beginner",
- description: `**Ціль:** 3 сеанси + пріоритетні виправлення.
-
-### Part A - Тести (18 хв)
-1. Запустіть контрольний список із 3 тестерами (або 3 самостійними запусками наосліп)
-2. Часові мітки журналу + серйозність
-
-### Part B - Виправлення (5 хв)
-1. Виправте всі проблеми P0 і основні P1
-2. Перевірте золотий шлях один раз
-
-### Part C - Зберегти (2 хв)
-1. **Зберегти в Roblox** →\`Lesson 12.3 - Playtest Pass\` 2. **Практика завершена**`,
- hints: [
- "Думати вголос виявляє плутанину",
- "Повторний біль > одна думка",
- "Опитування до/після за бажанням",
- ],
- optionalChallenge: "Опитування Google Form до/після виправлень.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "Проблеми P0 є...",
- options: [
- "Критичні блокери релізу",
- "Лише косметика",
- "Опційно",
- "Майбутнє",
- ],
- correctAnswer: 0,
- explanation: "Виправте зараз.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "Думки вголос допомагають знайти...",
- options: [
- "Плутанина UX",
- "Robux",
- "Terrain",
- "Version",
- ],
- correctAnswer: 0,
- explanation: "Розум гравця.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Три сеанси знаходять...",
- options: [
- "Повторювані патерни",
- "Нічого",
- "Лише баги",
- "Лише арт",
- ],
- correctAnswer: 0,
- explanation: "Дані шаблону.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "Не тренуйтеся рано, тому що...",
- options: [
- "Ховає справжній onboarding",
- "Обов'язково",
- "Швидше",
- "Правила",
- ],
- correctAnswer: 0,
- explanation: "Дійсний тест.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Виправити пріоритет перед косметичним...",
- options: [
- "Критичне та UX",
- "Спочатку кольори",
- "Спочатку trailer",
- "Пропустити",
- ],
- correctAnswer: 0,
- explanation: "Порядок запуску.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Урок 12.3 готує до...",
- options: [
- "Publish у 12.4",
- "Лише GDD",
- "Terrain",
- "Порожньо",
- ],
- correctAnswer: 0,
- explanation: "Запуск готовий.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Soft-lock - це суворість...",
- options: [
- "P0 критичний",
- "P3 косметика",
- "Ігнорувати",
- "Фіча",
- ],
- correctAnswer: 0,
- explanation: "Блокувальник.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Золотий шлях після виправлень...",
- options: [
- "Має пройти",
- "Опційно",
- "Видалено",
- "Заборонено",
- ],
- correctAnswer: 0,
- explanation: "Перевірка.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Урок 12.4 охоплює...",
- options: [
- "Publishing на Roblox",
- "Лише тестування",
- "Лише GDD",
- "NPC",
- ],
- correctAnswer: 0,
- explanation: "Звільнення.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Урок 12.3 зберегти назву...",
- options: [
- "Lesson 12.3 - Playtest Pass",
- "Published",
- "Portfolio",
- "SHOWCASE",
- ],
- correctAnswer: 0,
- explanation: "Зберегти проходження тесту.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-12-3",
+  "moduleId": "module-12",
+  "order": 3,
+  "title": "12.3 — Урон і Humanoid",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "сервер обробляє удар: зменшує Humanoid.Health або HP Attribute на NPC/манекені.",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** сервер обробляє удар: зменшує Humanoid.Health або HP Attribute на NPC/манекені.\n\nФаза курсу: **Ігрові механіки**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "Манекен `TrainingDummy` з Humanoid; Tool завдає 10 HP з cooldown; смерть dummy reset HP через 3 сек."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Шаблон коду (встав у Studio)",
+        "content": "Натисни **Копіювати** → вклей у **Script** або **LocalScript** у Studio. Спочатку міняй **числа, рядки, кольори** — не видаляй рядки «бо не розумію».\n\n### Шаблон (Script у ServerScriptService — серверний урон по dummy)\n\n```lua\nlocal ReplicatedStorage = game:GetService(\"ReplicatedStorage\")\nlocal dealDamage = Instance.new(\"RemoteEvent\")\ndealDamage.Name = \"DealDummyDamage\"\ndealDamage.Parent = ReplicatedStorage\n\nlocal DAMAGE = 10\nlocal RANGE = 12\n\ndealDamage.OnServerEvent:Connect(function(player)\n\tlocal character = player.Character\n\tif not character then\n\t\treturn\n\tend\n\tlocal root = character:FindFirstChild(\"HumanoidRootPart\")\n\tlocal dummy = workspace:FindFirstChild(\"TrainingDummy\")\n\tif not root or not dummy then\n\t\treturn\n\tend\n\tlocal humanoid = dummy:FindFirstChildOfClass(\"Humanoid\")\n\tlocal torso = dummy.PrimaryPart or dummy:FindFirstChild(\"HumanoidRootPart\") or dummy:FindFirstChildWhichIsA(\"BasePart\")\n\tif not humanoid or not torso then\n\t\treturn\n\tend\n\tif (root.Position - torso.Position).Magnitude > RANGE then\n\t\treturn\n\tend\n\thumanoid.Health = math.max(0, humanoid.Health - DAMAGE)\n\tif humanoid.Health <= 0 then\n\t\ttask.delay(3, function()\n\t\t\tif humanoid then\n\t\t\t\thumanoid.Health = humanoid.MaxHealth\n\t\t\tend\n\t\tend)\n\tend\nend)\n```"
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Попрацюй над результатом ще 15–20 хв і збережи Place. Наступного разу покажи короткий демо 20–30 сек."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **12.3 — Урон і Humanoid** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Урон і Humanoid",
+    "difficulty": "advanced",
+    "description": "### Завдання\nМанекен `TrainingDummy` з Humanoid; Tool завдає 10 HP з cooldown; смерть dummy reset HP через 3 сек.\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Шаблон коду — у вкладці «Теорія», кнопка «Копіювати»."
+    ],
+    "optionalChallenge": "Зроби артефакт трохи крутішим і будь готовий показати 20 секунд."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Humanoid.Health…",
+        "options": [
+          "Здоровʼя персонажа/манекена",
+          "Ціна Tool",
+          "Volume",
+          "ClockTime"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Здоровʼя персонажа/манекена"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Урон на сервері…",
+        "options": [
+          "Базова чесність",
+          "Гірше завжди",
+          "Видаляє Tool",
+          "Вимикає Output"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Базова чесність"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "TrainingDummy…",
+        "options": [
+          "Безпечна мішень для навчання",
+          "Обовʼязковий реальний PvP без згоди",
+          "NegatePart",
+          "Sky"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Безпечна мішень для навчання"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "Tool що бʼє dummy",
+          "Повний MMO",
+          "Blender face",
+          "Відеомонтаж"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Tool що бʼє dummy"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Reset HP dummy…",
+        "options": [
+          "Можна тренуватись знову",
+          "Заборонено",
+          "Видаляє Place",
+          "Дає Robux"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Можна тренуватись знову"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Hit detection просто…",
+        "options": [
+          "Touched під час удару / короткий Hitbox Part",
+          "Обовʼязковий AAA ray за 1 урок",
+          "Обовʼязковий ML AI",
+          "Обовʼязковий Blender cloth"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Touched під час удару / короткий Hitbox Part"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Якщо урон іде крізь пів карти…",
+        "options": [
+          "Звужений hitbox / перевірка дистанції",
+          "Ідеал",
+          "Дає Badge",
+          "Зберігає DataStore"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Звужений hitbox / перевірка дистанції"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "PvP у групі дітей…",
+        "options": [
+          "Лише з правилами викладача / краще PvE",
+          "Завжди вмикати без розмов",
+          "Єдина мета курсу",
+          "Заміна всіх модулів"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Лише з правилами викладача / краще PvE"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "ДЗ другий tool зі слабшим уроном…",
+        "options": [
+          "Порівняння балансу",
+          "Видалити dummy",
+          "Видалити Health",
+          "Скасувати cooldown"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Порівняння балансу"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "GUI HP / статус",
+          "Тільки Ambient",
+          "Тільки Decal",
+          "НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "GUI HP / статус"
+      }
+    ]
+  }
 }
 
 export const ukLesson124 = {
- lessonId: "lesson-roblox-12-4",
- moduleId: "module-12",
- order: 4,
- title: "12.4 - Публікація",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Опублікуйте місце в Roblox із назвою й описом",
- "Завантажте піктограму та мініатюру, які пояснюють процес гри",
- "Налаштуйте доступ до гри та налаштування безпеки",
- "Перевірте опублікований досвід із нового облікового запису",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**Publish to Roblox** — це більше ніж одна кнопка: метадані, іконка, безпека, тест у live-режимі.
-
-**Хід уроку:**
-1. **Теорія (40 хв)** - конвеєр публікації
-2. **Практика (~25 хв)** - опублікуйте свій остаточний проект
-3. **Вікторина (10 хв)** - проходження **70%**`,
- },
- {
- title: "Попередня публікація перепустки",
- content: `| Перевірте | Готово? |
-|-------|-------|
-| Останнє збереження завантажених | |
-| Немає хаків лише для Studio | |
-| DataStore API увімкнено (якщо використовується) | |
-| Відповідний чат/фільтр | |
-| Немає зламаного ікру | |
-| Name гри написана правильно | |
-| Опис відповідає дійсному геймплею | |`,
- },
- {
- title: "Публікуйте крок за кроком",
- content: `1. **File → Publish to Roblox** (або **File → Save to Roblox**)
-2. **Ім’я** - чітке, доступне для пошуку (не «Без назви»)
-3. **Опис** - хук + те, що ви робите + підказка щодо елементів керування
-4. **Жанр/теги** - відповідність вмісту
-5. **Іконка** 512×512 - читабельна при маленькому розмірі
-6. **Ескізи** - ігровий процес, а не порожня базова панель
-7. **Налаштувати** → дозволи (публічні/приватні), вік
-8. **Створити** → скопіювати **посилання на гру**`,
- },
- {
- title: "Шаблон опису",
- content: `\`\`\`
-[Hook sentence from GDD pitch]
-
-WHAT YOU DO:
-• Complete quests from Guide Maya
-• Solve laser puzzles and earn coins
-• Buy gear and level up stats
-
-TIP: Talk to the yellow marker at spawn first!
-
-Built in SmartCode Academy Roblox Studio course.
-\`\`\`**Чесно** - без фальшивих обіцянок.`,
- },
- {
- title: "Підказки щодо значків і мініатюр",
- content: `| Актив | Порада |
-|-------|-----|
-| **Значок** | Один character + яскравий фон |
-| **Великий палець 1** | Екшн кадр - головоломка або магазин |
-| **Великий палець 2** | Хаб широкий постріл |
-| **Контраст** | Читається на головному екрані телефону |
-
-Уникайте захаращеного тексту на значку - нерозбірливий маленький.`,
- },
- {
- title: "Основи безпеки запуску",
- content: `- **Публічний** лише тоді, коли готовий для незнайомців
-- Перегляньте поведінку **чату** в опублікованому місці
-- Існує система **Report** (за замовчуванням Roblox)
-- Немає придатних для експлуатації пультів (сервер перевіряє всі)
-- **Тест альтернативного облікового запису** - приєднайтеся як новий гравець
-
-**Дозволи:** хто може редагувати чи грати - командні ролі у груповій грі.`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Опубліковано в Roblox
-- [ ] Значок + 1+ ескіз завантажено
-- [ ] Опис відповідає кроку GDD
-- [] Живе посилання перевірено (нове приєднання)
-- [ ] Зберегти нотатки + посилання:\`Lesson 12.4 - Published\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Опис обіцяє функції, яких немає в грі",
- explanation: "Погані відгуки.",
- correctApproach: "Чесний гачок",
- },
- {
- mistake: "Сіра мініатюра за умовчанням",
- explanation: "Низькі кліки.",
- correctApproach: "Скріншот ігрового процесу",
- },
- {
- mistake: "Ніколи не тестуйте живе посилання",
- explanation: "Не публікуйте зламану збірку — спочатку виправте помилки.",
- correctApproach: "Альтернативне приєднання до облікового запису",
- },
- {
- mistake: "Studio API вимкнено, але гра використовує DataStore",
- explanation: "Зберегти не вдалося в прямому ефірі.",
- correctApproach: "Увімкнути служби API",
- },
- ],
- summary: "Ви пройшли перевірку перед публікацією, опублікували її з назвою/описом/іконкою/ескізами, налаштували параметри доступу та підтвердили живе посилання - ваша гра доступна на Roblox для справжніх гравців.",
- practiceTask: {
- title: "Publish to Roblox (~25 хв)",
- difficulty: "beginner",
- description: `**Ціль:** Посилання на гру в прямому ефірі, загальнодоступне чи не зазначене.
-
-### Part A - Активи (10 хв)
-1. Написати опис з GDD
-2. Підготувати іконку 512×512 + 1 мініатюру
-
-### Part B - Публікація (12 хв)
-1. Опублікуйте в Roblox - усі метадані
-2. Налаштуйте параметри доступу + віку
-
-### Part C - Тест наживо (3 хв)
-1. Приєднайтеся за посиланням (альтернативний обліковий запис, якщо можливо)
-2. Golden path працює наживо
-3. **Практика завершена** - зберегти URL-адресу гри в GDD`,
- hints: [
- "Скріншот Студія для мініатюр",
- "Спочатку опублікуйте приватно для перевірки викладачами",
- "Необов’язковий виклик A/B",
- ],
- optionalChallenge: "Два варіанти ескізів для перевірки кліків.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "Публікація включає...",
- options: [
- "Metadata, icon, thumbnails, settings",
- "Лише код",
- "Лише GDD",
- "Terrain",
- ],
- correctAnswer: 0,
- explanation: "Повний конвеєр.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "Опис повинен...",
- options: [
- "Відповідати реальному геймплею",
- "Обіцяти фейкові фічі",
- "Бути порожнім",
- "Ховати керування",
- ],
- correctAnswer: 0,
- explanation: "Чесність.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Значок повинен добре читатися...",
- options: [
- "На маленькому телефоні",
- "Лише 4K",
- "Ніколи",
- "Як абзац",
- ],
- correctAnswer: 0,
- explanation: "Виявленість.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "Тест альтернативного облікового запису знаходить...",
- options: [
- "Баги лише в live",
- "Нічого",
- "Баги Terrain",
- "Баги GDD",
- ],
- correctAnswer: 0,
- explanation: "Свіжий гравець.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Ігри DataStore потребують...",
- options: [
- "API services увімкнено",
- "Без Publish",
- "Без скриптів",
- "Лише UI",
- ],
- correctAnswer: 0,
- explanation: "Живі сейви.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Далі йде урок 12.4...",
- options: [
- "Пройдений плейтест 12.3",
- "Лише 12.1",
- "Порожньо",
- "Module 1",
- ],
- correctAnswer: 0,
- explanation: "Готова конструкція.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Урок 12.5 - це...",
- options: [
- "Пост portfolio",
- "Більше коду",
- "Terrain",
- "Лише NPC",
- ],
- correctAnswer: 0,
- explanation: "Показати роботу.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Публічна публікація, коли...",
- options: [
- "Готово для незнайомців",
- "Ніколи не тестували",
- "Зламано",
- "Порожньо",
- ],
- correctAnswer: 0,
- explanation: "Безпека.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Сервер перевіряє віддалені пристрої, оскільки...",
- options: [
- "У live є експлойтери",
- "Не потрібно",
- "Лише клієнт",
- "Лаг",
- ],
- correctAnswer: 0,
- explanation: "Безпека.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Результатом уроку 12.4 є...",
- options: [
- "Живе посилання на гру Roblox",
- "Лише GDD",
- "Trailer",
- "Лише нотатки",
- ],
- correctAnswer: 0,
- explanation: "Опубліковано.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-12-4",
+  "moduleId": "module-12",
+  "order": 4,
+  "title": "12.4 — GUI HP + магазин Tools",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "ScreenGui з Frame HP + магазин Tool за валюту (whitelist на сервері). Не довіряти клієнту імʼя «AdminSword».",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** ScreenGui з Frame HP + магазин Tool за валюту (whitelist на сервері). Не довіряти клієнту імʼя «AdminSword».\n\nФаза курсу: **Ігрові механіки**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "HP bar для гравця + whitelist `ToolsForSale` + Remote BuyTool → Tool у Backpack після покупки."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Шаблон коду (встав у Studio)",
+        "content": "Натисни **Копіювати** → вклей у **Script** або **LocalScript** у Studio. Спочатку міняй **числа, рядки, кольори** — не видаляй рядки «бо не розумію».\n\n### Шаблон HP (LocalScript у Fill-Frame)\n\n```lua\nlocal player = game.Players.LocalPlayer\nlocal bar = script.Parent -- Frame Fill\nlocal maxWidth = bar.Size.X.Offset\nif maxWidth <= 0 then\n\tmaxWidth = 200\n\tbar.Size = UDim2.new(0, maxWidth, bar.Size.Y.Scale, bar.Size.Y.Offset)\nend\n\nlocal function bind(humanoid)\n\tlocal function refresh()\n\t\tlocal ratio = math.clamp(humanoid.Health / humanoid.MaxHealth, 0, 1)\n\t\tbar.Size = UDim2.new(0, maxWidth * ratio, bar.Size.Y.Scale, bar.Size.Y.Offset)\n\t\tbar.BackgroundColor3 = ratio < 0.3 and Color3.fromRGB(220, 60, 60) or Color3.fromRGB(60, 200, 90)\n\tend\n\thumanoid.HealthChanged:Connect(refresh)\n\trefresh()\nend\n\nlocal function onCharacter(character)\n\tlocal humanoid = character:WaitForChild(\"Humanoid\")\n\tbind(humanoid)\nend\n\nif player.Character then\n\tonCharacter(player.Character)\nend\nplayer.CharacterAdded:Connect(onCharacter)\n```"
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Попрацюй над результатом ще 15–20 хв і збережи Place. Наступного разу покажи короткий демо 20–30 сек."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **12.4 — GUI HP + магазин Tools** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: GUI HP + магазин Tools",
+    "difficulty": "advanced",
+    "description": "### Завдання\nHP bar для гравця + whitelist `ToolsForSale` + Remote BuyTool → Tool у Backpack після покупки.\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Шаблон коду — у вкладці «Теорія», кнопка «Копіювати»."
+    ],
+    "optionalChallenge": "Зроби артефакт трохи крутішим і будь готовий показати 20 секунд."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "HealthChanged…",
+        "options": [
+          "Подія зміни HP",
+          "Подія Negate",
+          "Подія Publish",
+          "Подія Terrain"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Подія зміни HP"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Ширина бара пропорційна…",
+        "options": [
+          "hp/maxHp",
+          "Кількості друзів",
+          "Ціні Robux",
+          "Номеру уроку"
+        ],
+        "correctAnswer": 0,
+        "explanation": "hp/maxHp"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Whitelist імен Tool…",
+        "options": [
+          "Античит-гігієна магазину",
+          "Даремна",
+          "Малює Sky",
+          "Робить Negate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Античит-гігієна магазину"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Неправильна назва з клієнта…",
+        "options": [
+          "Сервер відмовляє",
+          "Обовʼязково видає Admin",
+          "Видаляє Place",
+          "Дає Robux"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Сервер відмовляє"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "LocalScript для HP bar…",
+        "options": [
+          "Типово на клієнті",
+          "Заборонений",
+          "Замінює ServerStorage",
+          "Робіть Union"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Типово на клієнті"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Backpack vs StarterPack…",
+        "options": [
+          "StarterPack — старт; Backpack — поточні інструменти",
+          "Немає різниці ніколи",
+          "Backpack лише для неба",
+          "StarterPack лише для Negate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "StarterPack — старт; Backpack — поточні інструменти"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "HP GUI + ≥1 покупка Tool",
+          "Повний MMO",
+          "Blender",
+          "Clipchamp"
+        ],
+        "correctAnswer": 0,
+        "explanation": "HP GUI + ≥1 покупка Tool"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Low HP червоний…",
+        "options": [
+          "UX фідбек",
+          "Ламає Humanoid",
+          "Видаляє Tool",
+          "Вимикає Play"
+        ],
+        "correctAnswer": 0,
+        "explanation": "UX фідбек"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Звʼязок Remote з М10…",
+        "options": [
+          "Той самий патерн покупок",
+          "Перший раз Remote у курсі",
+          "Remote скасовано",
+          "Remote лише для Lighting"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Той самий патерн покупок"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Збірка арени/майстерні з juice",
+          "Тільки Ambient",
+          "Тільки паркан",
+          "НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Збірка арени/майстерні з juice"
+      }
+    ]
+  }
 }
 
 export const ukLesson125 = {
- lessonId: "lesson-roblox-12-5",
- moduleId: "module-12",
- order: 5,
- title: "12.5 - Портфоліо",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Напишіть допис у портфоліо з презентацією, системами, завданнями, уроками",
- "Додайте GIF-файли або знімки екрана та посилання для відтворення",
- "Виділіть три технічні системи з курсу",
- "Використовуйте чіткий стриманий тон у стилі форуму для розробників",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**Портфоліо** доводить, що ви думаєте як розробник, а не просто граєте як розробник.
-
-**Хід уроку:**
-1. **Теорія (40 хв)** - структура посту
-2. **Практика (~25 хв)** - портфоліо + проект публікації розробника
-3. **Вікторина (10 хв)** - проходження **70%**`,
- },
- {
- title: "Портфоліо сторітелінг",
- content: `Скріншоти одні = слабкі.
-
-Потужне портфоліо показує:
-- **Що** ти збудував
-- **Як** (системи)
-- **Найскладніша помилка** та виправлення
-- **Чого ти навчився**
-- **Play посилання**`,
- },
- {
- title: "Структура поста",
- content: `## [Name гри] - Фінальний проект Roblox Studio
-
-**Пітч:** одне речення
-
-**Що я побудував:**
-- Клієнт-серверний магазин (Модуль 7)
-- Квест + центр NPC (Модуль 8)
-- RPG інвентар + збереження (Модуль 9)
-- Лазерна головоломка + процедурні раунди (Модуль 10)
-
-**Найскладніший виклик:**
-[напр. Десинхронізація інвентаризації DataStore - виправлено за допомогою серіалізації з версіями]
-
-**Чого я навчився:**
-- Повноваження сервера для економ
-- Керовані подіями > цикли спаму
-
-**Play:** [посилання Roblox]
-
-**Скріншоти:** 3-5 зображень або GIF-файлів`,
- },
- {
- title: "Слід виділити три системи",
- content: `Виберіть свою **найбільшу трійку** з курсу:
-
-| Приклад | Одностроковий браг |
-|---------|----------------|
-| Магазин | Захистіть касира сервера за допомогою RemoteEvents |
-| Квест | Таблиця стану для кожного гравця, без глобального експлойту |
-| Головоломка | Цілі Raycast + процедурні варіанти |
-| Гонки | Перевірка порядку checkpoint 3 кола |
-| Полірування | Завантаження + багаторівневий SFX + пропуск UX |
-
-**До/після**, якщо можливо, один знімок екрана.`,
- },
- {
- title: "Голос, готовий до Devforum",
- content: `**Роби:**
-- Окремі технічні умови
-- Чесна історія виклику
-- Попросіть відгук
-
-**Не:**
-- "НАЙКРАЩА ГРА КОЛИ-небудь!!!"
-- Розпливчасте "було важко"
-- Немає посилання, немає доказів
-
-**90-секундний трейлер** необов’язково - найпотужніший демонстраційний ресурс.`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Publish draft завершено (усі розділи)
-- [] 3+ скріншоти або GIF-файли
-- [ ] Посилання для відтворення працює
-- [ ] 3 системи, виділені деталями
-- [ ] Зберегти:\`Lesson 12.5 - Portfolio Post\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Хайп без технічних деталей",
- explanation: "Не заслуговує довіри.",
- correctApproach: "Системи + докази",
- },
- {
- mistake: "Несправне посилання на відтворення в публікації",
- explanation: "Соромно.",
- correctApproach: "Перевірте посилання перед публікацією",
- },
- {
- mistake: "Жодна історія викликів",
- explanation: "Розповідь про міс зростання.",
- correctApproach: "Найважчий параграф про помилку",
- },
- {
- mistake: "Стіна з текстом без зображень",
- explanation: "Ніхто не читає.",
- correctApproach: "GIF-файли/скріншоти",
- },
- ],
- summary: "Ви написали допис у портфоліо з презентацією, трьома технічними моментами, історією виклику, отриманими уроками, медіа та посиланням на гру - ви можете представити себе як серйозного творця Roblox.",
- practiceTask: {
- title: "Портфоліо + публікація розробника (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** Публікуємий запис портфоліо.
-
-### Part A - Чернетка (15 хв)
-1. Усі розділи публікацій заповнені
-2. Виділено 3 системи
-3. Найскладніший виклик + виправлення
-
-### Part B - ЗМІ (8 хв)
-1. 3 скріншоти або 1 короткий GIF
-2. Посилання на тестову гру в публікації
-
-### Part C - Поділіться (2 хв)
-1. Зберегти на платформі doc / class
-2. **Практика завершена**`,
- hints: [
- "GIF: 10-20 секунд золотий шлях",
- "До/після Explorer або UI",
- "Закінчити словами \"вітаємо відгук\"",
- ],
- optionalChallenge: "90-секундний трейлер відео.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "Потужне портфоліо показує...",
- options: [
- "Процес і системи, не лише скріншоти",
- "Лише хайп",
- "Без посилання",
- "Порожньо",
- ],
- correctAnswer: 0,
- explanation: "Розповідь.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "У розділі «Найважче завдання» показано...",
- options: [
- "Зростання й вирішення проблем",
- "Нічого",
- "Лише арт",
- "Лише музика",
- ],
- correctAnswer: 0,
- explanation: "Достовірність.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Посилання для відтворення має...",
- options: [
- "Працює при кліку",
- "Бути прихованим",
- "Фейк",
- "Завжди опційно",
- ],
- correctAnswer: 0,
- explanation: "доказ.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "Голос Devforum - це...",
- options: [
- "Чітко, конкретно, скромно",
- "Хайп капслоком",
- "Грубо",
- "Порожньо",
- ],
- correctAnswer: 0,
- explanation: "професійний.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Виділіть 3 системи, щоб...",
- options: [
- "Показати технічну глибину",
- "Заплутати читача",
- "Видалити гру",
- "Пропустити курс",
- ],
- correctAnswer: 0,
- explanation: "Очки гордості.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Далі йде урок 12.5...",
- options: [
- "Опублікована гра 12.4",
- "Лише 12.1",
- "Порожньо",
- "Лише тест",
- ],
- correctAnswer: 0,
- explanation: "Потрібне посилання.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Урок 12.6 - це...",
- options: [
- "SHOWCASE DAY",
- "GDD",
- "Publish знову",
- "Module 1",
- ],
- correctAnswer: 0,
- explanation: "Фінал.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "До/після допомагає...",
- options: [
- "Показати прогрес",
- "Лаг",
- "Бан",
- "Видалити",
- ],
- correctAnswer: 0,
- explanation: "Візуальний доказ.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Попросіть відгук наприкінці...",
- options: [
- "Запрошує спільноту",
- "Обов'язково Roblox",
- "Бани",
- "Видаляє",
- ],
- correctAnswer: 0,
- explanation: "Заручини.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Результатом уроку 12.5 є...",
- options: [
- "Чернетка поста portfolio",
- "Нова гра",
- "Лише icon",
- "Лише GDD",
- ],
- correctAnswer: 0,
- explanation: "Портфоліо.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-12-5",
+  "moduleId": "module-12",
+  "order": 5,
+  "title": "12.5 — Збірка арени + juice",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "playable loop 3–5 хв (tool → dummy/ящики → GUI → кращий tool) + 3 «соки» фідбеку (звук, спалах, легкий Tween).",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** playable loop 3–5 хв (tool → dummy/ящики → GUI → кращий tool) + 3 «соки» фідбеку (звук, спалах, легкий Tween).\n\nФаза курсу: **Ігрові механіки**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "Playable арена/майстерня + ≥3 juice-ефекти (звук хіту, колір dummy, Tween UI)."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Попрацюй над результатом ще 15–20 хв і збережи Place. Наступного разу покажи короткий демо 20–30 сек."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **12.5 — Збірка арени + juice** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Збірка арени + juice",
+    "difficulty": "advanced",
+    "description": "### Завдання\nPlayable арена/майстерня + ≥3 juice-ефекти (звук хіту, колір dummy, Tween UI).\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Якщо щось зникло — перевір, чи зберіг Place."
+    ],
+    "optionalChallenge": "Зроби артефакт трохи крутішим і будь готовий показати 20 секунд."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Мета збірки…",
+        "options": [
+          "Цілісний loop інструмента",
+          "Лише один print",
+          "Лише Baseplate",
+          "Лише PDF"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Цілісний loop інструмента"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Juice у геймдева…",
+        "options": [
+          "Відчуття відгуку на дію",
+          "Видалення ігрової логіки",
+          "Negate only",
+          "PDF only"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Відчуття відгуку на дію"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Звук хіту…",
+        "options": [
+          "Миттєвий фідбек",
+          "Заміна урону числами завжди",
+          "Вимкнення Tool",
+          "Вимкнення GUI"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Миттєвий фідбек"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "Playable loop + ≥3 juice",
+          "Порожній Baseplate",
+          "Blender cloth",
+          "НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Playable loop + ≥3 juice"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Не переборщити juice…",
+        "options": [
+          "3 чіткі ефекти краще 30 хаосу",
+          "Чим більше спалахів тим завжди краще",
+          "Volume завжди 10",
+          "Tween 5 хв на клік"
+        ],
+        "correctAnswer": 0,
+        "explanation": "3 чіткі ефекти краще 30 хаосу"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "М12 зʼєднує…",
+        "options": [
+          "Tools + GUI + серверні покупки",
+          "Лише Negate",
+          "Лише Atmosphere",
+          "Лише відео"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Tools + GUI + серверні покупки"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Парний playtest…",
+        "options": [
+          "Знайти баги UI/урону",
+          "Видалити чужий Place",
+          "Вимкнути мікрофон назавжди",
+          "Забрати Tool ІРЛ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Знайти баги UI/урону"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Якщо loop «порожній»…",
+        "options": [
+          "Додати мету / монети / кращий tool / juice",
+          "Видалити Tool",
+          "Видалити GUI",
+          "Вимкнути сервер"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Додати мету / монети / кращий tool / juice"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "PvP…",
+        "options": [
+          "Не обовʼязок М12",
+          "Єдиний критерій",
+          "Без правил завжди",
+          "Заміна dummy забороною"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Не обовʼязок М12"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Чекпоінт-презентація М12",
+          "Тільки Negate",
+          "Тільки Ambient",
+          "НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Чекпоінт-презентація М12"
+      }
+    ]
+  }
 }
 
 export const ukLesson126 = {
- lessonId: "lesson-roblox-12-6",
- moduleId: "module-12",
- order: 6,
- title: "12.6 - SHOWCASE DAY",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Проведіть 20-секундну презентацію та живу демонстрацію ігрового процесу",
- "Представте три технічні системи та історію виклику",
- "Поділіться отриманими уроками та планами на майбутнє",
- "Підготуйте резервну демонстраційну копію, якщо в прямому ефірі не вийде",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**ДЕНЬ ВІТРИНИ** - ви виступаєте як **справжній розробник ігор**.
-
-Це **фінальний курс** - відзначте 72 уроки праці.
-
-**Час презентації: ** ~5-8 хвилин + запитання та відповіді`,
- },
- {
- title: "План презентації",
- content: `| # | Сегмент | Час |
-|---|---------|------|
-| 1 | **Pitch** - зачіпне речення | 20 секунд |
-| 2 | **Демоверсія в реальному часі** - золотий шлях | 2-3 хв |
-| 3 | **Поглиблене занурення в системи** - 3 основні моменти | 1-2 хв |
-| 4 | **Завдання + рішення** - одна історія | 1 хв |
-| 5 | **Здобуті уроки** - 3 маркери | 30 сек |
-| 6 | **Дорожня карта** - наступне оновлення | 30 сек |
-| 7 | **Запитати** - відгук / тестери | 15 сек |`,
- },
- {
- title: "Демонстраційний резервний план",
- content: `Якщо live не вдається:
-- **Відеозапис** золотого шляху (90 сек)
-- **Слайд-шоу знімків екрана** з озвученням
-- Другий пристрій увійшов як резервний
-
-**Репетируйте 3 рази** мінімум - впевненість від практики.
-
-**Друкована картка з підказками:** висоти + 3 назви систем + посилання.`,
- },
- {
- title: "Що й казати - системи",
- content: `**Приклад Script (адаптуйте свій):**
-
-*"Я створив центр, де авторитетний серверний магазин і квести подають інвентар RPG зі збереженням DataStore. Лазерна головоломка використовує raycasts і процедурні макети - Модуль 10. Найскладнішою помилкою було подвійне витрачання на кліки магазину - виправлено за допомогою блокування покупки. Наступне оновлення: кооперативні гонки та один новий ланцюжок квестів."*`,
- },
- {
- title: "Підготовка запитань і відповідей",
- content: `Очікувані запитання:
-- Скільки часу це зайняло?
-- Що б ви зробили інакше?
-- Чи дружній він до мобільних пристроїв?
-- Можна мені пограти? → **посилання**
-- ШІ допоміг? → чесна відповідь за правилами класу
-
-**Короткі чіткі відповіді** - по 30 секунд.`,
- },
- {
- title: "Завершення курсу",
- content: `Ви пройшли **12 модулів, 72 уроки**:
-
-| Модуль | Що ви здали |
-|--------|-------------|
-| 1-2 | Світ + obby |
-| 3-4 | Економіка + магнат |
-| 5-6 | Бойові + гонки |
-| 7-8 | Магазин + живий світ |
-| 9-10 | RPG + головоломки |
-| 11-12 | Полірування + випуск |
-
-**Зберегти:**\`SmartCode - Final Showcase\`+ святкувати.`,
- },
- {
- title: "Контрольний список перед демонстрацією",
- content: `- [ ] Зроблено 3 репетиції
-- [ ] Резервне копіювання відео/скріншотів готове
-- [ ] Play посилання на слайді/дописі
-- [ ] Висота звуку запам’ятана або на картці
-- [ ] **ВІТРИНА доставлена**`,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Без репетиції",
- explanation: "Блукання або понаднормова робота.",
- correctApproach: "3 тренувальні заїзди",
- },
- {
- mistake: "Тільки технічний жаргон",
- explanation: "Аудиторія втрачена.",
- correctApproach: "Представлення, а потім демонстрація",
- },
- {
- mistake: "Немає резервного копіювання, якщо живий не вдається",
- explanation: "Паніка.",
- correctApproach: "Готове відео",
- },
- {
- mistake: "Пропустити вивчені уроки",
- explanation: "Історія міс зростання.",
- correctApproach: "3 чесних кулі",
- },
- ],
- summary: "Ви провели SHOWCASE DAY із презентацією, демонстрацією в прямому ефірі, системною історією, роздумом про завдання та дорожньою картою - курс SmartCode Roblox Studio завершено, і ви виходите на рівень творця, який публікує ігри.",
- practiceTask: {
- title: "Презентація SHOWCASE DAY (~40 хв)",
- difficulty: "beginner",
- description: `**Мета:** Впевнена презентація 5-8 хв.
-
-### Part A - Підготовка (15 хв)
-1. Напишіть підказку - сегменти плану
-2. Запишіть 90-секундне резервне відео
-3. Репетируйте хронометраж 3 рази
-
-### Part B - Поточний час (20 хв)
-1. Донести до класу / вчителя / запис
-2. Жива демонстрація або резервне копіювання
-3. Q&A - відповідь на 2 запитання
-
-### Part C - завершено (5 хв)
-1. Надішліть посилання на портфоліо + запис, якщо потрібно
-2. **Курс повний** - 72/72 уроки
-3. Святкуйте`,
- hints: [
- "Посміхніться, ви заслужили це",
- "Демонстрація повільна - аудиторія бачить інтерфейс користувача",
- "Одне чітке запитання наприкінці",
- ],
- optionalChallenge: "Питання та відповіді після показу + публічна дошка з дорожніми картами.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "ВІТРИНА починається з...",
- options: [
- "Пітч на 20 секунд",
- "Година коду",
- "Випадково",
- "Лише GDD",
- ],
- correctAnswer: 0,
- explanation: "Гачок перший.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "Резервне копіювання відео, якщо...",
- options: [
- "Жива демо падає",
- "Ніколи",
- "Завжди обов'язково",
- "Заборонено",
- ],
- correctAnswer: 0,
- explanation: "Сітка безпеки.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Три репетиції будують...",
- options: [
- "Впевненість",
- "Лаг",
- "Баги",
- "Robux",
- ],
- correctAnswer: 0,
- explanation: "Практика.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "Системи глибокого занурення охоплюють...",
- options: [
- "3 технічні акценти",
- "Нічого",
- "Лише арт",
- "Лише ім'я",
- ],
- correctAnswer: 0,
- explanation: "Глибина.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Дорожня карта ділиться...",
- options: [
- "Майбутні оновлення",
- "Лише минуле",
- "Секрети",
- "Паролі",
- ],
- correctAnswer: 0,
- explanation: "Погляд вперед.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Курс має...",
- options: [
- "12 модулів, 72 уроків",
- "1 урок",
- "Без модулів",
- "50 модулів",
- ],
- correctAnswer: 0,
- explanation: "Повний навчальний план.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Завершіть чітким запитом про...",
- options: [
- "Відгук або тестери",
- "Лише гроші",
- "Нічого",
- "Бан",
- ],
- correctAnswer: 0,
- explanation: "Заручини.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Урок 12.6 завершується...",
- options: [
- "Увесь курс Roblox EN rich path",
- "Лише Module 11",
- "Module 1",
- "Нічого",
- ],
- correctAnswer: 0,
- explanation: "Фінал.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Історія виклику показує...",
- options: [
- "Зростання через вирішення проблем",
- "Лише хайп",
- "Без роботи",
- "Копіпаст",
- ],
- correctAnswer: 0,
- explanation: "Автентичність.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Після демонстрації ви...",
- options: [
- "Мислення творця, готового до релізу",
- "Готово назавжди без оновлень",
- "Не кодер",
- "Лише тестер",
- ],
- correctAnswer: 0,
- explanation: "Дипломований будівельник.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-12-6",
+  "moduleId": "module-12",
+  "order": 6,
+  "title": "12.6 — Чекпоінт: презентація Tools",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "Зрозуміти тему «Чекпоінт: презентація Tools»",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** Опанувати тему «Чекпоінт: презентація Tools».\n\nФаза курсу: **Ігрові механіки**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "Зроби **видимий результат** у своєму Place і збережи його (Save to Roblox)."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Попрацюй над результатом ще 15–20 хв і збережи Place. Наступного разу покажи короткий демо 20–30 сек."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **12.6 — Чекпоінт: презентація Tools** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Чекпоінт: презентація Tools",
+    "difficulty": "advanced",
+    "description": "### Завдання\nВиконай кроки уроку «Чекпоінт: презентація Tools» у своєму Place.\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Якщо щось зникло — перевір, чи зберіг Place."
+    ],
+    "optionalChallenge": "Зроби артефакт трохи крутішим і будь готовий показати 20 секунд."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "М12 результат…",
+        "options": [
+          "Інструмент + UI + безпечніша покупка в loop",
+          "Лише Baseplate",
+          "Лише PDF",
+          "Лише нік"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Інструмент + UI + безпечніша покупка в loop"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Далі М13…",
+        "options": [
+          "Фіналка, polish, publish, showcase",
+          "Скасування всіх місць",
+          "Тільки Negate",
+          "Тільки НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Фіналка, polish, publish, showcase"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Whitelist…",
+        "options": [
+          "Ключовий safety skill",
+          "Непотрібний",
+          "Лише для Terrain",
+          "Лише для Decal"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ключовий safety skill"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Dummy PvE…",
+        "options": [
+          "Достатньо для здачі",
+          "Не зараховується ніколи",
+          "Заміна всього GUI",
+          "Заміна Tool Handle"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Достатньо для здачі"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Пояснити Equipped/Activated…",
+        "options": [
+          "Критерій розуміння",
+          "Заборонено",
+          "Заміна Place",
+          "Дає Robux"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Критерій розуміння"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Фаза D майже завершена…",
+        "options": [
+          "Жанри+інструменти зібрані",
+          "Lua не починали",
+          "Моделювання не починали",
+          "Тестів не було"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Жанри+інструменти зібрані"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Фіналка М13 дозволить…",
+        "options": [
+          "Обрати жанр і допиляти гру",
+          "Видалити всі навички",
+          "Лише дивитись відео",
+          "Лише писати есе без Studio"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Обрати жанр і допиляти гру"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Juice на здачі…",
+        "options": [
+          "Плюс до відчуття якості",
+          "Єдина вимога без Tool",
+          "Заміна урону",
+          "Заміна GUI без бару"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Плюс до відчуття якості"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Найкращий доказ…",
+        "options": [
+          "Інший учень пограв loop",
+          "Лише скрін хотбара",
+          "Лише Word",
+          "Лише стікер"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Інший учень пограв loop"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Тізер релізу…",
+        "options": [
+          "Баги, UX, publish, презентація",
+          "Видалення Publish з Roblox",
+          "Скасування Showcase",
+          "Скасування сертифіката"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Баги, UX, publish, презентація"
+      }
+    ]
+  }
 }

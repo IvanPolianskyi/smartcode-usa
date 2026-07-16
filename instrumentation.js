@@ -4,7 +4,7 @@
 export async function register() {
 	if (process.env.NEXT_RUNTIME === 'edge') return
 
-	// Polling does not work on Vercel serverless; use /api/telegram/webhook instead.
+	
 	if (process.env.VERCEL) return
 
 	// Opt-in for local dev / dedicated Node server (set in .env.local).

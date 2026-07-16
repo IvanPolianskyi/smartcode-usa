@@ -138,19 +138,74 @@
 	box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
 }
 
-/* Custom Phone Wrap */
-.customPhoneWrap {
-	border: 2px solid #e2e8f0 !important;
-	background: #f8fafc !important;
-	border-radius: 16px !important;
-	height: 56px !important;
-	transition: all 0.2s ease !important;
+/* Phone field — light theme to match other inputs */
+.phoneField {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
 }
 
-.customPhoneWrap:focus-within {
-	border-color: #3b82f6 !important;
-	background: #ffffff !important;
-	box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1) !important;
+.phoneContainer {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 56px;
+	border: 2px solid #e2e8f0;
+	background: #f8fafc;
+	border-radius: 16px;
+	overflow: hidden;
+	position: relative;
+	transition: all 0.2s ease;
+	box-sizing: border-box;
+}
+
+.phoneContainer:focus-within {
+	border-color: #3b82f6;
+	background: #ffffff;
+	box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.fieldError .phoneContainer {
+	border-color: #ef4444;
+}
+
+.fieldError .phoneContainer:focus-within {
+	box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+
+.countryBtn {
+	color: #475569;
+	border-radius: 14px 0 0 14px;
+}
+
+.countryBtn:hover {
+	background: rgba(59, 130, 246, 0.08);
+}
+
+.dropdownArrow {
+	color: #94a3b8;
+}
+
+.divider {
+	background: #e2e8f0;
+	height: 60%;
+}
+
+.phoneInputWrap {
+	background: transparent;
+}
+
+.phonePrefix {
+	color: #64748b;
+}
+
+.phoneInput {
+	color: #0f172a;
+	font-family: inherit;
+}
+
+.phoneInput::placeholder {
+	color: #94a3b8;
 }
 
 .inputError {

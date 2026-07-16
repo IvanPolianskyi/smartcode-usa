@@ -6,6 +6,7 @@ import { syncStudentScheduleAccess } from '@/lib/syncStudentScheduleAccess'
 import {
   canReadCourseProgress,
   getUnlockedLessonSet,
+  hasStudentCourseAccess,
   isLessonUnlockedInCourse,
 } from '@/lib/courseLessonAccess'
 import { getLocalizedMetadata, buildAlternates } from '@/lib/i18nMetadata'
@@ -41,6 +42,7 @@ export default async function LessonPageRoute({ params }) {
   let isPurchased = false
   let userRole = 'user'
   let studentProfile = null
+  let courseUser = null
   
   try {
     const userId = await getCurrentUser()
@@ -50,6 +52,7 @@ export default async function LessonPageRoute({ params }) {
       user = await syncStudentScheduleAccess(user, usersCollection)
       
       if (user) {
+        courseUser = user
         userRole = user.role || 'user'
         isPurchased = user.role === 'admin' || (user.purchasedCourses || []).includes(courseId)
         studentProfile = user.studentProfile || null
@@ -90,6 +93,7 @@ export default async function LessonPageRoute({ params }) {
     profile: studentProfile,
     progress: userProgress,
     isAdmin: userRole === 'admin',
+    isTeacher: userRole === 'teacher',
     isPurchased,
     isEnrolled,
   })
@@ -100,12 +104,14 @@ export default async function LessonPageRoute({ params }) {
   const isAccessible =
     isFreePreviewLesson ||
     userRole === 'admin' ||
+    userRole === 'teacher' ||
     isPurchased ||
     isLessonUnlockedInCourse(lessonId, {
       courseId,
       profile: studentProfile,
       progress: userProgress,
       isAdmin: userRole === 'admin',
+      isTeacher: userRole === 'teacher',
       isPurchased,
       isEnrolled,
     })
@@ -114,10 +120,17 @@ export default async function LessonPageRoute({ params }) {
     lessonId,
     courseId,
     userProgress,
-    isPurchased,
+    isPurchased: isPurchased || userRole === 'teacher',
     userRole,
     isAccessible,
     allowedLessons: [...unlockedSet],
+    /** Online-група / покупка: наступні уроки відкриваються після проходження попереднього */
+    sequentialUnlock: Boolean(
+      userRole === 'admin' ||
+        userRole === 'teacher' ||
+        isPurchased ||
+        hasStudentCourseAccess(courseUser, courseId)
+    ),
   }
 
   if (courseId === 'roblox-studio') {

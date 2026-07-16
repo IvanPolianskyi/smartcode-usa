@@ -1,1254 +1,1669 @@
-/** Rich EN content for Roblox Module 02 - lessons 2.1-2.6 */
+/** Roblox v2 Module 02 EN — AUTO gen-roblox-v2.mjs */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
+void MC
 
 export const enLesson21 = {
-  lessonId: 'lesson-roblox-2-1',
-  moduleId: 'module-02',
-  order: 1,
-  title: '2.1 - Kill Blocks',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Build neon hazard Parts that reset the player on touch',
-    'Use Touched with Humanoid checks safely',
-    'Tell safe platforms apart from kill blocks visually',
-    'Debug kill scripts in Play mode and Output',
-    'Start with a simple touch + print script before the full kill-block logic',
+  "lessonId": "lesson-roblox-2-1",
+  "moduleId": "module-02",
+  "order": 1,
+  "title": "2.1 — Model or Folder?",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "зрозуміти, коли «коробка для порядку», а коли «один предмет з частин».",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `**Module 2 - Danger Zone** starts here. You turn your **Living Island Hub** into the beginning of an **obby** (obstacle course).
-
-**Lesson flow:**
-1. **Theory (40 min)** - kill blocks with \`Touched\`
-2. **Practice (~25 min)** - lava lane with 4+ hazards
-3. **Quiz (10 min)** - **70%** to pass
-
-Open **Module 1 - Living Island** (or duplicate it as \`Lesson 2.1 - Obby Start\`). You will add a jump path beside your dock.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** зрозуміти, коли «коробка для порядку», а коли «один предмет з частин».\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'What is a kill block?',
-        content: `A **kill block** (lava, spikes, acid) **touches** the player → **Humanoid.Health = 0** → respawn.
-
-| Safe platform | Kill block |
-|---------------|------------|
-| Normal color, clear path | **Neon** + **Really red** (or orange) |
-| Player walks safely | Touch = instant fail |
-
-**Fair design rules:**
-- Hazards look dangerous - never identical to safe floors
-- Jump distances a beginner can make
-- No invisible thin kill strips (yet)
-
-**Exercise (3 min):** In your place, pick where the obby path leaves the spawn - flat area before first jump.`,
+        "title": "What you will build",
+        "content": "Лавка з М1 зібрана в `Model` з іменем `Bench`. Паркан лишається у `Folder` `Fence` (або створити, якщо не було)."
       },
       {
-        title: 'Build the Hazards folder',
-        content: `1. **Workspace** → Insert **Folder** → \`Obby\`
-2. Inside \`Obby\`, Folder \`Hazards\`
-3. Also create Folder \`SafePath\` for white/grey platforms
-
-**Each kill Part:**
-- Insert **Block** → Name: \`Kill_01\`, \`Kill_02\`, ...
-- Size: vary (\`4, 1, 4\` or thin \`8, 1, 2\`)
-- Material: **Neon** | BrickColor: **Really red**
-- Anchored: **true** | CanCollide: **true**
-
-**Exercise (10 min):** Place **4** kill blocks between safe jumps. Player must be able to see all hazards before jumping.`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M2_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'Bridge from Lesson 1.4 - same ideas, new event',
-        content: `In **1.4** you already knew:
-- \`local\` variables
-- \`script.Parent\`
-- \`Connect(function ... end)\` - code on an event
-- \`print\` to Output
-
-Today only the **event name** changes:
-| Lesson 1.4 | Lesson 2.1 |
-|------------|------------|
-| \`MouseClick\` | \`Touched\` |
-| Mouse click | Body / foot touches a Part |
-
-**New variable \`hit\`** - the Part that touched lava (usually the character's foot).
-
-**New \`if\` checks** - do not hurt everything, only players with a **Humanoid**.
-
-We write a **simple** script first (no death), then the full one.`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Step 1: warmup - touch and print (no death yet)',
-        content: `Before kill logic, prove **Touched** works at all.
-
-1. One kill Part → Insert **Script** inside it
-2. Paste **test-only** code:
-
-\`\`\`lua
-local block = script.Parent
-
-block.Touched:Connect(function(hit)
-    print("Something touched: " .. hit.Name)
-end)
-\`\`\`
-
-3. **Play (F5)** - step on the block
-4. **Output** should show e.g. \`Something touched: LeftFoot\`
-
-**What you learn:**
-- \`Touched\` can fire many times while contact lasts - normal at this stage
-- \`hit.Name\` - name of the touching Part
-- If Output stays empty - Script not inside Part, or not in Play mode
-
-**Exercise (5 min):** Stop Play. When warmup works, move to the full script below.`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Step 2: full kill block - Touched + Humanoid',
-        content: `**Touched** fires when something collides with the Part.
-
-Replace the warmup code with the **final** script (or add checks step by step):
-
-\`\`\`lua
-local killBlock = script.Parent
-
-killBlock.Touched:Connect(function(hit)
-    local character = hit.Parent
-    if not character then
-        return
-    end
-
-    local humanoid = character:FindFirstChildOfClass("Humanoid")
-    if humanoid then
-        humanoid.Health = 0
-    end
-end)
-\`\`\`
-
-**Line by line (classic programming):**
-1. \`local killBlock = script.Parent\` - variable for our object
-2. \`Connect(function(hit)\` - on touch we get \`hit\`
-3. \`local character = hit.Parent\` - foot → character model
-4. \`if not character then return end\` - if no parent, exit (do nothing)
-5. \`FindFirstChildOfClass("Humanoid")\` - find the player's health
-6. \`if humanoid then\` - only if found → \`Health = 0\`
-
-**Why not this script on day one?** Without warmup it is hard to tell **what** broke - the event, the Part, or Humanoid.`,
-      },
-      {
-        title: 'Who gets hurt? - Humanoid only',
-        content: `Without the Humanoid check, touching with a tool handle might cause weird bugs.
-
-| Touching object | Usually has Humanoid? |
-|-----------------|----------------------|
-| Player character | ✅ Yes |
-| Random Part falling | ❌ No |
-| Another player's accessory | ❌ Usually no |
-
-**Golden rule:** only set \`Health = 0\` when \`FindFirstChildOfClass("Humanoid")\` exists.
-
-**Exercise (8 min):** Play-test one \`Kill_01\`. Touch lava → respawn. Check **Output** for red errors.`,
-      },
-      {
-        title: 'Copy scripts - duplicate smart',
-        content: `You do **not** need different code per block.
-
-**Fast workflow:**
-1. Perfect **one** kill block + Script
-2. **Ctrl + D** duplicate the whole Part (script copies with it)
-3. Rename \`Kill_02\`, move into place
-4. Repeat for all hazards
-
-If you duplicate only the Part without Script, copy-paste the Script into each kill block.
-
-**Organize Explorer:**
-\`Obby → Hazards → Kill_01 ... Kill_04\`
-\`Obby → SafePath → Platform_01 ...\``,
-      },
-      {
-        title: 'Debug checklist',
-        content: `| Problem | Fix |
-|---------|-----|
-| Touch does nothing | Use **Script**, not LocalScript |
-| Touch does nothing | Script must be **child of kill Part** |
-| Touch does nothing | Part needs **CanCollide true** |
-| You never die | Not in **Play** mode |
-| Random deaths | Missing Humanoid check |
-
-**Play-test loop:**
-1. F5 Play
-2. Touch each kill block once
-3. Confirm respawn at SpawnLocation
-4. Stop Play before moving Parts`,
-      },
-      {
-        title: 'Polish - lava that feels fair',
-        content: `**Visual extras (optional):**
-- **PointLight** inside Neon block (red, Range 8)
-- Slight **Transparency** \`0.1\` on lava (still readable)
-
-**Sound:** insert **Sound** in kill Part, play on touch (short sizzle) - reuse Lesson 1.5 skills.
-
-**Before practice checklist:**
-- [ ] Folder \`Obby/Hazards\` exists
-- [ ] At least one kill script tested in Play
-- [ ] Safe path is a different color than lava`,
-      },
-    ],
+        "title": "Homework",
+        "content": "Усі меблі двору — Models з нормальними іменами. Скрін Explorer."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'LocalScript on kill block', explanation: 'LocalScripts run per client; server kill is standard for obbies.', correctApproach: 'Use a server Script inside each kill Part' },
-    { mistake: 'Kill block not Anchored', explanation: 'Unanchored lava falls away.', correctApproach: 'Anchored true on all hazards' },
-    { mistake: 'Safe and lava look identical', explanation: 'Players cannot learn the route.', correctApproach: 'Neon red lava vs matte grey/white safe platforms' },
-    { mistake: 'Script under Workspace', explanation: 'script.Parent is wrong object.', correctApproach: 'Script must be direct child of the kill Part' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You built a hazard lane with Neon kill blocks, connected Touched to Humanoid.Health = 0, and debugged fair obby deaths - the foundation of every Roblox obstacle course.`,
-  practiceTask: {
-    title: 'Lava lane - obby start (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Safe jumps + obvious lava that kills on touch.
-
-### Part A - Path layout (8 min)
-1. In \`Module 1 - Living Island\`, add Folder \`Obby\`
-2. Build **6** safe platforms in \`SafePath\` (Anchored, non-Neon)
-3. Gap jumps between platforms - testable on foot
-
-### Part B - Lava hazards (10 min)
-1. Add **4** kill blocks in \`Hazards\` (Neon Really red)
-2. Place between or beside jumps - at least one narrow lava strip
-3. Script each (duplicate working Script)
-
-### Part C - Test & save (7 min)
-1. **Play** - touch every lava once; all must respawn you
-2. Walk full lane without touching lava - possible route
-3. **File → Save to Roblox** → \`Lesson 2.1 - Lava Lane\`
-4. **Practice complete**`,
-    hints: [
-      'Duplicate one working kill Part instead of rewriting scripts',
-      'Make safe platforms wider than lava for the first jump',
-      'F5 Play - Edit mode never fires Touched for your character',
+  "summary": "**2.1 — Model or Folder?** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Model or Folder?",
+    "difficulty": "beginner",
+    "description": "### Task\nЛавка з М1 зібрана в `Model` з іменем `Bench`. Паркан лишається у `Folder` `Fence` (або створити, якщо не було).\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'Brief burn: set Health to 10, wait 0.2s with task.wait, then Health = 0.',
+    "optionalChallenge": "Челендж: перенести `Bench` на 4 studs ближче до Path одним Move (цілою моделлю)"
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'Kill blocks usually set...', options: ['Humanoid.Health = 0', 'Part.Anchored = false', 'Sky to night', 'Terrain to water'], correctAnswer: 0, explanation: 'Zero health triggers respawn.' },
-      { id: 'q2', type: MC, question: 'Touched fires when...', options: ['You save the game', 'Something collides with the Part', 'You rename Explorer', 'ClockTime changes'], correctAnswer: 1, explanation: 'Touched is a collision event.' },
-      { id: 'q3', type: MC, question: 'hit.Parent is usually...', options: ['The SoundService', 'The character model', 'Lighting', 'The script'], correctAnswer: 1, explanation: 'Player body parts parent to Character.' },
-      { id: 'q4', type: MC, question: 'FindFirstChildOfClass("Humanoid") prevents...', options: ['Lava from glowing', 'Killing non-characters', 'Saving the game', 'Terrain paint'], correctAnswer: 1, explanation: 'Only characters should trigger kill logic.' },
-      { id: 'q5', type: MC, question: 'Kill block scripts should be...', options: ['LocalScript in StarterGui', 'Server Script in the Part', 'Inside Lighting', 'A Sound only'], correctAnswer: 1, explanation: 'Server Scripts handle world hazards.' },
-      { id: 'q6', type: MC, question: 'Lava should look different using...', options: ['Neon + red color', 'Same as safe floor', 'Transparency 1', 'No Anchored'], correctAnswer: 0, explanation: 'Visual contrast keeps obbies fair.' },
-      { id: 'q7', type: MC, question: 'Fastest way to add 4 lava scripts...', options: ['Duplicate one working kill Part', 'Delete Workspace', 'Remove Humanoid', 'Only use Terrain'], correctAnswer: 0, explanation: 'Duplicate keeps the Script attached.' },
-      { id: 'q8', type: MC, question: 'Touched is tested in...', options: ['Play mode', 'Only Publish window', 'Asset Manager', 'Team Create only'], correctAnswer: 0, explanation: 'Character collision happens during Play.' },
-      { id: 'q9', type: MC, question: 'Kill blocks need Anchored...', options: ['true', 'false always', 'only for players', 'only at night'], correctAnswer: 0, explanation: 'Anchored keeps hazards in place.' },
-      { id: 'q10', type: MC, question: 'Lesson 2.1 save name...', options: ['Lesson 2.1 - Lava Lane', 'Module 1 - Living Island', 'Kill', 'Untitled'], correctAnswer: 0, explanation: 'Use lesson-based save names.' },
-    ],
-  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Folder у Workspace найкраще підходить щоб…",
+        "options": [
+          "Зробити Part невидимим",
+          "Навести порядок / згрупувати «папки» обʼєктів",
+          "Замінити Anchored",
+          "Увімкнути музику"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Навести порядок / згрупувати «папки» обʼєктів"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Model зручний коли…",
+        "options": [
+          "Треба один предмет з кількох Parts пересувати цілим",
+          "Хочемо лише сховати імена",
+          "Пишемо Lua for",
+          "Купуємо GamePass"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Треба один предмет з кількох Parts пересувати цілим"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Group (обʼєднати в Model) робить…",
+        "options": [
+          "Видалення всіх Parts",
+          "З кількох виділених обʼєктів — Model",
+          "Публікацію гри",
+          "Terrain воду"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: З кількох виділених обʼєктів — Model"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Ungroup робить…",
+        "options": [
+          "Розбирає Model назад на частини",
+          "Зберігає Place",
+          "Створює Negate",
+          "Вмикає Snap"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Розбирає Model назад на частини"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Якщо зрушити лише одну ніжку лавки, а сидіння лишити…",
+        "options": [
+          "Лавка «розʼїдеться» — тому потрібен Model",
+          "Studio видалить двір",
+          "Це єдино правильний спосіб",
+          "Зʼявиться скрипт"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Лавка «розʼїдеться» — тому потрібен Model"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Чи завжди треба все в світі робити Model?",
+        "options": [
+          "Так",
+          "Ні — іноді достатньо Folder для порядку",
+          "Тільки для неба",
+          "Тільки для Spawn"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Ні — іноді достатньо Folder для порядку"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Після Group перше що робимо…",
+        "options": [
+          "Даємо зрозуміле імʼя Model",
+          "Видаляємо Foundation",
+          "Вимикаємо інтернет",
+          "Відкриваємо Blender"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Даємо зрозуміле імʼя Model"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Артефакт уроку 2.1?",
+        "options": [
+          "`Bench` як Model",
+          "Повний шутер",
+          "DataStore",
+          "NPC діалог"
+        ],
+        "correctAnswer": 0,
+        "explanation": "`Bench` як Model"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Яка аналогія для Model?",
+        "options": [
+          "Зібраний LEGO-набір",
+          "Пароль від Wi-Fi",
+          "Калькулятор",
+          "Список друзів"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зібраний LEGO-набір"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "На М2 скрипти Lua пишемо?",
+        "options": [
+          "Так, обовʼязково",
+          "Ні, поки моделювання",
+          "Тільки RemoteEvent",
+          "Тільки на телефоні"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Правильна відповідь: Ні, поки моделювання"
+      }
+    ]
+  }
 }
 
 export const enLesson22 = {
-  lessonId: 'lesson-roblox-2-2',
-  moduleId: 'module-02',
-  order: 2,
-  title: '2.2 - Checkpoints',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Place SpawnLocation checkpoints along an obby',
-    'Set player.RespawnLocation when a checkpoint is touched',
-    'Give clear visual feedback when a checkpoint activates',
-    'Test respawn after dying on lava',
+  "lessonId": "lesson-roblox-2-2",
+  "moduleId": "module-02",
+  "order": 2,
+  "title": "2.2 — PrimaryPart",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "призначити PrimaryPart, щоб Model крутилась/ставилась передбачувано.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Dying on lava is fair only if players **do not restart from zero** every time.
-
-**Checkpoints** save progress **during one play session** (until you leave the game).
-
-**Lesson flow:**
-1. **Theory (40 min)** - SpawnLocation + RespawnLocation
-2. **Practice (~25 min)** - 3-stage obby with 3 checkpoints
-3. **Quiz (10 min)** - **70%** pass
-
-Open **Lesson 2.1 - Lava Lane**.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** призначити PrimaryPart, щоб Model крутилась/ставилась передбачувано.\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'Why checkpoints matter',
-        content: `| Without checkpoints | With checkpoints |
-|---------------------|------------------|
-| Die on lava → back to spawn | Die → respawn at last CP |
-| Players rage-quit | Players retry and improve |
-
-**Design rule:** place a checkpoint every **20-40 seconds** of jumping - end of each "stage."
-
-**Exercise (2 min):** Walk your lava lane in Play. Count seconds between start and first hard jump - that's stage 1.`,
+        "title": "What you will build",
+        "content": "У `Bench` і `Gate` (або `House_Base` якщо почнуть каркас) виставлено PrimaryPart. Учень вміє показати в Properties Model → PrimaryPart."
       },
       {
-        title: 'SpawnLocation as checkpoint',
-        content: `A **SpawnLocation** is a Part that can spawn characters **and** act as a respawn point.
-
-Insert → **SpawnLocation** at the end of stage 1.
-
-| Property | Value |
-|----------|-------|
-| **Name** | \`CP_1\` (not SpawnLocation) |
-| **Anchored** | true |
-| **Size** | \`6, 1, 6\` visible pad |
-| **BrickColor** | New Yeller (inactive) |
-| **Neutral** | true |
-| **AllowTeamChangeOnTouch** | false |
-
-Place **above** the platform - not inside lava.
-
-**Start spawn:** keep your Module 1 \`SpawnLocation\` at the hub - rename \`Spawn_Start\`. Checkpoints are **extra** SpawnLocations.`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M2_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'Script - save respawn point',
-        content: `Insert **Script** inside \`CP_1\`:
-
-\`\`\`lua
-local checkpoint = script.Parent
-
-checkpoint.Touched:Connect(function(hit)
-    local character = hit.Parent
-    if not character then
-        return
-    end
-
-    local humanoid = character:FindFirstChildOfClass("Humanoid")
-    if not humanoid then
-        return
-    end
-
-    local player = game:GetService("Players"):GetPlayerFromCharacter(character)
-    if not player then
-        return
-    end
-
-    player.RespawnLocation = checkpoint
-    checkpoint.BrickColor = BrickColor.new("Bright green")
-end)
-\`\`\`
-
-**GetPlayerFromCharacter** links the body to the account - only then change \`RespawnLocation\`.`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Test the checkpoint loop',
-        content: `**Critical test (do not skip):**
-1. **Play** - run to \`CP_1\` - pad turns **green**
-2. Jump into **lava** on purpose
-3. You should respawn on **CP_1**, NOT at island start
-
-If you respawn at start:
-- Did you touch \`CP_1\` before dying?
-- Is \`CP_1\` still a **SpawnLocation** class?
-- Any red errors in Output?
-
-**Exercise (10 min):** Pass this test before building \`CP_2\`.`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Three-stage layout',
-        content: `Extend your lava lane into **3 stages:**
-
-| Stage | Content | Checkpoint |
-|-------|---------|------------|
-| 1 | Easy jumps + 1 lava | \`CP_1\` |
-| 2 | Longer gap + 2 lava | \`CP_2\` |
-| 3 | Narrow path + finale | \`CP_3\` or \`CP_Final\` |
-
-Duplicate \`CP_1\` Script into each checkpoint Part.
-
-**Color progression:** Yellow (waiting) → Green (saved) - players read progress instantly.`,
-      },
-      {
-        title: 'UX feedback - sound and glow',
-        content: `Optional polish from Module 1:
-- **Sound** child on checkpoint - short ping on touch
-- **PointLight** - green when active
-
-\`\`\`lua
-local sound = checkpoint:FindFirstChild("CPSound")
-if sound then
-    sound:Play()
-end
-\`\`\`
-
-Add after setting RespawnLocation.
-
-**FAQ:** Touch fires many times - that's OK for this lesson; later you add debounce.`,
-      },
-      {
-        title: 'Before practice checklist',
-        content: `- [ ] I understand SpawnLocation vs normal Part
-- [ ] I passed the "die after CP_1" test
-- [ ] I will build CP_2 and CP_3 with copied scripts
-- [ ] Save name ready: \`Lesson 2.2 - Checkpoints\``,
-      },
-    ],
+        "title": "Homework",
+        "content": "Підготувати 4 стіни-блоки для майбутнього будинку (ще не Union): `Wall_N/E/S/W` у Folder `HouseParts`. Anchored."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'Used normal Part instead of SpawnLocation', explanation: 'RespawnLocation must be a SpawnLocation instance.', correctApproach: 'Insert → SpawnLocation, then rename to CP_1' },
-    { mistake: 'Respawn still at hub after CP_2', explanation: 'Never touched CP_2 before dying.', correctApproach: 'Walk onto each checkpoint pad before testing lava death' },
-    { mistake: 'Checkpoint inside kill block', explanation: 'Player dies before saving progress.', correctApproach: 'Place CP on safe platform past the hazard' },
-    { mistake: 'No Humanoid check in checkpoint script', explanation: 'Random touches might fire early.', correctApproach: 'Keep the same Humanoid + GetPlayerFromCharacter pattern as kill blocks' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You placed SpawnLocation checkpoints, set RespawnLocation on touch, turned pads green for feedback, and proved lava deaths respawn at the last checkpoint - real obby progression.`,
-  practiceTask: {
-    title: 'Three-stage checkpoint obby (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** 3 stages, 3 checkpoints, lava death returns to last CP.
-
-### Part A - Stage 1 + CP_1 (7 min)
-1. End of stage 1 safe platform → **SpawnLocation** \`CP_1\`
-2. Script: RespawnLocation + green color
-3. Test: touch CP_1 → die on lava → respawn on CP_1
-
-### Part B - Stage 2 + CP_2 (9 min)
-1. Harder jumps + 2 lava blocks
-2. **SpawnLocation** \`CP_2\` with copied script
-3. Same death test from CP_2
-
-### Part C - Stage 3 + CP_Final (9 min)
-1. Short finale path to \`CP_Final\`
-2. Full run: Start → CP_1 → CP_2 → CP_Final → die → respawn at CP_Final
-3. **Save to Roblox** → \`Lesson 2.2 - Checkpoints\`
-4. **Practice complete**`,
-    hints: [
-      'Yellow pad = not saved yet, Green = saved',
-      'Each checkpoint needs its own SpawnLocation object',
-      'Test death after EVERY new checkpoint before continuing',
+  "summary": "**2.2 — PrimaryPart** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: PrimaryPart",
+    "difficulty": "beginner",
+    "description": "### Task\nУ `Bench` і `Gate` (або `House_Base` якщо почнуть каркас) виставлено PrimaryPart. Учень вміє показати в Properties Model → PrimaryPart.\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'Add IntValue \`CheckpointNumber\` on character when CP is touched (for future UI).',
+    "optionalChallenge": "Челендж: повернути Bench на 90° і повернути назад без розвалу"
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'Checkpoints save progress...', options: ['During the play session', 'Forever on Roblox website', 'Only in Edit mode', 'Only for admins'], correctAnswer: 0, explanation: 'RespawnLocation lasts until the player leaves.' },
-      { id: 'q2', type: MC, question: 'player.RespawnLocation should be a...', options: ['SpawnLocation', 'Sound', 'Terrain', 'LocalScript'], correctAnswer: 0, explanation: 'Respawn uses SpawnLocation instances.' },
-      { id: 'q3', type: MC, question: 'GetPlayerFromCharacter gets...', options: ['The Player from a character model', 'The Part color', 'The sky', 'The script name'], correctAnswer: 0, explanation: 'Links character touch to the player object.' },
-      { id: 'q4', type: MC, question: 'Green checkpoint color means...', options: ['Lava is active', 'Player saved that respawn point', 'Game is published', 'Terrain deleted'], correctAnswer: 1, explanation: 'Green signals activation in this lesson.' },
-      { id: 'q5', type: MC, question: 'After touching CP_2 and dying, spawn at...', options: ['CP_2', 'Always world origin only', 'Toolbox', 'CP_1 only always'], correctAnswer: 0, explanation: 'Last touched checkpoint wins.' },
-      { id: 'q6', type: MC, question: 'Checkpoints should be placed...', options: ['On safe ground after hard jumps', 'Inside lava', 'Outside Workspace', 'In ServerScriptService'], correctAnswer: 0, explanation: 'Safe pads let players register progress.' },
-      { id: 'q7', type: MC, question: 'Neutral true on SpawnLocation allows...', options: ['Any player to use it', 'No spawning ever', 'Only one color', 'Deleting scripts'], correctAnswer: 0, explanation: 'Neutral spawns work for all teams.' },
-      { id: 'q8', type: MC, question: 'Checkpoint scripts are...', options: ['Server Scripts in the checkpoint', 'LocalScripts in Head', 'Inside Terrain', 'Only in chat'], correctAnswer: 0, explanation: 'Server sets RespawnLocation for all players.' },
-      { id: 'q9', type: MC, question: 'Ideal spacing between checkpoints...', options: ['Every 20-40 seconds of play', 'Once per game ever', 'Every 2 hours', 'Never'], correctAnswer: 0, explanation: 'Regular saves reduce frustration.' },
-      { id: 'q10', type: MC, question: 'Lesson 2.2 save name...', options: ['Lesson 2.2 - Checkpoints', 'Lesson 2.1 - Lava Lane', 'Click Magic', 'Module 12'], correctAnswer: 0, explanation: 'Track obby progress with clear filenames.' },
-    ],
-  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "PrimaryPart — це…",
+        "options": [
+          "Головна Part моделі, від якої зручно орієнтувати Model",
+          "Єдиний дозволений колір",
+          "Тип Material",
+          "Назва гри"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Головна Part моделі, від якої зручно орієнтувати Model"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Навіщо призначати PrimaryPart?",
+        "options": [
+          "Щоб повороти/позиціонування моделі були передбачувані",
+          "Щоб Part став прозорим",
+          "Щоб видалити Explorer",
+          "Щоб отримати Badge"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Щоб повороти/позиціонування моделі були передбачувані"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "PrimaryPart має…",
+        "options": [
+          "Бути всередині цієї Model",
+          "Жити лише в ServerStorage завжди",
+          "Бути NegatePart обовʼязково",
+          "Не мати імені"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Бути всередині цієї Model"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Якщо модель крутиться «летить убік»…",
+        "options": [
+          "Перевірити PrimaryPart / Pivot",
+          "Видалити акаунт",
+          "Вимкнути Snap назавжди",
+          "Купити Robux"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Перевірити PrimaryPart / Pivot"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Для лавки логічний PrimaryPart —…",
+        "options": [
+          "Сидіння",
+          "Випадковий Part у небі",
+          "Baseplate іншої гри",
+          "Lighting"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Сидіння"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Ungroup після налаштування PrimaryPart…",
+        "options": [
+          "Знищує сенс Model — робити лише свідомо",
+          "Обовʼязковий щохвилини",
+          "Додає скрипт",
+          "Створює вікно"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Знищує сенс Model — робити лише свідомо"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Артефакт уроку?",
+        "options": [
+          "Models з виставленим PrimaryPart",
+          "Готовий Tycoon",
+          "GUI магазин",
+          "Анімація стрільби"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Models з виставленим PrimaryPart"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "ДЗ з 4 стінами потрібно щоб…",
+        "options": [
+          "Підготувати деталі будинку до Union/Negate",
+          "Замінити доріжку",
+          "Видалити двір",
+          "Зробити симулятор одразу"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Підготувати деталі будинку до Union/Negate"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Model без PrimaryPart…",
+        "options": [
+          "Може поводитись незручно при трансформаціях",
+          "Автоматично видаляється",
+          "Не зберігається",
+          "Стає Folder"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Може поводитись незручно при трансформаціях"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Чи PrimaryPart сам робить вікна?",
+        "options": [
+          "Ні",
+          "Так",
+          "Тільки вночі",
+          "Тільки в Toolbox"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні"
+      }
+    ]
+  }
 }
 
 export const enLesson23 = {
-  lessonId: 'lesson-roblox-2-3',
-  moduleId: 'module-02',
-  order: 3,
-  title: '2.3 - Level Timer',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Build a ScreenGui timer with TextLabel',
-    'Update elapsed time using os.clock in a LocalScript',
-    'Stop the timer when the player touches FinishPad',
-    'Format time for speed-run style feedback',
+  "lessonId": "lesson-roblox-2-3",
+  "moduleId": "module-02",
+  "order": 3,
+  "title": "2.3 — Union: merge Parts",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "зробити перший успішний Union (без Negate).",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Speed-runners love timers. Your obby will show **live seconds** and freeze on the finish pad.
-
-**Lesson flow:**
-1. **Theory (40 min)** - ScreenGui + LocalScript + \`os.clock\`
-2. **Practice (~25 min)** - timer on your checkpoint obby
-3. **Quiz (10 min)** - **70%** pass
-
-**New idea:** **LocalScript** = runs on **your** screen (perfect for UI). Kill/checkpoint scripts stay **server** Scripts.
-
-Open **Lesson 2.2 - Checkpoints**.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** зробити перший успішний Union (без Negate).\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'Client UI vs server gameplay',
-        content: `| Script type | Runs where | Lesson use |
-|-------------|------------|------------|
-| **Script** | Server | Lava, checkpoints |
-| **LocalScript** | Player's device | Timer text on screen |
-
-The timer is **only visual for you** in solo Play - that's fine for learning. Later modules sync time with RemoteEvents.
-
-**Exercise (2 min):** In Explorer, expand **StarterGui** - see \`StarterPlayerScripts\` area where UI lives.`,
+        "title": "What you will build",
+        "content": "`Wall_Union_Demo` — наприклад, літера «Г» або сходинка з 2–3 Parts → один UnionOperation. Зберегти копію Parts-оригіналів у ServerStorage `UnionBackup` перед злиттям."
       },
       {
-        title: 'Build RunUI in StarterGui',
-        content: `1. **StarterGui** → Insert **ScreenGui** → Name: \`RunUI\`
-2. Inside \`RunUI\` → **TextLabel** → Name: \`TimerLabel\`
-
-| Property | Suggested |
-|----------|-----------|
-| **Size** | \`{0, 240}, {0, 56}\` |
-| **Position** | top center \`{0.5, -120}, {0, 16}\` (AnchorPoint 0.5, 0) |
-| **BackgroundTransparency** | \`0.2\` dark bar |
-| **Text** | \`Time: 0.00\` |
-| **TextScaled** | true |
-| **Font** | GothamBold or FredokaOne |
-
-**ResetOnSpawn** on ScreenGui: leave default (timer may reset on death - acceptable for this lesson).`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M2_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'LocalScript - live timer loop',
-        content: `Insert **LocalScript** inside \`RunUI\` (sibling of TimerLabel):
-
-\`\`\`lua
-local label = script.Parent:WaitForChild("TimerLabel")
-local startTime = os.clock()
-local running = true
-
-while running do
-    local elapsed = os.clock() - startTime
-    label.Text = string.format("Time: %.2f", elapsed)
-    task.wait(0.05)
-end
-\`\`\`
-
-**\`os.clock()\`** returns seconds with high precision - great for speed runs.
-
-**\`task.wait(0.05)\`** updates ~20 times per second - smooth text without lag.
-
-Press **Play** - timer should count up immediately.`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'FinishPad - stop the timer',
-        content: `In \`Obby\` folder, add **Part** \`FinishPad\`:
-- Size \`8, 1, 8\` | Neon green | Anchored true
-- Place after \`CP_Final\`
-
-Extend LocalScript:
-
-\`\`\`lua
-local Players = game:GetService("Players")
-local label = script.Parent:WaitForChild("TimerLabel")
-local finish = workspace:WaitForChild("Obby"):WaitForChild("FinishPad")
-
-local startTime = os.clock()
-local running = true
-
-task.spawn(function()
-    while running do
-        local elapsed = os.clock() - startTime
-        label.Text = string.format("Time: %.2f", elapsed)
-        task.wait(0.05)
-    end
-end)
-
-finish.Touched:Connect(function(hit)
-    if not running then
-        return
-    end
-
-    local character = hit.Parent
-    local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-    if not humanoid then
-        return
-    end
-
-    if Players.LocalPlayer.Character ~= character then
-        return
-    end
-
-    running = false
-    local elapsed = os.clock() - startTime
-    label.Text = string.format("Finished! %.2fs", elapsed)
-end)
-\`\`\`
-
-**LocalPlayer** check = only **you** finish the run in Play solo.`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Improve display - minutes format',
-        content: `For times over 60 seconds:
-
-\`\`\`lua
-local function formatTime(seconds)
-    if seconds >= 60 then
-        local m = math.floor(seconds / 60)
-        local s = seconds % 60
-        return string.format("%02d:%05.2f", m, s)
-    end
-    return string.format("%.2f", seconds)
-end
-\`\`\`
-
-Use \`formatTime(elapsed)\` instead of raw seconds in \`label.Text\`.
-
-**Exercise (5 min):** Complete the obby once - screenshot the **Finished!** time.`,
-      },
-      {
-        title: 'Timer + checkpoints together',
-        content: `**Expected behavior:**
-- Timer runs from spawn
-- Dying on lava → respawn at checkpoint → timer **keeps going** (OK for this lesson)
-- Touch \`FinishPad\` → timer **stops**
-
-**Speed-run tip:** after finishing, note your time and try to beat it by 10%.
-
-**Before practice checklist:**
-- [ ] \`RunUI\` is under **StarterGui**
-- [ ] LocalScript is inside \`RunUI\`
-- [ ] \`FinishPad\` path matches script (\`workspace.Obby.FinishPad\`)`,
-      },
-      {
-        title: 'Debug UI issues',
-        content: `| Problem | Fix |
-|---------|-----|
-| No timer visible | ScreenGui under StarterGui, not Workspace |
-| Timer stays 0.00 | LocalScript disabled or wrong parent |
-| Finish does not stop | Wrong path to FinishPad; fix WaitForChild names |
-| Error on Play | Read Output - missing TimerLabel name |
-
-**FAQ:** Timer resets on death - normal now; Module 3+ can persist best times.`,
-      },
-    ],
+        "title": "Homework",
+        "content": "Оригінали стінок тримати в `ServerStorage/HouseParts_Raw`. У Workspace можна мати робочі копії."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'ScreenGui in Workspace', explanation: 'UI will not show on player screen.', correctApproach: 'Create RunUI under StarterGui' },
-    { mistake: 'Server Script for timer label', explanation: 'Server cannot update your personal GUI easily.', correctApproach: 'Use LocalScript inside RunUI' },
-    { mistake: 'FinishPad path typo', explanation: 'WaitForChild infinite yield or nil.', correctApproach: 'Match folder names: Obby and FinishPad exactly' },
-    { mistake: 'Timer never stops', explanation: 'Finish touch not detecting local character.', correctApproach: 'Compare Players.LocalPlayer.Character to hit.Parent' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You built a ScreenGui timer with os.clock, updated it from a LocalScript, and froze the display on FinishPad - your checkpoint obby is now a speed-run challenge.`,
-  practiceTask: {
-    title: 'Beat your time (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Working timer from spawn to finish.
-
-### Part A - UI (8 min)
-1. \`RunUI\` + \`TimerLabel\` in StarterGui (styled, readable)
-2. LocalScript counting up with \`os.clock\`
-3. **Play** - confirm timer runs
-
-### Part B - Finish pad (8 min)
-1. \`FinishPad\` at end of obby after \`CP_Final\`
-2. Add finish touch code - timer stops, shows \`Finished! XX.XXs\`
-3. Test solo Play - only your character stops timer
-
-### Part C - Three runs (9 min)
-1. Run 1 - record time
-2. Run 2 - try 10% faster
-3. Run 3 - best attempt
-4. **Save to Roblox** → \`Lesson 2.3 - Obby Timer\`
-5. **Practice complete**`,
-    hints: [
-      'If FinishPad is not in Obby folder, change WaitForChild path in script',
-      'task.wait(0.05) is enough - do not use wait() with no argument',
-      'TextScaled helps timer read on mobile',
+  "summary": "**2.3 — Union: merge Parts** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Union: merge Parts",
+    "difficulty": "beginner",
+    "description": "### Task\n`Wall_Union_Demo` — наприклад, літера «Г» або сходинка з 2–3 Parts → один UnionOperation. Зберегти копію Parts-оригіналів у ServerStorage `UnionBackup` перед злиттям.\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'Use formatTime() for mm:ss display after 60 seconds.',
+    "optionalChallenge": "Челендж: Union з РІВНО 3 Parts; скрін до/після Explorer"
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'Timer UI belongs in...', options: ['StarterGui', 'Terrain', 'Lighting only', 'ServerStorage only'], correctAnswer: 0, explanation: 'StarterGui clones UI to players.' },
-      { id: 'q2', type: MC, question: 'Timer LocalScript runs on...', options: ['The player client', 'Roblox website', 'Every server CPU only', 'Output window'], correctAnswer: 0, explanation: 'LocalScripts run per player device.' },
-      { id: 'q3', type: MC, question: 'os.clock() measures...', options: ['Elapsed seconds', 'Player Robux', 'Part size', 'BrickColor index'], correctAnswer: 0, explanation: 'os.clock returns time for intervals.' },
-      { id: 'q4', type: MC, question: 'string.format("%.2f", n) shows...', options: ['Two decimal places', 'Random color', 'Player name only', 'Terrain height'], correctAnswer: 0, explanation: '%.2f formats floats.' },
-      { id: 'q5', type: MC, question: 'running = false stops...', options: ['The while loop updating the label', 'The entire game server', 'All checkpoints', 'Terrain generation'], correctAnswer: 0, explanation: 'Boolean flag ends the update loop.' },
-      { id: 'q6', type: MC, question: 'FinishPad should detect...', options: ['LocalPlayer character touch', 'Only lava', 'Sky changes', 'Save to file'], correctAnswer: 0, explanation: 'LocalPlayer check targets you in solo Play.' },
-      { id: 'q7', type: MC, question: 'task.wait(0.05) in the loop...', options: ['Updates text ~20 times per second', 'Deletes UI', 'Anchors Parts', 'Publishes game'], correctAnswer: 0, explanation: 'Short wait balances smooth and light.' },
-      { id: 'q8', type: MC, question: 'Kill blocks use Script; timer uses...', options: ['LocalScript', 'Folder', 'Sound only', 'SpawnLocation'], correctAnswer: 0, explanation: 'UI timers are client-side here.' },
-      { id: 'q9', type: MC, question: 'If timer missing, first check...', options: ['RunUI under StarterGui and label name', 'Delete Obby', 'Remove Humanoid', 'Change language'], correctAnswer: 0, explanation: 'Wrong GUI location is the top UI bug.' },
-      { id: 'q10', type: MC, question: 'Lesson 2.3 save name...', options: ['Lesson 2.3 - Obby Timer', 'Lesson 2.2 - Checkpoints', 'Module 1 - Living Island', 'Lava Lane'], correctAnswer: 0, explanation: 'Save after adding the timer.' },
-    ],
-  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Union у Solid Modeling…",
+        "options": [
+          "Зʼєднує вибрані Parts в одну суцільну форму",
+          "Грає музику",
+          "Створює RemoteEvent",
+          "Видаляє Place"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зʼєднує вибрані Parts в одну суцільну форму"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Перед складним Union варто…",
+        "options": [
+          "Зберегти Place / зробити Backup",
+          "Видалити Explorer",
+          "Вимкнути компʼютер",
+          "Змінити нік"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зберегти Place / зробити Backup"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Після Union в Explorer часто зʼявляється…",
+        "options": [
+          "UnionOperation (або подібний результат solid modeling)",
+          "Випадковий гравець",
+          "Новий акаунт",
+          "Blender файл"
+        ],
+        "correctAnswer": 0,
+        "explanation": "UnionOperation (або подібний результат solid modeling)"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Навіщо Backup Parts у ServerStorage?",
+        "options": [
+          "Щоб можна було переробити, якщо Union поганий",
+          "Щоб Part світився",
+          "Щоб швидше бігати",
+          "Це дає Robux"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Щоб можна було переробити, якщо Union поганий"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Чи обовʼязково Union одразу для всіх 100 Parts двору?",
+        "options": [
+          "Ні — маленькими кроками",
+          "Так",
+          "Тільки паркан",
+          "Тільки Spawn"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні — маленькими кроками"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Якщо після Union колір «зʼїхав»…",
+        "options": [
+          "Можна виставити Material/Color знову на результат",
+          "Гра знищена назавжди",
+          "Треба купити нову Studio",
+          "Треба видалити двір"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Можна виставити Material/Color знову на результат"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Артефакт 2.3?",
+        "options": [
+          "Перший успішний Union без Negate",
+          "Повний будинок з меблями всередині",
+          "Шутер",
+          "DataStore"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Перший успішний Union без Negate"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Union — це вже скриптинг?",
+        "options": [
+          "Ні, це моделювання",
+          "Так, це цикл for",
+          "Так, це if",
+          "Так, це UI"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні, це моделювання"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Undo після поганого Union…",
+        "options": [
+          "Нормальний інструмент, можна відкотити",
+          "Заборонено",
+          "Видаляє акаунт",
+          "Публікує гру"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Нормальний інструмент, можна відкотити"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Вікна Negate на цьому уроці…",
+        "options": [
+          "Ще не робимо — наступний урок",
+          "Обовʼязкові",
+          "Робляться голосом",
+          "Робляться в Python"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ще не робимо — наступний урок"
+      }
+    ]
+  }
 }
 
 export const enLesson24 = {
-  lessonId: 'lesson-roblox-2-4',
-  moduleId: 'module-02',
-  order: 4,
-  title: '2.4 - if/else Conditions',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Write if, elseif, and else branches in Luau',
-    'Assign S / A / B ranks from finish time',
-    'Test boundary values like 35.00 and 60.00 seconds',
-    'Connect rank logic to your timer finish flow',
+  "lessonId": "lesson-roblox-2-4",
+  "moduleId": "module-02",
+  "order": 4,
+  "title": "2.4 — NegatePart: cut a window",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "зробити перше вікно (дірка в стіні) через Negate + Union.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `Your obby already tracks time. Today the game **decides** how good that time is - **if/elseif/else**.
-
-**Lesson flow:**
-1. **Theory (40 min)** - conditions + rank grading
-2. **Practice (~25 min)** - S/A/B ranks on finish
-3. **Quiz (10 min)** - **70%** pass
-
-Open **Lesson 2.3 - Obby Timer**. You will extend the **FinishPad** LocalScript.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** зробити перше вікно (дірка в стіні) через Negate + Union.\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'Games think in questions',
-        content: `Every game asks yes/no questions:
-
-| Question | Action |
-|----------|--------|
-| Did player touch finish? | Stop timer |
-| Is time under 35 seconds? | **S Rank** |
-| Is time under 60 seconds? | **A Rank** |
-| Otherwise? | **B Rank** |
-
-**Conditions** turn questions into code. No AI needed - just clear rules you write.`,
+        "title": "What you will build",
+        "content": "Одна стіна `Wall_WithWindow`: прямокутний отвір. Результат назвати `Wall_N` (або відповідна сторона)."
       },
       {
-        title: 'if / elseif / else syntax',
-        content: `\`\`\`lua
-local elapsed = 47.3
-local rank = "B Rank"
-
-if elapsed < 35 then
-    rank = "S Rank"
-elseif elapsed < 60 then
-    rank = "A Rank"
-else
-    rank = "B Rank"
-end
-
-print(rank)
-\`\`\`
-
-**Rules:**
-- Only **one** branch runs - the first true condition
-- Conditions use **comparison**: \`<\`, \`>\`, \`==\`, \`<=\`
-- Every block ends with \`end\`
-- Use \`elseif\` for extra steps between \`if\` and \`else\`
-
-**Exercise (5 min):** In Output, test \`elapsed = 34.9\`, \`35.0\`, \`59.9\`, \`60.0\` - predict rank before running.`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M2_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'Comparison operators you need',
-        content: `| Operator | Meaning | Example |
-|----------|---------|---------|
-| \`<\` | less than | \`elapsed < 35\` |
-| \`<=\` | less or equal | \`deaths <= 3\` |
-| \`>\` | greater than | \`score > 10\` |
-| \`==\` | equal | \`rank == "S Rank"\` |
-| \`~=\` | not equal | \`team ~= "Red"\` |
-
-**Common bug:** writing \`if elapsed = 35\` - single \`=\` **assigns**, it does not compare. Always use \`==\` for equality checks.`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Rank function - clean code',
-        content: `Put grading in a **function** so finish code stays readable:
-
-\`\`\`lua
-local function getRank(elapsed)
-    if elapsed < 35 then
-        return "S Rank"
-    elseif elapsed < 60 then
-        return "A Rank"
-    else
-        return "B Rank"
-    end
-end
-\`\`\`
-
-**Call it** when FinishPad is touched:
-
-\`\`\`lua
-local rank = getRank(elapsed)
-print("You earned: " .. rank)
-\`\`\`
-
-**Exercise (8 min):** Add \`getRank\` to your timer LocalScript. Print rank to Output on finish.`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Wire rank to timer label',
-        content: `After \`running = false\`:
-
-\`\`\`lua
-local rank = getRank(elapsed)
-label.Text = string.format("Finished! %.2fs - %s", elapsed, rank)
-\`\`\`
-
-Players instantly see **time + grade** - motivates replay for S Rank.
-
-**Threshold tuning:** change \`35\` and \`60\` to match **your** obby length. Short obby → tighter times.`,
-      },
-      {
-        title: 'Test every branch on purpose',
-        content: `**Structured tests:**
-1. **S Rank** - sprint finish under 35s (or lower your thresholds temporarily)
-2. **A Rank** - normal careful run 35-59s
-3. **B Rank** - walk slowly / wait on a platform past 60s
-
-**Edge cases:**
-- Exactly \`35.00\` → goes to **A** (because \`< 35\` is false, \`< 60\` is true)
-- Exactly \`60.00\` → **B Rank**
-
-Write thresholds as comments at top of script:
-
-\`\`\`lua
-local S_TIME = 35
-local A_TIME = 60
-\`\`\``,
-      },
-      {
-        title: 'Optional - deaths downgrade rank',
-        content: `Track deaths with a counter in the same LocalScript:
-
-\`\`\`lua
-local deaths = 0
-
--- In lava: you cannot detect server death easily in LocalScript yet.
--- For this lesson: manual test variable deaths = 3 before finish
-\`\`\`
-
-Challenge branch:
-
-\`\`\`lua
-if deaths >= 3 and rank == "S Rank" then
-    rank = "A Rank"
-elseif deaths >= 3 and rank == "A Rank" then
-    rank = "B Rank"
-end
-\`\`\`
-
-Full death tracking comes in later modules with server events.`,
-      },
-      {
-        title: 'Before practice checklist',
-        content: `- [ ] I can explain why \`elseif\` runs only when earlier tests fail
-- [ ] \`getRank\` returns a string used in the timer label
-- [ ] I tested at least two different finish times
-- [ ] Save name ready: \`Lesson 2.4 - Finish Grades\``,
-      },
-    ],
+        "title": "Homework",
+        "content": "Друге вікно на протилежній стіні. Backup сирих Parts у Storage."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'Used = instead of == in if', explanation: 'Single equals assigns values.', correctApproach: 'Compare with == or < > <= >=' },
-    { mistake: 'elseif order wrong (60 before 35)', explanation: 'First match wins - wide condition catches everything.', correctApproach: 'Check strictest threshold first: S, then A, then else' },
-    { mistake: 'Rank always B Rank', explanation: 'elapsed never calculated before getRank.', correctApproach: 'Compute elapsed = os.clock() - startTime right before grading' },
-    { mistake: 'Changed thresholds but not comments', explanation: 'Future you forgets the rules.', correctApproach: 'Keep S_TIME and A_TIME constants at top of script' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You used if/elseif/else to grade finish times into S, A, and B ranks, tested boundary seconds, and connected rank text to your obby timer - your game now reacts with rules, not just numbers.`,
-  practiceTask: {
-    title: 'Finish grading - S / A / B (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Finish shows time + rank from conditions.
-
-### Part A - getRank function (10 min)
-1. Open timer LocalScript from Lesson 2.3
-2. Add \`S_TIME = 35\`, \`A_TIME = 60\` and \`getRank(elapsed)\`
-3. Print rank to Output on FinishPad touch
-
-### Part B - Label display (8 min)
-1. Update \`TimerLabel\` text: \`Finished! XX.XXs - S Rank\`
-2. Test three runs targeting S, A, and B
-
-### Part C - Tune & save (7 min)
-1. Adjust S_TIME / A_TIME if your obby is longer/shorter
-2. Document thresholds in a comment
-3. **Save to Roblox** → \`Lesson 2.4 - Finish Grades\`
-4. **Practice complete**`,
-    hints: [
-      'Test 34.99 vs 35.00 vs 59.99 vs 60.00 in Studio with temporary short obby',
-      'Put getRank above the Touched connection so you can read it easily',
-      'Print to Output before changing label text if bugs appear',
+  "summary": "**2.4 — NegatePart: cut a window** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: NegatePart: cut a window",
+    "difficulty": "beginner",
+    "description": "### Task\nОдна стіна `Wall_WithWindow`: прямокутний отвір. Результат назвати `Wall_N` (або відповідна сторона).\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'If deaths >= 3, downgrade rank one tier (manual deaths variable for now).',
+    "optionalChallenge": "Челендж: вікно рівне (не «зламаний зуб») — взаємний огляд 1 хв"
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'if/elseif/else picks...', options: ['The first true branch only', 'Every branch at once', 'Random branch', 'No branch'], correctAnswer: 0, explanation: 'First match wins, then stops.' },
-      { id: 'q2', type: MC, question: 'elseif elapsed < 60 runs when...', options: ['elapsed < 35 was false and time < 60', 'Always', 'Never after else', 'Only in Edit mode'], correctAnswer: 0, explanation: 'Earlier false conditions allow elseif.' },
-      { id: 'q3', type: MC, question: 'Compare equality uses...', options: ['==', '=', '===', '<>'], correctAnswer: 0, explanation: 'Luau uses == for equality.' },
-      { id: 'q4', type: MC, question: 'elapsed = 35.00 with if elapsed < 35 gets...', options: ['A Rank (not S)', 'S Rank', 'Error', 'No rank'], correctAnswer: 0, explanation: '35 is not less than 35.' },
-      { id: 'q5', type: MC, question: 'Functions like getRank help...', options: ['Reuse logic cleanly', 'Delete UI', 'Remove terrain', 'Ban players'], correctAnswer: 0, explanation: 'Functions organize condition blocks.' },
-      { id: 'q6', type: MC, question: 'Strictest time check should be...', options: ['First if', 'Last else only', 'Never used', 'Inside Sound'], correctAnswer: 0, explanation: 'Check S threshold before wider A threshold.' },
-      { id: 'q7', type: MC, question: 'S_TIME constant at top makes...', options: ['Tuning thresholds easier', 'Scripts invisible', 'Parts unanchored', 'Sky pink'], correctAnswer: 0, explanation: 'Named constants document game rules.' },
-      { id: 'q8', type: MC, question: 'Rank motivates players to...', options: ['Replay for better time', 'Delete Workspace', 'Disable Humanoid', 'Remove checkpoints'], correctAnswer: 0, explanation: 'Grades drive speed-run retries.' },
-      { id: 'q9', type: MC, question: 'else runs when...', options: ['No earlier condition was true', 'Always first', 'Only in Play', 'Player has Robux'], correctAnswer: 0, explanation: 'else is the fallback branch.' },
-      { id: 'q10', type: MC, question: 'Lesson 2.4 save name...', options: ['Lesson 2.4 - Finish Grades', 'Lesson 2.3 - Obby Timer', 'Lava Lane', 'Module 3'], correctAnswer: 0, explanation: 'Save after adding rank logic.' },
-    ],
-  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "NegatePart потрібен щоб…",
+        "options": [
+          "Позначити обʼєм який буде «віднято» при Union",
+          "Зробити Part сильнішим у бою",
+          "Зберегти Place",
+          "Відкрити Toolbox"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Позначити обʼєм який буде «віднято» при Union"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Правильний порядок для вікна…",
+        "options": [
+          "Стіна → вирізач → Negate вирізача → Union зі стіною",
+          "Одразу Publish",
+          "Negate SpawnLocation",
+          "Видалити Explorer"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Стіна → вирізач → Negate вирізача → Union зі стіною"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Якщо дірки немає, перше що перевірити…",
+        "options": [
+          "Чи перетинаються стіна і вирізач у 3D",
+          "Чи гарний нік",
+          "Чи є Robux",
+          "Чи увімкнено Discord"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Чи перетинаються стіна і вирізач у 3D"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Після успішного вікна результат варто…",
+        "options": [
+          "Перейменувати й Anchored",
+          "Одразу Ungroup 20 разів",
+          "Видалити двір",
+          "Зробити Part1"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Перейменувати й Anchored"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Чи Negate сам по собі вже «вирізає назавжди» без Union?",
+        "options": [
+          "Ні — потрібне обʼєднання з операцією Union",
+          "Так, завжди",
+          "Тільки вдень",
+          "Тільки на телефоні"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні — потрібне обʼєднання з операцією Union"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Артефакт уроку?",
+        "options": [
+          "Стіна з віконним отвором",
+          "Повний інтерʼєр квартири",
+          "Тільки табличка Decal без стіни",
+          "Скрипт дверей"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Стіна з віконним отвором"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Backup сирих Parts потрібен бо…",
+        "options": [
+          "Переробка вікна часта справа",
+          "Studio цього вимагає для Play",
+          "Інакше немає гравітації",
+          "Інакше немає камери"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Переробка вікна часта справа"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Вирізач вікна зазвичай…",
+        "options": [
+          "Трохи товстіший/довший за товщину стіни щоб гарантовано прорізати",
+          "Розміром з усю карту",
+          "Розміром 0",
+          "Обовʼязково Neon і Transparency 1 до Negate завжди"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Трохи товстіший/довший за товщину стіни щоб гарантовано прорізати"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Цей урок — про скрипти Touched?",
+        "options": [
+          "Ні",
+          "Так",
+          "Тільки while",
+          "Тільки GUI"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Наступна логічна тема після першого вікна…",
+        "options": [
+          "Як чинити невдалий Union / Separate",
+          "DataStore",
+          "Blender обличчя",
+          "Кіберспорт турнір"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Як чинити невдалий Union / Separate"
+      }
+    ]
+  }
 }
 
 export const enLesson25 = {
-  lessonId: 'lesson-roblox-2-5',
-  moduleId: 'module-02',
-  order: 5,
-  title: '2.5 - Victory Screen',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Build a VictoryGui ScreenGui with Frame and labels',
-    'Show and hide UI with Enabled property',
-    'Display dynamic time and rank from finish logic',
-    'Add a Retry button that resets the run feel',
+  "lessonId": "lesson-roblox-2-5",
+  "moduleId": "module-02",
+  "order": 5,
+  "title": "2.5 — Separate and repair Unions",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "не боятись зламаного Union; вміти окремити/переробити; доробити 2-ге вікно + дверний отвір.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Your path today (about 40 minutes)',
-        content: `A number on a timer label is good. A **victory screen** feels like winning a real game.
-
-**Lesson flow:**
-1. **Theory (40 min)** - VictoryGui layout + showVictory
-2. **Practice (~25 min)** - polished win panel
-3. **Quiz (10 min)** - **70%** pass
-
-Keep your **Lesson 2.4** finish grading. Today you move results into a **center panel**.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** не боятись зламаного Union; вміти окремити/переробити; доробити 2-ге вікно + дверний отвір.\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: 'What players expect when they win',
-        content: `Strong victory screens show:
-
-| Element | Purpose |
-|---------|---------|
-| **Title** | "Level Complete!" celebration |
-| **Time** | Proof of performance |
-| **Rank** | S / A / B from Lesson 2.4 |
-| **Retry** | One-click play again |
-
-**UX rules:**
-- Large readable text (**TextScaled**)
-- High contrast panel on blurred world behind
-- **Enabled = false** until finish - no spoilers at spawn`,
+        "title": "What you will build",
+        "content": "- `Wall_*` з 2 вікнами (або 1 вікно + дверний проріз) - Учень один раз свідомо зробив Separate (або Undo-переробку) і пояснив що сталось"
       },
       {
-        title: 'Build VictoryGui hierarchy',
-        content: `In **StarterGui**:
-
-\`ScreenGui\` → **VictoryGui** (ResetOnSpawn optional)
-└ \`Frame\` → **Panel** (center, Size ~ \`{0, 320}, {0, 280}\`)
-   ├ \`TextLabel\` → **TitleLabel** - "Level Complete!"
-   ├ \`TextLabel\` → **TimeLabel** - "Time: --"
-   ├ \`TextLabel\` → **RankLabel** - "Rank: --"
-   └ \`TextButton\` → **RetryButton** - "Play Again"
-
-**Panel style:**
-- BackgroundColor3 dark blue/grey
-- UICorner radius 12
-- UIStroke white thin border
-
-Set **VictoryGui.Enabled = false** in Properties before scripting.`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M2_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'showVictory function',
-        content: `LocalScript inside **VictoryGui** (or inside RunUI if you merge files):
-
-\`\`\`lua
-local gui = script.Parent
-local panel = gui:WaitForChild("Panel")
-local titleLabel = panel:WaitForChild("TitleLabel")
-local timeLabel = panel:WaitForChild("TimeLabel")
-local rankLabel = panel:WaitForChild("RankLabel")
-
-local function showVictory(finalTime, rank)
-    titleLabel.Text = "Level Complete!"
-    timeLabel.Text = string.format("Time: %.2fs", finalTime)
-    rankLabel.Text = "Rank: " .. rank
-    gui.Enabled = true
-end
-
-return showVictory
-\`\`\`
-
-If Script is sibling structure, use \`script.Parent\` paths that match **your** tree exactly.`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Connect finish pad to victory UI',
-        content: `**Option A - one LocalScript** in RunUI handles timer + finish + victory.
-
-On FinishPad touch after computing \`elapsed\` and \`rank\`:
-
-\`\`\`lua
--- Stop timer loop (running = false)
-local victoryGui = playerGui:WaitForChild("VictoryGui")
--- OR if VictoryGui is in StarterGui it clones to PlayerGui:
-local victoryGui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("VictoryGui")
-
-victoryGui.Panel.TitleLabel.Text = "Level Complete!"
-victoryGui.Panel.TimeLabel.Text = string.format("Time: %.2fs", elapsed)
-victoryGui.Panel.RankLabel.Text = "Rank: " .. rank
-victoryGui.Enabled = true
-\`\`\`
-
-**Exercise (10 min):** Finish obby - victory panel appears, timer stops underneath.`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Hide RunUI timer when victory shows',
-        content: `Optional polish:
-
-\`\`\`lua
-local runUI = playerGui:FindFirstChild("RunUI")
-if runUI then
-    runUI.Enabled = false
-end
-victoryGui.Enabled = true
-\`\`\`
-
-Players focus on the win card, not duplicate numbers.
-
-Restore RunUI when retrying.`,
-      },
-      {
-        title: 'Retry button behavior',
-        content: `\`\`\`lua
-local retryBtn = panel:WaitForChild("RetryButton")
-
-retryBtn.MouseButton1Click:Connect(function()
-    gui.Enabled = false
-    local runUI = playerGui:FindFirstChild("RunUI")
-    if runUI then
-        runUI.Enabled = true
-    end
-    local char = Players.LocalPlayer.Character
-    if char and char:FindFirstChild("Humanoid") then
-        char.Humanoid.Health = 0  -- respawn to restart run feel
-    end
-end)
-\`\`\`
-
-**Note:** Full timer reset needs reloading startTime - for lesson, respawn + hide GUI is enough. Perfect reset merges in Module 6 polish.
-
-**Exercise (5 min):** Click Retry - panel hides, you respawn.`,
-      },
-      {
-        title: 'Before practice checklist',
-        content: `- [ ] VictoryGui starts **Enabled false**
-- [ ] Exact names match script WaitForChild paths
-- [ ] Finish shows time **and** rank on panel
-- [ ] Retry hides panel
-- [ ] Save: \`Lesson 2.5 - Victory Screen\``,
-      },
-    ],
+        "title": "Homework",
+        "content": "Зібрати 4 стіни (з отворами) впритул «коробкою» будинку. Поки можна ще не фінальний Union усього будинку."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'Nil error on TitleLabel', explanation: 'Wrong path - Panel vs Frame name mismatch.', correctApproach: 'Match Explorer names exactly to WaitForChild strings' },
-    { mistake: 'Victory visible at spawn', explanation: 'Enabled left true.', correctApproach: 'VictoryGui.Enabled = false until finish' },
-    { mistake: 'Script in Workspace not StarterGui', explanation: 'UI does not clone to player.', correctApproach: 'LocalScript under VictoryGui in StarterGui' },
-    { mistake: 'Looking for VictoryGui in StarterGui at runtime', explanation: 'After spawn it lives under PlayerGui.', correctApproach: 'Use LocalPlayer.PlayerGui:WaitForChild("VictoryGui")' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You built a VictoryGui with title, time, rank, and retry, wired it to FinishPad logic, and learned Enabled plus PlayerGui paths - your obby now celebrates wins like a shipped mini-game.`,
-  practiceTask: {
-    title: 'Victory panel polish (~25 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Professional win screen on finish.
-
-### Part A - Layout (10 min)
-1. Create **VictoryGui** + **Panel** + 3 labels + **RetryButton**
-2. Style: corner, stroke, readable fonts, **Enabled false**
-3. Position panel center screen
-
-### Part B - Show on finish (10 min)
-1. Connect FinishPad to fill labels + \`VictoryGui.Enabled = true\`
-2. Hide or disable **RunUI** while victory shows
-3. Test S, A, B ranks display correctly
-
-### Part C - Retry & save (5 min)
-1. Retry button hides victory, enables RunUI, respawns player
-2. **Save to Roblox** → \`Lesson 2.5 - Victory Screen\`
-3. **Practice complete**`,
-    hints: [
-      'Use Explorer copy path to verify object names',
-      'If panel nil, print script.Parent:GetFullName() in Output',
-      'Test Retry once before saving',
+  "summary": "**2.5 — Separate and repair Unions** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Separate and repair Unions",
+    "difficulty": "beginner",
+    "description": "### Task\n- `Wall_*` з 2 вікнами (або 1 вікно + дверний проріз) - Учень один раз свідомо зробив Separate (або Undo-переробку) і пояснив що сталось\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'TweenService slide Panel from top when Enabled (Module 5 preview).',
+    "optionalChallenge": "Челендж: пролізти в Play через двері без стрибка в стелю"
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'VictoryGui should start with Enabled...', options: ['false', 'true always', 'nil', 'random'], correctAnswer: 0, explanation: 'Hidden until the player finishes.' },
-      { id: 'q2', type: MC, question: 'After spawn, VictoryGui is under...', options: ['PlayerGui', 'Terrain', 'Lighting', 'ServerScriptService only'], correctAnswer: 0, explanation: 'StarterGui clones into PlayerGui.' },
-      { id: 'q3', type: MC, question: 'showVictory updates...', options: ['Label Text properties', 'Terrain water', 'SpawnLocation class', 'Kill blocks'], correctAnswer: 0, explanation: 'Dynamic text goes on labels.' },
-      { id: 'q4', type: MC, question: 'TextButton click uses...', options: ['MouseButton1Click', 'Touched', 'BrickColor', 'Anchored'], correctAnswer: 0, explanation: 'GUI buttons use mouse events.' },
-      { id: 'q5', type: MC, question: 'Victory screen LocalScript runs on...', options: ['Client', 'Server only', 'Roblox API site', 'Output'], correctAnswer: 0, explanation: 'GUI is client-side.' },
-      { id: 'q6', type: MC, question: 'RankLabel should show...', options: ['S/A/B from conditions', 'Only player age', 'Terrain seed', 'Script errors'], correctAnswer: 0, explanation: 'Rank comes from Lesson 2.4 logic.' },
-      { id: 'q7', type: MC, question: 'UICorner on Panel...', options: ['Rounds corners for polish', 'Kills player', 'Adds lava', 'Saves to cloud'], correctAnswer: 0, explanation: 'UICorner is a visual modifier.' },
-      { id: 'q8', type: MC, question: 'Retry should at minimum...', options: ['Hide victory GUI', 'Delete obby', 'Remove checkpoints', 'Publish game'], correctAnswer: 0, explanation: 'Hide UI before another attempt.' },
-      { id: 'q9', type: MC, question: 'WaitForChild prevents...', options: ['Nil if UI loads late', 'All scripts', 'Playing sounds', 'Moving camera'], correctAnswer: 0, explanation: 'Waits for instances to exist.' },
-      { id: 'q10', type: MC, question: 'Lesson 2.5 save name...', options: ['Lesson 2.5 - Victory Screen', 'Finish Grades', 'Lava Lane', 'Coin Simulator'], correctAnswer: 0, explanation: 'Save the victory UI lesson.' },
-    ],
-  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Separate у Solid Modeling…",
+        "options": [
+          "Допомагає розібрати/відкотити результат solid modeling щоб переробити",
+          "Публікує гру",
+          "Створює музику",
+          "Дає Badge"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Допомагає розібрати/відкотити результат solid modeling щоб переробити"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Найспокійніший план ремонту…",
+        "options": [
+          "Backup → нова спроба маленькими кроками",
+          "Видалити весь Place завжди",
+          "Ніколи не зберігати",
+          "Кричати в чат"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Backup → нова спроба маленькими кроками"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Дверний проріз відрізняється від вікна тим що…",
+        "options": [
+          "Зазвичай нижчий до підлоги щоб увійти",
+          "Завжди круглий",
+          "Без Negate неможливий навіть Decal-ом",
+          "Потребує Python"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зазвичай нижчий до підлоги щоб увійти"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Навіщо перевіряти двері в Play?",
+        "options": [
+          "Чи проходить hitbox гравця",
+          "Чи є Robux",
+          "Чи працює Discord",
+          "Чи англійська мова Windows"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Чи проходить hitbox гравця"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Якщо Union «важкий» і Studio тормозить…",
+        "options": [
+          "Спростити форму / різати на менші операції / не union-ити всю карту",
+          "Додати ще 500 Parts у той самий Union",
+          "Відкрити 10 копій Studio",
+          "Вимкнути збереження"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Спростити форму / різати на менші операції / не union-ити всю карту"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Артефакт уроку?",
+        "options": [
+          "Стіни з вікнами + дверний отвір + досвід ремонту",
+          "Готовий MMO",
+          "Тільки небо",
+          "Тільки таблиця лідерів"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Стіни з вікнами + дверний отвір + досвід ремонту"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "«Музей фейлів» у групі потрібен щоб…",
+        "options": [
+          "Вчитись на помилках без сорому",
+          "Знизити оцінки всім",
+          "Видалити Explorer",
+          "Замінити тест"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Вчитись на помилках без сорому"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Чи обовʼязково union-ити всі 4 стіни в ОДИН Union вже сьогодні?",
+        "options": [
+          "Ні — спочатку зібрати коробку, великий Union обережно",
+          "Так завжди",
+          "Так і ще Terrain",
+          "Так і всіх гравців сервера"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні — спочатку зібрати коробку, великий Union обережно"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Якщо двері занадто вузькі…",
+        "options": [
+          "Переробити Negate ширшим вирізачем",
+          "Видалити Spawn назавжди",
+          "Вимкнути Anchored у підлоги світу",
+          "Змінити PrimaryPart неба"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Переробити Negate ширшим вирізачем"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "ДЗ до наступного уроку…",
+        "options": [
+          "Зібрати стіни коробкою будинку",
+          "Написати Tycoon",
+          "Зробити Raycast",
+          "Змонтувати летсплей на 20 хв"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зібрати стіни коробкою будинку"
+      }
+    ]
+  }
 }
 
 export const enLesson26 = {
-  lessonId: 'lesson-roblox-2-6',
-  moduleId: 'module-02',
-  order: 6,
-  title: '2.6 - Checkpoint: Obby Ready',
-  theoryMinutes: 40,
-  quizMinutes: 10,
-  estimatedTime: 50,
-  learningObjectives: [
-    'Integrate lava, checkpoints, timer, ranks, and victory UI',
-    'Run a five-case playtest checklist',
-    'Polish map clarity with signs and consistent naming',
-    'Ship Module 2 prototype: Obby Ready',
+  "lessonId": "lesson-roblox-2-6",
+  "moduleId": "module-02",
+  "order": 6,
+  "title": "2.6 — Pivot and roof assembly",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "точно скласти будинок (стіни/дах), користуватись Pivot і рівними стиками.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
   ],
-  theory: {
-    sections: [
+  "theory": {
+    "sections": [
       {
-        title: 'Module 2 checkpoint (about 40 minutes)',
-        content: `You are shipping **Obby Ready** - a complete mini obby, not a homework file.
-
-**Required systems:**
-- Kill blocks (2.1)
-- Checkpoints (2.2)
-- Timer (2.3)
-- S/A/B ranks (2.4)
-- Victory screen (2.5)
-
-**Lesson flow:** polish + playtest + quiz. Less new code, more **quality bar**.`,
+        "title": "Today’s goal",
+        "content": "**Goal:** точно скласти будинок (стіни/дах), користуватись Pivot і рівними стиками.\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
       },
       {
-        title: '60-minute sprint plan',
-        content: `| Phase | Minutes | Task |
-|-------|---------|------|
-| 1 | 10 | Explorer cleanup + signs |
-| 2 | 15 | Lava + checkpoints retest |
-| 3 | 15 | Timer → rank → victory flow |
-| 4 | 10 | Visual polish (colors, lights) |
-| 5 | 10 | Five playtests + fixes |
-
-**Folder target:**
-\`Workspace/Obby\` → Hazards, SafePath, Checkpoints, FinishPad
-\`StarterGui\` → RunUI, VictoryGui`,
+        "title": "What you will build",
+        "content": "`House` як Model: 4 стіни + дах + PrimaryPart (наприклад `Floor` або центральна стіна). Стики без великих щілин."
       },
       {
-        title: 'Map clarity - players must not get lost',
-        content: `Add **Neon arrow Parts** or sign Models pointing forward.
-
-| Sign | Text idea |
-|------|-----------|
-| Start | "Obby Start →" |
-| Mid | "Checkpoint ahead" |
-| End | "Finish!" |
-
-**Color language:**
-- Safe = grey/white wood
-- Lava = Neon red
-- CP inactive = yellow, active = green
-- Finish = Neon green pad
-
-**Exercise (8 min):** Stand at spawn in Play - can you see where to go without asking?`,
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M2_YourName`  \n3. Do all lesson steps in that Place"
       },
       {
-        title: 'Five playtests (mandatory)',
-        content: `Run each case. Mark pass/fail in a note.
-
-1. **Early death** - touch lava before CP_1 → respawn at **start**
-2. **CP_1 death** - touch CP_1, die on lava → respawn **CP_1**
-3. **Full clear** - reach FinishPad → victory UI + correct rank
-4. **Slow finish** - intentional 60s+ run → **B Rank** on panel
-5. **Retry** - click Play Again → panel hides, can run again
-
-**If any fail:** fix before calling the obby done.`,
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
       },
       {
-        title: 'Quality bar - feels shippable',
-        content: `- **60-120 seconds** of gameplay for average player
-- **No red Output spam** during a clean run
-- **8+** named Parts in obby (not generic Part)
-- **3+** checkpoints working
-- **3+** lava blocks
-- Victory + timer never show wrong text at same time
-
-**Audio optional:** quiet ambient + checkpoint ping (Module 1 skills).`,
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
       },
       {
-        title: 'Start hub connection',
-        content: `Your Module 1 **island spawn** can stay as flavor - connect obby start with a bridge or path from dock.
-
-Players understand: **hub → obby start sign → course**.
-
-Save as **Module 2 - Obby Ready** (new name) or overwrite your 2.5 place with final name.`,
-      },
-      {
-        title: 'Module 3 preview',
-        content: `Module 3 builds a **coin simulator** - collecting, UI score, saving data.
-
-Your obby skills (touch, UI, conditions) transfer directly to coin pickups.
-
-**Celebrate:** you now own a playable loop millions of Roblox games use: **try → fail → respawn → improve → win**.`,
-      },
-      {
-        title: 'Demo script for teacher / parents',
-        content: `Record or live-show **2 minutes:**
-1. Spawn - show start sign
-2. Die on lava once - show checkpoint save
-3. Finish with rank on victory screen
-4. Click Retry
-
-**Say out loud:** what S Rank time threshold is and why you picked it.`,
-      },
-    ],
+        "title": "Homework",
+        "content": "Поставити `House` у дворі біля Path так, щоб двері дивились на доріжку."
+      }
+    ]
   },
-  commonMistakes: [
-    { mistake: 'Victory shows but checkpoints broken', explanation: 'Rushed polish without retest.', correctApproach: 'Run all 5 playtests after every big change' },
-    { mistake: 'Obby too short (< 30s)', explanation: 'Not enough stages.', correctApproach: 'Add stage 4 or harder jumps before finish' },
-    { mistake: 'Generic Explorer names', explanation: 'Cannot debug 20 scripts named Part.', correctApproach: 'Rename everything before demo' },
-    { mistake: 'Timer and victory both enabled at finish', explanation: 'Confusing double UI.', correctApproach: 'Disable RunUI when VictoryGui shows' },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
   ],
-  summary: `You integrated every Module 2 system into Obby Ready, passed structured playtests, clarified the route with signs, and saved a demo-ready prototype - Module 3 coin games are next.`,
-  practiceTask: {
-    title: 'Ship Obby Ready (~40 min)',
-    difficulty: 'beginner',
-    description: `**Goal:** Pass all 5 playtests + demo-ready place.
-
-### Part A - Cleanup (10 min)
-1. Explorer: folders Hazards, SafePath, Checkpoints under Obby
-2. Rename stray Parts; add Start + Finish signs
-3. No unanchored obby Parts
-
-### Part B - Systems audit (15 min)
-1. Re-test lava, CP_1/2/Final, FinishPad
-2. Timer + getRank + VictoryGui one clean flow
-3. Fix any Output errors
-
-### Part C - Playtests & save (15 min)
-1. Complete checklist cases 1-5 (note pass/fail)
-2. One full run for best rank attempt
-3. **Save to Roblox** → \`Module 2 - Obby Ready\`
-4. **Practice complete** + optional 2-min recording`,
-    hints: [
-      'Fix checkpoint bugs before touching victory colors',
-      'Walk the route as if you never saw the map',
-      'Thresholds S_TIME/A_TIME must match obby length',
+  "summary": "**2.6 — Pivot and roof assembly** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Pivot and roof assembly",
+    "difficulty": "beginner",
+    "description": "### Task\n`House` як Model: 4 стіни + дах + PrimaryPart (наприклад `Floor` або центральна стіна). Стики без великих щілин.\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
-    optionalChallenge: 'Hidden skill shortcut route - faster but harder jumps.',
+    "optionalChallenge": "Челендж: вид згори — «чи квадрат/прямокутник читається»"
   },
-  quiz: {
-    passingScore: 70,
-    timeLimit: 10,
-    questions: [
-      { id: 'q1', type: MC, question: 'Obby Ready requires...', options: ['Lava + CP + timer + victory', 'Only terrain', 'Only clicks from 1.4', 'No scripts'], correctAnswer: 0, explanation: 'Module 2 checkpoint merges all systems.' },
-      { id: 'q2', type: MC, question: 'After CP_2 then death, spawn at...', options: ['CP_2', 'World origin only', 'FinishPad', 'Toolbox'], correctAnswer: 0, explanation: 'Last checkpoint touched wins.' },
-      { id: 'q3', type: MC, question: 'VictoryGui appears when...', options: ['Player touches FinishPad', 'Studio opens', 'Terrain generates', 'Saving file'], correctAnswer: 0, explanation: 'Finish triggers victory UI.' },
-      { id: 'q4', type: MC, question: 'Playtest 4 checks...', options: ['B Rank on slow finish', 'Deleting island', 'Coins only', 'Publishing'], correctAnswer: 0, explanation: 'Slow run should hit B branch.' },
-      { id: 'q5', type: MC, question: 'Good obby length is about...', options: ['60-120 seconds', '2 seconds', '1 hour minimum', 'No jumping'], correctAnswer: 0, explanation: 'Mini obby targets about a minute.' },
-      { id: 'q6', type: MC, question: 'Start signs help...', options: ['Players find the route', 'Increase lava damage', 'Remove Humanoid', 'Disable UI'], correctAnswer: 0, explanation: 'Wayfinding reduces confusion.' },
-      { id: 'q7', type: MC, question: 'Retry button should...', options: ['Hide victory and allow another run', 'Delete all checkpoints', 'Remove ranks', 'Close Studio'], correctAnswer: 0, explanation: 'Retry supports replay loop.' },
-      { id: 'q8', type: MC, question: 'Red Output during clean run means...', options: ['Fix scripts before shipping', 'Perfect game', 'More lava needed', 'Publish now'], correctAnswer: 0, explanation: 'Errors mean bugs remain.' },
-      { id: 'q9', type: MC, question: 'Module 3 topic is...', options: ['Coins and collecting', 'Only cars', 'Only publishing', 'Empty placeholders'], correctAnswer: 0, explanation: 'Module 3 starts coin simulator.' },
-      { id: 'q10', type: MC, question: 'Final Module 2 save name...', options: ['Module 2 - Obby Ready', 'Lesson 1.1', 'Untitled', 'Test Obby'], correctAnswer: 0, explanation: 'Checkpoint uses Module 2 portfolio name.' },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Pivot впливає на…",
+        "options": [
+          "Точку, навколо якої зручно обертати/ставти моделі",
+          "Ціну телефону",
+          "Мову інтерфейсу Windows",
+          "Кількість друзів"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Точку, навколо якої зручно обертати/ставти моделі"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Snap при збірці стін допомагає…",
+        "options": [
+          "Зводити стики рівніше",
+          "Писати цикли",
+          "Качати FPS у Fortnite",
+          "Робити Badge"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зводити стики рівніше"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Навіщо Group будинку в `House`?",
+        "options": [
+          "Пересувати цілий будинок і тримати порядок",
+          "Видалити вікна",
+          "Вимкнути камеру",
+          "Замінити Material глобально у всіх іграх"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Пересувати цілий будинок і тримати порядок"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Якщо між стінами щілина…",
+        "options": [
+          "Підігнати Move/Scale",
+          "Видалити Foundation обовʼязково",
+          "Зробити Negate на Spawn",
+          "Відкрити новий акаунт"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Підігнати Move/Scale"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "PrimaryPart для House логічно обрати…",
+        "options": [
+          "Підлогу будинку або стабільну центральну Part",
+          "Випадковий Part далеко в небі",
+          "Обʼєкт з іншої гри",
+          "Sound у Lighting"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Підлогу будинку або стабільну центральну Part"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Артефакт уроку?",
+        "options": [
+          "Model `House` зі стінами й дахом",
+          "Повний магазин GUI",
+          "Система ребіртів Tycoon",
+          "Квест NPC"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Model `House` зі стінами й дахом"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Двері мають «дивитись» на Path щоб…",
+        "options": [
+          "Шлях гравця читався",
+          "Studio швидше грузилось",
+          "Anchored вимкнувся",
+          "Зʼявився Toolbox"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Шлях гравця читався"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Чи обовʼязковий ідеальний двосхилий дах на М2?",
+        "options": [
+          "Ні — важливі стіни, отвори, акуратна збірка",
+          "Так, інакше курс не зарахують",
+          "Так, тільки Blender",
+          "Так, тільки Meshy AI"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні — важливі стіни, отвори, акуратна збірка"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Вид згори на челенджі перевіряє…",
+        "options": [
+          "Геометрію плану будинку",
+          "Якість мікрофону",
+          "Швидкість інтернету батьків",
+          "Рівень англійської"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Геометрію плану будинку"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Union усього будинку в один обʼєкт на цьому уроці…",
+        "options": [
+          "Не обовʼязковий — Model достатньо",
+          "Обовʼязковий завжди",
+          "Заборонений назавжди",
+          "Роблять тільки голосом"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Не обовʼязковий — Model достатньо"
+      }
+    ]
+  }
+}
+
+export const enLesson27 = {
+  "lessonId": "lesson-roblox-2-7",
+  "moduleId": "module-02",
+  "order": 7,
+  "title": "2.7 — Decals and facade",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "оживити будинок без скриптів: Decal на стіну/вивіску, матеріали, контраст фасаду.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Today’s goal",
+        "content": "**Goal:** оживити будинок без скриптів: Decal на стіну/вивіску, матеріали, контраст фасаду.\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
+      },
+      {
+        "title": "What you will build",
+        "content": "- `SignBoard` або стіна з Decal (номер будинку / вивіска «SHOP» / імʼя двору) - Узгоджена палітра: стіни / дах / двері різняться"
+      },
+      {
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M2_YourName`  \n3. Do all lesson steps in that Place"
+      },
+      {
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
+      },
+      {
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
+      },
+      {
+        "title": "Homework",
+        "content": "Прибрати сміття після експериментів з Decal. Зберегти. Підготуватись до здачі 2.8."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
+  ],
+  "summary": "**2.7 — Decals and facade** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Decals and facade",
+    "difficulty": "beginner",
+    "description": "### Task\n- `SignBoard` або стіна з Decal (номер будинку / вивіска «SHOP» / імʼя двору) - Узгоджена палітра: стіни / дах / двері різняться\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
     ],
+    "optionalChallenge": "Polish the artifact a bit and be ready to show it for 20 seconds."
   },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Decal — це…",
+        "options": [
+          "Зображення/наклейка на грані Part",
+          "Тип циклу Lua",
+          "Сервіс телепортації",
+          "Система HP"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зображення/наклейка на грані Part"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Якщо Decal «не видно», часто причина…",
+        "options": [
+          "Не той Face / орієнтація Part / прозорість",
+          "Занадто гарний нік",
+          "Відкритий браузер",
+          "Увімкнений Snap"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Не той Face / орієнтація Part / прозорість"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Навіщо різний колір стін і даху?",
+        "options": [
+          "Щоб форма будинку читалась",
+          "Щоб видалити Anchored",
+          "Щоб зламати Union",
+          "Це заборонено в Roblox"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Щоб форма будинку читалась"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Вивіска біля дверей допомагає…",
+        "options": [
+          "Орієнтиру й атмосфері",
+          "Автозбереженню Windows",
+          "Прискоренню Wi-Fi",
+          "Заміні PrimaryPart"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Орієнтиру й атмосфері"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Чи Decal замінює Negate-вікно?",
+        "options": [
+          "Ні — це декор, дірка це геометрія",
+          "Так повністю",
+          "Так і ще Spawn",
+          "Так і DataStore"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні — це декор, дірка це геометрія"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Артефакт уроку?",
+        "options": [
+          "Фасад з Decal/вивіскою + палітра",
+          "Повний шутер раундів",
+          "Тільки ServerStorage без будинку",
+          "Тільки тест без Place"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Фасад з Decal/вивіскою + палітра"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Після експериментів з Decal варто…",
+        "options": [
+          "Прибрати дублікати й сміття з Explorer",
+          "Залишити 50 Part1",
+          "Видалити House",
+          "Вимкнути збереження"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Прибрати дублікати й сміття з Explorer"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Material даху може відрізнятись щоб…",
+        "options": [
+          "Візуально відокремити дах від стін",
+          "Обовʼязково зламати CanCollide",
+          "Видалити Path",
+          "Створити RemoteFunction"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Візуально відокремити дах від стін"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Голосування в групі — це…",
+        "options": [
+          "Швидкий взаємний фідбек",
+          "Єдина оцінка курсу",
+          "Заміна рубрики 2.8",
+          "Спосіб видалити Place"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Швидкий взаємний фідбек"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Наступний урок…",
+        "options": [
+          "Чекпоінт-здача будинку",
+          "Початок Tycoon економіки",
+          "Blender character",
+          "Підготовка НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Чекпоінт-здача будинку"
+      }
+    ]
+  }
+}
+
+export const enLesson28 = {
+  "lessonId": "lesson-roblox-2-8",
+  "moduleId": "module-02",
+  "order": 8,
+  "title": "2.8 — Checkpoint: house with windows",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "show `House` against the lesson checklist.",
+    "Build the result in Roblox Studio",
+    "Pass the quiz with ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Today’s goal",
+        "content": "**Goal:** show `House` against the lesson checklist.\n\nCourse phase: **Studio & Modeling**.\n\n**Your plan:**\n1. Read the short theory (keep Studio open)\n2. Complete the practice steps\n3. Pass the quiz (≥70%)\n4. Do the homework"
+      },
+      {
+        "title": "What you will build",
+        "content": "Build a **visible result** in your Place and Save to Roblox."
+      },
+      {
+        "title": "Your Place",
+        "content": "Use a **copy of the school Place** — don’t start from a blank Baseplate every time.\n\n1. Ask for a Place copy in class  \n2. Save it as `M2_YourName`  \n3. Do all lesson steps in that Place"
+      },
+      {
+        "title": "How to work",
+        "content": "Keep **Roblox Studio** open next to this page.\n\n1. Follow the theory steps first  \n2. Complete the practice checklist  \n3. Then try the challenge  \n\nIf something fails — open **Output**, check **names** in Explorer, and press **Play**."
+      },
+      {
+        "title": "Before the quiz",
+        "content": "- [ ] Place saved\n- [ ] Lesson result is ready\n- [ ] No random Part1/Part2 clutter in the key area\n- [ ] I can say today’s goal in one sentence"
+      },
+      {
+        "title": "Homework",
+        "content": "Зберегти Place. Придумати біом двору: ліс / зима / пустеля / біля води (слова)."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Reading theory without Studio open",
+      "explanation": "Practice makes the steps stick.",
+      "correctApproach": "Keep Studio beside the page and repeat every step."
+    },
+    {
+      "mistake": "Not saving the Place",
+      "explanation": "Work can disappear after restart.",
+      "correctApproach": "File → Save to Roblox after meaningful changes."
+    },
+    {
+      "mistake": "Leaving Part1/Part2 clutter",
+      "explanation": "Later it is hard to find objects.",
+      "correctApproach": "Rename objects and group into Folders/Models."
+    }
+  ],
+  "summary": "**2.8 — Checkpoint: house with windows** is done when your Place result exists, practice is marked, and the quiz is ≥70%. Then the next lesson unlocks.",
+  "practiceTask": {
+    "title": "Practice: Checkpoint: house with windows",
+    "difficulty": "beginner",
+    "description": "### Task\nComplete the steps for “Checkpoint: house with windows” in your Place.\n\n\n### When done\n1. Save the Place  \n2. Check in **Play**  \n3. Tap “Studio practice finished” below",
+    "hints": [
+      "Do the steps 1:1 first, then customize.",
+      "Name objects with clear PascalCase labels.",
+      "Work in the Place copy from your teacher."
+    ],
+    "optionalChallenge": "Polish the artifact a bit and be ready to show it for 20 seconds."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Що з цього головний новий навик М2?",
+        "options": [
+          "Negate + Union для отворів",
+          "Цикл while",
+          "DataStore",
+          "RemoteEvent магазин"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Negate + Union для отворів"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Model від Folder відрізняється тим що…",
+        "options": [
+          "Model — зібраний обʼєкт для трансформацій цілком",
+          "Folder завжди видимий як цегла",
+          "Folder робить вікна",
+          "Model не можна іменувати"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Model — зібраний обʼєкт для трансформацій цілком"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "PrimaryPart потрібен щоб…",
+        "options": [
+          "Орієнтувати модель передбачувано",
+          "Замінити Negate",
+          "Створити монети",
+          "Увімкнути PvP"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Орієнтувати модель передбачувано"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Без чого не буде справжнього вікна-отвору?",
+        "options": [
+          "Без операції віднімання обʼєму (Negate+Union)",
+          "Без GamePass",
+          "Без Blender",
+          "Без TikTok"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Без операції віднімання обʼєму (Negate+Union)"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Backup сирих Parts у Storage — це…",
+        "options": [
+          "Подушка безпеки для переробок",
+          "Вірус",
+          "Заміна Path",
+          "Тип Lighting"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Подушка безпеки для переробок"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Двері перевіряємо в Play бо…",
+        "options": [
+          "Важливий реальний прохід гравця",
+          "Play додає Robux",
+          "Play видаляє Decal",
+          "Play вимикає Snap назавжди"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Важливий реальний прохід гравця"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Чи весь будинок обовʼязково один Union?",
+        "options": [
+          "Ні — Model зі стінами ок",
+          "Так",
+          "Так і ще Baseplate",
+          "Так і всіх гравців"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ні — Model зі стінами ок"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Decal на фасаді — це…",
+        "options": [
+          "Декор і читабельність",
+          "Заміна Spawn",
+          "Система HP",
+          "Lua таблиця"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Декор і читабельність"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Якщо Union зламався…",
+        "options": [
+          "Separate / Backup / нова спроба",
+          "Кинути курс",
+          "Видалити Roblox",
+          "Ніколи не зберігати"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Separate / Backup / нова спроба"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Логічне продовження в М3…",
+        "options": [
+          "Terrain, освітлення, атмосфера світу",
+          "Одразу повний Tycoon на 1 уроці",
+          "Лише теорія без Studio",
+          "Квантова хімія"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Terrain, освітлення, атмосфера світу"
+      }
+    ]
+  }
 }

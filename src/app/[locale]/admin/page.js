@@ -66,11 +66,12 @@ export default function AdminPanelPage() {
     let result = students
     if (showDebtOnly) {
       result = result.filter(student => {
-        const balance = student.profile?.accountBalance || 0;
-        const credits = student.profile?.lessonCredits || 0;
-        const completed = student.analytics?.totalCompletedLessons || 0;
-        const hasSchedule = (student.profile?.regularSchedule || []).length > 0;
-        return balance < 0 || (credits < 1 && (completed > 0 || hasSchedule));
+        // Як у CRM: борг = негативний баланс уроків (або 0 кредитів при активному навчанні для локальних).
+        const credits = Number(student.profile?.lessonCredits || 0)
+        const completed = student.analytics?.totalCompletedLessons || 0
+        const hasSchedule = (student.profile?.regularSchedule || []).length > 0
+        if (credits < 0) return true
+        return credits < 1 && (completed > 0 || hasSchedule)
       })
     }
     const query = studentSearch.trim().toLowerCase()
@@ -892,9 +893,14 @@ export default function AdminPanelPage() {
                       }}
                     >
                       <td>{student.name}<br />{student.email}</td>
-                      <td style={{ color: ((student.profile?.accountBalance || 0) < 0 || (student.profile?.lessonCredits || 0) < 1) ? '#ef4444' : 'inherit' }}>
-                        {student.profile?.accountBalance || 0} грн<br/>
-                        <span style={{ fontSize: '0.85em', color: '#6b7280' }}>Кредити: {student.profile?.lessonCredits || 0}</span>
+                      <td style={{ color: ((student.profile?.lessonCredits || 0) < 1) ? '#ef4444' : 'inherit' }}>
+                        <span style={{ fontSize: '0.85em', color: '#6b7280' }}>Баланс уроків</span><br/>
+                        <strong>{student.profile?.lessonCredits || 0}</strong>
+                        {(student.profile?.lessonCredits || 0) < 0 ? (
+                          <span style={{ display: 'block', fontSize: '0.8em', color: '#dc2626' }}>
+                            борг: {Math.abs(student.profile.lessonCredits)}
+                          </span>
+                        ) : null}
                       </td>
                       <td>
                         {(student.profile?.activeOnlineCourses || []).length > 0

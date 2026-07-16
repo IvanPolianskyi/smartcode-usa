@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { Star, Users, Award } from 'lucide-react'
+import { Star } from 'lucide-react'
 import styles from './Visit.module.css'
 import { useLocale } from 'next-intl'
 import HeroTrialForm from './HeroTrialForm'
@@ -16,6 +16,25 @@ const Visit = () => {
 	const locale = useLocale()
 	const isEn = locale === 'en'
 	const [shouldRenderCards, setShouldRenderCards] = useState(false)
+
+	// Стабільна висота hero на телефоні (Instagram / iOS toolbar) — дублює layout.js
+	useEffect(() => {
+		const setAppHeight = () => {
+			const h = window.visualViewport?.height ?? window.innerHeight
+			document.documentElement.style.setProperty('--app-height', `${h}px`)
+		}
+		setAppHeight()
+		window.addEventListener('resize', setAppHeight, { passive: true })
+		window.addEventListener('orientationchange', setAppHeight, { passive: true })
+		window.visualViewport?.addEventListener('resize', setAppHeight, {
+			passive: true,
+		})
+		return () => {
+			window.removeEventListener('resize', setAppHeight)
+			window.removeEventListener('orientationchange', setAppHeight)
+			window.visualViewport?.removeEventListener('resize', setAppHeight)
+		}
+	}, [])
 
 	useEffect(() => {
 		let idleId = null
@@ -50,13 +69,12 @@ const Visit = () => {
 
 	return (
 		<div className={styles.container}>
-			{/* Floating background elements */}
-			<div className={styles.backgroundElements}>
-				<div className={`${styles.floatingElement} ${styles.element1}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element2}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element3}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element4}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element5}`}></div>
+			{/* Background — black + purple glow + right neon arcs */}
+			<div className={styles.bgStack} aria-hidden='true'>
+				<div className={styles.bgGlowTopLeft} />
+				<div className={styles.bgGlowRight} />
+				<div className={styles.bgGlowBottomRight} />
+				<div className={styles.bgArcs} />
 			</div>
 
 			<div className={styles.mainContainer}>
@@ -113,32 +131,14 @@ const Visit = () => {
 						<div className={styles.heroRight}>
 							<div className={styles.heroImageWrap}>
 								<Image
-									src='/hero-placeholder.png'
-									alt='Учень SmartCode Academy навчається програмуванню'
+									src='/hero-teachers-v8.png'
+									alt='Викладачі SmartCode Academy'
 									fill
 									className={styles.heroImage}
 									priority
+									quality={92}
 									sizes='(max-width: 1024px) 100vw, 50vw'
 								/>
-								{/* Floating badge — соціальний доказ */}
-								<div className={styles.floatingBadge}>
-									<div className={styles.floatingBadgeIcon}>
-										<Users size={20} />
-									</div>
-									<div>
-										<div className={styles.floatingBadgeTitle}>5000+ учнів</div>
-										<div className={styles.floatingBadgeSub}>по всьому світу</div>
-									</div>
-								</div>
-								<div className={styles.floatingBadge2}>
-									<div className={styles.floatingBadgeIcon}>
-										<Award size={20} />
-									</div>
-									<div>
-										<div className={styles.floatingBadgeTitle}>Міжнародний</div>
-										<div className={styles.floatingBadgeSub}>сертифікат</div>
-									</div>
-								</div>
 							</div>
 						</div>
 					)}
@@ -149,7 +149,7 @@ const Visit = () => {
 					<EnhancedCourseCards />
 				) : (
 					<div
-						style={{ minHeight: '980px', width: '100%' }}
+						style={{ minHeight: '980px', marginTop: 240, width: '100%' }}
 						aria-hidden='true'
 					/>
 				)}

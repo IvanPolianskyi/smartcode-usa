@@ -46,14 +46,15 @@ const Footer = () => {
 			? [{ name: t('quickLinks.courses'), href: '/#our-courses' }]
 			: [{ name: t('quickLinks.contacts'), href: '/#Contactform', openModal: true }]),
 		{ name: t('quickLinks.login'), href: '/login' },
-		{ name: t('quickLinks.register'), href: '/register' },
 	]
 
 	const supportLinks = [
 		...(!isEn ? [{ name: t('supportLinks.faq'), href: '/#faq' }] : []),
-		{ name: t('supportLinks.offer'), href: '/oferta', useAnchor: false },
-		{ name: t('supportLinks.refund'), href: '/refund', useAnchor: false },
-		{ name: t('supportLinks.privacy'), href: '/privacy', useAnchor: false },
+		{ name: t('supportLinks.offer'), href: isEn ? '/oferta' : '/api/oferta-pdf', useAnchor: !isEn },
+		...(isEn ? [
+			{ name: t('supportLinks.refund'), href: '/refund', useAnchor: false },
+			{ name: t('supportLinks.privacy'), href: '/privacy', useAnchor: false }
+		] : [])
 	]
 
 	const achievements = [

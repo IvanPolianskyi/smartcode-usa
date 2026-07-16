@@ -23,6 +23,7 @@
   background-image:
     radial-gradient(ellipse 60% 50% at 10% 0%, rgba(79, 70, 229, 0.06), transparent),
     radial-gradient(ellipse 50% 40% at 90% 10%, rgba(245, 158, 11, 0.04), transparent);
+  color: var(--dash-text);
 }
 
 .loading {
@@ -590,6 +591,10 @@
   font-size: 1.15rem;
   color: var(--dash-text);
   margin-top: auto;
+}
+
+.payStatNegative {
+  color: #dc2626 !important;
 }
 
 .debtRow {

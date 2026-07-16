@@ -25,9 +25,11 @@
   "title": "Особистий кабінет",
   "roles": {
     "admin": "Адміністратор",
+    "teacher": "Викладач",
     "student": "Учень"
   },
   "adminPanelLink": "Адмін-панель",
+  "teacherPanelLink": "Кабінет викладача",
   "logout": "Вийти",
   "pending": {
     "title": "Зачекайте, поки менеджер налаштує ваш акаунт",
@@ -77,7 +79,7 @@
       "timePending": "час уточнюється"
     },
     "courseDescriptions": {
-      "roblox-studio": "72 уроки - від першого Part у Roblox Studio до публікації власної гри.",
+      "roblox-studio": "92 уроки - моделі, Lua, Obby/Tycoon і реліз власної гри на Showcase.",
       "python-developer-zero-to-junior": "96 уроків - Python від нуля до реальних проєктів."
     },
     "courses": {

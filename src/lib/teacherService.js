@@ -1,0 +1,540 @@
+import { ObjectId } from 'mongodb'
+import { getCollection } from '@/lib/mongodb'
+import {
+  flattenCourseLessons,
+  isKnownCourseId,
+  isLessonInCourse,
+} from '@/lib/courseLessonAccess'
+import { KNOWN_TEACHER_COURSE_IDS } from '@/lib/crmLmsSync'
+import { hashPassword } from '@/lib/auth'
+import crypto from 'crypto'
+
+/**
+ * Публічний анонімний код учня для вчителя (без ПІБ).
+ * Лише crmShortId — якщо немає, учень не показується в списку.
+ */
+export function studentCodeFromProfile(profile) {
+  return String(profile?.crmShortId || '').trim()
+}
+
+/** Санітизований рядок учня для teacher API — без name/email/phone. */
+export function sanitizeStudentForTeacher(user, progressByCourse = {}) {
+  const code = studentCodeFromProfile(user?.studentProfile)
+  if (!code) return null
+
+  const online = user?.studentProfile?.activeOnlineCourses || []
+  const purchased = user?.purchasedCourses || []
+  const courseIds = [...new Set([...online, ...purchased])].filter((id) =>
+    isKnownCourseId(id)
+  )
+
+  const progress = {}
+  for (const courseId of courseIds) {
+    const p = progressByCourse[courseId]
+    const total = flattenCourseLessons(courseId).length || 1
+    const done = (p?.completedLessons || []).length
+    progress[courseId] = {
+      completedCount: done,
+      totalLessons: total,
+      pct: Math.min(100, Math.round((done / total) * 100)),
+      lastLessonId: p?.completedLessons?.[done - 1] || null,
+    }
+  }
+
+  return {
+    code,
+    courseIds,
+    progress,
+  }
+}
+
+export async function findStudentByCodeForTeacher(code, teacherStaffId, { isAdmin = false } = {}) {
+  const shortId = String(code || '').trim()
+  if (!shortId) return null
+
+  const usersCollection = await getCollection('users')
+  const query = {
+    role: { $ne: 'teacher' },
+    'studentProfile.crmShortId': shortId,
+  }
+  if (!isAdmin) {
+    if (!teacherStaffId) return null
+    query['studentProfile.crmTeacherId'] = String(teacherStaffId)
+  }
+
+  return usersCollection.findOne(query)
+}
+
+export async function listTeacherStudents(teacherStaffId, { isAdmin = false } = {}) {
+  const usersCollection = await getCollection('users')
+  const progressCollection = await getCollection('userProgress')
+
+  const query = {
+    role: { $nin: ['teacher', 'admin'] },
+    'studentProfile.crmShortId': { $exists: true, $nin: ['', null] },
+  }
+  if (!isAdmin) {
+    if (!teacherStaffId) return []
+    query['studentProfile.crmTeacherId'] = String(teacherStaffId)
+  } else if (teacherStaffId) {
+    query['studentProfile.crmTeacherId'] = String(teacherStaffId)
+  }
+
+  const students = await usersCollection.find(query).limit(500).toArray()
+  const userIds = students.map((s) => s._id)
+  const progressDocs = userIds.length
+    ? await progressCollection.find({ userId: { $in: userIds } }).toArray()
+    : []
+
+  const progressMap = new Map()
+  for (const doc of progressDocs) {
+    const uid = doc.userId.toString()
+    if (!progressMap.has(uid)) progressMap.set(uid, {})
+    progressMap.get(uid)[doc.courseId] = doc
+  }
+
+  return students
+    .map((s) => sanitizeStudentForTeacher(s, progressMap.get(s._id.toString()) || {}))
+    .filter(Boolean)
+}
+
+export async function getStudentProgressDetail(student) {
+  const progressCollection = await getCollection('userProgress')
+  const docs = await progressCollection.find({ userId: student._id }).toArray()
+  const byCourse = {}
+  for (const doc of docs) {
+    if (!isKnownCourseId(doc.courseId)) continue
+    const total = flattenCourseLessons(doc.courseId).length
+    byCourse[doc.courseId] = {
+      completedLessons: doc.completedLessons || [],
+      completedPracticeTasks: doc.completedPracticeTasks || [],
+      completedQuizzes: Object.fromEntries(
+        Object.entries(doc.completedQuizzes || {}).map(([lessonId, q]) => [
+          lessonId,
+          { score: q?.score ?? null },
+        ])
+      ),
+      overallProgress: doc.overallProgress || 0,
+      totalLessons: total,
+    }
+  }
+  return byCourse
+}
+
+export async function mutateStudentProgress(student, { action, courseId, lessonId }) {
+  if (!isKnownCourseId(courseId)) {
+    throw new Error('Unknown courseId')
+  }
+
+  const usersCollection = await getCollection('users')
+  const progressCollection = await getCollection('userProgress')
+  const profile = student.studentProfile || {}
+  const courseAccess = { ...(profile.courseAccess || {}) }
+  const prevAccess = courseAccess[courseId] || {}
+  const access = {
+    enabled: true,
+    fullAccess: Boolean(prevAccess.fullAccess),
+    unlockedLessons: [...(prevAccess.unlockedLessons || [])],
+  }
+
+  if (action === 'unlockLesson') {
+    if (!lessonId || !isLessonInCourse(courseId, lessonId)) {
+      throw new Error('Invalid lessonId')
+    }
+    if (!access.unlockedLessons.includes(lessonId)) {
+      access.unlockedLessons.push(lessonId)
+    }
+    access.enabled = true
+    courseAccess[courseId] = access
+    const active = new Set(profile.activeOnlineCourses || [])
+    active.add(courseId)
+    await usersCollection.updateOne(
+      { _id: student._id },
+      {
+        $set: {
+          'studentProfile.courseAccess': courseAccess,
+          'studentProfile.activeOnlineCourses': [...active],
+          updatedAt: new Date(),
+        },
+        $addToSet: { enrolledCourses: courseId },
+      }
+    )
+    return { ok: true, action, courseId, lessonId }
+  }
+
+  let progress = await progressCollection.findOne({
+    userId: student._id,
+    courseId,
+  })
+
+  if (action === 'resetCourse') {
+    if (progress) {
+      await progressCollection.updateOne(
+        { _id: progress._id },
+        {
+          $set: {
+            completedLessons: [],
+            completedPracticeTasks: [],
+            completedQuizzes: {},
+            overallProgress: 0,
+            currentModule: 0,
+            currentLesson: 0,
+            updatedAt: new Date(),
+          },
+        }
+      )
+    }
+    courseAccess[courseId] = {
+      ...access,
+      unlockedLessons: [],
+      fullAccess: access.fullAccess,
+    }
+    await usersCollection.updateOne(
+      { _id: student._id },
+      {
+        $set: {
+          'studentProfile.courseAccess': courseAccess,
+          updatedAt: new Date(),
+        },
+      }
+    )
+    return { ok: true, action, courseId }
+  }
+
+  if (action === 'resetLesson') {
+    if (!lessonId || !isLessonInCourse(courseId, lessonId)) {
+      throw new Error('Invalid lessonId')
+    }
+    if (progress) {
+      const completedLessons = (progress.completedLessons || []).filter((id) => id !== lessonId)
+      const completedPracticeTasks = (progress.completedPracticeTasks || []).filter(
+        (id) => id !== lessonId
+      )
+      const completedQuizzes = { ...(progress.completedQuizzes || {}) }
+      delete completedQuizzes[lessonId]
+      const total = flattenCourseLessons(courseId).length || 1
+      const overallProgress = Math.round((completedLessons.length / total) * 100)
+      await progressCollection.updateOne(
+        { _id: progress._id },
+        {
+          $set: {
+            completedLessons,
+            completedPracticeTasks,
+            completedQuizzes,
+            overallProgress,
+            updatedAt: new Date(),
+          },
+        }
+      )
+    }
+    access.unlockedLessons = access.unlockedLessons.filter((id) => id !== lessonId)
+    courseAccess[courseId] = access
+    await usersCollection.updateOne(
+      { _id: student._id },
+      {
+        $set: {
+          'studentProfile.courseAccess': courseAccess,
+          updatedAt: new Date(),
+        },
+      }
+    )
+    return { ok: true, action, courseId, lessonId }
+  }
+
+  throw new Error('Unknown action')
+}
+
+function buildTeacherCourseAccess() {
+  const courseAccess = {}
+  for (const courseId of KNOWN_TEACHER_COURSE_IDS) {
+    const lessonIds = flattenCourseLessons(courseId).map((l) => l.lessonId)
+    courseAccess[courseId] = {
+      enabled: true,
+      fullAccess: true,
+      unlockedLessons: lessonIds,
+    }
+  }
+  return courseAccess
+}
+
+/**
+ * Привʼязати / створити LMS-акаунт вчителя до CRM staff id.
+ */
+export async function linkTeacherAccount({
+  email,
+  crmStaffId,
+  crmStaffName = '',
+  name = '',
+  password = '',
+  adminId = '',
+  createIfMissing = true,
+}) {
+  const normalizedEmail = String(email || '').trim().toLowerCase()
+  const staffId = String(crmStaffId || '').trim()
+  if (!normalizedEmail || !staffId) {
+    throw new Error('email and crmStaffId are required')
+  }
+
+  const usersCollection = await getCollection('users')
+  let user = await usersCollection.findOne({ email: normalizedEmail })
+  let tempPassword = null
+  let created = false
+
+  const teacherProfile = {
+    crmStaffId: staffId,
+    crmStaffName: String(crmStaffName || '').trim(),
+    linkedAt: new Date(),
+    linkedByAdminId: String(adminId || ''),
+  }
+  const courseAccess = buildTeacherCourseAccess()
+
+  if (!user) {
+    if (!createIfMissing) {
+      throw new Error('User not found')
+    }
+    tempPassword =
+      String(password || '').trim() ||
+      `ScT-${crypto.randomBytes(4).toString('hex')}`
+    const hashed = await hashPassword(tempPassword)
+    const doc = {
+      email: normalizedEmail,
+      password: hashed,
+      name: String(name || '').trim() || normalizedEmail.split('@')[0],
+      phone: null,
+      role: 'teacher',
+      teacherProfile,
+      studentProfile: {
+        regularSchedule: [],
+        zoomLink: '',
+        activeOnlineCourses: [...KNOWN_TEACHER_COURSE_IDS],
+        courseAccess,
+        accountBalance: 0,
+        lessonCredits: 0,
+        accountReady: true,
+      },
+      purchasedCourses: [],
+      enrolledCourses: [...KNOWN_TEACHER_COURSE_IDS],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+    const result = await usersCollection.insertOne(doc)
+    user = { ...doc, _id: result.insertedId }
+    created = true
+  } else {
+    if (user.role === 'admin') {
+      throw new Error('Cannot convert admin to teacher')
+    }
+    await usersCollection.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          role: 'teacher',
+          teacherProfile,
+          'studentProfile.activeOnlineCourses': [...KNOWN_TEACHER_COURSE_IDS],
+          'studentProfile.courseAccess': courseAccess,
+          'studentProfile.accountReady': true,
+          enrolledCourses: [
+            ...new Set([...(user.enrolledCourses || []), ...KNOWN_TEACHER_COURSE_IDS]),
+          ],
+          updatedAt: new Date(),
+          ...(name ? { name: String(name).trim() } : {}),
+        },
+      }
+    )
+    if (password) {
+      const hashed = await hashPassword(String(password))
+      await usersCollection.updateOne(
+        { _id: user._id },
+        { $set: { password: hashed, updatedAt: new Date() } }
+      )
+      tempPassword = String(password)
+    }
+    user = await usersCollection.findOne({ _id: user._id })
+  }
+
+  return {
+    id: user._id.toString(),
+    email: user.email,
+    name: user.name,
+    role: 'teacher',
+    teacherProfile: {
+      crmStaffId: staffId,
+      crmStaffName: teacherProfile.crmStaffName,
+    },
+    created,
+    tempPassword,
+  }
+}
+
+export async function listLinkedTeachers() {
+  const usersCollection = await getCollection('users')
+  const teachers = await usersCollection
+    .find({ role: 'teacher' })
+    .project({
+      email: 1,
+      name: 1,
+      teacherProfile: 1,
+      createdAt: 1,
+      updatedAt: 1,
+    })
+    .sort({ updatedAt: -1 })
+    .limit(200)
+    .toArray()
+
+  return teachers.map((t) => ({
+    id: t._id.toString(),
+    email: t.email,
+    name: t.name,
+    crmStaffId: t.teacherProfile?.crmStaffId || '',
+    crmStaffName: t.teacherProfile?.crmStaffName || '',
+    linkedAt: t.teacherProfile?.linkedAt || null,
+  }))
+}
+
+function escapeRegex(value) {
+  return String(value || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+/** Список викладачів LMS для CRM (привʼязки staff ↔ teacher). */
+export async function listLmsTeachersForCrm({
+  search = '',
+  linkedOnly = false,
+  unlinkedOnly = false,
+  staffIds = '',
+  userIds = '',
+  skip = 0,
+  limit = 40,
+} = {}) {
+  const usersCollection = await getCollection('users')
+  const q = { role: 'teacher' }
+
+  const idList = String(userIds || '')
+    .split(',')
+    .map((x) => x.trim())
+    .filter((x) => ObjectId.isValid(x))
+  if (idList.length > 0) {
+    q._id = { $in: idList.map((id) => new ObjectId(id)) }
+    skip = 0
+    limit = Math.max(limit, idList.length)
+  }
+
+  const staffList = String(staffIds || '')
+    .split(',')
+    .map((x) => x.trim())
+    .filter(Boolean)
+  if (staffList.length > 0) {
+    q['teacherProfile.crmStaffId'] = { $in: staffList }
+  }
+
+  if (unlinkedOnly) {
+    q.$or = [
+      { 'teacherProfile.crmStaffId': { $exists: false } },
+      { 'teacherProfile.crmStaffId': null },
+      { 'teacherProfile.crmStaffId': '' },
+    ]
+  } else if (linkedOnly) {
+    q['teacherProfile.crmStaffId'] = { $exists: true, $nin: [null, ''] }
+  }
+
+  const term = String(search || '').trim()
+  if (term) {
+    const esc = escapeRegex(term)
+    const searchClause = {
+      $or: [
+        { email: { $regex: esc, $options: 'i' } },
+        { name: { $regex: esc, $options: 'i' } },
+        { 'teacherProfile.crmStaffId': { $regex: esc, $options: 'i' } },
+        { 'teacherProfile.crmStaffName': { $regex: esc, $options: 'i' } },
+      ],
+    }
+    if (ObjectId.isValid(term)) {
+      searchClause.$or.push({ _id: new ObjectId(term) })
+    }
+    if (q.$or) {
+      q.$and = [{ $or: q.$or }, searchClause]
+      delete q.$or
+    } else {
+      Object.assign(q, searchClause)
+    }
+  }
+
+  const total = await usersCollection.countDocuments(q)
+  const users = await usersCollection
+    .find(q, {
+      projection: {
+        name: 1,
+        email: 1,
+        createdAt: 1,
+        teacherProfile: 1,
+      },
+    })
+    .sort({ name: 1, email: 1 })
+    .skip(skip)
+    .limit(limit)
+    .toArray()
+
+  return {
+    total,
+    teachers: users.map((user) => {
+      const tp = user.teacherProfile || {}
+      const crmStaffId = String(tp.crmStaffId || '').trim()
+      return {
+        id: user._id.toString(),
+        name: user.name || '',
+        email: user.email || '',
+        crmStaffId: crmStaffId || null,
+        crmStaffName: String(tp.crmStaffName || '').trim() || null,
+        linkedAt: tp.linkedAt || null,
+        createdAt: user.createdAt || null,
+        linked: Boolean(crmStaffId),
+      }
+    }),
+  }
+}
+
+export async function unlinkTeacherAccount(userId) {
+  if (!ObjectId.isValid(userId)) throw new Error('Invalid userId')
+  const usersCollection = await getCollection('users')
+  const user = await usersCollection.findOne({ _id: new ObjectId(userId) })
+  if (!user || user.role !== 'teacher') throw new Error('Teacher not found')
+
+  await usersCollection.updateOne(
+    { _id: user._id },
+    {
+      $set: {
+        role: 'student',
+        teacherProfile: {
+          crmStaffId: '',
+          crmStaffName: '',
+          linkedAt: null,
+          linkedByAdminId: '',
+        },
+        'studentProfile.activeOnlineCourses': [],
+        'studentProfile.courseAccess': {},
+        updatedAt: new Date(),
+      },
+    }
+  )
+  return { ok: true, userId: user._id.toString() }
+}
+
+export async function unlinkTeacherByCrmStaffId(crmStaffId, { smartcodeUserId = '' } = {}) {
+  const staffId = String(crmStaffId || '').trim()
+  const usersCollection = await getCollection('users')
+  let user = null
+
+  const scUid = String(smartcodeUserId || '').trim()
+  if (scUid && ObjectId.isValid(scUid)) {
+    user = await usersCollection.findOne({ _id: new ObjectId(scUid), role: 'teacher' })
+  }
+  if (!user && staffId) {
+    user = await usersCollection.findOne({
+      role: 'teacher',
+      'teacherProfile.crmStaffId': staffId,
+    })
+  }
+  if (!user) {
+    throw new Error('Teacher LMS account not found for this CRM staff')
+  }
+  return unlinkTeacherAccount(user._id.toString())
+}

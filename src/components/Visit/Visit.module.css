@@ -4,55 +4,85 @@
 .container {
 	min-height: 100vh;
 	min-height: 100svh;
+	/* Exact reference base */
 	background: #000000;
 	position: relative;
 	font-family: var(--font-geist-sans), Arial, sans-serif;
 	overflow-x: hidden;
-	/* Оптимізація для продуктивності */
 	contain: layout style paint;
 	transform: translateZ(0);
 	will-change: scroll-position;
 }
 
-/* Великий пурпуровий гloу справа + dot-pattern зліва */
-.container::before {
-	content: '';
+.bgStack {
 	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background:
-		radial-gradient(
-			circle at 85% 40%,
-			rgba(180, 0, 255, 0.55) 0%,
-			rgba(120, 0, 200, 0.25) 35%,
-			transparent 65%
-		),
-		radial-gradient(
-			circle at 75% 20%,
-			rgba(255, 0, 255, 0.2) 0%,
-			transparent 50%
-		);
+	inset: 0;
 	pointer-events: none;
 	z-index: 0;
+	overflow: hidden;
 }
 
-/* Крапковий dot-grid патерн зліва */
-.container::after {
-	content: '';
+/* Soft purple under logo / top-left */
+.bgGlowTopLeft {
 	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-image: radial-gradient(circle, rgba(180, 0, 255, 0.35) 1px, transparent 1px);
-	background-size: 28px 28px;
-	background-position: 0 0;
-	-webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.5) 0%, transparent 45%);
-	mask-image: linear-gradient(to right, rgba(0,0,0,0.5) 0%, transparent 45%);
-	pointer-events: none;
-	z-index: 0;
+	top: -12%;
+	left: -10%;
+	width: 48%;
+	height: 55%;
+	background: radial-gradient(
+		circle at 40% 40%,
+		rgba(157, 0, 255, 0.28) 0%,
+		rgba(122, 0, 200, 0.12) 40%,
+		transparent 70%
+	);
+	filter: blur(40px);
+}
+
+/* Main neon aura — middle/right (behind arcs) */
+.bgGlowRight {
+	position: absolute;
+	top: 8%;
+	right: -18%;
+	width: 70%;
+	height: 85%;
+	background: radial-gradient(
+		ellipse 55% 60% at 70% 48%,
+		rgba(180, 0, 255, 0.55) 0%,
+		rgba(157, 0, 255, 0.28) 32%,
+		rgba(90, 0, 160, 0.12) 55%,
+		transparent 72%
+	);
+	filter: blur(8px);
+}
+
+/* Larger bloom from bottom-right */
+.bgGlowBottomRight {
+	position: absolute;
+	right: -22%;
+	bottom: -20%;
+	width: 75%;
+	height: 75%;
+	background: radial-gradient(
+		circle at 55% 45%,
+		rgba(157, 0, 255, 0.4) 0%,
+		rgba(122, 0, 200, 0.18) 38%,
+		transparent 68%
+	);
+	filter: blur(50px);
+}
+
+/* Neon concentric ellipses on the right */
+.bgArcs {
+	position: absolute;
+	top: 50%;
+	right: -8%;
+	width: min(900px, 92vw);
+	height: min(1000px, 110vh);
+	transform: translateY(-50%);
+	background: url('/hero-arcs.svg') right center / contain no-repeat;
+	opacity: 0.95;
+	filter: drop-shadow(0 0 10px rgba(157, 0, 255, 0.55))
+		drop-shadow(0 0 28px rgba(157, 0, 255, 0.28));
 }
 
 .mainContainer {
@@ -61,90 +91,23 @@
 	padding: 0 2rem 4rem;
 	position: relative;
 	z-index: 10;
-	/* Оптимізація для продуктивності */
 	contain: layout style;
 	transform: translateZ(0);
 }
 
-/* --- ФОНОВІ ЕЛЕМЕНТИ --- */
-.backgroundElements {
-	position: absolute;
-	inset: 0;
-	pointer-events: none;
-	z-index: 1;
-	overflow: hidden;
-}
-.floatingElement {
-	position: absolute;
-	border-radius: 50%;
-	opacity: 1;
-	filter: blur(0);
-}
-
-/* Декоративні концентричні кола справа */
-.element1 {
-	top: 5%;
-	right: -5%;
-	width: 500px;
-	height: 500px;
-	border-radius: 50%;
-	border: 1px solid rgba(180, 0, 255, 0.25);
-	background: transparent;
-	animation: none;
-}
-.element2 {
-	top: calc(5% + 50px);
-	right: calc(-5% + 50px);
-	width: 400px;
-	height: 400px;
-	border-radius: 50%;
-	border: 1px solid rgba(180, 0, 255, 0.2);
-	background: transparent;
-	animation: none;
-}
-.element3 {
-	top: calc(5% + 100px);
-	right: calc(-5% + 100px);
-	width: 300px;
-	height: 300px;
-	border-radius: 50%;
-	border: 1px solid rgba(180, 0, 255, 0.15);
-	background: transparent;
-	animation: none;
-}
-.element4 {
-	top: calc(5% + 150px);
-	right: calc(-5% + 150px);
-	width: 200px;
-	height: 200px;
-	border-radius: 50%;
-	border: 1px solid rgba(180, 0, 255, 0.12);
-	background: transparent;
-	animation: none;
-}
-.element5 {
-	top: calc(5% + 200px);
-	right: calc(-5% + 200px);
-	width: 100px;
-	height: 100px;
-	border-radius: 50%;
-	border: 1px solid rgba(180, 0, 255, 0.1);
-	background: transparent;
-	animation: none;
-}
-
-/* Приховуємо зайві floating елементи */
-.element6, .element7, .element8, .element9, .element10, .element11, .element12, .element13, .element14 {
-	display: none;
-}
-
 /* --- СЕКЦІЯ HERO --- */
+/* Повна висота першого екрана (під хедером) + справжнє вертикальне центрування */
 .hero {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	align-items: stretch;
 	gap: 1.75rem;
-	padding-top: 1.5rem;
-	padding-bottom: 1.75rem;
+	box-sizing: border-box;
+	min-height: calc(
+		var(--app-height, 100svh) - var(--visit-header-offset, 80px)
+	);
+	padding: 1.25rem 0 1.75rem;
 }
 
 /* Ліва колонка */
@@ -160,22 +123,40 @@
 .heroRight {
 	display: none;
 	width: 100%;
-	max-width: 520px;
+	max-width: 640px;
 	position: relative;
 }
 
 .heroImageWrap {
 	position: relative;
 	width: 100%;
-	padding-bottom: 105%;
-	border-radius: 24px;
+	/* Під landscape cutout ~5:4 */
+	padding-bottom: 80%;
+	border-radius: 0;
 	overflow: visible;
 }
 
 .heroImage {
-	object-fit: cover;
-	border-radius: 24px;
-	box-shadow: 0 30px 60px rgba(180, 0, 255, 0.3);
+	object-fit: contain;
+	object-position: center bottom;
+	border-radius: 0;
+	box-shadow: none;
+	/* М’яке зникнення лише знизу — зверху/збоку без «фіолетового ореолу» */
+	-webkit-mask-image: linear-gradient(
+		to top,
+		transparent 0%,
+		rgba(0, 0, 0, 0.55) 10%,
+		#000 22%,
+		#000 100%
+	);
+	mask-image: linear-gradient(
+		to top,
+		transparent 0%,
+		rgba(0, 0, 0, 0.55) 10%,
+		#000 22%,
+		#000 100%
+	);
+	filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.5));
 }
 
 /* Floating badges поверх зображення */
@@ -192,7 +173,7 @@
 	border-radius: 16px;
 	padding: 0.75rem 1rem;
 	z-index: 10;
-	box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 	animation: floatBadge 3s ease-in-out infinite;
 }
 
@@ -209,13 +190,18 @@
 	border-radius: 16px;
 	padding: 0.75rem 1rem;
 	z-index: 10;
-	box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 	animation: floatBadge 3.5s ease-in-out infinite reverse;
 }
 
 @keyframes floatBadge {
-	0%, 100% { transform: translateY(0px); }
-	50% { transform: translateY(-8px); }
+	0%,
+	100% {
+		transform: translateY(0px);
+	}
+	50% {
+		transform: translateY(-8px);
+	}
 }
 
 .floatingBadgeIcon {
@@ -238,7 +224,7 @@
 
 .floatingBadgeSub {
 	font-size: 0.75rem;
-	color: rgba(255,255,255,0.65);
+	color: rgba(255, 255, 255, 0.65);
 	line-height: 1.2;
 }
 
@@ -333,13 +319,13 @@
 }
 
 .ratingDivider {
-	color: rgba(255,255,255,0.35);
+	color: rgba(255, 255, 255, 0.35);
 	font-size: 1rem;
 }
 
 .socialProofText {
 	font-size: 0.9375rem;
-	color: rgba(255,255,255,0.75);
+	color: rgba(255, 255, 255, 0.75);
 	font-weight: 500;
 }
 
@@ -347,7 +333,7 @@
 .ctaHint {
 	margin-top: 1rem;
 	font-size: 0.85rem;
-	color: rgba(255,255,255,0.5);
+	color: rgba(255, 255, 255, 0.5);
 	line-height: 1.5;
 }
 
@@ -380,9 +366,15 @@
 
 /* Золота переливаюча анімація для кнопок */
 @keyframes goldShimmer {
-	0% { background-position: 0% 50%; }
-	50% { background-position: 100% 50%; }
-	100% { background-position: 0% 50%; }
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 
 .primaryButton,
@@ -457,9 +449,9 @@
 	transform: translateY(0);
 }
 .secondaryButton {
-	background: rgba(255,255,255,0.08);
+	background: rgba(255, 255, 255, 0.08);
 	color: #fff;
-	border: 1.5px solid rgba(255,255,255,0.2);
+	border: 1.5px solid rgba(255, 255, 255, 0.2);
 	box-shadow: none;
 	width: 100%;
 	max-width: 480px;
@@ -469,8 +461,8 @@
 }
 .secondaryButton:hover {
 	transform: translateY(-2px);
-	background: rgba(255,255,255,0.12);
-	border-color: rgba(204,0,255,0.4);
+	background: rgba(255, 255, 255, 0.12);
+	border-color: rgba(204, 0, 255, 0.4);
 }
 
 /* Desktop media query */
@@ -478,20 +470,31 @@
 	.hero {
 		flex-direction: row;
 		align-items: center;
+		justify-content: space-between;
 		gap: 2.75rem;
-		padding-top: 2rem;
-		padding-bottom: 1.5rem;
+		padding: 1.5rem 0 2.75rem;
 	}
 
 	.heroLeft {
 		flex: 1;
 		min-width: 0;
+		padding-top: 0;
 	}
 
 	.heroRight {
 		display: flex;
-		justify-content: center;
-		flex: 0 0 440px;
+		justify-content: flex-end;
+		align-items: center;
+		align-self: center;
+		flex: 0 0 min(560px, 48vw);
+		padding-top: 0;
+		margin-top: 0;
+	}
+
+	.heroImageWrap {
+		width: 100%;
+		padding-bottom: 80%;
+		max-width: 560px;
 	}
 
 	.heroCta {
@@ -510,20 +513,24 @@
 @media (min-width: 1024px) {
 	.hero {
 		gap: 3.5rem;
-		padding-top: 2.25rem;
+		padding: 1.75rem 0 3rem;
 	}
 
 	.heroRight {
-		flex: 0 0 490px;
+		flex: 0 0 min(620px, 46vw);
+	}
+
+	.heroImageWrap {
+		max-width: 620px;
+		padding-bottom: 80%;
 	}
 }
 
-/* Only gently tighten on short laptop screens — keep headline & CTA strong */
+/* Short laptop — трохи стискаємо, але тримаємо центрування через min-height */
 @media (min-width: 768px) and (max-height: 820px) {
 	.hero {
-		padding-top: 1.25rem;
-		padding-bottom: 1rem;
 		gap: 2rem;
+		padding: 1rem 0 1.75rem;
 	}
 
 	.title {
@@ -540,17 +547,23 @@
 	}
 
 	.heroImageWrap {
-		padding-bottom: 96%;
+		padding-bottom: 80%;
+		max-width: 480px;
 	}
 
 	.heroRight {
-		flex: 0 0 400px;
+		flex: 0 0 min(480px, 42vw);
 	}
 }
 
 @media (min-width: 1024px) and (max-height: 820px) {
 	.heroRight {
-		flex: 0 0 430px;
+		flex: 0 0 min(520px, 40vw);
+	}
+
+	.heroImageWrap {
+		max-width: 520px;
+		padding-bottom: 80%;
 	}
 }
 
@@ -781,8 +794,8 @@
 		padding: 0 1.5rem 4rem;
 	}
 	.hero {
-		padding: 0.5rem 0 1rem;
-		padding-top: 0.5rem;
+		justify-content: center;
+		padding: 1rem 0 1.5rem;
 	}
 	/* Оптимізація для мобільних - заголовок завжди видимий */
 	.title,
@@ -830,7 +843,7 @@
 	}
 }
 
-/* Повноекранний hero з формою — тільки телефон (форма, не десктоп-кнопка) */
+/* Повноекранний hero з формою — тільки телефон */
 @media (max-width: 767px) {
 	.container {
 		min-height: var(--app-height, 100%);
@@ -841,7 +854,14 @@
 	}
 
 	.hero {
-		padding: 0;
+		justify-content: center;
+		gap: 1rem;
+		/* --app-height: window.innerHeight (layout.js), не vh/dvh — стабільно в Instagram / iOS */
+		min-height: calc(
+			var(--app-height, 100%) - var(--visit-header-offset, 70px)
+		);
+		padding: 0.75rem 0 1.25rem;
+		box-sizing: border-box;
 	}
 
 	.heroContent {
@@ -849,10 +869,6 @@
 		flex-direction: column;
 		justify-content: flex-start;
 		gap: 0.75rem;
-		/* --app-height: window.innerHeight (layout.js), не vh/dvh — стабільно в Instagram / iOS */
-		min-height: calc(var(--app-height, 100%) - var(--visit-header-offset, 70px));
-		padding: 0.35rem 0 1.25rem;
-		box-sizing: border-box;
 	}
 
 	.heroIntro {

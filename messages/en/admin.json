@@ -5,7 +5,32 @@
   "subtitle": "Business statistics",
   "refresh": "Refresh",
   "crmGroups": "CRM groups",
+  "teachersLink": "LMS teachers",
   "logout": "Log out",
+  "teachersPage": {
+    "title": "LMS teachers",
+    "subtitle": "Link a SmartCode email to a CRM staff id. Courses unlock automatically.",
+    "back": "Back to admin",
+    "email": "LMS email",
+    "name": "Name (optional)",
+    "password": "Password (optional; generated for new accounts)",
+    "crmStaff": "CRM teacher",
+    "link": "Link",
+    "unlink": "Unlink",
+    "created": "New teacher created",
+    "tempPassword": "Temporary password",
+    "linkedList": "Linked teachers",
+    "empty": "No linked teachers yet",
+    "columns": {
+      "email": "Email",
+      "name": "Name",
+      "staff": "CRM staff",
+      "actions": "Actions"
+    },
+    "error": "Error",
+    "success": "Saved",
+    "selectStaff": "Select a CRM teacher"
+  },
   "errors": {
     "loadStatistics": "Failed to load statistics",
     "loadStudents": "Failed to load student list",

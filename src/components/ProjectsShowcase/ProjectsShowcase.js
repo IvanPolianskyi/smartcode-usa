@@ -3,10 +3,6 @@ import React, { useState, useEffect } from 'react'
 import {
 	Code,
 	Eye,
-	ArrowRight,
-	Star,
-	Users,
-	ExternalLink,
 	Loader2
 } from 'lucide-react'
 import Image from 'next/image'
@@ -110,6 +106,9 @@ const ProjectsShowcase = () => {
 							<span className={styles.titleAccent}>{t('titleAccent')}</span> {t('titleSuffix')}
 						</h2>
 						<p className={styles.subtitle}>{t('subtitle')}</p>
+						<Link href="/projects" className={styles.viewAllLink}>
+							{t('viewAll')}
+						</Link>
 					</div>
 				</div>
 
@@ -167,20 +166,6 @@ const ProjectsShowcase = () => {
 						<p>{t('empty')}</p>
 					</div>
 				)}
-
-				{/* CTA Section */}
-				<div className={styles.ctaSection}>
-					<div className={styles.ctaContent}>
-						<h3 className={styles.ctaTitle}>{t('cta.title')}</h3>
-						<p className={styles.ctaDescription}>{t('cta.description')}</p>
-						<Link href="/projects" className={styles.ctaButton}>
-							<span>{t('cta.button')}</span>
-							<ArrowRight className={styles.buttonIcon} />
-						</Link>
-					</div>
-					
-					
-				</div>
 
 				{/* Phone Modal */}
 				<PhoneModal

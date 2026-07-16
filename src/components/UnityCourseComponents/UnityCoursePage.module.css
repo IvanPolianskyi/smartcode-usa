@@ -4,7 +4,7 @@
 
     /* --- ОСНОВНА СТРУКТУРА --- */
     .container {
-        background: var(--bg-dark);
+        background: var(--bg-primary);
         color: white;
         font-family: var(--main-font);
         position: relative;
@@ -23,7 +23,7 @@
     .gridPattern {
         position: absolute;
         inset: 0;
-        background-image: linear-gradient(rgba(37, 99, 235, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(37, 99, 235, 0.1) 1px, transparent 1px);
+        background-image: linear-gradient(rgba(161, 0, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(161, 0, 255, 0.1) 1px, transparent 1px);
         background-size: 40px 40px;
         animation: background-pan 60s linear infinite;
     }
@@ -69,7 +69,7 @@
     .ghostEye {
         width: 8px;
         height: 10px;
-        background: white;
+        background: var(--bg-elevated);
         border-radius: 50%;
         position: relative;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -130,7 +130,7 @@
         pointer-events: none;
     }
     .backButton, .scoreBoard {
-        background: rgba(15, 23, 42, 0.7);
+        background: rgba(10, 10, 15, 0.7);
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: var(--radius-full);
@@ -142,7 +142,7 @@
         align-items: center;
         gap: 0.5rem;
         text-decoration: none;
-        color: #cbd5e1;
+        color: var(--border-subtle);
         font-weight: 600;
         font-size: 0.875rem;
         transition: all var(--transition-base);
@@ -157,7 +157,7 @@
     .scoreLabel {
         font-size: 0.7rem;
         font-weight: 700;
-        color: #94a3b8;
+        color: var(--text-tertiary);
         letter-spacing: 1px;
         text-transform: uppercase;
     }
@@ -191,7 +191,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: rgba(15, 23, 42, 0.5);
+        background: rgba(10, 10, 15, 0.5);
         backdrop-filter: blur(10px);
         padding: 3rem;
         border-radius: var(--radius-2xl);
@@ -204,10 +204,10 @@
         margin-bottom: 2rem;
     }
     .titleLine1 { color: #fcd34d; text-shadow: 0 0 15px #fcd34d; animation: neonFlicker 3s infinite; }
-    .titleLine2 { color: #a78bfa; text-shadow: 0 0 15px #a78bfa; animation: neonFlicker 3s infinite 0.5s; }
+    .titleLine2 { color: var(--brand-accent-hot); text-shadow: 0 0 15px var(--brand-accent-hot); animation: neonFlicker 3s infinite 0.5s; }
     .description {
         font-size: 1.25rem;
-        color: #cbd5e1;
+        color: var(--border-subtle);
         margin-bottom: 2.5rem;
         line-height: 1.6;
         max-width: 50ch;
@@ -227,11 +227,12 @@
     }
     .startButton {
         max-width: 300px;
-        background: linear-gradient(135deg, var(--primary-orange), var(--primary-red));
+        background: var(--brand-accent);
+        border-radius: var(--radius-full);
         color: white;
-        box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
+        box-shadow: 0 8px 25px rgba(161, 0, 255, 0.3);
     }
-    .startButton:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 30px rgba(249, 115, 22, 0.4); }
+    .startButton:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 12px 30px rgba(161, 0, 255, 0.4); }
     .secondaryButton {
         background: rgba(255, 255, 255, 0.1);
         color: white;
@@ -260,7 +261,7 @@
     }
     .sectionSubtitle {
         font-size: 1.25rem;
-        color: #cbd5e1;
+        color: var(--border-subtle);
         line-height: 1.6;
     }
 
@@ -271,7 +272,7 @@
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
     .moduleCard {
-        background: rgba(30, 41, 59, 0.7);
+        background: rgba(18, 18, 24, 0.7);
         backdrop-filter: blur(15px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: var(--radius-xl);
@@ -291,21 +292,21 @@
         height: 3.5rem;
         display: grid;
         place-items: center;
-        background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+        background: var(--gradient-primary);
         border-radius: var(--radius-lg);
         color: white;
-        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2);
+        box-shadow: 0 8px 20px rgba(161, 0, 255, 0.2);
     }
     .levelBadge {
         background: #fcd34d;
-        color: var(--bg-dark);
+        color: var(--bg-primary);
         font-family: var(--pixel-font);
         font-size: 0.7rem;
         padding: 0.3rem 0.7rem;
         border-radius: var(--radius-full);
     }
     .moduleTitle { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .moduleDuration { font-size: 0.875rem; color: #94a3b8; margin-bottom: 1rem; }
+    .moduleDuration { font-size: 0.875rem; color: var(--text-tertiary); margin-bottom: 1rem; }
     .moduleTopics {
         list-style: none;
         padding: 0;
@@ -314,7 +315,7 @@
         flex-direction: column;
         gap: 0.5rem;
         font-size: 0.9375rem;
-        color: #cbd5e1;
+        color: var(--border-subtle);
     }
     .moduleTopics li::before {
         content: '•';
@@ -329,7 +330,7 @@
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
     .projectCard {
-        background: rgba(30, 41, 59, 0.7);
+        background: rgba(18, 18, 24, 0.7);
         backdrop-filter: blur(15px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: var(--radius-xl);
@@ -338,14 +339,14 @@
     }
     .projectCard:hover {
         transform: translateY(-10px);
-        border-color: #a78bfa;
-        box-shadow: 0 0 30px rgba(167, 139, 250, 0.2);
+        border-color: var(--brand-accent-hot);
+        box-shadow: 0 0 30px rgba(161, 0, 255, 0.2);
     }
     .projectHeader { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
     .projectIcon { font-size: 2.5rem; filter: drop-shadow(0 0 10px rgba(255,255,255,0.3)); }
     .projectPoints {
         background: #34d399;
-        color: var(--bg-dark);
+        color: var(--bg-primary);
         font-family: var(--pixel-font);
         font-size: 0.7rem;
         padding: 0.3rem 0.7rem;
@@ -365,9 +366,9 @@
         background: linear-gradient(90deg, #34d399, #fcd34d, #f87171);
         border-radius: var(--radius-full);
     }
-    .projectDescription { font-size: 0.9rem; color: #94a3b8; line-height: 1.6; margin-bottom: 1.5rem; }
+    .projectDescription { font-size: 0.9rem; color: var(--text-tertiary); line-height: 1.6; margin-bottom: 1.5rem; }
     .projectFooter { display: flex; justify-content: space-between; align-items: center; }
-    .projectTime { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #94a3b8; }
+    .projectTime { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-tertiary); }
     .selectButton {
         background: rgba(255, 255, 255, 0.1);
         color: white;
@@ -379,7 +380,7 @@
         cursor: pointer;
         transition: all var(--transition-base);
     }
-    .selectButton:hover { background: white; color: var(--bg-dark); }
+    .selectButton:hover { background: var(--bg-elevated); color: var(--bg-primary); }
 
     /* --- СЕКЦІЯ НАВИЧОК --- */
     .featuresGrid {
@@ -390,7 +391,7 @@
     .featureCard {
         text-align: center;
         padding: 2rem;
-        background: rgba(30, 41, 59, 0.7);
+        background: rgba(18, 18, 24, 0.7);
         backdrop-filter: blur(15px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: var(--radius-xl);
@@ -398,32 +399,32 @@
     }
     .featureCard:hover {
         transform: translateY(-10px);
-        border-color: var(--primary-blue);
-        box-shadow: 0 0 30px rgba(37, 99, 235, 0.2);
+        border-color: var(--brand-accent);
+        box-shadow: 0 0 30px rgba(161, 0, 255, 0.2);
     }
     .featureIcon {
         width: 4rem;
         height: 4rem;
-        background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+        background: var(--gradient-primary);
         display: grid;
         place-items: center;
         margin: 0 auto 1.5rem;
         border-radius: 50%;
         color: white;
-        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2);
+        box-shadow: 0 8px 20px rgba(161, 0, 255, 0.2);
         transition: transform 0.5s ease;
     }
     .featureCard:hover .featureIcon { transform: rotateY(180deg); }
     .featureTitle { font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .featureDescription { font-size: 1rem; color: #94a3b8; }
+    .featureDescription { font-size: 1rem; color: var(--text-tertiary); }
 
     /* --- CTA СЕКЦІЯ --- */
     .ctaSection { text-align: center; }
     .ctaContainer {
-        background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+        background: var(--gradient-primary);
         border-radius: var(--radius-2xl);
         padding: 4rem 2rem;
-        box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.3);
+        box-shadow: 0 25px 50px -12px rgba(161, 0, 255, 0.3);
     }
     .ctaTitle { font-family: var(--pixel-font); font-size: 2rem; margin-bottom: 1rem; }
     .ctaText { font-size: 1.25rem; max-width: 50ch; margin: 0 auto 2rem; opacity: 0.9; }

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Link, useRouter } from '@/i18n/navigation'
+import { useRouter } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 import { login } from '@/lib/authClient'
 import Logo from '@/components/Logo/Logo'
@@ -57,9 +57,6 @@ export default function LoginPage() {
             <button type="button" className={`${styles.authSwitchBtn} ${styles.authSwitchBtnActive}`} aria-current="page">
               {t('signIn')}
             </button>
-            <Link href="/register" className={styles.authSwitchBtn}>
-              {t('signUp')}
-            </Link>
           </div>
 
           {error && <div className={styles.error}>{error}</div>}
@@ -70,9 +67,10 @@ export default function LoginPage() {
                 {t('email')}
               </label>
               <input
-                type="email"
+                type="text"
                 id="email"
                 name="email"
+                autoComplete="username"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -122,10 +120,8 @@ export default function LoginPage() {
 
           <div className={styles.footer}>
             <p>
-              {t('footer')}{' '}
-              <Link href="/register" className={styles.link}>
-                {t('footerLink')}
-              </Link>
+              Акаунт видає менеджер SmartCode. Якщо маєте посилання з Telegram —
+              відкрийте його, щоб увійти в кабінет одразу.
             </p>
           </div>
         </div>

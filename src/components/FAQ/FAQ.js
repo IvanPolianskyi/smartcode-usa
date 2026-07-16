@@ -112,9 +112,22 @@ const FAQ = () => {
 				</div>
 
 				<div className={styles.ctaSection}>
+					<div className={styles.ctaBackground}>
+						<div className={styles.ctaBg1} />
+						<div className={styles.ctaBg2} />
+					</div>
 					<div className={styles.ctaContent}>
 						<h3 className={styles.ctaTitle}>{t('cta.title')}</h3>
 						<p className={styles.ctaText}>{t('cta.text')}</p>
+						<button
+							type='button'
+							className={styles.primaryCtaBtn}
+							onClick={() =>
+								window.dispatchEvent(new Event('openContactModal'))
+							}
+						>
+							{t('cta.button')}
+						</button>
 					</div>
 				</div>
 			</div>

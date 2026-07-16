@@ -1,0 +1,45 @@
+{
+  "title": "Кабінет викладача",
+  "subtitle": "Курси відкриті. Учні показуються лише за кодом CRM — без імен і контактів.",
+  "loading": "Завантаження...",
+  "logout": "Вийти",
+  "tabs": {
+    "courses": "Курси",
+    "students": "Учні",
+    "materials": "Матеріали"
+  },
+  "courses": {
+    "title": "Програми",
+    "open": "Відкрити курс",
+    "python": "Python",
+    "roblox": "Roblox Studio",
+    "web": "Веб-розробка",
+    "fullAccess": "Усі уроки відкриті"
+  },
+  "students": {
+    "title": "Мої учні",
+    "empty": "Немає учнів з кодом CRM, привʼязаних до вашого staff id.",
+    "code": "Код",
+    "courses": "Курси",
+    "progress": "Прогрес",
+    "actions": "Дії",
+    "viewProgress": "Деталі",
+    "unlockLesson": "Відкрити урок",
+    "resetLesson": "Скинути урок",
+    "resetCourse": "Скинути курс",
+    "selectCourse": "Курс",
+    "lessonId": "ID уроку (напр. lesson-roblox-1-2)",
+    "apply": "Застосувати",
+    "close": "Закрити",
+    "privacyNote": "Імена, email і телефони приховані. Працюйте лише з кодом учня.",
+    "notLinked": "Акаунт не привʼязаний до CRM staff. Зверніться до адміністратора.",
+    "error": "Помилка завантаження",
+    "saved": "Збережено"
+  },
+  "materials": {
+    "title": "Матеріали викладача",
+    "empty": "Матеріали ще не додані.",
+    "guides": "Гайти",
+    "starter": "Starter Place"
+  }
+}

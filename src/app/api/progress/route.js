@@ -22,6 +22,10 @@ import {
   lessonRequiresQuiz,
   scoreLessonQuiz,
 } from '@/lib/quizValidation'
+import {
+  migrateRobloxProgressDoc,
+  ROBLOX_CURRICULUM_REVISION,
+} from '@/lib/robloxProgressMigrate'
 
 const ALLOWED_ACTIONS = new Set([
   'completeLesson',
@@ -87,17 +91,42 @@ export async function GET(request) {
       return NextResponse.json({ progress: null }, { status: 200 })
     }
 
+    let doc = progress
+    if (courseId === ROBLOX_COURSE_ID) {
+      const { progress: migrated, changed } = migrateRobloxProgressDoc(progress)
+      if (changed) {
+        await progressCollection.updateOne(
+          { _id: progress._id },
+          {
+            $set: {
+              completedLessons: migrated.completedLessons,
+              completedPracticeTasks: migrated.completedPracticeTasks,
+              completedQuizzes: migrated.completedQuizzes,
+              currentLesson: migrated.currentLesson,
+              overallProgress: migrated.overallProgress,
+              robloxCurriculumRevision: ROBLOX_CURRICULUM_REVISION,
+              updatedAt: new Date(),
+            },
+          }
+        )
+      }
+      doc = migrated
+    }
+
     const progressResponse = {
-      userId: progress.userId.toString(),
-      courseId: progress.courseId,
-      enrolledAt: progress.enrolledAt,
-      completedLessons: progress.completedLessons || [],
-      completedQuizzes: progress.completedQuizzes || {},
-      completedPracticeTasks: progress.completedPracticeTasks || [],
-      currentModule: progress.currentModule || 0,
-      currentLesson: progress.currentLesson || 0,
-      overallProgress: progress.overallProgress || 0,
-      certificates: progress.certificates || []
+      userId: doc.userId.toString(),
+      courseId: doc.courseId,
+      enrolledAt: doc.enrolledAt,
+      completedLessons: doc.completedLessons || [],
+      completedQuizzes: doc.completedQuizzes || {},
+      completedPracticeTasks: doc.completedPracticeTasks || [],
+      currentModule: doc.currentModule || 0,
+      currentLesson: doc.currentLesson || 0,
+      overallProgress: doc.overallProgress || 0,
+      certificates: doc.certificates || [],
+      ...(courseId === ROBLOX_COURSE_ID
+        ? { robloxCurriculumRevision: doc.robloxCurriculumRevision || ROBLOX_CURRICULUM_REVISION }
+        : {}),
     }
 
     return NextResponse.json({ progress: progressResponse }, { status: 200 })
@@ -183,6 +212,27 @@ export async function POST(request) {
     } else if (shouldEnroll) {
       const { ensureUserEnrolled } = await import('@/lib/courseUtils')
       await ensureUserEnrolled(userIdObj, courseId)
+    }
+
+    if (courseId === ROBLOX_COURSE_ID && progress) {
+      const { progress: migrated, changed } = migrateRobloxProgressDoc(progress)
+      if (changed) {
+        await progressCollection.updateOne(
+          { _id: progress._id },
+          {
+            $set: {
+              completedLessons: migrated.completedLessons,
+              completedPracticeTasks: migrated.completedPracticeTasks,
+              completedQuizzes: migrated.completedQuizzes,
+              currentLesson: migrated.currentLesson,
+              overallProgress: migrated.overallProgress,
+              robloxCurriculumRevision: ROBLOX_CURRICULUM_REVISION,
+              updatedAt: new Date(),
+            },
+          }
+        )
+        progress = { ...progress, ...migrated }
+      }
     }
 
     const lessonScopedActions = ['completeLesson', 'completeQuiz', 'completePracticeTask', 'updateCurrentLesson']

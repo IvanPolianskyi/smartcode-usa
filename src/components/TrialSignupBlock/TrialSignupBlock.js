@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Sparkles, Check } from 'lucide-react'
+import { Sparkles } from 'lucide-react'
 import {
 	trackTrialInitiateCheckoutOnce,
 	trackTrialLeadOnce,
@@ -86,17 +86,17 @@ export default function TrialSignupBlock() {
 	}
 
 	const phoneClasses = {
-		field: styles.field,
-		fieldError: phoneStyles.fieldError,
+		field: styles.phoneField,
+		fieldError: styles.fieldError,
 		label: styles.label,
-		phoneContainer: phoneStyles.phoneContainer,
-		countryBtn: phoneStyles.countryBtn,
+		phoneContainer: styles.phoneContainer,
+		countryBtn: `${phoneStyles.countryBtn} ${styles.countryBtn}`,
 		flagEmoji: phoneStyles.flagEmoji,
-		dropdownArrow: phoneStyles.dropdownArrow,
-		divider: phoneStyles.divider,
-		phoneInputWrap: `${phoneStyles.phoneInputWrap} ${styles.customPhoneWrap}`,
-		phonePrefix: phoneStyles.phonePrefix,
-		phoneInput: phoneStyles.phoneInput,
+		dropdownArrow: `${phoneStyles.dropdownArrow} ${styles.dropdownArrow}`,
+		divider: `${phoneStyles.divider} ${styles.divider}`,
+		phoneInputWrap: `${phoneStyles.phoneInputWrap} ${styles.phoneInputWrap}`,
+		phonePrefix: `${phoneStyles.phonePrefix} ${styles.phonePrefix}`,
+		phoneInput: `${phoneStyles.phoneInput} ${styles.phoneInput}`,
 		dropdown: phoneStyles.dropdown,
 		dropdownSearchWrap: phoneStyles.dropdownSearchWrap,
 		dropdownSearch: phoneStyles.dropdownSearch,
@@ -196,7 +196,7 @@ export default function TrialSignupBlock() {
 							</div>
 
 							<button type="submit" className={styles.submit} disabled={submitting}>
-								{submitting ? 'Відправка...' : 'Записатися на пробне заняття ↗'}
+								{submitting ? 'Відправка...' : 'Записатися на пробне заняття'}
 							</button>
 						</form>
 					</div>

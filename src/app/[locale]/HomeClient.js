@@ -34,9 +34,6 @@ const TrialSignupBlock = dynamic(() => import('@/components/TrialSignupBlock/Tri
 const SocialMedia = dynamic(() => import('@/components/SocialMedia/SocialMedia'), {
   loading: () => <SectionSkeleton height='600px' />,
 })
-const LMSPromo = dynamic(() => import('@/components/LMSPromo/LMSPromo'), {
-  loading: () => <SectionSkeleton height='600px' />,
-})
 
 function LazySection({ children, height, sectionId, rootMargin = '300px 0px' }) {
   const ref = useRef(null)
@@ -204,9 +201,6 @@ export default function HomeClient() {
       </LazySection>
       <LazySection height="600px">
         <SocialMedia />
-      </LazySection>
-      <LazySection height="600px">
-        <LMSPromo />
       </LazySection>
       <LazySection height="800px">
         <FAQ />

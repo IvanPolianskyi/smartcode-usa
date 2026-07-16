@@ -1,1817 +1,1233 @@
-/** Rich UK content for Roblox Module 10 */
+/** Roblox v2 Module 10 UK — AUTO gen-roblox-v2.mjs */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
-const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
+const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE // reserved
+void MC
 
 export const ukLesson101 = {
- lessonId: "lesson-roblox-10-1",
- moduleId: "module-10",
- order: 1,
- title: "10.1 - Фізичні зв'язки (Constraints)",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Налаштуйте пари додатків для HingeConstraint і RopeConstraint",
- "Побудуйте дверцята на петлях, які активуються кнопкою",
- "Налаштуйте швидкість двигуна та демпфування для читабельного руху",
- "Додайте підвісну платформу на мотузці як другу фізичну демонстрацію",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**Модуль 10 - Магія Parts** - вдосконалюйте **фізику**, **Constraints** та **промені**.
-
-**Хід уроку:**
-1. **Теорія (40 хв)** - обмеження
-2. **Практика (~25 хв)** - петлі дверцята + мотузкова платформа
-3. **Вікторина (10 хв)** - проходження **70%**
-
-Нова область:\`Lesson 10.1 - Constraints\`.`,
- },
- {
- title: "Обмеження оживляють світи",
- content: `**Обмеження** з’єднують Parts з фізичними правилами:
-
-| Обмеження | Використовуйте |
-|------------|-----|
-| **HingeConstraint** | Двері, ворота, обертові майданчики |
-| **RopeConstraint** | Гойдалки, містки, вивіски |
-| **BallSocket** | Суглоби вільного обертання (просунуті) |
-
-Без обмежень ви анімуєте кожен кадр вручну. З обмеженнями **фізика Roblox** робить свою роботу.`,
- },
- {
- title: "Кріплення - опорні точки",
- content: `Кожне обмеження потребує **двох вкладень** (по одному на Part):
-
-1. Виберіть **Part A** (двері) → Create **Attachment**\`Att_Door\` 2. Виберіть **Part B** (рамка) → Create **Attachment**\`Att_Frame\` 3. Вирівняйте кріплення по **краю петлі** (лінія дверної петлі)
-
-**Hinge Constraint** у Part дверей:
-- **Attachment0** → Att_Door
-- **Додаток1** → Att_Frame
-
-**Рама закріплена true.** Двері **не Anchored** (рухається).`,
- },
- {
- title: "Двері на петлі з мотором",
- content: `\`Door\`+\`DoorFrame\`налаштування.
-
-Properties **HingeConstraint**:
-
-| Property | Початкове значення |
-|----------|-------------|
-| **Тип приводу** | Мотор |
-| **Кутова швидкість** | 1,5 |
-| **MotorMaxTorque** | 5000 |
-| **LimitsEnabled** | true |
-| **Нижній кут** | 0 |
-| **Верхній кут** | 90 |
-
-**Кнопка** → Скрипт перемикає двигун:\`\`\`lua
-local hinge = workspace.Mechanics.SwingDoor.Hinge
-local open = false
-
-script.Parent.ClickDetector.MouseClick:Connect(function()
- open = not open
- hinge.AngularVelocity = open and 1.5 or -1.5
-end)
-\`\`\`Або встановіть **TargetAngle**, якщо використовується режим Servo.`,
- },
- {
- title: "Мотузкова підвісна платформа",
- content: `**Платформа** (незакріплена) + **Стельова балка** (закріплена):
-
-**Обмежувач мотузки:**
-- Attachment на верхній Part платформи
-- Кріплення 1 на стелі
-- **Довжина** = відстань між точками
-- **Відшкодування** = 0,1 (низький відскок)
-- **Товщина** = 0,2 видимої мотузки
-
-Платформа **гойдається**, коли гравці стрибають на неї.
-
-**Налаштування ігрового процесу:** занадто пружний = нудота; занадто жорсткий = підробка.`,
- },
- {
- title: "Тюнінг і зіткнення",
- content: `| Проблема | Виправити |
-|---------|-----|
-| Двері відлітають | Знизьте AngularVelocity, підвищте MotorMaxTorque |
-| Програвач дверних затискачів | Групи зіткнень або менша швидкість |
-| Дивно тягнеться мотузка | Перевірте положення кріплень |
-| Платформа обертається | Додайте AlignOrientation або друге обмеження |
-
-**Вправа (5 хв.):** Пройдіть крізь двері, відчиняючи - рух можна розпізнати?`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Двері на петлі відкриваються/закриваються за допомогою кнопки
-- [ ] Рама закріплена, двері розкріплені
-- [ ] Канатна платформа гойдається під вагою
-- [ ] Кріплення, вирівняні в точках петлі/мотузки
-- [ ] Зберегти:\`Lesson 10.1 - Physical Constraints\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Обидві Parts Anchored",
- explanation: "Нічого не рухається.",
- correctApproach: "Рухома Part незакріплена",
- },
- {
- mistake: "Вкладення неправильно",
- explanation: "Дика вісь обертання.",
- correctApproach: "Прикріпити до краю петлі",
- },
- {
- mistake: "Кутова швидкість 50",
- explanation: "Хаотичні двері.",
- correctApproach: "Початок 1-2",
- },
- {
- mistake: "Без кріплення на рамі",
- explanation: "Обмеження неповне.",
- correctApproach: "Потрібні два вкладення",
- },
- ],
- summary: "Ви побудували двері з петлями з приводом від двигуна та платформу, підвішену на мотузці, використовуючи кріплення та обмеження - механічний рух, який відчувається фізичним, а не сценарним кожним кадром.",
- practiceTask: {
- title: "Механічні двері (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** Двері на петлях + мотузкова платформа.
-
-### Part A - Двері на петлі (15 хв)
-1. Механіка Folders - дверна рама + двері + петля
-2. ClickDetector або ProximityPrompt відкриває
-3. Межі 0-90 градусів
-
-### Part B - Мотузкова платформа (8 хв)
-1. Стеля + платформа + RopeConstraint
-2. Тестовий стрибок - розмах відчувається природним
-
-### Part C - Зберегти (2 хв)
-1. **Зберегти в Roblox** →\`Lesson 10.1 - Physical Constraints\` 2. **Практика завершена**`,
- hints: [
- "Лише анкерні опорні Parts",
- "Модуль 5 використовував анімацію - обмеження є рухом на основі фізики",
- "Групи зіткнень, якщо двері сильно б’ють гравців",
- ],
- optionalChallenge: "Перехресний міст коливається на петлі - виклик синхронізації.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "HingeConstraint потребує...",
- options: [
- "Два Attachment",
- "Лише Terrain",
- "Humanoid",
- "DataStore",
- ],
- correctAnswer: 0,
- explanation: "Прикріплена пара.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "Дверна рама повинна бути...",
- options: [
- "Anchored true",
- "Завжди Unanchored",
- "Лише невидимий",
- "Видалено",
- ],
- correctAnswer: 0,
- explanation: "HingeConstraint (петля).",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Обмеження RopeConstraint...",
- options: [
- "Відстань між Parts",
- "Монети гравця",
- "Прогрес квесту",
- "Size UI",
- ],
- correctAnswer: 0,
- explanation: "Довжина мотузки.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "ActuatorType Двигун обертається...",
- options: [
- "Hinge з velocity",
- "Terrain",
- "Sky",
- "Лише Sound",
- ],
- correctAnswer: 0,
- explanation: "Моторний привід.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Рухома Part дверей - це...",
- options: [
- "Unanchored",
- "Anchored true",
- "Лише Script",
- "Terrain",
- ],
- correctAnswer: 0,
- explanation: "Фізика руху.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Тема модуля 10...",
- options: [
- "Magic of Details",
- "Лише inventory",
- "Лише shop",
- "Publishing",
- ],
- correctAnswer: 0,
- explanation: "Модуль полірування.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Занадто швидка кутова швидкість...",
- options: [
- "Відчувається хаотично",
- "Покращує FPS",
- "Обов'язково",
- "Зберігає дані",
- ],
- correctAnswer: 0,
- explanation: "Тюнінг.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Урок 10.2 охоплює...",
- options: [
- "TweenService",
- "Лише DataStore",
- "Лише NPC",
- "Лише монети",
- ],
- correctAnswer: 0,
- explanation: "Наступний урок.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Обмеження, які використовуються для...",
- options: [
- "Двері, мости, ліфти",
- "Лише текст діалогу",
- "Leaderstats",
- "UK locale",
- ],
- correctAnswer: 0,
- explanation: "Механічний рух.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Урок 10.1 зберегти назву...",
- options: [
- "Lesson 10.1 - Physical Constraints",
- "Puzzle World",
- "Tween Mastery",
- "RPG Inventory",
- ],
- correctAnswer: 0,
- explanation: "Зберегти урок.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-10-1",
+  "moduleId": "module-10",
+  "order": 1,
+  "title": "10.1 — Ядро жанру симулятора",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "зрозуміти loop: **клік/збір → число росте → купуєш апгрейд → збираєш швидше**. Спроектувати 1 ресурс і 2 апгрейди на папері. Зібрати сцену: зони збору Parts.",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** зрозуміти loop: **клік/збір → число росте → купуєш апгрейд → збираєш швидше**. Спроектувати 1 ресурс і 2 апгрейди на папері. Зібрати сцену: зони збору Parts.\n\nФаза курсу: **Ігрові механіки**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "Place `M10_Sim`; Folder `Collectables`; Part `ShopNPC` або `ShopPad`; leaderstats: `Coins`, `Power` (IntValues)."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Попрацюй над результатом ще 15–20 хв і збережи Place. Наступного разу покажи короткий демо 20–30 сек."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **10.1 — Ядро жанру симулятора** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Ядро жанру симулятора",
+    "difficulty": "advanced",
+    "description": "### Завдання\nPlace `M10_Sim`; Folder `Collectables`; Part `ShopNPC` або `ShopPad`; leaderstats: `Coins`, `Power` (IntValues).\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Якщо щось зникло — перевір, чи зберіг Place."
+    ],
+    "optionalChallenge": "Зроби артефакт трохи крутішим і будь готовий показати 20 секунд."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Ядро симулятора — це…",
+        "options": [
+          "Цикл прогресії чисел через збір і апгрейди",
+          "Лише красиве небо",
+          "Лише Negate вікна",
+          "Лише відеомонтаж"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Цикл прогресії чисел через збір і апгрейди"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "`Power` у leaderstats часто означає…",
+        "options": [
+          "Скільки дає один збір / силу кліку",
+          "Назву біому",
+          "Volume Sound",
+          "ClockTime"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Скільки дає один збір / силу кліку"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Навіщо малювати 2 апгрейди до коду?",
+        "options": [
+          "Щоб знати економіку до програмування",
+          "Бо код пишеться без ідей завжди краще",
+          "Бо Roblox видаляє гру без малюнка",
+          "Бо Negate обовʼязковий"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Щоб знати економіку до програмування"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Артефакт уроку?",
+        "options": [
+          "Сцена + leaderstats під симулятор",
+          "Повний obby М9 копія",
+          "Blender персонаж",
+          "Clipchamp фільм"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Сцена + leaderstats під симулятор"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Collectables Folder…",
+        "options": [
+          "Місце обʼєктів збору",
+          "Сервіс Lighting",
+          "Тип Union",
+          "Плагін Snap"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Місце обʼєктів збору"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Симулятор відрізняється від obby тим що…",
+        "options": [
+          "Акцент на числах/прогресії, не на паркурі",
+          "Немає Parts",
+          "Немає Lua",
+          "Немає Play"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Акцент на числах/прогресії, не на паркурі"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Один ресурс на старті краще ніж 10 бо…",
+        "options": [
+          "Простіше збалансувати навчання",
+          "Roblox дозволяє лише один",
+          "IntValue не підтримує більше",
+          "GUI не існує"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Простіше збалансувати навчання"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "ShopPad…",
+        "options": [
+          "Точка взаємодії з магазином",
+          "Обовʼязковий KillBrick",
+          "Обовʼязковий TeleportService між місцями",
+          "Обовʼязковий Badge"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Точка взаємодії з магазином"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "ДЗ назви апгрейдів…",
+        "options": [
+          "«+Power», «×2 монети» тощо",
+          "Видалити Coins",
+          "Видалити Power",
+          "Скасувати сцену"
+        ],
+        "correctAnswer": 0,
+        "explanation": "«+Power», «×2 монети» тощо"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Збір ресурсу кодом",
+          "Тільки Sky",
+          "Тільки Ambient",
+          "НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Збір ресурсу кодом"
+      }
+    ]
+  }
 }
 
 export const ukLesson102 = {
- lessonId: "lesson-roblox-10-2",
- moduleId: "module-10",
- order: 2,
- title: "10.2 - TweenService: майстерність",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Створюйте твіни (tween) з TweenInfo за допомогою послаблення та тривалості TweenInfo",
- "Панелі Tween UI та Parts світу (двері, предмети колекціонування)",
- "Ланцюжок твінів із завершеною подією",
- "Вибирайте стилі полегшення для миттєвих або драматичних рухів",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**TweenService** = плавна анімація без ключових кадрів у кожному кадрі.
-
-Ви використовували TweenService в модулі 5 (Tween Polish) - сьогодні ви **опануєте** Constraints, raycast і процедурні головоломки.
-
-**Хід уроку:**
-1. **Теорія (40 хв)** - TweenInfo + ланцюжки
-2. **Практика (~25 хв)** - 3 демонстраційні ролики
-3. **Вікторина (10 хв)** - проходження **70%**
-
-Відкрийте **Урок 10.1 - Фізичні обмеження**.`,
- },
- {
- title: "Чому TweenService має значення",
- content: `Інтерфейс миттєвого телепорту виглядає дешево. **0,3 с Quad Out** дає відчуття професійності.
-
-**Tween** = інтерполяція Properties у часі:
-- Інтерфейс користувача\`Position\`,\`Size\`,\`BackgroundTransparency\`- Parts\`CFrame\`,\`Size\`,\`Color\`-\`Camera.CFrame\`(розширений)
-
-**Не для:** безперервної фізики (використовуйте обмеження 10.1).`,
- },
- {
- title: "Основний шаблон анімації",
- content: `\`\`\`lua
-local TweenService = game:GetService("TweenService")
-
-local panel = script.Parent.ShopPanel
-local goal = { Position = UDim2.fromScale(0.5, 0.5) }
-local info = TweenInfo.new(
- 0.5, -- time
- Enum.EasingStyle.Quad,
- Enum.EasingDirection.Out
-)
-
-local tween = TweenService:Create(panel, info, goal)
-tween:Play()
-\`\`\`| EasingStyle | Відчути |
-|-------------|------|
-| **Квадроцикл** | Загальний інтерфейс користувача |
-| **Назад** | Незначне перевищення |
-| **Відскок** | Грайливий (використовуйте економно) |
-| **Лінійний** | Механічні двері |`,
- },
- {
- title: "Три анімаційні демо",
- content: `**1 - відкрита панель інтерфейсу користувача** (ShopPanel прихована поза екраном):\`\`\`lua
--- from {Position = UDim2.fromScale(0.5, 1.2)} to center
-\`\`\`**2 - Розсувні двері** (Part CFrame - двері-пазли):\`\`\`lua
-local door = workspace.Puzzle.DoorSlide
-local openCF = door.CFrame * CFrame.new(0, 0, 8)
-TweenService:Create(door, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut), {CFrame = openCF}):Play()
-\`\`\`**3 - Колекційний імпульс** (цикл зміни розміру кристалу):\`\`\`lua
-local crystal = workspace.QuestProps.Crystal
-local big = TweenService:Create(crystal, TweenInfo.new(0.6, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Size = crystal.Size * 1.15})
-big:Play()
-\`\`\`**\`-1, true\`** = повторювати вічно, навпаки.`,
- },
- {
- title: "Ланцюжок із завершеним",
- content: `\`\`\`lua
-local function playOpenSequence(door, panel, label)
- local t1 = TweenService:Create(door, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {CFrame = doorOpenCF})
- t1:Play()
- t1.Completed:Connect(function()
- local t2 = TweenService:Create(panel, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Position = centerPos})
- t2:Play()
- t2.Completed:Connect(function()
- label.Text = "Room Unlocked!"
- end)
- end)
-end
-\`\`\`**Ланцюги** = відкриття головоломок, проходження квестів, ролики.`,
- },
- {
- title: "Рекомендації щодо часу",
- content: `| Дія | Тривалість |
-|--------|----------|
-| Кнопка зворотного зв'язку | 0,15-0,25 с |
-| Панель відкрита | 0,4-0,6с |
-| Драматичні двері | 0,8-1,2с |
-| Навколишній пульс | 0,5-1с цикл |
-
-Зберегти в конфігурації:\`\`\`lua
-local TWEEN_UI_OPEN = TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-\`\`\`**Уникайте** відскоків на кожному елементі інтерфейсу - виглядає непрофесійно.`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [] Панель інтерфейсу користувача між відкриттям/закриттям
-- [ ] Двері розсуваються з лінійною анімацією
-- [ ] Імпульсний цикл кристалу
-- [ ] Один завершений ланцюжок (2+ кроки)
-- [ ] Зберегти:\`Lesson 10.2 - Tween Mastery\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Tween Anchored двері неправильна вісь",
- explanation: "Двері застрягли.",
- correctApproach: "Ціль CFrame протестована в Studio",
- },
- {
- mistake: "Підстрибувати на все",
- explanation: "Інтерфейс клоуна.",
- correctApproach: "Quad/Back економно",
- },
- {
- mistake: "Забути :Play()",
- explanation: "Нічого не відбувається.",
- correctApproach: "tween:Play()",
- },
- {
- mistake: "Конфліктне обмеження + анімація позиції",
- explanation: "Фізика бореться з анімацією.",
- correctApproach: "Виберіть одну систему руху",
- },
- ],
- summary: "Ви освоїли динаміку TweenInfo, анімацію користувальницького інтерфейсу та світових об’єктів, колекційні цикли пульсу та завершені ланцюжки - ваші відгуки про гру тепер здаються плавними та навмисними.",
- practiceTask: {
- title: "Пакет лаків Tween (~25 хв)",
- difficulty: "beginner",
- description: `**Ціль:** 3 підростки + 1 ланцюжок.
-
-### Part A - Інтерфейс користувача (8 хв)
-1. Панель «Магазин» або «головоломка» - анімація за кадром
-2. Закрити реверс анімації
-
-### Part B - Світ (10 хв)
-1. Розсувні двері CFrame tween
-2. Цикл повторення кристалічного імпульсу
-
-### Part C - Приєднати та зберегти (7 хв)
-1. Двері відкриваються → панель → текст (Завершено)
-2. **Зберегти в Roblox** →\`Lesson 10.2 - Tween Mastery\` 3. **Практика завершена**`,
- hints: [
- "Модуль 5.4 мав TweenService - розширте тут",
- "Скасувати попередню анімацію, якщо спам, клацніть «Відкрити».",
- "UDim2 для інтерфейсу користувача, CFrame для Parts",
- ],
- optionalChallenge: "Міні-кінематограф: панорамування камери → двері → текст квесту.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "TweenService анімує...",
- options: [
- "Properties з часом",
- "Лише Terrain",
- "Лише Humanoid",
- "DataStore",
- ],
- correctAnswer: 0,
- explanation: "Інтерполяція.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "Перший аргумент TweenInfo.new - це...",
- options: [
- "Тривалість у секундах",
- "Ім'я гравця",
- "Item id",
- "Robux",
- ],
- correctAnswer: 0,
- explanation: "Тривалість часу.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Завершена подія запускається, коли...",
- options: [
- "Tween завершується",
- "Гравець приєднується",
- "Terrain завантажується",
- "Shop відкривається",
- ],
- correctAnswer: 0,
- explanation: "Ланцюжок твінів.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "Quad Out підходить для...",
- options: [
- "Панелі UI",
- "Авторитет Server",
- "Монети",
- "AI NPC",
- ],
- correctAnswer: 0,
- explanation: "Плавний інтерфейс користувача.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Повторення -1 у TweenInfo означає...",
- options: [
- "Цикл назавжди",
- "Один раз",
- "Зупинити server",
- "Видалити Part",
- ],
- correctAnswer: 0,
- explanation: "Імпульсний цикл.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Лінійне послаблення для відчуття дверей...",
- options: [
- "Механічно рівно",
- "Пружний",
- "Випадково",
- "Невидимий",
- ],
- correctAnswer: 0,
- explanation: "Двері розсувні.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Урок 10.2 базується на...",
- options: [
- "Обмеження Lesson 10.1",
- "Лише Module 1",
- "Порожньо",
- "Publish",
- ],
- correctAnswer: 0,
- explanation: "Те саме місце загадки.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Урок 10.3 додає...",
- options: [
- "Raycasting",
- "Лише shop",
- "Лише inventory",
- "Racing",
- ],
- correctAnswer: 0,
- explanation: "Далі датчики.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: ":Play() потрібен, оскільки...",
- options: [
- "Tween не працює до Play",
- "Завжди авто",
- "Бани Server",
- "UI видаляє",
- ],
- correctAnswer: 0,
- explanation: "Почніть анімацію.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Урок 10.2 зберегти назву...",
- options: [
- "Lesson 10.2 - Tween Mastery",
- "Physical Constraints",
- "Puzzle World",
- "Raycasting",
- ],
- correctAnswer: 0,
- explanation: "Зберегти урок.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-10-2",
+  "moduleId": "module-10",
+  "order": 2,
+  "title": "10.2 — Збір і Power",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "функція `grantReward(player)` додає `Power` до `Coins` (або окремий ресурс); респавн монети через wait/цикл.",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** функція `grantReward(player)` додає `Power` до `Coins` (або окремий ресурс); респавн монети через wait/цикл.\n\nФаза курсу: **Ігрові механіки**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "≥5 collectables; debounce; використання Power. ```lua local function grantReward(player) local ls = player:FindFirstChild(\"leaderstats\") if not ls then return end local coins, power = ls.Coins, ls.Power coins.Value += power.Value end ```"
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Шаблон коду (встав у Studio)",
+        "content": "Натисни **Копіювати** → вклей у **Script** або **LocalScript** у Studio. Спочатку міняй **числа, рядки, кольори** — не видаляй рядки «бо не розумію».\n\n### Шаблон 1\n\n```lua\nlocal function grantReward(player)\n\tlocal ls = player:FindFirstChild(\"leaderstats\")\n\tif not ls then return end\n\tlocal coins, power = ls.Coins, ls.Power\n\tcoins.Value += power.Value\nend\n```"
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Попрацюй над результатом ще 15–20 хв і збережи Place. Наступного разу покажи короткий демо 20–30 сек."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **10.2 — Збір і Power** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Збір і Power",
+    "difficulty": "advanced",
+    "description": "### Завдання\n≥5 collectables; debounce; використання Power. ```lua local function grantReward(player) local ls = player:FindFirstChild(\"leaderstats\") if not ls then return end local coins, power = ls.Coins, ls.Power coins.Value += power.Value end ```\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Шаблон коду — у вкладці «Теорія», кнопка «Копіювати»."
+    ],
+    "optionalChallenge": "Зроби артефакт трохи крутішим і будь готовий показати 20 секунд."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "`coins.Value += power.Value` …",
+        "options": [
+          "Нараховує збір з урахуванням сили",
+          "Видаляє Power",
+          "Робіть Negate",
+          "Малює Decal"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Нараховує збір з урахуванням сили"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Debounce на зборі…",
+        "options": [
+          "Анти-спам нарахувань",
+          "Тип Sky",
+          "Кнопка Publish",
+          "Плагін Terrain"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Анти-спам нарахувань"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Респавн монети…",
+        "options": [
+          "Повторюваний геймплей",
+          "Заборонений",
+          "Видаляє Place",
+          "Дає Badge автоматично"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Повторюваний геймплей"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "Працюючий збір із Power",
+          "Повний Tycoon dropper лінія",
+          "Blender",
+          "Відео 20′"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Працюючий збір із Power"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "grantReward функція…",
+        "options": [
+          "Одна точка видачі нагороди",
+          "Заміна Workspace",
+          "Заміна Lighting",
+          "Видалення Path"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Одна точка видачі нагороди"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Старт Power = 1 …",
+        "options": [
+          "Зрозумілий баланс",
+          "Обовʼязково 1_000_000",
+          "Обовʼязково 0 назавжди",
+          "Обовʼязково відʼємний"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зрозумілий баланс"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "ClickDetector замість Touched…",
+        "options": [
+          "Можливий варіант «клік-симулятор»",
+          "Неможливий у Roblox",
+          "Видаляє leaderstats",
+          "Вимикає Play"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Можливий варіант «клік-симулятор»"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Якщо монети не ростуть…",
+        "options": [
+          "Перевірити leaderstats / імена / debounce",
+          "Купити Robux обовʼязково",
+          "Видалити акаунт",
+          "Змінити нік"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Перевірити leaderstats / імена / debounce"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Цикл по Collectables…",
+        "options": [
+          "Як hazards у М9",
+          "Новий язык",
+          "Заборонений",
+          "Лише в PHP"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Як hazards у М9"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Магазин апгрейдів",
+          "Тільки Negate",
+          "Тільки паркан",
+          "НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Магазин апгрейдів"
+      }
+    ]
+  }
 }
 
 export const ukLesson103 = {
- lessonId: "lesson-roblox-10-3",
- moduleId: "module-10",
- order: 3,
- title: "10.3 - Raycasting",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Відтворюйте промені за допомогою RaycastParams і FilterDescendantsInstances",
- "Створіть датчик від випромінювача до цілі для розблокування головоломки",
- "Налагодження променів за допомогою Beam або тимчасових Parts",
- "Позначайте дійсні цілі за допомогою CollectionService",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**Raycasting** = невидимий лазер, який запитує, *що на шляху?*
-
-Ідеально підходить для лазерних головоломок, прямої видимості, виявлення ударів.
-
-**Хід уроку:**
-1. **Теорія (40 хв)** - Raycast API
-2. **Практика (~25 хв)** - розблокування сенсорного променя
-3. **Вікторина (10 хв)** - проходження **70%**
-
-Відкрийте **Урок 10.2 - Майстерність Tween**.`,
- },
- {
- title: "Raycasting простою англійською мовою",
- content: `З **початку** зйомки **напрямок** × **відстань**:\`\`\`lua
-local origin = emitter.Position
-local direction = (target.Position - origin).Unit
-local distance = (target.Position - origin).Magnitude
-
-local result = workspace:Raycast(origin, direction * distance, params)
-\`\`\`**результат** нуль = нічого не влучено (чиста лінія).
-**результат.Екземпляр** = звернення першої Parts.`,
- },
- {
- title: "Фільтри RaycastParams",
- content: `\`\`\`lua
-local params = RaycastParams.new()
-params.FilterType = Enum.RaycastFilterType.Exclude
-params.FilterDescendantsInstances = {
- game.Players.LocalPlayer.Character, -- if LocalScript test
- workspace.Debris,
-}
-params.IgnoreWater = true
-\`\`\`**Включити** білий список - враховуються лише позначені цілі:\`\`\`lua
-params.FilterType = Enum.RaycastFilterType.Include
-params.FilterDescendantsInstances = {workspace.Puzzle.Targets}
-\`\`\`**Серверна головоломка** - запустіть raycast на **сервері** для надійного розблокування.`,
- },
- {
- title: "Сенсорна логічна головоломка",
- content: `Part **Emitter** → Part **TargetCrystal** (тег\`PuzzleTarget\`)\`PuzzleRayService\`Script (сервер), кожні 0,2 с або дзеркальне обертання:\`\`\`lua
-local CollectionService = game:GetService("CollectionService")
-
-local function checkBeam(emitter, target)
- local dir = (target.Position - emitter.Position)
- local result = workspace:Raycast(emitter.Position, dir.Unit * dir.Magnitude, params)
-
- if not result then
- return false, "blocked" -- should not happen if target in range
- end
-
- if result.Instance == target or result.Instance:IsDescendantOf(target.Parent) then
- return true, "clear_hit"
- end
-
- return false, "blocked_by_" .. result.Instance.Name
-end
-\`\`\`Якщо **очистити** → встановити\`targetState.A = true\`→ перевірити всі цілі → відкрити двері.`,
- },
- {
- title: "Налагодити візуальні ефекти",
- content: `**Промінь** між насадками на випромінювачі та точкою попадання:\`\`\`lua
--- Attachment0 on emitter, Attachment1 on moving hit part
-beam.Color = ColorSequence.new(Color3.fromRGB(255, 0, 0))
--- Green when puzzle solved:
-beam.Color = ColorSequence.new(Color3.fromRGB(0, 255, 100))
-\`\`\`**Або** тимчасова тонка Part вздовж променя в налагодженні Studio.
-
-Налагодження зберігає години, коли «головоломка зламана» насправді є сторонньою Part на шляху.`,
- },
- {
- title: "Нормалізація напрямку",
- content: `**Завжди** використовуйте\`.Unit\`перед множенням відстані:\`\`\`lua
-local dir = (target.Position - origin)
-local result = workspace:Raycast(origin, dir.Unit * dir.Magnitude, params)
-\`\`\`неправильно:\`direction * 100\`з не одиничним вектором → неправильна дистанція попадання.
-
-**Виключіть** декоративні Parts та скло, якщо вони не повинні блокувати.`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Рей потрапляє в ціль, коли лінія вільна
-- [ ] Розблокувати стіну між блоками
-- [ ] Промінь налагодження відображає червоний/зелений стан
-- [ ] Server Script володіє розблокуванням (не тільки клієнтом)
-- [ ] Зберегти:\`Lesson 10.3 - Raycasting\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Неодиничний вектор напрямку",
- explanation: "Неправильна довжина променя.",
- correctApproach: "реж.Одиниця * величина",
- },
- {
- mistake: "Розблокування лише для клієнта",
- explanation: "Експлойт.",
- correctApproach: "Серверний рей + відкриті двері",
- },
- {
- mistake: "Забули виключити character гравця",
- explanation: "Самоблокування.",
- correctApproach: "FilterDescendantsInstances",
- },
- {
- mistake: "Декоративна Part в траєкторії променів",
- explanation: "Завжди заблокований.",
- correctApproach: "Виключити або перемістити Part",
- },
- ],
- summary: "Ви реалізували фільтрацію RaycastParams, перевірки датчика від випромінювача до цілі за допомогою налагоджувальних променів і логіку розблокування головоломки на стороні сервера - готові для поєднання з дзеркалами в уроці лазерної головоломки.",
- practiceTask: {
- title: "Система сенсорних променів (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** Ray clear = розблокувати крок.
-
-### Part A - Налаштування (10 хв)
-1. Емітер + TargetCrystal (тег PuzzleTarget)
-2. RaycastParams виключає гравець/сміття
-3. Налагодити візуал Beam
-
-### Part B - Логіка (12 хв)
-1. Функція Server checkBeam
-2. Заблоковано → заблоковане повідомлення; очистити → активувати ціль
-3. Усі мішені → проміжні двері відкриті (10.2)
-
-### Part C - Зберегти (3 хв)
-1. Розмістити стіну - перевірити блок; видалити - перевірити розблокування
-2. **Зберегти в Roblox** →\`Lesson 10.3 - Raycasting\` 3. **Практика завершена**`,
- hints: [
- "Друк результату.Ім’я екземпляра, коли заблоковано",
- "Тег CollectionService для дійсних цілей",
- "Урок 10.4 поєднує дзеркала + багатоцільові дії",
- ],
- optionalChallenge: "Зелений промінь лише при правильному попаданні в ціль.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "Raycast повертає нуль, коли...",
- options: [
- "Промінь нічого не влучив",
- "Гравець перемагає",
- "Лише Terrain",
- "UI відкривається",
- ],
- correctAnswer: 0,
- explanation: "Жодного удару.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "FilterDescendantsInstances...",
- options: [
- "Include або exclude Parts",
- "Видалити Terrain",
- "Зберегти DataStore",
- "Spawn NPC",
- ],
- correctAnswer: 0,
- explanation: "Променевий фільтр.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Напрямок повинен використовувати...",
- options: [
- "Одиничний вектор × відстань",
- "Випадково",
- "Ім'я гравця",
- "Robux",
- ],
- correctAnswer: 0,
- explanation: "Правильна довжина.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "Розблокування головоломки на сервері запобігає...",
- options: [
- "Клієнтські експлойти",
- "Лаг",
- "Sound",
- "Welds",
- ],
- correctAnswer: 0,
- explanation: "Авторитет.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "результат. Instance є...",
- options: [
- "Перший влучений Part",
- "Лише гравець",
- "Sky",
- "Script",
- ],
- correctAnswer: 0,
- explanation: "Хітова Part.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Налагодження променя допомагає...",
- options: [
- "Бачити шлях променя",
- "Publish гру",
- "Видалити Humanoid",
- "Додати монети",
- ],
- correctAnswer: 0,
- explanation: "Візуальне налагодження.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Урок 10.3 базується на...",
- options: [
- "Tween-и 10.2 для дверей",
- "Лише Module 3",
- "Порожньо",
- "Лише монети",
- ],
- correctAnswer: 0,
- explanation: "Анімація відкритих дверей.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Урок 10.4 поєднує...",
- options: [
- "Промені + дзеркала + стан головоломки",
- "Лише inventory",
- "Лише shop",
- "Лише гонки",
- ],
- correctAnswer: 0,
- explanation: "Лазерна головоломка.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Теги CollectionService допомагають...",
- options: [
- "Визначити цілі головоломки",
- "Політ",
- "Плавання",
- "Лікування",
- ],
- correctAnswer: 0,
- explanation: "Дійсні цілі.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Урок 10.3 зберегти назву...",
- options: [
- "Lesson 10.3 - Raycasting",
- "Tween Mastery",
- "Puzzle World",
- "Constraints",
- ],
- correctAnswer: 0,
- explanation: "Зберегти урок.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-10-3",
+  "moduleId": "module-10",
+  "order": 3,
+  "title": "10.3 — Магазин: ціни і canAfford",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "Module/таблица `Upgrades = { PowerUp = {price=25, add=1},... }`; покупка на сервері.",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** Module/таблица `Upgrades = { PowerUp = {price=25, add=1},... }`; покупка на сервері.\n\nФаза курсу: **Ігрові механіки**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "Клік Shop → якщо canAfford → зняти монети → збільшити Power; print/UI фідбек."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Попрацюй над результатом ще 15–20 хв і збережи Place. Наступного разу покажи короткий демо 20–30 сек."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **10.3 — Магазин: ціни і canAfford** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Магазин: ціни і canAfford",
+    "difficulty": "advanced",
+    "description": "### Завдання\nКлік Shop → якщо canAfford → зняти монети → збільшити Power; print/UI фідбек.\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Якщо щось зникло — перевір, чи зберіг Place."
+    ],
+    "optionalChallenge": "Зроби артефакт трохи крутішим і будь готовий показати 20 секунд."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Ціни в таблиці…",
+        "options": [
+          "Легко міняти баланс",
+          "Заборонено",
+          "Лише в Excel файлі поза Studio",
+          "Лише голосом"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Легко міняти баланс"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "canAfford перед покупкою…",
+        "options": [
+          "Захист від відʼємних монет",
+          "Малює Sky",
+          "Робіть Union",
+          "Відкриває Toolbox"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Захист від відʼємних монет"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Знімати монети на сервері…",
+        "options": [
+          "Базова античит-гігієна",
+          "Гірше ніж лише на клієнті завжди",
+          "Видаляє Power",
+          "Вимикає Output"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Базова античит-гігієна"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "Працююча покупка апгрейду",
+          "Повний MMO",
+          "Blender face",
+          "Clipchamp"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Працююча покупка апгрейду"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Другий апгрейд…",
+        "options": [
+          "Закріплює таблицю апгрейдів",
+          "Заборонений",
+          "Ламає IntValue завжди",
+          "Видаляє Shop"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Закріплює таблицю апгрейдів"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Відмова при нестачі…",
+        "options": [
+          "print/UI «не вистачає»",
+          "Видалення Place",
+          "Автоматичний Gift Robux",
+          "Negate гравця"
+        ],
+        "correctAnswer": 0,
+        "explanation": "print/UI «не вистачає»"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "ModuleScript цін…",
+        "options": [
+          "Звʼязок з М8",
+          "Суперечить М8",
+          "Скасовує функції",
+          "Скасовує таблиці"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Звʼязок з М8"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "add=1 до Power…",
+        "options": [
+          "Прогресія сили збору",
+          "Видаляє Coins завжди",
+          "Телепортує",
+          "Вбиває Humanoid"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Прогресія сили збору"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Баланс ціни занадто низький…",
+        "options": [
+          "Гра стає нудною миттєво — правити",
+          "Ідеал завжди",
+          "Дає Badge",
+          "Зберігає Place"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Гра стає нудною миттєво — правити"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "UI магазину",
+          "Тільки Ambient",
+          "Тільки Decal",
+          "НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "UI магазину"
+      }
+    ]
+  }
 }
 
 export const ukLesson104 = {
- lessonId: "lesson-roblox-10-4",
- moduleId: "module-10",
- order: 4,
- title: "10.4 - Загадка з лазером",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Створіть лазерні випромінювачі, дзеркала та три цільові вузли",
- "Відстежуйте стан головоломки в таблиці targetState сервера",
- "Обертайте дзеркала з усуненням стрибків і повторною перевіркою променів",
- "Відкрийте двері за допомогою анімації та звуку, коли всі цілі активні",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `Об’єднайте **промені (10.3)** + **tweens (10.2)** у **багатоступеневу лазерну кімнату**.
-
-**Хід уроку:**
-1. **Теорія (40 хв)** - структура головоломки + таблиця стану
-2. **Практика (~25 хв)** - 3 дзеркала, 3 мішені
-3. **Вікторина (10 хв)** - проходження **70%**
-
-Відкрийте **Урок 10.3 - Рейкастинг**.`,
- },
- {
- title: "Структура лазерної головоломки",
- content: `Folder\`Workspace/PuzzleRoom/LaserPuzzle/\`:
-
-| Шматок | Роль |
-|-------|------|
-| **Випромінювач_A** | Походження променів |
-| **Дзеркало_1..3** | Перенаправити (обернути, щоб прицілитися) |
-| **Ціль_A/B/C** | Тег\`PuzzleTarget\`|
-| **DoorLocked** | Відкривається, коли все true |
-| **PuzzleState** | Менеджер стану сервера |
-
-Гравці мають побачити **причину → наслідок** за 10 секунд.`,
- },
- {
- title: "таблиця targetState",
- content: `\`Srv_PuzzleLaser\`Script:\`\`\`lua
-local targetState = {
- A = false,
- B = false,
- C = false,
-}
-
-local function allActive()
- return targetState.A and targetState.B and targetState.C
-end
-
-local function tryOpenDoor()
- if not allActive() then return end
- -- Tween door from 10.2
- local door = workspace.PuzzleRoom.DoorLocked
- local TweenService = game:GetService("TweenService")
- local openCF = door.CFrame * CFrame.new(0, 0, 10)
- TweenService:Create(door, TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {CFrame = openCF}):Play()
- -- Sound + StatusLabel "Puzzle Complete!"
-end
-\`\`\`**Сервер володіє** targetState - клієнт не може FireServer(true, true, true).`,
- },
- {
- title: "Поворот дзеркала",
- content: `Кожне дзеркало - **ClickDetector** або **ProximityPrompt** "Rotate":\`\`\`lua
-local ROTATE_STEP = 45
-local lastRotate = 0
-local DEBOUNCE = 0.3
-
-mirror.ClickDetector.MouseClick:Connect(function()
- if os.clock() - lastRotate < DEBOUNCE then return end
- lastRotate = os.clock()
- mirror.CFrame = mirror.CFrame * CFrame.Angles(0, math.rad(ROTATE_STEP), 0)
- recheckAllRays() -- server function
-end)
-\`\`\`**recheckAllRays** запускає променеву логіку з 10.3 для кожної пари емітер → ціль (зі спрощеним перенаправленням дзеркала: перевірте пряму лінію для уроку або один відскок).`,
- },
- {
- title: "Спрощена доріжка променя уроку",
- content: `**Версія для початківців:** кожне дзеркало включає **зв’язану ціль** під час обертання для корекції повороту (Anchored кути):\`\`\`lua
-local correctAngles = {
- Mirror_1 = 90,
- Mirror_2 = 180,
- Mirror_3 = 0,
-}
-
-local function isAngleCorrect(mirror, correct)
- local _, y, _ = mirror.CFrame:ToEulerAnglesYXZ()
- local deg = math.deg(y) % 360
- return math.abs(deg - correct) < 10
-end
-\`\`\`**Додатково:** повна математика променів відбиття дзеркала (додаткове завдання).
-
-Коли правильно →\`targetState.A = true\`+ світиться мішень **Neon зелений**.`,
- },
- {
- title: "Петля зворотного зв'язку",
- content: `Кожна цільова активація:
-- **PointLight** увімкнено на кристалі
-- **Звуковий** пінг
-- Позначка **BillboardGui**
-- **StatusLabel**\`Targets: 2/3\`При неправильному обертанні:
-- Короткий червоний спалах на дзеркалі
-- Жодного прогресу
-
-**Кнопка скидання** (необов’язково): встановлює кути на 0 і стан false.`,
- },
- {
- title: "Антибайпас",
- content: `| Експлойт | Блок |
-|---------|-------|
-| Клієнт відкриває двері | Анімація дверей лише на сервері tryOpenDoor |
-| Пропустити дзеркала | Для кожної цілі потрібен сервер true |
-| Обертання спаму | Усунення стрибків 0,3 с |
-
-**Без кута:** якщо застрягли 90-ті, покажіть білборд з підказками (завдання).`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] 3 цілі + обертання дзеркала змінює стан
-- [ ] Усі 3 активні відкривають двері за допомогою анімації + звук
-- [ ] Статус показує прогрес X/3
-- [ ] Скидання працює для повтору
-- [ ] Зберегти:\`Lesson 10.4 - Laser Puzzle\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Клієнт встановлює targetState true",
- explanation: "Обійти головоломку.",
- correctApproach: "Лише повторна перевірка сервера",
- },
- {
- mistake: "Відсутність усунення стрибків при обертанні",
- explanation: "Тремтіння спаму.",
- correctApproach: "Час відновлення 0,3 с",
- },
- {
- mistake: "Двері відкриваються на 2/3 мішеней",
- explanation: "Логічний баг.",
- correctApproach: "перевірка allActive().",
- },
- {
- mistake: "Немає відгуків про активацію",
- explanation: "Плутана головоломка.",
- correctApproach: "Світло + звук + лічильник",
- },
- ],
- summary: "Ви створили лазерну головоломку з трьома цілями з цільовим станом сервера, обертанням дзеркала з усуненням стрибків, перевіркою променів або кутів і нагородою за проміжні двері - гравці розуміють і вирішують багатоетапне завдання.",
- practiceTask: {
- title: "Лазерна кімната головоломок (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** 3 мішені → відкриті двері.
-
-### Part A - Створення (10 хв)
-1. Folder LaserPuzzle - випромінювач, 3 дзеркала, 3 мішені
-2. targetState + серверний скрипт tryOpenDoor
-
-### Part B - Взаємодія (12 хв)
-1. Обернути дзеркала - перевірити повторно - оновити стан
-2. Індикатори/звуки зворотного зв’язку + інтерфейс Targets X/3
-3. Усі активні → дверна анімація
-
-### Part C - Зберегти (3 хв)
-1. Повне вирішення один раз; скинути та вирішити знову
-2. **Зберегти в Roblox** →\`Lesson 10.4 - Laser Puzzle\` 3. **Практика завершена**`,
- hints: [
- "Почніть із рішення кутової фіксації перед справжнім відбиттям дзеркала",
- "Друк таблиці targetState під час налагодження",
- "Поєднайте 10,2 твін + 10,3 промінь в одній кімнаті",
- ],
- optionalChallenge: "Золоті/срібні/бронзові медалі за часом вирішення.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "targetState має жити...",
- options: [
- "Server",
- "Лише клієнт",
- "Lighting",
- "Terrain",
- ],
- correctAnswer: 0,
- explanation: "Авторитет.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "allActive() перевіряє...",
- options: [
- "Усі цілі true",
- "Одна ціль",
- "Ім'я гравця",
- "Robux",
- ],
- correctAnswer: 0,
- explanation: "Умова перемоги.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Усунення дребезгу дзеркал запобігає...",
- options: [
- "Спам rotation/jitter",
- "Ходьба",
- "Стрибок",
- "Shop",
- ],
- correctAnswer: 0,
- explanation: "Введіть спам.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "Двері відкриваються за допомогою...",
- options: [
- "TweenService після головоломки",
- "Клієнтський чат",
- "Terrain",
- "Видалити",
- ],
- correctAnswer: 0,
- explanation: "Нагородний момент.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Відгук про ціль допомагає...",
- options: [
- "Гравці розуміють прогрес",
- "Лаг",
- "Зберегти дані",
- "NPC",
- ],
- correctAnswer: 0,
- explanation: "Чіткість UX.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Урок 10.4 використовує...",
- options: [
- "Промені та стан головоломки",
- "Лише inventory",
- "Лише монети",
- "Лише гонки",
- ],
- correctAnswer: 0,
- explanation: "Комбіновані системи.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Тег PuzzleTarget ідентифікує...",
- options: [
- "Валідні цілі кристалів",
- "Вороги",
- "Shops",
- "Машини",
- ],
- correctAnswer: 0,
- explanation: "Променеві цілі.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Урок 10.5 додає...",
- options: [
- "Процедурні variants",
- "Лише діалог",
- "DataStore",
- "Publish",
- ],
- correctAnswer: 0,
- explanation: "Випадкові макети.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Антибайпас означає...",
- options: [
- "Server перевіряє завершення",
- "Довіряти клієнту",
- "Без перевірок",
- "Пропустити головоломку",
- ],
- correctAnswer: 0,
- explanation: "Безпека.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Урок 10.4 зберегти назву...",
- options: [
- "Lesson 10.4 - Laser Puzzle",
- "Raycasting",
- "Puzzle World",
- "Constraints",
- ],
- correctAnswer: 0,
- explanation: "Зберегти урок.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-10-4",
+  "moduleId": "module-10",
+  "order": 4,
+  "title": "10.4 — UI магазину + RemoteEvent",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "ScreenGui зі списком 2 кнопок; RemoteEvent `BuyUpgrade` з імʼям апгрейду; сервер валідує.",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** ScreenGui зі списком 2 кнопок; RemoteEvent `BuyUpgrade` з імʼям апгрейду; сервер валідує.\n\nФаза курсу: **Ігрові механіки**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "Відкрити магазин біля ShopPad (ProximityPrompt **або** Click); купити з кнопки GUI."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Попрацюй над результатом ще 15–20 хв і збережи Place. Наступного разу покажи короткий демо 20–30 сек."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **10.4 — UI магазину + RemoteEvent** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: UI магазину + RemoteEvent",
+    "difficulty": "advanced",
+    "description": "### Завдання\nВідкрити магазин біля ShopPad (ProximityPrompt **або** Click); купити з кнопки GUI.\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Якщо щось зникло — перевір, чи зберіг Place."
+    ],
+    "optionalChallenge": "Зроби артефакт трохи крутішим і будь готовий показати 20 секунд."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "RemoteEvent між клієнтом і сервером…",
+        "options": [
+          "Передає сигнал/запит",
+          "Малює Terrain",
+          "Робіть Negate",
+          "Зберігає PDF"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Передає сигнал/запит"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Ціну перевіряє…",
+        "options": [
+          "Сервер",
+          "Лише колір кнопки",
+          "Лише Sky",
+          "Лише Decal"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Сервер"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Якщо клієнт бреше «це коштує 0»…",
+        "options": [
+          "Сервер все одно дивиться свою таблицю",
+          "Обовʼязково вірить",
+          "Видаляє гру",
+          "Дає адмінку"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Сервер все одно дивиться свою таблицю"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "GUI покупки через RemoteEvent",
+          "Повний obby таймер копія",
+          "Blender",
+          "Відеомонтаж"
+        ],
+        "correctAnswer": 0,
+        "explanation": "GUI покупки через RemoteEvent"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "ProximityPrompt…",
+        "options": [
+          "Зручний open shop",
+          "Заборонений",
+          "Заміна leaderstats",
+          "Заміна Parts"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Зручний open shop"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "LocalScript у кнопці…",
+        "options": [
+          "FireServer з імʼям апгрейду",
+          "Змінює ServerStorage напряму завжди ок без сервера",
+          "Видаляє Workspace",
+          "Вимикає Play"
+        ],
+        "correctAnswer": 0,
+        "explanation": "FireServer з імʼям апгрейду"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Це глибше за М4 меню бо…",
+        "options": [
+          "Є мережева покупка",
+          "Менше кнопок завжди погано",
+          "Немає UI",
+          "Немає Play"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Є мережева покупка"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Дві кнопки GUI…",
+        "options": [
+          "Два апгрейди",
+          "Обовʼязково 100",
+          "Обовʼязково 0",
+          "Обовʼязково Negate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Два апгрейди"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Помилка Remote не знайдено…",
+        "options": [
+          "Шлях/імена в ReplicatedStorage",
+          "Купити Robux",
+          "Видалити акаунт",
+          "Змінити нік"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Шлях/імена в ReplicatedStorage"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Множники / баланс сесії",
+          "Тільки Sky",
+          "Тільки паркан",
+          "НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Множники / баланс сесії"
+      }
+    ]
+  }
 }
 
 export const ukLesson105 = {
- lessonId: "lesson-roblox-10-5",
- moduleId: "module-10",
- order: 5,
- title: "10.5 - Процедурні елементи",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Вибирайте варіанти кімнати-головоломки за допомогою math.random із підібраних шаблонів",
- "Зберігайте метадані варіантів для складності та часу вирішення",
- "Переконайтеся, що кожен варіант вирішується з достатніми труднощами",
- "Використовуйте випадкове засівання для повторюваних тестів Studio",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**Процедурний** не означає хаотичний - це означає, що **різноманітні шаблони** гравці все ще можуть перемогти.
-
-**Хід уроку:**
-1. **Теорія (40 хв)** - шаблон + випадковий вибір
-2. **Практика (~25 хв)** - 4 варіанти головоломки
-3. **Вікторина (10 хв)** - проходження **70%**
-
-Відкрийте **Урок 10.4 - Лазерна головоломка**.`,
- },
- {
- title: "Процедурний проти випадкового безладу",
- content: `| Хороша процедурна | Поганий випадковий |
-|-----------------|------------|
-| 4 макети, створені вручну | Генерація чистого шуму |
-| Такий же діапазон складності | Неможливі дзеркальні комбо |
-| Зареєстрований ідентифікатор варіанта | Без тестування |
-
-**Відтворюваність** без **виходу з люті**.`,
- },
- {
- title: "Таблиця варіантів",
- content: `\`Modules/PuzzleVariants\`ModuleScript:\`\`\`lua
-local PuzzleVariants = {
- {
- id = "layout_alpha",
- difficulty = 1,
- estimatedMinutes = 3,
- mirrorAngles = {90, 180, 0},
- },
- {
- id = "layout_beta",
- difficulty = 2,
- estimatedMinutes = 4,
- mirrorAngles = {45, 135, 270},
- },
- {
- id = "layout_gamma",
- difficulty = 2,
- estimatedMinutes = 5,
- mirrorAngles = {0, 90, 180},
- },
- {
- id = "layout_delta",
- difficulty = 3,
- estimatedMinutes = 6,
- mirrorAngles = {135, 225, 315},
- },
-}
-
-return PuzzleVariants
-\`\`\``,
- },
- {
- title: "Варіант вибору та спауну",
- content: `\`Srv_PuzzleRound\`Script на початку раунду:\`\`\`lua
-local PuzzleVariants = require(game.ServerScriptService.Modules.PuzzleVariants)
-
-local function pickVariant()
- local index = math.random(1, #PuzzleVariants)
- return PuzzleVariants[index]
-end
-
-local function applyVariant(variant)
- print("[Puzzle] Spawning", variant.id, "difficulty", variant.difficulty)
- -- Reset targetState
- -- Set mirror correct angles from variant.mirrorAngles
- -- Update UI VariantLabel.Text = variant.id
-end
-
-local variant = pickVariant()
-applyVariant(variant)
-\`\`\`**Записуйте ідентифікатор варіанта** кожного раунду для балансування.`,
- },
- {
- title: "Зважений випадковий (необов'язково)",
- content: `\`\`\`lua
-local function pickWeighted()
- local roll = math.random()
- if roll < 0.1 then
- return PuzzleVariants[4] -- legendary hard, 10%
- end
- return PuzzleVariants[math.random(1, 3)]
-end
-\`\`\`**Правило справедливості:** перевірте кожен варіант 5 разів - усі можна виконати.`,
- },
- {
- title: "Висів довільний для тестування",
- content: `\`\`\`lua
-local TEST_MODE = false
-local TEST_SEED = 12345
-
-if TEST_MODE then
- math.randomseed(TEST_SEED)
-end
-\`\`\`Те саме початкове значення → така ж послідовність варіантів у Studio - відтворення помилок.
-
-**Ніколи** не пускайте в опубліковану живу гру з даних клієнта (передбачувані експлойти) - лише вибір сервера.`,
- },
- {
- title: "Круглий потік скидання",
- content: `Після відкриття дверей:
-1. Зачекайте 5 секунд святкування
-2. **Скинути** дзеркала, targetState, положення дверей
-3.\`pickVariant()\`знову
-4. Оголосити\`New challenge: layout_beta\`Підключається до майбутніх ігор **на основі раундів** (Модуль 11+).`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] 4 варіанти в модулі, усі перевірені розв’язні
-- [ ] Початок раунду вибирає випадковий варіант
-- [ ] VariantLabel показує поточний ідентифікатор макета
-- [ ] Скидання + новий варіант після перемоги працює
-- [ ] Зберегти:\`Lesson 10.5 - Procedural Elements\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Повністю випадкові кути",
- explanation: "Нерозв'язні головоломки.",
- correctApproach: "Підібрані кути дзеркала для кожного варіанту",
- },
- {
- mistake: "Немає варіантів реєстрації",
- explanation: "Не може збалансувати.",
- correctApproach: "Друкуйте ідентифікатор кожного раунду",
- },
- {
- mistake: "Лише один макет",
- explanation: "Не процедурна мета уроку.",
- correctApproach: "Мінімум 4 шаблони",
- },
- {
- mistake: "Варіант на вибір клієнта",
- explanation: "Зібрати вишню легко.",
- correctApproach: "Сервер pickVariant",
- },
- ],
- summary: "Ви додали підібрані варіанти головоломок, вибрані за допомогою math.random, метадані для рівня складності, необов’язкові зважені вибірки та цикл скидання раундів - тепер лазерна кімната змінюється між іграми, залишаючись справедливою.",
- practiceTask: {
- title: "Варіанти процедурних головоломок (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** 4 схеми, випадкові в кожному раунді.
-
-### Part A - Модуль варіантів (10 хв)
-1. Варіанти головоломки з 4 записами + дзеркальні кути
-2. Playtest кожен - все вирішується
-
-### Part B - Менеджер раунду (12 хв)
-1. pickVariant + applyVariant на початку
-2. Після перемоги → скинути → новий варіант
-3. VariantLabel UI
-
-### Part C - Зберегти (3 хв)
-1. Зіграйте 4 раунди - побачите різні ідентифікатори у вихідних даних
-2. **Зберегти в Roblox** →\`Lesson 10.5 - Procedural Elements\` 3. **Практика завершена**`,
- hints: [
- "TEST_SEED для повторного налагодження",
- "EstimatedMinutes допомагає вчителям балансувати",
- "Легендарний варіант 10% за бажанням",
- ],
- optionalChallenge: "Зважений випадковий - лише layout_delta 10%.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "Добре процедурне використання...",
- options: [
- "Куровані шаблони",
- "Чистий хаос",
- "Без тестування",
- "Лише клієнт",
- ],
- correctAnswer: 0,
- explanation: "Контрольований сорт.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "math.random picks...",
- options: [
- "Індекс variant",
- "HP гравця",
- "Terrain",
- "Sky",
- ],
- correctAnswer: 0,
- explanation: "Вибір макета.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Журналування ідентифікаторів варіантів допомагає...",
- options: [
- "Баланс складності",
- "Видалення збережень",
- "Бан",
- "Publishing",
- ],
- correctAnswer: 0,
- explanation: "Проектні дані.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "Сервер вибирає варіант, щоб запобігти...",
- options: [
- "Клієнт обирає легке",
- "Лаг",
- "Sound",
- "UI",
- ],
- correctAnswer: 0,
- explanation: "Чесний вибір.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "випадкове насіння в TEST_MODE...",
- options: [
- "Відтворювані debug-прогони",
- "Live експлойти",
- "Видаляє головоломки",
- "Видаляє UI",
- ],
- correctAnswer: 0,
- explanation: "Студійне тестування.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Кожен варіант має бути...",
- options: [
- "Вирішувано й протестовано",
- "Неможливо",
- "Невидимий",
- "Порожньо",
- ],
- correctAnswer: 0,
- explanation: "Правило справедливості.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Урок 10.5 базується на...",
- options: [
- "Лазерна кімната 10.4",
- "Лише Module 1",
- "Лише shop",
- "Порожньо",
- ],
- correctAnswer: 0,
- explanation: "Та сама основа головоломки.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Урок 10.6 - це...",
- options: [
- "Puzzle World checkpoint",
- "Лише RPG",
- "Лише гонки",
- "Лише NPC",
- ],
- correctAnswer: 0,
- explanation: "Фінал модуля.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "поле складності у варіанті...",
- options: [
- "Допомагає балансу й підписам",
- "Потрібно Roblox",
- "Замінює Humanoid",
- "Відкриває shop",
- ],
- correctAnswer: 0,
- explanation: "Метадані.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Урок 10.5 зберегти назву...",
- options: [
- "Lesson 10.5 - Procedural Elements",
- "Laser Puzzle",
- "Puzzle World",
- "Tween Mastery",
- ],
- correctAnswer: 0,
- explanation: "Зберегти урок.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-10-5",
+  "moduleId": "module-10",
+  "order": 5,
+  "title": "10.5 — Множник і мета",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "апгрейд множника; мета «накопичити N»; фідбек прогресу (бар або текст Goal).",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** апгрейд множника; мета «накопичити N»; фідбек прогресу (бар або текст Goal).\n\nФаза курсу: **Ігрові механіки**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "`Multiplier` Value або поле; мета 500 монет → повідомлення/бейдж-Part «Winner»; коротке утримання 1 сексії без DataStore (збереження — Тізер М13)."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Попрацюй над результатом ще 15–20 хв і збережи Place. Наступного разу покажи короткий демо 20–30 сек."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **10.5 — Множник і мета** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Множник і мета",
+    "difficulty": "advanced",
+    "description": "### Завдання\n`Multiplier` Value або поле; мета 500 монет → повідомлення/бейдж-Part «Winner»; коротке утримання 1 сексії без DataStore (збереження — Тізер М13).\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Якщо щось зникло — перевір, чи зберіг Place."
+    ],
+    "optionalChallenge": "Зроби артефакт трохи крутішим і будь готовий показати 20 секунд."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "Множник робить…",
+        "options": [
+          "Нарахування сильнішим",
+          "Видалення магазину",
+          "Negate вікна",
+          "Зміну біому словами"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Нарахування сильнішим"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Мета N монет…",
+        "options": [
+          "Дає сенс сесії",
+          "Заборонена",
+          "Ламає IntValue",
+          "Вимикає GUI"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Дає сенс сесії"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Баланс після playtest…",
+        "options": [
+          "Обовʼязкова частина жанру",
+          "Даремна",
+          "Лише для Tycoon",
+          "Лише для obby"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Обовʼязкова частина жанру"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Артефакт?",
+        "options": [
+          "Множник + мета + підкручений баланс",
+          "Повний DataStore між всіма places",
+          "Blender face",
+          "НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Множник + мета + підкручений баланс"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Без мета-цілі симулятор…",
+        "options": [
+          "Швидко набридає",
+          "Стає AAA автоматом",
+          "Видаляє потребу Power",
+          "Видаляє потребу Coins"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Швидко набридає"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "DataStore сьогодні…",
+        "options": [
+          "Ще не обовʼязок — чесно сказати «сесія»",
+          "Повний продакшен сейв",
+          "Заміна RemoteEvent",
+          "Заміна Parts"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ще не обовʼязок — чесно сказати «сесія»"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Текст прогресу до мети…",
+        "options": [
+          "Мотивує",
+          "Шкідливий завжди",
+          "Видаляє Power",
+          "Вимикає Shop"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Мотивує"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Занадто швидка мета…",
+        "options": [
+          "Підняти ціни / мету",
+          "Видалити збір",
+          "Видалити UI",
+          "Вимкнути сервер назавжди"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Підняти ціни / мету"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Груповий playtest…",
+        "options": [
+          "Валідація веселощів",
+          "Заміна рубрики здачі",
+          "Привід ображати",
+          "Привід читерити Remote ціною"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Валідація веселощів"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "Далі…",
+        "options": [
+          "Здача симулятора",
+          "Тільки Ambient",
+          "Тільки Negate",
+          "НМТ"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Здача симулятора"
+      }
+    ]
+  }
 }
 
 export const ukLesson106 = {
- lessonId: "lesson-roblox-10-6",
- moduleId: "module-10",
- order: 6,
- title: "10.6 - Checkpoint: Puzzle World",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Здайте Puzzle World з Constraints, анімаціями, променями та процедурними варіантами",
- "Пройдіть п'ять ігрових тестів з чіткими підказками та без тупикових ситуацій",
- "Організуйте ресурси головоломки в чистій структурі папок",
- "Збережіть портфоліо Module 10 за допомогою 60-секундної демонстрації",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**Puzzle World** = Модуль 10 портфоліо - доводить, що ви поєднуєте **фізику, досконалість, логіку та різноманітність**.
-
-**Необхідні інгредієнти:**
-- Механік обмеження (двері або платформа)
-- Розкриття/взаємодія Tween
-- Raycast або лазерна цільова логіка
-- Процедурний варіант на раундовому старті
-
-**Зберегти:**\`Module 10 - Puzzle World\``,
- },
- {
- title: "Світ макет план",
- content: `\`\`\`
-Workspace/PuzzleWorld/
-├── Mechanics/ (hinge door, rope platform)
-├── PuzzleRoom/
-│ ├── LaserPuzzle/
-│ └── DoorReward/
-├── RoundSpawn
-└── Signs/ (tutorial arrows)
-
-ServerScriptService/
-├── Modules/PuzzleVariants.lua
-├── Srv_PuzzleLaser.lua
-├── Srv_PuzzleRound.lua
-└── Srv_Mechanics.lua
-
-StarterGui/
-├── PuzzleUI (variant, targets X/3, status)
-└── HintUI (optional)
-\`\`\``,
- },
- {
- title: "Подорож гравця (золотий шлях)",
- content: `| Крок | Досвід |
-|------|------------|
-| 1 | Спаун → знак пояснює мету |
-| 2 | Додатково: поперечна мотузка / демонстрація відкритого шарніра |
-| 3 | Увійти в лазерну кімнату - оголошено варіант |
-| 4 | Розв’яжіть 3 мішені - відгук на кожну |
-| 5 | Tween дверей відкрив двері - святкування SFX |
-| 6 | Новий тур - інший варіант |
-
-**Загальний час: ** 5-8 хвилин перша спроба.`,
- },
- {
- title: "П'ять протоколів тестування",
- content: `Попросіть тестувальника (або себе) зіграти в **5 забігів**:
-
-| Запустити | Зверніть увагу на проблему? | Ідентифікатор варіанта | Час |
-|-----|------------------|------------|------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-
-**Виправте** 2 найпоширеніші проблеми перед збереженням.
-
-**Без тупиків:** завжди шлях скидання або підказки.`,
- },
- {
- title: "Контрольний список полірування",
- content: `| # | Пункт | Пройти |
-|---|------|------|
-| 1 | Підказки, які можна прочитати з spawn | |
-| 2 | Constraints не надто повільно/швидко | |
-| 3 | Промені/цілі надійні 10/10 спроб | |
-| 4 | Усі 4 варіанти можна виконати | |
-| 5 | Немає помилок виводу в золотому шляху | |
-| 6 | Очистити імена папок | |
-| 7 | 2 гравці: стан головоломки не залежить від гравця (необов’язковий кооператив: спільний стан допустимо, якщо документально) | |`,
- },
- {
- title: "60-секундна демонстрація + попередній перегляд модуля 11",
- content: `**Демонстраційний Script:**
-1. Показати Folder Mechanics - швидкий шарнір
-2. Введіть головоломку - прочитайте позначку варіанта
-3. Вирішіть одну ціль - світло + звук
-4. Повний пазл - дверний аніматор
-5. Новий раунд - новий варіант назви
-
-**Модуль 11 - Продуктивність і полірування:** Очищення Explorer, профілювання, підготовка до публікації.
-
-**Перед тренуванням:**
-- [ ] Виконано п'ять ігрових тестів
-- [ ] Контрольний список полірування 7/7
-- [ ] **Зберегти в Roblox** →\`Module 10 - Puzzle World\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Відсутній один обов’язковий інгредієнт",
- explanation: "Контрольна точка не завершена.",
- correctApproach: "Обмеження + анімація + промінь + процедурний",
- },
- {
- mistake: "Без тестування ігор",
- explanation: "Плутанина з StreamingEnabled.",
- correctApproach: "5-прохідний протокол",
- },
- {
- mistake: "Безладний дослідник",
- explanation: "Важко підтримувати.",
- correctApproach: "Структура папок PuzzleWorld",
- },
- {
- mistake: "Невирішуваний процесуальний варіант",
- explanation: "Погані відгуки.",
- correctApproach: "Перевірте всі 4 варіанти",
- },
- ],
- summary: "Ви інтегрували обмеження, Constraints, лазерні головоломки та процедурні раунди в Puzzle World, пройшли ігровий тест і перевірку якості, а також зберегли контрольну точку, готову для демоверсії - Модуль 10 завершено.",
- practiceTask: {
- title: "Здайте Puzzle World (~40 хв)",
- difficulty: "beginner",
- description: `**Мета:** Контрольна точка портфоліо.
-
-### Part A - Інтеграція (15 хв)
-1. Об’єднайте 10.1-10.5 у PuzzleWorld
-2. Один золотий шлях позначено
-3. PuzzleUI завершено
-
-### Part B - Ігрові тести (20 хв)
-1. П'ять прогонів - реєстрація застряглих точок - виправлення вершини 2
-2. Контрольний список полірування всі проходять
-
-### Part C - Збереження демо (5 хв)
-1. Відрепетировано демо 60-х
-2. **Зберегти в Roblox** →\`Module 10 - Puzzle World\` 3. **Практика завершена**`,
- hints: [
- "Налаштуйте час анімації після тесту відтворення 3",
- "Підказка після 90-х застрягла необов'язково",
- "Надійність порівняно з додатковими типами головоломок",
- ],
- optionalChallenge: "Адаптивна система підказок через 90 секунд.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "Puzzle World має включати...",
- options: [
- "Constraint + tween + ray + procedural",
- "Лише Terrain",
- "Лише shop",
- "Без скриптів",
- ],
- correctAnswer: 0,
- explanation: "Чотири інгредієнти.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "П'ять ігрових тестів знаходять...",
- options: [
- "Де гравці застрягають",
- "Robux",
- "Ключі DataStore",
- "Version",
- ],
- correctAnswer: 0,
- explanation: "Перевірка UX.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Модуль 10 зберегти назву...",
- options: [
- "Module 10 - Puzzle World",
- "RPG Inventory",
- "Living Location",
- "Lesson 10.1",
- ],
- correctAnswer: 0,
- explanation: "checkpoint.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "Процедурний раунд після перемоги...",
- options: [
- "Обирає новий variant",
- "Видаляє гравця",
- "Зупиняє server",
- "Публікує",
- ],
- correctAnswer: 0,
- explanation: "Цикл повторення.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Жодних безвихідних ситуацій означає...",
- options: [
- "У гравців завжди є шлях уперед",
- "Без головоломок",
- "Зона смерті",
- "Порожня мапа",
- ],
- correctAnswer: 0,
- explanation: "Чесний дизайн.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Урок 10.6 завершується...",
- options: [
- "Module 10 Magic of Details",
- "Module 12",
- "Module 1",
- "Лише монети",
- ],
- correctAnswer: 0,
- explanation: "Кінцевий модуль 10.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Чисті Folders допомагають...",
- options: [
- "Підтримка командою",
- "Лише лаг",
- "Видалити UI",
- "Бан",
- ],
- correctAnswer: 0,
- explanation: "організація.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Нагорода за двері використовує...",
- options: [
- "Tween з 10.2",
- "Лише чат",
- "Terrain",
- "Atmosphere",
- ],
- correctAnswer: 0,
- explanation: "Момент полірування.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Попередній перегляд модуля 11...",
- options: [
- "Performance and Polish",
- "Лише NPC",
- "Лише гонки",
- "Нічого",
- ],
- correctAnswer: 0,
- explanation: "Наступний модуль.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Контрольна точка має пріоритет...",
- options: [
- "Цілісний шлях гравця",
- "Максимум скриптів",
- "Без тестування",
- "Лише випадково",
- ],
- correctAnswer: 0,
- explanation: "Відчуйте якість.",
- },
- ],
- },
+  "lessonId": "lesson-roblox-10-6",
+  "moduleId": "module-10",
+  "order": 6,
+  "title": "10.6 — Чекпоінт: презентація симулятора",
+  "theoryMinutes": 40,
+  "quizMinutes": 10,
+  "estimatedTime": 60,
+  "learningObjectives": [
+    "Зрозуміти тему «Чекпоінт: презентація симулятора»",
+    "Зробити результат у Roblox Studio",
+    "Пройти тест на ≥70%"
+  ],
+  "theory": {
+    "sections": [
+      {
+        "title": "Сьогоднішня мета",
+        "content": "**Ціль:** Опанувати тему «Чекпоінт: презентація симулятора».\n\nФаза курсу: **Ігрові механіки**.\n\n**Твій план:**\n1. Прочитай коротко теорію (Studio поруч)\n2. Зроби практику за кроками\n3. Пройди тест (≥70%)\n4. Зроби домашнє завдання"
+      },
+      {
+        "title": "Що має вийти",
+        "content": "Зроби **видимий результат** у своєму Place і збережи його (Save to Roblox)."
+      },
+      {
+        "title": "Як працювати",
+        "content": "Тримай **Roblox Studio** відкритим поруч із цією сторінкою.\n\n1. Спочатку повтори кроки з теорії  \n2. Зроби практику за чеклістом  \n3. Потім можна ускладнити (челендж)\n\nЯкщо щось «не слухається» — відкрий **Output**, перевір **імена** в Explorer і натисни **Play**."
+      },
+      {
+        "title": "Перед тестом перевір",
+        "content": "- [ ] Place збережено\n- [ ] Результат уроку готовий\n- [ ] Немає безіменних Part1/Part2 у важливій зоні\n- [ ] Можу сказати ціль уроку одним реченням"
+      },
+      {
+        "title": "Домашка",
+        "content": "Попрацюй над результатом ще 15–20 хв і збережи Place. Наступного разу покажи короткий демо 20–30 сек."
+      }
+    ]
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Читати теорію без відкритої Studio",
+      "explanation": "Без практики складніше запамʼятати.",
+      "correctApproach": "Studio поруч із сторінкою. Кожен крок одразу повторюй."
+    },
+    {
+      "mistake": "Не зберігати Place",
+      "explanation": "Після перезапуску робота може зникнути.",
+      "correctApproach": "File → Save to Roblox після важливих змін."
+    },
+    {
+      "mistake": "Безіменні Part1/Part2",
+      "explanation": "Потім важко знайти потрібний обʼєкт.",
+      "correctApproach": "Давай зрозумілі імена і Folder/Model."
+    }
+  ],
+  "summary": "Урок **10.6 — Чекпоінт: презентація симулятора** готовий, коли є результат у Place, практика позначена і тест ≥70%. Тоді відкриється наступний урок.",
+  "practiceTask": {
+    "title": "Практика: Чекпоінт: презентація симулятора",
+    "difficulty": "advanced",
+    "description": "### Завдання\nВиконай кроки уроку «Чекпоінт: презентація симулятора» у своєму Place.\n\n\n### Коли готово\n1. Збережи Place  \n2. Перевір у **Play**  \n3. Натисни «Практику в Studio завершено» нижче",
+    "hints": [
+      "Спочатку зроби кроки 1:1, потім кастомізуй.",
+      "Імена обʼєктів латиницею / PascalCase — легше шукати.",
+      "Якщо щось зникло — перевір, чи зберіг Place."
+    ],
+    "optionalChallenge": "Зроби артефакт трохи крутішим і будь готовий показати 20 секунд."
+  },
+  "quiz": {
+    "passingScore": 70,
+    "timeLimit": 10,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "multiple_choice",
+        "question": "М10 результат…",
+        "options": [
+          "Міні-симулятор з прогресією",
+          "Лише Baseplate",
+          "Лише PDF",
+          "Лише нік"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Міні-симулятор з прогресією"
+      },
+      {
+        "id": "q2",
+        "type": "multiple_choice",
+        "question": "Далі М11…",
+        "options": [
+          "Tycoon",
+          "Скасування чисел",
+          "Тільки Decal",
+          "Тільки Sky"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Tycoon"
+      },
+      {
+        "id": "q3",
+        "type": "multiple_choice",
+        "question": "Серверна перевірка ціни…",
+        "options": [
+          "Ключовий skill модуля",
+          "Непотрібна",
+          "Лише для obby",
+          "Лише для Negate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ключовий skill модуля"
+      },
+      {
+        "id": "q4",
+        "type": "multiple_choice",
+        "question": "Tycoon відрізнятиметься…",
+        "options": [
+          "Дропери, бази, будівництво за гроші",
+          "Лише більшим небом",
+          "Відміною Coins",
+          "Відміною Parts"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Дропери, бази, будівництво за гроші"
+      },
+      {
+        "id": "q5",
+        "type": "multiple_choice",
+        "question": "Power у симуляторі…",
+        "options": [
+          "Драйвер прогресії збору",
+          "Назва Sound",
+          "Тип Union",
+          "Face Decal"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Драйвер прогресії збору"
+      },
+      {
+        "id": "q6",
+        "type": "multiple_choice",
+        "question": "Без GUI теж можна здати?",
+        "options": [
+          "Слабше; GUI був у ТЗ",
+          "Краще завжди без UI",
+          "UI заборонений",
+          "Remote заборонений"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Слабше; GUI був у ТЗ"
+      },
+      {
+        "id": "q7",
+        "type": "multiple_choice",
+        "question": "Пояснення Remote…",
+        "options": [
+          "Клієнт просить, сервер вирішує",
+          "Сервер просить, клієнт завжди вручає адмінку",
+          "Remote малює Terrain",
+          "Remote робить Negate"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Клієнт просить, сервер вирішує"
+      },
+      {
+        "id": "q8",
+        "type": "multiple_choice",
+        "question": "Баланс…",
+        "options": [
+          "Частина геймдизайну симулятора",
+          "Лише математика ЗНО",
+          "Лише хімія",
+          "Непотрібний"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Частина геймдизайну симулятора"
+      },
+      {
+        "id": "q9",
+        "type": "multiple_choice",
+        "question": "Презентація…",
+        "options": [
+          "Показати збір→покупку→сильніший збір",
+          "Лише скрін неба",
+          "Лише Word",
+          "Лише стікер"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Показати збір→покупку→сильніший збір"
+      },
+      {
+        "id": "q10",
+        "type": "multiple_choice",
+        "question": "М11 почне з…",
+        "options": [
+          "Ділянки гравця / plot",
+          "Видалення грошей",
+          "Скасування Studio",
+          "НМТ історія"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Ділянки гравця / plot"
+      }
+    ]
+  }
 }

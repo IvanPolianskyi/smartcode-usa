@@ -11,7 +11,7 @@
         "features": {
           "0": "24/7 mentor support",
           "1": "Interactive tasks",
-          "2": "Self-paced courses",
+          "2": "Recorded video lessons",
           "3": "Gamified progress"
         }
       },
@@ -66,14 +66,14 @@
     "gamedev": {
       "title": "GAME DEV",
       "subtitle": "Build your own games with Unity",
-      "description": "Develop exciting games in Unity - from simple 2D to advanced 3D projects.",
+      "description": "Develop exciting games in Unity — from simple 2D to advanced 3D projects.",
       "features": ["C#", "Unity 3D", "Character design", "Gameplay logic"],
       "badge": "Trend 2025"
     },
     "webdev": {
       "title": "WEB DEV",
       "subtitle": "Modern websites & apps",
-      "description": "Create responsive sites and web apps with HTML, CSS, JavaScript, and React - fast and beautifully designed.",
+      "description": "Create responsive sites and web apps with HTML, CSS, JavaScript, and React — fast and beautifully designed.",
       "features": ["HTML/CSS", "JavaScript", "React", "Node.js"],
       "badge": "New"
     }
@@ -131,7 +131,7 @@
   "lms": {
     "title": "WE BUILT A COMFORTABLE ENVIRONMENT",
     "titleLine2": "FOR LEARNING AND PRACTICE",
-    "description": "Study from anywhere in Ukraine or the world. Lessons and all materials are one click away - in your personal online account in a <strong>convenient LMS built for our students</strong>.",
+    "description": "Study from anywhere in Ukraine or the world. Lessons and all materials are one click away — in your personal online account in a <strong>convenient LMS built for our students</strong>.",
     "goToDashboard": "Go to dashboard",
     "login": "Sign in to your account",
     "subtitle": "WHAT YOU CAN DO IN THE",

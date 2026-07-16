@@ -5,7 +5,32 @@
   "subtitle": "Бізнес статистика",
   "refresh": "Оновити",
   "crmGroups": "Групи CRM",
+  "teachersLink": "Викладачі LMS",
   "logout": "Вийти",
+  "teachersPage": {
+    "title": "Викладачі LMS",
+    "subtitle": "Привʼязка email акаунта SmartCode до CRM staff id. Курси відкриваються автоматично.",
+    "back": "До адмінки",
+    "email": "Email LMS",
+    "name": "Імʼя (опційно)",
+    "password": "Пароль (опційно; якщо новий — згенеруємо)",
+    "crmStaff": "CRM викладач",
+    "link": "Привʼязати",
+    "unlink": "Відвʼязати",
+    "created": "Створено нового викладача",
+    "tempPassword": "Тимчасовий пароль",
+    "linkedList": "Привʼязані викладачі",
+    "empty": "Ще немає привʼязаних викладачів",
+    "columns": {
+      "email": "Email",
+      "name": "Імʼя",
+      "staff": "CRM staff",
+      "actions": "Дії"
+    },
+    "error": "Помилка",
+    "success": "Збережено",
+    "selectStaff": "Оберіть викладача з CRM"
+  },
   "errors": {
     "loadStatistics": "Помилка завантаження статистики",
     "loadStudents": "Помилка завантаження списку учнів",

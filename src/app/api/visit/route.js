@@ -36,8 +36,13 @@ export async function POST(request) {
       createdAt: new Date(),
     }
 
-    const visits = await getCollection('logs')
-    await visits.insertOne(doc)
+    try {
+      const visits = await getCollection('logs')
+      await visits.insertOne(doc)
+    } catch {
+      // Visit analytics must never block the page (e.g. missing MONGODB_URI in local dev).
+      return NextResponse.json({ ok: false, skipped: true }, { status: 200 })
+    }
 
     const res = NextResponse.json({ ok: true, created: true })
     // Set session cookie (no maxAge) to avoid duplicate inserts within the same browser session

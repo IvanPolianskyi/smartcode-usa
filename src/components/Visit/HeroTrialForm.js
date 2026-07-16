@@ -5,9 +5,9 @@ import { Sparkles } from 'lucide-react'
 import {
 	trackTrialInitiateCheckoutOnce,
 	trackTrialLeadOnce,
+	generateEventId,
 } from '@/lib/metaPixel'
 import { getClientAttribution } from '@/lib/attribution'
-import { acquireLeadIntent, clearLeadIntentCache } from '@/lib/leadFormClient'
 import { usePhoneInput } from '@/lib/usePhoneInput'
 import PhoneField from '@/components/PhoneField/PhoneField'
 import phoneStyles from '@/components/PhoneField/PhoneField.module.css'
@@ -53,7 +53,6 @@ export default function HeroTrialForm() {
 
 	const handleFocusCapture = () => {
 		trackTrialInitiateCheckoutOnce()
-		acquireLeadIntent().catch(() => {})
 	}
 
 	const handleSubmit = async (e) => {
@@ -74,7 +73,7 @@ export default function HeroTrialForm() {
 
 		setSubmitting(true)
 		try {
-			const { eventId, leadToken } = await acquireLeadIntent()
+			const eventId = generateEventId()
 			const response = await fetch('/api/telegram', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -86,7 +85,6 @@ export default function HeroTrialForm() {
 					contactMethod: 'phone',
 					preferredContactMethod: 'phone_call',
 					eventId,
-					leadToken,
 					sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://smartcode-academy.com',
 					attribution: getClientAttribution(),
 					locale,
@@ -103,7 +101,6 @@ export default function HeroTrialForm() {
 			if (data?.trackLead) {
 				trackTrialLeadOnce('', [], eventId)
 			}
-			clearLeadIntentCache()
 			setDone(true)
 		} catch {
 			alert(tc('errorNetwork'))

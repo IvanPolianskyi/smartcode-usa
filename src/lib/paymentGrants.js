@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb'
 import { getCollection } from '@/lib/mongodb'
 import { bookLessonSlot } from '@/lib/lessonSlotReserve'
+import { ROBLOX_CURRICULUM_REVISION } from '@/lib/robloxProgressMigrate'
 const EN_DAY_TO_UA = {
   sun: 'Нд',
   mon: 'Пн',
@@ -40,6 +41,9 @@ export async function grantFullCourseAccess(userId, courseId) {
       currentLesson: 0,
       overallProgress: 0,
       certificates: [],
+      ...(courseId === 'roblox-studio'
+        ? { robloxCurriculumRevision: ROBLOX_CURRICULUM_REVISION }
+        : {}),
     })
   }
 }
@@ -119,6 +123,9 @@ export async function grantEnLiveLessonAccess(identifier, courseId, { lessonForm
       currentLesson: 0,
       overallProgress: 0,
       certificates: [],
+      ...(courseId === 'roblox-studio'
+        ? { robloxCurriculumRevision: ROBLOX_CURRICULUM_REVISION }
+        : {}),
     })
   }
 }

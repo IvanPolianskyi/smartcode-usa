@@ -3,6 +3,8 @@ import { ObjectId } from 'mongodb'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { getStudentReceiptReviewState } from '@/lib/studentPaymentReceiptStatus'
+import { fetchCrmStudentPaymentStatus } from '@/lib/crmStudentPaymentStatus'
+import { resolveStudentPaymentBalance } from '@/lib/studentPaymentBalance'
 
 export async function GET() {
   try {
@@ -17,6 +19,11 @@ export async function GET() {
           creditedLessons: 0,
           accountBalance: 0,
           lessonCredits: 0,
+          debtLessons: 0,
+          hasDebt: false,
+          shouldRequestPayment: false,
+          balanceSource: 'local',
+          debtItems: [],
         },
         payments: [],
       }, { status: 200 })
@@ -50,6 +57,43 @@ export async function GET() {
       }))
     )
 
+    const localLessonCredits = Number(user?.studentProfile?.lessonCredits || 0)
+    const scheduleCount = Array.isArray(user?.studentProfile?.regularSchedule)
+      ? user.studentProfile.regularSchedule.length
+      : 0
+    const crmStudentId = String(user?.studentProfile?.crmStudentId || '').trim()
+    const crmStatus = crmStudentId
+      ? await fetchCrmStudentPaymentStatus(crmStudentId)
+      : null
+
+    const balance = resolveStudentPaymentBalance(crmStatus, {
+      localLessonCredits,
+      scheduleCount,
+      hasPendingReceiptReview: receiptReview.hasPendingReceiptReview,
+      hasRejectedReceipt: receiptReview.hasRejectedReceipt,
+    })
+
+    // Дзеркалимо CRM ledger у studentProfile.lessonCredits (кеш для адмінки / ready-checks).
+    if (
+      balance.balanceSource === 'crm' &&
+      user?._id &&
+      Number(balance.lessonCredits) !== localLessonCredits
+    ) {
+      try {
+        await usersCollection.updateOne(
+          { _id: user._id },
+          {
+            $set: {
+              'studentProfile.lessonCredits': Number(balance.lessonCredits) || 0,
+              updatedAt: new Date(),
+            },
+          }
+        )
+      } catch (syncErr) {
+        console.error('Failed to mirror CRM balance to lessonCredits:', syncErr)
+      }
+    }
+
     return NextResponse.json(
       {
         stats: {
@@ -59,10 +103,16 @@ export async function GET() {
           totalAmount,
           creditedLessons,
           accountBalance: Number(user?.studentProfile?.accountBalance || 0),
-          lessonCredits: Number(user?.studentProfile?.lessonCredits || 0),
-          hasPendingReceiptReview: receiptReview.hasPendingReceiptReview,
-          hasRejectedReceipt: receiptReview.hasRejectedReceipt,
+          lessonCredits: balance.lessonCredits,
+          debtLessons: balance.debtLessons,
+          hasDebt: balance.hasDebt,
+          shouldRequestPayment: balance.shouldRequestPayment,
+          balanceSource: balance.balanceSource,
+          debtItems: balance.debtItems,
+          hasPendingReceiptReview: balance.hasPendingReceiptReview,
+          hasRejectedReceipt: balance.hasRejectedReceipt,
           pendingReceiptUploadCount: receiptReview.pendingReceiptUploadCount,
+          pendingReceiptsCount: balance.pendingReceiptsCount,
         },
         payments: payments.map((p) => ({
           id: p._id.toString(),

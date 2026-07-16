@@ -301,6 +301,7 @@ export default function LessonPageWithSidebar({
                           key={lesson.lessonId}
                           href={`/courses/${courseId}/lessons/${lesson.lessonId}`}
                           className={`${styles.lessonLink} ${isActive ? styles.active : ''} ${!unlocked ? styles.locked : ''} ${completed ? styles.completed : ''}`}
+                          title={!unlocked ? t('sidebarLockedHint') : undefined}
                           onClick={(e) => {
                             if (!unlocked) e.preventDefault()
                           }}
