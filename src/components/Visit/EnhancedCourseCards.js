@@ -134,11 +134,15 @@ const EnhancedCourseCards = () => {
 
 							<div
 								className={`${styles.goLabel} ${
-									isExpanded || isMobile ? styles.goLabelVisible : ''
-								}`}
+									isExpanded ? styles.goLabelHover : ''
+								} ${isMobile ? styles.goLabelVisible : styles.goLabelIdle}`}
 							>
-								<span className={styles.goText}>{t('goTo')}</span>
-								<ArrowRight className={styles.goArrow} aria-hidden="true" />
+								<span className={styles.goText}>
+									{isExpanded ? t('goTo') : course.title}
+								</span>
+								{isExpanded ? (
+									<ArrowRight className={styles.goArrow} aria-hidden="true" />
+								) : null}
 							</div>
 						</div>
 					)
