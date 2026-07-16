@@ -400,8 +400,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
           <div className={styles.phaseRoadmap} aria-label={tCourse('phaseRoadmapLabel')}>
             {phaseStats.map((p) => {
               const phaseInfo = ROBOX_PHASES.find((x) => x.id === p.phase)
-              const phaseTitle =
-                locale === 'en' ? phaseInfo?.titleEn : phaseInfo?.titleUk
+              const phaseTitle = phaseInfo?.titleUk
               return (
                 <button
                   key={p.phase}

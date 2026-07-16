@@ -57,21 +57,15 @@ export default function PaymentResultFlow({ syncMonobank = true }) {
           const data = await response.json()
 
           if (data.requiresRegistration) {
-            const coursePath = getPaymentRedirectPath({
-              paymentType: data.paymentType,
-              courseId: data.courseId,
+            // Публічна реєстрація вимкнена — акаунт видає CRM / менеджер.
+            const q = new URLSearchParams({
+              needAccount: '1',
+              paid: '1',
             })
-            const registerUrl = new URLSearchParams({
-              claimOrder: orderId,
-              email: data.guestEmail || '',
-            })
-            if (statusToken) {
-              registerUrl.set('claimOrderToken', statusToken)
+            if (data.guestEmail) {
+              q.set('email', data.guestEmail)
             }
-            if (coursePath && coursePath !== '/dashboard') {
-              registerUrl.set('redirect', coursePath)
-            }
-            router.replace(`/login?claimOrder=${encodeURIComponent(orderId)}`)
+            router.replace(`/login?${q.toString()}`)
             return
           }
 

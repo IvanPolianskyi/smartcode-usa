@@ -44,17 +44,15 @@ export default function AuthSessionProvider({ children }) {
 	useEffect(() => {
 		refresh(true)
 		const onAuth = () => {
-			// Після login/register важливо одразу синхронізувати сесію зі спінером,
+			// Після login важливо одразу синхронізувати сесію зі спінером,
 			// щоб захищені сторінки не встигали зробити redirect на /login.
 			refresh(true)
 		}
 		window.addEventListener('auth:login', onAuth)
 		window.addEventListener('auth:logout', onAuth)
-		window.addEventListener('auth:register', onAuth)
 		return () => {
 			window.removeEventListener('auth:login', onAuth)
 			window.removeEventListener('auth:logout', onAuth)
-			window.removeEventListener('auth:register', onAuth)
 		}
 	}, [refresh])
 

@@ -5,12 +5,16 @@
  */
 
 export async function login(email, password) {
+  const { normalizeLoginIdentifier } = await import('@/lib/authLogin')
   const response = await fetch('/api/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({
+      email: normalizeLoginIdentifier(email),
+      password,
+    }),
   })
 
   const data = await response.json()
@@ -22,38 +26,11 @@ export async function login(email, password) {
   return data
 }
 
-export async function register(
-  email,
-  password,
-  name,
-  locale = 'uk',
-  claimOrder,
-  privacyAccepted = false,
-  claimOrderToken = null
-) {
-  const response = await fetch('/api/auth/register', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email,
-      password,
-      name,
-      locale,
-      claimOrder,
-      claimOrderToken,
-      privacyAccepted,
-    }),
-  })
-
-  const data = await response.json()
-
-  if (!response.ok) {
-    throw new Error(data.error || 'Registration failed')
-  }
-
-  return data
+/** Публічна реєстрація вимкнена — акаунти створює CRM / Telegram. */
+export async function register() {
+  throw new Error(
+    'Публічна реєстрація вимкнена. Акаунт видає менеджер SmartCode або Telegram-бот.'
+  )
 }
 
 export async function logout() {
@@ -180,57 +157,21 @@ export async function checkCoursePurchase(courseId) {
   }
 }
 
-export async function createPayment(courseId, locale = 'uk', guestEmail, guestName) {
-  const response = await fetch('/api/payment/create', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    body: JSON.stringify({ courseId, locale, guestEmail, guestName }),
-  })
-
-  const data = await response.json()
-
-  if (!response.ok) {
-    throw new Error(data.error || 'Failed to create payment')
-  }
-
-  return data
+/** Онлайн-оплата повних курсів вимкнена — доступ через CRM / онлайн-уроки. */
+export async function createPayment() {
+  throw new Error(
+    'Купівля курсів на сайті вимкнена. Доступ до платформи відкриває менеджер SmartCode разом з онлайн-уроками.'
+  )
 }
 
-export async function createEnLessonPayment({ courseId, lessonFormat, day, time, guestEmail, guestName }) {
-  const response = await fetch('/api/payment/en-lesson', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify({ courseId, lessonFormat, day, time, guestEmail, guestName }),
-  })
-  const data = await response.json()
-  if (!response.ok) {
-    throw new Error(data.error || 'Failed to create payment')
-  }
-  return data
+export async function createEnLessonPayment() {
+  throw new Error('Запис на урок через оплату на сайті вимкнено.')
 }
 
-/** Тестовий платіж Monobank (100 грн за замовчуванням) */
-export async function createMonobankTestPayment(options = {}) {
-  const response = await fetch('/api/payment/monobank/test', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify(options),
-  })
-  const data = await response.json()
-  if (!response.ok) {
-    throw new Error(data.error || 'Failed to create test payment')
-  }
-  return data
-}
-
-// Legacy function for backward compatibility
-export async function purchaseCourse(courseId, paymentMethod = 'manual', paymentData = {}) {
-  // This should not be called directly anymore - use createPayment instead
-  throw new Error('Use createPayment() instead of purchaseCourse()')
+/** @deprecated */
+export async function purchaseCourse() {
+  throw new Error(
+    'Купівля курсів на сайті вимкнена. Зверніться до менеджера SmartCode.'
+  )
 }
 

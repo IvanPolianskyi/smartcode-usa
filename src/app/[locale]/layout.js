@@ -41,10 +41,9 @@ export default async function LocaleLayout({ children, params }) {
 
 	setRequestLocale(locale)
 	const messages = await getMessages()
-	const htmlLang = locale === 'uk' ? 'uk' : 'en'
 
 	return (
-		<html lang={htmlLang} suppressHydrationWarning>
+		<html lang='uk' suppressHydrationWarning>
 			<head>
 				<meta name='format-detection' content='telephone=no' />
 				<meta name='apple-mobile-web-app-capable' content='yes' />

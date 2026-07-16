@@ -13,39 +13,18 @@ function resolveLocale(locale) {
 
 export function localePath(locale, path = '') {
 	const normalized = path.startsWith('/') ? path : `/${path}`
-	if (locale === 'en') {
-		return normalized === '/' ? '/en' : `/en${normalized}`
-	}
 	return normalized === '/' ? '' : normalized
 }
 
-/** noindex для /en — лише прямий перехід, не індексація в Google */
-export function getSearchIndexingMetadata(locale) {
-	if (locale !== 'en') return {}
-
-	return {
-		robots: {
-			index: false,
-			follow: true,
-			googleBot: {
-				index: false,
-				follow: true,
-			},
-		},
-	}
+/** Indexing metadata — always UK (no EN noindex branch). */
+export function getSearchIndexingMetadata() {
+	return {}
 }
 
 export function buildAlternates(locale, path = '') {
 	const normalized = path || '/'
 	const ukPath = normalized === '/' ? '' : normalized
 	const ukUrl = `${BASE_URL}${ukPath}`
-
-	if (locale === 'en') {
-		const enPath = localePath('en', normalized)
-		return {
-			canonical: `${BASE_URL}${enPath}`,
-		}
-	}
 
 	return {
 		canonical: ukUrl,
@@ -63,24 +42,19 @@ export async function getLocalizedMetadata(locale, pageKey) {
 		locale: resolvedLocale,
 		namespace: `metadata.${pageKey}`,
 	})
-	const ogLocale = resolvedLocale === 'uk' ? 'uk_UA' : 'en_US'
 
 	return {
 		metadataBase: SITE_URL,
 		title: t('title'),
 		description: t('description'),
-		...getSearchIndexingMetadata(resolvedLocale),
-		...(resolvedLocale === 'uk'
-			? {
-					other: {
-						'content-language': 'uk-UA',
-					},
-				}
-			: {}),
+		...getSearchIndexingMetadata(),
+		other: {
+			'content-language': 'uk-UA',
+		},
 		openGraph: {
 			title: t('title'),
 			description: t('description'),
-			locale: ogLocale,
+			locale: 'uk_UA',
 			type: 'website',
 			siteName: 'SmartCode Academy',
 		},

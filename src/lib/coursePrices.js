@@ -63,23 +63,18 @@ function withEnCoursePricing(info) {
   }
 }
 
-/** Full courses sold on EN site via Monobank */
-export function getEnPurchasableFullCourses() {
-  return Object.entries(coursePrices).map(([courseId, info]) => ({
-    courseId,
-    ...withEnCoursePricing(info),
-  }))
-}
-
 export function getCoursePrice(courseId, locale = 'uk') {
   const info = coursePrices[courseId]
-  if (!info) return { price: 0, currency: 'UAH', name: 'Unknown Course' }
+  if (!info) return { price: 0, currency: 'UAH', name: 'Unknown Course', purchasable: false }
 
-  if (locale === 'en') {
-    return withEnCoursePricing(info)
-  }
-
+  // Покупка повних курсів на сайті вимкнена (будь-яка locale).
+  void locale
   return { ...info, purchasable: false }
+}
+
+/** Full courses sold on EN site via Monobank — вимкнено. */
+export function getEnPurchasableFullCourses() {
+  return []
 }
 
 /** Сума для Monobank (UAH). */

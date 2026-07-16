@@ -2,6 +2,7 @@ import { MongoClient } from 'mongodb'
 
 let cachedClient = globalThis._smartcode_mongo_client || null
 let cachedDb = globalThis._smartcode_mongo_db || null
+let userIndexesPromise = null
 
 async function connectToMongo() {
   if (cachedClient && cachedDb) {
@@ -48,4 +49,44 @@ export async function getCollection(collectionName) {
   return db.collection(collectionName)
 }
 
-
+/** Unique sparse indexes for CRM↔LMS identity (idempotent). */
+export async function ensureUserIndexes() {
+  if (userIndexesPromise) return userIndexesPromise
+  userIndexesPromise = (async () => {
+    const users = await getCollection('users')
+    const ops = [
+      users.createIndex(
+        { telegramUserId: 1 },
+        {
+          unique: true,
+          name: 'users_telegramUserId_unique',
+          partialFilterExpression: {
+            telegramUserId: { $type: 'string', $gt: '' },
+          },
+        }
+      ),
+      users.createIndex(
+        { 'studentProfile.crmStudentId': 1 },
+        {
+          unique: true,
+          name: 'users_crmStudentId_unique',
+          partialFilterExpression: {
+            'studentProfile.crmStudentId': { $type: 'string', $gt: '' },
+          },
+        }
+      ),
+    ]
+    const results = await Promise.allSettled(ops)
+    for (const r of results) {
+      if (r.status === 'rejected') {
+        console.warn('ensureUserIndexes:', r.reason?.message || r.reason)
+      }
+    }
+  })()
+  try {
+    await userIndexesPromise
+  } catch (e) {
+    userIndexesPromise = null
+    throw e
+  }
+}

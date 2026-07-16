@@ -14,8 +14,7 @@ import {
   ROBLOX_COURSE_ID,
 } from '@/lib/courseLessonAccess'
 import { robloxCurriculum } from '@/lib/robloxCurriculum'
-import { lessonContentMap as lessonContentMapUk } from '@/lib/lessonContentMap.uk'
-import { lessonContentMap as lessonContentMapEn } from '@/lib/lessonContentMap.en'
+import { lessonContentMap } from '@/lib/lessonContentMap.uk'
 import { checkPracticeOutput } from '@/lib/practiceValidation'
 import {
   lessonRequiresPractice,
@@ -289,8 +288,7 @@ export async function POST(request) {
 
     if (action === 'completePracticeTask' && lessonId) {
       if (courseId !== ROBLOX_COURSE_ID) {
-        const lessonMap = locale === 'en' ? lessonContentMapEn : lessonContentMapUk
-        const lesson = lessonMap[lessonId]
+        const lesson = lessonContentMap[lessonId]
         const practiceTask = lesson?.practiceTask
 
         if (!practiceTask?.examples?.length) {

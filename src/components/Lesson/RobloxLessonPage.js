@@ -19,8 +19,7 @@ import {
 import { getRobloxCurriculum } from '@/lib/robloxCurriculumLocale'
 import { getRobloxLessonContent } from '@/lib/robloxLessonContent'
 import { markdownToHtml } from '@/lib/markdownToHtml'
-import { createPayment, updateProgress } from '@/lib/authClient'
-import { formatPrice, getCoursePrice } from '@/lib/coursePrices'
+import { updateProgress } from '@/lib/authClient'
 import styles from './RobloxLessonPage.module.css'
 import FloatingNavArrows from './FloatingNavArrows'
 import LessonPageWithSidebar from './LessonPageWithSidebar'
@@ -43,8 +42,6 @@ const RobloxLessonPage = ({
   const locale = useLocale()
   const router = useRouter()
   const [activeStep, setActiveStep] = useState('theory')
-  const [isPurchasing, setIsPurchasing] = useState(false)
-  const [paymentError, setPaymentError] = useState('')
   const [progressError, setProgressError] = useState('')
   const [gateHint, setGateHint] = useState('')
   const [markingPractice, setMarkingPractice] = useState(false)
@@ -53,6 +50,11 @@ const RobloxLessonPage = ({
   const [quizScore, setQuizScore] = useState(null)
   const [quizSubmitting, setQuizSubmitting] = useState(false)
   const [localProgress, setLocalProgress] = useState(userProgress)
+  const [practiceChecks, setPracticeChecks] = useState({
+    studio: false,
+    steps: false,
+    saved: false,
+  })
   const panelRef = useRef(null)
   useCopyCodeBlocks(panelRef, {
     copyLabel: t('copyCode'),
@@ -63,6 +65,13 @@ const RobloxLessonPage = ({
   useEffect(() => {
     setLocalProgress(userProgress)
   }, [userProgress, lessonId])
+
+  useEffect(() => {
+    setPracticeChecks({ studio: false, steps: false, saved: false })
+  }, [lessonId])
+
+  const practiceChecklistReady =
+    practiceChecks.studio && practiceChecks.steps && practiceChecks.saved
 
   const curriculum = getRobloxCurriculum(locale)
   const lessonContent = getRobloxLessonContent(lessonId, locale)
@@ -125,31 +134,6 @@ const RobloxLessonPage = ({
 
   const isLessonCompleted = (id) =>
     localProgress?.completedLessons?.includes(id) || false
-
-  const handlePurchase = async () => {
-    setPaymentError('')
-    setIsPurchasing(true)
-    try {
-      if (locale === 'en') {
-        try {
-          await fetch('/api/metrics/clicks', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ courseId, source: 'roblox_lesson_page' })
-          })
-        } catch (err) {
-          console.error('Failed to track click', err)
-        }
-      }
-
-      const { paymentUrl } = await createPayment(courseId, locale)
-      if (paymentUrl) window.location.href = paymentUrl
-    } catch (e) {
-      setPaymentError(e.message || t('paymentError'))
-    } finally {
-      setIsPurchasing(false)
-    }
-  }
 
   const handleMarkPractice = async () => {
     setMarkingPractice(true)
@@ -244,7 +228,6 @@ const RobloxLessonPage = ({
   }
 
   if (!isAccessible && userRole !== 'admin' && !isPurchased) {
-    const coursePrice = getCoursePrice(courseId, locale)
     return (
       <div className={styles.page}>
         <div className={styles.shell}>
@@ -253,30 +236,13 @@ const RobloxLessonPage = ({
               <Lock size={48} style={{ opacity: 0.4, marginBottom: '1rem' }} />
               <h2>{t('lockedTitle')}</h2>
               <p style={{ color: '#64748b', maxWidth: 480, margin: '1rem auto' }}>
-                {locale === 'en' ? tRoblox('lockedDescriptionEn') : tRoblox('lockedDescriptionUk')}
+                {tRoblox('lockedDescriptionUk')}
               </p>
               <div className={styles.footerActions} style={{ justifyContent: 'center' }}>
                 <Link href={`/courses/${courseId}`} className={styles.btnPrimary}>
                   {t('returnToCourse')}
                 </Link>
-                {locale === 'en' &&
-                  coursePrice?.price > 0 &&
-                  coursePrice.purchasable !== false && (
-                  <button
-                    type="button"
-                    className={styles.btnSecondary}
-                    onClick={handlePurchase}
-                    disabled={isPurchasing}
-                  >
-                    {isPurchasing
-                      ? t('processing')
-                      : tRoblox('purchaseFullCourse', {
-                          price: formatPrice(coursePrice.price, coursePrice.currency, locale),
-                        })}
-                  </button>
-                )}
               </div>
-              {paymentError && <p style={{ color: '#ef4444' }}>{paymentError}</p>}
             </div>
           </div>
         </div>
@@ -477,6 +443,16 @@ const RobloxLessonPage = ({
         )}
 
         {!fullLesson.comingSoon && (
+          <div className={`${styles.starterTip} ${styles.desktopTip}`} role="note">
+            <BookOpen size={20} />
+            <div>
+              <strong>{tRoblox('desktopTipTitle')}</strong>
+              <p>{tRoblox('desktopTipBody')}</p>
+            </div>
+          </div>
+        )}
+
+        {!fullLesson.comingSoon && (
           <div className={styles.steps}>
             {STEPS.filter((s) => s !== 'practice' || hasPractice).filter(
               (s) => s !== 'quiz' || hasQuiz
@@ -588,24 +564,60 @@ const RobloxLessonPage = ({
                 </div>
               )}
               {!practiceDone && (
-                <div className={styles.footerActions}>
-                  <button
-                    type="button"
-                    className={styles.btnPrimary}
-                    onClick={handleMarkPractice}
-                    disabled={markingPractice}
-                  >
-                    {markingPractice ? (
-                      <Loader2 size={18} className="animate-spin" />
-                    ) : (
-                      <ClipboardCheck size={18} />
-                    )}
-                    {tRoblox('markPracticeComplete')}
-                  </button>
+                <div className={styles.practiceGate}>
+                  <p className={styles.practiceGateTitle}>{tRoblox('checklistTitle')}</p>
+                  <label className={styles.checkRow}>
+                    <input
+                      type="checkbox"
+                      checked={practiceChecks.studio}
+                      onChange={(e) =>
+                        setPracticeChecks((prev) => ({ ...prev, studio: e.target.checked }))
+                      }
+                    />
+                    <span>{tRoblox('checklistOpenStudio')}</span>
+                  </label>
+                  <label className={styles.checkRow}>
+                    <input
+                      type="checkbox"
+                      checked={practiceChecks.steps}
+                      onChange={(e) =>
+                        setPracticeChecks((prev) => ({ ...prev, steps: e.target.checked }))
+                      }
+                    />
+                    <span>{tRoblox('checklistDidSteps')}</span>
+                  </label>
+                  <label className={styles.checkRow}>
+                    <input
+                      type="checkbox"
+                      checked={practiceChecks.saved}
+                      onChange={(e) =>
+                        setPracticeChecks((prev) => ({ ...prev, saved: e.target.checked }))
+                      }
+                    />
+                    <span>{tRoblox('checklistSaved')}</span>
+                  </label>
+                  {!practiceChecklistReady ? (
+                    <p className={styles.checklistHint}>{tRoblox('checklistHint')}</p>
+                  ) : null}
+                  <div className={styles.footerActions}>
+                    <button
+                      type="button"
+                      className={styles.btnPrimary}
+                      onClick={handleMarkPractice}
+                      disabled={markingPractice || !practiceChecklistReady}
+                    >
+                      {markingPractice ? (
+                        <Loader2 size={18} className="animate-spin" />
+                      ) : (
+                        <ClipboardCheck size={18} />
+                      )}
+                      {tRoblox('markPracticeComplete')}
+                    </button>
+                  </div>
                 </div>
               )}
               {practiceDone && (
-                <p style={{ color: '#059669', fontWeight: 700, marginTop: '1rem' }}>
+                <p className={styles.practiceDoneMsg}>
                   <CheckCircle2 size={16} style={{ verticalAlign: 'middle' }} />{' '}
                   {tRoblox('practiceDone')}
                 </p>

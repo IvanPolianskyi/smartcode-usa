@@ -12,12 +12,7 @@ const paths = [
 	{ path: '/oferta', priority: 0.5, changeFrequency: 'yearly' },
 	{ path: '/privacy', priority: 0.5, changeFrequency: 'yearly' },
 	{ path: '/refund', priority: 0.5, changeFrequency: 'yearly' },
-	{ path: '/en/oferta', priority: 0.5, changeFrequency: 'yearly' },
-	{ path: '/en/privacy', priority: 0.5, changeFrequency: 'yearly' },
-	{ path: '/en/refund', priority: 0.5, changeFrequency: 'yearly' },
 	{ path: '/invite', priority: 0.7, changeFrequency: 'monthly' },
-	{ path: '/login', priority: 0.4, changeFrequency: 'yearly' },
-	{ path: '/register', priority: 0.4, changeFrequency: 'yearly' },
 ]
 
 export default function sitemap() {

@@ -5,17 +5,14 @@ import { robloxCurriculum } from '@/lib/robloxCurriculum'
 export const PYTHON_COURSE_ID = 'python-developer-zero-to-junior'
 export const ROBLOX_COURSE_ID = 'roblox-studio'
 
-/** LMS course pages (EN home / dashboard). */
-export const EN_COURSE_PAGE_PATHS = {
+/** LMS course pages. */
+export const COURSE_PAGE_PATHS = {
   [PYTHON_COURSE_ID]: '/courses/python-developer-zero-to-junior',
   [ROBLOX_COURSE_ID]: '/courses/roblox-studio',
 }
 
-/** Checkout pages for EN purchasable courses. */
-export const EN_COURSE_BUY_PATHS = {
-  [PYTHON_COURSE_ID]: '/buy/python-developer-zero-to-junior',
-  [ROBLOX_COURSE_ID]: '/buy/roblox-studio',
-}
+/** @deprecated use COURSE_PAGE_PATHS */
+export const EN_COURSE_PAGE_PATHS = COURSE_PAGE_PATHS
 
 export const KNOWN_COURSE_IDS = new Set([
   PYTHON_COURSE_ID,
@@ -57,7 +54,11 @@ export function hasStudentCourseAccess(user, courseId) {
   if (!user) return false
   if (user.role === 'admin' || user.role === 'teacher') return true
   if ((user.purchasedCourses || []).includes(courseId)) return true
-  return hasActiveOnlineCourse(user.studentProfile, courseId)
+  if ((user.enrolledCourses || []).includes(courseId)) return true
+  if (hasActiveOnlineCourse(user.studentProfile, courseId)) return true
+  const access = user.studentProfile?.courseAccess?.[courseId]
+  if (access?.enabled === true || access?.fullAccess === true) return true
+  return false
 }
 
 /** Читання/запис прогресу: оплачений/онлайн курс або Roblox-прев’ю (урок 1.1). */
@@ -164,24 +165,30 @@ export function isLessonUnlockedInCourse(lessonId, ctx) {
   return getUnlockedLessonSet(ctx).has(lessonId)
 }
 
-/** Курси, до яких учень має доступ у кабінеті (CRM/онлайн + куплені). */
+/** Курси, до яких учень має доступ у кабінеті (CRM онлайн + гранти). */
 export function getStudentAccessibleCourseIds(user) {
   if (user?.role === 'admin' || user?.role === 'teacher') {
     return [...KNOWN_COURSE_IDS]
   }
   const ids = new Set()
   ;(user?.purchasedCourses || []).forEach((id) => ids.add(id))
+  ;(user?.enrolledCourses || []).forEach((id) => ids.add(id))
   ;(user?.studentProfile?.activeOnlineCourses || []).forEach((id) => ids.add(id))
-  return [...ids]
+  const accessMap = user?.studentProfile?.courseAccess || {}
+  Object.keys(accessMap).forEach((id) => {
+    if (accessMap[id]?.enabled || accessMap[id]?.fullAccess) ids.add(id)
+  })
+  return [...ids].filter((id) => KNOWN_COURSE_IDS.has(id) || Boolean(id))
 }
 
-/** Home/pricing CTA: course page if the student already has access, otherwise buy. */
-export function getEnHomeCourseHref(courseId, user) {
-  const owned = user ? new Set(getStudentAccessibleCourseIds(user)) : new Set()
-  if (owned.has(courseId)) {
-    return EN_COURSE_PAGE_PATHS[courseId] || `/courses/${courseId}`
-  }
-  return EN_COURSE_BUY_PATHS[courseId] || `/buy/${courseId}`
+/** CTA на сторінку курсу (самостійна купівля прибрана). */
+export function getCoursePageHref(courseId) {
+  return COURSE_PAGE_PATHS[courseId] || `/courses/${courseId}`
+}
+
+/** @deprecated use getCoursePageHref */
+export function getEnHomeCourseHref(courseId) {
+  return getCoursePageHref(courseId)
 }
 
 export function getRemovedOnlineCourseIds(prevOnlineIds = [], nextOnlineIds = [], purchasedCourses = []) {

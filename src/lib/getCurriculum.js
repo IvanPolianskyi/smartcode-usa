@@ -1,29 +1,25 @@
-import { pythonCurriculum as pythonUk } from './pythonCurriculum'
-import { pythonCurriculum as pythonEn } from './pythonCurriculum.en'
+import { pythonCurriculum } from './pythonCurriculum'
 import { enrichPythonModules } from './pythonModuleMeta'
-import { webDevCurriculum as webDevUk } from './webDevCurriculum'
-import { webDevCurriculum as webDevEn } from './webDevCurriculum.en'
+import { webDevCurriculum } from './webDevCurriculum'
 import { getRobloxCurriculum } from './robloxCurriculumLocale'
 
-export function getPythonCurriculum(locale) {
-	const loc = locale === 'en' ? 'en' : 'uk'
-	const base = loc === 'en' ? pythonEn : pythonUk
+export function getPythonCurriculum() {
 	return {
-		...base,
-		modules: enrichPythonModules(base.modules, loc),
+		...pythonCurriculum,
+		modules: enrichPythonModules(pythonCurriculum.modules),
 	}
 }
 
-export function getWebDevCurriculum(locale) {
-	return locale === 'en' ? webDevEn : webDevUk
+export function getWebDevCurriculum() {
+	return webDevCurriculum
 }
 
-export function getCurriculum(courseId, locale) {
+export function getCurriculum(courseId) {
 	if (courseId === 'web-development') {
-		return getWebDevCurriculum(locale)
+		return getWebDevCurriculum()
 	}
 	if (courseId === 'roblox-studio') {
-		return getRobloxCurriculum(locale)
+		return getRobloxCurriculum()
 	}
-	return getPythonCurriculum(locale)
+	return getPythonCurriculum()
 }

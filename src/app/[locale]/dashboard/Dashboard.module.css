@@ -1,15 +1,15 @@
 :global(:root) {
-  --dash-ivory: #f8fafc;
-  --dash-surface: rgba(255, 255, 255, 0.85);
-  --dash-border: rgba(226, 232, 240, 0.8);
-  --dash-text: #0f172a;
-  --dash-muted: #64748b;
-  --dash-primary: #4f46e5;
-  --dash-primary-dark: #3730a3;
-  --dash-accent: #f59e0b;
+  --dash-ivory: #000000;
+  --dash-surface: rgba(18, 18, 24, 0.92);
+  --dash-border: rgba(255, 255, 255, 0.08);
+  --dash-text: #ffffff;
+  --dash-muted: #8b8b9a;
+  --dash-primary: #a100ff;
+  --dash-primary-dark: #7a00c8;
+  --dash-accent: #c44bff;
   --dash-radius: 20px;
   --dash-radius-sm: 14px;
-  --dash-shadow: 0 4px 24px -2px rgba(15, 23, 42, 0.05), 0 0 1px rgba(15, 23, 42, 0.1);
+  --dash-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.45), 0 0 1px rgba(161, 0, 255, 0.25);
 }
 
 .container {
@@ -21,8 +21,8 @@
   box-sizing: border-box;
   background: var(--dash-ivory);
   background-image:
-    radial-gradient(ellipse 60% 50% at 10% 0%, rgba(79, 70, 229, 0.06), transparent),
-    radial-gradient(ellipse 50% 40% at 90% 10%, rgba(245, 158, 11, 0.04), transparent);
+    radial-gradient(ellipse 60% 50% at 10% 0%, rgba(161, 0, 255, 0.22), transparent),
+    radial-gradient(ellipse 50% 40% at 90% 10%, rgba(196, 75, 255, 0.12), transparent);
   color: var(--dash-text);
 }
 
@@ -31,7 +31,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #64748b;
+  color: #8b8b9a;
   font-weight: 600;
 }
 
@@ -40,8 +40,8 @@
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  background: #fff;
-  border: 1px solid #e2e8f0;
+  background: #121218;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
   padding: 1rem 1.25rem;
   margin-bottom: 1rem;
@@ -63,8 +63,8 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #e2e8f0;
-  color: #334155;
+  background: rgba(255, 255, 255, 0.08);
+  color: #c4c4d4;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,12 +73,12 @@
 .title {
   font-size: 1.1rem;
   margin: 0;
-  color: #0f172a;
+  color: #ffffff;
 }
 
 .subtitle {
   margin: 0.2rem 0 0;
-  color: #64748b;
+  color: #8b8b9a;
   font-size: 0.88rem;
 }
 
@@ -97,8 +97,8 @@
 }
 
 .card {
-  background: #fff;
-  border: 1px solid #e2e8f0;
+  background: #121218;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
   padding: 1rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -106,13 +106,13 @@
 
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
 }
 
 .metric {
   font-size: 1.3rem;
   font-weight: 800;
-  color: #111827;
+  color: #ffffff;
 }
 
 .heroCard {
@@ -121,12 +121,12 @@
   justify-content: space-between;
   align-items: stretch;
   gap: 1.25rem;
-  background: linear-gradient(135deg, #3730a3 0%, #4f46e5 45%, #818cf8 100%);
-  color: #fff;
+  background: linear-gradient(135deg, #7a00c8 0%, #a100ff 45%, #c44bff 100%);
+  color: #ffffff;
   border-radius: var(--dash-radius);
   padding: 2rem 2.25rem;
   margin-bottom: 1rem;
-  box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 20px 40px -10px rgba(161, 0, 255, 0.35);
   overflow: hidden;
 }
 
@@ -248,7 +248,7 @@
 .tabBtnActive {
   background: var(--dash-surface);
   color: var(--dash-primary-dark);
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .cardTitle {
@@ -256,12 +256,12 @@
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  color: #0f172a;
+  color: #ffffff;
   font-size: 1rem;
 }
 
 .cardText {
-  color: #64748b;
+  color: #8b8b9a;
   margin: 0 0 0.6rem;
 }
 
@@ -270,20 +270,20 @@
   align-items: center;
   gap: 0.5rem;
   text-decoration: none;
-  color: #334155;
+  color: #c4c4d4;
   padding: 0.45rem 0.2rem;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid #0a0a0f;
 }
 
 .courseRow {
   display: block;
   text-decoration: none;
   color: inherit;
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 0.7rem;
   margin-bottom: 0.55rem;
-  background: #fff;
+  background: #121218;
 }
 
 .courseBanner {
@@ -302,7 +302,7 @@
   height: 72px;
   object-fit: contain;
   opacity: 0.95;
-  filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.35));
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
 }
 
 .courseBannerFallbackIcon {
@@ -314,8 +314,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.25);
+  color: #ffffff;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
 }
 
 .courseBannerOverlay {
@@ -326,7 +326,7 @@
   justify-content: space-between;
   padding: 0.55rem 0.65rem;
   background: linear-gradient(to top, rgba(2, 6, 23, 0.45), rgba(2, 6, 23, 0.05));
-  color: #fff;
+  color: #ffffff;
 }
 
 .courseRowTop {
@@ -341,13 +341,13 @@
   align-items: center;
   gap: 0.35rem;
   font-weight: 600;
-  color: #fff;
-  text-shadow: 0 2px 8px rgba(15, 23, 42, 0.35);
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .courseMeta {
   margin-top: 0.3rem;
-  color: #64748b;
+  color: #8b8b9a;
   font-size: 0.84rem;
 }
 
@@ -356,8 +356,8 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 0.45rem 0;
-  border-bottom: 1px solid #f1f5f9;
-  color: #334155;
+  border-bottom: 1px solid #0a0a0f;
+  color: #c4c4d4;
 }
 
 .primaryBtn {
@@ -365,24 +365,25 @@
   border: none;
   border-radius: 10px;
   padding: 0.65rem 0.9rem;
-  background: linear-gradient(135deg, #4f46e5, #3b82f6);
-  color: #fff;
+  background: linear-gradient(135deg, #7a00c8 0%, #a100ff 50%, #c44bff 100%);
+  color: #ffffff;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  box-shadow: 0 4px 16px rgba(161, 0, 255, 0.35);
 }
 
 .primaryBtn:disabled {
-  background: #cbd5e1;
+  background: rgba(255, 255, 255, 0.12);
   cursor: not-allowed;
 }
 
 .secondaryBtn {
-  border: 1px solid #cbd5e1;
-  background: #fff;
-  color: #334155;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #121218;
+  color: #c4c4d4;
   border-radius: 10px;
   padding: 0.55rem 0.8rem;
   text-decoration: none;
@@ -464,10 +465,10 @@
   margin-top: 0.7rem;
   margin-bottom: 0.7rem;
   padding: 0.6rem 0.75rem;
-  border: 1px dashed #cbd5e1;
+  border: 1px dashed rgba(255, 255, 255, 0.12);
   border-radius: 10px;
-  color: #0f172a;
-  background: #f8fafc;
+  color: #ffffff;
+  background: #000000;
   font-size: 0.92rem;
 }
 
@@ -486,15 +487,15 @@
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  color: #334155;
+  color: #c4c4d4;
   font-size: 0.9rem;
 }
 
 .receiptInput {
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
   padding: 0.55rem 0.7rem;
-  background: #fff;
+  background: #121218;
   width: 100%;
   box-sizing: border-box;
 }
@@ -502,7 +503,7 @@
 .payPanel {
   margin-top: 0.85rem;
   padding-top: 0.85rem;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Payment card v2 */
@@ -691,8 +692,8 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--dash-primary), #6366f1);
-  color: #fff;
+  background: linear-gradient(135deg, var(--dash-primary), #a100ff);
+  color: #ffffff;
   font-size: 0.82rem;
   font-weight: 800;
   display: flex;
@@ -728,7 +729,7 @@
 
 .amountChip {
   border: 1px solid var(--dash-border);
-  background: #fff;
+  background: #121218;
   color: var(--dash-text);
   font-size: 0.8rem;
   font-weight: 600;
@@ -758,7 +759,7 @@
   width: 100%;
   box-sizing: border-box;
   padding: 1.1rem 1rem;
-  border: 2px dashed #cbd5e1;
+  border: 2px dashed rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   background: #fafaf9;
   cursor: pointer;
@@ -767,7 +768,7 @@
 }
 
 .uploadZone:hover {
-  border-color: #818cf8;
+  border-color: #c44bff;
   background: #eef2ff;
 }
 
@@ -831,8 +832,8 @@
   padding: 0;
   border: none;
   border-radius: 8px;
-  background: #fff;
-  color: #64748b;
+  background: #121218;
+  color: #8b8b9a;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
 }
@@ -845,8 +846,8 @@
 .receiptPreviewImageWrap {
   overflow: hidden;
   border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #121218;
   max-height: 220px;
 }
 
@@ -863,7 +864,7 @@
   justify-content: center;
   width: 100%;
   height: 120px;
-  background: #f8fafc;
+  background: #000000;
 }
 
 .receiptGenericIcon {
@@ -885,7 +886,7 @@
   padding: 0.55rem 0.75rem;
   border: 1px solid #c7d2fe;
   border-radius: 10px;
-  background: #fff;
+  background: #121218;
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--dash-primary);
@@ -904,19 +905,19 @@
   padding: 1rem 1.25rem;
   border: none;
   border-radius: 14px;
-  background: linear-gradient(135deg, #4338ca, #4f46e5 50%, #6366f1);
-  color: #fff;
+  background: linear-gradient(135deg, #7a00c8, #a100ff 50%, #a100ff);
+  color: #ffffff;
   font-size: 1.15rem;
   font-weight: 800;
   letter-spacing: 0.06em;
   cursor: pointer;
-  box-shadow: 0 12px 28px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 12px 28px rgba(161, 0, 255, 0.35);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .paySubmitBtn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 16px 32px rgba(79, 70, 229, 0.42);
+  box-shadow: 0 16px 32px rgba(161, 0, 255, 0.42);
 }
 
 .paySubmitBtn:disabled {
@@ -960,18 +961,18 @@
   justify-content: center;
   gap: 0.35rem;
   padding: 0.55rem 0.75rem;
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
-  background: #fff;
+  background: #121218;
   font-size: 0.88rem;
   cursor: pointer;
-  color: #334155;
+  color: #c4c4d4;
 }
 
 .payModeBtnActive {
-  border-color: #4f46e5;
+  border-color: #a100ff;
   background: #eef2ff;
-  color: #312e81;
+  color: #7a00c8;
   font-weight: 600;
 }
 
@@ -1006,14 +1007,14 @@
 
 .bankLabel {
   font-size: 0.75rem;
-  color: #64748b;
+  color: #8b8b9a;
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
 
 .bankValue {
   font-size: 0.9rem;
-  color: #0f172a;
+  color: #ffffff;
   word-break: break-all;
 }
 
@@ -1021,7 +1022,7 @@
   flex-shrink: 0;
   border: none;
   background: transparent;
-  color: #64748b;
+  color: #8b8b9a;
   cursor: pointer;
   padding: 0.2rem;
 }
@@ -1034,7 +1035,7 @@
 
 .pendingNotice {
   background: linear-gradient(135deg, #fef3c7, #fde68a);
-  border: 1px solid #f59e0b;
+  border: 1px solid #c44bff;
   border-radius: 14px;
   padding: 1rem 1.25rem;
   margin-bottom: 1rem;
@@ -1126,7 +1127,7 @@
 
 .metricCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px -4px rgba(15, 23, 42, 0.08), 0 0 2px rgba(15, 23, 42, 0.1);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 .metricCardIcon {
@@ -1200,7 +1201,7 @@
 .coursesSection:hover,
 .calendarCard:hover,
 .historyCard:hover {
-  box-shadow: 0 12px 32px -4px rgba(15, 23, 42, 0.08), 0 0 2px rgba(15, 23, 42, 0.1);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 .coursesSection .courseGrid,
@@ -1221,7 +1222,7 @@
   border: 1px solid var(--dash-border);
   border-radius: 14px;
   overflow: hidden;
-  background: #fff;
+  background: #121218;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -1254,9 +1255,31 @@
   border-radius: 999px;
   font-size: 0.7rem;
   font-weight: 700;
-  color: #fff;
+  color: #ffffff;
   background: linear-gradient(135deg, #6b7280, #4b5563);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.courseCardPrimary {
+  border-color: rgba(161, 0, 255, 0.45);
+  box-shadow: 0 0 0 1px rgba(161, 0, 255, 0.18);
+}
+
+.courseCardPrimaryBadge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #a100ff, #7c3aed);
+  box-shadow: 0 4px 12px rgba(161, 0, 255, 0.35);
 }
 
 .courseCardBadgeLocked {
@@ -1300,7 +1323,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #ffffff;
 }
 
 .courseCardBody {
@@ -1376,7 +1399,7 @@
   display: block;
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, #4f46e5, #818cf8);
+  background: linear-gradient(90deg, #a100ff, #c44bff);
   transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1389,8 +1412,8 @@
   padding: 0.6rem 0.85rem;
   border: none;
   border-radius: 10px;
-  background: linear-gradient(135deg, var(--dash-primary), #6366f1);
-  color: #fff;
+  background: linear-gradient(135deg, var(--dash-primary), #a100ff);
+  color: #ffffff;
   font-weight: 600;
   font-size: 0.88rem;
   text-decoration: none;
@@ -1400,7 +1423,7 @@
 
 .resumeBtn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 8px 20px rgba(161, 0, 255, 0.35);
 }
 
 .resumeBtn:disabled {
@@ -1421,7 +1444,7 @@
 
 .progressRingFill {
   stroke: url(#dashRingGrad);
-  stroke: #6366f1;
+  stroke: #a100ff;
   transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1483,7 +1506,7 @@
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: rgba(245, 158, 11, 0.2);
+  background: rgba(196, 75, 255, 0.2);
   color: #b45309;
   display: flex;
   align-items: center;
@@ -1538,8 +1561,8 @@
   padding: 0.65rem 1.1rem;
   border: none;
   border-radius: 10px;
-  background: linear-gradient(135deg, #ea580c, #f59e0b);
-  color: #fff;
+  background: linear-gradient(135deg, #ea580c, #c44bff);
+  color: #ffffff;
   font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
@@ -1634,7 +1657,7 @@
   flex-wrap: wrap;
   padding: 0.55rem 0.65rem;
   border-radius: 10px;
-  background: #fff;
+  background: #121218;
   border: 1px solid var(--dash-border);
 }
 
@@ -1683,7 +1706,7 @@
 
 .scheduleLessonLive .scheduleJoinBtn {
   background: linear-gradient(135deg, #16a34a, #22c55e);
-  color: #fff;
+  color: #ffffff;
   box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
 }
 

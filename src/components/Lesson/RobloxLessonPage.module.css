@@ -115,6 +115,57 @@
   line-height: 1.45;
 }
 
+.desktopTip {
+  border-color: rgba(56, 189, 248, 0.28);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(161, 0, 255, 0.06));
+}
+
+.practiceGate {
+  margin-top: 1.25rem;
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(161, 0, 255, 0.2);
+  background: rgba(18, 18, 24, 0.55);
+}
+
+.practiceGateTitle {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.checkRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin: 0.45rem 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.checkRow input {
+  margin-top: 0.2rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: #a100ff;
+  flex-shrink: 0;
+}
+
+.checklistHint {
+  margin: 0.65rem 0 0;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.practiceDoneMsg {
+  color: #34d399;
+  font-weight: 700;
+  margin-top: 1rem;
+}
+
 .unlockHint {
   margin: 0;
   font-size: 0.9rem;

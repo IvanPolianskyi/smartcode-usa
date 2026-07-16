@@ -19,11 +19,10 @@ import {
   Terminal,
   GripVertical
 } from 'lucide-react'
-import { updateProgress, checkCoursePurchase, createPayment, enrollInCourse } from '@/lib/authClient'
+import { updateProgress, checkCoursePurchase, enrollInCourse } from '@/lib/authClient'
 import { useLocale, useTranslations } from 'next-intl'
 import { getCurriculum } from '@/lib/getCurriculum'
-import { lessonContentMap as lessonContentMapUk } from '@/lib/lessonContentMap.uk'
-import { lessonContentMap as lessonContentMapEn } from '@/lib/lessonContentMap.en'
+import { lessonContentMap } from '@/lib/lessonContentMap.uk'
 import { checkPracticeOutput } from '@/lib/practiceValidation'
 import { parsePracticeStdin } from '@/lib/parsePracticeStdin'
 import { hasBlockedPythonCode } from '@/lib/pythonCodeGuard'
@@ -219,7 +218,6 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     success: null
   })
   const [isSaving, setIsSaving] = useState(false)
-  const [isPurchasing, setIsPurchasing] = useState(false)
   const [practiceCompleted, setPracticeCompleted] = useState(false)
   const [practiceChecked, setPracticeChecked] = useState(false)
   const [outputErrors, setOutputErrors] = useState([]) // Масив індексів рядків з помилками
@@ -322,8 +320,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     }
   }
   
-  // Get lesson content (locale-specific; EN falls back to UK until translated)
-  const lessonContentMap = locale === 'en' ? lessonContentMapEn : lessonContentMapUk
+  // Get lesson content
   const lesson = lessonContentMap[lessonId]
   
   const curriculum = getCurriculum(courseId, locale)
@@ -481,38 +478,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const currentModule = lessonModuleIndex >= 0 ? curriculum.modules[lessonModuleIndex] : null
   
   const lockedDescription =
-    locale === 'uk'
-      ? courseId === 'roblox-studio'
-        ? t('lockedDescriptionRoblox')
-        : t('lockedDescriptionPython')
-      : t('lockedDescription')
+    courseId === 'roblox-studio'
+      ? t('lockedDescriptionRoblox')
+      : courseId === 'python-developer-zero-to-junior'
+        ? t('lockedDescriptionPython')
+        : t('lockedDescription')
 
-  const handlePurchase = async () => {
-    setIsPurchasing(true)
-    try {
-      if (locale === 'en') {
-        try {
-          await fetch('/api/metrics/clicks', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ courseId, source: 'lesson_page' })
-          })
-        } catch (err) {
-          console.error('Failed to track click', err)
-        }
-      }
-
-      const paymentData = await createPayment(courseId, locale)
-      if (paymentData.paymentUrl) {
-        window.location.href = paymentData.paymentUrl
-      }
-    } catch (error) {
-      console.error('Purchase error:', error)
-      alert(t('paymentError'))
-      setIsPurchasing(false)
-    }
-  }
-  
   // Show locked message if lesson is not accessible
   if (!hasAccess) {
     return (
@@ -539,16 +510,6 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
             >
               {t('returnToCourse')}
             </Link>
-            {locale === 'en' && userProgress && (
-              <button
-                onClick={handlePurchase}
-                disabled={isPurchasing}
-                className={styles.ctaButton}
-                style={{ backgroundColor: 'var(--accent-blue)' }}
-              >
-                {isPurchasing ? t('processing') : t('purchaseCourse')}
-              </button>
-            )}
           </div>
         </div>
       </div>

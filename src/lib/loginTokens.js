@@ -37,7 +37,7 @@ export async function revokeUnusedLoginTokensForUser(userId) {
 
 /**
  * @param {string|ObjectId} userId
- * @param {{ ttlMs?: number, purpose?: string, revokePrevious?: boolean }} [opts]
+ * @param {{ ttlMs?: number, purpose?: string, revokePrevious?: boolean, redirectPath?: string }} [opts]
  * @returns {Promise<{ token: string, expiresAt: Date, loginPath: string }>}
  */
 export async function createLoginToken(userId, opts = {}) {
@@ -65,11 +65,20 @@ export async function createLoginToken(userId, opts = {}) {
     expiresAt,
     usedAt: null,
   })
+  let loginPath = `/api/auth/login?token=${encodeURIComponent(token)}`
+  const redirectPath = String(opts.redirectPath || '').trim()
+  if (
+    redirectPath.startsWith('/') &&
+    !redirectPath.startsWith('//') &&
+    redirectPath !== '/dashboard'
+  ) {
+    loginPath += `&redirect=${encodeURIComponent(redirectPath)}`
+  }
   return {
     token,
     expiresAt,
     // Use /api/auth/login (already on prod). /api/auth/magic is CDN-cached 404.
-    loginPath: `/api/auth/login?token=${encodeURIComponent(token)}`,
+    loginPath,
   }
 }
 

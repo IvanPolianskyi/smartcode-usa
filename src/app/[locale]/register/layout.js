@@ -7,6 +7,7 @@ export async function generateMetadata({ params }) {
 	return {
 		...meta,
 		alternates: buildAlternates(locale, '/register'),
+		robots: { index: false, follow: false },
 	}
 }
 

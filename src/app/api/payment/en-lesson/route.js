@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server'
 
 /**
- * Live lessons are not sold on the English site (self-paced courses only).
+ * EN live-lesson checkout removed — site is UK-only, courses not sold online.
  */
 export async function POST() {
   return NextResponse.json(
     {
       error:
-        'Live lessons are not available on the English site. Purchase a full course instead.',
+        'Оплата уроків карткою на сайті недоступна. Поповнення — банківським переказом у кабінеті або через менеджера SmartCode.',
     },
     { status: 410 }
   )

@@ -1,19 +1,17 @@
 import { getRobloxLessonContent } from '@/lib/robloxLessonContent'
-import { lessonContentMap as lessonContentMapUk } from '@/lib/lessonContentMap.uk'
-import { lessonContentMap as lessonContentMapEn } from '@/lib/lessonContentMap.en'
+import { lessonContentMap } from '@/lib/lessonContentMap.uk'
 import { ROBLOX_COURSE_ID } from '@/lib/courseLessonAccess'
 
-function getLessonForQuiz(courseId, lessonId, locale = 'uk') {
+function getLessonForQuiz(courseId, lessonId) {
   if (courseId === ROBLOX_COURSE_ID) {
-    return getRobloxLessonContent(lessonId, locale)
+    return getRobloxLessonContent(lessonId)
   }
-  const map = locale === 'en' ? lessonContentMapEn : lessonContentMapUk
-  return map[lessonId] || null
+  return lessonContentMap[lessonId] || null
 }
 
 /** Server-side quiz scoring — never trust client quizScore. */
-export function scoreLessonQuiz({ courseId, lessonId, quizAnswers, locale = 'uk' }) {
-  const lesson = getLessonForQuiz(courseId, lessonId, locale)
+export function scoreLessonQuiz({ courseId, lessonId, quizAnswers }) {
+  const lesson = getLessonForQuiz(courseId, lessonId)
   const questions = lesson?.quiz?.questions
   if (!questions?.length) return null
 

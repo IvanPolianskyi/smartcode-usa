@@ -9,7 +9,6 @@ import { isStudentDashboardReady } from '@/lib/studentAccountReady'
 import { useDashboardCourses } from '@/hooks/useDashboardCourses'
 import { computeScheduleStats } from '@/lib/studentScheduleStats'
 import { getStudentAccessibleCourseIds } from '@/lib/courseLessonAccess'
-import EnStudentDashboard from '@/components/Dashboard/EnStudentDashboard'
 import MyCoursesSection from '@/components/Dashboard/MyCoursesSection'
 import StudentPaymentPanel from '@/components/Dashboard/StudentPaymentPanel'
 import PaymentReminderBanner from '@/components/Dashboard/PaymentReminderBanner'
@@ -22,7 +21,6 @@ import {
   Clock,
   TrendingUp,
   LogOut,
-  CreditCard,
   ShieldCheck,
   Sparkles,
   Trophy,
@@ -68,7 +66,7 @@ function AdminDashboard({ adminStats, t }) {
 function StudentDashboard({ user, progressData, paymentStats, refreshData, t, locale, getCourseInfo, onLogout }) {
   const [activeTab, setActiveTab] = useState('overview')
   const [payPanelOpen, setPayPanelOpen] = useState(false)
-  const dateLocale = locale === 'uk' ? 'uk-UA' : 'en-US'
+  const dateLocale = 'uk-UA'
   const profile = user?.studentProfile || { regularSchedule: [], activeOnlineCourses: [], zoomLink: '' }
   const schedule = profile.regularSchedule || []
   const activeCourses = profile.activeOnlineCourses || []
@@ -173,8 +171,6 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
               user={user}
               progressData={progressData}
               getCourseInfo={getCourseInfo}
-              locale={locale}
-              onRequestAccess={scrollToPayment}
             />
           </div>
           <aside className={styles.dashAside}>
@@ -287,7 +283,6 @@ export default function DashboardPage() {
     return t('roles.student')
   }, [user?.role, t])
   const accountPendingSetup =
-    locale === 'uk' &&
     user?.role !== 'admin' &&
     user?.role !== 'teacher' &&
     !isStudentDashboardReady(user?.studentProfile)
@@ -308,26 +303,14 @@ export default function DashboardPage() {
 
   if (loading || user?.role === 'teacher') {
     return (
-      <div className={locale === 'en' ? '' : styles.container}>
-        <div className={locale === 'en' ? '' : styles.loading} style={locale === 'en' ? { minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b' } : undefined}>
+      <div className={styles.container}>
+        <div className={styles.loading}>
           {t('loading')}
         </div>
       </div>
     )
   }
   if (!user) return null
-
-  if (locale === 'en' && user.role !== 'admin' && user.role !== 'teacher') {
-    return (
-      <EnStudentDashboard
-        user={user}
-        progressData={progressData}
-        refreshData={refreshData}
-        getCourseInfo={getCourseInfo}
-        onLogout={handleLogout}
-      />
-    )
-  }
 
   const isAdmin = user.role === 'admin'
 

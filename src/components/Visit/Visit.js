@@ -4,17 +4,13 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { Star } from 'lucide-react'
 import styles from './Visit.module.css'
-import { useLocale } from 'next-intl'
 import HeroTrialForm from './HeroTrialForm'
-import HeroEnCta from './HeroEnCta'
 
 const EnhancedCourseCards = dynamic(() => import('./EnhancedCourseCards'), {
 	loading: () => <div style={{ minHeight: '980px', width: '100%' }} />,
 })
 
 const Visit = () => {
-	const locale = useLocale()
-	const isEn = locale === 'en'
 	const [shouldRenderCards, setShouldRenderCards] = useState(false)
 
 	// Стабільна висота hero на телефоні (Instagram / iOS toolbar) — дублює layout.js
@@ -83,11 +79,9 @@ const Visit = () => {
 					{/* Ліва колонка — текст */}
 					<div className={styles.heroLeft}>
 						{/* Підзаголовок школи */}
-						{!isEn && (
-							<p className={styles.schoolLabel}>
-								Онлайн школа програмування для дітей 7–17 років
-							</p>
-						)}
+						<p className={styles.schoolLabel}>
+							Онлайн школа програмування для дітей 7–17 років
+						</p>
 
 						{/* Головний оффер */}
 						<h1 className={styles.title}>
@@ -96,52 +90,46 @@ const Visit = () => {
 						</h1>
 
 						{/* Під-оффер */}
-						{!isEn && (
-							<p className={styles.subtitle}>
-								Перетворіть інтерес вашої дитини до ігор - на навичку, яка відкриє двері в IT вже сьогодні
-							</p>
-						)}
+						<p className={styles.subtitle}>
+							Перетворіть інтерес вашої дитини до ігор - на навичку, яка відкриє двері в IT вже сьогодні
+						</p>
 
 						{/* Соціальний доказ */}
-						{!isEn && (
-							<div className={styles.socialProof}>
-								<div className={styles.starsRow}>
-									{[1,2,3,4,5].map(i => (
-										<Star key={i} size={16} className={styles.starIcon} />
-									))}
-									<span className={styles.ratingText}>4.9</span>
-									<span className={styles.ratingDivider}>·</span>
-									<span className={styles.socialProofText}>700+ студентів</span>
-									<span className={styles.ratingDivider}>·</span>
-									<span className={styles.socialProofText}>5 років</span>
-								</div>
+						<div className={styles.socialProof}>
+							<div className={styles.starsRow}>
+								{[1,2,3,4,5].map(i => (
+									<Star key={i} size={16} className={styles.starIcon} />
+								))}
+								<span className={styles.ratingText}>4.9</span>
+								<span className={styles.ratingDivider}>·</span>
+								<span className={styles.socialProofText}>700+ студентів</span>
+								<span className={styles.ratingDivider}>·</span>
+								<span className={styles.socialProofText}>5 років</span>
 							</div>
-						)}
+						</div>
 
 						{/* CTA: форма ім'я + телефон (десктоп і мобільний) */}
 						<div className={styles.heroCta}>
 							<div className={styles.ctaButtons}>
-								{isEn ? <HeroEnCta /> : <HeroTrialForm />}
+								<HeroTrialForm />
 							</div>
 						</div>
 					</div>
 
 					{/* Права колонка — зображення */}
-					{!isEn && (
-						<div className={styles.heroRight}>
-							<div className={styles.heroImageWrap}>
-								<Image
-									src='/hero-teachers-v8.png'
-									alt='Викладачі SmartCode Academy'
-									fill
-									className={styles.heroImage}
-									priority
-									quality={92}
-									sizes='(max-width: 1024px) 100vw, 50vw'
-								/>
-							</div>
+					<div className={styles.heroRight}>
+						<div className={styles.heroImageWrap}>
+							<Image
+								src='/hero-teachers-v8.png'
+								alt='Викладачі SmartCode Academy'
+								fill
+								className={styles.heroImage}
+								priority
+								quality={92}
+								sizes='(max-width: 1024px) 100vw, 50vw'
+							/>
 						</div>
-					)}
+					</div>
 				</div>
 
 				{/* Course Cards */}

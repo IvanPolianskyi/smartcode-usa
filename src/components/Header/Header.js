@@ -14,7 +14,7 @@ import {
 } from 'lucide-react'
 import styles from './Header.module.css'
 import { Link, useRouter } from '@/i18n/navigation'
-import { useTranslations, useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import Logo from '@/components/Logo/Logo'
 import { logout } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
@@ -31,8 +31,6 @@ import {
 const Header = () => {
 	const t = useTranslations('header')
 	const tc = useTranslations('common')
-	const locale = useLocale()
-	const isEn = locale === 'en'
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const [menuMounted, setMenuMounted] = useState(false)
 	const [menuAnimatedOpen, setMenuAnimatedOpen] = useState(false)
@@ -141,11 +139,6 @@ const Header = () => {
 
 	const handleCtaClick = (e) => {
 		if (e?.preventDefault) e.preventDefault()
-		if (isEn) {
-			router.push('/login')
-			setIsMobileMenuOpen(false)
-			return
-		}
 		if (typeof window !== 'undefined') {
 			window.dispatchEvent(new Event('openContactModal'))
 		}
@@ -209,17 +202,11 @@ const Header = () => {
 	}
 
 	const navItems = [
-		isEn
-			? { label: t('nav.signUp'), href: '/login' }
-			: { label: t('nav.signUp'), href: '/#trial-signup', ctaModal: true },
+		{ label: t('nav.signUp'), href: '/#trial-signup', ctaModal: true },
 		{ label: t('nav.courses'), href: '/#our-courses' },
 		{ label: t('nav.lessons'), href: '/#courses', hideOnDesktop: true },
-		...(!isEn
-			? [
-					{ label: t('nav.reviews'), href: '/#testimonials' },
-					{ label: t('nav.invite'), href: '/invite' },
-				]
-			: []),
+		{ label: t('nav.reviews'), href: '/#testimonials' },
+		{ label: t('nav.invite'), href: '/invite' },
 	]
 	const desktopNavItems = navItems
 		.filter((item) => !item.hideOnDesktop)

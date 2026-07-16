@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 
-/** Реєстрація вимкнена — редірект на логін. */
+/** Публічна реєстрація вимкнена — акаунти видає CRM / Telegram. */
 export default function RegisterPage() {
-  redirect('/login')
+  redirect('/login?needAccount=1')
 }

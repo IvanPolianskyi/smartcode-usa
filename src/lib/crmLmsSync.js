@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb'
 import crypto from 'crypto'
-import { getCollection } from '@/lib/mongodb'
+import { ensureUserIndexes, getCollection } from '@/lib/mongodb'
 import { hashPassword } from '@/lib/auth'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
@@ -231,12 +231,36 @@ export function toAuthUserResponse(user) {
   }
 }
 
+async function applyTelegramFields(usersCollection, setFields, payload, excludeUserId) {
+  const tgUid = String(payload.telegramUserId || payload.telegram_user_id || '').trim()
+  const tgChat = String(payload.telegramChatId || payload.telegram_chat_id || '').trim()
+  const tgUser = String(payload.telegramUsername || payload.telegram_username || '').trim()
+  if (!tgUid) return { ok: true }
+  const query = { telegramUserId: tgUid }
+  if (excludeUserId) {
+    query._id = { $ne: excludeUserId }
+  }
+  const other = await usersCollection.findOne(query, { projection: { _id: 1 } })
+  if (other) {
+    return {
+      ok: false,
+      message:
+        'Цей Telegram уже привʼязаний до іншого акаунта LMS. Відвʼяжіть його спочатку.',
+    }
+  }
+  setFields.telegramUserId = tgUid
+  if (tgChat) setFields.telegramChatId = tgChat
+  if (tgUser) setFields.telegramUsername = tgUser
+  return { ok: true }
+}
+
 export async function upsertUserFromCrm(payload) {
   const crmStudentId = String(payload.crmStudentId || '').trim()
   if (!crmStudentId) {
     throw new Error('crmStudentId is required')
   }
 
+  await ensureUserIndexes()
   const usersCollection = await getCollection('users')
   const explicitUserId = String(payload.smartcodeUserId || '').trim()
   const shortId = String(payload.crmShortId || '').trim().toLowerCase()
@@ -292,6 +316,10 @@ export async function upsertUserFromCrm(payload) {
   if (payload.parentContact) {
     profilePatch.parentContact = String(payload.parentContact).trim()
   }
+  const primaryCourseId = String(payload.primaryCourseId || payload.primary_course_id || '').trim()
+  if (primaryCourseId) {
+    profilePatch.primaryCourseId = primaryCourseId
+  }
 
   if (user) {
     const prev = user.studentProfile || defaultStudentProfile()
@@ -304,12 +332,16 @@ export async function upsertUserFromCrm(payload) {
     if (email && !String(user.email || '').trim()) {
       setFields.email = email
     }
-    const tgUid = String(payload.telegramUserId || payload.telegram_user_id || '').trim()
-    const tgChat = String(payload.telegramChatId || payload.telegram_chat_id || '').trim()
-    const tgUser = String(payload.telegramUsername || payload.telegram_username || '').trim()
-    if (tgUid) setFields.telegramUserId = tgUid
-    if (tgChat) setFields.telegramChatId = tgChat
-    if (tgUser) setFields.telegramUsername = tgUser
+    const tgApply = await applyTelegramFields(
+      usersCollection,
+      setFields,
+      payload,
+      user._id
+    )
+    if (!tgApply.ok) {
+      // Не валимо весь upsert — профіль/email оновлюємо, Telegram пропускаємо.
+      console.warn('upsertUserFromCrm telegram skip:', tgApply.message)
+    }
 
     // Пароль: reset лише за issueCredentials; якщо пароля немає — один раз при login-link.
     if (issueCredentials || (!user.password && createLoginLinkOnly)) {
@@ -407,27 +439,48 @@ export async function upsertUserFromCrm(payload) {
         createdAt: new Date(),
         updatedAt: new Date(),
       }
-      const tgUid = String(payload.telegramUserId || payload.telegram_user_id || '').trim()
-      const tgChat = String(payload.telegramChatId || payload.telegram_chat_id || '').trim()
-      const tgUser = String(payload.telegramUsername || payload.telegram_username || '').trim()
-      if (tgUid) doc.telegramUserId = tgUid
-      if (tgChat) doc.telegramChatId = tgChat
-      if (tgUser) doc.telegramUsername = tgUser
-      const result = await usersCollection.insertOne(doc)
-      created = true
-      user = { ...doc, _id: result.insertedId }
+      const tgApply = await applyTelegramFields(usersCollection, doc, payload, null)
+      if (!tgApply.ok) {
+        return {
+          userId: null,
+          created: false,
+          message: tgApply.message,
+        }
+      }
+      try {
+        const result = await usersCollection.insertOne(doc)
+        created = true
+        user = { ...doc, _id: result.insertedId }
+      } catch (e) {
+        if (e?.code === 11000) {
+          return {
+            userId: null,
+            created: false,
+            message:
+              'Конфлікт унікальності (email / Telegram / CRM id). Привʼяжіть вручну на «Звʼязки».',
+          }
+        }
+        throw e
+      }
     }
   }
 
   let loginUrl = null
   let loginPath = null
-  if (issueCredentials || created || createLoginLinkOnly || payload.createLoginLink) {
+  const wantsMagicLink =
+    issueCredentials || created || createLoginLinkOnly || Boolean(payload.createLoginLink)
+  if (wantsMagicLink) {
     try {
       const { createLoginToken } = await import('@/lib/loginTokens')
+      const primary =
+        primaryCourseId ||
+        String(user?.studentProfile?.primaryCourseId || '').trim()
+      const redirectPath = primary ? `/courses/${primary}` : ''
       const link = await createLoginToken(user._id, {
         purpose: 'crm_issue',
         ttlMs: 60 * 60 * 1000,
         revokePrevious: true,
+        redirectPath,
       })
       loginPath = link.loginPath
       const vercel =
@@ -438,29 +491,39 @@ export async function upsertUserFromCrm(payload) {
         process.env.NEXT_PUBLIC_SITE_URL ||
           process.env.NEXT_PUBLIC_BASE_URL ||
           vercel ||
-          'https://smartcode-academy.com'
+          'https://www.smartcode-academy.com'
       ).replace(/\/$/, '')
-      // Canonical host without www (apex redirects to www on CDN if needed).
-      const base = rawBase.replace(
-        /^https?:\/\/www\.smartcode-academy\.com/i,
-        'https://smartcode-academy.com'
-      )
+      // Канонічний хост з www (apex редіректить і може зʼїсти query на CDN).
+      const base = rawBase
+        .replace(/^https?:\/\/smartcode-academy\.com$/i, 'https://www.smartcode-academy.com')
+        .replace(
+          /^https?:\/\/smartcode-academy\.com\//i,
+          'https://www.smartcode-academy.com/'
+        )
       if (!base || !/^https?:\/\//i.test(base)) {
         throw new Error('LMS public base URL is not configured')
+      }
+      if (!String(link.loginPath || '').includes('token=')) {
+        throw new Error('createLoginToken returned path without token')
       }
       loginUrl = `${base}${link.loginPath}`
     } catch (e) {
       console.error('createLoginToken failed', e)
-      // Do not fail upsert: Telegram/CRM can still show login + password.
+      // Для Telegram/CRM magic-login без token= — помилка, а не голий /login.
+      if (createLoginLinkOnly || payload.createLoginLink || issueCredentials) {
+        throw new Error(
+          `Не вдалося створити посилання для входу: ${String(e?.message || e)}`
+        )
+      }
       const fallbackBase = String(
         process.env.NEXT_PUBLIC_SITE_URL ||
           process.env.NEXT_PUBLIC_BASE_URL ||
-          'https://smartcode-academy.com'
+          'https://www.smartcode-academy.com'
       )
         .replace(/\/$/, '')
         .replace(
-          /^https?:\/\/www\.smartcode-academy\.com/i,
-          'https://smartcode-academy.com'
+          /^https?:\/\/smartcode-academy\.com$/i,
+          'https://www.smartcode-academy.com'
         )
       loginPath = '/login'
       loginUrl = `${fallbackBase}/login`
@@ -473,6 +536,21 @@ export async function upsertUserFromCrm(payload) {
     String(user?.email || '').trim() ||
     email ||
     (shortId ? syntheticStudentLogin(shortId) : '')
+
+  // Напрям навчання з CRM — одразу відкрити доступ до курсу на LMS.
+  const grantPrimary =
+    primaryCourseId || String(user?.studentProfile?.primaryCourseId || '').trim()
+  if (grantPrimary && user?._id) {
+    try {
+      await grantCourseAccessForCrmStudent(crmStudentId, grantPrimary, {
+        enabled: true,
+        smartcodeUserId: user._id.toString(),
+        email: login || email,
+      })
+    } catch (e) {
+      console.warn('upsertUserFromCrm primary course grant skipped:', e?.message || e)
+    }
+  }
 
   return {
     userId: user._id.toString(),

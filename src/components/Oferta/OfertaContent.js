@@ -1,6 +1,6 @@
 'use client'
 
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import styles from '@/app/[locale]/oferta/OfertaPage.module.css'
 import MerchantContactBlock from '@/components/Legal/MerchantContactBlock'
 import { linkifyLegalReferences } from '@/components/Oferta/linkifyLegalReferences'
@@ -41,11 +41,9 @@ function renderListItems(items, keyOrder) {
 	})
 }
 
-const SECTION2_LIST_ORDER_UK = ['onlineLessons', 'courses', 'materials']
-const SECTION2_LIST_ORDER_EN = ['courses', 'materials']
-const SECTION3_SUBSECTION_ORDER_UK = ['order', 'terms', 'payment', 'prepayment', 'delivery', 'absences']
-const SECTION3_SUBSECTION_ORDER_EN = ['order', 'terms', 'payment', 'delivery']
-const SECTION3_PAYMENT_ITEMS_ORDER = ['monobank', 'appleGoogle', 'bank']
+const SECTION3_PAYMENT_ITEMS_ORDER = ['monobank', 'bank', 'other', 'appleGoogle']
+const SECTION2_LIST_ORDER = ['onlineLessons', 'courses', 'materials']
+const SECTION3_SUBSECTION_ORDER = ['order', 'terms', 'payment', 'prepayment', 'delivery', 'absences']
 const SECTION4_SUBSECTION_ORDER = ['conditions', 'procedure', 'noRefund', 'cancellation']
 const SECTION4_CONDITIONS_ITEMS_ORDER = ['beforeStart', '14days', 'technical']
 const SECTION6_SUBSECTION_ORDER = ['provider', 'customer']
@@ -109,14 +107,13 @@ function renderSection4(subsections) {
 }
 
 export default function OfertaContent() {
-	const locale = useLocale()
 	const t = useTranslations('pages.oferta')
 	const section1 = t.raw('sections.1')
 	const section2 = t.raw('sections.2')
 	const section3 = t.raw('sections.3')
 	const section4 = t.raw('sections.4')
-	const section2ListOrder = locale === 'en' ? SECTION2_LIST_ORDER_EN : SECTION2_LIST_ORDER_UK
-	const section3SubOrder = locale === 'en' ? SECTION3_SUBSECTION_ORDER_EN : SECTION3_SUBSECTION_ORDER_UK
+	const section2ListOrder = SECTION2_LIST_ORDER
+	const section3SubOrder = SECTION3_SUBSECTION_ORDER
 	const section5 = t.raw('sections.5')
 	const section6 = t.raw('sections.6')
 	const section7 = t.raw('sections.7')
@@ -124,7 +121,7 @@ export default function OfertaContent() {
 	const section9 = t.raw('sections.9')
 	const section10 = t.raw('sections.10')
 	const section11 = t.raw('sections.11')
-	const localeTag = locale === 'en' ? 'en-US' : 'uk-UA'
+	const localeTag = 'uk-UA'
 
 	return (
 		<div className={styles.container}>

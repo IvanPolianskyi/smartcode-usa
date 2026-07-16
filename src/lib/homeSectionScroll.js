@@ -13,17 +13,17 @@ let activeScrollCleanup = null
 
 export function parseHomeHashTarget(href) {
 	if (typeof href !== 'string') return null
-	const m = href.match(/^(?:\/en)?\/#([\w-]+)$/)
+	const m = href.match(/^\/#([\w-]+)$/)
 	return m ? m[1] : null
 }
 
 export function isHomePathname(pathname) {
 	if (!pathname) return false
-	return pathname === '/' || pathname === '/en'
+	return pathname === '/'
 }
 
-export function getHomeBasePath(pathname) {
-	return pathname?.startsWith('/en') ? '/en' : '/'
+export function getHomeBasePath() {
+	return '/'
 }
 
 export function setPendingHomeSectionScroll(id) {

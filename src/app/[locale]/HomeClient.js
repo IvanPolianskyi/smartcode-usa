@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
 import { Analytics } from "@vercel/analytics/next"
 import { usePathname } from 'next/navigation'
-import { useLocale } from 'next-intl'
 import {
 	readAndClearPendingHomeSectionScroll,
 	scheduleScrollToHomeSectionId,
@@ -93,8 +92,6 @@ function LazySection({ children, height, sectionId, rootMargin = '300px 0px' }) 
 }
 
 export default function HomeClient() {
-  const locale = useLocale()
-  const isEn = locale === 'en'
   const pathname = usePathname()
 
   useEffect(() => {
@@ -183,16 +180,12 @@ export default function HomeClient() {
   return (
     <>
       <Analytics />
-      {!isEn && (
-        <LazySection height="1000px" sectionId="courses">
-          <CoursesSection />
-        </LazySection>
-      )}
-      {!isEn && (
-        <LazySection height="420px" sectionId="trial-signup">
-          <TrialSignupBlock />
-        </LazySection>
-      )}
+      <LazySection height="1000px" sectionId="courses">
+        <CoursesSection />
+      </LazySection>
+      <LazySection height="420px" sectionId="trial-signup">
+        <TrialSignupBlock />
+      </LazySection>
       <LazySection height="800px" sectionId="testimonials">
         <Testimonials />
       </LazySection>

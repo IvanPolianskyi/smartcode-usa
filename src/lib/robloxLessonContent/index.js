@@ -187,35 +187,30 @@ const LESSON_MAP = {
   'lesson-roblox-13-6': lesson_roblox_13_6
 }
 
-function createPlaceholder(lessonId, title, locale = 'uk') {
+function createPlaceholder(lessonId, title) {
   const ukContent =
     'Контент цього уроку ще готується. Продовжуй попередні уроки або звернися до викладача на онлайн-занятті.'
-  const enContent =
-    'This lesson is being prepared. Continue previous lessons or ask your teacher in a live class.'
-  const isEn = locale === 'en'
   return {
     lessonId,
     title: title || lessonId,
     theoryMinutes: 40,
     quizMinutes: 10,
     estimatedTime: 50,
-    learningObjectives: isEn
-      ? ['Continue previous lessons', 'Ask your teacher if stuck']
-      : ['Продовжуй попередні уроки', 'Запитай викладача, якщо застряг'],
+    learningObjectives: ['Продовжуй попередні уроки', 'Запитай викладача, якщо застряг'],
     theory: {
       sections: [
         {
-          title: isEn ? 'Coming soon' : 'Незабаром',
-          content: isEn ? enContent : ukContent,
+          title: 'Незабаром',
+          content: ukContent,
         },
       ],
     },
     commonMistakes: [],
-    summary: isEn ? enContent : ukContent,
+    summary: ukContent,
     practiceTask: {
-      title: isEn ? 'Practice coming soon' : 'Практика незабаром',
+      title: 'Практика незабаром',
       difficulty: 'beginner',
-      description: isEn ? enContent : ukContent,
+      description: ukContent,
       hints: [],
       optionalChallenge: '',
     },
@@ -224,14 +219,14 @@ function createPlaceholder(lessonId, title, locale = 'uk') {
   }
 }
 
-export function getRobloxLessonContent(lessonId, locale = 'uk') {
+export function getRobloxLessonContent(lessonId) {
   const pack = LESSON_MAP[lessonId]
   if (!pack) {
     const all = robloxCurriculum.modules.flatMap((m) => m.lessons)
     const meta = all.find((l) => l.lessonId === lessonId)
-    return createPlaceholder(lessonId, meta?.title, locale)
+    return createPlaceholder(lessonId, meta?.title)
   }
-  return locale === 'en' ? pack.en : pack.uk
+  return pack.uk
 }
 
 export function getAllRobloxLessonIds() {

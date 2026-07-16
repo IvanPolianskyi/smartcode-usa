@@ -4,17 +4,17 @@ import { getCollection } from '@/lib/mongodb'
 import { comparePassword, generateToken, setAuthCookie } from '@/lib/auth'
 import { consumeLoginToken } from '@/lib/loginTokens'
 import { toAuthUserResponse } from '@/lib/crmLmsSync'
+import { normalizeLoginIdentifier } from '@/lib/authLogin'
 
 /**
  * GET /api/auth/login?token=...&redirect=/dashboard
- * One-time magic login (CRM / Telegram). Mounted on existing /login route
- * so Vercel does not serve a stale cached 404 from /api/auth/magic.
+ * One-time magic login (CRM / Telegram).
  */
 export async function GET(request) {
   const { searchParams } = new URL(request.url)
   const token = searchParams.get('token') || ''
   if (!token) {
-    redirect('/login')
+    redirect('/login?error=magic_missing')
   }
   const redirectTo = searchParams.get('redirect') || '/dashboard'
   const safeRedirect =
@@ -37,40 +37,54 @@ export async function POST(request) {
     const body = await request.json()
     const { email, password } = body
 
-    // Validation
     if (!email || !password) {
       return NextResponse.json(
-        { error: 'Email and password are required' },
+        {
+          error:
+            'Вкажіть логін і пароль. Логін — email або код учня з CRM / Telegram.',
+        },
         { status: 400 }
       )
     }
 
-    // Find user by email (email field can contain username or email)
+    const loginId = normalizeLoginIdentifier(email)
     const usersCollection = await getCollection('users')
-    const user = await usersCollection.findOne({ email: email.toLowerCase() })
+    const user = await usersCollection.findOne({ email: loginId })
 
     if (!user) {
       return NextResponse.json(
-        { error: 'Invalid email or password' },
+        {
+          error:
+            'Невірний логін або пароль. Якщо акаунт видавав менеджер — перевірте логін з листа / Telegram. Без акаунта напишіть у SmartCode.',
+        },
         { status: 401 }
       )
     }
 
-    // Verify password
+    if (!user.password) {
+      return NextResponse.json(
+        {
+          error:
+            'Для цього акаунта потрібне одноразове посилання з Telegram або CRM. Попросіть менеджера надіслати нове.',
+        },
+        { status: 401 }
+      )
+    }
+
     const isValidPassword = await comparePassword(password, user.password)
 
     if (!isValidPassword) {
       return NextResponse.json(
-        { error: 'Invalid email or password' },
+        {
+          error:
+            'Невірний логін або пароль. Забули пароль? Попросіть нове посилання в Telegram-боті або у менеджера.',
+        },
         { status: 401 }
       )
     }
 
-    // Generate token
     const userId = user._id.toString()
     const token = generateToken(userId)
-
-    // Set cookie
     await setAuthCookie(token)
 
     return NextResponse.json(
@@ -85,4 +99,3 @@ export async function POST(request) {
     )
   }
 }
-
