@@ -4,7 +4,8 @@ import { getCollection } from '@/lib/mongodb'
 import { comparePassword, generateToken, setAuthCookie } from '@/lib/auth'
 import { consumeLoginToken } from '@/lib/loginTokens'
 import { toAuthUserResponse } from '@/lib/crmLmsSync'
-import { normalizeLoginIdentifier } from '@/lib/authLogin'
+import { normalizeLoginIdentifier, isStudentShortCode } from '@/lib/authLogin'
+import { syntheticStudentLogin } from '@/lib/studentLmsLogin'
 
 /**
  * GET /api/auth/login?token=...&redirect=/dashboard
@@ -49,7 +50,21 @@ export async function POST(request) {
 
     const loginId = normalizeLoginIdentifier(email)
     const usersCollection = await getCollection('users')
-    const user = await usersCollection.findOne({ email: loginId })
+    let user = null
+
+    if (isStudentShortCode(loginId)) {
+      user = await usersCollection.findOne({
+        'studentProfile.crmShortId': loginId,
+        role: { $ne: 'admin' },
+      })
+      if (!user) {
+        user = await usersCollection.findOne({
+          email: syntheticStudentLogin(loginId),
+        })
+      }
+    } else {
+      user = await usersCollection.findOne({ email: loginId })
+    }
 
     if (!user) {
       return NextResponse.json(

@@ -84,7 +84,7 @@ export async function createLoginToken(userId, opts = {}) {
 
 /**
  * Consume token once. Returns userId string or null.
- * Verifies user exists and is not admin/teacher when possible.
+ * Admin magic-login заборонено; teacher і student — дозволені.
  */
 export async function consumeLoginToken(rawToken) {
   const raw = String(rawToken || '').trim()
@@ -112,7 +112,8 @@ export async function consumeLoginToken(rawToken) {
     )
     if (!user) return null
     const role = String(user.role || 'student')
-    if (role === 'admin' || role === 'teacher') return null
+    // Admin не логінимо через magic link; teacher — так (CRM «Акаунти вчителів»).
+    if (role === 'admin') return null
   } catch {
     /* if users lookup fails, still allow consume for resilience */
   }

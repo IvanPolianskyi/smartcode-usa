@@ -1,11 +1,18 @@
 import { ObjectId } from 'mongodb'
-import crypto from 'crypto'
 import { ensureUserIndexes, getCollection } from '@/lib/mongodb'
 import { hashPassword } from '@/lib/auth'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { robloxCurriculum } from '@/lib/robloxCurriculum'
 import { flattenCourseLessons } from '@/lib/courseLessonAccess'
+import {
+  allocateUniqueStudentLogin,
+  generateStudentPassword,
+  isSyntheticScLogin,
+  loginLocalFromName,
+  studentLoginFromName,
+  syntheticStudentLogin,
+} from '@/lib/studentLmsLogin'
 
 export const LMS_COURSE_CATALOG = [
   { id: 'python-developer-zero-to-junior', name: 'Python' },
@@ -266,10 +273,15 @@ export async function upsertUserFromCrm(payload) {
   const usersCollection = await getCollection('users')
   const explicitUserId = String(payload.smartcodeUserId || '').trim()
   const shortId = String(payload.crmShortId || '').trim().toLowerCase()
+  const displayNameForLogin = String(payload.name || '').trim()
   let email = normalizeEmail(payload.email)
-  // Якщо email немає — логін з коду учня (поле email у users = логін).
-  if (!email && shortId) {
-    email = syntheticStudentLogin(shortId)
+  // Особистий email лишаємо; sc-* / порожній → логін з імені.
+  if (!email || isSyntheticScLogin(email)) {
+    email = await allocateUniqueStudentLogin(usersCollection, {
+      name: displayNameForLogin,
+      shortId,
+      preferredEmail: email && !isSyntheticScLogin(email) ? email : '',
+    })
   }
   const phone = payload.phone ? String(payload.phone).trim() : null
   // Create magic link without rotating password (Telegram «відкрити LMS»).
@@ -330,9 +342,22 @@ export async function upsertUserFromCrm(payload) {
       studentProfile: { ...prev, ...profilePatch },
       updatedAt: new Date(),
     }
-    // Не перетираємо існуючий логін; порожній email доповнюємо з CRM/short_id.
-    if (email && !String(user.email || '').trim()) {
-      setFields.email = email
+    // Не перетираємо особистий email; sc-* / порожній — оновлюємо на логін з імені.
+    const currentEmail = normalizeEmail(user.email)
+    if (
+      email &&
+      (!currentEmail || isSyntheticScLogin(currentEmail) || currentEmail !== email)
+    ) {
+      if (!currentEmail || isSyntheticScLogin(currentEmail)) {
+        const nextLogin = await allocateUniqueStudentLogin(usersCollection, {
+          name: displayNameForLogin,
+          shortId,
+          preferredEmail: email,
+          excludeUserId: user._id,
+        })
+        if (nextLogin) setFields.email = nextLogin
+        email = nextLogin || email
+      }
     }
     const tgApply = await applyTelegramFields(
       usersCollection,
@@ -381,10 +406,16 @@ export async function upsertUserFromCrm(payload) {
         }
       }
       if (!existingCrm) {
-        // Синтетичний логін sc-{shortId}@… — можна безпечно привʼязати до цього учня.
-        const synthetic = shortId ? syntheticStudentLogin(shortId) : ''
-        const canClaimSynthetic =
-          Boolean(synthetic) && email === synthetic
+        const local = loginLocalFromName(displayNameForLogin, shortId)
+        const ownLogins = new Set(
+          [
+            studentLoginFromName(displayNameForLogin, shortId),
+            shortId ? `student.${shortId}@students.smartcode` : '',
+            shortId ? syntheticStudentLogin(shortId) : '',
+            local && shortId ? `${local}.${shortId}@students.smartcode` : '',
+          ].filter(Boolean)
+        )
+        const canClaimSynthetic = ownLogins.has(email)
         if (!canClaimSynthetic) {
           return {
             userId: null,
@@ -572,18 +603,10 @@ export async function upsertUserFromCrm(payload) {
   }
 }
 
-/** Логін учня без особистого email: sc-{shortId}@students.smartcode */
-export function syntheticStudentLogin(shortId) {
-  const sid = String(shortId || '')
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, '')
-  if (!sid) return ''
-  return `sc-${sid}@students.smartcode`
-}
-
-export function generateStudentPassword() {
-  return `Sc-${crypto.randomBytes(12).toString('base64url')}`
+export {
+  generateStudentPassword,
+  studentLoginFromName,
+  syntheticStudentLogin,
 }
 
 export async function grantCourseAccessForCrmStudent(

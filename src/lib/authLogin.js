@@ -1,15 +1,19 @@
 /**
  * Нормалізація логіна для CRM/Telegram-акаунтів.
- * Код учня (6 символів) → sc-{shortId}@students.smartcode
+ * Код учня (4–12 символів) залишаємо як код — пошук по crmShortId на сервері.
+ * Старий sc-{shortId}@students.smartcode також підтримується.
  */
 export function normalizeLoginIdentifier(value) {
   const raw = String(value || '').trim().toLowerCase()
   if (!raw) return ''
   if (!raw.includes('@') && /^[a-z0-9]{4,12}$/.test(raw)) {
-    const sid = raw.replace(/[^a-z0-9]/g, '')
-    if (sid.length >= 4 && sid.length <= 12) {
-      return `sc-${sid}@students.smartcode`
-    }
+    return raw.replace(/[^a-z0-9]/g, '')
   }
   return raw
+}
+
+/** Чи ввід схожий на код учня CRM (без @). */
+export function isStudentShortCode(value) {
+  const raw = String(value || '').trim().toLowerCase()
+  return Boolean(raw) && !raw.includes('@') && /^[a-z0-9]{4,12}$/.test(raw)
 }

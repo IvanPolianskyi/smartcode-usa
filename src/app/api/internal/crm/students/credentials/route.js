@@ -5,6 +5,7 @@ import { upsertUserFromCrm } from '@/lib/crmLmsSync'
 /**
  * Створити / оновити LMS-акаунт учня + новий пароль + magic login link.
  * Body: ті самі поля upsert + issueCredentials (default true).
+ * Скидає пароль і оновлює збережений у CRM (кнопка менеджера).
  */
 export async function POST(request) {
   const authError = assertCrmInternalRequest(request)
