@@ -7,10 +7,6 @@
     position: relative;
     overflow: hidden;
     font-family: var(--font-geist-sans), Arial, sans-serif;
-    /* Фікс для Instagram in-app browser: ізолюємо від змін viewport при появі/зникненні тулбара */
-    contain: layout style paint;
-    transform: translateZ(0);
-    will-change: scroll-position;
 }
 .backgroundElements {
     position: absolute;

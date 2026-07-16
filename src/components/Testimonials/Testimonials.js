@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import styles from './Testimonials.module.css'
 
@@ -15,6 +15,63 @@ const testimonials = [
 
 const Testimonials = () => {
 	const t = useTranslations('homeSections.testimonials')
+	const carouselRef = useRef(null)
+
+	useEffect(() => {
+		const el = carouselRef.current
+		if (!el) return undefined
+
+		let isDown = false
+		let startX = 0
+		let scrollLeft = 0
+		let moved = false
+
+		const onPointerDown = (e) => {
+			if (e.pointerType === 'touch') return
+			isDown = true
+			moved = false
+			startX = e.clientX
+			scrollLeft = el.scrollLeft
+			el.setPointerCapture?.(e.pointerId)
+		}
+
+		const onPointerMove = (e) => {
+			if (!isDown) return
+			const dx = e.clientX - startX
+			if (Math.abs(dx) > 3) moved = true
+			el.scrollLeft = scrollLeft - dx
+		}
+
+		const onPointerUp = (e) => {
+			if (!isDown) return
+			isDown = false
+			try {
+				el.releasePointerCapture?.(e.pointerId)
+			} catch {}
+		}
+
+		const onClickCapture = (e) => {
+			if (moved) {
+				e.preventDefault()
+				e.stopPropagation()
+				moved = false
+			}
+		}
+
+		el.addEventListener('pointerdown', onPointerDown)
+		el.addEventListener('pointermove', onPointerMove)
+		el.addEventListener('pointerup', onPointerUp)
+		el.addEventListener('pointercancel', onPointerUp)
+		el.addEventListener('click', onClickCapture, true)
+
+		return () => {
+			el.removeEventListener('pointerdown', onPointerDown)
+			el.removeEventListener('pointermove', onPointerMove)
+			el.removeEventListener('pointerup', onPointerUp)
+			el.removeEventListener('pointercancel', onPointerUp)
+			el.removeEventListener('click', onClickCapture, true)
+		}
+	}, [])
 
 	return (
 		<section id='testimonials' className={styles.testimonialsSection}>
@@ -27,7 +84,7 @@ const Testimonials = () => {
 
 				<div className={styles.carouselWrapper}>
 					<div className={styles.carouselContainer}>
-						<div className={styles.carousel}>
+						<div ref={carouselRef} className={styles.carousel}>
 							{testimonials.map((testimonial, index) => (
 								<div key={`${testimonial.id}-${index}`} className={styles.card}>
 									<div className={styles.cardContent}>
@@ -37,6 +94,7 @@ const Testimonials = () => {
 											className={styles.media}
 											loading='lazy'
 											decoding='async'
+											draggable={false}
 										/>
 									</div>
 								</div>

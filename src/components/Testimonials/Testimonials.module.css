@@ -3,12 +3,8 @@
 	background: #0a0a0f;
 	padding: 4rem 0;
 	scroll-margin-top: 5.5rem;
-	overflow: hidden;
+	overflow: visible;
 	position: relative;
-	/* Фікс для Instagram in-app browser: ізолюємо від змін viewport при появі/зникненні тулбара */
-	contain: layout style paint;
-	transform: translateZ(0);
-	will-change: scroll-position;
 }
 
 @media (min-width: 768px) {
@@ -20,13 +16,14 @@
 .container {
 	max-width: 1400px;
 	margin: 0 auto;
-	padding: 0 1rem;
+	padding: 0;
 }
 
 /* --- Заголовок --- */
 .header {
 	text-align: center;
 	margin-bottom: 3rem;
+	padding: 0 1rem;
 }
 
 .title {
@@ -60,21 +57,39 @@
 .carousel {
 	display: flex;
 	overflow-x: auto;
+	overflow-y: hidden;
 	scroll-snap-type: x mandatory;
 	-webkit-overflow-scrolling: touch;
-	scrollbar-width: none; /* Firefox */
+	touch-action: pan-x;
+	overscroll-behavior-x: contain;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
 	gap: 1.5rem;
-	padding: 1rem;
+	padding: 1rem 1rem 1.25rem;
+	cursor: grab;
+}
+
+.carousel:active {
+	cursor: grabbing;
 }
 
 .carousel::-webkit-scrollbar {
-	display: none; /* Chrome/Safari */
+	height: 6px;
+}
+
+.carousel::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.carousel::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.35);
+	border-radius: 999px;
 }
 
 .card {
 	scroll-snap-align: center;
 	flex: 0 0 auto;
-	width: 320px;
+	width: min(320px, 78vw);
 	box-sizing: border-box;
 }
 
@@ -108,6 +123,7 @@
 	transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 	overflow: hidden;
 	aspect-ratio: 9/16;
+	pointer-events: none;
 }
 
 .cardContent:hover {
@@ -121,16 +137,14 @@
 	height: 100%;
 	object-fit: cover;
 	display: block;
+	user-select: none;
+	-webkit-user-drag: none;
 }
 
 /* --- Мобільна адаптація --- */
 @media (max-width: 768px) {
 	.testimonialsSection {
 		padding: 3rem 0;
-	}
-
-	.container {
-		padding: 0 1rem;
 	}
 
 	.header {
@@ -147,11 +161,6 @@
 		padding: 2.5rem 0;
 	}
 
-	.card {
-		width: 280px;
-		padding: 0 0.75rem;
-	}
-
 	.cardContent {
 		border-radius: 16px;
 	}
@@ -162,15 +171,7 @@
 		padding: 2rem 0;
 	}
 
-	.card {
-		width: 260px;
-		padding: 0 0.5rem;
-	}
-
 	.title {
 		font-size: 1.5rem;
 	}
 }
-
-/* Hover / touch pause rules are now defined above with .carouselAnimated */
-

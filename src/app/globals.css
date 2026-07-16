@@ -157,6 +157,13 @@ html {
   background: #000;
 }
 
+/* На тач-пристроях (Instagram in-app тощо) smooth конфліктує з нативним momentum */
+@media (hover: none) and (pointer: coarse) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 @media (max-width: 700px) {
   html {
     --visit-header-offset: 70px;
