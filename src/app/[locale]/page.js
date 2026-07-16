@@ -18,10 +18,8 @@ export default async function Home({ params }) {
 
 	return (
 		<div className='home-page-wrapper'>
-			<div className='overflow-x-hidden'>
-				<Visit />
-				<HomeClient />
-			</div>
+			<Visit />
+			<HomeClient />
 		</div>
 	)
 }

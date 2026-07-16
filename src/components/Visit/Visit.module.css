@@ -223,9 +223,9 @@
 	line-height: 1.2;
 }
 
-/* Підпис назви школи */
+/* Підпис назви школи — лише десктоп / планшет landscape */
 .schoolLabel {
-	display: inline-flex;
+	display: none;
 	align-items: center;
 	gap: 0.5rem;
 	font-size: 0.875rem;
@@ -238,6 +238,12 @@
 	background: rgba(204, 0, 255, 0.1);
 	border: 1px solid rgba(204, 0, 255, 0.3);
 	border-radius: 999px;
+}
+
+@media (min-width: 768px) {
+	.schoolLabel {
+		display: inline-flex;
+	}
 }
 
 .title {
@@ -899,10 +905,6 @@
 		max-width: 36ch;
 		padding: 0;
 		text-wrap: balance;
-	}
-
-	.schoolLabel {
-		display: none;
 	}
 
 	.socialProof {
