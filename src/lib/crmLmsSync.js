@@ -420,12 +420,17 @@ export async function upsertUserFromCrm(payload) {
         process.env.NEXT_PUBLIC_SITE_URL ||
           process.env.NEXT_PUBLIC_BASE_URL ||
           vercel ||
-          'https://smartcode-academy.com'
+          'https://www.smartcode-academy.com'
       ).replace(/\/$/, '')
-      const base = rawBase.replace(
-        /^https?:\/\/www\.smartcode-academy\.com/i,
-        'https://smartcode-academy.com'
-      )
+      const base = rawBase
+        .replace(
+          /^https?:\/\/smartcode-academy\.com(?=[:/]|$)/i,
+          'https://www.smartcode-academy.com'
+        )
+        .replace(
+          /^https?:\/\/www\.smartcode-academy\.com/i,
+          'https://www.smartcode-academy.com'
+        )
       if (!base || !/^https?:\/\//i.test(base)) {
         throw new Error('LMS public base URL is not configured')
       }
