@@ -27,6 +27,7 @@ function normalizeEmail(value) {
 function defaultStudentProfile() {
   return {
     regularSchedule: [],
+    upcomingLessons: [],
     zoomLink: '',
     activeOnlineCourses: [],
     courseAccess: {},
@@ -176,6 +177,7 @@ export function studentProfileForClient(profile) {
 
 const DEFAULT_CLIENT_STUDENT_PROFILE = {
   regularSchedule: [],
+  upcomingLessons: [],
   zoomLink: '',
   activeOnlineCourses: [],
   courseAccess: {},
