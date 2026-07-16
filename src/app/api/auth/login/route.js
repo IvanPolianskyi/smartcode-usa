@@ -1,7 +1,36 @@
 import { NextResponse } from 'next/server'
+import { redirect } from 'next/navigation'
 import { getCollection } from '@/lib/mongodb'
 import { comparePassword, generateToken, setAuthCookie } from '@/lib/auth'
+import { consumeLoginToken } from '@/lib/loginTokens'
 import { toAuthUserResponse } from '@/lib/crmLmsSync'
+
+/**
+ * GET /api/auth/login?token=...&redirect=/dashboard
+ * One-time magic login (CRM / Telegram). Mounted on existing /login route
+ * so Vercel does not serve a stale cached 404 from /api/auth/magic.
+ */
+export async function GET(request) {
+  const { searchParams } = new URL(request.url)
+  const token = searchParams.get('token') || ''
+  if (!token) {
+    redirect('/login')
+  }
+  const redirectTo = searchParams.get('redirect') || '/dashboard'
+  const safeRedirect =
+    redirectTo.startsWith('/') && !redirectTo.startsWith('//')
+      ? redirectTo
+      : '/dashboard'
+
+  const userId = await consumeLoginToken(token)
+  if (!userId) {
+    redirect('/login?error=magic_expired')
+  }
+
+  const jwt = generateToken(userId)
+  await setAuthCookie(jwt)
+  redirect(safeRedirect)
+}
 
 export async function POST(request) {
   try {

@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 
 /**
- * Locale-friendly entry: /uk/auth/enter?token=... → /api/auth/magic
+ * Locale-friendly entry: /uk/auth/enter?token=... → /api/auth/login?token=...
  */
 export default async function AuthEnterPage({ searchParams }) {
   const params = await searchParams
@@ -14,5 +14,5 @@ export default async function AuthEnterPage({ searchParams }) {
     token,
     redirect: redirectTo.startsWith('/') ? redirectTo : '/dashboard',
   })
-  redirect(`/api/auth/magic?${q.toString()}`)
+  redirect(`/api/auth/login?${q.toString()}`)
 }

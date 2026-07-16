@@ -1,26 +1,11 @@
 import { redirect } from 'next/navigation'
-import { generateToken, setAuthCookie } from '@/lib/auth'
-import { consumeLoginToken } from '@/lib/loginTokens'
 
 /**
- * GET /api/auth/magic?token=...&redirect=/dashboard
- * One-time magic login from CRM / Telegram bot.
+ * Legacy path — CDN may still serve a cached 404 for /api/auth/magic.
+ * Prefer /api/auth/login?token=... (same handler).
  */
 export async function GET(request) {
   const { searchParams } = new URL(request.url)
-  const token = searchParams.get('token') || ''
-  const redirectTo = searchParams.get('redirect') || '/dashboard'
-  const safeRedirect =
-    redirectTo.startsWith('/') && !redirectTo.startsWith('//')
-      ? redirectTo
-      : '/dashboard'
-
-  const userId = await consumeLoginToken(token)
-  if (!userId) {
-    redirect(`/login?error=magic_expired`)
-  }
-
-  const jwt = generateToken(userId)
-  await setAuthCookie(jwt)
-  redirect(safeRedirect)
+  const q = searchParams.toString()
+  redirect(q ? `/api/auth/login?${q}` : '/api/auth/login')
 }

@@ -246,18 +246,42 @@ export async function upsertUserFromCrm(payload) {
     email = syntheticStudentLogin(shortId)
   }
   const phone = payload.phone ? String(payload.phone).trim() : null
+  // Create magic link without rotating password (Telegram «відкрити LMS»).
+  const createLoginLinkOnly = Boolean(payload.createLoginLink) && !payload.issueCredentials && !payload.resetPassword
   const issueCredentials = Boolean(payload.issueCredentials || payload.resetPassword)
-  const requestedPassword = String(payload.password || '').trim()
+  // Ігноруємо client-supplied password — тільки серверна генерація.
+  const requestedPassword = ''
 
   let user = null
   let created = false
   let tempPassword = null
 
+  const rejectPrivileged = (doc) => {
+    const role = String(doc?.role || 'student')
+    if (role === 'admin' || role === 'teacher') {
+      return {
+        userId: null,
+        created: false,
+        message:
+          'Не можна привʼязати акаунт викладача/адміна як учня. Оберіть інший акаунт на сторінці «Звʼязки».',
+      }
+    }
+    return null
+  }
+
   if (explicitUserId && ObjectId.isValid(explicitUserId)) {
     user = await usersCollection.findOne({ _id: new ObjectId(explicitUserId) })
+    if (user) {
+      const blocked = rejectPrivileged(user)
+      if (blocked) return blocked
+    }
   }
   if (!user) {
     user = await findUserByCrmStudentId(crmStudentId, usersCollection)
+    if (user) {
+      const blocked = rejectPrivileged(user)
+      if (blocked) return blocked
+    }
   }
 
   const profilePatch = {
@@ -276,8 +300,8 @@ export async function upsertUserFromCrm(payload) {
       studentProfile: { ...prev, ...profilePatch },
       updatedAt: new Date(),
     }
-    // Не перетираємо існуючий логін, якщо не передали новий email.
-    if (email && !user.email) {
+    // Не перетираємо існуючий логін; порожній email доповнюємо з CRM/short_id.
+    if (email && !String(user.email || '').trim()) {
       setFields.email = email
     }
     const tgUid = String(payload.telegramUserId || payload.telegram_user_id || '').trim()
@@ -287,7 +311,8 @@ export async function upsertUserFromCrm(payload) {
     if (tgChat) setFields.telegramChatId = tgChat
     if (tgUser) setFields.telegramUsername = tgUser
 
-    if (issueCredentials) {
+    // Пароль: reset лише за issueCredentials; якщо пароля немає — один раз при login-link.
+    if (issueCredentials || (!user.password && createLoginLinkOnly)) {
       tempPassword = requestedPassword || generateStudentPassword()
       setFields.password = await hashPassword(tempPassword)
     }
@@ -305,7 +330,11 @@ export async function upsertUserFromCrm(payload) {
     }
     const existingByEmail = await usersCollection.findOne({ email })
     if (existingByEmail) {
-      // Якщо це вже наш CRM-учень — оновимо; інакше конфлікт.
+      const blocked = rejectPrivileged(existingByEmail)
+      if (blocked) return blocked
+
+      // Claim by email when already linked to this CRM student.
+      // Синтетичний sc-{shortId}@… без crmStudentId — теж можна привʼязати автоматично.
       const existingCrm = String(
         existingByEmail.studentProfile?.crmStudentId || ''
       ).trim()
@@ -317,7 +346,19 @@ export async function upsertUserFromCrm(payload) {
             'Акаунт з таким логіном уже є на сайті. Привʼяжіть вручну на сторінці «Звʼязки».',
         }
       }
-      if (!existingCrm || existingCrm === crmStudentId) {
+      if (!existingCrm) {
+        // Синтетичний логін sc-{shortId}@… — можна безпечно привʼязати до цього учня.
+        const synthetic = shortId ? syntheticStudentLogin(shortId) : ''
+        const canClaimSynthetic =
+          Boolean(synthetic) && email === synthetic
+        if (!canClaimSynthetic) {
+          return {
+            userId: null,
+            created: false,
+            message:
+              'Логін уже зайнятий на сайті без привʼязки CRM. Привʼяжіть вручну на сторінці «Звʼязки».',
+          }
+        }
         user = existingByEmail
         const prev = user.studentProfile || defaultStudentProfile()
         const setFields = {
@@ -325,7 +366,21 @@ export async function upsertUserFromCrm(payload) {
           studentProfile: { ...prev, ...profilePatch },
           updatedAt: new Date(),
         }
-        if (issueCredentials || !user.password) {
+        if (issueCredentials || (!user.password && createLoginLinkOnly)) {
+          tempPassword = requestedPassword || generateStudentPassword()
+          setFields.password = await hashPassword(tempPassword)
+        }
+        await usersCollection.updateOne({ _id: user._id }, { $set: setFields })
+        user = await usersCollection.findOne({ _id: user._id })
+      } else if (existingCrm === crmStudentId) {
+        user = existingByEmail
+        const prev = user.studentProfile || defaultStudentProfile()
+        const setFields = {
+          phone: phone ?? user.phone,
+          studentProfile: { ...prev, ...profilePatch },
+          updatedAt: new Date(),
+        }
+        if (issueCredentials || (!user.password && createLoginLinkOnly)) {
           tempPassword = requestedPassword || generateStudentPassword()
           setFields.password = await hashPassword(tempPassword)
         }
@@ -366,26 +421,64 @@ export async function upsertUserFromCrm(payload) {
 
   let loginUrl = null
   let loginPath = null
-  if (issueCredentials || created || payload.createLoginLink) {
+  if (issueCredentials || created || createLoginLinkOnly || payload.createLoginLink) {
     try {
       const { createLoginToken } = await import('@/lib/loginTokens')
-      const link = await createLoginToken(user._id, { purpose: 'crm_issue' })
+      const link = await createLoginToken(user._id, {
+        purpose: 'crm_issue',
+        ttlMs: 60 * 60 * 1000,
+        revokePrevious: true,
+      })
       loginPath = link.loginPath
-      const base = String(process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/$/, '')
-      loginUrl = base ? `${base}${link.loginPath}` : link.loginPath
+      const vercel =
+        process.env.VERCEL_URL && !String(process.env.VERCEL_URL).includes('localhost')
+          ? `https://${String(process.env.VERCEL_URL).replace(/^https?:\/\//, '')}`
+          : ''
+      const rawBase = String(
+        process.env.NEXT_PUBLIC_SITE_URL ||
+          process.env.NEXT_PUBLIC_BASE_URL ||
+          vercel ||
+          'https://smartcode-academy.com'
+      ).replace(/\/$/, '')
+      // Canonical host without www (apex redirects to www on CDN if needed).
+      const base = rawBase.replace(
+        /^https?:\/\/www\.smartcode-academy\.com/i,
+        'https://smartcode-academy.com'
+      )
+      if (!base || !/^https?:\/\//i.test(base)) {
+        throw new Error('LMS public base URL is not configured')
+      }
+      loginUrl = `${base}${link.loginPath}`
     } catch (e) {
       console.error('createLoginToken failed', e)
+      // Do not fail upsert: Telegram/CRM can still show login + password.
+      const fallbackBase = String(
+        process.env.NEXT_PUBLIC_SITE_URL ||
+          process.env.NEXT_PUBLIC_BASE_URL ||
+          'https://smartcode-academy.com'
+      )
+        .replace(/\/$/, '')
+        .replace(
+          /^https?:\/\/www\.smartcode-academy\.com/i,
+          'https://smartcode-academy.com'
+        )
+      loginPath = '/login'
+      loginUrl = `${fallbackBase}/login`
     }
   }
 
-  // На створенні завжди повертаємо пароль; на update — лише якщо reset.
-  const passwordOut = created || issueCredentials ? tempPassword : null
+  // Повертаємо plaintext лише якщо пароль згенеровано в цьому запиті (1 раз / reset).
+  const passwordOut = tempPassword || null
+  const login =
+    String(user?.email || '').trim() ||
+    email ||
+    (shortId ? syntheticStudentLogin(shortId) : '')
 
   return {
     userId: user._id.toString(),
     created,
-    login: user.email,
-    email: user.email,
+    login,
+    email: login,
     tempPassword: passwordOut,
     loginPath,
     loginUrl,
@@ -393,7 +486,9 @@ export async function upsertUserFromCrm(payload) {
       ? 'Створено акаунт LMS'
       : passwordOut
         ? 'Оновлено пароль LMS'
-        : 'Оновлено акаунт LMS',
+        : createLoginLinkOnly
+          ? 'Посилання для входу створено'
+          : 'Оновлено акаунт LMS',
   }
 }
 
@@ -408,7 +503,7 @@ export function syntheticStudentLogin(shortId) {
 }
 
 export function generateStudentPassword() {
-  return `Sc-${crypto.randomBytes(4).toString('hex')}`
+  return `Sc-${crypto.randomBytes(12).toString('base64url')}`
 }
 
 export async function grantCourseAccessForCrmStudent(
