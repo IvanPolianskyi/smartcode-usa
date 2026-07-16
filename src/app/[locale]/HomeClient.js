@@ -1,14 +1,13 @@
 "use client"
 
 import dynamic from 'next/dynamic'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import { Analytics } from "@vercel/analytics/next"
 import { usePathname } from 'next/navigation'
 import {
 	readAndClearPendingHomeSectionScroll,
 	scheduleScrollToHomeSectionId,
 	SCROLL_HOME_SECTION_EVENT,
-	HOME_SECTION_SCROLL_STORAGE_KEY,
 } from '@/lib/homeSectionScroll'
 
 const SectionSkeleton = ({ height = '60vh' }) => (
@@ -33,63 +32,6 @@ const TrialSignupBlock = dynamic(() => import('@/components/TrialSignupBlock/Tri
 const SocialMedia = dynamic(() => import('@/components/SocialMedia/SocialMedia'), {
   loading: () => <SectionSkeleton height='600px' />,
 })
-
-function LazySection({ children, height, sectionId, rootMargin = '300px 0px' }) {
-  const ref = useRef(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    if (!sectionId || typeof window === 'undefined') return undefined
-
-    const hashId = window.location.hash.replace(/^#/, '')
-    if (hashId === sectionId) {
-      setVisible(true)
-    }
-
-    try {
-      const pending = sessionStorage.getItem(HOME_SECTION_SCROLL_STORAGE_KEY)
-      if (pending === sectionId) {
-        setVisible(true)
-      }
-    } catch {}
-
-    const onScrollRequest = (e) => {
-      if (e.detail?.id === sectionId) {
-        setVisible(true)
-      }
-    }
-    window.addEventListener(SCROLL_HOME_SECTION_EVENT, onScrollRequest)
-    return () => window.removeEventListener(SCROLL_HOME_SECTION_EVENT, onScrollRequest)
-  }, [sectionId])
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return undefined
-
-    if (typeof IntersectionObserver === 'undefined') {
-      setVisible(true)
-      return undefined
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
-      },
-      { rootMargin }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
-  return (
-    <div ref={ref}>
-      {visible ? children : <SectionSkeleton height={height} />}
-    </div>
-  )
-}
 
 export default function HomeClient() {
   const pathname = usePathname()
@@ -180,24 +122,12 @@ export default function HomeClient() {
   return (
     <>
       <Analytics />
-      <LazySection height="1000px" sectionId="courses">
-        <CoursesSection />
-      </LazySection>
-      <LazySection height="420px" sectionId="trial-signup">
-        <TrialSignupBlock />
-      </LazySection>
-      <LazySection height="800px" sectionId="testimonials">
-        <Testimonials />
-      </LazySection>
-      <LazySection height="1000px">
-        <ProjectsShowcase />
-      </LazySection>
-      <LazySection height="600px">
-        <SocialMedia />
-      </LazySection>
-      <LazySection height="800px">
-        <FAQ />
-      </LazySection>
+      <CoursesSection />
+      <TrialSignupBlock />
+      <Testimonials />
+      <ProjectsShowcase />
+      <SocialMedia />
+      <FAQ />
     </>
   )
 }

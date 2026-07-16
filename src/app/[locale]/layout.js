@@ -50,11 +50,6 @@ export default async function LocaleLayout({ children, params }) {
 				<meta name='apple-mobile-web-app-status-bar-style' content='default' />
 				<meta name='mobile-web-app-capable' content='yes' />
 				<link rel='icon' href='/logo.jpeg' />
-				<script
-					dangerouslySetInnerHTML={{
-						__html: `(function(){function setAppHeight(){var h=window.innerHeight;document.documentElement.style.setProperty('--app-height',h+'px')}setAppHeight();window.addEventListener('orientationchange',function(){setTimeout(setAppHeight,150)},{passive:true})})();`,
-					}}
-				/>
 			</head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}

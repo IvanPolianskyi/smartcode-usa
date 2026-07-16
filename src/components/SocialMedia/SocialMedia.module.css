@@ -5,10 +5,6 @@
 	scroll-margin-top: 5.5rem;
 	position: relative;
 	overflow: hidden;
-	/* Фікс для Instagram in-app browser: ізолюємо від змін viewport при появі/зникненні тулбара */
-	contain: layout style paint;
-	transform: translateZ(0);
-	will-change: scroll-position;
 }
 
 @media (min-width: 769px) {

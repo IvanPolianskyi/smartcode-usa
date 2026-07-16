@@ -60,7 +60,13 @@ export function scrollToHomeSectionId(id) {
 	if (!el) return false
 	const top =
 		el.getBoundingClientRect().top + window.scrollY - HEADER_SCROLL_OFFSET
-	window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
+	const preferSmooth =
+		typeof window.matchMedia === 'function' &&
+		window.matchMedia('(hover: hover) and (pointer: fine)').matches
+	window.scrollTo({
+		top: Math.max(0, top),
+		behavior: preferSmooth ? 'smooth' : 'auto',
+	})
 	return true
 }
 

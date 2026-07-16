@@ -202,7 +202,7 @@ const Header = () => {
 	}
 
 	const navItems = [
-		{ label: t('nav.signUp'), href: '/#trial-signup', ctaModal: true },
+		{ label: tc('login'), href: '/login', accentCta: true, hideOnMobile: true },
 		{ label: t('nav.courses'), href: '/#our-courses' },
 		{ label: t('nav.lessons'), href: '/#courses', hideOnDesktop: true },
 		{ label: t('nav.reviews'), href: '/#testimonials' },
@@ -210,8 +210,10 @@ const Header = () => {
 	]
 	const desktopNavItems = navItems
 		.filter((item) => !item.hideOnDesktop)
-		.filter((item) => !(user && item.ctaModal))
-	const mobileNavItems = navItems.filter((item) => !(user && item.ctaModal))
+		.filter((item) => !(user && item.accentCta))
+	const mobileNavItems = navItems
+		.filter((item) => !item.hideOnMobile)
+		.filter((item) => !(user && item.accentCta))
 
 	const getUserInitials = (name) => {
 		if (!name) return '?'
@@ -286,8 +288,8 @@ const Header = () => {
 							<Link
 								key={item.label}
 								href={item.href}
-								className={`${styles.navLink} ${item.ctaModal ? styles.navLinkCta : ''}`}
-								scroll={item.ctaModal || parseHomeHashTarget(item.href) ? false : undefined}
+								className={`${styles.navLink} ${item.accentCta ? styles.navLinkCta : ''}`}
+								scroll={parseHomeHashTarget(item.href) ? false : undefined}
 								onClick={(e) => handleDesktopNavClick(e, item)}
 							>
 								{item.label}
@@ -297,7 +299,7 @@ const Header = () => {
 
 					{/* Права частина хедера */}
                     <div className={styles.headerRight}>
-						{/* Кнопка "Записатися" — йде ПЕРШОЮ */}
+						{/* Кнопка "Записатися" */}
 						{!userLoading && !user && (
 							<button
 								type='button'
@@ -308,7 +310,6 @@ const Header = () => {
 								{t('nav.signUp')}
 							</button>
 						)}
-						{/* Кнопка "Увійти" — йде ДРУГОЮ */}
 						{userLoading ? (
 							<div className={`${styles.userButton} ${styles.skeletonButton}`} style={{ width: '100px', pointerEvents: 'none' }}>
 								<div className={styles.skeletonPulse} />
@@ -331,12 +332,7 @@ const Header = () => {
 									<LogOut size={16} aria-hidden />
 								</button>
 							</div>
-						) : (
-							<Link href="/login" className={styles.loginButton}>
-								<User size={18} />
-								<span className={styles.userName}>{tc('login')}</span>
-							</Link>
-						)}
+						) : null}
 						{/* Кнопка кабінету для мобільної версії */}
 						{!userLoading && user && (
 							<Link
@@ -414,9 +410,8 @@ const Header = () => {
 									<Link
 										key={item.label}
 										href={item.href}
-										className={`${styles.mobileMenuItem} ${styles.mobileNavItem} ${item.ctaModal ? styles.mobileNavCta : ''}`}
+										className={`${styles.mobileMenuItem} ${styles.mobileNavItem}`}
 										style={itemStyle}
-										scroll={item.ctaModal ? false : undefined}
 										onClick={(e) => handleMobileNavClick(e, item)}
 									>
 										{item.label}

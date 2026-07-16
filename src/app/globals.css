@@ -148,19 +148,20 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* auto = нативний momentum; smooth лише ламає Instagram / iOS WebView */
+  scroll-behavior: auto;
   scrollbar-width: none;
-  --app-height: 100vh;
-  /* Висота фіксованого хедера — для центрування hero у першому екрані */
+  /* Фіксований хедер — для центрування hero у першому екрані */
   --visit-header-offset: 80px;
-  overflow-anchor: auto;
+  overflow-anchor: none;
   background: #000;
+  width: 100%;
+  max-width: 100%;
 }
 
-/* На тач-пристроях (Instagram in-app тощо) smooth конфліктує з нативним momentum */
-@media (hover: none) and (pointer: coarse) {
+@media (hover: hover) and (pointer: fine) {
   html {
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
   }
 }
 
@@ -181,7 +182,11 @@ body {
     Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.6;
   scrollbar-width: none;
-  overflow-anchor: auto;
+  overflow-anchor: none;
+  width: 100%;
+  max-width: 100%;
+  /* clip не ламає momentum-скрол так, як hidden на iOS/IG */
+  overflow-x: clip;
 }
 
 body::-webkit-scrollbar {
@@ -197,13 +202,6 @@ body::-webkit-scrollbar {
 #about,
 #Contactform {
   scroll-margin-top: 96px;
-}
-
-html,
-body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
 }
 
 main.main-content {
@@ -226,15 +224,7 @@ main.main-content {
 
 @media (max-width: 1024px) {
   .home-page-wrapper::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: env(safe-area-inset-top, 0px);
-    background: #000;
-    z-index: 10000;
-    pointer-events: none;
+    content: none;
   }
 }
 

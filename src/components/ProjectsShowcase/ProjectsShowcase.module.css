@@ -1,14 +1,9 @@
 .container {
   position: relative;
-  min-height: 100vh;
-  min-height: 100svh;
+  min-height: 0;
   background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--background-accent) 100%);
   overflow: hidden;
   padding: 80px 0;
-  /* Фікс для Instagram in-app browser: ізолюємо від змін viewport при появі/зникненні тулбара */
-  contain: layout style paint;
-  transform: translateZ(0);
-  will-change: scroll-position;
 }
 
 .backgroundElements {
