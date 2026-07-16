@@ -577,16 +577,17 @@
     padding: 0.35rem 0.85rem 0.35rem 0.35rem;
     border-radius: 9999px;
     text-decoration: none;
-    color: #1e293b;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1.5px solid rgba(99, 102, 241, 0.25);
-    box-shadow: 0 2px 12px rgba(99, 102, 241, 0.12);
-    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    color: var(--text-primary, #ffffff);
+    background: rgba(18, 18, 24, 0.92);
+    border: 1.5px solid var(--border-accent, rgba(161, 0, 255, 0.45));
+    box-shadow: 0 0 16px rgba(161, 0, 255, 0.18);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s, background 0.2s;
     max-width: 220px;
 }
 .profileChip:hover {
-    border-color: #6366f1;
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
+    border-color: var(--brand-accent-hot, #c44bff);
+    background: rgba(28, 16, 40, 0.95);
+    box-shadow: 0 0 22px rgba(161, 0, 255, 0.35);
     transform: translateY(-1px);
 }
 
@@ -600,7 +601,12 @@
     font-size: 0.7rem;
     font-weight: 800;
     color: #fff;
-    background: linear-gradient(145deg, #6366f1, #8b5cf6);
+    background: linear-gradient(
+        145deg,
+        var(--brand-accent-deep, #7a00c8),
+        var(--brand-accent, #a100ff),
+        var(--brand-accent-hot, #c44bff)
+    );
     flex-shrink: 0;
     letter-spacing: 0.02em;
 }
@@ -608,6 +614,7 @@
 .profileName {
     font-size: 0.875rem;
     font-weight: 700;
+    color: var(--text-primary, #ffffff);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -642,7 +649,12 @@
     font-size: 0.75rem;
     font-weight: 800;
     color: #fff;
-    background: linear-gradient(145deg, #6366f1, #8b5cf6);
+    background: linear-gradient(
+        145deg,
+        var(--brand-accent-deep, #7a00c8),
+        var(--brand-accent, #a100ff),
+        var(--brand-accent-hot, #c44bff)
+    );
     letter-spacing: 0.02em;
 }
 

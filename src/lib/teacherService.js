@@ -7,7 +7,10 @@ import {
 } from '@/lib/courseLessonAccess'
 import { KNOWN_TEACHER_COURSE_IDS } from '@/lib/crmLmsSync'
 import { hashPassword } from '@/lib/auth'
-import crypto from 'crypto'
+import {
+  allocateUniqueTeacherLogin,
+  generateStudentPassword,
+} from '@/lib/studentLmsLogin'
 
 /**
  * Публічний анонімний код учня для вчителя (без ПІБ).
@@ -259,6 +262,18 @@ function buildTeacherCourseAccess() {
 
 /**
  * Привʼязати / створити LMS-акаунт вчителя до CRM staff id.
+ * @param {{
+ *   email?: string,
+ *   crmStaffId: string,
+ *   crmStaffName?: string,
+ *   name?: string,
+ *   password?: string,
+ *   adminId?: string,
+ *   createIfMissing?: boolean,
+ *   issueCredentials?: boolean,
+ *   createLoginLink?: boolean,
+ *   resetPassword?: boolean,
+ * }} opts
  */
 export async function linkTeacherAccount({
   email,
@@ -268,21 +283,48 @@ export async function linkTeacherAccount({
   password = '',
   adminId = '',
   createIfMissing = true,
+  issueCredentials = false,
+  createLoginLink = false,
+  resetPassword = false,
 }) {
-  const normalizedEmail = String(email || '').trim().toLowerCase()
   const staffId = String(crmStaffId || '').trim()
-  if (!normalizedEmail || !staffId) {
-    throw new Error('email and crmStaffId are required')
+  if (!staffId) {
+    throw new Error('crmStaffId is required')
   }
 
   const usersCollection = await getCollection('users')
+  const displayName = String(name || crmStaffName || '').trim()
+  let normalizedEmail = String(email || '').trim().toLowerCase()
+
+  // Якщо email не передали — логін з імені @teachers.smartcode
+  if (!normalizedEmail || !normalizedEmail.includes('@')) {
+    normalizedEmail = await allocateUniqueTeacherLogin(usersCollection, {
+      name: displayName,
+      staffId,
+    })
+  }
+
   let user = await usersCollection.findOne({ email: normalizedEmail })
+  // Якщо вже привʼязаний цей staff — беремо його акаунт (навіть з іншим email).
+  if (!user) {
+    user = await usersCollection.findOne({
+      role: 'teacher',
+      'teacherProfile.crmStaffId': staffId,
+    })
+  }
+
   let tempPassword = null
   let created = false
+  const shouldIssuePassword = Boolean(
+    issueCredentials || resetPassword || (password && String(password).trim())
+  )
+  const wantsMagicLink = Boolean(
+    createLoginLink || issueCredentials || resetPassword
+  )
 
   const teacherProfile = {
     crmStaffId: staffId,
-    crmStaffName: String(crmStaffName || '').trim(),
+    crmStaffName: String(crmStaffName || displayName || '').trim(),
     linkedAt: new Date(),
     linkedByAdminId: String(adminId || ''),
   }
@@ -293,13 +335,12 @@ export async function linkTeacherAccount({
       throw new Error('User not found')
     }
     tempPassword =
-      String(password || '').trim() ||
-      `ScT-${crypto.randomBytes(4).toString('hex')}`
+      String(password || '').trim() || generateStudentPassword()
     const hashed = await hashPassword(tempPassword)
     const doc = {
       email: normalizedEmail,
       password: hashed,
-      name: String(name || '').trim() || normalizedEmail.split('@')[0],
+      name: displayName || normalizedEmail.split('@')[0],
       phone: null,
       role: 'teacher',
       teacherProfile,
@@ -324,32 +365,71 @@ export async function linkTeacherAccount({
     if (user.role === 'admin') {
       throw new Error('Cannot convert admin to teacher')
     }
-    await usersCollection.updateOne(
-      { _id: user._id },
-      {
-        $set: {
-          role: 'teacher',
-          teacherProfile,
-          'studentProfile.activeOnlineCourses': [...KNOWN_TEACHER_COURSE_IDS],
-          'studentProfile.courseAccess': courseAccess,
-          'studentProfile.accountReady': true,
-          enrolledCourses: [
-            ...new Set([...(user.enrolledCourses || []), ...KNOWN_TEACHER_COURSE_IDS]),
-          ],
-          updatedAt: new Date(),
-          ...(name ? { name: String(name).trim() } : {}),
-        },
-      }
-    )
-    if (password) {
-      const hashed = await hashPassword(String(password))
-      await usersCollection.updateOne(
-        { _id: user._id },
-        { $set: { password: hashed, updatedAt: new Date() } }
-      )
-      tempPassword = String(password)
+    const setFields = {
+      role: 'teacher',
+      teacherProfile,
+      'studentProfile.activeOnlineCourses': [...KNOWN_TEACHER_COURSE_IDS],
+      'studentProfile.courseAccess': courseAccess,
+      'studentProfile.accountReady': true,
+      enrolledCourses: [
+        ...new Set([...(user.enrolledCourses || []), ...KNOWN_TEACHER_COURSE_IDS]),
+      ],
+      updatedAt: new Date(),
+      ...(displayName ? { name: displayName } : {}),
     }
+
+    // Оновити email лише якщо порожній або @teachers.smartcode і новий інший.
+    const currentEmail = String(user.email || '').trim().toLowerCase()
+    if (
+      normalizedEmail &&
+      currentEmail !== normalizedEmail &&
+      (!currentEmail || /@teachers\.smartcode$/i.test(currentEmail))
+    ) {
+      const clash = await usersCollection.findOne({
+        email: normalizedEmail,
+        _id: { $ne: user._id },
+      })
+      if (!clash) setFields.email = normalizedEmail
+    }
+
+    if (shouldIssuePassword) {
+      tempPassword =
+        String(password || '').trim() || generateStudentPassword()
+      setFields.password = await hashPassword(tempPassword)
+    }
+
+    await usersCollection.updateOne({ _id: user._id }, { $set: setFields })
     user = await usersCollection.findOne({ _id: user._id })
+  }
+
+  let loginUrl = null
+  let loginPath = null
+  if (wantsMagicLink || created) {
+    const { createLoginToken } = await import('@/lib/loginTokens')
+    const link = await createLoginToken(user._id, {
+      purpose: 'crm_teacher_issue',
+      ttlMs: 60 * 60 * 1000,
+      revokePrevious: true,
+      redirectPath: '/teacher',
+    })
+    loginPath = link.loginPath
+    const vercel =
+      process.env.VERCEL_URL && !String(process.env.VERCEL_URL).includes('localhost')
+        ? `https://${String(process.env.VERCEL_URL).replace(/^https?:\/\//, '')}`
+        : ''
+    const rawBase = String(
+      process.env.NEXT_PUBLIC_SITE_URL ||
+        process.env.NEXT_PUBLIC_BASE_URL ||
+        vercel ||
+        'https://www.smartcode-academy.com'
+    ).replace(/\/$/, '')
+    const base = rawBase
+      .replace(/^https?:\/\/smartcode-academy\.com$/i, 'https://www.smartcode-academy.com')
+      .replace(
+        /^https?:\/\/smartcode-academy\.com\//i,
+        'https://www.smartcode-academy.com/'
+      )
+    loginUrl = `${base}${link.loginPath}`
   }
 
   return {
@@ -363,6 +443,8 @@ export async function linkTeacherAccount({
     },
     created,
     tempPassword,
+    loginPath,
+    loginUrl,
   }
 }
 
