@@ -68,7 +68,8 @@ export async function createLoginToken(userId, opts = {}) {
   return {
     token,
     expiresAt,
-    loginPath: `/api/auth/magic?token=${encodeURIComponent(token)}`,
+    // Use /api/auth/login (already on prod). /api/auth/magic is CDN-cached 404.
+    loginPath: `/api/auth/login?token=${encodeURIComponent(token)}`,
   }
 }
 

@@ -420,29 +420,32 @@ export async function upsertUserFromCrm(payload) {
         process.env.NEXT_PUBLIC_SITE_URL ||
           process.env.NEXT_PUBLIC_BASE_URL ||
           vercel ||
-          'https://www.smartcode-academy.com'
+          'https://smartcode-academy.com'
       ).replace(/\/$/, '')
-      const base = rawBase
-        .replace(
-          /^https?:\/\/smartcode-academy\.com(?=[:/]|$)/i,
-          'https://www.smartcode-academy.com'
-        )
-        .replace(
-          /^https?:\/\/www\.smartcode-academy\.com/i,
-          'https://www.smartcode-academy.com'
-        )
+      // Canonical host without www (apex redirects to www on CDN if needed).
+      const base = rawBase.replace(
+        /^https?:\/\/www\.smartcode-academy\.com/i,
+        'https://smartcode-academy.com'
+      )
       if (!base || !/^https?:\/\//i.test(base)) {
         throw new Error('LMS public base URL is not configured')
       }
       loginUrl = `${base}${link.loginPath}`
     } catch (e) {
       console.error('createLoginToken failed', e)
-      if (issueCredentials && tempPassword) {
-        // Password already rotated — fail loudly so CRM/Telegram can surface error.
-        throw new Error(
-          'Пароль оновлено, але не вдалося створити посилання входу. Спробуйте ще раз.'
+      // Do not fail upsert: Telegram/CRM can still show login + password.
+      const fallbackBase = String(
+        process.env.NEXT_PUBLIC_SITE_URL ||
+          process.env.NEXT_PUBLIC_BASE_URL ||
+          'https://smartcode-academy.com'
+      )
+        .replace(/\/$/, '')
+        .replace(
+          /^https?:\/\/www\.smartcode-academy\.com/i,
+          'https://smartcode-academy.com'
         )
-      }
+      loginPath = '/login'
+      loginUrl = `${fallbackBase}/login`
     }
   }
 
