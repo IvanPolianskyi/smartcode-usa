@@ -35,6 +35,7 @@ function defaultStudentProfile() {
   return {
     regularSchedule: [],
     upcomingLessons: [],
+    conductedLessonsCount: 0,
     zoomLink: '',
     activeOnlineCourses: [],
     courseAccess: {},
@@ -185,6 +186,7 @@ export function studentProfileForClient(profile) {
 const DEFAULT_CLIENT_STUDENT_PROFILE = {
   regularSchedule: [],
   upcomingLessons: [],
+  conductedLessonsCount: 0,
   zoomLink: '',
   activeOnlineCourses: [],
   courseAccess: {},

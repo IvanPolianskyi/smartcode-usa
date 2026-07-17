@@ -68,6 +68,8 @@
     "metrics": {
       "activeCourses": "Активних курсів",
       "completedLessons": "Завершених уроків",
+      "platformLessons": "Уроків на платформі",
+      "onlineLessons": "Онлайн-уроків",
       "formatLabel": "Формат навчання",
       "individual": "Індивідуальний",
       "group": "Груповий"

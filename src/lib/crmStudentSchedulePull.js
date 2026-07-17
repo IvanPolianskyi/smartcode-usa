@@ -318,6 +318,20 @@ export function isCrmLessonConducted(lesson, now = new Date()) {
   return Number.isFinite(startMs) && startMs < now.getTime()
 }
 
+/** Кількість проведених ІУ/ГУ з CRM-уроків (для метрики «Завершених уроків»). */
+export function countConductedCrmLessons(lessons, now = new Date()) {
+  let n = 0
+  for (const lesson of Array.isArray(lessons) ? lessons : []) {
+    if (isCrmTrialLesson(lesson)) continue
+    if (String(lesson?.kind || '') === 'availability') continue
+    const kind = String(lesson?.kind || '')
+    if (kind !== 'individual' && kind !== 'group') continue
+    if (lesson?.group_calendar_removed === true) continue
+    if (isCrmLessonConducted(lesson, now)) n += 1
+  }
+  return n
+}
+
 /**
  * Реальні уроки для календаря тижня (як у Telegram-боті):
  * поточний київський тиждень + горизонт на «наступний урок».
@@ -600,12 +614,20 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
       ? prev.upcomingLessons
       : []
 
+  const crmCountRaw = Number(crmStudent?.completed_lessons_count)
+  const crmCount = Number.isFinite(crmCountRaw) ? Math.max(0, Math.floor(crmCountRaw)) : 0
+  const fromLessons = lessonsFetchedOk ? countConductedCrmLessons(rawLessons) : 0
+  const nextConductedCount = lessonsFetchedOk
+    ? Math.max(crmCount, fromLessons)
+    : Math.max(0, Number(prev.conductedLessonsCount) || 0)
+
   let nextProfile = {
     ...prev,
     crmStudentId: String(crmStudent.id || ''),
     crmShortId: String(crmStudent.short_id || ''),
     regularSchedule: nextSchedule,
     upcomingLessons: nextUpcoming,
+    conductedLessonsCount: nextConductedCount,
     crmTeacherId: lessonsFetchedOk ? teacherId : String(prev.crmTeacherId || ''),
     crmTeacherName: lessonsFetchedOk ? teacherName : String(prev.crmTeacherName || ''),
     zoomLink: lessonsFetchedOk ? zoomLink : String(prev.zoomLink || ''),

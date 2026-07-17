@@ -28,6 +28,7 @@ import {
   Users,
   DollarSign,
   Eye,
+  Video,
 } from 'lucide-react'
 
 function AdminDashboard({ adminStats, t }) {
@@ -76,7 +77,15 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
     [user, profile.activeOnlineCourses, user?.purchasedCourses]
   )
   const zoomLink = profile.zoomLink || ''
-  const completedLessonsTotal = Object.values(progressData || {}).reduce((sum, p) => sum + (p?.completedLessons?.length || 0), 0)
+  const platformCompletedTotal = Object.values(progressData || {}).reduce(
+    (sum, p) => sum + (p?.completedLessons?.length || 0),
+    0
+  )
+  const crmConductedTotal = Math.max(0, Number(profile.conductedLessonsCount) || 0)
+  const fromUpcomingConducted = Array.isArray(upcomingLessons)
+    ? upcomingLessons.filter((item) => item?.conducted === true).length
+    : 0
+  const onlineCompletedTotal = Math.max(crmConductedTotal, fromUpcomingConducted)
   const lessonHistory = Object.entries(progressData || {}).flatMap(([courseId, progress]) =>
     (progress?.completedLessons || []).map((lessonId) => ({ courseId, lessonId }))
   )
@@ -161,7 +170,17 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
         </div>
         <div className={styles.metricCard}>
           <div className={styles.metricCardIcon}><Trophy size={18} /></div>
-          <div><strong>{completedLessonsTotal}</strong><span>{t('student.metrics.completedLessons')}</span></div>
+          <div>
+            <strong>{platformCompletedTotal}</strong>
+            <span>{t('student.metrics.platformLessons')}</span>
+          </div>
+        </div>
+        <div className={styles.metricCard}>
+          <div className={styles.metricCardIcon}><Video size={18} /></div>
+          <div>
+            <strong>{onlineCompletedTotal}</strong>
+            <span>{t('student.metrics.onlineLessons')}</span>
+          </div>
         </div>
       </div>
 
