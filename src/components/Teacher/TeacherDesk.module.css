@@ -1,13 +1,19 @@
 .page {
-  --desk-text: #0f172a;
-  --desk-muted: #64748b;
-  --desk-bg: #f8fafc;
-  --desk-surface: #ffffff;
-  --desk-border: rgba(15, 23, 42, 0.12);
+  --desk-text: #ffffff;
+  --desk-muted: #8b8b9a;
+  --desk-bg: #000000;
+  --desk-surface: #121218;
+  --desk-border: rgba(255, 255, 255, 0.08);
+  --desk-primary: #a100ff;
+  --desk-primary-dark: #7a00c8;
+  --desk-accent: #c44bff;
 
   min-height: 100vh;
   padding: 1.5rem 1.25rem 3rem;
   background: var(--desk-bg);
+  background-image:
+    radial-gradient(ellipse 60% 50% at 10% 0%, rgba(161, 0, 255, 0.22), transparent),
+    radial-gradient(ellipse 50% 40% at 90% 10%, rgba(196, 75, 255, 0.12), transparent);
   color: var(--desk-text);
 }
 
@@ -50,8 +56,8 @@
   margin-bottom: 1.25rem;
   padding: 1.1rem 1.2rem;
   border-radius: 1rem;
-  border: 1px solid rgba(161, 0, 255, 0.22);
-  background: linear-gradient(135deg, rgba(161, 0, 255, 0.08), rgba(161, 0, 255, 0.02));
+  border: 1px solid rgba(161, 0, 255, 0.35);
+  background: linear-gradient(135deg, rgba(122, 0, 200, 0.35), rgba(161, 0, 255, 0.18));
   color: var(--desk-text);
 }
 
@@ -60,7 +66,7 @@
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.65rem;
-  color: var(--brand-accent, #a100ff);
+  color: var(--desk-accent);
 }
 
 .nextLessonTitle {
@@ -106,8 +112,8 @@
   align-items: center;
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
-  background: rgba(161, 0, 255, 0.14);
-  color: var(--brand-accent, #a100ff);
+  background: rgba(161, 0, 255, 0.28);
+  color: #e9d5ff;
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -128,7 +134,7 @@
 
 .nextLessonLmsLabel {
   font-weight: 700;
-  color: var(--desk-text);
+  color: #c4c4d4;
 }
 
 .nextLessonActions {
@@ -149,19 +155,35 @@
   font-size: 0.9rem;
   cursor: pointer;
   text-decoration: none;
+  color: #c4c4d4;
+}
+
+.btn:hover {
+  border-color: rgba(255, 255, 255, 0.16);
   color: var(--desk-text);
 }
 
 .btnPrimary {
-  background: var(--brand-accent, #a100ff);
+  background: linear-gradient(135deg, #7a00c8 0%, #a100ff 50%, #c44bff 100%);
   border-color: transparent;
   color: #fff;
+  box-shadow: 0 4px 16px rgba(161, 0, 255, 0.35);
+}
+
+.btnPrimary:hover {
+  color: #fff;
+  filter: brightness(1.06);
 }
 
 .btnDanger {
-  background: #fff;
-  border-color: rgba(220, 38, 38, 0.35);
-  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+.btnDanger:hover {
+  background: rgba(239, 68, 68, 0.22);
+  color: #fecaca;
 }
 
 .tabs {
@@ -174,6 +196,7 @@
 .tab {
   display: inline-flex;
   align-items: center;
+  gap: 0.4rem;
   border: 1px solid var(--desk-border);
   background: var(--desk-surface);
   border-radius: 999px;
@@ -181,18 +204,23 @@
   font-weight: 700;
   font-size: 0.88rem;
   cursor: pointer;
+  color: var(--desk-muted);
+}
+
+.tab:hover {
   color: var(--desk-text);
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 .tabActive {
-  background: rgba(161, 0, 255, 0.1);
-  border-color: rgba(161, 0, 255, 0.35);
-  color: var(--brand-accent, #a100ff);
+  background: rgba(161, 0, 255, 0.22);
+  border-color: rgba(161, 0, 255, 0.45);
+  color: var(--desk-accent);
 }
 
 .panel {
   background: var(--desk-surface);
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border: 1px solid var(--desk-border);
   border-radius: 1rem;
   padding: 1.25rem;
   color: var(--desk-text);
@@ -202,20 +230,20 @@
   margin: 0 0 1rem;
   padding: 0.75rem 0.9rem;
   border-radius: 0.75rem;
-  background: rgba(161, 0, 255, 0.06);
-  border: 1px solid rgba(161, 0, 255, 0.15);
+  background: rgba(161, 0, 255, 0.12);
+  border: 1px solid rgba(161, 0, 255, 0.28);
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--desk-text);
+  color: #e9d5ff;
 }
 
 .error {
-  color: #b91c1c;
+  color: #f87171;
   font-weight: 600;
 }
 
 .success {
-  color: #059669;
+  color: #6ee7b7;
   font-weight: 600;
 }
 
@@ -226,10 +254,10 @@
 }
 
 .courseCard {
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border: 1px solid var(--desk-border);
   border-radius: 0.9rem;
   padding: 1rem;
-  background: linear-gradient(160deg, #fff, #faf5ff);
+  background: linear-gradient(160deg, #121218, #0c0614);
   color: var(--desk-text);
 }
 
@@ -260,7 +288,7 @@
 .table td {
   text-align: left;
   padding: 0.7rem 0.55rem;
-  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   vertical-align: top;
 }
 
@@ -289,7 +317,7 @@
 }
 
 .warn {
-  color: #b45309;
+  color: #fbbf24;
   font-weight: 600;
   margin: 0 0 1rem;
 }
@@ -302,8 +330,8 @@
 }
 
 .statCard {
-  border: 1px solid rgba(161, 0, 255, 0.15);
-  background: rgba(161, 0, 255, 0.04);
+  border: 1px solid rgba(161, 0, 255, 0.28);
+  background: rgba(161, 0, 255, 0.1);
   border-radius: 0.85rem;
   padding: 0.85rem 1rem;
   display: flex;
@@ -322,7 +350,7 @@
 .statValue {
   font-size: 1.45rem;
   line-height: 1.1;
-  color: var(--brand-accent, #a100ff);
+  color: var(--desk-accent);
 }
 
 .drawerTitle {
@@ -352,7 +380,7 @@
 .drawer {
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  border-top: 1px solid var(--desk-border);
 }
 
 .formRow {
@@ -370,7 +398,18 @@
   min-width: 180px;
   font: inherit;
   color: var(--desk-text);
-  background: #fff;
+  background: #0a0a0f;
+}
+
+.input::placeholder {
+  color: var(--desk-muted);
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: rgba(161, 0, 255, 0.55);
+  box-shadow: 0 0 0 2px rgba(161, 0, 255, 0.2);
 }
 
 .materialList {
@@ -380,7 +419,7 @@
 }
 
 .materialItem {
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border: 1px solid var(--desk-border);
   border-radius: 0.8rem;
   overflow: hidden;
 }
@@ -388,12 +427,16 @@
 .materialHead {
   width: 100%;
   text-align: left;
-  background: #f8fafc;
+  background: #0a0a0f;
   border: 0;
   padding: 0.85rem 1rem;
   font-weight: 700;
   cursor: pointer;
   color: var(--desk-text);
+}
+
+.materialHead:hover {
+  background: rgba(161, 0, 255, 0.1);
 }
 
 .materialBody {
@@ -403,7 +446,8 @@
   white-space: pre-wrap;
   font-size: 0.88rem;
   line-height: 1.5;
-  color: #334155;
+  color: #c4c4d4;
+  background: #0a0a0f;
 }
 
 .empty {
@@ -415,17 +459,25 @@
   margin-bottom: 1.25rem;
   padding: 1.1rem 1.2rem;
   border-radius: 1rem;
-  border: 1px solid rgba(15, 23, 42, 0.1);
+  border: 1px solid var(--desk-border);
   background: var(--desk-surface);
 }
 
 .recordingsHead {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 0.5rem 1rem;
   margin-bottom: 0.85rem;
+}
+
+.recordingsHeadText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  flex: 1 1 14rem;
 }
 
 .recordingsTitle {
@@ -443,6 +495,28 @@
   color: var(--desk-muted);
 }
 
+.refreshBtn {
+  flex: 0 0 auto;
+  border: 1px solid var(--desk-border);
+  background: var(--desk-surface);
+  border-radius: 0.65rem;
+  padding: 0.45rem 0.85rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #c4c4d4;
+}
+
+.refreshBtn:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.refreshBtn:not(:disabled):hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--desk-text);
+}
+
 .historyLegend {
   display: flex;
   flex-wrap: wrap;
@@ -450,8 +524,8 @@
   margin: 0 0 1rem;
   padding: 0.75rem 0.9rem;
   border-radius: 0.75rem;
-  background: #f8fafc;
-  border: 1px solid rgba(15, 23, 42, 0.06);
+  background: #0a0a0f;
+  border: 1px solid var(--desk-border);
 }
 
 .legendItem {
@@ -460,7 +534,7 @@
   gap: 0.4rem;
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--desk-text);
+  color: #c4c4d4;
 }
 
 .legendSwatch {
@@ -494,67 +568,67 @@
 }
 
 .badgeWithVideo {
-  background: rgba(22, 163, 74, 0.14);
-  color: #15803d;
+  background: rgba(22, 163, 74, 0.2);
+  color: #6ee7b7;
 }
 
 .badgeTextOnly {
-  background: rgba(217, 119, 6, 0.14);
-  color: #b45309;
+  background: rgba(217, 119, 6, 0.2);
+  color: #fbbf24;
 }
 
 .badgeMissing {
-  background: rgba(220, 38, 38, 0.12);
-  color: #b91c1c;
+  background: rgba(220, 38, 38, 0.2);
+  color: #fca5a5;
 }
 
 .rowWithVideo {
-  background: rgba(22, 163, 74, 0.08);
+  background: rgba(22, 163, 74, 0.1);
 }
 
 .rowWithVideo td {
-  border-bottom-color: rgba(22, 163, 74, 0.18);
+  border-bottom-color: rgba(22, 163, 74, 0.22);
 }
 
 .rowTextOnly {
-  background: rgba(217, 119, 6, 0.08);
+  background: rgba(217, 119, 6, 0.1);
 }
 
 .rowTextOnly td {
-  border-bottom-color: rgba(217, 119, 6, 0.18);
+  border-bottom-color: rgba(217, 119, 6, 0.22);
 }
 
 .rowMissing {
-  background: rgba(220, 38, 38, 0.07);
+  background: rgba(220, 38, 38, 0.1);
 }
 
 .rowMissing td {
-  border-bottom-color: rgba(220, 38, 38, 0.16);
+  border-bottom-color: rgba(220, 38, 38, 0.2);
 }
 
 .statCardAccent {
-  border-color: rgba(22, 163, 74, 0.25);
-  background: rgba(22, 163, 74, 0.06);
+  border-color: rgba(22, 163, 74, 0.35);
+  background: rgba(22, 163, 74, 0.12);
 }
 
 .statCardAccent .statValue {
-  color: #15803d;
+  color: #6ee7b7;
 }
 
 .statCardWarn {
-  border-color: rgba(217, 119, 6, 0.28);
-  background: rgba(217, 119, 6, 0.07);
+  border-color: rgba(217, 119, 6, 0.35);
+  background: rgba(217, 119, 6, 0.12);
 }
 
 .statCardWarn .statValue {
-  color: #b45309;
+  color: #fbbf24;
 }
 
 .statCardDanger {
-  border-color: rgba(220, 38, 38, 0.28);
-  background: rgba(220, 38, 38, 0.06);
+  border-color: rgba(220, 38, 38, 0.35);
+  background: rgba(220, 38, 38, 0.12);
 }
 
 .statCardDanger .statValue {
-  color: #b91c1c;
+  color: #fca5a5;
 }

@@ -241,6 +241,35 @@ function emptyTeacherTotals() {
   }
 }
 
+function lessonDocId(lesson) {
+  return String(lesson?.id || lesson?._id || '').trim()
+}
+
+/**
+ * Уроки викладача без слотів availability.
+ * Availability з Google Calendar забиває limit=2000 при sort=-1 і витісняє реальні ІУ/ПУ.
+ * Тому тягнемо окремо kind=individual та kind=trial (ГУ теж individual з group_id).
+ */
+async function fetchTeacherTeachingLessons(staffId) {
+  const tid = encodeURIComponent(staffId)
+  const [individual, trial] = await Promise.all([
+    crmJson('GET', `lessons?teacher_id=${tid}&kind=individual&limit=2000&sort=-1`),
+    crmJson('GET', `lessons?teacher_id=${tid}&kind=trial&limit=2000&sort=-1`),
+  ])
+
+  const byId = new Map()
+  for (const batch of [individual, trial]) {
+    if (!Array.isArray(batch)) continue
+    for (const lesson of batch) {
+      if (String(lesson?.kind || '') === 'availability') continue
+      const id = lessonDocId(lesson)
+      if (id) byId.set(id, lesson)
+      else byId.set(`anon-${byId.size}`, lesson)
+    }
+  }
+  return [...byId.values()]
+}
+
 /**
  * Агрегує уроки викладача з CRM: проведені та підтверджені записами бота.
  * @param {string} crmStaffId
@@ -268,10 +297,7 @@ export async function fetchTeacherCrmLessonStats(crmStaffId) {
 
   let lessons = []
   try {
-    lessons = await crmJson(
-      'GET',
-      `lessons?teacher_id=${encodeURIComponent(staffId)}&limit=2000&sort=-1`
-    )
+    lessons = await fetchTeacherTeachingLessons(staffId)
   } catch (error) {
     console.warn('fetchTeacherCrmLessonStats:', error?.message || error)
     return { ...empty, crmError: error?.message || 'CRM unavailable' }
@@ -336,10 +362,7 @@ export async function fetchTeacherLessonHistory(crmStaffId, { limit = 200 } = {}
 
   let lessons = []
   try {
-    lessons = await crmJson(
-      'GET',
-      `lessons?teacher_id=${encodeURIComponent(staffId)}&limit=2000&sort=-1`
-    )
+    lessons = await fetchTeacherTeachingLessons(staffId)
   } catch (error) {
     console.warn('fetchTeacherLessonHistory:', error?.message || error)
     return { ...empty, crmError: error?.message || 'CRM unavailable' }

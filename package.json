@@ -8,14 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "setup:webhook": "node scripts/setup-webhook.js",
-    "gen:roblox-v2": "node scripts/gen-roblox-v2.mjs",
     "gen:roblox-en": "node scripts/gen-roblox-lessons-en.mjs",
     "gen:roblox-uk": "node scripts/gen-roblox-lessons-uk.mjs",
     "fix:roblox-uk-terms": "node scripts/fix-roblox-uk-terms.mjs",
-    "wire:roblox-uk": "node scripts/wire-roblox-lessons-uk.mjs",
-    "extract:roblox-templates": "node scripts/extract-roblox-templates.mjs",
-    "migrate:roblox-progress": "node scripts/migrate-roblox-progress.mjs",
-    "test:roblox-progress-migrate": "node scripts/test-roblox-progress-migrate.mjs"
+    "wire:roblox-uk": "node scripts/wire-roblox-lessons-uk.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",

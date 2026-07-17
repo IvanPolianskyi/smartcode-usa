@@ -189,6 +189,7 @@ export default function TeacherDesk() {
       setHistoryCrmError(data.crmError || '')
     } catch (e) {
       setError(e.message || t('students.error'))
+      setHistoryCrmError(e.message || t('recordings.crmError'))
       setLessonHistory([])
     } finally {
       setLoadingHistory(false)
@@ -369,40 +370,55 @@ export default function TeacherDesk() {
           </section>
         )}
 
-        {(linked || user.role === 'admin') && recordingStats && (
+        {(linked || user.role === 'admin') && (recordingStats || historyCrmError) && (
           <section className={styles.recordingsSummary} aria-label={t('recordings.title')}>
             <div className={styles.recordingsHead}>
-              <h2 className={styles.recordingsTitle}>{t('recordings.title')}</h2>
-              <p className={styles.recordingsNote}>{t('recordings.syncNote')}</p>
+              <div className={styles.recordingsHeadText}>
+                <h2 className={styles.recordingsTitle}>{t('recordings.title')}</h2>
+                <p className={styles.recordingsNote}>{t('recordings.syncNote')}</p>
+              </div>
+              <button
+                type="button"
+                className={styles.refreshBtn}
+                onClick={() => loadLessonHistory()}
+                disabled={loadingHistory}
+              >
+                {t('recordings.refresh')}
+              </button>
             </div>
-            <div className={styles.statsRow}>
-              <div className={`${styles.statCard} ${styles.statCardAccent}`}>
-                <span className={styles.statLabel}>{t('recordings.credited')}</span>
-                <strong className={styles.statValue}>{recordingStats.recorded ?? 0}</strong>
+            {historyCrmError ? (
+              <p className={styles.warn}>{t('recordings.crmError')}</p>
+            ) : null}
+            {recordingStats ? (
+              <div className={styles.statsRow}>
+                <div className={`${styles.statCard} ${styles.statCardAccent}`}>
+                  <span className={styles.statLabel}>{t('recordings.credited')}</span>
+                  <strong className={styles.statValue}>{recordingStats.recorded ?? 0}</strong>
+                </div>
+                <div className={`${styles.statCard} ${styles.statCardAccent}`}>
+                  <span className={styles.statLabel}>{t('recordings.withVideo')}</span>
+                  <strong className={styles.statValue}>
+                    {recordingStats.recordedWithVideo ?? 0}
+                  </strong>
+                </div>
+                <div className={`${styles.statCard} ${styles.statCardWarn}`}>
+                  <span className={styles.statLabel}>{t('recordings.withoutVideo')}</span>
+                  <strong className={styles.statValue}>
+                    {recordingStats.recordedTextOnly ?? 0}
+                  </strong>
+                </div>
+                <div className={`${styles.statCard} ${styles.statCardDanger}`}>
+                  <span className={styles.statLabel}>{t('recordings.missing')}</span>
+                  <strong className={styles.statValue}>
+                    {recordingStats.missingRecording ?? 0}
+                  </strong>
+                </div>
+                <div className={styles.statCard}>
+                  <span className={styles.statLabel}>{t('recordings.completed')}</span>
+                  <strong className={styles.statValue}>{recordingStats.completed ?? 0}</strong>
+                </div>
               </div>
-              <div className={`${styles.statCard} ${styles.statCardAccent}`}>
-                <span className={styles.statLabel}>{t('recordings.withVideo')}</span>
-                <strong className={styles.statValue}>
-                  {recordingStats.recordedWithVideo ?? 0}
-                </strong>
-              </div>
-              <div className={`${styles.statCard} ${styles.statCardWarn}`}>
-                <span className={styles.statLabel}>{t('recordings.withoutVideo')}</span>
-                <strong className={styles.statValue}>
-                  {recordingStats.recordedTextOnly ?? 0}
-                </strong>
-              </div>
-              <div className={`${styles.statCard} ${styles.statCardDanger}`}>
-                <span className={styles.statLabel}>{t('recordings.missing')}</span>
-                <strong className={styles.statValue}>
-                  {recordingStats.missingRecording ?? 0}
-                </strong>
-              </div>
-              <div className={styles.statCard}>
-                <span className={styles.statLabel}>{t('recordings.completed')}</span>
-                <strong className={styles.statValue}>{recordingStats.completed ?? 0}</strong>
-              </div>
-            </div>
+            ) : null}
           </section>
         )}
 
