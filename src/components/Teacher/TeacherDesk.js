@@ -391,31 +391,13 @@ export default function TeacherDesk() {
             ) : null}
             {recordingStats ? (
               <div className={styles.statsRow}>
-                <div className={`${styles.statCard} ${styles.statCardAccent}`}>
-                  <span className={styles.statLabel}>{t('recordings.credited')}</span>
-                  <strong className={styles.statValue}>{recordingStats.recorded ?? 0}</strong>
-                </div>
-                <div className={`${styles.statCard} ${styles.statCardAccent}`}>
-                  <span className={styles.statLabel}>{t('recordings.withVideo')}</span>
-                  <strong className={styles.statValue}>
-                    {recordingStats.recordedWithVideo ?? 0}
-                  </strong>
-                </div>
-                <div className={`${styles.statCard} ${styles.statCardWarn}`}>
-                  <span className={styles.statLabel}>{t('recordings.withoutVideo')}</span>
-                  <strong className={styles.statValue}>
-                    {recordingStats.recordedTextOnly ?? 0}
-                  </strong>
-                </div>
-                <div className={`${styles.statCard} ${styles.statCardDanger}`}>
-                  <span className={styles.statLabel}>{t('recordings.missing')}</span>
-                  <strong className={styles.statValue}>
-                    {recordingStats.missingRecording ?? 0}
-                  </strong>
-                </div>
                 <div className={styles.statCard}>
                   <span className={styles.statLabel}>{t('recordings.completed')}</span>
                   <strong className={styles.statValue}>{recordingStats.completed ?? 0}</strong>
+                </div>
+                <div className={`${styles.statCard} ${styles.statCardAccent}`}>
+                  <span className={styles.statLabel}>{t('recordings.credited')}</span>
+                  <strong className={styles.statValue}>{recordingStats.recorded ?? 0}</strong>
                 </div>
               </div>
             ) : null}
@@ -478,18 +460,6 @@ export default function TeacherDesk() {
                 <div className={`${styles.statCard} ${styles.statCardAccent}`}>
                   <span className={styles.statLabel}>{t('students.totalRecorded')}</span>
                   <strong className={styles.statValue}>{teacherStats.recorded ?? 0}</strong>
-                </div>
-                <div className={`${styles.statCard} ${styles.statCardAccent}`}>
-                  <span className={styles.statLabel}>{t('recordings.withVideo')}</span>
-                  <strong className={styles.statValue}>
-                    {teacherStats.recordedWithVideo ?? 0}
-                  </strong>
-                </div>
-                <div className={`${styles.statCard} ${styles.statCardDanger}`}>
-                  <span className={styles.statLabel}>{t('recordings.missing')}</span>
-                  <strong className={styles.statValue}>
-                    {teacherStats.missingRecording ?? 0}
-                  </strong>
                 </div>
                 <div className={styles.statCard}>
                   <span className={styles.statLabel}>{t('students.studentsCount')}</span>
