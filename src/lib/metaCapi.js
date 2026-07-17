@@ -12,13 +12,19 @@ import crypto from 'crypto'
 import { parsePhoneNumberFromString } from 'libphonenumber-js'
 
 const CAPI_VERSION = 'v22.0'
-const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || '1016369117841084'
-const CAPI_TOKEN = process.env.META_CAPI_TOKEN
-const CAPI_TEST_EVENT_CODE = process.env.META_CAPI_TEST_EVENT_CODE || ''
+const DEFAULT_PIXEL_ID = '1016369117841084'
 
-const CAPI_URL = PIXEL_ID
-	? `https://graph.facebook.com/${CAPI_VERSION}/${PIXEL_ID}/events`
-	: null
+function getCapiConfig() {
+	const pixelId = String(process.env.NEXT_PUBLIC_META_PIXEL_ID || DEFAULT_PIXEL_ID).trim()
+	const token = String(process.env.META_CAPI_TOKEN || '').trim()
+	const testEventCode = String(process.env.META_CAPI_TEST_EVENT_CODE || '').trim()
+	return {
+		pixelId,
+		token,
+		testEventCode,
+		url: pixelId ? `https://graph.facebook.com/${CAPI_VERSION}/${pixelId}/events` : null,
+	}
+}
 
 /**
  * SHA-256 хеш для PII-даних (телефон, email).
@@ -69,6 +75,19 @@ function normalizeFbc(fbc, fbclid) {
 	return `fb.1.${Date.now()}.${String(fbclid).trim()}`
 }
 
+function parseMetaError(text) {
+	try {
+		const json = JSON.parse(text)
+		const err = json?.error
+		if (!err) return text?.slice?.(0, 180) || 'невідома помилка Meta'
+		const parts = [err.message, err.error_user_msg, err.code != null ? `code ${err.code}` : null]
+			.filter(Boolean)
+		return parts.join(' — ').slice(0, 220)
+	} catch {
+		return String(text || '').slice(0, 180) || 'невідома помилка Meta'
+	}
+}
+
 /**
  * Витягнути IP клієнта з Next.js Request headers.
  * Vercel встановлює x-forwarded-for.
@@ -108,16 +127,7 @@ export function getFbCookies(request) {
 /**
  * Основна функція відправки події в CAPI.
  *
- * @param {object} options
- * @param {string}  options.eventName     - Назва події: 'Lead', 'PageView', etc.
- * @param {string}  options.eventId       - UUID для дедуплікації (той самий що fbq eventID)
- * @param {string}  options.sourceUrl     - URL сторінки де відбулась подія
- * @param {string}  [options.phone]       - Телефон користувача (+380...) — буде хешований
- * @param {string}  [options.clientIp]    - IP клієнта
- * @param {string}  [options.userAgent]   - User-Agent клієнта
- * @param {string}  [options.fbc]         - _fbc cookie
- * @param {string}  [options.fbp]         - _fbp cookie
- * @param {object}  [options.customData]  - Додаткові параметри (content_name, content_ids, etc.)
+ * @returns {Promise<{ ok: boolean, error?: string, status?: number }>}
  */
 export async function sendCapiEvent({
 	eventName,
@@ -136,9 +146,15 @@ export async function sendCapiEvent({
 	fbclid,
 	customData = {},
 }) {
-	if (!CAPI_TOKEN || !CAPI_URL) {
-		console.warn('[CAPI] META_CAPI_TOKEN або NEXT_PUBLIC_META_PIXEL_ID не встановлено — подія не відправлена')
-		return false
+	const { token, url, testEventCode, pixelId } = getCapiConfig()
+
+	if (!token) {
+		console.warn('[CAPI] META_CAPI_TOKEN не встановлено — подія не відправлена')
+		return { ok: false, error: 'META_CAPI_TOKEN не встановлено' }
+	}
+	if (!url || !pixelId) {
+		console.warn('[CAPI] NEXT_PUBLIC_META_PIXEL_ID не встановлено — подія не відправлена')
+		return { ok: false, error: 'NEXT_PUBLIC_META_PIXEL_ID не встановлено' }
 	}
 
 	const hashedPhone = sha256(normalizePhone(phone))
@@ -175,11 +191,11 @@ export async function sendCapiEvent({
 
 	const body = {
 		data: [eventPayload],
-		...(CAPI_TEST_EVENT_CODE && { test_event_code: CAPI_TEST_EVENT_CODE }),
+		...(testEventCode && { test_event_code: testEventCode }),
 	}
 
 	try {
-		const res = await fetch(`${CAPI_URL}?access_token=${CAPI_TOKEN}`, {
+		const res = await fetch(`${url}?access_token=${encodeURIComponent(token)}`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(body),
@@ -187,13 +203,14 @@ export async function sendCapiEvent({
 
 		if (!res.ok) {
 			const text = await res.text().catch(() => '')
+			const parsed = parseMetaError(text)
 			console.error('[CAPI] Помилка відправки:', res.status, text)
-			return false
+			return { ok: false, status: res.status, error: `Meta API ${res.status}: ${parsed}` }
 		}
-		return true
+		return { ok: true }
 	} catch (err) {
 		console.error('[CAPI] Network error:', err)
-		return false
+		return { ok: false, error: `мережева помилка: ${String(err?.message || err)}` }
 	}
 }
 

@@ -229,6 +229,7 @@ export async function POST(request) {
     }
 
     let metaLeadSent = false
+    let metaLeadError = null
     if (shouldTrackLead) {
       const clientIp = getClientIp(request)
       const userAgent = getClientUserAgent(request)
@@ -236,7 +237,7 @@ export async function POST(request) {
       const { trialInterestToContentIds } = await import('@/lib/metaPixel')
       const contentIds = isTrialCourse ? trialInterestToContentIds(course) : []
 
-      metaLeadSent = await sendCapiLead({
+      const capiResult = await sendCapiLead({
         eventId,
         sourceUrl: sourceUrl || 'https://smartcode-academy.com',
         phone: normalizedPhone,
@@ -250,12 +251,14 @@ export async function POST(request) {
         contentName: displayCourse || 'trial_lesson',
         contentIds,
       })
+      metaLeadSent = Boolean(capiResult?.ok)
+      metaLeadError = capiResult?.ok ? null : (capiResult?.error || 'невідома помилка CAPI')
     }
 
     const metaLeadLine = metaLeadSent
       ? '<b>Meta Lead Sent:</b> yes'
       : shouldTrackLead
-        ? '<b>Meta Lead Sent:</b> no (помилка CAPI — перевірте META_CAPI_TOKEN)'
+        ? `<b>Meta Lead Sent:</b> no (${escapeHtml(metaLeadError || 'помилка CAPI')})`
         : `<b>Meta Lead Sent:</b> no (${escapeHtml(metaLeadSkipReason || 'невідомо')})`
 
     const lines = [
@@ -348,9 +351,10 @@ export async function POST(request) {
       if (savedOffline) {
         return NextResponse.json({
           ok: true,
-          trackLead: shouldTrackLead,
-          metaLeadSent,
-          metaLeadSkipReason,
+        trackLead: shouldTrackLead,
+        metaLeadSent,
+        metaLeadError,
+        metaLeadSkipReason,
           telegramDelivered: false,
         })
       }
@@ -377,6 +381,7 @@ export async function POST(request) {
         via: 'telegram',
         isUniqueLead: shouldTrackLead,
         metaLeadSent,
+        metaLeadError: metaLeadError || null,
       })
       if (tokenHash) {
         await markLeadTokenUsed(tokenHash)
@@ -402,9 +407,10 @@ export async function POST(request) {
 
     return NextResponse.json({
       ok: true,
-      trackLead: shouldTrackLead,
-      metaLeadSent,
-      metaLeadSkipReason,
+        trackLead: shouldTrackLead,
+        metaLeadSent,
+        metaLeadError,
+        metaLeadSkipReason,
     })
   } catch (error) {
     return NextResponse.json(
