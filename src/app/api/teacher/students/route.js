@@ -15,8 +15,12 @@ export async function GET() {
       )
     }
 
-    const students = await listTeacherStudents(staffId, { isAdmin: auth.isAdmin })
-    return NextResponse.json({ students })
+    const result = await listTeacherStudents(staffId, { isAdmin: auth.isAdmin })
+    return NextResponse.json({
+      students: result.students,
+      teacherStats: result.teacherStats,
+      crmError: result.crmError || null,
+    })
   } catch (error) {
     console.error('GET /api/teacher/students', error)
     return NextResponse.json({ error: 'Failed to load students' }, { status: 500 })

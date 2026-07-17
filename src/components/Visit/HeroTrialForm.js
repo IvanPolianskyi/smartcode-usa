@@ -170,6 +170,7 @@ export default function HeroTrialForm() {
 			<h2 className={styles.title}>
 				{t('title')}{' '}
 				<span className={styles.titleAccent}>{t('titleAccent')}</span>
+				{t('titleSuffix') ? <> {t('titleSuffix')}</> : null}
 			</h2>
 
 			<form
@@ -213,8 +214,6 @@ export default function HeroTrialForm() {
 						{submitting ? t('submitting') : t('submit')}
 					</span>
 				</button>
-
-				<p className={styles.hint}>{t('hint')}</p>
 			</form>
 		</div>
 	)

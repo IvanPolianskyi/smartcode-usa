@@ -4,7 +4,9 @@ import {
   findStudentByCodeForTeacher,
   getStudentProgressDetail,
   mutateStudentProgress,
+  displayNameForTeacher,
 } from '@/lib/teacherService'
+import { fetchTeacherCrmLessonStats } from '@/lib/crmTeacherStats'
 
 export async function GET(_request, { params }) {
   const auth = await requireTeacher()
@@ -21,8 +23,20 @@ export async function GET(_request, { params }) {
     }
 
     const progress = await getStudentProgressDetail(student)
+    let completedLessons = 0
+    let recordedLessons = 0
+    if (staffId) {
+      const crmStats = await fetchTeacherCrmLessonStats(staffId)
+      const shortId = String(student.studentProfile?.crmShortId || code).trim()
+      const crmRow = crmStats.students[shortId]
+      completedLessons = crmRow?.completedLessons ?? 0
+      recordedLessons = crmRow?.recordedLessons ?? 0
+    }
     return NextResponse.json({
       code: String(student.studentProfile?.crmShortId || code),
+      name: displayNameForTeacher(student),
+      completedLessons,
+      recordedLessons,
       courseIds: [
         ...new Set([
           ...(student.studentProfile?.activeOnlineCourses || []),

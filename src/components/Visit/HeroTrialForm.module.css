@@ -23,9 +23,10 @@
 }
 
 .titleAccent {
-	color: #f0abfc;
+	font-size: 1.14em;
+	color: #cc00ff;
 	background: none;
-	-webkit-text-fill-color: #f0abfc;
+	-webkit-text-fill-color: #cc00ff;
 }
 
 .form {
