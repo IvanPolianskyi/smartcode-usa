@@ -1,8 +1,14 @@
 .page {
+  --desk-text: #0f172a;
+  --desk-muted: #64748b;
+  --desk-bg: #f8fafc;
+  --desk-surface: #ffffff;
+  --desk-border: rgba(15, 23, 42, 0.12);
+
   min-height: 100vh;
   padding: 1.5rem 1.25rem 3rem;
-  background: var(--bg-page, #f8fafc);
-  color: var(--text-primary, #0f172a);
+  background: var(--desk-bg);
+  color: var(--desk-text);
 }
 
 .shell {
@@ -23,12 +29,13 @@
   margin: 0 0 0.35rem;
   font-size: clamp(1.4rem, 3vw, 1.85rem);
   font-weight: 800;
+  color: var(--desk-text);
 }
 
 .subtitle {
   margin: 0;
   max-width: 42rem;
-  color: var(--text-secondary, #64748b);
+  color: var(--desk-muted);
   font-size: 0.95rem;
   line-height: 1.45;
 }
@@ -43,15 +50,15 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  border: 1px solid rgba(15, 23, 42, 0.12);
-  background: #fff;
+  border: 1px solid var(--desk-border);
+  background: var(--desk-surface);
   border-radius: 0.7rem;
   padding: 0.55rem 0.9rem;
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
   text-decoration: none;
-  color: inherit;
+  color: var(--desk-text);
 }
 
 .btnPrimary {
@@ -74,13 +81,16 @@
 }
 
 .tab {
-  border: 1px solid rgba(15, 23, 42, 0.1);
-  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--desk-border);
+  background: var(--desk-surface);
   border-radius: 999px;
   padding: 0.45rem 0.95rem;
   font-weight: 700;
   font-size: 0.88rem;
   cursor: pointer;
+  color: var(--desk-text);
 }
 
 .tabActive {
@@ -90,10 +100,11 @@
 }
 
 .panel {
-  background: #fff;
+  background: var(--desk-surface);
   border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 1rem;
   padding: 1.25rem;
+  color: var(--desk-text);
 }
 
 .note {
@@ -104,6 +115,7 @@
   border: 1px solid rgba(161, 0, 255, 0.15);
   font-size: 0.9rem;
   font-weight: 600;
+  color: var(--desk-text);
 }
 
 .error {
@@ -127,16 +139,18 @@
   border-radius: 0.9rem;
   padding: 1rem;
   background: linear-gradient(160deg, #fff, #faf5ff);
+  color: var(--desk-text);
 }
 
 .courseCard h3 {
   margin: 0 0 0.35rem;
   font-size: 1.05rem;
+  color: var(--desk-text);
 }
 
 .courseMeta {
   margin: 0 0 0.85rem;
-  color: var(--text-secondary, #64748b);
+  color: var(--desk-muted);
   font-size: 0.85rem;
 }
 
@@ -148,6 +162,7 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 0.92rem;
+  color: var(--desk-text);
 }
 
 .table th,
@@ -162,21 +177,23 @@
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--text-secondary, #64748b);
+  color: var(--desk-muted);
 }
 
 .code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-weight: 700;
   font-size: 0.95rem;
+  color: var(--desk-text);
 }
 
 .studentName {
   font-weight: 700;
+  color: var(--desk-text);
 }
 
 .muted {
-  color: var(--text-secondary, #64748b);
+  color: var(--desk-muted);
   font-size: 0.85rem;
 }
 
@@ -207,7 +224,7 @@
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--text-secondary, #64748b);
+  color: var(--desk-muted);
   font-weight: 700;
 }
 
@@ -224,18 +241,19 @@
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.5rem;
+  color: var(--desk-text);
 }
 
 .codeInline {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.85rem;
-  color: var(--text-secondary, #64748b);
+  color: var(--desk-muted);
   font-weight: 600;
 }
 
 .drawerMeta {
   margin: 0 0 0.85rem;
-  color: var(--text-secondary, #64748b);
+  color: var(--desk-muted);
   font-size: 0.9rem;
   font-weight: 600;
 }
@@ -255,11 +273,13 @@
 
 .input,
 .select {
-  border: 1px solid rgba(15, 23, 42, 0.12);
+  border: 1px solid var(--desk-border);
   border-radius: 0.65rem;
   padding: 0.55rem 0.75rem;
   min-width: 180px;
   font: inherit;
+  color: var(--desk-text);
+  background: #fff;
 }
 
 .materialList {
@@ -282,6 +302,7 @@
   padding: 0.85rem 1rem;
   font-weight: 700;
   cursor: pointer;
+  color: var(--desk-text);
 }
 
 .materialBody {
@@ -295,6 +316,6 @@
 }
 
 .empty {
-  color: var(--text-secondary, #64748b);
+  color: var(--desk-muted);
   margin: 0;
 }
