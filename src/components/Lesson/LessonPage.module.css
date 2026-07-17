@@ -583,7 +583,7 @@
 
 .theoryContent pre {
   background: #0a0a0f;
-  color: var(--border-subtle);
+  color: var(--text-primary);
   padding: 1.5rem;
   border-radius: 0.75rem;
   overflow-x: auto;
@@ -641,7 +641,7 @@
 
 .theoryContent .code-block {
   background: #0a0a0f;
-  color: var(--border-subtle);
+  color: var(--text-primary);
   padding: 1.5rem;
   border-radius: 0.75rem;
   overflow-x: auto;
@@ -864,7 +864,7 @@
 
 .codeBlock {
   background: #0a0a0f;
-  color: var(--border-subtle);
+  color: var(--text-primary);
   padding: 1.5rem;
   border-radius: 0.75rem;
   overflow-x: auto;
@@ -1010,7 +1010,7 @@
 .exampleInput pre,
 .exampleOutput pre {
   background: #0a0a0f;
-  color: var(--border-subtle);
+  color: var(--text-primary);
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;
@@ -1097,7 +1097,7 @@
   width: 100%;
   min-height: 300px;
   background: #0a0a0f;
-  color: var(--border-subtle);
+  color: var(--text-primary);
   border: none;
   border-radius: 0.5rem;
   padding: 1rem;
@@ -1192,7 +1192,7 @@
 
 .executionOutput pre {
   background: #0a0a0f;
-  color: var(--border-subtle);
+  color: var(--text-primary);
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;
@@ -1367,7 +1367,7 @@
 
 .questionCode {
   background: #0a0a0f;
-  color: var(--border-subtle);
+  color: var(--text-primary);
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;

@@ -628,7 +628,7 @@
 
 .theoryBody :global(pre) {
   background: var(--bg-primary);
-  color: var(--border-subtle);
+  color: var(--text-primary);
   padding: 1rem;
   border-radius: 10px;
   overflow-x: auto;
@@ -741,7 +741,7 @@
 
 .challengeBody :global(pre) {
   background: var(--bg-primary);
-  color: var(--border-subtle);
+  color: var(--text-primary);
   padding: 1rem;
   border-radius: 10px;
   overflow-x: auto;
