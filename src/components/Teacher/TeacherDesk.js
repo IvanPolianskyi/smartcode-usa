@@ -32,6 +32,8 @@ export default function TeacherDesk() {
   const { user, loading: sessionLoading, refresh } = useAuthSession()
   const [tab, setTab] = useState('courses')
   const [students, setStudents] = useState([])
+  const [teacherStats, setTeacherStats] = useState(null)
+  const [crmError, setCrmError] = useState('')
   const [materials, setMaterials] = useState([])
   const [loadingStudents, setLoadingStudents] = useState(false)
   const [loadingMaterials, setLoadingMaterials] = useState(false)
@@ -68,6 +70,8 @@ export default function TeacherDesk() {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('students.error'))
       setStudents(data.students || [])
+      setTeacherStats(data.teacherStats || null)
+      setCrmError(data.crmError || '')
     } catch (e) {
       setError(e.message || t('students.error'))
     } finally {
@@ -240,6 +244,25 @@ export default function TeacherDesk() {
             {!linked && user.role === 'teacher' && (
               <p className={styles.error}>{t('students.notLinked')}</p>
             )}
+            {crmError && linked && (
+              <p className={styles.warn}>{t('students.crmStatsError')}</p>
+            )}
+            {teacherStats && linked && (
+              <div className={styles.statsRow}>
+                <div className={styles.statCard}>
+                  <span className={styles.statLabel}>{t('students.totalCompleted')}</span>
+                  <strong className={styles.statValue}>{teacherStats.completed ?? 0}</strong>
+                </div>
+                <div className={styles.statCard}>
+                  <span className={styles.statLabel}>{t('students.totalRecorded')}</span>
+                  <strong className={styles.statValue}>{teacherStats.recorded ?? 0}</strong>
+                </div>
+                <div className={styles.statCard}>
+                  <span className={styles.statLabel}>{t('students.studentsCount')}</span>
+                  <strong className={styles.statValue}>{students.length}</strong>
+                </div>
+              </div>
+            )}
             {loadingStudents ? (
               <p className={styles.empty}>{t('loading')}</p>
             ) : students.length === 0 ? (
@@ -249,7 +272,10 @@ export default function TeacherDesk() {
                 <table className={styles.table}>
                   <thead>
                     <tr>
+                      <th>{t('students.name')}</th>
                       <th>{t('students.code')}</th>
+                      <th>{t('students.lessonsCompleted')}</th>
+                      <th>{t('students.lessonsRecorded')}</th>
                       <th>{t('students.courses')}</th>
                       <th>{t('students.progress')}</th>
                       <th>{t('students.actions')}</th>
@@ -258,23 +284,34 @@ export default function TeacherDesk() {
                   <tbody>
                     {students.map((row) => (
                       <tr key={row.code}>
+                        <td className={styles.studentName}>{row.name || row.code}</td>
                         <td className={styles.code}>{row.code}</td>
+                        <td>{row.completedLessons ?? 0}</td>
+                        <td>{row.recordedLessons ?? 0}</td>
                         <td>{(row.courseIds || []).join(', ') || '—'}</td>
                         <td>
-                          {Object.entries(row.progress || {}).map(([courseId, p]) => (
-                            <div key={courseId}>
-                              {courseId}: {p.pct}%
-                            </div>
-                          ))}
+                          {Object.keys(row.progress || {}).length === 0 ? (
+                            '—'
+                          ) : (
+                            Object.entries(row.progress || {}).map(([courseId, p]) => (
+                              <div key={courseId}>
+                                {courseId}: {p.pct}%
+                              </div>
+                            ))
+                          )}
                         </td>
                         <td>
-                          <button
-                            type="button"
-                            className={styles.btn}
-                            onClick={() => openDetail(row.code)}
-                          >
-                            {t('students.viewProgress')}
-                          </button>
+                          {row.inLms !== false ? (
+                            <button
+                              type="button"
+                              className={styles.btn}
+                              onClick={() => openDetail(row.code)}
+                            >
+                              {t('students.viewProgress')}
+                            </button>
+                          ) : (
+                            <span className={styles.muted}>{t('students.noLms')}</span>
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -285,7 +322,14 @@ export default function TeacherDesk() {
 
             {selectedCode && detail && (
               <div className={styles.drawer}>
-                <h3 className={styles.code}>{selectedCode}</h3>
+                <h3 className={styles.drawerTitle}>
+                  {detail.name || selectedCode}
+                  <span className={styles.codeInline}>{selectedCode}</span>
+                </h3>
+                <p className={styles.drawerMeta}>
+                  {t('students.lessonsCompleted')}: {detail.completedLessons ?? 0} ·{' '}
+                  {t('students.lessonsRecorded')}: {detail.recordedLessons ?? 0}
+                </p>
                 <div className={styles.formRow}>
                   <select
                     className={styles.select}

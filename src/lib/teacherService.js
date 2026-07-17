@@ -11,17 +11,30 @@ import {
   allocateUniqueTeacherLogin,
   generateStudentPassword,
 } from '@/lib/studentLmsLogin'
+import {
+  fetchTeacherCrmLessonStats,
+  teacherStudentDisplayName,
+} from '@/lib/crmTeacherStats'
+import { isReliableStudentDisplayName } from '@/lib/crmLmsSync'
 
 /**
- * Публічний анонімний код учня для вчителя (без ПІБ).
- * Лише crmShortId — якщо немає, учень не показується в списку.
+ * Публічний код учня для вчителя (crmShortId).
+ * Лише crmShortId — якщо немає, учень не показується в списку LMS.
  */
 export function studentCodeFromProfile(profile) {
   return String(profile?.crmShortId || '').trim()
 }
 
-/** Санітизований рядок учня для teacher API — без name/email/phone. */
-export function sanitizeStudentForTeacher(user, progressByCourse = {}) {
+/** Імʼя учня для кабінету викладача — без email/телефону. */
+export function displayNameForTeacher(user) {
+  const name = String(user?.name || '').trim()
+  if (name && isReliableStudentDisplayName(name)) return name
+  const code = studentCodeFromProfile(user?.studentProfile)
+  return teacherStudentDisplayName('', code)
+}
+
+/** Санітизований рядок учня для teacher API — імʼя без контактів. */
+export function sanitizeStudentForTeacher(user, progressByCourse = {}, crmRow = null) {
   const code = studentCodeFromProfile(user?.studentProfile)
   if (!code) return null
 
@@ -44,10 +57,20 @@ export function sanitizeStudentForTeacher(user, progressByCourse = {}) {
     }
   }
 
+  const lmsName = displayNameForTeacher(user)
+  const name =
+    lmsName && !lmsName.startsWith('Учень ·')
+      ? lmsName
+      : crmRow?.name || lmsName
+
   return {
     code,
+    name,
     courseIds,
     progress,
+    completedLessons: crmRow?.completedLessons ?? 0,
+    recordedLessons: crmRow?.recordedLessons ?? 0,
+    inLms: true,
   }
 }
 
@@ -77,7 +100,18 @@ export async function listTeacherStudents(teacherStaffId, { isAdmin = false } = 
     'studentProfile.crmShortId': { $exists: true, $nin: ['', null] },
   }
   if (!isAdmin) {
-    if (!teacherStaffId) return []
+    if (!teacherStaffId) {
+      return {
+        students: [],
+        teacherStats: {
+          completed: 0,
+          recorded: 0,
+          individualCompleted: 0,
+          trialCompleted: 0,
+        },
+        crmError: null,
+      }
+    }
     query['studentProfile.crmTeacherId'] = String(teacherStaffId)
   } else if (teacherStaffId) {
     query['studentProfile.crmTeacherId'] = String(teacherStaffId)
@@ -96,9 +130,45 @@ export async function listTeacherStudents(teacherStaffId, { isAdmin = false } = 
     progressMap.get(uid)[doc.courseId] = doc
   }
 
-  return students
-    .map((s) => sanitizeStudentForTeacher(s, progressMap.get(s._id.toString()) || {}))
-    .filter(Boolean)
+  const crmStats = teacherStaffId
+    ? await fetchTeacherCrmLessonStats(teacherStaffId)
+    : { students: {}, totals: { completed: 0, recorded: 0, individualCompleted: 0, trialCompleted: 0 } }
+
+  const byCode = new Map()
+
+  for (const student of students) {
+    const code = studentCodeFromProfile(student.studentProfile)
+    if (!code) continue
+    const row = sanitizeStudentForTeacher(
+      student,
+      progressMap.get(student._id.toString()) || {},
+      crmStats.students[code] || null
+    )
+    if (row) byCode.set(code, row)
+  }
+
+  for (const [code, crmRow] of Object.entries(crmStats.students || {})) {
+    if (byCode.has(code)) continue
+    byCode.set(code, {
+      code,
+      name: crmRow.name,
+      courseIds: [],
+      progress: {},
+      completedLessons: crmRow.completedLessons ?? 0,
+      recordedLessons: crmRow.recordedLessons ?? 0,
+      inLms: false,
+    })
+  }
+
+  const mergedStudents = [...byCode.values()].sort((a, b) =>
+    String(a.name || a.code).localeCompare(String(b.name || b.code), 'uk')
+  )
+
+  return {
+    students: mergedStudents,
+    teacherStats: crmStats.totals,
+    crmError: crmStats.crmError || null,
+  }
 }
 
 export async function getStudentProgressDetail(student) {

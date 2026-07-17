@@ -144,6 +144,7 @@ const SocialMedia = () => {
 						{t('title')} <span className={styles.titleAccent}>{t('titleAccent')}</span>
 					</h2>
 					<p className={styles.subtitle}>{t('subtitle')}</p>
+					<p className={styles.audienceStat}>{t('audienceStat')}</p>
 				</div>
 
 				<div className={styles.grid}>

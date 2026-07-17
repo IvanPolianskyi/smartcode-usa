@@ -10,6 +10,25 @@ const EnhancedCourseCards = dynamic(() => import('./EnhancedCourseCards'), {
 	loading: () => <div style={{ minHeight: '980px', width: '100%' }} />,
 })
 
+const SCHOOL_LABEL = 'Онлайн школа програмування для дітей 7–17 років'
+
+function SocialProofRow({ className = '' }) {
+	return (
+		<div className={`${styles.starsRow} ${className}`.trim()}>
+			{[1, 2, 3, 4, 5].map((i) => (
+				<Star key={i} size={16} className={styles.starIcon} />
+			))}
+			<span className={styles.ratingText}>4.9</span>
+			<span className={styles.ratingDivider}>·</span>
+			<span className={styles.socialProofText}>700+ студентів</span>
+			<span className={styles.ratingDivider}>·</span>
+			<span className={styles.socialProofText}>5 років досвіду</span>
+			<span className={styles.ratingDivider}>·</span>
+			<span className={styles.socialProofText}>100 000+ підписників</span>
+		</div>
+	)
+}
+
 const Visit = () => {
 	const [shouldRenderCards, setShouldRenderCards] = useState(false)
 
@@ -59,15 +78,13 @@ const Visit = () => {
 				<div className={styles.hero}>
 					{/* Ліва колонка — текст */}
 					<div className={styles.heroLeft}>
-						{/* Підзаголовок школи */}
-						<p className={styles.schoolLabel}>
-							Онлайн школа програмування для дітей 7–17 років
-						</p>
+						{/* Підзаголовок школи — десктоп */}
+						<p className={styles.schoolLabel}>{SCHOOL_LABEL}</p>
 
 						{/* Головний оффер */}
 						<h1 className={styles.title}>
-							<span className={styles.titleMain}>З хобі -</span>
-							<span className={styles.titleAccent}> у професію майбутнього</span>
+							<span className={styles.titleMain}>від ігор -</span>
+							<span className={styles.titleAccent}> до професії майбутнього</span>
 						</h1>
 
 						{/* Під-оффер */}
@@ -75,29 +92,21 @@ const Visit = () => {
 							Перетворіть інтерес вашої дитини до ігор - на навичку, яка відкриє двері в IT вже сьогодні
 						</p>
 
-						{/* Соціальний доказ */}
-						<div className={styles.socialProof}>
-							<div className={styles.starsRow}>
-								{[1,2,3,4,5].map(i => (
-									<Star key={i} size={16} className={styles.starIcon} />
-								))}
-								<span className={styles.ratingText}>4.9</span>
-								<span className={styles.ratingDivider}>·</span>
-								<span className={styles.socialProofText}>700+ студентів</span>
-								<span className={styles.ratingDivider}>·</span>
-								<span className={styles.socialProofText}>5 років</span>
-							</div>
-						</div>
-
 						{/* CTA: форма ім'я + телефон (десктоп і мобільний) */}
 						<div className={styles.heroCta}>
 							<div className={styles.ctaButtons}>
 								<HeroTrialForm />
 							</div>
 						</div>
+
+						{/* Мобільний: бейдж + рейтинг в одному блоці під кнопкою */}
+						<div className={styles.heroMetaMobile}>
+							<p className={styles.heroMetaMobileLabel}>{SCHOOL_LABEL}</p>
+							<SocialProofRow className={styles.heroMetaMobileStats} />
+						</div>
 					</div>
 
-					{/* Права колонка — зображення */}
+					{/* Права колонка — зображення + статистика (десктоп) */}
 					<div className={styles.heroRight}>
 						<div className={styles.heroImageWrap}>
 							<Image
@@ -110,6 +119,9 @@ const Visit = () => {
 								sizes='(max-width: 1024px) 100vw, 50vw'
 							/>
 						</div>
+						<div className={styles.socialProofDesktop}>
+							<SocialProofRow className={styles.socialProofDesktopRow} />
+						</div>
 					</div>
 				</div>
 
@@ -118,7 +130,7 @@ const Visit = () => {
 					<EnhancedCourseCards />
 				) : (
 					<div
-						style={{ minHeight: '980px', marginTop: 240, width: '100%' }}
+						style={{ minHeight: '980px', marginTop: 120, width: '100%' }}
 						aria-hidden='true'
 					/>
 				)}
