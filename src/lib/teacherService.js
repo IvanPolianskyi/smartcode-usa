@@ -106,6 +106,8 @@ export async function listTeacherStudents(teacherStaffId, { isAdmin = false } = 
         teacherStats: {
           completed: 0,
           recorded: 0,
+          currentBatchVideos: 0,
+          currentBatchRecorded: 0,
           recordedWithVideo: 0,
           recordedTextOnly: 0,
           missingRecording: 0,
@@ -140,6 +142,8 @@ export async function listTeacherStudents(teacherStaffId, { isAdmin = false } = 
         totals: {
           completed: 0,
           recorded: 0,
+          currentBatchVideos: 0,
+          currentBatchRecorded: 0,
           recordedWithVideo: 0,
           recordedTextOnly: 0,
           missingRecording: 0,

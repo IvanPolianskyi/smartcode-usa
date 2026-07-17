@@ -210,6 +210,19 @@ function lessonHasVideo(lesson) {
 }
 
 /**
+ * Поточна (невиплачена) пачка ЗП — як у CRM Salaries / settle_teacher_payout:
+ * є TG-запис і teacher_payout_settled_at ще порожній.
+ */
+export function isInCurrentPayoutBatch(lesson) {
+  if (!lesson?.recording_submitted_at) return false
+  if (lesson?.teacher_payout_settled_at) return false
+  const status = String(lesson?.status || 'scheduled')
+  if (status === 'cancelled' || status === 'no_show') return false
+  const kind = String(lesson?.kind || 'individual')
+  return kind === 'individual' || kind === 'trial'
+}
+
+/**
  * Статус відео для кабінету викладача (синхрон з CRM ботом записів).
  * - with_video: скинуто відео
  * - text_only: підтверджено ботом без файлу відео
@@ -233,6 +246,10 @@ function emptyTeacherTotals() {
   return {
     completed: 0,
     recorded: 0,
+    /** Відео в поточній (невиплаченій) пачці ЗП. */
+    currentBatchVideos: 0,
+    /** Усі записи бота в поточній пачці (відео + text-only). */
+    currentBatchRecorded: 0,
     recordedWithVideo: 0,
     recordedTextOnly: 0,
     missingRecording: 0,
@@ -278,6 +295,8 @@ async function fetchTeacherTeachingLessons(staffId) {
  *   totals: {
  *     completed: number,
  *     recorded: number,
+ *     currentBatchVideos: number,
+ *     currentBatchRecorded: number,
  *     recordedWithVideo: number,
  *     recordedTextOnly: number,
  *     missingRecording: number,
@@ -316,10 +335,16 @@ export async function fetchTeacherCrmLessonStats(crmStaffId) {
     const status = String(lesson?.status || 'scheduled')
     const isCompleted = status === 'completed'
     const hasRecording = Boolean(lesson?.recording_submitted_at)
+    const inCurrentBatch = isInCurrentPayoutBatch(lesson)
     const videoStatus = resolveRecordingVideoStatus(lesson, nowMs)
+    const hasVideo = videoStatus === 'with_video'
 
     if (isCompleted) totals.completed += 1
     if (hasRecording) totals.recorded += 1
+    if (inCurrentBatch) {
+      totals.currentBatchRecorded += 1
+      if (hasVideo) totals.currentBatchVideos += 1
+    }
     if (videoStatus === 'with_video') totals.recordedWithVideo += 1
     if (videoStatus === 'text_only') totals.recordedTextOnly += 1
     if (videoStatus === 'missing') totals.missingRecording += 1
@@ -340,7 +365,8 @@ export async function fetchTeacherCrmLessonStats(crmStaffId) {
 
     const cell = students[shortId]
     if (isCompleted) cell.completedLessons += 1
-    if (hasRecording) cell.recordedLessons += 1
+    // У кабінеті «записів» — лише поточна пачка (як у ЗП).
+    if (inCurrentBatch && hasVideo) cell.recordedLessons += 1
 
     const nextName = teacherStudentDisplayName(lesson?.student_name, shortId)
     if (isBetterTeacherName(nextName, cell.name)) {
@@ -383,6 +409,7 @@ export async function fetchTeacherLessonHistory(crmStaffId, { limit = 200 } = {}
     if (status === 'cancelled' || status === 'no_show') continue
 
     const hasRecording = Boolean(lesson?.recording_submitted_at)
+    const inCurrentBatch = isInCurrentPayoutBatch(lesson)
     const startMs = parseUtcInstant(lesson?.start_at).getTime()
     const isPast = Number.isFinite(startMs) && startMs <= nowMs
     const isCompleted = status === 'completed'
@@ -393,6 +420,10 @@ export async function fetchTeacherLessonHistory(crmStaffId, { limit = 200 } = {}
 
     if (isCompleted) totals.completed += 1
     if (hasRecording) totals.recorded += 1
+    if (inCurrentBatch) {
+      totals.currentBatchRecorded += 1
+      if (hasVideo) totals.currentBatchVideos += 1
+    }
     if (videoStatus === 'with_video') totals.recordedWithVideo += 1
     if (videoStatus === 'text_only') totals.recordedTextOnly += 1
     if (videoStatus === 'missing') totals.missingRecording += 1
@@ -412,6 +443,7 @@ export async function fetchTeacherLessonHistory(crmStaffId, { limit = 200 } = {}
       groupName: lesson?.group_name || null,
       hasRecording,
       hasVideo,
+      inCurrentBatch,
       videoStatus,
       recordingSubmittedAt: lesson?.recording_submitted_at || null,
     })

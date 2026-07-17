@@ -391,13 +391,11 @@ export default function TeacherDesk() {
             ) : null}
             {recordingStats ? (
               <div className={styles.statsRow}>
-                <div className={styles.statCard}>
-                  <span className={styles.statLabel}>{t('recordings.completed')}</span>
-                  <strong className={styles.statValue}>{recordingStats.completed ?? 0}</strong>
-                </div>
                 <div className={`${styles.statCard} ${styles.statCardAccent}`}>
-                  <span className={styles.statLabel}>{t('recordings.credited')}</span>
-                  <strong className={styles.statValue}>{recordingStats.recorded ?? 0}</strong>
+                  <span className={styles.statLabel}>{t('recordings.currentBatch')}</span>
+                  <strong className={styles.statValue}>
+                    {recordingStats.currentBatchVideos ?? 0}
+                  </strong>
                 </div>
               </div>
             ) : null}
@@ -453,13 +451,11 @@ export default function TeacherDesk() {
             )}
             {teacherStats && linked && (
               <div className={styles.statsRow}>
-                <div className={styles.statCard}>
-                  <span className={styles.statLabel}>{t('students.totalCompleted')}</span>
-                  <strong className={styles.statValue}>{teacherStats.completed ?? 0}</strong>
-                </div>
                 <div className={`${styles.statCard} ${styles.statCardAccent}`}>
                   <span className={styles.statLabel}>{t('students.totalRecorded')}</span>
-                  <strong className={styles.statValue}>{teacherStats.recorded ?? 0}</strong>
+                  <strong className={styles.statValue}>
+                    {teacherStats.currentBatchVideos ?? 0}
+                  </strong>
                 </div>
                 <div className={styles.statCard}>
                   <span className={styles.statLabel}>{t('students.studentsCount')}</span>
@@ -478,7 +474,6 @@ export default function TeacherDesk() {
                     <tr>
                       <th>{t('students.name')}</th>
                       <th>{t('students.code')}</th>
-                      <th>{t('students.lessonsCompleted')}</th>
                       <th>{t('students.lessonsRecorded')}</th>
                       <th>{t('students.courses')}</th>
                       <th>{t('students.progress')}</th>
@@ -490,7 +485,6 @@ export default function TeacherDesk() {
                       <tr key={row.code}>
                         <td className={styles.studentName}>{row.name || row.code}</td>
                         <td className={styles.code}>{row.code}</td>
-                        <td>{row.completedLessons ?? 0}</td>
                         <td>{row.recordedLessons ?? 0}</td>
                         <td>{(row.courseIds || []).join(', ') || '—'}</td>
                         <td>
@@ -531,7 +525,6 @@ export default function TeacherDesk() {
                   <span className={styles.codeInline}>{selectedCode}</span>
                 </h3>
                 <p className={styles.drawerMeta}>
-                  {t('students.lessonsCompleted')}: {detail.completedLessons ?? 0} ·{' '}
                   {t('students.lessonsRecorded')}: {detail.recordedLessons ?? 0}
                 </p>
                 <div className={styles.formRow}>
