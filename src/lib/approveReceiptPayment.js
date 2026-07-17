@@ -73,21 +73,24 @@ export async function approveReceiptPayment(receiptId, approvedBy = null, credit
   )
   const crmLinked = Boolean(String(user?.studentProfile?.crmStudentId || '').trim())
 
-  const inc = {
-    'studentProfile.accountBalance': amount,
-  }
-  // CRM ledger — єдине джерело уроків для привʼязаних.
+  // CRM-linked: баланс уроків і грошей веде CRM ledger — не дублюємо на LMS.
   if (!crmLinked) {
-    inc['studentProfile.lessonCredits'] = creditedLessons
+    await usersCollection.updateOne(
+      { _id: claimed.userId },
+      {
+        $inc: {
+          'studentProfile.accountBalance': amount,
+          'studentProfile.lessonCredits': creditedLessons,
+        },
+        $set: { updatedAt: new Date() },
+      }
+    )
+  } else {
+    await usersCollection.updateOne(
+      { _id: claimed.userId },
+      { $set: { updatedAt: new Date() } }
+    )
   }
-
-  await usersCollection.updateOne(
-    { _id: claimed.userId },
-    {
-      $inc: inc,
-      $set: { updatedAt: new Date() },
-    }
-  )
 
   return { ok: true, alreadyApproved: false, crmLinked, creditedLessons }
 }
