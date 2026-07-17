@@ -30,7 +30,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-1-2",
           "order": 2,
-          "title": "1.2 - Будуємо острів",
+          "title": "1.2 - Terrain Editor: повний острів",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [

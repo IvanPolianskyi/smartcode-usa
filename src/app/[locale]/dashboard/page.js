@@ -228,7 +228,7 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
 
       <div className={styles.payBottomFull}>{paymentPanel}</div>
 
-      <ProfileAccountSection user={user} onDeleted={onLogout} />
+      <ProfileAccountSection user={user} />
 
       <div className={styles.toolbar}>
         <button className={styles.secondaryBtn} onClick={refreshData}><TrendingUp size={16} /> {t('student.refresh')}</button>
@@ -364,7 +364,7 @@ export default function DashboardPage() {
         : accountPendingSetup
           ? (
               <>
-                <ProfileAccountSection user={user} onDeleted={handleLogout} />
+                <ProfileAccountSection user={user} />
                 <div className={styles.toolbar}>
                   <button className={styles.secondaryBtn} onClick={handleLogout}>
                     <LogOut size={16} /> {t('logout')}
