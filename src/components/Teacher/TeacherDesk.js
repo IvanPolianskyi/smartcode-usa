@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link, useRouter } from '@/i18n/navigation'
-import { BookOpen, LogOut, Users, FileText, RefreshCw } from 'lucide-react'
+import { BookOpen, LogOut, Users, FileText, RefreshCw, CalendarClock } from 'lucide-react'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import { logout } from '@/lib/authClient'
 import styles from './TeacherDesk.module.css'
@@ -26,6 +26,22 @@ const COURSE_CARDS = [
   },
 ]
 
+function formatNextLessonWhen(startAt) {
+  if (!startAt) return ''
+  try {
+    return new Date(startAt).toLocaleString('uk-UA', {
+      timeZone: 'Europe/Kyiv',
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  } catch {
+    return String(startAt)
+  }
+}
+
 export default function TeacherDesk() {
   const t = useTranslations('teacher')
   const router = useRouter()
@@ -34,6 +50,8 @@ export default function TeacherDesk() {
   const [students, setStudents] = useState([])
   const [teacherStats, setTeacherStats] = useState(null)
   const [crmError, setCrmError] = useState('')
+  const [nextLesson, setNextLesson] = useState(null)
+  const [loadingNextLesson, setLoadingNextLesson] = useState(false)
   const [materials, setMaterials] = useState([])
   const [loadingStudents, setLoadingStudents] = useState(false)
   const [loadingMaterials, setLoadingMaterials] = useState(false)
@@ -61,6 +79,24 @@ export default function TeacherDesk() {
       router.push('/dashboard')
     }
   }, [sessionLoading, user, router])
+
+  const loadNextLesson = useCallback(async () => {
+    if (!linked && user?.role !== 'admin') {
+      setNextLesson(null)
+      return
+    }
+    setLoadingNextLesson(true)
+    try {
+      const res = await fetch('/api/teacher/next-lesson', { credentials: 'include' })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || t('students.error'))
+      setNextLesson(data.nextLesson || null)
+    } catch {
+      setNextLesson(null)
+    } finally {
+      setLoadingNextLesson(false)
+    }
+  }, [linked, user?.role, t])
 
   const loadStudents = useCallback(async () => {
     setLoadingStudents(true)
@@ -93,6 +129,11 @@ export default function TeacherDesk() {
       setLoadingMaterials(false)
     }
   }, [t])
+
+  useEffect(() => {
+    if (!user || (user.role !== 'teacher' && user.role !== 'admin')) return
+    loadNextLesson()
+  }, [user, loadNextLesson])
 
   useEffect(() => {
     if (!user || (user.role !== 'teacher' && user.role !== 'admin')) return
@@ -187,6 +228,7 @@ export default function TeacherDesk() {
               type="button"
               className={styles.btn}
               onClick={() => {
+                loadNextLesson()
                 if (tab === 'students') loadStudents()
                 if (tab === 'materials') loadMaterials()
                 refresh?.(false)
@@ -200,6 +242,64 @@ export default function TeacherDesk() {
             </button>
           </div>
         </header>
+
+        {(linked || user.role === 'admin') && (
+          <section className={styles.nextLesson} aria-label={t('nextLesson.title')}>
+            <div className={styles.nextLessonHead}>
+              <CalendarClock size={18} aria-hidden />
+              <h2 className={styles.nextLessonTitle}>{t('nextLesson.title')}</h2>
+            </div>
+            {loadingNextLesson ? (
+              <p className={styles.nextLessonEmpty}>{t('nextLesson.loading')}</p>
+            ) : !nextLesson ? (
+              <p className={styles.nextLessonEmpty}>{t('nextLesson.empty')}</p>
+            ) : (
+              <div className={styles.nextLessonBody}>
+                <div className={styles.nextLessonInfo}>
+                  <p className={styles.nextLessonWhen}>
+                    <span className={styles.nextLessonKind}>{nextLesson.kindLabel}</span>
+                    {formatNextLessonWhen(nextLesson.startAt)}
+                  </p>
+                  <p className={styles.nextLessonStudent}>
+                    {t('nextLesson.with')}{' '}
+                    <strong>{nextLesson.studentName}</strong>
+                    {nextLesson.studentCode ? (
+                      <span className={styles.codeInline}> · {nextLesson.studentCode}</span>
+                    ) : null}
+                    {nextLesson.groupName ? (
+                      <span className={styles.muted}> · {nextLesson.groupName}</span>
+                    ) : null}
+                  </p>
+                  {nextLesson.lmsLessonTitle ? (
+                    <p className={styles.nextLessonLms}>
+                      <span className={styles.nextLessonLmsLabel}>{t('nextLesson.lmsLesson')}:</span>{' '}
+                      {nextLesson.courseName ? `${nextLesson.courseName} — ` : ''}
+                      {nextLesson.lmsLessonTitle}
+                    </p>
+                  ) : (
+                    <p className={styles.nextLessonLms}>{t('nextLesson.noCourse')}</p>
+                  )}
+                </div>
+                <div className={styles.nextLessonActions}>
+                  {nextLesson.openHref ? (
+                    <Link
+                      href={nextLesson.openHref}
+                      className={`${styles.btn} ${styles.btnPrimary}`}
+                    >
+                      <BookOpen size={16} />
+                      {t('nextLesson.openLesson')}
+                    </Link>
+                  ) : null}
+                  {nextLesson.courseHref ? (
+                    <Link href={nextLesson.courseHref} className={styles.btn}>
+                      {t('nextLesson.openCourse')}
+                    </Link>
+                  ) : null}
+                </div>
+              </div>
+            )}
+          </section>
+        )}
 
         <div className={styles.tabs}>
           {[

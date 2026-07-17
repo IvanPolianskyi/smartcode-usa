@@ -46,6 +46,97 @@
   gap: 0.5rem;
 }
 
+.nextLesson {
+  margin-bottom: 1.25rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(161, 0, 255, 0.22);
+  background: linear-gradient(135deg, rgba(161, 0, 255, 0.08), rgba(161, 0, 255, 0.02));
+  color: var(--desk-text);
+}
+
+.nextLessonHead {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+  color: var(--brand-accent, #a100ff);
+}
+
+.nextLessonTitle {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.nextLessonEmpty {
+  margin: 0;
+  color: var(--desk-muted);
+  font-size: 0.92rem;
+}
+
+.nextLessonBody {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.nextLessonInfo {
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
+.nextLessonWhen {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--desk-text);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nextLessonKind {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(161, 0, 255, 0.14);
+  color: var(--brand-accent, #a100ff);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.nextLessonStudent {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+  color: var(--desk-text);
+}
+
+.nextLessonLms {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--desk-muted);
+  line-height: 1.4;
+}
+
+.nextLessonLmsLabel {
+  font-weight: 700;
+  color: var(--desk-text);
+}
+
+.nextLessonActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
