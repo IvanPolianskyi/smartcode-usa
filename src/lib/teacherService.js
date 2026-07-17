@@ -106,6 +106,9 @@ export async function listTeacherStudents(teacherStaffId, { isAdmin = false } = 
         teacherStats: {
           completed: 0,
           recorded: 0,
+          recordedWithVideo: 0,
+          recordedTextOnly: 0,
+          missingRecording: 0,
           individualCompleted: 0,
           trialCompleted: 0,
         },
@@ -132,7 +135,18 @@ export async function listTeacherStudents(teacherStaffId, { isAdmin = false } = 
 
   const crmStats = teacherStaffId
     ? await fetchTeacherCrmLessonStats(teacherStaffId)
-    : { students: {}, totals: { completed: 0, recorded: 0, individualCompleted: 0, trialCompleted: 0 } }
+    : {
+        students: {},
+        totals: {
+          completed: 0,
+          recorded: 0,
+          recordedWithVideo: 0,
+          recordedTextOnly: 0,
+          missingRecording: 0,
+          individualCompleted: 0,
+          trialCompleted: 0,
+        },
+      }
 
   const byCode = new Map()
 

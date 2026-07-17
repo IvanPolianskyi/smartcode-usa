@@ -410,3 +410,151 @@
   color: var(--desk-muted);
   margin: 0;
 }
+
+.recordingsSummary {
+  margin-bottom: 1.25rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: var(--desk-surface);
+}
+
+.recordingsHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.recordingsTitle {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--desk-text);
+}
+
+.recordingsNote {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--desk-muted);
+}
+
+.historyLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+  margin: 0 0 1rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.75rem;
+  background: #f8fafc;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--desk-text);
+}
+
+.legendSwatch {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 0.25rem;
+  flex-shrink: 0;
+}
+
+.legendWithVideo {
+  background: #16a34a;
+}
+
+.legendTextOnly {
+  background: #d97706;
+}
+
+.legendMissing {
+  background: #dc2626;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.badgeWithVideo {
+  background: rgba(22, 163, 74, 0.14);
+  color: #15803d;
+}
+
+.badgeTextOnly {
+  background: rgba(217, 119, 6, 0.14);
+  color: #b45309;
+}
+
+.badgeMissing {
+  background: rgba(220, 38, 38, 0.12);
+  color: #b91c1c;
+}
+
+.rowWithVideo {
+  background: rgba(22, 163, 74, 0.08);
+}
+
+.rowWithVideo td {
+  border-bottom-color: rgba(22, 163, 74, 0.18);
+}
+
+.rowTextOnly {
+  background: rgba(217, 119, 6, 0.08);
+}
+
+.rowTextOnly td {
+  border-bottom-color: rgba(217, 119, 6, 0.18);
+}
+
+.rowMissing {
+  background: rgba(220, 38, 38, 0.07);
+}
+
+.rowMissing td {
+  border-bottom-color: rgba(220, 38, 38, 0.16);
+}
+
+.statCardAccent {
+  border-color: rgba(22, 163, 74, 0.25);
+  background: rgba(22, 163, 74, 0.06);
+}
+
+.statCardAccent .statValue {
+  color: #15803d;
+}
+
+.statCardWarn {
+  border-color: rgba(217, 119, 6, 0.28);
+  background: rgba(217, 119, 6, 0.07);
+}
+
+.statCardWarn .statValue {
+  color: #b45309;
+}
+
+.statCardDanger {
+  border-color: rgba(220, 38, 38, 0.28);
+  background: rgba(220, 38, 38, 0.06);
+}
+
+.statCardDanger .statValue {
+  color: #b91c1c;
+}

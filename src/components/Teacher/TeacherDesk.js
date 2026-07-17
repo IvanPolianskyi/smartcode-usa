@@ -3,7 +3,15 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link, useRouter } from '@/i18n/navigation'
-import { BookOpen, LogOut, Users, FileText, RefreshCw, CalendarClock } from 'lucide-react'
+import {
+  BookOpen,
+  LogOut,
+  Users,
+  FileText,
+  RefreshCw,
+  CalendarClock,
+  History,
+} from 'lucide-react'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import { logout } from '@/lib/authClient'
 import styles from './TeacherDesk.module.css'
@@ -42,6 +50,35 @@ function formatNextLessonWhen(startAt) {
   }
 }
 
+function videoStatusRowClass(status, stylesMap) {
+  if (status === 'with_video') return stylesMap.rowWithVideo
+  if (status === 'text_only') return stylesMap.rowTextOnly
+  if (status === 'missing') return stylesMap.rowMissing
+  return ''
+}
+
+function videoStatusBadge(status, t, stylesMap) {
+  if (status === 'with_video') {
+    return {
+      className: `${stylesMap.badge} ${stylesMap.badgeWithVideo}`,
+      label: t('history.statusWithVideo'),
+    }
+  }
+  if (status === 'text_only') {
+    return {
+      className: `${stylesMap.badge} ${stylesMap.badgeTextOnly}`,
+      label: t('history.statusTextOnly'),
+    }
+  }
+  if (status === 'missing') {
+    return {
+      className: `${stylesMap.badge} ${stylesMap.badgeMissing}`,
+      label: t('history.statusMissing'),
+    }
+  }
+  return null
+}
+
 export default function TeacherDesk() {
   const t = useTranslations('teacher')
   const router = useRouter()
@@ -53,8 +90,12 @@ export default function TeacherDesk() {
   const [nextLesson, setNextLesson] = useState(null)
   const [loadingNextLesson, setLoadingNextLesson] = useState(false)
   const [materials, setMaterials] = useState([])
+  const [lessonHistory, setLessonHistory] = useState([])
+  const [historyStats, setHistoryStats] = useState(null)
+  const [historyCrmError, setHistoryCrmError] = useState('')
   const [loadingStudents, setLoadingStudents] = useState(false)
   const [loadingMaterials, setLoadingMaterials] = useState(false)
+  const [loadingHistory, setLoadingHistory] = useState(false)
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
   const [selectedCode, setSelectedCode] = useState('')
@@ -68,6 +109,7 @@ export default function TeacherDesk() {
   const [openMaterialId, setOpenMaterialId] = useState('')
 
   const linked = Boolean(user?.teacherProfile?.crmStaffId)
+  const recordingStats = historyStats || teacherStats
 
   useEffect(() => {
     if (sessionLoading) return
@@ -130,16 +172,41 @@ export default function TeacherDesk() {
     }
   }, [t])
 
+  const loadLessonHistory = useCallback(async () => {
+    if (!linked && user?.role !== 'admin') {
+      setLessonHistory([])
+      setHistoryStats(null)
+      return
+    }
+    setLoadingHistory(true)
+    setHistoryCrmError('')
+    try {
+      const res = await fetch('/api/teacher/lessons?limit=200', { credentials: 'include' })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || t('students.error'))
+      setLessonHistory(data.lessons || [])
+      setHistoryStats(data.totals || null)
+      setHistoryCrmError(data.crmError || '')
+    } catch (e) {
+      setError(e.message || t('students.error'))
+      setLessonHistory([])
+    } finally {
+      setLoadingHistory(false)
+    }
+  }, [linked, user?.role, t])
+
   useEffect(() => {
     if (!user || (user.role !== 'teacher' && user.role !== 'admin')) return
     loadNextLesson()
-  }, [user, loadNextLesson])
+    loadLessonHistory()
+  }, [user, loadNextLesson, loadLessonHistory])
 
   useEffect(() => {
     if (!user || (user.role !== 'teacher' && user.role !== 'admin')) return
     if (tab === 'students') loadStudents()
     if (tab === 'materials') loadMaterials()
-  }, [tab, user, loadStudents, loadMaterials])
+    if (tab === 'history') loadLessonHistory()
+  }, [tab, user, loadStudents, loadMaterials, loadLessonHistory])
 
   const openDetail = async (code) => {
     setSelectedCode(code)
@@ -229,6 +296,7 @@ export default function TeacherDesk() {
               className={styles.btn}
               onClick={() => {
                 loadNextLesson()
+                loadLessonHistory()
                 if (tab === 'students') loadStudents()
                 if (tab === 'materials') loadMaterials()
                 refresh?.(false)
@@ -301,10 +369,48 @@ export default function TeacherDesk() {
           </section>
         )}
 
+        {(linked || user.role === 'admin') && recordingStats && (
+          <section className={styles.recordingsSummary} aria-label={t('recordings.title')}>
+            <div className={styles.recordingsHead}>
+              <h2 className={styles.recordingsTitle}>{t('recordings.title')}</h2>
+              <p className={styles.recordingsNote}>{t('recordings.syncNote')}</p>
+            </div>
+            <div className={styles.statsRow}>
+              <div className={`${styles.statCard} ${styles.statCardAccent}`}>
+                <span className={styles.statLabel}>{t('recordings.credited')}</span>
+                <strong className={styles.statValue}>{recordingStats.recorded ?? 0}</strong>
+              </div>
+              <div className={`${styles.statCard} ${styles.statCardAccent}`}>
+                <span className={styles.statLabel}>{t('recordings.withVideo')}</span>
+                <strong className={styles.statValue}>
+                  {recordingStats.recordedWithVideo ?? 0}
+                </strong>
+              </div>
+              <div className={`${styles.statCard} ${styles.statCardWarn}`}>
+                <span className={styles.statLabel}>{t('recordings.withoutVideo')}</span>
+                <strong className={styles.statValue}>
+                  {recordingStats.recordedTextOnly ?? 0}
+                </strong>
+              </div>
+              <div className={`${styles.statCard} ${styles.statCardDanger}`}>
+                <span className={styles.statLabel}>{t('recordings.missing')}</span>
+                <strong className={styles.statValue}>
+                  {recordingStats.missingRecording ?? 0}
+                </strong>
+              </div>
+              <div className={styles.statCard}>
+                <span className={styles.statLabel}>{t('recordings.completed')}</span>
+                <strong className={styles.statValue}>{recordingStats.completed ?? 0}</strong>
+              </div>
+            </div>
+          </section>
+        )}
+
         <div className={styles.tabs}>
           {[
             { id: 'courses', icon: BookOpen, label: t('tabs.courses') },
             { id: 'students', icon: Users, label: t('tabs.students') },
+            { id: 'history', icon: History, label: t('tabs.history') },
             { id: 'materials', icon: FileText, label: t('tabs.materials') },
           ].map((item) => (
             <button
@@ -353,9 +459,21 @@ export default function TeacherDesk() {
                   <span className={styles.statLabel}>{t('students.totalCompleted')}</span>
                   <strong className={styles.statValue}>{teacherStats.completed ?? 0}</strong>
                 </div>
-                <div className={styles.statCard}>
+                <div className={`${styles.statCard} ${styles.statCardAccent}`}>
                   <span className={styles.statLabel}>{t('students.totalRecorded')}</span>
                   <strong className={styles.statValue}>{teacherStats.recorded ?? 0}</strong>
+                </div>
+                <div className={`${styles.statCard} ${styles.statCardAccent}`}>
+                  <span className={styles.statLabel}>{t('recordings.withVideo')}</span>
+                  <strong className={styles.statValue}>
+                    {teacherStats.recordedWithVideo ?? 0}
+                  </strong>
+                </div>
+                <div className={`${styles.statCard} ${styles.statCardDanger}`}>
+                  <span className={styles.statLabel}>{t('recordings.missing')}</span>
+                  <strong className={styles.statValue}>
+                    {teacherStats.missingRecording ?? 0}
+                  </strong>
                 </div>
                 <div className={styles.statCard}>
                   <span className={styles.statLabel}>{t('students.studentsCount')}</span>
@@ -490,6 +608,80 @@ export default function TeacherDesk() {
                 <pre className={styles.materialBody}>
                   {JSON.stringify(detail.progress || {}, null, 2)}
                 </pre>
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === 'history' && (
+          <div className={styles.panel}>
+            <p className={styles.note}>{t('recordings.syncNote')}</p>
+            {!linked && user.role === 'teacher' && (
+              <p className={styles.error}>{t('history.notLinked')}</p>
+            )}
+            {historyCrmError && linked && (
+              <p className={styles.warn}>{t('history.crmError')}</p>
+            )}
+            <div className={styles.historyLegend} aria-label={t('history.legendTitle')}>
+              <span className={styles.legendItem}>
+                <span className={`${styles.legendSwatch} ${styles.legendWithVideo}`} />
+                {t('history.legendWithVideo')}
+              </span>
+              <span className={styles.legendItem}>
+                <span className={`${styles.legendSwatch} ${styles.legendTextOnly}`} />
+                {t('history.legendTextOnly')}
+              </span>
+              <span className={styles.legendItem}>
+                <span className={`${styles.legendSwatch} ${styles.legendMissing}`} />
+                {t('history.legendMissing')}
+              </span>
+            </div>
+            {loadingHistory ? (
+              <p className={styles.empty}>{t('loading')}</p>
+            ) : lessonHistory.length === 0 ? (
+              <p className={styles.empty}>{t('history.empty')}</p>
+            ) : (
+              <div className={styles.tableWrap}>
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>{t('history.date')}</th>
+                      <th>{t('history.kind')}</th>
+                      <th>{t('history.student')}</th>
+                      <th>{t('history.recording')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {lessonHistory.map((row) => {
+                      const badge = videoStatusBadge(row.videoStatus, t, styles)
+                      const rowClass = videoStatusRowClass(row.videoStatus, styles)
+                      return (
+                        <tr key={row.id || `${row.startAt}-${row.studentCode}`} className={rowClass}>
+                          <td>{formatNextLessonWhen(row.startAt)}</td>
+                          <td>
+                            <span className={styles.nextLessonKind}>{row.kindLabel}</span>
+                          </td>
+                          <td>
+                            <span className={styles.studentName}>{row.studentName}</span>
+                            {row.studentCode ? (
+                              <span className={styles.codeInline}> · {row.studentCode}</span>
+                            ) : null}
+                            {row.groupName ? (
+                              <div className={styles.muted}>{row.groupName}</div>
+                            ) : null}
+                          </td>
+                          <td>
+                            {badge ? (
+                              <span className={badge.className}>{badge.label}</span>
+                            ) : (
+                              '—'
+                            )}
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
               </div>
             )}
           </div>

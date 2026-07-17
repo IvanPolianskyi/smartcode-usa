@@ -246,13 +246,15 @@ export async function syncStudentToCrm(studentDoc) {
   throw new Error(message || `CRM student sync failed (${patchResponse.status})`)
 }
 
-/** Груповий слот у CRM зберігається як kind=individual + series_id group:… або нотатка GROUP_LESSON. */
+/** Груповий слот у CRM: kind=individual + group_id / series group:… / GROUP_LESSON / legacy kind=group. */
 export function isCrmGroupLessonSlot(lesson) {
   if (lesson?.is_group_slot === true) return true
+  if (lesson?.is_group_shell === true) return true
+  if (String(lesson?.kind || '') === 'group') return true
   const series = String(lesson?.series_id || '')
   if (series.startsWith('group:')) return true
   if (String(lesson?.notes_internal || '').trim() === 'GROUP_LESSON') return true
-  return false
+  return Boolean(lesson?.group_id)
 }
 
 /** Пробний урок (ПУ) у CRM — не показувати в regularSchedule учня на сайті. */

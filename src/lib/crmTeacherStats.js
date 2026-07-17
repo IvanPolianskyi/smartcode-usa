@@ -196,12 +196,65 @@ function isBetterTeacherName(nextName, currentName) {
   return false
 }
 
+function lessonKindLabel(lesson) {
+  const kind = String(lesson?.kind || 'individual')
+  if (kind === 'trial') return 'ПУ'
+  if (lesson?.group_id || lesson?.is_group_slot || lesson?.is_group_shell) return 'ГУ'
+  return 'ІУ'
+}
+
+function lessonHasVideo(lesson) {
+  if (lesson?.recording_has_video === true) return true
+  if (lesson?.recording_has_video === false) return false
+  return Boolean(String(lesson?.recording_file_id || '').trim())
+}
+
+/**
+ * Статус відео для кабінету викладача (синхрон з CRM ботом записів).
+ * - with_video: скинуто відео
+ * - text_only: підтверджено ботом без файлу відео
+ * - missing: проведено / минулий слот без запису
+ * - pending: ще очікується (майбутній / scheduled)
+ */
+export function resolveRecordingVideoStatus(lesson, nowMs = Date.now()) {
+  const hasRecording = Boolean(lesson?.recording_submitted_at)
+  if (hasRecording) {
+    return lessonHasVideo(lesson) ? 'with_video' : 'text_only'
+  }
+  const status = String(lesson?.status || 'scheduled')
+  if (status === 'cancelled' || status === 'no_show') return 'pending'
+  const startMs = parseUtcInstant(lesson?.start_at).getTime()
+  const isPast = Number.isFinite(startMs) && startMs <= nowMs
+  if (status === 'completed' || isPast) return 'missing'
+  return 'pending'
+}
+
+function emptyTeacherTotals() {
+  return {
+    completed: 0,
+    recorded: 0,
+    recordedWithVideo: 0,
+    recordedTextOnly: 0,
+    missingRecording: 0,
+    individualCompleted: 0,
+    trialCompleted: 0,
+  }
+}
+
 /**
  * Агрегує уроки викладача з CRM: проведені та підтверджені записами бота.
  * @param {string} crmStaffId
  * @returns {Promise<{
  *   students: Record<string, { code: string, name: string, completedLessons: number, recordedLessons: number }>,
- *   totals: { completed: number, recorded: number, individualCompleted: number, trialCompleted: number },
+ *   totals: {
+ *     completed: number,
+ *     recorded: number,
+ *     recordedWithVideo: number,
+ *     recordedTextOnly: number,
+ *     missingRecording: number,
+ *     individualCompleted: number,
+ *     trialCompleted: number,
+ *   },
  *   crmError?: string
  * }>}
  */
@@ -209,12 +262,7 @@ export async function fetchTeacherCrmLessonStats(crmStaffId) {
   const staffId = String(crmStaffId || '').trim()
   const empty = {
     students: {},
-    totals: {
-      completed: 0,
-      recorded: 0,
-      individualCompleted: 0,
-      trialCompleted: 0,
-    },
+    totals: emptyTeacherTotals(),
   }
   if (!staffId) return empty
 
@@ -232,12 +280,8 @@ export async function fetchTeacherCrmLessonStats(crmStaffId) {
   if (!Array.isArray(lessons)) return empty
 
   const students = {}
-  const totals = {
-    completed: 0,
-    recorded: 0,
-    individualCompleted: 0,
-    trialCompleted: 0,
-  }
+  const totals = emptyTeacherTotals()
+  const nowMs = Date.now()
 
   for (const lesson of lessons) {
     const kind = String(lesson?.kind || 'individual')
@@ -246,9 +290,13 @@ export async function fetchTeacherCrmLessonStats(crmStaffId) {
     const status = String(lesson?.status || 'scheduled')
     const isCompleted = status === 'completed'
     const hasRecording = Boolean(lesson?.recording_submitted_at)
+    const videoStatus = resolveRecordingVideoStatus(lesson, nowMs)
 
     if (isCompleted) totals.completed += 1
     if (hasRecording) totals.recorded += 1
+    if (videoStatus === 'with_video') totals.recordedWithVideo += 1
+    if (videoStatus === 'text_only') totals.recordedTextOnly += 1
+    if (videoStatus === 'missing') totals.missingRecording += 1
     if (kind === 'trial' && isCompleted) totals.trialCompleted += 1
     if (kind === 'individual' && isCompleted) totals.individualCompleted += 1
 
@@ -275,4 +323,83 @@ export async function fetchTeacherCrmLessonStats(crmStaffId) {
   }
 
   return { students, totals }
+}
+
+/**
+ * Історія уроків викладача з CRM (проведені / минулі / з записом бота).
+ * Без контактів учнів — лише імʼя та код.
+ */
+export async function fetchTeacherLessonHistory(crmStaffId, { limit = 200 } = {}) {
+  const staffId = String(crmStaffId || '').trim()
+  const empty = { lessons: [], totals: emptyTeacherTotals() }
+  if (!staffId) return empty
+
+  let lessons = []
+  try {
+    lessons = await crmJson(
+      'GET',
+      `lessons?teacher_id=${encodeURIComponent(staffId)}&limit=2000&sort=-1`
+    )
+  } catch (error) {
+    console.warn('fetchTeacherLessonHistory:', error?.message || error)
+    return { ...empty, crmError: error?.message || 'CRM unavailable' }
+  }
+
+  if (!Array.isArray(lessons)) return empty
+
+  const nowMs = Date.now()
+  const totals = emptyTeacherTotals()
+  const rows = []
+
+  for (const lesson of lessons) {
+    const kind = String(lesson?.kind || 'individual')
+    if (kind === 'availability') continue
+    if (lesson?.group_calendar_removed === true) continue
+
+    const status = String(lesson?.status || 'scheduled')
+    if (status === 'cancelled' || status === 'no_show') continue
+
+    const hasRecording = Boolean(lesson?.recording_submitted_at)
+    const startMs = parseUtcInstant(lesson?.start_at).getTime()
+    const isPast = Number.isFinite(startMs) && startMs <= nowMs
+    const isCompleted = status === 'completed'
+    if (!isCompleted && !isPast && !hasRecording) continue
+
+    const videoStatus = resolveRecordingVideoStatus(lesson, nowMs)
+    const hasVideo = videoStatus === 'with_video'
+
+    if (isCompleted) totals.completed += 1
+    if (hasRecording) totals.recorded += 1
+    if (videoStatus === 'with_video') totals.recordedWithVideo += 1
+    if (videoStatus === 'text_only') totals.recordedTextOnly += 1
+    if (videoStatus === 'missing') totals.missingRecording += 1
+    if (kind === 'trial' && isCompleted) totals.trialCompleted += 1
+    if (kind === 'individual' && isCompleted) totals.individualCompleted += 1
+
+    const shortId = String(lesson?.student_short_id || '').trim()
+    rows.push({
+      id: String(lesson?.id || ''),
+      startAt: lesson?.start_at || null,
+      endAt: lesson?.end_at || null,
+      kind,
+      kindLabel: lessonKindLabel(lesson),
+      status,
+      studentCode: shortId || null,
+      studentName: teacherStudentDisplayName(lesson?.student_name, shortId),
+      groupName: lesson?.group_name || null,
+      hasRecording,
+      hasVideo,
+      videoStatus,
+      recordingSubmittedAt: lesson?.recording_submitted_at || null,
+    })
+  }
+
+  rows.sort((a, b) => {
+    const aMs = parseUtcInstant(a.startAt).getTime() || 0
+    const bMs = parseUtcInstant(b.startAt).getTime() || 0
+    return bMs - aMs
+  })
+
+  const capped = Math.min(Math.max(Number(limit) || 200, 1), 500)
+  return { lessons: rows.slice(0, capped), totals }
 }
