@@ -21,7 +21,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-1-1",
           "order": 1,
-          "title": "1.1 - Ласкаво просимо до Studio",
+          "title": "1.1 - Інструменти Studio + будинок з вікнами",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [],

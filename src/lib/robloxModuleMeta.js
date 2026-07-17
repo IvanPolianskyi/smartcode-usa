@@ -15,11 +15,11 @@ export const ROBOX_MODULE_META_UK = {
   'module-01': {
     tagline: 'Старт у Studio',
     description:
-      'Відкрий Roblox Studio, збудуй острів, додай клік, звук і атмосферу. Урок 1.6 закріплює основи програмування перед obby.',
+      'Освой інструменти Studio, збудуй будинок з вікнами (Union), освоїй Terrain, Properties і перший код. Далі — атмосфера, Party Mode і checkpoint острова.',
     learningOutcomes: [
-      'Орієнтуватися в Studio та Explorer',
-      'Створювати й налаштовувати Parts',
-      'Підключати ClickDetector, змінні, if і print',
+      'Будувати з Parts, Move/Scale/Rotate і Union',
+      'Працювати з Terrain і Properties',
+      'Писати перші скрипти зі змінними та if',
     ],
     phase: 'A',
   },
