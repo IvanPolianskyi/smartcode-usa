@@ -72,11 +72,16 @@ export function computeScheduleStats(schedule, { t, dateLocale, upcomingLessons 
     for (const item of upcomingLessons) {
       const at = parseUtcInstant(item?.startAt)
       if (Number.isNaN(at.getTime())) continue
+      const conducted =
+        item?.conducted === true || at.getTime() < now.getTime()
       if (at >= start && at < end) {
         thisWeekAll.push(at)
-        if (at > now) upcomingThisWeek.push(at)
+        if (!conducted && at > now) upcomingThisWeek.push(at)
       }
-      if (at.getTime() >= now.getTime() - 60 * 60 * 1000) {
+      if (
+        !conducted &&
+        at.getTime() >= now.getTime() - 60 * 60 * 1000
+      ) {
         upcomingAll.push(at)
       }
     }

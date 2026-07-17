@@ -78,12 +78,15 @@ export default function WeeklyScheduleCalendar({
         const dateKey = kyivDateKeyFromParts(kyivPartsFromInstant(at.getTime()))
         const list = byDateKey.get(dateKey) || []
         const [hh, mm] = String(item?.time || '').split(':')
+        const conducted =
+          item?.conducted === true || at.getTime() < now.getTime()
         list.push({
           time: item.time,
           hours: Number(hh),
           minutes: Number(mm),
           lessonAt: at,
-          slotZoomLink: item.zoomLink || zoomLink,
+          conducted,
+          slotZoomLink: conducted ? null : item.zoomLink || zoomLink,
         })
         byDateKey.set(dateKey, list)
       }
@@ -95,7 +98,10 @@ export default function WeeklyScheduleCalendar({
         const enriched = (byDateKey.get(cellDateKey) || [])
           .map((slot) => ({
             ...slot,
-            joinActive: Boolean(slot.slotZoomLink) && isJoinWindow(slot.lessonAt, now),
+            joinActive:
+              !slot.conducted &&
+              Boolean(slot.slotZoomLink) &&
+              isJoinWindow(slot.lessonAt, now),
           }))
           .sort(
             (a, b) =>
@@ -139,8 +145,13 @@ export default function WeeklyScheduleCalendar({
   const nextLesson = useMemo(() => {
     if (useInstances) {
       const future = upcomingLessons
-        .map((item) => parseUtcInstant(item?.startAt))
-        .filter((at) => !Number.isNaN(at.getTime()) && at.getTime() >= now.getTime() - 60 * 60 * 1000)
+        .filter((item) => {
+          if (item?.conducted === true) return false
+          const at = parseUtcInstant(item?.startAt)
+          if (Number.isNaN(at.getTime())) return false
+          return at.getTime() >= now.getTime() - 60 * 60 * 1000
+        })
+        .map((item) => parseUtcInstant(item.startAt))
         .sort((a, b) => a.getTime() - b.getTime())
       return future[0] ? { at: future[0] } : null
     }
@@ -199,35 +210,52 @@ export default function WeeklyScheduleCalendar({
                 row.slots.map((slot, i) => (
                   <div
                     key={`${row.dayKey}-${slot.time}-${i}`}
-                    className={`${styles.scheduleLesson} ${slot.joinActive ? styles.scheduleLessonLive : ''}`}
+                    className={`${styles.scheduleLesson} ${
+                      slot.conducted
+                        ? styles.scheduleLessonConducted
+                        : slot.joinActive
+                          ? styles.scheduleLessonLive
+                          : ''
+                    }`}
                   >
                     <div className={styles.scheduleLessonInfo}>
                       <span className={styles.scheduleLessonTime}>
                         <Clock size={14} />
                         {slot.time || t('student.schedule.timePending')}
+                        {slot.conducted
+                          ? ` · ${t('student.calendar.conducted')}`
+                          : ''}
                       </span>
                       <span className={styles.scheduleLessonTopic}>
-                        {t('student.calendar.liveLesson')}
+                        {slot.conducted
+                          ? t('student.calendar.conductedLesson')
+                          : t('student.calendar.liveLesson')}
                       </span>
                     </div>
-                    <button
-                      type="button"
-                      className={styles.scheduleJoinBtn}
-                      disabled={!slot.slotZoomLink}
-                      onClick={() =>
-                        slot.slotZoomLink &&
-                        window.open(
-                          slot.slotZoomLink,
-                          '_blank',
-                          'noopener,noreferrer'
-                        )
-                      }
-                    >
-                      <Video size={15} />
-                      {slot.slotZoomLink
-                        ? t('student.calendar.joinNow')
-                        : t('student.calendar.joinSoon')}
-                    </button>
+                    {slot.conducted ? (
+                      <span className={styles.scheduleConductedBadge}>
+                        {t('student.calendar.conducted')}
+                      </span>
+                    ) : (
+                      <button
+                        type="button"
+                        className={styles.scheduleJoinBtn}
+                        disabled={!slot.slotZoomLink}
+                        onClick={() =>
+                          slot.slotZoomLink &&
+                          window.open(
+                            slot.slotZoomLink,
+                            '_blank',
+                            'noopener,noreferrer'
+                          )
+                        }
+                      >
+                        <Video size={15} />
+                        {slot.slotZoomLink
+                          ? t('student.calendar.joinNow')
+                          : t('student.calendar.joinSoon')}
+                      </button>
+                    )}
                   </div>
                 ))
               )}

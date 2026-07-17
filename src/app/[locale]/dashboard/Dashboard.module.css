@@ -1666,6 +1666,12 @@
   background: rgba(16, 185, 129, 0.12);
 }
 
+.scheduleLessonConducted {
+  border-color: rgba(148, 163, 184, 0.35);
+  background: rgba(148, 163, 184, 0.08);
+  opacity: 0.92;
+}
+
 .scheduleLessonInfo {
   display: flex;
   flex-direction: column;
@@ -1685,6 +1691,17 @@
 .scheduleLessonTopic {
   font-size: 0.8rem;
   color: var(--dash-muted);
+}
+
+.scheduleConductedBadge {
+  flex-shrink: 0;
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.06);
+  color: #a3a3b5;
+  white-space: nowrap;
 }
 
 .scheduleJoinBtn {

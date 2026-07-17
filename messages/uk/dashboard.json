@@ -114,6 +114,8 @@
       "today": "Сьогодні",
       "noLesson": "Вільний день",
       "liveLesson": "Онлайн-урок",
+      "conductedLesson": "Урок проведено",
+      "conducted": "проведено",
       "joinNow": "Приєднатися",
       "joinSoon": "Скоро відкриється"
     },

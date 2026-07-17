@@ -309,9 +309,19 @@ export function filterFutureScheduledLessons(lessons) {
   })
 }
 
+/** Як у Telegram-боті: completed або scheduled зі слотом у минулому. */
+export function isCrmLessonConducted(lesson, now = new Date()) {
+  const status = String(lesson?.status || '')
+  if (status === 'completed') return true
+  if (status !== 'scheduled') return false
+  const startMs = parseUtcInstant(lesson?.start_at).getTime()
+  return Number.isFinite(startMs) && startMs < now.getTime()
+}
+
 /**
  * Реальні уроки для календаря тижня (як у Telegram-боті):
  * поточний київський тиждень + горизонт на «наступний урок».
+ * Включає проведені (completed / минулий scheduled) з прапорцем conducted.
  */
 export function upcomingLessonsFromCrmLessons(
   lessons,
@@ -326,7 +336,8 @@ export function upcomingLessonsFromCrmLessons(
     if (isCrmTrialLesson(lesson)) continue
     if (String(lesson?.kind || '') === 'availability') continue
     if (String(lesson?.kind || '') !== 'individual') continue
-    if (String(lesson?.status || '') !== 'scheduled') continue
+    const status = String(lesson?.status || '')
+    if (status !== 'scheduled' && status !== 'completed') continue
     if (lesson?.group_calendar_removed === true) continue
     const start = parseUtcInstant(lesson.start_at)
     const startMs = start.getTime()
@@ -334,10 +345,12 @@ export function upcomingLessonsFromCrmLessons(
     const p = kyivPartsFromInstant(startMs)
     const day = KYIV_WEEKDAY_UK[p.weekdayIndex]
     if (!day) continue
+    const conducted = isCrmLessonConducted(lesson, now)
     out.push({
       startAt: start.toISOString(),
       day,
       time: `${String(p.hour).padStart(2, '0')}:${String(p.minute).padStart(2, '0')}`,
+      conducted,
     })
   }
 
