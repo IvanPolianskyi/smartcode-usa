@@ -10,7 +10,7 @@ import { getCoursePrice } from '@/lib/coursePrices'
 
 export const META_PIXEL_ID =
 	(typeof process !== 'undefined' && process.env.NEXT_PUBLIC_META_PIXEL_ID) ||
-	null
+	'1016369117841084'
 
 function fbqReady() {
 	return typeof window !== 'undefined' && typeof window.fbq === 'function'

@@ -12,7 +12,7 @@ import crypto from 'crypto'
 import { parsePhoneNumberFromString } from 'libphonenumber-js'
 
 const CAPI_VERSION = 'v22.0'
-const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID
+const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || '1016369117841084'
 const CAPI_TOKEN = process.env.META_CAPI_TOKEN
 const CAPI_TEST_EVENT_CODE = process.env.META_CAPI_TEST_EVENT_CODE || ''
 
