@@ -6,12 +6,15 @@ import { useTranslations } from 'next-intl'
 import styles from './Testimonials.module.css'
 
 const testimonials = [
-	{ id: 2, type: 'image', src: '/comments/photo_2026-04-19_13-17-43.jpg' },
-	{ id: 3, type: 'image', src: '/comments/photo_2026-04-20_13-41-17.jpg' },
-	{ id: 4, type: 'image', src: '/comments/photo_2026-04-20_13-58-58.jpg' },
-	{ id: 5, type: 'image', src: '/comments/photo_2026-04-20_14-22-26.jpg' },
-	{ id: 6, type: 'image', src: '/comments/photo_2026-04-20_14-22-57.jpg' },
-	{ id: 7, type: 'image', src: '/comments/photo_2026-04-20_14-26-28.jpg' },
+	{ id: 1, type: 'image', src: '/comments/review-viber-alenka.png' },
+	{ id: 2, type: 'image', src: '/comments/review-viber-son-liked.png' },
+	{ id: 3, type: 'image', src: '/comments/review-viber-marynka.png' },
+	{ id: 4, type: 'image', src: '/comments/photo_2026-04-19_13-17-43.jpg' },
+	{ id: 5, type: 'image', src: '/comments/photo_2026-04-20_13-41-17.jpg' },
+	{ id: 6, type: 'image', src: '/comments/photo_2026-04-20_13-58-58.jpg' },
+	{ id: 7, type: 'image', src: '/comments/photo_2026-04-20_14-22-26.jpg' },
+	{ id: 8, type: 'image', src: '/comments/photo_2026-04-20_14-22-57.jpg' },
+	{ id: 9, type: 'image', src: '/comments/photo_2026-04-20_14-26-28.jpg' },
 ]
 
 const Testimonials = () => {
@@ -124,6 +127,15 @@ const Testimonials = () => {
 							{testimonials.map((testimonial, index) => (
 								<div key={`${testimonial.id}-${index}`} className={styles.card}>
 									<div className={styles.cardContent}>
+										<img
+											src={testimonial.src}
+											alt=''
+											aria-hidden='true'
+											className={styles.mediaBg}
+											loading='lazy'
+											decoding='async'
+											draggable={false}
+										/>
 										<img
 											src={testimonial.src}
 											alt='Відгук'
