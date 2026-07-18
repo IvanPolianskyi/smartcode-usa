@@ -13,46 +13,46 @@ export const ROBOX_PHASES = [
 
 export const ROBOX_MODULE_META_UK = {
   'module-01': {
-    tagline: 'Старт у Studio',
+    tagline: 'Старт творця',
     description:
-      'Освой інструменти Studio, збудуй будинок з вікнами (Union), освоїй Terrain, Properties і перший код. Далі — атмосфера, Party Mode і checkpoint острова.',
+      'Studio й будинок з Union, повний Terrain, змінні та if, оздоба, Lighting/Sound, Party Mode і checkpoint живої локації.',
     learningOutcomes: [
-      'Будувати з Parts, Move/Scale/Rotate і Union',
-      'Працювати з Terrain і Properties',
-      'Писати перші скрипти зі змінними та if',
+      'Будувати з Parts, Move/Scale/Rotate, Negate+Union',
+      'Ліпити острів у Terrain Editor',
+      'Писати перші скрипти зі змінними, if і Party Mode',
     ],
     phase: 'A',
   },
   'module-02': {
-    tagline: 'Obby',
+    tagline: 'World craft',
     description:
-      'Збери повноцінний паркур: пастки, чекпоінти, таймер, умови if/else та екран перемоги.',
+      'Штаб острова на Model, рухомі з’єднання Constraints, атракціони парку й гігієна Toolbox перед здачею Park_v1.',
     learningOutcomes: [
-      'Робити небезпечні зони та респавн',
-      'Писати прості умови в Lua',
-      'Завершити цілісний obby-рівень',
+      'Збирати Model з PrimaryPart, Pivot і Folder',
+      'Ставити Weld/Hinge/Rope для дверей і мостів',
+      'Здати парк після аудиту Free Model і playtest',
     ],
     phase: 'A',
   },
   'module-03': {
-    tagline: 'Симулятор',
+    tagline: 'Код, що грається',
     description:
-      'Монети, збір, рахунок на екрані, функції та збереження прогресу між сесіями.',
+      'Взаємодія Click/Prompt, Touched і чекпоінти, цикли while/for, functions, LocalScript+GUI і здача міні-гри.',
     learningOutcomes: [
-      'Збирати предмети через Touched',
-      'Показувати рахунок у leaderstats і UI',
-      'Зберігати дані в DataStore',
+      'Відкривати двері й підказки через ClickDetector і ProximityPrompt',
+      'Писати Touched, while/for і функції без хаосу',
+      'Зібрати міні-гру з GUI на LocalScript',
     ],
     phase: 'A',
   },
   'module-04': {
-    tagline: 'Tycoon',
+    tagline: 'Tables і дані',
     description:
-      'Економіка тайкуну: дропер, кнопки покупок, апгрейди та окрема ділянка кожному гравцю.',
+      'Масиви й словники, ModuleScript Config, DataStore lite і data-driven вітрина поверх навичок M3.',
     learningOutcomes: [
-      'Будувати ланцюжок дропер → колектор',
-      'Робити покупки за ігрову валюту',
-      'Масштабувати базу через таблиці',
+      'Тримати списки й прайси в table',
+      'Виносити Config у ModuleScript через require',
+      'Зберегти й завантажити table через DataStore lite',
     ],
     phase: 'B',
   },
@@ -158,33 +158,33 @@ export const ROBOX_MODULE_META_EN = {
     ],
   },
   'module-02': {
-    tagline: 'Obby',
+    tagline: 'World craft',
     description:
-      'Build a full obstacle course: traps, checkpoints, timer, if/else, and a victory screen.',
+      'Island HQ with Model/Pivot, park gate Constraints, rides, and Toolbox hygiene for Park_v1.',
     learningOutcomes: [
-      'Create hazards and respawn',
-      'Write simple Lua conditions',
-      'Ship a complete obby level',
+      'Assemble Models with PrimaryPart and Folders',
+      'Use Weld/Hinge/Rope for doors and bridges',
+      'Ship a park after Free Model audit and playtest',
     ],
   },
   'module-03': {
-    tagline: 'Simulator',
+    tagline: 'Playable code',
     description:
-      'Coins, collection, on-screen score, functions, and saving progress between sessions.',
+      'Click/Prompt interaction, Touched, checkpoints, while/for, functions, LocalScript GUI, and a mini-game handoff.',
     learningOutcomes: [
-      'Collect items with Touched',
-      'Show score in leaderstats and UI',
-      'Save data with DataStore',
+      'Open doors and hints with ClickDetector and ProximityPrompt',
+      'Write Touched, while/for, and functions cleanly',
+      'Ship a mini-game with LocalScript GUI',
     ],
   },
   'module-04': {
-    tagline: 'Tycoon',
+    tagline: 'Tables & data',
     description:
-      'Tycoon economy: dropper, purchase buttons, upgrades, and a plot for every player.',
+      'Arrays and dictionaries, ModuleScript Config, DataStore lite, and a data-driven shop showcase on top of M3 skills.',
     learningOutcomes: [
-      'Chain dropper → collector',
-      'Handle purchases with currency',
-      'Scale bases with tables',
+      'Keep lists and prices in tables',
+      'Move Config into a ModuleScript with require',
+      'Save and load a table with DataStore lite',
     ],
   },
   'module-05': {

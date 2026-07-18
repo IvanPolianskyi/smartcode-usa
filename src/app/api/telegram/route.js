@@ -173,8 +173,16 @@ export async function POST(request) {
     }
     const normalizedTelegram = telegram ? (telegram.startsWith('@') ? telegram : '@' + telegram) : null
     const cleanAttribution = sanitizeAttribution(attribution)
-    const preferredContactLabel = preferredContactMethod === 'telegram_phone' ? 'Написати в Telegram за цим номером' : 'Подзвонити'
     const hasValidEventId = Boolean(eventId)
+    const { fbc, fbp } = getFbCookies(request)
+    const crmAttribution = {
+      ...cleanAttribution,
+      ...(fbc ? { fbc } : {}),
+      ...(fbp ? { fbp } : {}),
+      ...(hasValidEventId ? { event_id: eventId } : {}),
+      event_time: Math.floor(Date.now() / 1000),
+    }
+    const preferredContactLabel = preferredContactMethod === 'telegram_phone' ? 'Написати в Telegram за цим номером' : 'Подзвонити'
     const isTrialCourse = isTrialCourseValue(safeCourseInput)
     const displayCourse =
       safeCourseInput ||
@@ -233,7 +241,6 @@ export async function POST(request) {
     if (shouldTrackLead) {
       const clientIp = getClientIp(request)
       const userAgent = getClientUserAgent(request)
-      const { fbc, fbp } = getFbCookies(request)
       const { trialInterestToContentIds } = await import('@/lib/metaPixel')
       const contentIds = isTrialCourse ? trialInterestToContentIds(course) : []
 
@@ -318,7 +325,7 @@ export async function POST(request) {
           message: safeMessage,
           contactMethod: contactMethod || 'phone',
           preferredContactMethod: preferredContactMethod || 'phone_call',
-          attribution: cleanAttribution,
+          attribution: crmAttribution,
           createdAt: new Date(),
           via: 'telegram-api-failed',
           isUniqueLead: shouldTrackLead,
@@ -338,7 +345,7 @@ export async function POST(request) {
           contactMethod: contactMethod || 'phone',
           preferredContactMethod: preferredContactMethod || 'phone_call',
           sourceUrl: sourceUrl || null,
-          attribution: cleanAttribution,
+          attribution: crmAttribution,
           referralId,
           createdAt: new Date().toISOString(),
         }).catch((error) => {
@@ -376,7 +383,7 @@ export async function POST(request) {
         message: safeMessage,
         contactMethod: contactMethod || 'phone',
         preferredContactMethod: preferredContactMethod || 'phone_call',
-        attribution: cleanAttribution,
+        attribution: crmAttribution,
         createdAt: new Date(),
         via: 'telegram',
         isUniqueLead: shouldTrackLead,
@@ -397,7 +404,7 @@ export async function POST(request) {
         contactMethod: contactMethod || 'phone',
         preferredContactMethod: preferredContactMethod || 'phone_call',
         sourceUrl: sourceUrl || null,
-        attribution: cleanAttribution,
+        attribution: crmAttribution,
         referralId,
         createdAt: new Date().toISOString(),
       }).catch((error) => {
