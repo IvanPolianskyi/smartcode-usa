@@ -1,4 +1,4 @@
-/** Rich UK content for Roblox Module 08 */
+/** Roblox Module 08 UK — 8 уроків (prod-92), Arena */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -7,296 +7,471 @@ export const ukLesson81 = {
  lessonId: "lesson-roblox-8-1",
  moduleId: "module-08",
  order: 1,
- title: "8.1 - Живий NPC",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
+ title: "8.1 - Humanoid Health",
+ theoryMinutes: 35,
+ quizMinutes: 15,
+ estimatedTime: 60,
  learningObjectives: [
- "Розмістіть Model NPC з Humanoid і чіткою роллю",
- "Додайте ProximityPrompt для взаємодії з гравцем",
- "Налаштуйте текст підказки та тривалість утримання",
- "Надайте NPC неактивну анімацію та читабельне ім’я",
+ "Зібрати просту арену з підлогою, бар’єрами і спавном",
+ "Налаштувати Humanoid.MaxHealth і Health гравця під бій",
+ "Поставити тестовий dummy з Humanoid для майбутнього урону",
+ "Показати/перевірити HP (смуга або print) до появи Tool",
+ "Зберегти Place як базу модуля Arena",
  ],
  theory: {
  sections: [
  {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**Модуль 8 - Розумна гра** - світи оживають завдяки **NPC**, діалогам, патрулям і квестам.
+ title: "Сьогоднішня місія (урок 57 з 92)",
+ content: `Модуль 8 - **Arena**. Сьогодні не махаєш мечем і не пишеш dealDamage. Сьогодні збираєш **поле бою** і розумієш **Humanoid Health**.
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - установка NPC + ProximityPrompt
-2. **Практика (~25 хв)** - Керуйте NPC під час появи
-3. **Вікторина (10 хв)** - проходження **70%**
+Артефакт уроку:
+1. Папка/модель \`Arena\` - підлога, бар’єри, вхід.
+2. SpawnLocation у безпечній зоні.
+3. Гравець з осмисленим \`MaxHealth\` / \`Health\` (наприклад 100).
+4. Dummy / мішень з Humanoid для тестів наступних уроків.
 
-Використовуйте місце **Module 7 - Shop Works** або новий центр:\`Lesson 8.1 - Living NPC\`.`,
+Без арени Tool і хвилі висітимуть у порожнечі. Без Health бій не має шкали життя.
+
+**Зроби зараз (2 хв):** намалюй олівцем квадрат арени і де стоятиме spawn - не в центрі майбутніх ворогів.`,
  },
  {
- title: "Від опори до характеру",
- content: `Хороший NPC має:
+ title: "Humanoid Health простими словами",
+ content: `| Властивість | Зміст |
+|-------------|--------|
+| **MaxHealth** | Стеля життя |
+| **Health** | Поточне життя (0 = смерть) |
+| **Humanoid** | Компонент Character / NPC |
 
-| Шматок | Призначення |
-|-------|---------|
-| **Model** | Згрупована установка (R15 або R6) |
-| **Humanoid** | Прогулянка, здоров'я, відображення імені |
-| **HumanoidRootPart** | Interaction anchor |
-| **Роль** | Одне речення: гід, купець, тренер |
+Метафора: MaxHealth - **повний резервуар**. Health - **скільки залишилось**. У 8.5 Health=0 запустить Died; сьогодні лише виставляєш і спостерігаєш.
 
-**Statue NPC** = немає Humanoid, немає підказки. **Живий NPC** = гравці можуть взаємодіяти.
-
-Гравці довіряють світам, які здаються **населеними**.`,
+За замовчуванням у гравця часто 100. Ти можеш змінити під жанр арени - але запиши число: завтра баланс (8.7) крутитиме саме його.`,
  },
  {
- title: "Отримання NPC на вашому місці",
- content: `**Варіант A - Toolbox (зручний для уроку):**
-1. Аватар → **Rig Builder** або знайдіть "R15 NPC"
-2. Insert Model → перейменувати\`NPC_Guide_Maya\`**Варіант B — Duplicate стартового character:**
-1. Скопіюйте свого Character в Play (лише для навчання)
-2. Закріпіть NPC на місці для статичної напрямної
+ title: "Білд арени (овал не потрібен)",
+ content: `Мінімум:
+1. Part \`Floor\` - велика підлога (Anchored).
+2. 4 стіни / бар’єри \`Wall\` - CanCollide true, щоб не випадати.
+3. Part \`Entrance\` або проріз з табличкою «Арена».
+4. Опційно: інший колір підлоги всередині vs лобі.
 
-**Folder:**\`Workspace/NPCs/NPC_Guide_Maya\`**Вправа (5 хв):** Встановіть Humanoid\`DisplayDistanceType\`тому ім'я відображається, коли поруч.`,
+Розмір: не stadium. Достатньо 40×40 studs для навчального бою.
+
+Папки:
+
+\`Workspace\`
+\` └── Arena\`
+\` ├── Floor\`
+\` ├── Walls\`
+\` ├── Spawn\`
+\` └── Dummies\`
+
+**Зроби зараз (12 хв):** замкнений простір, гравець не падає у void за 10 с бігу.
+
+Перевір кути: стик стін без щілин у 1–2 stud. Яскравий Material на Entrance допомагає новачку зрозуміти «ось сюди заходити в бій», а не блукати лобі.`,
  },
  {
- title: "Налаштування ProximityPrompt",
- content: `Всередині **HumanoidRootPart** → вставте **ProximityPrompt**:
+ title: "SpawnLocation і безпечний старт",
+ content: `Постав \`SpawnLocation\` **біля входу**, не в центрі арени (центр займуть dummy/хвилі).
 
-| Property | Пропонований |
-|----------|-----------|
-| **ActionText** | Розмова |
-| **Текст об’єкта** | Гід Майя |
-| **HoldDuration** | 0 (миттєво) або 0,5 |
-| **MaxActivationDistance** | 8-12 |
-| **RequiresLineOfSight** | false (простіше для NPC) |
+Властивості:
+- Duration / ForceField (базовий захист появи - знайомий з іншими модулями).
+- Neutral / Team - для соло-арени зазвичай просто.
 
-**Server Script** в NPC (або NPCService):\`\`\`lua
-local prompt = script.Parent:WaitForChild("HumanoidRootPart")
- :WaitForChild("ProximityPrompt")
+Перевір Play: з’являєшся ногами на підлозі, камера не в стіні.
 
-prompt.Triggered:Connect(function(player)
- print("[NPC] " .. player.Name .. " talked to Guide Maya")
- -- Lesson 8.2: OpenDialogue:FireClient(player, "guide_intro")
-end)
-\`\`\`**Triggered** запускається на **сервері**, коли гравець активує підказку.`,
+Пізніше 8.5 додасть власні i-frames - сьогодні достатньо розумного Spawn.`,
  },
  {
- title: "Неробоча анімація",
- content: `Скрипт **Animate** (часто всередині NPC) або вручну:
+ title: "Виставити MaxHealth гравцю на сервері",
+ content: `Script у ServerScriptService:
 
-1. **Редактор анімації** → створити idle
-2. Або використовуйте за замовчуванням режим простою з установки\`\`\`lua
-local humanoid = script.Parent:FindFirstChildOfClass("Humanoid")
-local animator = humanoid:FindFirstChildOfClass("Animator")
-if animator then
- local idle = Instance.new("Animation")
- idle.AnimationId = "rbxassetid://YOUR_IDLE_ID"
- local track = animator:LoadAnimation(idle)
- track.Looped = true
- track:Play()
-end
-\`\`\`Для уроку: навіть **стояти на місці** з назвою + підказкою можна, якщо ідентифікатор анімації недоступний.`,
+\`local START_HP = 100\`
+
+\`local function setupHealth(character)\`
+\` local hum = character:WaitForChild("Humanoid")\`
+\` hum.MaxHealth = START_HP\`
+\` hum.Health = START_HP\`
+\`end\`
+
+\`Players.PlayerAdded:Connect(function(player)\`
+\` player.CharacterAdded:Connect(setupHealth)\`
+\` if player.Character then setupHealth(player.Character) end\`
+\`end)\`
+
+Чому сервер: MaxHealth - правило світу. Клієнт може підкрутити собі HP у чітах - тому звичка «сервер ставить стелю» стартує вже тут.
+
+Print для перевірки: \`print(hum.MaxHealth, hum.Health)\`.`,
  },
  {
- title: "Розробка ролей і візуалізація",
- content: `Запишіть роль одного речення:
-*"Гід Майя вітає нових гравців і направляє їх до магазину."*
+ title: "Dummy - мішень з Humanoid",
+ content: `Збери просту модель:
+- Part/Model \`Dummy\`
+- Humanoid
+- HumanoidRootPart (або R15/R6 rig з Toolbox **як шаблон школи**, без зайвого AI)
 
-**Візуальна узгодженість:**
-- Одяг відповідає тематиці центру (модуль 1 острів/магазин)
-- **BillboardGui** необов'язково - плаваючий текст "Quest Mentor".
-- NPC **Anchored** false якщо йде пізніше; **true** для статичного посібника сьогодні
+Вистав:
 
-Folder **NPCs** забезпечує чистоту робочого простору.`,
+\`dummyHum.MaxHealth = 80\`
+\`dummyHum.Health = 80\`
+
+Anchored dummy на старті - ок (стоїть мішенню). У хвилях (8.6) знімеш/заміниш на рухомих.
+
+Помітка Billboard «HP test» над головою - опційно, допомагає ментору.
+
+Не вішай сьогодні повний AI chase - це роздує урок. Мішень + Health досить.
+
+Якщо береш rig з Toolbox - прибери чужі Scripts AI, лиши Humanoid і зовнішність. Інакше dummy почне «жити своїм життям» і зламає чистий тест HP.`,
  },
  {
- title: "Контрольний список перед початком практики",
- content: `- [ ] NPC_Guide_Maya з Humanoid + ProximityPrompt
-- [ ] Підказка показує Talk + ім'я NPC
-- [ ] Тригер виводить ім'я гравця у вихідних даних
-- [ ] Роль записана в конспектах уроків
-- [ ] Зберегти:\`Lesson 8.1 - Living NPC\``,
+ title: "Як побачити HP",
+ content: `| Спосіб | Плюс |
+|--------|------|
+| Стандартна смуга Health над Character | Вже є |
+| print на сервері | Точні цифри |
+| IntValue / Attribute \`HP\` | Для UI пізніше |
+| SurfaceGui на dummy | Навчальна мішень |
+
+Для здачі: стандартна смуга + один print після setup достатньо.
+
+Не витрачай годину на AAA HUD. У 8.4–8.8 з’являться інші пріоритети (урон, fx, хвилі).`,
+ },
+ {
+ title: "Тест: змінити Health свідомо",
+ content: `Тимчасовий серверний тест (кнопка / команда / delay):
+
+\`hum.Health = hum.Health - 10\`
+
+Очікування: смуга падає. Потім поверни повне HP для чистої бази:
+
+\`hum.Health = hum.MaxHealth\`
+
+Або вбий dummy тестово:
+
+\`dummyHum.Health = 0\` - побачиш смерть моделі; для гравця поки не обов’язково (це глибше в 8.5).
+
+Мета вправи: **ти контролюєш числа**, не магія випадкового падіння.`,
+ },
+ {
+ title: "Організація Place модуля 8",
+ content: `Імена:
+- Save: \`Lesson 8.1 - Arena Health\`
+- Корінь \`Arena\` у Workspace
+- Scripts: \`HealthSetup\` у SSS
+
+Не змішуй сюди старий NPC-квест / магазин з інших Place без потреби. Чиста арена = швидший дебаг у 8.3–8.8.
+
+Що НЕ робити сьогодні:
+- Tool і анімація (8.2)
+- dealDamage (8.3)
+- хвилі (8.6)
+
+Що МОЖНА: табличка «Скоро бій», колір стін, один світильник.
+
+Якщо тягнеш старий Place - зроби Save As під нову назву. Інакше ризик випадково зламати магазин/obby, поки крутиш MaxHealth.`,
+ },
+ {
+ title: "Health гравця vs Health dummy - дві шкали",
+ content: `| Хто | Навіщо MaxHealth сьогодні | Що буде далі |
+|-----|---------------------------|--------------|
+| Гравець | Базовий «резервуар» бою | 8.5 смерть, 8.7 баланс |
+| Dummy | Мішень для ударів | 8.3 dealDamage, 8.6 хвилі |
+
+Не став гравцю MaxHealth = 1 «для приколу» - зламаєш усі наступні playtest.  
+Не став dummy MaxHealth = 10000 - завтра TTK буде вічністю.
+
+Орієнтир старту модуля: гравець 100, dummy 60–100. Точні цифри підкрутиш у 8.7; сьогодні важлива **свідома** установка, не випадкове дефолтне «якось є».`,
+ },
+ {
+ title: "Playtest бази арени",
+ content: `| # | Дія | Очікування |
+|---|-----|------------|
+| 1 | Play | Spawn біля входу |
+| 2 | Побігати по підлозі | Не випадаєш у void |
+| 3 | Output print HP | MaxHealth/Health як задумано |
+| 4 | Dummy на місці | Humanoid з HP |
+| 5 | Тест -10 HP | Смуга реагує |
+| 6 | Explorer | Папка Arena читабельна |
+| 7 | Stop/Play | Все на місці, Anchored свідомо |
+
+Якщо пункт 2 червоний - спочатку стіни, не dummy.  
+Якщо пункт 3 червоний - скрипт не на CharacterAdded або WaitForChild не знайшов Humanoid.  
+Якщо пункт 5 не змінює смугу - дивись, чи тест на сервері (клієнтська властивість у Studio інколи плутає під час навчання).`,
+ },
+ {
+ title: "Чекліст здачі уроку 57",
+ content: `- [ ] Arena: підлога + бар’єри
+- [ ] SpawnLocation у безпечній зоні
+- [ ] Серверний setup MaxHealth/Health гравця
+- [ ] Dummy з Humanoid і HP
+- [ ] Перевірка смуги / print
+- [ ] Чисті імена папок
+- [ ] Save: Lesson 8.1 - Arena Health
+
+Далі **8.2** дасть Tool у руки. **8.3** навчить dealDamage. Сьогоднішній артефакт - **поле + життя**.
+
+Карта модуля вперед: Health → меч → суддя урону → fx → респавн → хвилі → баланс → Ship. Кожен наступний урок припускає, що арена вже стоїть.
+
+Без Health немає сенсу махати мечем. Без арени немає сенсу хвиль. Почни модуль з землі під ногами. Якщо ментор пробіг арену без void і бачить смугу HP + dummy - база готова до меча. Залиш Place збереженим перед закриттям Studio.`,
  },
  ],
  },
  commonMistakes: [
  {
- mistake: "ProximityPrompt у неправильній Part",
- explanation: "Важко викликати.",
- correctApproach: "HumanoidRootPart",
+ mistake: "Spawn у центрі майбутньої бойні",
+ explanation: "Пізніше death loop і злий playtest.",
+ correctApproach: "Spawn біля входу / лобі",
  },
  {
- mistake: "LocalScript увімкнено",
- explanation: "Ініціюється подія сервера.",
- correctApproach: "Скрипт на сервері",
+ mistake: "Немає бар’єрів - падіння у void",
+ explanation: "Година на «де я?» замість Health.",
+ correctApproach: "Стіни CanCollide",
  },
  {
- mistake: "На model немає Humanoid",
- explanation: "Не character.",
- correctApproach: "Риг з Humanoid",
+ mistake: "MaxHealth лише на клієнті",
+ explanation: "Звичка чіту; розсинхрон.",
+ correctApproach: "Серверний setup на CharacterAdded",
  },
  {
- mistake: "Максимальна відстань активації 100",
- explanation: "Розмова з усієї карти.",
- correctApproach: "8-12 стадів",
+ mistake: "Dummy без Humanoid",
+ explanation: "Немає HP для 8.3 тестів.",
+ correctApproach: "Humanoid + MaxHealth/Health",
+ },
+ {
+ mistake: "Година на HUD замість арени",
+ explanation: "Немає білд-артефакту.",
+ correctApproach: "Смуга за замовчуванням + print",
+ },
+ {
+ mistake: "Змішати старий квест-Place без чистки",
+ explanation: "Explorer-хаос, ментор губиться.",
+ correctApproach: "Чистий Arena Place",
  },
  ],
- summary: "Ви розмістили Guide Maya з Humanoid, ProximityPrompt і серверним обробником привітань - тепер у вашому центрі є живий NPC, готовий до діалогу в наступному уроці.",
+ summary: "Ти зібрав базу Arena: замкнений простір, безпечний spawn, серверний MaxHealth/Health і dummy-мішень. Модуль бою починається з поля і шкали життя - далі Tool і dealDamage.",
  practiceTask: {
- title: "Створення керівництва NPC (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** Взаємодіючий путівник на спауні.
+ title: "Поле бою (~30 хв)",
+ difficulty: "intermediate",
+ description: `**Мета:** арена з HP гравця і dummy.
 
-### Part A - Model NPC (10 хв)
-1. Folder Workspace/NPCs
-2. NPC_Guide_Maya - установка + Humanoid
-3. Позиція біля нереста або магазину
+### Part A - Білд (12 хв)
+1. Floor + Walls у папці Arena.
+2. SpawnLocation біля входу.
+3. Перевір, що не падаєш у void.
 
-### Part B - Взаємодія (10 хв)
-1. ProximityPrompt на HumanoidRootPart
-2. Server Script виводить привітання на Triggered
-3. Додаткова назва BillboardGui
+### Part B - Health (10 хв)
+1. Серверний setup MaxHealth/Health.
+2. Dummy з Humanoid і HP.
+3. print або смуга для перевірки.
 
-### Part C - Зберегти (5 хв)
-1. Play - утримувати E / клацнути підказку - див. Вивід
-2. **Зберегти в Roblox** →\`Lesson 8.1 - Living NPC\` 3. **Практика завершена**`,
+### Part C - Тест (8 хв)
+1. -10 HP тест і відновлення.
+2. Explorer чистий.
+3. **Save:** Lesson 8.1 - Arena Health`,
  hints: [
- "Перейменуйте все - майбутнє вам віддячить",
- "Перевірте оперативну відстань пішки та в автомобілі (не має спрацьовувати в автомобілі, якщо лише для ходьби)",
- "NPC магазину Module 7 може повторно використовувати те саме обладнання пізніше",
+ "Спочатку коробка-арена, потім цифри HP",
+ "Anchored на стінах і підлозі",
+ "Dummy можна зробити з 1 Part + Humanoid для старту",
  ],
- optionalChallenge: "BillboardGui «Quest Mentor» над головою.",
+ optionalChallenge: "BillboardGui над dummy з TextLabel Health (оновлюй з сервера при зміні - lite).",
  },
  quiz: {
  passingScore: 70,
- timeLimit: 10,
+ timeLimit: 15,
  questions: [
  {
  id: "q1",
- type: "multiple_choice",
- question: "ProximityPrompt дозволяє гравцям...",
+ type: MC,
+ question: "Головна мета уроку 8.1?",
  options: [
- "Взаємодіяти поруч",
- "Літати",
- "Редагувати Terrain",
- "Publish",
+ "Зібрати арену і налаштувати Humanoid Health",
+ "Написати повний Remote магазин",
+ "Зробити 10 хвиль одразу",
+ "Publish Race-трасу",
  ],
  correctAnswer: 0,
- explanation: "Контекстна дія.",
+ explanation: "База Arena.",
  },
  {
  id: "q2",
- type: "multiple_choice",
- question: "Ініційована подія виконується на...",
+ type: MC,
+ question: "Що таке MaxHealth?",
  options: [
- "Server",
- "Лише клієнт",
- "Terrain",
- "DataStore",
+ "Максимальне / стеля життя Humanoid",
+ "Назва Tool",
+ "Тип Terrain",
+ "Кількість RemoteEvent",
  ],
  correctAnswer: 0,
- explanation: "Підказка на стороні сервера.",
+ explanation: "Стеля HP.",
  },
  {
  id: "q3",
- type: "multiple_choice",
- question: "NPC потребує...",
+ type: MC,
+ question: "Де логічно ставити Spawn арени?",
  options: [
- "Humanoid",
- "Лише Part",
- "Лише Sky",
- "Лише Sound",
+ "Біля входу, не в центрі бою",
+ "Обов’язково в void",
+ "Лише в ServerStorage",
+ "Всередині Wall без прорізу",
  ],
  correctAnswer: 0,
- explanation: "Налаштування Character.",
+ explanation: "Безпечний старт.",
  },
  {
  id: "q4",
- type: "multiple_choice",
- question: "HumanoidRootPart містить...",
+ type: MC,
+ question: "Чому MaxHealth виставляють на сервері?",
  options: [
- "Якір ProximityPrompt",
- "Лише монети",
- "Terrain",
- "Atmosphere",
+ "Це правило світу; клієнту не довіряємо стелю HP",
+ "Сервер не вміє Humanoid",
+ "MaxHealth існує лише в LocalScript",
+ "Інакше Floor зникає",
  ],
  correctAnswer: 0,
- explanation: "Точка взаємодії.",
+ explanation: "Серверна звичка.",
  },
  {
  id: "q5",
- type: "multiple_choice",
- question: "Чітка роль NPC допомагає...",
+ type: MC,
+ question: "Навіщо dummy з Humanoid уже в 8.1?",
  options: [
- "Дизайн і код залишаються зосередженими",
- "Лаг",
- "Прибрати UI",
- "Видалити магазин",
+ "Щоб було на чому тестувати урон у наступних уроках",
+ "Dummy замінює гравця назавжди",
+ "Без dummy немає SpawnLocation",
+ "Humanoid потрібен лише для Sky",
  ],
  correctAnswer: 0,
- explanation: "Дизайн гри.",
+ explanation: "Мішень.",
  },
  {
  id: "q6",
- type: "multiple_choice",
- question: "Модуль 8 фокусується на...",
+ type: MC,
+ question: "Що НЕ обов’язково сьогодні?",
  options: [
- "Smart Game / NPCs і quests",
- "Лише гонки",
- "Лише shop code",
- "Лише publishing",
+ "Повний dealDamage і хвилі",
+ "Підлога арени",
+ "Бар’єри",
+ "Setup Health",
  ],
  correctAnswer: 0,
- explanation: "Живі світи.",
+ explanation: "Це пізніші уроки.",
  },
  {
  id: "q7",
- type: "multiple_choice",
- question: "Folder NPC у Workspace...",
+ type: MC,
+ question: "Навіщо бар’єри?",
  options: [
- "Організує characters",
- "Замінює сервер",
- "Потрібно Roblox",
- "Блокує Scripts",
+ "Не випадати у void під час бою/тестів",
+ "Вони створюють Animation",
+ "Бар’єри = RemoteEvent",
+ "Без них MaxHealth = 0",
  ],
  correctAnswer: 0,
- explanation: "Чиста ієрархія.",
+ explanation: "Тримають на полі.",
  },
  {
  id: "q8",
- type: "multiple_choice",
- question: "ActionText \"Talk\" повідомляє гравцеві...",
+ type: MC,
+ question: "Коли викликати setupHealth?",
  options: [
- "Що робить кнопка",
- "IP сервера",
- "Ціна в Robux",
- "Version",
+ "На CharacterAdded (і якщо Character уже є)",
+ "Лише один раз у житті гри без респавну",
+ "Тільки в Lighting",
+ "Після Publish обов’язково вручну",
  ],
  correctAnswer: 0,
- explanation: "Мітка UX.",
+ explanation: "Кожен Character.",
  },
  {
  id: "q9",
- type: "multiple_choice",
- question: "Урок 8.2 додає...",
+ type: MC,
+ question: "Як швидко перевірити, що Health змінюється?",
  options: [
- "Dialogue UI",
- "Лише автомобіль",
- "Лише таймер",
- "Лише DataStore",
+ "Серверний тест Health = Health - 10 і глянути смугу",
+ "Змінити лише назву Floor",
+ "Видалити Humanoid",
+ "Вимкнути Output назавжди",
  ],
  correctAnswer: 0,
- explanation: "Наступний крок.",
+ explanation: "Свідомий тест.",
  },
  {
  id: "q10",
- type: "multiple_choice",
- question: "Урок 8.1 зберегти назву...",
+ type: MC,
+ question: "Яка структура Explorer зручна?",
  options: [
- "Lesson 8.1 - Living NPC",
- "Living Location",
- "Shop Works",
- "Race Launched",
+ "Workspace.Arena з Floor, Walls, Spawn, Dummies",
+ "Все безіменне Part1…Part99 у корені",
+ "Лише SoundService",
+ "Усе в Terrain water",
  ],
  correctAnswer: 0,
- explanation: "Зберегти урок NPC.",
+ explanation: "Читабельний білд.",
+ },
+ {
+ id: "q11",
+ type: MC,
+ question: "Як 8.1 готує 8.2–8.3?",
+ options: [
+ "Є поле і HP - далі Tool і серверний урон",
+ "Health скасовує Tool",
+ "Арена забороняє Humanoid",
+ "Треба видалити dummy перед мечем",
+ ],
+ correctAnswer: 0,
+ explanation: "Фундамент модуля.",
+ },
+ {
+ id: "q12",
+ type: MC,
+ question: "Що означає Health = 0 для Humanoid?",
+ options: [
+ "Смерть (Died) - глибше розберете в 8.5",
+ "Обов’язкове збільшення MaxHealth",
+ "Створення Tool",
+ "Вимкнення Workspace",
+ ],
+ correctAnswer: 0,
+ explanation: "Нуль = смерть.",
+ },
+ {
+ id: "q13",
+ type: MC,
+ question: "Чому не будувати AAA HUD годину в 8.1?",
+ options: [
+ "Важливіші арена і числа HP; смуга за замовчуванням достатня",
+ "HUD заборонений у Roblox",
+ "Без HUD Humanoid не працює",
+ "Print незаконний",
+ ],
+ correctAnswer: 0,
+ explanation: "Пріоритет білду.",
+ },
+ {
+ id: "q14",
+ type: MC,
+ question: "Anchored на Floor/Walls потрібен щоб…",
+ options: [
+ "Геометрія арени не падала від фізики",
+ "Збільшити урон",
+ "Створити AnimationId",
+ "Видалити Spawn",
+ ],
+ correctAnswer: 0,
+ explanation: "Статична сцена.",
+ },
+ {
+ id: "q15",
+ type: MC,
+ question: "Що вважається зданим артефактом 8.1?",
+ options: [
+ "Арена + Spawn + Health setup + dummy + Save",
+ "Лише теорія",
+ "Порожній Baseplate",
+ "Tool з клієнтським Health=0",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібна база Arena.",
  },
  ],
  },
@@ -306,336 +481,461 @@ export const ukLesson82 = {
  lessonId: "lesson-roblox-8-2",
  moduleId: "module-08",
  order: 2,
- title: "8.2 - Система діалогів",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
+ title: "8.2 - Tool + Animation",
+ theoryMinutes: 35,
+ quizMinutes: 15,
+ estimatedTime: 60,
  learningObjectives: [
- "Зберігайте рядки діалогу в таблиці Lua за ключем",
- "Створіть DialogueGui з динаміком, текстом, наступним, закрити",
- "Відкрийте діалог із NPC ProximityPrompt через OpenDialogue RemoteEvent",
- "Запобігання накладання сеансів діалогу на клієнті",
+ "Зібрати Tool з Handle і зрозумілим Grip",
+ "Приварити клинок/меш до Handle (Weld/WeldConstraint)",
+ "Програти анімацію удару з LocalScript при Activated",
+ "Підготувати Tool до серверного урону в 8.3 (екіпірування, Touched-зона)",
+ "Покласти Tool у StarterPack, щоб він повертався після респавну",
  ],
  theory: {
  sections: [
  {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `З вашим NPC можна **поговорити**. Сьогодні вони мають **слова сказати**.
+ title: "Сьогоднішня місія (урок 58 з 92)",
+ content: `У **8.1** є арена і Health. Сьогодні даєш гравцю **зброю в руках**: Tool + мах анімації. Урон ще можна не рахувати чесно - це 8.3. Сьогодні - **відчути меч**.
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - дані діалогу + UI цикл
-2. **Практика (~25 хв)** - розмова на 4+ лініях
-3. **Вікторина (10 хв)** - проходження **70%**
+Артефакт уроку:
+1. Tool \`ArenaSword\` з Part \`Handle\`.
+2. Клинок приварений, не відлітає.
+3. При кліку/активації грає анімація удару (LocalScript).
+4. Tool у **StarterPack** (або чітка інструкція як видати).
 
-Відкрийте **Урок 8.1 - Живий NPC**.`,
+Без Tool завтрашній dealDamage ні до чого чіпляти. Без анімації бій виглядає як «невидима рука».
+
+**Зроби зараз (2 хв):** виріши форму - простий Part-клинок чи Mesh. Для здачі Part достатньо.`,
  },
  {
- title: "Діалог як дані",
- content: `**ServerScriptService** → ModuleScript\`DialogueData\`:\`\`\`lua
-local DialogueData = {
- guide_intro = {
- speaker = "Guide Maya",
- lines = {
- "Ласкаво просимо на хаб, будівничий!",
- "Магазин за мною продає стартове спорядження.",
- "Виконуй квести, щоб заробити більше монет.",
- "Удачі - натисни Next, щоб продовжити.",
- },
- },
-}
+ title: "Що таке Tool у Roblox",
+ content: `| Елемент | Роль |
+|---------|------|
+| **Tool** | Об’єкт у Backpack / руці |
+| **Handle** | Обов’язковий Part - за що тримаєш |
+| **Activated** | Подія «використали інструмент» |
+| **Equipped / Unequipped** | Взяли / сховали |
 
-return DialogueData
-\`\`\`**Мережа надсилає ключ** (\`"guide_intro"\`), а не повні текстові масиви - менші та безпечніші.`,
+Метафора: Tool - **предмет у хотбарі**. Handle - **ручка**. Без Handle Tool часто не екіпірується нормально.
+
+Імена:
+- Tool.Name = \`ArenaSword\` (видно в інвентарі)
+- Всередині обов’язково Part з іменем **\`Handle\`** (саме так)`,
  },
  {
- title: "Макет DialogueGui",
- content: `**StarterGui** →\`DialogueGui\`(ScreenGui)\`\`\`
-DialogueGui
-└── Panel (Frame, bottom center)
- ├── SpeakerLabel
- ├── LineLabel (large text, wrapped)
- ├── NextButton
- └── CloseButton
-\`\`\`**Panel.Visible = false**, доки не відкриється діалогове вікно.
+ title: "Збірка Handle і клинка",
+ content: `1. Insert → Tool у StarterPack (або збережи в ServerStorage і клонуй - для старту StarterPack простіше).
+2. Додай Part, назви \`Handle\` - розмір орієнтовно 1×1×3.
+3. Додай Part \`Blade\` (довший, тонший).
+4. Вирівняй Blade відносно Handle.
+5. \`WeldConstraint\` між Handle і Blade (або Weld).
+6. CanCollide на клінку часто false на старті (менше штовханини); для Touched-урону завтра можна окремий hitbox.
 
-**Доступність:** великий шрифт (18-22), висококонтрастне тло.`,
+**Grip** (властивості Tool): підкрути GripPos / GripForward, щоб меч не стирчав боком з руки. Це 5–10 хв крутіння в Play - нормально.
+
+**Зроби зараз (10 хв):** екіпіруєш Tool, меч видно в руці, модель не розсипається.`,
  },
  {
- title: "Цикл діалогу клієнта",
- content: `\`DialogueClient\`LocalScript:\`\`\`lua
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local openDialogue = ReplicatedStorage:WaitForChild("OpenDialogue")
-local getLines = ReplicatedStorage:WaitForChild("GetDialogue") -- RemoteFunction 8.2
+ title: "Weld - чому клинок інакше відлітає",
+ content: `| Симптом | Фікс |
+|---------|------|
+| Blade падає окремо | Немає Weld до Handle |
+| Все Anchored у руці | Зніми Anchored з Parts Tool |
+| Клинок у підлозі | Grip / орієнтація Handle |
+| Подвійний меч | Два Tool в StarterPack |
 
-local panel = script.Parent.Panel
-local lineLabel = panel.LineLabel
-local speakerLabel = panel.SpeakerLabel
-local nextBtn = panel.NextButton
-local closeBtn = panel.CloseButton
+Правило: у екіпірованому Tool фізику тримає збірка + персонаж. Не лишай Anchored=true на Handle «для зручності» назавжди - у руці виглядатиме зламано.
 
-local active = false
-local lines = {}
-local index = 1
-
-local function showLine()
- lineLabel.Text = lines[index] or ""
-end
-
-local function open(key)
- if active then return end
- active = true
- local data = getLines:InvokeServer(key)
- if not data then active = false return end
- speakerLabel.Text = data.speaker
- lines = data.lines
- index = 1
- panel.Visible = true
- showLine()
-end
-
-nextBtn.MouseButton1Click:Connect(function()
- if index < #lines then
- index += 1
- showLine()
- else
- panel.Visible = false
- active = false
- end
-end)
-
-closeBtn.MouseButton1Click:Connect(function()
- panel.Visible = false
- active = false
-end)
-
-openDialogue.OnClientEvent:Connect(function(key)
- open(key)
-end)
-\`\`\``,
+Якщо використовуєш MeshPart - той самий Weld до Handle.`,
  },
  {
- title: "Серверний міст",
- content: `**ReplicatedStorage:**
--\`OpenDialogue\`RemoteEvent
--\`GetDialogue\`RemoteFunction
+ title: "Анімація удару: звідки взяти",
+ content: `Варіанти школи:
+1. **Власна** анімація в Animation Editor (R15) - експорт, AnimationId.
+2. **Навчальний ID** від ментора / шаблону курсу (якщо є список).
+3. **Lite без кастомної анімації:** коротко крутни Tool.Grip або tween клинка - гірше, але краще ніж нічого; все одно плануй AnimationId.
 
-**Скрипт NPC** (оновлення 8.1):\`\`\`lua
-local openDialogue = game.ReplicatedStorage.OpenDialogue
+Робочий шлях:
+- Створи Animation об’єкт (або використай \`Instance.new("Animation")\`).
+- \`Animation.AnimationId = "rbxassetid://..."\`
+- У Character: \`Humanoid.Animator:LoadAnimation(anim)\`
+- \`track:Play()\`
 
-prompt.Triggered:Connect(function(player)
- openDialogue:FireClient(player, "guide_intro")
-end)
-\`\`\`**GetDialogue.OnServerInvoke:**\`\`\`lua
-local DialogueData = require(game.ServerScriptService.DialogueData)
-
-GetDialogue.OnServerInvoke = function(player, key)
- if type(key) ~= "string" then return nil end
- return DialogueData[key]
-end
-\`\`\`Сервер володіє текстом діалогу - клієнт не може легко вставити підроблені знання квесту.`,
+Перевір R6 vs R15: анімація має відповідати ригу аватара в Game Settings.`,
  },
  {
- title: "Правила UX",
- content: `| Правило | Чому |
-|------|-----|
-| Блок другий відкритий під час активності | Без панелей, що перекриваються |
-| Закрити завжди працює | Втеча гравця |
-| Далі в останньому рядку закриває або ховає | Очистити кінець |
-| Короткі рядки | Читається на мобільному |
+ title: "LocalScript у Tool",
+ content: `Під Tool додай **LocalScript** \`SwingClient\`:
 
-**Запобігання спаму:** час відновлення після підказки, активовано (0,5 с) необов’язково.`,
+\`local tool = script.Parent\`
+\`local anim = Instance.new("Animation")\`
+\`anim.AnimationId = "rbxassetid://YOUR_ID"\`
+
+\`local track\`
+\`tool.Equipped:Connect(function()\`
+\` local char = tool.Parent\`
+\` local hum = char:WaitForChild("Humanoid")\`
+\` local animator = hum:FindFirstChildOfClass("Animator") or Instance.new("Animator", hum)\`
+\` track = animator:LoadAnimation(anim)\`
+\`end)\`
+
+\`tool.Activated:Connect(function()\`
+\` if track then track:Play() end\`
+\`end)\`
+
+Чому LocalScript: анімація персонажа зручно стартує на клієнті власника. Урон завтра - **окремо на сервері**.
+
+Не клади TakeDamage у цей LocalScript як фінальну правду.`,
  },
  {
- title: "Контрольний список перед початком практики",
- content: `- [ ] 4+ рядки у guide_intro
-- [ ] Далі просувається, закриває виходи
-- [ ] Підказка відкриває діалогову панель
-- [ ] Показується ім’я динаміка
-- [ ] Зберегти:\`Lesson 8.2 - Dialogue System\``,
+ title: "Activated, debounce анімації",
+ content: `Спам кліків = ламаний mash анімацій.
+
+\`local swinging = false\`
+\`tool.Activated:Connect(function()\`
+\` if swinging then return end\`
+\` swinging = true\`
+\` track:Play()\`
+\` task.delay(0.5, function() swinging = false end)\`
+\`end)\`
+
+0.5 с узгодь з довжиною кліпу. У 8.3 серверний HIT_COOLDOWN може бути схожим - тоді відчуття «мах = удар» збігається.
+
+Tool.RequiresHandle = true зазвичай. Tool.CanBeDropped - виріши: для арени часто false, щоб не кидали меч у void.`,
+ },
+ {
+ title: "Підготовка hitbox до 8.3",
+ content: `Сьогодні можна:
+- залишити Handle.Touched на потім;
+- або додати невидимий Part \`Hitbox\` з Weld, CanCollide false, трохи більший за клинок.
+
+Не реалізуй повний dealDamage сьогодні, якщо час кінчається - але **імена готові**:
+- Tool \`ArenaSword\`
+- Handle
+- (опційно) Hitbox
+
+У нотатці: «завтра сервер слухає Touched / Remote від цього Tool».
+
+**Зроби зараз (5 хв):** у Explorer структура чиста; ментор знаходить Tool за 5 с.`,
+ },
+ {
+ title: "StarterPack і респавн",
+ content: `StarterPack клонує Tool у Backpack кожного гравця при старті / часто після респавну.
+
+Перевір:
+1. Play → меч у хотбарі.
+2. (Якщо вже вмієш) смерть/ресет → Tool повертається.
+
+Якщо Tool лише в Workspace - гравець його не отримає автоматично.
+
+ServerStorage шаблон + скрипт видачі - альтернатива для пізніших модулів; сьогодні StarterPack = найшвидший шлях.
+
+Після 8.5 (смерть/респавн) саме StarterPack зазвичай поверне меч без зайвого коду. Якщо покладеш Tool лише в Backpack скриптом один раз - після смерті можеш «втратити» зброю і здивуватись на Ship.`,
+ },
+ {
+ title: "Playtest Tool",
+ content: `| # | Дія | Очікування |
+|---|-----|------------|
+| 1 | Play | ArenaSword у інвентарі |
+| 2 | Екіпірувати | Меч у руці, Weld цілий |
+| 3 | Activated | Анімація маху (або lite-рух) |
+| 4 | Спам кліків | Debounce тримає |
+| 5 | Unequip / Equip знову | Track не крашиться |
+| 6 | Output | Немає помилок Animator/AnimationId |
+
+Якщо анімація не грає: перевір AnimationId, R15/R6, чи є Animator, чи Equipped встиг Load.  
+Якщо меч не в інвентарі: Tool не в StarterPack або RequiresHandle без Handle.  
+Якщо клинок у підлозі: Grip + Pivot моделі, не одразу пиши новий LocalScript.`,
+ },
+ {
+ title: "Типові дірки збірки",
+ content: `| Симптом | Причина | Фікс |
+|---------|---------|------|
+| «Tool requires a Handle» | Немає Part Handle | Назви саме Handle |
+| Меч в зубах / ногах | Grip | Крути Grip у Play |
+| Анімація чужого ригу | R6 anim на R15 | Інший ID / риг |
+| Скрипт на сервері грає anim погано | Не той контекст | LocalScript у Tool |
+| Два мечі | Дубль у StarterPack | Залиш один |
+
+Не витрачай годину на ідеальний скін. **Екіпірується + мах є** - здано для 8.2.
+
+Зв’язок з 8.3: коли мах вже стабільний, серверний урон «сяде» на той самий ритм debounce. Якщо сьогодні спам анімації - завтра спам Touched буде ще гірший.`,
+ },
+ {
+ title: "Чекліст здачі уроку 58",
+ content: `- [ ] Tool ArenaSword з Handle
+- [ ] Клинок на Weld
+- [ ] Grip прийнятний у руці
+- [ ] LocalScript: Activated → Play анімації (або чесний lite)
+- [ ] Debounce маху
+- [ ] StarterPack
+- [ ] Playtest 1–3 зелені
+- [ ] Save: Lesson 8.2 - Arena Tool
+
+Далі **8.3** повісить dealDamage на цей Tool. Не пиши Health=0 у сьогоднішньому LocalScript «щоб швидше» - зламаєш звичку Never trust client.
+
+Артефакт: **меч у руці з махом**. Арена більше не беззбройна. Якщо ментор за 10 с знаходить Tool у StarterPack і бачить мах у Play - урок зданий.`,
  },
  ],
  },
  commonMistakes: [
  {
- mistake: "Жорстко закодовані рядки лише в LocalScript",
- explanation: "Клієнт може підробляти / дрейфувати.",
- correctApproach: "DialogueData на сервері",
+ mistake: "Part не названий Handle",
+ explanation: "Tool не екіпірується коректно.",
+ correctApproach: "Саме ім’я Handle",
  },
  {
- mistake: "Надсилання повного рядкового масиву у FireClient",
- explanation: "важкий; важче оновити.",
- correctApproach: "Надіслати рядок ключа діалогу",
+ mistake: "Урон Health у LocalScript Tool",
+ explanation: "Обхід сервера; погано для 8.3.",
+ correctApproach: "Сьогодні лише анімація; урон завтра на сервері",
  },
  {
- mistake: "Немає активного прапора",
- explanation: "Подвійні панелі.",
- correctApproach: "Блокувати під час відкритого діалогу",
+ mistake: "Немає Weld - клинок окремо",
+ explanation: "Модель розвалюється.",
+ correctApproach: "WeldConstraint до Handle",
  },
  {
- mistake: "DialogueGui завжди видимий",
- explanation: "Блокує ігровий процес.",
- correctApproach: "Приховано, поки не буде відкрито",
+ mistake: "Анімація без debounce",
+ explanation: "Каша треків.",
+ correctApproach: "swinging flag + delay",
+ },
+ {
+ mistake: "Tool лише в Workspace",
+ explanation: "Гравець не отримує зброю.",
+ correctApproach: "StarterPack",
+ },
+ {
+ mistake: "Wrong rig AnimationId",
+ explanation: "Тихе «нічого не грає».",
+ correctApproach: "R15/R6 узгодити з грою",
  },
  ],
- summary: "Ви створили діалог на основі даних за допомогою DialogueData, циклу інтерфейсу користувача Next/Close і OpenDialogue із ProximityPrompt Guide Maya - NPC тепер говорять у повних розмовах.",
+ summary: "Ти зібрав ArenaSword: Handle, Weld клинка, LocalScript анімації на Activated і StarterPack. Меч готовий до серверного dealDamage в 8.3 - без клієнтського Health=0.",
  practiceTask: {
- title: "Система діалогу v1 (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** 4-строкова розмова від NPC.
+ title: "Меч арени (~30 хв)",
+ difficulty: "intermediate",
+ description: `**Мета:** екіпірувати Tool і побачити мах удару.
 
-### Part A - Дані + пульти (10 хв)
-1. Модуль DialogueData з guide_intro
-2. OpenDialogue + GetDialogue у ReplicatedStorage
-3. Серверні обробники
+### Part A - Модель (12 хв)
+1. Tool у StarterPack з Handle.
+2. Blade + WeldConstraint.
+3. Grip підкрутити в Play.
 
-### Part B - Інтерфейс користувача (12 хв)
-1. Панель DialogueGui + написи + кнопки
-2. Цикл DialogueClient
-3. Підказка Wire NPC → FireClient guide_intro
+### Part B - Анімація (12 хв)
+1. LocalScript SwingClient.
+2. LoadAnimation на Equipped.
+3. Activated + debounce 0.4–0.6 с.
 
-### Part C - Зберегти (3 хв)
-1. Грайте по всіх лініях
-2. **Зберегти в Roblox** →\`Lesson 8.2 - Dialogue System\` 3. **Практика завершена**`,
+### Part C - Перевірка (6 хв)
+1. Playtest таблиця 1–4.
+2. Структура імен чиста.
+3. **Save:** Lesson 8.2 - Arena Tool`,
  hints: [
- "pcall InvokeServer, як каталог Module 7",
- "UIGradient додаткове полірування панелі",
- "Тест Закрити в середині розмови",
+ "Спочатку меч у руці без анімації - потім ID",
+ "print('activated') якщо не певний, що кліки доходять",
+ "CanBeDropped = false зручно для арени",
  ],
- optionalChallenge: "Так/Ні вибір гілок до різних рядкових таблиць.",
+ optionalChallenge: "Короткий Sound «whoosh» на Activated (один Sound у Tool, Play).",
  },
  quiz: {
  passingScore: 70,
- timeLimit: 10,
+ timeLimit: 15,
  questions: [
  {
  id: "q1",
- type: "multiple_choice",
- question: "Репліки діалогу зберігаються як...",
+ type: MC,
+ question: "Головна мета уроку 8.2?",
  options: [
- "Lua-таблиця за ключем",
- "Terrain",
- "Випадкові рядки в UI",
- "Welds",
+ "Зібрати Tool з Handle і анімацією удару",
+ "Написати повний анти-чит магазин",
+ "Видалити арену",
+ "Зробити лише waveConfig",
  ],
  correctAnswer: 0,
- explanation: "Керований даними.",
+ explanation: "Tool + animation.",
  },
  {
  id: "q2",
- type: "multiple_choice",
- question: "OpenDialogue надсилає...",
+ type: MC,
+ question: "Як має називатись Part хвата в Tool?",
  options: [
- "Ключ діалогу клієнту",
- "Повне збереження гри",
- "Terrain id",
- "Екземпляр Tool",
+ "Handle",
+ "SwordTipOnly",
+ "Humanoid",
+ "SpawnLocation",
  ],
  correctAnswer: 0,
- explanation: "Пошук ключів.",
+ explanation: "Обов’язкове ім’я.",
  },
  {
  id: "q3",
- type: "multiple_choice",
- question: "Далі кнопка...",
+ type: MC,
+ question: "Навіщо Weld між Handle і Blade?",
  options: [
- "Переходить до наступного рядка",
- "Видаляє NPC",
- "Публікує",
- "Spawnить автомобіль",
+ "Щоб клинок не відлітав від ручки",
+ "Щоб вимкнути анімацію",
+ "Це створює RemoteEvent",
+ "Weld замінює StarterPack",
  ],
  correctAnswer: 0,
- explanation: "потік інтерфейсу користувача.",
+ explanation: "Зв’язок моделі.",
  },
  {
  id: "q4",
- type: "multiple_choice",
- question: "DialogueGui - це...",
+ type: MC,
+ question: "Де зручно тримати скрипт анімації маху?",
  options: [
- "ScreenGui на клієнті",
- "Лише сервер",
- "Шар Terrain",
- "Sound",
+ "LocalScript у Tool",
+ "Лише в Terrain",
+ "У Lighting як єдиний варіант",
+ "У SoundService без Tool",
  ],
  correctAnswer: 0,
- explanation: "Інтерфейс клієнта.",
+ explanation: "Клієнтський мах.",
  },
  {
  id: "q5",
- type: "multiple_choice",
- question: "GetDialogue має працювати на...",
+ type: MC,
+ question: "Яка подія Tool запускає удар по кліку?",
  options: [
- "Server OnServerInvoke",
- "Лише клієнт",
- "Lighting",
- "Workspace",
+ "Activated",
+ "Touched неба",
+ "PlayerRemoving",
+ "BindToClose",
  ],
  correctAnswer: 0,
- explanation: "Сервер повертає рядки.",
+ explanation: "Activated.",
  },
  {
  id: "q6",
- type: "multiple_choice",
- question: "активний прапор запобігає...",
+ type: MC,
+ question: "Навіщо StarterPack?",
  options: [
- "Накладені діалоги",
- "Ходьба",
- "Стрибок",
- "Shop",
+ "Автоматично дати Tool гравцю",
+ "Видалити Humanoid",
+ "Створити хвилі",
+ "Замінити MaxHealth",
  ],
  correctAnswer: 0,
- explanation: "Одна розмова.",
+ explanation: "Видача зброї.",
  },
  {
  id: "q7",
- type: "multiple_choice",
- question: "Урок 8.2 базується на...",
+ type: MC,
+ question: "Чому не ставити Health=0 у LocalScript Tool сьогодні?",
  options: [
- "Lesson 8.1 NPC + prompt",
- "Лише Lesson 6",
- "Порожньо",
- "Лише publish",
+ "Урон має бути на сервері в 8.3; клієнт не суддя",
+ "Health не існує",
+ "Tool тоді не екіпірується",
+ "Анімація забороняє числа",
  ],
  correctAnswer: 0,
- explanation: "Тригер NPC.",
+ explanation: "Never trust client.",
  },
  {
  id: "q8",
- type: "multiple_choice",
- question: "SpeakerLabel показує...",
+ type: MC,
+ question: "Навіщо debounce на Activated?",
  options: [
- "Ім’я NPC",
- "Пароль гравця",
- "IP сервера",
- "Robux",
+ "Не спамити анімацію маху",
+ "Збільшити MaxHealth",
+ "Вимкнути Weld",
+ "Створити Arena",
  ],
  correctAnswer: 0,
- explanation: "Ясність.",
+ explanation: "Чистий мах.",
  },
  {
  id: "q9",
- type: "multiple_choice",
- question: "Урок 8.3 додає...",
+ type: MC,
+ question: "Що крутити, якщо меч стирчить з руки криво?",
  options: [
- "NPC patrol, що ходить",
- "Лише магазин",
- "Лише гонки",
- "DataStore",
+ "Grip Tool (позиція/орієнтація)",
+ "Лише Skybox",
+ "Назву модуля 1",
+ "Видалити Handle",
  ],
  correctAnswer: 0,
- explanation: "Перейти до патруля.",
+ explanation: "Grip.",
  },
  {
  id: "q10",
- type: "multiple_choice",
- question: "Урок 8.2 зберегти назву...",
+ type: MC,
+ question: "Коли вантажити Animation track зручно?",
  options: [
- "Lesson 8.2 - Dialogue System",
- "Living NPC",
- "Living Location",
- "Shop UI",
+ "На Equipped (коли Tool у Character)",
+ "Лише в Menu Studio без Play",
+ "У PlayerRemoving завжди",
+ "Тільки після Publish",
  ],
  correctAnswer: 0,
- explanation: "Зберегти урок діалогу.",
+ explanation: "Equipped.",
+ },
+ {
+ id: "q11",
+ type: MC,
+ question: "Як 8.2 готує 8.3?",
+ options: [
+ "Є Tool/Handle для серверного хіту і dealDamage",
+ "8.3 видаляє всі Tool",
+ "Анімація замінює сервер",
+ "StarterPack забороняє урон",
+ ],
+ correctAnswer: 0,
+ explanation: "Зброя готова.",
+ },
+ {
+ id: "q12",
+ type: MC,
+ question: "Що буде, якщо AnimationId від не того ригу?",
+ options: [
+ "Часто анімація просто не відтворюється коректно",
+ "Обов’язково видалиться Baseplate",
+ "MaxHealth стане 0",
+ "Studio закриється завжди",
+ ],
+ correctAnswer: 0,
+ explanation: "R6/R15.",
+ },
+ {
+ id: "q13",
+ type: MC,
+ question: "CanBeDropped = false на арені означає…",
+ options: [
+ "Гравець не кине Tool на землю легко",
+ "Tool не можна екіпірувати",
+ "Анімація вимкнена",
+ "Weld знищено",
+ ],
+ correctAnswer: 0,
+ explanation: "Не губити меч.",
+ },
+ {
+ id: "q14",
+ type: MC,
+ question: "Мінімум для здачі без кастомної анімації?",
+ options: [
+ "Чесний lite-рух/твін + робочий Tool у руці (краще з AnimationId)",
+ "Порожній Tool без Handle",
+ "Лише назва Sword у Workspace",
+ "Health=0 на клієнті",
+ ],
+ correctAnswer: 0,
+ explanation: "Краще анімація, але меч обов’язковий.",
+ },
+ {
+ id: "q15",
+ type: MC,
+ question: "Що вважається зданим артефактом 8.2?",
+ options: [
+ "Tool у руці з махом + StarterPack + Save",
+ "Лише теорія",
+ "Порожній Baseplate",
+ "Урон лише клієнтський Health",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібен меч.",
  },
  ],
  },
@@ -645,304 +945,495 @@ export const ukLesson83 = {
  lessonId: "lesson-roblox-8-3",
  moduleId: "module-08",
  order: 3,
- title: "8.3 - NPC що ходить",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
+ title: "8.3 - dealDamage на сервері",
+ theoryMinutes: 35,
+ quizMinutes: 15,
+ estimatedTime: 60,
  learningObjectives: [
- "Створіть Parts маршрутних точок від WP_1 до WP_5 для маршруту патрулювання",
- "Патруль із Humanoid:MoveTo і MoveToFinished:Wait",
- "Кольцевий маршрут з паузами в кожній точці",
- "Налагодження застряглих NPC з інтервалом шляху та перешкодами",
+ "Написати function dealDamage на сервері (Humanoid, amount, source)",
+ "Пояснити Never trust client: клієнт не пише Health ворогу напряму",
+ "Додати lite-перевірки: тип amount, cooldown, відстань, живий target",
+ "Підключити хіт Tool до серверного урону (Touched або Remote lite)",
+ "Показати антиприклад «клієнт сам убив усіх» і чому це дірка",
  ],
  theory: {
  sections: [
  {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `Статичні напрямні в порядку. **Ходячі NPC** змушують центри відчувати себе **живими**.
+ title: "Сьогоднішня місія (урок 59 з 92)",
+ content: `У **8.1** є Health на арені. У **8.2** Tool махає. Сьогодні з’єднуєш їх чесно: **урон живе на сервері**.
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - шляхові точки + цикл MoveTo
-2. **Практика (~25 хв)** - 5-точкове патрулювання
-3. **Вікторина (10 хв)** - проходження **70%**
+Артефакт уроку:
+1. Function \`dealDamage(humanoid, amount, sourcePlayer)\` у Script (SSS) або ModuleScript.
+2. Успішний удар з Tool реально зменшує HP **через цю функцію**.
+3. Lite-захист: cooldown + перевірка що target живий + (бажано) відстань.
+4. Антиприклад: LocalScript, що ставить \`Health = 0\`, **не** є здачею.
 
-Відкрийте **Урок 8.2 - Система діалогів** - використовуйте другого NPC або ту саму Maya без прив’язки.`,
+Це якір модуля Arena. Без нього 8.4–8.8 будують феєрверки й хвилі на піску.
+
+**Зроби зараз (2 хв):** напиши одним реченням, хто в спорті ставить рахунок - суддя чи вболівальник з телефоном. Це сервер vs клієнт.`,
  },
  {
- title: "Проект маршруту маршрутної точки",
- content: `Folder\`Workspace/PatrolRoutes/Route_ShopLoop\`:
+ title: "Never trust client - правило арени",
+ content: `| Клієнт може | Сервер вирішує |
+|-------------|----------------|
+| Показати анімацію удару | Скільки HP зняти |
+| Надіслати «я вдарив X» | Чи X взагалі в зоні |
+| Малювати іскри (пізніше) | Чи не спам ударів |
+| Брехати | Правду світу |
 
-| Part | Ім'я | Примітки |
-|------|------|-------|
-| Neon куля |\`WP_1\`| Біля магазину |
-| |\`WP_2\`| Куточок стежки |
-| |\`WP_3\`| Середня площа |
-| |\`WP_4\`| Біля ікри |
-| |\`WP_5\`| Назад до магазину |
+Метафора: клієнт - **гравець з джойстиком**. Сервер - **суддя**. Джойстик не пише голи у протокол.
 
-**Properties:** Anchored true, CanCollide false, прозорість 0,5 (налагодження), потім 1 невидимий.
-
-**Відстань:** 8-15 стадів одна від одної, без різких 90° через стіни.`,
+У Solo Studio легко забути різницю: ти і сервер, і клієнт в одному вікні. Уявий друга з експлойтом - він змінить LocalScript за секунду. Тому Health ворога **ніколи** не є «правдою клієнта».`,
  },
  {
- title: "Збирайте шляхові точки по порядку",
- content: `\`\`\`lua
-local routeFolder = workspace.PatrolRoutes.Route_ShopLoop
-local waypoints = {}
+ title: "Антиприклад: клієнт убиває сам",
+ content: `Поганий LocalScript (НЕ копіюй у здачу):
 
-for _, wp in ipairs(routeFolder:GetChildren()) do
- if wp:IsA("BasePart") and wp.Name:match("^WP_%d+$") then
- table.insert(waypoints, wp)
- end
-end
+\`local hum = workspace.Arena.Dummy.Humanoid\`
+\`hum.Health = 0\`
 
-table.sort(waypoints, function(a, b)
- local na = tonumber(a.Name:match("%d+"))
- local nb = tonumber(b.Name:match("%d+"))
- return na < nb
-end)
-\`\`\`Сортування за номерами підтримує правильний порядок маршруту.`,
+Що відбувається в навчанні:
+- У Solo «працює» - здається, що бій готовий.
+- У мережі / з чітом - будь-хто чистить арену без меча.
+
+Демо для себе (5 хв):
+1. Зроби цей рядок у тимчасовому LocalScript.
+2. Побач, що dummy падає.
+3. **Видали** скрипт.
+4. Заміни шляхом: хіт → сервер → dealDamage.
+
+Цей контраст важливіший за ідеальний particle.`,
  },
  {
- title: "Петля патрулювання MoveTo",
- content: `**NPC_Patrol_Guard** - серверний скрипт:\`\`\`lua
-local npc = script.Parent
-local humanoid = npc:WaitForChild("Humanoid")
-humanoid.WalkSpeed = 10
+ title: "Сигнатура dealDamage",
+ content: `\`local function dealDamage(humanoid, amount, sourcePlayer)\`
+\` if typeof(humanoid) ~= "Instance" then return false end\`
+\` if not humanoid:IsA("Humanoid") then return false end\`
+\` if humanoid.Health <= 0 then return false end\`
+\` if typeof(amount) ~= "number" then return false end\`
+\` if amount <= 0 then return false end\`
+\` -- далі cooldown / distance\`
+\` humanoid:TakeDamage(amount)\`
+\` -- або: humanoid.Health = math.max(0, humanoid.Health - amount)\`
+\` return true\`
+\`end\`
 
-local PAUSE = 0.7
+Чому \`return true/false\`:
+- 8.4 викличе Fx лише після \`true\`.
+- Легше логувати невдалі хіти в Output.
 
-local function patrol(waypoints)
- while true do
- for _, wp in ipairs(waypoints) do
- humanoid:MoveTo(wp.Position)
- humanoid.MoveToFinished:Wait()
- task.wait(PAUSE)
- end
- end
-end
-
-task.spawn(patrol, waypoints)
-\`\`\`**NPC не має бути закріпленим** - Humanoidу потрібно рухатися.
-
-Вимкніть елементи керування гравця на NPC - це не character гравця.`,
+\`TakeDamage\` враховує деякі захисти движка; прямий \`Health =\` теж ок для навчання, якщо свідомо.`,
  },
  {
- title: "Застрягла налагодження NPC",
- content: `Якщо NPC зупиняється назавжди:
+ title: "Cooldown на джерело удару",
+ content: `Без cooldown спам Touched/Remote = тисяча урону за секунду.
 
-| Виправити | Try |
-|-----|-----|
-| Застряг на стіні | Move waypoint away from geometry |
-| Падає через карту | Check HipHeight, floor collision |
-| Ніколи не досягає точки | Збільште час очікування - MoveToFinished усе ще запускається |
-| Обертається на місці | Розширити кут повороту - додати середню точку |
+\`local lastHit = {} -- [player] = os.clock()\`
+\`local HIT_COOLDOWN = 0.4\`
 
-**Налагодження:** залишайте Parts WP видимими (червоний неон), доки маршрут не запрацює.
+\`local function canHit(player)\`
+\` local now = os.clock()\`
+\` local t = lastHit[player]\`
+\` if t and now - t < HIT_COOLDOWN then return false end\`
+\` lastHit[player] = now\`
+\` return true\`
+\`end\`
 
-**Друкувати** назву маршрутної точки після досягнення, видаляти відбитки, коли закінчите.`,
+У dealDamage / перед ним:
+
+\`if sourcePlayer and not canHit(sourcePlayer) then return false end\`
+
+\`PlayerRemoving\`: \`lastHit[player] = nil\`.
+
+Число 0.4 узгодь пізніше з анімацією з 8.2 і балансом 8.7. Сьогодні головне - **є** серверний ліміт.`,
  },
  {
- title: "Патруль + діалог разом",
- content: `**Два NPC** цілком допустимо для уроку:
-- **Guide Maya** - статичний + діалог (8.1-8.2)
-- **Patrol Guard** - цикл ходьби (8.3)
+ title: "Перевірка відстані (lite)",
+ content: `Навіть без повного Raycast:
 
-Або призупинити патрулювання під час розмови гравця (додатково):\`\`\`lua
-local patrolling = true
--- on prompt: patrolling = false, humanoid:MoveTo(npc.PrimaryPart.Position)
-\`\`\`Урок 8.3 присвячений **безперервному патрулюванню**.`,
+\`local MAX_RANGE = 10\`
+
+\`local function nearEnough(attackerChar, targetHum)\`
+\` local a = attackerChar and attackerChar:FindFirstChild("HumanoidRootPart")\`
+\` local t = targetHum.Parent and targetHum.Parent:FindFirstChild("HumanoidRootPart")\`
+\` if not a or not t then return false end\`
+\` return (a.Position - t.Position).Magnitude <= MAX_RANGE\`
+\`end\`
+
+Викликай перед TakeDamage. Якщо клієнт каже «вдарив боса за 200 studs» - \`return false\`.
+
+Це той самий м’яз, що в Race (nearFinish) і в магазині (не вірити ціні). Сьогодні - арени.`,
  },
  {
- title: "Контрольний список перед початком практики",
- content: `- [ ] 5 шляхових точок WP_1..WP_5 відсортовано
-- [ ] NPC повторює повну петлю
-- [ ] Пауза ~0,7 с у кожній точці
-- [ ] Немає застряг на 3+ послідовних колах
-- [ ] Зберегти:\`Lesson 8.3 - NPC Patrol\``,
+ title: "Звідки брати сигнал хіту",
+ content: `| Спосіб | Рівень | Нотатка |
+|--------|--------|---------|
+| **Handle.Touched** на сервері (Tool у Character) | Простий старт | Багато спаму - потрібен cooldown + фільтр |
+| **RemoteEvent** «Attack» + сервер сам шукає ціль у радіусі | Чистіше | Трохи більше коду |
+| Клієнт шле «пошкодь ось цього Humanoid на 999» | Погано | Never trust amount/target сліпо |
+
+Рекомендація курсу на сьогодні:
+1. Tool з 8.2 у руках.
+2. Сервер слухає Touched **або** Remote без довіри до amount з клієнта.
+3. Amount береться з **константи** \`DAMAGE = 20\`, не з аргумента клієнта.
+
+\`local DAMAGE = 20\` -- одне джерело правди`,
+ },
+ {
+ title: "Touched на сервері: мінімальний шлях",
+ content: `Коли Tool екіпірується, Character має Handle. На сервері (часто через збір Tool.Equipped / Character):
+
+\`handle.Touched:Connect(function(hit)\`
+\` local character = handle.Parent.Parent -- Tool.Parent = Character\`
+\` local player = Players:GetPlayerFromCharacter(character)\`
+\` if not player then return end\`
+\` local victimChar = hit.Parent\`
+\` local victimHum = victimChar and victimChar:FindFirstChildOfClass("Humanoid")\`
+\` if not victimHum then return end\`
+\` if victimChar == character then return end -- не бий себе\`
+\` dealDamage(victimHum, DAMAGE, player)\`
+\`end)\`
+
+Фільтри обов’язкові: не Part підлоги, не свій Humanoid, не труп (\`Health <= 0\` вже в dealDamage).
+
+Touched спамить - тому cooldown у dealDamage критичний.`,
+ },
+ {
+ title: "ModuleScript DamageService (опційно, але корисно)",
+ content: `\`ServerScriptService/Modules/DamageService\` ModuleScript:
+
+\`local DamageService = {}\`
+\`local DAMAGE = 20\`
+\`-- lastHit, dealDamage як вище\`
+\`function DamageService.apply(humanoid, sourcePlayer, amount)\`
+\` return dealDamage(humanoid, amount or DAMAGE, sourcePlayer)\`
+\`end\`
+\`return DamageService\`
+
+Інший Script:
+
+\`local DamageService = require(path)\`
+\`DamageService.apply(hum, player)\`
+
+Плюс: 8.6 хвилі, 8.7 баланс, 8.4 Fx - усі \`require\` одне API.  
+Мінус сьогодні: можна лишити одну function у Script, якщо Module ще важкий - але table BALANCE вже думай як на майбутнє.`,
+ },
+ {
+ title: "Що клієнту все ж можна",
+ content: `| На клієнті OK | На клієнті НЕ ok |
+|---------------|------------------|
+| Анімація маху (8.2) | \`enemy.Humanoid.Health = 0\` |
+| Звук удару локально | Встановити MaxHealth ворога |
+| Прохання «атакую» FireServer | Надіслати amount=999999 як правду |
+| UI свого HP (реплікація) | Вважати промах хітом для урону |
+
+Після успішного серверного урону Health реплікується - клієнт **побачить** падіння смуги. Йому не треба писати Health самому.
+
+**Зроби зараз (5 хв):** спробуй у Play змінити Health dummy з клієнтського вікна властивостей під час тесту - у справжній грі це інший шар; важливіше: твій **код** здачі не робить цього.`,
+ },
+ {
+ title: "Логування для дебагу",
+ content: `Тимчасово:
+
+\`print(player.Name, "hit", humanoid.Parent.Name, "hp", humanoid.Health)\`
+
+Або при \`return false\`:
+
+\`print("deny", reason)\` -- "cooldown" / "range" / "dead"
+
+На здачу вимкни зайвий спам або залиш 1 рядок. Ментор за 10 с бачить: удар → dealDamage → HP.
+
+Не дебаж лише очима анімації: анімація може грати при \`return false\`.`,
+ },
+ {
+ title: "Playtest Never trust",
+ content: `| # | Дія | Очікування |
+|---|-----|------------|
+| 1 | Чесний удар Tool | HP падає на сервері |
+| 2 | Спам ударів | Не швидше за cooldown |
+| 3 | Удар здалеку (якщо range є) | deny |
+| 4 | Удар по собі / підлозі | Немає урону |
+| 5 | Тимчасовий клієнтський Health=0 | Розумієш дірку; у здачі цього коду немає |
+| 6 | Dummy Health ≤ 0 | Повторні хіти не мінусують далі |
+| 7 | Output | Без крашу на nil Humanoid |
+
+Пункти 1–2 - мінімум здачі. Пункт 5 - розуміння правила.`,
+ },
+ {
+ title: "Чекліст здачі уроку 59",
+ content: `- [ ] dealDamage на сервері (function / Module)
+- [ ] Amount з константи сервера, не «правда клієнта»
+- [ ] Cooldown на sourcePlayer
+- [ ] Фільтр живого Humanoid / не себе
+- [ ] (Lite) перевірка відстані
+- [ ] Tool хіт викликає dealDamage
+- [ ] Немає здавального LocalScript Health=0
+- [ ] Playtest 1–2, 4 зелені
+- [ ] Save: Lesson 8.3 - Server Damage
+
+Далі **8.4** повісить Fx на \`return true\`. **8.5** додасть Died. **8.7** підкрутить DAMAGE. Усе тримається на сьогоднішній функції.
+
+Артефакт: **суддя арени**. Без нього меч - лише анімація.`,
  },
  ],
  },
  commonMistakes: [
  {
- mistake: "NPC Anchored true",
- explanation: "Не може ходити.",
- correctApproach: "Відкріпіть Model NPC для патрулювання",
+ mistake: "Humanoid.Health = … у LocalScript як урон",
+ explanation: "Чіт і розсинхрон; Never trust client.",
+ correctApproach: "dealDamage на сервері",
  },
  {
- mistake: "Шляхові точки всередині стін",
- explanation: "MoveTo застряг.",
- correctApproach: "Чистий відстань між шляхами",
+ mistake: "Вірити amount з FireServer без перевірки",
+ explanation: "Клієнт надішле 999999.",
+ correctApproach: "Константа DAMAGE на сервері",
  },
  {
- mistake: "Не відсортовано WP_10 перед WP_2",
- explanation: "Дивний маршрут.",
- correctApproach: "Числове сортування",
+ mistake: "Немає cooldown на Touched",
+ explanation: "Миттєве вбивство спамом.",
+ correctApproach: "lastHit[player] + HIT_COOLDOWN",
  },
  {
- mistake: "Скрипт патрулювання на LocalScript",
- explanation: "AI повинен бути сервером для всіх гравців.",
- correctApproach: "Серверний скрипт на NPC",
+ mistake: "Бити себе / підлогу як Humanoid",
+ explanation: "Дивний урон і логи.",
+ correctApproach: "Фільтр victim ~= self, IsA Humanoid",
+ },
+ {
+ mistake: "dealDamage повертає void, Fx завжди грає",
+ explanation: "Феєрверк на deny.",
+ correctApproach: "return true/false",
+ },
+ {
+ mistake: "Забути PlayerRemoving для lastHit",
+ explanation: "Витік посилань / дивні ключі.",
+ correctApproach: "lastHit[player] = nil",
  },
  ],
- summary: "Ви побудували петлю патрулювання з п’ятьма маршрутними точками за допомогою Humanoid MoveTo, пауз і відсортованих маршрутних точок - тепер у вашому центрі є NPC, який ходить, а не просто стоїть на спауні.",
+ summary: "Ти зібрав якір арени: function dealDamage на сервері з cooldown і lite-валідацією. Клієнт може махати Tool, але HP змінює лише суддя. Це база для Fx, смерті, хвиль і балансу.",
  practiceTask: {
- title: "Маршрут патрулювання NPC (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** Нескінченне 5-точкове патрулювання.
+ title: "Суддя урону (~30 хв)",
+ difficulty: "intermediate",
+ description: `**Мета:** удар Tool знімає HP лише через серверний dealDamage.
 
-### Part A - Пункти (8 хв)
-1. Folder PatrolRoutes/Route_ShopLoop
-2. WP_1 .. WP_5 - видимий для налаштування
+### Part A - Function (10 хв)
+1. dealDamage з перевірками typeof / Health / amount.
+2. Константа DAMAGE.
+3. return true/false + print для дебагу.
 
-### Part B - Патруль NPC (15 хв)
-1. NPC_Patrol_Guard - Humanoid WalkSpeed 10
-2. Script патрулювання сервера - цикл sort + while true
-3. Play - дивитися 3 повні петлі
+### Part B - Cooldown і range (10 хв)
+1. lastHit table + HIT_COOLDOWN.
+2. Magnitude lite до target.
+3. PlayerRemoving чистить lastHit.
 
-### Part C - відшліфувати та зберегти (2 хв)
-1. Приховати прозорість точки маршруту
-2. **Зберегти в Roblox** →\`Lesson 8.3 - NPC Patrol\` 3. **Практика завершена**`,
+### Part C - Підключення Tool (10 хв)
+1. Touched або Remote → dealDamage.
+2. Антиприклад Health=0 видалений.
+3. **Save:** Lesson 8.3 - Server Damage`,
  hints: [
- "MoveToFinished:Wait() після кожного MoveTo",
- "task.spawn, щоб Script не блокував інші системи",
- "Додатково: вивід випадкових рядків (print) на кожній WP",
+ "Спочатку кнопка на сервері викликає dealDamage по dummy - потім Tool",
+ "print deny reason економить 20 хв здогадок",
+ "DAMAGE одне число - не копіпаста 20 у трьох місцях",
  ],
- optionalChallenge: "Відтворювати короткий звук при досягненні кожної маршрутної точки.",
+ optionalChallenge: "ModuleScript DamageService.apply + require з одного бойового Script.",
  },
  quiz: {
  passingScore: 70,
- timeLimit: 10,
+ timeLimit: 15,
  questions: [
  {
  id: "q1",
- type: "multiple_choice",
- question: "NPC ходить за допомогою...",
+ type: MC,
+ question: "Головна мета уроку 8.3?",
  options: [
- "Humanoid:MoveTo",
- "Фарбування Terrain",
- "Лише ClickDetector",
- "Atmosphere",
+ "Зробити серверний dealDamage і не довіряти клієнту HP",
+ "Видалити Tool",
+ "Побудувати лише Particles",
+ "Publish без арени",
  ],
  correctAnswer: 0,
- explanation: "Крок пошуку шляху.",
+ explanation: "Never trust client.",
  },
  {
  id: "q2",
- type: "multiple_choice",
- question: "MoveToFinished:Wait()...",
+ type: MC,
+ question: "Чому LocalScript Health=0 - погана здача?",
  options: [
- "Чекає завершення кроку",
- "Видаляє NPC",
- "Відкриває магазин",
- "Зберігає DataStore",
+ "Клієнт може чітити й ламати бій",
+ "Health не існує в Roblox",
+ "LocalScript не вміє print",
+ "Це обов’язково для Tween",
  ],
  correctAnswer: 0,
- explanation: "Синхронізація послідовності.",
+ explanation: "Антиприклад.",
  },
  {
  id: "q3",
- type: "multiple_choice",
- question: "Пункти патрулювання під назвою...",
+ type: MC,
+ question: "Звідки брати число урону?",
  options: [
- "WP_1, WP_2, ...",
- "Випадково",
- "Лише Part",
- "SpawnLocation",
+ "З константи/конфігу на сервері",
+ "Сліпо з будь-якого числа клієнта",
+ "З назви Part небо",
+ "З Volume Sound",
  ],
  correctAnswer: 0,
- explanation: "Замовлений маршрут.",
+ explanation: "Серверна правда.",
  },
  {
  id: "q4",
- type: "multiple_choice",
- question: "Patrol NPC має бути...",
+ type: MC,
+ question: "Навіщо cooldown у dealDamage?",
  options: [
- "Unanchored",
- "Anchored true",
- "Лише невидимий",
- "Без Humanoid",
+ "Щоб спам Touched/ударів не знімав HP миттєво",
+ "Щоб змінити Skybox",
+ "Це вимикає Humanoid",
+ "Cooldown малює Billboard",
  ],
  correctAnswer: 0,
- explanation: "Для руху потрібна фізика.",
+ explanation: "Rate limit.",
  },
  {
  id: "q5",
- type: "multiple_choice",
- question: "while true do loop...",
+ type: MC,
+ question: "Навіщо перевірка Magnitude?",
  options: [
- "Повторює patrol безкінечно",
- "Виконується один раз",
- "Зупиняє гру",
- "Публікує",
+ "Відхилити удар «через пів карти»",
+ "Збільшити MaxHealth",
+ "Створити RemoteFunction",
+ "Замінити Tool",
  ],
  correctAnswer: 0,
- explanation: "Безперервне патрулювання.",
+ explanation: "Lite range.",
  },
  {
  id: "q6",
- type: "multiple_choice",
- question: "Скрипт Patrol працює на...",
+ type: MC,
+ question: "Що повертає вдалий dealDamage у шаблоні уроку?",
  options: [
- "Server",
- "Лише Client LocalScript",
- "StarterGui",
- "Lighting",
+ "true (щоб Fx/логи знали про успіх)",
+ "Завжди nil і краш",
+ "Лише Color3",
+ "SpawnLocation",
  ],
  correctAnswer: 0,
- explanation: "Усі гравці бачать одного NPC.",
+ explanation: "true/false API.",
  },
  {
  id: "q7",
- type: "multiple_choice",
- question: "Виправлення застряглих NPC включає...",
+ type: MC,
+ question: "Хто такий «суддя» в метафорі уроку?",
  options: [
- "Відсунути waypoints від стін",
- "Видалити Humanoid",
- "Прибрати ноги",
- "Сховати UI",
+ "Сервер",
+ "Лише LocalScript UI",
+ "Sky",
+ "Toolbox Decal",
  ],
  correctAnswer: 0,
- explanation: "Надійність шляху.",
+ explanation: "Сервер вирішує.",
  },
  {
  id: "q8",
- type: "multiple_choice",
- question: "Сортування маршрутних точок за номером...",
+ type: MC,
+ question: "Чи можна лишити анімацію удару на клієнті?",
  options: [
- "Зберігає порядок маршруту",
- "Прибирає NPC",
- "Додає монети",
- "Відкриває dialogue",
+ "Так - візуал ок, урон все одно на сервері",
+ "Ні - будь-яка анімація заборонена",
+ "Анімація автоматично пише Health",
+ "Анімація замінює dealDamage",
  ],
  correctAnswer: 0,
- explanation: "WP_2 перед WP_10.",
+ explanation: "Розділення ролей.",
  },
  {
  id: "q9",
- type: "multiple_choice",
- question: "Урок 8.4 додає...",
+ type: MC,
+ question: "Що зробити в PlayerRemoving для lastHit?",
  options: [
- "Quest system",
- "Лише автомобіль",
- "Лише таймер",
- "Publish",
+ "Очистити запис гравця",
+ "Видалити Workspace",
+ "Вимкнути Pathfinding",
+ "Обов’язково Publish",
  ],
  correctAnswer: 0,
- explanation: "Далі таблиці квестів.",
+ explanation: "Прибирання стану.",
  },
  {
  id: "q10",
- type: "multiple_choice",
- question: "Урок 8.3 зберегти назву...",
+ type: MC,
+ question: "Чому фільтрувати удар по собі?",
  options: [
- "Lesson 8.3 - NPC Patrol",
- "Dialogue System",
- "Living NPC",
- "Shop Works",
+ "Інакше можна дамажити власний Humanoid помилково",
+ "Свій Humanoid не існує",
+ "Tool тоді зникає",
+ "Сервер забороняє Character",
  ],
  correctAnswer: 0,
- explanation: "Збережи патрульний урок.",
+ explanation: "victim ~= self.",
+ },
+ {
+ id: "q11",
+ type: MC,
+ question: "Як 8.3 готує 8.4?",
+ options: [
+ "Fx викликають після return true від dealDamage",
+ "Particles замінюють урон",
+ "8.4 видаляє серверні скрипти",
+ "Tween пише Health",
+ ],
+ correctAnswer: 0,
+ explanation: "Спочатку урон, потім вау.",
+ },
+ {
+ id: "q12",
+ type: MC,
+ question: "Який ризик Remote, де клієнт шле amount?",
+ options: [
+ "Підроблений великий урон",
+ "Remote тоді не компілюється",
+ "Humanoid стає Part",
+ "Обов’язковий краш Studio",
+ ],
+ correctAnswer: 0,
+ explanation: "Не вірити amount.",
+ },
+ {
+ id: "q13",
+ type: MC,
+ question: "Навіщо ModuleScript DamageService?",
+ options: [
+ "Один API урону для хвиль/балансу/різних скриптів",
+ "Він вимикає Arena",
+ "Без модуля Tool не існує",
+ "Module завжди на клієнті лише",
+ ],
+ correctAnswer: 0,
+ explanation: "Повторне використання.",
+ },
+ {
+ id: "q14",
+ type: MC,
+ question: "Що перевірити, якщо анімація грає, а HP стоїть?",
+ options: [
+ "Чи взагалі викликається dealDamage і чи не deny",
+ "Лише колір меча",
+ "Назву модуля 12",
+ "Вимкнути Output",
+ ],
+ correctAnswer: 0,
+ explanation: "Дебаг урону.",
+ },
+ {
+ id: "q15",
+ type: MC,
+ question: "Що вважається зданим артефактом 8.3?",
+ options: [
+ "Серверний dealDamage з Tool + захист lite + Save",
+ "Лише клієнтський Health=0",
+ "Порожній Baseplate",
+ "Тільки теорія без Play",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібен суддя урону.",
  },
  ],
  },
@@ -952,325 +1443,469 @@ export const ukLesson84 = {
  lessonId: "lesson-roblox-8-4",
  moduleId: "module-08",
  order: 4,
- title: "8.4 - Квест-система",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
+ title: "8.4 - TweenService + Particles",
+ theoryMinutes: 35,
+ quizMinutes: 15,
+ estimatedTime: 60,
  learningObjectives: [
- "Визначте квести в таблиці QuestConfig із метою та винагородою",
- "Відстежуйте стан квестів кожного гравця на сервері",
- "Прийміть квест із діалогу та збільште прогрес у збиранні кристалів",
- "Синхронізувати статус квесту з QuestUI через QuestUpdate RemoteEvent",
+ "Зробити короткий Tween на хіт (розмір/прозорість/колір Part)",
+ "Додати ParticleEmitter burst при влучанні",
+ "Підключити feedback до моменту серверного dealDamage (не замість нього)",
+ "Прибрати ефекти після відтворення (Destroy / Enabled=false), без лагу",
+ "Підготувати «відчутний» удар до смерті/респавну і хвиль",
  ],
  theory: {
  sections: [
  {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `NPC дають **завдання**. Квести перетворюють завдання на **прогрес + нагороди**.
+ title: "Сьогоднішня місія (урок 60 з 92)",
+ content: `У **8.3** урон уже чесний на сервері. Сьогодні додаєш **відчуття удару**: гравець має бачити, що влучив, не лише вірити цифрі HP.
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - таблиці квестів + стан кожного гравця
-2. **Практика (~25 хв)** - зібрати 5 кристалів
-3. **Вікторина (10 хв)** - проходження **70%**
+Артефакт уроку:
+1. Мінімум **один Tween** на хіт (наприклад, Part «спалах» або короткий scale кузова dummy).
+2. Мінімум **один ParticleEmitter** burst (іскри / пил / «кров»-lite кольором).
+3. Ефект стартує в момент успішного урону (після dealDamage або з серверного сигналу).
+4. Cleanup: ефект не живе вічно і не плодить 500 емітерів.
 
-Відкрийте центр **Урок 8.2 - Система діалогу**.`,
+Без feedback бій «німий». З feedback Ship-демо в 8.8 виглядає живим навіть на 2 хвилях.
+
+**Зроби зараз (2 хв):** виріши один стиль - «іскра металу» чи «зелений слиз» під твого ворога.`,
  },
  {
- title: "Основа системи квестів",
- content: `**ServerScriptService** → ModuleScript\`QuestConfig\`:\`\`\`lua
-local QuestConfig = {
- collect_crystals_01 = {
- title = "Crystal Run",
- goal = 5,
- rewardCoins = 50,
- description = "Collect 5 crystals in the plaza.",
- },
-}
+ title: "Feedback ≠ урон",
+ content: `| Урон (8.3) | Feedback (сьогодні) |
+|------------|---------------------|
+| Змінює Health на сервері | Показує влучання очам |
+| dealDamage | Tween + Particles |
+| Правда бою | Спектакль бою |
+| Без цього бій читерний/мертвий | Без цього бій сухий |
 
-return QuestConfig
-\`\`\`**Один стіл** = легке балансування. Зміна\`goal\`або\`rewardCoins\`в одному місці.`,
+Метафора: урон - **суддя зняв очки**. Tween/particles - **феєрверк на табло**. Феєрверк без судді - обман; суддя без феєрверка - нудно.
+
+Правило: **спочатку** успішний dealDamage, **потім** ефект. Не навпаки («гарно блиснуло» але HP стоїть).`,
  },
  {
- title: "Прогрес кожного гравця",
- content: `Script **QuestService**:\`\`\`lua
-local playerQuestState = {} -- [player] = { [questId] = state }
+ title: "TweenService за 5 хвилин",
+ content: `\`local TweenService = game:GetService("TweenService")\`
 
-local function getState(player, questId)
- playerQuestState[player] = playerQuestState[player] or {}
- if not playerQuestState[player][questId] then
- playerQuestState[player][questId] = {
- started = false,
- progress = 0,
- completed = false,
- }
- end
- return playerQuestState[player][questId]
-end
-\`\`\`**Ніколи** один глобальний\`progress = 3\`для всього сервера - гравець Б вкраде квест гравця А.`,
+\`local info = TweenInfo.new(\`
+\` 0.15, -- час\`
+\` Enum.EasingStyle.Quad,\`
+\` Enum.EasingDirection.Out\`
+\`)\`
+
+\`local tween = TweenService:Create(part, info, { Transparency = 0.5, Size = part.Size * 1.1 })\`
+\`tween:Play()\`
+
+Типові властивості для хіту:
+- \`Transparency\`, \`Color\`, \`Size\`, \`CFrame\` (обережно з фізикою)
+
+Для «спалаху»:
+1. Clone маленького Part у точку удару.
+2. Tween Transparency 0 → 1.
+3. На \`Completed\` → Destroy.
+
+Не твінь Humanoid.Health - Health не для Tween; це справа dealDamage.`,
  },
  {
- title: "Прийняти квест",
- content: `Останній рядок діалогу Guide Maya → кнопка **Прийняти** АБО автоматичний запуск на клавіші діалогу\`guide_quest\`:\`\`\`lua
-local function startQuest(player, questId)
- local cfg = QuestConfig[questId]
- if not cfg then return end
- local state = getState(player, questId)
- if state.completed then return end
- state.started = true
- QuestUpdate:FireClient(player, questId, state.progress, cfg.goal, false)
-end
-\`\`\`**QuestUpdate** RemoteEvent → оновлення клієнта\`QuestUI\`етикетка:\`Crystal Run: 0 / 5\``,
+ title: "ParticleEmitter: burst, не вічний дим",
+ content: `На Part-якорі (або Attachment у Character):
+
+\`local p = Instance.new("ParticleEmitter")\`
+\`p.Texture = "rbxasset://textures/particles/sparkles_main.dds" -- або твій asset\`
+\`p.Rate = 0 -- не постійний потік\`
+\`p.Lifetime = NumberRange.new(0.3, 0.6)\`
+\`p.Speed = NumberRange.new(4, 10)\`
+\`p.Parent = anchor\`
+
+Burst:
+
+\`p:Emit(20)\`
+
+Або короткий Enabled:
+
+\`p.Enabled = true\`
+\`task.delay(0.2, function() p.Enabled = false end)\`
+
+| Режим | Коли |
+|-------|------|
+| \`Emit(n)\` | Один удар - ідеально |
+| \`Enabled\` постійно | Аура / зона - не кожен хіт |
+| Новий Emitter на кожен кадр | Лаг - **не роби** |
+
+**Зроби зараз (8 хв):** кнопка/удар → Emit(15) один раз, без спаму.`,
  },
  {
- title: "Збільшити прогрес",
- content: `Кришталеві Parts\`Crystal\`тег або префікс імені - server Script **Touched**:\`\`\`lua
-crystal.Touched:Connect(function(hit)
- local character = hit.Parent
- local player = game.Players:GetPlayerFromCharacter(character)
- if not player then return end
+ title: "Де запускати ефект: клієнт чи сервер",
+ content: `| Підхід | Плюс | Мінус |
+|--------|------|-------|
+| **Сервер** створює Part/Particle | Просто в одному Script з dealDamage | Трохи важче для мережі / всі бачать однаково |
+| **Сервер** FireClient «хіт тут» → LocalScript ефект | Легший клієнтський polish | Потрібен Remote (якщо вже є) |
+| **Лише LocalScript** без урону | Гарно, але брехня | Не для правди HP |
 
- local state = getState(player, "collect_crystals_01")
- if not state.started or state.completed then return end
+Для модуля Arena сьогодні ок:
+- мінімум: ефект у тому ж серверному шляху після TakeDamage;
+- або LocalScript слухає зміну Health / свій hit-detect **плюс** серверний урон окремо (обережно з розсинхроном).
 
- state.progress += 1
- local cfg = QuestConfig.collect_crystals_01
-
- if state.progress >= cfg.goal then
- completeQuest(player, "collect_crystals_01")
- else
- QuestUpdate:FireClient(player, "collect_crystals_01", state.progress, cfg.goal, false)
- end
-
- crystal:Destroy() -- or debounce per crystal
-end)
-\`\`\``,
+Якщо Remotes ще страшні - роби серверний спалах Part. Краса прийде; чесність уже є з 8.3.`,
  },
  {
- title: "Завершіть і винагородіть один раз",
- content: `\`\`\`lua
-local function completeQuest(player, questId)
- local state = getState(player, questId)
- if state.completed then return end -- no double reward
+ title: "Точка удару і якір ефекту",
+ content: `Звідки брати позицію:
+1. \`targetPart.Position\` (HumanoidRootPart / UpperTorso).
+2. Результат hit-detect Tool (Handle.Touched → hit.Position) - з валідацією на сервері.
+3. Attachment \`HitFx\` у моделі ворога.
 
- local cfg = QuestConfig[questId]
- state.completed = true
- state.progress = cfg.goal
+Шаблон спалаху:
 
- local coins = player.leaderstats.Coins
- if coins then
- coins.Value += cfg.rewardCoins
- end
+\`local fx = Instance.new("Part")\`
+\`fx.Size = Vector3.new(0.4, 0.4, 0.4)\`
+\`fx.Anchored = true\`
+\`fx.CanCollide = false\`
+\`fx.Material = Enum.Material.Neon\`
+\`fx.CFrame = CFrame.new(position)\`
+\`fx.Parent = workspace.Arena.Fx\`
+\`-- Particle на fx + Tween Transparency\`
+\`task.delay(0.4, function() fx:Destroy() end)\`
 
- QuestUpdate:FireClient(player, questId, state.progress, cfg.goal, true)
- print(player.Name, "completed", questId)
-end
-\`\`\`**completed** boolean blocks exploit re-claim.`,
+Папка \`Arena.Fx\` допомагає не губити сміття в Explorer під час дебагу.`,
  },
  {
- title: "QuestUI на клієнті",
- content: `**StarterGui** →\`QuestUI\`→\`QuestLabel\`
+ title: "Зв’язок з анімацією Tool (8.2)",
+ content: `Порядок «смачного» удару:
+1. Гравець активує Tool (анімація маху).
+2. Вікно хіту / Touched / remote hit.
+3. Сервер \`dealDamage\` успішний.
+4. **Тоді** Tween + Emit.
 
-\`\`\`lua
-QuestUpdate.OnClientEvent:Connect(function(questId, progress, goal, done)
- if done then
- QuestLabel.Text = "✓ Quest complete! +" .. QuestConfigDisplay[questId]
- else
- QuestLabel.Text = "Crystal Run: " .. progress .. " / " .. goal
- end
-end)
-\`\`\`Відображення заголовка з маленької клієнтської таблиці пошуку АБО другого аргументу з повідомлення сервера.`,
+Якщо ефект на початку анімації завжди - буде «феєрверк по повітрю» без урону.  
+Якщо ефект без анімації - теж ок для здачі, але гірший juice.
+
+Lite: навіть без идеальної синхронізації кадрів - ефект **після** успішного урону вже проходить рубрику Ship «є feedback».`,
  },
  {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Прийняти квест → UI показує 0/5
-- [ ] Кожен кристал збільшується (макс. 5)
-- [ ] Complete дає монети лише один раз
-- [ ] Другий гравець має незалежний прогрес
-- [ ] Зберегти:\`Lesson 8.4 - Quest System\``,
+ title: "Cleanup і продуктивність",
+ content: `| Погано | Добре |
+|--------|-------|
+| Emitter Enabled назавжди на кожному ворогові ×50 | Emit(n) на хіт |
+| Tween без Destroy якоря | Completed / delay → Destroy |
+| 200 Parts-спалахів за хвилину без cleanup | Ліміт / одна Fx-папка |
+| Tween фізичного кузова ворога кожен кадр | Короткий 0.1–0.2 с або окремий Fx Part |
+
+Правило: кожен створений Fx **має план смерті** (час життя < 1 с для хіт-спалаху).
+
+Playtest на хвилі (коли з’явиться 8.6): після 30 ударів Explorer не повинен потонути в Part1…Part200.`,
+ },
+ {
+ title: "Міні-набір «один удар = один вау»",
+ content: `Збери пакет функції:
+
+\`local function playHitFx(position)\`
+\` local fx = makeAnchor(position)\`
+\` emitSparks(fx)\`
+\` tweenFade(fx)\`
+\` task.delay(0.5, function() fx:Destroy() end)\`
+\`end\`
+
+Виклик після успішного dealDamage:
+
+\`if dealDamage(hum, amount, player) then\`
+\` playHitFx(hum.RootPart.Position)\`
+\`end\`
+
+(Якщо dealDamage void - тоді викликай playHitFx лише коли Health реально змінився.)
+
+Колір узгодь з ворогом: слиз - зелений, метал - жовтий Neon. Одна палітра краще за райдугу.`,
+ },
+ {
+ title: "Playtest feedback",
+ content: `| # | Дія | Очікування |
+|---|-----|------------|
+| 1 | Удар з уроном | HP падає **і** є спалах/іскри |
+| 2 | Удар у повітря (промах) | Немає ефекту (або інший «свист» - опційно) |
+| 3 | 10 ударів підряд | Немає лагу, Fx зникають |
+| 4 | Output | Немає помилок Tween на nil Part |
+| 5 | Інший гравець (якщо є) | Бачить ефект (якщо серверний) |
+| 6 | Без dealDamage (тимчасово вимкни) | Ефект не повинен «маскувати» відсутність урону на здачі |
+
+Пункт 1 - серце уроку. Пункт 3 - серце polish.
+
+Якщо пункт 1 червоний - спочатку перевір виклик playHitFx після dealDamage, не крути Texture годину. Якщо пункт 3 червоний - шукай Emit у циклі без Destroy або Enabled=true назавжди.`,
+ },
+ {
+ title: "Чекліст здачі уроку 60",
+ content: `- [ ] TweenInfo + Create + Play на хіт-якорі
+- [ ] ParticleEmitter з Emit або коротким Enabled
+- [ ] Ефект після успішного урону
+- [ ] Destroy / вимкнення після відтворення
+- [ ] Папка Fx або еквівалентний cleanup
+- [ ] Playtest 1 і 3 зелені
+- [ ] Save: Lesson 8.4 - Hit Feedback
+
+Далі **8.5** додасть смерть/респавн - ефекти не замінять i-frames, але зроблять смерть/хіт читабельними. У **8.8** рубрика спитає: «є feedback?»
+
+Не витрачай залишок години на п’ятий шар VFX. Один читабельний пакет (спалах + іскри) краще за купу напівживих емітерів.
+
+Артефакт: удар **чути очима**. Сухий TakeDamage більше не єдиний сигнал. Якщо ментор з відстані бачить іскру в момент падіння HP - feedback зданий.`,
  },
  ],
  },
  commonMistakes: [
  {
- mistake: "Глобальна змінна прогресу квесту",
- explanation: "Усі гравці діляться прогресом.",
- correctApproach: "playerQuestState[гравець]",
+ mistake: "Гарний VFX без dealDamage",
+ explanation: "Брехливий бій: блищить, HP стоїть.",
+ correctApproach: "Спочатку урон, потім ефект",
  },
  {
- mistake: "Нагорода без виконаної охорони",
- explanation: "Експлойт подвійних монет.",
- correctApproach: "якщо state.completed тоді повертається",
+ mistake: "Particle Rate високий Enabled назавжди на кожен хіт-якір",
+ explanation: "Лаг і каша.",
+ correctApproach: "Emit(n) або короткий Enabled",
  },
  {
- mistake: "Прогрес лише на клієнті",
- explanation: "Фальшиве завершення.",
- correctApproach: "Server Touched + state",
+ mistake: "Не Destroy Fx Parts",
+ explanation: "Сміття в Workspace, падіння FPS.",
+ correctApproach: "delay/Completed → Destroy",
  },
  {
- mistake: "Кристали відроджуються миттєво",
- explanation: "Нескінченний прогрес.",
- correctApproach: "Знищення або усунення відскоку за кристал",
+ mistake: "Твінити Health",
+ explanation: "Не той інструмент; плутанина з уроном.",
+ correctApproach: "TakeDamage/dealDamage + твін візуалу",
+ },
+ {
+ mistake: "Ефект на промах як на хіт",
+ explanation: "Гравець не читає влучання.",
+ correctApproach: "Fx лише після успішного урону",
+ },
+ {
+ mistake: "Створити 20 Emitter у циклі без Parent cleanup",
+ explanation: "Пам’ять і візуальний шум.",
+ correctApproach: "Один Emіt на якір / перевикористання",
  },
  ],
- summary: "Ви створили QuestConfig, стан квесту для кожного гравця, прогрес у зборі кристалів, одноразові винагороди монетами та оновлення QuestUI - тепер гравці мають відстежувану мету у вашому центрі.",
+ summary: "Ти додав hit-feedback: короткий Tween і Particle burst після серверного урону, з cleanup. Бій став читабельним для очей - база для смерті/хвиль і Ship-рубрики «є feedback».",
  practiceTask: {
- title: "Створення квестових столів (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** Зібрати 5 кристалів у квесті від кінця до кінця.
+ title: "Вау на хіті (~30 хв)",
+ difficulty: "intermediate",
+ description: `**Мета:** кожен успішний удар дає короткий візуальний feedback.
 
-### Part A - Конфігурація (8 хв)
-1. QuestConfig з collect_crystals_01
-2. QuestService + playerQuestState
-3. QuestUpdate RemoteEvent
+### Part A - Tween (10 хв)
+1. Якір-Part у точці хіту (Anchored, CanCollide false).
+2. Tween Transparency або Size 0.15 с.
+3. Destroy після Completed/delay.
 
-### Part B - Геймплей (12 хв)
-1. 5 кристалів на площі
-2. Розпочніть квест із діалогового вікна «Гід» або опції підказки
-3. Торкніться кроків → завершити на 5 → +50 монет
+### Part B - Particles (10 хв)
+1. ParticleEmitter на якорі.
+2. Emit(15–30) на хіт.
+3. Не лишай Enabled назавжди.
 
-### Part C - Зберегти (5 хв)
-1. QuestLabel оновлюється в реальному часі
-2. **Зберегти в Roblox** →\`Lesson 8.4 - Quest System\` 3. **Практика завершена**`,
+### Part C - Зв’язок з уроном (10 хв)
+1. Викликай playHitFx лише після успішного dealDamage.
+2. 10 ударів - без сміття в Explorer.
+3. **Save:** Lesson 8.4 - Hit Feedback`,
  hints: [
- "Скрізь використовуйте рядки ідентифікатора квесту - collect_crystals_01",
- "Тест 2 гравців - окремий прогрес",
- "Модуль 7 Монети leaderstats для винагороди",
+ "Спочатку Fx з кнопки, потім встав після dealDamage",
+ "Neon + короткий час = читабельно навіть без текстур",
+ "workspace.Arena.Fx:ClearAllChildren() під час дебагу - ок",
  ],
- optionalChallenge: "Другий квест відкривається лише після виконання першого.",
+ optionalChallenge: "Другий шар: легкий Sound Service звук удару разом з Emit (один Sound, не 50 клонів без Destroy).",
  },
  quiz: {
  passingScore: 70,
- timeLimit: 10,
+ timeLimit: 15,
  questions: [
  {
  id: "q1",
- type: "multiple_choice",
- question: "Перебіг квесту зберігається за...",
+ type: MC,
+ question: "Головна мета уроку 8.4?",
  options: [
- "Гравець на сервері",
- "Увесь сервер глобально",
- "Лише клієнт",
- "Terrain",
+ "Додати Tween/Particles як feedback після урону",
+ "Прибрати dealDamage",
+ "Побудувати Race Remote",
+ "Видалити Tool",
  ],
  correctAnswer: 0,
- explanation: "Багатокористувацька безпека.",
+ explanation: "Hit feedback.",
  },
  {
  id: "q2",
- type: "multiple_choice",
- question: "завершений прапор запобігає...",
+ type: MC,
+ question: "Чому feedback не замінює урон?",
  options: [
- "Подвійна нагорода",
- "Ходьба",
- "UI",
- "Sound",
+ "Блиск без зміни Health - брехливий бій",
+ "Tween завжди змінює MaxHealth",
+ "Particles заборонені з Humanoid",
+ "Сервер не бачить Parts",
  ],
  correctAnswer: 0,
- explanation: "Одноразова претензія.",
+ explanation: "Спочатку правда HP.",
  },
  {
  id: "q3",
- type: "multiple_choice",
- question: "QuestConfig містить...",
+ type: MC,
+ question: "Який сервіс створює Tween?",
  options: [
- "goal and rewardCoins",
- "Паролі гравців",
- "Terrain",
- "Camera",
+ "TweenService",
+ "ChatService",
+ "BadgeService",
+ "TeleportService",
  ],
  correctAnswer: 0,
- explanation: "Центральна таблиця балансу.",
+ explanation: "TweenService.",
  },
  {
  id: "q4",
- type: "multiple_choice",
- question: "Crystal Touch має працювати на...",
+ type: MC,
+ question: "Навіщо ParticleEmitter:Emit(n)?",
  options: [
- "Server",
- "Лише LocalScript",
- "StarterGui",
- "Lighting",
+ "Один контрольований burst на хіт",
+ "Вимкнути Humanoid",
+ "Замінити MaxHealth",
+ "Створити RemoteEvent",
  ],
  correctAnswer: 0,
- explanation: "Надійний прогрес.",
+ explanation: "Burst.",
  },
  {
  id: "q5",
- type: "multiple_choice",
- question: "QuestUpdate надсилає...",
+ type: MC,
+ question: "Коли краще запускати hit Fx?",
  options: [
- "progress і goal до UI",
- "Безкоштовні Robux",
- "Terrain",
- "Лише Tool",
+ "Після успішного dealDamage",
+ "Завжди на початку анімації навіть при промаху як єдиний сигнал урону",
+ "Лише при зміні Sky",
+ "Раз на годину",
  ],
  correctAnswer: 0,
- explanation: "Відображення клієнта.",
+ explanation: "Синхрон з уроном.",
  },
  {
  id: "q6",
- type: "multiple_choice",
- question: "Порядок виконання квесту...",
+ type: MC,
+ question: "Навіщо Destroy якоря ефекту?",
  options: [
- "Прийняти → прогрес → завершити → нагорода",
- "Спочатку нагорода",
- "Без прийняття",
- "Видалити гравця",
+ "Прибрати сміття і зберегти продуктивність",
+ "Інакше Tween не існує",
+ "Destroy збільшує урон",
+ "Обов’язково для SpawnLocation",
  ],
  correctAnswer: 0,
- explanation: "Стандартний цикл.",
+ explanation: "Cleanup.",
  },
  {
  id: "q7",
- type: "multiple_choice",
- question: "ключі ідентифікатора квесту, наприклад collect_crystals_01...",
+ type: MC,
+ question: "Чому погано твінити Health?",
  options: [
- "Бути послідовним у коді",
- "Змінювати кожен рядок",
- "Необов’язкові",
- "Замінити Humanoid",
+ "Health - не візуальний твін-таргет; урон робить dealDamage",
+ "Health завжди рядок",
+ "TweenService ламає Studio",
+ "Humanoid забороняє будь-які числа",
  ],
  correctAnswer: 0,
- explanation: "Дисципліна іменування.",
+ explanation: "Різні інструменти.",
  },
  {
  id: "q8",
- type: "multiple_choice",
- question: "Урок 8.4 базується на...",
+ type: MC,
+ question: "Які властивості Part зручні для хіт-твіну?",
  options: [
- "NPC-хаб 8.1–8.3",
- "Лише гонки",
- "Лише shop UI",
- "Порожньо",
+ "Transparency, Size, Color (коротко)",
+ "Лише Name як Tween ціль",
+ "Тільки Parent",
+ "Обов’язково Terrain.WaterColor",
  ],
  correctAnswer: 0,
- explanation: "Концентраційні системи.",
+ explanation: "Візуальні props.",
  },
  {
  id: "q9",
- type: "multiple_choice",
- question: "Урок 8.5 додає...",
+ type: MC,
+ question: "Чому постійний Rate на кожному хіт-якорі - ризик?",
  options: [
- "Атака ворога",
- "Лише dialogue",
- "Лише patrol",
- "Publish",
+ "Лаг і візуальний шум",
+ "Emit тоді компілюється краще",
+ "Roblox вимагає Rate=999",
+ "Це єдиний спосіб бачити іскри",
  ],
  correctAnswer: 0,
- explanation: "Бойовий ворог.",
+ explanation: "Продуктивність.",
  },
  {
  id: "q10",
- type: "multiple_choice",
- question: "Урок 8.4 зберегти назву...",
+ type: MC,
+ question: "Навіщо папка Arena.Fx?",
  options: [
- "Lesson 8.4 - Quest System",
- "NPC Patrol",
- "Living Location",
- "Shop Works",
+ "Зручно бачити й чистити тимчасові ефекти",
+ "Без неї Humanoid не працює",
+ "Вона замінює ServerStorage",
+ "Fx папка створює хвилі",
  ],
  correctAnswer: 0,
- explanation: "Зберегти квестовий урок.",
+ explanation: "Організація cleanup.",
+ },
+ {
+ id: "q11",
+ type: MC,
+ question: "Як 8.4 готує 8.8 Ship?",
+ options: [
+ "Рубрика питає про читабельний feedback удару",
+ "Ship забороняє Particles",
+ "Треба видалити Tween перед Ship",
+ "Feedback скасовує серверний урон",
+ ],
+ correctAnswer: 0,
+ explanation: "Juice для демо.",
+ },
+ {
+ id: "q12",
+ type: MC,
+ question: "Що таке TweenInfo.new(0.15, …)?",
+ options: [
+ "Тривалість і стиль анімації властивостей",
+ "Урон 0.15 HP",
+ "Кількість ворогів",
+ "Ім’я Remote",
+ ],
+ correctAnswer: 0,
+ explanation: "Параметри твіну.",
+ },
+ {
+ id: "q13",
+ type: MC,
+ question: "Який мінімум артефакту сьогодні?",
+ options: [
+ "1 Tween + 1 particle burst на хіт + cleanup",
+ "12 систем VFX AAA",
+ "Лише Sound без усього",
+ "Порожній Baseplate",
+ ],
+ correctAnswer: 0,
+ explanation: "MVP feedback.",
+ },
+ {
+ id: "q14",
+ type: MC,
+ question: "Чому CanCollide=false на Fx Part?",
+ options: [
+ "Щоб спалах не штовхав гравця/ворога",
+ "Інакше Tween не грає",
+ "CanCollide вимикає Particles",
+ "Це збільшує MaxHealth",
+ ],
+ correctAnswer: 0,
+ explanation: "Чисто візуальний якір.",
+ },
+ {
+ id: "q15",
+ type: MC,
+ question: "Що вважається зданим артефактом 8.4?",
+ options: [
+ "Ефект після урону + cleanup + Save",
+ "Лише теорія",
+ "VFX без будь-якого урону як фінал",
+ "Emitter Enabled назавжди без Emit",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібен hit juice.",
  },
  ],
  },
@@ -1280,297 +1915,462 @@ export const ukLesson85 = {
  lessonId: "lesson-roblox-8-5",
  moduleId: "module-08",
  order: 5,
- title: "8.5 - Ворог що атакує",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
+ title: "8.5 - Смерть + респавн",
+ theoryMinutes: 35,
+ quizMinutes: 15,
+ estimatedTime: 60,
  learningObjectives: [
- "Створіть ворога за допомогою станів простою, погоні, атаки та відновлення",
- "Переслідуйте найближчого гравця в діапазоні на сервері",
- "Застосуйте TakeDamage із кулдауном атаки та телеграфом",
- "Позначайте ворогів за допомогою CollectionService для чистих Scripts",
+ "Обробити Humanoid.Died на сервері для гравця",
+ "Зробити передбачуваний респавн (LoadCharacter / SpawnLocation)",
+ "Додати i-frames lite після появи, щоб уникнути death loop",
+ "Скинути або зберегти стан бою свідомо (Tool, хвиля - правило записати)",
+ "Підготувати стабільний цикл життя до хвиль (8.6) і балансу (8.7)",
  ],
  theory: {
  sections: [
  {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `Місце проживання потребує **небезпеки**. Сьогодні один **ворог** неабияк ганяється і нападає.
+ title: "Сьогоднішня місія (урок 61 з 92)",
+ content: `У **8.1–8.4** ти вже б’єшся: Health, Tool, dealDamage, feedback. Сьогодні закриваєш цикл **життя**: що відбувається, коли HP = 0.
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - стани + пошкодження сервера
-2. **Практика (~25 хв)** - прототип атаки
-3. **Вікторина (10 хв)** - проходження **70%**
+Артефакт уроку:
+1. Смерть гравця детектиться на сервері (\`Humanoid.Died\`).
+2. Респавн працює передбачувано (SpawnLocation / LoadCharacter).
+3. **i-frames lite** 1–2 с після появи - не вмираєш одразу знову.
+4. Коротке правило на табличці: що з Tool і з боєм після смерті.
 
-Повторне використання знань модуля 5 **Humanoid** / **TakeDamage**.`,
+Без цього хвилі в 8.6 перетворяться на «спавн у купу ворогів → миттєва смерть ×10».
+
+**Зроби зараз (2 хв):** стань у небезпечне місце арени й уяви: де має з’явитись після смерті - безпечний Spawn чи середина хвилі?`,
  },
  {
- title: "Стани поведінки ворога",
- content: `| Держава | Поведінка |
-|-------|----------|
-| **неактивний** | Стоять або патрулюють невелику територію |
-| **погоня** | Перейти до найближчого гравця в діапазоні агро |
-| **атака** | Телеграф → пошкодження |
-| **відновлення** | Зачекайте до наступної атаки |\`NPC_Enemy_Slime\`в\`Workspace/Enemies/\`Тег **CollectionService**\`Enemy\`- один скрипт обробляє всі model з тегами.`,
+ title: "Смерть у Roblox простими словами",
+ content: `| Подія | Хто відповідає | Що відчуває гравець |
+|-------|----------------|---------------------|
+| Health → 0 | Сервер / Humanoid | Падаєш / ragdoll |
+| Died | Сигнал Humanoid | «Я мертвий» |
+| Character зникає | Движок / твій код | Екран смерті / пауза |
+| Новий Character | Респавн | Знову в світі |
+
+Метафора: Died - **свисток судді**. Респавн - **вихід з лави запасних**. i-frames - **короткий щит**, щоб не вдарили в момент виходу.
+
+За замовчуванням Roblox уже вміє респавнити через SpawnLocation. Сьогодні ти **контролюєш** цей момент під арену: коли, куди, з яким імунітетом.`,
  },
  {
- title: "Агро і погоня",
- content: `\`\`\`lua
-local AGGRO_RANGE = 40
-local ATTACK_RANGE = 6
+ title: "Підписка на Died (сервер)",
+ content: `На \`Players.PlayerAdded\` і на кожен новий Character:
 
-local function getNearestPlayer(position)
- local nearest, dist = nil, AGGRO_RANGE
- for _, player in ipairs(game.Players:GetPlayers()) do
- local char = player.Character
- local root = char and char:FindFirstChild("HumanoidRootPart")
- if root then
- local d = (root.Position - position).Magnitude
- if d < dist then
- nearest, dist = player, d
- end
- end
- end
- return nearest
-end
-\`\`\`**Чейз:**\`humanoid:MoveTo(targetRoot.Position)\`кожні 0,5 с під час агро.`,
+\`local function hookCharacter(player, character)\`
+\` local hum = character:WaitForChild("Humanoid")\`
+\` hum.Died:Connect(function()\`
+\` onPlayerDied(player)\`
+\` end)\`
+\`end\`
+
+\`Players.PlayerAdded:Connect(function(player)\`
+\` player.CharacterAdded:Connect(function(character)\`
+\` hookCharacter(player, character)\`
+\` end)\`
+\` if player.Character then hookCharacter(player, player.Character) end\`
+\`end)\`
+
+Чому сервер: смерть і респавн - правила світу. Клієнт може брехати про HP; Died від серверного Humanoid - надійніший якір.
+
+У \`onPlayerDied\` поки достатньо: print імені, запустити таймер респавну, поставити прапор \`player:SetAttribute("Dead", true)\`.`,
  },
  {
- title: "Атака з перезарядкою",
- content: `\`\`\`lua
-local DAMAGE = 12
-local COOLDOWN = 1.2
-local onCooldown = false
+ title: "Респавн: LoadCharacter vs SpawnLocation",
+ content: `| Спосіб | Плюс | Мінус |
+|--------|------|-------|
+| **SpawnLocation** (авто) | Просто, движок сам | Менше контролю таймінгу |
+| **LoadCharacter()** з сервера | Ти вирішуєш «через 3 с» | Треба самому викликати |
+| Телепорт живого Character | Швидко | Не справжня «смерть» |
 
-local function tryAttack(enemy, targetChar)
- local root = targetChar:FindFirstChild("HumanoidRootPart")
- local hum = targetChar:FindFirstChildOfClass("Humanoid")
- if not root or not hum or onCooldown then return end
+Навчальний шаблон:
 
- if (enemy.PrimaryPart.Position - root.Position).Magnitude > ATTACK_RANGE then
- return
- end
+\`local RESPAWN_DELAY = 3\`
 
- onCooldown = true
- -- Telegraph: red highlight or sound here
- task.wait(0.4) -- wind-up
- hum:TakeDamage(DAMAGE)
- task.delay(COOLDOWN, function()
- onCooldown = false
- end)
-end
-\`\`\`**Пошкодження на сервері** - те саме правило, що й на арені Модуля 5.`,
+\`local function onPlayerDied(player)\`
+\` task.delay(RESPAWN_DELAY, function()\`
+\` if not player.Parent then return end\`
+\` player:LoadCharacter()\`
+\` end)\`
+\`end\`
+
+Після LoadCharacter спрацює \`CharacterAdded\` → знову \`hookCharacter\` + старт i-frames.
+
+Переконайся, що є **хоча б один** SpawnLocation у безпечній зоні (не всередині EnemySpawn).`,
  },
  {
- title: "Телеграф і справедливість",
- content: `До пошкодження:
-- **Play** короткий звук
-- **Спалах** Колір Parts або вибух Parts
-- **0,3-0,5 с** затримка намотування
+ title: "i-frames lite - щит після появи",
+ content: `Проблема: респавн у зону агро → удар → знову Died за 0.2 с.
 
-Гравці вчаться **ухилятися** під час заводу - відчувається, що залежить від навичок.
+Рішення lite (обери одне):
 
-**Швидкість ходьби** ворог ~14, гравець за умовчанням 16 - гравець може втекти.`,
+**A. Attribute \`Invulnerable\`**
+\`character:SetAttribute("Invulnerable", true)\`
+\`task.delay(1.5, function()\`
+\` if character.Parent then character:SetAttribute("Invulnerable", false) end\`
+\`end)\`
+
+У \`dealDamage\` / урон по гравцю:
+\`if character:GetAttribute("Invulnerable") then return end\`
+
+**B. Тимчасово ForceField**
+\`local ff = Instance.new("ForceField")\`
+\`ff.Parent = character\`
+\`task.delay(1.5, function() ff:Destroy() end)\`
+
+ForceField видимий - ок для навчання («бачу щит»). Attribute - чистіший для свого урону.
+
+**Зроби зараз (8 хв):** після респавну 1.5 с урон по тобі ігнорується (протестуй dealDamage / ворога).`,
  },
  {
- title: "Контрольний список налаштування противника",
- content: `| Шматок | Налаштування |
-|-------|---------|
-| Humanoid | MaxHealth 80 |
-| Швидкість ходьби | 12-14 |
-| Первинна Part | HumanoidRootPart |
-| Тег | Ворог (CollectionService) |
+ title: "Куди респавнитись на арені",
+ content: `| Місце Spawn | Коли ок | Коли погано |
+|-------------|---------|-------------|
+| Лобі / за бар’єром | Завжди безпечно | Далеко від бою - нудно бігти |
+| Край арени | Швидко назад у бій | Якщо хвиля вже там - потрібні i-frames |
+| Центр арени | Майже ніколи | Death loop |
 
-**Зона появи** біля квестових кристалів - хід виконання квесту: збір → боротьба → повернення.`,
+Правило школи на сьогодні:
+1. Spawn **поза** основним спавном ворогів.
+2. i-frames **обов’язкові**, якщо Spawn близько до бою.
+3. Табличка: «Після смерті з’явишся біля входу».
+
+Не телепортуй мертвий Character «вручну» замість респавну - отримаєш дивні стани Tool/анімацій.`,
  },
  {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Ворожі погоні в межах AGGRO_RANGE
-- [ ] Пошкодження лише в межах ATTACK_RANGE + час відновлення
-- [ ] Телеграф видно перед ударом
-- [ ] Тест для 2 гравців - правильні цілі найближчі
-- [ ] Зберегти:\`Lesson 8.5 - Enemy Attack\``,
+ title: "Tool, стан бою і «що зберігаємо»",
+ content: `Після смерті Character зникає - Tool з Character теж. StarterPack / Backpack логіка поверне зброю при новому Character **якщо** Tool у StarterPack.
+
+Запиши правило уроку (одне):
+- **A:** після смерті Tool знову з StarterPack - хвилі (коли з’являться) **продовжуються**.
+- **B:** смерть = fail run, хвилі стоп (для 8.6 вирішиш явно).
+
+Сьогодні хвиль ще може не бути - все одно продумай Tool:
+- StarterPack меч → після респавну знову в руках/інвентарі.
+- Якщо Tool лише клонували в Backpack скриптом - повтори клон у CharacterAdded.
+
+Не залишай «мертвий» стан \`Dead=true\` навічно після LoadCharacter - скинь Attribute.`,
+ },
+ {
+ title: "Смерть ворога vs смерть гравця",
+ content: `| | Гравець | Ворог (dummy/NPC) |
+|--|---------|-------------------|
+| Died | Респавн + i-frames | Зникнення / +прогрес хвилі (8.6) |
+| LoadCharacter | Так | Зазвичай Destroy модель |
+| i-frames | Так | Рідко потрібно |
+
+Не вішай на ворога той самий \`LoadCharacter\` - це для Player.
+
+Для ворога з 8.3–8.4:
+\`hum.Died:Connect(function()\`
+\` task.delay(0.5, function() enemy:Destroy() end)\`
+\`end)\`
+
+Сьогодні фокус - **гравець**. Ворожий Died лише перевір, що не крашиться, коли ти тестуєш свій урон.`,
+ },
+ {
+ title: "Playtest смерті (чекліст)",
+ content: `| # | Дія | Очікування |
+|---|-----|------------|
+| 1 | Впасти до 0 HP (свій урон / тест-кнопка / ворог) | Died спрацьовує (print) |
+| 2 | Через RESPAWN_DELAY | Новий Character на Spawn |
+| 3 | Одразу після появи отримати урон | i-frames тримають 1–2 с |
+| 4 | Після кінця i-frames | Урон знову діє |
+| 5 | Tool | Доступний після респавну (StarterPack) |
+| 6 | Дві смерті підряд | Не краш, hook знову працює |
+| 7 | Output | Без червоного спаму |
+
+Тест-кнопка (опційно, сервер): \`hum.Health = 0\` для швидкого Died без довгого бою.`,
+ },
+ {
+ title: "Типові дірки death loop",
+ content: `| Симптом | Причина | Фікс |
+|---------|---------|------|
+| Смерть кожні 0.2 с | Spawn у шкоді, немає i-frames | Spawn далі + ForceField/Attribute |
+| Не респавниться | Немає LoadCharacter / Disabled Spawn | Виклик + SpawnLocation |
+| Подвійний респавн | Died + авто-респавн движка разом | Обери один шлях |
+| Немає Died hook на 2-му житті | Підписався лише раз на старий Character | CharacterAdded кожен раз |
+| Урон ігнорується вічно | Invulnerable не скинувся | delay + false / Destroy FF |
+
+**Зроби зараз (5 хв):** навмисно постав Spawn близько до шкоди - переконайся, що i-frames рятують; потім поверни Spawn у безпечне місце.`,
+ },
+ {
+ title: "Чекліст здачі уроку 61",
+ content: `- [ ] Died hooked на кожен Character (сервер)
+- [ ] Респавн через delay (LoadCharacter або стабільний SpawnLocation)
+- [ ] Spawn не в центрі ворожого спавну
+- [ ] i-frames 1–2 с після появи
+- [ ] dealDamage / ворожий урон поважає i-frames
+- [ ] Tool повертається (StarterPack або клон)
+- [ ] Playtest 1–6 зелені
+- [ ] Save: Lesson 8.5 - Death Respawn
+
+Далі **8.6** додасть хвилі: респавн уже не повинен «з’їдати» гравця на старті хвилі. У **8.7** перевіриш, чи death loop не маскується під «складний баланс».
+
+Артефакт: цикл **жив → помер → повернувся зі щитом**. Без нього арена - одноразова пастка.`,
  },
  ],
  },
  commonMistakes: [
  {
- mistake: "Пошкодження в LocalScript",
- explanation: "Можна використовувати.",
- correctApproach: "Сервер TakeDamage",
+ mistake: "Немає i-frames біля небезпечного Spawn",
+ explanation: "Death loop, злість, неможливо тестувати хвилі.",
+ correctApproach: "1–2 с ForceField або Attribute Invulnerable",
  },
  {
- mistake: "Немає перезарядки",
- explanation: "Миттєве танення.",
- correctApproach: "1,2 с+ між ударами",
+ mistake: "Підписка на Died лише для першого Character",
+ explanation: "Друге життя без логіки смерті.",
+ correctApproach: "CharacterAdded → hook щоразу",
  },
  {
- mistake: "Без телеграфу",
- explanation: "Здається несправедливим.",
- correctApproach: "Затримка згортання + VFX",
+ mistake: "Респавн лише телепортом без LoadCharacter",
+ explanation: "Битий стан анімацій/Tool/Humanoid.",
+ correctApproach: "Справжній респавн Character",
  },
  {
- mistake: "Enemy was Anchored",
- explanation: "Не можна переслідувати.",
- correctApproach: "Знято з якоря Humanoid",
+ mistake: "Invulnerable залишити true назавжди",
+ explanation: "Гравець безсмертний - баланс мертвий.",
+ correctApproach: "Обов’язковий скид після delay",
+ },
+ {
+ mistake: "SpawnLocation всередині EnemySpawn",
+ explanation: "Миттєва смерть навіть з коротким щитом.",
+ correctApproach: "Безпечна зона входу",
+ },
+ {
+ mistake: "Клієнтський «фейковий» респавн UI без сервера",
+ explanation: "Розсинхрон з реальним Character.",
+ correctApproach: "Сервер Died + LoadCharacter",
  },
  ],
- summary: "Ви створили ворога за допомогою погоні, телеграфних атак на стороні сервера, шкоди від часу перезарядки та тегів CollectionService - тепер у центрі є бій, який відповідає циклу квесту.",
+ summary: "Ти зібрав цикл смерті й респавну: Died на сервері, передбачувана поява, i-frames lite проти death loop і повернення Tool. Це фундамент стабільних хвиль у 8.6 і чесного балансу в 8.7.",
  practiceTask: {
- title: "Прототип ворожої атаки (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** Один чесно атакуючий ворог.
+ title: "Життя після смерті (~30 хв)",
+ difficulty: "intermediate",
+ description: `**Мета:** померти → зачекати → з’явитись зі щитом → знову в бій.
 
-### Part A - Вороже обладнання (8 хв)
-1. NPC_Enemy_Slime + Humanoid + тег Enemy
-2. Розмістіть біля квестової зони
+### Part A - Died і респавн (10 хв)
+1. Hook Humanoid.Died на кожен Character (сервер).
+2. task.delay + LoadCharacter (або стабільний SpawnLocation).
+3. Spawn у безпечній зоні.
 
-### Part B - Script AI (15 хв)
-1. Цикл стану: знайти найближче → погоня → атака
-2. TakeDamage 12, час відновлення 1,2 с, телеграф 0,4 с
+### Part B - i-frames (12 хв)
+1. ForceField або Attribute Invulnerable на 1.5 с.
+2. dealDamage / урон по гравцю ігнорує щит.
+3. Після delay урон знову діє.
+4. Перевір Tool після респавну.
 
-### Part C - Перевірте та збережіть (2 хв)
-1. Агротест для двох гравців
-2. **Зберегти в Roblox** →\`Lesson 8.5 - Enemy Attack\` 3. **Практика завершена**`,
+### Part C - Playtest (8 хв)
+1. Таблиця 1–6.
+2. Дві смерті підряд без крашу.
+3. **Save:** Lesson 8.5 - Death Respawn`,
  hints: [
- "Відродження модуля 5 все ще працює, якщо гравець помирає",
- "CollectionService:GetTagged(\"Enemy\") масштабується до багатьох ворогів",
- "Вивід (print) стану змінюється під час налагодження",
+ "Тест: сервером постав Health=0 для швидкого Died",
+ "print на Died і на кінці i-frames",
+ "Спочатку безпечний Spawn, потім навмисний стрес-тест біля шкоди",
  ],
- optionalChallenge: "Стрибок під час телеграфу → половина шкоди.",
+ optionalChallenge: "Короткий Sound або TextLabel «Респавн через 3…2…1» (клієнтський UI від серверного сигналу lite).",
  },
  quiz: {
  passingScore: 70,
- timeLimit: 10,
+ timeLimit: 15,
  questions: [
  {
  id: "q1",
- type: "multiple_choice",
- question: "Пошкодження противника використовує...",
+ type: MC,
+ question: "Головна мета уроку 8.5?",
  options: [
- "Humanoid:TakeDamage на сервері",
- "Client print",
- "Terrain",
- "Coins",
+ "Зробити смерть, респавн і i-frames без death loop",
+ "Видалити Humanoid",
+ "Побудувати магазин Remotes",
+ "Publish трасу Race",
  ],
  correctAnswer: 0,
- explanation: "Повноваження сервера.",
+ explanation: "Цикл життя.",
  },
  {
  id: "q2",
- type: "multiple_choice",
- question: "Перезарядка запобігає...",
+ type: MC,
+ question: "Де логічно слухати Humanoid.Died гравця?",
  options: [
- "Шкода кожен кадр",
- "Ходьба",
- "Quest",
- "Dialogue",
+ "На сервері для кожного Character",
+ "Лише один раз у LocalScript неба",
+ "У Terrain",
+ "У назві Tool",
  ],
  correctAnswer: 0,
- explanation: "Чесна швидкість атаки.",
+ explanation: "Серверний якір.",
  },
  {
  id: "q3",
- type: "multiple_choice",
- question: "Telegraph дає гравцеві час...",
+ type: MC,
+ question: "Навіщо i-frames після респавну?",
  options: [
- "Реагувати та ухилятися",
- "Літати",
- "Shop",
- "Publish",
+ "Щоб не померти миттєво знову біля небезпеки",
+ "Щоб збільшити MaxHealth назавжди",
+ "Це замінює dealDamage",
+ "i-frames малюють Skybox",
  ],
  correctAnswer: 0,
- explanation: "Справедливість.",
+ explanation: "Анти death loop.",
  },
  {
  id: "q4",
- type: "multiple_choice",
- question: "Чейз використовує...",
+ type: MC,
+ question: "Що робить LoadCharacter?",
  options: [
- "Humanoid:MoveTo",
- "Фарбування Terrain",
- "Лише RemoteFunction",
- "Atmosphere",
+ "Створює новий Character гравця (респавн)",
+ "Видаляє Workspace",
+ "Створює RemoteEvent",
+ "Вимикає SpawnLocation назавжди",
  ],
  correctAnswer: 0,
- explanation: "Рух NPC.",
+ explanation: "Респавн з сервера.",
  },
  {
  id: "q5",
- type: "multiple_choice",
- question: "Тег CollectionService Ворог...",
+ type: MC,
+ question: "Чому Spawn у центрі EnemySpawn - погано?",
  options: [
- "Групує ворогів для Scripts",
- "Видаляє гравців",
- "Зберігає дані",
- "Відкриває UI",
+ "Високий ризик death loop навіть із коротким щитом",
+ "Humanoid тоді не існує",
+ "Studio не зберігає Place",
+ "Tool стає Anchored",
  ],
  correctAnswer: 0,
- explanation: "Чиста архітектура.",
+ explanation: "Безпечна зона.",
  },
  {
  id: "q6",
- type: "multiple_choice",
- question: "ATTACK_RANGE 6 означає...",
+ type: MC,
+ question: "Як ForceField допомагає в уроці?",
  options: [
- "Шкода лише впритул",
- "Шкода з усієї карти",
- "Шкоди ніколи",
- "Лікувати гравця",
+ "Тимчасовий видимий захист після появи",
+ "Замінює всі хвилі",
+ "Видаляє урон з гри назавжди",
+ "Це обов’язково для Billboard",
  ],
  correctAnswer: 0,
- explanation: "Дальність ближнього бою.",
+ explanation: "Lite i-frames.",
  },
  {
  id: "q7",
- type: "multiple_choice",
- question: "Штати включають...",
+ type: MC,
+ question: "Чому hook Died треба в CharacterAdded щоразу?",
  options: [
- "idle chase attack cooldown",
- "Лише idle",
- "Лише магазин",
- "Лише гонки",
+ "Кожен новий Character - новий Humanoid після респавну",
+ "CharacterAdded заборонений після смерті",
+ "Інакше MaxHealth стає рядком",
+ "Це вимикає Tool",
  ],
  correctAnswer: 0,
- explanation: "Машина поведінки.",
+ explanation: "Нове життя = новий hook.",
  },
  {
  id: "q8",
- type: "multiple_choice",
- question: "Урок 8.5 використовує навички з...",
+ type: MC,
+ question: "Що зробити з Attribute Invulnerable після delay?",
  options: [
- "Module 5 Humanoid damage",
- "Лише terrain Module 1",
- "Module 12 publish",
- "Нічого",
+ "Поставити false (зняти імунітет)",
+ "Залишити true назавжди",
+ "Видалити гравця з гри",
+ "Обов’язково Destroy Workspace",
  ],
  correctAnswer: 0,
- explanation: "Бойовий фундамент.",
+ explanation: "Інакше безсмертя.",
  },
  {
  id: "q9",
- type: "multiple_choice",
- question: "Урок 8.6 - це...",
+ type: MC,
+ question: "Як Tool зазвичай повертається після смерті?",
  options: [
- "Checkpoint Living Location",
- "Лише shop",
- "Лише гонки",
- "Порожньо",
+ "Через StarterPack на новий Character",
+ "Сам себе клонує з Lighting",
+ "Лише якщо назвати Part «Sword»",
+ "Tool ніколи не повертається в Roblox",
  ],
  correctAnswer: 0,
- explanation: "Фінал модуля.",
+ explanation: "StarterPack.",
  },
  {
  id: "q10",
- type: "multiple_choice",
- question: "Урок 8.5 зберегти назву...",
+ type: MC,
+ question: "Чим смерть ворога відрізняється від смерті гравця тут?",
  options: [
- "Lesson 8.5 - Enemy Attack",
- "Quest System",
- "Dialogue System",
- "Arena Ready",
+ "Ворога Destroy, гравця респавнять через LoadCharacter/Spawn",
+ "Ворог завжди LoadCharacter",
+ "Гравець завжди Destroy назавжди",
+ "Немає різниці ніколи",
  ],
  correctAnswer: 0,
- explanation: "Зберегти урок ворога.",
+ explanation: "Різні долі моделей.",
+ },
+ {
+ id: "q11",
+ type: MC,
+ question: "Як 8.5 готує 8.6 хвилі?",
+ options: [
+ "Респавн зі щитом дозволяє тестувати хвилі без миттєвого fail-loop",
+ "Хвилі забороняють респавн",
+ "Треба видалити Died перед хвилями",
+ "waveConfig замінює Humanoid",
+ ],
+ correctAnswer: 0,
+ explanation: "Стабільний цикл життя.",
+ },
+ {
+ id: "q12",
+ type: MC,
+ question: "Що перевірити в dealDamage щодо i-frames?",
+ options: [
+ "Якщо Invulnerable/ForceField - не завдавати шкоди",
+ "Завжди ігнорувати всі перевірки",
+ "i-frames діють лише на Terrain",
+ "dealDamage тоді компілюється гірше",
+ ],
+ correctAnswer: 0,
+ explanation: "Повага до щита.",
+ },
+ {
+ id: "q13",
+ type: MC,
+ question: "Який орієнтир тривалості i-frames у уроці?",
+ options: [
+ "Близько 1–2 секунд",
+ "Обов’язково 5 хвилин",
+ "0 мс завжди",
+ "Лише під час Publish",
+ ],
+ correctAnswer: 0,
+ explanation: "Короткий щит.",
+ },
+ {
+ id: "q14",
+ type: MC,
+ question: "Що означає death loop?",
+ options: [
+ "Повторні смерті одразу після респавну без шансу відіграти",
+ "Переможна хвиля",
+ "Назва ModuleScript",
+ "Обов’язковий режим Studio",
+ ],
+ correctAnswer: 0,
+ explanation: "Петля смерті.",
+ },
+ {
+ id: "q15",
+ type: MC,
+ question: "Що вважається зданим артефактом 8.5?",
+ options: [
+ "Died + респавн + i-frames + Save",
+ "Лише теорія без Play",
+ "Порожній Baseplate",
+ "Безсмертя Invulnerable=true навічно",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібен цикл життя.",
  },
  ],
  },
@@ -1580,295 +2380,510 @@ export const ukLesson86 = {
  lessonId: "lesson-roblox-8-6",
  moduleId: "module-08",
  order: 6,
- title: "8.6 - Checkpoint: Жива локація",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
+ title: "8.6 - Хвилі + waveConfig",
+ theoryMinutes: 35,
+ quizMinutes: 15,
+ estimatedTime: 60,
  learningObjectives: [
- "Інтегруйте NPC-гіда, патруль, діалог, квест і ворога",
- "Пройдіть повну перевірку якості гравця від появи до нагороди",
- "Зберігайте системи в окремих модулях для ремонтопридатності",
- "Збережіть модуль 8 - Living Location у портфоліо",
+ "Описати бій як послідовність хвиль, а не одного dummy",
+ "Зберігати параметри хвиль у table waveConfig (кількість, HP, пауза)",
+ "Спавнити ворогів на сервері і вести лічильник живих (aliveCount)",
+ "Переходити до наступної хвилі через while / індекс, коли хвиля очищена",
+ "Показати victory після останньої хвилі без крашу стану",
  ],
  theory: {
  sections: [
  {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**Житлова локація** = портфоліо модуля 8 - міні-зона, яка відчуває себе **живою**.
+ title: "Сьогоднішня місія (урок 62 з 92)",
+ content: `У **8.1–8.5** у тебе вже є арена, Tool, серверний урон і цикл смерть/респавн. Сьогодні додаєш **хвилі**: бій іде 1 → 2 → … а не «один dummy на вічність».
 
-**Обов’язково:**
-- Керівництво NPC + діалог (8.1-8.2)
-- Патруль NPC (8.3)
-- Квест збирати кристали (8.4)
-- Атакуючий ворог (8.5)
-- Купуйте з модуля 7 за бажанням поблизу
+Артефакт уроку:
+1. Table \`waveConfig\` з мінімум **2** хвилями (кількість ворогів + HP).
+2. Серверний \`spawnWave(index)\`, що клонує ворогів на арену.
+3. \`aliveCount\` (або еквівалент): коли 0 - наступна хвиля.
+4. Після останньої хвилі - \`victory\` (print / Part / TextLabel).
 
-**Зберегти:**\`Module 8 - Living Location\``,
+Без хвиль 8.7 нічого міряти кривою складності, а 8.8 Ship не має другого акту бою.
+
+**Зроби зараз (2 хв):** напиши: хвиля 1 = скільки ворогів і який HP; хвиля 2 = що зміниться.`,
  },
  {
- title: "План житлового приміщення",
- content: `\`\`\`
-Workspace
-├── NPCs/
-│ ├── NPC_Guide_Maya (dialogue + quest giver)
-│ └── NPC_Patrol_Guard (patrol loop)
-├── Enemies/
-│ └── NPC_Enemy_Slime
-├── QuestProps/
-│ └── Crystals x5
-├── PatrolRoutes/
-│ └── Route_ShopLoop
-└── ShopArea (from Module 7)
+ title: "Навіщо waveConfig, а не «захардкодити spawn»",
+ content: `| Захардкод у коді | waveConfig table |
+|------------------|------------------|
+| \`spawn(2); wait; spawn(5)\` розкидано | Один список правил |
+| Баланс шукаєш у 4 скриптах | Міняєш рядок table |
+| Складно пояснити ментору | Видно: wave 1 / wave 2 |
+| Нова хвиля = копіпаста | Новий рядок у масиві |
 
-ServerScriptService
-├── DialogueData
-├── QuestConfig + QuestService
-├── ShopConfig (optional)
-└── EnemyAI / NPC scripts
-\`\`\``,
+Метафора: waveConfig - **розклад концерту**. Скрипт лише виконує номер за номером.
+
+Приклад форми:
+
+\`local waveConfig = {\`
+\` { enemies = 2, hp = 60, delay = 1 },\`
+\` { enemies = 3, hp = 80, delay = 2 },\`
+\` { enemies = 1, hp = 150, delay = 1 }, -- «бос» lite\`
+\`}\`
+
+Поля можна розширити пізніше (швидкість, ім’я префаба). Сьогодні достатньо \`enemies\` + \`hp\` (+ опційно \`delay\`).`,
  },
  {
- title: "Досвід потокового тесту",
- content: `**Золотий шлях** (один гравець, ~3 хв):
+ title: "Стан режиму арени",
+ content: `Тримай на сервері простий стан (не на клієнті):
 
-| Крок | Дія | Пас? |
-|------|--------|-------|
-| 1 | Відродження в хабі | |
-| 2 | Поговоріть з Гідом Майєю - діалог | |
-| 3 | Прийняти/почати кристалічний квест | |
-| 4 | Зберіть 5 кристалів - оновлення інтерфейсу | |
-| 5 | Боріться зі слизовим ворогом - виживіть | |
-| 6 | Виконайте квест - винагорода монетами | |
-| 7 | Дивіться патрульний NPC, що йде | |
+\`local arena = {\`
+\` running = false,\`
+\` waveIndex = 0,\`
+\` aliveCount = 0,\`
+\` victory = false,\`
+\`}\`
 
-Якщо ви заплуталися на будь-якому кроці → виправте покажчики (стрілки, діалогові підказки).`,
+Правила:
+- \`running = true\` після старту бою (Prompt / Part «Start Waves»).
+- \`waveIndex\` - який рядок waveConfig зараз (1-based зручніше для UI).
+- \`aliveCount\` збільшуй при спавні, зменшуй на Death ворога.
+- \`victory\` - щоб не спавнити хвилю 99 після кінця.
+
+**PlayerRemoving / Stop:** якщо робиш соло-арену на сесію - скидай стан при виході, щоб не лишились «привиди» лічильника.
+
+Не зберігай \`aliveCount\` лише в LocalScript: клієнт бреше, хвиля «закінчиться» фейково.`,
  },
  {
- title: "Багатокористувацька перевірка якості",
- content: `**2 гравці:**
-- Самостійний прогрес квесту
-- Ворожі цілі найближчі - немає спільних помилок HP
-- Діалог не блокує інтерфейс іншого гравця
-- Патруль видно обом
+ title: "Префаб ворога і точка спавну",
+ content: `У ServerStorage (або ReplicatedStorage, якщо свідомо):
+- Model \`EnemyTemplate\` з Humanoid (з 8.1/8.3 логіки).
 
-**Output:** нуль червоних помилок під час золотого шляху × 2.`,
+У Workspace.Arena:
+- Part/Folder \`SpawnPoints\` (1–3 точки) **або** одна \`EnemySpawn\`.
+
+Клон:
+
+\`local function spawnEnemy(hp)\`
+\` local enemy = template:Clone()\`
+\` enemy:PivotTo(spawnCFrame)\`
+\` local hum = enemy:FindFirstChildOfClass("Humanoid")\`
+\` hum.MaxHealth = hp\`
+\` hum.Health = hp\`
+\` enemy.Parent = workspace.Arena.Enemies\`
+\` arena.aliveCount += 1\`
+\` hum.Died:Connect(function()\`
+\` arena.aliveCount -= 1\`
+\` -- далі перевірка «хвиля чиста?»\`
+\` end)\`
+\` return enemy\`
+\`end\`
+
+Anchored template у Storage - ок; у клона зніми зайве Anchored, щоб ходив/стояв як задумано.
+
+**Зроби зараз (8 хв):** один клон з HP з config з’являється по кнопці старту.`,
  },
  {
- title: "Смужка якості checkpoint",
- content: `| Бар | Стандарт |
-|-----|----------|
-| Scripts | Розділені за системою (Квест, Діалог, Ворог) |
-| Текст інтерфейсу користувача | Читається, без перекриття |
-| Квест | Прогрес точний, винагорода один раз |
-| Бойовий | Телеграф + перезарядка |
-| Полірування | Без налагодження друкує спам |
+ title: "spawnWave(index) - серце системи",
+ content: `\`local function spawnWave(index)\`
+\` local cfg = waveConfig[index]\`
+\` if not cfg then\`
+\` arena.victory = true\`
+\` arena.running = false\`
+\` announceVictory()\`
+\` return\`
+\` end\`
+\` arena.waveIndex = index\`
+\` arena.aliveCount = 0\`
+\` for i = 1, cfg.enemies do\`
+\` spawnEnemy(cfg.hp)\`
+\` task.wait(0.15) -- легкий рознос спавну\`
+\` end\`
+\`end\`
 
-**Надійність > додаткові функції** для checkpoint.`,
+Важливо: після циклу for \`aliveCount\` має дорівнювати \`cfg.enemies\` (якщо всі клони живі). Якщо Died спрацював миттєво через баг підлоги - шукай void/телепорт, не «наступну хвилю».
+
+Стартовий виклик: \`spawnWave(1)\` після \`arena.running = true\`.`,
  },
  {
- title: "60-секундний демонстраційний Script",
- content: `1. Spawn - пан хаб (патруль + гід)
-2. Бесіда - 2 діалогічні репліки
-3. Квест з'являється 0/5
-4. Зберіть 2 кристали - лічильник оновлень
-5. Швидка боротьба зі слизом
-6. Завершити квест - спливаюче вікно монети / мітка
-7. Відкрити магазин необов'язково
+ title: "Коли хвиля «очищена»",
+ content: `Після кожного \`Died\`:
 
-Запис для перегляду портфоліо або вчителя.`,
+\`local function onEnemyDied()\`
+\` arena.aliveCount -= 1\`
+\` if not arena.running or arena.victory then return end\`
+\` if arena.aliveCount > 0 then return end\`
+\` local nextIndex = arena.waveIndex + 1\`
+\` local delay = (waveConfig[arena.waveIndex] and waveConfig[arena.waveIndex].delay) or 1\`
+\` task.delay(delay, function()\`
+\` if not arena.running then return end\`
+\` spawnWave(nextIndex)\`
+\` end)\`
+\`end\`
+
+Типові дірки:
+| Баг | Фікс |
+|-----|------|
+| aliveCount іде в мінус | Died двічі / не той Humanoid |
+| Хвиля 2 одразу зі стартом | Перевірка aliveCount > 0 пропущена |
+| Victory ніколи | waveConfig[next] nil не оброблений |
+| Подвійний spawnWave | Два Died одночасно без «cleaning» прапора |
+
+Lite-захист: прапор \`arena.cleaningWave\`, щоб два останні смерті не викликали spawn двічі.`,
  },
  {
- title: "Попередній перегляд модуля 9",
- content: `**Модуль 9** часто охоплює **команди, раунди, перебіг матчу** - ваш живий центр може стати лобі між раундами.
+ title: "while як диригент (опційний стиль)",
+ content: `Два стилі - обери один і тримайся:
 
-**Перед тренуванням:**
-- [ ] Золотий шлях минає
-- [ ] пропуски для 2 гравців
-- [ ] **Зберегти в Roblox** →\`Module 8 - Living Location\``,
+**A. Подієвий (Died → next)** - вище; добре для живого бою.
+
+**B. while на сервері:**
+
+\`arena.running = true\`
+\`local w = 1\`
+\`while arena.running and waveConfig[w] do\`
+\` spawnWave(w)\`
+\` -- чекати поки aliveCount == 0\`
+\` while arena.running and arena.aliveCount > 0 do\`
+\` task.wait(0.25)\`
+\` end\`
+\` if arena.victory then break end\`
+\` w += 1\`
+\` task.wait(waveConfig[w-1].delay or 1)\`
+\`end\`
+\`if arena.running then announceVictory() end\`
+
+\`while\` тут - **суперсила очікування** «поки хвиля жива». Не плутай з while на клієнті, що вішає UI.
+
+Не роби \`while true do spawn() end\` без умови - отримаєш лавину ворогів.`,
+ },
+ {
+ title: "Старт і рестарт заїзду хвиль",
+ content: `Старт (ProximityPrompt / Touched StartPad / кнопка):
+
+1. Якщо \`running\` - ігнор або «вже йде».
+2. Почисти старих ворогів у \`Arena.Enemies\` (Destroy).
+3. Скинь \`victory = false\`, \`aliveCount = 0\`.
+4. \`running = true\` → \`spawnWave(1)\`.
+
+Рестарт після victory / смерті всіх:
+- Та сама функція \`beginWaves()\`.
+- Не залишай старі моделі - інакше aliveCount бреше.
+
+Зв’язок з 8.5: смерть **гравця** не обов’язково стопає хвилі (соло-арена може продовжуватись). Або стопає - але тоді запиши правило явно в табличці на арені.
+
+**Зроби зараз (5 хв):** StartPad двічі підряд не створює 2× хвилю 1 без cleanup.`,
+ },
+ {
+ title: "UI lite: «Хвиля N»",
+ content: `Для здачі достатньо:
+- \`print("Wave", index)\` у Output, **або**
+- SurfaceGui / Billboard «Хвиля 2», **або**
+- FireClient / Value \`Wave\` (якщо вже вмієш Remotes - не обов’язково сьогодні).
+
+Текст для гравця краще за «мовчазний спавн поза кадром».
+
+Онбординг біля Start:
+*«Натисни старт. Знищ усі хвилі. Після останньої - перемога.»*
+
+Не роби зараз повний лідерборд хвиль - це відволікає від aliveCount.`,
+ },
+ {
+ title: "Playtest хвиль",
+ content: `| # | Дія | Очікування |
+|---|-----|------------|
+| 1 | Старт | Хвиля 1, enemies з config |
+| 2 | Вбити всіх хвилі 1 | Після delay - хвиля 2 |
+| 3 | HP ворогів | Збігається з waveConfig.hp |
+| 4 | Кількість | Збігається з enemies |
+| 5 | Остання хвиля очищена | Victory, без нової хвилі |
+| 6 | Повторний старт | Cleanup + знову з 1 |
+| 7 | Output | Немає спаму помилок / мінус alive |
+
+Якщо пункт 2 червоний - лог \`aliveCount\` на кожен Died.  
+Якщо пункт 5 червоний - перевір \`if not cfg then victory\`.`,
+ },
+ {
+ title: "Зв’язок з 8.7–8.8",
+ content: `| Сьогодні | Далі |
+|----------|------|
+| waveConfig з різними hp | 8.7 міряє TTK по хвилях |
+| aliveCount стабільний | 8.8 рубрика: цикл бою зелений |
+| 2+ хвилі | Демо 90 с має «акт 2» |
+| Cleanup на рестарт | Ship без привидів ворогів |
+
+Save: \`Lesson 8.6 - Arena Waves\`.
+
+У **8.7** підкрутиш числа в тих самих рядках table. Не розмножуй HP у трьох скриптах.`,
+ },
+ {
+ title: "Чекліст здачі уроку 62",
+ content: `- [ ] waveConfig ≥2 рядки (enemies + hp)
+- [ ] spawnWave на сервері
+- [ ] aliveCount коректний (не мінус, не застряг)
+- [ ] Перехід 1→2 після очищення
+- [ ] Victory після останньої
+- [ ] Cleanup + рестарт працює
+- [ ] Playtest 1–5 зелені
+- [ ] Save Lesson 8.6 - Arena Waves
+
+Артефакт: арена **дихає хвилями**. Один dummy більше не «вся гра» - є розклад, який 8.7 збалансує, а 8.8 покаже ментору.`,
  },
  ],
  },
  commonMistakes: [
  {
- mistake: "Весь код в одному гігантському Scripts",
- explanation: "Необслуговуваний.",
- correctApproach: "QuestService, DialogueData, EnemyAI окремо",
+ mistake: "Хвилі лише в LocalScript",
+ explanation: "Клієнт може завершити хвилю фейково; розсинхрон.",
+ correctApproach: "spawnWave + aliveCount на сервері",
  },
  {
- mistake: "Ідентифікатори квесту та діалогу не збігаються",
- explanation: "Квест ніколи не починається.",
- correctApproach: "Модуль спільних констант",
+ mistake: "Немає aliveCount - наступна хвиля по wait(10)",
+ explanation: "Або рано, або пізно; не залежить від бою.",
+ correctApproach: "Died → aliveCount → next",
  },
  {
- mistake: "Пропуск випробування золотого шляху",
- explanation: "Порушений потік на демонстрації.",
- correctApproach: "Повний цикл перед збереженням",
+ mistake: "while true без умови зі spawn",
+ explanation: "Лавина ворогів, лаг, краш.",
+ correctApproach: "while по індексу config + очікування alive==0",
  },
  {
- mistake: "Ворог блокує квестові кристали",
- explanation: "розчарування.",
- correctApproach: "Космічні кристали подалі від табору появи",
+ mistake: "Рестарт без Destroy старих ворогів",
+ explanation: "Лічильник і сцена брешуть.",
+ correctApproach: "Cleanup Enemies перед spawnWave(1)",
+ },
+ {
+ mistake: "HP захардкожений у префабі, config ігнорується",
+ explanation: "Хвиля 2 не важча.",
+ correctApproach: "Ставити MaxHealth/Health з cfg.hp при клоні",
+ },
+ {
+ mistake: "Подвійний Died → два spawnWave",
+ explanation: "Хвиля 2+3 одночасно.",
+ correctApproach: "Прапор cleaningWave або перевірка aliveCount==0 один раз",
  },
  ],
- summary: "Ви інтегрували NPC, діалоги, патрулювання, квести та бойові дії в Living Location, пройшли перевірку якості для соло та кількох гравців і зберегли готовий до демо-версії хаб - Модуль 8 завершено.",
+ summary: "Ти зібрав хвилі арени на waveConfig: серверний spawnWave, aliveCount, перехід до наступної хвилі й victory. Table керує складністю - база для балансу 8.7 і Ship 8.8.",
  practiceTask: {
- title: "Здати Living Location (~40 хв)",
- difficulty: "beginner",
- description: `**Мета:** завершити контрольну точку Living Location.
+ title: "Розклад хвиль (~30 хв)",
+ difficulty: "intermediate",
+ description: `**Мета:** 2+ хвилі з table, очищення → наступна → victory.
 
-### Part A - Інтеграція (15 хв)
-1. Об’єднати 8.1-8.5 в одне місце
-2. Структура папок + окремі серверні модулі
-3. Знаки/стрілки, якщо потік нечіткий
+### Part A - Config і префаб (8 хв)
+1. waveConfig з 2–3 рядками (enemies, hp, delay).
+2. EnemyTemplate + SpawnPoint.
+3. Клон з HP з config.
 
-### Part B - Золотий шлях + 2P (20 хв)
-1. Запустіть таблицю потоків досвіду - помилка виправлення
-2. Тест незалежного квесту для двох гравців
-3. Очистіть помилки виведення
+### Part B - Цикл хвиль (14 хв)
+1. spawnWave(index) + aliveCount.
+2. Died → коли 0 → наступна (delay).
+3. nil config → victory.
+4. beginWaves з cleanup.
 
-### Part C - Збереження демо (5 хв)
-1. Відрепетируйте демо 60-х
-2. **Зберегти в Roblox** →\`Module 8 - Living Location\` 3. **Практика завершена**`,
+### Part C - Playtest (8 хв)
+1. Таблиця тестів 1–6.
+2. Повторний старт чистий.
+3. **Save:** Lesson 8.6 - Arena Waves`,
  hints: [
- "Виправляйте одну систему за раз",
- "Наставник діалогу повинен згадувати кристали і небезпеку",
- "Patrol NPC це атмосфера - квест це мета",
+ "Спочатку 1 ворог на хвилю - легше дебажити aliveCount",
+ "print(waveIndex, aliveCount) на Died",
+ "delay між хвилями 1–2 с, щоб встигнути побачити UI/print",
  ],
- optionalChallenge: "Після завершення квесту мерехтять вогні або банер. (В Уроці 8.7 ти розбудуєш ціле квестове містечко з кількома NPC!)",
+ optionalChallenge: "Billboard або TextLabel «Хвиля N / M», де M = #waveConfig.",
  },
  quiz: {
  passingScore: 70,
- timeLimit: 10,
+ timeLimit: 15,
  questions: [
  {
  id: "q1",
- type: "multiple_choice",
- question: "Місце проживання включає...",
+ type: MC,
+ question: "Головна мета уроку 8.6?",
  options: [
- "NPC + dialogue + quest + enemy",
- "Лише Terrain",
- "Лише магазин",
- "Без Scripts",
+ "Зробити послідовність хвиль через waveConfig на сервері",
+ "Видалити Tool з арени",
+ "Побудувати Race-трасу",
+ "Publish без ворогів",
  ],
  correctAnswer: 0,
- explanation: "Повний модуль 8.",
+ explanation: "Хвилі + config.",
  },
  {
  id: "q2",
- type: "multiple_choice",
- question: "Золотий шлях закінчується...",
+ type: MC,
+ question: "Навіщо waveConfig table?",
  options: [
- "Нагороду quest отримано",
- "Лише publish",
- "Видалити NPC",
- "Порожня baseplate",
+ "Змінювати кількість/HP хвиль в одному місці",
+ "Замінити Humanoid",
+ "Вимкнути Anchored назавжди",
+ "Створити Skybox",
  ],
  correctAnswer: 0,
- explanation: "Повний цикл.",
+ explanation: "Розклад бою.",
  },
  {
  id: "q3",
- type: "multiple_choice",
- question: "Перевірки квестів для двох гравців...",
+ type: MC,
+ question: "Де має жити aliveCount?",
  options: [
- "Незалежний прогрес",
- "Один спільний quest",
- "Без сервера",
- "Лише UI",
+ "На сервері в стані арени",
+ "Лише в LocalScript для краси",
+ "У Lighting",
+ "У назві Part",
  ],
  correctAnswer: 0,
- explanation: "Стан кожного гравця.",
+ explanation: "Серверна правда.",
  },
  {
  id: "q4",
- type: "multiple_choice",
- question: "Окремі Scripts допомагають...",
+ type: MC,
+ question: "Коли логічно викликати наступну хвилю?",
  options: [
- "Підтримуваність",
- "Лише лаг",
- "Прибрати UI",
- "Банити гравців",
+ "Коли aliveCount став 0 після очищення поточної",
+ "Кожні 0.01 с завжди",
+ "Лише при зміні неба",
+ "Коли гравець відкрив Explorer",
  ],
  correctAnswer: 0,
- explanation: "Чиста архітектура.",
+ explanation: "Хвиля очищена.",
  },
  {
  id: "q5",
- type: "multiple_choice",
- question: "Patrol NPC додає...",
+ type: MC,
+ question: "Що робити, якщо waveConfig[index] = nil?",
  options: [
- "Жива атмосфера",
- "Ціни shop",
- "DataStore",
- "Publishing",
+ "Victory / кінець режиму, не спавнити далі",
+ "Спавнити 999 ворогів",
+ "Видалити арену",
+ "Обов’язково крашнути Place",
  ],
  correctAnswer: 0,
- explanation: "Відчуття світу.",
+ explanation: "Кінець розкладу.",
  },
  {
  id: "q6",
- type: "multiple_choice",
- question: "Модуль 8 зберегти назву...",
+ type: MC,
+ question: "Навіщо ставити HP з cfg при Clone?",
  options: [
- "Module 8 - Living Location",
- "Shop Works",
- "Race Launched",
- "Lesson 8.1",
+ "Щоб різні хвилі реально відрізнялись міцністю",
+ "Clone ігнорує Humanoid завжди",
+ "Це вимикає Died",
+ "HP можна ставити лише на клієнті",
  ],
  correctAnswer: 0,
- explanation: "checkpoint.",
+ explanation: "Config діє.",
  },
  {
  id: "q7",
- type: "multiple_choice",
- question: "Контрольна точка має пріоритет...",
+ type: MC,
+ question: "Чому потрібен cleanup перед рестартом?",
  options: [
- "Чіткий потік і надійність",
- "Максимум ворогів",
- "Без тестів",
- "Квести лише на клієнті",
+ "Старі вороги псують сцену і лічильник",
+ "Roblox вимагає Destroy щосекунди",
+ "Без цього Tool зникає",
+ "Cleanup замінює dealDamage",
  ],
  correctAnswer: 0,
- explanation: "Якісний бар.",
+ explanation: "Чистий старт.",
  },
  {
  id: "q8",
- type: "multiple_choice",
- question: "Урок 8.6 завершується...",
+ type: MC,
+ question: "Яка небезпека while true зі spawn без умови?",
  options: [
- "Module 8 Smart Game",
- "Module 12",
- "Module 1",
- "Лише монети",
+ "Лавина ворогів і лаг",
+ "Обов’язковий швидший бій завжди хороший",
+ "while заборонений у Lua",
+ "Це створює RemoteEvent",
  ],
  correctAnswer: 0,
- explanation: "Кінцевий модуль 8.",
+ explanation: "Контрольований цикл.",
  },
  {
  id: "q9",
- type: "multiple_choice",
- question: "Довідник повинен згадати...",
+ type: MC,
+ question: "Де зручно тримати EnemyTemplate?",
  options: [
- "Мета quest у dialogue",
- "IP сервера",
- "Robux",
- "Лише version",
+ "ServerStorage (клон на сервері)",
+ "Лише в Terrain",
+ "У SoundService як єдиний варіант",
+ "У назві SpawnLocation",
  ],
  correctAnswer: 0,
- explanation: "UX покажчики.",
+ explanation: "Префаб для клону.",
  },
-        {
+ {
  id: "q10",
- type: "multiple_choice",
- question: "Ворог поблизу квесту має бути...",
+ type: MC,
+ question: "Навіщо легкий task.wait між клонами в одній хвилі?",
  options: [
- "Справедлива відстань — не блокує всі кристали",
- "На кожному кристалі",
- "Видалено",
- "Невидимий",
+ "Рознести спавн, менше миттєвого накладання",
+ "Це замінює aliveCount",
+ "Без wait Humanoid не існує",
+ "wait вимикає MaxHealth",
  ],
  correctAnswer: 0,
- explanation: "Весела ходьба.",
+ explanation: "М’який спавн.",
+ },
+ {
+ id: "q11",
+ type: MC,
+ question: "Як 8.6 готує 8.7?",
+ options: [
+ "Різні hp у waveConfig можна міряти й підкручувати",
+ "8.7 видаляє всі хвилі",
+ "Баланс не потребує чисел",
+ "Треба забути table",
+ ],
+ correctAnswer: 0,
+ explanation: "Крива складності.",
+ },
+ {
+ id: "q12",
+ type: MC,
+ question: "Що таке подвійний spawnWave від двох Died?",
+ options: [
+ "Баг: дві наступні хвилі майже разом",
+ "Обов’язкова фіча Roblox",
+ "Це victory",
+ "Так налаштовують i-frames",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібен захист.",
+ },
+ {
+ id: "q13",
+ type: MC,
+ question: "Мінімум хвиль для здачі?",
+ options: [
+ "Хоча б 2 рядки в waveConfig",
+ "Обов’язково 50",
+ "0 - лише dummy без config",
+ "Лише клієнтський print",
+ ],
+ correctAnswer: 0,
+ explanation: "Є акт 2.",
+ },
+ {
+ id: "q14",
+ type: MC,
+ question: "Чи може смерть гравця стопати хвилі?",
+ options: [
+ "Так, якщо ти явно так вирішив і записав правило",
+ "Ніколи в жодній грі",
+ "Хвилі існують лише на клієнті",
+ "Смерть гравця завжди видаляє waveConfig",
+ ],
+ correctAnswer: 0,
+ explanation: "Свідоме правило дизайну.",
+ },
+ {
+ id: "q15",
+ type: MC,
+ question: "Що вважається зданим артефактом 8.6?",
+ options: [
+ "waveConfig + spawnWave + перехід/victory + Save",
+ "Лише теорія без Play",
+ "Порожній Baseplate",
+ "Хвилі тільки в LocalScript",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібен цикл хвиль.",
  },
  ],
  },
@@ -1878,362 +2893,432 @@ export const ukLesson87 = {
  lessonId: "lesson-roblox-8-7",
  moduleId: "module-08",
  order: 7,
- title: "8.7 - Проєкт: Квестове містечко",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
+ title: "8.7 - Playtest баланс бою",
+ theoryMinutes: 35,
+ quizMinutes: 15,
+ estimatedTime: 60,
  learningObjectives: [
- "Розмістіть 2-3 NPC з різними ролями (гід, торговець, патруль) в одному містечку",
- "Створіть багатоступеневий квест: зібрати → повернутися → перемогти ворога",
- "Відстежуйте поточний крок квесту для кожного гравця на сервері",
- "Об'єднайте діалог, патруль і бій в єдиний ігровий цикл",
+ "Прогнати баланс HP гравця, HP ворога і урону удару на цифрах",
+ "Знайти one-shot / «вічний dummy» / нудний бій і зафіксувати в таблиці",
+ "Підкрутити MaxHealth і dealDamage amount за правилами школи",
+ "Перевірити cooldown / i-frames, щоб баланс не ламався спамом",
+ "Підготувати стабільні числа до Ship Arena (8.8)",
  ],
  theory: {
  sections: [
  {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `Це **проєктний урок**. Ви маєте весь інструментарій з 8.1-8.6 - сьогодні будуєте **містечко** з кількома NPC та квестом із **кількома кроками**, а не одним завданням.
+ title: "Сьогоднішня місія (урок 63 з 92)",
+ content: `У **8.1–8.6** ти зібрав арену, Tool, серверний урон, feedback, смерть/респавн і хвилі. Сьогодні **не** додаєш новий жанр. Сьогодні ти **міряєш бій**.
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - планування містечка + багатоступеневий квест
-2. **Практика (~35 хв)** - повний квестовий ланцюг
-3. **Вікторина (10 хв)** - проходження **70%**
+Артефакт уроку:
+1. Таблиця баланс-тестів (HP / урон / час до вбивства).
+2. Хоча б **2 live-підкрутки** чисел (MaxHealth або amount).
+3. Нотатка «комфортний бій» для демо 90 с.
+4. Place без one-shot і без «б’ю 3 хвилини одного dummy».
 
-Відкрийте своє місце з **Уроку 8.6 - Living Location**.`,
+Без цього 8.8 Ship впаде на відчутті: або гравець помирає за 1 удар, або хвиля нудна.
+
+**Зроби зараз (3 хв):** випиши поточні числа: Player MaxHealth, Enemy MaxHealth, damage за удар, cooldown якщо є.`,
  },
  {
- title: "Інструментарій Модуля 8 - швидкий огляд",
- content: `| Інструмент | З уроку | Роль у містечку |
-|-----------|---------|----------------|
-| ProximityPrompt + Humanoid | 8.1 | Взаємодія з NPC |
-| DialogueData + OpenDialogue | 8.2 | Розмови NPC |
-| Humanoid:MoveTo + waypoints | 8.3 | Ходячий NPC |
-| QuestConfig + playerQuestState | 8.4 | Прогрес квесту |
-| Агро + TakeDamage ворога | 8.5 | Небезпечна зона |
+ title: "Баланс ≠ «зробити складніше»",
+ content: `| Поганий баланс | Хороший навчальний баланс |
+|----------------|---------------------------|
+| One-shot гравця | 3–8 ударів ворога до смерті гравця (орієнтир) |
+| One-shot ворога завжди | 3–10 ударів до смерті dummy/хвилі 1 |
+| Бій 5+ хв на одного | Хвиля 1 вкладається в ~20–40 с |
+| Рандом «то легко то неможливо» | Передбачувані числа з table/констант |
 
-**Нічого нового** - лише більше NPC і **послідовність кроків** замість одного завдання.`,
+Метафора: ваги на кухні. Ти не «злишся на суп», ти **додаєш сіль потроху** і пробуєш знову.
+
+Школа: баланс крутимо **константами** (MaxHealth, damage, cooldown), не «магією в 20 місцях копіпасти».`,
  },
  {
- title: "План містечка",
- content: `\`\`\`
-Workspace/QuestTown
-├── NPCs/
-│ ├── NPC_Guide_Maya (dialogue + видає квест)
-│ └── NPC_Merchant_Tomas (dialogue + підказки, без квесту)
-├── PatrolRoutes/Route_TownLoop (NPC_Patrol_Guard ходить)
-├── QuestProps/Crystals x5 (крок 1)
-├── DangerZone/NPC_Enemy_Slime (крок 3)
-└── ShopArea (з Модуля 7, необов'язково)
-\`\`\`**Три NPC, одна небезпечна зона** - достатньо для відчуття живого містечка без перевантаження.`,
+ title: "Що саме міряємо",
+ content: `| Метрика | Як міряти | Навіщо |
+|---------|-----------|--------|
+| **TTK ворог** (time to kill) | Секундомір: старт ударів → ворог 0 HP | Темп хвилі |
+| **TTD гравець** (time to die) | Скільки ударів/часу до твоєї смерті | Складність |
+| **Ударів до вбивства** | MaxHealth / damage (ціле) | Швидка оцінка |
+| **Спам DPS** | Удари без cooldown | Чи зламаний бій |
+| **Після респавну** | Смерть → i-frames → знову в бій | Не «death loop» |
+
+Формула-орієнтир:
+
+\`hitsToKillEnemy ≈ enemyMaxHealth / damagePerHit\`
+\`hitsToKillPlayer ≈ playerMaxHealth / enemyDamagePerHit\`
+
+Якщо hitsToKillEnemy = 1 завжди - зменш damage або підніми HP ворога.  
+Якщо hitsToKillPlayer = 1 - зменш урон ворога або підніми HP гравця.`,
  },
  {
- title: "Багатоступеневий квест - структура даних",
- content: `Розширте \`QuestConfig\` (8.4) полем \`steps\`:
+ title: "Таблиця playtest балансу",
+ content: `Скопіюй у нотатку і заповни фактами з Play:
 
-\`\`\`lua
-QuestConfig.town_trouble = {
- title = "Town in Trouble",
- rewardCoins = 100,
- steps = {
- { id = "collect", goal = 5, description = "Collect 5 crystals" },
- { id = "return", description = "Report back to Guide Maya" },
- { id = "defeat", description = "Defeat the slime guarding the cave" },
- },
-}
-\`\`\`**Масив steps** - гравець проходить їх **по порядку**, як контрольні точки гонки з Модуля 6.`,
- },
- {
- title: "Стан кроку квесту на гравця",
- content: `\`\`\`lua
-local function getQuestState(player, questId)
- playerQuestState[player] = playerQuestState[player] or {}
- if not playerQuestState[player][questId] then
- playerQuestState[player][questId] = { stepIndex = 1, progress = 0, completed = false }
- end
- return playerQuestState[player][questId]
-end
+| # | Сценарій | Очікування | Факт (с / удари) | Вердикт |
+|---|----------|------------|------------------|---------|
+| 1 | Хвиля 1 / 1 dummy, чесні удари | 3–10 ударів | | |
+| 2 | Той самий, спам кліків | Не швидше в 10× якщо є CD | | |
+| 3 | Урон по тобі (якщо ворог б’є) | Не one-shot | | |
+| 4 | Повна хвиля 1 | ≤40–60 с | | |
+| 5 | Хвиля 2 (якщо є) | Трохи важче, не стіна | | |
+| 6 | Смерть → респавн | i-frames, можна повернутись | | |
+| 7 | Output | Без червоного | | |
 
-local function currentStep(player, questId)
- local state = getQuestState(player, questId)
- return QuestConfig[questId].steps[state.stepIndex]
-end
-\`\`\`**stepIndex** замінює просте \`started\`/\`completed\` з 8.4 - тепер це **лічильник прогресу через кроки**.`,
+Вердикт: **ok / easy / hard / broken**.  
+Broken = one-shot або невмирущий dummy через баг (урон не застосовується).`,
  },
  {
- title: "Крок 1: Збір (Collect)",
- content: `Той самий Touched-обробник кристалів з 8.4, але з перевіркою **поточного кроку**:
+ title: "Де крутити числа (одне джерело правди)",
+ content: `Погано: damage = 25 у Tool LocalScript, 40 у сервері, 10 у коментарі.
 
-\`\`\`lua
-crystal.Touched:Connect(function(hit)
- local player = game.Players:GetPlayerFromCharacter(hit.Parent)
- if not player then return end
+Добре: константи в одному Script/Module:
 
- local step = currentStep(player, "town_trouble")
- if not step or step.id ~= "collect" then return end -- wrong step, ignore
+\`local BALANCE = {\`
+\` playerMaxHealth = 100,\`
+\` enemyHpWave1 = 80,\`
+\` enemyHpWave2 = 120,\`
+\` damagePerHit = 20,\`
+\` hitCooldown = 0.4,\`
+\` respawnIFrames = 1.5,\`
+\`}\`
 
- local state = getQuestState(player, "town_trouble")
- state.progress += 1
- crystal:Destroy()
+На PlayerAdded / CharacterAdded виставляй Humanoid.MaxHealth і Health з BALANCE.  
+У dealDamage бери \`BALANCE.damagePerHit\`, не «магічне 999».
 
- if state.progress >= step.goal then
- state.stepIndex += 1 -- advance to "return" step
- state.progress = 0
- questUpdate:FireClient(player, "town_trouble", "Go report to Guide Maya!")
- end
-end)
-\`\`\`**Ігнорування дотику**, якщо гравець не на кроці "collect" - без цього можна забігти вперед.`,
+Хвилі з 8.6: \`waveConfig[i].hp\` має узгоджуватись з цією таблицею.
+
+**Зроби зараз (5 хв):** знайди всі місця з числами урону/HP і зведи хоча б у один блок коментарем «BALANCE».`,
  },
  {
- title: "Крок 2: Повернення (Return)",
- content: `У ProximityPrompt Гіда Майї (8.1):
+ title: "Типові симптоми і фікси",
+ content: `| Симптом | Ймовірна причина | Фікс |
+|---------|------------------|------|
+| Ворог падає з 1 удару | damage ≥ MaxHealth | ↓ damage або ↑ HP |
+| Б’ю вічно, HP не падає | dealDamage не викликається | Спочатку баг, не баланс |
+| Гравець one-shot | Урон ворога великий / немає i-frames | ↓ урон, ↑ HP, i-frames |
+| Спам = миттєва хвиля | Немає hitCooldown | Серверний cooldown |
+| Хвиля 2 нереальна | HP * 5 без зміни damage | Піднімай HP поступово (+20–50%) |
+| Нудно | hitsToKill > 15 | ↑ damage або ↓ HP |
 
-\`\`\`lua
-prompt.Triggered:Connect(function(player)
- local step = currentStep(player, "town_trouble")
- if step and step.id == "return" then
- local state = getQuestState(player, "town_trouble")
- state.stepIndex += 1 -- advance to "defeat"
- questUpdate:FireClient(player, "town_trouble", "The slime guards the cave - be careful!")
- return
- end
- openDialogue:FireClient(player, "guide_intro")
-end)
-\`\`\`**Один NPC, дві ролі** - звичайний діалог **і** перевірка кроку квесту в одному Triggered.`,
+Правило: **спочатку виправ broken**, потім easy/hard. Не балансуй баг.`,
  },
  {
- title: "Крок 3: Перемога над ворогом (Defeat)",
- content: `У Died-обробнику ворога з 8.5:
+ title: "Протокол підкрутки (15 хв спринт)",
+ content: `1. Заповни рядки 1–3 таблиці фактами.
+2. Обери **найгірший** вердикт (broken > hard > easy).
+3. Зміни **одне** число в BALANCE.
+4. Повтори той самий тест.
+5. Запиши нове значення.
+6. Повтори для другої проблеми.
 
-\`\`\`lua
-enemyHumanoid.Died:Connect(function()
- for _, player in ipairs(game.Players:GetPlayers()) do
- local step = currentStep(player, "town_trouble")
- if step and step.id == "defeat" then
- completeQuest(player, "town_trouble")
- end
- end
-end)
-\`\`\`**Перевірка для всіх гравців** - будь-хто, хто на кроці "defeat", отримує кредит за вбивство спільного ворога.`,
+Приклад логу:
+- Було: damage 50, enemy 50 → 1 удар (easy/broken).
+- Стало: damage 20, enemy 80 → 4 удари (ok).
+- Було: гравець one-shot від 80 урону.
+- Стало: enemyDamage 15, player HP 100 → ~7 ударів.
+
+Не крути 5 змінних одночасно - не зрозумієш, що допомогло.`,
  },
  {
- title: "Завершення багатоступеневого квесту",
- content: `\`\`\`lua
-local function completeQuest(player, questId)
- local state = getQuestState(player, questId)
- if state.completed then return end
- state.completed = true
+ title: "Cooldown, i-frames і «чесний» темп",
+ content: `Баланс цифр без темпу все одно ламається:
 
- local cfg = QuestConfig[questId]
- player.leaderstats.Coins.Value += cfg.rewardCoins
+- **hitCooldown** на сервері: навіть якщо анімація коротка, урон не частіше ніж раз на N с.
+- **i-frames** після респавну: 1–2 с без урону, інакше death loop біля спавну хвилі.
+- **Анімація vs урон:** якщо анімація 0.8 с, а урон кожні 0.1 с - відчуття «чіт». Вирівняй.
 
- questUpdate:FireClient(player, questId, "Quest complete! +" .. cfg.rewardCoins .. " coins")
-end
-\`\`\`**completed прапор** - той самий захист від подвійної нагороди, що і в простому квесті з 8.4.`,
+Тест спаму (рядок 2 таблиці): тримай кнопку/клік 3 с. Кількість реальних dealDamage має ≈ час / cooldown, не 60.
+
+**Зроби зараз (6 хв):** print на сервері кожен успішний hit з os.clock() - побачиш інтервали.`,
  },
  {
- title: "Другий NPC - торговець без квесту (флейвор)",
- content: `**NPC_Merchant_Tomas** потребує лише **діалогу** (8.2), без квестової логіки - додає глибину містечку без нового коду:
+ title: "Хвилі: крива складності lite",
+ content: `| Хвиля | Ідея HP | Ідея кількості |
+|-------|---------|----------------|
+| 1 | Базовий enemyHp | 1–2 |
+| 2 | +25–50% HP або +1 ворог | Не обидва максимуми одразу |
+| 3 (опційно) | Ще крок або «бос» 2× HP | Один бос краще за 10 клонів |
 
-\`\`\`lua
-DialogueData.merchant_hint = {
- speaker = "Tomas the Merchant",
- lines = {
- "Careful near the cave - a slime has been causing trouble.",
- "Bring me crystals someday and I'll trade you something nice.",
- },
-}
-\`\`\`**Не кожен NPC повинен видавати квест** - деякі просто роблять світ живим.`,
+Перевір: хвиля 1 - навчання удару. Хвиля 2 - трохи тиску. Не «хвиля 1 = бог, хвиля 2 = неможливо».
+
+Якщо waveConfig ще тонкий - для 8.7 достатньо 2 рядків у table з різними hp.`,
  },
  {
- title: "Контрольний список перед початком практики",
- content: `- [ ] QuestConfig.town_trouble з 3 кроками (collect, return, defeat)
-- [ ] currentStep правильно повертає активний крок гравця
-- [ ] Кожен крок ігнорує дії, що не відповідають поточному кроку
-- [ ] completeQuest дає монети рівно один раз
-- [ ] Зберегти: \`Lesson 8.7 - Quest Town\``,
+ title: "Чекліст здачі уроку 63 + місток до 8.8",
+ content: `- [ ] Виписані стартові числа HP / damage / cooldown
+- [ ] Таблиця тестів 1–7 з фактами
+- [ ] ≥2 live-підкрутки з лоґом «було → стало»
+- [ ] Немає one-shot гравця на базовому ворогові (або задокументовано як P0)
+- [ ] Ворог хвилі 1 не вмирає з 1 удару (або свідомий навчальний one-hit з міткою)
+- [ ] Спам не дає божевільний DPS (є cooldown або пояснення)
+- [ ] Респавн не в death loop (i-frames lite)
+- [ ] Save: Lesson 8.7 - Arena Balance
+
+Далі **8.8 Ship Arena** зшиє системи рубрикою. Якщо сьогодні TTK «зламаний» - завтра демо 90 с буде соромом, не вау.
+
+Артефакт: **передбачуваний бій**. Ship любить стабільні числа більше за новий меч.`,
  },
  ],
  },
  commonMistakes: [
  {
- mistake: "Кристали зараховуються незалежно від поточного кроку",
- explanation: "Гравець може закінчити крок 1 після того, як уже на кроці 3.",
- correctApproach: "Перевіряти step.id перед обробкою будь-якої дії",
+ mistake: "Крутити баланс, поки урон взагалі не застосовується",
+ explanation: "Ти «балансуєш» баг.",
+ correctApproach: "Спочатку print dealDamage, потім числа",
  },
  {
- mistake: "stepIndex спільний для всіх гравців",
- explanation: "Прогрес одного гравця впливає на іншого.",
- correctApproach: "playerQuestState[гравець][questId].stepIndex",
+ mistake: "Змінити 7 констант за раз",
+ explanation: "Неясно, що допомогло.",
+ correctApproach: "Одне число → один тест",
  },
  {
- mistake: "Died ворога перевіряє лише одного конкретного гравця",
- explanation: "Інший гравець на кроці defeat не отримує кредит.",
- correctApproach: "Цикл по всіх гравцях у Died-обробнику",
+ mistake: "One-shot залишити «бо так смішно»",
+ explanation: "Ship-демо виглядає зламаним.",
+ correctApproach: "3–10 ударів на хвилі 1",
  },
  {
- mistake: "completeQuest без перевірки completed",
- explanation: "Повторне вбивство того самого ворога дає нагороду знову.",
- correctApproach: "if state.completed then return в completeQuest",
+ mistake: "Немає hitCooldown на сервері",
+ explanation: "Спам ламає будь-які HP.",
+ correctApproach: "Серверний cooldown у dealDamage",
+ },
+ {
+ mistake: "Різні цифри урону в 4 скриптах",
+ explanation: "Баланс роз’їжджається завтра.",
+ correctApproach: "Один BALANCE table",
+ },
+ {
+ mistake: "Ігнорувати death loop після респавну",
+ explanation: "Гравець злиться швидше, ніж через складність хвилі",
+ correctApproach: "i-frames 1–2 с",
  },
  ],
- summary: "Ви побудували квестове містечко з трьома NPC, багатоступеневим квестом (зібрати → повернутися → перемогти) і небезпечною зоною - усе повторно використовуючи інструментарій діалогу, патрулю, квестів і бою з 8.1-8.6 без жодного нового API.",
+ summary: "Ти прогнав playtest балансу арени: виміряв TTK/удари, звів числа в BALANCE, зробив мінімум 2 підкрутки і перевірив cooldown/i-frames. Урок 63 готує стабільний бій до Ship Arena в 8.8.",
  practiceTask: {
- title: "Квестове містечко (~35 хв)",
- difficulty: "beginner",
- description: `**Мета:** Багатоступеневий квест від збору до перемоги над ворогом.
+ title: "Баланс-лабораторія (~30 хв)",
+ difficulty: "intermediate",
+ description: `**Мета:** передбачуваний бій на цифрах перед Ship.
 
-### Part A - Містечко (10 хв)
-1. 2-3 NPC: Guide Maya (квест), Merchant Tomas (флейвор), Patrol Guard (ходить)
-2. QuestProps/Crystals x5 + DangerZone з ворогом
+### Part A - Замір (8 хв)
+1. Випиши поточні HP / damage / cooldown.
+2. Заповни таблицю сценаріїв 1–4 фактами (секундомір + лічильник ударів).
+3. Познач easy / hard / broken.
 
-### Part B - Ланцюг квесту (18 хв)
-1. QuestConfig.town_trouble з steps (collect, return, defeat)
-2. currentStep + getQuestState на сервері
-3. Кожен крок перевіряє себе перед просуванням
+### Part B - Підкрутки (15 хв)
+1. Зведи числа в BALANCE (або один блок констант).
+2. Зроби ≥2 зміни (по одній за раз).
+3. Повтори ті самі тести; запиши було → стало.
+4. Додай/перевір hitCooldown і i-frames якщо рядки 2 або 6 червоні.
 
-### Part C - Тест і збереження (7 хв)
-1. Пройдіть увесь ланцюг: збір → доповідь Майї → перемога над ворогом → нагорода
-2. **Зберегти в Roblox** → \`Lesson 8.7 - Quest Town\` 3. **Практика завершена**`,
+### Part C - Готовність до Ship (7 хв)
+1. Хвиля 1 вкладається в комфортний час.
+2. Немає one-shot (або P0 записаний).
+3. **Save:** Lesson 8.7 - Arena Balance`,
  hints: [
- "Друкуйте stepIndex гравця після кожної дії для налагодження послідовності",
- "Тестуйте кожен крок окремо, перш ніж з'єднувати весь ланцюг",
- "Torch NPC Тomas може повторно використати DialogueGui з 8.2 без змін",
+ "Секундомір телефону + tally ударів - достатньо",
+ "print(damage, humanoid.Health) на сервері",
+ "Не чіпай VFX, поки TTK broken",
  ],
- optionalChallenge: "Четвертий крок - принести здобич з ворога назад торговцю Tomas за бонусну нагороду.",
+ optionalChallenge: "Окремий рядок BALANCE для «бос хвилі» з 2× HP і коротка нотатка в табличці на арені.",
  },
  quiz: {
  passingScore: 70,
- timeLimit: 10,
+ timeLimit: 15,
  questions: [
  {
  id: "q1",
- type: "multiple_choice",
- question: "Багатоступеневий квест зберігає кроки як...",
+ type: MC,
+ question: "Головна мета уроку 8.7?",
  options: [
- "Масив steps у QuestConfig",
- "Окремий DataStore",
- "RemoteFunction",
- "BillboardGui",
+ "Прогнати і підкрутити баланс HP/урону перед Ship",
+ "Видалити dealDamage",
+ "Побудувати Race-трасу",
+ "Publish без playtest",
  ],
  correctAnswer: 0,
- explanation: "Впорядкований список кроків.",
+ explanation: "Баланс бою.",
  },
  {
  id: "q2",
- type: "multiple_choice",
- question: "currentStep повертає...",
+ type: MC,
+ question: "Що таке TTK у цьому уроці?",
  options: [
- "Активний крок гравця за stepIndex",
- "Випадковий крок",
- "Завжди перший крок",
- "Ім'я NPC",
+ "Час (або удари), щоб убити ворога",
+ "Назва RemoteEvent",
+ "Тип Terrain",
+ "Кількість Decals",
  ],
  correctAnswer: 0,
- explanation: "Поточна позиція в ланцюгу.",
+ explanation: "Time to kill.",
  },
  {
  id: "q3",
- type: "multiple_choice",
- question: "Дотик кристала на кроці \"return\" повинен...",
+ type: MC,
+ question: "Чому one-shot на хвилі 1 - погано для ship?",
  options: [
- "Ігноруватися - невідповідний крок",
- "Завершити квест",
- "Видалити NPC",
- "Дати подвійну нагороду",
+ "Демо виглядає зламаним, немає відчуття бою",
+ "Roblox забороняє MaxHealth 100",
+ "Tool тоді не існує",
+ "Output завжди червоний",
  ],
  correctAnswer: 0,
- explanation: "Перевірка step.id перед дією.",
+ explanation: "Потрібен темп.",
  },
  {
  id: "q4",
- type: "multiple_choice",
- question: "Died ворога перевіряє...",
+ type: MC,
+ question: "Де краще тримати числа балансу?",
  options: [
- "Усіх гравців на кроці defeat",
- "Лише одного жорстко закодованого гравця",
- "Лише NPC",
- "Terrain",
+ "В одному BALANCE / константах",
+ "У 10 різних місцях різними цифрами",
+ "Лише в назві Part",
+ "Тільки в Skybox",
  ],
  correctAnswer: 0,
- explanation: "Спільний ворог, індивідуальний прогрес.",
+ explanation: "Одне джерело правди.",
  },
  {
  id: "q5",
- type: "multiple_choice",
- question: "Другий NPC без квесту потрібен для...",
+ type: MC,
+ question: "Що робити спочатку, якщо HP ворога не падає?",
  options: [
- "Атмосфери та флейвор-діалогу",
- "Дублювання коду",
- "Заміни Guide Maya",
- "DataStore",
+ "Перевірити, чи викликається dealDamage (баг), не крутити баланс наосліп",
+ "Одразу MaxHealth = 1",
+ "Видалити арену",
+ "Вимкнути Humanoid назавжди",
  ],
  correctAnswer: 0,
- explanation: "Не всі NPC видають завдання.",
+ explanation: "Баг ≠ баланс.",
  },
  {
  id: "q6",
- type: "multiple_choice",
- question: "stepIndex збільшується, коли...",
+ type: MC,
+ question: "Навіщо серверний hitCooldown?",
  options: [
- "Поточний крок виконано",
- "Гравець стрибає",
- "Сервер перезавантажується",
- "NPC патрулює",
+ "Щоб спам кліків не ламав DPS і баланс",
+ "Щоб змінити Material підлоги",
+ "Це замінює MaxHealth",
+ "Cooldown малює Billboard",
  ],
  correctAnswer: 0,
- explanation: "Просування по ланцюгу.",
+ explanation: "Темп удару.",
  },
  {
  id: "q7",
- type: "multiple_choice",
- question: "completed прапор запобігає...",
+ type: MC,
+ question: "Скільки змінних крутити за один тест?",
  options: [
- "Повторній нагороді за той самий квест",
- "Ходьбі NPC",
- "Відкриттю діалогу",
- "Публікації",
+ "Краще одну, щоб зрозуміти ефект",
+ "Обов’язково всі одразу",
+ "Жодної ніколи",
+ "Лише колір меча",
  ],
  correctAnswer: 0,
- explanation: "Одноразова винагорода.",
+ explanation: "Контрольований експеримент.",
  },
  {
  id: "q8",
- type: "multiple_choice",
- question: "Урок 8.7 повторно використовує з 8.1-8.6...",
+ type: MC,
+ question: "Навіщо i-frames у баланс-playtest?",
  options: [
- "Діалог, патруль, квести, бій",
- "Лише гонки",
- "Лише магазин",
- "Нічого",
+ "Уникнути death loop одразу після респавну",
+ "Збільшити урон меча",
+ "Вимкнути хвилі",
+ "Замінити waveConfig",
  ],
  correctAnswer: 0,
- explanation: "Проєктна інтеграція без нового API.",
+ explanation: "Життєвий цикл після смерті.",
  },
  {
  id: "q9",
- type: "multiple_choice",
- question: "Один NPC може мати...",
+ type: MC,
+ question: "Орієнтир hitsToKill для навчальної хвилі 1?",
  options: [
- "Звичайний діалог і перевірку кроку квесту разом",
- "Лише одну функцію назавжди",
- "Лише патруль",
- "Лише бій",
+ "Близько кількох–десятка ударів, не 1 і не 50",
+ "Завжди рівно 100",
+ "0 ударів",
+ "Лише через Teleport",
  ],
  correctAnswer: 0,
- explanation: "Комбіновані ролі NPC.",
+ explanation: "Комфортний темп.",
  },
  {
  id: "q10",
- type: "multiple_choice",
- question: "Урок 8.7 зберегти назву...",
+ type: MC,
+ question: "Як піднімати складність хвилі 2?",
  options: [
- "Lesson 8.7 - Quest Town",
- "Living Location",
- "Quest System",
- "Enemy Attack",
+ "Поступово +HP або +кількість, не обидва максимуми разом",
+ "Одразу HP * 100",
+ "Прибрати весь урон гравця",
+ "Видалити Tool",
  ],
  correctAnswer: 0,
- explanation: "Зберегти проєктний урок містечка.",
+ explanation: "Крива lite.",
+ },
+ {
+ id: "q11",
+ type: MC,
+ question: "Мінімум live-підкруток у практиці?",
+ options: [
+ "Хоча б 2 з логом було → стало",
+ "0 - лише теорія",
+ "Обов’язково 50",
+ "Лише зміна неба",
+ ],
+ correctAnswer: 0,
+ explanation: "Практика цифр.",
+ },
+ {
+ id: "q12",
+ type: MC,
+ question: "Як 8.7 готує 8.8?",
+ options: [
+ "Стабільні числа → демо Ship 90 с не розвалюється на one-shot",
+ "8.8 забороняє MaxHealth",
+ "Баланс скасовує рубрику",
+ "Треба видалити хвилі перед Ship",
+ ],
+ correctAnswer: 0,
+ explanation: "Готовність до ship.",
+ },
+ {
+ id: "q13",
+ type: MC,
+ question: "Що записувати в таблицю playtest?",
+ options: [
+ "Факти: секунди/удари і вердикт ok/easy/hard/broken",
+ "Лише «мені здається»",
+ "Тільки список Plugins",
+ "Колір Ambient",
+ ],
+ correctAnswer: 0,
+ explanation: "Доказ заміру.",
+ },
+ {
+ id: "q14",
+ type: MC,
+ question: "Чому погано тримати різний damage у клієнті і сервері?",
+ options: [
+ "Баланс і правда бою роз’їжджаються",
+ "Studio тоді не зберігає Place",
+ "Humanoid зникає",
+ "Це обов’язково для ParticleEmitter",
+ ],
+ correctAnswer: 0,
+ explanation: "Одна правда чисел.",
+ },
+ {
+ id: "q15",
+ type: MC,
+ question: "Що вважається зданим артефактом 8.7?",
+ options: [
+ "Таблиця тестів + ≥2 підкрутки + стабільніший бій + Save",
+ "Лише теорія без Play",
+ "Порожній Baseplate",
+ "One-shot навмисно без нотатки",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібен баланс-доказ.",
  },
  ],
  },
@@ -2243,338 +3328,487 @@ export const ukLesson88 = {
  lessonId: "lesson-roblox-8-8",
  moduleId: "module-08",
  order: 8,
- title: "8.8 - Жива локація: polish і playtest",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
+ title: "8.8 - Ship Arena",
+ theoryMinutes: 35,
+ quizMinutes: 15,
+ estimatedTime: 60,
  learningObjectives: [
- "Додайте маркери квесту над NPC та цілями через BillboardGui",
- "Зробіть діалог зрозумілим - кожна реплика натякає на наступний крок",
- "Збалансуйте відстань спавну гравця, ворога й квестових предметів",
- "Проведіть повний walkthrough-тест з двома гравцями перед фінальним збереженням",
+ "Зшити арену в один золотий шлях: вхід → бій → хвиля → смерть/респавн",
+ "Пройти рубрику Ship Arena (~15 пунктів) і закрити блокери",
+ "Підтвердити, що урон іде через серверний dealDamage, а не з клієнта",
+ "Показати feedback бою (анімація / tween / particles) без ламання балансу",
+ "Зберегти Place як артефакт модуля 8 перед Race (M9)",
  ],
  theory: {
  sections: [
  {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `Квестове містечко з 8.7 **функціонує**. Сьогодні воно стає **зрозумілим** - гравець ніколи не губиться, куди йти й що робити далі.
+ title: "Сьогоднішня місія (урок 64 з 92)",
+ content: `Це **фінал модуля Arena**. Не нова арена з нуля і не «ще один Tool». Сьогодні ти **зшиваєш** те, що вже є, у бій, який можна показати за 90 секунд.
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - маркери + ясність діалогу + баланс
-2. **Практика (~30 хв)** - відшліфоване містечко + walkthrough
-3. **Вікторина (10 хв)** - проходження **70%**
+У модулі 8 ти (або група) збирав:
+1. **8.1** - Humanoid Health / арена-білд.
+2. **8.2** - Tool + анімація удару.
+3. **8.3** - dealDamage на сервері (Never trust client).
+4. **8.4** - TweenService + Particles як feedback.
+5. **8.5** - смерть, респавн, i-frames lite.
+6. **8.6** - хвилі через waveConfig table.
+7. **8.7** - playtest баланс HP / урону.
 
-Відкрийте **Урок 8.7 - Quest Town**.`,
+Сьогоднішній артефакт: **один Place**, де гравець без суфлера:
+**заходить на арену → розуміє ціль → б’є Tool’ом → ворог/хвиля реагує → HP видно → смерть/респавн чесні → наступна хвиля або перемога.**
+
+Якщо якоїсь системи ще немає - зроби **lite** саме під маршрут (1 тип ворога, 2 хвилі, 1 Tool), а не три недороблені Places.
+
+**Зроби зараз (3 хв):** одним реченням запиши золотий шлях арени. Якщо не можеш - спочатку стрілки на папері.`,
  },
  {
- title: "Чому маркери важливіші за код",
- content: `Технічно робочий квест **все ще плутає гравця**, якщо він не знає, куди йти.
+ title: "Що означає Ship Arena (і що ні)",
+ content: `| Ship Arena | Ще НЕ ship |
+|------------|-----------|
+| Арена + Tool + урон + хвиля **разом** | Окремо «гарний меч» і окремо dummy без зв’язку |
+| Урон через **серверний** dealDamage | LocalScript сам ставить Health = 0 ворогу |
+| Гравець бачить HP / feedback удару | Лише print у Output викладача |
+| Смерть → респавн без крашу | Застряг у void / без i-frames спам смерті |
+| Output чистий на 1–2 хвилях | Червоні помилки «ігноруємо» |
+| 60–90 с демо без пояснень | 5 хв «зараз покажу де спавн ворога» |
 
-| Без маркерів | З маркерами |
-|-------------|-------------|
-| Гравець блукає навмання | Значок над NPC з квестом |
-| "Куди повертатися?" | Стрілка/маркер над Guide Maya під час кроку "return" |
-| Незрозуміло, де небезпека | Знак попередження біля DangerZone |
+Ship **не** означає AAA-шутер. Означає: **короткий повний бій уже зібраний**, іменований і чесний по урону.
 
-Маркери **не змінюють логіку** - лише роблять уже готовий квест **читабельним**.`,
+Після цього уроку модуль 9 (Race) матиме звичку: **сервер вирішує критичні числа** (тут HP/урон, там кола/фініш).`,
  },
  {
- title: "Маркер квесту над NPC (BillboardGui)",
- content: `\`\`\`lua
-local function addQuestMarker(npcHead, symbol)
- local billboard = Instance.new("BillboardGui")
- billboard.Size = UDim2.fromOffset(40, 40)
- billboard.StudsOffset = Vector3.new(0, 2.5, 0)
- billboard.AlwaysOnTop = true
- billboard.Parent = npcHead
+ title: "Карта систем, які зшиваємо",
+ content: `| Система | Де живе | Що дає золотому шляху |
+|---------|---------|------------------------|
+| Арена / бар’єри | Workspace | Місце бою, не виліт у void |
+| Health / MaxHealth | Humanoid | Життя гравця і ворога |
+| Tool + анімація | Backpack / Character | Удар видно |
+| dealDamage | Server Script / Module | Правда шкоди |
+| Tween / Particles | Feedback на хіт | «Вау, влучив» |
+| Смерть + респавн + i-frames | Сервер + Character | Цикл після смерті |
+| waveConfig | Table на сервері | Хвилі 1→2→… |
 
- local label = Instance.new("TextLabel")
- label.Size = UDim2.fromScale(1, 1)
- label.BackgroundTransparency = 1
- label.Text = symbol -- "!" for quest available, "?" for turn-in ready
- label.TextColor3 = Color3.fromRGB(255, 220, 60)
- label.TextScaled = true
- label.Font = Enum.Font.GothamBold
- label.Parent = billboard
- return billboard
-end
-\`\`\`**"!"** = квест доступний. **"?"** = крок готовий до завершення у цього NPC.`,
+Правило інтеграції: **одна правда про шкоду і HP** - на сервері. Клієнт показує анімацію/ефект, але не «сам убиває».
+
+**Зроби зараз (4 хв):** у Explorer знайди скрипт dealDamage, Tool, спавн хвилі, зону арени. Чого немає - P0 на сьогодні.`,
  },
  {
- title: "Динамічне оновлення маркера за кроком",
- content: `\`\`\`lua
-local function updateGuideMarker(player)
- local step = currentStep(player, "town_trouble")
- local marker = guideMaya.Head:FindFirstChild("QuestMarkerLabel")
- if not marker then return end
+ title: "Золотий шлях арени (6–8 кроків)",
+ content: `Запиши **до** фіксів:
 
- if not step then
- marker.Parent.Enabled = false
- elseif step.id == "return" then
- marker.Text = "?"
- marker.Parent.Enabled = true
- else
- marker.Parent.Enabled = false
- end
-end
-\`\`\`Викликайте після кожної зміни \`stepIndex\`, щоб маркер завжди відповідав реальному стану гравця.`,
+1. Spawn біля входу / табличка «Візьми зброю, виживи N хвиль».
+2. Підібрати Tool (або вже в StarterPack).
+3. Увійти в арену → хвиля 1 спавнить ворога/dummy.
+4. Удар → сервер dealDamage → HP падає / feedback (particle/tween).
+5. Ворог гине → прогрес хвилі / наступна з waveConfig.
+6. Якщо ти гинеш - респавн + короткі i-frames, стан хвилі зрозумілий.
+7. Після останньої хвилі - перемога (UI або Part «YOU WIN»).
+8. Output без червоного на маршруті.
+
+Це і є «інтеграція». Не «усі фічі в файлах», а **гравець відчуває бій**.
+
+Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з більшим MaxHealth достатньо для ship.`,
  },
  {
- title: "Ясність діалогу - кожна реплика натякає на крок",
- content: `**До polish (незрозуміло):**
-\`"Welcome to town. Good luck."\`
+ title: "Рубрика Ship Arena (~15 пунктів)",
+ content: `Став **так / ні / майже**. Мета: максимум **так** на золотому шляху.
 
-**Після polish (натякає на дію):**
-\`\`\`lua
-DialogueData.guide_intro.lines = {
- "Welcome, builder! The cave crystals hold great power.",
- "Collect 5 crystals from the plaza - watch for the slime guarding the cave.",
- "Come back to me once you have all 5, and I'll tell you what's next.",
-}
-\`\`\`**Правило:** якщо гравець закриє діалог і одразу не знатиме, що робити - перепишіть репліку.`,
+### A. Простір і старт (1–4)
+| # | Пункт | Так? |
+|---|-------|------|
+| 1 | Spawn / вхід зрозумілий, Tool доступний | |
+| 2 | Табличка каже ціль ≤30–60 с читання | |
+| 3 | Арена тримає гравця (бордюри / підлога) | |
+| 4 | Імена/папки читаються (Arena/, Enemies/, Tools/) | |
+
+### B. Цикл бою (5–8)
+| # | Пункт | Так? |
+|---|-------|------|
+| 5 | Удар реально знімає HP (видно або в leaderstats/бар) | |
+| 6 | Є feedback (анімація і/або particle/tween) | |
+| 7 | Хвиля або наступний ворог з’являється після смерті попереднього | |
+| 8 | Смерть гравця → респавн без крашу Place | |
+
+### C. Чесність урону (9–12)
+| # | Пункт | Так? |
+|---|-------|------|
+| 9 | dealDamage на сервері (не лише клієнтський Health=) | |
+| 10 | Клієнт не може вбити всіх одним LocalScript «читом» без сервера | |
+| 11 | Є lite-захист: cooldown удару / перевірка відстані / Tool equipped | |
+| 12 | i-frames або імунітет після респавну (хоча б 1–2 с) | |
+
+### D. Ship-якість (13–15)
+| # | Пункт | Так? |
+|---|-------|------|
+| 13 | Output чистий на 1–2 хвилях | |
+| 14 | Демо 60–90 с без суфлера | |
+| 15 | Save Lesson 8.8 - Arena Ship | |
+
+Усе «ні» в B/C = список фіксів Part B. Не малюй другу арену - закрий цикл.`,
  },
  {
- title: "Знак попередження біля небезпеки",
- content: `Simple Part \`WarningSign\` перед DangerZone:
+ title: "Типові дірки інтеграції арени",
+ content: `| Симптом | Ймовірна причина | Швидкий фікс |
+|---------|------------------|--------------|
+| Меч махає, HP стоїть | Урон лише візуальний / не викликає dealDamage | Зв’яжи hit → сервер |
+| Dummy вмирає від клієнта напряму | LocalScript пише Health | Прибери; лише сервер |
+| Хвиля 2 не стартує | Немає слухача «усі вороги мертві» | Лічильник alive у waveConfig |
+| Респавн спамить смерть | Немає i-frames | Короткий імунітет після LoadCharacter |
+| Particles лагають | Емітер на кожен кадр без Destroy | Один burst + cleanup |
+| Баланс «one-shot» | Урон > MaxHealth ворога / гравця | Підкрути з 8.7 нотаток |
 
-\`\`\`lua
--- SurfaceGui or just a bright red Part with text
-local sign = Instance.new("Part")
-sign.Size = Vector3.new(4, 3, 0.2)
-sign.Anchored = true
-sign.BrickColor = BrickColor.new("Bright red")
-sign.Position = dangerZoneEntrance.Position
-sign.Parent = workspace.QuestTown
-\`\`\`**Комбінуйте зі звуком** - гарчання слизу, чутне за 15+ studs, попереджає без потреби читати текст.`,
+**Зроби зараз (6 хв):** пройди шлях раз і познач перший червоний пункт рубрики. Лагод його раніше за новий декор.`,
  },
  {
- title: "Баланс відстаней у містечку",
- content: `| Відстань | Рекомендація |
-|----------|---------------|
-| Spawn гравця → Guide Maya | 10-15 studs (одразу видно) |
-| Guide Maya → зона кристалів | 20-40 studs (коротка прогулянка) |
-| Кристали → DangerZone ворога | 15-25 studs (небезпека поруч, але не на самих кристалах) |
-| Patrol route | Не перетинає DangerZone (плутанина ролей) |
+ title: "Міні-схема: урон і хвиля",
+ content: `На сервері:
 
-**Занадто далеко** = гравець втрачає інтерес. **Занадто близько** = ворог блокує все одразу.`,
+\`dealDamage(targetHumanoid, amount, sourcePlayer)\`
+\` - перевірити target існує\`
+\` - перевірити amount число і > 0\`
+\` - (lite) відстань source → target\`
+\` - (lite) cooldown на sourcePlayer\`
+\` - Humanoid:TakeDamage(amount) або Health = math.max(0, Health - amount)\`
+
+Хвилі (нагадування 8.6):
+
+\`waveConfig = {\`
+\` { enemies = 2, hp = 50 },\`
+\` { enemies = 3, hp = 60 },\`
+\`}\`
+
+\`spawnWave(index)\` клонує NPC, ставить MaxHealth/Health з config, тримає \`aliveCount\`.  
+Коли \`aliveCount == 0\` → \`spawnWave(index + 1)\` або victory.
+
+Клієнт: анімація Tool / звук / прохання «атакую» (якщо вже є Remote). Сервер: скільки HP зняти.`,
  },
  {
- title: "Walkthrough-тест (золотий шлях)",
- content: `**Один гравець, секундомір, ~3 хвилини:**
+ title: "Онбординг арени за 8 хвилин",
+ content: `Новачок у бою губиться: неясно, чи бити dummy, чи чекати хвилю, де взяти меч.
 
-| Крок | Дія | Час |
-|------|-----|-----|
-| 1 | Spawn → бачить маркер "!" над Guide Maya | |
-| 2 | Діалог - розуміє мету без переказу | |
-| 3 | Знаходить 5 кристалів без блукання | |
-| 4 | Бачить маркер "?" над Guide Maya - повертається | |
-| 5 | Йде до DangerZone, перемагає ворога | |
-| 6 | Отримує нагороду - чітке повідомлення успіху | |
+Мінімум на старті:
+- табличка з 2–3 кроками;
+- яскравий колір підлоги арени / бар’єр входу;
+- Tool у StarterPack або Part «Pick weapon» з підказкою.
 
-Якщо будь-який крок займає **надто довго через плутанину** - додайте маркер або перепишіть репліку.`,
+Текст:
+*«1) Візьми меч. 2) Зайди в червону арену. 3) Знищ хвилі ворогів.»*
+
+Перевір: відійди очима від монітора і підійди знову - чи видно вхід без твоїх слів?`,
  },
  {
- title: "Тест для двох гравців перед фінальним збереженням",
- content: `**2 гравці одночасно:**
-- Обидва бачать однакові маркери над NPC (кожен свій стан кроку)
-- Прогрес квесту незалежний - один на кроці "collect", інший на "defeat"
-- Спільний ворог dies - кредит зараховується правильному гравцю
-- Немає помилок Output протягом обох повних проходжень
+ title: "Playtest інтеграції (чекліст)",
+ content: `| # | Дія | Очікування | Факт |
+|---|-----|------------|------|
+| 1 | Новий Play | Spawn + Tool ок | |
+| 2 | Увійти в арену | Хвиля / dummy з’являється | |
+| 3 | Ударити | HP падає на сервері | |
+| 4 | Feedback | Анімація/particle хоч раз | |
+| 5 | Добити ворога | Хвиля прогресує / victory | |
+| 6 | Підробити Health на клієнті (якщо вмієш) | Вороги не «самі» падають від чистого клієнта | |
+| 7 | Смерть гравця | Респавн + i-frames | |
+| 8 | Друга хвиля | Не крашить, config читається | |
+| 9 | Output | Без червоного | |
+| 10 | Демо 90 с | Вкладаєшся | |
 
-**Записуйте** будь-яку плутанину чи помилку для фінального виправлення.`,
+Пункти 3–7 - серце Ship Arena. Без них рубрика C червона.`,
  },
  {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Маркер "!"/"?" над Guide Maya оновлюється за кроком квесту
-- [ ] Кожна реплика діалогу натякає на конкретну дію
-- [ ] Знак і звук попереджають про DangerZone заздалегідь
-- [ ] Golden path пройдено без плутанини одним гравцем
-- [ ] Тест для 2 гравців пройдено без помилок Output
-- [ ] Зберегти: \`Lesson 8.8 - Quest Town Polish\``,
+ title: "Що свідомо відкласти",
+ content: `Не роби сьогодні:
+- 12 типів ворогів і дерево скілів;
+- повний магазин зброї на Remotes (це ближче до M10);
+- Ideal CameraMode на годину;
+- Publish Public (ближче до M12);
+- open-world навколо арени.
+
+Роби сьогодні:
+- **один** бій MVP;
+- серверний dealDamage;
+- 2 хвилі з waveConfig;
+- респавн + рубрика + Save.
+
+Усе «хочу ще» - у нотатку для polish / M11. Ship любить вузький переможний круг.`,
+ },
+ {
+ title: "Чекліст здачі уроку 64 + місток до M9",
+ content: `- [ ] Золотий шлях записаний
+- [ ] Рубрика ~15 пунктів проставлена
+- [ ] Урон на сервері (dealDamage)
+- [ ] Tool + хоч якийсь feedback
+- [ ] Хвилі або чіткий цикл «вбити → наступний»
+- [ ] Смерть / респавн без крашу
+- [ ] i-frames lite або еквівалент
+- [ ] Playtest-таблиця хоча б раз
+- [ ] Демо 60–90 с
+- [ ] Save Lesson 8.8 - Arena Ship
+
+Далі **модуль 9 Race**: та сама дисципліна «сервер вирішує», але вже для кіл і фінішу. Якщо каса урону ще на клієнті - **не** йди в Race з гордістю: спочатку закрий рубрику C арени.
+
+Артефакт: арена, яку можна показати. Мережа гонки завтра будується на цій звичці Never trust client.`,
  },
  ],
  },
  commonMistakes: [
  {
- mistake: "Маркер квесту статичний, не оновлюється за кроком",
- explanation: "Гравець бачить \"!\" навіть коли крок уже \"defeat\".",
- correctApproach: "updateGuideMarker після кожної зміни stepIndex",
+ mistake: "Урон лише в LocalScript (Health = 0 на клієнті)",
+ explanation: "Чіт і розсинхрон з хвилями.",
+ correctApproach: "dealDamage на сервері",
  },
  {
- mistake: "Діалог загальний, без конкретної дії",
- explanation: "Гравець закриває розмову й не знає, куди йти.",
- correctApproach: "Кожна репліка називає конкретну ціль або локацію",
+ mistake: "Три Places: Tool / dummy / хвилі окремо",
+ explanation: "Немає інтегрованого бою.",
+ correctApproach: "Один Place, один золотий шлях",
  },
  {
- mistake: "DangerZone відразу біля точки спавну кристалів",
- explanation: "Гравець гине, ще не зрозумівши квест.",
- correctApproach: "15-25 studs буфер між кристалами і ворогом",
+ mistake: "Хвиля 2 ніколи не стартує",
+ explanation: "Немає підрахунку живих ворогів.",
+ correctApproach: "aliveCount + waveConfig наступний індекс",
  },
  {
- mistake: "Тестується лише один гравець перед збереженням",
- explanation: "Багатокористувацькі помилки виявляються надто пізно.",
- correctApproach: "Обов'язковий тест на 2 гравці в кінці",
+ mistake: "Рубрика «майже», але демо потребує суфлера",
+ explanation: "Це не ship для гравця.",
+ correctApproach: "Онбординг + 90 с без пояснень",
+ },
+ {
+ mistake: "Немає i-frames після респавну",
+ explanation: "Миттєва повторна смерть біля спавну ворога.",
+ correctApproach: "1–2 с імунітету",
+ },
+ {
+ mistake: "Роздути 10 ворогів замість закрити 2 хвилі",
+ explanation: "Година зникає, блокери лишаються.",
+ correctApproach: "2 хвилі MVP + стабільний урон",
  },
  ],
- summary: "Ви додали динамічні маркери квесту, переписали діалог так, щоб кожна реплика підказувала наступну дію, збалансували відстані в містечку та провели повний walkthrough-тест для одного й двох гравців - квестове містечко тепер зрозуміле й готове до демонстрації.",
+ summary: "Ти зібрав Ship Arena: один золотий шлях, де Tool, серверний урон, хвилі й респавн працюють разом. Рубрика й playtest підтверджують демо 60–90 с - база перед Race у модулі 9.",
  practiceTask: {
- title: "Polish та playtest містечка (~30 хв)",
- difficulty: "beginner",
- description: `**Мета:** Квестове містечко, зрозуміле без пояснень.
+ title: "Ship Arena: зшити і здати (~30 хв)",
+ difficulty: "intermediate",
+ description: `**Мета:** один Place з інтегрованим боєм вхід → удар → хвиля → респавн.
 
-### Part A - Маркери (12 хв)
-1. addQuestMarker над Guide Maya, "!" за замовчуванням
-2. updateGuideMarker перемикає на "?" на кроці "return"
+### Part A - Карта і рубрика (8 хв)
+1. Запиши золотий шлях 6–8 кроків.
+2. Пройди рубрику ~15 пунктів у Play.
+3. Випиши P0 з блоків B і C.
 
-### Part B - Ясність і баланс (10 хв)
-1. Перепишіть діалог guide_intro з конкретними діями
-2. Знак і звук попередження біля DangerZone
-3. Перевірте відстані за таблицею балансу
+### Part B - Інтеграційні фікси (15 хв)
+1. Удари йдуть у серверний dealDamage.
+2. Lite cooldown / відстань (якщо ще немає).
+3. Хвиля 2 з waveConfig або victory після останнього.
+4. Респавн + i-frames lite.
+5. Хоч один feedback (анімація або particle).
 
-### Part C - Walkthrough-тест (8 хв)
-1. Один гравець - повний золотий шлях без плутанини
-2. Два гравці - незалежний прогрес, без помилок Output
-3. **Зберегти в Roblox** → \`Lesson 8.8 - Quest Town Polish\` 4. **Практика завершена**`,
+### Part C - Демо і Save (7 хв)
+1. Playtest-таблиця 1–10.
+2. Репетиція демо 60–90 с.
+3. **Зберегти:** Lesson 8.8 - Arena Ship
+4. Практика завершена, коли рубрика має максимум «так» і Output чистий.`,
  hints: [
- "Попросіть когось, хто не грав раніше, пройти golden path без ваших пояснень",
- "Якщо маркер не оновлюється, друкуйте stepIndex поруч із викликом updateGuideMarker",
- "Записуйте час кожного кроку walkthrough - повільні кроки вказують на плутанину",
+ "Спочатку серверний урон, потім краса VFX",
+ "2 хвилі достатньо для ship",
+ "Якщо UI HP немає - Humanoid Health bar за замовчуванням ок для здачі",
  ],
- optionalChallenge: "Компас/стрілка на HUD, що вказує напрямок до поточної цілі квесту.",
+ optionalChallenge: "Короткий TextLabel «Хвиля N / M» з серверної правди після старту кожної хвилі.",
  },
  quiz: {
  passingScore: 70,
- timeLimit: 10,
+ timeLimit: 15,
  questions: [
  {
  id: "q1",
- type: "multiple_choice",
- question: "Маркер квесту над NPC показує через...",
+ type: MC,
+ question: "Головна мета уроку 8.8?",
  options: [
- "BillboardGui з текстовим символом",
- "DataStore",
- "RemoteFunction",
- "Terrain",
+ "Зшити арену в один золотий шлях і закрити рубрику Ship",
+ "Видалити Tool і хвилі",
+ "Почати Race-трасу з нуля",
+ "Publish Public обов’язково сьогодні",
  ],
  correctAnswer: 0,
- explanation: "Візуальний індикатор стану.",
+ explanation: "Інтеграція Arena.",
  },
  {
  id: "q2",
- type: "multiple_choice",
- question: "Маркер \"?\" означає...",
+ type: MC,
+ question: "Де має жити правда про шкоду?",
  options: [
- "Крок готовий до завершення у цього NPC",
- "Квест недоступний",
- "Ворог поруч",
- "Помилка сервера",
+ "На сервері в dealDamage",
+ "Лише в LocalScript Health=",
+ "У Lighting Ambient",
+ "У назві Part арени",
  ],
  correctAnswer: 0,
- explanation: "Сигнал завершення кроку.",
+ explanation: "Never trust client.",
  },
  {
  id: "q3",
- type: "multiple_choice",
- question: "Гарна реплика діалогу повинна...",
+ type: MC,
+ question: "Що таке золотий шлях арени?",
  options: [
- "Натякати на конкретну наступну дію",
- "Бути максимально загальною",
- "Уникати згадки мети",
- "Бути порожньою",
+ "Короткий маршрут гравця від входу до перемоги/циклу без суфлера",
+ "Список усіх Plugins у Studio",
+ "Обов’язковий open-world",
+ "Лише зміна Skybox",
  ],
  correctAnswer: 0,
- explanation: "Ясність UX діалогу.",
+ explanation: "Інтегрований бій.",
  },
  {
  id: "q4",
- type: "multiple_choice",
- question: "Буфер 15-25 studs між кристалами і ворогом потрібен, щоб...",
+ type: MC,
+ question: "Навіщо i-frames після респавну?",
  options: [
- "Гравець не гинув одразу, не зрозумівши квест",
- "Пришвидшити сервер",
- "Зменшити HP ворога",
- "Видалити NPC",
+ "Щоб не померти миттєво знову біля небезпеки",
+ "Щоб вимкнути Tool назавжди",
+ "Це замінює waveConfig",
+ "i-frames малюють Terrain",
  ],
  correctAnswer: 0,
- explanation: "Баланс складності й простору.",
+ explanation: "Захист після смерті.",
  },
  {
  id: "q5",
- type: "multiple_choice",
- question: "Golden path тест перевіряє...",
+ type: MC,
+ question: "Що перевіряє блок C рубрики?",
  options: [
- "Повний цикл квесту без плутанини",
- "Лише швидкість сервера",
- "Лише графіку",
- "Лише звук",
+ "Чесність урону: сервер, анти-клієнтський one-shot, cooldown/відстань",
+ "Лише колір бар’єра",
+ "Назву модуля 1",
+ "Кількість Decals у Toolbox",
  ],
  correctAnswer: 0,
- explanation: "Повне проходження одним гравцем.",
+ explanation: "Безпека бою.",
  },
  {
  id: "q6",
- type: "multiple_choice",
- question: "Тест для 2 гравців перевіряє...",
+ type: MC,
+ question: "Як хвилі пов’язані з ship?",
  options: [
- "Незалежний прогрес і спільного ворога без помилок",
- "Лише один спільний квест",
- "Відсутність сервера",
- "Лише UI кольори",
+ "Після смерті ворогів має стартувати наступна з waveConfig або victory",
+ "Хвилі лише декоративні Part",
+ "waveConfig живе тільки на клієнті як TextLabel",
+ "Хвилі заборонені в Arena",
  ],
  correctAnswer: 0,
- explanation: "Багатокористувацька стабільність.",
+ explanation: "Цикл бою.",
  },
  {
  id: "q7",
- type: "multiple_choice",
- question: "updateGuideMarker слід викликати...",
+ type: MC,
+ question: "Що НЕ треба робити в 8.8?",
  options: [
- "Після кожної зміни stepIndex гравця",
- "Лише раз при старті сервера",
- "Ніколи",
- "Лише на клієнті",
+ "Будувати 12 типів ворогів і магазин зброї замість закрити цикл",
+ "Пройти рубрику",
+ "Перевірити dealDamage",
+ "Зберегти Place",
  ],
  correctAnswer: 0,
- explanation: "Синхронізація маркера зі станом.",
+ explanation: "Вузький MVP.",
  },
  {
  id: "q8",
- type: "multiple_choice",
- question: "Знак і звук біля DangerZone дають...",
+ type: MC,
+ question: "Навіщо feedback (анімація/particles)?",
  options: [
- "Попередження заздалегідь",
- "Додаткову шкоду",
- "Нову валюту",
- "DataStore запис",
+ "Гравець відчуває влучання, не лише сухі цифри HP",
+ "Це вимикає серверний урон",
+ "Без цього Humanoid не існує",
+ "Particles замінюють MaxHealth",
  ],
  correctAnswer: 0,
- explanation: "Читабельність небезпеки.",
+ explanation: "Відчуття бою.",
  },
  {
  id: "q9",
- type: "multiple_choice",
- question: "Урок 8.8 завершує...",
+ type: MC,
+ question: "Якщо меч махає, а HP стоїть - що першим?",
  options: [
- "Полірування проєкту Quest Town з 8.7",
- "Новий незалежний модуль",
- "Модуль 9 наперед",
- "Порожньо",
+ "Перевірити, чи викликається серверний dealDamage",
+ "Видалити арену",
+ "Змінити тільки Sky",
+ "Вимкнути Output",
  ],
  correctAnswer: 0,
- explanation: "Фінальний polish проєкту.",
+ explanation: "Зв’язок hit → урон.",
  },
  {
  id: "q10",
- type: "multiple_choice",
- question: "Урок 8.8 зберегти назву...",
+ type: MC,
+ question: "Скільки триває цільове демо Ship?",
  options: [
- "Lesson 8.8 - Quest Town Polish",
- "Quest Town",
- "Living Location",
- "Enemy Attack",
+ "Близько 60–90 секунд без суфлера",
+ "Обов’язково 40 хвилин пояснень",
+ "Достатньо відкрити Explorer",
+ "Лише скріншот без Play",
  ],
  correctAnswer: 0,
- explanation: "Зберегти фінальний polish урок.",
+ explanation: "Коротке демо.",
+ },
+ {
+ id: "q11",
+ type: MC,
+ question: "Як 8.8 готує модуль 9 Race?",
+ options: [
+ "Звичка «сервер вирішує критичні числа» переходить на кола/фініш",
+ "Race забороняє серверні скрипти",
+ "Треба видалити всю арену з пам’яті",
+ "У Race урон пише лише клієнт",
+ ],
+ correctAnswer: 0,
+ explanation: "Дисципліна сервера.",
+ },
+ {
+ id: "q12",
+ type: MC,
+ question: "Навіщо lite cooldown / перевірка відстані?",
+ options: [
+ "Щоб спам і удари «через пів карти» не ламали бій",
+ "Щоб вимкнути Humanoid",
+ "Це обов’язково для Decal",
+ "Cooldown малює Billboard",
+ ],
+ correctAnswer: 0,
+ explanation: "Захист dealDamage.",
+ },
+ {
+ id: "q13",
+ type: MC,
+ question: "Що з наведеного - P0 для арени?",
+ options: [
+ "Урон або вбивство повністю на клієнті без сервера",
+ "Трохи кривий колір стіни",
+ "Неідеальний Ambient",
+ "Дрібний offset Billboard",
+ ],
+ correctAnswer: 0,
+ explanation: "Критична дірка бою.",
+ },
+ {
+ id: "q14",
+ type: MC,
+ question: "Навіщо один Place замість трьох окремих?",
+ options: [
+ "Інакше немає інтегрованого золотого шляху для демо",
+ "Studio дозволяє лише один Place у житті",
+ "Три Places швидше завжди",
+ "Рубрика забороняє папки",
+ ],
+ correctAnswer: 0,
+ explanation: "Інтеграція.",
+ },
+ {
+ id: "q15",
+ type: MC,
+ question: "Що вважається зданим артефактом 8.8?",
+ options: [
+ "Золотий шлях + рубрика + серверний урон/хвилі + Save",
+ "Лише теорія без Studio",
+ "Порожній Baseplate",
+ "Клієнтський Health= без сервера",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібен ship арени.",
  },
  ],
  },

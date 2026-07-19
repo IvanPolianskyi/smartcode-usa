@@ -1,17 +1,17 @@
 /**
- * Roblox Studio - 92 lessons / 12 modules (нова сітка)
- * Generated from global curriculum grid
+ * Roblox Studio — 92 lessons / 12 modules
+ * Grid: M1×8 + M2×4 + M3×8 + M4×8 + M5×10 + M6×10 + M7×8 + M8×8 + M9×8 + M10×8 + M11×6 + M12×6
  */
 
 export const robloxCurriculum = {
   "courseId": "roblox-studio",
-  "title": "Roblox Studio: 12 модулів / 92 уроки — від старту творця до релізу",
+  "title": "Roblox Studio: 92 уроки — від острова до релізу",
   "modules": [
     {
       "moduleId": "module-01",
       "order": 0,
       "title": "01 - Старт творця",
-      "description": "Studio, будинок, Terrain, змінні, if, атмосфера, Party Mode",
+      "description": "Старт творця",
       "duration": {
         "weeks": 4,
         "lessons": 8
@@ -21,7 +21,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-1-1",
           "order": 1,
-          "title": "1.1 - Інструменти + Union → будинок",
+          "title": "1.1 - Інструменти Studio + будинок з вікнами",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [],
@@ -30,7 +30,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-1-2",
           "order": 2,
-          "title": "1.2 - Terrain Editor повністю",
+          "title": "1.2 - Terrain Editor: повний острів",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -96,7 +96,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-1-8",
           "order": 8,
-          "title": "1.8 - Checkpoint M1",
+          "title": "1.8 - Checkpoint: острів живе",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -110,7 +110,7 @@ export const robloxCurriculum = {
       "moduleId": "module-02",
       "order": 1,
       "title": "02 - World craft",
-      "description": "Model, Constraints, атракціони, Toolbox — штаб острова і парк",
+      "description": "World craft: Model, Constraints, парк",
       "duration": {
         "weeks": 2,
         "lessons": 4
@@ -120,18 +120,16 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-2-1",
           "order": 1,
-          "title": "2.1 - Штаб острова",
+          "title": "2.1 - Штаб острова (Model + фізика)",
           "learningObjectives": [],
           "estimatedTime": 60,
-          "prerequisites": [
-            "lesson-roblox-1-8"
-          ],
+          "prerequisites": [],
           "isCheckpoint": false
         },
         {
           "lessonId": "lesson-roblox-2-2",
           "order": 2,
-          "title": "2.2 - Вхід у парк",
+          "title": "2.2 - Вхід у парк (Weld + Hinge + Rope)",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -153,13 +151,13 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-2-4",
           "order": 4,
-          "title": "2.4 - Здача парку",
+          "title": "2.4 - Здача парку (Toolbox + ship)",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-2-3"
           ],
-          "isCheckpoint": true
+          "isCheckpoint": false
         }
       ]
     },
@@ -167,7 +165,7 @@ export const robloxCurriculum = {
       "moduleId": "module-03",
       "order": 2,
       "title": "03 - Код, що грається",
-      "description": "Click/Prompt, Touched, while/for, functions, LocalScript — міні-гра",
+      "description": "Взаємодія, цикли, functions, LocalScript",
       "duration": {
         "weeks": 4,
         "lessons": 8
@@ -177,18 +175,16 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-3-1",
           "order": 1,
-          "title": "3.1 - Взаємодія",
+          "title": "3.1 - ClickDetector + ProximityPrompt",
           "learningObjectives": [],
           "estimatedTime": 60,
-          "prerequisites": [
-            "lesson-roblox-2-4"
-          ],
+          "prerequisites": [],
           "isCheckpoint": false
         },
         {
           "lessonId": "lesson-roblox-3-2",
           "order": 2,
-          "title": "3.2 - Touched + KillBrick",
+          "title": "3.2 - Touched + debounce + KillBrick",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -210,7 +206,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-3-4",
           "order": 4,
-          "title": "3.4 - while + платформи",
+          "title": "3.4 - while + платформи-привиди",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -221,7 +217,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-3-5",
           "order": 5,
-          "title": "3.5 - for / ipairs",
+          "title": "3.5 - for / ipairs + спавн траси",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -256,7 +252,7 @@ export const robloxCurriculum = {
           "order": 8,
           "title": "3.8 - Бос-здача міні-гри",
           "learningObjectives": [],
-          "estimatedTime": 75,
+          "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-3-7"
           ],
@@ -268,7 +264,7 @@ export const robloxCurriculum = {
       "moduleId": "module-04",
       "order": 3,
       "title": "04 - Tables і дані",
-      "description": "Масиви/словники, ModuleScript, DataStore",
+      "description": "Масиви, словники, ModuleScript, DataStore",
       "duration": {
         "weeks": 4,
         "lessons": 8
@@ -281,9 +277,7 @@ export const robloxCurriculum = {
           "title": "4.1 - Масиви + for",
           "learningObjectives": [],
           "estimatedTime": 60,
-          "prerequisites": [
-            "lesson-roblox-3-8"
-          ],
+          "prerequisites": [],
           "isCheckpoint": false
         },
         {
@@ -300,7 +294,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-4-3",
           "order": 3,
-          "title": "4.3 - insert / remove",
+          "title": "4.3 - insert / remove - інвентар",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -311,7 +305,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-4-4",
           "order": 4,
-          "title": "4.4 - Масив записів",
+          "title": "4.4 - Масив записів (table в table)",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -346,7 +340,7 @@ export const robloxCurriculum = {
           "order": 7,
           "title": "4.7 - Бос: data-driven вітрина",
           "learningObjectives": [],
-          "estimatedTime": 75,
+          "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-4-6"
           ],
@@ -355,9 +349,9 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-4-8",
           "order": 8,
-          "title": "4.8 - Checkpoint M4",
+          "title": "4.8 - Checkpoint: Tables",
           "learningObjectives": [],
-          "estimatedTime": 75,
+          "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-4-7"
           ],
@@ -368,18 +362,18 @@ export const robloxCurriculum = {
     {
       "moduleId": "module-05",
       "order": 4,
-      "title": "05 - Бійцівський клуб",
-      "description": "Бійцівський клуб",
+      "title": "05 - Obby",
+      "description": "Повноцінний obby-продукт",
       "duration": {
-        "weeks": 4,
-        "lessons": 8
+        "weeks": 5,
+        "lessons": 10
       },
       "learningOutcomes": [],
       "lessons": [
         {
           "lessonId": "lesson-roblox-5-1",
           "order": 1,
-          "title": "5.1 - Гуманоїд і здоров'я",
+          "title": "5.1 - Дизайн 3 біомів",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [],
@@ -388,7 +382,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-5-2",
           "order": 2,
-          "title": "5.2 - Зброя - перший меч",
+          "title": "5.2 - Hazards + debounce",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -399,7 +393,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-5-3",
           "order": 3,
-          "title": "5.3 - Система пошкоджень",
+          "title": "5.3 - Чекпоінти + таймер + GUI",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -410,7 +404,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-5-4",
           "order": 4,
-          "title": "5.4 - TweenService: плавні ефекти",
+          "title": "5.4 - while-платформи + Config",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -421,7 +415,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-5-5",
           "order": 5,
-          "title": "5.5 - Смерть та респавн",
+          "title": "5.5 - Секрети + ключ-двері",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -432,20 +426,20 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-5-6",
           "order": 6,
-          "title": "5.6 - Checkpoint: Arena готова",
+          "title": "5.6 - Playtest #1 + багліст",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-5-5"
           ],
-          "isCheckpoint": true
+          "isCheckpoint": false
         },
         {
           "lessonId": "lesson-roblox-5-7",
           "order": 7,
-          "title": "5.7 - Проєкт: Арена «Хвилі ворогів»",
+          "title": "5.7 - Difficulty curve",
           "learningObjectives": [],
-          "estimatedTime": 75,
+          "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-5-6"
           ],
@@ -454,11 +448,33 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-5-8",
           "order": 8,
-          "title": "5.8 - Баланс бою і polish арени",
+          "title": "5.8 - Checkpoint: повний прохід",
           "learningObjectives": [],
-          "estimatedTime": 75,
+          "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-5-7"
+          ],
+          "isCheckpoint": true
+        },
+        {
+          "lessonId": "lesson-roblox-5-9",
+          "order": 9,
+          "title": "5.9 - Juice: Sound + Particles",
+          "learningObjectives": [],
+          "estimatedTime": 60,
+          "prerequisites": [
+            "lesson-roblox-5-8"
+          ],
+          "isCheckpoint": false
+        },
+        {
+          "lessonId": "lesson-roblox-5-10",
+          "order": 10,
+          "title": "5.10 - Ship + Badge",
+          "learningObjectives": [],
+          "estimatedTime": 60,
+          "prerequisites": [
+            "lesson-roblox-5-9"
           ],
           "isCheckpoint": false
         }
@@ -467,18 +483,18 @@ export const robloxCurriculum = {
     {
       "moduleId": "module-06",
       "order": 5,
-      "title": "06 - Швидше, вище, далі",
-      "description": "Швидше, вище, далі",
+      "title": "06 - Simulator",
+      "description": "Core loop, leaderstats, HUD, DataStore",
       "duration": {
-        "weeks": 4,
-        "lessons": 8
+        "weeks": 5,
+        "lessons": 10
       },
       "learningOutcomes": [],
       "lessons": [
         {
           "lessonId": "lesson-roblox-6-1",
           "order": 1,
-          "title": "6.1 - Машина з нуля",
+          "title": "6.1 - Core loop + сцена",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [],
@@ -487,7 +503,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-6-2",
           "order": 2,
-          "title": "6.2 - Траса",
+          "title": "6.2 - leaderstats",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -498,7 +514,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-6-3",
           "order": 3,
-          "title": "6.3 - Таймер гонки",
+          "title": "6.3 - HUD на LocalScript",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -509,7 +525,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-6-4",
           "order": 4,
-          "title": "6.4 - Client-Server: перше знайомство",
+          "title": "6.4 - Функції нагород + анти-дубль",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -520,7 +536,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-6-5",
           "order": 5,
-          "title": "6.5 - Кола та лідерборд",
+          "title": "6.5 - Спавн з Config + for",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -531,20 +547,20 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-6-6",
           "order": 6,
-          "title": "6.6 - Checkpoint: Гонка запущена",
+          "title": "6.6 - Attributes / Power",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-6-5"
           ],
-          "isCheckpoint": true
+          "isCheckpoint": false
         },
         {
           "lessonId": "lesson-roblox-6-7",
           "order": 7,
-          "title": "6.7 - Проєкт: Гонка з чесним фінішем",
+          "title": "6.7 - DataStore прогресу",
           "learningObjectives": [],
-          "estimatedTime": 75,
+          "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-6-6"
           ],
@@ -553,21 +569,43 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-6-8",
           "order": 8,
-          "title": "6.8 - Траса: небезпеки і polish",
+          "title": "6.8 - Цілі дня з table",
           "learningObjectives": [],
-          "estimatedTime": 75,
+          "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-6-7"
           ],
           "isCheckpoint": false
+        },
+        {
+          "lessonId": "lesson-roblox-6-9",
+          "order": 9,
+          "title": "6.9 - Playtest економіка + VFX",
+          "learningObjectives": [],
+          "estimatedTime": 60,
+          "prerequisites": [
+            "lesson-roblox-6-8"
+          ],
+          "isCheckpoint": false
+        },
+        {
+          "lessonId": "lesson-roblox-6-10",
+          "order": 10,
+          "title": "6.10 - Ship Sim",
+          "learningObjectives": [],
+          "estimatedTime": 60,
+          "prerequisites": [
+            "lesson-roblox-6-9"
+          ],
+          "isCheckpoint": true
         }
       ]
     },
     {
       "moduleId": "module-07",
       "order": 6,
-      "title": "07 - Мережа та магазин",
-      "description": "Мережа та магазин",
+      "title": "07 - Tycoon",
+      "description": "Plot, дропер, покупки, апгрейди",
       "duration": {
         "weeks": 4,
         "lessons": 8
@@ -577,7 +615,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-7-1",
           "order": 1,
-          "title": "7.1 - Два світи: клієнт і сервер",
+          "title": "7.1 - Plot / dropper / collector",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [],
@@ -586,7 +624,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-7-2",
           "order": 2,
-          "title": "7.2 - RemoteEvent",
+          "title": "7.2 - Дропер while/for + Config",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -597,7 +635,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-7-3",
           "order": 3,
-          "title": "7.3 - Магазин: UI частина",
+          "title": "7.3 - Покупки + leaderstats",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -608,7 +646,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-7-4",
           "order": 4,
-          "title": "7.4 - Магазин: серверна логіка",
+          "title": "7.4 - Апгрейди з table",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -619,7 +657,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-7-5",
           "order": 5,
-          "title": "7.5 - RemoteFunction",
+          "title": "7.5 - Plot на гравця",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -630,20 +668,20 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-7-6",
           "order": 6,
-          "title": "7.6 - Checkpoint: Магазин працює",
+          "title": "7.6 - Playtest + баланс цін",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-7-5"
           ],
-          "isCheckpoint": true
+          "isCheckpoint": false
         },
         {
           "lessonId": "lesson-roblox-7-7",
           "order": 7,
-          "title": "7.7 - Проєкт: Магазин косметики",
+          "title": "7.7 - Проєкт: міні-фабрика",
           "learningObjectives": [],
-          "estimatedTime": 75,
+          "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-7-6"
           ],
@@ -652,21 +690,21 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-7-8",
           "order": 8,
-          "title": "7.8 - Безпека магазину і UX",
+          "title": "7.8 - Ship Tycoon",
           "learningObjectives": [],
-          "estimatedTime": 75,
+          "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-7-7"
           ],
-          "isCheckpoint": false
+          "isCheckpoint": true
         }
       ]
     },
     {
       "moduleId": "module-08",
       "order": 7,
-      "title": "08 - Розумна гра",
-      "description": "Розумна гра",
+      "title": "08 - Arena",
+      "description": "Health, Tool, урон, Tween, хвилі",
       "duration": {
         "weeks": 4,
         "lessons": 8
@@ -676,7 +714,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-8-1",
           "order": 1,
-          "title": "8.1 - Живий NPC",
+          "title": "8.1 - Humanoid Health",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [],
@@ -685,7 +723,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-8-2",
           "order": 2,
-          "title": "8.2 - Система діалогів",
+          "title": "8.2 - Tool + Animation",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -696,7 +734,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-8-3",
           "order": 3,
-          "title": "8.3 - NPC що ходить",
+          "title": "8.3 - dealDamage на сервері",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -707,7 +745,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-8-4",
           "order": 4,
-          "title": "8.4 - Квест-система",
+          "title": "8.4 - TweenService + Particles",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -718,7 +756,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-8-5",
           "order": 5,
-          "title": "8.5 - Ворог що атакує",
+          "title": "8.5 - Смерть + респавн",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -729,20 +767,20 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-8-6",
           "order": 6,
-          "title": "8.6 - Checkpoint: Жива локація",
+          "title": "8.6 - Хвилі + waveConfig",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-8-5"
           ],
-          "isCheckpoint": true
+          "isCheckpoint": false
         },
         {
           "lessonId": "lesson-roblox-8-7",
           "order": 7,
-          "title": "8.7 - Проєкт: Квестове містечко",
+          "title": "8.7 - Playtest баланс бою",
           "learningObjectives": [],
-          "estimatedTime": 75,
+          "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-8-6"
           ],
@@ -751,21 +789,21 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-8-8",
           "order": 8,
-          "title": "8.8 - Жива локація: polish і playtest",
+          "title": "8.8 - Ship Arena",
           "learningObjectives": [],
-          "estimatedTime": 75,
+          "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-8-7"
           ],
-          "isCheckpoint": false
+          "isCheckpoint": true
         }
       ]
     },
     {
       "moduleId": "module-09",
       "order": 8,
-      "title": "09 - Архітектор систем",
-      "description": "Архітектор систем",
+      "title": "09 - Race + мережа",
+      "description": "Гонки, client/server, RemoteEvent",
       "duration": {
         "weeks": 4,
         "lessons": 8
@@ -775,7 +813,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-9-1",
           "order": 1,
-          "title": "9.1 - ModuleScript: спільний код",
+          "title": "9.1 - Машина + траса",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [],
@@ -784,7 +822,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-9-2",
           "order": 2,
-          "title": "9.2 - Інвентар через таблицю",
+          "title": "9.2 - Таймер / кола / UI",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -795,7 +833,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-9-3",
           "order": 3,
-          "title": "9.3 - Таблиці як об'єкти",
+          "title": "9.3 - Client vs Server",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -806,7 +844,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-9-4",
           "order": 4,
-          "title": "9.4 - Екіпіровка та статистика",
+          "title": "9.4 - RemoteEvent",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -817,7 +855,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-9-5",
           "order": 5,
-          "title": "9.5 - Серіалізація інвентарю",
+          "title": "9.5 - Лідерборд кіл",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -828,18 +866,18 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-9-6",
           "order": 6,
-          "title": "9.6 - Checkpoint: RPG Inventory",
+          "title": "9.6 - Пастки + collision",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-9-5"
           ],
-          "isCheckpoint": true
+          "isCheckpoint": false
         },
         {
           "lessonId": "lesson-roblox-9-7",
           "order": 7,
-          "title": "9.7 - Проєкт: RPG рюкзак і екіпіровка",
+          "title": "9.7 - Playtest анти-чит",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -850,21 +888,21 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-9-8",
           "order": 8,
-          "title": "9.8 - Інвентар: UX і збереження",
+          "title": "9.8 - Ship Race",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-9-7"
           ],
-          "isCheckpoint": false
+          "isCheckpoint": true
         }
       ]
     },
     {
       "moduleId": "module-10",
       "order": 9,
-      "title": "10 - Магія деталей",
-      "description": "Магія деталей",
+      "title": "10 - Живий хаб",
+      "description": "Магазин Remotes, NPC, квести, Raycast",
       "duration": {
         "weeks": 4,
         "lessons": 8
@@ -874,7 +912,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-10-1",
           "order": 1,
-          "title": "10.1 - Фізичні зв'язки (Constraints)",
+          "title": "10.1 - Хаб-білд + RS/SSS",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [],
@@ -883,7 +921,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-10-2",
           "order": 2,
-          "title": "10.2 - TweenService: майстерність",
+          "title": "10.2 - Магазин: RemoteEvent + RemoteFunction",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -894,7 +932,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-10-3",
           "order": 3,
-          "title": "10.3 - Raycasting",
+          "title": "10.3 - Анти-чит + GamePass lite",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -905,7 +943,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-10-4",
           "order": 4,
-          "title": "10.4 - Загадка з лазером",
+          "title": "10.4 - NPC + Prompt + діалог",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -916,7 +954,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-10-5",
           "order": 5,
-          "title": "10.5 - Процедурні елементи",
+          "title": "10.5 - Pathfinding + while",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -927,18 +965,18 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-10-6",
           "order": 6,
-          "title": "10.6 - Checkpoint: Puzzle World",
+          "title": "10.6 - Квест з table",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-10-5"
           ],
-          "isCheckpoint": true
+          "isCheckpoint": false
         },
         {
           "lessonId": "lesson-roblox-10-7",
           "order": 7,
-          "title": "10.7 - Проєкт: Лабіринт загадок",
+          "title": "10.7 - Інвентар + Raycast",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -949,31 +987,31 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-10-8",
           "order": 8,
-          "title": "10.8 - Puzzle World: підказки і баланс",
+          "title": "10.8 - Ship хаб",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-10-7"
           ],
-          "isCheckpoint": false
+          "isCheckpoint": true
         }
       ]
     },
     {
       "moduleId": "module-11",
       "order": 10,
-      "title": "11 - Продуктивність та POLISH",
-      "description": "Продуктивність та POLISH",
+      "title": "11 - Polish",
+      "description": "Explorer, loading, juice, UX, demo",
       "duration": {
-        "weeks": 4,
-        "lessons": 8
+        "weeks": 3,
+        "lessons": 6
       },
       "learningOutcomes": [],
       "lessons": [
         {
           "lessonId": "lesson-roblox-11-1",
           "order": 1,
-          "title": "11.1 - Чистий Explorer",
+          "title": "11.1 - Аудит Explorer",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [],
@@ -993,7 +1031,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-11-3",
           "order": 3,
-          "title": "11.3 - Звуковий дизайн",
+          "title": "11.3 - Sound + Particles + Atmosphere",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -1004,7 +1042,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-11-4",
           "order": 4,
-          "title": "11.4 - Оптимізація",
+          "title": "11.4 - Оптимізація + UX",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -1015,7 +1053,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-11-5",
           "order": 5,
-          "title": "11.5 - UX та доступність",
+          "title": "11.5 - Demo Ready",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -1026,53 +1064,31 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-11-6",
           "order": 6,
-          "title": "11.6 - Checkpoint: Гра відполірована",
+          "title": "11.6 - Сліпий playtest + фікси",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
             "lesson-roblox-11-5"
           ],
           "isCheckpoint": true
-        },
-        {
-          "lessonId": "lesson-roblox-11-7",
-          "order": 7,
-          "title": "11.7 - Проєкт: Demo Ready Build",
-          "learningObjectives": [],
-          "estimatedTime": 60,
-          "prerequisites": [
-            "lesson-roblox-11-6"
-          ],
-          "isCheckpoint": false
-        },
-        {
-          "lessonId": "lesson-roblox-11-8",
-          "order": 8,
-          "title": "11.8 - Передрелізний аудит",
-          "learningObjectives": [],
-          "estimatedTime": 60,
-          "prerequisites": [
-            "lesson-roblox-11-7"
-          ],
-          "isCheckpoint": false
         }
       ]
     },
     {
       "moduleId": "module-12",
       "order": 11,
-      "title": "12 - День релізу",
-      "description": "День релізу",
+      "title": "12 - Реліз",
+      "description": "Пітч, збірка, тест, publish, портфоліо, SHOWCASE",
       "duration": {
-        "weeks": 4,
-        "lessons": 8
+        "weeks": 3,
+        "lessons": 6
       },
       "learningOutcomes": [],
       "lessons": [
         {
           "lessonId": "lesson-roblox-12-1",
           "order": 1,
-          "title": "12.1 - Фінальний проект: план",
+          "title": "12.1 - Пітч + MVP + table систем",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [],
@@ -1081,7 +1097,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-12-2",
           "order": 2,
-          "title": "12.2 - Збираємо все разом",
+          "title": "12.2 - Збірка фіналки + TeleportService",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -1092,7 +1108,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-12-3",
           "order": 3,
-          "title": "12.3 - Тестування",
+          "title": "12.3 - Тест-план + фікси P0",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -1103,7 +1119,7 @@ export const robloxCurriculum = {
         {
           "lessonId": "lesson-roblox-12-4",
           "order": 4,
-          "title": "12.4 - Публікація",
+          "title": "12.4 - Publish + Badge + GamePass-lite",
           "learningObjectives": [],
           "estimatedTime": 60,
           "prerequisites": [
@@ -1127,33 +1143,11 @@ export const robloxCurriculum = {
           "order": 6,
           "title": "12.6 - SHOWCASE DAY",
           "learningObjectives": [],
-          "estimatedTime": 60,
+          "estimatedTime": 75,
           "prerequisites": [
             "lesson-roblox-12-5"
           ],
           "isCheckpoint": true
-        },
-        {
-          "lessonId": "lesson-roblox-12-7",
-          "order": 7,
-          "title": "12.7 - Проєкт: Фінальна гра (збірка)",
-          "learningObjectives": [],
-          "estimatedTime": 60,
-          "prerequisites": [
-            "lesson-roblox-12-6"
-          ],
-          "isCheckpoint": false
-        },
-        {
-          "lessonId": "lesson-roblox-12-8",
-          "order": 8,
-          "title": "12.8 - Публікація, портфоліо і SHOWCASE",
-          "learningObjectives": [],
-          "estimatedTime": 60,
-          "prerequisites": [
-            "lesson-roblox-12-7"
-          ],
-          "isCheckpoint": false
         }
       ]
     }

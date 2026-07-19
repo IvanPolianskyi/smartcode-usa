@@ -1,11 +1,12 @@
 /**
- * Roblox progress helpers for the evolving 92-lesson grid.
+ * Roblox progress helpers for the production 92-lesson course.
+ * Grid: M1×8 + M2×4 + M3×8 + M4×8 + M5×10 + M6×10 + M7–M10×8 + M11×6 + M12×6
  * Filters stale IDs and keeps overallProgress in sync with robloxCurriculum.
  */
 
 import { robloxCurriculum } from './robloxCurriculum.js'
 
-export const ROBLOX_CURRICULUM_REVISION = 'prod-92-m4'
+export const ROBLOX_CURRICULUM_REVISION = 'prod-92'
 
 export function getRobloxTotalLessons() {
   return robloxCurriculum.modules.reduce((sum, m) => sum + m.lessons.length, 0)
@@ -43,7 +44,7 @@ function filterQuizMap(quizzes, validIds) {
 }
 
 /**
- * Normalize a roblox-studio progress document for the current curriculum grid.
+ * Normalize a roblox-studio progress document for the current 92-lesson grid.
  * Returns { progress, changed }.
  */
 export function migrateRobloxProgressDoc(progress) {
