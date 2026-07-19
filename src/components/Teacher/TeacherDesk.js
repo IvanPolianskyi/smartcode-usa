@@ -394,9 +394,19 @@ export default function TeacherDesk() {
                 <div className={`${styles.statCard} ${styles.statCardAccent}`}>
                   <span className={styles.statLabel}>{t('recordings.currentBatch')}</span>
                   <strong className={styles.statValue}>
-                    {recordingStats.currentBatchVideos ?? 0}
+                    {recordingStats.currentBatchRecorded ??
+                      recordingStats.currentBatchVideos ??
+                      0}
                   </strong>
                 </div>
+                {recordingStats.payoutUah != null ? (
+                  <div className={styles.statCard}>
+                    <span className={styles.statLabel}>{t('recordings.payoutAmount')}</span>
+                    <strong className={styles.statValue}>
+                      {Number(recordingStats.payoutUah).toLocaleString('uk-UA')} ₴
+                    </strong>
+                  </div>
+                ) : null}
               </div>
             ) : null}
           </section>
@@ -454,7 +464,9 @@ export default function TeacherDesk() {
                 <div className={`${styles.statCard} ${styles.statCardAccent}`}>
                   <span className={styles.statLabel}>{t('students.totalRecorded')}</span>
                   <strong className={styles.statValue}>
-                    {teacherStats.currentBatchVideos ?? 0}
+                    {teacherStats.currentBatchRecorded ??
+                      teacherStats.currentBatchVideos ??
+                      0}
                   </strong>
                 </div>
                 <div className={styles.statCard}>
