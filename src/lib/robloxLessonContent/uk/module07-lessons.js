@@ -1,942 +1,1483 @@
-/** Rich UK content for Roblox Module 07 */
+/** Roblox Module 07 UK — 8 уроків (prod-92), Tycoon */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
 
 export const ukLesson71 = {
- lessonId: "lesson-roblox-7-1",
- moduleId: "module-07",
- order: 1,
- title: "7.1 - Два світи: клієнт і сервер",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Поясніть відповідальність клієнта проти сервера в Roblox",
- "Позначте межі довіри для 10 ігрових дій",
- "Збірка демонстрації рукостискання PingServer RemoteEvent",
- "Правильно розмістіть Scripts в StarterGui проти ServerScriptService",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**Модуль 7 - Мережа та магазин** - ви дізнаєтесь, як **клієнт** і **сервер** безпечно взаємодіють. Це забезпечує магазини, квести та чесну багатокористувацьку гру.
+  lessonId: "lesson-roblox-7-1",
+  moduleId: "module-07",
+  order: 1,
+  title: "7.1 - Plot / dropper / collector",
+  theoryMinutes: 35,
+  quizMinutes: 15,
+  estimatedTime: 60,
+  learningObjectives: [
+    "Побудувати читабельний Plot для Tycoon із підлогою, стінами та напрямом руху",
+    "Створити корпус Dropper з окремим Part на ім'я Mouth",
+    "Налаштувати Collector як безпечну сенсорну зону з правильними властивостями",
+    "Організувати майбутні дропи у Folder Drops і перевірити геометрію вручну",
+    "Пояснити повний потік Tycoon від Mouth до Collector без автоматичної економіки",
+  ],
+  theory: {
+    sections: [
+      {
+        title: "Сьогоднішня місія (урок 49 з 92)",
+        content: `У 6.10 ти завершив і відправив Simulator. Сьогодні починається новий жанр - лише **Tycoon**. Ми не будуємо Simulator, Obby чи Arena. Твоя мета - створити фізичний скелет фабрики, де одразу видно, звідки виходить дроп, куди він падає і де завершує шлях. Автоматичного циклу сьогодні ще немає.
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - два світи + карта довіри
-2. **Практика (~25 хв)** - демонстрація ping + карта меж
-3. **Вікторина (10 хв)** - проходження **70%**
+Артефакт уроку:
+1. Plot із Floor та низькими Walls.
+2. Dropper з окремим Part **Mouth**.
+3. Collector із CanCollide false та CanTouch true.
+4. Folder **Drops** для майбутніх дропів.
+5. Sign зі схемою **Dropper -> Drop -> Collector** і ручний тест геометрії.
 
-Нове місце або центр:\`Lesson 7.1 - Two Worlds\`. Ви вже використовували RemoteEvents у гонках Module 6 - сьогодні ми заглибимося глибше.`,
- },
- {
- title: "Два комп'ютери, одна гра",
- content: `Кожен сеанс Roblox має:
+У попередньому уроці **6.10 - Ship Sim** ти закріпив звичку: Coins належать серверу. Вона знадобиться пізніше, але сьогодні Coins не створюємо й не нараховуємо. У наступному уроці **7.2 - Дропер while/for + Config** сцена отримає серверний цикл.
 
-| Світ | Де він проходить | Хто це бачить |
-|-------|--------------|-------------|
-| **Клієнт** | Пристрій гравця | Цей гравець тільки |
-| **Сервер** | Хост гри Roblox | Всі - single source of truth |
+| Вхід із 6.10 | Результат 7.1 |
+|---|---|
+| Чистий Ship Sim | Новий окремий Tycoon Plot |
+| Звичка називати системи | Floor, Walls, Dropper, Mouth, Collector, Drops |
+| Серверна дисципліна Coins | Поки лише геометрія без валюти |
+| Playtest маршруту | Ручна перевірка шляху дропа |
 
-**Клієнт** = камера, клавіатура, ваш ScreenGui, локальні звуки.
+Метафора: сьогодні ти креслиш русло фабрики, а вода потече наступного уроку.
 
-**Сервер** = монети, інвентар, пошкодження, прогрес у квесті, хто виграв гонку.
+**Зроби зараз (3 хв):** створи новий Place, запиши п'ять артефактів і переконайся, що в Explorer немає систем Simulator.`,
+      },
+      {
+        title: "Tycoon починається з читабельного потоку",
+        content: `У хорошому Tycoon гравець розуміє виробництво ще до першої покупки. Dropper стоїть вище, Mouth дивиться на вільний простір, дроп падає на Floor або коротку доріжку, а Collector помітно завершує маршрут. Якщо об'єкти розкидані без напряму, майбутній код лише швидше створюватиме безлад.
 
-**Правило:***Клієнт запитує. Сервер вирішує.*`,
- },
- {
- title: "Що куди належить",
- content: `| Дія | Сторона | Чому |
-|--------|------|-----|
-| Move камеру | Клієнт | Особистий погляд |
-| Натисніть кнопку магазину | Клієнт | Вхід |
-| Відрахувати монети | Сервер | Античіт |
-| Надати меч інструмент | Сервер | Спільний інвентар |
-| Показати «Обробка...» | Клієнт | Швидкий відгук |
-| Зберегти найкращий час кола | Сервер | Офіційний рахунок |
-| Відтворення звуку кроків локально | Клієнт | Немає необхідності в мережі |
-| Вбити гравця лавою | Сервер | Справедлива шкода |
+| Елемент | Його питання | Видимий доказ |
+|---|---|---|
+| Plot | Де моя фабрика? | Окрема підлога й межі |
+| Dropper | Звідки починається виробництво? | Корпус над стартом маршруту |
+| Mouth | Де саме з'явиться дроп? | Малий Part під корпусом |
+| Collector | Куди має потрапити дроп? | Контрастна зона у фіналі |
+| Sign | Що відбувається? | Стрілка потоку |
 
-**Вправа (8 хв.):** Напишіть 10 дій з вашого місця перегонів - позначте кожного клієнта/сервера/обидва.`,
- },
- {
- title: "Розміщення Script",
- content: `| Тип Script | Розташування | Працює на |
-|-------------|----------|---------|
-| **Script** | ServerScriptService, Parts (сервер) | Сервер |
-| **LocalScript** | StarterGui, StarterPlayerScripts | Клієнт |\`\`\`lua
--- LocalScript (StarterGui)
-print("Client: I read input and update UI")
+Не додавай другий конвеєр, магазин кнопок або декоративний склад. Для уроку потрібен один маршрут, який легко протестувати. Погляд від Spawn має знаходити Dropper і Collector без польоту камерою над картою.
 
--- Script (ServerScriptService)
-print("Server: I validate and save shared data")
-\`\`\`**LocalScript у ServerScriptService** = ніколи не запускається для гравців. **Script у StarterGui** = неправильне місце.`,
- },
- {
- title: "Межа довіри",
- content: `**Межа довіри** = межа, на якій ви перестаєте вірити клієнту.
+Образ для пам'яті: Tycoon схожий на прозору машину, де видно вхід, рух і вихід.
 
-**Ніколи не довіряйте клієнту за:**
-- Сума монети після покупки
-- "Я закінчив крок 5 квесту"
-- Пошкодження, завдані іншому гравцеві
-- Ціна товару
+**Зроби зараз (3 хв):** постав три тимчасові Parts на місця Dropper, середини маршруту й Collector, потім оглянь їх від Spawn.`,
+      },
+      {
+        title: "Plot: Floor задає масштаб",
+        content: `Створи Model **Plot** у Workspace, а всередині Part **Floor**. Для першої фабрики підійде прямокутна підлога приблизно 36 на 1 на 24 studs. Точні числа можна змінити, але персонаж повинен мати місце пройти поруч із потоком, не штовхаючи майбутні дропи. Floor має бути Anchored.
 
-**ОК на клієнті:**
-- Анімація кнопок
-- Тремтіння камери
-- Попередній перегляд тексту до підтвердження сервером
+| Властивість Floor | Рекомендація | Причина |
+|---|---|---|
+| Name | Floor | Script і команда швидко знаходять об'єкт |
+| Anchored | true | Основа не падає під час Play |
+| CanCollide | true | Гравець стоїть на Plot |
+| Size | близько 36, 1, 24 | Є місце для фабрики та проходу |
+| Material | SmoothPlastic або Metal | Простий читабельний прототип |
 
-Якщо обман зашкодить балансу → **сервер**.`,
- },
- {
- title: "Перше рукостискання - PingServer",
- content: `**ReplicatedStorage** → **RemoteEvent** →\`PingServer\`**ServerScriptService** → Script\`PingHandler\`:\`\`\`lua
-local ping = game.ReplicatedStorage:WaitForChild("PingServer")
+Тримай верх Floor біля зручної висоти й перевір SpawnLocation. Якщо підлога зависла або провалилася в Baseplate, ручний дроп дасть оманливий результат. Не масштабуй Plot до сотень studs: тоді маленький Collector губиться, а перевірка займає зайвий час.
 
-ping.OnServerEvent:Connect(function(player, msg)
- if type(msg) ~= "string" then return end
- print("[Ping] " .. player.Name .. " says: " .. msg)
- ping:FireClient(player, "Pong from server!")
-end)
-\`\`\`**StarterGui** →\`PingUI\`→ TextButton + **LocalScript**:\`\`\`lua
-local ping = game.ReplicatedStorage:WaitForChild("PingServer")
-local button = script.Parent.PingButton
+Тут Floor працює як аркуш міліметрівки: він обмежує задачу та показує пропорції.
 
-button.MouseButton1Click:Connect(function()
- ping:FireServer("Hello from client!")
-end)
+**Зроби зараз (4 хв):** створи Plot/Floor, зафіксуй Anchored і пройди від одного краю до іншого у Play.`,
+      },
+      {
+        title: "Walls позначають межі, а не клітку",
+        content: `Додай до Plot Folder або Model **Walls** і зроби три низькі стіни: ліву, праву та задню. Передній бік залиш відкритим для входу й огляду. Стіни не повинні закривати Dropper від камери. Висоти 3-5 studs достатньо, щоб межа читалася, але персонаж не почувався у коробці.
 
-ping.OnClientEvent:Connect(function(reply)
- script.Parent.StatusLabel.Text = reply
-end)
-\`\`\`**Play** → натисніть → Вивести + оновлення мітки.`,
- },
- {
- title: "Назви пультів для наступних уроків",
- content: `Хороші назви (модуль 7 шлях до магазину):
--\`PingServer\`- тільки тест
--\`RequestPurchase\`- клієнт → купити сервер
--\`PurchaseResult\`- сервер → відгук клієнта
+| Варіант | Перевага | Ризик |
+|---|---|---|
+| Три низькі Walls | Видно межу й обладнання | Треба точно вирівняти |
+| Чотири високі Walls | Plot важко покинути | Камера перекривається |
+| Без Walls | Швидко будувати | Немає відчуття власної ділянки |
+| Декоративна огорожа | Гарний силует | Зайва складність для прототипу |
 
-**Погані імена:**\`Event1\`,\`Remote\`,\`DoThing\`Розмістіть віддалені пристрої в **ReplicatedStorage**, а не в ServerStorage (клієнти не бачать ServerStorage).`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Карта довіри: позначені 10 дій
-- [ ] PingServer RemoteEvent працює в Play
-- [ ] Сервер виводить ім'я гравця + повідомлення
-- [ ] Client StatusLabel показує pong
-- [ ] Зберегти:\`Lesson 7.1 - Two Worlds\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Важлива логіка лише в LocalScript",
- explanation: "Експлуататори можуть підробити клієнта.",
- correctApproach: "Сервер перевіряє економіку та прогрес",
- },
- {
- mistake: "Remote in ServerStorage",
- explanation: "Клієнт не може FireServer.",
- correctApproach: "ReplicatedStorage для спільних пультів",
- },
- {
- mistake: "LocalScript у ServerScriptService",
- explanation: "Не працює на клієнті.",
- correctApproach: "LocalScript під StarterGui",
- },
- {
- mistake: "Підрахунок монет довірливого клієнта",
- explanation: "Нескінченний грошовий подвиг.",
- correctApproach: "Сервер зберігає та розмінює монети",
- },
- ],
- summary: "Ви позначили межі довіри між клієнтом і сервером, правильно розмістили Scripts та створили зв’язок PingServer - основу для магазину та безпечних покупок у решті модулю 7.",
- practiceTask: {
- title: "Карта довіри + демонстрація ping (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** межі документа + робочий віддалений пінг.
+Усі Walls постав Anchored true та CanCollide true. Переконайся, що між ними й Floor немає щілини, куди може впасти дроп. Якщо край маршруту проходить близько до стіни, лиши запас щонайменше у ширину дропа.
 
-### Part A - Карта довіри (10 хв)
-1. Папір або нотатки: 10 дій → Клієнт / Сервер / Обидва
-2. Принаймні 3 мають бути лише для сервера з причиною
+Межі тут нагадують береги каналу: вони спрямовують погляд, але не ховають течію.
 
-### Part B - Демонстрація ping (12 хв)
-1. Server Script PingServer RemoteEvent + PingHandler
-2. Кнопка PingUI + LocalScript + StatusLabel
-3. Play - перевірити Output та мітку
+**Зроби зараз (4 хв):** додай три Walls, запусти Play і перевір камерою кути біля Dropper та Collector.`,
+      },
+      {
+        title: "Dropper і точка Mouth",
+        content: `Створи Model **Dropper** всередині Plot. Корпус може складатися з одного великого Anchored Part і двох опор. Найважливіший елемент - окремий Part з точним ім'ям **Mouth**. У 7.2 сервер знайде цю точку й візьме її позицію для створення дропа.
 
-### Part C - Зберегти (3 хв)
-1. **Зберегти в Roblox** →\`Lesson 7.1 - Two Worlds\` 2. **Практика завершена**`,
- hints: [
- "Тестуйте з 2 гравцями в Studio - обидва мають пінгувати окремо",
- "Повернутися раніше, якщо повідомлення не є рядком",
- "Модуль 6 RaceEvent був таким самим шаблоном - повторне використання цієї ментальної model",
- ],
- optionalChallenge: "Надіслати os.clock() від клієнта; показати туди й назад мс на StatusLabel.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "Сервер є авторитетним для...",
- options: [
- "Спільний game state, наприклад монети",
- "Лише camera",
- "Лише локальні звуки",
- "Яскравість монітора гравця",
- ],
- correctAnswer: 0,
- explanation: "Сервер володіє спільною правдою.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "LocalScript працює на...",
- options: [
- "Client кожного гравця",
- "Лише сервер",
- "Сайт Roblox",
- "DataStore",
- ],
- correctAnswer: 0,
- explanation: "На стороні клієнта.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Клієнт запитує, сервер вирішує, означає...",
- options: [
- "Сервер перевіряє запити",
- "Клієнт завжди перемагає",
- "Без remotes",
- "Без UI",
- ],
- correctAnswer: 0,
- explanation: "Межа довіри.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "Спільні пульти дистанційного керування входять...",
- options: [
- "ReplicatedStorage",
- "Лише ServerStorage",
- "Lighting",
- "Terrain",
- ],
- correctAnswer: 0,
- explanation: "Обидві сторони можуть отримати доступ.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "FireServer надсилає...",
- options: [
- "Від клієнта до сервера",
- "Лише від сервера до клієнта",
- "Редагування Terrain",
- "Weld",
- ],
- correctAnswer: 0,
- explanation: "Запит клієнта.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "Відрахування монет магазину належить на...",
- options: [
- "Server",
- "Лише клієнт",
- "Текст StarterGui",
- "Sky",
- ],
- correctAnswer: 0,
- explanation: "Античіт.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Тема модуля 7...",
- options: [
- "Network & Shop / networking",
- "Лише Terrain",
- "Лише гонки",
- "Publishing",
- ],
- correctAnswer: 0,
- explanation: "Зв'язок клієнт-сервер.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Script у ServerScriptService працює на...",
- options: [
- "Server",
- "Client HUD",
- "Обидва",
- "Жоден",
- ],
- correctAnswer: 0,
- explanation: "Серверні скрипти.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Демонстрація Ping доводить...",
- options: [
- "Клієнт і сервер можуть спілкуватися",
- "DataStore працює",
- "Terrain генерується",
- "NPC pathfinding",
- ],
- correctAnswer: 0,
- explanation: "Тест рукостискання.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Урок 7.1 зберегти назву...",
- options: [
- "Lesson 7.1 - Two Worlds",
- "Shop Works",
- "Race Launched",
- "Arena Ready",
- ],
- correctAnswer: 0,
- explanation: "Зберегти урок 7.1.",
- },
- ],
- },
-}
+| Об'єкт | Anchored | CanCollide | Роль |
+|---|---:|---:|---|
+| DropperBody | true | true | Видимий корпус |
+| Support | true | true | Тримає силует |
+| Mouth | true | false | Точка появи, не перешкода |
+| Тестовий Drop | false | true | Перевіряє падіння |
+
+Mouth зроби невеликим, наприклад 2 на 1 на 2 studs, і постав під корпусом. Для прототипу він може бути яскравим та трохи прозорим. Його нижня поверхня повинна бути над вільним місцем, а не всередині Floor чи корпусу. Код сьогодні не потрібен, але корисно знати майбутню форму звернення: \`local mouth = workspace.Plot.Dropper.Mouth\`.
+
+Mouth - це сопло 3D-принтера: маленька точка визначає, де починається весь матеріальний потік.
+
+**Зроби зараз (5 хв):** створи Dropper/Mouth, вимкни колізію Mouth і подивися знизу, чи ніщо не перекриває вихід.`,
+      },
+      {
+        title: "Маршрут дропа без конвеєрної магії",
+        content: `Між Mouth і Collector має бути короткий, передбачуваний маршрут. У базовій версії дроп просто падає на похилу або рівну поверхню, а ти вручну перевіряєш геометрію. Не додавай автоматичний рух, складні сили чи приховані телепорти. Сьогодні важливо побачити фізичну помилку до появи циклу.
+
+| Стан маршруту | Що станеться | Виправлення |
+|---|---|---|
+| Mouth над краєм | Дроп падає за Plot | Посунути Dropper всередину |
+| Mouth над стіною | Дроп застрягає | Звільнити вертикальний шлях |
+| Collector надто далеко | Дроп зупиняється раніше | Скоротити маршрут |
+| Вузький прохід | Дропи накопичаться | Дати запас по ширині |
+| Різкий нахил | Дроп вилітає | Зменшити кут |
+
+Увімкни видимість колізій подумки через прості форми: кожен Part має реальний об'єм. Візуальна щілина не гарантує, що тестовий куб пройде. Орієнтуйся на куб приблизно 2 studs завширшки.
+
+Уяви маршрут як жолоб для кульки: форма доводить працездатність ще до моторчика.
+
+**Зроби зараз (4 хв):** проведи камерою від Mouth до Collector і знайди три потенційні місця зіткнення.`,
+      },
+      {
+        title: "Collector як сенсорна зона",
+        content: `Створи Part **Collector** у фіналі маршруту. Він позначає місце, де в 7.3 дроп перетвориться на серверну нагороду. Сьогодні він нічого не нараховує. Постав **CanCollide false**, щоб дроп не відскакував від невидимої стіни, і **CanTouch true**, щоб майбутня подія Touched могла спрацювати.
+
+| Властивість Collector | Значення | Навіщо |
+|---|---|---|
+| Anchored | true | Зона лишається на місці |
+| CanCollide | false | Дроп проходить крізь сенсор |
+| CanTouch | true | Доступний майбутній контакт |
+| Transparency | 0.25-0.5 | Межі видно під час розробки |
+| Color | Контрастний | Фінал маршруту легко знайти |
+
+Не роби Collector тоншим за траєкторію дропа. Сенсор повинен перетинати шлях, а не просто лежати поруч. У Properties перевір саме CanTouch: відсутність колізії не вмикає touch автоматично.
+
+Collector працює немов рамка сканера: предмет проходить крізь неї, а система помічає подію.
+
+**Зроби зараз (4 хв):** налаштуй властивості Collector і тимчасово зроби його напівпрозорим, щоб бачити перетин маршруту.`,
+      },
+      {
+        title: "Folder Drops тримає Plot охайним",
+        content: `Усередині Model **Plot** створи Folder з точним ім'ям **Drops**. У 7.2 кожен створений сервером дроп потраплятиме сюди. Folder не змінює фізику, але дає одну адресу для підрахунку, очищення та клону ділянки. Не клади майбутні дропи всередину Dropper або Collector і не розкидай їх по всьому Workspace.
+
+| Структура | Добре | Погано |
+|---|---|---|
+| Plot/Drops | Усі рухомі дропи ділянки разом | Дропи серед декорацій Baseplate |
+| Plot/Dropper/Mouth | Точка появи зрозуміла | Mouth названо Part7 |
+| Plot/Collector | Сенсор легко знайти | Collector захований у Walls |
+| Plot/Walls | Межі згруповані | Кожна стіна в корені |
+
+Поки Folder порожній - це правильно. Не залишай у ньому тестові Parts після перевірки. У майбутньому Script використає \`local folder = plot:WaitForChild("Drops")\`, а ти одразу побачиш кількість живих об'єктів саме цієї фабрики.
+
+Folder тут як підписаний лоток на робочому столі: він не виконує роботу, зате не дає деталям загубитися.
+
+**Зроби зараз (2 хв):** створи Plot/Drops, перевір регістр літер і прибери випадкові Part, Part1 та Copy.`,
+      },
+      {
+        title: "Sign пояснює потік гравцеві",
+        content: `Постав біля входу або над маршрутом Sign. Це може бути Anchored Part із SurfaceGui та TextLabel. Текст тримай коротким: **Dropper -> Drop -> Collector**. Стрілки мають збігатися з реальним напрямом, а табличка не повинна перекривати камеру чи падіння.
+
+| Текст Sign | Оцінка | Причина |
+|---|---|---|
+| Dropper -> Drop -> Collector | Добре | Показує три кроки |
+| Тут щось станеться | Слабко | Немає дії та напряму |
+| Довгий опис майбутньої економіки | Зайве | Coins сьогодні не працюють |
+| Стрілка у протилежний бік | Помилка | Суперечить геометрії |
+
+Відкрий Play і прочитай Sign з висоти персонажа. Якщо треба обійти фабрику або наблизити камеру впритул, зміни розмір TextLabel. Не обіцяй нагороду, якої ще немає: цей урок доводить лише фізичний потік.
+
+Sign виконує роль дорожнього покажчика: одне точне речення прибирає зайві здогадки.
+
+**Зроби зараз (4 хв):** додай Sign, відійди до Spawn і перевір, чи стрілка веде погляд до Collector.`,
+      },
+      {
+        title: "Ручний тестовий дроп",
+        content: `До автоматизації створи один Part **TestDrop** безпосередньо під Mouth. Розмір близько 2 на 2 на 2 studs, Anchored false, CanCollide true. Натисни Play і спостерігай: куб має вільно впасти, лишитися на Plot або пройти маршрутом і перетнути Collector.
+
+| Спостереження | Висновок | Наступна дія |
+|---|---|---|
+| Куб завис у повітрі | Anchored лишився true | Вимкнути Anchored |
+| Куб ударився об Mouth | Точка всередині корпусу | Опустити Mouth |
+| Куб вилетів за Walls | Невдалий кут або край | Пересунути маршрут |
+| Куб зупинився перед Collector | Зона не перетинає шлях | Розширити Collector |
+| Куб проходить центр зони | Геометрія готова | Видалити TestDrop |
+
+Для швидкого скидання в Command Bar можна тимчасово задати позицію: \`workspace.TestDrop.Position = workspace.Plot.Dropper.Mouth.Position - Vector3.new(0, 2, 0)\`. Це ручна діагностика, не готова система. Повтори тест тричі з однакової точки, бо один вдалий випадок ще не доводить стабільність.
+
+Такий тест схожий на пробну кульку в лабіринті: вона чесно показує кожен невдалий кут.
+
+**Зроби зараз (5 хв):** виконай три падіння, запиши факт кожного й видали TestDrop після успішної перевірки.`,
+      },
+      {
+        title: "Чекліст здачі та місток до 7.2",
+        content: `Перед Save перевір короткий список:
+
+- [ ] У Workspace є один Model Plot.
+- [ ] Floor і всі Walls мають Anchored true.
+- [ ] Передня сторона Plot відкрита й читабельна.
+- [ ] Dropper містить окремий Part Mouth.
+- [ ] Mouth має Anchored true та CanCollide false.
+- [ ] Collector має CanCollide false та CanTouch true.
+- [ ] Plot містить порожній Folder Drops.
+- [ ] Sign показує Dropper -> Drop -> Collector.
+- [ ] TestDrop тричі проходить правильний маршрут.
+- [ ] У сцені немає Coins і автоматичного циклу.
+- [ ] Output чистий.
+- [ ] Save: Lesson 7.1 - Tycoon Plot.
+
+У 7.2 сервер почне створювати дропи з Mouth і складати їх у Drops. Чиста геометрія дозволить тобі налагоджувати Config та цикл, а не шукати куби за межами Plot.
+
+Фінальний Save нагадує креслення перед запуском верстата: кожна точка вже має своє місце.
+
+**Зроби зараз (3 хв):** пройди чекліст зверху вниз, видали тестовий куб і збережи Place під точною назвою.`,
+      },
+    ],
+  },
+  commonMistakes: [
+    {
+      mistake: "Mouth залишається частиною корпусу з випадковим ім'ям Part",
+      explanation: "Наступний серверний Script не матиме надійної точки, з якої треба створювати дропи.",
+      correctApproach: "Створити окремий Part з точним ім'ям Mouth, закріпити його та вимкнути для нього колізію.",
+    },
+    {
+      mistake: "Collector має CanCollide true, бо він повинен зупиняти дроп",
+      explanation: "Дроп відскакує від сенсора або накопичується перед ним замість чистого перетину зони.",
+      correctApproach: "Встановити Collector CanCollide false і CanTouch true, а його форму розмістити поперек маршруту.",
+    },
+    {
+      mistake: "Folder Drops створено всередині Dropper або названо Drop",
+      explanation: "Майбутній код і перевірка кількості об'єктів отримають іншу адресу та можуть не знайти контейнер.",
+      correctApproach: "Створити всередині Plot один Folder з точним ім'ям Drops і поки лишити його порожнім.",
+    },
+    {
+      mistake: "Mouth розташовано всередині Floor або DropperBody",
+      explanation: "Тестовий дроп одразу перетинається з геометрією, відскакує або застрягає.",
+      correctApproach: "Залишити під Mouth вільний вертикальний простір щонайменше на висоту тестового дропа.",
+    },
+    {
+      mistake: "Геометрію вважають готовою після огляду лише в Edit",
+      explanation: "Без фізичного тесту не видно реальної колізії, падіння за край та зупинки перед Collector.",
+      correctApproach: "Тричі скинути один незаанкорений TestDrop з однакової точки та записати фактичний маршрут.",
+    },
+    {
+      mistake: "До сцени одразу додають Coins і автоматичний цикл",
+      explanation: "Помилки економіки змішуються з помилками геометрії, хоча урок присвячений лише скелету Tycoon.",
+      correctApproach: "Завершити Plot, Mouth, Collector, Drops і ручний тест, а серверний цикл перенести в 7.2.",
+    },
+  ],
+  summary: "Ти побудував читабельний скелет Tycoon і вручну підтвердив маршрут від Mouth до Collector. Сцена готова до серверного дропера в уроці 7.2.",
+  practiceTask: {
+    title: "Скелет Tycoon та ручний тест (~30 хв)",
+    difficulty: "intermediate",
+    description: `### Part A - Plot і потік (10 хв)
+1. Створи Plot із Floor та трьома низькими Walls.
+2. Розмісти Dropper так, щоб його було видно від Spawn.
+3. Додай окремий Mouth над вільним початком маршруту.
+
+### Part B - Collector та структура (12 хв)
+1. Створи Collector з CanCollide false і CanTouch true.
+2. Додай порожній Plot/Drops.
+3. Створи Sign з текстом Dropper -> Drop -> Collector.
+4. Перевір назви й Anchored для нерухомих деталей.
+
+### Part C - Геометричний доказ (8 хв)
+1. Створи TestDrop розміром приблизно 2 studs.
+2. Тричі скинь його з Mouth і виправ маршрут.
+3. Видали TestDrop та збережи **Lesson 7.1 - Tycoon Plot**.`,
+    hints: [
+      "Перевіряй сцену з висоти персонажа, а не лише камерою зверху.",
+      "Якщо куб б'ється об корпус, опусти Mouth і звільни простір під ним.",
+      "Collector має перетинати траєкторію, навіть коли його CanCollide вимкнено.",
+      "Порожній Folder Drops сьогодні є правильним результатом.",
+    ],
+    optionalChallenge: "Додай тонкі напрямні вздовж маршруту й доведи трьома тестами, що вони не затискають дроп.",
+  },
+  quiz: {
+    passingScore: 70,
+    timeLimit: 15,
+    questions: [
+      {
+        id: "q1",
+        type: MC,
+        question: "Який жанр будується в уроці 7.1?",
+        options: ["Simulator", "Obby", "Tycoon", "Arena"],
+        correctAnswer: 2,
+        explanation: "Урок відкриває модуль Tycoon і будує його фізичний скелет.",
+      },
+      {
+        id: "q2",
+        type: MC,
+        question: "Який головний результат уроку 7.1?",
+        options: [
+          "Plot, Dropper, Mouth, Collector, Drops і ручний тест",
+          "Повна економіка з Coins",
+          "Магазин десяти кнопок",
+          "Автоматичний цикл створення дропів",
+        ],
+        correctAnswer: 0,
+        explanation: "Сьогодні потрібна готова геометрія без циклу та валюти.",
+      },
+      {
+        id: "q3",
+        type: MC,
+        question: "Які властивості потрібні Collector?",
+        options: [
+          "CanCollide true, CanTouch false",
+          "CanCollide false, CanTouch true",
+          "Anchored false, CanTouch false",
+          "Transparency 1, CanTouch false",
+        ],
+        correctAnswer: 1,
+        explanation: "Дроп проходить крізь сенсор, а майбутній Touched лишається доступним.",
+      },
+      {
+        id: "q4",
+        type: MC,
+        question: "Де логічно тримати Folder Drops?",
+        options: [
+          "Усередині SurfaceGui",
+          "У ServerScriptService",
+          "У Model Plot разом із Dropper і Collector",
+          "Усередині TextLabel Sign",
+        ],
+        correctAnswer: 2,
+        explanation: "Drops належить сцені plot, щоб trim і клон ділянки бачили один контейнер.",
+      },
+      {
+        id: "q5",
+        type: MC,
+        question: "Навіщо потрібен окремий Part Mouth?",
+        options: [
+          "Щоб змінювати Coins",
+          "Щоб замінити Floor",
+          "Щоб блокувати Collector",
+          "Щоб мати точну точку появи дропа",
+        ],
+        correctAnswer: 3,
+        explanation: "Наступний Script братиме позицію Mouth для створення дропа.",
+      },
+      {
+        id: "q6",
+        type: MC,
+        question: "Що правильно зробити з TestDrop?",
+        options: [
+          "Скинути тричі з Mouth і видалити після тесту",
+          "Залишити Anchored true",
+          "Сховати його всередині DropperBody",
+          "Перетворити його на Collector",
+        ],
+        correctAnswer: 0,
+        explanation: "Повторний фізичний тест доводить геометрію, а тестовий об'єкт потім прибирають.",
+      },
+      {
+        id: "q7",
+        type: MC,
+        question: "Чого не треба додавати сьогодні?",
+        options: [
+          "Низькі Walls",
+          "Coins і автоматичний цикл",
+          "Sign зі стрілкою",
+          "Порожній Folder Drops",
+        ],
+        correctAnswer: 1,
+        explanation: "Економіка та автоматичне створення не входять у межі 7.1.",
+      },
+      {
+        id: "q8",
+        type: MC,
+        question: "Який текст найкраще пояснює потік на Sign?",
+        options: [
+          "Натисни для Power",
+          "Купи новий острів",
+          "Dropper -> Drop -> Collector",
+          "Збери 100 Coins",
+        ],
+        correctAnswer: 2,
+        explanation: "Текст точно показує видимий фізичний маршрут цього уроку.",
+      },
+      {
+        id: "q9",
+        type: MC,
+        question: "Чому передній бік Plot варто лишити відкритим?",
+        options: [
+          "Щоб Floor міг рухатися",
+          "Щоб Collector втратив CanTouch",
+          "Щоб Mouth став незаанкореним",
+          "Щоб гравець бачив і відвідував фабрику",
+        ],
+        correctAnswer: 3,
+        explanation: "Відкритий бік покращує вхід, камеру й читабельність потоку.",
+      },
+      {
+        id: "q10",
+        type: MC,
+        question: "Що означає куб, який завис у повітрі під час тесту?",
+        options: [
+          "Collector надто прозорий",
+          "У TestDrop залишився Anchored true",
+          "Folder Drops порожній",
+          "Walls надто низькі",
+        ],
+        correctAnswer: 1,
+        explanation: "Незаанкорений Part має падати під дією фізики.",
+      },
+      {
+        id: "q11",
+        type: MC,
+        question: "Яка структура є правильною?",
+        options: [
+          "Workspace/Plot з Dropper/Mouth, Collector і Drops",
+          "Workspace/Mouth/Drops/Plot",
+          "Collector/Workspace/Dropper",
+          "SurfaceGui/Floor/Walls",
+        ],
+        correctAnswer: 0,
+        explanation: "Увесь скелет фабрики зібраний у Plot зі стабільними іменами.",
+      },
+      {
+        id: "q12",
+        type: MC,
+        question: "Що робити, якщо дроп зупиняється перед Collector?",
+        options: [
+          "Додати Coins у TestDrop",
+          "Видалити Floor",
+          "Розширити або пересунути Collector на траєкторію",
+          "Увімкнути CanCollide для Mouth",
+        ],
+        correctAnswer: 2,
+        explanation: "Сенсор повинен реально перетинати шлях дропа.",
+      },
+      {
+        id: "q13",
+        type: MC,
+        question: "Яке твердження про звичку Coins правильне?",
+        options: [
+          "Coins сьогодні змінює Sign",
+          "Collector уже видає Coins без Script",
+          "Mouth зберігає Coins у Position",
+          "Серверна звичка з Simulator знадобиться пізніше, але Coins сьогодні немає",
+        ],
+        correctAnswer: 3,
+        explanation: "Архітектурне правило зберігається, але економіка ще не реалізується.",
+      },
+      {
+        id: "q14",
+        type: MC,
+        question: "Яка точна назва Save?",
+        options: [
+          "Lesson 7.1 - Dropper Loop",
+          "Lesson 7.1 - Tycoon Plot",
+          "Tycoon Plot Final Copy",
+          "Lesson 7.2 - Dropper Config",
+        ],
+        correctAnswer: 1,
+        explanation: "Чекліст вимагає назву Lesson 7.1 - Tycoon Plot.",
+      },
+      {
+        id: "q15",
+        type: MC,
+        question: "Що додасть наступний урок 7.2?",
+        options: [
+          "Новий жанр Obby",
+          "Фінальний Ship Simulator",
+          "Серверний цикл створення дропів із Config",
+          "Collector Coins без дропів",
+        ],
+        correctAnswer: 2,
+        explanation: "7.2 автоматизує вже перевірену сцену через серверний цикл і Config.",
+      },
+    ],
+  },;
 
 export const ukLesson72 = {
- lessonId: "lesson-roblox-7-2",
- moduleId: "module-07",
- order: 2,
- title: "7.2 - RemoteEvent",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
- learningObjectives: [
- "Використовуйте RemoteEvent для односторонніх повідомлень клієнт↔сервер",
- "Перевірка корисних навантажень за допомогою перевірки типу та раннього повернення",
- "Парні пульти RequestAction і ActionResult",
- "Додайте час відновлення для кожного гравця проти спаму",
- ],
- theory: {
- sections: [
- {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**RemoteEvent** = одностороння **пошта** між світами. Немає значення миттєвого повернення (тобто RemoteFunction у 7.5).
+  lessonId: "lesson-roblox-7-2",
+  moduleId: "module-07",
+  order: 2,
+  title: "7.2 - Дропер while/for + Config",
+  theoryMinutes: 35,
+  quizMinutes: 15,
+  estimatedTime: 60,
+  learningObjectives: [
+    "Запустити серверний while або for, який спавнить Drop з Mouth",
+    "Тримати interval, payout і maxAlive в єдиному DropperConfig",
+    "Читати Config.interval на кожній ітерації, щоб темп можна було змінювати",
+    "Обмежити кількість живих Drop через lifetime або відбір найстаріших за SpawnedAt",
+    "Підготувати Attribute Payout і структуру plot під collector у 7.3",
+  ],
+  theory: {
+    sections: [
+      {
+        title: "Сьогоднішня місія (урок 50 з 92)",
+        content: `У 7.1 ти зібрав скелет Tycoon: Plot, Dropper з Mouth, Collector і Folder Drops. Сьогодні сцена отримує мотор. Ти не додаєш Coins і не пишеш магазин. Твоя задача - щоб сервер ритмічно кидав Parts з Mouth, а числа темпу жили в Config.
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - події + перевірка
-2. **Практика (~25 хв)** - шина повідомлень з двома пультами
-3. **Вікторина (10 хв)** - проходження **70%**
+Артефакт уроку:
+1. ModuleScript або table **DropperConfig** з interval, payout, maxAlive.
+2. Серверний цикл while або for із task.wait(Config.interval).
+3. Функція spawnDrop, що створює Part у Mouth.CFrame і кладе його в Drops.
+4. Anti-lag: lifetime Destroy або trim за Attribute SpawnedAt.
+5. Доказ: зміна одного числа в Config змінює темп на наступній ітерації.
 
-Відкрийте **Урок 7.1 - Два світи**.`,
- },
- {
- title: "Напрямки RemoteEvent",
- content: `| Телефонуйте | Напрям | Використовуйте |
-|------|-----------|-----|
-|\`FireServer(...)\`| Клієнт → Сервер | Купити, квест, запит на здатність |
-|\`FireClient(player, ...)\`| Сервер → один клієнт | Особистий результат |
-|\`FireAllClients(...)\`| Сервер → усі | Оголошення |
+У 7.3 Collector прочитає Attribute Payout і додасть Coins. Тому сьогодні payout уже має бути на кожному Drop, навіть якщо каса ще мовчить.
 
-**Односторонній:** відправник не чекає повернення значення в тому самому рядку.`,
- },
- {
- title: "Шаблон RequestAction + ActionResult",
- content: `**ReplicatedStorage:**
--\`RequestAction\`- клієнт запускає ідентифікатор елемента
--\`ActionResult\`- сервер спрацьовує добре + повідомлення у відповідь
+| Було в 7.1 | Стає в 7.2 |
+|------------|------------|
+| Ручний Clone | Автоматичний цикл |
+| Числа в голові | DropperConfig |
+| Порожній Drops | Живі Parts з лімітом |
+| Статичний Mouth | Точка спавну для while |
 
-**Сервер**\`ShopBus\`у ServerScriptService:\`\`\`lua
-local request = game.ReplicatedStorage.RequestAction
-local result = game.ReplicatedStorage.ActionResult
+Метафора: учора ти поставив конвеєр, сьогодні вмикаєш стрічку.
 
-local cooldown = {}
-local COOLDOWN = 0.3
+**Зроби зараз (3 хв):** відкрий Plot з 7.1 і випиши стартові числа interval=2, payout=5, maxAlive=30.`,
+      },
+      {
+        title: "Config - пульт фабрики",
+        content: `Без Config ти завтра не зможеш зробити апгрейд темпу. Усі wait(2) і магічні 5 у різних Scripts перетворять баланс на лотерею.
 
-request.OnServerEvent:Connect(function(player, itemId)
- if type(itemId) ~= "string" then
- warn("Bad payload from", player.Name)
- return
- end
+\`local DropperConfig = {interval = 2, payout = 5, maxAlive = 30, lifetime = 20}\`
 
- if cooldown[player] and os.clock() - cooldown[player] < COOLDOWN then
- return
- end
- cooldown[player] = os.clock()
+У ModuleScript поверни такий table, а в DropperService підключи його один раз через require. Це одне джерело правди.
 
- -- Lesson 7.4 will add real shop table; today stub:
- if itemId == "sword_basic" or itemId == "shield_basic" then
- result:FireClient(player, true, "Request received: " .. itemId)
- else
- result:FireClient(player, false, "Unknown item")
- end
-end)
-\`\`\``,
- },
- {
- title: "Слухач клієнта",
- content: `\`StarterGui/ShopBusUI\`LocalScript:\`\`\`lua
-local request = game.ReplicatedStorage.RequestAction
-local result = game.ReplicatedStorage.ActionResult
-local status = script.Parent.StatusLabel
+| Поле | Навіщо |
+|------|--------|
+| interval | Пауза між дропами |
+| payout | Цінність для Attribute і майбутніх Coins |
+| maxAlive | Стеля живих Parts у Drops |
+| lifetime | Скільки секунд Drop живе, якщо його не зібрали |
 
-result.OnClientEvent:Connect(function(ok, message)
- if ok then
- status.Text = "✓ " .. message
- status.TextColor3 = Color3.fromRGB(80, 200, 120)
- else
- status.Text = "✗ " .. message
- status.TextColor3 = Color3.fromRGB(220, 80, 80)
- end
-end)
+Не дублюй ці числа в spawnDrop як літерали. Функція читає Config. У 7.4 і 7.6 ти змінюватимеш саме ці поля. Якщо interval=2 у ModuleScript, а в циклі стоїть wait(1), playtest покаже брехню: ментор крутить Config, а фабрика його не слухає.
 
--- wired from buttons in 7.3; test button here:
-script.Parent.TestBuy.MouseButton1Click:Connect(function()
- status.Text = "Processing..."
- request:FireServer("sword_basic")
-end)
-\`\`\``,
- },
- {
- title: "Правила корисного навантаження",
- content: `**Почніть із простого:**
--\`itemId\`рядок
--\`ok\`логічний
--\`message\`рядок
+Поклади ModuleScript у ReplicatedStorage або ServerStorage і require лише з серверного Script. Не копіюй table вручну в три файли "про всяк випадок". Одна копія - одна правда. Перед playtest відкрий Module і зачитай числа вголос: це твій контракт із демо.
 
-**Перевірте кожен аргумент:**\`\`\`lua
-if type(itemId) ~= "string" then return end
-if #itemId > 32 then return end -- anti spam string
-\`\`\`**Ніколи** не приймайте ціну від клієнта як авторитет.
+Образ: Config схожий на панель верстата - швидкість і розмір партії крутяться тут, а не всередині мотора.
 
-**Реєструйте підозрілі дані** у вихідних даних під час розробки.`,
- },
- {
- title: "Спам і експлойти",
- content: `Гравці можуть натискати «Купити» 100 разів на секунду.
+**Зроби зараз (4 хв):** створи DropperConfig і require його з ServerScriptService Script.`,
+      },
+      {
+        title: "while як мотор, не як зависання",
+        content: `Цикл має крутитись на сервері. LocalScript не може бути єдиним мотором фабрики: інші гравці не побачать правди, а чіт стане простішим.
 
-**Таблиця перезарядки:**\`\`\`lua
-local cooldown = {}
--- set os.clock() after accept; ignore if too soon
-\`\`\`**Повернення раніше** зберігає код незмінним:\`\`\`lua
-if type(itemId) ~= "string" then return end
-if not VALID_ITEMS[itemId] then
- result:FireClient(player, false, "Unknown item")
- return
-end
-\`\`\`Порівняйте з модулем 6 - та сама дисципліна для змагань.`,
- },
- {
- title: "Контрольний список перед початком практики",
- content: `- [ ] RequestAction + ActionResult у ReplicatedStorage
-- [ ] Сервер перевіряє рядок itemId
-- [ ] Клієнт показує зелений/червоний статус із ActionResult
-- [ ] Зарядка зупиняє спам кнопки
-- [ ] Зберегти:\`Lesson 7.2 - RemoteEvent\``,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Лише RequestAction, жодної події результату",
- explanation: "Інтерфейс застряг на обробці.",
- correctApproach: "ActionResult FireClient із повідомленням",
- },
- {
- mistake: "Немає перевірки типу itemId",
- explanation: "Збої або дивні експлойти.",
- correctApproach: "type(itemId) == рядок",
- },
- {
- mistake: "FireServer зі скрипта сервера",
- explanation: "Неправильний напрямок.",
- correctApproach: "FireServer лише з LocalScript",
- },
- {
- mistake: "Той самий RemoteEvent в обох напрямках заплутаний",
- explanation: "Важко налагодити.",
- correctApproach: "Окремі запити та результати дистанційного керування",
- },
- ],
- summary: "Ви створили дводистанційну шину повідомлень із перевіреними корисними навантаженнями RequestAction, зворотним зв’язком ActionResult з інтерфейсом користувача та часом відновлення для кожного гравця - готові підключити повний екран магазину на наступному уроці.",
- practiceTask: {
- title: "Автобус повідомлень про подію (~25 хв)",
- difficulty: "beginner",
- description: `**Ціль:** Цикл запиту + результату з перевіркою.
+\`task.spawn(function() while running do spawnDrop() task.wait(DropperConfig.interval) end end)\`
 
-### Part A - Пульти дистанційного керування (8 хв)
-1. RequestAction + ActionResult у ReplicatedStorage
-2. Серверний скрипт ShopBus із дійсними ідентифікаторами
+task.spawn потрібен, щоб while не заблокував решту Script на старті. Перед запуском задай running = true, а для зупинки зміни прапор на false під час вимкнення plot або PlayerRemoving.
 
-### Part B - Клієнт (12 хв)
-1. Кнопка TestBuy + StatusLabel
-2. OnClientEvent фарбує успіх/невдачу
-3. Перезарядка сервера 0,3 с - перевірка спаму
+| Добре | Погано |
+|-------|--------|
+| wait(Config.interval) | while true без wait |
+| Прапор running | Видалити Workspace щоб зупинити |
+| Серверний Script | LocalScript як єдина фабрика |
+| Читання interval щоразу | local w = interval один раз до while |
 
-### Part C - Зберегти (5 хв)
-1. Невідомий ідентифікатор → повідомлення про помилку
-2. **Зберегти в Roblox** →\`Lesson 7.2 - RemoteEvent\` 3. **Практика завершена**`,
- hints: [
- "Друкуйте кожну подію OnServerEvent із player.Name та itemId",
- "Обробка... тексту до того, як FireServer запрацює",
- "Таблиця VALID_ITEMS наразі може містити 2 елементи",
- ],
- optionalChallenge: "FireAllClients, коли хтось купує - \"X робить покупки!\"",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 10,
- questions: [
- {
- id: "q1",
- type: "multiple_choice",
- question: "RemoteEvent - це...",
- options: [
- "Односторонні повідомлення",
- "Лише синхронне повернення",
- "Terrain tool",
- "Тип Weld",
- ],
- correctAnswer: 0,
- explanation: "Вогонь і забудь.",
- },
- {
- id: "q2",
- type: "multiple_choice",
- question: "Цілі FireClient...",
- options: [
- "Один конкретний гравець",
- "Лише сервер",
- "Terrain",
- "DataStore",
- ],
- correctAnswer: 0,
- explanation: "Сервер до одного клієнта.",
- },
- {
- id: "q3",
- type: "multiple_choice",
- question: "Перевірте itemId за допомогою...",
- options: [
- "type(itemId) == \"string\"",
- "Довіряти клієнту",
- "Без перевірок",
- "Випадково",
- ],
- correctAnswer: 0,
- explanation: "Тип охоронець.",
- },
- {
- id: "q4",
- type: "multiple_choice",
- question: "ActionResult має бути запущено з...",
- options: [
- "Сервер після обробки",
- "Клієнт перед сервером",
- "Lighting",
- "Terrain",
- ],
- correctAnswer: 0,
- explanation: "Сервер володіє результатом.",
- },
- {
- id: "q5",
- type: "multiple_choice",
- question: "Перезарядка запобігає...",
- options: [
- "Spam-запити",
- "Ходьба",
- "Стрибки",
- "Camera",
- ],
- correctAnswer: 0,
- explanation: "Ліміт тарифу.",
- },
- {
- id: "q6",
- type: "multiple_choice",
- question: "FireServer викликається з...",
- options: [
- "LocalScript",
- "Лише Server Script",
- "Terrain",
- "Module у ServerStorage",
- ],
- correctAnswer: 0,
- explanation: "Клієнт ініціює.",
- },
- {
- id: "q7",
- type: "multiple_choice",
- question: "Передчасне повернення через погані дані...",
- options: [
- "Handlers залишаються читабельними",
- "Видаляє гравця",
- "Публікує гру",
- "Прибирає UI",
- ],
- correctAnswer: 0,
- explanation: "Охоронні положення.",
- },
- {
- id: "q8",
- type: "multiple_choice",
- question: "Використано два пульти, тому що...",
- options: [
- "Request і result — окремі потоки",
- "Одного завжди достатньо",
- "Без networking",
- "Лише UI",
- ],
- correctAnswer: 0,
- explanation: "Чіткий поділ.",
- },
- {
- id: "q9",
- type: "multiple_choice",
- question: "Урок 7.2 базується на...",
- options: [
- "Lesson 7.1 ping",
- "Лише Module 1",
- "Лише монети Module 3",
- "Publishing",
- ],
- correctAnswer: 0,
- explanation: "Продовжує роботу в мережі.",
- },
- {
- id: "q10",
- type: "multiple_choice",
- question: "Урок 7.2 зберегти назву...",
- options: [
- "Lesson 7.2 - RemoteEvent",
- "Two Worlds",
- "Shop Works",
- "Race Timer",
- ],
- correctAnswer: 0,
- explanation: "Зберегти урок 7.2.",
- },
- ],
- },
-}
+Альтернатива for зручна для скінченної навчальної серії: він повторює spawnDrop задану кількість разів і після кожного виклику чекає актуальний interval. Для живого plot while зручніший, бо фабрика має працювати, поки ділянка існує, а не рівно N разів.
+
+Перед першим запуском перевір, що Mouth і Drops уже знайдені через WaitForChild. Якщо Script стартує раніше за білд, цикл або впаде, або створить Parts у неправильному місці. Одне точне очікування Mouth економить пів години дебагу.
+
+Метафора: while без wait - як педаль газу без гальм.
+
+**Зроби зараз (5 хв):** запусти цикл на 20 с і переконайся, що Parts з'являються з Mouth.`,
+      },
+      {
+        title: "Читай interval на кожній ітерації",
+        content: `Апгрейди в 7.4 змінюватимуть темп під час гри. Якщо ти зчитав interval один раз перед while, дропер ігноруватиме нові значення до рестарту Script.
+
+Правильний цикл передає в task.wait значення DropperConfig.interval безпосередньо на кожній ітерації. Неправильний варіант один раз копіює interval у локальну pause перед while, тому майбутні апгрейди не впливають на темп.
+
+| Сценарій | Очікування |
+|----------|------------|
+| Змінив interval 2 -> 0.8 у Play | Наступна пауза коротша |
+| Змінив payout | Нові Drop мають новий Attribute |
+| Повернув interval 2 | Темп знову спокійний |
+| Залишив дебаг 0.05 | FPS і баланс брешуть - поверни перед Save |
+
+Під час тесту можна тимчасово прискорити темп, але перед здачею поверни навчальні 1.5-3 с. Інакше 7.3 і 7.6 отримають лавину замість ритму. Запиши "було / стало" як у балансі Simulator: interval 2 -> 0.8, Parts за 10 с стало помітно більше. Це і є доказ уроку.
+
+Якщо темп не змінюється, шукай захардкожений wait поруч із Config. Іноді учні читають Config для payout, але interval лишають літералом. Перевір обидва рядки в одному проході очима.
+
+Тут головне правило просте: конвеєр слухає пульт щоразу, коли робить крок.
+
+**Зроби зараз (4 хв):** під час Play зміни interval і покажи, що темп змінився без Stop.`,
+      },
+      {
+        title: "spawnDrop з Mouth у Drops",
+        content: `Функція має брати конкретні посилання plot, а не шукати Parts по всьому Workspace.
+
+\`drop:SetAttribute("Payout", DropperConfig.payout)\`
+
+\`drop:SetAttribute("SpawnedAt", os.clock())\`
+
+Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim і для ментора. Attribute Payout підготує collector у 7.3: він прочитає цінність без здогадок.
+
+| Поле Drop | Навіщо |
+|-----------|--------|
+| Anchored false | Падає фізикою |
+| Parent = Drops | Легко рахувати й чистити |
+| Payout Attribute | Майбутні Coins |
+| SpawnedAt | Чесний вибір найстаріших |
+
+Не клонуй template з випадковим Script усередині сто разів. Для здачі достатньо простого Part. Якщо дуже хочеться модельки, клонуй чистий шаблон без вкладених Script і одразу став Parent у Drops.
+
+Перевір Size: 1×1×1 добре читається й рідко застрягає. Занадто великий Drop ламає бортики з 7.1 і виглядає як уламки, а не продукція. Колір може бути яскравим для дебагу; пізніше приглушиш.
+
+Метафора: Mouth - кран, Drops - ящик під краном.
+
+**Зроби зараз (8 хв):** напиши spawnDrop(mouth, folder) і виклич її з циклу.`,
+      },
+      {
+        title: "Anti-lag: lifetime і чесний trim",
+        content: `Без ліміту while за 2 хвилини засипле карту. Є два надійні підходи, і їх можна комбінувати.
+
+**Lifetime:** після spawn через task.delay плануй видалення через DropperConfig.lifetime. Перед Destroy перевір, що drop усе ще має Parent, бо Collector може прибрати його раніше.
+
+**trim за віком:** не довіряй першому елементу GetChildren як найстарішому. Порядок дітей у Roblox не гарантує FIFO. Почни з oldestTime = math.huge, переглянь усі об'єкти та порівняй Attribute SpawnedAt:
+
+\`for _, item in folder:GetChildren() do local stamp = item:GetAttribute("SpawnedAt"); if stamp and stamp < oldestTime then oldest, oldestTime = item, stamp end end\`
+
+Після for викликай Destroy лише для знайденого oldest. Якщо кількість усе ще перевищує maxAlive, повтори пошук для наступного найстарішого об'єкта.
+
+| Підхід | Плюс | Мінус |
+|--------|------|-------|
+| lifetime | Простий і передбачуваний | Може видалити Drop біля Collector |
+| trim за SpawnedAt | Тримає стелю maxAlive | Потрібен Attribute і sort |
+| Перший елемент GetChildren | Здається коротким | Може знищити свіжий Drop |
+
+Викликай trim після spawn. Playtest 30 с не повинен давати сотні Parts.
+
+Метафора: anti-lag - це запобіжник, який не дає фабриці згоріти від власного темпу.
+
+**Зроби зараз (5 хв):** додай lifetime або trim і прогони 30 с із лічильником дітей у Drops.`,
+      },
+      {
+        title: "Фізика шляху все ще з 7.1",
+        content: `Якщо Parts летять у void, спочатку перевір білд, а не Config. interval і payout не піднімуть бортик.
+
+| Симптом | Де шукати |
+|---------|-----------|
+| Усі Drop у void | Mouth, Walls, Floor з 7.1 |
+| Parts застрягли в корпусі | Mouth випханий назовні? |
+| Нічого не доходить до Collector | Відстань / пандус / Velocity |
+| Лавина Parts | maxAlive / lifetime |
+| Цикл мовчить | running, Output, WaitForChild Mouth |
+
+Опційно додай легкий AssemblyLinearVelocity у бік Collector, але не витрачай годину на ідеальну балістику. Для здачі достатньо стабільного ритму і більшості Parts на шляху зони.
+
+Гравітація + бортики часто простіші за Tween. Tween корисний, коли потрібен ідеально прямий жолоб без фізики. Не витрачай урок на складну балістику з трьома Vector3: спочатку добейся, щоб більшість Drop опинялась біля Collector.
+
+Якщо Mouth дивиться в стіну Dropper, Parts народжуються всередині корпусу й вибухають назовні хаотично. Витягни Mouth на 1-2 studs уперед і повтори тест. Часто цього досить, щоб траєкторія стала передбачуваною.
+
+Образ для дебагу: якщо конвеєр сипле мимо ящика, крути ящик і жолоб, а не швидкість мотора.
+
+**Зроби зараз (4 хв):** стій 20 с біля Collector і полічи, скільки Drop доходять близько до зони.`,
+      },
+      {
+        title: "startDropper(plot) на майбутнє 7.5",
+        content: `Навіть з одним plot пиши код так, ніби ділянок буде кілька. Глобальний while на весь Workspace ускладнить клон.
+
+Функція startDropper приймає plot, знаходить його Mouth і Drops, створює локальний прапор running та запускає окрему задачу. На кожній ітерації вона викликає spawnDrop, trimDrops і task.wait з актуальним interval. Повернений stop-колбек змінює лише локальний running.
+
+Повернений stop-колбек знадобиться, коли plot зникне або гравець вийде. Імена з 7.1 тут критичні: шлях plot/Dropper/Mouth і дочірній Drops мають існувати. Якщо шлях інший - виправ імена зараз, а не маскуй їх довгим пошуком по Workspace.
+
+| Звичка сьогодні | Виграш у 7.5 |
+|-----------------|--------------|
+| startDropper(plot) | Клон отримує власний мотор |
+| Локальний running | Зупинка однієї ділянки |
+| Імена Mouth/Drops | Немає FindFirstChild навмання |
+| Config ззовні | Усі plot читають той самий каталог |
+
+Не зберігай running у глобальній змінній модуля, якщо плануєш кілька plot. Інакше вимкнення однієї ділянки зупинить усі. Локальний прапор у замиканні startDropper захищає від цієї пастки ще до появи клонів.
+
+Метафора: функція plot - як розетка на кожну ділянку, а не один кабель на весь цех.
+
+**Зроби зараз (5 хв):** винеси цикл у startDropper(plot) і перевір, що Stop через прапор працює.`,
+      },
+      {
+        title: "Playtest дропера",
+        content: `Заповни таблицю до зміни десятків налаштувань.
+
+| # | Дія | Очікування | Факт |
+|---|-----|------------|------|
+| 1 | Play | Через interval з'являється Drop | |
+| 2 | 30 с очікування | Дітей у Drops <= maxAlive | |
+| 3 | interval 2 -> 0.8 | Темп прискорюється | |
+| 4 | Новий Drop | Attribute Payout = Config | |
+| 5 | Шлях | Більшість Parts не у void | |
+| 6 | running = false | Нові Drop припиняються | |
+| 7 | Output | Без червоного spam | |
+
+Якщо пункт 5 червоний - повертайся до 7.1. Якщо пункт 2 червоний - спочатку anti-lag, потім баланс чисел.
+
+Не залишай interval=0.05 у фінальному Save. Поверни спокійний навчальний темп і запиши його в нотатку поруч із Place.
+
+Метафора: playtest - секундомір біля конвеєра, а не враження з коридору.
+
+**Зроби зараз (6 хв):** пройди рядки 1-4 і постав факти в таблицю.`,
+      },
+      {
+        title: "Підготовка каси 7.3",
+        content: `Завтра Collector торкнеться Drop і має знати суму. Сьогодні ти лише гарантуєш дані.
+
+| Сьогодні | Завтра в 7.3 |
+|----------|--------------|
+| Attribute Payout на Drop | Прочитати й додати до Coins |
+| Серверний spawn | Серверний Touched collector |
+| Один Config.payout | Апгрейди змінять payout |
+| Drops folder | Легко знайти живі Parts |
+| Без LocalScript Coins | Та сама дисципліна з Sim |
+
+Не нараховуй Coins у spawnDrop "для перевірки". Це змішає відповідальність і зіпсує урок каси. Для дебагу достатньо одного print із Payout нового дропа, який потім треба прибрати.
+
+Зв'язок із Simulator лишається архітектурним: сервер володіє цінністю, Config тримає числа, клієнт пізніше лише покаже HUD.
+
+Образ: сьогодні на коробках уже є цінники, завтра відкриється каса.
+
+**Зроби зараз (3 хв):** збери 5 Drop і перевір Attribute Payout у Properties у кожного.`,
+      },
+      {
+        title: "Чекліст здачі уроку 50",
+        content: `- [ ] DropperConfig з interval, payout, maxAlive
+- [ ] Серверний while/for з task.wait(Config.interval) на кожній ітерації
+- [ ] spawnDrop з Mouth у Folder Drops
+- [ ] Attribute Payout і SpawnedAt на Drop
+- [ ] lifetime або trim за SpawnedAt, не перший елемент GetChildren
+- [ ] Зміна interval у Play змінює темп
+- [ ] 30 с без затоплення Workspace
+- [ ] Save: Lesson 7.2 - Dropper Config
+
+Далі **7.3** навчить Collector класти payout у leaderstats. Якщо сьогодні Parts не доходять до зони або Config розкиданий по Scripts - каса отримає хаос замість ритму.
+
+Артефакт: живий конвеєр з пультом чисел. Plot більше не німий.
+
+**Зроби зараз (3 хв):** поверни навчальний interval, прожени 20 с і збережи Place під точною назвою.`,
+      },
+    ],
+  },
+  commonMistakes: [
+    {
+      mistake: "while true без task.wait",
+      explanation: "Серверний Script зависає або лагає, а Parts з'являються пачкою без контролю.",
+      correctApproach: "Завжди чекай DropperConfig.interval усередині циклу.",
+    },
+    {
+      mistake: "interval зчитаний один раз перед while",
+      explanation: "Зміна Config або майбутній апгрейд не змінює темп до рестарту Script.",
+      correctApproach: "Викликай task.wait(DropperConfig.interval) на кожній ітерації.",
+    },
+    {
+      mistake: "Destroy першого елемента GetChildren без сортування",
+      explanation: "Порядок дітей не гарантує FIFO, тож можна видалити свіжий Drop і залишити старі.",
+      correctApproach: "Порівнюй Attribute SpawnedAt або використовуй lifetime Destroy.",
+    },
+    {
+      mistake: "Числа interval і payout захардкожені в кількох Scripts",
+      explanation: "Баланс і апгрейди стають лотереєю, бо змінюєш одне місце й забуваєш інше.",
+      correctApproach: "Тримай усі робочі числа в одному DropperConfig.",
+    },
+    {
+      mistake: "Цикл крутиться лише в LocalScript",
+      explanation: "Інші клієнти не бачать спільної правди фабрики, а економіка стає вразливою.",
+      correctApproach: "Запускай дропер на сервері від конкретного plot.",
+    },
+    {
+      mistake: "Немає maxAlive і lifetime",
+      explanation: "За хвилину Workspace повниться Parts, FPS падає, playtest стає неможливим.",
+      correctApproach: "Обмеж живі Drop і видаляй застарілі після spawn.",
+    },
+  ],
+  summary: "Ти оживив Tycoon-дропер серверним циклом і DropperConfig: Parts падають з Mouth за interval, несуть Payout і не затоплюють карту. Конвеєр готовий віддати цінність collector у 7.3.",
+  practiceTask: {
+    title: "Конвеєр дропера (~30 хв)",
+    difficulty: "intermediate",
+    description: `### Part A - Config (6 хв)
+1. Створи DropperConfig з interval, payout, maxAlive, lifetime.
+2. Підключи його з серверного Script одного require або table.
+
+### Part B - Цикл і spawn (16 хв)
+1. Напиши startDropper(plot) з while running і task.spawn.
+2. spawnDrop ставить Part у Mouth, Attribute Payout і SpawnedAt, Parent = Drops.
+3. Додай lifetime або trim за SpawnedAt.
+4. Читай Config.interval на кожній ітерації.
+
+### Part C - Тест (8 хв)
+1. Зміни interval у Play і покажи новий темп.
+2. Прожени 30 с без затоплення Drops.
+3. Збережи Place як **Lesson 7.2 - Dropper Config**.`,
+    hints: [
+      "Спочатку хардкод wait(2), потім заміни на Config.interval.",
+      "print(\"drop\", os.clock()) допомагає побачити ритм.",
+      "Якщо Parts у void - повертайся до бортиків і Mouth з 7.1.",
+      "Не лишай interval=0.05 у фінальному Save.",
+    ],
+    optionalChallenge: "Зроби колір Drop трохи яскравішим при вищому payout, але значення все одно бери лише з Config.",
+  },
+  quiz: {
+    passingScore: 70,
+    timeLimit: 15,
+    questions: [
+      {
+        id: "q1",
+        type: MC,
+        question: "Який головний артефакт уроку 7.2?",
+        options: [
+          "Повний магазин покупок без дропера",
+          "Серверний цикл дропера з DropperConfig і anti-lag",
+          "Лише новий колір Floor",
+          "LocalScript, що сам пише Coins",
+        ],
+        correctAnswer: 1,
+        explanation: "Урок оживляє конвеєр Config і while на сервері.",
+      },
+      {
+        id: "q2",
+        type: MC,
+        question: "Де має крутитись while дропера?",
+        options: [
+          "На сервері від конкретного plot",
+          "Лише в LocalScript як єдина правда",
+          "У TextLabel Collector",
+          "У Sign без Script",
+        ],
+        correctAnswer: 0,
+        explanation: "Фабрика належить серверу.",
+      },
+      {
+        id: "q3",
+        type: MC,
+        question: "Навіщо DropperConfig.interval?",
+        options: [
+          "Щоб замінити Mouth",
+          "Щоб вимкнути Collector",
+          "Щоб керувати паузою між дропами з одного місця",
+          "Щоб створювати leaderstats",
+        ],
+        correctAnswer: 2,
+        explanation: "Interval задає ритм конвеєра.",
+      },
+      {
+        id: "q4",
+        type: MC,
+        question: "Як правильно чекати між дропами, якщо потрібні апгрейди темпу?",
+        options: [
+          "Зберегти interval у local один раз до while",
+          "Прибрати wait повністю",
+          "Чекати випадкове число без Config",
+          "Викликати task.wait(DropperConfig.interval) на кожній ітерації",
+        ],
+        correctAnswer: 3,
+        explanation: "Нове значення підхоплюється наступною паузою.",
+      },
+      {
+        id: "q5",
+        type: MC,
+        question: "Чому небезпечно одразу видаляти перший елемент після GetChildren()?",
+        options: [
+          "Бо порядок дітей не гарантує, що перший елемент найстаріший",
+          "Бо Destroy заборонений для Part",
+          "Бо Folder Drops не може мати дітей",
+          "Бо Config тоді видаляється",
+        ],
+        correctAnswer: 0,
+        explanation: "Потрібен SpawnedAt або lifetime, а не сліпий індекс.",
+      },
+      {
+        id: "q6",
+        type: MC,
+        question: "Навіщо Attribute Payout на Drop уже в 7.2?",
+        options: [
+          "Щоб замінити Floor",
+          "Щоб Collector у 7.3 знав, скільки додати до Coins",
+          "Щоб вимкнути гравітацію",
+          "Щоб LocalScript міг змінювати Config",
+        ],
+        correctAnswer: 1,
+        explanation: "Payout готує серверну касу наступного уроку.",
+      },
+      {
+        id: "q7",
+        type: MC,
+        question: "Навіщо task.spawn навколо while?",
+        options: [
+          "Щоб видалити DropperConfig",
+          "Щоб Parts стали Anchored",
+          "Щоб нескінченний цикл не блокував решту Script",
+          "Щоб Collector сам спавнив Drop",
+        ],
+        correctAnswer: 2,
+        explanation: "Мотор працює паралельно зі стартовою логікою.",
+      },
+      {
+        id: "q8",
+        type: MC,
+        question: "Що робити, якщо Drop падають у void?",
+        options: [
+          "Спочатку перевірити Mouth, Floor і Walls з 7.1",
+          "Одразу збільшити payout у сто разів",
+          "Перенести цикл у LocalScript",
+          "Видалити maxAlive",
+        ],
+        correctAnswer: 0,
+        explanation: "Геометрія часто важливіша за числа Config.",
+      },
+      {
+        id: "q9",
+        type: MC,
+        question: "Навіщо maxAlive або lifetime?",
+        options: [
+          "Щоб автоматично будувати другий plot",
+          "Щоб не затопити Workspace і не вбити FPS",
+          "Щоб замінити імена Mouth",
+          "Щоб Sign сам писав Config",
+        ],
+        correctAnswer: 1,
+        explanation: "Anti-lag тримає playtest живим.",
+      },
+      {
+        id: "q10",
+        type: MC,
+        question: "Як безпечно зупинити дропер?",
+        options: [
+          "Видалити весь Workspace",
+          "Поставити while true швидше",
+          "Вимкнути лише Baseplate",
+          "Поставити running = false і вийти з while",
+        ],
+        correctAnswer: 3,
+        explanation: "Прапор зупинки завершує цикл контрольовано.",
+      },
+      {
+        id: "q11",
+        type: MC,
+        question: "Чому startDropper(plot) кращий за глобальний пошук Parts?",
+        options: [
+          "Бо тоді легше клонувати ділянку й дати їй власний мотор у 7.5",
+          "Бо Roblox забороняє імена Dropper",
+          "Бо Config працює лише всередині Model без функції",
+          "Бо Mouth не може мати CFrame",
+        ],
+        correctAnswer: 0,
+        explanation: "Локальні посилання plot масштабуються на кількох гравців.",
+      },
+      {
+        id: "q12",
+        type: MC,
+        question: "Що перевірити після зміни interval у Play?",
+        options: [
+          "Чи змінився колір Sky",
+          "Чи Sign видалив себе",
+          "Чи темп нових Drop змінився на наступних ітераціях",
+          "Чи Floor став Unanchored",
+        ],
+        correctAnswer: 2,
+        explanation: "Доказ живого Config - видимий новий ритм.",
+      },
+      {
+        id: "q13",
+        type: MC,
+        question: "Чого не робити в spawnDrop сьогодні?",
+        options: [
+          "Ставити Attribute Payout",
+          "Батькувати Drop у Folder Drops",
+          "Нараховувати Coins напряму «для перевірки»",
+          "Читати DropperConfig.payout",
+        ],
+        correctAnswer: 2,
+        explanation: "Каса з'явиться в 7.3; сьогодні готуємо дані, не економіку.",
+      },
+      {
+        id: "q14",
+        type: MC,
+        question: "Який мінімальний набір полів Config потрібен для здачі?",
+        options: [
+          "Лише Color3 Floor",
+          "interval і payout, бажано також maxAlive або lifetime",
+          "50 обов'язкових полів магазину",
+          "Порожня table без чисел",
+        ],
+        correctAnswer: 1,
+        explanation: "Ритм, цінність і захист від лавини - база уроку.",
+      },
+      {
+        id: "q15",
+        type: MC,
+        question: "Яка точна назва Save для уроку 50?",
+        options: [
+          "Lesson 7.1 - Tycoon Plot",
+          "Lesson 7.3 - Collector Coins",
+          "Dropper Draft Final",
+          "Lesson 7.2 - Dropper Config",
+        ],
+        correctAnswer: 3,
+        explanation: "Чекліст вимагає Save Lesson 7.2 - Dropper Config.",
+      },
+    ],
+  },
+};
 
 export const ukLesson73 = {
  lessonId: "lesson-roblox-7-3",
  moduleId: "module-07",
  order: 3,
- title: "7.3 - Магазин: UI Part",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
+ title: "7.3 - Покупки + leaderstats",
+ theoryMinutes: 35,
+ quizMinutes: 15,
+ estimatedTime: 60,
  learningObjectives: [
- "Створіть панель магазину ScreenGui з перемикачем відкриття/закриття",
- "Створіть 3+ картки предметів із назвою, ціною та кнопками «Купити».",
- "Підключіть кнопки до FireServer RequestPurchase з ідентифікаторами елементів",
- "Показати відгук про обробку та статус клієнта",
+ "Мати Coins у leaderstats і змінювати їх лише на сервері",
+ "Зробити покупку через Prompt або SurfaceGui з перевіркою if canAfford",
+ "Списувати монети до/під час видачі апгрейду або товару",
+ "Додати debounce, щоб подвійний клік не купував двічі",
+ "Підготувати гаманець під апгрейди з table (7.4)",
  ],
  theory: {
  sections: [
  {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `Сьогодні **магазин виглядає справжнім** - лише інтерфейс. Сервер виплачує **7,4**.
+ title: "Сьогоднішня місія (урок 51 з 92)",
+ content: `У **7.1–7.2** дропер і collector уже можуть наповнювати світ деталями/монетами. Сьогодні з’являється **каса**: leaderstats Coins + покупка з перевіркою «чи вистачає».
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - верстка ScreenGui + UX
-2. **Практика (~25 хв)** - панель магазину з 3 предметів
-3. **Вікторина (10 хв)** - проходження **70%**
+Артефакт:
+1. Folder \`leaderstats\` з IntValue \`Coins\` на кожного Player (сервер).
+2. Collector (або тест) додає Coins **на сервері**.
+3. Кнопка/Prompt покупки: \`if coins >= price then\` списати.
+4. Debounce / «в процесі», щоб не подвоїти купівлю.
+5. Повідомлення відмови, якщо грошей бракує.
 
-Відкрийте **Урок 7.2 - RemoteEvent**. Перейменувати\`RequestAction\`→\`RequestPurchase\`якщо ви хочете назвати магазин (або зберегти обидва під час міграції).`,
+Без canAfford 7.4–7.8 - кнопки з порожніми обіцянками.
+
+**Зроби зараз (2 хв):** випиши тестову ціну першої покупки (наприклад 25) і переконайся, що знаєш, звідки зараз беруться монети. Якщо монет іще немає - зроби тестовий серверний +50 для перевірки каси, потім поверни чесний збір.`,
  },
  {
- title: "Ієрархія інтерфейсу користувача магазину",
- content: `**StarterGui** →\`ShopGui\`(ScreenGui)\`\`\`
-ShopGui
-├── OpenShopButton (TextButton, corner)
-└── ShopPanel (Frame, center, hidden at start)
- ├── TitleLabel ("Item Shop")
- ├── ItemList (ScrollingFrame or Frame)
- │ ├── Item_sword_basic
- │ ├── Item_shield_basic
- │ └── Item_speed_boost
- ├── StatusLabel (bottom)
- └── CloseButton
-\`\`\`**UICorner** + **UIStroke** на панелі для полірування.`,
+ title: "leaderstats - гаманець у TAB",
+ content: `| Об’єкт | Роль |
+|--------|------|
+| Folder \`leaderstats\` | Стандарт Roblox для TAB |
+| IntValue \`Coins\` | Баланс гравця |
+| Сервер | Єдиний хто пише Value |
+
+\`local folder = Instance.new("Folder")\`
+\`folder.Name = "leaderstats"\`
+\`folder.Parent = player\`
+\`local coins = Instance.new("IntValue")\`
+\`coins.Name = "Coins"\`
+\`coins.Value = 0\`
+\`coins.Parent = folder\`
+
+Метафора: TAB - **табло рахунку**. Суддя (сервер) крутить табло. Глядач з телефоном не має права дописувати голи.
+
+LocalScript може **читати** Coins для UI. Не роби \`Coins.Value = 9999\` на клієнті як здача.`,
  },
  {
- title: "Макет картки предмета",
- content: `Кожен\`Item_sword_basic\`Рама містить:
-- **NameLabel** - "Основний меч"
-- **PriceLabel** - "50 монет" (поки тільки відображення)
-- **BuyButton** - текст "Купити"
+ title: "Збір → Coins на сервері",
+ content: `У collector Touched (сервер):
 
-**Єдина таблиця цін** у LocalScript (джерело відображення):\`\`\`lua
-local DISPLAY_PRICES = {
- sword_basic = 50,
- shield_basic = 40,
- speed_boost = 30,
-}
-\`\`\`Сервер матиме реальні ціни в 7.4 - таблиця відображення лише для попереднього перегляду.`,
+\`local player = Players:GetPlayerFromCharacter(hit.Parent)\`
+\`if not player then return end\`
+\`local coins = player:FindFirstChild("leaderstats") and player.leaderstats:FindFirstChild("Coins")\`
+\`if not coins then return end\`
+\`coins.Value += payout\`
+\`hit:Destroy() -- якщо це drop Part\`
+
+Debounce: один Part = один payout; або cooldown на player.
+
+Перевір TAB: число росте. Якщо росте лише TextLabel на клієнті, а TAB стоїть - ти ще не в leaderstats.
+
+**Зроби зараз (8 хв):** +Coins від збору видно в TAB.`,
  },
  {
- title: "Відкрити і закрити панель",
- content: `\`ShopPanel.Visible = false\`на початку.\`\`\`lua
-local panel = script.Parent.ShopPanel
-local openBtn = script.Parent.OpenShopButton
-local closeBtn = panel.CloseButton
+ title: "canAfford - простий if",
+ content: `\`local price = 25 -- завтра з Config\`
 
-openBtn.MouseButton1Click:Connect(function()
- panel.Visible = true
-end)
+\`local function canAfford(player, price)\`
+\` local coins = player.leaderstats.Coins\`
+\` return coins.Value >= price\`
+\`end\`
 
-closeBtn.MouseButton1Click:Connect(function()
- panel.Visible = false
-end)
-\`\`\`Додатково: слайд-панель **TweenService** знизу (завдання).`,
+\`local function tryBuy(player, price)\`
+\` local coins = player.leaderstats.Coins\`
+\` if coins.Value < price then\`
+\` return false, "Недостатньо монет"\`
+\` end\`
+\` coins.Value -= price\`
+\` return true, "Куплено"\`
+\`end\`
+
+Порядок: перевірка → списання → ефект (апгрейд).  
+Не видавай ефект до списання без захисту від помилок.
+
+Ціну поки можна константою; у 7.4 переїде в table.`,
  },
  {
- title: "Купити кнопкову проводку",
- content: `\`ShopClient\`LocalScript у ShopPanel:\`\`\`lua
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local request = ReplicatedStorage:WaitForChild("RequestPurchase")
-local result = ReplicatedStorage:WaitForChild("PurchaseResult")
-local status = script.Parent.StatusLabel
+ title: "Prompt або SurfaceGui як каса",
+ content: `| Варіант | Плюс | Мінус |
+|---------|------|-------|
+| **ProximityPrompt** | Швидко, «E купити» | Менше місця для списку |
+| **SurfaceGui кнопка** | Видно ціну на Part | Трохи більше UI |
+| ScreenGui магазин | Гнучко | Довше збирати |
 
-local function hookBuy(button, itemId)
- button.MouseButton1Click:Connect(function()
- status.Text = "Processing..."
- status.TextColor3 = Color3.fromRGB(200, 200, 100)
- button.Active = false
- request:FireServer(itemId)
- task.delay(0.5, function()
- button.Active = true
- end)
- end)
-end
+Для тайкуна часто Prompt на кнопці plot:
 
-hookBuy(script.Parent.ItemList.Item_sword_basic.BuyButton, "sword_basic")
--- repeat for shield_basic, speed_boost
-\`\`\`Використовуйте **PurchaseResult** із шаблону 7.2 (за потреби перейменуйте ActionResult).`,
+\`prompt.ActionText = "Купити (+швидкість)"\`
+\`prompt.ObjectText = "25 coins"\`
+
+\`prompt.Triggered:Connect(function(player)\`
+\` -- tryBuy на сервері\`
+\`end)\`
+
+Якщо Prompt у LocalScript - все одно фінальне списання на сервері (Remote або серверний Prompt handler).`,
  },
  {
- title: "UX-полірування магазину",
- content: `| Трюк UX | Ефект |
-|----------|--------|
-| Вимкнути кнопку через 0,5 с після натискання | Немає відчуття подвійного вогню |
-| «Обробка...» жовтий текст | Гравець знає, що щось сталося |
-| Зелений ✓ / червоний ✗ результат | Чіткий результат |
-| Послідовні цінники | Довіра |
+ title: "Відмова і успіх - feedback",
+ content: `Гравець має зрозуміти результат:
+- успіх: короткий print / Billboard «Куплено!» / звук;
+- відмова: «Потрібно ще X монет».
 
-**Не** міняйте монети на клієнті - показуйте лише повідомлення до 7.4.`,
+\`local ok, msg = tryBuy(player, price)\`
+\`-- FireClient(player, ok, msg) або StatusLabel\`
+
+Без feedback здається, що кнопка «мертва», хоча canAfford спрацював правильно.
+
+Не спам повідомленнями кожен кадр - лише на Triggered.`,
  },
  {
- title: "Підготовка до серверної майстерні (7.4)",
- content: `**Ідентифікатори елементів** (рядки, нижній регістр, підкреслення):
--\`sword_basic\`-\`shield_basic\`-\`speed_boost\`Сервер\`ShopItems\`таблиця в 7.4 точно відповідатиме цим ідентифікаторам.
+ title: "Debounce покупки",
+ content: `\`local busy = {}\`
 
-**Контрольний список перед тренуваннями:**
-- [ ] 3 предмети з кнопками купити
-- [ ] Відкриття/закриття магазину працює
-- [ ] Кожна покупка запускає правильний itemId
-- [] StatusLabel оновлення з PurchaseResult
-- [ ] Зберегти:\`Lesson 7.3 - Shop UI\``,
+\`local function tryBuySafe(player, price)\`
+\` if busy[player] then return false, "Зачекай" end\`
+\` busy[player] = true\`
+\` local ok, msg = tryBuy(player, price)\`
+\` task.delay(0.4, function() busy[player] = nil end)\`
+\` return ok, msg\`
+\`end\`
+
+Подвійний E / подвійний клік інакше знімає 2× ціну або видає 2 ефекти.
+
+PlayerRemoving: \`busy[player] = nil\`.`,
+ },
+ {
+ title: "Що клієнту можна показувати",
+ content: `| OK на клієнті | НЕ ok |
+|---------------|------|
+| Читати Coins для TextLabel | Coins.Value = … |
+| Відкрити панель магазину | «Сервер сказав що я багатий» без перевірки |
+| FireServer("buyBasic") | FireServer(price=1) як правда |
+| Анімація кнопки | Видача апгрейду лише локально |
+
+Після списання на сервері лідерстат реплікується - UI оновиться сам, якщо слухає \`.Changed\`.
+
+\`coins:GetPropertyChangedSignal("Value"):Connect(function()\`
+\` label.Text = "Coins: " .. coins.Value\`
+\`end)\``,
+ },
+ {
+ title: "Міні-тест каса без повного апгрейду",
+ content: `Якщо 7.4 ще не готовий - купівля може:
+- списати монети;
+- поставити Attribute \`BoughtTest = true\`;
+- змінити колір кнопки.
+
+Головне сьогодні - **грошовий** шлях. Ефект дропера поглибиш завтра з table.
+
+Але вже зараз краще викликати заглушку \`applyUpgradeStub()\`, щоб місце під ефект існувало.`,
+ },
+ {
+ title: "Playtest покупок",
+ content: `| # | Дія | Очікування |
+|---|-----|------------|
+| 1 | Join | leaderstats.Coins = 0 (або старт) |
+| 2 | Збір | Coins ростуть у TAB |
+| 3 | Купівля без грошей | Відмова, Value не пішов у мінус |
+| 4 | Накопичити й купити | Списання рівно на price |
+| 5 | Подвійний клік | Не 2 покупки |
+| 6 | Клієнтський Coins=9999 | Не вважається здачею; сервер ігнорує |
+| 7 | Output | Чисто |
+
+Пункти 3–5 - серце уроку.`,
+ },
+ {
+ title: "Типові дірки каси",
+ content: `| Симптом | Фікс |
+|---------|------|
+| TAB не змінюється | Пишеш не leaderstats / не сервер |
+| Мінус монет | canAfford пропущений |
+| Подвійна покупка | busy debounce |
+| Ціна лише на клієнті | Дубль перевірки на сервері |
+| Collector дає монети всім Part | Фільтр player + debounce |
+
+**Зроби зараз (5 хв):** навмисна покупка з 0 монет - маєш побачити відмову.`,
+ },
+ {
+ title: "Чекліст здачі уроку 51",
+ content: `- [ ] leaderstats.Coins на сервері
+- [ ] Збір додає Coins у TAB
+- [ ] tryBuy / canAfford
+- [ ] Списання при успіху
+- [ ] Відмова без мінуса
+- [ ] Debounce покупки
+- [ ] Prompt або GUI каса
+- [ ] Save: Lesson 7.3 - Buys Leaderstats
+
+Короткий ритуал здачі: покажи TAB до купівлі, натисни Prompt, покажи TAB після, потім спробуй з нулем монет. Три кадри - і каса зрозуміла без довгої лекції. Запиши ціну тестової покупки в нотатку поруч з Place.
+
+Далі **7.4** підставить ціни й ефекти з table в цю ж касу. **7.5** прив’яже покупки до свого plot.
+
+Артефакт: **чесний гаманець**. Кнопка більше не «магічна безкоштовна».
+
+Якщо ментор бачить TAB ↓ після купівлі й відмову при бідності - каса здана. Не лишай клієнтський Coins++ у фінальному Place. Каса має бути нудною і чесною - це добре. 
+
+Пам’ятай зв’язок уроків: collector годує Coins, каса їх витрачає, table завтра скаже скільки саме. Якщо сьогодні TAB і списання роз’їхались - не малюй третю кнопку магазину. Спочатку один чесний Prompt і один price. Ментор за хвилину має зрозуміти: звідки гроші, куди ділись після купівлі, чому бідний гравець чує відмову. Це і є LTV-момент «я керую економікою», не «кнопка щось робить іноді».`,
  },
  ],
  },
  commonMistakes: [
  {
- mistake: "Різний itemId на кнопці та таблиці сервера",
- explanation: "Невідомий предмет назавжди.",
- correctApproach: "Константи спільного ідентифікатора",
+ mistake: "Coins.Value на клієнті",
+ explanation: "Чіт і розсинхрон TAB.",
+ correctApproach: "Лише сервер пише leaderstats",
  },
  {
- mistake: "LocalScript у Workspace",
- explanation: "Може працювати не для всіх гравців.",
- correctApproach: "Ієрархія StarterGui",
+ mistake: "Немає canAfford",
+ explanation: "Покупки в мінус або без грошей.",
+ correctApproach: "if Value >= price",
  },
  {
- mistake: "Клієнт змінює Coins IntValue при покупці",
- explanation: "Експлойт до 7.4.",
- correctApproach: "Повідомлення інтерфейсу користувача лише до тих пір, поки сервер не відніме",
+ mistake: "Ефект до списання без захисту",
+ explanation: "Безкоштовні апгрейди при помилках.",
+ correctApproach: "Списання потім ефект (атомарно)",
  },
  {
- mistake: "Жорстко закодована ціна на кнопці та невідповідність етикетки",
- explanation: "Заплутаний магазин.",
- correctApproach: "Одна таблиця DISPLAY_PRICES",
+ mistake: "Подвійний Triggered",
+ explanation: "Дві ціни за один намір.",
+ correctApproach: "busy debounce",
+ },
+ {
+ mistake: "UI Coins бреше, TAB інший",
+ explanation: "Два джерела правди.",
+ correctApproach: "UI слухає leaderstats",
+ },
+ {
+ mistake: "Ціна лише в тексті Prompt",
+ explanation: "Сервер не знає скільки списувати.",
+ correctApproach: "Константа/Config на сервері",
  },
  ],
- summary: "Ви створили магазин ScreenGui із трьома елементами, панеллю відкриття/закриття, кнопками покупки, що запускають RequestPurchase, і відшліфованим відгуком клієнта - готовий до безпечної оплати на сервері в Уроці 7.4.",
+ summary: "Ти зібрав касу тайкуна: leaderstats Coins, серверний збір, canAfford і списання з debounce. Гаманець готовий до апгрейдів з table і покупок на своєму plot.",
  practiceTask: {
- title: "Купуйте ScreenGui (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** повний інтерфейс магазину, підключений до пультів дистанційного керування (сервер заглушки в порядку).
+ title: "Каса тайкуна (~30 хв)",
+ difficulty: "intermediate",
+ description: `**Мета:** зібрати монети в TAB і купити з перевіркою canAfford.
 
-### Part A - Макет (12 хв)
-1. ShopGui + ShopPanel + 3 картки предметів
-2. Name + цінники з таблиці DISPLAY_PRICES
-3. OpenShopButton + CloseButton
+### Part A - leaderstats (8 хв)
+1. Folder + Coins IntValue на PlayerAdded.
+2. Collector += на сервері.
+3. TAB показує ріст.
 
-### Part B - Електропроводка (10 хв)
-1. RequestPurchase + PurchaseResult (з шаблону 7.2)
-2. hookBuy для кожного id товару
-3. Обробка + відключення кнопки + кольори стану
+### Part B - tryBuy (14 хв)
+1. canAfford + списання.
+2. Prompt або SurfaceGui Triggered на сервері.
+3. Debounce busy.
+4. Повідомлення ok/deny.
 
-### Part C - Зберегти (3 хв)
-1. Грайте - купуйте кожен предмет один раз
-2. **Зберегти в Roblox** →\`Lesson 7.3 - Shop UI\` 3. **Практика завершена**`,
+### Part C - Playtest (8 хв)
+1. Без грошей - відмова.
+2. З грошима - списання.
+3. **Save:** Lesson 7.3 - Buys Leaderstats`,
  hints: [
- "Назви кнопок Buy_sword_basic допомагають у налагодженні",
- "ScrollingFrame, якщо ви додасте більше 3 елементів пізніше",
- "Заглушка сервера з версії 7.2 все ще працює, доки у версії 7.4 не додадуться монети",
+ "Спочатку кнопка лише списує й фарбує Part - ефект дропера завтра",
+ "print(coins.Value) до і після",
+ "Не вір клієнтському Value",
  ],
- optionalChallenge: "Слайд панелі TweenService + затемнена рамка фону.",
+ optionalChallenge: "StatusLabel слухає Coins.Changed і показує баланс завжди.",
  },
  quiz: {
  passingScore: 70,
- timeLimit: 10,
+ timeLimit: 15,
  questions: [
  {
  id: "q1",
- type: "multiple_choice",
- question: "Інтерфейс магазину живе в...",
+ type: MC,
+ question: "Головна мета уроку 7.3?",
  options: [
- "StarterGui ScreenGui",
- "ServerStorage",
- "Terrain",
- "Лише Lighting",
+ "Зробити leaderstats Coins і покупку з canAfford",
+ "Видалити дропер",
+ "Побудувати Arena Remote",
+ "Publish без TAB",
  ],
  correctAnswer: 0,
- explanation: "Інтерфейс клієнта.",
+ explanation: "Каса + покупки.",
  },
  {
  id: "q2",
- type: "multiple_choice",
- question: "Кнопка «Купити» повинна FireServer з...",
+ type: MC,
+ question: "Хто має писати Coins.Value?",
  options: [
- "рядок item id",
- "Лише ім’я гравця",
- "Випадкова ціна",
- "Terrain id",
+ "Сервер",
+ "Лише LocalScript як правда",
+ "Lighting",
+ "Skybox",
  ],
  correctAnswer: 0,
- explanation: "Корисне навантаження для сервера.",
+ explanation: "Серверний гаманець.",
  },
  {
  id: "q3",
- type: "multiple_choice",
- question: "Відображати ціни на інтерфейсі користувача в 7.3...",
+ type: MC,
+ question: "Що перевіряє canAfford?",
  options: [
- "Попередній перегляд до перевірки сервером у 7.4",
- "Остаточний авторитет",
- "Зберігається в Terrain",
- "Приховано",
+ "Чи Coins.Value >= price",
+ "Чи існує Sky",
+ "Чи Tool у руці обов’язково",
+ "Чи гравець відкрив Explorer",
  ],
  correctAnswer: 0,
- explanation: "Сервер володіє реальними цінами.",
+ explanation: "Вистачає монет.",
  },
  {
  id: "q4",
- type: "multiple_choice",
- question: "Обробка... текст показує...",
+ type: MC,
+ question: "Навіщо debounce на покупці?",
  options: [
- "Запит надіслано, очікування",
- "Миттєва покупка завершена",
- "Сервер offline",
- "Гру опубліковано",
+ "Подвійний клік не списує двічі",
+ "Це замінює leaderstats",
+ "debounce малює Terrain",
+ "Обов’язково для Anchored",
  ],
  correctAnswer: 0,
- explanation: "UX відгук.",
+ explanation: "Анти-спам каси.",
  },
  {
  id: "q5",
- type: "multiple_choice",
- question: "Ненадовго вимкніть кнопку, щоб...",
+ type: MC,
+ question: "Де видно leaderstats гравцю?",
  options: [
- "Зменшити spam подвійних кліків",
- "Видалити предмет",
- "Закрити гру",
- "Зберегти place",
+ "У TAB (список лідерів)",
+ "Лише в ServerStorage",
+ "Тільки в назві Baseplate",
+ "У SoundService",
  ],
  correctAnswer: 0,
- explanation: "UX на стороні клієнта.",
+ explanation: "TAB.",
  },
  {
  id: "q6",
- type: "multiple_choice",
- question: "LocalScript обробляє...",
+ type: MC,
+ question: "Що робити при недостатньо монет?",
  options: [
- "Кліки та оновлення міток",
- "Списання монет",
- "Збереження DataStore",
- "NPC AI",
+ "Відмовити покупку, не йти в мінус",
+ "Завжди видати апгрейд",
+ "Поставити Coins = -100",
+ "Видалити plot",
  ],
  correctAnswer: 0,
- explanation: "Роль клієнта.",
+ explanation: "Deny.",
  },
  {
  id: "q7",
- type: "multiple_choice",
- question: "ідентифікатори елементів мають бути...",
+ type: MC,
+ question: "Чому погано Coins=9999 у LocalScript?",
  options: [
- "Однакові рядки, наприклад sword_basic",
- "Випадково кожен клік",
- "Лише числа на клієнті",
- "Порожньо",
+ "Це чіт і не серверна правда",
+ "IntValue не існує",
+ "TAB тоді швидший",
+ "Roblox вимагає саме так",
  ],
  correctAnswer: 0,
- explanation: "Зіставте таблицю сервера пізніше.",
+ explanation: "Never trust client.",
  },
  {
  id: "q8",
- type: "multiple_choice",
- question: "Для уроку 7.3 потрібні пульти від...",
+ type: MC,
+ question: "Як collector має додавати монети?",
  options: [
- "Lesson 7.2",
- "Лише Lesson 1.1",
- "Лише Module 6",
- "Без попередніх уроків",
+ "На сервері в player.leaderstats.Coins",
+ "Лише в клієнтський TextLabel",
+ "У Lighting Ambient",
+ "У назву Prompt",
  ],
  correctAnswer: 0,
- explanation: "Шаблон запит/результат.",
+ explanation: "Серверний збір.",
  },
  {
  id: "q9",
- type: "multiple_choice",
- question: "Серверна логіка coin з’являється...",
+ type: MC,
+ question: "Як 7.3 готує 7.4?",
  options: [
- "Lesson 7.4",
- "Lesson 7.1",
- "Lesson 6.1",
- "Lesson 12",
+ "Каса готова підставляти price з UpgradeConfig",
+ "7.4 видаляє Coins",
+ "Table забороняє canAfford",
+ "Апгрейди більше не потребують грошей",
  ],
  correctAnswer: 0,
- explanation: "Наступний урок.",
+ explanation: "Гаманець під table.",
  },
  {
  id: "q10",
- type: "multiple_choice",
- question: "Урок 7.3 зберегти назву...",
+ type: MC,
+ question: "ProximityPrompt.Triggered зручний щоб…",
  options: [
- "Lesson 7.3 - Shop UI",
- "Shop Works",
- "RemoteEvent",
- "Race Launched",
+ "Викликати спробу покупки, коли гравець підтвердив",
+ "Замінити MaxHealth",
+ "Створити Humanoid",
+ "Вимкнути дропер назавжди",
  ],
  correctAnswer: 0,
- explanation: "Зберегти урок інтерфейсу користувача.",
+ explanation: "Каса на plot.",
+ },
+ {
+ id: "q11",
+ type: MC,
+ question: "Що має статись з Coins після успішної купівлі?",
+ options: [
+ "Value зменшується на price",
+ "Value завжди +price",
+ "leaderstats зникає",
+ "Coins стає рядком",
+ ],
+ correctAnswer: 0,
+ explanation: "Списання.",
+ },
+ {
+ id: "q12",
+ type: MC,
+ question: "Навіщо слухати Coins.Changed на клієнті?",
+ options: [
+ "Оновлювати підпис балансу без брехні в Value",
+ "Щоб клієнт міг писати Value",
+ "Changed вимикає сервер",
+ "Це замінює canAfford",
+ ],
+ correctAnswer: 0,
+ explanation: "UI відображення.",
+ },
+ {
+ id: "q13",
+ type: MC,
+ question: "Порядок tryBuy логічний?",
+ options: [
+ "Перевірка → списання → ефект",
+ "Ефект → потім можливо списання колись",
+ "Спочатку видалити player",
+ "Спочатку Publish",
+ ],
+ correctAnswer: 0,
+ explanation: "Атомарна каса.",
+ },
+ {
+ id: "q14",
+ type: MC,
+ question: "Що з наведеного - дірка каси?",
+ options: [
+ "Немає перевірки canAfford перед списанням",
+ "Є debounce",
+ "Coins у leaderstats",
+ "Відмова при бідності",
+ ],
+ correctAnswer: 0,
+ explanation: "Обов’язковий if.",
+ },
+ {
+ id: "q15",
+ type: MC,
+ question: "Що вважається зданим артефактом 7.3?",
+ options: [
+ "leaderstats + canAfford покупка + Save",
+ "Лише теорія",
+ "Порожній Baseplate",
+ "Клієнтський гаманець без сервера",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібна каса.",
  },
  ],
  },
@@ -946,333 +1487,471 @@ export const ukLesson74 = {
  lessonId: "lesson-roblox-7-4",
  moduleId: "module-07",
  order: 4,
- title: "7.4 - Магазин: серверна логіка",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
+ title: "7.4 - Апгрейди з table",
+ theoryMinutes: 35,
+ quizMinutes: 15,
+ estimatedTime: 60,
  learningObjectives: [
- "Зберігайте на сервері таблицю ShopItems із цінами лише для сервера",
- "Підтверджуйте покупки та знімайте монети в статистиці лідерів",
- "Надайте інструменти рюкзаку з блокуванням покупки",
- "Запустіть PurchaseResult із балансом і чіткими повідомленнями",
+ "Описати всі апгрейди в одній UpgradeConfig table (id, price, ефект)",
+ "Застосовувати апгрейд лише з даних table після успішної покупки",
+ "Показати список апгрейдів у UI (SurfaceGui / прості кнопки / Frame)",
+ "Уникнути захардкожених цін і ефектів у 5 різних скриптах",
+ "Підготувати Config до балансу цін і plot на гравця",
  ],
  theory: {
  sections: [
  {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `Інтерфейс користувача з **7.3** просить купити. Сьогодні **сервер - це касир** - реальні монети, реальні предмети.
+ title: "Сьогоднішня місія (урок 52 з 92)",
+ content: `У **7.3** покупка вже вміє перевіряти canAfford і списувати leaderstats. Сьогодні апгрейди стають **даними в table**, а не копіпастою «якщо кнопка A то ціна 50».
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - потік перевірки + блокування
-2. **Практика (~25 хв)** - безпечний магазин серверів
-3. **Вікторина (10 хв)** - проходження **70%**
+Артефакт:
+1. \`UpgradeConfig\` з мінімум **2** записами (id, price, поля ефекту).
+2. \`applyUpgrade(player, id)\` читає лише Config.
+3. UI список / кнопки будуються з ключів table (або підписані id з Config).
+4. Після купівлі дропер реально змінює interval або payout.
 
-Відкрийте **Урок 7.3 - Інтерфейс користувача магазину**.`,
+Без table 7.6 баланс перетворюється на пошук чисел по всьому Place.
+
+**Зроби зараз (2 хв):** назви два апгрейди: наприклад \`fasterDrop\` і \`morePay\`.`,
  },
  {
- title: "Сервер - це касир",
- content: `Тільки сервер може:
-- Зберігайте **Монети** в\`leaderstats\`- Дізнайтеся **реальні ціни**
-- Схвалювати або відхиляти покупки
-- Покладіть інструменти в **Рюкзак**
+ title: "Чому саме table, а не if-лапша",
+ content: `| if кнопка1 / кнопка2 | UpgradeConfig table |
+|---------------------|---------------------|
+| Ціни в 4 місцях | Одне джерело |
+| Новий апгрейд = новий if | Новий рядок |
+| Баланс болить | Баланс = зміна числа |
+| UI вручну | UI з пар ключів |
 
-Клієнт надсилає **тільки ідентифікатор товару** - ніколи ціну, ніколи «У мене 999 монет».`,
+Метафора: Config - **меню ресторану**. Кухня (applyUpgrade) готує лише те, що є в меню. Клієнт замовляє \`id\`, не вигадує рецепт.
+
+\`local UpgradeConfig = {\`
+\` fasterDrop = { price = 50, interval = 1.2 },\`
+\` morePay = { price = 80, payout = 10 },\`
+\`}\``,
  },
  {
- title: "Модуль ShopItems",
- content: `**ServerScriptService** → **ModuleScript**\`ShopConfig\`:\`\`\`lua
-local ShopConfig = {}
+ title: "Поля запису апгрейду",
+ content: `| Поле | Призначення |
+|------|-------------|
+| **price** | Скільки зняти з Coins |
+| **interval** | Новий інтервал дропера (якщо тип speed) |
+| **payout** | Нова виплата за дроп |
+| **displayName** | Текст у UI (опційно) |
+| **once** | Купується один раз (часто true) |
 
-ShopConfig.Items = {
- sword_basic = {
- name = "Basic Sword",
- price = 50,
- toolName = "BasicSword", -- in ServerStorage/Tools
- },
- shield_basic = {
- name = "Wooden Shield",
- price = 40,
- toolName = "WoodenShield",
- },
- speed_boost = {
- name = "Speed Boost",
- price = 30,
- toolName = "SpeedBoost",
- },
-}
+Не обов’язково всі поля в кожному рядку. \`fasterDrop\` може не мати payout.
 
-return ShopConfig
-\`\`\`**ReplicatedStorage** не отримує ціни - клієнти дізнаються ціни через каталог у повідомленнях 7.5 або PurchaseResult.`,
+Правило: сервер **ніколи** не бере price з аргумента клієнта. Клієнт шле \`id\` = \`"fasterDrop"\`.`,
  },
  {
- title: "Монети при приєднанні",
- content: `Script **ShopServer** - PlayerAdded:\`\`\`lua
-local function setupCoins(player)
- local ls = player:FindFirstChild("leaderstats")
- if not ls then
- ls = Instance.new("Folder")
- ls.Name = "leaderstats"
- ls.Parent = player
- end
- local coins = ls:FindFirstChild("Coins")
- if not coins then
- coins = Instance.new("IntValue")
- coins.Name = "Coins"
- coins.Value = 100 -- starter coins for lesson
- coins.Parent = ls
- end
-end
+ title: "applyUpgrade після canAfford",
+ content: `Псевдо:
 
-game.Players.PlayerAdded:Connect(setupCoins)
-\`\`\`Повторне використання шаблону LeaderStats модуля 3.`,
+\`local function applyUpgrade(player, upgradeId)\`
+\` local cfg = UpgradeConfig[upgradeId]\`
+\` if not cfg then return false end\`
+\` local state = getPlotState(player)\`
+\` if state.owned[upgradeId] then return false end\`
+\` if cfg.interval then state.interval = cfg.interval end\`
+\` if cfg.payout then state.payout = cfg.payout end\`
+\` state.owned[upgradeId] = true\`
+\` return true\`
+\`end\`
+
+У покупці (з 7.3):
+
+\`if coins < cfg.price then return end\`
+\`coins -= cfg.price\`
+\`applyUpgrade(player, id)\`
+
+Спочатку гроші, потім ефект - або навпаки з відкатом; головне атомарно на сервері без подвійного кліку.`,
  },
  {
- title: "Потік перевірки (6 кроків)",
- content: `Увімкнено\`RequestPurchase.OnServerEvent\`:
+ title: "UI список з table",
+ content: `Варіанти:
+1. **Статичні кнопки** з Attribute \`UpgradeId\` = ключ Config.
+2. **Динамічний список**: for id, cfg in pairs(UpgradeConfig) створи TextButton.
 
-1. **Перевірка типу** -\`itemId\`це рядок
-2. **Існує** -\`ShopConfig.Items[itemId]\` 3. **Заблокувати** - пропустити якщо\`purchaseLock[player]\` 4. **Баланс** -\`coins.Value >= price\` 5. **Вирахування** -\`coins.Value -= price\` 6. **Grant** - інструмент клонування з\`ServerStorage/Tools\`→ Рюкзак
-7. **Повідомити** -\`PurchaseResult:FireClient(player, true, msg, coins.Value)\`
+Для SurfaceGui на plot:
 
-\`\`\`lua
-if not ShopConfig.Items[itemId] then
- return deny(player, "Unknown item")
-end
-local price = ShopConfig.Items[itemId].price
-if coins.Value < price then
- return deny(player, "Not enough coins")
-end
-\`\`\``,
+\`button:SetAttribute("UpgradeId", "fasterDrop")\`
+\`priceLabel.Text = tostring(UpgradeConfig.fasterDrop.price) .. " coins"\`
+
+Або при старті сервер/клієнт синхронізує підписи з Config (клієнту можна надіслати безпечну копію без секретів - ціни публічні ок).
+
+**Зроби зараз (10 хв):** 2 кнопки з id і ціною з table, без захардкоду 50 у Prompt окремо від Config.`,
  },
  {
- title: "Блокування покупки (захист від подвійних витрат)",
- content: `\`\`\`lua
-local purchaseLock = {}
+ title: "Owned: купити один раз",
+ content: `Більшість тайкун-апгрейдів - одноразові.
 
-local function processPurchase(player, itemId)
- if purchaseLock[player] then return end
- purchaseLock[player] = true
+\`if state.owned[id] then\`
+\` -- оновити UI «Куплено»\`
+\` return\`
+\`end\`
 
- local ok, err = pcall(function()
- -- validation + deduct + grant
- end)
+Після покупки:
+- змінити текст кнопки;
+- або Disabled Prompt;
+- або колір зелений.
 
- purchaseLock[player] = nil
-
- if not ok then
- warn("Purchase error:", err)
- PurchaseResult:FireClient(player, false, "Shop error", coins.Value)
- end
-end
-\`\`\`**pcall** гарантує, що блокування завжди знімається, навіть якщо надання не вдається.`,
+Без owned подвійний клік (навіть із debounce грошей) може повторно застосувати ефект і збити баланс, якщо ти зменшуєш interval щоразу.`,
  },
  {
- title: "Надайте інструмент безпечно",
- content: `\`\`\`lua
-local toolsFolder = game.ServerStorage:WaitForChild("Tools")
-local template = toolsFolder:FindFirstChild(item.toolName)
-if not template then
- return deny(player, "Item unavailable")
-end
+ title: "Дропер читає стан, не Config напряму завжди",
+ content: `Config = **каталог можливостей**.  
+State = **що вже куплено / які числа зараз**.
 
-local tool = template:Clone()
-tool.Parent = player.Backpack
-\`\`\`**Вже володієте?** Додатково: перевірте рюкзак/character перед наданням - забороніть дублікат або дозвольте стек для кожного дизайну.
+Цикл дропера:
 
-**Корисне навантаження PurchaseResult:**\`(success: boolean, message: string, newBalance: number)\`Клієнт оновлює **CoinsLabel** з\`newBalance\`, а не місцева математика.`,
+\`task.wait(state.interval)\`
+\`drop(state.payout)\`
+
+Стартові state.interval / payout візьми з базових констант або з окремого \`BaseDropConfig\`.
+
+Помилка: дропер завжди \`UpgradeConfig.fasterDrop.interval\` навіть до покупки - тоді апгрейд «вже увімкнений».`,
  },
  {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Невідомий ідентифікатор предмета → помилка, монети немає
-- [ ] 0 монет → "Недостатньо монет"
-- [ ] Дійсна покупка → інструмент у рюкзаку + знижка на монети
-- [ ] Швидкі кліки → лише одна покупка (блокування)
-- [ ] Зберегти:\`Lesson 7.4 - Server Shop\``,
+ title: "ModuleScript UpgradeConfig",
+ content: `Поклади table у ModuleScript (SSS або місце, звідки require і сервер покупки, і (обережно) UI).
+
+\`local UpgradeConfig = { ... }\`
+\`return UpgradeConfig\`
+
+Сервер покупки: \`require(...)\`  
+Якщо клієнт теж require для підписів цін - не клади туди секретних полів. Для школи ціни публічні - ок.
+
+Один require = один баланс у 7.6.`,
+ },
+ {
+ title: "Зв’язок з Prompt / Remote",
+ content: `Клієнт:
+
+\`BuyRE:FireServer("fasterDrop")\`
+
+Сервер:
+
+\`BuyRE.OnServerEvent:Connect(function(player, upgradeId)\`
+\` if typeof(upgradeId) ~= "string" then return end\`
+\` local cfg = UpgradeConfig[upgradeId]\`
+\` if not cfg then return end\`
+\` -- canAfford, deduct, applyUpgrade\`
+\`end)\`
+
+Не приймай \`FireServer(id, price)\` з довірою до price.
+
+Якщо поки без Remote - Prompt на сервері з Attribute id теж ок для plot.`,
+ },
+ {
+ title: "Playtest table-апгрейдів",
+ content: `| # | Дія | Очікування |
+|---|-----|------------|
+| 1 | Відкрити Config | ≥2 ключі з price |
+| 2 | Купівля id | Списання = cfg.price |
+| 3 | Ефект | interval або payout змінилось |
+| 4 | Повторна купівля | owned блокує |
+| 5 | Фейковий id | deny |
+| 6 | UI ціна | Збігається з Config |
+| 7 | Output | Чисто |
+
+Якщо пункт 3 червоний - applyUpgrade не пише state, який читає дропер.`,
+ },
+ {
+ title: "Підготовка до 7.5–7.6",
+ content: `| Сьогодні | Далі |
+|----------|------|
+| Config спільний | 7.5 state на кожного гравця/plot |
+| Ціни в table | 7.6 крутить ті самі поля |
+| UI з id | 7.7 список на міні-фабриці |
+
+Не розмножуй другий UpgradeConfig «тимчасово». Видаляй дублікати зараз.
+
+**Зроби зараз (5 хв):** пошук по Place числа старої ціни - має лишитись лише в table.`,
+ },
+ {
+ title: "Чекліст здачі уроку 52",
+ content: `- [ ] UpgradeConfig ≥2 записи
+- [ ] Покупка за id з table
+- [ ] applyUpgrade міняє state дропера
+- [ ] owned / одноразова купівля
+- [ ] UI ціни з Config
+- [ ] Немає довіри до price з клієнта
+- [ ] Playtest 1–4 зелені
+- [ ] Save: Lesson 7.4 - Upgrade Table
+
+Короткий ритуал здачі: відкрий Module, зміни price на очах ментора, онови підпис кнопки з Config, купи апгрейд і покажи зміну interval у Output. Дані керують грою - не навпаки. Якщо UI ціна не збіглась - зупинись і зводь підпис до Config перед Save.
+
+Далі **7.5** рознесе state на plot гравця. **7.6** підкрутить price/interval у цій же table.
+
+Артефакт: **меню апгрейдів як дані**. Кнопки лише замовляють id.
+
+Якщо ментор змінює одне число в Config і бачить нову ціну в грі - table працює. Залиш Module підписаним. Завтрашній баланс крутитиме ті самі поля price і interval.
+
+Перевір ще раз: чи немає в Prompt старого числа, яке ти забув після переносу в table. Чи дропер після купівлі читає саме state, а не «майбутній» рядок Config. Чи owned блокує другий клік. Ці три перевірки закривають 80% багів перед 7.5. Коли plot стане персональним, багнутий глобальний interval розмножиться на всіх гравців і баланс 7.6 зійде з розуму. Тому table + state сьогодні - інвестиція в спокійний Ship.
+
+Два осмислених апгрейди з ефектом краще за десять порожніх кнопок. Після table усі наступні уроки модуля лише підкручують і роздають ці дані гравцям на їхні plot.`,
  },
  ],
  },
  commonMistakes: [
  {
- mistake: "Клієнт надсилає ціну на FireServer",
- explanation: "Експлойт: ціна = 0.",
- correctApproach: "Сервер читає ціну ShopConfig",
+ mistake: "Ціна в Prompt і інша в Script",
+ explanation: "Баланс і довіра ламаються.",
+ correctApproach: "Лише UpgradeConfig.price",
  },
  {
- mistake: "Без блокування покупки",
- explanation: "Подвійні витрати на швидкі кліки.",
- correctApproach: "блокування покупки на гравця",
+ mistake: "Клієнт надсилає price",
+ explanation: "Чіт на знижку.",
+ correctApproach: "Лише id рядком",
  },
  {
- mistake: "Віднімати монети після невдачі надання",
- explanation: "Гравець платить, не отримує нічого.",
- correctApproach: "Інструмент перевірки існує перед відрахуванням або відшкодуванням у pcall",
+ mistake: "Немає owned - апгрейд стакається",
+ explanation: "interval падає в нуль від спаму.",
+ correctApproach: "owned[id] = true",
  },
  {
- mistake: "ShopItems у ReplicatedStorage",
- explanation: "Ризик фальсифікації.",
- correctApproach: "Тільки для сервера ModuleScript",
+ mistake: "Дропер читає Config майбутнього апгрейду до купівлі",
+ explanation: "Ефект уже активний без оплати.",
+ correctApproach: "Читати state",
+ },
+ {
+ mistake: "if id=='a' / elseif id=='b' на 20 гілок без table",
+ explanation: "Новий апгрейд = біль у коді.",
+ correctApproach: "Table + applyUpgrade",
+ },
+ {
+ mistake: "Два Module з різними цінами",
+ explanation: "7.6 крутить не те.",
+ correctApproach: "Один require",
  },
  ],
- summary: "Ви впровадили ShopConfig на стороні сервера, перевірку монет, блокування покупок, гранти інструментів і PurchaseResult із живим балансом - економіка магазину тепер безпечна та справедлива.",
+ summary: "Ти виніс апгрейди в UpgradeConfig table: покупка за id, applyUpgrade пише стан дропера, UI бере ціни з даних. Це фундамент балансу й фабрики на гравця.",
  practiceTask: {
- title: "Захищений магазин серверів (~25 хв)",
- difficulty: "beginner",
- description: `**Ціль:** Реальні покупки з повноваженнями сервера.
+ title: "Меню апгрейдів (~30 хв)",
+ difficulty: "intermediate",
+ description: `**Мета:** 2 апгрейди з table з реальним ефектом.
 
-### Part A - Конфігурація (8 хв)
-1. ShopConfig ModuleScript із 3 товарами + ціни
-2. Folder інструментів у ServerStorage (прості інструменти підходять)
-3. PlayerAdded → Монети = 100
+### Part A - Config (8 хв)
+1. UpgradeConfig з 2 id (price + interval/payout).
+2. ModuleScript або чіткий блок table.
+3. Базовий state дропера.
 
-### Part B - ShopServer (15 хв)
-1. Обробник RequestPurchase - повний 6-кроковий потік
-2. purchaseLock + pcall
-3. PurchaseResult з newBalance
+### Part B - apply + buy (14 хв)
+1. canAfford з cfg.price.
+2. applyUpgrade + owned.
+3. Дропер читає state.
+4. Клієнт шле лише id.
 
-### Part C - Перевірте та збережіть (2 хв)
-1. Купуйте меч - випадають монети, з'являється інструмент
-2. Купівля за 0 монет - відмовлено
-3. **Зберегти в Roblox** →\`Lesson 7.4 - Server Shop\` 4. **Практика завершена**`,
+### Part C - UI (8 хв)
+1. 2 кнопки / список з цінами з Config.
+2. Стан «Куплено».
+3. **Save:** Lesson 7.4 - Upgrade Table`,
  hints: [
- "Друк аналітики: гравець, itemId, успіх - допомагає збалансувати",
- "Помічник deny() запускає PurchaseResult false + поточний баланс",
- "Видаліть повноваження DISPLAY_PRICES з міток клієнта в 7.5",
+ "Спочатку один апгрейд швидкості - найвидиміший",
+ "print(state.interval) після купівлі",
+ "Фейковий id у тест-кнопці має deny",
  ],
- optionalChallenge: "Рядок виводу (print) сервера для кожної спроби покупки з результатом.",
+ optionalChallenge: "Третій апгрейд у table без нових if - лише новий рядок + кнопка з Attribute.",
  },
  quiz: {
  passingScore: 70,
- timeLimit: 10,
+ timeLimit: 15,
  questions: [
  {
  id: "q1",
- type: "multiple_choice",
- question: "Реальні ціни на товари діють...",
+ type: MC,
+ question: "Головна мета уроку 7.4?",
  options: [
- "Server ShopConfig",
- "Лише текст кнопки клієнта",
- "Terrain",
- "Sky",
+ "Тримати апгрейди в table і застосовувати за id",
+ "Видалити leaderstats",
+ "Зробити лише анімацію меча",
+ "Publish без Config",
  ],
  correctAnswer: 0,
- explanation: "Повноваження сервера.",
+ explanation: "UpgradeConfig.",
  },
  {
  id: "q2",
- type: "multiple_choice",
- question: "Клієнт повинен надіслати...",
+ type: MC,
+ question: "Що клієнт надсилає на покупку?",
  options: [
- "лише item id",
- "Ціна та монети",
- "Пароль адміна",
- "Terrain id",
+ "id апгрейду (рядок)",
+ "Будь-яку свою ціну як правду",
+ "MaxHealth",
+ "Skybox id",
  ],
  correctAnswer: 0,
- explanation: "Мінімальне корисне навантаження.",
+ explanation: "Лише id.",
  },
  {
  id: "q3",
- type: "multiple_choice",
- question: "purchaseLock запобігає...",
+ type: MC,
+ question: "Звідки брати price?",
  options: [
- "Гонка double-spend",
- "Ходьба",
- "Camera",
- "Sound",
+ "З UpgradeConfig на сервері",
+ "З аргумента FireServer завжди сліпо",
+ "З назви Part",
+ "З Volume Sound",
  ],
  correctAnswer: 0,
- explanation: "Одночасні покупки.",
+ explanation: "Серверна table.",
  },
  {
  id: "q4",
- type: "multiple_choice",
- question: "Монети IntValue належать до...",
+ type: MC,
+ question: "Навіщо owned?",
  options: [
- "leaderstats на сервері",
- "Lighting",
- "ReplicatedFirst",
- "Лише Workspace",
+ "Не купувати той самий апгрейд знову / не стакати ефект",
+ "Збільшити Terrain",
+ "Вимкнути дропер назавжди",
+ "Owned замінює Coins",
  ],
  correctAnswer: 0,
- explanation: "Таблиця лідерів + сервер.",
+ explanation: "Одноразова купівля.",
  },
  {
  id: "q5",
- type: "multiple_choice",
- question: "Інструмент надання означає клонування до...",
+ type: MC,
+ question: "Що читає цикл дропера після апгрейду?",
  options: [
- "player.Backpack",
- "Terrain",
- "Lighting",
- "ServerStorage",
+ "Поточний state гравця/plot (interval/payout)",
+ "Завжди лише майбутній рядок Config до купівлі",
+ "Лише Lighting",
+ "Назву кнопки",
  ],
  correctAnswer: 0,
- explanation: "Інвентар гравця.",
+ explanation: "State.",
  },
  {
  id: "q6",
- type: "multiple_choice",
- question: "Недостатньо монет має...",
+ type: MC,
+ question: "Чому table краще за довгий if?",
  options: [
- "Відмовити без списання",
- "Видати предмет безкоштовно",
- "Кикнути гравця",
- "Видалити магазин",
+ "Новий апгрейд = новий рядок, баланс в одному місці",
+ "if заборонений у Lua",
+ "table вимикає Remote",
+ "if не вміє порівнювати рядки",
  ],
  correctAnswer: 0,
- explanation: "Помилка перевірки.",
+ explanation: "Масштаб і баланс.",
  },
  {
  id: "q7",
- type: "multiple_choice",
- question: "pcall навколо покупки допомагає...",
+ type: MC,
+ question: "Мінімум записів у Config для здачі?",
  options: [
- "Зняти lock при помилках",
- "Пропустити validation",
- "Прибрати UI",
- "Publish",
+ "Хоча б 2",
+ "Обов’язково 50",
+ "0",
+ "Лише коментар без table",
  ],
  correctAnswer: 0,
- explanation: "Безпечне очищення.",
+ explanation: "Два апгрейди.",
  },
  {
  id: "q8",
- type: "multiple_choice",
- question: "PurchaseResult має містити...",
+ type: MC,
+ question: "Що має зробити applyUpgrade?",
  options: [
- "success, message, new balance",
- "Лише колір",
- "Terrain id",
- "Нічого",
+ "Записати ефект з cfg у state після валідної купівлі",
+ "Видалити leaderstats",
+ "Створити новий Place",
+ "Вимкнути Humanoid",
  ],
  correctAnswer: 0,
- explanation: "Клієнт оновлює інтерфейс користувача.",
+ explanation: "Застосування ефекту.",
  },
  {
  id: "q9",
- type: "multiple_choice",
- question: "Урок 7.4 базується на...",
+ type: MC,
+ question: "Як 7.4 готує 7.6?",
  options: [
- "Lesson 7.3 shop UI",
- "Лише гонки Lesson 6",
- "Lesson 1 terrain",
- "Порожньо",
+ "Баланс крутить поля тієї ж table",
+ "7.6 видаляє Config",
+ "Ціни більше не потрібні",
+ "Баланс лише в Skybox",
  ],
  correctAnswer: 0,
- explanation: "UI + серверна логіка.",
+ explanation: "Одні числа.",
  },
  {
  id: "q10",
- type: "multiple_choice",
- question: "Урок 7.4 зберегти назву...",
+ type: MC,
+ question: "Що робити з фейковим upgradeId?",
  options: [
- "Lesson 7.4 - Server Shop",
- "Shop UI",
- "Shop Works",
- "Two Worlds",
+ "return / deny на сервері",
+ "Дати безкоштовний апгрейд",
+ "Видалити гравця з гри завжди",
+ "Поставити Coins = 9999",
  ],
  correctAnswer: 0,
- explanation: "Зберегти серверний урок.",
+ explanation: "Валідація id.",
+ },
+ {
+ id: "q11",
+ type: MC,
+ question: "Навіщо displayName у Config?",
+ options: [
+ "Зручний текст у UI без хардкоду на кнопці",
+ "Це єдиний спосіб списати Coins",
+ "displayName замінює price",
+ "Обов’язково для Weld",
+ ],
+ correctAnswer: 0,
+ explanation: "Підпис UI.",
+ },
+ {
+ id: "q12",
+ type: MC,
+ question: "Чим Config відрізняється від state?",
+ options: [
+ "Config - каталог; state - що зараз активне в гравця",
+ "Це завжди одне і те саме",
+ "State лише на клієнті як правда",
+ "Config не містить price",
+ ],
+ correctAnswer: 0,
+ explanation: "Каталог vs стан.",
+ },
+ {
+ id: "q13",
+ type: MC,
+ question: "Як показати ціну на кнопці правильно?",
+ options: [
+ "Взяти число з UpgradeConfig для цього id",
+ "Написати випадкове 999",
+ "Взяти з клієнтської фантазії",
+ "Ціну показувати не можна ніколи",
+ ],
+ correctAnswer: 0,
+ explanation: "UI з даних.",
+ },
+ {
+ id: "q14",
+ type: MC,
+ question: "Що буде, якщо немає applyUpgrade після списання?",
+ options: [
+ "Гроші зникли, дроп не змінився",
+ "Обов’язково краш Studio",
+ "Coins самі повернуться",
+ "Дропер прискориться сам",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібен ефект.",
+ },
+ {
+ id: "q15",
+ type: MC,
+ question: "Що вважається зданим артефактом 7.4?",
+ options: [
+ "UpgradeConfig + покупка id + ефект + Save",
+ "Лише теорія",
+ "Порожній Baseplate",
+ "Ціни лише в Prompt різні від Script",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібна table апгрейдів.",
  },
  ],
  },
@@ -1282,308 +1961,470 @@ export const ukLesson75 = {
  lessonId: "lesson-roblox-7-5",
  moduleId: "module-07",
  order: 5,
- title: "7.5 - RemoteFunction",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
+ title: "7.5 - Plot на гравця",
+ theoryMinutes: 35,
+ quizMinutes: 15,
+ estimatedTime: 60,
  learningObjectives: [
- "Створіть GetShopCatalog RemoteFunction у ReplicatedStorage",
- "Повернути список безпечних елементів із сервера OnServerInvoke",
- "Динамічно створюйте картки інтерфейсу магазину з каталогу",
- "Правильно виберіть RemoteEvent проти RemoteFunction",
+ "Зберігати шаблон бази в ServerStorage і клонувати plot на гравця",
+ "Прив’язати plot до OwnerUserId / серверної table plots[player]",
+ "Розставити кілька слотів спавну plot без накладання",
+ "Зробити так, щоб collector і кнопки працювали лише для власника",
+ "Чистити plot на PlayerRemoving, щоб не лишались привиди баз",
  ],
  theory: {
  sections: [
  {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**RemoteEvent** = лист (без миттєвої відповіді). **RemoteFunction** = запитання з **відповіддю**.
+ title: "Сьогоднішня місія (урок 53 з 92)",
+ content: `У **7.1–7.4** фабрика вже вміє дропати, збирати монети й купувати апгрейди з table. Сьогодні кожен гравець отримує **свою** базу: клон plot, а не одна спільна купа станків на всіх.
 
-Використовуйте, коли клієнту потрібні дані **зараз**: каталог магазину, перевірка балансу монет.
+Артефакт уроку:
+1. Template \`PlotTemplate\` у ServerStorage (підлога, дропер, collector, 1–2 кнопки).
+2. При PlayerAdded (або Claim) - Clone у Workspace на вільний слот.
+3. Owner записаний (Attribute або \`plots[player]\`).
+4. Чужий collector/кнопка **не** дає тобі монети/покупки.
+5. PlayerRemoving → Destroy plot + очистити стан.
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - Шаблон InvokeServer
-2. **Практика (~25 хв)** - динамічний інтерфейс каталогу
-3. **Вікторина (10 хв)** - проходження **70%**
+Без ownership 7.7–7.8 ламаються вдвох: «хто зібрав мій дроп?».
 
-Відкрийте **Урок 7.4 - Магазин серверів**.`,
+**Зроби зараз (3 хв):** полічи, скільки гравців хочеш підтримати в навчанні (2–4 слоти достатньо). Намалюй на папері прямокутники Slot1..n, щоб не ставити бази впритул у Studio навмання. План слотів економить пів години рухання Pivot.`,
  },
  {
- title: "RemoteFunction проти RemoteEvent",
- content: `| Інструмент | Візерунок | Підходить для |
-|------|---------|----------|
-| **RemoteEvent** | Вогонь і забудь | Купити предмет, почати гонку |
-| **RemoteFunction** | Викликати і чекати | Отримати каталог, отримати статистику |\`\`\`lua
--- Client waits for return
-local catalog = GetShopCatalog:InvokeServer()
-\`\`\`**Не** викликайте сервер кожного кадру - викликає затримку.`,
+ title: "Навіщо plot на гравця",
+ content: `| Одна спільна база | Plot на гравця |
+|-------------------|----------------|
+| Монети плутаються | Кожен свій дохід |
+| Кнопки чужі | Апгрейди свої |
+| Демо «на одного» | Спліт-тест ок |
+| Легше зібрати спочатку | Потрібен клон + слоти |
+
+Метафора: не одна кухня на весь клас, а **свій стіл з інструментами**. Рецепт (Config) спільний, продукти - твої.
+
+Lite-допуск: якщо часу мало, зроби 2 слоти й Claim Part. Краще 2 чесні plot, ніж 8 порожніх маркерів.`,
  },
  {
- title: "Сервер GetShopCatalog",
- content: `**ReplicatedStorage** → **RemoteFunction**\`GetShopCatalog\`**ShopServer** (або CatalogService):\`\`\`lua
-local ShopConfig = require(game.ServerScriptService.ShopConfig)
-local getCatalog = game.ReplicatedStorage.GetShopCatalog
+ title: "Шаблон у ServerStorage",
+ content: `Збери або перенеси поточну базу в Model \`PlotTemplate\`:
 
-getCatalog.OnServerInvoke = function(player)
- local list = {}
- for id, item in pairs(ShopConfig.Items) do
- table.insert(list, {
- id = id,
- name = item.name,
- price = item.price,
- })
- end
- table.sort(list, function(a, b)
- return a.price < b.price
- end)
- return list
-end
-\`\`\`Повернути **тільки безпечні поля** - без секретних позначок адміністратора, без екземплярів інструментів.`,
+\`ServerStorage\`
+\` └── PlotTemplate\`
+\` ├── Base\`
+\` ├── Dropper\`
+\` ├── Collector\`
+\` ├── UpgradeButtons\`
+\` └── SpawnPoint (Part для гравця опційно)\`
+
+PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на слот.
+
+Усі скрипти логіки краще **не** дублювати всередині кожного клона як окремі копії хаосу. Патерн курсу:
+- один серверний менеджер знає всі plot;
+- або скрипти в template з \`script.Parent\` як корінь plot (теж ок для навчання).
+
+**Зроби зараз (10 хв):** template цілий, Anchored де треба, імена стабільні.`,
  },
  {
- title: "Динамічний інтерфейс клієнта",
- content: `\`ShopClient\`- у відкритому магазині:\`\`\`lua
-local getCatalog = game.ReplicatedStorage:WaitForChild("GetShopCatalog")
-local itemList = script.Parent.ShopPanel.ItemList
+ title: "Слоти на карті",
+ content: `У Workspace папка \`PlotSlots\`:
 
-local ok, catalog = pcall(function()
- return getCatalog:InvokeServer()
-end)
+\`Slot1\`, \`Slot2\`, \`Slot3\` - Part або Attachment з CFrame місця бази.
 
-if not ok then
- script.Parent.StatusLabel.Text = "Could not load shop"
- return
-end
+\`local slots = workspace.PlotSlots:GetChildren()\`
+\`-- сортуй за ім’ям Slot1..n\`
 
--- Clear old cards (except template)
-for _, item in ipairs(catalog) do
- local card = script.Template:Clone()
- card.Name = "Item_" .. item.id
- card.NameLabel.Text = item.name
- card.PriceLabel.Text = item.price .. " coins"
- card.BuyButton.MouseButton1Click:Connect(function()
- request:FireServer(item.id)
- end)
- card.Parent = itemList
- card.Visible = true
-end
-\`\`\`**Немає жорстко закодованих цін для клієнта** - мітки з каталогу серверів.`,
+При видачі:
+\`local cf = slot.CFrame\`
+\`plot:PivotTo(cf)\`
+
+Відстань між слотами: щоб дроп одного не падав у collector іншого (мінімум кілька десятків studs).
+
+Маркери слотів CanCollide false, Transparency 1 після дебагу.`,
  },
  {
- title: "Додатково: GetCoinBalance",
- content: `Друга **RemoteFunction**\`GetCoinBalance\`:\`\`\`lua
-GetCoinBalance.OnServerInvoke = function(player)
- local coins = player.leaderstats and player.leaderstats:FindFirstChild("Coins")
- return coins and coins.Value or 0
-end
-\`\`\`Клієнт **CoinsLabel** оновлює інформацію про відкриття магазину + після кожного PurchaseResult.
+ title: "Видача plot: Clone + owner",
+ content: `\`local plots = {} -- [Player] = Model\`
 
-**RemoteEvent** все ще обробляє покупки - функція лише **читає** дані.`,
+\`local function assignPlot(player)\`
+\` if plots[player] then return plots[player] end\`
+\` local slot = takeFreeSlot()\`
+\` if not slot then warn("no slots") return end\`
+\` local plot = template:Clone()\`
+\` plot.Name = "Plot_" .. player.Name\`
+\` plot:SetAttribute("OwnerUserId", player.UserId)\`
+\` plot:PivotTo(slot.CFrame)\`
+\` plot.Parent = workspace.Plots\`
+\` plots[player] = plot\`
+\` markSlotUsed(slot, player)\`
+\` return plot\`
+\`end\`
+
+\`Players.PlayerAdded:Connect(function(player)\`
+\` player.CharacterAdded:Connect(function()\`
+\` -- опційно телепорт до plot.SpawnPoint\`
+\` end)\`
+\` assignPlot(player)\`
+\`end)\`
+
+Не клонуй на кожен CharacterAdded без потреби - отримаєш купу баз.`,
  },
  {
- title: "pcall і збої",
- content: `\`\`\`lua
-local ok, result = pcall(function()
- return GetShopCatalog:InvokeServer()
-end)
+ title: "takeFreeSlot і повернення слота",
+ content: `Тримай \`slot.OwnerUserId\` Attribute або table \`slotOwners[slot] = player\`.
 
-if not ok then
- warn("Catalog failed:", result)
- StatusLabel.Text = "Shop offline - try again"
- return
-end
-\`\`\`Помилки сервера, тайм-аути або кіки не повинні назавжди порушувати інтерфейс користувача.`,
+\`free\`: OwnerUserId nil.  
+\`take\`: запиши player.  
+\`release\` на виході: nil + Destroy plot.
+
+Якщо слотів немає - повідом гравцю (print / Billboard «Немає вільних ділянок») і не падай з nil Clone.
+
+Для здачі 2–4 слоти. Не роби 20 «на майбутнє» без розмітки.`,
  },
  {
- title: "Контрольний список перед початком практики",
- content: `- [ ] GetShopCatalog повертає 3 елементи, відсортовані за ціною
-- [] Інтерфейс користувача створює картки з даних сервера
-- [ ] Зміна ціни ShopConfig оновлює інтерфейс користувача після повторного відкриття
-- [ ] Buy все ще використовує RequestPurchase RemoteEvent
-- [ ] Зберегти:\`Lesson 7.5 - RemoteFunction\``,
+ title: "Collector і кнопки лише для власника",
+ content: `У будь-якому Touched / Prompt на plot:
+
+\`local ownerId = plot:GetAttribute("OwnerUserId")\`
+\`local player = Players:GetPlayerFromCharacter(hit.Parent)\`
+\`if not player or player.UserId ~= ownerId then return end\`
+
+Те саме для покупки апгрейду: навіть якщо Prompt видимий здалеку, сервер відшиває чужого.
+
+Типовий баг: перевірка є на collector, немає на UpgradeButton - сусід качає твій дропер.
+
+**Зроби зараз (8 хв):** навмисно зайди «чужим» (2 вікна) і переконайся в deny.`,
+ },
+ {
+ title: "Стан апгрейдів на plot, не глобально",
+ content: `Після 7.4 Config спільний, але **поточний** interval/payout - на гравця/plot:
+
+\`plotState[player] = { interval = 2, payout = 5, owned = {} }\`
+
+Або Attributes на plot Model.
+
+Дропер цього plot читає стан власника, не глобальну змінну на весь сервер.
+
+Інакше апгрейд одного прискорить усіх - весело на 10 с, потім хаос у балансі 7.6.`,
+ },
+ {
+ title: "PlayerRemoving: прибрати базу",
+ content: `\`Players.PlayerRemoving:Connect(function(player)\`
+\` local plot = plots[player]\`
+\` if plot then plot:Destroy() end\`
+\` plots[player] = nil\`
+\` plotState[player] = nil\`
+\` releaseSlot(player)\`
+\`end)\`
+
+Без цього після виходу лишаються «привиди» баз і зайняті слоти.
+
+Перевір: зайшов → вийшов → слот знову вільний для наступного PlayerAdded.`,
+ },
+ {
+ title: "Телепорт / спавн біля своєї бази",
+ content: `Опційно після assignPlot:
+
+\`local spawn = plot:FindFirstChild("SpawnPoint", true)\`
+\`if spawn and player.Character then\`
+\` player.Character:PivotTo(spawn.CFrame + Vector3.new(0, 3, 0))\`
+\`end\`
+
+Або SpawnLocation на кожному plot (складніше з Neutral/Team). Для навчання PivotTo достатньо.
+
+Онбординг: табличка вже на template - клонується всім. Текст «Це твоя база» працює для кожного клона.`,
+ },
+ {
+ title: "Playtest ownership",
+ content: `| # | Дія | Очікування |
+|---|-----|------------|
+| 1 | Player1 Join | Отримав Plot_Name на Slot |
+| 2 | Player2 Join | Інший слот, інший plot |
+| 3 | P2 на collector P1 | Монети P2 не ростуть з чужого |
+| 4 | P2 тисне апгрейд P1 | deny |
+| 5 | P1 збір / апгрейд | Працює на своєму |
+| 6 | P1 Leave | Plot знищено, слот вільний |
+| 7 | Output | Немає nil Pivot / подвійних клонів |
+
+Спліт: два вікна Studio або Local Server + 2 гравці.`,
+ },
+ {
+ title: "Чекліст здачі уроку 53",
+ content: `- [ ] PlotTemplate у ServerStorage
+- [ ] Clone на вільний слот при вході
+- [ ] OwnerUserId / plots[player]
+- [ ] Collector і апгрейди лише власнику
+- [ ] Стан дропера per-player/plot
+- [ ] PlayerRemoving чистить
+- [ ] Playtest 1–6 зелені
+- [ ] Save: Lesson 7.5 - Player Plots
+
+Короткий ритуал здачі: два вікна, два Join, два різні Slot, спроба чужого collector = deny, Leave = Destroy. Якщо це проходить - ownership не на папері, а в Play. Підпиши в Explorer Plots і PlotSlots однаковим префіксом для ментора.
+
+Далі **7.6** балансує ціни вже на «свій дохід». **7.7** зшиє міні-фабрику. Якщо сьогодні всім одна база - познач як P0 перед Ship.
+
+Артефакт: **своя ділянка**. Тайкун перестає бути комуналкою.
+
+Якщо ментор у двох вікнах бачить дві бази й deny на чужому collector - урок зданий. Залиш слоти підписаними в Explorer. Це база мультиплеєрного тайкуна перед балансом цін.
+
+Спліт-тест зроби обов’язковим, навіть якщо «в соло все ок». Саме вдвох вилазить чужий collector і подвійний Clone. Підпиши в нотатці: скільки слотів вільно, що бачиш у Output при Join/Leave. Якщо слот не звільняється - Ship з двома гравцями впаде на старті. Ownership - не «гарна фіча», а умова чесної фабрики. Після зеленого спліту можна спокійно йти крутити ціни в 7.6 на реальному доході своєї бази.`,
  },
  ],
  },
  commonMistakes: [
  {
- mistake: "InvokeServer для кожної покупки",
- explanation: "Використовуйте RemoteEvent для дій.",
- correctApproach: "Подія = покупка, функція = каталог",
+ mistake: "Клон на кожен CharacterAdded",
+ explanation: "Пачка plot після респавну.",
+ correctApproach: "Один assign на Player, не на кожну смерть",
  },
  {
- mistake: "Повернення екземплярів інструменту в каталозі",
- explanation: "Важкий і ризикований.",
- correctApproach: "Тільки ідентифікатор повернення, назва, ціна",
+ mistake: "Немає перевірки owner на кнопках",
+ explanation: "Сусіди качають чужий дропер.",
+ correctApproach: "OwnerUserId на всі взаємодії plot",
  },
  {
- mistake: "Немає pcall на InvokeServer",
- explanation: "Інтерфейс ламається через помилку.",
- correctApproach: "pcall + повідомлення користувача",
+ mistake: "Глобальний interval на весь сервер",
+ explanation: "Апгрейд одного = апгрейд усіх.",
+ correctApproach: "plotState[player]",
  },
  {
- mistake: "Жорстко закодовані кнопки ТА каталог",
- explanation: "Дублюючий дрейф.",
- correctApproach: "Лише динамічні карти",
+ mistake: "Не Destroy на PlayerRemoving",
+ explanation: "Привиди баз і зайняті слоти.",
+ correctApproach: "Destroy + releaseSlot",
+ },
+ {
+ mistake: "Слоти накладені один на одного",
+ explanation: "Дроп/collector змішуються.",
+ correctApproach: "Відстань між Slot CFrame",
+ },
+ {
+ mistake: "Template у Workspace як єдина база без Clone",
+ explanation: "Немає per-player.",
+ correctApproach: "ServerStorage template + Clone",
  },
  ],
- summary: "Ви додали функцію GetShopCatalog RemoteFunction, щоб сервер повертав відсортований список товарів, а клієнт динамічно створював картки магазинів - жодних невідповідних жорстко закодованих цін.",
+ summary: "Ти видаєш кожному гравцю клон plot зі слотів, пишеш owner, ріжеш чужі collector/кнопки і чистиш базу на виході. Per-player фабрика готова до балансу й Ship.",
  practiceTask: {
- title: "Динамічний завантажувач каталогу (~25 хв)",
- difficulty: "beginner",
- description: `**Мета:** Інтерфейс користувача з каталогу сервера.
+ title: "Свої ділянки (~30 хв)",
+ difficulty: "intermediate",
+ description: `**Мета:** 2 гравці = 2 plot, чуже не збирається.
 
-### Part A - RemoteFunction (10 хв)
-1. GetShopCatalog у ReplicatedStorage
-2. OnServerInvoke створює список з ShopConfig
-3. Сортувати за зростанням ціни
+### Part A - Template і слоти (10 хв)
+1. PlotTemplate у ServerStorage.
+2. 2–4 PlotSlots у Workspace.
+3. Імена стабільні.
 
-### Part B - Динамічний інтерфейс користувача (12 хв)
-1. Рамка шаблону картки (прихована)
-2. У відкритому магазині - pcall InvokeServer, клонувати карти
-3. Кожна покупка запускає RequestPurchase(item.id)
+### Part B - Assign / cleanup (12 хв)
+1. assignPlot: Clone, OwnerUserId, plots[player].
+2. PlayerRemoving Destroy + free slot.
+3. Стан interval/payout на plot/player.
 
-### Part C - Зберегти (3 хв)
-1. Змініть одну ціну в ShopConfig - повторно відкрийте магазин - UI відповідає
-2. **Зберегти в Roblox** →\`Lesson 7.5 - RemoteFunction\` 3. **Практика завершена**`,
+### Part C - Owner checks (8 хв)
+1. Collector і апгрейд перевіряють UserId.
+2. Спліт-тест 2 вікна.
+3. **Save:** Lesson 7.5 - Player Plots`,
  hints: [
- "Знищіть старі динамічні карти перед відновленням",
- "Тримайте шаблон поза ItemList або чітко позначте його",
- "Оновлення CoinsLabel після покупки все ще використовує PurchaseResult",
+ "Спочатку 2 слоти - легше дебажити",
+ "print(ownerId, player.UserId) на deny",
+ "Не клонуй у циклі CharacterAdded",
  ],
- optionalChallenge: "GetOwnedItems RemoteFunction + значок «У власності» на картках.",
+ optionalChallenge: "Billboard на plot з DisplayName власника.",
  },
  quiz: {
  passingScore: 70,
- timeLimit: 10,
+ timeLimit: 15,
  questions: [
  {
  id: "q1",
- type: "multiple_choice",
- question: "RemoteFunction призначений для...",
+ type: MC,
+ question: "Головна мета уроку 7.5?",
  options: [
- "Запит із миттєвим поверненням",
- "Лише fire-and-forget",
- "Terrain",
- "Welds",
+ "Клонувати plot на гравця з owner і слотами",
+ "Видалити дропер",
+ "Зробити лише Arena",
+ "Publish без баз",
  ],
  correctAnswer: 0,
- explanation: "Викликати шаблон.",
+ explanation: "Plot на гравця.",
  },
  {
  id: "q2",
- type: "multiple_choice",
- question: "InvokeServer викликається з...",
+ type: MC,
+ question: "Де зручно тримати PlotTemplate?",
  options: [
- "LocalScript",
- "Server Script",
- "Terrain",
- "Lighting",
+ "ServerStorage",
+ "Лише Lighting",
+ "У SoundService",
+ "У назві Sky",
  ],
  correctAnswer: 0,
- explanation: "Клієнт запитує дані.",
+ explanation: "Шаблон для Clone.",
  },
  {
  id: "q3",
- type: "multiple_choice",
- question: "OnServerInvoke працює на...",
+ type: MC,
+ question: "Навіщо OwnerUserId на plot?",
  options: [
- "Server",
- "Лише клієнт",
- "Обидва",
- "Жоден",
+ "Відрізняти чий collector/кнопки",
+ "Збільшити MaxHealth",
+ "Створити Terrain",
+ "Вимкнути leaderstats",
  ],
  correctAnswer: 0,
- explanation: "Сервер повертає дані.",
+ explanation: "Ownership.",
  },
  {
  id: "q4",
- type: "multiple_choice",
- question: "При покупці варто використовувати...",
+ type: MC,
+ question: "Що зробити в PlayerRemoving?",
  options: [
- "RemoteEvent RequestPurchase",
- "RemoteFunction кожен клік",
- "Terrain",
- "Atmosphere",
+ "Destroy plot і звільнити слот",
+ "Видалити Workspace",
+ "Вимкнути Pathfinding",
+ "Обов’язково Publish",
  ],
  correctAnswer: 0,
- explanation: "Дії використовують події.",
+ explanation: "Прибирання.",
  },
  {
  id: "q5",
- type: "multiple_choice",
- question: "Каталог має повернутися...",
+ type: MC,
+ question: "Чому не клонувати plot на кожен CharacterAdded?",
  options: [
- "id, name, price only",
- "Повні admin keys",
- "Паролі гравців",
- "Terrain",
+ "З’являться зайві бази після респавну",
+ "Clone заборонений у Roblox",
+ "Інакше дропер не існує",
+ "Attribute тоді рядок",
  ],
  correctAnswer: 0,
- explanation: "Безпечні поля.",
+ explanation: "Один plot на гравця.",
  },
  {
  id: "q6",
- type: "multiple_choice",
- question: "pcall навколо InvokeServer...",
+ type: MC,
+ question: "Де тримати поточний interval дропера?",
  options: [
- "Коректно обробляє збої",
- "Прибирає сервер",
- "Видаляє UI",
- "Банить гравців",
+ "У стані гравця/plot, не в одній глобальній змінній на всіх",
+ "Лише в Skybox",
+ "Тільки на клієнті як текст",
+ "У назві Slot",
  ],
  correctAnswer: 0,
- explanation: "Обробка помилок.",
+ explanation: "Per-player стан.",
  },
  {
  id: "q7",
- type: "multiple_choice",
- question: "Кожен фрейм InvokeServer поганий, оскільки...",
+ type: MC,
+ question: "Що має статись, якщо чужий стоїть на твоєму collector?",
  options: [
- "Спричиняє лаг",
- "Покращує FPS",
- "Потрібно",
- "Безкоштовні Robux",
+ "Сервер не додає йому твої монети",
+ "Обов’язково дати йому всі Coins",
+ "Видалити його plot",
+ "Краш Studio",
  ],
  correctAnswer: 0,
- explanation: "Блокування спаму.",
+ explanation: "Deny чужому.",
  },
  {
  id: "q8",
- type: "multiple_choice",
- question: "Динамічний інтерфейс означає...",
+ type: MC,
+ question: "Навіщо кілька PlotSlots?",
  options: [
- "Картки з каталогу сервера",
- "Без Scripts",
- "Ціни лише на клієнті",
- "Без магазину",
+ "Різні позиції баз без накладання",
+ "Slots замінюють Humanoid",
+ "Без slots Clone неможливий технічно завжди",
+ "Slots малюють Animation",
  ],
  correctAnswer: 0,
- explanation: "Жодного жорстко закодованого дрейфу.",
+ explanation: "Розмітка карти.",
  },
  {
  id: "q9",
- type: "multiple_choice",
- question: "Урок 7.5 базується на...",
+ type: MC,
+ question: "Як 7.5 готує 7.8 Ship?",
  options: [
- "Lesson 7.4 ShopConfig",
- "Lesson 2 obby",
- "Lesson 12 publish",
- "Порожньо",
+ "Спліт-демо з двома базами проходить рубрику ownership",
+ "Ship забороняє Clone",
+ "Треба видалити owner перед Ship",
+ "Ship потребує одну базу на всіх обов’язково",
  ],
  correctAnswer: 0,
- explanation: "Дані магазину серверів.",
+ explanation: "Чесний мульти-plot.",
  },
  {
  id: "q10",
- type: "multiple_choice",
- question: "Урок 7.5 зберегти назву...",
+ type: MC,
+ question: "Що таке assignPlot?",
  options: [
- "Lesson 7.5 - RemoteFunction",
- "Server Shop",
- "Shop Works",
- "Two Worlds",
+ "Функція видачі вільного слота і клону бази гравцю",
+ "Назва RemoteFunction з магазину зброї",
+ "Тип Terrain",
+ "Вимкнення дропера",
  ],
  correctAnswer: 0,
- explanation: "Зберегти функціональний урок.",
+ explanation: "Видача plot.",
+ },
+ {
+ id: "q11",
+ type: MC,
+ question: "Чому слоти не ставити впритул?",
+ options: [
+ "Дроп і collector різних гравців змішаються",
+ "Roblox забороняє близькі Part",
+ "Інакше OwnerUserId стирається",
+ "PivotTo не існує",
+ ],
+ correctAnswer: 0,
+ explanation: "Відстань.",
+ },
+ {
+ id: "q12",
+ type: MC,
+ question: "Чи достатньо 2 слотів для здачі?",
+ options: [
+ "Так - для навчання і спліт-тесту ок",
+ "Ні - обов’язково 100",
+ "Слоти заборонені",
+ "Потрібен лише 0",
+ ],
+ correctAnswer: 0,
+ explanation: "MVP слотів.",
+ },
+ {
+ id: "q13",
+ type: MC,
+ question: "Де перевіряти owner - на клієнті чи сервері?",
+ options: [
+ "Обов’язково на сервері (клієнт можна обійти)",
+ "Лише LocalScript достатньо як правда",
+ "Перевірка не потрібна",
+ "Лише в Lighting",
+ ],
+ correctAnswer: 0,
+ explanation: "Never trust client.",
+ },
+ {
+ id: "q14",
+ type: MC,
+ question: "Навіщо PrimaryPart/Pivot на template?",
+ options: [
+ "Зручно ставити всю базу на CFrame слота",
+ "Це вимикає Coins",
+ "Замінює OwnerUserId",
+ "Обов’язково для Sound",
+ ],
+ correctAnswer: 0,
+ explanation: "PivotTo.",
+ },
+ {
+ id: "q15",
+ type: MC,
+ question: "Що вважається зданим артефактом 7.5?",
+ options: [
+ "Clone plot + owner checks + cleanup + Save",
+ "Лише теорія",
+ "Порожній Baseplate",
+ "Одна спільна база без owner як фінал",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібні свої ділянки.",
  },
  ],
  },
@@ -1593,290 +2434,437 @@ export const ukLesson76 = {
  lessonId: "lesson-roblox-7-6",
  moduleId: "module-07",
  order: 6,
- title: "7.6 - Checkpoint: Магазин працює",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
+ title: "7.6 - Playtest + баланс цін",
+ theoryMinutes: 35,
+ quizMinutes: 15,
+ estimatedTime: 60,
  learningObjectives: [
- "Інтегруйте інтерфейс користувача, покупки RemoteEvent і каталог RemoteFunction",
- "Пройдіть перевірку якості та експлойт для двох гравців",
- "Використовуйте один ShopConfig ModuleScript як єдине джерело правди",
- "Відвантажити модуль 7 - зберегти портфоліо Shop Works",
+ "Виміряти темп заробітку: монет за хвилину з дропера/collector",
+ "Підкрутити ціни апгрейдів і payout так, щоб перший апгрейд був досяжний",
+ "Знайти «вічна бідність» / «миттєве все купив» і зафіксувати в таблиці",
+ "Звести ціни в один Config без роз’їзду чисел",
+ "Підготувати грайбельну економіку до міні-фабрики і Ship",
  ],
  theory: {
  sections: [
  {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `**Shop Works** = завершити модуль 7.
+ title: "Сьогоднішня місія (урок 54 з 92)",
+ content: `У **7.1–7.5** ти зібрав plot, дропер, покупки, апгрейди з table і (ймовірно) клон plot. Сьогодні **міряєш економіку**.
 
-**Стопка:**
-- 7.1 Довіра + пінг
-- 7.2 Шаблон RemoteEvent
-- 7.3 Магазин ScreenGui
-- 7.4 Перевірка сервера + монети + інструменти
-- 7.5 Динамічний каталог через RemoteFunction
+Артефакт:
+1. Таблиця баланс-тестів (дохід / ціни / час до апгрейду).
+2. ≥2 live-підкрутки чисел (price або payout/interval).
+3. Перший апгрейд досяжний за ~30–90 с чесної гри.
+4. Немає «купив усе за 5 с» без зусилля (або задокументовано як too easy).
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - інтеграційний контрольний список
-2. **Практика (~40 хв)** - QA + остаточне збереження
-3. **Вікторина (10 хв)** - проходження **70%**`,
+Без цього 7.7–7.8 демо буде або нудним, або «я мільйонер одразу».
+
+**Зроби зараз (3 хв):** випиши поточні payout, interval, price апгрейду 1 і 2.
+
+Якщо чисел немає в одному місці - спочатку збери їх у нотатку з Explorer/скриптів. Баланс без виписаних стартових значень перетворюється на вгадайку.`,
  },
  {
- title: "Карта архітектури",
- content: `\`\`\`
-ReplicatedStorage
-├── RequestPurchase (RemoteEvent) → buy
-├── PurchaseResult (RemoteEvent) → feedback
-└── GetShopCatalog (RemoteFunction) → catalog
+ title: "Баланс цін ≠ «зробити дорожче»",
+ content: `| Поганий баланс | Хороший навчальний |
+|----------------|-------------------|
+| Апгрейд 1 за 10 хвилин AFK | Апгрейд 1 за ~30–90 с |
+| Усе куплено за 5 с | Є відчуття накопичення |
+| Ціна 50 в UI, 500 у Script | Одні числа в Config |
+| Рандом «то пусто то багатство» | Передбачуваний дохід/хв |
 
-ServerScriptService
-├── ShopConfig (ModuleScript) → items + prices
-└── ShopServer (Script) → economy
+Метафора: цінник у кафе. Ти не злишся на суп - ти **міняєш ціну або порцію** і пробуєш знову.
 
-StarterGui/ShopGui
-└── ShopClient (LocalScript) → UI + Invoke + Fire
-\`\`\`**Один конфігураційний файл** - відсутність повторюваних таблиць цін на клієнті.`,
+Крутимо константи в Config, не «магію в Prompt вручну щоразу».`,
  },
  {
- title: "Контрольний список інтеграції",
- content: `| # | Вимога | Пройти |
-|---|-------------|------|
-| 1 | Каталог завантажується з GetShopCatalog | |
-| 2 | Ціни відповідають ShopConfig (без повноважень клієнта) | |
-| 3 | Купити відраховує монети лише на сервері | |
-| 4 | Інструмент з’являється в Backpack | |
-| 5 | PurchaseResult оновлює статус + баланс | |
-| 6 | Ідентифікатор невідомого елемента відхилено | |
-| 7 | Нуль монет → видалити повідомлення про помилку | |
-| 8 | Немає помилок у виведенні протягом 5 покупок | |`,
+ title: "Що міряємо",
+ content: `| Метрика | Як | Навіщо |
+|---------|-----|--------|
+| **Income/min** | Скільки Coins за 60 с збору | Темп економіки |
+| **TTA1** (time to upgrade 1) | Секундомір до першої покупки | Онбординг |
+| **TTA2** | Час до другого апгрейду | Крива |
+| **Спам collector** | Чи множить debounce | Чи зламаний дохід |
+
+Орієнтир школи:
+\`TTA1 ≈ 30–90 с\`  
+\`price1 ≈ income_per_min * 0.5 … 1.5\` (грубо)
+
+Якщо payout=1, interval=5 с → ~12/хв. Тоді price=500 - вічність. Або ↑payout, або ↓price.`,
  },
  {
- title: "Протокол тесту для двох гравців",
- content: `**Студія → Тест → Почати** з **2 гравцями**:
+ title: "Таблиця playtest цін",
+ content: `| # | Сценарій | Очікування | Факт | Вердикт |
+|---|----------|------------|------|---------|
+| 1 | 60 с збору без апгрейдів | Записати Coins | | |
+| 2 | Час до апгрейду 1 | 30–90 с | | |
+| 3 | Після апгрейду 1 - нові 60 с | Дохід зріс | | |
+| 4 | Купівля без грошей | Відмова | | |
+| 5 | Подвійний клік | Не подвійна покупка | | |
+| 6 | Ціна в UI = Config | Збіг | | |
+| 7 | Output | Чисто | | |
 
-1. Обидва відкриті магазини - каталоги збігаються
-2. Гравець A купує меч - монети A випадають, B залишаються без змін
-3. Гравець B купує щит - незалежні запаси
-4. Швидка покупка - без подвійних витрат
-5. **Тест експлойту:** клієнт не може підробити ціну FireServer (сервер ігнорує)
-
-Необов’язково: панель команд не може надавати безкоштовні предмети без сервера (переконайтеся, що немає клієнтських Scripts монет).`,
+Вердикт: **ok / slow / fast / broken**.  
+Broken = монети не додаються або ціна нічого не списує.`,
  },
  {
- title: "Крайові корпуси",
- content: `Перевірте кожен:
-- **Невідомий ідентифікатор** → «Невідомий предмет», монети без змін
-- **0 монет** → «Недостатньо монет»
-- **Магазин знову відкрито** → каталог перебудовано чисто
-- **Відключити під час покупки** → блокування знято (pcall)
+ title: "Одне джерело правди для цін",
+ content: `\`UpgradeConfig.speed1.price = 50\`  
+\`DropperConfig.payout = 5\`  
+\`DropperConfig.interval = 2\`
 
-**Віддалене іменування:** префікс допомагає великим іграм:\`Shop_RequestPurchase\`- поліроль за бажанням.`,
+Погано: SurfaceGui текст «50», Script перевіряє 25.
+
+Після підкрутки **оновлюй** видимий текст з того ж Config (або пиши ціну динамічно).
+
+**Зроби зараз (5 хв):** знайди всі літерали цін і зведи в table.`,
  },
  {
- title: "60-секундний демонстраційний Script",
- content: `Запис або репетиція:
-1. Показати монети в таблиці лідерів (100 стартів)
-2. Відкритий магазин - 3 позиції з каталогу
-3. Купити меч - Обробка → успіх, інструмент оснащений
-4. Показати зменшений баланс монет
-5. Невдала покупка після того, як витратите всі монети
-6. Закрити магазин
+ title: "Типові симптоми і фікси",
+ content: `| Симптом | Фікс |
+|---------|------|
+| TTA1 > 3 хв | ↓price або ↑payout або ↓interval |
+| Усе куплено за 10 с | ↑price або ↓payout |
+| Після апгрейду дохід той самий | applyUpgrade не пише Config |
+| UI каже 50, списало 80 | Різні числа - звести |
+| Coins скачуть від Touched | Debounce collector |
+| Немає монет у TAB | Пишеш не leaderstats |
 
-**Зберегти:**\`Module 7 - Shop Works\``,
+Правило: спочатку **broken**, потім slow/fast.`,
  },
  {
- title: "Попередній перегляд модуля 8",
- content: `**Модуль 8 - Розумна гра** додає **NPC**, діалоги та розумніші світи. Пізніше ваш магазин може перебувати там же, де й торговець NPC.
+ title: "Протокол підкрутки (15 хв)",
+ content: `1. Заповни рядки 1–2 таблиці.
+2. Обери найгірший вердикт.
+3. Зміни **одне** число в Config.
+4. Повтори той самий тест.
+5. Запиши було → стало.
+6. Повтори для другої проблеми.
 
-**Перед тренуванням:**
-- [ ] Усі 8 рядків контрольного списку пройдені
-- [ ] Тест для двох гравців виконано
-- [ ] Ескіз архітектури в примітках (необов'язково)
-- [ ] **Зберегти в Roblox** →\`Module 7 - Shop Works\``,
+Приклад:
+- Було: payout 1 / 5с, price 200 → TTA1 ~15 хв (slow).
+- Стало: payout 5 / 2с, price 60 → TTA1 ~40 с (ok).
+
+Не крути 5 змінних одразу.
+
+Після двох успішних підкруток перечитай UI цін. Якщо SurfaceGui досі показує старе число - гравець думає, що сервер «краде» монети. Синхрон тексту з Config - частина балансу, не косметика.`,
+ },
+ {
+ title: "Крива двох апгрейдів",
+ content: `| Апгрейд | Ідея ціни | Ідея ефекту |
+|---------|-----------|-------------|
+| 1 | Дешевший, швидкий кайф | interval ↓ або payout ↑ |
+| 2 | Дорожчий у 1.5–3× | Ще крок, не стіна ×20 |
+
+Хвиля складності тайкуна: перший апгрейд вчить цикл, другий дає «вау ще».  
+Якщо апгрейд 2 = price ×100 без зростання доходу - гравець здається.
+
+Для 7.7 достатньо 2 ступенів; rebirth не сьогодні.
+
+Швидка перевірка кривої: після апгрейду 1 засічи нові 60 с доходу. Якщо приросту майже немає - ефект слабкий, навіть якщо ціна «ок». Тоді крути interval/payout апгрейду, не лише цінник.`,
+ },
+ {
+ title: "Debounce і чесний замір",
+ content: `Якщо collector без debounce, «дохід/хв» - фантазія спаму.
+
+Перед балансом:
+- переконайся, що збір раз на Part / cooldown;
+- міряй чесний прохід, не стояння в стінці з 60 Touched/с.
+
+Аналогічно покупка: один успішний buy на клік.
+
+**Зроби зараз (6 хв):** print на +Coins з os.clock() - побачиш інтервали.
+
+Запиши в нотатку також: чи дроп-частини знищуються після збору. Якщо Part лишається і дає монети знову - економіка «діряве відро», баланс цін не врятує.`,
+ },
+ {
+ title: "Що сказати ментору за 30 секунд",
+ content: `Формат звіту балансу:
+1. «Income/min було X, стало Y».
+2. «TTA1 було A с, стало B с».
+3. «Змінив ось ці два поля Config».
+4. «Подвійний клік / спам collector - закрито або ще P0».
+
+Це і є доказ уроку 54. Без цифр «мені здається норм» не проходить.
+
+Якщо час кінчається - краще одна чесна таблиця з двома підкрутками, ніж три нові декоративні кнопки з випадковими цінами.`,
+ },
+ {
+ title: "Чекліст здачі уроку 54",
+ content: `- [ ] Виписані payout / interval / prices
+- [ ] Таблиця тестів з фактами
+- [ ] ≥2 підкрутки з логом було → стало
+- [ ] TTA1 у комфортному вікні (або P0 записаний)
+- [ ] Ціни з одного Config
+- [ ] Collector/покупка без божевільного спаму
+- [ ] UI ціни збігається з Config
+- [ ] Save: Lesson 7.6 - Tycoon Balance
+
+Далі **7.7** збирає міні-фабрику на цих числах. **7.8** покаже їх ментору. Якщо сьогодні slow forever - Ship червоний.
+
+Не йди в 7.7 з TTA1 «ну якось довго» без запису. Або підкрути, або познач P0 - щоб Ship не здивувався.
+
+Артефакт: **передбачувана економіка**. Ship любить стабільні ціни більше за третій станок. Якщо ментор за хвилину розуміє TTA1 з твоєї таблиці - баланс зданий. Залиш Save до закриття Studio. Цифри з таблиці можна коротко вписати в Part-табличку на plot для ментора. Це швидший review, ніж шукати константи в трьох скриптах. Короткий рядок на стіні plot достатній для здачі й peer review.`,
  },
  ],
  },
  commonMistakes: [
  {
- mistake: "Клієнт DISPLAY_PRICES все ще використовується після 7.5",
- explanation: "Дрейф ціни з сервера.",
- correctApproach: "Етикетки лише для каталогу",
+ mistake: "Балансувати, поки Coins взагалі не додаються",
+ explanation: "Балансуєш баг.",
+ correctApproach: "Спочатку collector → leaderstats",
  },
  {
- mistake: "Пропуск тесту для двох гравців",
- explanation: "Спільні помилки стану.",
- correctApproach: "Економіка незалежних гравців",
+ mistake: "Змінити 7 чисел за раз",
+ explanation: "Неясно що допомогло.",
+ correctApproach: "Одне число → один тест",
  },
  {
- mistake: "Копія ShopConfig на клієнті",
- explanation: "Експлуатувати поверхню.",
- correctApproach: "Лише Server ModuleScript",
+ mistake: "Різні price у UI і Script",
+ explanation: "Гравець і сервер у різних реальностях.",
+ correctApproach: "Один Config",
  },
  {
- mistake: "Багато пультів з нечіткими назвами",
- explanation: "Налагодити кошмар.",
- correctApproach: "Очистити імена префіксів Shop_",
+ mistake: "Апгрейд 1 недосяжний за урок",
+ explanation: "Демо і мотивація мертві.",
+ correctApproach: "TTA1 30–90 с",
+ },
+ {
+ mistake: "Ігнорувати debounce collector",
+ explanation: "Замір доходу бреше.",
+ correctApproach: "Чесний збір + потім ціни",
+ },
+ {
+ mistake: "Апгрейд 2 у ×100 без росту доходу",
+ explanation: "Стіна прогресу.",
+ correctApproach: "Крива 1.5–3× і сильніший дроп",
  },
  ],
- summary: "Ви інтегрували безпечну серверну логіку магазину, динамічне завантаження каталогу та багатокористувацьку перевірку якості в Shop Works. Модуль 7 завершено та готовий до демонстрації.",
+ summary: "Ти прогнав баланс цін тайкуна: виміряв дохід і TTA, звів Config, зробив мінімум 2 підкрутки. Економіка готова до міні-фабрики 7.7 і Ship 7.8.",
  practiceTask: {
- title: "Здати Shop Works (~40 хв)",
- difficulty: "beginner",
- description: `**Мета:** checkpoint готового до виробництва міні-цеху.
+ title: "Лабораторія цін (~30 хв)",
+ difficulty: "intermediate",
+ description: `**Мета:** перший апгрейд досяжний, числа в одному Config.
 
-### Part A - Інтеграція (15 хв)
-1. Один ShopConfig - зв'язок ShopServer + ShopClient
-2. Видаліть залишкові заглушки/жорстко закодовані ціни
-3. CoinsLabel + StatusLabel + динамічні картки
+### Part A - Замір (8 хв)
+1. Випиши payout/interval/prices.
+2. 60 с збору + час до апгрейду 1.
+3. Вердикт slow/fast/broken.
 
-### Part B - QA (20 хв)
-1. Запустіть 8-рядковий контрольний список
-2. Тест на 2 гравці + спроби експлойтів
-3. Виправляйте помилки по черзі
+### Part B - Підкрутки (15 хв)
+1. Зведи ціни в Config.
+2. ≥2 зміни по одній.
+3. Повтори заміри; лог було → стало.
+4. Перевір debounce збору/купівлі.
 
-### Part C - Збереження демо (5 хв)
-1. 60-секундна репетиція проходження
-2. **Зберегти в Roblox** →\`Module 7 - Shop Works\` 3. **Практика завершена**`,
+### Part C - Готовність (7 хв)
+1. TTA1 комфортний.
+2. Після апгрейду дохід зріс.
+3. **Save:** Lesson 7.6 - Tycoon Balance`,
  hints: [
- "Один ModuleScript запобігає дрейфу конфігурації",
- "Журнал покупок: гравець, itemId, результат",
- "Надійність перевершує додаткові предмети в checkpoint",
+ "Секундомір телефону достатній",
+ "print coins кожні 10 с",
+ "Не чіпай декор, поки TTA broken/slow",
  ],
- optionalChallenge: "Панель історії покупок сесії - останні 5 покупок. (У Уроці 7.7 той самий магазин отримає косметичні предмети!)",
+ optionalChallenge: "Коротка табличка на plot «Ціни з балансу уроку» з актуальними числами з Config.",
  },
  quiz: {
  passingScore: 70,
- timeLimit: 10,
+ timeLimit: 15,
  questions: [
  {
  id: "q1",
- type: "multiple_choice",
- question: "Shop Works включає...",
+ type: MC,
+ question: "Головна мета уроку 7.6?",
  options: [
- "UI + events + server shop + catalog function",
- "Лише UI",
- "Лише Terrain",
- "Без networking",
+ "Прогнати і підкрутити баланс цін/доходу",
+ "Видалити дропер",
+ "Побудувати Arena",
+ "Publish без заміру",
  ],
  correctAnswer: 0,
- explanation: "Повний модуль 7.",
+ explanation: "Баланс економіки.",
  },
  {
  id: "q2",
- type: "multiple_choice",
- question: "Тест для двох гравців підтверджує...",
+ type: MC,
+ question: "Що таке TTA1 у цьому уроці?",
  options: [
- "Незалежні баланси монет",
- "Один спільний гаманець",
- "Без сервера",
- "Лише Terrain",
+ "Час до першого апгрейду",
+ "Назва Remote",
+ "Тип Terrain",
+ "Кількість Decals",
  ],
  correctAnswer: 0,
- explanation: "Економія на гравця.",
+ explanation: "Time to upgrade 1.",
  },
  {
  id: "q3",
- type: "multiple_choice",
- question: "Єдине джерело правди - це...",
+ type: MC,
+ question: "Орієнтир часу до апгрейду 1?",
  options: [
- "ShopConfig ModuleScript",
- "Текст кнопки клієнта",
- "Chat",
- "Sky",
+ "Близько 30–90 секунд чесної гри",
+ "Обов’язково 2 години",
+ "0 секунд завжди",
+ "Лише після Publish",
  ],
  correctAnswer: 0,
- explanation: "Одна конфігурація.",
+ explanation: "Комфортний онбординг.",
  },
  {
  id: "q4",
- type: "multiple_choice",
- question: "Підроблений ідентифікатор товару повинен...",
+ type: MC,
+ question: "Де тримати ціни?",
  options: [
- "Відхилити на сервері",
- "Видати безкоштовний Tool",
- "Краш гри",
- "Publish",
+ "В одному Config/table",
+ "У 10 Prompt з різними числами",
+ "Лише в Sky",
+ "Тільки в назві Part",
  ],
  correctAnswer: 0,
- explanation: "Перевірка.",
+ explanation: "Одне джерело.",
  },
  {
  id: "q5",
- type: "multiple_choice",
- question: "GetShopCatalog використовує...",
+ type: MC,
+ question: "Якщо монети не додаються - що першим?",
  options: [
- "RemoteFunction",
- "Лише Terrain",
- "Weld",
- "Atmosphere",
+ "Лагодити collector/leaderstats, не крутити ціну наосліп",
+ "Одразу price = 1_000_000",
+ "Видалити plot",
+ "Вимкнути Output",
  ],
  correctAnswer: 0,
- explanation: "Отримання каталогу.",
+ explanation: "Баг ≠ баланс.",
  },
  {
  id: "q6",
- type: "multiple_choice",
- question: "RequestPurchase використовує...",
+ type: MC,
+ question: "Скільки змінних крутити за один тест?",
  options: [
- "RemoteEvent",
- "RemoteFunction кожен кадр",
- "Лише DataStore",
- "Лише NPC",
+ "Краще одну",
+ "Усі одразу обов’язково",
+ "Жодної ніколи",
+ "Лише колір кнопки",
  ],
  correctAnswer: 0,
- explanation: "Купити дію.",
+ explanation: "Контрольований експеримент.",
  },
  {
  id: "q7",
- type: "multiple_choice",
- question: "Модуль 7 зберегти назву...",
+ type: MC,
+ question: "Навіщо міряти income за 60 с?",
  options: [
- "Module 7 - Shop Works",
- "Race Launched",
- "Arena Ready",
- "Lesson 7.1",
+ "Зрозуміти темп економіки перед цінами",
+ "Замінити MaxHealth",
+ "Створити Animation",
+ "Вимкнути дропер",
  ],
  correctAnswer: 0,
- explanation: "Збереження контрольної точки.",
+ explanation: "Замір доходу.",
  },
  {
  id: "q8",
- type: "multiple_choice",
- question: "Урок 7.6 завершується...",
+ type: MC,
+ question: "Що робити, якщо все купується за 5 с?",
  options: [
- "Module 7 Network & Shop",
- "Module 12",
- "Module 1",
- "Лише монети",
+ "Підняти ціни або зменшити payout",
+ "Видалити leaderstats",
+ "Обов’язково додати 50 станків",
+ "Вимкнути canAfford",
  ],
  correctAnswer: 0,
- explanation: "Кінець модуля 7.",
+ explanation: "Занадто fast.",
  },
-        {
+ {
  id: "q9",
- type: "multiple_choice",
- question: "Тема наступного модуля...",
+ type: MC,
+ question: "Чому важливий debounce collector перед балансом?",
  options: [
- "Smart Game / NPCs",
- "Лише гонки",
- "Лише publishing",
- "Порожньо",
+ "Інакше замір доходу від спаму бреше",
+ "Debounce малює Sky",
+ "Без нього Config не існує",
+ "Це замінює апгрейди",
  ],
  correctAnswer: 0,
- explanation: "Попередній перегляд модуля 8.",
+ explanation: "Чесний замір.",
  },
  {
  id: "q10",
- type: "multiple_choice",
- question: "Контрольна точка має пріоритет...",
+ type: MC,
+ question: "Як 7.6 готує 7.8?",
  options: [
- "Надійність важливіша за зайві фічі",
- "Максимум предметів",
- "Без тестів",
- "Економіка лише на клієнті",
+ "Стабільні ціни → демо Ship не розвалюється на «вічній бідності»",
+ "Ship забороняє Config",
+ "Баланс скасовує рубрику",
+ "Треба видалити апгрейди перед Ship",
  ],
  correctAnswer: 0,
- explanation: "QA мислення.",
+ explanation: "Готовність до ship.",
+ },
+ {
+ id: "q11",
+ type: MC,
+ question: "Мінімум live-підкруток?",
+ options: [
+ "Хоча б 2 з логом було → стало",
+ "0",
+ "Обов’язково 50",
+ "Лише зміна неба",
+ ],
+ correctAnswer: 0,
+ explanation: "Практика цифр.",
+ },
+ {
+ id: "q12",
+ type: MC,
+ question: "Якщо після апгрейду дохід не зріс?",
+ options: [
+ "Перевірити applyUpgrade / чи пишеться новий interval/payout",
+ "Лише перефарбувати кнопку ще раз",
+ "Видалити TAB",
+ "Обов’язково Publish",
+ ],
+ correctAnswer: 0,
+ explanation: "Ефект апгрейду.",
+ },
+ {
+ id: "q13",
+ type: MC,
+ question: "Крива апгрейду 2 щодо ціни 1?",
+ options: [
+ "Зазвичай дорожче в розумні 1.5–3×, не ×100 одразу",
+ "Завжди дешевше за перший",
+ "Ціна 2 завжди 0",
+ "Апгрейд 2 без ціни",
+ ],
+ correctAnswer: 0,
+ explanation: "Крива lite.",
+ },
+ {
+ id: "q14",
+ type: MC,
+ question: "Що записувати в таблицю?",
+ options: [
+ "Факти: секунди/монети і вердикт",
+ "Лише «мені здається»",
+ "Тільки список Plugins",
+ "Колір Ambient",
+ ],
+ correctAnswer: 0,
+ explanation: "Доказ заміру.",
+ },
+ {
+ id: "q15",
+ type: MC,
+ question: "Що вважається зданим артефактом 7.6?",
+ options: [
+ "Таблиця + ≥2 підкрутки + комфортніший TTA + Save",
+ "Лише теорія",
+ "Порожній Baseplate",
+ "Ціни роз’їхались у UI і Script",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібен баланс-доказ.",
  },
  ],
  },
@@ -1886,362 +2874,441 @@ export const ukLesson77 = {
  lessonId: "lesson-roblox-7-7",
  moduleId: "module-07",
  order: 7,
- title: "7.7 - Проєкт: Магазин косметики",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
+ title: "7.7 - Проєкт: міні-фабрика",
+ theoryMinutes: 35,
+ quizMinutes: 15,
+ estimatedTime: 60,
  learningObjectives: [
- "Розширте ShopConfig чотирма косметичними предметами (капелюх, шлейф, колір, сяйво)",
- "Застосуйте косметику до character через WeldConstraint, ParticleEmitter, BrickColor і PointLight",
- "Зберігайте власність (ownedItems) для кожного гравця на сервері",
- "Повторно застосовуйте косметику при кожному CharacterAdded (після respawn)",
+ "Зібрати міні-фабрику: ≥1 дропер, collector, ≥2 апгрейди з table",
+ "Показати повний цикл заробітку на своєму plot",
+ "Узгодити імена, Config і leaderstats без «магічних» чисел у 5 місцях",
+ "Закрити інтеграційні дірки перед Ship (7.8)",
+ "Зберегти Place як проєктний артефакт модуля",
  ],
  theory: {
  sections: [
  {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `Це **проєктний урок**. Ви вже маєте повний магазин зброї/предметів з 7.1-7.6 - сьогодні застосовуєте той самий шаблон до **косметики**, яку видно на самому character.
+ title: "Сьогоднішня місія (урок 55 з 92)",
+ content: `Це **проєктний** урок. Не нова механіка з нуля - ти збираєш **міні-фабрику** з цеглинок 7.1–7.6.
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - косметичні типи + застосування до character
-2. **Практика (~35 хв)** - магазин із 4 косметичними предметами
-3. **Вікторина (10 хв)** - проходження **70%**
+Артефакт:
+1. Plot (свій або шаблон з 7.5) з читабельним дропером.
+2. Collector → Coins у leaderstats.
+3. Мінімум **2** апгрейди з UpgradeConfig (ціна + ефект).
+4. Гравець проходить цикл без суфлера ≥1 раз.
 
-Відкрийте своє місце з **Уроку 7.6 - Shop Works**.`,
+Завтра 7.8 лише натягне рубрику Ship. Сьогодні має бути **що** шипати.
+
+**Зроби зараз (3 хв):** список «вже є / ще немає» по дропер, collector, shop, plot clone.
+
+Чесно познач «майже» як «немає», якщо цикл ще не проходиться в Play. Саме це визначить, куди підуть 25 хвилин практики.`,
  },
  {
- title: "Архітектура без змін",
- content: `Косметика використовує **той самий** стек, що й зброя в 7.1-7.6:
+ title: "Склад міні-фабрики",
+ content: `| Блок | Мінімум | Джерело уроків |
+|------|---------|----------------|
+| Plot | База з підлогою | 7.1 / 7.5 |
+| Dropper | while/for + Config | 7.2 |
+| Collector | +Coins сервер | 7.1 / 7.3 |
+| Shop/Upgrade | if canAfford + table | 7.3 / 7.4 |
+| Баланс цін | Грайбельні числа | 7.6 |
 
-\`\`\`
-ReplicatedStorage: RequestPurchase, PurchaseResult, GetShopCatalog
-ServerScriptService: ShopConfig (ModuleScript з 7.4), ShopServer
-StarterGui/ShopGui: ShopClient
-\`\`\`**Нове сьогодні** - лише **тип** предметів (косметика замість інструментів) і те, як сервер **застосовує** їх до character.`,
+Метафора: не новий двигун - **збірка авто з готових деталей**. Якщо деталі лежать у різних Places - сьогодні зводь в один.`,
  },
  {
- title: "Розширення ShopConfig косметикою",
- content: `У вашому існуючому \`ShopConfig\` (7.4) додайте 4 записи з полем \`type\`:
+ title: "Цільовий геймплей на 2 хвилини",
+ content: `Сценарій здачі:
+1. Зайти → plot твій.
+2. За 20–40 с зібрати достатньо на апгрейд 1.
+3. Купити → відчути швидший/багатший дроп.
+4. За ще ~30–60 с купити апгрейд 2 (або накопичити помітно).
+5. TAB показує Coins коректно.
 
-\`\`\`lua
-ShopConfig.Items.hat_crown = { name = "Golden Crown", price = 60, type = "hat" }
-ShopConfig.Items.trail_sparkle = { name = "Sparkle Trail", price = 45, type = "trail" }
-ShopConfig.Items.color_gold = { name = "Gold Skin", price = 35, type = "color" }
-ShopConfig.Items.glow_aura = { name = "Glow Aura", price = 50, type = "glow" }
-\`\`\`**type** визначає, **як** сервер застосовує предмет - гілка \`if\`/\`elseif\` у наступному розділі.`,
+Якщо апгрейд 1 коштує 10_000 при дропі +1/5с - баланс іще з 7.6; підкрути **сьогодні**, не відкладай на Ship.`,
  },
  {
- title: "Застосування капелюха (hat)",
- content: `\`\`\`lua
-local hatTemplates = game.ServerStorage.Cosmetics.Hats
+ title: "Один Config на фабрику",
+ content: `Зведи числа:
 
-local function applyHat(character, itemId)
- local head = character:FindFirstChild("Head")
- local template = hatTemplates:FindFirstChild(itemId)
- if not head or not template then return end
+\`DropperConfig = { interval = 2, payout = 5 }\`  
+\`UpgradeConfig = {\`
+\` speed1 = { price = 50, interval = 1.2 },\`
+\` pay1 = { price = 80, payout = 10 },\`
+\`}\`
 
- local hat = template:Clone()
- hat.CFrame = head.CFrame * CFrame.new(0, 0.6, 0)
- hat.Parent = character
+Після покупки \`speed1\` пиши в стан гравця/plot \`interval = 1.2\` і дропер читає його.
 
- local weld = Instance.new("WeldConstraint")
- weld.Part0 = hat
- weld.Part1 = head
- weld.Parent = hat
-end
-\`\`\`**WeldConstraint** - той самий інструмент, що приварював колеса до шасі в Модулі 6.`,
+Погано: ціна 50 в Prompt, 40 в Script, 80 в коментарі.
+
+**Зроби зараз (8 хв):** одна ModuleScript або один Script-блок з table апгрейдів.
+
+Перевір require/шлях один раз у Play: якщо Module не знаходиться, весь applyUpgrade мовчки впаде. Краще ранній print з підтвердженням що Config завантажився, ніж година дебагу кнопок.`,
  },
  {
- title: "Застосування шлейфу (trail) без Attachment",
- content: `Простий підхід через **ParticleEmitter**, який можна батьківщити прямо на Part (без Attachment):
+ title: "Plot ownership у проєкті",
+ content: `Якщо є клон plot на гравця (7.5):
+- collector додає монети **лише** власнику;
+- кнопки апгрейду на чужому plot не купують тобі;
+- дропер крутиться на твоєму plot.
 
-\`\`\`lua
-local function applyTrail(character)
- local root = character:FindFirstChild("HumanoidRootPart")
- if not root then return end
+Тест: 2 вікна Studio / логіка ownerAttribute.
 
- local emitter = Instance.new("ParticleEmitter")
- emitter.Name = "CosmeticTrail"
- emitter.Rate = 20
- emitter.Lifetime = NumberRange.new(0.5, 1)
- emitter.Speed = NumberRange.new(1, 2)
- emitter.Parent = root
-end
-\`\`\`**Rate** і **Lifetime** контролюють щільність шлейфу - невеликі числа виглядають елегантно, не захаращують екран.`,
+Якщо plot поки спільний (один на всіх) - запиши це як обмеження lite і все одно зроби чесні Coins. Для Ship краще мати owner, але 1 спільний plot краще за нуль циклу.
+
+Підпиши Attribute \`OwnerUserId\` на моделі plot або тримай \`plots[player] = model\` у серверній table. Головне - один явний спосіб відповісти «чий це станок?».`,
  },
  {
- title: "Застосування кольору (color) і сяйва (glow)",
- content: `\`\`\`lua
-local function applyColor(character, color)
- for _, part in ipairs(character:GetDescendants()) do
- if part:IsA("BasePart") then
- part.Color = color
- end
- end
-end
+ title: "UI мінімум для фабрики",
+ content: `Не обов’язково повний магазин-скролл. Достатньо:
+- 2× SurfaceGui / ProximityPrompt на кнопках апгрейду;
+- текст ціни з Config;
+- leaderstats Coins у TAB.
 
-local function applyGlow(character)
- local root = character:FindFirstChild("HumanoidRootPart")
- if not root then return end
+Онбординг-табличка з 3 кроками біля входу plot.
 
- local light = Instance.new("PointLight")
- light.Name = "CosmeticGlow"
- light.Brightness = 2
- light.Range = 8
- light.Color = Color3.fromRGB(255, 220, 150)
- light.Parent = root
-end
-\`\`\`**applyColor** повторює той самий цикл \`GetDescendants\`, що фарбував манекенів у Уроці 5.8.`,
+Не витрачай годину на анімовану касу - спочатку цикл грошей.
+
+Якщо робиш SurfaceGui - постав \`TextLabel\` ціни скриптом з Config при старті і після балансу 7.6. Інакше «відбалансована» ціна лишиться старою на стіні.`,
  },
  {
- title: "Стан власності гравця",
- content: `\`\`\`lua
-local ownedItems = {} -- [player] = { [itemId] = true }
+ title: "Інтеграційний чекліст перед «готово»",
+ content: `| # | Питання | Так? |
+|---|---------|------|
+| 1 | Дропер працює сам після Play? | |
+| 2 | Collector → leaderstats? | |
+| 3 | Купівля списує? | |
+| 4 | Апгрейд міняє interval або payout? | |
+| 5 | Другий апгрейд існує в table? | |
+| 6 | Немає клієнтського Coins=9999? | |
+| 7 | Імена читабельні ментору? | |
+| 8 | Save під проєктною назвою? | |
 
-local function ownsItem(player, itemId)
- return ownedItems[player] and ownedItems[player][itemId]
-end
+Усе «ні» - робота Part B практики, не декор.
 
-local function grantOwnership(player, itemId)
- ownedItems[player] = ownedItems[player] or {}
- ownedItems[player][itemId] = true
-end
-\`\`\`**Той самий шаблон**, що і \`playerQuestState\` у Модулі 8 - таблиця стану на гравця, а не глобальна змінна.`,
+Пріоритет фіксів: 2 → 3 → 4 → 1. Без монет і списання апгрейди безглузді. Без ефекту апгрейду кнопка - декорація.`,
  },
  {
- title: "Застосування при кожному CharacterAdded",
- content: `Косметика **втрачається** при кожному respawn, якщо ви її не перезастосовуєте:
+ title: "Типові дірки проєкту",
+ content: `| Дірка | Фікс |
+|-------|------|
+| Дропер у Workspace, shop в іншому Place | Звести Save As в один |
+| Апгрейд фарбує кнопку, Config той самий | applyUpgrade пише нові числа |
+| Collector Touched без debounce | Спам монет - додай cooldown |
+| Ціна Prompt застаріла | Бери price з Config при покупці |
+| while дропера в LocalScript | Перенеси на сервер |
 
-\`\`\`lua
-local function applyOwnedCosmetics(player, character)
- local owned = ownedItems[player]
- if not owned then return end
+**Зроби зараз (6 хв):** пройди чекліст 1–6 і випиши перші 2 «ні».
 
- for itemId in pairs(owned) do
- local item = ShopConfig.Items[itemId]
- if item.type == "hat" then applyHat(character, itemId)
- elseif item.type == "trail" then applyTrail(character)
- elseif item.type == "color" then applyColor(character, item.color)
- elseif item.type == "glow" then applyGlow(character)
- end
- end
-end
-
-player.CharacterAdded:Connect(function(character)
- applyOwnedCosmetics(player, character)
-end)
-\`\`\`Той самий шаблон **CharacterAdded**, що скидав бойовий стан у Уроці 5.5 - тепер він **відновлює** косметику.`,
+Якщо дірок більше ніж три - не починай particle. Закрий P0 економіки, інакше 7.8 рубрика C буде червоною пачкою.`,
  },
  {
- title: "Оновлений обробник покупки",
- content: `\`\`\`lua
-request.OnServerEvent:Connect(function(player, itemId)
- local item = ShopConfig.Items[itemId]
- if not item then return deny(player, "Unknown item") end
- if ownsItem(player, itemId) then return deny(player, "Already owned") end
- if coins.Value < item.price then return deny(player, "Not enough coins") end
+ title: "Полірування без роздування",
+ content: `Дозволений polish (якщо цикл зелений):
+- звук дропу / збору;
+- легкий particle на collector;
+- колір кнопок «куплено».
 
- coins.Value -= item.price
- grantOwnership(player, itemId)
+Заборонений polish сьогодні:
+- 10 нових станків;
+- Rebirth;
+- DataStore сезону;
+- кастомний HUD на годину.
 
- if player.Character then
- applyOwnedCosmetics(player, player.Character)
- end
+Правило: polish **після** зеленого циклу.
 
- result:FireClient(player, true, item.name .. " equipped!", coins.Value)
-end)
-\`\`\`**Немає Backpack Tool** - косметика застосовується напряму до character, а не видається як предмет інвентарю.`,
+Корисний мікро-polish: Billboard «Plot гравця» з DisplayName - ментор одразу бачить ownership у спліт-тесті.`,
  },
  {
- title: "Контрольний список перед початком практики",
- content: `- [ ] 4 косметичні записи в ShopConfig з полем type
-- [ ] applyHat / applyTrail / applyColor / applyGlow працюють окремо
-- [ ] ownedItems блокує повторну покупку того самого предмета
-- [ ] CharacterAdded перезастосовує косметику після смерті/respawn
-- [ ] Зберегти: \`Lesson 7.7 - Cosmetic Shop\``,
+ title: "Playtest проєкту",
+ content: `| # | Дія | Очікування |
+|---|-----|------------|
+| 1 | Новий Play | Дропер стартує |
+| 2 | Збір | Coins у TAB |
+| 3 | Апгрейд 1 | Ефект відчутний |
+| 4 | Апгрейд 2 | Купується або видимий у Config |
+| 5 | Без грошей | Відмова |
+| 6 | 2 хв геймплею | Не нуль прогресу |
+| 7 | Output | Чисто |
+
+Якщо за 2 хв не вистачає на апгрейд 1 - ціни з 7.6 іще високі: зменш price або збільш payout.
+
+Після апгрейду 1 зроби ще 20 с збору навмисно. Якщо темп не змінився - повертайся до applyUpgrade, не до нового станку.`,
+ },
+ {
+ title: "Чекліст здачі уроку 55",
+ content: `- [ ] Міні-фабрика в одному Place
+- [ ] Дропер + collector + Coins
+- [ ] ≥2 апгрейди з table з ефектом
+- [ ] canAfford / списання на сервері
+- [ ] Онбординг-табличка
+- [ ] Інтеграційний чекліст переважно «так»
+- [ ] Save: Lesson 7.7 - Mini Factory
+
+Далі **7.8 Ship** натягне рубрику 15 пунктів. Якщо сьогодні цикл кульгає - Ship буде червоним. Добій фабрику зараз.
+
+Завтра ти майже не пишеш новий код - ти захищаєш золотий шлях. Тож сьогодні залиш Place в стані «можна грати», не «майже з’єднаю».
+
+Артефакт: **маленька фабрика що годує апгрейди**. Не презентація на слайдах - Play. Якщо за два хвилини видно прогрес до другого апгрейду - проєкт живий. Залиш Place з онбордингом на видному місці. Завтрашній Ship майже не додає механік - він перевіряє, що сьогоднішній цикл уже грається.`,
  },
  ],
  },
  commonMistakes: [
  {
- mistake: "Косметика видається як Backpack Tool",
- explanation: "Капелюхи та кольори не потрібно екіпірувати руками.",
- correctApproach: "Застосовуйте напряму до character при покупці й при CharacterAdded",
+ mistake: "Новий Place замість зшиття",
+ explanation: "Втрачаєш час, Ship нема чого показувати.",
+ correctApproach: "Один Place з 7.1–7.6",
  },
  {
- mistake: "ownedItems не перевіряється перед повторною покупкою",
- explanation: "Гравець платить кілька разів за той самий капелюх.",
- correctApproach: "ownsItem(player, itemId) перед списанням монет",
+ mistake: "Один апгрейд без ефекту",
+ explanation: "Проєкт не відчувається фабрикою.",
+ correctApproach: "≥2 з реальною зміною Config",
  },
  {
- mistake: "Косметика зникає після смерті",
- explanation: "Немає CharacterAdded перезастосування.",
- correctApproach: "applyOwnedCosmetics у кожному CharacterAdded",
+ mistake: "Ціни неможливо накопичити за 2 хв",
+ explanation: "Демо мертве.",
+ correctApproach: "Підкрутити з 7.6 зараз",
  },
  {
- mistake: "applyColor фарбує лише один Part",
- explanation: "Character залишається частково старого кольору.",
- correctApproach: "Цикл по всіх BasePart через GetDescendants",
+ mistake: "Collector без прив’язки до owner",
+ explanation: "Крадіжка монет / хаос",
+ correctApproach: "Перевірка власника plot",
+ },
+ {
+ mistake: "Поліш замість зеленого циклу",
+ explanation: "Гарно і ламано.",
+ correctApproach: "Спочатку чекліст 1–6",
+ },
+ {
+ mistake: "Магічні числа в Prompt і Script різні",
+ explanation: "Баланс бреше.",
+ correctApproach: "Один UpgradeConfig",
  },
  ],
- summary: "Ви розширили магазин косметикою - капелюхом через WeldConstraint, шлейфом через ParticleEmitter, кольором через BrickColor-цикл і сяйвом через PointLight - зі станом власності на сервері, що переживає кожен respawn.",
+ summary: "Ти зібрав проєкт міні-фабрики: дропер, collector, серверні Coins і щонайменше два апгрейди з table. Це м’ясо для Ship Tycoon у 7.8.",
  practiceTask: {
- title: "Магазин косметики (~35 хв)",
- difficulty: "beginner",
- description: `**Мета:** 4 косметичні предмети, які купуються та зберігаються між смертями.
+ title: "Збірка міні-фабрики (~30 хв)",
+ difficulty: "intermediate",
+ description: `**Мета:** повний цикл заробітку + 2 апгрейди в одному Place.
 
-### Part A - Конфігурація та шаблони (10 хв)
-1. Додайте 4 записи в ShopConfig (hat, trail, color, glow) з полем type
-2. Folder ServerStorage/Cosmetics/Hats з одним Part-шаблоном капелюха
+### Part A - Інвентар систем (5 хв)
+1. Список є/немає.
+2. Зведи все в один Place якщо розкидано.
 
-### Part B - Функції застосування (15 хв)
-1. applyHat, applyTrail, applyColor, applyGlow - кожна окремою функцією
-2. ownedItems таблиця + ownsItem/grantOwnership
+### Part B - Зшивка (18 хв)
+1. Дропер читає Config.
+2. Collector → leaderstats.
+3. 2 апгрейди з table + applyUpgrade.
+4. Онбординг-табличка.
 
-### Part C - Інтеграція та збереження (10 хв)
-1. Оновіть обробник RequestPurchase - виклик applyOwnedCosmetics
-2. CharacterAdded перезастосовує все власне
-3. **Зберегти в Roblox** → \`Lesson 7.7 - Cosmetic Shop\` 4. **Практика завершена**`,
+### Part C - Прогін (7 хв)
+1. Чекліст інтеграції.
+2. 2 хв геймплею до апгрейду.
+3. **Save:** Lesson 7.7 - Mini Factory`,
  hints: [
- "Тестуйте кожну функцію applyX окремо в командному рядку перед інтеграцією в магазин",
- "Помріть і відродіться після покупки - косметика повинна повернутися автоматично",
- "Використовуйте UI-картки з Уроку 7.3 - лише itemId і назви змінилися",
+ "Спочатку один апгрейд зі швидкістю - найвидиміший ефект",
+ "print coins після collector",
+ "Не починай rebirth",
  ],
- optionalChallenge: "Кнопка \"Preview\" тимчасово показує косметику на 5с без покупки (лише клієнтський попередній перегляд).",
+ optionalChallenge: "Стан кнопки «Куплено» (колір / текст) після applyUpgrade.",
  },
  quiz: {
  passingScore: 70,
- timeLimit: 10,
+ timeLimit: 15,
  questions: [
  {
  id: "q1",
- type: "multiple_choice",
- question: "Косметика застосовується до character за допомогою...",
+ type: MC,
+ question: "Головна мета уроку 7.7?",
  options: [
- "WeldConstraint, ParticleEmitter, BrickColor, PointLight",
- "Лише DataStore",
- "Лише RemoteFunction",
- "Лише ModuleScript",
+ "Зібрати міні-фабрику з дропера, збору і апгрейдів",
+ "Видалити leaderstats",
+ "Почати лише Arena",
+ "Publish без циклу",
  ],
  correctAnswer: 0,
- explanation: "Відомі інструменти в новому застосуванні.",
+ explanation: "Проєкт фабрики.",
  },
  {
  id: "q2",
- type: "multiple_choice",
- question: "ownedItems зберігається як...",
+ type: MC,
+ question: "Скільки апгрейдів мінімум?",
  options: [
- "Таблиця стану на гравця на сервері",
- "Глобальна змінна для всіх",
- "Дані лише на клієнті",
- "Text у StarterGui",
+ "Хоча б 2 з table з ефектом",
+ "Обов’язково 50",
+ "0",
+ "Лише зміна кольору без Config",
  ],
  correctAnswer: 0,
- explanation: "Той самий підхід, що playerQuestState.",
+ explanation: "Два з ефектом.",
  },
  {
  id: "q3",
- type: "multiple_choice",
- question: "Косметика зникає після смерті, якщо...",
+ type: MC,
+ question: "Чому зводити системи в один Place?",
  options: [
- "Немає перезастосування в CharacterAdded",
- "Гравець забагатий",
- "ShopConfig видалено",
- "Це завжди так, нічого не зробити",
+ "Інакше немає інтегрованого циклу для Ship",
+ "Studio забороняє кілька Places у житті",
+ "Дропер працює лише в одному Place світу",
+ "leaderstats не існує інакше",
  ],
  correctAnswer: 0,
- explanation: "Character скидається кожен respawn.",
+ explanation: "Інтеграція.",
  },
  {
  id: "q4",
- type: "multiple_choice",
- question: "applyHat використовує...",
+ type: MC,
+ question: "Де мають жити ціни апгрейдів?",
  options: [
- "WeldConstraint до Head",
- "RemoteEvent до Head",
- "DataStore до Head",
- "TweenService назавжди",
+ "В одному UpgradeConfig / table",
+ "У 5 різних Prompt з різними числами",
+ "Лише в Skybox",
+ "Тільки на клієнті як текст",
  ],
  correctAnswer: 0,
- explanation: "Той самий приварювальний підхід з Модуля 6.",
+ explanation: "Одне джерело.",
  },
  {
  id: "q5",
- type: "multiple_choice",
- question: "Повторна покупка того самого предмета повинна...",
+ type: MC,
+ question: "Що має зробити апгрейд швидкості?",
  options: [
- "Бути заблокованою через ownsItem",
- "Списувати монети щоразу",
- "Видавати два капелюхи",
- "Видаляти персонажа",
+ "Зменшити interval дропера (швидший дроп)",
+ "Лише перефарбувати стіну",
+ "Видалити collector",
+ "Вимкнути Coins",
  ],
  correctAnswer: 0,
- explanation: "Захист від повторної покупки.",
+ explanation: "Геймплейний ефект.",
  },
  {
  id: "q6",
- type: "multiple_choice",
- question: "applyColor циклом проходить по...",
+ type: MC,
+ question: "Навіщо онбординг-табличка?",
  options: [
- "Усіх BasePart у GetDescendants character",
- "Лише одному Part",
- "Лише Humanoid",
- "Лише PointLight",
+ "Гравець розуміє цикл без суфлера",
+ "Вона замінює дропер",
+ "Обов’язкова для Humanoid",
+ "Табличка пише Coins сама",
  ],
  correctAnswer: 0,
- explanation: "Повне перефарбування.",
+ explanation: "Читабельний старт.",
  },
  {
  id: "q7",
- type: "multiple_choice",
- question: "ParticleEmitter для шлейфу батьківщиться до...",
+ type: MC,
+ question: "Якщо за 2 хв не вистачає на апгрейд 1?",
  options: [
- "HumanoidRootPart напряму",
- "ReplicatedStorage",
- "ServerScriptService",
- "StarterGui",
+ "Підкрутити ціну або payout (баланс)",
+ "Видалити фабрику",
+ "Обов’язково додати 10 станків",
+ "Вимкнути leaderstats",
  ],
  correctAnswer: 0,
- explanation: "Ефект слідує за персонажем.",
+ explanation: "Баланс зараз.",
  },
  {
  id: "q8",
- type: "multiple_choice",
- question: "Урок 7.7 повторно використовує архітектуру з...",
+ type: MC,
+ question: "Чому поліш після зеленого циклу?",
  options: [
- "RequestPurchase/PurchaseResult/GetShopCatalog (7.2-7.5)",
- "Лише Модуля 1",
- "Лише Модуля 5",
- "Порожньо",
+ "Інакше маскуєш зламану економіку красою",
+ "Поліш заборонений у Roblox",
+ "Particles видаляють Config",
+ "Звук ламає сервер завжди",
  ],
  correctAnswer: 0,
- explanation: "Той самий шаблон магазину.",
+ explanation: "Спочатку цикл.",
  },
  {
  id: "q9",
- type: "multiple_choice",
- question: "Косметика відрізняється від зброї тим, що...",
+ type: MC,
+ question: "Як 7.7 готує 7.8?",
  options: [
- "Не потрібен Backpack Tool - застосовується напряму",
- "Не потребує сервера",
- "Не має ціни",
- "Не має itemId",
+ "Ship рубрика натягнеться на готову фабрику",
+ "7.8 видаляє всі апгрейди",
+ "Ship не потребує Coins",
+ "Треба почати новий Place з нуля обов’язково",
  ],
  correctAnswer: 0,
- explanation: "Різний спосіб видачі.",
+ explanation: "М’ясо для ship.",
  },
  {
  id: "q10",
- type: "multiple_choice",
- question: "Урок 7.7 зберегти назву...",
+ type: MC,
+ question: "Collector повинен…",
  options: [
- "Lesson 7.7 - Cosmetic Shop",
- "Shop Works",
- "Server Shop",
- "RemoteFunction",
+ "Додавати Coins на сервері власнику",
+ "Працювати лише в LocalScript як правда",
+ "Видаляти plot",
+ "Створювати Animation",
  ],
  correctAnswer: 0,
- explanation: "Зберегти проєктний урок косметики.",
+ explanation: "Серверний збір.",
+ },
+ {
+ id: "q11",
+ type: MC,
+ question: "Що з наведеного - дірка проєкту?",
+ options: [
+ "Апгрейд не змінює Config дропера",
+ "Є табличка з 3 кроками",
+ "Є 2 апгрейди в table",
+ "Coins у leaderstats",
+ ],
+ correctAnswer: 0,
+ explanation: "Немає ефекту.",
+ },
+ {
+ id: "q12",
+ type: MC,
+ question: "Чи обов’язковий повний ScrollingFrame магазин?",
+ options: [
+ "Ні - 2 Prompt/кнопки достатньо для міні-фабрики",
+ "Так - інакше Coins не існують",
+ "Так - інакше дропер стоїть",
+ "Так за правилами Terrain",
+ ],
+ correctAnswer: 0,
+ explanation: "UI мінімум.",
+ },
+ {
+ id: "q13",
+ type: MC,
+ question: "Навіщо owner plot?",
+ options: [
+ "Чужі не збирають твої монети / не тиснуть твої кнопки",
+ "Owner замінює Humanoid",
+ "Без owner while не працює",
+ "Owner малює Sky",
+ ],
+ correctAnswer: 0,
+ explanation: "Прив’язка гравця.",
+ },
+ {
+ id: "q14",
+ type: MC,
+ question: "Що відкласти на після циклу?",
+ options: [
+ "Rebirth / 10 станків / годину HUD",
+ "canAfford",
+ "leaderstats Coins",
+ "applyUpgrade",
+ ],
+ correctAnswer: 0,
+ explanation: "Не роздувати.",
+ },
+ {
+ id: "q15",
+ type: MC,
+ question: "Що вважається зданим артефактом 7.7?",
+ options: [
+ "Міні-фабрика з циклом і 2 апгрейдами + Save",
+ "Лише теорія",
+ "Порожній Baseplate",
+ "Клієнтський Coins без сервера",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібен проєкт.",
  },
  ],
  },
@@ -2251,351 +3318,471 @@ export const ukLesson78 = {
  lessonId: "lesson-roblox-7-8",
  moduleId: "module-07",
  order: 8,
- title: "7.8 - Безпека магазину і UX",
- theoryMinutes: 40,
- quizMinutes: 10,
- estimatedTime: 50,
+ title: "7.8 - Ship Tycoon",
+ theoryMinutes: 35,
+ quizMinutes: 15,
+ estimatedTime: 60,
  learningObjectives: [
- "Підсиліть перевірки магазину проти повторних кліків і підробки itemId",
- "Додайте підтвердження покупки перед списанням монет",
- "Покажіть стани «Власне» та «Розпродано» на картках предметів",
- "Проведіть повний плейтест безпеки та UX магазину косметики",
+ "Зшити тайкун у один золотий шлях: plot → дропер → collector → покупка → апгрейд",
+ "Пройти рубрику Ship Tycoon (~15 пунктів) і закрити блокери",
+ "Підтвердити, що монети й ціни йдуть через leaderstats / сервер, не з клієнта",
+ "Показати демо 60–90 с без суфлера",
+ "Зберегти Place як артефакт модуля 7 перед Arena (M8)",
  ],
  theory: {
  sections: [
  {
- title: "Ваш сьогоднішній шлях (приблизно 40 хвилин)",
- content: `Магазин косметики з 7.7 **працює**. Сьогодні він стає **надійним і зрозумілим** - підтвердження перед покупкою, чіткі стани власності, ліміти на рідкісні предмети.
+ title: "Сьогоднішня місія (урок 56 з 92)",
+ content: `Це **фінал модуля Tycoon**. Не нова фабрика з нуля. Сьогодні ти **зшиваєш** те, що вже є, у цикл, який можна показати за 90 секунд.
 
-**Хід уроку:**
-1. **Теорія (40 хв)** - експлойти + confirm UX + sold-out
-2. **Практика (~30 хв)** - захищений магазин з лімітами
-3. **Вікторина (10 хв)** - проходження **70%**
+У модулі 7 ти (або група) збирав:
+1. **7.1** - plot / dropper / collector.
+2. **7.2** - дропер while/for + Config.
+3. **7.3** - покупки + leaderstats.
+4. **7.4** - апгрейди з table.
+5. **7.5** - plot на гравця (клон бази).
+6. **7.6** - баланс цін.
+7. **7.7** - міні-фабрика як проєкт.
 
-Відкрийте **Урок 7.7 - Cosmetic Shop**.`,
+Сьогоднішній артефакт: **один Place**, де гравець без суфлера:
+**отримує plot → бачить дроп → збирає монети → купує апгрейд → бачить ефект (швидше/більше) → цикл повторюється.**
+
+Якщо чогось немає - зроби **lite** (1 дропер, 2 апгрейди, 1 plot), не три недороблені Places.
+
+**Зроби зараз (3 хв):** одним реченням запиши золотий шлях тайкуна.`,
  },
  {
- title: "Карта поверхні атаки магазину",
- content: `Перш ніж додавати захист, перелічіть **де** гравець може обманути:
+ title: "Що означає Ship Tycoon (і що ні)",
+ content: `| Ship Tycoon | Ще НЕ ship |
+|-------------|-----------|
+| Дроп → збір → покупка **разом** | Окремо «гарний plot» і окремо UI без монет |
+| Ціни/списання на **сервері** + leaderstats | LocalScript сам ставить Coins = 9999 |
+| Апгрейд змінює Config/швидкість реально | Кнопка лише фарбує Part |
+| 60–90 с демо без пояснень | 5 хв «зараз покажу де collector» |
+| Output чистий на 1 циклі | Червоні помилки «ігноруємо» |
 
-| Атака | Захист |
-|-------|--------|
-| Спам-клік Buy | purchaseLock (з 7.4) |
-| Підроблений itemId | ShopConfig.Items[itemId] перевірка |
-| Купівля вже власного предмета | ownsItem (з 7.7) |
-| Купівля розпроданого предмета | **Новий сьогодні:** stock перевірка |
-| FireServer з ціною напряму | Сервер завжди читає ціну з ShopConfig |`,
+Ship **не** означає AAA-тайкун на 50 кнопок. Означає: **короткий повний цикл уже зібраний** і чесний по грошах.
+
+Далі M8 Arena використає ту саму звичку: критичні числа - на сервері.`,
  },
  {
- title: "Підтвердження покупки (Confirm UX)",
- content: `Замість миттєвого \`FireServer\` при кліку - **діалог підтвердження**:
+ title: "Карта систем, які зшиваємо",
+ content: `| Система | Де живе | Що дає золотому шляху |
+|---------|---------|------------------------|
+| Plot / база | Workspace (клон на гравця) | Місце фабрики |
+| Dropper + Config | while/for + table | Постійний дроп |
+| Collector | Touched / зона | Монети в кишеню |
+| leaderstats Coins | Сервер | Правда грошей |
+| Покупка / Prompt / SurfaceGui | 7.3 | Списання if canAfford |
+| Upgrade table | 7.4 | Ціна + ефект з одного місця |
 
-\`\`\`lua
-local pendingItemId = nil
+Правило інтеграції: **одна правда про Coins** - на сервері. UI лише показує.
 
-local function askConfirm(itemId, price)
- pendingItemId = itemId
- confirmPanel.Visible = true
- confirmPanel.MessageLabel.Text = "Купити за " .. price .. " монет?"
-end
-
-confirmPanel.YesButton.MouseButton1Click:Connect(function()
- confirmPanel.Visible = false
- if pendingItemId then
- request:FireServer(pendingItemId)
- pendingItemId = nil
- end
-end)
-
-confirmPanel.NoButton.MouseButton1Click:Connect(function()
- confirmPanel.Visible = false
- pendingItemId = nil
-end)
-\`\`\`**UX-правило:** дорогі або незворотні дії завжди мають крок підтвердження.`,
+**Зроби зараз (4 хв):** знайди в Explorer dropper loop, collector, Shop/Upgrade script, leaderstats. Чого немає - P0.`,
  },
  {
- title: "Стан «Власне» (Owned) на картці",
- content: `Клієнт оновлює кнопку після успішної покупки:
+ title: "Золотий шлях тайкуна (6–8 кроків)",
+ content: `1. Spawn / отримати свій plot (або стояти на базовому).
+2. Побачити табличку «Збирай дроп, купуй апгрейди».
+3. Дропер кидає частини/монетні Part.
+4. Collector зараховує Coins у leaderstats.
+5. Підійти до кнопки апгрейду → бачиш ціну.
+6. Якщо canAfford - списання, апгрейд застосовується (швидкість/дохід).
+7. Повторити збір - відчути різницю.
+8. Output без червоного.
 
-\`\`\`lua
-result.OnClientEvent:Connect(function(ok, message, newBalance, itemId)
- if ok then
- local card = itemList:FindFirstChild("Item_" .. itemId)
- if card then
- card.BuyButton.Text = "Owned ✓"
- card.BuyButton.Active = false
- card.BuyButton.BackgroundColor3 = Color3.fromRGB(120, 120, 120)
- end
- end
-end)
-\`\`\`Гравець одразу бачить, що покупка **успішна і стала постійною** - без плутанини, чи спрацював клік.`,
+Lite: 1 апгрейд «DropSpeed» достатньо для ship, якщо ефект видно.`,
  },
  {
- title: "Ліміт запасу і стан «Розпродано» (Sold Out)",
- content: `Додайте \`stock\` до рідкісного предмета в ShopConfig:
+ title: "Рубрика Ship Tycoon (~15 пунктів)",
+ content: `Став **так / ні / майже**.
 
-\`\`\`lua
-ShopConfig.Items.hat_crown.stock = 10 -- limited edition
-\`\`\`Перевірка та зменшення **всередині purchaseLock**, щоб уникнути гонки даних:
+### A. Простір і старт (1–4)
+| # | Пункт | Так? |
+|---|-------|------|
+| 1 | Plot/база зрозумілі, spawn ок | |
+| 2 | Табличка цілі ≤30–60 с | |
+| 3 | Імена/папки читаються (Plots/, Droppers/, Upgrades/) | |
+| 4 | Дропер видно/чути що працює | |
 
-\`\`\`lua
-if item.stock ~= nil then
- if item.stock <= 0 then
- return deny(player, "Sold out")
- end
- item.stock -= 1
- if item.stock <= 0 then
- result:FireAllClients(false, "SoldOut", nil, itemId)
- end
-end
-\`\`\`**FireAllClients** повідомляє **усіх**, що предмет закінчився - їхні кнопки одразу стають "Sold Out".`,
+### B. Економічний цикл (5–8)
+| # | Пункт | Так? |
+|---|-------|------|
+| 5 | Collector реально додає Coins | |
+| 6 | Покупка списує leaderstats на сервері | |
+| 7 | Апгрейд змінює поведінку (не лише колір) | |
+| 8 | Повторний цикл можливий (не one-shot) | |
+
+### C. Чесність грошей (9–12)
+| # | Пункт | Так? |
+|---|-------|------|
+| 9 | Ціна з table/конфігу сервера, не з клієнта | |
+| 10 | canAfford перевіряється до списання | |
+| 11 | Клієнт не може дати собі Coins LocalScript’ом у здачі | |
+| 12 | Немає подвійної покупки без грошей (debounce) | |
+
+### D. Ship-якість (13–15)
+| # | Пункт | Так? |
+|---|-------|------|
+| 13 | Output чистий на 1 циклі | |
+| 14 | Демо 60–90 с без суфлера | |
+| 15 | Save Lesson 7.8 - Tycoon Ship | |
+
+«Ні» в B/C = фікси Part B, не новий декор.`,
  },
  {
- title: "Чому перевірка stock має бути в purchaseLock",
- content: `**Без блокування** - два гравці можуть одночасно пройти перевірку \`stock > 0\`, коли залишається 1 штука, і обидва отримають предмет (stock стане -1).
+ title: "Типові дірки інтеграції",
+ content: `| Симптом | Причина | Фікс |
+|---------|---------|------|
+| Coins ростуть на UI, не в TAB | Пишеш не leaderstats | Серверний IntValue Coins |
+| Купівля без списання | Немає canAfford / Deduct | if coins >= price then |
+| Апгрейд «купився», дроп той самий | Не змінює Config | Після покупки онови interval/amount |
+| Подвійний клік = 2 апгрейди | Немає debounce / owned flag | Прапор куплено |
+| Чужий plot збирає твої монети | Немає прив’язки player | Перевір owner plot |
+| Дропер стоїть | while зупинився / break | Перевір loop і Config |
 
-\`\`\`lua
-local function processPurchase(player, itemId)
- if purchaseLock[player] then return end
- purchaseLock[player] = true
-
- -- stock check + decrement happens HERE, inside the lock
- -- (see previous section)
-
- purchaseLock[player] = nil
-end
-\`\`\`**purchaseLock** з 7.4 захищав лише від подвійних витрат одного гравця - тепер він також не дає **різним** гравцям одночасно вихопити останню одиницю (Lua виконує функції без переривань, тож послідовні виклики безпечні).`,
+**Зроби зараз (6 хв):** один прохід шляху → перший червоний пункт рубрики.`,
  },
  {
- title: "Оновлення каталогу після Sold Out",
- content: `Клієнт слухає широкомовне повідомлення й оновлює конкретну картку:
+ title: "Міні-схема грошей",
+ content: `На сервері:
 
-\`\`\`lua
-result.OnClientEvent:Connect(function(ok, message, newBalance, itemId)
- if message == "SoldOut" then
- local card = itemList:FindFirstChild("Item_" .. itemId)
- if card then
- card.BuyButton.Text = "Sold Out"
- card.BuyButton.Active = false
- end
- return
- end
- -- ...existing ok/fail handling
-end)
-\`\`\`**Немає** потреби перезавантажувати весь каталог через GetShopCatalog - точкове оновлення швидше.`,
+\`coins.Value = coins.Value + amount\` -- лише з collector / нагороди  
+\`if coins.Value < price then return end\`  
+\`coins.Value -= price\`  
+\`applyUpgrade(player, upgradeId)\`
+
+\`applyUpgrade\` читає \`UpgradeConfig[id]\` (ціна вже перевірена) і міняє dropper config гравця.
+
+Клієнт: Prompt / кнопка «купити id». Не надсилає нову ціну як правду.
+
+leaderstats:
+
+\`Coins\` IntValue у Folder leaderstats на Player - видно в TAB.`,
  },
  {
- title: "Фінальний протокол тесту на експлойт",
- content: `**5 обов'язкових тестів перед збереженням:**
+ title: "Онбординг за 8 хвилин",
+ content: `Новачок у тайкуні губиться: неясно, що підбирати і куди тиснути.
 
-1. Швидкий спам-клік Buy - лише одна покупка проходить
-2. Купівля вже власного предмета - "Already owned", монети не списані
-3. Невідомий itemId (вручну через консоль, якщо доступно) - "Unknown item"
-4. Два гравці купують останню одиницю лімітованого капелюха одночасно - лише один успіх
-5. Закриття/повторне відкриття магазину - стани Owned/Sold Out залишаються коректними`,
+Мінімум:
+- табличка з 3 кроками біля plot;
+- яскравий collector;
+- Billboard на першій кнопці апгрейду з ціною.
+
+Текст:
+*«1) Збирай дроп у колектор. 2) Дивись монети в TAB. 3) Купи апгрейд на кнопці.»*
+
+Відійди від монітора і підійди знову - чи зрозумілий старт без твоїх слів?`,
  },
  {
- title: "UX-полірування плейтесту",
- content: `| Перевірка | Пас? |
-|----------|------|
-| Confirm діалог з'являється перед кожною покупкою | |
-| Кнопка Owned/Sold Out читається одразу, без плутанини | |
-| StatusLabel завжди дає зрозумілу причину відмови | |
-| Немає "мертвих" станів кнопки (застряг Processing...) | |
+ title: "Playtest інтеграції",
+ content: `| # | Дія | Очікування | Факт |
+|---|-----|------------|------|
+| 1 | Play | Plot/spawn ок | |
+| 2 | Дочекатись дропу | Частини з’являються | |
+| 3 | Collector | Coins++ у leaderstats | |
+| 4 | Купівля без грошей | Відмова | |
+| 5 | Купівля з грошима | Списання + ефект | |
+| 6 | Підробити Coins на клієнті | Не змінює серверну правду | |
+| 7 | Другий цикл | Дроп швидший/більший | |
+| 8 | Output | Без червоного | |
+| 9 | Демо 90 с | Вкладаєшся | |
 
-Запросіть друга протестувати без пояснень - якщо він розуміє магазин без вашої допомоги, UX успішний.`,
+Пункти 3–6 - серце Ship Tycoon.`,
  },
  {
- title: "Контрольний список перед початком практики",
- content: `- [ ] Confirm-діалог перед кожним FireServer покупки
-- [ ] stock перевіряється й зменшується всередині purchaseLock
-- [ ] Owned і Sold Out стани відображаються на картках коректно
-- [ ] 5 тестів експлойту з попереднього розділу пройдено
-- [ ] Зберегти: \`Lesson 7.8 - Shop Security UX\``,
+ title: "Що свідомо відкласти",
+ content: `Не роби сьогодні:
+- 20 кнопок апгрейдів і Rebirth дерево;
+- DataStore сезонів (якщо ще не стабільно);
+- Publish Public;
+- open-world навколо фабрики.
+
+Роби сьогодні:
+- **один** економічний цикл MVP;
+- чесні Coins;
+- 1–2 апгрейди з table;
+- рубрика + Save.
+
+Усе «хочу ще» - у нотатку для M11 polish.`,
+ },
+ {
+ title: "Чекліст здачі уроку 56 + місток до M8",
+ content: `- [ ] Золотий шлях записаний
+- [ ] Рубрика ~15 пунктів
+- [ ] Дроп → collector → Coins
+- [ ] Покупка з canAfford на сервері
+- [ ] Апгрейд змінює геймплей
+- [ ] Немає клієнтських «читерських» Coins у здачі
+- [ ] Демо 60–90 с
+- [ ] Save: Lesson 7.8 - Tycoon Ship
+
+Далі **модуль 8 Arena**: та сама дисципліна серверних чисел, але для HP/урону. Якщо каса монет ще на клієнті - **не** йди далі з гордістю.
+
+Артефакт: фабрика, яку можна показати. Ship любить короткий переможний круг.`,
  },
  ],
  },
  commonMistakes: [
  {
- mistake: "Confirm-діалог не блокує повторний FireServer",
- explanation: "Гравець може натиснути Yes кілька разів.",
- correctApproach: "Очищайте pendingItemId одразу після FireServer",
+ mistake: "Coins++ лише в LocalScript",
+ explanation: "Чіт і розсинхрон TAB.",
+ correctApproach: "leaderstats на сервері",
  },
  {
- mistake: "stock перевіряється поза purchaseLock",
- explanation: "Два гравці можуть купити останню одиницю одночасно.",
- correctApproach: "Перевірка й декремент stock всередині заблокованої секції",
+ mistake: "Три Places: дропер / магазин / plot окремо",
+ explanation: "Немає інтегрованого циклу.",
+ correctApproach: "Один Place, один золотий шлях",
  },
  {
- mistake: "Sold Out оновлюється лише для покупця",
- explanation: "Інші гравці досі бачать активну кнопку Buy на закінченому предметі.",
- correctApproach: "FireAllClients для повідомлення про sold out",
+ mistake: "Апгрейд без зміни Config",
+ explanation: "Покупка косметична, цикл мертвий.",
+ correctApproach: "Змінити interval/amount після купівлі",
  },
  {
- mistake: "Owned предмет можна купити ще раз без помітної різниці",
- explanation: "Гравець не розуміє, що вже володіє предметом.",
- correctApproach: "Явний стан кнопки Owned ✓ з вимкненою активністю",
+ mistake: "Рубрика «майже», демо з суфлером",
+ explanation: "Це не ship для гравця.",
+ correctApproach: "Онбординг + 90 с без пояснень",
+ },
+ {
+ mistake: "Подвійний клік купує двічі",
+ explanation: "Економіка ламається.",
+ correctApproach: "debounce / owned flag",
+ },
+ {
+ mistake: "20 апгрейдів замість закрити 1 цикл",
+ explanation: "Година зникає, блокери лишаються.",
+ correctApproach: "1–2 апгрейди MVP",
  },
  ],
- summary: "Ви додали діалог підтвердження покупки, чіткі стани Owned і Sold Out на картках, безпечну перевірку лімітованого запасу всередині purchaseLock і провели фінальний протокол тестів на експлойт - магазин косметики тепер надійний і зрозумілий гравцю.",
+ summary: "Ти зібрав Ship Tycoon: один золотий шлях дроп → збір → покупка апгрейду на серверних Coins. Рубрика й демо 60–90 с підтверджують модуль перед Arena.",
  practiceTask: {
- title: "Безпека і UX магазину (~30 хв)",
- difficulty: "beginner",
- description: `**Мета:** Магазин з підтвердженням, лімітами й чіткими станами кнопок.
+ title: "Ship Tycoon: зшити і здати (~30 хв)",
+ difficulty: "intermediate",
+ description: `**Мета:** один Place з циклом plot → монети → апгрейд.
 
-### Part A - Confirm UX (10 хв)
-1. confirmPanel з YesButton/NoButton
-2. Buy-кнопка відкриває confirm замість миттєвого FireServer
+### Part A - Карта і рубрика (8 хв)
+1. Золотий шлях 6–8 кроків.
+2. Рубрика ~15 пунктів у Play.
+3. Випиши P0 з B і C.
 
-### Part B - Stock і стани (12 хв)
-1. stock = 10 на одному лімітованому предметі
-2. Перевірка/декремент stock всередині purchaseLock
-3. Owned ✓ і Sold Out стани на картках
+### Part B - Інтеграційні фікси (15 хв)
+1. Collector → leaderstats на сервері.
+2. canAfford + списання + debounce.
+3. Апгрейд реально міняє дропер.
+4. Прибери клієнтський Coins++ зі здачі.
 
-### Part C - Тест і збереження (8 хв)
-1. Виконайте 5 тестів на експлойт з теорії
-2. **Зберегти в Roblox** → \`Lesson 7.8 - Shop Security UX\` 3. **Практика завершена**`,
+### Part C - Демо і Save (7 хв)
+1. Playtest 1–9.
+2. Репетиція 60–90 с.
+3. **Save:** Lesson 7.8 - Tycoon Ship`,
  hints: [
- "Тестуйте stock з двома вікнами Studio клієнтів для реальної гонки даних",
- "pendingItemId = nil одразу після FireServer запобігає повторному підтвердженню",
- "Друкуйте stock після кожної спроби покупки для налагодження лімітів",
+ "Спочатку TAB Coins 1:1 з фактом збору, потім кнопка",
+ "1 апгрейд швидкості достатньо для ship",
+ "print на сервері після купівлі",
  ],
- optionalChallenge: "Лічильник \"Залишилось: 3\" на картці лімітованого предмета, що оновлюється в реальному часі для всіх.",
+ optionalChallenge: "Другий гравець / 2 вікна - кожен свій plot, монети не змішуються.",
  },
  quiz: {
  passingScore: 70,
- timeLimit: 10,
+ timeLimit: 15,
  questions: [
  {
  id: "q1",
- type: "multiple_choice",
- question: "Confirm-діалог перед покупкою потрібен для...",
+ type: MC,
+ question: "Головна мета уроку 7.8?",
  options: [
- "Запобігання випадковим покупкам",
- "Прискорення сервера",
- "Видалення магазину",
- "DataStore",
+ "Зшити тайкун у золотий шлях і закрити рубрику Ship",
+ "Видалити leaderstats",
+ "Почати Arena з нуля",
+ "Publish без циклу",
  ],
  correctAnswer: 0,
- explanation: "UX захист від помилок.",
+ explanation: "Ship Tycoon.",
  },
  {
  id: "q2",
- type: "multiple_choice",
- question: "stock перевіряється й зменшується...",
+ type: MC,
+ question: "Де правда про Coins?",
  options: [
- "Всередині purchaseLock",
- "На клієнті",
- "У ReplicatedFirst",
- "Ніде, не потрібно",
+ "На сервері в leaderstats",
+ "Лише в LocalScript TextLabel",
+ "У Lighting",
+ "У назві Part дропера",
  ],
  correctAnswer: 0,
- explanation: "Захист від гонки даних.",
+ explanation: "Серверні гроші.",
  },
  {
  id: "q3",
- type: "multiple_choice",
- question: "Sold Out оновлення транслюється через...",
+ type: MC,
+ question: "Що таке золотий шлях тайкуна?",
  options: [
- "FireAllClients",
- "Лише FireClient покупцю",
- "print на сервері",
- "DataStore",
+ "Короткий маршрут дроп → збір → покупка без суфлера",
+ "Список усіх Plugins",
+ "Обов’язковий open-world",
+ "Лише Skybox",
  ],
  correctAnswer: 0,
- explanation: "Усі гравці повинні бачити стан.",
+ explanation: "Інтегрований цикл.",
  },
  {
  id: "q4",
- type: "multiple_choice",
- question: "Owned ✓ стан кнопки означає...",
+ type: MC,
+ question: "Навіщо canAfford перед списанням?",
  options: [
- "Предмет уже куплено, повторна покупка блокована",
- "Предмет розпродано",
- "Помилка сервера",
- "Монети закінчилися",
+ "Не купувати в мінус / без грошей",
+ "Збільшити MaxHealth",
+ "Вимкнути дропер",
+ "Створити Terrain",
  ],
  correctAnswer: 0,
- explanation: "Чіткий візуальний стан.",
+ explanation: "Перевірка ціни.",
  },
  {
  id: "q5",
- type: "multiple_choice",
- question: "Без purchaseLock навколо stock...",
+ type: MC,
+ question: "Що перевіряє блок C рубрики?",
  options: [
- "Два гравці можуть купити останню одиницю одночасно",
- "Магазин працює швидше",
- "Немає жодного ризику",
- "UI виглядає краще",
+ "Чесність грошей: сервер, ціна з table, анти-клієнтський Coins",
+ "Лише колір стін",
+ "Назву модуля 1",
+ "Кількість Decals",
  ],
  correctAnswer: 0,
- explanation: "Гонка даних без блокування.",
+ explanation: "Економічна чесність.",
  },
  {
  id: "q6",
- type: "multiple_choice",
- question: "pendingItemId очищається...",
+ type: MC,
+ question: "Чому апгрейд має змінювати Config?",
  options: [
- "Одразу після FireServer підтвердженої покупки",
- "Ніколи",
- "Лише при закритті гри",
- "Автоматично щохвилини",
+ "Інакше покупка не відчувається в геймплеї",
+ "Config заборонений у тайкуні",
+ "Інакше leaderstats зникає",
+ "Weld тоді ламається",
  ],
  correctAnswer: 0,
- explanation: "Запобігання повторному підтвердженню.",
+ explanation: "Ефект апгрейду.",
  },
  {
  id: "q7",
- type: "multiple_choice",
- question: "5 тестів на експлойт включають...",
+ type: MC,
+ question: "Що НЕ треба робити в 7.8?",
  options: [
- "Спам-клік, підроблений id, гонку stock, вже власний предмет",
- "Лише перевірку кольору UI",
- "Лише швидкість завантаження",
- "Лише звук",
+ "Будувати 20 апгрейдів замість закрити цикл",
+ "Пройти рубрику",
+ "Перевірити collector",
+ "Зберегти Place",
  ],
  correctAnswer: 0,
- explanation: "Повний протокол безпеки.",
+ explanation: "Вузький MVP.",
  },
  {
  id: "q8",
- type: "multiple_choice",
- question: "Гарний UX-плейтест означає...",
+ type: MC,
+ question: "Навіщо debounce на покупці?",
  options: [
- "Гравець розуміє магазин без пояснень",
- "Магазин має 100 кнопок",
- "Немає жодного тексту",
- "Ціни приховані",
+ "Подвійний клік не купує двічі даром",
+ "Це замінює дропер",
+ "debounce малює Sky",
+ "Обов’язково для SpawnLocation",
  ],
  correctAnswer: 0,
- explanation: "Інтуїтивність інтерфейсу.",
+ explanation: "Анти-спам купівлі.",
  },
  {
  id: "q9",
- type: "multiple_choice",
- question: "Урок 7.8 базується на...",
+ type: MC,
+ question: "Скільки триває цільове демо Ship?",
  options: [
- "Cosmetic Shop з Уроку 7.7",
- "Лише Модуля 1",
- "Лише гонки",
- "Порожньо",
+ "Близько 60–90 секунд без суфлера",
+ "Обов’язково 40 хвилин пояснень",
+ "Достатньо відкрити Explorer",
+ "Лише скріншот",
  ],
  correctAnswer: 0,
- explanation: "Полірування проєкту магазину.",
+ explanation: "Коротке демо.",
  },
  {
  id: "q10",
- type: "multiple_choice",
- question: "Урок 7.8 зберегти назву...",
+ type: MC,
+ question: "Як 7.8 готує M8 Arena?",
  options: [
- "Lesson 7.8 - Shop Security UX",
- "Cosmetic Shop",
- "Shop Works",
- "RemoteFunction",
+ "Звичка «сервер вирішує критичні числа» переходить на HP/урон",
+ "Arena забороняє сервер",
+ "Треба видалити тайкун з пам’яті",
+ "У Arena Coins пише лише клієнт",
  ],
  correctAnswer: 0,
- explanation: "Зберегти урок безпеки й UX.",
+ explanation: "Дисципліна сервера.",
+ },
+ {
+ id: "q11",
+ type: MC,
+ question: "P0 для тайкуна?",
+ options: [
+ "Монети/покупки повністю на клієнті без сервера",
+ "Трохи кривий колір кнопки",
+ "Неідеальний Ambient",
+ "Дрібний Billboard offset",
+ ],
+ correctAnswer: 0,
+ explanation: "Критична дірка економіки.",
+ },
+ {
+ id: "q12",
+ type: MC,
+ question: "Навіщо один Place замість трьох?",
+ options: [
+ "Інакше немає інтегрованого золотого шляху",
+ "Studio дозволяє лише один Place",
+ "Три Places завжди швидше",
+ "Рубрика забороняє папки",
+ ],
+ correctAnswer: 0,
+ explanation: "Інтеграція.",
+ },
+ {
+ id: "q13",
+ type: MC,
+ question: "Що має зробити collector?",
+ options: [
+ "Додати Coins на сервері в leaderstats",
+ "Видалити plot",
+ "Створити RemoteFunction обов’язково",
+ "Змінити лише колір Floor",
+ ],
+ correctAnswer: 0,
+ explanation: "Збір грошей.",
+ },
+ {
+ id: "q14",
+ type: MC,
+ question: "Звідки брати ціну апгрейду?",
+ options: [
+ "З серверної table/конфігу",
+ "Сліпо з числа клієнта",
+ "З Volume Sound",
+ "З назви Sky",
+ ],
+ correctAnswer: 0,
+ explanation: "Config правда.",
+ },
+ {
+ id: "q15",
+ type: MC,
+ question: "Що вважається зданим артефактом 7.8?",
+ options: [
+ "Золотий шлях + рубрика + чесні Coins/апгрейд + Save",
+ "Лише теорія",
+ "Порожній Baseplate",
+ "Клієнтський Coins=9999",
+ ],
+ correctAnswer: 0,
+ explanation: "Потрібен ship тайкуна.",
  },
  ],
  },
 }
+

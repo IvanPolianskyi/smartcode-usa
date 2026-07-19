@@ -5,9 +5,9 @@
 
 export const ROBOX_PHASES = [
   { id: 'A', titleUk: 'Основи Studio', modules: [1, 2, 3] },
-  { id: 'B', titleUk: 'Ігрові жанри', modules: [4, 5, 6] },
-  { id: 'C', titleUk: 'Мережа і світ', modules: [7, 8] },
-  { id: 'D', titleUk: 'Системи і поліш', modules: [9, 10, 11] },
+  { id: 'B', titleUk: 'Дані та жанри', modules: [4, 5, 6] },
+  { id: 'C', titleUk: 'Tycoon і арена', modules: [7, 8] },
+  { id: 'D', titleUk: 'Мережа, хаб і поліш', modules: [9, 10, 11] },
   { id: 'E', titleUk: 'Реліз', modules: [12] },
 ]
 
@@ -15,132 +15,132 @@ export const ROBOX_MODULE_META_UK = {
   'module-01': {
     tagline: 'Старт творця',
     description:
-      'Studio й будинок з Union, повний Terrain, змінні та if, оздоба, Lighting/Sound, Party Mode і checkpoint живої локації.',
+      'Інструменти Studio, будинок з Union, Terrain, Properties, змінні, if, атмосфера і Party Mode.',
     learningOutcomes: [
-      'Будувати з Parts, Move/Scale/Rotate, Negate+Union',
-      'Ліпити острів у Terrain Editor',
-      'Писати перші скрипти зі змінними, if і Party Mode',
+      'Будувати з Parts, Move/Scale/Rotate і Union',
+      'Працювати з Terrain і Properties',
+      'Писати перші скрипти зі змінними та if',
     ],
     phase: 'A',
   },
   'module-02': {
     tagline: 'World craft',
     description:
-      'Штаб острова на Model, рухомі з’єднання Constraints, атракціони парку й гігієна Toolbox перед здачею Park_v1.',
+      'Model, фізика, Weld/Hinge/Rope, атракціони та безпечна здача парку з Toolbox.',
     learningOutcomes: [
-      'Збирати Model з PrimaryPart, Pivot і Folder',
-      'Ставити Weld/Hinge/Rope для дверей і мостів',
-      'Здати парк після аудиту Free Model і playtest',
+      'Групувати світ у Model і Folders',
+      'Збирати двері й міст на Constraints',
+      'Здати park-білд після playtest',
     ],
     phase: 'A',
   },
   'module-03': {
     tagline: 'Код, що грається',
     description:
-      'Взаємодія Click/Prompt, Touched і чекпоінти, цикли while/for, functions, LocalScript+GUI і здача міні-гри.',
+      'ClickDetector, ProximityPrompt, Touched, while/for, functions і LocalScript з GUI.',
     learningOutcomes: [
-      'Відкривати двері й підказки через ClickDetector і ProximityPrompt',
-      'Писати Touched, while/for і функції без хаосу',
-      'Зібрати міні-гру з GUI на LocalScript',
+      'Робити інтерактив і пастки з debounce',
+      'Писати цикли та функції без копіпасти',
+      'Розуміти Script vs LocalScript',
     ],
     phase: 'A',
   },
   'module-04': {
     tagline: 'Tables і дані',
     description:
-      'Масиви й словники, ModuleScript Config, DataStore lite і data-driven вітрина поверх навичок M3.',
+      'Масиви, словники, інвентар, ModuleScript Config і перший DataStore.',
     learningOutcomes: [
-      'Тримати списки й прайси в table',
-      'Виносити Config у ModuleScript через require',
-      'Зберегти й завантажити table через DataStore lite',
+      'Зберігати дані в table',
+      'Виносити баланс у ModuleScript',
+      'Зберігати прогрес через DataStore',
     ],
     phase: 'B',
   },
   'module-05': {
-    tagline: 'Арена',
+    tagline: 'Obby',
     description:
-      'Бійцівський клуб: здоров\'я, меч, урон, TweenService та респавн у PvE-арені.',
+      'Повний obby-продукт: біоми, hazards, чекпоінти, баланс, juice і ship з Badge.',
     learningOutcomes: [
-      'Керувати Humanoid і шкодою',
-      'Додавати зброю та візуальні ефекти',
-      'Збалансувати бій і смерть гравця',
+      'Зібрати прохідний obby на кілька зон',
+      'Ітерувати складність після playtest',
+      'Додати polish і здати рівень',
     ],
     phase: 'B',
   },
   'module-06': {
-    tagline: 'Гонки',
+    tagline: 'Simulator',
     description:
-      'Машина, трасса, таймер і кола. У кінці модуля - перший досвід RemoteEvent для чесного мультиплеєру.',
+      'Core loop, leaderstats, HUD, нагороди, Attributes, DataStore і ship симулятора.',
     learningOutcomes: [
-      'Зібрати авто на VehicleSeat',
-      'Рахувати кола та час',
-      'Зв\'язати клієнт і сервер через RemoteEvent',
+      'Зробити робочі leaderstats',
+      'Показати HUD на LocalScript',
+      'Зберегти Coins/Power між сесіями',
     ],
     phase: 'B',
   },
   'module-07': {
-    tagline: 'Мережа та магазин',
+    tagline: 'Tycoon',
     description:
-      'Клієнт і сервер, RemoteEvent і RemoteFunction, безпечний магазин з UI. Поглиблює тему з гонок.',
+      'Plot, дропер, покупки з leaderstats, апгрейди з table і здача міні-фабрики.',
     learningOutcomes: [
-      'Розділяти логіку клієнта й сервера',
-      'Будувати магазин із перевіркою на сервері',
-      'Захищати гру від читерства',
+      'Зібрати ланцюжок дропер → колектор',
+      'Робити покупки з перевіркою монет',
+      'Масштабувати апгрейди через table',
     ],
     phase: 'C',
   },
   'module-08': {
-    tagline: 'NPC і квести',
+    tagline: 'Arena',
     description:
-      'Живі NPC: діалоги, патруль, квести та ворог, який атакує.',
+      'Health, Tool, урон на сервері, Tween/Particles, хвилі ворогів і ship арени.',
     learningOutcomes: [
-      'Створити NPC з діалогами',
-      'Запустити просту квест-систему',
-      'Додати ворога з AI-атакою',
+      'Керувати Humanoid і шкодою на сервері',
+      'Додати зброю та візуальні ефекти',
+      'Зібрати хвилі з waveConfig',
     ],
     phase: 'C',
   },
   'module-09': {
-    tagline: 'RPG-системи',
+    tagline: 'Race + мережа',
     description:
-      'ModuleScript, інвентар, екіпіровка та збереження прогресу в стилі RPG.',
+      'Машина, кола, client/server, RemoteEvent, лідерборд і анти-чит playtest.',
     learningOutcomes: [
-      'Організувати код у ModuleScript',
-      'Зберігати інвентар у таблицях',
-      'Серіалізувати дані гравця',
+      'Зібрати трасу й таймер кіл',
+      'Пояснити клієнт vs сервер',
+      'Надіслати чесний сигнал через RemoteEvent',
     ],
     phase: 'D',
   },
   'module-10': {
-    tagline: 'Головоломки',
+    tagline: 'Живий хаб',
     description:
-      'Constraints, raycast, лазерні пастки та процедурні елементи для складніших рівнів.',
+      'Магазин на Remotes, NPC, Pathfinding, квести, інвентар і Raycast-пазл.',
     learningOutcomes: [
-      'Використовувати фізичні зв\'язки',
-      'Будувати пазли з Raycast',
-      'Підсилити гру візуальними деталями',
+      'Зробити безпечний магазин RemoteEvent/Function',
+      'Додати NPC з діалогом і квестом',
+      'Зібрати хаб до здачі',
     ],
     phase: 'D',
   },
   'module-11': {
-    tagline: 'Поліш',
+    tagline: 'Polish',
     description:
-      'Чистий проєкт, екран завантаження, звук, оптимізація та зручність для гравця.',
+      'Аудит Explorer, loading screen, juice, оптимізація/UX, Demo Ready і сліпий playtest.',
     learningOutcomes: [
-      'Прибирати зайве в Explorer',
-      'Покращувати UX і продуктивність',
-      'Готувати гру до публікації',
+      'Навести лад у проєкті',
+      'Підняти відчуття гри (звук/VFX/UX)',
+      'Підготувати demo до релізу',
     ],
     phase: 'D',
   },
   'module-12': {
     tagline: 'Реліз',
     description:
-      'Фінальний проєкт: план, збірка, тести, публікація, портфоліо та showcase.',
+      'Пітч і MVP, збірка з TeleportService, тест-план, Publish, портфоліо і SHOWCASE DAY.',
     learningOutcomes: [
-      'Спланувати власну гру',
+      'Спланувати й зібрати фіналку',
       'Протестувати та опублікувати',
-      'Оформити роботу в портфоліо',
+      'Провести фінальний showcase',
     ],
     phase: 'E',
   },
@@ -148,134 +148,130 @@ export const ROBOX_MODULE_META_UK = {
 
 export const ROBOX_MODULE_META_EN = {
   'module-01': {
-    tagline: 'Studio start',
+    tagline: 'Creator start',
     description:
-      'Open Roblox Studio, build an island, add clicks, sound, and atmosphere. Lesson 1.6 reinforces programming basics before the obby.',
+      'Studio tools, Union house, Terrain, Properties, variables, if, atmosphere, and Party Mode.',
     learningOutcomes: [
-      'Navigate Studio and Explorer',
-      'Create and tune Parts',
-      'Wire ClickDetector, variables, if, and print',
+      'Build with Parts, Move/Scale/Rotate, and Union',
+      'Work with Terrain and Properties',
+      'Write first scripts with variables and if',
     ],
   },
   'module-02': {
     tagline: 'World craft',
     description:
-      'Island HQ with Model/Pivot, park gate Constraints, rides, and Toolbox hygiene for Park_v1.',
+      'Models, physics, Weld/Hinge/Rope, rides, and a safe Toolbox park handoff.',
     learningOutcomes: [
-      'Assemble Models with PrimaryPart and Folders',
-      'Use Weld/Hinge/Rope for doors and bridges',
-      'Ship a park after Free Model audit and playtest',
+      'Organize the world with Models and Folders',
+      'Build gates and bridges with constraints',
+      'Ship a playtested park build',
     ],
   },
   'module-03': {
     tagline: 'Playable code',
     description:
-      'Click/Prompt interaction, Touched, checkpoints, while/for, functions, LocalScript GUI, and a mini-game handoff.',
+      'ClickDetector, ProximityPrompt, Touched, while/for, functions, and LocalScript GUI.',
     learningOutcomes: [
-      'Open doors and hints with ClickDetector and ProximityPrompt',
-      'Write Touched, while/for, and functions cleanly',
-      'Ship a mini-game with LocalScript GUI',
+      'Build interactives and hazards with debounce',
+      'Write loops and functions without copy-paste',
+      'Tell Script vs LocalScript apart',
     ],
   },
   'module-04': {
     tagline: 'Tables & data',
     description:
-      'Arrays and dictionaries, ModuleScript Config, DataStore lite, and a data-driven shop showcase on top of M3 skills.',
+      'Arrays, dictionaries, inventory, ModuleScript config, and first DataStore.',
     learningOutcomes: [
-      'Keep lists and prices in tables',
-      'Move Config into a ModuleScript with require',
-      'Save and load a table with DataStore lite',
+      'Store data in tables',
+      'Move balance into ModuleScript',
+      'Save progress with DataStore',
     ],
   },
   'module-05': {
-    tagline: 'Arena',
+    tagline: 'Obby',
     description:
-      'Fighting club: health, sword, damage, TweenService, and respawn in a PvE arena.',
+      'Full obby product: biomes, hazards, checkpoints, balance, juice, and Badge ship.',
     learningOutcomes: [
-      'Control Humanoid and damage',
-      'Add weapons and visual effects',
-      'Balance combat and death',
+      'Build a multi-zone completable obby',
+      'Iterate difficulty after playtest',
+      'Polish and ship the level',
     ],
   },
   'module-06': {
-    tagline: 'Racing',
+    tagline: 'Simulator',
     description:
-      'Car, track, timer, and laps. Ends with your first RemoteEvent for fair multiplayer racing.',
+      'Core loop, leaderstats, HUD, rewards, Attributes, DataStore, and sim ship.',
     learningOutcomes: [
-      'Build a VehicleSeat car',
-      'Track laps and race time',
-      'Connect client and server with RemoteEvent',
+      'Create working leaderstats',
+      'Show a LocalScript HUD',
+      'Save Coins/Power between sessions',
     ],
   },
   'module-07': {
-    tagline: 'Network & shop',
+    tagline: 'Tycoon',
     description:
-      'Client vs server, RemoteEvent and RemoteFunction, and a secure shop UI. Goes deeper than the racing teaser.',
+      'Plot, dropper, leaderstats purchases, table upgrades, and mini-factory ship.',
     learningOutcomes: [
-      'Separate client and server logic',
-      'Build a server-validated shop',
-      'Protect the game from exploits',
+      'Chain dropper → collector',
+      'Handle coin-checked purchases',
+      'Scale upgrades with tables',
     ],
   },
   'module-08': {
-    tagline: 'NPCs & quests',
+    tagline: 'Arena',
     description:
-      'Living NPCs: dialogue, patrol paths, quests, and an enemy that attacks.',
+      'Health, Tools, server damage, Tween/Particles, enemy waves, and arena ship.',
     learningOutcomes: [
-      'Create NPCs with dialogue',
-      'Run a simple quest system',
-      'Add an attacking enemy',
+      'Control Humanoid and server-side damage',
+      'Add weapons and VFX',
+      'Build waves from waveConfig',
     ],
   },
   'module-09': {
-    tagline: 'RPG systems',
+    tagline: 'Race + networking',
     description:
-      'ModuleScript, inventory, gear, and saving RPG-style player progress.',
+      'Car, laps, client/server, RemoteEvent, leaderboard, and anti-cheat playtest.',
     learningOutcomes: [
-      'Organize code with ModuleScript',
-      'Store inventory in tables',
-      'Serialize player data',
+      'Build a track and lap timer',
+      'Explain client vs server',
+      'Send a fair finish via RemoteEvent',
     ],
   },
   'module-10': {
-    tagline: 'Puzzles',
+    tagline: 'Living hub',
     description:
-      'Constraints, raycasting, laser traps, and procedural elements for advanced levels.',
+      'Remote shop, NPCs, Pathfinding, quests, inventory, and Raycast puzzle.',
     learningOutcomes: [
-      'Use physics constraints',
-      'Build puzzles with Raycast',
-      'Level up visuals and mechanics',
+      'Build a secure RemoteEvent/Function shop',
+      'Add NPC dialogue and quests',
+      'Ship an integrated hub',
     ],
   },
   'module-11': {
     tagline: 'Polish',
     description:
-      'Clean project, loading screen, sound design, optimization, and player-friendly UX.',
+      'Explorer audit, loading screen, juice, UX/perf, Demo Ready, and blind playtest.',
     learningOutcomes: [
-      'Keep Explorer organized',
-      'Improve UX and performance',
-      'Prepare the game for release',
+      'Keep the project organized',
+      'Raise game feel (SFX/VFX/UX)',
+      'Prepare a release-ready demo',
     ],
   },
   'module-12': {
     tagline: 'Release',
     description:
-      'Capstone: plan, assemble, test, publish, portfolio, and showcase day.',
+      'Pitch & MVP, final build with TeleportService, test plan, Publish, portfolio, SHOWCASE DAY.',
     learningOutcomes: [
-      'Plan your own game',
+      'Plan and assemble a final game',
       'Test and publish to Roblox',
-      'Present work in a portfolio',
+      'Deliver a final showcase',
     ],
   },
 }
 
-export const ROBOX_MODULE_TITLE_UK = {
-  'module-07': '07 - Мережа та магазин',
-}
+export const ROBOX_MODULE_TITLE_UK = {}
 
-export const ROBOX_MODULE_TITLE_EN = {
-  'module-07': '07 - Network & Shop',
-}
+export const ROBOX_MODULE_TITLE_EN = {}
 
 export function enrichRobloxModules(modules, locale = 'uk') {
   const metaMap = locale === 'en' ? ROBOX_MODULE_META_EN : ROBOX_MODULE_META_UK
