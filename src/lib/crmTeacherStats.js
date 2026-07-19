@@ -1,4 +1,4 @@
-import { crmJson } from '@/lib/crmStudentSchedulePull'
+import { crmJson, isCrmGroupLessonSlot } from '@/lib/crmStudentSchedulePull'
 import { isReliableStudentDisplayName, LMS_COURSE_CATALOG } from '@/lib/crmLmsSync'
 import {
   flattenCourseLessons,
@@ -172,7 +172,7 @@ export async function fetchTeacherNextLesson(crmStaffId) {
       kindLabel:
         kind === 'trial'
           ? 'ПУ'
-          : lesson.group_id || lesson.is_group_slot
+          : isCrmGroupLessonSlot(lesson)
             ? 'ГУ'
             : 'ІУ',
       studentCode: shortId || null,
@@ -199,7 +199,7 @@ function isBetterTeacherName(nextName, currentName) {
 function lessonKindLabel(lesson) {
   const kind = String(lesson?.kind || 'individual')
   if (kind === 'trial') return 'ПУ'
-  if (lesson?.group_id || lesson?.is_group_slot || lesson?.is_group_shell) return 'ГУ'
+  if (isCrmGroupLessonSlot(lesson)) return 'ГУ'
   return 'ІУ'
 }
 
