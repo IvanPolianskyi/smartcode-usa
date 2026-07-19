@@ -481,7 +481,8 @@ Sign виконує роль дорожнього покажчика: одне �
         explanation: "7.2 автоматизує вже перевірену сцену через серверний цикл і Config.",
       },
     ],
-  },;
+  },
+};
 
 export const ukLesson72 = {
   lessonId: "lesson-roblox-7-2",
