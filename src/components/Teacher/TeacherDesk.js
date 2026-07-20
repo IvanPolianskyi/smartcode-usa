@@ -227,7 +227,6 @@ export default function TeacherDesk() {
         <header className={styles.header}>
           <div>
             <h1 className={styles.title}>{t('title')}</h1>
-            <p className={styles.subtitle}>{t('subtitle')}</p>
           </div>
           <div className={styles.headerActions}>
             <button
