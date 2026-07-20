@@ -63,7 +63,7 @@ function AdminDashboard({ adminStats, t }) {
   )
 }
 
-function StudentDashboard({ user, progressData, paymentStats, progressLoading, refreshData, t, getCourseInfo, onLogout }) {
+function StudentDashboard({ user, progressData, paymentStats, progressLoading, paymentLoading, refreshData, t, getCourseInfo, onLogout }) {
   const [payPanelOpen, setPayPanelOpen] = useState(false)
   const dateLocale = 'uk-UA'
   const profile = user?.studentProfile || { regularSchedule: [], activeOnlineCourses: [], zoomLink: '' }
@@ -111,6 +111,7 @@ function StudentDashboard({ user, progressData, paymentStats, progressLoading, r
       <StudentPaymentPanel
         t={t}
         paymentStats={paymentStats}
+        paymentLoading={paymentLoading}
         onRefresh={refreshData}
         defaultOpen={payPanelOpen}
       />
@@ -207,10 +208,12 @@ export default function DashboardPage() {
   const [paymentStats, setPaymentStats] = useState({ completed: 0, pending: 0, failed: 0, totalAmount: 0 })
   const [adminStats, setAdminStats] = useState(null)
   const [progressLoading, setProgressLoading] = useState(true)
+  const [paymentLoading, setPaymentLoading] = useState(true)
 
   const loadData = useCallback(async () => {
     if (!user) return
     setProgressLoading(true)
+    setPaymentLoading(true)
     try {
       if (user.role === 'admin') {
         const adminStatsResponse = await fetch('/api/admin/statistics')
@@ -255,10 +258,12 @@ export default function DashboardPage() {
           )
         })
         .catch(() => {})
+        .finally(() => setPaymentLoading(false))
 
       await Promise.all([progressPromise, paymentPromise])
     } finally {
       setProgressLoading(false)
+      setPaymentLoading(false)
     }
   }, [user])
 
@@ -389,6 +394,7 @@ export default function DashboardPage() {
                 progressData={progressData}
                 paymentStats={paymentStats}
                 progressLoading={progressLoading}
+                paymentLoading={paymentLoading}
                 refreshData={refreshData}
                 t={t}
                 getCourseInfo={getCourseInfo}

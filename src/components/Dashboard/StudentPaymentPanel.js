@@ -7,6 +7,7 @@ import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
 export default function StudentPaymentPanel({
   t,
   paymentStats,
+  paymentLoading = false,
   onRefresh,
   defaultOpen = false,
 }) {
@@ -21,7 +22,7 @@ export default function StudentPaymentPanel({
 
   const lessonCredits = Number(paymentStats?.lessonCredits || 0)
   const balanceStrongClass =
-    lessonCredits < 0 ? styles.payStatNegative : undefined
+    !paymentLoading && lessonCredits < 0 ? styles.payStatNegative : undefined
 
   useEffect(() => {
     if (defaultOpen) {
@@ -109,7 +110,9 @@ export default function StudentPaymentPanel({
         <div className={styles.payBalance}>
           <BookOpen size={18} aria-hidden />
           <span>{t('student.payments.accountBalance')}</span>
-          <strong className={balanceStrongClass}>{lessonCredits}</strong>
+          <strong className={balanceStrongClass} aria-live="polite">
+            {paymentLoading ? t('student.payments.balanceLoading') : lessonCredits}
+          </strong>
         </div>
 
         <form className={styles.payFormCol} onSubmit={handleSubmit}>
