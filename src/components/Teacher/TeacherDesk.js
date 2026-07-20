@@ -3,13 +3,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link, useRouter } from '@/i18n/navigation'
-import {
-  BookOpen,
-  LogOut,
-  Users,
-  RefreshCw,
-  CalendarClock,
-} from 'lucide-react'
+import { BookOpen, LogOut, CalendarClock } from 'lucide-react'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import { logout } from '@/lib/authClient'
 import styles from './TeacherDesk.module.css'
@@ -52,30 +46,14 @@ export default function TeacherDesk() {
   const t = useTranslations('teacher')
   const router = useRouter()
   const { user, loading: sessionLoading, refresh } = useAuthSession()
-  const [tab, setTab] = useState('courses')
-  const [students, setStudents] = useState([])
-  const [teacherStats, setTeacherStats] = useState(null)
-  const [crmError, setCrmError] = useState('')
   const [nextLesson, setNextLesson] = useState(null)
   const [nextLessonError, setNextLessonError] = useState('')
   const [loadingNextLesson, setLoadingNextLesson] = useState(false)
   const [batchStats, setBatchStats] = useState(null)
   const [batchCrmError, setBatchCrmError] = useState('')
-  const [loadingStudents, setLoadingStudents] = useState(false)
   const [loadingBatch, setLoadingBatch] = useState(false)
-  const [error, setError] = useState('')
-  const [notice, setNotice] = useState('')
-  const [selectedCode, setSelectedCode] = useState('')
-  const [detail, setDetail] = useState(null)
-  const [actionForm, setActionForm] = useState({
-    action: 'unlockLesson',
-    courseId: 'roblox-studio',
-    lessonId: '',
-  })
-  const [saving, setSaving] = useState(false)
 
   const linked = Boolean(user?.teacherProfile?.crmStaffId)
-  const recordingStats = batchStats || teacherStats
 
   useEffect(() => {
     if (sessionLoading) return
@@ -99,33 +77,16 @@ export default function TeacherDesk() {
     try {
       const res = await fetch('/api/teacher/next-lesson', { credentials: 'include' })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error || t('students.error'))
+      if (!res.ok) throw new Error(data.error || t('recordings.crmError'))
       setNextLesson(data.nextLesson || null)
       if (data.crmError) setNextLessonError(data.crmError)
     } catch (e) {
       setNextLesson(null)
-      setNextLessonError(e.message || t('students.error'))
+      setNextLessonError(e.message || t('recordings.crmError'))
     } finally {
       setLoadingNextLesson(false)
     }
   }, [linked, user?.role, t])
-
-  const loadStudents = useCallback(async () => {
-    setLoadingStudents(true)
-    setError('')
-    try {
-      const res = await fetch('/api/teacher/students', { credentials: 'include' })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || t('students.error'))
-      setStudents(data.students || [])
-      setTeacherStats(data.teacherStats || null)
-      setCrmError(data.crmError || '')
-    } catch (e) {
-      setError(e.message || t('students.error'))
-    } finally {
-      setLoadingStudents(false)
-    }
-  }, [t])
 
   const loadSalaryBatch = useCallback(async () => {
     if (!linked && user?.role !== 'admin') {
@@ -138,7 +99,7 @@ export default function TeacherDesk() {
     try {
       const res = await fetch('/api/teacher/salary-batch', { credentials: 'include' })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error || t('students.error'))
+      if (!res.ok) throw new Error(data.error || t('recordings.crmError'))
       setBatchStats(data.totals || null)
       setBatchCrmError(data.crmError || '')
     } catch (e) {
@@ -151,78 +112,23 @@ export default function TeacherDesk() {
 
   useEffect(() => {
     if (!user || (user.role !== 'teacher' && user.role !== 'admin')) return
-    // Паралельно: один віджет не блокує інший.
     void loadNextLesson()
     void loadSalaryBatch()
   }, [user, loadNextLesson, loadSalaryBatch])
 
-  useEffect(() => {
-    if (!user || (user.role !== 'teacher' && user.role !== 'admin')) return
-    if (tab === 'students') loadStudents()
-  }, [tab, user, loadStudents])
-
-  const openDetail = async (code) => {
-    setSelectedCode(code)
-    setDetail(null)
-    setNotice('')
-    setError('')
-    try {
-      const res = await fetch(`/api/teacher/students/${encodeURIComponent(code)}/progress`, {
-        credentials: 'include',
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || t('students.error'))
-      setDetail(data)
-      const firstCourse = data.courseIds?.[0] || 'roblox-studio'
-      setActionForm((f) => ({ ...f, courseId: firstCourse }))
-    } catch (e) {
-      setError(e.message || t('students.error'))
-    }
-  }
-
-  const applyAction = async () => {
-    if (!selectedCode) return
-    setSaving(true)
-    setNotice('')
-    setError('')
-    try {
-      const res = await fetch(
-        `/api/teacher/students/${encodeURIComponent(selectedCode)}/progress`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(actionForm),
-        }
-      )
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || t('students.error'))
-      setNotice(t('students.saved'))
-      setDetail((prev) => (prev ? { ...prev, progress: data.progress } : prev))
-      await loadStudents()
-    } catch (e) {
-      setError(e.message || t('students.error'))
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  const handleLogout = async () => {
+  const onLogout = async () => {
     await logout()
+    await refresh()
     router.push('/login')
   }
 
   if (sessionLoading || !user) {
     return (
       <div className={styles.page}>
-        <div className={styles.shell}>
-          <p className={styles.empty}>{t('loading')}</p>
-        </div>
+        <p className={styles.empty}>{t('loading')}</p>
       </div>
     )
   }
-
-  if (user.role !== 'teacher' && user.role !== 'admin') return null
 
   return (
     <div className={styles.page}>
@@ -230,21 +136,10 @@ export default function TeacherDesk() {
         <header className={styles.header}>
           <div>
             <h1 className={styles.title}>{t('title')}</h1>
+            <p className={styles.subtitle}>{t('subtitle')}</p>
           </div>
           <div className={styles.headerActions}>
-            <button
-              type="button"
-              className={styles.btn}
-              onClick={() => {
-                loadNextLesson()
-                loadSalaryBatch()
-                if (tab === 'students') loadStudents()
-                refresh?.(false)
-              }}
-            >
-              <RefreshCw size={16} />
-            </button>
-            <button type="button" className={styles.btn} onClick={handleLogout}>
+            <button type="button" className={styles.btn} onClick={onLogout}>
               <LogOut size={16} />
               {t('logout')}
             </button>
@@ -329,24 +224,28 @@ export default function TeacherDesk() {
             {batchCrmError ? (
               <p className={styles.warn}>{t('recordings.crmError')}</p>
             ) : null}
-            {loadingBatch && !recordingStats ? (
+            {loadingBatch && !batchStats ? (
               <p className={styles.empty}>{t('loading')}</p>
             ) : null}
-            {recordingStats ? (
+            {batchStats ? (
               <div className={styles.statsRow}>
                 <div className={`${styles.statCard} ${styles.statCardAccent}`}>
-                  <span className={styles.statLabel}>{t('recordings.currentBatch')}</span>
+                  <span className={styles.statLabel}>{t('recordings.batchIu')}</span>
                   <strong className={styles.statValue}>
-                    {recordingStats.currentBatchRecorded ??
-                      recordingStats.currentBatchVideos ??
-                      0}
+                    {batchStats.individualCount ?? 0}
                   </strong>
                 </div>
-                {recordingStats.payoutUah != null ? (
+                <div className={`${styles.statCard} ${styles.statCardAccent}`}>
+                  <span className={styles.statLabel}>{t('recordings.batchGu')}</span>
+                  <strong className={styles.statValue}>
+                    {batchStats.groupCount ?? 0}
+                  </strong>
+                </div>
+                {batchStats.payoutUah != null ? (
                   <div className={styles.statCard}>
                     <span className={styles.statLabel}>{t('recordings.payoutAmount')}</span>
                     <strong className={styles.statValue}>
-                      {Number(recordingStats.payoutUah).toLocaleString('uk-UA')} ₴
+                      {Number(batchStats.payoutUah).toLocaleString('uk-UA')} ₴
                     </strong>
                   </div>
                 ) : null}
@@ -355,194 +254,20 @@ export default function TeacherDesk() {
           </section>
         )}
 
-        <div className={styles.tabs}>
-          {[
-            { id: 'courses', icon: BookOpen, label: t('tabs.courses') },
-            { id: 'students', icon: Users, label: t('tabs.students') },
-          ].map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              className={`${styles.tab} ${tab === item.id ? styles.tabActive : ''}`}
-              onClick={() => setTab(item.id)}
-            >
-              <item.icon size={14} style={{ marginRight: 6, verticalAlign: 'middle' }} />
-              {item.label}
-            </button>
-          ))}
-        </div>
-
-        {error && <p className={styles.error}>{error}</p>}
-        {notice && <p className={styles.success}>{notice}</p>}
-
-        {tab === 'courses' && (
-          <div className={styles.panel}>
-            <div className={styles.courseGrid}>
-              {COURSE_CARDS.map((course) => (
-                <div key={course.id} className={styles.courseCard}>
-                  <h3>{t(course.titleKey)}</h3>
-                  <p className={styles.courseMeta}>{t('courses.fullAccess')}</p>
-                  <Link href={course.href} className={`${styles.btn} ${styles.btnPrimary}`}>
-                    {t('courses.open')}
-                  </Link>
-                </div>
-              ))}
-            </div>
+        <section className={styles.panel} aria-label={t('courses.title')}>
+          <h2 className={styles.recordingsTitle}>{t('courses.title')}</h2>
+          <div className={styles.courseGrid}>
+            {COURSE_CARDS.map((course) => (
+              <div key={course.id} className={styles.courseCard}>
+                <h3>{t(course.titleKey)}</h3>
+                <p className={styles.courseMeta}>{t('courses.fullAccess')}</p>
+                <Link href={course.href} className={`${styles.btn} ${styles.btnPrimary}`}>
+                  {t('courses.open')}
+                </Link>
+              </div>
+            ))}
           </div>
-        )}
-
-        {tab === 'students' && (
-          <div className={styles.panel}>
-            {!linked && user.role === 'teacher' && (
-              <p className={styles.error}>{t('students.notLinked')}</p>
-            )}
-            {crmError && linked && (
-              <p className={styles.warn}>{t('students.crmStatsError')}</p>
-            )}
-            {teacherStats && linked && (
-              <div className={styles.statsRow}>
-                <div className={`${styles.statCard} ${styles.statCardAccent}`}>
-                  <span className={styles.statLabel}>{t('students.totalRecorded')}</span>
-                  <strong className={styles.statValue}>
-                    {teacherStats.currentBatchRecorded ??
-                      teacherStats.currentBatchVideos ??
-                      0}
-                  </strong>
-                </div>
-                <div className={styles.statCard}>
-                  <span className={styles.statLabel}>{t('students.studentsCount')}</span>
-                  <strong className={styles.statValue}>{students.length}</strong>
-                </div>
-              </div>
-            )}
-            {loadingStudents ? (
-              <p className={styles.empty}>{t('loading')}</p>
-            ) : students.length === 0 ? (
-              <p className={styles.empty}>{t('students.empty')}</p>
-            ) : (
-              <div className={styles.tableWrap}>
-                <table className={styles.table}>
-                  <thead>
-                    <tr>
-                      <th>{t('students.name')}</th>
-                      <th>{t('students.code')}</th>
-                      <th>{t('students.lessonsRecorded')}</th>
-                      <th>{t('students.courses')}</th>
-                      <th>{t('students.progress')}</th>
-                      <th>{t('students.actions')}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {students.map((row) => (
-                      <tr key={row.code}>
-                        <td className={styles.studentName}>{row.name || row.code}</td>
-                        <td className={styles.code}>{row.code}</td>
-                        <td>{row.recordedLessons ?? 0}</td>
-                        <td>{(row.courseIds || []).join(', ') || '—'}</td>
-                        <td>
-                          {Object.keys(row.progress || {}).length === 0 ? (
-                            '—'
-                          ) : (
-                            Object.entries(row.progress || {}).map(([courseId, p]) => (
-                              <div key={courseId}>
-                                {courseId}: {p.pct}%
-                              </div>
-                            ))
-                          )}
-                        </td>
-                        <td>
-                          {row.inLms !== false ? (
-                            <button
-                              type="button"
-                              className={styles.btn}
-                              onClick={() => openDetail(row.code)}
-                            >
-                              {t('students.viewProgress')}
-                            </button>
-                          ) : (
-                            <span className={styles.muted}>{t('students.noLms')}</span>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-
-            {selectedCode && detail && (
-              <div className={styles.drawer}>
-                <h3 className={styles.drawerTitle}>
-                  {detail.name || selectedCode}
-                  <span className={styles.codeInline}>{selectedCode}</span>
-                </h3>
-                <p className={styles.drawerMeta}>
-                  {t('students.lessonsRecorded')}: {detail.recordedLessons ?? 0}
-                </p>
-                <div className={styles.formRow}>
-                  <select
-                    className={styles.select}
-                    value={actionForm.action}
-                    onChange={(e) =>
-                      setActionForm((f) => ({ ...f, action: e.target.value }))
-                    }
-                  >
-                    <option value="unlockLesson">{t('students.unlockLesson')}</option>
-                    <option value="resetLesson">{t('students.resetLesson')}</option>
-                    <option value="resetCourse">{t('students.resetCourse')}</option>
-                  </select>
-                  <select
-                    className={styles.select}
-                    value={actionForm.courseId}
-                    onChange={(e) =>
-                      setActionForm((f) => ({ ...f, courseId: e.target.value }))
-                    }
-                  >
-                    {(detail.courseIds?.length
-                      ? detail.courseIds
-                      : COURSE_CARDS.map((c) => c.id)
-                    ).map((id) => (
-                      <option key={id} value={id}>
-                        {id}
-                      </option>
-                    ))}
-                  </select>
-                  {actionForm.action !== 'resetCourse' && (
-                    <input
-                      className={styles.input}
-                      placeholder={t('students.lessonId')}
-                      value={actionForm.lessonId}
-                      onChange={(e) =>
-                        setActionForm((f) => ({ ...f, lessonId: e.target.value }))
-                      }
-                    />
-                  )}
-                  <button
-                    type="button"
-                    className={`${styles.btn} ${styles.btnPrimary}`}
-                    disabled={saving}
-                    onClick={applyAction}
-                  >
-                    {t('students.apply')}
-                  </button>
-                  <button
-                    type="button"
-                    className={styles.btn}
-                    onClick={() => {
-                      setSelectedCode('')
-                      setDetail(null)
-                    }}
-                  >
-                    {t('students.close')}
-                  </button>
-                </div>
-                <pre className={styles.materialBody}>
-                  {JSON.stringify(detail.progress || {}, null, 2)}
-                </pre>
-              </div>
-            )}
-          </div>
-        )}
+        </section>
       </div>
     </div>
   )

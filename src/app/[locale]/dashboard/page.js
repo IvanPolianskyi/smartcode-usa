@@ -111,7 +111,6 @@ function StudentDashboard({ user, progressData, paymentStats, progressLoading, r
       <StudentPaymentPanel
         t={t}
         paymentStats={paymentStats}
-        scheduleCount={schedule.length}
         onRefresh={refreshData}
         defaultOpen={payPanelOpen}
       />

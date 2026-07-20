@@ -199,6 +199,8 @@ export async function fetchTeacherSalaryQueueFromCrm(crmStaffId) {
   const empty = {
     found: false,
     payableCount: 0,
+    individualCount: 0,
+    groupCount: 0,
     trialCount: 0,
     recordingsCount: 0,
     payoutUah: null,
@@ -221,24 +223,39 @@ export async function fetchTeacherSalaryQueueFromCrm(crmStaffId) {
   if (!row) return empty
 
   const recordings = Array.isArray(row.recordings) ? row.recordings : []
-  const lessonIds = new Set(
-    recordings.map((r) => String(r?.lesson_id || '').trim()).filter(Boolean)
+  const payableRecordings = recordings.filter(
+    (r) => String(r?.kind || '') !== 'trial'
   )
-  const payableCount = Number(row.payable_count) || 0
+  const lessonIds = new Set(
+    payableRecordings
+      .map((r) => String(r?.lesson_id || '').trim())
+      .filter(Boolean)
+  )
+  const individualCount =
+    Number(row.individual_count) ||
+    payableRecordings.filter((r) => String(r?.kind || '') === 'individual')
+      .length
+  const groupCount =
+    Number(row.group_count) ||
+    payableRecordings.filter((r) => String(r?.kind || '') === 'group').length
+  const payableCount =
+    Number(row.payable_count) || individualCount + groupCount || 0
   const trialCount = Number(row.trial_count) || 0
-  const recordingsCount =
-    Number(row.recordings_count) || payableCount + trialCount || recordings.length
+  // Пачка для кабінету = лише ІУ+ГУ (ПУ не входить).
+  const recordingsCount = payableCount
 
   return {
     found: true,
     payableCount,
+    individualCount,
+    groupCount,
     trialCount,
     recordingsCount,
     payoutUah: row.payout_uah == null ? null : Number(row.payout_uah),
     rateUah: row.rate_uah == null ? null : Number(row.rate_uah),
     groupRateUah:
       row.group_rate_uah == null ? null : Number(row.group_rate_uah),
-    recordings,
+    recordings: payableRecordings,
     lessonIds,
   }
 }
@@ -252,6 +269,8 @@ export async function fetchTeacherSalaryDeskSummaryFromCrm(crmStaffId) {
   const empty = {
     found: false,
     payableCount: 0,
+    individualCount: 0,
+    groupCount: 0,
     trialCount: 0,
     recordingsCount: 0,
     payoutUah: null,
@@ -268,13 +287,19 @@ export async function fetchTeacherSalaryDeskSummaryFromCrm(crmStaffId) {
   )
   if (!row || String(row.teacher_id || '') !== staffId) return empty
 
+  const individualCount = Number(row.individual_count) || 0
+  const groupCount = Number(row.group_count) || 0
+  const payableCount =
+    Number(row.payable_count) || individualCount + groupCount || 0
+
   return {
     found: true,
-    payableCount: Number(row.payable_count) || 0,
+    payableCount,
+    individualCount,
+    groupCount,
     trialCount: Number(row.trial_count) || 0,
-    recordingsCount:
-      Number(row.recordings_count) ||
-      (Number(row.payable_count) || 0) + (Number(row.trial_count) || 0),
+    // Пачка = ІУ+ГУ; ПУ не показуємо в лічильнику кабінету.
+    recordingsCount: payableCount,
     payoutUah: row.payout_uah == null ? null : Number(row.payout_uah),
     rateUah: row.rate_uah == null ? null : Number(row.rate_uah),
     groupRateUah:
@@ -284,11 +309,13 @@ export async function fetchTeacherSalaryDeskSummaryFromCrm(crmStaffId) {
 
 function applySalaryQueueToTotals(totals, salaryQueue) {
   if (!salaryQueue) return totals
-  const n = salaryQueue.recordingsCount || 0
-  // currentBatchVideos лишаємо = черга CRM (для старих клієнтів UI).
-  totals.currentBatchRecorded = n
-  totals.currentBatchVideos = n
-  totals.payableCount = salaryQueue.payableCount || 0
+  const payable = salaryQueue.payableCount || 0
+  // currentBatch* = лише ІУ+ГУ у черзі ЗП (ПУ не рахуємо).
+  totals.currentBatchRecorded = payable
+  totals.currentBatchVideos = payable
+  totals.payableCount = payable
+  totals.individualCount = salaryQueue.individualCount || 0
+  totals.groupCount = salaryQueue.groupCount || 0
   totals.trialCount = salaryQueue.trialCount || 0
   totals.payoutUah = salaryQueue.payoutUah
   totals.rateUah = salaryQueue.rateUah
@@ -307,6 +334,7 @@ function applySalaryQueueToStudents(students, salaryQueue) {
     cell.recordedLessons = 0
   }
   for (const rec of salaryQueue.recordings) {
+    if (String(rec?.kind || '') === 'trial') continue
     const code = String(rec?.student_short_id || '').trim()
     if (!code) continue
     if (!students[code]) {
@@ -331,13 +359,15 @@ function emptyTeacherTotals() {
     completed: 0,
     recorded: 0,
     /**
-     * Уроки в поточній пачці ЗП (як CRM /salaries).
-     * Історична назва currentBatchVideos — тепер = уся черга, не лише з файлом відео.
+     * Уроки в поточній пачці ЗП (як CRM /salaries) — лише ІУ+ГУ.
+     * Історична назва currentBatchVideos — тепер = payable, не ПУ.
      */
     currentBatchVideos: 0,
     /** Те саме, що currentBatchVideos (явна назва). */
     currentBatchRecorded: 0,
     payableCount: 0,
+    individualCount: 0,
+    groupCount: 0,
     trialCount: 0,
     payoutUah: null,
     rateUah: null,

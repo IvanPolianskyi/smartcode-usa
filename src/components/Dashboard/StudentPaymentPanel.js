@@ -1,13 +1,12 @@
 'use client'
 
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { Wallet, Upload, AlertTriangle, CircleCheck, Clock, BookOpen, X, ImageIcon } from 'lucide-react'
+import React, { useEffect, useRef, useState } from 'react'
+import { Wallet, Upload, BookOpen, X, ImageIcon } from 'lucide-react'
 import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
 
 export default function StudentPaymentPanel({
   t,
   paymentStats,
-  scheduleCount = 0,
   onRefresh,
   defaultOpen = false,
 }) {
@@ -21,25 +20,6 @@ export default function StudentPaymentPanel({
   const [messageType, setMessageType] = useState('info')
 
   const lessonCredits = Number(paymentStats?.lessonCredits || 0)
-  const hasPendingReceiptReview = Boolean(paymentStats?.hasPendingReceiptReview)
-  const hasRejectedReceipt = Boolean(paymentStats?.hasRejectedReceipt)
-
-  // CRM-linked: debt/balance з ledger (як у CRM). Без CRM — локальний fallback.
-  const debtLessons = useMemo(() => {
-    if (paymentStats?.debtLessons != null) {
-      return Math.max(0, Number(paymentStats.debtLessons) || 0)
-    }
-    if (scheduleCount > 0) {
-      return Math.max(0, scheduleCount - lessonCredits)
-    }
-    return lessonCredits < 1 ? 1 : 0
-  }, [paymentStats?.debtLessons, scheduleCount, lessonCredits])
-
-  const hasDebt =
-    paymentStats?.hasDebt != null
-      ? Boolean(paymentStats.hasDebt) && !hasPendingReceiptReview
-      : debtLessons > 0 && !hasPendingReceiptReview
-
   const balanceStrongClass =
     lessonCredits < 0 ? styles.payStatNegative : undefined
 
@@ -126,63 +106,10 @@ export default function StudentPaymentPanel({
       </div>
 
       <div className={styles.payCardInner}>
-        <div className={styles.paySummaryCol}>
-          <div className={styles.payStatsGrid}>
-            <div className={styles.payStatItem}>
-              <CircleCheck size={16} />
-              <span>{t('student.payments.completed')}</span>
-              <strong>{paymentStats.completed}</strong>
-            </div>
-            <div className={styles.payStatItem}>
-              <Clock size={16} />
-              <span>{t('student.payments.pending')}</span>
-              <strong>{paymentStats.pending}</strong>
-            </div>
-            <div className={styles.payStatItem}>
-              <BookOpen size={16} />
-              <span>{t('student.payments.lessonCredits')}</span>
-              <strong className={balanceStrongClass}>{lessonCredits}</strong>
-            </div>
-          </div>
-
-          <div
-            className={`${styles.debtRow} ${
-              hasPendingReceiptReview
-                ? styles.debtRowPending
-                : hasDebt
-                  ? styles.debtRowActive
-                  : ''
-            }`}
-          >
-            <div className={styles.debtRowMain}>
-              <div className={styles.debtRowLabel}>
-                {hasPendingReceiptReview ? (
-                  <Clock size={18} />
-                ) : hasDebt ? (
-                  <AlertTriangle size={18} />
-                ) : (
-                  <CircleCheck size={18} />
-                )}
-                <span>{t('student.payments.debt')}</span>
-              </div>
-              <strong className={styles.debtRowValue}>
-                {hasPendingReceiptReview
-                  ? t('student.payments.receiptPendingReview')
-                  : hasDebt
-                    ? t('student.payments.debtLessons', { count: debtLessons })
-                    : t('student.payments.noDebt')}
-              </strong>
-            </div>
-            {hasPendingReceiptReview ? (
-              <p className={styles.debtRowHint}>{t('student.payments.receiptPendingHint')}</p>
-            ) : hasDebt ? (
-              <p className={styles.debtRowHint}>
-                {hasRejectedReceipt
-                  ? t('student.payments.debtRejectedHint', { lessons: debtLessons })
-                  : t('student.payments.debtHint', { lessons: debtLessons })}
-              </p>
-            ) : null}
-          </div>
+        <div className={styles.payBalance}>
+          <BookOpen size={18} aria-hidden />
+          <span>{t('student.payments.accountBalance')}</span>
+          <strong className={balanceStrongClass}>{lessonCredits}</strong>
         </div>
 
         <form className={styles.payFormCol} onSubmit={handleSubmit}>
