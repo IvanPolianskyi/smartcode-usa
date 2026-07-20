@@ -10,8 +10,8 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or1  2 3 4 5 6  7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
-bun dev
+# or1  2 3 4 5 6  7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+bun dev 
 ``` 
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
