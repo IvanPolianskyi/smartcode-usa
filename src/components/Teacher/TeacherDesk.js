@@ -1,16 +1,14 @@
 'use client'
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link, useRouter } from '@/i18n/navigation'
 import {
   BookOpen,
   LogOut,
   Users,
-  FileText,
   RefreshCw,
   CalendarClock,
-  History,
 } from 'lucide-react'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import { logout } from '@/lib/authClient'
@@ -50,35 +48,6 @@ function formatNextLessonWhen(startAt) {
   }
 }
 
-function videoStatusRowClass(status, stylesMap) {
-  if (status === 'with_video') return stylesMap.rowWithVideo
-  if (status === 'text_only') return stylesMap.rowTextOnly
-  if (status === 'missing') return stylesMap.rowMissing
-  return ''
-}
-
-function videoStatusBadge(status, t, stylesMap) {
-  if (status === 'with_video') {
-    return {
-      className: `${stylesMap.badge} ${stylesMap.badgeWithVideo}`,
-      label: t('history.statusWithVideo'),
-    }
-  }
-  if (status === 'text_only') {
-    return {
-      className: `${stylesMap.badge} ${stylesMap.badgeTextOnly}`,
-      label: t('history.statusTextOnly'),
-    }
-  }
-  if (status === 'missing') {
-    return {
-      className: `${stylesMap.badge} ${stylesMap.badgeMissing}`,
-      label: t('history.statusMissing'),
-    }
-  }
-  return null
-}
-
 export default function TeacherDesk() {
   const t = useTranslations('teacher')
   const router = useRouter()
@@ -89,12 +58,9 @@ export default function TeacherDesk() {
   const [crmError, setCrmError] = useState('')
   const [nextLesson, setNextLesson] = useState(null)
   const [loadingNextLesson, setLoadingNextLesson] = useState(false)
-  const [materials, setMaterials] = useState([])
-  const [lessonHistory, setLessonHistory] = useState([])
   const [historyStats, setHistoryStats] = useState(null)
   const [historyCrmError, setHistoryCrmError] = useState('')
   const [loadingStudents, setLoadingStudents] = useState(false)
-  const [loadingMaterials, setLoadingMaterials] = useState(false)
   const [loadingHistory, setLoadingHistory] = useState(false)
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
@@ -106,7 +72,6 @@ export default function TeacherDesk() {
     lessonId: '',
   })
   const [saving, setSaving] = useState(false)
-  const [openMaterialId, setOpenMaterialId] = useState('')
 
   const linked = Boolean(user?.teacherProfile?.crmStaffId)
   const recordingStats = historyStats || teacherStats
@@ -157,24 +122,8 @@ export default function TeacherDesk() {
     }
   }, [t])
 
-  const loadMaterials = useCallback(async () => {
-    setLoadingMaterials(true)
-    setError('')
-    try {
-      const res = await fetch('/api/teacher/materials', { credentials: 'include' })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || t('students.error'))
-      setMaterials(data.materials || [])
-    } catch (e) {
-      setError(e.message || t('students.error'))
-    } finally {
-      setLoadingMaterials(false)
-    }
-  }, [t])
-
   const loadLessonHistory = useCallback(async () => {
     if (!linked && user?.role !== 'admin') {
-      setLessonHistory([])
       setHistoryStats(null)
       return
     }
@@ -184,13 +133,11 @@ export default function TeacherDesk() {
       const res = await fetch('/api/teacher/lessons?limit=200', { credentials: 'include' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('students.error'))
-      setLessonHistory(data.lessons || [])
       setHistoryStats(data.totals || null)
       setHistoryCrmError(data.crmError || '')
     } catch (e) {
       setError(e.message || t('students.error'))
       setHistoryCrmError(e.message || t('recordings.crmError'))
-      setLessonHistory([])
     } finally {
       setLoadingHistory(false)
     }
@@ -199,7 +146,7 @@ export default function TeacherDesk() {
   useEffect(() => {
     if (!user || (user.role !== 'teacher' && user.role !== 'admin')) return
     loadNextLesson()
-    // Історію/ЗП трохи пізніше, щоб «наступний урок» не ділив CRM-таймаут.
+    // ЗП/пачку трохи пізніше, щоб «наступний урок» не ділив CRM-таймаут.
     const timer = setTimeout(() => {
       loadLessonHistory()
     }, 150)
@@ -209,9 +156,7 @@ export default function TeacherDesk() {
   useEffect(() => {
     if (!user || (user.role !== 'teacher' && user.role !== 'admin')) return
     if (tab === 'students') loadStudents()
-    if (tab === 'materials') loadMaterials()
-    if (tab === 'history') loadLessonHistory()
-  }, [tab, user, loadStudents, loadMaterials, loadLessonHistory])
+  }, [tab, user, loadStudents])
 
   const openDetail = async (code) => {
     setSelectedCode(code)
@@ -260,27 +205,16 @@ export default function TeacherDesk() {
   }
 
   const handleLogout = async () => {
-    try {
-      await logout()
-      window.dispatchEvent(new Event('auth:logout'))
-      router.push('/')
-      router.refresh()
-    } catch {}
+    await logout()
+    router.push('/login')
   }
-
-  const guideMaterials = useMemo(
-    () => materials.filter((m) => m.kind === 'guide'),
-    [materials]
-  )
-  const starterMaterials = useMemo(
-    () => materials.filter((m) => m.kind === 'starter'),
-    [materials]
-  )
 
   if (sessionLoading || !user) {
     return (
       <div className={styles.page}>
-        <div className={styles.shell}>{t('loading')}</div>
+        <div className={styles.shell}>
+          <p className={styles.empty}>{t('loading')}</p>
+        </div>
       </div>
     )
   }
@@ -303,7 +237,6 @@ export default function TeacherDesk() {
                 loadNextLesson()
                 loadLessonHistory()
                 if (tab === 'students') loadStudents()
-                if (tab === 'materials') loadMaterials()
                 refresh?.(false)
               }}
             >
@@ -379,7 +312,6 @@ export default function TeacherDesk() {
             <div className={styles.recordingsHead}>
               <div className={styles.recordingsHeadText}>
                 <h2 className={styles.recordingsTitle}>{t('recordings.title')}</h2>
-                <p className={styles.recordingsNote}>{t('recordings.syncNote')}</p>
               </div>
               <button
                 type="button"
@@ -420,8 +352,6 @@ export default function TeacherDesk() {
           {[
             { id: 'courses', icon: BookOpen, label: t('tabs.courses') },
             { id: 'students', icon: Users, label: t('tabs.students') },
-            { id: 'history', icon: History, label: t('tabs.history') },
-            { id: 'materials', icon: FileText, label: t('tabs.materials') },
           ].map((item) => (
             <button
               key={item.id}
@@ -456,7 +386,6 @@ export default function TeacherDesk() {
 
         {tab === 'students' && (
           <div className={styles.panel}>
-            <p className={styles.note}>{t('students.privacyNote')}</p>
             {!linked && user.role === 'teacher' && (
               <p className={styles.error}>{t('students.notLinked')}</p>
             )}
@@ -604,139 +533,6 @@ export default function TeacherDesk() {
                   {JSON.stringify(detail.progress || {}, null, 2)}
                 </pre>
               </div>
-            )}
-          </div>
-        )}
-
-        {tab === 'history' && (
-          <div className={styles.panel}>
-            <p className={styles.note}>{t('recordings.syncNote')}</p>
-            {!linked && user.role === 'teacher' && (
-              <p className={styles.error}>{t('history.notLinked')}</p>
-            )}
-            {historyCrmError && linked && (
-              <p className={styles.warn}>{t('history.crmError')}</p>
-            )}
-            <div className={styles.historyLegend} aria-label={t('history.legendTitle')}>
-              <span className={styles.legendItem}>
-                <span className={`${styles.legendSwatch} ${styles.legendWithVideo}`} />
-                {t('history.legendWithVideo')}
-              </span>
-              <span className={styles.legendItem}>
-                <span className={`${styles.legendSwatch} ${styles.legendTextOnly}`} />
-                {t('history.legendTextOnly')}
-              </span>
-              <span className={styles.legendItem}>
-                <span className={`${styles.legendSwatch} ${styles.legendMissing}`} />
-                {t('history.legendMissing')}
-              </span>
-            </div>
-            {loadingHistory ? (
-              <p className={styles.empty}>{t('loading')}</p>
-            ) : lessonHistory.length === 0 ? (
-              <p className={styles.empty}>{t('history.empty')}</p>
-            ) : (
-              <div className={styles.tableWrap}>
-                <table className={styles.table}>
-                  <thead>
-                    <tr>
-                      <th>{t('history.date')}</th>
-                      <th>{t('history.kind')}</th>
-                      <th>{t('history.student')}</th>
-                      <th>{t('history.recording')}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {lessonHistory.map((row) => {
-                      const badge = videoStatusBadge(row.videoStatus, t, styles)
-                      const rowClass = videoStatusRowClass(row.videoStatus, styles)
-                      return (
-                        <tr key={row.id || `${row.startAt}-${row.studentCode}`} className={rowClass}>
-                          <td>{formatNextLessonWhen(row.startAt)}</td>
-                          <td>
-                            <span className={styles.nextLessonKind}>{row.kindLabel}</span>
-                          </td>
-                          <td>
-                            <span className={styles.studentName}>{row.studentName}</span>
-                            {row.studentCode ? (
-                              <span className={styles.codeInline}> · {row.studentCode}</span>
-                            ) : null}
-                            {row.groupName ? (
-                              <div className={styles.muted}>{row.groupName}</div>
-                            ) : null}
-                          </td>
-                          <td>
-                            {badge ? (
-                              <span className={badge.className}>{badge.label}</span>
-                            ) : (
-                              '—'
-                            )}
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        )}
-
-        {tab === 'materials' && (
-          <div className={styles.panel}>
-            {loadingMaterials ? (
-              <p className={styles.empty}>{t('loading')}</p>
-            ) : materials.length === 0 ? (
-              <p className={styles.empty}>{t('materials.empty')}</p>
-            ) : (
-              <>
-                {guideMaterials.length > 0 && (
-                  <>
-                    <h3>{t('materials.guides')}</h3>
-                    <div className={styles.materialList}>
-                      {guideMaterials.map((m) => (
-                        <div key={m.id} className={styles.materialItem}>
-                          <button
-                            type="button"
-                            className={styles.materialHead}
-                            onClick={() =>
-                              setOpenMaterialId((id) => (id === m.id ? '' : m.id))
-                            }
-                          >
-                            {m.title}
-                          </button>
-                          {openMaterialId === m.id && (
-                            <div className={styles.materialBody}>{m.content}</div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </>
-                )}
-                {starterMaterials.length > 0 && (
-                  <>
-                    <h3 style={{ marginTop: '1.25rem' }}>{t('materials.starter')}</h3>
-                    <div className={styles.materialList}>
-                      {starterMaterials.map((m) => (
-                        <div key={m.id} className={styles.materialItem}>
-                          <button
-                            type="button"
-                            className={styles.materialHead}
-                            onClick={() =>
-                              setOpenMaterialId((id) => (id === m.id ? '' : m.id))
-                            }
-                          >
-                            {m.path || m.title}
-                          </button>
-                          {openMaterialId === m.id && (
-                            <div className={styles.materialBody}>{m.content}</div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </>
             )}
           </div>
         )}
