@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { useTranslations, useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { Link, useRouter } from '@/i18n/navigation'
 import { logout, getUserProgress } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
@@ -18,7 +18,6 @@ import styles from './Dashboard.module.css'
 import {
   User,
   BookOpen,
-  Clock,
   TrendingUp,
   LogOut,
   ShieldCheck,
@@ -64,18 +63,12 @@ function AdminDashboard({ adminStats, t }) {
   )
 }
 
-function StudentDashboard({ user, progressData, paymentStats, refreshData, t, locale, getCourseInfo, onLogout }) {
-  const [activeTab, setActiveTab] = useState('overview')
+function StudentDashboard({ user, progressData, paymentStats, progressLoading, refreshData, t, getCourseInfo, onLogout }) {
   const [payPanelOpen, setPayPanelOpen] = useState(false)
   const dateLocale = 'uk-UA'
   const profile = user?.studentProfile || { regularSchedule: [], activeOnlineCourses: [], zoomLink: '' }
   const schedule = profile.regularSchedule || []
   const upcomingLessons = profile.upcomingLessons
-  const activeCourses = profile.activeOnlineCourses || []
-  const ownedCoursesCount = useMemo(
-    () => getStudentAccessibleCourseIds(user).length,
-    [user, profile.activeOnlineCourses, user?.purchasedCourses]
-  )
   const zoomLink = profile.zoomLink || ''
   const platformCompletedTotal = Object.values(progressData || {}).reduce(
     (sum, p) => sum + (p?.completedLessons?.length || 0),
@@ -86,9 +79,6 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
     ? upcomingLessons.filter((item) => item?.conducted === true).length
     : 0
   const onlineCompletedTotal = Math.max(crmConductedTotal, fromUpcomingConducted)
-  const lessonHistory = Object.entries(progressData || {}).flatMap(([courseId, progress]) =>
-    (progress?.completedLessons || []).map((lessonId) => ({ courseId, lessonId }))
-  )
   const scheduleInfo = useMemo(
     () => computeScheduleStats(schedule, { t, dateLocale, upcomingLessons }),
     [schedule, upcomingLessons, dateLocale, t]
@@ -130,6 +120,11 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
 
   return (
     <div className={styles.dashBody}>
+      {progressLoading ? (
+        <p className={styles.softLoading} aria-live="polite">
+          {t('loading')}
+        </p>
+      ) : null}
       <div className={styles.dashHeroGroup}>
         <div className={styles.heroCard}>
           <div>
@@ -156,16 +151,7 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
         />
       </div>
 
-      <div className={styles.tabRowPill}>
-        <button className={`${styles.tabBtn} ${activeTab === 'overview' ? styles.tabBtnActive : ''}`} onClick={() => setActiveTab('overview')}>{t('student.tabs.overview')}</button>
-        <button className={`${styles.tabBtn} ${activeTab === 'history' ? styles.tabBtnActive : ''}`} onClick={() => setActiveTab('history')}>{t('student.tabs.history')}</button>
-      </div>
-
       <div className={styles.metricCards}>
-        <div className={styles.metricCard}>
-          <div className={styles.metricCardIcon}><BookOpen size={18} /></div>
-          <div><strong>{ownedCoursesCount}</strong><span>{t('student.metrics.activeCourses')}</span></div>
-        </div>
         <div className={styles.metricCard}>
           <div className={styles.metricCardIcon}><Trophy size={18} /></div>
           <div>
@@ -182,47 +168,24 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
         </div>
       </div>
 
-      {activeTab === 'overview' ? (
-        <div className={styles.dashLayout}>
-          <div className={styles.dashMain}>
-            <MyCoursesSection
-              user={user}
-              progressData={progressData}
-              getCourseInfo={getCourseInfo}
-            />
-          </div>
-          <aside className={styles.dashAside}>
-            <WeeklyScheduleCalendar
-              schedule={schedule}
-              upcomingLessons={upcomingLessons}
-              zoomLink={zoomLink}
-              t={t}
-              dateLocale={dateLocale}
-            />
-          </aside>
+      <div className={styles.dashLayout}>
+        <div className={styles.dashMain}>
+          <MyCoursesSection
+            user={user}
+            progressData={progressData}
+            getCourseInfo={getCourseInfo}
+          />
         </div>
-      ) : (
-          <section className={styles.historyCard}>
-            <div className={styles.sectionHeader}>
-              <h3><Clock size={20} /> {t('student.history.title')}</h3>
-            </div>
-            {lessonHistory.length > 0 ? (
-              <div className={styles.historyList}>
-                {lessonHistory.slice(0, 30).map((entry, idx) => (
-                  <div key={`${entry.lessonId}-${idx}`} className={styles.historyItem}>
-                    <span>{getCourseInfo(entry.courseId).title}</span>
-                    <span>{entry.lessonId}</span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className={styles.emptyBlock}>
-                <Clock size={36} strokeWidth={1.25} />
-                <p>{t('student.history.empty')}</p>
-              </div>
-            )}
-          </section>
-      )}
+        <aside className={styles.dashAside}>
+          <WeeklyScheduleCalendar
+            schedule={schedule}
+            upcomingLessons={upcomingLessons}
+            zoomLink={zoomLink}
+            t={t}
+            dateLocale={dateLocale}
+          />
+        </aside>
+      </div>
 
       <div className={styles.payBottomFull}>{paymentPanel}</div>
 
@@ -238,7 +201,6 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
 
 export default function DashboardPage() {
   const router = useRouter()
-  const locale = useLocale()
   const t = useTranslations('dashboard')
   const getCourseInfo = useDashboardCourses()
   const { user, loading: sessionLoading, refresh } = useAuthSession()
@@ -259,24 +221,43 @@ export default function DashboardPage() {
         }
         return
       }
+
       const accessibleCourseIds = getStudentAccessibleCourseIds(user)
-      if (accessibleCourseIds.length > 0) {
-        const progressResults = await Promise.all(
-          accessibleCourseIds.map((courseId) =>
-            getUserProgress(courseId).then((progress) => ({ courseId, progress })).catch(() => ({ courseId, progress: null }))
+      const progressPromise =
+        accessibleCourseIds.length > 0
+          ? Promise.all(
+              accessibleCourseIds.map((courseId) =>
+                getUserProgress(courseId)
+                  .then((progress) => ({ courseId, progress }))
+                  .catch(() => ({ courseId, progress: null }))
+              )
+            ).then((progressResults) => {
+              const map = {}
+              progressResults.forEach(({ courseId, progress }) => {
+                map[courseId] = progress
+              })
+              setProgressData(map)
+            })
+          : Promise.resolve().then(() => setProgressData({}))
+
+      const paymentPromise = fetch('/api/payment/history')
+        .then(async (paymentResponse) => {
+          if (!paymentResponse.ok) return
+          const data = await paymentResponse.json()
+          setPaymentStats(
+            data.stats || {
+              completed: 0,
+              pending: 0,
+              failed: 0,
+              totalAmount: 0,
+              lessonCredits: 0,
+              accountBalance: 0,
+            }
           )
-        )
-        const map = {}
-        progressResults.forEach(({ courseId, progress }) => { map[courseId] = progress })
-        setProgressData(map)
-      } else {
-        setProgressData({})
-      }
-      const paymentResponse = await fetch('/api/payment/history')
-      if (paymentResponse.ok) {
-        const data = await paymentResponse.json()
-        setPaymentStats(data.stats || { completed: 0, pending: 0, failed: 0, totalAmount: 0, lessonCredits: 0, accountBalance: 0 })
-      }
+        })
+        .catch(() => {})
+
+      await Promise.all([progressPromise, paymentPromise])
     } finally {
       setProgressLoading(false)
     }
@@ -295,7 +276,32 @@ export default function DashboardPage() {
     loadData()
   }, [sessionLoading, user, router, loadData])
 
-  const loading = sessionLoading || progressLoading
+  // Фоновий sync розкладу з CRM після першого render (не блокує спінер).
+  const studentUserId =
+    user && user.role !== 'admin' && user.role !== 'teacher'
+      ? user.id || user._id
+      : null
+  useEffect(() => {
+    if (sessionLoading || !studentUserId) return
+    let cancelled = false
+    ;(async () => {
+      try {
+        await fetch('/api/student/crm-schedule-sync', {
+          method: 'POST',
+          credentials: 'include',
+        })
+      } catch {
+        /* ignore */
+      }
+      // Підхопити кеш після sync / after() з auth/me (auth/me тепер швидкий).
+      if (!cancelled) await refresh(false)
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [sessionLoading, studentUserId, refresh])
+
+  const loading = sessionLoading
   const roleLabel = useMemo(() => {
     if (user?.role === 'admin') return t('roles.admin')
     if (user?.role === 'teacher') return t('roles.teacher')
@@ -307,6 +313,14 @@ export default function DashboardPage() {
     !isStudentDashboardReady(user?.studentProfile)
 
   const refreshData = async () => {
+    try {
+      await fetch('/api/student/crm-schedule-sync', {
+        method: 'POST',
+        credentials: 'include',
+      })
+    } catch {
+      /* ignore */
+    }
     await refresh(false)
     await loadData()
   }
@@ -375,9 +389,9 @@ export default function DashboardPage() {
                 user={user}
                 progressData={progressData}
                 paymentStats={paymentStats}
+                progressLoading={progressLoading}
                 refreshData={refreshData}
                 t={t}
-                locale={locale}
                 getCourseInfo={getCourseInfo}
                 onLogout={handleLogout}
               />

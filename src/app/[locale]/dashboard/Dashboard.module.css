@@ -35,6 +35,17 @@
   font-weight: 600;
 }
 
+.softLoading {
+  margin: 0 0 0.75rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: #8b8b9a;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -218,37 +229,6 @@
   background: linear-gradient(90deg, #4ade80, #10b981);
   box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
   transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.tabRow {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.9rem;
-}
-
-.tabBtn {
-  border: none;
-  background: transparent;
-  color: var(--dash-muted);
-  border-radius: 10px;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  z-index: 1;
-}
-
-.tabBtn:hover:not(.tabBtnActive) {
-  color: var(--dash-text);
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.tabBtnActive {
-  background: var(--dash-surface);
-  color: var(--dash-primary-dark);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .cardTitle {
@@ -1182,8 +1162,7 @@
 
 .coursesSection,
 .calendarCard,
-.achievementsCard,
-.historyCard {
+.achievementsCard {
   background: var(--dash-surface);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1199,8 +1178,7 @@
 }
 
 .coursesSection:hover,
-.calendarCard:hover,
-.historyCard:hover {
+.calendarCard:hover {
   box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.45), 0 0 2px rgba(161, 0, 255, 0.2);
 }
 
@@ -1791,50 +1769,10 @@
   opacity: 0.55;
 }
 
-.emptyBlock {
-  text-align: center;
-  padding: 1.5rem 1rem;
-  color: var(--dash-muted);
-}
-
-.emptyBlock svg {
-  opacity: 0.35;
-  margin-bottom: 0.5rem;
-}
-
 .formError {
   margin-top: 0.5rem;
   color: #dc2626;
   font-size: 0.88rem;
-}
-
-.historyList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.historyItem {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.55rem 0.65rem;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--dash-border);
-  font-size: 0.86rem;
-  color: var(--dash-text);
-}
-
-.tabRowPill {
-  display: inline-flex;
-  gap: 0.25rem;
-  padding: 0.35rem;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(8px);
-  border-radius: 14px;
-  margin-bottom: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @media (min-width: 900px) {

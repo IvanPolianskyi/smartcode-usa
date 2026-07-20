@@ -205,24 +205,6 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
     }
   }, [isLoaded, hasAutoExpanded, continueLesson, course.modules])
 
-  const getLevelBadge = (level) => {
-    const levelKey = level === 'Intermediate' ? 'intermediate' : level === 'Advanced' ? 'advanced' : 'beginner'
-    const colors = {
-      beginner: "var(--accent-green)",
-      intermediate: "var(--accent-yellow)",
-      advanced: "var(--accent-red)",
-    }
-    return { text: tCommon(`levels.${levelKey}`), color: colors[levelKey] }
-  }
-
-  const courseLevel = courseId === "web-development" ? "Intermediate" : "Beginner"
-  const courseAge =
-    courseId === 'web-development'
-      ? '12-18'
-      : courseId === 'roblox-studio'
-        ? '9-13'
-        : '13-17'
-  const levelBadge = getLevelBadge(courseLevel)
   const isRoblox = courseId === 'roblox-studio'
 
   const moduleProgress = useMemo(() => {
@@ -300,15 +282,6 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
 
           <div className={styles.heroMain}>
             <div className={styles.heroLeft}>
-              <div className={styles.badges}>
-                <span className={styles.levelBadge} style={{ backgroundColor: levelBadge.color }}>
-                  {levelBadge.text}
-                </span>
-                <span className={styles.ageBadge}>
-                  {tCommon('age', { age: courseAge })}
-                </span>
-              </div>
-
               <h1 className={styles.title}>{course.title}</h1>
               <p className={styles.valueProposition}>{tVariant('valueProposition')}</p>
 

@@ -8,10 +8,16 @@ const CRM_STATIC_TOKEN = process.env.CRM_BEARER_TOKEN || ''
 
 const KYIV_WEEKDAY_UK = ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
 
-/** Мінімальний інтервал між auto-pull з CRM на /api/auth/me (секунди). */
-const CRM_AUTO_PULL_MIN_MS = 15 * 1000
+/** Мінімальний інтервал між auto-pull з CRM (мс). Не на кожен auth/me. */
+const CRM_AUTO_PULL_MIN_MS = 5 * 60 * 1000
 
 const CRM_FETCH_NO_STORE = { cache: 'no-store' }
+
+/** Таймаут CRM для pull розкладу учня (швидкий fail → кеш у Mongo). */
+const CRM_SCHEDULE_PULL_TIMEOUT_MS = 5000
+
+/** Скільки останніх ІУ/ГУ тягнути для слотів і upcoming (lean). */
+const CRM_SCHEDULE_LESSONS_LIMIT = 400
 
 function normalizeEmail(value) {
   return String(value || '').trim().toLowerCase()
@@ -129,7 +135,8 @@ export async function fetchCrmTeachers() {
   const token = await resolveCrmToken()
   const response = await fetchCrmWithTimeout(`${CRM_BASE_URL.replace(/\/$/, '')}/staff?limit=200&active_only=true`, {
     headers: buildCrmHeaders(token),
-    next: { revalidate: 300 },
+    timeout: CRM_SCHEDULE_PULL_TIMEOUT_MS,
+    ...CRM_FETCH_NO_STORE,
   })
   if (!response.ok) {
     const message = await response.text()
@@ -514,7 +521,9 @@ function resolveTeacherFromCrmData(rawLessons, crmGroups, teachers) {
 async function fetchCrmGroupsForStudent(crmStudentId) {
   if (!CRM_BASE_URL || !crmStudentId) return { groups: [], ok: false }
   try {
-    const groups = await crmJson('GET', 'groups?limit=200&active_only=true')
+    const groups = await crmJson('GET', 'groups?limit=200&active_only=true', undefined, {
+      timeout: CRM_SCHEDULE_PULL_TIMEOUT_MS,
+    })
     if (!Array.isArray(groups)) return { groups: [], ok: false }
     return {
       groups: groups.filter((g) =>
@@ -579,15 +588,19 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
   if (!crmStudent?.id) return student
 
   const token = await resolveCrmToken()
+  // lean + DESC + ліміт: не тягнути 2000 уроків з epoch-coverage (було 5–15+ с).
   const lessonsParams = new URLSearchParams({
     kind: 'individual',
     student_id: String(crmStudent.id),
-    limit: '2000',
+    limit: String(CRM_SCHEDULE_LESSONS_LIMIT),
+    lean: 'true',
+    sort: '-1',
   })
 
   const [lessonsResponse, teachers, crmGroupsResult] = await Promise.all([
     fetchCrmWithTimeout(`${CRM_BASE_URL.replace(/\/$/, '')}/lessons?${lessonsParams}`, {
       headers: buildCrmHeaders(token),
+      timeout: CRM_SCHEDULE_PULL_TIMEOUT_MS,
       ...CRM_FETCH_NO_STORE,
     }),
     fetchCrmTeachers().catch(() => []),

@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextResponse, after } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
@@ -28,11 +28,17 @@ export async function GET() {
       )
     }
     if (user.role !== 'teacher' && user.role !== 'admin') {
-      try {
-        user = await maybePullCrmScheduleForStudent(user, usersCollection)
-      } catch (crmErr) {
-        console.error('CRM schedule auto-pull failed:', crmErr)
-      }
+      // CRM pull — після відповіді (не блокує dashboard). Клієнт може ще раз смикнути sync.
+      const uidForBg = user._id.toString()
+      after(async () => {
+        try {
+          const coll = await getCollection('users')
+          const fresh = await coll.findOne({ _id: new ObjectId(uidForBg) })
+          if (fresh) await maybePullCrmScheduleForStudent(fresh, coll)
+        } catch (crmErr) {
+          console.error('CRM schedule background pull failed:', crmErr)
+        }
+      })
       try {
         user = await syncStudentScheduleAccess(user, usersCollection)
       } catch (syncErr) {

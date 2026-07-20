@@ -286,6 +286,10 @@ const RobloxLessonPage = ({
     setActiveStep(step)
   }
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [activeStep])
+
   return (
     <>
       <LessonPageWithSidebar

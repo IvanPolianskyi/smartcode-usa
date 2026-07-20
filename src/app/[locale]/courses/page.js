@@ -55,16 +55,6 @@ export default function CoursesPage() {
 
 	const loading = sessionLoading || progressLoading
 
-	const getLevelBadge = (level) => {
-		const key = level === 'Intermediate' ? 'intermediate' : level === 'Advanced' ? 'advanced' : 'beginner'
-		const colors = {
-			beginner: '#10b981',
-			intermediate: '#f59e0b',
-			advanced: '#ef4444',
-		}
-		return { text: t(`levels.${key}`), color: colors[key] }
-	}
-
 	return (
 		<div className={styles.container}>
 			<section className={styles.heroSection}>
@@ -85,7 +75,6 @@ export default function CoursesPage() {
 						const progress = progressData[course.courseId]
 						const isEnrolled = !!progress
 						const progressPercent = progress?.overallProgress || 0
-						const levelBadge = getLevelBadge(course.level)
 						const lmsAvailable = [
 							'python-developer-zero-to-junior',
 							'roblox-studio',
@@ -122,13 +111,6 @@ export default function CoursesPage() {
 									<div className={styles.courseTitleSection}>
 										<h2 className={styles.courseTitle}>{course.title}</h2>
 										<div className={styles.courseMeta}>
-											<span
-												className={styles.levelBadge}
-												style={{ backgroundColor: levelBadge.color }}
-											>
-												{levelBadge.text}
-											</span>
-											<span className={styles.ageBadge}>{course.age}</span>
 											<div className={styles.rating}>
 												<Star size={14} fill="#fbbf24" color="#fbbf24" />
 												<span>{course.rating}</span>
