@@ -16,7 +16,7 @@ export const ukLesson101 = {
  "Розкласти папки в Workspace за стандартом імен курсу",
  "Підготувати ReplicatedStorage (Remotes, Modules) і ServerScriptService (Systems)",
  "Зробити заготовку ScreenGui магазину під LocalScript (без повної каси)",
- "Нагадати різницю Script vs LocalScript і куди що класти",
+ "Нагадати різницю Script vs LocalScript і куди що класти"
  ],
  theory: {
  sections: [
@@ -239,7 +239,7 @@ export const ukLesson101 = {
 Якщо каркас кривий - весь модуль болітиме. Краще 40 студів чистого хабу, ніж «місто», у якому не знайти Zone_Shop.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -272,7 +272,7 @@ export const ukLesson101 = {
  mistake: "Toolbox-сіті замість трьох зон",
  explanation: "Година згорає, систем немає.",
  correctApproach: "Малий читабельний хаб",
- },
+ }
  ],
  summary: "Ти заклав базу живого хабу: зони Shop/NPC/Puzzle, папки Workspace, каркас RS/SSS, заготовку ShopGui на LocalScript і перевірку leaderstats. Далі на цей скелет сяде магазин, NPC і квести модуля 10.",
  practiceTask: {
@@ -299,7 +299,7 @@ export const ukLesson101 = {
  hints: [
  "Спочатку імена й папки, потім краса",
  "Enabled=false на ShopGui за замовчуванням",
- "Перевір TAB: чи є Coins після Play",
+ "Перевір TAB: чи є Coins після Play"
  ],
  optionalChallenge: "Part-стрілка від Spawn до Shop з Neon і підписом «Магазин →».",
  },
@@ -315,7 +315,7 @@ export const ukLesson101 = {
           "Зібрати простір хабу й каркас папок RS/SSS/UI під системи модуля",
           "Одразу завершити Ship усього курсу",
           "Видалити leaderstats",
-          "Підключити лише GamePass без хабу",
+          "Підключити лише GamePass без хабу"
         ],
  correctAnswer: 0,
  explanation: "База під M10.",
@@ -328,7 +328,7 @@ export const ukLesson101 = {
           "Лише небо й океан",
           "Shop, NPC, Puzzle (+ Spawn)",
           "Лише 50 Toolbox-дерев",
-          "Лише DataStore без світу",
+          "Лише DataStore без світу"
         ],
  correctAnswer: 1,
  explanation: "Слоти під 10.2–10.7.",
@@ -341,7 +341,7 @@ export const ukLesson101 = {
           "Місце лише для Terrain",
           "Папка, куди клієнт не може нічого бачити ніколи",
           "Сховище, доступне клієнту й серверу (наприклад Remotes)",
-          "Заміна Workspace",
+          "Заміна Workspace"
         ],
  correctAnswer: 2,
  explanation: "Спільна реплікація.",
@@ -354,7 +354,7 @@ export const ukLesson101 = {
           "У LocalScript всередині Part декору",
           "У Lighting",
           "У назві SpawnLocation",
-          "У ServerScriptService (Systems)",
+          "У ServerScriptService (Systems)"
         ],
  correctAnswer: 3,
  explanation: "SSS для серверної логіки.",
@@ -367,7 +367,7 @@ export const ukLesson101 = {
           "LocalScript завжди швидший у SSS",
           "Клієнтський UI-код має жити в StarterGui / клієнтських контейнерах",
           "SSS видаляє ScreenGui",
-          "Remotes не працюють з Gui",
+          "Remotes не працюють з Gui"
         ],
  correctAnswer: 1,
  explanation: "Правильне місце скриптів.",
@@ -380,7 +380,7 @@ export const ukLesson101 = {
           "Щоб замінити Pathfinding",
           "Gui заборонений у 10.2",
           "Щоб завтра в 10.2 лише наповнити логіку Remotes, а не збирати UI з нуля",
-          "Щоб вимкнути Explorer",
+          "Щоб вимкнути Explorer"
         ],
  correctAnswer: 2,
  explanation: "Підготовка вітрини.",
@@ -393,7 +393,7 @@ export const ukLesson101 = {
           "Клієнт може бачити вміст ReplicatedStorage",
           "RS не існує в Roblox",
           "Ціни можна ставити лише в Terrain",
-          "RemoteEvent знищує Modules",
+          "RemoteEvent знищує Modules"
         ],
  correctAnswer: 0,
  explanation: "RS не сейф.",
@@ -406,7 +406,7 @@ export const ukLesson101 = {
           "Coins потрібні лише для неба",
           "Без Coins не створюється Part",
           "Це вимикає Prompt",
-          "Магазин і квести модуля писатимуть у ту саму економіку",
+          "Магазин і квести модуля писатимуть у ту саму економіку"
         ],
  correctAnswer: 3,
  explanation: "Спільна валюта M10.",
@@ -419,7 +419,7 @@ export const ukLesson101 = {
           "Створення SpawnLocation",
           "Папки Zones",
           "Повну логіку Buy / каталог Remotes",
-          "Табличку онбордингу",
+          "Табличку онбордингу"
         ],
  correctAnswer: 2,
  explanation: "Скоуп control.",
@@ -432,7 +432,7 @@ export const ukLesson101 = {
           "Гігантське Toolbox-місто без систем",
           "Малий читабельний хаб з іменами й зонами",
           "Порожній Baseplate без Spawn",
-          "Лише ParticleEmitter без підлоги",
+          "Лише ParticleEmitter без підлоги"
         ],
  correctAnswer: 1,
  explanation: "Ясність > масштаб.",
@@ -445,7 +445,7 @@ export const ukLesson101 = {
           "Щоб замінити Workspace",
           "Remotes працюють лише в ServerStorage",
           "Це потрібно тільки для Atmosphere",
-          "Щоб було місце під ShopBuy/ShopQuery завтра",
+          "Щоб було місце під ShopBuy/ShopQuery завтра"
         ],
  correctAnswer: 3,
  explanation: "Каркас мережі.",
@@ -458,7 +458,7 @@ export const ukLesson101 = {
           "LocalScript у ShopGui (клієнт)",
           "Лише ModuleScript у ServerStorage без Gui",
           "Terrain Editor",
-          "PathfindingService",
+          "PathfindingService"
         ],
  correctAnswer: 0,
  explanation: "UI на клієнті.",
@@ -471,7 +471,7 @@ export const ukLesson101 = {
           "Таблички замінюють Remotes",
           "Без табличок не працює Humanoid",
           "Онбординг: гравець розуміє маршрут хабу",
-          "Це вимикає SSS",
+          "Це вимикає SSS"
         ],
  correctAnswer: 2,
  explanation: "Зрозумілість простору.",
@@ -484,7 +484,7 @@ export const ukLesson101 = {
           "Усі LocalScript гравця",
           "Обов’язково весь Workspace",
           "Lighting ефекти лише там",
-          "Шаблони Tools/предметів, які клонує сервер",
+          "Шаблони Tools/предметів, які клонує сервер"
         ],
  correctAnswer: 3,
  explanation: "Серверні шаблони.",
@@ -497,11 +497,11 @@ export const ukLesson101 = {
           "Лише теорія без Place",
           "Hub Base: зони, RS/SSS каркас, ShopGui-заготовка, Coins, Save",
           "Повний Ship без папок",
-          "Магазин з ціною на клієнті без хабу",
+          "Магазин з ціною на клієнті без хабу"
         ],
  correctAnswer: 1,
  explanation: "Потрібен каркас хабу.",
- },
+ }
  ],
  },
 }
@@ -519,7 +519,7 @@ export const ukLesson102 = {
  "Зібрати ShopConfig table товарів з цінами на сервері",
  "Зробити UI магазину (ScrollingFrame + список) на LocalScript",
  "Купівлю через FireServer(itemId) з перевіркою Coins і ціни на сервері",
- "Отримати каталог/баланс через RemoteFunction (InvokeServer)",
+ "Отримати каталог/баланс через RemoteFunction (InvokeServer)"
  ],
  theory: {
  sections: [
@@ -530,8 +530,6 @@ export const ukLesson102 = {
 1. **UI на LocalScript** (екран магазину).
 2. **Remotes** (клієнт ↔ сервер).
 3. **leaderstats Coins** (економіка).
-
-Артефакт: гравець відкриває магазин, бачить список товарів з **серверного** каталогу, натискає «Купити», сервер перевіряє монети й Config, списує Coins, підтверджує успіх.
 
 Завтра (**10.3**) додаси анти-чит і GamePass lite. Сьогодні фундамент має бути чесним: **ціна ніколи не приходить з клієнта**.
 
@@ -805,7 +803,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
 - [ ] Save Hub Shop
 
 **Зроби зараз (4 хв):** у Play відкрий TAB і підтверди, що Coins змінюються після дії на сервері.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -838,7 +836,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  mistake: "giveItem до перевірки монет",
  explanation: "Товар без оплати.",
  correctApproach: "Спочатку баланс ≥ price, потім списати й видати",
- },
+ }
  ],
  summary: "Ти зібрав повний вертикальний магазин хабу: ShopConfig на сервері, RemoteFunction для каталогу/балансу, RemoteEvent для Buy з перевіркою Coins, UI на LocalScript лише як вітрина. Це якір мережі+економіки перед анти-читом і NPC.",
  practiceTask: {
@@ -864,7 +862,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  hints: [
  "Спочатку catalog print на клієнті, потім Gui",
  "Тестові монети тільки через серверний Script",
- "Імена Remotes мають збігатися символ-в-символ",
+ "Імена Remotes мають збігатися символ-в-символ"
  ],
  optionalChallenge: "Третій товар + вже куплений (Attribute) → кнопка Buy Disabled.",
  },
@@ -880,7 +878,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "Зібрати магазин: UI + Remotes + серверні ціни/Coins",
           "Лише намалювати небо",
           "Видалити RemoteEvent з курсу",
-          "Замінити leaderstats на Lighting",
+          "Замінити leaderstats на Lighting"
         ],
  correctAnswer: 0,
  explanation: "Вертикальний зріз магазину.",
@@ -893,7 +891,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "Лише LocalScript без мережі",
           "RemoteEvent (FireServer itemId)",
           "BindableEvent у Workspace як заміна серверу",
-          "Зміна назви Part",
+          "Зміна назви Part"
         ],
  correctAnswer: 1,
  explanation: "Buy = подія на сервер.",
@@ -906,7 +904,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "Щоб вимкнути Anchored",
           "Щоб створити Terrain",
           "Щоб клієнт отримав каталог/баланс відповіддю InvokeServer",
-          "Це заборонений об’єкт",
+          "Це заборонений об’єкт"
         ],
  correctAnswer: 2,
  explanation: "Запит → відповідь.",
@@ -919,7 +917,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "З аргументу price від клієнта без перевірки",
           "З TextLabel кнопки напряму",
           "З ClockTime",
-          "З ShopConfig на сервері",
+          "З ShopConfig на сервері"
         ],
  correctAnswer: 3,
  explanation: "Прайс-лист сервера.",
@@ -932,7 +930,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "Нові Coins для всіх гравців",
           "itemId",
           "Довільну ціну 0",
-          "loadstring код",
+          "loadstring код"
         ],
  correctAnswer: 1,
  explanation: "Лише ідентифікатор.",
@@ -945,7 +943,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "Лише в LocalScript магазину",
           "У BillboardGui без сервера",
           "У серверному Script (SSS)",
-          "У SoundService",
+          "У SoundService"
         ],
  correctAnswer: 2,
  explanation: "Економіка на сервері.",
@@ -958,7 +956,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "Invoke чекає й повертає результат; Fire - сигнал без return",
           "Вони завжди ідентичні",
           "FireServer працює лише на сервері",
-          "InvokeServer не потребує RemoteFunction",
+          "InvokeServer не потребує RemoteFunction"
         ],
  correctAnswer: 0,
  explanation: "Подія vs запит.",
@@ -971,7 +969,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "Це вимикає магазин",
           "Без цього Config не компілюється",
           "WaitForChild замінює OnServerEvent",
-          "Об’єкт може ще не встигнути реплікуватись на клієнт",
+          "Об’єкт може ще не встигнути реплікуватись на клієнт"
         ],
  correctAnswer: 3,
  explanation: "Надійний старт клієнта.",
@@ -984,7 +982,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "Все одно видати товар",
           "Поставити Coins у мінус на клієнті",
           "Не списувати й надіслати fail-повідомлення клієнту",
-          "Видалити ShopConfig",
+          "Видалити ShopConfig"
         ],
  correctAnswer: 2,
  explanation: "Чесна відмова.",
@@ -997,7 +995,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "Щоб замінити RemoteEvent",
           "Щоб з каталогу намалювати список товарів кнопками Buy",
           "Це обов’язково для Pathfinding",
-          "Щоб створити Humanoid",
+          "Щоб створити Humanoid"
         ],
  correctAnswer: 1,
  explanation: "UI список.",
@@ -1010,7 +1008,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "LocalScript не може малювати TextLabel",
           "RemoteFunction тоді заборонений",
           "Coins не реплікуються ніколи",
-          "Сервер не має джерела правди для Buy",
+          "Сервер не має джерела правди для Buy"
         ],
  correctAnswer: 3,
  explanation: "Config на сервері.",
@@ -1023,7 +1021,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "Хоча б 2 з різними цінами",
           "Обов’язково 100",
           "0 - лише теорія",
-          "Лише 1 без UI",
+          "Лише 1 без UI"
         ],
  correctAnswer: 0,
  explanation: "Демо каталогу.",
@@ -1036,7 +1034,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "Призначити собі Coins локально навмання",
           "Вимкнути SSS",
           "Оновити статус/баланс UI (Changed або Invoke balance)",
-          "Видалити RemoteFunction",
+          "Видалити RemoteFunction"
         ],
  correctAnswer: 2,
  explanation: "Фідбек вітрини.",
@@ -1049,7 +1047,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "Видалення всіх Remotes",
           "Лише Terrain Paint",
           "Повна заміна UI на Output",
-          "Анти-чит lite (rate limit тощо) і GamePass-словник",
+          "Анти-чит lite (rate limit тощо) і GamePass-словник"
         ],
  correctAnswer: 3,
  explanation: "Наступний урок.",
@@ -1062,11 +1060,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
           "Лише порожній Frame без Remotes",
           "Працюючий Hub Shop: catalog Invoke + Buy Event + Coins з Config + Save",
           "Baseplate без Scripts",
-          "Магазин з ціною лише на клієнті",
+          "Магазин з ціною лише на клієнті"
         ],
  correctAnswer: 1,
  explanation: "Потрібен повний вертикальний зріз.",
- },
+ }
  ],
  },
 }
@@ -1084,7 +1082,7 @@ export const ukLesson103 = {
  "Додати rate limit / debounce на Buy Remote",
  "Перевіряти itemId, ціну з Config, баланс Coins і стан гравця на сервері",
  "Відрізнити монети (leaderstats) від GamePass / DevProduct на рівні ідеї",
- "Знати шкільну політику: що можна демо-пояснити, а що не обіцяти в проді без дозволу",
+ "Знати шкільну політику: що можна демо-пояснити, а що не обіцяти в проді без дозволу"
  ],
  theory: {
  sections: [
@@ -1299,7 +1297,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
 Далі (10.4) йдемо до NPC - магазин уже не повинен сипатись від дабл-кліку.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -1332,7 +1330,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  mistake: "Мовчазна відмова без логу під час дебагу",
  explanation: "Не зрозуміло, чи UI винний, чи сервер.",
  correctApproach: "warn/print теги [Shop] на час навчання",
- },
+ }
  ],
  summary: "Ти зміцнив магазин: rate limit, валідація itemId, ціна лише з Config, відмови з логом. Окремо розклав Coins vs GamePass vs DevProduct і шкільну політику lite - хаб готовий до NPC без дірявої каси.",
  practiceTask: {
@@ -1357,7 +1355,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  hints: [
  "Спочатку зламай свій магазин навмисно в Solo - потім полагодь",
  "PlayerRemoving чистить lastBuyAt",
- "Не підключай реальний Robux без дозволу викладача",
+ "Не підключай реальний Robux без дозволу викладача"
  ],
  optionalChallenge: "Лічильник spamStrikes: після 10 rate-deny за хвилину коротко Disabled Prompt/кнопки Buy на клієнті через FireClient.",
  },
@@ -1373,7 +1371,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "Ціну, монети й успіх покупки перевіряє/задає сервер, не LocalScript",
           "Клієнт завжди правий",
           "RemoteEvent заборонені",
-          "Config має лежати лише в StarterGui",
+          "Config має лежати лише в StarterGui"
         ],
  correctAnswer: 0,
  explanation: "Серверна правда.",
@@ -1386,7 +1384,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "Будь-яку ціну 0",
           "itemId товару",
           "Нове значення чужих Coins",
-          "Команду loadstring",
+          "Команду loadstring"
         ],
  correctAnswer: 1,
  explanation: "Лише ідентифікатор.",
@@ -1399,7 +1397,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "Щоб вимкнути Pathfinding",
           "Щоб замінити leaderstats",
           "Щоб спам і дабл-клік не виконували десятки покупок",
-          "Це потрібно лише для Terrain",
+          "Це потрібно лише для Terrain"
         ],
  correctAnswer: 2,
  explanation: "Захист від спаму.",
@@ -1412,7 +1410,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "З TextLabel на клієнті",
           "З аргументу price без перевірки",
           "З Lighting.ClockTime",
-          "З ShopConfig на сервері",
+          "З ShopConfig на сервері"
         ],
  correctAnswer: 3,
  explanation: "Config = джерело правди.",
@@ -1425,7 +1423,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "Вони абсолютно однакові завжди",
           "Пас зазвичай разовий «назавжди», DevProduct можна купувати повторно",
           "DevProduct існує лише на клієнті",
-          "GamePass - це завжди leaderstats Coins",
+          "GamePass - це завжди leaderstats Coins"
         ],
  correctAnswer: 1,
  explanation: "Різні моделі покупок.",
@@ -1438,7 +1436,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "Обов’язкові реальні Robux від однокласників",
           "Лише ParticleEmitter",
           "Coins у leaderstats / ігрова економіка",
-          "Назви Parts",
+          "Назви Parts"
         ],
  correctAnswer: 2,
  explanation: "Політика курсу: Coins first.",
@@ -1451,7 +1449,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "Клієнт можна підробити; перевірка володіння має бути на сервері",
           "VIP не існує в Roblox",
           "LocalScript не вміє показувати UI",
-          "Сервер не бачить гравців",
+          "Сервер не бачить гравців"
         ],
  correctAnswer: 0,
  explanation: "Преміум теж Never trust client.",
@@ -1464,7 +1462,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "Щоб прискорити Terrain",
           "Щоб відкрити діалог NPC",
           "Це вимикає RemoteEvent назавжди",
-          "Відсікти сміттєві аргументи з клієнта",
+          "Відсікти сміттєві аргументи з клієнта"
         ],
  correctAnswer: 3,
  explanation: "Валідація входу.",
@@ -1477,7 +1475,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "Завжди вимагати Robux у однокласників на уроці",
           "Ігнорувати будь-які правила",
           "Лише з дозволом школи/викладача і дорослим Creator-доступом",
-          "Підключати лише через LocalScript",
+          "Підключати лише через LocalScript"
         ],
  correctAnswer: 2,
  explanation: "Політика lite.",
@@ -1490,7 +1488,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "Щоб змінити колір неба",
           "Щоб tryBuy обрав правильну гілку перевірки",
           "Щоб видалити Prompt",
-          "Це лише косметика без сенсу",
+          "Це лише косметика без сенсу"
         ],
  correctAnswer: 1,
  explanation: "Архітектура товарів.",
@@ -1503,7 +1501,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "Змінити Material підлоги",
           "Вимкнути Output",
           "Перейменувати Workspace",
-          "Надіслати Buy з підробленою/нульовою ціною і подивитись, чи сервер бере Config",
+          "Надіслати Buy з підробленою/нульовою ціною і подивитись, чи сервер бере Config"
         ],
  correctAnswer: 3,
  explanation: "Навмисна перевірка.",
@@ -1516,7 +1514,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "Зрозуміле «Недостатньо монет» (і не списувати)",
           "Тишу й від’ємний баланс",
           "Краш Studio",
-          "Автоматичний GamePass",
+          "Автоматичний GamePass"
         ],
  correctAnswer: 0,
  explanation: "UX відмови.",
@@ -1529,7 +1527,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "Щоб замінити Config",
           "Щоб вимкнути анти-чит",
           "Швидко зрозуміти причину deny під час playtest",
-          "Лог заборонений у Studio",
+          "Лог заборонений у Studio"
         ],
  correctAnswer: 2,
  explanation: "Діагностика.",
@@ -1542,7 +1540,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "Довіра до клієнтського прапорця без сервера",
           "Видалення ShopConfig",
           "Збільшення MaxActivationDistance",
-          "Перевірка alreadyOwns до списання/видачі",
+          "Перевірка alreadyOwns до списання/видачі"
         ],
  correctAnswer: 3,
  explanation: "Серверний стан володіння.",
@@ -1555,11 +1553,11 @@ Save: \`Lesson 10.3 - Shop Guard\`.
           "Лише теорія без змін магазину",
           "Захищений Buy (config price, validate, cooldown) + розуміння GamePass lite + Save",
           "Порожній Baseplate",
-          "Клієнтські Coins без сервера",
+          "Клієнтські Coins без сервера"
         ],
  correctAnswer: 1,
  explanation: "Потрібен посилений магазин.",
- },
+ }
  ],
  },
 }
@@ -1577,7 +1575,7 @@ export const ukLesson104 = {
  "Налаштувати ProximityPrompt: ObjectText, ActionText, HoldDuration, MaxActivationDistance",
  "Показати діалог гілками if за станом (привіт / зайнятий / прощавай)",
  "Підключити Prompt на сервері й безпечно оновити UI на клієнті",
- "Підготувати NPC як якір для pathfinding (10.5) і квесту (10.6)",
+ "Підготувати NPC як якір для pathfinding (10.5) і квесту (10.6)"
  ],
  theory: {
  sections: [
@@ -1805,7 +1803,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
 Якщо є третя гілка (busy/ready) - бонус, не блокер.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -1838,7 +1836,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  mistake: "Спам Triggered відкриває 10 вікон",
  explanation: "Брудний UX.",
  correctApproach: "Debounce + Enabled false на час діалогу",
- },
+ }
  ],
  summary: "Ти зібрав NPC хабу з ProximityPrompt і діалогом на гілках if: сервер вирішує репліку, клієнт показує текст. Це якір для патруля, квесту й усього Ship-шляху модуля 10.",
  practiceTask: {
@@ -1864,7 +1862,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  hints: [
  "Спочатку print(player.Name), потім Gui",
  "Чисти Toolbox Scripts до написання свого коду",
- "Короткі репліки легше читати на мобільному",
+ "Короткі репліки легше читати на мобільному"
  ],
  optionalChallenge: "Третя гілка busy + кнопка «Ок» у Gui, що шле Remote «dialogue closed» і знову вмикає Prompt.",
  },
@@ -1880,7 +1878,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Зручна підказка ObjectText/ActionText і кращий мобільний UX",
           "Він єдиний об’єкт, який існує в Roblox",
           "Він замінює Humanoid",
-          "Він автоматично дає GamePass",
+          "Він автоматично дає GamePass"
         ],
  correctAnswer: 0,
  explanation: "Стандарт взаємодії з NPC.",
@@ -1893,7 +1891,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Лише в LocalScript без сервера",
           "На сервері",
           "У Lighting",
-          "У Terrain Editor",
+          "У Terrain Editor"
         ],
  correctAnswer: 1,
  explanation: "Стан і безпека.",
@@ -1906,7 +1904,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Щоб збільшити FPS",
           "Щоб створити leaderstats",
           "Щоб гравець бачив ім’я/контекст і що саме зробить клавіша",
-          "Це обов’язкові поля DataStore",
+          "Це обов’язкові поля DataStore"
         ],
  correctAnswer: 2,
  explanation: "Читабельний UX.",
@@ -1919,7 +1917,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Один print без Prompt",
           "Лише ParticleEmitter",
           "Видалення NPC після кліку",
-          "Дві гілки if за станом (наприклад перший раз / знову)",
+          "Дві гілки if за станом (наприклад перший раз / знову)"
         ],
  correctAnswer: 3,
  explanation: "Гілки реплік.",
@@ -1932,7 +1930,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Вони завжди без Humanoid",
           "Зайві/шкідливі Scripts, які варто прибрати",
           "ProximityPrompt у них заборонений",
-          "Їх не можна перейменувати",
+          "Їх не можна перейменувати"
         ],
  correctAnswer: 1,
  explanation: "Чистка Toolbox.",
@@ -1945,7 +1943,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Самовирішувати нагороду квесту",
           "Писати Coins у leaderstats",
           "Показати текст/UI після сигналу сервера",
-          "Вимикати PathfindingService глобально",
+          "Вимикати PathfindingService глобально"
         ],
  correctAnswer: 2,
  explanation: "UI = відображення.",
@@ -1958,7 +1956,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Щоб здалеку було видно: тут можна взаємодіяти",
           "Щоб замінити Prompt",
           "Щоб відкрити магазин без Remotes",
-          "Це потрібно лише для Raycast",
+          "Це потрібно лише для Raycast"
         ],
  correctAnswer: 0,
  explanation: "Орієнтир у просторі.",
@@ -1971,7 +1969,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Обов’язково 0",
           "Обов’язково 500",
           "Дистанція не існує в Prompt",
-          "Близько 8–12 студів (не пів карти)",
+          "Близько 8–12 студів (не пів карти)"
         ],
  correctAnswer: 3,
  explanation: "Близька зона.",
@@ -1984,7 +1982,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Щоб вимкнути Anchored",
           "Щоб створити table квесту",
           "Щоб складніше активувати Prompt крізь стіну",
-          "Щоб прискорити ComputeAsync",
+          "Щоб прискорити ComputeAsync"
         ],
  correctAnswer: 2,
  explanation: "Лінія видимості.",
@@ -1997,7 +1995,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Щоб видалити HumanoidRootPart",
           "Щоб спам клавіші не відкривав купу діалогів",
           "Це замінює if-гілки",
-          "Щоб обов’язково зламати UI",
+          "Щоб обов’язково зламати UI"
         ],
  correctAnswer: 1,
  explanation: "Анти-спам UX.",
@@ -2010,7 +2008,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Треба видалити Prompt перед квестом",
           "Квест працює лише без NPC",
           "table реплік заборонені в квестах",
-          "Ті самі гілки if можна наповнити QuestStatus і QuestConfig",
+          "Ті самі гілки if можна наповнити QuestStatus і QuestConfig"
         ],
  correctAnswer: 3,
  explanation: "Каркас під квест.",
@@ -2023,7 +2021,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Зрозуміла дієслово-підказка українською/простою мовою",
           "Interact швидше виконується рушієм",
           "Поговорити вимикає LineOfSight",
-          "Interact не підтримується на PC",
+          "Interact не підтримується на PC"
         ],
  correctAnswer: 0,
  explanation: "Ясність для гравця.",
@@ -2036,7 +2034,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Видалити NPC з гри",
           "Поставити MaxActivationDistance = 500",
           "Тимчасово Enabled = false або ігнорувати спам debounce",
-          "Перенести логіку лише на клієнт назавжди",
+          "Перенести логіку лише на клієнт назавжди"
         ],
  correctAnswer: 2,
  explanation: "Контроль повторів.",
@@ -2049,7 +2047,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Table вимикає сервер",
           "Без table Triggered не працює",
           "Це обов’язково замінює Attributes",
-          "Тексти в одному місці, легше міняти й розширювати",
+          "Тексти в одному місці, легше міняти й розширювати"
         ],
  correctAnswer: 3,
  explanation: "Дані діалогу.",
@@ -2062,11 +2060,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
           "Лише Model без Prompt",
           "NPC з Prompt, серверними гілками діалогу і видимим текстом + Save",
           "Порожній Baseplate",
-          "Тільки магазин без NPC",
+          "Тільки магазин без NPC"
         ],
  correctAnswer: 1,
  explanation: "Потрібен робочий talk-loop.",
- },
+ }
  ],
  },
 }
@@ -2084,7 +2082,7 @@ export const ukLesson105 = {
  "Налаштувати AgentParams (радіус/висота) під свого NPC",
  "Зробити патруль NPC по точках через while + перехід між waypoint",
  "Обробити Failed / Blocked шлях і не крутити вічний while без wait",
- "Підготувати рухомого NPC до квесту 10.6 (квестодавець / охоронець зони)",
+ "Підготувати рухомого NPC до квесту 10.6 (квестодавець / охоронець зони)"
  ],
  theory: {
  sections: [
@@ -2311,7 +2309,7 @@ Lite на годину:
 Завтра на цьому NPC вішаєш квест table - він уже «живий» у просторі хабу.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -2344,7 +2342,7 @@ Lite на годину:
  mistake: "Не обробляти Jump waypoint",
  explanation: "Застрягання на невеликих уступах.",
  correctApproach: "PathWaypointAction.Jump → humanoid.Jump",
- },
+ }
  ],
  summary: "Ти навчив NPC ходити через PathfindingService: ComputeAsync будує waypoints, while ганяє патруль між точками, Fail/таймаути не вбивають цикл. Живий охоронець/квестодавець готовий до квесту в 10.6.",
  practiceTask: {
@@ -2371,7 +2369,7 @@ Lite на годину:
  hints: [
  "Спочатку одна ціль успішно, потім while",
  "Transparency 1 на Patrol Parts, щоб не псувати білд",
- "warn(path.Status) - найкращий друг дебагу",
+ "warn(path.Status) - найкращий друг дебагу"
  ],
  optionalChallenge: "path.Blocked → негайний recompute до поточної цілі.",
  },
@@ -2387,7 +2385,7 @@ Lite на годину:
           "Щоб побудувати обхід перешкод через waypoints",
           "Щоб видалити Humanoid",
           "Щоб замінити leaderstats",
-          "Це потрібно лише для Terrain water",
+          "Це потрібно лише для Terrain water"
         ],
  correctAnswer: 0,
  explanation: "Маршрут з обходом.",
@@ -2400,7 +2398,7 @@ Lite на годину:
           "Одразу видає монети",
           "Рахує маршрут між двома позиціями (асинхронно чекає результат)",
           "Створює ScreenGui",
-          "Вимикає Anchored у всьому Workspace",
+          "Вимикає Anchored у всьому Workspace"
         ],
  correctAnswer: 1,
  explanation: "Побудова Path.",
@@ -2413,7 +2411,7 @@ Lite на годину:
           "Лише в LocalScript гравця",
           "У Lighting.Atmosphere",
           "На сервері (Script)",
-          "У назві Place",
+          "У назві Place"
         ],
  correctAnswer: 2,
  explanation: "Серверний AI/патруль.",
@@ -2426,7 +2424,7 @@ Lite на годину:
           "Це лише косметика Output",
           "Status завжди Success",
           "Щоб увімкнути Bloom",
-          "Щоб не вести NPC, якщо шляху немає (NoPath тощо)",
+          "Щоб не вести NPC, якщо шляху немає (NoPath тощо)"
         ],
  correctAnswer: 3,
  explanation: "Fail-safe.",
@@ -2439,7 +2437,7 @@ Lite на годину:
           "Список GamePass",
           "Список точок маршруту, по яких треба провести Humanoid",
           "Файли Audio",
-          "Типи Terrain Material",
+          "Типи Terrain Material"
         ],
  correctAnswer: 1,
  explanation: "Точки Path.",
@@ -2452,7 +2450,7 @@ Lite на годину:
           "while заборонений у Lua",
           "Wait вимикає Pathfinding",
           "Інакше tight loop вантажить сервер і ламає рух",
-          "Так вимагає RemoteFunction",
+          "Так вимагає RemoteFunction"
         ],
  correctAnswer: 2,
  explanation: "Не крутити порожній цикл.",
@@ -2465,7 +2463,7 @@ Lite на годину:
           "Каже системі «наскільки товстий» агент для проходів",
           "Це гучність Sound",
           "Це ціна товару в магазині",
-          "Це колір Neon",
+          "Це колір Neon"
         ],
  correctAnswer: 0,
  explanation: "Розмір агента.",
@@ -2478,7 +2476,7 @@ Lite на годину:
           "Видалити waypoint",
           "Вимкнути PathfindingService",
           "Поставити Anchored true назавжди",
-          "Увімкнути humanoid.Jump (або еквівалент стрибка)",
+          "Увімкнути humanoid.Jump (або еквівалент стрибка)"
         ],
  correctAnswer: 3,
  explanation: "Стрибок на маршруті.",
@@ -2491,7 +2489,7 @@ Lite на годину:
           "Занадто гарний BillboardGui",
           "Наявність ProximityPrompt",
           "Якір всередині колізії або занадто великий AgentRadius / вузький прохід",
-          "Занадто короткий title квесту",
+          "Занадто короткий title квесту"
         ],
  correctAnswer: 2,
  explanation: "Геометрія й агент.",
@@ -2504,7 +2502,7 @@ Lite на годину:
           "Щоб прискорити Publish",
           "Щоб NPC не завис назавжди, якщо фізика заблокувала рух",
           "Щоб видалити waypoints з гри",
-          "Це замінює Humanoid",
+          "Це замінює Humanoid"
         ],
  correctAnswer: 1,
  explanation: "Захист від вічного Wait.",
@@ -2517,7 +2515,7 @@ Lite на годину:
           "Видалити Prompt назавжди",
           "Перенести NPC у ReplicatedStorage під час діалогу обов’язково",
           "Вимкнути while у всьому Place",
-          "Прапорець paused: зупинити рух на час розмови",
+          "Прапорець paused: зупинити рух на час розмови"
         ],
  correctAnswer: 3,
  explanation: "Пауза AI.",
@@ -2530,7 +2528,7 @@ Lite на годину:
           "Маршрут перекрили після розрахунку - варто перерахувати",
           "Гравець купив GamePass",
           "Обов’язковий краш Studio",
-          "Успішне завершення квесту",
+          "Успішне завершення квесту"
         ],
  correctAnswer: 0,
  explanation: "Перекриття шляху.",
@@ -2543,7 +2541,7 @@ Lite на годину:
           "Обов’язково 100",
           "0 - лише Compute без руху",
           "Хоча б 2 (краще 3) з поверненням по колу",
-          "Лише 1 і вимкнути while",
+          "Лише 1 і вимкнути while"
         ],
  correctAnswer: 2,
  explanation: "Цикл між якорями.",
@@ -2556,7 +2554,7 @@ Lite на годину:
           "Pathfinding працює лише з Transparency 1",
           "Так вимагає DataStore",
           "Щоб замінити HumanoidRootPart",
-          "Це якорі позицій, а не декоративні стіни на шляху",
+          "Це якорі позицій, а не декоративні стіни на шляху"
         ],
  correctAnswer: 3,
  explanation: "Службові маркери.",
@@ -2569,11 +2567,11 @@ Lite на годину:
           "Лише теорія без Studio",
           "NPC з while-патрулем через Pathfinding по точках + Save",
           "Статичний Part без Humanoid",
-          "Магазин без NPC",
+          "Магазин без NPC"
         ],
  correctAnswer: 1,
  explanation: "Потрібен рухомий патруль.",
- },
+ }
  ],
  },
 }
@@ -2591,7 +2589,7 @@ export const ukLesson106 = {
  "Зберігати прогрес гравця на сервері (Attributes / Values / своя table)",
  "Зв’язати NPC + Prompt із стартом і здачею квесту через if",
  "Видати нагороду в leaderstats Coins лише на сервері (анти-дубль)",
- "Підготувати умову цілі під завтрашній пазл/інвентар (10.7)",
+ "Підготувати умову цілі під завтрашній пазл/інвентар (10.7)"
  ],
  theory: {
  sections: [
@@ -2788,21 +2786,6 @@ ProximityPrompt:
 **Зроби зараз (5 хв):** пройди таблицю тестів один раз і запиши pass/fail для кожного рядка.`,
  },
  {
- title: "Місток до 10.7 і 10.8",
- content: `| Сьогодні | Далі |
-|----------|------|
-| goalType count + маркери | goalType item + Inventory.has |
-| QuestRewarded анти-дубль | Той самий патерн для ключа/дверей |
-| Нагорода в Coins | Магазин витрачає ті самі Coins |
-| NPC як хаб-якір | Золотий шлях Ship: NPC → пазл → здача → магазин |
-
-Не роздувай сьогодні 5 квестів. **Один** id у Config, повністю стабільний - краще, ніж три напівмертві.
-
-Save: \`Lesson 10.6 - Quest Table\`.
-
-**Зроби зараз (2 хв):** допиши в Note один рядок, що переносиш у наступний урок.`,
- },
- {
  title: "Чекліст здачі уроку 78",
  content: `- [ ] QuestConfig table з id, ціллю, нагородою, текстами
 - [ ] Старт квесту з NPC Prompt
@@ -2816,7 +2799,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
 Якщо все є - завтра заміниш маркери на ключ з Raycast без переписування всієї машини станів.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -2849,7 +2832,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
  mistake: "Статус квесту ставить клієнт",
  explanation: "Підробка ready/turned_in.",
  correctApproach: "Attributes/state лише з сервер-скриптів",
- },
+ }
  ],
  summary: "Ти зібрав квест на QuestConfig table: NPC стартує, сервер крутить прогрес цілі, здача перевіряє умову і один раз додає Coins у leaderstats. Це каркас, у який завтра встане ключ з пазла, а в 10.8 - весь Ship-шлях хабу.",
  practiceTask: {
@@ -2876,7 +2859,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
  hints: [
  "Спочатку гілки діалогу з print, потім addCoins",
  "alreadyCollected важливіший за гарний Billboard",
- "Перевір TAB після здачі",
+ "Перевір TAB після здачі"
  ],
  optionalChallenge: "Другий квест у Config (reach_zone), який відкривається лише після turned_in першого.",
  },
@@ -2892,7 +2875,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "Щоб цілі, нагорода і тексти жили в одному місці й легко розширювались",
           "Щоб вимкнути NPC",
           "Щоб замінити Workspace на SSS",
-          "Це потрібно лише для Skybox",
+          "Це потрібно лише для Skybox"
         ],
  correctAnswer: 0,
  explanation: "Дані квесту окремо від дроту if.",
@@ -2905,7 +2888,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "Лише LocalScript у StarterGui",
           "Серверний Script",
           "Lighting",
-          "Випадковий Free Model без перевірки",
+          "Випадковий Free Model без перевірки"
         ],
  correctAnswer: 1,
  explanation: "Стан і економіка на сервері.",
@@ -2918,7 +2901,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "Щоб вимкнути Anchored",
           "Щоб створити Terrain",
           "Щоб нагороду не видати багато разів спамом Prompt",
-          "Це замінює Pathfinding",
+          "Це замінює Pathfinding"
         ],
  correctAnswer: 2,
  explanation: "Анти-дубль нагороди.",
@@ -2931,7 +2914,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "Лише в TextLabel без Value",
           "У ClockTime",
           "У ReplicatedFirst як Sound",
-          "У ті самі leaderstats Coins, що й магазин",
+          "У ті самі leaderstats Coins, що й магазин"
         ],
  correctAnswer: 3,
  explanation: "Одна економіка хабу.",
@@ -2944,7 +2927,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "Давати +10 за кожен Touched",
           "Пам’ятати alreadyCollected(markerId) для гравця",
           "Вимкнути сервер",
-          "Ставити статус на клієнті",
+          "Ставити статус на клієнті"
         ],
  correctAnswer: 1,
  explanation: "Debounce по id маркера.",
@@ -2957,7 +2940,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "Лише колір Part",
           "Лише ім’я Place",
           "id, ціль (тип/кількість), rewardCoins, тексти діалогу",
-          "Тільки ParticleEmitter Rate",
+          "Тільки ParticleEmitter Rate"
         ],
  correctAnswer: 2,
  explanation: "Дані для старту/прогресу/здачі.",
@@ -2970,7 +2953,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "Є відчуття «повернувся до квестодавця» і одна точка анти-дубля",
           "Так забороняє Roblox інакше",
           "Маркери не вміють Touched",
-          "NPC не може мати Prompt",
+          "NPC не може мати Prompt"
         ],
  correctAnswer: 0,
  explanation: "Класичний quest loop.",
@@ -2983,7 +2966,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "Одразу Publish Public",
           "Видалити leaderstats",
           "Дати монети без умови",
-          "Порахувати 3 маркери (count), завтра замінити на Key_Blue",
+          "Порахувати 3 маркери (count), завтра замінити на Key_Blue"
         ],
  correctAnswer: 3,
  explanation: "Та сама машина станів, інша ціль.",
@@ -2996,7 +2979,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "Щоб UI міг сам видати 1000 монет",
           "Щоб вимкнути Remotes магазину",
           "Щоб показати прогрес гравцю, не роблячи UI джерелом правди",
-          "Це обов’язково ламає сервер",
+          "Це обов’язково ламає сервер"
         ],
  correctAnswer: 2,
  explanation: "UI = відображення.",
@@ -3009,7 +2992,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "Зміна Material підлоги",
           "Повторна здача того самого квесту",
           "Відкриття Terrain Editor",
-          "Перейменування Lighting",
+          "Перейменування Lighting"
         ],
  correctAnswer: 1,
  explanation: "Перевірка анти-дубля.",
@@ -3022,7 +3005,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "LocalScript не може показувати TextLabel",
           "Attributes не існують",
           "Prompt працює лише на клієнті завжди",
-          "Сервер не побачить правди при здачі; легко підробити",
+          "Сервер не побачить правди при здачі; легко підробити"
         ],
  correctAnswer: 3,
  explanation: "Прогрес на сервері.",
@@ -3035,7 +3018,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "status active, progress 0, показати startText",
           "Одразу turned_in і 999 монет",
           "Видалення NPC",
-          "Вимкнення Explorer",
+          "Вимкнення Explorer"
         ],
  correctAnswer: 0,
  explanation: "Гілка старту.",
@@ -3048,7 +3031,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "Треба видалити QuestConfig",
           "Raycast заборонить квести",
           "Ті самі start/turn-in, ціль можна замінити на item/Inventory",
-          "Інвентар замінить leaderstats назавжди",
+          "Інвентар замінить leaderstats назавжди"
         ],
  correctAnswer: 2,
  explanation: "Гнучкий goalType.",
@@ -3061,7 +3044,7 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "Чи білий колір неба",
           "Чи вимкнено Output",
           "Чи назва модуля 1 правильна",
-          "Чи існує leaderstats.Coins і чи addCoins пише саме туди",
+          "Чи існує leaderstats.Coins і чи addCoins пише саме туди"
         ],
  correctAnswer: 3,
  explanation: "Діагностика економіки.",
@@ -3074,11 +3057,11 @@ Save: \`Lesson 10.6 - Quest Table\`.
           "Лише табличка без коду",
           "Працюючий квест з Config, прогресом, одноразовою нагородою в Coins і Save",
           "Порожній Baseplate",
-          "Магазин без квесту й без сервера",
+          "Магазин без квесту й без сервера"
         ],
  correctAnswer: 1,
  explanation: "Потрібен зібраний quest loop.",
- },
+ }
  ],
  },
 }
@@ -3096,7 +3079,7 @@ export const ukLesson107 = {
  "Зрозуміти Raycast: промінь, FilterDescendantsInstances, що повертає результат",
  "Зібрати lite пазл-кімнату: луч / приціл відкриває двері або дає ключ",
  "Зв’язати пазл з інвентарем (ключ у table → умова для дверей/квесту)",
- "Підготувати прапорець для завтрашнього Ship хабу (10.8)",
+ "Підготувати прапорець для завтрашнього Ship хабу (10.8)"
  ],
  theory: {
  sections: [
@@ -3341,7 +3324,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
 Завтра в 10.8 цей ключ/прапорець має лягти в золотий шлях хабу поруч із магазином.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -3374,7 +3357,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  mistake: "Не чистити bags[player] при виході",
  explanation: "Витік посилань, дивні баги в Studio.",
  correctApproach: "PlayerRemoving → bags[p]=nil",
- },
+ }
  ],
  summary: "Ти зібрав серверний інвентар на ModuleScript і пазл на Raycast: промінь підтверджує влучання, ключ потрапляє в table, двері або квест читають hasItem. Це міст до Ship хабу в уроці 10.8.",
  practiceTask: {
@@ -3401,7 +3384,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  hints: [
  "FilterType Include з одним CrystalTarget спрощує дебаг",
  "Множ unit-вектор на 50–100 для дальності",
- "Спочатку print(result), потім addItem",
+ "Спочатку print(result), потім addItem"
  ],
  optionalChallenge: "Другий кристал Key_Red + двері, що потребують обидва ключі (has AND has).",
  },
@@ -3417,7 +3400,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "Одна спільна логіка add/has/remove для квесту, дверей і пазла",
           "Щоб замінити Workspace",
           "Щоб вимкнути Raycast назавжди",
-          "Це потрібно лише для Skybox",
+          "Це потрібно лише для Skybox"
         ],
  correctAnswer: 0,
  explanation: "Єдина бібліотека інвентарю.",
@@ -3430,7 +3413,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "Лише в LocalScript UI",
           "У серверному Script / логіці SSS",
           "У Lighting",
-          "У назві Part",
+          "У назві Part"
         ],
  correctAnswer: 1,
  explanation: "Нагорода на сервері.",
@@ -3443,7 +3426,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "Завжди створює Tool",
           "Видаляє Terrain",
           "Перевіряє, у що вріжеться промінь з origin уздовж direction",
-          "Публікує гру",
+          "Публікує гру"
         ],
  correctAnswer: 2,
  explanation: "Запит лінією у світ.",
@@ -3456,7 +3439,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "Бо так вимагає SoundService",
           "Бо unit уже = 1000 студів",
           "Бо Raycast ігнорує довжину завжди",
-          "Бо довжина вектора задає дальність променя",
+          "Бо довжина вектора задає дальність променя"
         ],
  correctAnswer: 3,
  explanation: "Дальність у довжині direction.",
@@ -3469,7 +3452,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "Вимкнути Anchored",
           "Рахувати лише вибрані Parts (ціль/дзеркала), менше випадкових влучань",
           "Збільшити гучність",
-          "Створити leaderstats",
+          "Створити leaderstats"
         ],
  correctAnswer: 1,
  explanation: "Фільтр цілей.",
@@ -3482,7 +3465,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "LocalScript не вміє print",
           "Beam заборонений у Roblox",
           "Клієнт ненадійний для нагород - легко підробити",
-          "Так швидше завжди і безпечніше",
+          "Так швидше завжди і безпечніше"
         ],
  correctAnswer: 2,
  explanation: "Never trust client для луту.",
@@ -3495,7 +3478,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "nil (немає результату)",
           "Обов’язково Baseplate",
           "Помилку компіляції завжди",
-          "Новий Player",
+          "Новий Player"
         ],
  correctAnswer: 0,
  explanation: "Перевіряй if result then.",
@@ -3508,7 +3491,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "Повірити TextLabel на клієнті",
           "Перевірити колір неба",
           "Порахувати Parts у Toolbox",
-          "Inventory.has(player, \"Key_Blue\") на сервері",
+          "Inventory.has(player, \"Key_Blue\") на сервері"
         ],
  correctAnswer: 3,
  explanation: "Серверна перевірка володіння.",
@@ -3521,7 +3504,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "Видалити Workspace",
           "Вимкнути Pathfinding",
           "Прибрати bags[player], щоб не тримати зайві дані",
-          "Обов’язково Publish",
+          "Обов’язково Publish"
         ],
  correctAnswer: 2,
  explanation: "Очищення стану гравця.",
@@ -3534,7 +3517,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "Лише гарний Sky",
           "Предмет у інвентарі або Attribute на кшталт PuzzleDone",
           "Лише зміна Material підлоги",
-          "Видалення NPC",
+          "Видалення NPC"
         ],
  correctAnswer: 1,
  explanation: "Видимий прапорець для інших систем.",
@@ -3547,7 +3530,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "Table завжди видно як 3D меч",
           "Tool не існує в Roblox",
           "Інвентар можна писати тільки в ReplicatedFirst",
-          "Це логічний список id на сервері, зручний для ключів/квестів",
+          "Це логічний список id на сервері, зручний для ключів/квестів"
         ],
  correctAnswer: 3,
  explanation: "Логіка володіння vs фізичний Tool.",
@@ -3560,7 +3543,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "Перевіряти has перед add / debounce",
           "Вимкнути сервер",
           "Давати ключ лише на клієнті",
-          "Збільшити Rate частинок",
+          "Збільшити Rate частинок"
         ],
  correctAnswer: 0,
  explanation: "Одноразовість і захист.",
@@ -3573,7 +3556,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "Єдиним місцем, де зберігається правда ключів",
           "Заміною Raycast",
           "Відображенням даних з сервера (наприклад після InvUpdated)",
-          "Обов’язково без тексту",
+          "Обов’язково без тексту"
         ],
  correctAnswer: 2,
  explanation: "UI = відображення.",
@@ -3586,7 +3569,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "Щоб зламати ModuleScript",
           "Це вимикає Remotes",
           "Щоб очистити Terrain",
-          "Ключ витрачається, повторне відкриття потребує нового проходження",
+          "Ключ витрачається, повторне відкриття потребує нового проходження"
         ],
  correctAnswer: 3,
  explanation: "Витрата предмета.",
@@ -3599,11 +3582,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
           "Лише теорія без Studio",
           "Працюючий Raycast→ключ в Inventory→перевірка дверей/квесту + Save",
           "Порожній Baseplate",
-          "Магазин без сервера",
+          "Магазин без сервера"
         ],
  correctAnswer: 1,
  explanation: "Потрібен зібраний пазл з інвентарем.",
- },
+ }
  ],
  },
 }
@@ -3621,7 +3604,7 @@ export const ukLesson108 = {
  "Перевірити інтеграцію Remote-магазину, NPC-квесту і Raycast/інвентарю",
  "Пройти рубрику Ship хабу (~15 пунктів) і закрити блокери",
  "Залишити Output чистим на маршруті й зрозумілий онбординг",
- "Зберегти Place як артефакт модуля 10 перед Polish (M11)",
+ "Зберегти Place як артефакт модуля 10 перед Polish (M11)"
  ],
  theory: {
  sections: [
@@ -3862,7 +3845,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
 Якщо все це є - модуль 10 закрито. Можна йти в Polish.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -3895,7 +3878,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  mistake: "Роздути 10 товарів замість закрити 1 цикл",
  explanation: "Година зникає, блокери лишаються.",
  correctApproach: "1 квест + 1 товар + стабільний шлях",
- },
+ }
  ],
  summary: "Ти зібрав Ship хаб: один золотий шлях, де квест, пазл/дія і Remote-магазин ділять одні Coins на сервері. Рубрика й playtest підтверджують, що демо 60–90 с працює без суфлера - база для Polish у модулі 11.",
  practiceTask: {
@@ -3923,7 +3906,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  hints: [
  "Спочатку монети й Remote, потім краса UI",
  "Один товар у каталозі достатньо для ship",
- "Якщо пазла немає - lite Touched-прапорець, але квест має його читати",
+ "Якщо пазла немає - lite Touched-прапорець, але квест має його читати"
  ],
  optionalChallenge: "Другий товар у магазині, який вимагає Attribute з пазла (серверна перевірка «має ключ»).",
  },
@@ -3939,7 +3922,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "Зшити хаб в один золотий шлях і закрити рубрику Ship",
           "Почати новий жанр obby з нуля",
           "Одразу Publish Public на весь світ",
-          "Видалити всі Remotes",
+          "Видалити всі Remotes"
         ],
  correctAnswer: 0,
  explanation: "Інтеграція і здача модуля 10.",
@@ -3952,7 +3935,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "Лише в LocalScript магазину",
           "На сервері в leaderstats (або еквівалент)",
           "У назві Part",
-          "У Lighting.ClockTime",
+          "У Lighting.ClockTime"
         ],
  correctAnswer: 1,
  explanation: "Одна серверна правда для квесту і магазину.",
@@ -3965,7 +3948,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "Будь-яку ціну, яку сам вигадав",
           "Команду видалити чужі Coins",
           "itemId (ідентифікатор товару)",
-          "Запит змінити ShopConfig у всіх",
+          "Запит змінити ShopConfig у всіх"
         ],
  correctAnswer: 2,
  explanation: "Ціну бере сервер з Config.",
@@ -3978,7 +3961,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "Roblox забороняє кілька Places",
           "Так швидше завжди",
           "Так вимагає Terrain",
-          "Немає інтегрованого досвіду для гравця",
+          "Немає інтегрованого досвіду для гравця"
         ],
  correctAnswer: 3,
  explanation: "Ship = зшитий цикл.",
@@ -3991,7 +3974,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "Лише гарна табличка без систем",
           "Квест/дія → нагорода в Coins → покупка в магазині",
           "Лише ParticleEmitter",
-          "Лише зміна неба",
+          "Лише зміна неба"
         ],
  correctAnswer: 1,
  explanation: "Ланцюг економії та Remotes.",
@@ -4004,7 +3987,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "Скасувати весь модуль 10",
           "Купувати без монет на клієнті",
           "Lite-тригер (зона/прапорець), але зв’язати з квестом",
-          "Ігнорувати онбординг",
+          "Ігнорувати онбординг"
         ],
  correctAnswer: 2,
  explanation: "Чесна lite-заміна заради шляху.",
@@ -4017,7 +4000,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "Щоб не видавати нагороду багато разів",
           "Щоб вимкнути Anchored",
           "Щоб замінити RemoteEvent",
-          "Це обов’язково для Terrain",
+          "Це обов’язково для Terrain"
         ],
  correctAnswer: 0,
  explanation: "Захист економіки.",
@@ -4030,7 +4013,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "Є табличка на спавні",
           "Є один товар у Config",
           "Output чистий",
-          "Квест і магазин пишуть монети в різні місця",
+          "Квест і магазин пишуть монети в різні місця"
         ],
  correctAnswer: 3,
  explanation: "Різні сховища = роз’їзд балансу.",
@@ -4043,7 +4026,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "12 панелей HUD одразу",
           "Публікацію в каталог",
           "Зрозумілий перший крок (табличка/NPC/маркер)",
-          "Вимкнення Explorer",
+          "Вимкнення Explorer"
         ],
  correctAnswer: 2,
  explanation: "Новачок має знати куди йти.",
@@ -4056,7 +4039,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "Перевірку Output",
           "Роздуття каталогу й Publish Public замість стабільного циклу",
           "Один товар і один квест",
-          "Рубрику Ship",
+          "Рубрику Ship"
         ],
  correctAnswer: 1,
  explanation: "Скоуп control.",
@@ -4069,7 +4052,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "Замінює всі Remotes",
           "Потрібна лише для Lighting",
           "Це заборонено в Studio",
-          "Ловить подвійні нагороди і краші на 2-й спробі",
+          "Ловить подвійні нагороди і краші на 2-й спробі"
         ],
  correctAnswer: 3,
  explanation: "Стан і стабільність.",
@@ -4082,7 +4065,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "Брати ціну/дані товару без довіри до клієнта",
           "Малювати Terrain",
           "Вимкнути Pathfinding",
-          "Замінити SpawnLocation",
+          "Замінити SpawnLocation"
         ],
  correctAnswer: 0,
  explanation: "Джерело правди для магазину.",
@@ -4095,7 +4078,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "Колір неба о 18:00",
           "Кількість дерев на острові",
           "Купівля через Remote і ціна з Config",
-          "Назва модуля 1",
+          "Назва модуля 1"
         ],
  correctAnswer: 2,
  explanation: "Блок C рубрики.",
@@ -4108,7 +4091,7 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "Видалити хаб і почати Baseplate",
           "Пропустити всі тести",
           "Прибрати leaderstats назавжди",
-          "Polish M11 на цьому ж Place (аудит, juice, Demo Ready)",
+          "Polish M11 на цьому ж Place (аудит, juice, Demo Ready)"
         ],
  correctAnswer: 3,
  explanation: "Хаб - база для polish.",
@@ -4121,11 +4104,11 @@ Save: \`Lesson 10.8 - Hub Ship\`.
           "Лише теорія без Studio",
           "Place Hub Ship з інтегрованим шляхом, рубрикою й чистим Output",
           "Порожній магазин без монет",
-          "Окремий файл лише з ParticleEmitter",
+          "Окремий файл лише з ParticleEmitter"
         ],
  correctAnswer: 1,
  explanation: "Потрібен зібраний хаб.",
- },
+ }
  ],
  },
 }

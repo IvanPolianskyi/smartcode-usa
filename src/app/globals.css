@@ -193,6 +193,47 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+/* LMS course pages: branded scrollbar instead of floating nav arrows */
+html.lms-course-scroll,
+body.lms-course-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(161, 0, 255, 0.65) rgba(255, 255, 255, 0.06);
+}
+
+html.lms-course-scroll::-webkit-scrollbar,
+body.lms-course-scroll::-webkit-scrollbar {
+  display: block;
+  width: 11px;
+  height: 11px;
+}
+
+html.lms-course-scroll::-webkit-scrollbar-track,
+body.lms-course-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+html.lms-course-scroll::-webkit-scrollbar-thumb,
+body.lms-course-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #c44bff 0%, #a100ff 55%, #7a00c8 100%);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 0 12px rgba(161, 0, 255, 0.35);
+}
+
+html.lms-course-scroll::-webkit-scrollbar-thumb:hover,
+body.lms-course-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #d97bff 0%, #b52bff 55%, #8f14e0 100%);
+  background-clip: padding-box;
+  box-shadow: 0 0 16px rgba(196, 75, 255, 0.5);
+}
+
+html.lms-course-scroll::-webkit-scrollbar-corner,
+body.lms-course-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 #our-courses,
 #courses,
 #social-media,

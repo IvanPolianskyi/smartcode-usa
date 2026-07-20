@@ -16,20 +16,13 @@ export const ukLesson81 = {
  "Налаштувати Humanoid.MaxHealth і Health гравця під бій",
  "Поставити тестовий dummy з Humanoid для майбутнього урону",
  "Показати/перевірити HP (смуга або print) до появи Tool",
- "Зберегти Place як базу модуля Arena",
+ "Зберегти Place як базу модуля Arena"
  ],
  theory: {
  sections: [
  {
  title: "Сьогоднішня місія (урок 57 з 92)",
  content: `Модуль 8 - **Arena**. Сьогодні не махаєш мечем і не пишеш dealDamage. Сьогодні збираєш **поле бою** і розумієш **Humanoid Health**.
-
-Артефакт уроку:
-1. Папка/модель \`Arena\` - підлога, бар’єри, вхід.
-2. SpawnLocation у безпечній зоні.
-3. Гравець з осмисленим \`MaxHealth\` / \`Health\` (наприклад 100).
-4. Dummy / мішень з Humanoid для тестів наступних уроків.
-
 Без арени Tool і хвилі висітимуть у порожнечі. Без Health бій не має шкали життя.
 
 **Зроби зараз (2 хв):** намалюй олівцем квадрат арени і де стоятиме spawn - не в центрі майбутніх ворогів.`,
@@ -232,7 +225,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
 Без Health немає сенсу махати мечем. Без арени немає сенсу хвиль. Почни модуль з землі під ногами. Якщо ментор пробіг арену без void і бачить смугу HP + dummy - база готова до меча. Залиш Place збереженим перед закриттям Studio.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -265,7 +258,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
  mistake: "Змішати старий квест-Place без чистки",
  explanation: "Explorer-хаос, ментор губиться.",
  correctApproach: "Чистий Arena Place",
- },
+ }
  ],
  summary: "Ти зібрав базу Arena: замкнений простір, безпечний spawn, серверний MaxHealth/Health і dummy-мішень. Модуль бою починається з поля і шкали життя - далі Tool і dealDamage.",
  practiceTask: {
@@ -290,7 +283,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
  hints: [
  "Спочатку коробка-арена, потім цифри HP",
  "Anchored на стінах і підлозі",
- "Dummy можна зробити з 1 Part + Humanoid для старту",
+ "Dummy можна зробити з 1 Part + Humanoid для старту"
  ],
  optionalChallenge: "BillboardGui над dummy з TextLabel Health (оновлюй з сервера при зміні - lite).",
  },
@@ -306,7 +299,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "Зібрати арену і налаштувати Humanoid Health",
           "Написати повний Remote магазин",
           "Зробити 10 хвиль одразу",
-          "Publish Race-трасу",
+          "Publish Race-трасу"
         ],
  correctAnswer: 0,
  explanation: "База Arena.",
@@ -319,7 +312,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "Назва Tool",
           "Максимальне / стеля життя Humanoid",
           "Тип Terrain",
-          "Кількість RemoteEvent",
+          "Кількість RemoteEvent"
         ],
  correctAnswer: 1,
  explanation: "Стеля HP.",
@@ -332,7 +325,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "Обов’язково в void",
           "Лише в ServerStorage",
           "Біля входу, не в центрі бою",
-          "Всередині Wall без прорізу",
+          "Всередині Wall без прорізу"
         ],
  correctAnswer: 2,
  explanation: "Безпечний старт.",
@@ -345,7 +338,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "Сервер не вміє Humanoid",
           "MaxHealth існує лише в LocalScript",
           "Інакше Floor зникає",
-          "Це правило світу; клієнту не довіряємо стелю HP",
+          "Це правило світу; клієнту не довіряємо стелю HP"
         ],
  correctAnswer: 3,
  explanation: "Серверна звичка.",
@@ -358,7 +351,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "Dummy замінює гравця назавжди",
           "Щоб було на чому тестувати урон у наступних уроках",
           "Без dummy немає SpawnLocation",
-          "Humanoid потрібен лише для Sky",
+          "Humanoid потрібен лише для Sky"
         ],
  correctAnswer: 1,
  explanation: "Мішень.",
@@ -371,7 +364,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "Підлога арени",
           "Бар’єри",
           "Повний dealDamage і хвилі",
-          "Setup Health",
+          "Setup Health"
         ],
  correctAnswer: 2,
  explanation: "Це пізніші уроки.",
@@ -384,7 +377,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "Не випадати у void під час бою/тестів",
           "Вони створюють Animation",
           "Бар’єри = RemoteEvent",
-          "Без них MaxHealth = 0",
+          "Без них MaxHealth = 0"
         ],
  correctAnswer: 0,
  explanation: "Тримають на полі.",
@@ -397,7 +390,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "Лише один раз у житті гри без респавну",
           "Тільки в Lighting",
           "Після Publish обов’язково вручну",
-          "На CharacterAdded (і якщо Character уже є)",
+          "На CharacterAdded (і якщо Character уже є)"
         ],
  correctAnswer: 3,
  explanation: "Кожен Character.",
@@ -410,7 +403,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "Змінити лише назву Floor",
           "Видалити Humanoid",
           "Серверний тест Health = Health - 10 і глянути смугу",
-          "Вимкнути Output назавжди",
+          "Вимкнути Output назавжди"
         ],
  correctAnswer: 2,
  explanation: "Свідомий тест.",
@@ -423,7 +416,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "Все безіменне Part1…Part99 у корені",
           "Workspace.Arena з Floor, Walls, Spawn, Dummies",
           "Лише SoundService",
-          "Усе в Terrain water",
+          "Усе в Terrain water"
         ],
  correctAnswer: 1,
  explanation: "Читабельний білд.",
@@ -436,7 +429,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "Health скасовує Tool",
           "Арена забороняє Humanoid",
           "Треба видалити dummy перед мечем",
-          "Є поле і HP - далі Tool і серверний урон",
+          "Є поле і HP - далі Tool і серверний урон"
         ],
  correctAnswer: 3,
  explanation: "Фундамент модуля.",
@@ -449,7 +442,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "Смерть (Died) - глибше розберете в 8.5",
           "Обов’язкове збільшення MaxHealth",
           "Створення Tool",
-          "Вимкнення Workspace",
+          "Вимкнення Workspace"
         ],
  correctAnswer: 0,
  explanation: "Нуль = смерть.",
@@ -462,7 +455,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "HUD заборонений у Roblox",
           "Без HUD Humanoid не працює",
           "Важливіші арена і числа HP; смуга за замовчуванням достатня",
-          "Print незаконний",
+          "Print незаконний"
         ],
  correctAnswer: 2,
  explanation: "Пріоритет білду.",
@@ -475,7 +468,7 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "Збільшити урон",
           "Створити AnimationId",
           "Видалити Spawn",
-          "Геометрія арени не падала від фізики",
+          "Геометрія арени не падала від фізики"
         ],
  correctAnswer: 3,
  explanation: "Статична сцена.",
@@ -488,11 +481,11 @@ Anchored dummy на старті - ок (стоїть мішенню). У хви
           "Лише теорія",
           "Арена + Spawn + Health setup + dummy + Save",
           "Порожній Baseplate",
-          "Tool з клієнтським Health=0",
+          "Tool з клієнтським Health=0"
         ],
  correctAnswer: 1,
  explanation: "Потрібна база Arena.",
- },
+ }
  ],
  },
 }
@@ -510,20 +503,13 @@ export const ukLesson82 = {
  "Приварити клинок/меш до Handle (Weld/WeldConstraint)",
  "Програти анімацію удару з LocalScript при Activated",
  "Підготувати Tool до серверного урону в 8.3 (екіпірування, Touched-зона)",
- "Покласти Tool у StarterPack, щоб він повертався після респавну",
+ "Покласти Tool у StarterPack, щоб він повертався після респавну"
  ],
  theory: {
  sections: [
  {
  title: "Сьогоднішня місія (урок 58 з 92)",
  content: `У **8.1** є арена і Health. Сьогодні даєш гравцю **зброю в руках**: Tool + мах анімації. Урон ще можна не рахувати чесно - це 8.3. Сьогодні - **відчути меч**.
-
-Артефакт уроку:
-1. Tool \`ArenaSword\` з Part \`Handle\`.
-2. Клинок приварений, не відлітає.
-3. При кліку/активації грає анімація удару (LocalScript).
-4. Tool у **StarterPack** (або чітка інструкція як видати).
-
 Без Tool завтрашній dealDamage ні до чого чіпляти. Без анімації бій виглядає як «невидима рука».
 
 **Зроби зараз (2 хв):** виріши форму - простий Part-клинок чи Mesh. Для здачі Part достатньо.`,
@@ -711,10 +697,8 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
 
 Далі **8.3** повісить dealDamage на цей Tool. Не пиши Health=0 у сьогоднішньому LocalScript «щоб швидше» - зламаєш звичку Never trust client.
 
-Артефакт: **меч у руці з махом**. Арена більше не беззбройна. Якщо ментор за 10 с знаходить Tool у StarterPack і бачить мах у Play - урок зданий.
-
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -747,7 +731,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
  mistake: "Wrong rig AnimationId",
  explanation: "Тихе «нічого не грає».",
  correctApproach: "R15/R6 узгодити з грою",
- },
+ }
  ],
  summary: "Ти зібрав ArenaSword: Handle, Weld клинка, LocalScript анімації на Activated і StarterPack. Меч готовий до серверного dealDamage в 8.3 - без клієнтського Health=0.",
  practiceTask: {
@@ -772,7 +756,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
  hints: [
  "Спочатку меч у руці без анімації - потім ID",
  "print('activated') якщо не певний, що кліки доходять",
- "CanBeDropped = false зручно для арени",
+ "CanBeDropped = false зручно для арени"
  ],
  optionalChallenge: "Короткий Sound «whoosh» на Activated (один Sound у Tool, Play).",
  },
@@ -788,7 +772,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "Зібрати Tool з Handle і анімацією удару",
           "Написати повний анти-чит магазин",
           "Видалити арену",
-          "Зробити лише waveConfig",
+          "Зробити лише waveConfig"
         ],
  correctAnswer: 0,
  explanation: "Tool + animation.",
@@ -801,7 +785,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "SwordTipOnly",
           "Handle",
           "Humanoid",
-          "SpawnLocation",
+          "SpawnLocation"
         ],
  correctAnswer: 1,
  explanation: "Обов’язкове ім’я.",
@@ -814,7 +798,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "Щоб вимкнути анімацію",
           "Це створює RemoteEvent",
           "Щоб клинок не відлітав від ручки",
-          "Weld замінює StarterPack",
+          "Weld замінює StarterPack"
         ],
  correctAnswer: 2,
  explanation: "Зв’язок моделі.",
@@ -827,7 +811,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "Лише в Terrain",
           "У Lighting як єдиний варіант",
           "У SoundService без Tool",
-          "LocalScript у Tool",
+          "LocalScript у Tool"
         ],
  correctAnswer: 3,
  explanation: "Клієнтський мах.",
@@ -840,7 +824,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "Touched неба",
           "Activated",
           "PlayerRemoving",
-          "BindToClose",
+          "BindToClose"
         ],
  correctAnswer: 1,
  explanation: "Activated.",
@@ -853,7 +837,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "Видалити Humanoid",
           "Створити хвилі",
           "Автоматично дати Tool гравцю",
-          "Замінити MaxHealth",
+          "Замінити MaxHealth"
         ],
  correctAnswer: 2,
  explanation: "Видача зброї.",
@@ -866,7 +850,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "Урон має бути на сервері в 8.3; клієнт не суддя",
           "Health не існує",
           "Tool тоді не екіпірується",
-          "Анімація забороняє числа",
+          "Анімація забороняє числа"
         ],
  correctAnswer: 0,
  explanation: "Never trust client.",
@@ -879,7 +863,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "Збільшити MaxHealth",
           "Вимкнути Weld",
           "Створити Arena",
-          "Не спамити анімацію маху",
+          "Не спамити анімацію маху"
         ],
  correctAnswer: 3,
  explanation: "Чистий мах.",
@@ -892,7 +876,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "Лише Skybox",
           "Назву модуля 1",
           "Grip Tool (позиція/орієнтація)",
-          "Видалити Handle",
+          "Видалити Handle"
         ],
  correctAnswer: 2,
  explanation: "Grip.",
@@ -905,7 +889,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "Лише в Menu Studio без Play",
           "На Equipped (коли Tool у Character)",
           "У PlayerRemoving завжди",
-          "Тільки після Publish",
+          "Тільки після Publish"
         ],
  correctAnswer: 1,
  explanation: "Equipped.",
@@ -918,7 +902,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "8.3 видаляє всі Tool",
           "Анімація замінює сервер",
           "StarterPack забороняє урон",
-          "Є Tool/Handle для серверного хіту і dealDamage",
+          "Є Tool/Handle для серверного хіту і dealDamage"
         ],
  correctAnswer: 3,
  explanation: "Зброя готова.",
@@ -931,7 +915,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "Часто анімація просто не відтворюється коректно",
           "Обов’язково видалиться Baseplate",
           "MaxHealth стане 0",
-          "Studio закриється завжди",
+          "Studio закриється завжди"
         ],
  correctAnswer: 0,
  explanation: "R6/R15.",
@@ -944,7 +928,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "Tool не можна екіпірувати",
           "Анімація вимкнена",
           "Гравець не кине Tool на землю легко",
-          "Weld знищено",
+          "Weld знищено"
         ],
  correctAnswer: 2,
  explanation: "Не губити меч.",
@@ -957,7 +941,7 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "Порожній Tool без Handle",
           "Лише назва Sword у Workspace",
           "Health=0 на клієнті",
-          "Чесний lite-рух/твін + робочий Tool у руці (краще з AnimationId)",
+          "Чесний lite-рух/твін + робочий Tool у руці (краще з AnimationId)"
         ],
  correctAnswer: 3,
  explanation: "Краще анімація, але меч обов’язковий.",
@@ -970,11 +954,11 @@ ServerStorage шаблон + скрипт видачі - альтернатив�
           "Лише теорія",
           "Tool у руці з махом + StarterPack + Save",
           "Порожній Baseplate",
-          "Урон лише клієнтський Health",
+          "Урон лише клієнтський Health"
         ],
  correctAnswer: 1,
  explanation: "Потрібен меч.",
- },
+ }
  ],
  },
 }
@@ -992,20 +976,13 @@ export const ukLesson83 = {
  "Пояснити Never trust client: клієнт не пише Health ворогу напряму",
  "Додати lite-перевірки: тип amount, cooldown, відстань, живий target",
  "Підключити хіт Tool до серверного урону (Touched або Remote lite)",
- "Показати антиприклад «клієнт сам убив усіх» і чому це дірка",
+ "Показати антиприклад «клієнт сам убив усіх» і чому це дірка"
  ],
  theory: {
  sections: [
  {
  title: "Сьогоднішня місія (урок 59 з 92)",
  content: `У **8.1** є Health на арені. У **8.2** Tool махає. Сьогодні з’єднуєш їх чесно: **урон живе на сервері**.
-
-Артефакт уроку:
-1. Function \`dealDamage(humanoid, amount, sourcePlayer)\` у Script (SSS) або ModuleScript.
-2. Успішний удар з Tool реально зменшує HP **через цю функцію**.
-3. Lite-захист: cooldown + перевірка що target живий + (бажано) відстань.
-4. Антиприклад: LocalScript, що ставить \`Health = 0\`, **не** є здачею.
-
 Це якір модуля Arena. Без нього 8.4–8.8 будують феєрверки й хвилі на піску.
 
 **Зроби зараз (2 хв):** напиши одним реченням, хто в спорті ставить рахунок - суддя чи вболівальник з телефоном. Це сервер vs клієнт.`,
@@ -1231,10 +1208,8 @@ Touched спамить - тому cooldown у dealDamage критичний.
 
 Далі **8.4** повісить Fx на \`return true\`. **8.5** додасть Died. **8.7** підкрутить DAMAGE. Усе тримається на сьогоднішній функції.
 
-Артефакт: **суддя арени**. Без нього меч - лише анімація.
-
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -1267,7 +1242,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
  mistake: "Забути PlayerRemoving для lastHit",
  explanation: "Витік посилань / дивні ключі.",
  correctApproach: "lastHit[player] = nil",
- },
+ }
  ],
  summary: "Ти зібрав якір арени: function dealDamage на сервері з cooldown і lite-валідацією. Клієнт може махати Tool, але HP змінює лише суддя. Це база для Fx, смерті, хвиль і балансу.",
  practiceTask: {
@@ -1292,7 +1267,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
  hints: [
  "Спочатку кнопка на сервері викликає dealDamage по dummy - потім Tool",
  "print deny reason економить 20 хв здогадок",
- "DAMAGE одне число - не копіпаста 20 у трьох місцях",
+ "DAMAGE одне число - не копіпаста 20 у трьох місцях"
  ],
  optionalChallenge: "ModuleScript DamageService.apply + require з одного бойового Script.",
  },
@@ -1308,7 +1283,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Зробити серверний dealDamage і не довіряти клієнту HP",
           "Видалити Tool",
           "Побудувати лише Particles",
-          "Publish без арени",
+          "Publish без арени"
         ],
  correctAnswer: 0,
  explanation: "Never trust client.",
@@ -1321,7 +1296,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Health не існує в Roblox",
           "Клієнт може чітити й ламати бій",
           "LocalScript не вміє print",
-          "Це обов’язково для Tween",
+          "Це обов’язково для Tween"
         ],
  correctAnswer: 1,
  explanation: "Антиприклад.",
@@ -1334,7 +1309,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Сліпо з будь-якого числа клієнта",
           "З назви Part небо",
           "З константи/конфігу на сервері",
-          "З Volume Sound",
+          "З Volume Sound"
         ],
  correctAnswer: 2,
  explanation: "Серверна правда.",
@@ -1347,7 +1322,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Щоб змінити Skybox",
           "Це вимикає Humanoid",
           "Cooldown малює Billboard",
-          "Щоб спам Touched/ударів не знімав HP миттєво",
+          "Щоб спам Touched/ударів не знімав HP миттєво"
         ],
  correctAnswer: 3,
  explanation: "Rate limit.",
@@ -1360,7 +1335,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Збільшити MaxHealth",
           "Відхилити удар «через пів карти»",
           "Створити RemoteFunction",
-          "Замінити Tool",
+          "Замінити Tool"
         ],
  correctAnswer: 1,
  explanation: "Lite range.",
@@ -1373,7 +1348,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Завжди nil і краш",
           "Лише Color3",
           "true (щоб Fx/логи знали про успіх)",
-          "SpawnLocation",
+          "SpawnLocation"
         ],
  correctAnswer: 2,
  explanation: "true/false API.",
@@ -1386,7 +1361,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Сервер",
           "Лише LocalScript UI",
           "Sky",
-          "Toolbox Decal",
+          "Toolbox Decal"
         ],
  correctAnswer: 0,
  explanation: "Сервер вирішує.",
@@ -1399,7 +1374,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Ні - будь-яка анімація заборонена",
           "Анімація автоматично пише Health",
           "Анімація замінює dealDamage",
-          "Так - візуал ок, урон все одно на сервері",
+          "Так - візуал ок, урон все одно на сервері"
         ],
  correctAnswer: 3,
  explanation: "Розділення ролей.",
@@ -1412,7 +1387,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Видалити Workspace",
           "Вимкнути Pathfinding",
           "Очистити запис гравця",
-          "Обов’язково Publish",
+          "Обов’язково Publish"
         ],
  correctAnswer: 2,
  explanation: "Прибирання стану.",
@@ -1425,7 +1400,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Свій Humanoid не існує",
           "Інакше можна дамажити власний Humanoid помилково",
           "Tool тоді зникає",
-          "Сервер забороняє Character",
+          "Сервер забороняє Character"
         ],
  correctAnswer: 1,
  explanation: "victim ~= self.",
@@ -1438,7 +1413,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Particles замінюють урон",
           "8.4 видаляє серверні скрипти",
           "Tween пише Health",
-          "Fx викликають після return true від dealDamage",
+          "Fx викликають після return true від dealDamage"
         ],
  correctAnswer: 3,
  explanation: "Спочатку урон, потім вау.",
@@ -1451,7 +1426,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Підроблений великий урон",
           "Remote тоді не компілюється",
           "Humanoid стає Part",
-          "Обов’язковий краш Studio",
+          "Обов’язковий краш Studio"
         ],
  correctAnswer: 0,
  explanation: "Не вірити amount.",
@@ -1464,7 +1439,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Він вимикає Arena",
           "Без модуля Tool не існує",
           "Один API урону для хвиль/балансу/різних скриптів",
-          "Module завжди на клієнті лише",
+          "Module завжди на клієнті лише"
         ],
  correctAnswer: 2,
  explanation: "Повторне використання.",
@@ -1477,7 +1452,7 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Лише колір меча",
           "Назву модуля 12",
           "Вимкнути Output",
-          "Чи взагалі викликається dealDamage і чи не deny",
+          "Чи взагалі викликається dealDamage і чи не deny"
         ],
  correctAnswer: 3,
  explanation: "Дебаг урону.",
@@ -1490,11 +1465,11 @@ Touched спамить - тому cooldown у dealDamage критичний.
           "Лише клієнтський Health=0",
           "Серверний dealDamage з Tool + захист lite + Save",
           "Порожній Baseplate",
-          "Тільки теорія без Play",
+          "Тільки теорія без Play"
         ],
  correctAnswer: 1,
  explanation: "Потрібен суддя урону.",
- },
+ }
  ],
  },
 }
@@ -1512,20 +1487,13 @@ export const ukLesson84 = {
  "Додати ParticleEmitter burst при влучанні",
  "Підключити feedback до моменту серверного dealDamage (не замість нього)",
  "Прибрати ефекти після відтворення (Destroy / Enabled=false), без лагу",
- "Підготувати «відчутний» удар до смерті/респавну і хвиль",
+ "Підготувати «відчутний» удар до смерті/респавну і хвиль"
  ],
  theory: {
  sections: [
  {
  title: "Сьогоднішня місія (урок 60 з 92)",
  content: `У **8.3** урон уже чесний на сервері. Сьогодні додаєш **відчуття удару**: гравець має бачити, що влучив, не лише вірити цифрі HP.
-
-Артефакт уроку:
-1. Мінімум **один Tween** на хіт (наприклад, Part «спалах» або короткий scale кузова dummy).
-2. Мінімум **один ParticleEmitter** burst (іскри / пил / «кров»-lite кольором).
-3. Ефект стартує в момент успішного урону (після dealDamage або з серверного сигналу).
-4. Cleanup: ефект не живе вічно і не плодить 500 емітерів.
-
 Без feedback бій «німий». З feedback Ship-демо в 8.8 виглядає живим навіть на 2 хвилях.
 
 **Зроби зараз (2 хв):** виріши один стиль - «іскра металу» чи «зелений слиз» під твого ворога.`,
@@ -1721,10 +1689,8 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
 
 Не витрачай залишок години на п’ятий шар VFX. Один читабельний пакет (спалах + іскри) краще за купу напівживих емітерів.
 
-Артефакт: удар **чути очима**. Сухий TakeDamage більше не єдиний сигнал. Якщо ментор з відстані бачить іскру в момент падіння HP - feedback зданий.
-
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -1757,7 +1723,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
  mistake: "Створити 20 Emitter у циклі без Parent cleanup",
  explanation: "Пам’ять і візуальний шум.",
  correctApproach: "Один Emіt на якір / перевикористання",
- },
+ }
  ],
  summary: "Ти додав hit-feedback: короткий Tween і Particle burst після серверного урону, з cleanup. Бій став читабельним для очей - база для смерті/хвиль і Ship-рубрики «є feedback».",
  practiceTask: {
@@ -1782,7 +1748,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
  hints: [
  "Спочатку Fx з кнопки, потім встав після dealDamage",
  "Neon + короткий час = читабельно навіть без текстур",
- "workspace.Arena.Fx:ClearAllChildren() під час дебагу - ок",
+ "workspace.Arena.Fx:ClearAllChildren() під час дебагу - ок"
  ],
  optionalChallenge: "Другий шар: легкий Sound Service звук удару разом з Emit (один Sound, не 50 клонів без Destroy).",
  },
@@ -1798,7 +1764,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "Додати Tween/Particles як feedback після урону",
           "Прибрати dealDamage",
           "Побудувати Race Remote",
-          "Видалити Tool",
+          "Видалити Tool"
         ],
  correctAnswer: 0,
  explanation: "Hit feedback.",
@@ -1811,7 +1777,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "Tween завжди змінює MaxHealth",
           "Блиск без зміни Health - брехливий бій",
           "Particles заборонені з Humanoid",
-          "Сервер не бачить Parts",
+          "Сервер не бачить Parts"
         ],
  correctAnswer: 1,
  explanation: "Спочатку правда HP.",
@@ -1824,7 +1790,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "ChatService",
           "BadgeService",
           "TweenService",
-          "TeleportService",
+          "TeleportService"
         ],
  correctAnswer: 2,
  explanation: "TweenService.",
@@ -1837,7 +1803,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "Вимкнути Humanoid",
           "Замінити MaxHealth",
           "Створити RemoteEvent",
-          "Один контрольований burst на хіт",
+          "Один контрольований burst на хіт"
         ],
  correctAnswer: 3,
  explanation: "Burst.",
@@ -1850,7 +1816,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "Завжди на початку анімації навіть при промаху як єдиний сигнал урону",
           "Після успішного dealDamage",
           "Лише при зміні Sky",
-          "Раз на годину",
+          "Раз на годину"
         ],
  correctAnswer: 1,
  explanation: "Синхрон з уроном.",
@@ -1863,7 +1829,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "Інакше Tween не існує",
           "Destroy збільшує урон",
           "Прибрати сміття і зберегти продуктивність",
-          "Обов’язково для SpawnLocation",
+          "Обов’язково для SpawnLocation"
         ],
  correctAnswer: 2,
  explanation: "Cleanup.",
@@ -1876,7 +1842,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "Health - не візуальний твін-таргет; урон робить dealDamage",
           "Health завжди рядок",
           "TweenService ламає Studio",
-          "Humanoid забороняє будь-які числа",
+          "Humanoid забороняє будь-які числа"
         ],
  correctAnswer: 0,
  explanation: "Різні інструменти.",
@@ -1889,7 +1855,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "Лише Name як Tween ціль",
           "Тільки Parent",
           "Обов’язково Terrain.WaterColor",
-          "Transparency, Size, Color (коротко)",
+          "Transparency, Size, Color (коротко)"
         ],
  correctAnswer: 3,
  explanation: "Візуальні props.",
@@ -1902,7 +1868,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "Emit тоді компілюється краще",
           "Roblox вимагає Rate=999",
           "Лаг і візуальний шум",
-          "Це єдиний спосіб бачити іскри",
+          "Це єдиний спосіб бачити іскри"
         ],
  correctAnswer: 2,
  explanation: "Продуктивність.",
@@ -1915,7 +1881,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "Без неї Humanoid не працює",
           "Зручно бачити й чистити тимчасові ефекти",
           "Вона замінює ServerStorage",
-          "Fx папка створює хвилі",
+          "Fx папка створює хвилі"
         ],
  correctAnswer: 1,
  explanation: "Організація cleanup.",
@@ -1928,7 +1894,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "Ship забороняє Particles",
           "Треба видалити Tween перед Ship",
           "Feedback скасовує серверний урон",
-          "Рубрика питає про читабельний feedback удару",
+          "Рубрика питає про читабельний feedback удару"
         ],
  correctAnswer: 3,
  explanation: "Juice для демо.",
@@ -1941,7 +1907,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "Тривалість і стиль анімації властивостей",
           "Урон 0.15 HP",
           "Кількість ворогів",
-          "Ім’я Remote",
+          "Ім’я Remote"
         ],
  correctAnswer: 0,
  explanation: "Параметри твіну.",
@@ -1954,7 +1920,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "12 систем VFX AAA",
           "Лише Sound без усього",
           "1 Tween + 1 particle burst на хіт + cleanup",
-          "Порожній Baseplate",
+          "Порожній Baseplate"
         ],
  correctAnswer: 2,
  explanation: "MVP feedback.",
@@ -1967,7 +1933,7 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "Інакше Tween не грає",
           "CanCollide вимикає Particles",
           "Це збільшує MaxHealth",
-          "Щоб спалах не штовхав гравця/ворога",
+          "Щоб спалах не штовхав гравця/ворога"
         ],
  correctAnswer: 3,
  explanation: "Чисто візуальний якір.",
@@ -1980,11 +1946,11 @@ Playtest на хвилі (коли з’явиться 8.6): після 30 уд�
           "Лише теорія",
           "Ефект після урону + cleanup + Save",
           "VFX без будь-якого урону як фінал",
-          "Emitter Enabled назавжди без Emit",
+          "Emitter Enabled назавжди без Emit"
         ],
  correctAnswer: 1,
  explanation: "Потрібен hit juice.",
- },
+ }
  ],
  },
 }
@@ -2002,20 +1968,13 @@ export const ukLesson85 = {
  "Зробити передбачуваний респавн (LoadCharacter / SpawnLocation)",
  "Додати i-frames lite після появи, щоб уникнути death loop",
  "Скинути або зберегти стан бою свідомо (Tool, хвиля - правило записати)",
- "Підготувати стабільний цикл життя до хвиль (8.6) і балансу (8.7)",
+ "Підготувати стабільний цикл життя до хвиль (8.6) і балансу (8.7)"
  ],
  theory: {
  sections: [
  {
  title: "Сьогоднішня місія (урок 61 з 92)",
  content: `У **8.1–8.4** ти вже б’єшся: Health, Tool, dealDamage, feedback. Сьогодні закриваєш цикл **життя**: що відбувається, коли HP = 0.
-
-Артефакт уроку:
-1. Смерть гравця детектиться на сервері (\`Humanoid.Died\`).
-2. Респавн працює передбачувано (SpawnLocation / LoadCharacter).
-3. **i-frames lite** 1–2 с після появи - не вмираєш одразу знову.
-4. Коротке правило на табличці: що з Tool і з боєм після смерті.
-
 Без цього хвилі в 8.6 перетворяться на «спавн у купу ворогів → миттєва смерть ×10».
 
 **Зроби зараз (2 хв):** стань у небезпечне місце арени й уяви: де має з’явитись після смерті - безпечний Spawn чи середина хвилі?`,
@@ -2201,10 +2160,8 @@ ForceField видимий - ок для навчання («бачу щит»). 
 
 Далі **8.6** додасть хвилі: респавн уже не повинен «з’їдати» гравця на старті хвилі. У **8.7** перевіриш, чи death loop не маскується під «складний баланс».
 
-Артефакт: цикл **жив → помер → повернувся зі щитом**. Без нього арена - одноразова пастка.
-
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -2237,7 +2194,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
  mistake: "Клієнтський «фейковий» респавн UI без сервера",
  explanation: "Розсинхрон з реальним Character.",
  correctApproach: "Сервер Died + LoadCharacter",
- },
+ }
  ],
  summary: "Ти зібрав цикл смерті й респавну: Died на сервері, передбачувана поява, i-frames lite проти death loop і повернення Tool. Це фундамент стабільних хвиль у 8.6 і чесного балансу в 8.7.",
  practiceTask: {
@@ -2263,7 +2220,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
  hints: [
  "Тест: сервером постав Health=0 для швидкого Died",
  "print на Died і на кінці i-frames",
- "Спочатку безпечний Spawn, потім навмисний стрес-тест біля шкоди",
+ "Спочатку безпечний Spawn, потім навмисний стрес-тест біля шкоди"
  ],
  optionalChallenge: "Короткий Sound або TextLabel «Респавн через 3…2…1» (клієнтський UI від серверного сигналу lite).",
  },
@@ -2279,7 +2236,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Зробити смерть, респавн і i-frames без death loop",
           "Видалити Humanoid",
           "Побудувати магазин Remotes",
-          "Publish трасу Race",
+          "Publish трасу Race"
         ],
  correctAnswer: 0,
  explanation: "Цикл життя.",
@@ -2292,7 +2249,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Лише один раз у LocalScript неба",
           "На сервері для кожного Character",
           "У Terrain",
-          "У назві Tool",
+          "У назві Tool"
         ],
  correctAnswer: 1,
  explanation: "Серверний якір.",
@@ -2305,7 +2262,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Щоб збільшити MaxHealth назавжди",
           "Це замінює dealDamage",
           "Щоб не померти миттєво знову біля небезпеки",
-          "i-frames малюють Skybox",
+          "i-frames малюють Skybox"
         ],
  correctAnswer: 2,
  explanation: "Анти death loop.",
@@ -2318,7 +2275,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Видаляє Workspace",
           "Створює RemoteEvent",
           "Вимикає SpawnLocation назавжди",
-          "Створює новий Character гравця (респавн)",
+          "Створює новий Character гравця (респавн)"
         ],
  correctAnswer: 3,
  explanation: "Респавн з сервера.",
@@ -2331,7 +2288,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Humanoid тоді не існує",
           "Високий ризик death loop навіть із коротким щитом",
           "Studio не зберігає Place",
-          "Tool стає Anchored",
+          "Tool стає Anchored"
         ],
  correctAnswer: 1,
  explanation: "Безпечна зона.",
@@ -2344,7 +2301,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Замінює всі хвилі",
           "Видаляє урон з гри назавжди",
           "Тимчасовий видимий захист після появи",
-          "Це обов’язково для Billboard",
+          "Це обов’язково для Billboard"
         ],
  correctAnswer: 2,
  explanation: "Lite i-frames.",
@@ -2357,7 +2314,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Кожен новий Character - новий Humanoid після респавну",
           "CharacterAdded заборонений після смерті",
           "Інакше MaxHealth стає рядком",
-          "Це вимикає Tool",
+          "Це вимикає Tool"
         ],
  correctAnswer: 0,
  explanation: "Нове життя = новий hook.",
@@ -2370,7 +2327,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Залишити true назавжди",
           "Видалити гравця з гри",
           "Обов’язково Destroy Workspace",
-          "Поставити false (зняти імунітет)",
+          "Поставити false (зняти імунітет)"
         ],
  correctAnswer: 3,
  explanation: "Інакше безсмертя.",
@@ -2383,7 +2340,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Сам себе клонує з Lighting",
           "Лише якщо назвати Part «Sword»",
           "Через StarterPack на новий Character",
-          "Tool ніколи не повертається в Roblox",
+          "Tool ніколи не повертається в Roblox"
         ],
  correctAnswer: 2,
  explanation: "StarterPack.",
@@ -2396,7 +2353,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Ворог завжди LoadCharacter",
           "Ворога Destroy, гравця респавнять через LoadCharacter/Spawn",
           "Гравець завжди Destroy назавжди",
-          "Немає різниці ніколи",
+          "Немає різниці ніколи"
         ],
  correctAnswer: 1,
  explanation: "Різні долі моделей.",
@@ -2409,7 +2366,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Хвилі забороняють респавн",
           "Треба видалити Died перед хвилями",
           "waveConfig замінює Humanoid",
-          "Респавн зі щитом дозволяє тестувати хвилі без миттєвого fail-loop",
+          "Респавн зі щитом дозволяє тестувати хвилі без миттєвого fail-loop"
         ],
  correctAnswer: 3,
  explanation: "Стабільний цикл життя.",
@@ -2422,7 +2379,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Якщо Invulnerable/ForceField - не завдавати шкоди",
           "Завжди ігнорувати всі перевірки",
           "i-frames діють лише на Terrain",
-          "dealDamage тоді компілюється гірше",
+          "dealDamage тоді компілюється гірше"
         ],
  correctAnswer: 0,
  explanation: "Повага до щита.",
@@ -2435,7 +2392,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Обов’язково 5 хвилин",
           "0 мс завжди",
           "Близько 1–2 секунд",
-          "Лише під час Publish",
+          "Лише під час Publish"
         ],
  correctAnswer: 2,
  explanation: "Короткий щит.",
@@ -2448,7 +2405,7 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Переможна хвиля",
           "Назва ModuleScript",
           "Обов’язковий режим Studio",
-          "Повторні смерті одразу після респавну без шансу відіграти",
+          "Повторні смерті одразу після респавну без шансу відіграти"
         ],
  correctAnswer: 3,
  explanation: "Петля смерті.",
@@ -2461,11 +2418,11 @@ ForceField видимий - ок для навчання («бачу щит»). 
           "Лише теорія без Play",
           "Died + респавн + i-frames + Save",
           "Порожній Baseplate",
-          "Безсмертя Invulnerable=true навічно",
+          "Безсмертя Invulnerable=true навічно"
         ],
  correctAnswer: 1,
  explanation: "Потрібен цикл життя.",
- },
+ }
  ],
  },
 }
@@ -2483,20 +2440,13 @@ export const ukLesson86 = {
  "Зберігати параметри хвиль у table waveConfig (кількість, HP, пауза)",
  "Спавнити ворогів на сервері і вести лічильник живих (aliveCount)",
  "Переходити до наступної хвилі через while / індекс, коли хвиля очищена",
- "Показати victory після останньої хвилі без крашу стану",
+ "Показати victory після останньої хвилі без крашу стану"
  ],
  theory: {
  sections: [
  {
  title: "Сьогоднішня місія (урок 62 з 92)",
  content: `У **8.1–8.5** у тебе вже є арена, Tool, серверний урон і цикл смерть/респавн. Сьогодні додаєш **хвилі**: бій іде 1 → 2 → … а не «один dummy на вічність».
-
-Артефакт уроку:
-1. Table \`waveConfig\` з мінімум **2** хвилями (кількість ворогів + HP).
-2. Серверний \`spawnWave(index)\`, що клонує ворогів на арену.
-3. \`aliveCount\` (або еквівалент): коли 0 - наступна хвиля.
-4. Після останньої хвилі - \`victory\` (print / Part / TextLabel).
-
 Без хвиль 8.7 нічого міряти кривою складності, а 8.8 Ship не має другого акту бою.
 
 **Зроби зараз (2 хв):** напиши: хвиля 1 = скільки ворогів і який HP; хвиля 2 = що зміниться.`,
@@ -2732,10 +2682,8 @@ Save: \`Lesson 8.6 - Arena Waves\`.
 - [ ] Playtest 1–5 зелені
 - [ ] Save Lesson 8.6 - Arena Waves
 
-Артефакт: арена **дихає хвилями**. Один dummy більше не «вся гра» - є розклад, який 8.7 збалансує, а 8.8 покаже ментору.
-
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -2768,7 +2716,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
  mistake: "Подвійний Died → два spawnWave",
  explanation: "Хвиля 2+3 одночасно.",
  correctApproach: "Прапор cleaningWave або перевірка aliveCount==0 один раз",
- },
+ }
  ],
  summary: "Ти зібрав хвилі арени на waveConfig: серверний spawnWave, aliveCount, перехід до наступної хвилі й victory. Table керує складністю - база для балансу 8.7 і Ship 8.8.",
  practiceTask: {
@@ -2794,7 +2742,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
  hints: [
  "Спочатку 1 ворог на хвилю - легше дебажити aliveCount",
  "print(waveIndex, aliveCount) на Died",
- "delay між хвилями 1–2 с, щоб встигнути побачити UI/print",
+ "delay між хвилями 1–2 с, щоб встигнути побачити UI/print"
  ],
  optionalChallenge: "Billboard або TextLabel «Хвиля N / M», де M = #waveConfig.",
  },
@@ -2810,7 +2758,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "Зробити послідовність хвиль через waveConfig на сервері",
           "Видалити Tool з арени",
           "Побудувати Race-трасу",
-          "Publish без ворогів",
+          "Publish без ворогів"
         ],
  correctAnswer: 0,
  explanation: "Хвилі + config.",
@@ -2823,7 +2771,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "Замінити Humanoid",
           "Змінювати кількість/HP хвиль в одному місці",
           "Вимкнути Anchored назавжди",
-          "Створити Skybox",
+          "Створити Skybox"
         ],
  correctAnswer: 1,
  explanation: "Розклад бою.",
@@ -2836,7 +2784,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "Лише в LocalScript для краси",
           "У Lighting",
           "На сервері в стані арени",
-          "У назві Part",
+          "У назві Part"
         ],
  correctAnswer: 2,
  explanation: "Серверна правда.",
@@ -2849,7 +2797,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "Кожні 0.01 с завжди",
           "Лише при зміні неба",
           "Коли гравець відкрив Explorer",
-          "Коли aliveCount став 0 після очищення поточної",
+          "Коли aliveCount став 0 після очищення поточної"
         ],
  correctAnswer: 3,
  explanation: "Хвиля очищена.",
@@ -2862,7 +2810,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "Спавнити 999 ворогів",
           "Victory / кінець режиму, не спавнити далі",
           "Видалити арену",
-          "Обов’язково крашнути Place",
+          "Обов’язково крашнути Place"
         ],
  correctAnswer: 1,
  explanation: "Кінець розкладу.",
@@ -2875,7 +2823,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "Clone ігнорує Humanoid завжди",
           "Це вимикає Died",
           "Щоб різні хвилі реально відрізнялись міцністю",
-          "HP можна ставити лише на клієнті",
+          "HP можна ставити лише на клієнті"
         ],
  correctAnswer: 2,
  explanation: "Config діє.",
@@ -2888,7 +2836,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "Старі вороги псують сцену і лічильник",
           "Roblox вимагає Destroy щосекунди",
           "Без цього Tool зникає",
-          "Cleanup замінює dealDamage",
+          "Cleanup замінює dealDamage"
         ],
  correctAnswer: 0,
  explanation: "Чистий старт.",
@@ -2901,7 +2849,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "Обов’язковий швидший бій завжди хороший",
           "while заборонений у Lua",
           "Це створює RemoteEvent",
-          "Лавина ворогів і лаг",
+          "Лавина ворогів і лаг"
         ],
  correctAnswer: 3,
  explanation: "Контрольований цикл.",
@@ -2914,7 +2862,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "Лише в Terrain",
           "У SoundService як єдиний варіант",
           "ServerStorage (клон на сервері)",
-          "У назві SpawnLocation",
+          "У назві SpawnLocation"
         ],
  correctAnswer: 2,
  explanation: "Префаб для клону.",
@@ -2927,7 +2875,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "Це замінює aliveCount",
           "Рознести спавн, менше миттєвого накладання",
           "Без wait Humanoid не існує",
-          "wait вимикає MaxHealth",
+          "wait вимикає MaxHealth"
         ],
  correctAnswer: 1,
  explanation: "М’який спавн.",
@@ -2940,7 +2888,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "8.7 видаляє всі хвилі",
           "Баланс не потребує чисел",
           "Треба забути table",
-          "Різні hp у waveConfig можна міряти й підкручувати",
+          "Різні hp у waveConfig можна міряти й підкручувати"
         ],
  correctAnswer: 3,
  explanation: "Крива складності.",
@@ -2953,7 +2901,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "Баг: дві наступні хвилі майже разом",
           "Обов’язкова фіча Roblox",
           "Це victory",
-          "Так налаштовують i-frames",
+          "Так налаштовують i-frames"
         ],
  correctAnswer: 0,
  explanation: "Потрібен захист.",
@@ -2966,7 +2914,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "Обов’язково 50",
           "0 - лише dummy без config",
           "Хоча б 2 рядки в waveConfig",
-          "Лише клієнтський print",
+          "Лише клієнтський print"
         ],
  correctAnswer: 2,
  explanation: "Є акт 2.",
@@ -2979,7 +2927,7 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "Ніколи в жодній грі",
           "Хвилі існують лише на клієнті",
           "Смерть гравця завжди видаляє waveConfig",
-          "Так, якщо ти явно так вирішив і записав правило",
+          "Так, якщо ти явно так вирішив і записав правило"
         ],
  correctAnswer: 3,
  explanation: "Свідоме правило дизайну.",
@@ -2992,11 +2940,11 @@ Save: \`Lesson 8.6 - Arena Waves\`.
           "Лише теорія без Play",
           "waveConfig + spawnWave + перехід/victory + Save",
           "Порожній Baseplate",
-          "Хвилі тільки в LocalScript",
+          "Хвилі тільки в LocalScript"
         ],
  correctAnswer: 1,
  explanation: "Потрібен цикл хвиль.",
- },
+ }
  ],
  },
 }
@@ -3014,20 +2962,13 @@ export const ukLesson87 = {
  "Знайти one-shot / «вічний dummy» / нудний бій і зафіксувати в таблиці",
  "Підкрутити MaxHealth і dealDamage amount за правилами школи",
  "Перевірити cooldown / i-frames, щоб баланс не ламався спамом",
- "Підготувати стабільні числа до Ship Arena (8.8)",
+ "Підготувати стабільні числа до Ship Arena (8.8)"
  ],
  theory: {
  sections: [
  {
  title: "Сьогоднішня місія (урок 63 з 92)",
  content: `У **8.1–8.6** ти зібрав арену, Tool, серверний урон, feedback, смерть/респавн і хвилі. Сьогодні **не** додаєш новий жанр. Сьогодні ти **міряєш бій**.
-
-Артефакт уроку:
-1. Таблиця баланс-тестів (HP / урон / час до вбивства).
-2. Хоча б **2 live-підкрутки** чисел (MaxHealth або amount).
-3. Нотатка «комфортний бій» для демо 90 с.
-4. Place без one-shot і без «б’ю 3 хвилини одного dummy».
-
 Без цього 8.8 Ship впаде на відчутті: або гравець помирає за 1 удар, або хвиля нудна.
 
 **Зроби зараз (3 хв):** випиши поточні числа: Player MaxHealth, Enemy MaxHealth, damage за удар, cooldown якщо є.`,
@@ -3181,10 +3122,8 @@ Broken = one-shot або невмирущий dummy через баг (урон 
 
 Далі **8.8 Ship Arena** зшиє системи рубрикою. Якщо сьогодні TTK «зламаний» - завтра демо 90 с буде соромом, не вау.
 
-Артефакт: **передбачуваний бій**. Ship любить стабільні числа більше за новий меч.
-
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -3217,7 +3156,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
  mistake: "Ігнорувати death loop після респавну",
  explanation: "Гравець злиться швидше, ніж через складність хвилі",
  correctApproach: "i-frames 1–2 с",
- },
+ }
  ],
  summary: "Ти прогнав playtest балансу арени: виміряв TTK/удари, звів числа в BALANCE, зробив мінімум 2 підкрутки і перевірив cooldown/i-frames. Урок 63 готує стабільний бій до Ship Arena в 8.8.",
  practiceTask: {
@@ -3243,7 +3182,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
  hints: [
  "Секундомір телефону + tally ударів - достатньо",
  "print(damage, humanoid.Health) на сервері",
- "Не чіпай VFX, поки TTK broken",
+ "Не чіпай VFX, поки TTK broken"
  ],
  optionalChallenge: "Окремий рядок BALANCE для «бос хвилі» з 2× HP і коротка нотатка в табличці на арені.",
  },
@@ -3259,7 +3198,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "Прогнати і підкрутити баланс HP/урону перед Ship",
           "Видалити dealDamage",
           "Побудувати Race-трасу",
-          "Publish без playtest",
+          "Publish без playtest"
         ],
  correctAnswer: 0,
  explanation: "Баланс бою.",
@@ -3272,7 +3211,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "Назва RemoteEvent",
           "Час (або удари), щоб убити ворога",
           "Тип Terrain",
-          "Кількість Decals",
+          "Кількість Decals"
         ],
  correctAnswer: 1,
  explanation: "Time to kill.",
@@ -3285,7 +3224,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "Roblox забороняє MaxHealth 100",
           "Tool тоді не існує",
           "Демо виглядає зламаним, немає відчуття бою",
-          "Output завжди червоний",
+          "Output завжди червоний"
         ],
  correctAnswer: 2,
  explanation: "Потрібен темп.",
@@ -3298,7 +3237,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "У 10 різних місцях різними цифрами",
           "Лише в назві Part",
           "Тільки в Skybox",
-          "В одному BALANCE / константах",
+          "В одному BALANCE / константах"
         ],
  correctAnswer: 3,
  explanation: "Одне джерело правди.",
@@ -3311,7 +3250,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "Одразу MaxHealth = 1",
           "Перевірити, чи викликається dealDamage (баг), не крутити баланс наосліп",
           "Видалити арену",
-          "Вимкнути Humanoid назавжди",
+          "Вимкнути Humanoid назавжди"
         ],
  correctAnswer: 1,
  explanation: "Баг ≠ баланс.",
@@ -3324,7 +3263,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "Щоб змінити Material підлоги",
           "Це замінює MaxHealth",
           "Щоб спам кліків не ламав DPS і баланс",
-          "Cooldown малює Billboard",
+          "Cooldown малює Billboard"
         ],
  correctAnswer: 2,
  explanation: "Темп удару.",
@@ -3337,7 +3276,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "Краще одну, щоб зрозуміти ефект",
           "Обов’язково всі одразу",
           "Жодної ніколи",
-          "Лише колір меча",
+          "Лише колір меча"
         ],
  correctAnswer: 0,
  explanation: "Контрольований експеримент.",
@@ -3350,7 +3289,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "Збільшити урон меча",
           "Вимкнути хвилі",
           "Замінити waveConfig",
-          "Уникнути death loop одразу після респавну",
+          "Уникнути death loop одразу після респавну"
         ],
  correctAnswer: 3,
  explanation: "Життєвий цикл після смерті.",
@@ -3363,7 +3302,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "Завжди рівно 100",
           "0 ударів",
           "Близько кількох–десятка ударів, не 1 і не 50",
-          "Лише через Teleport",
+          "Лише через Teleport"
         ],
  correctAnswer: 2,
  explanation: "Комфортний темп.",
@@ -3376,7 +3315,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "Одразу HP * 100",
           "Поступово +HP або +кількість, не обидва максимуми разом",
           "Прибрати весь урон гравця",
-          "Видалити Tool",
+          "Видалити Tool"
         ],
  correctAnswer: 1,
  explanation: "Крива lite.",
@@ -3389,7 +3328,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "0 - лише теорія",
           "Обов’язково 50",
           "Лише зміна неба",
-          "Хоча б 2 з логом було → стало",
+          "Хоча б 2 з логом було → стало"
         ],
  correctAnswer: 3,
  explanation: "Практика цифр.",
@@ -3402,7 +3341,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "Стабільні числа → демо Ship 90 с не розвалюється на one-shot",
           "8.8 забороняє MaxHealth",
           "Баланс скасовує рубрику",
-          "Треба видалити хвилі перед Ship",
+          "Треба видалити хвилі перед Ship"
         ],
  correctAnswer: 0,
  explanation: "Готовність до ship.",
@@ -3415,7 +3354,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "Лише «мені здається»",
           "Тільки список Plugins",
           "Факти: секунди/удари і вердикт ok/easy/hard/broken",
-          "Колір Ambient",
+          "Колір Ambient"
         ],
  correctAnswer: 2,
  explanation: "Доказ заміру.",
@@ -3428,7 +3367,7 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "Studio тоді не зберігає Place",
           "Humanoid зникає",
           "Це обов’язково для ParticleEmitter",
-          "Баланс і правда бою роз’їжджаються",
+          "Баланс і правда бою роз’їжджаються"
         ],
  correctAnswer: 3,
  explanation: "Одна правда чисел.",
@@ -3441,11 +3380,11 @@ Broken = one-shot або невмирущий dummy через баг (урон 
           "Лише теорія без Play",
           "Таблиця тестів + ≥2 підкрутки + стабільніший бій + Save",
           "Порожній Baseplate",
-          "One-shot навмисно без нотатки",
+          "One-shot навмисно без нотатки"
         ],
  correctAnswer: 1,
  explanation: "Потрібен баланс-доказ.",
- },
+ }
  ],
  },
 }
@@ -3463,7 +3402,7 @@ export const ukLesson88 = {
  "Пройти рубрику Ship Arena (~15 пунктів) і закрити блокери",
  "Підтвердити, що урон іде через серверний dealDamage, а не з клієнта",
  "Показати feedback бою (анімація / tween / particles) без ламання балансу",
- "Зберегти Place як артефакт модуля 8 перед Race (M9)",
+ "Зберегти Place як артефакт модуля 8 перед Race (M9)"
  ],
  theory: {
  sections: [
@@ -3685,10 +3624,8 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
 
 Далі **модуль 9 Race**: та сама дисципліна «сервер вирішує», але вже для кіл і фінішу. Якщо каса урону ще на клієнті - **не** йди в Race з гордістю: спочатку закрий рубрику C арени.
 
-Артефакт: арена, яку можна показати. Мережа гонки завтра будується на цій звичці Never trust client.
-
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -3721,7 +3658,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
  mistake: "Роздути 10 ворогів замість закрити 2 хвилі",
  explanation: "Година зникає, блокери лишаються.",
  correctApproach: "2 хвилі MVP + стабільний урон",
- },
+ }
  ],
  summary: "Ти зібрав Ship Arena: один золотий шлях, де Tool, серверний урон, хвилі й респавн працюють разом. Рубрика й playtest підтверджують демо 60–90 с - база перед Race у модулі 9.",
  practiceTask: {
@@ -3749,7 +3686,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
  hints: [
  "Спочатку серверний урон, потім краса VFX",
  "2 хвилі достатньо для ship",
- "Якщо UI HP немає - Humanoid Health bar за замовчуванням ок для здачі",
+ "Якщо UI HP немає - Humanoid Health bar за замовчуванням ок для здачі"
  ],
  optionalChallenge: "Короткий TextLabel «Хвиля N / M» з серверної правди після старту кожної хвилі.",
  },
@@ -3765,7 +3702,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Зшити арену в один золотий шлях і закрити рубрику Ship",
           "Видалити Tool і хвилі",
           "Почати Race-трасу з нуля",
-          "Publish Public обов’язково сьогодні",
+          "Publish Public обов’язково сьогодні"
         ],
  correctAnswer: 0,
  explanation: "Інтеграція Arena.",
@@ -3778,7 +3715,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Лише в LocalScript Health=",
           "На сервері в dealDamage",
           "У Lighting Ambient",
-          "У назві Part арени",
+          "У назві Part арени"
         ],
  correctAnswer: 1,
  explanation: "Never trust client.",
@@ -3791,7 +3728,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Список усіх Plugins у Studio",
           "Обов’язковий open-world",
           "Короткий маршрут гравця від входу до перемоги/циклу без суфлера",
-          "Лише зміна Skybox",
+          "Лише зміна Skybox"
         ],
  correctAnswer: 2,
  explanation: "Інтегрований бій.",
@@ -3804,7 +3741,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Щоб вимкнути Tool назавжди",
           "Це замінює waveConfig",
           "i-frames малюють Terrain",
-          "Щоб не померти миттєво знову біля небезпеки",
+          "Щоб не померти миттєво знову біля небезпеки"
         ],
  correctAnswer: 3,
  explanation: "Захист після смерті.",
@@ -3817,7 +3754,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Лише колір бар’єра",
           "Чесність урону: сервер, анти-клієнтський one-shot, cooldown/відстань",
           "Назву модуля 1",
-          "Кількість Decals у Toolbox",
+          "Кількість Decals у Toolbox"
         ],
  correctAnswer: 1,
  explanation: "Безпека бою.",
@@ -3830,7 +3767,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Хвилі лише декоративні Part",
           "waveConfig живе тільки на клієнті як TextLabel",
           "Після смерті ворогів має стартувати наступна з waveConfig або victory",
-          "Хвилі заборонені в Arena",
+          "Хвилі заборонені в Arena"
         ],
  correctAnswer: 2,
  explanation: "Цикл бою.",
@@ -3843,7 +3780,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Будувати 12 типів ворогів і магазин зброї замість закрити цикл",
           "Пройти рубрику",
           "Перевірити dealDamage",
-          "Зберегти Place",
+          "Зберегти Place"
         ],
  correctAnswer: 0,
  explanation: "Вузький MVP.",
@@ -3856,7 +3793,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Це вимикає серверний урон",
           "Без цього Humanoid не існує",
           "Particles замінюють MaxHealth",
-          "Гравець відчуває влучання, не лише сухі цифри HP",
+          "Гравець відчуває влучання, не лише сухі цифри HP"
         ],
  correctAnswer: 3,
  explanation: "Відчуття бою.",
@@ -3869,7 +3806,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Видалити арену",
           "Змінити тільки Sky",
           "Перевірити, чи викликається серверний dealDamage",
-          "Вимкнути Output",
+          "Вимкнути Output"
         ],
  correctAnswer: 2,
  explanation: "Зв’язок hit → урон.",
@@ -3882,7 +3819,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Обов’язково 40 хвилин пояснень",
           "Близько 60–90 секунд без суфлера",
           "Достатньо відкрити Explorer",
-          "Лише скріншот без Play",
+          "Лише скріншот без Play"
         ],
  correctAnswer: 1,
  explanation: "Коротке демо.",
@@ -3895,7 +3832,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Race забороняє серверні скрипти",
           "Треба видалити всю арену з пам’яті",
           "У Race урон пише лише клієнт",
-          "Звичка «сервер вирішує критичні числа» переходить на кола/фініш",
+          "Звичка «сервер вирішує критичні числа» переходить на кола/фініш"
         ],
  correctAnswer: 3,
  explanation: "Дисципліна сервера.",
@@ -3908,7 +3845,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Щоб спам і удари «через пів карти» не ламали бій",
           "Щоб вимкнути Humanoid",
           "Це обов’язково для Decal",
-          "Cooldown малює Billboard",
+          "Cooldown малює Billboard"
         ],
  correctAnswer: 0,
  explanation: "Захист dealDamage.",
@@ -3921,7 +3858,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Трохи кривий колір стіни",
           "Неідеальний Ambient",
           "Урон або вбивство повністю на клієнті без сервера",
-          "Дрібний offset Billboard",
+          "Дрібний offset Billboard"
         ],
  correctAnswer: 2,
  explanation: "Критична дірка бою.",
@@ -3934,7 +3871,7 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Studio дозволяє лише один Place у житті",
           "Три Places швидше завжди",
           "Рубрика забороняє папки",
-          "Інакше немає інтегрованого золотого шляху для демо",
+          "Інакше немає інтегрованого золотого шляху для демо"
         ],
  correctAnswer: 3,
  explanation: "Інтеграція.",
@@ -3947,11 +3884,11 @@ Lite-заміна: якщо хвиль мало - 1 dummy + 1 «бос» з бі
           "Лише теорія без Studio",
           "Золотий шлях + рубрика + серверний урон/хвилі + Save",
           "Порожній Baseplate",
-          "Клієнтський Health= без сервера",
+          "Клієнтський Health= без сервера"
         ],
  correctAnswer: 1,
  explanation: "Потрібен ship арени.",
- },
+ }
  ],
  },
 }

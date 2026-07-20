@@ -16,20 +16,13 @@ export const ukLesson91 = {
  "Побудувати замкнену трасу з чітким стартом і напрямком",
  "Розставити чекпоінти кіл з індексами для наступного HUD",
  "Перевірити, що гравець сідає, їде і не провалюється крізь підлогу",
- "Зберегти Place як базу модуля Race перед таймером і мережею",
+ "Зберегти Place як базу модуля Race перед таймером і мережею"
  ],
  theory: {
  sections: [
  {
  title: "Сьогоднішня місія (урок 65 з 92)",
  content: `Модуль 9 - **Race + мережа**. Сьогодні ти не пишеш Remote і не малюєш складний GUI. Сьогодні ти збираєш **фізичну сцену гонки**: машина, яка їде, і траса, яку можна чесно об’їхати колом.
-
-Артефакт уроку:
-1. Модель \`Car\` з \`VehicleSeat\` (гравець сідає й керує).
-2. Колеса прив’язані (Weld / WeldConstraint), кузов не розсипається.
-3. Замкнена траса з бордюрами / стінами, щоб не вилетіти в прірву одразу.
-4. Чекпоінти \`CP1..CPn\` (+ зрозумілий старт/фініш кола) з Attribute \`Index\`.
-
 Без цього уроку 9.2 (таймер/UI) і 9.4 (Remote фінішу) ні до чого чіплятимуться: мережа без траси - порожня теорія.
 
 **Зроби зараз (2 хв):** виріши масштаб - маленьке овальне коло на Baseplate, не місто на 20 хвилин декору. Мета - **їхати і замикати коло**.`,
@@ -212,7 +205,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
 Це білд-урок: руки в Studio важливіші за довгі формули. Збережи Place до закриття.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -245,7 +238,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
  mistake: "Залишити все Anchored=true назавжди",
  explanation: "«Машина» стоїть як пам’ятник.",
  correctApproach: "Зняти Anchored після збірки Weld",
- },
+ }
  ],
  summary: "Ти зібрав базу Race: VehicleSeat-машина з колесами на Weld, замкнена траса і чекпоінти з Index. Це сцена для таймера (9.2) і далі мережі. Без їздного кола модуль не стартує.",
  practiceTask: {
@@ -271,7 +264,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
  hints: [
  "Спочатку пряма 30 studs - потім замикай овал",
  "Transparency 0.5 на CP допомагає бачити зони",
- "Якщо не їде - перевір що це VehicleSeat і орієнтацію",
+ "Якщо не їде - перевір що це VehicleSeat і орієнтацію"
  ],
  optionalChallenge: "Друга копія Car на піт-лейні + табличка Part «P2» для спліт-скрін playtest завтра.",
  },
@@ -287,7 +280,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Зібрати машину на VehicleSeat і замкнену трасу з чекпоінтами",
           "Написати повний анти-чит магазин",
           "Видалити всі Parts",
-          "Зробити лише RemoteFunction",
+          "Зробити лише RemoteFunction"
         ],
  correctAnswer: 0,
  explanation: "Білд Race-сцени.",
@@ -300,7 +293,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Забороняє Weld",
           "Дає керування транспортом (газ/руль), не лише сидіння",
           "Працює лише в Lighting",
-          "Автоматично малює HUD кіл",
+          "Автоматично малює HUD кіл"
         ],
  correctAnswer: 1,
  explanation: "Крісло пілота.",
@@ -313,7 +306,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Щоб вимкнути Collision",
           "Щоб створити RemoteEvent",
           "Щоб колеса не відлітали від Body під фізикою",
-          "Це замінює чекпоінти",
+          "Це замінює чекпоінти"
         ],
  correctAnswer: 2,
  explanation: "Зв’язок моделі.",
@@ -326,7 +319,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Roblox забороняє великі траси",
           "VehicleSeat працює лише на овалі",
           "Чекпоінти не ставляться на прямих",
-          "Швидше отримати їздний артефакт для наступних уроків",
+          "Швидше отримати їздний артефакт для наступних уроків"
         ],
  correctAnswer: 3,
  explanation: "Спочатку стабільність.",
@@ -339,7 +332,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Це обов’язково для Skybox",
           "Щоб у 9.2 рахувати кола в правильному порядку",
           "Index замінює VehicleSeat",
-          "Без Index машина не їде",
+          "Без Index машина не їде"
         ],
  correctAnswer: 1,
  explanation: "Підготовка до HUD.",
@@ -352,7 +345,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Залишити true назавжди обов’язково",
           "Anchored лише на RemoteEvent",
           "Зняти з кузова/коліс, щоб фізика й рух працювали",
-          "Видалити всі Parts",
+          "Видалити всі Parts"
         ],
  correctAnswer: 2,
  explanation: "Інакше пам’ятник.",
@@ -365,7 +358,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Менше падінь у void і стабільніший playtest",
           "Вони створюють leaderstats",
           "Без них LocalScript не стартує",
-          "Це єдиний спосіб сісти в Seat",
+          "Це єдиний спосіб сісти в Seat"
         ],
  correctAnswer: 0,
  explanation: "Тримають на дорозі.",
@@ -378,7 +371,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Усе безіменне в корені Lighting",
           "Лише ServerScriptService без сцени",
           "Випадкові назви Part1 Part2",
-          "Workspace.Race з Track, Car, Checkpoints",
+          "Workspace.Race з Track, Car, Checkpoints"
         ],
  correctAnswer: 3,
  explanation: "Чистий Explorer.",
@@ -391,7 +384,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Поставити VehicleSeat",
           "Зібрати замкнену трасу",
           "Повний RemoteEvent анти-чит фінішу",
-          "Додати чекпоінти з Index",
+          "Додати чекпоінти з Index"
         ],
  correctAnswer: 2,
  explanation: "Мережа пізніше.",
@@ -404,7 +397,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Видалення Baseplate",
           "Орієнтацію VehicleSeat і «перед» моделі",
           "Назву модуля 12",
-          "Publish settings лише",
+          "Publish settings лише"
         ],
  correctAnswer: 1,
  explanation: "Напрямок носа.",
@@ -417,7 +410,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Завжди true як скеля",
           "Чекпоінт не може бути Part",
           "Лише MeshPart без Attribute",
-          "Часто false (зона-тригер), щоб не стіна на дорозі",
+          "Часто false (зона-тригер), щоб не стіна на дорозі"
         ],
  correctAnswer: 3,
  explanation: "Тригер, не бар’єр.",
@@ -430,7 +423,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Дає трасу й CP, на які повісять таймер і лічильник кіл",
           "9.2 видаляє машину",
           "Без UI вже є лідерборд сервера",
-          "9.2 потребує лише Terrain water",
+          "9.2 потребує лише Terrain water"
         ],
  correctAnswer: 0,
  explanation: "Сцена для HUD.",
@@ -443,7 +436,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Лише відкрив Explorer",
           "Змінив колір неба",
           "Сів, проїхав, коло замикається без розвалу моделі",
-          "Написав 10 Remote без Place",
+          "Написав 10 Remote без Place"
         ],
  correctAnswer: 2,
  explanation: "Їздний артефакт.",
@@ -456,7 +449,7 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Roblox сортує Parts за алфавітом завжди правильно",
           "Index потрібен лише для Sound",
           "Порядок не впливає ні на що",
-          "Лічильник кіл очікує зростаючі індекси по ходу руху",
+          "Лічильник кіл очікує зростаючі індекси по ходу руху"
         ],
  correctAnswer: 3,
  explanation: "Ланцюг для 9.2.",
@@ -469,11 +462,11 @@ VehicleSeat - **крісло пілота з рулем**. Без нього Par
           "Лише текст теорії",
           "Car + замкнена траса + CP Index + Save",
           "Порожній Baseplate",
-          "Магазин монет без авто",
+          "Магазин монет без авто"
         ],
  correctAnswer: 1,
  explanation: "База Race.",
- },
+ }
  ],
  },
 }
@@ -491,20 +484,13 @@ export const ukLesson92 = {
  "Порахувати кола через чекпоінти з уроку 9.1",
  "Запустити таймер заїзду й показати час у зручному форматі",
  "Оновити TextLabel з LocalScript без ламання камери/машини",
- "Підготувати UI під мережу: завтра 9.3 пояснить, чому цифри на екрані ще не «правда сервера»",
+ "Підготувати UI під мережу: завтра 9.3 пояснить, чому цифри на екрані ще не «правда сервера»"
  ],
  theory: {
  sections: [
  {
  title: "Сьогоднішня місія (урок 66 з 92)",
  content: `У **9.1** ти зібрав машину й трасу з чекпоінтами. Сьогодні додаєш **приладову панель гонщика**: скільки кіл пройдено, який час іде, чи ти вже на фініші.
-
-Артефакт уроку:
-1. ScreenGui \`RaceHUD\` з полями Laps / Time / Status.
-2. LocalScript, що оновлює ці поля під час заїзду.
-3. Підрахунок кіл по чекпоінтах (порядок 1→2→…→фініш кола).
-4. Таймер від старту до фінішу (або до цільової кількості кіл).
-
 Це ще **навчальний HUD**: цифри можуть жити на клієнті, щоб ти швидко побачив результат. У **9.3–9.5** ти зрозумієш, чому для чесної гонки з друзями «правда» має бути на сервері - але спочатку навчись **читати заїзд очима**.
 
 **Зроби зараз (2 хв):** відкрий Place з 9.1 і напиши: скільки кіл хочеш у заїзді (2 чи 3) і де стоїть фінішна лінія.`,
@@ -718,12 +704,10 @@ export const ukLesson92 = {
 
 **Що далі:** у **9.3** розберемо Client vs Server: чому цей самий HUD - лише «табло в кабіні», а не суддя. У **9.4–9.5** кола переїдуть на сервер, а UI лишиться вітриною.
 
-Артефакт: гонка, в якій ти **бачиш** прогрес. Без цього Remote завтра нічого зрозумілого не покаже.
-
 Це урок «відчути заїзд», не «виграти анти-чит». Анти-чит прийде після карти скриптів.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -756,7 +740,7 @@ export const ukLesson92 = {
  mistake: "Вважати клієнтський laps остаточною правдою мультиплеєра",
  explanation: "Завтра це стане діркою.",
  correctApproach: "Сьогодні OK для навчання; 9.3+ перенесе облік на сервер",
- },
+ }
  ],
  summary: "Ти зібрав HUD гонки: кола по чекпоінтах, таймер від старту, Status на екрані. LocalScript малює прогрес. Далі 9.3 пояснить межу клієнта й сервера - щоб ці цифри стали чесними в мережі.",
  practiceTask: {
@@ -782,7 +766,7 @@ export const ukLesson92 = {
  hints: [
  "Спочатку змусь Time тікати без кіл - потім додай CP",
  "print(index) на Touched швидко покаже спам",
- "Один refreshHud після кожної зміни стану",
+ "Один refreshHud після кожної зміни стану"
  ],
  optionalChallenge: "Покажи «кращий час» у Session (змінна bestTime), якщо фінішував швидше за попередній заїзд у цій сесії Studio.",
  },
@@ -798,7 +782,7 @@ export const ukLesson92 = {
           "Показати на HUD кола і час заїзду",
           "Видалити машину з 9.1",
           "Одразу зробити RemoteEvent магазин",
-          "Публікувати гру без траси",
+          "Публікувати гру без траси"
         ],
  correctAnswer: 0,
  explanation: "Таймер / кола / UI.",
@@ -811,7 +795,7 @@ export const ukLesson92 = {
           "ServerStorage як єдиний варіант",
           "StarterGui (ScreenGui)",
           "Lighting",
-          "Terrain",
+          "Terrain"
         ],
  correctAnswer: 1,
  explanation: "UI гравця.",
@@ -824,7 +808,7 @@ export const ukLesson92 = {
           "Лише ModuleScript у SSS без клієнта",
           "SoundService",
           "LocalScript",
-          "Plugin лише",
+          "Plugin лише"
         ],
  correctAnswer: 2,
  explanation: "Клієнтський UI.",
@@ -837,7 +821,7 @@ export const ukLesson92 = {
           "Це вимикає таймер назавжди",
           "Без цього сервер не стартує",
           "WaitForChild замінює Touched",
-          "Інстанс може ще не встигнути з’явитись",
+          "Інстанс може ще не встигнути з’явитись"
         ],
  correctAnswer: 3,
  explanation: "Надійний старт.",
@@ -850,7 +834,7 @@ export const ukLesson92 = {
           "Одразу в першому рядку LocalScript завжди",
           "У момент старту заїзду (beginRace)",
           "Лише після Publish",
-          "У назві Part фінішу",
+          "У назві Part фінішу"
         ],
  correctAnswer: 1,
  explanation: "Таймер від старту.",
@@ -863,7 +847,7 @@ export const ukLesson92 = {
           "Будь-який Touched = +1 коло",
           "Рахувати лише колір Part",
           "Приймати лише наступний індекс у порядку",
-          "Збільшувати laps у Lighting",
+          "Збільшувати laps у Lighting"
         ],
  correctAnswer: 2,
  explanation: "Ланцюг CP.",
@@ -876,7 +860,7 @@ export const ukLesson92 = {
           "Touched спамить і може накрутити прогрес",
           "Roblox забороняє Touched без debounce назавжди",
           "Це замінює VehicleSeat",
-          "Без цього UI не існує",
+          "Без цього UI не існує"
         ],
  correctAnswer: 0,
  explanation: "Анти-спам.",
@@ -889,7 +873,7 @@ export const ukLesson92 = {
           "Видаляє трасу",
           "Створює RemoteEvent",
           "Публікує Place",
-          "Одним місцем оновлює Laps/Time/Status з таблиці race",
+          "Одним місцем оновлює Laps/Time/Status з таблиці race"
         ],
  correctAnswer: 3,
  explanation: "Єдине оновлення UI.",
@@ -902,7 +886,7 @@ export const ukLesson92 = {
           "LocalScript не вміє змінювати TextLabel",
           "Таймер заборонений у Roblox",
           "Клієнт можна підробити; чесний облік буде на сервері пізніше",
-          "Чекпоінти не існують на клієнті",
+          "Чекпоінти не існують на клієнті"
         ],
  correctAnswer: 2,
  explanation: "Місток до 9.3+.",
@@ -915,7 +899,7 @@ export const ukLesson92 = {
           "Гра обов’язково Remове всі Parts",
           "finished=true, таймер зупиняється, Status фініш",
           "Кола скидаються в мінус",
-          "Камера вимикається назавжди",
+          "Камера вимикається назавжди"
         ],
  correctAnswer: 1,
  explanation: "Кінець заїзду.",
@@ -928,7 +912,7 @@ export const ukLesson92 = {
           "ChatService як єдиний варіант",
           "TeleportService",
           "BadgeService",
-          "RunService.Heartbeat",
+          "RunService.Heartbeat"
         ],
  correctAnswer: 3,
  explanation: "Плавне оновлення часу.",
@@ -941,7 +925,7 @@ export const ukLesson92 = {
           "Щоб чужий персонаж не крутив твій HUD",
           "Інакше машина не їде",
           "Інакше Studio закриється",
-          "Touched працює лише з NPC",
+          "Touched працює лише з NPC"
         ],
  correctAnswer: 0,
  explanation: "Фільтр гравця.",
@@ -954,7 +938,7 @@ export const ukLesson92 = {
           "Одразу Finished",
           "999 кіл",
           "Очікування, кола 0, час ще не біжить",
-          "Порожній екран без лейблів",
+          "Порожній екран без лейблів"
         ],
  correctAnswer: 2,
  explanation: "Чистий престарт.",
@@ -967,7 +951,7 @@ export const ukLesson92 = {
           "9.5 видаляє весь HUD",
           "Лідерборд не потребує чисел",
           "Треба забути чекпоінти",
-          "Ти вже маєш поля кіл/часу на UI - далі їх наповнить сервер",
+          "Ти вже маєш поля кіл/часу на UI - далі їх наповнить сервер"
         ],
  correctAnswer: 3,
  explanation: "Вітрина вже є.",
@@ -980,11 +964,11 @@ export const ukLesson92 = {
           "Лише теорія без Play",
           "HUD з колами й таймером на трасі 9.1 + Save",
           "Порожній Baseplate",
-          "Магазин GamePass без гонки",
+          "Магазин GamePass без гонки"
         ],
  correctAnswer: 1,
  explanation: "Потрібна приладова панель.",
- },
+ }
  ],
  },
 }
@@ -1002,7 +986,7 @@ export const ukLesson93 = {
  "Знати, де запускаються Script, LocalScript і ModuleScript",
  "Зрозуміти реплікацію і FilteringEnabled (за замовчуванням)",
  "Показати антиприклад: клієнт сам додає собі «монети/кола»",
- "Накреслити карту папок під Remotes (RS) перед уроком 9.4",
+ "Накреслити карту папок під Remotes (RS) перед уроком 9.4"
  ],
  theory: {
  sections: [
@@ -1015,8 +999,6 @@ export const ukLesson93 = {
 2. Який скрипт де живе.
 3. Чому LocalScript не може чесно «дати собі 999 кіл».
 4. Де завтра ляжуть Remotes.
-
-Артефакт: схема на папері/в нотатці + мінімальний Place з підписаними папками + демо антиприкладу в Output.
 
 **Зроби зараз (2 хв):** напиши одним реченням, хто в твоєму житті «суддя», а хто «гравець з джойстиком». Це метафора сервер/клієнт.`,
  },
@@ -1180,19 +1162,6 @@ export const ukLesson93 = {
 **Зроби зараз (4 хв):** онови HUD після зміни серверного значення без ручного підроблення на клієнті.`,
  },
  {
- title: "Міст до 9.4 RemoteEvent",
- content: `| Сьогодні зрозумів | Завтра зробиш |
-|-------------------|---------------|
-| Клієнт ≠ суддя | FireServer «хочу фініш» |
-| Сервер тримає правду | OnServerEvent + валідація |
-| UI на LocalScript | OnClientEvent малює ok/deny |
-| Папка Remotes готова | Створиш RaceFinish |
-
-Якщо сьогоднішню схему пропустити - завтра будеш копіювати Remote «бо так сказали», без розуміння.
-
-**Зроби зараз (5 хв):** намалюй стрілки: LocalScript → (завтра Remote) → Script → (відповідь) → UI.`,
- },
- {
  title: "Міні-практика карти (без повного Remote)",
  content: `1. Створи папки Remotes / Systems / RaceUI як вище.  
 2. У SSS Script \`Srv_RaceHello\`: \`print("[Server] race systems ready")\`.  
@@ -1219,7 +1188,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
 Без цього 9.4 перетворюється на магію з копіпасти.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -1252,7 +1221,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
  mistake: "Глобальний laps без ключа player у голові дизайну",
  explanation: "Мультиплеєр зламається одразу.",
  correctApproach: "Думай race[player] уже зараз",
- },
+ }
  ],
  summary: "Ти розклав Client vs Server: суддя і гравець, Script/LocalScript/Module, реплікація, антиприклад клієнтських «кіл», карта папок під Remotes. Це фундамент, на якому завтра стоїть RemoteEvent.",
  practiceTask: {
@@ -1276,7 +1245,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
  hints: [
  "Спочатку слова й папки, потім код",
  "Префікси [Server]/[Client] у print рятують дебаг",
- "Не клади паролі в RS",
+ "Не клади паролі в RS"
  ],
  optionalChallenge: "Таблиця на 8 рядків «система гонки → S чи L» (камера, фініш, HUD, VehicleSeat фізика, облік кіл, звук UI, пастка-штраф, декор).",
  },
@@ -1292,7 +1261,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "Сервер",
           "Лише LocalScript",
           "Terrain Editor",
-          "Skybox",
+          "Skybox"
         ],
  correctAnswer: 0,
  explanation: "Сервер тримає правду.",
@@ -1305,7 +1274,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "Завжди тільки в ServerScriptService",
           "На клієнті (StarterGui / PlayerScripts тощо)",
           "Лише в Lighting",
-          "У назві Part",
+          "У назві Part"
         ],
  correctAnswer: 1,
  explanation: "Клієнтський код.",
@@ -1318,7 +1287,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "Сервер малює всі кнопки замість клієнта",
           "LocalScript заборонений назавжди",
           "Економіку/кола/фініш підтверджує сервер, не UI сам по собі",
-          "Remotes не потрібні ніколи",
+          "Remotes не потрібні ніколи"
         ],
  correctAnswer: 2,
  explanation: "Архітектура мережі.",
@@ -1331,7 +1300,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "SSS завжди швидший для кнопок",
           "LocalScript там автоматично стає сервером",
           "Так вимагає VehicleSeat",
-          "Не той контейнер для клієнтського UI-коду",
+          "Не той контейнер для клієнтського UI-коду"
         ],
  correctAnswer: 3,
  explanation: "Правильне місце скриптів.",
@@ -1344,7 +1313,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "Видалення Workspace",
           "Оновлення/копія даних або світу, яку бачать клієнти",
           "Лише зміна кольору неба",
-          "Обов’язковий DataStore",
+          "Обов’язковий DataStore"
         ],
  correctAnswer: 1,
  explanation: "Що «їде» до гравців.",
@@ -1357,7 +1326,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "ModuleScript не існує в Roblox",
           "RS вимикає print",
           "Клієнт може побачити вміст ReplicatedStorage",
-          "Паролі можна лише в TextLabel",
+          "Паролі можна лише в TextLabel"
         ],
  correctAnswer: 2,
  explanation: "RS не сейф.",
@@ -1370,7 +1339,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "Що екран/спроба клієнта ≠ серверна правда обліку",
           "Що leaderstats заборонені",
           "Що сервер не існує в Solo",
-          "Що треба видалити гонку",
+          "Що треба видалити гонку"
         ],
  correctAnswer: 0,
  explanation: "Never trust client.",
@@ -1383,7 +1352,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "Лише в Terrain",
           "У Camera",
           "Тільки в назві Place",
-          "ReplicatedStorage/Remotes",
+          "ReplicatedStorage/Remotes"
         ],
  correctAnswer: 3,
  explanation: "Карта папок.",
@@ -1396,7 +1365,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "Офіційний фінішний час як єдину правду",
           "Видачу монет усім гравцям",
           "Камера і відгук UI",
-          "Списання чужих Laps",
+          "Списання чужих Laps"
         ],
  correctAnswer: 2,
  explanation: "UI/ввід vs економіка.",
@@ -1409,7 +1378,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "Studio забороняє print",
           "Легко забути, що live = багато клієнтів + один сервер",
           "У Studio немає SSS",
-          "LocalScript там не запускається ніколи",
+          "LocalScript там не запускається ніколи"
         ],
  correctAnswer: 1,
  explanation: "Контекст Play.",
@@ -1422,7 +1391,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "Це збільшує FPS",
           "Це створює Remote",
           "Це вимикає FilteringEnabled",
-          "Швидко зрозуміти, з якого боку йде лог",
+          "Швидко зрозуміти, з якого боку йде лог"
         ],
  correctAnswer: 3,
  explanation: "Дебаг мережі.",
@@ -1435,7 +1404,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "Окремо на гравця (race[player]), не одна глобальна змінна на всіх",
           "Лише в TextLabel без сервера",
           "Один laps на весь сервер завжди",
-          "Кола рахує лише Sky",
+          "Кола рахує лише Sky"
         ],
  correctAnswer: 0,
  explanation: "Мультиплеєр-дизайн.",
@@ -1448,7 +1417,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "Автоматичний Publish",
           "Заміну Workspace",
           "Модуль коду через require, який можна ділити",
-          "Вимкнення клієнта",
+          "Вимкнення клієнта"
         ],
  correctAnswer: 2,
  explanation: "Спільні бібліотеки.",
@@ -1461,7 +1430,7 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "9.4 скасовує сервер",
           "Remotes більше не потрібні",
           "Треба видалити всі LocalScript",
-          "Розумієш навіщо канал Remote між L і S",
+          "Розумієш навіщо канал Remote між L і S"
         ],
  correctAnswer: 3,
  explanation: "Фундамент → міст.",
@@ -1474,11 +1443,11 @@ Save: \`Lesson 9.3 - Client Server Map\`.
           "Лише теорія без Place",
           "Схема + папки Remotes/Systems/UI + антиприклад + Save",
           "Повний Remote фініш без розуміння (це 9.4)",
-          "Порожній Baseplate",
+          "Порожній Baseplate"
         ],
  correctAnswer: 1,
  explanation: "Карта мережі перед Remote.",
- },
+ }
  ],
  },
 }
@@ -1496,7 +1465,7 @@ export const ukLesson94 = {
  "Створити RemoteEvent у ReplicatedStorage і підключити FireServer / OnServerEvent",
  "Відповісти клієнту через FireClient / OnClientEvent",
  "Валідувати аргументи й подію фінішу/кола на сервері (never trust client)",
- "Додати анти-спам lite (cooldown) на Remote",
+ "Додати анти-спам lite (cooldown) на Remote"
  ],
  theory: {
  sections: [
@@ -1509,8 +1478,6 @@ export const ukLesson94 = {
 2. Сервер перевіряє.
 3. Сервер відповідає: ok / deny + оновлює стан.
 4. UI реагує лише на відповідь сервера.
-
-Артефакт: працюючий \`RaceCheckpoint\` або \`RaceFinish\` Remote + демо «зламаний чіт → правильний Remote». Без цього каналу лідерборд (9.5) і анти-чит (9.7) нема на чому стояти - тому сьогодні не поспішай до декору траси. Краще один чесний FireServer→валідація→FireClient, ніж три «майже» Remote без перевірки.
 
 **Зроби зараз (3 хв):** у \`ReplicatedStorage\` створи Folder \`Remotes\` і RemoteEvent \`RaceFinish\`.`,
  },
@@ -1735,7 +1702,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
 Без цього 9.5–9.8 будують табло на піску.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -1768,7 +1735,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
  mistake: "Remote у випадковому місці Workspace",
  explanation: "Важко знайти, поганий стандарт.",
  correctApproach: "RS/Remotes",
- },
+ }
  ],
  summary: "Ти освоїв RemoteEvent: клієнт просить фініш/коло через FireServer, сервер валідує і відповідає FireClient, UI лише відображає. Це якір мережі модуля 9 перед лідербордом, пастками й анти-читом.",
  practiceTask: {
@@ -1795,7 +1762,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
  hints: [
  "Спочатку print, потім nearFinish",
  "Перший аргумент OnServerEvent - завжди player",
- "Cooldown 0.35 с ловить дабл-клік",
+ "Cooldown 0.35 с ловить дабл-клік"
  ],
  optionalChallenge: "Другий Remote RaceCheckpoint(cpIndex) з перевіркою порядку lastCheckpoint.",
  },
@@ -1811,7 +1778,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "Щоб клієнт просив дію, а сервер вирішував і відповідав",
           "Щоб замінити VehicleSeat",
           "Щоб малювати Terrain",
-          "Щоб вимкнути Explorer",
+          "Щоб вимкнути Explorer"
         ],
  correctAnswer: 0,
  explanation: "Канал клієнт↔сервер.",
@@ -1824,7 +1791,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "Лише в Lighting",
           "ReplicatedStorage/Remotes",
           "У назві SpawnLocation",
-          "Тільки в ServerStorage (клієнт не побачить для FireServer)",
+          "Тільки в ServerStorage (клієнт не побачить для FireServer)"
         ],
  correctAnswer: 1,
  explanation: "Спільне місце Remotes.",
@@ -1837,7 +1804,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "Лише Script у SSS",
           "Terrain Editor",
           "LocalScript / клієнт",
-          "PathfindingService",
+          "PathfindingService"
         ],
  correctAnswer: 2,
  explanation: "Клієнт → сервер.",
@@ -1850,7 +1817,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "Завжди FinishPart",
           "Обов’язково number 0",
           "Camera",
-          "player, який надіслав подію",
+          "player, який надіслав подію"
         ],
  correctAnswer: 3,
  explanation: "Хто стріляв Remote.",
@@ -1863,7 +1830,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "Клієнт пише в leaderstats",
           "Сервер надсилає подію конкретному гравцю",
           "Видаляє RemoteEvent",
-          "Створює Humanoid",
+          "Створює Humanoid"
         ],
  correctAnswer: 1,
  explanation: "Сервер → клієнт.",
@@ -1876,7 +1843,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "UI заборонений у Roblox",
           "FireServer тоді ламається",
           "Це не серверна правда - легко підробити / немає обліку",
-          "LocalScript не вміє TextLabel",
+          "LocalScript не вміє TextLabel"
         ],
  correctAnswer: 2,
  explanation: "Антиприклад чіту.",
@@ -1889,7 +1856,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "Запит/індекс чекпоінта, не офіційний час перемоги",
           "Будь-які laps = 999 як факт",
           "Команду змінити чужі дані без перевірки",
-          "loadstring",
+          "loadstring"
         ],
  correctAnswer: 0,
  explanation: "Сигнал, не вирок.",
@@ -1902,7 +1869,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "Щоб прискорити камеру",
           "Це замінює WaitForChild",
           "Це потрібно лише для Sound",
-          "Не зараховувати фініш гравцю далеко від зони",
+          "Не зараховувати фініш гравцю далеко від зони"
         ],
  correctAnswer: 3,
  explanation: "Валідація позиції.",
@@ -1915,7 +1882,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "Щоб змінити колір траси",
           "Це вимикає Anchored",
           "Щоб спам FireServer не оброблявся десятки разів",
-          "Cooldown замінює player",
+          "Cooldown замінює player"
         ],
  correctAnswer: 2,
  explanation: "Анти-спам lite.",
@@ -1928,7 +1895,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "Це видаляє SSS",
           "Remote може ще не встигнути реплікуватись",
           "Без цього не існує Parts",
-          "WaitForChild пише DataStore",
+          "WaitForChild пише DataStore"
         ],
  correctAnswer: 1,
  explanation: "Надійний старт.",
@@ -1941,7 +1908,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "Вони абсолютно однакові завжди",
           "Event працює лише на сервері",
           "Function заборонений у Roblox",
-          "Event = сигнал; Function = запит з return (Function детальніше в M10)",
+          "Event = сигнал; Function = запит з return (Function детальніше в M10)"
         ],
  correctAnswer: 3,
  explanation: "Різні інструменти.",
@@ -1954,7 +1921,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "У серверному Script (наприклад SSS)",
           "У LocalScript StarterGui як заміну серверу",
           "У Terrain",
-          "У Skybox",
+          "У Skybox"
         ],
  correctAnswer: 0,
  explanation: "Серверна обробка.",
@@ -1967,7 +1934,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "Видалити RemoteEvent",
           "Вимкнути Output",
           "finished=true, порахувати час, FireClient ok",
-          "Дати клієнту писати leaderstats самому",
+          "Дати клієнту писати leaderstats самому"
         ],
  correctAnswer: 2,
  explanation: "Фіксація результату.",
@@ -1980,7 +1947,7 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "Лідерборд скасовує Remotes",
           "Треба видалити валідацію",
           "9.5 працює лише без сервера",
-          "Чесний сигнал коло/фініш можна повесити на оновлення board",
+          "Чесний сигнал коло/фініш можна повесити на оновлення board"
         ],
  correctAnswer: 3,
  explanation: "Канал → табло.",
@@ -1993,11 +1960,11 @@ Save: \`Lesson 9.4 - RemoteEvent Finish\`.
           "Лише теорія без Studio",
           "Працюючий RaceFinish Remote з валідацією, відповіддю UI і Save",
           "Порожній Baseplate",
-          "Перемога лише TextLabel на клієнті",
+          "Перемога лише TextLabel на клієнті"
         ],
  correctAnswer: 1,
  explanation: "Потрібен чесний міст.",
- },
+ }
  ],
  },
 }
@@ -2015,20 +1982,13 @@ export const ukLesson95 = {
  "Оновлювати UI лідерборда через FireClient або leaderstats",
  "Закріпити Remote: клієнт повідомляє чекпоінт/коло, сервер вирішує",
  "Сортувати топ заїздів (швидший час / більше кіл) без довіри до клієнта",
- "Підготувати чистий облік під пастки (9.6) і анти-чит (9.7)",
+ "Підготувати чистий облік під пастки (9.6) і анти-чит (9.7)"
  ],
  theory: {
  sections: [
  {
  title: "Сьогоднішня місія (урок 69 з 92)",
  content: `У **9.2** ти вже міг показувати таймер/коло на UI. У **9.4** з’явився Remote. Сьогодні зшиваєш це в **лідерборд кіл / часу** - щоб заїзд було видно не лише собі в голові.
-
-Артефакт уроку:
-1. Сервер знає \`laps\` і (бажано) \`bestTime\` / поточний час.
-2. Гравець бачить свій прогрес на HUD.
-3. Є простий board: топ-3 або список «ім’я - кола - час».
-4. Оновлення йде з сервера (FireClient або репліковані Values), не з «я сам намалював перемогу».
-
 Без цього табло завтрашні пастки й анти-чит важче дебажити: не видно, чи сервер взагалі зарахував коло.
 
 **Зроби зараз (3 хв):** відкрий гонку й напиши: що вже рахує сервер, а що лише LocalScript?`,
@@ -2226,7 +2186,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
 Далі **9.6** додасть пастки - облік кіл має лишитись стабільним. Якщо board уже 1:1 з сервером, ти одразу побачиш, чи Oil випадково «з’їв» коло чи лише сповільнив машину.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -2259,7 +2219,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
  mistake: "Не чистити race на PlayerRemoving",
  explanation: "Витоки і дивні рядки.",
  correctApproach: "nil + оновити board",
- },
+ }
  ],
  summary: "Ти зібрав лідерборд кіл/часу на серверній правді: laps у стані заїзду, HUD/TAB і board через FireClient або leaderstats, Remote лише як сигнал. Це табло гонки перед пастками й анти-читом.",
  practiceTask: {
@@ -2285,7 +2245,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
  hints: [
  "Спочатку MyLaps 1:1 з сервером, потім топ-3",
  "print на сервері після laps++ - найкращий друг",
- "WaitForChild на Remotes у LocalScript",
+ "WaitForChild на Remotes у LocalScript"
  ],
  optionalChallenge: "BestTime StringValue + рядок «Рекорд: …» після фінішу.",
  },
@@ -2301,7 +2261,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "Показати кола/час з серверного обліку на HUD/лідерборді",
           "Видалити RemoteEvent",
           "Зробити лише декор траси",
-          "Publish без гонки",
+          "Publish без гонки"
         ],
  correctAnswer: 0,
  explanation: "Лідерборд на серверній правді.",
@@ -2314,7 +2274,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "Лише в LocalScript для краси",
           "На сервері після валідного коло/чекпоінта",
           "У Lighting",
-          "У назві Part",
+          "У назві Part"
         ],
  correctAnswer: 1,
  explanation: "Серверний облік.",
@@ -2327,7 +2287,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "FireClient тоді не існує",
           "UI не вміє малювати TextLabel",
           "Клієнт може підробити місця в рейтингу",
-          "leaderstats заборонені",
+          "leaderstats заборонені"
         ],
  correctAnswer: 2,
  explanation: "Сервер сортує.",
@@ -2340,7 +2300,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "Це замінює VehicleSeat",
           "Це вимикає Touched",
           "Обов’язково для Skybox",
-          "Швидко видно прогрес у TAB і легко дебажити",
+          "Швидко видно прогрес у TAB і легко дебажити"
         ],
  correctAnswer: 3,
  explanation: "Проста реплікація числа.",
@@ -2353,7 +2313,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "Пише Coins усім без перевірки",
           "Передає клієнту список для малювання UI",
           "Видаляє RemoteEvent",
-          "Створює Terrain",
+          "Створює Terrain"
         ],
  correctAnswer: 1,
  explanation: "Оновлення вітрини.",
@@ -2366,7 +2326,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "Одна глобальна змінна laps",
           "Лише на першому клієнті",
           "Окремий запис race[player] для кожного",
-          "У ReplicatedFirst як Sound",
+          "У ReplicatedFirst як Sound"
         ],
  correctAnswer: 2,
  explanation: "Ключ гравця.",
@@ -2379,7 +2339,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "Очистити race[player] і оновити board",
           "Видалити Workspace",
           "Вимкнути Pathfinding",
-          "Обов’язково Publish",
+          "Обов’язково Publish"
         ],
  correctAnswer: 0,
  explanation: "Прибирання стану.",
@@ -2392,7 +2352,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "Змінити колір неба",
           "Вимкнути Output",
           "Перейменувати модуль 1",
-          "Звірити print laps на сервері з числом на екрані",
+          "Звірити print laps на сервері з числом на екрані"
         ],
  correctAnswer: 3,
  explanation: "1:1 сервер і UI.",
@@ -2405,7 +2365,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "LocalScript не може малювати текст",
           "RemoteEvent тоді компілюється гірше",
           "Легко підробити прогрес і зламати лідерборд",
-          "VehicleSeat вимагає клієнтських кіл",
+          "VehicleSeat вимагає клієнтських кіл"
         ],
  correctAnswer: 2,
  explanation: "Never trust client.",
@@ -2418,7 +2378,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "Завжди випадковий порядок",
           "Більше laps вище; при рівності - кращий час",
           "За алфавітом Material",
-          "Хто пізніше зайшов - завжди перший",
+          "Хто пізніше зайшов - завжди перший"
         ],
  correctAnswer: 1,
  explanation: "Чесна ієрархія.",
@@ -2431,7 +2391,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "Це вимикає лідерборд",
           "Без цього сервер не існує",
           "WaitForChild замінює OnServerEvent",
-          "Об’єкт може ще не встигнути реплікуватись",
+          "Об’єкт може ще не встигнути реплікуватись"
         ],
  correctAnswer: 3,
  explanation: "Надійний старт UI.",
@@ -2444,7 +2404,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "Якщо Laps пише сервер, фейковий клієнтський ++ не потрапить у TAB/board",
           "Анти-чит скасовує всі UI",
           "Треба видалити leaderstats",
-          "9.7 забороняє FireClient",
+          "9.7 забороняє FireClient"
         ],
  correctAnswer: 0,
  explanation: "Серверна правда = менше дір.",
@@ -2457,7 +2417,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "Обов’язково Part.Transparency",
           "Лише Color3",
           "StringValue або ціле (мс), не «сирий» Int з дробом",
-          "Зберегти час у назві SpawnLocation",
+          "Зберегти час у назві SpawnLocation"
         ],
  correctAnswer: 2,
  explanation: "Зручне зберігання часу.",
@@ -2470,7 +2430,7 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "Кожен кадр без потреби з клієнта",
           "Лише при зміні неба",
           "Ніколи - board малює себе сам з нічого",
-          "Після зміни laps/фінішу на сервері",
+          "Після зміни laps/фінішу на сервері"
         ],
  correctAnswer: 3,
  explanation: "Оновлення після факту.",
@@ -2483,11 +2443,11 @@ Playtest: 2 вікна Studio / 2 акаунти - обидва +коло нез
           "Лише теорія без Studio",
           "Серверні laps + HUD/board з сервера + Save",
           "Порожній Baseplate",
-          "Клієнтський лічильник без сервера",
+          "Клієнтський лічильник без сервера"
         ],
  correctAnswer: 1,
  explanation: "Потрібне чесне табло.",
- },
+ }
  ],
  },
 }
@@ -2505,7 +2465,7 @@ export const ukLesson96 = {
  "Зрозуміти Collision Groups lite: машина vs бар’єр vs гравець",
  "Зробити debounce, щоб пастка не била 20 разів за секунду",
  "Налаштувати CameraType lite для гонки (опційно Follow/Custom)",
- "Підготувати hazards так, щоб не ламати чесний облік кіл (9.5–9.7)",
+ "Підготувати hazards так, щоб не ламати чесний облік кіл (9.5–9.7)"
  ],
  theory: {
  sections: [
@@ -2709,7 +2669,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
 Далі **9.7** перевірить, чи фініш досі чесний, коли на трасі вже є хаос пасток.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -2742,7 +2702,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
  mistake: "10 пасток замість 1 стабільної",
  explanation: "Година згорає, жодна не відлагоджена.",
  correctApproach: "1–2 читабельні hazards",
- },
+ }
  ],
  summary: "Ти додав пастки на трасу з debounce і чесним серверним ефектом, торкнув Collision Groups lite і камеру Follow для їзди. Hazards дають вау, не ламаючи облік кіл і фініш - база для анти-читу 9.7 і Ship 9.8.",
  practiceTask: {
@@ -2769,7 +2729,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
  hints: [
  "Спочатку 1 Oil зі стабільним debounce",
  "Не клади пастку на фінішну лінію",
- "При виході з машини поверни камеру",
+ "При виході з машини поверни камеру"
  ],
  optionalChallenge: "Другий hazard-тип (bump) + Billboard «Небезпека!» за 20 студів до зони.",
  },
@@ -2785,7 +2745,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "Додати читабельні пастки й порядок колізій/камери на трасі",
           "Видалити RemoteEvent",
           "Зробити лише DataStore",
-          "Publish Public без траси",
+          "Publish Public без траси"
         ],
  correctAnswer: 0,
  explanation: "Hazards + collision lite.",
@@ -2798,7 +2758,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "Debounce вимикає VehicleSeat назавжди",
           "Touched спамить багато разів підряд на швидкості",
           "Без debounce не існує Parts",
-          "Це замінює фініш",
+          "Це замінює фініш"
         ],
  correctAnswer: 1,
  explanation: "Анти-спам ефекту.",
@@ -2811,7 +2771,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "CanCollide true і повністю прозора завжди",
           "Видалити Part після одного кадру",
           "CanCollide false, CanTouch true, видно гравцю",
-          "Лише на клієнті міняти laps",
+          "Лише на клієнті міняти laps"
         ],
  correctAnswer: 2,
  explanation: "Зона-тригер, не стіна.",
@@ -2824,7 +2784,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "Лише LocalScript без сервера",
           "Lighting",
           "Terrain Editor",
-          "Серверний Script",
+          "Серверний Script"
         ],
  correctAnswer: 3,
  explanation: "Чесний ефект.",
@@ -2837,7 +2797,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "FinishPart тоді стає швидшим",
           "Плутанина з фінішем і зайві спрацювання / ризик багів обліку",
           "Touched заборонений біля фінішу в Roblox",
-          "Це підвищує FPS завжди",
+          "Це підвищує FPS завжди"
         ],
  correctAnswer: 1,
  explanation: "Розділи фініш і пастку.",
@@ -2850,7 +2810,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "Щоб малювати небо",
           "Це створює RemoteEvent",
           "Керувати, які Parts з чим зіштовхуються (бар’єр/машина/гравець)",
-          "Це видаляє Humanoid",
+          "Це видаляє Humanoid"
         ],
  correctAnswer: 2,
  explanation: "Порядок фізики.",
@@ -2863,7 +2823,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "Повернути нормальний режим (не лишати зламаний Scriptable)",
           "Видалити Camera назавжди",
           "Поставити ClockTime = 0 обов’язково",
-          "Вимкнути Output",
+          "Вимкнути Output"
         ],
  correctAnswer: 0,
  explanation: "Не ламати пост-гонку.",
@@ -2876,7 +2836,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "Обов’язково 50",
           "0 і ніколи не тестувати",
           "Лише невидимі без підказки",
-          "1–2 стабільні й видимі",
+          "1–2 стабільні й видимі"
         ],
  correctAnswer: 3,
  explanation: "Якість > кількість.",
@@ -2889,7 +2849,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "Яскравий Oil на повороті з debounce",
           "Billboard «Небезпека» перед ямою",
           "Невидима зона смерті без шансу об’їхати",
-          "Штраф часу замість крашу Studio",
+          "Штраф часу замість крашу Studio"
         ],
  correctAnswer: 2,
  explanation: "Фрустрація без навчання.",
@@ -2902,7 +2862,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "Так, завжди",
           "Ні - фініш окрема чиста зона/логіка",
           "Лише якщо Oil червоний",
-          "Тільки на клієнті",
+          "Тільки на клієнті"
         ],
  correctAnswer: 1,
  explanation: "Розділення систем.",
@@ -2915,7 +2875,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "Інакше Touched не працює",
           "Roblox вимагає саме ці імена",
           "Щоб вимкнути Pathfinding",
-          "Швидко знайти й пояснити структуру на Ship/викладачу",
+          "Швидко знайти й пояснити структуру на Ship/викладачу"
         ],
  correctAnswer: 3,
  explanation: "Чистий Explorer.",
@@ -2928,7 +2888,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "Проїхати Oil і порахувати, скільки разів спрацювало",
           "Змінити небо",
           "Перейменувати Lighting",
-          "Видалити SpawnLocation",
+          "Видалити SpawnLocation"
         ],
  correctAnswer: 0,
  explanation: "Перевірка debounce.",
@@ -2941,7 +2901,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "Це збільшує Coins",
           "Це вимикає Remotes",
           "Зручніше тримати машину в кадрі під час їзди",
-          "Це обов’язково ламає Seat",
+          "Це обов’язково ламає Seat"
         ],
  correctAnswer: 2,
  explanation: "Комфорт керування.",
@@ -2954,7 +2914,7 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "Треба видалити всі Hazards перед анти-читом",
           "9.7 забороняє Touched",
           "Collision groups скасовують сервер",
-          "Пастки не повинні давати фейковий фініш; анти-чит перевірить чесність",
+          "Пастки не повинні давати фейковий фініш; анти-чит перевірить чесність"
         ],
  correctAnswer: 3,
  explanation: "Чисті межі систем.",
@@ -2967,11 +2927,11 @@ Save: \`Lesson 9.6 - Race Hazards\`.
           "Лише теорія без Studio",
           "1–2 hazards з debounce + lite collision/camera + Save",
           "Порожній Baseplate",
-          "10 невидимих kill-brick без тесту",
+          "10 невидимих kill-brick без тесту"
         ],
  correctAnswer: 1,
  explanation: "Потрібні робочі пастки.",
- },
+ }
  ],
  },
 }
@@ -2989,7 +2949,7 @@ export const ukLesson97 = {
  "Перевірити Remote фінішу/кола: відстань, порядок чекпоінтів, спам",
  "Закрити мінімум 2 дірки (P0/P1) live з таймером",
  "Залишити Output і багліст чистими на золотому шляху",
- "Підготувати чесну базу до Ship Race (9.8)",
+ "Підготувати чесну базу до Ship Race (9.8)"
  ],
  theory: {
  sections: [
@@ -3182,7 +3142,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
 Далі **9.8** зшиє все рубрикою Ship - безпека вже не повинна сипатись від однієї клавіші P.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -3215,7 +3175,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
  mistake: "Змішувати стан двох гравців в одній table без ключа player",
  explanation: "Чужі кола/фініші.",
  correctApproach: "race[player] окремо",
- },
+ }
  ],
  summary: "Ти прогнав анти-чит playtest гонки: атаки «клієнт бреше», серверні deny, debounce і мінімум 2 фікси. Урок 71 готує чесний фініш до Ship Race в 9.8.",
  practiceTask: {
@@ -3242,7 +3202,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
  hints: [
  "Спочатку атака зі спавну - найшвидший діагноз",
  "Magnitude до FinishPart піджени під свою зону",
- "Не публікуй Place з увімкненим CheatTest",
+ "Не публікуй Place з увімкненим CheatTest"
  ],
  optionalChallenge: "Мінімальний час кола (anti-instant): якщо t < 5 с при NEED_LAPS=1 - deny з логом.",
  },
@@ -3258,7 +3218,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Перевірити й закрити дірки, де клієнт може брехати про фініш/кола",
           "Намалювати нову трасу з нуля",
           "Одразу Publish Public",
-          "Видалити RemoteEvent",
+          "Видалити RemoteEvent"
         ],
  correctAnswer: 0,
  explanation: "Анти-чит playtest гонки.",
@@ -3271,7 +3231,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Видалення SpawnLocation",
           "FireServer фініш, стоячи далеко від зони фінішу",
           "Зміна кольору машини",
-          "Вимкнення Output",
+          "Вимкнення Output"
         ],
  correctAnswer: 1,
  explanation: "Фейкова перемога без їзди.",
@@ -3284,7 +3244,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Щоб прискорити VehicleSeat",
           "Це замінює UI таймера",
           "Щоб не зараховувати фініш гравцю далеко від FinishPart",
-          "Це потрібно лише для Skybox",
+          "Це потрібно лише для Skybox"
         ],
  correctAnswer: 2,
  explanation: "Валідація позиції.",
@@ -3297,7 +3257,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Щоб вимкнути Anchored",
           "Це створює Terrain",
           "Це замінює Pathfinding",
-          "Щоб повторний/спам фініш не давав багато перемог",
+          "Щоб повторний/спам фініш не давав багато перемог"
         ],
  correctAnswer: 3,
  explanation: "Одноразовий результат.",
@@ -3310,7 +3270,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Play у Studio заборонений",
           "Чесна їзда не показує, чи сервер відмовить брехні клієнта",
           "Output не працює в Solo",
-          "Remotes не реплікуються ніколи",
+          "Remotes не реплікуються ніколи"
         ],
  correctAnswer: 1,
  explanation: "Треба навмисний тест брехні.",
@@ -3323,7 +3283,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Залишити Enabled назавжди в проді",
           "Покласти в ReplicatedStorage як секрет",
           "Disabled або Delete",
-          "Опублікувати як Tool для всіх",
+          "Опублікувати як Tool для всіх"
         ],
  correctAnswer: 2,
  explanation: "Прибрати тестовий чіт.",
@@ -3336,7 +3296,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Щоб спам подій не ламав облік",
           "Щоб змінити Material траси",
           "Це вимикає Humanoid",
-          "Це обов’язково для Decal",
+          "Це обов’язково для Decal"
         ],
  correctAnswer: 0,
  explanation: "Rate limit.",
@@ -3349,7 +3309,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Клієнт сам ставить lastCheckpoint без сервера",
           "Чекпоінти лише декоративні завжди",
           "Достатньо змінити назву Part",
-          "Сервер вимагає порядок / наступний індекс і відстань",
+          "Сервер вимагає порядок / наступний індекс і відстань"
         ],
  correctAnswer: 3,
  explanation: "Порядок і валідація.",
@@ -3362,7 +3322,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Трохи кривий колір бар’єра",
           "Дрібний Billboard offset",
           "Можна виграти FireServer зі спавну",
-          "Неідеальний Ambient",
+          "Неідеальний Ambient"
         ],
  correctAnswer: 2,
  explanation: "Критична дірка обліку.",
@@ -3375,7 +3335,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Атакувати будь-які ігри в каталозі",
           "Лише на своєму Place; не чіпати чужі опубліковані ігри",
           "Обов’язково качати експлойт-тулзи",
-          "Банити однокласників автоматично",
+          "Банити однокласників автоматично"
         ],
  correctAnswer: 1,
  explanation: "Етика навчання.",
@@ -3388,7 +3348,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Щоб збільшити Volume",
           "Це замінює VehicleSeat",
           "typeof працює лише на клієнті",
-          "Відсіяти сміття (число/table замість очікуваного)",
+          "Відсіяти сміття (число/table замість очікуваного)"
         ],
  correctAnswer: 3,
  explanation: "Валідація входу.",
@@ -3401,7 +3361,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Хоча б 2 P0/P1 дірки",
           "Обов’язково 50",
           "0 - лише теорія",
-          "Лише зміна неба",
+          "Лише зміна неба"
         ],
  correctAnswer: 0,
  explanation: "Атаки → фікси.",
@@ -3414,7 +3374,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Ship забороняє Remotes",
           "Треба видалити всю трасу",
           "Рубрика мережі завтра зеленіша, якщо фейковий фініш уже deny",
-          "Анти-чит скасовує UI",
+          "Анти-чит скасовує UI"
         ],
  correctAnswer: 2,
  explanation: "Безпека перед ship.",
@@ -3427,7 +3387,7 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Лише колір SpawnLocation",
           "Лише назву модуля",
           "Вимкнути Output назавжди",
-          "Атаки знову deny І чесний заїзд ok",
+          "Атаки знову deny І чесний заїзд ok"
         ],
  correctAnswer: 3,
  explanation: "Регресія обох шляхів.",
@@ -3440,11 +3400,11 @@ Save: \`Lesson 9.7 - Race AntiCheat\`.
           "Лише теорія без Studio",
           "Багліст атак + серверні deny + ≥2 фікси + Save",
           "Порожній Baseplate",
-          "CheatTest Enabled у проді",
+          "CheatTest Enabled у проді"
         ],
  correctAnswer: 1,
  explanation: "Потрібен доказ анти-читу.",
- },
+ }
  ],
  },
 }
@@ -3462,7 +3422,7 @@ export const ukLesson98 = {
  "Перевірити інтеграцію таймера/UI, Remote фінішу і серверного обліку кіл",
  "Пройти рубрику Ship Race (~15 пунктів) і закрити блокери",
  "Підтвердити, що клієнт не може «виграти» без серверної валідації",
- "Зберегти Place як артефакт модуля 9 перед хабом (M10)",
+ "Зберегти Place як артефакт модуля 9 перед хабом (M10)"
  ],
  theory: {
  sections: [
@@ -3699,7 +3659,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
 Якщо все є - модуль 9 закрито. Можна йти в живий хаб.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -3732,7 +3692,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
  mistake: "Роздути 5 трас замість закрити 1 коло",
  explanation: "Година зникає, блокери лишаються.",
  correctApproach: "1 MVP-заїзд + стабільний Remote",
- },
+ }
  ],
  summary: "Ти зібрав Ship Race: один золотий шлях, де машина, кола/час і Remote-фініш ділять серверну правду. Рубрика й playtest підтверджують демо 60–90 с без суфлера - база перед живим хабом у модулі 10.",
  practiceTask: {
@@ -3760,7 +3720,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
  hints: [
  "Спочатку серверний finished/laps, потім краса траси",
  "1 коло достатньо для ship",
- "Якщо лідерборда немає - TextLabel свого часу ок",
+ "Якщо лідерборда немає - TextLabel свого часу ок"
  ],
  optionalChallenge: "Другий гравець у Studio (або 2 вікна) - обидва фініші коректні без змішування стану.",
  },
@@ -3776,7 +3736,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "Зшити гонку в один золотий шлях і закрити рубрику Ship",
           "Почати новий жанр sim з нуля",
           "Одразу Publish Public",
-          "Видалити всі Remotes",
+          "Видалити всі Remotes"
         ],
  correctAnswer: 0,
  explanation: "Інтеграція і здача модуля 9.",
@@ -3789,7 +3749,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "Лише в LocalScript таймера",
           "На сервері (стан заїзду / Values)",
           "У назві Part траси",
-          "У Lighting.ClockTime",
+          "У Lighting.ClockTime"
         ],
  correctAnswer: 1,
  explanation: "Серверна правда гонки.",
@@ -3802,7 +3762,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "RemoteEvent заборонений у гонках",
           "UI не вміє показувати час",
           "Інакше легко підробити результат без валідації",
-          "VehicleSeat не працює без Remote",
+          "VehicleSeat не працює без Remote"
         ],
  correctAnswer: 2,
  explanation: "Never trust client.",
@@ -3815,7 +3775,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "Щоб вимкнути Anchored",
           "Це замінює VehicleSeat",
           "Це потрібно лише для Terrain",
-          "Щоб спам фінішу не давав багато перемог",
+          "Щоб спам фінішу не давав багато перемог"
         ],
  correctAnswer: 3,
  explanation: "Анти-дубль результату.",
@@ -3828,7 +3788,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "Лише гарна табличка",
           "Старт → їзда/кола → серверний фініш → видимий час/результат",
           "Лише ParticleEmitter",
-          "Лише зміна неба",
+          "Лише зміна неба"
         ],
  correctAnswer: 1,
  explanation: "Повний короткий заїзд.",
@@ -3841,7 +3801,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "Скасувати весь модуль 9",
           "Ставити перемогу лише на клієнті",
           "Lite: показати свій час з сервера на UI",
-          "Ігнорувати онбординг",
+          "Ігнорувати онбординг"
         ],
  correctAnswer: 2,
  explanation: "Чесна lite-заміна.",
@@ -3854,7 +3814,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "Перемога порахована лише на клієнті",
           "Занадто гарний Billboard",
           "Наявність SpawnLocation",
-          "Закороткий пітч",
+          "Закороткий пітч"
         ],
  correctAnswer: 0,
  explanation: "Роз’їзд клієнт/сервер.",
@@ -3867,7 +3827,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "Щоб видалити RemoteEvent",
           "Це вимикає Pathfinding",
           "Щоб очистити Terrain",
-          "Щоб другий заїзд коректно рахував кола/час",
+          "Щоб другий заїзд коректно рахував кола/час"
         ],
  correctAnswer: 3,
  explanation: "Чистий повтор.",
@@ -3880,7 +3840,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "Перевірку Output",
           "Один MVP-заїзд",
           "П’ять трас і Publish замість одного стабільного кола",
-          "Рубрику Ship",
+          "Рубрику Ship"
         ],
  correctAnswer: 2,
  explanation: "Скоуп control.",
@@ -3893,7 +3853,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "12 панелей HUD одразу",
           "Зрозумілий старт: машина + ціль (кола/фініш)",
           "Публікацію в каталог",
-          "Вимкнення Explorer",
+          "Вимкнення Explorer"
         ],
  correctAnswer: 1,
  explanation: "Новачок має знати що робити.",
@@ -3906,7 +3866,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "Колір неба о 18:00",
           "Кількість дерев біля траси",
           "Назва модуля 1",
-          "Фініш через Remote і lite-валідація на сервері",
+          "Фініш через Remote і lite-валідація на сервері"
         ],
  correctAnswer: 3,
  explanation: "Блок C рубрики.",
@@ -3919,7 +3879,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "Перевірити, що сервер відмовить у фейковій перемозі",
           "Щоб навчити хакерству інших учнів",
           "Це замінює рубрику",
-          "Так вимагає Terrain Editor",
+          "Так вимагає Terrain Editor"
         ],
  correctAnswer: 0,
  explanation: "Анти-чит з 9.7 у ship-контексті.",
@@ -3932,7 +3892,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "Видалити гонку і почати Baseplate",
           "Пропустити всі тести",
           "Модуль 10 - живий хаб (ті самі звички Remotes)",
-          "Прибрати VehicleSeat назавжди",
+          "Прибрати VehicleSeat назавжди"
         ],
  correctAnswer: 2,
  explanation: "Мережа → хаб.",
@@ -3945,7 +3905,7 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "Колір машини",
           "Гучність Sound",
           "Ім’я Place",
-          "Що гравець реально біля фінішу, а не «телепортнув» подію",
+          "Що гравець реально біля фінішу, а не «телепортнув» подію"
         ],
  correctAnswer: 3,
  explanation: "Lite-валідація позиції.",
@@ -3958,11 +3918,11 @@ Save: \`Lesson 9.8 - Race Ship\`.
           "Лише теорія без Studio",
           "Place Race Ship з інтегрованим заїздом, рубрикою й чистим Output",
           "Порожній Baseplate",
-          "UI таймера без сервера",
+          "UI таймера без сервера"
         ],
  correctAnswer: 1,
  explanation: "Потрібен зібраний заїзд.",
- },
+ }
  ],
  },
 }

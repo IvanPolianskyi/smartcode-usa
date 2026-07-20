@@ -21,7 +21,6 @@ import { getRobloxLessonContent } from '@/lib/robloxLessonContent'
 import { markdownToHtml } from '@/lib/markdownToHtml'
 import { updateProgress } from '@/lib/authClient'
 import styles from './RobloxLessonPage.module.css'
-import FloatingNavArrows from './FloatingNavArrows'
 import LessonPageWithSidebar from './LessonPageWithSidebar'
 import { useCopyCodeBlocks } from '@/hooks/useCopyCodeBlocks'
 
@@ -290,51 +289,8 @@ const RobloxLessonPage = ({
     setActiveStep(step)
   }
 
-  const handleNextAction = () => {
-    setGateHint('')
-    if (activeStep === 'theory') {
-      if (hasPractice) {
-        setActiveStep('practice')
-      } else if (hasQuiz) {
-        setActiveStep('quiz')
-      } else if (nextLesson && nextLessonUnlocked) {
-        router.push(`/courses/${courseId}/lessons/${nextLesson.lessonId}`)
-      }
-    } else if (activeStep === 'practice') {
-      if (hasQuiz) {
-        if (!practiceDone) {
-          setGateHint(tRoblox('quizLockedHint'))
-        } else {
-          setActiveStep('quiz')
-        }
-      } else if (nextLesson && nextLessonUnlocked) {
-        router.push(`/courses/${courseId}/lessons/${nextLesson.lessonId}`)
-      }
-    } else if (activeStep === 'quiz') {
-      if (nextLesson && quizPassed && nextLessonUnlocked) {
-        router.push(`/courses/${courseId}/lessons/${nextLesson.lessonId}`)
-      }
-    }
-  }
-
-  const handlePrevAction = () => {
-    if (activeStep === 'quiz') {
-      if (hasPractice) {
-        setActiveStep('practice')
-      } else {
-        setActiveStep('theory')
-      }
-    } else if (activeStep === 'practice') {
-      setActiveStep('theory')
-    }
-  }
-
   return (
     <>
-      <FloatingNavArrows
-        onNextAction={handleNextAction}
-        onPrevAction={handlePrevAction}
-      />
       <LessonPageWithSidebar
         courseId={courseId}
         curriculum={curriculum}

@@ -116,8 +116,6 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
     })
   }
 
-  const firstName = user.name?.split(/\s+/)[0] || user.name
-
   const paymentPanel = (
     <div id="payment-panel">
       <StudentPaymentPanel
@@ -136,7 +134,7 @@ function StudentDashboard({ user, progressData, paymentStats, refreshData, t, lo
         <div className={styles.heroCard}>
           <div>
             <div className={styles.heroLabel}><Sparkles size={16} /> {t('student.heroLabel')}</div>
-            <h2 className={styles.heroTitle}>{t('student.greeting', { name: firstName })}</h2>
+            <h2 className={styles.heroTitle}>{t('student.greeting')}</h2>
             <p className={styles.heroText}>{motivationalText}</p>
           </div>
           <div className={styles.goalBox}>

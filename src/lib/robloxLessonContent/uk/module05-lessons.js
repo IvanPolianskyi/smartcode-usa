@@ -16,7 +16,7 @@ export const ukLesson51 = {
     "Скласти паперовий ескіз маршруту Spawn → біом 1-2-3 → Finish до Studio",
     "Створити Folders Biome1/Biome2/Biome3 з контрастними кольорами й матеріалами",
     "Побудувати прохідний скелет платформ без hazards, скриптів бою й декору AAA",
-    "Залишити місця під checkpoint, hazard і секрет для уроків 5.2-5.5",
+    "Залишити місця під checkpoint, hazard і секрет для уроків 5.2-5.5"
   ],
   theory: {
     sections: [
@@ -25,15 +25,6 @@ export const ukLesson51 = {
         content: `Модуль 5 - **Obby**, не Arena і не «Бійцівський клуб». Забувай Humanoid.Health як тему дня. Сьогодні ти проєктуєш **три біоми** й один читабельний маршрут від Spawn до Finish.
 
 Решта модуля лише нашаровується на цей каркас: 5.2 hazards, 5.3 checkpoint+GUI, 5.4 while-платформи, 5.5 секрет, 5.6 playtest, 5.7 крива, 5.8 повний прохід, 5.9 juice, 5.10 Ship.
-
-Артефакт уроку:
-1. Паперовий або текстовий ескіз трьох зон і стрілки маршруту.
-2. Folders \`Biome_1\`, \`Biome_2\`, \`Biome_3\` у Workspace.
-3. Контраст вигляду між біомами (колір / Material / висота).
-4. Прохідний скелет платформ пішки в Play без скриптів бою.
-5. Spawn на старті біому 1, Part-заглушка Finish у кінці біому 3.
-6. Save **Lesson 5.1 - Three Biomes**.
-
 | Не тема 5.1 | Тема 5.1 |
 |-------------|----------|
 | Меч, TakeDamage, Died | Маршрут і біоми |
@@ -245,10 +236,8 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
 
 Далі **5.2 - Hazards + debounce**: у ями й HazardSpot додаси читабельні пастки й серверний Touched. Каркас біомів чіпати мінімально - лише наповнення небезпекою.
 
-Артефакт: **три зони Obby з одним зрозумілим шляхом**, готові прийняти системи модуля.
-
 **Зроби зараз (2 хв):** Save Place як Lesson 5.1 - Three Biomes.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -281,7 +270,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
       mistake: "Немає FinishLine-заглушки",
       explanation: "Немає цілі маршруту для 5.3/5.10.",
       correctApproach: "Іменований FinishLine у кінці Biome_3",
-    },
+    }
   ],
   summary: "Ти відкрив модуль Obby дизайном трьох контрастних біомів: ескіз, Folders, прохідний скелет Spawn→Finish і маркери під hazard/CP/секрет. Бойовий контент відхилено - каркас готовий до hazards у 5.2.",
   practiceTask: {
@@ -306,7 +295,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
     hints: [
       "Спочатку маршрут, потім краса",
       "Одна палітра всередині біому, сильний контраст між біомами",
-      "Не пиши KillBrick і меч на цьому уроці",
+      "Не пиши KillBrick і меч на цьому уроці"
     ],
     optionalChallenge: "Додай низькі бордюри ZoneBorder у кожному біомі, щоб гравець рідше злітав у void під час скелет-тесту.",
   },
@@ -322,7 +311,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "Arena з Humanoid.Health як головною темою",
           "Tycoon з дропером",
           "Obby з дизайном трьох біомів",
-          "Simulator з leaderstats",
+          "Simulator з leaderstats"
         ],
         correctAnswer: 2,
         explanation: "Curriculum: 05 - Obby, старт з біомів.",
@@ -335,7 +324,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "Навчання: м'якший старт і читабельний напрямок",
           "Найжорсткіший іспит одразу",
           "Місце для меча",
-          "Тільки Skybox без платформ",
+          "Тільки Skybox без платформ"
         ],
         correctAnswer: 0,
         explanation: "Спочатку вчити, потім іспитувати.",
@@ -348,7 +337,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "Roblox вимагає PDF",
           "Дешевше визначити маршрут, ніж годинами переставляти Parts",
           "Ескіз замінює Folders",
-          "Без ескізу не працює Play",
+          "Без ескізу не працює Play"
         ],
         correctAnswer: 1,
         explanation: "План руху до витрат часу в Explorer.",
@@ -361,7 +350,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "Щоб вимкнути Anchored",
           "Щоб згрупувати зони для навігації й наступних систем",
           "Щоб створити Tool",
-          "Щоб замінити FinishLine",
+          "Щоб замінити FinishLine"
         ],
         correctAnswer: 1,
         explanation: "Порядок у Workspace і ясність зон.",
@@ -374,7 +363,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "Лише номером у голові автора",
           "Контраст кольору, Material або висоти",
           "Обов'язково різними DataStore",
-          "Тільки різною музикою без геометрії",
+          "Тільки різною музикою без геометрії"
         ],
         correctAnswer: 1,
         explanation: "Гравець читає зону очима.",
@@ -387,7 +376,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "Прохідний скелет трьох біомів зі Spawn і Finish",
           "Робочий меч і TakeDamage",
           "Повний Badge ship",
-          "while-платформи з Config",
+          "while-платформи з Config"
         ],
         correctAnswer: 0,
         explanation: "Дизайн і геометрія маршруту.",
@@ -400,7 +389,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "Повністю закодити KillBrick",
           "Поставити маркери місць без бойової логіки",
           "Зробити всю підлогу вбивчою",
-          "Видалити всі ями",
+          "Видалити всі ями"
         ],
         correctAnswer: 1,
         explanation: "Spot-маркери; Script у 5.2.",
@@ -413,7 +402,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "Новачок не встигає навчитись і здається рано",
           "Studio не дозволяє широкі Parts на старті",
           "FinishLine тоді зникає",
-          "Folders стають неможливими",
+          "Folders стають неможливими"
         ],
         correctAnswer: 0,
         explanation: "Крива має рости до біому 3.",
@@ -426,7 +415,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "Лише FPS",
           "Чи маршрут проходиться й читається без скриптів бою",
           "Чи AwardBadge працює",
-          "Чи DataStore зберіг меч",
+          "Чи DataStore зберіг меч"
         ],
         correctAnswer: 1,
         explanation: "Цілісність шляху Spawn→Finish.",
@@ -439,7 +428,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "Три Folder біомів",
           "Ескіз маршруту",
           "Humanoid.TakeDamage як основна механіка",
-          "FinishLine-заглушка",
+          "FinishLine-заглушка"
         ],
         correctAnswer: 2,
         explanation: "Бойовий контент - застарілий слот.",
@@ -452,7 +441,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "Щоб одразу видати Badge",
           "Щоб зафіксувати ціль маршруту для 5.3 і 5.10",
           "Щоб замінити Spawn",
-          "Щоб увімкнути Atmosphere",
+          "Щоб увімкнути Atmosphere"
         ],
         correctAnswer: 1,
         explanation: "Ім'я й місце фінішу потрібні наступним урокам.",
@@ -465,7 +454,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "HazardSpot і ями готові прийняти KillBrick з debounce",
           "5.2 видаляє всі біоми",
           "Пастки більше не потрібні",
-          "Треба перейти на Tycoon",
+          "Треба перейти на Tycoon"
         ],
         correctAnswer: 0,
         explanation: "Каркас місць під пастки.",
@@ -478,7 +467,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "Один",
           "Два",
           "Десять",
-          "Три",
+          "Три"
         ],
         correctAnswer: 3,
         explanation: "Дизайн саме трьох зон.",
@@ -491,7 +480,7 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "AAA Mesh-декор усього острова",
           "Читабельний прохідний маршрут",
           "Повний саундтрек",
-          "PvP арена в центрі",
+          "PvP арена в центрі"
         ],
         correctAnswer: 1,
         explanation: "Спочатку скелет і напрямок.",
@@ -504,11 +493,11 @@ FinishLine сьогодні - Anchored Part з ім'ям FinishLine і відм�
           "Lesson 5.2 - Hazards Debounce",
           "Arena Health Zones",
           "Lesson 5.10 - Ship + Badge",
-          "Lesson 5.1 - Three Biomes",
+          "Lesson 5.1 - Three Biomes"
         ],
         correctAnswer: 3,
         explanation: "Чекліст вимагає Lesson 5.1 - Three Biomes.",
-      },
+      }
     ],
   },
 };
@@ -526,7 +515,7 @@ export const ukLesson52 = {
     "Обробити Touched на сервері й знайти Humanoid гравця через GetPlayerFromCharacter",
     "Застосувати смерть або шкоду лише після перевірок hit Part",
     "Захистити повторні Touched debounce-ом, щоб не було миттєвої серії вбивств",
-    "Підготувати чесні пастки під checkpoint у 5.3 і juice у 5.9",
+    "Підготувати чесні пастки під checkpoint у 5.3 і juice у 5.9"
   ],
   theory: {
     sections: [
@@ -535,15 +524,6 @@ export const ukLesson52 = {
         content: `У **5.1** ти розклав три біоми й основний маршрут. Сьогодні маршрут отримує **ціну помилки**: hazards - лава, шипи, отруйна вода, невидимі лише якщо unfair.
 
 Це не урок про меч і Arena. Tool, Activated і дуелі тут не здаються. Жанр - Obby: гравець стрибає, промахується, торкається небезпеки, помирає, вчиться.
-
-Артефакт уроку:
-1. Folder Hazards з мінімум 3 різними пастками на маршруті.
-2. Серверний Script: Touched → Humanoid → Health = 0 (або TakeDamage).
-3. Debounce на гравця / на Part, щоб не було спаму смерті.
-4. Читабельний вигляд: колір, форма або Material відрізняються від безпечної підлоги.
-5. Play: один дотик = одна логічна кара; без Output-спаму.
-6. Save **Lesson 5.2 - Hazards Debounce**.
-
 | Було в 5.1 | Стає в 5.2 |
 |-------------|------------|
 | Геометрія й маршрут | Маршрут із наслідком помилки |
@@ -715,23 +695,6 @@ Anchored true для статичної лави. Неякірний KillBrick �
 **Зроби зараз (4 хв):** навмисно зламай один тест (вимкни debounce) і послухай різницю, потім поверни debounce.`,
       },
       {
-        title: "Підготовка до checkpoint і juice",
-        content: `Сьогоднішня смерть ще кидає на Spawn (або дефолтний Respawn). У **5.3** CharacterAdded перенесе на LastCheckpoint - **не змінюй** hazards під це заздалегідь, лише залиш чистий хук.
-
-У **5.9** у той самий блок після успішного debounce додаси:
-
-\`deathSound:Play()\`
-\`puff:Emit(15)\`
-
-Тому не створюй другий Touched «для звуку». Один обробник = одна подія.
-
-Не видавай Badge і не пиши Coins за смерть. Кара - це урок паркуру, не нагорода.
-
-ForceField після респавну: у playtest зачекай 2-3 с або постав hazard далі від Spawn.
-
-**Зроби зараз (3 хв):** залиш у коді коментар \`-- 5.9 juice here\` одразу після Health = 0 всередині debounce.`,
-      },
-      {
         title: "Що НЕ будувати в 5.2",
         content: `| Не роби зараз | Чому |
 |---------------|------|
@@ -776,10 +739,8 @@ ForceField після респавну: у playtest зачекай 2-3 с або
 
 Далі **5.3 - Чекпоінти + таймер + GUI**: ті самі смерті стануть дешевшими для навчання. У **5.6** багліст збере unfair невидимі KillBrick. У **5.9** на хук сяде juice.
 
-Артефакт: **чесні серверні пастки з debounce**, не зброя арени.
-
 **Зроби зараз (2 хв):** Save Place як Lesson 5.2 - Hazards Debounce.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -812,7 +773,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
       mistake: "Здавати меч Tool замість hazards",
       explanation: "Це застарілий Arena-контент, не Obby 5.2.",
       correctApproach: "Touched-пастки на маршруті паркуру",
-    },
+    }
   ],
   summary: "Ти зібрав Obby-hazards: читабельні пастки, серверний Touched до Humanoid, debounce проти спаму й Folder для масштабу. Смерть чесна й готова прийняти checkpoint у 5.3 та juice у 5.9.",
   practiceTask: {
@@ -838,7 +799,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
     hints: [
       "Чекай кінця ForceField після респавну перед повторним тестом",
       "hit.Parent - Character, не сам hit Part",
-      "Спочатку один hazard, потім цикл на Folder",
+      "Спочатку один hazard, потім цикл на Folder"
     ],
     optionalChallenge: "Додай Attribute Kind=damage на один Part і TakeDamage(25) з окремим debounce 0.75 с, не чіпаючи kill-пастки.",
   },
@@ -854,7 +815,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "Зробити Tool-меч для Arena",
           "Чесні Obby-hazards з Touched і debounce",
           "Відкрити магазин Coins",
-          "Зберегти DataStore",
+          "Зберегти DataStore"
         ],
         correctAnswer: 1,
         explanation: "Пастки паркуру, не зброя.",
@@ -867,7 +828,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "У LocalScript StarterPlayer",
           "У Script на сервері",
           "Лише в Lighting",
-          "У Bundle без Script",
+          "У Bundle без Script"
         ],
         correctAnswer: 1,
         explanation: "Смерть - серверна правда.",
@@ -880,7 +841,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "Обов'язково сам гравець Instance",
           "Завжди Humanoid",
           "Part, що торкнувся (часто частина Character)",
-          "Тільки SpawnLocation",
+          "Тільки SpawnLocation"
         ],
         correctAnswer: 2,
         explanation: "Character шукають через hit.Parent.",
@@ -893,7 +854,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "Щоб прискорити WalkSpeed",
           "Щоб заборонити Anchored",
           "Щоб Part став прозорим",
-          "Щоб серія Touched не спамила одну й ту саму кару",
+          "Щоб серія Touched не спамила одну й ту саму кару"
         ],
         correctAnswer: 3,
         explanation: "Touched шумний, поки контакт триває.",
@@ -906,7 +867,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "humanoid.Health = 0",
           "Видалити Workspace",
           "Teleport на Null",
-          "LocalScript Destroy(player)",
+          "LocalScript Destroy(player)"
         ],
         correctAnswer: 0,
         explanation: "Миттєва смерть на сервері.",
@@ -919,7 +880,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "Яскрава лава під промахом стрибка",
           "KillBrick кольору підлоги без натяку",
           "Шипи з контрастним Neon",
-          "Пастка з обхідним маршрутом",
+          "Пастка з обхідним маршрутом"
         ],
         correctAnswer: 1,
         explanation: "Гравець не читає ризик.",
@@ -932,7 +893,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "Щоб відфільтрувати саме гравця, а не будь-який Humanoid",
           "Щоб намалювати Sky",
           "Щоб створити Tool",
-          "Щоб вимкнути Touched",
+          "Щоб вимкнути Touched"
         ],
         correctAnswer: 0,
         explanation: "Перевірка, що Character належить Player.",
@@ -945,7 +906,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "Окремий Place на кожен hazard",
           "Folder Hazards + for + спільна функція bind",
           "Лише Studio Plugins",
-          "Видалити всі Parts крім одного",
+          "Видалити всі Parts крім одного"
         ],
         correctAnswer: 1,
         explanation: "Один шаблон на дітей Folder.",
@@ -958,7 +919,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "Він видаляє Script",
           "Короткий імунітет не дає одразу померти в hazard",
           "Він вимикає debounce назавжди",
-          "Він переносить FinishLine",
+          "Він переносить FinishLine"
         ],
         correctAnswer: 1,
         explanation: "Зачекай кінця захисту або тестуй пізніше.",
@@ -971,7 +932,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "Три читабельні hazards",
           "Debounce",
           "Серверний Touched",
-          "Меч Tool з Activated як основний артефакт",
+          "Меч Tool з Activated як основний артефакт"
         ],
         correctAnswer: 3,
         explanation: "Arena-зброя - застаріла тема цього слота.",
@@ -984,7 +945,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "Checkpoint зменшить вартість цих смертей для навчання",
           "5.3 видаляє всі hazards",
           "Debounce більше не потрібен",
-          "GUI замінить KillBrick",
+          "GUI замінить KillBrick"
         ],
         correctAnswer: 0,
         explanation: "Смерть лишається, прогрес з'явиться.",
@@ -997,7 +958,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "В окремий другий Touched без логіки",
           "У той самий серверний хук після підтвердженого kill",
           "Лише в SoundService без Part",
-          "У Terrain",
+          "У Terrain"
         ],
         correctAnswer: 1,
         explanation: "Одна подія - один обробник.",
@@ -1010,7 +971,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "Під промахом стрибка",
           "Збоку від безпечного краю",
           "На SpawnLocation гравця",
-          "У ямі біому 2",
+          "У ямі біому 2"
         ],
         correctAnswer: 2,
         explanation: "Старт має бути безпечним.",
@@ -1023,7 +984,7 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "Arena з PvP мечами",
           "Tycoon з дропером",
           "Obby з паркуром і пастками",
-          "Simulator з Coins",
+          "Simulator з Coins"
         ],
         correctAnswer: 2,
         explanation: "Curriculum: 05 - Obby.",
@@ -1036,11 +997,11 @@ ForceField після респавну: у playtest зачекай 2-3 с або
           "Lesson 5.1 - Biomes",
           "Lesson 5.3 - Checkpoints Timer GUI",
           "Arena First Sword",
-          "Lesson 5.2 - Hazards Debounce",
+          "Lesson 5.2 - Hazards Debounce"
         ],
         correctAnswer: 3,
         explanation: "Чекліст вимагає Lesson 5.2 - Hazards Debounce.",
-      },
+      }
     ],
   },
 };
@@ -1058,7 +1019,7 @@ export const ukLesson53 = {
     "Респавнити Character на збереженій позиції, а не лише на старті рівня",
     "Показати ScreenGui з номером checkpoint і живим таймером проходження",
     "Захистити повторні Touched debounce-ом і не давати відкату на старіший CP",
-    "Підготувати прогрес і час до while-платформ у 5.4 і playtest у 5.6",
+    "Підготувати прогрес і час до while-платформ у 5.4 і playtest у 5.6"
   ],
   theory: {
     sections: [
@@ -1067,15 +1028,6 @@ export const ukLesson53 = {
         content: `У **5.2** hazards уже вбивають з debounce. Без збереження прогресу кожна смерть кидає гравця на початок - Obby стає карою, а не навчанням. Сьогодні будуєш **три системи разом**: checkpoint, respawn на ньому й GUI з таймером.
 
 Це не Arena «система пошкоджень мечем». Жанр - Obby: прогрес по біомах, чесний повтор після смерті, видимий час проходження.
-
-Артефакт уроку:
-1. Мінімум 3 Checkpoint Parts на основному шляху (бажано по біомах).
-2. Серверний стан LastCheckpoint (CFrame або номер + позиція).
-3. Респавн на останньому CP після смерті.
-4. ScreenGui: мітка checkpoint + таймер мм:сс.
-5. Debounce / «лише вперед» - старіший CP не затирає новіший.
-6. Save **Lesson 5.3 - Checkpoints Timer GUI**.
-
 | Було в 5.2 | Стає в 5.3 |
 |-------------|------------|
 | Смерть → старт рівня | Смерть → останній checkpoint |
@@ -1332,10 +1284,8 @@ Debounce на Finish такий самий, як на CP. Повторні до�
 
 Далі **5.4 - while-платформи + Config**: став рухомі Parts після CP, щоб навчання таймінгу не коштувало повного рестарту. У **5.6** тестер виміряє смерті й паузи саме між цими checkpoint.
 
-Артефакт: **серверний прогрес + видимий час**, а не бойова система арени.
-
 **Зроби зараз (2 хв):** Save Place як Lesson 5.3 - Checkpoints Timer GUI.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -1368,7 +1318,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
       mistake: "Писати систему урону мечем замість CP",
       explanation: "Це застарілий Arena-контент модуля.",
       correctApproach: "Checkpoints, timer, GUI для Obby",
-    },
+    }
   ],
   summary: "Ти зібрав прогрес Obby: серверні checkpoint лише вперед, респавн на останньому CP, ScreenGui з індексом і таймером, Finish зупиняє час. Каркас готовий до while-платформ у 5.4 і Badge на тій самій FinishLine у 5.10.",
   practiceTask: {
@@ -1394,7 +1344,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
     hints: [
       "WaitForChild HumanoidRootPart перед телепортом",
       "Підніми респавн на +3 studs по Y",
-      "Не скидайте таймер на кожному CP",
+      "Не скидайте таймер на кожному CP"
     ],
     optionalChallenge: "Покажи на GUI назву біому (Biomes Attribute на CP) разом із номером checkpoint.",
   },
@@ -1410,7 +1360,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "Система урону мечем на арені",
           "Checkpoints, респавн, таймер і GUI для Obby",
           "Tween ударів",
-          "DataStore монет",
+          "DataStore монет"
         ],
         correctAnswer: 1,
         explanation: "Прогрес і час проходження паркуру.",
@@ -1423,7 +1373,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "На сервері в даних Player",
           "Лише в LocalScript змінній",
           "У Lighting",
-          "У Terrain",
+          "У Terrain"
         ],
         correctAnswer: 0,
         explanation: "Серверна правда прогресу.",
@@ -1436,7 +1386,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "Щоб видалити FinishLine",
           "Щоб прискорити Humanoid",
           "Щоб стояння на Part не спамило збереження й GUI",
-          "Щоб вимкнути Anchored",
+          "Щоб вимкнути Anchored"
         ],
         correctAnswer: 2,
         explanation: "Touched повторюється багато кадрів.",
@@ -1449,7 +1399,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "newIndex <= current ігнорується",
           "Завжди скидати на 0",
           "CP працюють лише в Studio",
-          "Таймер іде назад",
+          "Таймер іде назад"
         ],
         correctAnswer: 0,
         explanation: "Старіший checkpoint не затирає новіший прогрес.",
@@ -1462,7 +1412,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "У Lighting.Changed",
           "У CharacterAdded після WaitForChild HumanoidRootPart",
           "Лише в Edit Mode",
-          "У Bundle",
+          "У Bundle"
         ],
         correctAnswer: 1,
         explanation: "Новий Character з'являється - тоді ставимо CFrame.",
@@ -1475,7 +1425,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "true завжди",
           "false, щоб не плодити GUI й підписки",
           "nil обов'язково",
-          "Лише на мобільному",
+          "Лише на мобільному"
         ],
         correctAnswer: 1,
         explanation: "GUI прогресу переживає смерті.",
@@ -1488,7 +1438,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "Лише читати Value і малювати текст",
           "Призначати собі index = 99",
           "Видаляти hazards",
-          "Створювати leaderstats",
+          "Створювати leaderstats"
         ],
         correctAnswer: 0,
         explanation: "Клієнт - вітрина, не суддя прогресу.",
@@ -1501,7 +1451,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "Замінити checkpoint",
           "Показати час проходження рівня",
           "Збільшити WalkSpeed",
-          "Видалити SpawnLocation",
+          "Видалити SpawnLocation"
         ],
         correctAnswer: 1,
         explanation: "Видимий час забігу для гравця й playtest.",
@@ -1514,7 +1464,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "Так завжди",
           "Ні - це час усього проходження, не сегмента",
           "Так, інакше GUI не працює",
-          "Лише на CP_01",
+          "Лише на CP_01"
         ],
         correctAnswer: 1,
         explanation: "Сегментний час - опція, не мінімум.",
@@ -1527,7 +1477,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "AwardBadge одразу",
           "Відкрити магазин",
           "Зупинити таймер і позначити Finished",
-          "Видалити всі CP",
+          "Видалити всі CP"
         ],
         correctAnswer: 2,
         explanation: "Badge - у 5.10; зараз фіксація фінішу й часу.",
@@ -1540,7 +1490,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "Після смерті респавн на останньому CP, debounce hazard лишається",
           "Hazard вимикає всі CP",
           "CP скасовує CanCollide у лаві",
-          "Потрібен меч",
+          "Потрібен меч"
         ],
         correctAnswer: 0,
         explanation: "Смерть і прогрес працюють разом.",
@@ -1553,7 +1503,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "Три checkpoint",
           "GUI з індексом",
           "Система пошкоджень мечем Arena",
-          "Таймер мм:сс",
+          "Таймер мм:сс"
         ],
         correctAnswer: 2,
         explanation: "Застарілий Arena-контент відхилено.",
@@ -1566,7 +1516,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "While-платформи ставлять після CP, щоб навчання не коштувало повного рестарту",
           "5.4 видаляє GUI",
           "Платформи замінюють усі CP",
-          "Config більше не потрібен",
+          "Config більше не потрібен"
         ],
         correctAnswer: 0,
         explanation: "Прогрес підтримує ритмічні виклики.",
@@ -1579,7 +1529,7 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "Щоб збільшити WalkSpeed",
           "Щоб уникнути застрягання в геометрії CP",
           "Щоб вимкнути таймер",
-          "Щоб створити Badge",
+          "Щоб створити Badge"
         ],
         correctAnswer: 1,
         explanation: "HRP не повинен застрягти в Part.",
@@ -1592,11 +1542,11 @@ Debounce на Finish такий самий, як на CP. Повторні до�
           "Lesson 5.2 - Hazards",
           "Lesson 5.4 - Moving Platforms",
           "Arena Damage System",
-          "Lesson 5.3 - Checkpoints Timer GUI",
+          "Lesson 5.3 - Checkpoints Timer GUI"
         ],
         correctAnswer: 3,
         explanation: "Чекліст вимагає Lesson 5.3 - Checkpoints Timer GUI.",
-      },
+      }
     ],
   },
 };
@@ -1614,7 +1564,7 @@ export const ukLesson54 = {
     "Тримати waitUp, waitDown і offset у PlatformConfig table",
     "Зв'язати кілька платформ циклом for по Config без копіпасти Script",
     "Зробити таймінг читабельним: гравець бачить цикл і встигає стрибнути",
-    "Підготувати Config як важіль балансу для difficulty curve у 5.7",
+    "Підготувати Config як важіль балансу для difficulty curve у 5.7"
   ],
   theory: {
     sections: [
@@ -1623,14 +1573,6 @@ export const ukLesson54 = {
         content: `У **5.3** ти зібрав чекпоінти, таймер і GUI. Сьогодні Obby отримує **рух у часі**: платформи, що з'являються, зникають або їздять туди-назад за циклом \`while\`.
 
 Це не TweenService polish для Arena-ударів. Жанр лишається Obby: гравець читає ритм платформи й стрибає у вікно безпеки.
-
-Артефакт уроку:
-1. Мінімум 2 while-платформи на основному шляху.
-2. ModuleScript або Script table **PlatformConfig** з id, waitUp, waitDown (і offset за потреби).
-3. Один серверний цикл (або for по Config), без окремого майже однакового Script на кожен Part.
-4. Play: цикл стабільний, немає спаму в Output, стрибок можливий.
-5. Save **Lesson 5.4 - Moving Platforms**.
-
 | Було в 5.3 | Стає в 5.4 |
 |-------------|------------|
 | Статичні Parts і checkpoints | Parts з повторюваним таймінгом |
@@ -1892,10 +1834,8 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
 
 Далі **5.5 - Секрети + ключ-двері**: основний шлях уже з ритмом; секрет лишиться опційним. У **5.6** тестер оцінить, чи while зрозумілий без підказок. У **5.7** ти крутитимеш саме Config як важіль difficulty curve.
 
-Артефакт: **живі платформи з одним Config-пультом**, а не разовий Tween з уроку про арену.
-
 **Зроби зараз (2 хв):** Save Place як Lesson 5.4 - Moving Platforms.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -1928,7 +1868,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
       mistake: "Повернення до Arena Tween/меч замість Obby while",
       explanation: "Ламає жанр модуля 5.",
       correctApproach: "Blink/shuttle платформи на паркурному маршруті",
-    },
+    }
   ],
   summary: "Ти зібрав while-платформи Obby з PlatformConfig: мінімум два цикли, for + task.spawn, читабельні waitUp/waitDown. Config готовий стати пультом балансу в 5.7 без переписування логіки.",
   practiceTask: {
@@ -1954,7 +1894,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
     hints: [
       "Без task.spawn другий while не стартує після першого while true",
       "Починай з waitUp ≥ 1.5 с для першої навчальної платформи",
-      "id у Config має точно збігатися з Name Part",
+      "id у Config має точно збігатися з Name Part"
     ],
     optionalChallenge: "Додай третій рядок Config з іншим offset і винеси kind-гілку blink/shuttle в одну функцію startPlatform(cfg).",
   },
@@ -1970,7 +1910,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "Tween ударів меча на Arena",
           "While-платформи Obby з таймінгом у Config",
           "DataStore прогресу монет",
-          "Видалити всі checkpoint",
+          "Видалити всі checkpoint"
         ],
         correctAnswer: 1,
         explanation: "Ритмічні платформи й Config - тема уроку.",
@@ -1983,7 +1923,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "Інакше порожній цикл лагає сервер",
           "Без wait Part не може бути Anchored",
           "wait створює Badge",
-          "LocalScript інакше не існує",
+          "LocalScript інакше не існує"
         ],
         correctAnswer: 0,
         explanation: "Пауза між станами й захист від busy-loop.",
@@ -1996,7 +1936,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "Малювати Skybox",
           "Замінити Humanoid",
           "Тримати waitUp/waitDown в одному місці для ітерацій",
-          "Вимкнути Touched",
+          "Вимкнути Touched"
         ],
         correctAnswer: 2,
         explanation: "Пульт чисел для балансу й підтримки.",
@@ -2009,7 +1949,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "Щоб кожен while працював паралельно",
           "Щоб видалити Config",
           "Щоб платформи стали LocalScript",
-          "Щоб вимкнути Anchored",
+          "Щоб вимкнути Anchored"
         ],
         correctAnswer: 0,
         explanation: "Інакше перший while true блокує наступні.",
@@ -2022,7 +1962,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "MaxHealth гравця",
           "CanCollide і Transparency за розкладом",
           "SoundService Volume глобально",
-          "Ім'я Place",
+          "Ім'я Place"
         ],
         correctAnswer: 1,
         explanation: "Тверда/м'яка підлога в часі.",
@@ -2035,7 +1975,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "Лише в LocalScript одного гравця",
           "У Script на сервері",
           "У Lighting без Script",
-          "У Bundle Marketplace",
+          "У Bundle Marketplace"
         ],
         correctAnswer: 1,
         explanation: "Серверна правда позиції/стану для всіх.",
@@ -2048,7 +1988,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "2.0 с",
           "1.8 с",
           "2.5 с",
-          "0.15 с",
+          "0.15 с"
         ],
         correctAnswer: 3,
         explanation: "Занадто коротке вікно = unfair spike.",
@@ -2061,7 +2001,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "Перевірити id у Config і Name Part",
           "Збільшити Volume",
           "Видалити всі while",
-          "Поставити правильну відповідь quiz у 0",
+          "Поставити правильну відповідь quiz у 0"
         ],
         correctAnswer: 0,
         explanation: "Імена мають збігатися.",
@@ -2074,7 +2014,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "5.7 видаляє Config",
           "Difficulty curve крутитиме waitUp/waitDown як важіль",
           "5.7 замінює Obby на Tycoon",
-          "Платформи більше не потрібні",
+          "Платформи більше не потрібні"
         ],
         correctAnswer: 1,
         explanation: "Config стає пультом балансу.",
@@ -2087,7 +2027,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "SpawnLocation тоді зникає",
           "Новачок ще не читає ритм - високий ризик стіни на старті",
           "while заборонений біля Spawn",
-          "Config не працює в біомі 1",
+          "Config не працює в біомі 1"
         ],
         correctAnswer: 1,
         explanation: "Спочатку навчи статичним стрибкам і дай CP.",
@@ -2100,7 +2040,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "Anchored",
           "Looped у Sound",
           "CanQuery = false завжди",
-          "Material = Neon обов'язково",
+          "Material = Neon обов'язково"
         ],
         correctAnswer: 0,
         explanation: "Без Anchored Part падає.",
@@ -2113,7 +2053,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "Зміна waitUp одразу змінює цикл у Play",
           "Part перейменовано вручну",
           "Небо змінили в Lighting",
-          "Додали Decal",
+          "Додали Decal"
         ],
         correctAnswer: 0,
         explanation: "Число з table керує поведінкою.",
@@ -2126,7 +2066,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "Дві while-платформи",
           "PlatformConfig",
           "Стабільний цикл без Output spam",
-          "Полірування Arena-меча через TweenService",
+          "Полірування Arena-меча через TweenService"
         ],
         correctAnswer: 3,
         explanation: "Старий Arena-контент відхилено.",
@@ -2139,7 +2079,7 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "Видаляє GUI таймера",
           "Checkpoint перед складною платформою зменшує лють від навчання",
           "Замінює всі checkpoint на while",
-          "Вимикає respawn",
+          "Вимикає respawn"
         ],
         correctAnswer: 1,
         explanation: "Прогрес і ритм працюють разом.",
@@ -2152,11 +2092,11 @@ Play на 30+ секунд: обидва цикли живі, немає зро�
           "Lesson 5.3 - Checkpoints",
           "Lesson 5.5 - Secrets Key Door",
           "Arena Tween Polish",
-          "Lesson 5.4 - Moving Platforms",
+          "Lesson 5.4 - Moving Platforms"
         ],
         correctAnswer: 3,
         explanation: "Чекліст вимагає Lesson 5.4 - Moving Platforms.",
-      },
+      }
     ],
   },
 };
@@ -2174,7 +2114,7 @@ export const ukLesson55 = {
     "Створити Key Part і Door Part з чіткими іменами та читабельним натяком",
     "Відкрити двері через ProximityPrompt лише за наявності ключа на сервері",
     "Зберігати стан HasKey і Open на сервері без LocalScript як правди",
-    "Підготувати секрет до playtest 5.6: без ключа Finish доступний",
+    "Підготувати секрет до playtest 5.6: без ключа Finish доступний"
   ],
   theory: {
     sections: [
@@ -2183,15 +2123,6 @@ export const ukLesson55 = {
         content: `У **5.4** ти додав while-платформи з Config. Основний маршрут Obby уже вміє вчити, карати й повертати на checkpoint. Сьогодні додаєш **опційний шар дослідження**: секрет з ключем і дверима.
 
 Це не Arena death/respawn і не обов'язковий тупик. Секрет винагороджує цікавість. Якщо гравець його пропустить - він усе одно має дійти до Finish основним шляхом.
-
-Артефакт уроку:
-1. Folder Secrets (або SecretZone) з Key і Door.
-2. Читабельний натяк: колір, Billboard, форма - без текстової підказки автора.
-3. ProximityPrompt на дверях або ключі.
-4. Серверний стан: гравець має ключ / двері відкриті.
-5. Play: без ключа Finish доступний; з ключем двері відкриваються один раз.
-6. Save **Lesson 5.5 - Secrets Key Door**.
-
 | Було в 5.4 | Стає в 5.5 |
 |-------------|------------|
 | Основний маршрут з платформами | Той самий маршрут + бічний секрет |
@@ -2445,10 +2376,8 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
 
 У 5.7 difficulty curve може послабити підхід до секрету, якщо він занадто жорсткий, але не зробить секрет обов'язковим. У 5.9 додаси короткий Sound на підбір ключа й відкриття дверей.
 
-Артефакт: **опційний ключ-двері на серверній правді**, вбудовані в Obby без блокування основного шляху.
-
 **Зроби зараз (2 хв):** Save Place як Lesson 5.5 - Secrets Key Door.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -2481,7 +2410,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
       mistake: "Будувати магазин, Badge і juice замість одного ключа",
       explanation: "Обсяг роздувається, мінімум здачі не закривається.",
       correctApproach: "Key + Door + опційна нагорода; решта - пізніші уроки",
-    },
+    }
   ],
   summary: "Ти додав опційний секрет Obby: Key і Door з ProximityPrompt, серверним HasKey і одноразовим відкриттям. Основний шлях до Finish лишається доступним без ключа - готово до чесного playtest у 5.6.",
   practiceTask: {
@@ -2507,7 +2436,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
     hints: [
       "Спочатку перевір маршрут без секрету - він має існувати",
       "Prompt.Triggered обробляй у Script, не в LocalScript",
-      "Після Open вимкни Prompt, щоб не було повторних кліків",
+      "Після Open вимкни Prompt, щоб не було повторних кліків"
     ],
     optionalChallenge: "Додай другий натяк: слабке світло з-під дверей або Billboard з «?» над alcove ключа - без прямого тексту маршруту.",
   },
@@ -2523,7 +2452,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "Єдиний спосіб дійти до Finish",
           "Обов'язковий бій з NPC",
           "Опційне дослідження з ключем і дверима",
-          "Заміна всіх checkpoint",
+          "Заміна всіх checkpoint"
         ],
         correctAnswer: 2,
         explanation: "Секрет винагороджує цікавість і не блокує основний шлях.",
@@ -2536,7 +2465,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "Видалити Key і Door уявно: Finish усе одно досяжний",
           "Зробити ключ обов'язковим на Spawn",
           "Поставити двері перед кожним біомом",
-          "Вимкнути всі hazards",
+          "Вимкнути всі hazards"
         ],
         correctAnswer: 0,
         explanation: "Основний маршрут існує незалежно від секрету.",
@@ -2549,7 +2478,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "Лише в LocalScript GUI",
           "У коментарі Workspace",
           "У Lighting",
-          "На сервері: BoolValue або Attribute гравця",
+          "На сервері: BoolValue або Attribute гравця"
         ],
         correctAnswer: 3,
         explanation: "Сервер вирішує, чи двері можуть відкритись.",
@@ -2562,7 +2491,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "Він автоматично зберігає DataStore",
           "Гравець робить навмисну дію, а не випадковий Touched",
           "Prompt працює лише в Edit Mode",
-          "Він замінює Humanoid",
+          "Він замінює Humanoid"
         ],
         correctAnswer: 1,
         explanation: "Навмисне натискання підходить для дверей і важливих взаємодій.",
@@ -2575,7 +2504,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "Open один раз: CanCollide/Transparency або Tween, Prompt вимкнено",
           "Двері вбивають гравця",
           "Видаляється весь біом 2",
-          "Скидаються всі checkpoint",
+          "Скидаються всі checkpoint"
         ],
         correctAnswer: 0,
         explanation: "Одноразове відкриття без спаму Triggered.",
@@ -2588,7 +2517,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "Відкрити двері все одно",
           "Телепортувати на Finish",
           "Нічого не ламати; опційно короткий feedback «потрібен ключ»",
-          "Видалити HasKey у всіх гравців",
+          "Видалити HasKey у всіх гравців"
         ],
         correctAnswer: 2,
         explanation: "Без ключа двері лишаються зачиненими.",
@@ -2601,7 +2530,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "На SpawnLocation замість біому 1",
           "Поза main path, з видимими дверима й легким натяком",
           "Як єдиний прохід у біом 3",
-          "Усередині KillBrick",
+          "Усередині KillBrick"
         ],
         correctAnswer: 1,
         explanation: "Бічний alcove з читабельним натяком.",
@@ -2614,7 +2543,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "Повна економіка Coins і DataStore",
           "Обов'язковий Badge курсу",
           "Четвертий біом на 100 Parts",
-          "Короткий shortcut, кімната або бонусний вид з виходом на main path",
+          "Короткий shortcut, кімната або бонусний вид з виходом на main path"
         ],
         correctAnswer: 3,
         explanation: "Мала опційна нагорода, не новий модуль.",
@@ -2627,7 +2556,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "Character не може містити Parts",
           "Після смерті Character зникає і стан легко губиться",
           "Prompt тоді не існує",
-          "ServerScriptService видаляє Character",
+          "ServerScriptService видаляє Character"
         ],
         correctAnswer: 1,
         explanation: "Стан на Player переживає respawn.",
@@ -2640,7 +2569,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "Автор пояснює маршрут вголос",
           "Величезний текст «ключ за стіною ліворуч»",
           "Ледь інший колір/форма й Prompt на дверях",
-          "Повна невидимість без жодної відмінності",
+          "Повна невидимість без жодної відмінності"
         ],
         correctAnswer: 2,
         explanation: "Баланс між знахідністю і спойлером.",
@@ -2653,7 +2582,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "Що HasKey або Open лишаються коректними для дверей",
           "Що всі Sounds видалились",
           "Що Finish зник",
-          "Що Config платформ обнулився",
+          "Що Config платформ обнулився"
         ],
         correctAnswer: 0,
         explanation: "Секрет має переживати типовий Obby-death.",
@@ -2666,7 +2595,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "Один Key і одні Door",
           "Серверну перевірку HasKey",
           "Повний juice на всі hazards і магазин монет",
-          "Playtest Finish без ключа",
+          "Playtest Finish без ключа"
         ],
         correctAnswer: 2,
         explanation: "Juice і економіка - пізніші уроки.",
@@ -2679,7 +2608,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "5.6 видаляє всі секрети",
           "Тестер перевірить опційність, натяки й Prompt без підказок автора",
           "Багліст більше не потрібен",
-          "5.6 будує Arena меч",
+          "5.6 будує Arena меч"
         ],
         correctAnswer: 1,
         explanation: "Playtest вимірює, чи секрет читається й не блокує.",
@@ -2692,7 +2621,7 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "Arena з мечами",
           "Tycoon з дропером",
           "Simulator з Coins",
-          "Obby з опційним секретом",
+          "Obby з опційним секретом"
         ],
         correctAnswer: 3,
         explanation: "Модуль 5 - Obby; секрет - шар дослідження.",
@@ -2705,11 +2634,11 @@ Checkpoint з 5.3 не повинен скидати HasKey. CharacterAdded мо
           "Lesson 5.5 - Secrets Key Door",
           "Lesson 5.4 - Platforms",
           "Lesson 5.6 - Playtest 1 Buglist",
-          "Arena Death Respawn",
+          "Arena Death Respawn"
         ],
         correctAnswer: 0,
         explanation: "Чекліст вимагає Lesson 5.5 - Secrets Key Door.",
-      },
+      }
     ],
   },
 };
@@ -2727,7 +2656,7 @@ export const ukLesson56 = {
     "Записати баги з expected, actual, reproduce steps і доказом",
     "Розподілити проблеми за категоріями та пріоритетом P0-P3",
     "Виправляти одну причину за раз і робити короткий regression retest",
-    "Підготувати перевірений багліст як вхідні дані для difficulty curve у 5.7",
+    "Підготувати перевірений багліст як вхідні дані для difficulty curve у 5.7"
   ],
   theory: {
     sections: [
@@ -2736,15 +2665,6 @@ export const ukLesson56 = {
         content: `У **5.5** ти додав секрет, ключ і двері до Obby. На карті вже є три біоми, hazards, чекпоінти, таймер, GUI, while-платформи й опційний маршрут. Сьогодні ти не будуєш нову механіку. Ти перевіряєш, чи всі ці системи переживають **повний прохід від Spawn до Finish**.
 
 Playtest #1 - перша чесна зустріч гри з гравцем. Автор знає кожен стрибок, прихований ключ і таймінг платформи. Тестер цього не знає. Саме тому його помилки корисніші за твоє «у мене працює».
-
-Артефакт уроку:
-1. Заморожений Save перед тестом.
-2. Один повний прогін без підказок.
-3. Багліст мінімум із 5 конкретних спостережень.
-4. Для кожного бага: де, expected, actual, reproduce steps, priority.
-5. Мінімум один виправлений P0/P1 і regression retest.
-6. Save **Lesson 5.6 - Playtest 1 Buglist**.
-
 | Було в 5.5 | Стає в 5.6 |
 |-------------|------------|
 | Автор знає маршрут | Незнайомий гравець перевіряє читабельність |
@@ -3007,10 +2927,8 @@ Severity і frequency можна записувати окремо. Рідкіс
 
 У 5.8 інша людина зробить контрольний повний прохід після твоїх змін. У 5.9 з'являться Sound і Particles. У 5.10 - Ship + Badge. Сьогоднішній документ тримає весь цей ланцюг на фактах.
 
-Артефакт: **відтворюваний багліст + один перевірений фікс**, а не фраза «ми пограли, наче нормально».
-
 **Зроби зараз (2 хв):** збережи Place і багліст під назвою Lesson 5.6 - Playtest 1 Buglist.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -3043,7 +2961,7 @@ Severity і frequency можна записувати окремо. Рідкіс
       mistake: "Difficulty-проблему одразу закрили декором",
       explanation: "Красивий Part не виправляє unfair gap або неправильний timing.",
       correctApproach: "Записати спостереження й передати його в difficulty curve 5.7",
-    },
+    }
   ],
   summary: "Ти заморозив збірку Obby, провів повний playtest без підказок, записав відтворювані баги з priority P0-P3, виправив один блокер і підтвердив його regression retest. Багліст готовий стати картою difficulty curve у 5.7.",
   practiceTask: {
@@ -3069,7 +2987,7 @@ Severity і frequency можна записувати окремо. Рідкіс
     hints: [
       "Не пояснюй тестеру, куди йти - пауза є даними",
       "Expected і Actual пиши окремо, навіть якщо різниця здається очевидною",
-      "Difficulty spike не перебудовуй одразу - передай точні дані в 5.7",
+      "Difficulty spike не перебудовуй одразу - передай точні дані в 5.7"
     ],
     optionalChallenge: "Проведи другий короткий тест з іншим гравцем і познач, які проблеми повторились у двох людей.",
   },
@@ -3085,7 +3003,7 @@ Severity і frequency можна записувати окремо. Рідкіс
           "Новий четвертий біом",
           "Sound і ParticleEmitter на кожній події",
           "Відтворюваний багліст і перевірений фікс",
-          "Public-реліз без повторного тесту",
+          "Public-реліз без повторного тесту"
         ],
         correctAnswer: 2,
         explanation: "Playtest перетворює спостереження на багліст і retest.",
@@ -3098,7 +3016,7 @@ Severity і frequency можна записувати окремо. Рідкіс
           "Підказка приховує проблеми навігації та пояснення правил",
           "Тестер повинен читати код у ServerScriptService",
           "Будь-яка розмова зупиняє Play Mode",
-          "Підказки автоматично змінюють difficulty",
+          "Підказки автоматично змінюють difficulty"
         ],
         correctAnswer: 0,
         explanation: "Потрібно побачити, що гра пояснює сама.",
@@ -3111,7 +3029,7 @@ Severity і frequency можна записувати окремо. Рідкіс
           "Щоб автоматично створити Badge",
           "Щоб заборонити тестеру помирати",
           "Щоб увімкнути Team Create",
-          "Щоб усі спостереження стосувались однієї незмінної збірки",
+          "Щоб усі спостереження стосувались однієї незмінної збірки"
         ],
         correctAnswer: 3,
         explanation: "Змішані версії не дають порівнюваного результату.",
@@ -3124,7 +3042,7 @@ Severity і frequency можна записувати окремо. Рідкіс
           "Checkpoint дивний",
           "Touch CP_02 → die → respawn на старті; expected CP_02",
           "У мене вчора працювало",
-          "Тестер не вміє грати",
+          "Тестер не вміє грати"
         ],
         correctAnswer: 1,
         explanation: "Є місце, steps, actual і expected.",
@@ -3137,7 +3055,7 @@ Severity і frequency можна записувати окремо. Рідкіс
           "Finish неможливо досягти через зламаний основний шлях",
           "Текст таймера зміщений на кілька pixels",
           "Декорація має інший Material",
-          "Один gap здається трохи легким",
+          "Один gap здається трохи легким"
         ],
         correctAnswer: 0,
         explanation: "P0 блокує основний прохід для всіх.",
@@ -3150,7 +3068,7 @@ Severity і frequency можна записувати окремо. Рідкіс
           "Одразу видалити весь біом",
           "Сказати правильний таймінг і не записувати",
           "Зафіксувати місце як можливий difficulty або fairness дефект",
-          "Додати частинки, не змінюючи стрибок",
+          "Додати частинки, не змінюючи стрибок"
         ],
         correctAnswer: 2,
         explanation: "Поведінка є доказом для triage та 5.7.",
@@ -3163,7 +3081,7 @@ Severity і frequency можна записувати окремо. Рідкіс
           "Одразу після зміни коду без Play",
           "Після повторення steps і успішного retest",
           "Коли автор більше не пам'ятає про неї",
-          "Після зміни кольору рядка таблиці",
+          "Після зміни кольору рядка таблиці"
         ],
         correctAnswer: 1,
         explanation: "Зміна створює Retest; доказ переводить у Fixed.",
@@ -3176,7 +3094,7 @@ Severity і frequency можна записувати окремо. Рідкіс
           "Лише його колір в Edit Mode",
           "Тільки перший touch без смерті",
           "Лише Output до запуску сервера",
-          "Touch, смерть, respawn і перехід до наступного checkpoint",
+          "Touch, смерть, respawn і перехід до наступного checkpoint"
         ],
         correctAnswer: 3,
         explanation: "Regression-набір перевіряє весь сусідній прогрес.",
@@ -3189,7 +3107,7 @@ Severity і frequency можна записувати окремо. Рідкіс
           "Ключ обов'язково має блокувати основний Finish",
           "Двері не треба тестувати після respawn",
           "Секрет має бути опційним і не ламати основний маршрут",
-          "Prompt автоматично виправляє всі баги дверей",
+          "Prompt автоматично виправляє всі баги дверей"
         ],
         correctAnswer: 2,
         explanation: "Секрет винагороджує дослідження, а не блокує Obby.",
@@ -3202,7 +3120,7 @@ Severity і frequency можна записувати окремо. Рідкіс
           "Тестер стояв 8 секунд перед входом у біом 2",
           "Стрілка точно занадто темна",
           "Усі новачки ненавидять цей біом",
-          "Потрібно перебудувати весь рівень",
+          "Потрібно перебудувати весь рівень"
         ],
         correctAnswer: 0,
         explanation: "Спостережувана пауза - факт; причина потребує перевірки.",
@@ -3215,7 +3133,7 @@ Severity і frequency можна записувати окремо. Рідкіс
           "Видалити запис як вигаданий",
           "Позначити Frequency 1/3 і зберегти доказ",
           "Автоматично поставити P3",
-          "Оголосити гру повністю готовою",
+          "Оголосити гру повністю готовою"
         ],
         correctAnswer: 1,
         explanation: "Рідкісний баг лишається даними з частотою.",
@@ -3228,7 +3146,7 @@ Severity і frequency можна записувати окремо. Рідкіс
           "P3 → P2 → P1 → P0",
           "Спочатку найкрасивіший фікс",
           "Усі зміни одночасно",
-          "P0 → P1 → P2 → P3",
+          "P0 → P1 → P2 → P3"
         ],
         correctAnswer: 3,
         explanation: "Блокери й прогрес важливіші за косметику.",
@@ -3241,7 +3159,7 @@ Severity і frequency можна записувати окремо. Рідкіс
           "У список SoundId для 5.9",
           "У Game Settings перед Public",
           "У багліст як вхідні дані difficulty curve 5.7",
-          "У BadgeService",
+          "У BadgeService"
         ],
         correctAnswer: 2,
         explanation: "5.7 працює з Hard/Easy/Unfair даними playtest.",
@@ -3254,7 +3172,7 @@ Severity і frequency можна записувати окремо. Рідкіс
           "Записувати смерті",
           "Змінювати Parts або Config і продовжувати той самий тест",
           "Фіксувати питання тестера",
-          "Зберігати відеодоказ",
+          "Зберігати відеодоказ"
         ],
         correctAnswer: 1,
         explanation: "Фікси належать наступній збірці.",
@@ -3267,11 +3185,11 @@ Severity і frequency можна записувати окремо. Рідкіс
           "Lesson 5.6 - Playtest 1 Buglist",
           "Lesson 5.7 - Difficulty Curve",
           "Lesson 5.5 - Secret Door",
-          "Arena Checkpoint Final",
+          "Arena Checkpoint Final"
         ],
         correctAnswer: 0,
         explanation: "Save фіксує перший Obby playtest і багліст.",
-      },
+      }
     ],
   },
 };
@@ -3289,21 +3207,13 @@ export const ukLesson57 = {
     "Крутити gap, width, hazard timing і щільність checkpoint як окремі важелі балансу",
     "Змінювати лише один важіль за ітерацію і фіксувати числа в Config",
     "Розподілити біоми за ролями teach, train і exam без повного перебудовування",
-    "Провести retest Better/Same/Worse і підготувати збірку до peer run у 5.8",
+    "Провести retest Better/Same/Worse і підготувати збірку до peer run у 5.8"
   ],
   theory: {
     sections: [
       {
         title: "Сьогоднішня місія (урок 35 з 92)",
         content: `У **5.6** ти зібрав багліст з playtest #1: час, смерті, паузи й записи типу «занадто важко», «нечесно», «не зрозуміло куди». Сьогодні ти **не перебудовуєш Obby з нуля**. Ти вирівнюєш **difficulty curve** - послідовність, де складність зростає передбачувано від біому 1 до фінішу.
-
-Артефакт уроку:
-1. Таблиця точок з багліста, де проблема стосується балансу.
-2. Мінімум дві ітерації з **одним важелем** на кожну.
-3. Зафіксовані числа в Parts або \`PlatformConfig\`.
-4. Retest кожної зміни: Better / Same / Worse.
-5. Save **Lesson 5.7 - Difficulty Curve**.
-
 | Було в 5.6 | Стає в 5.7 |
 |------------|------------|
 | «Тут усі падають» | Конкретна зміна gap або timing |
@@ -3582,28 +3492,6 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
 **Зроби зараз (2 хв):** випиши 3 juice-ідеї в блок «після 5.8» і не чіпай Explorer для Sound.`,
       },
       {
-        title: "Підготовка до peer run у 5.8",
-        content: `**5.8 - Full Playthrough** - контрольний прохід **іншою людиною** після curve. Ти готуєш Place, не проводиш peer сьогодні.
-
-Що зробити до кінця 5.7:
-1. Закрити або явно відкласти unfair spikes з Curve Map.
-2. Мати Build з changelog (мінімум 2 ітерації).
-3. Переконатись, що P0/P1 з 5.6 не повернулись після правок.
-4. Smoke test: Spawn → біом 1 → 2 → 3 → Finish без телепортів.
-5. Save **Lesson 5.7 - Difficulty Curve**.
-
-Інструкція для peer (запиши на завтра):
-- «Пройди від Spawn до Finish без підказок.»
-- «Говори, що очікуєш на незнайомих ділянках.»
-- «Я записую смерті й паузи, не підказую маршрут.»
-
-Ти в 5.8 будеш **спостерігачем**, як у 5.6 - але тепер перевіряєш, чи curve тримається на чужих очах.
-
-Порівняй очікування: якщо 5.6 дав 12 смертей на біомі 2, після curve peer має дати **менше** на тій самій ділянці або чесніші «я не зрозумів цикл», а не «це неможливо».
-
-**Зроби зараз (5 хв):** зроби smoke test повного маршруту і Save Lesson 5.7 - Difficulty Curve.`,
-      },
-      {
         title: "Чекліст здачі 5.7",
         content: `Перед фінальним Save перевір:
 
@@ -3620,10 +3508,8 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
 
 Далі **5.8**: peer run, 6-категорійна рубрика, багліст без зупинки гри, один fix pass лише blockers, окремий список juice. Потім **5.9** Sound + Particles і **5.10** Ship + Badge.
 
-Артефакт: **керована крива з документованими числами**, а не «я трохи подвигав Parts».
-
 **Зроби зараз (2 хв):** простав галочки і збережи Place під Lesson 5.7 - Difficulty Curve.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -3656,7 +3542,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
       mistake: "Стрибок одразу в 5.9 або 5.10",
       explanation: "Product gate 5.8 пропущено - blockers залишаться в ship.",
       correctApproach: "Save 5.7 і пройти peer run у 5.8 перед juice",
-    },
+    }
   ],
   keyTakeaways: [
     "5.7 - curve з багліста 5.6, не total redesign Obby",
@@ -3664,7 +3550,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
     "Одна зміна за ітерацію + retest Better/Same/Worse",
     "Teach → train → exam задає очікуваний профіль складності",
     "Unfair spike виправляють до juice у 5.9 і Ship у 5.10",
-    "Save Lesson 5.7 - Difficulty Curve готує peer run у 5.8",
+    "Save Lesson 5.7 - Difficulty Curve готує peer run у 5.8"
   ],
   summary: "Ти перетворив багліст 5.6 на Curve Map, крутив gap, width, timing Config і щільність CP по одному важелю за ітерацію, відрізнив unfair spike від чесної складності й зафіксував retest Better/Same/Worse. Place готовий до контрольного peer run у 5.8.",
   practiceTask: {
@@ -3690,7 +3576,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
     hints: [
       "Якщо Same на gap - спробуй width або CP перед блоком",
       "Unfair spike важливіший за «трохи легше exam»",
-      "Не додавай Sound - це наступний модуль кроку 5.9",
+      "Не додавай Sound - це наступний модуль кроку 5.9"
     ],
     optionalChallenge: "Третя ітерація лише CP density в exam - порівняй смерті з ітерацією 2.",
   },
@@ -3706,7 +3592,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "Новий четвертий біом",
           "Багліст і спостереження з playtest 5.6",
           "Game Settings Icon",
-          "Badge ID з 5.10",
+          "Badge ID з 5.10"
         ],
         correctAnswer: 1,
         explanation: "Curve будується на фактах 5.6, не на ship-обгортці.",
@@ -3719,7 +3605,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "Один",
           "Усі чотири одразу",
           "Стільки, скільки знайшли баги",
-          "Жодного - лише декор",
+          "Жодного - лише декор"
         ],
         correctAnswer: 0,
         explanation: "Один важіль дає зрозумілий retest.",
@@ -3732,7 +3618,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "У Game Settings",
           "У BadgeService",
           "У PlatformConfig (waitUp/waitDown)",
-          "У LocalScript GUI",
+          "У LocalScript GUI"
         ],
         correctAnswer: 2,
         explanation: "Config з 5.4 - пульт timing без нового циклу.",
@@ -3745,7 +3631,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "Будь-який важкий exam-блок",
           "Місце, де гравець не мав шансу прочитати правило",
           "Наявність трьох біомів",
-          "Checkpoint перед Finish",
+          "Checkpoint перед Finish"
         ],
         correctAnswer: 1,
         explanation: "Unfair - дизайн-баг, не legit exam.",
@@ -3758,7 +3644,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "Відкотити Place до 5.1",
           "Автоматично Ship у 5.10",
           "Додати juice",
-          "Спробувати інший важіль або малу додаткову зміну",
+          "Спробувати інший важіль або малу додаткову зміну"
         ],
         correctAnswer: 3,
         explanation: "Same - сигнал змінити підхід, не здаватися.",
@@ -3771,7 +3657,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "Exam",
           "Train",
           "Teach",
-          "Secret only",
+          "Secret only"
         ],
         correctAnswer: 2,
         explanation: "Біом 1 навчає базовим патернам.",
@@ -3784,7 +3670,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "Записувати Before/After",
           "Повний redesign усіх біомів",
           "Retest Better/Same/Worse",
-          "Готувати changelog для 5.8",
+          "Готувати changelog для 5.8"
         ],
         correctAnswer: 1,
         explanation: "Curve - точкові зміни, не новий рівень.",
@@ -3797,7 +3683,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "Рідша, ніж у teach",
           "Кожні 2 studs",
           "Відсутня повністю",
-          "Тільки в секреті 5.5",
+          "Тільки в секреті 5.5"
         ],
         correctAnswer: 0,
         explanation: "Exam підвищує ставку через рідші save points.",
@@ -3810,7 +3696,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "Реалізувати зараз у hazard Script",
           "Окремий список для 5.9 після 5.8 gate",
           "У Badge Description",
-          "Видалити з багліста",
+          "Видалити з багліста"
         ],
         correctAnswer: 1,
         explanation: "Juice після product gate 5.8.",
@@ -3823,7 +3709,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "Peer full playthrough у 5.8",
           "Ship + Badge одразу",
           "Новий модуль 6 Simulator",
-          "Видалити Config",
+          "Видалити Config"
         ],
         correctAnswer: 0,
         explanation: "5.8 перевіряє curve на чужих очах.",
@@ -3836,7 +3722,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "Щось подвигав",
           "Gap_07 gap 8→6 studs, Build 5.7-A, retest Better",
           "Тепер краще, точно",
-          "Змінив все в біомі 2",
+          "Змінив все в біомі 2"
         ],
         correctAnswer: 1,
         explanation: "Є місце, числа, build і результат retest.",
@@ -3849,7 +3735,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "Площу приземлення без зміни gap",
           "Badge видачу",
           "Team Create",
-          "DataStore ключ",
+          "DataStore ключ"
         ],
         correctAnswer: 0,
         explanation: "Width - окремий важіль від gap.",
@@ -3862,7 +3748,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "Залишити і додати Sound",
           "Revert до попереднього Save і інший важіль",
           "Опублікувати Public",
-          "Ігнорувати retest",
+          "Ігнорувати retest"
         ],
         correctAnswer: 1,
         explanation: "Worse = відкат і нова гіпотеза.",
@@ -3875,7 +3761,7 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "5.7 замінює багліст",
           "5.6 дає вхідні точки для curve",
           "5.6 видаляє checkpoints",
-          "Немає зв'язку",
+          "Немає зв'язку"
         ],
         correctAnswer: 1,
         explanation: "Playtest #1 годує difficulty work.",
@@ -3888,11 +3774,11 @@ Ship у **5.10** вимагатиме повного проходу з **5.8** �
           "Lesson 5.6 - Playtest 1 Buglist",
           "Lesson 5.8 - Full Playthrough",
           "Lesson 5.7 - Difficulty Curve",
-          "Lesson 5.9 - Juice Pass",
+          "Lesson 5.9 - Juice Pass"
         ],
         correctAnswer: 2,
         explanation: "Save фіксує curve-ітерації перед 5.8.",
-      },
+      }
     ],
   },
 };
@@ -3910,7 +3796,7 @@ export const ukLesson58 = {
     "Розподілити ролі гравець і спостерігач без підказок під час run",
     "Оцінити Place за 6-категорійною рубрикою під час одного прогону",
     "Продовжити багліст 5.6, записуючи баги без зупинки Play",
-    "Підтвердити curve 5.7, зробити один fix pass лише blockers і зберегти Full Playthrough",
+    "Підтвердити curve 5.7, зробити один fix pass лише blockers і зберегти Full Playthrough"
   ],
   theory: {
     sections: [
@@ -3919,17 +3805,6 @@ export const ukLesson58 = {
         content: `У **5.6** ти зібрав перший багліст. У **5.7** вирівняв difficulty curve важелями gap, width, timing і CP density. Сьогодні - **product gate**: повний прохід Obby **іншою людиною** (peer), який перевіряє, чи рівень готовий до polish у **5.9** і Ship у **5.10**.
 
 Це не ще один «авторський пробіг». Peer не знає, де ключ, який \`waitUp\` ти крутив і де unfair spike був учора. Якщо він проходить без blockers - curve і Progress тримаються на чужих очах.
-
-Артефакт уроку:
-1. Build **5.8-A** заморожений до peer run.
-2. Один повний прогін: гравець грає, ти спостерігаєш.
-3. Рубрика 6 категорій заповнена під час run.
-4. Багліст 5.6 **продовжений** - запис без зупинки гри.
-5. Перевірка curve 5.7 (смерті, паузи, exam).
-6. Один fix pass **лише P0/P1 blockers**.
-7. Окремий список juice-ідей (не реалізований).
-8. Save **Lesson 5.8 - Full Playthrough**.
-
 | Було в 5.7 | Стає в 5.8 |
 |------------|------------|
 | Self-retest curve | Peer run на Build після curve |
@@ -4212,28 +4087,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
 **5.10** Ship вимагатиме те, що ти підтвердив сьогодні: прохідність, curve, стабільність - плюс juice після 5.9.
 
 **Зроби зараз (5 хв):** простав галочки і зроби фінальний self-run 3 хвилини.`,
-      },
-      {
-        title: "Міст до 5.9 і 5.10",
-        content: `Після Save 5.8 Place має бути **тихим продуктом**: логіка працює, curve перевірена peer, blockers зняті fix pass, juice - лише в backlog.
-
-**5.9 - Juice:**
-- Sound на hazard і checkpoint у **існуючих** Touched-хуках;
-- ParticleEmitter через \`Emit()\`, не другий Touched;
-- повний прохід з увімкненим звуком у Roblox settings.
-
-**5.10 - Ship + Badge:**
-- Game Settings Name, Description, Icon;
-- Badge на FinishLine, \`AwardBadge\` на сервері;
-- ship-рубрика ~15 пунктів по 5.1-5.9;
-- демо 60-90 с.
-
-Якщо ти пропустив gate і додав juice раніше - у 5.9 доведеться відділяти «новий баг CP» від «гучний hazard». Роби в порядку: **5.8 gate → 5.9 polish → 5.10 ship**.
-
-Артефакт 5.8: **peer rubric + оновлений багліст + juice backlog + blocker fix**, а не «мы пограли ще раз».
-
-**Зроби зараз (2 хв):** Save Lesson 5.8 - Full Playthrough і одним рядком запиши «Ready for 5.9: так/ні».`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -4266,7 +4120,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
       mistake: "Gate pass при P0 на main path",
       explanation: "5.9 і 5.10 побудуються на зламаному фундаменті.",
       correctApproach: "Blocker fix pass або Reopen до проходження gate",
-    },
+    }
   ],
   keyTakeaways: [
     "5.8 - product gate після curve 5.7, перед juice 5.9 і Ship 5.10",
@@ -4274,7 +4128,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
     "6 категорій рубрики: Gameplay, Progress, Navigation, Secret, Curve, Stability",
     "Багліст 5.6 продовжується; запис без зупинки Play",
     "Один fix pass лише P0/P1 blockers; juice - окремий backlog",
-    "Save Lesson 5.8 - Full Playthrough відкриває 5.9",
+    "Save Lesson 5.8 - Full Playthrough відкриває 5.9"
   ],
   summary: "Ти провів контрольний peer run як product gate, заповнив 6-категорійну рубрику, продовжив багліст 5.6 без зупинки гри, перевірив curve 5.7 за метриками, зробив один blocker fix pass і виніс juice-ідеї в окремий backlog. Place готовий до Sound і Particles у 5.9.",
   practiceTask: {
@@ -4301,7 +4155,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
     hints: [
       "P2 curve без blockers - gate pass, fix не обов'язковий",
       "Regression після fix: steps бага + сусідній CP",
-      "Sound додаси в 5.9 - сьогодні лише backlog",
+      "Sound додаси в 5.9 - сьогодні лише backlog"
     ],
     optionalChallenge: "Другий peer на Build після fix pass - порівняй rubric до/після.",
   },
@@ -4317,7 +4171,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "Product gate peer run перед juice і Ship",
           "Додати Badge і Game Settings",
           "Перебудувати всі три біоми",
-          "Видалити багліст 5.6",
+          "Видалити багліст 5.6"
         ],
         correctAnswer: 0,
         explanation: "5.8 підтверджує готовність до 5.9/5.10.",
@@ -4330,7 +4184,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "Підказує timing while-платформ",
           "Рухає Parts у Play Mode",
           "Видає Badge на половині маршруту",
-          "Записує rubric і баги без підказок маршруту",
+          "Записує rubric і баги без підказок маршруту"
         ],
         correctAnswer: 3,
         explanation: "Роль як у 5.6, мета - gate після 5.7.",
@@ -4343,7 +4197,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "3",
           "6",
           "15",
-          "92",
+          "92"
         ],
         correctAnswer: 1,
         explanation: "Gameplay, Progress, Navigation, Secret, Curve, Stability.",
@@ -4356,7 +4210,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "Немає Sound на hazard",
           "P3 зміщений текст GUI",
           "P0 softlock на main path",
-          "Peer не знайшов секрет",
+          "Peer не знайшов секрет"
         ],
         correctAnswer: 2,
         explanation: "Blockers Progress/Gameplay = fail gate.",
@@ -4369,7 +4223,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "Shorthand без зупинки, повні рядки після",
           "Після зупинки Play і правки Parts",
           "Не записують - лише rubric",
-          "Тільки в Output",
+          "Тільки в Output"
         ],
         correctAnswer: 0,
         explanation: "Run не переривають для fix.",
@@ -4382,7 +4236,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "Необмежено всіма P2",
           "Лише P0/P1 blockers, один цикл",
           "Тільки косметикою",
-          "Повним redesign exam",
+          "Повним redesign exam"
         ],
         correctAnswer: 1,
         explanation: "Один blocker fix + regression.",
@@ -4395,7 +4249,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "Реалізують у hazard Script",
           "Замінюють багліст",
           "Окремий backlog без Sound сьогодні",
-          "Видаляють curve 5.7",
+          "Видаляють curve 5.7"
         ],
         correctAnswer: 2,
         explanation: "5.9 реалізує juice на готових хуках.",
@@ -4408,7 +4262,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "Новий файл без історії",
           "5.6 видаляють",
           "Тільки для juice",
-          "Продовження з новими ID і Build",
+          "Продовження з новими ID і Build"
         ],
         correctAnswer: 3,
         explanation: "Живий документ через модуль.",
@@ -4421,7 +4275,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "Teach→train→exam після змін 5.7",
           "Badge ID",
           "Icon 512×512",
-          "Team Create",
+          "Team Create"
         ],
         correctAnswer: 0,
         explanation: "Peer підтверджує curve на чужих очах.",
@@ -4434,7 +4288,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "5.9 Juice: Sound + Particles",
           "5.1 Three Biomes з нуля",
           "6.10 Ship Sim",
-          "Пропустити до 5.10 без juice",
+          "Пропустити до 5.10 без juice"
         ],
         correctAnswer: 0,
         explanation: "Polish після gate, ship після juice.",
@@ -4447,7 +4301,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "5.8 не потребує peer",
           "5.6 після Ship",
           "5.8 - gate після curve, не перший збір багів",
-          "5.8 без rubric",
+          "5.8 без rubric"
         ],
         correctAnswer: 2,
         explanation: "5.6 збирає дані, 5.8 підтверджує продукт.",
@@ -4460,7 +4314,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "Заборонено",
           "Замінює Save",
           "Не потребує rubric",
-          "Допустимо з позначкою Tester: self-gate",
+          "Допустимо з позначкою Tester: self-gate"
         ],
         correctAnswer: 3,
         explanation: "Слабше за peer, але краще за авторський пробіг.",
@@ -4473,7 +4327,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "Steps бага + сусідній сценарій Progress",
           "Не потрібен",
           "Лише Edit Mode колір",
-          "Publish Public",
+          "Publish Public"
         ],
         correctAnswer: 0,
         explanation: "Як у 5.6 - короткий regression набір.",
@@ -4486,7 +4340,7 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "Наявність ParticleEmitter",
           "Кількість біомів",
           "Output без помилок, немає softlock",
-          "Опис у Game Settings",
+          "Опис у Game Settings"
         ],
         correctAnswer: 2,
         explanation: "Stability ≠ juice.",
@@ -4499,11 +4353,11 @@ Gate pass → **5.9 Juice**. Gate fail з лишковим P0 → Reopen, дру
           "Lesson 5.7 - Difficulty Curve",
           "Lesson 5.6 - Playtest 1 Buglist",
           "Lesson 5.9 - Juice Pass",
-          "Lesson 5.8 - Full Playthrough",
+          "Lesson 5.8 - Full Playthrough"
         ],
         correctAnswer: 3,
         explanation: "Save фіксує gate peer run перед 5.9.",
-      },
+      }
     ],
   },
 };
@@ -4521,7 +4375,7 @@ export const ukLesson59 = {
     "Підключити Sound до серверних хуків hazard і checkpoint без другого Touched",
     "Налаштувати короткий ParticleEmitter burst через Emit() замість постійного Enabled",
     "Обрати Part або SoundService за просторовою роллю звуку та уникнути спаму",
-    "Провести повний juice-playtest після 5.8 і підготувати Place до Ship у 5.10",
+    "Провести повний juice-playtest після 5.8 і підготувати Place до Ship у 5.10"
   ],
   theory: {
  sections: [
@@ -4737,8 +4591,6 @@ Juice складається з **трьох каналів**, які ми сь�
 
 **Проблема 3 - завелика Volume.** \`Volume = 1\` для короткого «дзвіночка» чекпоінта звучить різко і втомлює за 10-й раз. Тримай Volume у діапазоні **0.4-0.7** для частих подій; голосніші значення залиш для рідких, важливих моментів (перемога, бос).
 
-
-
 **Проблема 4 - різні гучності на різних hazard.** Якщо один hazard грає на Volume 0.9, а інший на 0.3, рівень відчувається «зламаним». Пройди всі hazard одним проходом і вирівняй Volume в межах 0.1 - однаковий характер смерті по всьому obby.
 
 **Правило одного правила:** якщо подія трапляється часто (а чекпоінти й смерті в obby трапляються **дуже** часто), ефект має бути **коротким і тихим**, інакше гравець вимкне звук у грі взагалі.
@@ -4756,8 +4608,6 @@ Juice складається з **трьох каналів**, які ми сь�
 | Кожен чекпоінт | «дзвіночок» + іскри один раз, без повтору | рівно 1 Play() на 1 checkpoint |
 | Повторна смерть у тому самому hazard | звук не «залипає», не накладається | чисто після кожного respawn |
 | Гучність за 10 проходжень підряд | не втомлює вухо | Volume 0.4-0.7 тримається комфортно |
-
-
 
 **Запис плейтесту:** у Studio Notes або блокноті заведи колонки «Подія / Ок / Проблема / Виправлення». Після третього проходу всі рядки мають бути «Ок» - інакше не переходь до Ship 5.10.
 
@@ -4778,7 +4628,7 @@ Juice складається з **трьох каналів**, які ми сь�
 - [ ] Збережено: \`Lesson 5.9 - Juice Pass\`
 
 **Зроби зараз (2 хв):** звір чекліст, збережи Place як Lesson 5.9 - Juice Pass і підготуй його до Ship + Badge у 5.10.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -4811,7 +4661,7 @@ Juice складається з **трьох каналів**, які ми сь�
  mistake: "Той самий Sound відтворюється і на сервері, і в LocalScript одночасно",
  explanation: "Гравець чує подвоєний, накладений звук замість чистого одного сигналу.",
  correctApproach: "Базовий Sound - лише на сервері один раз; локальний шар додає інший, додатковий ефект",
- },
+ }
  ],
  summary: "Ти додав Sound і ParticleEmitter до вже готових хуків смерті та чекпоінта з 5.2 і 5.3, навчився вибирати між SoundService і Parent Part, керувати частинками через Emit() замість Enabled, уникати спаму й перевантаженої гучності - тепер твій obby після 5.8 не просто проходиться, а відчувається живим і готовим до фінальної здачі в 5.10.",
  practiceTask: {
@@ -4836,7 +4686,7 @@ Juice складається з **трьох каналів**, які ми сь�
  hints: [
  "Якщо звук обривається - перевір, що Sound не є дитиною Character",
  "Якщо частинки летять без зупинки - перевір, що Rate дорівнює 0, а не Enabled",
- "Слухай рівень у навушниках один раз - різкий Volume чуєш одразу",
+ "Слухай рівень у навушниках один раз - різкий Volume чуєш одразу"
  ],
  optionalChallenge: "Додай короткий екранний спалах кольору через LocalScript і Attribute зміни здоров'я - додатковий локальний шар без дублювання серверного Sound.",
  },
@@ -4852,7 +4702,7 @@ Juice складається з **трьох каналів**, які ми сь�
           "Нова система руху персонажа",
           "Заміна debounce в hazard",
           "Шар короткого відгуку над уже робочою механікою",
-          "Фонова музика на весь рівень",
+          "Фонова музика на весь рівень"
         ],
         correctAnswer: 2,
         explanation: "Juice підсилює відчуття події, але не змінює її правила.",
@@ -4865,7 +4715,7 @@ Juice складається з **трьох каналів**, які ми сь�
           "У тому самому серверному Touched-хуку після перевірок і debounce",
           "В окремому LocalScript без зв'язку зі смертю",
           "У новому Touched лише для звуку",
-          "У ScreenGui замість hazard Part",
+          "У ScreenGui замість hazard Part"
         ],
         correctAnswer: 0,
         explanation: "Один підтверджений хук синхронізує логіку смерті та feedback.",
@@ -4878,7 +4728,7 @@ Juice складається з **трьох каналів**, які ми сь�
           "Character не може містити Sound",
           "Part автоматично робить звук глобальним",
           "Sound у Character завжди Looped",
-          "Character зникає під час respawn і може обірвати звук",
+          "Character зникає під час respawn і може обірвати звук"
         ],
         correctAnswer: 3,
         explanation: "Hazard залишається в Workspace, тому короткий SFX дограє.",
@@ -4891,7 +4741,7 @@ Juice складається з **трьох каналів**, які ми сь�
           "Для локального sizzle конкретної лави",
           "Для глобального UI-сигналу або музики лобі",
           "Для chime конкретного checkpoint",
-          "Для звуку, напрямок якого має знайти гравець",
+          "Для звуку, напрямок якого має знайти гравець"
         ],
         correctAnswer: 1,
         explanation: "SoundService дає непозиційний 2D-звук.",
@@ -4904,7 +4754,7 @@ Juice складається з **трьох каналів**, які ми сь�
           "Looped true і Volume 1.5",
           "Looped false і Volume приблизно 0.4-0.7",
           "PlaybackSpeed 0 і без SoundId",
-          "Sound у Character з великим RollOff",
+          "Sound у Character з великим RollOff"
         ],
         correctAnswer: 1,
         explanation: "Частий сигнал має бути коротким і комфортним.",
@@ -4917,7 +4767,7 @@ Juice складається з **трьох каналів**, які ми сь�
           "Enabled true на весь playtest",
           "Rate 100 на кожному hazard",
           "Створювати новий emitter щокадру",
-          "Rate 0 і виклик Emit(n) у момент підтвердженої події",
+          "Rate 0 і виклик Emit(n) у момент підтвердженої події"
         ],
         correctAnswer: 3,
         explanation: "Emit випускає задану кількість і не працює постійно.",
@@ -4930,7 +4780,7 @@ Juice складається з **трьох каналів**, які ми сь�
           "Частинки йтимуть безперервно та створюватимуть шум",
           "Він спрацює рівно один раз",
           "Він чекатиме виклику Play()",
-          "Він автоматично успадкує checkpoint debounce",
+          "Він автоматично успадкує checkpoint debounce"
         ],
         correctAnswer: 0,
         explanation: "Enabled запускає постійний потік відповідно до Rate.",
@@ -4943,7 +4793,7 @@ Juice складається з **трьох каналів**, які ми сь�
           "SoundId можна призначити лише в Edit Mode",
           "Play() працює тільки з одним Sound за гру",
           "Зайві Instance створюються в найгарячіший момент і потребують cleanup",
-          "Touched забороняє створення Instance",
+          "Touched забороняє створення Instance"
         ],
         correctAnswer: 2,
         explanation: "Готовий Sound у Part дешевше повторно запускати через Play().",
@@ -4956,7 +4806,7 @@ Juice складається з **трьох каналів**, які ми сь�
           "На кожен дотик будь-якої частини тіла",
           "Щосекунди, поки гравець стоїть на Part",
           "Після кожного respawn незалежно від прогресу",
-          "Лише коли сервер підтвердив новий checkpoint усередині debounce",
+          "Лише коли сервер підтвердив новий checkpoint усередині debounce"
         ],
         correctAnswer: 3,
         explanation: "Feedback має означати реальне зарахування прогресу.",
@@ -4969,7 +4819,7 @@ Juice складається з **трьох каналів**, які ми сь�
           "Що Sound стає глобальним",
           "Що chime і sparkles не дублюються через кілька Touched",
           "Що ParticleEmitter переходить у Enabled true",
-          "Що checkpoint видаляється після першого гравця",
+          "Що checkpoint видаляється після першого гравця"
         ],
         correctAnswer: 1,
         explanation: "Один прогрес має давати один feedback-пакет.",
@@ -4982,7 +4832,7 @@ Juice складається з **трьох каналів**, які ми сь�
           "Обидва шари грають той самий Sound одночасно",
           "Локальний шар сам вирішує, чи checkpoint зараховано",
           "Сервер запускає базову подію, а клієнт може додати інший UI-ефект",
-          "Усю логіку треба перенести в LocalScript",
+          "Усю логіку треба перенести в LocalScript"
         ],
         correctAnswer: 2,
         explanation: "Сервер лишається правдою, локальний шар не дублює базовий SFX.",
@@ -4995,7 +4845,7 @@ Juice складається з **трьох каналів**, які ми сь�
           "Щоб різкі стрибки гучності не ламали відчуття рівня",
           "Щоб RollOffMode вимкнувся",
           "Щоб усі Sounds отримали один SoundId автоматично",
-          "Щоб не використовувати debounce",
+          "Щоб не використовувати debounce"
         ],
         correctAnswer: 0,
         explanation: "Однакові події мають мати послідовну силу feedback.",
@@ -5008,7 +4858,7 @@ Juice складається з **трьох каналів**, які ми сь�
           "Лише перший hazard і перший checkpoint",
           "Кожен hazard і checkpoint, повтори після respawn та комфорт гучності",
           "Тільки іконку майбутнього Badge",
-          "Лише фонову музику в SoundService",
+          "Лише фонову музику в SoundService"
         ],
         correctAnswer: 1,
         explanation: "Ship потребує стабільності feedback на всьому маршруті.",
@@ -5021,7 +4871,7 @@ Juice складається з **трьох каналів**, які ми сь�
           "Переписування всіх hazard з нуля",
           "Початок Tycoon у тому самому Place",
           "Видалення Sound і ParticleEmitter",
-          "Ship + Badge і фінальна здача Obby",
+          "Ship + Badge і фінальна здача Obby"
         ],
         correctAnswer: 3,
         explanation: "5.10 пакує й здає вже відполірований Obby.",
@@ -5034,11 +4884,11 @@ Juice складається з **трьох каналів**, які ми сь�
           "Lesson 5.8 - Full Run",
           "Lesson 5.10 - Ship + Badge",
           "Lesson 5.9 - Juice Pass",
-          "Obby Sound Final Draft",
+          "Obby Sound Final Draft"
         ],
         correctAnswer: 2,
         explanation: "Чекліст вимагає Lesson 5.9 - Juice Pass.",
-      },
+      }
     ],
   },
 };
@@ -5056,7 +4906,7 @@ export const ukLesson510 = {
     "Створити Badge на сайті Roblox і видати його AwardBadge на сервері на фініші",
     "Захистити видачу через UserHasBadgeAsync і pcall перед AwardBadge",
     "Пройти ship-рубрику по біомах, чекпоінтах, hazards і juice з 5.1-5.9",
-    "Відрепетирувати демо 60-90 секунд без суфлера і зберегти фінальний Place",
+    "Відрепетирувати демо 60-90 секунд без суфлера і зберегти фінальний Place"
   ],
   theory: {
     sections: [
@@ -5065,14 +4915,6 @@ export const ukLesson510 = {
         content: `Це фінал модуля 5 - **Obby**. Нової механіки немає. Ти **пакуєш** готовий рівень у продукт, який можна показати незнайомій людині за 90 секунд.
 
 Шлях позаду: 5.1 три біоми, 5.2 hazards + debounce, 5.3 чекпоінти + таймер + GUI, 5.4 while-платформи + Config, 5.5 секрети + ключ-двері, 5.6 playtest і багліст, 5.7 difficulty curve, 5.8 повний прохід, 5.9 juice Sound + Particles.
-
-Артефакт уроку:
-1. Place з зрозумілими Name, Description, Icon.
-2. Access Friends або Public - обраний свідомо, не «як було».
-3. Badge на сайті Roblox + серверний AwardBadge рівно на FinishLine.
-4. UserHasBadgeAsync блокує повторну видачу.
-5. Рубрика ~15 пунктів, демо 60-90 с і Save **Lesson 5.10 - Ship + Badge**.
-
 | Було в 5.9 | Стає в 5.10 |
 |------------|-------------|
 | Рівень із juice | Той самий рівень як показуваний продукт |
@@ -5317,7 +5159,7 @@ Playtest інтеграції перед Save:
 Артефакт дня: **обгорнутий, показуваний obby з одноразовою серверною нагородою**. Ship любить короткий переможний прохід, не найбільшу карту світу.
 
 **Зроби зараз (2 хв):** Save з точною назвою Lesson 5.10 - Ship + Badge.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -5350,7 +5192,7 @@ Playtest інтеграції перед Save:
       mistake: "Один біом 'майже готовий' на здачі",
       explanation: "Прохід ламається посередині демо - ship не відбувся.",
       correctApproach: "Спочатку фікс усіх трьох біомів, потім Save",
-    },
+    }
   ],
   summary: "Ти закрив модуль 5 Ship + Badge: Game Settings з назвою, описом і іконкою, свідомий Access, Badge з сайту й серверний AwardBadge на FinishLine з UserHasBadgeAsync. Рубрика й демо 60-90 с підтверджують показуваний obby перед переходом до Simulator у 6.1.",
   practiceTask: {
@@ -5375,7 +5217,7 @@ Playtest інтеграції перед Save:
     hints: [
       "Badge ID копіюй точно - одна зайва цифра ламає видачу",
       "Під час дебагу print success і hasBadge всередині pcall",
-      "Тренуй демо на таймері телефону, не на око",
+      "Тренуй демо на таймері телефону, не на око"
     ],
     optionalChallenge: "Після реальної видачі на сервері FireClient короткий банер Badge Earned! на клієнті - лише разом із успішним AwardBadge.",
   },
@@ -5391,7 +5233,7 @@ Playtest інтеграції перед Save:
           "Побудувати четвертий біом",
           "Обгорнути готовий obby в показуваний продукт з Badge на фініші",
           "Видалити чекпоінти з 5.3",
-          "Почати Simulator з нуля",
+          "Почати Simulator з нуля"
         ],
         correctAnswer: 1,
         explanation: "Ship + Badge - фінал модуля 5 без нової механіки рівня.",
@@ -5404,7 +5246,7 @@ Playtest інтеграції перед Save:
           "File → Game Settings → Basic Info",
           "У Script через Instance.new",
           "У BadgeService напряму",
-          "Лише в Creator Dashboard без Studio",
+          "Лише в Creator Dashboard без Studio"
         ],
         correctAnswer: 0,
         explanation: "Game Settings - основне вікно налаштувань place.",
@@ -5417,7 +5259,7 @@ Playtest інтеграції перед Save:
           "Одразу після першого Play",
           "Замість заповнення Description",
           "Після проходження повної ship-рубрики",
-          "Public завжди обов'язковий з першого дня",
+          "Public завжди обов'язковий з першого дня"
         ],
         correctAnswer: 2,
         explanation: "Public без перевірки показує баги незнайомцям.",
@@ -5430,7 +5272,7 @@ Playtest інтеграції перед Save:
           "У Studio через Instance.new(\"Badge\")",
           "У ServerScriptService автоматично",
           "У Toolbox як Model",
-          "На сайті Roblox: Creator Dashboard → Badges",
+          "На сайті Roblox: Creator Dashboard → Badges"
         ],
         correctAnswer: 3,
         explanation: "Badge - сутність сайту, не Instance у Workspace.",
@@ -5443,7 +5285,7 @@ Playtest інтеграції перед Save:
           "LocalScript технічно не бачить BadgeService",
           "Інакше можна видати собі нагороду без реального проходу",
           "Сервер швидший для UI",
-          "Це вимога лише для Friends place",
+          "Це вимога лише для Friends place"
         ],
         correctAnswer: 1,
         explanation: "Довіра сервера - як для шкоди чи валюти.",
@@ -5456,7 +5298,7 @@ Playtest інтеграції перед Save:
           "Замінює перевірку Humanoid",
           "Прискорює Terrain",
           "Блокує повторну видачу того самого Badge",
-          "Потрібен лише в Friends-режимі",
+          "Потрібен лише в Friends-режимі"
         ],
         correctAnswer: 2,
         explanation: "Анти-дубль нагороди при повторному дотику фінішу.",
@@ -5469,7 +5311,7 @@ Playtest інтеграції перед Save:
           "pcall прискорює AwardBadge",
           "Без pcall Badge не створити на сайті",
           "pcall замінює UserHasBadgeAsync",
-          "Сервіс може відповісти помилкою - гра не має ламатись",
+          "Сервіс може відповісти помилкою - гра не має ламатись"
         ],
         correctAnswer: 3,
         explanation: "Захист від збою мережевого сервісу.",
@@ -5482,7 +5324,7 @@ Playtest інтеграції перед Save:
           "Обов'язково 10+ хвилин",
           "Близько 60-90 секунд без суфлера",
           "Досить одного скріншота",
-          "Рівно 5 секунд",
+          "Рівно 5 секунд"
         ],
         correctAnswer: 1,
         explanation: "Коротке репетируване демо.",
@@ -5495,7 +5337,7 @@ Playtest інтеграції перед Save:
           "Лише назву place",
           "Лише колір іконки",
           "Прохідність біомів, чекпоінтів, hazards, секрету й криву складності",
-          "Лише наявність Badge ID у файлі",
+          "Лише наявність Badge ID у файлі"
         ],
         correctAnswer: 2,
         explanation: "Категорія B - серце самого проходу.",
@@ -5508,7 +5350,7 @@ Playtest інтеграції перед Save:
           "Чекпоінти зберігають прогрес",
           "Output чистий",
           "Access обраний свідомо",
-          "Badge кличеться знову без UserHasBadgeAsync",
+          "Badge кличеться знову без UserHasBadgeAsync"
         ],
         correctAnswer: 3,
         explanation: "Класична дірка без анти-дубля.",
@@ -5521,7 +5363,7 @@ Playtest інтеграції перед Save:
           "5.9 - Sound + Particles",
           "5.2 - Hazards",
           "5.5 - Секрети",
-          "5.1 - Дизайн біомів",
+          "5.1 - Дизайн біомів"
         ],
         correctAnswer: 0,
         explanation: "5.9 додав звук і частинки для фінального показу.",
@@ -5534,7 +5376,7 @@ Playtest інтеграції перед Save:
           "Складність росте плавно",
           "Іконка place не дефолтна",
           "Секрет знаходиться швидко",
-          "Badge видається один раз",
+          "Badge видається один раз"
         ],
         correctAnswer: 1,
         explanation: "Категорія A - до і на вході в гру.",
@@ -5547,7 +5389,7 @@ Playtest інтеграції перед Save:
           "Заповнити Game Settings",
           "Створити Badge на сайті",
           "Будувати четвертий біом замість обгортки",
-          "Прорепетирувати демо",
+          "Прорепетирувати демо"
         ],
         correctAnswer: 2,
         explanation: "Ship - пакування готового, не новий контент.",
@@ -5560,7 +5402,7 @@ Playtest інтеграції перед Save:
           "Видаляє звичку серверних нагород",
           "Замінює Obby на Tycoon в тому ж Place",
           "Вчить DataStore для монет одразу",
-          "Закріплює правило: сервер видає нагороду (далі - Coins)",
+          "Закріплює правило: сервер видає нагороду (далі - Coins)"
         ],
         correctAnswer: 3,
         explanation: "Badge тут → серверні Coins у Simulator.",
@@ -5573,11 +5415,11 @@ Playtest інтеграції перед Save:
           "Lesson 5.9 - Juice",
           "Lesson 5.10 - Ship + Badge",
           "Lesson 6.1 - Core Loop",
-          "Obby Draft Final",
+          "Obby Draft Final"
         ],
         correctAnswer: 1,
         explanation: "Чекліст вимагає Lesson 5.10 - Ship + Badge.",
-      },
+      }
     ],
   },
 };

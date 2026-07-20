@@ -17,7 +17,7 @@ export const ukLesson11 = {
  "Впевнено користуватись Select, Move, Scale, Rotate, Snap і Duplicate",
  "Розрізняти типи Parts (Block, Sphere, Wedge, Cylinder, CornerWedge)",
  "Зібрати будинок і вирізати вікна/двері через Negate + Union (+ Separate)",
- "Зберегти Place у Roblox як перший артефакт курсу",
+ "Зберегти Place у Roblox як перший артефакт курсу"
  ],
  theory: {
  sections: [
@@ -27,17 +27,7 @@ export const ukLesson11 = {
 
 Вікна й двері ми не малюємо наклейкою - ми їх **вирізаємо** інструментами **Negate + Union**. Це той самий прийом, яким у Studio роблять арки, тунелі й складні форми без малювання кожної цеглини вручну. Якщо освоїш Union зараз, у M2–M5 ти швидше збиратимеш цікаві форми для парку й obby.
 
-**Як працювати з уроком:** тримай Roblox Studio відкритою поруч із цим текстом. Кожна секція має блок **«Зроби зараз»** - не читай усе підряд «очима», а одразу повторюй у Viewport. Моторика (камера, Snap, Union) закріплюється лише через руки. Якщо лише дивитись відео викладача без власного Baseplate - через тиждень кнопки 1–4 знову «забудуться».
-
-**Що здаємо сьогодні (артефакт):**
-- Model \`House_01\`
-- мінімум **2 вікна**-отвори через Union
-- **дверний отвір** (або третє вікно)
-- Place збережено: \`Lesson 1.1 - House_01\`
-
-**Де цей урок у спіралі курсу:** 1.1 - інструменти й будинок; 1.2 - острів (Terrain); 1.3 - змінні й перший Script («магічний куб»); 1.4 - арифметика й \`if/else\`; далі оздоба, атмосфера, Party Mode і checkpoint. Тобто сьогодні ти закладаєш **фізичний світ**, на якому житиме весь Модуль 1.
-
-Код сьогодні майже не пишемо - так і задумано. Але в кінці теорії ти побачиш **2 короткі приклади Lua**, щоб панелі Output і Script уже не були «страшною зоною».`,
+**Як працювати з уроком:** тримай Roblox Studio відкритою поруч із цим текстом. Кожна секція має блок **«Зроби зараз»** - не читай усе підряд «очима», а одразу повторюй у Viewport. Моторика (камера, Snap, Union) закріплюється лише через руки. Якщо лише дивитись відео викладача без власного Baseplate - через тиждень кнопки 1–4 знову «забудуться».`,
  },
  {
  title: "Що таке Roblox Studio і навіщо Baseplate",
@@ -259,7 +249,7 @@ export const ukLesson11 = {
 **Зроби зараз (12 хв):** два вікна + дверний отвір. Після кожного Union - Anchored, погляд зсередини будинку, швидкий Play.`,
  },
  {
- title: "Model House_01, збереження й погляд уперед (Lua)",
+ title: "Model House_01 і збереження",
  content: `### Згрупувати
 1. У Explorer виділи Floor + стіни + Roof (Ctrl+клік). Не захопи Baseplate і випадкові Scrap.
 2. **Ctrl+G** (або Model → Group) → Name \`House_01\`.
@@ -272,31 +262,6 @@ export const ukLesson11 = {
 
 «Save to File» на диск - ок як бекап, але для курсу головне **хмара Roblox**: Place відкриється з іншого ПК і не зникне після перевстановлення Studio. Назви з номером уроку допомагають викладачу й тобі через місяць знайти артефакт.
 
-### Погляд уперед: два міні-фрагменти Lua
-Сьогодні Script ще не здаємо. Але подивись (або встав у тестовий Script під тестову Part і одразу видали), як виглядає код, який з’явиться в **1.3–1.4**:
-
-\`-- Урок 1.3: змінна + зміна вигляду Part\`
-\`local part = script.Parent\`
-\`local glowName = "MagicCube"\`
-\`part.Name = glowName\`
-\`print("Part renamed to:", part.Name)\`
-
-\`-- Урок 1.4: простий if (логіка кнопки)\`
-\`local isOpen = false\`
-\`if isOpen then\`
-\` print("Door is open")\`
-\`else\`
-\` print("Door is closed")\`
-\`end\`
-
-**Що запам’ятати з цих двох блоків уже зараз:**
-- \`local\` - створити змінну в цьому Script.
-- \`script.Parent\` - об’єкт, у якому лежить Script.
-- \`print\` пише в **Output** (тому панель Output ти вже відкрив).
-- \`if / else\` - розвилка «так / ні»; повний урок - у 1.4.
-
-Якщо вставив тестовий Script - **Stop**, видали його перед здачею House_01, щоб не плутати артефакт.
-
 ### Чекліст перед практикою
 - [ ] Камера: WASD + ПКМ + F
 - [ ] Знаю 1/2/3/4 і Snap
@@ -307,52 +272,14 @@ export const ukLesson11 = {
 - [ ] Save to Roblox`,
  },
  {
- title: "Play-тест, імена й гігієна перед здачею",
- content: `Багато хто зберігає Place одразу після першого вдалого Union і йде далі. Через урок виявляється: двері не прохідні, одна стіна без Anchored, у Explorer п’ять \`Part\` без імен, а \`WindowCut\` лишився червоним і не потрапив у Union.
-
-**Міні-ритуал здачі (5 хвилин, обов’язково):**
-1. **Explorer:** чи всі частини будинку мають осмислені імена? Чи немає зайвих \`WindowCut\` / \`Part\` поза стіною?
-2. **Anchored:** клікни Floor, кожну стіну, Roof (або розгорни Model і пройдись по children).
-3. **Play:** зайди «в дім» камерою або Character - чи проходять двері, чи видно світло крізь вікна, чи нічого не падає.
-4. **Огляд ззовні:** з трьох сторін фасад читається як будинок, а не як купа плит. Звис даху бажаний.
-5. **Save to Roblox** з правильною назвою \`Lesson 1.1 - House_01\`.
-
-**Чекліст імен (швидкий):**
-- Добре: \`Floor\`, \`Wall_Front\`, \`Roof\`, \`House_01\`
-- Погано: \`Part\`, \`Part1\`, \`Union\`, \`asdf\`, \`стіна\`
-
-**Чому імена важливі вже в 1.1:** у **1.3** ти писатимеш Script і дивитимешся на дерево. \`script.Parent\` легше розуміти, коли Parent називається \`MagicCube\`, а не \`Part\`. У **1.7 Party Mode** кнопка \`PartyButton\` знайдеться за секунду. У M2 штаб острова вимагатиме PascalCase і Folder - краще не вчитися «перейменовувати 80 Parts за ніч».
-
-**Що свідомо відкладаємо на наступні уроки:**
-- Decal, Texture, стиль фасаду → **1.5**
-- Lighting / Atmosphere / Sound → **1.6**
-- Neon-кнопка вечірки з \`if partyOn\` → **1.7**
-- Рубрика всього острова + peer-demo → **1.8**
-- Model PrimaryPart, Constraints, Toolbox hygiene → **M2**
-
-Сьогодні твоя суперсила - **чистий каркас + чесні отвори Union**. Все інше ляже зверху шарами. Якщо зараз поженешся за «красиво як у грі з каталогу», не встигнеш якість отворів - а саме отвори перевіряє викладач найперше.
-
-**Зроби зараз (4 хв):** пройди ритуал здачі на поточному білді ще до фінальної практики. Знайшов баг - виправ зараз. Запиши собі в нотатках одне «що покращу наступного разу» (наприклад: «завжди перевіряю Anchored після Union»).`,
- },
- {
  title: "Як викладач оцінює цей урок (рубрика)",
  content: `| Рівень | Що видно в Place | Типовий коментар викладача |
 |--------|------------------|----------------------------|
 | **Не зараховано** | Немає вікон Union / стіни падають / немає Save | «Дороби отвори й Anchored, збережи в Roblox» |
 | **Зараховано** | Підлога+стіни+дах, ≥2 вікна Union, двері або 3-тє вікно, Model, Save | «Ок, базовий артефакт є» |
 | **Добре** | Рівні кути, Snap, імена осмислені, двері прохідні в Play | «Можна йти в 1.2 без сорому» |
-| **Відмінно** | Охайний звис даху, 3+ вікна, димар/паркан, ракурс гравця «читає» дім | «Бери скрін у портфоліо» |
-
-**Що викладач дивиться за 60–90 секунд:**
-1. Чи відкривається правильний Place (назва).
-2. Play - чи стоїть будинок.
-3. Чи є дірки вікон (не Decal).
-4. Чи Explorer не повний сміттям \`Part\`.
-
-Наступний урок (**1.2**) обгорне будинок у **Terrain-острів**: Add/Subtract/Paint/Grow/Erode/Smooth/Flat, вода, берег. Якщо сьогодні стіни криві - на острові це буде ще помітніше з висоти камери. Краще витратити 5 зайвих хвилин на Snap і Union, ніж потім «латати» фундамент, коли навколо вже вода й пагорби.
-
-**Зв’язок з кінцем модуля:** у **1.8** ти здаватимеш «живу» локацію з Party Mode. Будинок з 1.1 - візуальний якір острова. Не видаляй його між уроками; зберігай ланцюжок Place або дублюй перед експериментами.`,
- },
+| **Відмінно** | Охайний звис даху, 3+ вікна, димар/паркан, ракурс гравця «читає» дім | «Бери скрін у портфоліо» |`,
+ }
  ],
  },
  commonMistakes: [
@@ -390,7 +317,7 @@ export const ukLesson11 = {
  mistake: "Будує без Snap - щілини в кутах",
  explanation: "Parts зсунуті на частки studs; здається дрібницею, але ламає охайність.",
  correctApproach: "Увімкни Snap to Grid; вирівняй зверху камерою перед Union.",
- },
+ }
  ],
  summary:
  "Ти відкрив Studio, освоїв камеру, інструменти 1–4, Snap, Duplicate і типи Parts, зібрав будинок і вирізав вікна/двері через Negate + Union (з розумінням Separate). Place збережено - перший артефакт модуля «Старт творця».",
@@ -429,7 +356,7 @@ export const ukLesson11 = {
  "Negate-виріз трохи товстіший за стіну, інакше не проріже",
  "Після кожного Union одразу Anchored = true",
  "Загубив камеру - клікни будинок → F",
- "Separate або Ctrl+Z краще, ніж латати кривий Union новими вирізами",
+ "Separate або Ctrl+Z краще, ніж латати кривий Union новими вирізами"
  ],
  optionalChallenge:
  "Зроби двосхилий дах з двох Wedge + димар Cylinder; збережи скрін з рівня гравця для портфоліо.",
@@ -446,7 +373,7 @@ export const ukLesson11 = {
           "Obby",
           "City",
           "Baseplate",
-          "Повністю Empty без підлоги",
+          "Повністю Empty без підлоги"
         ],
  correctAnswer: 2,
  explanation: "Baseplate дає чисту підлогу й небо без зайвого шуму шаблону.",
@@ -459,7 +386,7 @@ export const ukLesson11 = {
           "2",
           "1",
           "3",
-          "4",
+          "4"
         ],
  correctAnswer: 0,
  explanation: "1 - Select, 2 - Move, 3 - Scale, 4 - Rotate.",
@@ -472,7 +399,7 @@ export const ukLesson11 = {
           "1",
           "2",
           "4",
-          "3",
+          "3"
         ],
  correctAnswer: 3,
  explanation: "3 - Scale.",
@@ -485,7 +412,7 @@ export const ukLesson11 = {
           "1",
           "4",
           "2",
-          "3",
+          "3"
         ],
  correctAnswer: 1,
  explanation: "4 - Rotate.",
@@ -498,7 +425,7 @@ export const ukLesson11 = {
           "Фокусує камеру на об’єкті",
           "Видаляє Part",
           "Вмикає Play",
-          "Робить Union",
+          "Робить Union"
         ],
  correctAnswer: 0,
  explanation: "F підлітає камерою до вибраного об’єкта.",
@@ -511,7 +438,7 @@ export const ukLesson11 = {
           "Properties",
           "Toolbox",
           "Explorer",
-          "Output",
+          "Output"
         ],
  correctAnswer: 2,
  explanation: "Explorer показує ієрархію об’єктів.",
@@ -524,7 +451,7 @@ export const ukLesson11 = {
           "Part невидима",
           "Part ігнорує гравітацію й не падає",
           "Part не можна виділити",
-          "Part стає Negate",
+          "Part стає Negate"
         ],
  correctAnswer: 1,
  explanation: "Закріплені Parts лишаються на місці під час Play.",
@@ -537,7 +464,7 @@ export const ukLesson11 = {
           "Щоб увімкнути музику",
           "Щоб видалити Terrain",
           "Щоб опублікувати гру",
-          "Щоб Parts легше стикувались рівно по сітці",
+          "Щоб Parts легше стикувались рівно по сітці"
         ],
  correctAnswer: 3,
  explanation: "Snap зменшує криві щілини між Parts.",
@@ -550,7 +477,7 @@ export const ukLesson11 = {
           "Union → потім Negate на стіні",
           "Тільки Scale стіни до дірки",
           "Negate на вирізі → виділити виріз і стіну → Union",
-          "Anchored false → Play",
+          "Anchored false → Play"
         ],
  correctAnswer: 2,
  explanation: "Спочатку Negate на «дірці», потім Union зі стіною.",
@@ -563,7 +490,7 @@ export const ukLesson11 = {
           "Позначає Part як об’єм, який відніметься при Union",
           "Фарбує в зелений",
           "Зберігає Place",
-          "Створює Script",
+          "Створює Script"
         ],
  correctAnswer: 0,
  explanation: "Negate перетворює Part на від’ємний об’єм для CSG.",
@@ -576,7 +503,7 @@ export const ukLesson11 = {
           "Щоб опублікувати гру",
           "Щоб увімкнути камеру",
           "Щоб видалити Terrain",
-          "Щоб спробувати розібрати CSG-операцію й виправити форму",
+          "Щоб спробувати розібрати CSG-операцію й виправити форму"
         ],
  correctAnswer: 3,
  explanation: "Separate допомагає розібрати Union; інакше лишається Ctrl+Z.",
@@ -589,7 +516,7 @@ export const ukLesson11 = {
           "Тільки Ctrl+S",
           "Ctrl+D (Duplicate)",
           "F5",
-          "Delete",
+          "Delete"
         ],
  correctAnswer: 1,
  explanation: "Ctrl+D дублює вибраний об’єкт.",
@@ -602,7 +529,7 @@ export const ukLesson11 = {
           "Block",
           "Wedge",
           "Cylinder",
-          "CornerWedge",
+          "CornerWedge"
         ],
  correctAnswer: 2,
  explanation: "Cylinder природно виглядає як труба чи колона.",
@@ -615,7 +542,7 @@ export const ukLesson11 = {
           "Лише скріншот",
           "Edit → Copy",
           "View → Output",
-          "File → Save to Roblox",
+          "File → Save to Roblox"
         ],
  correctAnswer: 3,
  explanation: "Save to Roblox пише місце в хмару акаунта.",
@@ -628,11 +555,11 @@ export const ukLesson11 = {
           "Model House_01 з вікнами через Union і Save to Roblox",
           "Порожній Baseplate",
           "Тільки одна сфера Neon",
-          "Лише відкритий Toolbox",
+          "Лише відкритий Toolbox"
         ],
  correctAnswer: 0,
  explanation: "Потрібен будинок з вирізаними вікнами, згрупований і збережений.",
- },
+ }
  ],
  },
 }
@@ -650,7 +577,7 @@ export const ukLesson12 = {
  "Відкрити Terrain Editor: Generate, Sculpt, Paint",
  "Ліпити форму: Add, Subtract, Grow, Erode, Smooth, Flatten/Flat",
  "Пофарбувати Grass, Sand, Rock і додати Water на березі",
- "Посадити будинок House_01 на острів, пройти Play-тест і зберегти Place",
+ "Посадити будинок House_01 на острів, пройти Play-тест і зберегти Place"
  ],
  theory: {
  sections: [
@@ -670,8 +597,6 @@ export const ukLesson12 = {
 **Як працювати:** відкрий Place з 1.1 (\`Lesson 1.1 - House_01\`). Якщо будинку ще немає - новий Baseplate і мінімальний каркас, але краще тягнути ланцюжок артефактів модуля. Studio тримай поруч із текстом і одразу повторюй у Viewport: ліпка руками запам’ятовується краще, ніж перегляд скрінів.
 
 **Повний набір інструментів сьогодні (сітка курсу):** Add, Subtract, Paint, Grow, Erode, Smooth, Flatten/Flat - не лише «три кнопки», а свідомий пайплайн.
-
-**Де у спіралі курсу:** після острова в **1.3** з’явиться перший Script і змінні («магічний куб»). Сьогодні код майже не пишемо - лише 2 короткі preview-фрагменти в кінці, щоб Output лишався знайомим.
 
 Острів задає масштаб світу: гравець відчуває, що будинок стоїть на реальній землі, а не на сірому Baseplate. Контраст Grass, Sand і Water на березі допомагає очам знайти шлях до дверей House_01 ще до Lighting у 1.6. Пагорб за будинком створює «сцену» для фасаду - корисно для peer-demo в 1.8.`,
  },
@@ -869,32 +794,6 @@ export const ukLesson12 = {
 **Зроби зараз (3 хв):** глянь на свій поточний Place і назви вголос, на якому кроці пайплайну ти зараз. Якщо ти на кроці 5, а Smooth ще не робив - повернись на крок 3.`,
  },
  {
- title: "Погляд уперед: два фрагменти Lua (під 1.3)",
- content: `Сьогодні Script **не** є артефактом здачі. Але світ уже є - у **1.3** ти змінюватимеш вигляд Part з коду на цьому острові. Два короткі фрагменти (можна вставити в тестовий Script під тестову Part і видалити перед здачею):
-
-\`-- Урок 1.3: змінна тримає посилання на Part (куб / частина будинку)\`
-\`local part = script.Parent\`
-\`local islandTag = "NearShore"\`
-\`print(part.Name, "stands on island zone:", islandTag)\`
-
-\`-- Міст до 1.3-1.4: число + if (висоту двору пізніше можна читати з Position)\`
-\`local yardHeight = 12\`
-\`if yardHeight > 10 then\`
-\` print("Yard is high enough for the house")\`
-\`else\`
-\` print("Raise terrain or move the house")\`
-\`end\`
-
-**Що вже має сенс після острова:**
-- \`local\` - іменоване значення в Script;
-- \`print\` пише в **Output** (панель з 1.1);
-- \`if / else\` - розвилка; повний урок арифметики й умов - у **1.4**.
-
-Навіщо preview зараз? Щоб у 1.3 ти не витрачав 10 хвилин на пошук Output і не боявся слова Script. Острів дає контекст: куб стоятиме на Flatten-дворі, а не в порожнечі.
-
-Не лишай тестові Scripts у зданому Island без потреби - чистота Explorer важлива вже зараз і критична в 1.8.`,
- },
- {
  title: "Чекліст і рубрика здачі 1.2",
  content: `**Чекліст перед LMS**
 - [ ] Острів згенерований / виліплений (не голий Baseplate)
@@ -912,8 +811,6 @@ export const ukLesson12 = {
 | **Добре** | Читабельний пляж, Smooth, прохідні схили, стежка |
 | **Відмінно** | Характерний силует зверху, охайний двір, друга водойма або бухта |
 
-**Що викладач дивиться першим:** Play (чи пройти), берег (чи є Sand), чи не «пила» без Smooth, чи є правильна назва Place.
-
 **Далі по сітці:** **1.3 - Properties + змінні + перший Script → магічний куб** на цьому острові. **1.4** додасть арифметику й \`if/else\`. Не видаляй острів між уроками.`,
  },
  {
@@ -929,7 +826,7 @@ export const ukLesson12 = {
 **Smooth «з’їв» мій обрив, який я хотів.** Smooth згладжує все під пензлем. Роби обрив Rock окремо й води Smooth лише по пляжу, не по всій скелі.
 
 **Зроби зараз (4 хв):** обери один ризик зі списку, який є у твоєму Place, і виправ його до фінальної практики. Запиши в нотатках одне правило для себе (наприклад: «завжди Smooth перед Paint»).`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -967,7 +864,7 @@ export const ukLesson12 = {
  mistake: "Плутають Flatten і Smooth",
  explanation: "Smooth згладжує, Flatten вирівнює майданчик.",
  correctApproach: "Flatten під будинок/двір; Smooth для берегів і природних схилів.",
- },
+ }
  ],
  summary:
  "Ти повністю пройшов Terrain Editor: Generate, Add/Subtract/Grow/Erode, Smooth, Flatten і Paint. Навколо будинку з 1.1 - острів з берегом і водою; база для магічного куба в 1.3 і всього Модуля 1.",
@@ -1004,7 +901,7 @@ export const ukLesson12 = {
  "Smooth перед фінальним Paint - краї виглядають природніше",
  "Flatten ≠ Smooth: двір вирівнюй Flatten, берег згладжуй Smooth",
  "Зберігай одразу після Generate і після великого Sculpt",
- "Воду завжди перевіряй у Play",
+ "Воду завжди перевіряй у Play"
  ],
  optionalChallenge:
  "Зроби «міні-бухту» з Rock-обривом з одного боку і широким Sand-пляжем з іншого; скрін зверху для портфоліо.",
@@ -1021,7 +918,7 @@ export const ukLesson12 = {
           "Кнопок меню UI",
           "Тільки Scripts",
           "Природних пагорбів, пляжів і озер",
-          "Звукових ефектів",
+          "Звукових ефектів"
         ],
  correctAnswer: 2,
  explanation: "Terrain - для ландшафту; Parts - для будівель і механік.",
@@ -1034,7 +931,7 @@ export const ukLesson12 = {
           "Terrain - суцільна земля, Part - окремий об’єкт-блок",
           "Terrain не можна зберегти",
           "Part завжди світиться Neon",
-          "Terrain існує лише в Play",
+          "Terrain існує лише в Play"
         ],
  correctAnswer: 0,
  explanation: "Terrain - ландшафт світу; Parts - окремі будівельні блоки.",
@@ -1047,7 +944,7 @@ export const ukLesson12 = {
           "Paint",
           "Properties",
           "Toolbox",
-          "Generate",
+          "Generate"
         ],
  correctAnswer: 3,
  explanation: "Generate створює карту місцевості за параметрами.",
@@ -1060,7 +957,7 @@ export const ukLesson12 = {
           "Видаляє Place",
           "Піднімає / додає землю",
           "Фарбує тільки Sand",
-          "Вмикає Union",
+          "Вмикає Union"
         ],
  correctAnswer: 1,
  explanation: "Add нарощує об’єм землі під пензлем.",
@@ -1073,7 +970,7 @@ export const ukLesson12 = {
           "Grow видаляє воду",
           "Grow працює лише в Play",
           "Grow створює Script",
-          "Grow м’якше нарощує землю",
+          "Grow м’якше нарощує землю"
         ],
  correctAnswer: 3,
  explanation: "Grow дає м’якше нарощування порівняно з грубим Add.",
@@ -1086,7 +983,7 @@ export const ukLesson12 = {
           "Зберегти в Roblox",
           "Забирати / змивати землю (озера, затоки, стачування)",
           "Групувати Model",
-          "Відкрити Output",
+          "Відкрити Output"
         ],
  correctAnswer: 1,
  explanation: "Subtract копає; Erode м’якше стачує поверхню.",
@@ -1099,7 +996,7 @@ export const ukLesson12 = {
           "Щоб згладити гострі краї місцевості",
           "Щоб зробити Parts прозорими",
           "Щоб увімкнути Anchored",
-          "Щоб створити Script",
+          "Щоб створити Script"
         ],
  correctAnswer: 0,
  explanation: "Smooth пом’якшує схили після грубої ліпки.",
@@ -1112,7 +1009,7 @@ export const ukLesson12 = {
           "Створити RemoteEvent",
           "Вирізати вікна Union",
           "Вирівняти зону під будівництво / двір",
-          "Змінити BrickColor Part",
+          "Змінити BrickColor Part"
         ],
  correctAnswer: 2,
  explanation: "Flatten вирівнює майданчик під будинок чи двір.",
@@ -1125,7 +1022,7 @@ export const ukLesson12 = {
           "Paint → Generate → Smooth",
           "Generate → Add/Subtract/Grow/Erode → Smooth/Flatten → Paint",
           "Play → Negate → Generate",
-          "Union → Paint → Generate",
+          "Union → Paint → Generate"
         ],
  correctAnswer: 1,
  explanation: "Спочатку форма, потім згладжування/вирівнювання, потім фарба.",
@@ -1138,7 +1035,7 @@ export const ukLesson12 = {
           "Тільки на дах будинку",
           "У ServerScriptService",
           "На Neon-кнопку",
-          "На пляж біля води",
+          "На пляж біля води"
         ],
  correctAnswer: 3,
  explanation: "Пісок читається як берег / пляж.",
@@ -1151,7 +1048,7 @@ export const ukLesson12 = {
           "Лише Rock",
           "Лише Neon",
           "Grass → Sand → Water",
-          "Тільки Plastic Parts",
+          "Тільки Plastic Parts"
         ],
  correctAnswer: 2,
  explanation: "Трава, пісок і вода разом читаються як берег.",
@@ -1164,7 +1061,7 @@ export const ukLesson12 = {
           "Flatten землю і/або Move будинок на поверхню",
           "Видалити акаунт",
           "Вимкнути Explorer",
-          "Negate на Baseplate",
+          "Negate на Baseplate"
         ],
  correctAnswer: 0,
  explanation: "Піджени висоту землі або Position будинку.",
@@ -1177,7 +1074,7 @@ export const ukLesson12 = {
           "Бо Terrain зникає в Play",
           "Бо Paint працює лише в Play",
           "Бо Generate доступний лише в Play",
-          "Бо в Edit анімація води може бути не видно",
+          "Бо в Edit анімація води може бути не видно"
         ],
  correctAnswer: 3,
  explanation: "Багато ефектів води видно саме під час Play.",
@@ -1190,7 +1087,7 @@ export const ukLesson12 = {
           "Підпису в Explorer",
           "Швидкої грубої форми острова",
           "Створення ModuleScript",
-          "Зміни Snap сітки Parts",
+          "Зміни Snap сітки Parts"
         ],
  correctAnswer: 1,
  explanation: "Великий пензель швидко задає силует ландшафту.",
@@ -1203,11 +1100,11 @@ export const ukLesson12 = {
           "Порожній Baseplate без землі",
           "Тільки одна Part Neon",
           "Острів з водою, згладженими берегами, ≥3 матеріалами, будинок на зоні і Save",
-          "Лише відкритий Toolbox",
+          "Лише відкритий Toolbox"
         ],
  correctAnswer: 2,
  explanation: "Потрібен виліплений і пофарбований острів, збережений у Roblox.",
- },
+ }
  ],
  },
 }
@@ -1225,21 +1122,13 @@ export const ukLesson13 = {
  "Вставити Script у Part і відкрити Output",
  "Оголосити змінні через local і змінити вигляд Part з коду",
  "Використовувати print для перевірки значень",
- "Здати артефакт MagicCube на острові з 1.2",
+ "Здати артефакт MagicCube на острові з 1.2"
  ],
  theory: {
  sections: [
  {
  title: "Сьогоднішня місія - магічний куб",
  content: `Досі ти будував руками: стіни, вікна, острів. Сьогодні світ уперше **слухається коду**. Артефакт уроку - **магічний куб** (\`MagicCube\`): Part на острові, у якій живе Script. Скрипт через змінні змінює вигляд куба і пише повідомлення в **Output**.
-
-**Що здаємо:**
-- Part \`MagicCube\` на острові (біля будинку / на дворі)
-- Усередині: **Script** (не LocalScript)
-- Код із \`local\`, зміною Properties і \`print\`
-- Play: у Output видно твої повідомлення, куб змінився
-- Save: \`Lesson 1.3 - MagicCube\`
-
 **Спіраль важких тем:** саме тут уперше з’являються **змінні**. У **1.4** додамо арифметику й \`if/else\`. Не намагайся сьогодні писати складні умови - сфокусуйся на \`local\`, \`script.Parent\` і Properties.
 
 Відкрий Place \`Lesson 1.2 - Island\`. Studio + Output поруч із текстом.`,
@@ -1442,23 +1331,6 @@ print("Size:", part.Size)
 **Далі:** **1.4 - арифметика + if/else** на базі цього куба / кнопки (ClickDetector lite як тригер).`,
  },
  {
- title: "Погляд на 1.4 - навіщо вже зараз думати про if",
- content: `Сьогодні куб завжди робить одне й те саме при старті. У 1.4 з’явиться вибір:
-
-\`\`\`lua
-local score = 10
-if score >= 10 then
- print("High score path")
-else
- print("Keep trying")
-end
-\`\`\`
-
-Поки що **не обов’язково** вставляти if у залік 1.3. Але якщо встигаєш - спробуй у челенджі: наприклад, \`if part.Anchored then print("safe") end\`. Це підготовка, не заміна основному артефакту.
-
-Головний фокус 1.3 лишається: **змінні + Properties + print**.`,
- },
- {
  title: "Зв’язок з будинком і островом (цілісність модуля)",
  content: `Модуль «Старт творця» будується шарами:
 1.1 будинок → 1.2 острів → **1.3 код на сцені** → 1.4 логіка → 1.5 оздоба → 1.6 атмосфера → 1.7 вечірка → 1.8 checkpoint.
@@ -1466,7 +1338,7 @@ end
 Якщо зараз створити новий порожній Place лише для куба - втратиш контекст і ускладниш 1.5–1.8. Працюй у \`Lesson 1.2 - Island\`, збережи як \`Lesson 1.3 - MagicCube\` (Save As / нова версія в Roblox - як звикло на курсі).
 
 **Зроби зараз (2 хв):** переконайся, що в тому ж Place видно й будинок, і острів, і куб. Один скрін Viewport - уже портфоліо-момент «мій перший код у світі».`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -1504,7 +1376,7 @@ end
  mistake: "Редагують код лише в Play і губляться",
  explanation: "Зміни в Play легко плутають із Edit.",
  correctApproach: "Stop → прав код → Play знову.",
- },
+ }
  ],
  summary:
  "Ти вставив перший Script у MagicCube, оголосив змінні через local, змінив Properties з коду і перевірив результат через print у Output - старт програмування на острові Модуля 1.",
@@ -1543,7 +1415,7 @@ end
  "Script має бути всередині MagicCube",
  "Stop перед редагуванням коду",
  "Neon + яскравий колір найкраще видно на скріні",
- "Не ховай куб під водою",
+ "Не ховай куб під водою"
  ],
  optionalChallenge:
  "Зроби два куби (MagicCube_A/B) з майже однаковим Script, але різними local-кольорами - побачиш силу змінних.",
@@ -1560,7 +1432,7 @@ end
           "Лише в Lighting",
           "Обов’язково LocalScript у StarterGui",
           "У Terrain",
-          "Усередині MagicCube (script.Parent = куб)",
+          "Усередині MagicCube (script.Parent = куб)"
         ],
  correctAnswer: 3,
  explanation: "Script у Part дає правильний script.Parent.",
@@ -1573,7 +1445,7 @@ end
           "Видалити Part",
           "Оголосити змінну в цьому Script",
           "Увімкнути Neon",
-          "Зберегти Place",
+          "Зберегти Place"
         ],
  correctAnswer: 1,
  explanation: "local створює локальну змінну.",
@@ -1586,7 +1458,7 @@ end
           "Part, у якій лежить Script",
           "Гравця",
           "Sky",
-          "Website Roblox",
+          "Website Roblox"
         ],
  correctAnswer: 0,
  explanation: "Parent - контейнер Script, тобто MagicCube.",
@@ -1599,7 +1471,7 @@ end
           "Explorer",
           "Toolbox",
           "Output",
-          "Terrain Editor",
+          "Terrain Editor"
         ],
  correctAnswer: 2,
  explanation: "Output показує print і помилки.",
@@ -1612,7 +1484,7 @@ end
           "LocalScript",
           "Script",
           "ModuleScript",
-          "Animation",
+          "Animation"
         ],
  correctAnswer: 1,
  explanation: "Серверний Script у Part.",
@@ -1625,7 +1497,7 @@ end
           "Ім’я Place",
           "Гучність Sound",
           "Розмір острова",
-          "Колір Part",
+          "Колір Part"
         ],
  correctAnswer: 3,
  explanation: "BrickColor задає колір Part.",
@@ -1638,7 +1510,7 @@ end
           "Поставити матеріал Neon",
           "Видалити Terrain",
           "Створити Folder",
-          "Відкрити Plugin",
+          "Відкрити Plugin"
         ],
  correctAnswer: 0,
  explanation: "Так задають Material з коду.",
@@ -1651,7 +1523,7 @@ end
           "ClockTime",
           "SoundId",
           "Size",
-          "WalkSpeed",
+          "WalkSpeed"
         ],
  correctAnswer: 2,
  explanation: "Size Part задають через Vector3.",
@@ -1664,7 +1536,7 @@ end
           "Видалити акаунт",
           "Видалити Terrain",
           "Увімкнути Union",
-          "Прочитати перший червоний рядок і перевірити дерево Script",
+          "Прочитати перший червоний рядок і перевірити дерево Script"
         ],
  correctAnswer: 3,
  explanation: "Дебаг починається з повідомлення помилки й місця Script.",
@@ -1677,7 +1549,7 @@ end
           "Так вимагає Roblox завжди",
           "Легше міняти налаштування в одному місці",
           "Інакше print не працює",
-          "Щоб вимкнути Anchored",
+          "Щоб вимкнути Anchored"
         ],
  correctAnswer: 1,
  explanation: "Змінні зверху спрощують зміни й готують до 1.4.",
@@ -1690,7 +1562,7 @@ end
           "true (щоб не падав)",
           "false завжди",
           "nil",
-          "тільки в LocalScript",
+          "тільки в LocalScript"
         ],
  correctAnswer: 0,
  explanation: "Статичний куб закріплюють.",
@@ -1703,7 +1575,7 @@ end
           "1.1",
           "1.2",
           "1.3",
-          "Модулі 9",
+          "Модулі 9"
         ],
  correctAnswer: 2,
  explanation: "1.3 - старт змінних; 1.4 - if/else.",
@@ -1716,7 +1588,7 @@ end
           "Part завжди Neon",
           "Part повністю невидима",
           "Part видалена",
-          "Part у Workspace",
+          "Part у Workspace"
         ],
  correctAnswer: 1,
  explanation: "1 = повна прозорість.",
@@ -1729,7 +1601,7 @@ end
           "Легко заплутати стан Edit і Play",
           "Так заборонено законом",
           "print тоді зелений",
-          "Terrain зникає",
+          "Terrain зникає"
         ],
  correctAnswer: 0,
  explanation: "Новачкам безпечніший цикл Stop → Edit → Play.",
@@ -1742,11 +1614,11 @@ end
           "Лише острів без коду",
           "Порожній Baseplate",
           "Тільки Decal на даху",
-          "MagicCube зі Script, local, зміною вигляду, print і Save",
+          "MagicCube зі Script, local, зміною вигляду, print і Save"
         ],
  correctAnswer: 3,
  explanation: "Потрібен магічний куб з робочим першим Script.",
- },
+ }
  ],
  },
 }
@@ -1764,20 +1636,13 @@ export const ukLesson14 = {
  "Порівнювати значення: == ~= > < >= <=",
  "Писати розгалуження if / elseif / else",
  "Підключити ClickDetector lite як тригер логіки",
- "Здати LogicCube - куб, що змінює поведінку за умовою",
+ "Здати LogicCube - куб, що змінює поведінку за умовою"
  ],
  theory: {
  sections: [
  {
  title: "Сьогоднішня місія - куб логіки",
  content: `У **1.3** магічний куб завжди робив одне й те саме при старті. Сьогодні куб **вирішує**: якщо умова істинна - один ефект, інакше - інший. Артефакт - **LogicCube** (можна розвинути \`MagicCube\` або зробити новий Part поруч).
-
-**Що здаємо:**
-- Part \`LogicCube\` на острові зі Script + **ClickDetector**
-- У коді є арифметика (хоча б + або *) і \`if / else\` (бажано \`elseif\`)
-- Клік змінює вигляд / значення і пише в Output, *яка* гілка спрацювала
-- Save: \`Lesson 1.4 - LogicCube\`
-
 **Спіраль:** змінні були в 1.3 → сьогодні **арифметика + if/else**. ClickDetector тут **lite**: лише як кнопка «запусти логіку», не як головна тема курсу (глибша взаємодія - у M3).
 
 Відкрий \`Lesson 1.3 - MagicCube\` (або Island). Output тримай відкритим.`,
@@ -2019,26 +1884,7 @@ end)
 | Відмінно | Ріст Size + гілки рангів; легкий debounce |
 
 **Далі:** **1.5 - Materials, Decal, оздоба** будинку з 1.1 (візуальний шар без нової важкої логіки). LogicCube лишай на острові - він знадобиться для настрою в 1.6–1.7.`,
- },
- {
- title: "Місток: від LogicCube до Party Mode",
- content: `У **1.7** з’явиться щось дуже схоже:
-
-\`\`\`lua
-local partyOn = false
--- клік перемикає:
-partyOn = not partyOn
-if partyOn then
- -- ніч + музика
-else
- -- день
-end
-\`\`\`
-
-Сьогодні ти тренуєш саме цей м’яз: **змінна стану + if**. Різниця лише в тому, *що* саме вмикаєш. Тому не ставсь до 1.4 як до «математики заради математики» - це фундамент вечірки й усіх пізніших систем.
-
-**Зроби зараз (2 хв):** у нотатках однією фразою напиши: «мій LogicCube вважає, що успіх - це …» (наприклад clicks >= 3). Це і є дизайн умови.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -2076,7 +1922,7 @@ end
  mistake: "Лише арифметика без if або навпаки",
  explanation: "Сітка уроку вимагає обидва вміння в артефакті.",
  correctApproach: "Мінімум clicks + 1 і одна розвилка if/else на кліку.",
- },
+ }
  ],
  summary:
  "Ти освоїв арифметику й порівняння в Luau, написав if/elseif/else і підключив ClickDetector як тригер - LogicCube реагує на кліки різними гілками логіки.",
@@ -2114,7 +1960,7 @@ end
  "Спочатку if/else з print, потім додавай колір",
  "Пороги elseif став від більшого до меншого",
  "MaxActivationDistance 32, якщо клік не ловиться",
- "Stop → Edit → Play, якщо Output дивний",
+ "Stop → Edit → Play, якщо Output дивний"
  ],
  optionalChallenge:
  "Зроби goal у local зверху (наприклад 5) і одну арифметичну формулу score = clicks * 10; покажи Rank за score.",
@@ -2131,7 +1977,7 @@ end
           "==",
           "+",
           "then",
-          "end",
+          "end"
         ],
  correctAnswer: 1,
  explanation: "+ додає значення.",
@@ -2144,7 +1990,7 @@ end
           "Присвоює значення",
           "Ділить числа",
           "Створює Part",
-          "Перевіряє рівність",
+          "Перевіряє рівність"
         ],
  correctAnswer: 3,
  explanation: "== порівнює; = присвоює.",
@@ -2157,7 +2003,7 @@ end
           "Помилка Luau",
           "Plus ігнорується",
           "Спочатку виконується множення",
-          "print округлює",
+          "print округлює"
         ],
  correctAnswer: 2,
  explanation: "* і / мають вищий пріоритет; дужки змінюють порядок.",
@@ -2170,7 +2016,7 @@ end
           "if clicks >= 3 then",
           "if clicks >= 3",
           "when clicks >= 3",
-          "if clicks >= 3 {",
+          "if clicks >= 3 {"
         ],
  correctAnswer: 0,
  explanation: "Після умови потрібен then.",
@@ -2183,7 +2029,7 @@ end
           "Видалити Script",
           "Увімкнути Terrain",
           "Зберегти Place",
-          "Виконати код, якщо умова if хибна",
+          "Виконати код, якщо умова if хибна"
         ],
  correctAnswer: 3,
  explanation: "else - альтернативна гілка.",
@@ -2196,7 +2042,7 @@ end
           "Є лише один варіант",
           "Потрібно перевірити кілька умов підряд",
           "Немає ClickDetector",
-          "Part Anchored false",
+          "Part Anchored false"
         ],
  correctAnswer: 1,
  explanation: "elseif додає проміжні гілки.",
@@ -2209,7 +2055,7 @@ end
           "Тільки всередині MouseClick щоразу заново",
           "У Lighting",
           "Поза функцією Connect",
-          "У назві Place",
+          "У назві Place"
         ],
  correctAnswer: 2,
  explanation: "Інакше лічильник скидатиметься кожен клік.",
@@ -2222,7 +2068,7 @@ end
           "Lite-тригер для запуску логіки if",
           "Заміна Terrain",
           "Обов’язковий ModuleScript",
-          "Тип камери",
+          "Тип камери"
         ],
  correctAnswer: 0,
  explanation: "Сітка: ClickDetector lite як тригер.",
@@ -2235,7 +2081,7 @@ end
           "Дорівнює",
           "Не дорівнює",
           "Множення",
-          "Коментар",
+          "Коментар"
         ],
  correctAnswer: 1,
  explanation: "~= - нерівність у Luau.",
@@ -2248,7 +2094,7 @@ end
           "Завжди Rank S",
           "Помилка Studio",
           "Видалиться Part",
-          "Може спрацювати слабша гілка раніше залежно від порядку",
+          "Може спрацювати слабша гілка раніше залежно від порядку"
         ],
  correctAnswer: 3,
  explanation: "Порядок гілок критичний; суворіші умови став вище.",
@@ -2261,7 +2107,7 @@ end
           "Арифметики зі змінною",
           "Union",
           "Terrain Paint",
-          "Decal",
+          "Decal"
         ],
  correctAnswer: 0,
  explanation: "Збільшення лічильника - базова арифметика стану.",
@@ -2274,7 +2120,7 @@ end
           "stop",
           "finish",
           "end",
-          "close",
+          "close"
         ],
  correctAnswer: 2,
  explanation: "У Luau блоки закриває end.",
@@ -2287,7 +2133,7 @@ end
           "1.1",
           "1.3",
           "1.8",
-          "1.4",
+          "1.4"
         ],
  correctAnswer: 3,
  explanation: "1.3 - змінні; 1.4 - if/else.",
@@ -2300,7 +2146,7 @@ end
           "Output існує лише в Edit",
           "MouseClick не працює в Edit як у грі",
           "ClickDetector видаляється в Play",
-          "if заборонений у Play",
+          "if заборонений у Play"
         ],
  correctAnswer: 1,
  explanation: "Кліки гравця ловляться під час Play.",
@@ -2313,11 +2159,11 @@ end
           "LogicCube з арифметикою, if/else і кліком",
           "Лише острів без коду",
           "Порожній Baseplate",
-          "Тільки Decal",
+          "Тільки Decal"
         ],
  correctAnswer: 0,
  explanation: "Потрібен куб логіки з умовами на кліку.",
- },
+ }
  ],
  },
 }
@@ -2335,7 +2181,7 @@ export const ukLesson15 = {
  "Відрізнити BrickColor і Color3 і коли що зручніше",
  "Додати Decal / Texture на стіни чи вивіску",
  "Підсилити акцент Neon без перетворення всього в «дискотеку»",
- "Здати оздоблений House_01 зі збереженим стилем фасаду",
+ "Здати оздоблений House_01 зі збереженим стилем фасаду"
  ],
  theory: {
  sections: [
@@ -2348,8 +2194,6 @@ export const ukLesson15 = {
 - мінімум **1 Decal** або **Texture** на видному місці (вивіска, стіна, дверний простір)
 - Neon лише як акцент (лампа, облямівка, вивіска) - не всі стіни
 - Save: \`Lesson 1.5 - Decorated House\`
-
-**Спіраль:** сьогодні майже без нового коду. Логіка if лишається в LogicCube; тут тренуємо око дизайнера. У **1.6** поверх оздоби ляже Lighting + Sound.
 
 Відкрий Place з будинком (ланцюжок 1.1→1.4). Працюй у тому ж світі.`,
  },
@@ -2542,7 +2386,7 @@ print("Sign ready:", part.Name)
 - [ ] Neon лише як акцент
 - [ ] Anchored на декорі
 - [ ] Save з назвою 1.5`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -2580,7 +2424,7 @@ print("Sign ready:", part.Name)
  mistake: "Зберегли без нової назви / не той Place",
  explanation: "Втрачається слід артефакту 1.5.",
  correctApproach: "Save to Roblox → Lesson 1.5 - Decorated House.",
- },
+ }
  ],
  summary:
  "Ти оздобив будинок: узгодив Material і колір фасаду, додав Decal/Texture і Neon-акцент - візуальний шар перед Lighting і звуком у 1.6.",
@@ -2617,7 +2461,7 @@ print("Sign ready:", part.Name)
  "Decal не видно - змінюй Face",
  "Neon лише на дрібних деталях",
  "Не чіпай Negate/Union вікон без потреби",
- "Імена Sign_Board / Lamp_1 допомагають у 1.8",
+ "Імена Sign_Board / Lamp_1 допомагають у 1.8"
  ],
  optionalChallenge:
  "Зроби «денну» і «нічну» пару скрінів одного фасаду (ClockTime змінитимеш глибоко в 1.6 - зараз можна просто прикрутити Neon і уявити ніч).",
@@ -2634,7 +2478,7 @@ print("Sign ready:", part.Name)
           "Тип скрипта",
           "Мову Studio",
           "Поверхню / вигляд Part",
-          "Розмір острова Generate",
+          "Розмір острова Generate"
         ],
  correctAnswer: 2,
  explanation: "Material задає вигляд поверхні.",
@@ -2647,7 +2491,7 @@ print("Sign ready:", part.Name)
           "Neon на всіх стінах",
           "Brick або Wood",
           "ForceField",
-          "Air",
+          "Air"
         ],
  correctAnswer: 1,
  explanation: "Brick/Wood читаються як фасад; Neon - акцент.",
@@ -2660,7 +2504,7 @@ print("Sign ready:", part.Name)
           "Видаляє Terrain",
           "Створює ClickDetector",
           "Замінює Script",
-          "Це готові названі кольори",
+          "Це готові названі кольори"
         ],
  correctAnswer: 3,
  explanation: "BrickColor - пресети кольорів.",
@@ -2673,7 +2517,7 @@ print("Sign ready:", part.Name)
           "Потрібен довільний відтінок RGB",
           "Треба згенерувати острів",
           "Треба Union",
-          "Треба вимкнути Output",
+          "Треба вимкнути Output"
         ],
  correctAnswer: 0,
  explanation: "Color3 дає точніший контроль кольору.",
@@ -2686,7 +2530,7 @@ print("Sign ready:", part.Name)
           "Матеріал усіх стін",
           "Акцент (вивіска, лампа, облямівка)",
           "Заміну Anchored",
-          "Тип камери",
+          "Тип камери"
         ],
  correctAnswer: 1,
  explanation: "Neon - акцент, не весь будинок.",
@@ -2699,7 +2543,7 @@ print("Sign ready:", part.Name)
           "Інструмент Terrain Subtract",
           "Тип RemoteEvent",
           "Шаблон Baseplate",
-          "Зображення на грані Part",
+          "Зображення на грані Part"
         ],
  correctAnswer: 3,
  explanation: "Decal клеїть картинку на Face.",
@@ -2712,7 +2556,7 @@ print("Sign ready:", part.Name)
           "Face і TextureId",
           "Видалення Workspace",
           "Мову інтерфейсу",
-          "Snap to Grid",
+          "Snap to Grid"
         ],
  correctAnswer: 0,
  explanation: "Часто невірний Face або порожній id.",
@@ -2725,7 +2569,7 @@ print("Sign ready:", part.Name)
           "Єдиного кліку MouseClick",
           "Generate Islands",
           "Повторюваного візерунка по площині",
-          "ModuleScript",
+          "ModuleScript"
         ],
  correctAnswer: 2,
  explanation: "Texture зручний для тайлінгу патерну.",
@@ -2738,7 +2582,7 @@ print("Sign ready:", part.Name)
           "Обов’язково Negate",
           "Видалити будинок",
           "Вимкнути Explorer",
-          "Anchored = true",
+          "Anchored = true"
         ],
  correctAnswer: 3,
  explanation: "Інакше декор впаде від гравітації.",
@@ -2751,7 +2595,7 @@ print("Sign ready:", part.Name)
           "Можна зламати вже готові отвори",
           "Union заборонений у Roblox",
           "Decal тоді не працює ніколи",
-          "Studio видалить острів",
+          "Studio видалить острів"
         ],
  correctAnswer: 0,
  explanation: "Рамки з окремих Parts безпечніші.",
@@ -2764,7 +2608,7 @@ print("Sign ready:", part.Name)
           "50 Free Models",
           "≥1 Decal або Texture",
           "Жодних зображень",
-          "Лише Skybox",
+          "Лише Skybox"
         ],
  correctAnswer: 1,
  explanation: "Сітка: Decal/Texture як частина оздоби.",
@@ -2777,7 +2621,7 @@ print("Sign ready:", part.Name)
           "Кожна Part унікального випадкового Material",
           "Тільки Plastic",
           "2–3 матеріали/кольори в одній темі",
-          "Без даху",
+          "Без даху"
         ],
  correctAnswer: 2,
  explanation: "Стиль = обмежена палітра.",
@@ -2790,7 +2634,7 @@ print("Sign ready:", part.Name)
           "Lighting, Atmosphere, Sound",
           "DataStore",
           "RemoteEvent",
-          "Tool damage",
+          "Tool damage"
         ],
  correctAnswer: 0,
  explanation: "За сіткою M1: атмосфера після оздоби.",
@@ -2803,7 +2647,7 @@ print("Sign ready:", part.Name)
           "Part",
           "asdf",
           "Union",
-          "Sign_Board",
+          "Sign_Board"
         ],
  correctAnswer: 3,
  explanation: "Зрозумілі імена для декору.",
@@ -2816,11 +2660,11 @@ print("Sign ready:", part.Name)
           "Untitled",
           "Lesson 1.5 - Decorated House",
           "Lesson 1.1 - House_01 лише",
-          "Module 9",
+          "Module 9"
         ],
  correctAnswer: 1,
  explanation: "Артефакт оздобленого будинку.",
- },
+ }
  ],
  },
 }
@@ -2838,7 +2682,7 @@ export const ukLesson16 = {
  "Додати Atmosphere (серпанок) і легке підсилення Bloom",
  "Розвести ambient-луп і короткі SFX",
  "Зібрати два настрої: ранок і ніч, з відповідним звуком",
- "Зберегти Place як атмосферний острів перед Party Mode",
+ "Зберегти Place як атмосферний острів перед Party Mode"
  ],
  theory: {
  sections: [
@@ -2852,8 +2696,6 @@ export const ukLesson16 = {
 - є **ambient**-звук (зациклений фон) і щонайменше **один SFX** (короткий ефект)
 - Play-тест: прохід від будинку до пляжу в обох настроях
 - Save: \`Lesson 1.6 - Island Atmosphere\`
-
-**Спіраль:** сьогодні майже не вчимо новий \`if\` - він знадобиться завтра в **Party Mode (1.7)**, де кнопка сама перемикатиме ніч і музику. Зараз ти готуєш «палітру» світла й звуку вручну, щоб розуміти, *що саме* потім вмикатиме код.
 
 Відкрий \`Lesson 1.5 - Decorated House\` (або свіжий ланцюжок острова). Панель **Output** тримай під рукою, якщо додаватимеш короткий Script для SFX.`,
  },
@@ -3056,7 +2898,7 @@ end
 \`\`\`
 
 Сьогодні досить розуміти сенс цих рядків; писати повний Party Mode будеш у 1.7.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -3094,7 +2936,7 @@ end
  mistake: "Не зберегли після довгого міксу",
  explanation: "Втрачаються Sound і Lighting.",
  correctApproach: "Save to Roblox → Lesson 1.6 - Island Atmosphere.",
- },
+ }
  ],
  summary:
  "Ти налаштував Lighting і Atmosphere, зібрав настрої ранку й ночі, додав ambient-луп і SFX - острів звучить і виглядає як сцена, готова до Party Mode.",
@@ -3132,7 +2974,7 @@ end
  "Ambient тихіший за SFX",
  "Density не піднімай «на око» вище 0.45 без потреби",
  "Вночі перевір, чи видно стежку до води",
- "Імена Ambient_ / SFX_ полегшать Party Mode",
+ "Імена Ambient_ / SFX_ полегшать Party Mode"
  ],
  optionalChallenge:
  "Зроби два Sound (день/ніч) і таблицю пресетів у нотатках - завтра лише підв’яжеш їх до partyOn.",
@@ -3149,7 +2991,7 @@ end
           "Годиною доби в сцені",
           "Гучністю Sound",
           "Розміром Part",
-          "Типом Script",
+          "Типом Script"
         ],
  correctAnswer: 0,
  explanation: "ClockTime задає час доби 0–24.",
@@ -3162,7 +3004,7 @@ end
           "Швидкість Character",
           "Кількість вікон Union",
           "MaxActivationDistance",
-          "Товщину серпанку / туману",
+          "Товщину серпанку / туману"
         ],
  correctAnswer: 3,
  explanation: "Density - наскільки густий атмосферний серпанок.",
@@ -3175,7 +3017,7 @@ end
           "Looped = false і Volume 1 завжди",
           "Looped = true і низьку гучність",
           "Жити лише в Terrain",
-          "Заміняти ClickDetector",
+          "Заміняти ClickDetector"
         ],
  correctAnswer: 1,
  explanation: "Фон зациклюють і тримають тихішим за SFX.",
@@ -3188,7 +3030,7 @@ end
           "Єдиний обов’язковий DataStore",
           "Тип камери",
           "Короткий ефект на дію або Part",
-          "Шаблон Baseplate",
+          "Шаблон Baseplate"
         ],
  correctAnswer: 2,
  explanation: "SFX - короткі звуки; ambient - фон.",
@@ -3201,7 +3043,7 @@ end
           "Бо ClockTime працює лише в Edit",
           "Бо Atmosphere видаляється в Play",
           "Бо Save недоступний уночі",
-          "Щоб переконатися, що шлях і фасад ще видно",
+          "Щоб переконатися, що шлях і фасад ще видно"
         ],
  correctAnswer: 3,
  explanation: "Вночі легко зробити сцену непрохідно темною.",
@@ -3214,7 +3056,7 @@ end
           "Looped",
           "Anchored",
           "Union",
-          "Snap",
+          "Snap"
         ],
  correctAnswer: 0,
  explanation: "Для фону потрібен Looped = true.",
@@ -3227,7 +3069,7 @@ end
           "Максимальним завжди",
           "Замість Atmosphere",
           "Легким акцентом або опційним",
-          "Замість Sound",
+          "Замість Sound"
         ],
  correctAnswer: 2,
  explanation: "Bloom lite - підсилення, не обов’язкова каша.",
@@ -3240,7 +3082,7 @@ end
           "Генерації острова",
           "Запуску відтворення Sound",
           "Створення Folder",
-          "Видалення Lighting",
+          "Видалення Lighting"
         ],
  correctAnswer: 1,
  explanation: "Play() стартує звук на Instance.",
@@ -3253,7 +3095,7 @@ end
           "Roblox заборонив числа вище 0.5",
           "Перекриє SFX і зробить мікс брудним",
           "Тоді не працює ClockTime",
-          "Тоді зникає Decal",
+          "Тоді зникає Decal"
         ],
  correctAnswer: 1,
  explanation: "Тихіший фон лишає місце ефектам.",
@@ -3266,7 +3108,7 @@ end
           "Вирізати вікна",
           "Зберегти Place",
           "Підфарбувати тіньові зони",
-          "Увімкнути Toolbox",
+          "Увімкнути Toolbox"
         ],
  correctAnswer: 2,
  explanation: "OutdoorAmbient задає відтінок у тіні.",
@@ -3279,7 +3121,7 @@ end
           "Світло → Atmosphere → звук → Play",
           "П’ять ambient → потім ClockTime",
           "Bloom максимум → без Play",
-          "Спочатку Party Mode кнопка без пресетів",
+          "Спочатку Party Mode кнопка без пресетів"
         ],
  correctAnswer: 0,
  explanation: "Спочатку видно світ, потім чути.",
@@ -3292,7 +3134,7 @@ end
           "До 1.6",
           "Лише в M9",
           "Замість 1.2",
-          "В 1.7 після атмосфери",
+          "В 1.7 після атмосфери"
         ],
  correctAnswer: 3,
  explanation: "1.6 готує пресети; 1.7 перемикає їх кодом.",
@@ -3305,7 +3147,7 @@ end
           "Згенерувати Terrain",
           "Відкрити Plugins",
           "Безпечно знайти Sound і уникнути помилки, якщо його немає",
-          "Змінити мову Studio",
+          "Змінити мову Studio"
         ],
  correctAnswer: 2,
  explanation: "Повертає nil замість падіння, якщо дитини немає.",
@@ -3318,7 +3160,7 @@ end
           "Безкоштовний Robux",
           "Більш об’ємну картинку з тінями",
           "Автоматичний Decal",
-          "Вимкнення Sound",
+          "Вимкнення Sound"
         ],
  correctAnswer: 1,
  explanation: "Тіні додають об’єму сцені.",
@@ -3331,11 +3173,11 @@ end
           "Lesson 1.6 - Island Atmosphere",
           "Untitled",
           "Lesson 1.1 - House_01",
-          "Module 12",
+          "Module 12"
         ],
  correctAnswer: 0,
  explanation: "Артефакт атмосферного острова.",
- },
+ }
  ],
  },
 }
@@ -3353,7 +3195,7 @@ export const ukLesson17 = {
  "Тримати стан вечірки у змінній partyOn і перемикати її кліком",
  "Через if partyOn вмикати ніч, музику й візуальний ефект «конфеті»",
  "Повернути денний/ранковий пресет, коли вечірку вимкнено",
- "Здати робочий toggle Party Mode на острові",
+ "Здати робочий toggle Party Mode на острові"
  ],
  theory: {
  sections: [
@@ -3367,8 +3209,6 @@ export const ukLesson17 = {
 - \`if partyOn then ... else ... end\`: ніч + музика + ефект конфеті / свята
 - у гілці \`else\` - повернення до денного/ранкового пресету з 1.6
 - Save: \`Lesson 1.7 - Party Mode\`
-
-**Спіраль:** це застосування **1.4** (if + клік) на пресетах **1.6**. Нових складних тем немає - збираємо «вау» з уже відомого.
 
 Відкрий \`Lesson 1.6 - Island Atmosphere\`. Запиши собі числа: ранок (наприклад ClockTime \`9\`) і ніч (\`0.5\`).`,
  },
@@ -3604,18 +3444,7 @@ end)
 | Відмінно | function для візуалу, debounce, кнопка змінює колір |
 
 **Далі (1.8):** checkpoint усього Модуля 1 - рубрика острова, Save, легкі Folder, peer-demo саме **Party Mode**. Сьогодні зроби кнопку стабільною: завтра показуватимеш її іншим.`,
- },
- {
- title: "Місток до checkpoint 1.8",
- content: `У 1.8 ти не вчиш нову механіку - ти **доводиш локацію**:
-- будинок + острів + куби + оздоба + атмосфера + **вечірка**
-- імена в Explorer
-- короткий показ другу / викладачу: 30–60 с Party Mode
-
-Тому не розкидай тестові Parts без імен і не лишай три копії \`Music_Party\`. Прибери сміття вже сьогодні.
-
-**Зроби зараз (2 хв):** Ctrl+Shift+F → пошук \`Part\` без змісту; перейменуй або видали зайве біля кнопки.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -3653,7 +3482,7 @@ end)
  mistake: "Занадто гучна музика",
  explanation: "Мікс перекриває ambient і голос на уроці.",
  correctApproach: "Volume музики ≈ 0.35–0.5; ambient ще тихіший.",
- },
+ }
  ],
  summary:
  "Ти зібрав Neon-кнопку з перемикачем partyOn: клік вмикає ніч, музику й конфеті, повторний клік повертає спокійний день - Party Mode готовий до показу на checkpoint.",
@@ -3691,7 +3520,7 @@ end)
  "Імена Sound мають збігатися з FindFirstChild",
  "not partyOn на кожному кліку",
  "Другий клік обов’язково тестуй",
- "Конфеті можна сховати Transparency, не видаляти",
+ "Конфеті можна сховати Transparency, не видаляти"
  ],
  optionalChallenge:
  "Додай короткий SFX_PartyStart лише в момент увімкнення (не на вимкненні) і різний print для ON/OFF.",
@@ -3708,7 +3537,7 @@ end)
           "Завжди ставить true",
           "Видаляє Part",
           "Зберігає Place",
-          "Інвертує логічний стан (toggle)",
+          "Інвертує логічний стан (toggle)"
         ],
  correctAnswer: 3,
  explanation: "not перемикає true↔false.",
@@ -3721,7 +3550,7 @@ end)
           "Щоб вимкнути ефекти й повернути денний пресет",
           "Щоб увімкнути вечірку",
           "Щоб створити Terrain",
-          "Щоб відкрити Toolbox",
+          "Щоб відкрити Toolbox"
         ],
  correctAnswer: 0,
  explanation: "else повертає острів у спокійний стан.",
@@ -3734,7 +3563,7 @@ end)
           "Без Anchored обов’язково",
           "Лише LocalScript у Sky",
           "Neon з ClickDetector",
-          "MeshPart з Toolbox без Script",
+          "MeshPart з Toolbox без Script"
         ],
  correctAnswer: 2,
  explanation: "Neon-кнопка + ClickDetector - вимога 1.7.",
@@ -3747,7 +3576,7 @@ end)
           "Видалити Lighting",
           "Зупинити ambient, коли partyOn = true",
           "Вимкнути ClickDetector",
-          "Поставити ClockTime = 14 завжди",
+          "Поставити ClockTime = 14 завжди"
         ],
  correctAnswer: 1,
  explanation: "На вечірці лишають музику, а спокійний фон вимикають.",
@@ -3760,7 +3589,7 @@ end)
           "Видалити Workspace",
           "Union з Baseplate",
           "Transparency = 1 на Parts конфеті",
-          "Змінити мову Studio",
+          "Змінити мову Studio"
         ],
  correctAnswer: 2,
  explanation: "Transparency 1 ховає, 0 показує.",
@@ -3773,7 +3602,7 @@ end)
           "Малювати Decal",
           "Змінювати ClockTime з Script",
           "Створити Folder",
-          "Увімкнути Snap",
+          "Увімкнути Snap"
         ],
  correctAnswer: 1,
  explanation: "Через Lighting змінюють час доби з коду.",
@@ -3786,7 +3615,7 @@ end)
           "Усередині PartyButton",
           "Обов’язково лише в Terrain",
           "У назві Place",
-          "У BrickColor",
+          "У BrickColor"
         ],
  correctAnswer: 0,
  explanation: "script.Parent тоді вказує на кнопку.",
@@ -3799,7 +3628,7 @@ end)
           "DataStore з M4",
           "RemoteEvent з M9",
           "Лише Terrain Generate",
-          "if/клік з 1.4 і пресети світла/звуку з 1.6",
+          "if/клік з 1.4 і пресети світла/звуку з 1.6"
         ],
  correctAnswer: 3,
  explanation: "1.7 зводить логіку й атмосферу докупи.",
@@ -3812,7 +3641,7 @@ end)
           "Побачити в Output, який стан зараз активний",
           "Збільшити Brightness",
           "Створити Atmosphere",
-          "Вирізати вікна",
+          "Вирізати вікна"
         ],
  correctAnswer: 0,
  explanation: "Дебаг стану toggle через Output.",
@@ -3825,7 +3654,7 @@ end)
           "Обов’язково 1000 Parts",
           "Лише зміна імені Place",
           "Без жодного візуалу, тільки print",
-          "Помітна зміна (Parts/частинки/святкові вогні) між ON і OFF",
+          "Помітна зміна (Parts/частинки/святкові вогні) між ON і OFF"
         ],
  correctAnswer: 3,
  explanation: "Важлива помітна різниця свята, не кількість кубиків.",
@@ -3838,7 +3667,7 @@ end)
           "Видалити ClickDetector",
           "Вечіркова музика не грала вдень",
           "Скинути Anchored",
-          "Очистити Terrain",
+          "Очистити Terrain"
         ],
  correctAnswer: 1,
  explanation: "Вимикаємо музику, коли вечірка OFF.",
@@ -3851,7 +3680,7 @@ end)
           "Лише в Terrain Editor",
           "Лише на сайті Roblox без Studio",
           "У Play",
-          "У Properties без F5",
+          "У Properties без F5"
         ],
  correctAnswer: 2,
  explanation: "Клік і звук перевіряють у Play.",
@@ -3864,7 +3693,7 @@ end)
           "Втрати Decal",
           "Занадто частих подвійних кліків",
           "Зміни Material стін",
-          "Generate острова",
+          "Generate острова"
         ],
  correctAnswer: 1,
  explanation: "Коротка пауза зменшує спам кліків.",
@@ -3877,7 +3706,7 @@ end)
           "Checkpoint і показ Party Mode",
           "Новий жанр Tycoon",
           "RemoteFunction магазин",
-          "Публікація на Marketplace як єдиний фокус",
+          "Публікація на Marketplace як єдиний фокус"
         ],
  correctAnswer: 0,
  explanation: "1.8 - здача живої локації модуля.",
@@ -3890,11 +3719,11 @@ end)
           "Untitled",
           "Lesson 1.2 - Island лише",
           "Lesson 1.7 - Party Mode",
-          "Module 5",
+          "Module 5"
         ],
  correctAnswer: 2,
  explanation: "Артефакт кнопки вечірки.",
- },
+ }
  ],
  },
 }
@@ -3912,7 +3741,7 @@ export const ukLesson18 = {
  "Навести лад у Explorer легкими Folder і зрозумілими іменами",
  "Перевірити Save to Roblox і назву портфоліо",
  "Показати Party Mode однолітку / викладачу (peer-demo)",
- "Зафіксувати, що вже вмієш перед Модулем 2",
+ "Зафіксувати, що вже вмієш перед Модулем 2"
  ],
  theory: {
  sections: [
@@ -4133,17 +3962,7 @@ Lighting.ClockTime = 0.5
 | Темна ніч, нічого не видно | Brightness ≈ 0 | Підкрутити Lighting з 1.6 |
 
 **Зроби зараз (3 хв):** закрий одну дірку зі списку, якщо вона твоя.`,
- },
- {
- title: "Погляд у Модуль 2 - без спойлерів-навантажень",
- content: `Коротко, щоб було цікаво, але без домашнього завдання «вивчи вже зараз»:
-
-У M2 ти глибше збереш **моделі й рухомі з’єднання** для парку (двері, міст, атракціони) і навчишся акуратніше працювати з Toolbox. Твій острів і Party Mode можуть лишитись **хабом**, від якого піде парк - або почнеш окремий Place. Викладач скаже формат на місці.
-
-Сьогоднішнє завдання - не почати M2 раніше, а **закрити M1 якісно**.
-
-Вітаю: ти пройшов «Старт творця» від першої стіни до живої вечірки на острові.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -4181,7 +4000,7 @@ Lighting.ClockTime = 0.5
  mistake: "Видаляють будинок або острів «щоб легше було»",
  explanation: "Ланцюжок модуля саме про цілісність місця.",
  correctApproach: "Залиш усі шари 1.1–1.7 в одному Place.",
- },
+ }
  ],
  summary:
  "Ти зібрав Модуль 1 у одну живу локацію: пройшов рубрику, навів легкий лад у Explorer, зберіг Place й показав Party Mode - старт творця закрито без нових тем, лише на вже здобутих навичках.",
@@ -4217,7 +4036,7 @@ Lighting.ClockTime = 0.5
  "Script лишається всередині Part",
  "Другий клік Party Mode обов’язковий",
  "Демо тільки в Play",
- "Не тягни Free Model замість свого будинку",
+ "Не тягни Free Model замість свого будинку"
  ],
  optionalChallenge:
  "Напиши в зошиті 5 рядків: «Я вмію…» по одному на Union, Terrain, local, if, Party Mode - це шпаргалка перед M2.",
@@ -4234,7 +4053,7 @@ Lighting.ClockTime = 0.5
           "Вивчити DataStore",
           "Здати й показати вже зібрану локацію Модуля 1",
           "Побудувати tycoon",
-          "Написати LocalScript GUI",
+          "Написати LocalScript GUI"
         ],
  correctAnswer: 1,
  explanation: "Checkpoint - поліш і здача, не нова велика тема.",
@@ -4247,7 +4066,7 @@ Lighting.ClockTime = 0.5
           "RemoteEvent магазин",
           "Тільки порожній Baseplate",
           "House_01, острів, куби з кодом, оздоба, атмосфера, Party Mode",
-          "Лише ModuleScript Config",
+          "Лише ModuleScript Config"
         ],
  correctAnswer: 2,
  explanation: "Усе з ланцюжка 1.1–1.7.",
@@ -4260,7 +4079,7 @@ Lighting.ClockTime = 0.5
           "Тягнути нову механіку, якої не було в модулі",
           "Підправити Anchored і імена",
           "Перевірити Party Mode ON/OFF",
-          "Зробити Save з назвою модуля",
+          "Зробити Save з назвою модуля"
         ],
  correctAnswer: 0,
  explanation: "Лише вже вивчене; без забігання вперед.",
@@ -4273,7 +4092,7 @@ Lighting.ClockTime = 0.5
           "Щоб замінити Script",
           "Щоб згенерувати Terrain",
           "Щоб увімкнути Bloom",
-          "Щоб трохи впорядкувати Explorer перед здачею",
+          "Щоб трохи впорядкувати Explorer перед здачею"
         ],
  correctAnswer: 3,
  explanation: "Гігієна дерева об’єктів, не нова складна система.",
@@ -4286,7 +4105,7 @@ Lighting.ClockTime = 0.5
           "Може зламатись script.Parent",
           "Автоматично з’явиться Decal",
           "Увімкнеться DataStore",
-          "Видалиться Terrain",
+          "Видалиться Terrain"
         ],
  correctAnswer: 0,
  explanation: "Script має лишатись дитиною своєї Part.",
@@ -4299,7 +4118,7 @@ Lighting.ClockTime = 0.5
           "Лише в Edit без кліків",
           "У Play за 30–60 секунд",
           "Без звуку й без другого кліку",
-          "На порожньому Place без кнопки",
+          "На порожньому Place без кнопки"
         ],
  correctAnswer: 1,
  explanation: "Короткий показ у Play з ON і OFF.",
@@ -4312,7 +4131,7 @@ Lighting.ClockTime = 0.5
           "asdf",
           "Untitled Game",
           "test123",
-          "Module 1 - Living Island",
+          "Module 1 - Living Island"
         ],
  correctAnswer: 3,
  explanation: "Зрозуміла назва портфоліо модуля.",
@@ -4325,7 +4144,7 @@ Lighting.ClockTime = 0.5
           "RemoteFunction",
           "while true без wait",
           "Flatten/Move з навичок Terrain (1.2)",
-          "Видалення Lighting",
+          "Видалення Lighting"
         ],
  correctAnswer: 2,
  explanation: "Повертаємось до вже відомого Terrain/Move.",
@@ -4338,7 +4157,7 @@ Lighting.ClockTime = 0.5
           "1.1",
           "1.8 як нова тема",
           "1.3",
-          "M9",
+          "M9"
         ],
  correctAnswer: 2,
  explanation: "1.3 - перші змінні; 1.8 лише повторює.",
@@ -4351,7 +4170,7 @@ Lighting.ClockTime = 0.5
           "1.4 (і використовується в 1.7)",
           "1.2",
           "Лише M5",
-          "Ніде",
+          "Ніде"
         ],
  correctAnswer: 0,
  explanation: "1.4 вводить if; Party Mode застосовує.",
@@ -4364,7 +4183,7 @@ Lighting.ClockTime = 0.5
           "Лише один клік увімкнення",
           "Лише зміну імені кнопки",
           "Лише скрін без Play",
-          "І увімкнення, і вимкнення",
+          "І увімкнення, і вимкнення"
         ],
  correctAnswer: 3,
  explanation: "Toggle має працювати в обидва боки.",
@@ -4377,7 +4196,7 @@ Lighting.ClockTime = 0.5
           "Повторення лише Baseplate",
           "World craft (Model, Constraints, атракціони…)",
           "Реліз на Marketplace як єдиний урок",
-          "DataStore з першого дня M2",
+          "DataStore з першого дня M2"
         ],
  correctAnswer: 1,
  explanation: "Після M1 іде World craft.",
@@ -4390,7 +4209,7 @@ Lighting.ClockTime = 0.5
           "RemoteEvent",
           "DataStore",
           "Raycast",
-          "Negate + Union",
+          "Negate + Union"
         ],
  correctAnswer: 3,
  explanation: "Вікна з 1.1 через CSG.",
@@ -4403,7 +4222,7 @@ Lighting.ClockTime = 0.5
           "Щоб видалити Atmosphere",
           "Щоб скинути знання if",
           "Щоб переконатися, що збереглась саме робоча версія",
-          "Щоб увімкнути Plugin",
+          "Щоб увімкнути Plugin"
         ],
  correctAnswer: 2,
  explanation: "Перевірка, що в хмарі правильний файл.",
@@ -4416,11 +4235,11 @@ Lighting.ClockTime = 0.5
           "Жива локація за рубрикою + Save + peer-demo Party Mode",
           "Порожній Baseplate",
           "Лише один Decal без острова",
-          "Новий tycoon з нуля",
+          "Новий tycoon з нуля"
         ],
  correctAnswer: 0,
  explanation: "Checkpoint здає цілісний результат M1.",
- },
+ }
  ],
  },
 }

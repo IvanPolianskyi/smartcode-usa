@@ -215,15 +215,6 @@ const Header = () => {
 		.filter((item) => !item.hideOnMobile)
 		.filter((item) => !(user && item.accentCta))
 
-	const getUserInitials = (name) => {
-		if (!name) return '?'
-		const parts = name.trim().split(/\s+/).filter(Boolean)
-		if (parts.length >= 2) {
-			return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase()
-		}
-		return parts[0].slice(0, 2).toUpperCase()
-	}
-
 	const courses = [
 		{
 			icon: <Code size={24} />,
@@ -316,11 +307,11 @@ const Header = () => {
 							</div>
 						) : user ? (
 							<div className={styles.profileWrap}>
-								<Link href="/dashboard" className={styles.profileChip} title={tc('myProfile')}>
+								<Link href="/dashboard" className={styles.profileChip} title={tc('cabinet')}>
 									<span className={styles.profileAvatar} aria-hidden="true">
-										{getUserInitials(user.name)}
+										<User size={16} />
 									</span>
-									<span className={styles.profileName}>{user.name}</span>
+									<span className={styles.profileName}>{tc('cabinet')}</span>
 								</Link>
 								<button
 									type="button"
@@ -338,10 +329,10 @@ const Header = () => {
 							<Link
 								href="/dashboard"
 								className={styles.mobileCabinetButton}
-								aria-label={tc('myProfile')}
+								aria-label={tc('cabinet')}
 							>
 								<span className={styles.mobileProfileAvatar} aria-hidden="true">
-									{getUserInitials(user.name)}
+									<User size={16} />
 								</span>
 							</Link>
 						)}
@@ -468,8 +459,8 @@ const Header = () => {
 									className={`${styles.mobileMenuItem} ${styles.mobileProfileLink}`}
 									onClick={handleMobileMenuClose}
 								>
-									<span className={styles.mobileProfileAvatar}>{getUserInitials(user.name)}</span>
-									<span className={styles.mobileProfileName}>{user.name}</span>
+									<span className={styles.mobileProfileAvatar} aria-hidden="true"><User size={16} /></span>
+									<span className={styles.mobileProfileName}>{tc('cabinet')}</span>
 								</Link>
 								<button 
 									onClick={() => {

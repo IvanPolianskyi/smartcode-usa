@@ -16,7 +16,7 @@ export const ukLesson31 = {
  "Додати BillboardGui як підказку над об’єктом взаємодії",
  "Зробити двері/хвіртку з станом відкрито/зачинено через if",
  "Підключити серверний Script без LocalScript і без Touched",
- "Здати InteractDoor_v1 на базі Park_v1 або острова",
+ "Здати InteractDoor_v1 на базі Park_v1 або острова"
  ],
  theory: {
  sections: [
@@ -27,8 +27,6 @@ export const ukLesson31 = {
 У Модулі 1 ти вже клікав куб і кнопку вечірки через **ClickDetector**. Тоді це була швидка кнопка «зроби ефект». Сьогодні взаємодію збираємо **як систему**: два способи запуску, підказка в повітрі, зрозумілий стан «відкрито / зачинено».
 
 Після World craft у тебе є парк і двері на фізичній петлі. Тут інший навик - **логічна** реакція на намір гравця. Не обов’язково штовхати плечем: можна підійти, прочитати підказку й натиснути E.
-
-**Артефакт:** Model \`InteractDoor_v1\`
 - стулка або хвіртка біля парку / штабу
 - **ClickDetector** або **ProximityPrompt** (корисно зрозуміти обидва; у здачі достатньо одного стабільного шляху + короткий дослід другого)
 - **BillboardGui** з текстом на кшталт «Відкрити» / «Зачинити»
@@ -292,13 +290,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
 Якщо лишився час - зроби бонус spawnPad. Якщо ні - достатньо міцного killCharacter і чесного Play-тесту.
 
 **Зроби зараз (2 хв):** прибери з маршруту здачі все, що виходить за межі цього уроку.`,
- },
- {
- title: "Погляд у 3.2",
- content: `Далі світ реагуватиме на **дотик**: \`Touched\`, Humanoid, debounce, \`task.wait\`, KillBrick. Двері з 3.1 можуть лишитись біля входу в небезпечну зону - але логіку смерті пиши вже новим уроком, не змішуй усе в один Script сьогодні.
-
-**Зроби зараз (2 хв):** допиши в Note один рядок, що переносиш у наступний урок.`,
- },
+ }
  ],
  },
  practice: {
@@ -341,7 +333,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
 **Не роби:** KillBrick, \`while true\`, ScreenGui у StarterGui, Free Model дверей із чужим кодом.
 
 **Зроби зараз (4 хв):** онови HUD після зміни серверного значення без ручного підроблення на клієнті.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -372,7 +364,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
  {
  mistake: "CanCollide лишився false після «зачинити»",
  fix: "У гілці зачинено повертай CanCollide true (якщо використовуєш прозорий прийом).",
- },
+ }
  ],
  quiz: {
  title: "Тест 3.1 - Взаємодія",
@@ -386,7 +378,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "InteractDoor_v1 з підказкою і станом відкрито/зачинено",
           "KillBrick з Touched",
           "leaderstats монет",
-          "DataStore сейв",
+          "DataStore сейв"
         ],
  correctAnswer: 0,
  explanation: "Взаємодія дверей, не симулятор і не kill.",
@@ -399,7 +391,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "Лише з меню Toolbox",
           "Коли гравець підходить і натискає клавішу взаємодії",
           "Автоматично кожну секунду без гравця",
-          "Лише в Terrain Editor",
+          "Лише в Terrain Editor"
         ],
  correctAnswer: 1,
  explanation: "Підхід + E (типово).",
@@ -412,7 +404,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "M4 DataStore",
           "Лише в M12",
           "M1 (куб логіки / Party Mode)",
-          "Ніколи",
+          "Ніколи"
         ],
  correctAnswer: 2,
  explanation: "Спіраль: клік був у Модулі 1.",
@@ -425,7 +417,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "Обов’язковий ScreenGui у StarterGui",
           "Тип Constraint",
           "Сервіс збереження",
-          "Підказка в світі над Part",
+          "Підказка в світі над Part"
         ],
  correctAnswer: 3,
  explanation: "Світова підказка, не повний HUD урок 3.7.",
@@ -438,7 +430,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "Щоб увімкнути Atmosphere",
           "Щоб пам’ятати стан дверей і перемикати if/else",
           "Щоб замінити PrimaryPart",
-          "Щоб створити MeshPart",
+          "Щоб створити MeshPart"
         ],
  correctAnswer: 1,
  explanation: "Прапорець стану, як partyOn.",
@@ -451,7 +443,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "LocalScript обов’язково",
           "ModuleScript у ReplicatedStorage обов’язково",
           "Звичайний Script",
-          "Script у Lighting only",
+          "Script у Lighting only"
         ],
  correctAnswer: 2,
  explanation: "Серверний Script, як у M1–M2.",
@@ -464,7 +456,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "Triggered",
           "Touched",
           "Heartbeat",
-          "RenderStepped",
+          "RenderStepped"
         ],
  correctAnswer: 0,
  explanation: "Triggered після взаємодії.",
@@ -477,7 +469,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "Яскравість Neon",
           "Розмір острова",
           "Швидкість Hinge",
-          "З якої відстані спрацьовує клік або Prompt",
+          "З якої відстані спрацьовує клік або Prompt"
         ],
  correctAnswer: 3,
  explanation: "Дистанція активації.",
@@ -490,7 +482,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "BillboardGui",
           "ProximityPrompt",
           "Touched KillBrick",
-          "if відкрито/зачинено",
+          "if відкрито/зачинено"
         ],
  correctAnswer: 2,
  explanation: "Kill/Touched - 3.2.",
@@ -503,7 +495,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "Видалити Terrain",
           "Гравець бачив наступну дію («Зачинити»)",
           "Увімкнути DataStore",
-          "Зламати Hinge",
+          "Зламати Hinge"
         ],
  correctAnswer: 1,
  explanation: "Підказка відповідає стану.",
@@ -516,7 +508,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "Єдиний дозволений спосіб у Roblox",
           "Заборонений завжди",
           "Те саме, що Union",
-          "Допустимий навчальний прийом замість повороту стулки",
+          "Допустимий навчальний прийом замість повороту стулки"
         ],
  correctAnswer: 3,
  explanation: "Альтернатива Orientation.",
@@ -529,7 +521,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "Легко отримати подвійне спрацювання й плутанину",
           "Studio вибухне",
           "Зникне Billboard",
-          "Вимкнеться Snap",
+          "Вимкнеться Snap"
         ],
  correctAnswer: 0,
  explanation: "Один намір - один тригер.",
@@ -542,7 +534,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "Повний модуль M4",
           "Заміна Model",
           "Легке групування коду; глибокі functions - у 3.6",
-          "Обов’язковий RemoteEvent",
+          "Обов’язковий RemoteEvent"
         ],
  correctAnswer: 2,
  explanation: "Спіраль: легкий function зараз, урок functions пізніше.",
@@ -555,7 +547,7 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "Untitled",
           "Module 6 Simulator Final",
           "Obby Kill Only",
-          "Lesson 3.1 - InteractDoor_v1",
+          "Lesson 3.1 - InteractDoor_v1"
         ],
  correctAnswer: 3,
  explanation: "Явний артефакт 3.1.",
@@ -568,11 +560,11 @@ Script на кнопці: \`script.Parent\` - кнопка; \`DoorLeaf\` шук�
           "DataStore",
           "Touched + KillBrick",
           "Publish Showcase",
-          "Tables insert/remove",
+          "Tables insert/remove"
         ],
  correctAnswer: 1,
  explanation: "3.2 - дотик і небезпека.",
- },
+ }
  ],
  },
 }
@@ -590,7 +582,7 @@ export const ukLesson32 = {
  "Знайти Humanoid у Character і безпечно змінити Health",
  "Додати debounce, щоб одна небезпека не спамила смерть десятки разів",
  "Використати task.wait для короткої паузи в обробнику",
- "Здати KillLane_v1 з чесними неоновими небезпеками біля InteractDoor",
+ "Здати KillLane_v1 з чесними неоновими небезпеками біля InteractDoor"
  ],
  theory: {
  sections: [
@@ -599,8 +591,6 @@ export const ukLesson32 = {
  content: `У 3.1 двері відповідали на **намір** гравця (клік або E). Сьогодні світ відповідає на **контакт**: нога ступила на небезпечну плиту - і щось має статись.
 
 Це інший тип геймплею. Двері ти відкриваєш свідомо. Лаву часто наступаєш випадково - саме тому код має бути і суворим, і стриманим: убивати гравця, але не спамити подію на кожен міліметр пальця.
-
-**Артефакт:** зона \`KillLane_v1\`
 - Folder або Model із **3+** неоновими небезпечними Parts (\`Kill_01\`…)
 - у кожної - Script із \`Touched\`, перевіркою Humanoid, \`debounce\`, коротким \`task.wait\`
 - небезпеки **виглядають** небезпечно (Neon, яскравий колір) - чесний дизайн
@@ -851,17 +841,7 @@ end)
 Сьогоднішня перемога - **контрольований Touched**, не цілий obby-жанр.
 
 **Зроби зараз (2 хв):** прибери з маршруту здачі все, що виходить за межі цього уроку.`,
- },
- {
- title: "Погляд у 3.3",
- content: `У **3.3** з’являться чекпоінти й таймер: SpawnLocation / точка відновлення, секундомір, простий TextLabel за шаблоном. Тоді \`KillLane_v1\` стане чеснішою для гравця: помер - повернувся ближче до прогресу, а не завжди на край світу.
-
-Сьогодні не будуй складну систему респавну й не малюй повний HUD. Достатньо стабільних неонових плит із debounce і маршруту «двері → небезпека».
-
-Якщо лишиш \`InteractDoor_v1\` перед смугою - у 3.3 цей ланцюжок легко перетворити на короткий challenge з часом. Тож не знось двері й плити перед наступним уроком: зроби Save As копію 3.3, коли дойде час.
-
-**Зроби зараз (2 хв):** допиши в Note один рядок, що переносиш у наступний урок.`,
- },
+ }
  ],
  },
  practice: {
@@ -904,7 +884,7 @@ end)
 **Не роби:** while-платформи, DataStore, екран «You Died», невидимі kill-зони.
 
 **Зроби зараз (4 хв):** зроби save/load або чесно задокументуй mock-режим у Output.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -935,7 +915,7 @@ end)
  {
  mistake: "LocalScript на Kill Part",
  fix: "Звичайний Script у Workspace, як для дверей і кубів.",
- },
+ }
  ],
  quiz: {
  title: "Тест 3.2 - Touched + KillBrick",
@@ -949,7 +929,7 @@ end)
           "KillLane_v1 з неоновими плитами на Touched",
           "InteractDoor без змін",
           "Повний GUI таймера",
-          "DataStore",
+          "DataStore"
         ],
  correctAnswer: 0,
  explanation: "Смуга небезпек, не HUD і не сейв.",
@@ -962,7 +942,7 @@ end)
           "Гравець натиснув E",
           "Щось торкнулось Part",
           "Змінився ClockTime",
-          "Збереглась гра",
+          "Збереглась гра"
         ],
  correctAnswer: 1,
  explanation: "Контакт з Part.",
@@ -975,7 +955,7 @@ end)
           "Lighting",
           "SoundService",
           "Part, яка торкнулась",
-          "ModuleScript",
+          "ModuleScript"
         ],
  correctAnswer: 2,
  explanation: "Часто деталь Character.",
@@ -988,7 +968,7 @@ end)
           "Щоб змінити Material підлоги",
           "Щоб створити Terrain",
           "Щоб відкрити Toolbox",
-          "Щоб зрозуміти, що торкнувся персонаж, і керувати Health",
+          "Щоб зрозуміти, що торкнувся персонаж, і керувати Health"
         ],
  correctAnswer: 3,
  explanation: "Фільтр гравця/NPC.",
@@ -1001,7 +981,7 @@ end)
           "Змінює колір неба",
           "Вбиває персонажа (стандартна смерть)",
           "Зберігає DataStore",
-          "Вмикає Hinge",
+          "Вмикає Hinge"
         ],
  correctAnswer: 1,
  explanation: "Класичний kill.",
@@ -1014,7 +994,7 @@ end)
           "Ніколи не спрацьовує двічі",
           "Працює лише в Studio без Play",
           "Може спрацювати багато разів за короткий час",
-          "Замінює Anchored",
+          "Замінює Anchored"
         ],
  correctAnswer: 2,
  explanation: "Антиспам обробника.",
@@ -1027,7 +1007,7 @@ end)
           "Щоб утримати debounce паузу після дії",
           "Щоб вічно крутити while-платформу",
           "Щоб завантажити RemoteEvent",
-          "Щоб намалювати Decal",
+          "Щоб намалювати Decal"
         ],
  correctAnswer: 0,
  explanation: "Пауза в обробнику, не урок while.",
@@ -1040,7 +1020,7 @@ end)
           "Все одно ставити Health = 0",
           "Видалити Baseplate",
           "Увімкнути Party Mode",
-          "return і нічого не робити",
+          "return і нічого не робити"
         ],
  correctAnswer: 3,
  explanation: "Не чіпай випадкові Parts.",
@@ -1053,7 +1033,7 @@ end)
           "Як звичайна сіра підлога без сигналу",
           "Повністю прозоро завжди",
           "Неоново і помітно небезпечно",
-          "Лише в ServerStorage",
+          "Лише в ServerStorage"
         ],
  correctAnswer: 2,
  explanation: "Гравець має бачити ризик.",
@@ -1066,7 +1046,7 @@ end)
           "debounce",
           "while true платформи",
           "Touched",
-          "Humanoid.Health",
+          "Humanoid.Health"
         ],
  correctAnswer: 1,
  explanation: "while - 3.4.",
@@ -1079,7 +1059,7 @@ end)
           "Touched завжди безпечніший",
           "Touched існує лише в Terrain",
           "Click потребує DataStore",
-          "Click - свідомий намір, Touched - контакт (часто випадковий)",
+          "Click - свідомий намір, Touched - контакт (часто випадковий)"
         ],
  correctAnswer: 3,
  explanation: "Намір vs контакт.",
@@ -1092,7 +1072,7 @@ end)
           "Звичайний Script",
           "LocalScript у StarterGui обов’язково",
           "Лише ModuleScript",
-          "Script у Lighting only",
+          "Script у Lighting only"
         ],
  correctAnswer: 0,
  explanation: "Серверний Script у світі.",
@@ -1105,7 +1085,7 @@ end)
           "Заборонений назавжди",
           "Замінює PrimaryPart",
           "Допустимий; прибрати повтори допоможе урок functions (3.6)",
-          "Автоматично створює чекпоінти",
+          "Автоматично створює чекпоінти"
         ],
  correctAnswer: 2,
  explanation: "Спіраль рефакторингу.",
@@ -1118,7 +1098,7 @@ end)
           "Untitled",
           "Module 9 Remotes",
           "Lesson 1.1 House",
-          "Lesson 3.2 - KillLane_v1",
+          "Lesson 3.2 - KillLane_v1"
         ],
  correctAnswer: 3,
  explanation: "Явний артефакт.",
@@ -1131,11 +1111,11 @@ end)
           "Tables DataStore",
           "Чекпоінти + таймер",
           "Publish Showcase",
-          "BallSocket only",
+          "BallSocket only"
         ],
  correctAnswer: 1,
  explanation: "3.3 - респавн і час.",
- },
+ }
  ],
  },
 }
@@ -1153,7 +1133,7 @@ export const ukLesson33 = {
  "Змінювати RespawnLocation гравця після дотику до чекпоінта",
  "Зібрати секундомір із легким циклом оновлення",
  "Показати час на TextLabel за шаблоном GUI",
- "Здати CheckpointRun_v1 разом із KillLane без нечесного респавну в лаву",
+ "Здати CheckpointRun_v1 разом із KillLane без нечесного респавну в лаву"
  ],
  theory: {
  sections: [
@@ -1162,8 +1142,6 @@ export const ukLesson33 = {
  content: `У 3.2 ти навчив світ убивати. Без чекпоінтів це швидко стає знущанням: кожна помилка - повернення на край карти. Сьогодні додаємо **пам’ять прогресу в межах забігу** і **секундомір**.
 
 Це логічний наступний крок модуля «Код, що грається»: спочатку взаємодія, потім небезпека, тепер - справедливий респавн і відчуття часу. Не будуємо ще цілий obby-жанр (він у M5). Збираємо цеглинки, з яких потім складеться міні-гра на бос-здачі 3.8.
-
-**Артефакт:** \`CheckpointRun_v1\`
 - старт \`Spawn_Start\` (SpawnLocation)
 - 2+ чекпоінти \`Checkpoint_A\`, \`Checkpoint_B\`
 - після дотику гравець респавниться ближче до прогресу (\`RespawnLocation\`)
@@ -1171,8 +1149,6 @@ export const ukLesson33 = {
 - Save: \`Lesson 3.3 - CheckpointRun_v1\`
 
 **Старт:** Place після 3.2. Не знось \`KillLane_v1\` і двері 3.1 - саме вони показують, навіщо чекпоінт існує. Якщо Place загубився - віднови мінімальну неонову смугу з 3.2, інакше нема на чому перевіряти респавн.
-
-**Спіраль:** Touched, Humanoid і debounce уже вмієш. Нове - SpawnLocation / RespawnLocation і шаблон GUI для часу. Повний LocalScript+GUI - **3.7**; глибокий \`while\` для платформ - **3.4**. Сьогодні легкий цикл лише для секундоміра, обов’язково з wait усередині.
 
 **Зроби зараз (2 хв):** відкрий Place після попереднього уроку і підготуй робочу зону для артефакту цього заняття.`,
  },
@@ -1392,15 +1368,7 @@ end
 На здачі розкажи одним реченням різницю: SpawnLocation - точка; RespawnLocation - «який Spawn обрати після смерті».
 
 **Зроби зараз (5 хв):** пройди таблицю тестів один раз і запиши pass/fail для кожного рядка.`,
- },
- {
- title: "Погляд у 3.4",
- content: `У **3.4** \`while true\` піде глибше: показ і ховання платформ, періоди, небезпека циклу без wait. Сьогоднішній секундомір - перший обережний контакт із вічним циклом.
-
-Не починай уже зараз будувати складні зникаючі підлоги «бо while вже був». Спочатку закрій чекпоінти й стабільний таймер, зроби Save, і лише тоді рухайся далі.
-
-**Зроби зараз (2 хв):** допиши в Note один рядок, що переносиш у наступний урок.`,
- },
+ }
  ],
  },
  practice: {
@@ -1443,7 +1411,7 @@ end
 **Не роби:** DataStore рекордів, while-платформи зникаючі, повний win-UI з 3.7–3.8.
 
 **Зроби зараз (4 хв):** зроби save/load або чесно задокументуй mock-режим у Output.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -1474,7 +1442,7 @@ end
  {
  mistake: "Чекає повний урок GUI перед секундоміром",
  fix: "Сьогодні лише шаблон Label; глибина GUI - 3.7.",
- },
+ }
  ],
  quiz: {
  title: "Тест 3.3 - Чекпоінти + таймер",
@@ -1488,7 +1456,7 @@ end
           "CheckpointRun_v1 з чекпоінтами і секундоміром",
           "Лише KillLane без змін",
           "DataStore таблиця рекордів",
-          "Повний магазин Prompt",
+          "Повний магазин Prompt"
         ],
  correctAnswer: 0,
  explanation: "Чекпоінти + таймер.",
@@ -1501,7 +1469,7 @@ end
           "Тип Constraint",
           "Точка появи гравця",
           "Обов’язковий ModuleScript",
-          "Сервіс HTTP",
+          "Сервіс HTTP"
         ],
  correctAnswer: 1,
  explanation: "Точка спавну.",
@@ -1514,7 +1482,7 @@ end
           "Колір неба",
           "Гучність музики",
           "Який SpawnLocation використати після смерті",
-          "Розмір Baseplate",
+          "Розмір Baseplate"
         ],
  correctAnswer: 2,
  explanation: "Пам’ять чекпоінта для респавну.",
@@ -1527,7 +1495,7 @@ end
           "Створити Terrain",
           "Замінити Humanoid",
           "Вимкнути Lighting",
-          "Отримати Player з Character після Touched",
+          "Отримати Player з Character після Touched"
         ],
  correctAnswer: 3,
  explanation: "Міст Character → Player.",
@@ -1540,7 +1508,7 @@ end
           "Бо так красивіше Neon",
           "Touched знову може спамити присвоєння RespawnLocation",
           "Бо без нього не працює Snap",
-          "Бо DataStore вимагає",
+          "Бо DataStore вимагає"
         ],
  correctAnswer: 1,
  explanation: "Та сама гігієна, що в 3.2.",
@@ -1553,7 +1521,7 @@ end
           "Terrain",
           "ServerStorage обов’язково",
           "ScreenGui у StarterGui (шаблон)",
-          "SoundService",
+          "SoundService"
         ],
  correctAnswer: 2,
  explanation: "Простий GUI-шаблон.",
@@ -1566,7 +1534,7 @@ end
           "GUI гравця зручно оновлювати на клієнті",
           "Бо Script заборонений у всьому Roblox",
           "Бо Touched не існує",
-          "Бо Anchored так вимагає",
+          "Бо Anchored так вимагає"
         ],
  correctAnswer: 0,
  explanation: "Клієнтський HUD.",
@@ -1579,7 +1547,7 @@ end
           "Працює швидше і краще",
           "Автоматично створює чекпоінт",
           "Виправляє Orientation",
-          "Ризикує зависнути",
+          "Ризикує зависнути"
         ],
  correctAnswer: 3,
  explanation: "Пауза обов’язкова.",
@@ -1592,7 +1560,7 @@ end
           "RespawnLocation",
           "Секундомір на TextLabel",
           "Зникаючі while-платформи як головний артефакт",
-          "SpawnLocation",
+          "SpawnLocation"
         ],
  correctAnswer: 2,
  explanation: "Платформи while - 3.4.",
@@ -1605,7 +1573,7 @@ end
           "Ідентично неоновому kill",
           "Інакше ніж небезпека, щоб його читали",
           "Повністю невидимо завжди",
-          "Лише в ServerScriptService",
+          "Лише в ServerScriptService"
         ],
  correctAnswer: 1,
  explanation: "Читабельність траси.",
@@ -1618,7 +1586,7 @@ end
           "Малювати Terrain",
           "Створювати Weld",
           "Публікувати Place",
-          "Міряти минулий час",
+          "Міряти минулий час"
         ],
  correctAnswer: 3,
  explanation: "Відлік секунд.",
@@ -1631,7 +1599,7 @@ end
           "Чи присвоєно RespawnLocation на SpawnLocation",
           "Atmosphere",
           "Чи є Decal на даху",
-          "Чи вимкнено Snap",
+          "Чи вимкнено Snap"
         ],
  correctAnswer: 0,
  explanation: "Ланцюжок чекпоінта.",
@@ -1644,7 +1612,7 @@ end
           "1.1",
           "2.4 лише",
           "3.7",
-          "M12 тільки",
+          "M12 тільки"
         ],
  correctAnswer: 2,
  explanation: "Сьогодні шаблон; глибина в 3.7.",
@@ -1657,7 +1625,7 @@ end
           "Untitled",
           "Module 6 HUD Final",
           "Lesson 2.1 Island only",
-          "Lesson 3.3 - CheckpointRun_v1",
+          "Lesson 3.3 - CheckpointRun_v1"
         ],
  correctAnswer: 3,
  explanation: "Явний артефакт 3.3.",
@@ -1670,11 +1638,11 @@ end
           "DataStore",
           "while + платформи",
           "RemoteEvent гонки",
-          "Toolbox hygiene M2",
+          "Toolbox hygiene M2"
         ],
  correctAnswer: 1,
  explanation: "3.4 - while глибше.",
- },
+ }
  ],
  },
 }
@@ -1692,7 +1660,7 @@ export const ukLesson34 = {
  "Зробити платформи, що періодично з’являються й зникають",
  "Керувати CanCollide і Transparency у циклі",
  "Підібрати період (час видимості / паузи) під чесний стрибок",
- "Здати BlinkPlatforms_v1 на трасі з чекпоінтами без зависання Studio",
+ "Здати BlinkPlatforms_v1 на трасі з чекпоінтами без зависання Studio"
  ],
  theory: {
  sections: [
@@ -1701,8 +1669,6 @@ export const ukLesson34 = {
  content: `У 3.3 ти вже бачив \`while true\` у секундомірі. Сьогодні той самий інструмент керує **світом**: платформи з’являються й зникають за періодом.
 
 Це інший смак циклу. Таймер лише змінював текст на екрані. Тут цикл чіпає фізику під ногами гравця - тому помилка з CanCollide або wait відчувається одразу падінням або зависанням.
-
-**Артефакт:** \`BlinkPlatforms_v1\`
 - 2+ платформи (\`Blink_01\`, \`Blink_02\`…)
 - Script із \`while true do\` + \`task.wait\`
 - видимість через Transparency і прохідність через CanCollide
@@ -1934,15 +1900,7 @@ end
 Сьогоднішня перемога - **безпечний while** і читабельний ритм платформ.
 
 **Зроби зараз (2 хв):** прибери з маршруту здачі все, що виходить за межі цього уроку.`,
- },
- {
- title: "Погляд у 3.5",
- content: `У **3.5** з’явиться \`for\` / \`ipairs\`: розмножувати частини траси без копипасту. Сьогоднішні дві-три платформи з ручним зсувом фази - фундамент.
-
-Не намагайся вже зараз написати генератор рівня «на 40 платформ». Спочатку відчуй цикл на одній Part, зроби Save, і лише тоді рухайся до for.
-
-**Зроби зараз (2 хв):** допиши в Note один рядок, що переносиш у наступний урок.`,
- },
+ }
  ],
  },
  practice: {
@@ -1985,7 +1943,7 @@ end
 **Не роби:** for-генератор усієї карти, Tween-пакет з Toolbox, while без wait.
 
 **Зроби зараз (4 хв):** зроби одну дію pick/use і підтверди результат у Output або інвентарі.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -2016,7 +1974,7 @@ end
  {
  mistake: "Плутає while з Touched",
  fix: "Touched - подія контакту; while - повтор у часі. Різні інструменти.",
- },
+ }
  ],
  quiz: {
  title: "Тест 3.4 - while + платформи",
@@ -2030,7 +1988,7 @@ end
           "BlinkPlatforms_v1 з while і періодами",
           "Лише секундомір без змін",
           "DataStore",
-          "RemoteEvent магазин",
+          "RemoteEvent магазин"
         ],
  correctAnswer: 0,
  explanation: "Миготливі платформи.",
@@ -2043,7 +2001,7 @@ end
           "Лише один раз",
           "Поки Script живий (умова завжди true)",
           "Лише при кліку миші",
-          "Лише в Terrain Editor",
+          "Лише в Terrain Editor"
         ],
  correctAnswer: 1,
  explanation: "Вічний цикл за задумом.",
@@ -2056,7 +2014,7 @@ end
           "Кращий FPS завжди",
           "Автоматичний Save",
           "Зависання Play/клієнта",
-          "Зникнення Terrain",
+          "Зникнення Terrain"
         ],
  correctAnswer: 2,
  explanation: "Головне правило уроку.",
@@ -2069,7 +2027,7 @@ end
           "Лише змінити BrickColor",
           "Видалити Lighting",
           "Увімкнути Party Mode",
-          "Transparency і CanCollide узгоджено",
+          "Transparency і CanCollide узгоджено"
         ],
  correctAnswer: 3,
  explanation: "Вигляд + колізія.",
@@ -2082,7 +2040,7 @@ end
           "Transparency 1 і CanCollide false",
           "Transparency 1, але CanCollide true",
           "Немає Script",
-          "Part у ServerStorage",
+          "Part у ServerStorage"
         ],
  correctAnswer: 1,
  explanation: "Прозора, але тверда.",
@@ -2095,7 +2053,7 @@ end
           "Назву Place",
           "Тип Constraint",
           "Тривалість фаз видно/сховати",
-          "Версію Studio",
+          "Версію Studio"
         ],
  correctAnswer: 2,
  explanation: "Ритм task.wait.",
@@ -2108,7 +2066,7 @@ end
           "task.wait перед while",
           "DataStore",
           "Видалення Humanoid",
-          "Union з Baseplate",
+          "Union з Baseplate"
         ],
  correctAnswer: 0,
  explanation: "Простий зсув ритму.",
@@ -2121,7 +2079,7 @@ end
           "LocalScript у StarterGui обов’язково",
           "Лише ModuleScript",
           "Script у SoundService",
-          "Звичайний Script",
+          "Звичайний Script"
         ],
  correctAnswer: 3,
  explanation: "Логіка світу на сервері.",
@@ -2134,7 +2092,7 @@ end
           "while true + wait",
           "Transparency/CanCollide ритм",
           "for/ipairs спавн усієї траси",
-          "Період чесного стрибка",
+          "Період чесного стрибка"
         ],
  correctAnswer: 2,
  explanation: "for - 3.5.",
@@ -2147,7 +2105,7 @@ end
           "While завжди про GUI",
           "Touched реагує на контакт, while задає повтор у часі",
           "While існує лише в M1",
-          "Touched заборонений після 3.2",
+          "Touched заборонений після 3.2"
         ],
  correctAnswer: 1,
  explanation: "Різні ролі.",
@@ -2160,7 +2118,7 @@ end
           "Transparency 1, CanCollide false",
           "Видалити Part",
           "Anchored false обов’язково без Constraint",
-          "Transparency 0, CanCollide true",
+          "Transparency 0, CanCollide true"
         ],
  correctAnswer: 3,
  explanation: "Видно і тримає.",
@@ -2173,7 +2131,7 @@ end
           "У 3.3 - легкий контакт для таймера; тут while керує світом і балансом",
           "Помилка сітки",
           "While у 3.3 був заборонений",
-          "Бо LocalScript зник",
+          "Бо LocalScript зник"
         ],
  correctAnswer: 0,
  explanation: "Спіраль поглиблення.",
@@ -2186,7 +2144,7 @@ end
           "Прямо на Spawn_Start у лаві",
           "У Lighting",
           "Після чекпоінта, з шансом чесного стрибка",
-          "У ReplicatedStorage only",
+          "У ReplicatedStorage only"
         ],
  correctAnswer: 2,
  explanation: "Справедливість прогресу.",
@@ -2199,7 +2157,7 @@ end
           "Untitled",
           "Module 9 Remotes",
           "Lesson 1.8 only",
-          "Lesson 3.4 - BlinkPlatforms_v1",
+          "Lesson 3.4 - BlinkPlatforms_v1"
         ],
  correctAnswer: 3,
  explanation: "Явний артефакт.",
@@ -2212,11 +2170,11 @@ end
           "DataStore",
           "for / ipairs",
           "Publish Showcase",
-          "Toolbox Free Model admin",
+          "Toolbox Free Model admin"
         ],
  correctAnswer: 1,
  explanation: "3.5 - цикли for.",
- },
+ }
  ],
  },
 }
@@ -2234,7 +2192,7 @@ export const ukLesson35 = {
  "Обійти список через ipairs і зрозуміти різницю з числовим for",
  "Спавнити ряд платформ траси без копипасту Parts руками",
  "Задати Position від індексу (крок studs)",
- "Здати TrackSpawn_v1 з Folder і коротким Script-генератором",
+ "Здати TrackSpawn_v1 з Folder і коротким Script-генератором"
  ],
  theory: {
  sections: [
@@ -2243,8 +2201,6 @@ export const ukLesson35 = {
  content: `У 3.4 ти ставив дві-три blink-платформи вручну й копипастив Script. Сьогодні вчимось **розмножувати геометрію кодом**: один шаблон → багато плит у ряд.
 
 Це той момент, коли курс перестає винагороджувати Ctrl+D на кожну цеглину. Якщо треба шість однакових опор - цикл зробить це швидше й з меншою кількістю помилок в іменах (Pad_1, Pad_2… замість Part, Part1, asdasd).
-
-**Артефакт:** \`TrackSpawn_v1\`
 - Folder \`TrackSpawn_v1\`
 - Script, який через \`for\` створює **6+** платформ
 - імена на кшталт \`Pad_1\`…\`Pad_6\`
@@ -2252,8 +2208,6 @@ export const ukLesson35 = {
 - Save: \`Lesson 3.5 - TrackSpawn_v1\`
 
 **Старт:** Place після 3.4. Не знось чекпоінти й kill - нова траса може вести **далі** маршрутом або лежати паралельно як тренувальна смуга. Головне - щоб було куди стрибати й що показати на здачі.
-
-**Спіраль:** \`ipairs\` + \`GetChildren\` ти вже бачив у аудитах M2. Сьогодні for стає інструментом **будівництва**, не лише огляду. Повний урок functions - **3.6**; GUI - **3.7**. Поки що не ховай спавн у function «на виріст» - спочатку робочий for у одному Script.
 
 **Зроби зараз (2 хв):** відкрий Place після попереднього уроку і підготуй робочу зону для артефакту цього заняття.`,
  },
@@ -2476,15 +2430,7 @@ print("Разом BasePart у Folder:", n)
 Сьогоднішня перемога - **перестати копипастити геометрію руками**, коли вистачає циклу.
 
 **Зроби зараз (2 хв):** прибери з маршруту здачі все, що виходить за межі цього уроку.`,
- },
- {
- title: "Погляд у 3.6",
- content: `У **3.6** functions стануть головною темою: параметри, return, scope, рефактор KillBrick і логічно - \`spawnPad(i)\` замість товстого тіла for.
-
-Сьогоднішній цикл - ідеальна заготовка під рефактор. Не роздувай його до «всієї гри» з blink, kill і GUI всередині одного for. Лиши генератор чистим - завтра винесеш кроки в function спокійно.
-
-**Зроби зараз (2 хв):** допиши в Note один рядок, що переносиш у наступний урок.`,
- },
+ }
  ],
  },
  practice: {
@@ -2527,7 +2473,7 @@ print("Разом BasePart у Folder:", n)
 **Не роби:** DataStore, Remote, повний function-модуль «на виріст», while без wait для спавну (спавн - for, не вічний while).
 
 **Зроби зараз (4 хв):** зроби save/load або чесно задокументуй mock-режим у Output.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -2558,7 +2504,7 @@ print("Разом BasePart у Folder:", n)
  {
  mistake: "Чекає tables M4, щоб зробити список",
  fix: "GetChildren уже дає список для ipairs; окремі tables - пізніше.",
- },
+ }
  ],
  quiz: {
  title: "Тест 3.5 - for / ipairs",
@@ -2572,7 +2518,7 @@ print("Разом BasePart у Folder:", n)
           "TrackSpawn_v1 з for-генератором платформ",
           "Лише одна Part вручну",
           "DataStore сейв",
-          "Win ScreenGui",
+          "Win ScreenGui"
         ],
  correctAnswer: 0,
  explanation: "Спавн траси циклом.",
@@ -2585,7 +2531,7 @@ print("Разом BasePart у Folder:", n)
           "Завжди 0",
           "Пробігає значення 1…6",
           "Це RemoteEvent",
-          "Це Material",
+          "Це Material"
         ],
  correctAnswer: 1,
  explanation: "Лічильник циклу.",
@@ -2598,7 +2544,7 @@ print("Разом BasePart у Folder:", n)
           "Треба вічний ритм без списку",
           "Треба лише змінити Lighting",
           "Є список дітей / елементів і треба їх обійти",
-          "Заборонено GetChildren",
+          "Заборонено GetChildren"
         ],
  correctAnswer: 2,
  explanation: "Обхід наявного списку.",
@@ -2611,7 +2557,7 @@ print("Разом BasePart у Folder:", n)
           "SoundService",
           "SpawnLocation обов’язково",
           "ScreenGui",
-          "Нову Part у пам’яті (потрібен Parent)",
+          "Нову Part у пам’яті (потрібен Parent)"
         ],
  correctAnswer: 3,
  explanation: "Створення інстанса.",
@@ -2624,7 +2570,7 @@ print("Разом BasePart у Folder:", n)
           "Щоб увімкнути Neon",
           "Щоб зсувати кожну наступну плиту на крок",
           "Щоб видалити Humanoid",
-          "Щоб зберегти DataStore",
+          "Щоб зберегти DataStore"
         ],
  correctAnswer: 1,
  explanation: "Ряд у просторі.",
@@ -2637,7 +2583,7 @@ print("Разом BasePart у Folder:", n)
           "Бо Roblox так вимагає для Terrain",
           "Бо ipairs заборонений інакше",
           "Щоб Stop/Play не плодив дублікати",
-          "Щоб вимкнути Snap",
+          "Щоб вимкнути Snap"
         ],
  correctAnswer: 2,
  explanation: "Анти-дублікати.",
@@ -2650,7 +2596,7 @@ print("Разом BasePart у Folder:", n)
           "for має відому кількість повторів; while true - доки не зупинять (з wait)",
           "for завжди зависає",
           "while не існує в Luau",
-          "for працює лише в LocalScript",
+          "for працює лише в LocalScript"
         ],
  correctAnswer: 0,
  explanation: "Різні задачі циклів.",
@@ -2663,7 +2609,7 @@ print("Разом BasePart у Folder:", n)
           "Видалення Part",
           "Constraint",
           "Atmosphere",
-          "Рядок імені з номером",
+          "Рядок імені з номером"
         ],
  correctAnswer: 3,
  explanation: "Конкатенація рядка.",
@@ -2676,7 +2622,7 @@ print("Разом BasePart у Folder:", n)
           "for i = 1, n",
           "ipairs + GetChildren",
           "Повний урок function / return / scope",
-          "Instance.new для плит",
+          "Instance.new для плит"
         ],
  correctAnswer: 2,
  explanation: "Functions - 3.6.",
@@ -2689,7 +2635,7 @@ print("Разом BasePart у Folder:", n)
           "LocalScript у StarterGui обов’язково",
           "Звичайний Script",
           "Лише ModuleScript без Parent",
-          "Script у Lighting only",
+          "Script у Lighting only"
         ],
  correctAnswer: 1,
  explanation: "Серверне будівництво.",
@@ -2702,7 +2648,7 @@ print("Разом BasePart у Folder:", n)
           "Нова заборонена тема",
           "DataStore",
           "HingeConstraint",
-          "Вже відомий if + арифметика для чергування",
+          "Вже відомий if + арифметика для чергування"
         ],
  correctAnswer: 3,
  explanation: "Спіраль 1.4.",
@@ -2715,7 +2661,7 @@ print("Разом BasePart у Folder:", n)
           "Перевірити імена й Position у Output",
           "Публікувати Place",
           "Вимкнути CanQuery глобально",
-          "Створити RemoteFunction",
+          "Створити RemoteFunction"
         ],
  correctAnswer: 0,
  explanation: "Перевірка результату.",
@@ -2728,7 +2674,7 @@ print("Разом BasePart у Folder:", n)
           "Прибрати всі цикли назавжди",
           "Замінити Part на Terrain обов’язково",
           "Винести створення плити в function",
-          "Видалити чекпоінти",
+          "Видалити чекпоінти"
         ],
  correctAnswer: 2,
  explanation: "Спіраль functions.",
@@ -2741,7 +2687,7 @@ print("Разом BasePart у Folder:", n)
           "Untitled",
           "Module 12 Showcase",
           "Lesson 2.2 only",
-          "Lesson 3.5 - TrackSpawn_v1",
+          "Lesson 3.5 - TrackSpawn_v1"
         ],
  correctAnswer: 3,
  explanation: "Явний артефакт.",
@@ -2754,11 +2700,11 @@ print("Разом BasePart у Folder:", n)
           "Publish only",
           "Functions",
           "Toolbox admin",
-          "Race Remotes",
+          "Race Remotes"
         ],
  correctAnswer: 1,
  explanation: "3.6 - functions.",
- },
+ }
  ],
  },
 }
@@ -2776,7 +2722,7 @@ export const ukLesson36 = {
  "Передати параметри і повернути значення через return",
  "Пояснити scope: де живе змінна всередині / зовні функції",
  "Рефакторити KillBrick через спільну function",
- "За бажанням винести spawnPad(i) з генератора траси 3.5",
+ "За бажанням винести spawnPad(i) з генератора траси 3.5"
  ],
  theory: {
  sections: [
@@ -2787,8 +2733,6 @@ export const ukLesson36 = {
 Досі курс дозволяв копипаст: три kill-скрипти, товстий for зі створенням Part. Це нормально для навчання. Але щойно треба змінити одне правило смерті в усіх плитах - копипаст стає пасткою. Function дає одне місце, де живе правило.
 
 Це не «новий жанр гри». Геймплей лишається тим самим: лава вбиває, траса спавниться. Змінюється лише те, **як** ти це записуєш у Script - щоб завтрашній ти й викладач читали швидше.
-
-**Артефакт:** \`FunctionsKit_v1\`
 - рефактор kill: одна \`killCharacter(character)\` (або подібна назва) + виклик із Touched
 - debounce лишається і працює як раніше
 - бонус: \`spawnPad(i, folder, start, step)\` у генераторі траси
@@ -3049,15 +2993,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
 Сьогоднішня перемога - **рефактор без зміни геймплею на гірше**.
 
 **Зроби зараз (2 хв):** прибери з маршруту здачі все, що виходить за межі цього уроку.`,
- },
- {
- title: "Погляд у 3.7",
- content: `У **3.7** порівняєш Script і LocalScript глибше: StarterGui, ScreenGui, Frame, TextButton, win UI. Function знадобляться й там (наприклад \`showWin()\` чи \`setButtonEnabled(btn, on)\`), але спочатку закрий серверний рефактор kill/spawn.
-
-Не починай уже малювати повний екран перемоги «бо function вмію». Спочатку Save з FunctionsKit, потім GUI-урок - інакше змішаєш дві складні теми в один вечір і нічого не здаси чисто.
-
-**Зроби зараз (2 хв):** допиши в Note один рядок, що переносиш у наступний урок.`,
- },
+ }
  ],
  },
  practice: {
@@ -3099,7 +3035,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
 **Не роби:** ModuleScript «на виріст», RemoteEvent, повний win-GUI 3.7.
 
 **Зроби зараз (4 хв):** зроби один Remote-виклик і зафіксуй, хто приймає рішення - клієнт чи сервер.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -3130,7 +3066,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
  {
  mistake: "Пише ModuleScript замість local function",
  fix: "ModuleScript - M4. Сьогодні все в одному Script.",
- },
+ }
  ],
  quiz: {
  title: "Тест 3.6 - Functions",
@@ -3144,7 +3080,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "Functions: параметри, return, scope, рефактор kill",
           "Новий Constraint",
           "DataStore",
-          "Publish Showcase",
+          "Publish Showcase"
         ],
  correctAnswer: 0,
  explanation: "Урок functions.",
@@ -3157,7 +3093,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "Обов’язковий RemoteEvent",
           "Вхідне ім’я/значення, яке передають під час виклику",
           "Тип Terrain",
-          "Лише Material",
+          "Лише Material"
         ],
  correctAnswer: 1,
  explanation: "Вхід функції.",
@@ -3170,7 +3106,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "Завжди видаляє Part",
           "Вмикає Lighting",
           "Повертає значення викликачу і завершує function",
-          "Створює SpawnLocation",
+          "Створює SpawnLocation"
         ],
  correctAnswer: 2,
  explanation: "Вихід і кінець виклику.",
@@ -3183,7 +3119,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "Видно в усьому Place",
           "Автоматично стає DataStore",
           "Ламає Anchored",
-          "Зазвичай не видно (інший scope)",
+          "Зазвичай не видно (інший scope)"
         ],
  correctAnswer: 3,
  explanation: "Scope.",
@@ -3196,7 +3132,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "Бо Roblox забороняє local у function",
           "Бо стан має жити між різними викликами Touched",
           "Бо так швидше Snap",
-          "Бо LocalScript вимагає",
+          "Бо LocalScript вимагає"
         ],
  correctAnswer: 1,
  explanation: "Стан між подіями.",
@@ -3209,7 +3145,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "Інакше не працює print",
           "Вимикає Touched",
           "Обмежує ім’я локальною областю Script",
-          "Створює GUI",
+          "Створює GUI"
         ],
  correctAnswer: 2,
  explanation: "Звичка локальності.",
@@ -3222,7 +3158,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "Винести спільну логіку в function без погіршення Play",
           "Видалити всі небезпеки",
           "Замінити Part на Terrain",
-          "Увімкнути Party Mode",
+          "Увімкнути Party Mode"
         ],
  correctAnswer: 0,
  explanation: "Чистіше, та сама поведінка.",
@@ -3235,7 +3171,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "Constraint",
           "Atmosphere",
           "Toolbox hygiene",
-          "Function з кількома параметрами",
+          "Function з кількома параметрами"
         ],
  correctAnswer: 3,
  explanation: "Бонус-рефактор траси.",
@@ -3248,7 +3184,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "return",
           "scope",
           "ModuleScript + require Config",
-          "параметри",
+          "параметри"
         ],
  correctAnswer: 2,
  explanation: "ModuleScript - M4.",
@@ -3261,7 +3197,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "Рефактор завершено",
           "Потрібно викликати function з Connect",
           "Обов’язково DataStore",
-          "Видалити Humanoid",
+          "Видалити Humanoid"
         ],
  correctAnswer: 1,
  explanation: "Виклик обов’язковий.",
@@ -3274,7 +3210,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "Обов’язковий краш Studio",
           "Успішний kill",
           "Новий SpawnLocation",
-          "Людського Humanoid не знайдено / немає character",
+          "Людського Humanoid не знайдено / немає character"
         ],
  correctAnswer: 3,
  explanation: "Порожній результат.",
@@ -3287,7 +3223,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "Коли це один простий рядок без повтору",
           "Коли блок повторюється в трьох місцях",
           "Коли є параметри",
-          "Коли є return",
+          "Коли є return"
         ],
  correctAnswer: 0,
  explanation: "Не горобити зайвого.",
@@ -3300,7 +3236,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "LocalScript у StarterGui обов’язково",
           "Лише ModuleScript",
           "Звичайний Script",
-          "Script у SoundService",
+          "Script у SoundService"
         ],
  correctAnswer: 2,
  explanation: "Серверна логіка світу.",
@@ -3313,7 +3249,7 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "Untitled",
           "Module 9 Remotes",
           "Lesson 1.1 only",
-          "Lesson 3.6 - FunctionsKit_v1",
+          "Lesson 3.6 - FunctionsKit_v1"
         ],
  correctAnswer: 3,
  explanation: "Явний артефакт.",
@@ -3326,11 +3262,11 @@ return pad зручний, якщо одразу хочеш щось зроби�
           "DataStore tables",
           "LocalScript + GUI",
           "Toolbox Free admin",
-          "Publish only",
+          "Publish only"
         ],
  correctAnswer: 1,
  explanation: "3.7 - GUI на клієнті.",
- },
+ }
  ],
  },
 }
@@ -3348,7 +3284,7 @@ export const ukLesson37 = {
  "Зібрати ієрархію StarterGui → ScreenGui → Frame → TextLabel/TextButton",
  "Показати екран перемоги (win UI) через Visible",
  "Підключити TextButton до MouseButton1Click і сховати панель",
- "Зв’язати фініш міні-гри (Touched на сервері) з GUI через Attribute без Remotes",
+ "Зв’язати фініш міні-гри (Touched на сервері) з GUI через Attribute без Remotes"
  ],
  theory: {
  sections: [
@@ -3359,8 +3295,6 @@ export const ukLesson37 = {
 Це логічний міст до бос-здачі 3.8: міні-гра без «ти виграв» на екрані відчувається обірваною. Двері, kill, чекпоінти, платформи й functions уже є - лишається шар, який бачить гравець поверх світу. Без цього шару викладач бачить лише print у Output, а гравець - тишу після фінішу.
 
 Подумай так: Workspace - сцена, StarterGui - субтитри й титри. Сцена без титрів інколи ок для експерименту. Здача модуля без титрів перемоги - ніби фільм, який обривається на півслові.
-
-**Артефакт:** \`WinUI_v1\`
 - \`StarterGui\` → \`WinGui\` (\`ScreenGui\`) з \`WinFrame\`, написом і кнопкою
 - фінішна Part \`FinishPad\` з серверним Script (Touched + debounce)
 - сервер ставить гравцю Attribute \`HasWon\`
@@ -3620,18 +3554,6 @@ end)
 **Зроби зараз (5 хв):** пройди таблицю тестів один раз і запиши pass/fail для кожного рядка.`,
  },
  {
- title: "Погляд у 3.8 - бос-здача міні-гри",
- content: `У **3.8** ти не вчиш нову мову - ти **збираєш продукт**: двері, небезпека, чекпоінти, платформи, генерація, functions, win UI; підкручуєш баланс; робиш Badge lite; презентуєш за ~60 секунд.
-
-Сьогодні закрий WinUI_v1 так, щоб завтра не лагодити базовий показ перемоги під час полішу всього модуля. Найгірший сценарій боса - коли інтеграція є, а фінішний екран «доробимо в останні п’ять хвилин» і не встигаєш.
-
-Також завтра знадобиться читабельна карта маршруту. Якщо зараз FinishPad посеред нічого «для тесту» - поверни його на логічний кінець рівня ще сьогодні. Майбутній ти скаже дякую.
-
-Не відкривай M4 і не тягни tables «почитати наперед» замість Save. Спіраль курсу працює, коли кожен бос стоїть на твердому попередньому артефакті.
-
-**Зроби зараз (2 хв):** допиши в Note один рядок, що переносиш у наступний урок.`,
- },
- {
  title: "Практика A - Разом (10 хв)",
  content: `1. Збери ієрархію WinGui (Frame + 2 Label + TextButton), Visible false.
 2. Постав FinishPad і серверний Script з Attribute HasWon.
@@ -3669,7 +3591,7 @@ end)
 Челендж - зірочка. Спочатку здай базовий WinUI_v1.
 
 **Зроби зараз (4 хв):** зроби один Remote-виклик і зафіксуй, хто приймає рішення - клієнт чи сервер.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -3700,7 +3622,7 @@ end)
  {
  mistake: "Додає RemoteEvent «про запас»",
  fix: "У M3 вистачає Attribute. Remotes - пізніше.",
- },
+ }
  ],
  quiz: {
  title: "Тест 3.7 - LocalScript + GUI",
@@ -3714,7 +3636,7 @@ end)
           "LocalScript + ScreenGui/Frame/TextButton і win UI",
           "DataStore монет",
           "SpringConstraint",
-          "Publish на вітрину",
+          "Publish на вітрину"
         ],
  correctAnswer: 0,
  explanation: "GUI на клієнті й екран перемоги.",
@@ -3727,7 +3649,7 @@ end)
           "Terrain",
           "StarterGui / біля елементів GUI",
           "Lighting",
-          "ServerStorage обов’язково для дверей",
+          "ServerStorage обов’язково для дверей"
         ],
  correctAnswer: 1,
  explanation: "Клієнтський UI.",
@@ -3740,7 +3662,7 @@ end)
           "Інакше не працює Snap",
           "LocalScript заборонений у принципі",
           "Правило перемоги - серверна логіка світу",
-          "Так вимагає Toolbox",
+          "Так вимагає Toolbox"
         ],
  correctAnswer: 2,
  explanation: "Світ і правила на сервері.",
@@ -3753,7 +3675,7 @@ end)
           "Щоб видалити Terrain",
           "Щоб увімкнути Party Mode",
           "Щоб створити Model",
-          "Щоб передати факт перемоги клієнту без Remotes у цьому уроці",
+          "Щоб передати факт перемоги клієнту без Remotes у цьому уроці"
         ],
  correctAnswer: 3,
  explanation: "Міст сервер→клієнт для UI.",
@@ -3766,7 +3688,7 @@ end)
           "3D Part у Workspace",
           "2D контейнер для елементів інтерфейсу",
           "Тип Constraint",
-          "Обов’язковий DataStore",
+          "Обов’язковий DataStore"
         ],
  correctAnswer: 1,
  explanation: "GUI-контейнер.",
@@ -3779,7 +3701,7 @@ end)
           "Touched",
           "MouseClick від ClickDetector",
           "MouseButton1Click",
-          "GetChildren",
+          "GetChildren"
         ],
  correctAnswer: 2,
  explanation: "GUI-кнопка.",
@@ -3792,7 +3714,7 @@ end)
           "Billboard висить у світі біля Part, ScreenGui - шар на екрані",
           "Вони повністю однакові",
           "ScreenGui завжди в Terrain",
-          "Billboard працює лише з DataStore",
+          "Billboard працює лише з DataStore"
         ],
  correctAnswer: 0,
  explanation: "Різні простори підказок.",
@@ -3805,7 +3727,7 @@ end)
           "Видалити весь парк",
           "Увімкнути Free Model admin",
           "Прибрати Anchored у всього",
-          "Перевірити print/Attribute на фініші, потім Visible і тип Script",
+          "Перевірити print/Attribute на фініші, потім Visible і тип Script"
         ],
  correctAnswer: 3,
  explanation: "Ланцюжок фініш→факт→UI.",
@@ -3818,7 +3740,7 @@ end)
           "TextButton",
           "StarterGui",
           "RemoteEvent магазин",
-          "Visible у Frame",
+          "Visible у Frame"
         ],
  correctAnswer: 2,
  explanation: "Remotes - пізніші модулі.",
@@ -3831,7 +3753,7 @@ end)
           "Колір Ocean у Terrain",
           "Чи скидається/пересоздається GUI після респавну персонажа",
           "Силу SpringConstraint",
-          "Чи працює Union",
+          "Чи працює Union"
         ],
  correctAnswer: 1,
  explanation: "Поведінка GUI після смерті.",
@@ -3844,7 +3766,7 @@ end)
           "Luau забороняє print",
           "Studio видаляє Script",
           "Так не працює Anchored",
-          "Особистий HUD зручніше й чистіше вести LocalScript + факт з сервера",
+          "Особистий HUD зручніше й чистіше вести LocalScript + факт з сервера"
         ],
  correctAnswer: 3,
  explanation: "Розподіл ролей.",
@@ -3857,7 +3779,7 @@ end)
           "Елемент GUI може ще не встигнути з’явитись у клоні",
           "Треба згенерувати Terrain",
           "Треба вимкнути Lighting",
-          "Обов’язковий Hinge",
+          "Обов’язковий Hinge"
         ],
  correctAnswer: 0,
  explanation: "Очікування нащадка.",
@@ -3870,7 +3792,7 @@ end)
           "Untitled",
           "Lesson 3.1 - Coin Route",
           "Lesson 3.7 - WinUI_v1",
-          "Module 6 Simulator only",
+          "Module 6 Simulator only"
         ],
  correctAnswer: 2,
  explanation: "Артефакт уроку.",
@@ -3883,7 +3805,7 @@ end)
           "Обов’язково пише DataStore",
           "Видаляє FinishPad",
           "Створює RemoteFunction",
-          "Ховає WinFrame (Visible false)",
+          "Ховає WinFrame (Visible false)"
         ],
  correctAnswer: 3,
  explanation: "Локальне закриття панелі.",
@@ -3896,11 +3818,11 @@ end)
           "Новий синтаксис while",
           "Бос-здача міні-гри: інтеграція, баланс, Badge lite, презентація",
           "Лише Toolbox",
-          "Тільки Lighting",
+          "Тільки Lighting"
         ],
  correctAnswer: 1,
  explanation: "Checkpoint модуля.",
- },
+ }
  ],
  },
 }
@@ -3918,7 +3840,7 @@ export const ukLesson38 = {
  "Підкрутити баланс: чесність kill, ритм платформ, відстань чекпоінтів",
  "Додати Badge lite (візуальний трофей і/або простий AwardBadge-шаблон)",
  "Підготувати презентацію ~60 секунд за чітким сценарієм",
- "Здати портфоліо-сейв Module 3 - PlayableMini_v1",
+ "Здати портфоліо-сейв Module 3 - PlayableMini_v1"
  ],
  theory: {
  sections: [
@@ -3929,8 +3851,6 @@ export const ukLesson38 = {
 У кінці має бути Place, який можна пройти як коротку міні-гру: взаємодія → ризик → прогрес → ритм платформ → фініш → екран перемоги. Functions з 3.6 мають бути видно в коді (хоча б kill або spawn). LocalScript GUI з 3.7 - обов’язковий фінал.
 
 Подумай про різницю: «у мене є сім сейвів уроків» vs «у мене є одна міні-гра». Курс будував спіраль саме до другого. Якщо на здачі ти стрибаєш між файлами «зараз покажу kill з 3.2, а двері в іншому Place» - рубрика інтеграції червона.
-
-**Артефакт:** \`PlayableMini_v1\`
 - інтеграція 3.1–3.7 в одному маршруті
 - баланс-пас (не «з першої спроби неможливо» і не «нудно легко»)
 - Badge lite: трофей у світі / на win UI + опційно шаблон BadgeService
@@ -4048,23 +3968,6 @@ end
 **Зроби зараз (8 хв):** трофей + напис у WinFrame; опційно tryAward з ID 0.`,
  },
  {
- title: "Код-гігієна перед здачею (functions + GUI)",
- content: `Швидкий аудит без рефактору всього світу. Мета - не ідеальний код-рев’ю, а відсутність соромних дірок:
-
-1. Kill: чи є \`killCharacter\` (або еквівалент) з 3.6? Якщо три одинакові скрипти - хоч один рефактор покажи.
-2. Win: чи фініш ставить Attribute, а LocalScript лише малює?
-3. Немає LocalScript на KillPart і Script у TextButton.
-4. while на blink і таймері має \`task.wait\`.
-5. Імена PascalCase / зрозумілі: FinishPad, Checkpoint_A, WinFrame.
-6. Немає «випадкових» Free Model Scripts з Toolbox без аудиту (звичка 2.4).
-
-Якщо час підтискає: **не** починай ModuleScript. Чистий один Script з function цінніший за «архітектуру на виріст». M4 якраз про винесення Config - не кради цю тему нападом у останні 20 хвилин.
-
-Перевір Output на чистому Play: чи немає червоних помилок ще до першого кроку? Здача з помилкою на старті виглядає гірше, ніж простий, але чистий Place.
-
-**Зроби зараз (7 хв):** пройди 6 пунктів і виправ лише критичне.`,
- },
- {
  title: "Презентація 60 секунд - сценарій",
  content: `Говори по секундах, не імпровізуй з нуля. 60″ - це навичка стислості, яку потім потрібні polish/demo модулі лише загострять.
 
@@ -4177,7 +4080,7 @@ end
 **Не роби:** DataStore таблиці рекордів, Remote магазин, повний перепис у ModuleScript «бо M4 близько».
 
 **Зроби зараз (4 хв):** зроби save/load або чесно задокументуй mock-режим у Output.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -4208,7 +4111,7 @@ end
  {
  mistake: "Тягне DataStore/Remotes у бос M3",
  fix: "Залиш для M4/M9. Сьогодні інтеграція вже вивченого.",
- },
+ }
  ],
  quiz: {
  title: "Тест 3.8 - Бос-здача міні-гри",
@@ -4222,7 +4125,7 @@ end
           "Інтегрувати 3.1–3.7, баланс, Badge lite, презентація ~60″",
           "Вивчити RemoteFunction",
           "Лише Terrain Paint",
-          "Опублікувати платний gamepass",
+          "Опублікувати платний gamepass"
         ],
  correctAnswer: 0,
  explanation: "Бос-чекпоінт модуля.",
@@ -4235,7 +4138,7 @@ end
           "Бо Studio інакше видаляє Parts",
           "Бо здача - це зіграна міні-гра, а не архів фрагментів",
           "Бо так вимагає Lighting",
-          "Бо LocalScript не працює інакше",
+          "Бо LocalScript не працює інакше"
         ],
  correctAnswer: 1,
  explanation: "Інтеграція продукту.",
@@ -4248,7 +4151,7 @@ end
           "0",
           "20 обов’язково",
           "≥2 з смертю-тестом",
-          "Лише Spawn без RespawnLocation",
+          "Лише Spawn без RespawnLocation"
         ],
  correctAnswer: 2,
  explanation: "Прогрес після смерті.",
@@ -4261,7 +4164,7 @@ end
           "Обов’язковий магазин Remotes",
           "Видалення WinFrame",
           "Лише Toolbox Free Model",
-          "Видима нагорода (трофей/UI) і опційно AwardBadge",
+          "Видима нагорода (трофей/UI) і опційно AwardBadge"
         ],
  correctAnswer: 3,
  explanation: "Легка нагорода за фініш.",
@@ -4274,7 +4177,7 @@ end
           "Обов’язковий краш Place",
           "Гра продовжується; лишається візуальний трофей / print",
           "Видаляється Terrain",
-          "Вимикається Anchored",
+          "Вимикається Anchored"
         ],
  correctAnswer: 1,
  explanation: "Безпечний lite-режим.",
@@ -4287,7 +4190,7 @@ end
           "5 секунд",
           "30 хвилин коду вголос",
           "~60 секунд за сценарієм",
-          "Без ліміту",
+          "Без ліміту"
         ],
  correctAnswer: 2,
  explanation: "Короткий demo.",
@@ -4300,7 +4203,7 @@ end
           "Читабельність виклику і чесність небезпек",
           "Максимальний біль гравця",
           "Кількість Free Models",
-          "Кількість RemoteEvent",
+          "Кількість RemoteEvent"
         ],
  correctAnswer: 0,
  explanation: "Чесний дизайн.",
@@ -4313,7 +4216,7 @@ end
           "Win UI",
           "Kill debounce",
           "Blink з wait",
-          "DataStore таблиці сейву",
+          "DataStore таблиці сейву"
         ],
  correctAnswer: 3,
  explanation: "DataStore - M4.",
@@ -4326,7 +4229,7 @@ end
           "Untitled",
           "Lesson 1.1 only",
           "Module 3 - PlayableMini_v1",
-          "Module 9 Remotes",
+          "Module 9 Remotes"
         ],
  correctAnswer: 2,
  explanation: "Портфоліо M3.",
@@ -4339,7 +4242,7 @@ end
           "Щоб видалити Script",
           "Щоб побачити незрозумілі місця очима іншої людини",
           "Щоб увімкнути Atmosphere",
-          "Щоб отримати DataStore",
+          "Щоб отримати DataStore"
         ],
  correctAnswer: 1,
  explanation: "Ітерація зворотним зв’язком.",
@@ -4352,7 +4255,7 @@ end
           "Заборонені",
           "Обов’язковий ModuleScript",
           "Лише в LocalScript кнопок",
-          "Бажано показати хоч у kill/spawn - гігієна з 3.6",
+          "Бажано показати хоч у kill/spawn - гігієна з 3.6"
         ],
  correctAnswer: 3,
  explanation: "Видно рефактор модуля.",
@@ -4365,7 +4268,7 @@ end
           "Studio/Play ризикує зависнути - виправити до демо",
           "Це ок для здачі",
           "Це вмикає Badge",
-          "Це замінює фініш",
+          "Це замінює фініш"
         ],
  correctAnswer: 0,
  explanation: "Безпека циклу.",
@@ -4378,7 +4281,7 @@ end
           "Видаленням Spawn",
           "Лише Toolbox",
           "FinishPad + WinFrame",
-          "Лише Lighting ніч",
+          "Лише Lighting ніч"
         ],
  correctAnswer: 2,
  explanation: "Фінал з 3.7.",
@@ -4391,7 +4294,7 @@ end
           "Одразу M12 Publish без даних",
           "Лише повтор 1.1",
           "Тільки Constraints",
-          "M4 - tables, ModuleScript, DataStore",
+          "M4 - tables, ModuleScript, DataStore"
         ],
  correctAnswer: 3,
  explanation: "Спіраль до даних.",
@@ -4404,11 +4307,11 @@ end
           "Додати 10 нових механік з майбутніх модулів",
           "Закрити червоні пункти рубрики й відрепетирувати 60″",
           "Видалити всі Script",
-          "Замінити все на один Free Model",
+          "Замінити все на один Free Model"
         ],
  correctAnswer: 1,
  explanation: "Інтеграція і демо.",
- },
+ }
  ],
  },
 }

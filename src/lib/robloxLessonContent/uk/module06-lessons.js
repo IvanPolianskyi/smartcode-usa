@@ -16,7 +16,7 @@ export const ukLesson61 = {
     "Скласти паперовий ескіз сцени і відповісти на п'ять питань дизайну",
     "Створити Folders Collectables і SpawnPoints з послідовними іменами Parts",
     "Порівняти Touched і ProximityPrompt і письмово обрати Touched для збору",
-    "Побудувати малий острів і пройти порожній loop перед leaderstats у 6.2",
+    "Побудувати малий острів і пройти порожній loop перед leaderstats у 6.2"
   ],
   theory: {
     sections: [
@@ -25,14 +25,6 @@ export const ukLesson61 = {
         content: `У **5.10** ти закрив Obby Ship + Badge. Модуль 6 - новий жанр: **Simulator**. Десять уроків ведуть від сцени до Ship Sim: 6.1 loop і острів, 6.2 leaderstats, 6.3 HUD, 6.4 giveCoins, 6.5-6.6 спавн і Power, 6.7 DataStore, 6.8 цілі дня, 6.9 баланс і juice, 6.10 здача.
 
 Сьогодні немає економіки. Жодного leaderstats, HUD, giveCoins чи DataStore. Ти вирішуєш лише **що** гравець повторює по колу і **де** він це робить. Решта модуля лише підключить числа до цього каркасу.
-
-Артефакт уроку:
-1. Паперовий або текстовий ескіз core loop і сцени.
-2. Folder Collectables і Folder SpawnPoints у Workspace.
-3. Parts із іменами Collectable_01 / SpawnPoint_01 і парами номерів.
-4. Письмове рішення: Touched для Collectables (з короткою причиною).
-5. Малий острів із межею, playtest порожнього маршруту і Save **Lesson 6.1 - Core Loop**.
-
 | Вхід після 5.10 | Результат 6.1 |
 |-----------------|---------------|
 | Навички Studio і playtest | Інший жанр: фарм, не проходження рівня |
@@ -262,7 +254,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
 Артефакт дня: **продуманий loop на папері + чиста сцена з Folders і письмовим вибором способу збору**, готова прийняти leaderstats без переробки траси.
 
 **Зроби зараз (2 хв):** Save Place з точною назвою Lesson 6.1 - Core Loop і закрий зайві вкладки Explorer.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -300,7 +292,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
       mistake: "Немає видимої межі зони",
       explanation: "На playtest гравець падає в порожнечу і губить орієнтацію.",
       correctApproach: "Бордюр або низька стіна навколо зони збору",
-    },
+    }
   ],
   summary: "Ти визначив core loop Simulator (збір → нагорода → апгрейд → швидший збір), відповів на п'ять питань дизайну, зібрав Folders Collectables і SpawnPoints з парними іменами, письмово обрав Touched для масового збору і пройшов порожній playtest малого острова. Це каркас, на який 6.2-6.10 накладуть leaderstats, HUD, giveCoins, спавн, Power, DataStore і Ship без переробки сцени.",
   practiceTask: {
@@ -325,7 +317,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
     hints: [
       "Ескіз не мусить бути гарним - головне закрити п'ять питань",
       "Номери Collectable_XX і SpawnPoint_XX мають збігатися",
-      "Touched для швидкого фарму - стандарт жанру на цьому етапі",
+      "Touched для швидкого фарму - стандарт жанру на цьому етапі"
     ],
     optionalChallenge: "Додай другий колір Collectable з префіксом CollectableB_01 як підготовку до кількох типів ресурсів пізніше - без нового скрипту.",
   },
@@ -341,7 +333,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "Апгрейд → збір → швидший збір → нагорода",
           "Збір → нагорода → апгрейд → швидший збір",
           "Нагорода → апгрейд → збір → повільніший збір",
-          "Швидший збір → збір → апгрейд → нагорода",
+          "Швидший збір → збір → апгрейд → нагорода"
         ],
         correctAnswer: 1,
         explanation: "Стандартний ланцюжок жанру Simulator.",
@@ -354,7 +346,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "Дешевше й швидше міняти ідеї, ніж пересувати Parts",
           "Roblox вимагає папір перед Publish",
           "Studio блокує видалення Parts без ескізу",
-          "Папір замінює Folders у Workspace",
+          "Папір замінює Folders у Workspace"
         ],
         correctAnswer: 0,
         explanation: "Дешева ітерація до витрат часу в Explorer.",
@@ -367,7 +359,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "Скільки типів Collectable у першій версії",
           "Де межа зони",
           "Скільки ключів DataStore потрібно для збереження",
-          "Що станеться з Part після дотику",
+          "Що станеться з Part після дотику"
         ],
         correctAnswer: 2,
         explanation: "DataStore - тема 6.7, не паперовий дизайн 6.1.",
@@ -380,7 +372,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "Roblox забороняє два типи Parts в одному Folder",
           "SpawnPoints мають бути видимими, Collectables - ні",
           "Це лише вимога ментора без технічної користі",
-          "Щоб Script спавну в 6.5 не плутав маркери з готовими предметами",
+          "Щоб Script спавну в 6.5 не плутав маркери з готовими предметами"
         ],
         correctAnswer: 3,
         explanation: "Розділення готує чистий цикл спавну.",
@@ -393,7 +385,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "Part2",
           "Collectable_01",
           "coin cool",
-          "PART",
+          "PART"
         ],
         correctAnswer: 1,
         explanation: "Префікс типу + номер із нулем спереду.",
@@ -406,7 +398,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "Roblox вимагає нуль у всіх іменах Parts",
           "Нуль прискорює фізику дотику",
           "Зберігає правильне сортування в Explorer після десяти екземплярів",
-          "Дозволяє обійтися без Folders",
+          "Дозволяє обійтися без Folders"
         ],
         correctAnswer: 2,
         explanation: "Без нуля Collectable_10 плутається між _1 і _2.",
@@ -419,7 +411,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "ProximityPrompt працює лише в LocalScript",
           "Touched завжди показує іконку з підписом",
           "Різниці для гравця немає",
-          "Touched спрацьовує від дотику, Prompt вимагає натискання кнопки",
+          "Touched спрацьовує від дотику, Prompt вимагає натискання кнопки"
         ],
         correctAnswer: 3,
         explanation: "Автоматичний дотик проти навмисної дії.",
@@ -432,7 +424,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "ProximityPrompt технічно неможливий на Part",
           "Дає швидкий масовий збір без кнопки на кожен предмет",
           "Touched сам зберігає прогрес у DataStore",
-          "Touched створює leaderstats без коду",
+          "Touched створює leaderstats без коду"
         ],
         correctAnswer: 1,
         explanation: "Темп фарму - ключове відчуття жанру.",
@@ -445,7 +437,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "Для збору десятків монет підряд",
           "Завжди в будь-якій Simulator-грі",
           "Для рідкісної навмисної дії: крамниця чи діалог з NPC",
-          "Лише для декоративних Parts без логіки",
+          "Лише для декоративних Parts без логіки"
         ],
         correctAnswer: 2,
         explanation: "Навмисність і вбудована підказка Prompt.",
@@ -458,7 +450,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "Folder Collectables і SpawnPoints",
           "Паперовий ескіз core loop",
           "Письмове рішення Touched vs Prompt",
-          "Script, що нараховує монети при дотику",
+          "Script, що нараховує монети при дотику"
         ],
         correctAnswer: 3,
         explanation: "Нарахування - тема 6.4 (giveCoins).",
@@ -471,7 +463,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "Острів 40×40-60×60 studs і 3-8 Collectable",
           "Кілька великих островів із десятками зон",
           "Уся Baseplate без меж",
-          "Один Collectable без зони взагалі",
+          "Один Collectable без зони взагалі"
         ],
         correctAnswer: 0,
         explanation: "Малий масштаб для швидкої перевірки loop.",
@@ -484,7 +476,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "Межа потрібна лише для DataStore",
           "Roblox вимагає межу, щоб створити Folder",
           "Щоб на playtest не впасти в порожнечу й не загубити орієнтацію",
-          "Межа замінює SpawnPoints",
+          "Межа замінює SpawnPoints"
         ],
         correctAnswer: 2,
         explanation: "Безпека й орієнтація під час порожнього тесту.",
@@ -497,7 +489,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "HUD показує правильні Coins",
           "DataStore зберігає прогрес між сесіями",
           "Гравець пішки дістається до кожного Collectable без застрягання",
-          "Power уже множить нагороду",
+          "Power уже множить нагороду"
         ],
         correctAnswer: 2,
         explanation: "Геометрія й доступність важливіші за код на цьому етапі.",
@@ -510,7 +502,7 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "6.2 видаляє всі Folders із 6.1",
           "leaderstats замінює Folder Collectables",
           "6.1 і 6.2 не пов'язані",
-          "Готова сцена дозволяє додати leaderstats без переробки геометрії",
+          "Готова сцена дозволяє додати leaderstats без переробки геометрії"
         ],
         correctAnswer: 3,
         explanation: "Каркас сцени лишається; 6.2 додає серверні дані.",
@@ -523,11 +515,11 @@ ProximityPrompt не «поганий» - він просто для іншої 
           "Lesson 6.2 - leaderstats",
           "Lesson 6.1 - Core Loop",
           "Sim Draft Final",
-          "Lesson 5.10 - Ship Badge",
+          "Lesson 5.10 - Ship Badge"
         ],
         correctAnswer: 1,
         explanation: "Чекліст вимагає Lesson 6.1 - Core Loop.",
-      },
+      }
     ],
   },
 };
@@ -545,21 +537,13 @@ export const ukLesson62 = {
     "Створити Folder leaderstats і IntValue Coins на сервері через PlayerAdded",
     "Опційно додати IntValue Power зі стартом 1 поруч із Coins",
     "Обробити вже підключених гравців циклом for і FindFirstChild",
-    "Тримати Parent = player, а не Character, і не створювати stats у LocalScript",
+    "Тримати Parent = player, а не Character, і не створювати stats у LocalScript"
   ],
   theory: {
     sections: [
       {
         title: "Сьогоднішня місія (урок 40 з 92)",
         content: `У 6.1 ти зібрав сцену острова: є що збирати й куди бігати. Але прогрес гравця ще ніде не рахується. Сьогодні будуєш число: **leaderstats** з IntValue Coins на сервері. Це якір модуля 6 - HUD, giveCoins, спавн, Power і DataStore читатимуть або писатимуть саме сюди.
-
-Артефакт уроку:
-1. Script у ServerScriptService (не LocalScript).
-2. Players.PlayerAdded створює Folder leaderstats + IntValue Coins.
-3. (Опційно) IntValue Power зі стартом 1.
-4. Цикл for по вже підключених гравцях.
-5. TAB показує ім'я і Coins без додаткового UI і Save **Lesson 6.2 - leaderstats**.
-
 | Було в 6.1 | Стає в 6.2 |
 |-------------|------------|
 | Сцена і маркери збору | Число Coins, яке реально рахується |
@@ -812,36 +796,7 @@ FindFirstChild повертає Instance або nil і не блокує. Це �
 playtest - контроль, що паспорт не змивається під дощем.
 
 **Зроби зараз (8 хв):** пройди пункти 1, 5 і 8 обов'язково.`,
-      },
-      {
-        title: "Місток до HUD і каси + чекліст",
-        content: `| Урок | Що візьме з 6.2 |
-|------|-----------------|
-| 6.3 HUD | WaitForChild("leaderstats").Coins на читання |
-| 6.4 giveCoins | Запис у Coins.Value |
-| 6.6 Power | Множник з того самого Folder |
-| 6.7 DataStore | Load/save цих самих чисел |
-
-Чекліст:
-- [ ] Script у ServerScriptService
-- [ ] Folder з іменем рівно leaderstats
-- [ ] IntValue Coins = 0
-- [ ] (Опційно) IntValue Power = 1
-- [ ] Parent = player, не Character
-- [ ] PlayerAdded + for existing players
-- [ ] FindFirstChild перед створенням
-- [ ] TAB показує ім'я і Coins
-- [ ] Немає створення stats у LocalScript
-- [ ] Save: Lesson 6.2 - leaderstats
-
-Артефакт: серверна правда про прогрес у одному місці - Player.leaderstats - незалежна від смерті Character.
-
-Короткий ритуал: Play → Tab → Coins = 0 → смерть → респавн → число на місці.
-
-фінальний Save фіксує паспортний стіл перед тим, як відкриється вітрина HUD.
-
-**Зроби зараз (3 хв):** пройди ритуал і збережи Place під точною назвою.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -879,7 +834,7 @@ playtest - контроль, що паспорт не змивається пі�
       mistake: "Немає FindFirstChild перед створенням",
       explanation: "Повторний виклик може створити дублікат Folder і зламати очікування коду.",
       correctApproach: "Якщо leaderstats уже є - одразу return.",
-    },
+    }
   ],
   summary: "Ти створив leaderstats на сервері: Folder leaderstats, IntValue Coins і опційно Power=1 через PlayerAdded і цикл для вже підключених. Parent = player, TAB показує прогрес - основа для HUD, giveCoins і DataStore.",
   practiceTask: {
@@ -903,7 +858,7 @@ playtest - контроль, що паспорт не змивається пі�
       "Ім'я Folder рівно leaderstats - без великих літер.",
       "Parent Folder = player, а не player.Character.",
       "Спочатку Connect на PlayerAdded, потім цикл existing players.",
-      "Power = 1, якщо додаєш множник уже сьогодні.",
+      "Power = 1, якщо додаєш множник уже сьогодні."
     ],
     optionalChallenge: "Додай третій IntValue (наприклад Gems = 0) і перевір, що TAB показує три колонки без UI-коду.",
   },
@@ -919,7 +874,7 @@ playtest - контроль, що паспорт не змивається пі�
           "HUD на LocalScript",
           "leaderstats.Coins на сервері, видимий у TAB",
           "giveCoins з анти-дублем",
-          "DataStore rejoin",
+          "DataStore rejoin"
         ],
         correctAnswer: 1,
         explanation: "Урок будує серверну правду прогресу.",
@@ -932,7 +887,7 @@ playtest - контроль, що паспорт не змивається пі�
           "leaderstats",
           "LeaderStats",
           "Leaderstats",
-          "leader_stats",
+          "leader_stats"
         ],
         correctAnswer: 0,
         explanation: "Потрібен рядок рівно маленькими літерами.",
@@ -945,7 +900,7 @@ playtest - контроль, що паспорт не змивається пі�
           "У LocalScript у StarterPlayerScripts",
           "У ModuleScript без require",
           "У Script у ServerScriptService",
-          "У Lighting",
+          "У Lighting"
         ],
         correctAnswer: 2,
         explanation: "Лише сервер вирішує дані гравця.",
@@ -958,7 +913,7 @@ playtest - контроль, що паспорт не змивається пі�
           "Players.PlayerRemoving",
           "Workspace.ChildAdded",
           "RunService.Heartbeat",
-          "Players.PlayerAdded",
+          "Players.PlayerAdded"
         ],
         correctAnswer: 3,
         explanation: "Спрацьовує один раз при вході.",
@@ -971,7 +926,7 @@ playtest - контроль, що паспорт не змивається пі�
           "Видалити leaderstats у всіх",
           "Дати stats гравцям, підключеним до старту Script",
           "Замінити PlayerAdded назавжди",
-          "Створити Power = 0",
+          "Створити Power = 0"
         ],
         correctAnswer: 1,
         explanation: "PlayerAdded не повториться для вже присутніх.",
@@ -984,7 +939,7 @@ playtest - контроль, що паспорт не змивається пі�
           "player.Character",
           "player.Character.Humanoid",
           "player",
-          "Workspace",
+          "Workspace"
         ],
         correctAnswer: 2,
         explanation: "Player живе всю сесію, Character - ні.",
@@ -997,7 +952,7 @@ playtest - контроль, що паспорт не змивається пі�
           "Coins стане швидшим",
           "TAB покаже подвійне число",
           "Це рекомендований варіант",
-          "Coins зникатиме при смерті персонажа",
+          "Coins зникатиме при смерті персонажа"
         ],
         correctAnswer: 3,
         explanation: "Folder знищується разом із тілом.",
@@ -1010,7 +965,7 @@ playtest - контроль, що паспорт не змивається пі�
           "0",
           "1",
           "100",
-          "-1",
+          "-1"
         ],
         correctAnswer: 1,
         explanation: "1 - нейтральний множник для майбутньої формули.",
@@ -1023,7 +978,7 @@ playtest - контроль, що паспорт не змивається пі�
           "Щоб видалити Coins",
           "Обов'язково для TAB взагалі",
           "Захист від дубліката leaderstats",
-          "Заміна PlayerAdded",
+          "Заміна PlayerAdded"
         ],
         correctAnswer: 2,
         explanation: "Повторний виклик не створює другу Folder.",
@@ -1036,7 +991,7 @@ playtest - контроль, що паспорт не змивається пі�
           "Так, це швидше",
           "Так, лише в Studio",
           "Так, якщо Power = 1",
-          "Ні - інші гравці і сервер його не побачать",
+          "Ні - інші гравці і сервер його не побачать"
         ],
         correctAnswer: 3,
         explanation: "Клієнтський Instance не є серверною правдою.",
@@ -1049,7 +1004,7 @@ playtest - контроль, що паспорт не змивається пі�
           "Ім'я гравця і колонки з leaderstats",
           "Список усіх Script",
           "Вміст ServerStorage",
-          "Журнал Output",
+          "Журнал Output"
         ],
         correctAnswer: 0,
         explanation: "Вбудований UI Roblox читає leaderstats автоматично.",
@@ -1062,7 +1017,7 @@ playtest - контроль, що паспорт не змивається пі�
           "StringValue",
           "BoolValue",
           "IntValue",
-          "CFrameValue",
+          "CFrameValue"
         ],
         correctAnswer: 2,
         explanation: "Ціле число монет.",
@@ -1075,7 +1030,7 @@ playtest - контроль, що паспорт не змивається пі�
           "HUD малює анімацію",
           "DataStore уже зберігає прогрес",
           "Coins не зникає після смерті й респавну",
-          "Power видно лише в чаті",
+          "Power видно лише в чаті"
         ],
         correctAnswer: 2,
         explanation: "Parent = player гарантує стабільність.",
@@ -1088,7 +1043,7 @@ playtest - контроль, що паспорт не змивається пі�
           "6.3 видаляє leaderstats",
           "HUD створює власний leaderstats",
           "Power зникне у 6.3",
-          "HUD читатиме той самий Coins.Value через WaitForChild",
+          "HUD читатиме той самий Coins.Value через WaitForChild"
         ],
         correctAnswer: 3,
         explanation: "HUD - вітрина тієї самої серверної правди.",
@@ -1101,11 +1056,11 @@ playtest - контроль, що паспорт не змивається пі�
           "Lesson 6.3 - HUD",
           "Lesson 6.2 - leaderstats",
           "Lesson 6.1 - Core loop",
-          "Stats Draft Final",
+          "Stats Draft Final"
         ],
         correctAnswer: 1,
         explanation: "Чекліст вимагає Lesson 6.2 - leaderstats.",
-      },
+      }
     ],
   },
 };
@@ -1123,21 +1078,13 @@ export const ukLesson63 = {
     "Написати LocalScript, що безпечно чекає leaderstats і Coins через WaitForChild",
     "Оновлювати HUD через GetPropertyChangedSignal(\"Value\") або Changed",
     "Показати стартове значення одразу, не лише після першої зміни",
-    "Не писати Coins.Value з клієнта і підготувати bindLabel під Power",
+    "Не писати Coins.Value з клієнта і підготувати bindLabel під Power"
   ],
   theory: {
     sections: [
       {
         title: "Сьогоднішня місія (урок 41 з 92)",
         content: `У 6.2 ти отримав leaderstats з IntValue Coins - серверна правда вже існує. Сьогодні будуєш вітрину цієї правди: HUD на екрані, який показує Coins без відкриття TAB. LocalScript лише читає Value і малює текст. Жодного запису, жодної логіки нарахування.
-
-Артефакт уроку:
-1. ScreenGui у StarterGui з TextLabel **CoinsLabel**.
-2. LocalScript з WaitForChild до leaderstats і Coins.
-3. Підписка на зміну Value - текст оновлюється миттєво.
-4. Початкове значення виставлене одразу при старті.
-5. Жодного \`Coins.Value =\` у LocalScript і Save **Lesson 6.3 - HUD**.
-
 Без стабільного HUD 6.4-6.10 підключатимуть giveCoins, спавн, Power і DataStore до системи, яку гравець бачить лише через TAB. Це незручно і не схоже на реальну Simulator-гру.
 
 | Було в 6.2 | Стає в 6.3 |
@@ -1410,12 +1357,10 @@ bindLabel - універсальна розетка для будь-якого �
 
 Якщо Coins ще немає - повернись у 6.2, перш ніж чекати WaitForChild тут.
 
-Артефакт: живий HUD, що дзеркалить серверну правду без клієнтського запису.
-
 фінальний Save фіксує вітрину перед тим, як каса почне проводити реальні продажі.
 
 **Зроби зараз (3 хв):** ритуал здачі - Play → правильне число → Command Bar → оновлення → збіг з TAB → Save.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -1448,7 +1393,7 @@ bindLabel - універсальна розетка для будь-якого �
       mistake: "Формат тексту прописаний у двох різних місцях",
       explanation: "Стартовий рядок і Changed виглядають по-різному, текст «стрибає».",
       correctApproach: "Тримати один update для старту і для всіх наступних змін.",
-    },
+    }
   ],
   summary: "Ти зібрав живий HUD на LocalScript: CoinsLabel читає leaderstats через WaitForChild і оновлюється через сигнал Value без клієнтського запису. HUD і TAB показують одне число - основа для giveCoins, Power і DataStore.",
   practiceTask: {
@@ -1472,7 +1417,7 @@ bindLabel - універсальна розетка для будь-якого �
       "WaitForChild без таймауту на старті - нормально.",
       "Виклич update() один раз до Connect.",
       "Ніколи не пиши coins.Value = у LocalScript.",
-      "Якщо HUD порожній - перевір Visible і TextTransparency.",
+      "Якщо HUD порожній - перевір Visible і TextTransparency."
     ],
     optionalChallenge: "Додай bindLabel(valueInstance, label, prefix) як заготовку для Power у 6.6.",
   },
@@ -1488,7 +1433,7 @@ bindLabel - універсальна розетка для будь-якого �
           "Новий спосіб нарахування монет",
           "Coins.Value з leaderstats лише на читання",
           "Список усіх гравців сервера",
-          "Швидкість персонажа",
+          "Швидкість персонажа"
         ],
         correctAnswer: 1,
         explanation: "HUD - вітрина серверної правди, не каса.",
@@ -1501,7 +1446,7 @@ bindLabel - універсальна розетка для будь-якого �
           "Лише в LocalScript",
           "У будь-якому Script однаково",
           "Тільки в ModuleScript",
-          "У Lighting",
+          "У Lighting"
         ],
         correctAnswer: 0,
         explanation: "LocalPlayer існує на клієнті.",
@@ -1514,7 +1459,7 @@ bindLabel - універсальна розетка для будь-якого �
           "Щоб прискорити гру",
           "Щоб замінити ScreenGui",
           "Щоб безпечно дочекатись leaderstats і Coins",
-          "Щоб видалити TAB",
+          "Щоб видалити TAB"
         ],
         correctAnswer: 2,
         explanation: "На старті Instance ще може бути відсутній.",
@@ -1527,7 +1472,7 @@ bindLabel - універсальна розетка для будь-якого �
           "Він сам пише Value",
           "Він працює лише на сервері",
           "Він замінює WaitForChild",
-          "Він стежить лише за конкретною властивістю Value",
+          "Він стежить лише за конкретною властивістю Value"
         ],
         correctAnswer: 3,
         explanation: "Контракт підписки точніший за загальний Changed.",
@@ -1540,7 +1485,7 @@ bindLabel - універсальна розетка для будь-якого �
           "Щоб видалити ScreenGui",
           "Щоб текст показав правильне число з першої секунди",
           "Це вимога Roblox для всіх функцій",
-          "Інакше сигнал ніколи не спрацює",
+          "Інакше сигнал ніколи не спрацює"
         ],
         correctAnswer: 1,
         explanation: "Підписка не показує значення до першої зміни.",
@@ -1553,7 +1498,7 @@ bindLabel - універсальна розетка для будь-якого �
           "Так, якщо швидко",
           "Так, лише в Studio",
           "Ні, клієнт лише читає",
-          "Так, якщо ResetOnSpawn false",
+          "Так, якщо ResetOnSpawn false"
         ],
         correctAnswer: 2,
         explanation: "Запис цінності належить серверу.",
@@ -1566,7 +1511,7 @@ bindLabel - універсальна розетка для будь-якого �
           "Керує швидкістю анімації тексту",
           "Дозволяє клієнту писати Value",
           "Змінює колір фону Frame",
-          "Визначає, чи пересоздається HUD при респавні",
+          "Визначає, чи пересоздається HUD при респавні"
         ],
         correctAnswer: 3,
         explanation: "Для лічильників валюти зазвичай ставлять false.",
@@ -1579,7 +1524,7 @@ bindLabel - універсальна розетка для будь-якого �
           "Бо IntValue у leaderstats реплікується автоматично",
           "Бо LocalScript може писати на сервер сам",
           "Бо TAB вимикає репліку",
-          "Бо WaitForChild створює Remote",
+          "Бо WaitForChild створює Remote"
         ],
         correctAnswer: 0,
         explanation: "Репліка Instance у Player уже вбудована.",
@@ -1592,7 +1537,7 @@ bindLabel - універсальна розетка для будь-якого �
           "giveCoins треба писати в LocalScript",
           "HUD уже покаже прирости від серверної каси без змін коду",
           "Анти-дубль більше не потрібен",
-          "TAB замінює giveCoins",
+          "TAB замінює giveCoins"
         ],
         correctAnswer: 1,
         explanation: "Підписка на Value автоматично відобразить серверні зміни.",
@@ -1605,7 +1550,7 @@ bindLabel - універсальна розетка для будь-якого �
           "Серверна функція нарахування",
           "Заміна ScreenGui",
           "Універсальна прив'язка Value до TextLabel",
-          "Спосіб вимкнути TAB",
+          "Спосіб вимкнути TAB"
         ],
         correctAnswer: 2,
         explanation: "Патерн готує HUD до Power та інших лічильників.",
@@ -1618,7 +1563,7 @@ bindLabel - універсальна розетка для будь-якого �
           "Подвійні або потрійні Connect після респавнів",
           "WaitForChild стає швидшим",
           "Coins зникають із leaderstats",
-          "ResetOnSpawn вимикається сам",
+          "ResetOnSpawn вимикається сам"
         ],
         correctAnswer: 0,
         explanation: "Кожен респавн додає нову Connection.",
@@ -1631,7 +1576,7 @@ bindLabel - універсальна розетка для будь-якого �
           "Чи однакове число на екрані й у TAB",
           "Чи ScreenGui має ParticleEmitter",
           "Чи LocalScript пише Value",
-          "Чи Baseplate Anchored",
+          "Чи Baseplate Anchored"
         ],
         correctAnswer: 0,
         explanation: "Обидва інтерфейси мають дзеркалити одну серверну правду.",
@@ -1644,7 +1589,7 @@ bindLabel - універсальна розетка для будь-якого �
           "У Workspace як SurfaceGui на підлозі",
           "У StarterGui",
           "У ServerStorage як єдиний варіант",
-          "У Lighting",
+          "У Lighting"
         ],
         correctAnswer: 1,
         explanation: "StarterGui копіюється в PlayerGui гравця.",
@@ -1657,7 +1602,7 @@ bindLabel - універсальна розетка для будь-якого �
           "Lesson 6.2 - leaderstats",
           "Lesson 6.4 - GiveCoins",
           "Lesson 6.3 - HUD",
-          "HUD Draft Final",
+          "HUD Draft Final"
         ],
         correctAnswer: 2,
         explanation: "Чекліст вимагає Lesson 6.3 - HUD.",
@@ -1670,11 +1615,11 @@ bindLabel - універсальна розетка для будь-якого �
           "Написати Coins.Value на клієнті",
           "Видалити ScreenGui",
           "Вимкнути Output",
-          "Повернутись у 6.2 і перевірити створення leaderstats на сервері",
+          "Повернутись у 6.2 і перевірити створення leaderstats на сервері"
         ],
         correctAnswer: 3,
         explanation: "HUD чекає Instance, який повинен створити попередній урок.",
-      },
+      }
     ],
   },
 };
@@ -1692,21 +1637,13 @@ export const ukLesson64 = {
     "Підключити збір монети до giveCoins, а не до прямого Coins.Value +=",
     "Зробити анти-дубль: Collected до нагороди і Destroy після успіху",
     "Повертати true/false з giveCoins і tryCollect для майбутнього Fx і цілей",
-    "Підготувати єдину касу під спавн, Power і баланс наступних уроків",
+    "Підготувати єдину касу під спавн, Power і баланс наступних уроків"
   ],
   theory: {
     sections: [
       {
         title: "Сьогоднішня місія (урок 42 з 92)",
         content: `У 6.2-6.3 ти вже маєш Coins у leaderstats і HUD, що читає серверну правду. Сьогодні з'являється каса нагород: одна function giveCoins і захист від подвійного збору. Без цього 6.5-6.10 будують економіку на дірявому відрі.
-
-Артефакт уроку:
-1. \`giveCoins(player, amount)\` у серверному Script або ModuleScript.
-2. Збір Part викликає giveCoins, а не прямий \`Coins.Value +=\`.
-3. Анти-дубль: повторний Touched не дає другу нагороду.
-4. Монета зникає через Destroy або блокується Attribute Collected.
-5. return true/false і Save **Lesson 6.4 - GiveCoins**.
-
 У 6.5 for наспавнить багато монет на цю касу. У 6.6 всередині giveCoins з'явиться Power. У 6.8-6.9 цілі й juice спрацьовуватимуть лише після успішного return true.
 
 | Було в 6.2-6.3 | Стає в 6.4 |
@@ -1994,14 +1931,12 @@ playtest - контроль касового чека, а не «здаєтьс�
 
 Далі **6.5** наспавнить багато монет на цю касу. **6.6** додасть Power у формулу всередині giveCoins. **6.8-6.9** підв'яжуть цілі й juice до return true.
 
-Артефакт: одна каса нагород. Усі дороги збору ведуть сюди.
-
 Короткий ритуал: спам по монеті → TAB + рівно одна порція → монета зникла → Output без хаосу.
 
 фінальний Save фіксує двері каси перед тим, як склад заповнять десятки товарів.
 
 **Зроби зараз (3 хв):** пройди ритуал і збережи Place під точною назвою.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -2034,7 +1969,7 @@ playtest - контроль касового чека, а не «здаєтьс�
       mistake: "giveCoins падає на nil leaderstats",
       explanation: "Ранній Join або race зі Spawn ламає Script замість безпечного false.",
       correctApproach: "Перевіряти FindFirstChild і повертати false без крашу.",
-    },
+    }
   ],
   summary: "Ти зібрав giveCoins і анти-дубль: одна серверна каса, одна монета - один payout, true лише після реальної нагороди. Це база для спавну, Power, цілей і Ship.",
   practiceTask: {
@@ -2059,7 +1994,7 @@ playtest - контроль касового чека, а не «здаєтьс�
       "Спочатку одна Anchored монета з CanTouch true.",
       "SetAttribute Collected до giveCoins, не після Destroy.",
       "Не вір клієнтському amount у Remote.",
-      "Якщо монета зникла без Coins - дивись порядок Destroy.",
+      "Якщо монета зникла без Coins - дивись порядок Destroy."
     ],
     optionalChallenge: "Винеси giveCoins у ModuleScript CoinService і require його з одного збірного Script.",
   },
@@ -2075,7 +2010,7 @@ playtest - контроль касового чека, а не «здаєтьс�
           "HUD, який сам пише Coins",
           "giveCoins на сервері + анти-дубль одного payout",
           "Новий острів без збору",
-          "Remote, що довіряє клієнтському amount",
+          "Remote, що довіряє клієнтському amount"
         ],
         correctAnswer: 1,
         explanation: "Урок будує єдину касу і захист від подвійної нагороди.",
@@ -2088,7 +2023,7 @@ playtest - контроль касового чека, а не «здаєтьс�
           "У серверному giveCoins",
           "У LocalScript на кожен touch",
           "У ParticleEmitter",
-          "У назві монети",
+          "У назві монети"
         ],
         correctAnswer: 0,
         explanation: "Сервер є джерелом правди для цінності.",
@@ -2101,7 +2036,7 @@ playtest - контроль касового чека, а не «здаєтьс�
           "Після Destroy",
           "Після звуку збору",
           "До giveCoins, щоб заблокувати паралельні Touched",
-          "Лише на клієнті",
+          "Лише на клієнті"
         ],
         correctAnswer: 2,
         explanation: "Раннє блокування зупиняє гонку подвійного payout.",
@@ -2114,7 +2049,7 @@ playtest - контроль касового чека, а не «здаєтьс�
           "Бо Touched заборонений у Studio",
           "Бо Attribute не існує без for",
           "Бо CanTouch завжди false",
-          "Бо один пробіг може згенерувати багато подій",
+          "Бо один пробіг може згенерувати багато подій"
         ],
         correctAnswer: 3,
         explanation: "Touched спамить і без захисту роздуває економіку.",
@@ -2127,7 +2062,7 @@ playtest - контроль касового чека, а не «здаєтьс�
           "Сліпо з FireServer клієнта",
           "З серверного Attribute або константи",
           "З кольору Part",
-          "З Volume Sound",
+          "З Volume Sound"
         ],
         correctAnswer: 1,
         explanation: "Клієнтському числу не довіряють.",
@@ -2140,7 +2075,7 @@ playtest - контроль касового чека, а не «здаєтьс�
           "Все одно додати 1",
           "Видалити leaderstats",
           "Повернути false і не змінювати Coins",
-          "Поставити Coins = 999",
+          "Поставити Coins = 999"
         ],
         correctAnswer: 2,
         explanation: "Валідація захищає касу від кривих даних.",
@@ -2153,7 +2088,7 @@ playtest - контроль касового чека, а не «здаєтьс�
           "Щоб Fx і майбутні цілі запускались лише після реальної нагороди",
           "Щоб вимкнути HUD",
           "Щоб створити Terrain",
-          "Щоб замінити leaderstats",
+          "Щоб замінити leaderstats"
         ],
         correctAnswer: 0,
         explanation: "Контракт успіху потрібен juice і quest-системам.",
@@ -2166,7 +2101,7 @@ playtest - контроль касового чека, а не «здаєтьс�
           "Залишити Collected і Destroy",
           "Відкотити Collected і лишити монету",
           "Поставити Coins на клієнті",
-          "Видалити Player",
+          "Видалити Player"
         ],
         correctAnswer: 1,
         explanation: "Rollback дозволяє повторити збір, коли stats готові.",
@@ -2179,7 +2114,7 @@ playtest - контроль касового чека, а не «здаєтьс�
           "6.5 видаляє giveCoins",
           "Спавн більше не потрібен",
           "Усі Clone зможуть йти в ту саму tryCollect/giveCoins",
-          "Config замінює анти-дубль",
+          "Config замінює анти-дубль"
         ],
         correctAnswer: 2,
         explanation: "Єдина каса масштабується на багато монет.",
@@ -2192,7 +2127,7 @@ playtest - контроль касового чека, а не «здаєтьс�
           "Щоб один hook підхоплював усі монети, включно з новими Clone",
           "Щоб клієнт міг писати Coins",
           "Щоб вимкнути Touched",
-          "Щоб замінити Attribute CoinValue",
+          "Щоб замінити Attribute CoinValue"
         ],
         correctAnswer: 0,
         explanation: "Tag зручний для централізованого hook перед for-spawn.",
@@ -2205,7 +2140,7 @@ playtest - контроль касового чека, а не «здаєтьс�
           "Destroy → giveCoins → Collected",
           "giveCoins → Collected → Destroy",
           "Collected → giveCoins → Destroy",
-          "Fx → Destroy → giveCoins",
+          "Fx → Destroy → giveCoins"
         ],
         correctAnswer: 2,
         explanation: "Спочатку блок, потім каса, потім прибирання об'єкта.",
@@ -2218,7 +2153,7 @@ playtest - контроль касового чека, а не «здаєтьс�
           "Неідеальний колір монети",
           "Одна монета дає кілька payout при спамі",
           "Billboard трохи кривий",
-          "Ambient можна тепліший",
+          "Ambient можна тепліший"
         ],
         correctAnswer: 1,
         explanation: "Подвійний payout ламає всю подальшу економіку.",
@@ -2231,7 +2166,7 @@ playtest - контроль касового чека, а не «здаєтьс�
           "Power можна вставити всередину giveCoins без пошуку десяти +=",
           "Power замінює анти-дубль",
           "Attribute CoinValue більше не потрібен",
-          "HUD починає писати Power сам",
+          "HUD починає писати Power сам"
         ],
         correctAnswer: 0,
         explanation: "Одна каса - одне місце для множника.",
@@ -2244,7 +2179,7 @@ playtest - контроль касового чека, а не «здаєтьс�
           "Lesson 6.5 - Coin Config Spawn",
           "Lesson 6.4 - GiveCoins",
           "Lesson 6.3 - HUD",
-          "Coins Draft Final",
+          "Coins Draft Final"
         ],
         correctAnswer: 1,
         explanation: "Чекліст вимагає Lesson 6.4 - GiveCoins.",
@@ -2257,11 +2192,11 @@ playtest - контроль касового чека, а не «здаєтьс�
           "Бо Sound тоді гучніший",
           "Бо Destroy стає неможливим",
           "Бо Attribute зникне",
-          "Бо гравець чує успіх, навіть коли Coins не змінились",
+          "Бо гравець чує успіх, навіть коли Coins не змінились"
         ],
         correctAnswer: 3,
         explanation: "Feedback має підтверджувати серверну правду.",
-      },
+      }
     ],
   },
 };
@@ -2279,21 +2214,13 @@ export const ukLesson65 = {
     "Розкласти монети циклом for по маркерах CoinSpawns",
     "Ставити CoinValue і CoinId Attribute при spawnCoin",
     "Респавнити зібрану монету через Destroy, Occupied і task.delay",
-    "Підключити всі спавнені монети до серверного giveCoins з 6.4",
+    "Підключити всі спавнені монети до серверного giveCoins з 6.4"
   ],
   theory: {
     sections: [
       {
         title: "Сьогоднішня місія (урок 43 з 92)",
         content: `У 6.4 ти зібрав касу: giveCoins, анти-дубль і один серверний вхід нагороди. Одна тестова монета доводить формулу, але острів ще не живе. Сьогодні з'являється система розкладки: table правил, for по точках і респавн після збору.
-
-Артефакт уроку:
-1. CoinConfig з мінімум двома типами: small і big.
-2. Folder CoinSpawns з 6-12 маркерами SP1..n.
-3. spawnCoin, що ставить CoinValue і CoinId Attribute.
-4. Стартовий for і респавн через task.delay після Destroy.
-5. Збір лише через giveCoins і Save **Lesson 6.5 - Coin Config Spawn**.
-
 У 6.6 giveCoins помножить CoinValue на Power. У 6.9 ти крутитимеш value і respawn у тій самій table для TTG1. Без сьогоднішнього Config баланс знову розмажеться по десяти Scripts.
 
 | Було в 6.4 | Стає в 6.5 |
@@ -2551,38 +2478,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
 таблиця - накладна прийомки складу перед відкриттям магазину.
 
 **Зроби зараз (7 хв):** пройди рядки 1-5 і постав статуси.`,
-      },
-      {
-        title: "Місток до Power і балансу + чекліст",
-        content: `| Урок | Що бере з 6.5 |
-|------|----------------|
-| 6.6 Power | CoinValue Attribute як чиста база |
-| 6.7 DataStore | Потік Coins від живого острова |
-| 6.8 Цілі | Достатньо монет, щоб progress рухався |
-| 6.9 Баланс | Крутить value і respawn у тій же table |
-| 6.10 Ship | Острів сам підтримує цикл збору |
-
-Не роздувай 20 типів монет. Два value і робочий respawn достатньо. Якщо структура чиста, наступні уроки додають шари, а не латки поверх ручних Clone.
-
-Чекліст:
-- [ ] CoinConfig: ≥2 id з value і respawn
-- [ ] CoinConfigById побудовано
-- [ ] CoinSpawns: 6-12 маркерів
-- [ ] ServerStorage template + folder Coins
-- [ ] spawnCoin ставить CoinValue, CoinId, Collected
-- [ ] for розкладає на старті
-- [ ] tryCollect → giveCoins → Destroy → delay
-- [ ] Occupied блокує стопку
-- [ ] Різний payout small vs big
-- [ ] Playtest 1-7 зелені
-- [ ] Save: Lesson 6.5 - Coin Config Spawn
-
-Артефакт: острів, що сам кладе монети за меню. Ручний Clone у Workspace більше не здача.
-
-фінальний Save - відкритий склад із прайс-листом, а не купа коробок без етикеток.
-
-**Зроби зараз (3 хв):** покажи Config, big/small у TAB і respawn на SP1, потім збережи Place.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -2615,7 +2511,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
       mistake: "Сотня точок у перший день",
       explanation: "Немає часу стабілізувати жодну, playtest і дебаг стають хаотичними.",
       correctApproach: "Почати з 6-12 маркерів і двох типів value.",
-    },
+    }
   ],
   summary: "Ти розкладаєш collectables через CoinConfig і for: різні value в Attributes, респавн після збору й єдина каса giveCoins. Острів сам підтримує цикл під Power і баланс.",
   practiceTask: {
@@ -2640,7 +2536,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
       "Спочатку всі small, потім чергування big через modulo.",
       "print(cfg.id, cfg.value) при spawn і при респавні.",
       "Transparency 0.5 на маркерах під час дебагу, 1 перед здачею.",
-      "Зберігай SpawnPointName і CoinId до Destroy.",
+      "Зберігай SpawnPointName і CoinId до Destroy."
     ],
     optionalChallenge: "Додай третій тип rare лише новим рядком Config: більший value і довший respawn.",
   },
@@ -2656,7 +2552,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "Видалити giveCoins і лишити ручні Clone",
           "CoinConfig, for-spawn, Attributes і респавн після збору",
           "Лише новий Skybox",
-          "DataStore без монет на сцені",
+          "DataStore без монет на сцені"
         ],
         correctAnswer: 1,
         explanation: "Урок будує автоматичну розкладку collectables з даними в Config.",
@@ -2669,7 +2565,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "Однаково розставити монети зі списку маркерів",
           "for замінює Humanoid",
           "Без for Attribute не існує",
-          "for малює Terrain",
+          "for малює Terrain"
         ],
         correctAnswer: 0,
         explanation: "Цикл повторює spawnCoin на кожній точці.",
@@ -2682,7 +2578,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "Випадково з клієнта",
           "З назви Skybox",
           "З CoinConfig і поставити Attribute",
-          "Завжди 999999",
+          "Завжди 999999"
         ],
         correctAnswer: 2,
         explanation: "Table є джерелом правди, Attribute несе runtime-значення.",
@@ -2695,7 +2591,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "Щоб вимкнути Touched",
           "Щоб замінити DisplayName",
           "Щоб зупинити for назавжди",
-          "Щоб задати час повернення монети після збору",
+          "Щоб задати час повернення монети після збору"
         ],
         correctAnswer: 3,
         explanation: "Різні типи можуть повертатись з різною паузою.",
@@ -2708,7 +2604,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "Спавнити швидше за збір",
           "Destroy при зборі плюс Occupied / один delay",
           "Прибрати giveCoins",
-          "Зробити CanCollide стіну назавжди",
+          "Зробити CanCollide стіну назавжди"
         ],
         correctAnswer: 1,
         explanation: "Одна жива монета на маркер - базове правило anti-lag.",
@@ -2721,7 +2617,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "LocalScript Coins =",
           "Lighting",
           "giveCoins на сервері",
-          "SpawnLocation сам по собі",
+          "SpawnLocation сам по собі"
         ],
         correctAnswer: 2,
         explanation: "Єдина каса з 6.4 лишається обов'язковою.",
@@ -2734,7 +2630,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "Щоб швидко знайти cfg за CoinId після Destroy",
           "Щоб видалити leaderstats",
           "Щоб клієнт міг міняти value",
-          "Щоб замінити Folder CoinSpawns",
+          "Щоб замінити Folder CoinSpawns"
         ],
         correctAnswer: 0,
         explanation: "Lookup потрібен для коректного респавну того самого типу.",
@@ -2747,7 +2643,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "У SoundService",
           "У клієнтському Temporary",
           "Template не потрібен",
-          "У ServerStorage для серверного Clone",
+          "У ServerStorage для серверного Clone"
         ],
         correctAnswer: 3,
         explanation: "Префаб клонує сервер, а не клієнт.",
@@ -2760,7 +2656,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "6.6 видаляє всі монети",
           "Attributes після spawn заборонені",
           "CoinValue Attribute стає чистою базою для Power",
-          "Power замінює Config",
+          "Power замінює Config"
         ],
         correctAnswer: 2,
         explanation: "Множник читатиме ту саму серверну базу.",
@@ -2773,7 +2669,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "Обов'язково 50",
           "Хоча б 2, наприклад 1 і 5",
           "0",
-          "Лише колір без чисел",
+          "Лише колір без чисел"
         ],
         correctAnswer: 1,
         explanation: "Різниця вартостей доводить роботу Config.",
@@ -2786,7 +2682,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "Можна зібрати знову або отримати дублікати",
           "Обов'язково вищий FPS",
           "Config видалиться сам",
-          "for зупиниться назавжди",
+          "for зупиниться назавжди"
         ],
         correctAnswer: 0,
         explanation: "Cleanup потрібен і для анти-дубля, і для респавну.",
@@ -2799,7 +2695,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "Part не має Color",
           "giveCoins читає лише BrickColor",
           "Колір завжди точний на сервері",
-          "Серверна правда - Attribute/Config, вигляд можна змінити візуально",
+          "Серверна правда - Attribute/Config, вигляд можна змінити візуально"
         ],
         correctAnswer: 3,
         explanation: "Дані важливіші за підказку для очей.",
@@ -2812,7 +2708,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "Близько 6-12, не сотня",
           "Обов'язково 1000",
           "Рівно 0",
-          "Лише 1 на весь модуль назавжди",
+          "Лише 1 на весь модуль назавжди"
         ],
         correctAnswer: 0,
         explanation: "Невеликий набір легше стабілізувати й тестувати.",
@@ -2825,7 +2721,7 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "Баланс видаляє Config",
           "TTG не залежить від спавну",
           "Баланс крутить value і respawn у тій самій table",
-          "Juice замінює spawn",
+          "Juice замінює spawn"
         ],
         correctAnswer: 2,
         explanation: "Ті самі поля Config стануть важелями економіки.",
@@ -2838,11 +2734,11 @@ Playtest: стій на одній точці, збери тричі. Має б�
           "Lesson 6.4 - GiveCoins",
           "Lesson 6.6 - Power Attributes",
           "Coin Spawn Draft Final",
-          "Lesson 6.5 - Coin Config Spawn",
+          "Lesson 6.5 - Coin Config Spawn"
         ],
         correctAnswer: 3,
         explanation: "Чекліст вимагає Lesson 6.5 - Coin Config Spawn.",
-      },
+      }
     ],
   },
 };
@@ -2860,21 +2756,13 @@ export const ukLesson66 = {
     "Додати IntValue Power у leaderstats зі стартом не менше 1",
     "Рахувати фінальну нагороду в giveCoins через одну формулу з Power",
     "Підняти Power на сервері через Prompt або Remote і показати його в TAB/HUD",
-    "Підготувати множник під DataStore, цілі дня та заміри TTG",
+    "Підготувати множник під DataStore, цілі дня та заміри TTG"
   ],
   theory: {
     sections: [
       {
         title: "Сьогоднішня місія (урок 44 з 92)",
         content: `У 6.5 ти навчив спавн читати Config і ставити Attribute CoinValue на монети. Сьогодні з'являється другий множник: Power гравця. База лишається на collectable, а сила - у leaderstats. Разом вони змінюють відчуття збору без нового острова.
-
-Артефакт уроку:
-1. IntValue **Power** у leaderstats зі стартом 1.
-2. giveCoins рахує \`final = math.floor(base * power)\` в одному місці.
-3. CoinValue Attribute читається на сервері з дефолтом при nil.
-4. Хоча б один серверний спосіб підняти Power.
-5. TAB або HUD показує Power і Save **Lesson 6.6 - Power Attributes**.
-
 У 6.7 Power поїде в DataStore поруч із Coins. У 6.8 цілі зможуть вимагати збір з вищим Power. У 6.9 TTG1 порівняє дохід при Power 1 і Power 2.
 
 | Було в 6.5 | Стає в 6.6 |
@@ -3125,23 +3013,6 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
 **Зроби зараз (4 хв):** зроби один збір і звіри три числа в Output із TAB.`,
       },
       {
-        title: "Місток до DataStore, цілей і балансу",
-        content: `| Урок | Що потребує від 6.6 |
-|------|---------------------|
-| 6.7 DataStore | Поле power у payload |
-| 6.8 Цілі дня | Збір швидшає з Power; можливі цілі на Power |
-| 6.9 Баланс | Порівняння Coins/min при Power 1 і 2 |
-| 6.10 Ship | Відчутний прогрес сили в короткому демо |
-
-Не будуй сьогодні дерево престижу, rebirth і п'ять валют. Достатньо ×Power на зборі. Якщо пізніше з'явиться пасивний дохід, виріши окремо, чи множить його той самий Power.
-
-Залиш формулу в одному коментарі біля giveCoins. У 6.9 ти крутитимеш Config value і Power окремо; подвійне множення зруйнує TTG1.
-
-сьогодні ти ставиш коробку передач; завтра виміряєш швидкість, післязавтра збережеш одометр.
-
-**Зроби зараз (3 хв):** запиши в нотатку: «Power зберігаємо в 6.7 як number, старт 1».`,
-      },
-      {
         title: "Чекліст здачі уроку 44",
         content: `- [ ] Power у leaderstats, старт ≥ 1
 - [ ] giveCoins множить base * Power з math.floor
@@ -3154,8 +3025,6 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
 - [ ] Немає Coins.Value += поза giveCoins
 - [ ] Save: Lesson 6.6 - Power Attributes
 
-Артефакт: сила як множник каси. Збір масштабується з прогресом гравця, а не лише з типом монети.
-
 Короткий ритуал: big при Power 1 → +Power → та сама big після респавну → різниця в Coins очевидна без лекції.
 
 У 6.7 цей Power стане полем сейфу. Не йди далі, поки множник не видно в TAB і Output.
@@ -3163,7 +3032,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
 фінальний Save фіксує важіль, яким уже можна користуватись.
 
 **Зроби зараз (3 хв):** пройди ритуал здачі й збережи Place під точною назвою.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -3196,7 +3065,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
       mistake: "Немає способу підняти Power у Play",
       explanation: "Неможливо довести вплив множника ментору за один прогін.",
       correctApproach: "Додати серверний Prompt або Remote з +1 Power і порівняти два збори.",
-    },
+    }
   ],
   summary: "Ти додав CoinValue Attributes і Power у leaderstats: giveCoins множить базу на силу гравця в одному місці. Множник видно в TAB і готовий до сейву, цілей та балансу.",
   practiceTask: {
@@ -3221,7 +3090,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
       "Спочатку хардкод Power=2 для тесту, потім підключи Prompt.",
       "math.floor тримає IntValue чистим.",
       "Якщо big і small однакові - спочатку перевір SetAttribute у spawn з 6.5.",
-      "Не приймай абсолютне Power з клієнтського FireServer без перевірок.",
+      "Не приймай абсолютне Power з клієнтського FireServer без перевірок."
     ],
     optionalChallenge: "Додай короткий cooldown на addPower і текст на алтарі: «Монета × Power = нагорода».",
   },
@@ -3237,7 +3106,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "Видалити Config і лишити лише колір монет",
           "Power у leaderstats і Attribute CoinValue, що разом змінюють payout",
           "Новий острів без giveCoins",
-          "LocalScript, який сам пише Coins",
+          "LocalScript, який сам пише Coins"
         ],
         correctAnswer: 1,
         explanation: "Урок з'єднує вартість предмета і силу гравця в одній касі.",
@@ -3250,7 +3119,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "IntValue у leaderstats на Player",
           "Лише змінна в LocalScript",
           "Attribute тільки на Character",
-          "У назві Baseplate",
+          "У назві Baseplate"
         ],
         correctAnswer: 0,
         explanation: "leaderstats стабільний між респавнами і видимий у TAB.",
@@ -3263,7 +3132,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "Щоб видалити Humanoid",
           "Щоб створити RemoteEvent",
           "Щоб прочитати базову вартість монети на сервері",
-          "Щоб вимкнути HUD",
+          "Щоб вимкнути HUD"
         ],
         correctAnswer: 2,
         explanation: "Attribute зберігає базу предмета для формули нагороди.",
@@ -3276,7 +3145,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "Бо IntValue забороняє 0",
           "Бо TAB тоді працює швидше",
           "Бо Attribute зникне",
-          "Бо base * 0 обнуляє всі нагороди",
+          "Бо base * 0 обнуляє всі нагороди"
         ],
         correctAnswer: 3,
         explanation: "Старт 1 зберігає сенс базового збору.",
@@ -3289,7 +3158,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "final завжди 999999",
           "final = math.floor(base * Power)",
           "final = лише Power без base",
-          "final пише клієнт у TextLabel",
+          "final пише клієнт у TextLabel"
         ],
         correctAnswer: 1,
         explanation: "Одна серверна формула множить чисту базу на силу.",
@@ -3302,7 +3171,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "Обов'язково крашнути Script",
           "Видалити гравця",
           "Взяти дефолт або fallback через CoinId і Config",
-          "Поставити Coins у мінус",
+          "Поставити Coins у мінус"
         ],
         correctAnswer: 2,
         explanation: "Дефолт захищає касу від nil.",
@@ -3315,7 +3184,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "Серверний Prompt або Remote-обробник",
           "Будь-який LocalScript без перевірки",
           "ParticleEmitter після burst",
-          "Sign із SurfaceGui сам по собі",
+          "Sign із SurfaceGui сам по собі"
         ],
         correctAnswer: 0,
         explanation: "Сила змінюється лише серверною логікою.",
@@ -3328,7 +3197,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "Character не існує в Roblox",
           "Attribute на Character завжди кращий за Value",
           "Character може зникнути при респавні",
-          "leaderstats тоді заборонені",
+          "leaderstats тоді заборонені"
         ],
         correctAnswer: 2,
         explanation: "Прогрес сили має жити на Player.",
@@ -3341,7 +3210,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "DataStore забороняє зберігати Power",
           "Треба видалити Power перед сейвом",
           "Save має бути лише на клієнті",
-          "Power стає числовим полем payload разом із Coins",
+          "Power стає числовим полем payload разом із Coins"
         ],
         correctAnswer: 3,
         explanation: "Множник має переживати rejoin у наступному уроці.",
@@ -3354,7 +3223,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "Config уже містить Power, і giveCoins множить ще раз",
           "Дві монети на сцені",
           "Два TextLabel у HUD",
-          "Два SpawnPoints",
+          "Два SpawnPoints"
         ],
         correctAnswer: 0,
         explanation: "База має бути чистою, множник - лише в giveCoins.",
@@ -3367,7 +3236,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "Скріншот Explorer без Play",
           "Той самий collectable дає більший payout після +Power",
           "Новий Skybox",
-          "Видалення анти-дубля",
+          "Видалення анти-дубля"
         ],
         correctAnswer: 1,
         explanation: "Порівняння до й після апгрейду показує живу формулу.",
@@ -3380,7 +3249,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "Записувати будь-яке число з клієнта",
           "Замінювати giveCoins",
           "Читати серверне Value і показувати його",
-          "Видаляти CoinValue Attribute",
+          "Видаляти CoinValue Attribute"
         ],
         correctAnswer: 2,
         explanation: "HUD - вітрина, не каса.",
@@ -3393,7 +3262,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "Щоб швидше знайти, де саме ламається формула",
           "Щоб збільшити MaxHealth",
           "Щоб вимкнути DataStore",
-          "Щоб замінити TAB",
+          "Щоб замінити TAB"
         ],
         correctAnswer: 0,
         explanation: "Три числа показують джерело помилки за секунди.",
@@ -3406,7 +3275,7 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "Lesson 6.7 - Sim DataStore",
           "Lesson 6.6 - Power Attributes",
           "Lesson 6.5 - Spawn Config",
-          "Power Draft Final",
+          "Power Draft Final"
         ],
         correctAnswer: 1,
         explanation: "Чекліст вимагає Lesson 6.6 - Power Attributes.",
@@ -3419,11 +3288,11 @@ playtest - ваги: спочатку гиря 5, потім важіль ×2.
           "Баланс зможе порівняти дохід при різних значеннях сили",
           "TTG1 більше не потрібен",
           "Config value стане непотрібним",
-          "Анти-дубль можна вимкнути",
+          "Анти-дубль можна вимкнути"
         ],
         correctAnswer: 0,
         explanation: "Різний Power дає вимірювану різницю Coins/min і TTG.",
-      },
+      }
     ],
   },
 };
@@ -3441,21 +3310,13 @@ export const ukLesson67 = {
     "Завантажити Coins і Power через pcall із перевіркою типів та дефолтами",
     "Зберегти серверний payload через UpdateAsync без довіри до клієнта",
     "Додати PlayerRemoving, BindToClose й помірний autosave із dirty-прапором",
-    "Провести rejoin-тест і підготувати формат даних для цілей дня",
+    "Провести rejoin-тест і підготувати формат даних для цілей дня"
   ],
   theory: {
     sections: [
       {
         title: "Сьогоднішня місія (урок 45 з 92)",
         content: `У 6.6 ти додав Power і Attributes: під час однієї сесії гравець уже збирає Coins швидше. Сьогодні прогрес переживе вихід із гри. Ти збережеш серверні Coins і Power, потім доведеш результат через Stop - Play або rejoin.
-
-Артефакт уроку:
-1. Версований DataStore **SimProgress_v1** і ключ із UserId.
-2. Load через pcall, перевірку payload і безпечні дефолти.
-3. Save через UpdateAsync із серверних Coins та Power.
-4. PlayerRemoving, BindToClose й autosave без запиту на кожен збір.
-5. Таблиця rejoin-тесту та Save **Lesson 6.7 - Sim DataStore**.
-
 У 6.8 payload зможе отримати activeId, progress і completed цілей дня. У 6.9 rejoin не повинен псувати заміри економіки, а в 6.10 стабільний restore стане пунктом Ship.
 
 | Було в 6.6 | Стає в 6.7 |
@@ -3718,7 +3579,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
 фінальний Save Place фіксує не обіцянку, а перевірений маршрут даних туди й назад.
 
 **Зроби зараз (3 хв):** покажи ментору числа до виходу й після rejoin, потім збережи Place під точною назвою.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -3751,7 +3612,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
       mistake: "Autosave і PlayerRemoving одночасно пишуть той самий ключ",
       explanation: "Паралельні записи можуть конфліктувати або витратити зайві запити.",
       correctApproach: "Використати saving-прапор і UpdateAsync, не запускаючи другий save до завершення першого.",
-    },
+    }
   ],
   summary: "Ти зібрав безпечний DataStore для Coins і Power: load/save через pcall, UpdateAsync, autosave та захист від перезапису після load fail. Rejoin тепер повертає серверний прогрес і готує payload до цілей дня.",
   practiceTask: {
@@ -3777,7 +3638,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
       "Якщо load впав, не зберігай дефолти поверх невідомих старих даних.",
       "Перевір назву store і ключ в обох функціях.",
       "Не став autosave на кожну секунду або кожен collectable.",
-      "Для Studio потрібні Publish і Enable Studio Access to API Services.",
+      "Для Studio потрібні Publish і Enable Studio Access to API Services."
     ],
     optionalChallenge: "Додай лічильник saveRevision у payload і показуй у Output, яка успішна версія відновилась після rejoin.",
   },
@@ -3793,7 +3654,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "HUD, який локально вигадує збережені Coins",
           "Новий острів без серверного стану",
           "DataStore load/save Coins і Power з успішним rejoin",
-          "SetAsync після кожного touch",
+          "SetAsync після кожного touch"
         ],
         correctAnswer: 2,
         explanation: "Артефакт має довести відновлення серверного прогресу між сесіями.",
@@ -3806,7 +3667,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "\"player_\" .. player.UserId",
           "Один ключ global для всіх",
           "DisplayName без UserId",
-          "Нове випадкове число при кожному вході",
+          "Нове випадкове число при кожному вході"
         ],
         correctAnswer: 0,
         explanation: "UserId стабільний і унікальний.",
@@ -3819,7 +3680,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "Щоб автоматично збільшити Coins",
           "Щоб обійти всі бюджети DataStore",
           "Щоб клієнт отримав доступ до store",
-          "Щоб перехопити помилку API й не зламати Script",
+          "Щоб перехопити помилку API й не зламати Script"
         ],
         correctAnswer: 3,
         explanation: "DataStore-запити можуть завершуватися помилками.",
@@ -3832,7 +3693,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "Одразу зберегти дефолтні нулі",
           "Дати тимчасові дефолти, але заблокувати save цієї сесії",
           "Довірити save клієнту",
-          "Видалити DataStore",
+          "Видалити DataStore"
         ],
         correctAnswer: 1,
         explanation: "Так справжні дані не будуть перезаписані після тимчасового load fail.",
@@ -3845,7 +3706,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "З аргументу FireServer",
           "З назви collectable",
           "З тексту CoinsHUD",
-          "Із серверного leaderstats.Coins.Value",
+          "Із серверного leaderstats.Coins.Value"
         ],
         correctAnswer: 3,
         explanation: "Серверний стан є джерелом правди.",
@@ -3858,7 +3719,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "Він автоматично створює Power",
           "Без нього UserId не працює",
           "Щоб позначити формат і підготувати майбутню міграцію",
-          "Він замінює pcall",
+          "Він замінює pcall"
         ],
         correctAnswer: 2,
         explanation: "Версія допомагає керувати змінами структури даних.",
@@ -3871,7 +3732,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "Бо це витрачає бюджет запитів і створює навантаження",
           "Бо Coins перетворяться на рядок",
           "Бо UpdateAsync дозволений лише один раз",
-          "Бо leaderstats тоді зникає",
+          "Бо leaderstats тоді зникає"
         ],
         correctAnswer: 0,
         explanation: "Dirty й autosave дають надійність без API-спаму.",
@@ -3884,7 +3745,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "До початку кожного save",
           "Одразу після зміни Coins",
           "Після успішного збереження відповідного payload",
-          "Після будь-якої помилки API",
+          "Після будь-якої помилки API"
         ],
         correctAnswer: 2,
         explanation: "Після fail зміни ще потребують повторної спроби.",
@@ -3897,7 +3758,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "Щоб LocalScript міг змінити payload",
           "Щоб autosave і PlayerRemoving не писали один ключ паралельно",
           "Щоб вимкнути BindToClose",
-          "Щоб замінити DataStore key",
+          "Щоб замінити DataStore key"
         ],
         correctAnswer: 1,
         explanation: "Прапор не допускає конкурентних save однієї сесії.",
@@ -3910,7 +3771,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "Чи зберігся колір HUD",
           "Чи LocalScript викликав RemoteEvent",
           "Чи змінився DisplayName",
-          "Чи ті самі Coins і Power відновилися після повторного входу",
+          "Чи ті самі Coins і Power відновилися після повторного входу"
         ],
         correctAnswer: 3,
         explanation: "Відновлені серверні числа є доказом роботи DataStore.",
@@ -3923,7 +3784,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "Опублікувати досвід і ввімкнути Studio Access to API Services",
           "Перенести Script у StarterGui",
           "Видалити Baseplate",
-          "Зберігати тільки з LocalScript",
+          "Зберігати тільки з LocalScript"
         ],
         correctAnswer: 0,
         explanation: "Studio потребує доступу до API для такого тесту.",
@@ -3936,7 +3797,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "Він має отримати числа від клієнта",
           "Він повертає нову table і не повинен yield",
           "Він може не повертати payload",
-          "Він повинен чекати task.wait усередині",
+          "Він повинен чекати task.wait усередині"
         ],
         correctAnswer: 1,
         explanation: "Callback формує нове значення ключа синхронно.",
@@ -3949,7 +3810,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "Щоб вимкнути версію store",
           "Щоб клієнт міг вибрати будь-який Power",
           "Щоб nil або неправильний тип не зламав leaderstats",
-          "Щоб зберегти весь Character",
+          "Щоб зберегти весь Character"
         ],
         correctAnswer: 2,
         explanation: "Перевірка типів дає безпечні числа й дефолти.",
@@ -3962,7 +3823,7 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "activeId, progress і completed цілей",
           "Увесь Workspace",
           "Клієнтські паролі",
-          "Копію DailyGoals Config для кожного гравця",
+          "Копію DailyGoals Config для кожного гравця"
         ],
         correctAnswer: 0,
         explanation: "DataStore зберігає індивідуальний стан цілей, а не спільний Config.",
@@ -3975,11 +3836,11 @@ rejoin - контрольне відкриття сейфа, а не віра в
           "Lesson 6.8 - Daily Goals",
           "Simulator Save Final Copy",
           "Lesson 6.6 - Power Attributes",
-          "Lesson 6.7 - Sim DataStore",
+          "Lesson 6.7 - Sim DataStore"
         ],
         correctAnswer: 3,
         explanation: "Чекліст вимагає Save Lesson 6.7 - Sim DataStore.",
-      },
+      }
     ],
   },
 };
@@ -3997,21 +3858,13 @@ export const ukLesson68 = {
     "Вести activeId, progress і completed на сервері від реального giveCoins",
     "Показати GoalHUD з текстом і лічильником X / N з однієї правди",
     "Виконати completeGoal один раз без повторної нагороди",
-    "Підготувати вимірювану ціль для TTG1 у 6.9 і демо Ship у 6.10",
+    "Підготувати вимірювану ціль для TTG1 у 6.9 і демо Ship у 6.10"
   ],
   theory: {
     sections: [
       {
         title: "Сьогоднішня місія (урок 46 з 92)",
         content: `У 6.7 ти навчився зберігати прогрес Simulator між сесіями. Сьогодні збір отримує напрям: гравець бачить конкретну ціль дня і розуміє, навіщо бігати між collectables. Без цього 6.9 не матиме TTG1, а Ship у 6.10 виглядатиме як безцільний збір.
-
-Артефакт уроку:
-1. \`DailyGoals\` table з мінімум однією активною ціллю (id, need, text, reward).
-2. Серверний \`questState\` на гравця: activeId, progress, completed.
-3. Підключення progress до успішного giveCoins, не до локального touch.
-4. GoalHUD: текст цілі + \`X / N\`.
-5. \`completeGoal\` з одноразовою нагородою і Save **Lesson 6.8 - Daily Goals**.
-
 | Було в 6.7 | Стає в 6.8 |
 |------------|------------|
 | Coins між сесіями | Навіщо збирати саме зараз |
@@ -4229,34 +4082,7 @@ complete - це печатка в журналі, а не кнопка, яку �
 таблиця - секундомір перед стартом забігу, а не спогад після фінішу.
 
 **Зроби зараз (6 хв):** пройди рядки 1-4 і постав статуси.`,
-      },
-      {
-        title: "Підготовка до 6.9 і чекліст здачі",
-        content: `| Сьогодні | У 6.9 | У 6.10 |
-|----------|-------|--------|
-| need у table | TTG1 до complete | Рубрика «ціль рухається» |
-| одноразовий reward | Баланс не вибухає | Чесне демо |
-| GoalHUD X / N | Видно прогрес під час заміру | Гравець розуміє напрям |
-
-Не став need = 10000 «на серйозно» до балансу. Для здачі можна тимчасово need = 5, показати complete, потім повернути реалістичне значення під 1-3 хвилини гри.
-
-Чекліст:
-- [ ] DailyGoals з need, text, reward
-- [ ] questState на сервері
-- [ ] progress тільки від успішного giveCoins
-- [ ] одна схема A або B
-- [ ] complete при progress >= need
-- [ ] completed блокує повтор
-- [ ] GoalHUD text + X / N
-- [ ] Playtest 1-4 зелені
-- [ ] Save: Lesson 6.8 - Daily Goals
-
-Артефакт: місія дня як дані. Збір більше не безцільний.
-
-цей Save - компас перед заміром швидкості в 6.9.
-
-**Зроби зараз (3 хв):** поверни need для гри, збережи Place під точною назвою.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -4289,7 +4115,7 @@ complete - це печатка в журналі, а не кнопка, яку �
       mistake: "Ціль працює, але GoalHUD відсутній або сховано",
       explanation: "Гравець не бачить напряму, тож демо і TTG1 втрачають сенс.",
       correctApproach: "Показати видимий text + X / N одразу після Join.",
-    },
+    }
   ],
   summary: "Ти зробив цілі дня з DailyGoals table: серверний progress від giveCoins, одноразовий complete і GoalHUD X / N. Simulator отримав напрям перед балансом і Ship.",
   practiceTask: {
@@ -4314,7 +4140,7 @@ complete - це печатка в журналі, а не кнопка, яку �
       "Спочатку print progress на кожен успішний збір.",
       "Став completed до виклику reward.",
       "Текст цілі бери лише з DailyGoals[id].text.",
-      "Відхилений повторний touch не повинен рухати progress.",
+      "Відхилений повторний touch не повинен рухати progress."
     ],
     optionalChallenge: "Після complete автоматично активуй другу ціль із GoalOrder і скинь progress у 0.",
   },
@@ -4330,7 +4156,7 @@ complete - це печатка в журналі, а не кнопка, яку �
           "Видалити giveCoins і лишити лише UI",
           "DailyGoals table, серверний прогрес, GoalHUD і одноразовий complete",
           "Новий острів без цілей",
-          "Лише ParticleEmitter на Spawn",
+          "Лише ParticleEmitter на Spawn"
         ],
         correctAnswer: 1,
         explanation: "Урок додає місію дня як дані й серверну логіку.",
@@ -4343,7 +4169,7 @@ complete - це печатка в журналі, а не кнопка, яку �
           "На сервері в questState гравця",
           "Лише в LocalScript як єдина правда",
           "У назві collectable",
-          "У SoundService",
+          "У SoundService"
         ],
         correctAnswer: 0,
         explanation: "Прогрес і нагорода належать серверу.",
@@ -4356,7 +4182,7 @@ complete - це печатка в журналі, а не кнопка, яку �
           "Щоб замінити CoinsHUD",
           "Щоб вимкнути Power",
           "Щоб задати поріг виконання з одного місця",
-          "Щоб створювати Terrain",
+          "Щоб створювати Terrain"
         ],
         correctAnswer: 2,
         explanation: "need - поріг complete для обраної схеми.",
@@ -4369,7 +4195,7 @@ complete - це печатка в журналі, а не кнопка, яку �
           "Щоб збільшити розмір монети",
           "Щоб видалити Config після Join",
           "Щоб GoalHUD міг писати Coins",
-          "Щоб не видавати нагороду цілі повторно",
+          "Щоб не видавати нагороду цілі повторно"
         ],
         correctAnswer: 3,
         explanation: "Прапор блокує повторний reward після порогу.",
@@ -4382,7 +4208,7 @@ complete - це печатка в журналі, а не кнопка, яку �
           "З випадкового рядка щосекунди",
           "З DailyGoals[id].text",
           "З назви Baseplate",
-          "Текст не потрібен, якщо є Coins",
+          "Текст не потрібен, якщо є Coins"
         ],
         correctAnswer: 1,
         explanation: "UI читає дані з того самого table.",
@@ -4395,7 +4221,7 @@ complete - це печатка в журналі, а не кнопка, яку �
           "На кожен локальний Touched",
           "Раз на хвилину незалежно від збору",
           "Коли progress >= need і ціль ще не completed",
-          "Лише після Stop Play",
+          "Лише після Stop Play"
         ],
         correctAnswer: 2,
         explanation: "Complete прив'язаний до порогу і одноразовості.",
@@ -4408,7 +4234,7 @@ complete - це печатка в журналі, а не кнопка, яку �
           "Щоб need, текст і UI говорили однією мовою",
           "Бо Lua забороняє дві змінні",
           "Щоб вимкнути DataStore",
-          "Щоб Mouth працював у Tycoon",
+          "Щоб Mouth працював у Tycoon"
         ],
         correctAnswer: 0,
         explanation: "Змішані одиниці ламають момент complete.",
@@ -4421,7 +4247,7 @@ complete - це печатка в журналі, а не кнопка, яку �
           "GoalHUD обов'язково зникне",
           "Reward може знову збільшити progress тієї ж цілі",
           "Power завжди стане 0",
-          "Config неможливо require",
+          "Config неможливо require"
         ],
         correctAnswer: 1,
         explanation: "Потрібен lock або виключення reward із progress.",
@@ -4434,7 +4260,7 @@ complete - це печатка в журналі, а не кнопка, яку �
           "6.9 видаляє всі цілі перед балансом",
           "Juice замінює questState",
           "TTG1 міряє час до complete цілі дня",
-          "Баланс більше не потребує need",
+          "Баланс більше не потребує need"
         ],
         correctAnswer: 2,
         explanation: "Без робочої цілі немає метрики TTG1.",
@@ -4447,7 +4273,7 @@ complete - це печатка в журналі, а не кнопка, яку �
           "Лише ім'я гравця",
           "Список усіх Scripts",
           "Volume активного Sound",
-          "Поточний progress і need у форматі X / N",
+          "Поточний progress і need у форматі X / N"
         ],
         correctAnswer: 3,
         explanation: "Гравець бачить відстань до complete.",
@@ -4460,7 +4286,7 @@ complete - це печатка в журналі, а не кнопка, яку �
           "Перевірити наявність у DailyGoals і не виконувати complete",
           "Завжди видати велику пачку Coins",
           "Видалити leaderstats",
-          "Перенести прогрес у LocalScript",
+          "Перенести прогрес у LocalScript"
         ],
         correctAnswer: 0,
         explanation: "Валідація id захищає від nil і фейкових нагород.",
@@ -4473,7 +4299,7 @@ complete - це печатка в журналі, а не кнопка, яку �
           "Бо тоді Config стає read-only",
           "Бо анти-дубль і каса мають визначати реальний успіх",
           "Бо GoalHUD не вміє числа",
-          "Бо need тоді стає рядком",
+          "Бо need тоді стає рядком"
         ],
         correctAnswer: 1,
         explanation: "Лише підтверджений giveCoins живить ціль.",
@@ -4486,7 +4312,7 @@ complete - це печатка в журналі, а не кнопка, яку �
           "Обов'язково 20 різних цілей",
           "Лише порожня table без UI",
           "Одна робоча ціль з UI і одноразовим complete",
-          "Ціль без need, лише з текстом",
+          "Ціль без need, лише з текстом"
         ],
         correctAnswer: 2,
         explanation: "Одна чесна місія дня важливіша за велике меню.",
@@ -4499,7 +4325,7 @@ complete - це печатка в журналі, а не кнопка, яку �
           "Lesson 6.9 - Sim Balance Juice",
           "Lesson 6.8 - Daily Goals",
           "Lesson 6.10 - Sim Ship",
-          "Goals Draft Final",
+          "Goals Draft Final"
         ],
         correctAnswer: 1,
         explanation: "Чекліст вимагає Lesson 6.8 - Daily Goals.",
@@ -4512,11 +4338,11 @@ complete - це печатка в журналі, а не кнопка, яку �
           "Ship забороняє GoalHUD",
           "Цілі замінюють collectables",
           "Без цілей giveCoins неможливий технічно",
-          "Демо отримує напрям: збір → прогрес → complete",
+          "Демо отримує напрям: збір → прогрес → complete"
         ],
         correctAnswer: 3,
         explanation: "Коротке демо потребує зрозумілої місії.",
-      },
+      }
     ],
   },
 };
@@ -4534,21 +4360,13 @@ export const ukLesson69 = {
     "Провести контрольовані зміни балансу через єдиний Config",
     "Перевірити вплив Power, анти-дубля, HUD і DataStore на результати тесту",
     "Додати короткий Sound і ParticleEmitter після підтвердженої нагороди",
-    "Підготувати таблицю доказів і стабільний Save до фінального Ship Sim",
+    "Підготувати таблицю доказів і стабільний Save до фінального Ship Sim"
   ],
   theory: {
     sections: [
       {
         title: "Сьогоднішня місія (урок 47 з 92)",
         content: `У 6.8 ти додав цілі дня з table: гравець уже бачить, скільки треба зібрати та коли завдання завершене. Сьогодні ти перевіриш, чи ця ціль досяжна, чи Power справді корисний і чи нагорода відчувається. У 6.10 цей Simulator проходитиме фінальну рубрику Ship, тому зараз потрібні числа й факти, а не враження "ніби нормально".
-
-Артефакт уроку:
-1. Таблиця playtest із Coins/min, TTG1 та окремим тестом Power.
-2. Щонайменше дві контрольовані зміни в Config із записом "було - стало".
-3. Перевірка анти-дубля, TAB, HUD, цілі та rejoin.
-4. Короткий Sound і burst ParticleEmitter після успішного giveCoins.
-5. Save **Lesson 6.9 - Sim Balance Juice**, готовий до 6.10.
-
 | Вхід | Результат уроку |
 |------|-----------------|
 | Ціль дня з 6.8 | Відомий реальний час до complete |
@@ -4773,7 +4591,7 @@ Config задає партитуру, а HUD і сервер мають грат
 цей Save - генеральна репетиція перед відкриттям.
 
 **Зроби зараз (3 хв):** закрий останній broken-рядок, повтори короткий прогін і збережи Place під точною назвою.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -4806,7 +4624,7 @@ Config задає партитуру, а HUD і сервер мають грат
       mistake: "Тимчасові Fx Parts і Sounds не видаляються",
       explanation: "Після серії зборів Workspace росте, а продуктивність погіршується.",
       correctApproach: "Використовувати Emit(n), Debris або явний cleanup після завершення ефекту.",
-    },
+    }
   ],
   summary: "Ти виміряв темп Simulator, провів дві контрольовані зміни Config і підтвердив вплив Power. Нагородний VFX тепер запускається після серверної правди, а таблиця готує проєкт до Ship Sim.",
   practiceTask: {
@@ -4831,7 +4649,7 @@ Config задає партитуру, а HUD і сервер мають грат
       "Секундомір телефона достатній, якщо старт і стоп кожного прогону однакові.",
       "Якщо один Part дає кілька payout, не балансуй числа до виправлення анти-дубля.",
       "Для VFX використовуй короткий burst, а не постійно ввімкнений ParticleEmitter.",
-      "Після зміни GoalNeed перевір і серверну умову, і текст GoalHUD.",
+      "Після зміни GoalNeed перевір і серверну умову, і текст GoalHUD."
     ],
     optionalChallenge: "Додай у playtest-таблицю третій прогін і порахуй середній Coins/min, не змінюючи Config між спробами.",
   },
@@ -4847,7 +4665,7 @@ Config задає партитуру, а HUD і сервер мають грат
           "Таблиця метрик без повторних тестів після зміни Config",
           "VFX на локальний touch без перевірки серверної нагороди",
           "Таблиця метрик, дві зміни Config, перевірки та VFX після payout",
-          "Лише фінальний Coins/min без тесту Power і анти-дубля",
+          "Лише фінальний Coins/min без тесту Power і анти-дубля"
         ],
         correctAnswer: 2,
         explanation: "Урок потребує вимірюваного балансу та чесного feedback.",
@@ -4860,7 +4678,7 @@ Config задає партитуру, а HUD і сервер мають грат
           "Час до завершення першої цілі",
           "Час cleanup одного Fx Part",
           "Інтервал між autosave",
-          "Тривалість одного ParticleEmitter burst",
+          "Тривалість одного ParticleEmitter burst"
         ],
         correctAnswer: 0,
         explanation: "TTG1 означає time to first goal.",
@@ -4873,7 +4691,7 @@ Config задає партитуру, а HUD і сервер мають грат
           "Щоб не повторювати playtest після зміни",
           "Щоб GoalHUD міг зберігати окреме число",
           "Щоб усі метрики автоматично стали зеленими",
-          "Щоб визначити причину зміни результату",
+          "Щоб визначити причину зміни результату"
         ],
         correctAnswer: 3,
         explanation: "Контрольована зміна дає зрозумілий висновок.",
@@ -4886,7 +4704,7 @@ Config задає партитуру, а HUD і сервер мають грат
           "Змінити Reward і GoalNeed одночасно",
           "Підтвердити один payout на один collectable",
           "Виміряти Power на іншому маршруті",
-          "Запустити VFX до серверної перевірки",
+          "Запустити VFX до серверної перевірки"
         ],
         correctAnswer: 1,
         explanation: "Без анти-дубля результат доходу буде штучно завищений.",
@@ -4899,7 +4717,7 @@ Config задає партитуру, а HUD і сервер мають грат
           "Менше 10 секунд незалежно від GoalNeed",
           "Понад 15 хвилин без Power",
           "Приблизно 60-180 секунд",
-          "Будь-який час, якщо HUD виглядає правильно",
+          "Будь-який час, якщо HUD виглядає правильно"
         ],
         correctAnswer: 2,
         explanation: "Цей діапазон дозволяє показати повний цикл у короткому тесті.",
@@ -4912,7 +4730,7 @@ Config задає партитуру, а HUD і сервер мають грат
           "Змінити одночасно GoalNeed і spawn",
           "Пройти той самий маршрут за однаковий час",
           "Порівняти різні Places",
-          "Оцінити лише колір HUD",
+          "Оцінити лише колір HUD"
         ],
         correctAnswer: 1,
         explanation: "Однакові умови ізолюють вплив Power.",
@@ -4925,7 +4743,7 @@ Config задає партитуру, а HUD і сервер мають грат
           "LocalScript, який першим побачив touch",
           "GoalHUD після зміни тексту",
           "Клієнтський RemoteEvent без перевірки",
-          "Серверна логіка нагороди",
+          "Серверна логіка нагороди"
         ],
         correctAnswer: 3,
         explanation: "Сервер володіє цінністю та не довіряє клієнтському amount.",
@@ -4938,7 +4756,7 @@ Config задає партитуру, а HUD і сервер мають грат
           "Після підтвердженого серверного payout",
           "Одразу до перевірки collected",
           "Після будь-якого локального touch, навіть відхиленого",
-          "Під час respawn як заміна нагороди",
+          "Під час respawn як заміна нагороди"
         ],
         correctAnswer: 0,
         explanation: "Feedback повинен підтверджувати реальну нагороду.",
@@ -4951,7 +4769,7 @@ Config задає партитуру, а HUD і сервер мають грат
           "Повторний payout без progress цілі",
           "Жодного нового payout і нагородного VFX",
           "VFX без payout для підтвердження touch",
-          "Новий payout, якщо HUD ще не оновився",
+          "Новий payout, якщо HUD ще не оновився"
         ],
         correctAnswer: 1,
         explanation: "Анти-дубль блокує і нагороду, і її feedback.",
@@ -4964,7 +4782,7 @@ Config задає партитуру, а HUD і сервер мають грат
           "Щоб оцінити баланс без перевірки Coins",
           "Щоб залишити всі Fx Parts для наступного прогону",
           "Щоб замінити тест анти-дубля тестом продуктивності",
-          "Щоб знайти невидалені Fx Parts, Sounds і помилки",
+          "Щоб знайти невидалені Fx Parts, Sounds і помилки"
         ],
         correctAnswer: 3,
         explanation: "Серія виявляє накопичення тимчасових об'єктів.",
@@ -4977,7 +4795,7 @@ Config задає партитуру, а HUD і сервер мають грат
           "З єдиного Config або серверного стану",
           "З окремого числа, вручну вписаного в кожен TextLabel",
           "З останнього локального touch незалежно від payout",
-          "З попереднього Save без звірки з Config",
+          "З попереднього Save без звірки з Config"
         ],
         correctAnswer: 0,
         explanation: "Одне джерело не дає UI розійтися із серверною умовою.",
@@ -4990,7 +4808,7 @@ Config задає партитуру, а HUD і сервер мають грат
           "Темп трохи відрізняється від прогнозу, але цикл працює",
           "VFX потребує меншої кількості частинок",
           "Основна система нагороди або тесту не працює правильно",
-          "Потрібен ще один контрольний прогін для середнього значення",
+          "Потрібен ще один контрольний прогін для середнього значення"
         ],
         correctAnswer: 2,
         explanation: "Broken треба виправити до висновків про баланс.",
@@ -5003,7 +4821,7 @@ Config задає партитуру, а HUD і сервер мають грат
           "Один прогін після кількох одночасних змін",
           "Запис метрики до і після однієї зміни Config",
           "Порівняння різних маршрутів без фіксації часу",
-          "Оцінка лише за яскравістю VFX",
+          "Оцінка лише за яскравістю VFX"
         ],
         correctAnswer: 1,
         explanation: "Порівнювані виміри показують реальний вплив.",
@@ -5016,7 +4834,7 @@ Config задає партитуру, а HUD і сервер мають грат
           "Чесно записати стан як неперевірений",
           "Вважати restore успішним за результатом HUD",
           "Змінити DataStore key і поставити статус ok без rejoin",
-          "Замінити rejoin повторним touch-тестом",
+          "Замінити rejoin повторним touch-тестом"
         ],
         correctAnswer: 0,
         explanation: "Артефакт має відрізняти факт від припущення.",
@@ -5029,11 +4847,11 @@ Config задає партитуру, а HUD і сервер мають грат
           "Lesson 6.9 - Sim Ship",
           "Lesson 6.8 - Daily Goals Final",
           "Lesson 6.9 - Simulator VFX Only",
-          "Lesson 6.9 - Sim Balance Juice",
+          "Lesson 6.9 - Sim Balance Juice"
         ],
         correctAnswer: 3,
         explanation: "Чекліст вимагає Save Lesson 6.9 - Sim Balance Juice.",
-      },
+      }
     ],
   },
 };
@@ -5051,21 +4869,13 @@ export const ukLesson610 = {
     "Перевірити серверне нарахування Coins, анти-дубль і синхронний HUD",
     "Провести playtest за таблицею та відокремити блокери від косметичних дефектів",
     "Підготувати коротке демо з ціллю дня, VFX і чесним прогресом",
-    "Зберегти фінальний Place модуля та сформувати список покращень після релізу",
+    "Зберегти фінальний Place модуля та сформувати список покращень після релізу"
   ],
   theory: {
     sections: [
       {
         title: "Сьогоднішня місія (урок 48 з 92)",
         content: `Ти дійшов до фіналу модуля 6 - **Simulator**. У 6.9 ти перевіряв економіку, змінював числа в Config і додавав VFX після успішної нагороди. Сьогодні не час будувати другий острів або нову валюту. Мета - зшити готові системи в один короткий маршрут, який гравець розуміє без твоїх пояснень.
-
-Артефакт уроку:
-1. Один Place з повним циклом збір - Coins - ціль.
-2. Заповнена playtest-таблиця з очікуванням і фактом.
-3. Закриті критичні дефекти серверної нагороди, HUD та анти-дубля.
-4. Демо на 60-90 секунд із чесним juice після нагороди.
-5. Збереження **Lesson 6.10 - Sim Ship** і короткий список покращень на потім.
-
 У наступному уроці почнеться модуль 7 - Tycoon. Там зміняться декорації та механіка заробітку, але правило залишиться: сервер володіє Coins, Config зберігає баланс, а клієнт показує результат.
 
 | Було в 6.9 | Має бути після 6.10 |
@@ -5289,7 +5099,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
 фінальний Save - це контрольна точка перед переходом на нову карту курсу.
 
 **Зроби зараз (3 хв):** збережи Place під точною назвою, закрий останній P0 і покажи ментору демо.`,
-      },
+      }
     ],
   },
   commonMistakes: [
@@ -5322,7 +5132,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
       mistake: "Перед здачею будується новий острів",
       explanation: "Scope росте, а критичні дефекти готового циклу залишаються.",
       correctApproach: "Закрити P0 і P1 одного MVP-циклу, а розширення записати в backlog.",
-    },
+    }
   ],
   summary: "Ти зшив системи Simulator в один чесний золотий шлях, перевірив його таблицею та підготував коротке демо. Фінальний Save фіксує готовий модуль перед переходом до Tycoon.",
   practiceTask: {
@@ -5347,7 +5157,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
       "Спочатку порівняй TAB і HUD після одного збору, а вже потім перевіряй VFX.",
       "Якщо одна монета платить двічі, став блокування до зміни Coins.",
       "Для демо зменш need у Config так, щоб complete настав за 5-7 зборів.",
-      "Після серверного фіксу повтори перевірки анти-дубля, GoalHUD і Output.",
+      "Після серверного фіксу повтори перевірки анти-дубля, GoalHUD і Output."
     ],
     optionalChallenge: "Додай одноразовий complete-банер, який отримує підтверджений стан цілі та не видає додаткові Coins.",
   },
@@ -5363,7 +5173,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "Окремий Place лише для VFX",
           "Скріншот Explorer без Play",
           "Один Place з повним циклом, playtest-таблицею та коротким демо",
-          "Новий острів без систем нагороди",
+          "Новий острів без систем нагороди"
         ],
         correctAnswer: 2,
         explanation: "Ship перевіряє інтегрований цикл у одному Place.",
@@ -5376,7 +5186,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "Одна сфера видає Coins кілька разів",
           "ParticleEmitter трохи завеликий",
           "Колір другорядної монети неідеальний",
-          "Ambient можна зробити теплішим",
+          "Ambient можна зробити теплішим"
         ],
         correctAnswer: 0,
         explanation: "Повторний payout ламає чесність циклу.",
@@ -5389,7 +5199,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "У TextLabel всередині CoinsHUD",
           "У локальному скрипті collectable",
           "У ParticleEmitter після burst",
-          "У серверній логіці giveCoins",
+          "У серверній логіці giveCoins"
         ],
         correctAnswer: 3,
         explanation: "Сервер є джерелом правди для цінності.",
@@ -5402,7 +5212,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "Після завершення Sound",
           "До зміни Coins і запуску нагороди",
           "Після другого Touched",
-          "Після respawn предмета",
+          "Після respawn предмета"
         ],
         correctAnswer: 1,
         explanation: "Раннє блокування зупиняє паралельні Touched.",
@@ -5415,7 +5225,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "HUD завжди на 10 Coins більший",
           "TAB оновлюється лише після Stop",
           "Однакове серверне значення після кожного збору",
-          "Кожен інтерфейс веде власний рахунок",
+          "Кожен інтерфейс веде власний рахунок"
         ],
         correctAnswer: 2,
         explanation: "Обидва інтерфейси дзеркалять одну серверну правду.",
@@ -5428,7 +5238,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "Таке, що потребує щонайменше години",
           "Нуль, щоб ціль завершилась без гри",
           "Випадкове значення поза Config",
-          "Досяжне приблизно за 5-7 зборів",
+          "Досяжне приблизно за 5-7 зборів"
         ],
         correctAnswer: 3,
         explanation: "Глядач має побачити progress і complete за 60-90 с.",
@@ -5441,7 +5251,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "Самостійно видавати Coins",
           "Показувати прогрес підтвердженої сервером цілі",
           "Визначати BaseReward замість Config",
-          "Створювати collectables у Workspace",
+          "Створювати collectables у Workspace"
         ],
         correctAnswer: 1,
         explanation: "GoalHUD відображає прогрес і не створює цінність.",
@@ -5454,7 +5264,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "Одразу при будь-якому Touched",
           "Під час завантаження Config",
           "Після підтвердженого серверного payout",
-          "На кожному відхиленому повторному touch",
+          "На кожному відхиленому повторному touch"
         ],
         correctAnswer: 2,
         explanation: "Juice підтверджує справжню нагороду.",
@@ -5467,7 +5277,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "Щоб не запускати Play",
           "Щоб порівняти вимогу з реальною поведінкою",
           "Щоб замінити Output",
-          "Щоб записувати лише назви кольорів",
+          "Щоб записувати лише назви кольорів"
         ],
         correctAnswer: 1,
         explanation: "Різниця між очікуванням і фактом робить дефект видимим.",
@@ -5480,7 +5290,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "Будувати новий острів",
           "Видалити playtest-таблицю",
           "Перенести Coins у LocalScript",
-          "Повторити тест нагороди, анти-дубля, HUD і цілі",
+          "Повторити тест нагороди, анти-дубля, HUD і цілі"
         ],
         correctAnswer: 3,
         explanation: "Залежні системи треба перевірити після зміни каси.",
@@ -5493,7 +5303,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "Чесно позначити стан «майже» та зберегти робочий локальний цикл",
           "Приховати проблему від ментора",
           "Стверджувати, що rejoin працює без тесту",
-          "Перенести всю нагороду на клієнт",
+          "Перенести всю нагороду на клієнт"
         ],
         correctAnswer: 0,
         explanation: "Стан save описують чесно, не ламаючи основний цикл.",
@@ -5506,7 +5316,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "Spawn та інструкцію",
           "Збір і синхронний рахунок",
           "Довгу екскурсію по всіх Scripts в Explorer",
-          "Завершення цілі",
+          "Завершення цілі"
         ],
         correctAnswer: 2,
         explanation: "Демо починається з досвіду гравця.",
@@ -5519,7 +5329,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "Зупинити весь playtest на годину",
           "Записати в backlog і спочатку закрити P0 та P1",
           "Замінити ним перевірку серверної каси",
-          "Оголосити його критичним без відтворення",
+          "Оголосити його критичним без відтворення"
         ],
         correctAnswer: 1,
         explanation: "Косметика не блокує Ship, якщо P0 і P1 закриті.",
@@ -5532,7 +5342,7 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "Lesson 6.9 - Sim Balance Juice",
           "Lesson 7.1 - Tycoon Plot",
           "Simulator Final Draft",
-          "Lesson 6.10 - Sim Ship",
+          "Lesson 6.10 - Sim Ship"
         ],
         correctAnswer: 3,
         explanation: "Чекліст вимагає Save Lesson 6.10 - Sim Ship.",
@@ -5545,11 +5355,11 @@ DataStore бажаний, бо він був темою 6.7, але не при�
           "Кожен HUD зберігає власні Coins",
           "Клієнт визначає вартість нагороди",
           "Сервер володіє Coins, Config числами, HUD відображенням",
-          "Playtest потрібен лише для Simulator",
+          "Playtest потрібен лише для Simulator"
         ],
         correctAnswer: 2,
         explanation: "Розподіл відповідальності лишається корисним у Tycoon.",
-      },
+      }
     ],
   },
 };

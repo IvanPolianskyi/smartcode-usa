@@ -43,6 +43,28 @@
   transition: width 0.3s ease;
   flex-shrink: 0;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(161, 0, 255, 0.55) rgba(255, 255, 255, 0.04);
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #c44bff 0%, #a100ff 55%, #7a00c8 100%);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #d97bff 0%, #b52bff 55%, #8f14e0 100%);
+  background-clip: padding-box;
 }
 
 .sidebar.collapsed {

@@ -16,7 +16,7 @@ export const ukLesson21 = {
  "Організувати Workspace через Folder і імена PascalCase",
  "Свідомо виставити Anchored, CanCollide і Massless на деталях штабу",
  "Прочитати дітей моделі через GetChildren і print у Output",
- "Здати IslandHQ_v1 поверх Living Island без атракціонів і Constraints",
+ "Здати IslandHQ_v1 поверх Living Island без атракціонів і Constraints"
  ],
  theory: {
  sections: [
@@ -25,20 +25,7 @@ export const ukLesson21 = {
  content: `Модуль **«World craft»** починається не з лави й kill-блоків, а з **порядку в світі**. У кінці уроку в тебе буде **штаб острова** - Model \`IslandHQ_v1\`: кілька іменованих Parts у одній «коробці», з якорем (**PrimaryPart** / **Pivot**), папками і коротким Script, який у Output показує дітей моделі.
 
 Чому саме штаб, а не одразу двері чи карусель? Бо Constraints (урок 2.2) і атракціони (2.3) **ламатимуться**, якщо світ - смітник безіменних \`Part\` у корені Workspace. Ти вже здав живу локацію в 1.8; тепер учишся **пакувати** місце в Model так, щоб його можна було пересунути, повернути й перевірити з коду.
-
-**Що здаємо (артефакт):**
-- Model \`IslandHQ_v1\` біля будинку / на видному місці острова
-- усередині: мінімум **Platform**, **Pillar_A**, **Pillar_B**, **RoofPlate** (або рівноцінні імена PascalCase)
-- у Model виставлено **PrimaryPart**
-- Folder-структура штабу; інтерактиви M1 - у своїх Folder
-- Script \`HQ_Audit\` усередині штабу з \`GetChildren\` у Output
-- Save: \`Lesson 2.1 - IslandHQ_v1\`
-
 **Звідки стартуємо:** відкрий \`Module 1 - Living Island\` (або найповніший Place після 1.8). Не починай порожній Baseplate - штаб живе **на твоєму острові**. Якщо боїшся зіпсувати здачу M1 - спочатку **Save As** копію \`Lesson 2.1 - IslandHQ_v1\` і працюй у копії.
-
-**Спіраль:** з M1 ти вже вмієш Parts, Properties, легкі Folder, \`local\`, \`print\`, \`if/else\`, \`script.Parent\`. Сьогодні нове - **Model як система**, PrimaryPart/Pivot, Massless (знайомство), \`GetChildren\`. Повний модуль циклів \`while\`/\`for\` буде в M3; тут \`for _, child in ipairs(...)\` лише як **огляд дітей** для аудиту.
-
-**Чого сьогодні немає (свідомо):** WeldConstraint, Hinge, мости на Rope, атракціони, Toolbox Free Model, \`Touched\`, kill-блоки. Це **2.2–2.4** і далі M3/M5.`,
  },
  {
  title: "Навіщо Model, якщо вже є Folder і Parts",
@@ -238,7 +225,7 @@ end
 Після Save не покладайся на Autosave як на єдиний доказ: у портфоліо має бути явна версія 2.1.
 
 **Погляд у 2.2:** у **2.2 - Вхід у парк** з’являться **Attachments** і Constraints: Weld, Hinge (двері), Rope/Rod (міст). Артефакт - \`ParkGate\`. Сьогоднішній штаб лишиться **якорем світу**: парк логічно «відростає» від острова, де вже є \`IslandHQ_v1\` і \`House_01\`. Не розбирай штаб - клонуй Save As до \`Lesson 2.2 - ParkGate\`, коли дойде час. У 2.2 навчишся змусити **частини моделі рухатись одна відносно одної**, не втрачаючи цілісності.`,
- },
+ }
  ],
  },
  practice: {
@@ -276,7 +263,7 @@ end
 - або вистав Massless = true лише на дрібній декоративній деталі й напиши одним реченням, *коли* це стане важливим (підказка: Constraints у 2.2+).
 
 **Не роби:** Weld/Hinge, Free Model з Toolbox, \`Touched\` kill-підлогу.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -307,7 +294,7 @@ end
  {
  mistake: "LocalScript замість Script",
  fix: "Для аудиту в Workspace потрібен звичайний Script (як MagicCube у 1.3). LocalScript - пізніше в M3.",
- },
+ }
  ],
  quiz: {
  title: "Тест 2.1 - Штаб острова",
@@ -321,7 +308,7 @@ end
  "Kill-смуга з Touched",
  "ParkGate на Hinge",
  "Model IslandHQ_v1 з PrimaryPart і audit",
- "DataStore сейв острова",
+ "DataStore сейв острова"
  ],
  correctAnswer: 2,
  explanation: "2.1 - штаб як Model; ворота й Toolbox пізніше.",
@@ -334,7 +321,7 @@ end
  "Model має PrimaryPart/Pivot і зручно рухається як один об’єкт",
  "Folder завжди швидший у Play",
  "У Folder не можна класти Parts",
- "Model забороняє Scripts",
+ "Model забороняє Scripts"
  ],
  correctAnswer: 0,
  explanation: "Folder - порядок; Model - цілісний об’єкт світу з опорою.",
@@ -347,7 +334,7 @@ end
  "Щоб увімкнути Neon",
  "Щоб замінити Anchored",
  "Щоб автоматично створити Toolbox",
- "Щоб задати опору для позиції/повороту Model",
+ "Щоб задати опору для позиції/повороту Model"
  ],
  correctAnswer: 3,
  explanation: "PrimaryPart - якір моделі.",
@@ -360,7 +347,7 @@ end
  "new model",
  "IslandHQ_v1",
  "штаб",
- "Part",
+ "Part"
  ],
  correctAnswer: 1,
  explanation: "PascalCase і стабільна назва артефакту.",
@@ -373,7 +360,7 @@ end
  "Видаляє всіх дітей Model",
  "Вмикає CanCollide",
  "Повертає список дітей об’єкта",
- "Публікує Place",
+ "Публікує Place"
  ],
  correctAnswer: 2,
  explanation: "GetChildren повертає дітей для огляду/обробки.",
@@ -386,7 +373,7 @@ end
  "Всередині Model IslandHQ_v1",
  "У ServerStorage обов’язково",
  "У LocalPlayer",
- "Лише в Lighting",
+ "Лише в Lighting"
  ],
  correctAnswer: 0,
  explanation: "script.Parent тоді вказує на штаб.",
@@ -399,7 +386,7 @@ end
  "Massless = true",
  "Anchored = true",
  "CanQuery = false",
- "Locked = true",
+ "Locked = true"
  ],
  correctAnswer: 1,
  explanation: "Anchored - базова звичка з M1.",
@@ -412,7 +399,7 @@ end
  "Антена видалиться в Play",
  "PrimaryPart скинеться",
  "GetChildren зламається",
- "Character не впреться в антену головою",
+ "Character не впреться в антену головою"
  ],
  correctAnswer: 3,
  explanation: "Вимикаємо колізію декору, щоб не чіпляло гравця.",
@@ -425,7 +412,7 @@ end
  "Лише знайомимось; критично стане з Constraints пізніше",
  "Обов’язково вмикаємо на всіх Parts штабу",
  "Використовуємо замість PrimaryPart",
- "Ставимо лише на Terrain",
+ "Ставимо лише на Terrain"
  ],
  correctAnswer: 0,
  explanation: "Тема підготовча до 2.2–2.3.",
@@ -438,7 +425,7 @@ end
  "hq:GetParents()",
  "while hq do kill(hq) end",
  "for _, child in ipairs(hq:GetChildren()) do print(child.Name) end",
- "hq.PrimaryPart:Destroy()",
+ "hq.PrimaryPart:Destroy()"
  ],
  correctAnswer: 2,
  explanation: "ipairs + GetChildren - огляд дітей.",
@@ -451,7 +438,7 @@ end
  "Зламався Terrain",
  "Виділена дитина Model, а не сама IslandHQ_v1",
  "Треба LocalScript",
- "Забагато Decal",
+ "Забагато Decal"
  ],
  correctAnswer: 1,
  explanation: "Виділяй Model у Explorer.",
@@ -464,7 +451,7 @@ end
  "PrimaryPart",
  "PascalCase імена",
  "GetChildren audit",
- "WeldConstraint для дверей",
+ "WeldConstraint для дверей"
  ],
  correctAnswer: 3,
  explanation: "Weld/Hinge - урок 2.2.",
@@ -477,7 +464,7 @@ end
  "уроку 1.4 (if/else)",
  "M4 DataStore",
  "M9 RemoteEvent",
- "уроку 2.4 Toolbox",
+ "уроку 2.4 Toolbox"
  ],
  correctAnswer: 0,
  explanation: "Спіраль: if уже був у 1.4.",
@@ -490,7 +477,7 @@ end
  "Untitled Experience",
  "Obby Kill Final",
  "Lesson 2.1 - IslandHQ_v1",
- "Module 9 Remotes",
+ "Module 9 Remotes"
  ],
  correctAnswer: 2,
  explanation: "Явна версія артефакту 2.1.",
@@ -503,11 +490,11 @@ end
  "Touched KillBrick",
  "Вхід у парк (Constraints: двері/міст)",
  "leaderstats Simulator",
- "Publish на Showcase",
+ "Publish на Showcase"
  ],
  correctAnswer: 1,
  explanation: "2.2 - ParkGate з Weld/Hinge/Rope.",
- },
+ }
  ],
  },
 }
@@ -525,7 +512,7 @@ export const ukLesson22 = {
  "Розмістити Attachments і зрозуміти, навіщо вони Constraints",
  "З’єднати статичні деталі через WeldConstraint",
  "Зробити двері на HingeConstraint і місток на Rope або Rod",
- "Перевірити з’єднання в Play і коротким Script-аудитом",
+ "Перевірити з’єднання в Play і коротким Script-аудитом"
  ],
  theory: {
  sections: [
@@ -534,8 +521,6 @@ export const ukLesson22 = {
  content: `Модуль **World craft** йде далі: штаб \`IslandHQ_v1\` уже вміє стояти як одна Model. Сьогодні частини моделі **рухаються одна відносно одної** - але контрольовано, через **Constraints**.
 
 У 1.1 ти зливав форму через Union. У 2.1 пакував світ у Model. Тепер з’являється третій шар майстерності: **фізичний зв’язок**. Без нього «двері» - просто стіна, а «міст» - декорація, яка в Play розлітається.
-
-**Артефакт:** Model \`ParkGate\` - ворота парку біля острова:
 - дві опори (\`Post_L\`, \`Post_R\`)
 - стулка дверей \`GateDoor\` на **HingeConstraint**
 - короткий місток / перекладка на **RopeConstraint** або **RodConstraint**
@@ -752,7 +737,7 @@ end
 Можна лишити Party Mode з M1 - не перенось його Script у \`ParkGate\` без потреби.
 
 **Погляд у 2.3:** додаси Spring / Prismatic / BallSocket і CanTouch / CanQuery та Collision groups lite. Артефакт - \`ParkRides_v1\`. \`ParkGate\` лишиться **входом** - не розбирай ворота перед 2.3, Save As новий файл уроку.`,
- },
+ }
  ],
  },
  practice: {
@@ -790,7 +775,7 @@ end
 - порівняй Rope vs Rod на двох копіях перекладки й одним реченням у чаті курсу поясни різницю.
 
 **Не роби:** Spring-карусель, Free Model з Toolbox, \`Touched\` на підлозі воріт.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -821,7 +806,7 @@ end
  {
  mistake: "PrimaryPart порожній у ParkGate",
  fix: "Вистав опору як PrimaryPart - інакше Move/Rotate воріт знову «п’яні», як у 2.1.",
- },
+ }
  ],
  quiz: {
  title: "Тест 2.2 - Вхід у парк",
@@ -835,7 +820,7 @@ end
  "Model ParkGate з Weld, Hinge і Rope/Rod",
  "IslandHQ_v1 без Constraints",
  "ParkRides_v1 на Spring",
- "Kill-смуга з Touched",
+ "Kill-смуга з Touched"
  ],
  correctAnswer: 0,
  explanation: "2.2 - вхід у парк; атракціони в 2.3.",
@@ -848,7 +833,7 @@ end
  "Щоб змінити Material дверей",
  "Щоб замінити PrimaryPart",
  "Це точки кріплення, куди чіпляється Constraint",
- "Щоб увімкнути Terrain воду",
+ "Щоб увімкнути Terrain воду"
  ],
  correctAnswer: 2,
  explanation: "Constraints тримаються за Attachments.",
@@ -861,7 +846,7 @@ end
  "HingeConstraint",
  "WeldConstraint",
  "RopeConstraint",
- "BallSocketConstraint",
+ "BallSocketConstraint"
  ],
  correctAnswer: 1,
  explanation: "Weld - жорстка зварка двох Parts.",
@@ -874,7 +859,7 @@ end
  "Anchored = true",
  "CanCollide обов’язково false",
  "Бути Terrain",
- "Anchored = false",
+ "Anchored = false"
  ],
  correctAnswer: 3,
  explanation: "Anchored стулка не гойдається на Hinge.",
@@ -887,7 +872,7 @@ end
  "Anchored = true",
  "Unanchored і Massless",
  "Лише MeshPart без Anchored",
- "LocalScript",
+ "LocalScript"
  ],
  correctAnswer: 0,
  explanation: "Стовпи стоять; крутиться стулка.",
@@ -900,7 +885,7 @@ end
  "Завжди видаляє Attachments",
  "Працює лише в Lighting",
  "Більше схожий на мотузку з довжиною/провисанням; Rod - жорсткий стержень",
- "Замінює Union",
+ "Замінює Union"
  ],
  correctAnswer: 2,
  explanation: "Rope гнучкіший за відчуттям, Rod фіксує довжину жорсткіше.",
@@ -913,7 +898,7 @@ end
  "Нічим",
  "Union зливає меші/форму; Weld зв’язує фізику, Parts лишаються окремими",
  "Weld вирізає вікна",
- "Union працює лише під водою",
+ "Union працює лише під водою"
  ],
  correctAnswer: 1,
  explanation: "Різні інструменти для різних задач.",
@@ -926,7 +911,7 @@ end
  "Двері все одно ідеально крутяться",
  "Автоматично створюється DataStore",
  "З’являється Free Model",
- "Петля не працює або поводиться дивно",
+ "Петля не працює або поводиться дивно"
  ],
  correctAnswer: 3,
  explanation: "Attachment0/1 мають бути заповнені.",
@@ -939,7 +924,7 @@ end
  "Заборонений завжди",
  "Замінює HingeConstraint",
  "Часто допомагає легшій/стабільнішій петлі",
- "Потрібен лише на Terrain",
+ "Потрібен лише на Terrain"
  ],
  correctAnswer: 2,
  explanation: "Продовження теми Massless з 2.1 у контексті Constraints.",
@@ -952,7 +937,7 @@ end
  "Друкувати склад воріт і наявність Constraints у Output",
  "Відкривати двері по RemoteEvent",
  "Вбивати гравця при дотику",
- "Публікувати Place",
+ "Публікувати Place"
  ],
  correctAnswer: 0,
  explanation: "Аудит як у 2.1, плюс перевірка з’єднань.",
@@ -965,7 +950,7 @@ end
  "Чи Part червона",
  "Чи об’єкт є HingeConstraint",
  "Чи гравець у меню",
- "Чи є вода на острові",
+ "Чи є вода на острові"
  ],
  correctAnswer: 1,
  explanation: "IsA - перевірка класу інстанса.",
@@ -978,7 +963,7 @@ end
  "WeldConstraint",
  "HingeConstraint",
  "RopeConstraint або RodConstraint",
- "SpringConstraint для атракціону",
+ "SpringConstraint для атракціону"
  ],
  correctAnswer: 3,
  explanation: "Spring - урок 2.3.",
@@ -991,7 +976,7 @@ end
  "Untitled",
  "Module 6 Simulator",
  "Lesson 2.2 - ParkGate",
- "Obby Kill Final",
+ "Obby Kill Final"
  ],
  correctAnswer: 2,
  explanation: "Явний артефакт 2.2.",
@@ -1004,7 +989,7 @@ end
  "Виділена дитина Model, а не ParkGate",
  "Зламався Output",
  "Треба DataStore",
- "Треба LocalScript у Lighting",
+ "Треба LocalScript у Lighting"
  ],
  correctAnswer: 0,
  explanation: "Та сама звичка, що в 2.1 зі штабом.",
@@ -1017,11 +1002,11 @@ end
  "Checkpoint M1",
  "Атракціони + колізії (Spring/Prismatic…)",
  "leaderstats",
- "Publish Showcase",
+ "Publish Showcase"
  ],
  correctAnswer: 1,
  explanation: "2.3 - ParkRides_v1.",
- },
+ }
  ],
  },
 }
@@ -1039,7 +1024,7 @@ export const ukLesson23 = {
  "Підключити SpringConstraint, PrismaticConstraint і BallSocketConstraint",
  "Свідомо виставити CanTouch і CanQuery на деталях атракціонів",
  "Зробити легке розділення колізій через Collision groups (lite)",
- "Перевірити атракціони Play-тестом і Script-аудитом без Touched-логіки гри",
+ "Перевірити атракціони Play-тестом і Script-аудитом без Touched-логіки гри"
  ],
  theory: {
  sections: [
@@ -1048,20 +1033,7 @@ export const ukLesson23 = {
  content: `За воротами \`ParkGate\` гість має побачити **парк, що рухається**. Артефакт уроку - Model \`ParkRides_v1\`: мінімум **три** прості атракціони на різних Constraints.
 
 У 2.2 ти навчив двері крутитись і міст триматись. Сьогодні інший настрій: **грайливий рух** - пружина, ліфт по рейці, маятник. Це все ще World craft (фізика й структура), а не код «гри» з M3: без kill-блоків, без збору монет, без Remote.
-
-**Що здаємо:**
-- Model \`ParkRides_v1\` за воротами (окремо від \`ParkGate\` і \`IslandHQ_v1\`)
-- **Spring** - гойдалка / батут-платформа / «пружинна» стійка
-- **Prismatic** - ліфт / платформа, що їздить по одній осі
-- **BallSocket** - маятник / вивіска, що гойдається в конусі
-- свідомі **CanTouch** / **CanQuery** на ключових Parts
-- **Collision group** lite (або чесний еквівалент через CanCollide на декорі)
-- Script \`Rides_Audit\`
-- Save: \`Lesson 2.3 - ParkRides_v1\`
-
 **Старт:** \`Lesson 2.2 - ParkGate\` → Save As 2.3. Ворота лишаються входом; сьогодні будуєш **за** ними. Якщо воріт немає - спочатку віднови мінімальний ParkGate з 2.2, інакше «атракціони в полі» гірше читаються як парк.
-
-**Спіраль:** Attachment, Weld, Hinge, Rope/Rod, Anchored/Massless уже були. Нове - Spring / Prismatic / BallSocket + тонші тумблери колізій. **Немає** Toolbox Free Model (**2.4**), немає \`Touched\` як ігрової механіки (**M3**).`,
  },
  {
  title: "Три нові Constraints - карта відчуттів",
@@ -1273,7 +1245,7 @@ end
 Після Save не перезаписуй файл ім’ям 2.2: портфоліо має окрему версію атракціонів.
 
 **Погляд у 2.4:** checkpoint World craft - Toolbox hygiene, аудит Scripts, MeshPart vs Decal, playtest → \`Park_v1\`. Атракціони - серце парку; у 2.4 додаси гігієну, а не нові Constraints з нуля.`,
- },
+ }
  ],
  },
  practice: {
@@ -1310,7 +1282,7 @@ end
 - маятник з Limits, щоб не бив \`ParkGate\`.
 
 **Не роби:** Free Model карусель з Toolbox, \`Touched\` kill, \`while true\` спінер.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -1341,7 +1313,7 @@ end
  {
  mistake: "Ігнорує CanTouch/CanQuery повністю",
  fix: "Хоча б на 1–2 декоративних Parts вимкни свідомо й поясни на здачі.",
- },
+ }
  ],
  quiz: {
  title: "Тест 2.3 - Атракціони + колізії",
@@ -1355,7 +1327,7 @@ end
  "ParkGate без нових Constraints",
  "Park_v1 після Toolbox",
  "ParkRides_v1 з Spring, Prismatic і BallSocket",
- "Obby з KillBrick",
+ "Obby з KillBrick"
  ],
  correctAnswer: 2,
  explanation: "2.3 - зона атракціонів.",
@@ -1368,7 +1340,7 @@ end
  "Жорсткої зварки Weld",
  "Пружини з жорсткістю й затуханням",
  "Тільки горизонтальних дверей",
- "DataStore",
+ "DataStore"
  ],
  correctAnswer: 1,
  explanation: "Пружина - Stiffness/Damping.",
@@ -1381,7 +1353,7 @@ end
  "Вздовж однієї осі (слайд)",
  "Лише обертанням на 360°",
  "Лише зміною Material",
- "Лише в Terrain Editor",
+ "Лише в Terrain Editor"
  ],
  correctAnswer: 0,
  explanation: "Салазки / ліфт по осі.",
@@ -1394,7 +1366,7 @@ end
  "Не потребує Attachments",
  "Працює лише під водою",
  "Замінює PrimaryPart",
- "Дає вільніше гойдання в конусі, не лише оберт в одній площині петлі",
+ "Дає вільніше гойдання в конусі, не лише оберт в одній площині петлі"
  ],
  correctAnswer: 3,
  explanation: "Кулястий шарнір vs петля.",
@@ -1407,7 +1379,7 @@ end
  "Чи Part є фізичною перешкодою / підлогою",
  "Чи є Script у Part",
  "Чи опубліковано Place",
- "Чи працює Lighting",
+ "Чи працює Lighting"
  ],
  correctAnswer: 0,
  explanation: "Класичний тумблер колізії.",
@@ -1420,7 +1392,7 @@ end
  "Обов’язково використовуємо з Connect(Touched)",
  "Видаляємо з Studio",
  "Виставляємо свідомо, але не пишемо ігрову Touched-логіку",
- "Ставимо лише на Terrain",
+ "Ставимо лише на Terrain"
  ],
  correctAnswer: 2,
  explanation: "Touched-механіки - пізніше в M3.",
@@ -1433,7 +1405,7 @@ end
  "Зберігати DataStore",
  "Керувати, які групи об’єктів зіштовхуються",
  "Замінити Union",
- "Створити LocalScript",
+ "Створити LocalScript"
  ],
  correctAnswer: 1,
  explanation: "Розділення колізій між групами.",
@@ -1446,7 +1418,7 @@ end
  "Пружина стане сильнішою",
  "Автоматично з’явиться BallSocket",
  "Зникне ParkGate",
- "Пружинний рух зазвичай гине",
+ "Пружинний рух зазвичай гине"
  ],
  correctAnswer: 3,
  explanation: "Weld фіксує відносно бази.",
@@ -1459,7 +1431,7 @@ end
  "if child:IsA(\"SpringConstraint\") then spring += 1 end",
  "while true do kill() end",
  "game:GetService(\"DataStoreService\")",
- "Terrain:Clear()",
+ "Terrain:Clear()"
  ],
  correctAnswer: 0,
  explanation: "IsA + лічильник в аудиті.",
@@ -1472,7 +1444,7 @@ end
  "Усередині Lighting",
  "Лише в ServerStorage",
  "За ParkGate, окремою Model",
- "Замість Terrain",
+ "Замість Terrain"
  ],
  correctAnswer: 2,
  explanation: "Зона за входом.",
@@ -1485,7 +1457,7 @@ end
  "PrismaticConstraint",
  "Аудит Scripts у Free Model з Toolbox",
  "CanQuery",
- "BallSocketConstraint",
+ "BallSocketConstraint"
  ],
  correctAnswer: 1,
  explanation: "Toolbox hygiene - 2.4.",
@@ -1498,7 +1470,7 @@ end
  "Кращий Decal",
  "Автоматичний Save",
  "Вимкнення Atmosphere",
- "Ривки / «вистріл» гравця",
+ "Ривки / «вистріл» гравця"
  ],
  correctAnswer: 3,
  explanation: "Баланс Stiffness/Damping.",
@@ -1511,7 +1483,7 @@ end
  "HingeConstraint",
  "BallSocket",
  "Spring лише",
- "Prismatic вертикальний",
+ "Prismatic вертикальний"
  ],
  correctAnswer: 0,
  explanation: "Двері лишаються на Hinge.",
@@ -1524,7 +1496,7 @@ end
  "Untitled Experience",
  "Module 9 Remotes",
  "Lesson 2.3 - ParkRides_v1",
- "Lesson 1.1 - House_01",
+ "Lesson 1.1 - House_01"
  ],
  correctAnswer: 2,
  explanation: "Явний артефакт 2.3.",
@@ -1537,11 +1509,11 @@ end
  "Таблиці й DataStore",
  "Здача парку (Toolbox hygiene, playtest → Park_v1)",
  "RemoteEvent гонки",
- "Checkpoint M1",
+ "Checkpoint M1"
  ],
  correctAnswer: 1,
  explanation: "2.4 - фінальна здача M2.",
- },
+ }
  ],
  },
 }
@@ -1559,7 +1531,7 @@ export const ukLesson24 = {
  "Обережно користуватись Toolbox і перевіряти Free Model перед вставкою",
  "Відрізнити MeshPart від Decal і знати, коли що доречніше",
  "Пройти фінальний playtest маршрутом гостя World craft",
- "Здати checkpoint Модуля 2 без нових механік з M3+",
+ "Здати checkpoint Модуля 2 без нових механік з M3+"
  ],
  theory: {
  sections: [
@@ -1568,8 +1540,6 @@ export const ukLesson24 = {
  content: `Це **контрольна точка** Модуля 2, а не нова гілка фізики. Ти не відкриваєш Spring «з нуля» і не вчиш \`Touched\` - ти **доводиш до показу** те, що вже зібрав у 2.1–2.3, плюс акуратна робота з Toolbox і фінальний лад у світі.
 
 За три уроки World craft ти зібрав штаб, вхід і рухомі атракціони. Сьогодні питання одне: **чи виглядає це як парк, який можна показати людині за дві хвилини?** Якщо ні - не добудовуй п’ятий Constraint. Прибери хаос, перевір двері, почисти чужі скрипти.
-
-**Артефакт:** Place \`Park_v1\` - живий острів з M1 + штаб + ворота + атракціони, охайний Explorer, короткий playtest, Save з ясною назвою.
 
 **Рекомендована назва:** \`Module 2 - Park_v1\`  
 (робоча копія може називатись \`Lesson 2.4 - Park_v1\` - перед здачею зроби фінальний Save As з назвою модуля.)
@@ -1801,7 +1771,7 @@ hasModel("ParkRides_v1")
 **Зроби зараз (3 хв):** назви вголос свою найслабшу галочку. Потім виправ.
 
 **Погляд у Модуль 3:** там з’являться ClickDetector, ProximityPrompt, \`Touched\`, цикли, LocalScript. Сьогодні **не забігай наперед** - закрий World craft чесно. Підсумок: ти вмієш зібрати місце, яке **тримається купи** і **рухається по правилах Constraints**. Далі навчиш його **відповідати на дії гравця** кодом.`,
- },
+ }
  ],
  },
  practice: {
@@ -1838,7 +1808,7 @@ hasModel("ParkRides_v1")
 - порожній \`Toolbox_Inbox\` перед здачею (весь декор розкладений по \`Decor\`).
 
 **Не роби:** нову kill-зону, DataStore, завантаження «повного парку» з Toolbox замість своїх Constraints.`,
- },
+ }
  ],
  },
  commonMistakes: [
@@ -1869,7 +1839,7 @@ hasModel("ParkRides_v1")
  {
  mistake: "Output повний чужого спаму після Toolbox",
  fix: "Знайди і видали Scripts Free Model. Повторі audit.",
- },
+ }
  ],
  quiz: {
  title: "Тест 2.4 - Здача парку",
@@ -1883,7 +1853,7 @@ hasModel("ParkRides_v1")
  "Нова тема Spring з нуля",
  "Старт DataStore",
  "Checkpoint здачі Park_v1 + гігієна Toolbox",
- "Повний obby на 10 біомів",
+ "Повний obby на 10 біомів"
  ],
  correctAnswer: 2,
  explanation: "Checkpoint World craft, не новий жанр.",
@@ -1896,7 +1866,7 @@ hasModel("ParkRides_v1")
  "IslandHQ_v1, ParkGate, ParkRides_v1",
  "Only House_01",
  "Лише Free Model з Toolbox",
- "Lighting, SoundService, Teams",
+ "Lighting, SoundService, Teams"
  ],
  correctAnswer: 0,
  explanation: "Штаб, ворота, атракціони.",
@@ -1909,7 +1879,7 @@ hasModel("ParkRides_v1")
  "Щоб швидше публікувати гру",
  "Щоб ізолювати Free Model до аудиту Scripts",
  "Щоб вимкнути Terrain",
- "Щоб замінити PrimaryPart",
+ "Щоб замінити PrimaryPart"
  ],
  correctAnswer: 1,
  explanation: "Карантин перед вставкою в парк.",
@@ -1922,7 +1892,7 @@ hasModel("ParkRides_v1")
  "Залишити обов’язково",
  "Перейменувати в Part",
  "Перенести в Lighting",
- "Видалити (для декору код майже не потрібен) або прибрати модель",
+ "Видалити (для декору код майже не потрібен) або прибрати модель"
  ],
  correctAnswer: 3,
  explanation: "Гігієна важливіша за чужий код.",
@@ -1935,7 +1905,7 @@ hasModel("ParkRides_v1")
  "Повноцінна 3D-модель з меша",
  "Тип Constraint",
  "Зображення на грані Part",
- "Сервіс збереження даних",
+ "Сервіс збереження даних"
  ],
  correctAnswer: 2,
  explanation: "Наклейка; порівняй з 1.5.",
@@ -1948,7 +1918,7 @@ hasModel("ParkRides_v1")
  "Part зі складною 3D-формою (меш)",
  "Лише звук у SoundService",
  "Синонім WeldConstraint",
- "Обов’язковий kill-блок",
+ "Обов’язковий kill-блок"
  ],
  correctAnswer: 0,
  explanation: "Форма, не наклейка.",
@@ -1961,7 +1931,7 @@ hasModel("ParkRides_v1")
  "Так, завжди краще",
  "Ні - ворота й атракціони мають лишитись твоїми артефактами",
  "Так, якщо назва FREE",
- "Так, якщо є Neon",
+ "Так, якщо є Neon"
  ],
  correctAnswer: 1,
  explanation: "Free Model - декор, не заміна модуля.",
@@ -1974,7 +1944,7 @@ hasModel("ParkRides_v1")
  "Untitled Experience",
  "Lesson 9.4 Remotes",
  "Baseplate",
- "Module 2 - Park_v1",
+ "Module 2 - Park_v1"
  ],
  correctAnswer: 3,
  explanation: "Явна назва модуля.",
@@ -1987,7 +1957,7 @@ hasModel("ParkRides_v1")
  "DataStore сейв монет",
  "Підкрутити Damping пружини",
  "Додати Decal на вивіску",
- "Прибрати дублікат Part",
+ "Прибрати дублікат Part"
  ],
  correctAnswer: 0,
  explanation: "Нові системи M4+ не тема checkpoint.",
@@ -2000,7 +1970,7 @@ hasModel("ParkRides_v1")
  "Щоб заповнити Atmosphere",
  "Щоб видалити Terrain",
  "Щоб перевірити читабельність і стабільність парку як гравець",
- "Щоб створити RemoteEvent",
+ "Щоб створити RemoteEvent"
  ],
  correctAnswer: 2,
  explanation: "Користувацький шлях, не вигляд з камери творця.",
@@ -2013,7 +1983,7 @@ hasModel("ParkRides_v1")
  "Опублікувати Place",
  "Відкрити/оцінити або видалити Script",
  "Увімкнути Party Mode",
- "Зробити Union з Baseplate",
+ "Зробити Union з Baseplate"
  ],
  correctAnswer: 1,
  explanation: "Спочатку розібратись із кодом.",
@@ -2026,7 +1996,7 @@ hasModel("ParkRides_v1")
  "Лише меню Toolbox",
  "Повний код DataStore",
  "Порожній Baseplate",
- "Двері + хоча б один атракціон за 30–60 с",
+ "Двері + хоча б один атракціон за 30–60 с"
  ],
  correctAnswer: 3,
  explanation: "Короткий живий доказ рубрики.",
@@ -2039,7 +2009,7 @@ hasModel("ParkRides_v1")
  "Завжди безпечний і можна ігнорувати",
  "Це тип Terrain",
  "Теж варто помітити в аудиті - може тягнути логіку",
- "Замінює PrimaryPart",
+ "Замінює PrimaryPart"
  ],
  correctAnswer: 2,
  explanation: "Аудит усіх видів скриптів.",
@@ -2052,7 +2022,7 @@ hasModel("ParkRides_v1")
  "Вставлена модель одразу сипле помилки/спам у Output",
  "Один кущ без Scripts",
  "Decal на табличці",
- "PascalCase імена опор",
+ "PascalCase імена опор"
  ],
  correctAnswer: 0,
  explanation: "Чужий код без аудиту.",
@@ -2065,11 +2035,11 @@ hasModel("ParkRides_v1")
  "Одразу Publish на Showcase без коду",
  "Модуль 3 - код, що грається (Prompt, Touched, цикли…)",
  "Лише Terrain назавжди",
- "M12 Реліз без проміжних модулів",
+ "M12 Реліз без проміжних модулів"
  ],
  correctAnswer: 1,
  explanation: "Спіраль курсу: далі інтерактивний код.",
- },
+ }
  ],
  },
 }

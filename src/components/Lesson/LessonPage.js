@@ -28,7 +28,6 @@ import { parsePracticeStdin } from '@/lib/parsePracticeStdin'
 import { hasBlockedPythonCode } from '@/lib/pythonCodeGuard'
 import { executePythonWithPyodide } from '@/lib/pyodideRunner'
 import styles from './LessonPage.module.css'
-import FloatingNavArrows from './FloatingNavArrows'
 
 // Функція для конвертації markdown в HTML
 const markdownToHtml = (text) => {
@@ -901,45 +900,6 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     }
   }
 
-  const handleNextAction = () => {
-    if (activeTab === 'theory') {
-      if (fullLesson.practiceTask) {
-        setActiveTab('practice')
-      } else if (fullLesson.quiz && fullLesson.quiz.questions && fullLesson.quiz.questions.length > 0) {
-        setActiveTab('quiz')
-      } else if (nextLesson) {
-        router.push(`/courses/${courseId}/lessons/${nextLesson.lessonId}`)
-      }
-    } else if (activeTab === 'practice') {
-      if (fullLesson.quiz && fullLesson.quiz.questions && fullLesson.quiz.questions.length > 0) {
-        const isPracticeCompleted = practiceCompleted || (Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false)
-        if (!isPracticeCompleted) {
-          alert(t('practiceRequiredAlert'))
-        } else {
-          setActiveTab('quiz')
-        }
-      } else if (nextLesson) {
-        router.push(`/courses/${courseId}/lessons/${nextLesson.lessonId}`)
-      }
-    } else if (activeTab === 'quiz') {
-      if (nextLesson && isQuizPassed) {
-        router.push(`/courses/${courseId}/lessons/${nextLesson.lessonId}`)
-      }
-    }
-  }
-
-  const handlePrevAction = () => {
-    if (activeTab === 'quiz') {
-      if (fullLesson.practiceTask) {
-        setActiveTab('practice')
-      } else {
-        setActiveTab('theory')
-      }
-    } else if (activeTab === 'practice') {
-      setActiveTab('theory')
-    }
-  }
-
   return (
     <>
       {/* Edge drag area when sidebar is closed */}
@@ -978,10 +938,6 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         </button>
       )}
 
-      <FloatingNavArrows 
-        onNextAction={handleNextAction} 
-        onPrevAction={handlePrevAction} 
-      />
       <div className={`${styles.pageWrapper} ${isResizing ? styles.resizing : ''}`}>
         
         {/* Sidebar Navigation */}
