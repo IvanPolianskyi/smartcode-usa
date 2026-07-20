@@ -83,9 +83,6 @@ const RobloxLessonPage = ({
     m.lessons.some((l) => l.lessonId === lessonId)
   )
   const currentModule = curriculum.modules[lessonModuleIndex]
-  const moduleNum = Number(String(lessonId || '').match(/lesson-roblox-(\d+)/)?.[1] || 0)
-  const isFirstLesson = lessonId === 'lesson-roblox-1-1'
-  const showStarterTip = !isFirstLesson && moduleNum > 0 && moduleNum <= 4
   const allowedSet = useMemo(() => new Set(allowedLessons || []), [allowedLessons])
 
   const practiceDone =
@@ -385,26 +382,6 @@ const RobloxLessonPage = ({
             <div>
               <strong>{tRoblox('checkpointCelebrateTitle')}</strong>
               <p>{tRoblox('checkpointCelebrateBody')}</p>
-            </div>
-          </div>
-        )}
-
-        {showStarterTip && !fullLesson.comingSoon && (
-          <div className={styles.starterTip} role="note">
-            <Code size={20} />
-            <div>
-              <strong>{tRoblox('starterTipTitle')}</strong>
-              <p>{tRoblox('starterTipBody')}</p>
-            </div>
-          </div>
-        )}
-
-        {!isFirstLesson && !fullLesson.comingSoon && (
-          <div className={`${styles.starterTip} ${styles.desktopTip}`} role="note">
-            <BookOpen size={20} />
-            <div>
-              <strong>{tRoblox('desktopTipTitle')}</strong>
-              <p>{tRoblox('desktopTipBody')}</p>
             </div>
           </div>
         )}

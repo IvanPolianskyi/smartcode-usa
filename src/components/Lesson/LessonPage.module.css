@@ -2,15 +2,13 @@
 
 .pageWrapper {
   display: flex;
+  align-items: flex-start;
   min-height: 100vh;
   min-height: 100svh;
   background: var(--background);
   color: var(--text-primary);
   margin-top: 0;
   padding-top: 0;
-  contain: layout style paint;
-  transform: translateZ(0);
-  will-change: scroll-position;
 }
 
 /* На мобільних пристроях прибираємо зайві відступи */
@@ -26,45 +24,30 @@
   }
 }
 
-/* Sidebar Navigation */
+/* Sidebar Navigation — sticky viewport column with its own scroll */
 .sidebar {
   width: 320px;
   min-width: 0;
   max-width: 90vw;
   background: var(--background-secondary);
   border-right: 2px solid var(--background-tertiary);
-  overflow-y: auto;
-  overflow-x: hidden;
-  position: relative;
-  height: 100%;
-  min-height: 100vh;
-  min-height: 100svh;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: calc(100vh - 80px);
+  height: calc(100svh - 80px);
+  height: calc(100dvh - 80px);
+  max-height: calc(100vh - 80px);
+  max-height: calc(100svh - 80px);
+  max-height: calc(100dvh - 80px);
+  min-height: 0;
   padding: 0;
   transition: width 0.3s ease;
   flex-shrink: 0;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-  scrollbar-width: thin;
-  scrollbar-color: rgba(161, 0, 255, 0.55) rgba(255, 255, 255, 0.04);
-}
-
-.sidebar::-webkit-scrollbar {
-  width: 8px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #c44bff 0%, #a100ff 55%, #7a00c8 100%);
-  border-radius: 999px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #d97bff 0%, #b52bff 55%, #8f14e0 100%);
-  background-clip: padding-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar.collapsed {
@@ -258,6 +241,7 @@
   background: var(--background);
   position: relative;
   z-index: 10;
+  flex-shrink: 0;
 }
 
 .sidebarHeader h3 {
@@ -272,6 +256,33 @@
 
 .sidebarNav {
   padding: 1rem 0;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(161, 0, 255, 0.55) rgba(255, 255, 255, 0.04);
+}
+
+.sidebarNav::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebarNav::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.sidebarNav::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #c44bff 0%, #a100ff 55%, #7a00c8 100%);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.sidebarNav::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #d97bff 0%, #b52bff 55%, #8f14e0 100%);
+  background-clip: padding-box;
 }
 
 .moduleSection {
@@ -1652,9 +1663,14 @@
     max-height: 50vh;
     max-height: 50svh;
     position: relative;
+    top: auto;
     border-right: none;
     border-bottom: 2px solid var(--background-tertiary);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .sidebarNav {
     overflow-y: auto;
   }
   

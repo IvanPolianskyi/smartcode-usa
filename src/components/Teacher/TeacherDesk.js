@@ -58,10 +58,10 @@ export default function TeacherDesk() {
   const [crmError, setCrmError] = useState('')
   const [nextLesson, setNextLesson] = useState(null)
   const [loadingNextLesson, setLoadingNextLesson] = useState(false)
-  const [historyStats, setHistoryStats] = useState(null)
-  const [historyCrmError, setHistoryCrmError] = useState('')
+  const [batchStats, setBatchStats] = useState(null)
+  const [batchCrmError, setBatchCrmError] = useState('')
   const [loadingStudents, setLoadingStudents] = useState(false)
-  const [loadingHistory, setLoadingHistory] = useState(false)
+  const [loadingBatch, setLoadingBatch] = useState(false)
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
   const [selectedCode, setSelectedCode] = useState('')
@@ -74,7 +74,7 @@ export default function TeacherDesk() {
   const [saving, setSaving] = useState(false)
 
   const linked = Boolean(user?.teacherProfile?.crmStaffId)
-  const recordingStats = historyStats || teacherStats
+  const recordingStats = batchStats || teacherStats
 
   useEffect(() => {
     if (sessionLoading) return
@@ -122,24 +122,24 @@ export default function TeacherDesk() {
     }
   }, [t])
 
-  const loadLessonHistory = useCallback(async () => {
+  const loadSalaryBatch = useCallback(async () => {
     if (!linked && user?.role !== 'admin') {
-      setHistoryStats(null)
+      setBatchStats(null)
       return
     }
-    setLoadingHistory(true)
-    setHistoryCrmError('')
+    setLoadingBatch(true)
+    setBatchCrmError('')
     try {
-      const res = await fetch('/api/teacher/lessons?limit=200', { credentials: 'include' })
+      const res = await fetch('/api/teacher/salary-batch', { credentials: 'include' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('students.error'))
-      setHistoryStats(data.totals || null)
-      setHistoryCrmError(data.crmError || '')
+      setBatchStats(data.totals || null)
+      setBatchCrmError(data.crmError || '')
     } catch (e) {
       setError(e.message || t('students.error'))
-      setHistoryCrmError(e.message || t('recordings.crmError'))
+      setBatchCrmError(e.message || t('recordings.crmError'))
     } finally {
-      setLoadingHistory(false)
+      setLoadingBatch(false)
     }
   }, [linked, user?.role, t])
 
@@ -148,10 +148,10 @@ export default function TeacherDesk() {
     loadNextLesson()
     // ЗП/пачку трохи пізніше, щоб «наступний урок» не ділив CRM-таймаут.
     const timer = setTimeout(() => {
-      loadLessonHistory()
+      loadSalaryBatch()
     }, 150)
     return () => clearTimeout(timer)
-  }, [user, loadNextLesson, loadLessonHistory])
+  }, [user, loadNextLesson, loadSalaryBatch])
 
   useEffect(() => {
     if (!user || (user.role !== 'teacher' && user.role !== 'admin')) return
@@ -234,7 +234,7 @@ export default function TeacherDesk() {
               className={styles.btn}
               onClick={() => {
                 loadNextLesson()
-                loadLessonHistory()
+                loadSalaryBatch()
                 if (tab === 'students') loadStudents()
                 refresh?.(false)
               }}
@@ -306,7 +306,7 @@ export default function TeacherDesk() {
           </section>
         )}
 
-        {(linked || user.role === 'admin') && (recordingStats || historyCrmError) && (
+        {(linked || user.role === 'admin') && (recordingStats || batchCrmError || loadingBatch) && (
           <section className={styles.recordingsSummary} aria-label={t('recordings.title')}>
             <div className={styles.recordingsHead}>
               <div className={styles.recordingsHeadText}>
@@ -315,14 +315,17 @@ export default function TeacherDesk() {
               <button
                 type="button"
                 className={styles.refreshBtn}
-                onClick={() => loadLessonHistory()}
-                disabled={loadingHistory}
+                onClick={() => loadSalaryBatch()}
+                disabled={loadingBatch}
               >
                 {t('recordings.refresh')}
               </button>
             </div>
-            {historyCrmError ? (
+            {batchCrmError ? (
               <p className={styles.warn}>{t('recordings.crmError')}</p>
+            ) : null}
+            {loadingBatch && !recordingStats ? (
+              <p className={styles.empty}>{t('loading')}</p>
             ) : null}
             {recordingStats ? (
               <div className={styles.statsRow}>

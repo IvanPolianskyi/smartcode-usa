@@ -198,33 +198,6 @@ function isBetterTeacherName(nextName, currentName) {
   return false
 }
 
-function lessonKindLabel(lesson) {
-  const kind = String(lesson?.kind || 'individual')
-  if (kind === 'trial') return 'ПУ'
-  if (isCrmGroupLessonSlot(lesson)) return 'ГУ'
-  return 'ІУ'
-}
-
-function lessonHasVideo(lesson) {
-  if (lesson?.recording_has_video === true) return true
-  if (lesson?.recording_has_video === false) return false
-  return Boolean(String(lesson?.recording_file_id || '').trim())
-}
-
-/**
- * Поточна (невиплачена) пачка ЗП — як у CRM Salaries / settle_teacher_payout:
- * є TG-запис (відео або text-only), не settled, не excluded.
- */
-export function isInCurrentPayoutBatch(lesson) {
-  if (!lesson?.recording_submitted_at) return false
-  if (lesson?.teacher_payout_settled_at) return false
-  if (lesson?.teacher_payout_excluded_at) return false
-  const status = String(lesson?.status || 'scheduled')
-  if (status === 'cancelled' || status === 'no_show') return false
-  const kind = String(lesson?.kind || 'individual')
-  return kind === 'individual' || kind === 'trial' || kind === 'group'
-}
-
 /**
  * Черга ЗП викладача з тієї ж вкладки CRM «Зарплати»
  * (GET /reports/teacher-salaries?outstanding_only=true&teacher_id=…).
@@ -322,26 +295,6 @@ function applySalaryQueueToStudents(students, salaryQueue) {
   return students
 }
 
-/**
- * Статус відео для кабінету викладача (синхрон з CRM ботом записів).
- * - with_video: скинуто відео
- * - text_only: підтверджено ботом без файлу відео
- * - missing: проведено / минулий слот без запису
- * - pending: ще очікується (майбутній / scheduled)
- */
-export function resolveRecordingVideoStatus(lesson, nowMs = Date.now()) {
-  const hasRecording = Boolean(lesson?.recording_submitted_at)
-  if (hasRecording) {
-    return lessonHasVideo(lesson) ? 'with_video' : 'text_only'
-  }
-  const status = String(lesson?.status || 'scheduled')
-  if (status === 'cancelled' || status === 'no_show') return 'pending'
-  const startMs = parseUtcInstant(lesson?.start_at).getTime()
-  const isPast = Number.isFinite(startMs) && startMs <= nowMs
-  if (status === 'completed' || isPast) return 'missing'
-  return 'pending'
-}
-
 function emptyTeacherTotals() {
   return {
     completed: 0,
@@ -366,54 +319,30 @@ function emptyTeacherTotals() {
   }
 }
 
-function lessonDocId(lesson) {
-  return String(lesson?.id || lesson?._id || '').trim()
-}
-
 /**
- * Уроки викладача без слотів availability.
- * Availability з Google Calendar забиває limit=2000 при sort=-1 і витісняє реальні ІУ/ПУ.
- * Один запит з exclude_kinds швидший за два паралельні kind=.
+ * Лише черга ЗП (без історії уроків) — для карток «пачка / до виплати».
  */
-async function fetchTeacherTeachingLessons(staffId) {
-  const tid = encodeURIComponent(staffId)
-  const batch = await crmJson(
-    'GET',
-    `lessons?teacher_id=${tid}&exclude_kinds=availability&limit=2000&sort=-1`,
-    undefined,
-    { timeout: 15000 }
-  )
+export async function fetchTeacherSalaryBatchTotals(crmStaffId) {
+  const staffId = String(crmStaffId || '').trim()
+  const empty = { totals: emptyTeacherTotals() }
+  if (!staffId) return empty
 
-  const byId = new Map()
-  if (Array.isArray(batch)) {
-    for (const lesson of batch) {
-      if (String(lesson?.kind || '') === 'availability') continue
-      const id = lessonDocId(lesson)
-      if (id) byId.set(id, lesson)
-      else byId.set(`anon-${byId.size}`, lesson)
+  try {
+    const queue = await fetchTeacherSalaryQueueFromCrm(staffId)
+    const totals = emptyTeacherTotals()
+    if (queue?.found) applySalaryQueueToTotals(totals, queue)
+    return { totals }
+  } catch (error) {
+    console.warn('fetchTeacherSalaryBatchTotals:', error?.message || error)
+    return {
+      ...empty,
+      crmError: error?.message || 'CRM unavailable',
     }
   }
-  return [...byId.values()]
 }
 
 /**
- * Агрегує уроки викладача з CRM: проведені та підтверджені записами бота.
- * @param {string} crmStaffId
- * @returns {Promise<{
- *   students: Record<string, { code: string, name: string, completedLessons: number, recordedLessons: number }>,
- *   totals: {
- *     completed: number,
- *     recorded: number,
- *     currentBatchVideos: number,
- *     currentBatchRecorded: number,
- *     recordedWithVideo: number,
- *     recordedTextOnly: number,
- *     missingRecording: number,
- *     individualCompleted: number,
- *     trialCompleted: number,
- *   },
- *   crmError?: string
- * }>}
+ * Статистика пачки ЗП по учнях (без повної історії уроків з CRM).
  */
 export async function fetchTeacherCrmLessonStats(crmStaffId) {
   const staffId = String(crmStaffId || '').trim()
@@ -423,202 +352,20 @@ export async function fetchTeacherCrmLessonStats(crmStaffId) {
   }
   if (!staffId) return empty
 
-  // Спочатку черга ЗП (швидко з teacher_id) — лічильник пачки не залежить від історії.
-  let salaryQueue = null
   try {
     const queue = await fetchTeacherSalaryQueueFromCrm(staffId)
-    if (queue?.found) salaryQueue = queue
-  } catch (error) {
-    console.warn('fetchTeacherSalaryQueueFromCrm:', error?.message || error)
-  }
-
-  let lessons = []
-  try {
-    lessons = await fetchTeacherTeachingLessons(staffId)
+    const students = {}
+    const totals = emptyTeacherTotals()
+    if (queue?.found) {
+      applySalaryQueueToTotals(totals, queue)
+      applySalaryQueueToStudents(students, queue)
+    }
+    return { students, totals }
   } catch (error) {
     console.warn('fetchTeacherCrmLessonStats:', error?.message || error)
-    if (!salaryQueue) {
-      return {
-        ...empty,
-        crmError: error?.message || 'CRM unavailable',
-      }
+    return {
+      ...empty,
+      crmError: error?.message || 'CRM unavailable',
     }
   }
-
-  if (!Array.isArray(lessons)) lessons = []
-
-  const students = {}
-  const totals = emptyTeacherTotals()
-  const nowMs = Date.now()
-
-  for (const lesson of lessons) {
-    const kind = String(lesson?.kind || 'individual')
-    if (kind === 'availability') continue
-
-    const status = String(lesson?.status || 'scheduled')
-    const isCompleted = status === 'completed' || status === 'held'
-    const hasRecording = Boolean(lesson?.recording_submitted_at)
-    const videoStatus = resolveRecordingVideoStatus(lesson, nowMs)
-
-    if (isCompleted) totals.completed += 1
-    if (hasRecording) totals.recorded += 1
-    if (videoStatus === 'with_video') totals.recordedWithVideo += 1
-    if (videoStatus === 'text_only') totals.recordedTextOnly += 1
-    if (videoStatus === 'missing') totals.missingRecording += 1
-    if (kind === 'trial' && isCompleted) totals.trialCompleted += 1
-    if (kind === 'individual' && isCompleted) totals.individualCompleted += 1
-
-    const shortId = String(lesson?.student_short_id || '').trim()
-    if (!shortId) continue
-
-    if (!students[shortId]) {
-      students[shortId] = {
-        code: shortId,
-        name: teacherStudentDisplayName(lesson?.student_name, shortId),
-        completedLessons: 0,
-        recordedLessons: 0,
-      }
-    }
-
-    const cell = students[shortId]
-    if (isCompleted) cell.completedLessons += 1
-
-    const nextName = teacherStudentDisplayName(lesson?.student_name, shortId)
-    if (isBetterTeacherName(nextName, cell.name)) {
-      cell.name = nextName
-    }
-  }
-
-  if (salaryQueue) {
-    applySalaryQueueToTotals(totals, salaryQueue)
-    applySalaryQueueToStudents(students, salaryQueue)
-  } else {
-    for (const lesson of lessons) {
-      if (!isInCurrentPayoutBatch(lesson)) continue
-      totals.currentBatchRecorded += 1
-      totals.currentBatchVideos += 1
-      const shortId = String(lesson?.student_short_id || '').trim()
-      if (shortId && students[shortId]) {
-        students[shortId].recordedLessons += 1
-      }
-    }
-  }
-
-  return { students, totals }
-}
-
-/**
- * Історія уроків викладача з CRM (проведені / минулі / з записом бота).
- * Без контактів учнів — лише імʼя та код.
- */
-export async function fetchTeacherLessonHistory(crmStaffId, { limit = 200 } = {}) {
-  const staffId = String(crmStaffId || '').trim()
-  const empty = { lessons: [], totals: emptyTeacherTotals() }
-  if (!staffId) return empty
-
-  // Пачка ЗП — окремо й першою: кабінет показує лічильник навіть якщо історія падає.
-  let salaryQueue = null
-  try {
-    const queue = await fetchTeacherSalaryQueueFromCrm(staffId)
-    if (queue?.found) salaryQueue = queue
-  } catch (error) {
-    console.warn('fetchTeacherSalaryQueueFromCrm:', error?.message || error)
-  }
-
-  let lessons = []
-  try {
-    lessons = await fetchTeacherTeachingLessons(staffId)
-  } catch (error) {
-    console.warn('fetchTeacherLessonHistory:', error?.message || error)
-    if (!salaryQueue) {
-      return {
-        ...empty,
-        crmError: error?.message || 'CRM unavailable',
-      }
-    }
-    const totals = emptyTeacherTotals()
-    applySalaryQueueToTotals(totals, salaryQueue)
-    return { lessons: [], totals }
-  }
-
-  if (!Array.isArray(lessons)) {
-    if (salaryQueue) {
-      const totals = emptyTeacherTotals()
-      applySalaryQueueToTotals(totals, salaryQueue)
-      return { lessons: [], totals }
-    }
-    return empty
-  }
-
-  const nowMs = Date.now()
-  const totals = emptyTeacherTotals()
-  const rows = []
-  const salaryLessonIds = salaryQueue?.lessonIds || new Set()
-
-  for (const lesson of lessons) {
-    const kind = String(lesson?.kind || 'individual')
-    if (kind === 'availability') continue
-    if (lesson?.group_calendar_removed === true) continue
-
-    const status = String(lesson?.status || 'scheduled')
-    if (status === 'cancelled' || status === 'no_show') continue
-
-    const hasRecording = Boolean(lesson?.recording_submitted_at)
-    const lessonId = lessonDocId(lesson)
-    const inCurrentBatch = salaryQueue
-      ? Boolean(lessonId && salaryLessonIds.has(lessonId))
-      : isInCurrentPayoutBatch(lesson)
-    const startMs = parseUtcInstant(lesson?.start_at).getTime()
-    const isPast = Number.isFinite(startMs) && startMs <= nowMs
-    const isCompleted = status === 'completed' || status === 'held'
-    if (!isCompleted && !isPast && !hasRecording) continue
-
-    const videoStatus = resolveRecordingVideoStatus(lesson, nowMs)
-    const hasVideo = videoStatus === 'with_video'
-
-    if (isCompleted) totals.completed += 1
-    if (hasRecording) totals.recorded += 1
-    if (videoStatus === 'with_video') totals.recordedWithVideo += 1
-    if (videoStatus === 'text_only') totals.recordedTextOnly += 1
-    if (videoStatus === 'missing') totals.missingRecording += 1
-    if (kind === 'trial' && isCompleted) totals.trialCompleted += 1
-    if (kind === 'individual' && isCompleted) totals.individualCompleted += 1
-
-    const shortId = String(lesson?.student_short_id || '').trim()
-    rows.push({
-      id: String(lesson?.id || ''),
-      startAt: lesson?.start_at || null,
-      endAt: lesson?.end_at || null,
-      kind,
-      kindLabel: lessonKindLabel(lesson),
-      status,
-      studentCode: shortId || null,
-      studentName: teacherStudentDisplayName(lesson?.student_name, shortId),
-      groupName: lesson?.group_name || null,
-      hasRecording,
-      hasVideo,
-      inCurrentBatch,
-      videoStatus,
-      recordingSubmittedAt: lesson?.recording_submitted_at || null,
-    })
-  }
-
-  if (salaryQueue) {
-    applySalaryQueueToTotals(totals, salaryQueue)
-  } else {
-    for (const row of rows) {
-      if (!row.inCurrentBatch) continue
-      totals.currentBatchRecorded += 1
-      totals.currentBatchVideos += 1
-    }
-  }
-
-  rows.sort((a, b) => {
-    const aMs = parseUtcInstant(a.startAt).getTime() || 0
-    const bMs = parseUtcInstant(b.startAt).getTime() || 0
-    return bMs - aMs
-  })
-
-  const capped = Math.min(Math.max(Number(limit) || 200, 1), 500)
-  return { lessons: rows.slice(0, capped), totals }
 }
