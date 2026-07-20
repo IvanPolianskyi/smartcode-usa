@@ -43,13 +43,11 @@ function buildLeadIdentity({ normalizedPhone, normalizedTelegram }) {
 function getMetaLeadSkipReason({
   normalizedPhone,
   hasValidEventId,
-  existingLead,
   existingEvent,
 }) {
   if (!normalizedPhone) return 'немає телефону'
   if (!hasValidEventId) return 'немає event id (не пробна форма)'
   if (existingEvent) return 'дубль event id'
-  if (existingLead) return 'дубль контакту'
   return null
 }
 
@@ -195,33 +193,29 @@ export async function POST(request) {
 
     const leadIdentity = buildLeadIdentity({ normalizedPhone, normalizedTelegram })
     const submissions = await getCollection('submissions')
+    // Блокуємо лише повторну відправку того самого eventId (той самий токен форми).
+    // Один телефон / IP може залишати кілька заявок.
     const existingEvent = hasValidEventId
       ? await submissions.findOne({ eventId })
       : null
-    const existingLead = leadIdentity
-      ? await submissions.findOne({
-        $or: [
-          { leadIdentity },
-          ...(normalizedPhone ? [{ phone: normalizedPhone }] : []),
-          ...(normalizedTelegram ? [{ telegram: normalizedTelegram }] : []),
-        ],
-      })
-      : null
 
-    const shouldTrackLead = Boolean(
-      normalizedPhone &&
-      hasValidEventId &&
-      !existingLead &&
-      !existingEvent
-    )
-    const shouldNotifyTelegram = Boolean(
-      shouldTrackLead || internalLead || (!hasValidEventId && !existingLead)
-    )
+    if (existingEvent) {
+      await recordLeadSubmitAttempt(submitIp, { blocked: false })
+      return NextResponse.json({
+        ok: true,
+        trackLead: false,
+        metaLeadSent: false,
+        metaLeadSkipReason: 'дубль event id',
+        duplicate: true,
+      })
+    }
+
+    const shouldTrackLead = Boolean(normalizedPhone && hasValidEventId)
+    const shouldNotifyTelegram = Boolean(internalLead || hasValidEventId || leadIdentity)
 
     const metaLeadSkipReason = getMetaLeadSkipReason({
       normalizedPhone,
       hasValidEventId,
-      existingLead,
       existingEvent,
     })
 
@@ -231,8 +225,8 @@ export async function POST(request) {
         ok: true,
         trackLead: false,
         metaLeadSent: false,
-        metaLeadSkipReason: metaLeadSkipReason || 'дубль заявки',
-        duplicate: true,
+        metaLeadSkipReason: metaLeadSkipReason || 'немає даних для заявки',
+        duplicate: false,
       })
     }
 

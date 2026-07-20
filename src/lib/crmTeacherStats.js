@@ -22,7 +22,6 @@ const COURSE_NAME_BY_ID = Object.fromEntries(
 
 /** Grace: урок, що вже почався, ще вважаємо «наступним», поки не завершився. */
 const NEXT_LESSON_GRACE_MS = 60 * 60 * 1000
-const NEXT_LESSON_HORIZON_MS = 21 * 24 * 60 * 60 * 1000
 
 /**
  * Наступний урок курсу для розбору з учнем (перший незавершений у curriculum).
@@ -98,41 +97,33 @@ export async function fetchTeacherNextLesson(crmStaffId) {
   const staffId = String(crmStaffId || '').trim()
   if (!staffId) return { nextLesson: null }
 
-  const now = Date.now()
-  const rangeStart = new Date(now - NEXT_LESSON_GRACE_MS).toISOString()
-  const rangeEnd = new Date(now + NEXT_LESSON_HORIZON_MS).toISOString()
-
   let lessons = []
   try {
     lessons = await crmJson(
       'GET',
-      `lessons/range?start=${encodeURIComponent(rangeStart)}&end=${encodeURIComponent(rangeEnd)}&kinds=${encodeURIComponent('individual,trial')}`,
+      `lessons/next?teacher_id=${encodeURIComponent(staffId)}&limit=1&horizon_days=3`,
       undefined,
-      { timeout: 15000 }
+      { timeout: 10000 }
     )
   } catch (error) {
     console.warn('fetchTeacherNextLesson:', error?.message || error)
     return { nextLesson: null, crmError: error?.message || 'CRM unavailable' }
   }
 
-  if (!Array.isArray(lessons)) return { nextLesson: null }
+  if (!Array.isArray(lessons) || !lessons.length) return { nextLesson: null }
 
-  const upcoming = lessons
-    .filter((lesson) => {
-      if (String(lesson?.teacher_id || '') !== staffId) return false
-      if (String(lesson?.kind || '') === 'availability') return false
-      if (lesson?.group_calendar_removed === true) return false
-      const status = String(lesson?.status || 'scheduled')
+  const now = Date.now()
+  const lesson =
+    lessons.find((row) => {
+      if (String(row?.teacher_id || '') !== staffId) return false
+      if (String(row?.kind || '') === 'availability') return false
+      if (row?.group_calendar_removed === true) return false
+      const status = String(row?.status || 'scheduled')
       if (status !== 'scheduled') return false
-      const startMs = parseUtcInstant(lesson?.start_at).getTime()
+      const startMs = parseUtcInstant(row?.start_at).getTime()
       return Number.isFinite(startMs) && startMs >= now - NEXT_LESSON_GRACE_MS
-    })
-    .sort(
-      (a, b) =>
-        parseUtcInstant(a.start_at).getTime() - parseUtcInstant(b.start_at).getTime()
-    )
+    }) || lessons[0]
 
-  const lesson = upcoming[0]
   if (!lesson) return { nextLesson: null }
 
   const shortId = String(lesson.student_short_id || '').trim()
@@ -201,6 +192,7 @@ function isBetterTeacherName(nextName, currentName) {
 /**
  * Черга ЗП викладача з тієї ж вкладки CRM «Зарплати»
  * (GET /reports/teacher-salaries?outstanding_only=true&teacher_id=…).
+ * Повний список recordings — для вкладки учнів / деталізації.
  */
 export async function fetchTeacherSalaryQueueFromCrm(crmStaffId) {
   const staffId = String(crmStaffId || '').trim()
@@ -248,6 +240,45 @@ export async function fetchTeacherSalaryQueueFromCrm(crmStaffId) {
       row.group_rate_uah == null ? null : Number(row.group_rate_uah),
     recordings,
     lessonIds,
+  }
+}
+
+/**
+ * Легкі totals для карток кабінету (без recordings[]).
+ * GET /reports/teacher-salaries/desk-summary?teacher_id=…
+ */
+export async function fetchTeacherSalaryDeskSummaryFromCrm(crmStaffId) {
+  const staffId = String(crmStaffId || '').trim()
+  const empty = {
+    found: false,
+    payableCount: 0,
+    trialCount: 0,
+    recordingsCount: 0,
+    payoutUah: null,
+    rateUah: null,
+    groupRateUah: null,
+  }
+  if (!staffId) return empty
+
+  const row = await crmJson(
+    'GET',
+    `reports/teacher-salaries/desk-summary?teacher_id=${encodeURIComponent(staffId)}`,
+    undefined,
+    { timeout: 10000 }
+  )
+  if (!row || String(row.teacher_id || '') !== staffId) return empty
+
+  return {
+    found: true,
+    payableCount: Number(row.payable_count) || 0,
+    trialCount: Number(row.trial_count) || 0,
+    recordingsCount:
+      Number(row.recordings_count) ||
+      (Number(row.payable_count) || 0) + (Number(row.trial_count) || 0),
+    payoutUah: row.payout_uah == null ? null : Number(row.payout_uah),
+    rateUah: row.rate_uah == null ? null : Number(row.rate_uah),
+    groupRateUah:
+      row.group_rate_uah == null ? null : Number(row.group_rate_uah),
   }
 }
 
@@ -328,7 +359,7 @@ export async function fetchTeacherSalaryBatchTotals(crmStaffId) {
   if (!staffId) return empty
 
   try {
-    const queue = await fetchTeacherSalaryQueueFromCrm(staffId)
+    const queue = await fetchTeacherSalaryDeskSummaryFromCrm(staffId)
     const totals = emptyTeacherTotals()
     if (queue?.found) applySalaryQueueToTotals(totals, queue)
     return { totals }

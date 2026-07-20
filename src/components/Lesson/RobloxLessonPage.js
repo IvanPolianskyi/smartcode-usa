@@ -683,20 +683,18 @@ const RobloxLessonPage = ({
                         <p style={{ fontWeight: 700 }}>
                           {quizPassed ? t('quizPassed') : t('quizFailed')}
                         </p>
-                        {!quizPassed && (
-                          <button
-                            type="button"
-                            className={styles.btnSecondary}
-                            style={{ marginTop: '0.75rem' }}
-                            onClick={() => {
-                              setQuizAnswers({})
-                              setQuizSubmitted(false)
-                              setQuizScore(null)
-                            }}
-                          >
-                            {t('retakeQuiz')}
-                          </button>
-                        )}
+                        <button
+                          type="button"
+                          className={styles.btnSecondary}
+                          style={{ marginTop: '0.75rem' }}
+                          onClick={() => {
+                            setQuizAnswers({})
+                            setQuizSubmitted(false)
+                            setQuizScore(null)
+                          }}
+                        >
+                          {t('retakeQuiz')}
+                        </button>
                       </div>
                     )}
                   </div>

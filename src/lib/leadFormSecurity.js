@@ -7,9 +7,9 @@ const TOKEN_TTL_MS = 30 * 60 * 1000
 const MIN_TOKEN_AGE_MS = 0
 const RATE_WINDOW_MS = 15 * 60 * 1000
 /** Отримання leadToken (відкриття модалки) — окремий, м’якший ліміт */
-const RATE_MAX_INTENT_PER_IP = 60
-/** Відправка форми — ліміт на успішні/реальні submit, не на кожну помилку токена */
-const RATE_MAX_SUBMIT_PER_IP = 30
+const RATE_MAX_INTENT_PER_IP = 200
+/** Відправка форми — м’який анти-бот ліміт; повторні заявки з одного IP дозволені */
+const RATE_MAX_SUBMIT_PER_IP = 100
 
 function getSigningSecret() {
   const secret = String(process.env.LEAD_FORM_SIGNING_SECRET || '').trim()

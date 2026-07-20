@@ -57,6 +57,7 @@ export default function TeacherDesk() {
   const [teacherStats, setTeacherStats] = useState(null)
   const [crmError, setCrmError] = useState('')
   const [nextLesson, setNextLesson] = useState(null)
+  const [nextLessonError, setNextLessonError] = useState('')
   const [loadingNextLesson, setLoadingNextLesson] = useState(false)
   const [batchStats, setBatchStats] = useState(null)
   const [batchCrmError, setBatchCrmError] = useState('')
@@ -90,16 +91,20 @@ export default function TeacherDesk() {
   const loadNextLesson = useCallback(async () => {
     if (!linked && user?.role !== 'admin') {
       setNextLesson(null)
+      setNextLessonError('')
       return
     }
     setLoadingNextLesson(true)
+    setNextLessonError('')
     try {
       const res = await fetch('/api/teacher/next-lesson', { credentials: 'include' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('students.error'))
       setNextLesson(data.nextLesson || null)
-    } catch {
+      if (data.crmError) setNextLessonError(data.crmError)
+    } catch (e) {
       setNextLesson(null)
+      setNextLessonError(e.message || t('students.error'))
     } finally {
       setLoadingNextLesson(false)
     }
@@ -125,6 +130,7 @@ export default function TeacherDesk() {
   const loadSalaryBatch = useCallback(async () => {
     if (!linked && user?.role !== 'admin') {
       setBatchStats(null)
+      setBatchCrmError('')
       return
     }
     setLoadingBatch(true)
@@ -136,7 +142,7 @@ export default function TeacherDesk() {
       setBatchStats(data.totals || null)
       setBatchCrmError(data.crmError || '')
     } catch (e) {
-      setError(e.message || t('students.error'))
+      setBatchStats(null)
       setBatchCrmError(e.message || t('recordings.crmError'))
     } finally {
       setLoadingBatch(false)
@@ -145,12 +151,9 @@ export default function TeacherDesk() {
 
   useEffect(() => {
     if (!user || (user.role !== 'teacher' && user.role !== 'admin')) return
-    loadNextLesson()
-    // ЗП/пачку трохи пізніше, щоб «наступний урок» не ділив CRM-таймаут.
-    const timer = setTimeout(() => {
-      loadSalaryBatch()
-    }, 150)
-    return () => clearTimeout(timer)
+    // Паралельно: один віджет не блокує інший.
+    void loadNextLesson()
+    void loadSalaryBatch()
   }, [user, loadNextLesson, loadSalaryBatch])
 
   useEffect(() => {
@@ -256,6 +259,8 @@ export default function TeacherDesk() {
             </div>
             {loadingNextLesson ? (
               <p className={styles.nextLessonEmpty}>{t('nextLesson.loading')}</p>
+            ) : nextLessonError && !nextLesson ? (
+              <p className={styles.warn}>{t('recordings.crmError')}</p>
             ) : !nextLesson ? (
               <p className={styles.nextLessonEmpty}>{t('nextLesson.empty')}</p>
             ) : (
@@ -306,7 +311,7 @@ export default function TeacherDesk() {
           </section>
         )}
 
-        {(linked || user.role === 'admin') && (recordingStats || batchCrmError || loadingBatch) && (
+        {(linked || user.role === 'admin') && (
           <section className={styles.recordingsSummary} aria-label={t('recordings.title')}>
             <div className={styles.recordingsHead}>
               <div className={styles.recordingsHeadText}>

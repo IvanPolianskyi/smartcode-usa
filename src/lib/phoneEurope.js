@@ -1,4 +1,4 @@
-import { parsePhoneNumberFromString, isValidPhoneNumber, getCountryCallingCode } from 'libphonenumber-js'
+import { parsePhoneNumberFromString, isValidPhoneNumber } from 'libphonenumber-js'
 import { PHONE_VALIDATION, resolveLocale } from './localeStrings'
 
 /**
@@ -59,18 +59,6 @@ export const EUROPE_COUNTRY = new Set([
 	'XK',
 ])
 
-const DIAL_CODES_DESC = [...new Set(
-	Array.from(EUROPE_COUNTRY)
-		.map((iso) => {
-			try {
-				return getCountryCallingCode(iso)
-			} catch {
-				return null
-			}
-		})
-		.filter(Boolean)
-)].sort((a, b) => b.length - a.length)
-
 /**
  * @returns {string | null} кандидат E.164: + + лише цифри, без зайвого
  */
@@ -105,11 +93,6 @@ export function validateEuropeanPhone(raw, locale = 'uk') {
 	}
 	if (digits.length > 15) {
 		return { ok: false, message: m.tooLong }
-	}
-	for (const dialCode of DIAL_CODES_DESC) {
-		if (digits.includes(`${dialCode}${dialCode}`)) {
-			return { ok: false, message: m.duplicateDial(dialCode) }
-		}
 	}
 	const p = parsePhoneNumberFromString(e164)
 	if (!p) {

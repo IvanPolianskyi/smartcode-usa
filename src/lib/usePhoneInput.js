@@ -63,10 +63,6 @@ function normalizeNationalDigits(inputDigits, country) {
 	return stripLeadingZeros(digits)
 }
 
-function hasDuplicatedDialCode(allDigits, dialCode) {
-	return allDigits.includes(`${dialCode}${dialCode}`)
-}
-
 function validateUaPartial(normalized, t) {
 	if (!normalized) return ''
 	if (normalized.length >= 1 && !UA_MOBILE_PREFIX_FIRST_DIGITS.has(normalized[0])) {
@@ -90,22 +86,12 @@ function countryDisplayName(country, locale) {
  * @param {(key: string, values?: Record<string, string>) => string} t
  * @param {string} locale
  */
-function validateNational(nationalDigits, country, rawInput = '', opts = {}, t, locale) {
+function validateNational(nationalDigits, country, _rawInput = '', opts = {}, t, locale) {
 	const { strict = false } = opts
 	const normalized = normalizeNationalDigits(nationalDigits, country)
 
 	if (!normalized) {
 		return strict ? t('enterAfterCountryCode') : ''
-	}
-
-	const inputDigits = String(rawInput).replace(/\D/g, '')
-	if (inputDigits.startsWith(country.dialCode) && inputDigits.length > country.dialCode.length) {
-		return t('duplicateCountry', { prefix: country.prefix })
-	}
-
-	const allDigits = country.dialCode + normalized
-	if (hasDuplicatedDialCode(allDigits, country.dialCode)) {
-		return t('duplicateCountry', { prefix: country.prefix })
 	}
 
 	if (country.code === 'UA') {
