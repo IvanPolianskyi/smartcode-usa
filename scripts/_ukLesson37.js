@@ -428,7 +428,7 @@ Juice складається з **трьох каналів**, які ми сь�
       {
         id: "q8",
         type: MC,
-        question: "Чому не варто робити Instance.new("Sound") на кожен Touched?",
+        question: "Чому не варто робити Instance.new('Sound') на кожен Touched?",
         options: [
           "SoundId можна призначити лише в Edit Mode",
           "Play() працює тільки з одним Sound за гру",

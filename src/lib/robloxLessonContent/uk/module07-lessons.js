@@ -1,4 +1,4 @@
-/** Roblox Module 07 UK — 8 уроків (prod-92), Tycoon */
+/** Roblox Module 07 UK - 8 уроків (prod-92), Tycoon */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -40,7 +40,7 @@ export const ukLesson71 = {
 | Серверна дисципліна Coins | Поки лише геометрія без валюти |
 | Playtest маршруту | Ручна перевірка шляху дропа |
 
-Метафора: сьогодні ти креслиш русло фабрики, а вода потече наступного уроку.
+сьогодні ти креслиш русло фабрики, а вода потече наступного уроку.
 
 **Зроби зараз (3 хв):** створи новий Place, запиши п'ять артефактів і переконайся, що в Explorer немає систем Simulator.`,
       },
@@ -294,8 +294,13 @@ Sign виконує роль дорожнього покажчика: одне �
         id: "q1",
         type: MC,
         question: "Який жанр будується в уроці 7.1?",
-        options: ["Simulator", "Obby", "Tycoon", "Arena"],
-        correctAnswer: 2,
+        options: [
+          "Tycoon",
+          "Simulator",
+          "Obby",
+          "Arena",
+        ],
+        correctAnswer: 0,
         explanation: "Урок відкриває модуль Tycoon і будує його фізичний скелет.",
       },
       {
@@ -303,12 +308,12 @@ Sign виконує роль дорожнього покажчика: одне �
         type: MC,
         question: "Який головний результат уроку 7.1?",
         options: [
-          "Plot, Dropper, Mouth, Collector, Drops і ручний тест",
           "Повна економіка з Coins",
+          "Plot, Dropper, Mouth, Collector, Drops і ручний тест",
           "Магазин десяти кнопок",
           "Автоматичний цикл створення дропів",
         ],
-        correctAnswer: 0,
+        correctAnswer: 1,
         explanation: "Сьогодні потрібна готова геометрія без циклу та валюти.",
       },
       {
@@ -317,11 +322,11 @@ Sign виконує роль дорожнього покажчика: одне �
         question: "Які властивості потрібні Collector?",
         options: [
           "CanCollide true, CanTouch false",
-          "CanCollide false, CanTouch true",
           "Anchored false, CanTouch false",
+          "CanCollide false, CanTouch true",
           "Transparency 1, CanTouch false",
         ],
-        correctAnswer: 1,
+        correctAnswer: 2,
         explanation: "Дроп проходить крізь сенсор, а майбутній Touched лишається доступним.",
       },
       {
@@ -331,10 +336,10 @@ Sign виконує роль дорожнього покажчика: одне �
         options: [
           "Усередині SurfaceGui",
           "У ServerScriptService",
-          "У Model Plot разом із Dropper і Collector",
           "Усередині TextLabel Sign",
+          "У Model Plot разом із Dropper і Collector",
         ],
-        correctAnswer: 2,
+        correctAnswer: 3,
         explanation: "Drops належить сцені plot, щоб trim і клон ділянки бачили один контейнер.",
       },
       {
@@ -343,11 +348,11 @@ Sign виконує роль дорожнього покажчика: одне �
         question: "Навіщо потрібен окремий Part Mouth?",
         options: [
           "Щоб змінювати Coins",
+          "Щоб мати точну точку появи дропа",
           "Щоб замінити Floor",
           "Щоб блокувати Collector",
-          "Щоб мати точну точку появи дропа",
         ],
-        correctAnswer: 3,
+        correctAnswer: 1,
         explanation: "Наступний Script братиме позицію Mouth для створення дропа.",
       },
       {
@@ -355,12 +360,12 @@ Sign виконує роль дорожнього покажчика: одне �
         type: MC,
         question: "Що правильно зробити з TestDrop?",
         options: [
-          "Скинути тричі з Mouth і видалити після тесту",
           "Залишити Anchored true",
           "Сховати його всередині DropperBody",
+          "Скинути тричі з Mouth і видалити після тесту",
           "Перетворити його на Collector",
         ],
-        correctAnswer: 0,
+        correctAnswer: 2,
         explanation: "Повторний фізичний тест доводить геометрію, а тестовий об'єкт потім прибирають.",
       },
       {
@@ -368,12 +373,12 @@ Sign виконує роль дорожнього покажчика: одне �
         type: MC,
         question: "Чого не треба додавати сьогодні?",
         options: [
-          "Низькі Walls",
           "Coins і автоматичний цикл",
+          "Низькі Walls",
           "Sign зі стрілкою",
           "Порожній Folder Drops",
         ],
-        correctAnswer: 1,
+        correctAnswer: 0,
         explanation: "Економіка та автоматичне створення не входять у межі 7.1.",
       },
       {
@@ -383,10 +388,10 @@ Sign виконує роль дорожнього покажчика: одне �
         options: [
           "Натисни для Power",
           "Купи новий острів",
-          "Dropper -> Drop -> Collector",
           "Збери 100 Coins",
+          "Dropper -> Drop -> Collector",
         ],
-        correctAnswer: 2,
+        correctAnswer: 3,
         explanation: "Текст точно показує видимий фізичний маршрут цього уроку.",
       },
       {
@@ -396,10 +401,10 @@ Sign виконує роль дорожнього покажчика: одне �
         options: [
           "Щоб Floor міг рухатися",
           "Щоб Collector втратив CanTouch",
-          "Щоб Mouth став незаанкореним",
           "Щоб гравець бачив і відвідував фабрику",
+          "Щоб Mouth став незаанкореним",
         ],
-        correctAnswer: 3,
+        correctAnswer: 2,
         explanation: "Відкритий бік покращує вхід, камеру й читабельність потоку.",
       },
       {
@@ -420,12 +425,12 @@ Sign виконує роль дорожнього покажчика: одне �
         type: MC,
         question: "Яка структура є правильною?",
         options: [
-          "Workspace/Plot з Dropper/Mouth, Collector і Drops",
           "Workspace/Mouth/Drops/Plot",
           "Collector/Workspace/Dropper",
           "SurfaceGui/Floor/Walls",
+          "Workspace/Plot з Dropper/Mouth, Collector і Drops",
         ],
-        correctAnswer: 0,
+        correctAnswer: 3,
         explanation: "Увесь скелет фабрики зібраний у Plot зі стабільними іменами.",
       },
       {
@@ -433,12 +438,12 @@ Sign виконує роль дорожнього покажчика: одне �
         type: MC,
         question: "Що робити, якщо дроп зупиняється перед Collector?",
         options: [
+          "Розширити або пересунути Collector на траєкторію",
           "Додати Coins у TestDrop",
           "Видалити Floor",
-          "Розширити або пересунути Collector на траєкторію",
           "Увімкнути CanCollide для Mouth",
         ],
-        correctAnswer: 2,
+        correctAnswer: 0,
         explanation: "Сенсор повинен реально перетинати шлях дропа.",
       },
       {
@@ -448,10 +453,10 @@ Sign виконує роль дорожнього покажчика: одне �
         options: [
           "Coins сьогодні змінює Sign",
           "Collector уже видає Coins без Script",
-          "Mouth зберігає Coins у Position",
           "Серверна звичка з Simulator знадобиться пізніше, але Coins сьогодні немає",
+          "Mouth зберігає Coins у Position",
         ],
-        correctAnswer: 3,
+        correctAnswer: 2,
         explanation: "Архітектурне правило зберігається, але економіка ще не реалізується.",
       },
       {
@@ -460,11 +465,11 @@ Sign виконує роль дорожнього покажчика: одне �
         question: "Яка точна назва Save?",
         options: [
           "Lesson 7.1 - Dropper Loop",
-          "Lesson 7.1 - Tycoon Plot",
           "Tycoon Plot Final Copy",
           "Lesson 7.2 - Dropper Config",
+          "Lesson 7.1 - Tycoon Plot",
         ],
-        correctAnswer: 1,
+        correctAnswer: 3,
         explanation: "Чекліст вимагає назву Lesson 7.1 - Tycoon Plot.",
       },
       {
@@ -473,11 +478,11 @@ Sign виконує роль дорожнього покажчика: одне �
         question: "Що додасть наступний урок 7.2?",
         options: [
           "Новий жанр Obby",
-          "Фінальний Ship Simulator",
           "Серверний цикл створення дропів із Config",
+          "Фінальний Ship Simulator",
           "Collector Coins без дропів",
         ],
-        correctAnswer: 2,
+        correctAnswer: 1,
         explanation: "7.2 автоматизує вже перевірену сцену через серверний цикл і Config.",
       },
     ],
@@ -521,7 +526,7 @@ export const ukLesson72 = {
 | Порожній Drops | Живі Parts з лімітом |
 | Статичний Mouth | Точка спавну для while |
 
-Метафора: учора ти поставив конвеєр, сьогодні вмикаєш стрічку.
+учора ти поставив конвеєр, сьогодні вмикаєш стрічку.
 
 **Зроби зараз (3 хв):** відкрий Plot з 7.1 і випиши стартові числа interval=2, payout=5, maxAlive=30.`,
       },
@@ -567,7 +572,7 @@ task.spawn потрібен, щоб while не заблокував решту S
 
 Перед першим запуском перевір, що Mouth і Drops уже знайдені через WaitForChild. Якщо Script стартує раніше за білд, цикл або впаде, або створить Parts у неправильному місці. Одне точне очікування Mouth економить пів години дебагу.
 
-Метафора: while без wait - як педаль газу без гальм.
+while без wait - як педаль газу без гальм.
 
 **Зроби зараз (5 хв):** запусти цикл на 20 с і переконайся, що Parts з'являються з Mouth.`,
       },
@@ -613,7 +618,7 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
 
 Перевір Size: 1×1×1 добре читається й рідко застрягає. Занадто великий Drop ламає бортики з 7.1 і виглядає як уламки, а не продукція. Колір може бути яскравим для дебагу; пізніше приглушиш.
 
-Метафора: Mouth - кран, Drops - ящик під краном.
+Mouth - кран, Drops - ящик під краном.
 
 **Зроби зараз (8 хв):** напиши spawnDrop(mouth, folder) і виклич її з циклу.`,
       },
@@ -637,7 +642,7 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
 
 Викликай trim після spawn. Playtest 30 с не повинен давати сотні Parts.
 
-Метафора: anti-lag - це запобіжник, який не дає фабриці згоріти від власного темпу.
+anti-lag - це запобіжник, який не дає фабриці згоріти від власного темпу.
 
 **Зроби зараз (5 хв):** додай lifetime або trim і прогони 30 с із лічильником дітей у Drops.`,
       },
@@ -680,7 +685,7 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
 
 Не зберігай running у глобальній змінній модуля, якщо плануєш кілька plot. Інакше вимкнення однієї ділянки зупинить усі. Локальний прапор у замиканні startDropper захищає від цієї пастки ще до появи клонів.
 
-Метафора: функція plot - як розетка на кожну ділянку, а не один кабель на весь цех.
+функція plot - як розетка на кожну ділянку, а не один кабель на весь цех.
 
 **Зроби зараз (5 хв):** винеси цикл у startDropper(plot) і перевір, що Stop через прапор працює.`,
       },
@@ -702,7 +707,7 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
 
 Не залишай interval=0.05 у фінальному Save. Поверни спокійний навчальний темп і запиши його в нотатку поруч із Place.
 
-Метафора: playtest - секундомір біля конвеєра, а не враження з коридору.
+playtest - секундомір біля конвеєра, а не враження з коридору.
 
 **Зроби зараз (6 хв):** пройди рядки 1-4 і постав факти в таблицю.`,
       },
@@ -812,12 +817,12 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
         type: MC,
         question: "Який головний артефакт уроку 7.2?",
         options: [
-          "Повний магазин покупок без дропера",
           "Серверний цикл дропера з DropperConfig і anti-lag",
+          "Повний магазин покупок без дропера",
           "Лише новий колір Floor",
           "LocalScript, що сам пише Coins",
         ],
-        correctAnswer: 1,
+        correctAnswer: 0,
         explanation: "Урок оживляє конвеєр Config і while на сервері.",
       },
       {
@@ -825,12 +830,12 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
         type: MC,
         question: "Де має крутитись while дропера?",
         options: [
-          "На сервері від конкретного plot",
           "Лише в LocalScript як єдина правда",
+          "На сервері від конкретного plot",
           "У TextLabel Collector",
           "У Sign без Script",
         ],
-        correctAnswer: 0,
+        correctAnswer: 1,
         explanation: "Фабрика належить серверу.",
       },
       {
@@ -864,12 +869,12 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
         type: MC,
         question: "Чому небезпечно одразу видаляти перший елемент після GetChildren()?",
         options: [
-          "Бо порядок дітей не гарантує, що перший елемент найстаріший",
           "Бо Destroy заборонений для Part",
+          "Бо порядок дітей не гарантує, що перший елемент найстаріший",
           "Бо Folder Drops не може мати дітей",
           "Бо Config тоді видаляється",
         ],
-        correctAnswer: 0,
+        correctAnswer: 1,
         explanation: "Потрібен SpawnedAt або lifetime, а не сліпий індекс.",
       },
       {
@@ -878,11 +883,11 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
         question: "Навіщо Attribute Payout на Drop уже в 7.2?",
         options: [
           "Щоб замінити Floor",
-          "Щоб Collector у 7.3 знав, скільки додати до Coins",
           "Щоб вимкнути гравітацію",
+          "Щоб Collector у 7.3 знав, скільки додати до Coins",
           "Щоб LocalScript міг змінювати Config",
         ],
-        correctAnswer: 1,
+        correctAnswer: 2,
         explanation: "Payout готує серверну касу наступного уроку.",
       },
       {
@@ -890,12 +895,12 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
         type: MC,
         question: "Навіщо task.spawn навколо while?",
         options: [
+          "Щоб нескінченний цикл не блокував решту Script",
           "Щоб видалити DropperConfig",
           "Щоб Parts стали Anchored",
-          "Щоб нескінченний цикл не блокував решту Script",
           "Щоб Collector сам спавнив Drop",
         ],
-        correctAnswer: 2,
+        correctAnswer: 0,
         explanation: "Мотор працює паралельно зі стартовою логікою.",
       },
       {
@@ -903,12 +908,12 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
         type: MC,
         question: "Що робити, якщо Drop падають у void?",
         options: [
-          "Спочатку перевірити Mouth, Floor і Walls з 7.1",
           "Одразу збільшити payout у сто разів",
           "Перенести цикл у LocalScript",
           "Видалити maxAlive",
+          "Спочатку перевірити Mouth, Floor і Walls з 7.1",
         ],
-        correctAnswer: 0,
+        correctAnswer: 3,
         explanation: "Геометрія часто важливіша за числа Config.",
       },
       {
@@ -917,11 +922,11 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
         question: "Навіщо maxAlive або lifetime?",
         options: [
           "Щоб автоматично будувати другий plot",
-          "Щоб не затопити Workspace і не вбити FPS",
           "Щоб замінити імена Mouth",
+          "Щоб не затопити Workspace і не вбити FPS",
           "Щоб Sign сам писав Config",
         ],
-        correctAnswer: 1,
+        correctAnswer: 2,
         explanation: "Anti-lag тримає playtest живим.",
       },
       {
@@ -930,11 +935,11 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
         question: "Як безпечно зупинити дропер?",
         options: [
           "Видалити весь Workspace",
+          "Поставити running = false і вийти з while",
           "Поставити while true швидше",
           "Вимкнути лише Baseplate",
-          "Поставити running = false і вийти з while",
         ],
-        correctAnswer: 3,
+        correctAnswer: 1,
         explanation: "Прапор зупинки завершує цикл контрольовано.",
       },
       {
@@ -942,12 +947,12 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
         type: MC,
         question: "Чому startDropper(plot) кращий за глобальний пошук Parts?",
         options: [
-          "Бо тоді легше клонувати ділянку й дати їй власний мотор у 7.5",
           "Бо Roblox забороняє імена Dropper",
           "Бо Config працює лише всередині Model без функції",
           "Бо Mouth не може мати CFrame",
+          "Бо тоді легше клонувати ділянку й дати їй власний мотор у 7.5",
         ],
-        correctAnswer: 0,
+        correctAnswer: 3,
         explanation: "Локальні посилання plot масштабуються на кількох гравців.",
       },
       {
@@ -955,12 +960,12 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
         type: MC,
         question: "Що перевірити після зміни interval у Play?",
         options: [
+          "Чи темп нових Drop змінився на наступних ітераціях",
           "Чи змінився колір Sky",
           "Чи Sign видалив себе",
-          "Чи темп нових Drop змінився на наступних ітераціях",
           "Чи Floor став Unanchored",
         ],
-        correctAnswer: 2,
+        correctAnswer: 0,
         explanation: "Доказ живого Config - видимий новий ритм.",
       },
       {
@@ -982,11 +987,11 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
         question: "Який мінімальний набір полів Config потрібен для здачі?",
         options: [
           "Лише Color3 Floor",
-          "interval і payout, бажано також maxAlive або lifetime",
           "50 обов'язкових полів магазину",
           "Порожня table без чисел",
+          "interval і payout, бажано також maxAlive або lifetime",
         ],
-        correctAnswer: 1,
+        correctAnswer: 3,
         explanation: "Ритм, цінність і захист від лавини - база уроку.",
       },
       {
@@ -995,11 +1000,11 @@ Mouth з 7.1 - точка CFrame. Folder Drops - контейнер для trim 
         question: "Яка точна назва Save для уроку 50?",
         options: [
           "Lesson 7.1 - Tycoon Plot",
+          "Lesson 7.2 - Dropper Config",
           "Lesson 7.3 - Collector Coins",
           "Dropper Draft Final",
-          "Lesson 7.2 - Dropper Config",
         ],
-        correctAnswer: 3,
+        correctAnswer: 1,
         explanation: "Чекліст вимагає Save Lesson 7.2 - Dropper Config.",
       },
     ],
@@ -1054,9 +1059,25 @@ export const ukLesson73 = {
 \`coins.Value = 0\`
 \`coins.Parent = folder\`
 
-Метафора: TAB - **табло рахунку**. Суддя (сервер) крутить табло. Глядач з телефоном не має права дописувати голи.
+TAB - **табло рахунку**. Суддя (сервер) крутить табло. Глядач з телефоном не має права дописувати голи.
 
-LocalScript може **читати** Coins для UI. Не роби \`Coins.Value = 9999\` на клієнті як здача.`,
+LocalScript може **читати** Coins для UI. Не роби \`Coins.Value = 9999\` на клієнті як здача.
+
+Стандартний шаблон на сервері (ServerScriptService):
+
+\`Players.PlayerAdded:Connect(function(player)\`
+\` local folder = Instance.new("Folder")\`
+\` folder.Name = "leaderstats"\`
+\` folder.Parent = player\`
+\` local coins = Instance.new("IntValue")\`
+\` coins.Name = "Coins"\`
+\` coins.Value = 0\`
+\` coins.Parent = folder\`
+\`end)\`
+
+Якщо гравець уже в грі під час тесту - перезапусти Play або додай той самий блок у \`Players:GetPlayers()\` для існуючих. Без цього TAB порожній, хоча collector «ніби працює» в Output.
+
+**Зроби зараз (4 хв):** у Play відкрий TAB і підтверди, що Coins змінюються після дії на сервері.`,
  },
  {
  title: "Збір → Coins на сервері",
@@ -1072,6 +1093,8 @@ LocalScript може **читати** Coins для UI. Не роби \`Coins.Val
 Debounce: один Part = один payout; або cooldown на player.
 
 Перевір TAB: число росте. Якщо росте лише TextLabel на клієнті, а TAB стоїть - ти ще не в leaderstats.
+
+Швидкий дебаг: у collector після \`coins.Value += payout\` додай \`print(player.Name, "coins", coins.Value)\`. У Output має збігатися з TAB. Якщо print є, а TAB ні - шукай не той IntValue (наприклад копія в Character замість player).
 
 **Зроби зараз (8 хв):** +Coins від збору видно в TAB.`,
  },
@@ -1096,7 +1119,9 @@ Debounce: один Part = один payout; або cooldown на player.
 Порядок: перевірка → списання → ефект (апгрейд).  
 Не видавай ефект до списання без захисту від помилок.
 
-Ціну поки можна константою; у 7.4 переїде в table.`,
+Ціну поки можна константою; у 7.4 переїде в table.
+
+**Зроби зараз (4 хв):** спробуй купівлю з 0 монет і після успішної покупки - перевір TAB/Output.`,
  },
  {
  title: "Prompt або SurfaceGui як каса",
@@ -1115,7 +1140,11 @@ Debounce: один Part = один payout; або cooldown на player.
 \` -- tryBuy на сервері\`
 \`end)\`
 
-Якщо Prompt у LocalScript - все одно фінальне списання на сервері (Remote або серверний Prompt handler).`,
+Якщо Prompt у LocalScript - все одно фінальне списання на сервері (Remote або серверний Prompt handler).
+
+Підказка Prompt має збігатися з серверною ціною: \`ObjectText = price .. " coins"\`, де \`price\` - та сама константа, що в \`tryBuy\`. Якщо напис «25», а сервер списує 50 - гравець не довіряє касі.
+
+**Зроби зараз (5 хв):** постав Prompt на кнопку plot і підтверди Triggered у Output.`,
  },
  {
  title: "Відмова і успіх - feedback",
@@ -1128,7 +1157,16 @@ Debounce: один Part = один payout; або cooldown на player.
 
 Без feedback здається, що кнопка «мертва», хоча canAfford спрацював правильно.
 
-Не спам повідомленнями кожен кадр - лише на Triggered.`,
+Не спам повідомленнями кожен кадр - лише на Triggered.
+
+Повідомлення відмови з різницею:
+
+\`local need = price - coins.Value\`
+\`return false, "Ще " .. need .. " монет"\`
+
+Так гравець бачить, скільки не вистачає, а не загадкове «ні».
+
+**Зроби зараз (4 хв):** купи з 0 монет - у Output/Status має бути відмова з числом need.`,
  },
  {
  title: "Debounce покупки",
@@ -1144,7 +1182,11 @@ Debounce: один Part = один payout; або cooldown на player.
 
 Подвійний E / подвійний клік інакше знімає 2× ціну або видає 2 ефекти.
 
-PlayerRemoving: \`busy[player] = nil\`.`,
+PlayerRemoving: \`busy[player] = nil\`.
+
+Тест debounce: швидко натисни E 5 разів. Має бути одне списання і один ефект. Якщо бачиш «Зачекай» - debounce працює; якщо TAB падає на 2× price - посили затримку або перевір, що \`busy\` скидається.
+
+**Зроби зараз (4 хв):** подвійний клік на Prompt - лише одна покупка.`,
  },
  {
  title: "Що клієнту можна показувати",
@@ -1159,7 +1201,9 @@ PlayerRemoving: \`busy[player] = nil\`.`,
 
 \`coins:GetPropertyChangedSignal("Value"):Connect(function()\`
 \` label.Text = "Coins: " .. coins.Value\`
-\`end)\``,
+\`end)\`
+
+**Зроби зараз (4 хв):** у Play відкрий TAB і підтверди, що Coins змінюються після дії на сервері.`,
  },
  {
  title: "Міні-тест каса без повного апгрейду",
@@ -1170,7 +1214,9 @@ PlayerRemoving: \`busy[player] = nil\`.`,
 
 Головне сьогодні - **грошовий** шлях. Ефект дропера поглибиш завтра з table.
 
-Але вже зараз краще викликати заглушку \`applyUpgradeStub()\`, щоб місце під ефект існувало.`,
+Але вже зараз краще викликати заглушку \`applyUpgradeStub()\`, щоб місце під ефект існувало.
+
+**Зроби зараз (4 хв):** зміни одне значення в table/Config і підтверди нову поведінку.`,
  },
  {
  title: "Playtest покупок",
@@ -1184,7 +1230,9 @@ PlayerRemoving: \`busy[player] = nil\`.`,
 | 6 | Клієнтський Coins=9999 | Не вважається здачею; сервер ігнорує |
 | 7 | Output | Чисто |
 
-Пункти 3–5 - серце уроку.`,
+Пункти 3–5 - серце уроку.
+
+**Зроби зараз (5 хв):** пройди таблицю тестів один раз і запиши pass/fail для кожного рядка.`,
  },
  {
  title: "Типові дірки каси",
@@ -1209,15 +1257,7 @@ PlayerRemoving: \`busy[player] = nil\`.`,
 - [ ] Prompt або GUI каса
 - [ ] Save: Lesson 7.3 - Buys Leaderstats
 
-Короткий ритуал здачі: покажи TAB до купівлі, натисни Prompt, покажи TAB після, потім спробуй з нулем монет. Три кадри - і каса зрозуміла без довгої лекції. Запиши ціну тестової покупки в нотатку поруч з Place.
-
-Далі **7.4** підставить ціни й ефекти з table в цю ж касу. **7.5** прив’яже покупки до свого plot.
-
-Артефакт: **чесний гаманець**. Кнопка більше не «магічна безкоштовна».
-
-Якщо ментор бачить TAB ↓ після купівлі й відмову при бідності - каса здана. Не лишай клієнтський Coins++ у фінальному Place. Каса має бути нудною і чесною - це добре. 
-
-Пам’ятай зв’язок уроків: collector годує Coins, каса їх витрачає, table завтра скаже скільки саме. Якщо сьогодні TAB і списання роз’їхались - не малюй третю кнопку магазину. Спочатку один чесний Prompt і один price. Ментор за хвилину має зрозуміти: звідки гроші, куди ділись після купівлі, чому бідний гравець чує відмову. Це і є LTV-момент «я керую економікою», не «кнопка щось робить іноді».`,
+**Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
  },
  ],
  },
@@ -1290,11 +1330,11 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "Головна мета уроку 7.3?",
  options: [
- "Зробити leaderstats Coins і покупку з canAfford",
- "Видалити дропер",
- "Побудувати Arena Remote",
- "Publish без TAB",
- ],
+          "Зробити leaderstats Coins і покупку з canAfford",
+          "Видалити дропер",
+          "Побудувати Arena Remote",
+          "Publish без TAB",
+        ],
  correctAnswer: 0,
  explanation: "Каса + покупки.",
  },
@@ -1303,12 +1343,12 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "Хто має писати Coins.Value?",
  options: [
- "Сервер",
- "Лише LocalScript як правда",
- "Lighting",
- "Skybox",
- ],
- correctAnswer: 0,
+          "Лише LocalScript як правда",
+          "Сервер",
+          "Lighting",
+          "Skybox",
+        ],
+ correctAnswer: 1,
  explanation: "Серверний гаманець.",
  },
  {
@@ -1316,12 +1356,12 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "Що перевіряє canAfford?",
  options: [
- "Чи Coins.Value >= price",
- "Чи існує Sky",
- "Чи Tool у руці обов’язково",
- "Чи гравець відкрив Explorer",
- ],
- correctAnswer: 0,
+          "Чи існує Sky",
+          "Чи Tool у руці обов’язково",
+          "Чи Coins.Value >= price",
+          "Чи гравець відкрив Explorer",
+        ],
+ correctAnswer: 2,
  explanation: "Вистачає монет.",
  },
  {
@@ -1329,12 +1369,12 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "Навіщо debounce на покупці?",
  options: [
- "Подвійний клік не списує двічі",
- "Це замінює leaderstats",
- "debounce малює Terrain",
- "Обов’язково для Anchored",
- ],
- correctAnswer: 0,
+          "Це замінює leaderstats",
+          "debounce малює Terrain",
+          "Обов’язково для Anchored",
+          "Подвійний клік не списує двічі",
+        ],
+ correctAnswer: 3,
  explanation: "Анти-спам каси.",
  },
  {
@@ -1342,12 +1382,12 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "Де видно leaderstats гравцю?",
  options: [
- "У TAB (список лідерів)",
- "Лише в ServerStorage",
- "Тільки в назві Baseplate",
- "У SoundService",
- ],
- correctAnswer: 0,
+          "Лише в ServerStorage",
+          "У TAB (список лідерів)",
+          "Тільки в назві Baseplate",
+          "У SoundService",
+        ],
+ correctAnswer: 1,
  explanation: "TAB.",
  },
  {
@@ -1355,12 +1395,12 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "Що робити при недостатньо монет?",
  options: [
- "Відмовити покупку, не йти в мінус",
- "Завжди видати апгрейд",
- "Поставити Coins = -100",
- "Видалити plot",
- ],
- correctAnswer: 0,
+          "Завжди видати апгрейд",
+          "Поставити Coins = -100",
+          "Відмовити покупку, не йти в мінус",
+          "Видалити plot",
+        ],
+ correctAnswer: 2,
  explanation: "Deny.",
  },
  {
@@ -1368,11 +1408,11 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "Чому погано Coins=9999 у LocalScript?",
  options: [
- "Це чіт і не серверна правда",
- "IntValue не існує",
- "TAB тоді швидший",
- "Roblox вимагає саме так",
- ],
+          "Це чіт і не серверна правда",
+          "IntValue не існує",
+          "TAB тоді швидший",
+          "Roblox вимагає саме так",
+        ],
  correctAnswer: 0,
  explanation: "Never trust client.",
  },
@@ -1381,12 +1421,12 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "Як collector має додавати монети?",
  options: [
- "На сервері в player.leaderstats.Coins",
- "Лише в клієнтський TextLabel",
- "У Lighting Ambient",
- "У назву Prompt",
- ],
- correctAnswer: 0,
+          "Лише в клієнтський TextLabel",
+          "У Lighting Ambient",
+          "У назву Prompt",
+          "На сервері в player.leaderstats.Coins",
+        ],
+ correctAnswer: 3,
  explanation: "Серверний збір.",
  },
  {
@@ -1394,12 +1434,12 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "Як 7.3 готує 7.4?",
  options: [
- "Каса готова підставляти price з UpgradeConfig",
- "7.4 видаляє Coins",
- "Table забороняє canAfford",
- "Апгрейди більше не потребують грошей",
- ],
- correctAnswer: 0,
+          "7.4 видаляє Coins",
+          "Table забороняє canAfford",
+          "Каса готова підставляти price з UpgradeConfig",
+          "Апгрейди більше не потребують грошей",
+        ],
+ correctAnswer: 2,
  explanation: "Гаманець під table.",
  },
  {
@@ -1407,12 +1447,12 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "ProximityPrompt.Triggered зручний щоб…",
  options: [
- "Викликати спробу покупки, коли гравець підтвердив",
- "Замінити MaxHealth",
- "Створити Humanoid",
- "Вимкнути дропер назавжди",
- ],
- correctAnswer: 0,
+          "Замінити MaxHealth",
+          "Викликати спробу покупки, коли гравець підтвердив",
+          "Створити Humanoid",
+          "Вимкнути дропер назавжди",
+        ],
+ correctAnswer: 1,
  explanation: "Каса на plot.",
  },
  {
@@ -1420,12 +1460,12 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "Що має статись з Coins після успішної купівлі?",
  options: [
- "Value зменшується на price",
- "Value завжди +price",
- "leaderstats зникає",
- "Coins стає рядком",
- ],
- correctAnswer: 0,
+          "Value завжди +price",
+          "leaderstats зникає",
+          "Coins стає рядком",
+          "Value зменшується на price",
+        ],
+ correctAnswer: 3,
  explanation: "Списання.",
  },
  {
@@ -1433,11 +1473,11 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "Навіщо слухати Coins.Changed на клієнті?",
  options: [
- "Оновлювати підпис балансу без брехні в Value",
- "Щоб клієнт міг писати Value",
- "Changed вимикає сервер",
- "Це замінює canAfford",
- ],
+          "Оновлювати підпис балансу без брехні в Value",
+          "Щоб клієнт міг писати Value",
+          "Changed вимикає сервер",
+          "Це замінює canAfford",
+        ],
  correctAnswer: 0,
  explanation: "UI відображення.",
  },
@@ -1446,12 +1486,12 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "Порядок tryBuy логічний?",
  options: [
- "Перевірка → списання → ефект",
- "Ефект → потім можливо списання колись",
- "Спочатку видалити player",
- "Спочатку Publish",
- ],
- correctAnswer: 0,
+          "Ефект → потім можливо списання колись",
+          "Спочатку видалити player",
+          "Перевірка → списання → ефект",
+          "Спочатку Publish",
+        ],
+ correctAnswer: 2,
  explanation: "Атомарна каса.",
  },
  {
@@ -1459,12 +1499,12 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "Що з наведеного - дірка каси?",
  options: [
- "Немає перевірки canAfford перед списанням",
- "Є debounce",
- "Coins у leaderstats",
- "Відмова при бідності",
- ],
- correctAnswer: 0,
+          "Є debounce",
+          "Coins у leaderstats",
+          "Відмова при бідності",
+          "Немає перевірки canAfford перед списанням",
+        ],
+ correctAnswer: 3,
  explanation: "Обов’язковий if.",
  },
  {
@@ -1472,12 +1512,12 @@ PlayerRemoving: \`busy[player] = nil\`.`,
  type: MC,
  question: "Що вважається зданим артефактом 7.3?",
  options: [
- "leaderstats + canAfford покупка + Save",
- "Лише теорія",
- "Порожній Baseplate",
- "Клієнтський гаманець без сервера",
- ],
- correctAnswer: 0,
+          "Лише теорія",
+          "leaderstats + canAfford покупка + Save",
+          "Порожній Baseplate",
+          "Клієнтський гаманець без сервера",
+        ],
+ correctAnswer: 1,
  explanation: "Потрібна каса.",
  },
  ],
@@ -1524,12 +1564,16 @@ export const ukLesson74 = {
 | Баланс болить | Баланс = зміна числа |
 | UI вручну | UI з пар ключів |
 
-Метафора: Config - **меню ресторану**. Кухня (applyUpgrade) готує лише те, що є в меню. Клієнт замовляє \`id\`, не вигадує рецепт.
+Config - **меню ресторану**. Кухня (applyUpgrade) готує лише те, що є в меню. Клієнт замовляє \`id\`, не вигадує рецепт.
 
 \`local UpgradeConfig = {\`
 \` fasterDrop = { price = 50, interval = 1.2 },\`
 \` morePay = { price = 80, payout = 10 },\`
-\`}\``,
+\`}\`
+
+Коли ментор каже «зроби третій апгрейд» - ти додаєш рядок у table і одну кнопку з Attribute. Не відкриваєш п’ять скриптів, щоб знайти, де заховано «80».
+
+**Зроби зараз (4 хв):** зміни price в одному рядку Config і підтверди нову ціну в UI без правок Prompt окремо.`,
  },
  {
  title: "Поля запису апгрейду",
@@ -1543,7 +1587,15 @@ export const ukLesson74 = {
 
 Не обов’язково всі поля в кожному рядку. \`fasterDrop\` може не мати payout.
 
-Правило: сервер **ніколи** не бере price з аргумента клієнта. Клієнт шле \`id\` = \`"fasterDrop"\`.`,
+Правило: сервер **ніколи** не бере price з аргумента клієнта. Клієнт шле \`id\` = \`"fasterDrop"\`.
+
+Приклад повного рядка:
+
+\`fasterDrop = { price = 50, interval = 1.2, displayName = "Швидший дроп", once = true }\`
+
+У UI показуєш \`displayName\`, у \`tryBuy\` читаєш \`cfg.price\`. Якщо \`once = true\` - після купівлі блокуй повтор у \`owned\`.
+
+**Зроби зараз (5 хв):** допиши displayName до обох рядків Config і покажи їх на кнопках.`,
  },
  {
  title: "applyUpgrade після canAfford",
@@ -1566,7 +1618,15 @@ export const ukLesson74 = {
 \`coins -= cfg.price\`
 \`applyUpgrade(player, id)\`
 
-Спочатку гроші, потім ефект - або навпаки з відкатом; головне атомарно на сервері без подвійного кліку.`,
+Спочатку гроші, потім ефект - або навпаки з відкатом; головне атомарно на сервері без подвійного кліку.
+
+Якщо \`applyUpgrade\` повернув false після списання - поверни монети:
+
+\`coins.Value += cfg.price\`
+
+На здачі рідко потрібно, але патерн «відкат при помилці» рятує, коли дропер ще не підключений до state.
+
+**Зроби зараз (6 хв):** купи fasterDrop і print \`state.interval\` до/після - число має змінитись.`,
  },
  {
  title: "UI список з table",
@@ -1597,7 +1657,9 @@ export const ukLesson74 = {
 - або Disabled Prompt;
 - або колір зелений.
 
-Без owned подвійний клік (навіть із debounce грошей) може повторно застосувати ефект і збити баланс, якщо ти зменшуєш interval щоразу.`,
+Без owned подвійний клік (навіть із debounce грошей) може повторно застосувати ефект і збити баланс, якщо ти зменшуєш interval щоразу.
+
+**Зроби зараз (4 хв):** зроби одну перевірку з цього розділу в Play і запиши результат у Note.`,
  },
  {
  title: "Дропер читає стан, не Config напряму завжди",
@@ -1611,7 +1673,9 @@ State = **що вже куплено / які числа зараз**.
 
 Стартові state.interval / payout візьми з базових констант або з окремого \`BaseDropConfig\`.
 
-Помилка: дропер завжди \`UpgradeConfig.fasterDrop.interval\` навіть до покупки - тоді апгрейд «вже увімкнений».`,
+Помилка: дропер завжди \`UpgradeConfig.fasterDrop.interval\` навіть до покупки - тоді апгрейд «вже увімкнений».
+
+**Зроби зараз (4 хв):** зміни одне значення в table/Config і підтверди нову поведінку.`,
  },
  {
  title: "ModuleScript UpgradeConfig",
@@ -1623,7 +1687,16 @@ State = **що вже куплено / які числа зараз**.
 Сервер покупки: \`require(...)\`  
 Якщо клієнт теж require для підписів цін - не клади туди секретних полів. Для школи ціни публічні - ок.
 
-Один require = один баланс у 7.6.`,
+Один require = один баланс у 7.6.
+
+Структура в Explorer:
+
+\`ServerScriptService/UpgradeConfig (ModuleScript)\`
+\`ServerScriptService/PlotManager (Script) → require UpgradeConfig\`
+
+Не клади Module у Workspace всередині template - після Clone отримаєш копії з різними require-шляхами. Один Module на сервер = одна правда для всіх plot.
+
+**Зроби зараз (5 хв):** зміни price в Module, перезапусти Play - UI і сервер мають показати нове число.`,
  },
  {
  title: "Зв’язок з Prompt / Remote",
@@ -1642,7 +1715,11 @@ State = **що вже куплено / які числа зараз**.
 
 Не приймай \`FireServer(id, price)\` з довірою до price.
 
-Якщо поки без Remote - Prompt на сервері з Attribute id теж ок для plot.`,
+Якщо поки без Remote - Prompt на сервері з Attribute id теж ок для plot.
+
+Тест без Remote: на кнопці \`SetAttribute("UpgradeId", "fasterDrop")\`, у Triggered читай \`upgradeId = button:GetAttribute("UpgradeId")\` і викликай ту саму серверну \`tryBuyUpgrade(player, upgradeId)\`. Клієнт не надсилає price - лише id з Attribute, який сервер і так перевіряє через Config.
+
+**Зроби зараз (5 хв):** FireServer або Prompt з id fasterDrop - сервер deny на фейковий id "hack".`,
  },
  {
  title: "Playtest table-апгрейдів",
@@ -1656,7 +1733,9 @@ State = **що вже куплено / які числа зараз**.
 | 6 | UI ціна | Збігається з Config |
 | 7 | Output | Чисто |
 
-Якщо пункт 3 червоний - applyUpgrade не пише state, який читає дропер.`,
+Якщо пункт 3 червоний - applyUpgrade не пише state, який читає дропер.
+
+**Зроби зараз (5 хв):** пройди таблицю тестів один раз і запиши pass/fail для кожного рядка.`,
  },
  {
  title: "Підготовка до 7.5–7.6",
@@ -1667,6 +1746,8 @@ State = **що вже куплено / які числа зараз**.
 | UI з id | 7.7 список на міні-фабриці |
 
 Не розмножуй другий UpgradeConfig «тимчасово». Видаляй дублікати зараз.
+
+Перед Save зроби пошук по Explorer: старі числа цін не повинні лишитись у TextLabel окремо від Config.
 
 **Зроби зараз (5 хв):** пошук по Place числа старої ціни - має лишитись лише в table.`,
  },
@@ -1681,17 +1762,7 @@ State = **що вже куплено / які числа зараз**.
 - [ ] Playtest 1–4 зелені
 - [ ] Save: Lesson 7.4 - Upgrade Table
 
-Короткий ритуал здачі: відкрий Module, зміни price на очах ментора, онови підпис кнопки з Config, купи апгрейд і покажи зміну interval у Output. Дані керують грою - не навпаки. Якщо UI ціна не збіглась - зупинись і зводь підпис до Config перед Save.
-
-Далі **7.5** рознесе state на plot гравця. **7.6** підкрутить price/interval у цій же table.
-
-Артефакт: **меню апгрейдів як дані**. Кнопки лише замовляють id.
-
-Якщо ментор змінює одне число в Config і бачить нову ціну в грі - table працює. Залиш Module підписаним. Завтрашній баланс крутитиме ті самі поля price і interval.
-
-Перевір ще раз: чи немає в Prompt старого числа, яке ти забув після переносу в table. Чи дропер після купівлі читає саме state, а не «майбутній» рядок Config. Чи owned блокує другий клік. Ці три перевірки закривають 80% багів перед 7.5. Коли plot стане персональним, багнутий глобальний interval розмножиться на всіх гравців і баланс 7.6 зійде з розуму. Тому table + state сьогодні - інвестиція в спокійний Ship.
-
-Два осмислених апгрейди з ефектом краще за десять порожніх кнопок. Після table усі наступні уроки модуля лише підкручують і роздають ці дані гравцям на їхні plot.`,
+**Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
  },
  ],
  },
@@ -1764,11 +1835,11 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Головна мета уроку 7.4?",
  options: [
- "Тримати апгрейди в table і застосовувати за id",
- "Видалити leaderstats",
- "Зробити лише анімацію меча",
- "Publish без Config",
- ],
+          "Тримати апгрейди в table і застосовувати за id",
+          "Видалити leaderstats",
+          "Зробити лише анімацію меча",
+          "Publish без Config",
+        ],
  correctAnswer: 0,
  explanation: "UpgradeConfig.",
  },
@@ -1777,12 +1848,12 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Що клієнт надсилає на покупку?",
  options: [
- "id апгрейду (рядок)",
- "Будь-яку свою ціну як правду",
- "MaxHealth",
- "Skybox id",
- ],
- correctAnswer: 0,
+          "Будь-яку свою ціну як правду",
+          "id апгрейду (рядок)",
+          "MaxHealth",
+          "Skybox id",
+        ],
+ correctAnswer: 1,
  explanation: "Лише id.",
  },
  {
@@ -1790,12 +1861,12 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Звідки брати price?",
  options: [
- "З UpgradeConfig на сервері",
- "З аргумента FireServer завжди сліпо",
- "З назви Part",
- "З Volume Sound",
- ],
- correctAnswer: 0,
+          "З аргумента FireServer завжди сліпо",
+          "З назви Part",
+          "З UpgradeConfig на сервері",
+          "З Volume Sound",
+        ],
+ correctAnswer: 2,
  explanation: "Серверна table.",
  },
  {
@@ -1803,12 +1874,12 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Навіщо owned?",
  options: [
- "Не купувати той самий апгрейд знову / не стакати ефект",
- "Збільшити Terrain",
- "Вимкнути дропер назавжди",
- "Owned замінює Coins",
- ],
- correctAnswer: 0,
+          "Збільшити Terrain",
+          "Вимкнути дропер назавжди",
+          "Owned замінює Coins",
+          "Не купувати той самий апгрейд знову / не стакати ефект",
+        ],
+ correctAnswer: 3,
  explanation: "Одноразова купівля.",
  },
  {
@@ -1816,12 +1887,12 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Що читає цикл дропера після апгрейду?",
  options: [
- "Поточний state гравця/plot (interval/payout)",
- "Завжди лише майбутній рядок Config до купівлі",
- "Лише Lighting",
- "Назву кнопки",
- ],
- correctAnswer: 0,
+          "Завжди лише майбутній рядок Config до купівлі",
+          "Поточний state гравця/plot (interval/payout)",
+          "Лише Lighting",
+          "Назву кнопки",
+        ],
+ correctAnswer: 1,
  explanation: "State.",
  },
  {
@@ -1829,12 +1900,12 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Чому table краще за довгий if?",
  options: [
- "Новий апгрейд = новий рядок, баланс в одному місці",
- "if заборонений у Lua",
- "table вимикає Remote",
- "if не вміє порівнювати рядки",
- ],
- correctAnswer: 0,
+          "if заборонений у Lua",
+          "table вимикає Remote",
+          "Новий апгрейд = новий рядок, баланс в одному місці",
+          "if не вміє порівнювати рядки",
+        ],
+ correctAnswer: 2,
  explanation: "Масштаб і баланс.",
  },
  {
@@ -1842,11 +1913,11 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Мінімум записів у Config для здачі?",
  options: [
- "Хоча б 2",
- "Обов’язково 50",
- "0",
- "Лише коментар без table",
- ],
+          "Хоча б 2",
+          "Обов’язково 50",
+          "0",
+          "Лише коментар без table",
+        ],
  correctAnswer: 0,
  explanation: "Два апгрейди.",
  },
@@ -1855,12 +1926,12 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Що має зробити applyUpgrade?",
  options: [
- "Записати ефект з cfg у state після валідної купівлі",
- "Видалити leaderstats",
- "Створити новий Place",
- "Вимкнути Humanoid",
- ],
- correctAnswer: 0,
+          "Видалити leaderstats",
+          "Створити новий Place",
+          "Вимкнути Humanoid",
+          "Записати ефект з cfg у state після валідної купівлі",
+        ],
+ correctAnswer: 3,
  explanation: "Застосування ефекту.",
  },
  {
@@ -1868,12 +1939,12 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Як 7.4 готує 7.6?",
  options: [
- "Баланс крутить поля тієї ж table",
- "7.6 видаляє Config",
- "Ціни більше не потрібні",
- "Баланс лише в Skybox",
- ],
- correctAnswer: 0,
+          "7.6 видаляє Config",
+          "Ціни більше не потрібні",
+          "Баланс крутить поля тієї ж table",
+          "Баланс лише в Skybox",
+        ],
+ correctAnswer: 2,
  explanation: "Одні числа.",
  },
  {
@@ -1881,12 +1952,12 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Що робити з фейковим upgradeId?",
  options: [
- "return / deny на сервері",
- "Дати безкоштовний апгрейд",
- "Видалити гравця з гри завжди",
- "Поставити Coins = 9999",
- ],
- correctAnswer: 0,
+          "Дати безкоштовний апгрейд",
+          "return / deny на сервері",
+          "Видалити гравця з гри завжди",
+          "Поставити Coins = 9999",
+        ],
+ correctAnswer: 1,
  explanation: "Валідація id.",
  },
  {
@@ -1894,12 +1965,12 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Навіщо displayName у Config?",
  options: [
- "Зручний текст у UI без хардкоду на кнопці",
- "Це єдиний спосіб списати Coins",
- "displayName замінює price",
- "Обов’язково для Weld",
- ],
- correctAnswer: 0,
+          "Це єдиний спосіб списати Coins",
+          "displayName замінює price",
+          "Обов’язково для Weld",
+          "Зручний текст у UI без хардкоду на кнопці",
+        ],
+ correctAnswer: 3,
  explanation: "Підпис UI.",
  },
  {
@@ -1907,11 +1978,11 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Чим Config відрізняється від state?",
  options: [
- "Config - каталог; state - що зараз активне в гравця",
- "Це завжди одне і те саме",
- "State лише на клієнті як правда",
- "Config не містить price",
- ],
+          "Config - каталог; state - що зараз активне в гравця",
+          "Це завжди одне і те саме",
+          "State лише на клієнті як правда",
+          "Config не містить price",
+        ],
  correctAnswer: 0,
  explanation: "Каталог vs стан.",
  },
@@ -1920,12 +1991,12 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Як показати ціну на кнопці правильно?",
  options: [
- "Взяти число з UpgradeConfig для цього id",
- "Написати випадкове 999",
- "Взяти з клієнтської фантазії",
- "Ціну показувати не можна ніколи",
- ],
- correctAnswer: 0,
+          "Написати випадкове 999",
+          "Взяти з клієнтської фантазії",
+          "Взяти число з UpgradeConfig для цього id",
+          "Ціну показувати не можна ніколи",
+        ],
+ correctAnswer: 2,
  explanation: "UI з даних.",
  },
  {
@@ -1933,12 +2004,12 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Що буде, якщо немає applyUpgrade після списання?",
  options: [
- "Гроші зникли, дроп не змінився",
- "Обов’язково краш Studio",
- "Coins самі повернуться",
- "Дропер прискориться сам",
- ],
- correctAnswer: 0,
+          "Обов’язково краш Studio",
+          "Coins самі повернуться",
+          "Дропер прискориться сам",
+          "Гроші зникли, дроп не змінився",
+        ],
+ correctAnswer: 3,
  explanation: "Потрібен ефект.",
  },
  {
@@ -1946,12 +2017,12 @@ State = **що вже куплено / які числа зараз**.
  type: MC,
  question: "Що вважається зданим артефактом 7.4?",
  options: [
- "UpgradeConfig + покупка id + ефект + Save",
- "Лише теорія",
- "Порожній Baseplate",
- "Ціни лише в Prompt різні від Script",
- ],
- correctAnswer: 0,
+          "Лише теорія",
+          "UpgradeConfig + покупка id + ефект + Save",
+          "Порожній Baseplate",
+          "Ціни лише в Prompt різні від Script",
+        ],
+ correctAnswer: 1,
  explanation: "Потрібна table апгрейдів.",
  },
  ],
@@ -1999,9 +2070,13 @@ export const ukLesson75 = {
 | Демо «на одного» | Спліт-тест ок |
 | Легше зібрати спочатку | Потрібен клон + слоти |
 
-Метафора: не одна кухня на весь клас, а **свій стіл з інструментами**. Рецепт (Config) спільний, продукти - твої.
+не одна кухня на весь клас, а **свій стіл з інструментами**. Рецепт (Config) спільний, продукти - твої.
 
-Lite-допуск: якщо часу мало, зроби 2 слоти й Claim Part. Краще 2 чесні plot, ніж 8 порожніх маркерів.`,
+Lite-допуск: якщо часу мало, зроби 2 слоти й Claim Part. Краще 2 чесні plot, ніж 8 порожніх маркерів.
+
+На SHOWCASE ментор часто дивиться саме на це: чи кожен гравець має «свій стіл», чи всі бігають до одного collector. Відповідь має бути очевидною за 20 секунд демо.
+
+**Зроби зараз (4 хв):** напиши в Note одне речення, чому спільна база ламає тайкун для 2+ гравців.`,
  },
  {
  title: "Шаблон у ServerStorage",
@@ -2038,7 +2113,9 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
 
 Відстань між слотами: щоб дроп одного не падав у collector іншого (мінімум кілька десятків studs).
 
-Маркери слотів CanCollide false, Transparency 1 після дебагу.`,
+Маркери слотів CanCollide false, Transparency 1 після дебагу.
+
+**Зроби зараз (4 хв):** зроби одну перевірку з цього розділу в Play і запиши результат у Note.`,
  },
  {
  title: "Видача plot: Clone + owner",
@@ -2065,7 +2142,9 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
 \` assignPlot(player)\`
 \`end)\`
 
-Не клонуй на кожен CharacterAdded без потреби - отримаєш купу баз.`,
+Не клонуй на кожен CharacterAdded без потреби - отримаєш купу баз.
+
+**Зроби зараз (4 хв):** зроби одну перевірку з цього розділу в Play і запиши результат у Note.`,
  },
  {
  title: "takeFreeSlot і повернення слота",
@@ -2077,7 +2156,18 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
 
 Якщо слотів немає - повідом гравцю (print / Billboard «Немає вільних ділянок») і не падай з nil Clone.
 
-Для здачі 2–4 слоти. Не роби 20 «на майбутнє» без розмітки.`,
+Для здачі 2–4 слоти. Не роби 20 «на майбутнє» без розмітки.
+
+Псевдокод \`takeFreeSlot\`:
+
+\`for _, slot in ipairs(sortedSlots) do\`
+\` if not slot:GetAttribute("OwnerUserId") then return slot end\`
+\`end\`
+\`return nil\`
+
+\`releaseSlot\`: \`slot:SetAttribute("OwnerUserId", nil)\`. Без release другий гравець отримає «немає слотів», хоча база вже знищена.
+
+**Зроби зараз (5 хв):** зайди двома гравцями, вийди першим - другий має отримати звільнений слот.`,
  },
  {
  title: "Collector і кнопки лише для власника",
@@ -2091,6 +2181,14 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
 
 Типовий баг: перевірка є на collector, немає на UpgradeButton - сусід качає твій дропер.
 
+Допоміжна функція на сервері:
+
+\`local function isPlotOwner(plot, player)\`
+\` return player and plot:GetAttribute("OwnerUserId") == player.UserId\`
+\`end\`
+
+Викликай її в collector, Prompt покупки і будь-якому Touched на template - один раз написав, не забудеш кнопку.
+
 **Зроби зараз (8 хв):** навмисно зайди «чужим» (2 вікна) і переконайся в deny.`,
  },
  {
@@ -2103,7 +2201,9 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
 
 Дропер цього plot читає стан власника, не глобальну змінну на весь сервер.
 
-Інакше апгрейд одного прискорить усіх - весело на 10 с, потім хаос у балансі 7.6.`,
+Інакше апгрейд одного прискорить усіх - весело на 10 с, потім хаос у балансі 7.6.
+
+**Зроби зараз (4 хв):** зміни одне значення в table/Config і підтверди нову поведінку.`,
  },
  {
  title: "PlayerRemoving: прибрати базу",
@@ -2117,7 +2217,9 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
 
 Без цього після виходу лишаються «привиди» баз і зайняті слоти.
 
-Перевір: зайшов → вийшов → слот знову вільний для наступного PlayerAdded.`,
+Перевір: зайшов → вийшов → слот знову вільний для наступного PlayerAdded.
+
+**Зроби зараз (5 хв):** зроби одну перевірку з цього розділу в Play і запиши результат у Note.`,
  },
  {
  title: "Телепорт / спавн біля своєї бази",
@@ -2130,7 +2232,9 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
 
 Або SpawnLocation на кожному plot (складніше з Neutral/Team). Для навчання PivotTo достатньо.
 
-Онбординг: табличка вже на template - клонується всім. Текст «Це твоя база» працює для кожного клона.`,
+Онбординг: табличка вже на template - клонується всім. Текст «Це твоя база» працює для кожного клона.
+
+**Зроби зараз (4 хв):** зроби одну перевірку з цього розділу в Play і запиши результат у Note.`,
  },
  {
  title: "Playtest ownership",
@@ -2144,7 +2248,9 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
 | 6 | P1 Leave | Plot знищено, слот вільний |
 | 7 | Output | Немає nil Pivot / подвійних клонів |
 
-Спліт: два вікна Studio або Local Server + 2 гравці.`,
+Спліт: два вікна Studio або Local Server + 2 гравці.
+
+**Зроби зараз (5 хв):** пройди таблицю тестів один раз і запиши pass/fail для кожного рядка.`,
  },
  {
  title: "Чекліст здачі уроку 53",
@@ -2157,15 +2263,7 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
 - [ ] Playtest 1–6 зелені
 - [ ] Save: Lesson 7.5 - Player Plots
 
-Короткий ритуал здачі: два вікна, два Join, два різні Slot, спроба чужого collector = deny, Leave = Destroy. Якщо це проходить - ownership не на папері, а в Play. Підпиши в Explorer Plots і PlotSlots однаковим префіксом для ментора.
-
-Далі **7.6** балансує ціни вже на «свій дохід». **7.7** зшиє міні-фабрику. Якщо сьогодні всім одна база - познач як P0 перед Ship.
-
-Артефакт: **своя ділянка**. Тайкун перестає бути комуналкою.
-
-Якщо ментор у двох вікнах бачить дві бази й deny на чужому collector - урок зданий. Залиш слоти підписаними в Explorer. Це база мультиплеєрного тайкуна перед балансом цін.
-
-Спліт-тест зроби обов’язковим, навіть якщо «в соло все ок». Саме вдвох вилазить чужий collector і подвійний Clone. Підпиши в нотатці: скільки слотів вільно, що бачиш у Output при Join/Leave. Якщо слот не звільняється - Ship з двома гравцями впаде на старті. Ownership - не «гарна фіча», а умова чесної фабрики. Після зеленого спліту можна спокійно йти крутити ціни в 7.6 на реальному доході своєї бази.`,
+**Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
  },
  ],
  },
@@ -2237,11 +2335,11 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Головна мета уроку 7.5?",
  options: [
- "Клонувати plot на гравця з owner і слотами",
- "Видалити дропер",
- "Зробити лише Arena",
- "Publish без баз",
- ],
+          "Клонувати plot на гравця з owner і слотами",
+          "Видалити дропер",
+          "Зробити лише Arena",
+          "Publish без баз",
+        ],
  correctAnswer: 0,
  explanation: "Plot на гравця.",
  },
@@ -2250,12 +2348,12 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Де зручно тримати PlotTemplate?",
  options: [
- "ServerStorage",
- "Лише Lighting",
- "У SoundService",
- "У назві Sky",
- ],
- correctAnswer: 0,
+          "Лише Lighting",
+          "ServerStorage",
+          "У SoundService",
+          "У назві Sky",
+        ],
+ correctAnswer: 1,
  explanation: "Шаблон для Clone.",
  },
  {
@@ -2263,12 +2361,12 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Навіщо OwnerUserId на plot?",
  options: [
- "Відрізняти чий collector/кнопки",
- "Збільшити MaxHealth",
- "Створити Terrain",
- "Вимкнути leaderstats",
- ],
- correctAnswer: 0,
+          "Збільшити MaxHealth",
+          "Створити Terrain",
+          "Відрізняти чий collector/кнопки",
+          "Вимкнути leaderstats",
+        ],
+ correctAnswer: 2,
  explanation: "Ownership.",
  },
  {
@@ -2276,12 +2374,12 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Що зробити в PlayerRemoving?",
  options: [
- "Destroy plot і звільнити слот",
- "Видалити Workspace",
- "Вимкнути Pathfinding",
- "Обов’язково Publish",
- ],
- correctAnswer: 0,
+          "Видалити Workspace",
+          "Вимкнути Pathfinding",
+          "Обов’язково Publish",
+          "Destroy plot і звільнити слот",
+        ],
+ correctAnswer: 3,
  explanation: "Прибирання.",
  },
  {
@@ -2289,12 +2387,12 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Чому не клонувати plot на кожен CharacterAdded?",
  options: [
- "З’являться зайві бази після респавну",
- "Clone заборонений у Roblox",
- "Інакше дропер не існує",
- "Attribute тоді рядок",
- ],
- correctAnswer: 0,
+          "Clone заборонений у Roblox",
+          "З’являться зайві бази після респавну",
+          "Інакше дропер не існує",
+          "Attribute тоді рядок",
+        ],
+ correctAnswer: 1,
  explanation: "Один plot на гравця.",
  },
  {
@@ -2302,12 +2400,12 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Де тримати поточний interval дропера?",
  options: [
- "У стані гравця/plot, не в одній глобальній змінній на всіх",
- "Лише в Skybox",
- "Тільки на клієнті як текст",
- "У назві Slot",
- ],
- correctAnswer: 0,
+          "Лише в Skybox",
+          "Тільки на клієнті як текст",
+          "У стані гравця/plot, не в одній глобальній змінній на всіх",
+          "У назві Slot",
+        ],
+ correctAnswer: 2,
  explanation: "Per-player стан.",
  },
  {
@@ -2315,11 +2413,11 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Що має статись, якщо чужий стоїть на твоєму collector?",
  options: [
- "Сервер не додає йому твої монети",
- "Обов’язково дати йому всі Coins",
- "Видалити його plot",
- "Краш Studio",
- ],
+          "Сервер не додає йому твої монети",
+          "Обов’язково дати йому всі Coins",
+          "Видалити його plot",
+          "Краш Studio",
+        ],
  correctAnswer: 0,
  explanation: "Deny чужому.",
  },
@@ -2328,12 +2426,12 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Навіщо кілька PlotSlots?",
  options: [
- "Різні позиції баз без накладання",
- "Slots замінюють Humanoid",
- "Без slots Clone неможливий технічно завжди",
- "Slots малюють Animation",
- ],
- correctAnswer: 0,
+          "Slots замінюють Humanoid",
+          "Без slots Clone неможливий технічно завжди",
+          "Slots малюють Animation",
+          "Різні позиції баз без накладання",
+        ],
+ correctAnswer: 3,
  explanation: "Розмітка карти.",
  },
  {
@@ -2341,12 +2439,12 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Як 7.5 готує 7.8 Ship?",
  options: [
- "Спліт-демо з двома базами проходить рубрику ownership",
- "Ship забороняє Clone",
- "Треба видалити owner перед Ship",
- "Ship потребує одну базу на всіх обов’язково",
- ],
- correctAnswer: 0,
+          "Ship забороняє Clone",
+          "Треба видалити owner перед Ship",
+          "Спліт-демо з двома базами проходить рубрику ownership",
+          "Ship потребує одну базу на всіх обов’язково",
+        ],
+ correctAnswer: 2,
  explanation: "Чесний мульти-plot.",
  },
  {
@@ -2354,12 +2452,12 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Що таке assignPlot?",
  options: [
- "Функція видачі вільного слота і клону бази гравцю",
- "Назва RemoteFunction з магазину зброї",
- "Тип Terrain",
- "Вимкнення дропера",
- ],
- correctAnswer: 0,
+          "Назва RemoteFunction з магазину зброї",
+          "Функція видачі вільного слота і клону бази гравцю",
+          "Тип Terrain",
+          "Вимкнення дропера",
+        ],
+ correctAnswer: 1,
  explanation: "Видача plot.",
  },
  {
@@ -2367,12 +2465,12 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Чому слоти не ставити впритул?",
  options: [
- "Дроп і collector різних гравців змішаються",
- "Roblox забороняє близькі Part",
- "Інакше OwnerUserId стирається",
- "PivotTo не існує",
- ],
- correctAnswer: 0,
+          "Roblox забороняє близькі Part",
+          "Інакше OwnerUserId стирається",
+          "PivotTo не існує",
+          "Дроп і collector різних гравців змішаються",
+        ],
+ correctAnswer: 3,
  explanation: "Відстань.",
  },
  {
@@ -2380,11 +2478,11 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Чи достатньо 2 слотів для здачі?",
  options: [
- "Так - для навчання і спліт-тесту ок",
- "Ні - обов’язково 100",
- "Слоти заборонені",
- "Потрібен лише 0",
- ],
+          "Так - для навчання і спліт-тесту ок",
+          "Ні - обов’язково 100",
+          "Слоти заборонені",
+          "Потрібен лише 0",
+        ],
  correctAnswer: 0,
  explanation: "MVP слотів.",
  },
@@ -2393,12 +2491,12 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Де перевіряти owner - на клієнті чи сервері?",
  options: [
- "Обов’язково на сервері (клієнт можна обійти)",
- "Лише LocalScript достатньо як правда",
- "Перевірка не потрібна",
- "Лише в Lighting",
- ],
- correctAnswer: 0,
+          "Лише LocalScript достатньо як правда",
+          "Перевірка не потрібна",
+          "Обов’язково на сервері (клієнт можна обійти)",
+          "Лише в Lighting",
+        ],
+ correctAnswer: 2,
  explanation: "Never trust client.",
  },
  {
@@ -2406,12 +2504,12 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Навіщо PrimaryPart/Pivot на template?",
  options: [
- "Зручно ставити всю базу на CFrame слота",
- "Це вимикає Coins",
- "Замінює OwnerUserId",
- "Обов’язково для Sound",
- ],
- correctAnswer: 0,
+          "Це вимикає Coins",
+          "Замінює OwnerUserId",
+          "Обов’язково для Sound",
+          "Зручно ставити всю базу на CFrame слота",
+        ],
+ correctAnswer: 3,
  explanation: "PivotTo.",
  },
  {
@@ -2419,12 +2517,12 @@ PrimaryPart / Pivot на підлозі - зручно для \`PivotTo\` на �
  type: MC,
  question: "Що вважається зданим артефактом 7.5?",
  options: [
- "Clone plot + owner checks + cleanup + Save",
- "Лише теорія",
- "Порожній Baseplate",
- "Одна спільна база без owner як фінал",
- ],
- correctAnswer: 0,
+          "Лише теорія",
+          "Clone plot + owner checks + cleanup + Save",
+          "Порожній Baseplate",
+          "Одна спільна база без owner як фінал",
+        ],
+ correctAnswer: 1,
  explanation: "Потрібні свої ділянки.",
  },
  ],
@@ -2473,9 +2571,11 @@ export const ukLesson76 = {
 | Ціна 50 в UI, 500 у Script | Одні числа в Config |
 | Рандом «то пусто то багатство» | Передбачуваний дохід/хв |
 
-Метафора: цінник у кафе. Ти не злишся на суп - ти **міняєш ціну або порцію** і пробуєш знову.
+цінник у кафе. Ти не злишся на суп - ти **міняєш ціну або порцію** і пробуєш знову.
 
-Крутимо константи в Config, не «магію в Prompt вручну щоразу».`,
+Крутимо константи в Config, не «магію в Prompt вручну щоразу».
+
+**Зроби зараз (4 хв):** зміни одне значення в table/Config і підтверди нову поведінку.`,
  },
  {
  title: "Що міряємо",
@@ -2490,7 +2590,9 @@ export const ukLesson76 = {
 \`TTA1 ≈ 30–90 с\`  
 \`price1 ≈ income_per_min * 0.5 … 1.5\` (грубо)
 
-Якщо payout=1, interval=5 с → ~12/хв. Тоді price=500 - вічність. Або ↑payout, або ↓price.`,
+Якщо payout=1, interval=5 с → ~12/хв. Тоді price=500 - вічність. Або ↑payout, або ↓price.
+
+**Зроби зараз (4 хв):** у Play відкрий TAB і підтверди, що Coins змінюються після дії на сервері.`,
  },
  {
  title: "Таблиця playtest цін",
@@ -2505,7 +2607,9 @@ export const ukLesson76 = {
 | 7 | Output | Чисто | | |
 
 Вердикт: **ok / slow / fast / broken**.  
-Broken = монети не додаються або ціна нічого не списує.`,
+Broken = монети не додаються або ціна нічого не списує.
+
+**Зроби зараз (5 хв):** пройди таблицю тестів один раз і запиши pass/fail для кожного рядка.`,
  },
  {
  title: "Одне джерело правди для цін",
@@ -2530,7 +2634,9 @@ Broken = монети не додаються або ціна нічого не 
 | Coins скачуть від Touched | Debounce collector |
 | Немає монет у TAB | Пишеш не leaderstats |
 
-Правило: спочатку **broken**, потім slow/fast.`,
+Правило: спочатку **broken**, потім slow/fast.
+
+**Зроби зараз (3 хв):** знайди в Place один симптом з таблиці і виправ або підтверди, що його немає.`,
  },
  {
  title: "Протокол підкрутки (15 хв)",
@@ -2547,7 +2653,9 @@ Broken = монети не додаються або ціна нічого не 
 
 Не крути 5 змінних одразу.
 
-Після двох успішних підкруток перечитай UI цін. Якщо SurfaceGui досі показує старе число - гравець думає, що сервер «краде» монети. Синхрон тексту з Config - частина балансу, не косметика.`,
+Після двох успішних підкруток перечитай UI цін. Якщо SurfaceGui досі показує старе число - гравець думає, що сервер «краде» монети. Синхрон тексту з Config - частина балансу, не косметика.
+
+**Зроби зараз (4 хв):** зміни одне значення в table/Config і підтверди нову поведінку.`,
  },
  {
  title: "Крива двох апгрейдів",
@@ -2561,7 +2669,9 @@ Broken = монети не додаються або ціна нічого не 
 
 Для 7.7 достатньо 2 ступенів; rebirth не сьогодні.
 
-Швидка перевірка кривої: після апгрейду 1 засічи нові 60 с доходу. Якщо приросту майже немає - ефект слабкий, навіть якщо ціна «ок». Тоді крути interval/payout апгрейду, не лише цінник.`,
+Швидка перевірка кривої: після апгрейду 1 засічи нові 60 с доходу. Якщо приросту майже немає - ефект слабкий, навіть якщо ціна «ок». Тоді крути interval/payout апгрейду, не лише цінник.
+
+**Зроби зараз (4 хв):** зроби одну перевірку з цього розділу в Play і запиши результат у Note.`,
  },
  {
  title: "Debounce і чесний замір",
@@ -2587,7 +2697,9 @@ Broken = монети не додаються або ціна нічого не 
 
 Це і є доказ уроку 54. Без цифр «мені здається норм» не проходить.
 
-Якщо час кінчається - краще одна чесна таблиця з двома підкрутками, ніж три нові декоративні кнопки з випадковими цінами.`,
+Якщо час кінчається - краще одна чесна таблиця з двома підкрутками, ніж три нові декоративні кнопки з випадковими цінами.
+
+**Зроби зараз (4 хв):** зміни одне значення в table/Config і підтверди нову поведінку.`,
  },
  {
  title: "Чекліст здачі уроку 54",
@@ -2604,7 +2716,9 @@ Broken = монети не додаються або ціна нічого не 
 
 Не йди в 7.7 з TTA1 «ну якось довго» без запису. Або підкрути, або познач P0 - щоб Ship не здивувався.
 
-Артефакт: **передбачувана економіка**. Ship любить стабільні ціни більше за третій станок. Якщо ментор за хвилину розуміє TTA1 з твоєї таблиці - баланс зданий. Залиш Save до закриття Studio. Цифри з таблиці можна коротко вписати в Part-табличку на plot для ментора. Це швидший review, ніж шукати константи в трьох скриптах. Короткий рядок на стіні plot достатній для здачі й peer review.`,
+Артефакт: **передбачувана економіка**. Ship любить стабільні ціни більше за третій станок. Якщо ментор за хвилину розуміє TTA1 з твоєї таблиці - баланс зданий. Залиш Save до закриття Studio. Цифри з таблиці можна коротко вписати в Part-табличку на plot для ментора. Це швидший review, ніж шукати константи в трьох скриптах. Короткий рядок на стіні plot достатній для здачі й peer review.
+
+**Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
  },
  ],
  },
@@ -2677,11 +2791,11 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Головна мета уроку 7.6?",
  options: [
- "Прогнати і підкрутити баланс цін/доходу",
- "Видалити дропер",
- "Побудувати Arena",
- "Publish без заміру",
- ],
+          "Прогнати і підкрутити баланс цін/доходу",
+          "Видалити дропер",
+          "Побудувати Arena",
+          "Publish без заміру",
+        ],
  correctAnswer: 0,
  explanation: "Баланс економіки.",
  },
@@ -2690,12 +2804,12 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Що таке TTA1 у цьому уроці?",
  options: [
- "Час до першого апгрейду",
- "Назва Remote",
- "Тип Terrain",
- "Кількість Decals",
- ],
- correctAnswer: 0,
+          "Назва Remote",
+          "Час до першого апгрейду",
+          "Тип Terrain",
+          "Кількість Decals",
+        ],
+ correctAnswer: 1,
  explanation: "Time to upgrade 1.",
  },
  {
@@ -2703,12 +2817,12 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Орієнтир часу до апгрейду 1?",
  options: [
- "Близько 30–90 секунд чесної гри",
- "Обов’язково 2 години",
- "0 секунд завжди",
- "Лише після Publish",
- ],
- correctAnswer: 0,
+          "Обов’язково 2 години",
+          "0 секунд завжди",
+          "Близько 30–90 секунд чесної гри",
+          "Лише після Publish",
+        ],
+ correctAnswer: 2,
  explanation: "Комфортний онбординг.",
  },
  {
@@ -2716,12 +2830,12 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Де тримати ціни?",
  options: [
- "В одному Config/table",
- "У 10 Prompt з різними числами",
- "Лише в Sky",
- "Тільки в назві Part",
- ],
- correctAnswer: 0,
+          "У 10 Prompt з різними числами",
+          "Лише в Sky",
+          "Тільки в назві Part",
+          "В одному Config/table",
+        ],
+ correctAnswer: 3,
  explanation: "Одне джерело.",
  },
  {
@@ -2729,12 +2843,12 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Якщо монети не додаються - що першим?",
  options: [
- "Лагодити collector/leaderstats, не крутити ціну наосліп",
- "Одразу price = 1_000_000",
- "Видалити plot",
- "Вимкнути Output",
- ],
- correctAnswer: 0,
+          "Одразу price = 1_000_000",
+          "Лагодити collector/leaderstats, не крутити ціну наосліп",
+          "Видалити plot",
+          "Вимкнути Output",
+        ],
+ correctAnswer: 1,
  explanation: "Баг ≠ баланс.",
  },
  {
@@ -2742,12 +2856,12 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Скільки змінних крутити за один тест?",
  options: [
- "Краще одну",
- "Усі одразу обов’язково",
- "Жодної ніколи",
- "Лише колір кнопки",
- ],
- correctAnswer: 0,
+          "Усі одразу обов’язково",
+          "Жодної ніколи",
+          "Краще одну",
+          "Лише колір кнопки",
+        ],
+ correctAnswer: 2,
  explanation: "Контрольований експеримент.",
  },
  {
@@ -2755,11 +2869,11 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Навіщо міряти income за 60 с?",
  options: [
- "Зрозуміти темп економіки перед цінами",
- "Замінити MaxHealth",
- "Створити Animation",
- "Вимкнути дропер",
- ],
+          "Зрозуміти темп економіки перед цінами",
+          "Замінити MaxHealth",
+          "Створити Animation",
+          "Вимкнути дропер",
+        ],
  correctAnswer: 0,
  explanation: "Замір доходу.",
  },
@@ -2768,12 +2882,12 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Що робити, якщо все купується за 5 с?",
  options: [
- "Підняти ціни або зменшити payout",
- "Видалити leaderstats",
- "Обов’язково додати 50 станків",
- "Вимкнути canAfford",
- ],
- correctAnswer: 0,
+          "Видалити leaderstats",
+          "Обов’язково додати 50 станків",
+          "Вимкнути canAfford",
+          "Підняти ціни або зменшити payout",
+        ],
+ correctAnswer: 3,
  explanation: "Занадто fast.",
  },
  {
@@ -2781,12 +2895,12 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Чому важливий debounce collector перед балансом?",
  options: [
- "Інакше замір доходу від спаму бреше",
- "Debounce малює Sky",
- "Без нього Config не існує",
- "Це замінює апгрейди",
- ],
- correctAnswer: 0,
+          "Debounce малює Sky",
+          "Без нього Config не існує",
+          "Інакше замір доходу від спаму бреше",
+          "Це замінює апгрейди",
+        ],
+ correctAnswer: 2,
  explanation: "Чесний замір.",
  },
  {
@@ -2794,12 +2908,12 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Як 7.6 готує 7.8?",
  options: [
- "Стабільні ціни → демо Ship не розвалюється на «вічній бідності»",
- "Ship забороняє Config",
- "Баланс скасовує рубрику",
- "Треба видалити апгрейди перед Ship",
- ],
- correctAnswer: 0,
+          "Ship забороняє Config",
+          "Стабільні ціни → демо Ship не розвалюється на «вічній бідності»",
+          "Баланс скасовує рубрику",
+          "Треба видалити апгрейди перед Ship",
+        ],
+ correctAnswer: 1,
  explanation: "Готовність до ship.",
  },
  {
@@ -2807,12 +2921,12 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Мінімум live-підкруток?",
  options: [
- "Хоча б 2 з логом було → стало",
- "0",
- "Обов’язково 50",
- "Лише зміна неба",
- ],
- correctAnswer: 0,
+          "0",
+          "Обов’язково 50",
+          "Лише зміна неба",
+          "Хоча б 2 з логом було → стало",
+        ],
+ correctAnswer: 3,
  explanation: "Практика цифр.",
  },
  {
@@ -2820,11 +2934,11 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Якщо після апгрейду дохід не зріс?",
  options: [
- "Перевірити applyUpgrade / чи пишеться новий interval/payout",
- "Лише перефарбувати кнопку ще раз",
- "Видалити TAB",
- "Обов’язково Publish",
- ],
+          "Перевірити applyUpgrade / чи пишеться новий interval/payout",
+          "Лише перефарбувати кнопку ще раз",
+          "Видалити TAB",
+          "Обов’язково Publish",
+        ],
  correctAnswer: 0,
  explanation: "Ефект апгрейду.",
  },
@@ -2833,12 +2947,12 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Крива апгрейду 2 щодо ціни 1?",
  options: [
- "Зазвичай дорожче в розумні 1.5–3×, не ×100 одразу",
- "Завжди дешевше за перший",
- "Ціна 2 завжди 0",
- "Апгрейд 2 без ціни",
- ],
- correctAnswer: 0,
+          "Завжди дешевше за перший",
+          "Ціна 2 завжди 0",
+          "Зазвичай дорожче в розумні 1.5–3×, не ×100 одразу",
+          "Апгрейд 2 без ціни",
+        ],
+ correctAnswer: 2,
  explanation: "Крива lite.",
  },
  {
@@ -2846,12 +2960,12 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Що записувати в таблицю?",
  options: [
- "Факти: секунди/монети і вердикт",
- "Лише «мені здається»",
- "Тільки список Plugins",
- "Колір Ambient",
- ],
- correctAnswer: 0,
+          "Лише «мені здається»",
+          "Тільки список Plugins",
+          "Колір Ambient",
+          "Факти: секунди/монети і вердикт",
+        ],
+ correctAnswer: 3,
  explanation: "Доказ заміру.",
  },
  {
@@ -2859,12 +2973,12 @@ Broken = монети не додаються або ціна нічого не 
  type: MC,
  question: "Що вважається зданим артефактом 7.6?",
  options: [
- "Таблиця + ≥2 підкрутки + комфортніший TTA + Save",
- "Лише теорія",
- "Порожній Baseplate",
- "Ціни роз’їхались у UI і Script",
- ],
- correctAnswer: 0,
+          "Лише теорія",
+          "Таблиця + ≥2 підкрутки + комфортніший TTA + Save",
+          "Порожній Baseplate",
+          "Ціни роз’їхались у UI і Script",
+        ],
+ correctAnswer: 1,
  explanation: "Потрібен баланс-доказ.",
  },
  ],
@@ -2914,7 +3028,9 @@ export const ukLesson77 = {
 | Shop/Upgrade | if canAfford + table | 7.3 / 7.4 |
 | Баланс цін | Грайбельні числа | 7.6 |
 
-Метафора: не новий двигун - **збірка авто з готових деталей**. Якщо деталі лежать у різних Places - сьогодні зводь в один.`,
+не новий двигун - **збірка авто з готових деталей**. Якщо деталі лежать у різних Places - сьогодні зводь в один.
+
+**Зроби зараз (4 хв):** спробуй купівлю з 0 монет і після успішної покупки - перевір TAB/Output.`,
  },
  {
  title: "Цільовий геймплей на 2 хвилини",
@@ -2925,7 +3041,9 @@ export const ukLesson77 = {
 4. За ще ~30–60 с купити апгрейд 2 (або накопичити помітно).
 5. TAB показує Coins коректно.
 
-Якщо апгрейд 1 коштує 10_000 при дропі +1/5с - баланс іще з 7.6; підкрути **сьогодні**, не відкладай на Ship.`,
+Якщо апгрейд 1 коштує 10_000 при дропі +1/5с - баланс іще з 7.6; підкрути **сьогодні**, не відкладай на Ship.
+
+**Зроби зараз (4 хв):** у Play відкрий TAB і підтверди, що Coins змінюються після дії на сервері.`,
  },
  {
  title: "Один Config на фабрику",
@@ -2956,7 +3074,9 @@ export const ukLesson77 = {
 
 Якщо plot поки спільний (один на всіх) - запиши це як обмеження lite і все одно зроби чесні Coins. Для Ship краще мати owner, але 1 спільний plot краще за нуль циклу.
 
-Підпиши Attribute \`OwnerUserId\` на моделі plot або тримай \`plots[player] = model\` у серверній table. Головне - один явний спосіб відповісти «чий це станок?».`,
+Підпиши Attribute \`OwnerUserId\` на моделі plot або тримай \`plots[player] = model\` у серверній table. Головне - один явний спосіб відповісти «чий це станок?».
+
+**Зроби зараз (4 хв):** у Play відкрий TAB і підтверди, що Coins змінюються після дії на сервері.`,
  },
  {
  title: "UI мінімум для фабрики",
@@ -2969,7 +3089,9 @@ export const ukLesson77 = {
 
 Не витрачай годину на анімовану касу - спочатку цикл грошей.
 
-Якщо робиш SurfaceGui - постав \`TextLabel\` ціни скриптом з Config при старті і після балансу 7.6. Інакше «відбалансована» ціна лишиться старою на стіні.`,
+Якщо робиш SurfaceGui - постав \`TextLabel\` ціни скриптом з Config при старті і після балансу 7.6. Інакше «відбалансована» ціна лишиться старою на стіні.
+
+**Зроби зараз (4 хв):** у Play відкрий TAB і підтверди, що Coins змінюються після дії на сервері.`,
  },
  {
  title: "Інтеграційний чекліст перед «готово»",
@@ -2986,7 +3108,9 @@ export const ukLesson77 = {
 
 Усе «ні» - робота Part B практики, не декор.
 
-Пріоритет фіксів: 2 → 3 → 4 → 1. Без монет і списання апгрейди безглузді. Без ефекту апгрейду кнопка - декорація.`,
+Пріоритет фіксів: 2 → 3 → 4 → 1. Без монет і списання апгрейди безглузді. Без ефекту апгрейду кнопка - декорація.
+
+**Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
  },
  {
  title: "Типові дірки проєкту",
@@ -3017,7 +3141,9 @@ export const ukLesson77 = {
 
 Правило: polish **після** зеленого циклу.
 
-Корисний мікро-polish: Billboard «Plot гравця» з DisplayName - ментор одразу бачить ownership у спліт-тесті.`,
+Корисний мікро-polish: Billboard «Plot гравця» з DisplayName - ментор одразу бачить ownership у спліт-тесті.
+
+**Зроби зараз (4 хв):** зроби save/load або чесно задокументуй mock-режим у Output.`,
  },
  {
  title: "Playtest проєкту",
@@ -3033,7 +3159,9 @@ export const ukLesson77 = {
 
 Якщо за 2 хв не вистачає на апгрейд 1 - ціни з 7.6 іще високі: зменш price або збільш payout.
 
-Після апгрейду 1 зроби ще 20 с збору навмисно. Якщо темп не змінився - повертайся до applyUpgrade, не до нового станку.`,
+Після апгрейду 1 зроби ще 20 с збору навмисно. Якщо темп не змінився - повертайся до applyUpgrade, не до нового станку.
+
+**Зроби зараз (5 хв):** пройди таблицю тестів один раз і запиши pass/fail для кожного рядка.`,
  },
  {
  title: "Чекліст здачі уроку 55",
@@ -3049,7 +3177,9 @@ export const ukLesson77 = {
 
 Завтра ти майже не пишеш новий код - ти захищаєш золотий шлях. Тож сьогодні залиш Place в стані «можна грати», не «майже з’єднаю».
 
-Артефакт: **маленька фабрика що годує апгрейди**. Не презентація на слайдах - Play. Якщо за два хвилини видно прогрес до другого апгрейду - проєкт живий. Залиш Place з онбордингом на видному місці. Завтрашній Ship майже не додає механік - він перевіряє, що сьогоднішній цикл уже грається.`,
+Артефакт: **маленька фабрика що годує апгрейди**. Не презентація на слайдах - Play. Якщо за два хвилини видно прогрес до другого апгрейду - проєкт живий. Залиш Place з онбордингом на видному місці. Завтрашній Ship майже не додає механік - він перевіряє, що сьогоднішній цикл уже грається.
+
+**Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
  },
  ],
  },
@@ -3121,11 +3251,11 @@ export const ukLesson77 = {
  type: MC,
  question: "Головна мета уроку 7.7?",
  options: [
- "Зібрати міні-фабрику з дропера, збору і апгрейдів",
- "Видалити leaderstats",
- "Почати лише Arena",
- "Publish без циклу",
- ],
+          "Зібрати міні-фабрику з дропера, збору і апгрейдів",
+          "Видалити leaderstats",
+          "Почати лише Arena",
+          "Publish без циклу",
+        ],
  correctAnswer: 0,
  explanation: "Проєкт фабрики.",
  },
@@ -3134,12 +3264,12 @@ export const ukLesson77 = {
  type: MC,
  question: "Скільки апгрейдів мінімум?",
  options: [
- "Хоча б 2 з table з ефектом",
- "Обов’язково 50",
- "0",
- "Лише зміна кольору без Config",
- ],
- correctAnswer: 0,
+          "Обов’язково 50",
+          "Хоча б 2 з table з ефектом",
+          "0",
+          "Лише зміна кольору без Config",
+        ],
+ correctAnswer: 1,
  explanation: "Два з ефектом.",
  },
  {
@@ -3147,12 +3277,12 @@ export const ukLesson77 = {
  type: MC,
  question: "Чому зводити системи в один Place?",
  options: [
- "Інакше немає інтегрованого циклу для Ship",
- "Studio забороняє кілька Places у житті",
- "Дропер працює лише в одному Place світу",
- "leaderstats не існує інакше",
- ],
- correctAnswer: 0,
+          "Studio забороняє кілька Places у житті",
+          "Дропер працює лише в одному Place світу",
+          "Інакше немає інтегрованого циклу для Ship",
+          "leaderstats не існує інакше",
+        ],
+ correctAnswer: 2,
  explanation: "Інтеграція.",
  },
  {
@@ -3160,12 +3290,12 @@ export const ukLesson77 = {
  type: MC,
  question: "Де мають жити ціни апгрейдів?",
  options: [
- "В одному UpgradeConfig / table",
- "У 5 різних Prompt з різними числами",
- "Лише в Skybox",
- "Тільки на клієнті як текст",
- ],
- correctAnswer: 0,
+          "У 5 різних Prompt з різними числами",
+          "Лише в Skybox",
+          "Тільки на клієнті як текст",
+          "В одному UpgradeConfig / table",
+        ],
+ correctAnswer: 3,
  explanation: "Одне джерело.",
  },
  {
@@ -3173,12 +3303,12 @@ export const ukLesson77 = {
  type: MC,
  question: "Що має зробити апгрейд швидкості?",
  options: [
- "Зменшити interval дропера (швидший дроп)",
- "Лише перефарбувати стіну",
- "Видалити collector",
- "Вимкнути Coins",
- ],
- correctAnswer: 0,
+          "Лише перефарбувати стіну",
+          "Зменшити interval дропера (швидший дроп)",
+          "Видалити collector",
+          "Вимкнути Coins",
+        ],
+ correctAnswer: 1,
  explanation: "Геймплейний ефект.",
  },
  {
@@ -3186,12 +3316,12 @@ export const ukLesson77 = {
  type: MC,
  question: "Навіщо онбординг-табличка?",
  options: [
- "Гравець розуміє цикл без суфлера",
- "Вона замінює дропер",
- "Обов’язкова для Humanoid",
- "Табличка пише Coins сама",
- ],
- correctAnswer: 0,
+          "Вона замінює дропер",
+          "Обов’язкова для Humanoid",
+          "Гравець розуміє цикл без суфлера",
+          "Табличка пише Coins сама",
+        ],
+ correctAnswer: 2,
  explanation: "Читабельний старт.",
  },
  {
@@ -3199,11 +3329,11 @@ export const ukLesson77 = {
  type: MC,
  question: "Якщо за 2 хв не вистачає на апгрейд 1?",
  options: [
- "Підкрутити ціну або payout (баланс)",
- "Видалити фабрику",
- "Обов’язково додати 10 станків",
- "Вимкнути leaderstats",
- ],
+          "Підкрутити ціну або payout (баланс)",
+          "Видалити фабрику",
+          "Обов’язково додати 10 станків",
+          "Вимкнути leaderstats",
+        ],
  correctAnswer: 0,
  explanation: "Баланс зараз.",
  },
@@ -3212,12 +3342,12 @@ export const ukLesson77 = {
  type: MC,
  question: "Чому поліш після зеленого циклу?",
  options: [
- "Інакше маскуєш зламану економіку красою",
- "Поліш заборонений у Roblox",
- "Particles видаляють Config",
- "Звук ламає сервер завжди",
- ],
- correctAnswer: 0,
+          "Поліш заборонений у Roblox",
+          "Particles видаляють Config",
+          "Звук ламає сервер завжди",
+          "Інакше маскуєш зламану економіку красою",
+        ],
+ correctAnswer: 3,
  explanation: "Спочатку цикл.",
  },
  {
@@ -3225,12 +3355,12 @@ export const ukLesson77 = {
  type: MC,
  question: "Як 7.7 готує 7.8?",
  options: [
- "Ship рубрика натягнеться на готову фабрику",
- "7.8 видаляє всі апгрейди",
- "Ship не потребує Coins",
- "Треба почати новий Place з нуля обов’язково",
- ],
- correctAnswer: 0,
+          "7.8 видаляє всі апгрейди",
+          "Ship не потребує Coins",
+          "Ship рубрика натягнеться на готову фабрику",
+          "Треба почати новий Place з нуля обов’язково",
+        ],
+ correctAnswer: 2,
  explanation: "М’ясо для ship.",
  },
  {
@@ -3238,12 +3368,12 @@ export const ukLesson77 = {
  type: MC,
  question: "Collector повинен…",
  options: [
- "Додавати Coins на сервері власнику",
- "Працювати лише в LocalScript як правда",
- "Видаляти plot",
- "Створювати Animation",
- ],
- correctAnswer: 0,
+          "Працювати лише в LocalScript як правда",
+          "Додавати Coins на сервері власнику",
+          "Видаляти plot",
+          "Створювати Animation",
+        ],
+ correctAnswer: 1,
  explanation: "Серверний збір.",
  },
  {
@@ -3251,12 +3381,12 @@ export const ukLesson77 = {
  type: MC,
  question: "Що з наведеного - дірка проєкту?",
  options: [
- "Апгрейд не змінює Config дропера",
- "Є табличка з 3 кроками",
- "Є 2 апгрейди в table",
- "Coins у leaderstats",
- ],
- correctAnswer: 0,
+          "Є табличка з 3 кроками",
+          "Є 2 апгрейди в table",
+          "Coins у leaderstats",
+          "Апгрейд не змінює Config дропера",
+        ],
+ correctAnswer: 3,
  explanation: "Немає ефекту.",
  },
  {
@@ -3264,11 +3394,11 @@ export const ukLesson77 = {
  type: MC,
  question: "Чи обов’язковий повний ScrollingFrame магазин?",
  options: [
- "Ні - 2 Prompt/кнопки достатньо для міні-фабрики",
- "Так - інакше Coins не існують",
- "Так - інакше дропер стоїть",
- "Так за правилами Terrain",
- ],
+          "Ні - 2 Prompt/кнопки достатньо для міні-фабрики",
+          "Так - інакше Coins не існують",
+          "Так - інакше дропер стоїть",
+          "Так за правилами Terrain",
+        ],
  correctAnswer: 0,
  explanation: "UI мінімум.",
  },
@@ -3277,12 +3407,12 @@ export const ukLesson77 = {
  type: MC,
  question: "Навіщо owner plot?",
  options: [
- "Чужі не збирають твої монети / не тиснуть твої кнопки",
- "Owner замінює Humanoid",
- "Без owner while не працює",
- "Owner малює Sky",
- ],
- correctAnswer: 0,
+          "Owner замінює Humanoid",
+          "Без owner while не працює",
+          "Чужі не збирають твої монети / не тиснуть твої кнопки",
+          "Owner малює Sky",
+        ],
+ correctAnswer: 2,
  explanation: "Прив’язка гравця.",
  },
  {
@@ -3290,12 +3420,12 @@ export const ukLesson77 = {
  type: MC,
  question: "Що відкласти на після циклу?",
  options: [
- "Rebirth / 10 станків / годину HUD",
- "canAfford",
- "leaderstats Coins",
- "applyUpgrade",
- ],
- correctAnswer: 0,
+          "canAfford",
+          "leaderstats Coins",
+          "applyUpgrade",
+          "Rebirth / 10 станків / годину HUD",
+        ],
+ correctAnswer: 3,
  explanation: "Не роздувати.",
  },
  {
@@ -3303,12 +3433,12 @@ export const ukLesson77 = {
  type: MC,
  question: "Що вважається зданим артефактом 7.7?",
  options: [
- "Міні-фабрика з циклом і 2 апгрейдами + Save",
- "Лише теорія",
- "Порожній Baseplate",
- "Клієнтський Coins без сервера",
- ],
- correctAnswer: 0,
+          "Лише теорія",
+          "Міні-фабрика з циклом і 2 апгрейдами + Save",
+          "Порожній Baseplate",
+          "Клієнтський Coins без сервера",
+        ],
+ correctAnswer: 1,
  explanation: "Потрібен проєкт.",
  },
  ],
@@ -3364,7 +3494,9 @@ export const ukLesson78 = {
 
 Ship **не** означає AAA-тайкун на 50 кнопок. Означає: **короткий повний цикл уже зібраний** і чесний по грошах.
 
-Далі M8 Arena використає ту саму звичку: критичні числа - на сервері.`,
+Далі M8 Arena використає ту саму звичку: критичні числа - на сервері.
+
+**Зроби зараз (4 хв):** у Play відкрий TAB і підтверди, що Coins змінюються після дії на сервері.`,
  },
  {
  title: "Карта систем, які зшиваємо",
@@ -3392,7 +3524,9 @@ Ship **не** означає AAA-тайкун на 50 кнопок. Означа
 7. Повторити збір - відчути різницю.
 8. Output без червоного.
 
-Lite: 1 апгрейд «DropSpeed» достатньо для ship, якщо ефект видно.`,
+Lite: 1 апгрейд «DropSpeed» достатньо для ship, якщо ефект видно.
+
+**Зроби зараз (4 хв):** спробуй купівлю з 0 монет і після успішної покупки - перевір TAB/Output.`,
  },
  {
  title: "Рубрика Ship Tycoon (~15 пунктів)",
@@ -3429,7 +3563,9 @@ Lite: 1 апгрейд «DropSpeed» достатньо для ship, якщо е
 | 14 | Демо 60–90 с без суфлера | |
 | 15 | Save Lesson 7.8 - Tycoon Ship | |
 
-«Ні» в B/C = фікси Part B, не новий декор.`,
+«Ні» в B/C = фікси Part B, не новий декор.
+
+**Зроби зараз (4 хв):** спробуй купівлю з 0 монет і після успішної покупки - перевір TAB/Output.`,
  },
  {
  title: "Типові дірки інтеграції",
@@ -3459,7 +3595,9 @@ Lite: 1 апгрейд «DropSpeed» достатньо для ship, якщо е
 
 leaderstats:
 
-\`Coins\` IntValue у Folder leaderstats на Player - видно в TAB.`,
+\`Coins\` IntValue у Folder leaderstats на Player - видно в TAB.
+
+**Зроби зараз (4 хв):** у Play відкрий TAB і підтверди, що Coins змінюються після дії на сервері.`,
  },
  {
  title: "Онбординг за 8 хвилин",
@@ -3473,7 +3611,9 @@ leaderstats:
 Текст:
 *«1) Збирай дроп у колектор. 2) Дивись монети в TAB. 3) Купи апгрейд на кнопці.»*
 
-Відійди від монітора і підійди знову - чи зрозумілий старт без твоїх слів?`,
+Відійди від монітора і підійди знову - чи зрозумілий старт без твоїх слів?
+
+**Зроби зараз (4 хв):** зроби одну перевірку з цього розділу в Play і запиши результат у Note.`,
  },
  {
  title: "Playtest інтеграції",
@@ -3489,7 +3629,9 @@ leaderstats:
 | 8 | Output | Без червоного | |
 | 9 | Демо 90 с | Вкладаєшся | |
 
-Пункти 3–6 - серце Ship Tycoon.`,
+Пункти 3–6 - серце Ship Tycoon.
+
+**Зроби зараз (5 хв):** пройди таблицю тестів один раз і запиши pass/fail для кожного рядка.`,
  },
  {
  title: "Що свідомо відкласти",
@@ -3505,7 +3647,9 @@ leaderstats:
 - 1–2 апгрейди з table;
 - рубрика + Save.
 
-Усе «хочу ще» - у нотатку для M11 polish.`,
+Усе «хочу ще» - у нотатку для M11 polish.
+
+**Зроби зараз (4 хв):** у Play відкрий TAB і підтверди, що Coins змінюються після дії на сервері.`,
  },
  {
  title: "Чекліст здачі уроку 56 + місток до M8",
@@ -3520,7 +3664,9 @@ leaderstats:
 
 Далі **модуль 8 Arena**: та сама дисципліна серверних чисел, але для HP/урону. Якщо каса монет ще на клієнті - **не** йди далі з гордістю.
 
-Артефакт: фабрика, яку можна показати. Ship любить короткий переможний круг.`,
+Артефакт: фабрика, яку можна показати. Ship любить короткий переможний круг.
+
+**Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
  },
  ],
  },
@@ -3593,11 +3739,11 @@ leaderstats:
  type: MC,
  question: "Головна мета уроку 7.8?",
  options: [
- "Зшити тайкун у золотий шлях і закрити рубрику Ship",
- "Видалити leaderstats",
- "Почати Arena з нуля",
- "Publish без циклу",
- ],
+          "Зшити тайкун у золотий шлях і закрити рубрику Ship",
+          "Видалити leaderstats",
+          "Почати Arena з нуля",
+          "Publish без циклу",
+        ],
  correctAnswer: 0,
  explanation: "Ship Tycoon.",
  },
@@ -3606,12 +3752,12 @@ leaderstats:
  type: MC,
  question: "Де правда про Coins?",
  options: [
- "На сервері в leaderstats",
- "Лише в LocalScript TextLabel",
- "У Lighting",
- "У назві Part дропера",
- ],
- correctAnswer: 0,
+          "Лише в LocalScript TextLabel",
+          "На сервері в leaderstats",
+          "У Lighting",
+          "У назві Part дропера",
+        ],
+ correctAnswer: 1,
  explanation: "Серверні гроші.",
  },
  {
@@ -3619,12 +3765,12 @@ leaderstats:
  type: MC,
  question: "Що таке золотий шлях тайкуна?",
  options: [
- "Короткий маршрут дроп → збір → покупка без суфлера",
- "Список усіх Plugins",
- "Обов’язковий open-world",
- "Лише Skybox",
- ],
- correctAnswer: 0,
+          "Список усіх Plugins",
+          "Обов’язковий open-world",
+          "Короткий маршрут дроп → збір → покупка без суфлера",
+          "Лише Skybox",
+        ],
+ correctAnswer: 2,
  explanation: "Інтегрований цикл.",
  },
  {
@@ -3632,12 +3778,12 @@ leaderstats:
  type: MC,
  question: "Навіщо canAfford перед списанням?",
  options: [
- "Не купувати в мінус / без грошей",
- "Збільшити MaxHealth",
- "Вимкнути дропер",
- "Створити Terrain",
- ],
- correctAnswer: 0,
+          "Збільшити MaxHealth",
+          "Вимкнути дропер",
+          "Створити Terrain",
+          "Не купувати в мінус / без грошей",
+        ],
+ correctAnswer: 3,
  explanation: "Перевірка ціни.",
  },
  {
@@ -3645,12 +3791,12 @@ leaderstats:
  type: MC,
  question: "Що перевіряє блок C рубрики?",
  options: [
- "Чесність грошей: сервер, ціна з table, анти-клієнтський Coins",
- "Лише колір стін",
- "Назву модуля 1",
- "Кількість Decals",
- ],
- correctAnswer: 0,
+          "Лише колір стін",
+          "Чесність грошей: сервер, ціна з table, анти-клієнтський Coins",
+          "Назву модуля 1",
+          "Кількість Decals",
+        ],
+ correctAnswer: 1,
  explanation: "Економічна чесність.",
  },
  {
@@ -3658,12 +3804,12 @@ leaderstats:
  type: MC,
  question: "Чому апгрейд має змінювати Config?",
  options: [
- "Інакше покупка не відчувається в геймплеї",
- "Config заборонений у тайкуні",
- "Інакше leaderstats зникає",
- "Weld тоді ламається",
- ],
- correctAnswer: 0,
+          "Config заборонений у тайкуні",
+          "Інакше leaderstats зникає",
+          "Інакше покупка не відчувається в геймплеї",
+          "Weld тоді ламається",
+        ],
+ correctAnswer: 2,
  explanation: "Ефект апгрейду.",
  },
  {
@@ -3671,11 +3817,11 @@ leaderstats:
  type: MC,
  question: "Що НЕ треба робити в 7.8?",
  options: [
- "Будувати 20 апгрейдів замість закрити цикл",
- "Пройти рубрику",
- "Перевірити collector",
- "Зберегти Place",
- ],
+          "Будувати 20 апгрейдів замість закрити цикл",
+          "Пройти рубрику",
+          "Перевірити collector",
+          "Зберегти Place",
+        ],
  correctAnswer: 0,
  explanation: "Вузький MVP.",
  },
@@ -3684,12 +3830,12 @@ leaderstats:
  type: MC,
  question: "Навіщо debounce на покупці?",
  options: [
- "Подвійний клік не купує двічі даром",
- "Це замінює дропер",
- "debounce малює Sky",
- "Обов’язково для SpawnLocation",
- ],
- correctAnswer: 0,
+          "Це замінює дропер",
+          "debounce малює Sky",
+          "Обов’язково для SpawnLocation",
+          "Подвійний клік не купує двічі даром",
+        ],
+ correctAnswer: 3,
  explanation: "Анти-спам купівлі.",
  },
  {
@@ -3697,12 +3843,12 @@ leaderstats:
  type: MC,
  question: "Скільки триває цільове демо Ship?",
  options: [
- "Близько 60–90 секунд без суфлера",
- "Обов’язково 40 хвилин пояснень",
- "Достатньо відкрити Explorer",
- "Лише скріншот",
- ],
- correctAnswer: 0,
+          "Обов’язково 40 хвилин пояснень",
+          "Достатньо відкрити Explorer",
+          "Близько 60–90 секунд без суфлера",
+          "Лише скріншот",
+        ],
+ correctAnswer: 2,
  explanation: "Коротке демо.",
  },
  {
@@ -3710,12 +3856,12 @@ leaderstats:
  type: MC,
  question: "Як 7.8 готує M8 Arena?",
  options: [
- "Звичка «сервер вирішує критичні числа» переходить на HP/урон",
- "Arena забороняє сервер",
- "Треба видалити тайкун з пам’яті",
- "У Arena Coins пише лише клієнт",
- ],
- correctAnswer: 0,
+          "Arena забороняє сервер",
+          "Звичка «сервер вирішує критичні числа» переходить на HP/урон",
+          "Треба видалити тайкун з пам’яті",
+          "У Arena Coins пише лише клієнт",
+        ],
+ correctAnswer: 1,
  explanation: "Дисципліна сервера.",
  },
  {
@@ -3723,12 +3869,12 @@ leaderstats:
  type: MC,
  question: "P0 для тайкуна?",
  options: [
- "Монети/покупки повністю на клієнті без сервера",
- "Трохи кривий колір кнопки",
- "Неідеальний Ambient",
- "Дрібний Billboard offset",
- ],
- correctAnswer: 0,
+          "Трохи кривий колір кнопки",
+          "Неідеальний Ambient",
+          "Дрібний Billboard offset",
+          "Монети/покупки повністю на клієнті без сервера",
+        ],
+ correctAnswer: 3,
  explanation: "Критична дірка економіки.",
  },
  {
@@ -3736,11 +3882,11 @@ leaderstats:
  type: MC,
  question: "Навіщо один Place замість трьох?",
  options: [
- "Інакше немає інтегрованого золотого шляху",
- "Studio дозволяє лише один Place",
- "Три Places завжди швидше",
- "Рубрика забороняє папки",
- ],
+          "Інакше немає інтегрованого золотого шляху",
+          "Studio дозволяє лише один Place",
+          "Три Places завжди швидше",
+          "Рубрика забороняє папки",
+        ],
  correctAnswer: 0,
  explanation: "Інтеграція.",
  },
@@ -3749,12 +3895,12 @@ leaderstats:
  type: MC,
  question: "Що має зробити collector?",
  options: [
- "Додати Coins на сервері в leaderstats",
- "Видалити plot",
- "Створити RemoteFunction обов’язково",
- "Змінити лише колір Floor",
- ],
- correctAnswer: 0,
+          "Видалити plot",
+          "Створити RemoteFunction обов’язково",
+          "Додати Coins на сервері в leaderstats",
+          "Змінити лише колір Floor",
+        ],
+ correctAnswer: 2,
  explanation: "Збір грошей.",
  },
  {
@@ -3762,12 +3908,12 @@ leaderstats:
  type: MC,
  question: "Звідки брати ціну апгрейду?",
  options: [
- "З серверної table/конфігу",
- "Сліпо з числа клієнта",
- "З Volume Sound",
- "З назви Sky",
- ],
- correctAnswer: 0,
+          "Сліпо з числа клієнта",
+          "З Volume Sound",
+          "З назви Sky",
+          "З серверної table/конфігу",
+        ],
+ correctAnswer: 3,
  explanation: "Config правда.",
  },
  {
@@ -3775,12 +3921,12 @@ leaderstats:
  type: MC,
  question: "Що вважається зданим артефактом 7.8?",
  options: [
- "Золотий шлях + рубрика + чесні Coins/апгрейд + Save",
- "Лише теорія",
- "Порожній Baseplate",
- "Клієнтський Coins=9999",
- ],
- correctAnswer: 0,
+          "Лише теорія",
+          "Золотий шлях + рубрика + чесні Coins/апгрейд + Save",
+          "Порожній Baseplate",
+          "Клієнтський Coins=9999",
+        ],
+ correctAnswer: 1,
  explanation: "Потрібен ship тайкуна.",
  },
  ],
