@@ -52,16 +52,19 @@ function formatCrmError(status, data) {
  * @param {string} method
  * @param {string} pathAndQuery напр. "groups" або "groups?limit=50"
  * @param {object} [jsonBody]
+ * @param {{ timeout?: number }} [options]
  */
-export async function crmJson(method, pathAndQuery, jsonBody) {
+export async function crmJson(method, pathAndQuery, jsonBody, options = {}) {
   if (!CRM_BASE_URL) throw new Error('CRM не налаштовано (немає CRM_API_URL)')
   const base = CRM_BASE_URL.replace(/\/$/, '')
   const path = String(pathAndQuery || '').replace(/^\//, '')
   const url = `${base}/${path}`
   const token = await resolveCrmToken()
+  const timeout = Number(options?.timeout) > 0 ? Number(options.timeout) : 8000
   const init = {
     method,
     headers: buildCrmHeaders(token),
+    timeout,
   }
   if (method === 'GET' || method === 'HEAD') {
     init.cache = 'no-store'

@@ -106,7 +106,9 @@ export async function fetchTeacherNextLesson(crmStaffId) {
   try {
     lessons = await crmJson(
       'GET',
-      `lessons/range?start=${encodeURIComponent(rangeStart)}&end=${encodeURIComponent(rangeEnd)}&kinds=${encodeURIComponent('individual,trial')}`
+      `lessons/range?start=${encodeURIComponent(rangeStart)}&end=${encodeURIComponent(rangeEnd)}&kinds=${encodeURIComponent('individual,trial')}`,
+      undefined,
+      { timeout: 15000 }
     )
   } catch (error) {
     console.warn('fetchTeacherNextLesson:', error?.message || error)
@@ -225,11 +227,12 @@ export function isInCurrentPayoutBatch(lesson) {
 
 /**
  * Черга ЗП викладача з тієї ж вкладки CRM «Зарплати»
- * (GET /reports/teacher-salaries?outstanding_only=true).
+ * (GET /reports/teacher-salaries?outstanding_only=true&teacher_id=…).
  */
 export async function fetchTeacherSalaryQueueFromCrm(crmStaffId) {
   const staffId = String(crmStaffId || '').trim()
   const empty = {
+    found: false,
     payableCount: 0,
     trialCount: 0,
     recordingsCount: 0,
@@ -243,10 +246,13 @@ export async function fetchTeacherSalaryQueueFromCrm(crmStaffId) {
 
   const report = await crmJson(
     'GET',
-    'reports/teacher-salaries?outstanding_only=true'
+    `reports/teacher-salaries?outstanding_only=true&teacher_id=${encodeURIComponent(staffId)}`,
+    undefined,
+    { timeout: 12000 }
   )
   const teachers = Array.isArray(report?.teachers) ? report.teachers : []
-  const row = teachers.find((t) => String(t?.teacher_id || '') === staffId)
+  const row =
+    teachers.find((t) => String(t?.teacher_id || '') === staffId) || null
   if (!row) return empty
 
   const recordings = Array.isArray(row.recordings) ? row.recordings : []
@@ -259,6 +265,7 @@ export async function fetchTeacherSalaryQueueFromCrm(crmStaffId) {
     Number(row.recordings_count) || payableCount + trialCount || recordings.length
 
   return {
+    found: true,
     payableCount,
     trialCount,
     recordingsCount,
@@ -366,18 +373,19 @@ function lessonDocId(lesson) {
 /**
  * Уроки викладача без слотів availability.
  * Availability з Google Calendar забиває limit=2000 при sort=-1 і витісняє реальні ІУ/ПУ.
- * Тому тягнемо окремо kind=individual та kind=trial (ГУ теж individual з group_id).
+ * Один запит з exclude_kinds швидший за два паралельні kind=.
  */
 async function fetchTeacherTeachingLessons(staffId) {
   const tid = encodeURIComponent(staffId)
-  const [individual, trial] = await Promise.all([
-    crmJson('GET', `lessons?teacher_id=${tid}&kind=individual&limit=2000&sort=-1`),
-    crmJson('GET', `lessons?teacher_id=${tid}&kind=trial&limit=2000&sort=-1`),
-  ])
+  const batch = await crmJson(
+    'GET',
+    `lessons?teacher_id=${tid}&exclude_kinds=availability&limit=2000&sort=-1`,
+    undefined,
+    { timeout: 15000 }
+  )
 
   const byId = new Map()
-  for (const batch of [individual, trial]) {
-    if (!Array.isArray(batch)) continue
+  if (Array.isArray(batch)) {
     for (const lesson of batch) {
       if (String(lesson?.kind || '') === 'availability') continue
       const id = lessonDocId(lesson)
@@ -415,27 +423,33 @@ export async function fetchTeacherCrmLessonStats(crmStaffId) {
   }
   if (!staffId) return empty
 
-  let lessons = []
+  // Спочатку черга ЗП (швидко з teacher_id) — лічильник пачки не залежить від історії.
   let salaryQueue = null
   try {
-    lessons = await fetchTeacherTeachingLessons(staffId)
-  } catch (error) {
-    console.warn('fetchTeacherCrmLessonStats:', error?.message || error)
-    return { ...empty, crmError: error?.message || 'CRM unavailable' }
-  }
-
-  try {
-    salaryQueue = await fetchTeacherSalaryQueueFromCrm(staffId)
+    const queue = await fetchTeacherSalaryQueueFromCrm(staffId)
+    if (queue?.found) salaryQueue = queue
   } catch (error) {
     console.warn('fetchTeacherSalaryQueueFromCrm:', error?.message || error)
   }
 
-  if (!Array.isArray(lessons)) return empty
+  let lessons = []
+  try {
+    lessons = await fetchTeacherTeachingLessons(staffId)
+  } catch (error) {
+    console.warn('fetchTeacherCrmLessonStats:', error?.message || error)
+    if (!salaryQueue) {
+      return {
+        ...empty,
+        crmError: error?.message || 'CRM unavailable',
+      }
+    }
+  }
+
+  if (!Array.isArray(lessons)) lessons = []
 
   const students = {}
   const totals = emptyTeacherTotals()
   const nowMs = Date.now()
-  const salaryLessonIds = salaryQueue?.lessonIds || new Set()
 
   for (const lesson of lessons) {
     const kind = String(lesson?.kind || 'individual')
@@ -502,22 +516,39 @@ export async function fetchTeacherLessonHistory(crmStaffId, { limit = 200 } = {}
   const empty = { lessons: [], totals: emptyTeacherTotals() }
   if (!staffId) return empty
 
-  let lessons = []
+  // Пачка ЗП — окремо й першою: кабінет показує лічильник навіть якщо історія падає.
   let salaryQueue = null
   try {
-    lessons = await fetchTeacherTeachingLessons(staffId)
-  } catch (error) {
-    console.warn('fetchTeacherLessonHistory:', error?.message || error)
-    return { ...empty, crmError: error?.message || 'CRM unavailable' }
-  }
-
-  try {
-    salaryQueue = await fetchTeacherSalaryQueueFromCrm(staffId)
+    const queue = await fetchTeacherSalaryQueueFromCrm(staffId)
+    if (queue?.found) salaryQueue = queue
   } catch (error) {
     console.warn('fetchTeacherSalaryQueueFromCrm:', error?.message || error)
   }
 
-  if (!Array.isArray(lessons)) return empty
+  let lessons = []
+  try {
+    lessons = await fetchTeacherTeachingLessons(staffId)
+  } catch (error) {
+    console.warn('fetchTeacherLessonHistory:', error?.message || error)
+    if (!salaryQueue) {
+      return {
+        ...empty,
+        crmError: error?.message || 'CRM unavailable',
+      }
+    }
+    const totals = emptyTeacherTotals()
+    applySalaryQueueToTotals(totals, salaryQueue)
+    return { lessons: [], totals }
+  }
+
+  if (!Array.isArray(lessons)) {
+    if (salaryQueue) {
+      const totals = emptyTeacherTotals()
+      applySalaryQueueToTotals(totals, salaryQueue)
+      return { lessons: [], totals }
+    }
+    return empty
+  }
 
   const nowMs = Date.now()
   const totals = emptyTeacherTotals()

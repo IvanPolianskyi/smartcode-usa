@@ -199,7 +199,11 @@ export default function TeacherDesk() {
   useEffect(() => {
     if (!user || (user.role !== 'teacher' && user.role !== 'admin')) return
     loadNextLesson()
-    loadLessonHistory()
+    // Історію/ЗП трохи пізніше, щоб «наступний урок» не ділив CRM-таймаут.
+    const timer = setTimeout(() => {
+      loadLessonHistory()
+    }, 150)
+    return () => clearTimeout(timer)
   }, [user, loadNextLesson, loadLessonHistory])
 
   useEffect(() => {
