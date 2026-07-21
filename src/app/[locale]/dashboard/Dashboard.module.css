@@ -690,6 +690,158 @@
   line-height: 1.4;
 }
 
+/* Нотатки стану оплати (як у повідомленнях бота) */
+.payDebtNote {
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.payDebtNote p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.payDebtNote ul {
+  margin: 0.45rem 0 0;
+  padding-left: 1.1rem;
+  color: rgba(252, 165, 165, 0.85);
+  font-size: 0.82rem;
+}
+
+.payPendingNote {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(96, 165, 250, 0.4);
+  color: #93c5fd;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+/* Пропозиція з пакетами уроків (як «Як оплатити?» в боті) */
+.packOffer {
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  background: linear-gradient(160deg, rgba(122, 0, 200, 0.14), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(161, 0, 255, 0.3);
+}
+
+.packOfferHead h4 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1rem;
+  color: var(--dash-text);
+}
+
+.packOfferHead p {
+  margin: 0.3rem 0 0;
+  font-size: 0.84rem;
+  color: var(--dash-muted);
+  line-height: 1.4;
+}
+
+.packMeta {
+  margin: 0.65rem 0 0.75rem;
+  font-size: 0.82rem;
+  color: var(--dash-muted);
+}
+
+.packGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.6rem;
+}
+
+.packItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--dash-border);
+  color: var(--dash-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+
+.packItem:hover {
+  border-color: rgba(196, 75, 255, 0.6);
+  background: rgba(161, 0, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.packItemBest {
+  border-color: rgba(196, 75, 255, 0.65);
+  background: rgba(161, 0, 255, 0.12);
+  box-shadow: 0 0 0 1px rgba(196, 75, 255, 0.25);
+}
+
+.packBestBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(196, 75, 255, 0.22);
+  color: #d9a4ff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.packCount {
+  font-size: 1.02rem;
+  font-weight: 800;
+}
+
+.packUnit {
+  font-size: 0.82rem;
+  color: var(--dash-muted);
+}
+
+.packTotal {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--dash-text);
+}
+
+.packGift {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.74rem;
+  color: #86efac;
+  line-height: 1.35;
+}
+
+.packBestNote {
+  margin: 0.75rem 0 0;
+  font-size: 0.82rem;
+  color: #d9a4ff;
+  line-height: 1.45;
+}
+
+.packChooseHint {
+  margin: 0.5rem 0 0;
+  font-size: 0.76rem;
+  color: var(--dash-muted);
+  line-height: 1.4;
+}
+
 .payStep {
   display: flex;
   gap: 0.75rem;

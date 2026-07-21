@@ -65,6 +65,9 @@ export function resolveStudentPaymentBalance(crm, local) {
       hasRejectedReceipt: localRejected,
       debtItems: Array.isArray(crm.debt_items) ? crm.debt_items : [],
       pendingReceiptsCount: Number(crm.pending_receipts_count || 0),
+      lessonPrice: Number(crm.lesson_price) > 0 ? Number(crm.lesson_price) : null,
+      lessonFormat: String(crm.lesson_format || '') || null,
+      lessonPackages: Array.isArray(crm.packages) ? crm.packages : [],
     }
   }
 
@@ -83,5 +86,8 @@ export function resolveStudentPaymentBalance(crm, local) {
     hasRejectedReceipt: localRejected,
     debtItems: [],
     pendingReceiptsCount: 0,
+    lessonPrice: null,
+    lessonFormat: null,
+    lessonPackages: [],
   }
 }

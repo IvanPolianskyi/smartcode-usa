@@ -113,6 +113,9 @@ export async function GET() {
           hasRejectedReceipt: balance.hasRejectedReceipt,
           pendingReceiptUploadCount: receiptReview.pendingReceiptUploadCount,
           pendingReceiptsCount: balance.pendingReceiptsCount,
+          lessonPrice: balance.lessonPrice,
+          lessonFormat: balance.lessonFormat,
+          lessonPackages: balance.lessonPackages,
         },
         payments: payments.map((p) => ({
           id: p._id.toString(),

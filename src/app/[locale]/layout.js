@@ -10,6 +10,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import Header from '@/components/Header/Header'
 import Script from 'next/script'
 import MetaPixelRouteTracker from '@/components/MetaPixel/MetaPixelRouteTracker'
+import AttributionCapture from '@/components/AttributionCapture/AttributionCapture'
 import AuthSessionProvider from '@/components/AuthSessionProvider'
 import { META_PIXEL_ID } from '@/lib/metaPixel'
 import { routing } from '@/i18n/routing'
@@ -59,6 +60,7 @@ export default async function LocaleLayout({ children, params }) {
 					<AuthSessionProvider>
 						<Suspense fallback={null}>
 							<MetaPixelRouteTracker />
+							<AttributionCapture />
 						</Suspense>
 						<ScrollToTop />
 						<Header />

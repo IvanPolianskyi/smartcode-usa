@@ -86,6 +86,8 @@ export default function WeeklyScheduleCalendar({
           minutes: Number(mm),
           lessonAt: at,
           conducted,
+          isGroup: item?.isGroup === true,
+          teacherName: String(item?.teacherName || '').trim(),
           slotZoomLink: conducted ? null : item.zoomLink || zoomLink,
         })
         byDateKey.set(dateKey, list)
@@ -222,14 +224,19 @@ export default function WeeklyScheduleCalendar({
                       <span className={styles.scheduleLessonTime}>
                         <Clock size={14} />
                         {slot.time || t('student.schedule.timePending')}
+                        {slot.isGroup !== undefined && useInstances
+                          ? ` (${slot.isGroup ? t('student.calendar.kindGroup') : t('student.calendar.kindIndividual')})`
+                          : ''}
                         {slot.conducted
                           ? ` · ${t('student.calendar.conducted')}`
                           : ''}
                       </span>
                       <span className={styles.scheduleLessonTopic}>
-                        {slot.conducted
-                          ? t('student.calendar.conductedLesson')
-                          : t('student.calendar.liveLesson')}
+                        {slot.teacherName
+                          ? slot.teacherName
+                          : slot.conducted
+                            ? t('student.calendar.conductedLesson')
+                            : t('student.calendar.liveLesson')}
                       </span>
                     </div>
                     {slot.conducted ? (

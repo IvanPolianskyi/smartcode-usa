@@ -319,17 +319,23 @@ export function filterFutureScheduledLessons(lessons) {
   })
 }
 
-/** Як у Telegram-боті: completed або scheduled зі слотом у минулому. */
+/**
+ * Як у Telegram-боті: канонічний CRM-статус held (+ legacy completed) = проведено.
+ * Fallback: scheduled зі слотом у минулому (CRM ще не встиг promote → held).
+ */
 export function isCrmLessonConducted(lesson, now = new Date()) {
   const status = String(lesson?.status || '')
-  if (status === 'completed') return true
+  if (status === 'held' || status === 'completed') return true
   if (status !== 'scheduled') return false
   const startMs = parseUtcInstant(lesson?.start_at).getTime()
   return Number.isFinite(startMs) && startMs < now.getTime()
 }
 
-/** Кількість проведених ІУ/ГУ з CRM-уроків (для метрики «Завершених уроків»). */
-export function countConductedCrmLessons(lessons, now = new Date()) {
+/**
+ * Кількість проведених ІУ/ГУ з CRM-уроків (для метрики «Завершених уроків»).
+ * Як count_conducted_lessons_by_student у CRM: лише status held|completed.
+ */
+export function countConductedCrmLessons(lessons) {
   let n = 0
   for (const lesson of Array.isArray(lessons) ? lessons : []) {
     if (isCrmTrialLesson(lesson)) continue
@@ -337,31 +343,39 @@ export function countConductedCrmLessons(lessons, now = new Date()) {
     const kind = String(lesson?.kind || '')
     if (kind !== 'individual' && kind !== 'group') continue
     if (lesson?.group_calendar_removed === true) continue
-    if (isCrmLessonConducted(lesson, now)) n += 1
+    if (lesson?.is_group_shell === true) continue
+    const status = String(lesson?.status || '')
+    if (status === 'held' || status === 'completed') n += 1
   }
   return n
 }
 
 /**
- * Реальні уроки для календаря тижня (як у Telegram-боті):
+ * Реальні уроки для календаря тижня (точно як у Telegram-боті):
  * поточний київський тиждень + горизонт на «наступний урок».
- * Включає проведені (completed / минулий scheduled) з прапорцем conducted.
+ * Статуси scheduled | held | completed; проведені — з прапорцем conducted.
  */
 export function upcomingLessonsFromCrmLessons(
   lessons,
-  { now = new Date(), horizonDays = 21 } = {}
+  { now = new Date(), horizonDays = 21, teachers = [] } = {}
 ) {
   const week = kyivWeekRange(now)
   const from = week.start.getTime()
   const to = now.getTime() + horizonDays * 24 * 60 * 60 * 1000
+  const teacherNameById = new Map(
+    (Array.isArray(teachers) ? teachers : []).map((item) => [
+      String(item.id),
+      String(item.fullName || ''),
+    ])
+  )
   const out = []
 
   for (const lesson of Array.isArray(lessons) ? lessons : []) {
     if (isCrmTrialLesson(lesson)) continue
-    if (String(lesson?.kind || '') === 'availability') continue
-    if (String(lesson?.kind || '') !== 'individual') continue
+    const kind = String(lesson?.kind || '')
+    if (kind !== 'individual' && kind !== 'group') continue
     const status = String(lesson?.status || '')
-    if (status !== 'scheduled' && status !== 'completed') continue
+    if (status !== 'scheduled' && status !== 'held' && status !== 'completed') continue
     if (lesson?.group_calendar_removed === true) continue
     const start = parseUtcInstant(lesson.start_at)
     const startMs = start.getTime()
@@ -375,6 +389,9 @@ export function upcomingLessonsFromCrmLessons(
       day,
       time: `${String(p.hour).padStart(2, '0')}:${String(p.minute).padStart(2, '0')}`,
       conducted,
+      isGroup: isCrmGroupLessonSlot(lesson),
+      teacherName:
+        teacherNameById.get(String(lesson?.teacher_id || '')) || '',
     })
   }
 
@@ -625,7 +642,7 @@ export async function pullCrmScheduleToSmartcodeStudent(student, usersCollection
   // CRM відповів — беремо фактичний розклад (порожній теж), без застарілого шаблону.
   const nextSchedule = lessonsFetchedOk ? schedule : prev.regularSchedule || []
   const nextUpcoming = lessonsFetchedOk
-    ? upcomingLessonsFromCrmLessons(rawLessons)
+    ? upcomingLessonsFromCrmLessons(rawLessons, { teachers })
     : Array.isArray(prev.upcomingLessons)
       ? prev.upcomingLessons
       : []

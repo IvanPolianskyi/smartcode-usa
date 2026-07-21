@@ -1,8 +1,87 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
-import { Wallet, Upload, BookOpen, X, ImageIcon } from 'lucide-react'
+import { Wallet, Upload, BookOpen, X, ImageIcon, Star, Gift } from 'lucide-react'
 import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
+
+function packageLessonsLabel(t, count) {
+  const n = Number(count) || 0
+  if (n === 1) return t('student.packages.oneLesson')
+  if (n >= 2 && n <= 4) return t('student.packages.lessonsFew', { count: n })
+  return t('student.packages.lessonsMany', { count: n })
+}
+
+/** Пропозиція з пакетами (як у повідомленні бота «Як оплатити?»). */
+function LessonPackagesOffer({ t, paymentStats, onSelect }) {
+  const packages = Array.isArray(paymentStats?.lessonPackages)
+    ? paymentStats.lessonPackages
+    : []
+  if (packages.length === 0) return null
+
+  const lessonPrice = Number(paymentStats?.lessonPrice || 0)
+  const isGroup = String(paymentStats?.lessonFormat || '') === 'group'
+  const best = packages.find((p) => p?.is_best_value)
+
+  return (
+    <div className={styles.packOffer}>
+      <div className={styles.packOfferHead}>
+        <h4>{t('student.packages.title')}</h4>
+        <p>{t('student.packages.subtitle')}</p>
+      </div>
+      <p className={styles.packMeta}>
+        {isGroup
+          ? t('student.packages.formatGroup')
+          : t('student.packages.formatIndividual')}
+        {lessonPrice > 0
+          ? ` · ${t('student.packages.basePrice', { price: lessonPrice })}`
+          : ''}
+      </p>
+      <div className={styles.packGrid}>
+        {packages.map((pack) => {
+          const n = Number(pack.lessons) || 0
+          const showGift = Boolean(pack.show_gift_in_copy) && Number(pack.gift_lessons) >= 1
+          return (
+            <button
+              key={n}
+              type="button"
+              className={`${styles.packItem} ${pack.is_best_value ? styles.packItemBest : ''}`}
+              onClick={() => onSelect?.(pack)}
+            >
+              {pack.is_best_value ? (
+                <span className={styles.packBestBadge}>
+                  <Star size={12} aria-hidden /> {t('student.packages.bestValue')}
+                </span>
+              ) : null}
+              <strong className={styles.packCount}>{packageLessonsLabel(t, n)}</strong>
+              <span className={styles.packUnit}>
+                {t('student.packages.perLesson', { price: pack.unit_price })}
+              </span>
+              <span className={styles.packTotal}>
+                {t('student.packages.total', { total: pack.total })}
+              </span>
+              {showGift ? (
+                <span className={styles.packGift}>
+                  <Gift size={12} aria-hidden />{' '}
+                  {t('student.packages.payAsFor', { count: pack.paid_as_lessons })} ·{' '}
+                  {t('student.packages.gift', { count: pack.gift_lessons })}
+                </span>
+              ) : null}
+            </button>
+          )
+        })}
+      </div>
+      {best ? (
+        <p className={styles.packBestNote}>
+          {t('student.packages.bestNote', {
+            count: best.lessons,
+            price: best.unit_price,
+          })}
+        </p>
+      ) : null}
+      <p className={styles.packChooseHint}>{t('student.packages.chooseHint')}</p>
+    </div>
+  )
+}
 
 export default function StudentPaymentPanel({
   t,
@@ -23,6 +102,22 @@ export default function StudentPaymentPanel({
   const lessonCredits = Number(paymentStats?.lessonCredits || 0)
   const balanceStrongClass =
     !paymentLoading && lessonCredits < 0 ? styles.payStatNegative : undefined
+  const debtLessons = Number(paymentStats?.debtLessons || 0)
+  const debtItems = Array.isArray(paymentStats?.debtItems) ? paymentStats.debtItems : []
+  const pendingReceiptsCount = Math.max(
+    Number(paymentStats?.pendingReceiptsCount || 0),
+    paymentStats?.hasPendingReceiptReview ? 1 : 0
+  )
+
+  const applyPackage = (pack) => {
+    const total = Number(pack?.total || 0)
+    const lessons = Number(pack?.lessons || 0)
+    if (!total || !lessons) return
+    setAmount(String(total))
+    setLessonCount(String(lessons))
+    setMessage('')
+    document.getElementById('pay-amount')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
 
   useEffect(() => {
     if (defaultOpen) {
@@ -114,6 +209,29 @@ export default function StudentPaymentPanel({
             {paymentLoading ? t('student.payments.balanceLoading') : lessonCredits}
           </strong>
         </div>
+
+        {!paymentLoading && debtLessons > 0 ? (
+          <div className={styles.payDebtNote}>
+            <p>{t('student.payments.debtNote', { count: debtLessons })}</p>
+            {debtItems.length > 0 ? (
+              <ul>
+                {debtItems.slice(0, 3).map((item, i) => (
+                  <li key={item.lesson_id || i}>
+                    {[item.date_label, item.time, item.kind].filter(Boolean).join(' · ')}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
+        ) : null}
+
+        {!paymentLoading && pendingReceiptsCount > 0 ? (
+          <p className={styles.payPendingNote}>
+            {t('student.payments.pendingReviewNote', { count: pendingReceiptsCount })}
+          </p>
+        ) : null}
+
+        <LessonPackagesOffer t={t} paymentStats={paymentStats} onSelect={applyPackage} />
 
         <form className={styles.payFormCol} onSubmit={handleSubmit}>
           <div className={styles.payStep}>
