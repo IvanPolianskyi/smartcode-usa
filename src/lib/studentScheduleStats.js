@@ -63,7 +63,13 @@ export function parseScheduleSlots(schedule) {
 export function computeScheduleStats(schedule, { t, dateLocale, upcomingLessons } = {}) {
   const now = new Date()
 
-  if (Array.isArray(upcomingLessons)) {
+  // Порожній snapshot CRM-уроків при наявному regularSchedule → рахуємо за шаблоном.
+  const hasScheduleTemplate = Array.isArray(schedule) && schedule.length > 0
+  const useInstances =
+    Array.isArray(upcomingLessons) &&
+    (upcomingLessons.length > 0 || !hasScheduleTemplate)
+
+  if (useInstances) {
     const { start, end } = kyivWeekRange(now)
     const thisWeekAll = []
     const upcomingThisWeek = []

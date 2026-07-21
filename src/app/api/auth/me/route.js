@@ -4,7 +4,7 @@ import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { syncStudentScheduleAccess } from '@/lib/syncStudentScheduleAccess'
 import { getStudentAccessibleCourseIds } from '@/lib/courseLessonAccess'
-import { maybePullCrmScheduleForStudent } from '@/lib/crmStudentSchedulePull'
+import { maybePullCrmScheduleForStudent, hasEmptyScheduleCache } from '@/lib/crmStudentSchedulePull'
 import { isStudentDashboardReady, shouldPersistAccountReady } from '@/lib/studentAccountReady'
 import { toAuthUserResponse } from '@/lib/crmLmsSync'
 
@@ -28,17 +28,26 @@ export async function GET() {
       )
     }
     if (user.role !== 'teacher' && user.role !== 'admin') {
-      // CRM pull — після відповіді (не блокує dashboard). Клієнт може ще раз смикнути sync.
-      const uidForBg = user._id.toString()
-      after(async () => {
+      if (hasEmptyScheduleCache(user.studentProfile)) {
+        // Кеш розкладу пустий — тягнемо CRM синхронно, щоб учень одразу побачив уроки.
         try {
-          const coll = await getCollection('users')
-          const fresh = await coll.findOne({ _id: new ObjectId(uidForBg) })
-          if (fresh) await maybePullCrmScheduleForStudent(fresh, coll)
+          user = await maybePullCrmScheduleForStudent(user, usersCollection)
         } catch (crmErr) {
-          console.error('CRM schedule background pull failed:', crmErr)
+          console.error('CRM schedule sync pull failed:', crmErr)
         }
-      })
+      } else {
+        // CRM pull — після відповіді (не блокує dashboard). Клієнт може ще раз смикнути sync.
+        const uidForBg = user._id.toString()
+        after(async () => {
+          try {
+            const coll = await getCollection('users')
+            const fresh = await coll.findOne({ _id: new ObjectId(uidForBg) })
+            if (fresh) await maybePullCrmScheduleForStudent(fresh, coll)
+          } catch (crmErr) {
+            console.error('CRM schedule background pull failed:', crmErr)
+          }
+        })
+      }
       try {
         user = await syncStudentScheduleAccess(user, usersCollection)
       } catch (syncErr) {

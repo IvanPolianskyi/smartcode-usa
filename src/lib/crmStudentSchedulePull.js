@@ -774,8 +774,17 @@ export async function syncScheduleFromCrmStudentId(crmStudentId) {
   }
 }
 
+/** Кеш розкладу порожній (немає ні уроків CRM, ні шаблону) — тротлінг не застосовуємо. */
+export function hasEmptyScheduleCache(profile) {
+  const p = profile || {}
+  const upcoming = Array.isArray(p.upcomingLessons) ? p.upcomingLessons : []
+  const regular = Array.isArray(p.regularSchedule) ? p.regularSchedule : []
+  return upcoming.length === 0 && regular.length === 0
+}
+
 /**
  * Те саме, що pullCrmScheduleToSmartcodeStudent, але не частіше ніж раз на CRM_AUTO_PULL_MIN_MS (для /api/auth/me).
+ * Якщо кеш розкладу порожній — пробуємо частіше (раз на хвилину), щоб учень не дивився на пустий тиждень.
  */
 export async function maybePullCrmScheduleForStudent(user, usersCollection) {
   if (!user || user.role === 'admin' || !CRM_BASE_URL) return user
@@ -783,7 +792,8 @@ export async function maybePullCrmScheduleForStudent(user, usersCollection) {
   const last = profile.crmScheduleSyncedAt
   if (last) {
     const ts = new Date(last).getTime()
-    if (Number.isFinite(ts) && Date.now() - ts < CRM_AUTO_PULL_MIN_MS) {
+    const minInterval = hasEmptyScheduleCache(profile) ? 60 * 1000 : CRM_AUTO_PULL_MIN_MS
+    if (Number.isFinite(ts) && Date.now() - ts < minInterval) {
       return user
     }
   }

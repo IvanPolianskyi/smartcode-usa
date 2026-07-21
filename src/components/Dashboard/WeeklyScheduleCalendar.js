@@ -59,7 +59,11 @@ export default function WeeklyScheduleCalendar({
 }) {
   const now = new Date()
   const kyivWeek = kyivWeekRange(now)
-  const useInstances = Array.isArray(upcomingLessons)
+  // Порожній кеш CRM-уроків не авторитетний: якщо є regularSchedule — показуємо його,
+  // а не тиждень «вільних днів» (симптом застарілого snapshot до pull).
+  const useInstances =
+    Array.isArray(upcomingLessons) &&
+    (upcomingLessons.length > 0 || !(schedule || []).length)
 
   const slots = useMemo(
     () => (schedule || []).map(parseSlot).filter(Boolean),

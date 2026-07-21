@@ -1230,12 +1230,14 @@
 }
 
 .payBottomFull .payCardInner {
-  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
 }
 
 .payBottomFull .payFormCol {
-  padding-left: 1.5rem;
-  border-left: 1px solid var(--dash-border);
+  width: 100%;
+  padding-left: 0;
+  border-left: none;
 }
 
 .payBottomFull .bankBlock {
@@ -1957,16 +1959,11 @@
 }
 
 @media (min-width: 900px) {
+  /* Одна колонка на всю ширину картки: баланс → пакети → форма. */
   .payCardInner {
-    display: grid;
-    grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
-    align-items: start;
-  }
-
-  .payFormCol {
-    padding-left: 1.5rem;
-    border-left: 1px solid var(--dash-border);
   }
 
   .bankBlock {
