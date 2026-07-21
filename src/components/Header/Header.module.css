@@ -943,11 +943,26 @@
         );
     z-index: 10000; /* перекриває все */
     opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
     align-items: stretch;
     justify-content: flex-start;
     padding: 0;
     box-sizing: border-box;
     overflow: hidden;
+    pointer-events: none;
+}
+
+/* Смонтоване меню (рендериться, але ще прозоре — для анімації відкриття) */
+.mobileMenuMounted {
+    display: flex;
+}
+
+/* Повністю відкрите меню */
+.mobileMenuOpen {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .mobileMenuClose {
