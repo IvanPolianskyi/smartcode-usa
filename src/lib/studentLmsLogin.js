@@ -157,18 +157,26 @@ export async function allocateUniqueStudentLogin(
   candidates.push(syntheticStudentLogin(sid))
 
   const seen = new Set()
+  const isFree = async (e) => {
+    const query = { email: e }
+    if (excludeUserId) query._id = { $ne: excludeUserId }
+    const taken = await usersCollection.findOne(query, { projection: { _id: 1 } })
+    return !taken
+  }
   for (const email of candidates) {
     const e = String(email || '').trim().toLowerCase()
     if (!e || seen.has(e)) continue
     seen.add(e)
-    const query = { email: e }
-    if (excludeUserId) query._id = { $ne: excludeUserId }
-    const taken = await usersCollection.findOne(query, { projection: { _id: 1 } })
-    if (!taken) return e
+    if (await isFree(e)) return e
   }
 
-  const fallback = `student.${sid || crypto.randomBytes(3).toString('hex')}@${STUDENTS_DOMAIN}`
-  return fallback
+  // Усі кандидати зайняті — додаємо випадковий суфікс, доки не знайдемо вільний.
+  const base = sid || crypto.randomBytes(3).toString('hex')
+  for (let i = 0; i < 10; i += 1) {
+    const fallback = `student.${base}.${crypto.randomBytes(2).toString('hex')}@${STUDENTS_DOMAIN}`
+    if (await isFree(fallback)) return fallback
+  }
+  return `student.${crypto.randomBytes(6).toString('hex')}@${STUDENTS_DOMAIN}`
 }
 
 /**

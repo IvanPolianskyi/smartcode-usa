@@ -399,15 +399,32 @@ export async function upsertUserFromCrm(payload) {
       const existingCrm = String(
         existingByEmail.studentProfile?.crmStudentId || ''
       ).trim()
-      if (existingCrm && existingCrm !== crmStudentId) {
-        return {
-          userId: null,
-          created: false,
-          message:
-            'Акаунт з таким логіном уже є на сайті. Привʼяжіть вручну на сторінці «Звʼязки».',
+      const claimExistingAccount = async () => {
+        user = existingByEmail
+        const prev = user.studentProfile || defaultStudentProfile()
+        const setFields = {
+          phone: phone ?? user.phone,
+          studentProfile: { ...prev, ...profilePatch },
+          updatedAt: new Date(),
         }
+        if (issueCredentials || (!user.password && createLoginLinkOnly)) {
+          tempPassword = requestedPassword || generateStudentPassword()
+          setFields.password = await hashPassword(tempPassword)
+        }
+        await usersCollection.updateOne({ _id: user._id }, { $set: setFields })
+        user = await usersCollection.findOne({ _id: user._id })
       }
-      if (!existingCrm) {
+
+      if (existingCrm === crmStudentId) {
+        await claimExistingAccount()
+      } else if (existingCrm) {
+        // Логін зайнятий іншим учнем — не блокуємо: беремо інший вільний логін
+        // і створюємо новий акаунт нижче.
+        email = await allocateUniqueStudentLogin(usersCollection, {
+          name: displayNameForLogin,
+          shortId,
+        })
+      } else {
         const local = loginLocalFromName(displayNameForLogin, shortId)
         const ownLogins = new Set(
           [
@@ -417,42 +434,15 @@ export async function upsertUserFromCrm(payload) {
             local && shortId ? `${local}.${shortId}@students.smartcode` : '',
           ].filter(Boolean)
         )
-        const canClaimSynthetic = ownLogins.has(email)
-        if (!canClaimSynthetic) {
-          return {
-            userId: null,
-            created: false,
-            message:
-              'Логін уже зайнятий на сайті без привʼязки CRM. Привʼяжіть вручну на сторінці «Звʼязки».',
-          }
+        if (ownLogins.has(email)) {
+          await claimExistingAccount()
+        } else {
+          // Чужий логін без привʼязки CRM — теж просто беремо інший вільний.
+          email = await allocateUniqueStudentLogin(usersCollection, {
+            name: displayNameForLogin,
+            shortId,
+          })
         }
-        user = existingByEmail
-        const prev = user.studentProfile || defaultStudentProfile()
-        const setFields = {
-          phone: phone ?? user.phone,
-          studentProfile: { ...prev, ...profilePatch },
-          updatedAt: new Date(),
-        }
-        if (issueCredentials || (!user.password && createLoginLinkOnly)) {
-          tempPassword = requestedPassword || generateStudentPassword()
-          setFields.password = await hashPassword(tempPassword)
-        }
-        await usersCollection.updateOne({ _id: user._id }, { $set: setFields })
-        user = await usersCollection.findOne({ _id: user._id })
-      } else if (existingCrm === crmStudentId) {
-        user = existingByEmail
-        const prev = user.studentProfile || defaultStudentProfile()
-        const setFields = {
-          phone: phone ?? user.phone,
-          studentProfile: { ...prev, ...profilePatch },
-          updatedAt: new Date(),
-        }
-        if (issueCredentials || (!user.password && createLoginLinkOnly)) {
-          tempPassword = requestedPassword || generateStudentPassword()
-          setFields.password = await hashPassword(tempPassword)
-        }
-        await usersCollection.updateOne({ _id: user._id }, { $set: setFields })
-        user = await usersCollection.findOne({ _id: user._id })
       }
     }
 
