@@ -665,6 +665,11 @@
     justify-content: flex-start;
 }
 
+.mobileMenuFooter .mobileProfileLink {
+    color: #ffffff;
+    text-decoration: none;
+}
+
 .mobileProfileName {
     font-weight: 700;
     font-size: 1rem;
@@ -928,19 +933,17 @@
     display: none;
     flex-direction: column;
     background: 
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 1px,
-            rgba(255, 255, 255, 0.02) 1px,
-            rgba(255, 255, 255, 0.02) 2px
+        radial-gradient(
+            ellipse 90% 55% at 15% 0%,
+            rgba(122, 0, 200, 0.4) 0%,
+            transparent 55%
         ),
-        linear-gradient(
-            to right,
-            #e0f2fe 0%,
-            #e9d5ff 50%,
-            #f3e8ff 100%
-        );
+        radial-gradient(
+            ellipse 80% 50% at 100% 100%,
+            rgba(161, 0, 255, 0.22) 0%,
+            transparent 60%
+        ),
+        #0c0614;
     z-index: 10000; /* перекриває все */
     opacity: 0;
     transform: translateY(8px);
@@ -971,24 +974,24 @@
     right: max(0.75rem, env(safe-area-inset-right, 0px));
     width: 48px;
     height: 48px;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(161, 0, 255, 0.35);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-primary);
+    color: #ffffff;
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 10000;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 16px rgba(161, 0, 255, 0.2);
 }
 
 .mobileMenuClose:hover {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(161, 0, 255, 0.2);
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 24px rgba(161, 0, 255, 0.35);
 }
 
 .mobileMenuContent { 
@@ -1031,7 +1034,7 @@
     align-items: center;
     justify-content: flex-start;
     gap: 0;
-    color: var(--text-primary);
+    color: #ffffff;
 }
 
 /* Компактний логотип у меню (структура Link > icon wrap > Image) */
@@ -1087,7 +1090,7 @@
 .mobileMenuSectionTitle {
     font-size: 0.7rem;
     font-weight: 700;
-    color: var(--text-secondary);
+    color: #c44bff;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 0.3rem;
@@ -1110,17 +1113,17 @@
     display: flex;
     align-items: center;
     gap: 0.45rem;
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(161, 0, 255, 0.22);
     border-radius: 10px;
     padding: 0.4rem 0.5rem;
     margin-bottom: 0.25rem;
     text-decoration: none;
-    color: var(--text-primary);
+    color: #ffffff;
     transition: all 0.3s ease;
     text-align: left;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .mobileCourseItem:last-child {
@@ -1128,9 +1131,10 @@
 }
 
 .mobileCourseItem:hover {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(161, 0, 255, 0.14);
+    border-color: rgba(161, 0, 255, 0.45);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 18px rgba(161, 0, 255, 0.25);
 }
 
 .mobileCourseIcon {
@@ -1157,7 +1161,7 @@
 .mobileCourseTitle {
     font-size: 0.82rem;
     font-weight: 700;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 0.1rem;
     display: flex;
     align-items: center;
@@ -1169,7 +1173,7 @@
 .mobileCourseDescription {
     font-size: 0.65rem;
     line-height: 1.25;
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.62);
     margin-bottom: 0;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -1179,7 +1183,7 @@
 
 .mobileCourseAge {
     font-size: 0.65rem;
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.55);
     font-weight: 600;
     line-height: 1.2;
 }
@@ -1199,18 +1203,18 @@
 
 /* Стилі для навігаційних пунктів */
 .mobileNavItem {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(161, 0, 255, 0.22);
     border-radius: 10px;
     padding: 0.55rem 0.75rem;
     margin-bottom: 0.3rem;
     text-decoration: none;
-    color: var(--text-primary);
+    color: #ffffff;
     font-size: 0.9rem;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     width: 100%;
     text-align: left;
     cursor: pointer;
@@ -1223,9 +1227,10 @@ button.mobileNavItem {
 }
 
 .mobileNavItem:hover {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(161, 0, 255, 0.14);
+    border-color: rgba(161, 0, 255, 0.45);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 18px rgba(161, 0, 255, 0.25);
 }
 
 .mobileMenuFooter {
@@ -1237,12 +1242,12 @@ button.mobileNavItem {
     flex-shrink: 0;
     padding-top: 0.45rem;
     padding-bottom: max(0.65rem, env(safe-area-inset-bottom, 0px));
-    border-top: 1px solid rgba(15, 23, 42, 0.08);
+    border-top: 1px solid rgba(161, 0, 255, 0.2);
     background: linear-gradient(
         180deg,
-        rgba(243, 232, 255, 0) 0%,
-        rgba(255, 255, 255, 0.55) 35%,
-        rgba(255, 255, 255, 0.75) 100%
+        rgba(12, 6, 20, 0) 0%,
+        rgba(12, 6, 20, 0.75) 35%,
+        rgba(12, 6, 20, 0.92) 100%
     );
 }
 
@@ -1251,29 +1256,29 @@ button.mobileNavItem {
     align-items: center;
     justify-content: center;
     gap: 0.6rem;
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(161, 0, 255, 0.25);
     border-radius: 14px;
     padding: 0.9rem 1.25rem;
     text-decoration: none;
-    color: var(--text-primary);
+    color: #ffffff;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .mobileContact:hover {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(161, 0, 255, 0.14);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 18px rgba(161, 0, 255, 0.25);
 }
 
 .mobileLoginButton {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(10px);
-    border: 1.5px solid #3b82f6;
-    color: #3b82f6;
+    border: 1.5px solid rgba(196, 75, 255, 0.7);
+    color: #c44bff;
     padding: 0.72rem 1rem;
     font-weight: 600;
     border-radius: 50px;
@@ -1284,37 +1289,37 @@ button.mobileNavItem {
     font-size: 0.92rem;
     transition: all 0.3s ease;
     margin-bottom: 0.35rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 14px rgba(161, 0, 255, 0.15);
 }
 
 .mobileLoginButton:hover {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(161, 0, 255, 0.16);
+    color: #ffffff;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 22px rgba(161, 0, 255, 0.35);
 }
 
 .mobileRegisterButton {
-    background: #3b82f6;
+    background: linear-gradient(135deg, #a100ff 0%, #7a00c8 100%);
     color: white;
     padding: 0.72rem 1rem;
     font-weight: 600;
     border-radius: 50px;
-    border: 1.5px solid #3b82f6;
+    border: 1.5px solid rgba(196, 75, 255, 0.6);
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
     font-size: 0.92rem;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 16px rgba(161, 0, 255, 0.4);
     transition: all 0.3s ease;
     margin-bottom: 0;
 }
 
 .mobileRegisterButton:hover {
-    background: #2563eb;
-    border-color: #2563eb;
+    filter: brightness(1.12);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 6px 22px rgba(161, 0, 255, 0.55);
 }
 
 /* Медіа-запити для мобільного меню */
