@@ -351,12 +351,12 @@
 }
 
 .hint {
-	margin: 0;
-	text-align: left;
-	font-size: 0.8rem;
+	margin: 0.65rem 0 0;
+	text-align: center;
+	font-size: 0.78rem;
 	font-weight: 500;
-	color: rgba(255, 255, 255, 0.62);
-	line-height: 1.4;
+	color: rgba(255, 255, 255, 0.68);
+	line-height: 1.45;
 }
 
 .success {

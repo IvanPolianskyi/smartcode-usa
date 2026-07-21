@@ -214,6 +214,8 @@ export default function HeroTrialForm() {
 						{submitting ? t('submitting') : t('submit')}
 					</span>
 				</button>
+
+				<p className={styles.hint}>{t('hint')}</p>
 			</form>
 		</div>
 	)

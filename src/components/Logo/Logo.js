@@ -33,8 +33,8 @@ export default function Logo({ className = '', href = '/', hideText = false }) {
 			</div>
 			{!hideText && (
 				<div className={styles.logoText}>
-					<span className={styles.logoTitle}>SmartCode</span>
-					<span className={styles.logoSubtitle}>Academy</span>
+					<span className={styles.logoTitle}>SmartCode Academy</span>
+					<span className={styles.logoSubtitle}>школа програмування</span>
 				</div>
 			)}
 		</Link>

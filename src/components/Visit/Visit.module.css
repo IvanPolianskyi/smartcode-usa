@@ -539,10 +539,11 @@
 	}
 
 	.heroRight {
-		flex: 0 0 min(380px, 32%);
-		max-width: 400px;
+		flex: 0 0 min(440px, 38%);
+		max-width: 460px;
 		justify-content: flex-end;
 		padding-top: 0;
+		margin-right: clamp(1rem, 5vw, 5.5rem);
 	}
 
 	.heroFormBadge {
@@ -557,16 +558,18 @@
 	}
 
 	.title {
-		font-size: clamp(2.85rem, 4.6vw, 4.4rem);
+		font-size: clamp(3.3rem, 5.4vw, 5.2rem);
 		margin-bottom: 1.15rem;
 		width: max-content;
 		max-width: 100%;
+		line-height: 1.05;
 	}
 
 	.titleMain {
-		display: inline;
+		display: block;
 	}
 
+	.titleAccentMid,
 	.titleAccentEnd {
 		display: block;
 	}
@@ -598,12 +601,12 @@
 	}
 
 	.heroRight {
-		flex: 0 0 min(420px, 30%);
-		max-width: 440px;
+		flex: 0 0 min(490px, 36%);
+		max-width: 510px;
 	}
 
 	.title {
-		font-size: clamp(3.15rem, 4.4vw, 4.65rem);
+		font-size: clamp(3.6rem, 5.2vw, 5.5rem);
 	}
 
 	.subtitle {
@@ -619,7 +622,7 @@
 	}
 
 	.title {
-		font-size: clamp(2.45rem, 4vw, 3.6rem);
+		font-size: clamp(2.85rem, 4.6vw, 4.3rem);
 		margin-bottom: 0.85rem;
 	}
 

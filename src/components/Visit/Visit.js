@@ -1,7 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import { Star } from 'lucide-react'
 import styles from './Visit.module.css'
 import HeroTrialForm from './HeroTrialForm'
 
@@ -14,11 +13,6 @@ const SCHOOL_LABEL = 'Онлайн школа програмування для 
 function SocialProofRow({ className = '' }) {
 	return (
 		<div className={`${styles.starsRow} ${className}`.trim()}>
-			{[1, 2, 3, 4, 5].map((i) => (
-				<Star key={i} size={16} className={styles.starIcon} />
-			))}
-			<span className={styles.ratingText}>4.9</span>
-			<span className={styles.ratingDivider}>·</span>
 			<span className={styles.socialProofText}>5000+ учнів</span>
 			<span className={styles.ratingDivider}>·</span>
 			<span className={styles.socialProofText}>5 років досвіду</span>
