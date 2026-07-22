@@ -91,13 +91,17 @@ function StudentDashboard({ user, progressData, paymentStats, progressLoading, p
     ? t('student.schedule.motivationRemaining', { count: scheduleInfo.weeklyRemaining, next: scheduleInfo.nextLessonText })
     : t('student.schedule.motivationDone', { next: scheduleInfo.nextLessonText })
 
-  const lessonCredits = Number(paymentStats?.lessonCredits ?? user?.studentProfile?.lessonCredits ?? 0)
+  const lessonCredits = Number(
+    paymentStats?.lessonCredits ?? user?.studentProfile?.lessonCredits ?? 0
+  )
   const hasPendingReceiptReview = Boolean(paymentStats?.hasPendingReceiptReview)
-  // Як у CRM: should_request_payment = борг > 0 і немає pending-квитанції.
+  // Поки payment/history не відповіла — не показуємо «борг» / нагадування:
+  // у профілі lessonCredits часто 0 до дзеркала з CRM, і fallback дає хибний flash.
   const showPaymentReminder =
-    paymentStats?.shouldRequestPayment != null
+    !paymentLoading &&
+    (paymentStats?.shouldRequestPayment != null
       ? Boolean(paymentStats.shouldRequestPayment)
-      : schedule.length > 0 && lessonCredits < 1 && !hasPendingReceiptReview
+      : false)
 
   const scrollToPayment = () => {
     setPayPanelOpen(true)
@@ -205,7 +209,16 @@ export default function DashboardPage() {
   const getCourseInfo = useDashboardCourses()
   const { user, loading: sessionLoading, refresh } = useAuthSession()
   const [progressData, setProgressData] = useState({})
-  const [paymentStats, setPaymentStats] = useState({ completed: 0, pending: 0, failed: 0, totalAmount: 0 })
+  const [paymentStats, setPaymentStats] = useState({
+    completed: 0,
+    pending: 0,
+    failed: 0,
+    totalAmount: 0,
+    // Поки null — UI не трактує відсутність поля як «борг 0 кредитів».
+    lessonCredits: null,
+    debtLessons: null,
+    shouldRequestPayment: null,
+  })
   const [adminStats, setAdminStats] = useState(null)
   const [progressLoading, setProgressLoading] = useState(true)
   const [paymentLoading, setPaymentLoading] = useState(true)
