@@ -3,7 +3,7 @@ import { getCollection } from '@/lib/mongodb'
 import { cookies } from 'next/headers'
 import { sendCapiLead, getClientIp, getClientUserAgent, getFbCookies } from '@/lib/metaCapi'
 import { normalizePhoneE164 } from '@/lib/phoneE164'
-import { sanitizeAttribution } from '@/lib/attribution'
+import { detectTrafficType, resolveServerAttribution } from '@/lib/attribution'
 import {
   API_ERRORS,
   getTrialGenericCourse,
@@ -49,16 +49,6 @@ function getMetaLeadSkipReason({
   if (!hasValidEventId) return 'немає event id (не пробна форма)'
   if (existingEvent) return 'дубль event id'
   return null
-}
-
-function detectTrafficType(attribution) {
-  const medium = String(attribution?.utm_medium || '').toLowerCase()
-  const source = String(attribution?.utm_source || '').toLowerCase()
-  const hasClickId = Boolean(attribution?.fbclid || attribution?.gclid || attribution?.ttclid)
-  const paidMedium = ['cpc', 'ppc', 'paid', 'paid_social', 'cpm', 'display']
-  const paidSource = ['facebook', 'instagram', 'meta', 'google', 'tiktok']
-  const looksPaid = hasClickId || paidMedium.some((m) => medium.includes(m)) || paidSource.some((s) => source.includes(s))
-  return looksPaid ? 'Реклама' : 'Органіка/невідомо'
 }
 
 async function sendLeadToCrm(payload) {
@@ -170,22 +160,40 @@ export async function POST(request) {
       )
     }
     const normalizedTelegram = telegram ? (telegram.startsWith('@') ? telegram : '@' + telegram) : null
-    const cleanAttribution = sanitizeAttribution(attribution)
     const hasValidEventId = Boolean(eventId)
     const { fbc, fbp } = getFbCookies(request)
-    const crmAttribution = {
-      ...cleanAttribution,
-      ...(fbc ? { fbc } : {}),
-      ...(fbp ? { fbp } : {}),
-      ...(hasValidEventId ? { event_id: eventId } : {}),
-      event_time: Math.floor(Date.now() / 1000),
-    }
+    // Клієнтські UTM + fallback з sourceUrl + _fbc/_fbp cookies (Meta часто дає лише fbclid без UTM).
+    const resolvedAttribution = resolveServerAttribution({
+      clientAttribution: attribution,
+      sourceUrl,
+      fbc,
+      fbp,
+    })
+    const {
+      fbc: resolvedFbc,
+      fbp: resolvedFbp,
+      ...cleanAttribution
+    } = resolvedAttribution
     const preferredContactLabel = preferredContactMethod === 'telegram_phone' ? 'Написати в Telegram за цим номером' : 'Подзвонити'
     const isTrialCourse = isTrialCourseValue(safeCourseInput)
     const displayCourse =
       safeCourseInput ||
       (hasValidEventId ? getTrialGenericCourse(loc) : '')
-    const trafficType = detectTrafficType(cleanAttribution)
+    const traffic = detectTrafficType({
+      ...cleanAttribution,
+      ...(resolvedFbc ? { fbc: resolvedFbc } : {}),
+      ...(resolvedFbp ? { fbp: resolvedFbp } : {}),
+    })
+    const trafficType = traffic.type
+    const crmAttribution = {
+      ...cleanAttribution,
+      ...(resolvedFbc ? { fbc: resolvedFbc } : {}),
+      ...(resolvedFbp ? { fbp: resolvedFbp } : {}),
+      ...(hasValidEventId ? { event_id: eventId } : {}),
+      event_time: Math.floor(Date.now() / 1000),
+      traffic_type: trafficType,
+      traffic_reason: traffic.reason,
+    }
 
     const cookieStore = await cookies()
     const referralIdCookie = cookieStore.get('referralId')
@@ -246,8 +254,8 @@ export async function POST(request) {
         name: safeName || undefined,
         clientIp,
         userAgent,
-        fbc,
-        fbp,
+        fbc: resolvedFbc || fbc,
+        fbp: resolvedFbp || fbp,
         fbclid: cleanAttribution.fbclid || undefined,
         contentName: displayCourse || 'trial_lesson',
         contentIds,
@@ -273,6 +281,7 @@ export async function POST(request) {
       displayCourse ? `<b>Курс:</b> ${escapeHtml(displayCourse)}` : null,
       safeMessage ? `<b>Повідомлення:</b>\n${escapeHtml(safeMessage)}` : null,
       `<b>Трафік:</b> ${escapeHtml(trafficType)}`,
+      traffic.reason ? `<b>Підстава:</b> ${escapeHtml(traffic.reason)}` : null,
       metaLeadLine,
       cleanAttribution.utm_source ? `<b>UTM Source:</b> ${escapeHtml(cleanAttribution.utm_source)}` : null,
       cleanAttribution.utm_medium ? `<b>UTM Medium:</b> ${escapeHtml(cleanAttribution.utm_medium)}` : null,
@@ -282,6 +291,10 @@ export async function POST(request) {
       cleanAttribution.fbclid ? `<b>fbclid:</b> <code>${escapeHtml(cleanAttribution.fbclid)}</code>` : null,
       cleanAttribution.gclid ? `<b>gclid:</b> <code>${escapeHtml(cleanAttribution.gclid)}</code>` : null,
       cleanAttribution.ttclid ? `<b>ttclid:</b> <code>${escapeHtml(cleanAttribution.ttclid)}</code>` : null,
+      resolvedFbc
+        ? `<b>Meta click (_fbc):</b> yes`
+        : `<b>Meta click (_fbc):</b> no`,
+      resolvedFbp ? `<b>Meta browser (_fbp):</b> yes` : `<b>Meta browser (_fbp):</b> no`,
       sourceUrl ? `<b>URL:</b> ${escapeHtml(sourceUrl)}` : null,
       hasValidEventId ? `<b>Event ID:</b> <code>${escapeHtml(eventId)}</code>` : `<b>Event ID:</b> невалідний/відсутній`,
       referralId ? `<b>🔥 Реферал ID:</b> <code>${escapeHtml(referralId)}</code>` : null,
