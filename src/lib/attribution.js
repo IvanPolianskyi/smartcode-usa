@@ -217,9 +217,9 @@ export function resolveServerAttribution({
 }
 
 /**
- * Бінарна відповідь для таргетологів: Реклама / Не реклама + підстава.
+ * Бінарна відповідь: Реклама / Органіка/невідомо + підстава (для реклами).
  * Meta-клік і відкладений візит після кліку = Реклама (треба для ретаргету/аналітики).
- * @returns {{ type: 'Реклама' | 'Не реклама', reason: string, signals: string[], confidence: 'high' | 'medium' | 'none', deferred: boolean }}
+ * @returns {{ type: 'Реклама' | 'Органіка/невідомо', reason: string, signals: string[], confidence: 'high' | 'medium' | 'none', deferred: boolean }}
  */
 export function detectTrafficType(attribution) {
 	const medium = String(attribution?.utm_medium || '').toLowerCase()
@@ -276,26 +276,9 @@ export function detectTrafficType(attribution) {
 		}
 	}
 
-	const utmBits = [
-		attribution?.utm_source && `source=${attribution.utm_source}`,
-		attribution?.utm_medium && `medium=${attribution.utm_medium}`,
-		attribution?.utm_campaign && `campaign=${attribution.utm_campaign}`,
-	].filter(Boolean)
-
-	if (utmBits.length) {
-		return {
-			type: 'Не реклама',
-			reason: `є UTM без paid-ознаки (${utmBits.join(', ')})`,
-			signals: [],
-			confidence: 'none',
-			deferred: false,
-		}
-	}
-
 	return {
-		type: 'Не реклама',
-		reason:
-			'немає paid UTM, fbclid/_fbc чи gclid — сайт не бачив рекламного кліку (навіть раніше в межах 28 днів)',
+		type: 'Органіка/невідомо',
+		reason: '',
 		signals: [],
 		confidence: 'none',
 		deferred: false,

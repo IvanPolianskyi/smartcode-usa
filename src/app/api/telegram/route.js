@@ -288,26 +288,38 @@ export async function POST(request) {
       safeMessage ? `<b>Повідомлення:</b>\n${escapeHtml(safeMessage)}` : null,
       trafficType === 'Реклама'
         ? traffic.deferred
-          ? `<b>Трафік:</b> ✅ РЕКЛАМА (відкладений візит)`
-          : `<b>Трафік:</b> ✅ РЕКЛАМА`
-        : `<b>Трафік:</b> ❌ НЕ РЕКЛАМА`,
-      trafficType === 'Реклама'
-        ? `<b>Для таргетологів:</b> рахувати як рекламу`
+          ? `<b>Трафік:</b> Реклама (відкладений візит)`
+          : `<b>Трафік:</b> Реклама`
+        : `<b>Трафік:</b> Органіка/невідомо`,
+      // Деталі атрибуції — лише для реклами (таргетологам корисно).
+      trafficType === 'Реклама' && traffic.reason
+        ? `<b>Підстава:</b> ${escapeHtml(traffic.reason)}`
         : null,
-      traffic.reason ? `<b>Підстава:</b> ${escapeHtml(traffic.reason)}` : null,
+      trafficType === 'Реклама' && cleanAttribution.utm_source
+        ? `<b>UTM Source:</b> ${escapeHtml(cleanAttribution.utm_source)}`
+        : null,
+      trafficType === 'Реклама' && cleanAttribution.utm_medium
+        ? `<b>UTM Medium:</b> ${escapeHtml(cleanAttribution.utm_medium)}`
+        : null,
+      trafficType === 'Реклама' && cleanAttribution.utm_campaign
+        ? `<b>UTM Campaign:</b> ${escapeHtml(cleanAttribution.utm_campaign)}`
+        : null,
+      trafficType === 'Реклама' && cleanAttribution.utm_term
+        ? `<b>UTM Term:</b> ${escapeHtml(cleanAttribution.utm_term)}`
+        : null,
+      trafficType === 'Реклама' && cleanAttribution.utm_content
+        ? `<b>UTM Content:</b> ${escapeHtml(cleanAttribution.utm_content)}`
+        : null,
+      trafficType === 'Реклама' && cleanAttribution.fbclid
+        ? `<b>fbclid:</b> <code>${escapeHtml(cleanAttribution.fbclid)}</code>`
+        : null,
+      trafficType === 'Реклама' && cleanAttribution.gclid
+        ? `<b>gclid:</b> <code>${escapeHtml(cleanAttribution.gclid)}</code>`
+        : null,
+      trafficType === 'Реклама' && cleanAttribution.ttclid
+        ? `<b>ttclid:</b> <code>${escapeHtml(cleanAttribution.ttclid)}</code>`
+        : null,
       metaLeadLine,
-      cleanAttribution.utm_source ? `<b>UTM Source:</b> ${escapeHtml(cleanAttribution.utm_source)}` : null,
-      cleanAttribution.utm_medium ? `<b>UTM Medium:</b> ${escapeHtml(cleanAttribution.utm_medium)}` : null,
-      cleanAttribution.utm_campaign ? `<b>UTM Campaign:</b> ${escapeHtml(cleanAttribution.utm_campaign)}` : null,
-      cleanAttribution.utm_term ? `<b>UTM Term:</b> ${escapeHtml(cleanAttribution.utm_term)}` : null,
-      cleanAttribution.utm_content ? `<b>UTM Content:</b> ${escapeHtml(cleanAttribution.utm_content)}` : null,
-      cleanAttribution.fbclid ? `<b>fbclid:</b> <code>${escapeHtml(cleanAttribution.fbclid)}</code>` : null,
-      cleanAttribution.gclid ? `<b>gclid:</b> <code>${escapeHtml(cleanAttribution.gclid)}</code>` : null,
-      cleanAttribution.ttclid ? `<b>ttclid:</b> <code>${escapeHtml(cleanAttribution.ttclid)}</code>` : null,
-      resolvedFbc
-        ? `<b>Meta click (_fbc):</b> yes`
-        : `<b>Meta click (_fbc):</b> no`,
-      resolvedFbp ? `<b>Meta browser (_fbp):</b> yes` : `<b>Meta browser (_fbp):</b> no`,
       sourceUrl ? `<b>URL:</b> ${escapeHtml(sourceUrl)}` : null,
       hasValidEventId ? `<b>Event ID:</b> <code>${escapeHtml(eventId)}</code>` : `<b>Event ID:</b> невалідний/відсутній`,
       referralId ? `<b>🔥 Реферал ID:</b> <code>${escapeHtml(referralId)}</code>` : null,
