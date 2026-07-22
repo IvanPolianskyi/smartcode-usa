@@ -110,6 +110,15 @@ export function getClientUserAgent(request) {
  * fbc  — Facebook Click ID (з URL ?fbclid=...)
  * fbp  — Facebook Browser ID (встановлюється пікселем)
  */
+function decodeCookieValue(value) {
+	if (!value) return undefined
+	try {
+		return decodeURIComponent(value)
+	} catch {
+		return value
+	}
+}
+
 export function getFbCookies(request) {
 	const cookieHeader = request.headers.get('cookie') || ''
 	const cookies = Object.fromEntries(
@@ -119,8 +128,8 @@ export function getFbCookies(request) {
 		})
 	)
 	return {
-		fbc: cookies['_fbc'] || undefined,
-		fbp: cookies['_fbp'] || undefined,
+		fbc: decodeCookieValue(cookies['_fbc']),
+		fbp: decodeCookieValue(cookies['_fbp']),
 	}
 }
 

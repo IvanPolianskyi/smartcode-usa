@@ -172,6 +172,8 @@ export async function POST(request) {
     const {
       fbc: resolvedFbc,
       fbp: resolvedFbp,
+      _from_live_url: fromLiveUrl,
+      _deferred_visit: deferredVisit,
       ...cleanAttribution
     } = resolvedAttribution
     const preferredContactLabel = preferredContactMethod === 'telegram_phone' ? 'Написати в Telegram за цим номером' : 'Подзвонити'
@@ -183,6 +185,8 @@ export async function POST(request) {
       ...cleanAttribution,
       ...(resolvedFbc ? { fbc: resolvedFbc } : {}),
       ...(resolvedFbp ? { fbp: resolvedFbp } : {}),
+      _from_live_url: fromLiveUrl,
+      _deferred_visit: deferredVisit,
     })
     const trafficType = traffic.type
     const crmAttribution = {
@@ -193,6 +197,8 @@ export async function POST(request) {
       event_time: Math.floor(Date.now() / 1000),
       traffic_type: trafficType,
       traffic_reason: traffic.reason,
+      traffic_confidence: traffic.confidence,
+      traffic_deferred: Boolean(traffic.deferred),
     }
 
     const cookieStore = await cookies()
@@ -280,7 +286,14 @@ export async function POST(request) {
       normalizedPhone ? `<b>Бажаний спосіб зв'язку:</b> ${escapeHtml(preferredContactLabel)}` : null,
       displayCourse ? `<b>Курс:</b> ${escapeHtml(displayCourse)}` : null,
       safeMessage ? `<b>Повідомлення:</b>\n${escapeHtml(safeMessage)}` : null,
-      `<b>Трафік:</b> ${escapeHtml(trafficType)}`,
+      trafficType === 'Реклама'
+        ? traffic.deferred
+          ? `<b>Трафік:</b> ✅ РЕКЛАМА (відкладений візит)`
+          : `<b>Трафік:</b> ✅ РЕКЛАМА`
+        : `<b>Трафік:</b> ❌ НЕ РЕКЛАМА`,
+      trafficType === 'Реклама'
+        ? `<b>Для таргетологів:</b> рахувати як рекламу`
+        : null,
       traffic.reason ? `<b>Підстава:</b> ${escapeHtml(traffic.reason)}` : null,
       metaLeadLine,
       cleanAttribution.utm_source ? `<b>UTM Source:</b> ${escapeHtml(cleanAttribution.utm_source)}` : null,

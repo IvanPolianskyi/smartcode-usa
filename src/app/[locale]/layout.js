@@ -13,6 +13,7 @@ import MetaPixelRouteTracker from '@/components/MetaPixel/MetaPixelRouteTracker'
 import AttributionCapture from '@/components/AttributionCapture/AttributionCapture'
 import AuthSessionProvider from '@/components/AuthSessionProvider'
 import { META_PIXEL_ID } from '@/lib/metaPixel'
+import { getAttributionBootstrapScript } from '@/lib/attribution'
 import { routing } from '@/i18n/routing'
 
 const geistSans = Geist({
@@ -51,6 +52,10 @@ export default async function LocaleLayout({ children, params }) {
 				<meta name='apple-mobile-web-app-status-bar-style' content='default' />
 				<meta name='mobile-web-app-capable' content='yes' />
 				<link rel='icon' href='/logo.jpeg' />
+				{/* Ловимо UTM/fbclid одразу в <head>, до React/навігації */}
+				<script
+					dangerouslySetInnerHTML={{ __html: getAttributionBootstrapScript() }}
+				/>
 			</head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
