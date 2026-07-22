@@ -77,6 +77,8 @@ export async function POST(request) {
   try {
     const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN
     const telegramChatId = process.env.TELEGRAM_CHAT_ID
+    // Друга група для дубля рекламних лідів (таргетологи).
+    const telegramAdsChatId = '-1004284257942'
 
     if (!telegramBotToken || !telegramChatId) {
       return NextResponse.json(
@@ -327,24 +329,46 @@ export async function POST(request) {
       `<b>Час:</b> ${escapeHtml(createdAt)}`,
     ].filter(Boolean)
 
-    const telegramResponse = await fetch(
-      `https://api.telegram.org/bot${telegramBotToken}/sendMessage`,
-      {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: telegramChatId,
-          text: lines.join('\n'),
-          parse_mode: 'HTML',
-          disable_web_page_preview: true,
-        }),
+    const chatIds = [String(telegramChatId).trim()].filter(Boolean)
+    // Рекламні ліди — також у другу групу (якщо задана і це не той самий chat_id).
+    if (
+      trafficType === 'Реклама' &&
+      telegramAdsChatId &&
+      !chatIds.includes(telegramAdsChatId)
+    ) {
+      chatIds.push(telegramAdsChatId)
+    }
+
+    async function sendTelegramToChat(chatId) {
+      const telegramResponse = await fetch(
+        `https://api.telegram.org/bot${telegramBotToken}/sendMessage`,
+        {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: lines.join('\n'),
+            parse_mode: 'HTML',
+            disable_web_page_preview: true,
+          }),
+        }
+      )
+      const tgData = await telegramResponse.json().catch(() => null)
+      return { chatId, ok: Boolean(telegramResponse.ok && tgData?.ok), tgData }
+    }
+
+    const sendResults = await Promise.all(chatIds.map((id) => sendTelegramToChat(id)))
+    const primaryResult = sendResults.find((r) => r.chatId === String(telegramChatId).trim())
+    const telegramResponseOk = Boolean(primaryResult?.ok)
+    const tgData = primaryResult?.tgData ?? null
+
+    for (const result of sendResults) {
+      if (!result.ok) {
+        console.error('Telegram sendMessage failed chat_id=%s:', result.chatId, result.tgData)
       }
-    )
+    }
 
-    const tgData = await telegramResponse.json().catch(() => null)
-
-    if (!telegramResponse.ok || !tgData?.ok) {
-      console.error('Telegram sendMessage failed:', tgData)
+    if (!telegramResponseOk || !tgData?.ok) {
       let savedOffline = false
       try {
         const insertResult = await submissions.insertOne({
