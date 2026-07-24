@@ -78,11 +78,16 @@ export function computeScheduleStats(schedule, { t, dateLocale, upcomingLessons 
     for (const item of upcomingLessons) {
       const at = parseUtcInstant(item?.startAt)
       if (Number.isNaN(at.getTime())) continue
+      const endAt = item?.endAt ? parseUtcInstant(item.endAt) : null
       const conducted =
-        item?.conducted === true || at.getTime() < now.getTime()
+        item?.conducted === true ||
+        (endAt != null &&
+          !Number.isNaN(endAt.getTime()) &&
+          endAt.getTime() < now.getTime())
       if (at >= start && at < end) {
         thisWeekAll.push(at)
-        if (!conducted && at > now) upcomingThisWeek.push(at)
+        // Залишок тижня: ще не проведено (майбутні + ті, що зараз ідуть).
+        if (!conducted) upcomingThisWeek.push(at)
       }
       if (
         !conducted &&

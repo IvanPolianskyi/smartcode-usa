@@ -321,14 +321,19 @@ export function filterFutureScheduledLessons(lessons) {
 
 /**
  * Як у Telegram-боті: канонічний CRM-статус held (+ legacy completed) = проведено.
- * Fallback: scheduled зі слотом у минулому (CRM ще не встиг promote → held).
+ * Fallback: scheduled зі слотом, що вже ЗАКІНЧИВСЯ (end_at < now), якщо CRM
+ * ще не встиг promote → held. До кінця уроку лишається «заплановано».
  */
 export function isCrmLessonConducted(lesson, now = new Date()) {
   const status = String(lesson?.status || '')
   if (status === 'held' || status === 'completed') return true
   if (status !== 'scheduled') return false
+  const nowMs = now.getTime()
+  const endMs = parseUtcInstant(lesson?.end_at).getTime()
+  if (Number.isFinite(endMs)) return endMs < nowMs
+  // Немає end_at: не вважаємо проведеним одразу після старту (дефолт слот 1 год).
   const startMs = parseUtcInstant(lesson?.start_at).getTime()
-  return Number.isFinite(startMs) && startMs < now.getTime()
+  return Number.isFinite(startMs) && startMs + 60 * 60 * 1000 < nowMs
 }
 
 /**
@@ -384,8 +389,11 @@ export function upcomingLessonsFromCrmLessons(
     const day = KYIV_WEEKDAY_UK[p.weekdayIndex]
     if (!day) continue
     const conducted = isCrmLessonConducted(lesson, now)
+    const end = parseUtcInstant(lesson?.end_at)
+    const endMs = end.getTime()
     out.push({
       startAt: start.toISOString(),
+      endAt: Number.isFinite(endMs) ? end.toISOString() : null,
       day,
       time: `${String(p.hour).padStart(2, '0')}:${String(p.minute).padStart(2, '0')}`,
       conducted,
