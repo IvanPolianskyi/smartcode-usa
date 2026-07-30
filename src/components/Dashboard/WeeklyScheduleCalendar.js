@@ -82,8 +82,13 @@ export default function WeeklyScheduleCalendar({
         const dateKey = kyivDateKeyFromParts(kyivPartsFromInstant(at.getTime()))
         const list = byDateKey.get(dateKey) || []
         const [hh, mm] = String(item?.time || '').split(':')
+        // Довіряємо CRM-прапорцю; fallback лише по endAt (не по старту).
+        const endAt = item?.endAt ? parseUtcInstant(item.endAt) : null
         const conducted =
-          item?.conducted === true || at.getTime() < now.getTime()
+          item?.conducted === true ||
+          (endAt != null &&
+            !Number.isNaN(endAt.getTime()) &&
+            endAt.getTime() < now.getTime())
         list.push({
           time: item.time,
           hours: Number(hh),

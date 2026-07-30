@@ -101,13 +101,25 @@ export default function StudentPaymentPanel({
 
   const lessonCredits = Number(paymentStats?.lessonCredits || 0)
   const balanceStrongClass =
-    !paymentLoading && lessonCredits < 0 ? styles.payStatNegative : undefined
-  const debtLessons = Number(paymentStats?.debtLessons || 0)
-  const debtItems = Array.isArray(paymentStats?.debtItems) ? paymentStats.debtItems : []
-  const pendingReceiptsCount = Math.max(
-    Number(paymentStats?.pendingReceiptsCount || 0),
-    paymentStats?.hasPendingReceiptReview ? 1 : 0
-  )
+    !paymentLoading &&
+    paymentStats?.lessonCredits != null &&
+    lessonCredits < 0
+      ? styles.payStatNegative
+      : undefined
+  const debtLessons =
+    !paymentLoading && paymentStats?.debtLessons != null
+      ? Number(paymentStats.debtLessons) || 0
+      : 0
+  const debtItems =
+    !paymentLoading && Array.isArray(paymentStats?.debtItems)
+      ? paymentStats.debtItems
+      : []
+  const pendingReceiptsCount = paymentLoading
+    ? 0
+    : Math.max(
+        Number(paymentStats?.pendingReceiptsCount || 0),
+        paymentStats?.hasPendingReceiptReview ? 1 : 0
+      )
 
   const applyPackage = (pack) => {
     const total = Number(pack?.total || 0)
