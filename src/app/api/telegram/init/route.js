@@ -1,146 +1,23 @@
 import { NextResponse } from 'next/server'
-import { requireAdmin } from '@/lib/requireAdmin'
-import { blockUnlessDevOrAdminEnabled } from '@/lib/requireAdminRoute'
 
+/** Бот проєктів вимкнено — init/webhook config заборонено. */
 export async function POST() {
-  const blocked = blockUnlessDevOrAdminEnabled()
-  if (blocked) return blocked
-  const guard = await requireAdmin()
-  if (guard.error) return guard.error
-
-  try {
-    const botToken = process.env.TELEGRAM_BOT_TOKEN_PROJECTS || process.env.TELEGRAM_BOT_TOKEN
-    
-    if (!botToken) {
-      return NextResponse.json(
-        { success: false, error: 'TELEGRAM_BOT_TOKEN_PROJECTS not configured' },
-        { status: 500 }
-      )
-    }
-
-    // Get the webhook URL
-    const webhookUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}/api/telegram/webhook`
-      : `${process.env.API_BASE_URL || 'http://localhost:3000'}/api/telegram/webhook`
-
-    console.log('🔗 Setting webhook URL:', webhookUrl)
-
-    // Set webhook
-    const response = await fetch(`https://api.telegram.org/bot${botToken}/setWebhook`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        url: webhookUrl,
-        allowed_updates: ['message', 'photo']
-      })
-    })
-
-    const data = await response.json()
-
-    if (!data.ok) {
-      return NextResponse.json(
-        { success: false, error: 'Failed to set webhook', detail: data },
-        { status: 500 }
-      )
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: 'Telegram bot webhook configured successfully',
-      webhookUrl
-    })
-
-  } catch (error) {
-    console.error('Error configuring Telegram bot:', error)
-    return NextResponse.json(
-      { success: false, error: 'Failed to configure Telegram bot', detail: error.message },
-      { status: 500 }
-    )
-  }
+  return NextResponse.json(
+    { success: false, disabled: true, error: 'Projects Telegram bot is disabled' },
+    { status: 410 }
+  )
 }
 
 export async function GET() {
-  const blocked = blockUnlessDevOrAdminEnabled()
-  if (blocked) return blocked
-  const guard = await requireAdmin()
-  if (guard.error) return guard.error
-
-  try {
-    const botToken = process.env.TELEGRAM_BOT_TOKEN_PROJECTS || process.env.TELEGRAM_BOT_TOKEN
-    
-    if (!botToken) {
-      return NextResponse.json(
-        { success: false, error: 'TELEGRAM_BOT_TOKEN_PROJECTS not configured' },
-        { status: 500 }
-      )
-    }
-
-    // Get webhook info
-    const response = await fetch(`https://api.telegram.org/bot${botToken}/getWebhookInfo`)
-    const data = await response.json()
-
-    if (!data.ok) {
-      return NextResponse.json(
-        { success: false, error: 'Failed to get webhook info', detail: data },
-        { status: 500 }
-      )
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: 'Telegram bot webhook status',
-      webhookInfo: data.result
-    })
-
-  } catch (error) {
-    console.error('Error getting bot status:', error)
-    return NextResponse.json(
-      { success: false, error: 'Failed to get bot status', detail: error.message },
-      { status: 500 }
-    )
-  }
+  return NextResponse.json(
+    { success: false, disabled: true, error: 'Projects Telegram bot is disabled' },
+    { status: 410 }
+  )
 }
 
 export async function DELETE() {
-  const blocked = blockUnlessDevOrAdminEnabled()
-  if (blocked) return blocked
-  const guard = await requireAdmin()
-  if (guard.error) return guard.error
-
-  try {
-    const botToken = process.env.TELEGRAM_BOT_TOKEN_PROJECTS || process.env.TELEGRAM_BOT_TOKEN
-    
-    if (!botToken) {
-      return NextResponse.json(
-        { success: false, error: 'TELEGRAM_BOT_TOKEN_PROJECTS not configured' },
-        { status: 500 }
-      )
-    }
-
-    // Delete webhook
-    const response = await fetch(`https://api.telegram.org/bot${botToken}/deleteWebhook`, {
-      method: 'POST'
-    })
-
-    const data = await response.json()
-
-    if (!data.ok) {
-      return NextResponse.json(
-        { success: false, error: 'Failed to delete webhook', detail: data },
-        { status: 500 }
-      )
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: 'Telegram bot webhook deleted successfully'
-    })
-
-  } catch (error) {
-    console.error('Error stopping Telegram bot:', error)
-    return NextResponse.json(
-      { success: false, error: 'Failed to stop Telegram bot', detail: error.message },
-      { status: 500 }
-    )
-  }
+  return NextResponse.json(
+    { success: false, disabled: true, error: 'Projects Telegram bot is disabled' },
+    { status: 410 }
+  )
 }

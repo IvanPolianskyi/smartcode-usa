@@ -139,7 +139,12 @@ export async function fetchMonobankPubKeyPem(force = false) {
  */
 export async function verifyMonobankWebhook(rawBody, xSignBase64) {
   if (!xSignBase64) return false
-  if (process.env.MONOBANK_SKIP_WEBHOOK_VERIFY === 'true') {
+  // Ніколи не пропускати перевірку на production.
+  if (
+    process.env.MONOBANK_SKIP_WEBHOOK_VERIFY === 'true' &&
+    process.env.NODE_ENV !== 'production' &&
+    process.env.VERCEL_ENV !== 'production'
+  ) {
     return true
   }
   try {

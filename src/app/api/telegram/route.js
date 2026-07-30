@@ -22,6 +22,7 @@ import {
   sanitizeLeadCourse,
   sanitizeLeadMessage,
 } from '@/lib/sanitizeLeadText'
+import { getCrmLeadIngestKey } from '@/lib/integrationApiKey'
 
 function escapeHtml(input) {
   const str = String(input ?? '')
@@ -56,9 +57,13 @@ async function sendLeadToCrm(payload) {
   if (!crmLeadEndpoint) return { skipped: true }
 
   const headers = { 'content-type': 'application/json' }
-  if (process.env.CRM_API_KEY) {
-    headers['x-api-key'] = process.env.CRM_API_KEY
+  const apiKey = getCrmLeadIngestKey()
+  if (!apiKey) {
+    throw new Error(
+      'CRM lead sync: задайте SITE_LEADS_INGEST_KEY / CRM_API_KEY / CRM_LMS_SYNC_KEY'
+    )
   }
+  headers['x-api-key'] = apiKey
 
   const response = await fetch(crmLeadEndpoint, {
     method: 'POST',

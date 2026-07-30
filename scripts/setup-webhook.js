@@ -31,6 +31,11 @@ async function makeRequest(url, options = {}) {
 }
 
 async function setupWebhook() {
+  console.error(
+    'Projects Telegram bot is disabled. Use deleteWebhook if you want Telegram to stop calling the site.'
+  );
+  process.exit(1);
+
   const botToken = process.env.TELEGRAM_BOT_TOKEN_PROJECTS;
   const webhookUrl = `https://${process.env.API_BASE_URL}/api/telegram/webhook`
 

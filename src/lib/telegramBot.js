@@ -27,7 +27,8 @@ class TelegramBotService {
 
   isAuthorized(userId) {
     if (this.AUTHORIZED_USERS.length === 0) {
-      return process.env.NODE_ENV !== 'production';
+      // Fail-closed: без allowlist ніхто (навіть у dev).
+      return false;
     }
     return this.AUTHORIZED_USERS.includes(userId.toString());
   }
