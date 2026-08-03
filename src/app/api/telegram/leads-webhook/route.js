@@ -5,6 +5,7 @@ import {
 } from '@/lib/leadContactStatus'
 import { applyLeadContactStatusFromCallback } from '@/lib/applyLeadContactStatus'
 import { getCrmLeadIngestKey } from '@/lib/integrationApiKey'
+import { ensureLeadsTelegramWebhook } from '@/lib/ensureLeadsTelegramWebhook'
 
 async function tgApi(botToken, method, body) {
   const res = await fetch(`https://api.telegram.org/bot${botToken}/${method}`, {
@@ -46,8 +47,8 @@ async function syncContactStatusToCrm(leadId, contactStatus) {
 }
 
 /**
- * Webhook бота заявок (TELEGRAM_BOT_TOKEN): кнопки статусу контакту.
- * setWebhook → https://www.smartcode-academy.com/api/telegram/leads-webhook
+ * Webhook бота заявок: кнопки статусу.
+ * Критично: answerCallbackQuery одразу — інакше Telegram «крутить» кнопку.
  */
 export async function POST(request) {
   const botToken = process.env.TELEGRAM_BOT_TOKEN
@@ -55,41 +56,52 @@ export async function POST(request) {
     return NextResponse.json({ ok: false, error: 'bot not configured' }, { status: 503 })
   }
 
+  let cq = null
   try {
+    // Секрет: відхиляємо лише явний mismatch. Якщо header немає —
+    // webhook міг бути зареєстрований без secret_token (типова причина «лагає»).
     const secret = (process.env.TELEGRAM_LEADS_WEBHOOK_SECRET || '').trim()
     if (secret) {
       const provided =
         request.headers.get('x-telegram-bot-api-secret-token') || ''
-      if (provided !== secret) {
-        console.warn('[leads-webhook] secret mismatch')
+      if (provided && provided !== secret) {
+        console.warn('[leads-webhook] secret mismatch (header present)')
         return NextResponse.json({ ok: false, error: 'unauthorized' }, { status: 401 })
+      }
+      if (!provided) {
+        console.warn(
+          '[leads-webhook] secret configured but Telegram sent no header — processing anyway; will re-register webhook'
+        )
+        void ensureLeadsTelegramWebhook({ force: true })
       }
     }
 
     const update = await request.json().catch(() => null)
-    const cq = update?.callback_query
+    cq = update?.callback_query
     if (!cq) {
       return NextResponse.json({ ok: true, ignored: true })
     }
 
     const parsed = parseLeadStatusCallbackData(cq.data)
+    const label = parsed ? leadContactStatusLabel(parsed.code) : null
+
+    // 1) Миттєво зняти спінер у Telegram.
+    await tgApi(botToken, 'answerCallbackQuery', {
+      callback_query_id: cq.id,
+      text: label ? `📌 ${label}` : 'Оновлено',
+      show_alert: false,
+    })
+
+    if (!parsed) {
+      return NextResponse.json({ ok: true, unknown_action: true })
+    }
+
+    const { leadId, code } = parsed
     const chatId = cq.message?.chat?.id
     const messageId = cq.message?.message_id
     const originalText = cq.message?.text || cq.message?.caption || ''
 
-    if (!parsed) {
-      await tgApi(botToken, 'answerCallbackQuery', {
-        callback_query_id: cq.id,
-        text: 'Невідома дія',
-        show_alert: false,
-      })
-      return NextResponse.json({ ok: true })
-    }
-
-    const { leadId, code } = parsed
-    const label = leadContactStatusLabel(code)
-
-    // Спочатку оновити кнопки на повідомленні — це головний UX.
+    // 2) Оновити повідомлення в чаті (рядок статусу + ✅ на кнопці).
     const applied = await applyLeadContactStatusFromCallback({
       leadId,
       contactStatus: code,
@@ -98,21 +110,8 @@ export async function POST(request) {
       originalText,
     })
 
-    // CRM у фоні не блокує відповідь користувачу.
+    // 3) CRM — у фоні.
     void syncContactStatusToCrm(leadId, code)
-
-    await tgApi(botToken, 'answerCallbackQuery', {
-      callback_query_id: cq.id,
-      text:
-        applied?.updatedMessages > 0
-          ? label
-            ? `✅ ${label}`
-            : 'Оновлено'
-          : label
-            ? `Статус: ${label}`
-            : 'Оновлено',
-      show_alert: false,
-    })
 
     return NextResponse.json({
       ok: true,
@@ -122,6 +121,13 @@ export async function POST(request) {
     })
   } catch (error) {
     console.error('leads-webhook error:', error)
+    if (cq?.id) {
+      await tgApi(botToken, 'answerCallbackQuery', {
+        callback_query_id: cq.id,
+        text: 'Помилка оновлення',
+        show_alert: false,
+      }).catch(() => null)
+    }
     return NextResponse.json(
       { ok: false, error: String(error?.message || error) },
       { status: 500 }
@@ -130,9 +136,14 @@ export async function POST(request) {
 }
 
 export async function GET() {
+  // Підстрахування: при відкритті/health-check також ставимо webhook.
+  const setup = await ensureLeadsTelegramWebhook().catch((e) => ({
+    ok: false,
+    error: String(e?.message || e),
+  }))
   return NextResponse.json({
     ok: true,
     service: 'telegram-leads-webhook',
-    hint: 'POST updates from Telegram. Auto-setup via instrumentation.js on production.',
+    setup,
   })
 }

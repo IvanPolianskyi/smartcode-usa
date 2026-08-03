@@ -38,7 +38,7 @@ export function leadContactStatusLabel(code) {
   return LEAD_CONTACT_STATUS_BY_CODE[code]?.label || null
 }
 
-/** Inline keyboard; активний статус з ✅, інші з ○ — видно поточний стан. */
+/** Inline keyboard; активний статус з ✅ */
 export function buildLeadContactKeyboard(leadId, activeCode = null) {
   const id = String(leadId || '').trim()
   if (!id) return undefined
@@ -47,7 +47,7 @@ export function buildLeadContactKeyboard(leadId, activeCode = null) {
       const isActive = activeCode === s.code
       return [
         {
-          text: isActive ? `✅ ${s.label}` : `○ ${s.label}`,
+          text: isActive ? `✅ ${s.label}` : s.label,
           callback_data: `ls:${id}:${s.code}`,
         },
       ]
@@ -65,20 +65,26 @@ export function parseLeadStatusCallbackData(data) {
   return { leadId, code }
 }
 
-/** Рядок статусу в кінці повідомлення (plain text для editMessageText). */
-export function contactStatusMessageLinePlain(code) {
+/** Видимий блок статусу на початку повідомлення в чаті. */
+export function contactStatusBannerPlain(code) {
   const label = leadContactStatusLabel(code)
   if (!label) return null
-  return `Статус: ${label}`
+  return `📌 Статус: ${label}`
 }
 
+const STATUS_BANNER_RE = /^📌 Статус: [^\n]*/m
+const STATUS_LINE_RE = /\n?\n?(?:📌 )?Статус: [^\n]*/g
+
 /**
- * Оновити/додати рядок «Статус:» у plain-тексті заявки (з Telegram callback).
+ * Вставити/оновити рядок статусу на початку тексту повідомлення (plain).
+ * Так стан видно прямо в чаті, не лише в toast.
  */
 export function withContactStatusInPlainText(originalText, code) {
-  const text = String(originalText || '')
-  const line = contactStatusMessageLinePlain(code)
-  if (!line) return text
-  const stripped = text.replace(/\n?\n?Статус: [^\n]*/g, '').trimEnd()
-  return `${stripped}\n\n${line}`
+  const banner = contactStatusBannerPlain(code)
+  if (!banner) return String(originalText || '')
+  let text = String(originalText || '')
+  text = text.replace(STATUS_LINE_RE, '').trim()
+  // Прибрати старий банер на початку
+  text = text.replace(STATUS_BANNER_RE, '').trim()
+  return `${banner}\n\n${text}`
 }

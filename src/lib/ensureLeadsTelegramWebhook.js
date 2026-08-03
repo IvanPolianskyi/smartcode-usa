@@ -86,8 +86,7 @@ export async function ensureLeadsTelegramWebhook(opts = {}) {
     if (
       !force &&
       currentUrl === webhookUrl &&
-      // Telegram не віддає secret назад — якщо задано secret, раз на зміну env
-      // force через TELEGRAM_LEADS_WEBHOOK_FORCE=1 або зміну URL.
+      !secret &&
       !process.env.TELEGRAM_LEADS_WEBHOOK_FORCE
     ) {
       return {
@@ -99,6 +98,7 @@ export async function ensureLeadsTelegramWebhook(opts = {}) {
       }
     }
 
+    // Якщо є secret — завжди перереєструємо (getWebhookInfo не показує secret).
     const body = {
       url: webhookUrl,
       allowed_updates: ['callback_query'],

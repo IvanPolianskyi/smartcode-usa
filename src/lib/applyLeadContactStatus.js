@@ -27,9 +27,14 @@ async function tgApi(botToken, method, body) {
   return data
 }
 
+function isNotModified(data) {
+  return String(data?.description || '')
+    .toLowerCase()
+    .includes('not modified')
+}
+
 /**
- * Оновити кнопки (і бажано рядок статусу) на конкретному повідомленні.
- * Кнопки — обовʼязково; текст — best-effort (HTML-повідомлення інколи не дає editMessageText).
+ * Оновити текст (зі статусом) + кнопки на повідомленні в чаті.
  */
 export async function refreshLeadTelegramMessage({
   botToken,
@@ -44,54 +49,47 @@ export async function refreshLeadTelegramMessage({
   }
 
   const keyboard = buildLeadContactKeyboard(leadId, contactStatus)
+  const hasText = typeof originalText === 'string' && originalText.length > 0
 
-  // 1) Спочатку саме кнопки — це те, що має змінюватись при кліку.
-  const markup = await tgApi(botToken, 'editMessageReplyMarkup', {
-    chat_id: chatId,
-    message_id: messageId,
-    reply_markup: keyboard,
-  })
-
-  let textOk = false
-  if (typeof originalText === 'string' && originalText.length > 0) {
+  if (hasText) {
     const newText = withContactStatusInPlainText(originalText, contactStatus)
-    // Якщо текст той самий — Telegram ігнорує і reply_markup («message is not modified»).
-    // Тому текст оновлюємо лише коли він реально змінився; кнопки вже оновили вище.
-    if (newText !== originalText) {
-      const edited = await tgApi(botToken, 'editMessageText', {
-        chat_id: chatId,
-        message_id: messageId,
-        text: newText,
-        disable_web_page_preview: true,
-        reply_markup: keyboard,
-      })
-      textOk = Boolean(edited?.ok)
-      // Якщо editMessageText зняв/зламав markup — ще раз поставимо кнопки.
-      if (edited?.ok) {
+    const edited = await tgApi(botToken, 'editMessageText', {
+      chat_id: chatId,
+      message_id: messageId,
+      text: newText,
+      disable_web_page_preview: true,
+      reply_markup: keyboard,
+    })
+    if (edited?.ok || isNotModified(edited)) {
+      // Гарантуємо актуальні кнопки навіть після «not modified» по тексту.
+      if (isNotModified(edited) || !edited?.ok) {
         await tgApi(botToken, 'editMessageReplyMarkup', {
           chat_id: chatId,
           message_id: messageId,
           reply_markup: keyboard,
         })
       }
+      return { ok: true, textOk: Boolean(edited?.ok), markupOk: true }
     }
   }
 
-  const markupOk =
-    Boolean(markup?.ok) ||
-    // «message is not modified» = кнопки вже в потрібному стані
-    String(markup?.description || '').toLowerCase().includes('not modified')
-
+  // Fallback: лише кнопки (якщо тексту немає або editMessageText впав).
+  const markup = await tgApi(botToken, 'editMessageReplyMarkup', {
+    chat_id: chatId,
+    message_id: messageId,
+    reply_markup: keyboard,
+  })
+  const markupOk = Boolean(markup?.ok) || isNotModified(markup)
   return {
-    ok: markupOk || textOk,
+    ok: markupOk,
+    textOk: false,
     markupOk,
-    textOk,
-    error: markupOk || textOk ? undefined : markup?.description || 'edit_failed',
+    error: markupOk ? undefined : markup?.description || 'edit_failed',
   }
 }
 
 /**
- * Зберегти статус контакту в submissions і оновити всі Telegram-повідомлення заявки.
+ * Зберегти статус і оновити Telegram-повідомлення заявки.
  */
 export async function applyLeadContactStatus(leadId, contactStatus, opts = {}) {
   const id = String(leadId || '').trim()
@@ -111,24 +109,7 @@ export async function applyLeadContactStatus(leadId, contactStatus, opts = {}) {
     return { ok: false, contactStatus: code, label, updatedMessages: 0, error: 'bad_lead_id' }
   }
 
-  const submissions = await getCollection('submissions')
-  await submissions.updateOne(
-    { _id: leadOid },
-    {
-      $set: {
-        contactStatus: code,
-        contactStatusUpdatedAt: now,
-      },
-    },
-    // Якщо документа ще немає (гонка з insert) — не падаємо.
-    { upsert: false }
-  )
-  const updated = await submissions.findOne({ _id: leadOid })
-  const deliveries = Array.isArray(updated?.telegramDeliveries)
-    ? updated.telegramDeliveries
-    : []
-
-  // Додаткова ціль з callback (навіть якщо deliveries порожні / старі заявки).
+  // Спочатку оновити чат (швидкий UX), Mongo — після.
   const extra = opts.primaryMessage
   const targets = []
   const seen = new Set()
@@ -142,9 +123,6 @@ export async function applyLeadContactStatus(leadId, contactStatus, opts = {}) {
 
   if (extra) {
     pushTarget(extra.chatId, extra.messageId, extra.originalText ?? null)
-  }
-  for (const d of deliveries) {
-    pushTarget(d.chatId, d.messageId, null)
   }
 
   let updatedMessages = 0
@@ -162,18 +140,54 @@ export async function applyLeadContactStatus(leadId, contactStatus, opts = {}) {
     }
   }
 
+  // Persist + інші чати (дубль реклами) — не блокуємо вже оновлене повідомлення.
+  try {
+    const submissions = await getCollection('submissions')
+    await submissions.updateOne(
+      { _id: leadOid },
+      {
+        $set: {
+          contactStatus: code,
+          contactStatusUpdatedAt: now,
+        },
+      }
+    )
+    const updated = await submissions.findOne(
+      { _id: leadOid },
+      { projection: { telegramDeliveries: 1 } }
+    )
+    const deliveries = Array.isArray(updated?.telegramDeliveries)
+      ? updated.telegramDeliveries
+      : []
+
+    if (botToken) {
+      for (const d of deliveries) {
+        const key = `${d.chatId}:${d.messageId}`
+        if (seen.has(key)) continue
+        seen.add(key)
+        const r = await refreshLeadTelegramMessage({
+          botToken,
+          chatId: d.chatId,
+          messageId: d.messageId,
+          leadId: id,
+          contactStatus: code,
+          originalText: null,
+        })
+        if (r.ok) updatedMessages += 1
+      }
+    }
+  } catch (e) {
+    console.warn('[leads-tg] persist/sync deliveries failed:', e)
+  }
+
   return {
     ok: true,
     contactStatus: code,
     label,
     updatedMessages,
-    found: Boolean(updated),
   }
 }
 
-/**
- * Оновити повідомлення після кліку в Telegram.
- */
 export async function applyLeadContactStatusFromCallback({
   leadId,
   contactStatus,

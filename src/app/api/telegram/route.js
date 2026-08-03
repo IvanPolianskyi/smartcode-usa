@@ -25,6 +25,7 @@ import {
 } from '@/lib/sanitizeLeadText'
 import { getCrmLeadIngestKey } from '@/lib/integrationApiKey'
 import { buildLeadContactKeyboard } from '@/lib/leadContactStatus'
+import { ensureLeadsTelegramWebhook } from '@/lib/ensureLeadsTelegramWebhook'
 
 function escapeHtml(input) {
   const str = String(input ?? '')
@@ -386,6 +387,9 @@ export async function POST(request) {
         chatId: String(r.chatId),
         messageId: r.messageId,
       }))
+
+    // Підстрахування: після відправки заявки ще раз переконатись, що webhook кнопок живий.
+    void ensureLeadsTelegramWebhook()
 
     for (const result of sendResults) {
       if (!result.ok) {
