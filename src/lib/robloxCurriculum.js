@@ -157,7 +157,7 @@ export const robloxCurriculum = {
           "prerequisites": [
             "lesson-roblox-2-3"
           ],
-          "isCheckpoint": false
+          "isCheckpoint": true
         }
       ]
     },
@@ -454,7 +454,7 @@ export const robloxCurriculum = {
           "prerequisites": [
             "lesson-roblox-5-7"
           ],
-          "isCheckpoint": true
+          "isCheckpoint": false
         },
         {
           "lessonId": "lesson-roblox-5-9",
@@ -476,7 +476,7 @@ export const robloxCurriculum = {
           "prerequisites": [
             "lesson-roblox-5-9"
           ],
-          "isCheckpoint": false
+          "isCheckpoint": true
         }
       ]
     },

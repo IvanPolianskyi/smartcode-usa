@@ -15,7 +15,13 @@ export function markdownToHtml(text) {
 
   const applyInline = (line) => {
     let s = line
-    s = s.replace(/`([^`\n]+)`/g, '<code>$1</code>')
+    const codes = []
+    s = s.replace(/`([^`\n]+)`/g, (_, code) => {
+      const ph = `\u00A0\u00A0IC_${codes.length}\u00A0\u00A0`
+      codes.push(`<code>${code}</code>`)
+      return ph
+    })
+    s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
     s = s.replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>')
     s = s.replace(/__([^_\n]+?)__/g, '<strong>$1</strong>')
     s = s.replace(/(?<!\*)\*([^*\n]+?)\*(?!\*)/g, '<em>$1</em>')
@@ -23,6 +29,9 @@ export function markdownToHtml(text) {
     s = s.replace(/\s->\s/g, ' <span class="md-arrow" aria-hidden="true">→</span> ')
     s = s.replace(/([^>\s])→([^<\s])/g, '$1 <span class="md-arrow" aria-hidden="true">→</span> $2')
     s = s.replace(/\s—\s/g, ' <span class="md-emdash">—</span> ')
+    codes.forEach((html, i) => {
+      s = s.replace(`\u00A0\u00A0IC_${i}\u00A0\u00A0`, html)
+    })
     return s
   }
 

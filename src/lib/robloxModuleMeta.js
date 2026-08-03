@@ -4,11 +4,10 @@
  */
 
 export const ROBOX_PHASES = [
-  { id: 'A', titleUk: 'Основи Studio', modules: [1, 2, 3] },
-  { id: 'B', titleUk: 'Дані та жанри', modules: [4, 5, 6] },
-  { id: 'C', titleUk: 'Tycoon і арена', modules: [7, 8] },
-  { id: 'D', titleUk: 'Мережа, хаб і поліш', modules: [9, 10, 11] },
-  { id: 'E', titleUk: 'Реліз', modules: [12] },
+  { id: 'A', titleUk: 'Основи Studio', modules: [1, 2, 3, 4] },
+  { id: 'B', titleUk: 'Жанри', modules: [5, 6, 7, 8, 9] },
+  { id: 'C', titleUk: 'Хаб і поліш', modules: [10, 11] },
+  { id: 'D', titleUk: 'Реліз', modules: [12] },
 ]
 
 export const ROBOX_MODULE_META_UK = {
