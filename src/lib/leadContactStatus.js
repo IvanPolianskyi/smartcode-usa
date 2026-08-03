@@ -38,17 +38,20 @@ export function leadContactStatusLabel(code) {
   return LEAD_CONTACT_STATUS_BY_CODE[code]?.label || null
 }
 
-/** Inline keyboard; активний статус з ✓ */
+/** Inline keyboard; активний статус з ✅, інші з ○ — видно поточний стан. */
 export function buildLeadContactKeyboard(leadId, activeCode = null) {
   const id = String(leadId || '').trim()
   if (!id) return undefined
   return {
-    inline_keyboard: LEAD_CONTACT_STATUSES.map((s) => [
-      {
-        text: activeCode === s.code ? `✓ ${s.label}` : s.label,
-        callback_data: `ls:${id}:${s.code}`,
-      },
-    ]),
+    inline_keyboard: LEAD_CONTACT_STATUSES.map((s) => {
+      const isActive = activeCode === s.code
+      return [
+        {
+          text: isActive ? `✅ ${s.label}` : `○ ${s.label}`,
+          callback_data: `ls:${id}:${s.code}`,
+        },
+      ]
+    }),
   }
 }
 

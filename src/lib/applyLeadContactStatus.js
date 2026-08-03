@@ -13,14 +13,87 @@ async function tgApi(botToken, method, body) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(body),
   })
-  return res.json().catch(() => null)
+  const data = await res.json().catch(() => null)
+  if (!data?.ok) {
+    console.warn(
+      `[leads-tg] ${method} failed:`,
+      data?.description || data,
+      'chat=',
+      body?.chat_id,
+      'msg=',
+      body?.message_id
+    )
+  }
+  return data
 }
 
 /**
- * Зберегти статус контакту в submissions і оновити Telegram-повідомлення.
- * @returns {{ ok: boolean, contactStatus: string, label: string|null, updatedMessages: number, error?: string }}
+ * Оновити кнопки (і бажано рядок статусу) на конкретному повідомленні.
+ * Кнопки — обовʼязково; текст — best-effort (HTML-повідомлення інколи не дає editMessageText).
  */
-export async function applyLeadContactStatus(leadId, contactStatus) {
+export async function refreshLeadTelegramMessage({
+  botToken,
+  chatId,
+  messageId,
+  leadId,
+  contactStatus,
+  originalText = null,
+}) {
+  if (!botToken || chatId == null || messageId == null) {
+    return { ok: false, error: 'missing_target' }
+  }
+
+  const keyboard = buildLeadContactKeyboard(leadId, contactStatus)
+
+  // 1) Спочатку саме кнопки — це те, що має змінюватись при кліку.
+  const markup = await tgApi(botToken, 'editMessageReplyMarkup', {
+    chat_id: chatId,
+    message_id: messageId,
+    reply_markup: keyboard,
+  })
+
+  let textOk = false
+  if (typeof originalText === 'string' && originalText.length > 0) {
+    const newText = withContactStatusInPlainText(originalText, contactStatus)
+    // Якщо текст той самий — Telegram ігнорує і reply_markup («message is not modified»).
+    // Тому текст оновлюємо лише коли він реально змінився; кнопки вже оновили вище.
+    if (newText !== originalText) {
+      const edited = await tgApi(botToken, 'editMessageText', {
+        chat_id: chatId,
+        message_id: messageId,
+        text: newText,
+        disable_web_page_preview: true,
+        reply_markup: keyboard,
+      })
+      textOk = Boolean(edited?.ok)
+      // Якщо editMessageText зняв/зламав markup — ще раз поставимо кнопки.
+      if (edited?.ok) {
+        await tgApi(botToken, 'editMessageReplyMarkup', {
+          chat_id: chatId,
+          message_id: messageId,
+          reply_markup: keyboard,
+        })
+      }
+    }
+  }
+
+  const markupOk =
+    Boolean(markup?.ok) ||
+    // «message is not modified» = кнопки вже в потрібному стані
+    String(markup?.description || '').toLowerCase().includes('not modified')
+
+  return {
+    ok: markupOk || textOk,
+    markupOk,
+    textOk,
+    error: markupOk || textOk ? undefined : markup?.description || 'edit_failed',
+  }
+}
+
+/**
+ * Зберегти статус контакту в submissions і оновити всі Telegram-повідомлення заявки.
+ */
+export async function applyLeadContactStatus(leadId, contactStatus, opts = {}) {
   const id = String(leadId || '').trim()
   const code = String(contactStatus || '').trim()
   if (!id || !isValidLeadContactStatus(code)) {
@@ -46,34 +119,46 @@ export async function applyLeadContactStatus(leadId, contactStatus) {
         contactStatus: code,
         contactStatusUpdatedAt: now,
       },
-    }
+    },
+    // Якщо документа ще немає (гонка з insert) — не падаємо.
+    { upsert: false }
   )
   const updated = await submissions.findOne({ _id: leadOid })
   const deliveries = Array.isArray(updated?.telegramDeliveries)
     ? updated.telegramDeliveries
     : []
 
+  // Додаткова ціль з callback (навіть якщо deliveries порожні / старі заявки).
+  const extra = opts.primaryMessage
+  const targets = []
+  const seen = new Set()
+  const pushTarget = (chatId, messageId, originalText = null) => {
+    if (chatId == null || messageId == null) return
+    const key = `${chatId}:${messageId}`
+    if (seen.has(key)) return
+    seen.add(key)
+    targets.push({ chatId, messageId, originalText })
+  }
+
+  if (extra) {
+    pushTarget(extra.chatId, extra.messageId, extra.originalText ?? null)
+  }
+  for (const d of deliveries) {
+    pushTarget(d.chatId, d.messageId, null)
+  }
+
   let updatedMessages = 0
-  if (botToken && deliveries.length > 0) {
-    const keyboard = buildLeadContactKeyboard(id, code)
-    for (const d of deliveries) {
-      const chatId = d.chatId
-      const messageId = d.messageId
-      if (chatId == null || messageId == null) continue
-
-      // Спочатку лише кнопки — текст заявки лишається з HTML-розміткою.
-      const markup = await tgApi(botToken, 'editMessageReplyMarkup', {
-        chat_id: chatId,
-        message_id: messageId,
-        reply_markup: keyboard,
+  if (botToken) {
+    for (const t of targets) {
+      const r = await refreshLeadTelegramMessage({
+        botToken,
+        chatId: t.chatId,
+        messageId: t.messageId,
+        leadId: id,
+        contactStatus: code,
+        originalText: t.originalText,
       })
-      if (markup?.ok) {
-        updatedMessages += 1
-        continue
-      }
-
-      // Fallback: якщо markup не вийшов, спробуємо plain text + статус.
-      // (потрібен getChat — немає тексту; пропускаємо якщо немає)
+      if (r.ok) updatedMessages += 1
     }
   }
 
@@ -87,7 +172,7 @@ export async function applyLeadContactStatus(leadId, contactStatus) {
 }
 
 /**
- * Оновити повідомлення після кліку в Telegram (є оригінальний текст з callback).
+ * Оновити повідомлення після кліку в Telegram.
  */
 export async function applyLeadContactStatusFromCallback({
   leadId,
@@ -96,57 +181,11 @@ export async function applyLeadContactStatusFromCallback({
   messageId,
   originalText,
 }) {
-  const base = await applyLeadContactStatus(leadId, contactStatus)
-  const botToken = process.env.TELEGRAM_BOT_TOKEN
-  if (!botToken || !base.ok) return base
-
-  const keyboard = buildLeadContactKeyboard(leadId, contactStatus)
-  const newText = withContactStatusInPlainText(originalText, contactStatus)
-
-  if (chatId != null && messageId != null) {
-    const edited = await tgApi(botToken, 'editMessageText', {
-      chat_id: chatId,
-      message_id: messageId,
-      text: newText,
-      disable_web_page_preview: true,
-      reply_markup: keyboard,
-    })
-    if (!edited?.ok) {
-      await tgApi(botToken, 'editMessageReplyMarkup', {
-        chat_id: chatId,
-        message_id: messageId,
-        reply_markup: keyboard,
-      })
-    }
-  }
-
-  // Дублі в інших чатах — лише кнопки (тексту немає).
-  try {
-    const leadOid = new ObjectId(leadId)
-    const submissions = await getCollection('submissions')
-    const doc = await submissions.findOne(
-      { _id: leadOid },
-      { projection: { telegramDeliveries: 1 } }
-    )
-    const deliveries = Array.isArray(doc?.telegramDeliveries)
-      ? doc.telegramDeliveries
-      : []
-    for (const d of deliveries) {
-      const dChat = String(d.chatId || '')
-      const dMsg = d.messageId
-      if (!dChat || dMsg == null) continue
-      if (String(dChat) === String(chatId) && Number(dMsg) === Number(messageId)) {
-        continue
-      }
-      await tgApi(botToken, 'editMessageReplyMarkup', {
-        chat_id: dChat,
-        message_id: dMsg,
-        reply_markup: keyboard,
-      })
-    }
-  } catch {
-    /* ignore */
-  }
-
-  return base
+  return applyLeadContactStatus(leadId, contactStatus, {
+    primaryMessage: {
+      chatId,
+      messageId,
+      originalText,
+    },
+  })
 }

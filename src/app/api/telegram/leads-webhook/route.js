@@ -50,17 +50,18 @@ async function syncContactStatusToCrm(leadId, contactStatus) {
  * setWebhook → https://www.smartcode-academy.com/api/telegram/leads-webhook
  */
 export async function POST(request) {
-  try {
-    const botToken = process.env.TELEGRAM_BOT_TOKEN
-    if (!botToken) {
-      return NextResponse.json({ ok: false, error: 'bot not configured' }, { status: 503 })
-    }
+  const botToken = process.env.TELEGRAM_BOT_TOKEN
+  if (!botToken) {
+    return NextResponse.json({ ok: false, error: 'bot not configured' }, { status: 503 })
+  }
 
+  try {
     const secret = (process.env.TELEGRAM_LEADS_WEBHOOK_SECRET || '').trim()
     if (secret) {
       const provided =
         request.headers.get('x-telegram-bot-api-secret-token') || ''
       if (provided !== secret) {
+        console.warn('[leads-webhook] secret mismatch')
         return NextResponse.json({ ok: false, error: 'unauthorized' }, { status: 401 })
       }
     }
@@ -88,22 +89,37 @@ export async function POST(request) {
     const { leadId, code } = parsed
     const label = leadContactStatusLabel(code)
 
-    await applyLeadContactStatusFromCallback({
+    // Спочатку оновити кнопки на повідомленні — це головний UX.
+    const applied = await applyLeadContactStatusFromCallback({
       leadId,
       contactStatus: code,
       chatId,
       messageId,
       originalText,
     })
-    await syncContactStatusToCrm(leadId, code)
+
+    // CRM у фоні не блокує відповідь користувачу.
+    void syncContactStatusToCrm(leadId, code)
 
     await tgApi(botToken, 'answerCallbackQuery', {
       callback_query_id: cq.id,
-      text: label ? `Статус: ${label}` : 'Оновлено',
+      text:
+        applied?.updatedMessages > 0
+          ? label
+            ? `✅ ${label}`
+            : 'Оновлено'
+          : label
+            ? `Статус: ${label}`
+            : 'Оновлено',
       show_alert: false,
     })
 
-    return NextResponse.json({ ok: true, leadId, contactStatus: code })
+    return NextResponse.json({
+      ok: true,
+      leadId,
+      contactStatus: code,
+      updatedMessages: applied?.updatedMessages ?? 0,
+    })
   } catch (error) {
     console.error('leads-webhook error:', error)
     return NextResponse.json(
@@ -117,6 +133,6 @@ export async function GET() {
   return NextResponse.json({
     ok: true,
     service: 'telegram-leads-webhook',
-    hint: 'POST updates from Telegram here. Run scripts/setup-leads-webhook.js once.',
+    hint: 'POST updates from Telegram. Auto-setup via instrumentation.js on production.',
   })
 }
