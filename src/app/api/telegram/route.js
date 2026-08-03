@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { ObjectId } from 'mongodb'
 import { getCollection } from '@/lib/mongodb'
 import { cookies } from 'next/headers'
 import { sendCapiLead, getClientIp, getClientUserAgent, getFbCookies } from '@/lib/metaCapi'
@@ -23,6 +24,7 @@ import {
   sanitizeLeadMessage,
 } from '@/lib/sanitizeLeadText'
 import { getCrmLeadIngestKey } from '@/lib/integrationApiKey'
+import { buildLeadContactKeyboard } from '@/lib/leadContactStatus'
 
 function escapeHtml(input) {
   const str = String(input ?? '')
@@ -334,6 +336,11 @@ export async function POST(request) {
       `<b>Час:</b> ${escapeHtml(createdAt)}`,
     ].filter(Boolean)
 
+    // Фіксований id до відправки — щоб кнопки статусу знали leadId.
+    const leadObjectId = new ObjectId()
+    const leadIdStr = leadObjectId.toString()
+    const statusKeyboard = buildLeadContactKeyboard(leadIdStr)
+
     const chatIds = [String(telegramChatId).trim()].filter(Boolean)
     // Рекламні ліди — також у другу групу (якщо задана і це не той самий chat_id).
     if (
@@ -355,17 +362,30 @@ export async function POST(request) {
             text: lines.join('\n'),
             parse_mode: 'HTML',
             disable_web_page_preview: true,
+            reply_markup: statusKeyboard,
           }),
         }
       )
       const tgData = await telegramResponse.json().catch(() => null)
-      return { chatId, ok: Boolean(telegramResponse.ok && tgData?.ok), tgData }
+      const messageId = tgData?.result?.message_id
+      return {
+        chatId,
+        ok: Boolean(telegramResponse.ok && tgData?.ok),
+        tgData,
+        messageId: typeof messageId === 'number' ? messageId : null,
+      }
     }
 
     const sendResults = await Promise.all(chatIds.map((id) => sendTelegramToChat(id)))
     const primaryResult = sendResults.find((r) => r.chatId === String(telegramChatId).trim())
     const telegramResponseOk = Boolean(primaryResult?.ok)
     const tgData = primaryResult?.tgData ?? null
+    const telegramDeliveries = sendResults
+      .filter((r) => r.ok && r.messageId != null)
+      .map((r) => ({
+        chatId: String(r.chatId),
+        messageId: r.messageId,
+      }))
 
     for (const result of sendResults) {
       if (!result.ok) {
@@ -373,10 +393,27 @@ export async function POST(request) {
       }
     }
 
+    const crmLeadPayload = {
+      leadId: leadIdStr,
+      name: safeName,
+      phone: normalizedPhone || null,
+      telegram: normalizedTelegram || null,
+      course: displayCourse || '',
+      message: safeMessage,
+      contactMethod: contactMethod || 'phone',
+      preferredContactMethod: preferredContactMethod || 'phone_call',
+      sourceUrl: sourceUrl || null,
+      attribution: crmAttribution,
+      referralId,
+      createdAt: new Date().toISOString(),
+      telegramDeliveries,
+    }
+
     if (!telegramResponseOk || !tgData?.ok) {
       let savedOffline = false
       try {
-        const insertResult = await submissions.insertOne({
+        await submissions.insertOne({
+          _id: leadObjectId,
           name: safeName,
           phone: normalizedPhone || '',
           telegram: normalizedTelegram || '',
@@ -390,6 +427,8 @@ export async function POST(request) {
           createdAt: new Date(),
           via: 'telegram-api-failed',
           isUniqueLead: shouldTrackLead,
+          contactStatus: null,
+          telegramDeliveries: [],
         })
         savedOffline = true
         if (tokenHash) {
@@ -397,18 +436,8 @@ export async function POST(request) {
         }
         await recordLeadSubmitAttempt(submitIp, { blocked: false })
         await sendLeadToCrm({
-          leadId: String(insertResult.insertedId),
-          name: safeName,
-          phone: normalizedPhone || null,
-          telegram: normalizedTelegram || null,
-          course: displayCourse || '',
-          message: safeMessage,
-          contactMethod: contactMethod || 'phone',
-          preferredContactMethod: preferredContactMethod || 'phone_call',
-          sourceUrl: sourceUrl || null,
-          attribution: crmAttribution,
-          referralId,
-          createdAt: new Date().toISOString(),
+          ...crmLeadPayload,
+          telegramDeliveries: [],
         }).catch((error) => {
           console.error('CRM lead sync failed after telegram error:', error)
         })
@@ -434,7 +463,8 @@ export async function POST(request) {
     }
 
     try {
-      const insertResult = await submissions.insertOne({
+      await submissions.insertOne({
+        _id: leadObjectId,
         name: safeName,
         phone: normalizedPhone || '',
         telegram: normalizedTelegram || '',
@@ -450,25 +480,14 @@ export async function POST(request) {
         isUniqueLead: shouldTrackLead,
         metaLeadSent,
         metaLeadError: metaLeadError || null,
+        contactStatus: null,
+        telegramDeliveries,
       })
       if (tokenHash) {
         await markLeadTokenUsed(tokenHash)
       }
       await recordLeadSubmitAttempt(submitIp, { blocked: false })
-      await sendLeadToCrm({
-        leadId: String(insertResult.insertedId),
-        name: safeName,
-        phone: normalizedPhone || null,
-        telegram: normalizedTelegram || null,
-        course: displayCourse || '',
-        message: safeMessage,
-        contactMethod: contactMethod || 'phone',
-        preferredContactMethod: preferredContactMethod || 'phone_call',
-        sourceUrl: sourceUrl || null,
-        attribution: crmAttribution,
-        referralId,
-        createdAt: new Date().toISOString(),
-      }).catch((error) => {
+      await sendLeadToCrm(crmLeadPayload).catch((error) => {
         console.error('CRM lead sync failed:', error)
       })
     } catch {}
