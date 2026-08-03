@@ -1,12 +1,25 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Phone, X } from 'lucide-react'
+import { getMerchantInfo } from '@/lib/merchantInfo'
 import styles from './ContactFab.module.css'
 
-const PHONE_DISPLAY = '+380 96 957 67 23'
-const PHONE_HREF = 'tel:+380969576723'
 const TELEGRAM_HREF = 'https://t.me/SmartCode_Academy'
+
+function formatPhoneDisplay(phone) {
+	const digits = String(phone || '').replace(/\D/g, '')
+	if (digits.length === 12 && digits.startsWith('380')) {
+		return `+380 ${digits.slice(3, 5)} ${digits.slice(5, 8)} ${digits.slice(8, 10)} ${digits.slice(10, 12)}`
+	}
+	return String(phone || '').trim() || '+380 95 145 72 48'
+}
+
+function phoneTelHref(phone) {
+	const digits = String(phone || '').replace(/\D/g, '')
+	if (!digits) return 'tel:+380951457248'
+	return `tel:+${digits}`
+}
 
 function TelegramIcon({ size = 22 }) {
 	return (
@@ -25,6 +38,13 @@ function TelegramIcon({ size = 22 }) {
 export default function ContactFab() {
 	const [open, setOpen] = useState(false)
 	const rootRef = useRef(null)
+	const { phoneDisplay, phoneHref } = useMemo(() => {
+		const phone = getMerchantInfo('uk').phone
+		return {
+			phoneDisplay: formatPhoneDisplay(phone),
+			phoneHref: phoneTelHref(phone),
+		}
+	}, [])
 
 	useEffect(() => {
 		if (!open) return undefined
@@ -55,10 +75,10 @@ export default function ContactFab() {
 			{open && (
 				<div className={styles.panel} role='menu' aria-label="Зв'язатися з нами">
 					<a
-						href={PHONE_HREF}
+						href={phoneHref}
 						className={`${styles.action} ${styles.phone}`}
-						aria-label={`Подзвонити ${PHONE_DISPLAY}`}
-						title={PHONE_DISPLAY}
+						aria-label={`Подзвонити ${phoneDisplay}`}
+						title={phoneDisplay}
 						role='menuitem'
 					>
 						<Phone size={22} strokeWidth={2.2} />
