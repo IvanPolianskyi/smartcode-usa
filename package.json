@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "setup:webhook": "node scripts/setup-webhook.js",
+    "setup:leads-webhook": "node scripts/setup-leads-webhook.js",
     "gen:roblox-en": "node scripts/gen-roblox-lessons-en.mjs",
     "gen:roblox-uk": "node scripts/gen-roblox-lessons-uk.mjs",
     "fix:roblox-uk-terms": "node scripts/fix-roblox-uk-terms.mjs",
