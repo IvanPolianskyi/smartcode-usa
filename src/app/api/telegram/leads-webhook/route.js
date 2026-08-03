@@ -4,7 +4,7 @@ import {
   parseLeadStatusCallbackData,
 } from '@/lib/leadContactStatus'
 import { applyLeadContactStatusFromCallback } from '@/lib/applyLeadContactStatus'
-import { getCrmLeadIngestKey } from '@/lib/integrationApiKey'
+import { postCrmLeadContactStatus } from '@/lib/crmLeadContactStatus'
 import { ensureLeadsTelegramWebhook } from '@/lib/ensureLeadsTelegramWebhook'
 
 async function tgApi(botToken, method, body) {
@@ -16,39 +16,9 @@ async function tgApi(botToken, method, body) {
   return res.json().catch(() => null)
 }
 
-async function syncContactStatusToCrm(leadId, contactStatus) {
-  const crmLeadEndpoint = process.env.CRM_LEAD_ENDPOINT
-  if (!crmLeadEndpoint) return { skipped: true }
-  const base = crmLeadEndpoint.replace(/\/incoming\/?$/i, '')
-  const url = `${base}/contact-status`
-  const headers = { 'content-type': 'application/json' }
-  const apiKey = getCrmLeadIngestKey()
-  if (!apiKey) {
-    console.error('CRM contact-status: missing ingest key')
-    return { ok: false, error: 'missing key' }
-  }
-  headers['x-api-key'] = apiKey
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ leadId, contactStatus }),
-    })
-    const data = await response.json().catch(() => ({}))
-    if (!response.ok) {
-      console.error('CRM contact-status failed:', response.status, data)
-      return { ok: false, status: response.status, data }
-    }
-    return { ok: true, data }
-  } catch (e) {
-    console.error('CRM contact-status error:', e)
-    return { ok: false, error: String(e?.message || e) }
-  }
-}
-
 /**
  * Webhook бота заявок: кнопки статусу.
- * Критично: answerCallbackQuery одразу — інакше Telegram «крутить» кнопку.
+ * Критично: answerCallbackQuery одразу; CRM sync обовʼязково await (Vercel ріже void).
  */
 export async function POST(request) {
   const botToken = process.env.TELEGRAM_BOT_TOKEN
@@ -58,8 +28,6 @@ export async function POST(request) {
 
   let cq = null
   try {
-    // Секрет: відхиляємо лише явний mismatch. Якщо header немає —
-    // webhook міг бути зареєстрований без secret_token (типова причина «лагає»).
     const secret = (process.env.TELEGRAM_LEADS_WEBHOOK_SECRET || '').trim()
     if (secret) {
       const provided =
@@ -70,7 +38,7 @@ export async function POST(request) {
       }
       if (!provided) {
         console.warn(
-          '[leads-webhook] secret configured but Telegram sent no header — processing anyway; will re-register webhook'
+          '[leads-webhook] secret configured but no header — processing; re-register webhook'
         )
         void ensureLeadsTelegramWebhook({ force: true })
       }
@@ -101,7 +69,7 @@ export async function POST(request) {
     const messageId = cq.message?.message_id
     const originalText = cq.message?.text || cq.message?.caption || ''
 
-    // 2) Оновити повідомлення в чаті (рядок статусу + ✅ на кнопці).
+    // 2) Оновити повідомлення в чаті.
     const applied = await applyLeadContactStatusFromCallback({
       leadId,
       contactStatus: code,
@@ -110,14 +78,16 @@ export async function POST(request) {
       originalText,
     })
 
-    // 3) CRM — у фоні.
-    void syncContactStatusToCrm(leadId, code)
+    // 3) CRM — обовʼязково await (інакше на Vercel запит не встигає).
+    const crm = await postCrmLeadContactStatus(leadId, code)
 
     return NextResponse.json({
       ok: true,
       leadId,
       contactStatus: code,
       updatedMessages: applied?.updatedMessages ?? 0,
+      crmSynced: Boolean(crm?.ok),
+      crmError: crm?.ok ? undefined : crm?.error || crm?.status || null,
     })
   } catch (error) {
     console.error('leads-webhook error:', error)
@@ -136,7 +106,6 @@ export async function POST(request) {
 }
 
 export async function GET() {
-  // Підстрахування: при відкритті/health-check також ставимо webhook.
   const setup = await ensureLeadsTelegramWebhook().catch((e) => ({
     ok: false,
     error: String(e?.message || e),
