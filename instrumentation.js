@@ -22,4 +22,11 @@ export async function register() {
 	} catch (e) {
 		console.warn('[leads-webhook] auto-setup error:', e)
 	}
+
+	try {
+		const { ensureAffiliateClickIndexes } = await import('@/lib/affiliateClicks')
+		await ensureAffiliateClickIndexes()
+	} catch (e) {
+		console.warn('[affiliate-clicks] index setup error:', e)
+	}
 }
