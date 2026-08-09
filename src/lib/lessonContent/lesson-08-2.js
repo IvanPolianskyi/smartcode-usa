@@ -481,14 +481,16 @@ itertools допомагає писати ефективний та елеган
   practiceTask: {
     title: "Генерація всіх можливих паролів",
     description: "Використайте product для генерації всіх можливих комбінацій",
-    problemStatement: `Створіть функцію, яка генерує всі можливі паролі заданої довжини:
-1. Використайте product для генерації комбінацій
-2. Обмежте виведення першими 10 паролями
-3. Підрахуйте загальну кількість можливих паролів
+    problemStatement: `Створіть програму генерації паролів:
+1. Зчитайте символи, довжину та скільки перших паролів показати
+2. Використайте itertools.product
+3. Виведіть перші show паролів і загальну кількість
 
-Символи: 'abc'
-Довжина: 3`,
-    outputFormat: `Перші 10 паролів:
+Формат вводу:
+abc
+3
+10`,
+    outputFormat: `Перші паролі:
 aaa
 aab
 aac
@@ -503,37 +505,71 @@ baa
 Загальна кількість: 27`,
     examples: [
       {
-        output: `Перші 10 паролів:
+        input: `ab
+2
+4`,
+        output: `Перші паролі:
 aa
 ab
 ba
 bb
 
 Загальна кількість: 4`,
-        explanation: "Використовуємо product з repeat для генерації всіх комбінацій."
+        explanation: "2 символи, довжина 2 → 4 паролі"
+      },
+      {
+        input: `abc
+3
+10`,
+        output: `Перші паролі:
+aaa
+aab
+aac
+aba
+abb
+abc
+aca
+acb
+acc
+baa
+
+Загальна кількість: 27`,
+        explanation: "3^3 = 27 комбінацій, показано 10"
+      },
+      {
+        input: `xy
+1
+2`,
+        output: `Перші паролі:
+x
+y
+
+Загальна кількість: 2`,
+        explanation: "Довжина 1 → два паролі"
       }
     ],
     solution: {
       code: `from itertools import product
 
-def generate_passwords(chars, length):
-    passwords = product(chars, repeat=length)
-    password_list = list(passwords)
-    
-    print('Перші 10 паролів:')
-    for pwd in password_list[:10]:
-        print(''.join(pwd))
-    
-    print(f'\\nЗагальна кількість: {len(password_list)}')
+chars = input().strip()
+length = int(input())
+show = int(input())
 
-generate_passwords('ab', 2)`,
-      explanation: "Використовуємо product з repeat для генерації всіх можливих комбінацій символів заданої довжини."
+passwords = list(product(chars, repeat=length))
+
+print('Перші паролі:')
+for pwd in passwords[:show]:
+    print(''.join(pwd))
+
+print()
+print(f'Загальна кількість: {len(passwords)}')`,
+      explanation: "product з repeat генерує всі комбінації; параметри з stdin."
     },
     hints: [
-      "Використайте product з параметром repeat",
-      "Перетворіть кортежі в рядки за допомогою join",
-      "Обмежте виведення першими 10 елементами",
-      "Підрахуйте загальну кількість через len()"
+      "Зчитайте chars, length, show через input()",
+      "product(chars, repeat=length)",
+      "Обріжте список до show елементів",
+      "Загальна кількість: len(passwords)"
     ],
     difficulty: "intermediate"
   },

@@ -392,57 +392,66 @@ else:
     description: "Створіть програму для перевірки сили пароля",
     problemStatement: `Напишіть програму, яка:
 1. Має список заборонених паролів: forbidden = ["123456", "password", "qwerty"]
-2. Має тестовий пароль: test_password = "MyPass123"
+2. Зчитує пароль з вводу
 3. Перевіряє пароль:
-   - Якщо пароль в forbidden: виводить "Пароль заборонений!" і виходить
-   - Якщо довжина < 6: виводить "Пароль занадто короткий!" і пропускає перевірку
-   - Якщо пароль не містить цифр: виводить "Пароль має містити цифри!" і пропускає
-   - Якщо все ОК: виводить "Пароль прийнято!"
-4. Використовує break, continue, else та оператор in`,
-    outputFormat: `Приклад виведення:
-Перевірка пароля: MyPass123
+   - Якщо пароль у forbidden: "Пароль заборонений!"
+   - Інакше якщо довжина < 6: "Пароль занадто короткий!"
+   - Інакше якщо немає цифр: "Пароль має містити цифри!"
+   - Інакше: "Пароль прийнято!"
+4. Використовуйте оператор in, цикл for і break для пошуку цифр
+
+Формат вводу:
+MyPass123`,
+    outputFormat: `Перевірка пароля: MyPass123
 Пароль прийнято!`,
     examples: [
       {
+        input: `MyPass123`,
         output: `Перевірка пароля: MyPass123
 Пароль прийнято!`,
-        explanation: "Валідний пароль приймається"
+        explanation: "Довгий пароль з цифрами, не з заборонених"
+      },
+      {
+        input: `password`,
+        output: `Перевірка пароля: password
+Пароль заборонений!`,
+        explanation: "Пароль є у списку forbidden"
+      },
+      {
+        input: `abc`,
+        output: `Перевірка пароля: abc
+Пароль занадто короткий!`,
+        explanation: "Довжина 3 < 6"
       }
     ],
     solution: {
-      code: `# Система перевірки паролів
-forbidden = ["123456", "password", "qwerty"]
-test_password = "MyPass123"
+      code: `forbidden = ["123456", "password", "qwerty"]
+test_password = input().strip()
 
 print(f"Перевірка пароля: {test_password}")
 
-# Перевірка на заборонені паролі
 if test_password in forbidden:
     print("Пароль заборонений!")
+elif len(test_password) < 6:
+    print("Пароль занадто короткий!")
 else:
-    # Перевірка довжини
-    if len(test_password) < 6:
-        print("Пароль занадто короткий!")
+    has_digit = False
+    for char in test_password:
+        if char.isdigit():
+            has_digit = True
+            break
+
+    if not has_digit:
+        print("Пароль має містити цифри!")
     else:
-        # Перевірка наявності цифр
-        has_digit = False
-        for char in test_password:
-            if char.isdigit():
-                has_digit = True
-                break
-        
-        if not has_digit:
-            print("Пароль має містити цифри!")
-        else:
-            print("Пароль прийнято!")`,
-      explanation: "Рішення використовує in для перевірки заборонених паролів, break для дострокового виходу при знаходженні цифри, та вкладені if для перевірок."
+        print("Пароль прийнято!")`,
+      explanation: "Читаємо пароль з stdin і перевіряємо через in, len та цикл з break для цифр."
     },
     hints: [
-      "Використовуйте 'пароль in forbidden' для перевірки заборонених",
-      "Використовуйте len() для перевірки довжини",
-      "Використовуйте цикл for з break для пошуку цифр",
-      "Використовуйте char.isdigit() для перевірки чи символ - цифра",
-      "Використовуйте вкладені if/else для послідовних перевірок"
+      "Зчитайте пароль: test_password = input().strip()",
+      "Перевірте 'пароль in forbidden'",
+      "Використовуйте len() для довжини",
+      "Шукайте цифри циклом for з char.isdigit() і break"
     ],
     difficulty: "beginner"
   },

@@ -344,21 +344,25 @@ print(groups)`,
     title: "Система управління бібліотекою",
     description: "Створіть програму для управління бібліотекою книг",
     problemStatement: `Напишіть програму, яка:
-1. Має список книг: books = [
-   {"назва": "Python Basics", "автор": "Іван", "рік": 2020, "рейтинг": 4.5},
-   {"назва": "Advanced Python", "автор": "Марія", "рік": 2021, "рейтинг": 4.8},
-   {"назва": "Python для початківців", "автор": "Іван", "рік": 2019, "рейтинг": 4.2},
-   {"назва": "Data Science", "автор": "Петро", "рік": 2022, "рейтинг": 4.9}
-]
-2. Знаходить:
-   - Книги з рейтингом >= 4.5
-   - Книги автора "Іван"
+1. Зчитує мінімальний рейтинг (float), ім'я автора для пошуку та кількість книг n
+2. Далі зчитує n рядків у форматі: назва;автор;рік;рейтинг
+3. Знаходить:
+   - Книги з рейтингом >= мінімального
+   - Книги вказаного автора
    - Найновішу книгу (найбільший рік)
-   - Середній рейтинг всіх книг
-3. Групує книги за авторами
-4. Виводить всі результати`,
-    outputFormat: `Приклад виведення:
-Книги з рейтингом >= 4.5: ['Python Basics', 'Advanced Python', 'Data Science']
+   - Середній рейтинг (1 знак після коми)
+4. Групує книги за авторами (у порядку першої появи автора)
+5. Виводить усі результати
+
+Формат вводу:
+4.5
+Іван
+4
+Python Basics;Іван;2020;4.5
+Advanced Python;Марія;2021;4.8
+Python для початківців;Іван;2019;4.2
+Data Science;Петро;2022;4.9`,
+    outputFormat: `Книги з рейтингом >= 4.5: ['Python Basics', 'Advanced Python', 'Data Science']
 Книги автора Іван: ['Python Basics', 'Python для початківців']
 Найновіша книга: Data Science (2022)
 Середній рейтинг: 4.6
@@ -368,6 +372,13 @@ print(groups)`,
 Петро: ['Data Science']`,
     examples: [
       {
+        input: `4.5
+Іван
+4
+Python Basics;Іван;2020;4.5
+Advanced Python;Марія;2021;4.8
+Python для початківців;Іван;2019;4.2
+Data Science;Петро;2022;4.9`,
         output: `Книги з рейтингом >= 4.5: ['Python Basics', 'Advanced Python', 'Data Science']
 Книги автора Іван: ['Python Basics', 'Python для початківців']
 Найновіша книга: Data Science (2022)
@@ -376,39 +387,67 @@ print(groups)`,
 Іван: ['Python Basics', 'Python для початківців']
 Марія: ['Advanced Python']
 Петро: ['Data Science']`,
-        explanation: "Програма виконує комплексний аналіз бібліотеки книг"
+        explanation: "Фільтр рейтингу, автора Іван, newest 2022, середнє 4.6"
+      },
+      {
+        input: `4.0
+Оля
+2
+Книга А;Оля;2018;4.0
+Книга Б;Тарас;2021;4.7`,
+        output: `Книги з рейтингом >= 4.0: ['Книга А', 'Книга Б']
+Книги автора Оля: ['Книга А']
+Найновіша книга: Книга Б (2021)
+Середній рейтинг: 4.3
+Книги за авторами:
+Оля: ['Книга А']
+Тарас: ['Книга Б']`,
+        explanation: "Обидві книги >= 4.0; середнє (4.0+4.7)/2 = 4.3"
+      },
+      {
+        input: `5.0
+Петро
+1
+Alone;Петро;2015;4.1`,
+        output: `Книги з рейтингом >= 5.0: []
+Книги автора Петро: ['Alone']
+Найновіша книга: Alone (2015)
+Середній рейтинг: 4.1
+Книги за авторами:
+Петро: ['Alone']`,
+        explanation: "Немає книг з рейтингом >= 5.0"
       }
     ],
     solution: {
-      code: `# Система управління бібліотекою
-books = [
-    {"назва": "Python Basics", "автор": "Іван", "рік": 2020, "рейтинг": 4.5},
-    {"назва": "Advanced Python", "автор": "Марія", "рік": 2021, "рейтинг": 4.8},
-    {"назва": "Python для початківців", "автор": "Іван", "рік": 2019, "рейтинг": 4.2},
-    {"назва": "Data Science", "автор": "Петро", "рік": 2022, "рейтинг": 4.9}
-]
+      code: `min_rating = float(input())
+search_author = input().strip()
+n = int(input())
 
-# Книги з рейтингом >= 4.5
-high_rated = [book["назва"] for book in books if book["рейтинг"] >= 4.5]
-print(f"Книги з рейтингом >= 4.5: {high_rated}")
+books = []
+for _ in range(n):
+    title, author, year, rating = input().strip().split(";")
+    books.append({
+        "назва": title,
+        "автор": author,
+        "рік": int(year),
+        "рейтинг": float(rating)
+    })
 
-# Книги автора "Іван"
-ivan_books = [book["назва"] for book in books if book["автор"] == "Іван"]
-print(f"Книги автора Іван: {ivan_books}")
+high_rated = [book["назва"] for book in books if book["рейтинг"] >= min_rating]
+print(f"Книги з рейтингом >= {min_rating}: {high_rated}")
 
-# Найновіша книга
+author_books = [book["назва"] for book in books if book["автор"] == search_author]
+print(f"Книги автора {search_author}: {author_books}")
+
 newest = books[0]
 for book in books:
     if book["рік"] > newest["рік"]:
         newest = book
 print(f"Найновіша книга: {newest['назва']} ({newest['рік']})")
 
-# Середній рейтинг
-total_rating = sum(book["рейтинг"] for book in books)
-average_rating = total_rating / len(books)
+average_rating = sum(book["рейтинг"] for book in books) / len(books)
 print(f"Середній рейтинг: {average_rating:.1f}")
 
-# Групування за авторами
 by_author = {}
 for book in books:
     author = book["автор"]
@@ -419,14 +458,13 @@ for book in books:
 print("Книги за авторами:")
 for author, titles in by_author.items():
     print(f"{author}: {titles}")`,
-      explanation: "Рішення використовує list comprehensions для фільтрації, цикл for для пошуку максимуму, sum() для середнього, та словник для групування."
+      explanation: "Читаємо параметри та книги з stdin, фільтруємо list comprehensions і групуємо словником."
     },
     hints: [
-      "Використовуйте list comprehension для фільтрації книг за рейтингом",
-      "Використовуйте list comprehension для фільтрації за автором",
-      "Використовуйте цикл for для пошуку книги з найбільшим роком",
-      "Використовуйте sum() та len() для обчислення середнього",
-      "Використовуйте словник для групування книг за авторами"
+      "Зчитайте min_rating, автора, n, потім n рядків з роздільником ';'",
+      "Використовуйте list comprehension для фільтрації",
+      "Середній рейтинг форматуйте через :.1f",
+      "Для групування використовуйте словник за авторами"
     ],
     difficulty: "intermediate"
   },

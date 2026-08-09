@@ -735,7 +735,9 @@ export default function AdminPanelPage() {
                     >
                       <option value="roblox-studio">Roblox Studio</option>
                       <option value="python-developer-zero-to-junior">Python</option>
-                      <option value="web-development">Web Development</option>
+                      <option value="web-development">Створення сайтів</option>
+                      <option value="scratch">Scratch</option>
+                      <option value="minecraft-education">Minecraft Education</option>
                     </select>
                   </div>
                   <div className={styles.certFormGroup}>

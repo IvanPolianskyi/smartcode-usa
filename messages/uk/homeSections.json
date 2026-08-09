@@ -71,11 +71,25 @@
       "badge": "Тренд 2025"
     },
     "webdev": {
-      "title": "ВЕБ-РОЗРОБКА",
+      "title": "СТВОРЕННЯ САЙТІВ",
       "subtitle": "Сучасні сайти та додатки",
       "description": "Створюй адаптивні сайти та веб-додатки з HTML, CSS, JavaScript та React, що вражають своєю швидкістю та дизайном.",
       "features": ["HTML/CSS", "JavaScript", "React", "Node.js"],
       "badge": "Новинка"
+    },
+    "scratch": {
+      "title": "SCRATCH",
+      "subtitle": "Перші кроки в коді через ігри",
+      "description": "Блокове програмування для дітей: анімації, ігри та історії без складного синтаксису. Ідеальний старт у IT.",
+      "features": ["Блоки коду", "Ігри та анімації", "Логіка і змінні", "Свої проєкти"],
+      "badge": "Для молодших"
+    },
+    "minecraft": {
+      "title": "MINECRAFT EDUCATION",
+      "subtitle": "Minecraft Education",
+      "description": "Вчимося програмувати та мислити в світі Minecraft Education: агенти, командні блоки, квести та STEM-проєкти.",
+      "features": ["Education Edition", "Агенти", "Команди", "Квести у світі"],
+      "badge": "STEM"
     }
   },
   "lessons": {

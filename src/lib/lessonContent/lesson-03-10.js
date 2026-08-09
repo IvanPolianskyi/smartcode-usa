@@ -829,51 +829,51 @@ def calculate_total_with_tax(price, quantity, tax_rate):
   practiceTask: {
     title: "Система управління бібліотекою",
     description: "Створіть систему управління бібліотекою з використанням всіх вивчених концепцій",
-    problemStatement: `Створіть систему управління бібліотекою з наступними функціями:
+    problemStatement: `Створіть систему з функціями:
 
-1. **add_book** - додає книгу до бібліотеки
-   - Параметри: library (словник), title, author, year, isbn
-   - Валідує дані (title та author обов'язкові, year має бути числом)
-   - Додає книгу до бібліотеки
-   - Повертає True, якщо успішно, False - якщо помилка
+1. add_book(library, title, author, year=None, isbn=None)
+2. find_books(library, **criteria)
+3. calculate_statistics(library)
+4. format_book_info(book, format_type="short")
+5. get_books_by_author(library, author)
+6. remove_book(library, isbn)
 
-2. **find_books** - знаходить книги за критеріями
-   - Параметри: library, **criteria (іменовані аргументи: author, year, min_year, max_year)
-   - Використовує filter() для пошуку
-   - Повертає список знайдених книг
+Зчитайте n книг (title;author;year;isbn), автора для пошуку, isbn для видалення.
+Додайте книги, виведіть знайдені, статистику, формати, список автора, результат видалення.
 
-3. **calculate_statistics** - обчислює статистику бібліотеки
-   - Параметри: library
-   - Використовує reduce() або інші методи
-   - Повертає словник: загальна кількість книг, кількість авторів, найстаріша книга, найновіша книга
-
-4. **format_book_info** - форматує інформацію про книгу
-   - Параметри: book (словник), format_type="short" (може бути "short" або "full")
-   - Використовує методи рядків
-   - Повертає відформатований рядок
-
-5. **get_books_by_author** - отримує книги автора
-   - Параметри: library, author
-   - Використовує filter() та map()
-   - Повертає список назв книг автора
-
-6. **remove_book** - видаляє книгу
-   - Параметри: library, isbn
-   - Знаходить та видаляє книгу за ISBN
-   - Повертає True, якщо знайдено та видалено, False - якщо ні
-
-**Важливо:** Не використовуйте функцію input(). Введіть значення напряму в коді.
-
-Створіть приклади використання всіх функцій та виведіть результати.`,
-    outputFormat: `Приклад виведення:
-Книга додана: True
-Знайдені книги: [{'title': 'Python для початківців', 'author': 'Олександр Петренко', 'year': 2023}]
-Статистика: {'total_books': 3, 'total_authors': 2, 'oldest_year': 2020, 'newest_year': 2023}
-Форматування: Python для початківців (2023)
-Книги автора: ['Python для початківців', 'Поглиблений Python']
-Книга видалена: True`,
+Формат вводу:
+3
+Python для початківців;Олександр Петренко;2023;978-1234567890
+Поглиблений Python;Олександр Петренко;2024;978-1234567891
+Основи програмування;Марія Іваненко;2020;978-1234567892
+Олександр Петренко
+978-1234567890`,
+    outputFormat: `Книга додана: True
+Знайдені книги автора 'Олександр Петренко': 2
+- Python для початківців (2023)
+- Поглиблений Python (2024)
+Статистика бібліотеки:
+Загальна кількість книг: 3
+Кількість авторів: 2
+Найстаріша книга: 2020
+Найновіша книга: 2024
+Коротке форматування: Python для початківців (2023)
+Повне форматування:
+Назва: Python для початківців
+Автор: Олександр Петренко
+Рік: 2023
+ISBN: 978-1234567890
+Книги автора 'Олександр Петренко': ['Python для початківців', 'Поглиблений Python']
+Книга видалена: True
+Кількість книг після видалення: 2`,
     examples: [
       {
+        input: `3
+Python для початківців;Олександр Петренко;2023;978-1234567890
+Поглиблений Python;Олександр Петренко;2024;978-1234567891
+Основи програмування;Марія Іваненко;2020;978-1234567892
+Олександр Петренко
+978-1234567890`,
         output: `Книга додана: True
 Знайдені книги автора 'Олександр Петренко': 2
 - Python для початківців (2023)
@@ -892,256 +892,188 @@ ISBN: 978-1234567890
 Книги автора 'Олександр Петренко': ['Python для початківців', 'Поглиблений Python']
 Книга видалена: True
 Кількість книг після видалення: 2`,
-        explanation: "Демонструє додавання книги, пошук, обчислення статистики та форматування."
+        explanation: "Три книги, пошук автора, видалення першої за ISBN"
+      },
+      {
+        input: `2
+Книга А;Автор А;2010;isbn-1
+Книга Б;Автор Б;2015;isbn-2
+Автор А
+isbn-2`,
+        output: `Книга додана: True
+Знайдені книги автора 'Автор А': 1
+- Книга А (2010)
+Статистика бібліотеки:
+Загальна кількість книг: 2
+Кількість авторів: 2
+Найстаріша книга: 2010
+Найновіша книга: 2015
+Коротке форматування: Книга А (2010)
+Повне форматування:
+Назва: Книга А
+Автор: Автор А
+Рік: 2010
+ISBN: isbn-1
+Книги автора 'Автор А': ['Книга А']
+Книга видалена: True
+Кількість книг після видалення: 1`,
+        explanation: "Видаляється друга книга; форматування першої"
+      },
+      {
+        input: `1
+Alone;Solo;1999;x-1
+Solo
+missing`,
+        output: `Книга додана: True
+Знайдені книги автора 'Solo': 1
+- Alone (1999)
+Статистика бібліотеки:
+Загальна кількість книг: 1
+Кількість авторів: 1
+Найстаріша книга: 1999
+Найновіша книга: 1999
+Коротке форматування: Alone (1999)
+Повне форматування:
+Назва: Alone
+Автор: Solo
+Рік: 1999
+ISBN: x-1
+Книги автора 'Solo': ['Alone']
+Книга видалена: False
+Кількість книг після видалення: 1`,
+        explanation: "ISBN missing не знайдено — видалення False"
       }
     ],
     solution: {
-      code: `# Система управління бібліотекою
-
-from functools import reduce
+      code: `from functools import reduce
 
 def add_book(library, title, author, year=None, isbn=None):
-    """
-    Додає книгу до бібліотеки
-    
-    Args:
-        library: Словник бібліотеки
-        title: Назва книги (обов'язкове)
-        author: Автор (обов'язкове)
-        year: Рік видання (опціональне)
-        isbn: ISBN (опціональне)
-    
-    Returns:
-        True, якщо успішно, False - якщо помилка
-    """
-    # Валідація
+    """Додає книгу до бібліотеки"""
     if not title or not author:
         return False
     if year is not None and (not isinstance(year, int) or year < 0):
         return False
-    
-    # Створення книги
     book = {
         "title": title.strip(),
         "author": author.strip(),
         "year": year,
         "isbn": isbn
     }
-    
-    # Додавання до бібліотеки
     if "books" not in library:
         library["books"] = []
-    
     library["books"].append(book)
     return True
 
 def find_books(library, **criteria):
-    """
-    Знаходить книги за критеріями
-    
-    Args:
-        library: Словник бібліотеки
-        **criteria: Критерії пошуку (author, year, min_year, max_year)
-    
-    Returns:
-        Список знайдених книг
-    """
+    """Знаходить книги за критеріями"""
     if "books" not in library:
         return []
-    
     books = library["books"]
-    
-    # Фільтрація за автором
     if "author" in criteria:
         books = list(filter(lambda b: b.get("author", "").lower() == criteria["author"].lower(), books))
-    
-    # Фільтрація за роком
     if "year" in criteria:
         books = list(filter(lambda b: b.get("year") == criteria["year"], books))
-    
-    # Фільтрація за діапазоном років
     if "min_year" in criteria:
         books = list(filter(lambda b: b.get("year") is not None and b.get("year") >= criteria["min_year"], books))
-    
     if "max_year" in criteria:
         books = list(filter(lambda b: b.get("year") is not None and b.get("year") <= criteria["max_year"], books))
-    
     return books
 
 def calculate_statistics(library):
-    """
-    Обчислює статистику бібліотеки
-    
-    Args:
-        library: Словник бібліотеки
-    
-    Returns:
-        Словник зі статистикою
-    """
+    """Обчислює статистику бібліотеки"""
     if "books" not in library or len(library["books"]) == 0:
-        return {
-            "total_books": 0,
-            "total_authors": 0,
-            "oldest_year": None,
-            "newest_year": None
-        }
-    
+        return {"total_books": 0, "total_authors": 0, "oldest_year": None, "newest_year": None}
     books = library["books"]
-    
-    # Загальна кількість книг
-    total_books = len(books)
-    
-    # Кількість унікальних авторів
     authors = set(book.get("author", "") for book in books if book.get("author"))
-    total_authors = len(authors)
-    
-    # Найстаріша та найновіша книга
     years = [book.get("year") for book in books if book.get("year") is not None]
-    
     if years:
-        oldest_year = reduce(lambda x, y: x if x < y else y, years)
-        newest_year = reduce(lambda x, y: x if x > y else y, years)
+        oldest_year = reduce(lambda a, b: a if a < b else b, years)
+        newest_year = reduce(lambda a, b: a if a > b else b, years)
     else:
         oldest_year = None
         newest_year = None
-    
     return {
-        "total_books": total_books,
-        "total_authors": total_authors,
+        "total_books": len(books),
+        "total_authors": len(authors),
         "oldest_year": oldest_year,
         "newest_year": newest_year
     }
 
 def format_book_info(book, format_type="short"):
-    """
-    Форматує інформацію про книгу
-    
-    Args:
-        book: Словник з інформацією про книгу
-        format_type: Тип форматування ('short' або 'full')
-    
-    Returns:
-        Відформатований рядок
-    """
+    """Форматує інформацію про книгу"""
     if format_type == "short":
-        title = book.get("title", "Невідома")
-        year = book.get("year", "?")
-        return f"{title} ({year})"
-    else:  # full
-        title = book.get("title", "Невідома")
-        author = book.get("author", "Невідомий")
-        year = book.get("year", "?")
-        isbn = book.get("isbn") if book.get("isbn") else "Немає"
-        return f"Назва: {title}\\nАвтор: {author}\\nРік: {year}\\nISBN: {isbn}"
+        return f"{book.get('title', 'Невідома')} ({book.get('year', '?')})"
+    title = book.get("title", "Невідома")
+    author = book.get("author", "Невідомий")
+    year = book.get("year", "?")
+    isbn = book.get("isbn") if book.get("isbn") else "Немає"
+    return f"Назва: {title}\\nАвтор: {author}\\nРік: {year}\\nISBN: {isbn}"
 
 def get_books_by_author(library, author):
-    """
-    Отримує список назв книг автора
-    
-    Args:
-        library: Словник бібліотеки
-        author: Ім'я автора
-    
-    Returns:
-        Список назв книг
-    """
+    """Список назв книг автора"""
     if "books" not in library:
         return []
-    
-    # Фільтруємо книги автора, потім отримуємо назви
     author_books = filter(lambda b: b.get("author", "").lower() == author.lower(), library["books"])
-    titles = map(lambda b: b.get("title", ""), author_books)
-    return list(titles)
+    return list(map(lambda b: b.get("title", ""), author_books))
 
 def remove_book(library, isbn):
-    """
-    Видаляє книгу за ISBN
-    
-    Args:
-        library: Словник бібліотеки
-        isbn: ISBN книги
-    
-    Returns:
-        True, якщо знайдено та видалено, False - якщо ні
-    """
+    """Видаляє книгу за ISBN"""
     if "books" not in library:
         return False
-    
-    # Знаходимо індекс книги
     for i, book in enumerate(library["books"]):
         if book.get("isbn") == isbn:
             library["books"].pop(i)
             return True
-    
     return False
 
-# Вводимо значення напряму в коді (не використовуємо input())
-
-# Створюємо бібліотеку
+n = int(input())
 library = {}
+first_result = None
+for _ in range(n):
+    title, author, year, isbn = input().strip().split(";")
+    result = add_book(library, title, author, int(year), isbn)
+    if first_result is None:
+        first_result = result
 
-# Додаємо книги
-result = add_book(library, "Python для початківців", "Олександр Петренко", 2023, "978-1234567890")
-add_book(library, "Поглиблений Python", "Олександр Петренко", 2024, "978-1234567891")
-add_book(library, "Основи програмування", "Марія Іваненко", 2020, "978-1234567892")
+search_author = input().strip()
+remove_isbn = input().strip()
 
-print(f"Книга додана: {result}")
-# Пошук книг
-found = find_books(library, author="Олександр Петренко")
-print(f"Знайдені книги автора 'Олександр Петренко': {len(found)}")
+print(f"Книга додана: {first_result}")
+found = find_books(library, author=search_author)
+print(f"Знайдені книги автора '{search_author}': {len(found)}")
 for book in found:
     print(f"- {format_book_info(book)}")
-# Статистика
+
 stats = calculate_statistics(library)
 print("Статистика бібліотеки:")
 print(f"Загальна кількість книг: {stats['total_books']}")
 print(f"Кількість авторів: {stats['total_authors']}")
 print(f"Найстаріша книга: {stats['oldest_year']}")
 print(f"Найновіша книга: {stats['newest_year']}")
-# Форматування
+
 book = library["books"][0]
 print(f"Коротке форматування: {format_book_info(book, 'short')}")
 print("Повне форматування:")
-full_info = format_book_info(book, 'full')
-for line in full_info.split('\\n'):
+for line in format_book_info(book, "full").split("\\n"):
     print(line)
-# Книги автора
-author_books = get_books_by_author(library, "Олександр Петренко")
-print(f"Книги автора 'Олександр Петренко': {author_books}")
-# Видалення книги
-removed = remove_book(library, "978-1234567890")
+
+author_books = get_books_by_author(library, search_author)
+print(f"Книги автора '{search_author}': {author_books}")
+
+removed = remove_book(library, remove_isbn)
 print(f"Книга видалена: {removed}")
 print(f"Кількість книг після видалення: {len(library['books'])}")`,
-      explanation: "Рішення демонструє комплексне використання всіх вивчених концепцій: валідація, іменовані аргументи, **kwargs, методи об'єктів, filter(), map(), reduce(), форматування рядків. Система управління бібліотекою показує практичне застосування функцій у реальному проекті."
+      explanation: "Повна бібліотечна система на функціях; книги та операції з stdin."
     },
     hints: [
-      "Введіть значення напряму в коді - не використовуйте input()",
-      "Використовуйте **criteria для гнучкого пошуку за різними критеріями",
-      "Для валідації перевіряйте наявність обов'язкових полів та типи даних",
-      "Використовуйте filter() для пошуку книг за критеріями",
-      "Використовуйте reduce() для обчислення мінімуму та максимуму років",
-      "Для отримання унікальних авторів використовуйте set()",
-      "Використовуйте методи рядків (strip(), lower()) для нормалізації даних",
-      "Перевіряйте наявність ключа 'books' в бібліотеці перед роботою з ним",
-      "Для видалення знайдіть індекс елемента, потім використайте pop()"
+      "Зчитайте n книг у форматі title;author;year;isbn",
+      "Використовуйте **criteria у find_books",
+      "Для повного форматування розділюйте рядок по \\\\n",
+      "remove_book шукає isbn і робить pop"
     ],
-    difficulty: "advanced",
-    testCases: [
-      {
-        expectedOutput: "True",
-        description: "Перевірка додавання книги"
-      },
-      {
-        expectedOutput: "Знайдені книги",
-        description: "Перевірка пошуку книг"
-      },
-      {
-        expectedOutput: "total_books",
-        description: "Перевірка обчислення статистики"
-      }
-    ]
+    difficulty: "advanced"
   },
-  
+
   quiz: {
     questions: [
       {

@@ -36,7 +36,9 @@ export async function GET() {
       'python-developer-zero-to-junior': 'Пайтон',
       'unity-game-development': 'Розробка ігор на Unity',
       'roblox-studio': 'Roblox Studio',
-      'web-development': 'Веб-розробка',
+      'web-development': 'Створення сайтів',
+      scratch: 'Scratch',
+      'minecraft-education': 'Minecraft Education',
     }
 
     // Collect user ids to hydrate names/emails

@@ -1,14 +1,20 @@
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { robloxCurriculum } from '@/lib/robloxCurriculum'
+import { scratchCurriculum } from '@/lib/scratchCurriculum'
+import { minecraftCurriculum } from '@/lib/minecraftCurriculum'
 
 export const PYTHON_COURSE_ID = 'python-developer-zero-to-junior'
 export const ROBLOX_COURSE_ID = 'roblox-studio'
+export const SCRATCH_COURSE_ID = 'scratch'
+export const MINECRAFT_COURSE_ID = 'minecraft-education'
 
 /** LMS course pages. */
 export const COURSE_PAGE_PATHS = {
   [PYTHON_COURSE_ID]: '/courses/python-developer-zero-to-junior',
   [ROBLOX_COURSE_ID]: '/courses/roblox-studio',
+  [SCRATCH_COURSE_ID]: '/courses/scratch',
+  [MINECRAFT_COURSE_ID]: '/courses/minecraft-education',
 }
 
 /** @deprecated use COURSE_PAGE_PATHS */
@@ -18,12 +24,16 @@ export const KNOWN_COURSE_IDS = new Set([
   PYTHON_COURSE_ID,
   'web-development',
   ROBLOX_COURSE_ID,
+  SCRATCH_COURSE_ID,
+  MINECRAFT_COURSE_ID,
 ])
 
 export const ONLINE_COURSE_CURRICULA = {
   [PYTHON_COURSE_ID]: pythonCurriculum,
   'web-development': webDevCurriculum,
   'roblox-studio': robloxCurriculum,
+  [SCRATCH_COURSE_ID]: scratchCurriculum,
+  [MINECRAFT_COURSE_ID]: minecraftCurriculum,
 }
 
 export function flattenCourseLessons(courseId) {

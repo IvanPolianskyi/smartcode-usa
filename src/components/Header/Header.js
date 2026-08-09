@@ -9,6 +9,8 @@ import {
 	Monitor,
 	Star,
 	Box,
+	Blocks,
+	Cuboid,
 	User,
 	LogOut,
 } from 'lucide-react'
@@ -248,6 +250,22 @@ const Header = () => {
 			link: '/webDev',
 			age: t('coursesDropdown.webDev.age'),
 			theme: 'purple',
+		},
+		{
+			icon: <Blocks size={24} />,
+			title: t('coursesDropdown.scratch.title'),
+			description: t('coursesDropdown.scratch.description'),
+			link: '/Scratch',
+			age: t('coursesDropdown.scratch.age'),
+			theme: 'orange',
+		},
+		{
+			icon: <Cuboid size={24} />,
+			title: t('coursesDropdown.minecraft.title'),
+			description: t('coursesDropdown.minecraft.description'),
+			link: '/MinecraftEducation',
+			age: t('coursesDropdown.minecraft.age'),
+			theme: 'green',
 		},
 	]
 

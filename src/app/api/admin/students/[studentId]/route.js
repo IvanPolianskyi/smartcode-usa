@@ -8,7 +8,9 @@ const COURSE_NAMES = {
   'python-developer-zero-to-junior': 'Пайтон',
   'unity-game-development': 'Розробка ігор на Unity',
   'roblox-studio': 'Roblox Studio',
-  'web-development': 'Веб-розробка',
+  'web-development': 'Створення сайтів',
+  scratch: 'Scratch',
+  'minecraft-education': 'Minecraft Education',
 }
 
 const CRM_BASE_URL = process.env.CRM_API_URL || process.env.SMARTCODE_CRM_API_URL || ''

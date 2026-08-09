@@ -10,6 +10,8 @@ import {
 	Star,
 	GraduationCap,
 	Box,
+	Blocks,
+	Cuboid,
 	Instagram,
 } from 'lucide-react'
 import TikTokIcon from '@/components/Icons/TikTokIcon'
@@ -32,6 +34,8 @@ const Footer = () => {
 		{ name: t('courses.webDev'), icon: Code, href: '/webDev' },
 		{ name: t('courses.unity'), icon: Gamepad2, href: '/Unity' },
 		{ name: t('courses.roblox'), icon: Box, href: '/Roblox' },
+		{ name: t('courses.scratch'), icon: Blocks, href: '/Scratch' },
+		{ name: t('courses.minecraft'), icon: Cuboid, href: '/MinecraftEducation' },
 	]
 
 	const quickLinks = [
@@ -94,10 +98,7 @@ const Footer = () => {
 
 	return (
 		<footer className={styles.footer}>
-			<div className={styles.backgroundElements}>
-				<div className={`${styles.floatingElement} ${styles.element1}`}></div>
-				<div className={`${styles.floatingElement} ${styles.element2}`}></div>
-			</div>
+			<div className={styles.glow} aria-hidden="true" />
 			<div className={styles.container}>
 				<div className={styles.mainContent}>
 					<div className={styles.schoolInfo}>
@@ -107,8 +108,8 @@ const Footer = () => {
 									src='/logo.jpeg'
 									alt='SmartCode Academy Logo'
 									className={styles.logoImage}
-									width={48}
-									height={48}
+									width={40}
+									height={40}
 								/>
 							</div>
 							<div className={styles.logoText}>
@@ -120,15 +121,9 @@ const Footer = () => {
 						<div className={styles.achievements}>
 							{achievements.map((item, index) => (
 								<div key={index} className={styles.achievement}>
-									<div className={styles.achievementIcon}>
-										<item.icon size={16} />
-									</div>
-									<div>
-										<div className={styles.achievementNumber}>
-											{item.number}
-										</div>
-										<div className={styles.achievementLabel}>{item.label}</div>
-									</div>
+									<item.icon size={14} className={styles.achievementIcon} />
+									<span className={styles.achievementNumber}>{item.number}</span>
+									<span className={styles.achievementLabel}>{item.label}</span>
 								</div>
 							))}
 						</div>
@@ -136,11 +131,11 @@ const Footer = () => {
 
 					<div className={styles.section}>
 						<h4 className={styles.sectionTitle}>{t('coursesTitle')}</h4>
-						<ul className={styles.linksList}>
+						<ul className={`${styles.linksList} ${styles.coursesList}`}>
 							{courses.map((course, index) => (
 								<li key={index}>
 									<Link href={course.href} className={styles.link}>
-										<course.icon size={16} className={styles.linkIcon} />{' '}
+										<course.icon size={14} className={styles.linkIcon} />
 										{course.name}
 									</Link>
 								</li>
@@ -200,13 +195,9 @@ const Footer = () => {
 					</div>
 				</div>
 
-				<div className={styles.divider}></div>
-
 				<div className={styles.bottomSection}>
-					<div className={styles.copyrightContainer}>
-						<div className={styles.copyright}>
-							{t('copyright', { year: currentYear })}
-						</div>
+					<div className={styles.copyright}>
+						{t('copyright', { year: currentYear })}
 					</div>
 					<div className={styles.socialLinks}>
 						{socialLinks.map((social, index) => (
@@ -218,7 +209,7 @@ const Footer = () => {
 								target='_blank'
 								rel='noopener noreferrer'
 							>
-								<social.icon size={18} />
+								<social.icon size={16} />
 							</a>
 						))}
 					</div>

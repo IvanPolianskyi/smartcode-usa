@@ -777,70 +777,92 @@ example()  # Обидва повідомлення про відсутність
   practiceTask: {
     title: "Універсальний калькулятор",
     description: "Створіть універсальний калькулятор, який працює з довільною кількістю чисел та опціями",
-    problemStatement: `Напишіть програму з функціями для універсального калькулятора:
+    problemStatement: `Напишіть програму з функціями:
 
-1. **calculate** - основна функція калькулятора
-   - Параметри: operation (обов'язковий), *numbers (довільна кількість чисел), **options (опціональні налаштування)
-   - Підтримувані операції: "add" (додавання), "multiply" (множення), "average" (середнє)
-   - Опції: "round" (округлити результат), "format" (може бути "int" або "float")
-   - Повертає результат обчислення
+1. calculate(operation, *numbers, **options) — "add", "multiply", "average"; опція round
+2. format_result(result, **format_options) — prefix, suffix
+3. display_calculation(operation, *numbers, result, **info) — друкує блок обчислення
 
-2. **format_result** - форматує результат
-   - Параметри: result (число), **format_options (опції форматування)
-   - Опції: "decimals" (кількість знаків після коми), "prefix" (префікс перед числом), "suffix" (суфікс після числа)
-   - Повертає відформатований рядок
+Зчитайте: operation, n, n чисел, round_flag (True/False), prefix, suffix.
 
-3. **display_calculation** - виводить інформацію про обчислення
-   - Параметри: operation, *numbers, result, **info (додаткова інформація)
-   - Виводить детальну інформацію про обчислення
-
-**Важливо:** Не використовуйте функцію input(). Введіть значення напряму в коді.
-
-Створіть кілька прикладів використання калькулятора з різними операціями та опціями.`,
-    outputFormat: `Приклад виведення:
-=== Обчислення ===
+Формат вводу:
+add
+3
+10
+20
+30
+True
+Сума: 
+ грн`,
+    outputFormat: `=== Обчислення ===
 Операція: add
 Числа: 10, 20, 30
 Результат: 60
-Форматування: 60`,
+Форматування: 60
+
+Відформатований результат: Сума: 60 грн`,
     examples: [
       {
+        input: `add
+3
+10
+20
+30
+True
+Сума: 
+ грн`,
         output: `=== Обчислення ===
 Операція: add
 Числа: 10, 20, 30
 Результат: 60
 Форматування: 60
 
-=== Обчислення ===
+Відформатований результат: Сума: 60 грн`,
+        explanation: "Додавання з округленням і префіксом/суфіксом"
+      },
+      {
+        input: `multiply
+3
+2
+3
+4
+False
+-
+-`,
+        output: `=== Обчислення ===
 Операція: multiply
 Числа: 2, 3, 4
 Результат: 24
-Додаткова інформація:
-  note: Множення трьох чисел
 Форматування: 24
 
-=== Обчислення ===
+Відформатований результат: 24`,
+        explanation: "Множення 2*3*4 = 24; '-' означає порожній prefix/suffix"
+      },
+      {
+        input: `average
+4
+10
+20
+30
+40
+True
+Середнє: 
+-`,
+        output: `=== Обчислення ===
 Операція: average
 Числа: 10, 20, 30, 40
 Результат: 25
-Додаткова інформація:
-  description: Середнє арифметичне
 Форматування: 25
 
-Відформатований результат: Сума: 75 грн`,
-        explanation: "Демонструє додавання чисел з опцією округлення."
+Відформатований результат: Середнє: 25`,
+        explanation: "Середнє 25 з префіксом; '-' = порожній suffix"
       }
     ],
     solution: {
-      code: `# Універсальний калькулятор
-
-def calculate(operation, *numbers, **options):
-    """
-    Виконує математичні операції над довільною кількістю чисел
-    """
+      code: `def calculate(operation, *numbers, **options):
+    """Виконує операцію над довільною кількістю чисел"""
     if len(numbers) == 0:
         return None
-    
     if operation == "add":
         result = sum(numbers)
     elif operation == "multiply":
@@ -851,103 +873,57 @@ def calculate(operation, *numbers, **options):
         result = sum(numbers) / len(numbers)
     else:
         return None
-    
-    # Обробка опцій
-    if "round" in options and options["round"]:
+    if options.get("round"):
         result = round(result)
-    
-    if "format" in options:
-        if options["format"] == "int":
-            result = int(result)
-        elif options["format"] == "float":
-            result = float(result)
-    
     return result
 
 def format_result(result, **format_options):
-    """
-    Форматує результат з опціями
-    """
+    """Форматує результат з опціями"""
     if result is None:
         return "Помилка"
-    
-    formatted = result
-    
-    # Обробка decimals
-    if "decimals" in format_options:
-        formatted = round(formatted, format_options["decimals"])
-    
-    # Додавання префіксу та суфіксу
     prefix = format_options.get("prefix", "")
     suffix = format_options.get("suffix", "")
-    
-    return f"{prefix}{formatted}{suffix}"
+    return f"{prefix}{result}{suffix}"
 
 def display_calculation(operation, *numbers, result, **info):
-    """
-    Виводить детальну інформацію про обчислення
-    """
+    """Виводить детальну інформацію про обчислення"""
     print("=== Обчислення ===")
     print(f"Операція: {operation}")
     print(f"Числа: {', '.join(str(n) for n in numbers)}")
     print(f"Результат: {result}")
-    
     if info:
         print("Додаткова інформація:")
         for key, value in info.items():
             print(f"  {key}: {value}")
-    
-    # Форматування результату
-    formatted = format_result(result)
-    print(f"Форматування: {formatted}")
+    print(f"Форматування: {format_result(result)}")
     print()
 
-# Вводимо значення напряму в коді (не використовуємо input())
+operation = input().strip()
+n = int(input())
+numbers = [int(input()) for _ in range(n)]
+round_flag = input().strip() == "True"
+prefix = input()
+suffix = input()
+if prefix.strip() == "-":
+    prefix = ""
+if suffix.strip() == "-":
+    suffix = ""
 
-# Приклад 1: Додавання з округленням
-result1 = calculate("add", 10, 20, 30, round=True)
-display_calculation("add", 10, 20, 30, result=result1)
-
-# Приклад 2: Множення з форматуванням
-result2 = calculate("multiply", 2, 3, 4, format="int")
-display_calculation("multiply", 2, 3, 4, result=result2, note="Множення трьох чисел")
-
-# Приклад 3: Середнє значення з округленням та форматуванням
-result3 = calculate("average", 10, 20, 30, 40, round=True, format="int")
-display_calculation("average", 10, 20, 30, 40, result=result3, description="Середнє арифметичне")
-
-# Приклад 4: Форматування з префіксом та суфіксом
-result4 = calculate("add", 15, 25, 35)
-formatted = format_result(result4, prefix="Сума: ", suffix=" грн", decimals=2)
+result = calculate(operation, *numbers, round=round_flag)
+display_calculation(operation, *numbers, result=result)
+formatted = format_result(result, prefix=prefix, suffix=suffix)
 print(f"Відформатований результат: {formatted}")`,
-      explanation: "Рішення демонструє використання *args для довільної кількості чисел, **kwargs для опцій та комбінування обох підходів. Функції працюють гнучко з різними комбінаціями аргументів."
+      explanation: "Використовуємо *args/**kwargs; читаємо операцію та числа з stdin. '-' у prefix/suffix означає порожній рядок."
     },
     hints: [
-      "Введіть значення напряму в коді - не використовуйте input()",
-      "Функція calculate має обробляти різні операції та опції через **kwargs",
-      "Використовуйте *numbers для прийняття довільної кількості чисел",
-      "Перевіряйте наявність опцій в **kwargs перед використанням (наприклад, 'round' in options)",
-      "Функція format_result має обробляти різні опції форматування",
-      "Функція display_calculation має використовувати *numbers та **info для гнучкості",
-      "Пам'ятайте про правильний порядок параметрів: обов'язкові → *args → **kwargs"
+      "Визначте calculate з *numbers та **options",
+      "Зчитайте operation, n і числа через input()",
+      "round_flag = input().strip() == \"True\"",
+      "Пам'ятайте порядок: обов'язкові → *args → **kwargs"
     ],
-    difficulty: "intermediate",
-    testCases: [
-      {
-        expectedOutput: "Результат: 60",
-        description: "Перевірка додавання трьох чисел"
-      },
-      {
-        expectedOutput: "Результат: 24",
-        description: "Перевірка множення трьох чисел"
-      },
-      {
-        expectedOutput: "Результат: 20.0",
-        description: "Перевірка обчислення середнього значення"
-      }
-    ]
+    difficulty: "intermediate"
   },
-  
+
   quiz: {
     questions: [
       {

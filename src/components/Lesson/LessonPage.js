@@ -23,7 +23,7 @@ import { updateProgress, checkCoursePurchase, enrollInCourse } from '@/lib/authC
 import { useLocale, useTranslations } from 'next-intl'
 import { getCurriculum } from '@/lib/getCurriculum'
 import { lessonContentMap } from '@/lib/lessonContentMap.uk'
-import { checkPracticeOutput } from '@/lib/practiceValidation'
+import { checkPracticeOutputs } from '@/lib/practiceValidation'
 import { parsePracticeStdin } from '@/lib/parsePracticeStdin'
 import { hasBlockedPythonCode } from '@/lib/pythonCodeGuard'
 import { executePythonWithPyodide } from '@/lib/pyodideRunner'
@@ -220,6 +220,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const [practiceCompleted, setPracticeCompleted] = useState(false)
   const [practiceChecked, setPracticeChecked] = useState(false)
   const [outputErrors, setOutputErrors] = useState([]) // Масив індексів рядків з помилками
+  const [failedExampleIndexes, setFailedExampleIndexes] = useState([])
+  const [practiceTestCount, setPracticeTestCount] = useState(0)
   const [isPyodideLoading, setIsPyodideLoading] = useState(false)
   
   // Sidebar state — fixed defaults for SSR; restored from localStorage after mount
@@ -622,9 +624,6 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   
   const isQuizPassed = quizScore !== null && quizScore >= (fullLesson.quiz?.passingScore || 60)
 
-  const checkPracticeTask = (output) =>
-    checkPracticeOutput(output, fullLesson.practiceTask)
-
   const handleRunCode = async () => {
     if (!userCode.trim()) {
       setCodeExecution({
@@ -667,43 +666,66 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     })
     setPracticeChecked(false)
     setOutputErrors([])
+    setFailedExampleIndexes([])
+    setPracticeTestCount(0)
     setIsPyodideLoading(true)
 
     try {
-      let stdinData = ''
-      if (fullLesson.practiceTask?.examples?.length > 0) {
-        const firstExample = fullLesson.practiceTask.examples[0]
-        if (firstExample.input) {
-          stdinData = parsePracticeStdin(firstExample.input)
-        }
+      const examples = fullLesson.practiceTask?.examples?.length
+        ? fullLesson.practiceTask.examples
+        : [null]
+
+      const runMessages = {
+        timeout: t('runCodeErrors.executionTimeout'),
+        workerError: t('runCodeErrors.workerError'),
+        workerStartFailed: t('runCodeErrors.workerStartFailed'),
       }
 
-      const data = await executePythonWithPyodide(userCode, {
-        stdin: stdinData,
-        moduleId,
-        onLoading: () => setIsPyodideLoading(true),
-        messages: {
-          timeout: t('runCodeErrors.executionTimeout'),
-          workerError: t('runCodeErrors.workerError'),
-          workerStartFailed: t('runCodeErrors.workerStartFailed'),
-        },
-      })
+      const outputs = []
+      let lastError = null
+      let anySuccess = false
+
+      for (let i = 0; i < examples.length; i++) {
+        const example = examples[i]
+        const stdinData = example?.input ? parsePracticeStdin(example.input) : ''
+
+        const data = await executePythonWithPyodide(userCode, {
+          stdin: stdinData,
+          moduleId,
+          onLoading: () => setIsPyodideLoading(true),
+          messages: runMessages,
+        })
+
+        outputs.push(data.output || '')
+        if (data.errorOutput) lastError = data.errorOutput
+        if (data.success) anySuccess = true
+      }
 
       setIsPyodideLoading(false)
 
-      const output = data.output || ''
-      const checkResult = checkPracticeTask(output)
+      const displayOutput =
+        outputs.length > 1
+          ? outputs
+              .map((out, i) => `=== ${t('testCaseLabel', { number: i + 1 })} ===\n${out}`.trimEnd())
+              .join('\n\n')
+          : outputs[0] || ''
+
+      const checkResult = fullLesson.practiceTask?.examples?.length
+        ? checkPracticeOutputs(outputs, fullLesson.practiceTask)
+        : { isCorrect: null, errors: [], failedExampleIndexes: [] }
 
       setCodeExecution({
         isRunning: false,
-        output,
-        error: data.errorOutput || null,
-        success: data.success,
+        output: displayOutput,
+        error: lastError,
+        success: anySuccess && !lastError,
       })
 
       if (checkResult.isCorrect !== null) {
         setPracticeChecked(true)
         setOutputErrors(checkResult.errors)
+        setFailedExampleIndexes(checkResult.failedExampleIndexes || [])
+        setPracticeTestCount(examples.length)
         setPracticeCompleted(Boolean(checkResult.isCorrect))
 
         if (checkResult.isCorrect) {
@@ -711,7 +733,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
             await updateProgress(courseId, {
               action: 'completePracticeTask',
               lessonId,
-              practiceOutput: output,
+              practiceOutput: outputs[0] || '',
+              practiceOutputs: outputs,
               locale,
             })
             router.refresh()
@@ -736,6 +759,8 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       })
       setPracticeChecked(false)
       setOutputErrors([])
+      setFailedExampleIndexes([])
+      setPracticeTestCount(0)
       setPracticeCompleted(
         Boolean((Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false))
       )
@@ -1369,6 +1394,14 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                               <XCircle className="w-5 h-5" />
                               <strong>{t('practiceFail')}</strong>
                               <p>{t('practiceFailHint')}</p>
+                              {practiceTestCount > 1 && failedExampleIndexes.length > 0 && (
+                                <p style={{ fontSize: '0.875rem', marginTop: '0.5rem', color: '#ef4444' }}>
+                                  {t('failedTestsFound', {
+                                    failed: failedExampleIndexes.map((i) => i + 1).join(', '),
+                                    total: practiceTestCount,
+                                  })}
+                                </p>
+                              )}
                               {outputErrors.length > 0 && (
                                 <p style={{ fontSize: '0.875rem', marginTop: '0.5rem', color: '#ef4444' }}>
                                   {t('outputErrorsFound', { count: outputErrors.length })}

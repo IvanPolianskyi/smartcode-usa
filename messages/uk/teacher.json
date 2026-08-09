@@ -38,7 +38,9 @@
     "open": "Відкрити курс",
     "python": "Python",
     "roblox": "Roblox Studio",
-    "web": "Веб-розробка",
+    "web": "Створення сайтів",
+    "scratch": "Scratch",
+    "minecraft": "Minecraft Education",
     "fullAccess": "Усі уроки відкриті"
   },
   "students": {

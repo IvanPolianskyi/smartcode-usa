@@ -127,6 +127,16 @@ const COURSE_LANDING_VIEW_CONTENT = {
 		content_name: 'Веб-розробка - курс для дітей',
 		content_category: 'online_course',
 	},
+	scratch: {
+		content_ids: ['smartcode_landing_scratch'],
+		content_name: 'Scratch - блокове програмування для дітей',
+		content_category: 'online_course',
+	},
+	minecraft: {
+		content_ids: ['smartcode_landing_minecraft'],
+		content_name: 'Minecraft Education - курс для дітей',
+		content_category: 'online_course',
+	},
 }
 
 /** Перегляд лендінгу напряму - ViewContent */

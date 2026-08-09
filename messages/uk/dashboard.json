@@ -1,7 +1,9 @@
 {
   "courses": {
     "python-developer-zero-to-junior": { "title": "Пайтон" },
-    "roblox-studio": { "title": "Roblox Studio" }
+    "roblox-studio": { "title": "Roblox Studio" },
+    "scratch": { "title": "Scratch" },
+    "minecraft-education": { "title": "Minecraft Education" }
   },
   "days": {
     "sun": "Нд",
@@ -82,7 +84,9 @@
     },
     "courseDescriptions": {
       "roblox-studio": "92 уроки - моделі, Lua, Obby/Tycoon і реліз власної гри на Showcase.",
-      "python-developer-zero-to-junior": "96 уроків - Python від нуля до реальних проєктів."
+      "python-developer-zero-to-junior": "96 уроків - Python від нуля до реальних проєктів.",
+      "scratch": "92 уроки - блоки, ігри та анімації від першого спрайта до фінального проєкту.",
+      "minecraft-education": "92 уроки - агент, MakeCode, квести та STEM у світі Minecraft Education."
     },
     "courses": {
       "title": "Мої курси на платформі",
@@ -93,6 +97,8 @@
       "lockedHint": "Доступ до платформи відкривається з онлайн-уроками — зверніться до менеджера",
       "lockedViaLessonsRoblox": "Щоб отримати доступ, відвідуйте онлайн-уроки Roblox Studio у SmartCode.",
       "lockedViaLessonsPython": "Щоб отримати доступ, відвідуйте онлайн-уроки Python у SmartCode.",
+      "lockedViaLessonsScratch": "Щоб отримати доступ, відвідуйте онлайн-уроки Scratch у SmartCode.",
+      "lockedViaLessonsMinecraft": "Щоб отримати доступ, відвідуйте онлайн-уроки Minecraft Education у SmartCode.",
       "unlockCta": "Запросити доступ",
       "preview": "Переглянути програму",
       "goTo": "Перейти",

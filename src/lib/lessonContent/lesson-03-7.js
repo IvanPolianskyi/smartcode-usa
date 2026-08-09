@@ -769,44 +769,52 @@ result = len([1, 2, 3])  #  len працює як функція`
   practiceTask: {
     title: "Робота з областю видимості змінних",
     description: "Створіть функції, які демонструють різні аспекти області видимості змінних",
-    problemStatement: `Напишіть програму, яка демонструє роботу з областю видимості змінних:
+    problemStatement: `Напишіть програму, яка демонструє область видимості:
 
-1. **local_example** - демонструє локальні змінні
-   - Створює локальну змінну всередині функції
-   - Показує, що локальна змінна не впливає на глобальну
-   - Повертає значення локальної змінної
+1. local_example() — локальна x=20, глобальна x не змінюється
+2. increment / reset / get_count — глобальний counter
+3. outer()/inner() — вкладені функції
+4. create_adder(n), create_multiplier(n) — замикання
 
-2. **global_counter** - лічильник з глобальною змінною
-   - Використовує глобальну змінну counter
-   - Функція increment() збільшує лічильник
-   - Функція reset() скидає лічильник
-   - Функція get_count() повертає поточне значення
+Зчитайте: початковий counter не потрібен (почніть з 0); кількість increment; n1, x1 для adder; n2, x2 для adder; n3, x3 для multiplier; n4, x4 для multiplier.
+Глобальна x = 10. Виведіть демо локальних змінних, лічильник, outer/inner і замикання.
 
-3. **nested_example** - вкладені функції
-   - Зовнішня функція outer() містить змінну
-   - Внутрішня функція inner() використовує змінну з outer()
-   - Демонструє роботу з вкладеними просторами
-
-4. **closure_example** - замикання
-   - Функція create_adder(n) створює функцію, яка додає n
-   - Внутрішня функція "запам'ятовує" значення n
-   - Створіть кілька функцій з різними значеннями n
-
-**Важливо:** Не використовуйте функцію input(). Введіть значення напряму в коді.
-
-Створіть приклади використання всіх функцій та виведіть результати.`,
-    outputFormat: `Приклад виведення:
-Локальна змінна: 20
+Формат вводу:
+2
+3
+5
+7
+5
+2
+4
+5
+4`,
+    outputFormat: `Локальна змінна: 20
 Глобальна змінна: 10
-Лічильник: 1
-Лічильник після increment: 2
+
+Лічильник: 0
+Лічильник після increment: 1
+Лічильник після ще одного increment: 2
 Лічильник після reset: 0
+
 Outer: outer_value
 Inner: outer_value
-Adder(5): 8
-Adder(10): 13`,
+
+Adder(5) з n=3: 8
+Adder(5) з n=7: 12
+Multiplier(4) з n=2: 8
+Multiplier(4) з n=5: 20`,
     examples: [
       {
+        input: `2
+3
+5
+7
+5
+2
+4
+5
+4`,
         output: `Локальна змінна: 20
 Глобальна змінна: 10
 
@@ -822,146 +830,152 @@ Adder(5) з n=3: 8
 Adder(5) з n=7: 12
 Multiplier(4) з n=2: 8
 Multiplier(4) з n=5: 20`,
-        explanation: "Демонструє роботу з локальними, глобальними та вкладеними змінними."
+        explanation: "2 інкременти; adder(3)+5=8, adder(7)+5=12; *2 і *5"
+      },
+      {
+        input: `1
+1
+10
+2
+10
+3
+3
+4
+3`,
+        output: `Локальна змінна: 20
+Глобальна змінна: 10
+
+Лічильник: 0
+Лічильник після increment: 1
+Лічильник після reset: 0
+
+Outer: outer_value
+Inner: outer_value
+
+Adder(10) з n=1: 11
+Adder(10) з n=2: 12
+Multiplier(3) з n=3: 9
+Multiplier(3) з n=4: 12`,
+        explanation: "Один increment; інші значення для замикань"
+      },
+      {
+        input: `3
+10
+1
+20
+2
+5
+2
+6
+2`,
+        output: `Локальна змінна: 20
+Глобальна змінна: 10
+
+Лічильник: 0
+Лічильник після increment: 1
+Лічильник після ще одного increment: 2
+Лічильник після ще одного increment: 3
+Лічильник після reset: 0
+
+Outer: outer_value
+Inner: outer_value
+
+Adder(1) з n=10: 11
+Adder(2) з n=20: 22
+Multiplier(2) з n=5: 10
+Multiplier(2) з n=6: 12`,
+        explanation: "Три інкременти та інші параметри замикань"
       }
     ],
     solution: {
-      code: `# Робота з областю видимості змінних
-
-# Глобальна змінна
-x = 10
+      code: `x = 10
 counter = 0
 
-# 1. Демонстрація локальних змінних
 def local_example():
-    """
-    Демонструє локальні змінні
-    """
-    x = 20  # Локальна змінна (не впливає на глобальну)
+    """Демонструє локальні змінні"""
+    x = 20
     return x
 
-# 2. Лічильник з глобальною змінною
 def increment():
-    """
-    Збільшує глобальний лічильник
-    """
+    """Збільшує глобальний лічильник"""
     global counter
     counter += 1
     return counter
 
 def reset():
-    """
-    Скидає глобальний лічильник
-    """
+    """Скидає глобальний лічильник"""
     global counter
     counter = 0
 
 def get_count():
-    """
-    Повертає поточне значення лічильника
-    """
+    """Повертає поточне значення лічильника"""
     return counter
 
-# 3. Вкладені функції
 def outer():
-    """
-    Зовнішня функція з вкладеногою
-    """
+    """Зовнішня функція з вкладеною"""
     outer_var = "outer_value"
-    
+
     def inner():
-        """
-        Внутрішня функція, яка використовує змінну з outer()
-        """
         print(f"Inner: {outer_var}")
-    
+
     print(f"Outer: {outer_var}")
     inner()
-    return inner
 
-# 4. Замикання
 def create_adder(n):
-    """
-    Створює функцію, яка додає n до аргументу
-    """
-    def adder(x):
-        return x + n  # Використовує n з зовнішньої функції
+    """Створює функцію, яка додає n"""
+    def adder(val):
+        return val + n
     return adder
 
 def create_multiplier(n):
-    """
-    Створює функцію, яка множить аргумент на n
-    """
-    def multiplier(x):
-        return x * n
+    """Створює функцію, яка множить на n"""
+    def multiplier(val):
+        return val * n
     return multiplier
 
-# Вводимо значення напряму в коді (не використовуємо input())
+inc_times = int(input())
+n1 = int(input())
+x1 = int(input())
+n2 = int(input())
+x2 = int(input())
+n3 = int(input())
+x3 = int(input())
+n4 = int(input())
+x4 = int(input())
 
-# Приклад 1: Локальні змінні
-local_x = local_example()
-print(f"Локальна змінна: {local_x}")
-print(f"Глобальна змінна: {x}")  # Глобальна не змінилася
-
+print(f"Локальна змінна: {local_example()}")
+print(f"Глобальна змінна: {x}")
 print()
 
-# Приклад 2: Глобальний лічильник
 print(f"Лічильник: {get_count()}")
-increment()
-print(f"Лічильник після increment: {get_count()}")
-increment()
-print(f"Лічильник після ще одного increment: {get_count()}")
+for i in range(inc_times):
+    increment()
+    if i == 0:
+        print(f"Лічильник після increment: {get_count()}")
+    else:
+        print(f"Лічильник після ще одного increment: {get_count()}")
 reset()
 print(f"Лічильник після reset: {get_count()}")
-
 print()
 
-# Приклад 3: Вкладені функції
-inner_func = outer()
-
+outer()
 print()
 
-# Приклад 4: Замикання
-adder_3 = create_adder(3)
-adder_7 = create_adder(7)
-
-print(f"Adder(5) з n=3: {adder_3(5)}")
-print(f"Adder(5) з n=7: {adder_7(5)}")
-
-multiplier_2 = create_multiplier(2)
-multiplier_5 = create_multiplier(5)
-
-print(f"Multiplier(4) з n=2: {multiplier_2(4)}")
-print(f"Multiplier(4) з n=5: {multiplier_5(4)}")`,
-      explanation: "Рішення демонструє різні аспекти області видимості: локальні змінні, глобальні змінні з ключовим словом global, вкладені функції та замикання. Кожна функція показує різний рівень області видимості."
+print(f"Adder({x1}) з n={n1}: {create_adder(n1)(x1)}")
+print(f"Adder({x2}) з n={n2}: {create_adder(n2)(x2)}")
+print(f"Multiplier({x3}) з n={n3}: {create_multiplier(n3)(x3)}")
+print(f"Multiplier({x4}) з n={n4}: {create_multiplier(n4)(x4)}")`,
+      explanation: "Демонстрація local/global/nonlocal-замикань; параметри замикань і кількість increment з stdin."
     },
     hints: [
-      "Введіть значення напряму в коді - не використовуйте input()",
-      "Для зміни глобальної змінної використовуйте ключове слово global",
-      "Локальні змінні не впливають на глобальні без global",
-      "Вкладені функції можуть використовувати змінні з зовнішніх функцій",
-      "Замикання створюються, коли внутрішня функція 'запам'ятовує' змінну з зовнішньої",
-      "Для зміни змінної з вкладеного простору використовуйте nonlocal (якщо потрібно)",
-      "Глобальні змінні визначаються на рівні модуля (поза функціями)",
-      "Використовуйте локальні змінні, коли можливо, щоб уникнути конфліктів"
+      "Для зміни counter використовуйте global",
+      "Зчитайте кількість increment і параметри замикань через input()",
+      "Локальна x у функції не змінює глобальну x",
+      "create_adder повертає внутрішню функцію"
     ],
-    difficulty: "intermediate",
-    testCases: [
-      {
-        expectedOutput: "Локальна змінна: 20",
-        description: "Перевірка локальних змінних"
-      },
-      {
-        expectedOutput: "Лічильник після increment: 1",
-        description: "Перевірка глобального лічильника"
-      },
-      {
-        expectedOutput: "Adder(5) з n=3: 8",
-        description: "Перевірка замикання"
-      }
-    ]
+    difficulty: "intermediate"
   },
-  
+
   quiz: {
     questions: [
       {

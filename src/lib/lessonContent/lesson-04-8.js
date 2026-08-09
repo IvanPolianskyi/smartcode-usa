@@ -604,17 +604,15 @@ bike.start()`,
     title: "Система роботів з композицією",
     description: "Створіть систему роботів використовуючи композицію",
     problemStatement: `Напишіть програму, яка:
-1. Створює класи компонентів:
-   - Sensor(type) - з методом detect()
-   - Motor(power) - з методом move()
-   - Battery(capacity) - з методами use(amount) та charge()
-2. Створює клас Robot, який:
-   - Використовує композицію для компонентів
-   - Має метод operate() - використовує всі компоненти
-   - Перевіряє заряд батареї перед роботою
-3. Створює кілька роботів з різними компонентами`,
-    outputFormat: `Приклад виведення:
-Робот-1:
+1. Створює класи Sensor(type), Motor(power), Battery(capacity)
+2. Створює клас Robot з композицією компонентів і методом operate()
+3. Витрата енергії мотора: power // 10
+4. Зчитує роботів зі stdin і викликає operate() для кожного (між ними ---)
+
+Формат вводу:
+- число n
+- n рядків: name sensor_type power capacity`,
+    outputFormat: `Робот-1:
 Сенсор camera виявив перешкоду
 Мотор 100W рухається
 Батарея: 90%
@@ -625,6 +623,9 @@ bike.start()`,
 Батарея: 80%`,
     examples: [
       {
+        input: `2
+Робот-1 camera 100 100
+Робот-2 radar 200 100`,
         output: `Робот-1:
 Сенсор camera виявив перешкоду
 Мотор 100W рухається
@@ -634,50 +635,72 @@ bike.start()`,
 Сенсор radar виявив перешкоду
 Мотор 200W рухається
 Батарея: 80%`,
-        explanation: "Програма демонструє композицію для створення гнучкої системи роботів"
+        explanation: "Витрата 10 і 20 одиниць з батареї 100 → 90% і 80%"
+      },
+      {
+        input: `1
+Бот lidar 50 100`,
+        output: `Бот:
+Сенсор lidar виявив перешкоду
+Мотор 50W рухається
+Батарея: 95%`,
+        explanation: "Один робот, витрата 5 → 95%"
+      },
+      {
+        input: `2
+A cam 10 100
+B sonar 0 100`,
+        output: `A:
+Сенсор cam виявив перешкоду
+Мотор 10W рухається
+Батарея: 99%
+---
+B:
+Сенсор sonar виявив перешкоду
+Мотор 0W рухається
+Батарея: 100%`,
+        explanation: "Витрата 1 і 0 відсотків відповідно"
       }
     ],
     solution: {
-      code: `# Система роботів з композицією
-class Sensor:
+      code: `class Sensor:
     def __init__(self, sensor_type):
         self.type = sensor_type
-    
+
     def detect(self):
         print(f"Сенсор {self.type} виявив перешкоду")
 
 class Motor:
     def __init__(self, power):
         self.power = power
-    
+
     def move(self):
         print(f"Мотор {self.power}W рухається")
-    
+
     def get_energy_consumption(self):
-        # Мотор з більшою потужністю використовує більше енергії
         return self.power // 10
 
 class Battery:
     def __init__(self, capacity):
         self.capacity = capacity
         self.charge = capacity
-    
+
     def use(self, amount):
         if self.charge >= amount:
             self.charge -= amount
             return True
         return False
-    
+
     def get_percentage(self):
         return int((self.charge / self.capacity) * 100)
 
 class Robot:
     def __init__(self, name, sensor, motor, battery):
         self.name = name
-        self.sensor = sensor    # Композиція
-        self.motor = motor      # Композиція
-        self.battery = battery  # Композиція
-    
+        self.sensor = sensor
+        self.motor = motor
+        self.battery = battery
+
     def operate(self):
         print(f"{self.name}:")
         energy_needed = self.motor.get_energy_consumption()
@@ -688,28 +711,27 @@ class Robot:
         else:
             print("Батарея розряджена!")
 
-# Створюємо роботів з різними компонентами
-robot1 = Robot("Робот-1", 
-               Sensor("camera"), 
-               Motor(100), 
-               Battery(100))
+n = int(input())
+robots = []
+for _ in range(n):
+    parts = input().split()
+    name = parts[0]
+    sensor_type = parts[1]
+    power = int(parts[2])
+    capacity = int(parts[3])
+    robots.append(Robot(name, Sensor(sensor_type), Motor(power), Battery(capacity)))
 
-robot2 = Robot("Робот-2", 
-               Sensor("radar"), 
-               Motor(200), 
-               Battery(100))
-
-robot1.operate()
-print("---")
-robot2.operate()`,
-      explanation: "Рішення використовує композицію для створення гнучкої системи, де робот складається з різних компонентів. Мотор з більшою потужністю використовує більше енергії."
+for i, robot in enumerate(robots):
+    if i > 0:
+        print("---")
+    robot.operate()`,
+      explanation: "Композиція Sensor/Motor/Battery у Robot; параметри роботів читаємо з stdin."
     },
     hints: [
-      "Створи окремі класи для Sensor, Motor, Battery",
-      "В Robot використовуй композицію - зберігай об'єкти компонентів",
-      "Перевіряй заряд батареї перед використанням",
-      "Кожен робот має свої власні екземпляри компонентів",
-      "Метод operate() викликає методи всіх компонентів"
+      "Зчитайте n = int(input()), потім n рядків параметрів",
+      "Витрата енергії: power // 10",
+      "Між роботами виводьте ---",
+      "Метод operate() використовує всі компоненти"
     ],
     difficulty: "intermediate"
   },

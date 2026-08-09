@@ -642,166 +642,104 @@ Lambda-функції - потужний інструмент для функц�
   practiceTask: {
     title: "Обробка даних з використанням lambda, map та filter",
     description: "Створіть функції для обробки даних, використовуючи lambda, map() та filter()",
-    problemStatement: `Напишіть програму для обробки даних користувачів та чисел:
+    problemStatement: `Напишіть програму з функціями:
 
-1. **process_numbers** - обробляє список чисел
-   - Параметри: numbers (список чисел)
-   - Використовує map() та lambda для піднесення всіх чисел до квадрату
-   - Повертає список квадратів
+1. process_numbers(numbers) — map + lambda: квадрати
+2. filter_even(numbers) — filter + lambda: парні
+3. process_names(names) — map + lambda: capitalize
+4. filter_long_words(words, min_length=5) — слова з len >= min_length
+5. complex_processing(numbers) — квадрати парних чисел
 
-2. **filter_even** - фільтрує парні числа
-   - Параметри: numbers (список чисел)
-   - Використовує filter() та lambda для фільтрації парних чисел
-   - Повертає список парних чисел
+Зчитайте рядок чисел і рядок імен (через пробіл), потім min_length.
+Виведіть квадрати, парні, квадрати парних, відформатовані імена та довгі імена.
 
-3. **process_names** - обробляє імена
-   - Параметри: names (список рядків з іменами)
-   - Використовує map() та lambda для форматування імен (перша літера велика, решта малі)
-   - Повертає список відформатованих імен
-
-4. **filter_long_words** - фільтрує довгі слова
-   - Параметри: words (список рядків), min_length (мінімальна довжина, за замовчуванням 5)
-   - Використовує filter() та lambda для фільтрації слів довших за min_length
-   - Повертає список довгих слів
-
-5. **complex_processing** - комплексна обробка
-   - Параметри: numbers (список чисел)
-   - Спочатку фільтрує парні числа, потім підносить їх до квадрату
-   - Використовує комбінування filter() та map() з lambda
-   - Повертає список квадратів парних чисел
-
-**Важливо:** Не використовуйте функцію input(). Введіть значення напряму в коді.
-
-Створіть кілька прикладів використання всіх функцій.`,
-    outputFormat: `Приклад виведення:
-Квадрати чисел: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+Формат вводу:
+1 2 3 4 5 6 7 8 9 10
+олександр марія іван анна
+5`,
+    outputFormat: `Квадрати чисел: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 Парні числа: [2, 4, 6, 8, 10]
+Квадрати парних чисел: [4, 16, 36, 64, 100]
 Відформатовані імена: ['Олександр', 'Марія', 'Іван', 'Анна']
-Довгі слова: ['Олександр', 'Марія']
-Квадрати парних чисел: [4, 16, 36, 64, 100]`,
+Довгі імена (min_length=5): ['Олександр', 'Марія']`,
     examples: [
       {
+        input: `1 2 3 4 5 6 7 8 9 10
+олександр марія іван анна
+5`,
         output: `Квадрати чисел: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 Парні числа: [2, 4, 6, 8, 10]
 Квадрати парних чисел: [4, 16, 36, 64, 100]
-
 Відформатовані імена: ['Олександр', 'Марія', 'Іван', 'Анна']
-Довгі імена (min_length=5): ['Олександр', 'Марія']
-
-Довгі слова (min_length=4): ['Python', 'great', 'programming']
-
-Числа > 15, помножені на 2: [40, 50, 60]`,
-        explanation: "Демонструє обробку чисел: квадрати, фільтрація парних, комплексна обробка."
+Довгі імена (min_length=5): ['Олександр', 'Марія']`,
+        explanation: "Базовий набір 1..10 і імена з min_length=5"
+      },
+      {
+        input: `2 4 5
+яна богдан оля
+4`,
+        output: `Квадрати чисел: [4, 16, 25]
+Парні числа: [2, 4]
+Квадрати парних чисел: [4, 16]
+Відформатовані імена: ['Яна', 'Богдан', 'Оля']
+Довгі імена (min_length=4): ['Богдан']`,
+        explanation: "Богдан має довжину >= 4"
+      },
+      {
+        input: `3 6 9
+кіт пес
+3`,
+        output: `Квадрати чисел: [9, 36, 81]
+Парні числа: [6]
+Квадрати парних чисел: [36]
+Відформатовані імена: ['Кіт', 'Пес']
+Довгі імена (min_length=3): ['Кіт', 'Пес']`,
+        explanation: "Обидва імені довжиною 3"
       }
     ],
     solution: {
-      code: `# Обробка даних з використанням lambda, map та filter
-
-def process_numbers(numbers):
-    """
-    Підносить всі числа до квадрату
-    """
-    squared = list(map(lambda x: x ** 2, numbers))
-    return squared
+      code: `def process_numbers(numbers):
+    """Підносить всі числа до квадрату"""
+    return list(map(lambda x: x ** 2, numbers))
 
 def filter_even(numbers):
-    """
-    Фільтрує парні числа
-    """
-    evens = list(filter(lambda x: x % 2 == 0, numbers))
-    return evens
+    """Фільтрує парні числа"""
+    return list(filter(lambda x: x % 2 == 0, numbers))
 
 def process_names(names):
-    """
-    Форматує імена (перша літера велика)
-    """
-    formatted = list(map(lambda name: name.capitalize(), names))
-    return formatted
+    """Форматує імена (перша літера велика)"""
+    return list(map(lambda name: name.capitalize(), names))
 
 def filter_long_words(words, min_length=5):
-    """
-    Фільтрує слова довші за min_length
-    """
-    long_words = list(filter(lambda word: len(word) >= min_length, words))
-    return long_words
+    """Фільтрує слова довші або рівні min_length"""
+    return list(filter(lambda word: len(word) >= min_length, words))
 
 def complex_processing(numbers):
-    """
-    Фільтрує парні числа та підносить їх до квадрату
-    """
-    # Спочатку фільтруємо парні, потім підносимо до квадрату
-    result = list(map(lambda x: x ** 2, filter(lambda x: x % 2 == 0, numbers)))
-    return result
+    """Квадрати парних чисел"""
+    return list(map(lambda x: x ** 2, filter(lambda x: x % 2 == 0, numbers)))
 
-# Вводимо значення напряму в коді (не використовуємо input())
+numbers = list(map(int, input().split()))
+names = input().split()
+min_length = int(input())
 
-# Приклад 1: Обробка чисел
-numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
-squared = process_numbers(numbers)
-print(f"Квадрати чисел: {squared}")
-
-evens = filter_even(numbers)
-print(f"Парні числа: {evens}")
-
-complex_result = complex_processing(numbers)
-print(f"Квадрати парних чисел: {complex_result}")
-
-print()
-
-# Приклад 2: Обробка імен
-names = ["олександр", "марія", "іван", "анна"]
+print(f"Квадрати чисел: {process_numbers(numbers)}")
+print(f"Парні числа: {filter_even(numbers)}")
+print(f"Квадрати парних чисел: {complex_processing(numbers)}")
 
 formatted_names = process_names(names)
 print(f"Відформатовані імена: {formatted_names}")
-
-long_names = filter_long_words(formatted_names, min_length=5)
-print(f"Довгі імена (min_length=5): {long_names}")
-
-print()
-
-# Приклад 3: Додатковий приклад зі словами
-words = ["Python", "is", "great", "for", "programming"]
-long_words = filter_long_words(words, min_length=4)
-print(f"Довгі слова (min_length=4): {long_words}")
-
-print()
-
-# Приклад 4: Комплексна обробка з різними операціями
-numbers2 = [5, 10, 15, 20, 25, 30]
-
-# Фільтруємо числа > 15, потім множимо на 2
-filtered_multiplied = list(map(lambda x: x * 2, filter(lambda x: x > 15, numbers2)))
-print(f"Числа > 15, помножені на 2: {filtered_multiplied}")`,
-      explanation: "Рішення демонструє використання lambda-функцій з map() та filter() для різних операцій обробки даних. Всі функції використовують lambda для компактного коду та функціонального стилю програмування."
+print(f"Довгі імена (min_length={min_length}): {filter_long_words(formatted_names, min_length=min_length)}")`,
+      explanation: "lambda з map/filter у функціях; дані читаються з stdin."
     },
     hints: [
-      "Введіть значення напряму в коді - не використовуйте input()",
-      "Використовуйте map() з lambda для застосування функції до всіх елементів",
-      "Використовуйте filter() з lambda для фільтрації елементів за умовою",
-      "Пам'ятайте: map() та filter() повертають ітератори, потрібен list() для отримання списку",
-      "Для комплексної обробки спочатку filter(), потім map()",
-      "Lambda може приймати параметри зі значеннями за замовчуванням через зовнішню функцію",
-      "Використовуйте lambda для простих операцій, для складних краще звичайні функції",
-      "Перевірте, що lambda повертає правильний тип даних (для filter() - True/False)"
+      "map() і filter() повертають ітератори — обгорніть у list()",
+      "Зчитайте числа та імена через input().split()",
+      "Для complex_processing спочатку filter, потім map",
+      "Передайте min_length у filter_long_words"
     ],
-    difficulty: "intermediate",
-    testCases: [
-      {
-        expectedOutput: "[1, 4, 9, 16, 25]",
-        description: "Перевірка піднесення чисел до квадрату"
-      },
-      {
-        expectedOutput: "[2, 4, 6]",
-        description: "Перевірка фільтрації парних чисел"
-      },
-      {
-        expectedOutput: "['Олександр', 'Марія']",
-        description: "Перевірка форматування імен"
-      }
-    ]
+    difficulty: "intermediate"
   },
-  
+
   quiz: {
     questions: [
       {

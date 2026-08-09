@@ -8,6 +8,8 @@ import {
 	Gamepad2,
 	Monitor,
 	Box,
+	Blocks,
+	Cuboid,
 	Send,
 	Sparkles,
 	MessageSquare,
@@ -153,6 +155,32 @@ export default function KidsPage() {
 					</div>
 
 					<div className={styles.kidsGrid}>
+						<div className={styles.courseCard}>
+							<div className={`${styles.cardIcon}`} style={{ backgroundColor: '#f97316' }}>
+								<Blocks size={24} />
+							</div>
+							<h3 className={styles.cardTitle}>Scratch</h3>
+							<p className={styles.cardText}>
+								Перші ігри та анімації на блоках — ідеальний старт у програмуванні для молодших учнів.
+							</p>
+							<Link href="/Scratch" className={styles.cardLink}>
+								Детальніше <ArrowRight size={14} />
+							</Link>
+						</div>
+
+						<div className={styles.courseCard}>
+							<div className={`${styles.cardIcon}`} style={{ backgroundColor: '#22c55e' }}>
+								<Cuboid size={24} />
+							</div>
+							<h3 className={styles.cardTitle}>Minecraft Education</h3>
+							<p className={styles.cardText}>
+								Код, агенти та квести у світі Minecraft Education — STEM через улюблену гру.
+							</p>
+							<Link href="/MinecraftEducation" className={styles.cardLink}>
+								Детальніше <ArrowRight size={14} />
+							</Link>
+						</div>
+
 						<div className={styles.courseCard}>
 							<div className={`${styles.cardIcon} styles.robloxIcon`} style={{ backgroundColor: '#2563eb' }}>
 								<Box size={24} />

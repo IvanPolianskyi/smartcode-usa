@@ -3,7 +3,7 @@
     "siteName": "SmartCode Academy",
     "home": {
       "title": "SmartCode Academy - школа програмування для дітей та підлітків",
-      "description": "Провідна школа програмування для дітей та підлітків. Навчаємо через практику в Zoom та на платформі. 500+ випускників, 4.9 рейтинг. Python, Unity, Roblox, веб-розробка. Безкоштовне пробне заняття."
+      "description": "Провідна школа програмування для дітей та підлітків. Навчаємо через практику в Zoom та на платформі. 500+ випускників, 4.9 рейтинг. Python, Scratch, Minecraft Education, Unity, Roblox, веб-розробка. Безкоштовне пробне заняття."
     },
     "tariff": {
       "title": "Тарифи та ціни - SmartCode Academy",
@@ -23,7 +23,7 @@
     },
     "courses": {
       "title": "Курси програмування для дітей та підлітків - SmartCode Academy",
-      "description": "Онлайн курси програмування для дітей та підлітків: Python, веб-розробка, Unity та Roblox. Індивідуальні заняття з викладачем, реальні проєкти та підтримка менторів."
+      "description": "Онлайн курси програмування для дітей та підлітків: Scratch, Minecraft Education, Python, веб-розробка, Unity та Roblox. Індивідуальні заняття з викладачем, реальні проєкти та підтримка менторів."
     },
     "python": {
       "title": "Курс Python для дітей - SmartCode Academy",
@@ -40,6 +40,14 @@
     "roblox": {
       "title": "Курс Roblox Studio для дітей - SmartCode Academy",
       "description": "Онлайн курс Roblox Studio для дітей та підлітків: Lua-програмування, створення Obby, Tycoon та Simulator-ігор, публікація та монетизація проєктів."
+    },
+    "scratch": {
+      "title": "Курс Scratch для дітей - SmartCode Academy",
+      "description": "Онлайн курс Scratch для дітей 7–11 років: блокове програмування, анімації, ігри та логіка мислення. М’який старт у IT без складного синтаксису."
+    },
+    "minecraft": {
+      "title": "Курс Minecraft Education для дітей - SmartCode Academy",
+      "description": "Онлайн курс Minecraft Education для дітей 8–13 років: агенти, командні блоки, квести та STEM-проєкти у безпечному освітньому світі Minecraft."
     },
     "invite": {
       "title": "Запроси друга - SmartCode Academy | Знижка 500 грн",
@@ -161,9 +169,19 @@
         "age": ""
       },
       "webDev": {
-        "title": "Веб-розробка",
+        "title": "Створення сайтів",
         "description": "HTML, CSS, React, дизайн",
         "age": ""
+      },
+      "scratch": {
+        "title": "Scratch",
+        "description": "Блокове програмування для дітей",
+        "age": "7–11"
+      },
+      "minecraft": {
+        "title": "Minecraft Education",
+        "description": "Код і STEM у світі Minecraft",
+        "age": "8–13"
       },
       "popular": "Топ"
     }
@@ -177,9 +195,11 @@
     "supportTitle": "Підтримка",
     "courses": {
       "python": "Python програмування",
-      "webDev": "Веб-розробка",
+      "webDev": "Створення сайтів",
       "unity": "Розробка ігор на Unity",
-      "roblox": "Roblox Studio"
+      "roblox": "Roblox Studio",
+      "scratch": "Scratch",
+      "minecraft": "Minecraft Education"
     },
     "quickLinks": {
       "about": "Про нас",

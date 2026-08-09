@@ -4,6 +4,8 @@ import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
+import { scratchCurriculum } from '@/lib/scratchCurriculum'
+import { minecraftCurriculum } from '@/lib/minecraftCurriculum'
 import { createProgressEntry } from '@/lib/courseUtils'
 import {
   canReadCourseProgress,
@@ -12,10 +14,12 @@ import {
   isKnownCourseId,
   isLessonInCourse,
   ROBLOX_COURSE_ID,
+  SCRATCH_COURSE_ID,
+  MINECRAFT_COURSE_ID,
 } from '@/lib/courseLessonAccess'
 import { robloxCurriculum } from '@/lib/robloxCurriculum'
 import { lessonContentMap } from '@/lib/lessonContentMap.uk'
-import { checkPracticeOutput } from '@/lib/practiceValidation'
+import { checkPracticeOutputs } from '@/lib/practiceValidation'
 import {
   lessonRequiresPractice,
   lessonRequiresQuiz,
@@ -156,6 +160,7 @@ export async function POST(request) {
       lessonId,
       quizAnswers,
       practiceOutput,
+      practiceOutputs,
       locale = 'uk',
       action,
     } = body
@@ -298,10 +303,11 @@ export async function POST(request) {
           )
         }
 
-        const validation = checkPracticeOutput(
-          typeof practiceOutput === 'string' ? practiceOutput : '',
-          practiceTask
-        )
+        const outputs = Array.isArray(practiceOutputs)
+          ? practiceOutputs.map((o) => (typeof o === 'string' ? o : ''))
+          : [typeof practiceOutput === 'string' ? practiceOutput : '']
+
+        const validation = checkPracticeOutputs(outputs, practiceTask)
 
         if (!validation.isCorrect) {
           return NextResponse.json(
@@ -331,6 +337,8 @@ export async function POST(request) {
       let curriculum = pythonCurriculum
       if (id === 'web-development') curriculum = webDevCurriculum
       else if (id === ROBLOX_COURSE_ID) curriculum = robloxCurriculum
+      else if (id === SCRATCH_COURSE_ID) curriculum = scratchCurriculum
+      else if (id === MINECRAFT_COURSE_ID) curriculum = minecraftCurriculum
       return curriculum.modules.reduce((sum, m) => sum + m.lessons.length, 0)
     }
 

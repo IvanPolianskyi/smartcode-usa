@@ -361,6 +361,7 @@
 .blue { background: var(--primary-blue); }
 .green { background: var(--primary-green); }
 .purple { background: var(--primary-purple); }
+.orange { background: #ea580c; }
 
 .dropdownInfo {
     flex: 1;

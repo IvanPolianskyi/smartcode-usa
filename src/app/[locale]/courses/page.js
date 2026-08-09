@@ -78,6 +78,8 @@ export default function CoursesPage() {
 						const lmsAvailable = [
 							'python-developer-zero-to-junior',
 							'roblox-studio',
+							'scratch',
+							'minecraft-education',
 						].includes(course.courseId)
 						const isLocked = !lmsAvailable
 
@@ -169,6 +171,16 @@ export default function CoursesPage() {
 
 								<div className={styles.courseActions}>
 									{isLocked ? (
+										course.marketingOnly ? (
+											<Link
+												href={course.link}
+												className={styles.primaryButton}
+												style={{ backgroundColor: course.color }}
+											>
+												{t('actions.learnMore')}
+												<ChevronRight size={18} />
+											</Link>
+										) : (
 										<button
 											className={styles.lockedButton}
 											onClick={(e) => {
@@ -179,6 +191,7 @@ export default function CoursesPage() {
 											<Lock size={18} />
 											{t('actions.comingSoon')}
 										</button>
+										)
 									) : (
 										<>
 											<Link

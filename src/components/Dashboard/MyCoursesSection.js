@@ -13,11 +13,15 @@ const COURSE_PATHS = {
   'roblox-studio': '/courses/roblox-studio',
   'python-developer-zero-to-junior': '/courses/python-developer-zero-to-junior',
   'web-development': '/webDev',
+  scratch: '/courses/scratch',
+  'minecraft-education': '/courses/minecraft-education',
 }
 
 const LOCKED_HINT_KEYS = {
   'roblox-studio': 'lockedViaLessonsRoblox',
   'python-developer-zero-to-junior': 'lockedViaLessonsPython',
+  scratch: 'lockedViaLessonsScratch',
+  'minecraft-education': 'lockedViaLessonsMinecraft',
 }
 
 export default function MyCoursesSection({

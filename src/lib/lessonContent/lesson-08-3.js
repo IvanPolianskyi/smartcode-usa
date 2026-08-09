@@ -472,22 +472,37 @@ functools допомагає писати більш ефективний та �
     title: "Створення кешованого калькулятора",
     description: "Використайте lru_cache та partial для створення ефективного калькулятора",
     problemStatement: `Створіть систему обчислень:
-1. Створіть функцію power(base, exponent) з кешуванням
-2. Використайте partial для створення функцій square та cube
-3. Обчисліть квадрати та куби чисел від 1 до 10
-4. Покажіть статистику кешу
+1. Функція power(base, exponent) з @lru_cache
+2. square і cube через partial
+3. Зчитайте n і обчисліть квадрати та куби чисел від 1 до n
+4. Виведіть статистику кешу
 
-Функції:
-- square(n) = n²
-- cube(n) = n³`,
-    outputFormat: `Квадрати: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
-Куби: [1, 8, 27, 64, 125, 216, 343, 512, 729, 1000]
-Статистика кешу: CacheInfo(hits=..., misses=...)`,
+Формат вводу:
+3`,
+    outputFormat: `Квадрати: [1, 4, 9]
+Куби: [1, 8, 27]
+Статистика кешу: CacheInfo(hits=0, misses=6, maxsize=128, currsize=6)`,
     examples: [
       {
+        input: `3`,
         output: `Квадрати: [1, 4, 9]
-Куби: [1, 8, 27]`,
-        explanation: "Використовуємо lru_cache для кешування та partial для створення спеціалізованих функцій."
+Куби: [1, 8, 27]
+Статистика кешу: CacheInfo(hits=0, misses=6, maxsize=128, currsize=6)`,
+        explanation: "6 унікальних викликів power (3 квадрати + 3 куби)"
+      },
+      {
+        input: `1`,
+        output: `Квадрати: [1]
+Куби: [1]
+Статистика кешу: CacheInfo(hits=0, misses=2, maxsize=128, currsize=2)`,
+        explanation: "Два виклики: 1² і 1³"
+      },
+      {
+        input: `5`,
+        output: `Квадрати: [1, 4, 9, 16, 25]
+Куби: [1, 8, 27, 64, 125]
+Статистика кешу: CacheInfo(hits=0, misses=10, maxsize=128, currsize=10)`,
+        explanation: "10 унікальних викликів для n=5"
       }
     ],
     solution: {
@@ -497,24 +512,25 @@ functools допомагає писати більш ефективний та �
 def power(base, exponent):
     return base ** exponent
 
-# Створюємо спеціалізовані функції
 square = partial(power, exponent=2)
 cube = partial(power, exponent=3)
 
-# Обчислюємо квадрати та куби
-numbers = [1, 2, 3]
-squares = [square(n) for n in numbers]
-cubes = [cube(n) for n in numbers]
+n = int(input())
+numbers = list(range(1, n + 1))
+squares = [square(x) for x in numbers]
+cubes = [cube(x) for x in numbers]
 
 print(f'Квадрати: {squares}')
-print(f'Куби: {cubes}')`,
-      explanation: "Використовуємо lru_cache для кешування результатів power та partial для створення square та cube."
+print(f'Куби: {cubes}')
+info = power.cache_info()
+print(f'Статистика кешу: CacheInfo(hits={info.hits}, misses={info.misses}, maxsize={info.maxsize}, currsize={info.currsize})')`,
+      explanation: "lru_cache + partial; n з stdin; cache_info виводимо явно для стабільного формату."
     },
     hints: [
-      "Використайте @lru_cache для функції power",
-      "Використайте partial для створення square та cube",
-      "Використайте list comprehension для обчислення",
-      "Перевірте статистику кешу через cache_info()"
+      "Зчитайте n = int(input())",
+      "@lru_cache на power",
+      "square = partial(power, exponent=2)",
+      "Виведіть cache_info() після обчислень"
     ],
     difficulty: "intermediate"
   },

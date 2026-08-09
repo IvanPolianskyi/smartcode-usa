@@ -6,9 +6,11 @@ import { getCollection } from '@/lib/mongodb'
 
 const COURSE_NAMES = {
   'python-developer-zero-to-junior': 'Python',
-  'web-development': 'Веб-розробка',
+  'web-development': 'Створення сайтів',
   'roblox-studio': 'Roblox Studio',
   'unity-game-development': 'Unity',
+  scratch: 'Scratch',
+  'minecraft-education': 'Minecraft Education',
 }
 
 function flattenSyllabus(courseId) {

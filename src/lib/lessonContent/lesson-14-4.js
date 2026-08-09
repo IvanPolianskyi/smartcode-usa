@@ -171,15 +171,7 @@ app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, on_text))`,
 
   summary: `Фінальний Telegram-проєкт поєднує handlers, Reply-меню, user_data та HTTP API з коректною обробкою помилок і документацією запуску.`,
 
-  practiceTask: {
-    title: "Бот-асистент",
-    description: "Реалізуйте мінімум 3 команди та одну кнопку з даними з публічного API.",
-    hints: [
-      "Використайте .env для токена",
-      "Перевірте бота в приватному чаті",
-      "Логуйте помилки в консоль, не в чат"
-    ]
-  },
+  practiceTask: null,
 
   quiz: {
     questions: [

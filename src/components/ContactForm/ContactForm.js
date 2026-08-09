@@ -20,7 +20,7 @@ const ContactForm = () => {
 	const tc = useTranslations('common')
 	const locale = useLocale()
     const [isOpen, setIsOpen] = useState(false)
-    const [formData, setFormData] = useState({ name: '', message: '' })
+    const [formData, setFormData] = useState({ name: '', message: '', course: '' })
     const [nameError, setNameError] = useState('')
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [submitting, setSubmitting] = useState(false)
@@ -33,7 +33,19 @@ const ContactForm = () => {
 
     useEffect(() => {
         let rafId = null
-        const open = () => {
+        const open = (event) => {
+            const courseFromEvent =
+                typeof event?.detail?.course === 'string' ? event.detail.course.trim() : ''
+            if (courseFromEvent) {
+                setFormData((prev) => ({ ...prev, course: courseFromEvent }))
+            } else if (typeof window !== 'undefined') {
+                const path = window.location.pathname || ''
+                if (/\/Scratch\/?$/i.test(path)) {
+                    setFormData((prev) => ({ ...prev, course: 'Scratch' }))
+                } else if (/\/MinecraftEducation\/?$/i.test(path)) {
+                    setFormData((prev) => ({ ...prev, course: 'Minecraft Education' }))
+                }
+            }
             openedAtRef.current = Date.now()
             if (rafId) cancelAnimationFrame(rafId)
             rafId = requestAnimationFrame(() => {
@@ -128,7 +140,7 @@ const ContactForm = () => {
                 name: formData.name.trim(),
                 phone: phoneInput.getFullNumber(),
                 message: formData.message,
-                course: '',
+                course: formData.course || '',
                 contactMethod: 'phone',
                 preferredContactMethod: 'phone_call',
                 eventId,

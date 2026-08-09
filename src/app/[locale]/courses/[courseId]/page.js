@@ -11,7 +11,11 @@ export async function generateMetadata({ params }) {
 			? 'webDev'
 			: courseId === 'roblox-studio'
 				? 'roblox'
-				: 'python'
+				: courseId === 'scratch'
+					? 'scratch'
+					: courseId === 'minecraft-education'
+						? 'minecraft'
+						: 'python'
 	const meta = await getLocalizedMetadata(locale, pageKey)
 	const path = `/courses/${courseId}`
 

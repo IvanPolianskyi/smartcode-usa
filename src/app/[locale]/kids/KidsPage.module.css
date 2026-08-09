@@ -187,7 +187,7 @@
 
 @media (min-width: 1024px) {
   .kidsGrid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -236,6 +236,21 @@
   font-size: 0.9rem;
   line-height: 1.5;
   flex-grow: 1;
+}
+
+.cardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--brand-accent, #a100ff);
+  text-decoration: none;
+}
+
+.cardLink:hover {
+  text-decoration: underline;
 }
 
 /* Registration Form Card */

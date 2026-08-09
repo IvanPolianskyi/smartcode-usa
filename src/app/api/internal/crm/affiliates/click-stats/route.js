@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server'
 import { assertCrmInternalRequest } from '@/lib/crmInternalAuth'
-import { getAffiliateClickStats } from '@/lib/affiliateClicks'
+import {
+  getAffiliateClickStats,
+  getAffiliateClickStatsBySrc,
+} from '@/lib/affiliateClicks'
 
 const MAX_CODES = 500
 
@@ -17,11 +20,15 @@ export async function GET(request) {
     .slice(0, MAX_CODES)
 
   if (!codes.length) {
-    return NextResponse.json({ codes: {} })
+    return NextResponse.json({ codes: {}, by_src: {} })
   }
 
   try {
-    return NextResponse.json({ codes: await getAffiliateClickStats(codes) })
+    const [codeStats, bySrc] = await Promise.all([
+      getAffiliateClickStats(codes),
+      getAffiliateClickStatsBySrc(codes),
+    ])
+    return NextResponse.json({ codes: codeStats, by_src: bySrc })
   } catch (error) {
     console.error('affiliate click-stats:', error?.message || error)
     return NextResponse.json({ error: 'Не вдалося порахувати переходи' }, { status: 500 })

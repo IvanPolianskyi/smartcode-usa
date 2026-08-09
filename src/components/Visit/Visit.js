@@ -105,7 +105,7 @@ const Visit = () => {
 					<EnhancedCourseCards />
 				) : (
 					<div
-						style={{ minHeight: '980px', marginTop: 120, width: '100%' }}
+						style={{ minHeight: '980px', marginTop: 36, width: '100%' }}
 						aria-hidden='true'
 					/>
 				)}

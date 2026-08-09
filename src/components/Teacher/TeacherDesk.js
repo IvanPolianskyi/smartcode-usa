@@ -24,6 +24,16 @@ const COURSE_CARDS = [
     titleKey: 'courses.web',
     href: '/courses/web-development',
   },
+  {
+    id: 'scratch',
+    titleKey: 'courses.scratch',
+    href: '/courses/scratch',
+  },
+  {
+    id: 'minecraft-education',
+    titleKey: 'courses.minecraft',
+    href: '/courses/minecraft-education',
+  },
 ]
 
 function formatNextLessonWhen(startAt) {

@@ -749,181 +749,143 @@ result = sum(x ** 2 for x in numbers if x > 5)`
   practiceTask: {
     title: "Обробка даних з функціями вищого порядку",
     description: "Створіть програму для обробки даних, використовуючи map(), filter() та reduce()",
-    problemStatement: `Напишіть програму для обробки даних користувачів та продуктів:
+    problemStatement: `Напишіть програму з функціями (from functools import reduce):
 
-1. **process_numbers** - обробка чисел
-   - Параметри: numbers (список чисел)
-   - Використовує map() для піднесення до квадрату
-   - Використовує filter() для фільтрації парних чисел
-   - Використовує reduce() для обчислення суми
-   - Повертає результат
+1. process_numbers(numbers) — сума квадратів парних
+2. process_users(users) — імена користувачів з age >= 18
+3. calculate_statistics(numbers) — словник sum, product, max через reduce
+4. process_texts(texts) — strip().upper()
+5. complex_processing(data) — середнє квадратів чисел > 10
 
-2. **process_users** - обробка даних користувачів
-   - Параметри: users (список словників з даними користувачів)
-   - Використовує filter() для фільтрації користувачів з віком >= 18
-   - Використовує map() для отримання імен користувачів
-   - Повертає список імен дорослих користувачів
+Зчитайте: рядок чисел; k користувачів (ім'я і вік на рядку); m текстів; рядок data для complex.
 
-3. **calculate_statistics** - обчислення статистики
-   - Параметри: numbers (список чисел)
-   - Використовує reduce() для обчислення суми
-   - Використовує reduce() для обчислення добутку
-   - Використовує reduce() для пошуку максимуму
-   - Повертає словник зі статистикою
-
-4. **process_texts** - обробка текстів
-   - Параметри: texts (список рядків)
-   - Використовує map() для очищення (strip) та upper
-   - Використовує filter() для фільтрації довгих слів (len > 5)
-   - Повертає оброблені тексти
-
-5. **complex_processing** - комплексна обробка
-   - Параметри: data (список чисел)
-   - Комбінує filter(), map() та reduce()
-   - Фільтрує числа > 10, підносить до квадрату, обчислює середнє
-   - Повертає результат
-
-**Важливо:** Не використовуйте функцію input(). Введіть значення напряму в коді.
-
-Створіть приклади використання всіх функцій та виведіть результати.`,
-    outputFormat: `Приклад виведення:
-Сума квадратів парних чисел: 220
+Формат вводу:
+1 2 3 4 5 6 7 8 9 10
+3
+Олександр 20
+Марія 25
+Іван 17
+3
+  привіт  
+  світ  
+  python  
+5 12 8 15 3 20 7`,
+    outputFormat: `Сума квадратів парних чисел: 220
 Дорослі користувачі: ['Олександр', 'Марія']
 Статистика: {'sum': 55, 'product': 3628800, 'max': 10}
 Оброблені тексти: ['ПРИВІТ', 'СВІТ', 'PYTHON']
-Середнє квадратів чисел > 10: 169.0`,
+Середнє квадратів чисел > 10: 256.3333333333333`,
     examples: [
       {
+        input: `1 2 3 4 5 6 7 8 9 10
+3
+Олександр 20
+Марія 25
+Іван 17
+3
+  привіт  
+  світ  
+  python  
+5 12 8 15 3 20 7`,
         output: `Сума квадратів парних чисел: 220
 Дорослі користувачі: ['Олександр', 'Марія']
 Статистика: {'sum': 55, 'product': 3628800, 'max': 10}
 Оброблені тексти: ['ПРИВІТ', 'СВІТ', 'PYTHON']
-Середнє квадратів чисел > 10: 256.3333333333333
-Альтернативний спосіб: 220`,
-        explanation: "Демонструє обробку чисел: фільтрація, перетворення та агрегація."
+Середнє квадратів чисел > 10: 256.3333333333333`,
+        explanation: "Парні квадрати 4+16+...+100=220; середнє (144+225+400)/3"
+      },
+      {
+        input: `2 3 4
+2
+Анна 18
+Богдан 16
+2
+ hi 
+ bye 
+11 12`,
+        output: `Сума квадратів парних чисел: 20
+Дорослі користувачі: ['Анна']
+Статистика: {'sum': 9, 'product': 24, 'max': 4}
+Оброблені тексти: ['HI', 'BYE']
+Середнє квадратів чисел > 10: 132.5`,
+        explanation: "2^2+4^2=20; (121+144)/2=132.5"
+      },
+      {
+        input: `1 1 1
+1
+Оля 30
+1
+test
+20`,
+        output: `Сума квадратів парних чисел: 0
+Дорослі користувачі: ['Оля']
+Статистика: {'sum': 3, 'product': 1, 'max': 1}
+Оброблені тексти: ['TEST']
+Середнє квадратів чисел > 10: 400.0`,
+        explanation: "Немає парних — reduce на порожньому потребує обережності; використайте 0 якщо немає парних"
       }
     ],
     solution: {
-      code: `# Обробка даних з функціями вищого порядку
-
-from functools import reduce
+      code: `from functools import reduce
 
 def process_numbers(numbers):
-    """
-    Обробляє числа: фільтрує парні, підносить до квадрату, сумує
-    """
-    filtered = filter(lambda x: x % 2 == 0, numbers)
-    squared = map(lambda x: x ** 2, filtered)
-    total = reduce(lambda x, y: x + y, squared)
-    return total
+    """Сума квадратів парних чисел"""
+    filtered = list(filter(lambda x: x % 2 == 0, numbers))
+    if not filtered:
+        return 0
+    return reduce(lambda x, y: x + y, map(lambda x: x ** 2, filtered))
 
 def process_users(users):
-    """
-    Обробляє користувачів: фільтрує дорослих, повертає імена
-    """
+    """Імена дорослих користувачів"""
     adults = filter(lambda u: u["age"] >= 18, users)
-    names = map(lambda u: u["name"], adults)
-    return list(names)
+    return list(map(lambda u: u["name"], adults))
 
 def calculate_statistics(numbers):
-    """
-    Обчислює статистику: суму, добуток, максимум
-    """
-    stats = {
+    """Статистика через reduce"""
+    return {
         "sum": reduce(lambda x, y: x + y, numbers),
         "product": reduce(lambda x, y: x * y, numbers),
         "max": reduce(lambda x, y: x if x > y else y, numbers)
     }
-    return stats
 
 def process_texts(texts):
-    """
-    Обробляє тексти: очищає та перетворює в верхній регістр
-    """
-    cleaned = map(lambda t: t.strip().upper(), texts)
-    return list(cleaned)
+    """strip та upper"""
+    return list(map(lambda t: t.strip().upper(), texts))
 
 def complex_processing(data):
-    """
-    Комплексна обробка: фільтрує > 10, підносить до квадрату, обчислює середнє
-    """
-    filtered = filter(lambda x: x > 10, data)
-    squared = map(lambda x: x ** 2, filtered)
-    squared_list = list(squared)
-    
-    if len(squared_list) == 0:
+    """Середнє квадратів чисел > 10"""
+    squared_list = list(map(lambda x: x ** 2, filter(lambda x: x > 10, data)))
+    if not squared_list:
         return 0
-    
     total = reduce(lambda x, y: x + y, squared_list)
-    average = total / len(squared_list)
-    return average
+    return total / len(squared_list)
 
-# Вводимо значення напряму в коді (не використовуємо input())
+numbers = list(map(int, input().split()))
+k = int(input())
+users = []
+for _ in range(k):
+    parts = input().split()
+    users.append({"name": parts[0], "age": int(parts[1])})
+m = int(input())
+texts = [input() for _ in range(m)]
+data = list(map(int, input().split()))
 
-# Приклад 1: Обробка чисел
-numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-result1 = process_numbers(numbers)
-print(f"Сума квадратів парних чисел: {result1}")
-
-# Приклад 2: Обробка користувачів
-users = [
-    {"name": "Олександр", "age": 20},
-    {"name": "Марія", "age": 25},
-    {"name": "Іван", "age": 17}
-]
-adult_names = process_users(users)
-print(f"Дорослі користувачі: {adult_names}")
-
-# Приклад 3: Статистика
-stats = calculate_statistics(numbers)
-print(f"Статистика: {stats}")
-
-# Приклад 4: Обробка текстів
-texts = ["  привіт  ", "  світ  ", "  python  "]
-processed_texts = process_texts(texts)
-print(f"Оброблені тексти: {processed_texts}")
-
-# Приклад 5: Комплексна обробка
-data = [5, 12, 8, 15, 3, 20, 7]
-avg = complex_processing(data)
-print(f"Середнє квадратів чисел > 10: {avg}")
-
-# Додатковий приклад: комбінування в одному рядку
-numbers2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-result2 = reduce(
-    lambda x, y: x + y,
-    map(lambda x: x ** 2, filter(lambda x: x % 2 == 0, numbers2))
-)
-print(f"Альтернативний спосіб: {result2}")`,
-      explanation: "Рішення демонструє використання map(), filter() та reduce() для різних типів обробки даних. Кожна функція показує різні аспекти функцій вищого порядку: перетворення, фільтрацію та агрегацію."
+print(f"Сума квадратів парних чисел: {process_numbers(numbers)}")
+print(f"Дорослі користувачі: {process_users(users)}")
+print(f"Статистика: {calculate_statistics(numbers)}")
+print(f"Оброблені тексти: {process_texts(texts)}")
+print(f"Середнє квадратів чисел > 10: {complex_processing(data)}")`,
+      explanation: "map/filter/reduce для обробки; усі дані з stdin. Порожній filter дає 0."
     },
     hints: [
-      "Введіть значення напряму в коді - не використовуйте input()",
-      "Не забудьте імпортувати reduce з functools: from functools import reduce",
-      "map() та filter() повертають ітератори, для списків потрібен list()",
-      "reduce() згортає послідовність в одне значення",
-      "Для комплексної обробки спочатку filter(), потім map(), потім reduce()",
-      "Функція в filter() має повертати True/False",
-      "Можна комбінувати функції в одному рядку або розбити на кроки для читабельності",
-      "Для обчислення середнього потрібно спочатку отримати список, потім обчислити суму та розділити на кількість"
+      "Імпортуйте reduce з functools",
+      "Якщо після filter список порожній — поверніть 0",
+      "Зчитайте користувачів циклом: ім'я та вік",
+      "Для середнього спочатку list(), потім сума/довжина"
     ],
-    difficulty: "intermediate",
-    testCases: [
-      {
-        expectedOutput: "220",
-        description: "Перевірка обробки чисел"
-      },
-      {
-        expectedOutput: "['Олександр', 'Марія']",
-        description: "Перевірка обробки користувачів"
-      },
-      {
-        expectedOutput: "{'sum': 15",
-        description: "Перевірка обчислення статистики"
-      }
-    ]
+    difficulty: "intermediate"
   },
-  
+
   quiz: {
     questions: [
       {

@@ -385,128 +385,125 @@ result = calculate_squares()`,
     title: "Створення системи аналізу продажів",
     description: "Створіть комплексну систему для аналізу продажів з використанням всіх вивчених модулів",
     problemStatement: `Створіть систему аналізу продажів:
-1. Завантажте дані продажів з JSON файлу
-2. Використайте Counter для підрахунку продажів за продуктами
-3. Використайте defaultdict для групування за категоріями
-4. Використайте groupby для аналізу за датами
-5. Експортуйте результати в CSV та Excel
-6. Використайте lru_cache для кешування обчислень
+1. Зчитайте n продажів зі stdin (product category price date)
+2. Counter — топ товарів (до 2)
+3. defaultdict — суми за категоріями (категорії в алфавітному порядку)
+4. groupby — аналіз за датами (для внутрішньої обробки)
+5. lru_cache — кешування загальної суми
+6. Експорт у sales_report.csv (без Excel/openpyxl)
 
-Структура даних:
-{
-  "sales": [
-    {"product": "Ноутбук", "category": "Електроніка", "price": 25000, "date": "2024-01-15"},
-    ...
-  ]
-}`,
-    outputFormat: `Завантажено 10 продажів
+Формат вводу:
+4
+Ноутбук Електроніка 25000 2024-01-15
+Ноутбук Електроніка 25000 2024-01-15
+Миша Електроніка 500 2024-01-16
+Стіл Меблі 5000 2024-01-16`,
+    outputFormat: `Завантажено 4 продажів
 Найпопулярніші товари:
-1. Ноутбук: 3 продажі
-2. Миша: 2 продажі
-
+1. Ноутбук: 2 продажі
+2. Миша: 1 продажі
 Загальна сума за категоріями:
-Електроніка: 50000 грн
+Електроніка: 50500 грн
 Меблі: 5000 грн
-
-Дані експортовано у sales_report.csv та sales_report.xlsx`,
+Дані експортовано у sales_report.csv`,
     examples: [
       {
-        output: `Завантажено 5 продажів
-\nНайпопулярніші товари:
+        input: `4
+Ноутбук Електроніка 25000 2024-01-15
+Ноутбук Електроніка 25000 2024-01-15
+Миша Електроніка 500 2024-01-16
+Стіл Меблі 5000 2024-01-16`,
+        output: `Завантажено 4 продажів
+Найпопулярніші товари:
 1. Ноутбук: 2 продажі
-\nЗагальна сума: 50000 грн`,
-        explanation: "Використовуємо всі вивчені модулі для комплексного аналізу."
+2. Миша: 1 продажі
+Загальна сума за категоріями:
+Електроніка: 50500 грн
+Меблі: 5000 грн
+Дані експортовано у sales_report.csv`,
+        explanation: "Ноутбук найпопулярніший; суми за двома категоріями"
+      },
+      {
+        input: `2
+Стіл Меблі 3000 2024-02-01
+Крісло Меблі 2000 2024-02-01`,
+        output: `Завантажено 2 продажів
+Найпопулярніші товари:
+1. Стіл: 1 продажі
+2. Крісло: 1 продажі
+Загальна сума за категоріями:
+Меблі: 5000 грн
+Дані експортовано у sales_report.csv`,
+        explanation: "Одна категорія Меблі, сума 5000"
+      },
+      {
+        input: `1
+Миша Електроніка 400 2024-03-01`,
+        output: `Завантажено 1 продажів
+Найпопулярніші товари:
+1. Миша: 1 продажі
+Загальна сума за категоріями:
+Електроніка: 400 грн
+Дані експортовано у sales_report.csv`,
+        explanation: "Один продаж — один рядок у топі"
       }
     ],
     solution: {
-      code: `import json
-import csv
+      code: `import csv
 from collections import Counter, defaultdict
 from itertools import groupby
 from functools import lru_cache
 
-# Дані продажів (замість завантаження з файлу) - 5 продажів, загальна сума 50000
-sales_data = {
-    "sales": [
-        {"product": "Ноутбук", "category": "Електроніка", "price": 25000, "date": "2024-01-15"},
-        {"product": "Ноутбук", "category": "Електроніка", "price": 25000, "date": "2024-01-15"},
-        {"product": "Миша", "category": "Електроніка", "price": 0, "date": "2024-01-16"},
-        {"product": "Стіл", "category": "Меблі", "price": 0, "date": "2024-01-16"},
-        {"product": "Крісло", "category": "Меблі", "price": 0, "date": "2024-01-17"}
-    ]
-}
+n = int(input())
+sales = []
+for _ in range(n):
+    product, category, price, date = input().split()
+    sales.append({
+        'product': product,
+        'category': category,
+        'price': int(price),
+        'date': date
+    })
 
-sales = sales_data['sales']
 print(f'Завантажено {len(sales)} продажів')
 
-# Підрахунок за продуктами
 product_counter = Counter(s['product'] for s in sales)
-
-print('\\nНайпопулярніші товари:')
-for i, (product, count) in enumerate(product_counter.most_common(1), 1):
+print('Найпопулярніші товари:')
+for i, (product, count) in enumerate(product_counter.most_common(2), 1):
     print(f'{i}. {product}: {count} продажі')
 
-# Обчислення загальної суми
-total_sum = sum(sale['price'] for sale in sales)
-print(f'\\nЗагальна сума: {total_sum} грн')
+by_category = defaultdict(int)
+for sale in sales:
+    by_category[sale['category']] += sale['price']
 
-# Групування за датами
+print('Загальна сума за категоріями:')
+for category in sorted(by_category.keys()):
+    print(f'{category}: {by_category[category]} грн')
+
 sorted_by_date = sorted(sales, key=lambda x: x['date'])
 by_date = {}
 for date, group in groupby(sorted_by_date, key=lambda x: x['date']):
     by_date[date] = sum(s['price'] for s in group)
 
-# Кешування обчислень
 @lru_cache(maxsize=128)
-def calculate_total(sales_tuple):
-    return sum(s['price'] for s in sales_tuple)
+def cached_total(total):
+    return total
 
-# Експорт в CSV
-def export_to_csv(sales, filename):
-    try:
-        with open(filename, 'w', encoding='utf-8', newline='') as f:
-            writer = csv.DictWriter(f, fieldnames=['product', 'category', 'price', 'date'])
-            writer.writeheader()
-            writer.writerows(sales)
-    except Exception:
-        pass
+_ = cached_total(sum(s['price'] for s in sales))
 
-# Експорт в Excel
-def export_to_excel(sales, filename):
-    try:
-        from openpyxl import Workbook
-        wb = Workbook()
-        ws = wb.active
-        
-        # Заголовки
-        ws['A1'] = 'Продукт'
-        ws['B1'] = 'Категорія'
-        ws['C1'] = 'Ціна'
-        ws['D1'] = 'Дата'
-        
-        # Дані
-        for row_num, sale in enumerate(sales, start=2):
-            ws[f'A{row_num}'] = sale['product']
-            ws[f'B{row_num}'] = sale['category']
-            ws[f'C{row_num}'] = sale['price']
-            ws[f'D{row_num}'] = sale['date']
-        
-        wb.save(filename)
-    except ImportError:
-        pass
-    except Exception:
-        pass
+with open('sales_report.csv', 'w', encoding='utf-8', newline='') as f:
+    writer = csv.DictWriter(f, fieldnames=['product', 'category', 'price', 'date'])
+    writer.writeheader()
+    writer.writerows(sales)
 
-export_to_csv(sales, 'sales_report.csv')
-export_to_excel(sales, 'sales_report.xlsx')`,
-      explanation: "Використовуємо всі вивчені модулі: json для читання, Counter для підрахунку, defaultdict для групування, groupby для аналізу, csv/Excel для експорту."
+print('Дані експортовано у sales_report.csv')`,
+      explanation: "Дані з stdin; Counter, defaultdict, groupby, lru_cache і CSV-експорт без openpyxl."
     },
     hints: [
-      "Використайте json.load() для читання",
-      "Використайте Counter для підрахунку",
-      "Використайте defaultdict для групування",
-      "Використайте groupby для аналізу за датами",
-      "Використайте csv та openpyxl для експорту"
+      "Зчитайте n і n рядків: product category price date",
+      "most_common(2) для топу товарів",
+      "Сортуйте категорії для стабільного виводу",
+      "Експортуйте лише в CSV через csv.DictWriter"
     ],
     difficulty: "advanced"
   },

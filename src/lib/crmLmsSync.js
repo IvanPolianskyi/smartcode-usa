@@ -4,6 +4,8 @@ import { hashPassword } from '@/lib/auth'
 import { pythonCurriculum } from '@/lib/pythonCurriculum'
 import { webDevCurriculum } from '@/lib/webDevCurriculum'
 import { robloxCurriculum } from '@/lib/robloxCurriculum'
+import { scratchCurriculum } from '@/lib/scratchCurriculum'
+import { minecraftCurriculum } from '@/lib/minecraftCurriculum'
 import { flattenCourseLessons } from '@/lib/courseLessonAccess'
 import {
   allocateUniqueStudentLogin,
@@ -16,15 +18,19 @@ import {
 
 export const LMS_COURSE_CATALOG = [
   { id: 'python-developer-zero-to-junior', name: 'Python' },
-  { id: 'web-development', name: 'Веб-розробка' },
+  { id: 'web-development', name: 'Створення сайтів' },
   { id: 'roblox-studio', name: 'Roblox Studio' },
   { id: 'unity-game-development', name: 'Unity' },
+  { id: 'scratch', name: 'Scratch' },
+  { id: 'minecraft-education', name: 'Minecraft Education' },
 ]
 
 const CURRICULA = {
   'python-developer-zero-to-junior': pythonCurriculum,
   'web-development': webDevCurriculum,
   'roblox-studio': robloxCurriculum,
+  scratch: scratchCurriculum,
+  'minecraft-education': minecraftCurriculum,
 }
 
 function normalizeEmail(value) {
@@ -198,7 +204,13 @@ const DEFAULT_CLIENT_STUDENT_PROFILE = {
 
 /** Курси, які відкриваємо викладачу при привʼязці. */
 export const KNOWN_TEACHER_COURSE_IDS = LMS_COURSE_CATALOG.filter((c) =>
-  ['python-developer-zero-to-junior', 'web-development', 'roblox-studio'].includes(c.id)
+  [
+    'python-developer-zero-to-junior',
+    'web-development',
+    'roblox-studio',
+    'scratch',
+    'minecraft-education',
+  ].includes(c.id)
 ).map((c) => c.id)
 
 /** Відповідь /api/auth/* для клієнта: без CRM-імʼі та внутрішніх полів профілю. */

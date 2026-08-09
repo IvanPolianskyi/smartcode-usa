@@ -495,24 +495,20 @@ print(f"Відстань: {coord1.distance_to(coord2):.2f}")
     title: "Система управління бібліотекою з dataclasses",
     description: "Створіть систему управління бібліотекою використовуючи dataclasses",
     problemStatement: `Напишіть програму, яка:
-1. Створює dataclass Book з полями:
-   - title: str
-   - author: str
-   - isbn: str
-   - is_available: bool = True
-2. Створює dataclass Library з полями:
-   - name: str
-   - books: List[Book] (використати field(default_factory))
-3. Додає методи до Library:
-   - add_book(book) - додає книгу
-   - borrow_book(isbn) - позичає книгу (is_available = False)
-   - return_book(isbn) - повертає книгу (is_available = True)
-   - available_books_count() - кількість доступних книг
-4. Створює бібліотеку, додає кілька книг та тестує методи`,
-    outputFormat: `Приклад виведення:
-Бібліотека: Центральна
-Додано: "1984" від Дж. Оруелл
-Додано: "Кобзар" від Т. Шевченко
+1. Створює dataclass Book з полями title, author, isbn, is_available (за замовчуванням True)
+2. Створює dataclass Library з полями name та books (List[Book] через field(default_factory=list))
+3. Додає методи: add_book, borrow_book, return_book, available_books_count
+4. Зчитує дані з stdin і тестує методи
+
+Формат вводу:
+- рядок: назва бібліотеки
+- число n: кількість книг
+- n рядків: title author isbn (через пробіл, без пробілів у полях)
+- рядок: ISBN для позичення
+- рядок: ISBN для повернення`,
+    outputFormat: `Бібліотека: Центральна
+Додано: "1984" від Дж.Оруелл
+Додано: "Кобзар" від Т.Шевченко
 Доступно книг: 2
 Позичено: "1984"
 Доступно книг: 1
@@ -520,20 +516,57 @@ print(f"Відстань: {coord1.distance_to(coord2):.2f}")
 Доступно книг: 2`,
     examples: [
       {
+        input: `Центральна
+2
+1984 Дж.Оруелл 978-1
+Кобзар Т.Шевченко 978-2
+978-1
+978-1`,
         output: `Бібліотека: Центральна
-Додано: "1984" від Дж. Оруелл
-Додано: "Кобзар" від Т. Шевченко
+Додано: "1984" від Дж.Оруелл
+Додано: "Кобзар" від Т.Шевченко
 Доступно книг: 2
 Позичено: "1984"
 Доступно книг: 1
 Повернено: "1984"
 Доступно книг: 2`,
-        explanation: "Програма демонструє роботу з dataclasses для управління бібліотекою"
+        explanation: "Додано 2 книги, позичено і повернуто першу"
+      },
+      {
+        input: `Міська
+1
+Дюна Ф.Герберт 111
+111
+111`,
+        output: `Бібліотека: Міська
+Додано: "Дюна" від Ф.Герберт
+Доступно книг: 1
+Позичено: "Дюна"
+Доступно книг: 0
+Повернено: "Дюна"
+Доступно книг: 1`,
+        explanation: "Одна книга: після позичення доступно 0, після повернення — 1"
+      },
+      {
+        input: `Шкільна
+2
+Ая B.Автор 978-a
+Сон Я.Українка 978-c
+978-a
+978-a`,
+        output: `Бібліотека: Шкільна
+Додано: "Ая" від B.Автор
+Додано: "Сон" від Я.Українка
+Доступно книг: 2
+Позичено: "Ая"
+Доступно книг: 1
+Повернено: "Ая"
+Доступно книг: 2`,
+        explanation: "Дві книги, операції з ISBN 978-a"
       }
     ],
     solution: {
-      code: `# Система управління бібліотекою
-from dataclasses import dataclass, field
+      code: `from dataclasses import dataclass, field
 from typing import List
 
 @dataclass
@@ -547,11 +580,11 @@ class Book:
 class Library:
     name: str
     books: List[Book] = field(default_factory=list)
-    
+
     def add_book(self, book: Book):
         self.books.append(book)
         print(f'Додано: "{book.title}" від {book.author}')
-    
+
     def borrow_book(self, isbn: str):
         for book in self.books:
             if book.isbn == isbn and book.is_available:
@@ -559,7 +592,7 @@ class Library:
                 print(f'Позичено: "{book.title}"')
                 return
         print(f"Книга з ISBN {isbn} недоступна")
-    
+
     def return_book(self, isbn: str):
         for book in self.books:
             if book.isbn == isbn:
@@ -567,34 +600,33 @@ class Library:
                 print(f'Повернено: "{book.title}"')
                 return
         print(f"Книга з ISBN {isbn} не знайдена")
-    
+
     def available_books_count(self):
         return sum(1 for book in self.books if book.is_available)
 
-# Створюємо бібліотеку
-library = Library("Центральна")
+name = input().strip()
+n = int(input())
+library = Library(name)
 print(f"Бібліотека: {library.name}")
 
-# Додаємо книги
-book1 = Book("1984", "Дж. Оруелл", "978-0-452-28423-4")
-book2 = Book("Кобзар", "Т. Шевченко", "978-966-03-4385-8")
+for _ in range(n):
+    parts = input().split()
+    title, author, isbn = parts[0], parts[1], parts[2]
+    library.add_book(Book(title, author, isbn))
 
-library.add_book(book1)
-library.add_book(book2)
-
-# Тестуємо методи
 print(f"Доступно книг: {library.available_books_count()}")
-library.borrow_book("978-0-452-28423-4")
+borrow_isbn = input().strip()
+library.borrow_book(borrow_isbn)
 print(f"Доступно книг: {library.available_books_count()}")
-library.return_book("978-0-452-28423-4")
+return_isbn = input().strip()
+library.return_book(return_isbn)
 print(f"Доступно книг: {library.available_books_count()}")`,
-      explanation: "Рішення використовує dataclasses для створення класів Book та Library з автоматичною генерацією методів."
+      explanation: "Читаємо дані з stdin, створюємо dataclasses Book/Library і перевіряємо позичення/повернення."
     },
     hints: [
-      "Використовуй @dataclass для обох класів",
-      "Для списку books використовуй field(default_factory=list)",
-      "Додай typing import для List[Book]",
-      "Методи можна додавати як у звичайних класах",
+      "Спочатку зчитайте назву бібліотеки через input()",
+      "Використовуй @dataclass та field(default_factory=list)",
+      "Кожен рядок книги: title author isbn через split()",
       "Перевіряй is_available при позиченні книги"
     ],
     difficulty: "intermediate"

@@ -44,6 +44,26 @@ const COURSE_CONFIG = [
 		stats: { students: '156+', projects: '10+' },
 		particleColors: ['#7dd3fc', '#67e8f9', '#a5f3fc', '#38bdf8'],
 	},
+	{
+		id: 'scratch',
+		theme: 'themeScratch',
+		href: '/Scratch',
+		icon: '/logos/scratch-course.png?v=4',
+		iconType: 'image',
+		rating: 4.9,
+		stats: { students: '90+', projects: '12+' },
+		particleColors: ['#fdba74', '#fb923c', '#fbbf24', '#fde68a'],
+	},
+	{
+		id: 'minecraft',
+		theme: 'themeMinecraft',
+		href: '/MinecraftEducation',
+		icon: '/logos/minecraft-course.png?v=6',
+		iconType: 'image',
+		rating: 4.8,
+		stats: { students: '75+', projects: '10+' },
+		particleColors: ['#d6b895', '#c4a484', '#e8d5b7', '#b08968'],
+	},
 ]
 
 export function useHomeCourseCards() {

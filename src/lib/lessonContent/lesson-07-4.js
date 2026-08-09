@@ -358,30 +358,15 @@ list2 = list(x**2 for x in numbers)  # Створюємо новий генер�
   practiceTask: {
     title: "Створення пайплайну обробки даних",
     description: "Створіть систему генераторів для обробки даних через кілька кроків",
-    problemStatement: `Створіть пайплайн обробки даних з такими кроками:
+    problemStatement: `Створіть пайплайн:
+read_numbers → square → filter_positive → multiply(factor) → limit_results(max_count)
 
-1. **read_numbers(limit)** - генератор, який генерує числа від 0 до limit-1
+Зчитайте зі stdin: limit factor max_count
+Пайплайн: числа 0..limit-1 → квадрат → >0 → *factor → перші max_count
 
-2. **square(numbers)** - генератор, який підносить кожне число до квадрату
-
-3. **filter_positive(numbers)** - генератор, який фільтрує тільки додатні числа (більше 0)
-
-4. **multiply(numbers, factor)** - генератор, який множить кожне число на factor
-
-5. **limit_results(numbers, max_count)** - генератор, який обмежує кількість результатів
-
-**Завдання:**
-- Створіть всі генератори
-- Об'єднайте їх у пайплайн: read → square → filter_positive → multiply(2) → limit(5)
-- Виведіть результати обробки для limit=10
-
-**Вимоги:**
-- Кожен генератор має приймати попередній генератор як аргумент
-- Використовуйте yield для створення генераторів
-- Введіть значення напряму в коді (не використовуйте input())`,
-    outputFormat: `Приклад виведення:
-
-=== Пайплайн обробки даних ===
+Формат вводу:
+10 2 5`,
+    outputFormat: `=== Пайплайн обробки даних ===
 Результат 1: 2
 Результат 2: 8
 Результат 3: 18
@@ -389,42 +374,53 @@ list2 = list(x**2 for x in numbers)  # Створюємо новий генер�
 Результат 5: 50`,
     examples: [
       {
+        input: `10 2 5`,
         output: `=== Пайплайн обробки даних ===
 Результат 1: 2
 Результат 2: 8
 Результат 3: 18
 Результат 4: 32
 Результат 5: 50`,
-        explanation: "Демонструє роботу пайплайну: числа генеруються, підносяться до квадрату, фільтруються, множаться та обмежуються."
+        explanation: "1²*2, 2²*2, … обмежено 5 результатами"
+      },
+      {
+        input: `5 3 3`,
+        output: `=== Пайплайн обробки даних ===
+Результат 1: 3
+Результат 2: 12
+Результат 3: 27`,
+        explanation: "factor=3, max_count=3"
+      },
+      {
+        input: `4 1 2`,
+        output: `=== Пайплайн обробки даних ===
+Результат 1: 1
+Результат 2: 4`,
+        explanation: "factor=1, лише 2 результати"
       }
     ],
     solution: {
-      code: `# 1. Генератор чисел
-def read_numbers(limit):
+      code: `def read_numbers(limit):
     """Генерує числа від 0 до limit-1"""
     for i in range(limit):
         yield i
 
-# 2. Генератор квадратів
 def square(numbers):
     """Підносить кожне число до квадрату"""
     for num in numbers:
         yield num ** 2
 
-# 3. Генератор фільтрації
 def filter_positive(numbers):
     """Фільтрує тільки додатні числа"""
     for num in numbers:
         if num > 0:
             yield num
 
-# 4. Генератор множення
 def multiply(numbers, factor):
     """Множить кожне число на factor"""
     for num in numbers:
         yield num * factor
 
-# 5. Генератор обмеження
 def limit_results(numbers, max_count):
     """Обмежує кількість результатів"""
     count = 0
@@ -434,32 +430,30 @@ def limit_results(numbers, max_count):
         yield num
         count += 1
 
-# Створюємо пайплайн
+limit, factor, max_count = map(int, input().split())
+
 print("=== Пайплайн обробки даних ===")
 pipeline = limit_results(
     multiply(
         filter_positive(
             square(
-                read_numbers(10)
+                read_numbers(limit)
             )
         ),
-        2
+        factor
     ),
-    5
+    max_count
 )
 
-# Виводимо результати
 for i, result in enumerate(pipeline, 1):
     print(f"Результат {i}: {result}")`,
-      explanation: "Рішення створює пайплайн з п'яти генераторів, які обробляють дані послідовно. Кожен генератор приймає попередній як аргумент та обробляє дані по одному елементу, економлячи пам'ять."
+      explanation: "Пайплайн з п'яти генераторів; limit, factor, max_count з stdin."
     },
     hints: [
-      "Почніть з read_numbers - він просто генерує числа через yield",
-      "square приймає numbers як аргумент та використовує цикл for для ітерації",
-      "filter_positive перевіряє умову num > 0 перед yield",
-      "multiply множить num на factor перед yield",
-      "limit_results зберігає лічильник та зупиняється, коли досягнуто max_count",
-      "Об'єднайте генератори в пайплайн, передаючи один в інший"
+      "Зчитайте три числа: limit, factor, max_count",
+      "Кожен генератор приймає попередній як аргумент",
+      "filter_positive пропускає лише num > 0",
+      "limit_results зупиняється після max_count елементів"
     ],
     difficulty: "intermediate"
   },

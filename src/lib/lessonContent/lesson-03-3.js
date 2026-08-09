@@ -661,97 +661,99 @@ create_user(
   practiceTask: {
     title: "Система налаштувань користувача",
     description: "Створіть функції для роботи з налаштуваннями користувача, використовуючи позиційні та іменовані аргументи",
-    problemStatement: `Напишіть програму, яка містить функції для роботи з налаштуваннями користувача:
+    problemStatement: `Напишіть програму з функціями:
 
-1. **create_user_settings** - створює налаштування користувача
-   - Параметри: username (обов'язковий), theme (за замовчуванням "light"), language (за замовчуванням "uk"), notifications (за замовчуванням True), font_size (за замовчуванням 14)
-   - Повертає словник з налаштуваннями
+1. create_user_settings(username, theme="light", language="uk", notifications=True, font_size=14) — повертає словник налаштувань
+2. update_settings(settings, theme=None, language=None, notifications=None, font_size=None) — оновлює лише передані (не None) поля
+3. display_settings(settings, format="short") — виводить налаштування:
+   - short: Тема / Мова
+   - full: Тема інтерфейсу / Мова інтерфейсу
+   - Сповіщення: "Увімкнено" або "Вимкнено"
 
-2. **update_settings** - оновлює налаштування
-   - Параметри: settings (словник налаштувань), theme, language, notifications, font_size (всі опціональні)
-   - Оновлює тільки передані параметри
-   - Повертає оновлений словник
+Зчитайте: username, theme, language, notifications (True/False), font_size, format, new_theme, new_font_size.
+Створіть налаштування, оновіть theme і font_size, виведіть результат.
 
-3. **display_settings** - виводить налаштування
-   - Параметри: settings (словник), format (за замовчуванням "short")
-   - Якщо format="short" - виводить короткий формат
-   - Якщо format="full" - виводить повний формат з описом
-
-**Важливо:** Не використовуйте функцію input(). Введіть значення напряму в коді.
-
-Використайте різні способи виклику функцій:
-- Тільки позиційні аргументи
-- Тільки іменовані аргументи
-- Комбінування позиційних та іменованих
-
-Створіть кілька користувачів з різними налаштуваннями та виведіть їх.`,
-    outputFormat: `Приклад виведення:
-=== Налаштування користувача ===
+Формат вводу:
+user1
+light
+uk
+True
+14
+short
+dark
+16`,
+    outputFormat: `=== Налаштування користувача (короткий формат) ===
 Користувач: user1
 Тема: dark
-Мова: en
+Мова: uk
 Сповіщення: Увімкнено
 Розмір шрифту: 16`,
     examples: [
       {
+        input: `user1
+light
+uk
+True
+14
+short
+dark
+16`,
         output: `=== Налаштування користувача (короткий формат) ===
 Користувач: user1
-Тема: light
+Тема: dark
 Мова: uk
 Сповіщення: Увімкнено
-Розмір шрифту: 14
-
-=== Налаштування користувача (короткий формат) ===
-Користувач: user2
-Тема: dark
-Мова: en
-Сповіщення: Увімкнено
-Розмір шрифту: 14
-
-=== Налаштування користувача (повний формат) ===
+Розмір шрифту: 16`,
+        explanation: "Створено з light/14, оновлено на dark/16, формат short"
+      },
+      {
+        input: `user3
+dark
+en
+False
+16
+full
+dark
+16`,
+        output: `=== Налаштування користувача (повний формат) ===
 Користувач: user3
 Тема інтерфейсу: dark
 Мова інтерфейсу: en
 Сповіщення: Вимкнено
-Розмір шрифту: 16
-
-=== Налаштування користувача (короткий формат) ===
-Користувач: user4
-Тема: dark
-Мова: uk
-Сповіщення: Вимкнено
-Розмір шрифту: 18
-
-=== Оновлені налаштування ===
-Користувач: user2
+Розмір шрифту: 16`,
+        explanation: "Повний формат; сповіщення вимкнено"
+      },
+      {
+        input: `anna
+light
+uk
+True
+14
+short
+light
+20`,
+        output: `=== Налаштування користувача (короткий формат) ===
+Користувач: anna
 Тема: light
-Мова: en
+Мова: uk
 Сповіщення: Увімкнено
 Розмір шрифту: 20`,
-        explanation: "Демонструє створення налаштувань з різними параметрами та виведення в різних форматах."
+        explanation: "Оновлено лише розмір шрифту до 20"
       }
     ],
     solution: {
-      code: `# Система налаштувань користувача
-
-def create_user_settings(username, theme="light", language="uk", notifications=True, font_size=14):
-    """
-    Створює налаштування користувача
-    """
-    settings = {
+      code: `def create_user_settings(username, theme="light", language="uk", notifications=True, font_size=14):
+    """Створює налаштування користувача"""
+    return {
         "username": username,
         "theme": theme,
         "language": language,
         "notifications": notifications,
         "font_size": font_size
     }
-    return settings
 
 def update_settings(settings, theme=None, language=None, notifications=None, font_size=None):
-    """
-    Оновлює налаштування користувача
-    Оновлює тільки передані параметри
-    """
+    """Оновлює тільки передані параметри"""
     if theme is not None:
         settings["theme"] = theme
     if language is not None:
@@ -762,87 +764,45 @@ def update_settings(settings, theme=None, language=None, notifications=None, fon
         settings["font_size"] = font_size
     return settings
 
-def display_settings(settings, format="short", header=None):
-    """
-    Виводить налаштування користувача
-    """
-    if header:
-        print(header)
-    elif format == "short":
-        print("=== Налаштування користувача (короткий формат) ===")
-    else:  # full
-        print("=== Налаштування користувача (повний формат) ===")
-    
+def display_settings(settings, format="short"):
+    """Виводить налаштування користувача"""
     if format == "short":
+        print("=== Налаштування користувача (короткий формат) ===")
         print(f"Користувач: {settings['username']}")
         print(f"Тема: {settings['theme']}")
         print(f"Мова: {settings['language']}")
-        status = "Увімкнено" if settings['notifications'] else "Вимкнено"
-        print(f"Сповіщення: {status}")
-        print(f"Розмір шрифту: {settings['font_size']}")
-    else:  # full
+    else:
+        print("=== Налаштування користувача (повний формат) ===")
         print(f"Користувач: {settings['username']}")
         print(f"Тема інтерфейсу: {settings['theme']}")
         print(f"Мова інтерфейсу: {settings['language']}")
-        status = "Увімкнено" if settings['notifications'] else "Вимкнено"
-        print(f"Сповіщення: {status}")
-        print(f"Розмір шрифту: {settings['font_size']}")
-    print()
+    status = "Увімкнено" if settings["notifications"] else "Вимкнено"
+    print(f"Сповіщення: {status}")
+    print(f"Розмір шрифту: {settings['font_size']}")
 
-# Вводимо значення напряму в коді (не використовуємо input())
+username = input().strip()
+theme = input().strip()
+language = input().strip()
+notifications = input().strip() == "True"
+font_size = int(input())
+fmt = input().strip()
+new_theme = input().strip()
+new_font_size = int(input())
 
-# Приклад 1: Тільки обов'язковий параметр (використовуються значення за замовчуванням)
-user1 = create_user_settings("user1")
-display_settings(user1)
-
-# Приклад 2: Позиційні аргументи
-user2 = create_user_settings("user2", "dark", "en")
-display_settings(user2)
-
-# Приклад 3: Іменовані аргументи (порядок не важливий)
-user3 = create_user_settings(
-    username="user3",
-    font_size=16,
-    theme="dark",
-    language="en",
-    notifications=False
-)
-display_settings(user3, format="full")
-
-# Приклад 4: Комбінування позиційних та іменованих
-user4 = create_user_settings("user4", "dark", notifications=False, font_size=18)
-display_settings(user4)
-
-# Приклад 5: Оновлення налаштувань
-updated_user2 = update_settings(user2, theme="light", font_size=20)
-display_settings(updated_user2, format="short", header="=== Оновлені налаштування ===")`,
-      explanation: "Рішення демонструє використання позиційних та іменованих аргументів, значень за замовчуванням та комбінування різних способів виклику функцій."
+settings = create_user_settings(username, theme=theme, language=language, notifications=notifications, font_size=font_size)
+settings = update_settings(settings, theme=new_theme, font_size=new_font_size)
+display_settings(settings, format=fmt)`,
+      explanation: "Функції зі значеннями за замовчуванням і іменованими аргументами; дані читаються з stdin."
     },
     hints: [
-      "Введіть значення напряму в коді - не використовуйте input()",
-      "Функція create_user_settings має один обов'язковий параметр (username) та кілька зі значеннями за замовчуванням",
-      "Функція update_settings має перевіряти, чи параметр не None перед оновленням",
-      "Функція display_settings має виводити різні формати залежно від параметра format",
-      "Спробуйте використати різні способи виклику: тільки позиційні, тільки іменовані, комбінування",
-      "Використовуйте іменовані аргументи для читабельності, особливо коли багато параметрів"
+      "Визначте функції зі значеннями за замовчуванням",
+      "notifications = input().strip() == \"True\"",
+      "Викликайте create_user_settings та update_settings з іменованими аргументами",
+      "У display_settings змінюйте підписи залежно від format"
     ],
-    difficulty: "intermediate",
-    testCases: [
-      {
-        expectedOutput: "Тема: light",
-        description: "Перевірка значень за замовчуванням"
-      },
-      {
-        expectedOutput: "Мова: en",
-        description: "Перевірка позиційних аргументів"
-      },
-      {
-        expectedOutput: "Розмір шрифту: 16",
-        description: "Перевірка всіх параметрів"
-      }
-    ]
+    difficulty: "intermediate"
   },
-  
+
   quiz: {
     questions: [
       {

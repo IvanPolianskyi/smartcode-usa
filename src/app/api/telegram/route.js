@@ -214,6 +214,8 @@ export async function POST(request) {
     const cookieStore = await cookies()
     const referralIdCookie = cookieStore.get('referralId')
     const referralId = referralIdCookie?.value || null
+    const affiliateSrcCookie = cookieStore.get('affiliateSrc')
+    const affiliateSrc = affiliateSrcCookie?.value || null
 
     const leadIdentity = buildLeadIdentity({ normalizedPhone, normalizedTelegram })
     const submissions = await getCollection('submissions')
@@ -333,6 +335,9 @@ export async function POST(request) {
       sourceUrl ? `<b>URL:</b> ${escapeHtml(sourceUrl)}` : null,
       hasValidEventId ? `<b>Event ID:</b> <code>${escapeHtml(eventId)}</code>` : `<b>Event ID:</b> невалідний/відсутній`,
       referralId ? `<b>🔥 Реферал ID:</b> <code>${escapeHtml(referralId)}</code>` : null,
+      affiliateSrc
+        ? `<b>📎 Джерело (група):</b> <code>${escapeHtml(affiliateSrc)}</code>`
+        : null,
       '',
       `<b>Час:</b> ${escapeHtml(createdAt)}`,
     ].filter(Boolean)
@@ -409,6 +414,7 @@ export async function POST(request) {
       sourceUrl: sourceUrl || null,
       attribution: crmAttribution,
       referralId,
+      affiliateSrc,
       createdAt: new Date().toISOString(),
       telegramDeliveries,
     }
@@ -429,6 +435,7 @@ export async function POST(request) {
           preferredContactMethod: preferredContactMethod || 'phone_call',
           attribution: crmAttribution,
           referralId,
+          affiliateSrc,
           createdAt: new Date(),
           via: 'telegram-api-failed',
           isUniqueLead: shouldTrackLead,
@@ -481,6 +488,7 @@ export async function POST(request) {
         preferredContactMethod: preferredContactMethod || 'phone_call',
         attribution: crmAttribution,
         referralId,
+        affiliateSrc,
         createdAt: new Date(),
         via: 'telegram',
         isUniqueLead: shouldTrackLead,

@@ -279,6 +279,82 @@
   background: rgba(229, 168, 75, 0.1);
 }
 
+.groupCard {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.groupHeader {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.groupTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.groupMeta {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #a8a2bd;
+}
+
+.groupStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+  gap: 0.5rem;
+}
+
+.groupStat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.groupStatLabel {
+  font-size: 0.68rem;
+  color: #8e88a6;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.groupStatValue {
+  font-size: 0.95rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.groupActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.formStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.6rem;
+}
+
 @media (max-width: 540px) {
   .inputNarrow {
     flex: 1 1 100%;

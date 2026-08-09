@@ -489,27 +489,48 @@ CSV та Excel - стандартні формати для зберігання
   
   practiceTask: {
     title: "Створення системи обліку студентів",
-    description: "Створіть систему для зберігання та обробки даних студентів у CSV та Excel",
+    description: "Створіть систему для зберігання та обробки даних студентів у CSV",
     problemStatement: `Створіть систему обліку студентів:
-1. Створіть функцію для збереження даних студентів у CSV
-2. Створіть функцію для читання даних з CSV
-3. Створіть функцію для обчислення середньої оцінки
-4. Експортуйте дані у Excel файл
+1. Зчитайте кількість студентів n
+2. Далі зчитайте n рядків: ім'я, вік, курс, оцінка (через пробіл)
+3. Збережіть дані у CSV файл students.csv
+4. Завантажте дані назад і виведіть кількість студентів та середню оцінку (1 знак після коми)
 
-Дані студентів:
-- Олександр, 25, Python, 95
-- Марія, 23, JavaScript, 88
-- Іван, 30, Python, 92`,
-    outputFormat: `Дані збережено у students.csv
+Формат вводу:
+3
+Олександр 25 Python 95
+Марія 23 JavaScript 88
+Іван 30 Python 92`,
+    outputFormat: `Дані збережено
 Завантажено 3 студентів
-Середня оцінка: 91.67
-Дані експортовано у students.xlsx`,
+Середня оцінка: 91.7`,
     examples: [
       {
+        input: `3
+Олександр 25 Python 95
+Марія 23 JavaScript 88
+Іван 30 Python 92`,
         output: `Дані збережено
-Завантажено 1 студента
-Середня оцінка: 95.0`,
-        explanation: "Використовуємо csv для збереження та читання, обчислюємо середнє значення."
+Завантажено 3 студентів
+Середня оцінка: 91.7`,
+        explanation: "Три студенти, середнє (95+88+92)/3 = 91.7"
+      },
+      {
+        input: `1
+Олена 20 Python 100`,
+        output: `Дані збережено
+Завантажено 1 студентів
+Середня оцінка: 100.0`,
+        explanation: "Один студент з оцінкою 100"
+      },
+      {
+        input: `2
+Аня 22 Java 80
+Богдан 24 Python 90`,
+        output: `Дані збережено
+Завантажено 2 студентів
+Середня оцінка: 85.0`,
+        explanation: "Середнє (80+90)/2 = 85.0"
       }
     ],
     solution: {
@@ -544,52 +565,28 @@ def calculate_average_grade(students):
     total = sum(s['grade'] for s in students)
     return total / len(students)
 
-def export_to_excel(students, filename='students.xlsx'):
-    try:
-        from openpyxl import Workbook
-        wb = Workbook()
-        ws = wb.active
-        
-        # Заголовки
-        ws['A1'] = "Ім'я"
-        ws['B1'] = 'Вік'
-        ws['C1'] = 'Курс'
-        ws['D1'] = 'Оцінка'
-        
-        # Дані
-        for row_num, student in enumerate(students, start=2):
-            ws[f'A{row_num}'] = student['name']
-            ws[f'B{row_num}'] = student['age']
-            ws[f'C{row_num}'] = student['course']
-            ws[f'D{row_num}'] = student['grade']
-        
-        wb.save(filename)
-        print(f'Дані експортовано у {filename}')
-    except ImportError:
-        print('Модуль openpyxl не встановлено, Excel експорт пропущено')
-    except Exception:
-        pass
+n = int(input())
+students = []
+for _ in range(n):
+    parts = input().split()
+    name = parts[0]
+    age = int(parts[1])
+    course = parts[2]
+    grade = float(parts[3])
+    students.append({'name': name, 'age': age, 'course': course, 'grade': grade})
 
-# Дані
-students = [{'name': 'Олександр', 'age': 25, 'course': 'Python', 'grade': 95}]
-
-# Зберігаємо
 save_students_csv(students)
-
-# Завантажуємо
 loaded = load_students_csv()
-print(f'Завантажено {len(loaded)} студента')
-
-# Обчислюємо середнє
+print(f'Завантажено {len(loaded)} студентів')
 avg = calculate_average_grade(loaded)
 print(f'Середня оцінка: {avg:.1f}')`,
-      explanation: "Використовуємо csv для збереження/читання, обчислюємо середнє значення та експортуємо в Excel."
+      explanation: "Читаємо дані з stdin, зберігаємо/читаємо CSV і рахуємо середню оцінку."
     },
     hints: [
-      "Використайте csv.DictWriter для запису",
-      "Використайте csv.DictReader для читання",
-      "Обчисліть середнє через sum() та len()",
-      "Використайте openpyxl для створення Excel файлу"
+      "Спочатку зчитайте n = int(input())",
+      "Використайте csv.DictWriter / DictReader",
+      "Середнє: sum(grades) / len(students)",
+      "Форматуйте середнє через f'{avg:.1f}'"
     ],
     difficulty: "intermediate"
   },

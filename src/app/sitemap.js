@@ -7,6 +7,8 @@ const paths = [
 	{ path: '/webDev', priority: 0.9, changeFrequency: 'monthly' },
 	{ path: '/Unity', priority: 0.9, changeFrequency: 'monthly' },
 	{ path: '/Roblox', priority: 0.9, changeFrequency: 'monthly' },
+	{ path: '/Scratch', priority: 0.9, changeFrequency: 'monthly' },
+	{ path: '/MinecraftEducation', priority: 0.9, changeFrequency: 'monthly' },
 	{ path: '/tariff', priority: 0.8, changeFrequency: 'monthly' },
 	{ path: '/projects', priority: 0.8, changeFrequency: 'weekly' },
 	{ path: '/oferta', priority: 0.5, changeFrequency: 'yearly' },

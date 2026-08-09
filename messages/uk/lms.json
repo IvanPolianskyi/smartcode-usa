@@ -147,6 +147,62 @@
       ],
       "certificateText": "Після завершення курсу - сертифікат SmartCode Academy з Roblox game development.",
       "certificateRole": "Roblox-розробника"
+    },
+    "scratch": {
+      "valueProposition": "92 уроки блокового коду: від першого спрайта до власної гри з рівнями та фінальним проєктом.",
+      "skillShort": ["Спрайти", "Події", "Змінні", "Цикли", "Клони", "Ігри"],
+      "requirementsShort": ["ПК + інтернет", "Scratch Online", "Мотивація"],
+      "certificateShort": "Сертифікат SmartCode з Scratch після фінального проєкту.",
+      "skills": [
+        "Інтерфейс Scratch і робота зі спрайтами",
+        "Рух, анімація та сцени",
+        "Події, змінні та умови",
+        "Цикли, клони й списки",
+        "Ігрові механіки: меню, рівні, win/lose",
+        "Фінальна гра та презентація"
+      ],
+      "format": [
+        "Живі онлайн-уроки з викладачем",
+        "Перелік тем і прогрес у LMS",
+        "Міні-проєкти та чекпоінти модулів",
+        "Фінальний проєкт",
+        "Підтримка ментора"
+      ],
+      "requirements": [
+        "Комп'ютер з інтернетом",
+        "Акаунт Scratch (безкоштовний)",
+        "Бажання створювати ігри та історії"
+      ],
+      "certificateText": "Після завершення курсу — сертифікат SmartCode Academy з блокового програмування Scratch.",
+      "certificateRole": "учня Scratch"
+    },
+    "minecraft": {
+      "valueProposition": "92 уроки в Minecraft Education: агент, MakeCode, command blocks, квести та STEM-проєкти.",
+      "skillShort": ["Агент", "MakeCode", "Будівництво", "Команди", "Квести", "STEM"],
+      "requirementsShort": ["Windows/Mac", "Minecraft Education", "Інтернет"],
+      "certificateShort": "Сертифікат SmartCode з Minecraft Education після фінального світу.",
+      "skills": [
+        "Орієнтація в Minecraft Education",
+        "Code Builder / MakeCode і агент",
+        "Будівництво патернів і геометрії",
+        "Умови, цикли та події в коді",
+        "Command blocks і квести",
+        "STEM-проєкти та командна робота"
+      ],
+      "format": [
+        "Живі онлайн-уроки з викладачем",
+        "Перелік тем і прогрес у LMS",
+        "Практичні світи та чекпоінти",
+        "Фінальний світ і презентація",
+        "Підтримка ментора"
+      ],
+      "requirements": [
+        "Windows або macOS",
+        "Доступ до Minecraft Education Edition",
+        "Інтернет для уроків і Code Builder"
+      ],
+      "certificateText": "Після завершення курсу — сертифікат SmartCode Academy з Minecraft Education.",
+      "certificateRole": "учня Minecraft Education"
     }
   },
   "lesson": {
@@ -221,6 +277,8 @@
     "practiceFail": "Практичне завдання виконано неправильно.",
     "practiceFailHint": "Перевірте ваш код та спробуйте ще раз. Перегляньте приклади виводу та підказки.",
     "outputErrorsFound": "Знайдено {count} помилок у виводі. Рядки з помилками виділені червоним кольором.",
+    "testCaseLabel": "Тест {number}",
+    "failedTestsFound": "Не пройдено тести: {failed} (усього {total}).",
     "exampleSolution": "Приклад рішення:",
     "insertCode": "Вставити код в редактор",
     "noPracticeAdvanced": "Для цього уроку практичного завдання немає. Ви можете перейти до тесту.",

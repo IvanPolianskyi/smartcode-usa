@@ -112,18 +112,8 @@ function validateExactExample(actualLines, expectedLines) {
   return { isCorrect: errors.length === 0, errors }
 }
 
-/**
- * @param {string} output - Program stdout
- * @param {object|null|undefined} practiceTask - Lesson practiceTask config
- * @returns {{ isCorrect: boolean|null, errors: number[] }}
- */
-export function checkPracticeOutput(output, practiceTask) {
-  if (!practiceTask?.examples?.length) {
-    return { isCorrect: null, errors: [] }
-  }
-
+function checkAgainstExpectedOutput(output, expectedOutput, validation) {
   const actualLines = splitOutputLines(output).map((line) => line.trimEnd())
-  const validation = practiceTask.validation
   const { lines: nonEmptyLines, sourceIndices } = getNonEmptyLines(actualLines)
 
   const failWithRuleErrors = (ruleErrors) => ({
@@ -158,9 +148,10 @@ export function checkPracticeOutput(output, practiceTask) {
       return lineRuleResult
     }
 
-    const expectedOutput = practiceTask.examples[0]?.output
     if (expectedOutput) {
-      const expectedLines = splitOutputLines(expectedOutput).map((line) => line.trimEnd())
+      const expectedLines = splitOutputLines(expectedOutput)
+        .map((line) => line.trimEnd())
+        .filter((line) => normalizeLine(line).length > 0)
       const exactResult = validateExactExample(nonEmptyLines, expectedLines)
       if (exactResult.isCorrect) {
         return { isCorrect: true, errors: [] }
@@ -170,8 +161,115 @@ export function checkPracticeOutput(output, practiceTask) {
     return failWithRuleErrors(lineRuleResult.errors)
   }
 
-  const expectedOutput = practiceTask.examples[0].output
-  const expectedLines = splitOutputLines(expectedOutput).map((line) => line.trimEnd())
+  if (!expectedOutput && expectedOutput !== '') {
+    return { isCorrect: false, errors: [0] }
+  }
 
+  const expectedLines = splitOutputLines(expectedOutput)
+    .map((line) => line.trimEnd())
+    .filter((line) => normalizeLine(line).length > 0)
   return validateExactExample(nonEmptyLines, expectedLines)
+}
+
+/**
+ * Validate stdout against a single practice example.
+ * @param {string} output
+ * @param {{ output?: string, validation?: object }|null|undefined} example
+ * @param {object|null|undefined} taskValidation - practiceTask.validation (shared)
+ * @returns {{ isCorrect: boolean, errors: number[] }}
+ */
+export function checkPracticeAgainstExample(output, example, taskValidation) {
+  if (!example) {
+    return { isCorrect: false, errors: [0] }
+  }
+  const validation = example.validation || taskValidation
+  return checkAgainstExpectedOutput(output, example.output, validation)
+}
+
+/**
+ * Validate one or more run outputs against all practice examples.
+ * @param {string|string[]} outputs - stdout per example (or single string for first/only)
+ * @param {object|null|undefined} practiceTask
+ * @returns {{
+ *   isCorrect: boolean|null,
+ *   errors: number[],
+ *   failedExampleIndexes: number[],
+ *   exampleResults: Array<{ isCorrect: boolean, errors: number[] }>
+ * }}
+ */
+export function checkPracticeOutputs(outputs, practiceTask) {
+  if (!practiceTask?.examples?.length) {
+    return {
+      isCorrect: null,
+      errors: [],
+      failedExampleIndexes: [],
+      exampleResults: [],
+    }
+  }
+
+  const examples = practiceTask.examples
+  const outputList = Array.isArray(outputs) ? outputs : [outputs]
+  const exampleResults = []
+  const failedExampleIndexes = []
+
+  for (let i = 0; i < examples.length; i++) {
+    const output = outputList[i] ?? (i === 0 ? outputList[0] : '')
+    // For tasks with only one submitted output but multiple examples that share
+    // the same validation.lineRules (no distinct I/O), validate the first output
+    // against lineRules once when every example lacks distinct expected output runs.
+    const result = checkPracticeAgainstExample(
+      output,
+      examples[i],
+      practiceTask.validation
+    )
+    exampleResults.push(result)
+    if (!result.isCorrect) {
+      failedExampleIndexes.push(i)
+    }
+  }
+
+  // Special case: single-run lineRules tasks with multiple illustrative examples
+  // that all rely on the same structural validation (no per-example input).
+  // If only one output was provided and validation.lineRules exist, pass when
+  // that output satisfies lineRules (examples are documentation).
+  const onlyOneOutput =
+    !Array.isArray(outputs) || outputs.length === 1 || outputList.filter((o) => o != null && o !== '').length <= 1
+  const allExamplesLackInput = examples.every((ex) => !ex.input)
+  if (
+    failedExampleIndexes.length > 0 &&
+    onlyOneOutput &&
+    allExamplesLackInput &&
+    practiceTask.validation?.lineRules?.length
+  ) {
+    const single = checkPracticeAgainstExample(
+      outputList[0] ?? '',
+      examples[0],
+      practiceTask.validation
+    )
+    if (single.isCorrect) {
+      return {
+        isCorrect: true,
+        errors: [],
+        failedExampleIndexes: [],
+        exampleResults: examples.map(() => ({ isCorrect: true, errors: [] })),
+      }
+    }
+  }
+
+  const firstFailed = failedExampleIndexes[0]
+  return {
+    isCorrect: failedExampleIndexes.length === 0,
+    errors: firstFailed == null ? [] : exampleResults[firstFailed].errors,
+    failedExampleIndexes,
+    exampleResults,
+  }
+}
+
+/**
+ * @param {string} output - Program stdout
+ * @param {object|null|undefined} practiceTask - Lesson practiceTask config
+ * @returns {{ isCorrect: boolean|null, errors: number[], failedExampleIndexes?: number[], exampleResults?: Array<{ isCorrect: boolean, errors: number[] }> }}
+ */
+export function checkPracticeOutput(output, practiceTask) {
+  return checkPracticeOutputs(output, practiceTask)
 }

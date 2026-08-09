@@ -647,192 +647,116 @@ text = text + "4"  #  Конкатенація рядків`
   practiceTask: {
     title: "Система обробки текстових даних",
     description: "Створіть функції для обробки текстових даних, використовуючи методи рядків, списків та словників",
-    problemStatement: `Напишіть програму для обробки текстових даних користувачів:
+    problemStatement: `Напишіть програму з функціями:
 
-1. **clean_text** - очищає текст
-   - Параметри: text (рядок)
-   - Видаляє пробіли на початку та в кінці
-   - Перетворює першу літеру на велику
-   - Повертає очищений текст
+1. clean_text(text) — strip + capitalize
+2. process_words(words) — без дублікатів, відсортовані
+3. create_word_count(text) — словник {слово: кількість} з оригінального тексту (strip + split)
+4. format_user_data(user_data) — capitalize name, lower email, додає role="user", status="active"
 
-2. **process_words** - обробляє список слів
-   - Параметри: words (список рядків)
-   - Видаляє дублікати (створює новий список без дублікатів)
-   - Сортує слова в алфавітному порядку
-   - Повертає оброблений список
+Зчитайте рядок тексту, ім'я та email. Виведіть очищений текст, оброблені слова, підрахунок і дані користувача.
 
-3. **create_word_count** - створює словник з підрахунком слів
-   - Параметри: text (рядок)
-   - Розділяє текст на слова
-   - Рахує кількість кожного слова
-   - Повертає словник {слово: кількість}
-
-4. **format_user_data** - форматує дані користувача
-   - Параметри: user_data (словник)
-   - Форматує ім'я (перша літера велика)
-   - Форматує email (нижній регістр)
-   - Додає відсутні поля зі значеннями за замовчуванням
-   - Повертає відформатований словник
-
-**Важливо:** Не використовуйте функцію input(). Введіть значення напряму в коді.
-
-Створіть кілька прикладів використання всіх функцій.`,
-    outputFormat: `Приклад виведення:
-Очищений текст: Привіт світ привіт python
-Оброблені слова: ['python', 'привіт', 'світ']
+Формат вводу:
+  привіт світ привіт python  
+олександр
+USER@EXAMPLE.COM`,
+    outputFormat: `Очищений текст: Привіт світ привіт python
+Оброблені слова: ['python', 'Привіт', 'привіт', 'світ']
 Підрахунок слів: {'привіт': 2, 'світ': 1, 'python': 1}
-Дані користувача: {'name': 'Олександр', 'email': 'user@example.com', 'role': 'user'}`,
+Дані користувача: {'name': 'Олександр', 'email': 'user@example.com', 'role': 'user', 'status': 'active'}`,
     examples: [
       {
+        input: `  привіт світ привіт python  
+олександр
+USER@EXAMPLE.COM`,
         output: `Очищений текст: Привіт світ привіт python
 Оброблені слова: ['python', 'Привіт', 'привіт', 'світ']
 Підрахунок слів: {'привіт': 2, 'світ': 1, 'python': 1}
-
-Дані користувача: {'name': 'Олександр', 'email': 'user@example.com', 'role': 'user', 'status': 'active'}
-
-Очищений текст: Python python програміст програміст розробник
-Оброблені слова: ['Python', 'python', 'програміст', 'розробник']
-Підрахунок слів: {'Python': 2, 'програміст': 2, 'розробник': 1}`,
-        explanation: "Демонструє обробку тексту: очищення, видалення дублікатів, підрахунок слів."
+Дані користувача: {'name': 'Олександр', 'email': 'user@example.com', 'role': 'user', 'status': 'active'}`,
+        explanation: "capitalize змінює лише першу літеру всього рядка; підрахунок з оригінальних слів"
+      },
+      {
+        input: `Python Python код
+марія
+Maria@Mail.COM`,
+        output: `Очищений текст: Python python код
+Оброблені слова: ['Python', 'python', 'код']
+Підрахунок слів: {'Python': 2, 'код': 1}
+Дані користувача: {'name': 'Марія', 'email': 'maria@mail.com', 'role': 'user', 'status': 'active'}`,
+        explanation: "Два Python у підрахунку; після capitalize друге слово стає python"
+      },
+      {
+        input: `один два
+іван
+IVAN@TEST.UA`,
+        output: `Очищений текст: Один два
+Оброблені слова: ['Один', 'два']
+Підрахунок слів: {'один': 1, 'два': 1}
+Дані користувача: {'name': 'Іван', 'email': 'ivan@test.ua', 'role': 'user', 'status': 'active'}`,
+        explanation: "Підрахунок зберігає регістр оригінальних слів"
       }
     ],
     solution: {
-      code: `# Система обробки текстових даних
-
-def clean_text(text):
-    """
-    Очищає текст: видаляє пробіли та форматує
-    """
-    cleaned = text.strip().capitalize()
-    return cleaned
+      code: `def clean_text(text):
+    """Очищає текст: strip та capitalize"""
+    return text.strip().capitalize()
 
 def process_words(words):
-    """
-    Обробляє список слів: видаляє дублікати та сортує
-    """
-    # Видаляємо дублікати (створюємо новий список)
+    """Видаляє дублікати та сортує слова"""
     unique_words = []
     for word in words:
         if word not in unique_words:
             unique_words.append(word)
-    
-    # Сортуємо
     unique_words.sort()
-    
     return unique_words
 
 def create_word_count(text):
-    """
-    Створює словник з підрахунком слів
-    """
-    # Розділяємо текст на слова
+    """Створює словник з підрахунком слів"""
     words = text.strip().split()
-    
-    # Створюємо словник для підрахунку
     word_count = {}
-    
-    # Рахуємо слова
     for word in words:
-        if word in word_count:
-            word_count[word] += 1
-        else:
-            word_count[word] = 1
-    
+        word_count[word] = word_count.get(word, 0) + 1
     return word_count
 
 def format_user_data(user_data):
-    """
-    Форматує дані користувача
-    """
-    # Створюємо копію, щоб не змінювати оригінал
+    """Форматує дані користувача"""
     formatted = user_data.copy()
-    
-    # Форматуємо ім'я
     if "name" in formatted:
         formatted["name"] = formatted["name"].capitalize()
-    
-    # Форматуємо email
     if "email" in formatted:
         formatted["email"] = formatted["email"].lower()
-    
-    # Додаємо відсутні поля
     if "role" not in formatted:
         formatted["role"] = "user"
-    
     if "status" not in formatted:
         formatted["status"] = "active"
-    
     return formatted
 
-# Вводимо значення напряму в коді (не використовуємо input())
+text = input()
+name = input().strip()
+email = input().strip()
 
-# Приклад 1: Обробка тексту
-text = "  привіт світ привіт python  "
-
-# Очищаємо текст
 cleaned = clean_text(text)
 print(f"Очищений текст: {cleaned}")
 
-# Розділяємо на слова
-words = cleaned.split()
-
-# Обробляємо слова
-processed = process_words(words)
+processed = process_words(cleaned.split())
 print(f"Оброблені слова: {processed}")
 
-# Створюємо підрахунок слів
 word_count = create_word_count(text)
 print(f"Підрахунок слів: {word_count}")
 
-print()
-
-# Приклад 2: Форматування даних користувача
-user_data = {"name": "олександр", "email": "USER@EXAMPLE.COM"}
-
-formatted_data = format_user_data(user_data)
-print(f"Дані користувача: {formatted_data}")
-
-print()
-
-# Приклад 3: Додатковий приклад
-text2 = "Python Python програміст програміст розробник"
-cleaned2 = clean_text(text2)
-words2 = cleaned2.split()
-processed2 = process_words(words2)
-word_count2 = create_word_count(text2)
-
-print(f"Очищений текст: {cleaned2}")
-print(f"Оброблені слова: {processed2}")
-print(f"Підрахунок слів: {word_count2}")`,
-      explanation: "Рішення демонструє використання методів рядків (strip, capitalize, split, lower), методів списків (append, sort) та методів словників (copy, get, keys). Всі функції працюють з методами об'єктів для обробки даних."
+formatted_data = format_user_data({"name": name, "email": email})
+print(f"Дані користувача: {formatted_data}")`,
+      explanation: "Методи рядків/списків/словників у функціях; вхідні дані з stdin."
     },
     hints: [
-      "Введіть значення напряму в коді - не використовуйте input()",
-      "Використовуйте методи рядків: strip(), capitalize(), split(), lower()",
-      "Для видалення дублікатів створіть новий список та перевіряйте наявність елемента",
-      "Використовуйте методи списків: append(), sort()",
-      "Для підрахунку слів створіть словник та використовуйте методи словників",
-      "Використовуйте copy() для створення копії словника, щоб не змінювати оригінал",
-      "Перевіряйте наявність ключів у словнику перед форматуванням",
-      "Пам'ятайте: методи рядків не змінюють оригінальний рядок, вони повертають новий"
+      "Використовуйте strip(), capitalize(), split(), lower()",
+      "Підрахунок робіть з оригінального text.strip().split()",
+      "Для унікальних слів перевіряйте not in перед append",
+      "format_user_data має додати role та status за замовчуванням"
     ],
-    difficulty: "intermediate",
-    testCases: [
-      {
-        expectedOutput: "Привіт світ",
-        description: "Перевірка очищення тексту"
-      },
-      {
-        expectedOutput: "['привіт', 'світ']",
-        description: "Перевірка видалення дублікатів та сортування"
-      },
-      {
-        expectedOutput: "{'привіт': 2, 'світ': 1}",
-        description: "Перевірка підрахунку слів"
-      }
-    ]
+    difficulty: "intermediate"
   },
-  
+
   quiz: {
     questions: [
       {

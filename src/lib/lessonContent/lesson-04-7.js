@@ -608,18 +608,15 @@ db.disconnect()`,
     title: "Система обробки файлів з абстрактними класами",
     description: "Створіть систему для обробки різних типів файлів",
     problemStatement: `Напишіть програму, яка:
-1. Створює абстрактний клас FileProcessor з методами:
-   - read() - абстрактний
-   - write(content) - абстрактний
-   - get_extension() - абстрактний
-   - process() - звичайний метод, що викликає read() та write()
-2. Створює дочірні класи:
-   - TextFileProcessor - для текстових файлів (.txt)
-   - JSONFileProcessor - для JSON файлів (.json)
-3. Кожен клас реалізує всі абстрактні методи
-4. Створює об'єкти та тестує методи`,
-    outputFormat: `Приклад виведення:
-Читання текстового файлу: data.txt
+1. Створює абстрактний клас FileProcessor з методами read(), write(content), get_extension() та process()
+2. Створює TextFileProcessor (.txt) та JSONFileProcessor (.json)
+3. Зчитує зі stdin ім'я текстового файлу та ім'я JSON-файлу
+4. Викликає process() для обох (між ними рядок ---)
+
+Формат вводу:
+data.txt
+config.json`,
+    outputFormat: `Читання текстового файлу: data.txt
 Запис у текстовий файл: data.txt
 Розширення: .txt
 ---
@@ -628,6 +625,8 @@ db.disconnect()`,
 Розширення: .json`,
     examples: [
       {
+        input: `data.txt
+config.json`,
         output: `Читання текстового файлу: data.txt
 Запис у текстовий файл: data.txt
 Розширення: .txt
@@ -635,29 +634,52 @@ db.disconnect()`,
 Читання JSON файлу: config.json
 Запис у JSON файл: config.json
 Розширення: .json`,
-        explanation: "Програма демонструє роботу з абстрактними класами"
+        explanation: "Обробка data.txt та config.json"
+      },
+      {
+        input: `notes.txt
+settings.json`,
+        output: `Читання текстового файлу: notes.txt
+Запис у текстовий файл: notes.txt
+Розширення: .txt
+---
+Читання JSON файлу: settings.json
+Запис у JSON файл: settings.json
+Розширення: .json`,
+        explanation: "Інші імена файлів з stdin"
+      },
+      {
+        input: `log.txt
+api.json`,
+        output: `Читання текстового файлу: log.txt
+Запис у текстовий файл: log.txt
+Розширення: .txt
+---
+Читання JSON файлу: api.json
+Запис у JSON файл: api.json
+Розширення: .json`,
+        explanation: "log.txt та api.json"
       }
     ],
     solution: {
-      code: `# Система обробки файлів
-from abc import ABC, abstractmethod
+      code: `from abc import ABC, abstractmethod
 
 class FileProcessor(ABC):
     def __init__(self, filename):
         self.filename = filename
-    
+
     @abstractmethod
     def read(self):
         pass
-    
+
     @abstractmethod
     def write(self, content):
         pass
-    
+
     @abstractmethod
     def get_extension(self):
         pass
-    
+
     def process(self):
         print(self.read())
         print(self.write("дані"))
@@ -666,39 +688,38 @@ class FileProcessor(ABC):
 class TextFileProcessor(FileProcessor):
     def read(self):
         return f"Читання текстового файлу: {self.filename}"
-    
+
     def write(self, content):
         return f"Запис у текстовий файл: {self.filename}"
-    
+
     def get_extension(self):
         return ".txt"
 
 class JSONFileProcessor(FileProcessor):
     def read(self):
         return f"Читання JSON файлу: {self.filename}"
-    
+
     def write(self, content):
         return f"Запис у JSON файл: {self.filename}"
-    
+
     def get_extension(self):
         return ".json"
 
-# Тестування
-txt_processor = TextFileProcessor("data.txt")
+txt_name = input().strip()
+json_name = input().strip()
+
+txt_processor = TextFileProcessor(txt_name)
 txt_processor.process()
-
 print("---")
-
-json_processor = JSONFileProcessor("config.json")
+json_processor = JSONFileProcessor(json_name)
 json_processor.process()`,
-      explanation: "Рішення використовує абстрактний клас FileProcessor з абстрактними та звичайними методами."
+      explanation: "Абстрактний FileProcessor і два нащадки; імена файлів читаємо з stdin."
     },
     hints: [
       "Імпортуй ABC та abstractmethod з модуля abc",
-      "Клас FileProcessor має наслідуватися від ABC",
-      "Позначай абстрактні методи декоратором @abstractmethod",
-      "Дочірні класи мають реалізувати ВСІ абстрактні методи",
-      "Метод process() викликає інші методи"
+      "Зчитай два рядки через input()",
+      "Дочірні класи мають реалізувати всі абстрактні методи",
+      "Між process() виведи ---"
     ],
     difficulty: "intermediate"
   },

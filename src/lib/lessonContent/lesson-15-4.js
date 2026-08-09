@@ -182,15 +182,7 @@ async def telegram_webhook(request: Request):
 
   summary: `FastAPI обслуговує CRUD і приймає Telegram webhook. ngrok дає HTTPS для локальної розробки; на продакшені - постійний домен.`,
 
-  practiceTask: {
-    title: "Tasks API + webhook",
-    description: "CRUD для tasks і один робочий POST /telegram/webhook, який обробляє текст повідомлення.",
-    hints: [
-      "Спочатку перевірте /docs",
-      "Webhook потребує публічного HTTPS URL",
-      "Після setWebhook зупиніть run_polling()"
-    ]
-  },
+  practiceTask: null,
 
   quiz: {
     questions: [

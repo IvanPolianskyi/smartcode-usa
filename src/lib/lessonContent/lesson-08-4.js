@@ -475,28 +475,59 @@ JSON - стандартний формат для обміну даними та
     title: "Створення системи збереження завдань",
     description: "Створіть систему для збереження та завантаження списку завдань у JSON",
     problemStatement: `Створіть систему управління завданнями:
-1. Створіть функцію для збереження завдань у JSON файл
-2. Створіть функцію для завантаження завдань з JSON файлу
-3. Додайте можливість додавання нових завдань
-4. Збережіть та завантажте список завдань
+1. Зчитайте n завдань зі stdin (title і completed: 0 або 1)
+2. Збережіть у tasks.json
+3. Завантажте назад і виведіть список
 
-Структура завдання:
-{
-  "id": 1,
-  "title": "Вивчити JSON",
-  "completed": false
-}`,
-    outputFormat: `Завдання збережено у tasks.json
+Формат вводу:
+3
+Вивчити JSON
+0
+Створити проект
+0
+Написати тести
+1`,
+    outputFormat: `Завдання збережено
 Завантажено 3 завдання:
 1. Вивчити JSON (не виконано)
 2. Створити проект (не виконано)
 3. Написати тести (виконано)`,
     examples: [
       {
+        input: `1
+Завдання 1
+0`,
         output: `Завдання збережено
 Завантажено 1 завдання:
 1. Завдання 1 (не виконано)`,
-        explanation: "Використовуємо json.dump() для збереження та json.load() для завантаження."
+        explanation: "Одне невиконане завдання"
+      },
+      {
+        input: `3
+Вивчити JSON
+0
+Створити проект
+0
+Написати тести
+1`,
+        output: `Завдання збережено
+Завантажено 3 завдання:
+1. Вивчити JSON (не виконано)
+2. Створити проект (не виконано)
+3. Написати тести (виконано)`,
+        explanation: "Три завдання, останнє виконано"
+      },
+      {
+        input: `2
+A
+1
+B
+0`,
+        output: `Завдання збережено
+Завантажено 2 завдання:
+1. A (виконано)
+2. B (не виконано)`,
+        explanation: "Два короткі завдання з різними статусами"
       }
     ],
     solution: {
@@ -510,30 +541,30 @@ def save_tasks(tasks, filename='tasks.json'):
 def load_tasks(filename='tasks.json'):
     try:
         with open(filename, 'r', encoding='utf-8') as f:
-            tasks = json.load(f)
-        return tasks
+            return json.load(f)
     except FileNotFoundError:
         return []
 
-# Створюємо завдання
-tasks = [{'id': 1, 'title': 'Завдання 1', 'completed': False}]
+n = int(input())
+tasks = []
+for i in range(1, n + 1):
+    title = input().strip()
+    completed = input().strip() == '1'
+    tasks.append({'id': i, 'title': title, 'completed': completed})
 
-# Зберігаємо
 save_tasks(tasks)
-
-# Завантажуємо
 loaded_tasks = load_tasks()
 print(f'Завантажено {len(loaded_tasks)} завдання:')
 for task in loaded_tasks:
     status = 'виконано' if task['completed'] else 'не виконано'
     print(f"{task['id']}. {task['title']} ({status})")`,
-      explanation: "Використовуємо json.dump() для збереження та json.load() для завантаження завдань з обробкою помилок."
+      explanation: "Читаємо завдання з stdin, зберігаємо/читаємо JSON через dump/load."
     },
     hints: [
-      "Використайте json.dump() для збереження",
-      "Використайте json.load() для завантаження",
-      "Обробіть FileNotFoundError для нового файлу",
-      "Використайте ensure_ascii=False для українського тексту"
+      "Для кожного завдання: input() для title, input() для 0/1",
+      "json.dump з ensure_ascii=False",
+      "Обробіть FileNotFoundError у load_tasks",
+      "Статус: 'виконано' або 'не виконано'"
     ],
     difficulty: "intermediate"
   },

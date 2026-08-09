@@ -33,7 +33,11 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
       ? 'webdev'
       : courseId === 'roblox-studio'
         ? 'roblox'
-        : 'python'
+        : courseId === 'scratch'
+          ? 'scratch'
+          : courseId === 'minecraft-education'
+            ? 'minecraft'
+            : 'python'
   const tCommon = useTranslations('lms.common')
   const tCourse = useTranslations('lms.course')
   const tVariant = useTranslations(`lms.course.${courseSlug}`)

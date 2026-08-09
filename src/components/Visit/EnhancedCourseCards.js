@@ -5,7 +5,6 @@ import styles from './EnhancedCourseCards.module.css'
 import { useRouter } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 import { useHomeCourseCards } from '@/hooks/useHomeCourseCards'
-import Image from 'next/image'
 
 const useIsMobile = () => {
 	const [isMobile, setIsMobile] = useState(false)
@@ -104,27 +103,14 @@ const EnhancedCourseCards = () => {
 								>
 									{course.iconType === 'image' ? (
 										<div className={styles.logoImageContainer}>
-											{course.icon.endsWith('.svg') ? (
-												<img
-													src={course.icon}
-													alt=""
-													aria-hidden="true"
-													className={styles.logoImage}
-													loading={index < 2 ? 'eager' : 'lazy'}
-													decoding="async"
-												/>
-											) : (
-												<Image
-													src={course.icon}
-													alt=""
-													aria-hidden="true"
-													width={180}
-													height={180}
-													className={styles.logoImage}
-													priority={index < 2}
-													loading={index < 2 ? 'eager' : 'lazy'}
-												/>
-											)}
+											<img
+												src={course.icon}
+												alt=""
+												aria-hidden="true"
+												className={styles.logoImage}
+												loading={index < 2 ? 'eager' : 'lazy'}
+												decoding="async"
+											/>
 										</div>
 									) : (
 										course.icon

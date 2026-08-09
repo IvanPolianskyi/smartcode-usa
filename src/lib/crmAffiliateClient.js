@@ -1,5 +1,8 @@
 import { getCrmLeadIngestKey } from '@/lib/integrationApiKey'
-import { getAffiliateClickStats } from '@/lib/affiliateClicks'
+import {
+  getAffiliateClickStats,
+  getAffiliateClickStatsBySrc,
+} from '@/lib/affiliateClicks'
 
 /** Корінь CRM API: з CRM_LEAD_ENDPOINT (.../site-leads/incoming) або CRM_API_URL. */
 export function resolveCrmApiBase() {
@@ -65,12 +68,34 @@ const cabinetPath = (token, suffix = '') =>
 async function withLocalClicks(cabinet) {
   if (!cabinet?.code) return cabinet
   try {
-    const stats = await getAffiliateClickStats([cabinet.code])
-    const local = stats[String(cabinet.code).toLowerCase()]
-    if (!local) return cabinet
+    const code = String(cabinet.code).toLowerCase()
+    const [stats, bySrcAll] = await Promise.all([
+      getAffiliateClickStats([cabinet.code]),
+      getAffiliateClickStatsBySrc([cabinet.code]),
+    ])
+    const local = stats[code]
+    const srcMap = bySrcAll[code] || {}
+    const groups = Array.isArray(cabinet.groups)
+      ? cabinet.groups.map((group) => {
+          const key = String(group?.source_key || '').toLowerCase()
+          const srcStats = key ? srcMap[key] : null
+          if (!srcStats) return group
+          return {
+            ...group,
+            stats: {
+              ...(group.stats || {}),
+              clicks: srcStats.total,
+              unique_clicks: srcStats.unique,
+            },
+          }
+        })
+      : cabinet.groups
     return {
       ...cabinet,
-      stats: { ...cabinet.stats, clicks: local.total, unique_clicks: local.unique },
+      groups,
+      stats: local
+        ? { ...cabinet.stats, clicks: local.total, unique_clicks: local.unique }
+        : cabinet.stats,
     }
   } catch (error) {
     console.warn('affiliate cabinet local clicks:', error?.message || error)
@@ -99,5 +124,26 @@ export function deleteAffiliateSocialPost(token, postId) {
     'DELETE',
     token,
     `/social-posts/${encodeURIComponent(postId)}`
+  )
+}
+
+export function createAffiliateGroup(token, group) {
+  return cabinetCall('POST', token, '/groups', group)
+}
+
+export function updateAffiliateGroup(token, groupId, group) {
+  return cabinetCall(
+    'PATCH',
+    token,
+    `/groups/${encodeURIComponent(groupId)}`,
+    group
+  )
+}
+
+export function deleteAffiliateGroup(token, groupId) {
+  return cabinetCall(
+    'DELETE',
+    token,
+    `/groups/${encodeURIComponent(groupId)}`
   )
 }

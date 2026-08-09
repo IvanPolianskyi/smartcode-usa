@@ -602,23 +602,17 @@ class Iterator:
     description: "Створіть кілька власних ітераторів з реалізацією протоколу ітерації",
     problemStatement: `Створіть три класи-ітератори:
 
-1. **SquareIterator(limit)** - ітератор, який генерує квадрати чисел від 1 до limit
-   - Приклад: для limit=5 має генерувати: 1, 4, 9, 16, 25
+1. **SquareIterator(limit)** — квадрати від 1 до limit
+2. **EvenIterator(limit)** — парні від 0 до limit включно
+3. **ReverseIterator(items)** — обхід списку навпаки
 
-2. **EvenIterator(limit)** - ітератор, який генерує парні числа від 0 до limit
-   - Приклад: для limit=10 має генерувати: 0, 2, 4, 6, 8, 10
+Зчитайте параметри зі stdin.
 
-3. **ReverseIterator(items)** - ітератор, який обходить список в зворотному порядку
-   - Приклад: для [1, 2, 3, 4] має генерувати: 4, 3, 2, 1
-
-**Вимоги:**
-- Кожен клас має реалізувати методи __iter__() та __next__()
-- __next__() має викликати StopIteration, коли значення закінчилися
-- Протестуйте кожен ітератор, використовуючи цикл for
-- Введіть значення напряму в коді (не використовуйте input())`,
-    outputFormat: `Приклад виведення:
-
-=== Квадрати чисел ===
+Формат вводу:
+5
+10
+1 2 3 4`,
+    outputFormat: `=== Квадрати чисел ===
 1
 4
 9
@@ -640,6 +634,9 @@ class Iterator:
 1`,
     examples: [
       {
+        input: `5
+10
+1 2 3 4`,
         output: `=== Квадрати чисел ===
 1
 4
@@ -660,19 +657,52 @@ class Iterator:
 3
 2
 1`,
-        explanation: "Демонструє роботу всіх трьох ітераторів з різними параметрами."
+        explanation: "Квадрати 1..5, парні до 10, реверс [1,2,3,4]"
+      },
+      {
+        input: `3
+4
+10 20 30`,
+        output: `=== Квадрати чисел ===
+1
+4
+9
+
+=== Парні числа ===
+0
+2
+4
+
+=== Зворотний порядок ===
+30
+20
+10`,
+        explanation: "Менші межі та інший список"
+      },
+      {
+        input: `1
+0
+7`,
+        output: `=== Квадрати чисел ===
+1
+
+=== Парні числа ===
+0
+
+=== Зворотний порядок ===
+7`,
+        explanation: "Мінімальний випадок"
       }
     ],
     solution: {
-      code: `# 1. Ітератор квадратів
-class SquareIterator:
+      code: `class SquareIterator:
     def __init__(self, limit):
         self.limit = limit
         self.current = 1
-    
+
     def __iter__(self):
         return self
-    
+
     def __next__(self):
         if self.current > self.limit:
             raise StopIteration
@@ -680,15 +710,14 @@ class SquareIterator:
         self.current += 1
         return result
 
-# 2. Ітератор парних чисел
 class EvenIterator:
     def __init__(self, limit):
         self.limit = limit
         self.current = 0
-    
+
     def __iter__(self):
         return self
-    
+
     def __next__(self):
         if self.current > self.limit:
             raise StopIteration
@@ -696,15 +725,14 @@ class EvenIterator:
         self.current += 2
         return result
 
-# 3. Ітератор зворотного порядку
 class ReverseIterator:
     def __init__(self, items):
         self.items = items
         self.index = len(items) - 1
-    
+
     def __iter__(self):
         return self
-    
+
     def __next__(self):
         if self.index < 0:
             raise StopIteration
@@ -712,32 +740,30 @@ class ReverseIterator:
         self.index -= 1
         return result
 
-# Тестування
+sq_limit = int(input())
+even_limit = int(input())
+items = list(map(int, input().split()))
+
 print("=== Квадрати чисел ===")
-squares = SquareIterator(5)
-for square in squares:
+for square in SquareIterator(sq_limit):
     print(square)
 
 print()
 print("=== Парні числа ===")
-evens = EvenIterator(10)
-for num in evens:
+for num in EvenIterator(even_limit):
     print(num)
 
 print()
 print("=== Зворотний порядок ===")
-reverse = ReverseIterator([1, 2, 3, 4])
-for num in reverse:
+for num in ReverseIterator(items):
     print(num)`,
-      explanation: "Рішення створює три класи-ітератори, кожен з яких реалізує протокол ітерації через методи __iter__() та __next__(). Кожен ітератор зберігає свій стан та викликає StopIteration, коли значення закінчуються."
+      explanation: "Три ітератори з __iter__/__next__; параметри з stdin."
     },
     hints: [
-      "Кожен клас має мати __init__ для ініціалізації стану",
-      "Метод __iter__() має повертати self (ітератор сам є ітератором)",
-      "Метод __next__() має перевіряти умову завершення та викликати raise StopIteration",
-      "Для SquareIterator зберігайте поточне число та збільшуйте його",
-      "Для EvenIterator збільшуйте current на 2",
-      "Для ReverseIterator зберігайте індекс та зменшуйте його"
+      "Зчитайте sq_limit, even_limit і список чисел",
+      "__iter__ повертає self",
+      "__next__ викликає StopIteration на кінці",
+      "Для ReverseIterator зменшуйте індекс"
     ],
     difficulty: "intermediate"
   },

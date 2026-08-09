@@ -543,66 +543,70 @@ print(response.json())`,
   
   practiceTask: {
     title: "Створення API клієнта",
-    description: "Створіть простий клієнт для роботи з публічним API",
-    problemStatement: `Створіть функцію для отримання інформації про користувача GitHub:
-1. Функція приймає username
-2. Виконує GET запит до GitHub API
-3. Повертає інформацію про користувача (ім'я, біо, кількість репозиторіїв)
-4. Обробляє помилки (користувач не знайдений, мережеві помилки)
+    description: "Створіть простий клієнт для роботи з даними користувача (без мережі)",
+    problemStatement: `Створіть функцію get_user_info(username), яка:
+1. Шукає користувача у словнику-«базі» USERS
+2. Якщо знайдено — виводить ім'я, біо та кількість репозиторіїв
+3. Якщо ні — виводить повідомлення що користувача не знайдено
 
-API endpoint: https://api.github.com/users/{username}`,
+Зчитайте username з input() і викличте функцію.
+
+USERS вже заданий у рішенні (скопіюйте його у свій код).`,
     outputFormat: `Інформація про користувача:
-Ім'я: Олександр
-Біо: Python Developer
-Публічні репозиторії: 15`,
+Ім'я: The Octocat
+Біо: GitHub mascot
+Публічні репозиторії: 8`,
     examples: [
       {
+        input: `octocat`,
         output: `Інформація про користувача:
 Ім'я: The Octocat
-Біо: None
+Біо: GitHub mascot
 Публічні репозиторії: 8`,
-        explanation: "Отримуємо дані про користувача octocat з GitHub API."
+        explanation: "Користувач octocat є в базі"
+      },
+      {
+        input: `torvalds`,
+        output: `Інформація про користувача:
+Ім'я: Linus Torvalds
+Біо: Linux creator
+Публічні репозиторії: 1`,
+        explanation: "Користувач torvalds є в базі"
+      },
+      {
+        input: `unknown_user`,
+        output: `Користувач unknown_user не знайдений`,
+        explanation: "Відсутній користувач"
       }
     ],
     solution: {
-      code: `import requests
-from requests.exceptions import RequestException, HTTPError
+      code: `USERS = {
+    'octocat': {'name': 'The Octocat', 'bio': 'GitHub mascot', 'public_repos': 8},
+    'torvalds': {'name': 'Linus Torvalds', 'bio': 'Linux creator', 'public_repos': 1},
+    'gvanrossum': {'name': 'Guido van Rossum', 'bio': 'Python BDFL', 'public_repos': 12},
+}
 
-def get_github_user(username):
-    url = f'https://api.github.com/users/{username}'
-    
-    try:
-        response = requests.get(url, timeout=5)
-        response.raise_for_status()
-        
-        user_data = response.json()
-        
-        print(f"Інформація про користувача:")
-        print(f"Ім'я: {user_data.get('name', 'Не вказано')}")
-        print(f"Біо: {user_data.get('bio', 'Не вказано')}")
-        print(f"Публічні репозиторії: {user_data.get('public_repos', 0)}")
-        
-        return user_data
-        
-    except HTTPError as e:
-        if e.response.status_code == 404:
-            print(f'Користувач {username} не знайдений')
-        else:
-            print(f'HTTP помилка: {e}')
-        return None
-    except RequestException as e:
-        print(f'Помилка запиту: {e}')
+def get_user_info(username):
+    user_data = USERS.get(username)
+    if user_data is None:
+        print(f'Користувач {username} не знайдений')
         return None
 
-# Використання
-get_github_user('octocat')`,
-      explanation: "Створюємо функцію з обробкою помилок для отримання даних про користувача GitHub."
+    print('Інформація про користувача:')
+    print(f"Ім'я: {user_data.get('name', 'Не вказано')}")
+    print(f"Біо: {user_data.get('bio', 'Не вказано')}")
+    print(f"Публічні репозиторії: {user_data.get('public_repos', 0)}")
+    return user_data
+
+username = input().strip()
+get_user_info(username)`,
+      explanation: "Працюємо з локальним словником замість мережевого API — стабільні тести."
     },
     hints: [
-      "Використайте f-рядок для формування URL",
-      "Використайте response.raise_for_status() для перевірки статусу",
-      "Обробіть HTTPError для 404 помилки",
-      "Використайте .get() для безпечного доступу до ключів словника"
+      "Скопіюйте словник USERS у свій код",
+      "Використайте USERS.get(username)",
+      "Зчитайте username через input().strip()",
+      "Для відсутнього ключа виведіть повідомлення про помилку"
     ],
     difficulty: "intermediate"
   },

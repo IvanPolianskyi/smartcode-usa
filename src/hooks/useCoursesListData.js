@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import { useTranslations } from 'next-intl'
-import { Code, Gamepad2, Monitor, Box } from 'lucide-react'
+import { Code, Gamepad2, Monitor, Box, Blocks, Cuboid } from 'lucide-react'
 
 const COURSE_CONFIG = [
 	{
@@ -17,6 +17,7 @@ const COURSE_CONFIG = [
 		duration: { weeks: 41, lessons: 96, hours: 192 },
 		popular: false,
 		rating: 4.9,
+		marketingOnly: false,
 	},
 	{
 		key: 'unity',
@@ -30,6 +31,7 @@ const COURSE_CONFIG = [
 		duration: { weeks: 20, lessons: 40, hours: 80 },
 		popular: false,
 		rating: 4.8,
+		marketingOnly: false,
 	},
 	{
 		key: 'roblox',
@@ -43,6 +45,7 @@ const COURSE_CONFIG = [
 		duration: { weeks: 46, lessons: 92, hours: 92 },
 		popular: false,
 		rating: 4.7,
+		marketingOnly: false,
 	},
 	{
 		key: 'webdev',
@@ -56,6 +59,35 @@ const COURSE_CONFIG = [
 		duration: { weeks: 22, lessons: 44, hours: 88 },
 		popular: false,
 		rating: 4.8,
+		marketingOnly: false,
+	},
+	{
+		key: 'scratch',
+		courseId: 'scratch',
+		icon: Blocks,
+		color: '#f97316',
+		theme: 'orange',
+		link: '/Scratch',
+		courseLink: '/courses/scratch',
+		level: 'Beginner',
+		duration: { weeks: 46, lessons: 92, hours: 92 },
+		popular: false,
+		rating: 4.9,
+		marketingOnly: false,
+	},
+	{
+		key: 'minecraft',
+		courseId: 'minecraft-education',
+		icon: Cuboid,
+		color: '#22c55e',
+		theme: 'green',
+		link: '/MinecraftEducation',
+		courseLink: '/courses/minecraft-education',
+		level: 'Beginner',
+		duration: { weeks: 46, lessons: 92, hours: 92 },
+		popular: false,
+		rating: 4.8,
+		marketingOnly: false,
 	},
 ]
 

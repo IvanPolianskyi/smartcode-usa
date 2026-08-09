@@ -13,6 +13,19 @@ const PLATFORMS = [
   { value: 'other', label: 'Інше' },
 ]
 
+const GROUP_PLATFORMS = [
+  { value: 'telegram', label: 'Telegram' },
+  { value: 'facebook', label: 'Facebook' },
+  { value: 'other', label: 'Інше' },
+]
+
+const GROUP_STATUSES = [
+  { value: 'testing', label: 'Тестую' },
+  { value: 'active', label: 'Працює' },
+  { value: 'paused', label: 'На паузі' },
+  { value: 'dead', label: 'Не працює' },
+]
+
 const LEAD_STATUS_LABELS = {
   new: 'Нова',
   scheduling_trial: 'Записуємо на пробне',
@@ -23,6 +36,23 @@ const LEAD_STATUS_LABELS = {
 
 const platformLabel = (value) =>
   PLATFORMS.find((p) => p.value === value)?.label || 'Інше'
+
+const groupPlatformLabel = (value) =>
+  GROUP_PLATFORMS.find((p) => p.value === value)?.label || 'Інше'
+
+const groupStatusLabel = (value) =>
+  GROUP_STATUSES.find((p) => p.value === value)?.label || value
+
+const emptyGroupForm = () => ({
+  title: '',
+  platform: 'telegram',
+  url: '',
+  city: '',
+  niche: '',
+  size_estimate: '',
+  status: 'testing',
+  notes: '',
+})
 
 const formatNumber = (value) => new Intl.NumberFormat('uk-UA').format(Number(value) || 0)
 
@@ -64,9 +94,13 @@ export default function AffiliateCabinet({ token, initialCabinet }) {
   const [postUrl, setPostUrl] = useState('')
   const [postPlatform, setPostPlatform] = useState('tiktok')
   const [postViews, setPostViews] = useState('')
+  const [groupForm, setGroupForm] = useState(emptyGroupForm)
+  const [editingGroupId, setEditingGroupId] = useState(null)
+  const [copiedGroupId, setCopiedGroupId] = useState(null)
 
   const stats = cabinet.stats || {}
   const socials = useMemo(() => cabinet.socials || [], [cabinet.socials])
+  const groups = useMemo(() => cabinet.groups || [], [cabinet.groups])
   const apiBase = `/api/affiliate/${encodeURIComponent(token)}`
 
   const runAction = useCallback(async (action, successMessage) => {
@@ -164,6 +198,79 @@ export default function AffiliateCabinet({ token, initialCabinet }) {
             method: 'DELETE',
           }),
         'Допис видалено'
+      ),
+    [apiBase, runAction]
+  )
+
+  const copyGroupLink = useCallback(async (group) => {
+    try {
+      await navigator.clipboard.writeText(group.tracking_url)
+      setCopiedGroupId(group.id)
+      setTimeout(() => setCopiedGroupId(null), 2000)
+    } catch {
+      setError('Не вдалося скопіювати. Скопіюйте посилання вручну.')
+    }
+  }, [])
+
+  const startEditGroup = useCallback((group) => {
+    setEditingGroupId(group.id)
+    setGroupForm({
+      title: group.title || '',
+      platform: group.platform || 'telegram',
+      url: group.url || '',
+      city: group.city || '',
+      niche: group.niche || '',
+      size_estimate: group.size_estimate || '',
+      status: group.status || 'testing',
+      notes: group.notes || '',
+    })
+  }, [])
+
+  const resetGroupForm = useCallback(() => {
+    setEditingGroupId(null)
+    setGroupForm(emptyGroupForm())
+  }, [])
+
+  const saveGroup = useCallback(async () => {
+    const title = groupForm.title.trim()
+    if (!title) {
+      setError('Вкажіть назву групи')
+      return
+    }
+    const payload = {
+      title,
+      platform: groupForm.platform || 'telegram',
+      url: groupForm.url.trim() || null,
+      city: groupForm.city.trim() || null,
+      niche: groupForm.niche.trim() || null,
+      size_estimate: groupForm.size_estimate.trim() || null,
+      status: groupForm.status || 'testing',
+      notes: groupForm.notes.trim() || null,
+    }
+    const ok = await runAction(
+      () =>
+        editingGroupId
+          ? callCabinetApi(`${apiBase}/groups/${encodeURIComponent(editingGroupId)}`, {
+              method: 'PATCH',
+              body: JSON.stringify(payload),
+            })
+          : callCabinetApi(`${apiBase}/groups`, {
+              method: 'POST',
+              body: JSON.stringify(payload),
+            }),
+      editingGroupId ? 'Групу оновлено' : 'Групу додано'
+    )
+    if (ok) resetGroupForm()
+  }, [apiBase, editingGroupId, groupForm, resetGroupForm, runAction])
+
+  const removeGroup = useCallback(
+    (groupId) =>
+      runAction(
+        () =>
+          callCabinetApi(`${apiBase}/groups/${encodeURIComponent(groupId)}`, {
+            method: 'DELETE',
+          }),
+        'Групу прибрано з робочого простору'
       ),
     [apiBase, runAction]
   )
@@ -302,6 +409,206 @@ export default function AffiliateCabinet({ token, initialCabinet }) {
                 </li>
               ))}
             </ul>
+          )}
+        </section>
+
+        <section className={styles.card}>
+          <h2 className={styles.cardTitle}>Мої групи</h2>
+          <p className={styles.cardHint}>
+            Збирай сюди Telegram- і Facebook-групи, з якими працюєш. Для кожної — своє
+            посилання: так побачиш, яка реально приводить заявки.
+          </p>
+
+          <div className={styles.formStack}>
+            <div className={styles.formGrid}>
+              <input
+                className={styles.input}
+                type="text"
+                placeholder="Назва групи"
+                value={groupForm.title}
+                onChange={(e) =>
+                  setGroupForm((prev) => ({ ...prev, title: e.target.value }))
+                }
+                aria-label="Назва групи"
+              />
+              <select
+                className={styles.select}
+                value={groupForm.platform}
+                onChange={(e) =>
+                  setGroupForm((prev) => ({ ...prev, platform: e.target.value }))
+                }
+                aria-label="Платформа групи"
+              >
+                {GROUP_PLATFORMS.map((p) => (
+                  <option key={p.value} value={p.value}>
+                    {p.label}
+                  </option>
+                ))}
+              </select>
+              <select
+                className={styles.select}
+                value={groupForm.status}
+                onChange={(e) =>
+                  setGroupForm((prev) => ({ ...prev, status: e.target.value }))
+                }
+                aria-label="Статус групи"
+              >
+                {GROUP_STATUSES.map((p) => (
+                  <option key={p.value} value={p.value}>
+                    {p.label}
+                  </option>
+                ))}
+              </select>
+              <input
+                className={styles.input}
+                type="url"
+                inputMode="url"
+                placeholder="Посилання на групу (необовʼязково)"
+                value={groupForm.url}
+                onChange={(e) =>
+                  setGroupForm((prev) => ({ ...prev, url: e.target.value }))
+                }
+                aria-label="Посилання на групу"
+              />
+              <input
+                className={styles.input}
+                type="text"
+                placeholder="Місто"
+                value={groupForm.city}
+                onChange={(e) =>
+                  setGroupForm((prev) => ({ ...prev, city: e.target.value }))
+                }
+                aria-label="Місто"
+              />
+              <input
+                className={styles.input}
+                type="text"
+                placeholder="Ніша (мами, ЖК, школа…)"
+                value={groupForm.niche}
+                onChange={(e) =>
+                  setGroupForm((prev) => ({ ...prev, niche: e.target.value }))
+                }
+                aria-label="Ніша"
+              />
+            </div>
+            <input
+              className={styles.input}
+              type="text"
+              placeholder="Нотатка для себе"
+              value={groupForm.notes}
+              onChange={(e) =>
+                setGroupForm((prev) => ({ ...prev, notes: e.target.value }))
+              }
+              aria-label="Нотатка"
+            />
+            <div className={styles.groupActions}>
+              <button
+                type="button"
+                className={styles.btn}
+                onClick={saveGroup}
+                disabled={busy}
+              >
+                {editingGroupId ? 'Зберегти зміни' : 'Додати групу'}
+              </button>
+              {editingGroupId ? (
+                <button
+                  type="button"
+                  className={styles.btnDanger}
+                  onClick={resetGroupForm}
+                  disabled={busy}
+                >
+                  Скасувати
+                </button>
+              ) : null}
+            </div>
+          </div>
+
+          {groups.length === 0 ? (
+            <p className={styles.empty}>
+              Поки порожньо. Додай першу групу — і тримай під рукою окреме посилання
+              для неї.
+            </p>
+          ) : (
+            <div className={styles.formStack}>
+              {groups.map((group) => (
+                <article key={group.id} className={styles.groupCard}>
+                  <div className={styles.groupHeader}>
+                    <div>
+                      <h3 className={styles.groupTitle}>{group.title}</h3>
+                      <p className={styles.groupMeta}>
+                        {groupPlatformLabel(group.platform)} ·{' '}
+                        {groupStatusLabel(group.status)}
+                        {group.city ? ` · ${group.city}` : ''}
+                        {group.niche ? ` · ${group.niche}` : ''}
+                      </p>
+                    </div>
+                    <span className={styles.badge}>
+                      {groupStatusLabel(group.status)}
+                    </span>
+                  </div>
+
+                  <div className={styles.groupStats}>
+                    <div className={styles.groupStat}>
+                      <span className={styles.groupStatLabel}>Кліки</span>
+                      <span className={styles.groupStatValue}>
+                        {formatNumber(group.stats?.clicks)}
+                      </span>
+                    </div>
+                    <div className={styles.groupStat}>
+                      <span className={styles.groupStatLabel}>Заявки</span>
+                      <span className={styles.groupStatValue}>
+                        {formatNumber(group.stats?.leads)}
+                      </span>
+                    </div>
+                    <div className={styles.groupStat}>
+                      <span className={styles.groupStatLabel}>Пробні</span>
+                      <span className={styles.groupStatValue}>
+                        {formatNumber(group.stats?.trials)}
+                      </span>
+                    </div>
+                    <div className={styles.groupStat}>
+                      <span className={styles.groupStatLabel}>Записи</span>
+                      <span className={styles.groupStatValue}>
+                        {formatNumber(group.stats?.enrolled)}
+                      </span>
+                    </div>
+                  </div>
+
+                  <code className={styles.linkValue}>{group.tracking_url}</code>
+                  {group.notes ? (
+                    <p className={styles.groupMeta}>{group.notes}</p>
+                  ) : null}
+
+                  <div className={styles.groupActions}>
+                    <button
+                      type="button"
+                      className={styles.btn}
+                      onClick={() => copyGroupLink(group)}
+                    >
+                      {copiedGroupId === group.id
+                        ? 'Скопійовано'
+                        : 'Копіювати лінк групи'}
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.btn}
+                      onClick={() => startEditGroup(group)}
+                      disabled={busy}
+                    >
+                      Редагувати
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.btnDanger}
+                      onClick={() => removeGroup(group.id)}
+                      disabled={busy}
+                    >
+                      Прибрати
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
           )}
         </section>
 
