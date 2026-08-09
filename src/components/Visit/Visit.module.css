@@ -934,6 +934,15 @@
 		box-sizing: border-box;
 	}
 
+	.heroLeft {
+		align-items: center;
+		text-align: center;
+	}
+
+	.schoolLabel {
+		text-align: center;
+	}
+
 	.heroContent {
 		display: flex;
 		flex-direction: column;
@@ -958,6 +967,7 @@
 		margin-bottom: 0;
 		letter-spacing: -0.035em;
 		line-height: 1.05;
+		text-align: center;
 	}
 
 	.titleMain {
@@ -979,11 +989,12 @@
 		font-size: clamp(1.08rem, 4.8vw, 1.25rem);
 		font-weight: 500;
 		color: rgba(255, 255, 255, 0.78);
-		margin: 0 0 1.15rem;
+		margin: 0 auto 1.15rem;
 		line-height: 1.5;
 		letter-spacing: -0.015em;
 		max-width: 36ch;
 		padding: 0;
+		text-align: center;
 		text-wrap: balance;
 	}
 

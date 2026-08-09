@@ -35,16 +35,6 @@ const COURSE_CONFIG = [
 		particleColors: ['#6ee7b7', '#5eead4', '#a7f3d0', '#34d399'],
 	},
 	{
-		id: 'webdev',
-		theme: 'themeWebdev',
-		href: '/webDev',
-		icon: '/logos/web.svg',
-		iconType: 'image',
-		rating: 4.9,
-		stats: { students: '156+', projects: '10+' },
-		particleColors: ['#7dd3fc', '#67e8f9', '#a5f3fc', '#38bdf8'],
-	},
-	{
 		id: 'scratch',
 		theme: 'themeScratch',
 		href: '/Scratch',
@@ -53,6 +43,16 @@ const COURSE_CONFIG = [
 		rating: 4.9,
 		stats: { students: '90+', projects: '12+' },
 		particleColors: ['#fdba74', '#fb923c', '#fbbf24', '#fde68a'],
+	},
+	{
+		id: 'webdev',
+		theme: 'themeWebdev',
+		href: '/webDev',
+		icon: '/logos/web.svg',
+		iconType: 'image',
+		rating: 4.9,
+		stats: { students: '156+', projects: '10+' },
+		particleColors: ['#7dd3fc', '#67e8f9', '#a5f3fc', '#38bdf8'],
 	},
 	{
 		id: 'minecraft',
