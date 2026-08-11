@@ -290,6 +290,40 @@ async function sendLeadToCrm(payload) {
 /**
  * Зберегти лід з Instagram/Facebook Lead Form і розіслати як заявку з сайту.
  */
+async function notifyLeadgenProblem({ title, details }) {
+  const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN
+  const telegramChatId = process.env.TELEGRAM_CHAT_ID
+  if (!telegramBotToken || !telegramChatId) return { ok: false }
+
+  const text = [`⚠️ ${title}`, '', ...details.filter(Boolean)].join('\n')
+  const chatIds = [String(telegramChatId).trim(), ADS_CHAT_ID].filter(
+    (id, idx, arr) => id && arr.indexOf(id) === idx
+  )
+
+  let sent = 0
+  for (const chatId of chatIds) {
+    try {
+      const res = await fetch(
+        `https://api.telegram.org/bot${telegramBotToken}/sendMessage`,
+        {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text,
+            disable_web_page_preview: true,
+          }),
+        }
+      )
+      const data = await res.json().catch(() => null)
+      if (res.ok && data?.ok) sent += 1
+    } catch (e) {
+      console.error('[meta-leadgen] problem notify failed:', e)
+    }
+  }
+  return { ok: sent > 0, sent }
+}
+
 export async function ingestMetaLeadgen({
   leadgenId,
   pageId = null,
@@ -297,8 +331,13 @@ export async function ingestMetaLeadgen({
   adId = null,
 }) {
   const allowedForms = configuredFormIds()
+  // Form ID — лише попередження. Раніше жорсткий фільтр міг тихо відсікти реальні ліди
+  // (Form ID від таргетолога інколи не збігається з тим, що приходить у webhook).
   if (allowedForms.length && formId && !allowedForms.includes(String(formId))) {
-    return { ok: true, skipped: true, reason: 'form_not_allowed', formId }
+    console.warn(
+      '[meta-leadgen] form_id not in META_LEAD_FORM_IDS, still processing:',
+      formId
+    )
   }
   const pageFilter = String(process.env.META_PAGE_ID || '').trim()
   if (pageFilter && pageId && String(pageId) !== pageFilter) {
@@ -313,19 +352,37 @@ export async function ingestMetaLeadgen({
     return { ok: true, duplicate: true, leadId: String(existing._id) }
   }
 
-  const raw = await fetchMetaLeadById(leadgenId)
+  let raw
+  try {
+    raw = await fetchMetaLeadById(leadgenId)
+  } catch (e) {
+    const err = String(e?.message || e)
+    console.error('[meta-leadgen] graph fetch failed:', err)
+    await notifyLeadgenProblem({
+      title: 'Instagram Lead Form: не вдалося забрати дані ліда',
+      details: [
+        `Leadgen ID: ${leadgenId}`,
+        formId ? `Form ID: ${formId}` : null,
+        pageId ? `Page ID: ${pageId}` : null,
+        `Помилка: ${err.slice(0, 500)}`,
+        '',
+        'Якщо це Test з Webhooks (ID 4444…) — так і має бути.',
+        'Потрібен реальний лід з Lead Ads Testing Tool.',
+      ],
+    })
+    return { ok: false, error: 'graph_fetch_failed', detail: err }
+  }
+
   const resolvedFormId = raw?.form_id || formId
   if (
     allowedForms.length &&
     resolvedFormId &&
     !allowedForms.includes(String(resolvedFormId))
   ) {
-    return {
-      ok: true,
-      skipped: true,
-      reason: 'form_not_allowed',
-      formId: resolvedFormId,
-    }
+    console.warn(
+      '[meta-leadgen] resolved form_id not in allowlist, still processing:',
+      resolvedFormId
+    )
   }
 
   const resolved = resolveLeadFields(raw?.field_data || [])
@@ -346,6 +403,14 @@ export async function ingestMetaLeadgen({
     : null
 
   if (!normalizedPhone && !normalizedTelegram && !name) {
+    await notifyLeadgenProblem({
+      title: 'Instagram Lead Form: лід без імені/телефону',
+      details: [
+        `Leadgen ID: ${leadgenId}`,
+        resolvedFormId ? `Form ID: ${resolvedFormId}` : null,
+        `Сирі поля: ${JSON.stringify(raw?.field_data || []).slice(0, 800)}`,
+      ],
+    })
     return {
       ok: false,
       error: 'empty_lead_fields',
@@ -500,9 +565,11 @@ export async function ingestMetaLeadgen({
   }
 }
 
-export async function processLeadgenWebhookPayload(body) {
+function collectLeadgenEvents(body) {
+  const events = []
+
+  // Стандартний Page webhook.
   const entries = Array.isArray(body?.entry) ? body.entry : []
-  const results = []
   for (const entry of entries) {
     const pageId = entry?.id
     const changes = Array.isArray(entry?.changes) ? entry.changes : []
@@ -511,19 +578,54 @@ export async function processLeadgenWebhookPayload(body) {
       const value = change?.value || {}
       const leadgenId = value.leadgen_id || value.lead_id
       if (!leadgenId) continue
-      try {
-        const r = await ingestMetaLeadgen({
-          leadgenId: String(leadgenId),
-          pageId: pageId ? String(pageId) : value.page_id ? String(value.page_id) : null,
-          formId: value.form_id ? String(value.form_id) : null,
-          adId: value.ad_id ? String(value.ad_id) : null,
-        })
-        results.push(r)
-      } catch (e) {
-        console.error('[meta-leadgen] ingest failed:', e)
-        results.push({ ok: false, error: String(e?.message || e) })
-      }
+      events.push({
+        leadgenId: String(leadgenId),
+        pageId: pageId
+          ? String(pageId)
+          : value.page_id
+            ? String(value.page_id)
+            : null,
+        formId: value.form_id ? String(value.form_id) : null,
+        adId: value.ad_id ? String(value.ad_id) : null,
+      })
     }
+  }
+
+  // Формат «пример поля» / sample з Meta App Webhooks UI.
+  const sample = body?.sample
+  if (sample?.field === 'leadgen' && sample?.value) {
+    const value = sample.value
+    const leadgenId = value.leadgen_id || value.lead_id
+    if (leadgenId) {
+      events.push({
+        leadgenId: String(leadgenId),
+        pageId: value.page_id ? String(value.page_id) : null,
+        formId: value.form_id ? String(value.form_id) : null,
+        adId: value.ad_id ? String(value.ad_id) : null,
+      })
+    }
+  }
+
+  return events
+}
+
+export async function processLeadgenWebhookPayload(body) {
+  const events = collectLeadgenEvents(body)
+  const results = []
+  for (const event of events) {
+    try {
+      const r = await ingestMetaLeadgen(event)
+      results.push(r)
+    } catch (e) {
+      console.error('[meta-leadgen] ingest failed:', e)
+      results.push({ ok: false, error: String(e?.message || e) })
+    }
+  }
+  if (!events.length) {
+    console.warn(
+      '[meta-leadgen] webhook without leadgen events:',
+      JSON.stringify(body)?.slice(0, 500)
+    )
   }
   return results
 }
