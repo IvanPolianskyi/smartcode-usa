@@ -5,7 +5,7 @@ import { isValidLeadContactStatus } from '@/lib/leadContactStatus'
 
 /**
  * CRM → LMS: оновити статус контакту заявки і кнопки в Telegram.
- * Body: { leadId, contactStatus }
+ * Body: { leadId, contactStatus, callbackAt?, clearCallback? }
  */
 export async function POST(request) {
   const authError = assertCrmInternalRequest(request)
@@ -15,6 +15,12 @@ export async function POST(request) {
     const body = await request.json().catch(() => ({}))
     const leadId = String(body.leadId || '').trim()
     const contactStatus = String(body.contactStatus || '').trim()
+    const clearCallback = Boolean(body.clearCallback)
+    let callbackAt = null
+    if (body.callbackAt) {
+      const d = new Date(body.callbackAt)
+      if (!Number.isNaN(d.getTime())) callbackAt = d
+    }
 
     if (!leadId || !isValidLeadContactStatus(contactStatus)) {
       return NextResponse.json(
@@ -23,11 +29,15 @@ export async function POST(request) {
       )
     }
 
-    const result = await applyLeadContactStatus(leadId, contactStatus)
+    const result = await applyLeadContactStatus(leadId, contactStatus, {
+      callbackAt,
+      clearCallback,
+      force: Boolean(body.force),
+    })
     if (!result.ok) {
       return NextResponse.json(
         { error: result.error || 'failed', ...result },
-        { status: 400 }
+        { status: result.error === 'terminal_status' ? 409 : 400 }
       )
     }
     return NextResponse.json(result)

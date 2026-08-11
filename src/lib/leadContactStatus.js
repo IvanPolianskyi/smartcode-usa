@@ -13,6 +13,7 @@ export const LEAD_CONTACT_STATUSES = [
     code: 'paid_enrolled',
     label: 'Записався на платне',
     shortLabel: 'Платне',
+    terminal: true,
   },
   {
     code: 'no_answer',
@@ -29,10 +30,21 @@ export const LEAD_CONTACT_STATUSES = [
     label: 'Відписали в месенджері',
     shortLabel: 'Відписали',
   },
+  {
+    code: 'not_enrolled',
+    label: 'Не записався',
+    shortLabel: 'Не записався',
+    terminal: true,
+    hideFromKeyboard: true,
+  },
 ]
 
 export const LEAD_CONTACT_STATUS_BY_CODE = Object.fromEntries(
   LEAD_CONTACT_STATUSES.map((s) => [s.code, s])
+)
+
+export const TERMINAL_CONTACT_STATUSES = new Set(
+  LEAD_CONTACT_STATUSES.filter((s) => s.terminal).map((s) => s.code)
 )
 
 export function isValidLeadContactStatus(code) {
@@ -43,21 +55,52 @@ export function leadContactStatusLabel(code) {
   return LEAD_CONTACT_STATUS_BY_CODE[code]?.label || null
 }
 
-/** Inline keyboard; активний статус з ✅ */
+export function isTerminalLeadContactStatus(code) {
+  return TERMINAL_CONTACT_STATUSES.has(String(code || '').trim())
+}
+
+/** Чи можна змінити статус з existing на next (антидаунгрейд). */
+export function canChangeLeadContactStatus(existing, next) {
+  const from = String(existing || '').trim()
+  const to = String(next || '').trim()
+  if (!to || !isValidLeadContactStatus(to)) return false
+  if (!from || from === to) return true
+  if (from === 'paid_enrolled') return false
+  if (from === 'not_enrolled' && to !== 'paid_enrolled') return false
+  return true
+}
+
+/** Inline keyboard; активний статус з ✅. Термінальні — лише поточний рядок. */
 export function buildLeadContactKeyboard(leadId, activeCode = null) {
   const id = String(leadId || '').trim()
   if (!id) return undefined
-  return {
-    inline_keyboard: LEAD_CONTACT_STATUSES.map((s) => {
-      const isActive = activeCode === s.code
+  const active = String(activeCode || '').trim()
+  if (isTerminalLeadContactStatus(active)) {
+    const s = LEAD_CONTACT_STATUS_BY_CODE[active]
+    if (!s) return { inline_keyboard: [] }
+    return {
+      inline_keyboard: [
+        [
+          {
+            text: `✅ ${s.label}`,
+            callback_data: `ls:${id}:${s.code}`,
+          },
+        ],
+      ],
+    }
+  }
+  const rows = LEAD_CONTACT_STATUSES.filter((s) => !s.hideFromKeyboard).map(
+    (s) => {
+      const isActive = active === s.code
       return [
         {
           text: isActive ? `✅ ${s.label}` : s.label,
           callback_data: `ls:${id}:${s.code}`,
         },
       ]
-    }),
-  }
+    }
+  )
+  return { inline_keyboard: rows }
 }
 
 export function parseLeadStatusCallbackData(data) {
@@ -71,25 +114,44 @@ export function parseLeadStatusCallbackData(data) {
 }
 
 /** Видимий блок статусу на початку повідомлення в чаті. */
-export function contactStatusBannerPlain(code) {
+export function contactStatusBannerPlain(code, opts = {}) {
   const label = leadContactStatusLabel(code)
   if (!label) return null
-  return `📌 Статус: ${label}`
+  const lines = [`📌 Статус: ${label}`]
+  const callbackLine = formatCallbackBannerLine(opts.callbackAt, opts.clearCallback)
+  if (callbackLine) lines.push(callbackLine)
+  return lines.join('\n')
 }
 
-const STATUS_BANNER_RE = /^📌 Статус: [^\n]*/m
-const STATUS_LINE_RE = /\n?\n?(?:📌 )?Статус: [^\n]*/g
+const STATUS_BANNER_RE = /^📌 Статус: [^\n]*(?:\n📌 Переобдзвін:[^\n]*)?/m
+const STATUS_LINE_RE =
+  /\n?\n?(?:📌 )?Статус: [^\n]*(?:\n📌 Переобдзвін:[^\n]*)?/g
+const CALLBACK_LINE_RE = /\n?📌 Переобдзвін:[^\n]*/g
+
+export function formatCallbackBannerLine(callbackAt, clearCallback = false) {
+  if (clearCallback) return null
+  if (!callbackAt) return null
+  const d = callbackAt instanceof Date ? callbackAt : new Date(callbackAt)
+  if (Number.isNaN(d.getTime())) return null
+  const formatted = new Intl.DateTimeFormat('uk-UA', {
+    timeZone: 'Europe/Kyiv',
+    day: 'numeric',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(d)
+  return `📌 Переобдзвін: ${formatted}`
+}
 
 /**
- * Вставити/оновити рядок статусу на початку тексту повідомлення (plain).
- * Так стан видно прямо в чаті, не лише в toast.
+ * Вставити/оновити рядок статусу (+ опційно переобдзвін) на початку тексту.
  */
-export function withContactStatusInPlainText(originalText, code) {
-  const banner = contactStatusBannerPlain(code)
+export function withContactStatusInPlainText(originalText, code, opts = {}) {
+  const banner = contactStatusBannerPlain(code, opts)
   if (!banner) return String(originalText || '')
   let text = String(originalText || '')
   text = text.replace(STATUS_LINE_RE, '').trim()
-  // Прибрати старий банер на початку
+  text = text.replace(CALLBACK_LINE_RE, '').trim()
   text = text.replace(STATUS_BANNER_RE, '').trim()
   return `${banner}\n\n${text}`
 }

@@ -78,6 +78,21 @@ export async function POST(request) {
       originalText,
     })
 
+    if (applied && applied.ok === false && applied.error === 'terminal_status') {
+      await tgApi(botToken, 'answerCallbackQuery', {
+        callback_query_id: cq.id,
+        text: 'Статус уже фінальний — зміна заблокована',
+        show_alert: true,
+      }).catch(() => null)
+      return NextResponse.json({
+        ok: false,
+        blocked: true,
+        leadId,
+        contactStatus: code,
+        existingContactStatus: applied.existingContactStatus,
+      })
+    }
+
     // 3) CRM — обовʼязково await (інакше на Vercel запит не встигає).
     const crm = await postCrmLeadContactStatus(leadId, code)
 

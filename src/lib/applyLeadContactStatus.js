@@ -2,6 +2,7 @@ import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import {
   buildLeadContactKeyboard,
+  canChangeLeadContactStatus,
   isValidLeadContactStatus,
   leadContactStatusLabel,
   withContactStatusInPlainText,
@@ -43,6 +44,8 @@ export async function refreshLeadTelegramMessage({
   leadId,
   contactStatus,
   originalText = null,
+  callbackAt = null,
+  clearCallback = false,
 }) {
   if (!botToken || chatId == null || messageId == null) {
     return { ok: false, error: 'missing_target' }
@@ -52,7 +55,10 @@ export async function refreshLeadTelegramMessage({
   const hasText = typeof originalText === 'string' && originalText.length > 0
 
   if (hasText) {
-    const newText = withContactStatusInPlainText(originalText, contactStatus)
+    const newText = withContactStatusInPlainText(originalText, contactStatus, {
+      callbackAt,
+      clearCallback,
+    })
     const edited = await tgApi(botToken, 'editMessageText', {
       chat_id: chatId,
       message_id: messageId,
@@ -101,12 +107,38 @@ export async function applyLeadContactStatus(leadId, contactStatus, opts = {}) {
   const botToken = process.env.TELEGRAM_BOT_TOKEN
   const label = leadContactStatusLabel(code)
   const now = new Date()
+  const callbackAt = opts.callbackAt ?? null
+  const clearCallback = Boolean(opts.clearCallback)
 
   let leadOid = null
   try {
     leadOid = new ObjectId(id)
   } catch {
     return { ok: false, contactStatus: code, label, updatedMessages: 0, error: 'bad_lead_id' }
+  }
+
+  // Антидаунгрейд з уже збереженого статусу (окрім force при reopen).
+  if (!opts.force) {
+    try {
+      const submissions = await getCollection('submissions')
+      const existing = await submissions.findOne(
+        { _id: leadOid },
+        { projection: { contactStatus: 1 } }
+      )
+      const prev = existing?.contactStatus
+      if (prev && !canChangeLeadContactStatus(prev, code)) {
+        return {
+          ok: false,
+          contactStatus: code,
+          label,
+          updatedMessages: 0,
+          error: 'terminal_status',
+          existingContactStatus: prev,
+        }
+      }
+    } catch (e) {
+      console.warn('[leads-tg] precheck contact status failed:', e)
+    }
   }
 
   // Спочатку оновити чат (швидкий UX), Mongo — після.
@@ -135,6 +167,8 @@ export async function applyLeadContactStatus(leadId, contactStatus, opts = {}) {
         leadId: id,
         contactStatus: code,
         originalText: t.originalText,
+        callbackAt,
+        clearCallback,
       })
       if (r.ok) updatedMessages += 1
     }
@@ -143,18 +177,25 @@ export async function applyLeadContactStatus(leadId, contactStatus, opts = {}) {
   // Persist + інші чати (дубль реклами) — не блокуємо вже оновлене повідомлення.
   try {
     const submissions = await getCollection('submissions')
+    const setFields = {
+      contactStatus: code,
+      contactStatusUpdatedAt: now,
+    }
+    if (clearCallback) {
+      setFields.callbackAt = null
+    } else if (callbackAt) {
+      const d = callbackAt instanceof Date ? callbackAt : new Date(callbackAt)
+      if (!Number.isNaN(d.getTime())) setFields.callbackAt = d
+    }
     await submissions.updateOne(
       { _id: leadOid },
       {
-        $set: {
-          contactStatus: code,
-          contactStatusUpdatedAt: now,
-        },
+        $set: setFields,
       }
     )
     const updated = await submissions.findOne(
       { _id: leadOid },
-      { projection: { telegramDeliveries: 1, telegramNotifyText: 1 } }
+      { projection: { telegramDeliveries: 1, telegramNotifyText: 1, callbackAt: 1 } }
     )
     const deliveries = Array.isArray(updated?.telegramDeliveries)
       ? updated.telegramDeliveries
@@ -164,6 +205,9 @@ export async function applyLeadContactStatus(leadId, contactStatus, opts = {}) {
       updated.telegramNotifyText.trim()
         ? updated.telegramNotifyText
         : null
+    const storedCallback = clearCallback
+      ? null
+      : callbackAt || updated?.callbackAt || null
 
     if (botToken) {
       for (const d of deliveries) {
@@ -177,6 +221,8 @@ export async function applyLeadContactStatus(leadId, contactStatus, opts = {}) {
           leadId: id,
           contactStatus: code,
           originalText: storedText,
+          callbackAt: storedCallback,
+          clearCallback,
         })
         if (r.ok) updatedMessages += 1
       }
