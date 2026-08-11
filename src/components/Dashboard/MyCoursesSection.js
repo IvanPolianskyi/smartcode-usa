@@ -15,6 +15,7 @@ const COURSE_PATHS = {
   'web-development': '/webDev',
   scratch: '/courses/scratch',
   'minecraft-education': '/courses/minecraft-education',
+  'unity-game-development': '/courses/unity-game-development',
 }
 
 const LOCKED_HINT_KEYS = {
@@ -22,6 +23,8 @@ const LOCKED_HINT_KEYS = {
   'python-developer-zero-to-junior': 'lockedViaLessonsPython',
   scratch: 'lockedViaLessonsScratch',
   'minecraft-education': 'lockedViaLessonsMinecraft',
+  'web-development': 'lockedViaLessonsWeb',
+  'unity-game-development': 'lockedViaLessonsUnity',
 }
 
 export default function MyCoursesSection({

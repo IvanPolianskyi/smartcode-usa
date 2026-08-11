@@ -2,13 +2,15 @@
 
 import { useMemo } from 'react'
 import { useTranslations } from 'next-intl'
-import { Code, Box, BookOpen, Blocks, Cuboid } from 'lucide-react'
+import { Code, Box, BookOpen, Blocks, Cuboid, Gamepad2, Globe } from 'lucide-react'
 
 export const DASHBOARD_COURSE_IDS = [
 	'python-developer-zero-to-junior',
 	'roblox-studio',
 	'scratch',
 	'minecraft-education',
+	'web-development',
+	'unity-game-development',
 ]
 
 const COURSE_META = {
@@ -39,6 +41,20 @@ const COURSE_META = {
 		link: '/courses/minecraft-education',
 		bannerImage: '/logos/minecraft-course.png',
 		bannerGradient: 'linear-gradient(135deg, #15803d, #22c55e)',
+	},
+	'web-development': {
+		icon: Globe,
+		color: '#0ea5e9',
+		link: '/webDev',
+		bannerImage: '/logos/web.svg',
+		bannerGradient: 'linear-gradient(135deg, #0369a1, #0ea5e9)',
+	},
+	'unity-game-development': {
+		icon: Gamepad2,
+		color: '#64748b',
+		link: '/courses/unity-game-development',
+		bannerImage: '/logos/unity.svg',
+		bannerGradient: 'linear-gradient(135deg, #1e293b, #475569)',
 	},
 }
 

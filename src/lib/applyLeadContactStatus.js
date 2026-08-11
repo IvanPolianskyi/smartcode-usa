@@ -154,11 +154,16 @@ export async function applyLeadContactStatus(leadId, contactStatus, opts = {}) {
     )
     const updated = await submissions.findOne(
       { _id: leadOid },
-      { projection: { telegramDeliveries: 1 } }
+      { projection: { telegramDeliveries: 1, telegramNotifyText: 1 } }
     )
     const deliveries = Array.isArray(updated?.telegramDeliveries)
       ? updated.telegramDeliveries
       : []
+    const storedText =
+      typeof updated?.telegramNotifyText === 'string' &&
+      updated.telegramNotifyText.trim()
+        ? updated.telegramNotifyText
+        : null
 
     if (botToken) {
       for (const d of deliveries) {
@@ -171,7 +176,7 @@ export async function applyLeadContactStatus(leadId, contactStatus, opts = {}) {
           messageId: d.messageId,
           leadId: id,
           contactStatus: code,
-          originalText: null,
+          originalText: storedText,
         })
         if (r.ok) updatedMessages += 1
       }

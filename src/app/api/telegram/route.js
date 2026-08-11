@@ -342,6 +342,15 @@ export async function POST(request) {
       `<b>Час:</b> ${escapeHtml(createdAt)}`,
     ].filter(Boolean)
 
+    const telegramNotifyText = lines
+      .join('\n')
+      .replace(/<[^>]+>/g, '')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#039;/g, "'")
+
     // Фіксований id до відправки — щоб кнопки статусу знали leadId.
     const leadObjectId = new ObjectId()
     const leadIdStr = leadObjectId.toString()
@@ -441,6 +450,7 @@ export async function POST(request) {
           isUniqueLead: shouldTrackLead,
           contactStatus: null,
           telegramDeliveries: [],
+          telegramNotifyText,
         })
         savedOffline = true
         if (tokenHash) {
@@ -496,6 +506,7 @@ export async function POST(request) {
         metaLeadError: metaLeadError || null,
         contactStatus: null,
         telegramDeliveries,
+        telegramNotifyText,
       })
       if (tokenHash) {
         await markLeadTokenUsed(tokenHash)

@@ -10,6 +10,11 @@ export const LEAD_CONTACT_STATUSES = [
     shortLabel: 'Пробне',
   },
   {
+    code: 'paid_enrolled',
+    label: 'Записався на платне',
+    shortLabel: 'Платне',
+  },
+  {
     code: 'no_answer',
     label: 'Не відповідають',
     shortLabel: 'Не відповідають',
