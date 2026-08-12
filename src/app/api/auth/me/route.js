@@ -1,5 +1,5 @@
 import { NextResponse, after } from 'next/server'
-import { getCurrentUser } from '@/lib/auth'
+import { getCurrentUser, issueAuthSession } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { syncStudentScheduleAccess } from '@/lib/syncStudentScheduleAccess'
@@ -15,6 +15,13 @@ export async function GET() {
     // 200 + user: null - звичайний стан «гість», без 401 (інакше DevTools шумить на кожній сторінці)
     if (!userId) {
       return NextResponse.json({ user: null }, { status: 200 })
+    }
+
+    // Sliding session: кожен візит подовжує cookie/JWT, щоб учні не вилітали з акаунта.
+    try {
+      await issueAuthSession(userId)
+    } catch (sessionErr) {
+      console.error('Auth session refresh failed:', sessionErr)
     }
 
     // Get user from database

@@ -2,7 +2,10 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 
-const JWT_EXPIRES_IN = '7d'
+/** Практично «довічна» сесія учня (браузери можуть обмежити cookie ~400 днів). */
+const JWT_EXPIRES_IN = '10y'
+/** 10 років у секундах — maxAge cookie; оновлюється при кожному /api/auth/me. */
+export const AUTH_COOKIE_MAX_AGE_SEC = 60 * 60 * 24 * 365 * 10
 
 function getJwtSecret() {
   const secret = process.env.JWT_SECRET || ''
@@ -76,8 +79,18 @@ export async function setAuthCookie(token) {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    maxAge: 60 * 60 * 24 * 7 // 7 days
+    path: '/',
+    maxAge: AUTH_COOKIE_MAX_AGE_SEC,
   })
+}
+
+/**
+ * Видати новий JWT і оновити cookie (login або sliding refresh сесії).
+ */
+export async function issueAuthSession(userId) {
+  const token = generateToken(userId)
+  await setAuthCookie(token)
+  return token
 }
 
 /**
@@ -85,7 +98,13 @@ export async function setAuthCookie(token) {
  */
 export async function removeAuthCookie() {
   const cookieStore = await cookies()
-  cookieStore.delete('auth_token')
+  cookieStore.set('auth_token', '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 0,
+  })
 }
 
 

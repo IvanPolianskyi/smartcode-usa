@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { redirect } from 'next/navigation'
 import { getCollection } from '@/lib/mongodb'
-import { comparePassword, generateToken, setAuthCookie } from '@/lib/auth'
+import { comparePassword, issueAuthSession } from '@/lib/auth'
 import { consumeLoginToken } from '@/lib/loginTokens'
 import { toAuthUserResponse } from '@/lib/crmLmsSync'
 import { normalizeLoginIdentifier, isStudentShortCode } from '@/lib/authLogin'
@@ -28,8 +28,7 @@ export async function GET(request) {
     redirect('/login?error=magic_expired')
   }
 
-  const jwt = generateToken(userId)
-  await setAuthCookie(jwt)
+  await issueAuthSession(userId)
   redirect(safeRedirect)
 }
 
@@ -99,8 +98,7 @@ export async function POST(request) {
     }
 
     const userId = user._id.toString()
-    const token = generateToken(userId)
-    await setAuthCookie(token)
+    const token = await issueAuthSession(userId)
 
     return NextResponse.json(
       { user: toAuthUserResponse(user), token },
