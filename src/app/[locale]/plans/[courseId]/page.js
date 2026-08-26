@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import { headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import { ArrowLeft } from 'lucide-react'
@@ -6,6 +7,7 @@ import { Link } from '@/i18n/navigation'
 import SiteHeader from '@/components/Nav/SiteHeader'
 import PlanPicker from '@/components/Billing/PlanPicker'
 import { programForCourseId } from '@/lib/billingCatalog'
+import { countryFromHeaders } from '@/lib/paddleCountry'
 import { LANDING_PROGRAMS } from '@/lib/landingPrograms'
 import { ALL_PROGRAM_COURSE_IDS } from '@/lib/courseIds'
 import { LEGAL } from '@/lib/legalConfig'
@@ -35,6 +37,7 @@ export default async function PlanPage({ params }) {
 	if (!program) notFound()
 
 	const landing = LANDING_PROGRAMS.find((p) => p.courseId === courseId)
+	const country = countryFromHeaders(await headers())
 
 	return (
 		<div className={styles.page} data-theme="light">
@@ -59,7 +62,7 @@ export default async function PlanPage({ params }) {
 				<Suspense
 					fallback={<p className={styles.sectionLede}>Loading plans…</p>}
 				>
-					<PlanPicker courseId={courseId} />
+					<PlanPicker courseId={courseId} country={country} />
 				</Suspense>
 			</section>
 

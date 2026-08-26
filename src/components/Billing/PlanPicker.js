@@ -4,8 +4,9 @@ import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Check } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
-import { BILLING_TIERS, annualSaving } from '@/lib/billingCatalog'
+import { BILLING_TIERS, annualSaving, priceIdFor } from '@/lib/billingCatalog'
 import { LEGAL } from '@/lib/legalConfig'
+import { usePaddlePrices } from '@/hooks/usePaddlePrices'
 import CheckoutButton from './CheckoutButton'
 import styles from './ProgramPricingFlow.module.css'
 
@@ -15,10 +16,10 @@ const TIER_ORDER = ['standard', 'premium']
 /**
  * Step 2 of the purchase: tier + billing period for one already-chosen program.
  *
- * Premium is the default selection (live lessons are the upsell). Cards are
- * clickable so the visitor can switch highlight + CTA style before starting.
+ * Prices come from Paddle PricePreview (localised totals). Catalog strings are
+ * only a fallback while preview loads or if Paddle is unreachable.
  */
-export default function PlanPicker({ courseId }) {
+export default function PlanPicker({ courseId, country = null }) {
 	const searchParams = useSearchParams()
 	const planParam = searchParams.get('plan')
 	const tierParam = searchParams.get('tier')
@@ -29,8 +30,26 @@ export default function PlanPicker({ courseId }) {
 		tierParam === 'standard' || tierParam === 'premium' ? tierParam : 'premium'
 	)
 
+	const priceIds = TIER_ORDER.flatMap((tierId) => [
+		priceIdFor(courseId, 'month', tierId),
+		priceIdFor(courseId, 'year', tierId),
+	]).filter(Boolean)
+
+	const { prices: paddlePrices, loading: pricesLoading } = usePaddlePrices(
+		priceIds,
+		country
+	)
+
 	const isAnnual = billing === 'annual'
 	const standardSaving = annualSaving('standard')
+
+	function displayPrice(tierId) {
+		const interval = isAnnual ? 'year' : 'month'
+		const priceId = priceIdFor(courseId, interval, tierId)
+		if (priceId && paddlePrices[priceId]) return paddlePrices[priceId]
+		const tier = BILLING_TIERS[tierId]
+		return isAnnual ? tier.annualPrice : tier.monthlyPrice
+	}
 
 	return (
 		<div className={styles.picker}>
@@ -50,7 +69,7 @@ export default function PlanPicker({ courseId }) {
 					onClick={() => setBilling('annual')}
 				>
 					Annual
-					{standardSaving ? (
+					{!pricesLoading && standardSaving ? (
 						<span className={styles.saveTag}>save {standardSaving.display}</span>
 					) : null}
 				</button>
@@ -63,10 +82,11 @@ export default function PlanPicker({ courseId }) {
 			>
 				{TIER_ORDER.map((tierId) => {
 					const tier = BILLING_TIERS[tierId]
-					const price = isAnnual ? tier.annualPrice : tier.monthlyPrice
+					const price = displayPrice(tierId)
 					const saving = annualSaving(tierId)
 					const isSelected = selectedTier === tierId
 					const isPremium = tierId === 'premium'
+					const priceBusy = pricesLoading && !paddlePrices[priceIdFor(courseId, isAnnual ? 'year' : 'month', tierId)]
 
 					return (
 						<div
@@ -93,13 +113,13 @@ export default function PlanPicker({ courseId }) {
 							<p className={styles.tierTagline}>{tier.tagline}</p>
 
 							<p className={styles.priceRow}>
-								<span className={styles.price}>{price}</span>
+								<span className={styles.price}>{priceBusy ? '…' : price}</span>
 								<span className={styles.per}>{isAnnual ? '/year' : '/month'}</span>
 							</p>
 							<p className={styles.priceNote}>
 								{isAnnual && saving
-									? `First ${TRIAL} days free ($0 today), then ${price}/year (save ${saving.display})`
-									: `First ${TRIAL} days free ($0 today), then ${price}/month · cancel anytime`}
+									? `First ${TRIAL} days free ($0 today), then ${priceBusy ? '…' : price}/year (save ${saving.display})`
+									: `First ${TRIAL} days free ($0 today), then ${priceBusy ? '…' : price}/month · cancel anytime`}
 							</p>
 
 							<ul className={styles.featureList}>
@@ -116,9 +136,7 @@ export default function PlanPicker({ courseId }) {
 								))}
 							</ul>
 
-							{/* Opens Paddle in place for signed-in visitors; guests are sent
-							    to /start to make an account and resume here. One click
-							    fewer than routing everyone through /start. */}
+							{/* Opens Paddle overlay for signed-in visitors; guests go to register. */}
 							<div
 								className={styles.tierCtaWrap}
 								onClick={(event) => event.stopPropagation()}

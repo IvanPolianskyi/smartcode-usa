@@ -7,6 +7,7 @@ import StickyNav from '@/components/Nav/StickyNav'
 import { Link } from '@/i18n/navigation'
 import { programForCourseId } from '@/lib/billingCatalog'
 import { LEGAL } from '@/lib/legalConfig'
+import { loadPaddle } from '@/lib/paddleClient'
 import {
 	normalizePlan,
 	normalizeTier,
@@ -14,47 +15,6 @@ import {
 	startPath,
 } from '@/lib/startCheckout'
 import styles from '../login/Auth.module.css'
-
-const PADDLE_SCRIPT = 'https://cdn.paddle.com/paddle/v2/paddle.js'
-let paddleLoader = null
-
-function loadPaddle() {
-	if (typeof window === 'undefined') return Promise.reject(new Error('browser only'))
-	if (paddleLoader) return paddleLoader
-
-	paddleLoader = new Promise((resolve, reject) => {
-		if (window.Paddle) {
-			resolve(window.Paddle)
-			return
-		}
-		const script = document.createElement('script')
-		script.src = PADDLE_SCRIPT
-		script.async = true
-		script.onload = () => {
-			if (!window.Paddle) {
-				reject(new Error('Paddle failed to initialise'))
-				return
-			}
-			resolve(window.Paddle)
-		}
-		script.onerror = () => reject(new Error('Could not load the payment library'))
-		document.head.appendChild(script)
-	}).then((Paddle) => {
-		const token = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN
-		if (!token) throw new Error('Payments are not configured')
-		if (process.env.NEXT_PUBLIC_PADDLE_ENV !== 'production') {
-			Paddle.Environment.set('sandbox')
-		}
-		Paddle.Initialize({ token })
-		return Paddle
-	})
-
-	paddleLoader.catch(() => {
-		paddleLoader = null
-	})
-
-	return paddleLoader
-}
 
 function StartFlow() {
 	const router = useRouter()
@@ -141,14 +101,14 @@ function StartFlow() {
 		return () => {
 			cancelled = true
 		}
-	}, [courseId, plan, tier, router])
+	}, [courseId, plan, tier, router, registerHref])
 
 	if (phase === 'loading' || phase === 'checkout') {
 		return (
 			<div className={styles.panel}>
 				<p className={styles.label}>Account</p>
 				<h1 className={styles.title}>
-					{phase === 'loading' ? 'Checking account…' : 'Taking you to your account…'}
+					{phase === 'loading' ? 'Checking account…' : 'Opening checkout…'}
 				</h1>
 				<p className={styles.lede}>
 					{program?.label

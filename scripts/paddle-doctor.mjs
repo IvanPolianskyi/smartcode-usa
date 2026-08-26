@@ -201,6 +201,8 @@ async function checkWebhook() {
 
 	const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/$/, '')
 	const wanted = siteUrl ? `${siteUrl}${WEBHOOK_PATH}` : null
+	const siteIsLocal =
+		/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(siteUrl || '')
 
 	let settings
 	try {
@@ -219,9 +221,23 @@ async function checkWebhook() {
 		return
 	}
 
-	const match = wanted
+	let match = wanted
 		? settings.find((s) => (s.destination || '').replace(/\/$/, '') === wanted)
 		: null
+
+	// Local .env often points SITE_URL at localhost while the real destination
+	// is production. That is fine for day-to-day work — warn, don't block.
+	if (!match && siteIsLocal) {
+		match = settings.find((s) =>
+			String(s.destination || '').includes(WEBHOOK_PATH)
+		)
+		if (match) {
+			warn(
+				`SITE_URL is ${siteUrl}, but Paddle notifies ${match.destination}`,
+				'Local checkouts will not unlock access until you tunnel webhooks or test on the deployed URL.'
+			)
+		}
+	}
 
 	if (!match) {
 		fail(

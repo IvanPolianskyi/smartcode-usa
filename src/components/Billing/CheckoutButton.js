@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { loadPaddle } from '@/lib/paddleClient'
 import {
 	normalizePlan,
 	normalizeTier,
@@ -9,52 +10,8 @@ import {
 	runAuthenticatedCheckout,
 } from '@/lib/startCheckout'
 
-const PADDLE_SCRIPT = 'https://cdn.paddle.com/paddle/v2/paddle.js'
-
-let paddleLoader = null
-
-function loadPaddle() {
-	if (typeof window === 'undefined') return Promise.reject(new Error('browser only'))
-	if (paddleLoader) return paddleLoader
-
-	paddleLoader = new Promise((resolve, reject) => {
-		if (window.Paddle) {
-			resolve(window.Paddle)
-			return
-		}
-
-		const script = document.createElement('script')
-		script.src = PADDLE_SCRIPT
-		script.async = true
-		script.onload = () => {
-			if (!window.Paddle) {
-				reject(new Error('Paddle failed to initialise'))
-				return
-			}
-			resolve(window.Paddle)
-		}
-		script.onerror = () => reject(new Error('Could not load the payment library'))
-		document.head.appendChild(script)
-	}).then((Paddle) => {
-		const token = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN
-		if (!token) throw new Error('Payments are not configured')
-
-		if (process.env.NEXT_PUBLIC_PADDLE_ENV !== 'production') {
-			Paddle.Environment.set('sandbox')
-		}
-		Paddle.Initialize({ token })
-		return Paddle
-	})
-
-	paddleLoader.catch(() => {
-		paddleLoader = null
-	})
-
-	return paddleLoader
-}
-
 /**
- * Opens checkout for a signed-in user, or sends guests to /start.
+ * Opens checkout for a signed-in user, or sends guests to register → /start.
  */
 export default function CheckoutButton({
 	courseId,
@@ -98,8 +55,6 @@ export default function CheckoutButton({
 			const me = meResponse.ok ? await meResponse.json() : null
 			const user = me?.user || null
 			if (!user?._id && !user?.id) {
-				// We already know they are signed out - send them straight to the
-				// account step instead of bouncing through /start to learn it again.
 				router.push(registerPath({ courseId, plan: planLabel, tier: planTier }))
 				return
 			}

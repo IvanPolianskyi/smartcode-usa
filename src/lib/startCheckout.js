@@ -125,7 +125,12 @@ export async function runAuthenticatedCheckout({
 			tier: planTier,
 		},
 		settings: {
-			successUrl: `${window.location.origin}/dashboard?checkout=success`,
+			displayMode: 'overlay',
+			variant: 'one-page',
+			allowLogout: !user.email,
+			// Welcome page polls the webhook before sending them to the dashboard.
+			// Never grant access from this redirect — entitlements.js is the source of truth.
+			successUrl: `${window.location.origin}/welcome?checkout=success`,
 		},
 	})
 	return { action: 'paddle' }

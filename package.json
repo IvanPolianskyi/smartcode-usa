@@ -12,6 +12,7 @@
     "paddle:doctor": "node scripts/paddle-doctor.mjs"
   },
   "dependencies": {
+    "@paddle/paddle-js": "^1.6.5",
     "bcryptjs": "^3.0.3",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^0.562.0",
