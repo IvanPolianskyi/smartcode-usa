@@ -18,7 +18,17 @@
 	--br-yellow: #e6b800;
 	--br-radius: 20px;
 	--br-radius-sm: 14px;
-	--br-shell: 1120px;
+	/*
+	 * The first screen was designed at browser zoom 125%. On a wide monitor at
+	 * 100% the same layout reads small and lost, so nav + hero scale up with the
+	 * viewport instead. One knob: every size on the first screen is expressed as
+	 * base * --br-scale, where base is the 100%-zoom value.
+	 */
+	--br-scale: 1;
+	--br-shell: calc(1120px * var(--br-scale));
+	/* Measured: 16px top padding + the 66px pill. Understating it makes the hero
+	 * min-height overshoot and pushes the CTAs below the fold. */
+	--br-topbar-h: calc(82px * var(--br-scale));
 	--br-font-serif: var(--font-source-serif), Georgia, 'Times New Roman', serif;
 	--br-font-sans: var(--font-geist-sans), system-ui, sans-serif;
 	--br-font-mono: var(--font-geist-mono), ui-monospace, monospace;
@@ -33,6 +43,23 @@
 	color-scheme: light;
 }
 
+/*
+ * Step up rather than interpolate: a unitless fluid scale is not expressible in
+ * calc (you cannot divide a length by a length). Both steps land above the
+ * common 1280/1366 laptop widths, so those keep the unscaled layout.
+ */
+@media (min-width: 1440px) {
+	.page {
+		--br-scale: 1.12;
+	}
+}
+
+@media (min-width: 1700px) {
+	.page {
+		--br-scale: 1.25;
+	}
+}
+
 .gridBg {
 	pointer-events: none;
 	position: absolute;
@@ -42,7 +69,7 @@
 	background-image:
 		linear-gradient(rgba(20, 21, 26, 0.1) 1px, transparent 1px),
 		linear-gradient(90deg, rgba(20, 21, 26, 0.1) 1px, transparent 1px);
-	background-size: 40px 40px;
+	background-size: calc(40px * var(--br-scale)) calc(40px * var(--br-scale));
 	mask-image: radial-gradient(ellipse 95% 70% at 50% 0%, #000 35%, transparent 85%);
 }
 
@@ -51,16 +78,15 @@
 .firstScreen {
 	display: flex;
 	flex-direction: column;
-	min-height: 100svh;
-	min-height: 100dvh;
+	min-height: calc(100svh - var(--br-topbar-h, 68px));
+	min-height: calc(100dvh - var(--br-topbar-h, 68px));
 }
 
 .topBar {
 	position: sticky;
 	top: 0;
 	z-index: 40;
-	flex: none;
-	padding: 16px 0 0;
+	padding: calc(16px * var(--br-scale)) 0 0;
 	display: flex;
 	justify-content: center;
 	background: transparent;
@@ -75,45 +101,55 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 16px;
-	padding: 10px 12px 10px 18px;
+	gap: calc(16px * var(--br-scale));
+	padding: calc(10px * var(--br-scale)) calc(12px * var(--br-scale))
+		calc(10px * var(--br-scale)) calc(18px * var(--br-scale));
 	background: color-mix(in srgb, var(--br-elev) 94%, transparent);
 	border: 1px solid var(--br-border-strong);
 	border-radius: 9999px;
 	backdrop-filter: blur(16px);
 	box-shadow: 0 8px 28px rgba(20, 21, 26, 0.08);
+	transition: box-shadow 0.3s var(--sc-ease, ease), border-color 0.3s var(--sc-ease, ease),
+		background 0.3s var(--sc-ease, ease), transform 0.3s var(--sc-ease, ease);
+}
+
+.topBar[data-stuck='true'] .pillNav {
+	background: color-mix(in srgb, var(--br-elev) 98%, transparent);
+	border-color: var(--br-border-strong);
+	box-shadow: 0 12px 32px rgba(20, 21, 26, 0.14);
+	transform: translateY(1px) scale(0.99);
 }
 
 .navBrand {
 	display: inline-flex;
 	align-items: center;
-	gap: 10px;
+	gap: calc(10px * var(--br-scale));
 	color: var(--br-text);
 	text-decoration: none;
 	font-weight: 700;
-	font-size: 1.15rem;
+	font-size: calc(1.15rem * var(--br-scale));
 	letter-spacing: -0.02em;
 }
 
 .navMark {
-	width: 32px;
-	height: 32px;
-	border-radius: 8px;
+	width: calc(32px * var(--br-scale));
+	height: calc(32px * var(--br-scale));
+	border-radius: calc(8px * var(--br-scale));
 	object-fit: cover;
 }
 
 .navRight {
 	display: flex;
 	align-items: center;
-	gap: 6px;
+	gap: calc(6px * var(--br-scale));
 }
 
 .navQuiet {
 	display: none;
-	padding: 8px 14px;
+	padding: calc(8px * var(--br-scale)) calc(14px * var(--br-scale));
 	color: var(--br-muted);
 	text-decoration: none;
-	font-size: 0.95rem;
+	font-size: calc(0.95rem * var(--br-scale));
 	font-weight: 500;
 	border-radius: 9999px;
 }
@@ -132,12 +168,12 @@
 .navCta {
 	display: inline-flex;
 	align-items: center;
-	padding: 10px 18px;
+	padding: calc(10px * var(--br-scale)) calc(18px * var(--br-scale));
 	border-radius: 9999px;
 	background: var(--br-green);
 	color: #ffffff;
 	text-decoration: none;
-	font-size: 0.95rem;
+	font-size: calc(0.95rem * var(--br-scale));
 	font-weight: 700;
 	transition: background 0.2s ease;
 }
@@ -174,7 +210,7 @@
 	gap: 40px;
 	align-items: center;
 	align-content: center;
-	padding: 28px 0 48px;
+	padding: 12px 0 36px;
 	box-sizing: border-box;
 	min-height: 0;
 }
@@ -184,12 +220,16 @@
 	.hero {
 		grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
 		gap: clamp(40px, 5vw, 64px);
-		padding: clamp(12px, 2vh, 28px) 0 clamp(28px, 4vh, 56px);
+		/* Slight upward bias so the block reads centered under the nav. */
+		padding: 0 0 clamp(40px, 6vh, 72px);
 	}
 
 	.heroVisual {
 		align-self: center;
-		max-height: min(520px, calc(100svh - 180px));
+		max-height: min(
+			calc(520px * var(--br-scale)),
+			calc(100svh - 160px * var(--br-scale))
+		);
 	}
 
 	.heroVisual .productCard {
@@ -201,13 +241,29 @@
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	gap: 20px;
+	gap: calc(20px * var(--br-scale));
+}
+
+.heroIn {
+	animation: heroFadeUp 0.7s var(--sc-ease, ease) both;
+	animation-delay: var(--heroInDelay, 0ms);
+}
+
+@keyframes heroFadeUp {
+	from {
+		opacity: 0;
+		transform: translateY(16px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
 }
 
 .heroTitle {
 	margin: 0;
 	font-family: var(--br-font-serif);
-	font-size: clamp(2.4rem, 5.5vw, 3.75rem);
+	font-size: clamp(2.4rem, 5.5vw, calc(3.75rem * var(--br-scale)));
 	font-weight: 700;
 	line-height: 1.08;
 	letter-spacing: -0.025em;
@@ -217,7 +273,7 @@
 
 .heroLede {
 	margin: 0;
-	font-size: 1.125rem;
+	font-size: calc(1.125rem * var(--br-scale));
 	line-height: 1.55;
 	color: var(--br-muted);
 	max-width: 48ch;
@@ -234,21 +290,21 @@
 .heroCtas {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 12px;
-	margin-top: 8px;
+	gap: calc(12px * var(--br-scale));
+	margin-top: calc(8px * var(--br-scale));
 }
 
 .btnPrimary {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	padding: 14px 22px;
+	padding: calc(14px * var(--br-scale)) calc(22px * var(--br-scale));
 	border: none;
 	border-radius: 9999px;
 	background: var(--br-green);
 	color: #ffffff;
 	font: inherit;
-	font-size: 1rem;
+	font-size: calc(1rem * var(--br-scale));
 	font-weight: 700;
 	text-decoration: none;
 	cursor: pointer;
@@ -267,13 +323,13 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	padding: 14px 22px;
+	padding: calc(14px * var(--br-scale)) calc(22px * var(--br-scale));
 	border-radius: 9999px;
 	border: 1px solid var(--br-border-strong);
 	background: var(--br-elev);
 	color: var(--br-text);
 	font: inherit;
-	font-size: 1rem;
+	font-size: calc(1rem * var(--br-scale));
 	font-weight: 600;
 	text-decoration: none;
 	transition: background 0.2s ease, border-color 0.2s ease;
@@ -414,6 +470,13 @@
 	border: 1px solid var(--br-border);
 	border-radius: var(--br-radius);
 	box-shadow: 0 8px 24px rgba(20, 21, 26, 0.04);
+	transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.includedCard:hover {
+	border-color: var(--br-border-strong);
+	transform: translateY(-3px);
+	box-shadow: 0 14px 32px rgba(20, 21, 26, 0.08);
 }
 
 .includedIndex {
@@ -817,6 +880,37 @@
 		padding: 12px 0 0;
 	}
 
+	.section {
+		width: min(100% - 28px, var(--br-shell));
+		padding: 56px 0;
+	}
+
+	.sectionTitle {
+		font-size: clamp(1.65rem, 7vw, 2.1rem);
+	}
+
+	.sectionLede {
+		font-size: 0.98rem;
+	}
+
+	.programCard {
+		padding: 22px 0 20px;
+	}
+
+	.programTitle {
+		font-size: 1.4rem;
+	}
+
+	.programCta {
+		padding: 0 18px;
+	}
+
+	.programCta :is(button, a) {
+		width: 100%;
+		justify-content: center;
+		box-sizing: border-box;
+	}
+
 	.pillNav {
 		width: min(100% - 24px, var(--br-shell));
 		padding: 8px 10px 8px 14px;
@@ -899,10 +993,6 @@
 			0 0 0 1px rgba(20, 21, 26, 0.04);
 	}
 
-	.section {
-		padding: 56px 0;
-	}
-
 	.close {
 		padding: 48px 20px;
 	}
@@ -913,8 +1003,14 @@
 		animation: none;
 	}
 
-	.programCard {
+	.programCard,
+	.includedCard,
+	.pillNav {
 		transition: none;
+	}
+
+	.heroIn {
+		animation: none;
 	}
 }
 
