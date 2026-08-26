@@ -17,10 +17,10 @@ export default function SiteFooter() {
 
 				<div className={styles.footerLinks}>
 					<Link href="/pricing">Pricing</Link>
+					<Link href="/contact">Contact</Link>
 					<Link href="/terms">Terms</Link>
 					<Link href="/privacy">Privacy</Link>
 					<Link href="/refund">Refunds</Link>
-					<a href={`mailto:${LEGAL.supportEmail}`}>Contact</a>
 				</div>
 
 				<p className={styles.footerNote}>

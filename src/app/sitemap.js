@@ -12,6 +12,7 @@ const paths = [
 	{ path: '/privacy', priority: 0.5, changeFrequency: 'yearly' },
 	{ path: '/refund', priority: 0.5, changeFrequency: 'yearly' },
 	{ path: '/terms', priority: 0.5, changeFrequency: 'yearly' },
+	{ path: '/contact', priority: 0.6, changeFrequency: 'yearly' },
 ]
 
 export default function sitemap() {

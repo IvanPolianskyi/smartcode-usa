@@ -1,0 +1,52 @@
+.section {
+	padding-top: 2rem;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 1.25rem;
+	max-width: 960px;
+	margin: 0 auto;
+}
+
+.card {
+	background: var(--br-elev, #fff);
+	border: 1px solid var(--br-border, rgba(20, 21, 26, 0.08));
+	border-radius: 16px;
+	padding: 1.25rem 1.35rem;
+}
+
+.cardTitle {
+	margin: 0 0 0.75rem;
+	font-size: 1.05rem;
+}
+
+.card p {
+	margin: 0 0 0.55rem;
+	color: var(--br-muted, #5c6370);
+	font-size: 0.95rem;
+	line-height: 1.55;
+}
+
+.card a {
+	color: var(--br-text, #14151a);
+}
+
+.priceList,
+.linkList {
+	margin: 0.5rem 0 0;
+	padding-left: 1.15rem;
+	color: var(--br-muted, #5c6370);
+	font-size: 0.95rem;
+	line-height: 1.55;
+}
+
+.priceNote {
+	font-size: 0.9rem !important;
+}
+
+.mor {
+	margin-top: 0.75rem !important;
+	font-size: 0.85rem !important;
+}

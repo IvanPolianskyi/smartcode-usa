@@ -41,8 +41,9 @@ export default function ProgramPricingFlow({ programs }) {
 								{BILLING_TIERS.standard.monthlyPrice}
 							</span>
 							<span className={styles.cardPricePer}>
-								today · then {BILLING_TIERS.standard.monthlyPrice}/month after{' '}
-								{TRIAL} days
+								today · Standard from {BILLING_TIERS.standard.monthlyPrice}/mo ·
+								Premium from {BILLING_TIERS.premium.monthlyPrice}/mo after {TRIAL}{' '}
+								days
 							</span>
 						</p>
 						<div className={pageStyles.programCta}>

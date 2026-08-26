@@ -66,6 +66,9 @@ function MarketingActions({ ctaHref, ctaAsAnchor }) {
 			<Link href="/pricing" className={styles.quiet}>
 				Pricing
 			</Link>
+			<Link href="/contact" className={styles.quiet}>
+				Contact
+			</Link>
 			<HomeNavAuth />
 			{cta}
 		</>

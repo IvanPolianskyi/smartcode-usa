@@ -74,12 +74,28 @@ export function LegalDoc({
 				<div className={styles.footerInner}>
 					<span className={styles.footerBrand}>SmartCode</span>
 					<div className={styles.footerLinks}>
+						<Link href="/">Home</Link>
+						<Link href="/pricing">Pricing</Link>
+						<Link href="/contact">Contact</Link>
 						{DOCS.map((doc) => (
 							<Link key={doc.href} href={doc.href}>
 								{doc.label}
 							</Link>
 						))}
 					</div>
+					<p className={styles.footerNote}>
+						{LEGAL.legalName}, {LEGAL.legalForm} ·{' '}
+						<a href={`mailto:${LEGAL.supportEmail}`}>{LEGAL.supportEmail}</a>
+						{LEGAL.supportPhone ? (
+							<>
+								{' '}
+								·{' '}
+								<a href={`tel:${LEGAL.supportPhone.replace(/\s/g, '')}`}>
+									{LEGAL.supportPhone}
+								</a>
+							</>
+						) : null}
+					</p>
 					<p className={styles.footerNote}>
 						Payments by Paddle, our Merchant of Record.
 					</p>
