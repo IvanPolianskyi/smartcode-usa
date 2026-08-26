@@ -37,7 +37,7 @@ export const LEGAL = {
 		process.env.NEXT_PUBLIC_SUPPORT_EMAIL ||
 		process.env.NEXT_PUBLIC_MERCHANT_EMAIL ||
 		process.env.SUPPORT_EMAIL ||
-		'smartcodeacademy@gmail.com',
+		'smartcodeacadem@gmail.com',
 	supportPhone: process.env.NEXT_PUBLIC_SUPPORT_PHONE || '+380 96 957 67 23',
 	siteDomain: displaySiteHost(),
 	siteUrl: `https://${displaySiteHost()}`,

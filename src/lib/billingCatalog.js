@@ -143,6 +143,7 @@ function readPriceEntries() {
 			label: 'Roblox Studio',
 			tier: 'standard',
 			interval: 'month',
+			env: 'NEXT_PUBLIC_PADDLE_PRICE_ROBLOX_MONTHLY',
 			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ROBLOX_MONTHLY,
 		},
 		{
@@ -150,6 +151,7 @@ function readPriceEntries() {
 			label: 'Roblox Studio',
 			tier: 'standard',
 			interval: 'year',
+			env: 'NEXT_PUBLIC_PADDLE_PRICE_ROBLOX_ANNUAL',
 			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ROBLOX_ANNUAL,
 		},
 		{
@@ -157,6 +159,7 @@ function readPriceEntries() {
 			label: 'Roblox Studio',
 			tier: 'premium',
 			interval: 'month',
+			env: 'NEXT_PUBLIC_PADDLE_PRICE_ROBLOX_PREMIUM_MONTHLY',
 			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ROBLOX_PREMIUM_MONTHLY,
 		},
 		{
@@ -164,6 +167,7 @@ function readPriceEntries() {
 			label: 'Roblox Studio',
 			tier: 'premium',
 			interval: 'year',
+			env: 'NEXT_PUBLIC_PADDLE_PRICE_ROBLOX_PREMIUM_ANNUAL',
 			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ROBLOX_PREMIUM_ANNUAL,
 		},
 		{
@@ -171,6 +175,7 @@ function readPriceEntries() {
 			label: 'Python',
 			tier: 'standard',
 			interval: 'month',
+			env: 'NEXT_PUBLIC_PADDLE_PRICE_PYTHON_MONTHLY',
 			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_PYTHON_MONTHLY,
 		},
 		{
@@ -178,6 +183,7 @@ function readPriceEntries() {
 			label: 'Python',
 			tier: 'standard',
 			interval: 'year',
+			env: 'NEXT_PUBLIC_PADDLE_PRICE_PYTHON_ANNUAL',
 			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_PYTHON_ANNUAL,
 		},
 		{
@@ -185,6 +191,7 @@ function readPriceEntries() {
 			label: 'Python',
 			tier: 'premium',
 			interval: 'month',
+			env: 'NEXT_PUBLIC_PADDLE_PRICE_PYTHON_PREMIUM_MONTHLY',
 			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_PYTHON_PREMIUM_MONTHLY,
 		},
 		{
@@ -192,6 +199,7 @@ function readPriceEntries() {
 			label: 'Python',
 			tier: 'premium',
 			interval: 'year',
+			env: 'NEXT_PUBLIC_PADDLE_PRICE_PYTHON_PREMIUM_ANNUAL',
 			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_PYTHON_PREMIUM_ANNUAL,
 		},
 		{
@@ -199,6 +207,7 @@ function readPriceEntries() {
 			label: 'AI for Real Life',
 			tier: 'standard',
 			interval: 'month',
+			env: 'NEXT_PUBLIC_PADDLE_PRICE_AI_MONTHLY',
 			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_AI_MONTHLY,
 		},
 		{
@@ -206,6 +215,7 @@ function readPriceEntries() {
 			label: 'AI for Real Life',
 			tier: 'standard',
 			interval: 'year',
+			env: 'NEXT_PUBLIC_PADDLE_PRICE_AI_ANNUAL',
 			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_AI_ANNUAL,
 		},
 		{
@@ -213,6 +223,7 @@ function readPriceEntries() {
 			label: 'AI for Real Life',
 			tier: 'premium',
 			interval: 'month',
+			env: 'NEXT_PUBLIC_PADDLE_PRICE_AI_PREMIUM_MONTHLY',
 			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_AI_PREMIUM_MONTHLY,
 		},
 		{
@@ -220,6 +231,7 @@ function readPriceEntries() {
 			label: 'AI for Real Life',
 			tier: 'premium',
 			interval: 'year',
+			env: 'NEXT_PUBLIC_PADDLE_PRICE_AI_PREMIUM_ANNUAL',
 			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_AI_PREMIUM_ANNUAL,
 		},
 	]
@@ -264,6 +276,35 @@ function buildPriceMap() {
 
 function priceMap() {
 	return buildPriceMap()
+}
+
+/**
+ * Env var that supplies the price ID for one program x tier x interval.
+ * The provisioning and preflight scripts read this so the catalogue and the
+ * deployment config can never drift apart.
+ */
+export function priceEnvNameFor(courseId, interval = 'month', tier = 'standard') {
+	const tierId = normalizeTier(tier)
+	const wantInterval = normalizeInterval(interval)
+	const match = readPriceEntries().find(
+		(entry) =>
+			entry.courseId === courseId &&
+			entry.tier === tierId &&
+			entry.interval === wantInterval
+	)
+	return match ? match.env : null
+}
+
+/** Every program x tier x interval combination the catalogue expects to sell. */
+export function allPriceSlots() {
+	return readPriceEntries().map((entry) => ({
+		courseId: entry.courseId,
+		label: entry.label,
+		tier: entry.tier,
+		interval: entry.interval,
+		env: entry.env,
+		priceId: cleanId(entry.priceId),
+	}))
 }
 
 /** Course IDs unlocked by this Paddle price. Empty array if unknown. */

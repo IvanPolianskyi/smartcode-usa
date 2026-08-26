@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
 import { BookOpen, CheckCircle2, Play, Lock } from 'lucide-react'
@@ -46,6 +46,7 @@ export default function MyCoursesSection({ user, progressData, getCourseInfo }) 
 	const {
 		loading: billingLoading,
 		activating,
+		activationStalled,
 		error,
 		opening,
 		cancellingId,
@@ -56,11 +57,21 @@ export default function MyCoursesSection({ user, progressData, getCourseInfo }) 
 		status,
 	} = useBillingStatus()
 
+	// Billing is the newer truth right after checkout: the session was fetched
+	// before the webhook landed, so trust either source for the card state.
+	const entitledCourseIds = status?.courseIds || []
+	const isOwned = useCallback(
+		(courseId) =>
+			hasStudentCourseAccess(user, courseId) ||
+			entitledCourseIds.includes(courseId),
+		[user, entitledCourseIds]
+	)
+
 	const orderedCourseIds = useMemo(() => {
 		const owned = []
 		const locked = []
 		for (const id of DASHBOARD_COURSE_IDS) {
-			if (hasStudentCourseAccess(user, id)) owned.push(id)
+			if (isOwned(id)) owned.push(id)
 			else locked.push(id)
 		}
 		if (primaryCourseId && owned.includes(primaryCourseId)) {
@@ -71,12 +82,12 @@ export default function MyCoursesSection({ user, progressData, getCourseInfo }) 
 			]
 		}
 		return [...owned, ...locked]
-	}, [user, primaryCourseId])
+	}, [isOwned, primaryCourseId])
 
 	const hasAnySubscription = Boolean(status?.programs?.length)
 
 	const renderCourseCard = (courseId) => {
-		const owned = hasStudentCourseAccess(user, courseId)
+		const owned = isOwned(courseId)
 		const course = getCourseInfo(courseId)
 		const progress = owned ? progressData?.[courseId]?.overallProgress || 0 : 0
 		const href = COURSE_PATHS[courseId] || course.link
@@ -233,6 +244,12 @@ export default function MyCoursesSection({ user, progressData, getCourseInfo }) 
 
 			{activating ? (
 				<p className={styles.courseBillingNotice}>{t('activating')}</p>
+			) : null}
+
+			{activationStalled ? (
+				<p className={styles.courseBillingNotice} role="alert">
+					{t('activationStalled', { email: LEGAL.supportEmail })}
+				</p>
 			) : null}
 
 			{billingLoading && !status ? (

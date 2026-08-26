@@ -86,6 +86,7 @@ export function useBillingStatus() {
 	const [status, setStatus] = useState(null)
 	const [loading, setLoading] = useState(true)
 	const [activating, setActivating] = useState(checkoutSuccess)
+	const [activationStalled, setActivationStalled] = useState(false)
 	const [error, setError] = useState(null)
 	const [opening, setOpening] = useState(false)
 	const [cancellingId, setCancellingId] = useState(null)
@@ -102,6 +103,10 @@ export function useBillingStatus() {
 				setError(null)
 				if (poll && data?.hasSubscription && (data.courseIds || []).length > 0) {
 					setActivating(false)
+					// The session's subscribedCourseIds decide whether the course card
+					// unlocks. It was fetched before the webhook landed, so re-sync it -
+					// otherwise a paying customer sees "locked" until they reload.
+					window.dispatchEvent(new Event('auth:login'))
 					return true
 				}
 				return false
@@ -121,8 +126,13 @@ export function useBillingStatus() {
 			const poll = async () => {
 				attempts += 1
 				const ready = await load({ poll: true })
-				if (ready || attempts >= 12 || cancelled) {
+				if (cancelled) return
+				if (ready) return
+				if (attempts >= 12) {
+					// ~30s without a webhook. The payment is not lost - say so plainly
+					// instead of dropping the customer onto a silently locked dashboard.
 					setActivating(false)
+					setActivationStalled(true)
 					return
 				}
 				timer = setTimeout(poll, 2500)
@@ -197,6 +207,7 @@ export function useBillingStatus() {
 		status,
 		loading,
 		activating,
+		activationStalled,
 		error,
 		opening,
 		cancellingId,

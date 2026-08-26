@@ -10,6 +10,7 @@ import { LANDING_PROGRAMS } from '@/lib/landingPrograms'
 import { ALL_PROGRAM_COURSE_IDS } from '@/lib/courseIds'
 import { LEGAL } from '@/lib/legalConfig'
 import styles from '../../page.module.css'
+import SiteFooter from '@/components/Nav/SiteFooter'
 
 export function generateStaticParams() {
 	return ALL_PROGRAM_COURSE_IDS.map((courseId) => ({ courseId }))
@@ -62,19 +63,7 @@ export default async function PlanPage({ params }) {
 				</Suspense>
 			</section>
 
-			<footer className={styles.footer}>
-				<div className={styles.footerInner}>
-					<span className={styles.footerBrand}>SmartCode</span>
-					<div className={styles.footerLinks}>
-						<Link href="/terms">Terms</Link>
-						<Link href="/privacy">Privacy</Link>
-						<Link href="/refund">Refunds</Link>
-					</div>
-					<p className={styles.footerNote}>
-						Payments by Paddle, our Merchant of Record.
-					</p>
-				</div>
-			</footer>
+			<SiteFooter />
 		</div>
 	)
 }

@@ -90,8 +90,11 @@ function StartFlow() {
 
 			try {
 				const meResponse = await fetch('/api/auth/me', { credentials: 'include' })
-				if (!meResponse.ok) throw new Error('Could not check your account')
-				const me = await meResponse.json()
+				// A stale or missing session is the register path, not an error.
+				if (!meResponse.ok && meResponse.status !== 401 && meResponse.status !== 404) {
+					throw new Error('Could not check your account')
+				}
+				const me = meResponse.ok ? await meResponse.json() : null
 				const user = me?.user || null
 				if (!user?._id && !user?.id) {
 					if (!cancelled) {

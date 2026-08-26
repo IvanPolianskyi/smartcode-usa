@@ -2,11 +2,11 @@ import { Suspense } from 'react'
 import { setRequestLocale } from 'next-intl/server'
 import ProgramPricingFlow from '@/components/Billing/ProgramPricingFlow'
 import SiteHeader from '@/components/Nav/SiteHeader'
-import { Link } from '@/i18n/navigation'
 import { LANDING_PROGRAMS } from '@/lib/landingPrograms'
 import { BILLING_TIERS } from '@/lib/billingCatalog'
 import { LEGAL } from '@/lib/legalConfig'
 import styles from '../page.module.css'
+import SiteFooter from '@/components/Nav/SiteFooter'
 
 export default async function PricingPage({ params }) {
 	const { locale } = await params
@@ -36,19 +36,7 @@ export default async function PricingPage({ params }) {
 				</div>
 			</section>
 
-			<footer className={styles.footer}>
-				<div className={styles.footerInner}>
-					<span className={styles.footerBrand}>SmartCode</span>
-					<div className={styles.footerLinks}>
-						<Link href="/terms">Terms</Link>
-						<Link href="/privacy">Privacy</Link>
-						<Link href="/refund">Refunds</Link>
-					</div>
-					<p className={styles.footerNote}>
-						Payments handled by Paddle, our Merchant of Record.
-					</p>
-				</div>
-			</footer>
+			<SiteFooter />
 		</div>
 	)
 }

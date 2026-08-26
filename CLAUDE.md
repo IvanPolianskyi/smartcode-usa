@@ -42,13 +42,34 @@ on file presence, and see `git diff --stat` for the full pivot.
   each visit (see commit `f33af72`) — long-lived on purpose, LMS not a bank.
 
 ### Known gaps / open questions (do not guess on these — ask)
-1. **Paddle catalog not provisioned.** `.env.local` has `PADDLE_API_KEY`,
-   `PADDLE_WEBHOOK_SECRET`, `NEXT_PUBLIC_PADDLE_CLIENT_TOKEN` set, but **zero**
-   `NEXT_PUBLIC_PADDLE_PRICE_*` vars. Products/prices for each
-   program × tier (standard/premium) × interval (month/year) must be created
-   in the Paddle dashboard first — this needs the account owner, not just an
-   API key. Until then every checkout silently falls through to the dev-only
-   local grant in non-prod, and would hard-fail in prod.
+1. **Paddle is not connected anywhere yet — this is the launch blocker.**
+   - `.env.local` holds `test_paddle_*` *placeholders*, not real keys.
+   - Vercel **production has no Paddle variables at all** (`vercel env ls`
+     shows only Mongo/JWT/site/support vars). So on smartcode.academy today a
+     signed-in visitor cannot buy: there is no price ID, and the dev-only
+     local grant is blocked in prod.
+   - No `NEXT_PUBLIC_PADDLE_PRICE_*` exists in either environment.
+
+   The catalogue itself no longer has to be built by hand:
+
+   ```bash
+   npm run paddle:provision -- --dry-run   # show the plan
+   npm run paddle:provision                # create 6 products + 12 prices
+   npm run paddle:doctor                   # verify env, prices, trial, webhook
+   ```
+
+   `paddle-provision.mjs` is idempotent (tags everything with
+   `custom_data.smartcode_key`), reads every number from `billingCatalog.js` /
+   `legalConfig.js`, sets the advertised `trialDays` trial on each price, and
+   prints the exact env block to paste into `.env.local` and Vercel.
+   `paddle-doctor.mjs` fails loudly on anything that would stop a payment from
+   granting access — mismatched sandbox/live env, a price without the
+   advertised trial, a missing webhook destination or unsubscribed event.
+
+   Still owner-only (cannot be scripted): a real API key + client token +
+   notification secret, approving `smartcode.academy` as a Paddle.js domain,
+   and creating the webhook destination pointing at
+   `https://smartcode.academy/api/billing/webhook`.
 2. ~~Admin panel removed, not replaced.~~ Rebuilt 2026-08-26, scoped to the
    new model: `/admin` (student list + search + subscription counts) and
    `/admin/students/[studentId]` (subscription history, manual grant/revoke).
@@ -83,8 +104,15 @@ npm run dev      # next dev --turbopack
 npm run build    # next build
 npm run start    # next start (production)
 npm run lint
-node --test src/lib/paddle.test.mjs   # only real automated test today
+npm test         # node --test src/lib/paddle.test.mjs (the only automated test)
+npm run paddle:provision   # create/repair the Paddle catalogue (add --dry-run / --fix)
+npm run paddle:doctor      # preflight: env, prices, trial, webhook destination
 ```
+
+`npm run lint` is broken (Next 16 removed `next lint`, and the flat ESLint
+config throws a circular-structure error). Verification is `npm run build`.
+Do not run `npm run build` while `next dev` is up — it overwrites `.next` and
+the dev server starts 500ing until restarted.
 
 No CI config in-repo. Verify manually: `npm run build`, then click through
 `/pricing` → `/start?course=<id>` → checkout in the browser preview.

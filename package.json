@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "node --test src/lib/paddle.test.mjs",
+    "paddle:provision": "node scripts/paddle-provision.mjs",
+    "paddle:doctor": "node scripts/paddle-doctor.mjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

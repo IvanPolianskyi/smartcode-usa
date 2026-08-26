@@ -139,6 +139,7 @@
       "updatePayment": "Update payment method",
       "portalOpening": "Opening…",
       "activating": "Payment received - activating your access. This usually takes a few seconds…",
+      "activationStalled": "Payment received. Your access is taking longer than usual to switch on - refresh this page in a minute, or email {email} and we will sort it out straight away.",
       "billingLoading": "Loading subscription details…",
       "pricingBlurb": "Standard $14/mo (platform + Discord) or Premium $20/mo (adds 2 live lessons). {days}-day free trial on each.",
       "seePricing": "Or see all options on the",

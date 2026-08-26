@@ -6,7 +6,7 @@ import { Check } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
 import { BILLING_TIERS, annualSaving } from '@/lib/billingCatalog'
 import { LEGAL } from '@/lib/legalConfig'
-import { startPath } from '@/lib/startCheckout'
+import CheckoutButton from './CheckoutButton'
 import styles from './ProgramPricingFlow.module.css'
 
 const TRIAL = LEGAL.trialDays
@@ -116,14 +116,23 @@ export default function PlanPicker({ courseId }) {
 								))}
 							</ul>
 
-							<Link
-								href={startPath({ courseId, plan: billing, tier: tierId })}
-								className={styles.tierCta}
-								data-variant={isSelected ? 'primary' : 'ghost'}
+							{/* Opens Paddle in place for signed-in visitors; guests are sent
+							    to /start to make an account and resume here. One click
+							    fewer than routing everyone through /start. */}
+							<div
+								className={styles.tierCtaWrap}
 								onClick={(event) => event.stopPropagation()}
 							>
-								Start {TRIAL} days free
-							</Link>
+								<CheckoutButton
+									courseId={courseId}
+									plan={billing}
+									tier={tierId}
+									className={styles.tierCta}
+									variant={isSelected ? 'primary' : 'ghost'}
+								>
+									Start {TRIAL} days free
+								</CheckoutButton>
+							</div>
 						</div>
 					)
 				})}

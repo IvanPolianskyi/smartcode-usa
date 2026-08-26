@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getEntitlement } from '@/lib/entitlements'
-import { getCurrentUser, issueAuthSession } from '@/lib/auth'
+import { getCurrentUser, issueAuthSession, removeAuthCookie } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { getStudentAccessibleCourseIds, KNOWN_COURSE_IDS, buildCourseDripStartedAt } from '@/lib/courseLessonAccess'
@@ -26,11 +26,12 @@ export async function GET() {
     const usersCollection = await getCollection('users')
     let user = await usersCollection.findOne({ _id: new ObjectId(userId) })
 
+    // A valid token for an account that no longer exists is not an error the
+    // caller can act on - it is a stale cookie. Clear it and answer "guest",
+    // otherwise checkout and the dashboard stay stuck on an unrecoverable 404.
     if (!user) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      )
+      await removeAuthCookie().catch(() => {})
+      return NextResponse.json({ user: null }, { status: 200 })
     }
 
     const profileAfterSync = user.studentProfile || {}

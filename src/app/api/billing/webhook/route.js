@@ -10,6 +10,7 @@ import {
 import { ensureBillingIndexes } from '@/lib/entitlements'
 import { courseIdsForPriceId, tierForPriceId } from '@/lib/billingCatalog'
 import { isKnownCourseId } from '@/lib/courseLessonAccess'
+import { SUBSCRIPTION_EVENT_TYPES } from '@/lib/paddleEvents'
 
 /**
  * Paddle webhook - the only thing in the app that may grant or revoke access.
@@ -22,16 +23,7 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 /** Subscription lifecycle events we act on. Anything else is acknowledged and ignored. */
-const SUBSCRIPTION_EVENTS = new Set([
-	'subscription.created',
-	'subscription.activated',
-	'subscription.updated',
-	'subscription.trialing',
-	'subscription.past_due',
-	'subscription.paused',
-	'subscription.resumed',
-	'subscription.canceled',
-])
+const SUBSCRIPTION_EVENTS = new Set(SUBSCRIPTION_EVENT_TYPES)
 
 function toObjectId(value) {
 	if (!value) return null
@@ -88,6 +80,9 @@ export async function POST(request) {
 		return NextResponse.json({ error: 'missing event fields' }, { status: 400 })
 	}
 
+	// Released if processing fails, so Paddle's retry is not swallowed as a duplicate.
+	let claimedEventId = null
+
 	try {
 		await ensureBillingIndexes()
 
@@ -96,6 +91,7 @@ export async function POST(request) {
 		const events = await getCollection('paddleWebhookEvents')
 		try {
 			await events.insertOne({ eventId, eventType, receivedAt: new Date() })
+			claimedEventId = eventId
 		} catch (error) {
 			if (error?.code === 11000) {
 				return NextResponse.json({ ok: true, duplicate: true })
@@ -175,6 +171,16 @@ export async function POST(request) {
 	} catch (error) {
 		console.error('[paddle] webhook error:', error)
 		// 500 makes Paddle retry, which is what we want for a transient failure.
+		// The dedupe row was claimed before processing, so release it - otherwise
+		// the retry matches the unique index and the event is dropped for good.
+		if (claimedEventId) {
+			try {
+				const events = await getCollection('paddleWebhookEvents')
+				await events.deleteOne({ eventId: claimedEventId })
+			} catch (cleanupError) {
+				console.error('[paddle] could not release event id:', cleanupError)
+			}
+		}
 		return NextResponse.json({ error: 'processing failed' }, { status: 500 })
 	}
 }

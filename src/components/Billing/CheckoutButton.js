@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation'
 import {
 	normalizePlan,
 	normalizeTier,
+	registerPath,
 	runAuthenticatedCheckout,
-	startPath,
 } from '@/lib/startCheckout'
 
 const PADDLE_SCRIPT = 'https://cdn.paddle.com/paddle/v2/paddle.js'
@@ -61,6 +61,7 @@ export default function CheckoutButton({
 	plan = 'monthly',
 	tier = 'standard',
 	className = 'sc-btn sc-btn-primary sc-btn-lg',
+	variant,
 	children,
 	autoStart = false,
 }) {
@@ -86,19 +87,20 @@ export default function CheckoutButton({
 
 			const planLabel = normalizePlan(plan)
 			const planTier = normalizeTier(tier)
-			const gate = startPath({
-				courseId,
-				plan: planLabel,
-				tier: planTier,
-			})
 
 			const meResponse = await fetch('/api/auth/me', { credentials: 'include' })
-			if (!meResponse.ok) throw new Error('Could not check your account')
+			// 401/404 mean "no usable session", not "something broke" - fall through
+			// to the account step rather than dead-ending someone trying to pay.
+			if (!meResponse.ok && meResponse.status !== 401 && meResponse.status !== 404) {
+				throw new Error('Could not check your account')
+			}
 
-			const me = await meResponse.json()
+			const me = meResponse.ok ? await meResponse.json() : null
 			const user = me?.user || null
 			if (!user?._id && !user?.id) {
-				router.push(gate)
+				// We already know they are signed out - send them straight to the
+				// account step instead of bouncing through /start to learn it again.
+				router.push(registerPath({ courseId, plan: planLabel, tier: planTier }))
 				return
 			}
 
@@ -142,6 +144,7 @@ export default function CheckoutButton({
 			<button
 				type="button"
 				className={className}
+				data-variant={variant}
 				onClick={openCheckout}
 				disabled={busy}
 			>

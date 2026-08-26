@@ -8,6 +8,7 @@ import { register } from '@/lib/authClient'
 import StickyNav from '@/components/Nav/StickyNav'
 import { Link } from '@/i18n/navigation'
 import { LEGAL } from '@/lib/legalConfig'
+import { programForCourseId } from '@/lib/billingCatalog'
 import styles from '../login/Auth.module.css'
 
 const PERKS = [
@@ -76,6 +77,19 @@ function RegisterForm() {
 		}
 	}, [searchParams])
 
+	/**
+	 * The program the visitor already chose, carried in the resume redirect.
+	 * Naming it here keeps the purchase visible across the account step instead
+	 * of telling someone who just picked Roblox that they pick a program next.
+	 */
+	const chosenProgram = useMemo(() => {
+		const redirect = searchParams.get('redirect') || ''
+		const courseId = redirect.includes('course=')
+			? decodeURIComponent(redirect.split('course=')[1].split('&')[0])
+			: ''
+		return courseId ? programForCourseId(courseId) : null
+	}, [searchParams])
+
 	const banner = useMemo(() => {
 		if (
 			searchParams.get('needAccount') === '1' ||
@@ -83,11 +97,13 @@ function RegisterForm() {
 		) {
 			return {
 				kind: 'info',
-				text: `One quick step - create your account and your ${LEGAL.trialDays} free days start right after.`,
+				text: chosenProgram
+					? `One quick step - create your account and your ${LEGAL.trialDays} free days of ${chosenProgram.label} start right after.`
+					: `One quick step - create your account and your ${LEGAL.trialDays} free days start right after.`,
 			}
 		}
 		return null
-	}, [searchParams])
+	}, [searchParams, chosenProgram])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
@@ -135,11 +151,16 @@ function RegisterForm() {
 			<p className={styles.label}>Account</p>
 			<h1 className={styles.title}>Create account</h1>
 			<p className={styles.lede}>
-				Free to join. You pick a program next - nothing is charged today.
+				{chosenProgram
+					? `Free to join. Next step is checkout for ${chosenProgram.label} - nothing is charged today.`
+					: 'Free to join. You pick a program next - nothing is charged today.'}
 			</p>
 
 			<div className={styles.programRowCompact} aria-label="Programs">
-				{PROGRAMS.map((p) => (
+				{(chosenProgram
+					? PROGRAMS.filter((p) => p.label === chosenProgram.label)
+					: PROGRAMS
+				).map((p) => (
 					<span key={p.label} className={styles.programPill} data-tone={p.tone}>
 						<span className={styles.programDot} />
 						{p.label}

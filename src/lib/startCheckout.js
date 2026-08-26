@@ -3,6 +3,7 @@
  */
 
 import { priceIdFor } from '@/lib/billingCatalog'
+import { LEGAL } from '@/lib/legalConfig'
 
 /** Plan-picker page for one program - step 2 of the purchase. */
 export function planPath(courseId, plan = null) {
@@ -18,6 +19,16 @@ export function startPath({ courseId, plan = 'monthly', tier = 'standard' }) {
 	if (tier) params.set('tier', tier)
 	const qs = params.toString()
 	return qs ? `/start?${qs}` : '/start'
+}
+
+/**
+ * Where a signed-out visitor goes to buy: make an account, then resume at
+ * /start, which opens Paddle. Skipping the /start round trip on the way in
+ * saves a full page load and a spinner flash.
+ */
+export function registerPath({ courseId, plan = 'monthly', tier = 'standard' }) {
+	const resume = startPath({ courseId, plan, tier })
+	return `/register?needAccount=1&redirect=${encodeURIComponent(resume)}`
 }
 
 export function normalizePlan(plan) {
@@ -65,6 +76,16 @@ export async function runAuthenticatedCheckout({
 	}
 
 	if (!priceId) {
+		// No Paddle price configured for this plan. In production that is a
+		// deployment gap, not something the visitor did - say so and give them a
+		// way to buy anyway, instead of a 404 from the dev-only grant route.
+		if (process.env.NODE_ENV === 'production') {
+			return {
+				action: 'error',
+				message: `Checkout for this plan is not available right now. Email ${LEGAL.supportEmail} and we will get you started today.`,
+			}
+		}
+
 		const grant = await fetch('/api/billing/local-grant', {
 			method: 'POST',
 			credentials: 'include',
