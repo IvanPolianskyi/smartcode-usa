@@ -64,12 +64,26 @@ function StartFlow() {
 				}
 
 				if (!cancelled) setPhase('checkout')
+
+				let paddleCustomerId = null
+				try {
+					const billing = await fetch('/api/billing/status', { credentials: 'include' })
+					if (billing.ok) {
+						const status = await billing.json()
+						if (status?.paddleCustomerId?.startsWith?.('ctm_')) {
+							paddleCustomerId = status.paddleCustomerId
+						}
+					}
+				} catch {
+					// Retain is best-effort
+				}
+
 				const result = await runAuthenticatedCheckout({
 					courseId,
 					plan,
 					tier,
 					user,
-					loadPaddle,
+					loadPaddle: () => loadPaddle({ paddleCustomerId }),
 				})
 				if (cancelled) return
 

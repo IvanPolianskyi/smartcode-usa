@@ -59,12 +59,25 @@ export default function CheckoutButton({
 				return
 			}
 
+			let paddleCustomerId = null
+			try {
+				const billing = await fetch('/api/billing/status', { credentials: 'include' })
+				if (billing.ok) {
+					const status = await billing.json()
+					if (status?.paddleCustomerId?.startsWith?.('ctm_')) {
+						paddleCustomerId = status.paddleCustomerId
+					}
+				}
+			} catch {
+				// Retain is best-effort — checkout still works without it.
+			}
+
 			const result = await runAuthenticatedCheckout({
 				courseId,
 				plan: planLabel,
 				tier: planTier,
 				user,
-				loadPaddle,
+				loadPaddle: () => loadPaddle({ paddleCustomerId }),
 			})
 
 			if (result.action === 'dashboard' && result.path) {

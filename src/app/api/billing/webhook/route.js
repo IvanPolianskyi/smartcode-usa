@@ -7,6 +7,7 @@ import {
 	readUserIdFromCustomData,
 	readCourseIdFromCustomData,
 } from '@/lib/paddle'
+import { assertPaddleWebhookIp } from '@/lib/paddleIps'
 import { ensureBillingIndexes } from '@/lib/entitlements'
 import { courseIdsForPriceId, tierForPriceId } from '@/lib/billingCatalog'
 import { isKnownCourseId } from '@/lib/courseLessonAccess'
@@ -55,6 +56,12 @@ async function resolveUserId(normalized) {
 }
 
 export async function POST(request) {
+	const ipCheck = await assertPaddleWebhookIp(request)
+	if (!ipCheck.ok) {
+		console.warn('[paddle] rejected webhook by IP:', ipCheck.reason, ipCheck.ip || '')
+		return NextResponse.json({ error: 'forbidden' }, { status: 403 })
+	}
+
 	// Signature is computed over the exact bytes Paddle sent. Reading JSON first
 	// and re-serialising would change them and break verification.
 	const rawBody = await request.text()

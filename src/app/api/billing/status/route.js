@@ -24,6 +24,9 @@ export async function GET() {
 		const canManageBilling = rows.some((row) =>
 			isPaddleManagedCustomerId(row.paddleCustomerId)
 		)
+		const paddleCustomerId =
+			rows.find((row) => isPaddleManagedCustomerId(row.paddleCustomerId))
+				?.paddleCustomerId || null
 		const programs = (entitlement.subscriptions || []).map((sub) => {
 			const row = rowBySubId.get(sub.paddleSubscriptionId)
 			const cancellableStatus =
@@ -65,6 +68,8 @@ export async function GET() {
 			billingInterval: programs[0]?.billingInterval || null,
 			hasSubscription: programs.length > 0,
 			canManageBilling,
+			/** Paddle customer id (`ctm_…`) for Retain / pwCustomer — never an email. */
+			paddleCustomerId,
 			programs,
 		})
 	} catch (error) {

@@ -6,14 +6,33 @@
 import { initializePaddle } from '@paddle/paddle-js'
 
 let paddlePromise = null
+/** @type {string | null} */
+let paddlePwCustomerId = null
 
 /**
  * Initialise Paddle.js once per page load.
  * Fails loudly if the public env vars are missing — never silently defaults.
+ *
+ * @param {{ paddleCustomerId?: string | null }} [options]
+ *   When the signed-in user already has a Paddle customer id (`ctm_…`), pass it
+ *   so Retain (`pwCustomer`) can recover payments. Never pass email or our
+ *   internal Mongo user id here.
  */
-export function loadPaddle() {
+export function loadPaddle(options = {}) {
 	if (typeof window === 'undefined') {
 		return Promise.reject(new Error('Paddle is browser-only'))
+	}
+
+	const nextPw =
+		options.paddleCustomerId &&
+		String(options.paddleCustomerId).startsWith('ctm_')
+			? String(options.paddleCustomerId)
+			: null
+
+	// Re-init if we later learn the Retain customer id (first call had none).
+	if (paddlePromise && nextPw && nextPw !== paddlePwCustomerId) {
+		paddlePromise = null
+		paddlePwCustomerId = null
 	}
 
 	if (paddlePromise) return paddlePromise
@@ -43,13 +62,23 @@ export function loadPaddle() {
 		return paddlePromise
 	}
 
-	paddlePromise = initializePaddle({ token, environment }).then((paddle) => {
+	paddlePwCustomerId = nextPw
+	const init = {
+		token,
+		environment,
+	}
+	if (nextPw) {
+		init.pwCustomer = { id: nextPw }
+	}
+
+	paddlePromise = initializePaddle(init).then((paddle) => {
 		if (!paddle) throw new Error('Paddle failed to initialise')
 		return paddle
 	})
 
 	paddlePromise.catch(() => {
 		paddlePromise = null
+		paddlePwCustomerId = null
 	})
 
 	return paddlePromise
