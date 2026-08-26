@@ -19,10 +19,11 @@ async function connectToMongo() {
   const client = new MongoClient(mongoUri, {
     maxPoolSize: 10,
     minPoolSize: 1,
-    // Keep API responses snappy when Atlas/DNS is unavailable.
-    serverSelectionTimeoutMS: 3000,
-    connectTimeoutMS: 3000,
-    socketTimeoutMS: 10000,
+    // Atlas needs room for SRV lookup + TLS handshake on a cold connection;
+    // 3s was tuned for a local mongod and times out against a shared cluster.
+    serverSelectionTimeoutMS: 10000,
+    connectTimeoutMS: 10000,
+    socketTimeoutMS: 20000,
     // Prefer IPv4 first to reduce SRV DNS issues on some networks.
     family: 4,
   })
