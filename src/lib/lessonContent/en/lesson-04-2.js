@@ -27,7 +27,7 @@ export const lesson_04_2 = {
     sections: [
       {
         title: "Instance attributes vs class attributes",
-        content: `In the previous lesson we stored data with \`self.name\` — these are **instance attributes**. They belong to a **specific** object.
+        content: `In the previous lesson we stored data with \`self.name\` - these are **instance attributes**. They belong to a **specific** object.
 
 **Class attributes** are declared directly in the class body (outside \`__init__\`). They are **shared** by all instances.
 
@@ -60,7 +60,7 @@ print(Dog.species)    # Canis familiaris
 
 \`\`\`python
 class Team:
-    members = []  # DANGEROUS — shared list!
+    members = []  # DANGEROUS - shared list!
 
     def __init__(self, name):
         self.name = name
@@ -71,7 +71,7 @@ class Team:
 t1 = Team("A")
 t2 = Team("B")
 t1.add("Olya")
-print(t2.members)  # ['Olya'] — surprise!
+print(t2.members)  # ['Olya'] - surprise!
 \`\`\`
 
 Better keep lists as **instance attributes**: \`self.members = []\` in \`__init__\`.`
@@ -107,7 +107,7 @@ print(account.get_balance())  # 1300
 **Good practices:**
 
 1. Name methods with verbs: \`deposit\`, \`calculate_total\`, \`reset\`
-2. One method — one clear action
+2. One method - one clear action
 3. Change state through methods, not “from the outside at random” (though Python allows it)
 
 \`\`\`python
@@ -170,9 +170,9 @@ class Demo:
     value = 10
 
 d = Demo()
-print(d.value)   # 10 — reads the class attribute
+print(d.value)   # 10 - reads the class attribute
 d.value = 99     # creates an INSTANCE attribute!
-print(Demo.value)  # 10 — class attribute unchanged
+print(Demo.value)  # 10 - class attribute unchanged
 print(d.value)     # 99
 \`\`\`
 
@@ -182,7 +182,7 @@ To change the class attribute itself, write through the class name: \`Demo.value
         title: "Briefly: @classmethod and @staticmethod",
         content: `Besides instance methods, Python has two more types. At this stage it is enough to **understand the idea**; the main focus stays on instance methods.
 
-**\`@classmethod\`** — receives the class (\`cls\`), not an instance. Often used as alternative constructors.
+**\`@classmethod\`** - receives the class (\`cls\`), not an instance. Often used as alternative constructors.
 
 \`\`\`python
 class Person:
@@ -199,7 +199,7 @@ p = Person.from_birth_year("Elena", 2000)
 print(p.age)  # 26
 \`\`\`
 
-**\`@staticmethod\`** — a regular function inside a class **without** \`self\` or \`cls\`. Logically related to the class, but does not use its state.
+**\`@staticmethod\`** - a regular function inside a class **without** \`self\` or \`cls\`. Logically related to the class, but does not use its state.
 
 \`\`\`python
 class MathHelper:
@@ -248,9 +248,9 @@ print(Product.store_name)
 \`\`\`
 
 Here:
-- \`store_name\`, \`tax_rate\` — shared by all products
-- \`title\`, \`price\` — unique for each
-- \`price_with_tax\`, \`label\` — instance methods
+- \`store_name\`, \`tax_rate\` - shared by all products
+- \`title\`, \`price\` - unique for each
+- \`price_with_tax\`, \`label\` - instance methods
 
 This split makes the code cleaner and clearer.`
       }
@@ -347,7 +347,7 @@ t.show()`,
       correctApproach: `Demo.value = 20  # change the class attribute
 # or
 d = Demo()
-# reading d.value is OK; to change the class one — use Demo.value`
+# reading d.value is OK; to change the class one - use Demo.value`
     },
     {
       mistake: "Calling an instance method without an object",
@@ -364,13 +364,13 @@ account.deposit(50)  # correct`
 
   summary: `In this lesson we learned:
 
-1. Instance attributes — unique data for each object
-2. Class attributes — shared by all instances
-3. Instance methods — the main way to work with state
+1. Instance attributes - unique data for each object
+2. Class attributes - shared by all instances
+3. Instance methods - the main way to work with state
 4. Be careful with mutable class attributes (lists, dicts)
 5. Briefly: @classmethod and @staticmethod
 
-Next — encapsulation and controlling access to data.`,
+Next - encapsulation and controlling access to data.`,
 
   practiceTask: {
     title: "Bank account",
@@ -379,9 +379,9 @@ Next — encapsulation and controlling access to data.`,
 1. Declares a BankAccount class with class attribute bank_name = "SmartBank"
 2. Constructor __init__(self, owner, balance) stores the owner and balance
 3. Methods:
-   - deposit(self, amount) — adds amount to the balance
-   - withdraw(self, amount) — subtracts amount from the balance (no checks for this task)
-   - status(self) — prints: {bank_name} | {owner}: {balance}
+   - deposit(self, amount) - adds amount to the balance
+   - withdraw(self, amount) - subtracts amount from the balance (no checks for this task)
+   - status(self) - prints: {bank_name} | {owner}: {balance}
 4. Reads from stdin: owner, starting balance, deposit amount, withdraw amount
 5. Prints status() after creation, after deposit, and after withdraw
 
@@ -527,7 +527,7 @@ account.status()`,
           "There is no problem"
         ],
         correctAnswer: 0,
-        explanation: "A mutable class attribute is shared between objects — better use self.items = [] in __init__."
+        explanation: "A mutable class attribute is shared between objects - better use self.items = [] in __init__."
       },
       {
         id: "q6",

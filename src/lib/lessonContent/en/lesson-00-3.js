@@ -144,10 +144,10 @@ print('grape' in fruits)  # False
       {
         title: "Basic list methods",
         content: `If you are familiar with other programming languages, you can draw a parallel between arrays in those languages and lists in Python. However, Python lists are more flexible for two reasons:
-1. **No fixed size** — you do not need to specify how large the list will be
-2. **No type restrictions** — you can store different data types
+1. **No fixed size** - you do not need to specify how large the list will be
+2. **No type restrictions** - you can store different data types
 
-**append() — add an element to the end:**
+**append() - add an element to the end:**
 \`\`\`python
 my_list = [1, 2, 3]
 my_list.append(4)
@@ -157,7 +157,7 @@ my_list.append('five')
 print(my_list)  # [1, 2, 3, 4, 'five']
 \`\`\`
 
-**pop() — remove and return an element:**
+**pop() - remove and return an element:**
 \`\`\`python
 my_list = [1, 2, 3, 4, 5]
 
@@ -172,21 +172,21 @@ print(second)  # 2
 print(my_list)  # [1, 3, 4]
 \`\`\`
 
-**remove() — remove by value:**
+**remove() - remove by value:**
 \`\`\`python
 my_list = ['apple', 'banana', 'orange']
 my_list.remove('banana')
 print(my_list)  # ['apple', 'orange']
 \`\`\`
 
-**insert() — insert an element at a position:**
+**insert() - insert an element at a position:**
 \`\`\`python
 my_list = [1, 2, 4]
 my_list.insert(2, 3)  # Insert 3 at position 2
 print(my_list)  # [1, 2, 3, 4]
 \`\`\`
 
-**sort() — sort the list:**
+**sort() - sort the list:**
 \`\`\`python
 numbers = [3, 1, 4, 1, 5, 9, 2]
 numbers.sort()
@@ -197,21 +197,21 @@ words.sort()
 print(words)  # ['apple', 'banana', 'orange']
 \`\`\`
 
-**reverse() — reverse the order:**
+**reverse() - reverse the order:**
 \`\`\`python
 my_list = [1, 2, 3, 4, 5]
 my_list.reverse()
 print(my_list)  # [5, 4, 3, 2, 1]
 \`\`\`
 
-**index() — find an element's index:**
+**index() - find an element's index:**
 \`\`\`python
 my_list = ['apple', 'banana', 'orange']
 index = my_list.index('banana')
 print(index)  # 1
 \`\`\`
 
-**count() — count how many times an element appears:**
+**count() - count how many times an element appears:**
 \`\`\`python
 my_list = [1, 2, 2, 3, 2, 4]
 count = my_list.count(2)
@@ -253,7 +253,7 @@ print(matrix[0][0])  # 1
 print(matrix[2][1])  # 8
 \`\`\`
 
-**Practical example — grade table:**
+**Practical example - grade table:**
 \`\`\`python
 # Student grade table
 grades = [
@@ -387,12 +387,12 @@ print("First column:", column)`,
   
   summary: `In this lesson we learned:
 
-1. Creating lists — using square brackets []
-2. Indexing and slicing — accessing elements by index
-3. List methods — append(), pop(), remove(), insert(), sort(), reverse()
-4. Nested lists — lists inside lists for creating matrices
+1. Creating lists - using square brackets []
+2. Indexing and slicing - accessing elements by index
+3. List methods - append(), pop(), remove(), insert(), sort(), reverse()
+4. Nested lists - lists inside lists for creating matrices
 
-Lists are one of the most important data structures in Python! Next lesson — dictionaries.`,
+Lists are one of the most important data structures in Python! Next lesson - dictionaries.`,
   
   practiceTask: {
     title: "Shopping list management system",

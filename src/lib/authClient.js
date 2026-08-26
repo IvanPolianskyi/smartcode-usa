@@ -159,7 +159,7 @@ export async function enrollInCourse(courseId) {
 
 export async function checkCoursePurchase(courseId) {
   try {
-    // Online purchase flow removed — treat access as not purchased via payment API.
+    // Online purchase flow removed - treat access as not purchased via payment API.
     void courseId
     return false
   } catch (error) {

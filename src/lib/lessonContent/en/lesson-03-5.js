@@ -56,7 +56,7 @@ result = text.upper()  # upper() is a string method
 
 - Methods work with a specific object
 - Different types of objects have different methods
-- Methods can modify the object or return a new value`
+- Methods can modify an object or return a new value`
       },
       {
         title: "String Methods",
@@ -73,12 +73,12 @@ result = text.upper()  # "HELLO, WORLD!"
 2. **\`lower()\`** - converts a string to lowercase
 \`\`\`python
 text = "HELLO, WORLD!"
-result = text.lower()  # "Hello, world!"
+result = text.lower()  # "hello, world!"
 \`\`\`
 
 3. **\`capitalize()\`** - makes the first letter uppercase
 \`\`\`python
-text = "Hello, world!"
+text = "hello, world!"
 result = text.capitalize()  # "Hello, world!"
 \`\`\`
 
@@ -106,7 +106,7 @@ text = "Hello, world, Python"
 result = text.split(", ")  # ["Hello", "world", "Python"]
 \`\`\`
 
-8. **\`join(iterable)\`** - combines list elements into a string
+8. **\`join(iterable)\`** - combines list items into a row
 \`\`\`python
 words = ["Hello", "world", "Python"]
 result = ", ".join(words)  # "Hello, world, Python"
@@ -122,7 +122,7 @@ position = text.find("Python")  # -1 (not found)
 10. **\`count(substring)\`** - counts the number of substring occurrences
 \`\`\`python
 text = "Hello, hello, world!"
-count = text.count("hello")  # 2
+count = text.count("Hello")  # 2
 \`\`\`
 
 **Important:** String methods do not change the original string, they return a new one!
@@ -153,7 +153,7 @@ numbers = [1, 2, 3]
 numbers.insert(1, 10)  # [1, 10, 2, 3]
 \`\`\`
 
-3. **\`remove(item)\`** - deletes the first occurrence of the element
+3. **\`remove(item)\`** - removes the first occurrence of an element
 \`\`\`python
 numbers = [1, 2, 3, 2]
 numbers.remove(2)  # [1, 3, 2] (first occurrence removed)
@@ -196,7 +196,7 @@ numbers = [1, 2, 3, 4]
 numbers.reverse()  # [4, 3, 2, 1] (the original list has changed)
 \`\`\`
 
-**Important:** Some list methods change the original list (append, insert, remove, pop, sort, reverse), while others return a new value (count, index).`
+**Important:** Some list methods modify the original list (append, insert, remove, pop, sort, reverse), while others return a new value (count, index).`
       },
       {
         title: "Dictionary Methods",
@@ -206,7 +206,7 @@ numbers.reverse()  # [4, 3, 2, 1] (the original list has changed)
 
 1. **\`keys()\`** - returns all keys
 \`\`\`python
-person = {"name": "Alexander", "age": 20, "city": "Kyiv"}
+person = {"name": "Oleksandr", "age": 20, "city": "Kyiv"}
 keys = person.keys()  # dict_keys(['name', 'age', 'city'])
 # It can be converted into a list:
 keys_list = list(person.keys())  # ['name', 'age', 'city']
@@ -214,62 +214,62 @@ keys_list = list(person.keys())  # ['name', 'age', 'city']
 
 2. **\`values()\`** - returns all values
 \`\`\`python
-person = {"name": "Alexander", "age": 20, "city": "Kyiv"}
-values = person.values()  # dict_values(['Alexander', 20, 'Kyiv'])
+person = {"name": "Oleksandr", "age": 20, "city": "Kyiv"}
+values = person.values()  # dict_values(['Oleksandr', 20, 'Kyiv'])
 \`\`\`
 
 3. **\`items()\`** - returns key-value pairs
 \`\`\`python
-person = {"name": "Alexander", "age": 20, "city": "Kyiv"}
-items = person.items()  # dict_items([('name', 'Alexander'), ('age', 20), ('city', 'Kyiv')])
+person = {"name": "Oleksandr", "age": 20, "city": "Kyiv"}
+items = person.items()  # dict_items([('name', 'Oleksandr'), ('age', 20), ('city', 'Kyiv')])
 \`\`\`
 
 4. **\`get(key, default)\`** - gets the value by key (without error if the key does not exist)
 \`\`\`python
-person = {"name": "Alexander", "age": 20}
-name = person.get("name")  # "Alexander"
-email = person.get("email", "Not specified")  # "Not specified" (if the key is missing)
+person = {"name": "Oleksandr", "age": 20}
+name = person.get("name")  # "Oleksandr"
+email = person.get("email", "Not specified")  # "Not specified" (if there is no key)
 \`\`\`
 
-5. **\`pop(key, default)\`** - removes and returns the value by key
+5. **\`pop(key, default)\`** - deletes and returns the key value
 \`\`\`python
-person = {"name": "Alexander", "age": 20, "city": "Kyiv"}
-age = person.pop("age")  # age = 20, person = {"name": "Alexander", "city": "Kyiv"}
+person = {"name": "Oleksandr", "age": 20, "city": "Kyiv"}
+age = person.pop("age")  # age = 20, person = {"name": "Oleksandr", "city": "Kyiv"}
 \`\`\`
 
 6. **\`update(other_dict)\`** - updates the dictionary with values from another dictionary
 \`\`\`python
-person = {"name": "Alexander", "age": 20}
-person.update({"city": "Kyiv", "age": 21})  # {"name": "Alexander", "age": 21, "city": "Kyiv"}
+person = {"name": "Oleksandr", "age": 20}
+person.update({"city": "Kyiv", "age": 21})  # {"name": "Oleksandr", "age": 21, "city": "Kyiv"}
 \`\`\`
 
 7. **\`clear()\`** - deletes all elements
 \`\`\`python
-person = {"name": "Alexander", "age": 20}
+person = {"name": "Oleksandr", "age": 20}
 person.clear()  # {}
 \`\`\`
 
 8. **\`copy()\`** - creates a copy of the dictionary
 \`\`\`python
-person = {"name": "Alexander", "age": 20}
+person = {"name": "Oleksandr", "age": 20}
 person_copy = person.copy()  # New copy
 \`\`\``
       },
       {
-        title: "Chain of methods",
+        title: "Method chain",
         content: `You can call methods one after another if the previous method returns an object with the next method.
 
 **Example with strings:**
 
 \`\`\`python
-text = "  Hello, world!  "
+text = "  hello, world!  "
 result = text.strip().upper().replace("WORLD", "PYTHON")
-# First strip() → "Hello, world!"
+# First strip() → "hello, world!"
 # Then upper() → "HELLO, WORLD!"
 # Then replace() → "HELLO, PYTHON!"
 \`\`\`
 
-**Important:** The chain works if each method returns an object of the same type or an object with the required method.
+**Important:** A chain works if each method returns an object of the same type or an object with the desired method.
 
 **Example:**
 
@@ -280,10 +280,10 @@ words = text.split(", ")  # ["Hello", "world", "Python"]
 result = ", ".join(words).upper()  # "HELLO, WORLD, PYTHON"
 \`\`\`
 
-**Not working:**
+**Does not work:**
 
 \`\`\`python
-# Doesn't work because append() does not return a list
+# It doesn't work because append() does not return a list
 numbers = [1, 2, 3]
 numbers.append(4).append(5)  #  Error! append() returns None
 \`\`\``
@@ -295,7 +295,7 @@ numbers.append(4).append(5)  #  Error! append() returns None
 **1. The help() function:**
 
 \`\`\`python
-help(str.upper)  # Help with the upper() method for strings
+help(str.upper)  # Reference about the upper() method for strings
 help(list.append)  # Reference about the append() method for lists
 \`\`\`
 
@@ -328,7 +328,7 @@ help(str.count)
 **Practical example:**
 
 \`\`\`python
-# Learn about the split() method
+# Let's learn about the split() method
 help(str.split)
 # Then we use it:
 text = "Hello, world, Python"
@@ -337,18 +337,18 @@ words = text.split(", ")  # ["Hello", "world", "Python"]
       },
       {
         title: "Practical examples",
-        content: `**Example 1: Text Processing**
+        content: `**Example 1: Text processing**
 
 \`\`\`python
 def process_text(text):
     """
-    Processes text: removes spaces, capitalizes the first letter
+    Processes text: removes spaces, makes the first letter capital
     """
     processed = text.strip().capitalize()
     return processed
 
 # Usage
-result = process_text("  Hello, world!  ")  # "Hello, world!"
+result = process_text("  hello, world!  ")  # "Hello, world!"
 \`\`\`
 
 **Example 2: Working with a list of users**
@@ -358,14 +358,14 @@ def manage_users():
     """
     Demonstrates working with list methods
     """
-    users = ["Alexander", "Maria"]
+    users = ["Oleksandr", "Maria"]
     
     # Adding users
     users.append("Ivan")
     users.insert(0, "Anna")
     
     # Checking the quantity
-    count = users.count("Alexander")
+    count = users.count("Oleksandr")
     
     # Sorting
     users.sort()
@@ -373,7 +373,7 @@ def manage_users():
     return users
 
 # Usage
-users = manage_users()  # ["Anna", "Ivan", "Maria", "Alexander"]
+users = manage_users()  # ["Anna", "Ivan", "Maria", "Oleksandr"]
 \`\`\`
 
 **Example 3: User Data Processing**
@@ -395,7 +395,7 @@ def process_user_data(user_dict):
     return user_dict, email
 
 # Usage
-user = {"name": "Alexander", "age": 20}
+user = {"name": "Oleksandr", "age": 20}
 updated_user, email = process_user_data(user)
 \`\`\`
 
@@ -406,7 +406,7 @@ def format_text(text):
     """
     Formats text: removes spaces, replaces words, merges
     """
-    # Remove spaces and convert them to a list of words
+    # We remove spaces and convert into a list of words
     words = text.strip().split()
     
     # We replace words
@@ -423,7 +423,7 @@ result = format_text(text)  # "Hello Python Programmer"
 \`\`\``
       },
       {
-        title: "Summary",
+        title: "The bottom line",
         content: `In this lesson, we studied object methods:
 
 **Key Concepts:**
@@ -515,23 +515,23 @@ person.update({"city": "Kyiv", "age": 21})  # {"name": "Oleksandr", "age": 21, "
       explanation: "Demonstrates the main dictionary methods: keys(), values(), get(), update()."
     },
     {
-      title: "Chain of methods",
-      code: `text = " Hello World!  "
+      title: "Method chain",
+      code: `text = "  hello, world!  "
 
-# Call methods one by one
+# We call the methods one after another
 result = text.strip().upper().replace("WORLD", "PYTHON")
-# First strip() → "hello world!"
-# Then upper() → "HELLO WORLD!"
+# First strip() → "hello, world!"
+# Then upper() → "HELLO, WORLD!"
 # Then replace() → "HELLO, PYTHON!"`,
       explanation: "Shows how you can call string methods one after another (method chaining)."
     },
     {
       title: "Obtaining a certificate",
-      code: `# Reference about the method
+      code: `# Method Help
 help(str.upper)
 
-# All methods of an object
-methods = dir("Hello")  # List of all string methods
+# All Object Methods
+methods = dir("Hello") # List of all string methods
 print(methods)`,
       explanation: "Demonstrates the use of help() and dir() to get information about methods."
     },
@@ -635,8 +635,8 @@ text = text + "4"  # String concatenation`
 5. Method chaining
    - You can call methods one after another
    - Works if each method returns an object with the next method6. Reference
-   - help() - get help on a method
-   - dir() - see all methods of an object
+   - help() - get help about the method
+   - dir() - see all object methods
 
 Methods are a powerful tool for working with objects in Python!`,
   
@@ -645,19 +645,19 @@ Methods are a powerful tool for working with objects in Python!`,
     description: "Create functions for processing text data using string, list, and dictionary methods",
     problemStatement: `Write a program with functions:
 
-1. clean_text(text) — strip + capitalize
-2. process_words(words) — no duplicates, sorted
-3. create_word_count(text) — dictionary {word: quantity} from the original text (strip + split)
-4. format_user_data(user_data) — capitalize name, lower email, adds role="user", status="active"
+1. clean_text(text) - strip + capitalize
+2. process_words(words) - no duplicates, sorted
+3. create_word_count(text) - dictionary {word: count} from the original text (strip + split)
+4. format_user_data(user_data) - capitalize name, lower email, add role="user", status="active"
 
-Read the line of text, first name, and email. Output the cleaned text, processed words, counting, and user data.
+Read a string of text, name, and email. Output the cleaned text, processed words, word count, and user data.
 
 Input format:
   hello world hello python  
-Alexander
+Oleksandr
 USER@EXAMPLE.COM`,
     outputFormat: `Cleaned text: Hello world hello python
-Processed words: ['python', 'Hello', 'hello', 'world']
+Processed words: ['Hello', 'hello', 'python', 'world']
 Word count: {'hello': 2, 'world': 1, 'python': 1}
 User data: {'name': 'Oleksandr', 'email': 'user@example.com', 'role': 'user', 'status': 'active'}`,
     examples: [
@@ -666,17 +666,17 @@ User data: {'name': 'Oleksandr', 'email': 'user@example.com', 'role': 'user', 's
 oleksandr
 USER@EXAMPLE.COM`,
         output: `Cleaned text: Hello world hello python
-Processed words: ['python', 'Hello', 'hello', 'world']
+Processed words: ['Hello', 'hello', 'python', 'world']
 Word count: {'hello': 2, 'world': 1, 'python': 1}
 User data: {'name': 'Oleksandr', 'email': 'user@example.com', 'role': 'user', 'status': 'active'}`,
         explanation: "capitalize changes only the first letter of the entire string; counting from the original words"
       },
       {
         input: `Python Python code
-марія
+Maria
 Maria@Mail.COM`,
         output: `Cleaned text: Python python code
-Processed words: ['Python', 'python', 'code']
+Processed words: ['Python', 'code', 'python']
 Word count: {'Python': 2, 'code': 1}
 User data: {'name': 'Maria', 'email': 'maria@mail.com', 'role': 'user', 'status': 'active'}`,
         explanation: "Two Pythons in counting; after capitalize the second word becomes python"
@@ -712,7 +712,9 @@ def create_word_count(text):
     word_count = {}
     for word in words:
         word_count[word] = word_count.get(word, 0) + 1
-    return word_countdef format_user_data(user_data):
+    return word_count
+
+def format_user_data(user_data):
     """Formats user data"""
     formatted = user_data.copy()
     if "name" in formatted:
@@ -736,7 +738,8 @@ processed = process_words(cleaned.split())
 print(f"Processed words: {processed}")
 
 word_count = create_word_count(text)
-print(f"Word count: {word_count}")formatted_data = format_user_data({"name": name, "email": email})
+print(f"Word count: {word_count}")
+formatted_data = format_user_data({"name": name, "email": email})
 print(f"User data: {formatted_data}")`,
       explanation: "String/list/dictionary methods in functions; input data from stdin."
     },
@@ -757,7 +760,7 @@ print(f"User data: {formatted_data}")`,
         question: "What is an object method?",
         options: [
           "A function bound to an object, which is called through the object",
-          "Variable inside an object",
+          "Variable inside the object",
           "Data type",
           "Python operator"
         ],
@@ -814,7 +817,7 @@ print(f"User data: {formatted_data}")`,
           "Error"
         ],
         correctAnswer: 0,
-        explanation: "sort() sorts the list in place (changes the original list), so numbers will become [1, 1, 3, 4, 5]."
+        explanation: "sort() sorts the list in place (modifies the original list), so numbers will become [1, 1, 3, 4, 5]."
       },
       {
         id: "q6",
@@ -832,7 +835,7 @@ print(f"User data: {formatted_data}")`,
       {
         id: "q7",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "What will this code output?\n\n```python\nperson = {\"name\": \"Alexander\", \"age\": 20}\nemail = person.get(\"email\", \"Не вказано\")\nprint(email)\n```",
+        question: "What will this code output?\n\n```python\nperson = {\"name\": \"Alexander\", \"age\": 20}\nemail = person.get(\"email\", \"Not specified\")\nprint(email)\n```",
         options: [
           "Not specified",
           "Error",
@@ -851,7 +854,7 @@ print(f"User data: {formatted_data}")`,
           "False"
         ],
         correctAnswer: 0,
-        explanation: "Yes, a chain of methods works if each method returns an object of the same type or an object with the required method. For example, text.strip().upper() works because both methods return a string."
+        explanation: "Yes, the method chain works if each method returns an object of the same type or an object with the required method. For example, text.strip().upper() works because both methods return a string."
       }
     ],
     timeLimit: 15,

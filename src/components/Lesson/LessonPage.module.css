@@ -24,7 +24,7 @@
   }
 }
 
-/* Sidebar Navigation — sticky viewport column with its own scroll */
+/* Sidebar Navigation - sticky viewport column with its own scroll */
 .sidebar {
   width: 320px;
   min-width: 0;
@@ -616,7 +616,7 @@
 
 .theoryContent pre {
   background: #0a0a0f;
-  color: var(--text-primary);
+  color: #e8eaef;
   padding: 1.5rem;
   border-radius: 0.75rem;
   overflow-x: auto;
@@ -627,7 +627,8 @@
 }
 
 .theoryContent code {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(20, 21, 26, 0.06);
+  color: var(--text-primary);
   padding: 0.2rem 0.4rem;
   border-radius: 0.25rem;
   font-family: 'Courier New', monospace;
@@ -637,6 +638,7 @@
 .theoryContent pre code {
   background: none;
   padding: 0;
+  color: inherit;
 }
 
 .theoryContent ul,
@@ -672,9 +674,10 @@
   margin: 1rem 0;
 }
 
-.theoryContent .code-block {
+.theoryContent :global(pre.code-block),
+.theoryContent :global(.code-block) {
   background: #0a0a0f;
-  color: var(--text-primary);
+  color: #e8eaef;
   padding: 1.5rem;
   border-radius: 0.75rem;
   overflow-x: auto;
@@ -684,7 +687,8 @@
   line-height: 1.6;
 }
 
-.theoryContent .code-block code {
+.theoryContent :global(pre.code-block) code,
+.theoryContent :global(.code-block) code {
   background: none;
   padding: 0;
   color: inherit;
@@ -897,7 +901,7 @@
 
 .codeBlock {
   background: #0a0a0f;
-  color: var(--text-primary);
+  color: #e8eaef;
   padding: 1.5rem;
   border-radius: 0.75rem;
   overflow-x: auto;
@@ -1043,7 +1047,7 @@
 .exampleInput pre,
 .exampleOutput pre {
   background: #0a0a0f;
-  color: var(--text-primary);
+  color: #e8eaef;
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;
@@ -1130,7 +1134,8 @@
   width: 100%;
   min-height: 300px;
   background: #0a0a0f;
-  color: var(--text-primary);
+  color: #e8eaef;
+  caret-color: #e8eaef;
   border: none;
   border-radius: 0.5rem;
   padding: 1rem;
@@ -1225,7 +1230,7 @@
 
 .executionOutput pre {
   background: #0a0a0f;
-  color: var(--text-primary);
+  color: #e8eaef;
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;
@@ -1400,7 +1405,7 @@
 
 .questionCode {
   background: #0a0a0f;
-  color: var(--text-primary);
+  color: #e8eaef;
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;

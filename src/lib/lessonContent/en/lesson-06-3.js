@@ -28,9 +28,9 @@ export const lesson_06_3 = {
         title: "Built-in method decorators",
         content: `In Python classes you often see three built-in decorators:
 
-1. **@property** — lets you access a method like an attribute (\`obj.name\` instead of \`obj.name()\`)
-2. **@staticmethod** — a method without \`self\` or \`cls\`, logically tied to the class
-3. **@classmethod** — a method that receives the class (\`cls\`) instead of an instance
+1. **@property** - lets you access a method like an attribute (\`obj.name\` instead of \`obj.name()\`)
+2. **@staticmethod** - a method without \`self\` or \`cls\`, logically tied to the class
+3. **@classmethod** - a method that receives the class (\`cls\`) instead of an instance
 
 \`\`\`python
 class Demo:
@@ -52,7 +52,7 @@ print(Demo.ping())   # pong
 print(Demo.create()) # <Demo object ...>
 \`\`\`
 
-All three are ordinary decorators — just ones already defined by the language.`
+All three are ordinary decorators - just ones already defined by the language.`
       },
       {
         title: "@property: getters and setters",
@@ -95,7 +95,7 @@ p.age = 21          # via setter
       },
       {
         title: "@staticmethod vs @classmethod",
-        content: `**@staticmethod** — an ordinary function in the class namespace. It receives neither the instance nor the class.
+        content: `**@staticmethod** - an ordinary function in the class namespace. It receives neither the instance nor the class.
 
 \`\`\`python
 class MathUtils:
@@ -106,7 +106,7 @@ class MathUtils:
 print(MathUtils.clamp(15, 0, 10))  # 10
 \`\`\`
 
-**@classmethod** — first argument is \`cls\` (the class itself). Convenient for alternative constructors.
+**@classmethod** - first argument is \`cls\` (the class itself). Convenient for alternative constructors.
 
 \`\`\`python
 class Person:
@@ -124,8 +124,8 @@ print(p.name, p.age)  # Taras 17
 \`\`\`
 
 **When to use which:**
-- \`staticmethod\` — a utility that needs no class/instance state
-- \`classmethod\` — factories, working with \`cls\`, inheritable alternative constructors`
+- \`staticmethod\` - a utility that needs no class/instance state
+- \`classmethod\` - factories, working with \`cls\`, inheritable alternative constructors`
       },
       {
         title: "Custom decorators for methods",
@@ -156,7 +156,7 @@ print(c.inc())
 # 1
 \`\`\`
 
-You can keep \`*args, **kwargs\` without an explicit \`self\` — then \`self\` simply lands in \`args[0]\`. Explicit \`self\` is more readable for instance methods.`
+You can keep \`*args, **kwargs\` without an explicit \`self\` - then \`self\` simply lands in \`args[0]\`. Explicit \`self\` is more readable for instance methods.`
       },
       {
         title: "Class decorators (briefly)",
@@ -179,7 +179,7 @@ class Point:
 print(Point(1, 2))  # Point(x=1, y=2)
 \`\`\`
 
-**Idea:** add methods, register the class, wrap all methods, and so on — without editing the class body by hand.
+**Idea:** add methods, register the class, wrap all methods, and so on - without editing the class body by hand.
 
 Class decorators are less common for beginners than \`@property\` / \`@classmethod\`, but the concept is the same: \`Point = add_repr(Point)\`.`
       },
@@ -216,9 +216,9 @@ print(Rectangle.is_valid(4, 4))  # True
 \`\`\`
 
 Here you can see the difference:
-- \`area\` — like an attribute
-- \`square\` — an alternative constructor via \`cls\`
-- \`is_valid\` — a utility without \`self\``
+- \`area\` - like an attribute
+- \`square\` - an alternative constructor via \`cls\`
+- \`is_valid\` - a utility without \`self\``
       }
     ]
   },
@@ -269,7 +269,7 @@ print(u.login)  # guest`,
         return s.strip().lower()
 
 print(TextTools.normalize("  Hello "))  # hello`,
-      explanation: "staticmethod does not need self — it is a function in the class namespace."
+      explanation: "staticmethod does not need self - it is a function in the class namespace."
     },
     {
       title: "Class decorator add_repr",
@@ -297,7 +297,7 @@ print(Box(10))`,
     },
     {
       mistake: "Declaring @staticmethod with a self parameter",
-      explanation: "staticmethod does not receive an instance — self becomes an ordinary required argument.",
+      explanation: "staticmethod does not receive an instance - self becomes an ordinary required argument.",
       correctApproach: "Do not add self/cls for staticmethod; keep self for instance methods"
     },
     {
@@ -314,11 +314,11 @@ print(Box(10))`,
 
   summary: `In this lesson we looked at decorators in the context of classes:
 
-1. @property — methods as attributes, getters/setters, computed fields
-2. @staticmethod — utilities without self/cls
-3. @classmethod — working with cls, alternative constructors
-4. Custom method decorators — the same wrapping, often with explicit self
-5. Class decorators — Class = decorator(Class), for example adding __repr__
+1. @property - methods as attributes, getters/setters, computed fields
+2. @staticmethod - utilities without self/cls
+3. @classmethod - working with cls, alternative constructors
+4. Custom method decorators - the same wrapping, often with explicit self
+5. Class decorators - Class = decorator(Class), for example adding __repr__
 
 In the next (practice) lesson we will reinforce everything on harder tasks: retry, cache, combining decorators.`,
 
@@ -327,10 +327,10 @@ In the next (practice) lesson we will reinforce everything on harder tasks: retr
     description: "Create a class with name, age, and is_adult properties",
     problemStatement: `Create a **Person** class with:
 
-1. \`__init__(self, name, age)\` — stores \`_name\` and \`_age\`
-2. \`@property name\` — returns the name
-3. \`@property age\` — returns the age
-4. \`@property is_adult\` — \`True\` if age ≥ 18, otherwise \`False\`
+1. \`__init__(self, name, age)\` - stores \`_name\` and \`_age\`
+2. \`@property name\` - returns the name
+3. \`@property age\` - returns the age
+4. \`@property is_adult\` - \`True\` if age ≥ 18, otherwise \`False\`
 
 Read a name and age from stdin (two lines). Create a \`Person\` and print three lines:
 
@@ -420,7 +420,7 @@ print(f"Adult: {person.is_adult}")`,
           "is_adult(obj)"
         ],
         correctAnswer: 1,
-        explanation: "A property is used like an attribute — without parentheses."
+        explanation: "A property is used like an attribute - without parentheses."
       },
       {
         id: "q2",

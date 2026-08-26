@@ -30,10 +30,10 @@ export const lesson_09_1 = {
 
 **What are HTTP requests?**
 
-- **GET** — retrieve data from the server
-- **POST** — send data to the server
-- **PUT** — update data
-- **DELETE** — delete data
+- **GET** - retrieve data from the server
+- **POST** - send data to the server
+- **PUT** - update data
+- **DELETE** - delete data
 
 **The requests library:**
 
@@ -69,10 +69,10 @@ print(response.text)  # HTML or JSON response
 
 **Status codes:**
 
-- **200** — OK (success)
-- **404** — Not Found
-- **500** — Server Error
-- **403** — Forbidden
+- **200** - OK (success)
+- **404** - Not Found
+- **500** - Server Error
+- **403** - Forbidden
 
 \`\`\`python
 import requests
@@ -167,8 +167,8 @@ print(response.json())
 
 **Difference between data and json:**
 
-- **data** — sends form-data
-- **json** — sends JSON (sets Content-Type automatically)
+- **data** - sends form-data
+- **json** - sends JSON (sets Content-Type automatically)
 
 \`\`\`python
 import requests
@@ -441,20 +441,20 @@ download_file('https://example.com/image.jpg', 'image.jpg')
 
 **Key methods:**
 
-1. **requests.get()** — GET request
-2. **requests.post()** — POST request
-3. **response.json()** — parse JSON response
-4. **response.text** — text response
-5. **response.status_code** — status code
+1. **requests.get()** - GET request
+2. **requests.post()** - POST request
+3. **response.json()** - parse JSON response
+4. **response.text** - text response
+5. **response.status_code** - status code
 
 **Core ideas:**
 
-- GET — retrieve data
-- POST — send data
-- Headers — request metadata
-- Cookies — keep state
-- Sessions — keep cookies across requests
-- Timeouts — limit wait time
+- GET - retrieve data
+- POST - send data
+- Headers - request metadata
+- Cookies - keep state
+- Sessions - keep cookies across requests
+- Timeouts - limit wait time
 
 **Important:**
 
@@ -536,11 +536,11 @@ print(response.json())`,
   
   summary: `In this lesson we learned how to work with HTTP requests:
 
-1. requests.get() — retrieve data
-2. requests.post() — send data
-3. Headers and cookies — configure requests
-4. Sessions — keep state
-5. Error handling — handle exceptions correctly
+1. requests.get() - retrieve data
+2. requests.post() - send data
+3. Headers and cookies - configure requests
+4. Sessions - keep state
+5. Error handling - handle exceptions correctly
 
 The requests library is a powerful tool for working with web APIs!`,
   
@@ -549,8 +549,8 @@ The requests library is a powerful tool for working with web APIs!`,
     description: "Create a simple client for user data (no network)",
     problemStatement: `Create a function get_user_info(username) that:
 1. Looks up the user in the USERS dictionary “database”
-2. If found — prints name, bio, and repository count
-3. If not — prints a message that the user was not found
+2. If found - prints name, bio, and repository count
+3. If not - prints a message that the user was not found
 
 Read username with input() and call the function.
 
@@ -603,7 +603,7 @@ def get_user_info(username):
 
 username = input().strip()
 get_user_info(username)`,
-      explanation: "We use a local dictionary instead of a network API — stable tests."
+      explanation: "We use a local dictionary instead of a network API - stable tests."
     },
     hints: [
       "Copy the USERS dictionary into your code",
@@ -647,10 +647,10 @@ get_user_info(username)`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What does status code 404 mean?",
         options: [
-          "Not Found — the resource was not found",
-          "OK — success",
-          "Server Error — server error",
-          "Forbidden — access denied"
+          "Not Found - the resource was not found",
+          "OK - success",
+          "Server Error - server error",
+          "Forbidden - access denied"
         ],
         correctAnswer: 0,
         explanation: "404 means the requested resource was not found on the server."
@@ -666,7 +666,7 @@ get_user_info(username)`,
           "To cache responses"
         ],
         correctAnswer: 0,
-        explanation: "Sessions keep cookies and other settings across multiple requests — useful for authentication."
+        explanation: "Sessions keep cookies and other settings across multiple requests - useful for authentication."
       },
       {
         id: "q5",

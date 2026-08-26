@@ -90,14 +90,14 @@ print(t[:3])   # ('one', 'two', 'three')
         title: "Tuple methods",
         content: `Tuples have built-in methods, but not as many as lists. Let's look at two of them:
 
-**index() — find an element's index:**
+**index() - find an element's index:**
 \`\`\`python
 t = ('one', 'two', 'three')
 index = t.index('two')
 print(index)  # 1
 \`\`\`
 
-**count() — count how many times an element appears:**
+**count() - count how many times an element appears:**
 \`\`\`python
 t = (1, 2, 2, 3, 2, 4)
 count = t.count(2)
@@ -210,7 +210,7 @@ Sets are an unordered collection of **unique** elements. We can create them usin
 my_set = {1, 2, 3}
 print(my_set)  # {1, 2, 3}
 
-# Empty set (not {} — that is a dictionary!)
+# Empty set (not {} - that is a dictionary!)
 empty_set = set()
 print(empty_set)  # set()
 \`\`\`
@@ -395,13 +395,13 @@ print("Difference:", difference)`,
   
   summary: `In this lesson we learned:
 
-1. Tuples (tuple) — immutable sequences, created with ()
-2. Immutability — tuples cannot be changed after creation
-3. Tuple methods — index(), count()
-4. Sets (set) — unordered collections of unique elements
-5. Set operations — union, intersection, difference
+1. Tuples (tuple) - immutable sequences, created with ()
+2. Immutability - tuples cannot be changed after creation
+3. Tuple methods - index(), count()
+4. Sets (set) - unordered collections of unique elements
+5. Set operations - union, intersection, difference
 
-Tuples and sets are important data structures for different tasks! Next lesson — strings.`,
+Tuples and sets are important data structures for different tasks! Next lesson - strings.`,
   
   practiceTask: {
     title: "Coordinate system and unique values",

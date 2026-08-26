@@ -11,7 +11,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import crypto from 'node:crypto'
-import { verifyWebhookSignature, normalizeSubscription } from './paddle.js'
+import { verifyWebhookSignature, normalizeSubscription, readCourseIdFromCustomData, isPaddleManagedCustomerId } from './paddle.js'
 
 const SECRET = 'pdl_ntfset_test_secret'
 
@@ -29,7 +29,7 @@ test('accepts a correctly signed body', () => {
 
 test('rejects a body that was re-serialised after parsing', () => {
 	const signature = sign(BODY)
-	// Same data, different bytes — this is what happens if the route reads
+	// Same data, different bytes - this is what happens if the route reads
 	// req.json() and stringifies it again.
 	const reserialised = JSON.stringify(JSON.parse(BODY), null, 2)
 	const result = verifyWebhookSignature(reserialised, signature, SECRET)
@@ -113,4 +113,17 @@ test('normalizeSubscription survives a payload with no items', () => {
 	assert.equal(normalized.priceId, null)
 	assert.equal(normalized.currentPeriodEnd, null)
 	assert.equal(normalized.cancelAtPeriodEnd, false)
+})
+
+test('readCourseIdFromCustomData reads camelCase and snake_case', () => {
+	assert.equal(readCourseIdFromCustomData({ courseId: 'roblox-studio' }), 'roblox-studio')
+	assert.equal(readCourseIdFromCustomData({ course_id: 'ai-at-work' }), 'ai-at-work')
+	assert.equal(readCourseIdFromCustomData(null), null)
+})
+
+test('isPaddleManagedCustomerId rejects placeholders', () => {
+	assert.equal(isPaddleManagedCustomerId('ctm_abc'), true)
+	assert.equal(isPaddleManagedCustomerId('admin_manual'), false)
+	assert.equal(isPaddleManagedCustomerId('local_dev_customer'), false)
+	assert.equal(isPaddleManagedCustomerId(''), false)
 })

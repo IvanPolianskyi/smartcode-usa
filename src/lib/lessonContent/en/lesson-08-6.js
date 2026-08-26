@@ -383,114 +383,115 @@ This concludes Module 08 - Advanced Python Modules!`,
     description: "Create a comprehensive system for sales analysis using all the studied modules",
     problemStatement: `Create a sales analysis system: 
 1. Read n sales from stdin (product category price date) 
-2. Counter — top products (up to 2) 
-3. defaultdict — amounts by category (categories in alphabetical order) 
-4. groupby — analysis by dates (for internal processing) 
-5. lru_cache — caching of the total amount 
+2. Counter - top products (up to 2) 
+3. defaultdict - amounts by category (categories in alphabetical order) 
+4. groupby - analysis by dates (for internal processing) 
+5. lru_cache - caching of the total amount 
 6. Export to sales_report.csv (without Excel/openpyxl) 
 
 Input format: 
 4 
 Laptop Electronics 25000 2024-01-15 
 Laptop Electronics 25000 2024-01-15 
-Misha Electronics 500 2024-01-16 
+Mouse Electronics 500 2024-01-16 
 Table Furniture 5000 2024-01-16`,
-    outputFormat: `4 sales uploaded 
-The most popular products: 
-1. Laptop: 2 sales 
-2. Mouse: 1 sales 
-Total amount by category: 
-Electronics: UAH 50,500 
-Furniture: UAH 5,000 
-The data is exported to sales_report.csv`,
+    outputFormat: `Loaded 4 sales
+Most popular products:
+1. Laptop: 2 sales
+2. Mouse: 1 sales
+Total amount by category:
+Electronics: 50500 UAH
+Furniture: 5000 UAH
+Data exported to sales_report.csv`,
     examples: [
       {
-        input: `4 
-Laptop Electronics 25000 2024-01-15 
-Laptop Electronics 25000 2024-01-15 
-Misha Electronics 500 2024-01-16 
+        input: `4
+Laptop Electronics 25000 2024-01-15
+Laptop Electronics 25000 2024-01-15
+Mouse Electronics 500 2024-01-16
 Table Furniture 5000 2024-01-16`,
-        output: `4 sales uploaded 
-The most popular products: 
-1. Laptop: 2 sales 
-2. Mouse: 1 sales 
-Total amount by category: 
-Electronics: UAH 50,500 
-Furniture: UAH 5,000 
-The data is exported to sales_report.csv`,
+        output: `Loaded 4 sales
+Most popular products:
+1. Laptop: 2 sales
+2. Mouse: 1 sales
+Total amount by category:
+Electronics: 50500 UAH
+Furniture: 5000 UAH
+Data exported to sales_report.csv`,
         explanation: "The laptop is the most popular; amounts in two categories"
       },
       {
-        input: `2 
-Table Furniture 3000 2024-02-01 
+        input: `2
+Table Furniture 3000 2024-02-01
 Armchair Furniture 2000 2024-02-01`,
-        output: `2 sales uploaded 
-The most popular products: 
-1. Table: 1 sales 
-2. Armchair: 1 sales 
-Total amount by category: 
-Furniture: UAH 5,000 
-The data is exported to sales_report.csv`,
+        output: `Loaded 2 sales
+Most popular products:
+1. Table: 1 sales
+2. Armchair: 1 sales
+Total amount by category:
+Furniture: 5000 UAH
+Data exported to sales_report.csv`,
         explanation: "One category Furniture, amount 5000"
       },
       {
-        input: `1 
-Misha Electronics 400 2024-03-01`,
-        output: `1 sales uploaded 
-The most popular products: 
-1. Mouse: 1 sales 
-Total amount by category: 
-Electronics: UAH 400 
-The data is exported to sales_report.csv`,
+        input: `1
+Mouse Electronics 400 2024-03-01`,
+        output: `Loaded 1 sales
+Most popular products:
+1. Mouse: 1 sales
+Total amount by category:
+Electronics: 400 UAH
+Data exported to sales_report.csv`,
         explanation: "One sale is one line in the top"
       }
     ],
     solution: {
-      code: `import csv 
-from collections import Counter, defaultdict 
-from itertools import groupby 
-from functools import lru_cache 
+      code: `import csv
+from collections import Counter, defaultdict
+from itertools import groupby
+from functools import lru_cache
 
-n = int(input()) 
-sales = [] 
-for _ in range(n): 
-product, category, price, date = input().split() 
-sales.append({ 
-'product': product, 
-'category': category, 
-'price': int(price), 
-'date': date 
-}) 
+n = int(input())
+sales = []
+for _ in range(n):
+    product, category, price, date = input().split()
+    sales.append({
+        'product': product,
+        'category': category,
+        'price': int(price),
+        'date': date
+    })
 
-print(f'Loaded {len(sales)} sales') 
+print(f'Loaded {len(sales)} sales')
 
-product_counter = Counter(s['product'] for s in sales) 
-print('Most popular products:') 
-for i, (product, count) in enumerate(product_counter.most_common(2), 1): 
-print(f'{i}. {product}: {count} sales') 
+product_counter = Counter(s['product'] for s in sales)
+print('Most popular products:')
+for i, (product, count) in enumerate(product_counter.most_common(2), 1):
+    print(f'{i}. {product}: {count} sales')
 
-by_category = defaultdict(int) 
-for sale in sales: 
-by_category[sale['category']] += sale['price'] 
+by_category = defaultdict(int)
+for sale in sales:
+    by_category[sale['category']] += sale['price']
 
-print('Total amount by category:') 
-for category in sorted(by_category.keys()): 
-print(f'{category}: {by_category[category]} UAH')
-sorted_by_date = sorted(sales, key=lambda x: x['date']) 
-by_date = {} 
-for date, group in groupby(sorted_by_date, key=lambda x: x['date']): 
-by_date[date] = sum(s['price'] for s in group) 
+print('Total amount by category:')
+for category in sorted(by_category.keys()):
+    print(f'{category}: {by_category[category]} UAH')
 
-@lru_cache(maxsize=128) 
-def cached_total(total): 
-return total 
+sorted_by_date = sorted(sales, key=lambda x: x['date'])
+by_date = {}
+for date, group in groupby(sorted_by_date, key=lambda x: x['date']):
+    by_date[date] = sum(s['price'] for s in group)
 
-_ = cached_total(sum(s['price'] for s in sales)) 
+@lru_cache(maxsize=128)
+def cached_total(total):
+    return total
 
-with open('sales_report.csv', 'w', encoding='utf-8', newline='') as f: 
-writer = csv.DictWriter(f, fieldnames=['product', 'category', 'price', 'date']) 
-writer.writeheader() 
-writer.writerrows(sales) 
+_ = cached_total(sum(s['price'] for s in sales))
+
+with open('sales_report.csv', 'w', encoding='utf-8', newline='') as f:
+    writer = csv.DictWriter(f, fieldnames=['product', 'category', 'price', 'date'])
+    writer.writeheader()
+    writer.writerows(sales)
 
 print('Data exported to sales_report.csv')`,
       explanation: "Data from stdin; Counter, defaultdict, groupby, lru_cache and CSV export without openpyxl."

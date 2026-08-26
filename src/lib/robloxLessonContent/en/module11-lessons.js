@@ -2474,7 +2474,7 @@ After this the Place is ready for a hard check through other eyes.
  options: [
           "Only module 1",
           "Only Publish",
-          "11.1–11.4 (Explorer, loading, juice, UX/opt)",
+          "11.1-11.4 (Explorer, loading, juice, UX/opt)",
           "None"
         ],
  correctAnswer: 2,

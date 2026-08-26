@@ -16,21 +16,21 @@ export function localePath(locale, path = '') {
 	return normalized === '/' ? '' : normalized
 }
 
-/** Indexing metadata — always UK (no EN noindex branch). */
+/** Indexing metadata - always UK (no EN noindex branch). */
 export function getSearchIndexingMetadata() {
 	return {}
 }
 
 export function buildAlternates(locale, path = '') {
 	const normalized = path || '/'
-	const ukPath = normalized === '/' ? '' : normalized
-	const ukUrl = `${BASE_URL}${ukPath}`
+	const pagePath = normalized === '/' ? '' : normalized
+	const url = `${BASE_URL}${pagePath}`
 
 	return {
-		canonical: ukUrl,
+		canonical: url,
 		languages: {
-			'uk-UA': ukUrl,
-			'x-default': ukUrl,
+			'en': url,
+			'x-default': url,
 		},
 	}
 }

@@ -1,0 +1,488 @@
+{
+  "common": {
+    "breadcrumb": {
+      "home": "Home",
+      "courses": "Courses"
+    },
+    "levels": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "stats": {
+      "weeks": "weeks",
+      "lessons": "lessons",
+      "modules": "modules",
+      "certificate": "Certificate",
+      "duration": "Duration",
+      "materials": "Lessons",
+      "modulesLabel": "Modules",
+      "afterCompletion": "Upon completion"
+    },
+    "age": "Age: {age}"
+  },
+  "course": {
+    "skillsTitle": "Skills you will gain",
+    "formatTitle": "Learning format",
+    "requirementsTitle": "Requirements",
+    "certificateTitle": "Certificate",
+    "programTitle": "Course curriculum",
+    "programDescription": "{modules} modules, {lessons} lessons - from fundamentals to building full projects",
+    "moduleLabel": "Module {order}",
+    "moduleWeeks": "{count} weeks",
+    "moduleLessons": "{count} lessons",
+    "learnTitle": "What you will learn:",
+    "lessonsTitle": "Module lessons:",
+    "lessonLabel": "Lesson {order}",
+    "projectBadge": "Project",
+    "checkpointBadge": "Checkpoint",
+    "minutes": "{count} min",
+    "quizScore": "Quiz: {score}%",
+    "locked": "Locked",
+    "lockedLessonHint": "New lessons unlock over time - 2 lessons each week from when you got access.",
+    "ctaTitle": "Keep learning",
+    "ctaDescription": "You are already {progress}% through the course. Continue with new lessons!",
+    "ctaButton": "Go to lessons",
+    "progressLabel": "Course progress",
+    "continueLearning": "CONTINUE LEARNING",
+    "continueHint": "Up next: {title}",
+    "progressStart": "Start your first mission - progress will grow!",
+    "progressLessons": "{done} of {total} lessons done",
+    "phaseRoadmapLabel": "Course phases",
+    "statLearning": "Learning",
+    "statMaterials": "Materials",
+    "statKnowledge": "Knowledge",
+    "statCertHint": "Upon completion",
+    "formatVideoTitle": "VIDEO LESSONS",
+    "formatVideoSub": "with explanations",
+    "formatPracticeTitle": "PRACTICE",
+    "formatPracticeSub": "& code review",
+    "python": {
+      "valueProposition": "Your IT journey starts here! Build real Python projects.",
+      "skillShort": [
+        "Python",
+        "Data",
+        "OOP",
+        "DB",
+        "Flask",
+        "Tests",
+        "Git",
+        "API",
+        "Deploy"
+      ],
+      "requirementsShort": [
+        "English",
+        "PC + internet",
+        "Motivation"
+      ],
+      "certificateShort": "International SmartCode certificate after all modules and the final project.",
+      "skills": [
+        "Python programming fundamentals",
+        "Working with data and files",
+        "Object-oriented programming",
+        "Working with databases",
+        "Web development with Flask",
+        "Code testing",
+        "Git version control",
+        "REST API development",
+        "Project deployment"
+      ],
+      "format": [
+        "Video lessons with explanations",
+        "Hands-on tasks after each lesson",
+        "Quizzes to check your knowledge",
+        "Real portfolio projects",
+        "Code review from mentors"
+      ],
+      "requirements": [
+        "Basic English skills",
+        "Access to a computer with internet",
+        "Motivation and readiness to learn"
+      ],
+      "certificateText": "After successfully completing all modules and the final project, you will receive an international SmartCode Academy certificate confirming your skills as a Python developer.",
+      "certificateRole": "Python developer"
+    },
+    "webdev": {
+      "valueProposition": "Your web dev journey starts here! Build modern sites and apps.",
+      "skillShort": [
+        "HTML",
+        "CSS",
+        "Responsive",
+        "JS",
+        "DOM",
+        "API",
+        "React",
+        "Next.js",
+        "Deploy"
+      ],
+      "requirementsShort": [
+        "English",
+        "PC + internet",
+        "Motivation"
+      ],
+      "certificateShort": "SmartCode certificate after all modules and the final web project.",
+      "skills": [
+        "HTML5 and semantic markup",
+        "CSS Flexbox and Grid",
+        "Responsive design",
+        "JavaScript fundamentals",
+        "DOM manipulation and events",
+        "Working with APIs (Fetch)",
+        "React and component-based architecture",
+        "Next.js (SSR/SSG)",
+        "Deploying web applications"
+      ],
+      "format": [
+        "Video lessons with explanations",
+        "Hands-on tasks after each lesson",
+        "Quizzes to check your knowledge",
+        "Real portfolio projects",
+        "Code review from mentors"
+      ],
+      "requirements": [
+        "Basic English skills",
+        "Access to a computer with internet",
+        "Motivation and readiness to learn"
+      ],
+      "certificateText": "After successfully completing all modules and the final project, you will receive an international SmartCode Academy certificate confirming your skills as a web developer.",
+      "certificateRole": "web developer"
+    },
+    "roblox": {
+      "valueProposition": "92 lessons: modeling first, then ready-code sparks, serious Lua, genres, and a shipped final game.",
+      "skillShort": [
+        "Studio",
+        "Models",
+        "Lua",
+        "Obby",
+        "Tycoon",
+        "Release"
+      ],
+      "requirementsShort": [
+        "Windows/Mac",
+        "Roblox",
+        "Internet"
+      ],
+      "certificateShort": "SmartCode Roblox certificate after Showcase Day.",
+      "skills": [
+        "Roblox Studio, Parts, Models, Unions",
+        "Terrain, Lighting, and atmosphere",
+        "Lua: variables, if, loops, functions",
+        "Obby, simulator, Tycoon, Tools/GUI",
+        "Safer shops with RemoteEvent basics",
+        "Release and Showcase Day"
+      ],
+      "format": [
+        "Live online classes (groups up to 5 or 1:1)",
+        "Theory + practice + quiz in the LMS every lesson",
+        "Mini-projects and module checkpoints",
+        "Final game + Showcase",
+        "Portfolio Place on Roblox"
+      ],
+      "requirements": [
+        "Windows 10+ or macOS 10.13+",
+        "Roblox account (free)",
+        "Roblox Studio installed",
+        "Internet for Studio setup and multiplayer tests"
+      ],
+      "certificateText": "After completing the course you receive a SmartCode Academy certificate confirming Roblox game development skills.",
+      "certificateRole": "Roblox developer"
+    },
+    "ai": {
+      "valueProposition": "Prompting, generative media, and a content system you can actually keep running.",
+      "skillShort": [
+        "Prompting",
+        "Images",
+        "Video",
+        "Workflow"
+      ],
+      "requirementsShort": [
+        "Browser",
+        "Internet",
+        "Curiosity"
+      ],
+      "certificateShort": "SmartCode certificate after completing AI for Real Life.",
+      "skills": [
+        "How generative models actually work",
+        "Prompting as an engineering skill",
+        "Generating images and video",
+        "Writing that still sounds human",
+        "A weekly content system"
+      ],
+      "format": [
+        "Self-paced lessons in the LMS",
+        "Practice tasks with clear briefs",
+        "Reusable prompt templates",
+        "Progress saved across devices"
+      ],
+      "requirements": [
+        "A modern browser",
+        "Internet connection",
+        "Willingness to iterate on prompts"
+      ],
+      "certificateText": "After finishing the program - a SmartCode certificate for AI for Real Life.",
+      "certificateRole": "AI practitioner"
+    },
+    "scratch": {
+      "valueProposition": "92 block-coding lessons: from your first sprite to your own game with levels and a final project.",
+      "skillShort": [
+        "Sprites",
+        "Events",
+        "Variables",
+        "Loops",
+        "Clones",
+        "Games"
+      ],
+      "requirementsShort": [
+        "PC + internet",
+        "Scratch Online",
+        "Motivation"
+      ],
+      "certificateShort": "SmartCode Scratch certificate after the final project.",
+      "skills": [
+        "Scratch interface and working with sprites",
+        "Motion, animation, and backdrops",
+        "Events, variables, and conditionals",
+        "Loops, clones, and lists",
+        "Game mechanics: menus, levels, win/lose",
+        "Final game and presentation"
+      ],
+      "format": [
+        "Live online lessons with a teacher",
+        "Topic list and progress in the LMS",
+        "Mini-projects and module checkpoints",
+        "Final project",
+        "Mentor support"
+      ],
+      "requirements": [
+        "A computer with internet",
+        "A free Scratch account",
+        "Willingness to build games and stories"
+      ],
+      "certificateText": "After completing the course - a SmartCode Academy certificate in Scratch block coding.",
+      "certificateRole": "Scratch student"
+    },
+    "minecraft": {
+      "valueProposition": "92 lessons in Minecraft Education: agent, MakeCode, command blocks, quests, and STEM projects.",
+      "skillShort": [
+        "Agent",
+        "MakeCode",
+        "Building",
+        "Commands",
+        "Quests",
+        "STEM"
+      ],
+      "requirementsShort": [
+        "Windows/Mac",
+        "Minecraft Education",
+        "Internet"
+      ],
+      "certificateShort": "SmartCode Minecraft Education certificate after the final world.",
+      "skills": [
+        "Navigating Minecraft Education",
+        "Code Builder / MakeCode and the agent",
+        "Building patterns and geometry",
+        "Conditionals, loops, and events in code",
+        "Command blocks and quests",
+        "STEM projects and teamwork"
+      ],
+      "format": [
+        "Live online lessons with a teacher",
+        "Topic list and progress in the LMS",
+        "Practice worlds and checkpoints",
+        "Final world and presentation",
+        "Mentor support"
+      ],
+      "requirements": [
+        "Windows or macOS",
+        "Access to Minecraft Education Edition",
+        "Internet for lessons and Code Builder"
+      ],
+      "certificateText": "After completing the course - a SmartCode Academy certificate in Minecraft Education.",
+      "certificateRole": "Minecraft Education student"
+    }
+  },
+  "lesson": {
+    "notFound": "Lesson not found",
+    "backToCourse": "Back to course",
+    "backToModule": "Back to module",
+    "lockedTitle": "Lesson locked",
+    "lockedDescription": "This lesson is available only after purchasing the course. The first lesson of the first module is free for preview.",
+    "lockedDescriptionDrip": "This lesson is not open yet. With your subscription, 2 new lessons unlock every week from the day you got access.",
+    "returnToCourse": "Return to course",
+    "purchaseCourse": "Purchase course",
+    "processing": "Processing...",
+    "paymentError": "Failed to create payment. Please try again.",
+    "progressError": "Failed to save progress. Please try again.",
+    "sidebarTitle": "Course navigation",
+    "sidebarModule": "Module {order}: {title}",
+    "dragOpenMenu": "Drag to open menu",
+    "expandMenu": "Expand menu",
+    "collapseMenu": "Collapse menu",
+    "openMenu": "Open menu",
+    "resizeMenu": "Resize menu",
+    "prevTab": "Previous tab",
+    "prevSection": "Previous section",
+    "nextTab": "Next tab",
+    "nextSection": "Next section",
+    "breadcrumb": {
+      "home": "Home",
+      "course": "Course",
+      "module": "Module",
+      "lesson": "Lesson"
+    },
+    "tabs": {
+      "theory": "Theory",
+      "practice": "Practice",
+      "quiz": "Quiz"
+    },
+    "practiceRequiredAlert": "Mark Studio practice as finished first - then the quiz unlocks.",
+    "practiceRequiredTitle": "Finish Studio practice first",
+    "sidebarLockedHint": "This lesson is still locked. Two new lessons unlock each week.",
+    "objectivesTitle": "Lesson objectives",
+    "videoLesson": "Video lesson",
+    "codeExamplesTitle": "Code examples",
+    "mistakesTitle": "Common mistakes",
+    "correctLabel": "Correct:",
+    "summaryTitle": "Summary",
+    "practiceTitle": "Practice task",
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "taskCondition": "Task description:",
+    "examplesTitle": "Examples:",
+    "inputLabel": "Input:",
+    "outputLabel": "Output:",
+    "hintsTitle": "Hints:",
+    "yourCode": "Your code",
+    "showSolution": "Show",
+    "hideSolution": "Hide",
+    "solutionToggle": "{action} solution",
+    "codePlaceholder": "Write your code here...",
+    "runCode": "Run code",
+    "running": "Running...",
+    "pyodideLoading": "Loading Python...",
+    "executionResult": "Execution result:",
+    "outputResult": "Output:",
+    "errorLabel": "Error:",
+    "executionError": "Execution error:",
+    "practiceSuccess": "Congratulations! The practice task was completed correctly!",
+    "practiceSuccessHint": "You can now proceed to the quiz.",
+    "practiceFail": "The practice task was not completed correctly.",
+    "practiceFailHint": "Check your code and try again. Review the output examples and hints.",
+    "outputErrorsFound": "Found {count} errors in the output. Lines with errors are highlighted in red.",
+    "exampleSolution": "Sample solution:",
+    "insertCode": "Insert code into editor",
+    "noPracticeAdvanced": "This lesson has no practice task. You can proceed to the quiz.",
+    "noPracticeYet": "The practice task for this lesson has not been added yet.",
+    "quizLockedTitle": "Quiz still locked",
+    "quizLockedDescription": "Finish the practice in Studio first, then tap “I've finished the practice in Studio”.",
+    "goToPractice": "Go to practice",
+    "quizTitle": "Knowledge quiz",
+    "quizInfo": "{count} questions • Minimum passing score: {passingScore}%",
+    "quizTimeLimit": " • Time: {minutes} min",
+    "questionNumber": "Question {number}",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "explanation": "Explanation:",
+    "submitQuiz": "Submit quiz",
+    "yourScore": "Your score",
+    "quizPassed": "Quiz passed!",
+    "quizFailed": "Quiz not passed",
+    "retakeInfo": "Minimum score: {passingScore}%. Try again!",
+    "nextLesson": "Go to next lesson: {title}",
+    "courseCompleted": "Congratulations! You have completed all lessons in this course!",
+    "retakeQuiz": "Retake quiz",
+    "noQuizYet": "The quiz for this lesson has not been added yet.",
+    "completed": "Completed",
+    "copyCode": "Copy",
+    "copiedCode": "Copied",
+    "minutes": "{count} minutes",
+    "runCodeErrors": {
+      "emptyCode": "Please enter code before running",
+      "dangerousCode": "The code contains unsafe operations that are not allowed. Please use only safe Python constructs for learning.",
+      "codeTooLong": "Code is too long. Maximum length: 50,000 characters",
+      "executionFailed": "Code execution error",
+      "executionTimeout": "Execution timed out (10 s)",
+      "workerError": "Python runtime error",
+      "workerStartFailed": "Could not start Python in the browser",
+      "connectionError": "Failed to connect to the server. Please try again.",
+      "pyodideLoadFailed": "Could not load Python in the browser. Check your connection and try again.",
+      "loginRequired": "Sign in to run code on the protected SmartCode server.",
+      "noCourseAccess": "You do not have access to this course.",
+      "rateLimit": "Too many code runs. Please wait a few minutes.",
+      "serverUnavailable": "Server-side Python is temporarily unavailable. Contact support."
+    },
+    "roblox": {
+      "lockedDescriptionEn": "This lesson is locked. Purchase the full course for $15 to unlock all lessons. The first lesson of the first module is free to preview.",
+      "lockedDescriptionUk": "This lesson is still locked. Ask your teacher or manager to open the Roblox course - then come back after class.",
+      "purchaseFullCourse": "Buy full course - {price}",
+      "onlineAccessHint": "Online student access",
+      "comingSoon": "Content coming soon",
+      "markComplete": "Mark lesson complete",
+      "optionalChallenge": "Optional challenge",
+      "theoryDuration": "{minutes} min theory",
+      "quizDuration": "{minutes} min quiz",
+      "markPracticeComplete": "I've finished the practice in Studio",
+      "practiceDone": "Practice done - you can take the quiz",
+      "quizLockedHint": "Finish Studio practice first, then tap the complete button below",
+      "quizLockedDescription": "The quiz unlocks after Studio practice. Follow the lesson steps, save your Place, then tap “I've finished the practice in Studio”.",
+      "statusPracticeDone": "Practice ✓",
+      "statusQuizDone": "Quiz ✓",
+      "courseProgress": "{done}/{total} lessons · {pct}%",
+      "checkpointPill": "Checkpoint",
+      "checkpointCelebrateTitle": "Module checkpoint cleared!",
+      "checkpointCelebrateBody": "Nice work. Save your Place and keep going - the next module levels up your skills.",
+      "backToRoadmap": "Back to course map",
+      "nextLockedHint": "The next lesson unlocks when you get course access (online group or purchase).",
+      "nextLockedHintSequential": "Pass this quiz (≥70%) - the next lesson unlocks right away.",
+      "nextLockedHintDrip": "Two new lessons unlock every week. Check back next week for the next ones.",
+      "goQuizCta": "Go to quiz",
+      "starterTipTitle": "Your Place",
+      "starterTipBody": "Work in a Place copy from your teacher, not a fresh Baseplate every time. Ask for a copy in class and save it as M1_YourName (or your module).",
+      "checklistTitle": "Check before the quiz",
+      "checklistOpenStudio": "Opened Roblox Studio and your Place",
+      "checklistDidSteps": "Completed the practice steps from the lesson",
+      "checklistSaved": "Saved the Place (File → Save)",
+      "checklistHint": "Check all three boxes - then the button becomes active"
+    },
+    "ai": {
+      "lockedDescriptionEn": "This lesson is locked. Subscribe to AI for Real Life to unlock the full program. The first lesson is free to preview.",
+      "lockedDescriptionUk": "This lesson is locked. Subscribe to AI for Real Life to unlock the full program. The first lesson is free to preview.",
+      "purchaseFullCourse": "View pricing",
+      "onlineAccessHint": "Subscriber access",
+      "comingSoon": "Content coming soon",
+      "markComplete": "Mark lesson complete",
+      "optionalChallenge": "Optional challenge",
+      "theoryDuration": "{minutes} min theory",
+      "quizDuration": "{minutes} min quiz",
+      "markPracticeComplete": "I've finished the practice brief",
+      "practiceDone": "Practice done - you can take the quiz",
+      "quizLockedHint": "Finish the practice brief first, then tap the complete button below",
+      "quizLockedDescription": "The quiz unlocks after practice. Follow the brief in your AI tool, save your best output, then tap “I've finished the practice brief”.",
+      "statusPracticeDone": "Practice ✓",
+      "statusQuizDone": "Quiz ✓",
+      "courseProgress": "{done}/{total} lessons · {pct}%",
+      "checkpointPill": "Capstone",
+      "checkpointCelebrateTitle": "Capstone cleared!",
+      "checkpointCelebrateBody": "You shipped a content system you can run. Keep the templates warm - the next 30 days are where the habit sticks.",
+      "backToRoadmap": "Back to course map",
+      "nextLockedHint": "The next lesson unlocks when you subscribe to AI for Real Life.",
+      "nextLockedHintSequential": "Pass this quiz (≥70%) - the next lesson unlocks right away.",
+      "nextLockedHintDrip": "Two new lessons unlock every week. Check back next week for the next ones.",
+      "goQuizCta": "Go to quiz",
+      "starterTipTitle": "Your workspace",
+      "starterTipBody": "Work in one chat thread or doc per lesson so you can reuse prompts later.",
+      "checklistTitle": "Check before the quiz",
+      "checklistOpenStudio": "Opened my AI tool (chat, image, or video)",
+      "checklistDidSteps": "Completed the practice steps from the lesson",
+      "checklistSaved": "Saved my best output (doc, folder, or note)",
+      "checklistHint": "Check all three boxes - then the button becomes active"
+    },
+    "lockedDescriptionPython": "To unlock the course, attend SmartCode online Python lessons. Module 1 lesson 1 is available as a preview.",
+    "lockedDescriptionRoblox": "To unlock the course, attend SmartCode online Roblox Studio lessons. Module 1 lesson 1 is available as a preview.",
+    "testCaseLabel": "Test {number}",
+    "failedTestsFound": "Failed tests: {failed} (of {total})."
+  }
+}

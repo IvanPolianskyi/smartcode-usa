@@ -10,10 +10,12 @@
  */
 export const courseStructure = {
   courseId: "python-developer-zero-to-junior",
-  title: "Повний курс Пайтон",
-  shortDescription: "Повний курс програмування на Python від основ до рівня впевненого джуніора",
-  valueProposition: "Навчись створювати реальні проекти на Python та отримай навички, необхідні для початку кар'єри в IT.",
-  
+  title: "Complete Python Course",
+  shortDescription:
+    "A complete Python programming course from the basics to a confident junior level",
+  valueProposition:
+    "Learn to build real Python projects and gain the skills you need to start a career in IT.",
+
   // Course metadata
   level: "Beginner",
   targetAge: "13-17",
@@ -22,20 +24,20 @@ export const courseStructure = {
     lessons: 96,
     hours: 192
   },
-  
+
   // Skills students will gain
   skills: [
-    "Основи програмування на Python",
-    "Робота з даними та файлами",
-    "Об'єктно-орієнтоване програмування",
-    "Робота з базами даних",
-    "Веб-розробка з Flask",
-    "Тестування коду",
-    "Версійний контроль Git",
-    "Розробка REST API",
-    "Деплой проектів"
+    "Python programming fundamentals",
+    "Working with data and files",
+    "Object-oriented programming",
+    "Working with databases",
+    "Web development with Flask",
+    "Code testing",
+    "Git version control",
+    "REST API development",
+    "Deploying projects"
   ],
-  
+
   // Learning format
   learningFormat: {
     video: true,
@@ -44,21 +46,21 @@ export const courseStructure = {
     projects: true,
     codeReview: true
   },
-  
+
   // Certificate info
   certificate: {
     available: true,
-    requirements: "Завершення всіх модулів та фінального проекту",
-    type: "Міжнародний сертифікат SmartCode Academy"
+    requirements: "Complete all modules and the final project",
+    type: "International SmartCode Academy certificate"
   },
-  
+
   // Requirements
   requirements: [
-    "Базові знання англійської мови",
-    "Доступ до комп'ютера з інтернетом",
-    "Мотивація та готовність до навчання"
+    "Basic English",
+    "A computer with internet access",
+    "Motivation and readiness to learn"
   ],
-  
+
   // Course roadmap (modules overview)
   modules: [] // Will be populated from curriculum
 }

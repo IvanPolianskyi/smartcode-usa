@@ -779,9 +779,9 @@ example()  # Обидва повідомлення про відсутність
     description: "Створіть універсальний калькулятор, який працює з довільною кількістю чисел та опціями",
     problemStatement: `Напишіть програму з функціями:
 
-1. calculate(operation, *numbers, **options) — "add", "multiply", "average"; опція round
-2. format_result(result, **format_options) — prefix, suffix
-3. display_calculation(operation, *numbers, result, **info) — друкує блок обчислення
+1. calculate(operation, *numbers, **options) - "add", "multiply", "average"; опція round
+2. format_result(result, **format_options) - prefix, suffix
+3. display_calculation(operation, *numbers, result, **info) - друкує блок обчислення
 
 Зчитайте: operation, n, n чисел, round_flag (True/False), prefix, suffix.
 

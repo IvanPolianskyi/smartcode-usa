@@ -170,7 +170,7 @@ export async function allocateUniqueStudentLogin(
     if (await isFree(e)) return e
   }
 
-  // Усі кандидати зайняті — додаємо випадковий суфікс, доки не знайдемо вільний.
+  // Усі кандидати зайняті - додаємо випадковий суфікс, доки не знайдемо вільний.
   const base = sid || crypto.randomBytes(3).toString('hex')
   for (let i = 0; i < 10; i += 1) {
     const fallback = `student.${base}.${crypto.randomBytes(2).toString('hex')}@${STUDENTS_DOMAIN}`

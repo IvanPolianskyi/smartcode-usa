@@ -34,7 +34,7 @@ export const lesson_03_3 = {
 \`\`\`python
 def greet(name, age, city):
     """
-    name, age, city — parameters
+    name, age, city - parameters
     """
     print(f"Hello, {name}! You are {age} years old. You are from {city}.")
 
@@ -59,7 +59,7 @@ def calculate(a, b, operation):
 # Correct order
 result1 = calculate(5, 3, "add")  # 5 + 3 = 8
 
-# Wrong order — unexpected result!
+# Wrong order - unexpected result!
 result2 = calculate("add", 5, 3)  # Error or unexpected result
 \`\`\`
 
@@ -96,7 +96,7 @@ def create_user(username, email, age, is_active, role):
     # Create a user
     pass
 
-# With keyword arguments — clear what each value means
+# With keyword arguments - clear what each value means
 create_user(
     username="john_doe",
     email="john@example.com",
@@ -144,8 +144,8 @@ def greet(name, age, city, country):
 
 # Combining
 greet("Alexander", 20, city="Kyiv", country="Ukraine")
-# "Alexander" and 20 — positional
-# city and country — keyword
+# "Alexander" and 20 - positional
+# city and country - keyword
 \`\`\`
 
 **Important rule:**
@@ -289,7 +289,7 @@ print(format_text(text, fill_char="*"))     # Fill with asterisks
         title: "When to use positional vs keyword?",
         content: `**Use positional arguments when:**
 
-1. **The function has 1–2 parameters:**
+1. **The function has 1-2 parameters:**
 \`\`\`python
 def add(a, b):
     return a + b
@@ -357,8 +357,8 @@ def process_data(data, format="json", validate=True, save=False, output_file=Non
     # Process data
     pass
 
-# First parameter (data) — positional (required)
-# Rest — keyword (optional)
+# First parameter (data) - positional (required)
+# Rest - keyword (optional)
 process_data(my_data, format="xml", save=True, output_file="result.xml")
 \`\`\``
       },
@@ -483,14 +483,14 @@ notif3 = send_notification("Message", recipient="user@example.com", urgent=True)
 
 **Rules:**
 
-- Use positional for simple functions (1–2 parameters)
+- Use positional for simple functions (1-2 parameters)
 - Use keyword for complex functions (many parameters)
 - Combine when appropriate
 - Defaults make functions more flexible
 
 **Next step:**
 
-In the next lesson we will learn about *args and **kwargs — powerful tools for working with a variable number of arguments.`
+In the next lesson we will learn about *args and **kwargs - powerful tools for working with a variable number of arguments.`
       }
     ]
   },
@@ -503,7 +503,7 @@ In the next lesson we will learn about *args and **kwargs — powerful tools for
 
 # Order matters
 greet("Alexander", 20, "Kyiv")  # Correct
-greet("Kyiv", "Alexander", 20)  # Incorrect — order mixed up`,
+greet("Kyiv", "Alexander", 20)  # Incorrect - order mixed up`,
       explanation: "Shows positional arguments, where order is critical."
     },
     {
@@ -652,7 +652,7 @@ create_user(
    - Defaults must come after non-default parameters
 
 5. When to use which
-   - Positional for simple functions (1–2 parameters)
+   - Positional for simple functions (1-2 parameters)
    - Keyword for complex functions (many parameters)
    - Combine when appropriate
 
@@ -663,9 +663,9 @@ This knowledge will help you write more readable and flexible code!`,
     description: "Create functions for user settings using positional and keyword arguments",
     problemStatement: `Write a program with these functions:
 
-1. create_user_settings(username, theme="light", language="uk", notifications=True, font_size=14) — returns a settings dictionary
-2. update_settings(settings, theme=None, language=None, notifications=None, font_size=None) — updates only provided (non-None) fields
-3. display_settings(settings, format="short") — prints settings:
+1. create_user_settings(username, theme="light", language="uk", notifications=True, font_size=14) - returns a settings dictionary
+2. update_settings(settings, theme=None, language=None, notifications=None, font_size=None) - updates only provided (non-None) fields
+3. display_settings(settings, format="short") - prints settings:
    - short: Theme / Language
    - full: Interface theme / Interface language
    - Notifications: "Enabled" or "Disabled"
@@ -905,7 +905,7 @@ display_settings(settings, format=fmt)`,
           "True"
         ],
         correctAnswer: 0,
-        explanation: "Not always. For simple functions with 1–2 parameters, positional arguments are often more convenient and shorter. Keyword arguments are better for complex functions with many parameters."
+        explanation: "Not always. For simple functions with 1-2 parameters, positional arguments are often more convenient and shorter. Keyword arguments are better for complex functions with many parameters."
       }
     ],
     timeLimit: 15,

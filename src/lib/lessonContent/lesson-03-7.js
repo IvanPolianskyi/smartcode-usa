@@ -771,10 +771,10 @@ result = len([1, 2, 3])  #  len працює як функція`
     description: "Створіть функції, які демонструють різні аспекти області видимості змінних",
     problemStatement: `Напишіть програму, яка демонструє область видимості:
 
-1. local_example() — локальна x=20, глобальна x не змінюється
-2. increment / reset / get_count — глобальний counter
-3. outer()/inner() — вкладені функції
-4. create_adder(n), create_multiplier(n) — замикання
+1. local_example() - локальна x=20, глобальна x не змінюється
+2. increment / reset / get_count - глобальний counter
+3. outer()/inner() - вкладені функції
+4. create_adder(n), create_multiplier(n) - замикання
 
 Зчитайте: початковий counter не потрібен (почніть з 0); кількість increment; n1, x1 для adder; n2, x2 для adder; n3, x3 для multiplier; n4, x4 для multiplier.
 Глобальна x = 10. Виведіть демо локальних змінних, лічильник, outer/inner і замикання.

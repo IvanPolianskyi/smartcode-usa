@@ -1,16 +1,45 @@
 'use client'
 
-import Link from 'next/link'
+import { useState } from 'react'
 import Image from 'next/image'
 import StickyNav from '@/components/Nav/StickyNav'
+import { Link } from '@/i18n/navigation'
 import styles from '../login/Auth.module.css'
 
-const SUPPORT_EMAIL =
-	process.env.NEXT_PUBLIC_MERCHANT_EMAIL ||
-	process.env.NEXT_PUBLIC_SUPPORT_EMAIL ||
-	'support@smartcode.academy'
-
 export default function ForgotPasswordPage() {
+	const [email, setEmail] = useState('')
+	const [loading, setLoading] = useState(false)
+	const [submitted, setSubmitted] = useState(false)
+	const [error, setError] = useState('')
+
+	const handleSubmit = async (e) => {
+		e.preventDefault()
+		setError('')
+		const cleanEmail = email.trim()
+		if (!cleanEmail) {
+			setError('Please enter your email address.')
+			return
+		}
+
+		setLoading(true)
+		try {
+			const res = await fetch('/api/auth/forgot-password', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ email: cleanEmail }),
+			})
+			const data = await res.json()
+			if (!res.ok) {
+				throw new Error(data.error || 'Failed to send reset link.')
+			}
+			setSubmitted(true)
+		} catch (err) {
+			setError(err.message || 'Something went wrong. Please try again.')
+		} finally {
+			setLoading(false)
+		}
+	}
+
 	return (
 		<div className={styles.page} data-theme="light">
 			<StickyNav
@@ -44,20 +73,66 @@ export default function ForgotPasswordPage() {
 				<div className={styles.panel}>
 					<p className={styles.label}>Account</p>
 					<h1 className={styles.title}>Forgot password?</h1>
-					<p className={styles.lede}>
-						We don&apos;t offer self-serve password reset yet. Email us and
-						we&apos;ll help you get back in.
-					</p>
 
-					<ul className={styles.helpList}>
-						<li>
-							Write to{' '}
-							<a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> from the
-							address on your account.
-						</li>
-						<li>Tell us you need a password reset or a fresh sign-in link.</li>
-						<li>We&apos;ll reply with next steps, usually within one business day.</li>
-					</ul>
+					{submitted ? (
+						<>
+							<div className={styles.bannerInfo}>
+								<strong>Check your inbox</strong>
+								<p style={{ margin: '8px 0 0' }}>
+									If an account is associated with <strong>{email}</strong>, we’ve sent an email with a link to reset your password. The link is valid for 1 hour.
+								</p>
+							</div>
+							<p className={styles.lede}>
+								Didn’t receive the email? Check your spam folder or try requesting a new link below.
+							</p>
+							<button
+								type="button"
+								className={`sc-btn sc-btn-ghost ${styles.submit}`}
+								onClick={() => {
+									setSubmitted(false)
+									setEmail('')
+								}}
+							>
+								Send another link
+							</button>
+						</>
+					) : (
+						<>
+							<p className={styles.lede}>
+								Enter the email address for your SmartCode account and we&apos;ll send you a link to reset your password.
+							</p>
+
+							{error ? <div className={styles.error}>{error}</div> : null}
+
+							<form onSubmit={handleSubmit} className={styles.form}>
+								<div className={styles.field}>
+									<label htmlFor="email" className={styles.fieldLabel}>
+										Email
+									</label>
+									<input
+										id="email"
+										type="email"
+										name="email"
+										required
+										autoComplete="email"
+										className={styles.input}
+										placeholder="you@example.com"
+										value={email}
+										onChange={(e) => setEmail(e.target.value)}
+										disabled={loading}
+									/>
+								</div>
+
+								<button
+									type="submit"
+									className={`sc-btn sc-btn-primary sc-btn-lg ${styles.submit}`}
+									disabled={loading}
+								>
+									{loading ? 'Sending link…' : 'Send reset link'}
+								</button>
+							</form>
+						</>
+					)}
 
 					<div className={styles.footer}>
 						<p>

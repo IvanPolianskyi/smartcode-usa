@@ -1,21 +1,21 @@
+import { notFound } from 'next/navigation'
 import CoursePage from '@/components/Course/CoursePage'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { getLocalizedMetadata, buildAlternates } from '@/lib/i18nMetadata'
+import { isKnownCourseId } from '@/lib/courseLessonAccess'
 
 export async function generateMetadata({ params }) {
 	const { locale, courseId } = await params
 	const pageKey =
-		courseId === 'web-development'
-			? 'webDev'
-			: courseId === 'roblox-studio'
-				? 'roblox'
-				: courseId === 'scratch'
-					? 'scratch'
-					: courseId === 'minecraft-education'
-						? 'minecraft'
-						: 'python'
+		courseId === 'roblox-studio'
+			? 'roblox'
+			: courseId === 'ai-at-work'
+				? 'ai'
+				: courseId === 'python-developer-zero-to-junior'
+					? 'python'
+					: 'python'
 	const meta = await getLocalizedMetadata(locale, pageKey)
 	const path = `/courses/${courseId}`
 
@@ -27,6 +27,10 @@ export async function generateMetadata({ params }) {
 
 export default async function CoursePageRoute({ params }) {
 	const { courseId } = await params
+
+	if (!isKnownCourseId(courseId)) {
+		notFound()
+	}
 
 	let userProgress = null
 	try {

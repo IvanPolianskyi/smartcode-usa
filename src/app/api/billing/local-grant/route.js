@@ -31,7 +31,7 @@ export async function POST(request) {
 
 		if (priceIdFor(courseId, interval, tier)) {
 			return NextResponse.json(
-				{ error: 'Use Paddle checkout — price IDs are configured' },
+				{ error: 'Use Paddle checkout - price IDs are configured' },
 				{ status: 400 }
 			)
 		}
@@ -51,6 +51,7 @@ export async function POST(request) {
 					priceId: `pri_local_${courseId}_${tier}_${interval}`,
 					productId: `pro_local_${courseId}`,
 					courseIds: [courseId],
+					planTier: tier,
 					status: 'active',
 					billingInterval: interval,
 					trialEndsAt: null,

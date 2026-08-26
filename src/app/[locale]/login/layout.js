@@ -1,7 +1,7 @@
 import { setRequestLocale } from 'next-intl/server'
 
 export const metadata = {
-	title: 'Log in — SmartCode',
+	title: 'Log in - SmartCode',
 	description: 'Sign in to your SmartCode account to continue learning.',
 }
 

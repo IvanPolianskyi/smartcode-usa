@@ -210,7 +210,9 @@ def example(**options):  # It works too!
     return options
 
 result = example(a=1, b=2, c=3)
-\`\`\`2. ****kwargs collects arguments into a dictionary:**\`\`\`python
+\`\`\`
+
+2. ****kwargs collects arguments into a dictionary:**\`\`\`python
 def show_kwargs(**kwargs):
     print(f"Type: {type(kwargs)}")
     print(f"Value: {kwargs}")
@@ -690,9 +692,9 @@ These tools make functions more flexible and powerful!`,
     description: "Create a universal calculator that works with any number of numbers and options",
     problemStatement: `Write a program with functions:
 
-1. calculate(operation, *numbers, **options) — "add", "multiply", "average"; round option
-2. format_result(result, **format_options) — prefix, suffix
-3. display_calculation(operation, *numbers, result, **info) — prints calculation block
+1. calculate(operation, *numbers, **options) - "add", "multiply", "average"; round option
+2. format_result(result, **format_options) - prefix, suffix
+3. display_calculation(operation, *numbers, result, **info) - prints calculation block
 
 Read: operation, n, n numbers, round_flag (True/False), prefix, suffix.
 
@@ -721,7 +723,7 @@ Formatted result: Sum: 60 UAH`,
 30
 True
 Sum: 
-UAH`,
+ UAH`,
         output: `=== Calculation ===
 Operation: add
 Numbers: 10, 20, 30
@@ -759,13 +761,13 @@ Formatted result: 24`,
 True
 Average: 
 -`,
-        output: `=== Calculations ===
+        output: `=== Calculation ===
 Operation: average
 Numbers: 10, 20, 30, 40
 Result: 25
 Formatting: 25
 
-Formatted Result: Average: 25`,
+Formatted result: Average: 25`,
         explanation: "Average 25 with prefix; '-' = empty suffix"
       }
     ],
@@ -794,7 +796,9 @@ def format_result(result, **format_options):
         return "Error"
     prefix = format_options.get("prefix", "")
     suffix = format_options.get("suffix", "")
-    return f"{prefix}{result}{suffix}"def display_calculation(operation, *numbers, result, **info):
+    return f"{prefix}{result}{suffix}"
+
+def display_calculation(operation, *numbers, result, **info):
     """Displays detailed information about the calculation"""
     print("=== Calculation ===")
     print(f"Operation: {operation}")
@@ -816,7 +820,9 @@ suffix = input()
 if prefix.strip() == "-":
     prefix = ""
 if suffix.strip() == "-":
-    suffix = ""result = calculate(operation, *numbers, round=round_flag)
+    suffix = ""
+
+result = calculate(operation, *numbers, round=round_flag)
 display_calculation(operation, *numbers, result=result)
 formatted = format_result(result, prefix=prefix, suffix=suffix)
 print(f"Formatted result: {formatted}")`,

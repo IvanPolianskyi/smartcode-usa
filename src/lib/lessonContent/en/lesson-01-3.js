@@ -240,7 +240,7 @@ Score: 85
 Membership card: True
 Can join: True
 Cannot join: False`,
-        explanation: "Conditions pass — can_join True, not gives False"
+        explanation: "Conditions pass - can_join True, not gives False"
       },
       {
         input: `10
@@ -251,7 +251,7 @@ Score: 70
 Membership card: False
 Can join: False
 Cannot join: True`,
-        explanation: "Age too low and no card — access denied, not → True"
+        explanation: "Age too low and no card - access denied, not → True"
       },
       {
         input: `16
@@ -262,7 +262,7 @@ Score: 50
 Membership card: False
 Can join: False
 Cannot join: True`,
-        explanation: "Score < 60 and no card — access denied"
+        explanation: "Score < 60 and no card - access denied"
       }
     ],
     solution: {

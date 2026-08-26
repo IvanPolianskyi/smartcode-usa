@@ -31,9 +31,9 @@ export const lesson_05_3 = {
 
 **Приклади з життя:**
 
-- \`InsufficientFundsError\` — недостатньо коштів на рахунку
-- \`InvalidEmailError\` — некоректний email
-- \`BookAlreadyExistsError\` — книга вже в каталозі
+- \`InsufficientFundsError\` - недостатньо коштів на рахунку
+- \`InvalidEmailError\` - некоректний email
+- \`BookAlreadyExistsError\` - книга вже в каталозі
 
 **Переваги:**
 
@@ -52,7 +52,7 @@ raise InsufficientFundsError("Недостатньо коштів")
       },
       {
         title: "Створення класу винятку",
-        content: `Мінімальний власний виняток — клас, що наслідує \`Exception\`:
+        content: `Мінімальний власний виняток - клас, що наслідує \`Exception\`:
 
 \`\`\`python
 class AgeError(Exception):
@@ -82,7 +82,7 @@ raise AgeError(150, "Вік занадто великий")
 Завжди наслідуйте від \`Exception\` (або від вашого базового доменного класу), а не від \`BaseException\`.`
       },
       {
-        title: "raise — підняття винятку",
+        title: "raise - підняття винятку",
         content: `Ключове слово \`raise\` створює (або повторно кидає) виняток.
 
 \`\`\`python
@@ -147,10 +147,10 @@ except ValidationError as e:
 
 Можна обробити конкретику або одним блоком спіймати **усі** помилки валідації через базовий клас.
 
-**Правило:** називайте базовий клас коротко і ясно (\`BankError\`, \`ParseError\`), нащадків — описово.`
+**Правило:** називайте базовий клас коротко і ясно (\`BankError\`, \`ParseError\`), нащадків - описово.`
       },
       {
-        title: "raise from — ланцюжок причин",
+        title: "raise from - ланцюжок причин",
         content: `Іноді внутрішня помилка (наприклад, \`ValueError\`) має стати вашою доменною. \`raise ... from ...\` зберігає причину:
 
 \`\`\`python
@@ -166,10 +166,10 @@ def load_port(text):
 
 У traceback буде видно:
 
-- \`ConfigError\` — що сталося на рівні вашої логіки
-- \`ValueError\` — першопричина
+- \`ConfigError\` - що сталося на рівні вашої логіки
+- \`ValueError\` - першопричина
 
-**raise from None** — навпаки, приховати внутрішню причину (використовуйте рідко):
+**raise from None** - навпаки, приховати внутрішню причину (використовуйте рідко):
 
 \`\`\`python
 raise ConfigError("Невірний порт") from None
@@ -179,7 +179,7 @@ raise ConfigError("Невірний порт") from None
       },
       {
         title: "Документація та стиль",
-        content: `**Домовленість іменування:** суфікс \`Error\` (\`NotFoundError\`, \`PermissionError\` у вашому модулі — з унікальним префіксом, щоб не плутати зі стандартними).
+        content: `**Домовленість іменування:** суфікс \`Error\` (\`NotFoundError\`, \`PermissionError\` у вашому модулі - з унікальним префіксом, щоб не плутати зі стандартними).
 
 **Docstring обов’язковий для публічних винятків:**
 
@@ -290,12 +290,12 @@ except InsufficientFundsError as e:
   commonMistakes: [
     {
       mistake: "Наслідування від BaseException",
-      explanation: "BaseException включає KeyboardInterrupt і SystemExit — їх рідко варто ловити разом із бізнес-помилками.",
+      explanation: "BaseException включає KeyboardInterrupt і SystemExit - їх рідко варто ловити разом із бізнес-помилками.",
       correctApproach: "Наслідуйте від Exception або від свого базового *Error."
     },
     {
       mistake: "raise рядок: raise \"помилка\"",
-      explanation: "У сучасному Python так не роблять — потрібен екземпляр винятку.",
+      explanation: "У сучасному Python так не роблять - потрібен екземпляр винятку.",
       correctApproach: "raise MyError(\"помилка\")"
     },
     {
@@ -305,28 +305,28 @@ except InsufficientFundsError as e:
     },
     {
       mistake: "Глушити кастомний виняток порожнім except Exception",
-      explanation: "Тоді сенс власного типу втрачається — його ніхто не обробляє цілеспрямовано.",
+      explanation: "Тоді сенс власного типу втрачається - його ніхто не обробляє цілеспрямовано.",
       correctApproach: "except MyError as e: ... і лише потім загальний Exception за потреби."
     }
   ],
 
   summary: `На цьому уроці ми навчилися створювати власні винятки:
 
-1. class MyError(Exception) — мінімальний шаблон
-2. raise — підняття доменної помилки
-3. Ієрархія — базовий клас і конкретні нащадки
-4. raise from — збереження першопричини
+1. class MyError(Exception) - мінімальний шаблон
+2. raise - підняття доменної помилки
+3. Ієрархія - базовий клас і конкретні нащадки
+4. raise from - збереження першопричини
 5. Docstring і іменування з суфіксом Error
 
-Далі — assert і валідація даних.`,
+Далі - assert і валідація даних.`,
 
   practiceTask: {
     title: "Валідація віку з AgeError",
     description: "Створіть власний виняток і функцію перевірки віку",
     problemStatement: `1. Створіть клас AgeError(Exception)
 2. Напишіть функцію check_age(age):
-   - якщо age < 0 — raise AgeError("Вік не може бути від'ємним")
-   - якщо age > 120 — raise AgeError("Вік занадто великий")
+   - якщо age < 0 - raise AgeError("Вік не може бути від'ємним")
+   - якщо age > 120 - raise AgeError("Вік занадто великий")
    - інакше виведіть: Вік {age} прийнято
 3. Зчитайте n, потім n цілих чисел (вік). Для кожного викличте check_age у try/except.
 4. При AgeError виведіть: Помилка: {повідомлення}`,
@@ -398,7 +398,7 @@ for _ in range(n):
         question: "Від якого класу зазвичай наслідують власні винятки?",
         options: ["object", "Exception", "BaseException", "Error"],
         correctAnswer: 1,
-        explanation: "Стандартна практика — наслідувати від Exception."
+        explanation: "Стандартна практика - наслідувати від Exception."
       },
       {
         id: "q2",
@@ -453,7 +453,7 @@ for _ in range(n):
           "problem"
         ],
         correctAnswer: 0,
-        explanation: "Описова назва з суфіксом Error — прийнятий стиль."
+        explanation: "Описова назва з суфіксом Error - прийнятий стиль."
       },
       {
         id: "q7",

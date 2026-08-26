@@ -26,7 +26,7 @@ export const lesson_10_2 = {
     sections: [
       {
         title: "Resizing an image",
-        content: `**resize() — change size:**
+        content: `**resize() - change size:**
 
 \`\`\`python
 from PIL import Image
@@ -45,7 +45,7 @@ resized = img.resize((new_width, new_height))
 resized.save('photo_proportional.jpg')
 \`\`\`
 
-**thumbnail() — create a thumbnail:**
+**thumbnail() - create a thumbnail:**
 
 \`\`\`python
 from PIL import Image
@@ -69,16 +69,16 @@ from PIL import Image
 
 img = Image.open('photo.jpg')
 
-# NEAREST — nearest pixel (fast, lower quality)
+# NEAREST - nearest pixel (fast, lower quality)
 resized_nearest = img.resize((800, 600), Image.NEAREST)
 
-# BILINEAR — bilinear interpolation (better quality)
+# BILINEAR - bilinear interpolation (better quality)
 resized_bilinear = img.resize((800, 600), Image.BILINEAR)
 
-# BICUBIC — bicubic interpolation (higher quality, slower)
+# BICUBIC - bicubic interpolation (higher quality, slower)
 resized_bicubic = img.resize((800, 600), Image.BICUBIC)
 
-# LANCZOS — best quality for downscaling
+# LANCZOS - best quality for downscaling
 resized_lanczos = img.resize((800, 600), Image.LANCZOS)
 
 resized_lanczos.save('photo_high_quality.jpg')
@@ -86,7 +86,7 @@ resized_lanczos.save('photo_high_quality.jpg')
       },
       {
         title: "Cropping an image",
-        content: `**crop() — crop:**
+        content: `**crop() - crop:**
 
 \`\`\`python
 from PIL import Image
@@ -140,7 +140,7 @@ square.save('photo_square.jpg')
       },
       {
         title: "Rotation and flips",
-        content: `**rotate() — rotate:**
+        content: `**rotate() - rotate:**
 
 \`\`\`python
 from PIL import Image
@@ -160,7 +160,7 @@ rotated = img.rotate(45, expand=True)
 rotated.save('photo_rotated_expanded.jpg')
 \`\`\`
 
-**transpose() — standard transforms:**
+**transpose() - standard transforms:**
 
 \`\`\`python
 from PIL import Image
@@ -192,7 +192,7 @@ cropped.save('photo_rotated_cropped.jpg')
       },
       {
         title: "Brightness and contrast",
-        content: `**ImageEnhance — improve an image:**
+        content: `**ImageEnhance - improve an image:**
 
 \`\`\`python
 from PIL import Image, ImageEnhance
@@ -235,7 +235,7 @@ enhanced.save('photo_auto_enhanced.jpg')
       },
       {
         title: "Basic filters",
-        content: `**ImageFilter — built-in filters:**
+        content: `**ImageFilter - built-in filters:**
 
 \`\`\`python
 from PIL import Image, ImageFilter
@@ -381,13 +381,13 @@ batch_enhance('photos/', 'enhanced/')
 
 **Key methods:**
 
-1. **resize()** — change size
-2. **thumbnail()** — create a thumbnail
-3. **crop()** — crop
-4. **rotate()** — rotate
-5. **transpose()** — standard transforms
-6. **ImageEnhance** — brightness and contrast
-7. **ImageFilter** — apply filters
+1. **resize()** - change size
+2. **thumbnail()** - create a thumbnail
+3. **crop()** - crop
+4. **rotate()** - rotate
+5. **transpose()** - standard transforms
+6. **ImageEnhance** - brightness and contrast
+7. **ImageFilter** - apply filters
 
 **Main operations:**
 
@@ -476,11 +476,11 @@ enhanced.save('photo_enhanced.jpg')`,
   
   summary: `In this lesson we learned image manipulations:
 
-1. Resize — resize(), thumbnail()
-2. Crop — crop()
-3. Rotate — rotate(), transpose()
-4. Enhance — ImageEnhance (brightness, contrast)
-5. Filters — ImageFilter (blur, sharpen, edges)
+1. Resize - resize(), thumbnail()
+2. Crop - crop()
+3. Rotate - rotate(), transpose()
+4. Enhance - ImageEnhance (brightness, contrast)
+5. Filters - ImageFilter (blur, sharpen, edges)
 
 Image manipulation is the foundation of image processing!`,
   

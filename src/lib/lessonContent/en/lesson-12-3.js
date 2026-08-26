@@ -42,10 +42,10 @@ export const lesson_12_3 = {
 
 **Tools:**
 
-- smtplib — sending email
-- schedule — task scheduling
-- threading — asynchronous sending
-- logging — event logging`
+- smtplib - sending email
+- schedule - task scheduling
+- threading - asynchronous sending
+- logging - event logging`
       },
       {
         title: "Creating a class for sending email",
@@ -474,11 +474,11 @@ except:
 
 **What we built:**
 
-1. **EmailSender class** — core sending functionality
-2. **ReportSender** — automatic reports
-3. **ErrorNotifier** — error notifications
-4. **MassMailer** — bulk mailings
-5. **EmailDecorator** — application integration
+1. **EmailSender class** - core sending functionality
+2. **ReportSender** - automatic reports
+3. **ErrorNotifier** - error notifications
+4. **MassMailer** - bulk mailings
+5. **EmailDecorator** - application integration
 
 **Key concepts:**
 
@@ -579,11 +579,11 @@ except Exception as e:
 
   summary: `In this lesson we built an email automation system:
 
-1. EmailSender class — core functionality
-2. Automatic reports — scheduling with schedule
-3. Error notifications — application integration
-4. Bulk mailings — efficient delivery
-5. Decorators — automated alerts
+1. EmailSender class - core functionality
+2. Automatic reports - scheduling with schedule
+3. Error notifications - application integration
+4. Bulk mailings - efficient delivery
+5. Decorators - automated alerts
 
 Email automation is a key to productivity!`,
 
@@ -622,8 +622,8 @@ Email automation is a key to productivity!`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is BCC in the context of bulk mailings?",
         options: [
-          "Blind carbon copy — recipients cannot see other addresses",
-          "Carbon copy — everyone can see the addresses",
+          "Blind carbon copy - recipients cannot see other addresses",
+          "Carbon copy - everyone can see the addresses",
           "The email subject",
           "An attachment"
         ],

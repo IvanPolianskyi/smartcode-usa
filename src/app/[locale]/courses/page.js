@@ -8,12 +8,12 @@ import {
 	Star,
 	ChevronRight,
 	BookOpen,
-	Lock,
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { getUserProgress } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import { useCoursesListData } from '@/hooks/useCoursesListData'
+import { KNOWN_COURSE_IDS } from '@/lib/courseLessonAccess'
 import styles from './CoursesPage.module.css'
 
 export default function CoursesPage() {
@@ -53,8 +53,6 @@ export default function CoursesPage() {
 		loadProgress()
 	}, [sessionLoading, user])
 
-	const loading = sessionLoading || progressLoading
-
 	return (
 		<div className={styles.container}>
 			<section className={styles.heroSection}>
@@ -75,30 +73,15 @@ export default function CoursesPage() {
 						const progress = progressData[course.courseId]
 						const isEnrolled = !!progress
 						const progressPercent = progress?.overallProgress || 0
-						const lmsAvailable = [
-							'python-developer-zero-to-junior',
-							'roblox-studio',
-							'scratch',
-							'minecraft-education',
-						].includes(course.courseId)
-						const isLocked = !lmsAvailable
+						const lmsAvailable = KNOWN_COURSE_IDS.has(course.courseId)
 
 						return (
-							<div
-								key={course.courseId}
-								className={`${styles.courseCard} ${isLocked ? styles.lockedCard : ''}`}
-							>
+							<div key={course.courseId} className={styles.courseCard}>
 								<div className={styles.badgeContainer}>
 									{course.popular && (
 										<div className={styles.popularBadge}>
 											<Star size={14} />
 											<span>{t('badges.popular')}</span>
-										</div>
-									)}
-									{isLocked && (
-										<div className={styles.lockedBadge}>
-											<Lock size={14} />
-											<span>{t('badges.comingSoon')}</span>
 										</div>
 									)}
 								</div>
@@ -147,7 +130,10 @@ export default function CoursesPage() {
 										<div className={styles.progressBar}>
 											<div
 												className={styles.progressFill}
-												style={{ width: `${progressPercent}%`, backgroundColor: course.color }}
+												style={{
+													width: `${progressPercent}%`,
+													backgroundColor: course.color,
+												}}
 											/>
 										</div>
 									</div>
@@ -170,29 +156,7 @@ export default function CoursesPage() {
 								</div>
 
 								<div className={styles.courseActions}>
-									{isLocked ? (
-										course.marketingOnly ? (
-											<Link
-												href={course.link}
-												className={styles.primaryButton}
-												style={{ backgroundColor: course.color }}
-											>
-												{t('actions.learnMore')}
-												<ChevronRight size={18} />
-											</Link>
-										) : (
-										<button
-											className={styles.lockedButton}
-											onClick={(e) => {
-												e.preventDefault()
-												window.dispatchEvent(new Event('openContactModal'))
-											}}
-										>
-											<Lock size={18} />
-											{t('actions.comingSoon')}
-										</button>
-										)
-									) : (
+									{lmsAvailable ? (
 										<>
 											<Link
 												href={course.courseLink}
@@ -208,6 +172,15 @@ export default function CoursesPage() {
 												</Link>
 											)}
 										</>
+									) : (
+										<Link
+											href="/pricing"
+											className={styles.primaryButton}
+											style={{ backgroundColor: course.color }}
+										>
+											{t('actions.learnMore')}
+											<ChevronRight size={18} />
+										</Link>
 									)}
 								</div>
 							</div>

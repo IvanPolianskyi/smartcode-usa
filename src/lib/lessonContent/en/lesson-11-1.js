@@ -30,9 +30,9 @@ export const lesson_11_1 = {
 
 **Libraries for working with PDF:**
 
-- **PyPDF2** — reading and manipulating existing PDFs
-- **reportlab** — creating new PDF documents
-- **pdfplumber** — more powerful reading and analysis
+- **PyPDF2** - reading and manipulating existing PDFs
+- **reportlab** - creating new PDF documents
+- **pdfplumber** - more powerful reading and analysis
 
 **Common tasks:**
 
@@ -482,8 +482,8 @@ merge_reports('reports/', 'all_reports.pdf')
 
 **Key libraries:**
 
-1. **PyPDF2** — reading and manipulating PDFs
-2. **reportlab** — creating new PDF documents
+1. **PyPDF2** - reading and manipulating PDFs
+2. **reportlab** - creating new PDF documents
 
 **Main operations:**
 
@@ -575,19 +575,19 @@ doc.build([table])`,
     },
     {
       mistake: "Not saving the PDF after creating it",
-      explanation: "reportlab does not save the PDF automatically — you must call save().",
+      explanation: "reportlab does not save the PDF automatically - you must call save().",
       correctApproach: "Always call c.save() after creating a PDF."
     }
   ],
   
   summary: `In this lesson we learned how to work with PDFs:
 
-1. PyPDF2 — reading and manipulating PDFs
-2. reportlab — creating new PDF documents
-3. Extracting text — extract_text()
-4. Merging PDFs — PdfMerger
-5. Creating PDFs — canvas and platypus
-6. Tables and formatting — styles and tables
+1. PyPDF2 - reading and manipulating PDFs
+2. reportlab - creating new PDF documents
+3. Extracting text - extract_text()
+4. Merging PDFs - PdfMerger
+5. Creating PDFs - canvas and platypus
+6. Tables and formatting - styles and tables
 
 PDF is the standard format for documents!`,
   

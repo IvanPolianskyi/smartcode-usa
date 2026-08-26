@@ -13,10 +13,10 @@ export const lesson_03_6 = {
   
   learningObjectives: [
     "Understand what lambda functions are and when to use them",
-    "Use the map() function to apply a function to all elements",
+    "Use the map() function to apply the function to all elements",
     "Use the filter() function to filter elements",
     "Combine lambda with map() and filter()",
-    "Understand the advantages and limitations of lambda functions"
+    "Understand the benefits and limitations of lambda functions"
   ],
   
   prerequisites: ["lesson-03-5"],
@@ -27,11 +27,11 @@ export const lesson_03_6 = {
     sections: [
       {
         title: "What are lambda functions?",
-        content: `Lambda functions (also called anonymous functions) are a way to create short functions without using the keyword \`def\`.
+        content: `Lambda functions (also called anonymous functions) are a way to create short functions without using the \`def\` keyword.
 
 **Main idea:**
 
-Instead of creating a full function:
+Instead of creating a complete function:
 
 \`\`\`python
 def square(x):
@@ -47,7 +47,7 @@ square = lambda x: x ** 2
 **Syntax:**
 
 \`\`\`python
-lambda аргументи: вираз
+lambda arguments: expression
 \`\`\`
 
 **Example:**
@@ -114,9 +114,9 @@ print(list(squared))  # [1, 4, 9, 16, 25]
 
 \`\`\`python
 # String transformations
-names = ["Alexander", "Maria", "Ivan"]
+names = ["Oleksandr", "Maria", "Ivan"]
 capitalized = list(map(lambda name: name.capitalize(), names))
-# ["Alexander", "Maria", "Ivan"]
+# ["Oleksandr", "Maria", "Ivan"]
 
 # Calculations with multiple lists
 numbers1 = [1, 2, 3]
@@ -125,7 +125,7 @@ sums = list(map(lambda x, y: x + y, numbers1, numbers2))
 # [11, 22, 33]
 
 # Application of the method
-texts = ["  hello  ", "  world  ", "  python  "]
+texts = ["  Hello  ", "  world  ", "  python  "]
 cleaned = list(map(lambda text: text.strip().upper(), texts))
 # ["HELLO", "WORLD", "PYTHON"]
 \`\`\`
@@ -137,7 +137,7 @@ cleaned = list(map(lambda text: text.strip().upper(), texts))
 - You can apply one function to many elements at the same time`
       },
       {
-        title: "The filter() function",
+        title: "filter() function",
         content: `The function \`IC0\` filters elements of an iterable object, leaving only those for which the function returns \`IC1\`.
 
 **Syntax:**
@@ -146,9 +146,9 @@ cleaned = list(map(lambda text: text.strip().upper(), texts))
 filter(function, iterable)
 \`\`\`
 
-**Important:** The function must return \`True\` or \`False\` (Boolean value).
+**Important:** The function must return \`True\` or \`False\` (a boolean value).
 
-**Example with normal function:**
+**Example with a regular function:**
 
 \`\`\`python
 def is_even(num):
@@ -172,12 +172,12 @@ print(list(evens))  # [0, 2, 4, 6, 8, 10]
 **More complex examples:**
 
 \`\`\`python
-# Filtering Strings by Length
+# Filtering rows by length
 words = ["Python", "is", "great", "for", "programming"]
 long_words = list(filter(lambda word: len(word) > 3, words))
 # ["Python", "great", "programming"]
 
-# Filtering numbers by condition
+# Filtering numbers by convention
 numbers = [10, 15, 20, 25, 30, 35, 40]
 large_numbers = list(filter(lambda x: x > 20, numbers))
 # [25, 30, 35, 40]
@@ -208,7 +208,7 @@ filtered = list(filter(lambda x: x % 2 == 0 and x > 5, numbers))
 \`\`\`python
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-# First we filter even numbers, then we raise to the square
+# First, filter the even numbers, then bring them to the square
 even_squared = list(map(lambda x: x ** 2, filter(lambda x: x % 2 == 0, numbers)))
 # [4, 16, 36, 64, 100]
 \`\`\`
@@ -223,7 +223,7 @@ cleaned_long = list(filter(lambda x: len(x) > 3, map(lambda x: x.strip(), words)
 # ["python", "javascript"]
 \`\`\`
 
-**Example 3: Comprehensive Processing**
+**Example 3: Comprehensive processing**
 
 \`\`\`python
 numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -248,8 +248,8 @@ result = list(map(lambda x: x ** 2, filter(lambda x: x % 2 == 0, numbers)))
 
 **When to use what:**
 
-- **map() + filter() + lambda** - for a functional style, when you need to pass a function as an argument
-- **List comprehensions** - often more readable for simple operations`
+- **map() + filter() + lambda** - for a functional style when you want to pass a function as an argument
+- **List inclusions** - often more readable for simple operations`
       },
       {
         title: "Lambda with several arguments",
@@ -305,7 +305,7 @@ averages = list(map(lambda x, y, z: (x + y + z) / 3, a, b, c))
 
 **1. Only one expression**
 
-A lambda can contain only one expression, it cannot contain multiple lines:
+A Lambda can contain only one expression, it cannot contain multiple lines:
 
 \`\`\`python
 # Incorrect:
@@ -335,9 +335,9 @@ def assign(x):
     return y
 \`\`\`
 
-**3. You cannot use return**
+**3. Cannot use return**
 
-\`return\` is not needed in a lambda, the result of the expression is returned automatically:
+\`return\` is not needed in Lambda, the result of the expression is automatically returned:
 
 \`\`\`python
 # Incorrect:
@@ -416,33 +416,33 @@ numbers = [1, 2, 3, 4, 5]
 \`\`\`python
 # Sorting users by age
 users = [
-    {"name": "Alexander", "age": 20},
+    {"name": "Oleksandr", "age": 20},
     {"name": "Maria", "age": 25},
     {"name": "Ivan", "age": 18}
 ]
 
 sorted_users = sorted(users, key=lambda user: user["age"])
-# [{"name": "Ivan", "age": 18}, {"name": "Alexander", "age": 20}, {"name": "Maria", "age": 25}]
+# [{"name": "Ivan", "age": 18}, {"name": "Oleksandr", "age": 20}, {"name": "Maria", "age": 25}]
 \`\`\``
       },
       {
-        title: "Summary",
+        title: "The bottom line",
         content: `In this lesson, we studied lambda functions and their usage:
 
 **Key Concepts:**
 
 1. **Lambda Functions**
    - Anonymous functions without the keyword \`def\`
-   - Syntax: \`lambda аргументи: вираз\`
-   - Can contain only a single expression
+   - Syntax: \`lambda arguments: expression\`
+   - Can contain only one expression
 
 2. **map()**
    - Applies a function to each element
    - Returns an iterator
-   - Convenient for transforming data
+   - Convenient for data transformation
 
 3. **filter()**
-   - Filters elements by a condition
+   - Filters elements based on a condition
    - Keeps only those for which the function returns \`True\`
    - Returns an iterator
 
@@ -468,14 +468,14 @@ sorted_users = sorted(users, key=lambda user: user["age"])
 
 **Next step:**
 
-In the next lesson, we will learn about variable scope – how Python finds variables in the code.`
+In the next lesson, we will learn about variable scope - how Python finds variables in the code.`
       }
     ]
   },
   
   codeExamples: [
     {
-      title: "Basic lambda example",
+      title: "Basic example of lambda",
       code: `# Regular function
 def square(x):
     return x ** 2
@@ -556,7 +556,7 @@ sorted_users = sorted(users, key=lambda user: user["age"])
   commonMistakes: [
     {
       mistake: "Using return in lambda",
-      explanation: "Beginners often try to use return in lambda, but it is not necessary.",
+      explanation: "Beginners often try to use return in a lambda, but it is not necessary.",
       correctApproach: `# Incorrect:
 square = lambda x: return x ** 2  # Error!
 
@@ -571,9 +571,9 @@ complex_func = lambda x:
     if x > 0:
         return x * 2
     else:
-        return x # Error!
+        return x  #  Error!
 
-# Correct - use the normal function:
+# Correct - use a regular function:
 def complex_func(x):
     if x > 0:
         return x * 2
@@ -614,7 +614,7 @@ result = list(map(process_text, texts))  # More readable`
 
 1. Lambda functions
    - Anonymous functions without \`def\`
-   - Syntax: \`lambda аргументи: вираз\`
+   - Syntax: \`lambda arguments: expression\`
    - Can contain only one expression
 
 2. map()
@@ -642,11 +642,11 @@ result = list(map(process_text, texts))  # More readable`
     description: "Create functions for data processing using lambda, map(), and filter()",
     problemStatement: `Write a program with functions:
 
-1. process_numbers(numbers) — map + lambda: squares
-2. filter_even(numbers) — filter + lambda: even
-3. process_names(names) — map + lambda: capitalize
-4. filter_long_words(words, min_length=5) — words with len >= min_length
-5. complex_processing(numbers) — squares of even numbers
+1. process_numbers(numbers) - map + lambda: squares
+2. filter_even(numbers) - filter + lambda: even
+3. process_names(names) - map + lambda: capitalize
+4. filter_long_words(words, min_length=5) - words with len >= min_length
+5. complex_processing(numbers) - squares of even numbers
 
 Read a line of numbers and a line of names (separated by space), then min_length.
 Print squares, evens, squares of evens, formatted names, and long names.
@@ -674,14 +674,14 @@ Long names (min_length=5): ['Oleksandr', 'Maria']`,
       },
       {
         input: `2 4 5
-yana bohdan olya
+ian bohdan ava
 4`,
         output: `Squares of numbers: [4, 16, 25]
 Even numbers: [2, 4]
 Squares of even numbers: [4, 16]
-Formatted names: ['Yana', 'Bohdan', 'Olya']
+Formatted names: ['Ian', 'Bohdan', 'Ava']
 Long names (min_length=4): ['Bohdan']`,
-        explanation: "Bogdan has a length of >= 4"
+        explanation: "Bohdan has a length >= 4"
       },
       {
         input: `3 6 9
@@ -690,8 +690,8 @@ cat dog
         output: `Squares of numbers: [9, 36, 81]
 Even numbers: [6]
 Squares of even numbers: [36]
-Formatted names: ['Кіт', 'Пес']
-Long names (min_length=3): ['Кіт', 'Пес']`,
+Formatted names: ['Cat', 'Dog']
+Long names (min_length=3): ['Cat', 'Dog']`,
         explanation: "Both names are 3 letters long"
       }
     ],
@@ -718,7 +718,9 @@ def complex_processing(numbers):
 
 numbers = list(map(int, input().split()))
 names = input().split()
-min_length = int(input())print(f"Squares of numbers: {process_numbers(numbers)}")
+min_length = int(input())
+
+print(f"Squares of numbers: {process_numbers(numbers)}")
 print(f"Even numbers: {filter_even(numbers)}")
 print(f"Squares of even numbers: {complex_processing(numbers)}")
 
@@ -728,7 +730,7 @@ print(f"Long names (min_length={min_length}): {filter_long_words(formatted_names
       explanation: "lambda with map/filter in functions; data is read from stdin."
     },
     hints: [
-      "map() and filter() return iterators — wrap in list()",
+      "map() and filter() return iterators - wrap them in list()",
       "Read numbers and names using input().split()",
       "For complex_processing first filter, then map",
       "Pass min_length to filter_long_words"
@@ -788,7 +790,7 @@ print(f"Long names (min_length={min_length}): {filter_long_words(formatted_names
           "Adds elements"
         ],
         correctAnswer: 0,
-        explanation: "filter() filters the elements of an iterable, leaving only those for which the passed function returns True."
+        explanation: "filter() filters elements of an iterable, leaving only those for which the passed function returns True."
       },
       {
         id: "q5",
@@ -806,15 +808,15 @@ print(f"Long names (min_length={min_length}): {filter_long_words(formatted_names
       {
         id: "q6",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Is it possible to use return in a lambda function?",
+        question: "Can you use return in lambda function?",
         options: [
-          "No, return is not needed, the result of the expression is returned automatically",
+          "No, return is not needed, the result of the expression is automatically returned",
           "Yes, a return is definitely needed",
           "Only for complex lambdas",
           "Depends on the Python version"
         ],
         correctAnswer: 0,
-        explanation: "In a lambda function, return is not needed and will cause an error. The result of the expression is automatically returned."
+        explanation: "In lambda, the return function is not needed and will cause an error. The result of the expression is automatically returned."
       },
       {
         id: "q7",
@@ -838,7 +840,7 @@ print(f"Long names (min_length={min_length}): {filter_long_words(formatted_names
           "True"
         ],
         correctAnswer: 0,
-        explanation: "No, lambda functions can contain only a single expression. For multiple lines, you need to use a regular function with def."
+        explanation: "No, lambda functions can contain only one expression. For multiple lines, you need to use a regular function with def."
       }
     ],
     timeLimit: 15,

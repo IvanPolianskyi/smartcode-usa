@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 
 const PAGE_SIZE = 50
 
-/** Student list for the admin panel — search by name/email, entitlement summary per row. */
+/** Student list for the admin panel - search by name/email, entitlement summary per row. */
 export async function GET(request) {
 	const auth = await requireAdmin()
 	if (auth.error) return auth.error

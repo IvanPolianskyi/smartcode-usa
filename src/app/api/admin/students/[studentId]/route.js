@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { requireAdmin } from '@/lib/requireAdmin'
 import { getCollection } from '@/lib/mongodb'
-import { getEntitlement, getSubscriptions } from '@/lib/entitlements'
+import { getEntitlement, getSubscriptions, resolvePlanTier } from '@/lib/entitlements'
 import { labelForCourseIds } from '@/lib/billingCatalog'
 
 export const runtime = 'nodejs'
@@ -56,7 +56,7 @@ export async function GET(_request, { params }) {
 				paddleCustomerId: row.paddleCustomerId,
 				courseIds: row.courseIds || [],
 				label: labelForCourseIds(row.courseIds || []),
-				planTier: row.planTier || null,
+				planTier: resolvePlanTier(row),
 				status: row.status,
 				billingInterval: row.billingInterval || null,
 				currentPeriodEnd: row.currentPeriodEnd || null,

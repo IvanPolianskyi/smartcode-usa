@@ -210,6 +210,23 @@ Next 5.2 - Hazards + debounce: in pits and HazardSpot add readable traps and ser
       },
     ],
   },
+    commonMistakes: [
+    {
+      "mistake": "Platforms fall into the abyss immediately after pressing Play",
+      "explanation": "The Anchored property was not set to true on the biome parts.",
+      "correctApproach": "Select all platform parts across Biome_1, Biome_2, Biome_3 folders and set Anchored = true."
+    },
+    {
+      "mistake": "Biome 1 is too punishing, preventing beginners from completing the first 3 jumps",
+      "explanation": "Platform gaps in the tutorial zone exceed comfortable 6-8 stud distances.",
+      "correctApproach": "Make starting platforms wider and keep early gaps between 6-8 studs for a gentle learning curve."
+    },
+    {
+      "mistake": "All biomes look identical, making navigation confusing",
+      "explanation": "The same material and color palette were used throughout the entire obby.",
+      "correctApproach": "Use distinct color schemes and materials for each folder (e.g., Grass/Green -> Sand/Yellow -> Basalt/Dark Grey)."
+    }
+  ],
   summary: "You have opened the Obby module with the design of three contrasting biomes: sketch, Folders, a passable skeleton Spawn→Finish, and markers for hazard/CP/secret. The three biomes with contrasts, passable framework, and markers are ready for hazards in 5.2.",
   practiceTask: {
     title: "Practice for 5.1 - Design of 3 biomes",
@@ -618,6 +635,23 @@ Next 5.3 - checkpoints, timer, and GUI: the same deaths will become cheaper for 
       },
     ],
   },
+    commonMistakes: [
+    {
+      "mistake": "Lava block eliminates the player 20 times per second and floods Output logs",
+      "explanation": "The Touched event handler lacks a debounce guard.",
+      "correctApproach": "Add a local isDebounced = false variable, verify it before damage, and reset after task.wait(0.5)."
+    },
+    {
+      "mistake": "Error 'attempt to index nil with Health' occurs when non-character parts touch lava",
+      "explanation": "The script attempts to read Health without confirming a Humanoid exists.",
+      "correctApproach": "Always check local humanoid = hit.Parent:FindFirstChild(\"Humanoid\") and only apply damage if humanoid is not nil."
+    },
+    {
+      "mistake": "Hazards look like regular safe platforms, killing players unexpectedly",
+      "explanation": "Violates fair visual design principles.",
+      "correctApproach": "Always make fatal hazards unmistakably visible with bright Neon materials or lava textures."
+    }
+  ],
   summary: "You've collected Obby-hazards: readable traps, server-side Touched to Humanoid, debounce against spam, and Folder for scale. Death is honest and ready to accept checkpoint in 5.3 and juice in 5.9.",
   practiceTask: {
     title: "Practice for 5.2 - Hazards + debounce",
@@ -1101,6 +1135,23 @@ Next 5.4 - while-platforms + Config: make Parts movable after CP, so that timing
       },
     ],
   },
+    commonMistakes: [
+    {
+      "mistake": "Players can jump directly to checkpoint #5 and bypass the level",
+      "explanation": "The checkpoint script fails to validate sequential checkpoint order.",
+      "correctApproach": "Only activate checkpoint N if the player's current checkpoint equals N - 1."
+    },
+    {
+      "mistake": "Character spawns stuck inside the floor upon respawning",
+      "explanation": "Spawn CFrame was set without adding vertical height offset.",
+      "correctApproach": "Add a vertical offset: spawnCFrame = checkpoint.CFrame + Vector3.new(0, 3.5, 0)."
+    },
+    {
+      "mistake": "Checkpoints managed in LocalScript fail to sync on server respawns",
+      "explanation": "Client LocalScripts lack server authority over respawn logic.",
+      "correctApproach": "Manage active checkpoint state strictly inside server Scripts."
+    }
+  ],
   summary: "You collected Obby progress: server checkpoints only go forward, respawn at the last CP, ScreenGui with an index and timer, Finish stops the time. The framework is ready for while-platforms in 5.4 and Badge at the same FinishLine in 5.10.",
   practiceTask: {
     title: "Practice for 5.3 - Checkpoints + timer + GUI",
@@ -1554,6 +1605,23 @@ Next 5.5 - Secrets + key-door: the main path already has a rhythm; the secret wi
       },
     ],
   },
+    commonMistakes: [
+    {
+      "mistake": "Studio freezes immediately upon launching Play mode",
+      "explanation": "The while true loop is missing a task.wait() call.",
+      "correctApproach": "Always include task.wait(interval) inside repeating platform loops."
+    },
+    {
+      "mistake": "Player slips off moving platforms during motion",
+      "explanation": "Moving platforms by modifying Position directly breaks character physics friction.",
+      "correctApproach": "Use TweenService or Constraints for smooth kinematic platform movement."
+    },
+    {
+      "mistake": "Disappearing platforms vanish abruptly without player warning",
+      "explanation": "Transparency and collision drop to 0 with zero telegraphing.",
+      "correctApproach": "Add a 0.5s flash or fade animation before setting CanCollide = false."
+    }
+  ],
   summary: "You assembled the Obby while-platforms with PlatformConfig: at least two loops, for + task.spawn, readable waitUp/waitDown. The Config is ready to become a balance controller in 5.7 without rewriting the logic.",
   practiceTask: {
     title: "Practice for 5.4 - while platforms + Config",
@@ -1690,7 +1758,7 @@ Part C - Retest (7 min)
         options: [
           "5.7 removes Config",
           "The difficulty curve will twist waitUp/waitDown like a lever",
-          "5.7 removes Config",
+          "Platforms move randomly without timing",
           "Platforms are no longer needed",
         ],
         correctAnswer: 1,
@@ -2003,6 +2071,23 @@ In 5.7 the difficulty curve can ease the approach to the secret if it is too str
       },
     ],
   },
+    commonMistakes: [
+    {
+      "mistake": "Key item can be collected infinitely many times",
+      "explanation": "The key is neither destroyed nor tagged with a collected attribute upon touch.",
+      "correctApproach": "Call keyPart:Destroy() or set an attribute keyPart:SetAttribute(\"Collected\", true)."
+    },
+    {
+      "mistake": "Secret door opens for every server player when only one player finds the key",
+      "explanation": "Door opens globally on the server without player inventory verification.",
+      "correctApproach": "Verify key ownership before unlocking or toggle locally on the client."
+    },
+    {
+      "mistake": "Secret area is completely undetectable without trial-and-error guessing",
+      "explanation": "No visual telegraphing is provided to reward observant players.",
+      "correctApproach": "Add subtle hints such as distinct wall tints, particle sparks, or floor markings."
+    }
+  ],
   summary: "You added the optional secret Obby: Key and Door with ProximityPrompt, server-side HasKey, and one-time opening. The main path to Finish remains accessible without the key - ready for an honest playtest in 5.6.",
   practiceTask: {
     title: "Practice for 5.5 - Secrets + key-door",
@@ -2470,6 +2555,18 @@ In 5.8 another person will do a control full run after your changes. In 5.9 Soun
       },
     ],
   },
+    commonMistakes: [
+    {
+      "mistake": "Testing only once by the developer without external blind playtests",
+      "explanation": "Developers memorize obstacle timings and overlook novice friction points.",
+      "correctApproach": "Conduct blind playtests with friends or test recordings to identify choke points."
+    },
+    {
+      "mistake": "Ignoring red error messages in the Output log during playtesting",
+      "explanation": "Hidden script errors can silently break respawn or scoring systems.",
+      "correctApproach": "Resolve all Output warnings and errors before finalizing game balance."
+    }
+  ],
   summary: "You froze the Obby build, ran a full playtest without hints, recorded reproducible bugs with priority P0-P3, fixed one blocker, and confirmed it with a regression retest. The bug list is ready to become the difficulty curve map in 5.7.",
   practiceTask: {
     title: "Practice for 5.6 - Playtest #1 + bug list",
@@ -2925,6 +3022,18 @@ Next is 5.8: peer run, 6-category checklist, bug list without stopping the game,
       },
     ],
   },
+    commonMistakes: [
+    {
+      "mistake": "Sudden difficulty spikes between biomes causing early player churn",
+      "explanation": "Violates smooth difficulty progression principles.",
+      "correctApproach": "Scale jump distances gradually: Biome 1 (6-8 studs), Biome 2 (8-11 studs), Biome 3 (11-13 studs)."
+    },
+    {
+      "mistake": "Placing 15+ stud gap jumps without providing speed boost powerups",
+      "explanation": "Default Roblox avatar physics cannot clear 14+ stud flat jumps.",
+      "correctApproach": "Keep standard jumps under 13 studs unless speed or jump modifiers are active."
+    }
+  ],
   summary: "You turned the 5.6 bug list into a Curve Map, adjusted gap, width, Config timing, and CP density one lever per iteration, told unfair spikes apart from fair difficulty, and recorded retest Better/Same/Worse. The Place is ready for the control peer run in 5.8.",
   practiceTask: {
     title: "Practice for 5.7 - Difficulty curve",
@@ -3351,6 +3460,18 @@ The final checkpoint and Ship in 5.10 will demand what you confirmed today: clea
       },
     ],
   },
+    commonMistakes: [
+    {
+      "mistake": "Softlock pits where players get permanently stuck without resetting",
+      "explanation": "Blind gaps between decorative meshes trap players without triggering death.",
+      "correctApproach": "Place invisible KillBricks across all dead-end crevices to reset players to checkpoints."
+    },
+    {
+      "mistake": "Camera clipping awkwardly inside high narrow walls",
+      "explanation": "Tight corridors collide aggressively with third-person camera occlusion.",
+      "correctApproach": "Widen narrow tunnels or set CanCollide = false on camera-blocking decor."
+    }
+  ],
   summary: "You ran a control peer full playthrough, filled the 6-category checklist, continued the 5.6 bug list without stopping the game, checked the 5.7 curve against metrics, did one blocker fix pass, and moved juice ideas into a separate backlog. The Place is ready for Sound and Particles in 5.9.",
   practiceTask: {
     title: "Practice for 5.8 - Full playthrough: peer review",
@@ -3827,6 +3948,23 @@ One-rule rule: if the event happens often (and checkpoints and deaths in an obby
       },
     ],
   },
+    commonMistakes: [
+    {
+      "mistake": "3D spatial audio heard globally across the entire map",
+      "explanation": "RollOffMaxDistance is set excessively high or the Sound instance is parented to SoundService.",
+      "correctApproach": "Parent 3D Sound instances directly inside world Parts and set RollOffMaxDistance between 20-40 studs."
+    },
+    {
+      "mistake": "High ParticleEmitter emission rates causing mobile framerate drops",
+      "explanation": "Rate property set excessively high on multiple simultaneous emitters.",
+      "correctApproach": "Keep Rate between 5-15 for ambient environmental effects."
+    },
+    {
+      "mistake": "Collection SFX plays 30 times in a fraction of a second on touch",
+      "explanation": "sound:Play() called without debounce filtering.",
+      "correctApproach": "Trigger audio playback only once upon successful pickup validation."
+    }
+  ],
   summary: "You added Sound and ParticleEmitter to the ready death and checkpoint hooks from 5.2 and 5.3, learned to choose between SoundService and Parent Part, drive particles with Emit() instead of Enabled, and avoid spam and overloaded volume - now your obby after 5.8 does not just clear, it feels alive and ready for the final handoff in 5.10.",
   practiceTask: {
     title: "Practice for 5.9 - Juice: Sound + Particles",
@@ -4288,6 +4426,23 @@ Artifact of the day: a wrapped, showable obby with a one-time server reward. Shi
       },
     ],
   },
+    commonMistakes: [
+    {
+      "mistake": "Attempting to award badges from a client LocalScript",
+      "explanation": "BadgeService:AwardBadge is strictly restricted to server Scripts for security.",
+      "correctApproach": "Call BadgeService:AwardBadge(player.UserId, badgeId) inside a server Script on finish line touch."
+    },
+    {
+      "mistake": "Badges fail to award due to empty or unconfigured badge IDs",
+      "explanation": "Badges must be provisioned in the Roblox Creator dashboard first.",
+      "correctApproach": "Create a Badge in Creator Hub and paste the numeric ID into your config."
+    },
+    {
+      "mistake": "Game published without enforcing Avatar Rig type (R6 vs R15)",
+      "explanation": "Jump clearances calibrated for R6 can fail on R15 due to animation differences.",
+      "correctApproach": "In Game Settings → Avatar, lock the avatar type to match your jump tuning (e.g. R6 or R15)."
+    }
+  ],
   summary: "You passed the final checkpoint of module 5 and closed it with Ship + Badge: Game Settings with name, description, and icon, deliberate Access, a Badge from the site, and server AwardBadge on FinishLine with UserHasBadgeAsync. The checkpoint rubric and 60-90 s demo confirm a showable obby before moving to Simulator in 6.1.",
   practiceTask: {
     title: "Practice for 5.10 - Checkpoint: Ship + Badge",

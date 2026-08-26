@@ -432,15 +432,15 @@ print("Number", number, "converted to string: '" + number_str + "'")`,
   
   summary: `In this lesson we learned:
 
-1. Number types — int (integers) and float (floating point)
-2. Arithmetic operations — +, -, *, /, //, %, **
-3. Variable assignment — using = to create variables
-4. Naming rules — how to name variables correctly
-5. Dynamic typing — Python allows changing variable types
-6. The type() function — to determine a variable's type
-7. Type conversion — int(), float(), str()
+1. Number types - int (integers) and float (floating point)
+2. Arithmetic operations - +, -, *, /, //, %, **
+3. Variable assignment - using = to create variables
+4. Naming rules - how to name variables correctly
+5. Dynamic typing - Python allows changing variable types
+6. The type() function - to determine a variable's type
+7. Type conversion - int(), float(), str()
 
-You now know the basics of working with numbers and variables in Python! Next lesson — lists.`,
+You now know the basics of working with numbers and variables in Python! Next lesson - lists.`,
   
   practiceTask: {
     title: "Personal expense calculator",

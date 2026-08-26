@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import { getCollection } from '@/lib/mongodb'
 import { hashPassword, issueAuthSession } from '@/lib/auth'
 import { toAuthUserResponse } from '@/lib/authUserResponse'
+import { sendWelcomeEmail } from '@/lib/email'
 
 function isValidEmail(email) {
 	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -94,6 +95,14 @@ export async function POST(request) {
 		const result = await usersCollection.insertOne(user)
 		const userId = result.insertedId.toString()
 		const token = await issueAuthSession(userId)
+
+		// Send welcome email asynchronously without blocking registration response
+		sendWelcomeEmail({
+			to: user.email,
+			name: user.name,
+		}).catch((err) => {
+			console.error('[register] Welcome email dispatch failed:', err)
+		})
 
 		return NextResponse.json(
 			{

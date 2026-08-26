@@ -1,49 +1,125 @@
-/* Continuous CSS timelines. One loop = one story. No JS phase jumps. */
+/**
+ * Brilliant-style lesson demos: light canvas + soft pastel blocks.
+ * Single-shot CSS timelines over --dur. HeroDemo rewinds via data-state="idle".
+ */
 
 .scene {
-	--dur: 5.2s;
+	--dur: 5.6s;
 	--ease: cubic-bezier(0.22, 1, 0.36, 1);
+	--spring: cubic-bezier(0.34, 1.45, 0.64, 1);
+	--soft: cubic-bezier(0.33, 0, 0.2, 1);
+	position: relative;
+	isolation: isolate;
 	width: 100%;
 	height: 100%;
-	min-height: 220px;
+	min-height: 0;
 	display: grid;
 	place-items: center;
-	padding: 18px;
+	padding: 12px;
 	box-sizing: border-box;
-	background:
-		radial-gradient(70% 55% at 80% 0%, var(--glow, transparent), transparent 65%),
-		#090b11;
+	background: #f3f4f7;
 }
 
 .scene[data-tone='cyan'] {
-	--accent: #5ac3e5;
-	--glow: rgba(90, 195, 229, 0.12);
+	--accent: #2a9bb8;
+	--loop: #3d9a6a;
+	--loop-bg: #e5f5ec;
+	--loop-ink: #1f6b45;
+	--var: #7c6bc4;
+	--var-bg: #efeafc;
+	--var-ink: #4a3d8a;
+	--draw: #3b82c4;
+	--draw-bg: #e4f0fb;
+	--draw-ink: #1e4f7a;
+	--canvas-tint: rgba(42, 155, 184, 0.06);
 }
 
 .scene[data-tone='coral'] {
 	--accent: #fc6e51;
-	--glow: rgba(252, 110, 81, 0.14);
+	--loop: #3d9a6a;
+	--loop-bg: #e5f5ec;
+	--loop-ink: #1f6b45;
+	--var: #7c6bc4;
+	--var-bg: #efeafc;
+	--var-ink: #4a3d8a;
+	--draw: #e06a4e;
+	--draw-bg: #fdece7;
+	--draw-ink: #9a3d2a;
+	--canvas-tint: rgba(252, 110, 81, 0.07);
 }
 
 .scene[data-tone='violet'] {
-	--accent: #b582ff;
-	--glow: rgba(181, 130, 255, 0.14);
+	--accent: #7c5cff;
+	--loop: #3d9a6a;
+	--loop-bg: #e5f5ec;
+	--loop-ink: #1f6b45;
+	--var: #7c6bc4;
+	--var-bg: #efeafc;
+	--var-ink: #4a3d8a;
+	--draw: #7c5cff;
+	--draw-bg: #eee9ff;
+	--draw-ink: #4a35b0;
+	--canvas-tint: rgba(124, 92, 255, 0.07);
 }
 
-/* ============================================================ Python */
+/* Name exports for scene modifiers (tone comes from data-tone). */
+.python {
+	--scene: python;
+}
+.roblox {
+	--scene: roblox;
+}
+.ai {
+	--scene: ai;
+}
 
-.window {
+/* ============================================================ lesson shell */
+
+.lesson {
+	position: relative;
+	z-index: 1;
 	width: 100%;
+	height: 100%;
+	max-height: 100%;
+	display: grid;
+	grid-template-rows: minmax(0, 1.15fr) minmax(0, 0.95fr);
+	gap: 0;
 	border-radius: 16px;
-	border: 1px solid rgba(255, 255, 255, 0.1);
-	background: #12151d;
-	overflow: hidden;
+	background: #ffffff;
+	border: 1px solid rgba(20, 21, 26, 0.1);
 	box-shadow:
-		0 20px 48px rgba(0, 0, 0, 0.5),
-		inset 0 1px 0 rgba(255, 255, 255, 0.04);
+		0 18px 40px rgba(20, 21, 26, 0.08),
+		0 1px 0 rgba(255, 255, 255, 0.8) inset;
+	overflow: hidden;
+	animation: cardIn 0.55s var(--ease) both;
 }
 
-@keyframes floatIn {
+.sceneLabel {
+	position: absolute;
+	top: 12px;
+	left: 14px;
+	z-index: 5;
+	font-family: var(--font-geist-sans), system-ui, sans-serif;
+	font-size: 11px;
+	font-weight: 650;
+	letter-spacing: -0.01em;
+	color: #5c6370;
+	pointer-events: none;
+	animation: labelIn 0.45s var(--ease) both;
+}
+
+@keyframes labelIn {
+	from {
+		opacity: 0;
+		transform: translateY(-4px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@keyframes cardIn {
 	from {
 		opacity: 0;
 		transform: translateY(10px) scale(0.985);
@@ -54,692 +130,629 @@
 	}
 }
 
-.titlebar {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	padding: 11px 13px;
-	background: #181c26;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
+/* ============================================================ canvas */
 
-.traffic {
-	display: flex;
-	gap: 5px;
-}
-
-.traffic i {
-	width: 7px;
-	height: 7px;
-	border-radius: 50%;
-	background: rgba(255, 255, 255, 0.18);
-	display: block;
-}
-
-.winLabel {
-	font-family: var(--font-geist-mono), ui-monospace, monospace;
-	font-size: 10px;
-	color: #6e7384;
-	letter-spacing: 0.03em;
-}
-
-.editor {
+.canvas {
+	position: relative;
+	min-height: 0;
 	display: grid;
-	grid-template-columns: 28px 1fr;
-	min-height: 118px;
+	place-items: center;
+	padding: 28px 16px 8px;
+	background:
+		radial-gradient(70% 80% at 50% 40%, var(--canvas-tint), transparent 70%),
+		#fafbfc;
+	border-bottom: 1px solid rgba(20, 21, 26, 0.06);
 }
 
-.gutter {
+.canvasFrame {
+	position: relative;
+	width: min(100%, 220px);
+	aspect-ratio: 1;
+	display: grid;
+	place-items: center;
+}
+
+/* Nested rotated squares — build one-by-one like Brilliant CS */
+.spiralSq {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: var(--sq-size);
+	height: var(--sq-size);
+	margin: calc(var(--sq-size) / -2) 0 0 calc(var(--sq-size) / -2);
+	border: 2.5px solid var(--sq-color);
+	border-radius: 3px;
+	box-sizing: border-box;
+	background: var(--sq-fill, transparent);
+	transform: rotate(var(--sq-angle)) scale(0.55);
+	opacity: 0;
+	animation: squarePop var(--dur) var(--spring) both;
+	animation-delay: calc(0.72s + var(--sq-i) * 0.16s);
+}
+
+@keyframes squarePop {
+	0% {
+		opacity: 0;
+		transform: rotate(var(--sq-angle)) scale(0.55);
+	}
+	12% {
+		opacity: 1;
+		transform: rotate(var(--sq-angle)) scale(1.06);
+	}
+	22%,
+	100% {
+		opacity: 1;
+		transform: rotate(var(--sq-angle)) scale(1);
+	}
+}
+
+/* ============================================================ code blocks */
+
+.blocks {
+	list-style: none;
+	margin: 0;
+	padding: 10px 12px 12px;
 	display: flex;
 	flex-direction: column;
-	padding: 14px 0 10px;
-	gap: 0;
-	font-family: var(--font-geist-mono), ui-monospace, monospace;
-	font-size: 11px;
-	line-height: 1.7;
-	color: #3f4454;
+	gap: 5px;
+	min-height: 0;
+	overflow: hidden;
+	background: #ffffff;
+}
+
+.block {
+	display: grid;
+	grid-template-columns: 18px 1fr;
+	align-items: center;
+	gap: 6px;
+	opacity: 0;
+	transform: translateY(6px);
+	animation: blockIn var(--dur) var(--ease) both;
+}
+
+.b1 {
+	animation-delay: 0.05s;
+}
+.b2 {
+	animation-delay: 0.12s;
+}
+.b3 {
+	animation-delay: 0.19s;
+}
+.b4 {
+	animation-delay: 0.26s;
+}
+.b5 {
+	animation-delay: 0.33s;
+}
+
+@keyframes blockIn {
+	0%,
+	2% {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+	10%,
+	100% {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.ln {
+	font-family: var(--font-geist-sans), system-ui, sans-serif;
+	font-size: 10px;
+	font-weight: 600;
+	color: #a0a6b0;
 	text-align: right;
-	padding-right: 8px;
 	user-select: none;
 }
 
-.gutter span {
-	display: block;
-	height: 1.7em;
-}
-
-.code {
-	margin: 0;
-	padding: 14px 12px 10px 0;
-	font-family: var(--font-geist-mono), ui-monospace, monospace;
-	font-size: 11.5px;
-	line-height: 1.7;
-	color: #d7dae4;
-}
-
-.line {
-	display: block;
-	overflow: hidden;
-	white-space: nowrap;
-	max-width: 0;
-	opacity: 0;
-}
-
-/* Staggered type-on across the loop */
-.python .line1 {
-	animation: typeLine var(--dur) var(--ease) infinite;
-}
-
-.python .line2 {
-	animation: typeLine var(--dur) var(--ease) infinite;
-	animation-delay: 0.15s;
-}
-
-.python .line3 {
-	animation: typeLine var(--dur) var(--ease) infinite;
-	animation-delay: 0.35s;
-}
-
-.python .line4 {
-	animation: typeLine var(--dur) var(--ease) infinite;
-	animation-delay: 0.55s;
-}
-
-@keyframes typeLine {
-	0%,
-	6% {
-		max-width: 0;
-		opacity: 0;
-	}
-	14%,
-	88% {
-		max-width: 100%;
-		opacity: 1;
-	}
-	96%,
-	100% {
-		max-width: 100%;
-		opacity: 0.35;
-	}
-}
-
-.cmt {
-	color: #6b7280;
-}
-
-.kw {
-	color: var(--accent);
-}
-
-.fn {
-	color: #f0c96a;
-}
-
-.caret {
-	display: inline-block;
-	width: 6px;
-	height: 1em;
-	margin-left: 2px;
-	vertical-align: -2px;
-	background: var(--accent);
-	border-radius: 1px;
-	animation: caretPulse 1s steps(1) infinite;
-}
-
-@keyframes caretPulse {
-	50% {
-		opacity: 0;
-	}
-}
-
-.toolbar {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 8px 12px;
-	border-top: 1px solid rgba(255, 255, 255, 0.05);
-	background: #151922;
-}
-
-.toolMuted {
-	font-size: 10px;
-	color: #4b5060;
-	text-transform: uppercase;
-	letter-spacing: 0.06em;
-}
-
-.run {
+.chip {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
-	padding: 5px 12px;
-	border-radius: 999px;
+	min-width: 0;
+	padding: 5px 10px;
+	border-radius: 8px;
+	font-family: var(--font-geist-sans), system-ui, sans-serif;
 	font-size: 11px;
-	font-weight: 700;
-	background: rgba(255, 255, 255, 0.06);
-	color: #8b90a0;
-	animation: runFlash var(--dur) var(--ease) infinite;
+	font-weight: 550;
+	letter-spacing: -0.01em;
+	line-height: 1.35;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	box-shadow: 0 1px 0 rgba(20, 21, 26, 0.04);
+	transition: box-shadow 0.2s var(--soft);
+	animation: chipPulse var(--dur) var(--ease) both;
 }
 
-.runIcon {
-	font-size: 9px;
+.chipIcon {
+	width: 12px;
+	height: 12px;
+	flex: none;
 }
 
-@keyframes runFlash {
+.blockLoop .chip {
+	background: var(--loop-bg);
+	color: var(--loop-ink);
+}
+
+.blockVar .chip {
+	background: var(--var-bg);
+	color: var(--var-ink);
+}
+
+.blockDraw .chip {
+	background: var(--draw-bg);
+	color: var(--draw-ink);
+}
+
+/* Highlight the active line as the loop “runs” */
+.python .b1 .chip {
+	animation-name: chipPulse, loopGlow;
+}
+.python .b2 .chip {
+	animation-name: chipPulse, varGlow;
+	animation-delay: 0, 1.1s;
+}
+.python .b3 .chip {
+	animation-name: chipPulse, varGlow;
+	animation-delay: 0, 1.35s;
+}
+.python .b4 .chip {
+	animation-name: chipPulse, varGlow;
+	animation-delay: 0, 1.55s;
+}
+.python .b5 .chip {
+	animation-name: chipPulse, drawGlow;
+	animation-delay: 0, 1.75s;
+}
+
+@keyframes chipPulse {
 	0%,
-	28% {
-		background: rgba(255, 255, 255, 0.06);
-		color: #8b90a0;
-		box-shadow: none;
-	}
-	34%,
-	48% {
-		background: #fc6e51;
-		color: #04140c;
-		box-shadow: 0 0 0 4px rgba(22, 196, 122, 0.2);
-	}
-	56%,
 	100% {
-		background: rgba(255, 255, 255, 0.06);
-		color: #8b90a0;
-		box-shadow: none;
+		/* placeholder so multi-name animations resolve */
 	}
 }
 
-.output {
-	padding: 10px 12px 12px;
-	border-top: 1px solid rgba(255, 255, 255, 0.05);
-	background: #080a10;
-	min-height: 58px;
-	font-family: var(--font-geist-mono), ui-monospace, monospace;
-	font-size: 11.5px;
-}
-
-.outLabel {
-	display: block;
-	font-size: 9px;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-	color: #4b5060;
-	margin-bottom: 6px;
-}
-
-.outBody {
-	display: grid;
-	gap: 3px;
-}
-
-.outLine,
-.ok {
-	opacity: 0;
-	transform: translateY(4px);
-}
-
-.python .outLine {
-	color: #c8ccd8;
-	animation: revealSoft var(--dur) var(--ease) infinite;
-	animation-delay: 0.05s;
-}
-
-.python .ok {
-	color: #fc6e51;
-	animation: revealSoft var(--dur) var(--ease) infinite;
-	animation-delay: 0.18s;
-}
-
-@keyframes revealSoft {
+@keyframes loopGlow {
 	0%,
+	8% {
+		box-shadow: 0 1px 0 rgba(20, 21, 26, 0.04);
+		transform: none;
+	}
+	12% {
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--loop) 28%, transparent);
+		transform: scale(1.02);
+	}
+	22%,
+	100% {
+		box-shadow: 0 1px 0 rgba(20, 21, 26, 0.04);
+		transform: none;
+	}
+}
+
+@keyframes varGlow {
+	0%,
+	4% {
+		box-shadow: 0 1px 0 rgba(20, 21, 26, 0.04);
+		transform: none;
+	}
+	10% {
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--var) 28%, transparent);
+		transform: scale(1.015);
+	}
+	22%,
+	100% {
+		box-shadow: 0 1px 0 rgba(20, 21, 26, 0.04);
+		transform: none;
+	}
+}
+
+@keyframes drawGlow {
+	0%,
+	3% {
+		box-shadow: 0 1px 0 rgba(20, 21, 26, 0.04);
+		transform: none;
+	}
+	/* Keep a soft pulse while squares are drawing */
+	8%,
+	70% {
+		box-shadow: 0 0 0 2.5px color-mix(in srgb, var(--draw) 22%, transparent);
+	}
+	78%,
+	100% {
+		box-shadow: 0 1px 0 rgba(20, 21, 26, 0.04);
+		transform: none;
+	}
+}
+
+/* Cursor that drifts over the active lines (Brilliant hover cue) */
+.cursor {
+	position: absolute;
+	width: 14px;
+	height: 18px;
+	left: 72%;
+	top: 62%;
+	z-index: 4;
+	pointer-events: none;
+	opacity: 0;
+	background: #14151a;
+	clip-path: polygon(0 0, 0 100%, 28% 78%, 48% 100%, 58% 94%, 38% 70%, 100% 70%);
+	filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+	animation: cursorTour var(--dur) var(--ease) both;
+}
+
+@keyframes cursorTour {
+	0%,
+	18% {
+		opacity: 0;
+		transform: translate(8px, 12px);
+	}
+	24% {
+		opacity: 1;
+		transform: translate(0, 0);
+	}
+	32% {
+		transform: translate(-28px, 22px);
+	}
+	42% {
+		transform: translate(-12px, 48px);
+	}
+	55% {
+		transform: translate(4px, 72px);
+	}
+	68%,
+	100% {
+		opacity: 0;
+		transform: translate(10px, 90px);
+	}
+}
+
+/* ============================================================ Roblox stage */
+
+.studioFrame {
+	width: min(100%, 200px);
+}
+
+.gridFloor {
+	position: absolute;
+	inset: 18% 8% 12%;
+	background-image:
+		linear-gradient(rgba(20, 21, 26, 0.07) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(20, 21, 26, 0.07) 1px, transparent 1px);
+	background-size: 18px 18px;
+	transform: perspective(420px) rotateX(58deg);
+	border-radius: 8px;
+	opacity: 0;
+	animation: fadeUp var(--dur) var(--ease) both;
+	animation-delay: 0.35s;
+}
+
+.partShadow {
+	position: absolute;
+	top: 58%;
+	left: 50%;
+	width: 64px;
+	height: 28px;
+	margin: 0 0 0 -32px;
+	border-radius: 50%;
+	background: radial-gradient(closest-side, rgba(20, 21, 26, 0.18), transparent 72%);
+	opacity: 0;
+	animation: fadeUp var(--dur) var(--ease) both;
+	animation-delay: 0.5s;
+}
+
+.part {
+	position: absolute;
+	top: 42%;
+	left: 50%;
+	width: 48px;
+	height: 48px;
+	margin: -24px 0 0 -24px;
+	transform-style: preserve-3d;
+	opacity: 0;
+	animation: partLife var(--dur) var(--spring) both;
+}
+
+@keyframes partLife {
+	0%,
+	12% {
+		opacity: 0;
+		transform: translateY(-18px) scale(0.8);
+	}
+	22% {
+		opacity: 1;
+		transform: none;
+	}
 	38% {
-		opacity: 0;
-		transform: translateY(5px);
-	}
-	46%,
-	88% {
-		opacity: 1;
-		transform: none;
-	}
-	96%,
-	100% {
-		opacity: 0;
-		transform: translateY(-2px);
-	}
-}
-
-/* ============================================================ Roblox / Luau */
-
-.roblox .line.rbxLine1 {
-	animation: typeLine var(--dur) var(--ease) infinite;
-}
-
-.roblox .line.rbxLine2 {
-	animation: typeLine var(--dur) var(--ease) infinite;
-	animation-delay: 0.15s;
-}
-
-.roblox .line.rbxLine3 {
-	animation: typeLine var(--dur) var(--ease) infinite;
-	animation-delay: 0.35s;
-}
-
-.roblox .line.rbxLine4 {
-	animation: typeLine var(--dur) var(--ease) infinite;
-	animation-delay: 0.55s;
-}
-
-.roblox .outLine {
-	color: #c8ccd8;
-	animation: revealSoft var(--dur) var(--ease) infinite;
-	animation-delay: 0.05s;
-}
-
-.roblox .ok {
-	color: #fc6e51;
-	animation: revealSoft var(--dur) var(--ease) infinite;
-	animation-delay: 0.18s;
-}
-
-/* ============================================================ AI */
-
-.aiWindow {
-	width: 100%;
-	border-radius: 16px;
-	border: 1px solid rgba(255, 255, 255, 0.1);
-	background: #12151d;
-	overflow: hidden;
-	box-shadow:
-		0 20px 48px rgba(0, 0, 0, 0.5),
-		inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-
-.ai .winLabel {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-}
-
-.aiMark {
-	width: 12px;
-	height: 12px;
-	color: var(--accent);
-	flex-shrink: 0;
-}
-
-.aiShell {
-	display: grid;
-	grid-template-columns: 1.12fr 1fr;
-	gap: 10px;
-	padding: 12px;
-}
-
-.brief,
-.result {
-	border-radius: 12px;
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	background: #0a0c12;
-	padding: 12px;
-	min-height: 168px;
-}
-
-.badge {
-	display: inline-flex;
-	align-items: center;
-	gap: 5px;
-	padding: 4px 9px;
-	border-radius: 999px;
-	background: rgba(181, 130, 255, 0.12);
-	border: 1px solid rgba(181, 130, 255, 0.22);
-	color: #d4b8ff;
-	font-size: 10px;
-	font-weight: 650;
-	margin-bottom: 10px;
-	letter-spacing: 0.02em;
-}
-
-.badgeSpark {
-	width: 11px;
-	height: 11px;
-	color: var(--accent);
-}
-
-.prompt {
-	min-height: 64px;
-	padding: 10px 12px;
-	border-radius: 10px;
-	background: #12151d;
-	border: 1px solid rgba(255, 255, 255, 0.07);
-	font-size: 12.5px;
-	line-height: 1.45;
-	color: #fff;
-	margin-bottom: 10px;
-}
-
-.type {
-	display: inline;
-	overflow: hidden;
-	white-space: nowrap;
-	max-width: 0;
-	animation: typePrompt var(--dur) steps(28, end) infinite;
-}
-
-@keyframes typePrompt {
-	0%,
-	6% {
-		max-width: 0;
-		opacity: 1;
-	}
-	28%,
-	82% {
-		max-width: 18ch;
-		opacity: 1;
-	}
-	92%,
-	100% {
-		max-width: 18ch;
-		opacity: 0.45;
-	}
-}
-
-.generate {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	padding: 7px 12px;
-	border-radius: 9px;
-	background: rgba(181, 130, 255, 0.18);
-	border: 1px solid rgba(181, 130, 255, 0.35);
-	color: #efe6ff;
-	font-size: 11px;
-	font-weight: 650;
-	opacity: 0.35;
-	transform: scale(0.96);
-	animation: generatePulse var(--dur) var(--ease) infinite;
-	box-shadow: 0 0 0 rgba(181, 130, 255, 0);
-}
-
-.genSpark {
-	width: 12px;
-	height: 12px;
-	color: var(--accent);
-}
-
-@keyframes generatePulse {
-	0%,
-	26% {
-		opacity: 0.35;
-		transform: scale(0.96);
-		box-shadow: 0 0 0 rgba(181, 130, 255, 0);
-	}
-	32%,
-	42% {
-		opacity: 1;
-		transform: none;
-		box-shadow: 0 0 18px rgba(181, 130, 255, 0.35);
-	}
-	48%,
-	82% {
-		opacity: 0.7;
-		transform: none;
-		box-shadow: 0 0 8px rgba(181, 130, 255, 0.15);
-	}
-	92%,
-	100% {
-		opacity: 0.35;
-		transform: scale(0.96);
-		box-shadow: 0 0 0 rgba(181, 130, 255, 0);
-	}
-}
-
-.result {
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
-	justify-content: flex-start;
-	gap: 12px;
-	position: relative;
-	overflow: hidden;
-}
-
-.result::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(
-		105deg,
-		transparent 30%,
-		rgba(181, 130, 255, 0.07) 48%,
-		transparent 66%
-	);
-	transform: translateX(-120%);
-	animation: aiShimmer var(--dur) var(--ease) infinite;
-	pointer-events: none;
-}
-
-@keyframes aiShimmer {
-	0%,
-	28% {
-		transform: translateX(-120%);
-		opacity: 0;
-	}
-	34% {
-		opacity: 1;
+		transform: translateY(4px) scale(1.08, 0.9);
 	}
 	48% {
-		transform: translateX(120%);
-		opacity: 0;
+		transform: translateY(-10px) scale(0.96, 1.06);
 	}
-	100% {
-		transform: translateX(120%);
-		opacity: 0;
-	}
-}
-
-.aiStatus {
-	position: relative;
-	height: 44px;
-	display: grid;
-	place-items: center;
-}
-
-.statusThink,
-.statusGen,
-.statusDone {
-	position: absolute;
-	inset: 0;
-	display: grid;
-	place-items: center;
-	font-size: 11px;
-	font-weight: 650;
-	letter-spacing: 0.04em;
-	opacity: 0;
-	z-index: 1;
-}
-
-.statusThink {
-	color: #9aa0b0;
-	animation: statusThink var(--dur) var(--ease) infinite;
-}
-
-.statusGen {
-	color: var(--accent);
-	animation: statusGen var(--dur) var(--ease) infinite;
-}
-
-.statusDone {
-	color: #fc6e51;
-	grid-auto-flow: column;
-	justify-content: center;
-	align-content: center;
-	gap: 5px;
-	animation: statusDone var(--dur) var(--ease) infinite;
-}
-
-.doneSpark {
-	width: 12px;
-	height: 12px;
-	color: #fc6e51;
-}
-
-@keyframes statusThink {
-	0%,
-	30% {
-		opacity: 0;
-	}
-	34%,
-	42% {
-		opacity: 1;
-	}
-	48%,
-	100% {
-		opacity: 0;
-	}
-}
-
-@keyframes statusGen {
-	0%,
-	42% {
-		opacity: 0;
-	}
-	46%,
 	58% {
-		opacity: 1;
+		transform: translateY(2px) scale(1.03, 0.98);
 	}
-	64%,
+	70%,
 	100% {
-		opacity: 0;
-	}
-}
-
-@keyframes statusDone {
-	0%,
-	60% {
-		opacity: 0;
-		transform: scale(0.94);
-	}
-	66%,
-	82% {
 		opacity: 1;
 		transform: none;
 	}
-	90%,
+}
+
+.part i {
+	position: absolute;
+	inset: 0;
+	display: block;
+	border-radius: 4px;
+}
+
+.partTop {
+	transform: rotateX(58deg) rotateZ(45deg) translateZ(18px);
+	background: #c8ccd6;
+	animation: partColorTop var(--dur) var(--ease) both;
+}
+
+.partFront {
+	transform: rotateX(58deg) rotateZ(45deg) rotateX(-90deg) translateZ(18px);
+	background: #aeb3c0;
+	animation: partColorFront var(--dur) var(--ease) both;
+}
+
+.partSide {
+	transform: rotateX(58deg) rotateZ(45deg) rotateY(90deg) translateZ(18px);
+	background: #969ba8;
+	animation: partColorSide var(--dur) var(--ease) both;
+}
+
+@keyframes partColorTop {
+	0%,
+	28% {
+		background: #c8ccd6;
+	}
+	40%,
 	100% {
-		opacity: 0;
+		background: #fc6e51;
 	}
 }
 
-.ringWrap {
-	position: absolute;
-	inset: 0;
-	display: grid;
-	place-items: center;
-	pointer-events: none;
-	opacity: 0.55;
-}
-
-.ringSvg {
-	width: 40px;
-	height: 40px;
-	transform: rotate(-90deg);
-}
-
-.ringBg,
-.ringFg {
-	fill: none;
-	stroke-width: 2.2;
-}
-
-.ringBg {
-	stroke: rgba(255, 255, 255, 0.07);
-}
-
-.ringFg {
-	stroke: var(--accent);
-	stroke-linecap: round;
-	stroke-dasharray: 94;
-	stroke-dashoffset: 94;
-	animation: ringFill var(--dur) var(--ease) infinite;
-	filter: drop-shadow(0 0 4px rgba(181, 130, 255, 0.45));
-}
-
-@keyframes ringFill {
+@keyframes partColorFront {
 	0%,
-	30% {
-		stroke-dashoffset: 94;
+	28% {
+		background: #aeb3c0;
+	}
+	40%,
+	100% {
+		background: #e85d3a;
+	}
+}
+
+@keyframes partColorSide {
+	0%,
+	28% {
+		background: #969ba8;
+	}
+	40%,
+	100% {
+		background: #c44a30;
+	}
+}
+
+.spark {
+	position: absolute;
+	top: 42%;
+	left: 50%;
+	width: 72px;
+	height: 72px;
+	margin: -24px 0 0 -36px;
+	border-radius: 50%;
+	border: 2px solid var(--accent);
+	opacity: 0;
+	transform: scale(0.3);
+	animation: sparkRing var(--dur) var(--soft) both;
+}
+
+@keyframes sparkRing {
+	0%,
+	36% {
+		opacity: 0;
+		transform: scale(0.3);
+	}
+	42% {
+		opacity: 0.7;
 	}
 	58%,
-	82% {
-		stroke-dashoffset: 12;
-	}
-	92%,
 	100% {
-		stroke-dashoffset: 94;
+		opacity: 0;
+		transform: scale(1.6);
 	}
 }
 
-.stack {
+@keyframes fadeUp {
+	0% {
+		opacity: 0;
+	}
+	18%,
+	100% {
+		opacity: 1;
+	}
+}
+
+/* ============================================================ AI plan */
+
+.planFrame {
+	width: min(100%, 240px);
+	aspect-ratio: auto;
+	min-height: 120px;
+}
+
+.planStack {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 	width: 100%;
 	display: grid;
-	gap: 6px;
-	position: relative;
-	z-index: 1;
-}
-
-.stack li {
-	display: flex;
-	align-items: baseline;
-	justify-content: space-between;
 	gap: 8px;
-	padding: 8px 10px;
-	border-radius: 9px;
-	background: rgba(255, 255, 255, 0.035);
-	border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.planStack li {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 12px;
+	border-radius: 12px;
+	background: #ffffff;
+	border: 1px solid rgba(20, 21, 26, 0.08);
+	box-shadow: 0 4px 14px rgba(20, 21, 26, 0.04);
 	opacity: 0;
-	transform: translateY(8px);
-	animation: cardIn var(--dur) var(--ease) infinite;
+	transform: translateY(8px) scale(0.96);
+	animation: planCard var(--dur) var(--spring) both;
 }
 
-.cardTitle {
-	font-size: 11px;
-	font-weight: 650;
-	color: #e8eaf0;
+.planStack li:nth-child(1) {
+	animation-delay: 1.1s;
+}
+.planStack li:nth-child(2) {
+	animation-delay: 1.55s;
+}
+.planStack li:nth-child(3) {
+	animation-delay: 2s;
 }
 
-.cardHint {
-	font-size: 9.5px;
-	color: #8b91a3;
-	white-space: nowrap;
-}
-
-.stack li:nth-child(1) {
-	animation-delay: 0.05s;
-}
-
-.stack li:nth-child(2) {
-	animation-delay: 0.16s;
-}
-
-.stack li:nth-child(3) {
-	animation-delay: 0.28s;
-}
-
-@keyframes cardIn {
-	0%,
-	52% {
+@keyframes planCard {
+	0% {
 		opacity: 0;
-		transform: translateY(8px);
+		transform: translateY(8px) scale(0.96);
 	}
-	62%,
-	82% {
+	14% {
+		opacity: 1;
+		transform: translateY(-2px) scale(1.03);
+	}
+	22%,
+	100% {
 		opacity: 1;
 		transform: none;
-		border-color: rgba(181, 130, 255, 0.18);
 	}
-	90%,
+}
+
+.planStack span {
+	display: flex;
+	flex-direction: column;
+	gap: 1px;
+	min-width: 0;
+}
+
+.planStack strong {
+	font-family: var(--font-geist-sans), system-ui, sans-serif;
+	font-size: 12px;
+	font-weight: 650;
+	color: #14151a;
+}
+
+.planStack em {
+	font-style: normal;
+	font-size: 10.5px;
+	color: #8b919c;
+}
+
+.tick {
+	width: 14px;
+	height: 14px;
+	flex: none;
+	color: var(--accent);
+}
+
+.tick path {
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+	animation: drawTick var(--dur) var(--ease) both;
+}
+
+.planStack li:nth-child(1) .tick path {
+	animation-delay: 1.2s;
+}
+.planStack li:nth-child(2) .tick path {
+	animation-delay: 1.65s;
+}
+.planStack li:nth-child(3) .tick path {
+	animation-delay: 2.1s;
+}
+
+@keyframes drawTick {
+	0%,
+	8% {
+		stroke-dashoffset: 1;
+	}
+	18%,
 	100% {
-		opacity: 0;
-		transform: translateY(-4px);
+		stroke-dashoffset: 0;
+	}
+}
+
+/* Roblox / AI block highlight timing */
+.roblox .b1 .chip,
+.roblox .b2 .chip,
+.roblox .b3 .chip,
+.roblox .b4 .chip,
+.ai .b1 .chip,
+.ai .b2 .chip,
+.ai .b3 .chip {
+	animation-name: chipPulse, varGlow;
+}
+
+.roblox .b2 .chip {
+	animation-delay: 0, 1s;
+}
+.roblox .b3 .chip {
+	animation-delay: 0, 1.4s;
+}
+.roblox .b4 .chip {
+	animation-name: chipPulse, loopGlow;
+	animation-delay: 0, 2.2s;
+}
+
+.ai .b2 .chip {
+	animation-name: chipPulse, loopGlow;
+	animation-delay: 0, 0.9s;
+}
+.ai .b3 .chip {
+	animation-name: chipPulse, drawGlow;
+	animation-delay: 0, 2.2s;
+}
+
+/* Roblox / AI row balance */
+.roblox .lesson,
+.ai .lesson {
+	grid-template-rows: minmax(0, 1.2fr) minmax(0, 0.8fr);
+}
+
+/* ============================================================ compact */
+
+@media (max-width: 640px) {
+	.scene {
+		padding: 8px;
+	}
+
+	.chip {
+		font-size: 10px;
+		padding: 4px 8px;
+	}
+
+	.canvas {
+		padding: 10px 12px 6px;
+	}
+
+	.spiralSq {
+		border-width: 2px;
+	}
+
+	.sceneLabel {
+		top: 10px;
+		left: 12px;
+		font-size: 10.5px;
 	}
 }
 
@@ -751,26 +764,42 @@
 	.scene *::after {
 		animation-duration: 0.001ms !important;
 		animation-iteration-count: 1 !important;
+		animation-delay: 0ms !important;
 		transition: none !important;
 	}
 
-	.line,
-	.type,
-	.outLine,
-	.ok,
-	.generate,
-	.statusDone,
-	.stack li,
-	.ringFg {
+	.lesson,
+	.block,
+	.spiralSq,
+	.gridFloor,
+	.partShadow,
+	.part,
+	.planStack li,
+	.sceneLabel {
 		opacity: 1 !important;
-		max-width: 100% !important;
 		transform: none !important;
-		stroke-dashoffset: 12 !important;
 	}
 
-	.statusThink,
-	.statusGen,
-	.result::before {
+	.spiralSq {
+		transform: rotate(var(--sq-angle)) scale(1) !important;
+	}
+
+	.partTop {
+		background: #fc6e51 !important;
+	}
+	.partFront {
+		background: #e85d3a !important;
+	}
+	.partSide {
+		background: #c44a30 !important;
+	}
+
+	.tick path {
+		stroke-dashoffset: 0 !important;
+	}
+
+	.cursor,
+	.spark {
 		opacity: 0 !important;
 	}
 }

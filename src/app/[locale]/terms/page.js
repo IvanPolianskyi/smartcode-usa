@@ -1,251 +1,259 @@
-import { LegalDoc, LegalSection, LegalCallout } from '@/components/Legal/LegalDoc'
+import LegalDoc, { LegalCallout } from '@/components/Legal/LegalDoc'
 import { LEGAL } from '@/lib/legalConfig'
-import { Link } from '@/i18n/navigation'
 
-function SupportContacts() {
-	return (
-		<>
-			<a href={`mailto:${LEGAL.supportEmail}`}>{LEGAL.supportEmail}</a>
-			{LEGAL.supportPhone ? (
-				<>
-					{' '}
-					or{' '}
-					<a href={`tel:${LEGAL.supportPhone.replace(/\s+/g, '')}`}>
-						{LEGAL.supportPhone}
-					</a>
-				</>
-			) : null}
-		</>
-	)
+export const metadata = {
+	title: 'Terms of Service',
+	description: `Terms of Service for ${LEGAL.brandName} - subscription learning platform. Merchant of Record: Paddle.`,
+	alternates: { canonical: '/terms' },
 }
 
 export default function TermsPage() {
 	return (
 		<LegalDoc
-			active="/terms"
 			title="Terms of Service"
-			summary="These Terms explain what you get when you subscribe to SmartCode Academy and what we expect from you in return."
-			lastUpdated={LEGAL.lastUpdated}
+			updated={LEGAL.lastUpdated}
+			active="/terms"
+			lede={`These Terms of Service (“Terms”) govern your access to and use of ${LEGAL.brandName} at ${LEGAL.siteDomain} (the “Service”). By creating an account, starting a free trial, or completing a purchase, you agree to these Terms, our Privacy Policy, and our Refund Policy.`}
 		>
-			<LegalSection n={1} title="Who we are">
-				<p>
-					{LEGAL.brandName} (&ldquo;we&rdquo;, &ldquo;us&rdquo;,
-					&ldquo;our&rdquo;) is an online platform offering programming
-					courses at {LEGAL.siteDomain}. The service is operated by{' '}
-					{LEGAL.legalName}, {LEGAL.legalForm}, registered address{' '}
-					{LEGAL.businessAddress}. Buyer support:{' '}
-					<SupportContacts />.
-				</p>
-			</LegalSection>
-
-			<LegalSection n={2} title="The service">
-				<p>
-					SmartCode Academy provides subscription access to structured
-					online courses that teach programming, including lessons,
-					quizzes, practice tasks, and live lessons where included in
-					your plan. Our catalogue includes separate programs such as
-					Roblox Studio, Python, and AI at Work. You subscribe per
-					program. New modules may be added while you remain a
-					subscriber.
-				</p>
-				<p>
-					Our courses are for learning and skill-building only. We are
-					not an accredited school, college, or university. Completing a
-					course does not grant a recognized diploma, degree, or
-					professional certification, and we do not guarantee any
-					employment or career outcome.
-				</p>
-			</LegalSection>
-
-			<LegalSection n={3} title="Eligibility">
-				<p>
-					You must be at least 13 years old to create an account. If you
-					are under 18, you need permission from a parent or legal
-					guardian to use the service and to start a paid subscription.
-					By subscribing, you confirm that you meet these requirements,
-					or that a parent or guardian has agreed to these Terms on your
-					behalf.
-				</p>
-			</LegalSection>
-
-			<LegalSection n={4} title="Your account">
-				<p>
-					Keep your login details confidential. You are responsible for
-					all activity on your account, including any use by someone you
-					share your password with. If you think your account has been
-					accessed without permission, tell us right away at{' '}
-					<a href={`mailto:${LEGAL.supportEmail}`}>
-						{LEGAL.supportEmail}
-					</a>
-					.
-				</p>
-			</LegalSection>
-
-			<LegalSection n={5} title="Subscription, trial, and billing">
-				<ul>
-					<li>
-						New subscribers get a {LEGAL.trialDays}-day free trial on
-						each program they start.
-					</li>
-					<li>
-						If you do not cancel before the trial ends, it converts
-						automatically into a paid subscription and billing begins.
-					</li>
-					<li>
-						Each program is billed separately. Standard is{' '}
-						{LEGAL.monthlyPrice} per month or {LEGAL.annualPrice} per year
-						(platform and Discord). Premium is{' '}
-						{LEGAL.premiumMonthlyPrice} per month or{' '}
-						{LEGAL.premiumAnnualPrice} per year and adds 2 live lessons a
-						week. Charges run automatically at the start of each billing
-						period until you cancel.
-					</li>
-					<li>
-						You can cancel anytime from your account page or through
-						Paddle&apos;s buyer tools. Cancelling stops future charges.
-						You keep access until the end of the period you already paid
-						for.
-					</li>
-					<li>
-						Prices shown exclude applicable taxes. Paddle calculates and
-						collects tax (including VAT where required) at checkout; the
-						final amount including tax is confirmed before you pay.
-					</li>
-					<li>
-						We may change prices for future billing periods. We will
-						tell you in advance so you can decide whether to continue.
-					</li>
-				</ul>
-			</LegalSection>
-
-			<LegalSection n={6} title="Payment processing (Merchant of Record)">
+			<section>
+				<h2>1. Merchant of Record</h2>
 				<LegalCallout>
 					<p>
-						Our order process is conducted by our online reseller
-						Paddle.com. Paddle.com is the Merchant of Record for all
-						our orders. Paddle provides all customer service inquiries
-						and handles returns.
+						Our order process is conducted by our online reseller Paddle.com
+						Market Limited (and its affiliates, “Paddle”). Paddle is the Merchant
+						of Record for all our orders. Paddle provides all customer service
+						inquiries and handles returns.
 					</p>
 				</LegalCallout>
 				<p>
-					Paddle.com Market Limited (&ldquo;Paddle&rdquo;) sells the
-					subscription to you as our authorized reseller, appears on
-					your bank or card statement, collects and remits applicable
-					sales tax or VAT, issues receipts/invoices, and handles
-					billing support and refunds. Your purchase is also subject to{' '}
+					Paddle’s Buyer Terms apply to the purchase transaction:{' '}
 					<a
 						href={LEGAL.paddleBuyerTermsUrl}
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						Paddle&apos;s Buyer Terms
+						{LEGAL.paddleBuyerTermsUrl}
 					</a>
-					. Product and learning support is provided by us at{' '}
-					<a href={`mailto:${LEGAL.supportEmail}`}>
-						{LEGAL.supportEmail}
+					. Paddle’s Privacy Policy:{' '}
+					<a
+						href={LEGAL.paddlePrivacyUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{LEGAL.paddlePrivacyUrl}
 					</a>
 					.
 				</p>
-			</LegalSection>
-
-			<LegalSection n={7} title="Refunds and cancellations">
 				<p>
-					Refunds are described in our{' '}
-					<Link href="/refund">Refund Policy</Link>. In summary, you may
-					request a full refund within {LEGAL.refundDays} days of your
-					first paid charge for a program. After that window, charges for
-					the current period are final except where required by law or
-					Paddle&apos;s policies. Cancellation stops future renewals; it
-					does not by itself create a refund for time already paid.
+					{LEGAL.legalName}, {LEGAL.legalForm} (“we,” “us,” or “Vendor”),
+					operates the Service and fulfills digital access after purchase.
+					Business address: {LEGAL.businessAddress}. Support:{' '}
+					<a href={`mailto:${LEGAL.supportEmail}`}>{LEGAL.supportEmail}</a>
+					{LEGAL.supportPhone ? (
+						<>
+							{' '}
+							· <a href={`tel:${LEGAL.supportPhone.replace(/\s/g, '')}`}>{LEGAL.supportPhone}</a>
+						</>
+					) : null}
+					.
 				</p>
-			</LegalSection>
+			</section>
 
-			<LegalSection n={8} title="Acceptable use">
+			<section>
+				<h2>2. Eligibility</h2>
 				<p>
-					Use the service for your own personal learning only. You agree
-					not to:
+					You must be at least 16 years old (or the age of digital consent in
+					your country, if higher) and able to form a binding contract. If you
+					use the Service on behalf of an organization, you represent that you
+					have authority to bind that organization. The Service is not directed
+					to children under 13 (COPPA).
+				</p>
+			</section>
+
+			<section>
+				<h2>3. The Service</h2>
+				<p>
+					{LEGAL.brandName} provides online programming courses, learning
+					materials, progress tracking, and related community features
+					(including optional Discord access for enrolled members). We may
+					update, improve, or discontinue features with reasonable notice when
+					materially adverse to paying subscribers. Course content is licensed,
+					not sold.
+				</p>
+			</section>
+
+			<section>
+				<h2>4. Accounts</h2>
+				<p>
+					You are responsible for your account credentials and for activity
+					under your account. Provide accurate registration information and keep
+					it current. Notify us promptly of unauthorized access at{' '}
+					<a href={`mailto:${LEGAL.supportEmail}`}>{LEGAL.supportEmail}</a>. We
+					may suspend or terminate accounts that violate these Terms, abuse the
+					platform, or create security or legal risk.
+				</p>
+			</section>
+
+			<section>
+				<h2>5. Free trial, pricing, and auto-renewal</h2>
+				<p>
+					<strong>Free trial.</strong> New subscriptions may include a free
+					trial of {LEGAL.trialDays} days. You authorize Paddle to store your
+					payment method and to charge the then-current subscription price when
+					the trial ends, unless you cancel before the trial expires. You will
+					not be charged during the trial if you cancel in time.
+				</p>
+				<p>
+					<strong>Prices (USD).</strong> Standard: {LEGAL.monthlyPrice}/month or{' '}
+					{LEGAL.annualPrice}/year. Premium: {LEGAL.premiumMonthlyPrice}/month
+					or {LEGAL.premiumAnnualPrice}/year. Applicable taxes (VAT, sales tax,
+					etc.) are calculated and collected by Paddle as Merchant of Record and
+					shown at checkout. Prices may change for future renewal periods; we
+					will provide notice as required by law and/or via email before a
+					price change takes effect for your next renewal.
+				</p>
+				<p>
+					<strong>Automatic renewal (important).</strong> Unless you cancel,
+					your subscription renews automatically at the end of each billing
+					period (monthly or annual) for the same plan and term, and your
+					payment method on file with Paddle will be charged the renewal price
+					plus applicable taxes. By starting a trial or paid subscription, you
+					expressly agree to these recurring charges until you cancel.
+				</p>
+				<p>
+					<strong>How to cancel.</strong> You may cancel anytime from your
+					account billing settings or by contacting{' '}
+					<a href={`mailto:${LEGAL.supportEmail}`}>{LEGAL.supportEmail}</a> or
+					Paddle support. Cancellation stops future renewals; it does not
+					automatically refund the current period except as described in our{' '}
+					<a href="/refund">Refund Policy</a>. Access continues through the end
+					of the paid period already purchased, unless a refund is issued.
+				</p>
+			</section>
+
+			<section>
+				<h2>6. Payment and billing</h2>
+				<p>
+					All payments are processed by Paddle. We do not store full card
+					numbers. Failed payments may result in suspension of access until the
+					invoice is paid or the subscription is canceled. Receipts and invoices
+					are issued by Paddle.
+				</p>
+			</section>
+
+			<section>
+				<h2>7. Refunds and statutory withdrawal</h2>
+				<p>
+					Our voluntary seller guarantee is a {LEGAL.refundDays}-day money-back
+					window on the first paid charge for a subscription, as detailed in the{' '}
+					<a href="/refund">Refund Policy</a>. That policy also explains how EU/UK
+					consumers’ statutory withdrawal rights interact with digital content
+					and services. Chargebacks should be a last resort; contact us or
+					Paddle first so we can resolve the issue quickly.
+				</p>
+			</section>
+
+			<section>
+				<h2>8. License and acceptable use</h2>
+				<p>
+					We grant you a limited, non-exclusive, non-transferable, revocable
+					license to access the Service for your personal educational use while
+					your subscription is active. You may not:
 				</p>
 				<ul>
-					<li>share your account or login credentials with anyone else</li>
-					<li>
-						copy, download, redistribute, resell, or publish course
-						lessons, videos, code samples, or recordings outside the
-						platform
-					</li>
-					<li>
-						harass, abuse, or threaten other users, teachers, or staff
-					</li>
-					<li>
-						attempt to bypass payment, access controls, or security
-						measures
-					</li>
-					<li>use the service for any unlawful purpose</li>
+					<li>share, resell, sublicense, or publicly redistribute course materials;</li>
+					<li>scrape, bulk-download, or reverse engineer the Service except as allowed by law;</li>
+					<li>circumvent access controls, trials, or payment systems;</li>
+					<li>harass others, spam, or upload malware;</li>
+					<li>use the Service for unlawful purposes or in violation of export/sanctions laws.</li>
 				</ul>
 				<p>
-					If you break these rules, we may suspend or permanently close
-					your account without a refund, in addition to any other rights
-					we have.
+					Community spaces (e.g. Discord) remain subject to their own rules and
+					to our moderation. Violation may result in removal from community
+					features and/or termination of the account without refund where
+					permitted by law and our Refund Policy.
 				</p>
-			</LegalSection>
+			</section>
 
-			<LegalSection n={9} title="Intellectual property">
+			<section>
+				<h2>9. Intellectual property</h2>
 				<p>
-					All lessons, videos, code samples, quizzes, exercises, and
-					other course material are owned by us or our licensors.
-					Subscribing gives you a personal, non-transferable license to
-					access and use this material for your own learning while your
-					subscription is active. It does not give you ownership of
-					anything, and you may not redistribute, resell, publicly
-					perform, or otherwise share course material with anyone outside
-					your own account.
+					All course content, branding, software, and related materials are
+					owned by us or our licensors. Feedback you submit may be used by us
+					without obligation to you. You retain ownership of content you post in
+					community channels; you grant us a license to host and display that
+					content as needed to operate the Service.
 				</p>
-			</LegalSection>
+			</section>
 
-			<LegalSection n={10} title="Content availability">
+			<section>
+				<h2>10. Third-party services</h2>
 				<p>
-					We release new course modules over time on a regular schedule.
-					We do not guarantee a fixed release date for any specific
-					module, and the course catalogue, syllabus, and features may
-					change, be updated, or be discontinued at our discretion. We
-					make reasonable efforts to keep active courses available to
-					current subscribers.
+					The Service may link to or integrate third parties (including Paddle
+					checkout, Discord, email delivery, and analytics). Their terms and
+					privacy policies apply to those services. We are not responsible for
+					third-party sites or services we do not control.
 				</p>
-			</LegalSection>
+			</section>
 
-			<LegalSection n={11} title="Disclaimer of warranties">
+			<section>
+				<h2>11. Disclaimers</h2>
 				<p>
-					The service is provided &ldquo;as is&rdquo; and &ldquo;as
-					available&rdquo;. We do not guarantee that it will be
-					uninterrupted, error-free, or fit for any particular purpose.
-					We do not promise any specific learning outcome, skill level,
-					or employment result from using the service. Nothing in these
-					Terms limits rights that cannot be excluded under applicable
-					consumer law.
+					THE SERVICE AND CONTENT ARE PROVIDED “AS IS” AND “AS AVAILABLE.” TO
+					THE MAXIMUM EXTENT PERMITTED BY LAW, WE DISCLAIM WARRANTIES OF
+					MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+					NON-INFRINGEMENT. We do not guarantee specific career outcomes, exam
+					results, or uninterrupted availability. Educational content may
+					contain errors; use professional judgment.
 				</p>
-			</LegalSection>
-
-			<LegalSection n={12} title="Limitation of liability">
 				<p>
-					To the fullest extent permitted by law, we are not liable for
-					any indirect, incidental, or consequential damages arising from
-					your use of the service. Our total liability for any claim
-					relating to the service is limited to the amount you paid for
-					the relevant subscription in the 12 months before the claim
-					arose.
+					Nothing in these Terms excludes or limits liability that cannot be
+					excluded under applicable consumer protection law (including for
+					death or personal injury caused by negligence, fraud, or statutory
+					rights that cannot be waived).
 				</p>
-			</LegalSection>
+			</section>
 
-			<LegalSection n={13} title="Complaints">
+			<section>
+				<h2>12. Limitation of liability</h2>
 				<p>
-					If something goes wrong, email us at{' '}
-					<a href={`mailto:${LEGAL.supportEmail}`}>
-						{LEGAL.supportEmail}
-					</a>
-					. We aim to acknowledge complaints within 2 business days and
-					resolve them within 14 days. Billing and refund disputes for
-					Paddle transactions can also be raised with Paddle at{' '}
+					TO THE MAXIMUM EXTENT PERMITTED BY LAW, OUR TOTAL LIABILITY ARISING
+					OUT OF OR RELATED TO THE SERVICE OR THESE TERMS WILL NOT EXCEED THE
+					AMOUNTS YOU PAID TO PADDLE FOR THE SERVICE IN THE TWELVE (12) MONTHS
+					BEFORE THE CLAIM. WE WILL NOT BE LIABLE FOR INDIRECT, INCIDENTAL,
+					SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR LOST
+					PROFITS, DATA, OR GOODWILL, EVEN IF ADVISED OF THE POSSIBILITY.
+				</p>
+			</section>
+
+			<section>
+				<h2>13. Indemnity</h2>
+				<p>
+					You will defend and indemnify us against claims arising from your
+					misuse of the Service, violation of these Terms, or infringement of
+					third-party rights, except to the extent caused by our willful
+					misconduct.
+				</p>
+			</section>
+
+			<section>
+				<h2>14. Complaints and escalation</h2>
+				<p>
+					For product, access, or billing issues, email{' '}
+					<a href={`mailto:${LEGAL.supportEmail}`}>{LEGAL.supportEmail}</a>. We
+					acknowledge complaints within {LEGAL.complaintAckDays} business days
+					and aim to resolve them within {LEGAL.complaintResolveDays} business
+					days. Billing disputes may also be raised with Paddle:{' '}
 					<a
 						href={LEGAL.paddleSupportUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{LEGAL.paddleSupportUrl}
+					</a>{' '}
+					or via{' '}
+					<a
+						href={LEGAL.paddleNetUrl}
 						target="_blank"
 						rel="noopener noreferrer"
 					>
@@ -253,60 +261,126 @@ export default function TermsPage() {
 					</a>
 					.
 				</p>
-			</LegalSection>
-
-			<LegalSection n={14} title="Termination">
 				<p>
-					You may stop using the service at any time by cancelling your
-					subscription. We may suspend or terminate your account if you
-					violate these Terms, including the acceptable use rules in
-					Section 8. Termination for violating these Terms does not
-					entitle you to a refund.
+					If we cannot resolve a dispute, you may seek help from an independent
+					body without prejudice to your other rights:
 				</p>
-			</LegalSection>
+				<ul>
+					<li>
+						<strong>EU consumers:</strong> European online dispute redress
+						information -{' '}
+						<a
+							href={LEGAL.euConsumerCentreUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							consumer-redress.ec.europa.eu
+						</a>
+					</li>
+					<li>
+						<strong>UK consumers:</strong>{' '}
+						<a
+							href={LEGAL.ukConsumerUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Citizens Advice
+						</a>
+					</li>
+					<li>
+						<strong>US consumers:</strong> your state attorney general’s
+						consumer protection office, or{' '}
+						<a
+							href={LEGAL.usFtcComplaintUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							reportfraud.ftc.gov
+						</a>
+					</li>
+					<li>
+						<strong>Ukraine:</strong> State Service of Ukraine on Food Safety
+						and Consumer Protection (consumer protection authority)
+					</li>
+				</ul>
+			</section>
 
-			<LegalSection n={15} title="Governing law">
+			<section>
+				<h2>15. Governing law and disputes</h2>
 				<p>
-					These Terms are governed by the laws of Ukraine, without regard
-					to conflict-of-law principles. Mandatory consumer protections
-					in your country of residence still apply where they cannot be
-					waived. Any dispute relating to these Terms or the service will
-					be resolved under Ukrainian law, subject to those mandatory
-					rights.
+					These Terms are governed by the laws of Ukraine, without regard to
+					conflict-of-law rules, except that mandatory consumer protection laws
+					of your country of residence continue to apply and cannot be waived.
+					Courts of competent jurisdiction in Ukraine have exclusive venue for
+					disputes we bring, subject to your non-waivable rights to bring
+					claims in your local courts where required by law.
 				</p>
-			</LegalSection>
+			</section>
 
-			<LegalSection n={16} title="Changes to these Terms">
+			<section>
+				<h2>16. Changes</h2>
 				<p>
-					We may update these Terms from time to time. If we make a
-					material change, we will notify you by email at least 30 days
-					before it takes effect. Continuing to use the service after a
-					change takes effect means you accept the updated Terms. Related
-					policies:{' '}
-					<Link href="/privacy">Privacy Policy</Link> and{' '}
-					<Link href="/refund">Refund Policy</Link>.
+					We may update these Terms. The “Last updated” date will change. For
+					material changes affecting paid subscribers, we will provide notice by
+					email or in-product notice where reasonably practicable. Continued use
+					after the effective date constitutes acceptance, except where local
+					law requires affirmative consent.
 				</p>
-			</LegalSection>
+			</section>
 
-			<LegalSection n={17} title="Contact us">
+			<section>
+				<h2>17. General</h2>
 				<p>
-					Questions about these Terms? Email{' '}
-					<a href={`mailto:${LEGAL.supportEmail}`}>
-						{LEGAL.supportEmail}
-					</a>
+					<strong>Entire agreement.</strong> These Terms, the Privacy Policy,
+					and the Refund Policy are the entire agreement between you and us
+					regarding the Service (purchase terms with Paddle also apply to
+					payment).
+				</p>
+				<p>
+					<strong>Severability.</strong> If a provision is unenforceable, the
+					remainder stays in effect.
+				</p>
+				<p>
+					<strong>Assignment.</strong> You may not assign these Terms without
+					our consent. We may assign them in connection with a merger, sale, or
+					reorganization.
+				</p>
+				<p>
+					<strong>Electronic communications.</strong> You consent to receive
+					notices electronically (email and in-product). Notices are deemed
+					received when sent to the email on your account.
+				</p>
+				<p>
+					<strong>Force majeure.</strong> We are not liable for delays or
+					failures caused by events beyond our reasonable control.
+				</p>
+				<p>
+					<strong>No waiver.</strong> Failure to enforce a provision is not a
+					waiver of future enforcement.
+				</p>
+			</section>
+
+			<section>
+				<h2>18. Contact</h2>
+				<p>
+					{LEGAL.legalName} ({LEGAL.legalForm})
+					<br />
+					{LEGAL.businessAddress}
+					<br />
+					<a href={`mailto:${LEGAL.supportEmail}`}>{LEGAL.supportEmail}</a>
 					{LEGAL.supportPhone ? (
 						<>
-							{' '}
-							or call{' '}
-							<a href={`tel:${LEGAL.supportPhone.replace(/\s+/g, '')}`}>
+							<br />
+							<a href={`tel:${LEGAL.supportPhone.replace(/\s/g, '')}`}>
 								{LEGAL.supportPhone}
 							</a>
 						</>
 					) : null}
-					. Legal entity: {LEGAL.legalName}, {LEGAL.legalForm},{' '}
-					{LEGAL.businessAddress}.
+					<br />
+					Website:{' '}
+					<a href={LEGAL.siteUrl}>{LEGAL.siteDomain}</a>
 				</p>
-			</LegalSection>
+			</section>
 		</LegalDoc>
 	)
 }

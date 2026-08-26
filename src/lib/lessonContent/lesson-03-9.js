@@ -751,11 +751,11 @@ result = sum(x ** 2 for x in numbers if x > 5)`
     description: "Створіть програму для обробки даних, використовуючи map(), filter() та reduce()",
     problemStatement: `Напишіть програму з функціями (from functools import reduce):
 
-1. process_numbers(numbers) — сума квадратів парних
-2. process_users(users) — імена користувачів з age >= 18
-3. calculate_statistics(numbers) — словник sum, product, max через reduce
-4. process_texts(texts) — strip().upper()
-5. complex_processing(data) — середнє квадратів чисел > 10
+1. process_numbers(numbers) - сума квадратів парних
+2. process_users(users) - імена користувачів з age >= 18
+3. calculate_statistics(numbers) - словник sum, product, max через reduce
+4. process_texts(texts) - strip().upper()
+5. complex_processing(data) - середнє квадратів чисел > 10
 
 Зчитайте: рядок чисел; k користувачів (ім'я і вік на рядку); m текстів; рядок data для complex.
 
@@ -822,7 +822,7 @@ test
 Статистика: {'sum': 3, 'product': 1, 'max': 1}
 Оброблені тексти: ['TEST']
 Середнє квадратів чисел > 10: 400.0`,
-        explanation: "Немає парних — reduce на порожньому потребує обережності; використайте 0 якщо немає парних"
+        explanation: "Немає парних - reduce на порожньому потребує обережності; використайте 0 якщо немає парних"
       }
     ],
     solution: {
@@ -879,7 +879,7 @@ print(f"Середнє квадратів чисел > 10: {complex_processing(d
     },
     hints: [
       "Імпортуйте reduce з functools",
-      "Якщо після filter список порожній — поверніть 0",
+      "Якщо після filter список порожній - поверніть 0",
       "Зчитайте користувачів циклом: ім'я та вік",
       "Для середнього спочатку list(), потім сума/довжина"
     ],

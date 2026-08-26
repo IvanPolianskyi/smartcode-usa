@@ -455,9 +455,9 @@ for number in gen:  # Обробляємо по одному
     description: "Створіть кілька генераторів для різних послідовностей",
     problemStatement: `Створіть три генераторні функції:
 
-1. **square_numbers(n)** — квадрати від 1 до n
-2. **countdown(start)** — від start до 1
-3. **multiples_of(m, limit)** — кратні m, строго менші за limit
+1. **square_numbers(n)** - квадрати від 1 до n
+2. **countdown(start)** - від start до 1
+3. **multiples_of(m, limit)** - кратні m, строго менші за limit
 
 Зчитайте параметри зі stdin і виведіть результати через for.
 

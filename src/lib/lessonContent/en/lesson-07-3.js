@@ -522,9 +522,9 @@ Iterators are the foundation of working with sequences in Python. Understanding 
     description: "Create several custom iterators with the implementation of the iteration protocol",
     problemStatement: `Create three iterator classes:
 
-1. **SquareIterator(limit)** — squares from 1 to limit
-2. **EvenIterator(limit)** — even numbers from 0 to limit inclusive
-3. **ReverseIterator(items)** — iterate over the list in reverse
+1. **SquareIterator(limit)** - squares from 1 to limit
+2. **EvenIterator(limit)** - even numbers from 0 to limit inclusive
+3. **ReverseIterator(items)** - iterate over the list in reverse
 
 Read parameters from stdin.
 
@@ -656,7 +656,7 @@ class ReverseIterator:
     def __next__(self):
         if self.index < 0:
             raise StopIteration
-result = self.items[self.index]
+        result = self.items[self.index]
         self.index -= 1
         return result
 
@@ -740,7 +740,7 @@ for num in ReverseIterator(items):
           "Data type"
         ],
         correctAnswer: 0,
-        explanation: "StopIteration is an exception that is thrown when an iterator has no more values ​​to return."
+        explanation: "StopIteration is an exception that is thrown when an iterator has no more values to return."
       },
       {
         id: "q5",

@@ -644,11 +644,11 @@ Lambda-функції - потужний інструмент для функц�
     description: "Створіть функції для обробки даних, використовуючи lambda, map() та filter()",
     problemStatement: `Напишіть програму з функціями:
 
-1. process_numbers(numbers) — map + lambda: квадрати
-2. filter_even(numbers) — filter + lambda: парні
-3. process_names(names) — map + lambda: capitalize
-4. filter_long_words(words, min_length=5) — слова з len >= min_length
-5. complex_processing(numbers) — квадрати парних чисел
+1. process_numbers(numbers) - map + lambda: квадрати
+2. filter_even(numbers) - filter + lambda: парні
+3. process_names(names) - map + lambda: capitalize
+4. filter_long_words(words, min_length=5) - слова з len >= min_length
+5. complex_processing(numbers) - квадрати парних чисел
 
 Зчитайте рядок чисел і рядок імен (через пробіл), потім min_length.
 Виведіть квадрати, парні, квадрати парних, відформатовані імена та довгі імена.
@@ -732,7 +732,7 @@ print(f"Довгі імена (min_length={min_length}): {filter_long_words(form
       explanation: "lambda з map/filter у функціях; дані читаються з stdin."
     },
     hints: [
-      "map() і filter() повертають ітератори — обгорніть у list()",
+      "map() і filter() повертають ітератори - обгорніть у list()",
       "Зчитайте числа та імена через input().split()",
       "Для complex_processing спочатку filter, потім map",
       "Передайте min_length у filter_long_words"

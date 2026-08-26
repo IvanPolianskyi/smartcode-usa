@@ -31,9 +31,9 @@ export const lesson_05_3 = {
 
 **Real-life examples:**
 
-- \`InsufficientFundsError\` — not enough money on the account
-- \`InvalidEmailError\` — invalid email
-- \`BookAlreadyExistsError\` — book already in the catalog
+- \`InsufficientFundsError\` - not enough money on the account
+- \`InvalidEmailError\` - invalid email
+- \`BookAlreadyExistsError\` - book already in the catalog
 
 **Advantages:**
 
@@ -82,7 +82,7 @@ raise AgeError(150, "Age is too large")
 Always inherit from \`Exception\` (or from your base domain class), not from \`BaseException\`.`
       },
       {
-        title: "raise — raising an exception",
+        title: "raise - raising an exception",
         content: `The \`raise\` keyword creates (or re-raises) an exception.
 
 \`\`\`python
@@ -147,10 +147,10 @@ except ValidationError as e:
 
 You can handle specifics or catch **all** validation errors with one block via the base class.
 
-**Rule:** name the base class briefly and clearly (\`BankError\`, \`ParseError\`), subclasses — descriptively.`
+**Rule:** name the base class briefly and clearly (\`BankError\`, \`ParseError\`), subclasses - descriptively.`
       },
       {
-        title: "raise from — cause chain",
+        title: "raise from - cause chain",
         content: `Sometimes an inner error (for example, \`ValueError\`) should become your domain error. \`raise ... from ...\` keeps the cause:
 
 \`\`\`python
@@ -166,10 +166,10 @@ def load_port(text):
 
 In the traceback you will see:
 
-- \`ConfigError\` — what happened at your logic level
-- \`ValueError\` — the root cause
+- \`ConfigError\` - what happened at your logic level
+- \`ValueError\` - the root cause
 
-**raise from None** — opposite, hide the inner cause (use rarely):
+**raise from None** - opposite, hide the inner cause (use rarely):
 
 \`\`\`python
 raise ConfigError("Invalid port") from None
@@ -179,7 +179,7 @@ For learning and most applied tasks prefer \`raise NewError(...) from e\`.`
       },
       {
         title: "Documentation and style",
-        content: `**Naming convention:** \`Error\` suffix (\`NotFoundError\`, \`PermissionError\` in your module — with a unique prefix so you do not confuse them with standards).
+        content: `**Naming convention:** \`Error\` suffix (\`NotFoundError\`, \`PermissionError\` in your module - with a unique prefix so you do not confuse them with standards).
 
 **Docstring is required for public exceptions:**
 
@@ -290,12 +290,12 @@ except InsufficientFundsError as e:
   commonMistakes: [
     {
       mistake: "Inheriting from BaseException",
-      explanation: "BaseException includes KeyboardInterrupt and SystemExit — rarely worth catching with business errors.",
+      explanation: "BaseException includes KeyboardInterrupt and SystemExit - rarely worth catching with business errors.",
       correctApproach: "Inherit from Exception or from your base *Error."
     },
     {
       mistake: "raise a string: raise \"error\"",
-      explanation: "In modern Python you do not do that — you need an exception instance.",
+      explanation: "In modern Python you do not do that - you need an exception instance.",
       correctApproach: "raise MyError(\"error\")"
     },
     {
@@ -305,28 +305,28 @@ except InsufficientFundsError as e:
     },
     {
       mistake: "Swallowing a custom exception with a bare except Exception",
-      explanation: "Then the point of a custom type is lost — nobody handles it deliberately.",
+      explanation: "Then the point of a custom type is lost - nobody handles it deliberately.",
       correctApproach: "except MyError as e: ... and only then a general Exception if needed."
     }
   ],
 
   summary: `In this lesson we learned to create custom exceptions:
 
-1. class MyError(Exception) — minimal template
-2. raise — raising a domain error
-3. Hierarchy — base class and concrete subclasses
-4. raise from — keeping the root cause
+1. class MyError(Exception) - minimal template
+2. raise - raising a domain error
+3. Hierarchy - base class and concrete subclasses
+4. raise from - keeping the root cause
 5. Docstring and naming with the Error suffix
 
-Next — assert and data validation.`,
+Next - assert and data validation.`,
 
   practiceTask: {
     title: "Age validation with AgeError",
     description: "Create a custom exception and an age-checking function",
     problemStatement: `1. Create class AgeError(Exception)
 2. Write function check_age(age):
-   - if age < 0 — raise AgeError("Age cannot be negative")
-   - if age > 120 — raise AgeError("Age is too large")
+   - if age < 0 - raise AgeError("Age cannot be negative")
+   - if age > 120 - raise AgeError("Age is too large")
    - otherwise print: Age {age} accepted
 3. Read n, then n integers (ages). For each call check_age in try/except.
 4. On AgeError print: Error: {message}`,

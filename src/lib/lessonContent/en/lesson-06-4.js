@@ -12,10 +12,10 @@ export const lesson_06_4 = {
   title: "Practice: decorator problems",
 
   learningObjectives: [
-    "Reinforce knowledge of decorators",
-    "Create more complex decorators",
-    "Combine different decorators",
-    "Solve practical problems"
+    "Consolidate understanding of decorator function mechanisms",
+    "Create complex decorators with parameters and functools.wraps",
+    "Combine stacked decorators for caching, timing, and validation",
+    "Solve real-world practical challenges with decorators"
   ],
 
   prerequisites: ["lesson-06-3"],
@@ -29,10 +29,10 @@ export const lesson_06_4 = {
         content: `In this lesson we will reinforce everything from module 06 about decorators:
 
 What we covered:
-1. Introduction to decorators — what they are and how to use them
-2. Creating your own decorators — functools.wraps, parameterized decorators
-3. Class and method decorators — @property, @staticmethod, @classmethod
-4. Practical examples — logging, timing, validation
+1. Introduction to decorators - what they are and how to use them
+2. Creating your own decorators - functools.wraps, parameterized decorators
+3. Class and method decorators - @property, @staticmethod, @classmethod
+4. Practical examples - logging, timing, validation
 
 Goals for this lesson:
 - Combine all concepts
@@ -289,13 +289,13 @@ result2 = expensive_calculation(1000000)  # Uses cache, logs
         title: "Practical tips",
         content: `**When to use decorators:**
 
-1. **Logging** — when you need to track function calls
-2. **Performance measurement** — for optimizing code
-3. **Caching** — for expensive computations
-4. **Validation** — for checking input data
-5. **Error handling** — for centralized handling
-6. **Authorization** — for access checks
-7. **Rate limiting** — for APIs and web apps
+1. **Logging** - when you need to track function calls
+2. **Performance measurement** - for optimizing code
+3. **Caching** - for expensive computations
+4. **Validation** - for checking input data
+5. **Error handling** - for centralized handling
+6. **Authorization** - for access checks
+7. **Rate limiting** - for APIs and web apps
 
 **Best practices:**
 
@@ -418,11 +418,11 @@ print(p)  # Person(name=Alexander, age=15)`,
 
   summary: `In this practice lesson we:
 
-1. Reinforced knowledge — reviewed all decorator concepts
-2. Built advanced decorators — repeat, retry, cache, rate_limit
-3. Combined decorators — logging, timing, caching
-4. Solved practical problems — real usage scenarios
-5. Learned best practices — when and how to use decorators
+1. Reinforced knowledge - reviewed all decorator concepts
+2. Built advanced decorators - repeat, retry, cache, rate_limit
+3. Combined decorators - logging, timing, caching
+4. Solved practical problems - real usage scenarios
+5. Learned best practices - when and how to use decorators
 
 You can now confidently create and use decorators in your projects!`,
 
@@ -431,8 +431,8 @@ You can now confidently create and use decorators in your projects!`,
     description: "Create two simple decorators for logging and authorization",
     problemStatement: `Create two simple decorators:
 
-1. **@log_function** — logs a function call with its name and time
-2. **@require_auth** — checks the global is_authenticated flag
+1. **@log_function** - logs a function call with its name and time
+2. **@require_auth** - checks the global is_authenticated flag
 
 Read a time from stdin in HH:MM:SS format and use it in logs (instead of datetime.now()).
 
@@ -567,7 +567,7 @@ print(f"Result: {result}")`,
     hints: [
       "First read the time: time_str = input().strip()",
       "For @require_auth use global is_authenticated",
-      "If authorization fails — print a message and return None",
+      "If authorization fails - print a message and return None",
       "Order: @log_function outside, @require_auth inside"
     ],
     difficulty: "intermediate"

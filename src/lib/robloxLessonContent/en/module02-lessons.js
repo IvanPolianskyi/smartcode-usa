@@ -1409,7 +1409,7 @@ export const enLesson24 = {
  sections: [
  {
  title: "Preparing the final park",
- content: `This lesson is a **checkpoint** for the whole module. You do not create new physical connections. You polish what you built in previous lessons (2.1–2.3). You will also learn to work safely with Toolbox models and tidy the Explorer panel for the final review.
+ content: `This lesson is a **checkpoint** for the whole module. You do not create new physical connections. You polish what you built in previous lessons (2.1-2.3). You will also learn to work safely with Toolbox models and tidy the Explorer panel for the final review.
 
 Today's question is one: **does your location look like a complete park you can show in two minutes?** If not, do not add new attractions. First clear the clutter, check that the door works, and remove third-party scripts.
 
@@ -1538,7 +1538,7 @@ Confirm that all validation scripts (\`HQ_Audit\`, \`Gate_Audit\`, \`Rides_Audit
 
 If something breaks, return to checking Anchored, Attachments, or spring parameters.
 
-**Do this now:** walk the full path (about 60 seconds). Note 1–2 issues and fix only those, without rebuilding the whole park.`,
+**Do this now:** walk the full path (about 60 seconds). Note 1-2 issues and fix only those, without rebuilding the whole park.`,
  },
  {
  title: "Automatic park check (Script check)",
@@ -1678,7 +1678,7 @@ Do not rely on Autosave alone. A portfolio always needs a clearly named file.`,
     "Only a configuration script",
    ],
    correctAnswer: 2,
-   explanation: "The level should include all assignment results from Lessons 2.1–2.3.",
+   explanation: "The level should include all assignment results from Lessons 2.1-2.3.",
   },
   {
    id: "q3",
@@ -1829,7 +1829,7 @@ Do not rely on Autosave alone. A portfolio always needs a clearly named file.`,
    question: "How should you demonstrate the park correctly?",
    options: [
     "In Edit mode without pressing any buttons",
-    "In Play mode, showing the door and at least one attraction in 30–60 seconds",
+    "In Play mode, showing the door and at least one attraction in 30-60 seconds",
     "Without sound and without checking shutdown",
     "On an empty level with no Models",
    ],

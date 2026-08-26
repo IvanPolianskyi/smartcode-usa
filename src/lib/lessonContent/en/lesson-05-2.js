@@ -47,27 +47,27 @@ BaseException
 
 - \`except ValueError\` catches only ValueError (and its subclasses)
 - \`except Exception\` catches almost all “ordinary” errors
-- \`except:\` without a type even catches KeyboardInterrupt — almost always a bad idea
+- \`except:\` without a type even catches KeyboardInterrupt - almost always a bad idea
 
 Remember: the more **specific** the except, the clearer the program behavior.`
       },
       {
         title: "ValueError, TypeError, ZeroDivisionError",
-        content: `**ValueError** — the value has the right type, but invalid content.
+        content: `**ValueError** - the value has the right type, but invalid content.
 
 \`\`\`python
 int("hello")      # ValueError
 int("3.14")       # ValueError (int needs a whole-number form)
 \`\`\`
 
-**TypeError** — an operation was applied to an object of the wrong type.
+**TypeError** - an operation was applied to an object of the wrong type.
 
 \`\`\`python
 "5" + 5           # TypeError
 len(10)           # TypeError
 \`\`\`
 
-**ZeroDivisionError** — division or modulo by zero.
+**ZeroDivisionError** - division or modulo by zero.
 
 \`\`\`python
 10 / 0            # ZeroDivisionError
@@ -89,21 +89,21 @@ except ZeroDivisionError:
       },
       {
         title: "IndexError, KeyError, FileNotFoundError",
-        content: `**IndexError** — index outside a sequence.
+        content: `**IndexError** - index outside a sequence.
 
 \`\`\`python
 nums = [1, 2, 3]
 print(nums[10])   # IndexError
 \`\`\`
 
-**KeyError** — key missing from a dictionary.
+**KeyError** - key missing from a dictionary.
 
 \`\`\`python
 user = {"name": "Olya"}
 print(user["age"])  # KeyError
 \`\`\`
 
-**FileNotFoundError** — file or path does not exist.
+**FileNotFoundError** - file or path does not exist.
 
 \`\`\`python
 open("no_such_file.txt")  # FileNotFoundError
@@ -115,7 +115,7 @@ open("no_such_file.txt")  # FileNotFoundError
 # Instead of KeyError
 age = user.get("age", 0)
 
-# Instead of IndexError — check length
+# Instead of IndexError - check length
 if index < len(nums):
     print(nums[index])
 \`\`\`
@@ -133,7 +133,7 @@ except (ValueError, TypeError) as e:
     print(f"Data problem: {e}")
 \`\`\`
 
-Or in separate blocks — when the reaction differs:
+Or in separate blocks - when the reaction differs:
 
 \`\`\`python
 try:
@@ -157,7 +157,7 @@ except ValueError:
 except Exception:
     ...
 
-# Wrong — ValueError never reaches here
+# Wrong - ValueError never reaches here
 # if Exception is above
 except Exception:
     ...
@@ -167,7 +167,7 @@ except ValueError:
       },
       {
         title: "except Exception and as e",
-        content: `\`as e\` stores the exception object — you can read the message:
+        content: `\`as e\` stores the exception object - you can read the message:
 
 \`\`\`python
 try:
@@ -178,7 +178,7 @@ except ValueError as e:
     print(str(e))    # the same message as a string
 \`\`\`
 
-**except Exception** — a safety net for unexpected errors:
+**except Exception** - a safety net for unexpected errors:
 
 \`\`\`python
 try:
@@ -288,7 +288,7 @@ except Exception as e:
     },
     {
       mistake: "Confusing ValueError and TypeError",
-      explanation: "ValueError — bad value of the right type; TypeError — operation with the wrong type.",
+      explanation: "ValueError - bad value of the right type; TypeError - operation with the wrong type.",
       correctApproach: "int('x') → ValueError; 'a' + 1 → TypeError."
     },
     {
@@ -305,13 +305,13 @@ except Exception as e:
 
   summary: `In this lesson we studied exception types:
 
-1. ValueError, TypeError, ZeroDivisionError — value, type, and division errors
-2. IndexError, KeyError, FileNotFoundError — data and file access
-3. Several types in one except — (A, B) as e
-4. except Exception — fallback after specific blocks
-5. as e — access to the error message
+1. ValueError, TypeError, ZeroDivisionError - value, type, and division errors
+2. IndexError, KeyError, FileNotFoundError - data and file access
+3. Several types in one except - (A, B) as e
+4. except Exception - fallback after specific blocks
+5. as e - access to the error message
 
-Next — creating custom exceptions for business logic.`,
+Next - creating custom exceptions for business logic.`,
 
   practiceTask: {
     title: "Calculator with different error types",
@@ -372,13 +372,13 @@ except ValueError:
     print("Error: ValueError")
 except ZeroDivisionError:
     print("Error: ZeroDivisionError")`,
-      explanation: "float() may raise ValueError; division by 0 — ZeroDivisionError."
+      explanation: "float() may raise ValueError; division by 0 - ZeroDivisionError."
     },
     hints: [
       "Read three lines: number, operation, number",
       "Use float() for conversion",
       "Handle ValueError and ZeroDivisionError separately",
-      "For an unknown operation you do not need except — use a regular else"
+      "For an unknown operation you do not need except - use a regular else"
     ],
     difficulty: "beginner"
   },
@@ -391,7 +391,7 @@ except ZeroDivisionError:
         question: "Which exception occurs with int(\"abc\")?",
         options: ["TypeError", "ValueError", "IndexError", "KeyError"],
         correctAnswer: 1,
-        explanation: "The string has type str, but the value is unsuitable for int — ValueError."
+        explanation: "The string has type str, but the value is unsuitable for int - ValueError."
       },
       {
         id: "q2",
@@ -412,7 +412,7 @@ except ZeroDivisionError:
         question: "What does this code print?\n\n```python\ndata = {\"x\": 1}\ntry:\n    print(data[\"y\"])\nexcept KeyError:\n    print(\"missing key\")\n```",
         options: ["1", "missing key", "KeyError", "None"],
         correctAnswer: 1,
-        explanation: "Key \"y\" is missing — except KeyError runs."
+        explanation: "Key \"y\" is missing - except KeyError runs."
       },
       {
         id: "q4",
@@ -428,7 +428,7 @@ except ZeroDivisionError:
         question: "Which exception for nums[10] when len(nums) == 3?",
         options: ["KeyError", "ValueError", "IndexError", "TypeError"],
         correctAnswer: 2,
-        explanation: "Index outside the list — IndexError."
+        explanation: "Index outside the list - IndexError."
       },
       {
         id: "q6",
@@ -457,7 +457,7 @@ except ZeroDivisionError:
         question: "\"hello\" + 5 raises:",
         options: ["ValueError", "TypeError", "IndexError", "ZeroDivisionError"],
         correctAnswer: 1,
-        explanation: "Incompatible types for + — TypeError."
+        explanation: "Incompatible types for + - TypeError."
       }
     ],
     timeLimit: 15,

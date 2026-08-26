@@ -83,7 +83,7 @@ hello()
 # After call
 \`\`\`
 
-The original \`hello\` body is not changed — we only replace the name with a new wrapper function.`
+The original \`hello\` body is not changed - we only replace the name with a new wrapper function.`
       },
       {
         title: "@decorator syntax vs manual assignment",
@@ -151,7 +151,7 @@ So the wrapper works with any number of positional and keyword arguments. Otherw
       },
       {
         title: "The idea of a timing decorator",
-        content: `A decorator can measure how long a function takes — useful for optimization.
+        content: `A decorator can measure how long a function takes - useful for optimization.
 
 \`\`\`python
 import time
@@ -173,7 +173,7 @@ print(slow_sum(1_000_000))
 \`\`\`
 
 **Remember:**
-- A decorator does not replace the function's logic — it extends it
+- A decorator does not replace the function's logic - it extends it
 - Always return the result of \`func(...)\`, otherwise you get \`None\`
 - In practice tasks, time is often read from stdin instead of \`time.time()\` so the output is predictable`
       },
@@ -181,10 +181,10 @@ print(slow_sum(1_000_000))
         title: "When decorators are appropriate",
         content: `Decorators are convenient when the same "wrapper" should apply to many functions:
 
-1. **Logging** — who called the function and when
-2. **Profiling** — how long execution took
-3. **Access checks** — whether the user is authorized
-4. **Validation** — whether arguments are valid
+1. **Logging** - who called the function and when
+2. **Profiling** - how long execution took
+3. **Access checks** - whether the user is authorized
+4. **Validation** - whether arguments are valid
 
 **For now, focus on:**
 - Understanding that \`@decorator\` = \`func = decorator(func)\`
@@ -268,7 +268,7 @@ say("Python!")`,
     },
     {
       mistake: "Forgetting to return the result of func()",
-      explanation: "Without return, the original function's result is lost — outer code receives None.",
+      explanation: "Without return, the original function's result is lost - outer code receives None.",
       correctApproach: "Write: result = func(*args, **kwargs); return result"
     },
     {
@@ -286,10 +286,10 @@ say("Python!")`,
   summary: `In this lesson we learned the basics of decorators:
 
 1. Functions are first-class objects: you can pass, store, and return them
-2. Wrapping — a decorator wraps a function with new behavior
-3. @decorator — syntactic sugar for func = decorator(func)
-4. Simple scenarios — call logging and timing
-5. *args/**kwargs — make the wrapper universal
+2. Wrapping - a decorator wraps a function with new behavior
+3. @decorator - syntactic sugar for func = decorator(func)
+4. Simple scenarios - call logging and timing
+5. *args/**kwargs - make the wrapper universal
 
 Next we will learn how to preserve metadata with functools.wraps and create parameterized decorators.`,
 
@@ -420,7 +420,7 @@ greet(name)`,
           "A list of arguments"
         ],
         correctAnswer: 2,
-        explanation: "A function without return returns None — the decorated name becomes None."
+        explanation: "A function without return returns None - the decorated name becomes None."
       },
       {
         id: "q6",

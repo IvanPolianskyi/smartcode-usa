@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import { Geist, Geist_Mono, Instrument_Sans, Source_Serif_4 } from 'next/font/google'
 import AuthSessionProvider from '@/components/AuthSessionProvider'
 import RevealProvider from '@/components/Motion/Reveal'
+import SupportWidget from '@/components/Support/SupportWidget'
 import { routing } from '@/i18n/routing'
 
 const geistSans = Geist({
@@ -28,7 +29,7 @@ const instrumentSans = Instrument_Sans({
 	weight: ['500', '600', '700'],
 })
 
-/** Serif display — Brilliant-style headlines. */
+/** Serif display - Brilliant-style headlines. */
 const sourceSerif = Source_Serif_4({
 	variable: '--font-source-serif',
 	subsets: ['latin'],
@@ -56,7 +57,9 @@ export default async function LocaleLayout({ children, params }) {
 				<meta name='format-detection' content='telephone=no' />
 				<meta name='apple-mobile-web-app-capable' content='yes' />
 				<meta name='mobile-web-app-capable' content='yes' />
-				<link rel='icon' href='/favicon.svg' type='image/svg+xml' />
+				<link rel='icon' href='/favicon.ico?v=6' sizes='any' />
+				<link rel='icon' href='/favicon.png?v=6' type='image/png' sizes='32x32' />
+				<link rel='apple-touch-icon' href='/apple-touch-icon.png?v=6' />
 			</head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} ${instrumentSans.variable} ${sourceSerif.variable} sc-page`}
@@ -66,6 +69,7 @@ export default async function LocaleLayout({ children, params }) {
 					<AuthSessionProvider>
 						<RevealProvider />
 						{children}
+						<SupportWidget />
 					</AuthSessionProvider>
 				</NextIntlClientProvider>
 			</body>

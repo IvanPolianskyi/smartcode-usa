@@ -24,7 +24,7 @@ import { ROBOX_PHASES } from '@/lib/robloxModuleMeta'
 import { getUserProgress, checkCoursePurchase } from '@/lib/authClient'
 import { getUnlockedLessonSet, hasStudentCourseAccess } from '@/lib/courseLessonAccess'
 import { useAuthSession } from '@/components/AuthSessionProvider'
-import LmsHeader from '@/components/Nav/LmsHeader'
+import SiteHeader from '@/components/Nav/SiteHeader'
 import styles from './CoursePage.module.css'
 
 const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress: initialProgress = null }) => {
@@ -142,6 +142,17 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   }, [sessionLoading, sessionUser, courseId, course.modules])
 
   const getModuleIcon = (moduleOrder) => {
+    if (courseId === 'ai-at-work') {
+      const aiIcons = [
+        <Brain className="w-6 h-6" />,
+        <Code className="w-6 h-6" />,
+        <Globe className="w-6 h-6" />,
+        <BookOpen className="w-6 h-6" />,
+        <Target className="w-6 h-6" />,
+        <Rocket className="w-6 h-6" />,
+      ]
+      return aiIcons[(moduleOrder - 1) % aiIcons.length] || <Brain className="w-6 h-6" />
+    }
     const icons = [
       <Code className="w-6 h-6" />,
       <Brain className="w-6 h-6" />,
@@ -166,11 +177,17 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
         progress: userProgress,
         isAdmin: user?.role === 'admin',
         isTeacher: user?.role === 'teacher',
-        isPurchased: isPurchased || user?.role === 'teacher',
-        isSubscribed: Array.isArray(user?.subscribedCourseIds)
-          ? user.subscribedCourseIds.includes(courseId)
-          : user?.subscriptionActive === true,
+        isPurchased: isPurchased || (user?.purchasedCourses || []).includes(courseId),
+        isSubscribed:
+          hasCourseAccess ||
+          (Array.isArray(user?.subscribedCourseIds)
+            ? user.subscribedCourseIds.includes(courseId)
+            : user?.subscriptionActive === true),
         isEnrolled,
+        dripStartedAt:
+          userProgress?.enrolledAt ||
+          user?.courseDripStartedAt?.[courseId] ||
+          null,
       }),
     [
       courseId,
@@ -178,9 +195,12 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
       user?.role,
       user?.subscriptionActive,
       user?.subscribedCourseIds,
+      user?.purchasedCourses,
+      user?.courseDripStartedAt,
       userProgress,
       isPurchased,
       isEnrolled,
+      hasCourseAccess,
     ]
   )
 
@@ -273,32 +293,33 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
 
   return (
     <div className={`${styles.container} ${isLoaded ? styles.loaded : ''}`}>
-      <LmsHeader />
-      <section className={styles.heroSection}>
-        <div className={styles.particles} aria-hidden="true">
-          {Array.from({ length: 18 }).map((_, i) => (
-            <span
-              key={i}
-              className={styles.particle}
-              style={{
-                '--particle-size': `${4 + (i % 5) * 2}px`,
-                '--particle-left': `${(i * 17 + 7) % 100}%`,
-                '--particle-top': `${(i * 23 + 11) % 100}%`,
-                '--particle-duration': `${6 + (i % 4) * 2}s`,
-                '--particle-delay': `${i * -0.35}s`,
-              }}
-            />
-          ))}
-        </div>
+      <div className={styles.heroFold}>
+        <SiteHeader />
+        <section className={styles.heroSection}>
+          <div className={styles.particles} aria-hidden="true">
+            {Array.from({ length: 18 }).map((_, i) => (
+              <span
+                key={i}
+                className={styles.particle}
+                style={{
+                  '--particle-size': `${4 + (i % 5) * 2}px`,
+                  '--particle-left': `${(i * 17 + 7) % 100}%`,
+                  '--particle-top': `${(i * 23 + 11) % 100}%`,
+                  '--particle-duration': `${6 + (i % 4) * 2}s`,
+                  '--particle-delay': `${i * -0.35}s`,
+                }}
+              />
+            ))}
+          </div>
 
-        <div className={styles.heroContent}>
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-            <Link href="/">{tCommon('breadcrumb.home')}</Link>
-            <ChevronRight className="w-4 h-4" aria-hidden />
-            <span>{tCommon('breadcrumb.courses')}</span>
-            <ChevronRight className="w-4 h-4" aria-hidden />
-            <span className={styles.breadcrumbCurrent}>{course.title}</span>
-          </nav>
+          <div className={styles.heroContent}>
+            <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+              <Link href="/">{tCommon('breadcrumb.home')}</Link>
+              <ChevronRight className="w-4 h-4" aria-hidden />
+              <span>{tCommon('breadcrumb.courses')}</span>
+              <ChevronRight className="w-4 h-4" aria-hidden />
+              <span className={styles.breadcrumbCurrent}>{course.title}</span>
+            </nav>
 
           <div className={styles.heroMain}>
             <div className={styles.heroLeft}>
@@ -306,14 +327,33 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
               <p className={styles.valueProposition}>{tVariant('valueProposition')}</p>
 
               <div className={styles.ctaRow}>
-                <Link href={continueHref} className={styles.continueBtn} prefetch={false}>
-                  <Play className="w-6 h-6" fill="currentColor" aria-hidden />
-                  {tCourse('continueLearning')}
-                </Link>
-                {continueLesson && (
-                  <p className={styles.continueHint}>
-                    {tCourse('continueHint', { title: continueLesson.title })}
-                  </p>
+                {!hasCourseAccess ? (
+                  <>
+                    <div className={styles.heroBtnGroup}>
+                      <Link href={`/plans/${courseId}`} className={styles.continueBtn} prefetch={false}>
+                        Start 3 days free trial
+                      </Link>
+                      <Link href={continueHref} className={styles.previewBtn} prefetch={false}>
+                        <Play className="w-5 h-5" fill="currentColor" aria-hidden />
+                        Preview lesson 1
+                      </Link>
+                    </div>
+                    <p className={styles.continueHint}>
+                      3 days free · Cancel anytime · Full access to lessons &amp; community
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <Link href={continueHref} className={styles.continueBtn} prefetch={false}>
+                      <Play className="w-6 h-6" fill="currentColor" aria-hidden />
+                      {tCourse('continueLearning')}
+                    </Link>
+                    {continueLesson && (
+                      <p className={styles.continueHint}>
+                        {tCourse('continueHint', { title: continueLesson.title })}
+                      </p>
+                    )}
+                  </>
                 )}
               </div>
             </div>
@@ -382,6 +422,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
           </div>
         </div>
       </section>
+      </div>
 
       <section className={styles.roadmapSection} id="course-program">
         <h2 className={styles.sectionTitle}>{tCourse('programTitle')}</h2>
@@ -393,7 +434,8 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
           <div className={styles.phaseRoadmap} aria-label={tCourse('phaseRoadmapLabel')}>
             {phaseStats.map((p) => {
               const phaseInfo = ROBOX_PHASES.find((x) => x.id === p.phase)
-              const phaseTitle = phaseInfo?.titleUk
+              const phaseTitle =
+                locale === 'uk' ? phaseInfo?.titleUk : phaseInfo?.titleEn || phaseInfo?.titleUk
               return (
                 <button
                   key={p.phase}
@@ -524,7 +566,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                       return (
                         <Link
                           key={lesson.lessonId}
-                          href={`/courses/${courseId}/lessons/${lesson.lessonId}`}
+                          href={unlocked || hasCourseAccess ? `/courses/${courseId}/lessons/${lesson.lessonId}` : `/plans/${courseId}`}
                           prefetch={false}
                           className={`${styles.lessonItem} ${!unlocked ? styles.locked : ''} ${completed ? styles.completed : ''} ${lessonColor ? styles[`lesson${lessonColor.charAt(0).toUpperCase() + lessonColor.slice(1)}`] : ''}`}
                           style={lessonColor ? {
@@ -534,9 +576,9 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                               '#ef4444'
                             }`
                           } : {}}
-                          title={!unlocked ? tCourse('lockedLessonHint') : undefined}
+                          title={!unlocked ? (hasCourseAccess ? tCourse('lockedLessonHint') : 'Unlock with 3 days free trial') : undefined}
                           onClick={(e) => {
-                            if (!unlocked) {
+                            if (!unlocked && hasCourseAccess) {
                               e.preventDefault()
                               setLockedTip(tCourse('lockedLessonHint'))
                               window.setTimeout(() => setLockedTip(''), 4000)
@@ -596,14 +638,32 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
 
       <section className={styles.ctaSection}>
         <div className={styles.ctaCard}>
-          <h2 className={styles.ctaTitle}>{tCourse('ctaTitle')}</h2>
+          <h2 className={styles.ctaTitle}>
+            {hasCourseAccess ? tCourse('ctaTitle') : 'Start building your own projects today'}
+          </h2>
           <p className={styles.ctaDescription}>
-            {tCourse('ctaDescription', { progress })}
+            {hasCourseAccess
+              ? tCourse('ctaDescription', { progress })
+              : 'Get full access to all lessons, interactive tasks, and the private Discord community. Free for 3 days, then $14/month. Cancel anytime.'}
           </p>
-          <Link href={continueHref} className={styles.ctaButton} prefetch={false}>
-            <Play className="w-5 h-5" fill="currentColor" aria-hidden />
-            {tCourse('continueLearning')}
-          </Link>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            {!hasCourseAccess ? (
+              <>
+                <Link href={`/plans/${courseId}`} className={styles.ctaButton} prefetch={false}>
+                  Start 3 days free trial
+                </Link>
+                <Link href={continueHref} className={styles.previewBtn} prefetch={false}>
+                  <Play className="w-5 h-5" fill="currentColor" aria-hidden />
+                  Preview lesson 1
+                </Link>
+              </>
+            ) : (
+              <Link href={continueHref} className={styles.ctaButton} prefetch={false}>
+                <Play className="w-5 h-5" fill="currentColor" aria-hidden />
+                {tCourse('continueLearning')}
+              </Link>
+            )}
+          </div>
         </div>
       </section>
     </div>

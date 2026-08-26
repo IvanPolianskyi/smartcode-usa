@@ -12,7 +12,7 @@ const MANUAL_CUSTOMER_IDS = new Set(['admin_manual', 'local_dev_customer'])
 /**
  * Revoke one subscription row. A manual grant is just a local document, so we
  * cancel it directly. A real Paddle subscription must be canceled through
- * Paddle — writing `status: canceled` here without telling Paddle would leave
+ * Paddle - writing `status: canceled` here without telling Paddle would leave
  * the customer paying for access we just took away.
  */
 export async function POST(request, { params }) {

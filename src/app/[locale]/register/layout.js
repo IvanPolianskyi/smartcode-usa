@@ -1,8 +1,8 @@
 import { setRequestLocale } from 'next-intl/server'
 
 export const metadata = {
-	title: 'Create account — SmartCode',
-	description: 'Create a SmartCode account, then subscribe to Roblox, Python, or AI at Work.',
+	title: 'Create account - SmartCode',
+	description: 'Create a SmartCode account, then subscribe to Roblox, Python, or AI for Real Life.',
 	robots: { index: false, follow: false },
 }
 

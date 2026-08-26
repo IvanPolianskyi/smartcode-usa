@@ -5,12 +5,14 @@ import {
 	verifyWebhookSignature,
 	normalizeSubscription,
 	readUserIdFromCustomData,
+	readCourseIdFromCustomData,
 } from '@/lib/paddle'
 import { ensureBillingIndexes } from '@/lib/entitlements'
 import { courseIdsForPriceId, tierForPriceId } from '@/lib/billingCatalog'
+import { isKnownCourseId } from '@/lib/courseLessonAccess'
 
 /**
- * Paddle webhook — the only thing in the app that may grant or revoke access.
+ * Paddle webhook - the only thing in the app that may grant or revoke access.
  *
  * Access is never granted on the checkout success redirect: that URL is
  * guessable, and treating it as proof of payment is how people get in free.
@@ -112,7 +114,7 @@ export async function POST(request) {
 
 		const userId = await resolveUserId(normalized)
 		if (!userId) {
-			// Store nothing we cannot attribute — a subscription with no owner
+			// Store nothing we cannot attribute - a subscription with no owner
 			// would grant access to nobody and hide the real problem.
 			console.error('[paddle] unattributable subscription', {
 				eventType,
@@ -124,8 +126,26 @@ export async function POST(request) {
 
 		const subscriptions = await getCollection('subscriptions')
 		const now = new Date()
-		const courseIds = courseIdsForPriceId(normalized.priceId)
-		const planTier = tierForPriceId(normalized.priceId)
+		let courseIds = courseIdsForPriceId(normalized.priceId)
+		if (!courseIds.length) {
+			const fromCheckout = readCourseIdFromCustomData(normalized.customData)
+			if (fromCheckout && isKnownCourseId(fromCheckout)) {
+				courseIds = [fromCheckout]
+				console.warn('[paddle] price map miss; using customData.courseId', {
+					priceId: normalized.priceId,
+					courseId: fromCheckout,
+				})
+			} else {
+				console.error('[paddle] subscription with no course mapping', {
+					eventType,
+					subscriptionId: normalized.paddleSubscriptionId,
+					priceId: normalized.priceId,
+				})
+			}
+		}
+		const planTier =
+			tierForPriceId(normalized.priceId) ||
+			(normalized.customData?.tier === 'premium' ? 'premium' : 'standard')
 
 		await subscriptions.updateOne(
 			{ paddleSubscriptionId: normalized.paddleSubscriptionId },

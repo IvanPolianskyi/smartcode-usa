@@ -13,7 +13,7 @@ import {
   isLessonInCourse,
   ROBLOX_COURSE_ID,
 } from '@/lib/courseLessonAccess'
-import { lessonContentMap } from '@/lib/lessonContentMap.uk'
+import { getPythonLessonContent } from '@/lib/quizValidation'
 import { checkPracticeOutputs } from '@/lib/practiceValidation'
 import {
   lessonRequiresPractice,
@@ -155,9 +155,11 @@ export async function POST(request) {
       quizAnswers,
       practiceOutput,
       practiceOutputs,
-      locale = 'uk',
+      locale = 'en',
       action,
     } = body
+
+    const contentLocale = locale === 'uk' ? 'uk' : 'en'
 
     if (!courseId || !isKnownCourseId(courseId)) {
       return NextResponse.json(
@@ -246,7 +248,12 @@ export async function POST(request) {
     const addToSetOperations = {}
 
     if (action === 'completeLesson' && lessonId) {
-      const prereq = lessonPrerequisitesMet({ courseId, lessonId, progress, locale })
+      const prereq = lessonPrerequisitesMet({
+        courseId,
+        lessonId,
+        progress,
+        locale: contentLocale,
+      })
       if (!prereq.ok) {
         return NextResponse.json({ error: prereq.error }, { status: 403 })
       }
@@ -260,14 +267,22 @@ export async function POST(request) {
       const practiceTasks = Array.isArray(progress.completedPracticeTasks)
         ? progress.completedPracticeTasks
         : []
-      if (lessonRequiresPractice(courseId, lessonId, locale) && !practiceTasks.includes(lessonId)) {
+      if (
+        lessonRequiresPractice(courseId, lessonId, contentLocale) &&
+        !practiceTasks.includes(lessonId)
+      ) {
         return NextResponse.json(
           { error: 'Complete the practice task first' },
           { status: 403 }
         )
       }
 
-      const scored = scoreLessonQuiz({ courseId, lessonId, quizAnswers, locale })
+      const scored = scoreLessonQuiz({
+        courseId,
+        lessonId,
+        quizAnswers,
+        locale: contentLocale,
+      })
       if (!scored) {
         return NextResponse.json(
           { error: 'Quiz not found for this lesson' },
@@ -286,7 +301,7 @@ export async function POST(request) {
 
     if (action === 'completePracticeTask' && lessonId) {
       if (courseId !== ROBLOX_COURSE_ID) {
-        const lesson = lessonContentMap[lessonId]
+        const lesson = getPythonLessonContent(lessonId, contentLocale)
         const practiceTask = lesson?.practiceTask
 
         if (!practiceTask?.examples?.length) {

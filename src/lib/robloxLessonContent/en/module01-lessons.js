@@ -591,7 +591,7 @@ Most Edit tools include brush settings: **Brush Shape** (sphere, box, cylinder),
 - **Draw (Add mode)**: Adds volume quickly and noticeably. Use it to create rough forms such as hills, cliffs, and small islands. It works quickly but produces sharp edges.
 - **Sculpt (Add mode)**: Builds up the ground more gently without sharp peaks. Its **Strength** setting controls the effect. Lower values add volume more gradually. Use it to refine hills after Draw.
 
-**Tip:** First create the mountain's general shape with a large Draw (Add) brush. Then refine it with Sculpt (Add), using a smaller brush and a Strength of about 0.3–0.5.
+**Tip:** First create the mountain's general shape with a large Draw (Add) brush. Then refine it with Sculpt (Add), using a smaller brush and a Strength of about 0.3-0.5.
 
 Avoid making hills too steep, or the character will not be able to climb them during the game. Check the hill's profile from the side as you work.
 
@@ -2461,8 +2461,8 @@ A level feels empty without sound. Without appropriate lighting, even bright mat
 
 | Property | What it does | Recommended values |
 |----------|-----------|----------------------|
-| **ClockTime** | Time of day from 0 to 24 | Morning: \`8\`–\`10\`; Night: \`0\`–\`2\` |
-| **Brightness** | Overall light brightness | Day: \`2\`–\`3\`; Night: lower, but not \`0\` |
+| **ClockTime** | Time of day from 0 to 24 | Morning: \`8\`-\`10\`; Night: \`0\`-\`2\` |
+| **Brightness** | Overall light brightness | Day: \`2\`-\`3\`; Night: lower, but not \`0\` |
 | **GlobalShadows** | Enables shadows from objects | \`true\` (adds visual depth) |
 | **OutdoorAmbient** | Color of outdoor shadows | Slightly blue in the morning, warm in the evening |
 | **Ambient** | Overall fill light | Keep it moderate to avoid washing out the materials from \`1.5\` |
@@ -2478,7 +2478,7 @@ A level feels empty without sound. Without appropriate lighting, even bright mat
 
 | Property | Purpose | Starting values |
 |----------|--------|-------------------|
-| **Density** | Fog density | \`0.25\`–\`0.4\` |
+| **Density** | Fog density | \`0.25\`-\`0.4\` |
 | **Offset** | Shifts the fog closer or farther away | \`0.25\` |
 | **Color** | Color of the fog | Depends on the time of day |
 
@@ -2505,7 +2505,7 @@ A level feels empty without sound. Without appropriate lighting, even bright mat
 | **Ambient** | Background nature audio, waves, or wind | In **Workspace** or SoundService | **true** |
 | **SFX** | A short effect, such as a click, creak, or impact | Inside a specific Part | **false** |
 
-Ambient audio should remain quiet (Volume \`0.25\`–\`0.45\`) so the player can hear short sound effects (SFX).
+Ambient audio should remain quiet (Volume \`0.25\`-\`0.45\`) so the player can hear short sound effects (SFX).
 
 **Try it now:** decide which ambient sound best fits your island. For example, waves work well for a house near the water.`,
  },
@@ -2575,7 +2575,7 @@ end
 | Ambient audio stops | Looped is disabled | Enable Looped in Properties |
 | The screen is too white or hazy | Bloom or Brightness is too high | Reduce these settings |
 | Nothing is visible at night | Brightness is zero | Increase the light and shadow brightness |
-| Fog hides the house | Atmosphere Density is too high | Set it to about 0.25–0.35 |`,
+| Fog hides the house | Atmosphere Density is too high | Set it to about 0.25-0.35 |`,
  },
  {
  title: "Project completion requirements",
@@ -2936,8 +2936,8 @@ For organization, group interactive objects such as the button and LogicCube in 
 
 | Sound | Purpose | Looped | Volume |
 |-------|------|--------|--------|
-| \`Ambient_Day\` | Daytime ambience from lesson 1.6 | true | 0.3–0.4 |
-| \`Music_Party\` | Party music | true | 0.35–0.5 |
+| \`Ambient_Day\` | Daytime ambience from lesson 1.6 | true | 0.3-0.4 |
+| \`Music_Party\` | Party music | true | 0.35-0.5 |
 | \`SFX_PartyStart\` | Optional short startup effect | false | 0.5 |
 
 Toggle behavior:
@@ -3408,14 +3408,14 @@ export const enLesson18 = {
  sections: [
  {
  title: "Lesson Task: Submit the Level",
- content: `This is a **checkpoint**, not a new topic. Your main goal is to refine and prepare everything you created in lessons 1.1–1.7 for presentation.
+ content: `This is a **checkpoint**, not a new topic. Your main goal is to refine and prepare everything you created in lessons 1.1-1.7 for presentation.
 
 **Complete these items by the end of the lesson:**
 - Prepare one level that combines all Module 1 work.
 - Check the level against the checklist.
 - Organize Explorer with folders and clear names.
 - Save the level as \`Module 1 - Living Island\`.
-- Prepare a short 30–60 second Party Mode demonstration.
+- Prepare a short 30-60 second Party Mode demonstration.
 
 Open the saved level from the previous lesson. Use the most complete version available.`,
  },
@@ -3485,7 +3485,7 @@ Lighting
 **Important:** use the standard folder tools (Insert → Folder) and drag objects into place. Do not move scripts out of interactive Parts such as \`LogicCube\` or \`PartyButton\`, because this will break the \`script.Parent\` reference.
 
 
-**Try it now:** create 1–3 folders and use them to group decorative objects, sounds, and interactive elements.`,
+**Try it now:** create 1-3 folders and use them to group decorative objects, sounds, and interactive elements.`,
  },
  {
  title: "Playtest from the Player's Perspective",
@@ -3515,7 +3515,7 @@ After saving, close the level and reopen it from your project list. Confirm that
  },
  {
  title: "Party Mode Demonstration",
- content: `Prepare a short 30–60 second presentation.
+ content: `Prepare a short 30-60 second presentation.
 
 **Demonstration outline:**
 1. Introduce the island and house while showing them with the camera.
@@ -3558,7 +3558,7 @@ end
 - [ ] Folders are created in Explorer, and object names are organized.
 - [ ] Party Mode consistently turns on and off.
 - [ ] The project is saved as \`Module 1 - Living Island\`.
-- [ ] A 30–60 second demonstration is prepared.
+- [ ] A 30-60 second demonstration is prepared.
 - [ ] You can explain a variable and an \`if\` condition in your own words.
 
 **Try it now:** review every item. Resolve any incomplete item before the final submission.`,
@@ -3587,7 +3587,7 @@ You have now completed Module 1 and turned an empty space into a functional inte
  {
  mistake: "Attempting to add complex mechanics from online sources",
  explanation: "At the submission stage, there is limited time to debug unfamiliar code. The review covers only the material from this module.",
- correctApproach: "Refine only the work created in lessons 1.1–1.7.",
+ correctApproach: "Refine only the work created in lessons 1.1-1.7.",
  },
  {
  mistake: "Running the Party Mode demonstration in Edit mode",
@@ -3633,13 +3633,13 @@ You have now completed Module 1 and turned an empty space into a functional inte
 3. Fix any issues using only familiar tools.
 
 ### Part B: Organization and Testing
-1. Create 1–3 folders (Folder) in Explorer and use them to organize decorative and interactive objects. Do not move scripts out of their Parts.
+1. Create 1-3 folders (Folder) in Explorer and use them to organize decorative and interactive objects. Do not move scripts out of their Parts.
 2. Start Play and follow the complete visitor route. Test Party Mode by turning it on and off twice.
 3. Save the level with **File → Save to Roblox** as \`Module 1 - Living Island\`.
 4. Close and reopen the level to verify the saved version.
 
 ### Part C: Demonstration
-1. Prepare a 30–60 second presentation using the outline.
+1. Prepare a 30-60 second presentation using the outline.
 2. Demonstrate Party Mode in Play mode to another person or record a screen video.
 3. Mark the practice and checkpoint as complete in the system.`,
  hints: [
@@ -3680,7 +3680,7 @@ You have now completed Module 1 and turned an empty space into a functional inte
           "Only a configuration script",
         ],
  correctAnswer: 2,
- explanation: "The level should combine all work completed in lessons 1.1–1.7.",
+ explanation: "The level should combine all work completed in lessons 1.1-1.7.",
  },
  {
  id: "q3",
@@ -3727,7 +3727,7 @@ You have now completed Module 1 and turned an empty space into a functional inte
  question: "How should you run the Party Mode demonstration?",
  options: [
           "In Edit mode, without clicking any buttons",
-          "In Play mode, in 30–60 seconds",
+          "In Play mode, in 30-60 seconds",
           "Without sound and without testing whether the mode turns off",
           "In an empty level without the button",
         ],

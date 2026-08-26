@@ -1,12 +1,26 @@
 {
   "courses": {
-    "python-developer-zero-to-junior": { "title": "Python" },
-    "roblox-studio": { "title": "Roblox Studio" },
-    "ai-at-work": { "title": "AI at Work" },
-    "scratch": { "title": "Scratch" },
-    "minecraft-education": { "title": "Minecraft Education" },
-    "web-development": { "title": "Web Development" },
-    "unity-game-development": { "title": "Unity" }
+    "python-developer-zero-to-junior": {
+      "title": "Python"
+    },
+    "roblox-studio": {
+      "title": "Roblox Studio"
+    },
+    "ai-at-work": {
+      "title": "AI for Real Life"
+    },
+    "scratch": {
+      "title": "Scratch"
+    },
+    "minecraft-education": {
+      "title": "Minecraft Education"
+    },
+    "web-development": {
+      "title": "Web Development"
+    },
+    "unity-game-development": {
+      "title": "Unity"
+    }
   },
   "days": {
     "sun": "Sun",
@@ -37,13 +51,13 @@
   "teacherPanelLink": "Teacher dashboard",
   "logout": "Log out",
   "pending": {
-    "title": "Wait while your account is being set up",
-    "text": "Your account has been created. Once your courses, schedule, and access are set up (or you open the link from Telegram), the full dashboard will appear here. If this is taking a while, contact us."
+    "title": "Welcome - pick a program to start",
+    "text": "Your account is ready. Subscribe to Roblox, Python, or AI for Real Life from Pricing or the panel below to unlock lessons."
   },
   "adminView": {
     "management": {
-      "title": "Management",
-      "text": "Manage students, schedules, course access, and analytics.",
+      "title": "Admin",
+      "text": "View students, grant or revoke course access, and review subscriptions.",
       "button": "Open admin panel"
     },
     "stats": {
@@ -66,7 +80,10 @@
     "heroLabel": "Student progress",
     "greeting": "Welcome back. Let's keep learning.",
     "greetingNamed": "Hi, {name}",
-    "lede": "Pick a course below and keep building.",
+    "lede": "Glad to see you.",
+    "continueLearning": "Continue learning",
+    "pickProgram": "Pick a program",
+    "pickProgramHint": "Unlock lessons from Pricing",
     "goalTitle": "Weekly goal",
     "tabs": {
       "overview": "Overview",
@@ -97,14 +114,14 @@
     },
     "courses": {
       "title": "My courses",
-      "subtitle": "Open a program to continue where you left off",
+      "subtitle": "Progress, billing, and resume - one place per program",
       "active": "Course active",
       "purchased": "Access granted",
       "locked": "Locked",
       "lockedHint": "Platform access opens up with online lessons. Contact support for details.",
-      "lockedViaLessonsRoblox": "Subscribe to Roblox Studio, or attend online lessons at SmartCode.",
-      "lockedViaLessonsPython": "Subscribe to Python, or attend online lessons at SmartCode.",
-      "lockedViaLessonsAi": "Subscribe to AI at Work to unlock this program.",
+      "lockedViaLessonsRoblox": "Subscribe to Roblox Studio to unlock this program.",
+      "lockedViaLessonsPython": "Subscribe to Python to unlock this program.",
+      "lockedViaLessonsAi": "Subscribe to AI for Real Life to unlock this program.",
       "lockedViaLessonsScratch": "To get access, attend Scratch online lessons at SmartCode.",
       "lockedViaLessonsMinecraft": "To get access, attend Minecraft Education online lessons at SmartCode.",
       "lockedViaLessonsWeb": "To get access, attend Web Development online lessons at SmartCode.",
@@ -116,7 +133,20 @@
       "openTrack": "Open my course",
       "yourTrack": "Your track",
       "progress": "Progress: {percent}%",
-      "empty": "No courses assigned yet."
+      "empty": "No courses assigned yet.",
+      "cancel": "Cancel subscription",
+      "cancelling": "Cancelling…",
+      "updatePayment": "Update payment method",
+      "portalOpening": "Opening…",
+      "activating": "Payment received - activating your access. This usually takes a few seconds…",
+      "billingLoading": "Loading subscription details…",
+      "pricingBlurb": "Standard $14/mo (platform + Discord) or Premium $20/mo (adds 2 live lessons). {days}-day free trial on each.",
+      "seePricing": "Or see all options on the",
+      "pricingLink": "pricing page",
+      "tierStandard": "Standard",
+      "tierPremium": "Premium",
+      "tierStandardBlurb": "Standard plan — platform + Discord",
+      "tierPremiumBlurb": "Premium plan — platform + Discord + 2 live lessons / week"
     },
     "paymentReminder": {
       "title": "Time to top up your lesson balance",
@@ -225,10 +255,75 @@
       },
       "success": "Payment received. Lessons credited: {count}"
     },
-    "refresh": "Refresh data"
+    "refresh": "Refresh data",
+    "arcade": {
+      "eyebrow": "Arcade",
+      "title": "Code Crush",
+      "lede": "Match three coding orbs. Clear cascades, earn XP, climb the monthly ranks, and compete for prizes.",
+      "tabGame": "Play Game",
+      "tabLeaderboard": "Leaderboard & Prizes",
+      "newGame": "New game",
+      "score": "Score",
+      "moves": "Moves",
+      "best": "Best",
+      "rankBadge": "#{rank} in ranking",
+      "unrankedBadge": "Unranked",
+      "hintPick": "Drag an orb onto a neighbor to swap.",
+      "hintSwap": "Keep dragging toward an adjacent orb.",
+      "roundOver": "Out of moves - start another round.",
+      "roundOverTitle": "Round complete",
+      "finalScore": "Score: {score}",
+      "playAgain": "Play again",
+      "xpEarned": "+{xp} XP saved to your level",
+      "level": "Level {level}",
+      "streak": "{count}-day streak",
+      "bestScore": "Best {score}",
+      "boardLabel": "Code Crush board",
+      "cellLabel": "{gem} at row {row}, column {col}",
+      "yourRankTitle": "Your Rank",
+      "yourRankPlace": "Rank #{rank}",
+      "yourRankTop": "Your Rank: #{rank} of {total} students",
+      "yourRankUnranked": "Not ranked this month yet",
+      "yourRankUnrankedHint": "Play a round to enter the tournament and compete for prizes!",
+      "inPrizeZone": "🔥 You're in the top 3! In line for the grand prize!",
+      "inTop10": "⭐ You're in the Top 10! Close to the podium!",
+      "ptsToTop10": "{pts} pts needed to reach Top 10",
+      "ptsToTop3": "{pts} pts needed to reach Top 3",
+      "seasonBadge": "Season: {season}",
+      "daysLeft": "{days} days left until prizes",
+      "monthBest": "Monthly Best: {score}",
+      "leaderboardTitle": "Monthly Student Leaderboard",
+      "leaderboardSubtitle": "Play, score big each month, and win prizes!",
+      "tableRank": "Rank",
+      "tableStudent": "Student",
+      "tableScore": "High Score",
+      "tableLevel": "Level",
+      "tableReward": "Prize",
+      "youBadge": "You",
+      "loadingLeaderboard": "Loading leaderboard...",
+      "noScoresYet": "Be the first to set a high score this month!",
+      "prizesTitle": "🎁 Monthly Tournament Prizes",
+      "prizesSubtitle": "At the end of each calendar month, top players earn exclusive rewards:",
+      "prize1Title": "1st Place (Gold)",
+      "prize1Reward": "1 Month Full Course or 1:1 Live Lesson + \"Code Champion\" Badge + 500 XP",
+      "prize2Title": "2nd Place (Silver)",
+      "prize2Reward": "Free 1:1 Live Lesson + \"Arcade Master\" Badge + 300 XP",
+      "prize3Title": "3rd Place (Bronze)",
+      "prize3Reward": "Exclusive Discord VIP Role + \"Top Scorer\" Badge + 200 XP",
+      "prizeTop10Title": "4th-10th (Top 10)",
+      "prizeTop10Reward": "Finalist \"Top 10 Finisher\" Badge + 100 XP",
+      "rulesTitle": "How to claim prizes?",
+      "rulesText": "Play Code Crush, improve your score, and maintain a top position. At 23:59 on the last day of each month, rankings freeze and prizes are automatically distributed to winners!",
+      "newMonthlyBest": "🎉 New Monthly Record!",
+      "yourNewRank": "Your tournament rank: #{rank}",
+      "viewLeaderboard": "View Leaderboard",
+      "congratsRank": "You are ranked #{rank} this month!"
+    }
   },
   "profile": {
     "title": "Profile",
+    "discordCta": "Join private Discord",
+    "discordHint": "Closed student community - ask questions and share builds.",
     "dataLossWarning": "Deleting your account permanently destroys all your data: learning progress, course access, schedule, dashboard history, and profile settings. This cannot be undone.",
     "deleteButton": "Delete account",
     "deleting": "Deleting…",

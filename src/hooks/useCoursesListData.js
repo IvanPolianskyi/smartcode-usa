@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import { useTranslations } from 'next-intl'
-import { Code, Box, BookOpen } from 'lucide-react'
+import { Code, Box, BookOpen, Sparkles } from 'lucide-react'
 
 const COURSE_CONFIG = [
 	{
@@ -36,13 +36,13 @@ const COURSE_CONFIG = [
 	{
 		key: 'ai',
 		courseId: 'ai-at-work',
-		icon: BookOpen,
-		color: '#e85d3a',
-		theme: 'teal',
+		icon: Sparkles,
+		color: '#8b5cf6',
+		theme: 'purple',
 		link: '/courses/ai-at-work',
 		courseLink: '/courses/ai-at-work',
 		level: 'Beginner',
-		duration: { weeks: 5, lessons: 3, hours: 10 },
+		duration: { weeks: 8, lessons: 28, hours: 28 },
 		popular: false,
 		rating: 5,
 		marketingOnly: false,

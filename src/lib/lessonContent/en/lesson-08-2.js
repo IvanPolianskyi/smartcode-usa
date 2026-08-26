@@ -522,7 +522,7 @@ Total number: 4`,
         output: `First passwords: 
 aaa 
 aab 
-ac 
+aac 
 aba 
 abb 
 abc 
@@ -547,19 +547,19 @@ Total number: 2`,
       }
     ],
     solution: {
-      code: `from itertools import product 
+      code: `from itertools import product
 
-chars = input().strip() 
-length = int(input()) 
-show = int(input()) 
+chars = input().strip()
+length = int(input())
+show = int(input())
 
-passwords = list(product(chars, repeat=length)) 
+passwords = list(product(chars, repeat=length))
 
-print('First passwords:') 
-for pwd in passwords[:show]: 
-print(''.join(pwd)) 
+print('First passwords:')
+for pwd in passwords[:show]:
+    print(''.join(pwd))
 
-print() 
+print()
 print(f'Total number: {len(passwords)}')`,
       explanation: "product with repeat generates all combinations; parameters from stdin."
     },

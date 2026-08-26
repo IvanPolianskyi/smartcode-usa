@@ -1,0 +1,707 @@
+{
+  "metadata": {
+    "siteName": "SmartCode Academy",
+    "home": {
+      "title": "SmartCode Academy - Programming School for Kids & Teens",
+      "description": "Self-paced online programming courses on our learning platform. Python and Roblox for international students."
+    },
+    "tariff": {
+      "title": "Course Pricing - SmartCode Academy",
+      "description": "Full online programming courses for kids and teens. One-time purchase, instant platform access."
+    },
+    "login": {
+      "title": "Sign In - SmartCode Academy",
+      "description": "Sign in to your SmartCode Academy account to continue your programming courses."
+    },
+    "register": {
+      "title": "Create Account - SmartCode Academy",
+      "description": "Create a SmartCode Academy account to access online programming courses for kids and teens."
+    },
+    "courses": {
+      "title": "Programs - SmartCode Academy",
+      "description": "Self-paced coding programs: Roblox Studio, Python, and AI for Real Life. Standard or Premium with live lessons."
+    },
+    "python": {
+      "title": "Python Course for Kids - SmartCode Academy",
+      "description": "Learn Python from scratch to a confident level. Build web apps, analyze data, and explore AI."
+    },
+    "webDev": {
+      "title": "Web Development Course for Kids & Teens - SmartCode Academy",
+      "description": "Online web development: HTML, CSS, JavaScript, React, and Next.js. Hands-on projects, modern design, and mentor support."
+    },
+    "unity": {
+      "title": "Unity Game Development Course for Kids - SmartCode Academy",
+      "description": "Online Unity course for kids and teens: C# programming, 2D and 3D games, physics, animation, and publishing projects. Lots of practice and real games in your portfolio."
+    },
+    "roblox": {
+      "title": "Roblox Studio Course for Kids - SmartCode Academy",
+      "description": "Online Roblox Studio course: Lua programming, Obby, Tycoon, and Simulator games, plus publishing and monetization."
+    },
+    "invite": {
+      "title": "Invite a Friend - SmartCode Academy | 500 UAH Off",
+      "description": "Invite a friend to SmartCode Academy and get 500 UAH off a programming course. Your friend gets a discount too. No limits on referrals!"
+    },
+    "oferta": {
+      "title": "Public offer - SmartCode Academy",
+      "description": "Unified public offer (English and Ukrainian). Payment, seller contact details."
+    },
+    "privacy": {
+      "title": "Privacy Policy - SmartCode Academy",
+      "description": "How SmartCode Academy collects, uses, and protects personal data for students and parents"
+    },
+    "terms": {
+      "title": "Terms of Service - SmartCode Academy",
+      "description": "Terms of Service for SmartCode Academy subscriptions, billing via Paddle, and acceptable use."
+    },
+    "pricing": {
+      "title": "Pricing - SmartCode Academy",
+      "description": "Subscribe to Roblox Studio, Python, or AI for Real Life separately. Free trial on each program. Standard and Premium tiers."
+    },
+    "start": {
+      "title": "Start your program - SmartCode Academy",
+      "description": "Create an account or log in to start your free trial and subscribe via Paddle."
+    },
+    "refund": {
+      "title": "Refund Policy - SmartCode Academy",
+      "description": "Refund conditions, cancellation procedure, and transaction policies for SmartCode Academy"
+    },
+    "projects": {
+      "title": "Student Projects - SmartCode Academy",
+      "description": "Explore real student projects from SmartCode Academy: games, websites, and apps built with Python, Unity, Roblox, and web development."
+    },
+    "dashboard": {
+      "title": "Dashboard - SmartCode Academy",
+      "description": "Student dashboard with course progress, certificates, and learning stats."
+    },
+    "knowledgeTest": {
+      "title": "Knowledge Test - SmartCode Academy",
+      "description": "Test your knowledge in Python, Roblox Studio, web development, and Unity"
+    },
+    "paymentSuccess": {
+      "title": "Payment Status - SmartCode Academy",
+      "description": "Course payment confirmation page for SmartCode Academy."
+    },
+    "lesson": {
+      "title": "Course Lesson - SmartCode Academy",
+      "description": "Private course lesson at SmartCode Academy with practice tasks and materials.",
+      "loading": "Loading lesson…"
+    },
+    "forgotPassword": {
+      "title": "Restore access - SmartCode Academy",
+      "description": "Reset your password from the login page, or contact SmartCode support if you need help."
+    },
+    "scratch": {
+      "title": "Scratch course for kids - SmartCode Academy",
+      "description": "Online Scratch course for ages 7-11: block coding, animations, games, and logical thinking. A gentle start in IT without complex syntax."
+    },
+    "minecraft": {
+      "title": "Minecraft Education course for kids - SmartCode Academy",
+      "description": "Online Minecraft Education course for ages 8-13: agents, command blocks, quests, and STEM projects in a safe educational Minecraft world."
+    },
+    "ai": {
+      "title": "AI for Real Life - SmartCode Academy",
+      "description": "Learn practical AI workflows for writing, images, and video - with templates you can reuse every week."
+    }
+  },
+  "common": {
+    "siteName": "SmartCode Academy",
+    "signUp": "Sign Up",
+    "signUpTrial": "Get started",
+    "login": "Sign In",
+    "register": "Register",
+    "dashboard": "Dashboard",
+    "logout": "Log Out",
+    "prices": "Pricing",
+    "viewPrices": "View Pricing",
+    "submit": "Submit Request",
+    "submitting": "Sending…",
+    "close": "Close",
+    "errorSubmit": "Sorry, something went wrong while sending. Please try again.",
+    "errorNetwork": "A network error occurred. Check your connection and try again.",
+    "name": "Your name",
+    "namePlaceholder": "Enter your name",
+    "nameRequired": "Please enter your name",
+    "phone": "Phone",
+    "message": "Comment",
+    "freeTrial": "full course access",
+    "langUk": "UA",
+    "langEn": "EN",
+    "myProfile": "My Profile",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "popular": "Top",
+    "currency": "UAH",
+    "dataProcessingConsent": "By submitting this form, you consent to the processing of your personal data in accordance with our <privacy>Privacy Policy</privacy>.",
+    "errorRateLimit": "Too many attempts from your network. Wait 10-15 minutes and try again.",
+    "errorLeadConfig": "The form is temporarily unavailable. Message us on Telegram or give us a call.",
+    "cabinet": "Dashboard"
+  },
+  "phoneField": {
+    "label": "PHONE NUMBER",
+    "selectCountry": "Select country",
+    "searchCountry": "Search country",
+    "searchPlaceholder": "Country or code (+48, Poland…)",
+    "countryNotFound": "Country not found",
+    "countryAria": "Country: {name}",
+    "phonePlaceholder": "Phone number",
+    "intlPlaceholder": "+380…",
+    "duplicateCountry": "Do not duplicate the country code ({prefix} only once)",
+    "countryMismatch": "Number does not match selected country ({country})",
+    "invalidUaOperator": "Invalid Ukrainian mobile operator code",
+    "enterAfterCountryCode": "Enter the phone number after the country code",
+    "invalidUaMobile": "Enter a valid Ukrainian mobile number (e.g. +380 96 123 45 67)",
+    "checkDigitCount": "Check the number of digits (without duplicating the country code)",
+    "europeOnly": "A European country number is required",
+    "enterFullNumber": "Enter the full number with country code (e.g. +380…)"
+  },
+  "header": {
+    "nav": {
+      "signUp": "Book a Lesson",
+      "courses": "Courses",
+      "lessons": "Sample Lessons",
+      "prices": "Pricing",
+      "reviews": "Reviews",
+      "invite": "Invite a Friend"
+    },
+    "signUpAria": "Book a live Zoom lesson",
+    "mobile": {
+      "pages": "Pages",
+      "courses": "Courses"
+    },
+    "coursesDropdown": {
+      "python": {
+        "title": "Python",
+        "description": "Programming fundamentals in Python",
+        "age": ""
+      },
+      "unity": {
+        "title": "Game Development",
+        "description": "C# and Unity",
+        "age": ""
+      },
+      "roblox": {
+        "title": "Roblox Studio",
+        "description": "Create games in Roblox Studio",
+        "age": ""
+      },
+      "webDev": {
+        "title": "Web Development",
+        "description": "HTML, CSS, React, design",
+        "age": ""
+      },
+      "popular": "Popular",
+      "scratch": {
+        "title": "Scratch",
+        "description": "Block coding for kids",
+        "age": "7-11"
+      },
+      "minecraft": {
+        "title": "Minecraft Education",
+        "description": "Code and STEM in the Minecraft world",
+        "age": "8-13"
+      }
+    }
+  },
+  "footer": {
+    "schoolName": "SmartCode",
+    "schoolSubtitle": "Academy",
+    "description": "A leading programming school. We teach through practice and build the future together!",
+    "coursesTitle": "Our Courses",
+    "navigationTitle": "Navigation",
+    "supportTitle": "Support",
+    "courses": {
+      "python": "Python Programming",
+      "webDev": "Web Development",
+      "unity": "Unity Game Development",
+      "roblox": "Roblox Studio",
+      "scratch": "Scratch",
+      "minecraft": "Minecraft Education"
+    },
+    "quickLinks": {
+      "about": "About Us",
+      "courses": "Courses",
+      "reviews": "Reviews",
+      "contacts": "Contact",
+      "login": "Sign In",
+      "register": "Register"
+    },
+    "supportLinks": {
+      "faq": "FAQ",
+      "offer": "Terms of Service",
+      "refund": "Refund Policy",
+      "privacy": "Privacy Policy"
+    },
+    "merchantDetails": {
+      "title": "Merchant Details",
+      "name": "Merchant Name:",
+      "taxId": "Tax ID (RNKPP/INN):",
+      "email": "Support Email:",
+      "phone": "Contact Phone:"
+    },
+    "achievements": {
+      "graduates": {
+        "number": "500+",
+        "label": "Graduates"
+      },
+      "experience": {
+        "number": "3+",
+        "label": "Years of Experience"
+      },
+      "rating": {
+        "number": "4.9",
+        "label": "Rating"
+      }
+    },
+    "copyright": "© {year} SmartCode Academy. All rights reserved.",
+    "social": {
+      "instagram": "Instagram",
+      "tiktokMain": "TikTok - SmartCode Academy",
+      "tiktokAlt": "TikTok - SmartCode Academy 2",
+      "tiktokIvan": "TikTok - Ivan Python",
+      "tiktokArtem": "TikTok - Artem SmartCode"
+    }
+  },
+  "home": {
+    "titleMain": "SmartCode",
+    "titleAccent": "Academy",
+    "subtitle": "Live coding lessons on Zoom in English - one-on-one or in small groups. Python, Roblox Studio & more",
+    "lessonTypes": {
+      "group": "Group classes",
+      "individual": "one-on-one",
+      "students": "5000+ students",
+      "platform": "online platform"
+    },
+    "features": {
+      "age": "",
+      "online": "Online lessons",
+      "certificate": "International certificate"
+    },
+    "stats": {
+      "students": {
+        "number": "5000+",
+        "label": "kids learning worldwide"
+      },
+      "liveLessons": {
+        "number": "100%",
+        "label": "of lessons with live instructors"
+      },
+      "courses": {
+        "number": "4+ courses",
+        "label": "Python, Roblox, Unity, Web Dev"
+      },
+      "trial": {
+        "number": "0 UAH",
+        "label": "Trial lesson cost"
+      }
+    },
+    "cta": {
+      "signUpTrial": "Browse courses",
+      "viewPrices": "View Pricing"
+    },
+    "heroEnCta": {
+      "badge": "Self-paced courses worldwide",
+      "title": "Learn to Code on Our Online Platform",
+      "lead": "Full Python and Roblox Studio courses in English. Study at your own pace with structured lessons, practice, and quizzes - for kids & teens.",
+      "benefitPlatform": "Full platform access",
+      "benefitEnglish": "In English",
+      "benefitPace": "Learn at your pace",
+      "benefitCertificate": "Certificate",
+      "primaryCtaTitle": "Create a free account",
+      "primaryCtaSub": "Then buy a course and start learning",
+      "hint": "Pay with card, Apple Pay, or Google Pay · instant access after checkout",
+      "courses": {
+        "roblox-studio": {
+          "name": "Roblox Studio",
+          "desc": "92 lessons · learn at your own pace"
+        },
+        "python-developer-zero-to-junior": {
+          "name": "Python",
+          "desc": "96 lessons · full course"
+        }
+      }
+    },
+    "heroForm": {
+      "title": "Book your",
+      "titleAccent": "live Zoom lesson",
+      "nameLabel": "Your name",
+      "namePlaceholder": "Enter your name",
+      "nameRequired": "Please enter your name",
+      "submit": "Sign Up",
+      "submitting": "Sending…",
+      "hint": "Paid lessons · flexible schedule",
+      "successTitle": "Request received!",
+      "successText": "We'll contact you shortly.",
+      "titleSuffix": "individual online lesson"
+    },
+    "subtitleRich": "Live Zoom lessons, an <accent>online platform</accent>, and a free trial class"
+  },
+  "faq": {
+    "badge": "FAQ",
+    "title": "Answers to everything",
+    "titleAccent": "you're wondering about",
+    "subtitle": "Common questions about our self-paced courses on the learning platform.",
+    "sidebarTitle": "Categories",
+    "categories": {
+      "general": "General Questions",
+      "process": "Learning Process",
+      "results": "Results",
+      "technical": "Technical Questions"
+    },
+    "items": {
+      "0": {
+        "question": "How does learning work? What do you need?",
+        "answer": "After you purchase a course, you get instant access to all lessons, practice tasks, and quizzes on our learning platform. Study at your own pace whenever it suits you. You need a computer or laptop and a stable internet connection."
+      },
+      "1": {
+        "question": "Do you need a powerful laptop for learning?",
+        "answer": "No-a regular computer is enough. For advanced courses (Unity, 3D) there may be additional requirements, which we'll tell you about in advance."
+      },
+      "2": {
+        "question": "Can you learn on a tablet?",
+        "answer": "For full programming lessons we recommend using a computer or laptop. A tablet can be used for reading theory and completing light practice tasks."
+      },
+      "3": {
+        "question": "What course formats are available?",
+        "answer": "On the English site we offer full self-paced courses: Python Developer (zero to junior) and Roblox Studio. After payment you can start immediately and work through modules in any order allowed by the course path."
+      },
+      "4": {
+        "question": "How do payments work?",
+        "answer": "We accept secure online payments via Visa, Mastercard, Apple Pay, and Google Pay. The full course price is shown on the checkout page before you pay, with no hidden fees."
+      },
+      "5": {
+        "question": "How is progress tracked?",
+        "answer": "The platform records completed lessons, quiz scores, and practice progress automatically. After sign-in, the student (or parent using the same account) can see status and the next unlocked lesson in the personal dashboard."
+      },
+      "6": {
+        "question": "What does a student get after completing a course?",
+        "answer": "After finishing the course path and meeting completion requirements, students receive a certificate and a portfolio of projects built during practice tasks. Course materials remain available in the account according to your purchase terms."
+      },
+      "7": {
+        "question": "What language is the course in?",
+        "answer": "On the English site, the platform interface and all purchased course content (lessons, quizzes, and instructions) are in English."
+      },
+      "8": {
+        "question": "Can a student take another course after finishing one?",
+        "answer": "Yes. Python and Roblox Studio are separate courses on the platform. After completing one, you can purchase another and continue learning at your own pace."
+      },
+      "9": {
+        "question": "Can we pause and continue later?",
+        "answer": "Yes. Self-paced courses have no fixed class times. Stop anytime and resume from your dashboard - progress is saved as you complete lessons and quizzes."
+      },
+      "10": {
+        "question": "How does support work?",
+        "answer": "For account, payment, or platform issues, contact us by email or the contact options on the site. We help with access and technical problems; course content is designed to be followed step by step in the lessons."
+      }
+    },
+    "cta": {
+      "title": "Take the first step toward a successful career in programming today",
+      "text": "In a free lesson you can create your own online game",
+      "button": "Sign up for a free lesson"
+    }
+  },
+  "contact": {
+    "closeAria": "Close form",
+    "title": "Get in touch",
+    "subtitle": "Leave your contact details and we'll reply soon",
+    "nameLabel": "Your name",
+    "namePlaceholder": "Child's or parent's name",
+    "nameRequired": "Please enter your name",
+    "messageLabel": "Comment",
+    "messageOptional": "(optional)",
+    "messagePlaceholder": "Preferred contact method, child's age, questions…",
+    "submit": "Submit Request",
+    "submitting": "Sending…",
+    "note": "We'll reply within one business day.",
+    "successTitle": "Thank you!",
+    "successText": "Our manager will contact you shortly.",
+    "errorSubmit": "Sorry, something went wrong while sending. Please try again or message us on Telegram.",
+    "errorNetwork": "A network error occurred. Check your connection and try again.",
+    "errorTelegramConfig": "The form is not configured on the server (Telegram). Message us on Telegram or call - contacts are on the site.",
+    "errorLeadConfig": "Form security is not configured on the server (LEAD_FORM_SIGNING_SECRET). Please contact the site administrator.",
+    "errorRateLimit": "Too many attempts. Wait 15 minutes or message us on Telegram."
+  },
+  "trial": {
+    "title": "BOOK A FREE TRIAL",
+    "subtitle": "Choose how you'd like us to reach you and a course direction-we'll reply and schedule a time.",
+    "contactMethodLabel": "How should we contact you?",
+    "contactMethodAria": "Contact method",
+    "phoneCall": "Call you",
+    "telegram": "Telegram by phone number",
+    "courseLabel": "Course direction",
+    "coursePlaceholder": "Select a direction",
+    "courseRequired": "Please select a direction",
+    "messageLabel": "Comment (optional)",
+    "messagePlaceholder": "Child's age, preferred time, questions…",
+    "submit": "Submit Request",
+    "submitting": "Sending…",
+    "successTitle": "Request received",
+    "successText": "Thank you! We'll contact you shortly.",
+    "courses": {
+      "roblox": "Roblox Studio",
+      "python": "Python",
+      "webDev": "JavaScript & Web Development",
+      "unity": "Unity Game Development",
+      "unsure": "Not sure - need a consultation"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in to your account",
+      "switchAria": "Choose action",
+      "signIn": "Sign In",
+      "signUp": "Register",
+      "email": "Email",
+      "emailPlaceholder": "smartcode@gmail.com",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign In",
+      "submitting": "Signing in…",
+      "error": "Sign-in failed. Please check your details.",
+      "footer": "Don't have an account?",
+      "footerLink": "Create account",
+      "subtitle": "Sign in with the email and password you used to create your account.",
+      "emailHint": "Use the email address you registered with.",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "bannerMagicExpired": "That sign-in link has expired. Log in with your password, or ask support for a new link.",
+      "bannerMagicMissing": "This link is missing a sign-in token. Open the full link from your email or support message.",
+      "bannerNeedAccount": "Payment received. Create an account (or sign in) to access your courses.",
+      "helpTitle": "How to get access",
+      "helpTelegram": "Need help? Contact SmartCode support and we will sort it out.",
+      "helpManager": "Or email support and we will send login details.",
+      "helpMagic": "A one-time link opens your dashboard without typing a password.",
+      "footerHome": "Back to home"
+    },
+    "register": {
+      "title": "Create an account",
+      "switchAria": "Choose action",
+      "signIn": "Sign In",
+      "signUp": "Register",
+      "fullName": "Student's full name",
+      "fullNamePlaceholder": "Enter full name",
+      "email": "Email",
+      "emailPlaceholder": "smartcode@gmail.com",
+      "phone": "Phone number",
+      "phonePlaceholder": "Phone number",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "submit": "Register",
+      "submitting": "Registering…",
+      "errorPasswordMismatch": "Passwords do not match",
+      "errorPasswordLength": "Password must be at least 6 characters",
+      "errorPhone": "Please enter the full phone number",
+      "errorAcceptPrivacy": "Please confirm that you have read the Privacy Policy",
+      "privacyCheckbox": "I confirm that I have read the <privacy>Privacy Policy</privacy>",
+      "error": "Registration failed. Please try again.",
+      "footer": "Already registered?",
+      "footerLink": "Sign In"
+    },
+    "forgotPassword": {
+      "title": "Restore access",
+      "subtitle": "Enter your email to reset your password, or contact support if you are stuck.",
+      "stepTelegram": "Check your email for a reset link, or contact SmartCode support for help.",
+      "stepManager": "Or message support - we will send a new password or link.",
+      "stepCredentials": "After a reset, your old password will no longer work.",
+      "backToLogin": "Back to sign in",
+      "home": "Back to home"
+    }
+  },
+  "pricing": {
+    "en": {
+      "hero": {
+        "title": "Full",
+        "titleAccent": "online courses",
+        "subtitle": "One-time purchase · instant access to every lesson, practice task, and quiz on our platform. Pay securely with card, Apple Pay, or Google Pay.",
+        "cta": "View courses"
+      },
+      "courses": {
+        "badge": "Popular",
+        "period": "one-time",
+        "cta": "Buy course",
+        "roblox-studio": {
+          "name": "Roblox Studio",
+          "subtitle": "92 lessons · game development",
+          "description": "From your first Part in Studio to publishing your own Roblox game.",
+          "features": [
+            "Full course on the platform",
+            "Theory, practice, and quizzes",
+            "Learn at your own pace",
+            "Certificate after completion"
+          ]
+        },
+        "python-developer-zero-to-junior": {
+          "name": "Python",
+          "subtitle": "96 lessons · zero to junior",
+          "description": "Structured Python path with real projects and hands-on practice.",
+          "features": [
+            "Full course on the platform",
+            "Interactive code practice",
+            "Progress tracking in your dashboard",
+            "Certificate after completion"
+          ]
+        }
+      },
+      "finalCta": {
+        "title": "Start learning this week",
+        "text": "Create an account, choose Python or Roblox Studio, and get instant access after checkout.",
+        "cta": "Create account"
+      }
+    },
+    "enTrust": {
+      "badge": "Why families choose us",
+      "title": "Simple, transparent pricing",
+      "items": {
+        "fullAccess": {
+          "title": "Full course access",
+          "text": "One payment unlocks all modules and lessons on the platform."
+        },
+        "securePay": {
+          "title": "Secure checkout",
+          "text": "Visa, Mastercard, Apple Pay, and Google Pay via our payment provider."
+        },
+        "selfPaced": {
+          "title": "Self-paced learning",
+          "text": "Your child studies when it suits your schedule - no fixed live slots."
+        },
+        "noHidden": {
+          "title": "No hidden fees",
+          "text": "The price shown at checkout is the full course price."
+        }
+      }
+    },
+    "hero": {
+      "title": "Pay",
+      "titleAccent": "per lesson",
+      "titleLine2": "no prepayment",
+      "subtitle": "Choose a learning format that fits your goals and budget. Pay only for completed lessons-no hidden terms, no risk, with real progress for your child.",
+      "cta": "Book a Live Lesson"
+    },
+    "plans": {
+      "group": {
+        "name": "Mini Group",
+        "subtitle": "Up to 5 students per group",
+        "description": "Great for social learning, motivation, and a steady pace",
+        "period": "/ lesson",
+        "features": [
+          "Group of up to 5 students",
+          "Live Zoom lessons with a teacher",
+          "Regular schedule and discipline",
+          "Practice on real tasks",
+          "Platform + homework",
+          "Support and progress feedback"
+        ],
+        "cta": "Sign Up"
+      },
+      "individual": {
+        "name": "One-on-One",
+        "subtitle": "1-on-1 with a teacher",
+        "description": "Maximum results through a personalized pace and program tailored to your child",
+        "period": "/ lesson",
+        "badge": "Most Popular",
+        "features": [
+          "Personal 1-on-1 approach",
+          "Flexible schedule",
+          "Pace and curriculum matched to the student",
+          "Focus on goals and weak areas",
+          "Platform + homework",
+          "Faster progress"
+        ],
+        "cta": "Sign Up"
+      }
+    },
+    "trust": {
+      "badge": "Why families choose us",
+      "title": "Convenient, transparent, risk-free",
+      "items": {
+        "payPerLesson": {
+          "title": "Pay per lesson",
+          "text": "Pay only for lessons that take place. No prepayment or packages-full flexibility!"
+        },
+        "flexible": {
+          "title": "Flexible schedule",
+          "text": "Pick a convenient time. We're available Monday through Sunday, mornings and evenings."
+        },
+        "zoom": {
+          "title": "Online on Zoom",
+          "text": "Classes happen on Zoom. Learn from anywhere-all you need is a laptop."
+        },
+        "noCommitment": {
+          "title": "No commitment",
+          "text": "You can stop anytime. No contracts or penalties."
+        }
+      }
+    },
+    "finalCta": {
+      "title": "Start risk-free this week",
+      "text": "Book a trial lesson or choose a live lesson format - we'll help you pick the best option for your child.",
+      "cta": "Contact us"
+    }
+  },
+  "bookLesson": {
+    "title": "Book a Live Zoom Lesson",
+    "subtitle": "Choose your course, format, day, and time - then pay securely with Apple Pay, Google Pay, or card.",
+    "courseLabel": "Course",
+    "formatLabel": "Lesson format",
+    "group": "Group lesson",
+    "individual": "1-on-1 lesson",
+    "perLesson": "per lesson",
+    "dayLabel": "Preferred day",
+    "timeLabel": "Preferred time",
+    "days": {
+      "mon": "Monday",
+      "tue": "Tuesday",
+      "wed": "Wednesday",
+      "thu": "Thursday",
+      "fri": "Friday",
+      "sat": "Saturday",
+      "sun": "Sunday"
+    },
+    "payMethods": "Secure payment · Apple Pay · Google Pay · Visa / Mastercard",
+    "payButton": "Pay {price} and book",
+    "processing": "Processing…",
+    "loading": "Loading...",
+    "timezoneNote": "All times are shown in Kyiv time",
+    "noSlots": "No available slots right now. Check back later or contact support.",
+    "authTitle": "Create an account to continue",
+    "authText": "You need to sign in or register before booking a lesson. It only takes a minute.",
+    "authRegister": "Register",
+    "authLogin": "Sign In",
+    "errors": {
+      "failed": "Payment failed. Please try again."
+    }
+  },
+  "buyCourse": {
+    "buyButton": "Buy for {price}",
+    "processing": "Processing…",
+    "oneTime": "One-time payment · lifetime access",
+    "comingSoon": "Coming soon! We'll notify you when this course is available for purchase.",
+    "payMethods": "Secure payment · Apple Pay · Google Pay · Visa / Mastercard",
+    "legalCheckbox": "I confirm that I have read and accept the <oferta>Terms of Service</oferta>, <privacy>Privacy Policy</privacy>, and <refund>Refund Policy</refund>.",
+    "legalAgree": "By completing payment you agree to our <oferta>Terms of Service</oferta>, <privacy>Privacy Policy</privacy>, and <refund>Refund Policy</refund>.",
+    "authTitle": "Create an account to continue",
+    "authText": "Register or sign in to purchase this course. After payment, it will appear in your dashboard.",
+    "authRegister": "Register",
+    "authLogin": "Sign In",
+    "alreadyOwned": "You already own this course",
+    "goToCourse": "Go to course",
+    "courses": {
+      "roblox-studio": {
+        "title": "Roblox Studio - Full Course",
+        "description": "92 LMS lessons: modeling → ready-code sparks → serious Lua → Obby/simulator/Tycoon/Tools → release & Showcase. Groups of up to 5 or 1:1. About 8-10 months at 2 lessons/week.",
+        "lessons": "92 lessons",
+        "access": "Lifetime access"
+      },
+      "python-developer-zero-to-junior": {
+        "title": "Python - Full Course",
+        "description": "96 structured lessons taking you from absolute beginner to confident junior developer on our online platform. Duration: Approx. 8 months. Syllabus Highlights: Python fundamentals, data types and structures, Object-Oriented Programming (OOP), web development basics with Flask/Django, working with databases, building Telegram bots, and final portfolio projects. Master one of the world's most popular programming languages!",
+        "lessons": "96 lessons",
+        "access": "Lifetime access"
+      }
+    },
+    "errors": {
+      "notFound": "Course not found",
+      "failed": "Payment failed. Please try again.",
+      "acceptLegal": "Please confirm agreement with the Terms of Service and Privacy Policy."
+    }
+  }
+}

@@ -67,7 +67,7 @@ print(matrix[0][0])  # 1
 print(matrix[2][1])  # 8
 \`\`\`
 
-**Practical example — grade table:**
+**Practical example - grade table:**
 \`\`\`python
 # Student grade table
 grades = [
@@ -491,19 +491,19 @@ print(f"Alexander's average: {alex_avg:.2f}")`,
   
   summary: `In this lesson we learned:
 
-1. Nested lists — matrices and multidimensional structures
-2. Nested dictionaries — dictionaries inside dictionaries
-3. Lists of dictionaries — data tables
-4. Dictionaries with lists — organizing data by category
-5. Complex structures — combinations of all types
+1. Nested lists - matrices and multidimensional structures
+2. Nested dictionaries - dictionaries inside dictionaries
+3. Lists of dictionaries - data tables
+4. Dictionaries with lists - organizing data by category
+5. Complex structures - combinations of all types
 
-Nested data structures let you organize complex data efficiently! Next lesson — practice with all the structures you have learned.`,
+Nested data structures let you organize complex data efficiently! Next lesson - practice with all the structures you have learned.`,
   
   practiceTask: {
     title: "Library management system",
     description: "Create a program to manage a library of books",
     problemStatement: `Write a program that:
-1. Reads data about 3 books (for each: title, author, number of pages — one value per line)
+1. Reads data about 3 books (for each: title, author, number of pages - one value per line)
 2. Stores the books in a data structure (a dictionary with a list of dictionaries)
 3. Prints information about all books
 

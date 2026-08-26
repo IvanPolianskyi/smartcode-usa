@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import { useTranslations } from 'next-intl'
-import { Code, Box, BookOpen } from 'lucide-react'
+import { Code, Box, BookOpen, Sparkles } from 'lucide-react'
 
 export const DASHBOARD_COURSE_IDS = [
 	'python-developer-zero-to-junior',
@@ -26,11 +26,11 @@ const COURSE_META = {
 		bannerGradient: 'linear-gradient(135deg, #b91c1c, #dc2626)',
 	},
 	'ai-at-work': {
-		icon: BookOpen,
-		color: '#e85d3a',
+		icon: Sparkles,
+		color: '#8b5cf6',
 		link: '/courses/ai-at-work',
 		bannerImage: '/projects/default-project.svg',
-		bannerGradient: 'linear-gradient(135deg, #0b1210, #e85d3a)',
+		bannerGradient: 'linear-gradient(135deg, #2e1065, #7c3aed)',
 	},
 }
 

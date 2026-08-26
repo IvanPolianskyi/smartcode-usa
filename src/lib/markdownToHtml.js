@@ -28,7 +28,7 @@ export function markdownToHtml(text) {
     s = s.replace(/\s→\s/g, ' <span class="md-arrow" aria-hidden="true">→</span> ')
     s = s.replace(/\s->\s/g, ' <span class="md-arrow" aria-hidden="true">→</span> ')
     s = s.replace(/([^>\s])→([^<\s])/g, '$1 <span class="md-arrow" aria-hidden="true">→</span> $2')
-    s = s.replace(/\s—\s/g, ' <span class="md-emdash">—</span> ')
+    s = s.replace(/\s-\s/g, ' <span class="md-emdash">-</span> ')
     codes.forEach((html, i) => {
       s = s.replace(`\u00A0\u00A0IC_${i}\u00A0\u00A0`, html)
     })

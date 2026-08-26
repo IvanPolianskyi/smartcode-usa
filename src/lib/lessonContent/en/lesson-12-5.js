@@ -34,7 +34,7 @@ export const lesson_12_5 = {
 - Logs and reports
 - Data for automation scripts
 
-**Built-in module** \`csv\` — no pip install needed:
+**Built-in module** \`csv\` - no pip install needed:
 
 \`\`\`python
 import csv
@@ -53,7 +53,7 @@ with open("sales.csv", newline="", encoding="utf-8") as f:
         print(row["product"], row["amount"])
 \`\`\`
 
-\`DictReader\` returns each row as a **dictionary** — convenient access by column name.
+\`DictReader\` returns each row as a **dictionary** - convenient access by column name.
 
 **Plain reader** (lists):
 
@@ -95,14 +95,14 @@ with open("out.csv", "w", newline="", encoding="utf-8") as f:
 
 1. Collect data → list of dictionaries
 2. Save **CSV** for the archive
-3. With **reportlab** (lesson 11) — PDF for management
-4. Via **smtplib** (lesson 12) — send the PDF as an attachment
+3. With **reportlab** (lesson 11) - PDF for management
+4. Via **smtplib** (lesson 12) - send the PDF as an attachment
 
 CSV is an intermediate format you can open in Excel without extra code.`
       },
       {
         title: "Summary",
-        content: `csv.DictReader / DictWriter are the standard for tabular data. Always set encoding and newline="". Next — report automation overview (lesson 12-6).`
+        content: `csv.DictReader / DictWriter are the standard for tabular data. Always set encoding and newline="". Next - report automation overview (lesson 12-6).`
       }
     ]
   },
@@ -177,7 +177,7 @@ print(total)`,
         question: "CSV and Excel .xlsx are the same format.",
         options: ["True", "False"],
         correctAnswer: 1,
-        explanation: "False — xlsx is binary; CSV is plain text."
+        explanation: "False - xlsx is binary; CSV is plain text."
       }
     ],
     timeLimit: 15,

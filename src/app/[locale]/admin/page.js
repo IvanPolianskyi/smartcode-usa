@@ -85,6 +85,9 @@ export default function AdminPanelPage() {
 						<p className={styles.pageEyebrow}>Admin</p>
 						<h1 className={styles.pageTitle}>Students &amp; subscriptions</h1>
 					</div>
+					<Link href="/admin/live-lessons" className="sc-btn sc-btn-ghost">
+						Live lessons
+					</Link>
 				</header>
 
 				{error ? <p className={styles.error}>{error}</p> : null}
@@ -92,7 +95,7 @@ export default function AdminPanelPage() {
 				<div className={styles.statGrid}>
 					{statCards.map((card) => (
 						<div className={styles.statCard} key={card.label}>
-							<p className={styles.statValue}>{card.value ?? '—'}</p>
+							<p className={styles.statValue}>{card.value ?? '-'}</p>
 							<p className={styles.statLabel}>{card.label}</p>
 						</div>
 					))}
@@ -131,7 +134,7 @@ export default function AdminPanelPage() {
 										<tr key={s.id}>
 											<td>
 												<Link href={`/admin/students/${s.id}`} className={styles.rowLink}>
-													{s.name || '—'}
+													{s.name || '-'}
 												</Link>
 											</td>
 											<td>{s.email}</td>
@@ -139,7 +142,7 @@ export default function AdminPanelPage() {
 											<td>
 												<StatusBadge active={s.active} trialing={s.trialing} />
 											</td>
-											<td>{s.courseIds.length ? s.courseIds.join(', ') : '—'}</td>
+											<td>{s.courseIds.length ? s.courseIds.join(', ') : '-'}</td>
 										</tr>
 									))}
 								</tbody>

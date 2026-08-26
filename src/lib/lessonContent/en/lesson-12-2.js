@@ -445,13 +445,13 @@ def send_email_with_cc_bcc(sender, password, recipient, cc_recipients, bcc_recip
     msg['To'] = recipient
     msg['Subject'] = subject
 
-    # CC — everyone can see the addresses
+    # CC - everyone can see the addresses
     if cc_recipients:
         if isinstance(cc_recipients, str):
             cc_recipients = [cc_recipients]
         msg['Cc'] = ', '.join(cc_recipients)
 
-    # BCC — not added to headers
+    # BCC - not added to headers
     all_recipients = [recipient]
     if cc_recipients:
         all_recipients.extend(cc_recipients)
@@ -484,8 +484,8 @@ send_email_with_cc_bcc(
 
 **Difference between CC and BCC:**
 
-- **CC (Carbon Copy)** — all recipients can see each other's addresses
-- **BCC (Blind Carbon Copy)** — recipients cannot see BCC addresses`
+- **CC (Carbon Copy)** - all recipients can see each other's addresses
+- **BCC (Blind Carbon Copy)** - recipients cannot see BCC addresses`
       },
       {
         title: "Practical examples",
@@ -563,19 +563,19 @@ def send_report_email(recipient, report_path):
 
 **Key concepts:**
 
-1. **HTML email** — polished message formatting
-2. **MIMEMultipart** — for combined messages
-3. **Attachments** — adding files to email
-4. **Inline images** — images inside HTML
-5. **CC and BCC** — copies and blind copies
+1. **HTML email** - polished message formatting
+2. **MIMEMultipart** - for combined messages
+3. **Attachments** - adding files to email
+4. **Inline images** - images inside HTML
+5. **CC and BCC** - copies and blind copies
 
 **Main modules:**
 
-- \`email.mime.multipart.MIMEMultipart\` — multipart messages
-- \`email.mime.text.MIMEText\` — text and HTML
-- \`email.mime.base.MIMEBase\` — attachments
-- \`email.mime.image.MIMEImage\` — images
-- \`email.encoders\` — encoding attachments
+- \`email.mime.multipart.MIMEMultipart\` - multipart messages
+- \`email.mime.text.MIMEText\` - text and HTML
+- \`email.mime.base.MIMEBase\` - attachments
+- \`email.mime.image.MIMEImage\` - images
+- \`email.encoders\` - encoding attachments
 
 **Important:**
 
@@ -665,11 +665,11 @@ server.send_message(msg, to_addrs=all_recipients)`,
 
   summary: `In this lesson we covered advanced email features:
 
-1. HTML email — creating polished messages
-2. Attachments — adding files
-3. Inline images — images in HTML
-4. CC and BCC — copies and blind copies
-5. MIMEMultipart — multipart messages
+1. HTML email - creating polished messages
+2. Attachments - adding files
+3. Inline images - images in HTML
+4. CC and BCC - copies and blind copies
+5. MIMEMultipart - multipart messages
 
 HTML email and attachments are powerful tools for professional messaging!`,
 
@@ -708,8 +708,8 @@ HTML email and attachments are powerful tools for professional messaging!`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is BCC?",
         options: [
-          "Blind carbon copy — recipients cannot see BCC addresses",
-          "Carbon copy — everyone can see the addresses",
+          "Blind carbon copy - recipients cannot see BCC addresses",
+          "Carbon copy - everyone can see the addresses",
           "The email subject",
           "An attachment"
         ],

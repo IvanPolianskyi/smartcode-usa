@@ -400,7 +400,7 @@ True`,
 Score: 85
 Permission: True
 Can play: True`,
-        explanation: "Age and score are enough, or permission is granted — access allowed"
+        explanation: "Age and score are enough, or permission is granted - access allowed"
       },
       {
         input: `10
@@ -410,7 +410,7 @@ False`,
 Score: 90
 Permission: False
 Can play: False`,
-        explanation: "Age < 13 and no permission — access denied"
+        explanation: "Age < 13 and no permission - access denied"
       },
       {
         input: `12
@@ -420,7 +420,7 @@ True`,
 Score: 50
 Permission: True
 Can play: True`,
-        explanation: "Age/score conditions fail, but permission is True (or) — access granted"
+        explanation: "Age/score conditions fail, but permission is True (or) - access granted"
       }
     ],
     solution: {

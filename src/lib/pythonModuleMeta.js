@@ -20,21 +20,21 @@ export const PYTHON_MODULE_META_EN = {
   'module-09': {
     tagline: 'Web scraping',
     description:
-      'HTTP requests, BeautifulSoup, and collecting data from real sites — your first field project.',
+      'HTTP requests, BeautifulSoup, and collecting data from real sites - your first field project.',
   },
   'module-10': { tagline: 'Images' },
   'module-11': {
     tagline: 'PDF',
-    description: 'Reading and creating PDFs — useful for reports and document automation.',
+    description: 'Reading and creating PDFs - useful for reports and document automation.',
   },
   'module-12': {
     tagline: 'Email',
-    description: 'Automate messages with smtplib — notifications and reports from a script.',
+    description: 'Automate messages with smtplib - notifications and reports from a script.',
   },
   'module-13': {
     tagline: 'GUI (bonus)',
     description:
-      'Final bonus: a desktop app with Tkinter — put it all together in a user-facing interface.',
+      'Final bonus: a desktop app with Tkinter - put it all together in a user-facing interface.',
   },
   'module-14': {
     tagline: 'Telegram bots',
@@ -44,7 +44,7 @@ export const PYTHON_MODULE_META_EN = {
   'module-15': {
     tagline: 'FastAPI',
     description:
-      'REST APIs with FastAPI: Pydantic, CRUD, webhooks, and deploy — the course’s final backend module.',
+      'REST APIs with FastAPI: Pydantic, CRUD, webhooks, and deploy - the course’s final backend module.',
   },
 }
 

@@ -26,12 +26,12 @@ export const lesson_09_2 = {
     sections: [
       {
         title: "Що таке BeautifulSoup?",
-        content: `**BeautifulSoup** (пакет \`beautifulsoup4\`) — бібліотека для парсингу HTML і XML у Python. Вона перетворює «сирі» рядки HTML у зручне дерево DOM, по якому можна шукати теги, класи та атрибути.
+        content: `**BeautifulSoup** (пакет \`beautifulsoup4\`) - бібліотека для парсингу HTML і XML у Python. Вона перетворює «сирі» рядки HTML у зручне дерево DOM, по якому можна шукати теги, класи та атрибути.
 
 **Навіщо вона потрібна:**
 
 - Сайти без публічного API часто віддають дані лише в HTML
-- HTML на реальних сторінках буває «ламаним» — BeautifulSoup намагається його виправити
+- HTML на реальних сторінках буває «ламаним» - BeautifulSoup намагається його виправити
 - API \`find\` / \`find_all\` читабельніший, ніж складні регулярні вирази по всьому документу
 
 **Встановлення:**
@@ -46,7 +46,7 @@ pip install lxml
 from bs4 import BeautifulSoup
 \`\`\`
 
-**У цьому курсі:** основний фокус — \`requests\` + JSON API (простіше і стабільніше). BeautifulSoup — додатковий інструмент, коли API немає або дані лише на сторінці.`
+**У цьому курсі:** основний фокус - \`requests\` + JSON API (простіше і стабільніше). BeautifulSoup - додатковий інструмент, коли API немає або дані лише на сторінці.`
       },
       {
         title: "Перший парсинг HTML",
@@ -75,11 +75,11 @@ print(soup.title.string)  # текст у <title>
 soup = BeautifulSoup(html, "lxml")
 \`\`\`
 
-**Структура дерева:** кожен тег — вузол; можна переходити \`.parent\`, \`.children\`, \`.next_sibling\`.`
+**Структура дерева:** кожен тег - вузол; можна переходити \`.parent\`, \`.children\`, \`.next_sibling\`.`
       },
       {
         title: "Пошук елементів: find і find_all",
-        content: `**Один елемент** — \`find\` (перший збіг або \`None\`):
+        content: `**Один елемент** - \`find\` (перший збіг або \`None\`):
 
 \`\`\`python
 header = soup.find("h1")
@@ -87,7 +87,7 @@ if header:
     print(header.get_text(strip=True))
 \`\`\`
 
-**Усі збіги** — \`find_all\` (список):
+**Усі збіги** - \`find_all\` (список):
 
 \`\`\`python
 links = soup.find_all("a", href=True)
@@ -95,7 +95,7 @@ for link in links:
     print(link["href"], link.get_text(strip=True))
 \`\`\`
 
-**За класом або id** (у HTML атрибут \`class\`, у Python — \`class_\`):
+**За класом або id** (у HTML атрибут \`class\`, у Python - \`class_\`):
 
 \`\`\`python
 cards = soup.find_all("div", class_="product-card")
@@ -114,12 +114,12 @@ first = soup.select_one("article.post h2")
       {
         title: "Витягування тексту та атрибутів",
         content: `\`\`\`python
-# Текст одного елемента (без вкладених тегів окремо — get_text)
+# Текст одного елемента (без вкладених тегів окремо - get_text)
 paragraph = soup.find("p", class_="lead")
 if paragraph:
     print(paragraph.get_text(strip=True))
 
-# Увесь видимий текст сторінки (обережно — багато «шуму»)
+# Увесь видимий текст сторінки (обережно - багато «шуму»)
 all_text = soup.get_text(separator="\\n", strip=True)
 
 # Атрибути
@@ -140,7 +140,7 @@ if img and img.get("src"):
 | **BeautifulSoup** | Гнучкий парсинг HTML | Ламається при зміні верстки |
 | **regex** | Для дрібних фрагментів | Погано масштабується на весь HTML |
 
-**Правило:** якщо є офіційне API — використовуйте його. BeautifulSoup — коли дані лише в HTML і це дозволено правилами сайту (\`robots.txt\`, ToS).
+**Правило:** якщо є офіційне API - використовуйте його. BeautifulSoup - коли дані лише в HTML і це дозволено правилами сайту (\`robots.txt\`, ToS).
 
 \`\`\`python
 # Погано: парсити JSON через BeautifulSoup
@@ -152,10 +152,10 @@ data = response.json()
         title: "Етика та обмеження",
         content: `Перед скрапінгом перевірте:
 
-1. **robots.txt** — \`https://site.com/robots.txt\`
+1. **robots.txt** - \`https://site.com/robots.txt\`
 2. **Умови використання** сайту
-3. **Навантаження** — паузи між запитами (\`time.sleep\`), не DDoS
-4. **Заголовок User-Agent** — чесно вказуйте бота або скрипт навчання
+3. **Навантаження** - паузи між запитами (\`time.sleep\`), не DDoS
+4. **Заголовок User-Agent** - чесно вказуйте бота або скрипт навчання
 
 \`\`\`python
 import time
@@ -168,15 +168,15 @@ for url in urls:
     time.sleep(1)  # пауза між запитами
 \`\`\`
 
-Динамічні сторінки (контент після JavaScript) BeautifulSoup **не** виконає — потрібні інші інструменти (Selenium, Playwright); у базовому курсі ми їх не розглядаємо.`
+Динамічні сторінки (контент після JavaScript) BeautifulSoup **не** виконає - потрібні інші інструменти (Selenium, Playwright); у базовому курсі ми їх не розглядаємо.`
       },
       {
         title: "Підсумок",
         content: `BeautifulSoup доповнює \`requests\`, коли потрібно витягнути дані з HTML:
 
-- \`BeautifulSoup(html, "html.parser")\` — дерево документа
-- \`find\` / \`find_all\` / \`select\` — пошук елементів
-- \`get_text(strip=True)\` — чистий текст
+- \`BeautifulSoup(html, "html.parser")\` - дерево документа
+- \`find\` / \`find_all\` / \`select\` - пошук елементів
+- \`get_text(strip=True)\` - чистий текст
 - JSON API залишається пріоритетом, якщо він доступний
 
 У наступних уроках модуля 9 ви застосуєте \`requests\` для повноцінного скрапінгу та збереження даних.`
@@ -207,7 +207,7 @@ for a in links[:5]:
       code: `items = soup.select("ul.menu li a")
 for item in items:
     print(item.get_text(strip=True))`,
-      explanation: "select працює як у CSS — зручно для вкладених структур."
+      explanation: "select працює як у CSS - зручно для вкладених структур."
     }
   ],
 
@@ -219,7 +219,7 @@ for item in items:
     },
     {
       mistake: "Не перевіряти результат find",
-      explanation: "find повертає None, якщо елемент не знайдено — буде AttributeError.",
+      explanation: "find повертає None, якщо елемент не знайдено - буде AttributeError.",
       correctApproach: "if element: ... або element = soup.find(...) or default"
     },
     {
@@ -234,7 +234,7 @@ for item in items:
     }
   ],
 
-  summary: `BeautifulSoup — зручний парсер HTML для веб-скрапінгу, коли JSON API недоступний. У курсі пріоритет — requests + API; Soup — додатковий інструмент для розуміння повного стеку збору даних.`,
+  summary: `BeautifulSoup - зручний парсер HTML для веб-скрапінгу, коли JSON API недоступний. У курсі пріоритет - requests + API; Soup - додатковий інструмент для розуміння повного стеку збору даних.`,
 
   practiceTask: null,
 
@@ -251,7 +251,7 @@ for item in items:
           "html5lib-only без bs4"
         ],
         correctAnswer: 0,
-        explanation: "На PyPI пакет називається beautifulsoup4, імпорт — from bs4 import BeautifulSoup."
+        explanation: "На PyPI пакет називається beautifulsoup4, імпорт - from bs4 import BeautifulSoup."
       },
       {
         id: "q2",
@@ -264,7 +264,7 @@ for item in items:
           "Порожній рядок"
         ],
         correctAnswer: 0,
-        explanation: "find повертає None; find_all — порожній список."
+        explanation: "find повертає None; find_all - порожній список."
       },
       {
         id: "q3",
@@ -287,7 +287,7 @@ for item in items:
           "Коли сайт офіційно надає структуроване API",
           "Коли HTML дуже великий",
           "Коли потрібен лише заголовок title",
-          "Ніколи — Soup завжди кращий"
+          "Ніколи - Soup завжди кращий"
         ],
         correctAnswer: 0,
         explanation: "API стабільніший і простіший у підтримці, ніж парсинг верстки."

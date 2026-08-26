@@ -6,7 +6,13 @@ import { useEffect, useRef, useState } from 'react'
  * Sticky header that only grows a border once the page has scrolled, so the
  * hero meets the viewport edge cleanly.
  */
-export default function StickyNav({ className, innerClassName, brand, children }) {
+export default function StickyNav({
+	className,
+	innerClassName,
+	brand,
+	children,
+	ariaLabel,
+}) {
 	const [stuck, setStuck] = useState(false)
 	const sentinel = useRef(null)
 
@@ -25,7 +31,7 @@ export default function StickyNav({ className, innerClassName, brand, children }
 	return (
 		<>
 			<div ref={sentinel} aria-hidden="true" />
-			<nav className={className} data-stuck={stuck}>
+			<nav className={className} data-stuck={stuck} aria-label={ariaLabel}>
 				<div className={innerClassName}>
 					{brand}
 					{children}

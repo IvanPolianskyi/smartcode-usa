@@ -38,16 +38,16 @@ numbers = [x for x in range(1000000)]
 # This uses a lot of memory!
 \`\`\`
 
-**The solution — generators:**
+**The solution - generators:**
 
 Generators do not create all values at once. They produce values "on the fly" (lazy evaluation) when needed.
 
 **Advantages of generators:**
 
-1. **Memory savings** — they do not store all values in memory
-2. **Speed** — they do not spend time creating every value up front
-3. **Infinite sequences** — they can produce an unlimited number of values
-4. **Simplicity** — easier to write and read
+1. **Memory savings** - they do not store all values in memory
+2. **Speed** - they do not spend time creating every value up front
+3. **Infinite sequences** - they can produce an unlimited number of values
+4. **Simplicity** - easier to write and read
 
 **Analogy:**
 
@@ -83,8 +83,8 @@ print(next(gen))  # Prints: 3
 
 **Key difference:**
 
-- **return** — finishes the function and returns a value
-- **yield** — pauses the function, returns a value, but keeps state so it can continue
+- **return** - finishes the function and returns a value
+- **yield** - pauses the function, returns a value, but keeps state so it can continue
 
 **Important:** Calling a generator function does not run it immediately. It returns a generator object you can use to get values.`
       },
@@ -164,7 +164,7 @@ def generate_numbers(n):
     for i in range(n):
         yield i
 
-# Does not create a list — only a generator
+# Does not create a list - only a generator
 gen = generate_numbers(1000000)
 # Uses almost no memory!
 
@@ -256,17 +256,17 @@ for num in numbers_divisible_by(3, 20):
         title: "When to use generators?",
         content: `**Use generators when:**
 
-1. **Large data volumes** — you need to process a lot of data, but not all at once
-2. **Infinite sequences** — you need to generate values without an end
-3. **Memory savings** — memory efficiency matters
-4. **Streaming** — data is processed one element at a time
-5. **Custom iterators** — you need your own iterator
+1. **Large data volumes** - you need to process a lot of data, but not all at once
+2. **Infinite sequences** - you need to generate values without an end
+3. **Memory savings** - memory efficiency matters
+4. **Streaming** - data is processed one element at a time
+5. **Custom iterators** - you need your own iterator
 
 **Do not use generators when:**
 
-1. **You need all values at once** — a list is better
-2. **You need random access** — generators do not support indexing
-3. **You need to reuse values** — a generator is exhausted after one pass
+1. **You need all values at once** - a list is better
+2. **You need random access** - generators do not support indexing
+3. **You need to reuse values** - a generator is exhausted after one pass
 
 **Practical example:**
 
@@ -289,10 +289,10 @@ for line in read_file_lines('large_file.txt'):
 
 **Key concepts:**
 
-1. **Generators** — special functions that produce values one by one
-2. **yield** — the keyword for creating generators
-3. **Memory savings** — generators do not store all values in memory
-4. **Lazy evaluation** — values are produced only when needed
+1. **Generators** - special functions that produce values one by one
+2. **yield** - the keyword for creating generators
+3. **Memory savings** - generators do not store all values in memory
+4. **Lazy evaluation** - values are produced only when needed
 
 **Syntax:**
 
@@ -303,9 +303,9 @@ def generator_function():
 
 **Usage:**
 
-- \`next(gen)\` — get the next value
-- \`for value in gen:\` — iterate over the generator
-- \`list(gen)\` — convert to a list (loses the advantages)
+- \`next(gen)\` - get the next value
+- \`for value in gen:\` - iterate over the generator
+- \`list(gen)\` - convert to a list (loses the advantages)
 
 **Next step:**
 
@@ -327,7 +327,7 @@ gen = simple_generator()
 print(next(gen))  # 1
 print(next(gen))  # 2
 print(next(gen))  # 3`,
-      explanation: "The simplest generator example — it yields three values."
+      explanation: "The simplest generator example - it yields three values."
     },
     {
       title: "Generator in a for loop",
@@ -417,7 +417,7 @@ list2 = list(gen2)`
     },
     {
       mistake: "Forgetting that a generator does not run immediately",
-      explanation: "Calling a generator function does not execute the code — it only creates a generator object.",
+      explanation: "Calling a generator function does not execute the code - it only creates a generator object.",
       correctApproach: `# Incorrect understanding:
 def generator():
     print("Running")
@@ -442,11 +442,11 @@ for number in gen:  # Process one by one
 
   summary: `In this lesson we learned the basics of generators:
 
-1. What generators are — special functions that produce values one by one
-2. The yield syntax — how to create generator functions
-3. Using generators — via next(), a for loop, or list()
-4. Advantages — memory savings, speed, infinite sequences
-5. Comparison with ordinary functions — when to use generators
+1. What generators are - special functions that produce values one by one
+2. The yield syntax - how to create generator functions
+3. Using generators - via next(), a for loop, or list()
+4. Advantages - memory savings, speed, infinite sequences
+5. Comparison with ordinary functions - when to use generators
 
 Generators are a powerful tool for working with large data and building efficient iterators.`,
 
@@ -455,9 +455,9 @@ Generators are a powerful tool for working with large data and building efficien
     description: "Create several generators for different sequences",
     problemStatement: `Create three generator functions:
 
-1. **square_numbers(n)** — squares from 1 to n
-2. **countdown(start)** — from start down to 1
-3. **multiples_of(m, limit)** — multiples of m strictly less than limit
+1. **square_numbers(n)** - squares from 1 to n
+2. **countdown(start)** - from start down to 1
+3. **multiples_of(m, limit)** - multiples of m strictly less than limit
 
 Read the parameters from stdin and print the results with for loops.
 

@@ -356,7 +356,7 @@ Grades 80-90: [85, 88, 90, 87]`,
 Passing grades: [90, 70]
 Labels: ['Excellent', 'Good', 'Needs improvement']
 Grades 80-90: [90]`,
-        explanation: "Three grades — one in each label category"
+        explanation: "Three grades - one in each label category"
       },
       {
         input: `80 85 90`,

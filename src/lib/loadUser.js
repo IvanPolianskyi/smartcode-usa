@@ -1,7 +1,10 @@
 import { ObjectId } from 'mongodb'
 import { getCollection } from '@/lib/mongodb'
 import { getEntitlement } from '@/lib/entitlements'
-import { KNOWN_COURSE_IDS } from '@/lib/courseLessonAccess'
+import {
+	KNOWN_COURSE_IDS,
+	buildCourseDripStartedAt,
+} from '@/lib/courseLessonAccess'
 
 /**
  * Load a user together with their subscription state.
@@ -13,7 +16,7 @@ import { KNOWN_COURSE_IDS } from '@/lib/courseLessonAccess'
  *
  * Anything that gates paid content must load the user through this function.
  * A plain `users.findOne()` produces a user with no `subscribedCourseIds`,
- * which the access checks read as "no subscription" — failing closed.
+ * which the access checks read as "no subscription" - failing closed.
  */
 export async function loadUserWithAccess(userId) {
 	if (!userId) return null
@@ -35,6 +38,7 @@ export async function loadUserWithAccess(userId) {
 			...user,
 			subscriptionActive: true,
 			subscribedCourseIds: [...KNOWN_COURSE_IDS],
+			courseDripStartedAt: {},
 			entitlement: null,
 		}
 	}
@@ -48,6 +52,7 @@ export async function loadUserWithAccess(userId) {
 			...user,
 			subscriptionActive: false,
 			subscribedCourseIds: [],
+			courseDripStartedAt: {},
 			entitlement: null,
 		}
 	}
@@ -58,6 +63,7 @@ export async function loadUserWithAccess(userId) {
 		...user,
 		subscriptionActive: subscribedCourseIds.length > 0,
 		subscribedCourseIds,
+		courseDripStartedAt: buildCourseDripStartedAt(entitlement.subscriptions || []),
 		entitlement,
 	}
 }

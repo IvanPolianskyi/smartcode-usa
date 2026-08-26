@@ -26,7 +26,7 @@ export const lesson_06_2 = {
     sections: [
       {
         title: "The metadata loss problem",
-        content: `After wrapping, a function "forgets" its name and docstring — \`wrapper\` metadata appears instead.
+        content: `After wrapping, a function "forgets" its name and docstring - \`wrapper\` metadata appears instead.
 
 \`\`\`python
 def log_calls(func):
@@ -70,7 +70,7 @@ print(greet.__doc__)   # Greets the user
 
 **Course rule:** in your own decorators, almost always put \`@wraps(func)\` on \`wrapper\`.
 
-\`wraps\` also preserves \`__module__\`, \`__annotations__\`, and adds \`__wrapped__\` — a reference to the original.`
+\`wraps\` also preserves \`__module__\`, \`__annotations__\`, and adds \`__wrapped__\` - a reference to the original.`
       },
       {
         title: "*args and **kwargs in decorators",
@@ -95,9 +95,9 @@ print(add(2, 3, scale=10)) # args=(2, 3), kwargs={'scale': 10}
 \`\`\`
 
 **Explanation:**
-- \`*args\` — a tuple of positional arguments
-- \`**kwargs\` — a dictionary of keyword arguments
-- \`func(*args, **kwargs)\` — "unpacks" them back into a call
+- \`*args\` - a tuple of positional arguments
+- \`**kwargs\` - a dictionary of keyword arguments
+- \`func(*args, **kwargs)\` - "unpacks" them back into a call
 
 Without this, the decorator would work only with one fixed signature.`
       },
@@ -107,9 +107,9 @@ Without this, the decorator would work only with one fixed signature.`
 
 **Three nesting levels:**
 
-1. Outer function — takes parameters (\`times\`)
-2. Middle — takes \`func\` (this is the decorator)
-3. Inner \`wrapper\` — runs on every call
+1. Outer function - takes parameters (\`times\`)
+2. Middle - takes \`func\` (this is the decorator)
+3. Inner \`wrapper\` - runs on every call
 
 \`\`\`python
 from functools import wraps
@@ -211,7 +211,7 @@ work()
 - Always use \`@wraps(func)\`
 - Always \`return\` the result of \`func\`
 - Document the factory parameters
-- Do not mix parameter logic and \`wrapper\` logic unnecessarily — keep the levels clear`
+- Do not mix parameter logic and \`wrapper\` logic unnecessarily - keep the levels clear`
       }
     ]
   },
@@ -306,7 +306,7 @@ report("Server started")`,
   commonMistakes: [
     {
       mistake: "Forgetting to call the factory: writing @repeat instead of @repeat(3)",
-      explanation: "Without parentheses Python passes the function as times, not as func — the structure breaks.",
+      explanation: "Without parentheses Python passes the function as times, not as func - the structure breaks.",
       correctApproach: "For a parameterized decorator always write @repeat(3) or @repeat(times=3)"
     },
     {
@@ -328,11 +328,11 @@ report("Server started")`,
 
   summary: `In this lesson we learned how to build reliable custom decorators:
 
-1. functools.wraps — preserves name, docstring, and other metadata
-2. *args/**kwargs — universal argument forwarding
-3. Decorator factories — three levels for parameters like @repeat(3)
-4. Stacking — multiple @ lines apply bottom-up
-5. Template — wraps + wrapper + always return the result
+1. functools.wraps - preserves name, docstring, and other metadata
+2. *args/**kwargs - universal argument forwarding
+3. Decorator factories - three levels for parameters like @repeat(3)
+4. Stacking - multiple @ lines apply bottom-up
+5. Template - wraps + wrapper + always return the result
 
 Next we will cover @property, @staticmethod, @classmethod, and class decorators.`,
 
@@ -341,8 +341,8 @@ Next we will cover @property, @staticmethod, @classmethod, and class decorators.
     description: "Create two decorators with wraps and apply them together",
     problemStatement: `Create two decorators with \`functools.wraps\`:
 
-1. **shout** — returns the function result in UPPERCASE
-2. **add_bang** — appends \`!\` to the function result
+1. **shout** - returns the function result in UPPERCASE
+2. **add_bang** - appends \`!\` to the function result
 
 Apply them like this:
 \`\`\`python
@@ -454,7 +454,7 @@ print(echo(text))`,
           "Four"
         ],
         correctAnswer: 2,
-        explanation: "Factory (parameters) → decorator (func) → wrapper (call) — three levels."
+        explanation: "Factory (parameters) → decorator (func) → wrapper (call) - three levels."
       },
       {
         id: "q5",
@@ -475,7 +475,7 @@ print(echo(text))`,
         question: "What happens if you write @repeat instead of @repeat(3) for a factory?",
         options: [
           "It works like @repeat(1)",
-          "The function itself becomes times — the decorator breaks",
+          "The function itself becomes times - the decorator breaks",
           "Python ignores the decorator",
           "times=0 is substituted automatically"
         ],

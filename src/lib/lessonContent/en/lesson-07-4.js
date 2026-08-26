@@ -390,59 +390,59 @@ Result 3: 27`,
       {
         input: `4 1 2`,
         output: `=== Data processing pipeline === 
-The result is 1:1 
+Result 1: 1 
 Result 2: 4`,
         explanation: "factor=1, only 2 results"
       }
     ],
     solution: {
-      code: `def read_numbers(limit): 
-"""Generates numbers from 0 to limit-1""" 
-for i in range(limit): 
-yield i 
+      code: `def read_numbers(limit):
+    """Generates numbers from 0 to limit-1"""
+    for i in range(limit):
+        yield i
 
-def square(numbers): 
-"""Squaring each number""" 
-for number in numbers: 
-yield number ** 2 
+def square(numbers):
+    """Squaring each number"""
+    for num in numbers:
+        yield num ** 2
 
-def filter_positive(numbers): 
-"""Filters only positive numbers""" 
-for number in numbers: 
-if num > 0: 
-yield num 
+def filter_positive(numbers):
+    """Filters only positive numbers"""
+    for num in numbers:
+        if num > 0:
+            yield num
 
-def multiply(numbers, factor): 
-"""Multiplies each number by factor""" 
-for number in numbers: 
-yield num * factor 
+def multiply(numbers, factor):
+    """Multiplies each number by factor"""
+    for num in numbers:
+        yield num * factor
 
-def limit_results(numbers, max_count): 
-"""Limits the number of results""" 
-count = 0 
-for number in numbers: 
-if count >= max_count: 
-break 
-yield num 
-count += 1 
+def limit_results(numbers, max_count):
+    """Limits the number of results"""
+    count = 0
+    for num in numbers:
+        if count >= max_count:
+            break
+        yield num
+        count += 1
 
-limit, factor, max_count = map(int, input().split()) 
+limit, factor, max_count = map(int, input().split())
 
-print("=== Data processing pipeline ===") 
-pipeline = limit_results( 
-multiply( 
-filter_positive( 
-square(
-read_numbers(limit) 
-) 
-), 
-factor 
-), 
-max_count 
-) 
+print("=== Data processing pipeline ===")
+pipeline = limit_results(
+    multiply(
+        filter_positive(
+            square(
+                read_numbers(limit)
+            )
+        ),
+        factor
+    ),
+    max_count
+)
 
-for i, result in enumerate(pipeline, 1): 
-print(f"Result {i}: {result}")`,
+for i, result in enumerate(pipeline, 1):
+    print(f"Result {i}: {result}")`,
       explanation: "A pipeline of five generators; limit, factor, max_count from stdin."
     },
     hints: [

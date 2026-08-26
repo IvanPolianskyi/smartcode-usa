@@ -2,7 +2,7 @@
 @import "../styles/tokens.css";
 
 :root {
-  /* Brand — coral/orange accent across the product */
+  /* Brand - coral/orange accent across the product */
   --brand-accent: #fc6e51;
   --brand-accent-hot: #ff8263;
   --brand-accent-deep: #e85d3a;
@@ -24,7 +24,7 @@
   --neon-orange: #fc6e51;
   --neon-purple: #fc6e51;
 
-  /* Background Colors — light canvas */
+  /* Background Colors - light canvas */
   --background: #f7f8fa;
   --background-secondary: #eef0f4;
   --background-accent: #ffece7;
@@ -152,7 +152,7 @@
 html {
   /* auto = нативний momentum; smooth лише ламає Instagram / iOS WebView */
   scroll-behavior: auto;
-  /* Фіксований хедер — для центрування hero у першому екрані */
+  /* Фіксований хедер - для центрування hero у першому екрані */
   --visit-header-offset: 80px;
   overflow-anchor: none;
   /* Ground comes from the token system so light and dark both resolve. */
@@ -315,9 +315,9 @@ main.main-content {
   z-index: 2;
   padding: 0.3rem 0.65rem;
   border-radius: 8px;
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   background: rgba(18, 18, 24, 0.92);
-  color: var(--text-secondary);
+  color: #c4c8d0;
   font-size: 0.72rem;
   font-weight: 600;
   cursor: pointer;

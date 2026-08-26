@@ -1,5 +1,5 @@
 /**
- * Lesson 03-7: Variable scope
+ * Lesson 03-7: Scope of variables
  * Full educational content
  */
 
@@ -9,11 +9,11 @@ export const lesson_03_7 = {
   lessonId: "lesson-03-7",
   moduleId: "module-03",
   order: 7,
-  title: "Variable scope",
+  title: "Scope of variables",
   
   learningObjectives: [
-    "To understand what variable scope is",
-    "Apply the LEGB rule for searching variables",
+    "Understand what variable scope is",
+    "Apply the LEGB rule to find variables",
     "Distinguish between local and global variables",
     "Use the keyword global",
     "Understand working with nested functions",
@@ -45,7 +45,7 @@ print(printer())  # Will print: 50 (local variable)
 
 **How does Python determine which variable to use?**
 
-Python uses the LEGB rule to look up variables:
+Python uses the LEGB rule for searching variables:
 - **L** - Local
 - **E** - Enclosing (nested functions)
 - **G** - Global
@@ -54,7 +54,7 @@ Python uses the LEGB rule to look up variables:
 Python searches for a variable in this order, stopping at the first one found.`
       },
       {
-        title: "LEGB Rule",
+        title: "LEGB rule",
         content: `**LEGB** is an acronym that describes the order of variable lookup in Python:
 
 **L: Local**
@@ -94,12 +94,12 @@ outer()  # Will display: "outer"
 x = "global"  # Global variable
 
 def example():
-    print(x)  # Uses the global x
+    print(x)  # Uses a global x
 
 example()  # Will display: "global"
 \`\`\`
 
-**B: Built-in (Вбудована)**
+**B: Built-in (Built-in)**
 - Built-in Python functions and variables
 - For example: \`len\`, \`print\`, \`range\`, \`str\`, \`int\`
 
@@ -155,17 +155,17 @@ print(f"Outside function: {x}")  # Will output: Outside function: 10
 2. **Variables are created at the moment of assignment:**
 \`\`\`python
 def example():
-    print(x)  #  Error! x is not yet defined locally
+    print(x)  #  Mistake! x is not yet locally defined
     x = 5     # x becomes a local variable
 
 # Even if there is a global x, Python considers x to be local
-# due to the assignment below, this error occurs
+# due to the assignment below, so an error occurs
 \`\`\`
 
 3. **Function parameters are local variables:**
 \`\`\`python
 def example(param):
-    print(param)  # param - local variable
+    print(param)  # param is a local variable
     param = 10    # Changes the local variable
     return param
 
@@ -232,11 +232,11 @@ change_globals()
 print(x, y, z)  # 100 200 300
 \`\`\`
 
-**When to use global:**
+**When to Use Global:**
 
-- For counters, settings
-- When you need to change the state at the module level
-- Better to avoid when you can pass the value through parameters`
+- For meters, settings
+- When you need to change the status at the module level
+- It is better to avoid when it is possible to pass values through parameters`
       },
       {
         title: "Nested functions (Enclosing)",
@@ -284,7 +284,7 @@ def outer():
         x = "middle"
         
         def inner():
-            print(x)  # Uses x from middle()
+            print(x)  # Uses x with middle()
         
         inner()
     
@@ -293,7 +293,7 @@ def outer():
 outer()  # Will display: "middle"
 \`\`\`
 
-**nonlocal - changing a variable from an enclosing scope:**
+**nonlocal - changing a variable of an enclosing scope:**
 
 If you need to change a variable from an enclosing scope (but not global), use \`nonlocal\`:
 
@@ -471,9 +471,9 @@ def log(message):
     if DEBUG:
         print(f"[DEBUG] {message}")
 
-log("This will not be printed")  # Will not be withdrawn
+log("This will not be printed out")  # Will not be withdrawn
 set_debug(True)
-log("This will be displayed")  # [DEBUG] This will be displayed
+log("This will be displayed")  # [DEBUG] This will be printed
 \`\`\`
 
 **Example 3: Nested functions with closures**
@@ -512,7 +512,7 @@ print(triple(5))   # 15
    - Use different names for variables`
       },
       {
-        title: "Summary",
+        title: "The bottom line",
         content: `In this lesson, we studied the scope of variables:
 
 **Key Concepts:**
@@ -569,7 +569,7 @@ def func(x):
     print(f'Changed local x to {x}')
 
 func(x)
-print(f'x is still {x}')  # Global x hasn't changed`,
+print(f'x is still {x}')  # Global x didn't change`,
       explanation: "Demonstrates the difference between local and global variables. A local variable does not affect the global one."
     },
     {
@@ -640,12 +640,12 @@ example()`,
     Creates a function that multiplies by n
     """
     def multiplier(x):
-        return x * n  # Uses n from the outer function
+        return x * n # Uses n from an external function
     return multiplier
 
 double = create_multiplier(2)
 print(double(5))  # 10`,
-      explanation: "A practical example of a closure is that an inner function 'remembers' a variable from an outer function."
+      explanation: "A practical example of a closure is that an internal function 'remembers' a variable from an external function."
     }
   ],
   
@@ -657,7 +657,7 @@ print(double(5))  # 10`,
 x = 10
 
 def change():
-    x = 20  #  Creates a new local variable, does not change the global
+    x = 20  # Creates a new local variable, does not change the global one
     print(x)
 
 change()  # 20
@@ -667,8 +667,8 @@ print(x)  # 10 (did not change!)
 x = 10
 
 def change():
-    global x  #  Declare global
-    x = 20  # Now changes the global
+    global x  # Declare global
+    x = 20  # Now changes the global variable
     print(x)
 
 change()  # 20
@@ -702,8 +702,8 @@ def example():
     },
     {
       mistake: "Confusion between global and nonlocal",
-      explanation: "Beginners confuse when to use global and when to use nonlocal.",
-      correctApproach: `# global - for module-level variables
+      explanation: "Beginners get confused about when to use global and when to use nonlocal.",
+      correctApproach: `# global - for variables at the module level
 x = 10  # Global
 
 def outer():
@@ -711,9 +711,9 @@ def outer():
         global x  # Refers to the global x
         x = 20
 
-# nonlocal - for variables in the enclosing scope
+# nonlocal - for variables from the nested scope
 def outer():
-    x = 10  # Enclosing scope
+    x = 10  # Nested scope
     
     def inner():
         nonlocal x  # Refers to x from outer()
@@ -723,56 +723,56 @@ def outer():
       mistake: "Overriding built-in names",
       explanation: "Beginners sometimes accidentally override built-in functions, which leads to errors.",
       correctApproach: `# Incorrect:
-len = 10 # Override the built-in function
-result = len([1, 2, 3]) # Error!
+len = 10  #  Redefining the built-in function
+result = len([1, 2, 3])  #  Error!
 
 # Correct:
-my_length = 10 # Use a different name
-result = len([1, 2, 3]) # len works as a function`
+my_length = 10  #  Using a different name
+result = len([1, 2, 3])  #  len works as a function`
     }
   ],
   
-  summary: `In this lesson, we have explored the scope of variables:
+  summary: `In this lesson, we studied the scope of variables:
 
 1. Scope
-   - Specifies where the variable can be used in the code
-   - Python uses the LEGB rule to find variables
+   - Determines where in the code a variable can be used
+   - Python uses the LEGB rule to look up variables
 
 2. LEGB Rule
-   - L - Local: Variables inside a function
-   - E - Enclosing: variables from external functions
-   - G - Global: module-level variables
-   - B - Built-in: built-in Python functions
+   - L - Local: variables inside a function
+   - E - Enclosing: variables from outer functions
+   - G - Global: variables at the module level
+   - B - Built-in: Python built-in functions
 
-3. Local variables
-   - Functions defined inside
-   - Do not affect global without global
+3. Local Variables
+   - Defined inside a function
+   - Do not affect globals without global
 
-4. Global variables
+4. Global Variables
    - Defined at the module level
-   - To change, you need the keyword global
-   - It is better to avoid when it is possible to pass through parameters
+   - To modify, the global keyword is needed
+   - Better to avoid when they can be passed as parameters
 
-5. Nested functions
-   - Can use variables from external functions
-   - Change requires nonlocal
+5. Nested Functions
+   - Can use variables from outer functions
+   - To modify, nonlocal is needed
    - Create closures6. Diagnostics
    - globals() - view global variables
    - locals() - view local variables
 
-Understanding the scope helps you write more structured and predictable code!`,
+Understanding the scope helps to write more structured and predictable code!`,
   
   practiceTask: {
     title: "Working with the scope of variables",
-    description: "Create functions that demonstrate different aspects of variable scope",
+    description: "Create functions that demonstrate different aspects of the scope of variables",
     problemStatement: `Write a program that demonstrates the scope:
 
-1. local_example() — local x=20, global x does not change
-2. increment / reset / get_count — global counter
-3. outer()/inner() — nested functions
-4. create_adder(n), create_multiplier(n) — closures
+1. local_example() - local x=20, global x does not change
+2. increment / reset / get_count - global counter
+3. outer()/inner() - nested functions
+4. create_adder(n), create_multiplier(n) - closures
 
-Read: initial counter not needed (start from 0); number of increments; n1, x1 for adder; n2, x2 for adder; n3, x3 for multiplier; n4, x4 for multiplier.
+Input: initial counter not needed (start from 0); number of increments; n1, x1 for adder; n2, x2 for adder; n3, x3 for multiplier; n4, x4 for multiplier.
 Global x = 10. Output demo of local variables, counter, outer/inner, and closures.
 
 Input format:
@@ -921,7 +921,9 @@ def create_adder(n):
     """Creates a function that adds n"""
     def adder(val):
         return val + n
-    return adderdef create_multiplier(n):
+    return adder
+
+def create_multiplier(n):
     """Creates a function that multiplies by n"""
     def multiplier(val):
         return val * n
@@ -953,7 +955,8 @@ print(f"Counter after reset: {get_count()}")
 print()
 
 outer()
-print()print(f"Adder({x1}) with n={n1}: {create_adder(n1)(x1)}")
+print()
+print(f"Adder({x1}) with n={n1}: {create_adder(n1)(x1)}")
 print(f"Adder({x2}) with n={n2}: {create_adder(n2)(x2)}")
 print(f"Multiplier({x3}) with n={n3}: {create_multiplier(n3)(x3)}")
 print(f"Multiplier({x4}) with n={n4}: {create_multiplier(n4)(x4)}")`,
@@ -963,7 +966,7 @@ print(f"Multiplier({x4}) with n={n4}: {create_multiplier(n4)(x4)}")`,
       "To change the counter, use global",
       "Read the number of increments and closure parameters through input()",
       "A local x in a function does not change the global x",
-      "create_adder returns an inner function"
+      "create_adder returns an internal function"
     ],
     difficulty: "intermediate"
   },
@@ -975,13 +978,13 @@ print(f"Multiplier({x4}) with n={n4}: {create_multiplier(n4)(x4)}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What does the acronym LEGB mean?",
         options: [
-          "Local, Enclosing, Global, Built-in - the order of finding variables",
+          "Local, Enclosing, Global, Built-in - the order of variable lookup",
           "Local, Export, Global, Basic variables",
           "Linear, Exponential, Geometric, Binary",
-          "It's not an acronym"
+          "This is not an acronym"
         ],
         correctAnswer: 0,
-        explanation: "LEGB is the order of variable lookup in Python: first Local, then Enclosing (nested functions), then Global, and finally Built-in."
+        explanation: "LEGB is the order in which variables are found in Python: first Local (local), then Enclosing (nested functions), then Global (global), finally Built-in (built-in)."
       },
       {
         id: "q2",
@@ -1020,7 +1023,7 @@ print(f"Multiplier({x4}) with n={n4}: {create_multiplier(n4)(x4)}")`,
           "Syntax error"
         ],
         correctAnswer: 0,
-        explanation: "A closure is a function that retains references to variables from the enclosing scope, even after the outer function has finished executing."
+        explanation: "A closure is a function that retains references to variables from an external scope (enclosing scope), even after the external function has finished executing."
       },
       {
         id: "q5",
@@ -1033,7 +1036,7 @@ print(f"Multiplier({x4}) with n={n4}: {create_multiplier(n4)(x4)}")`,
           "Error"
         ],
         correctAnswer: 0,
-        explanation: "inner() uses x from the nested (outer) space, so 20 is printed. The global x=10 has not changed, so 10 is printed outside."
+        explanation: "inner() uses x from the nested scope (outer), so it outputs 20. The global x=10 has not changed, so outside it outputs 10."
       },
       {
         id: "q6",

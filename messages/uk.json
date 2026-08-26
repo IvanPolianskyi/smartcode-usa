@@ -43,11 +43,11 @@
     },
     "scratch": {
       "title": "Курс Scratch для дітей - SmartCode Academy",
-      "description": "Онлайн курс Scratch для дітей 7–11 років: блокове програмування, анімації, ігри та логіка мислення. М’який старт у IT без складного синтаксису."
+      "description": "Онлайн курс Scratch для дітей 7-11 років: блокове програмування, анімації, ігри та логіка мислення. М’який старт у IT без складного синтаксису."
     },
     "minecraft": {
       "title": "Курс Minecraft Education для дітей - SmartCode Academy",
-      "description": "Онлайн курс Minecraft Education для дітей 8–13 років: агенти, командні блоки, квести та STEM-проєкти у безпечному освітньому світі Minecraft."
+      "description": "Онлайн курс Minecraft Education для дітей 8-13 років: агенти, командні блоки, квести та STEM-проєкти у безпечному освітньому світі Minecraft."
     },
     "invite": {
       "title": "Запроси друга - SmartCode Academy | Знижка 500 грн",
@@ -64,6 +64,14 @@
     "terms": {
       "title": "Terms of Service - SmartCode Academy",
       "description": "Terms of Service for SmartCode Academy subscriptions, billing via Paddle, and acceptable use."
+    },
+    "pricing": {
+      "title": "Pricing - SmartCode Academy",
+      "description": "Subscribe to Roblox Studio, Python, or AI for Real Life separately. Free trial on each program."
+    },
+    "start": {
+      "title": "Start your program - SmartCode Academy",
+      "description": "Create an account or log in to start your free trial and subscribe via Paddle."
     },
     "refund": {
       "title": "Refund Policy - SmartCode Academy",
@@ -89,6 +97,10 @@
       "title": "Урок курсу - SmartCode Academy",
       "description": "Закритий урок курсу SmartCode Academy з практичними завданнями та матеріалами.",
       "loading": "Завантаження уроку…"
+    },
+    "ai": {
+      "title": "AI for Real Life - SmartCode Academy",
+      "description": "Опануйте інженерію промптів, генерацію медіа та побудуйте робочу контент-систему."
     }
   },
   "common": {
@@ -106,7 +118,7 @@
     "close": "Закрити",
     "errorSubmit": "На жаль, сталася помилка при відправці. Спробуйте ще раз.",
     "errorNetwork": "Сталася помилка мережі. Перевірте підключення та спробуйте ще раз.",
-    "errorRateLimit": "Забагато спроб з вашої мережі. Зачекайте 10–15 хвилин і спробуйте знову.",
+    "errorRateLimit": "Забагато спроб з вашої мережі. Зачекайте 10-15 хвилин і спробуйте знову.",
     "errorLeadConfig": "Форма тимчасово недоступна. Напишіть нам у Telegram або зателефонуйте.",
     "name": "Ваше ім'я",
     "namePlaceholder": "Введіть своє ім'я",
@@ -180,12 +192,12 @@
       "scratch": {
         "title": "Scratch",
         "description": "Блокове програмування для дітей",
-        "age": "7–11"
+        "age": "7-11"
       },
       "minecraft": {
         "title": "Minecraft Education",
         "description": "Код і STEM у світі Minecraft",
-        "age": "8–13"
+        "age": "8-13"
       },
       "popular": "Топ"
     }
@@ -381,7 +393,7 @@
     "successText": "Наш менеджер зв'яжеться з вами найближчим часом.",
     "errorSubmit": "На жаль, сталася помилка при відправці. Спробуйте ще раз або напишіть нам у Telegram.",
     "errorNetwork": "Сталася помилка мережі. Перевірте підключення та спробуйте ще раз.",
-    "errorTelegramConfig": "Форма тимчасово не налаштована на сервері (Telegram). Напишіть нам у Telegram або зателефонуйте — контакти на сайті.",
+    "errorTelegramConfig": "Форма тимчасово не налаштована на сервері (Telegram). Напишіть нам у Telegram або зателефонуйте - контакти на сайті.",
     "errorLeadConfig": "Захист форми не налаштований на сервері (LEAD_FORM_SIGNING_SECRET). Зверніться до адміністратора сайту.",
     "errorRateLimit": "Занадто багато спроб. Зачекайте 15 хвилин або напишіть нам у Telegram."
   },
@@ -590,7 +602,7 @@
     "courses": {
       "roblox-studio": {
         "title": "Roblox Studio - Повний курс",
-        "description": "92 уроки у LMS: моделі → іскри з готовим кодом → серйозний Lua → Obby/симулятор/Tycoon/Tools → реліз і Showcase. Групи до 5 або індивідуал. Тривалість ~8–10 місяців при 2 уроках на тиждень.",
+        "description": "92 уроки у LMS: моделі → іскри з готовим кодом → серйозний Lua → Obby/симулятор/Tycoon/Tools → реліз і Showcase. Групи до 5 або індивідуал. Тривалість ~8-10 місяців при 2 уроках на тиждень.",
         "lessons": "92 уроки",
         "access": "Доступ з онлайн-уроками"
       },

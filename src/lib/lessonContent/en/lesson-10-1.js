@@ -141,11 +141,11 @@ print(img.filename)  # photo.jpg
 
 **Color modes:**
 
-- **RGB** — red, green, blue (24-bit)
-- **RGBA** — RGB + alpha (transparency, 32-bit)
-- **L** — grayscale (8-bit)
-- **P** — palette (8-bit, indexed colors)
-- **CMYK** — for print (cyan, magenta, yellow, black)
+- **RGB** - red, green, blue (24-bit)
+- **RGBA** - RGB + alpha (transparency, 32-bit)
+- **L** - grayscale (8-bit)
+- **P** - palette (8-bit, indexed colors)
+- **CMYK** - for print (cyan, magenta, yellow, black)
 
 \`\`\`python
 from PIL import Image
@@ -376,12 +376,12 @@ check_image_size('photo.jpg', max_width=1920, max_height=1080)
 
 **Key methods:**
 
-1. **Image.open()** — open an image
-2. **img.save()** — save an image
-3. **img.size** — image size
-4. **img.mode** — color mode
-5. **img.convert()** — convert mode
-6. **Image.new()** — create a new image
+1. **Image.open()** - open an image
+2. **img.save()** - save an image
+3. **img.size** - image size
+4. **img.mode** - color mode
+5. **img.convert()** - convert mode
+6. **Image.new()** - create a new image
 
 **Core ideas:**
 
@@ -452,7 +452,7 @@ print(f'Format: {img.format}')`,
     },
     {
       mistake: "Trying to save RGBA as JPEG",
-      explanation: "JPEG does not support transparency — only PNG and WebP do.",
+      explanation: "JPEG does not support transparency - only PNG and WebP do.",
       correctApproach: "Use PNG or WebP for transparency, or convert to RGB before saving as JPEG."
     },
     {
@@ -469,12 +469,12 @@ print(f'Format: {img.format}')`,
   
   summary: `In this lesson we learned the basics of Pillow:
 
-1. Install and import — pip install Pillow
-2. Open and save — Image.open(), img.save()
-3. Image info — size, mode, format
-4. Create images — Image.new()
-5. Convert formats — save in different formats
-6. Color modes — RGB, RGBA, L, P
+1. Install and import - pip install Pillow
+2. Open and save - Image.open(), img.save()
+3. Image info - size, mode, format
+4. Create images - Image.new()
+5. Convert formats - save in different formats
+6. Color modes - RGB, RGBA, L, P
 
 Pillow is a powerful tool for working with images!`,
   

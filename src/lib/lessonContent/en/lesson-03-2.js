@@ -528,8 +528,8 @@ print(f"Even: {even}, Positive: {positive}, Square: {squared}")
 **Key concepts:**
 
 1. **Parameters vs Arguments**
-   - Parameters — in the function definition
-   - Arguments — when calling the function
+   - Parameters - in the function definition
+   - Arguments - when calling the function
 
 2. **Return**
    - Returns a value from the function
@@ -684,8 +684,8 @@ def example():
   summary: `In this lesson we studied parameters, return, and None in detail:
 
 1. Parameters vs Arguments
-   - Parameters — variables in the function definition
-   - Arguments — values when calling the function
+   - Parameters - variables in the function definition
+   - Arguments - values when calling the function
 
 2. Return
    - Returns a value from the function
@@ -709,10 +709,10 @@ This knowledge will help you create more effective and clearer functions!`,
     description: "Create functions to calculate and analyze student grades",
     problemStatement: `Write a program with these functions:
 
-1. calculate_average(grade1, grade2, grade3) — average score rounded to 2 decimals (round)
-2. get_letter_grade(average) — "Excellent" (>=90), "Good" (>=75), "Satisfactory" (>=60), otherwise "Unsatisfactory"
-3. has_passed(average) — True if average >= 60
-4. analyze_student(grade1, grade2, grade3) — tuple (average_score, grade, passed)
+1. calculate_average(grade1, grade2, grade3) - average score rounded to 2 decimals (round)
+2. get_letter_grade(average) - "Excellent" (>=90), "Good" (>=75), "Satisfactory" (>=60), otherwise "Unsatisfactory"
+3. has_passed(average) - True if average >= 60
+4. analyze_student(grade1, grade2, grade3) - tuple (average_score, grade, passed)
 
 Read three grades from input, call the functions, and print the results.
 
@@ -733,7 +733,7 @@ Analysis: (87.67, 'Good', True)`,
 Grade: Good
 Student passed: True
 Analysis: (87.67, 'Good', True)`,
-        explanation: "Average 87.67 — Good, passed"
+        explanation: "Average 87.67 - Good, passed"
       },
       {
         input: `95
@@ -743,7 +743,7 @@ Analysis: (87.67, 'Good', True)`,
 Grade: Excellent
 Student passed: True
 Analysis: (95.0, 'Excellent', True)`,
-        explanation: "Average 95.0 — Excellent"
+        explanation: "Average 95.0 - Excellent"
       },
       {
         input: `50
@@ -753,7 +753,7 @@ Analysis: (95.0, 'Excellent', True)`,
 Grade: Unsatisfactory
 Student passed: False
 Analysis: (48.33, 'Unsatisfactory', False)`,
-        explanation: "Average 48.33 < 60 — did not pass"
+        explanation: "Average 48.33 < 60 - did not pass"
       }
     ],
     solution: {
@@ -803,7 +803,7 @@ print(f"Analysis: {analysis}")`,
     hints: [
       "Define the functions first, then read three grades with input()",
       "Use round(average, 2) in calculate_average",
-      "get_letter_grade — an if/elif/else chain",
+      "get_letter_grade - an if/elif/else chain",
       "analyze_student should return a tuple with return"
     ],
     difficulty: "intermediate"
@@ -835,7 +835,7 @@ print(f"Analysis: {analysis}")`,
           "An error"
         ],
         correctAnswer: 0,
-        explanation: "A function without return automatically returns None — a special value that means 'nothing'."
+        explanation: "A function without return automatically returns None - a special value that means 'nothing'."
       },
       {
         id: "q3",

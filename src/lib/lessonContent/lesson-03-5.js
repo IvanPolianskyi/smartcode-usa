@@ -649,10 +649,10 @@ text = text + "4"  #  Конкатенація рядків`
     description: "Створіть функції для обробки текстових даних, використовуючи методи рядків, списків та словників",
     problemStatement: `Напишіть програму з функціями:
 
-1. clean_text(text) — strip + capitalize
-2. process_words(words) — без дублікатів, відсортовані
-3. create_word_count(text) — словник {слово: кількість} з оригінального тексту (strip + split)
-4. format_user_data(user_data) — capitalize name, lower email, додає role="user", status="active"
+1. clean_text(text) - strip + capitalize
+2. process_words(words) - без дублікатів, відсортовані
+3. create_word_count(text) - словник {слово: кількість} з оригінального тексту (strip + split)
+4. format_user_data(user_data) - capitalize name, lower email, додає role="user", status="active"
 
 Зчитайте рядок тексту, ім'я та email. Виведіть очищений текст, оброблені слова, підрахунок і дані користувача.
 

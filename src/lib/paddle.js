@@ -10,7 +10,7 @@ import crypto from 'node:crypto'
 const LIVE_API = 'https://api.paddle.com'
 const SANDBOX_API = 'https://sandbox-api.paddle.com'
 
-/** Reject signatures older than this — a captured request must not replay later. */
+/** Reject signatures older than this - a captured request must not replay later. */
 const MAX_SIGNATURE_AGE_SEC = 5 * 60
 
 export function isSandbox() {
@@ -32,7 +32,7 @@ function requireEnv(name) {
  *
  * The body must be the exact bytes Paddle sent. Parsing the JSON first and
  * re-serialising it changes key order and whitespace, and the signature will
- * never match — this is the single most common way this integration breaks.
+ * never match - this is the single most common way this integration breaks.
  *
  * @param {string} rawBody exact request body as text
  * @param {string} signatureHeader value of the `Paddle-Signature` header
@@ -96,7 +96,7 @@ async function paddleRequest(path, { method = 'GET', body } = {}) {
 	try {
 		payload = text ? JSON.parse(text) : null
 	} catch {
-		// fall through — reported below with the raw text
+		// fall through - reported below with the raw text
 	}
 
 	if (!response.ok) {
@@ -109,7 +109,7 @@ async function paddleRequest(path, { method = 'GET', body } = {}) {
 
 /**
  * A hosted portal session where the customer can update their card, see
- * invoices and cancel. Cancellation must be self-service — a processor treats
+ * invoices and cancel. Cancellation must be self-service - a processor treats
  * "email us to cancel" as a red flag, and so do customers.
  */
 export async function createPortalSession(paddleCustomerId, subscriptionIds = []) {
@@ -134,7 +134,7 @@ export async function getSubscriptionFromPaddle(subscriptionId) {
 	return paddleRequest(`/subscriptions/${subscriptionId}`)
 }
 
-/** Cancel at period end rather than immediately — the customer paid for it. */
+/** Cancel at period end rather than immediately - the customer paid for it. */
 export async function cancelSubscription(subscriptionId, { immediately = false } = {}) {
 	return paddleRequest(`/subscriptions/${subscriptionId}/cancel`, {
 		method: 'POST',
@@ -182,4 +182,20 @@ export function normalizeSubscription(subscription) {
 export function readUserIdFromCustomData(customData) {
 	const value = customData?.userId ?? customData?.user_id
 	return value ? String(value) : null
+}
+
+/** Course id attached at checkout - fallback when the price→course map misses. */
+export function readCourseIdFromCustomData(customData) {
+	const value = customData?.courseId ?? customData?.course_id
+	return value ? String(value) : null
+}
+
+/** True Paddle customer ids - not local/admin placeholders. */
+export function isPaddleManagedCustomerId(customerId) {
+	if (!customerId || typeof customerId !== 'string') return false
+	if (customerId === 'admin_manual' || customerId === 'local_dev_customer') return false
+	if (customerId.startsWith('admin_manual') || customerId.startsWith('local_dev')) {
+		return false
+	}
+	return customerId.startsWith('ctm_')
 }

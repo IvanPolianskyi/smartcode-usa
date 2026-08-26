@@ -324,7 +324,19 @@ An array that already works becomes the foundation: price often lives in a dicti
  fix: "That is 4.2 and 4.6. Today only the list + loop.",
  },
  ],
- quiz: {
+   summary: "You learned how to create indexed arrays in Lua, manipulate elements with table.insert and table.remove, get table length via the # operator, and iterate items with ipairs.",
+  practiceTask: {
+    "title": "Hands-on Practice: Rewards Array (RewardsArray_v1)",
+    "difficulty": "intermediate",
+    "description": "**Objective:** Create and manipulate a rewards array using core Lua table methods.\n\n### Part A: Manager Script\n1. In `ServerScriptService`, create a Script named `RewardsManager`.\n2. Declare an array: `local rewards = {\"WoodSword\", \"HealthPotion\", \"IronShield\"}`.\n\n### Part B: Array Methods\n1. Insert a new item: `table.insert(rewards, \"GoldBow\")`.\n2. Remove the first item: `table.remove(rewards, 1)`.\n3. Iterate and print items using `ipairs`:\n```lua\nfor index, itemName in ipairs(rewards) do\n    print(\"Slot #\" .. index .. \": \" .. itemName)\nend\n```\n\n### Part C: Verification\n1. Press Play: verify Output displays 3 items in order (HealthPotion, IronShield, GoldBow).\n2. Save Place as `Lesson 4.1 - RewardsArray_v1`.",
+    "hints": [
+      "Lua arrays are 1-indexed (first element is index 1).",
+      "The # operator returns the length of contiguous arrays.",
+      "Always use ipairs for indexed array loops."
+    ],
+    "optionalChallenge": "Write a helper function hasReward(rewardName) that returns true if the item exists in the array."
+  },
+  quiz: {
  title: "Quiz 4.1 - Arrays + for",
  passingScore: 70,
  questions: [
@@ -443,7 +455,7 @@ An array that already works becomes the foundation: price often lives in a dicti
  "ipairs",
  ],
  correctAnswer: 2,
- explanation: "DataStore — 4.6.",
+ explanation: "DataStore - 4.6.",
  },
  {
  id: "q10",
@@ -756,7 +768,19 @@ Labeled drawers are ready. Next: the insert/remove basket.
        correctApproach: "Server only via canAfford",
      },
    ],
- quiz: {
+   summary: "You mastered key-value tables (dictionaries) in Lua, structured item parameters, implemented instant lookups by string key, and iterated entries using pairs.",
+  practiceTask: {
+    "title": "Hands-on Practice: Item Stats Database (ItemStats_v1)",
+    "difficulty": "intermediate",
+    "description": "**Objective:** Build a dictionary of item stats with lookup functions and missing-key error handling.\n\n### Part A: Dictionary Structure\n1. In `ServerScriptService`, create a Script named `ItemDatabase`:\n```lua\nlocal itemDatabase = {\n    Sword = { Damage = 25, Cost = 100, LevelReq = 1 },\n    Axe = { Damage = 40, Cost = 250, LevelReq = 3 },\n    MagicStaff = { Damage = 65, Cost = 600, LevelReq = 5 }\n}\n```\n\n### Part B: Lookup Function\n1. Implement `printItemInfo(itemName)` to safely check `if itemDatabase[itemName] then ... else warn() end`.\n\n### Part C: Verification\n1. Test with existing and non-existent item keys.\n2. Save Place as `Lesson 4.2 - ItemDatabase_v1`.",
+    "hints": [
+      "Access keys using dictionary[key] or dictionary.key syntax.",
+      "Always use pairs() when iterating key-value dictionaries.",
+      "Verify non-nil values before indexing nested properties."
+    ],
+    "optionalChallenge": "Write getAffordableItems(coins) returning an array of items the player can afford."
+  },
+  quiz: {
    title: "Quiz 4.2 - 4.2 - Dictionaries + price",
    passingScore: 70,
    questions: [
@@ -1183,7 +1207,19 @@ The basket can grow and shrink. Next - product questionnaires in the catalog.
        fix: "busy[player] flag or MaxBagSize",
      },
    ],
- quiz: {
+   summary: "You built a table-based player inventory system with max capacity validation, item insertion, item removal, and inventory search.",
+  practiceTask: {
+    "title": "Hands-on Practice: Inventory System (InventorySystem_v1)",
+    "difficulty": "intermediate",
+    "description": "**Objective:** Develop a robust slot-capped inventory system using Lua tables and helper methods.\n\n### Part A: Inventory State\n1. In `ServerScriptService`, create a Script named `InventoryManager`.\n2. Define:\n```lua\nlocal MAX_SLOTS = 4\nlocal playerInventory = {}\n```\n\n### Part B: Add & Remove Operations\n1. Write `addItem(item)` that guards on `#playerInventory < MAX_SLOTS`.\n2. Write `removeItem(itemName)` that finds and removes the item index.\n3. Write `printInventory()` to log current slots.\n\n### Part C: Capacity Testing\n1. Add 4 items, then attempt to add a 5th item.\n2. Confirm the 5th item is safely rejected with \"Inventory full\".\n3. Remove 1 item, re-add, and verify successful placement.\n4. Save Place as `Lesson 4.3 - InventorySystem_v1`.",
+    "hints": [
+      "Checking #inventory < MAX_SLOTS prevents array overflow.",
+      "Iterate with ipairs to locate items before removal.",
+      "Return boolean status from addItem for UI feedback."
+    ],
+    "optionalChallenge": "Implement item stacking for consumables: {Name = \"Potion\", Count = 3}."
+  },
+  quiz: {
    title: "Test 4.3 - 4.3 - insert/remove inventory",
    passingScore: 70,
    questions: [
@@ -1612,7 +1648,19 @@ The file is ready. Next, export it to ModuleScript.
        correctApproach: "Bag = id array; Catalog = real true information",
      },
    ],
- quiz: {
+   summary: "You learned how to structure code with ModuleScripts in ReplicatedStorage, import them using require(), and eliminate duplicate game constants across scripts.",
+  practiceTask: {
+    "title": "Hands-on Practice: Shared Config Module (ConfigModule_v1)",
+    "difficulty": "intermediate",
+    "description": "**Objective:** Build a central configuration ModuleScript in ReplicatedStorage and require it from server scripts.\n\n### Part A: ModuleScript\n1. In `ReplicatedStorage`, insert a `ModuleScript` named `GameConfig`:\n```lua\nlocal GameConfig = {}\nGameConfig.VERSION = \"1.0.0\"\nGameConfig.START_COINS = 100\nGameConfig.DEFAULT_WALKSPEED = 16\nGameConfig.SPRINT_WALKSPEED = 28\nreturn GameConfig\n```\n\n### Part B: Requiring the Module\n1. In `ServerScriptService`, create a Script:\n```lua\nlocal ReplicatedStorage = game:GetService(\"ReplicatedStorage\")\nlocal GameConfig = require(ReplicatedStorage:WaitForChild(\"GameConfig\"))\n\ngame.Players.PlayerAdded:Connect(function(player)\n    player.CharacterAdded:Connect(function(character)\n        local humanoid = character:WaitForChild(\"Humanoid\")\n        humanoid.WalkSpeed = GameConfig.DEFAULT_WALKSPEED\n    end)\nend)\n```\n\n### Part C: Verification\n1. Playtest: verify walk speed is applied from the module.\n2. Change the module value to 24, retest, and verify instant balance updates without touching the player setup script.\n3. Save Place as `Lesson 4.4 - ConfigModule_v1`.",
+    "hints": [
+      "Every ModuleScript must end with return TableName.",
+      "Place shared modules in ReplicatedStorage.",
+      "Always use WaitForChild before require."
+    ],
+    "optionalChallenge": "Add a helper method GameConfig.getDropChance(rarity) to the module."
+  },
+  quiz: {
    title: "Test 4.4 - 4.4 - Array of records",
    passingScore: 70,
    questions: [
@@ -2112,7 +2160,19 @@ Single truth is ready. Next: teach its neighbor cloud progress.
        fix: "Config is data only, with no circular dependencies",
      },
    ],
- quiz: {
+   summary: "You learned how to design centralized game balance tables, manage enemy tiers, reward multipliers, and loot drops from a clean configuration file.",
+  practiceTask: {
+    "title": "Hands-on Practice: Game Balance Module (GameBalance_v1)",
+    "difficulty": "intermediate",
+    "description": "**Objective:** Separate game stats into a dedicated balance ModuleScript and spawn enemies procedurally.\n\n### Part A: Balance Module\n1. In `ReplicatedStorage`, add a `ModuleScript` named `EnemyBalance`:\n```lua\nlocal EnemyBalance = {\n    Slime = { Health = 50, Damage = 10, CoinReward = 15, Speed = 12, Color = \"Bright green\" },\n    Skeleton = { Health = 100, Damage = 25, CoinReward = 45, Speed = 16, Color = \"Medium stone grey\" },\n    Boss = { Health = 350, Damage = 50, CoinReward = 200, Speed = 10, Color = \"Really red\" }\n}\nreturn EnemyBalance\n```\n\n### Part B: Data-Driven Spawner\n1. In `ServerScriptService`, create an `EnemySpawner` script that pulls stats directly from `EnemyBalance` when instantiating enemies.\n\n### Part C: Verification\n1. Spawn each enemy type and verify their stats match the balance table.\n2. Save Place as `Lesson 4.5 - GameBalance_v1`.",
+    "hints": [
+      "Never hardcode stats inside gameplay trigger scripts.",
+      "Centralized configs allow rapid live-game balancing without breaking logic.",
+      "Validate enemy type existence before accessing nested keys."
+    ],
+    "optionalChallenge": "Add a randomized weighted loot table for drops."
+  },
+  quiz: {
    title: "Quiz 4.5 - 4.5 - ModuleScript + Config",
    passingScore: 70,
    questions: [
@@ -2626,7 +2686,19 @@ Lite does not mean "sloppy". It means "few fields, full ritual".
        fix: "Only primitives and tables of primitives",
      },
    ],
- quiz: {
+   summary: "You mastered Roblox DataStoreService, learned how to save and load data with SetAsync and GetAsync, and protected calls with pcall error handling.",
+  practiceTask: {
+    "title": "Hands-on Practice: Safe DataStore (DataStoreTest_v1)",
+    "difficulty": "intermediate",
+    "description": "**Objective:** Set up cloud DataStore persistence with pcall error handling.\n\n### Part A: Game Security Settings\n1. Open **Home → Game Settings → Security**.\n2. Turn ON **Enable Studio Access to API Services** and save.\n\n### Part B: Pcall DataStore Script\n1. In `ServerScriptService`, create a Script:\n```lua\nlocal DataStoreService = game:GetService(\"DataStoreService\")\nlocal coinStore = DataStoreService:GetDataStore(\"CoinStore_v1\")\n\nlocal testKey = \"Player_9999\"\nlocal testValue = 250\n\nlocal saveSuccess, saveErr = pcall(function()\n    coinStore:SetAsync(testKey, testValue)\nend)\nif saveSuccess then print(\"Data saved!\") else warn(saveErr) end\n\nlocal loadSuccess, loaded = pcall(function()\n    return coinStore:GetAsync(testKey)\nend)\nif loadSuccess then print(\"Loaded coins:\", loaded) end\n```\n\n### Part C: Verification\n1. Press Play: confirm output shows successful save and load of 250 coins.\n2. Save Place as `Lesson 4.6 - DataStoreTest_v1`.",
+    "hints": [
+      "Studio Access to API Services must be enabled in Game Settings.",
+      "Always wrap DataStore calls in pcall to protect against network drops.",
+      "Use player.UserId for unique player keys."
+    ],
+    "optionalChallenge": "Add fallback default values if GetAsync returns nil for first-time players."
+  },
+  quiz: {
    title: "Quiz 4.6 - 4.6 - DataStore lite",
    passingScore: 70,
    questions: [
@@ -3131,7 +3203,19 @@ The Tables module boss is data discipline. The shelf only shows that the discipl
        fix: "Add a test record and verify without manual UI",
      },
    ],
- quiz: {
+   summary: "You implemented a complete player data lifecycle: loading on Players.PlayerAdded, saving on Players.PlayerRemoving, and shutdown protection via game:BindToClose.",
+  practiceTask: {
+    "title": "Hands-on Practice: Auto-Save System (AutoSaveSystem_v1)",
+    "difficulty": "advanced",
+    "description": "**Objective:** Create an end-to-end player progression auto-save system tied to leaderstats.\n\n### Part A: Leaderstats Initialization\n1. In `ServerScriptService`, create a Script named `SaveManager`.\n2. On `Players.PlayerAdded`, create a `leaderstats` folder with `Coins` and `Level` IntValues.\n\n### Part B: Save, Load, and BindToClose\n1. Load player data on join using `GetAsync` in a pcall.\n2. Save on `Players.PlayerRemoving` with `SetAsync`.\n3. Add `game:BindToClose` to iterate all active players on server shutdown.\n\n### Part C: Verification\n1. Playtest: change your Coins value in Properties.\n2. Stop Play, restart, and confirm your updated Coins persisted from the DataStore.\n3. Save Place as `Lesson 4.7 - AutoSaveSystem_v1`.",
+    "hints": [
+      "The folder must be named 'leaderstats' (all lowercase) for the Roblox leaderboard HUD.",
+      "BindToClose saves data when game servers restart.",
+      "Save multiple stats as a dictionary: {Coins = 100, Level = 2}."
+    ],
+    "optionalChallenge": "Add a periodic background auto-save loop every 5 minutes."
+  },
+  quiz: {
    title: "Quiz 4.7 - 4.7 - Boss: data-driven showcase",
    passingScore: 70,
    questions: [
@@ -3611,7 +3695,19 @@ Module 4 artifact is ready. Next is Obby route geometry, but with a head that al
        fix: "One showcase Folder is enough",
      },
    ],
- quiz: {
+   summary: "You completed Module 4 by building the complete FullDataPipeline_v1 system, combining ModuleScript configs, table-based inventory, and reliable DataStore auto-saving.",
+  practiceTask: {
+    "title": "Module 4 Final Project: Full Data Pipeline (FullDataPipeline_v1)",
+    "difficulty": "advanced",
+    "description": "**Objective:** Combine configs, player tables, and cloud saving into an integrated production data pipeline.\n\n### Part A: Shared Config\n1. Create `ItemConfig` in `ReplicatedStorage` with item definitions and prices.\n\n### Part B: Session & Save Manager\n1. In `ServerScriptService`, build `DataManager`:\n   - Setup leaderstats (Coins, Level);\n   - Manage player inventory arrays;\n   - Save coin balance + inventory array to DataStore on player leave;\n   - Implement `game:BindToClose`.\n\n### Part C: Full Pipeline Test\n1. Join game, earn coins, buy items.\n2. Restart game and verify coins and inventory items reload cleanly.\n3. Save Place as `Lesson 4.8 - FullDataPipeline_v1`.",
+    "hints": [
+      "DataStores serialize tables directly into JSON.",
+      "Keep configs in ReplicatedStorage and database logic in ServerScriptService.",
+      "Check Output for zero DataStore warning logs."
+    ],
+    "optionalChallenge": "Add session locking to prevent data race conditions across multiple server instances."
+  },
+  quiz: {
    title: "Quiz 4.8 - 4.8 - Checkpoint: Tables",
    passingScore: 70,
    questions: [

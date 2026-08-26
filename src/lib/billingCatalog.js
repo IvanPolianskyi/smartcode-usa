@@ -2,8 +2,8 @@
  * Paddle price IDs → which courses a subscription unlocks.
  *
  * Tiers:
- *   standard — platform + Discord ($14/mo or $99/yr)
- *   premium  — platform + Discord + 2 live lessons/week ($20/mo or $149/yr)
+ *   standard - platform + Discord ($14/mo or $99/yr)
+ *   premium  - platform + Discord + 2 live lessons/week ($20/mo or $149/yr)
  *
  * NEXT_PUBLIC_* must be read as static property access so Next can inline
  * them into the client bundle.
@@ -14,7 +14,7 @@ import {
 	PYTHON_COURSE_ID,
 	ROBLOX_COURSE_ID,
 	ALL_PROGRAM_COURSE_IDS,
-} from '@/lib/courseIds'
+} from './courseIds.js'
 
 export const BILLING_TIERS = {
 	standard: {
@@ -24,6 +24,13 @@ export const BILLING_TIERS = {
 		annualPrice: '$99',
 		includes: 'Platform + Discord',
 		includesDetail: 'Self-paced lessons on the platform and the private Discord community.',
+		tagline: 'Everything you need to learn on your own time.',
+		features: [
+			'Every lesson in your program',
+			'Your code checked the moment you run it',
+			'Private Discord with other builders',
+			'Your finished project promoted on our Instagram',
+		],
 	},
 	premium: {
 		id: 'premium',
@@ -33,7 +40,35 @@ export const BILLING_TIERS = {
 		includes: 'Platform + Discord + 2 live lessons',
 		includesDetail:
 			'Everything in Standard, plus two live teacher sessions every week (recordings if you miss one).',
+		tagline: 'Standard, plus a real teacher twice a week.',
+		features: [
+			'Everything in Standard',
+			'2 live lessons every week',
+			'Recordings if you miss one',
+			'Ask a teacher when you get stuck',
+		],
 	},
+}
+
+/** Numeric value of a display price like "$14" - used for savings math. */
+export function priceValue(display) {
+	const n = Number(String(display || '').replace(/[^0-9.]/g, ''))
+	return Number.isFinite(n) ? n : 0
+}
+
+/**
+ * What a year on the annual plan saves versus paying monthly.
+ * @returns {{ amount: number, display: string } | null}
+ */
+export function annualSaving(tier = 'standard') {
+	const entry = BILLING_TIERS[normalizeTier(tier)]
+	if (!entry) return null
+	const monthly = priceValue(entry.monthlyPrice)
+	const annual = priceValue(entry.annualPrice)
+	if (!monthly || !annual) return null
+	const amount = monthly * 12 - annual
+	if (amount <= 0) return null
+	return { amount, display: `$${Math.round(amount)}` }
 }
 
 export const BILLING_PROGRAMS = [
@@ -69,7 +104,7 @@ export const BILLING_PROGRAMS = [
 	},
 	{
 		courseId: AI_AT_WORK_COURSE_ID,
-		label: 'AI at Work',
+		label: 'AI for Real Life',
 		blurb: 'Prompting, generative media, and a content system you can run.',
 		prices: {
 			standard: {
@@ -96,32 +131,113 @@ function normalizeInterval(interval) {
 	return interval === 'year' || interval === 'annual' ? 'year' : 'month'
 }
 
+/**
+ * Read price IDs from env at call time (static property access so Next can
+ * inline NEXT_PUBLIC_* into the client bundle). Avoids a stale module-load
+ * cache when tests set env before exercising the helpers.
+ */
+function readPriceEntries() {
+	return [
+		{
+			courseId: ROBLOX_COURSE_ID,
+			label: 'Roblox Studio',
+			tier: 'standard',
+			interval: 'month',
+			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ROBLOX_MONTHLY,
+		},
+		{
+			courseId: ROBLOX_COURSE_ID,
+			label: 'Roblox Studio',
+			tier: 'standard',
+			interval: 'year',
+			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ROBLOX_ANNUAL,
+		},
+		{
+			courseId: ROBLOX_COURSE_ID,
+			label: 'Roblox Studio',
+			tier: 'premium',
+			interval: 'month',
+			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ROBLOX_PREMIUM_MONTHLY,
+		},
+		{
+			courseId: ROBLOX_COURSE_ID,
+			label: 'Roblox Studio',
+			tier: 'premium',
+			interval: 'year',
+			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ROBLOX_PREMIUM_ANNUAL,
+		},
+		{
+			courseId: PYTHON_COURSE_ID,
+			label: 'Python',
+			tier: 'standard',
+			interval: 'month',
+			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_PYTHON_MONTHLY,
+		},
+		{
+			courseId: PYTHON_COURSE_ID,
+			label: 'Python',
+			tier: 'standard',
+			interval: 'year',
+			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_PYTHON_ANNUAL,
+		},
+		{
+			courseId: PYTHON_COURSE_ID,
+			label: 'Python',
+			tier: 'premium',
+			interval: 'month',
+			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_PYTHON_PREMIUM_MONTHLY,
+		},
+		{
+			courseId: PYTHON_COURSE_ID,
+			label: 'Python',
+			tier: 'premium',
+			interval: 'year',
+			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_PYTHON_PREMIUM_ANNUAL,
+		},
+		{
+			courseId: AI_AT_WORK_COURSE_ID,
+			label: 'AI for Real Life',
+			tier: 'standard',
+			interval: 'month',
+			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_AI_MONTHLY,
+		},
+		{
+			courseId: AI_AT_WORK_COURSE_ID,
+			label: 'AI for Real Life',
+			tier: 'standard',
+			interval: 'year',
+			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_AI_ANNUAL,
+		},
+		{
+			courseId: AI_AT_WORK_COURSE_ID,
+			label: 'AI for Real Life',
+			tier: 'premium',
+			interval: 'month',
+			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_AI_PREMIUM_MONTHLY,
+		},
+		{
+			courseId: AI_AT_WORK_COURSE_ID,
+			label: 'AI for Real Life',
+			tier: 'premium',
+			interval: 'year',
+			priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_AI_PREMIUM_ANNUAL,
+		},
+	]
+}
+
 /** Build priceId → { courseIds, interval, tier, label } from the current env. */
 function buildPriceMap() {
 	const map = new Map()
 
-	for (const program of BILLING_PROGRAMS) {
-		for (const tierId of ['standard', 'premium']) {
-			const prices = program.prices?.[tierId] || {}
-			const monthly = cleanId(prices.monthlyPriceId)
-			if (monthly) {
-				map.set(monthly, {
-					courseIds: [program.courseId],
-					interval: 'month',
-					tier: tierId,
-					label: program.label,
-				})
-			}
-			const annual = cleanId(prices.annualPriceId)
-			if (annual) {
-				map.set(annual, {
-					courseIds: [program.courseId],
-					interval: 'year',
-					tier: tierId,
-					label: program.label,
-				})
-			}
-		}
+	for (const entry of readPriceEntries()) {
+		const id = cleanId(entry.priceId)
+		if (!id) continue
+		map.set(id, {
+			courseIds: [entry.courseId],
+			interval: entry.interval,
+			tier: entry.tier,
+			label: entry.label,
+		})
 	}
 
 	const legacyMonthly = cleanId(process.env.NEXT_PUBLIC_PADDLE_PRICE_MONTHLY)
@@ -146,11 +262,8 @@ function buildPriceMap() {
 	return map
 }
 
-let cachedMap = null
-
 function priceMap() {
-	if (!cachedMap) cachedMap = buildPriceMap()
-	return cachedMap
+	return buildPriceMap()
 }
 
 /** Course IDs unlocked by this Paddle price. Empty array if unknown. */
@@ -173,13 +286,15 @@ export function tierForPriceId(priceId) {
  * @param {'standard'|'premium'} tier
  */
 export function priceIdFor(courseId, interval = 'month', tier = 'standard') {
-	const program = BILLING_PROGRAMS.find((p) => p.courseId === courseId)
-	if (!program) return null
 	const tierId = normalizeTier(tier)
-	const annual = normalizeInterval(interval) === 'year'
-	const prices = program.prices?.[tierId]
-	if (!prices) return null
-	return cleanId(annual ? prices.annualPriceId : prices.monthlyPriceId)
+	const wantInterval = normalizeInterval(interval)
+	const match = readPriceEntries().find(
+		(entry) =>
+			entry.courseId === courseId &&
+			entry.tier === tierId &&
+			entry.interval === wantInterval
+	)
+	return match ? cleanId(match.priceId) : null
 }
 
 export function programForCourseId(courseId) {

@@ -322,8 +322,8 @@ Next lesson - more practice problems!`,
     problemStatement: `Write a program that:
 1. Reads a line of text
 2. Counts the total number of words and the number of unique words
-3. Finds the longest word (on a tie — the first from the left)
-4. Finds the word that appears most often (on a tie — the first with the maximum frequency in order of appearance; take the first maximum while looping over words in appearance order)
+3. Finds the longest word (on a tie - the first from the left)
+4. Finds the word that appears most often (on a tie - the first with the maximum frequency in order of appearance; take the first maximum while looping over words in appearance order)
 5. Prints the results
 
 Input format:

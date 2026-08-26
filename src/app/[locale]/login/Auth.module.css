@@ -1,4 +1,4 @@
-/* Auth + marketing utility pages — match landing Brilliant light look. */
+/* Auth + marketing utility pages - match landing Brilliant light look. */
 
 .page {
 	position: relative;
@@ -543,10 +543,23 @@
 
 	.panel {
 		padding: 22px 18px;
+		max-width: none;
+		box-sizing: border-box;
 	}
 
 	.title {
-		font-size: clamp(1.6rem, 6vw, 2rem);
+		font-size: clamp(1.55rem, 6.5vw, 1.95rem);
+	}
+
+	.lede {
+		font-size: 0.95rem;
+		max-width: none;
+	}
+
+	.form .submit,
+	.submit {
+		min-height: 48px;
+		box-sizing: border-box;
 	}
 
 	.shell {

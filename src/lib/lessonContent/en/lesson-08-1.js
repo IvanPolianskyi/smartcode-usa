@@ -504,8 +504,8 @@ These data structures help you write more efficient and readable code!`,
     description: "Use Counter and defaultdict to count votes in elections",
     problemStatement: `Create a vote counting system: 
 1. Count n pairs (candidate, region) 
-2. Counter — total count and winner 
-3. defaultdict(Counter) — statistics by region 
+2. Counter - total count and winner 
+3. defaultdict(Counter) - statistics by region 
 4. In the regions, display the candidates in alphabetical order 
 
 Input format: 
@@ -559,28 +559,28 @@ Kharkiv: {'Olya': 2}`,
       }
     ],
     solution: {
-      code: `from collections import Counter, defaultdict 
+      code: `from collections import Counter, defaultdict
 
-n = int(input()) 
-votes = [] 
-regions = [] 
-for _ in range(n): 
-vote, region = input().split() 
-votes.append(vote) 
-regions.append(region) 
+n = int(input())
+votes = []
+regions = []
+for _ in range(n):
+    vote, region = input().split()
+    votes.append(vote)
+    regions.append(region)
 
-vote_counter = Counter(votes) 
-winner, votes_count = vote_counter.most_common(1)[0] 
-print(f'Winner: {winner} ({votes_count} votes)') 
+vote_counter = Counter(votes)
+winner, votes_count = vote_counter.most_common(1)[0]
+print(f'Winner: {winner} ({votes_count} votes)')
 
-regional_votes = defaultdict(Counter) 
-for vote, region in zip(votes, regions): 
-regional_votes[region][vote] += 1 
+regional_votes = defaultdict(Counter)
+for vote, region in zip(votes, regions):
+    regional_votes[region][vote] += 1
 
-print('Statistics by region:') 
-for region, reg_votes in regional_votes.items(): 
-items = ', '.join(f"'{k}': {v}" for k, v in sorted(reg_votes.items())) 
-print(f'{region}: {{{items}}}')`,
+print('Statistics by region:')
+for region, reg_votes in regional_votes.items():
+    items = ', '.join(f"'{k}': {v}" for k, v in sorted(reg_votes.items()))
+    print(f'{region}: {{{items}}}')`,
       explanation: "Counter for winner, defaultdict(Counter) for regions; candidates are sorted for stable output."
     },
     hints: [
@@ -638,7 +638,7 @@ print(f'{region}: {{{items}}}')`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What does defaultdict do?",
         options: [
-          "Automatically creates default values ​​for new keys",
+          "Automatically creates default values for new keys",
           "Preserves the insertion order",
           "Counts elements",
           "Creates named tuples"

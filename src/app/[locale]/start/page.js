@@ -1,11 +1,12 @@
 'use client'
 
 import { Suspense, useEffect, useMemo, useState } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import StickyNav from '@/components/Nav/StickyNav'
+import { Link } from '@/i18n/navigation'
 import { programForCourseId } from '@/lib/billingCatalog'
+import { LEGAL } from '@/lib/legalConfig'
 import {
 	normalizePlan,
 	normalizeTier,
@@ -93,7 +94,9 @@ function StartFlow() {
 				const me = await meResponse.json()
 				const user = me?.user || null
 				if (!user?._id && !user?.id) {
-					if (!cancelled) setPhase('gate')
+					if (!cancelled) {
+						router.replace(registerHref)
+					}
 					return
 				}
 
@@ -108,6 +111,7 @@ function StartFlow() {
 				if (cancelled) return
 
 				if (result.action === 'dashboard' && result.path) {
+					window.dispatchEvent(new Event('auth:login'))
 					router.replace(result.path)
 					return
 				}
@@ -120,7 +124,7 @@ function StartFlow() {
 					setPhase('error')
 					return
 				}
-				// paddle overlay open — stay on page with a short note
+				// paddle overlay open - stay on page with a short note
 				setPhase('checkout')
 			} catch (err) {
 				if (!cancelled) {
@@ -170,30 +174,40 @@ function StartFlow() {
 
 	return (
 		<div className={styles.panel}>
-			<p className={styles.label}>Account</p>
-			<h1 className={styles.title}>Sign in to continue</h1>
+			<p className={styles.label}>Almost there</p>
+			<h1 className={styles.title}>Create your account</h1>
 			<p className={styles.lede}>
 				{program?.label
-					? `Create an account or log in to start ${program.label}.`
-					: 'Create an account or log in, then you can start your free trial and subscription.'}
+					? `Takes about 30 seconds. Your ${LEGAL.trialDays} free days of ${program.label} start right after - nothing is charged today.`
+					: `Takes about 30 seconds. Your ${LEGAL.trialDays} free days start right after - nothing is charged today.`}
 			</p>
 			<div className={styles.form}>
 				<Link
 					href={registerHref}
 					className={`sc-btn sc-btn-primary sc-btn-lg ${styles.submit}`}
 				>
-					Create account
+					Create account - it&apos;s free
 				</Link>
 				<Link
 					href={loginHref}
 					className={`sc-btn sc-btn-ghost sc-btn-lg ${styles.submit}`}
 				>
-					Log in
+					I already have an account
 				</Link>
 			</div>
 			<div className={styles.footer}>
 				<p>
-					<Link href="/#programs">Not now</Link>
+					Cancel anytime · Auto-renews after trial · {LEGAL.refundDays}-day
+					money-back on your first charge
+				</p>
+				<p>
+					By continuing you agree to our <Link href="/terms">Terms</Link>,{' '}
+					<Link href="/refund">Refund Policy</Link>, and{' '}
+					<Link href="/privacy">Privacy Policy</Link>. Payments by Paddle
+					(Merchant of Record).
+				</p>
+				<p>
+					<Link href="/#programs">Back to programs</Link>
 				</p>
 			</div>
 		</div>

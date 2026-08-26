@@ -39,7 +39,7 @@
     "minutes": "{count} хв",
     "quizScore": "Тест: {score}%",
     "locked": "Заблоковано",
-    "lockedLessonHint": "Спочатку заверши попередній урок (практика + тест ≥70%). Тоді цей відкриється автоматично.",
+    "lockedLessonHint": "Нові уроки відкриваються з часом - по 2 уроки щотижня від дня, коли зʼявився доступ.",
     "ctaTitle": "Продовжуй навчання",
     "ctaDescription": "Ти вже на {progress}% шляху до завершення курсу. Продовжуй вивчати нові уроки!",
     "ctaButton": "Перейти до уроків",
@@ -149,30 +149,30 @@
       "certificateRole": "Roblox-розробника"
     },
     "ai": {
-      "valueProposition": "Prompting, generative media, and a content system you can actually keep running.",
-      "skillShort": ["Prompting", "Images", "Video", "Workflow"],
-      "requirementsShort": ["Browser", "Internet", "Curiosity"],
-      "certificateShort": "SmartCode certificate after completing AI at Work.",
+      "valueProposition": "Інженерія промптів, генерація медіа та робоча контент-система, яку ти зможеш запускати щотижня.",
+      "skillShort": ["Промптинг", "Зображення", "Відео", "Воркфлоу"],
+      "requirementsShort": ["Браузер", "Інтернет", "Цікавість"],
+      "certificateShort": "Сертифікат SmartCode Academy після завершення курсу AI for Real Life.",
       "skills": [
-        "How generative models actually work",
-        "Prompting as an engineering skill",
-        "Generating images and video",
-        "Writing that still sounds human",
-        "A weekly content system"
+        "Як насправді працюють генеративні моделі",
+        "Інженерія промптів як технічна навичка",
+        "Генерація комерційних зображень та відео",
+        "Людяний копірайтинг без роботизованого тону",
+        "Щотижнева автоматизована контент-система"
       ],
       "format": [
-        "Self-paced lessons in the LMS",
-        "Practice tasks with clear briefs",
-        "Reusable prompt templates",
-        "Progress saved across devices"
+        "Самостійні уроки на платформі",
+        "Практичні завдання з чіткими брифами",
+        "Готові шаблони промптів для копіювання",
+        "Збереження прогресу між пристроями"
       ],
       "requirements": [
-        "A modern browser",
-        "Internet connection",
-        "Willingness to iterate on prompts"
+        "Сучасний веб-браузер",
+        "Підключення до інтернету",
+        "Готовність експериментувати з промптами"
       ],
-      "certificateText": "After finishing the program — a SmartCode certificate for AI at Work.",
-      "certificateRole": "AI practitioner"
+      "certificateText": "Після завершення програми - офіційний сертифікат SmartCode Academy з AI for Real Life.",
+      "certificateRole": "AI-практика"
     },
     "scratch": {
       "valueProposition": "92 уроки блокового коду: від першого спрайта до власної гри з рівнями та фінальним проєктом.",
@@ -199,7 +199,7 @@
         "Акаунт Scratch (безкоштовний)",
         "Бажання створювати ігри та історії"
       ],
-      "certificateText": "Після завершення курсу — сертифікат SmartCode Academy з блокового програмування Scratch.",
+      "certificateText": "Після завершення курсу - сертифікат SmartCode Academy з блокового програмування Scratch.",
       "certificateRole": "учня Scratch"
     },
     "minecraft": {
@@ -227,7 +227,7 @@
         "Доступ до Minecraft Education Edition",
         "Інтернет для уроків і Code Builder"
       ],
-      "certificateText": "Після завершення курсу — сертифікат SmartCode Academy з Minecraft Education.",
+      "certificateText": "Після завершення курсу - сертифікат SmartCode Academy з Minecraft Education.",
       "certificateRole": "учня Minecraft Education"
     }
   },
@@ -236,9 +236,10 @@
     "backToCourse": "До курсу",
     "backToModule": "До модуля",
     "lockedTitle": "Урок заблоковано",
-    "lockedDescription": "Цей урок доступний учням онлайн-груп SmartCode. Перший урок першого модуля - для ознайомлення. Доступ до інших уроків відкриває викладач за розкладом.",
-    "lockedDescriptionPython": "Щоб отримати доступ до курсу, відвідуйте уроки з Python в онлайн-групі SmartCode. Перший урок модуля 1 доступний для ознайомлення.",
-    "lockedDescriptionRoblox": "Щоб отримати доступ до курсу, відвідуйте уроки з Roblox Studio в онлайн-групі SmartCode. Перший урок модуля 1 доступний для ознайомлення.",
+    "lockedDescription": "Цей урок доступний після оформлення підписки. Перший урок першого модуля - для ознайомлення.",
+    "lockedDescriptionDrip": "Цей урок ще не відкритий. З підпискою щотижня відкривається 2 нових уроки від дня отримання доступу.",
+    "lockedDescriptionPython": "Щоб отримати доступ до курсу, оформіть підписку. Перший урок модуля 1 доступний для ознайомлення.",
+    "lockedDescriptionRoblox": "Щоб отримати доступ до курсу, оформіть підписку. Перший урок модуля 1 доступний для ознайомлення.",
     "returnToCourse": "Повернутися до курсу",
     "purchaseCourse": "Запитати доступ у менеджера",
     "processing": "Обробка...",
@@ -266,9 +267,9 @@
       "practice": "Практика",
       "quiz": "Тест"
     },
-    "practiceRequiredAlert": "Спочатку познач практику в Studio як завершену — тоді відкриється тест.",
+    "practiceRequiredAlert": "Спочатку познач практику в Studio як завершену - тоді відкриється тест.",
     "practiceRequiredTitle": "Спочатку заверши практику в Studio",
-    "sidebarLockedHint": "Урок ще закритий. Заверши попередній (тест ≥70%).",
+    "sidebarLockedHint": "Урок ще закритий. Щотижня відкривається 2 нових уроки.",
     "objectivesTitle": "Цілі уроку",
     "videoLesson": "Відео-урок",
     "codeExamplesTitle": "Приклади коду",
@@ -348,8 +349,8 @@
       "serverUnavailable": "Серверне виконання Python тимчасово недоступне. Зверніться до підтримки."
     },
     "roblox": {
-      "lockedDescriptionEn": "This lesson is locked. Access comes with SmartCode online lessons — ask your manager.",
-      "lockedDescriptionUk": "Цей урок ще закритий. Попроси викладача або менеджера відкрити курс Roblox — і повертайся сюди після уроку.",
+      "lockedDescriptionEn": "This lesson is locked. Access comes with SmartCode online lessons - ask your manager.",
+      "lockedDescriptionUk": "Цей урок ще закритий. Попроси викладача або менеджера відкрити курс Roblox - і повертайся сюди після уроку.",
       "purchaseFullCourse": "Запитати доступ у менеджера",
       "onlineAccessHint": "Доступ для онлайн-учнів",
       "comingSoon": "Матеріал скоро з'явиться",
@@ -358,7 +359,7 @@
       "theoryDuration": "{minutes} хв теорія",
       "quizDuration": "{minutes} хв тест",
       "markPracticeComplete": "Я все зробив у Studio ✓",
-      "practiceDone": "Супер! Практика готова — можна йти на тест",
+      "practiceDone": "Супер! Практика готова - можна йти на тест",
       "quizLockedHint": "Спочатку зроби практику в Studio і постав усі галочки нижче",
       "quizLockedDescription": "Тест відкриється після практики. Зроби кроки в Studio, постав галочки і натисни кнопку завершення.",
       "statusPracticeDone": "Практика ✓",
@@ -366,16 +367,50 @@
       "courseProgress": "{done}/{total} уроків · {pct}%",
       "checkpointPill": "Чекпоінт",
       "checkpointCelebrateTitle": "Модульний чекпоінт пройдено!",
-      "checkpointCelebrateBody": "Круто. Збережи Place і йди далі — наступний модуль відкриває новий рівень навичок.",
+      "checkpointCelebrateBody": "Круто. Збережи Place і йди далі - наступний модуль відкриває новий рівень навичок.",
       "backToRoadmap": "До карти курсу",
       "nextLockedHint": "Наступний урок відкриється, коли зʼявиться доступ до курсу (онлайн-група).",
-      "nextLockedHintSequential": "Пройди цей тест на ≥70% — наступний урок відкриється одразу.",
+      "nextLockedHintSequential": "Пройди цей тест на ≥70% - наступний урок відкриється одразу.",
+      "nextLockedHintDrip": "Щотижня відкривається 2 нових уроки. Завітай наступного тижня.",
       "goQuizCta": "Перейти до тесту",
       "checklistTitle": "Перевір перед тестом",
       "checklistOpenStudio": "Відкрив Roblox Studio і свій Place",
       "checklistDidSteps": "Зробив кроки практики з уроку",
       "checklistSaved": "Збереження Place (File → Save)",
-      "checklistHint": "Постав усі три галочки — тоді кнопка стане активною"
+      "checklistHint": "Постав усі три галочки - тоді кнопка стане активною"
+    },
+    "ai": {
+      "lockedDescriptionEn": "Цей урок закритий. Оформіть підписку на AI for Real Life, щоб відкрити всю програму.",
+      "lockedDescriptionUk": "Цей урок закритий. Оформіть підписку на AI for Real Life, щоб відкрити всю програму. Перший урок доступний як превʼю.",
+      "purchaseFullCourse": "Переглянути тарифи",
+      "onlineAccessHint": "Доступ для підписників",
+      "comingSoon": "Матеріал скоро з'явиться",
+      "markComplete": "Позначити урок виконаним",
+      "optionalChallenge": "Необов'язковий виклик",
+      "theoryDuration": "{minutes} хв теорія",
+      "quizDuration": "{minutes} хв тест",
+      "markPracticeComplete": "Я виконав практичне завдання ✓",
+      "practiceDone": "Практика готова - можна йти на тест",
+      "quizLockedHint": "Спочатку зроби практику і постав усі галочки нижче",
+      "quizLockedDescription": "Тест відкриється після практики. Виконай бриф у своєму AI-інструменті, збережи результат і натисни кнопку завершення.",
+      "statusPracticeDone": "Практика ✓",
+      "statusQuizDone": "Тест ✓",
+      "courseProgress": "{done}/{total} уроків · {pct}%",
+      "checkpointPill": "Капстоун",
+      "checkpointCelebrateTitle": "Капстоун пройдено!",
+      "checkpointCelebrateBody": "Ти зібрав контент-систему, яку можна запускати. Тримай шаблони під рукою - наступні 30 днів закріплять звичку.",
+      "backToRoadmap": "До карти курсу",
+      "nextLockedHint": "Наступний урок відкриється після підписки на AI for Real Life.",
+      "nextLockedHintSequential": "Пройди цей тест на ≥70% - наступний урок відкриється одразу.",
+      "nextLockedHintDrip": "Щотижня відкривається 2 нових уроки. Завітай наступного тижня.",
+      "goQuizCta": "Перейти до тесту",
+      "starterTipTitle": "Твій робочий простір",
+      "starterTipBody": "Працюй в одному чаті або документі на урок, щоб потім перевикористовувати промпти.",
+      "checklistTitle": "Перевір перед тестом",
+      "checklistOpenStudio": "Відкрив свій AI-інструмент (чат, зображення або відео)",
+      "checklistDidSteps": "Зробив кроки практики з уроку",
+      "checklistSaved": "Зберіг найкращий результат (док, папка або нотатка)",
+      "checklistHint": "Постав усі три галочки - тоді кнопка стане активною"
     }
   }
 }

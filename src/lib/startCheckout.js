@@ -1,8 +1,15 @@
 /**
- * Shared checkout helpers — used by CheckoutButton and /start page.
+ * Shared checkout helpers - used by CheckoutButton and /start page.
  */
 
 import { priceIdFor } from '@/lib/billingCatalog'
+
+/** Plan-picker page for one program - step 2 of the purchase. */
+export function planPath(courseId, plan = null) {
+	if (!courseId) return '/pricing'
+	const base = `/plans/${encodeURIComponent(courseId)}`
+	return plan ? `${base}?plan=${encodeURIComponent(plan)}` : base
+}
 
 export function startPath({ courseId, plan = 'monthly', tier = 'standard' }) {
 	const params = new URLSearchParams()
@@ -75,7 +82,12 @@ export async function runAuthenticatedCheckout({
 				message: payload.error || 'This plan is not available right now',
 			}
 		}
-		return { action: 'dashboard', path: dashboardPath, coursePath }
+		// Force the dashboard to re-sync session + billing (same as Paddle return).
+		return {
+			action: 'dashboard',
+			path: `${dashboardPath}?checkout=success`,
+			coursePath,
+		}
 	}
 
 	if (typeof loadPaddle !== 'function') {

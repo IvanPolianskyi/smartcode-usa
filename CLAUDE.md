@@ -1,7 +1,7 @@
 # SmartCode Academy
 
 Next.js 16 (App Router, Turbopack) LMS selling self-paced coding courses (Roblox
-Studio, Python, AI at Work) by subscription via Paddle. MongoDB backend, JWT
+Studio, Python, AI for Real Life) by subscription via Paddle. MongoDB backend, JWT
 cookie auth. Legal seller: Ivan Polianskyi, sole proprietor (FOP), Ukraine.
 
 ## Status (2026-08-26)

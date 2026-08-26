@@ -13,16 +13,22 @@
   opacity: 1;
 }
 
-/* —— Hero —— */
-.heroSection {
-  position: relative;
-  overflow: hidden;
-  color: var(--text-primary);
-  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 4vw, 2.5rem) clamp(2.5rem, 6vw, 4rem);
+/* Header + hero share one background so the pill isn't stranded on empty chrome. */
+.heroFold {
   background:
     radial-gradient(ellipse 60% 50% at 8% 0%, rgba(252, 110, 81, 0.12), transparent 55%),
     radial-gradient(ellipse 50% 40% at 92% 10%, rgba(252, 110, 81, 0.08), transparent 50%),
     var(--background);
+}
+
+/* -- Hero -- */
+/* Header sits above this in document flow, so keep top padding tight. */
+.heroSection {
+  position: relative;
+  overflow: hidden;
+  color: var(--text-primary);
+  padding: 0.35rem clamp(1rem, 4vw, 2.5rem) clamp(2.5rem, 6vw, 4rem);
+  background: transparent;
   margin-top: 0;
   border-bottom: 1px solid var(--border-subtle);
 }
@@ -133,9 +139,10 @@
 
 .phaseRoadmap {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.65rem;
-  margin: 0 0 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto 1.5rem;
 }
 
 .phaseChip {
@@ -175,7 +182,8 @@
 }
 
 .lockedTip {
-  margin: 0 0 1rem;
+  max-width: 1000px;
+  margin: 0 auto 1rem;
   padding: 0.7rem 0.95rem;
   border-radius: 0.75rem;
   border: 1px solid rgba(252, 110, 81, 0.18);
@@ -241,6 +249,38 @@
   background: #e85d3a;
   box-shadow: 0 12px 28px rgba(252, 110, 81, 0.35);
   filter: none;
+}
+
+.heroBtnGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.previewBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.6rem;
+  min-height: 3.25rem;
+  background: var(--bg-elevated, #ffffff);
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
+  text-decoration: none;
+  border-radius: 9999px;
+  border: 1px solid rgba(20, 21, 26, 0.14);
+  box-shadow: 0 4px 12px rgba(20, 21, 26, 0.04);
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.previewBtn:hover {
+  transform: translateY(-2px);
+  background: var(--bg-hover, #f3f4f7);
+  border-color: rgba(20, 21, 26, 0.25);
+  box-shadow: 0 8px 18px rgba(20, 21, 26, 0.08);
 }
 
 @keyframes pulseCta {
@@ -409,7 +449,7 @@
   color: var(--text-tertiary);
 }
 
-/* —— Roadmap —— */
+/* -- Roadmap -- */
 .roadmapSection {
   padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem);
   background: var(--background);
@@ -746,7 +786,7 @@
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* —— Bottom CTA —— */
+/* -- Bottom CTA -- */
 .ctaSection {
   padding: clamp(2rem, 5vw, 3.5rem) clamp(1rem, 4vw, 2rem);
   background: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
@@ -809,7 +849,7 @@
   box-shadow: 0 12px 28px rgba(252, 110, 81, 0.35);
 }
 
-/* —— Responsive —— */
+/* -- Responsive -- */
 @media (max-width: 768px) {
   .heroMain {
     grid-template-columns: 1fr;

@@ -709,10 +709,10 @@ def example():
     description: "Створіть функції для обчислення та аналізу оцінок студентів",
     problemStatement: `Напишіть програму з функціями:
 
-1. calculate_average(grade1, grade2, grade3) — середній бал, округлений до 2 знаків (round)
-2. get_letter_grade(average) — "Відмінно" (>=90), "Добре" (>=75), "Задовільно" (>=60), інакше "Незадовільно"
-3. has_passed(average) — True, якщо average >= 60
-4. analyze_student(grade1, grade2, grade3) — кортеж (середній_бал, оцінка, чи_здав)
+1. calculate_average(grade1, grade2, grade3) - середній бал, округлений до 2 знаків (round)
+2. get_letter_grade(average) - "Відмінно" (>=90), "Добре" (>=75), "Задовільно" (>=60), інакше "Незадовільно"
+3. has_passed(average) - True, якщо average >= 60
+4. analyze_student(grade1, grade2, grade3) - кортеж (середній_бал, оцінка, чи_здав)
 
 Зчитайте три оцінки з вводу, викличте функції та виведіть результати.
 
@@ -733,7 +733,7 @@ def example():
 Оцінка: Добре
 Студент здав: True
 Аналіз: (87.67, 'Добре', True)`,
-        explanation: "Середнє 87.67 — Добре, здав"
+        explanation: "Середнє 87.67 - Добре, здав"
       },
       {
         input: `95
@@ -743,7 +743,7 @@ def example():
 Оцінка: Відмінно
 Студент здав: True
 Аналіз: (95.0, 'Відмінно', True)`,
-        explanation: "Середнє 95.0 — Відмінно"
+        explanation: "Середнє 95.0 - Відмінно"
       },
       {
         input: `50
@@ -753,7 +753,7 @@ def example():
 Оцінка: Незадовільно
 Студент здав: False
 Аналіз: (48.33, 'Незадовільно', False)`,
-        explanation: "Середнє 48.33 < 60 — не здав"
+        explanation: "Середнє 48.33 < 60 - не здав"
       }
     ],
     solution: {
@@ -803,7 +803,7 @@ print(f"Аналіз: {analysis}")`,
     hints: [
       "Спочатку визначте функції, потім зчитайте три оцінки через input()",
       "Використовуйте round(average, 2) у calculate_average",
-      "get_letter_grade — ланцюжок if/elif/else",
+      "get_letter_grade - ланцюжок if/elif/else",
       "analyze_student має повернути кортеж через return"
     ],
     difficulty: "intermediate"

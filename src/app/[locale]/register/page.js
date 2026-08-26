@@ -1,24 +1,26 @@
 'use client'
 
 import { Suspense, useEffect, useMemo, useState } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Check, Eye, EyeOff } from 'lucide-react'
 import { register } from '@/lib/authClient'
 import StickyNav from '@/components/Nav/StickyNav'
+import { Link } from '@/i18n/navigation'
+import { LEGAL } from '@/lib/legalConfig'
 import styles from '../login/Auth.module.css'
 
 const PERKS = [
-	'Interactive lessons — write, run, and get checked',
-	'Private Discord community for builders',
-	'3 days free, then pick Roblox, Python, or AI at Work',
+	`${LEGAL.trialDays} days free - nothing is charged today`,
+	'Write real code and get it checked instantly',
+	'Private Discord with other builders',
+	`Cancel anytime · ${LEGAL.refundDays}-day money-back`,
 ]
 
 const PROGRAMS = [
 	{ tone: 'coral', label: 'Roblox Studio' },
 	{ tone: 'cyan', label: 'Python' },
-	{ tone: 'violet', label: 'AI at Work' },
+	{ tone: 'violet', label: 'AI for Real Life' },
 ]
 
 function RegisterAside() {
@@ -26,11 +28,11 @@ function RegisterAside() {
 		<aside className={styles.aside}>
 			<p className={styles.asideEyebrow}>Start free</p>
 			<h2 className={styles.asideTitle}>
-				Build real skills. <em>Learn by doing.</em>
+				Build things people <em>actually use.</em>
 			</h2>
 			<p className={styles.asideLede}>
-				Create your account in a minute, then choose a program and start
-				practicing right away.
+				Create your account in under a minute, pick a program, and write your
+				first line of code today.
 			</p>
 			<ul className={styles.perkList}>
 				{PERKS.map((text) => (
@@ -81,7 +83,7 @@ function RegisterForm() {
 		) {
 			return {
 				kind: 'info',
-				text: 'Create an account first, then you can start a subscription for your program.',
+				text: `One quick step - create your account and your ${LEGAL.trialDays} free days start right after.`,
 			}
 		}
 		return null
@@ -133,7 +135,7 @@ function RegisterForm() {
 			<p className={styles.label}>Account</p>
 			<h1 className={styles.title}>Create account</h1>
 			<p className={styles.lede}>
-				Free to join — pick a program after you sign up.
+				Free to join. You pick a program next - nothing is charged today.
 			</p>
 
 			<div className={styles.programRowCompact} aria-label="Programs">
@@ -233,10 +235,14 @@ function RegisterForm() {
 						I agree to the{' '}
 						<Link href="/privacy" target="_blank">
 							Privacy Policy
-						</Link>{' '}
-						and{' '}
+						</Link>
+						,{' '}
 						<Link href="/terms" target="_blank">
-							Terms
+							Terms of Service
+						</Link>
+						, and{' '}
+						<Link href="/refund" target="_blank">
+							Refund Policy
 						</Link>
 						.
 					</span>

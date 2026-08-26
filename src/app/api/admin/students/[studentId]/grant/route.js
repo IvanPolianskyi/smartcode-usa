@@ -8,7 +8,7 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 /**
- * Manually grant course access outside Paddle — comps, support cases, refund
+ * Manually grant course access outside Paddle - comps, support cases, refund
  * disputes resolved in the student's favor. Marked `admin_manual` so it's
  * never mistaken for a real subscription and never touched by the webhook
  * (which only ever matches on `paddleSubscriptionId`).
@@ -60,7 +60,7 @@ export async function POST(request, { params }) {
 					productId: null,
 					courseIds: [courseId],
 					planTier: tier,
-					// 'active' grants access regardless of currentPeriodEnd — see entitlements.js.
+					// 'active' grants access regardless of currentPeriodEnd - see entitlements.js.
 					status: 'active',
 					billingInterval: null,
 					trialEndsAt: null,

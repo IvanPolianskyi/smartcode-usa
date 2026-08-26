@@ -490,7 +490,7 @@ Cache statistics: CacheInfo(hits=0, misses=6, maxsize=128, currsize=6)`,
       {
         input: `1`,
         output: `Squares: [1] 
-Cuba: [1] 
+Cubes: [1] 
 Cache statistics: CacheInfo(hits=0, misses=2, maxsize=128, currsize=2)`,
         explanation: "Two challenges: 1² and 1³"
       },
@@ -503,23 +503,23 @@ Cache statistics: CacheInfo(hits=0, misses=10, maxsize=128, currsize=10)`,
       }
     ],
     solution: {
-      code: `from functools import lru_cache, partial 
+      code: `from functools import lru_cache, partial
 
-@lru_cache(maxsize=128) 
-def power(base, exponent): 
-return base ** exponent 
+@lru_cache(maxsize=128)
+def power(base, exponent):
+    return base ** exponent
 
-square = partial(power, exponent=2) 
-cube = partial(power, exponent=3) 
+square = partial(power, exponent=2)
+cube = partial(power, exponent=3)
 
-n = int(input()) 
-numbers = list(range(1, n + 1)) 
-squares = [square(x) for x in numbers] 
-cubes = [cube(x) for x in numbers] 
+n = int(input())
+numbers = list(range(1, n + 1))
+squares = [square(x) for x in numbers]
+cubes = [cube(x) for x in numbers]
 
-print(f'Squares: {squares}') 
-print(f'Cubes: {cubes}') 
-info = power.cache_info() 
+print(f'Squares: {squares}')
+print(f'Cubes: {cubes}')
+info = power.cache_info()
 print(f'Cache statistics: CacheInfo(hits={info.hits}, misses={info.misses}, maxsize={info.maxsize}, currsize={info.currsize})')`,
       explanation: "lru_cache + partial; n from stdin; We output cache_info explicitly for a stable format."
     },

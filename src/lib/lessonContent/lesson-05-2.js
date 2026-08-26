@@ -27,7 +27,7 @@ export const lesson_05_2 = {
     sections: [
       {
         title: "Ієрархія винятків у Python",
-        content: `У Python майже всі помилки — це класи, що наслідуються від \`BaseException\`. Для звичайної обробки важливий клас \`Exception\` та його нащадки.
+        content: `У Python майже всі помилки - це класи, що наслідуються від \`BaseException\`. Для звичайної обробки важливий клас \`Exception\` та його нащадки.
 
 **Спрощена схема:**
 
@@ -47,27 +47,27 @@ BaseException
 
 - \`except ValueError\` ловить лише ValueError (і його нащадків)
 - \`except Exception\` ловить майже всі «звичайні» помилки
-- \`except:\` без типу ловить навіть KeyboardInterrupt — це майже завжди погана ідея
+- \`except:\` без типу ловить навіть KeyboardInterrupt - це майже завжди погана ідея
 
 Пам’ятайте: чим **конкретніший** except, тим зрозуміліша поведінка програми.`
       },
       {
         title: "ValueError, TypeError, ZeroDivisionError",
-        content: `**ValueError** — значення має правильний тип, але неприпустимий зміст.
+        content: `**ValueError** - значення має правильний тип, але неприпустимий зміст.
 
 \`\`\`python
 int("hello")      # ValueError
 int("3.14")       # ValueError (для int потрібен цілий запис)
 \`\`\`
 
-**TypeError** — операція застосована до об’єкта не того типу.
+**TypeError** - операція застосована до об’єкта не того типу.
 
 \`\`\`python
 "5" + 5           # TypeError
 len(10)           # TypeError
 \`\`\`
 
-**ZeroDivisionError** — ділення або остача від ділення на нуль.
+**ZeroDivisionError** - ділення або остача від ділення на нуль.
 
 \`\`\`python
 10 / 0            # ZeroDivisionError
@@ -89,21 +89,21 @@ except ZeroDivisionError:
       },
       {
         title: "IndexError, KeyError, FileNotFoundError",
-        content: `**IndexError** — індекс поза межами послідовності.
+        content: `**IndexError** - індекс поза межами послідовності.
 
 \`\`\`python
 nums = [1, 2, 3]
 print(nums[10])   # IndexError
 \`\`\`
 
-**KeyError** — ключа немає у словнику.
+**KeyError** - ключа немає у словнику.
 
 \`\`\`python
 user = {"name": "Оля"}
 print(user["age"])  # KeyError
 \`\`\`
 
-**FileNotFoundError** — файл або шлях не існує.
+**FileNotFoundError** - файл або шлях не існує.
 
 \`\`\`python
 open("немає_такого.txt")  # FileNotFoundError
@@ -115,7 +115,7 @@ open("немає_такого.txt")  # FileNotFoundError
 # Замість KeyError
 age = user.get("age", 0)
 
-# Замість IndexError — перевірка довжини
+# Замість IndexError - перевірка довжини
 if index < len(nums):
     print(nums[index])
 \`\`\`
@@ -133,7 +133,7 @@ except (ValueError, TypeError) as e:
     print(f"Проблема з даними: {e}")
 \`\`\`
 
-Або окремими блоками — коли реакція різна:
+Або окремими блоками - коли реакція різна:
 
 \`\`\`python
 try:
@@ -148,7 +148,7 @@ except IndexError:
 
 **Важливо про порядок:**
 
-Спочатку — **конкретні** типи, потім — загальніші.
+Спочатку - **конкретні** типи, потім - загальніші.
 
 \`\`\`python
 # Правильно
@@ -157,7 +157,7 @@ except ValueError:
 except Exception:
     ...
 
-# Неправильно — ValueError ніколи не дійде сюди,
+# Неправильно - ValueError ніколи не дійде сюди,
 # якщо Exception стоїть вище
 except Exception:
     ...
@@ -167,7 +167,7 @@ except ValueError:
       },
       {
         title: "except Exception та as e",
-        content: `\`as e\` зберігає об’єкт винятку — можна прочитати повідомлення:
+        content: `\`as e\` зберігає об’єкт винятку - можна прочитати повідомлення:
 
 \`\`\`python
 try:
@@ -178,7 +178,7 @@ except ValueError as e:
     print(str(e))    # те саме повідомлення рядком
 \`\`\`
 
-**except Exception** — «страхувальна сітка» для несподіваних помилок:
+**except Exception** - «страхувальна сітка» для несподіваних помилок:
 
 \`\`\`python
 try:
@@ -284,11 +284,11 @@ except Exception as e:
     {
       mistake: "Занадто загальний except першим",
       explanation: "Якщо except Exception стоїть вище за ValueError, конкретний блок ніколи не спрацює.",
-      correctApproach: "Спочатку конкретні типи, в кінці — Exception."
+      correctApproach: "Спочатку конкретні типи, в кінці - Exception."
     },
     {
       mistake: "Плутати ValueError і TypeError",
-      explanation: "ValueError — погане значення правильного типу; TypeError — операція з неправильним типом.",
+      explanation: "ValueError - погане значення правильного типу; TypeError - операція з неправильним типом.",
       correctApproach: "int('x') → ValueError; 'a' + 1 → TypeError."
     },
     {
@@ -305,13 +305,13 @@ except Exception as e:
 
   summary: `На цьому уроці ми вивчили типи винятків:
 
-1. ValueError, TypeError, ZeroDivisionError — помилки значень, типів і ділення
-2. IndexError, KeyError, FileNotFoundError — доступ до даних і файлів
-3. Кілька типів у одному except — (A, B) as e
-4. except Exception — запасний варіант після конкретних блоків
-5. as e — доступ до повідомлення помилки
+1. ValueError, TypeError, ZeroDivisionError - помилки значень, типів і ділення
+2. IndexError, KeyError, FileNotFoundError - доступ до даних і файлів
+3. Кілька типів у одному except - (A, B) as e
+4. except Exception - запасний варіант після конкретних блоків
+5. as e - доступ до повідомлення помилки
 
-Далі — створення власних винятків для бізнес-логіки.`,
+Далі - створення власних винятків для бізнес-логіки.`,
 
   practiceTask: {
     title: "Калькулятор з різними типами помилок",
@@ -372,13 +372,13 @@ except ValueError:
     print("Помилка: ValueError")
 except ZeroDivisionError:
     print("Помилка: ZeroDivisionError")`,
-      explanation: "float() може кинути ValueError; ділення на 0 — ZeroDivisionError."
+      explanation: "float() може кинути ValueError; ділення на 0 - ZeroDivisionError."
     },
     hints: [
       "Зчитайте три рядки: число, операція, число",
       "Використайте float() для перетворення",
       "Окремо обробіть ValueError і ZeroDivisionError",
-      "Для невідомої операції не потрібен except — звичайний else"
+      "Для невідомої операції не потрібен except - звичайний else"
     ],
     difficulty: "beginner"
   },
@@ -391,7 +391,7 @@ except ZeroDivisionError:
         question: "Який виняток виникає при int(\"abc\")?",
         options: ["TypeError", "ValueError", "IndexError", "KeyError"],
         correctAnswer: 1,
-        explanation: "Рядок має тип str, але значення непридатне для int — ValueError."
+        explanation: "Рядок має тип str, але значення непридатне для int - ValueError."
       },
       {
         id: "q2",
@@ -412,7 +412,7 @@ except ZeroDivisionError:
         question: "Що виведе код?\n\n```python\ndata = {\"x\": 1}\ntry:\n    print(data[\"y\"])\nexcept KeyError:\n    print(\"немає ключа\")\n```",
         options: ["1", "немає ключа", "KeyError", "None"],
         correctAnswer: 1,
-        explanation: "Ключа \"y\" немає — спрацьовує except KeyError."
+        explanation: "Ключа \"y\" немає - спрацьовує except KeyError."
       },
       {
         id: "q4",
@@ -428,7 +428,7 @@ except ZeroDivisionError:
         question: "Який виняток при nums[10], якщо len(nums) == 3?",
         options: ["KeyError", "ValueError", "IndexError", "TypeError"],
         correctAnswer: 2,
-        explanation: "Індекс поза межами списку — IndexError."
+        explanation: "Індекс поза межами списку - IndexError."
       },
       {
         id: "q6",
@@ -457,7 +457,7 @@ except ZeroDivisionError:
         question: "\"hello\" + 5 викликає:",
         options: ["ValueError", "TypeError", "IndexError", "ZeroDivisionError"],
         correctAnswer: 1,
-        explanation: "Несумісні типи для + — TypeError."
+        explanation: "Несумісні типи для + - TypeError."
       }
     ],
     timeLimit: 15,

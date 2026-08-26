@@ -485,34 +485,34 @@ Create a project
 0 
 Write tests 
 1`,
-    outputFormat: `Task saved 
-3 tasks have been uploaded: 
-1. Learn JSON (not done) 
-2. Create a project (not completed) 
-3. Write tests (done)`,
+    outputFormat: `Task saved
+Loaded 3 tasks:
+1. Learn JSON (not completed)
+2. Create a project (not completed)
+3. Write tests (completed)`,
     examples: [
       {
-        input: `1 
-Task 1 
+        input: `1
+Task 1
 0`,
-        output: `Task saved 
-1 task loaded: 
+        output: `Task saved
+Loaded 1 tasks:
 1. Task 1 (not completed)`,
         explanation: "One unfinished task"
       },
       {
-        input: `3 
-Learn JSON 
-0 
-Create a project 
-0 
-Write tests 
+        input: `3
+Learn JSON
+0
+Create a project
+0
+Write tests
 1`,
-        output: `Task saved 
-3 tasks have been uploaded: 
-1. Learn JSON (not done) 
-2. Create a project (not completed) 
-3. Write tests (done)`,
+        output: `Task saved
+Loaded 3 tasks:
+1. Learn JSON (not completed)
+2. Create a project (not completed)
+3. Write tests (completed)`,
         explanation: "Three tasks, the last one completed"
       },
       {
@@ -521,41 +521,41 @@ A
 1
 B
 0`,
-        output: `Task saved 
-2 tasks loaded: 
-1. A (done) 
+        output: `Task saved
+Loaded 2 tasks:
+1. A (completed)
 2. B (not completed)`,
         explanation: "Two short tasks with different statuses"
       }
     ],
     solution: {
-      code: `import json 
+      code: `import json
 
-def save_tasks(tasks, filename='tasks.json'): 
-with open(filename, 'w', encoding='utf-8') as f: 
-json.dump(tasks, f, indent=2, ensure_ascii=False) 
-print('Job saved') 
+def save_tasks(tasks, filename='tasks.json'):
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(tasks, f, indent=2, ensure_ascii=False)
+    print('Task saved')
 
-def load_tasks(filename='tasks.json'): 
-try: 
-with open(filename, 'r', encoding='utf-8') as f: 
-return json.load(f) 
-except FileNotFoundError: 
-return [] 
+def load_tasks(filename='tasks.json'):
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
 
-n = int(input()) 
-tasks = [] 
-for i in range(1, n + 1): 
-title = input().strip() 
-completed = input().strip() == '1' 
-tasks.append({'id': i, 'title': title, 'completed': completed}) 
+n = int(input())
+tasks = []
+for i in range(1, n + 1):
+    title = input().strip()
+    completed = input().strip() == '1'
+    tasks.append({'id': i, 'title': title, 'completed': completed})
 
-save_tasks(tasks) 
-loaded_tasks = load_tasks() 
-print(f'Loaded {len(loaded_tasks)} tasks:') 
-for task in loaded_tasks: 
-status = 'completed' if task['completed'] else 'not completed' 
-print(f"{task['id']}. {task['title']} ({status})")`,
+save_tasks(tasks)
+loaded_tasks = load_tasks()
+print(f'Loaded {len(loaded_tasks)} tasks:')
+for task in loaded_tasks:
+    status = 'completed' if task['completed'] else 'not completed'
+    print(f"{task['id']}. {task['title']} ({status})")`,
       explanation: "We read tasks from stdin, save/read JSON via dump/load."
     },
     hints: [

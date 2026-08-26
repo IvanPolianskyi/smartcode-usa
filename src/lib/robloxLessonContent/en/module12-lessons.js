@@ -1,4 +1,4 @@
-/** Roblox Module 12 EN — 6 уроків (prod-92), фінал 12.6 SHOWCASE DAY */
+/** Roblox Module 12 EN - 6 уроків (prod-92), фінал 12.6 SHOWCASE DAY */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -16,7 +16,7 @@ export const enLesson121 = {
  "Describe your main player and core loop (action → reward → again)",
  "Build a systems table: must have / if time / later",
  "Move the MVP table into the Place (Folder + Attributes / StringValues)",
- "Sketch a rough timeline for 12.2–12.6 with buffer",
+ "Sketch a rough timeline for 12.2-12.6 with buffer",
  ],
  theory: {
  sections: [
@@ -26,7 +26,7 @@ export const enLesson121 = {
 
 By the end you will have:
 1. A **pitch** (1 sentence) in a document **and** as an Attribute on the Place.
-2. A **core loop** of 5–7 steps.
+2. A **core loop** of 5-7 steps.
 3. A **systems table** with three columns.
 4. A Folder \`MVP_Board\` in Workspace with the "must have" list.
 5. A **timeline** through SHOWCASE.
@@ -76,7 +76,7 @@ That pitch signals the MVP is not chosen yet.
 
 | Question | Your answer |
 |----------|-------------|
-| Approx. age | e.g. 9–12 |
+| Approx. age | e.g. 9-12 |
 | Plays on PC / phone? | ... |
 | What should feel fun in 2 min? | ... |
 | What should they NOT need a lecture for? | ... |
@@ -111,7 +111,7 @@ Examples by course genre:
 
 **Rule:** the loop should be explainable to a friend in **30 seconds**. If the explanation is longer than the game, the loop is fuzzy.
 
-**Do now (7 min):** draw 5–7 arrows for your loop. Under each arrow - what is visible on screen (coin, Prompt, finish…).`,
+**Do now (7 min):** draw 5-7 arrows for your loop. Under each arrow - what is visible on screen (coin, Prompt, finish…).`,
  },
  {
  title: "Course systems inventory (where to pull details)",
@@ -119,7 +119,7 @@ Examples by course genre:
 
 | Module | What you can take into the finale |
 |--------|-----------------------------------|
-| M1–M2 | World, building/park, atmosphere |
+| M1-M2 | World, building/park, atmosphere |
 | M3 | Prompt, Touched, debounce, while/for, GUI |
 | M4 | table, Config, DataStore lite |
 | M5 | Obby zone, checkpoints, juice |
@@ -130,9 +130,9 @@ Examples by course genre:
 | M10 | Shop Remotes, NPC, quest, raycast |
 | M11 | Loading, sound, Explorer cleanup |
 
-For SHOWCASE, **2–3 strong systems** you actually understand are enough. An honest shop + leaderstats beats a "sort of RPG inventory" that crashes.
+For SHOWCASE, **2-3 strong systems** you actually understand are enough. An honest shop + leaderstats beats a "sort of RPG inventory" that crashes.
 
-**Do now (5 min):** check off 4–6 systems that *almost already exist* in your Places. Those are easier to assemble tomorrow than writing from scratch.`,
+**Do now (5 min):** check off 4-6 systems that *almost already exist* in your Places. Those are easier to assemble tomorrow than writing from scratch.`,
  },
  {
  title: "Systems table: must have / if time / later",
@@ -151,7 +151,7 @@ For SHOWCASE, **2–3 strong systems** you actually understand are enough. An ho
 | Second zone / boss / skins | | | ☐ |
 
 Column rules:
-- **Must have** = without this the game is not submittable in 12.2–12.6. Usually **5–7** items, not 20.
+- **Must have** = without this the game is not submittable in 12.2-12.6. Usually **5-7** items, not 20.
 - **If time** = only after a stable golden path.
 - **Later** = ideas you deliberately **do not** build in the module 12 sprint.
 
@@ -178,7 +178,7 @@ This is the same table that tomorrow becomes the FREEZE law for the build.`,
 
 Notice: even "cool" PvP went to **later**. That is normal. A small finished game beats a giant dream at 10%.
 
-**Studio anchor (8–10 min, required):** in \`MVP_Board\` do:
+**Studio anchor (8-10 min, required):** in \`MVP_Board\` do:
 1. StringValue / Attribute on the Folder: \`Pitch\` = your sentence.
 2. Folder \`Must\` - one StringValue per "must have" row (name = system, Value = "must").
 3. Folders \`Stretch\` and \`Later\` - the same for the other columns.
@@ -204,7 +204,7 @@ MVP test:
 
 If question 4 is "no" - cut systems today, not in panic on 12.5.
 
-**Do now (4 min):** write the MVP as one paragraph of 3–4 sentences. If the paragraph is long - the MVP is still bloated.`,
+**Do now (4 min):** write the MVP as one paragraph of 3-4 sentences. If the paragraph is long - the MVP is still bloated.`,
  },
  {
  title: "Module 12 timeline with buffer",
@@ -219,7 +219,7 @@ If question 4 is "no" - cut systems today, not in panic on 12.5.
 
 Add **~30% buffer** in your head: something will break on assembly or in live. So do not plan "must have" as if every minute is perfect.
 
-Home buffer (if you have it): 1–2 hours only on golden-path fixes between 12.2 and 12.3 - better than new features.`,
+Home buffer (if you have it): 1-2 hours only on golden-path fixes between 12.2 and 12.3 - better than new features.`,
  },
  {
  title: "Art / sound / mood (brief, so you do not scatter)",
@@ -227,7 +227,7 @@ Home buffer (if you have it): 1–2 hours only on golden-path fixes between 12.2
 
 Then only 3 decisions for that mood:
 1. Main Material / hub color.
-2. 1–2 sounds (click / reward), not a 40-track playlist.
+2. 1-2 sounds (click / reward), not a 40-track playlist.
 3. Whether night (ClockTime) is a feature, or day for readability.
 
 Do not start the finale with a full soundtrack and 50 Decals. Loop and systems table first. Mood can catch up in 12.2 / M11 polish skills if time remains in "if time."`,
@@ -250,11 +250,11 @@ Save the file so it opens tomorrow in 10 seconds: \`Lesson 12.1 - Final GDD\`.
  {
  title: "Lesson 87 submit checklist",
  content: `- [ ] Pitch in 1 sentence (aloud + in MVP_Board)
-- [ ] 2–3 lines about the player
-- [ ] Core loop 5–7 steps
+- [ ] 2-3 lines about the player
+- [ ] Core loop 5-7 steps
 - [ ] Systems table with 3 columns (in Doc **and** in Folders Must/Stretch/Later)
 - [ ] "Must have" / Must ≤ 8 items
-- [ ] Timeline 12.2–12.6 + buffer understood
+- [ ] Timeline 12.2-12.6 + buffer understood
 - [ ] 3 mood words (optional)
 - [ ] Doc saved: \`Lesson 12.1 - Final GDD\`
 - [ ] Place saved with \`MVP_Board\` (name like \`Lesson 12.1 - Final WIP\`)
@@ -267,7 +267,7 @@ Without a table **and** without MVP_Board in the Place, **do not start** a big "
  {
  mistake: "Everything in the \"must have\" column",
  explanation: "That is not an MVP, it is a dream. Build and test will not finish in time.",
- correctApproach: "At most 5–8 must-have items; the rest go to if time / later.",
+ correctApproach: "At most 5-8 must-have items; the rest go to if time / later.",
  },
  {
  mistake: "A pitch full of \"and also\"",
@@ -277,7 +277,7 @@ Without a table **and** without MVP_Board in the Place, **do not start** a big "
  {
  mistake: "No core loop on paper",
  explanation: "Tomorrow you glue systems with no player route.",
- correctApproach: "5–7 loop arrows + the same steps in a note / MVP_Board.",
+ correctApproach: "5-7 loop arrows + the same steps in a note / MVP_Board.",
  },
  {
  mistake: "Planning systems you never built in the course",
@@ -305,12 +305,12 @@ Without a table **and** without MVP_Board in the Place, **do not start** a big "
 ### Part A - Identity (8 min)
 1. 3 pitch drafts → 1 final.
 2. Who the player is (brief).
-3. Core loop 5–7 steps.
+3. Core loop 5-7 steps.
 
 ### Part B - Table (10 min)
 1. Systems list → must have / if time / later.
 2. Must have ≤ 8.
-3. Timeline 12.2–12.6 + buffer.
+3. Timeline 12.2-12.6 + buffer.
 
 ### Part C - Studio anchor (12 min)
 1. Folder \`MVP_Board\` + Pitch + Must/Stretch/Later.
@@ -398,7 +398,7 @@ Without a table **and** without MVP_Board in the Place, **do not start** a big "
  type: MC,
  question: "About how many items should stay in \"must have\"?",
  options: [
- "About 5–8, not dozens",
+ "About 5-8, not dozens",
  "At least 30",
  "Exactly 0",
  "Only 1 with no loop",
@@ -570,7 +570,7 @@ Open your 12.1 notes and the Place you will pull parts from (park zone, sim, hub
 
 You are not rewriting the course. You **connect** what you already learned: Parts/Terrain, scripts, UI, maybe leaderstats, Prompt, shop, save - whatever you chose in 12.1.
 
-**Do now (3 min):** write on paper 5–7 "must have today" items. If more than 7 - cut to 7. A narrow working MVP beats a mountain of unfinished work.`,
+**Do now (3 min):** write on paper 5-7 "must have today" items. If more than 7 - cut to 7. A narrow working MVP beats a mountain of unfinished work.`,
  },
  {
  title: "Scope freeze (feature freeze)",
@@ -634,7 +634,7 @@ Naming rules:
  content: `1. Open the old Place (where the feature already worked) in a second Studio tab or save a model.
 2. Copy the **minimal** set: Parts + needed Scripts + Remotes + ModuleScript.
 3. Paste into the finale in the correct folder.
-4. Immediately press **Play** and test only that feature for 60–90 s.
+4. Immediately press **Play** and test only that feature for 60-90 s.
 5. If Output is red - **do not glue the next system**; fix first.
 
 Typical glitches after copy:
@@ -711,7 +711,7 @@ Alternative to Touched - **ProximityPrompt** on the pad ("Press E - enter zone")
 Checks before submitting pads:
 1. Anchored = true on the pad (otherwise physics flings the Part).
 2. CanCollide can stay true, but ArriveHere is better invisible and non-colliding so it does not push.
-3. If the character teleports "into the floor" - raise ArriveHere 3–4 studs.
+3. If the character teleports "into the floor" - raise ArriveHere 3-4 studs.
 4. After PivotTo the camera sometimes faces a wall - acceptable in MVP; for SHOWCASE place ArriveHere with a clear view of hub/zone.
 
 **Do now (12 min):** both pads there-and-back + signs. Test in Play 3 times.`,
@@ -803,7 +803,7 @@ Next: **12.3** runs the build through a test plan (10 required cases + P0 fixes)
  },
  {
  title: "What to show the teacher / yourself at the end of class",
- content: `Show in 60–90 seconds (no long lecture):
+ content: `Show in 60-90 seconds (no long lecture):
 
 1. Explorer: folders in place.
 2. Play: spawn in Hub.
@@ -832,12 +832,12 @@ Note for later (12.5): one line "biggest snag today" - e.g. "two ShopGui" or "pa
  {
  mistake: "Teleport without debounce on Touched",
  explanation: "Player gets flung back and forth or spams errors.",
- correctApproach: "Attribute / flag + task.delay 1–2 s.",
+ correctApproach: "Attribute / flag + task.delay 1-2 s.",
  },
  {
  mistake: "Gluing five systems with no Play between them",
  explanation: "You do not know which one broke the build.",
- correctApproach: "After each paste - 60–90 s Play.",
+ correctApproach: "After each paste - 60-90 s Play.",
  },
  {
  mistake: "No return teleport to hub",
@@ -991,7 +991,7 @@ Note for later (12.5): one line "biggest snag today" - e.g. "two ShopGui" or "pa
  type: MC,
  question: "What do you do after pasting another system from an old Place?",
  options: [
- "Short Play 60–90 s and check Output",
+ "Short Play 60-90 s and check Output",
  "Immediately paste five more systems",
  "Delete Hub",
  "Skip checking until SHOWCASE",
@@ -1091,7 +1091,7 @@ export const enLesson123 = {
  estimatedTime: 60,
  learningObjectives: [
  "Walk 10 required golden-path cases (+ up to 10 optional)",
- "Distinguish P0–P3 and close critical issues before Publish",
+ "Distinguish P0-P3 and close critical issues before Publish",
  "Run a blind playtest with no hints",
  "Close at least 2 live P0/P1s with a timer",
  "Confirm the golden path and save the bug list for 12.5",
@@ -1124,11 +1124,11 @@ Open the build from **12.2**. Turn Output on immediately.
 | Fix pretty things while the loop is dead | First what blocks the game |
 | Embarrassing at SHOWCASE | Fewer live surprises |
 
-The plan does not need to be "10 pages of Excel." **10 required** cases are enough. Cases 11–20 are bonus if time allows.
+The plan does not need to be "10 pages of Excel." **10 required** cases are enough. Cases 11-20 are bonus if time allows.
 
 Without a plan you only check your favorite route. Bugs hide in a **newcomer's first minute**.
 
-**Do now:** in notes, title \`Test 12.3\` + space for cases **1–10** (required) and **11–20** (optional).`,
+**Do now:** in notes, title \`Test 12.3\` + space for cases **1-10** (required) and **11-20** (optional).`,
  },
  {
  title: "Priorities: what to fix first",
@@ -1141,7 +1141,7 @@ Without a plan you only check your favorite route. Bugs hide in a **newcomer's f
 
 Rule of the day: **do not paint the sign while the player is stuck in a wall.**
 
-Quick priority check: "If we leave this - can a new player walk the golden path in 3–5 min?" If no - at least **P1**, often **P0**.
+Quick priority check: "If we leave this - can a new player walk the golden path in 3-5 min?" If no - at least **P1**, often **P0**.
 
 Finale example: Prompt near the NPC exists, but **MaxActivationDistance** is too small - it feels like "the quest is broken." That is **P1** (sometimes P0 if without Prompt there is no loop at all). Hub roof color - **P3**.`,
  },
@@ -1166,7 +1166,7 @@ If 2 of 3 stuck in the same place - that is not "bad luck." That is a **P1** you
 Self-test: close your eyes for 3 seconds before Play and tell yourself "I am a new player, I did not read the instructions." Then follow only what is visible in the world.`,
  },
  {
- title: "Test plan: start (cases 1–5) — REQUIRED",
+ title: "Test plan: start (cases 1-5) - REQUIRED",
  content: `| # | Case | How to check | OK? |
 |---|------|--------------|-----|
 | 1 | Spawn works | Enter Play - character appears at start | |
@@ -1179,10 +1179,10 @@ Write notes next to the case number, not "somewhere it was bad."
 
 **Where to look in Studio:** SpawnLocation in Workspace (or your start point), CanCollide on walls near spawn, Anchored on the floor. If you fall through the floor - check **CanCollide = true** and whether Terrain has a hole.
 
-**Do now:** run cases 1–5 once "blind." If case 2 fails - before the shop place a BillboardGui / Part with an arrow to the first goal.`,
+**Do now:** run cases 1-5 once "blind." If case 2 fails - before the shop place a BillboardGui / Part with an arrow to the first goal.`,
  },
  {
- title: "Test plan: loop (cases 6–10) — REQUIRED",
+ title: "Test plan: loop (cases 6-10) - REQUIRED",
  content: `| # | Case | How to check | OK? |
 |---|------|--------------|-----|
 | 6 | Main action gives a result | Collect / jump / buy / hit / round - something changes | |
@@ -1193,13 +1193,13 @@ Write notes next to the case number, not "somewhere it was bad."
 
 This is the heart of the finale. If there are holes here - Publish is early.
 
-MVP time guide: **first reward in 1–3 minutes** of honest play (not 20). If the "do → get → repeat" loop breaks after the first time (coin does not respawn, quest stuck on "done"), that is **P0/P1**.
+MVP time guide: **first reward in 1-3 minutes** of honest play (not 20). If the "do → get → repeat" loop breaks after the first time (coin does not respawn, quest stuck on "done"), that is **P0/P1**.
 
 Case 10 check: deliberately die / fall into a hazard. Do you appear again in a clear state (HP, coins, quest not broken)? No black screen / dead UI left behind?`,
  },
  {
- title: "Optional: systems (cases 11–15)",
- content: `If 1–10 are green and time remains - run systems. Otherwise **move to P0 fixes**.
+ title: "Optional: systems (cases 11-15)",
+ content: `If 1-10 are green and time remains - run systems. Otherwise **move to P0 fixes**.
 
 | # | Case | How to check | OK? |
 |---|------|--------------|-----|
@@ -1215,7 +1215,7 @@ N/A for missing systems is fine.
 **DataStore:** in Studio it can be flaky - note that.`,
  },
  {
- title: "Optional: feel (cases 16–20)",
+ title: "Optional: feel (cases 16-20)",
  content: `| # | Case | How to check | OK? |
 |---|------|--------------|-----|
 | 16 | Sound does not hurt ears | Volume / Looped | |
@@ -1230,11 +1230,11 @@ LTV rule: **better 10 cases + 2 fixes** than 20 checkmarks with no edits.`,
  },
  {
  title: "Live fixes: 2 bugs with a timer",
- content: `After the first 1–10 run, pick the **2 worst** bugs (P0 or repeating P1).
+ content: `After the first 1-10 run, pick the **2 worst** bugs (P0 or repeating P1).
 
-Sprint format (≈12–15 min):
-1. Set 6–7 min on bug A → fix → short Play of that spot.
-2. 6–7 min on bug B → fix → Play.
+Sprint format (≈12-15 min):
+1. Set 6-7 min on bug A → fix → short Play of that spot.
+2. 6-7 min on bug B → fix → Play.
 3. Full golden path again (start → action → reward) + Output.
 
 Do not touch P3 "roof color" while A/B are open.
@@ -1288,10 +1288,10 @@ If one hard **P1** remains and the hour ended - document it clearly (repro steps
  },
  {
  title: "Lesson 89 submit checklist",
- content: `- [ ] Cases **1–10** marked ok / no / N/A
-- [ ] (Optional) 11–20 if time remained
+ content: `- [ ] Cases **1-10** marked ok / no / N/A
+- [ ] (Optional) 11-20 if time remained
 - [ ] ≥1 run with no hints
-- [ ] Bug list P0–P3
+- [ ] Bug list P0-P3
 - [ ] **≥2 live fixes** P0/P1 done today
 - [ ] Golden path after fixes + Output clean on the route
 - [ ] Save: \`Lesson 12.3 - Playtest Pass\`
@@ -1334,10 +1334,10 @@ If a P0 is still open - **do not** go to 12.4.`,
  practiceTask: {
  title: "Practice: 10 cases + 2 fixes (~30 min)",
  difficulty: "beginner",
- description: `**Goal:** cases 1–10 + 2 live fixes + a passing golden path.
+ description: `**Goal:** cases 1-10 + 2 live fixes + a passing golden path.
 
 ### Part A - Run (10 min)
-1. Cases 1–10 into notes (ok / no / N/A + time).
+1. Cases 1-10 into notes (ok / no / N/A + time).
 2. Output open; 1 "blind" run.
 
 ### Part B - Live fixes (15 min)
@@ -1346,12 +1346,12 @@ If a P0 is still open - **do not** go to 12.4.`,
 3. Full golden path + Output.
 
 ### Part C - Submit (5 min)
-1. (Optional) cases 11–20 if you had time.
+1. (Optional) cases 11-20 if you had time.
 2. Save \`Lesson 12.3 - Playtest Pass\` + bug list for 12.5.
 3. Mark practice in the LMS.
 
 ### Pass criteria
-- 1–10 marked
+- 1-10 marked
 - ≥2 fixes today
 - P0 closed (or honest workaround + docs)
 - Golden path after fixes
@@ -1362,7 +1362,7 @@ If a P0 is still open - **do not** go to 12.4.`,
  "Keep Output open on the golden path",
  ],
  optionalChallenge:
- "Ask a friend to walk cases 1–10 and compare notes; or walk 11–15 yourself.",
+ "Ask a friend to walk cases 1-10 and compare notes; or walk 11-15 yourself.",
  },
  quiz: {
  passingScore: 70,
@@ -1413,7 +1413,7 @@ If a P0 is still open - **do not** go to 12.4.`,
  "0 - no plan needed",
  ],
  correctAnswer: 0,
- explanation: "1–10 first; the rest if you have time.",
+ explanation: "1-10 first; the rest if you have time.",
  },
  {
  id: "q5",
@@ -1550,7 +1550,7 @@ If a P0 is still open - **do not** go to 12.4.`,
  type: MC,
  question: "What counts as the submitted artifact for lesson 12.3?",
  options: [
- "Cases 1–10 + ≥2 live fixes + bug list + golden path",
+ "Cases 1-10 + ≥2 live fixes + bug list + golden path",
  "Only one screenshot with no notes",
  "An empty checklist",
  "Publish with no test",
@@ -1630,7 +1630,7 @@ Code updates after first Publish: Save/Publish again to the same Place. The link
 3. Open the experience page. Blocks are usually: **Overview**, **Places**, **Configure** (names may differ slightly in the UI - look for Icon, Thumbnails, Description, Permissions).
 4. **Name / Description** - align with what you put in Publish. Description can be longer and cleaner here.
 5. **Icon** - upload a square file (see the icon section).
-6. **Thumbnails** - 1–2 gameplay frames. No empty Baseplate and no screenshot with Explorer open.
+6. **Thumbnails** - 1-2 gameplay frames. No empty Baseplate and no screenshot with Explorer open.
 7. **Permissions / Playability** - Private / Friends / Public (details below).
 8. If you need to show the teacher a place separately - in Places confirm the published start Place is the one players spawn in.
 
@@ -1656,7 +1656,7 @@ Made in the SmartCode Academy course (Roblox Studio).
 **Yes:** "One dropper, coin save, 1 quest."  
 **No:** "100 zones, PvP arena, seasonal battle pass!" - if that does not exist.
 
-Length: 3–8 short lines are enough. Write what a player will do in the first 2 minutes. Do not claim "1000 online players" or promise a VIP GamePass that does not exist.
+Length: 3-8 short lines are enough. Write what a player will do in the first 2 minutes. Do not claim "1000 online players" or promise a VIP GamePass that does not exist.
 
 An honest description = less broken trust after Publish and a calmer SHOWCASE.`,
  },
@@ -1677,7 +1677,7 @@ How to capture in Studio:
 
 Do not use an empty Baseplate, Output full of errors, or the Properties window as a thumbnail. Teachers and friends notice immediately.
 
-**Do now (8 min):** 1 square for Icon + 1–2 frames for Thumbnails → upload on Dashboard.`,
+**Do now (8 min):** 1 square for Icon + 1-2 frames for Thumbnails → upload on Dashboard.`,
  },
  {
  title: "Access modes (privacy) and when to use which",
@@ -1706,7 +1706,7 @@ For most module 12 submits, **Friends** is enough. Public without permission is 
 1. Copy the experience URL from Dashboard or the Share button.
 2. On the second account open the link. If Friends - accounts must be friends; if Private - alt cannot join (temporarily Friends for the test).
 3. Spawn → one main golden-path action (collect / buy / finish) → if save exists, leave and join again.
-4. Write in notes: time, what worked, what did not (1–3 lines).
+4. Write in notes: time, what worked, what did not (1-3 lines).
 
 Without this run Publish is not "submitted" yet. For the creator in Studio "all OK" often lies compared to a new player's eyes.`,
  },
@@ -1780,7 +1780,7 @@ Place in Studio: **Save to Roblox** → \`Lesson 12.4 - Published\`. This save a
 - [ ] On Dashboard: name + honest description
 - [ ] Icon + ≥1 Thumbnail uploaded
 - [ ] Access chosen deliberately (often Friends)
-- [ ] Live test from another account 1–2 min (golden path)
+- [ ] Live test from another account 1-2 min (golden path)
 - [ ] If DataStore - save checked in live or status written
 - [ ] Badge created **or** written plan "when we award" (+ Id if any)
 - [ ] In notes: GamePass vs DevProduct + school policy briefly
@@ -1798,7 +1798,7 @@ Place in Studio: **Save to Roblox** → \`Lesson 12.4 - Published\`. This save a
  {
  mistake: "Did not check the link from another account",
  explanation: "For the creator \"all OK\"; for the player - crash or empty world.",
- correctApproach: "Required live check 1–2 minutes.",
+ correctApproach: "Required live check 1-2 minutes.",
  },
  {
  mistake: "DataStore in the game, but live saves nothing",
@@ -1825,12 +1825,12 @@ Place in Studio: **Save to Roblox** → \`Lesson 12.4 - Published\`. This save a
 
 ### Part A - Metadata (10 min)
 1. Write an honest description from the template.
-2. Prepare icon (square) + 1–2 thumbnails.
+2. Prepare icon (square) + 1-2 thumbnails.
 
 ### Part B - Publish and live (12 min)
 1. File → Publish to Roblox / update Place.
 2. Set access (often Friends for school).
-3. Join from another account for 1–2 min on the golden path.
+3. Join from another account for 1-2 min on the golden path.
 4. If DataStore - check save.
 
 ### Part C - Badge / GamePass lite (8 min)
@@ -2061,7 +2061,7 @@ export const enLesson125 = {
  estimatedTime: 60,
  learningObjectives: [
  "Build a portfolio post: pitch, systems, challenge, lessons, link",
- "Add 3–5 screenshots (or a short GIF) of the golden path",
+ "Add 3-5 screenshots (or a short GIF) of the golden path",
  "Highlight 3 technical course systems in plain words",
  "Verify the game link opens",
  "Prepare the text so tomorrow at SHOWCASE you have something to show",
@@ -2073,10 +2073,10 @@ export const enLesson125 = {
  content: `Tomorrow is **SHOWCASE DAY (12.6)**. Today you gather **proof** in ~30 min, not a 3-screen essay.
 
 "Portfolio sprint" format:
-1. **0–5′** - open the game from 12.4 + section template.
-2. **5–20′** - fill briefly: pitch, 3 systems, 1 challenge, lessons, link.
-3. **20–28′** - 3 golden-path screenshots (preferably from Player) + Publish/game page screenshot.
-4. **28–30′** - click the link from another account / incognito.
+1. **0-5′** - open the game from 12.4 + section template.
+2. **5-20′** - fill briefly: pitch, 3 systems, 1 challenge, lessons, link.
+3. **20-28′** - 3 golden-path screenshots (preferably from Player) + Publish/game page screenshot.
+4. **28-30′** - click the link from another account / incognito.
 
 Goal: **one page** you can send parents in a messenger without "wait, I will explain."`,
  },
@@ -2123,7 +2123,7 @@ Problem → what I tried → what worked
 
 **Play:** [Roblox link]
 
-**Media:** 3–5 screenshots / 1 short GIF
+**Media:** 3-5 screenshots / 1 short GIF
 \`\`\`
 
 Do not write a novel. **Clear and short** beats a wall of text. Guide: one screen on a computer without long scrolling - enough for submit and for SHOWCASE.`,
@@ -2138,7 +2138,7 @@ In **"what I built"** write facts, not hype:
 - good: "shop with server check", "3-biome obby", "leaderstats + HUD";
 - bad: "THE BEST GAME IN ALL OF ROBLOX!!!".
 
-Take only what **actually exists** in the game after 12.2–12.4. If a zone is "almost ready" but not in Play - do not put it in the post.
+Take only what **actually exists** in the game after 12.2-12.4. If a zone is "almost ready" but not in Play - do not put it in the post.
 
 **Mini exercise (4 min):** write the pitch and exactly **4** "what I built" bullets. Cross out anything you cannot show in Play in 2 minutes.`,
  },
@@ -2164,7 +2164,7 @@ Under each system you can add **1 screenshot** where it is visible in game (HUD 
  },
  {
  title: "\"Hardest challenge\" block - how to fill it",
- content: `Template for 4–6 sentences:
+ content: `Template for 4-6 sentences:
 
 1. **What broke** (symptom: what the player saw)
 2. **Why that is bad** for the player
@@ -2219,7 +2219,7 @@ At the end you can add a line: "Happy for feedback - what you liked and what bro
  },
  {
  title: "Screenshots on Windows: how to capture cleanly",
- content: `Take **3–5** frames (or 1 GIF 10–20 s) of the golden path.
+ content: `Take **3-5** frames (or 1 GIF 10-20 s) of the golden path.
 
 | # | What is in the frame |
 |---|----------------------|
@@ -2233,7 +2233,7 @@ At the end you can add a line: "Happy for feedback - what you liked and what bro
 1. Join the game through Roblox Player (not necessarily Studio) so Explorer panels are not in the frame.
 2. **Win + Shift + S** - select the game area; paste into Doc/Notion with **Ctrl + V**.
 3. Or **Win + PrtSc** - full screen into "Pictures → Screenshots"; then insert the frames you need.
-4. For a short clip: **Win + G** (Xbox Game Bar) → Record, or GIF via any light recorder for 10–20 s.
+4. For a short clip: **Win + G** (Xbox Game Bar) → Record, or GIF via any light recorder for 10-20 s.
 
 **Quality tips:**
 - hide extra Studio panels if you capture in Play Solo;
@@ -2249,7 +2249,7 @@ At the end you can add a line: "Happy for feedback - what you liked and what bro
 1. Copy the URL from the experience page after **12.4** (full \`https://www.roblox.com/games/...\`).
 2. Paste into the post **as one line**, not "message me in private".
 3. Open the link from **another** account (or incognito / friend / phone).
-4. Join for 1–2 minutes: spawn → one main action.
+4. Join for 1-2 minutes: spawn → one main action.
 5. If it is Private and the teacher cannot join - switch to Friends (or as your class agreed) and check again.
 
 If the link does not open, leads to an empty Place, or "no access" - the post is **not ready yet**, even if the text looks nice. Fix access or Publish, then update the Play line in Doc/Notion.`,
@@ -2291,11 +2291,11 @@ If they ask for one file - **File → Download → PDF** in Google Doc or Export
  title: "Link to tomorrow's SHOWCASE",
  content: `Today's post is the **speech script** for 12.6, written in advance.
 
-| Today in the post | Tomorrow in the talk (5–8 min) |
+| Today in the post | Tomorrow in the talk (5-8 min) |
 |-------------------|--------------------------------|
 | Pitch | First ~20 seconds |
 | "What I built" list | Short feature tour before demo |
-| 3 systems | "How it works" block (~30–40 s each) |
+| 3 systems | "How it works" block (~30-40 s each) |
 | Challenge | Story for ~1 min |
 | Screenshots / GIF | Plan B if live fails |
 | Play link | "You can play here" |
@@ -2348,7 +2348,7 @@ After the post you already have answers to typical teacher questions: "what is t
  {
  mistake: "A wall of text with no pictures",
  explanation: "Nobody reads to the link.",
- correctApproach: "3–5 screenshots or a short golden-path GIF.",
+ correctApproach: "3-5 screenshots or a short golden-path GIF.",
  },
  ],
  summary:
@@ -2384,7 +2384,7 @@ After the post you already have answers to typical teacher questions: "what is t
  "Bug list from 12.3 = ready \"challenge\" paragraph",
  ],
  optionalChallenge:
- "60–90 s screen recording of the golden path as plan B for SHOWCASE.",
+ "60-90 s screen recording of the golden path as plan B for SHOWCASE.",
  },
  quiz: {
  passingScore: 70,
@@ -2527,7 +2527,7 @@ After the post you already have answers to typical teacher questions: "what is t
  id: "q12",
  type: MC,
  question: "How many screenshots should you add at minimum?",
- options: ["3–5 (or 1 short GIF)", "0", "Exactly 100", "Only one pixel"],
+ options: ["3-5 (or 1 short GIF)", "0", "Exactly 100", "Only one pixel"],
  correctAnswer: 0,
  explanation: "Visual proof supports the text.",
  },
@@ -2583,9 +2583,9 @@ export const enLesson126 = {
  quizMinutes: 15,
  estimatedTime: 75,
  learningObjectives: [
- "Deliver a final 5–8 minute talk about your game",
+ "Deliver a final 5-8 minute talk about your game",
  "Show a live demo of the player's \"golden path\"",
- "Explain 2–3 technical course systems in your own words",
+ "Explain 2-3 technical course systems in your own words",
  "Share one challenge, three course lessons, and a next-step plan",
  "Have a backup plan (video/screenshots) if live fails",
  ],
@@ -2595,18 +2595,18 @@ export const enLesson126 = {
  title: "Today's mission - SHOWCASE DAY",
  content: `This is the **last lesson of the course** (lesson **92** of 92).
 
-Today you do not learn a new Studio button. You present as a **game creator**: briefly tell, show a live demo, explain 2–3 systems, answer questions.
+Today you do not learn a new Studio button. You present as a **game creator**: briefly tell, show a live demo, explain 2-3 systems, answer questions.
 
-From **12.1–12.5** you should already have:
+From **12.1-12.5** you should already have:
 - plan / MVP;
 - assembled finale;
 - test;
 - Publish (or updated Place);
 - portfolio with link and screenshots.
 
-If something is missing - first **5–10 min finish the minimum** (link + one working demo), then present. An honest short show beats promises about features that do not exist.
+If something is missing - first **5-10 min finish the minimum** (link + one working demo), then present. An honest short show beats promises about features that do not exist.
 
-Goal of the day: after 6–8 minutes the viewer understands **what to play**, **how you made it**, and **where to click** to try it themselves.`,
+Goal of the day: after 6-8 minutes the viewer understands **what to play**, **how you made it**, and **where to click** to try it themselves.`,
  },
  {
  title: "Minute by minute - lesson and talk timing",
@@ -2614,23 +2614,23 @@ Goal of the day: after 6–8 minutes the viewer understands **what to play**, **
 
 | Lesson time | What you do |
 |-------------|-------------|
-| 0–5 min | Check link, Place, plan B, microphone |
-| 5–15 min | Last pitch + golden path rehearsal |
-| 15–55 min | Talks in turn (5–8 min + short questions) |
-| 55–70 min | Q&A, feedback, save Final Showcase |
-| 70–75 min | Submit checklist in LMS |
+| 0-5 min | Check link, Place, plan B, microphone |
+| 5-15 min | Last pitch + golden path rehearsal |
+| 15-55 min | Talks in turn (5-8 min + short questions) |
+| 55-70 min | Q&A, feedback, save Final Showcase |
+| 70-75 min | Submit checklist in LMS |
 
 Keep your **personal** talk like this:
 
 | Talk minute | What exactly |
 |-------------|--------------|
-| 0:00–0:20 | Pitch in one sentence |
-| 0:20–3:00 | Live golden-path demo |
-| 3:00–4:30 | 2–3 systems "how it works" |
-| 4:30–5:30 | One challenge + how you solved it |
-| 5:30–6:30 | 3 course lessons + what's next |
-| 6:30–7:30 | Link + "you can play" |
-| after | Audience questions (1–3) |
+| 0:00-0:20 | Pitch in one sentence |
+| 0:20-3:00 | Live golden-path demo |
+| 3:00-4:30 | 2-3 systems "how it works" |
+| 4:30-5:30 | One challenge + how you solved it |
+| 5:30-6:30 | 3 course lessons + what's next |
+| 6:30-7:30 | Link + "you can play" |
+| after | Audience questions (1-3) |
 
 Do not stretch to 15 minutes. Clear 6 minutes beats long and messy. If the timer shows 8:00 - cut system talk, **do not cut the demo**.`,
  },
@@ -2675,7 +2675,7 @@ During the demo speak briefly: "collecting now", "here's a purchase", "here's a 
  },
  {
  title: "Systems - speak like a developer",
- content: `Pick **2–3 systems** you actually built. The viewer wants to understand "button in game → logic in code," not hear the whole Script.
+ content: `Pick **2-3 systems** you actually built. The viewer wants to understand "button in game → logic in code," not hear the whole Script.
 
 | System | How to say it simply |
 |--------|----------------------|
@@ -2685,7 +2685,7 @@ During the demo speak briefly: "collecting now", "here's a purchase", "here's a 
 | Touched + debounce | "Trap fires once per approach, not 20 times" |
 | ProximityPrompt | "Walk up - press E - action opens" |
 
-Template for one system (~20–25 s): **name → why for the player → where visible in the demo → where logic lives (server/client)**.
+Template for one system (~20-25 s): **name → why for the player → where visible in the demo → where logic lives (server/client)**.
 
 Do not read code line by line. Do not apologize ("it's still messy"). State the fact and move on.`,
  },
@@ -2727,16 +2727,16 @@ One real step beats ten fantasies. "Next I will do everything" sounds weaker tha
 **0:00 pitch:**  
 *"This is a hub simulator: you collect coins, buy a power upgrade, and take a quest from an NPC."*
 
-**0:20–3:00 demo (speak under the action):**  
+**0:20-3:00 demo (speak under the action):**  
 *"Spawn. I run to the collect zone - coins grow in TAB. I open the shop - buy an upgrade. I walk to the NPC - ProximityPrompt, take the quest. That's the short game loop."*
 
-**3:00–4:30 systems:**  
+**3:00-4:30 systems:**  
 *"Three systems. First - leaderstats on the server; HUD only displays. Second - purchase via RemoteEvent: client asks, server checks price and deducts. Third - quest on ProximityPrompt so we do not catch random Touched."*
 
-**4:30–5:30 challenge:**  
+**4:30-5:30 challenge:**  
 *"Biggest snag - double coin charge. Fixed with a server check and a short button pause."*
 
-**5:30–6:30 lessons + next:**  
+**5:30-6:30 lessons + next:**  
 *"From the course I take three things: do not trust the client with money, make a test plan before Publish, and that an honest MVP beats empty promises. Next I will add a second collect zone."*
 
 **close:**  
@@ -2746,7 +2746,7 @@ In rehearsal start a timer. If longer than 8 min - cut systems, do not cut the d
  },
  {
  title: "Q&A - typical questions and ready answers",
- content: `After the show expect 1–3 questions. Answer in **20–30 seconds**, then stop.
+ content: `After the show expect 1-3 questions. Answer in **20-30 seconds**, then stop.
 
 | Question | Short answer |
 |----------|--------------|
@@ -2770,13 +2770,13 @@ Before the lesson starts prepare at least two items:
 
 | Plan B | When you switch |
 |--------|-----------------|
-| 60–90 s golden-path video | Studio / Play will not open |
-| 4–6 screenshots in the right order | Video will not open either |
+| 60-90 s golden-path video | Studio / Play will not open |
+| 4-6 screenshots in the right order | Video will not open either |
 | Play link to the published game | Viewer can join while you talk |
 | Second device / account | Fast restart without panic |
 | Portfolio from 12.5 on screen | Pitch, screenshots, and link even without Studio |
 
-Failure protocol (30–40 s):
+Failure protocol (30-40 s):
 1. Calmly say: *"I will switch to the backup demo."*
 2. Open video or screenshots.
 3. Continue pitch → show → systems on the same timing.
@@ -2810,7 +2810,7 @@ If camera is off by class rules - OK, but voice and screen must be clean. Copy t
 
 **At least 2 times**, better 3:
 
-1. **Round 1 (dry):** demo only, silent, 2–3 min. Check the route does not break.
+1. **Round 1 (dry):** demo only, silent, 2-3 min. Check the route does not break.
 2. **Round 2 (full):** pitch → demo → systems → challenge → lessons → link. Timer 6 min. Note where you stuck.
 3. **Round 3 (almost real):** same + 2 made-up questions from the Q&A table. If online - turn on screen share as in class.
 
@@ -2824,7 +2824,7 @@ Bonus: ask a friend / sibling / parent to listen for 3 minutes. If they get the 
 
 1. Pitch (1 line)
 2. Demo route (4 steps)
-3. Names of 2–3 systems
+3. Names of 2-3 systems
 4. One bug story (4 hook words)
 5. 3 lessons + 1 "next"
 6. Game link (or "link in chat")
@@ -2839,7 +2839,7 @@ During the talk look at people / the camera. The sheet is only if you freeze for
 
 - [ ] Pitch in 1 sentence written and said aloud today
 - [ ] Demo walked dry with no explanations
-- [ ] 2–3 systems named in plain language
+- [ ] 2-3 systems named in plain language
 - [ ] Challenge story ready (problem → solution)
 - [ ] 3 course lessons + 1 next plan
 - [ ] Plan B (video / screenshots / link) open in 1 click
@@ -2856,7 +2856,7 @@ After the talk: thank them, drop the link again, save the Place, mark practice i
  {
  mistake: "Start with 5 minutes of code and no demo",
  explanation: "The viewer still does not know what to play.",
- correctApproach: "Pitch + demo first, then 2–3 systems.",
+ correctApproach: "Pitch + demo first, then 2-3 systems.",
  },
  {
  mistake: "Promise features that are not in the demo",
@@ -2871,7 +2871,7 @@ After the talk: thank them, drop the link again, save the Place, mark practice i
  {
  mistake: "15+ minute talk with no structure",
  explanation: "Attention drops; it feels like chaos.",
- correctApproach: "Keep 5–8 min by the segment table.",
+ correctApproach: "Keep 5-8 min by the segment table.",
  },
  {
  mistake: "Forget the game link",
@@ -2884,19 +2884,19 @@ After the talk: thank them, drop the link again, save the Place, mark practice i
  practiceTask: {
  title: "Practice: SHOWCASE DAY (~40 min)",
  difficulty: "beginner",
- description: `**Goal:** deliver (or fully rehearse) a final 5–8 min talk.
+ description: `**Goal:** deliver (or fully rehearse) a final 5-8 min talk.
 
 ### Part A - Prep (10 min)
 1. Finish pitch and cheat sheet.
 2. Walk the golden path silently once.
 3. Check plan B.
 
-### Part B - Talk (15–20 min)
-1. Timer 6–8 min.
+### Part B - Talk (15-20 min)
+1. Timer 6-8 min.
 2. Pitch → demo → systems → challenge → lessons → next.
-3. 2–3 questions (from teacher / classmates / yourself aloud).
+3. 2-3 questions (from teacher / classmates / yourself aloud).
 
-### Part C - Submit (5–10 min)
+### Part C - Submit (5-10 min)
 1. Put the game link in the portfolio (if not yet).
 2. **File → Save to Roblox** → \`SmartCode - Final Showcase\`.
 3. Mark practice complete in the LMS.
@@ -2912,7 +2912,7 @@ After the talk: thank them, drop the link again, save the Place, mark practice i
  "Keep the game link copied to the clipboard",
  ],
  optionalChallenge:
- "Record the final talk as a 5–7 min video for the portfolio (separate from live).",
+ "Record the final talk as a 5-7 min video for the portfolio (separate from live).",
  },
  quiz: {
  passingScore: 70,
@@ -2923,8 +2923,8 @@ After the talk: thank them, drop the link again, save the Place, mark practice i
  type: MC,
  question: "About how long is the main talk on SHOWCASE DAY?",
  options: [
- "5–8 minutes (+ short questions)",
- "30–40 minutes required",
+ "5-8 minutes (+ short questions)",
+ "30-40 minutes required",
  "Exactly 90 seconds and done",
  "No time limit",
  ],
@@ -2962,7 +2962,7 @@ After the talk: thank them, drop the link again, save the Place, mark practice i
  type: MC,
  question: "How many technical systems should you briefly explain?",
  options: [
- "2–3 systems in your own words",
+ "2-3 systems in your own words",
  "All 92 lessons one by one",
  "None - screenshots only",
  "Only file names with no meaning",
@@ -3046,7 +3046,7 @@ After the talk: thank them, drop the link again, save the Place, mark practice i
  "Only an open Toolbox",
  ],
  correctAnswer: 0,
- explanation: "12.1–12.5 prepare material for the final day.",
+ explanation: "12.1-12.5 prepare material for the final day.",
  },
  {
  id: "q11",
@@ -3066,7 +3066,7 @@ After the talk: thank them, drop the link again, save the Place, mark practice i
  type: MC,
  question: "What belongs on the cheat sheet?",
  options: [
- "Pitch, demo route, 2–3 systems, challenge, lessons, link",
+ "Pitch, demo route, 2-3 systems, challenge, lessons, link",
  "All module 1 theory text",
  "Only random English words",
  "Nothing - improvise with no anchor",

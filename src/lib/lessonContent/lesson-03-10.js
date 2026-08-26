@@ -941,7 +941,7 @@ ISBN: x-1
 Книги автора 'Solo': ['Alone']
 Книга видалена: False
 Кількість книг після видалення: 1`,
-        explanation: "ISBN missing не знайдено — видалення False"
+        explanation: "ISBN missing не знайдено - видалення False"
       }
     ],
     solution: {

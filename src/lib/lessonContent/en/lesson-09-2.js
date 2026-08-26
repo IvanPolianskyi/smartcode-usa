@@ -31,7 +31,7 @@ export const lesson_09_2 = {
 **Why you need it:**
 
 - Sites without a public API often expose data only in HTML
-- Real-world HTML can be messy — BeautifulSoup tries to fix it
+- Real-world HTML can be messy - BeautifulSoup tries to fix it
 - The \`find\` / \`find_all\` API is more readable than complex regexes over the whole document
 
 **Installation:**
@@ -79,7 +79,7 @@ soup = BeautifulSoup(html, "lxml")
       },
       {
         title: "Finding elements: find and find_all",
-        content: `**One element** — \`find\` (first match or \`None\`):
+        content: `**One element** - \`find\` (first match or \`None\`):
 
 \`\`\`python
 header = soup.find("h1")
@@ -87,7 +87,7 @@ if header:
     print(header.get_text(strip=True))
 \`\`\`
 
-**All matches** — \`find_all\` (a list):
+**All matches** - \`find_all\` (a list):
 
 \`\`\`python
 links = soup.find_all("a", href=True)
@@ -95,7 +95,7 @@ for link in links:
     print(link["href"], link.get_text(strip=True))
 \`\`\`
 
-**By class or id** (HTML attribute \`class\`, in Python — \`class_\`):
+**By class or id** (HTML attribute \`class\`, in Python - \`class_\`):
 
 \`\`\`python
 cards = soup.find_all("div", class_="product-card")
@@ -119,7 +119,7 @@ paragraph = soup.find("p", class_="lead")
 if paragraph:
     print(paragraph.get_text(strip=True))
 
-# All visible page text (careful — a lot of noise)
+# All visible page text (careful - a lot of noise)
 all_text = soup.get_text(separator="\\n", strip=True)
 
 # Attributes
@@ -140,7 +140,7 @@ if img and img.get("src"):
 | **BeautifulSoup** | Flexible HTML parsing | Breaks when markup changes |
 | **regex** | Fine for small fragments | Scales poorly to full HTML |
 
-**Rule:** if there is an official API — use it. BeautifulSoup — when data is only in HTML and the site rules allow it (\`robots.txt\`, ToS).
+**Rule:** if there is an official API - use it. BeautifulSoup - when data is only in HTML and the site rules allow it (\`robots.txt\`, ToS).
 
 \`\`\`python
 # Bad: parse JSON with BeautifulSoup
@@ -152,10 +152,10 @@ data = response.json()
         title: "Ethics and limits",
         content: `Before scraping, check:
 
-1. **robots.txt** — \`https://site.com/robots.txt\`
+1. **robots.txt** - \`https://site.com/robots.txt\`
 2. The site’s **terms of use**
-3. **Load** — pauses between requests (\`time.sleep\`), not a DDoS
-4. **User-Agent** — honestly identify a bot or learning script
+3. **Load** - pauses between requests (\`time.sleep\`), not a DDoS
+4. **User-Agent** - honestly identify a bot or learning script
 
 \`\`\`python
 import time
@@ -168,15 +168,15 @@ for url in urls:
     time.sleep(1)  # pause between requests
 \`\`\`
 
-Dynamic pages (content after JavaScript) are **not** executed by BeautifulSoup — you need other tools (Selenium, Playwright); we do not cover them in the basic course.`
+Dynamic pages (content after JavaScript) are **not** executed by BeautifulSoup - you need other tools (Selenium, Playwright); we do not cover them in the basic course.`
       },
       {
         title: "Summary",
         content: `BeautifulSoup complements \`requests\` when you need to extract data from HTML:
 
-- \`BeautifulSoup(html, "html.parser")\` — document tree
-- \`find\` / \`find_all\` / \`select\` — finding elements
-- \`get_text(strip=True)\` — clean text
+- \`BeautifulSoup(html, "html.parser")\` - document tree
+- \`find\` / \`find_all\` / \`select\` - finding elements
+- \`get_text(strip=True)\` - clean text
 - A JSON API remains the priority when available
 
 In the next lessons of module 9 you will use \`requests\` for full scraping and saving data.`
@@ -207,7 +207,7 @@ for a in links[:5]:
       code: `items = soup.select("ul.menu li a")
 for item in items:
     print(item.get_text(strip=True))`,
-      explanation: "select works like CSS — handy for nested structures."
+      explanation: "select works like CSS - handy for nested structures."
     }
   ],
 
@@ -219,7 +219,7 @@ for item in items:
     },
     {
       mistake: "Not checking the result of find",
-      explanation: "find returns None when nothing matches — AttributeError follows.",
+      explanation: "find returns None when nothing matches - AttributeError follows.",
       correctApproach: "if element: ... or element = soup.find(...) or default"
     },
     {
@@ -287,7 +287,7 @@ for item in items:
           "When the site officially provides a structured API",
           "When the HTML is very large",
           "When you only need the title tag",
-          "Never — Soup is always better"
+          "Never - Soup is always better"
         ],
         correctAnswer: 0,
         explanation: "An API is more stable and easier to maintain than scraping markup."

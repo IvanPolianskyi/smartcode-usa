@@ -41,11 +41,11 @@ export const lesson_07_2 = {
 **Comparison:**
 
 \`\`\`python
-# List comprehension — creates the whole list
+# List comprehension - creates the whole list
 squares_list = [x**2 for x in range(10)]
 print(squares_list)  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
 
-# Generator expression — creates a generator
+# Generator expression - creates a generator
 squares_gen = (x**2 for x in range(10))
 print(squares_gen)  # <generator object <genexpr> at 0x...>
 print(list(squares_gen))  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
@@ -53,9 +53,9 @@ print(list(squares_gen))  # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
 
 **Advantages of generator expressions:**
 
-1. **Compactness** — shorter syntax
-2. **Memory savings** — does not create a list
-3. **Lazy evaluation** — values are produced only when needed
+1. **Compactness** - shorter syntax
+2. **Memory savings** - does not create a list
+3. **Lazy evaluation** - values are produced only when needed
 
 **When to use:**
 
@@ -125,7 +125,7 @@ print(max_value)  # 18
 `
       },
       {
-        title: "yield from — delegating generators",
+        title: "yield from - delegating generators",
         content: `\`yield from\` lets you delegate value production to another generator. This is useful for composing generators.
 
 **Syntax:**
@@ -188,10 +188,10 @@ for num in full_range():
 
 **Advantages of yield from:**
 
-1. **Readability** — cleaner code
-2. **Composition** — easy to combine generators
-3. **Delegation** — hand control to another generator
-4. **Optimization** — more efficient than manually calling next()`
+1. **Readability** - cleaner code
+2. **Composition** - easy to combine generators
+3. **Delegation** - hand control to another generator
+4. **Optimization** - more efficient than manually calling next()`
       },
       {
         title: "Infinite generators",
@@ -316,9 +316,9 @@ for num in pipeline:
 
 **Advantages:**
 
-1. **Memory savings** — no intermediate lists
-2. **Speed** — process one element at a time
-3. **Flexibility** — easy to combine operations`
+1. **Memory savings** - no intermediate lists
+2. **Speed** - process one element at a time
+3. **Flexibility** - easy to combine operations`
       },
       {
         title: "Practical tips",
@@ -355,10 +355,10 @@ for num in pipeline:
 
 **Key concepts:**
 
-1. **Generator expressions** — compact syntax for creating generators
-2. **yield from** — delegate generation to another generator
-3. **Infinite generators** — generators with no end (use limits!)
-4. **Optimization** — use generators to save memory
+1. **Generator expressions** - compact syntax for creating generators
+2. **yield from** - delegate generation to another generator
+3. **Infinite generators** - generators with no end (use limits!)
+4. **Optimization** - use generators to save memory
 
 **Syntax:**
 
@@ -497,10 +497,10 @@ for square in gen:  # Process one by one
 
   summary: `In this lesson we learned advanced generator features:
 
-1. Generator expressions — compact syntax (x**2 for x in range(10))
-2. yield from — delegate generation to other generators
-3. Infinite generators — generators with no end (use limits!)
-4. Optimization — use generators to save memory and improve speed
+1. Generator expressions - compact syntax (x**2 for x in range(10))
+2. yield from - delegate generation to other generators
+3. Infinite generators - generators with no end (use limits!)
+4. Optimization - use generators to save memory and improve speed
 
 Generator expressions and yield from make working with generators even more powerful and convenient.`,
 
@@ -511,7 +511,7 @@ Generator expressions and yield from make working with generators even more powe
 
 1. Uses a generator expression for cubes from 1 to cube_n
 2. Defines combine_ranges(start1, end1, start2, end2) with yield from
-3. Defines infinite_evens() — the first even_count even numbers
+3. Defines infinite_evens() - the first even_count even numbers
 4. Computes the sum of squares from 1 to square_n
 
 Input format:
@@ -737,7 +737,7 @@ print(total)`,
           "Only with generator expressions"
         ],
         correctAnswer: 0,
-        explanation: "Yes, with while True — but always limit usage or the program will hang."
+        explanation: "Yes, with while True - but always limit usage or the program will hang."
       },
       {
         id: "q5",

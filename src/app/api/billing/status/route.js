@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
-import { getEntitlement } from '@/lib/entitlements'
+import { getEntitlement, getSubscriptions } from '@/lib/entitlements'
 import { labelForCourseIds } from '@/lib/billingCatalog'
+import { isPaddleManagedCustomerId } from '@/lib/paddle'
 
 /** Subscription state for the account page. Never exposes Paddle internals. */
 
@@ -16,20 +17,41 @@ export async function GET() {
 
 	try {
 		const entitlement = await getEntitlement(userId)
-		const programs = (entitlement.subscriptions || []).map((sub) => ({
-			courseIds: sub.courseIds,
-			label: labelForCourseIds(sub.courseIds),
-			status: sub.status,
-			trialing: sub.trialing,
-			inGrace: sub.inGrace,
-			active: sub.active,
-			cancelAtPeriodEnd: sub.cancelAtPeriodEnd,
-			endsAt: sub.endsAt,
-			trialEndsAt: sub.trialEndsAt,
-			billingInterval: sub.billingInterval,
-			planTier: sub.planTier || null,
-			paddleSubscriptionId: sub.paddleSubscriptionId,
-		}))
+		const rows = await getSubscriptions(userId)
+		const rowBySubId = new Map(
+			rows.map((row) => [row.paddleSubscriptionId, row])
+		)
+		const canManageBilling = rows.some((row) =>
+			isPaddleManagedCustomerId(row.paddleCustomerId)
+		)
+		const programs = (entitlement.subscriptions || []).map((sub) => {
+			const row = rowBySubId.get(sub.paddleSubscriptionId)
+			const cancellableStatus =
+				sub.status === 'active' ||
+				sub.status === 'trialing' ||
+				sub.status === 'past_due' ||
+				sub.status === 'paused'
+			const canCancel =
+				Boolean(sub.paddleSubscriptionId) &&
+				cancellableStatus &&
+				!sub.cancelAtPeriodEnd &&
+				Boolean(row)
+			return {
+				courseIds: sub.courseIds,
+				label: labelForCourseIds(sub.courseIds),
+				status: sub.status,
+				trialing: sub.trialing,
+				inGrace: sub.inGrace,
+				active: sub.active,
+				cancelAtPeriodEnd: sub.cancelAtPeriodEnd,
+				endsAt: sub.endsAt,
+				trialEndsAt: sub.trialEndsAt,
+				billingInterval: sub.billingInterval,
+				planTier: sub.planTier === 'premium' ? 'premium' : 'standard',
+				paddleSubscriptionId: sub.paddleSubscriptionId,
+				canCancel,
+			}
+		})
 
 		return NextResponse.json({
 			active: entitlement.active,
@@ -42,6 +64,7 @@ export async function GET() {
 			trialEndsAt: entitlement.trialEndsAt,
 			billingInterval: programs[0]?.billingInterval || null,
 			hasSubscription: programs.length > 0,
+			canManageBilling,
 			programs,
 		})
 	} catch (error) {

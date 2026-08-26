@@ -617,12 +617,12 @@ if __name__ == '__main__':
 
 **What we did:**
 
-1. **Analysis and planning** — defined goals and structure
-2. **Basic implementation** — built the core scraper
-3. **Extended functionality** — added monitoring and automation
-4. **Edge cases** — validation and error handling
-5. **Visualization** — generating reports
-6. **Testing** — verifying functionality
+1. **Analysis and planning** - defined goals and structure
+2. **Basic implementation** - built the core scraper
+3. **Extended functionality** - added monitoring and automation
+4. **Edge cases** - validation and error handling
+5. **Visualization** - generating reports
+6. **Testing** - verifying functionality
 
 **Skills we gained:**
 
@@ -723,12 +723,12 @@ def save_data(rates):
   
   summary: `In this lesson we built a complete web scraping project:
 
-1. Planning — analysis and project structure
-2. Implementation — building a working scraper
-3. Extension — adding new capabilities
-4. Error handling — validation and edge cases
-5. Storage — different data formats
-6. Testing — verifying functionality
+1. Planning - analysis and project structure
+2. Implementation - building a working scraper
+3. Extension - adding new capabilities
+4. Error handling - validation and edge cases
+5. Storage - different data formats
+6. Testing - verifying functionality
 
 A practical project is the best way to reinforce your skills!`,
   

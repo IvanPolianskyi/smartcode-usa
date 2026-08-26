@@ -16,8 +16,10 @@ import {
   HelpCircle,
   XCircle,
 } from 'lucide-react'
+import { getCurriculum } from '@/lib/getCurriculum'
 import { getRobloxCurriculum } from '@/lib/robloxCurriculumLocale'
 import { getRobloxLessonContent } from '@/lib/robloxLessonContent'
+import { getAiAtWorkLessonContent } from '@/lib/aiAtWorkLessonContent'
 import { markdownToHtml } from '@/lib/markdownToHtml'
 import { updateProgress } from '@/lib/authClient'
 import styles from './RobloxLessonPage.module.css'
@@ -37,7 +39,8 @@ const RobloxLessonPage = ({
   sequentialUnlock = false,
 }) => {
   const t = useTranslations('lms.lesson')
-  const tRoblox = useTranslations('lms.lesson.roblox')
+  const isAiCourse = courseId === 'ai-at-work'
+  const tRoblox = useTranslations(isAiCourse ? 'lms.lesson.ai' : 'lms.lesson.roblox')
   const locale = useLocale()
   const router = useRouter()
   const [activeStep, setActiveStep] = useState('theory')
@@ -72,8 +75,12 @@ const RobloxLessonPage = ({
   const practiceChecklistReady =
     practiceChecks.studio && practiceChecks.steps && practiceChecks.saved
 
-  const curriculum = getRobloxCurriculum(locale)
-  const lessonContent = getRobloxLessonContent(lessonId, locale)
+  const curriculum = isAiCourse
+    ? getCurriculum(courseId, locale)
+    : getRobloxCurriculum(locale)
+  const lessonContent = isAiCourse
+    ? getAiAtWorkLessonContent(lessonId, locale)
+    : getRobloxLessonContent(lessonId, locale)
   const allLessons = useMemo(
     () => curriculum.modules.flatMap((m) => m.lessons),
     [curriculum]
@@ -112,20 +119,13 @@ const RobloxLessonPage = ({
 
   const unlockedLessonIds = useMemo(() => {
     const set = new Set(allowedSet)
-    if (userRole === 'admin' || isPurchased) {
+    if (userRole === 'admin' || userRole === 'teacher') {
       allLessons.forEach((l) => set.add(l.lessonId))
       return set
     }
-    if (!sequentialUnlock) return set
-    const completed = new Set(localProgress?.completedLessons || [])
-    for (let i = 1; i < allLessons.length; i++) {
-      const prevId = allLessons[i - 1].lessonId
-      if (set.has(prevId) && completed.has(prevId)) {
-        set.add(allLessons[i].lessonId)
-      }
-    }
+    // Do not expand beyond the server drip set (sequentialUnlock is unused for time drip).
     return set
-  }, [allowedSet, allLessons, localProgress, sequentialUnlock, userRole, isPurchased])
+  }, [allowedSet, allLessons, userRole])
 
   const isLessonUnlocked = (lesson) => unlockedLessonIds.has(lesson.lessonId)
 
@@ -224,7 +224,12 @@ const RobloxLessonPage = ({
     )
   }
 
-  if (!isAccessible && userRole !== 'admin' && !isPurchased) {
+  if (
+    !isAccessible &&
+    userRole !== 'admin' &&
+    userRole !== 'teacher' &&
+    !allowedSet.has(lessonId)
+  ) {
     return (
       <div className={styles.page}>
         <div className={styles.shell}>
@@ -233,10 +238,17 @@ const RobloxLessonPage = ({
               <Lock size={48} style={{ opacity: 0.4, marginBottom: '1rem' }} />
               <h2>{t('lockedTitle')}</h2>
               <p style={{ color: '#64748b', maxWidth: 480, margin: '1rem auto' }}>
-                {tRoblox('lockedDescriptionUk')}
+                {isPurchased
+                  ? t('lockedDescriptionDrip')
+                  : tRoblox('lockedDescriptionEn')}
               </p>
-              <div className={styles.footerActions} style={{ justifyContent: 'center' }}>
-                <Link href={`/courses/${courseId}`} className={styles.btnPrimary}>
+              <div className={styles.footerActions} style={{ justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                {!isPurchased && (
+                  <Link href={`/plans/${courseId}`} className={styles.btnPrimary} style={{ textDecoration: 'none' }}>
+                    Start 3 days free trial
+                  </Link>
+                )}
+                <Link href={`/courses/${courseId}`} className={isPurchased ? styles.btnPrimary : styles.btnSecondary} style={{ textDecoration: 'none' }}>
                   {t('returnToCourse')}
                 </Link>
               </div>
@@ -730,9 +742,7 @@ const RobloxLessonPage = ({
           )}
           {lessonComplete && nextLesson && !nextLessonUnlocked && (
             <p className={styles.unlockHint}>
-              {sequentialUnlock
-                ? tRoblox('nextLockedHintSequential')
-                : tRoblox('nextLockedHint')}
+              {tRoblox('nextLockedHintDrip')}
             </p>
           )}
           {!lessonComplete && practiceDone && hasQuiz && !quizPassed && activeStep !== 'quiz' && (

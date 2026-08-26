@@ -11,6 +11,6 @@ export default function robots() {
           '/api/',
       ],
     },
-    sitemap: 'https://smartcode-academy.com/sitemap.xml',
+    sitemap: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://smartcode.academy'}/sitemap.xml`,
   }
 }

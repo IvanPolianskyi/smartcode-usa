@@ -53,28 +53,28 @@ export const lesson_09_3 = {
       },
       {
         title: "Scraping tools",
-        content: `**BeautifulSoup — a library for parsing HTML**
+        content: `**BeautifulSoup - a library for parsing HTML**
 
 BeautifulSoup is a powerful Python library for parsing HTML and XML. It makes it easy to find and extract data from HTML pages.
 
 **Main BeautifulSoup methods:**
 
-- \`soup.find('tag')\` — find the first element
-- \`soup.find_all('tag')\` — find all matching elements
-- \`soup.find('div', class_='content')\` — search by class
-- \`element.get_text()\` — get the text from an element
+- \`soup.find('tag')\` - find the first element
+- \`soup.find_all('tag')\` - find all matching elements
+- \`soup.find('div', class_='content')\` - search by class
+- \`element.get_text()\` - get the text from an element
 
-**Note:** BeautifulSoup requires installation (\`pip install beautifulsoup4\`). In this course we show BeautifulSoup examples for demonstration, but for practice tasks we recommend using JSON APIs via requests — it is simpler and needs no extra libraries.`
+**Note:** BeautifulSoup requires installation (\`pip install beautifulsoup4\`). In this course we show BeautifulSoup examples for demonstration, but for practice tasks we recommend using JSON APIs via requests - it is simpler and needs no extra libraries.`
       },
       {
         title: "Scraper structure",
         content: `**Main components of a scraper:**
 
-1. **Fetching the page** — requests
-2. **Parsing HTML** — BeautifulSoup (for complex HTML) or JSON (if an API is available)
-3. **Extracting data** — finding elements
-4. **Saving data** — JSON, CSV, database
-5. **Error handling** — try/except
+1. **Fetching the page** - requests
+2. **Parsing HTML** - BeautifulSoup (for complex HTML) or JSON (if an API is available)
+3. **Extracting data** - finding elements
+4. **Saving data** - JSON, CSV, database
+5. **Error handling** - try/except
 
 **Basic scraper template with BeautifulSoup:**
 
@@ -459,7 +459,7 @@ import time
 
 for url in urls:
     response = requests.get(url)
-    # Delay of 1–2 seconds
+    # Delay of 1-2 seconds
     time.sleep(1.5)
 \`\`\`
 
@@ -582,12 +582,12 @@ scraper.save('news.json')
 
 **Key concepts:**
 
-1. **Scraper structure** — fetch, parse, save
-2. **Multi-page scraping** — handling several pages
-3. **Dynamic content** — working with JavaScript
-4. **Saving data** — JSON, CSV, database
-5. **Error handling** — retry logic
-6. **Ethical scraping** — robots.txt, delays
+1. **Scraper structure** - fetch, parse, save
+2. **Multi-page scraping** - handling several pages
+3. **Dynamic content** - working with JavaScript
+4. **Saving data** - JSON, CSV, database
+5. **Error handling** - retry logic
+6. **Ethical scraping** - robots.txt, delays
 
 **Important practices:**
 
@@ -690,11 +690,11 @@ def fetch_with_retry(url, max_retries=3):
   
   summary: `In this lesson we learned how to build web scrapers:
 
-1. Scraper structure — fetch, parse, save
-2. Multi-page scraping — handling several pages
-3. Saving data — JSON, CSV, database
-4. Error handling — retry logic
-5. Ethical scraping — robots.txt, delays
+1. Scraper structure - fetch, parse, save
+2. Multi-page scraping - handling several pages
+3. Saving data - JSON, CSV, database
+4. Error handling - retry logic
+5. Ethical scraping - robots.txt, delays
 
 Web scraping is a powerful tool for collecting data!`,
   

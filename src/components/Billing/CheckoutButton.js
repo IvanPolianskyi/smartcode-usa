@@ -111,6 +111,7 @@ export default function CheckoutButton({
 			})
 
 			if (result.action === 'dashboard' && result.path) {
+				window.dispatchEvent(new Event('auth:login'))
 				router.push(result.path)
 				return
 			}

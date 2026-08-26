@@ -1,4 +1,4 @@
-/** Rich UK content for Roblox Module 03 — Код, що грається */
+/** Rich UK content for Roblox Module 03 - Код, що грається */
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
@@ -360,7 +360,20 @@ Open Park_v1 or the island after M2.`,
  fix: "In the closed branch, set CanCollide back to true (if you use the transparent trick).",
  },
  ],
- quiz: {
+   summary: "You learned how to build interactive world objects using ClickDetector and ProximityPrompt, configure activation distance, and control door state (open/closed) using variables and if/else logic in a server Script.",
+  practiceTask: {
+    "title": "Hands-on Practice: Interactive Door (InteractDoor_v1)",
+    "difficulty": "beginner",
+    "description": "**Objective:** Build a toggleable interactive door using ProximityPrompt or ClickDetector with clean server-side state.\n\n### Part A: Door Frame & Model\n1. Place a `DoorFrame` and a `DoorLeaf` part near your base (both Anchored = true).\n2. Group them into a Model named `InteractDoor_v1` and set PrimaryPart = `DoorFrame`.\n3. Add a `BillboardGui` with a `TextLabel` (\"Approach and press E\").\n\n### Part B: Interaction Logic\n1. Insert a `ProximityPrompt` inside `DoorLeaf` (ActionText = \"Open\", ObjectText = \"Gate\", HoldDuration = 0).\n2. Insert a regular server `Script` inside `DoorLeaf`.\n3. Declare `local isOpen = false`.\n4. In `prompt.Triggered:Connect(function() ... end)`, toggle state:\n   - When `not isOpen`: set `Transparency = 0.8`, `CanCollide = false`, `prompt.ActionText = \"Close\"`, `isOpen = true`.\n   - When `isOpen`: set `Transparency = 0`, `CanCollide = true`, `prompt.ActionText = \"Open\"`, `isOpen = false`.\n\n### Part C: Verification\n1. Press Play (F5), walk up to the gate, and press E to open.\n2. Walk through the opening, turn around, and close it.\n3. Verify zero errors in the Output console.\n4. Save Place as `Lesson 3.1 - InteractDoor_v1`.",
+    "hints": [
+      "Use a regular server Script, not a LocalScript.",
+      "Setting CanCollide = false allows the player character to walk through.",
+      "Keep MaxActivationDistance around 8-12 studs for intuitive interaction.",
+      "Remember to flip the isOpen boolean flag on each activation."
+    ],
+    "optionalChallenge": "Add a click sound effect or smooth color transition when the door is opened."
+  },
+  quiz: {
  title: "Quiz 3.1 - Interaction",
  passingScore: 70,
  questions: [
@@ -440,7 +453,7 @@ Open Park_v1 or the island after M2.`,
  "Script in Lighting only",
  ],
  correctAnswer: 1,
- explanation: "A server Script, like in M1–M2.",
+ explanation: "A server Script, like in M1-M2.",
  },
  {
  id: "q7",
@@ -479,7 +492,7 @@ Open Park_v1 or the island after M2.`,
  "if open/closed",
  ],
  correctAnswer: 2,
- explanation: "Kill/Touched — 3.2.",
+ explanation: "Kill/Touched - 3.2.",
  },
  {
  id: "q10",
@@ -692,7 +705,7 @@ Sometimes Character sits deeper (rare nonstandard avatar builds). For Baseplate 
 **Do this now (6 min):** print only when Humanoid is found.`,
  },
  {
- title: "KillBrick — Health = 0",
+ title: "KillBrick - Health = 0",
  content: `Once you have Humanoid, the classic teaching trick for a hazard plate is:
 
 \`\`\`lua
@@ -780,7 +793,7 @@ Today wait is needed **inside** the Touched handler to hold debounce. This is no
 
 Older tutorials often write plain \`wait(1)\`. In modern Luau, prefer \`task.wait\`. Learn it now so you do not relearn later.
 
-For death debounce, 0.5–1.5 s is usually enough. Too long a pause and the plate stays "silent" when you want to retest quickly. Too short and you risk extra repeats while sliding.
+For death debounce, 0.5-1.5 s is usually enough. Too long a pause and the plate stays "silent" when you want to retest quickly. Too short and you risk extra repeats while sliding.
 
 Important: \`task.wait\` here does not "make a platform", spin a ride, or replace the level timer from 3.3. It only holds the debounce flag. If you want richer on-screen time logic, wait for the next lesson.
 
@@ -909,7 +922,20 @@ Open the Place after 3.1.`,
  fix: "A normal Script in Workspace, same as for doors and cubes.",
  },
  ],
- quiz: {
+   summary: "You mastered the Touched event for collision detection, learned to find the Humanoid in character models, change Health safely, and apply debounce with task.wait to avoid event spam.",
+  practiceTask: {
+    "title": "Hands-on Practice: Hazard Lane (KillLane_v1)",
+    "difficulty": "beginner",
+    "description": "**Objective:** Create a hazard lane with neon hazard parts and a robust debounce damage script.\n\n### Part A: Hazard Zone\n1. Create a Folder named `KillLane_v1`.\n2. Add 3 hazard parts (`Kill_01`, `Kill_02`, `Kill_03`) with Neon material, Really red color, Anchored = true.\n\n### Part B: Debounce Damage Script\n1. Add a server `Script` inside `Kill_01`.\n2. Add debounce logic:\n```lua\nlocal part = script.Parent\nlocal isDebounced = false\n\npart.Touched:Connect(function(hit)\n    local humanoid = hit.Parent:FindFirstChild(\"Humanoid\")\n    if humanoid and not isDebounced then\n        isDebounced = true\n        humanoid.Health = 0\n        task.wait(1)\n        isDebounced = false\n    end\nend)\n```\n\n### Part C: Verification\n1. Duplicate the script into the other hazard parts.\n2. Playtest: step on the lava part - the character dies cleanly once without spamming Output.\n3. Drop an unanchored test part onto the hazard - verify no nil indexing errors.\n4. Save Place as `Lesson 3.2 - KillLane_v1`.",
+    "hints": [
+      "Always check hit.Parent:FindFirstChild(\"Humanoid\") before reading Health.",
+      "Debounce guards your game against multiple rapid triggers on each footstep.",
+      "Ensure hazard parts are Anchored = true so they don't fall through the floor.",
+      "Use task.wait instead of legacy wait."
+    ],
+    "optionalChallenge": "Create a poison pad that deals 25 damage every 0.5 seconds instead of instant death."
+  },
+  quiz: {
  title: "Quiz 3.2 - Touched + KillBrick",
  passingScore: 70,
  questions: [
@@ -1041,7 +1067,7 @@ Open the Place after 3.1.`,
  "Humanoid.Health",
  ],
  correctAnswer: 2,
- explanation: "while — 3.4.",
+ explanation: "while - 3.4.",
  },
  {
  id: "q11",
@@ -1324,13 +1350,13 @@ If \`script.Parent\` is somehow not the Label, time will not appear or Output wi
 7. Deliberate death → respawn at the last checkpoint
 8. The timer keeps running (no need to reset). Fine for this lesson
 
-We do not require a leaderboard or DataStore. The goal is to feel **progress + time** in one Place built from 3.1–3.3 bricks.
+We do not require a leaderboard or DataStore. The goal is to feel **progress + time** in one Place built from 3.1-3.3 bricks.
 
 If the loop falls apart (respawn into lava, timer invisible, checkpoint looks like kill), fix the route first. Do not add new systems or download a Free Model "checkpoint pack".
 
 Ask a partner to walk it silently. If after death they understand *why* they appeared exactly there, the checkpoint is done right.
 
-**Do this now (5 min):** walk steps 1–7 with no instructor hints.`,
+**Do this now (5 min):** walk steps 1-7 with no instructor hints.`,
  },
  {
  title: "Common checkpoint and timer breakages",
@@ -1402,7 +1428,7 @@ Open the Place after 3.2.`,
 - checkpoint color changes after taking it (once, with a flag);
 - timer format with tenths (slightly change format). Explain the difference.
 
-**Do not:** DataStore records, vanishing while-platforms, full win-UI from 3.7–3.8.`,
+**Do not:** DataStore records, vanishing while-platforms, full win-UI from 3.7-3.8.`,
  },
  ],
  },
@@ -1436,7 +1462,19 @@ Open the Place after 3.2.`,
  fix: "Today only the Label template; deeper GUI is 3.7.",
  },
  ],
- quiz: {
+   summary: "You learned how to use numeric variables to track score and countdown timers, increment/decrement values on player actions, and display live counts using BillboardGui.",
+  practiceTask: {
+    "title": "Hands-on Practice: Coin Counter & Timer (Counter_v1)",
+    "difficulty": "beginner",
+    "description": "**Objective:** Build an interactive score-tracking object with live in-world BillboardGui counter updates.\n\n### Part A: Coin Stand Model\n1. Create a neon gold part named `CoinStand` (Anchored = true).\n2. Insert a `BillboardGui` (AlwaysOnTop = true, ExtentsOffset = Vector3.new(0, 2, 0)).\n3. Add a `TextLabel` inside (\"Coins: 0\", TextScaled = true).\n\n### Part B: Increment Logic\n1. Insert a `ClickDetector` or `ProximityPrompt` into `CoinStand`.\n2. Insert a `Script` tracking `local coins = 0`.\n3. On trigger, increment `coins = coins + 1` and set `textLabel.Text = \"Coins: \" .. coins`.\n\n### Part C: Playtest\n1. Click the stand 5 times in Play mode and confirm the display updates smoothly 0 → 5.\n2. Save Place as `Lesson 3.3 - Counter_v1`.",
+    "hints": [
+      "Use Lua string concatenation: \"Coins: \" .. coins.",
+      "AlwaysOnTop ensures the score is visible even behind obstacles.",
+      "Initialize coins = 0 outside the event handler so it doesn't reset on each click."
+    ],
+    "optionalChallenge": "Add a goal trigger: when coins reach 10, turn the stand green and play a victory chime."
+  },
+  quiz: {
  title: "Quiz 3.3 - Checkpoints + timer",
  passingScore: 70,
  questions: [
@@ -1732,7 +1770,7 @@ A separate myth: "I will use wait(0) or a tiny number, almost like no wait, but 
 2. Anchored true, CanCollide true at start (visible phase).
 3. Color and material distinct from kill: blue Neon, green Plastic, and so on, so the eye reads "this is a platform, not lava".
 4. Folder or Model \`BlinkPlatforms_v1\`.
-5. To start, one Script per platform (copy-paste is fine). In 3.5–3.6 we will shrink the copy-paste.
+5. To start, one Script per platform (copy-paste is fine). In 3.5-3.6 we will shrink the copy-paste.
 
 Keep jump distances human: a beginner after doors and a checkpoint should have a chance, not a lottery. If needed, put temporary safety below for tests and remove it before submission.
 
@@ -1807,7 +1845,7 @@ After the first successful cycle, Stop Play and run again: the Script should bre
 
 | "On" too short | "Off" too long | A comfortable teaching start |
 |---------------------|------------------------|------------------------------|
-| You cannot step on in time | You stand and get bored | 1.5–2.5 s visible, 1–2 s hidden |
+| You cannot step on in time | You stand and get bored | 1.5-2.5 s visible, 1-2 s hidden |
 
 Honesty rules (same spirit as Neon kill and readable checkpoints):
 - when the platform is "on", it really holds and is clearly visible
@@ -1844,7 +1882,7 @@ end
 
 Now the platforms do not breathe in unison. This is not yet \`for\` over a list of children, just two deliberate copies with different starts. In 3.5 you will learn to duplicate objects more neatly; in 3.6 you will remove copy-paste with a function.
 
-Test the jump for 20–30 seconds: are there windows when at least one platform holds? A full synced "pit" for two seconds often frustrates more than it teaches timing.
+Test the jump for 20-30 seconds: are there windows when at least one platform holds? A full synced "pit" for two seconds often frustrates more than it teaches timing.
 
 If a 0.7 s offset feels weak, try 1.0 or a different wait inside the phases on the second platform only. Write down what worked.
 
@@ -1964,7 +2002,19 @@ Open the Place after 3.3.`,
  fix: "Touched is a contact event; while is a timed repeat. Different tools.",
  },
  ],
- quiz: {
+   summary: "You learned how while true do loops work in Roblox, why task.wait() is mandatory to prevent Studio crashes, and how to create periodic hazard spawners.",
+  practiceTask: {
+    "title": "Hands-on Practice: Hazard Spawner (HazardSpawner_v1)",
+    "difficulty": "intermediate",
+    "description": "**Objective:** Build a repeating hazard spawner using a safe while loop and Debris cleanup.\n\n### Part A: Spawner Setup\n1. Create a platform part named `SpawnerPlatform` elevated high in the air (Anchored = true).\n\n### Part B: While Loop with task.wait\n1. Add a server `Script` inside the spawner:\n```lua\nlocal Debris = game:GetService(\"Debris\")\n\nwhile true do\n    task.wait(2)\n    local hazard = Instance.new(\"Part\")\n    hazard.Name = \"FallingHazard\"\n    hazard.Size = Vector3.new(2, 2, 2)\n    hazard.Material = Enum.Material.Neon\n    hazard.BrickColor = BrickColor.new(\"Bright red\")\n    hazard.Position = script.Parent.Position - Vector3.new(0, 3, 0)\n    hazard.Anchored = false\n    hazard.Parent = workspace\n    \n    Debris:AddItem(hazard, 5)\nend\n```\n\n### Part C: Verification\n1. Playtest: ensure hazards spawn every 2 seconds and delete after 5 seconds without lagging the game.\n2. Save Place as `Lesson 3.4 - HazardSpawner_v1`.",
+    "hints": [
+      "NEVER run a while true loop without task.wait() - it will freeze Studio.",
+      "Debris:AddItem automatically removes objects after a lifetime.",
+      "Set Anchored = false so the spawned parts fall with gravity."
+    ],
+    "optionalChallenge": "Attach a Touched damage script to spawned hazards so they eliminate players on contact."
+  },
+  quiz: {
  title: "Quiz 3.4 - while + platforms",
  passingScore: 70,
  questions: [
@@ -2083,7 +2133,7 @@ Open the Place after 3.3.`,
  "Honest jump period",
  ],
  correctAnswer: 2,
- explanation: "for — 3.5.",
+ explanation: "for - 3.5.",
  },
  {
  id: "q10",
@@ -2343,13 +2393,13 @@ Check: Stop → Play → Stop → Play. Explorer should show exactly count plate
  {
  title: "Fit the course to the world",
  content: `1. Set \`start\` so the first plate is reachable from a path or checkpoint.
-2. Tune \`step\` to Character jump length (often 6–10 studs for flat plates of this Size).
+2. Tune \`step\` to Character jump length (often 6-10 studs for flat plates of this Size).
 3. Height Y: above a gap or water, not inside Baseplate.
 4. Optionally alternate color from \`i\`: even/odd with \`if i % 2 == 0 then\`.
 
 That is again \`if\` from 1.4 inside for. Combining what you know, not a brand-new topic. You can also nudge Size a little, but do not make the third plate gigantic "because you can". Even jumps first.
 
-Blink scripts from 3.4 are **not required** on every generated plate today. You can submit a static spawn course as a clean for artifact. If you really want rhythm, hang blink by hand on 1–2 plates after generation, without automating functions.
+Blink scripts from 3.4 are **not required** on every generated plate today. You can submit a static spawn course as a clean for artifact. If you really want rhythm, hang blink by hand on 1-2 plates after generation, without automating functions.
 
 Do not run the generated course through KillLane so Pad_1 looks like normal death floor with no signal. Either separate the zones in space, or make the course color clearly "safe parkour" (not Really red Neon like kill).
 
@@ -2492,7 +2542,19 @@ Open the Place after 3.4.`,
  fix: "GetChildren already gives a list for ipairs; separate tables come later.",
  },
  ],
- quiz: {
+   summary: "You mastered numeric for loops to generate staircases, platform rows, and object iterations using ipairs, generating procedural geometry in just a few lines of code.",
+  practiceTask: {
+    "title": "Hands-on Practice: Staircase Builder (StairBuilder_v1)",
+    "difficulty": "intermediate",
+    "description": "**Objective:** Procedurally generate a 10-step staircase using a numeric for loop.\n\n### Part A: Generator Anchor\n1. Create a `StairBase` part on the ground (Anchored = true).\n2. Insert a server `Script` named `StairBuilder`.\n\n### Part B: For Loop Generation\n1. Write the generation loop:\n```lua\nlocal basePos = script.Parent.Position\n\nfor i = 1, 10 do\n    local step = Instance.new(\"Part\")\n    step.Name = \"Step_\" .. i\n    step.Size = Vector3.new(6, 1, 3)\n    step.Position = basePos + Vector3.new(0, i * 1.2, i * 3)\n    step.Anchored = true\n    step.Material = Enum.Material.SmoothPlastic\n    step.BrickColor = BrickColor.new(i % 2 == 0 and \"Bright blue\" or \"Bright yellow\")\n    step.Parent = workspace\nend\n```\n\n### Part C: Verification\n1. Press Play: 10 alternating colored stairs appear instantly.\n2. Climb from bottom to top to confirm proper step height.\n3. Save Place as `Lesson 3.5 - StairBuilder_v1`.",
+    "hints": [
+      "A numeric for i = 1, 10 loop automatically increments i by 1 each step.",
+      "Calculate offsets using multiplication: i * height and i * depth.",
+      "Ensure step.Anchored = true so steps stay in place."
+    ],
+    "optionalChallenge": "Make the final 10th step twice as wide with a golden trophy platform."
+  },
+  quiz: {
  title: "Quiz 3.5 - for / ipairs",
  passingScore: 70,
  questions: [
@@ -2611,7 +2673,7 @@ Open the Place after 3.4.`,
  "Instance.new for pads",
  ],
  correctAnswer: 2,
- explanation: "Functions — 3.6.",
+ explanation: "Functions - 3.6.",
  },
  {
  id: "q10",
@@ -2689,7 +2751,7 @@ Open the Place after 3.4.`,
  "Race Remotes",
  ],
  correctAnswer: 0,
- explanation: "3.6 — functions.",
+ explanation: "3.6 - functions.",
  },
  ],
  },
@@ -3050,7 +3112,19 @@ Open the Place after 3.5.`,
  fix: "ModuleScript is M4. Today keep everything in one Script.",
  },
  ],
- quiz: {
+   summary: "You learned how to structure code with reusable functions, parameters, and return values, eliminating code duplication across damage, healing, and effect handlers.",
+  practiceTask: {
+    "title": "Hands-on Practice: Helper Functions (HelperFunctions_v1)",
+    "difficulty": "intermediate",
+    "description": "**Objective:** Create modular health-modifying functions and wire them to separate trigger pads.\n\n### Part A: Pad Setup\n1. Place a red `TrapPad` and a green `HealPad` in a Model named `EffectPads` (Anchored = true).\n\n### Part B: Shared Function Script\n1. Add a server `Script` inside `EffectPads`:\n```lua\nlocal function modifyHealth(humanoid, amount)\n    if not humanoid or humanoid.Health <= 0 then return false end\n    humanoid.Health = math.clamp(humanoid.Health + amount, 0, humanoid.MaxHealth)\n    print(\"Health modified by\", amount, \"Current:\", humanoid.Health)\n    return true\nend\n```\n2. Connect `TrapPad.Touched` to `modifyHealth(humanoid, -25)` with debounce.\n3. Connect `HealPad.Touched` to `modifyHealth(humanoid, 25)` with debounce.\n\n### Part C: Verification\n1. Step on TrapPad (Health drops by 25), then step on HealPad (Health recovers).\n2. Save Place as `Lesson 3.6 - HelperFunctions_v1`.",
+    "hints": [
+      "math.clamp keeps Health cleanly bounded between 0 and MaxHealth.",
+      "Functions let you update logic in one central spot instead of duplicating code.",
+      "Pass the target Humanoid and numeric amount as explicit parameters."
+    ],
+    "optionalChallenge": "Add a third function applySpeedBoost(humanoid, boostAmount, duration) for temporary sprint boosts."
+  },
+  quiz: {
  title: "Quiz 3.6 - Functions",
  passingScore: 70,
  questions: [
@@ -3169,7 +3243,7 @@ Open the Place after 3.5.`,
  "parameters",
  ],
  correctAnswer: 2,
- explanation: "ModuleScript — M4.",
+ explanation: "ModuleScript - M4.",
  },
  {
  id: "q10",
@@ -3608,7 +3682,19 @@ Challenge is a star. Hand in base WinUI_v1 first.`,
  fix: "In M3, Attribute is enough. Remotes come later.",
  },
  ],
- quiz: {
+   summary: "You mastered the difference between client LocalScripts and server Scripts, learned how to build UI in StarterGui, and handle on-screen button clicks.",
+  practiceTask: {
+    "title": "Hands-on Practice: Interactive HUD (PlayerGui_v1)",
+    "difficulty": "intermediate",
+    "description": "**Objective:** Build a responsive client-side UI in StarterGui with a sprint toggle button.\n\n### Part A: ScreenGui Setup\n1. In `StarterGui`, add a `ScreenGui` named `MainHUD`.\n2. Insert a `TextButton` named `SprintButton` in the bottom-right corner.\n\n### Part B: Client LocalScript\n1. Add a `LocalScript` inside `SprintButton`:\n```lua\nlocal button = script.Parent\nlocal player = game.Players.LocalPlayer\nlocal character = player.Character or player.CharacterAdded:Wait()\nlocal humanoid = character:WaitForChild(\"Humanoid\")\n\nlocal isSprinting = false\n\nbutton.MouseButton1Click:Connect(function()\n    isSprinting = not isSprinting\n    if isSprinting then\n        humanoid.WalkSpeed = 32\n        button.Text = \"Sprint: ON\"\n        button.BackgroundColor3 = Color3.fromRGB(46, 204, 113)\n    else\n        humanoid.WalkSpeed = 16\n        button.Text = \"Sprint: OFF\"\n        button.BackgroundColor3 = Color3.fromRGB(52, 152, 219)\n    end\nend)\n```\n\n### Part C: Verification\n1. Press Play: click the on-screen button and verify instant walk speed toggling between 16 and 32.\n2. Save Place as `Lesson 3.7 - PlayerGui_v1`.",
+    "hints": [
+      "LocalScripts run only on the client (StarterGui, StarterPlayerScripts, Character).",
+      "WalkSpeed changes on the client automatically replicate character movement.",
+      "Use game.Players.LocalPlayer to access the local client player."
+    ],
+    "optionalChallenge": "Add a stamina meter that depletes while sprinting and recharges when walking."
+  },
+  quiz: {
  title: "Quiz 3.7 - LocalScript + GUI",
  passingScore: 70,
  questions: [
@@ -3820,7 +3906,7 @@ export const enLesson38 = {
  quizMinutes: 15,
  estimatedTime: 75,
  learningObjectives: [
- "Assemble one Place where systems from lessons 3.1–3.7 work",
+ "Assemble one Place where systems from lessons 3.1-3.7 work",
  "Tune balance: kill fairness, platform rhythm, checkpoint spacing",
  "Add Badge lite (visual trophy and/or simple AwardBadge template)",
  "Prepare a ~60 second presentation with a clear script",
@@ -3837,7 +3923,7 @@ At the end you need a Place you can play as a short mini-game: interaction → r
 Think about the difference: "I have seven lesson saves" vs "I have one mini-game". The course built these skills toward this integration. If at hand-in you jump between files "now I'll show kill from 3.2, and doors are in another Place", the integration rubric goes red.
 
 **Artifact:** \`PlayableMini_v1\`
-- integration of 3.1–3.7 on one route
+- integration of 3.1-3.7 on one route
 - balance pass (not "impossible on first try" and not "boring easy")
 - Badge lite: trophy in the world / on win UI + optional BadgeService template
 - ~60" presentation
@@ -3862,7 +3948,7 @@ If time is short: cut level length, do not cut win UI and checkpoint death-tests
 | 3.4 Platforms | Blink with wait, can be completed | Unreadable rhythm |
 | 3.5/3.6 Track/functions | for-spawn and/or killCharacter | Only copy-paste with no function names |
 | 3.7 Win UI | Finish → Attribute → Frame + button | "Win" only as print in Output |
-| Balance | 1–3 deaths in a teaching run are fine | Unpassable or zero challenge |
+| Balance | 1-3 deaths in a teaching run are fine | Unpassable or zero challenge |
 | Badge lite | Trophy / reward is visible | Empty promise of "later" |
 | Presentation | ~60" from a script | Chaotic clicks through Explorer |
 
@@ -3880,7 +3966,7 @@ Give yourself a deadline: close all critical "not yet" first, then paint. The re
 2. **Gate** - InteractDoor / Prompt (3.1): "the game started on purpose"
 3. **Risk** - a KillLane fragment (3.2), but not right in the face from spawn
 4. **Checkpoint_A** - fairness after the first risk
-5. **Rhythm** - 1–2 blink platforms (3.4)
+5. **Rhythm** - 1-2 blink platforms (3.4)
 6. **Checkpoint_B** - before the final challenge
 7. **Track/platforms** - a for-spawn piece or carefully placed pads (3.5)
 8. **FinishPad** - Attribute HasWon (3.7)
@@ -3902,7 +3988,7 @@ Tune in order (not everything at once):
 - **Kill:** neon color, do not disguise as floor; distance from Spawn; CanCollide/size adequate
 - **Checkpoints:** after a hard section, not inside lava; death-test required
 - **Blink:** visible/hidden period such that a beginner can grasp the rhythm in one observation; do not make phase offset chaotic "RNG"
-- **Length:** target a 45–90 second hand-in run, not a 10-minute marathon
+- **Length:** target a 45-90 second hand-in run, not a 10-minute marathon
 - **Finish:** do not hide FinishPad; Billboard "FINISH" is fine
 
 Rule: if you rage-quit 8 times in one spot without understanding why, that is a design bug, not "hardcore". Hardcore without readability on a boss hand-in reads as unfinished work.
@@ -3974,12 +4060,12 @@ Check Output on a clean Play: any red errors before the first step? A hand-in wi
 
 | Time | What you do / say |
 |-----|------------------|
-| 0–10" | "This is the module 3 mini-game: from doors to win screen" + start Play |
-| 10–20" | Open the door / Prompt (3.1) |
-| 20–35" | Show risk + checkpoint (death or briefly explain) |
-| 35–45" | Blink or a track piece |
-| 45–55" | Finish → WinFrame + trophy/badge lite |
-| 55–60" | One sentence about balance or a function in the code |
+| 0-10" | "This is the module 3 mini-game: from doors to win screen" + start Play |
+| 10-20" | Open the door / Prompt (3.1) |
+| 20-35" | Show risk + checkpoint (death or briefly explain) |
+| 35-45" | Blink or a track piece |
+| 45-55" | Finish → WinFrame + trophy/badge lite |
+| 55-60" | One sentence about balance or a function in the code |
 
 Forbidden holes: 20 seconds of silent digging in Explorer; "I'll quickly finish writing"; demo of a broken finish; arguing with the phone timer "just one more minute".
 
@@ -4026,7 +4112,7 @@ Do not publish the Place to Discover "because it feels ready". The course releas
  },
  {
  title: "Final checklist before the instructor",
- content: `- [ ] Route 3.1–3.7 assembled in one Place
+ content: `- [ ] Route 3.1-3.7 assembled in one Place
 - [ ] Checkpoint death-test passed today (not "it probably worked last week")
 - [ ] Blink does not hang Studio (has wait)
 - [ ] Finish opens WinFrame
@@ -4106,7 +4192,19 @@ Do not start a new mechanic at minute 14. If everything critical is green, polis
  fix: "Leave that for M4/M9. Today integrate what you already learned.",
  },
  ],
- quiz: {
+   summary: "You completed Module 3 by building the integrated PlayableArena_v1 mini-game, combining ProximityPrompt doors, debounce hazards, spawner loops, helper functions, and client HUD.",
+  practiceTask: {
+    "title": "Module 3 Final Project: Playable Arena (PlayableArena_v1)",
+    "difficulty": "intermediate",
+    "description": "**Objective:** Integrate all Module 3 systems into a complete obstacle mini-game arena.\n\n### Part A: Arena Architecture\n1. Assemble a walled arena with an `InteractDoor` (3.1) entrance.\n2. Place a `KillLane` (3.2) hazard zone across the middle floor.\n3. Add a high-altitude `HazardSpawner` (3.4) dropping timed obstacle cubes.\n\n### Part B: Logic & HUD Integration\n1. Wire damage/healing helper functions (3.6) into arena pads.\n2. Add the sprint toggle button (3.7) and coin counter (3.3) to `StarterGui`.\n3. Unlock the exit gate when the player collects 3 coin bonuses.\n\n### Part C: Full Playtest\n1. Test the full course: open door → sprint past falling hazards → jump over lava → collect 3 coins → reach exit.\n2. Confirm clean Output logs on character resets.\n3. Save Place as `Lesson 3.8 - PlayableArena_v1`.",
+    "hints": [
+      "Check Anchored = true on all static walls and platforms.",
+      "Ensure every damage/collection trigger uses debounce.",
+      "Verify the HUD continues functioning after character respawns."
+    ],
+    "optionalChallenge": "Add a 45-second countdown timer: if time expires before reaching the exit, lock the arena."
+  },
+  quiz: {
  title: "Quiz 3.8 - Mini-game boss hand-in",
  passingScore: 70,
  questions: [
@@ -4116,7 +4214,7 @@ Do not start a new mechanic at minute 14. If everything critical is green, polis
  question: "Main goal of lesson 3.8:",
  options: [
  "Learn RemoteFunction",
- "Integrate 3.1–3.7, balance, Badge lite, ~60\" presentation",
+ "Integrate 3.1-3.7, balance, Badge lite, ~60\" presentation",
  "Terrain Paint only",
  "Publish a paid gamepass",
  ],
@@ -4212,7 +4310,7 @@ Do not start a new mechanic at minute 14. If everything critical is green, polis
  "Blink with wait",
  ],
  correctAnswer: 1,
- explanation: "DataStore — M4.",
+ explanation: "DataStore - M4.",
  },
  {
  id: "q9",
@@ -4284,7 +4382,7 @@ Do not start a new mechanic at minute 14. If everything critical is green, polis
  type: MC,
  question: "After M3 the course's logical next focus is:",
  options: [
- "M4 — tables, ModuleScript, DataStore",
+ "M4 - tables, ModuleScript, DataStore",
  "Straight to M12 Publish without data",
  "Only a 1.1 redo",
  "Constraints only",

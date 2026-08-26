@@ -612,12 +612,12 @@ if __name__ == '__main__':
 
 **What we did:**
 
-1. **Planning** — defined structure and features
-2. **Base class** — created ImageProcessor with core operations
-3. **Effects** — added sepia, vintage, watercolor, cartoon
-4. **Batch processing** — processed multiple files
-5. **Watermark** — added text and image watermarks
-6. **Full implementation** — combined all features
+1. **Planning** - defined structure and features
+2. **Base class** - created ImageProcessor with core operations
+3. **Effects** - added sepia, vintage, watercolor, cartoon
+4. **Batch processing** - processed multiple files
+5. **Watermark** - added text and image watermarks
+6. **Full implementation** - combined all features
 
 **Skills we practiced:**
 
@@ -716,12 +716,12 @@ def batch_enhance(input_dir, output_dir):
   
   summary: `In this lesson we built a complete image-processing project:
 
-1. Planning — structure and features
-2. Base class — ImageProcessor with core operations
-3. Effects — sepia, vintage, watercolor, cartoon
-4. Batch processing — multiple files
-5. Watermark — text and image
-6. Full implementation — combining all features
+1. Planning - structure and features
+2. Base class - ImageProcessor with core operations
+3. Effects - sepia, vintage, watercolor, cartoon
+4. Batch processing - multiple files
+5. Watermark - text and image
+6. Full implementation - combining all features
 
 A practical project is the best way to reinforce your skills!`,
   

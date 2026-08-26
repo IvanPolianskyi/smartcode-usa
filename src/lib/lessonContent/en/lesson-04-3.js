@@ -33,12 +33,12 @@ Think of an ATM: you press buttons (public interface), but you do not reach into
 
 **Why is this needed?**
 
-1. **Data protection** — prevent setting a negative price or age -5
-2. **Flexibility** — you can change the internal implementation without breaking outside code
-3. **Cleaner API** — users of the class see only what they need
+1. **Data protection** - prevent setting a negative price or age -5
+2. **Flexibility** - you can change the internal implementation without breaking outside code
+3. **Cleaner API** - users of the class see only what they need
 
 \`\`\`python
-# Without control — dangerous
+# Without control - dangerous
 class Account:
     def __init__(self, balance):
         self.balance = balance
@@ -53,10 +53,10 @@ With encapsulation we limit direct access and allow changes only through checked
         title: "Public, protected, and private in Python",
         content: `Python has **no real** access modifiers like Java (\`private\`, \`protected\`). There are **conventions** and a name-mangling mechanism.
 
-**1. Public** — ordinary names (\`name\`, \`balance\`)
+**1. Public** - ordinary names (\`name\`, \`balance\`)
 Accessible from everywhere.
 
-**2. “Protected”** — one leading underscore (\`_balance\`)
+**2. “Protected”** - one leading underscore (\`_balance\`)
 A signal: “this is an internal detail; do not touch from outside.” Python does **not** block access.
 
 \`\`\`python
@@ -66,7 +66,7 @@ class User:
         self._id = 42          # “protected” by convention
 \`\`\`
 
-**3. “Private”** — two underscores (\`__balance\`)
+**3. “Private”** - two underscores (\`__balance\`)
 Python rewrites the attribute name (**name mangling**): \`__balance\` becomes \`_ClassName__balance\`.
 
 \`\`\`python
@@ -80,7 +80,7 @@ class Vault:
 v = Vault("key")
 print(v.reveal())       # key
 # print(v.__secret)     # AttributeError
-print(v._Vault__secret) # key — technically available, but you should not do this
+print(v._Vault__secret) # key - technically available, but you should not do this
 \`\`\`
 
 | Notation | Meaning | “Protection” level |
@@ -89,7 +89,7 @@ print(v._Vault__secret) # key — technically available, but you should not do t
 | \`_value\` | protected (convention) | weak |
 | \`__value\` | private (mangling) | stronger, but not absolute |
 
-Python follows the philosophy: *“we are all adults”* — conventions matter more than hard bans.`
+Python follows the philosophy: *“we are all adults”* - conventions matter more than hard bans.`
       },
       {
         title: "Getter and setter methods",
@@ -164,7 +164,7 @@ class Circle:
 
 c = Circle(5)
 print(c.area)   # 78.5
-# c.area = 10   # AttributeError — no setter
+# c.area = 10   # AttributeError - no setter
 \`\`\`
 
 \`@property\` is the idiomatic Python way to encapsulate: convenient syntax + access control.`
@@ -199,13 +199,13 @@ t.celsius = 30
 print(t.fahrenheit)   # 86.0
 \`\`\`
 
-Users of the class do not need to know how data is stored — they work with a clean interface.
+Users of the class do not need to know how data is stored - they work with a clean interface.
 
 **SmartCode recommendations:**
 
 1. Start with public attributes if validation is not needed
 2. Add \`_\` / \`__\` and \`property\` when rules appear
-3. Do not make everything “private” — hide only what is truly internal`
+3. Do not make everything “private” - hide only what is truly internal`
       }
     ]
   },
@@ -314,12 +314,12 @@ e.status()
   summary: `In this lesson we studied encapsulation:
 
 1. Encapsulation hides internal details and protects state
-2. _attr — “do not touch” by convention (protected)
-3. __attr — name mangling (conditional private)
-4. Getter/setter — classic access control
-5. @property — the convenient Pythonic way
+2. _attr - “do not touch” by convention (protected)
+3. __attr - name mangling (conditional private)
+4. Getter/setter - classic access control
+5. @property - the convenient Pythonic way
 
-Next — inheritance: how to create new classes based on existing ones.`,
+Next - inheritance: how to create new classes based on existing ones.`,
 
   practiceTask: {
     title: "Product with controlled price",
@@ -328,9 +328,9 @@ Next — inheritance: how to create new classes based on existing ones.`,
 1. Declares a Product class
 2. In __init__(self, name, price) stores name (publicly) and __price (privately)
 3. Has methods:
-   - get_price(self) — returns __price
-   - set_price(self, price) — if price > 0, sets __price; otherwise leaves it unchanged
-   - info(self) — prints:
+   - get_price(self) - returns __price
+   - set_price(self, price) - if price > 0, sets __price; otherwise leaves it unchanged
+   - info(self) - prints:
      Product: {name}
      Price: {price}
 4. Reads name, initial price, new price

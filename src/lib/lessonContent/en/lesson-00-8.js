@@ -200,10 +200,10 @@ print(f"\\nAdded product: tangerines")
 Do not try to solve everything at once. Break the problem into smaller subproblems.
 
 **2. Use the right data structures:**
-- Lists — for sequences that can change
-- Dictionaries — for key-value pairs
-- Sets — for unique elements
-- Tuples — for immutable sequences
+- Lists - for sequences that can change
+- Dictionaries - for key-value pairs
+- Sets - for unique elements
+- Tuples - for immutable sequences
 
 **3. Use built-in functions:**
 - \`sum()\`, \`len()\`
@@ -296,12 +296,12 @@ print("(In later modules we will learn how to automatically find the most expens
   
   summary: `In this lesson we:
 
-1. Reviewed all data structures — lists, dictionaries, tuples, sets, strings
-2. Solved practical problems — management systems, data analysis
-3. Applied nested structures — complex data organization
-4. Learned a problem-solving approach — breaking into subproblems, testing
+1. Reviewed all data structures - lists, dictionaries, tuples, sets, strings
+2. Solved practical problems - management systems, data analysis
+3. Applied nested structures - complex data organization
+4. Learned a problem-solving approach - breaking into subproblems, testing
 
-You are now ready for the next module — comparison operators!`,
+You are now ready for the next module - comparison operators!`,
   
   practiceTask: {
     title: "Student management system",

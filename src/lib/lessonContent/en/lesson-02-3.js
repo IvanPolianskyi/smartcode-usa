@@ -450,7 +450,7 @@ Number of grades: 1
 Average grade: 55.00
 Maximum grade: 55
 Minimum grade: 55`,
-        explanation: "One grade — it is the average, max, and min"
+        explanation: "One grade - it is the average, max, and min"
       }
     ],
     solution: {

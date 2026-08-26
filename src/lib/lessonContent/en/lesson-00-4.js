@@ -195,27 +195,27 @@ print(school['class_9A']['students']['student1']['score'])  # 85
       },
       {
         title: "Basic dictionary methods",
-        content: `**keys() — get all keys:**
+        content: `**keys() - get all keys:**
 \`\`\`python
 my_dict = {'name': 'Alexander', 'age': 16, 'city': 'New York'}
 keys = list(my_dict.keys())
 print(keys)  # ['name', 'age', 'city']
 \`\`\`
 
-**values() — get all values:**
+**values() - get all values:**
 \`\`\`python
 values = list(my_dict.values())
 print(values)  # ['Alexander', 16, 'New York']
 \`\`\`
 
-**items() — get key-value pairs:**
+**items() - get key-value pairs:**
 \`\`\`python
 items = list(my_dict.items())
 print(items)  # [('name', 'Alexander'), ('age', 16), ('city', 'New York')]
 \`\`\`
 *Note: items() returns pairs that we currently treat as lists. We will learn more about this later.*
 
-**get() — get a value by key:**
+**get() - get a value by key:**
 \`\`\`python
 # If the key exists, return the value
 print(my_dict.get('name'))  # Alexander
@@ -224,7 +224,7 @@ print(my_dict.get('name'))  # Alexander
 print(my_dict.get('phone', 'Not specified'))  # 'Not specified'
 \`\`\`
 
-**in — check whether a key exists:**
+**in - check whether a key exists:**
 \`\`\`python
 my_dict = {'name': 'Alexander', 'age': 16}
 print('name' in my_dict)  # True
@@ -400,12 +400,12 @@ print("Alexander's grade:", grades['Alexander'])`,
   
   summary: `In this lesson we learned:
 
-1. Creating dictionaries — using curly braces {} and a colon :
-2. Accessing values — by keys with square brackets
-3. Modification — adding and changing values
-4. Nested dictionaries — dictionaries inside dictionaries
-5. Basic methods — keys(), values(), items(), get()
-6. Checking for a key — using the in operator
+1. Creating dictionaries - using curly braces {} and a colon :
+2. Accessing values - by keys with square brackets
+3. Modification - adding and changing values
+4. Nested dictionaries - dictionaries inside dictionaries
+5. Basic methods - keys(), values(), items(), get()
+6. Checking for a key - using the in operator
 
 Dictionaries are a powerful tool for organizing structured data!`,
   

@@ -663,9 +663,9 @@ create_user(
     description: "Створіть функції для роботи з налаштуваннями користувача, використовуючи позиційні та іменовані аргументи",
     problemStatement: `Напишіть програму з функціями:
 
-1. create_user_settings(username, theme="light", language="uk", notifications=True, font_size=14) — повертає словник налаштувань
-2. update_settings(settings, theme=None, language=None, notifications=None, font_size=None) — оновлює лише передані (не None) поля
-3. display_settings(settings, format="short") — виводить налаштування:
+1. create_user_settings(username, theme="light", language="uk", notifications=True, font_size=14) - повертає словник налаштувань
+2. update_settings(settings, theme=None, language=None, notifications=None, font_size=None) - оновлює лише передані (не None) поля
+3. display_settings(settings, format="short") - виводить налаштування:
    - short: Тема / Мова
    - full: Тема інтерфейсу / Мова інтерфейсу
    - Сповіщення: "Увімкнено" або "Вимкнено"

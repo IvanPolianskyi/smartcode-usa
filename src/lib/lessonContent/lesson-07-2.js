@@ -511,7 +511,7 @@ for square in gen:  # Обробляємо по одному
 
 1. Генераторне вираз кубів від 1 до cube_n
 2. combine_ranges(start1, end1, start2, end2) з yield from
-3. infinite_evens() — перші even_count парних чисел
+3. infinite_evens() - перші even_count парних чисел
 4. Сума квадратів від 1 до square_n
 
 Формат вводу:

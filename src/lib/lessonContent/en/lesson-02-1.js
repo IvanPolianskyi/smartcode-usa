@@ -373,7 +373,7 @@ passed
 Student 2:
 Score: 59
 failed`,
-        explanation: "Passing boundary: 60 — passed, 59 — failed"
+        explanation: "Passing boundary: 60 - passed, 59 - failed"
       },
       {
         input: `3
@@ -407,7 +407,7 @@ for i in range(1, n + 1):
         print("failed")
     if i < n:
         print()`,
-      explanation: "Read n scores and for each check with if/else: >= 60 — passed."
+      explanation: "Read n scores and for each check with if/else: >= 60 - passed."
     },
     hints: [
       "Read n = int(input()), then scores in a loop",

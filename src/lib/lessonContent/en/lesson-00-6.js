@@ -54,10 +54,10 @@ export const lesson_00_6 = {
 **Important about quotes:**
 If the string contains a single quote, use double quotes:
 \`\`\`python
-# Error — single quote inside
+# Error - single quote inside
 # 'I'm using single quotes, but this will cause an error'
 
-# Correct — double quotes on the outside
+# Correct - double quotes on the outside
 "Now I can use single quotes inside the string!"
 \`\`\`
 
@@ -87,13 +87,13 @@ print('See what I mean?')
 
 **Special characters:**
 \`\`\`python
-# \\n — new line
+# \\n - new line
 print('Line 1\\nLine 2')
 
-# \\t — tab
+# \\t - tab
 print('Column1\\tColumn2')
 
-# \\\\ — backslash
+# \\\\ - backslash
 print('Path: C:\\\\Users\\\\Name')
 \`\`\``
       },
@@ -218,19 +218,19 @@ print(s)  # 'Hello World concatenate me!'
 object.method(parameters)
 \`\`\`
 
-**upper() — convert to uppercase:**
+**upper() - convert to uppercase:**
 \`\`\`python
 s = 'Hello World'
 print(s.upper())  # 'HELLO WORLD'
 \`\`\`
 
-**lower() — convert to lowercase:**
+**lower() - convert to lowercase:**
 \`\`\`python
 s = 'Hello World'
 print(s.lower())  # 'hello world'
 \`\`\`
 
-**split() — split a string:**
+**split() - split a string:**
 \`\`\`python
 s = 'Hello World'
 
@@ -241,26 +241,26 @@ print(s.split())  # ['Hello', 'World']
 print(s.split('W'))  # ['Hello ', 'orld']
 \`\`\`
 
-**strip() — remove spaces from the start and end:**
+**strip() - remove spaces from the start and end:**
 \`\`\`python
 s = '  Hello World  '
 print(s.strip())  # 'Hello World'
 \`\`\`
 
-**replace() — replace a substring:**
+**replace() - replace a substring:**
 \`\`\`python
 s = 'Hello World'
 print(s.replace('World', 'Python'))  # 'Hello Python'
 \`\`\`
 
-**find() — find the position of a substring:**
+**find() - find the position of a substring:**
 \`\`\`python
 s = 'Hello World'
 print(s.find('World'))  # 6
 print(s.find('Python'))  # -1 (not found)
 \`\`\`
 
-**count() — count occurrences:**
+**count() - count occurrences:**
 \`\`\`python
 s = 'Hello World'
 print(s.count('l'))  # 3
@@ -431,13 +431,13 @@ print(f'Number of spaces: {text.count(" ")}')`,
   
   summary: `In this lesson we learned:
 
-1. Creating strings — single, double, and triple quotes
-2. Indexing and slicing — accessing characters and parts of a string
-3. Immutability — strings cannot be changed, but you can create new ones
-4. String methods — upper(), lower(), split(), strip(), replace(), find()
-5. Formatting — f-strings (recommended), .format(), % operator
+1. Creating strings - single, double, and triple quotes
+2. Indexing and slicing - accessing characters and parts of a string
+3. Immutability - strings cannot be changed, but you can create new ones
+4. String methods - upper(), lower(), split(), strip(), replace(), find()
+5. Formatting - f-strings (recommended), .format(), % operator
 
-Strings are a powerful tool for working with text! Next lesson — nested data structures.`,
+Strings are a powerful tool for working with text! Next lesson - nested data structures.`,
   
   practiceTask: {
     title: "Text processing",

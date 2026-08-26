@@ -41,17 +41,17 @@ In Python a car can be described as a **class** \`Car\`, and a specific Toyota o
 
 **Why OOP?**
 
-1. **Code organization** — related data and actions live together
-2. **Reuse** — one class → many objects
-3. **Scalability** — easier to grow large programs
-4. **Modeling** — code stays closer to real-world entities
+1. **Code organization** - related data and actions live together
+2. **Reuse** - one class → many objects
+3. **Scalability** - easier to grow large programs
+4. **Modeling** - code stays closer to real-world entities
 
 **Four pillars of OOP** (we will build on them in this module):
 
-1. **Encapsulation** — hiding internal details
-2. **Inheritance** — creating new classes based on existing ones
-3. **Polymorphism** — one interface, different behavior
-4. **Abstraction** — focusing on what matters, ignoring details
+1. **Encapsulation** - hiding internal details
+2. **Inheritance** - creating new classes based on existing ones
+3. **Polymorphism** - one interface, different behavior
+4. **Abstraction** - focusing on what matters, ignoring details
 
 In this lesson we focus on the foundation: **classes, objects, \`__init__\`, and \`self\`**.`
       },
@@ -60,16 +60,16 @@ In this lesson we focus on the foundation: **classes, objects, \`__init__\`, and
         content: `A **class** is a blueprint (template). An **object** (instance) is a concrete thing created from that blueprint.
 
 \`\`\`python
-# Class — template
+# Class - template
 class Dog:
     pass
 
-# Objects — concrete instances
+# Objects - concrete instances
 dog1 = Dog()
 dog2 = Dog()
 
 print(type(dog1))  # <class '__main__.Dog'>
-print(dog1 is dog2)  # False — different objects
+print(dog1 is dog2)  # False - different objects
 \`\`\`
 
 **Important:**
@@ -81,7 +81,7 @@ print(dog1 is dog2)  # False — different objects
 | Attribute | Object data | \`s.name\` |
 | Method | Function inside a class | \`s.greet()\` |
 
-One class can produce **as many** objects as you need — each with its own data.`
+One class can produce **as many** objects as you need - each with its own data.`
       },
       {
         title: "Creating a class and the __init__ constructor",
@@ -145,17 +145,17 @@ cat1.meow()  # Mittens says: Meow!
 cat2.meow()  # Snowball says: Meow!
 \`\`\`
 
-When you write \`cat1.meow()\`, Python actually calls \`Cat.meow(cat1)\` — it passes the object as \`self\` automatically.
+When you write \`cat1.meow()\`, Python actually calls \`Cat.meow(cat1)\` - it passes the object as \`self\` automatically.
 
 **Common mistakes with self:**
 
 \`\`\`python
-# Wrong — forgot self in the method definition
+# Wrong - forgot self in the method definition
 class Demo:
     def greet():  # TypeError when called
         print("Hello")
 
-# Wrong — forgot self. before the attribute
+# Wrong - forgot self. before the attribute
 class Demo:
     def __init__(self, name):
         name = name  # local variable, not an attribute!
@@ -205,7 +205,7 @@ class Book:
         self.pages = pages
 
     def info(self):
-        return f'"{self.title}" — {self.author} ({self.pages} pp.)'
+        return f'"{self.title}" - {self.author} ({self.pages} pp.)'
 
 books = [
     Book("Kobzar", "T. Shevchenko", 400),
@@ -216,7 +216,7 @@ for book in books:
     print(book.info())
 \`\`\`
 
-This way we model real entities — not just a pile of separate variables.`
+This way we model real entities - not just a pile of separate variables.`
       },
       {
         title: "Practical tips for beginners",
@@ -228,9 +228,9 @@ class User:          # noun
         pass
 \`\`\`
 
-**2. Keep \`__init__\` simple** — only store initial data; put complex logic in methods.
+**2. Keep \`__init__\` simple** - only store initial data; put complex logic in methods.
 
-**3. One class — one responsibility**
+**3. One class - one responsibility**
 
 Do not make an \`EverythingManager\` class. Prefer separate \`Student\`, \`Course\`, \`GradeBook\`.
 
@@ -299,7 +299,7 @@ dog2 = Dog("Lucky", "labrador")
 
 dog1.bark()
 dog2.bark()`,
-      explanation: "One class — two independent objects with different attributes."
+      explanation: "One class - two independent objects with different attributes."
     },
     {
       title: "Class with a computed method",
@@ -343,7 +343,7 @@ counter.show()`,
   commonMistakes: [
     {
       mistake: "Forgetting self in a method or constructor",
-      explanation: "Without self, Python will not pass a reference to the instance — you get a TypeError.",
+      explanation: "Without self, Python will not pass a reference to the instance - you get a TypeError.",
       correctApproach: `class Demo:
     def __init__(self, value):
         self.value = value
@@ -365,7 +365,7 @@ name = name  # local variable only`
       explanation: "A method belongs to an instance; you need an object and call parentheses.",
       correctApproach: `student = Student("Olya", 18)
 student.greet()  # correct
-# Student.greet() without an argument — error`
+# Student.greet() without an argument - error`
     },
     {
       mistake: "Expecting __init__ to return a value",
@@ -378,12 +378,12 @@ student.greet()  # correct
   summary: `In this lesson we covered OOP basics:
 
 1. A class is a template; an object is a concrete instance
-2. class — the keyword for declaring a class
-3. __init__ — the constructor for initial attributes
-4. self — a reference to the current instance
+2. class - the keyword for declaring a class
+3. __init__ - the constructor for initial attributes
+4. self - a reference to the current instance
 5. Attributes store state; methods describe behavior
 
-This is the foundation of the entire OOP module. Next — a deeper look at attributes and class methods.`,
+This is the foundation of the entire OOP module. Next - a deeper look at attributes and class methods.`,
 
   practiceTask: {
     title: "Student profile",
@@ -562,7 +562,7 @@ student.info()`,
           "False"
         ],
         correctAnswer: 0,
-        explanation: "Exactly: one template — many instances with their own data."
+        explanation: "Exactly: one template - many instances with their own data."
       }
     ],
     timeLimit: 15,

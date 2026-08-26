@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb'
-import { getCollection } from '@/lib/mongodb'
-import { courseIdsForPriceId } from '@/lib/billingCatalog'
+import { getCollection } from './mongodb.js'
+import { courseIdsForPriceId, tierForPriceId } from './billingCatalog.js'
 
 /**
  * Single source of truth for "may this account use paid features".
@@ -55,6 +55,29 @@ export function resolveSubscriptionCourseIds(subscription) {
 }
 
 /**
+ * Resolve Standard vs Premium for display and live-lesson gates.
+ * Prefer the stored field, then the Paddle price map, then local-dev id hints.
+ * Defaults to standard so the dashboard never leaves tier ambiguous.
+ */
+export function resolvePlanTier(subscription) {
+	const stored = subscription?.planTier
+	if (stored === 'premium' || stored === 'standard') return stored
+
+	const fromPrice = tierForPriceId(subscription?.priceId)
+	if (fromPrice === 'premium' || fromPrice === 'standard') return fromPrice
+
+	const priceId = String(subscription?.priceId || '')
+	const subId = String(subscription?.paddleSubscriptionId || '')
+	if (
+		/(^|_)premium(_|$)/i.test(priceId) ||
+		/(^|_)premium(_|$)/i.test(subId)
+	) {
+		return 'premium'
+	}
+	return 'standard'
+}
+
+/**
  * Whether a single subscription row currently grants access.
  *
  * @returns {{
@@ -88,6 +111,24 @@ export function evaluateSubscription(subscription, { now = new Date() } = {}) {
 	const cancelAtPeriodEnd = Boolean(subscription.cancelAtPeriodEnd)
 
 	if (ACTIVE_STATUSES.has(status)) {
+		// Timed admin/local grants store currentPeriodEnd; honor expiry so comps end.
+		const isManualGrant =
+			subscription.paddleCustomerId === 'admin_manual' ||
+			subscription.paddleCustomerId === 'local_dev_customer' ||
+			String(subscription.paddleSubscriptionId || '').startsWith('admin_manual_') ||
+			String(subscription.paddleSubscriptionId || '').startsWith('local_dev_')
+		if (isManualGrant && endsAt && now >= endsAt) {
+			return {
+				active: false,
+				status,
+				trialing: false,
+				inGrace: false,
+				endsAt,
+				trialEndsAt,
+				cancelAtPeriodEnd,
+				reason: 'manual_expired',
+			}
+		}
 		return {
 			active: true,
 			status,
@@ -189,9 +230,11 @@ export async function getEntitlement(userId, { now = new Date() } = {}) {
 			...evaluated,
 			courseIds: ids,
 			billingInterval: row.billingInterval || null,
-			planTier: row.planTier || null,
+			planTier: resolvePlanTier(row),
 			priceId: row.priceId || null,
 			paddleSubscriptionId: row.paddleSubscriptionId || null,
+			// Access-start clock for weekly lesson drip unlock.
+			createdAt: row.createdAt || null,
 		}
 
 		if (evaluated.active) {

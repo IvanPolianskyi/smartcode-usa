@@ -27,7 +27,7 @@ export const lesson_05_4 = {
     sections: [
       {
         title: "What is assert?",
-        content: `\`assert\` is a short way to say: “I am sure this condition is true; if not — it is a bug.”
+        content: `\`assert\` is a short way to say: “I am sure this condition is true; if not - it is a bug.”
 
 **Syntax:**
 
@@ -49,7 +49,7 @@ print(average([10, 20, 30]))  # 20.0
 
 If the condition is \`False\`, Python raises \`AssertionError\`.
 
-**Idea:** assert documents **internal invariants** — things that “should never happen” if the code is correct.`
+**Idea:** assert documents **internal invariants** - things that “should never happen” if the code is correct.`
       },
       {
         title: "How AssertionError works",
@@ -82,7 +82,7 @@ Assert is a tool for **development and testing assumptions**, not a public funct
 **Typical checks:**
 
 - type (\`isinstance\`)
-- range (age 0–120, score 0–100)
+- range (age 0-120, score 0-100)
 - format (email contains \`@\`)
 - required fields (string is not empty)
 - consistency between fields
@@ -110,19 +110,19 @@ def validate_score(score):
 | User-facing message | Usually no | Yes |
 
 \`\`\`python
-# For user input — raise
+# For user input - raise
 def set_username(name):
     if not name.strip():
         raise ValueError("Name cannot be empty")
     return name.strip()
 
-# For internal logic after validation — assert
+# For internal logic after validation - assert
 def _normalize(scores):
     assert all(0 <= s <= 100 for s in scores)
     return [s / 100 for s in scores]
 \`\`\`
 
-**SmartCode rule:** at the system boundary (stdin, API, form) — \`raise\`; inside after checks — you may use \`assert\`.`
+**SmartCode rule:** at the system boundary (stdin, API, form) - \`raise\`; inside after checks - you may use \`assert\`.`
       },
       {
         title: "Practical validation patterns",
@@ -158,7 +158,7 @@ def clamp(value, low, high):
     return result
 \`\`\`
 
-Combine: outside — clear \`ValueError\`, inside — \`assert\` on invariants.`
+Combine: outside - clear \`ValueError\`, inside - \`assert\` on invariants.`
       },
       {
         title: "Common mistakes and good messages",
@@ -180,7 +180,7 @@ assert len(items) > 0, "items cannot be empty before average()"
 
 1. Which field / value is wrong
 2. Which constraint was violated
-3. When possible — the actual value
+3. When possible - the actual value
 
 \`\`\`python
 def validate_score(score):
@@ -191,7 +191,7 @@ def validate_score(score):
     return score
 \`\`\`
 
-In the practice task you will validate scores with \`ValueError\` — the right approach for user input.`
+In the practice task you will validate scores with \`ValueError\` - the right approach for user input.`
       }
     ]
   },
@@ -271,19 +271,19 @@ print(require_in_range(50, 0, 100))`,
 
   summary: `In this lesson we studied assert and validation:
 
-1. assert — checking internal assumptions (can be disabled with -O)
-2. AssertionError — result of a failed assert
-3. Validate at the entrance — protection from bad data
-4. raise ValueError — the right tool for an external contract
-5. Clear messages — key to convenient error handling
+1. assert - checking internal assumptions (can be disabled with -O)
+2. AssertionError - result of a failed assert
+3. Validate at the entrance - protection from bad data
+4. raise ValueError - the right tool for an external contract
+5. Clear messages - key to convenient error handling
 
 In the next lesson we will reinforce everything in a combined practice task.`,
 
   practiceTask: {
     title: "Score validation",
-    description: "Check scores in the range 0–100 using ValueError",
+    description: "Check scores in the range 0-100 using ValueError",
     problemStatement: `Write function validate_score(score):
-- if score < 0 or score > 100 — raise ValueError("Score must be between 0 and 100")
+- if score < 0 or score > 100 - raise ValueError("Score must be between 0 and 100")
 - otherwise return score
 
 Read n, then n integers.
@@ -292,7 +292,7 @@ For each:
 - on success print: OK: {score}
 - on ValueError print: Error: {message}
 
-Do not use assert for this task — you need raise ValueError (input validation).`,
+Do not use assert for this task - you need raise ValueError (input validation).`,
     outputFormat: `OK: 85
 Error: Score must be between 0 and 100
 Error: Score must be between 0 and 100`,
@@ -338,7 +338,7 @@ for _ in range(n):
         print(f"OK: {score}")
     except ValueError as e:
         print(f"Error: {e}")`,
-      explanation: "Validation via raise ValueError — the right approach for stdin data."
+      explanation: "Validation via raise ValueError - the right approach for stdin data."
     },
     hints: [
       "In validate_score use raise ValueError, not assert",
@@ -383,7 +383,7 @@ for _ in range(n):
           "Prints \"not ok\""
         ],
         correctAnswer: 0,
-        explanation: "Condition is false — AssertionError is raised with the text."
+        explanation: "Condition is false - AssertionError is raised with the text."
       },
       {
         id: "q4",

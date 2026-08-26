@@ -32,18 +32,18 @@ export const lesson_05_1 = {
 **Example without handling:**
 
 \`\`\`python
-number = int("abc")  # ValueError — the program stops
+number = int("abc")  # ValueError - the program stops
 print("This line will never run")
 \`\`\`
 
 **Why handle errors?**
 
-1. **Stability** — the program does not crash on an expected error
-2. **Clear messages** — the user sees what went wrong
-3. **Recovery** — you can offer to retry input or continue
-4. **Resources** — you can properly close files, connections, etc.
+1. **Stability** - the program does not crash on an expected error
+2. **Clear messages** - the user sees what went wrong
+3. **Recovery** - you can offer to retry input or continue
+4. **Resources** - you can properly close files, connections, etc.
 
-**Analogy:** imagine opening a door. If the key does not fit — that is an error. Instead of “breaking,” you can try another key or report the problem.`
+**Analogy:** imagine opening a door. If the key does not fit - that is an error. Instead of “breaking,” you can try another key or report the problem.`
       },
       {
         title: "The try / except block",
@@ -73,11 +73,11 @@ except ValueError:
 **How it works:**
 
 1. Python runs the code in the \`try\` block
-2. If there is no error — \`except\` is skipped
-3. If a matching exception occurs — control moves to \`except\`
+2. If there is no error - \`except\` is skipped
+3. If a matching exception occurs - control moves to \`except\`
 4. The program continues after the block
 
-**Important:** catch only errors you can actually handle. Do not hide everything silently — bugs become hard to find.`
+**Important:** catch only errors you can actually handle. Do not hide everything silently - bugs become hard to find.`
       },
       {
         title: "The else block",
@@ -95,7 +95,7 @@ else:
 **Why else?**
 
 - Separate “success” code from code that may raise
-- Make intent clearer: “if all is ok — do this”
+- Make intent clearer: “if all is ok - do this”
 
 \`\`\`python
 try:
@@ -110,7 +110,7 @@ In this example, squaring happens only after a successful conversion.`
       },
       {
         title: "The finally block",
-        content: `The \`finally\` block **always** runs — after success and after an error (even if there was a \`return\` in \`try\`/\`except\`).
+        content: `The \`finally\` block **always** runs - after success and after an error (even if there was a \`return\` in \`try\`/\`except\`).
 
 \`\`\`python
 try:
@@ -161,10 +161,10 @@ finally:
 
 **Block order rules:**
 
-1. \`try\` — required
+1. \`try\` - required
 2. One or more \`except\`
-3. \`else\` — only after all \`except\`
-4. \`finally\` — always last
+3. \`else\` - only after all \`except\`
+4. \`finally\` - always last
 
 **When to use which:**
 
@@ -192,13 +192,13 @@ finally:
 - Empty \`except:\` or \`except Exception:\` without a message hides bugs
 
 \`\`\`python
-# Bad — hides all errors
+# Bad - hides all errors
 try:
     do_something()
 except:
     pass
 
-# Better — a specific error and a clear message
+# Better - a specific error and a clear message
 try:
     do_something()
 except ValueError as e:
@@ -218,7 +218,7 @@ except ValueError as e:
     print(number)
 except ValueError:
     print("Could not convert to a number")`,
-      explanation: "If the string is valid, except does not run. On error — a message is printed."
+      explanation: "If the string is valid, except does not run. On error - a message is printed."
     },
     {
       title: "try with else",
@@ -239,7 +239,7 @@ except ZeroDivisionError:
     print("Division by zero")
 finally:
     print("Done")`,
-      explanation: "finally always runs — on success and on error."
+      explanation: "finally always runs - on success and on error."
     },
     {
       title: "Safe division with the full construct",
@@ -273,7 +273,7 @@ except ValueError as e:
     },
     {
       mistake: "Forgetting that after except the program continues",
-      explanation: "After handling, execution continues — that is normal, but plan the logic.",
+      explanation: "After handling, execution continues - that is normal, but plan the logic.",
       correctApproach: "After except set a default or return / continue if continuing is unsafe."
     },
     {
@@ -285,11 +285,11 @@ except ValueError as e:
 
   summary: `In this lesson we covered error-handling basics:
 
-1. Exceptions — events that interrupt normal program flow
-2. try / except — catching and handling errors
-3. else — code only after a successful try
-4. finally — code that always runs
-5. When to catch errors — only expected situations with a clear response
+1. Exceptions - events that interrupt normal program flow
+2. try / except - catching and handling errors
+3. else - code only after a successful try
+4. finally - code that always runs
+5. When to catch errors - only expected situations with a clear response
 
 In the next lesson we will look at specific Python exception types.`,
 
@@ -299,8 +299,8 @@ In the next lesson we will look at specific Python exception types.`,
     problemStatement: `Read two integers a and b from stdin.
 Compute a / b in a try block.
 
-- If division succeeds — print the result (as float, e.g. 5.0)
-- If b is 0 — print: Error: division by zero
+- If division succeeds - print the result (as float, e.g. 5.0)
+- If b is 0 - print: Error: division by zero
 - In the finally block always print: Done
 
 Use try / except / else / finally.`,
@@ -356,7 +356,7 @@ finally:
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Which block always runs — after success and after an error?",
+        question: "Which block always runs - after success and after an error?",
         options: ["else", "except", "finally", "try"],
         correctAnswer: 2,
         explanation: "finally always runs, whether or not there was an error."
@@ -427,7 +427,7 @@ finally:
         question: "A try block can be used without except if there is finally.",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True. try/finally without except is allowed — for guaranteed resource cleanup."
+        explanation: "True. try/finally without except is allowed - for guaranteed resource cleanup."
       }
     ],
     timeLimit: 15,

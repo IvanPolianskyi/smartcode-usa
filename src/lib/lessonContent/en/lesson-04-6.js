@@ -545,7 +545,7 @@ Borrowed: "Dune"
 Available books: 0
 Returned: "Dune"
 Available books: 1`,
-        explanation: "One book: after borrowing 0 available, after returning — 1"
+        explanation: "One book: after borrowing 0 available, after returning - 1"
       },
       {
         input: `School
@@ -684,7 +684,7 @@ print(f"Available books: {library.available_books_count()}")`,
           "Does nothing"
         ],
         correctAnswer: 0,
-        explanation: "frozen=True makes the object immutable — you cannot change its attributes."
+        explanation: "frozen=True makes the object immutable - you cannot change its attributes."
       },
       {
         id: "q5",

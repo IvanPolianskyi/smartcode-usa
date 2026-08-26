@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 
 /** Практично «довічна» сесія учня (браузери можуть обмежити cookie ~400 днів). */
 const JWT_EXPIRES_IN = '10y'
-/** 10 років у секундах — maxAge cookie; оновлюється при кожному /api/auth/me. */
+/** 10 років у секундах - maxAge cookie; оновлюється при кожному /api/auth/me. */
 export const AUTH_COOKIE_MAX_AGE_SEC = 60 * 60 * 24 * 365 * 10
 
 function getJwtSecret() {

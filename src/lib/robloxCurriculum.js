@@ -1,11 +1,11 @@
 /**
- * Roblox Studio — 92 lessons / 12 modules
+ * Roblox Studio - 92 lessons / 12 modules
  * Grid: M1×8 + M2×4 + M3×8 + M4×8 + M5×10 + M6×10 + M7×8 + M8×8 + M9×8 + M10×8 + M11×6 + M12×6
  */
 
 export const robloxCurriculum = {
   "courseId": "roblox-studio",
-  "title": "Roblox Studio: 92 Lessons — From Island to Release",
+  "title": "Roblox Studio: 92 Lessons - From Island to Release",
   "modules": [
     {
       "moduleId": "module-01",

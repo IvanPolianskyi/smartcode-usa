@@ -136,14 +136,14 @@ send_simple_email(
 
 **Step-by-step explanation:**
 
-1. **MIMEText** — creates a text message
-2. **msg['From']** — sender address
-3. **msg['To']** — recipient address
-4. **msg['Subject']** — email subject
-5. **server.starttls()** — enables encryption
-6. **server.login()** — authenticates
-7. **server.send_message()** — sends the message
-8. **server.quit()** — closes the connection`
+1. **MIMEText** - creates a text message
+2. **msg['From']** - sender address
+3. **msg['To']** - recipient address
+4. **msg['Subject']** - email subject
+5. **server.starttls()** - enables encryption
+6. **server.login()** - authenticates
+7. **server.send_message()** - sends the message
+8. **server.quit()** - closes the connection`
       },
       {
         title: "Storing passwords securely",
@@ -261,10 +261,10 @@ else:
 
 **Error types:**
 
-- **SMTPAuthenticationError** — wrong email or password
-- **SMTPRecipientsRefused** — invalid recipient address
-- **SMTPException** — general SMTP error
-- **ConnectionError** — network problems`
+- **SMTPAuthenticationError** - wrong email or password
+- **SMTPRecipientsRefused** - invalid recipient address
+- **SMTPException** - general SMTP error
+- **ConnectionError** - network problems`
       },
       {
         title: "Sending to multiple recipients",
@@ -397,11 +397,11 @@ send_daily_report(report_data)
 
 **Key concepts:**
 
-1. **SMTP** — the protocol for sending email
-2. **smtplib** — Python's built-in library
-3. **MIMEText** — creating a text message
-4. **starttls()** — encrypting the connection
-5. **Security** — storing passwords in environment variables
+1. **SMTP** - the protocol for sending email
+2. **smtplib** - Python's built-in library
+3. **MIMEText** - creating a text message
+4. **starttls()** - encrypting the connection
+5. **Security** - storing passwords in environment variables
 
 **Main steps:**
 
@@ -511,11 +511,11 @@ server.quit()`,
   
   summary: `In this lesson we learned the basics of sending email:
 
-1. SMTP protocol — the protocol for sending email
-2. smtplib — Python's built-in library
-3. MIMEText — creating a text message
-4. Security — storing passwords in environment variables
-5. Error handling — handling exceptions correctly
+1. SMTP protocol - the protocol for sending email
+2. smtplib - Python's built-in library
+3. MIMEText - creating a text message
+4. Security - storing passwords in environment variables
+5. Error handling - handling exceptions correctly
 
 Email is a powerful tool for automating notifications!`,
   

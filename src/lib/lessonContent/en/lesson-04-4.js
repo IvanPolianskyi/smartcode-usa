@@ -29,8 +29,8 @@ export const lesson_04_4 = {
         title: "What is inheritance?",
         content: `**Inheritance** lets you create a new class based on an existing one, **taking over** its attributes and methods.
 
-- **Parent class (parent / base / superclass)** — the original template
-- **Child class (child / derived / subclass)** — an extension or specialization
+- **Parent class (parent / base / superclass)** - the original template
+- **Child class (child / derived / subclass)** - an extension or specialization
 
 **Analogy:** “Transport” → “Car” → “Electric car.” Each next level adds details but keeps what is shared.
 
@@ -56,7 +56,7 @@ dog.speak()  # Rex says: Woof!
 2. Build hierarchies (“is a kind of”)
 3. Extend behavior without changing the base class
 
-**Important:** inheritance makes sense when classes have an *“is-a”* relationship (Dog **is an** Animal), not just *“has-a”* (Car **has an** Engine — that is composition, lesson 04-8).`
+**Important:** inheritance makes sense when classes have an *“is-a”* relationship (Dog **is an** Animal), not just *“has-a”* (Car **has an** Engine - that is composition, lesson 04-8).`
       },
       {
         title: "Syntax and inherited members",
@@ -104,7 +104,7 @@ dev.info()
 \`\`\`
 
 \`isinstance(dev, Developer)\` → \`True\`  
-\`isinstance(dev, Employee)\` → \`True\` — a child object **is also** an instance of the parent.`
+\`isinstance(dev, Employee)\` → \`True\` - a child object **is also** an instance of the parent.`
       },
       {
         title: "Method overriding",
@@ -135,7 +135,7 @@ This is the basis of polymorphism (next lesson): the same \`move()\` call, diffe
 - if you can simply add a new method without replacing the old one`
       },
       {
-        title: "super() — calling the parent implementation",
+        title: "super() - calling the parent implementation",
         content: `Often a child class wants to **extend**, not fully replace, parent logic. Use \`super()\` for that.
 
 \`\`\`python
@@ -351,7 +351,7 @@ print(C().step())  # A-B-C`,
 4. isinstance also works for parent types
 5. MRO defines the method lookup order
 
-Next — polymorphism: the same call shape, different behavior.`,
+Next - polymorphism: the same call shape, different behavior.`,
 
   practiceTask: {
     title: "Animals and sounds",

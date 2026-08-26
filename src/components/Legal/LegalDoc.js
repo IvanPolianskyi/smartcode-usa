@@ -16,7 +16,18 @@ const DOCS = [
  * readable measure, numbered sections they can cite back at us, and a visible
  * last-updated date. Forced light theme matches the marketing site.
  */
-export function LegalDoc({ title, summary, lastUpdated, active, children }) {
+export function LegalDoc({
+	title,
+	summary,
+	lede,
+	lastUpdated,
+	updated,
+	active,
+	children,
+}) {
+	const intro = summary || lede
+	const dated = lastUpdated || updated || LEGAL.lastUpdated
+
 	return (
 		<div className={styles.page} data-theme="light">
 			<header className={styles.topBar}>
@@ -52,10 +63,8 @@ export function LegalDoc({ title, summary, lastUpdated, active, children }) {
 					<header className={styles.header}>
 						<p className={styles.kicker}>Legal</p>
 						<h1 className={styles.title}>{title}</h1>
-						{summary ? <p className={styles.summary}>{summary}</p> : null}
-						<p className={styles.updated}>
-							Last updated: {lastUpdated || LEGAL.lastUpdated}
-						</p>
+						{intro ? <p className={styles.summary}>{intro}</p> : null}
+						<p className={styles.updated}>Last updated: {dated}</p>
 					</header>
 					{children}
 				</article>
@@ -99,3 +108,5 @@ export function LegalSection({ n, title, children }) {
 export function LegalCallout({ children }) {
 	return <aside className={styles.callout}>{children}</aside>
 }
+
+export default LegalDoc

@@ -13,7 +13,7 @@ export const ukLesson101 = {
  estimatedTime: 60,
  learningObjectives: [
  "Зібрати читабельний простір хабу: Spawn, зони Shop / NPC / Puzzle",
- "Розкласти папки в Workspace за стандартом імен курсу",
+ "Розкласти Folders в Workspace за стандартом імен курсу",
  "Підготувати ReplicatedStorage (Remotes, Modules) і ServerScriptService (Systems)",
  "Зробити заготовку ScreenGui магазину під LocalScript (без повної каси)",
  "Нагадати різницю Script vs LocalScript і куди що класти"
@@ -25,8 +25,8 @@ export const ukLesson101 = {
  content: `Стартує модуль **«Живий хаб»**. Далі буде магазин на Remotes, анти-чит, NPC, pathfinding, квест, інвентар/Raycast і Ship. Усе це розсиплеться, якщо сьогодні немає **підлоги під системи**.
 
 Сьогодні ти не пишеш повну касу. Сьогодні ти:
-1. Будуєш **простір хабу** (спавн + 3 зони).
-2. Кладеш **папки-служби** в RS і SSS.
+1. Будуєш **простір хабу** (spawn + 3 зони).
+2. Кладеш **folders-служби** в RS і SSS.
 3. Готуєш **порожній каркас ShopGui** + нагадування, чому UI на LocalScript.
 4. Зберігаєш Place як базу на весь модуль 10.
 
@@ -40,7 +40,7 @@ export const ukLesson101 = {
 |-----|--------|
 | Одна сцена, з якої «живуть» системи | П’ять незв’язаних Baseplate |
 | Зони видно здалеку | Все звалено в одну купу Parts |
-| Гравець розуміє куди йти за ≤30–60 с | Красиво, але без маршруту |
+| Гравець розуміє куди йти за ≤30-60 с | Красиво, але без маршруту |
 | Місце під магазин/NPC/пазл | Лише декоративний лобі без слотів |
 
 Хаб може бути маленьким: платформа 40×40, три кольорові зони, таблички. Краще **маленький і зрозумілий**, ніж гігантський лабіринт без сенсу.
@@ -57,17 +57,17 @@ export const ukLesson101 = {
 |------|--------------|--------|
 | **Spawn** | SpawnLocation | Старт |
 | **Shop** | синя підлога / вивіска | Завтра каса 10.2 |
-| **NPC** | жовтий «!» | 10.4–10.6 |
+| **NPC** | жовтий «!» | 10.4-10.6 |
 | **Puzzle** | фіолетова кімната-коробка | 10.7 |
 
-Кроки білду (≈20–25 хв):
+Кроки білду (≈20-25 хв):
 1. Підлога хабу + стіни-орієнтири (не обов’язково повний будинок).
 2. SpawnLocation у центрі/вході, Anchored.
 3. Три Part-платформи зон з іменами \`Zone_Shop\`, \`Zone_NPC\`, \`Zone_Puzzle\`.
 4. Таблички (SurfaceGui або Billboard) з 1 реченням кожна.
 5. Світло: одне нормальне Lighting, без спаму Neon на все.
 
-Не тягни весь Toolbox-сіті. Кожна зайва модель = сміття в Explorer перед 11.1.
+Не тягни весь Toolbox-сіті. Кожна зайва model = сміття в Explorer перед 11.1.
 
 **Зроби зараз (4 хв):** зроби одну дію pick/use і підтверди результат у Output або інвентарі.`,
  },
@@ -85,9 +85,9 @@ export const ukLesson101 = {
 Правила імен:
 - без 40× \`Part\`;
 - префікси зон \`Zone_\`;
-- моделі з великої \`NPC_\`, \`Door_\` тощо.
+- model з великої \`NPC_\`, \`Door_\` тощо.
 
-**Зроби зараз (5 хв):** створи папки й перенеси вже зліплені Parts усередину. Якщо щось «тимчасове» - папка \`Hub/_Trash\` на сьогодні, видалиш у кінці уроку.`,
+**Зроби зараз (5 хв):** створи Folders й перенеси вже зліплені Parts усередину. Якщо щось «тимчасове» - Folder \`Hub/_Trash\` на сьогодні, видалиш у кінці уроку.`,
  },
  {
  title: "ReplicatedStorage: що класти і чому",
@@ -95,7 +95,7 @@ export const ukLesson101 = {
 
 Сьогодні створи:
 
-| Папка / об’єкт | Навіщо |
+| Folder / об’єкт | Навіщо |
 |----------------|--------|
 | \`RS/Remotes/\` | Сюди завтра ляжуть ShopBuy / ShopQuery (можна порожньо або вже створити імена) |
 | \`RS/Modules/\` | Спільні ModuleScript, які можна require з клієнта й сервера (обережно з секретами!) |
@@ -113,15 +113,15 @@ export const ukLesson101 = {
 
 Сьогодні:
 
-| Папка | Навіщо |
+| Folder | Навіщо |
 |-------|--------|
 | \`SSS/Systems/\` | Заготовки \`Srv_Shop\`, \`Srv_Quest\`… (поки можна порожні Script Disabled) |
-| \`SSS/Modules/\` | ShopConfig, Inventory, QuestConfig - з’являться в 10.2–10.7 |
+| \`SSS/Modules/\` | ShopConfig, Inventory, QuestConfig - з’являться в 10.2-10.7 |
 | \`SSS/Boot/\` (опційно) | Один Script, що гарантує leaderstats |
 
 Можна одразу створити Disabled-скрипти з правильними іменами - щоб завтра не шукати «куди писати».
 
-\`ServerStorage\` - для Tools/шаблонів, які клонує лише сервер. Якщо плануєш Tool з магазину - папка \`ServerStorage/ShopTools\` вже зараз.
+\`ServerStorage\` - для Tools/шаблонів, які клонує лише сервер. Якщо плануєш Tool з магазину - Folder \`ServerStorage/ShopTools\` вже зараз.
 
 **Зроби зараз (4 хв):** у Play відкрий TAB і підтверди, що Coins змінюються після дії на сервері.`,
  },
@@ -174,13 +174,13 @@ export const ukLesson101 = {
 2. Якщо ні - зроби мінімум у \`SSS/Boot/Leaderstats.lua\` (Script):
 
 \`game.Players.PlayerAdded:Connect(function(player)\`
-\` local folder = Instance.new("Folder")\`
-\` folder.Name = "leaderstats"\`
-\` folder.Parent = player\`
+\` local Folder = Instance.new("Folder")\`
+\` Folder.Name = "leaderstats"\`
+\` Folder.Parent = player\`
 \` local coins = Instance.new("IntValue")\`
 \` coins.Name = "Coins"\`
 \` coins.Value = 100 -- тестовий старт хабу\`
-\` coins.Parent = folder\`
+\` coins.Parent = Folder\`
 \`end)\`
 
 Тестові 100 монет - ок для навчання. У фіналці баланс підженеш квестами.
@@ -206,12 +206,12 @@ export const ukLesson101 = {
  {
  title: "Що свідомо НЕ робити сьогодні",
  content: `- Повний магазин з Remotes (це 10.2).
-- Повний квест і Raycast (10.6–10.7).
+- Повний квест і Raycast (10.6-10.7).
 - Десять Toolbox-NPC з чужими скриптами.
 - Гігантський open world на 10 хвилин ходьби між зонами.
 - Publish Public.
 
-Роби: **білд + папки + Gui-каркас + leaderstats boot + Save**.
+Роби: **білд + Folders + Gui-каркас + leaderstats boot + Save**.
 
 Усе «я вже знаю Remotes» можна набросати іменами в RS/Remotes, але логіку Buy залиш на завтра - інакше розмажеш годину.
 
@@ -220,7 +220,7 @@ export const ukLesson101 = {
  {
  title: "Чекліст здачі уроку 73 + місток далі",
  content: `- [ ] Хаб з Spawn і 3 зонами (Shop/NPC/Puzzle)
-- [ ] Папки Workspace/Hub/...
+- [ ] Folders Workspace/Hub/...
 - [ ] RS/Remotes (+ опційно порожні Remote імена)
 - [ ] SSS/Systems і SSS/Modules
 - [ ] ShopGui заготовка відкривається/закривається
@@ -232,8 +232,8 @@ export const ukLesson101 = {
 |------|------------------------|
 | 10.2 | Каса Remotes + Config |
 | 10.3 | Захист Buy |
-| 10.4–10.5 | NPC у Zone_NPC |
-| 10.6–10.7 | Квест + пазл |
+| 10.4-10.5 | NPC у Zone_NPC |
+| 10.6-10.7 | Квест + пазл |
 | 10.8 | Ship усього хабу |
 
 Якщо каркас кривий - весь модуль болітиме. Краще 40 студів чистого хабу, ніж «місто», у якому не знайти Zone_Shop.
@@ -274,17 +274,17 @@ export const ukLesson101 = {
  correctApproach: "Малий читабельний хаб",
  }
  ],
- summary: "Ти заклав базу живого хабу: зони Shop/NPC/Puzzle, папки Workspace, каркас RS/SSS, заготовку ShopGui на LocalScript і перевірку leaderstats. Далі на цей скелет сяде магазин, NPC і квести модуля 10.",
+ summary: "Ти заклав базу живого хабу: зони Shop/NPC/Puzzle, Folders Workspace, каркас RS/SSS, заготовку ShopGui на LocalScript і перевірку leaderstats. Далі на цей скелет сяде магазин, NPC і квести модуля 10.",
  practiceTask: {
  title: "Hub Base (~30 хв)",
  difficulty: "beginner",
- description: `**Мета:** простір хабу + службові папки + Gui-каркас.
+ description: `**Мета:** простір хабу + службові Folders + Gui-каркас.
 
 ### Part A - Білд (12 хв)
 1. Підлога + SpawnLocation.
 2. Zone_Shop, Zone_NPC, Zone_Puzzle з маркерами.
 3. 3 короткі таблички.
-4. Папки Workspace/Hub/...
+4. Folders Workspace/Hub/...
 
 ### Part B - RS/SSS (8 хв)
 1. RS/Remotes (опційно створи ShopBuy, ShopQuery порожніми).
@@ -297,7 +297,7 @@ export const ukLesson101 = {
 3. Спосіб відкрити Gui (кнопка/Prompt).
 4. **Зберегти:** Lesson 10.1 - Hub Base`,
  hints: [
- "Спочатку імена й папки, потім краса",
+ "Спочатку імена й folders, потім краса",
  "Enabled=false на ShopGui за замовчуванням",
  "Перевір TAB: чи є Coins після Play"
  ],
@@ -312,11 +312,11 @@ export const ukLesson101 = {
  type: MC,
  question: "Яка головна мета уроку 10.1?",
  options: [
-          "Зібрати простір хабу й каркас папок RS/SSS/UI під системи модуля",
-          "Одразу завершити Ship усього курсу",
-          "Видалити leaderstats",
-          "Підключити лише GamePass без хабу"
-        ],
+ "Зібрати простір хабу й каркас папок RS/SSS/UI під системи модуля",
+ "Одразу завершити Ship усього курсу",
+ "Видалити leaderstats",
+ "Підключити лише GamePass без хабу"
+ ],
  correctAnswer: 0,
  explanation: "База під M10.",
  },
@@ -325,24 +325,24 @@ export const ukLesson101 = {
  type: MC,
  question: "Які три зони мінімально варто закласти?",
  options: [
-          "Лише небо й океан",
-          "Shop, NPC, Puzzle (+ Spawn)",
-          "Лише 50 Toolbox-дерев",
-          "Лише DataStore без світу"
-        ],
+ "Лише небо й океан",
+ "Shop, NPC, Puzzle (+ Spawn)",
+ "Лише 50 Toolbox-дерев",
+ "Лише DataStore без світу"
+ ],
  correctAnswer: 1,
- explanation: "Слоти під 10.2–10.7.",
+ explanation: "Слоти під 10.2-10.7.",
  },
  {
  id: "q3",
  type: MC,
  question: "Що таке ReplicatedStorage у контексті хабу?",
  options: [
-          "Місце лише для Terrain",
-          "Папка, куди клієнт не може нічого бачити ніколи",
-          "Сховище, доступне клієнту й серверу (наприклад Remotes)",
-          "Заміна Workspace"
-        ],
+ "Місце лише для Terrain",
+ "Folder, куди клієнт не може нічого бачити ніколи",
+ "Сховище, доступне клієнту й серверу (наприклад Remotes)",
+ "Заміна Workspace"
+ ],
  correctAnswer: 2,
  explanation: "Спільна реплікація.",
  },
@@ -351,11 +351,11 @@ export const ukLesson101 = {
  type: MC,
  question: "Де краще тримати серверні системи на кшталт Srv_Shop?",
  options: [
-          "У LocalScript всередині Part декору",
-          "У Lighting",
-          "У назві SpawnLocation",
-          "У ServerScriptService (Systems)"
-        ],
+ "У LocalScript всередині Part декору",
+ "У Lighting",
+ "У назві SpawnLocation",
+ "У ServerScriptService (Systems)"
+ ],
  correctAnswer: 3,
  explanation: "SSS для серверної логіки.",
  },
@@ -364,11 +364,11 @@ export const ukLesson101 = {
  type: MC,
  question: "Чому LocalScript у SSS - погана ідея для UI магазину?",
  options: [
-          "LocalScript завжди швидший у SSS",
-          "Клієнтський UI-код має жити в StarterGui / клієнтських контейнерах",
-          "SSS видаляє ScreenGui",
-          "Remotes не працюють з Gui"
-        ],
+ "LocalScript завжди швидший у SSS",
+ "Клієнтський UI-код має жити в StarterGui / клієнтських контейнерах",
+ "SSS видаляє ScreenGui",
+ "Remotes не працюють з Gui"
+ ],
  correctAnswer: 1,
  explanation: "Правильне місце скриптів.",
  },
@@ -377,11 +377,11 @@ export const ukLesson101 = {
  type: MC,
  question: "Навіщо заготовка ShopGui вже в 10.1?",
  options: [
-          "Щоб замінити Pathfinding",
-          "Gui заборонений у 10.2",
-          "Щоб завтра в 10.2 лише наповнити логіку Remotes, а не збирати UI з нуля",
-          "Щоб вимкнути Explorer"
-        ],
+ "Щоб замінити Pathfinding",
+ "Gui заборонений у 10.2",
+ "Щоб завтра в 10.2 лише наповнити логіку Remotes, а не збирати UI з нуля",
+ "Щоб вимкнути Explorer"
+ ],
  correctAnswer: 2,
  explanation: "Підготовка вітрини.",
  },
@@ -390,11 +390,11 @@ export const ukLesson101 = {
  type: MC,
  question: "Чому прайс магазину не варто вважати «секретом у RS»?",
  options: [
-          "Клієнт може бачити вміст ReplicatedStorage",
-          "RS не існує в Roblox",
-          "Ціни можна ставити лише в Terrain",
-          "RemoteEvent знищує Modules"
-        ],
+ "Клієнт може бачити вміст ReplicatedStorage",
+ "RS не існує в Roblox",
+ "Ціни можна ставити лише в Terrain",
+ "RemoteEvent знищує Modules"
+ ],
  correctAnswer: 0,
  explanation: "RS не сейф.",
  },
@@ -403,11 +403,11 @@ export const ukLesson101 = {
  type: MC,
  question: "Навіщо leaderstats.Coins уже на старті хабу?",
  options: [
-          "Coins потрібні лише для неба",
-          "Без Coins не створюється Part",
-          "Це вимикає Prompt",
-          "Магазин і квести модуля писатимуть у ту саму економіку"
-        ],
+ "Coins потрібні лише для неба",
+ "Без Coins не створюється Part",
+ "Це вимикає Prompt",
+ "Магазин і квести модуля писатимуть у ту саму економіку"
+ ],
  correctAnswer: 3,
  explanation: "Спільна валюта M10.",
  },
@@ -416,11 +416,11 @@ export const ukLesson101 = {
  type: MC,
  question: "Що свідомо відкладаємо з 10.1 на 10.2?",
  options: [
-          "Створення SpawnLocation",
-          "Папки Zones",
-          "Повну логіку Buy / каталог Remotes",
-          "Табличку онбордингу"
-        ],
+ "Створення SpawnLocation",
+ "Folders Zones",
+ "Повну логіку Buy / каталог Remotes",
+ "Табличку онбордингу"
+ ],
  correctAnswer: 2,
  explanation: "Скоуп control.",
  },
@@ -429,24 +429,24 @@ export const ukLesson101 = {
  type: MC,
  question: "Який стиль білду кращий для здачі?",
  options: [
-          "Гігантське Toolbox-місто без систем",
-          "Малий читабельний хаб з іменами й зонами",
-          "Порожній Baseplate без Spawn",
-          "Лише ParticleEmitter без підлоги"
-        ],
+ "Гігантське Toolbox-місто без систем",
+ "Малий читабельний хаб з іменами й зонами",
+ "Порожній Baseplate без Spawn",
+ "Лише ParticleEmitter без підлоги"
+ ],
  correctAnswer: 1,
  explanation: "Ясність > масштаб.",
  },
  {
  id: "q11",
  type: MC,
- question: "Для чого папка RS/Remotes уже сьогодні?",
+ question: "Для чого Folder RS/Remotes уже сьогодні?",
  options: [
-          "Щоб замінити Workspace",
-          "Remotes працюють лише в ServerStorage",
-          "Це потрібно тільки для Atmosphere",
-          "Щоб було місце під ShopBuy/ShopQuery завтра"
-        ],
+ "Щоб замінити Workspace",
+ "Remotes працюють лише в ServerStorage",
+ "Це потрібно тільки для Atmosphere",
+ "Щоб було місце під ShopBuy/ShopQuery завтра"
+ ],
  correctAnswer: 3,
  explanation: "Каркас мережі.",
  },
@@ -455,11 +455,11 @@ export const ukLesson101 = {
  type: MC,
  question: "Хто малює екран магазину для гравця?",
  options: [
-          "LocalScript у ShopGui (клієнт)",
-          "Лише ModuleScript у ServerStorage без Gui",
-          "Terrain Editor",
-          "PathfindingService"
-        ],
+ "LocalScript у ShopGui (клієнт)",
+ "Лише ModuleScript у ServerStorage без Gui",
+ "Terrain Editor",
+ "PathfindingService"
+ ],
  correctAnswer: 0,
  explanation: "UI на клієнті.",
  },
@@ -468,11 +468,11 @@ export const ukLesson101 = {
  type: MC,
  question: "Навіщо таблички біля зон уже в 10.1?",
  options: [
-          "Таблички замінюють Remotes",
-          "Без табличок не працює Humanoid",
-          "Онбординг: гравець розуміє маршрут хабу",
-          "Це вимикає SSS"
-        ],
+ "Таблички замінюють Remotes",
+ "Без табличок не працює Humanoid",
+ "Онбординг: гравець розуміє маршрут хабу",
+ "Це вимикає SSS"
+ ],
  correctAnswer: 2,
  explanation: "Зрозумілість простору.",
  },
@@ -481,11 +481,11 @@ export const ukLesson101 = {
  type: MC,
  question: "Що логічно покласти в ServerStorage для майбутнього магазину?",
  options: [
-          "Усі LocalScript гравця",
-          "Обов’язково весь Workspace",
-          "Lighting ефекти лише там",
-          "Шаблони Tools/предметів, які клонує сервер"
-        ],
+ "Усі LocalScript гравця",
+ "Обов’язково весь Workspace",
+ "Lighting ефекти лише там",
+ "Шаблони Tools/предметів, які клонує сервер"
+ ],
  correctAnswer: 3,
  explanation: "Серверні шаблони.",
  },
@@ -494,11 +494,11 @@ export const ukLesson101 = {
  type: MC,
  question: "Що вважається зданим артефактом 10.1?",
  options: [
-          "Лише теорія без Place",
-          "Hub Base: зони, RS/SSS каркас, ShopGui-заготовка, Coins, Save",
-          "Повний Ship без папок",
-          "Магазин з ціною на клієнті без хабу"
-        ],
+ "Лише теорія без Place",
+ "Hub Base: зони, RS/SSS каркас, ShopGui-заготовка, Coins, Save",
+ "Повний Ship без папок",
+ "Магазин з ціною на клієнті без хабу"
+ ],
  correctAnswer: 1,
  explanation: "Потрібен каркас хабу.",
  }
@@ -533,7 +533,7 @@ export const ukLesson102 = {
 
 Завтра (**10.3**) додаси анти-чит і GamePass lite. Сьогодні фундамент має бути чесним: **ціна ніколи не приходить з клієнта**.
 
-Працюй у хабі з **10.1** (папки RS/SSS, заготовка UI). Якщо хабу ще тонкий - одна кімната Shop + Spawn достатньо.
+Працюй у хабі з **10.1** (Folders RS/SSS, заготовка UI). Якщо хабу ще тонкий - одна кімната Shop + Spawn достатньо.
 
 **Зроби зараз (3 хв):** у \`ReplicatedStorage\` створи Folder \`Remotes\` і два об’єкти: RemoteEvent \`ShopBuy\`, RemoteFunction \`ShopQuery\`.`,
  },
@@ -584,7 +584,7 @@ UI - **вітрина**. Remote - **дзвінок на склад**. Серве
 
 Імена тримай стабільними - завтра анти-чит і NPC чіплятимуться до тих самих Remotes.
 
-Якщо leaderstats ще немає - **спочатку** 8–10 хв мінімальний PlayerAdded → Folder leaderstats → IntValue Coins. Без цього каса порожня.
+Якщо leaderstats ще немає - **спочатку** 8-10 хв мінімальний PlayerAdded → Folder leaderstats → IntValue Coins. Без цього каса порожня.
 
 **Зроби зараз (4 хв):** у Play відкрий TAB і підтверди, що Coins змінюються після дії на сервері.`,
  },
@@ -707,7 +707,7 @@ InvokeServer **чекає**. Не кликай Buy 20 разів, поки ка�
 \` end\`
 \`end)\`
 
-Не міняй \`leaderstats.Coins.Value\` з LocalScript «для швидкості». TAB і так оновиться з реплікації серверного Value; для HUD інколи зручніше Invoke balance або слухати \`Coins.Changed\` на клієнті (лідерстат реплікується).
+Не міняй \`leaderstats.Coins.Value\` з LocalScript «для швидкості». TAB і так оновиться з реплікації серверного Value; для HUD інколи зручніше Invoke balance або слухати \`Coins.Changed\` на клієнті (leaderstats реплікується).
 
 \`Coins:GetPropertyChangedSignal("Value")\` у LocalScript - нормальний спосіб HUD без зайвого Invoke.
 
@@ -730,7 +730,7 @@ InvokeServer **чекає**. Не кликай Buy 20 разів, поки ка�
 
 Перед повторним відкриттям - очисти старі рядки (крім template), інакше дублікати кнопок.
 
-UIListLayout + CanvasSize: для 2–4 товарів можна вручну; для довгого списку навчишся AutomaticCanvasSize пізніше.
+UIListLayout + CanvasSize: для 2-4 товарів можна вручну; для довгого списку навчишся AutomaticCanvasSize пізніше.
 
 **Зроби зараз (4 хв):** зроби один Remote-виклик і зафіксуй, хто приймає рішення - клієнт чи сервер.`,
  },
@@ -840,7 +840,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  ],
  summary: "Ти зібрав повний вертикальний магазин хабу: ShopConfig на сервері, RemoteFunction для каталогу/балансу, RemoteEvent для Buy з перевіркою Coins, UI на LocalScript лише як вітрина. Це якір мережі+економіки перед анти-читом і NPC.",
  practiceTask: {
- title: "Каса хабу (~30–35 хв)",
+ title: "Каса хабу (~30-35 хв)",
  difficulty: "intermediate",
  description: `**Мета:** 2 товари, каталог через Invoke, купівля через FireServer.
 
@@ -853,7 +853,7 @@ Save: \`Lesson 10.2 - Hub Shop\`.
 1. OnServerInvoke: catalog + balance.
 2. OnServerEvent Buy: validate, price з Config, списати, giveItem lite, FireClient ok/fail.
 
-### Part C - UI (10–15 хв)
+### Part C - UI (10-15 хв)
 1. ShopGui + список з шаблону.
 2. Invoke catalog при відкритті.
 3. Buy кнопки → FireServer(id).
@@ -875,11 +875,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Яка головна мета уроку 10.2?",
  options: [
-          "Зібрати магазин: UI + Remotes + серверні ціни/Coins",
-          "Лише намалювати небо",
-          "Видалити RemoteEvent з курсу",
-          "Замінити leaderstats на Lighting"
-        ],
+ "Зібрати магазин: UI + Remotes + серверні ціни/Coins",
+ "Лише намалювати небо",
+ "Видалити RemoteEvent з курсу",
+ "Замінити leaderstats на Lighting"
+ ],
  correctAnswer: 0,
  explanation: "Вертикальний зріз магазину.",
  },
@@ -888,11 +888,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Що краще для сигналу «купити»?",
  options: [
-          "Лише LocalScript без мережі",
-          "RemoteEvent (FireServer itemId)",
-          "BindableEvent у Workspace як заміна серверу",
-          "Зміна назви Part"
-        ],
+ "Лише LocalScript без мережі",
+ "RemoteEvent (FireServer itemId)",
+ "BindableEvent у Workspace як заміна серверу",
+ "Зміна назви Part"
+ ],
  correctAnswer: 1,
  explanation: "Buy = подія на сервер.",
  },
@@ -901,11 +901,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Навіщо RemoteFunction у магазині?",
  options: [
-          "Щоб вимкнути Anchored",
-          "Щоб створити Terrain",
-          "Щоб клієнт отримав каталог/баланс відповіддю InvokeServer",
-          "Це заборонений об’єкт"
-        ],
+ "Щоб вимкнути Anchored",
+ "Щоб створити Terrain",
+ "Щоб клієнт отримав каталог/баланс відповіддю InvokeServer",
+ "Це заборонений об’єкт"
+ ],
  correctAnswer: 2,
  explanation: "Запит → відповідь.",
  },
@@ -914,11 +914,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Звідки сервер бере ціну товару?",
  options: [
-          "З аргументу price від клієнта без перевірки",
-          "З TextLabel кнопки напряму",
-          "З ClockTime",
-          "З ShopConfig на сервері"
-        ],
+ "З аргументу price від клієнта без перевірки",
+ "З TextLabel кнопки напряму",
+ "З ClockTime",
+ "З ShopConfig на сервері"
+ ],
  correctAnswer: 3,
  explanation: "Прайс-лист сервера.",
  },
@@ -927,11 +927,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Що клієнт має надіслати в ShopBuy?",
  options: [
-          "Нові Coins для всіх гравців",
-          "itemId",
-          "Довільну ціну 0",
-          "loadstring код"
-        ],
+ "Нові Coins для всіх гравців",
+ "itemId",
+ "Довільну ціну 0",
+ "loadstring код"
+ ],
  correctAnswer: 1,
  explanation: "Лише ідентифікатор.",
  },
@@ -940,11 +940,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Де має жити логіка списання Coins?",
  options: [
-          "Лише в LocalScript магазину",
-          "У BillboardGui без сервера",
-          "У серверному Script (SSS)",
-          "У SoundService"
-        ],
+ "Лише в LocalScript магазину",
+ "У BillboardGui без сервера",
+ "У серверному Script (SSS)",
+ "У SoundService"
+ ],
  correctAnswer: 2,
  explanation: "Економіка на сервері.",
  },
@@ -953,11 +953,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Чим InvokeServer відрізняється від FireServer?",
  options: [
-          "Invoke чекає й повертає результат; Fire - сигнал без return",
-          "Вони завжди ідентичні",
-          "FireServer працює лише на сервері",
-          "InvokeServer не потребує RemoteFunction"
-        ],
+ "Invoke чекає й повертає результат; Fire - сигнал без return",
+ "Вони завжди ідентичні",
+ "FireServer працює лише на сервері",
+ "InvokeServer не потребує RemoteFunction"
+ ],
  correctAnswer: 0,
  explanation: "Подія vs запит.",
  },
@@ -966,11 +966,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Навіщо WaitForChild для Remotes?",
  options: [
-          "Це вимикає магазин",
-          "Без цього Config не компілюється",
-          "WaitForChild замінює OnServerEvent",
-          "Об’єкт може ще не встигнути реплікуватись на клієнт"
-        ],
+ "Це вимикає магазин",
+ "Без цього Config не компілюється",
+ "WaitForChild замінює OnServerEvent",
+ "Об’єкт може ще не встигнути реплікуватись на клієнт"
+ ],
  correctAnswer: 3,
  explanation: "Надійний старт клієнта.",
  },
@@ -979,11 +979,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Що зробити при недостатніх монетах?",
  options: [
-          "Все одно видати товар",
-          "Поставити Coins у мінус на клієнті",
-          "Не списувати й надіслати fail-повідомлення клієнту",
-          "Видалити ShopConfig"
-        ],
+ "Все одно видати товар",
+ "Поставити Coins у мінус на клієнті",
+ "Не списувати й надіслати fail-повідомлення клієнту",
+ "Видалити ShopConfig"
+ ],
  correctAnswer: 2,
  explanation: "Чесна відмова.",
  },
@@ -992,11 +992,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Навіщо ScrollingFrame + шаблон ItemTemplate?",
  options: [
-          "Щоб замінити RemoteEvent",
-          "Щоб з каталогу намалювати список товарів кнопками Buy",
-          "Це обов’язково для Pathfinding",
-          "Щоб створити Humanoid"
-        ],
+ "Щоб замінити RemoteEvent",
+ "Щоб з каталогу намалювати список товарів кнопками Buy",
+ "Це обов’язково для Pathfinding",
+ "Щоб створити Humanoid"
+ ],
  correctAnswer: 1,
  explanation: "UI список.",
  },
@@ -1005,11 +1005,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Чому погано тримати єдиний прайс лише в LocalScript?",
  options: [
-          "LocalScript не може малювати TextLabel",
-          "RemoteFunction тоді заборонений",
-          "Coins не реплікуються ніколи",
-          "Сервер не має джерела правди для Buy"
-        ],
+ "LocalScript не може малювати TextLabel",
+ "RemoteFunction тоді заборонений",
+ "Coins не реплікуються ніколи",
+ "Сервер не має джерела правди для Buy"
+ ],
  correctAnswer: 3,
  explanation: "Config на сервері.",
  },
@@ -1018,11 +1018,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Який мінімум товарів для здачі уроку?",
  options: [
-          "Хоча б 2 з різними цінами",
-          "Обов’язково 100",
-          "0 - лише теорія",
-          "Лише 1 без UI"
-        ],
+ "Хоча б 2 з різними цінами",
+ "Обов’язково 100",
+ "0 - лише теорія",
+ "Лише 1 без UI"
+ ],
  correctAnswer: 0,
  explanation: "Демо каталогу.",
  },
@@ -1031,11 +1031,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Що логічно робити після успішного Buy на клієнті?",
  options: [
-          "Призначити собі Coins локально навмання",
-          "Вимкнути SSS",
-          "Оновити статус/баланс UI (Changed або Invoke balance)",
-          "Видалити RemoteFunction"
-        ],
+ "Призначити собі Coins локально навмання",
+ "Вимкнути SSS",
+ "Оновити статус/баланс UI (Changed або Invoke balance)",
+ "Видалити RemoteFunction"
+ ],
  correctAnswer: 2,
  explanation: "Фідбек вітрини.",
  },
@@ -1044,11 +1044,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Що буде завтра в 10.3 поверх цього магазину?",
  options: [
-          "Видалення всіх Remotes",
-          "Лише Terrain Paint",
-          "Повна заміна UI на Output",
-          "Анти-чит lite (rate limit тощо) і GamePass-словник"
-        ],
+ "Видалення всіх Remotes",
+ "Лише Terrain Paint",
+ "Повна заміна UI на Output",
+ "Анти-чит lite (rate limit тощо) і GamePass-словник"
+ ],
  correctAnswer: 3,
  explanation: "Наступний урок.",
  },
@@ -1057,11 +1057,11 @@ Save: \`Lesson 10.2 - Hub Shop\`.
  type: MC,
  question: "Що вважається зданим артефактом 10.2?",
  options: [
-          "Лише порожній Frame без Remotes",
-          "Працюючий Hub Shop: catalog Invoke + Buy Event + Coins з Config + Save",
-          "Baseplate без Scripts",
-          "Магазин з ціною лише на клієнті"
-        ],
+ "Лише порожній Frame без Remotes",
+ "Працюючий Hub Shop: catalog Invoke + Buy Event + Coins з Config + Save",
+ "Baseplate без Scripts",
+ "Магазин з ціною лише на клієнті"
+ ],
  correctAnswer: 1,
  explanation: "Потрібен повний вертикальний зріз.",
  }
@@ -1127,7 +1127,7 @@ export const ukLesson103 = {
 7. Списати монети, видати товар, підтвердити клієнту.
 8. **Rate limit**: не частіше ніж раз на X мс від того самого гравця.
 
-Якщо пункт 2–4 уже були в 10.2 - сьогодні доводиш 6–8 і додаєш лог відмов.
+Якщо пункт 2-4 уже були в 10.2 - сьогодні доводиш 6-8 і додаєш лог відмов.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
  },
@@ -1203,7 +1203,7 @@ export const ukLesson103 = {
 | **GamePass** | Разовий Robux-пас «маєш назавжди» (у межах паса) | VIP, x2, ексклюзивний скін |
 | **Developer Product** | Robux-покупка, яку можна повторювати | Пачки монет, одноразові пакети |
 
-Важливо для голови 9–13:
+Важливо для голови 9-13:
 - Coins - **ти керуєш** правилами в Lua.
 - GamePass/Product - гроші через економіку Roblox; потрібні **ID з Creator Dashboard**, перевірки на сервері через офіційні API (на кшталт MarketplaceService), не «клієнт сказав, що купив».
 
@@ -1318,7 +1318,7 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  },
  {
  mistake: "Плутати GamePass і DevProduct",
- explanation: "Неправильна модель монетизації й очікувань.",
+ explanation: "Неправильна model монетизації й очікувань.",
  correctApproach: "Пас назавжди vs повторюваний продукт - таблиця уроку",
  },
  {
@@ -1368,11 +1368,11 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  type: MC,
  question: "Що означає Never trust the client у магазині?",
  options: [
-          "Ціну, монети й успіх покупки перевіряє/задає сервер, не LocalScript",
-          "Клієнт завжди правий",
-          "RemoteEvent заборонені",
-          "Config має лежати лише в StarterGui"
-        ],
+ "Ціну, монети й успіх покупки перевіряє/задає сервер, не LocalScript",
+ "Клієнт завжди правий",
+ "RemoteEvent заборонені",
+ "Config має лежати лише в StarterGui"
+ ],
  correctAnswer: 0,
  explanation: "Серверна правда.",
  },
@@ -1381,11 +1381,11 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  type: MC,
  question: "Що клієнт може безпечно надіслати в Buy?",
  options: [
-          "Будь-яку ціну 0",
-          "itemId товару",
-          "Нове значення чужих Coins",
-          "Команду loadstring"
-        ],
+ "Будь-яку ціну 0",
+ "itemId товару",
+ "Нове значення чужих Coins",
+ "Команду loadstring"
+ ],
  correctAnswer: 1,
  explanation: "Лише ідентифікатор.",
  },
@@ -1394,11 +1394,11 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  type: MC,
  question: "Навіщо rate limit / COOLDOWN на Buy?",
  options: [
-          "Щоб вимкнути Pathfinding",
-          "Щоб замінити leaderstats",
-          "Щоб спам і дабл-клік не виконували десятки покупок",
-          "Це потрібно лише для Terrain"
-        ],
+ "Щоб вимкнути Pathfinding",
+ "Щоб замінити leaderstats",
+ "Щоб спам і дабл-клік не виконували десятки покупок",
+ "Це потрібно лише для Terrain"
+ ],
  correctAnswer: 2,
  explanation: "Захист від спаму.",
  },
@@ -1407,11 +1407,11 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  type: MC,
  question: "Звідки сервер бере price?",
  options: [
-          "З TextLabel на клієнті",
-          "З аргументу price без перевірки",
-          "З Lighting.ClockTime",
-          "З ShopConfig на сервері"
-        ],
+ "З TextLabel на клієнті",
+ "З аргументу price без перевірки",
+ "З Lighting.ClockTime",
+ "З ShopConfig на сервері"
+ ],
  correctAnswer: 3,
  explanation: "Config = джерело правди.",
  },
@@ -1420,24 +1420,24 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  type: MC,
  question: "Чим GamePass відрізняється від DevProduct у словнику уроку?",
  options: [
-          "Вони абсолютно однакові завжди",
-          "Пас зазвичай разовий «назавжди», DevProduct можна купувати повторно",
-          "DevProduct існує лише на клієнті",
-          "GamePass - це завжди leaderstats Coins"
-        ],
+ "Вони абсолютно однакові завжди",
+ "Пас зазвичай разовий «назавжди», DevProduct можна купувати повторно",
+ "DevProduct існує лише на клієнті",
+ "GamePass - це завжди leaderstats Coins"
+ ],
  correctAnswer: 1,
- explanation: "Різні моделі покупок.",
+ explanation: "Різні model покупок.",
  },
  {
  id: "q6",
  type: MC,
  question: "Що є основною навчальною валютою хабу в цьому курсі?",
  options: [
-          "Обов’язкові реальні Robux від однокласників",
-          "Лише ParticleEmitter",
-          "Coins у leaderstats / ігрова економіка",
-          "Назви Parts"
-        ],
+ "Обов’язкові реальні Robux від однокласників",
+ "Лише ParticleEmitter",
+ "Coins у leaderstats / ігрова економіка",
+ "Назви Parts"
+ ],
  correctAnswer: 2,
  explanation: "Політика курсу: Coins first.",
  },
@@ -1446,11 +1446,11 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  type: MC,
  question: "Чому погано вірити LocalScript «я маю VIP»?",
  options: [
-          "Клієнт можна підробити; перевірка володіння має бути на сервері",
-          "VIP не існує в Roblox",
-          "LocalScript не вміє показувати UI",
-          "Сервер не бачить гравців"
-        ],
+ "Клієнт можна підробити; перевірка володіння має бути на сервері",
+ "VIP не існує в Roblox",
+ "LocalScript не вміє показувати UI",
+ "Сервер не бачить гравців"
+ ],
  correctAnswer: 0,
  explanation: "Преміум теж Never trust client.",
  },
@@ -1459,11 +1459,11 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  type: MC,
  question: "Навіщо typeof(itemId) ~= \"string\" → return?",
  options: [
-          "Щоб прискорити Terrain",
-          "Щоб відкрити діалог NPC",
-          "Це вимикає RemoteEvent назавжди",
-          "Відсікти сміттєві аргументи з клієнта"
-        ],
+ "Щоб прискорити Terrain",
+ "Щоб відкрити діалог NPC",
+ "Це вимикає RemoteEvent назавжди",
+ "Відсікти сміттєві аргументи з клієнта"
+ ],
  correctAnswer: 3,
  explanation: "Валідація входу.",
  },
@@ -1472,11 +1472,11 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  type: MC,
  question: "Що робити з реальною оплатою Robux у шкільному контексті?",
  options: [
-          "Завжди вимагати Robux у однокласників на уроці",
-          "Ігнорувати будь-які правила",
-          "Лише з дозволом школи/викладача і дорослим Creator-доступом",
-          "Підключати лише через LocalScript"
-        ],
+ "Завжди вимагати Robux у однокласників на уроці",
+ "Ігнорувати будь-які правила",
+ "Лише з дозволом школи/викладача і дорослим Creator-доступом",
+ "Підключати лише через LocalScript"
+ ],
  correctAnswer: 2,
  explanation: "Політика lite.",
  },
@@ -1485,11 +1485,11 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  type: MC,
  question: "Навіщо поле kind = coins/gamepass у Config?",
  options: [
-          "Щоб змінити колір неба",
-          "Щоб tryBuy обрав правильну гілку перевірки",
-          "Щоб видалити Prompt",
-          "Це лише косметика без сенсу"
-        ],
+ "Щоб змінити колір неба",
+ "Щоб tryBuy обрав правильну гілку перевірки",
+ "Щоб видалити Prompt",
+ "Це лише косметика без сенсу"
+ ],
  correctAnswer: 1,
  explanation: "Архітектура товарів.",
  },
@@ -1498,11 +1498,11 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  type: MC,
  question: "Який playtest ловить дірку «ціна з клієнта»?",
  options: [
-          "Змінити Material підлоги",
-          "Вимкнути Output",
-          "Перейменувати Workspace",
-          "Надіслати Buy з підробленою/нульовою ціною і подивитись, чи сервер бере Config"
-        ],
+ "Змінити Material підлоги",
+ "Вимкнути Output",
+ "Перейменувати Workspace",
+ "Надіслати Buy з підробленою/нульовою ціною і подивитись, чи сервер бере Config"
+ ],
  correctAnswer: 3,
  explanation: "Навмисна перевірка.",
  },
@@ -1511,11 +1511,11 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  type: MC,
  question: "Що показати гравцю при недостатніх монетах?",
  options: [
-          "Зрозуміле «Недостатньо монет» (і не списувати)",
-          "Тишу й від’ємний баланс",
-          "Краш Studio",
-          "Автоматичний GamePass"
-        ],
+ "Зрозуміле «Недостатньо монет» (і не списувати)",
+ "Тишу й від’ємний баланс",
+ "Краш Studio",
+ "Автоматичний GamePass"
+ ],
  correctAnswer: 0,
  explanation: "UX відмови.",
  },
@@ -1524,11 +1524,11 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  type: MC,
  question: "Навіщо лог [Shop] у Output під час навчання?",
  options: [
-          "Щоб замінити Config",
-          "Щоб вимкнути анти-чит",
-          "Швидко зрозуміти причину deny під час playtest",
-          "Лог заборонений у Studio"
-        ],
+ "Щоб замінити Config",
+ "Щоб вимкнути анти-чит",
+ "Швидко зрозуміти причину deny під час playtest",
+ "Лог заборонений у Studio"
+ ],
  correctAnswer: 2,
  explanation: "Діагностика.",
  },
@@ -1537,11 +1537,11 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  type: MC,
  question: "Який захист від подвійної видачі одноразового товару?",
  options: [
-          "Довіра до клієнтського прапорця без сервера",
-          "Видалення ShopConfig",
-          "Збільшення MaxActivationDistance",
-          "Перевірка alreadyOwns до списання/видачі"
-        ],
+ "Довіра до клієнтського прапорця без сервера",
+ "Видалення ShopConfig",
+ "Збільшення MaxActivationDistance",
+ "Перевірка alreadyOwns до списання/видачі"
+ ],
  correctAnswer: 3,
  explanation: "Серверний стан володіння.",
  },
@@ -1550,11 +1550,11 @@ Save: \`Lesson 10.3 - Shop Guard\`.
  type: MC,
  question: "Що вважається зданим артефактом 10.3?",
  options: [
-          "Лише теорія без змін магазину",
-          "Захищений Buy (config price, validate, cooldown) + розуміння GamePass lite + Save",
-          "Порожній Baseplate",
-          "Клієнтські Coins без сервера"
-        ],
+ "Лише теорія без змін магазину",
+ "Захищений Buy (config price, validate, cooldown) + розуміння GamePass lite + Save",
+ "Порожній Baseplate",
+ "Клієнтські Coins без сервера"
+ ],
  correctAnswer: 1,
  explanation: "Потрібен посилений магазин.",
  }
@@ -1581,10 +1581,10 @@ export const ukLesson104 = {
  sections: [
  {
  title: "Сьогоднішня місія (урок 76 з 92)",
- content: `Хаб без NPC відчувається порожнім складом. Сьогодні з’являється **персонаж, з яким можна поговорити**.
+ content: `Хаб без NPC відчувається порожнім складом. Сьогодні з’являється **character, з яким можна поговорити**.
 
 Ти зробиш:
-1. Модель \`NPC_QuestGiver\` (або інша зрозуміла назва).
+1. Model \`NPC_QuestGiver\` (або інша зрозуміла назва).
 2. **ProximityPrompt** - підійшов, натиснув E (або утримав), почалась взаємодія.
 3. **Діалог з гілками if** - різні репліки залежно від стану (перший раз / уже говорили / квест пізніше).
 
@@ -1599,7 +1599,7 @@ export const ukLesson104 = {
  content: `| Елемент | Навіщо |
 |---------|--------|
 | Model з зрозумілим ім’ям | Знайти за 2 с у Explorer |
-| Humanoid + HumanoidRootPart **або** простий R6/манекен | Щоб виглядав як персонаж; для статичного NPC інколи достатньо Parts |
+| Humanoid + HumanoidRootPart **або** простий R6/манекен | Щоб виглядав як character; для статичного NPC інколи достатньо Parts |
 | PrimaryPart (бажано HRP) | Зручно телепортувати / pathfinding завтра |
 | Anchored на «ногах»/торсі якщо стоїть | Не падає і не розлітається |
 | BillboardGui з «!» або ім’ям | Гравець здалеку бачить «тут можна говорити» |
@@ -1622,13 +1622,13 @@ Toolbox-NPC часто тягне зайві Scripts. Правило: **вста
 
 Сьогодні стандарт хабу - **ProximityPrompt**.
 
-Важливі властивості:
+Важливі Properties:
 
 | Property | Типовий старт | Сенс |
 |----------|---------------|------|
 | \`ObjectText\` | ім’я NPC | Рядок зверху |
 | \`ActionText\` | «Поговорити» | Що зробить гравець |
-| \`MaxActivationDistance\` | 8–12 | Як близько треба підійти |
+| \`MaxActivationDistance\` | 8-12 | Як близько треба підійти |
 | \`HoldDuration\` | 0 або 0.3 | Миттєво vs утримати |
 | \`RequiresLineOfSight\` | true спочатку | Не клік крізь стіну |
 | \`Enabled\` | true | Можна вимикати під час катсцени |
@@ -1651,7 +1651,7 @@ Toolbox-NPC часто тягне зайві Scripts. Правило: **вста
 \` onTalk(player, npc)\`
 \`end)\`
 
-\`player\` - хто натиснув. Завжди перевіряй, що персонаж існує, якщо треба відстань додатково (Prompt уже фільтрує дистанцію, але зайва перевірка не завадить у квестах).
+\`player\` - хто натиснув. Завжди перевіряй, що character існує, якщо треба відстань додатково (Prompt уже фільтрує дистанцію, але зайва перевірка не завадить у квестах).
 
 LocalScript може лише **показувати** вікно діалогу після сигналу з сервера (\`FireClient\`), а не вирішувати «який квест здано».
 
@@ -1701,7 +1701,7 @@ LocalScript може лише **показувати** вікно діалогу
 Рекомендований мінімум уроку:
 1. RemoteEvent \`RS/Remotes/DialogueShow\`.
 2. Сервер: \`DialogueShow:FireClient(player, text)\`.
-3. LocalScript у StarterGui: показує Frame з TextLabel 4–6 секунд, кнопка «Ок» ховає.
+3. LocalScript у StarterGui: показує Frame з TextLabel 4-6 секунд, кнопка «Ок» ховає.
 
 Не клади правду діалогу лише в LocalScript. Сервер каже **який** рядок показати (або ключ \`greet\`/\`again\`, а клієнт мапить на текст - теж ок, якщо тексти не секрет).
 
@@ -1719,7 +1719,7 @@ LocalScript може лише **показувати** вікно діалогу
 
 Коли діалог відкритий - можна тимчасово \`prompt.Enabled = false\`, щоб не спамити Triggered. Після закриття UI - знову true (через Remote «діалог закрито» або таймер на сервері).
 
-**Анти-спам:** debounce 0.5–1 с на Triggered для того самого player+npc.
+**Анти-спам:** debounce 0.5-1 с на Triggered для того самого player+npc.
 
 **Зроби зараз (3 хв):** підійди до Prompt у Play і підтверди Triggered один раз.`,
  },
@@ -1764,7 +1764,7 @@ LocalScript може лише **показувати** вікно діалогу
  },
  {
  title: "Ввічливий UX діалогу",
- content: `- Текст на 1–3 речення, не стіна.
+ content: `- Текст на 1-3 речення, не стіна.
 - ActionText дієсловом: «Поговорити», не «Interact».
 - Після закриття діалогу камера/керування не зламані (не лоч камеру без відпуску).
 - Не відкривай магазин і діалог одним Prompt без розрізнення.
@@ -1775,7 +1775,7 @@ LocalScript може лише **показувати** вікно діалогу
 **Зроби зараз (5 хв):** попроси сусіда / сам зайди «з нуля» - чи зрозуміло, що треба підійти і натиснути?`,
  },
  {
- title: "Зв’язок з 10.5–10.8",
+ title: "Зв’язок з 10.5-10.8",
  content: `| Урок | Що додасть на цього NPC |
 |------|-------------------------|
 | **10.5** | while + Pathfinding патруль, пауза під час діалогу |
@@ -1830,7 +1830,7 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  {
  mistake: "MaxActivationDistance 50+",
  explanation: "Говориш з пів хабу крізь натовп.",
- correctApproach: "8–12 студів, LineOfSight за потреби",
+ correctApproach: "8-12 студів, LineOfSight за потреби",
  },
  {
  mistake: "Спам Triggered відкриває 10 вікон",
@@ -1847,16 +1847,16 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
 ### Part A - Білд (8 хв)
 1. Model NPC_QuestGiver в Hub/NPCs.
 2. Billboard «!» або ім’я.
-3. ProximityPrompt: ObjectText, ActionText «Поговорити», дистанція 8–12.
+3. ProximityPrompt: ObjectText, ActionText «Поговорити», дистанція 8-12.
 
 ### Part B - Серверний діалог (12 хв)
 1. Script: Triggered → onTalk(player).
 2. Attribute HasMet_… : перший раз / знову.
-3. Table Lines з 2–3 текстами.
+3. Table Lines з 2-3 текстами.
 4. Debounce 0.5+ с.
 
 ### Part C - Показ гравцю (10 хв)
-1. Remote DialogueShow + ScreenGui або Billboard на 4–6 с.
+1. Remote DialogueShow + ScreenGui або Billboard на 4-6 с.
 2. Перевір LineOfSight / дистанцію.
 3. **Зберегти:** Lesson 10.4 - NPC Dialogue`,
  hints: [
@@ -1875,11 +1875,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Чому для NPC у хабі курсу рекомендують ProximityPrompt?",
  options: [
-          "Зручна підказка ObjectText/ActionText і кращий мобільний UX",
-          "Він єдиний об’єкт, який існує в Roblox",
-          "Він замінює Humanoid",
-          "Він автоматично дає GamePass"
-        ],
+ "Зручна підказка ObjectText/ActionText і кращий мобільний UX",
+ "Він єдиний об’єкт, який існує в Roblox",
+ "Він замінює Humanoid",
+ "Він автоматично дає GamePass"
+ ],
  correctAnswer: 0,
  explanation: "Стандарт взаємодії з NPC.",
  },
@@ -1888,11 +1888,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Де краще обробляти Prompt.Triggered для діалогу/квесту?",
  options: [
-          "Лише в LocalScript без сервера",
-          "На сервері",
-          "У Lighting",
-          "У Terrain Editor"
-        ],
+ "Лише в LocalScript без сервера",
+ "На сервері",
+ "У Lighting",
+ "У Terrain Editor"
+ ],
  correctAnswer: 1,
  explanation: "Стан і безпека.",
  },
@@ -1901,11 +1901,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Навіщо ObjectText і ActionText?",
  options: [
-          "Щоб збільшити FPS",
-          "Щоб створити leaderstats",
-          "Щоб гравець бачив ім’я/контекст і що саме зробить клавіша",
-          "Це обов’язкові поля DataStore"
-        ],
+ "Щоб збільшити FPS",
+ "Щоб створити leaderstats",
+ "Щоб гравець бачив ім’я/контекст і що саме зробить клавіша",
+ "Це обов’язкові поля DataStore"
+ ],
  correctAnswer: 2,
  explanation: "Читабельний UX.",
  },
@@ -1914,11 +1914,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Мінімум «справжнього» діалогу в цьому уроці - це…",
  options: [
-          "Один print без Prompt",
-          "Лише ParticleEmitter",
-          "Видалення NPC після кліку",
-          "Дві гілки if за станом (наприклад перший раз / знову)"
-        ],
+ "Один print без Prompt",
+ "Лише ParticleEmitter",
+ "Видалення NPC після кліку",
+ "Дві гілки if за станом (наприклад перший раз / знову)"
+ ],
  correctAnswer: 3,
  explanation: "Гілки реплік.",
  },
@@ -1927,11 +1927,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Що небезпечного в Free Model NPC?",
  options: [
-          "Вони завжди без Humanoid",
-          "Зайві/шкідливі Scripts, які варто прибрати",
-          "ProximityPrompt у них заборонений",
-          "Їх не можна перейменувати"
-        ],
+ "Вони завжди без Humanoid",
+ "Зайві/шкідливі Scripts, які варто прибрати",
+ "ProximityPrompt у них заборонений",
+ "Їх не можна перейменувати"
+ ],
  correctAnswer: 1,
  explanation: "Чистка Toolbox.",
  },
@@ -1940,11 +1940,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Яка роль LocalScript у діалозі за схемою уроку?",
  options: [
-          "Самовирішувати нагороду квесту",
-          "Писати Coins у leaderstats",
-          "Показати текст/UI після сигналу сервера",
-          "Вимикати PathfindingService глобально"
-        ],
+ "Самовирішувати нагороду квесту",
+ "Писати Coins у leaderstats",
+ "Показати текст/UI після сигналу сервера",
+ "Вимикати PathfindingService глобально"
+ ],
  correctAnswer: 2,
  explanation: "UI = відображення.",
  },
@@ -1953,11 +1953,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Навіщо Billboard «!» над NPC?",
  options: [
-          "Щоб здалеку було видно: тут можна взаємодіяти",
-          "Щоб замінити Prompt",
-          "Щоб відкрити магазин без Remotes",
-          "Це потрібно лише для Raycast"
-        ],
+ "Щоб здалеку було видно: тут можна взаємодіяти",
+ "Щоб замінити Prompt",
+ "Щоб відкрити магазин без Remotes",
+ "Це потрібно лише для Raycast"
+ ],
  correctAnswer: 0,
  explanation: "Орієнтир у просторі.",
  },
@@ -1966,11 +1966,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Типовий MaxActivationDistance для розмови з NPC?",
  options: [
-          "Обов’язково 0",
-          "Обов’язково 500",
-          "Дистанція не існує в Prompt",
-          "Близько 8–12 студів (не пів карти)"
-        ],
+ "Обов’язково 0",
+ "Обов’язково 500",
+ "Дистанція не існує в Prompt",
+ "Близько 8-12 студів (не пів карти)"
+ ],
  correctAnswer: 3,
  explanation: "Близька зона.",
  },
@@ -1979,11 +1979,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Навіщо RequiresLineOfSight = true?",
  options: [
-          "Щоб вимкнути Anchored",
-          "Щоб створити table квесту",
-          "Щоб складніше активувати Prompt крізь стіну",
-          "Щоб прискорити ComputeAsync"
-        ],
+ "Щоб вимкнути Anchored",
+ "Щоб створити table квесту",
+ "Щоб складніше активувати Prompt крізь стіну",
+ "Щоб прискорити ComputeAsync"
+ ],
  correctAnswer: 2,
  explanation: "Лінія видимості.",
  },
@@ -1992,11 +1992,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Навіщо debounce на Triggered?",
  options: [
-          "Щоб видалити HumanoidRootPart",
-          "Щоб спам клавіші не відкривав купу діалогів",
-          "Це замінює if-гілки",
-          "Щоб обов’язково зламати UI"
-        ],
+ "Щоб видалити HumanoidRootPart",
+ "Щоб спам клавіші не відкривав купу діалогів",
+ "Це замінює if-гілки",
+ "Щоб обов’язково зламати UI"
+ ],
  correctAnswer: 1,
  explanation: "Анти-спам UX.",
  },
@@ -2005,11 +2005,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Як діалог 10.4 готує урок 10.6?",
  options: [
-          "Треба видалити Prompt перед квестом",
-          "Квест працює лише без NPC",
-          "table реплік заборонені в квестах",
-          "Ті самі гілки if можна наповнити QuestStatus і QuestConfig"
-        ],
+ "Треба видалити Prompt перед квестом",
+ "Квест працює лише без NPC",
+ "table реплік заборонені в квестах",
+ "Ті самі гілки if можна наповнити QuestStatus і QuestConfig"
+ ],
  correctAnswer: 3,
  explanation: "Каркас під квест.",
  },
@@ -2018,11 +2018,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Чому ActionText «Поговорити» краще за «Interact» для дітей на курсі?",
  options: [
-          "Зрозуміла дієслово-підказка українською/простою мовою",
-          "Interact швидше виконується рушієм",
-          "Поговорити вимикає LineOfSight",
-          "Interact не підтримується на PC"
-        ],
+ "Зрозуміла дієслово-підказка українською/простою мовою",
+ "Interact швидше виконується рушієм",
+ "Поговорити вимикає LineOfSight",
+ "Interact не підтримується на PC"
+ ],
  correctAnswer: 0,
  explanation: "Ясність для гравця.",
  },
@@ -2031,11 +2031,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Що зробити з Prompt під час відкритого діалогу (хороший UX)?",
  options: [
-          "Видалити NPC з гри",
-          "Поставити MaxActivationDistance = 500",
-          "Тимчасово Enabled = false або ігнорувати спам debounce",
-          "Перенести логіку лише на клієнт назавжди"
-        ],
+ "Видалити NPC з гри",
+ "Поставити MaxActivationDistance = 500",
+ "Тимчасово Enabled = false або ігнорувати спам debounce",
+ "Перенести логіку лише на клієнт назавжди"
+ ],
  correctAnswer: 2,
  explanation: "Контроль повторів.",
  },
@@ -2044,11 +2044,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Навіщо table Lines для реплік?",
  options: [
-          "Table вимикає сервер",
-          "Без table Triggered не працює",
-          "Це обов’язково замінює Attributes",
-          "Тексти в одному місці, легше міняти й розширювати"
-        ],
+ "Table вимикає сервер",
+ "Без table Triggered не працює",
+ "Це обов’язково замінює Attributes",
+ "Тексти в одному місці, легше міняти й розширювати"
+ ],
  correctAnswer: 3,
  explanation: "Дані діалогу.",
  },
@@ -2057,11 +2057,11 @@ Save: \`Lesson 10.4 - NPC Dialogue\`.
  type: MC,
  question: "Що вважається зданим артефактом 10.4?",
  options: [
-          "Лише Model без Prompt",
-          "NPC з Prompt, серверними гілками діалогу і видимим текстом + Save",
-          "Порожній Baseplate",
-          "Тільки магазин без NPC"
-        ],
+ "Лише Model без Prompt",
+ "NPC з Prompt, серверними гілками діалогу і видимим текстом + Save",
+ "Порожній Baseplate",
+ "Тільки магазин без NPC"
+ ],
  correctAnswer: 1,
  explanation: "Потрібен робочий talk-loop.",
  }
@@ -2097,7 +2097,7 @@ export const ukLesson105 = {
 - квестодавець, що не стоїть статуєю;
 - гід до зони пазла (lite).
 
-Не будуй навігацію на пів карти. Зроби **2–3 Parts-якорі** \`Patrol_1\`, \`Patrol_2\`, \`Patrol_3\` і стабільний цикл.
+Не будуй навігацію на пів карти. Зроби **2-3 Parts-якорі** \`Patrol_1\`, \`Patrol_2\`, \`Patrol_3\` і стабільний цикл.
 
 **Зроби зараз (3 хв):** у папці NPC додай порожні Parts (CanCollide false, Transparency 1) як точки патруля. Імена важливі.`,
  },
@@ -2106,12 +2106,12 @@ export const ukLesson105 = {
  content: `| Підхід | Що робить | Мінус у хабі |
 |--------|-----------|--------------|
 | \`Humanoid:MoveTo(pos)\` один раз | Йде по прямій | Вріжеться в стіну |
-| Tween CFrame NPC | «Летить» по кривій | Не фізичний персонаж |
+| Tween CFrame NPC | «Летить» по кривій | Не фізичний character |
 | **Pathfinding** | Шукає шлях між перешкодами | Треба обробляти Fail/Blocked |
 
 Pathfinding малює невидимий маршрут «як би проклав розумний пішохід». Ти лише **виконуєш** кроки.
 
-Важливо: шлях рахується на **сервері** (Script у SSS або в моделі NPC на сервері). LocalScript для патруля охоронця з нагородами/зонами - погана ідея.
+Важливо: шлях рахується на **сервері** (Script у SSS або в Model NPC на сервері). LocalScript для патруля охоронця з нагородами/зонами - погана ідея.
 
 **Зроби зараз (4 хв):** один удар/hazard у Play - Health має змінитись на сервері, не в LocalScript.`,
  },
@@ -2161,7 +2161,7 @@ ComputeAsync - GPS побудував маршрут. Waypoints - поворот
 
 \`CreatePath\` один раз на NPC (або пересоздавай обережно). \`ComputeAsync\` - **кожен новий пункт призначення**.
 
-Не забудь: у NPC має бути **Humanoid** + **HumanoidRootPart**, модель не Anchored цілком як статуя (HRP може бути під контролем Humanoid).
+Не забудь: у NPC має бути **Humanoid** + **HumanoidRootPart**, model не Anchored цілком як статуя (HRP може бути під контролем Humanoid).
 
 **Зроби зараз (4 хв):** один удар/hazard у Play - Health має змінитись на сервері, не в LocalScript.`,
  },
@@ -2169,7 +2169,7 @@ ComputeAsync - GPS побудував маршрут. Waypoints - поворот
  title: "AgentParams: чому NPC «не знаходить шлях»",
  content: `| Симптом | Ймовірна причина | Що спробувати |
 |---------|------------------|---------------|
-| NoPath між близькими точками | Занадто товстий AgentRadius | Зменшити радіус 1.5–2 |
+| NoPath між близькими точками | Занадто товстий AgentRadius | Зменшити радіус 1.5-2 |
 | Ріже кути / застряє в вузьких дверях | Радіус більший за прохід | Ширші двері або менший агент |
 | Не стрибає на уступ | AgentCanJump false / немає Jump | true + обробка Action.Jump |
 | Шлях через декоративні Parts | Декор CanCollide true | Зробити декор без колізії або PathfindingModifier |
@@ -2273,10 +2273,10 @@ Lite на годину:
  title: "Білд чекліст NPC для pathfinding",
  content: `- [ ] Model з Humanoid + HumanoidRootPart
 - [ ] Animate опційно (не блокер)
-- [ ] Anchored = false на частинах тіла (типовий Rig)
+- [ ] Anchored = false на Partх тіла (типовий Rig)
 - [ ] Немає випадкового Weld до підлоги хабу
-- [ ] Patrol Parts вище підлоги на ~1–2 студ, у проходах
-- [ ] Скрипт патруля в SSS або Script у моделі (сервер)
+- [ ] Patrol Parts вище підлоги на ~1-2 студ, у проходах
+- [ ] Скрипт патруля в SSS або Script у model (сервер)
 - [ ] Output: Success і імена точок при дебазі
 
 Якщо береш Rig з Toolbox - **перевір скрипти**. Зайвий AI з Toolbox може битися з твоїм while. Краще свій короткий Script.
@@ -2382,11 +2382,11 @@ Lite на годину:
  type: MC,
  question: "Навіщо PathfindingService замість одного MoveTo крізь стіну?",
  options: [
-          "Щоб побудувати обхід перешкод через waypoints",
-          "Щоб видалити Humanoid",
-          "Щоб замінити leaderstats",
-          "Це потрібно лише для Terrain water"
-        ],
+ "Щоб побудувати обхід перешкод через waypoints",
+ "Щоб видалити Humanoid",
+ "Щоб замінити leaderstats",
+ "Це потрібно лише для Terrain water"
+ ],
  correctAnswer: 0,
  explanation: "Маршрут з обходом.",
  },
@@ -2395,11 +2395,11 @@ Lite на годину:
  type: MC,
  question: "Що робить path:ComputeAsync(from, to)?",
  options: [
-          "Одразу видає монети",
-          "Рахує маршрут між двома позиціями (асинхронно чекає результат)",
-          "Створює ScreenGui",
-          "Вимикає Anchored у всьому Workspace"
-        ],
+ "Одразу видає монети",
+ "Рахує маршрут між двома позиціями (асинхронно чекає результат)",
+ "Створює ScreenGui",
+ "Вимикає Anchored у всьому Workspace"
+ ],
  correctAnswer: 1,
  explanation: "Побудова Path.",
  },
@@ -2408,11 +2408,11 @@ Lite на годину:
  type: MC,
  question: "Де має жити логіка патруля NPC в цьому уроці?",
  options: [
-          "Лише в LocalScript гравця",
-          "У Lighting.Atmosphere",
-          "На сервері (Script)",
-          "У назві Place"
-        ],
+ "Лише в LocalScript гравця",
+ "У Lighting.Atmosphere",
+ "На сервері (Script)",
+ "У назві Place"
+ ],
  correctAnswer: 2,
  explanation: "Серверний AI/патруль.",
  },
@@ -2421,11 +2421,11 @@ Lite на годину:
  type: MC,
  question: "Навіщо перевіряти path.Status після ComputeAsync?",
  options: [
-          "Це лише косметика Output",
-          "Status завжди Success",
-          "Щоб увімкнути Bloom",
-          "Щоб не вести NPC, якщо шляху немає (NoPath тощо)"
-        ],
+ "Це лише косметика Output",
+ "Status завжди Success",
+ "Щоб увімкнути Bloom",
+ "Щоб не вести NPC, якщо шляху немає (NoPath тощо)"
+ ],
  correctAnswer: 3,
  explanation: "Fail-safe.",
  },
@@ -2434,11 +2434,11 @@ Lite на годину:
  type: MC,
  question: "Що таке waypoints?",
  options: [
-          "Список GamePass",
-          "Список точок маршруту, по яких треба провести Humanoid",
-          "Файли Audio",
-          "Типи Terrain Material"
-        ],
+ "Список GamePass",
+ "Список точок маршруту, по яких треба провести Humanoid",
+ "Файли Audio",
+ "Типи Terrain Material"
+ ],
  correctAnswer: 1,
  explanation: "Точки Path.",
  },
@@ -2447,11 +2447,11 @@ Lite на годину:
  type: MC,
  question: "Чому while true для патруля потребує Wait / MoveToFinished?",
  options: [
-          "while заборонений у Lua",
-          "Wait вимикає Pathfinding",
-          "Інакше tight loop вантажить сервер і ламає рух",
-          "Так вимагає RemoteFunction"
-        ],
+ "while заборонений у Lua",
+ "Wait вимикає Pathfinding",
+ "Інакше tight loop вантажить сервер і ламає рух",
+ "Так вимагає RemoteFunction"
+ ],
  correctAnswer: 2,
  explanation: "Не крутити порожній цикл.",
  },
@@ -2460,24 +2460,24 @@ Lite на годину:
  type: MC,
  question: "Навіщо AgentRadius у CreatePath?",
  options: [
-          "Каже системі «наскільки товстий» агент для проходів",
-          "Це гучність Sound",
-          "Це ціна товару в магазині",
-          "Це колір Neon"
-        ],
+ "Каже системі «наскільки товстий» агент для проходів",
+ "Це гучність Sound",
+ "Це ціна товару в магазині",
+ "Це колір Neon"
+ ],
  correctAnswer: 0,
- explanation: "Розмір агента.",
+ explanation: "Size агента.",
  },
  {
  id: "q8",
  type: MC,
  question: "Що робити при PathWaypointAction.Jump?",
  options: [
-          "Видалити waypoint",
-          "Вимкнути PathfindingService",
-          "Поставити Anchored true назавжди",
-          "Увімкнути humanoid.Jump (або еквівалент стрибка)"
-        ],
+ "Видалити waypoint",
+ "Вимкнути PathfindingService",
+ "Поставити Anchored true назавжди",
+ "Увімкнути humanoid.Jump (або еквівалент стрибка)"
+ ],
  correctAnswer: 3,
  explanation: "Стрибок на маршруті.",
  },
@@ -2486,11 +2486,11 @@ Lite на годину:
  type: MC,
  question: "Типова причина NoPath між двома близькими точками?",
  options: [
-          "Занадто гарний BillboardGui",
-          "Наявність ProximityPrompt",
-          "Якір всередині колізії або занадто великий AgentRadius / вузький прохід",
-          "Занадто короткий title квесту"
-        ],
+ "Занадто гарний BillboardGui",
+ "Наявність ProximityPrompt",
+ "Якір всередині колізії або занадто великий AgentRadius / вузький прохід",
+ "Занадто короткий title квесту"
+ ],
  correctAnswer: 2,
  explanation: "Геометрія й агент.",
  },
@@ -2499,11 +2499,11 @@ Lite на годину:
  type: MC,
  question: "Навіщо таймаут навколо MoveToFinished?",
  options: [
-          "Щоб прискорити Publish",
-          "Щоб NPC не завис назавжди, якщо фізика заблокувала рух",
-          "Щоб видалити waypoints з гри",
-          "Це замінює Humanoid"
-        ],
+ "Щоб прискорити Publish",
+ "Щоб NPC не завис назавжди, якщо фізика заблокувала рух",
+ "Щоб видалити waypoints з гри",
+ "Це замінює Humanoid"
+ ],
  correctAnswer: 1,
  explanation: "Захист від вічного Wait.",
  },
@@ -2512,11 +2512,11 @@ Lite на годину:
  type: MC,
  question: "Як патруль дружить з діалогом Prompt?",
  options: [
-          "Видалити Prompt назавжди",
-          "Перенести NPC у ReplicatedStorage під час діалогу обов’язково",
-          "Вимкнути while у всьому Place",
-          "Прапорець paused: зупинити рух на час розмови"
-        ],
+ "Видалити Prompt назавжди",
+ "Перенести NPC у ReplicatedStorage під час діалогу обов’язково",
+ "Вимкнути while у всьому Place",
+ "Прапорець paused: зупинити рух на час розмови"
+ ],
  correctAnswer: 3,
  explanation: "Пауза AI.",
  },
@@ -2525,11 +2525,11 @@ Lite на годину:
  type: MC,
  question: "Що означає path.Blocked у контексті уроку?",
  options: [
-          "Маршрут перекрили після розрахунку - варто перерахувати",
-          "Гравець купив GamePass",
-          "Обов’язковий краш Studio",
-          "Успішне завершення квесту"
-        ],
+ "Маршрут перекрили після розрахунку - варто перерахувати",
+ "Гравець купив GamePass",
+ "Обов’язковий краш Studio",
+ "Успішне завершення квесту"
+ ],
  correctAnswer: 0,
  explanation: "Перекриття шляху.",
  },
@@ -2538,11 +2538,11 @@ Lite на годину:
  type: MC,
  question: "Скільки точок патруля мінімально для демонстрації циклу?",
  options: [
-          "Обов’язково 100",
-          "0 - лише Compute без руху",
-          "Хоча б 2 (краще 3) з поверненням по колу",
-          "Лише 1 і вимкнути while"
-        ],
+ "Обов’язково 100",
+ "0 - лише Compute без руху",
+ "Хоча б 2 (краще 3) з поверненням по колу",
+ "Лише 1 і вимкнути while"
+ ],
  correctAnswer: 2,
  explanation: "Цикл між якорями.",
  },
@@ -2551,11 +2551,11 @@ Lite на годину:
  type: MC,
  question: "Чому Patrol Parts часто роблять прозорими без колізії?",
  options: [
-          "Pathfinding працює лише з Transparency 1",
-          "Так вимагає DataStore",
-          "Щоб замінити HumanoidRootPart",
-          "Це якорі позицій, а не декоративні стіни на шляху"
-        ],
+ "Pathfinding працює лише з Transparency 1",
+ "Так вимагає DataStore",
+ "Щоб замінити HumanoidRootPart",
+ "Це якорі позицій, а не декоративні стіни на шляху"
+ ],
  correctAnswer: 3,
  explanation: "Службові маркери.",
  },
@@ -2564,11 +2564,11 @@ Lite на годину:
  type: MC,
  question: "Що вважається зданим артефактом 10.5?",
  options: [
-          "Лише теорія без Studio",
-          "NPC з while-патрулем через Pathfinding по точках + Save",
-          "Статичний Part без Humanoid",
-          "Магазин без NPC"
-        ],
+ "Лише теорія без Studio",
+ "NPC з while-патрулем через Pathfinding по точках + Save",
+ "Статичний Part без Humanoid",
+ "Магазин без NPC"
+ ],
  correctAnswer: 1,
  explanation: "Потрібен рухомий патруль.",
  }
@@ -2603,7 +2603,7 @@ export const ukLesson106 = {
 - які репліки сказати;
 - чи вже взято / здано.
 
-Ти вже маєш з 10.4–10.5 NPC, Prompt і (ідеально) pathfinding. Сьогодні NPC стає **квестодавцем**, а не лише «привіт».
+Ти вже маєш з 10.4-10.5 NPC, Prompt і (ідеально) pathfinding. Сьогодні NPC стає **квестодавцем**, а не лише «привіт».
 
 Завтра (**10.7**) ціль може стати «принеси Key_Blue з Raycast-кімнати». Сьогодні достатньо **чесної lite-цілі** (зібрати 3 монети-зони / дійти до маркера / Attribute), але **архітектура** має бути як для справжнього квесту.
 
@@ -2643,7 +2643,7 @@ export const ukLesson106 = {
 \`}\`
 \`return QuestConfig\`
 
-Поля можна звузити, але тримай мінімум: **id, ціль, нагорода, 2–3 тексти**.
+Поля можна звузити, але тримай мінімум: **id, ціль, нагорода, 2-3 тексти**.
 
 Пізніше для ключа з 10.7 додаси квест \`bring_key\` з \`goalType = "item"\` і \`goalItem = "Key_Blue"\` - **той самий** код здачі, інший рядок Config.
 
@@ -2754,7 +2754,7 @@ ProximityPrompt:
  },
  {
  title: "UI прогресу lite",
- content: `Гравцю треба бачити \`2/3\`, інакше квест відчувається зламаним.
+ content: `Гравцю треба бачити \` 2/3\`, інакше квест відчувається зламаним.
 
 Мінімум:
 - TextLabel у StarterGui: LocalScript слухає \`GetAttributeChangedSignal("QuestProgress")\` і \`QuestStatus\`;
@@ -2768,7 +2768,7 @@ ProximityPrompt:
  },
  {
  title: "Playtest квесту (10 проходів думкою + 1 у Play)",
- content: `| # | Сценарій | Очікування |
+ content: `| # | Script | Очікування |
 |---|----------|------------|
 | 1 | Prompt до старту | Статус active, progress 0 |
 | 2 | Маркер без active | Нічого / ігнор |
@@ -2793,7 +2793,7 @@ ProximityPrompt:
 - [ ] Здача з перевіркою умови
 - [ ] Coins у leaderstats + анти-дубль нагороди
 - [ ] UI або чіткий фідбек progress
-- [ ] Playtest сценарії 1–6 зелені
+- [ ] Playtest Scripts 1-6 зелені
 - [ ] Save Lesson 10.6 - Quest Table
 
 Якщо все є - завтра заміниш маркери на ключ з Raycast без переписування всієї машини станів.
@@ -2872,11 +2872,11 @@ ProximityPrompt:
  type: MC,
  question: "Навіщо описувати квест у table/Config?",
  options: [
-          "Щоб цілі, нагорода і тексти жили в одному місці й легко розширювались",
-          "Щоб вимкнути NPC",
-          "Щоб замінити Workspace на SSS",
-          "Це потрібно лише для Skybox"
-        ],
+ "Щоб цілі, нагорода і тексти жили в одному місці й легко розширювались",
+ "Щоб вимкнути NPC",
+ "Щоб замінити Workspace на SSS",
+ "Це потрібно лише для Skybox"
+ ],
  correctAnswer: 0,
  explanation: "Дані квесту окремо від дроту if.",
  },
@@ -2885,11 +2885,11 @@ ProximityPrompt:
  type: MC,
  question: "Хто має змінювати QuestStatus / видавати монети?",
  options: [
-          "Лише LocalScript у StarterGui",
-          "Серверний Script",
-          "Lighting",
-          "Випадковий Free Model без перевірки"
-        ],
+ "Лише LocalScript у StarterGui",
+ "Серверний Script",
+ "Lighting",
+ "Випадковий Free Model без перевірки"
+ ],
  correctAnswer: 1,
  explanation: "Стан і економіка на сервері.",
  },
@@ -2898,11 +2898,11 @@ ProximityPrompt:
  type: MC,
  question: "Навіщо прапорець QuestRewarded / turned_in?",
  options: [
-          "Щоб вимкнути Anchored",
-          "Щоб створити Terrain",
-          "Щоб нагороду не видати багато разів спамом Prompt",
-          "Це замінює Pathfinding"
-        ],
+ "Щоб вимкнути Anchored",
+ "Щоб створити Terrain",
+ "Щоб нагороду не видати багато разів спамом Prompt",
+ "Це замінює Pathfinding"
+ ],
  correctAnswer: 2,
  explanation: "Анти-дубль нагороди.",
  },
@@ -2911,11 +2911,11 @@ ProximityPrompt:
  type: MC,
  question: "Куди має йти rewardCoins у хабі курсу?",
  options: [
-          "Лише в TextLabel без Value",
-          "У ClockTime",
-          "У ReplicatedFirst як Sound",
-          "У ті самі leaderstats Coins, що й магазин"
-        ],
+ "Лише в TextLabel без Value",
+ "У ClockTime",
+ "У ReplicatedFirst як Sound",
+ "У ті самі leaderstats Coins, що й магазин"
+ ],
  correctAnswer: 3,
  explanation: "Одна економіка хабу.",
  },
@@ -2924,11 +2924,11 @@ ProximityPrompt:
  type: MC,
  question: "Що робити, щоб один маркер не накрутив увесь progress?",
  options: [
-          "Давати +10 за кожен Touched",
-          "Пам’ятати alreadyCollected(markerId) для гравця",
-          "Вимкнути сервер",
-          "Ставити статус на клієнті"
-        ],
+ "Давати +10 за кожен Touched",
+ "Пам’ятати alreadyCollected(markerId) для гравця",
+ "Вимкнути сервер",
+ "Ставити статус на клієнті"
+ ],
  correctAnswer: 1,
  explanation: "Debounce по id маркера.",
  },
@@ -2937,11 +2937,11 @@ ProximityPrompt:
  type: MC,
  question: "Який мінімальний набір полів у QuestConfig корисний на старті?",
  options: [
-          "Лише колір Part",
-          "Лише ім’я Place",
-          "id, ціль (тип/кількість), rewardCoins, тексти діалогу",
-          "Тільки ParticleEmitter Rate"
-        ],
+ "Лише колір Part",
+ "Лише ім’я Place",
+ "id, ціль (тип/кількість), rewardCoins, тексти діалогу",
+ "Тільки ParticleEmitter Rate"
+ ],
  correctAnswer: 2,
  explanation: "Дані для старту/прогресу/здачі.",
  },
@@ -2950,11 +2950,11 @@ ProximityPrompt:
  type: MC,
  question: "Чому нагороду краще видавати біля NPC при здачі, а не в момент останнього маркера?",
  options: [
-          "Є відчуття «повернувся до квестодавця» і одна точка анти-дубля",
-          "Так забороняє Roblox інакше",
-          "Маркери не вміють Touched",
-          "NPC не може мати Prompt"
-        ],
+ "Є відчуття «повернувся до квестодавця» і одна точка анти-дубля",
+ "Так забороняє Roblox інакше",
+ "Маркери не вміють Touched",
+ "NPC не може мати Prompt"
+ ],
  correctAnswer: 0,
  explanation: "Класичний quest loop.",
  },
@@ -2963,11 +2963,11 @@ ProximityPrompt:
  type: MC,
  question: "Що з наведеного підходить як lite-ціль сьогодні під архітектуру item-квесту?",
  options: [
-          "Одразу Publish Public",
-          "Видалити leaderstats",
-          "Дати монети без умови",
-          "Порахувати 3 маркери (count), завтра замінити на Key_Blue"
-        ],
+ "Одразу Publish Public",
+ "Видалити leaderstats",
+ "Дати монети без умови",
+ "Порахувати 3 маркери (count), завтра замінити на Key_Blue"
+ ],
  correctAnswer: 3,
  explanation: "Та сама машина станів, інша ціль.",
  },
@@ -2976,24 +2976,24 @@ ProximityPrompt:
  type: MC,
  question: "Навіщо UI читає Attributes квесту?",
  options: [
-          "Щоб UI міг сам видати 1000 монет",
-          "Щоб вимкнути Remotes магазину",
-          "Щоб показати прогрес гравцю, не роблячи UI джерелом правди",
-          "Це обов’язково ламає сервер"
-        ],
+ "Щоб UI міг сам видати 1000 монет",
+ "Щоб вимкнути Remotes магазину",
+ "Щоб показати прогрес гравцю, не роблячи UI джерелом правди",
+ "Це обов’язково ламає сервер"
+ ],
  correctAnswer: 2,
  explanation: "UI = відображення.",
  },
  {
  id: "q10",
  type: MC,
- question: "Який сценарій playtest ловить друкарню монет?",
+ question: "Який Script playtest ловить друкарню монет?",
  options: [
-          "Зміна Material підлоги",
-          "Повторна здача того самого квесту",
-          "Відкриття Terrain Editor",
-          "Перейменування Lighting"
-        ],
+ "Зміна Material підлоги",
+ "Повторна здача того самого квесту",
+ "Відкриття Terrain Editor",
+ "Перейменування Lighting"
+ ],
  correctAnswer: 1,
  explanation: "Перевірка анти-дубля.",
  },
@@ -3002,11 +3002,11 @@ ProximityPrompt:
  type: MC,
  question: "Чому погано тримати прогрес лише в LocalScript?",
  options: [
-          "LocalScript не може показувати TextLabel",
-          "Attributes не існують",
-          "Prompt працює лише на клієнті завжди",
-          "Сервер не побачить правди при здачі; легко підробити"
-        ],
+ "LocalScript не може показувати TextLabel",
+ "Attributes не існують",
+ "Prompt працює лише на клієнті завжди",
+ "Сервер не побачить правди при здачі; легко підробити"
+ ],
  correctAnswer: 3,
  explanation: "Прогрес на сервері.",
  },
@@ -3015,11 +3015,11 @@ ProximityPrompt:
  type: MC,
  question: "Що має статись при старті квесту з Prompt?",
  options: [
-          "status active, progress 0, показати startText",
-          "Одразу turned_in і 999 монет",
-          "Видалення NPC",
-          "Вимкнення Explorer"
-        ],
+ "status active, progress 0, показати startText",
+ "Одразу turned_in і 999 монет",
+ "Видалення NPC",
+ "Вимкнення Explorer"
+ ],
  correctAnswer: 0,
  explanation: "Гілка старту.",
  },
@@ -3028,11 +3028,11 @@ ProximityPrompt:
  type: MC,
  question: "Як квест 10.6 готує інтеграцію з 10.7?",
  options: [
-          "Треба видалити QuestConfig",
-          "Raycast заборонить квести",
-          "Ті самі start/turn-in, ціль можна замінити на item/Inventory",
-          "Інвентар замінить leaderstats назавжди"
-        ],
+ "Треба видалити QuestConfig",
+ "Raycast заборонить квести",
+ "Ті самі start/turn-in, ціль можна замінити на item/Inventory",
+ "Інвентар замінить leaderstats назавжди"
+ ],
  correctAnswer: 2,
  explanation: "Гнучкий goalType.",
  },
@@ -3041,11 +3041,11 @@ ProximityPrompt:
  type: MC,
  question: "Що перевірити, якщо після здачі TAB не змінився?",
  options: [
-          "Чи білий колір неба",
-          "Чи вимкнено Output",
-          "Чи назва модуля 1 правильна",
-          "Чи існує leaderstats.Coins і чи addCoins пише саме туди"
-        ],
+ "Чи білий колір неба",
+ "Чи вимкнено Output",
+ "Чи назва модуля 1 правильна",
+ "Чи існує leaderstats.Coins і чи addCoins пише саме туди"
+ ],
  correctAnswer: 3,
  explanation: "Діагностика економіки.",
  },
@@ -3054,11 +3054,11 @@ ProximityPrompt:
  type: MC,
  question: "Що вважається зданим артефактом уроку 10.6?",
  options: [
-          "Лише табличка без коду",
-          "Працюючий квест з Config, прогресом, одноразовою нагородою в Coins і Save",
-          "Порожній Baseplate",
-          "Магазин без квесту й без сервера"
-        ],
+ "Лише табличка без коду",
+ "Працюючий квест з Config, прогресом, одноразовою нагородою в Coins і Save",
+ "Порожній Baseplate",
+ "Магазин без квесту й без сервера"
+ ],
  correctAnswer: 1,
  explanation: "Потрібен зібраний quest loop.",
  }
@@ -3093,13 +3093,13 @@ export const ukLesson107 = {
 Навіщо разом? Бо класичний хаб-пазл звучить так: *навів промінь на кристал → отримав ключ у інвентар → двері/квест перевіряють ключ*.
 
 Ти вже маєш з модуля 10:
-- хаб і папки (10.1);
-- магазин + Remotes (10.2–10.3);
-- NPC і квест з table (10.4–10.6).
+- хаб і Folders (10.1);
+- магазин + Remotes (10.2-10.3);
+- NPC і квест з table (10.4-10.6).
 
 Сьогодні додаєш **предметну логіку** і **просторовий промінь**, щоб завтра в **10.8** зшити все в один шлях.
 
-**Зроби зараз (2 хв):** у Workspace зроби папку \`PuzzleRoom\` з двома Parts: \`LaserOrigin\` і \`CrystalTarget\` (імена важливі).`,
+**Зроби зараз (2 хв):** у Workspace зроби Folder \`PuzzleRoom\` з двома Parts: \`LaserOrigin\` і \`CrystalTarget\` (імена важливі).`,
  },
  {
  title: "Інвентар ≠ Tool у Backpack (спочатку)",
@@ -3205,7 +3205,7 @@ Tool можна додати пізніше як «вау». Сьогодні я
  title: "RaycastParams і типові налаштування",
  content: `| Поле / ідея | Навіщо |
 |-------------|--------|
-| \`FilterType = Exclude\` | Ігнорувати список (наприклад персонажа гравця) |
+| \`FilterType = Exclude\` | Ігнорувати список (наприклад Character гравця) |
 | \`FilterType = Include\` | Рахувати лише Parts з списку (зручно для пазла) |
 | \`FilterDescendantsInstances\` | Сам список Models/Parts |
 | \`IgnoreWater\` | Щоб вода не їла промінь без потреби |
@@ -3383,7 +3383,7 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
 4. **Зберегти:** Lesson 10.7 - Inventory Raycast`,
  hints: [
  "FilterType Include з одним CrystalTarget спрощує дебаг",
- "Множ unit-вектор на 50–100 для дальності",
+ "Множ unit-вектор на 50-100 для дальності",
  "Спочатку print(result), потім addItem"
  ],
  optionalChallenge: "Другий кристал Key_Red + двері, що потребують обидва ключі (has AND has).",
@@ -3397,11 +3397,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "Навіщо в цьому уроці ModuleScript Inventory?",
  options: [
-          "Одна спільна логіка add/has/remove для квесту, дверей і пазла",
-          "Щоб замінити Workspace",
-          "Щоб вимкнути Raycast назавжди",
-          "Це потрібно лише для Skybox"
-        ],
+ "Одна спільна логіка add/has/remove для квесту, дверей і пазла",
+ "Щоб замінити Workspace",
+ "Щоб вимкнути Raycast назавжди",
+ "Це потрібно лише для Skybox"
+ ],
  correctAnswer: 0,
  explanation: "Єдина бібліотека інвентарю.",
  },
@@ -3410,11 +3410,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "Де має виконуватись Inventory.add для ключа?",
  options: [
-          "Лише в LocalScript UI",
-          "У серверному Script / логіці SSS",
-          "У Lighting",
-          "У назві Part"
-        ],
+ "Лише в LocalScript UI",
+ "У серверному Script / логіці SSS",
+ "У Lighting",
+ "У назві Part"
+ ],
  correctAnswer: 1,
  explanation: "Нагорода на сервері.",
  },
@@ -3423,11 +3423,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "Що робить workspace:Raycast?",
  options: [
-          "Завжди створює Tool",
-          "Видаляє Terrain",
-          "Перевіряє, у що вріжеться промінь з origin уздовж direction",
-          "Публікує гру"
-        ],
+ "Завжди створює Tool",
+ "Видаляє Terrain",
+ "Перевіряє, у що вріжеться промінь з origin уздовж direction",
+ "Публікує гру"
+ ],
  correctAnswer: 2,
  explanation: "Запит лінією у світ.",
  },
@@ -3436,11 +3436,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "Чому direction часто = unit * distance?",
  options: [
-          "Бо так вимагає SoundService",
-          "Бо unit уже = 1000 студів",
-          "Бо Raycast ігнорує довжину завжди",
-          "Бо довжина вектора задає дальність променя"
-        ],
+ "Бо так вимагає SoundService",
+ "Бо unit уже = 1000 студів",
+ "Бо Raycast ігнорує довжину завжди",
+ "Бо довжина вектора задає дальність променя"
+ ],
  correctAnswer: 3,
  explanation: "Дальність у довжині direction.",
  },
@@ -3449,11 +3449,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "Навіщо RaycastFilterType.Include для пазла?",
  options: [
-          "Вимкнути Anchored",
-          "Рахувати лише вибрані Parts (ціль/дзеркала), менше випадкових влучань",
-          "Збільшити гучність",
-          "Створити leaderstats"
-        ],
+ "Вимкнути Anchored",
+ "Рахувати лише вибрані Parts (ціль/дзеркала), менше випадкових влучань",
+ "Збільшити гучність",
+ "Створити leaderstats"
+ ],
  correctAnswer: 1,
  explanation: "Фільтр цілей.",
  },
@@ -3462,11 +3462,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "Чому погано видавати ключ лише з LocalScript після «візуального» Beam?",
  options: [
-          "LocalScript не вміє print",
-          "Beam заборонений у Roblox",
-          "Клієнт ненадійний для нагород - легко підробити",
-          "Так швидше завжди і безпечніше"
-        ],
+ "LocalScript не вміє print",
+ "Beam заборонений у Roblox",
+ "Клієнт ненадійний для нагород - легко підробити",
+ "Так швидше завжди і безпечніше"
+ ],
  correctAnswer: 2,
  explanation: "Never trust client для луту.",
  },
@@ -3475,11 +3475,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "Що повертає Raycast, якщо нічого релевантного не влучило?",
  options: [
-          "nil (немає результату)",
-          "Обов’язково Baseplate",
-          "Помилку компіляції завжди",
-          "Новий Player"
-        ],
+ "nil (немає результату)",
+ "Обов’язково Baseplate",
+ "Помилку компіляції завжди",
+ "Новий Player"
+ ],
  correctAnswer: 0,
  explanation: "Перевіряй if result then.",
  },
@@ -3488,11 +3488,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "Як двері мають перевірити ключ?",
  options: [
-          "Повірити TextLabel на клієнті",
-          "Перевірити колір неба",
-          "Порахувати Parts у Toolbox",
-          "Inventory.has(player, \"Key_Blue\") на сервері"
-        ],
+ "Повірити TextLabel на клієнті",
+ "Перевірити колір неба",
+ "Порахувати Parts у Toolbox",
+ "Inventory.has(player, \"Key_Blue\") на сервері"
+ ],
  correctAnswer: 3,
  explanation: "Серверна перевірка володіння.",
  },
@@ -3501,11 +3501,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "Навіщо PlayerRemoving у Inventory Module?",
  options: [
-          "Видалити Workspace",
-          "Вимкнути Pathfinding",
-          "Прибрати bags[player], щоб не тримати зайві дані",
-          "Обов’язково Publish"
-        ],
+ "Видалити Workspace",
+ "Вимкнути Pathfinding",
+ "Прибрати bags[player], щоб не тримати зайві дані",
+ "Обов’язково Publish"
+ ],
  correctAnswer: 2,
  explanation: "Очищення стану гравця.",
  },
@@ -3514,11 +3514,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "Який мінімум для зв’язку з квестом/хабом після пазла?",
  options: [
-          "Лише гарний Sky",
-          "Предмет у інвентарі або Attribute на кшталт PuzzleDone",
-          "Лише зміна Material підлоги",
-          "Видалення NPC"
-        ],
+ "Лише гарний Sky",
+ "Предмет у інвентарі або Attribute на кшталт PuzzleDone",
+ "Лише зміна Material підлоги",
+ "Видалення NPC"
+ ],
  correctAnswer: 1,
  explanation: "Видимий прапорець для інших систем.",
  },
@@ -3527,11 +3527,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "Чим table-інвентар відрізняється від Tool у Backpack у цьому уроці?",
  options: [
-          "Table завжди видно як 3D меч",
-          "Tool не існує в Roblox",
-          "Інвентар можна писати тільки в ReplicatedFirst",
-          "Це логічний список id на сервері, зручний для ключів/квестів"
-        ],
+ "Table завжди видно як 3D меч",
+ "Tool не існує в Roblox",
+ "Інвентар можна писати тільки в ReplicatedFirst",
+ "Це логічний список id на сервері, зручний для ключів/квестів"
+ ],
  correctAnswer: 3,
  explanation: "Логіка володіння vs фізичний Tool.",
  },
@@ -3540,11 +3540,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "Що робити при спамі Prompt, щоб не роздати 50 ключів?",
  options: [
-          "Перевіряти has перед add / debounce",
-          "Вимкнути сервер",
-          "Давати ключ лише на клієнті",
-          "Збільшити Rate частинок"
-        ],
+ "Перевіряти has перед add / debounce",
+ "Вимкнути сервер",
+ "Давати ключ лише на клієнті",
+ "Збільшити Rate Parts"
+ ],
  correctAnswer: 0,
  explanation: "Одноразовість і захист.",
  },
@@ -3553,11 +3553,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "UI інвентарю має бути…",
  options: [
-          "Єдиним місцем, де зберігається правда ключів",
-          "Заміною Raycast",
-          "Відображенням даних з сервера (наприклад після InvUpdated)",
-          "Обов’язково без тексту"
-        ],
+ "Єдиним місцем, де зберігається правда ключів",
+ "Заміною Raycast",
+ "Відображенням даних з сервера (наприклад після InvUpdated)",
+ "Обов’язково без тексту"
+ ],
  correctAnswer: 2,
  explanation: "UI = відображення.",
  },
@@ -3566,11 +3566,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "Навіщо removeItem після відкриття дверей одноразовим ключем?",
  options: [
-          "Щоб зламати ModuleScript",
-          "Це вимикає Remotes",
-          "Щоб очистити Terrain",
-          "Ключ витрачається, повторне відкриття потребує нового проходження"
-        ],
+ "Щоб зламати ModuleScript",
+ "Це вимикає Remotes",
+ "Щоб очистити Terrain",
+ "Ключ витрачається, повторне відкриття потребує нового проходження"
+ ],
  correctAnswer: 3,
  explanation: "Витрата предмета.",
  },
@@ -3579,11 +3579,11 @@ Playtest: 1) отримай ключ 2) відкрий двері 3) спроб�
  type: MC,
  question: "Що вважається зданим артефактом 10.7?",
  options: [
-          "Лише теорія без Studio",
-          "Працюючий Raycast→ключ в Inventory→перевірка дверей/квесту + Save",
-          "Порожній Baseplate",
-          "Магазин без сервера"
-        ],
+ "Лише теорія без Studio",
+ "Працюючий Raycast→ключ в Inventory→перевірка дверей/квесту + Save",
+ "Порожній Baseplate",
+ "Магазин без сервера"
+ ],
  correctAnswer: 1,
  explanation: "Потрібен зібраний пазл з інвентарем.",
  }
@@ -3613,13 +3613,13 @@ export const ukLesson108 = {
  content: `Це **фінал модуля «Живий хаб»**. Не новий жанр з нуля і не «ще одна фіча». Сьогодні ти **зшиваєш** те, що вже є, в один досвід, який можна показати за 90 секунд.
 
 У модулі 10 ти (або група) збирав:
-1. **10.1** - простір хабу + папки RS/SSS + UI-заготовка.
-2. **10.2–10.3** - магазин через Remotes + анти-чит lite.
-3. **10.4–10.6** - NPC, pathfinding, квест з table.
+1. **10.1** - простір хабу + Folders RS/SSS + UI-заготовка.
+2. **10.2-10.3** - магазин через Remotes + анти-чит lite.
+3. **10.4-10.6** - NPC, pathfinding, квест з table.
 4. **10.7** - інвентар / Raycast-кімната.
 
 Сьогоднішній артефакт: **один Place**, де гравець без суфлера проходить:
-**спавн → розуміє ціль → робить квест або пазл → отримує монети/предмет → може купити в магазині → цикл не ламається.**
+**spawn → розуміє ціль → робить квест або пазл → отримує монети/предмет → може купити в магазині → цикл не ламається.**
 
 Якщо якоїсь системи ще немає - зроби **lite-версію** саме під цей маршрут (1 товар, 1 квест, 1 пазл), а не три недороблені світи.
 
@@ -3633,7 +3633,7 @@ export const ukLesson108 = {
 | Монети з квесту реально купують товар | Квест дає print, магазин живе окремо |
 | NPC/Prompt веде на наступний крок | Гравець стоїть і не знає куди |
 | Output без червоного на маршруті | «Помилки ігноруємо» |
-| 60–90 с демо без пояснень | 5 хв «зараз покажу де кнопка» |
+| 60-90 с демо без пояснень | 5 хв «зараз покажу де кнопка» |
 
 Ship **не** означає AAA-хаб на рік. Означає: **короткий повний цикл уже зібраний**, іменований і стабільний.
 
@@ -3645,7 +3645,7 @@ Ship **не** означає AAA-хаб на рік. Означає: **коро�
  title: "Карта систем, які зшиваємо",
  content: `| Система | Де живе логіка | Що має дати золотому шляху |
 |---------|----------------|----------------------------|
-| Хаб-білд | Workspace папки | Спавн, зони Shop / Quest / Puzzle |
+| Хаб-білд | Workspace Folders | Spawn, зони Shop / Quest / Puzzle |
 | Магазин | SSS Script + RS Remotes + LocalScript UI | Купівля з **серверною** ціною |
 | leaderstats | Server Script | Coins видно в TAB і після нагороди |
 | NPC + Prompt | Model + Prompt + діалог | Старт квесту / підказка |
@@ -3658,10 +3658,10 @@ Ship **не** означає AAA-хаб на рік. Означає: **коро�
 **Зроби зараз (4 хв):** у Explorer знайди \`Coins\` (або як назвав), \`Buy\` Remote, NPC із Prompt. Якщо чогось немає - познач як P0 на сьогодні.`,
  },
  {
- title: "Золотий шлях хабу (зафіксуй 6–8 кроків)",
+ title: "Золотий шлях хабу (зафіксуй 6-8 кроків)",
  content: `Запиши **до** фіксів. Приклад робочого маршруту:
 
-1. Спавн біля таблички «Спочатку квест у NPC».
+1. Spawn біля таблички «Спочатку квест у NPC».
 2. Підійти до NPC → ProximityPrompt → коротке «принеси ключ / пройди кімнату».
 3. Зайти в зону пазла / Raycast → отримати предмет або Attribute \`HasKey = true\`.
 4. Повернутись до NPC → квест complete → **+Coins** на сервері.
@@ -3680,15 +3680,15 @@ Ship **не** означає AAA-хаб на рік. Означає: **коро�
  title: "Рубрика Ship хабу (~15 пунктів)",
  content: `Став **так / ні / майже**. Мета уроку: якомога більше **так** саме на золотому шляху.
 
-### A. Простір і онбординг (1–4)
+### A. Простір і онбординг (1-4)
 | # | Пункт | Так? |
 |---|-------|------|
-| 1 | Спавн стабільний, зони Shop/Quest/Puzzle видно | |
-| 2 | Табличка або NPC каже перший крок ≤30–60 с | |
-| 3 | Імена/папки читаються (не 40× Part) | |
+| 1 | Spawn стабільний, зони Shop/Quest/Puzzle видно | |
+| 2 | Табличка або NPC каже перший крок ≤30-60 с | |
+| 3 | Імена/Folders читаються (не 40× Part) | |
 | 4 | Немає «мертвих» дверей без підказки на маршруті | |
 
-### B. Квест + пазл/дія (5–8)
+### B. Квест + пазл/дія (5-8)
 | # | Пункт | Так? |
 |---|-------|------|
 | 5 | Prompt/діалог стартує квест | |
@@ -3696,7 +3696,7 @@ Ship **не** означає AAA-хаб на рік. Означає: **коро�
 | 7 | Пазл або Raycast/зона дає прогрес квесту | |
 | 8 | Нагорода в **Coins на сервері**, видно в TAB/HUD | |
 
-### C. Магазин і мережа (9–12)
+### C. Магазин і мережа (9-12)
 | # | Пункт | Так? |
 |---|-------|------|
 | 9 | UI магазину відкривається з хабу | |
@@ -3704,11 +3704,11 @@ Ship **не** означає AAA-хаб на рік. Означає: **коро�
 | 11 | Недостатньо монет → зрозуміле повідомлення | |
 | 12 | Анти-спам / повторний клік не ламає баланс | |
 
-### D. Ship-якість (13–15)
+### D. Ship-якість (13-15)
 | # | Пункт | Так? |
 |---|-------|------|
 | 13 | Output без червоного на всьому шляху | |
-| 14 | Можу провести демо 60–90 с без суфлера | |
+| 14 | Можу провести демо 60-90 с без суфлера | |
 | 15 | Save з назвою Lesson 10.8 - Hub Ship | |
 
 Усе «ні» = список фіксів Part B. Не роздувай скоуп: спочатку A+B+C на одному товарі й одному квесті.
@@ -3763,7 +3763,7 @@ Ship **не** означає AAA-хаб на рік. Означає: **коро�
  title: "Онбординг хабу за 10 хвилин",
  content: `Новачок у хабі губиться швидше, ніж в obby: багато дверей, мало підказок.
 
-Мінімум на спавні:
+Мінімум на spawnі:
 - табличка з 3 короткими кроками;
 - яскравий колір / Neon на зоні квесту;
 - ActionText у Prompt на кшталт «Поговорити з квестодавцем», не «Interact».
@@ -3781,7 +3781,7 @@ Ship **не** означає AAA-хаб на рік. Означає: **коро�
  title: "Playtest інтеграції (чекліст на 15′)",
  content: `| # | Дія | Очікування | Факт |
 |---|-----|------------|------|
-| 1 | Новий Play | Спавн ок, табличка видно | |
+| 1 | Новий Play | Spawn ок, табличка видно | |
 | 2 | Старт квесту | Prompt працює, стан «активний» | |
 | 3 | Пазл/зона | Прапорець/предмет з’явився | |
 | 4 | Здача квесту | Coins зросли в TAB | |
@@ -3832,14 +3832,14 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  },
  {
  title: "Чекліст здачі уроку 80",
- content: `- [ ] Золотий шлях записаний (6–8 кроків)
+ content: `- [ ] Золотий шлях записаний (6-8 кроків)
 - [ ] Рубрика ~15 пунктів проставлена
 - [ ] Квест дає Coins на сервері
 - [ ] Магазин купує через Remote з Config-ціною
 - [ ] Пазл/зона реально впливає на квест (або чесна lite-заміна)
 - [ ] Playtest-таблиця пройдена хоча б раз
 - [ ] Output чистий на маршруті
-- [ ] Демо 60–90 с репетиція ×1–2
+- [ ] Демо 60-90 с репетиція ×1-2
 - [ ] Place збережено як Lesson 10.8 - Hub Ship
 
 Якщо все це є - модуль 10 закрито. Можна йти в Polish.
@@ -3880,14 +3880,14 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  correctApproach: "1 квест + 1 товар + стабільний шлях",
  }
  ],
- summary: "Ти зібрав Ship хаб: один золотий шлях, де квест, пазл/дія і Remote-магазин ділять одні Coins на сервері. Рубрика й playtest підтверджують, що демо 60–90 с працює без суфлера - база для Polish у модулі 11.",
+ summary: "Ти зібрав Ship хаб: один золотий шлях, де квест, пазл/дія і Remote-магазин ділять одні Coins на сервері. Рубрика й playtest підтверджують, що демо 60-90 с працює без суфлера - база для Polish у модулі 11.",
  practiceTask: {
  title: "Ship хаб: зшити і здати (~30 хв)",
  difficulty: "intermediate",
  description: `**Мета:** один Place з інтегрованим циклом квест → нагорода → магазин.
 
 ### Part A - Карта і рубрика (8 хв)
-1. Запиши золотий шлях 6–8 кроків.
+1. Запиши золотий шлях 6-8 кроків.
 2. Пройди рубрику ~15 пунктів у Play.
 3. Випиши P0 (усі «ні» з блоків B і C).
 
@@ -3899,8 +3899,8 @@ Save: \`Lesson 10.8 - Hub Ship\`.
 5. Захист від подвійної нагороди.
 
 ### Part C - Демо і Save (7 хв)
-1. Пройди playtest-таблицю 1–10.
-2. Репетиція демо 60–90 с.
+1. Пройди playtest-таблицю 1-10.
+2. Репетиція демо 60-90 с.
 3. **Зберегти:** Lesson 10.8 - Hub Ship
 4. **Практика завершена**, коли рубрика має максимум «так» на маршруті й Output чистий.`,
  hints: [
@@ -3919,11 +3919,11 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  type: MC,
  question: "Головна мета уроку 10.8 - це…",
  options: [
-          "Зшити хаб в один золотий шлях і закрити рубрику Ship",
-          "Почати новий жанр obby з нуля",
-          "Одразу Publish Public на весь світ",
-          "Видалити всі Remotes"
-        ],
+ "Зшити хаб в один золотий шлях і закрити рубрику Ship",
+ "Почати новий жанр obby з нуля",
+ "Одразу Publish Public на весь світ",
+ "Видалити всі Remotes"
+ ],
  correctAnswer: 0,
  explanation: "Інтеграція і здача модуля 10.",
  },
@@ -3932,11 +3932,11 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  type: MC,
  question: "Де має жити «правда» про кількість монет?",
  options: [
-          "Лише в LocalScript магазину",
-          "На сервері в leaderstats (або еквівалент)",
-          "У назві Part",
-          "У Lighting.ClockTime"
-        ],
+ "Лише в LocalScript магазину",
+ "На сервері в leaderstats (або еквівалент)",
+ "У назві Part",
+ "У Lighting.ClockTime"
+ ],
  correctAnswer: 1,
  explanation: "Одна серверна правда для квесту і магазину.",
  },
@@ -3945,11 +3945,11 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  type: MC,
  question: "Що клієнт може надіслати при купівлі безпечно?",
  options: [
-          "Будь-яку ціну, яку сам вигадав",
-          "Команду видалити чужі Coins",
-          "itemId (ідентифікатор товару)",
-          "Запит змінити ShopConfig у всіх"
-        ],
+ "Будь-яку ціну, яку сам вигадав",
+ "Команду видалити чужі Coins",
+ "itemId (ідентифікатор товару)",
+ "Запит змінити ShopConfig у всіх"
+ ],
  correctAnswer: 2,
  explanation: "Ціну бере сервер з Config.",
  },
@@ -3958,11 +3958,11 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  type: MC,
  question: "Чому три окремі Places замість одного хабу - поганий ship?",
  options: [
-          "Roblox забороняє кілька Places",
-          "Так швидше завжди",
-          "Так вимагає Terrain",
-          "Немає інтегрованого досвіду для гравця"
-        ],
+ "Roblox забороняє кілька Places",
+ "Так швидше завжди",
+ "Так вимагає Terrain",
+ "Немає інтегрованого досвіду для гравця"
+ ],
  correctAnswer: 3,
  explanation: "Ship = зшитий цикл.",
  },
@@ -3971,11 +3971,11 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  type: MC,
  question: "Який мінімальний ланцюг вважається інтеграцією хабу?",
  options: [
-          "Лише гарна табличка без систем",
-          "Квест/дія → нагорода в Coins → покупка в магазині",
-          "Лише ParticleEmitter",
-          "Лише зміна неба"
-        ],
+ "Лише гарна табличка без систем",
+ "Квест/дія → нагорода в Coins → покупка в магазині",
+ "Лише ParticleEmitter",
+ "Лише зміна неба"
+ ],
  correctAnswer: 1,
  explanation: "Ланцюг економії та Remotes.",
  },
@@ -3984,11 +3984,11 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  type: MC,
  question: "Що робити, якщо пазла з 10.7 ще немає?",
  options: [
-          "Скасувати весь модуль 10",
-          "Купувати без монет на клієнті",
-          "Lite-тригер (зона/прапорець), але зв’язати з квестом",
-          "Ігнорувати онбординг"
-        ],
+ "Скасувати весь модуль 10",
+ "Купувати без монет на клієнті",
+ "Lite-тригер (зона/прапорець), але зв’язати з квестом",
+ "Ігнорувати онбординг"
+ ],
  correctAnswer: 2,
  explanation: "Чесна lite-заміна заради шляху.",
  },
@@ -3997,11 +3997,11 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  type: MC,
  question: "Навіщо прапорець alreadyRewarded у квесті?",
  options: [
-          "Щоб не видавати нагороду багато разів",
-          "Щоб вимкнути Anchored",
-          "Щоб замінити RemoteEvent",
-          "Це обов’язково для Terrain"
-        ],
+ "Щоб не видавати нагороду багато разів",
+ "Щоб вимкнути Anchored",
+ "Щоб замінити RemoteEvent",
+ "Це обов’язково для Terrain"
+ ],
  correctAnswer: 0,
  explanation: "Захист економіки.",
  },
@@ -4010,24 +4010,24 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  type: MC,
  question: "Що з наведеного - типова дірка інтеграції?",
  options: [
-          "Є табличка на спавні",
-          "Є один товар у Config",
-          "Output чистий",
-          "Квест і магазин пишуть монети в різні місця"
-        ],
+ "Є табличка на spawnі",
+ "Є один товар у Config",
+ "Output чистий",
+ "Квест і магазин пишуть монети в різні місця"
+ ],
  correctAnswer: 3,
  explanation: "Різні сховища = роз’їзд балансу.",
  },
  {
  id: "q9",
  type: MC,
- question: "Онбординг хабу на спавні мінімально потребує…",
+ question: "Онбординг хабу на spawnі мінімально потребує…",
  options: [
-          "12 панелей HUD одразу",
-          "Публікацію в каталог",
-          "Зрозумілий перший крок (табличка/NPC/маркер)",
-          "Вимкнення Explorer"
-        ],
+ "12 панелей HUD одразу",
+ "Публікацію в каталог",
+ "Зрозумілий перший крок (табличка/NPC/маркер)",
+ "Вимкнення Explorer"
+ ],
  correctAnswer: 2,
  explanation: "Новачок має знати куди йти.",
  },
@@ -4036,11 +4036,11 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  type: MC,
  question: "Що свідомо відкладаємо в 10.8?",
  options: [
-          "Перевірку Output",
-          "Роздуття каталогу й Publish Public замість стабільного циклу",
-          "Один товар і один квест",
-          "Рубрику Ship"
-        ],
+ "Перевірку Output",
+ "Роздуття каталогу й Publish Public замість стабільного циклу",
+ "Один товар і один квест",
+ "Рубрику Ship"
+ ],
  correctAnswer: 1,
  explanation: "Скоуп control.",
  },
@@ -4049,11 +4049,11 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  type: MC,
  question: "Навіщо playtest-таблиця з повторним проходженням шляху?",
  options: [
-          "Замінює всі Remotes",
-          "Потрібна лише для Lighting",
-          "Це заборонено в Studio",
-          "Ловить подвійні нагороди і краші на 2-й спробі"
-        ],
+ "Замінює всі Remotes",
+ "Потрібна лише для Lighting",
+ "Це заборонено в Studio",
+ "Ловить подвійні нагороди і краші на 2-й спробі"
+ ],
  correctAnswer: 3,
  explanation: "Стан і стабільність.",
  },
@@ -4062,11 +4062,11 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  type: MC,
  question: "ShopConfig на сервері потрібен, щоб…",
  options: [
-          "Брати ціну/дані товару без довіри до клієнта",
-          "Малювати Terrain",
-          "Вимкнути Pathfinding",
-          "Замінити SpawnLocation"
-        ],
+ "Брати ціну/дані товару без довіри до клієнта",
+ "Малювати Terrain",
+ "Вимкнути Pathfinding",
+ "Замінити SpawnLocation"
+ ],
  correctAnswer: 0,
  explanation: "Джерело правди для магазину.",
  },
@@ -4075,11 +4075,11 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  type: MC,
  question: "Який пункт рубрики стосується мережі магазину?",
  options: [
-          "Колір неба о 18:00",
-          "Кількість дерев на острові",
-          "Купівля через Remote і ціна з Config",
-          "Назва модуля 1"
-        ],
+ "Колір неба о 18:00",
+ "Кількість дерев на острові",
+ "Купівля через Remote і ціна з Config",
+ "Name модуля 1"
+ ],
  correctAnswer: 2,
  explanation: "Блок C рубрики.",
  },
@@ -4088,24 +4088,24 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  type: MC,
  question: "Після успішного 10.8 логічний наступний крок курсу…",
  options: [
-          "Видалити хаб і почати Baseplate",
-          "Пропустити всі тести",
-          "Прибрати leaderstats назавжди",
-          "Polish M11 на цьому ж Place (аудит, juice, Demo Ready)"
-        ],
+ "Видалити хаб і почати Baseplate",
+ "Пропустити всі тести",
+ "Прибрати leaderstats назавжди",
+ "Polish M11 на цьому ж Place (аудит, juice, Demo Ready)"
+ ],
  correctAnswer: 3,
- explanation: "Хаб - база для polish.",
+ explanation: "Хаб - база для полірування.",
  },
  {
  id: "q15",
  type: MC,
  question: "Що вважається зданим артефактом уроку 10.8?",
  options: [
-          "Лише теорія без Studio",
-          "Place Hub Ship з інтегрованим шляхом, рубрикою й чистим Output",
-          "Порожній магазин без монет",
-          "Окремий файл лише з ParticleEmitter"
-        ],
+ "Лише теорія без Studio",
+ "Place Hub Ship з інтегрованим шляхом, рубрикою й чистим Output",
+ "Порожній магазин без монет",
+ "Окремий файл лише з ParticleEmitter"
+ ],
  correctAnswer: 1,
  explanation: "Потрібен зібраний хаб.",
  }

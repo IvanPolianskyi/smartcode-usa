@@ -498,85 +498,85 @@ Input format:
 Alexander 25 Python 95 
 Maria 23 JavaScript 88 
 Ivan 30 Python 92`,
-    outputFormat: `Data saved 
-3 students loaded 
+    outputFormat: `Data saved
+3 students loaded
 Average grade: 91.7`,
     examples: [
       {
-        input: `3 
-Alexander 25 Python 95 
-Maria 23 JavaScript 88 
+        input: `3
+Alexander 25 Python 95
+Maria 23 JavaScript 88
 Ivan 30 Python 92`,
-        output: `Data saved 
-3 students loaded 
+        output: `Data saved
+3 students loaded
 Average grade: 91.7`,
         explanation: "Three students, average (95+88+92)/3 = 91.7"
       },
       {
-        input: `1 
+        input: `1
 Elena 20 Python 100`,
-        output: `Data saved 
-1 students uploaded 
+        output: `Data saved
+1 students loaded
 Average grade: 100.0`,
         explanation: "One student with a score of 100"
       },
       {
-        input: `2 
-Anya 22 Java 80 
+        input: `2
+Anya 22 Java 80
 Bohdan 24 Python 90`,
-        output: `Data saved 
-2 students uploaded 
+        output: `Data saved
+2 students loaded
 Average grade: 85.0`,
         explanation: "Average (80+90)/2 = 85.0"
       }
     ],
     solution: {
-      code: `import csv 
+      code: `import csv
 
-def save_students_csv(students, filename='students.csv'): 
-with open(filename, 'w', encoding='utf-8', newline='') as f: 
-writer = csv.DictWriter(f, fieldnames=['name', 'age', 'course', 'grade']) 
-writer.writeheader() 
-writer.writerrows(students) 
-print('Data saved') 
+def save_students_csv(students, filename='students.csv'):
+    with open(filename, 'w', encoding='utf-8', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=['name', 'age', 'course', 'grade'])
+        writer.writeheader()
+        writer.writerows(students)
+    print('Data saved')
 
-def load_students_csv(filename='students.csv'): 
-students = [] 
-try: 
-with open(filename, 'r', encoding='utf-8') as f: 
-reader = csv.DictReader(f) 
-for row in reader: 
-students.append({ 
-'name': row['name'], 
-'age': int(row['age']), 
-'course': row['course'], 
-'grade': float(row['grade']) 
-}) 
-except FileNotFoundError: 
-pass 
-return students 
+def load_students_csv(filename='students.csv'):
+    students = []
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                students.append({
+                    'name': row['name'],
+                    'age': int(row['age']),
+                    'course': row['course'],
+                    'grade': float(row['grade'])
+                })
+    except FileNotFoundError:
+        pass
+    return students
 
-def calculate_average_grade(students): 
-if not students: 
-return 0
-total = sum(s['grade'] for s in students) 
-return total / len(students) 
+def calculate_average_grade(students):
+    if not students:
+        return 0
+    total = sum(s['grade'] for s in students)
+    return total / len(students)
 
-n = int(input()) 
-students = [] 
-for _ in range(n): 
-parts = input().split() 
-name = parts[0] 
-age = int(parts[1]) 
-course = parts[2] 
-grade = float(parts[3]) 
-students.append({'name': name, 'age': age, 'course': course, 'grade': grade}) 
+n = int(input())
+students = []
+for _ in range(n):
+    parts = input().split()
+    name = parts[0]
+    age = int(parts[1])
+    course = parts[2]
+    grade = float(parts[3])
+    students.append({'name': name, 'age': age, 'course': course, 'grade': grade})
 
-save_students_csv(students) 
-loaded = load_students_csv() 
-print(f'Loaded {len(loaded)} students') 
-avg = calculate_average_grade(loaded) 
-print(f'Average score: {avg:.1f}')`,
+save_students_csv(students)
+loaded = load_students_csv()
+print(f'{len(loaded)} students loaded')
+avg = calculate_average_grade(loaded)
+print(f'Average grade: {avg:.1f}')`,
       explanation: "We read data from stdin, save/read CSV and calculate the average score."
     },
     hints: [
@@ -601,7 +601,7 @@ print(f'Average score: {avg:.1f}')`,
           "Code-Separated Values"
         ],
         correctAnswer: 0,
-        explanation: "CSV stands for Comma-Separated Values ​​- values ​​separated by commas."
+        explanation: "CSV stands for Comma-Separated Values - values separated by commas."
       },
       {
         id: "q2",

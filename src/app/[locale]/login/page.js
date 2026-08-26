@@ -1,13 +1,13 @@
 'use client'
 
 import { Suspense, useEffect, useMemo, useState } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Check, Eye, EyeOff } from 'lucide-react'
 import { login } from '@/lib/authClient'
 import { normalizeLoginIdentifier } from '@/lib/authLogin'
 import StickyNav from '@/components/Nav/StickyNav'
+import { Link } from '@/i18n/navigation'
 import styles from './Auth.module.css'
 
 const PERKS = [
@@ -19,7 +19,7 @@ const PERKS = [
 const PROGRAMS = [
 	{ tone: 'coral', label: 'Roblox Studio' },
 	{ tone: 'cyan', label: 'Python' },
-	{ tone: 'violet', label: 'AI at Work' },
+	{ tone: 'violet', label: 'AI for Real Life' },
 ]
 
 function LoginAside() {

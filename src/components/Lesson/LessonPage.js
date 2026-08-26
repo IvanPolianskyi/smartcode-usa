@@ -22,7 +22,8 @@ import {
 import { updateProgress, checkCoursePurchase, enrollInCourse } from '@/lib/authClient'
 import { useLocale, useTranslations } from 'next-intl'
 import { getCurriculum } from '@/lib/getCurriculum'
-import { lessonContentMap } from '@/lib/lessonContentMap.uk'
+import { lessonContentMap as lessonContentMapEn } from '@/lib/lessonContentMap.en'
+import { lessonContentMap as lessonContentMapUk } from '@/lib/lessonContentMap.uk'
 import { checkPracticeOutputs } from '@/lib/practiceValidation'
 import { parsePracticeStdin } from '@/lib/parsePracticeStdin'
 import { hasBlockedPythonCode } from '@/lib/pythonCodeGuard'
@@ -200,6 +201,7 @@ const markdownToHtml = (text) => {
 
 const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", userProgress = null, isPurchased = false, userRole = 'user', isAccessible = false, allowedLessons = [] }) => {
   const locale = useLocale()
+  const lessonContentMap = locale === 'uk' ? lessonContentMapUk : lessonContentMapEn
   const t = useTranslations('lms.lesson')
   const tCommon = useTranslations('lms.common')
   const router = useRouter()
@@ -224,102 +226,13 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const [practiceTestCount, setPracticeTestCount] = useState(0)
   const [isPyodideLoading, setIsPyodideLoading] = useState(false)
   
-  // Sidebar state — fixed defaults for SSR; restored from localStorage after mount
+  // Sidebar state - fixed defaults for SSR; restored from localStorage after mount
   const [sidebarWidth, setSidebarWidth] = useState(320)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const [isResizing, setIsResizing] = useState(false)
   const [isSidebarClosed, setIsSidebarClosed] = useState(false)
   const [sidebarPrefsHydrated, setSidebarPrefsHydrated] = useState(false)
   
-  // Handle Tab key for indentation in code editor
-  const handleCodeKeyDown = (e) => {
-    if (e.key === 'Tab') {
-      e.preventDefault()
-      const textarea = e.target
-      const start = textarea.selectionStart
-      const end = textarea.selectionEnd
-      const value = userCode
-      const indent = '    ' // 4 spaces for Python
-      const indentSize = 4
-      
-      if (e.shiftKey) {
-        // Shift+Tab: remove indentation
-        const lines = value.split('\n')
-        const startLine = value.substring(0, start).split('\n').length - 1
-        const endLine = value.substring(0, end).split('\n').length - 1
-        
-        let newValue = ''
-        let newStart = start
-        let newEnd = end
-        let removedChars = 0
-        
-        for (let i = 0; i < lines.length; i++) {
-          if (i >= startLine && i <= endLine) {
-            const line = lines[i]
-            const leadingSpaces = line.match(/^(\s*)/)[1].length
-            if (leadingSpaces >= indentSize) {
-              const newLine = line.substring(indentSize)
-              newValue += newLine
-              if (i < lines.length - 1) newValue += '\n'
-              if (i === startLine) {
-                removedChars = Math.min(indentSize, leadingSpaces)
-                newStart = start - removedChars
-              }
-              newEnd -= Math.min(indentSize, leadingSpaces)
-            } else {
-              newValue += line
-              if (i < lines.length - 1) newValue += '\n'
-            }
-          } else {
-            newValue += lines[i]
-            if (i < lines.length - 1) newValue += '\n'
-          }
-        }
-        
-        setUserCode(newValue)
-        setTimeout(() => {
-          textarea.selectionStart = Math.max(0, newStart)
-          textarea.selectionEnd = Math.max(0, newEnd)
-        }, 0)
-      } else {
-        // Tab: add indentation
-        if (start === end) {
-          // Single cursor - just add indent
-          const newValue = value.substring(0, start) + indent + value.substring(end)
-          setUserCode(newValue)
-          setTimeout(() => {
-            textarea.selectionStart = start + indent.length
-            textarea.selectionEnd = start + indent.length
-          }, 0)
-        } else {
-          // Multiple lines selected - indent all lines
-          const lines = value.split('\n')
-          const startLine = value.substring(0, start).split('\n').length - 1
-          const endLine = value.substring(0, end).split('\n').length - 1
-          
-          let newValue = ''
-          let newStart = start + indent.length
-          let newEnd = end
-          
-          for (let i = 0; i < lines.length; i++) {
-            if (i >= startLine && i <= endLine) {
-              newValue += indent + lines[i]
-              newEnd += indent.length
-            } else {
-              newValue += lines[i]
-            }
-            if (i < lines.length - 1) newValue += '\n'
-          }
-          
-          setUserCode(newValue)
-          setTimeout(() => {
-            textarea.selectionStart = newStart
-            textarea.selectionEnd = newEnd
-          }, 0)
-        }
-      }
-    }
-  }
   
   // Get lesson content
   const lesson = lessonContentMap[lessonId]
@@ -461,25 +374,22 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   
   // Check if lesson is accessible
   const allLessons = curriculum.modules.flatMap(m => m.lessons)
-  const currentLesson = allLessons.find(l => l.lessonId === lessonId)
   const lessonModuleIndex = curriculum.modules.findIndex(m => 
     m.lessons.some(l => l.lessonId === lessonId)
   )
-  const isFirstLesson = lessonModuleIndex === 0 && currentLesson?.order === 1
   const explicitAllowedSet = new Set(allowedLessons || [])
   const hasAccess =
     userRole === 'admin' ||
     userRole === 'teacher' ||
-    isPurchased ||
     isAccessible ||
-    explicitAllowedSet.has(lessonId) ||
-    isFirstLesson
+    explicitAllowedSet.has(lessonId)
   
   // Find current module
   const currentModule = lessonModuleIndex >= 0 ? curriculum.modules[lessonModuleIndex] : null
   
-  const lockedDescription =
-    courseId === 'roblox-studio'
+  const lockedDescription = isPurchased
+    ? t('lockedDescriptionDrip')
+    : courseId === 'roblox-studio'
       ? t('lockedDescriptionRoblox')
       : courseId === 'python-developer-zero-to-junior'
         ? t('lockedDescriptionPython')
@@ -504,10 +414,20 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           <p style={{ marginBottom: '2rem', textAlign: 'center', maxWidth: '500px' }}>
             {lockedDescription}
           </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            {!isPurchased && (
+              <Link 
+                href={`/plans/${courseId}`}
+                className={styles.nextLessonButton}
+                style={{ textDecoration: 'none' }}
+              >
+                Start 3 days free trial
+              </Link>
+            )}
             <Link 
               href={`/courses/${courseId}`}
-              className={styles.ctaButton}
+              className={styles.backButton}
+              style={{ textDecoration: 'none' }}
             >
               {t('returnToCourse')}
             </Link>
@@ -766,15 +686,113 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
       )
     }
   }
+
+  // Handle keyboard shortcuts (Tab indentation, Shift+Tab dedent, Ctrl/Cmd+Enter run) in code editor
+  const handleCodeKeyDown = (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault()
+      if (!codeExecution.isRunning) {
+        handleRunCode()
+      }
+      return
+    }
+
+    if (e.key === 'Tab') {
+      e.preventDefault()
+      const textarea = e.target
+      const start = textarea.selectionStart
+      const end = textarea.selectionEnd
+      const value = userCode
+      const indent = '    ' // 4 spaces for Python
+      const indentSize = 4
+      
+      if (e.shiftKey) {
+        // Shift+Tab: remove indentation
+        const lines = value.split('\n')
+        const startLine = value.substring(0, start).split('\n').length - 1
+        const endLine = value.substring(0, end).split('\n').length - 1
+        
+        let newValue = ''
+        let newStart = start
+        let newEnd = end
+        let removedChars = 0
+        
+        for (let i = 0; i < lines.length; i++) {
+          if (i >= startLine && i <= endLine) {
+            const line = lines[i]
+            const leadingSpaces = line.match(/^(\s*)/)[1].length
+            if (leadingSpaces >= indentSize) {
+              const newLine = line.substring(indentSize)
+              newValue += newLine
+              if (i < lines.length - 1) newValue += '\n'
+              if (i === startLine) {
+                removedChars = Math.min(indentSize, leadingSpaces)
+                newStart = start - removedChars
+              }
+              newEnd -= Math.min(indentSize, leadingSpaces)
+            } else {
+              newValue += line
+              if (i < lines.length - 1) newValue += '\n'
+            }
+          } else {
+            newValue += lines[i]
+            if (i < lines.length - 1) newValue += '\n'
+          }
+        }
+        
+        setUserCode(newValue)
+        setTimeout(() => {
+          textarea.selectionStart = Math.max(0, newStart)
+          textarea.selectionEnd = Math.max(0, newEnd)
+        }, 0)
+      } else {
+        // Tab: add indentation
+        if (start === end) {
+          // Single cursor - just add indent
+          const newValue = value.substring(0, start) + indent + value.substring(end)
+          setUserCode(newValue)
+          setTimeout(() => {
+            textarea.selectionStart = start + indent.length
+            textarea.selectionEnd = start + indent.length
+          }, 0)
+        } else {
+          // Multiple lines selected - indent all lines
+          const lines = value.split('\n')
+          const startLine = value.substring(0, start).split('\n').length - 1
+          const endLine = value.substring(0, end).split('\n').length - 1
+          
+          let newValue = ''
+          let newStart = start + indent.length
+          let newEnd = end
+          
+          for (let i = 0; i < lines.length; i++) {
+            if (i >= startLine && i <= endLine) {
+              newValue += indent + lines[i]
+              newEnd += indent.length
+            } else {
+              newValue += lines[i]
+            }
+            if (i < lines.length - 1) newValue += '\n'
+          }
+          
+          setUserCode(newValue)
+          setTimeout(() => {
+            textarea.selectionStart = newStart
+            textarea.selectionEnd = newEnd
+          }, 0)
+        }
+      }
+    }
+  }
   
   // Helper function to check if lesson is completed
   const isLessonCompleted = (lessonId) => {
     return userProgress?.completedLessons?.includes(lessonId) || false
   }
 
-  // Helper function to check if lesson is unlocked
+  // Helper function to check if lesson is unlocked (server drip set is authoritative)
   const isLessonUnlocked = (lesson) => {
-    if (userRole === 'admin' || userRole === 'teacher' || isPurchased) return true
+    if (userRole === 'admin' || userRole === 'teacher') return true
     return explicitAllowedSet.has(lesson.lessonId)
   }
 
@@ -1318,6 +1336,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                       className={styles.runButton}
                       onClick={handleRunCode}
                       disabled={codeExecution.isRunning}
+                      title={`${t('runCode')} (Ctrl+Enter)`}
                     >
                       {codeExecution.isRunning ? (
                         <>

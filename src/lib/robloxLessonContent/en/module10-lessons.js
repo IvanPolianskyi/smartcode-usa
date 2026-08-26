@@ -40,7 +40,7 @@ The hub is the **city**. RS/SSS are the **city hall and document warehouse**. Wi
 |-----|--------|
 | One scene that systems live from | Five unrelated Baseplates |
 | Zones visible from a distance | Everything dumped in one Part pile |
-| Player knows where to go in ≤30–60 s | Pretty, but no route |
+| Player knows where to go in ≤30-60 s | Pretty, but no route |
 | Slots for shop/NPC/puzzle | Decorative lobby only, no slots |
 
 A hub can be small: a 40×40 platform, three colored zones, signs. Better **small and clear** than a giant maze with no meaning.
@@ -57,10 +57,10 @@ After M9 you already feel the network. M10 builds the **social/service** layer: 
 |------|--------------|--------|
 | **Spawn** | SpawnLocation | Start |
 | **Shop** | blue floor / sign | Checkout tomorrow in 10.2 |
-| **NPC** | yellow "!" | 10.4–10.6 |
+| **NPC** | yellow "!" | 10.4-10.6 |
 | **Puzzle** | purple box room | 10.7 |
 
-Build steps (~20–25 min):
+Build steps (~20-25 min):
 1. Hub floor + landmark walls (full building optional).
 2. SpawnLocation at center/entrance, Anchored.
 3. Three zone Part platforms named \`Zone_Shop\`, \`Zone_NPC\`, \`Zone_Puzzle\`.
@@ -116,7 +116,7 @@ Today:
 | Folder | Why |
 |-------|--------|
 | \`SSS/Systems/\` | Stubs \`Srv_Shop\`, \`Srv_Quest\`… (empty Disabled Scripts are fine for now) |
-| \`SSS/Modules/\` | ShopConfig, Inventory, QuestConfig appear in 10.2–10.7 |
+| \`SSS/Modules/\` | ShopConfig, Inventory, QuestConfig appear in 10.2-10.7 |
 | \`SSS/Boot/\` (optional) | One Script that guarantees leaderstats |
 
 You can create Disabled scripts with the right names now so tomorrow you are not hunting "where do I write this".
@@ -206,7 +206,7 @@ Same muscle as Demo Ready, just at module start.
  {
  title: "What you deliberately skip today",
  content: `- Full shop with Remotes (that is 10.2).
-- Full quest and Raycast (10.6–10.7).
+- Full quest and Raycast (10.6-10.7).
 - Ten Toolbox NPCs with foreign scripts.
 - Giant open world with 10 minutes of walking between zones.
 - Publish Public.
@@ -232,8 +232,8 @@ Anything "I already know Remotes" can be sketched as names in RS/Remotes, but le
 |------|------------------------|
 | 10.2 | Remotes checkout + Config |
 | 10.3 | Buy protection |
-| 10.4–10.5 | NPC in Zone_NPC |
-| 10.6–10.7 | Quest + puzzle |
+| 10.4-10.5 | NPC in Zone_NPC |
+| 10.6-10.7 | Quest + puzzle |
 | 10.8 | Ship the whole hub |
 
 If the frame is crooked, the whole module hurts. Better 40 studs of clean hub than a "city" where you cannot find Zone_Shop.
@@ -331,7 +331,7 @@ If the frame is crooked, the whole module hurts. Better 40 studs of clean hub th
           "Only DataStore with no world"
         ],
  correctAnswer: 1,
- explanation: "Slots for 10.2–10.7.",
+ explanation: "Slots for 10.2-10.7.",
  },
  {
  id: "q3",
@@ -584,7 +584,7 @@ Do not shove everything into one Remote "just in case". Different verbs = differ
 
 Keep names stable. Tomorrow anti-cheat and NPC will hook the same Remotes.
 
-If leaderstats is still missing, **first** spend 8–10 min on minimal PlayerAdded → Folder leaderstats → IntValue Coins. Without that, checkout is empty.
+If leaderstats is still missing, **first** spend 8-10 min on minimal PlayerAdded → Folder leaderstats → IntValue Coins. Without that, checkout is empty.
 
 **Do now (4 min):** in Play open TAB and confirm Coins change after a server action.`,
  },
@@ -730,7 +730,7 @@ Do not change \`leaderstats.Coins.Value\` from LocalScript "for speed". TAB upda
 
 Before reopening, clear old rows (except the template) or you get duplicate buttons.
 
-UIListLayout + CanvasSize: for 2–4 items you can set by hand; for long lists you will learn AutomaticCanvasSize later.
+UIListLayout + CanvasSize: for 2-4 items you can set by hand; for long lists you will learn AutomaticCanvasSize later.
 
 **Do now (4 min):** make one Remote call and note who decides: client or server.`,
  },
@@ -840,7 +840,7 @@ Hand-in checklist:
  ],
  summary: "You built a full vertical hub shop: ShopConfig on the server, RemoteFunction for catalog/balance, RemoteEvent for Buy with Coins checks, LocalScript UI only as the storefront. This is the network+economy anchor before anti-cheat and NPC.",
  practiceTask: {
- title: "Hub checkout (~30–35 min)",
+ title: "Hub checkout (~30-35 min)",
  difficulty: "intermediate",
  description: `**Goal:** 2 items, catalog via Invoke, purchase via FireServer.
 
@@ -853,7 +853,7 @@ Hand-in checklist:
 1. OnServerInvoke: catalog + balance.
 2. OnServerEvent Buy: validate, price from Config, deduct, giveItem lite, FireClient ok/fail.
 
-### Part C - UI (10–15 min)
+### Part C - UI (10-15 min)
 1. ShopGui + list from template.
 2. Invoke catalog on open.
 3. Buy buttons → FireServer(id).
@@ -1127,7 +1127,7 @@ The client is a **note from a student** ("I already turned in the work"). The se
 7. Deduct coins, grant item, confirm to client.
 8. **Rate limit**: no more often than once per X ms from the same player.
 
-If items 2–4 were already in 10.2, today you finish 6–8 and add deny logging.
+If items 2-4 were already in 10.2, today you finish 6-8 and add deny logging.
 
 **Do now (3 min):** walk the checklist and check only items you really finished.`,
  },
@@ -1203,7 +1203,7 @@ The log exists so a 1-minute playtest shows whether the UI is sending garbage or
 | **GamePass** | One-time Robux pass "you have it forever" (within the pass) | VIP, x2, exclusive skin |
 | **Developer Product** | Robux purchase you can repeat | Coin packs, one-shot bundles |
 
-Important for ages ~9–13:
+Important for ages ~9-13:
 - Coins: **you control** the rules in Lua.
 - GamePass/Product: money through the Roblox economy; you need **IDs from Creator Dashboard**, server checks via official APIs (like MarketplaceService), not "client said they bought".
 
@@ -1628,7 +1628,7 @@ Important properties:
 |----------|---------------|------|
 | \`ObjectText\` | NPC name | Top line |
 | \`ActionText\` | "Talk" | What the player will do |
-| \`MaxActivationDistance\` | 8–12 | How close to walk |
+| \`MaxActivationDistance\` | 8-12 | How close to walk |
 | \`HoldDuration\` | 0 or 0.3 | Instant vs hold |
 | \`RequiresLineOfSight\` | true at first | No click through walls |
 | \`Enabled\` | true | Can disable during a cutscene |
@@ -1701,7 +1701,7 @@ Keep "you" style: short sentences, no bureaucracy.
 Recommended lesson minimum:
 1. RemoteEvent \`RS/Remotes/DialogueShow\`.
 2. Server: \`DialogueShow:FireClient(player, text)\`.
-3. LocalScript in StarterGui: shows Frame with TextLabel 4–6 seconds, "OK" button hides it.
+3. LocalScript in StarterGui: shows Frame with TextLabel 4-6 seconds, "OK" button hides it.
 
 Do not keep dialogue truth only in LocalScript. The server says **which** line to show (or key \`greet\`/\`again\`, and the client maps to text: also fine if texts are not secret).
 
@@ -1719,7 +1719,7 @@ Practice:
 
 When dialogue is open, you can temporarily set \`prompt.Enabled = false\` so Triggered does not spam. After UI closes, true again (via Remote "dialogue closed" or a server timer).
 
-**Anti-spam:** 0.5–1 s debounce on Triggered for the same player+npc.
+**Anti-spam:** 0.5-1 s debounce on Triggered for the same player+npc.
 
 **Do now (3 min):** walk up to the Prompt in Play and confirm Triggered once.`,
  },
@@ -1764,7 +1764,7 @@ That is the difference between "hello button" and "NPC system".
  },
  {
  title: "Polite dialogue UX",
- content: `- Text in 1–3 sentences, not a wall.
+ content: `- Text in 1-3 sentences, not a wall.
 - ActionText as a verb: "Talk", not "Interact".
 - After closing dialogue, camera/controls are not broken (do not lock camera without release).
 - Do not open shop and dialogue on one Prompt without distinguishing them.
@@ -1775,7 +1775,7 @@ Mobile player: HoldDuration 0 is often more comfortable. If HoldDuration > 0, wr
 **Do now (5 min):** ask a neighbor / enter "from scratch" yourself. Is it clear you should walk up and press?`,
  },
  {
- title: "Link to 10.5–10.8",
+ title: "Link to 10.5-10.8",
  content: `| Lesson | What it adds on this NPC |
 |------|-------------------------|
 | **10.5** | while + Pathfinding patrol, pause during dialogue |
@@ -1830,7 +1830,7 @@ A third branch (busy/ready) is a bonus, not a blocker.
  {
  mistake: "MaxActivationDistance 50+",
  explanation: "You talk from half the hub through a crowd.",
- correctApproach: "8–12 studs, LineOfSight as needed",
+ correctApproach: "8-12 studs, LineOfSight as needed",
  },
  {
  mistake: "Triggered spam opens 10 windows",
@@ -1847,16 +1847,16 @@ A third branch (busy/ready) is a bonus, not a blocker.
 ### Part A - Build (8 min)
 1. Model NPC_QuestGiver in Hub/NPCs.
 2. Billboard "!" or name.
-3. ProximityPrompt: ObjectText, ActionText "Talk", distance 8–12.
+3. ProximityPrompt: ObjectText, ActionText "Talk", distance 8-12.
 
 ### Part B - Server dialogue (12 min)
 1. Script: Triggered → onTalk(player).
 2. Attribute HasMet_… : first time / again.
-3. Lines table with 2–3 texts.
+3. Lines table with 2-3 texts.
 4. Debounce 0.5+ s.
 
 ### Part C - Show to player (10 min)
-1. Remote DialogueShow + ScreenGui or Billboard for 4–6 s.
+1. Remote DialogueShow + ScreenGui or Billboard for 4-6 s.
 2. Check LineOfSight / distance.
 3. **Save:** Lesson 10.4 - NPC Dialogue`,
  hints: [
@@ -1969,7 +1969,7 @@ A third branch (busy/ready) is a bonus, not a blocker.
           "Must be 0",
           "Must be 500",
           "Distance does not exist on Prompt",
-          "About 8–12 studs (not half the map)"
+          "About 8-12 studs (not half the map)"
         ],
  correctAnswer: 3,
  explanation: "Close range.",
@@ -2097,7 +2097,7 @@ Why in the hub:
 - quest giver that is not a statue;
 - guide to the puzzle zone (lite).
 
-Do not build navigation across half the map. Make **2–3 Part anchors** \`Patrol_1\`, \`Patrol_2\`, \`Patrol_3\` and a stable loop.
+Do not build navigation across half the map. Make **2-3 Part anchors** \`Patrol_1\`, \`Patrol_2\`, \`Patrol_3\` and a stable loop.
 
 **Do now (3 min):** in the NPC folder add empty Parts (CanCollide false, Transparency 1) as patrol points. Names matter.`,
  },
@@ -2169,7 +2169,7 @@ Remember: the NPC needs **Humanoid** + **HumanoidRootPart**, and the model must 
  title: "AgentParams: why the NPC \"cannot find a path\"",
  content: `| Symptom | Likely cause | What to try |
 |---------|------------------|---------------|
-| NoPath between nearby points | AgentRadius too thick | Reduce radius 1.5–2 |
+| NoPath between nearby points | AgentRadius too thick | Reduce radius 1.5-2 |
 | Cuts corners / stuck in narrow doors | Radius larger than the passage | Wider doors or smaller agent |
 | Does not jump onto a ledge | AgentCanJump false / no Jump | true + handle Action.Jump |
 | Path through decorative Parts | Decor CanCollide true | Make decor non-colliding or PathfindingModifier |
@@ -2275,7 +2275,7 @@ That way the guard does not run away mid-conversation.
 - [ ] Animate optional (not a blocker)
 - [ ] Anchored = false on body parts (typical Rig)
 - [ ] No accidental Weld to the hub floor
-- [ ] Patrol Parts ~1–2 studs above floor, in corridors
+- [ ] Patrol Parts ~1-2 studs above floor, in corridors
 - [ ] Patrol script in SSS or Script in the model (server)
 - [ ] Output: Success and point names when debugging
 
@@ -2603,7 +2603,7 @@ In this course we build the quest on a **table**:
 - which lines to say;
 - whether already taken / turned in.
 
-From 10.4–10.5 you already have NPC, Prompt, and (ideally) pathfinding. Today the NPC becomes a **quest giver**, not only "hello".
+From 10.4-10.5 you already have NPC, Prompt, and (ideally) pathfinding. Today the NPC becomes a **quest giver**, not only "hello".
 
 Tomorrow (**10.7**) the goal can become "bring Key_Blue from the Raycast room". Today a **honest lite goal** is enough (collect 3 coin-zones / reach a marker / Attribute), but the **architecture** should look like a real quest.
 
@@ -2643,7 +2643,7 @@ The client only "asks for the menu" or "asks to turn in". The kitchen does not t
 \`}\`
 \`return QuestConfig\`
 
-You can narrow fields, but keep the minimum: **id, goal, reward, 2–3 texts**.
+You can narrow fields, but keep the minimum: **id, goal, reward, 2-3 texts**.
 
 Later for the 10.7 key you will add quest \`bring_key\` with \`goalType = "item"\` and \`goalItem = "Key_Blue"\`: **the same** turn-in code, different Config row.
 
@@ -2793,7 +2793,7 @@ If row 6 is red, that is P0. Hub economy matters more than nice text.
 - [ ] Turn-in with condition check
 - [ ] Coins in leaderstats + reward anti-dupe
 - [ ] UI or clear progress feedback
-- [ ] Playtest scenarios 1–6 green
+- [ ] Playtest scenarios 1-6 green
 - [ ] Save Lesson 10.6 - Quest Table
 
 If all of that is there, tomorrow you replace markers with a Raycast key without rewriting the whole state machine.
@@ -3094,8 +3094,8 @@ Why together? Because a classic hub puzzle sounds like: *aim the ray at the crys
 
 From module 10 you already have:
 - hub and folders (10.1);
-- shop + Remotes (10.2–10.3);
-- NPC and quest with table (10.4–10.6).
+- shop + Remotes (10.2-10.3);
+- NPC and quest with table (10.4-10.6).
 
 Today you add **item logic** and a **spatial ray** so tomorrow in **10.8** you can stitch everything into one path.
 
@@ -3383,7 +3383,7 @@ Tomorrow in 10.8 this key/flag should sit on the hub golden path next to the sho
 4. **Save:** Lesson 10.7 - Inventory Raycast`,
  hints: [
  "FilterType Include with one CrystalTarget simplifies debug",
- "Multiply unit vector by 50–100 for distance",
+ "Multiply unit vector by 50-100 for distance",
  "print(result) first, then addItem"
  ],
  optionalChallenge: "Second crystal Key_Red + door that needs both keys (has AND has).",
@@ -3614,8 +3614,8 @@ export const enLesson108 = {
 
 In module 10 you (or the group) built:
 1. **10.1**: hub space + RS/SSS folders + UI stub.
-2. **10.2–10.3**: shop via Remotes + anti-cheat lite.
-3. **10.4–10.6**: NPC, pathfinding, quest with table.
+2. **10.2-10.3**: shop via Remotes + anti-cheat lite.
+3. **10.4-10.6**: NPC, pathfinding, quest with table.
 4. **10.7**: inventory / Raycast room.
 
 Today's artifact: **one Place** where a player without a prompter completes:
@@ -3633,7 +3633,7 @@ If a system is still missing, make a **lite version** for this route (1 item, 1 
 | Quest coins actually buy an item | Quest prints, shop lives separately |
 | NPC/Prompt leads to the next step | Player stands and does not know where to go |
 | Output with no red on the route | "We ignore errors" |
-| 60–90 s demo with no explanations | 5 min "now I will show where the button is" |
+| 60-90 s demo with no explanations | 5 min "now I will show where the button is" |
 
 Ship does **not** mean an AAA hub for a year. It means: a **short complete cycle is already assembled**, named, and stable.
 
@@ -3658,7 +3658,7 @@ Integration rule: **one truth about coins**, on the server in leaderstats. Quest
 **Do now (4 min):** in Explorer find \`Coins\` (or your name), \`Buy\` Remote, NPC with Prompt. If something is missing, mark it P0 for today.`,
  },
  {
- title: "Hub golden path (lock 6–8 steps)",
+ title: "Hub golden path (lock 6-8 steps)",
  content: `Write it **before** fixes. Example working route:
 
 1. Spawn near the sign "Start with the NPC quest".
@@ -3680,15 +3680,15 @@ If the puzzle is still missing, replace step 3 with a simple Touched zone "colle
  title: "Hub Ship rubric (~15 items)",
  content: `Mark **yes / no / almost**. Lesson goal: as many **yes** as possible on the golden path.
 
-### A. Space and onboarding (1–4)
+### A. Space and onboarding (1-4)
 | # | Item | Yes? |
 |---|-------|------|
 | 1 | Spawn stable, Shop/Quest/Puzzle zones visible | |
-| 2 | Sign or NPC states the first step in ≤30–60 s | |
+| 2 | Sign or NPC states the first step in ≤30-60 s | |
 | 3 | Names/folders are readable (not 40× Part) | |
 | 4 | No "dead" doors without a hint on the route | |
 
-### B. Quest + puzzle/action (5–8)
+### B. Quest + puzzle/action (5-8)
 | # | Item | Yes? |
 |---|-------|------|
 | 5 | Prompt/dialogue starts the quest | |
@@ -3696,7 +3696,7 @@ If the puzzle is still missing, replace step 3 with a simple Touched zone "colle
 | 7 | Puzzle or Raycast/zone advances the quest | |
 | 8 | Reward in **Coins on the server**, visible in TAB/HUD | |
 
-### C. Shop and network (9–12)
+### C. Shop and network (9-12)
 | # | Item | Yes? |
 |---|-------|------|
 | 9 | Shop UI opens from the hub | |
@@ -3704,11 +3704,11 @@ If the puzzle is still missing, replace step 3 with a simple Touched zone "colle
 | 11 | Not enough coins → clear message | |
 | 12 | Anti-spam / double-click does not break balance | |
 
-### D. Ship quality (13–15)
+### D. Ship quality (13-15)
 | # | Item | Yes? |
 |---|-------|------|
 | 13 | Output with no red on the whole path | |
-| 14 | I can run a 60–90 s demo with no prompter | |
+| 14 | I can run a 60-90 s demo with no prompter | |
 | 15 | Save named Lesson 10.8 - Hub Ship | |
 
 Every "no" = Part B fix list. Do not inflate scope: first A+B+C on one item and one quest.
@@ -3832,14 +3832,14 @@ Save: \`Lesson 10.8 - Hub Ship\`.
  },
  {
  title: "Lesson 80 hand-in checklist",
- content: `- [ ] Golden path written (6–8 steps)
+ content: `- [ ] Golden path written (6-8 steps)
 - [ ] Rubric ~15 items filled
 - [ ] Quest grants Coins on the server
 - [ ] Shop buys via Remote with Config price
 - [ ] Puzzle/zone really affects the quest (or honest lite replacement)
 - [ ] Playtest table run at least once
 - [ ] Output clean on the route
-- [ ] 60–90 s demo rehearsal ×1–2
+- [ ] 60-90 s demo rehearsal ×1-2
 - [ ] Place saved as Lesson 10.8 - Hub Ship
 
 If all of that is there, module 10 is closed. You can go to Polish.
@@ -3880,14 +3880,14 @@ If all of that is there, module 10 is closed. You can go to Polish.
  correctApproach: "1 quest + 1 item + stable path",
  }
  ],
- summary: "You assembled Ship hub: one golden path where quest, puzzle/action, and Remote shop share the same Coins on the server. Rubric and playtest confirm a 60–90 s demo works without a prompter. Base for Polish in module 11.",
+ summary: "You assembled Ship hub: one golden path where quest, puzzle/action, and Remote shop share the same Coins on the server. Rubric and playtest confirm a 60-90 s demo works without a prompter. Base for Polish in module 11.",
  practiceTask: {
  title: "Ship hub: stitch and hand in (~30 min)",
  difficulty: "intermediate",
  description: `**Goal:** one Place with an integrated cycle quest → reward → shop.
 
 ### Part A - Map and rubric (8 min)
-1. Write the golden path in 6–8 steps.
+1. Write the golden path in 6-8 steps.
 2. Walk the ~15-item rubric in Play.
 3. List P0 (all "no" from blocks B and C).
 
@@ -3899,8 +3899,8 @@ If all of that is there, module 10 is closed. You can go to Polish.
 5. Protection from double reward.
 
 ### Part C - Demo and Save (7 min)
-1. Walk playtest table 1–10.
-2. 60–90 s demo rehearsal.
+1. Walk playtest table 1-10.
+2. 60-90 s demo rehearsal.
 3. **Save:** Lesson 10.8 - Hub Ship
 4. **Practice complete** when the rubric has maximum "yes" on the route and Output is clean.`,
  hints: [

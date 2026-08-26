@@ -18,9 +18,9 @@ function statusBadgeClass(status, cancelAtPeriodEnd) {
 }
 
 function formatDate(value) {
-	if (!value) return '—'
+	if (!value) return '-'
 	const date = new Date(value)
-	return Number.isNaN(date.getTime()) ? '—' : date.toLocaleDateString()
+	return Number.isNaN(date.getTime()) ? '-' : date.toLocaleDateString()
 }
 
 export default function AdminStudentDetailPage() {
@@ -219,7 +219,7 @@ export default function AdminStudentDetailPage() {
 				<section className={styles.panel}>
 					<h2 className={styles.panelTitle}>Manually grant a course</h2>
 					<p className={styles.subDetail}>
-						For support cases and comps. Never used for real Paddle purchases — those come
+						For support cases and comps. Never used for real Paddle purchases - those come
 						from the webhook only.
 					</p>
 					<form className={styles.form} onSubmit={handleGrant}>

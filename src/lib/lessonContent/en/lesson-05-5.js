@@ -28,11 +28,11 @@ export const lesson_05_5 = {
         title: "Error handling principles",
         content: `**Key error-handling principles:**
 
-1. **Validate at the entrance** — check data before processing
-2. **Specific messages** — show clear error messages
-3. **Handle at different levels** — handle errors where it makes sense
-4. **Logging** — log errors for debugging
-5. **Recovery** — try to keep the program running when possible
+1. **Validate at the entrance** - check data before processing
+2. **Specific messages** - show clear error messages
+3. **Handle at different levels** - handle errors where it makes sense
+4. **Logging** - log errors for debugging
+5. **Recovery** - try to keep the program running when possible
 
 **Example: Basic error-handling structure**
 
@@ -446,14 +446,14 @@ account.withdraw(1000)  # Error`,
 
   summary: `In this lesson we learned:
 
-1. Error-handling principles — validation, specific messages, logging
-2. Practical examples — calculator, files, input validation
-3. Combined systems — bank accounts with full error handling
-4. Reliable code — building programs that handle errors correctly
+1. Error-handling principles - validation, specific messages, logging
+2. Practical examples - calculator, files, input validation
+3. Combined systems - bank accounts with full error handling
+4. Reliable code - building programs that handle errors correctly
 
 Now you can create reliable programs with proper error handling!
 
-This completes module 5 — Error Handling and Exceptions!`,
+This completes module 5 - Error Handling and Exceptions!`,
 
   practiceTask: {
     title: "Building a simple program with error handling",
@@ -466,7 +466,7 @@ This completes module 5 — Error Handling and Exceptions!`,
 Input format:
 - number n
 - for each book: a title line, then an author line
-(empty title or author — validation error)`,
+(empty title or author - validation error)`,
     outputFormat: `Book 'Harry Potter' added successfully
 Error: Book title cannot be empty
 Error: Book 'Harry Potter' already exists`,
@@ -492,7 +492,7 @@ Kobzar
 Other`,
         output: `Book 'Kobzar' added successfully
 Error: Book 'Kobzar' already exists`,
-        explanation: "Second attempt with the same title — BookError"
+        explanation: "Second attempt with the same title - BookError"
       },
       {
         input: `2
@@ -540,7 +540,7 @@ for _ in range(n):
       "Create class BookError from Exception",
       "Read n, then for each book two lines via input()",
       "An empty line is a validation error",
-      "Duplicate title — BookError"
+      "Duplicate title - BookError"
     ],
     difficulty: "beginner"
   },

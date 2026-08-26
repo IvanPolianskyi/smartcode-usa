@@ -77,7 +77,7 @@ Imagine a matryoshka (nested dolls). To open them all, you need to:
 \`\`\`python
 def infinite_recursion(n):
     print(n)
-    infinite_recursion(n - 1)  #  No stopping condition!
+    infinite_recursion(n - 1)  #  There is no stop condition!
 
 # infinite_recursion(5)  # Will cause an error: maximum recursion depth
 \`\`\`
@@ -108,7 +108,7 @@ def example(n):
 example(5)  #  Works: 5 → 4 → 3 → 2 → 1 → 0
 \`\`\`
 
-2. **The base case should be simple:**
+2. **The basic case should be simple:**
 \`\`\`python
 def factorial(n):
     if n == 0 or n == 1:  #  A simple basic case
@@ -307,7 +307,7 @@ print(contains([1, 2, 3, 4, 5], 6))  # False
 \`\`\`python
 def is_palindrome(text):
     """
-    Checks if the string is a palindrome (read equally on both sides)
+    Checks if a string is a palindrome (reads the same from both sides)
     """
     # Remove spaces and convert to lowercase
     text = text.replace(" ", "").lower()
@@ -323,7 +323,7 @@ def is_palindrome(text):
 
 # Usage
 print(is_palindrome("radar"))  # True
-print(is_palindrome("hello"))  # False
+print(is_palindrome("Hello"))  # False
 print(is_palindrome("And the rose fell on Azor's paw"))  # True
 \`\`\`
 
@@ -346,7 +346,7 @@ def count_char(text, char):
 print(count_char("programmer", "r"))  # 2
 \`\`\`
 
-**3. String Reversal**
+**3. Line reversal**
 
 \`\`\`python
 def reverse_string(text):
@@ -381,7 +381,7 @@ print(sys.getrecursionlimit())  # Usually 1000
 \`\`\`python
 import sys
 
-sys.setrecursionlimit(2000)  # Increasing the restrictions
+sys.setrecursionlimit(2000)  # Increasing the limit
 \`\`\`
 
 **Maximum recursion depth error:**
@@ -540,10 +540,10 @@ def countdown(n):
     countdown(n + 1)  # n increases - infinite recursion!
 \`\`\`
 
-**3. Use recursion for naturally recursive problems**
+**3. Use recursion for naturally recursive tasks**
 
 \`\`\`python
-# Tree traversal (naturally recursive problem)
+# Tree traversal (naturally recursive task)
 def traverse_tree(node):
     if node is None:
         return
@@ -552,7 +552,7 @@ def traverse_tree(node):
     traverse_tree(node.right)
 \`\`\`
 
-**4. Think of the problem as smaller subtasks**
+**4. Think about the task as smaller subtasks**
 
 \`\`\`python
 # Task: find the sum of a list
@@ -566,7 +566,7 @@ def sum_list(numbers):
 **5. Test on small data first**
 
 \`\`\`python
-# Check on small values first
+# First, check with small values
 print(factorial(5))  # 120
 print(factorial(0))  # 1
 print(factorial(1))  # 1
@@ -590,14 +590,14 @@ Recursive case: ...
 \`\`\``
       },
       {
-        title: "Summary",
+        title: "The bottom line",
         content: `In this lesson, we studied recursion:
 
 **Key Concepts:**
 
 1. **Recursion**
    - A function calls itself
-   - A base case and a recursive case are needed
+   - Requires a base case and a recursive case
 
 2. **Base Case**
    - A condition that stops the recursion
@@ -605,7 +605,7 @@ Recursive case: ...
 
 3. **Recursive Case**
    - The function calls itself
-   - Must approach the base case
+   - Must move toward the base case
 
 4. **Classic Examples**
    - Factorial
@@ -617,9 +617,9 @@ Recursive case: ...
    - May cause stack overflow
 
 6. **Recursion vs Iteration**
-   - Many tasks can be solved by both methods
-   - Recursion is more readable for complex tasks
-   - Iteration is more efficient for simple tasks
+   - Many problems can be solved by both methods
+   - Recursion is more readable for complex problems
+   - Iteration is more efficient for simple problems
 
 **Rules:**- Always have a base case
 - Approach the base case
@@ -681,11 +681,11 @@ print(fibonacci(6))  # 8`,
       title: "Sum of list elements",
       code: `def sum_list(numbers):
     """
-    Calculates the sum of the list elements recursively
+    Calculates the sum of list items recursively
     """
-    if len(numbers) == 0:  # Base case
+    if len(numbers) == 0: # Base case
         return 0
-    return numbers[0] + sum_list(numbers[1:])  # Recursive case
+    return numbers[0] + sum_list(numbers[1:]) # Recursive case
 
 print(sum_list([1, 2, 3, 4, 5]))  # 15`,
       explanation: "Shows the use of recursion for working with lists."
@@ -724,7 +724,7 @@ print(factorial_tail(5))  # 120`,
   commonMistakes: [
     {
       mistake: "Lack of a base case",
-      explanation: "The most common mistake is forgetting the base case, which leads to infinite recursion.",
+      explanation: "The most common mistake is forgetting the base case, resulting in infinite recursion.",
       correctApproach: `# Incorrect:
 def countdown(n):
     print(n)
@@ -768,7 +768,7 @@ def factorial(n):
     return n * factorial(n - 1)  # There is return`
     },
     {
-      mistake: "Inefficient recursion for simple tasks",
+      mistake: "Inefficient recursion for simple problems",
       explanation: "For simple tasks, iteration is often more efficient than recursion.",
       correctApproach: `# Recursion (may be slower)
 def sum_recursive(n):
@@ -816,7 +816,7 @@ def sum_iterative(n):
 Recursion is a powerful tool for solving complex problems!`,
   
   practiceTask: {
-    title: "Recursive functions for different tasks",
+    title: "Recursive functions for different problems",
     description: "Create recursive functions for different types of tasks",
     problemStatement: `Write recursive functions:
 
@@ -859,19 +859,19 @@ Number of occurrences of 2 in [1, 2, 3, 2, 4, 2]: 3
 "radar" is a palindrome: True
 "hello" is a palindrome: False
 2^5 = 32`,
-        explanation: "A classic set of recursive problems"
+        explanation: "Classic set of recursive problems"
       },
       {
         input: `4
 99
 5 5 5
 5
-Cossack
+kazak
 abc
 3
 3`,
         output: `Factorial of 4: 24
-Sum of digits of 99: 18
+Sum of the digits of 99: 18
 Number of occurrences of 5 in [5, 5, 5]: 3
 "kazak" is a palindrome: True
 "abc" is a palindrome: False
@@ -887,8 +887,8 @@ a
 ab
 10
 0`,
-        output: `Factorial 1: 1
-Sum of digits 7: 7
+        output: `Factorial of 1: 1
+Sum of the digits of 7: 7
 Number of occurrences of 7 in [7]: 1
 "a" is a palindrome: True
 "ab" is a palindrome: False
@@ -898,13 +898,13 @@ Number of occurrences of 7 in [7]: 1
     ],
     solution: {
       code: `def factorial(n):
-    """Calculates factorial recursively"""
+    """Computes factorial recursively"""
     if n == 0 or n == 1:
         return 1
     return n * factorial(n - 1)
 
 def sum_digits(n):
-    """Sum of the digits of a number recursively"""
+    """Sum of digits of a number recursively"""
     if n < 10:
         return n
     return (n % 10) + sum_digits(n // 10)
@@ -917,13 +917,15 @@ def count_occurrences(items, target):
     return count + count_occurrences(items[1:], target)
 
 def is_palindrome(text):
-    """Checks palindrome recursively"""
+    """Checks the palindrome recursively"""
     text = text.replace(" ", "").lower()
     if len(text) <= 1:
         return True
     if text[0] != text[-1]:
         return False
-    return is_palindrome(text[1:-1])def power(base, exponent):
+    return is_palindrome(text[1:-1])
+
+def power(base, exponent):
     """Raises to a power recursively"""
     if exponent == 0:
         return 1
@@ -940,8 +942,8 @@ text2 = input().strip()
 base = int(input())
 exp = int(input())
 
-print(f"Factorial {n}: {factorial(n)}")
-print(f"Sum of digits {number}: {sum_digits(number)}")
+print(f"Factorial of {n}: {factorial(n)}")
+print(f"Sum of the digits of {number}: {sum_digits(number)}")
 print(f"Number of occurrences of {target} in {items}: {count_occurrences(items, target)}")
 print(f'"{text1}" is a palindrome: {is_palindrome(text1)}')
 print(f'"{text2}" is a palindrome: {is_palindrome(text2)}')
@@ -964,7 +966,7 @@ print(f"{base}^{exp} = {power(base, exp)}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is recursion?",
         options: [
-          "Technique when a function causes itself",
+          "A technique where a function calls itself",
           "Data type in Python",
           "Sorting method",
           "Object method"
@@ -1006,10 +1008,10 @@ print(f"{base}^{exp} = {power(base, exp)}")`,
           "Infinite recursion and maximum depth error",
           "The function will work normally",
           "The function will return None",
-          "The function will work slower"
+          "The function will work more slowly"
         ],
         correctAnswer: 0,
-        explanation: "Without the base case, the function will be called indefinitely, resulting in RecursionError: maximum recursion depth exceeded."
+        explanation: "Without a base case, the function will call itself infinitely, which will lead to RecursionError: maximum recursion depth exceeded."
       },
       {
         id: "q5",
@@ -1032,7 +1034,7 @@ print(f"{base}^{exp} = {power(base, exp)}")`,
           "For complex data structures and naturally recursive problems",
           "Always, recursion is always better",
           "Never, iteration is always better",
-          "Only for mathematical problems"
+          "For math problems only"
         ],
         correctAnswer: 0,
         explanation: "Recursion is better for complex data structures (trees, graphs) and tasks that are naturally recursive. For simple tasks, iteration is often more efficient."

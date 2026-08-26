@@ -7,7 +7,8 @@ import {
   canReadCourseProgress,
   getUnlockedLessonSet,
   hasStudentCourseAccess,
-  isLessonUnlockedInCourse,
+  isSubscribedToCourse,
+  resolveDripStartedAt,
 } from '@/lib/courseLessonAccess'
 import { getLocalizedMetadata, buildAlternates } from '@/lib/i18nMetadata'
 import LessonPageLoading from '@/components/Lesson/LessonPageLoading'
@@ -47,13 +48,12 @@ export default async function LessonPageRoute({ params }) {
   try {
     const userId = await getCurrentUser()
     if (userId) {
-      const usersCollection = await getCollection('users')
       const user = await loadUserWithAccess(userId)
       
       if (user) {
         courseUser = user
         userRole = user.role || 'user'
-        isPurchased = user.role === 'admin' || (user.purchasedCourses || []).includes(courseId)
+        isPurchased = (user.purchasedCourses || []).includes(courseId)
         studentProfile = user.studentProfile || null
       }
 
@@ -87,6 +87,9 @@ export default async function LessonPageRoute({ params }) {
   }
   
   const isEnrolled = Boolean(userProgress)
+  const isSubscribed = isSubscribedToCourse(courseUser, courseId)
+  const hasCourseAccess = hasStudentCourseAccess(courseUser, courseId)
+  const dripStartedAt = resolveDripStartedAt(courseUser, courseId, userProgress)
   const unlockedSet = getUnlockedLessonSet({
     courseId,
     profile: studentProfile,
@@ -94,48 +97,29 @@ export default async function LessonPageRoute({ params }) {
     isAdmin: userRole === 'admin',
     isTeacher: userRole === 'teacher',
     isPurchased,
-    isSubscribed: Array.isArray(courseUser?.subscribedCourseIds)
-      ? courseUser.subscribedCourseIds.includes(courseId)
-      : courseUser?.subscriptionActive === true,
+    // Any course entitlement (sub, enroll, purchase) starts the weekly drip.
+    isSubscribed: isSubscribed || hasCourseAccess,
     isEnrolled,
+    dripStartedAt,
   })
 
-  const isFreePreviewLesson =
-    courseId === 'roblox-studio' && lessonId === 'lesson-roblox-1-1'
-
-  const isAccessible =
-    isFreePreviewLesson ||
-    userRole === 'admin' ||
-    userRole === 'teacher' ||
-    isPurchased ||
-    isLessonUnlockedInCourse(lessonId, {
-      courseId,
-      profile: studentProfile,
-      progress: userProgress,
-      isAdmin: userRole === 'admin',
-      isTeacher: userRole === 'teacher',
-      isPurchased,
-      isEnrolled,
-    })
+  // Source of truth: unlocked set already includes free preview + drip access.
+  const isAccessible = unlockedSet.has(lessonId)
 
   const sharedProps = {
     lessonId,
     courseId,
     userProgress,
-    isPurchased: isPurchased || userRole === 'teacher',
+    // Entitlement for CTAs - must NOT bypass drip locks in lesson UIs.
+    isPurchased: isPurchased || isSubscribed || hasCourseAccess,
     userRole,
     isAccessible,
     allowedLessons: [...unlockedSet],
-    /** Online-група / покупка: наступні уроки відкриваються після проходження попереднього */
-    sequentialUnlock: Boolean(
-      userRole === 'admin' ||
-        userRole === 'teacher' ||
-        isPurchased ||
-        hasStudentCourseAccess(courseUser, courseId)
-    ),
+    // Time drip is authoritative; do not expand unlocks by completing prior lessons.
+    sequentialUnlock: false,
   }
 
-  if (courseId === 'roblox-studio') {
+  if (courseId === 'roblox-studio' || courseId === 'ai-at-work') {
     return <RobloxLessonPage {...sharedProps} />
   }
 

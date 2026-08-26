@@ -92,7 +92,7 @@ import { lesson_roblox_12_5 } from './lesson-roblox-12-5'
 import { lesson_roblox_12_6 } from './lesson-roblox-12-6'
 import { robloxCurriculum } from '../robloxCurriculum'
 
-function createPlaceholder(lessonId, title, locale = 'uk') {
+function createPlaceholder(lessonId, title, locale = 'en') {
   const ukContent =
     'Контент цього уроку ще готується за новою програмою (92 уроки). Продовжуй попередні уроки або звернися до викладача на онлайн-занятті.'
   const enContent =

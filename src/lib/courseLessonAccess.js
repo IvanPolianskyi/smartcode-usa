@@ -6,12 +6,22 @@ import {
 	PYTHON_COURSE_ID,
 	ROBLOX_COURSE_ID,
 } from '@/lib/courseIds'
+import {
+	asDripDate,
+	countDripUnlockedLessons,
+} from '@/lib/lessonDrip'
 
 export {
 	AI_AT_WORK_COURSE_ID,
 	PYTHON_COURSE_ID,
 	ROBLOX_COURSE_ID,
 } from '@/lib/courseIds'
+
+export {
+	LESSONS_UNLOCKED_PER_WEEK,
+	countDripUnlockedLessons,
+	getNextDripUnlockAt,
+} from '@/lib/lessonDrip'
 
 /** LMS course pages. */
 export const COURSE_PAGE_PATHS = {
@@ -81,6 +91,45 @@ export function hasStudentCourseAccess(user, courseId) {
 	return false
 }
 
+/**
+ * Earliest access-start timestamp for drip unlock (subscription grant, else enroll).
+ * @returns {Date|null}
+ */
+export function resolveDripStartedAt(user, courseId, progress = null) {
+	if (!courseId) return null
+	const candidates = [
+		progress?.dripStartedAt,
+		progress?.enrolledAt,
+		user?.courseDripStartedAt?.[courseId],
+	]
+		.map(asDripDate)
+		.filter(Boolean)
+	if (candidates.length === 0) return null
+	return new Date(Math.min(...candidates.map((d) => d.getTime())))
+}
+
+/**
+ * Map courseId → ISO start date from active subscription rows (earliest wins).
+ * Used by loadUserWithAccess so client + server share the same drip clock.
+ */
+export function buildCourseDripStartedAt(subscriptions = []) {
+	const map = {}
+	for (const sub of subscriptions || []) {
+		const started = asDripDate(sub?.createdAt)
+		if (!started) continue
+		const ids = Array.isArray(sub.courseIds) ? sub.courseIds : []
+		for (const courseId of ids) {
+			if (!courseId || !isKnownCourseId(String(courseId))) continue
+			const key = String(courseId)
+			const existing = asDripDate(map[key])
+			if (!existing || started < existing) {
+				map[key] = started.toISOString()
+			}
+		}
+	}
+	return map
+}
+
 /** Читання/запис прогресу: оплачений/онлайн курс або Roblox-прев’ю (урок 1.1). */
 export function canReadCourseProgress(user, courseId) {
 	if (!user || !courseId || !isKnownCourseId(courseId)) return false
@@ -89,24 +138,23 @@ export function canReadCourseProgress(user, courseId) {
 	return false
 }
 
-/** Запис прогресу по уроку — лише якщо урок відкритий (прев’ю, покупка, онлайн-група). */
+/** Запис прогресу по уроку - лише якщо урок відкритий drip/прев’ю. */
 export function canUpdateLessonProgress(user, courseId, lessonId, progress = null) {
 	if (!user || !courseId || !lessonId) return false
 	if (!isKnownCourseId(courseId) || !isLessonInCourse(courseId, lessonId)) return false
 	if (user.role === 'admin' || user.role === 'teacher') return true
 
 	const isPurchased = (user.purchasedCourses || []).includes(courseId)
-	if (isPurchased) return true
-
 	const unlocked = getUnlockedLessonSet({
 		courseId,
 		profile: user.studentProfile,
 		progress,
-		isAdmin: user.role === 'admin',
-		isTeacher: user.role === 'teacher',
+		isAdmin: false,
+		isTeacher: false,
 		isPurchased,
 		isSubscribed: isSubscribedToCourse(user, courseId),
 		isEnrolled: Boolean(progress),
+		dripStartedAt: resolveDripStartedAt(user, courseId, progress),
 	})
 
 	return unlocked.has(lessonId)
@@ -122,8 +170,10 @@ export function isCourseFullAccess(profile, courseId) {
 }
 
 /**
- * Побудова множини відкритих уроків: повний доступ адміна/покупки; Python — усі уроки для онлайн-учнів;
- * інші курси — перший урок + наступні після завершення попереднього.
+ * Open lesson IDs for a user.
+ * Staff: all lessons.
+ * Entitled students: weekly drip (2 new lessons per week from access start).
+ * Everyone else: free preview (first lesson) + any manual unlocks.
  */
 export function getUnlockedLessonSet({
 	courseId,
@@ -134,6 +184,8 @@ export function getUnlockedLessonSet({
 	isPurchased = false,
 	isEnrolled = false,
 	isSubscribed = false,
+	dripStartedAt = null,
+	now = new Date(),
 }) {
 	const allLessons = flattenCourseLessons(courseId)
 	const allIds = allLessons.map((l) => l.lessonId)
@@ -143,11 +195,13 @@ export function getUnlockedLessonSet({
 	// sells the subscription, and it gives a reviewer something to look at.
 	const freePreview = new Set(allIds.length ? [allIds[0]] : [])
 
-	if (isAdmin || isTeacher || isPurchased || isSubscribed) {
-		return new Set(allIds)
-	}
+	const manualUnlocked = new Set(
+		(profile?.courseAccess?.[courseId]?.unlockedLessons || []).filter((id) =>
+			allIds.includes(id)
+		)
+	)
 
-	if (isCourseFullAccess(profile, courseId)) {
+	if (isAdmin || isTeacher) {
 		return new Set(allIds)
 	}
 
@@ -155,32 +209,29 @@ export function getUnlockedLessonSet({
 		hasActiveOnlineCourse(profile, courseId) ||
 		profile?.courseAccess?.[courseId]?.enabled === true
 
-	const manualUnlocked = new Set(
-		(profile?.courseAccess?.[courseId]?.unlockedLessons || []).filter((id) =>
-			allIds.includes(id)
+	// Progress alone is not entitlement (Roblox free preview also creates a
+	// progress row). Drip only starts after billing / online / purchase access.
+	const entitled =
+		isPurchased ||
+		isSubscribed ||
+		hasOnline ||
+		isCourseFullAccess(profile, courseId)
+
+	if (entitled) {
+		const start =
+			asDripDate(dripStartedAt) ||
+			asDripDate(progress?.dripStartedAt) ||
+			asDripDate(progress?.enrolledAt)
+		const count = Math.min(
+			allIds.length,
+			countDripUnlockedLessons(start, { now })
 		)
-	)
-
-	if (!hasOnline) {
-		return new Set([...freePreview, ...manualUnlocked])
+		const unlocked = new Set(allIds.slice(0, count))
+		for (const id of manualUnlocked) unlocked.add(id)
+		return unlocked
 	}
 
-	if (courseId === PYTHON_COURSE_ID) {
-		return new Set(allIds)
-	}
-
-	const completed = new Set(progress?.completedLessons || [])
-	const unlocked = new Set(freePreview)
-	unlocked.add(allIds[0])
-	for (let i = 1; i < allIds.length; i++) {
-		if (completed.has(allIds[i - 1])) {
-			unlocked.add(allIds[i])
-		}
-	}
-	for (const id of manualUnlocked) {
-		unlocked.add(id)
-	}
-	return unlocked
+	return new Set([...freePreview, ...manualUnlocked])
 }
 
 export function isLessonUnlockedInCourse(lessonId, ctx) {

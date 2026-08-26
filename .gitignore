@@ -40,3 +40,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local scratch / translation tooling (not for production)
+.claude/
+.translation-cache.json
+__pycache__/
+_translate_*.py
+i18n-src/
+i18n-work/
+scripts/_bing_*
+scripts/_translate_*
+scripts/_json_*
+scripts/_build_*

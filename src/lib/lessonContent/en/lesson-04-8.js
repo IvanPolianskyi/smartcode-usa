@@ -573,7 +573,7 @@ bike.start()`,
     {
       mistake: "Creating deep inheritance hierarchies",
       explanation: "Deep hierarchies are hard to maintain and understand.",
-      correctApproach: "Limit inheritance depth to 2–3 levels and use composition"
+      correctApproach: "Limit inheritance depth to 2-3 levels and use composition"
     },
     {
       mistake: "Using inheritance only for code reuse",
@@ -762,7 +762,7 @@ for i, robot in enumerate(robots):
           "Encapsulation"
         ],
         correctAnswer: 0,
-        explanation: "Car contains (has) Engine and Wheels — this is composition."
+        explanation: "Car contains (has) Engine and Wheels - this is composition."
       },
       {
         id: "q3",

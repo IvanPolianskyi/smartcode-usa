@@ -1,6 +1,6 @@
 /**
  * Roblox progress helpers for the production 92-lesson course.
- * Grid: M1×8 + M2×4 + M3×8 + M4×8 + M5×10 + M6×10 + M7–M10×8 + M11×6 + M12×6
+ * Grid: M1×8 + M2×4 + M3×8 + M4×8 + M5×10 + M6×10 + M7-M10×8 + M11×6 + M12×6
  * Filters stale IDs and keeps overallProgress in sync with robloxCurriculum.
  */
 

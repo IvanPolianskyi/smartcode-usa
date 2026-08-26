@@ -27,7 +27,7 @@ export const ukLesson111 = {
 Сьогодні ти робиш **аудит і прибирання** - але з **швидким вау**, не «прибирання заради ідеалу»:
 1. Відкриваєш свій найбільший / найкращий Place.
 2. Робиш **замір до**: скільки \`Part\`/\`Script\` без імені + скільки секунд шукаєш головний Script системи.
-3. Папки, імена, сміття Toolbox.
+3. Folders, імена, сміття Toolbox.
 4. **Замір після** + маленький вау на Save (Neon-вивіска \`Polish_Ready\` або короткий SFX).
 
 Швидкість: коли завтра зламається магазин, ти за 10 с знайдеш \`Srv_Shop\` у \`ServerScriptService/Systems\`, а не серед 80 штук \`Script\`.
@@ -38,7 +38,7 @@ export const ukLesson111 = {
 3. Це твій «борг хаосу». В кінці уроку A і T1 мають стати меншими.`,
  },
  {
- title: "Навіщо чистий Explorer (для 9–13 і для викладача)",
+ title: "Навіщо чистий Explorer (для 9-13 і для викладача)",
  content: `| Брудний Explorer | Чистий Explorer |
 |------------------|-----------------|
 | Баг шукаєш 20 хв | Баг шукаєш 2 хв |
@@ -46,7 +46,7 @@ export const ukLesson111 = {
 | Дублікати логіки | Одна правда в одній папці |
 | Страшно щось видалити | Сміття видно одразу |
 
-На SHOWCASE інколи питають: «покажи, як організовано». Чисті папки виглядають як робота розробника, не як випадковий склад кубиків.
+На SHOWCASE інколи питають: «покажи, як організовано». Чисті Folders виглядають як робота розробника, не як випадковий склад кубиків.
 
 Також: оптимізація (11.4) і juice (11.3) легші, коли ефекти й звуки лежать у зрозумілих місцях.
 
@@ -65,11 +65,11 @@ export const ukLesson111 = {
 Правила:
 1. **Англійською латиницею** для імен об’єктів (українською - підписи в UI Text).
 2. **PascalCase або Prefix_Name** - без пробілів і emoji в Name.
-3. Назва каже **що це**, не \`fff\`, \`new\`, \`copy2\`.
+3. Name каже **що це**, не \`fff\`, \`new\`, \`copy2\`.
 4. Однакова схема в усьому Place.
 
 Префікси, які зручно тримати в курсі:
-- \`NPC_\` - персонажі
+- \`NPC_\` - Character
 - \`UI_\` - елементи інтерфейсу
 - \`SFX_\` / \`AMB_\` - звуки
 - \`FX_\` - ефекти
@@ -105,7 +105,7 @@ ServerStorage:
 
 Не обов’язково ідеальна копія цієї схеми. Обов’язково: **логічні купи**, а не все в корені Workspace.
 
-Як перенести: виділи об’єкти → перетягни в Folder. Якщо Model важливий - спочатку згрупуй, потім поклади в папку.
+Як перенести: виділи об’єкти → перетягни в Folder. Якщо Model важливий - спочатку згрупуй, потім поклади в Folder.
 
 **Зроби зараз (4 хв):** зроби одну дію pick/use і підтверди результат у Output або інвентарі.`,
  },
@@ -135,12 +135,12 @@ ServerStorage:
 - дублікати вже твоїх систем.
 
 Правило аудиту:
-1. Якщо вставив модель - одразу розкрий у Explorer.
+1. Якщо вставив model - одразу розкрий у Explorer.
 2. Знайди всі Scripts / LocalScripts.
 3. Якщо не розумієш код і він не потрібен для меші - **видали Script**, лиши геометрію.
-4. Ніколи не лишай «магічний» Script «бо модель інакше не стоїть», якщо не перевірив.
+4. Ніколи не лишай «магічний» Script «бо model інакше не стоїть», якщо не перевірив.
 
-Для курсу безпечніше: свої Parts + свої Scripts. Модель - лише як декор без логіки.
+Для курсу безпечніше: свої Parts + свої Scripts. Model - лише як декор без логіки.
 
 **Зроби зараз (4 хв):** онови HUD після зміни серверного значення без ручного підроблення на клієнті.`,
  },
@@ -169,7 +169,7 @@ ServerStorage:
 | ServerScriptService | Логіка нагород, магазин на сервері, DataStore |
 | StarterGui / StarterPlayerScripts | LocalScripts UI, камера, локальні ефекти |
 | ReplicatedStorage | Remotes, Config ModuleScript, спільні шаблони |
-| Workspace | Світ, тригери, NPC-моделі |
+| Workspace | Світ, тригери, NPC-model |
 | ServerStorage | Те, що гравець не має бачити напряму (шаблони Tools) |
 
 Типова помилка: покласти важливий серверний Script у Workspace Part і забути. Або LocalScript у SSS - він не працюватиме як очікуєш.
@@ -185,24 +185,24 @@ ServerStorage:
 - не три копії таблиць цін у різних Scripts.
 
 Remotes:
-- папка ReplicatedStorage/Remotes;
+- Folder ReplicatedStorage/Remotes;
 - імена \`BuyItem\`, \`QuestFinished\` - без \`RemoteEvent1\`.
 
-Якщо сьогодні немає часу переписувати логіку - хоча б **перенеси і перейменуй**, щоб завтра 11.2–11.5 не шукали голку.
+Якщо сьогодні немає часу переписувати логіку - хоча б **перенеси і перейменуй**, щоб завтра 11.2-11.5 не шукали голку.
 
-**Зроби зараз (7 хв):** створи папки Remotes і Systems (якщо немає) і поклади туди те, що вже існує.`,
+**Зроби зараз (7 хв):** створи Folders Remotes і Systems (якщо немає) і поклади туди те, що вже існує.`,
  },
  {
  title: "Порядок спринту прибирання на 60′",
  content: `| Хв | Дія |
 |----|-----|
-| 0–5 | Чекліст так/ні + скрін «до» (опційно) |
-| 5–20 | Folders + перенос з кореня Workspace |
-| 20–35 | Перейменування Part/Script/UI |
-| 35–45 | Дублікати + аудит Scripts з моделей |
-| 45–50 | Швидкий Play: світ не розсипався |
-| 50–55 | Дрібні фікси Anchored / видимість |
-| 55–60 | Save |
+| 0-5 | Чекліст так/ні + скрін «до» (опційно) |
+| 5-20 | Folders + перенос з кореня Workspace |
+| 20-35 | Перейменування Part/Script/UI |
+| 35-45 | Дублікати + аудит Scripts з моделей |
+| 45-50 | Швидкий Play: світ не розсипався |
+| 50-55 | Дрібні фікси Anchored / видимість |
+| 55-60 | Save |
 
 Не починай з ідеального префікса на 200 об’єктах, якщо корінь ще звалище. Спочатку **структура**, потім імена.
 
@@ -211,14 +211,14 @@ Remotes:
  {
  title: "Як здати «аудит» викладачу за 40 с",
  content: `Покажи:
-1. Корінь Workspace з папками Hub / PlayZone / NPCs.
+1. Корінь Workspace з Folders Hub / PlayZone / NPCs.
 2. ReplicatedStorage/Remotes (або скажи, що Remotes ще будуть - але місце готове).
 3. Один приклад перейменування: було \`Script\`, стало \`Srv_...\`.
 4. Скажи число: «було N безіменних Part, лишилось M».
 
 Це і є доказ уроку. Не «я трохи прибрав», а **вимірювана чистота**.
 
-**Вау на Save (2–3 хв, обов’язково):** після чистоти постав у хабі/спавні Part \`Polish_Ready\` (Neon + Billboard «Polish base») **або** Sound \`SFX_SaveReady\` на 1 клік кнопки/Part. Це не декор на рік - це сигнал «база готова, можна juice». Завтра loading сяде на цей Place приємніше.
+**Вау на Save (2-3 хв, обов’язково):** після чистоти постав у хабі/spawnі Part \`Polish_Ready\` (Neon + Billboard «Polish base») **або** Sound \`SFX_SaveReady\` на 1 клік кнопки/Part. Це не декор на рік - це сигнал «база готова, можна juice». Завтра loading сяде на цей Place приємніше.
 
 Save: \`Lesson 11.1 - Explorer Audit\`.
 
@@ -250,7 +250,7 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  correctApproach: "Спочатку Folders, потім імена.",
  },
  {
- mistake: "Видаляєш Script з моделі навмання під час Play-тесту чужої логіки без бекапу",
+ mistake: "Видаляєш Script з model навмання під час Play-тесту чужої логіки без бекапу",
  explanation: "Можна зламати єдину робочу систему.",
  correctApproach: "Disabled спочатку → Play → потім Delete.",
  },
@@ -271,7 +271,7 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  }
  ],
  summary:
- "Ти провів аудит Explorer з заміром до/після: папки, імена, дублікати, безпека Scripts і вау-якір Polish_Ready. Урок 81 дає чисту базу для всього модуля Polish.",
+ "Ти провів аудит Explorer з заміром до/після: folders, імена, дублікати, безпека Scripts і вау-якір Polish_Ready. Урок 81 дає чисту базу для всього модуля Polish.",
  practiceTask: {
  title: "Практика: аудит Explorer (~30 хв)",
  difficulty: "beginner",
@@ -284,7 +284,7 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
 
 ### Part B - Прибирання (18 хв)
 1. Folders і розклад Workspace.
-2. Перейменуй найгірші 15–30 об’єктів.
+2. Перейменуй найгірші 15-30 об’єктів.
 3. Дублікати GUI/Scripts + Free Model Scripts.
 4. Короткий Play.
 
@@ -295,7 +295,7 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
 4. Покажи викладачу за 40 с: «було A за T1 с → стало A2 за T2 с».
 
 ### Критерій «зараховано»
-- Папки + менше хаосу імен
+- Folders + менше хаосу імен
 - Є числа до/після
 - Є Polish_Ready або SFX
 - Play не розвалений
@@ -306,7 +306,7 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  "Вау-якір = 1 Part або 1 Sound, не новий жанр"
  ],
  optionalChallenge:
- "Напиши 8–10 рядків «стандарт імен команди» і застосуй його до StarterGui повністю.",
+ "Напиши 8-10 рядків «стандарт імен команди» і застосуй його до StarterGui повністю.",
  },
  quiz: {
  passingScore: 70,
@@ -317,24 +317,24 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  type: MC,
  question: "Який номер уроку 11.1 у новій сітці?",
  options: [
-          "81-й з 92",
-          "96-й",
-          "1-й",
-          "11-й без номера курсу"
-        ],
+ "81-й з 92",
+ "96-й",
+ "1-й",
+ "11-й без номера курсу"
+ ],
  correctAnswer: 0,
  explanation: "11.1 відкриває модуль Polish як урок 81.",
  },
  {
  id: "q2",
  type: MC,
- question: "Навіщо чистий Explorer у polish-модулі?",
+ question: "Навіщо чистий Explorer у полірування-модулі?",
  options: [
-          "Щоб вимкнути Play назавжди",
-          "Щоб швидше знаходити баги і показувати структуру",
-          "Це потрібно лише для Terrain Material",
-          "Щоб замінити DataStore"
-        ],
+ "Щоб вимкнути Play назавжди",
+ "Щоб швидше знаходити баги і показувати структуру",
+ "Це потрібно лише для Terrain Material",
+ "Щоб замінити DataStore"
+ ],
  correctAnswer: 1,
  explanation: "Швидкість і ясність команди.",
  },
@@ -343,11 +343,11 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  type: MC,
  question: "Яке ім’я краще для серверного скрипта магазину?",
  options: [
-          "Script",
-          "fff",
-          "Srv_Shop",
-          "Script (1) copy"
-        ],
+ "Script",
+ "fff",
+ "Srv_Shop",
+ "Script (1) copy"
+ ],
  correctAnswer: 2,
  explanation: "Префікс + сенс.",
  },
@@ -356,11 +356,11 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  type: MC,
  question: "З чого логічно починати спринт прибирання?",
  options: [
-          "З ідеального префікса на 500 об’єктах при звалищі в корені",
-          "З Publish Public",
-          "З видалення всього Workspace",
-          "З Folders і розкладки кореня, потім імена"
-        ],
+ "З ідеального префікса на 500 об’єктах при звалищі в корені",
+ "З Publish Public",
+ "З видалення всього Workspace",
+ "З Folders і розкладки кореня, потім імена"
+ ],
  correctAnswer: 3,
  explanation: "Структура перша.",
  },
@@ -369,11 +369,11 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  type: MC,
  question: "Де логічно тримати Remotes?",
  options: [
-          "Випадково по різних Parts без системи",
-          "ReplicatedStorage/Remotes",
-          "Лише в Lighting",
-          "У SoundService обов’язково"
-        ],
+ "Випадково по різних Parts без системи",
+ "ReplicatedStorage/Remotes",
+ "Лише в Lighting",
+ "У SoundService обов’язково"
+ ],
  correctAnswer: 1,
  explanation: "Одне місце для мережевих точок.",
  },
@@ -382,11 +382,11 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  type: MC,
  question: "Що робити з підозрілим Script у Free Model?",
  options: [
-          "Завжди лишати «на магію»",
-          "Копіювати ще 10 разів",
-          "Перевірити; якщо не потрібен - Disabled, потім Delete",
-          "Перейменувати в Part"
-        ],
+ "Завжди лишати «на магію»",
+ "Копіювати ще 10 разів",
+ "Перевірити; якщо не потрібен - Disabled, потім Delete",
+ "Перейменувати в Part"
+ ],
  correctAnswer: 2,
  explanation: "Безпека важливіша за лінь.",
  },
@@ -395,11 +395,11 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  type: MC,
  question: "Який симптом часто дає два однакові Scripts нагороди?",
  options: [
-          "Подвійне нарахування монет / подвійні події",
-          "Красивіший Terrain",
-          "Швидший loading завжди",
-          "Автоматичний Badge"
-        ],
+ "Подвійне нарахування монет / подвійні події",
+ "Красивіший Terrain",
+ "Швидший loading завжди",
+ "Автоматичний Badge"
+ ],
  correctAnswer: 0,
  explanation: "Дублікати логіки.",
  },
@@ -408,11 +408,11 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  type: MC,
  question: "Який наступний урок після 11.1?",
  options: [
-          "12.6 SHOWCASE",
-          "11.7 (немає)",
-          "Модуль 1",
-          "11.2 - Loading Screen"
-        ],
+ "12.6 SHOWCASE",
+ "11.7 (немає)",
+ "Модуль 1",
+ "11.2 - Loading Screen"
+ ],
  correctAnswer: 3,
  explanation: "Спочатку порядок, потім loading.",
  },
@@ -421,11 +421,11 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  type: MC,
  question: "Яку назву Save пропонує урок?",
  options: [
-          "Juice Pass",
-          "Demo Ready",
-          "Lesson 11.1 - Explorer Audit",
-          "Final GDD"
-        ],
+ "Juice Pass",
+ "Demo Ready",
+ "Lesson 11.1 - Explorer Audit",
+ "Final GDD"
+ ],
  correctAnswer: 2,
  explanation: "Здача аудиту Explorer.",
  },
@@ -434,24 +434,24 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  type: MC,
  question: "Де зазвичай лежить серверна логіка систем?",
  options: [
-          "Тільки StarterGui",
-          "ServerScriptService (наприклад Systems)",
-          "Тільки Atmosphere",
-          "У назві Place"
-        ],
+ "Тільки StarterGui",
+ "ServerScriptService (наприклад Systems)",
+ "Тільки Atmosphere",
+ "У назві Place"
+ ],
  correctAnswer: 1,
- explanation: "SSS для серверних Scripts.",
+ explanation: "SSS для server Scripts.",
  },
  {
  id: "q11",
  type: MC,
  question: "Чому імена з emoji/пробілами погані для об’єктів?",
  options: [
-          "Roblox їх фізично не відображає ніколи",
-          "Вони підвищують FPS",
-          "Вони замінюють Folders",
-          "Важко і крихко шукати в коді через WaitForChild"
-        ],
+ "Roblox їх фізично не відображає ніколи",
+ "Вони підвищують FPS",
+ "Вони замінюють Folders",
+ "Важко і крихко шукати в коді через WaitForChild"
+ ],
  correctAnswer: 3,
  explanation: "Чисті технічні імена.",
  },
@@ -460,11 +460,11 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  type: MC,
  question: "Що зробити перед остаточним Delete підозрілого Script?",
  options: [
-          "Disabled + короткий Play-тест",
-          "Одразу Publish",
-          "Нічого не перевіряти",
-          "Дублікувати ще раз"
-        ],
+ "Disabled + короткий Play-тест",
+ "Одразу Publish",
+ "Нічого не перевіряти",
+ "Дублікувати ще раз"
+ ],
  correctAnswer: 0,
  explanation: "Безпечний порядок.",
  },
@@ -473,11 +473,11 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  type: MC,
  question: "Навіщо один Config замість трьох копій цін?",
  options: [
-          "Config забороняє UI",
-          "Це лише для іконки",
-          "Одна правда балансу, менше роз’їзду систем",
-          "Щоб вимкнути Explorer"
-        ],
+ "Config забороняє UI",
+ "Це лише для іконки",
+ "Одна правда балансу, менше роз’їзду систем",
+ "Щоб вимкнути Explorer"
+ ],
  correctAnswer: 2,
  explanation: "Єдине джерело правди.",
  },
@@ -486,11 +486,11 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  type: MC,
  question: "Що показати викладачу як доказ аудиту?",
  options: [
-          "Лише порожній чат",
-          "Тільки небо",
-          "Чужий Place без змін",
-          "Числа до/після + папки + приклад перейменування (+ Polish_Ready)"
-        ],
+ "Лише порожній чат",
+ "Тільки небо",
+ "Чужий Place без змін",
+ "Числа до/після + Folders + приклад перейменування (+ Polish_Ready)"
+ ],
  correctAnswer: 3,
  explanation: "Вимірюваний результат + вау-якір.",
  },
@@ -499,11 +499,11 @@ Save: \`Lesson 11.1 - Explorer Audit\`.
  type: MC,
  question: "Що вважається зданим артефактом уроку 11.1?",
  options: [
-          "Лише теорія без змін",
-          "Place з папками, заміром до/після, вау-якорем і Save",
-          "Public Publish без структури",
-          "Видалений увесь StarterGui без потреби"
-        ],
+ "Лише теорія без змін",
+ "Place з Folders, заміром до/після, вау-якорем і Save",
+ "Public Publish без структури",
+ "Видалений увесь StarterGui без потреби"
+ ],
  correctAnswer: 1,
  explanation: "Аудит = чистота + доказ + Polish_Ready.",
  }
@@ -538,7 +538,7 @@ export const ukLesson112 = {
 3. LocalScript, який показує екран, імітує/робить етапи, потім ховає.
 4. Плавне зникнення (Tween).
 
-Працюй на Place після **11.1** (чистий Explorer допомагає). LoadingGui поклади в **StarterGui**. Після hide одразу глянь, чи не перекриває щось спавн і чи Output без червоного на LocalScript.
+Працюй на Place після **11.1** (чистий Explorer допомагає). LoadingGui поклади в **StarterGui**. Після hide одразу глянь, чи не перекриває щось spawn і чи Output без червоного на LocalScript.
 
 **Зроби зараз (2 хв):** напиши назву гри одним рядком - вона з’явиться на екрані завантаження. Тримай цю назву короткою: на loading довгий заголовок погано читається.`,
  },
@@ -552,7 +552,7 @@ export const ukLesson112 = {
 
 Loading - це не «доросла фіча AAA». Це ввічливість: скажи гравцеві, що відбувається.
 
-Для Demo Ready і SHOWCASE 3 секунди з назвою виглядають набагато дорожче, ніж миттєвий спавн у недогруженому хабі.
+Для Demo Ready і SHOWCASE 3 секунди з назвою виглядають набагато дорожче, ніж миттєвий spawn у недогруженому хабі.
 
 **Зроби зараз (4 хв):** запусти Play і підтверди, що loading screen зникає після завантаження.`,
  },
@@ -560,12 +560,12 @@ Loading - це не «доросла фіча AAA». Це ввічливість
  title: "Де живе LoadingGui (карта)",
  content: `\`\`\`
 StarterGui/
-  LoadingGui/          -- ScreenGui
-    Background/        -- Frame на весь екран
-    Title/             -- TextLabel назва
-    Status/            -- TextLabel статус
-    Tip/               -- TextLabel підказка (опційно)
-    LocalScript        -- логіка показати/сховати
+ LoadingGui/ -- ScreenGui
+ Background/ -- Frame на весь екран
+ Title/ -- TextLabel назва
+ Status/ -- TextLabel статус
+ Tip/ -- TextLabel підказка (опційно)
+ LocalScript -- логіка показати/сховати
 \`\`\`
 
 Важливо:
@@ -579,7 +579,7 @@ StarterGui/
 **Зроби зараз (4 хв):** онови HUD після зміни серверного значення без ручного підроблення на клієнті.`,
  },
  {
- title: "Збери UI за 10–12 хвилин (кроки)",
+ title: "Збери UI за 10-12 хвилин (кроки)",
  content: `1. StarterGui → Insert **ScreenGui** → назви \`LoadingGui\`.
 2. Додай **Frame** \`Background\`: Size \`{1,0},{1,0}\`, колір темний, AnchorPoint 0.5 / Position центр якщо треба.
 3. **TextLabel** \`Title\`: велика назва гри, білий/яскравий текст, центр зверху.
@@ -690,11 +690,11 @@ end
 Мінімум:
 - твінь \`BackgroundTransparency\` 0 → 1;
 - паралельно \`TextTransparency\` у Title/Status;
-- \`TweenInfo.new(0.5–0.8)\`.
+- \`TweenInfo.new(0.5-0.8)\`.
 
 Після Completed → \`gui.Enabled = false\`.
 
-Не роби твін на 5 секунд - гравець думає, що зависло. 0.4–0.8 с - солодка зона.
+Не роби твін на 5 секунд - гравець думає, що зависло. 0.4-0.8 с - солодка зона.
 
 **Зроби зараз (8 хв):** підключи hideLoading з твіном і перевір Stop→Play двічі.`,
  },
@@ -744,7 +744,7 @@ end)
 
 Сьогодні заклади звичку: **будь-яка пауза пояснюється текстом**.
 
-Після loading одразу перевір: спавн + онбординг видимі. Loading не замінює табличку в світі.
+Після loading одразу перевір: spawn + онбординг видимі. Loading не замінює табличку в світі.
 
 Save: \`Lesson 11.2 - Loading Screen\`.
 
@@ -757,8 +757,8 @@ Save: \`Lesson 11.2 - Loading Screen\`.
 - [ ] Є плавне зникнення (Tween) або акуратно просте hide
 - [ ] ResetOnSpawn налаштований свідомо
 - [ ] Є захист від вічного екрана (таймаут)
-- [ ] Після hide видно спавн / гру
-- [ ] (Бонус) PreloadAsync хоча б на 1–2 асети
+- [ ] Після hide видно spawn / гру
+- [ ] (Бонус) PreloadAsync хоча б на 1-2 асети
 - [ ] Save: \`Lesson 11.2 - Loading Screen\`
 
 Далі **11.3** додасть juice; **11.5** перевірить, чи loading не заважає демо.
@@ -775,7 +775,7 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  },
  {
  mistake: "Loading знову з’являється після смерті через ResetOnSpawn",
- explanation: "Дратує на кожному респавні.",
+ explanation: "Дратує на кожному Respawnі.",
  correctApproach: "ResetOnSpawn = false для LoadingGui (зазвичай).",
  },
  {
@@ -786,7 +786,7 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  {
  mistake: "Твін на 5+ секунд",
  explanation: "Виглядає як фриз.",
- correctApproach: "0.4–0.8 с на fade-out.",
+ correctApproach: "0.4-0.8 с на fade-out.",
  },
  {
  mistake: "Логіка loading у неправильному місці без LocalScript",
@@ -811,7 +811,7 @@ Save: \`Lesson 11.2 - Loading Screen\`.
 2. Tween hide + Enabled = false.
 3. Таймаут force-close.
 4. ResetOnSpawn свідомо.
-5. (Бонус) PreloadAsync на 1–2 асети.
+5. (Бонус) PreloadAsync на 1-2 асети.
 
 ### Part C - Здача (5 хв)
 1. Stop→Play двічі: екран з’являється і зникає.
@@ -827,7 +827,7 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  hints: [
  "Спочатку UI і прості wait-етапи, потім Preload",
  "Якщо текст не видно - перевір Z-order і колір",
- "Force-close на 6–8 с рятує демо навіть при багу"
+ "Force-close на 6-8 с рятує демо навіть при багу"
  ],
  optionalChallenge:
  "Додай смужку прогресу (Frame-grow по Width) синхронно з етапами статусу.",
@@ -841,11 +841,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Який номер уроку 11.2 у новій сітці?",
  options: [
-          "82-й з 92",
-          "96-й",
-          "1-й",
-          "40-й"
-        ],
+ "82-й з 92",
+ "96-й",
+ "1-й",
+ "40-й"
+ ],
  correctAnswer: 0,
  explanation: "11.2 = урок 82.",
  },
@@ -854,11 +854,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Де логічно тримати LoadingGui?",
  options: [
-          "У ServerStorage як єдиний варіант",
-          "У StarterGui як ScreenGui",
-          "У Terrain",
-          "У DataStoreService"
-        ],
+ "У ServerStorage як єдиний варіант",
+ "У StarterGui як ScreenGui",
+ "У Terrain",
+ "У DataStoreService"
+ ],
  correctAnswer: 1,
  explanation: "Клієнтський UI зі StarterGui.",
  },
@@ -867,11 +867,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Який скрипт керує екраном завантаження гравця?",
  options: [
-          "Лише ModuleScript у SSS без UI",
-          "Тільки команда в Output",
-          "LocalScript",
-          "SoundService"
-        ],
+ "Лише ModuleScript у SSS без UI",
+ "Тільки команда в Output",
+ "LocalScript",
+ "SoundService"
+ ],
  correctAnswer: 2,
  explanation: "UI гравця = клієнт.",
  },
@@ -880,11 +880,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Навіщо текст Status з етапами?",
  options: [
-          "Щоб замінити всю гру",
-          "Це потрібно лише для Terrain",
-          "Status заборонений у ScreenGui",
-          "Щоб гравець розумів, що гра готується, а не зависла"
-        ],
+ "Щоб замінити всю гру",
+ "Це потрібно лише для Terrain",
+ "Status заборонений у ScreenGui",
+ "Щоб гравець розумів, що гра готується, а не зависла"
+ ],
  correctAnswer: 3,
  explanation: "Пояснена пауза = кращий UX.",
  },
@@ -893,11 +893,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Навіщо TweenService при хованні loading?",
  options: [
-          "Щоб збільшити Volume звуку",
-          "М’яке зникнення замість різкого кліку",
-          "Щоб створити RemoteEvent",
-          "Це замінює Title"
-        ],
+ "Щоб збільшити Volume звуку",
+ "М’яке зникнення замість різкого кліку",
+ "Щоб створити RemoteEvent",
+ "Це замінює Title"
+ ],
  correctAnswer: 1,
  explanation: "Fade виглядає професійніше.",
  },
@@ -906,11 +906,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Що робить ContentProvider:PreloadAsync?",
  options: [
-          "Публікує гру в Public",
-          "Чистить Explorer",
-          "Просить клієнт заздалегідь підвантажити асети",
-          "Створює Badge"
-        ],
+ "Публікує гру в Public",
+ "Чистить Explorer",
+ "Просить клієнт заздалегідь підвантажити асети",
+ "Створює Badge"
+ ],
  correctAnswer: 2,
  explanation: "Попереднє завантаження ресурсів.",
  },
@@ -919,11 +919,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Чому потрібен таймаут force-close?",
  options: [
-          "Щоб екран не завис навічно при помилці",
-          "Щоб вимкнути Anchored",
-          "Це обов’язок лише для Atmosphere",
-          "Таймаут заборонений"
-        ],
+ "Щоб екран не завис навічно при помилці",
+ "Щоб вимкнути Anchored",
+ "Це обов’язок лише для Atmosphere",
+ "Таймаут заборонений"
+ ],
  correctAnswer: 0,
  explanation: "Безпека демо і гравця.",
  },
@@ -932,11 +932,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Який ResetOnSpawn часто логічний для LoadingGui?",
  options: [
-          "Завжди true обов’язково",
-          "Немає такої властивості",
-          "Лише для Parts",
-          "false - щоб не показувати loading на кожному респавні"
-        ],
+ "Завжди true обов’язково",
+ "Немає такої Properties",
+ "Лише для Parts",
+ "false - щоб не показувати loading на кожному Respawnі"
+ ],
  correctAnswer: 3,
  explanation: "Інакше loading дратує після смерті.",
  },
@@ -945,11 +945,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Який наступний урок після 11.2?",
  options: [
-          "12.6 SHOWCASE",
-          "11.7 (немає)",
-          "11.3 - Sound + Particles + Atmosphere",
-          "Модуль 1"
-        ],
+ "12.6 SHOWCASE",
+ "11.7 (немає)",
+ "11.3 - Sound + Particles + Atmosphere",
+ "Модуль 1"
+ ],
  correctAnswer: 2,
  explanation: "Loading → juice → opt/UX.",
  },
@@ -958,11 +958,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Яку назву Save пропонує урок?",
  options: [
-          "Juice Pass",
-          "Lesson 11.2 - Loading Screen",
-          "Demo Ready",
-          "Final GDD"
-        ],
+ "Juice Pass",
+ "Lesson 11.2 - Loading Screen",
+ "Demo Ready",
+ "Final GDD"
+ ],
  correctAnswer: 1,
  explanation: "Здача loading-дня.",
  },
@@ -971,11 +971,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Чому DisplayOrder для LoadingGui ставлять високим?",
  options: [
-          "Щоб прискорити DataStore",
-          "Щоб вимкнути Lighting",
-          "Це лише для Trail",
-          "Щоб екран був поверх інших панелей"
-        ],
+ "Щоб прискорити DataStore",
+ "Щоб вимкнути Lighting",
+ "Це лише для Trail",
+ "Щоб екран був поверх інших панелей"
+ ],
  correctAnswer: 3,
  explanation: "Loading має перекрити HUD на старті.",
  },
@@ -984,11 +984,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Який орієнтир тривалості fade-out?",
  options: [
-          "Близько 0.4–0.8 секунди",
-          "Мінімум 10 секунд завжди",
-          "0 секунд і тільки destroy світу",
-          "Рівно 1 година"
-        ],
+ "Близько 0.4-0.8 секунди",
+ "Мінімум 10 секунд завжди",
+ "0 секунд і тільки destroy світу",
+ "Рівно 1 година"
+ ],
  correctAnswer: 0,
  explanation: "Досить м’яко, не як фриз.",
  },
@@ -997,11 +997,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Що покласти в Tip на loading?",
  options: [
-          "Повний код усіх Scripts",
-          "Нічого ніколи",
-          "Одну коротку підказку першої дії",
-          "Список усіх GamePass"
-        ],
+ "Повний код усіх Scripts",
+ "Нічого ніколи",
+ "Одну коротку підказку першої дії",
+ "Список усіх GamePass"
+ ],
  correctAnswer: 2,
  explanation: "Короткий онбординг під час очікування.",
  },
@@ -1010,11 +1010,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Чи достатньо етапів з task.wait без Preload для здачі MVP?",
  options: [
-          "Ні, без Preload урок неможливий",
-          "Потрібен лише Publish",
-          "Потрібен лише Terrain",
-          "Так, якщо UI і hide працюють; Preload - бонус"
-        ],
+ "Ні, без Preload урок неможливий",
+ "Потрібен лише Publish",
+ "Потрібен лише Terrain",
+ "Так, якщо UI і hide працюють; Preload - бонус"
+ ],
  correctAnswer: 3,
  explanation: "Спочатку надійний екран, потім ускладнення.",
  },
@@ -1023,11 +1023,11 @@ Save: \`Lesson 11.2 - Loading Screen\`.
  type: MC,
  question: "Що вважається зданим артефактом уроку 11.2?",
  options: [
-          "Порожній Baseplate",
-          "LoadingGui з етапами, hide/tween, без вічного зависання + Save",
-          "Лише теорія",
-          "Public Publish без UI"
-        ],
+ "Порожній Baseplate",
+ "LoadingGui з етапами, hide/tween, без вічного зависання + Save",
+ "Лише теорія",
+ "Public Publish без UI"
+ ],
  correctAnswer: 1,
  explanation: "Потрібен робочий екран завантаження.",
  }
@@ -1056,12 +1056,12 @@ export const ukLesson113 = {
  title: "Сьогоднішня місія (урок 83 з 92)",
  content: `Сьогодні Place має **звучати і відчуватися**, не лише виглядати кубиками.
 
-Три інструменти polish:
+Три інструменти полірування:
 1. **Sound** - що чути на старті, кліку, нагороді.
 2. **Particles / Trail** - короткий візуальний вау.
 3. **Atmosphere / Lighting** - настрій світу (ранок, ніч, туман).
 
-Працюй на своєму Place з модуля 11 (після чистого Explorer з 11.1 і loading з 11.2, якщо вже є). Усе чіпляй на **золотий шлях**: спавн → дія → нагорода.
+Працюй на своєму Place з модуля 11 (після чистого Explorer з 11.1 і loading з 11.2, якщо вже є). Усе чіпляй на **золотий шлях**: spawn → дія → нагорода.
 
 **Правило дня:** краще 4 влучні ефекти, ніж 40 постійних шумових «прикрас».
 
@@ -1087,13 +1087,13 @@ Juice = зворотний зв’язок. Гравець зробив дію �
  title: "Три шари звуку",
  content: `| Шар | Гучність (орієнтир) | Приклади | Де живе |
 |-----|---------------------|----------|---------|
-| **Ambient** | 0.2–0.4 | Вітер, тихий гул хабу | SoundService або Part у хабі, Looped |
-| **UI** | 0.45–0.7 | Клік кнопки, відкриття панелі | LocalScript біля GUI |
-| **Gameplay** | 0.7–1.0 | Монета, квест done, фініш, удар | Script/LocalScript на подію |
+| **Ambient** | 0.2-0.4 | Вітер, тихий гул хабу | SoundService або Part у хабі, Looped |
+| **UI** | 0.45-0.7 | Клік кнопки, відкриття панелі | LocalScript біля GUI |
+| **Gameplay** | 0.7-1.0 | Монета, квест done, фініш, удар | Script/LocalScript на подію |
 
 Критичні сигнали (нагорода, помилка покупки) мають бути **голосніше** за ambient.
 
-Папка для порядку (якщо ще немає):
+Folder для порядку (якщо ще немає):
 \`ReplicatedStorage/Audio/\` або \`SoundService\` з іменами \`SFX_Coin\`, \`SFX_Click\`, \`AMB_Hub\`.
 
 **Зроби зараз (4 хв):** онови HUD після зміни серверного значення без ручного підроблення на клієнті.`,
@@ -1102,10 +1102,10 @@ Juice = зворотний зв’язок. Гравець зробив дію �
  title: "Як додати Sound у Studio (кроки)",
  content: `1. Вибери об’єкт (Part / SoundService) → Insert Object → **Sound**.
 2. У Properties:
-   - **SoundId** - rbxassetid з Toolbox (офіційні / дозволені звуки) або свій асет;
-   - **Volume** - почни з 0.5 і крути;
-   - **Looped** - true лише для ambient;
-   - **RollOff** / MaxDistance - якщо звук у світі (3D).
+ - **SoundId** - rbxassetid з Toolbox (офіційні / дозволені звуки) або свій асет;
+ - **Volume** - почни з 0.5 і крути;
+ - **Looped** - true лише для ambient;
+ - **RollOff** / MaxDistance - якщо звук у світі (3D).
 3. Для UI-кліку часто зручніше Sound у \`SoundService\` і \`Play()\` з LocalScript.
 4. Для нагороди на сервері - грай з Script після перевірки дії (або через Remote, якщо UI на клієнті).
 
@@ -1124,7 +1124,7 @@ end)
  content: `| Проблема | Фікс |
 |----------|------|
 | Усе на Volume 1 | Знизь ambient, лиш нагороду голосніше |
-| Один і той самий звук 20 разів підряд | Інший Pitch трохи (0.95–1.05) або рідший тригер |
+| Один і той самий звук 20 разів підряд | Інший Pitch трохи (0.95-1.05) або рідший тригер |
 | Звук грає крізь усю карту | Зменши MaxDistance / RollOffMode |
 | Страшний скрімер у дитячій грі | Заміни на м’який « ding / whoosh » |
 
@@ -1139,7 +1139,7 @@ end)
  content: `**ParticleEmitter** - іскри / дим / блиск з Part.
 
 Базові Properties, які чіпаєш сьогодні:
-- **Rate** - скільки частинок (почни низько: 5–20);
+- **Rate** - скільки Parts (почни низько: 5-20);
 - **Lifetime** - як довго живуть;
 - **Speed / SpreadAngle** - напрямок;
 - **Color / Size / Transparency** - вигляд;
@@ -1147,7 +1147,7 @@ end)
 
 Для Demo Ready краще:
 1. Emitter **вимкнений** за замовчуванням.
-2. На події: \`Enabled = true\` на 0.4–1.5 с → знову false.
+2. На події: \`Enabled = true\` на 0.4-1.5 с → знову false.
 3. Або \`Emit(20)\` один раз (якщо вмієш цей метод у своїй версії API) / короткий імпульс.
 
 Не став 5 Emitter з Rate 200 на весь хаб «для краси». Завтрашня оптимізація (11.4) тоді буде болем, і зараз уже лагатиме.
@@ -1156,12 +1156,12 @@ end)
  },
  {
  title: "Trail (lite)",
- content: `**Trail** малює слід за рухомим об’єктом (часто Attachment0 / Attachment1 на Parts персонажа або снаряду).
+ content: `**Trail** малює слід за рухомим об’єктом (часто Attachment0 / Attachment1 на Parts Character або снаряду).
 
 Коли доречно:
 - фінішна стрічка;
 - слід меча / снаряду;
-- «вау» після апгрейду на 1–2 с.
+- «вау» після апгрейду на 1-2 с.
 
 Коли не треба:
 - постійний райдужний шлейф на кожному NPC у хабі;
@@ -1176,7 +1176,7 @@ end)
  content: `Відкрий **Lighting** у Explorer.
 
 Корисне на сьогодні:
-| Властивість / об’єкт | Навіщо |
+| Property / об’єкт | Навіщо |
 |----------------------|--------|
 | **ClockTime** | День / вечір / ніч |
 | **Ambient / OutdoorAmbient** | Загальний відтінок тіней |
@@ -1186,7 +1186,7 @@ end)
 
 Ідеї пресетів:
 - **Яскравий аркадний хаб:** день, вищий Brightness, легкий Bloom.
-- **Нічна вечірка:** ClockTime ~20–22, трохи Neon, не викручуй Bloom на максимум.
+- **Нічна вечірка:** ClockTime ~20-22, трохи Neon, не викручуй Bloom на максимум.
 - **Туманний острів:** Atmosphere Density трохи вище, не «біла каша».
 
 **Зроби зараз (7 хв):** зроби 2 пресети (день / настрій) і вмій перемкнути ClockTime вручну. Якщо вже є Party Mode з M1 - можеш підв’язати пізніше; сьогодні достатньо ручного пресета.`,
@@ -1197,10 +1197,10 @@ end)
 
 | Крок шляху | Sound | Particle/Trail | Atmosphere/світло |
 |------------|-------|----------------|-------------------|
-| Спавн | тихий ambient | - | базовий пресет |
+| Spawn | тихий ambient | - | базовий пресет |
 | Перша підказка / Prompt | UI click (опційно) | - | - |
 | Головна дія | SFX дії | короткий імпульс (опційно) | - |
-| Нагорода | гучний позитивний SFX | іскри 0.5–1 с | (опційно) спалах Neon |
+| Нагорода | гучний позитивний SFX | іскри 0.5-1 с | (опційно) спалах Neon |
 | Помилка (немає монет) | короткий «ні» / soft buzz | - | - |
 
 Мінімум для здачі уроку:
@@ -1285,7 +1285,7 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  }
  ],
  summary:
- "Ти зібрав juice-прохід: шари звуку, точкову частинку на нагороді та Atmosphere/Lighting під настрій. Урок 83 робить золотий шлях відчутним перед оптимізацією й Demo Ready.",
+ "Ти зібрав juice-прохід: шари звуку, точкову Partsку на нагороді та Atmosphere/Lighting під настрій. Урок 83 робить золотий шлях відчутним перед оптимізацією й Demo Ready.",
  practiceTask: {
  title: "Практика: juice на золотому шляху (~30 хв)",
  difficulty: "beginner",
@@ -1331,11 +1331,11 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  type: MC,
  question: "Який номер уроку 11.3 у новій сітці?",
  options: [
-          "83-й з 92",
-          "96-й",
-          "1-й",
-          "50-й"
-        ],
+ "83-й з 92",
+ "96-й",
+ "1-й",
+ "50-й"
+ ],
  correctAnswer: 0,
  explanation: "11.3 = урок 83.",
  },
@@ -1344,11 +1344,11 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  type: MC,
  question: "Який звук логічно робити найгучнішим?",
  options: [
-          "Завжди лише ambient на 1.0",
-          "Сигнал нагороди / важливої події",
-          "Тиша замість усіх SFX",
-          "Тільки звук у Edit без Play"
-        ],
+ "Завжди лише ambient на 1.0",
+ "Сигнал нагороди / важливої події",
+ "Тиша замість усіх SFX",
+ "Тільки звук у Edit без Play"
+ ],
  correctAnswer: 1,
  explanation: "Критичні сигнали голосніші за атмосферу.",
  },
@@ -1357,11 +1357,11 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  type: MC,
  question: "Для чого Looped найчастіше?",
  options: [
-          "Обов’язково кожен клік UI",
-          "Лише для ParticleEmitter",
-          "Ambient / фоновий гул",
-          "Замість SoundId"
-        ],
+ "Обов’язково кожен клік UI",
+ "Лише для ParticleEmitter",
+ "Ambient / фоновий гул",
+ "Замість SoundId"
+ ],
  correctAnswer: 2,
  explanation: "Луп для фону, не для кожної нагороди.",
  },
@@ -1370,11 +1370,11 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  type: MC,
  question: "Чому particle краще вмикати коротко на події?",
  options: [
-          "Бо ParticleEmitter інакше не існує",
-          "Бо Atmosphere тоді ламається",
-          "Бо SoundId так вимагає",
-          "Менше лагу і сильніший вау"
-        ],
+ "Бо ParticleEmitter інакше не існує",
+ "Бо Atmosphere тоді ламається",
+ "Бо SoundId так вимагає",
+ "Менше лагу і сильніший вау"
+ ],
  correctAnswer: 3,
  explanation: "Точковий juice > вічний фонтан.",
  },
@@ -1383,11 +1383,11 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  type: MC,
  question: "Що налаштовує ClockTime?",
  options: [
-          "Ціну GamePass",
-          "Час доби в освітленні сцени",
-          "Розмір Baseplate Part",
-          "Ім’я RemoteEvent"
-        ],
+ "Ціну GamePass",
+ "Час доби в освітленні сцени",
+ "Size Baseplate Part",
+ "Ім’я RemoteEvent"
+ ],
  correctAnswer: 1,
  explanation: "День/ніч через Lighting.",
  },
@@ -1396,11 +1396,11 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  type: MC,
  question: "Навіщо Atmosphere в Lighting?",
  options: [
-          "Збереження DataStore",
-          "Створення Script",
-          "Туман / колір повітря / глибина горизонту",
-          "Видалення UI"
-        ],
+ "Збереження DataStore",
+ "Створення Script",
+ "Туман / колір повітря / глибина горизонту",
+ "Видалення UI"
+ ],
  correctAnswer: 2,
  explanation: "Настрій повітря сцени.",
  },
@@ -1409,11 +1409,11 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  type: MC,
  question: "Що небезпечного в сильному Bloom?",
  options: [
-          "Мильна картинка і гірша читабельність UI",
-          "Він завжди підвищує FPS",
-          "Він вимикає Sound",
-          "Він обов’язковий для Publish"
-        ],
+ "Мильна картинка і гірша читабельність UI",
+ "Він завжди підвищує FPS",
+ "Він вимикає Sound",
+ "Він обов’язковий для Publish"
+ ],
  correctAnswer: 0,
  explanation: "Легкий Bloom або без нього.",
  },
@@ -1422,11 +1422,11 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  type: MC,
  question: "Який наступний урок після 11.3?",
  options: [
-          "12.6 SHOWCASE",
-          "11.7 (немає)",
-          "Модуль 1",
-          "11.4 - Оптимізація + UX"
-        ],
+ "12.6 SHOWCASE",
+ "11.7 (немає)",
+ "Модуль 1",
+ "11.4 - Оптимізація + UX"
+ ],
  correctAnswer: 3,
  explanation: "Juice → opt/UX → Demo Ready.",
  },
@@ -1435,24 +1435,24 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  type: MC,
  question: "Де логічно тримати набір SFX?",
  options: [
-          "Випадково в ServerStorage без імен",
-          "Тільки в описі гри",
-          "SoundService або ReplicatedStorage/Audio з ясними іменами",
-          "У Terrain Material"
-        ],
+ "Випадково в ServerStorage без імен",
+ "Тільки в описі гри",
+ "SoundService або ReplicatedStorage/Audio з ясними іменами",
+ "У Terrain Material"
+ ],
  correctAnswer: 2,
- explanation: "Порядок = швидший polish далі.",
+ explanation: "Порядок = швидший полірування далі.",
  },
  {
  id: "q10",
  type: MC,
  question: "Яку назву Save пропонує урок?",
  options: [
-          "Demo Ready",
-          "Lesson 11.3 - Juice Pass",
-          "Final GDD",
-          "SHOWCASE DAY"
-        ],
+ "Demo Ready",
+ "Lesson 11.3 - Juice Pass",
+ "Final GDD",
+ "SHOWCASE DAY"
+ ],
  correctAnswer: 1,
  explanation: "Здача juice-проходу.",
  },
@@ -1461,11 +1461,11 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  type: MC,
  question: "Що робити, якщо звуку не чути в Play?",
  options: [
-          "Одразу видалити Lighting",
-          "Увімкнути Streaming як єдиний фікс",
-          "Ігнорувати до модуля 12",
-          "Перевірити SoundId, Volume і чи викликається Play()"
-        ],
+ "Одразу видалити Lighting",
+ "Увімкнути Streaming як єдиний фікс",
+ "Ігнорувати до модуля 12",
+ "Перевірити SoundId, Volume і чи викликається Play()"
+ ],
  correctAnswer: 3,
  explanation: "Типова діагностика Sound.",
  },
@@ -1474,11 +1474,11 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  type: MC,
  question: "Навіщо трохи міняти Pitch повторюваного SFX?",
  options: [
-          "Щоб вухо менше втомлювалось від копіпасти",
-          "Щоб вимкнути Anchored",
-          "Це замінює ParticleEmitter",
-          "Pitch заборонений у Roblox"
-        ],
+ "Щоб вухо менше втомлювалось від копіпасти",
+ "Щоб вимкнути Anchored",
+ "Це замінює ParticleEmitter",
+ "Pitch заборонений у Roblox"
+ ],
  correctAnswer: 0,
  explanation: "Анти-втома від повтору.",
  },
@@ -1487,11 +1487,11 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  type: MC,
  question: "Коли Trail доречний у цьому уроці?",
  options: [
-          "Обов’язково на кожній підлозі",
-          "Замість усіх Sound",
-          "Короткий слід на рухомому вау-об’єкті, не на всьому хабі",
-          "Лише в DataStore"
-        ],
+ "Обов’язково на кожній підлозі",
+ "Замість усіх Sound",
+ "Короткий слід на рухомому вау-об’єкті, не на всьому хабі",
+ "Лише в DataStore"
+ ],
  correctAnswer: 2,
  explanation: "Lite-опція, не обов’язок.",
  },
@@ -1500,11 +1500,11 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  type: MC,
  question: "Який мінімум juice для здачі?",
  options: [
-          "Лише одне небо без звуку",
-          "20 Looped треків",
-          "Тільки Bloom на максимумі",
-          "Ambient + UI/дії SFX + reward SFX + particle імпульс + Lighting пресет"
-        ],
+ "Лише одне небо без звуку",
+ "20 Looped треків",
+ "Тільки Bloom на максимумі",
+ "Ambient + UI/дії SFX + reward SFX + particle імпульс + Lighting пресет"
+ ],
  correctAnswer: 3,
  explanation: "Баланс шарів і точковий VFX.",
  },
@@ -1513,11 +1513,11 @@ Save: \`Lesson 11.3 - Juice Pass\`.
  type: MC,
  question: "Що вважається зданим артефактом уроку 11.3?",
  options: [
-          "Порожній Baseplate",
-          "Золотий шлях зі звуками, точковим VFX, настроєм освітлення і Save Juice Pass",
-          "Лише теорія без Studio",
-          "Publish Public без ефектів"
-        ],
+ "Порожній Baseplate",
+ "Золотий шлях зі звуками, точковим VFX, настроєм освітлення і Save Juice Pass",
+ "Лише теорія без Studio",
+ "Publish Public без ефектів"
+ ],
  correctAnswer: 1,
  explanation: "Потрібен відчутний juice на маршруті.",
  }
@@ -1549,9 +1549,9 @@ export const ukLesson114 = {
 1. **Оптимізація** - гра не заїкається на золотому шляху.
 2. **UX** - гравець розуміє, що робити, і читає UI.
 
-Красиві частинки з 11.3 марні, якщо телефон гріється і кнопка мікроскопічна. І навпаки: ідеальний FPS з порожнім онбордингом теж не Demo Ready.
+Красиві Parts з 11.3 марні, якщо телефон гріється і кнопка мікроскопічна. І навпаки: ідеальний FPS з порожнім онбордингом теж не Demo Ready.
 
-Працюй на **своєму** Place (той, що піде в 11.5–11.6). Не починай новий світ.
+Працюй на **своєму** Place (той, що піде в 11.5-11.6). Не починай новий світ.
 
 **Зроби зараз (2 хв):** увімкни Play, пройди 60 с золотого шляху й чесно напиши: «лагає? де? / незрозуміло? де?»
 
@@ -1578,15 +1578,15 @@ export const ukLesson114 = {
 | Купа ParticleEmitter завжди On | Підійди до зони ефектів | Еміт лише на подію, коротко |
 | Багато звуків Looped на повну | Послухай + гучність | Менше лупів, тихіше |
 | \`while true\` без wait / кожен кадр важка робота | Output + відчуття FPS | Події (Touched/Changed), \`task.wait\` |
-| Величезний світ одразу | Далеко від спавну все «важке» | Streaming (див. далі), ділити зони |
+| Величезний світ одразу | Далеко від spawn все «важке» | Streaming (див. далі), ділити зони |
 
 Не оптимізуй наосліп увесь Place годину. Спочатку знайди **одне** вузьке місце на золотому шляху.
 
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
  },
  {
- title: "Прохід оптимізації на 20–25 хвилин",
- content: `1. **Зафіксуй маршрут:** спавн → дія → нагорода (той самий, що для демо).
+ title: "Прохід оптимізації на 20-25 хвилин",
+ content: `1. **Зафіксуй маршрут:** spawn → дія → нагорода (той самий, що для демо).
 2. **Програй 2 рази** і познач місця «тупить».
 3. У зоні лагу відкрий Explorer: скільки Emitter / Parts / Lights?
 4. Зменши або вимкни зайве (Disabled / менший Rate / прибери дублікати).
@@ -1599,8 +1599,8 @@ export const ukLesson114 = {
 
 Додаткові швидкі перемоги:
 - вимкни \`CastShadow\` на дрібному декорі, який ніхто не помічає;
-- зменши \`Rate\` у ParticleEmitter у 2–3 рази замість повного видалення;
-- перевір, чи немає дублікатів одного й того ж Script у двох папках (подвійна логіка = подвійне навантаження).
+- зменши \`Rate\` у ParticleEmitter у 2-3 рази замість повного видалення;
+- перевір, чи немає дублікатів одного й того ж Script у двох folderх (подвійна логіка = подвійне навантаження).
 - у Lighting прибери зайві Bloom/Blur на максимумі, якщо картинка «мильна» і важка.
 
 Не треба заміряти FPS професійним софтом. Достатньо відчуття: «було січе → стало їхати» + нотатка що змінив.`,
@@ -1632,9 +1632,9 @@ export const ukLesson114 = {
  content: `| Погано | Краще |
 |--------|--------|
 | \`while true do\` важка робота без паузи | \`task.wait(0.1)\` або рідше |
-| Копія логіки на кожній монеті окремим Script | Один скрипт + CollectionService / папка |
+| Копія логіки на кожній монеті окремим Script | Один скрипт + CollectionService / Folder |
 | Перевірка кожної Part у Workspace щосекунди | Подія Touched / Prompt / Changed |
-| Нескінченний спавн ефектів | Один ефект на подію + Destroy/після часу |
+| Нескінченний spawn ефектів | Один ефект на подію + Destroy/після часу |
 
 Ти не мусиш сьогодні переписувати весь курс. Знайди **1** явний важкий цикл або спам Clone і полегши його.
 
@@ -1646,7 +1646,7 @@ export const ukLesson114 = {
  title: "UX: гравець завжди має наступний крок",
  content: `UX тут = **зрозумілість**, не «модний дизайн».
 
-Запитання кожні 10–15 с шляху:
+Запитання кожні 10-15 с шляху:
 1. Чи я розумію, що робити зараз?
 2. Чи бачу ціль (маркер/табличка/Prompt)?
 3. Чи отримав зворотний зв’язок на дію (звук/UI/ефект)?
@@ -1654,7 +1654,7 @@ export const ukLesson114 = {
 Якщо на будь-яке «ні» довше ~30 с - це UX-дірка. Її треба закрити **до** Demo Ready.
 
 Мінімальні фікси:
-- табличка на спавні (1–2 речення);
+- табличка на spawnі (1-2 речення);
 - ActionText на ProximityPrompt;
 - підсвітка першої зони (Neon / Highlight);
 - повідомлення «+монети» / «куплено».
@@ -1665,11 +1665,11 @@ export const ukLesson114 = {
  title: "UI: читабельність і контроль",
  content: `| Перевір | Ціль |
 |---------|------|
-| Розмір тексту | Не мікроскопічний на основних підписах |
+| Size тексту | Не мікроскопічний на основних підписах |
 | Контраст | Світлий текст на темній панелі (або навпаки) |
 | Кнопки | Достатньо великі, щоб влучити мишею/пальцем |
 | Колір | Не лише червоний/зелений без іконки/тексту |
-| Спам панелей | 1–2 головні елементи на демо, не 8 вікон |
+| Спам панелей | 1-2 головні елементи на демо, не 8 вікон |
 
 **Зроби зараз (8 хв):** зменш вікно Studio (імітація малого екрана) і пройди HUD. Якщо не читається - збільш текст / спростіть панель.
 
@@ -1678,21 +1678,21 @@ export const ukLesson114 = {
 Типові UX-помилки на цьому етапі курсу:
 1. Кнопка є, але зливається з фоном.
 2. Prompt є, але ActionText порожній або англійською без сенсу для класу.
-3. Підказка є, але стоїть спиною до спавну - гравець її не бачить.
+3. Підказка є, але стоїть спиною до spawn - гравець її не бачить.
 4. Після покупки тиша: не зрозуміло, чи спрацювало.
 
-Кожну з цих дір можна закрити за 5–10 хвилин. Саме такі фікси завтра полюблять пункти рубрики Demo Ready.`,
+Кожну з цих дір можна закрити за 5-10 хвилин. Саме такі фікси завтра полюблять пункти рубрики Demo Ready.`,
  },
  {
  title: "Онбординг за 60 секунд (зв’язок з оптимізацією)",
  content: `Поганий онбординг змушує гравця блукати всією картою → більше промальовки → більше лагу + більше злості.
 
 Тому UX і FPS дружать:
-1. Ясна ціль біля спавну.
+1. Ясна ціль біля spawn.
 2. Короткий шлях до першої нагороди.
 3. Важкі ефекти - **на нагороді**, не на порожньому блуканні.
 
-Приклад: не вмикай 10 Emitter на всьому хабі завжди. Увімкни феєрверк на «квест виконано» на 1–2 с.
+Приклад: не вмикай 10 Emitter на всьому хабі завжди. Увімкни феєрверк на «квест виконано» на 1-2 с.
 
 **Зроби зараз (6 хв):** скороти шлях до першої нагороди (ближчий збір / слабший перший етап / яскравіша стрілка).`,
  },
@@ -1703,7 +1703,7 @@ export const ukLesson114 = {
 | 1 | На золотому шляху немає сильного січення | |
 | 2 | Прибрав хоч один явний важкий ефект/декор/цикл | |
 | 3 | Знаю, що таке StreamingEnabled | |
-| 4 | На спавні зрозуміло, що робити | |
+| 4 | На spawnі зрозуміло, що робити | |
 | 5 | UI основних підписів читається | |
 | 6 | Нагорода дає зворотний зв’язок | |
 | 7 | Output без червоного на маршруті | |
@@ -1740,10 +1740,10 @@ export const ukLesson114 = {
 **Зроби зараз (3 хв):** пройди чекліст і постав галочки лише на реально виконані пункти.`,
  },
  {
- title: "Приклад короткого звіту викладачу (30–40 с)",
+ title: "Приклад короткого звіту викладачу (30-40 с)",
  content: `На кінець пари вмій сказати так:
 
-*«На шляху біля фонтана сікло - прибрав 3 постійні Emitter, ефект лишив лише на нагороді. На спавні додав табличку і збільшив текст HUD. Streaming знаю: для великої карти можна вмикати, у мене хаб малий - не чіпав. Output на маршруті чистий.»*
+*«На шляху біля фонтана сікло - прибрав 3 постійні Emitter, ефект лишив лише на нагороді. На spawnі додав табличку і збільшив текст HUD. Streaming знаю: для великої карти можна вмикати, у мене хаб малий - не чіпав. Output на маршруті чистий.»*
 
 Це і є доказ уроку: не «я подумав про оптимізацію», а **що змінив**.
 
@@ -1760,7 +1760,7 @@ export const ukLesson114 = {
  correctApproach: "Спочатку прибери/скороти ефекти, потім точковий вау на нагороді.",
  },
  {
- mistake: "Оптимізуєш далекий декор, ігноруючи лаг на спавні",
+ mistake: "Оптимізуєш далекий декор, ігноруючи лаг на spawnі",
  explanation: "Гравець страждає саме на золотому шляху.",
  correctApproach: "Оптимізуй маршрут демо першим.",
  },
@@ -1790,11 +1790,11 @@ export const ukLesson114 = {
 ### Part A - Оптимізація з заміром (12 хв)
 1. Пройди шлях на «слабому» режимі: звузь вікно Studio або (краще) глянь на телефоні/планшеті викладача / Device Emulator.
 2. Запиши 1 рядок «до»: де січе / що дратує.
-3. Прибери/послаб 1–3 важкі речі (Emitter, Looped Sound, декор, цикл).
+3. Прибери/послаб 1-3 важкі речі (Emitter, Looped Sound, декор, цикл).
 4. Той самий шлях «після» - 1 рядок у нотатці (має відрізнятись).
 
 ### Part B - UX (12 хв)
-1. Онбординг на спавні.
+1. Онбординг на spawnі.
 2. UI в малому вікні.
 3. Feedback нагороди (звук/текст/ефект).
 
@@ -1825,11 +1825,11 @@ export const ukLesson114 = {
  type: MC,
  question: "Який номер уроку 11.4 у новій сітці?",
  options: [
-          "84-й з 92",
-          "96-й",
-          "1-й",
-          "40-й"
-        ],
+ "84-й з 92",
+ "96-й",
+ "1-й",
+ "40-й"
+ ],
  correctAnswer: 0,
  explanation: "11.4 = урок 84.",
  },
@@ -1838,11 +1838,11 @@ export const ukLesson114 = {
  type: MC,
  question: "Чому оптимізація і UX на одному уроці?",
  options: [
-          "UX замінює Scripts",
-          "Гра має бути і плавною, і зрозумілою на одному шляху",
-          "Оптимізація потрібна лише для іконок",
-          "Це випадковість"
-        ],
+ "UX замінює Scripts",
+ "Гра має бути і плавною, і зрозумілою на одному шляху",
+ "Оптимізація потрібна лише для іконок",
+ "Це випадковість"
+ ],
  correctAnswer: 1,
  explanation: "Обидва впливають на те, чи залишаться гравці.",
  },
@@ -1851,11 +1851,11 @@ export const ukLesson114 = {
  type: MC,
  question: "З чого починати оптимізацію?",
  options: [
-          "З випадкового далекого декору без перевірки",
-          "З Publish Public",
-          "З місць лагу на золотому шляху",
-          "З видалення всього UI"
-        ],
+ "З випадкового далекого декору без перевірки",
+ "З Publish Public",
+ "З місць лагу на золотому шляху",
+ "З видалення всього UI"
+ ],
  correctAnswer: 2,
  explanation: "Спочатку те, що відчуває гравець.",
  },
@@ -1864,11 +1864,11 @@ export const ukLesson114 = {
  type: MC,
  question: "Що часто дає лаг у красивих сценах?",
  options: [
-          "Один Anchored Part",
-          "Один print у Output",
-          "Назва Place",
-          "Багато постійних ParticleEmitter / важкий декор / важкі цикли"
-        ],
+ "Один Anchored Part",
+ "Один print у Output",
+ "Name Place",
+ "Багато постійних ParticleEmitter / важкий декор / важкі цикли"
+ ],
  correctAnswer: 3,
  explanation: "Спам ефектів і важка логіка.",
  },
@@ -1877,11 +1877,11 @@ export const ukLesson114 = {
  type: MC,
  question: "Навіщо StreamingEnabled?",
  options: [
-          "Замінити DataStore",
-          "Підвантажувати світ біля гравця на великих картах",
-          "Вимкнути звук",
-          "Створити Badge"
-        ],
+ "Замінити DataStore",
+ "Підвантажувати світ біля гравця на великих картах",
+ "Вимкнути звук",
+ "Створити Badge"
+ ],
  correctAnswer: 1,
  explanation: "Стрімінг карти, не магія для всього.",
  },
@@ -1890,37 +1890,37 @@ export const ukLesson114 = {
  type: MC,
  question: "Що краще за важкий while true без паузи?",
  options: [
-          "Ще швидший while без wait",
-          "Видалити Workspace",
-          "Події або цикл з task.wait",
-          "Тільки LocalScript на кожному кадрі з важкою роботою без сенсу"
-        ],
+ "Ще швидший while без wait",
+ "Видалити Workspace",
+ "Події або цикл з task.wait",
+ "Тільки LocalScript на кожному кадрі з важкою роботою без сенсу"
+ ],
  correctAnswer: 2,
  explanation: "Не їж CPU постійно.",
  },
  {
  id: "q7",
  type: MC,
- question: "Який мінімальний UX на спавні?",
+ question: "Який мінімальний UX на spawnі?",
  options: [
-          "Зрозумілий наступний крок: табличка / маркер / Prompt",
-          "Повна відсутність підказок завжди краща",
-          "Лише 10 панелей налаштувань",
-          "Тільки Atmosphere без світу"
-        ],
+ "Зрозумілий наступний крок: табличка / маркер / Prompt",
+ "Повна відсутність підказок завжди краща",
+ "Лише 10 панелей налаштувань",
+ "Тільки Atmosphere без світу"
+ ],
  correctAnswer: 0,
- explanation: "Онбординг = частина UX.",
+ explanation: "Онбординг = Part UX.",
  },
  {
  id: "q8",
  type: MC,
  question: "Як перевірити читабельність UI швидко?",
  options: [
-          "Ніколи не дивитись на UI",
-          "Видалити весь текст",
-          "Писати лише білим по білому",
-          "Зменшити вікно / глянути як на малому екрані"
-        ],
+ "Ніколи не дивитись на UI",
+ "Видалити весь текст",
+ "Писати лише білим по білому",
+ "Зменшити вікно / глянути як на малому екрані"
+ ],
  correctAnswer: 3,
  explanation: "Маленький екран одразу показує проблеми.",
  },
@@ -1929,11 +1929,11 @@ export const ukLesson114 = {
  type: MC,
  question: "Який наступний урок після 11.4?",
  options: [
-          "12.6 SHOWCASE",
-          "11.7 (немає в новій сітці)",
-          "11.5 - Demo Ready",
-          "Модуль 1"
-        ],
+ "12.6 SHOWCASE",
+ "11.7 (немає в новій сітці)",
+ "11.5 - Demo Ready",
+ "Модуль 1"
+ ],
  correctAnswer: 2,
  explanation: "Opt/UX → Demo Ready → сліпий тест.",
  },
@@ -1942,11 +1942,11 @@ export const ukLesson114 = {
  type: MC,
  question: "Чому важкі ефекти краще на нагороді, а не на всьому хабі?",
  options: [
-          "Бо Roblox забороняє ефекти в хабі",
-          "Менше лагу в блуканні + сильніший вау в моменті",
-          "Бо ParticleEmitter не працює на подіях",
-          "Це лише для іконки"
-        ],
+ "Бо Roblox забороняє ефекти в хабі",
+ "Менше лагу в блуканні + сильніший вау в моменті",
+ "Бо ParticleEmitter не працює на подіях",
+ "Це лише для іконки"
+ ],
  correctAnswer: 1,
  explanation: "Точковий juice дешевший і ефективніший.",
  },
@@ -1955,11 +1955,11 @@ export const ukLesson114 = {
  type: MC,
  question: "Яку назву Save пропонує урок?",
  options: [
-          "Demo Ready",
-          "SHOWCASE DAY",
-          "Final GDD",
-          "Lesson 11.4 - Opt and UX"
-        ],
+ "Demo Ready",
+ "SHOWCASE DAY",
+ "Final GDD",
+ "Lesson 11.4 - Opt and UX"
+ ],
  correctAnswer: 3,
  explanation: "Здача саме цього дня.",
  },
@@ -1968,11 +1968,11 @@ export const ukLesson114 = {
  type: MC,
  question: "Що не варто робити сьогодні?",
  options: [
-          "Повний редизайн усього UI на 3 години замість шляху",
-          "Прибрати зайвий Emitter",
-          "Додати табличку на спавні",
-          "Перевірити Output"
-        ],
+ "Повний редизайн усього UI на 3 години замість шляху",
+ "Прибрати зайвий Emitter",
+ "Додати табличку на spawnі",
+ "Перевірити Output"
+ ],
  correctAnswer: 0,
  explanation: "Фокус на золотому шляху.",
  },
@@ -1981,11 +1981,11 @@ export const ukLesson114 = {
  type: MC,
  question: "Навіщо зворотний зв’язок на нагороду?",
  options: [
-          "Це замінює оптимізацію",
-          "Це вимикає Streaming",
-          "Гравець розуміє, що дія спрацювала",
-          "Потрібно лише для Terrain"
-        ],
+ "Це замінює оптимізацію",
+ "Це вимикає Streaming",
+ "Гравець розуміє, що дія спрацювала",
+ "Потрібно лише для Terrain"
+ ],
  correctAnswer: 2,
  explanation: "UX-feedback обов’язковий.",
  },
@@ -1994,11 +1994,11 @@ export const ukLesson114 = {
  type: MC,
  question: "Якщо карта маленька, StreamingEnabled…",
  options: [
-          "Обов’язковий завжди інакше гра не стартує",
-          "Замінює всі Scripts",
-          "Видаляє UI",
-          "Не завжди критичний; спочатку прибери сміття на шляху"
-        ],
+ "Обов’язковий завжди інакше гра не стартує",
+ "Замінює всі Scripts",
+ "Видаляє UI",
+ "Не завжди критичний; спочатку прибери сміття на шляху"
+ ],
  correctAnswer: 3,
  explanation: "Інструмент за потребою.",
  },
@@ -2007,11 +2007,11 @@ export const ukLesson114 = {
  type: MC,
  question: "Що вважається зданим артефактом уроку 11.4?",
  options: [
-          "Лише теорія без змін у Studio",
-          "Place з помітною opt-зміною + UX-фіксом на шляху і Save",
-          "Порожній Baseplate",
-          "Publish без перевірки"
-        ],
+ "Лише теорія без змін у Studio",
+ "Place з помітною opt-зміною + UX-фіксом на шляху і Save",
+ "Порожній Baseplate",
+ "Publish без перевірки"
+ ],
  correctAnswer: 1,
  explanation: "Потрібні конкретні правки в білді.",
  }
@@ -2031,19 +2031,19 @@ export const ukLesson115 = {
  "Обрати один жанровий Place і довести його до стану Demo Ready",
  "Пройти рубрику з ~15 пунктів по золотому шляху",
  "Закрити дірки онбордингу, UI, звуку й стабільності перед сліпим тестом",
- "Підготувати 60–90 с демо-маршрут для показу",
+ "Підготувати 60-90 с демо-маршрут для показу",
  "Зберегти Place як базу для завтрашнього сліпого playtest (11.6)"
  ],
  theory: {
  sections: [
  {
  title: "Сьогоднішня місія (урок 85 з 92)",
- content: `**Demo Ready** = гру вже можна показати за 1–2 хвилини без виправдань «зараз підкажу».
+ content: `**Demo Ready** = гру вже можна показати за 1-2 хвилини без виправдань «зараз підкажу».
 
 Ти вже робив у модулі 11:
 - **11.1** порядок у Explorer;
 - **11.2** loading (якщо є);
-- **11.3** звук / частинки / атмосфера;
+- **11.3** звук / Parts / атмосфера;
 - **11.4** оптимізація + UX-база.
 
 Сьогодні не починаєш новий жанр з нуля. Сьогодні береш **один** свій найкращий Place (obby / sim / хаб / арена / тайкун-шматок…) і доводиш його рубрикою з **~15 пунктів**.
@@ -2061,12 +2061,12 @@ export const ukLesson115 = {
 | Золотий шлях проходить без суфлера | «Я знаю куди бігти, новачок - ні» |
 | Є старт, дія, нагорода | Красивий хаб без циклу |
 | Output чистий на маршруті | Червоні помилки «ігноруємо» |
-| 60–90 с демо можна провести | 10 хв пояснень замість гри |
+| 60-90 с демо можна провести | 10 хв пояснень замість гри |
 | Чесний обсяг | Обіцянки фіч, яких немає |
 
 Demo Ready **не** означає «ідеальна гра на рік». Означає: **короткий повний досвід** уже зібраний і виглядає свідомо.
 
-**Зроби зараз (3 хв):** напиши одним реченням, який Place обираєш і який у нього золотий шлях (спавн → … → нагорода).`,
+**Зроби зараз (3 хв):** напиши одним реченням, який Place обираєш і який у нього золотий шлях (spawn → … → нагорода).`,
  },
  {
  title: "Обери один Place - не три «майже»",
@@ -2074,7 +2074,7 @@ Demo Ready **не** означає «ідеальна гра на рік». Оз
 
 Як вибрати:
 1. У якому Place найстабільніший основний цикл?
-2. Де вже є хоч якийсь polish з 11.1–11.4?
+2. Де вже є хоч якийсь полірування з 11.1-11.4?
 3. Що реально показати за 90 с?
 
 Не клеїй сьогодні obby + sim + арену «бо прикольно». Це робота модуля 12 (збірка фіналки). Сьогодні - **глибина одного жанру**.
@@ -2085,9 +2085,9 @@ Demo Ready **не** означає «ідеальна гра на рік». Оз
  },
  {
  title: "Золотий шлях Demo Ready (зафіксуй на папері)",
- content: `Запиши 5–7 кроків **до** правок:
+ content: `Запиши 5-7 кроків **до** правок:
 
-1. Спавн / після loading.
+1. Spawn / після loading.
 2. Гравець розуміє ціль (табличка / маркер / Prompt).
 3. Йде до головної дії.
 4. Робить дію.
@@ -2103,15 +2103,15 @@ Demo Ready **не** означає «ідеальна гра на рік». Оз
  title: "Рубрика Demo Ready (~15 пунктів)",
  content: `Став **так / ні / майже**. Мета сьогодні: якомога більше **так** на золотому шляху. «Майже» = конкретний фікс у баг-нотатці.
 
-### A. Старт і зрозумілість (1–4)
+### A. Старт і зрозумілість (1-4)
 | # | Пункт | Так? |
 |---|-------|------|
-| 1 | Спавн працює, персонаж не падає в пустоту | |
-| 2 | За ≤30–60 с зрозуміло, що робити | |
+| 1 | Spawn працює, character не падає в пустоту | |
+| 2 | За ≤30-60 с зрозуміло, що робити | |
 | 3 | Є видимий орієнтир (табличка / світло / NPC / стрілка) | |
 | 4 | Перша дія очевидна (Prompt / кнопка / зона) | |
 
-### B. Цикл і нагорода (5–8)
+### B. Цикл і нагорода (5-8)
 | # | Пункт | Так? |
 |---|-------|------|
 | 5 | Головна дія дає результат | |
@@ -2119,20 +2119,20 @@ Demo Ready **не** означає «ідеальна гра на рік». Оз
 | 7 | Можна повторити цикл або піти далі | |
 | 8 | Поразка/смерть (якщо є) не ламає гру назавжди | |
 
-### C. Polish модуля 11 (9–12)
+### C. Polish модуля 11 (9-12)
 | # | Пункт | Так? |
 |---|-------|------|
-| 9 | Explorer читається (папки/імена з 11.1) | |
+| 9 | Explorer читається (folders/імена з 11.1) | |
 | 10 | Loading не блокує вічно / або його свідомо немає | |
 | 11 | На шляху є ≥1 осмислений SFX або VFX (11.3) | |
 | 12 | Немає жахливого лагу / спаму звуком на маршруті (11.4) | |
 
-### D. Стабільність і демо (13–15)
+### D. Стабільність і демо (13-15)
 | # | Пункт | Так? |
 |---|-------|------|
 | 13 | Output без червоного на золотому шляху | |
 | 14 | UI читається (контраст, розмір) | |
-| 15 | Можу провести демо 60–90 с без «зараз поясню» | |
+| 15 | Можу провести демо 60-90 с без «зараз поясню» | |
 
 **Зроби зараз (8 хв):** простав галочки чесно в Play. Усе «ні» = список фіксів на Part B практики.`,
  },
@@ -2140,9 +2140,9 @@ Demo Ready **не** означає «ідеальна гра на рік». Оз
  title: "Як закривати пункти швидко (типові фікси)",
  content: `| Пункт червоний | Швидкий хід |
 |----------------|-------------|
-| 2–4 онбординг | Табличка + Neon-орієнтир + ActionText на Prompt |
-| 5–6 нагорода | Звук успіху + TextLabel «+10» / частинка |
-| 8 респавн | Перевір SpawnLocation / checkpoint |
+| 2-4 онбординг | Табличка + Neon-орієнтир + ActionText на Prompt |
+| 5-6 нагорода | Звук успіху + TextLabel «+10» / Partsка |
+| 8 Respawn | Перевір SpawnLocation / checkpoint |
 | 9 Explorer | 10 хв імен і Folders, не ідеал на рік |
 | 11 juice | 1 Sound на нагороду + 1 ParticleEmitter |
 | 13 Output | Відкрий Output, відтвори шлях, лагодь перший червоний |
@@ -2154,9 +2154,9 @@ Demo Ready **не** означає «ідеальна гра на рік». Оз
 **Зроби зараз (3 хв):** знайди в Place один симптом з таблиці і виправ або підтверди, що його немає.`,
  },
  {
- title: "Чекліст онбордингу на спавні (обов’язковий мінімум)",
- content: `Після спавну гравець має побачити хоча б одне з:
-- табличку з 1–2 реченнями;
+ title: "Чекліст онбордингу на spawnі (обов’язковий мінімум)",
+ content: `Після spawn гравець має побачити хоча б одне з:
+- табличку з 1-2 реченнями;
 - яскравий маркер цілі;
 - NPC з ProximityPrompt і зрозумілим ActionText;
 - стрілку / Highlight на перший об’єкт.
@@ -2166,7 +2166,7 @@ Demo Ready **не** означає «ідеальна гра на рік». Оз
 
 Уникай роману на 15 рядків. Уникай сленгу без пояснення («прокинь івент»).
 
-**Зроби зараз (6 хв):** постав/онови табличку й перевір з камери новачка (відійди від спавну і підійди знову очима).`,
+**Зроби зараз (6 хв):** постав/онови табличку й перевір з камери новачка (відійди від spawn і підійди знову очима).`,
  },
  {
  title: "UI на демо: що має читатись",
@@ -2177,21 +2177,21 @@ Demo Ready **не** означає «ідеальна гра на рік». Оз
 | Повідомлення помилки | «Недостатньо монет», не тиша |
 | Мобільний/маленьке вікно | Хоча б зменш Studio-вікно і глянь |
 
-Якщо HUD порожній весь демо - глядач не розуміє прогресу. Якщо HUD кричить 8 панелей одразу - теж погано. Для Demo Ready достатньо **1–2 головних числа/кнопки**.
+Якщо HUD порожній весь демо - глядач не розуміє прогресу. Якщо HUD кричить 8 панелей одразу - теж погано. Для Demo Ready достатньо **1-2 головних числа/кнопки**.
 
 **Зроби зараз (4 хв):** зроби одну перевірку з цього розділу в Play і запиши результат у Note.`,
  },
  {
- title: "Підготуй сценарій демо 60–90 секунд",
+ title: "Підготуй Script демо 60-90 секунд",
  content: `Запиши на шпаргалку:
 
 | Сек | Що робиш / кажеш |
 |-----|------------------|
-| 0–10 | «Це [жанр]: гравець [дія], щоб [нагорода].» |
-| 10–20 | Спавн + показати табличку |
-| 20–50 | Головна дія live |
-| 50–70 | Нагорода + 1 polish (звук/VFX) |
-| 70–90 | «Далі на 11.6 - сліпий тест» / коротка пауза |
+| 0-10 | «Це [жанр]: гравець [дія], щоб [нагорода].» |
+| 10-20 | Spawn + показати табличку |
+| 20-50 | Головна дія live |
+| 50-70 | Нагорода + 1 полірування (звук/VFX) |
+| 70-90 | «Далі на 11.6 - сліпий тест» / коротка пауза |
 
 Репетиція: **2 рази** з таймером. Якщо не вкладаєшся - ріж слова, не ріж дію.
 
@@ -2219,7 +2219,7 @@ Demo Ready **не** означає «ідеальна гра на рік». Оз
 |----------|------|
 | Place з максимальною кількістю «так» у рубриці | Сліпий playtest 11.6 |
 | Список «ні/майже» | Багліст завтра |
-| Демо 60–90 с | Заготовка до портфоліо/SHOWCASE |
+| Демо 60-90 с | Заготовка до портфоліо/SHOWCASE |
 | Чесний обсяг | Пітч MVP у 12.1 легше писати |
 
 Якщо рубрика має багато «ні» в блоці A (старт) - не йди в 11.6 «на удачу». Добій онбординг сьогодні: це найдешевший фікс.
@@ -2233,8 +2233,8 @@ Save: \`Lesson 11.5 - Demo Ready\`.
  content: `- [ ] Обрано один Place
 - [ ] Золотий шлях записаний
 - [ ] Рубрика ~15 пунктів проставлена
-- [ ] Критичні «ні» (особливо 1–8 і 13–15) закриті або майже
-- [ ] Є шпаргалка демо 60–90 с
+- [ ] Критичні «ні» (особливо 1-8 і 13-15) закриті або майже
+- [ ] Є шпаргалка демо 60-90 с
 - [ ] Один прогін демо з таймером пройдено
 - [ ] Output чистий на маршруті
 - [ ] Save: \`Lesson 11.5 - Demo Ready\`
@@ -2254,17 +2254,17 @@ Save: \`Lesson 11.5 - Demo Ready\`.
  {
  mistake: "Красивий світ без нагороди на шляху",
  explanation: "Демо розвалюється: «і що далі?»",
- correctApproach: "Спочатку пункти 5–6 рубрики.",
+ correctApproach: "Спочатку пункти 5-6 рубрики.",
  },
  {
- mistake: "Немає таблички/орієнтира на спавні",
+ mistake: "Немає таблички/орієнтира на spawnі",
  explanation: "Завтрашній сліпий тест одразу червоний.",
  correctApproach: "Онбординг-мінімум сьогодні.",
  },
  {
  mistake: "Демо 5 хвилин пояснень без гри",
  explanation: "Це не Demo Ready, це лекція.",
- correctApproach: "60–90 с з живою дією.",
+ correctApproach: "60-90 с з живою дією.",
  },
  {
  mistake: "Ігноруєш червоний Output «бо гра йде»",
@@ -2273,11 +2273,11 @@ Save: \`Lesson 11.5 - Demo Ready\`.
  }
  ],
  summary:
- "Ти довів один Place до Demo Ready за рубрикою ~15 пунктів: зрозумілий старт, цикл з нагородою, базовий polish і короткий демо-маршрут. Урок 85 готовий до сліпого playtest у 11.6.",
+ "Ти довів один Place до Demo Ready за рубрикою ~15 пунктів: зрозумілий старт, цикл з нагородою, базовий полірування і короткий демо-маршрут. Урок 85 готовий до сліпого playtest у 11.6.",
  practiceTask: {
  title: "Практика: Demo Ready рубрика (~30 хв)",
  difficulty: "beginner",
- description: `**Мета:** один Place з максимальною кількістю «так» і готовим демо 60–90 с.
+ description: `**Мета:** один Place з максимальною кількістю «так» і готовим демо 60-90 с.
 
 ### Part A - Рубрика (10 хв)
 1. Обери Place і запиши золотий шлях.
@@ -2285,8 +2285,8 @@ Save: \`Lesson 11.5 - Demo Ready\`.
 
 ### Part B - Фікси (15 хв)
 1. Закрий найболючіші «ні» (старт, нагорода, Output, UI).
-2. Додай мінімум онбордингу на спавні.
-3. Підготуй шпаргалку демо і прожени таймер 1–2 рази.
+2. Додай мінімум онбордингу на spawnі.
+3. Підготуй шпаргалку демо і прожени таймер 1-2 рази.
 
 ### Part C - Здача (5 хв)
 1. Фінальний прогін золотого шляху.
@@ -2296,16 +2296,16 @@ Save: \`Lesson 11.5 - Demo Ready\`.
 ### Критерій «зараховано»
 - Є заповнена рубрика
 - Золотий шлях проходить
-- Є демо-сценарій 60–90 с
+- Є демо-Script 60-90 с
 - Критичні пункти старту/циклу/стабільності не всі «ні»
 - Place збережено`,
  hints: [
- "Почни фікси з пунктів 1–6 - вони дають найбільший ефект на демо",
- "Один хороший SFX нагороди часто закриває і polish, і зрозумілість",
+ "Почни фікси з пунктів 1-6 - вони дають найбільший ефект на демо",
+ "Один хороший SFX нагороди часто закриває і полірування, і зрозумілість",
  "Запиши «ні» окремо - завтра це майже готовий багліст для 11.6"
  ],
  optionalChallenge:
- "Зроби скрін «до/після» спавну (без таблички → з табличкою/маркером) для портфоліо.",
+ "Зроби скрін «до/після» spawn (без таблички → з табличкою/маркером) для портфоліо.",
  },
  quiz: {
  passingScore: 70,
@@ -2316,11 +2316,11 @@ Save: \`Lesson 11.5 - Demo Ready\`.
  type: MC,
  question: "Який номер уроку 11.5 у новій сітці?",
  options: [
-          "85-й з 92",
-          "96-й",
-          "1-й",
-          "50-й"
-        ],
+ "85-й з 92",
+ "96-й",
+ "1-й",
+ "50-й"
+ ],
  correctAnswer: 0,
  explanation: "11.5 = урок 85; далі 11.6 = 86.",
  },
@@ -2329,24 +2329,24 @@ Save: \`Lesson 11.5 - Demo Ready\`.
  type: MC,
  question: "Що означає Demo Ready у цьому уроці?",
  options: [
-          "Гра ідеальна назавжди",
-          "Короткий повний досвід можна показати без суфлера",
-          "Обов’язково Publish Public сьогодні",
-          "Порожній Baseplate"
-        ],
+ "Гра ідеальна назавжди",
+ "Короткий повний досвід можна показати без суфлера",
+ "Обов’язково Publish Public сьогодні",
+ "Порожній Baseplate"
+ ],
  correctAnswer: 1,
- explanation: "Готовність до показу, не вічний polish.",
+ explanation: "Готовність до показу, не вічний полірування.",
  },
  {
  id: "q3",
  type: MC,
  question: "Скільки Place варто полірувати на цьому уроці?",
  options: [
-          "Обов’язково десять",
-          "Нуль",
-          "Один головний",
-          "Усі одночасно без пріоритету"
-        ],
+ "Обов’язково десять",
+ "Нуль",
+ "Один головний",
+ "Усі одночасно без пріоритету"
+ ],
  correctAnswer: 2,
  explanation: "Глибина одного кандидата.",
  },
@@ -2355,24 +2355,24 @@ Save: \`Lesson 11.5 - Demo Ready\`.
  type: MC,
  question: "Скільки приблизно пунктів у рубриці Demo Ready?",
  options: [
-          "Рівно 2",
-          "100 обов’язково",
-          "Рубрика не потрібна",
-          "Близько 15"
-        ],
+ "Рівно 2",
+ "100 обов’язково",
+ "Рубрика не потрібна",
+ "Близько 15"
+ ],
  correctAnswer: 3,
  explanation: "Урок побудований навколо ~15 чекпоінтів якості.",
  },
  {
  id: "q5",
  type: MC,
- question: "Що має бути на спавні для онбордингу?",
+ question: "Що має бути на spawnі для онбордингу?",
  options: [
-          "Нічого - гравець сам здогадається завжди",
-          "Підказка: табличка / маркер / Prompt зі зрозумілим текстом",
-          "Лише 20 екранів налаштувань",
-          "Тільки небо без світу"
-        ],
+ "Нічого - гравець сам здогадається завжди",
+ "Підказка: табличка / маркер / Prompt зі зрозумілим текстом",
+ "Лише 20 екранів налаштувань",
+ "Тільки небо без світу"
+ ],
  correctAnswer: 1,
  explanation: "Без орієнтира демо і сліпий тест страждають.",
  },
@@ -2381,24 +2381,24 @@ Save: \`Lesson 11.5 - Demo Ready\`.
  type: MC,
  question: "Який наступний урок після 11.5?",
  options: [
-          "12.6 SHOWCASE одразу",
-          "Модуль 1",
-          "11.6 - Сліпий playtest + фікси",
-          "11.7 (у новій сітці немає)"
-        ],
+ "12.6 SHOWCASE одразу",
+ "Модуль 1",
+ "11.6 - Сліпий playtest + фікси",
+ "11.7 (у новій сітці немає)"
+ ],
  correctAnswer: 2,
  explanation: "Спочатку Demo Ready, потім сліпий тест.",
  },
  {
  id: "q7",
  type: MC,
- question: "Скільки триває демо-сценарій цього уроку?",
+ question: "Скільки триває демо-Script цього уроку?",
  options: [
-          "Приблизно 60–90 секунд",
-          "30 хвилин лекції",
-          "0 секунд",
-          "Рівно 1 кадр"
-        ],
+ "Приблизно 60-90 секунд",
+ "30 хвилин лекції",
+ "0 секунд",
+ "Рівно 1 кадр"
+ ],
  correctAnswer: 0,
  explanation: "Короткий живий показ.",
  },
@@ -2407,24 +2407,24 @@ Save: \`Lesson 11.5 - Demo Ready\`.
  type: MC,
  question: "Чому важливий пункт про Output на золотому шляху?",
  options: [
-          "Output потрібен лише для Terrain",
-          "Помилки завжди корисні на демо",
-          "Output замінює UI",
-          "Червоні помилки на маршруті показу вилізуть у найгірший момент"
-        ],
+ "Output потрібен лише для Terrain",
+ "Помилки завжди корисні на демо",
+ "Output замінює UI",
+ "Червоні помилки на маршруті показу вилізуть у найгірший момент"
+ ],
  correctAnswer: 3,
- explanation: "Стабільність - частина Demo Ready.",
+ explanation: "Стабільність - Part Demo Ready.",
  },
  {
  id: "q9",
  type: MC,
  question: "Що робити з пунктами рубрики «ні»?",
  options: [
-          "Ігнорувати до SHOWCASE",
-          "Видалити рубрику",
-          "Перетворити на список фіксів і закрити найкритичніші сьогодні",
-          "Одразу Public Publish"
-        ],
+ "Ігнорувати до SHOWCASE",
+ "Видалити рубрику",
+ "Перетворити на список фіксів і закрити найкритичніші сьогодні",
+ "Одразу Public Publish"
+ ],
  correctAnswer: 2,
  explanation: "Рубрика без фіксів марна.",
  },
@@ -2433,11 +2433,11 @@ Save: \`Lesson 11.5 - Demo Ready\`.
  type: MC,
  question: "Яку назву Save пропонує урок?",
  options: [
-          "SHOWCASE DAY",
-          "Lesson 11.5 - Demo Ready",
-          "Final GDD",
-          "Module 11 - Game Polished"
-        ],
+ "SHOWCASE DAY",
+ "Lesson 11.5 - Demo Ready",
+ "Final GDD",
+ "Module 11 - Game Polished"
+ ],
  correctAnswer: 1,
  explanation: "Окрема назва дня Demo Ready; Game Polished - після 11.6.",
  },
@@ -2446,11 +2446,11 @@ Save: \`Lesson 11.5 - Demo Ready\`.
  type: MC,
  question: "Що важливіше для Demo Ready сьогодні?",
  options: [
-          "Новий жанр з нуля за годину",
-          "10 GamePass одразу",
-          "Тільки атмосфера без геймплею",
-          "Повний короткий цикл з нагородою"
-        ],
+ "Новий жанр з нуля за годину",
+ "10 GamePass одразу",
+ "Тільки атмосфера без геймплею",
+ "Повний короткий цикл з нагородою"
+ ],
  correctAnswer: 3,
  explanation: "Цикл > декоративна купа.",
  },
@@ -2459,37 +2459,37 @@ Save: \`Lesson 11.5 - Demo Ready\`.
  type: MC,
  question: "Навіщо репетирувати демо з таймером?",
  options: [
-          "Щоб вкластись у 60–90 с і не замінити гру лекцією",
-          "Щоб вимкнути Explorer",
-          "Таймер заборонений",
-          "Лише для музики"
-        ],
+ "Щоб вкластись у 60-90 с і не замінити гру лекцією",
+ "Щоб вимкнути Explorer",
+ "Таймер заборонений",
+ "Лише для музики"
+ ],
  correctAnswer: 0,
  explanation: "Дисципліна показу.",
  },
  {
  id: "q13",
  type: MC,
- question: "Які уроки модуля 11 прямо підтримують пункти polish у рубриці?",
+ question: "Які уроки модуля 11 прямо підтримують пункти полірування у рубриці?",
  options: [
-          "Лише модуль 1",
-          "Лише Publish",
-          "11.1–11.4 (Explorer, loading, juice, UX/opt)",
-          "Жодні"
-        ],
+ "Лише модуль 1",
+ "Лише Publish",
+ "11.1-11.4 (Explorer, loading, juice, UX/opt)",
+ "Жодні"
+ ],
  correctAnswer: 2,
- explanation: "Demo Ready зводить попередній polish докупи.",
+ explanation: "Demo Ready зводить попередній полірування докупи.",
  },
  {
  id: "q14",
  type: MC,
  question: "Що свідомо не робимо на 11.5?",
  options: [
-          "Заповнення рубрики",
-          "Онбординг на спавні",
-          "Коротке демо",
-          "Publish Public і роздування трьох Place одразу"
-        ],
+ "Заповнення рубрики",
+ "Онбординг на spawnі",
+ "Коротке демо",
+ "Publish Public і роздування трьох Place одразу"
+ ],
  correctAnswer: 3,
  explanation: "Фокус вузький: готовність до показу/тесту.",
  },
@@ -2498,11 +2498,11 @@ Save: \`Lesson 11.5 - Demo Ready\`.
  type: MC,
  question: "Що вважається зданим артефактом уроку 11.5?",
  options: [
-          "Порожній чекліст",
-          "Один Place з рубрикою, золотим шляхом, демо-сценарієм і Save Demo Ready",
-          "Лише іконка без гри",
-          "Три недописані Place"
-        ],
+ "Порожній чекліст",
+ "Один Place з рубрикою, золотим шляхом, демо-Script і Save Demo Ready",
+ "Лише іконка без гри",
+ "Три недописані Place"
+ ],
  correctAnswer: 1,
  explanation: "Demo Ready = вимірювана готовність одного білду.",
  }
@@ -2521,7 +2521,7 @@ export const ukLesson116 = {
  learningObjectives: [
  "Провести сліпий playtest без підказок перші хвилини",
  "Записати плутанину словами тестера і скласти багліст",
- "Пріоритизувати фікси: P0 блокери → P1 UX → далі polish",
+ "Пріоритизувати фікси: P0 блокери → P1 UX → дал і полірування",
  "Перевірити золотий шлях після виправлень без червоного Output",
  "Зберегти Place як підсумок модуля 11 перед релізом (модуль 12)"
  ],
@@ -2529,7 +2529,7 @@ export const ukLesson116 = {
  sections: [
  {
  title: "Сьогоднішня місія (урок 86 з 92)",
- content: `Це **останній урок модуля Polish**. Ти вже робив Explorer, loading, звук/VFX, оптимізацію/UX і Demo Ready (11.1–11.5). Сьогодні перевірка жорстким способом:
+ content: `Це **останній урок модуля Polish**. Ти вже робив Explorer, loading, звук/VFX, оптимізацію/UX і Demo Ready (11.1-11.5). Сьогодні перевірка жорстким способом:
 
 **Сліпий playtest** = хтось (або ти «в ролі новачка») грає **без підказок**, а ти лише дивишся і записуєш.
 
@@ -2539,7 +2539,7 @@ export const ukLesson116 = {
 3. Повторний золотий шлях.
 4. Save: \`Module 11 - Game Polished\`.
 
-Далі модуль **12** - план, збірка, тест, Publish, портфоліо, SHOWCASE. Сьогоднішня якість напряму вплине на те, наскільки боляче буде 12.2–12.3.
+Далі модуль **12** - план, збірка, тест, Publish, портфоліо, SHOWCASE. Сьогоднішня якість напряму вплине на те, наскільки боляче буде 12.2-12.3.
 
 Відкрий свій найкращий Place після 11.5 (або головний проєкт курсу).
 
@@ -2564,15 +2564,15 @@ export const ukLesson116 = {
 **Зроби зараз (2 хв):** домовся хто тестер і підготуй аркуш для нотаток.`,
  },
  {
- title: "Протокол сесії (10–12 хвилин)",
+ title: "Протокол сесії (10-12 хвилин)",
  content: `1. Тестер сідає / бере керування. Ти **мовчиш мінімум 5 хвилин**.
 2. Просиш думати вголос: «шукаю магазин… не бачу…».
 3. Пишеш час + факт: \`02:15 - стоїть біля стіни, шукає квест\`.
 4. Не виправляй баги під час сесії (крім повного крашу).
 5. Після гри три питання:
-   - Що було найясніше?
-   - Де заплутався найбільше?
-   - Що зламалось / бісило?
+ - Що було найясніше?
+ - Де заплутався найбільше?
+ - Що зламалось / бісило?
 6. Якщо є другий тестер - повтори. Патерн з двох людей цінніший за одну думку.
 
 Заборонено на сесії:
@@ -2623,7 +2623,7 @@ export const ukLesson116 = {
 
 | ID | Проблема | Час/нотатка | P | Статус |
 |----|----------|-------------|---|--------|
-| 1 | Не видно, що робити на спавні | 0:40 | P1 | відкрито |
+| 1 | Не видно, що робити на spawnі | 0:40 | P1 | відкрито |
 | 2 | Магазин списує двічі | 6:10 | P0 | відкрито |
 | 3 | Гучна музика | 1:00 | P2 | потім |
 
@@ -2637,14 +2637,14 @@ export const ukLesson116 = {
 **Зроби зараз (4 хв):** зроби одну перевірку з цього розділу в Play і запиши результат у Note.`,
  },
  {
- title: "Рубрика «відчувається готово» (1–5)",
+ title: "Рубрика «відчувається готово» (1-5)",
  content: `Після фіксів оціни чесно. Мета: **усі ≥4**, або план що саме лишається P2/P3.
 
 | Область | 1 = погано | 5 = супер | Твоя оцінка |
 |---------|------------|-----------|-------------|
 | Зрозумілість старту | Не знаю що робити | За 30 с ясно | |
 | Відгук на дії | Клік «німий» | Є SFX/UI/нагорода | |
-| Стабільність | Червоний Output | 8–10 хв без падінь | |
+| Стабільність | Червоний Output | 8-10 хв без падінь | |
 | Темп | Нудно / занадто жорстко | Хочеться ще раз | |
 | Охайність | Хаос Explorer/UI | Читається як продукт | |
 
@@ -2656,11 +2656,11 @@ export const ukLesson116 = {
  title: "Швидкі фікси, які часто рятують сліпий тест",
  content: `| Проблема тестера | Швидкий фікс |
 |------------------|--------------|
-| «Не знаю куди йти» | Яскрава стрілка / Neon Part / табличка на спавні |
+| «Не знаю куди йти» | Яскрава стрілка / Neon Part / табличка на spawnі |
 | «Не бачу кнопку» | Більший TextButton, контраст, UIScale |
 | «Підійшов до NPC - тиша» | ProximityPrompt з ActionText, MaxActivationDistance |
 | «Застряг у стіні» | CanCollide / дірка в геометрії / Anchored |
-| «Звук ріже» | Volume 0.3–0.5, не 1 на всьому |
+| «Звук ріже» | Volume 0.3-0.5, не 1 на всьому |
 | «Довго нічого не відбувається» | Перша нагорода раніше (ближчий збір / слабший перший етап) |
 | «Не розумію що купив» | Print/UI «Куплено X», звук успіху |
 
@@ -2672,12 +2672,12 @@ export const ukLesson116 = {
  title: "Повторний прогін після фіксів (регресія)",
  content: `Виправив три баги - і зламав четвертий. Тому:
 
-1. Пройди золотий шлях: спавн → головна дія → нагорода.
+1. Пройди золотий шлях: spawn → головна дія → нагорода.
 2. Перевір саме місця з багліста (де були P0/P1).
 3. Глянь Output ще раз.
 4. Якщо є loading з 11.2 - один холодний захід (Stop → Play).
 
-Мінімум часу на регресію: **5–7 хвилин**. Без неї «фікси» інколи гірші за баги.
+Мінімум часу на регресію: **5-7 хвилин**. Без неї «фікси» інколи гірші за баги.
 
 Якщо тестер ще доступний - дай йому 3 хвилини тільки на раніше проблемне місце. Це найдешевший спосіб перевірити, що UX справді став яснішим.
 
@@ -2687,9 +2687,9 @@ export const ukLesson116 = {
  title: "60-секундне міні-демо для себе / викладача",
  content: `На кінець пари вмій показати:
 
-1. Старт (loading, якщо є) + спавн.
+1. Старт (loading, якщо є) + spawn.
 2. Зрозуміла перша дія.
-3. Одна нагорода / один «вау» (звук, частинка, апгрейд).
+3. Одна нагорода / один «вау» (звук, Partsка, апгрейд).
 4. (Опційно) чистий фрагмент Explorer для викладача.
 
 Це репетиція м’язів для модуля 12 SHOWCASE, тільки коротша.
@@ -2709,7 +2709,7 @@ export const ukLesson116 = {
 
 Не починай модуль 12 з місця, де тестер «не зрозумів що робити 5 хвилин». Спочатку добій онбординг сьогодні.
 
-Save окремо: навіть якщо далі зробиш нову фіналку, \`Module 11 - Game Polished\` лишається контрольним знімком polish-навичок.
+Save окремо: навіть якщо далі зробиш нову фіналку, \`Module 11 - Game Polished\` лишається контрольним знімком полірування-навичок.
 
 **Зроби зараз (4 хв):** зроби одну перевірку з цього розділу в Play і запиши результат у Note.`,
  },
@@ -2731,11 +2731,11 @@ Save окремо: навіть якщо далі зробиш нову фіна
  title: "Чекліст здачі уроку 86",
  content: `- [ ] Була сліпа сесія ≥10 хв (або 2 коротші наосліп-прогони)
 - [ ] Є топ-3 плутанини словами тестера
-- [ ] Багліст з P0–P3
+- [ ] Багліст з P0-P3
 - [ ] P0 закриті; ключові P1 закриті або з тимчасовою підказкою в світі
 - [ ] Золотий шлях пройдено після фіксів
 - [ ] Output чистий на цьому маршруті
-- [ ] Рубрика 1–5 заповнена
+- [ ] Рубрика 1-5 заповнена
 - [ ] Save: \`Module 11 - Game Polished\`
 
 Модуль 11 після цього вважається зданим по суті: не «є ефекти», а «гравець може пройти без суфлера».
@@ -2763,7 +2763,7 @@ Save окремо: навіть якщо далі зробиш нову фіна
  {
  mistake: "Немає повторного прогону після фіксів",
  explanation: "Фікс ламає сусідню систему непомітно.",
- correctApproach: "Регресія золотого шляху 5–7 хв.",
+ correctApproach: "Регресія золотого шляху 5-7 хв.",
  },
  {
  mistake: "Пишеш «йому просто не сподобалось»",
@@ -2784,12 +2784,12 @@ Save окремо: навіть якщо далі зробиш нову фіна
 3. Запиши топ-3 плутанини + Output-помітки.
 
 ### Part B - Багліст і фікси (18 хв)
-1. Заповни таблицю P0–P3.
+1. Заповни таблицю P0-P3.
 2. Закрий усі P0 і найболючіші P1 (табличка/Prompt/кнопка/гучність…).
 3. Пройди золотий шлях + проблемні місця ще раз.
 
 ### Part C - Рубрика і Save (5 хв)
-1. Оціни 5 областей 1–5.
+1. Оціни 5 областей 1-5.
 2. **File → Save to Roblox** → \`Module 11 - Game Polished\`.
 3. У LMS познач практику завершеною.
 
@@ -2800,12 +2800,12 @@ Save окремо: навіть якщо далі зробиш нову фіна
 - Золотий шлях після фіксів ок
 - Place збережено з фінальною назвою модуля 11`,
  hints: [
- "Одна яскрава табличка на спавні часто знімає пів P1",
+ "Одна яскрава табличка на spawnі часто знімає пів P1",
  "Якщо тестера немає - два наосліп-прогони сам з таймером і забороною підказок собі вголос",
  "Багліст сфотографуй/збережи - знадобиться в 12.5"
  ],
  optionalChallenge:
- "Запиши 60–90 с екранного відео «до/після» одного UX-фіксу (наприклад онбординг на спавні).",
+ "Запиши 60-90 с екранного відео «до/після» одного UX-фіксу (наприклад онбординг на spawnі).",
  },
  quiz: {
  passingScore: 70,
@@ -2816,11 +2816,11 @@ Save окремо: навіть якщо далі зробиш нову фіна
  type: MC,
  question: "Який номер уроку 11.6 у новій сітці?",
  options: [
-          "86-й з 92",
-          "96-й",
-          "11-й лише в модулі без номера курсу",
-          "1-й"
-        ],
+ "86-й з 92",
+ "96-й",
+ "11-й лише в модулі без номера курсу",
+ "1-й"
+ ],
  correctAnswer: 0,
  explanation: "11.6 = урок 86; далі модуль 12 починається з 87.",
  },
@@ -2829,11 +2829,11 @@ Save окремо: навіть якщо далі зробиш нову фіна
  type: MC,
  question: "Що таке сліпий playtest?",
  options: [
-          "Тест лише з вимкненим монітором",
-          "Гра без підказок творця, щоб зловити справжню плутанину",
-          "Publish без опису",
-          "Видалення всіх Scripts"
-        ],
+ "Тест лише з вимкненим монітором",
+ "Гра без підказок творця, щоб зловити справжню плутанину",
+ "Publish без опису",
+ "Видалення всіх Scripts"
+ ],
  correctAnswer: 1,
  explanation: "Свіжі очі без суфлера.",
  },
@@ -2842,11 +2842,11 @@ Save окремо: навіть якщо далі зробиш нову фіна
  type: MC,
  question: "Скільки мінімум варто мовчати на старті сесії?",
  options: [
-          "0 секунд - одразу підказуй",
-          "Рівно 1 година",
-          "Близько 5 хвилин",
-          "Мовчати заборонено"
-        ],
+ "0 секунд - одразу підказуй",
+ "Рівно 1 година",
+ "Близько 5 хвилин",
+ "Мовчати заборонено"
+ ],
  correctAnswer: 2,
  explanation: "Інакше ховаєш онбординг.",
  },
@@ -2855,24 +2855,24 @@ Save окремо: навіть якщо далі зробиш нову фіна
  type: MC,
  question: "Що лагодити першим після тесту?",
  options: [
-          "Спочатку колір неба",
-          "Спочатку новий жанр з нуля",
-          "Нічого не лагодити",
-          "P0 блокери, потім сильний UX (P1)"
-        ],
+ "Спочатку колір неба",
+ "Спочатку новий жанр з нуля",
+ "Нічого не лагодити",
+ "P0 блокери, потім сильний UX (P1)"
+ ],
  correctAnswer: 3,
- explanation: "Пріоритет перед polish-дрібницями.",
+ explanation: "Пріоритет перед полірування-дрібницями.",
  },
  {
  id: "q5",
  type: MC,
  question: "Навіщо повторний золотий шлях після фіксів?",
  options: [
-          "Щоб видалити багліст",
-          "Перевірити, що фікс не зламав маршрут",
-          "Це замінює модуль 12",
-          "Лише для іконки гри"
-        ],
+ "Щоб видалити багліст",
+ "Перевірити, що фікс не зламав маршрут",
+ "Це замінює модуль 12",
+ "Лише для іконки гри"
+ ],
  correctAnswer: 1,
  explanation: "Регресія обов’язкова.",
  },
@@ -2881,24 +2881,24 @@ Save окремо: навіть якщо далі зробиш нову фіна
  type: MC,
  question: "Яку назву Save пропонує фінал модуля 11?",
  options: [
-          "SHOWCASE DAY",
-          "Final GDD",
-          "Module 11 - Game Polished",
-          "Lesson 1.1 - House"
-        ],
+ "SHOWCASE DAY",
+ "Final GDD",
+ "Module 11 - Game Polished",
+ "Lesson 1.1 - House"
+ ],
  correctAnswer: 2,
- explanation: "Контрольний знімок polish.",
+ explanation: "Контрольний знімок полірування.",
  },
  {
  id: "q7",
  type: MC,
  question: "Що писати в нотатках замість «йому не зайшло»?",
  options: [
-          "Час, що очікував, що сталось",
-          "Тільки емодзі",
-          "Нічого",
-          "Лише «погано»"
-        ],
+ "Час, що очікував, що сталось",
+ "Тільки емодзі",
+ "Нічого",
+ "Лише «погано»"
+ ],
  correctAnswer: 0,
  explanation: "Відтворюваний факт.",
  },
@@ -2907,11 +2907,11 @@ Save окремо: навіть якщо далі зробиш нову фіна
  type: MC,
  question: "Якщо два тестери застрягли в одному місці, це…",
  options: [
-          "Випадковість, можна ігнорувати",
-          "Привід видалити курс",
-          "Ознака що Publish уже зроблено",
-          "Сильний сигнал P1, який треба лагодити"
-        ],
+ "Випадковість, можна ігнорувати",
+ "Привід видалити курс",
+ "Ознака що Publish уже зроблено",
+ "Сильний сигнал P1, який треба лагодити"
+ ],
  correctAnswer: 3,
  explanation: "Патерн > одна думка.",
  },
@@ -2920,24 +2920,24 @@ Save окремо: навіть якщо далі зробиш нову фіна
  type: MC,
  question: "Який наступний модуль після 11.6?",
  options: [
-          "Модуль 1 з нуля",
-          "Модуль 11.7 (у новій сітці немає)",
-          "Модуль 12 - Реліз",
-          "Тільки Terrain окремо"
-        ],
+ "Модуль 1 з нуля",
+ "Модуль 11.7 (у новій сітці немає)",
+ "Модуль 12 - Реліз",
+ "Тільки Terrain окремо"
+ ],
  correctAnswer: 2,
  explanation: "Далі план/збірка/Publish/SHOWCASE.",
  },
  {
  id: "q10",
  type: MC,
- question: "Навіщо рубрика оцінок 1–5?",
+ question: "Навіщо рубрика оцінок 1-5?",
  options: [
-          "Замінити playtest",
-          "Чесно побачити слабкі зони перед модулем 12",
-          "Вимкнути Output",
-          "Це оцінка Roblox автоматично"
-        ],
+ "Замінити playtest",
+ "Чесно побачити слабкі зони перед модулем 12",
+ "Вимкнути Output",
+ "Це оцінка Roblox автоматично"
+ ],
  correctAnswer: 1,
  explanation: "Самоаудит якості.",
  },
@@ -2946,11 +2946,11 @@ Save окремо: навіть якщо далі зробиш нову фіна
  type: MC,
  question: "Який швидкий фікс часто рятує «не знаю куди йти»?",
  options: [
-          "Видалити спавн",
-          "Додати 10 GamePass одразу",
-          "Вимкнути UI назавжди",
-          "Табличка / стрілка / яскравий орієнтир на спавні"
-        ],
+ "Видалити spawn",
+ "Додати 10 GamePass одразу",
+ "Вимкнути UI назавжди",
+ "Табличка / стрілка / яскравий орієнтир на spawnі"
+ ],
  correctAnswer: 3,
  explanation: "Онбординг-декор працює.",
  },
@@ -2959,11 +2959,11 @@ Save окремо: навіть якщо далі зробиш нову фіна
  type: MC,
  question: "Чому багліст з модуля 11 корисний у 12.5?",
  options: [
-          "З нього береться історія виклику для портфоліо",
-          "Він замінює Publish",
-          "Він потрібен лише для Terrain",
-          "Його завжди видаляють"
-        ],
+ "З нього береться історія виклику для портфоліо",
+ "Він замінює Publish",
+ "Він потрібен лише для Terrain",
+ "Його завжди видаляють"
+ ],
  correctAnswer: 0,
  explanation: "Реальний процес > порожній текст.",
  },
@@ -2972,11 +2972,11 @@ Save окремо: навіть якщо далі зробиш нову фіна
  type: MC,
  question: "Що таке soft-lock у контексті цього уроку?",
  options: [
-          "Гарна анімація дверей",
-          "Назва Badge",
-          "Гравець застряг і не може нормально продовжити",
-          "Тип Lighting"
-        ],
+ "Гарна анімація дверей",
+ "Name Badge",
+ "Гравець застряг і не може нормально продовжити",
+ "Тип Lighting"
+ ],
  correctAnswer: 2,
  explanation: "Типовий P0.",
  },
@@ -2985,11 +2985,11 @@ Save окремо: навіть якщо далі зробиш нову фіна
  type: MC,
  question: "Скільки топ-плутанин мінімум треба виписати?",
  options: [
-          "Нуль",
-          "Обов’язково сто",
-          "Лише одну без деталей",
-          "Приблизно три"
-        ],
+ "Нуль",
+ "Обов’язково сто",
+ "Лише одну без деталей",
+ "Приблизно три"
+ ],
  correctAnswer: 3,
  explanation: "Три конкретні UX-сигнали.",
  },
@@ -2998,13 +2998,13 @@ Save окремо: навіть якщо далі зробиш нову фіна
  type: MC,
  question: "Що вважається зданим артефактом уроку 11.6?",
  options: [
-          "Лише новий Decal",
-          "Сліпі нотатки + багліст + фікси P0/P1 + Game Polished Save",
-          "Порожній чекліст",
-          "Publish Public без тесту"
-        ],
+ "Лише новий Decal",
+ "Сліпі нотатки + багліст + фікси P0/P1 + Game Polished Save",
+ "Порожній чекліст",
+ "Publish Public без тесту"
+ ],
  correctAnswer: 1,
- explanation: "Фінал polish = перевірена грабельність.",
+ explanation: "Фінал полірування = перевірена грабельність.",
  }
  ],
  },

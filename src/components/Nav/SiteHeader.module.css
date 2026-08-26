@@ -1,0 +1,238 @@
+/* Shared pill header - same chrome as the landing page on every surface. */
+
+.topBar {
+	--br-bg: #f7f8fa;
+	--br-elev: #ffffff;
+	--br-elev-2: #f3f4f7;
+	--br-text: #14151a;
+	--br-muted: #5c6370;
+	--br-border-strong: rgba(20, 21, 26, 0.14);
+	--br-green: #fc6e51;
+	--br-green-hover: #e85d3a;
+	--br-shell: 1120px;
+
+	position: sticky;
+	top: 0;
+	z-index: 40;
+	flex: 0 0 auto;
+	padding: calc(16px * var(--br-scale, 1)) 0 0;
+	display: flex;
+	justify-content: center;
+	background: transparent;
+	border-bottom: none;
+	backdrop-filter: none;
+}
+
+.pillNav {
+	width: min(100% - 40px, var(--br-shell));
+	box-sizing: border-box;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: calc(16px * var(--br-scale, 1));
+	padding: calc(10px * var(--br-scale, 1)) calc(12px * var(--br-scale, 1))
+		calc(10px * var(--br-scale, 1)) calc(18px * var(--br-scale, 1));
+	background: color-mix(in srgb, var(--br-elev) 94%, transparent);
+	border: 1px solid var(--br-border-strong);
+	border-radius: 9999px;
+	backdrop-filter: blur(16px);
+	box-shadow: 0 8px 28px rgba(20, 21, 26, 0.08);
+	transition: box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease,
+		transform 0.3s ease;
+}
+
+.topBar[data-stuck='true'] .pillNav {
+	background: color-mix(in srgb, var(--br-elev) 98%, transparent);
+	border-color: var(--br-border-strong);
+	box-shadow: 0 12px 32px rgba(20, 21, 26, 0.14);
+	transform: translateY(1px) scale(0.99);
+}
+
+.brand {
+	display: inline-flex;
+	align-items: center;
+	gap: calc(10px * var(--br-scale, 1));
+	color: var(--br-text);
+	text-decoration: none;
+	font-weight: 700;
+	font-size: calc(1.05rem * var(--br-scale, 1));
+	letter-spacing: -0.02em;
+	white-space: nowrap;
+	min-width: 0;
+}
+
+.tag {
+	font-weight: 600;
+	color: var(--br-muted);
+}
+
+.mark {
+	width: calc(32px * var(--br-scale, 1));
+	height: calc(32px * var(--br-scale, 1));
+	border-radius: calc(8px * var(--br-scale, 1));
+	object-fit: cover;
+}
+
+.navRight {
+	display: flex;
+	align-items: center;
+	gap: calc(6px * var(--br-scale, 1));
+}
+
+.quiet {
+	display: none;
+	padding: calc(8px * var(--br-scale, 1)) calc(14px * var(--br-scale, 1));
+	color: var(--br-muted);
+	text-decoration: none;
+	font-size: calc(0.95rem * var(--br-scale, 1));
+	font-weight: 500;
+	border-radius: 9999px;
+	border: none;
+	background: transparent;
+	font-family: inherit;
+	cursor: pointer;
+}
+
+.quiet:hover {
+	color: var(--br-text);
+	background: rgba(20, 21, 26, 0.04);
+}
+
+@media (min-width: 640px) {
+	.quiet {
+		display: inline-flex;
+		align-items: center;
+	}
+}
+
+.cta {
+	display: inline-flex;
+	align-items: center;
+	padding: calc(10px * var(--br-scale, 1)) calc(18px * var(--br-scale, 1));
+	border-radius: 9999px;
+	background: var(--br-green);
+	color: #ffffff;
+	text-decoration: none;
+	font-size: calc(0.95rem * var(--br-scale, 1));
+	font-weight: 700;
+	border: none;
+	font-family: inherit;
+	cursor: pointer;
+	transition: background 0.2s ease;
+}
+
+.cta:hover {
+	background: var(--br-green-hover);
+}
+
+.account {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	max-width: 180px;
+	padding: 4px 12px 4px 4px;
+	border: 1px solid var(--br-border-strong);
+	border-radius: 9999px;
+	background: var(--br-elev);
+	color: var(--br-text);
+	text-decoration: none;
+	font-size: 0.875rem;
+	font-weight: 600;
+	transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.account:hover {
+	background: var(--br-elev-2);
+	border-color: rgba(20, 21, 26, 0.22);
+}
+
+.account[aria-current='page'] {
+	border-color: color-mix(in srgb, var(--br-green) 40%, var(--br-border-strong));
+}
+
+.avatar {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: none;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: var(--br-green);
+	color: #ffffff;
+	font-size: 0.8rem;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.accountName {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.logout {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 9px 14px;
+	border: 1px solid var(--br-border-strong);
+	border-radius: 9999px;
+	background: transparent;
+	color: var(--br-muted);
+	font: inherit;
+	font-size: 0.875rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.logout:hover {
+	color: var(--br-text);
+	border-color: rgba(20, 21, 26, 0.22);
+	background: rgba(20, 21, 26, 0.03);
+}
+
+@media (max-width: 640px) {
+	.pillNav {
+		width: min(100% - 24px, var(--br-shell));
+		padding: 8px 10px 8px 14px;
+		gap: 10px;
+		box-shadow: 0 6px 20px rgba(20, 21, 26, 0.08);
+	}
+
+	.brand {
+		font-size: 1.02rem;
+		gap: 8px;
+	}
+
+	.tag {
+		display: none;
+	}
+
+	.mark {
+		width: 28px;
+		height: 28px;
+		border-radius: 7px;
+	}
+
+	.cta {
+		padding: 9px 14px;
+		font-size: 0.875rem;
+	}
+
+	.account {
+		padding: 3px;
+		gap: 0;
+	}
+
+	.accountName {
+		display: none;
+	}
+
+	.logout {
+		padding: 9px 14px;
+		font-size: 0.875rem;
+	}
+}

@@ -1,0 +1,85 @@
+/* Landing nav account slot. Uses the --br-* tokens scoped to the landing page. */
+
+.slot {
+	display: inline-block;
+	width: 0;
+	height: 36px;
+}
+
+.login {
+	display: inline-flex;
+	align-items: center;
+	padding: 6px 12px;
+	color: var(--br-muted, #5c6370);
+	text-decoration: none;
+	font-size: 0.875rem;
+	font-weight: 500;
+	border-radius: 9999px;
+	transition: color 0.2s ease, background 0.2s ease;
+}
+
+.login:hover {
+	color: var(--br-text, #14151a);
+	background: rgba(20, 21, 26, 0.04);
+}
+
+@media (min-width: 640px) {
+	.login {
+		padding: 8px 14px;
+		font-size: 0.95rem;
+	}
+}
+
+.profile {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	max-width: 200px;
+	padding: 5px 12px 5px 5px;
+	border: 1px solid var(--br-border-strong, rgba(20, 21, 26, 0.14));
+	border-radius: 9999px;
+	background: var(--br-elev, #ffffff);
+	color: var(--br-text, #14151a);
+	text-decoration: none;
+	font-size: 0.9rem;
+	font-weight: 600;
+	transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.profile:hover {
+	background: var(--br-elev-2, #f3f4f7);
+	border-color: rgba(20, 21, 26, 0.22);
+}
+
+.avatar {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: none;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	background: var(--br-green, #fc6e51);
+	color: #ffffff;
+	font-size: 0.8rem;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.name {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* Tight nav on phones: the avatar alone carries the signed-in state. */
+@media (max-width: 520px) {
+	.profile {
+		padding: 4px;
+		gap: 0;
+	}
+
+	.name {
+		display: none;
+	}
+}

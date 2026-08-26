@@ -1,13 +1,7 @@
-import { setRequestLocale } from 'next-intl/server'
+import { createPageMetadata } from '@/lib/createPageMetadata'
 
-export const metadata = {
-	title: 'Start learning — SmartCode',
-	description: 'Create an account or log in to start your SmartCode free trial.',
-	robots: { index: false, follow: false },
-}
+export const generateMetadata = createPageMetadata('start', '/start')
 
-export default async function StartLayout({ children, params }) {
-	const { locale } = await params
-	setRequestLocale(locale)
+export default function StartLayout({ children }) {
 	return children
 }

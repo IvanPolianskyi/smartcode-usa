@@ -240,7 +240,7 @@ True`,
 Членський квиток: True
 Можна вступити: True
 Не можна вступити: False`,
-        explanation: "Умови виконані — can_join True, not дає False"
+        explanation: "Умови виконані - can_join True, not дає False"
       },
       {
         input: `10
@@ -251,7 +251,7 @@ False`,
 Членський квиток: False
 Можна вступити: False
 Не можна вступити: True`,
-        explanation: "Вік малий і немає квитка — доступ заборонено, not → True"
+        explanation: "Вік малий і немає квитка - доступ заборонено, not → True"
       },
       {
         input: `16
@@ -262,7 +262,7 @@ False`,
 Членський квиток: False
 Можна вступити: False
 Не можна вступити: True`,
-        explanation: "Оцінка < 60 і немає квитка — доступ заборонено"
+        explanation: "Оцінка < 60 і немає квитка - доступ заборонено"
       }
     ],
     solution: {

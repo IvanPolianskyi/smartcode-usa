@@ -27,7 +27,7 @@ export const lesson_04_5 = {
     sections: [
       {
         title: "What is polymorphism?",
-        content: `**Polymorphism** (from Greek — “many forms”) means: **one interface — different behavior**.
+        content: `**Polymorphism** (from Greek - “many forms”) means: **one interface - different behavior**.
 
 You call the same method (\`speak()\`, \`area()\`, \`draw()\`), and objects of different classes respond in their own way.
 
@@ -45,15 +45,15 @@ for animal in animals:
     print(animal.speak())
 \`\`\`
 
-The loop **does not know** the concrete type — it only cares that the object has \`speak()\`.
+The loop **does not know** the concrete type - it only cares that the object has \`speak()\`.
 
 **Why is this powerful?**
 
 1. Code becomes shorter and more flexible
 2. Easy to add a new class without changing the loop
-3. Fewer \`if/elif\` chains like “if dog — this, if cat — that”
+3. Fewer \`if/elif\` chains like “if dog - this, if cat - that”
 
-Polymorphism is closely tied to inheritance, but in Python it often works **even without a shared parent** — thanks to duck typing.`
+Polymorphism is closely tied to inheritance, but in Python it often works **even without a shared parent** - thanks to duck typing.`
       },
       {
         title: "Polymorphism through inheritance",
@@ -112,7 +112,7 @@ make_it_quack(Duck())
 make_it_quack(Person())  # works too!
 \`\`\`
 
-\`Person\` does **not** inherit \`Duck\`, but has a \`quack\` method — and that is enough.
+\`Person\` does **not** inherit \`Duck\`, but has a \`quack\` method - and that is enough.
 
 **Pros of duck typing:**
 
@@ -151,7 +151,7 @@ for method in [CashPayment(), CardPayment(), OnlinePayment()]:
     checkout(method, 250)
 \`\`\`
 
-Function \`checkout\` does not change when a new payment method appears — just add a class with method \`pay\`.
+Function \`checkout\` does not change when a new payment method appears - just add a class with method \`pay\`.
 
 **Anti-pattern without polymorphism:**
 
@@ -165,7 +165,7 @@ def checkout(kind, amount):
         print(...)
 \`\`\`
 
-Every new method inflates \`if/elif\`. With polymorphism, extension is local — in the new class.`
+Every new method inflates \`if/elif\`. With polymorphism, extension is local - in the new class.`
       },
       {
         title: "Built-in polymorphism in Python",
@@ -180,7 +180,7 @@ print(3 + 4)             # number addition
 print("Hello, " + "World")  # string concatenation
 \`\`\`
 
-One operator / one function — different behavior depending on type.
+One operator / one function - different behavior depending on type.
 
 Same with \`for\`: any iterable object works in a loop.
 
@@ -217,14 +217,14 @@ Even without ABC, write in a docstring: “\`handler\` must have method \`handle
 **4. Test with different implementations**  
 Check polymorphic code with several classes to catch missing methods.
 
-Next lesson — **dataclasses**: how to describe data classes quickly with minimal boilerplate.`
+Next lesson - **dataclasses**: how to describe data classes quickly with minimal boilerplate.`
       }
     ]
   },
 
   codeExamples: [
     {
-      title: "One loop — different speak()",
+      title: "One loop - different speak()",
       code: `class Dog:
     def speak(self):
         return "Woof!"
@@ -275,7 +275,7 @@ def run_export(exporter):
 
 run_export(FileExporter())
 run_export(ApiExporter())`,
-      explanation: "Having method export is enough — an official hierarchy is optional."
+      explanation: "Having method export is enough - an official hierarchy is optional."
     },
     {
       title: "Extending without changing client code",
@@ -287,7 +287,7 @@ class NotifySMS:
     def send(self, text):
         print(f"SMS: {text}")
 
-# New channel — old notify_all code stays unchanged
+# New channel - old notify_all code stays unchanged
 class NotifyPush:
     def send(self, text):
         print(f"Push: {text}")
@@ -308,7 +308,7 @@ notify_all([NotifyEmail(), NotifySMS(), NotifyPush()], "Lesson complete")`,
       correctApproach: "Agree on one interface: all implementations with the same method name"
     },
     {
-      mistake: "Instead of polymorphism — a long if/elif chain by type",
+      mistake: "Instead of polymorphism - a long if/elif chain by type",
       explanation: "Every new type requires editing the central function.",
       correctApproach: "Move behavior into class methods and call them the same way"
     },
@@ -326,13 +326,13 @@ notify_all([NotifyEmail(), NotifySMS(), NotifyPush()], "Lesson complete")`,
 
   summary: `In this lesson we studied polymorphism:
 
-1. One interface — different object behavior
-2. Inheritance + override — the classic path
-3. Duck typing — polymorphism by behavior in Python
+1. One interface - different object behavior
+2. Inheritance + override - the classic path
+3. Duck typing - polymorphism by behavior in Python
 4. Collections of different objects are processed the same way
 5. Fewer if/elif, more extensibility
 
-Next — dataclasses for quickly creating data classes.`,
+Next - dataclasses for quickly creating data classes.`,
 
   practiceTask: {
     title: "Shape areas",
@@ -450,7 +450,7 @@ for name, shape in shapes:
       "Use constant 3.14 for the circle",
       "Read labels circle/rect/square via input(), even if you do not check them",
       "For whole areas you can convert float → int when the value is whole",
-      "The main point — call shape.area() the same way for all"
+      "The main point - call shape.area() the same way for all"
     ],
     difficulty: "intermediate"
   },
@@ -462,7 +462,7 @@ for name, shape in shapes:
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is polymorphism?",
         options: [
-          "One interface (method) — different behavior in different classes",
+          "One interface (method) - different behavior in different classes",
           "Saving data to a file",
           "Deleting unused variables",
           "Compiling code to bytecode"
@@ -505,7 +505,7 @@ for name, shape in shapes:
           "Polymorphism is forbidden in Python"
         ],
         correctAnswer: 0,
-        explanation: "If an object has the needed methods — you can use it."
+        explanation: "If an object has the needed methods - you can use it."
       },
       {
         id: "q5",
@@ -518,7 +518,7 @@ for name, shape in shapes:
           "It always calls only one parent method"
         ],
         correctAnswer: 0,
-        explanation: "process depends only on having run() — classic polymorphism."
+        explanation: "process depends only on having run() - classic polymorphism."
       },
       {
         id: "q6",
@@ -555,7 +555,7 @@ for name, shape in shapes:
           "The file name payment.py"
         ],
         correctAnswer: 0,
-        explanation: "Agreed behavior is enough — a shared method with the expected meaning."
+        explanation: "Agreed behavior is enough - a shared method with the expected meaning."
       }
     ],
     timeLimit: 15,

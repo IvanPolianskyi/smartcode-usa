@@ -4,10 +4,10 @@
  */
 
 export const ROBOX_PHASES = [
-  { id: 'A', titleUk: 'Основи Studio', modules: [1, 2, 3, 4] },
-  { id: 'B', titleUk: 'Жанри', modules: [5, 6, 7, 8, 9] },
-  { id: 'C', titleUk: 'Хаб і поліш', modules: [10, 11] },
-  { id: 'D', titleUk: 'Реліз', modules: [12] },
+  { id: 'A', titleEn: 'Studio foundations', titleUk: 'Основи Studio', modules: [1, 2, 3, 4] },
+  { id: 'B', titleEn: 'Genres', titleUk: 'Жанри', modules: [5, 6, 7, 8, 9] },
+  { id: 'C', titleEn: 'Hub & polish', titleUk: 'Хаб і поліш', modules: [10, 11] },
+  { id: 'D', titleEn: 'Release', titleUk: 'Реліз', modules: [12] },
 ]
 
 export const ROBOX_MODULE_META_UK = {
@@ -53,7 +53,7 @@ export const ROBOX_MODULE_META_UK = {
       'Виносити баланс у ModuleScript',
       'Зберігати прогрес через DataStore',
     ],
-    phase: 'B',
+    phase: 'A',
   },
   'module-05': {
     tagline: 'Obby',
@@ -86,7 +86,7 @@ export const ROBOX_MODULE_META_UK = {
       'Робити покупки з перевіркою монет',
       'Масштабувати апгрейди через table',
     ],
-    phase: 'C',
+    phase: 'B',
   },
   'module-08': {
     tagline: 'Arena',
@@ -97,7 +97,7 @@ export const ROBOX_MODULE_META_UK = {
       'Додати зброю та візуальні ефекти',
       'Зібрати хвилі з waveConfig',
     ],
-    phase: 'C',
+    phase: 'B',
   },
   'module-09': {
     tagline: 'Race + мережа',
@@ -108,7 +108,7 @@ export const ROBOX_MODULE_META_UK = {
       'Пояснити клієнт vs сервер',
       'Надіслати чесний сигнал через RemoteEvent',
     ],
-    phase: 'D',
+    phase: 'B',
   },
   'module-10': {
     tagline: 'Живий хаб',
@@ -119,7 +119,7 @@ export const ROBOX_MODULE_META_UK = {
       'Додати NPC з діалогом і квестом',
       'Зібрати хаб до здачі',
     ],
-    phase: 'D',
+    phase: 'C',
   },
   'module-11': {
     tagline: 'Polish',
@@ -130,7 +130,7 @@ export const ROBOX_MODULE_META_UK = {
       'Підняти відчуття гри (звук/VFX/UX)',
       'Підготувати demo до релізу',
     ],
-    phase: 'D',
+    phase: 'C',
   },
   'module-12': {
     tagline: 'Реліз',
@@ -141,7 +141,7 @@ export const ROBOX_MODULE_META_UK = {
       'Протестувати та опублікувати',
       'Провести фінальний showcase',
     ],
-    phase: 'E',
+    phase: 'D',
   },
 }
 
@@ -155,6 +155,7 @@ export const ROBOX_MODULE_META_EN = {
       'Work with Terrain and Properties',
       'Write first scripts with variables and if',
     ],
+    phase: 'A',
   },
   'module-02': {
     tagline: 'World craft',
@@ -165,6 +166,7 @@ export const ROBOX_MODULE_META_EN = {
       'Build gates and bridges with constraints',
       'Ship a playtested park build',
     ],
+    phase: 'A',
   },
   'module-03': {
     tagline: 'Playable code',
@@ -175,6 +177,7 @@ export const ROBOX_MODULE_META_EN = {
       'Write loops and functions without copy-paste',
       'Tell Script vs LocalScript apart',
     ],
+    phase: 'A',
   },
   'module-04': {
     tagline: 'Tables & data',
@@ -185,6 +188,7 @@ export const ROBOX_MODULE_META_EN = {
       'Move balance into ModuleScript',
       'Save progress with DataStore',
     ],
+    phase: 'A',
   },
   'module-05': {
     tagline: 'Obby',
@@ -195,6 +199,7 @@ export const ROBOX_MODULE_META_EN = {
       'Iterate difficulty after playtest',
       'Polish and ship the level',
     ],
+    phase: 'B',
   },
   'module-06': {
     tagline: 'Simulator',
@@ -205,6 +210,7 @@ export const ROBOX_MODULE_META_EN = {
       'Show a LocalScript HUD',
       'Save Coins/Power between sessions',
     ],
+    phase: 'B',
   },
   'module-07': {
     tagline: 'Tycoon',
@@ -215,6 +221,7 @@ export const ROBOX_MODULE_META_EN = {
       'Handle coin-checked purchases',
       'Scale upgrades with tables',
     ],
+    phase: 'B',
   },
   'module-08': {
     tagline: 'Arena',
@@ -225,6 +232,7 @@ export const ROBOX_MODULE_META_EN = {
       'Add weapons and VFX',
       'Build waves from waveConfig',
     ],
+    phase: 'B',
   },
   'module-09': {
     tagline: 'Race + networking',
@@ -235,6 +243,7 @@ export const ROBOX_MODULE_META_EN = {
       'Explain client vs server',
       'Send a fair finish via RemoteEvent',
     ],
+    phase: 'B',
   },
   'module-10': {
     tagline: 'Living hub',
@@ -245,6 +254,7 @@ export const ROBOX_MODULE_META_EN = {
       'Add NPC dialogue and quests',
       'Ship an integrated hub',
     ],
+    phase: 'C',
   },
   'module-11': {
     tagline: 'Polish',
@@ -255,6 +265,7 @@ export const ROBOX_MODULE_META_EN = {
       'Raise game feel (SFX/VFX/UX)',
       'Prepare a release-ready demo',
     ],
+    phase: 'C',
   },
   'module-12': {
     tagline: 'Release',
@@ -265,6 +276,7 @@ export const ROBOX_MODULE_META_EN = {
       'Test and publish to Roblox',
       'Deliver a final showcase',
     ],
+    phase: 'D',
   },
 }
 
@@ -272,7 +284,7 @@ export const ROBOX_MODULE_TITLE_UK = {}
 
 export const ROBOX_MODULE_TITLE_EN = {}
 
-export function enrichRobloxModules(modules, locale = 'uk') {
+export function enrichRobloxModules(modules, locale = 'en') {
   const metaMap = locale === 'en' ? ROBOX_MODULE_META_EN : ROBOX_MODULE_META_UK
   const titleOverrides = locale === 'en' ? ROBOX_MODULE_TITLE_EN : ROBOX_MODULE_TITLE_UK
 

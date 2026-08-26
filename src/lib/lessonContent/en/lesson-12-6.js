@@ -26,7 +26,7 @@ export const lesson_12_6 = {
     sections: [
       {
         title: "Pipeline: data → report → email",
-        content: `Typical **automation** after modules 11–12:
+        content: `Typical **automation** after modules 11-12:
 
 \`\`\`
 Source (CSV / API / DB)
@@ -53,21 +53,21 @@ Each step is a separate lesson; together they form a **notification system** wit
 - log to \`report.log\`
 - secrets only in .env
 
-On failure — email an admin or write to the log; do not fail silently.`
+On failure - email an admin or write to the log; do not fail silently.`
       },
       {
         title: "Report quality checklist",
         content: `- [ ] Email subject includes the date
 - [ ] Body: short text + PDF/CSV attachment
 - [ ] UTF-8 encoding in CSV
-- [ ] Do not duplicate recipients in To (use BCC for bulk — lesson 12-2)
+- [ ] Do not duplicate recipients in To (use BCC for bulk - lesson 12-2)
 - [ ] Test on your own email before production`
       },
       {
         title: "What is next in the course",
-        content: `Module **13 (Tkinter)** — graphical interfaces for local utilities.
+        content: `Module **13 (Tkinter)** - graphical interfaces for local utilities.
 
-Modules **14–15** — Telegram bots and **FastAPI** for server logic and webhooks.
+Modules **14-15** - Telegram bots and **FastAPI** for server logic and webhooks.
 
 Email and PDF skills stay useful for notifications from a bot or API.`
       }
@@ -81,7 +81,7 @@ Email and PDF skills stay useful for notifications from a bot or API.`
 # 2. build PDF with reportlab
 # 3. send via smtplib + MIMEMultipart
 # 4. log success / failure`,
-      explanation: "Orchestration with no new libraries — just combining what you learned."
+      explanation: "Orchestration with no new libraries - just combining what you learned."
     }
   ],
 
@@ -98,7 +98,7 @@ Email and PDF skills stay useful for notifications from a bot or API.`
     }
   ],
 
-  summary: `Modules 11–12 give a full documents-and-email chain; a scheduler turns a script into a daily service. Next — GUI and web bots.`,
+  summary: `Modules 11-12 give a full documents-and-email chain; a scheduler turns a script into a daily service. Next - GUI and web bots.`,
 
   practiceTask: null,
 
@@ -147,7 +147,7 @@ Email and PDF skills stay useful for notifications from a bot or API.`
         question: "PDF attachments in email require MIME multipart.",
         options: ["True", "False"],
         correctAnswer: 0,
-        explanation: "True — MIMEMultipart + MIMEApplication (lesson 12-2)."
+        explanation: "True - MIMEMultipart + MIMEApplication (lesson 12-2)."
       }
     ],
     timeLimit: 15,

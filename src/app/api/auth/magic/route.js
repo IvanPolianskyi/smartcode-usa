@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 
 /**
- * Legacy path — CDN may still serve a cached 404 for /api/auth/magic.
+ * Legacy path - CDN may still serve a cached 404 for /api/auth/magic.
  * Prefer /api/auth/login?token=... (same handler).
  */
 export async function GET(request) {

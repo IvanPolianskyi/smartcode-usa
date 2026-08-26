@@ -35,14 +35,14 @@ A function is a block of code that performs a specific task. You can call a func
 
 **Why do we need functions?**
 
-1. **Avoid repetition** — instead of writing the same code many times, you write it once inside a function
-2. **Organize code** — functions help break a complex program into smaller, clearer parts
-3. **Reuse** — once you write a function, you can use it in different places
-4. **Easier testing** — you can check individual parts of the program
+1. **Avoid repetition** - instead of writing the same code many times, you write it once inside a function
+2. **Organize code** - functions help break a complex program into smaller, clearer parts
+3. **Reuse** - once you write a function, you can use it in different places
+4. **Easier testing** - you can check individual parts of the program
 
 **Real-life example:**
 
-Imagine you are making breakfast. Instead of describing the whole process every time ("take eggs, crack them, add salt, fry..."), you simply say: "Make scrambled eggs!" — that is a function!
+Imagine you are making breakfast. Instead of describing the whole process every time ("take eggs, crack them, add salt, fry..."), you simply say: "Make scrambled eggs!" - that is a function!
 
 **In Python we already use functions:**
 
@@ -73,12 +73,12 @@ def function_name():
 
 **Important rules:**
 
-1. **def** — the keyword for creating a function
-2. **Function name** — should be descriptive (for example, \`calculate_sum\`, not \`f\`)
-3. **Parentheses ()** — required, even if the function takes no parameters
-4. **Colon :** — required after the parentheses
-5. **Indentation** — all code inside the function must be indented (usually 4 spaces)
-6. **Docstring** — a description of the function (optional, but very useful)
+1. **def** - the keyword for creating a function
+2. **Function name** - should be descriptive (for example, \`calculate_sum\`, not \`f\`)
+3. **Parentheses ()** - required, even if the function takes no parameters
+4. **Colon :** - required after the parentheses
+5. **Indentation** - all code inside the function must be indented (usually 4 spaces)
+6. **Docstring** - a description of the function (optional, but very useful)
 
 **First function:**
 
@@ -94,8 +94,8 @@ say_hello()  # Prints: Hello, world!
 \`\`\`
 
 **Watch out!** Do not forget the parentheses when calling a function:
-- \`say_hello()\` — correct (calls the function)
-- \`say_hello\` — incorrect (just a reference to the function; does not call it)`
+- \`say_hello()\` - correct (calls the function)
+- \`say_hello\` - incorrect (just a reference to the function; does not call it)`
       },
       {
         title: "Calling a function",
@@ -133,7 +133,7 @@ greet()  # Now the code inside the function runs
       },
       {
         title: "Functions with parameters",
-        content: `Functions can take **parameters** (arguments) — values passed into the function to work with.
+        content: `Functions can take **parameters** (arguments) - values passed into the function to work with.
 
 **Syntax of a function with parameters:**
 
@@ -174,8 +174,8 @@ add_numbers(10, 20) # Prints: 10 + 20 = 30
 
 **Parameters vs Arguments:**
 
-- **Parameters** — variables in the function definition (\`def add_numbers(a, b):\`)
-- **Arguments** — values passed when calling (\`add_numbers(5, 3)\`)
+- **Parameters** - variables in the function definition (\`def add_numbers(a, b):\`)
+- **Arguments** - values passed when calling (\`add_numbers(5, 3)\`)
 
 In this example:
 - \`a\` and \`b\` are parameters
@@ -185,7 +185,7 @@ In this example:
         title: "print() vs return: an important difference",
         content: `This is one of the most important topics! Many beginners confuse \`print()\` and \`return\`.
 
-**print() — displays on the screen:**
+**print() - displays on the screen:**
 
 \`\`\`python
 def print_result(num1, num2):
@@ -200,7 +200,7 @@ total = print_result(5, 3)  # total will be None!
 print(total)  # Prints: None
 \`\`\`
 
-**return — returns a value:**
+**return - returns a value:**
 
 \`\`\`python
 def calculate_sum(num1, num2):
@@ -229,17 +229,17 @@ print(double)  # Prints: 16
 
 **When to use which:**
 
-- **print()** — when you just need to show something to the user
-- **return** — when you need a result for further work
+- **print()** - when you just need to show something to the user
+- **return** - when you need a result for further work
 
 **Example of both approaches:**
 
 \`\`\`python
-# Function with print() — only displays
+# Function with print() - only displays
 def show_sum(a, b):
     print(a + b)
 
-# Function with return — returns a value
+# Function with return - returns a value
 def get_sum(a, b):
     return a + b
 
@@ -383,10 +383,10 @@ print(process_number(4))   # Prints: 16 (4 > 0, so 4² = 16)
 
 **Benefits of this approach:**
 
-1. **Modularity** — each function does one job
-2. **Readability** — the code is easier to understand
-3. **Reuse** — functions can be used in different places
-4. **Testing** — it is easier to check individual parts`
+1. **Modularity** - each function does one job
+2. **Readability** - the code is easier to understand
+3. **Reuse** - functions can be used in different places
+4. **Testing** - it is easier to check individual parts`
       },
       {
         title: "Summary",
@@ -394,12 +394,12 @@ print(process_number(4))   # Prints: 16 (4 > 0, so 4² = 16)
 
 **Key concepts:**
 
-1. **def** — the keyword for creating a function
-2. **Parameters** — variables in the function definition
-3. **Arguments** — values passed when calling
-4. **print()** — displays on the screen, does not return a value
-5. **return** — returns a value from the function
-6. **Function call** — running the function code with \`function_name()\`
+1. **def** - the keyword for creating a function
+2. **Parameters** - variables in the function definition
+3. **Arguments** - values passed when calling
+4. **print()** - displays on the screen, does not return a value
+5. **return** - returns a value from the function
+6. **Function call** - running the function code with \`function_name()\`
 
 **Rules:**
 
@@ -558,12 +558,12 @@ greet()  # Now the function is already defined`
   
   summary: `In this lesson we learned the basics of functions:
 
-1. What functions are — blocks of code that perform a specific task
-2. def syntax — how to create functions with the def keyword
-3. Parameters and arguments — how to pass data into functions
-4. print() vs return — the important difference between displaying and returning values
-5. Calling functions — how to use the functions you create
-6. Functions working together — how functions can use other functions
+1. What functions are - blocks of code that perform a specific task
+2. def syntax - how to create functions with the def keyword
+3. Parameters and arguments - how to pass data into functions
+4. print() vs return - the important difference between displaying and returning values
+5. Calling functions - how to use the functions you create
+6. Functions working together - how functions can use other functions
 
 Functions are the foundation of organizing code in Python. They help you write cleaner, clearer, and more reusable code.`,
   
@@ -571,11 +571,11 @@ Functions are the foundation of organizing code in Python. They help you write c
     title: "Function calculator",
     description: "Create a set of functions for mathematical operations",
     problemStatement: `Write a program with these functions:
-1. add(a, b) — addition
-2. subtract(a, b) — subtraction
-3. multiply(a, b) — multiplication
-4. divide(a, b) — division
-5. average(num1, num2, num3) — arithmetic mean of three numbers
+1. add(a, b) - addition
+2. subtract(a, b) - subtraction
+3. multiply(a, b) - multiplication
+4. divide(a, b) - division
+5. average(num1, num2, num3) - arithmetic mean of three numbers
 
 Each function must take parameters, return a result with return, and have a docstring.
 
@@ -768,7 +768,7 @@ print(f"Average of {num1}, {num2}, {num3}: {average(num1, num2, num3)}")`,
           "False"
         ],
         correctAnswer: 0,
-        explanation: "Yes — Python runs code top to bottom, so a function must be defined (def) before you call it."
+        explanation: "Yes - Python runs code top to bottom, so a function must be defined (def) before you call it."
       }
     ],
     timeLimit: 15,

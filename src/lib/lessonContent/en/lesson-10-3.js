@@ -177,7 +177,7 @@ gradient.save('gradient_alpha.png')
       },
       {
         title: "Advanced filters",
-        content: `**ImageFilter — additional filters:**
+        content: `**ImageFilter - additional filters:**
 
 \`\`\`python
 from PIL import Image, ImageFilter
@@ -542,24 +542,24 @@ batch_apply_effect('photos/', 'sepia/', sepia_effect)
 
 **Key concepts:**
 
-1. **Color spaces** — RGB, RGBA, L, HSV, CMYK
-2. **Alpha channel** — transparency, image compositing
-3. **Advanced filters** — GaussianBlur, UnsharpMask, MedianFilter
-4. **Effects** — sepia, vintage, watercolor, cartoon
-5. **Masks** — creating and applying masks
+1. **Color spaces** - RGB, RGBA, L, HSV, CMYK
+2. **Alpha channel** - transparency, image compositing
+3. **Advanced filters** - GaussianBlur, UnsharpMask, MedianFilter
+4. **Effects** - sepia, vintage, watercolor, cartoon
+5. **Masks** - creating and applying masks
 
 **Main methods:**
 
-- convert() — color space conversion
-- split() / merge() — working with channels
-- alpha_composite() — compositing with transparency
-- ImageFilter — advanced filters
+- convert() - color space conversion
+- split() / merge() - working with channels
+- alpha_composite() - compositing with transparency
+- ImageFilter - advanced filters
 - Creating custom effects
 
 **Important:**
 
 - RGBA supports transparency (PNG and WebP only)
-- The alpha channel uses values 0–255 (0 = transparent, 255 = opaque)
+- The alpha channel uses values 0-255 (0 = transparent, 255 = opaque)
 - Filters can be combined for complex effects
 - Masks give precise control over transparency
 
@@ -629,7 +629,7 @@ def sepia(img):
     },
     {
       mistake: "Incorrect use of the alpha channel",
-      explanation: "The alpha channel uses values 0–255, where 0 = transparent and 255 = opaque.",
+      explanation: "The alpha channel uses values 0-255, where 0 = transparent and 255 = opaque.",
       correctApproach: "Check alpha values and use the right methods for manipulations."
     },
     {
@@ -646,11 +646,11 @@ def sepia(img):
   
   summary: `In this lesson we learned how to work with colors and filters:
 
-1. Color spaces — RGB, RGBA, L, HSV, conversion
-2. Alpha channel — transparency, compositing
-3. Advanced filters — GaussianBlur, UnsharpMask
-4. Effects — sepia, vintage, watercolor
-5. Masks — creating and applying
+1. Color spaces - RGB, RGBA, L, HSV, conversion
+2. Alpha channel - transparency, compositing
+3. Advanced filters - GaussianBlur, UnsharpMask
+4. Effects - sepia, vintage, watercolor
+5. Masks - creating and applying
 
 Working with colors and filters opens up endless possibilities!`,
   

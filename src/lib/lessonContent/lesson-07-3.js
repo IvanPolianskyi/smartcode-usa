@@ -602,9 +602,9 @@ class Iterator:
     description: "Створіть кілька власних ітераторів з реалізацією протоколу ітерації",
     problemStatement: `Створіть три класи-ітератори:
 
-1. **SquareIterator(limit)** — квадрати від 1 до limit
-2. **EvenIterator(limit)** — парні від 0 до limit включно
-3. **ReverseIterator(items)** — обхід списку навпаки
+1. **SquareIterator(limit)** - квадрати від 1 до limit
+2. **EvenIterator(limit)** - парні від 0 до limit включно
+3. **ReverseIterator(items)** - обхід списку навпаки
 
 Зчитайте параметри зі stdin.
 
