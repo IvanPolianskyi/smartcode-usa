@@ -1,68 +1,70 @@
 @import "tailwindcss";
+@import "../styles/tokens.css";
 
 :root {
-  /* Brand - SmartCode Academy dark purple */
-  --brand-accent: #a100ff;
-  --brand-accent-hot: #c44bff;
-  --brand-accent-deep: #7a00c8;
-  --brand-glow: rgba(161, 0, 255, 0.45);
+  /* Brand — coral/orange accent across the product */
+  --brand-accent: #fc6e51;
+  --brand-accent-hot: #ff8263;
+  --brand-accent-deep: #e85d3a;
+  --brand-glow: rgba(252, 110, 81, 0.28);
+  --brand-coral: #fc6e51;
 
   /* Primary Colors */
-  --primary-blue: #7c3aed;
-  --primary-purple: #a100ff;
-  --primary-orange: #ff6b35;
+  --primary-blue: #3b82f6;
+  --primary-purple: #fc6e51;
+  --primary-orange: #fc6e51;
   --primary-red: #ef4444;
-  --primary-green: #10b981;
+  --primary-green: #fc6e51;
 
-  /* Neon Colors */
-  --neon-yellow: #ffcc00;
-  --neon-pink: #ff4dcc;
-  --neon-blue: #b24bff;
-  --neon-green: #00ff00;
-  --neon-orange: #ff6600;
-  --neon-purple: #a100ff;
+  /* Neon Colors (kept for legacy lesson chrome) */
+  --neon-yellow: #fbbf24;
+  --neon-pink: #fc6e51;
+  --neon-blue: #5ac3e5;
+  --neon-green: #fc6e51;
+  --neon-orange: #fc6e51;
+  --neon-purple: #fc6e51;
 
-  /* Background Colors */
-  --background: #000000;
-  --background-secondary: #050508;
-  --background-accent: #0c0614;
-  --bg-primary: #000000;
-  --bg-secondary: #0a0a0f;
-  --bg-elevated: #121218;
-  --bg-glass: rgba(12, 6, 20, 0.85);
-  --dark-bg: #000000;
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-accent: rgba(161, 0, 255, 0.45);
+  /* Background Colors — light canvas */
+  --background: #f7f8fa;
+  --background-secondary: #eef0f4;
+  --background-accent: #ffece7;
+  --bg-primary: #f7f8fa;
+  --bg-secondary: #eef0f4;
+  --bg-elevated: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.88);
+  --dark-bg: #14151a;
+  --border-subtle: rgba(20, 21, 26, 0.1);
+  --border-accent: rgba(252, 110, 81, 0.35);
 
   /* Text Colors */
-  --foreground: #ffffff;
-  --text-primary: #ffffff;
-  --text-secondary: #c4c4d4;
-  --text-tertiary: #8b8b9a;
-  --text-secondary-alt: #b0b0c0;
-  --text-tertiary-alt: #7a7a8c;
-  --text-primary-dark: #ffffff;
-  --text-secondary-dark: #c4c4d4;
-  --text-tertiary-dark: #8b8b9a;
+  --foreground: #14151a;
+  --text-primary: #14151a;
+  --text-secondary: #5c6370;
+  --text-tertiary: #8b919c;
+  --text-secondary-alt: #5c6370;
+  --text-tertiary-alt: #8b919c;
+  --text-primary-dark: #14151a;
+  --text-secondary-dark: #5c6370;
+  --text-tertiary-dark: #8b919c;
 
   /* Accent Colors */
-  --accent-green: #10b981;
+  --accent-green: #fc6e51;
   --accent-yellow: #fbbf24;
   --accent-red: #ef4444;
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #7a00c8 0%, #a100ff 50%, #c44bff 100%);
-  --gradient-secondary: linear-gradient(135deg, #a100ff 0%, #7a00c8 100%);
-  --gradient-background: radial-gradient(ellipse at 70% 40%, rgba(161, 0, 255, 0.22), transparent 55%),
-    #000000;
+  --gradient-primary: linear-gradient(135deg, #e85d3a 0%, #fc6e51 50%, #ff8263 100%);
+  --gradient-secondary: linear-gradient(135deg, #fc6e51 0%, #e85d3a 100%);
+  --gradient-background: radial-gradient(ellipse at 70% 40%, rgba(252, 110, 81, 0.12), transparent 55%),
+    #f7f8fa;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 12px -1px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 10px 24px -3px rgba(0, 0, 0, 0.55);
-  --shadow-xl: 0 20px 40px -5px rgba(0, 0, 0, 0.6);
-  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-  --shadow-glow: 0 0 32px rgba(161, 0, 255, 0.35);
+  --shadow-sm: 0 1px 2px 0 rgba(20, 21, 26, 0.05);
+  --shadow-md: 0 4px 12px -1px rgba(20, 21, 26, 0.1);
+  --shadow-lg: 0 10px 24px -3px rgba(20, 21, 26, 0.12);
+  --shadow-xl: 0 20px 40px -5px rgba(20, 21, 26, 0.14);
+  --shadow-2xl: 0 25px 50px -12px rgba(20, 21, 26, 0.16);
+  --shadow-glow: 0 0 32px rgba(252, 110, 81, 0.22);
 
   /* Border Radius */
   --radius-sm: 0.375rem;
@@ -86,12 +88,12 @@
   --transition-slow: 500ms ease;
 
   /* Pixel Art / Grid Style */
-  --grid-color: rgba(161, 0, 255, 0.22);
+  --grid-color: rgba(252, 110, 81, 0.16);
   --pixel-size: 8px;
-  --gradient-pink-purple: linear-gradient(135deg, #c44bff, #a100ff);
-  --gradient-purple-blue: linear-gradient(135deg, #a100ff, #7a00c8);
-  --gradient-blue-cyan: linear-gradient(135deg, #7a00c8, #a100ff);
-  --gradient-multicolor: linear-gradient(135deg, #7a00c8, #a100ff, #c44bff);
+  --gradient-pink-purple: linear-gradient(135deg, #ff8263, #fc6e51);
+  --gradient-purple-blue: linear-gradient(135deg, #fc6e51, #e85d3a);
+  --gradient-blue-cyan: linear-gradient(135deg, #e85d3a, #fc6e51);
+  --gradient-multicolor: linear-gradient(135deg, #e85d3a, #fc6e51, #ff8263);
 }
 
 .accent-text {
@@ -108,7 +110,7 @@
   border: none;
   background: var(--brand-accent);
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   box-shadow: var(--shadow-glow);
   transition: var(--transition-base);
@@ -116,8 +118,8 @@
 }
 
 .btn-pill-primary:hover {
-  background: var(--brand-accent-hot);
-  box-shadow: 0 0 40px rgba(161, 0, 255, 0.55);
+  background: var(--brand-accent-deep);
+  box-shadow: 0 0 40px rgba(252, 110, 81, 0.35);
 }
 
 .btn-pill-outline {
@@ -129,7 +131,7 @@
   border-radius: var(--radius-full);
   border: 1.5px solid var(--brand-accent);
   background: transparent;
-  color: var(--brand-accent-hot);
+  color: var(--brand-accent-deep);
   font-weight: 600;
   text-decoration: none;
   transition: var(--transition-base);
@@ -137,8 +139,8 @@
 }
 
 .btn-pill-outline:hover {
-  background: rgba(161, 0, 255, 0.12);
-  color: #fff;
+  background: rgba(252, 110, 81, 0.1);
+  color: var(--text-primary);
 }
 
 * {
@@ -150,11 +152,11 @@
 html {
   /* auto = нативний momentum; smooth лише ламає Instagram / iOS WebView */
   scroll-behavior: auto;
-  scrollbar-width: none;
   /* Фіксований хедер — для центрування hero у першому екрані */
   --visit-header-offset: 80px;
   overflow-anchor: none;
-  background: #000;
+  /* Ground comes from the token system so light and dark both resolve. */
+  background: var(--sc-bg);
   width: 100%;
   max-width: 100%;
 }
@@ -171,17 +173,14 @@ html {
   }
 }
 
-html::-webkit-scrollbar {
-  display: none;
-}
+
 
 body {
-  background: #000;
-  color: var(--foreground);
+  background: var(--sc-bg);
+  color: var(--sc-ink);
   font-family: var(--font-geist-sans), var(--font-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.6;
-  scrollbar-width: none;
   overflow-anchor: none;
   width: 100%;
   max-width: 100%;
@@ -189,15 +188,13 @@ body {
   overflow-x: clip;
 }
 
-body::-webkit-scrollbar {
-  display: none;
-}
+
 
 /* LMS course pages: branded scrollbar instead of floating nav arrows */
 html.lms-course-scroll,
 body.lms-course-scroll {
   scrollbar-width: thin;
-  scrollbar-color: rgba(161, 0, 255, 0.65) rgba(255, 255, 255, 0.06);
+  scrollbar-color: rgba(252, 110, 81, 0.65) rgba(20, 21, 26, 0.06);
 }
 
 html.lms-course-scroll::-webkit-scrollbar,
@@ -209,24 +206,24 @@ body.lms-course-scroll::-webkit-scrollbar {
 
 html.lms-course-scroll::-webkit-scrollbar-track,
 body.lms-course-scroll::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.04);
-  border-left: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(20, 21, 26, 0.04);
+  border-left: 1px solid rgba(20, 21, 26, 0.06);
 }
 
 html.lms-course-scroll::-webkit-scrollbar-thumb,
 body.lms-course-scroll::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #c44bff 0%, #a100ff 55%, #7a00c8 100%);
+  background: linear-gradient(180deg, #ff8263 0%, #fc6e51 55%, #e85d3a 100%);
   border-radius: 999px;
   border: 2px solid transparent;
   background-clip: padding-box;
-  box-shadow: 0 0 12px rgba(161, 0, 255, 0.35);
+  box-shadow: 0 0 12px rgba(252, 110, 81, 0.25);
 }
 
 html.lms-course-scroll::-webkit-scrollbar-thumb:hover,
 body.lms-course-scroll::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #d97bff 0%, #b52bff 55%, #8f14e0 100%);
+  background: linear-gradient(180deg, #ff9a7a 0%, #fc6e51 55%, #d14c2c 100%);
   background-clip: padding-box;
-  box-shadow: 0 0 16px rgba(196, 75, 255, 0.5);
+  box-shadow: 0 0 16px rgba(252, 110, 81, 0.4);
 }
 
 html.lms-course-scroll::-webkit-scrollbar-corner,
@@ -247,7 +244,7 @@ body.lms-course-scroll::-webkit-scrollbar-corner {
 
 main.main-content {
   padding-top: 80px;
-  background: #000;
+  background: var(--sc-bg);
 }
 
 @media (max-width: 1024px) and (min-width: 701px) {

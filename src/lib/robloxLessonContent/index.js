@@ -253,10 +253,10 @@ function buildMapForLocale(locale) {
 
 const cache = { uk: null, en: null }
 
-export const robloxLessonContentMap = buildMapForLocale('uk')
+export const robloxLessonContentMap = buildMapForLocale('en')
 
-export function getRobloxLessonContent(lessonId, locale = 'uk') {
-  const loc = locale === 'en' ? 'en' : 'uk'
+export function getRobloxLessonContent(lessonId, locale = 'en') {
+  const loc = locale === 'uk' ? 'uk' : 'en'
   if (!cache[loc]) cache[loc] = buildMapForLocale(loc)
   return cache[loc][lessonId] || null
 }

@@ -1,12 +1,11 @@
-import { NextResponse, after } from 'next/server'
+import { NextResponse } from 'next/server'
+import { getEntitlement } from '@/lib/entitlements'
 import { getCurrentUser, issueAuthSession } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
-import { syncStudentScheduleAccess } from '@/lib/syncStudentScheduleAccess'
-import { getStudentAccessibleCourseIds } from '@/lib/courseLessonAccess'
-import { maybePullCrmScheduleForStudent, hasEmptyScheduleCache } from '@/lib/crmStudentSchedulePull'
+import { getStudentAccessibleCourseIds, KNOWN_COURSE_IDS } from '@/lib/courseLessonAccess'
 import { isStudentDashboardReady, shouldPersistAccountReady } from '@/lib/studentAccountReady'
-import { toAuthUserResponse } from '@/lib/crmLmsSync'
+import { toAuthUserResponse } from '@/lib/authUserResponse'
 
 export async function GET() {
   try {
@@ -24,7 +23,6 @@ export async function GET() {
       console.error('Auth session refresh failed:', sessionErr)
     }
 
-    // Get user from database
     const usersCollection = await getCollection('users')
     let user = await usersCollection.findOne({ _id: new ObjectId(userId) })
 
@@ -33,33 +31,6 @@ export async function GET() {
         { error: 'User not found' },
         { status: 404 }
       )
-    }
-    if (user.role !== 'teacher' && user.role !== 'admin') {
-      if (hasEmptyScheduleCache(user.studentProfile)) {
-        // Кеш розкладу пустий — тягнемо CRM синхронно, щоб учень одразу побачив уроки.
-        try {
-          user = await maybePullCrmScheduleForStudent(user, usersCollection)
-        } catch (crmErr) {
-          console.error('CRM schedule sync pull failed:', crmErr)
-        }
-      } else {
-        // CRM pull — після відповіді (не блокує dashboard). Клієнт може ще раз смикнути sync.
-        const uidForBg = user._id.toString()
-        after(async () => {
-          try {
-            const coll = await getCollection('users')
-            const fresh = await coll.findOne({ _id: new ObjectId(uidForBg) })
-            if (fresh) await maybePullCrmScheduleForStudent(fresh, coll)
-          } catch (crmErr) {
-            console.error('CRM schedule background pull failed:', crmErr)
-          }
-        })
-      }
-      try {
-        user = await syncStudentScheduleAccess(user, usersCollection)
-      } catch (syncErr) {
-        console.error('syncStudentScheduleAccess failed:', syncErr)
-      }
     }
 
     const profileAfterSync = user.studentProfile || {}
@@ -77,6 +48,14 @@ export async function GET() {
     }
 
     const progressCollection = await getCollection('userProgress')
+    const entitlement = await getEntitlement(userId).catch(() => null)
+    const subscribedCourseIds =
+      user.role === 'admin' || user.role === 'teacher'
+        ? [...KNOWN_COURSE_IDS]
+        : entitlement?.courseIds || []
+    user.subscribedCourseIds = subscribedCourseIds
+    user.subscriptionActive =
+      user.role === 'admin' || user.role === 'teacher' || subscribedCourseIds.length > 0
     const allowedCourseIds = new Set(getStudentAccessibleCourseIds(user))
     let currentEnrolledCourses = user.enrolledCourses || []
 
@@ -123,7 +102,6 @@ export async function GET() {
       user.enrolledCourses = updatedUser.enrolledCourses || []
     }
 
-    // Return user (without password)
     const baseProfile = user.studentProfile || {
       regularSchedule: [],
       zoomLink: '',
@@ -132,44 +110,6 @@ export async function GET() {
       accountBalance: 0,
       lessonCredits: 0,
       scheduleSyncStartAt: null,
-    }
-
-    try {
-      if (baseProfile.regularSchedule && baseProfile.regularSchedule.length > 0) {
-        const slotsCollection = await getCollection('availableSlots')
-        
-        // Find any slot that matches the day/time in the student's schedule
-        const scheduleQueries = baseProfile.regularSchedule.map(item => ({
-          day: item.day,
-          time: item.time
-        }))
-
-        const matchingSlots = await slotsCollection.find({ 
-          $or: scheduleQueries
-        }).toArray()
-
-        const profileZoom = String(baseProfile.zoomLink || '').trim() || null
-        baseProfile.regularSchedule = baseProfile.regularSchedule.map((item) => {
-          const slotsForThisTime = matchingSlots.filter(
-            (s) => s.day === item.day && s.time === item.time
-          )
-          const bookedSlot = slotsForThisTime.find(
-            (s) =>
-              (s.bookedBy && s.bookedBy.toString() === userId.toString()) ||
-              s.bookedBy === user.email
-          )
-          const slotZoom = bookedSlot?.zoomLink
-            ? String(bookedSlot.zoomLink).trim()
-            : null
-
-          return {
-            ...item,
-            zoomLink: slotZoom || profileZoom,
-          }
-        })
-      }
-    } catch (err) {
-      console.error('Error fetching booked slots for zoom links:', err)
     }
 
     const userForClient = {
@@ -189,4 +129,3 @@ export async function GET() {
     )
   }
 }
-

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { loadUserWithAccess } from '@/lib/loadUser'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
@@ -27,8 +28,7 @@ export async function POST(request) {
     }
 
     const userIdObj = new ObjectId(userId)
-    const usersCollection = await getCollection('users')
-    const user = await usersCollection.findOne({ _id: userIdObj })
+    const user = await loadUserWithAccess(userIdObj)
     if (!user || !hasStudentCourseAccess(user, courseId)) {
       return NextResponse.json(
         { error: 'No access to this course' },

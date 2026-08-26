@@ -1,0 +1,776 @@
+/* Continuous CSS timelines. One loop = one story. No JS phase jumps. */
+
+.scene {
+	--dur: 5.2s;
+	--ease: cubic-bezier(0.22, 1, 0.36, 1);
+	width: 100%;
+	height: 100%;
+	min-height: 220px;
+	display: grid;
+	place-items: center;
+	padding: 18px;
+	box-sizing: border-box;
+	background:
+		radial-gradient(70% 55% at 80% 0%, var(--glow, transparent), transparent 65%),
+		#090b11;
+}
+
+.scene[data-tone='cyan'] {
+	--accent: #5ac3e5;
+	--glow: rgba(90, 195, 229, 0.12);
+}
+
+.scene[data-tone='coral'] {
+	--accent: #fc6e51;
+	--glow: rgba(252, 110, 81, 0.14);
+}
+
+.scene[data-tone='violet'] {
+	--accent: #b582ff;
+	--glow: rgba(181, 130, 255, 0.14);
+}
+
+/* ============================================================ Python */
+
+.window {
+	width: 100%;
+	border-radius: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	background: #12151d;
+	overflow: hidden;
+	box-shadow:
+		0 20px 48px rgba(0, 0, 0, 0.5),
+		inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+@keyframes floatIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px) scale(0.985);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.titlebar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 11px 13px;
+	background: #181c26;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.traffic {
+	display: flex;
+	gap: 5px;
+}
+
+.traffic i {
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.18);
+	display: block;
+}
+
+.winLabel {
+	font-family: var(--font-geist-mono), ui-monospace, monospace;
+	font-size: 10px;
+	color: #6e7384;
+	letter-spacing: 0.03em;
+}
+
+.editor {
+	display: grid;
+	grid-template-columns: 28px 1fr;
+	min-height: 118px;
+}
+
+.gutter {
+	display: flex;
+	flex-direction: column;
+	padding: 14px 0 10px;
+	gap: 0;
+	font-family: var(--font-geist-mono), ui-monospace, monospace;
+	font-size: 11px;
+	line-height: 1.7;
+	color: #3f4454;
+	text-align: right;
+	padding-right: 8px;
+	user-select: none;
+}
+
+.gutter span {
+	display: block;
+	height: 1.7em;
+}
+
+.code {
+	margin: 0;
+	padding: 14px 12px 10px 0;
+	font-family: var(--font-geist-mono), ui-monospace, monospace;
+	font-size: 11.5px;
+	line-height: 1.7;
+	color: #d7dae4;
+}
+
+.line {
+	display: block;
+	overflow: hidden;
+	white-space: nowrap;
+	max-width: 0;
+	opacity: 0;
+}
+
+/* Staggered type-on across the loop */
+.python .line1 {
+	animation: typeLine var(--dur) var(--ease) infinite;
+}
+
+.python .line2 {
+	animation: typeLine var(--dur) var(--ease) infinite;
+	animation-delay: 0.15s;
+}
+
+.python .line3 {
+	animation: typeLine var(--dur) var(--ease) infinite;
+	animation-delay: 0.35s;
+}
+
+.python .line4 {
+	animation: typeLine var(--dur) var(--ease) infinite;
+	animation-delay: 0.55s;
+}
+
+@keyframes typeLine {
+	0%,
+	6% {
+		max-width: 0;
+		opacity: 0;
+	}
+	14%,
+	88% {
+		max-width: 100%;
+		opacity: 1;
+	}
+	96%,
+	100% {
+		max-width: 100%;
+		opacity: 0.35;
+	}
+}
+
+.cmt {
+	color: #6b7280;
+}
+
+.kw {
+	color: var(--accent);
+}
+
+.fn {
+	color: #f0c96a;
+}
+
+.caret {
+	display: inline-block;
+	width: 6px;
+	height: 1em;
+	margin-left: 2px;
+	vertical-align: -2px;
+	background: var(--accent);
+	border-radius: 1px;
+	animation: caretPulse 1s steps(1) infinite;
+}
+
+@keyframes caretPulse {
+	50% {
+		opacity: 0;
+	}
+}
+
+.toolbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(255, 255, 255, 0.05);
+	background: #151922;
+}
+
+.toolMuted {
+	font-size: 10px;
+	color: #4b5060;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.run {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 12px;
+	border-radius: 999px;
+	font-size: 11px;
+	font-weight: 700;
+	background: rgba(255, 255, 255, 0.06);
+	color: #8b90a0;
+	animation: runFlash var(--dur) var(--ease) infinite;
+}
+
+.runIcon {
+	font-size: 9px;
+}
+
+@keyframes runFlash {
+	0%,
+	28% {
+		background: rgba(255, 255, 255, 0.06);
+		color: #8b90a0;
+		box-shadow: none;
+	}
+	34%,
+	48% {
+		background: #fc6e51;
+		color: #04140c;
+		box-shadow: 0 0 0 4px rgba(22, 196, 122, 0.2);
+	}
+	56%,
+	100% {
+		background: rgba(255, 255, 255, 0.06);
+		color: #8b90a0;
+		box-shadow: none;
+	}
+}
+
+.output {
+	padding: 10px 12px 12px;
+	border-top: 1px solid rgba(255, 255, 255, 0.05);
+	background: #080a10;
+	min-height: 58px;
+	font-family: var(--font-geist-mono), ui-monospace, monospace;
+	font-size: 11.5px;
+}
+
+.outLabel {
+	display: block;
+	font-size: 9px;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: #4b5060;
+	margin-bottom: 6px;
+}
+
+.outBody {
+	display: grid;
+	gap: 3px;
+}
+
+.outLine,
+.ok {
+	opacity: 0;
+	transform: translateY(4px);
+}
+
+.python .outLine {
+	color: #c8ccd8;
+	animation: revealSoft var(--dur) var(--ease) infinite;
+	animation-delay: 0.05s;
+}
+
+.python .ok {
+	color: #fc6e51;
+	animation: revealSoft var(--dur) var(--ease) infinite;
+	animation-delay: 0.18s;
+}
+
+@keyframes revealSoft {
+	0%,
+	38% {
+		opacity: 0;
+		transform: translateY(5px);
+	}
+	46%,
+	88% {
+		opacity: 1;
+		transform: none;
+	}
+	96%,
+	100% {
+		opacity: 0;
+		transform: translateY(-2px);
+	}
+}
+
+/* ============================================================ Roblox / Luau */
+
+.roblox .line.rbxLine1 {
+	animation: typeLine var(--dur) var(--ease) infinite;
+}
+
+.roblox .line.rbxLine2 {
+	animation: typeLine var(--dur) var(--ease) infinite;
+	animation-delay: 0.15s;
+}
+
+.roblox .line.rbxLine3 {
+	animation: typeLine var(--dur) var(--ease) infinite;
+	animation-delay: 0.35s;
+}
+
+.roblox .line.rbxLine4 {
+	animation: typeLine var(--dur) var(--ease) infinite;
+	animation-delay: 0.55s;
+}
+
+.roblox .outLine {
+	color: #c8ccd8;
+	animation: revealSoft var(--dur) var(--ease) infinite;
+	animation-delay: 0.05s;
+}
+
+.roblox .ok {
+	color: #fc6e51;
+	animation: revealSoft var(--dur) var(--ease) infinite;
+	animation-delay: 0.18s;
+}
+
+/* ============================================================ AI */
+
+.aiWindow {
+	width: 100%;
+	border-radius: 16px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	background: #12151d;
+	overflow: hidden;
+	box-shadow:
+		0 20px 48px rgba(0, 0, 0, 0.5),
+		inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.ai .winLabel {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.aiMark {
+	width: 12px;
+	height: 12px;
+	color: var(--accent);
+	flex-shrink: 0;
+}
+
+.aiShell {
+	display: grid;
+	grid-template-columns: 1.12fr 1fr;
+	gap: 10px;
+	padding: 12px;
+}
+
+.brief,
+.result {
+	border-radius: 12px;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	background: #0a0c12;
+	padding: 12px;
+	min-height: 168px;
+}
+
+.badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 4px 9px;
+	border-radius: 999px;
+	background: rgba(181, 130, 255, 0.12);
+	border: 1px solid rgba(181, 130, 255, 0.22);
+	color: #d4b8ff;
+	font-size: 10px;
+	font-weight: 650;
+	margin-bottom: 10px;
+	letter-spacing: 0.02em;
+}
+
+.badgeSpark {
+	width: 11px;
+	height: 11px;
+	color: var(--accent);
+}
+
+.prompt {
+	min-height: 64px;
+	padding: 10px 12px;
+	border-radius: 10px;
+	background: #12151d;
+	border: 1px solid rgba(255, 255, 255, 0.07);
+	font-size: 12.5px;
+	line-height: 1.45;
+	color: #fff;
+	margin-bottom: 10px;
+}
+
+.type {
+	display: inline;
+	overflow: hidden;
+	white-space: nowrap;
+	max-width: 0;
+	animation: typePrompt var(--dur) steps(28, end) infinite;
+}
+
+@keyframes typePrompt {
+	0%,
+	6% {
+		max-width: 0;
+		opacity: 1;
+	}
+	28%,
+	82% {
+		max-width: 18ch;
+		opacity: 1;
+	}
+	92%,
+	100% {
+		max-width: 18ch;
+		opacity: 0.45;
+	}
+}
+
+.generate {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 7px 12px;
+	border-radius: 9px;
+	background: rgba(181, 130, 255, 0.18);
+	border: 1px solid rgba(181, 130, 255, 0.35);
+	color: #efe6ff;
+	font-size: 11px;
+	font-weight: 650;
+	opacity: 0.35;
+	transform: scale(0.96);
+	animation: generatePulse var(--dur) var(--ease) infinite;
+	box-shadow: 0 0 0 rgba(181, 130, 255, 0);
+}
+
+.genSpark {
+	width: 12px;
+	height: 12px;
+	color: var(--accent);
+}
+
+@keyframes generatePulse {
+	0%,
+	26% {
+		opacity: 0.35;
+		transform: scale(0.96);
+		box-shadow: 0 0 0 rgba(181, 130, 255, 0);
+	}
+	32%,
+	42% {
+		opacity: 1;
+		transform: none;
+		box-shadow: 0 0 18px rgba(181, 130, 255, 0.35);
+	}
+	48%,
+	82% {
+		opacity: 0.7;
+		transform: none;
+		box-shadow: 0 0 8px rgba(181, 130, 255, 0.15);
+	}
+	92%,
+	100% {
+		opacity: 0.35;
+		transform: scale(0.96);
+		box-shadow: 0 0 0 rgba(181, 130, 255, 0);
+	}
+}
+
+.result {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: flex-start;
+	gap: 12px;
+	position: relative;
+	overflow: hidden;
+}
+
+.result::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		105deg,
+		transparent 30%,
+		rgba(181, 130, 255, 0.07) 48%,
+		transparent 66%
+	);
+	transform: translateX(-120%);
+	animation: aiShimmer var(--dur) var(--ease) infinite;
+	pointer-events: none;
+}
+
+@keyframes aiShimmer {
+	0%,
+	28% {
+		transform: translateX(-120%);
+		opacity: 0;
+	}
+	34% {
+		opacity: 1;
+	}
+	48% {
+		transform: translateX(120%);
+		opacity: 0;
+	}
+	100% {
+		transform: translateX(120%);
+		opacity: 0;
+	}
+}
+
+.aiStatus {
+	position: relative;
+	height: 44px;
+	display: grid;
+	place-items: center;
+}
+
+.statusThink,
+.statusGen,
+.statusDone {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	font-size: 11px;
+	font-weight: 650;
+	letter-spacing: 0.04em;
+	opacity: 0;
+	z-index: 1;
+}
+
+.statusThink {
+	color: #9aa0b0;
+	animation: statusThink var(--dur) var(--ease) infinite;
+}
+
+.statusGen {
+	color: var(--accent);
+	animation: statusGen var(--dur) var(--ease) infinite;
+}
+
+.statusDone {
+	color: #fc6e51;
+	grid-auto-flow: column;
+	justify-content: center;
+	align-content: center;
+	gap: 5px;
+	animation: statusDone var(--dur) var(--ease) infinite;
+}
+
+.doneSpark {
+	width: 12px;
+	height: 12px;
+	color: #fc6e51;
+}
+
+@keyframes statusThink {
+	0%,
+	30% {
+		opacity: 0;
+	}
+	34%,
+	42% {
+		opacity: 1;
+	}
+	48%,
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes statusGen {
+	0%,
+	42% {
+		opacity: 0;
+	}
+	46%,
+	58% {
+		opacity: 1;
+	}
+	64%,
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes statusDone {
+	0%,
+	60% {
+		opacity: 0;
+		transform: scale(0.94);
+	}
+	66%,
+	82% {
+		opacity: 1;
+		transform: none;
+	}
+	90%,
+	100% {
+		opacity: 0;
+	}
+}
+
+.ringWrap {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	pointer-events: none;
+	opacity: 0.55;
+}
+
+.ringSvg {
+	width: 40px;
+	height: 40px;
+	transform: rotate(-90deg);
+}
+
+.ringBg,
+.ringFg {
+	fill: none;
+	stroke-width: 2.2;
+}
+
+.ringBg {
+	stroke: rgba(255, 255, 255, 0.07);
+}
+
+.ringFg {
+	stroke: var(--accent);
+	stroke-linecap: round;
+	stroke-dasharray: 94;
+	stroke-dashoffset: 94;
+	animation: ringFill var(--dur) var(--ease) infinite;
+	filter: drop-shadow(0 0 4px rgba(181, 130, 255, 0.45));
+}
+
+@keyframes ringFill {
+	0%,
+	30% {
+		stroke-dashoffset: 94;
+	}
+	58%,
+	82% {
+		stroke-dashoffset: 12;
+	}
+	92%,
+	100% {
+		stroke-dashoffset: 94;
+	}
+}
+
+.stack {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	display: grid;
+	gap: 6px;
+	position: relative;
+	z-index: 1;
+}
+
+.stack li {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 8px;
+	padding: 8px 10px;
+	border-radius: 9px;
+	background: rgba(255, 255, 255, 0.035);
+	border: 1px solid rgba(255, 255, 255, 0.06);
+	opacity: 0;
+	transform: translateY(8px);
+	animation: cardIn var(--dur) var(--ease) infinite;
+}
+
+.cardTitle {
+	font-size: 11px;
+	font-weight: 650;
+	color: #e8eaf0;
+}
+
+.cardHint {
+	font-size: 9.5px;
+	color: #8b91a3;
+	white-space: nowrap;
+}
+
+.stack li:nth-child(1) {
+	animation-delay: 0.05s;
+}
+
+.stack li:nth-child(2) {
+	animation-delay: 0.16s;
+}
+
+.stack li:nth-child(3) {
+	animation-delay: 0.28s;
+}
+
+@keyframes cardIn {
+	0%,
+	52% {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	62%,
+	82% {
+		opacity: 1;
+		transform: none;
+		border-color: rgba(181, 130, 255, 0.18);
+	}
+	90%,
+	100% {
+		opacity: 0;
+		transform: translateY(-4px);
+	}
+}
+
+/* ============================================================ motion prefs */
+
+@media (prefers-reduced-motion: reduce) {
+	.scene *,
+	.scene *::before,
+	.scene *::after {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition: none !important;
+	}
+
+	.line,
+	.type,
+	.outLine,
+	.ok,
+	.generate,
+	.statusDone,
+	.stack li,
+	.ringFg {
+		opacity: 1 !important;
+		max-width: 100% !important;
+		transform: none !important;
+		stroke-dashoffset: 12 !important;
+	}
+
+	.statusThink,
+	.statusGen,
+	.result::before {
+		opacity: 0 !important;
+	}
+}

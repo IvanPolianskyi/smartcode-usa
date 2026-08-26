@@ -1,13 +1,8 @@
 import { setRequestLocale } from 'next-intl/server'
-import { getLocalizedMetadata, buildAlternates } from '@/lib/i18nMetadata'
 
-export async function generateMetadata({ params }) {
-	const { locale } = await params
-	const meta = await getLocalizedMetadata(locale, 'login')
-	return {
-		...meta,
-		alternates: buildAlternates(locale, '/login'),
-	}
+export const metadata = {
+	title: 'Log in — SmartCode',
+	description: 'Sign in to your SmartCode account to continue learning.',
 }
 
 export default async function LoginLayout({ children, params }) {

@@ -3,30 +3,12 @@
 export async function register() {
 	if (process.env.NEXT_RUNTIME === 'edge') return
 
-	// Projects Telegram bot disabled (see /api/telegram/webhook).
-
-	// Бот заявок: кнопки статусу → /api/telegram/leads-webhook
-	// На production після деплою/cold start ідемпотентно викликає setWebhook.
+	// Billing indexes are what make webhook replays harmless, so create them
+	// before the first webhook can arrive rather than lazily on it.
 	try {
-		const { ensureLeadsTelegramWebhook } = await import(
-			'@/lib/ensureLeadsTelegramWebhook'
-		)
-		const result = await ensureLeadsTelegramWebhook()
-		if (result?.skipped) {
-			console.log('[leads-webhook] skip:', result.reason)
-		} else if (result?.ok) {
-			console.log('[leads-webhook] ready:', result.webhookUrl)
-		} else {
-			console.warn('[leads-webhook] setup issue:', result)
-		}
-	} catch (e) {
-		console.warn('[leads-webhook] auto-setup error:', e)
-	}
-
-	try {
-		const { ensureAffiliateClickIndexes } = await import('@/lib/affiliateClicks')
-		await ensureAffiliateClickIndexes()
-	} catch (e) {
-		console.warn('[affiliate-clicks] index setup error:', e)
+		const { ensureBillingIndexes } = await import('@/lib/entitlements')
+		await ensureBillingIndexes()
+	} catch (error) {
+		console.warn('[billing] index setup skipped:', error?.message || error)
 	}
 }

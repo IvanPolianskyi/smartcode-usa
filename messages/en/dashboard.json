@@ -1,0 +1,238 @@
+{
+  "courses": {
+    "python-developer-zero-to-junior": { "title": "Python" },
+    "roblox-studio": { "title": "Roblox Studio" },
+    "ai-at-work": { "title": "AI at Work" },
+    "scratch": { "title": "Scratch" },
+    "minecraft-education": { "title": "Minecraft Education" },
+    "web-development": { "title": "Web Development" },
+    "unity-game-development": { "title": "Unity" }
+  },
+  "days": {
+    "sun": "Sun",
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat"
+  },
+  "dayMap": {
+    "Sun": "sun",
+    "Mon": "mon",
+    "Tue": "tue",
+    "Wed": "wed",
+    "Thu": "thu",
+    "Fri": "fri",
+    "Sat": "sat"
+  },
+  "loading": "Loading...",
+  "title": "Dashboard",
+  "roles": {
+    "admin": "Administrator",
+    "teacher": "Instructor",
+    "student": "Student"
+  },
+  "adminPanelLink": "Admin panel",
+  "teacherPanelLink": "Teacher dashboard",
+  "logout": "Log out",
+  "pending": {
+    "title": "Wait while your account is being set up",
+    "text": "Your account has been created. Once your courses, schedule, and access are set up (or you open the link from Telegram), the full dashboard will appear here. If this is taking a while, contact us."
+  },
+  "adminView": {
+    "management": {
+      "title": "Management",
+      "text": "Manage students, schedules, course access, and analytics.",
+      "button": "Open admin panel"
+    },
+    "stats": {
+      "title": "Dashboard",
+      "visits": "Visits",
+      "users": "Users",
+      "revenue": "Revenue",
+      "currency": "USD"
+    },
+    "topCourses": {
+      "title": "Top courses",
+      "empty": "No enrollment data yet."
+    },
+    "activity": {
+      "title": "30-day activity",
+      "text": "Visits over the last month"
+    }
+  },
+  "student": {
+    "heroLabel": "Student progress",
+    "greeting": "Welcome back. Let's keep learning.",
+    "greetingNamed": "Hi, {name}",
+    "lede": "Pick a course below and keep building.",
+    "goalTitle": "Weekly goal",
+    "tabs": {
+      "overview": "Overview",
+      "history": "History"
+    },
+    "metrics": {
+      "activeCourses": "Active courses",
+      "completedLessons": "Completed lessons",
+      "platformLessons": "Lessons on the platform",
+      "onlineLessons": "Online lessons",
+      "formatLabel": "Learning format",
+      "individual": "Individual",
+      "group": "Group"
+    },
+    "schedule": {
+      "noLessons": "No lessons scheduled",
+      "motivationRemaining": "{count} more lesson(s) this week. Next: {next}",
+      "motivationDone": "No more lessons this week. Next: {next}",
+      "timePending": "time to be confirmed"
+    },
+    "courseDescriptions": {
+      "roblox-studio": "92 lessons: models, Lua, Obby/Tycoon, and releasing your own game on Showcase.",
+      "python-developer-zero-to-junior": "96 lessons: Python from scratch to real projects.",
+      "scratch": "92 lessons: blocks, games, and animations, from your first sprite to a final project.",
+      "minecraft-education": "92 lessons: agents, MakeCode, quests, and STEM in the Minecraft Education world.",
+      "web-development": "HTML, CSS, JavaScript: from your first page to your own website.",
+      "unity-game-development": "Unity: building 2D/3D games from your first scene to release."
+    },
+    "courses": {
+      "title": "My courses",
+      "subtitle": "Open a program to continue where you left off",
+      "active": "Course active",
+      "purchased": "Access granted",
+      "locked": "Locked",
+      "lockedHint": "Platform access opens up with online lessons. Contact support for details.",
+      "lockedViaLessonsRoblox": "Subscribe to Roblox Studio, or attend online lessons at SmartCode.",
+      "lockedViaLessonsPython": "Subscribe to Python, or attend online lessons at SmartCode.",
+      "lockedViaLessonsAi": "Subscribe to AI at Work to unlock this program.",
+      "lockedViaLessonsScratch": "To get access, attend Scratch online lessons at SmartCode.",
+      "lockedViaLessonsMinecraft": "To get access, attend Minecraft Education online lessons at SmartCode.",
+      "lockedViaLessonsWeb": "To get access, attend Web Development online lessons at SmartCode.",
+      "lockedViaLessonsUnity": "To get access, attend Unity online lessons at SmartCode.",
+      "unlockCta": "Request access",
+      "preview": "Preview curriculum",
+      "goTo": "Go",
+      "resume": "Resume learning",
+      "openTrack": "Open my course",
+      "yourTrack": "Your track",
+      "progress": "Progress: {percent}%",
+      "empty": "No courses assigned yet."
+    },
+    "paymentReminder": {
+      "title": "Time to top up your lesson balance",
+      "text": "Your next lesson is coming up soon. Next lesson: {deadline}. Top up your lesson balance in the form below.",
+      "creditsLeft": "Lessons remaining in your balance: {count}",
+      "payNow": "Pay now",
+      "pendingTitle": "Receipt received",
+      "pendingText": "We're reviewing your receipt. Once it's confirmed, lessons will appear in your balance. This usually takes a short time."
+    },
+    "calendar": {
+      "title": "Weekly schedule",
+      "next": "Next lesson",
+      "today": "Today",
+      "noLesson": "Free day",
+      "liveLesson": "Online lesson",
+      "conductedLesson": "Lesson completed",
+      "kindGroup": "group",
+      "kindIndividual": "1:1",
+      "conducted": "completed",
+      "joinNow": "Join",
+      "joinSoon": "Opens soon"
+    },
+    "achievements": {
+      "title": "Achievements",
+      "subtitle": "Earn points and unlock badges",
+      "points": "points",
+      "badges": "badges",
+      "items": {
+        "first": "First lesson",
+        "five": "5 lessons",
+        "ten": "10 lessons",
+        "quarter": "25% of the course",
+        "half": "50% of the course"
+      }
+    },
+    "zoom": {
+      "title": "Schedule and Zoom",
+      "empty": "Schedule not set up yet.",
+      "join": "Join the lesson on Zoom",
+      "waiting": "Waiting for the Zoom link"
+    },
+    "history": {
+      "title": "Lesson history",
+      "empty": "No completed lessons yet."
+    },
+    "packages": {
+      "title": "Lesson packages",
+      "subtitle": "Booking more lessons in advance means steadier progress without breaks",
+      "formatIndividual": "Your lessons: individual",
+      "formatGroup": "Your lessons: group",
+      "basePrice": "Regular price: ${price} per lesson",
+      "oneLesson": "1 lesson",
+      "lessonsFew": "{count} lessons",
+      "lessonsMany": "{count} lessons",
+      "perLesson": "${price}/lesson",
+      "total": "Total: ${total}",
+      "payAsFor": "you pay as if for {count}",
+      "gift": "+{count} lesson(s) free 🎁",
+      "bestValue": "Best value",
+      "bestNote": "⭐ Best value: {count} lessons, ${price}/lesson. Booking more lessons in advance means steady progress without breaks.",
+      "chooseHint": "Select a package, and the amount and number of lessons will be filled into the payment form below."
+    },
+    "payments": {
+      "title": "Course payments",
+      "subtitle": "Enter the amount and attach a photo of your receipt after paying",
+      "pendingReviewNote": "🧾 Your payment is being reviewed ({count}). Lessons will appear in your balance soon.",
+      "debtNote": "⚠️ You have an outstanding balance for {count} lesson(s). Top up your balance to continue without interruption.",
+      "completed": "Completed",
+      "pending": "Pending",
+      "failed": "Failed",
+      "totalAmount": "Total payments",
+      "lessonCredits": "Lessons in balance",
+      "debt": "Outstanding balance",
+      "debtLessons": "{count} lesson(s)",
+      "noDebt": "None",
+      "debtHint": "We recommend entering {lessons} lesson(s) in the field below",
+      "receiptPendingReview": "Under review",
+      "receiptPendingHint": "Your receipt has been submitted. Please wait for confirmation. The outstanding balance will clear once the lessons are credited.",
+      "debtRejectedHint": "Your previous receipt was rejected. Please submit a new one. We recommend entering {lessons} lesson(s).",
+      "accountBalance": "Balance",
+      "balanceLoading": "loading",
+      "currency": "USD",
+      "openPay": "Pay",
+      "closePay": "Collapse",
+      "stepReceipt": "Receipt photo",
+      "receiptHint": "After completing your bank transfer, take a screenshot or photo of the confirmation and attach it here. Your instructor will provide payment details.",
+      "noFile": "No file selected",
+      "amountLabel": "Payment amount (USD)",
+      "amountPlaceholder": "Amount from the receipt",
+      "lessonsLabel": "Number of lessons paid for",
+      "receiptPhoto": "Click to select a receipt photo",
+      "receiptAttached": "Receipt attached",
+      "receiptPreviewAlt": "Receipt preview",
+      "changeReceipt": "Change file",
+      "removeReceipt": "Remove receipt",
+      "submitting": "Submitting…",
+      "submit": "Submit receipt",
+      "errors": {
+        "invalidAmount": "Enter a valid payment amount",
+        "invalidLessons": "Enter the number of lessons (minimum 1)",
+        "amountTooLow": "The minimum amount for one lesson is ${price}",
+        "noPhoto": "Add a receipt photo",
+        "submitFailed": "Could not submit the receipt",
+        "submitError": "Error submitting the receipt",
+        "paymentFailed": "Could not create the payment"
+      },
+      "success": "Payment received. Lessons credited: {count}"
+    },
+    "refresh": "Refresh data"
+  },
+  "profile": {
+    "title": "Profile",
+    "dataLossWarning": "Deleting your account permanently destroys all your data: learning progress, course access, schedule, dashboard history, and profile settings. This cannot be undone.",
+    "deleteButton": "Delete account",
+    "deleting": "Deleting…",
+    "confirmMessage": "Are you sure you want to delete your account?\n\nAll your data will be lost permanently: progress, courses, schedule, and dashboard information.\n\nThis action cannot be undone.",
+    "errorGeneric": "Could not delete your account. Try again later or contact support."
+  }
+}

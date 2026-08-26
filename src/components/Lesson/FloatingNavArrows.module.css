@@ -25,21 +25,21 @@
 }
 
 .navButton:hover {
-  background-color: rgba(161, 0, 255, 0.18);
-  color: #c44bff;
-  border-color: rgba(161, 0, 255, 0.45);
+  background-color: rgba(252, 110, 81, 0.18);
+  color: #ff8263;
+  border-color: rgba(252, 110, 81, 0.45);
   transform: scale(1.05);
 }
 
 .nextButton {
-  background: linear-gradient(135deg, #a100ff, #7a00c8);
+  background: linear-gradient(135deg, #fc6e51, #e85d3a);
   color: white;
   border-color: transparent;
-  box-shadow: 0 8px 20px rgba(161, 0, 255, 0.35);
+  box-shadow: 0 8px 20px rgba(252, 110, 81, 0.35);
 }
 
 .nextButton:hover {
-  background: linear-gradient(135deg, #c44bff, #a100ff);
+  background: linear-gradient(135deg, #ff8263, #fc6e51);
   color: white;
 }
 

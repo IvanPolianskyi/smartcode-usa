@@ -1,28 +1,45 @@
 import { getRequestConfig } from 'next-intl/server'
 import { routing } from './routing'
 
+async function importMessages(locale, name) {
+	try {
+		if (name === 'base') {
+			return (await import(`../../messages/${locale}.json`)).default
+		}
+		return (await import(`../../messages/${locale}/${name}.json`)).default
+	} catch {
+		if (locale === 'en') {
+			if (name === 'base') {
+				return (await import('../../messages/uk.json')).default
+			}
+			return (await import(`../../messages/uk/${name}.json`)).default
+		}
+		throw new Error(`Missing messages: ${locale}/${name}`)
+	}
+}
+
 async function loadMessages(locale) {
 	const [base, homeSections, coursePages, pages, dashboard, lms, admin, teacher] =
 		await Promise.all([
-			import(`../../messages/${locale}.json`),
-			import(`../../messages/${locale}/homeSections.json`),
-			import(`../../messages/${locale}/coursePages.json`),
-			import(`../../messages/${locale}/pages.json`),
-			import(`../../messages/${locale}/dashboard.json`),
-			import(`../../messages/${locale}/lms.json`),
-			import(`../../messages/${locale}/admin.json`),
-			import(`../../messages/${locale}/teacher.json`),
+			importMessages(locale, 'base'),
+			importMessages(locale, 'homeSections'),
+			importMessages(locale, 'coursePages'),
+			importMessages(locale, 'pages'),
+			importMessages(locale, 'dashboard'),
+			importMessages(locale, 'lms'),
+			importMessages(locale, 'admin'),
+			importMessages(locale, 'teacher'),
 		])
 
 	return {
-		...base.default,
-		homeSections: homeSections.default,
-		coursePages: coursePages.default,
-		pages: pages.default,
-		dashboard: dashboard.default,
-		lms: lms.default,
-		admin: admin.default,
-		teacher: teacher.default,
+		...base,
+		homeSections,
+		coursePages,
+		pages,
+		dashboard,
+		lms,
+		admin,
+		teacher,
 	}
 }
 

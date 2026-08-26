@@ -26,11 +26,28 @@ export async function login(email, password) {
   return data
 }
 
-/** Публічна реєстрація вимкнена — акаунти створює CRM / Telegram. */
-export async function register() {
-  throw new Error(
-    'Публічна реєстрація вимкнена. Акаунт видає менеджер SmartCode або Telegram-бот.'
-  )
+export async function register({ email, password, name, phone, privacyAccepted }) {
+  const response = await fetch('/api/auth/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email,
+      password,
+      name,
+      phone: phone || undefined,
+      privacyAccepted: Boolean(privacyAccepted),
+    }),
+  })
+
+  const data = await response.json()
+
+  if (!response.ok) {
+    throw new Error(data.error || 'Registration failed')
+  }
+
+  return data
 }
 
 export async function logout() {
@@ -142,36 +159,25 @@ export async function enrollInCourse(courseId) {
 
 export async function checkCoursePurchase(courseId) {
   try {
-    const response = await fetch(`/api/payment?courseId=${courseId}`, {
-      credentials: 'include',
-    })
-
-    if (!response.ok) {
-      return false
-    }
-
-    const data = await response.json()
-    return data.purchased || false
+    // Online purchase flow removed — treat access as not purchased via payment API.
+    void courseId
+    return false
   } catch (error) {
     return false
   }
 }
 
-/** Онлайн-оплата повних курсів вимкнена — доступ через CRM / онлайн-уроки. */
+/** Use Paddle checkout via Pricing instead. */
 export async function createPayment() {
-  throw new Error(
-    'Купівля курсів на сайті вимкнена. Доступ до платформи відкриває менеджер SmartCode разом з онлайн-уроками.'
-  )
+  throw new Error('Course purchase moved to Pricing. Pick a program and start a free trial.')
 }
 
 export async function createEnLessonPayment() {
-  throw new Error('Запис на урок через оплату на сайті вимкнено.')
+  throw new Error('Lesson booking via site payment is disabled. Use Pricing to subscribe.')
 }
 
 /** @deprecated */
 export async function purchaseCourse() {
-  throw new Error(
-    'Купівля курсів на сайті вимкнена. Зверніться до менеджера SmartCode.'
-  )
+  throw new Error('Course purchase moved to Pricing. Pick a program and start a free trial.')
 }
 

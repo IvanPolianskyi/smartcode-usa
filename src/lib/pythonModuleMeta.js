@@ -1,56 +1,56 @@
 /**
- * Taglines and richer module blurbs for Python curriculum (UK).
+ * Taglines and richer module blurbs for the Python curriculum (EN).
  * Merged in getPythonCurriculum().
  */
 
-export const PYTHON_MODULE_META_UK = {
+export const PYTHON_MODULE_META_EN = {
   'module-00': {
-    tagline: 'Старт',
+    tagline: 'Getting started',
     description:
-      'Перші кроки в Python: змінні, списки, словники, рядки та вкладені структури даних.',
+      'First steps in Python: variables, lists, dictionaries, strings, and nested data structures.',
   },
-  'module-01': { tagline: 'Порівняння' },
-  'module-02': { tagline: 'Цикли та умови' },
-  'module-03': { tagline: 'Функції' },
-  'module-04': { tagline: 'ООП' },
-  'module-05': { tagline: 'Помилки' },
-  'module-06': { tagline: 'Декоратори' },
-  'module-07': { tagline: 'Генератори' },
-  'module-08': { tagline: 'Модулі stdlib' },
+  'module-01': { tagline: 'Comparisons' },
+  'module-02': { tagline: 'Loops and conditionals' },
+  'module-03': { tagline: 'Functions' },
+  'module-04': { tagline: 'OOP' },
+  'module-05': { tagline: 'Errors' },
+  'module-06': { tagline: 'Decorators' },
+  'module-07': { tagline: 'Generators' },
+  'module-08': { tagline: 'Stdlib modules' },
   'module-09': {
-    tagline: 'Веб-скрапінг',
+    tagline: 'Web scraping',
     description:
-      'HTTP-запити, BeautifulSoup і збір даних з реальних сайтів - перший «польовий» проєкт.',
+      'HTTP requests, BeautifulSoup, and collecting data from real sites — your first field project.',
   },
-  'module-10': { tagline: 'Зображення' },
+  'module-10': { tagline: 'Images' },
   'module-11': {
     tagline: 'PDF',
-    description: 'Читання та створення PDF - корисно для звітів і автоматизації документів.',
+    description: 'Reading and creating PDFs — useful for reports and document automation.',
   },
   'module-12': {
     tagline: 'Email',
-    description: 'Автоматизація листів через smtplib - сповіщення та звіти скриптом.',
+    description: 'Automate messages with smtplib — notifications and reports from a script.',
   },
   'module-13': {
-    tagline: 'GUI (бонус)',
+    tagline: 'GUI (bonus)',
     description:
-      'Фінальний бонус: віконний додаток на Tkinter - збираєш усе в інтерфейс для користувача.',
+      'Final bonus: a desktop app with Tkinter — put it all together in a user-facing interface.',
   },
   'module-14': {
-    tagline: 'Telegram-боти',
+    tagline: 'Telegram bots',
     description:
-      'Від BotFather до власного бота: команди, клавіатури та проєкт-асистент на python-telegram-bot.',
+      'From BotFather to your own bot: commands, keyboards, and an assistant project with python-telegram-bot.',
   },
   'module-15': {
     tagline: 'FastAPI',
     description:
-      'REST API на FastAPI: Pydantic, CRUD і webhook, щоб поєднати бота з бекендом.',
+      'REST APIs with FastAPI: Pydantic, CRUD, webhooks, and deploy — the course’s final backend module.',
   },
 }
 
 export function enrichPythonModules(modules) {
   return modules.map((m) => {
-    const meta = PYTHON_MODULE_META_UK[m.moduleId] || {}
+    const meta = PYTHON_MODULE_META_EN[m.moduleId] || {}
     return {
       ...m,
       tagline: meta.tagline,

@@ -1,0 +1,163 @@
+{
+  "hero": {
+    "tryFree": "Try for free",
+    "mockupProgress": "Progress: 75%",
+    "mockupLevel": "Level: Junior+",
+    "slides": {
+      "platform": {
+        "superTitle": "Interactive Platform",
+        "title": "Learning that keeps you engaged",
+        "subtitle": "Dive into code with a platform where theory turns into practice immediately.",
+        "features": {
+          "0": "24/7 access to mentors",
+          "1": "Interactive exercises",
+          "2": "Recorded video lessons",
+          "3": "Gamified progress tracking"
+        }
+      },
+      "mentorship": {
+        "superTitle": "Personal Mentorship",
+        "title": "Your personal guide into tech",
+        "subtitle": "Get support from experienced developers who help you avoid mistakes and grow faster.",
+        "features": {
+          "0": "A personalized approach",
+          "1": "Detailed code reviews",
+          "2": "Career guidance",
+          "3": "Preparation for real-world projects"
+        }
+      },
+      "community": {
+        "superTitle": "An Active Community",
+        "title": "Strength in numbers",
+        "subtitle": "Join a community of like-minded people where you can share ideas, build projects, and grow together.",
+        "features": {
+          "0": "Team hackathons",
+          "1": "Collaborative open-source projects",
+          "2": "Expert-led webinars",
+          "3": "Networking and knowledge sharing"
+        }
+      }
+    }
+  },
+  "courseCards": {
+    "sectionTitle": "Courses",
+    "age": "years old",
+    "students": "students",
+    "projects": "projects",
+    "months": "mo",
+    "details": "Learn more",
+    "goTo": "Go",
+    "startLearning": "Start learning",
+    "years": "years",
+    "python": {
+      "title": "PYTHON",
+      "subtitle": "The programming language of the future",
+      "description": "From the basics to Telegram bots, FastAPI, and automation. Practice on real projects.",
+      "features": ["Python fundamentals", "OOP and algorithms", "Telegram bots", "FastAPI"],
+      "badge": "Top pick"
+    },
+    "roblox": {
+      "title": "ROBLOX",
+      "subtitle": "Build games in Roblox Studio",
+      "description": "Dive into game design and scripting with Roblox Studio and Lua. Build worlds, create mechanics, and publish games.",
+      "features": ["Roblox Studio", "Lua", "Game design", "Publishing games"],
+      "badge": "Popular"
+    },
+    "gamedev": {
+      "title": "GAME DEV",
+      "subtitle": "Build your own games with Unity",
+      "description": "Develop engaging games in Unity, from simple 2D projects to complex 3D ones.",
+      "features": ["C#", "Unity 3D", "Character design", "Gameplay logic"],
+      "badge": "Trending in 2025"
+    },
+    "webdev": {
+      "title": "WEB DEVELOPMENT",
+      "subtitle": "Modern websites and apps",
+      "description": "Build responsive websites and web apps with HTML, CSS, JavaScript, and React that stand out for their speed and design.",
+      "features": ["HTML/CSS", "JavaScript", "React", "Node.js"],
+      "badge": "New"
+    },
+    "scratch": {
+      "title": "SCRATCH",
+      "subtitle": "First steps in code through games",
+      "description": "Block-based programming: animations, games, and interactive stories without complex syntax. A great starting point in tech.",
+      "features": ["Code blocks", "Games and animations", "Logic and variables", "Your own projects"],
+      "badge": "Beginner friendly"
+    },
+    "minecraft": {
+      "title": "MINECRAFT EDUCATION",
+      "subtitle": "Minecraft Education",
+      "description": "Learn to code and think computationally in Minecraft Education: agents, command blocks, quests, and STEM projects.",
+      "features": ["Education Edition", "Agents", "Commands", "In-world quests"],
+      "badge": "STEM"
+    }
+  },
+  "lessons": {
+    "badge": "One-on-one online lessons",
+    "title": "Lesson examples",
+    "titleAccent": " with an instructor on Zoom",
+    "description": "Every session is a live lesson: real-time feedback, your own pace, and hands-on project work. Below are short clips so you can see the teaching style.",
+    "playVideo": "Play video: {title}",
+    "knowledgeTest": "Test your knowledge",
+    "examples": {
+      "0": {
+        "title": "Lesson example: Python fundamentals",
+        "description": "We cover core concepts and immediately apply them in a mini-project."
+      },
+      "1": {
+        "title": "Lesson example: Web development",
+        "description": "We build a first page step by step and work through real tasks."
+      },
+      "2": {
+        "title": "Lesson example: Roblox",
+        "description": "We cover the basics of Roblox and build a simple project."
+      }
+    }
+  },
+  "testimonials": {
+    "title": "WHAT OUR",
+    "titleAccent": "STUDENTS SAY"
+  },
+  "projects": {
+    "title": "Projects by our students",
+    "titleAccent": "Projects",
+    "titleRest": "by our students",
+    "subtitle": "After just a few lessons, your own project could be featured here",
+    "loading": "Loading projects...",
+    "error": "Could not load projects",
+    "viewCode": "View code",
+    "viewAll": "View all projects",
+    "noImage": "No image"
+  },
+  "social": {
+    "badge": "Social media",
+    "title": "Follow",
+    "titleAccent": "SmartCode Academy",
+    "subtitle": "Short lessons, student projects, and behind-the-scenes moments on Instagram and TikTok",
+    "audienceStat": "100,000+ followers across our social channels",
+    "subscribe": "Follow",
+    "accounts": {
+      "tiktokMain": { "description": "Our courses and projects" },
+      "instagram": { "description": "Behind the scenes and updates" },
+      "ivan": { "name": "Ivan - Python", "description": "Python programming" },
+      "artem": { "name": "Artem - SmartCode", "description": "Educational content" }
+    }
+  },
+  "lms": {
+    "title": "WE BUILT A COMFORTABLE ENVIRONMENT",
+    "titleLine2": "FOR LEARNING AND PRACTICE",
+    "description": "You can study from anywhere in the world. Lessons and all learning materials are just a click away, in your personal dashboard on <strong>an LMS built for remote learning</strong>, designed specifically around the needs of our students.",
+    "goToDashboard": "Go to dashboard",
+    "login": "Log in",
+    "subtitle": "WHAT YOU CAN DO IN",
+    "subtitleLine2": "YOUR ONLINE DASHBOARD?",
+    "features": {
+      "0": "Attend live online lessons with an instructor",
+      "1": "Access learning materials",
+      "2": "Track your progress through the program",
+      "3": "Receive and submit assignments",
+      "4": "Make payments for your courses",
+      "5": "Refer friends to the courses and earn rewards"
+    }
+  }
+}

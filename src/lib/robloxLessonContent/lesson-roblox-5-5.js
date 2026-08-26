@@ -1,3 +1,4 @@
 import { ukLesson55 } from './uk/module05-lessons'
+import { enLesson55 } from './en/module05-lessons'
 
-export const lesson_roblox_5_5 = { uk: ukLesson55 }
+export const lesson_roblox_5_5 = { uk: ukLesson55, en: enLesson55 }

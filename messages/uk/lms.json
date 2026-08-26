@@ -148,6 +148,32 @@
       "certificateText": "Після завершення курсу - сертифікат SmartCode Academy з Roblox game development.",
       "certificateRole": "Roblox-розробника"
     },
+    "ai": {
+      "valueProposition": "Prompting, generative media, and a content system you can actually keep running.",
+      "skillShort": ["Prompting", "Images", "Video", "Workflow"],
+      "requirementsShort": ["Browser", "Internet", "Curiosity"],
+      "certificateShort": "SmartCode certificate after completing AI at Work.",
+      "skills": [
+        "How generative models actually work",
+        "Prompting as an engineering skill",
+        "Generating images and video",
+        "Writing that still sounds human",
+        "A weekly content system"
+      ],
+      "format": [
+        "Self-paced lessons in the LMS",
+        "Practice tasks with clear briefs",
+        "Reusable prompt templates",
+        "Progress saved across devices"
+      ],
+      "requirements": [
+        "A modern browser",
+        "Internet connection",
+        "Willingness to iterate on prompts"
+      ],
+      "certificateText": "After finishing the program — a SmartCode certificate for AI at Work.",
+      "certificateRole": "AI practitioner"
+    },
     "scratch": {
       "valueProposition": "92 уроки блокового коду: від першого спрайта до власної гри з рівнями та фінальним проєктом.",
       "skillShort": ["Спрайти", "Події", "Змінні", "Цикли", "Клони", "Ігри"],

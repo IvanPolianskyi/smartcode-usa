@@ -1,14 +1,9 @@
 import { setRequestLocale } from 'next-intl/server'
-import { getLocalizedMetadata, buildAlternates } from '@/lib/i18nMetadata'
 
-export async function generateMetadata({ params }) {
-	const { locale } = await params
-	const meta = await getLocalizedMetadata(locale, 'register')
-	return {
-		...meta,
-		alternates: buildAlternates(locale, '/register'),
-		robots: { index: false, follow: false },
-	}
+export const metadata = {
+	title: 'Create account — SmartCode',
+	description: 'Create a SmartCode account, then subscribe to Roblox, Python, or AI at Work.',
+	robots: { index: false, follow: false },
 }
 
 export default async function RegisterLayout({ children, params }) {

@@ -1,21 +1,25 @@
 /**
- * Translate Ukrainian lesson content strings to English.
- * Preserves code structure, exports, and non-Cyrillic strings.
+ * Translate Ukrainian lesson content to English into lessonContent/en/.
+ * Usage: node scripts/translate-lesson-uk-en.mjs [stem...]
+ * Default: all lesson-*.js in lessonContent/
  */
 import fs from 'fs'
 import path from 'path'
 
-const DEFAULT_STEMS = [
-  'lesson-05-5', 'lesson-06-4', 'lesson-07-1', 'lesson-07-2', 'lesson-07-3', 'lesson-07-4',
-  'lesson-08-1', 'lesson-08-2', 'lesson-08-3', 'lesson-08-4', 'lesson-08-5', 'lesson-08-6',
-  'lesson-09-1', 'lesson-09-2', 'lesson-09-3', 'lesson-09-4',
-]
-const STEMS = process.argv.length > 2 ? process.argv.slice(2) : DEFAULT_STEMS
-
 const CYRILLIC = /[\u0400-\u04FF]/
 const cache = new Map()
+const MAX_CHUNK = 1500
 
-async function translateText(text) {
+const STEMS =
+  process.argv.length > 2
+    ? process.argv.slice(2)
+    : fs
+        .readdirSync('src/lib/lessonContent')
+        .filter((f) => /^lesson-.*\.js$/.test(f))
+        .map((f) => f.replace(/\.js$/, ''))
+        .sort()
+
+async function translateChunk(text) {
   if (!CYRILLIC.test(text)) return text
   if (cache.has(text)) return cache.get(text)
 
@@ -23,30 +27,85 @@ async function translateText(text) {
     'https://translate.googleapis.com/translate_a/single?client=gtx&sl=uk&tl=en&dt=t&q=' +
     encodeURIComponent(text)
 
-  const res = await fetch(url)
-  if (!res.ok) throw new Error(`Translate HTTP ${res.status}`)
-  const data = await res.json()
-  const translated = data[0].map((part) => part[0]).join('')
-  cache.set(text, translated)
-  await new Promise((r) => setTimeout(r, 120))
-  return translated
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      const res = await fetch(url)
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const data = await res.json()
+      const translated = data[0].map((part) => part[0]).join('')
+      cache.set(text, translated)
+      await new Promise((r) => setTimeout(r, 80))
+      return translated
+    } catch (e) {
+      await new Promise((r) => setTimeout(r, 400 * (attempt + 1)))
+      if (attempt === 3) throw e
+    }
+  }
+  return text
 }
 
-/** Split content into translatable segments (outside template/code may still have UA in strings) */
+/** Split long text on blank lines / newlines while keeping Cyrillic chunks. */
+async function translateText(text) {
+  if (!CYRILLIC.test(text)) return text
+  if (text.length <= MAX_CHUNK) return translateChunk(text)
+
+  const parts = text.split(/(\n\n+)/)
+  const out = []
+  let buf = ''
+
+  async function flush() {
+    if (!buf) return
+    if (CYRILLIC.test(buf)) out.push(await translateChunk(buf))
+    else out.push(buf)
+    buf = ''
+  }
+
+  for (const part of parts) {
+    if ((buf + part).length > MAX_CHUNK && buf) await flush()
+    if (part.length > MAX_CHUNK && CYRILLIC.test(part)) {
+      await flush()
+      const lines = part.split(/(\n)/)
+      let lineBuf = ''
+      for (const line of lines) {
+        if ((lineBuf + line).length > MAX_CHUNK && lineBuf) {
+          out.push(await translateChunk(lineBuf))
+          lineBuf = ''
+        }
+        lineBuf += line
+      }
+      if (lineBuf) {
+        out.push(CYRILLIC.test(lineBuf) ? await translateChunk(lineBuf) : lineBuf)
+      }
+    } else {
+      buf += part
+    }
+  }
+  await flush()
+  return out.join('')
+}
+
 function extractStringLiterals(content) {
   const segments = []
-  const re =
-    /(`(?:\\`|[^`])*`|"(?:\\"|[^"])*"|'(?:\\'|[^'])*')/gs
+  const re = /(`(?:\\`|[^`])*`|"(?:\\"|[^"])*"|'(?:\\'|[^'])*')/gs
   let m
   while ((m = re.exec(content)) !== null) {
     const raw = m[0]
-    const inner =
-      raw[0] === '`' ? raw.slice(1, -1) : raw.slice(1, -1)
+    const inner = raw.slice(1, -1)
     if (CYRILLIC.test(inner)) {
       segments.push({ start: m.index, end: m.index + raw.length, raw, inner })
     }
   }
   return segments
+}
+
+function escapeForQuote(translated, quote) {
+  if (quote === '`') {
+    return translated.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$\{/g, '\\${')
+  }
+  if (quote === '"') {
+    return translated.replace(/\\/g, '\\\\').replace(/"/g, '\\"')
+  }
+  return translated.replace(/\\/g, '\\\\').replace(/'/g, "\\'")
 }
 
 async function translateFile(stem) {
@@ -60,26 +119,17 @@ async function translateFile(stem) {
   )
 
   const segments = extractStringLiterals(content)
-  // Process longest first to avoid partial overlaps (sorted by start desc)
   segments.sort((a, b) => b.start - a.start)
 
   for (const seg of segments) {
     const translated = await translateText(seg.inner)
     const quote = seg.raw[0]
-    let escaped = translated
-    if (quote === '`') {
-      escaped = translated.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$/g, '\\$')
-    } else if (quote === '"') {
-      escaped = translated.replace(/\\/g, '\\\\').replace(/"/g, '\\"')
-    } else {
-      escaped = translated.replace(/\\/g, '\\\\').replace(/'/g, "\\'")
-    }
-    const newRaw = quote + escaped + quote
+    const newRaw = quote + escapeForQuote(translated, quote) + quote
     content = content.slice(0, seg.start) + newRaw + content.slice(seg.end)
   }
 
   fs.writeFileSync(destPath, content, 'utf8')
-  return { stem, segments: segments.length }
+  return { stem, segments: segments.length, remaining: (content.match(/[\u0400-\u04FF]/g) || []).length }
 }
 
 async function main() {
@@ -87,11 +137,12 @@ async function main() {
   const results = []
   const failures = []
 
+  console.log(`Translating ${STEMS.length} lessons...`)
   for (const stem of STEMS) {
     try {
       const r = await translateFile(stem)
       results.push(r)
-      console.log(`OK ${stem} (${r.segments} strings)`)
+      console.log(`OK ${stem} (strings=${r.segments}, cyrillicLeft=${r.remaining})`)
     } catch (e) {
       failures.push({ stem, error: e.message })
       console.error(`FAIL ${stem}: ${e.message}`)
@@ -101,9 +152,9 @@ async function main() {
   console.log('\n--- Summary ---')
   console.log(`Translated: ${results.length}`)
   console.log(`Failed: ${failures.length}`)
-  if (failures.length) {
-    failures.forEach((f) => console.log(`  ${f.stem}: ${f.error}`))
-  }
+  const stillCyr = results.filter((r) => r.remaining > 0)
+  console.log(`With remaining Cyrillic: ${stillCyr.length}`)
+  if (failures.length) failures.forEach((f) => console.log(`  ${f.stem}: ${f.error}`))
 }
 
 main().catch((e) => {

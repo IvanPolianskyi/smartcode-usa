@@ -2,6 +2,7 @@
   "courses": {
     "python-developer-zero-to-junior": { "title": "Пайтон" },
     "roblox-studio": { "title": "Roblox Studio" },
+    "ai-at-work": { "title": "AI at Work" },
     "scratch": { "title": "Scratch" },
     "minecraft-education": { "title": "Minecraft Education" },
     "web-development": { "title": "Створення сайтів" },
@@ -64,6 +65,8 @@
   "student": {
     "heroLabel": "Прогрес учня",
     "greeting": "Привіт! Продовжуємо навчання",
+    "greetingNamed": "Привіт, {name}",
+    "lede": "Обери курс нижче й продовжуй навчання.",
     "goalTitle": "Ціль тижня",
     "tabs": {
       "overview": "Огляд",
@@ -99,8 +102,9 @@
       "purchased": "Доступ відкрито",
       "locked": "Закрито",
       "lockedHint": "Доступ до платформи відкривається з онлайн-уроками — зверніться до менеджера",
-      "lockedViaLessonsRoblox": "Щоб отримати доступ, відвідуйте онлайн-уроки Roblox Studio у SmartCode.",
-      "lockedViaLessonsPython": "Щоб отримати доступ, відвідуйте онлайн-уроки Python у SmartCode.",
+      "lockedViaLessonsRoblox": "Оформіть підписку на Roblox Studio або відвідуйте онлайн-уроки у SmartCode.",
+      "lockedViaLessonsPython": "Оформіть підписку на Python або відвідуйте онлайн-уроки у SmartCode.",
+      "lockedViaLessonsAi": "Оформіть підписку на AI at Work, щоб відкрити цю програму.",
       "lockedViaLessonsScratch": "Щоб отримати доступ, відвідуйте онлайн-уроки Scratch у SmartCode.",
       "lockedViaLessonsMinecraft": "Щоб отримати доступ, відвідуйте онлайн-уроки Minecraft Education у SmartCode.",
       "lockedViaLessonsWeb": "Щоб отримати доступ, відвідуйте онлайн-уроки зі створення сайтів у SmartCode.",

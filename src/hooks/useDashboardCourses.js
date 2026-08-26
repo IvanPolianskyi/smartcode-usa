@@ -2,15 +2,12 @@
 
 import { useMemo } from 'react'
 import { useTranslations } from 'next-intl'
-import { Code, Box, BookOpen, Blocks, Cuboid, Gamepad2, Globe } from 'lucide-react'
+import { Code, Box, BookOpen } from 'lucide-react'
 
 export const DASHBOARD_COURSE_IDS = [
 	'python-developer-zero-to-junior',
 	'roblox-studio',
-	'scratch',
-	'minecraft-education',
-	'web-development',
-	'unity-game-development',
+	'ai-at-work',
 ]
 
 const COURSE_META = {
@@ -23,38 +20,17 @@ const COURSE_META = {
 	},
 	'roblox-studio': {
 		icon: Box,
-		color: '#10b981',
+		color: '#fc6e51',
 		link: '/courses/roblox-studio',
 		bannerImage: '/logos/roblox.svg',
 		bannerGradient: 'linear-gradient(135deg, #b91c1c, #dc2626)',
 	},
-	scratch: {
-		icon: Blocks,
-		color: '#f97316',
-		link: '/courses/scratch',
-		bannerImage: '/logos/scratch-course.png',
-		bannerGradient: 'linear-gradient(135deg, #ea580c, #f97316)',
-	},
-	'minecraft-education': {
-		icon: Cuboid,
-		color: '#22c55e',
-		link: '/courses/minecraft-education',
-		bannerImage: '/logos/minecraft-course.png',
-		bannerGradient: 'linear-gradient(135deg, #15803d, #22c55e)',
-	},
-	'web-development': {
-		icon: Globe,
-		color: '#0ea5e9',
-		link: '/webDev',
-		bannerImage: '/logos/web.svg',
-		bannerGradient: 'linear-gradient(135deg, #0369a1, #0ea5e9)',
-	},
-	'unity-game-development': {
-		icon: Gamepad2,
-		color: '#64748b',
-		link: '/courses/unity-game-development',
-		bannerImage: '/logos/unity.svg',
-		bannerGradient: 'linear-gradient(135deg, #1e293b, #475569)',
+	'ai-at-work': {
+		icon: BookOpen,
+		color: '#e85d3a',
+		link: '/courses/ai-at-work',
+		bannerImage: '/projects/default-project.svg',
+		bannerGradient: 'linear-gradient(135deg, #0b1210, #e85d3a)',
 	},
 }
 

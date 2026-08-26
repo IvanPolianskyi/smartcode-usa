@@ -1,19 +1,10 @@
 import '../globals.css'
-import { Suspense } from 'react'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
-import Footer from '@/components/Footer/footer'
-import ContactForm from '@/components/ContactForm/ContactForm'
-import ScrollToTop from '@/components/ScrollToTop/ScrollToTop'
-import { Geist, Geist_Mono } from 'next/font/google'
-import Header from '@/components/Header/Header'
-import Script from 'next/script'
-import MetaPixelRouteTracker from '@/components/MetaPixel/MetaPixelRouteTracker'
-import AttributionCapture from '@/components/AttributionCapture/AttributionCapture'
+import { Geist, Geist_Mono, Instrument_Sans, Source_Serif_4 } from 'next/font/google'
 import AuthSessionProvider from '@/components/AuthSessionProvider'
-import { META_PIXEL_ID } from '@/lib/metaPixel'
-import { getAttributionBootstrapScript } from '@/lib/attribution'
+import RevealProvider from '@/components/Motion/Reveal'
 import { routing } from '@/i18n/routing'
 
 const geistSans = Geist({
@@ -27,7 +18,22 @@ const geistMono = Geist_Mono({
 	variable: '--font-geist-mono',
 	subsets: ['latin'],
 	display: 'swap',
-	weight: ['400', '500', '600', '700'],
+	weight: ['400', '500'],
+})
+
+const instrumentSans = Instrument_Sans({
+	variable: '--font-instrument-sans',
+	subsets: ['latin'],
+	display: 'swap',
+	weight: ['500', '600', '700'],
+})
+
+/** Serif display — Brilliant-style headlines. */
+const sourceSerif = Source_Serif_4({
+	variable: '--font-source-serif',
+	subsets: ['latin'],
+	display: 'swap',
+	weight: ['600', '700'],
 })
 
 export function generateStaticParams() {
@@ -45,78 +51,23 @@ export default async function LocaleLayout({ children, params }) {
 	const messages = await getMessages()
 
 	return (
-		<html lang='uk' suppressHydrationWarning>
+		<html lang={locale} data-theme="light" suppressHydrationWarning>
 			<head>
 				<meta name='format-detection' content='telephone=no' />
 				<meta name='apple-mobile-web-app-capable' content='yes' />
-				<meta name='apple-mobile-web-app-status-bar-style' content='default' />
 				<meta name='mobile-web-app-capable' content='yes' />
-				<link rel='icon' href='/logo.jpeg' />
-				{/* Ловимо UTM/fbclid одразу в <head>, до React/навігації */}
-				<script
-					dangerouslySetInnerHTML={{ __html: getAttributionBootstrapScript() }}
-				/>
+				<link rel='icon' href='/favicon.svg' type='image/svg+xml' />
 			</head>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+				className={`${geistSans.variable} ${geistMono.variable} ${instrumentSans.variable} ${sourceSerif.variable} sc-page`}
 				suppressHydrationWarning
 			>
 				<NextIntlClientProvider messages={messages}>
 					<AuthSessionProvider>
-						<Suspense fallback={null}>
-							<MetaPixelRouteTracker />
-							<AttributionCapture />
-						</Suspense>
-						<ScrollToTop />
-						<Header />
-						<div className='min-h-screen flex flex-col'>
-							<main className='flex-1 relative main-content'>{children}</main>
-							<Footer />
-							<ContactForm />
-						</div>
+						<RevealProvider />
+						{children}
 					</AuthSessionProvider>
 				</NextIntlClientProvider>
-
-				<Script
-					src='https://www.googletagmanager.com/gtag/js?id=G-MYR6FDXWYF'
-					strategy='lazyOnload'
-				/>
-				<Script id='google-analytics' strategy='lazyOnload'>
-					{`
-						window.dataLayer = window.dataLayer || [];
-						function gtag(){dataLayer.push(arguments);}
-						gtag('js', new Date());
-						gtag('config', 'G-MYR6FDXWYF');
-					`}
-				</Script>
-				{META_PIXEL_ID && (
-					<>
-						<Script id='meta-pixel' strategy='lazyOnload'>
-							{`
-								!function(f,b,e,v,n,t,s)
-								{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-								n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-								if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-								n.queue=[];t=b.createElement(e);t.async=!0;
-								t.src=v;s=b.getElementsByTagName(e)[0];
-								s.parentNode.insertBefore(t,s)}(window, document,'script',
-								'https://connect.facebook.net/en_US/fbevents.js');
-								fbq('set', 'autoConfig', false, '${META_PIXEL_ID}');
-								fbq('init', '${META_PIXEL_ID}');
-								fbq('track', 'PageView');
-							`}
-						</Script>
-						<noscript>
-							<img
-								height='1'
-								width='1'
-								style={{ display: 'none' }}
-								src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
-								alt=''
-							/>
-						</noscript>
-					</>
-				)}
 			</body>
 		</html>
 	)

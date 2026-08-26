@@ -58,12 +58,16 @@
       "description": "Публічна оферта SmartCode Academy. Оплата онлайн-уроків, повернення коштів, контакти."
     },
     "privacy": {
-      "title": "Політика конфіденційності - SmartCode Academy",
-      "description": "Як SmartCode Academy збирає, використовує та захищає персональні дані учнів і батьків"
+      "title": "Privacy Policy - SmartCode Academy",
+      "description": "How SmartCode Academy collects, uses, and protects personal data. Includes Paddle payment processing."
+    },
+    "terms": {
+      "title": "Terms of Service - SmartCode Academy",
+      "description": "Terms of Service for SmartCode Academy subscriptions, billing via Paddle, and acceptable use."
     },
     "refund": {
-      "title": "Політика повернення коштів - SmartCode Academy",
-      "description": "Умови повернення коштів, скасування транзакцій та порядок подання заявок"
+      "title": "Refund Policy - SmartCode Academy",
+      "description": "30-day money-back guarantee, cancellations, and how Paddle processes refunds for SmartCode Academy."
     },
     "projects": {
       "title": "Проєкти учнів SmartCode Academy",

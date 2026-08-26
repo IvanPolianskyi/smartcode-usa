@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic'
+import { loadUserWithAccess } from '@/lib/loadUser'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
-import { syncStudentScheduleAccess } from '@/lib/syncStudentScheduleAccess'
 import {
   canReadCourseProgress,
   getUnlockedLessonSet,
@@ -48,8 +48,7 @@ export default async function LessonPageRoute({ params }) {
     const userId = await getCurrentUser()
     if (userId) {
       const usersCollection = await getCollection('users')
-      let user = await usersCollection.findOne({ _id: new ObjectId(userId) })
-      user = await syncStudentScheduleAccess(user, usersCollection)
+      const user = await loadUserWithAccess(userId)
       
       if (user) {
         courseUser = user
@@ -95,6 +94,9 @@ export default async function LessonPageRoute({ params }) {
     isAdmin: userRole === 'admin',
     isTeacher: userRole === 'teacher',
     isPurchased,
+    isSubscribed: Array.isArray(courseUser?.subscribedCourseIds)
+      ? courseUser.subscribedCourseIds.includes(courseId)
+      : courseUser?.subscriptionActive === true,
     isEnrolled,
   })
 

@@ -1,23 +1,18 @@
 import { NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
+import { loadUserWithAccess } from '@/lib/loadUser'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
-import { pythonCurriculum } from '@/lib/pythonCurriculum'
-import { webDevCurriculum } from '@/lib/webDevCurriculum'
-import { scratchCurriculum } from '@/lib/scratchCurriculum'
-import { minecraftCurriculum } from '@/lib/minecraftCurriculum'
 import { createProgressEntry } from '@/lib/courseUtils'
 import {
   canReadCourseProgress,
   canUpdateLessonProgress,
+  flattenCourseLessons,
   hasStudentCourseAccess,
   isKnownCourseId,
   isLessonInCourse,
   ROBLOX_COURSE_ID,
-  SCRATCH_COURSE_ID,
-  MINECRAFT_COURSE_ID,
 } from '@/lib/courseLessonAccess'
-import { robloxCurriculum } from '@/lib/robloxCurriculum'
 import { lessonContentMap } from '@/lib/lessonContentMap.uk'
 import { checkPracticeOutputs } from '@/lib/practiceValidation'
 import {
@@ -78,8 +73,7 @@ export async function GET(request) {
       )
     }
 
-    const usersCollection = await getCollection('users')
-    const user = await usersCollection.findOne({ _id: new ObjectId(userId) })
+    const user = await loadUserWithAccess(userId)
     if (!user || !canReadCourseProgress(user, courseId)) {
       return NextResponse.json({ progress: null }, { status: 200 })
     }
@@ -186,8 +180,7 @@ export async function POST(request) {
       )
     }
 
-    const usersCollection = await getCollection('users')
-    const user = await usersCollection.findOne({ _id: new ObjectId(userId) })
+    const user = await loadUserWithAccess(userId)
     if (!user) {
       return NextResponse.json(
         { error: 'Not authenticated' },
@@ -334,12 +327,7 @@ export async function POST(request) {
     }
 
     const getTotalLessons = (id) => {
-      let curriculum = pythonCurriculum
-      if (id === 'web-development') curriculum = webDevCurriculum
-      else if (id === ROBLOX_COURSE_ID) curriculum = robloxCurriculum
-      else if (id === SCRATCH_COURSE_ID) curriculum = scratchCurriculum
-      else if (id === MINECRAFT_COURSE_ID) curriculum = minecraftCurriculum
-      return curriculum.modules.reduce((sum, m) => sum + m.lessons.length, 0)
+      return flattenCourseLessons(id).length
     }
 
     let updatedCompletedLessons = [...(progress.completedLessons || [])]

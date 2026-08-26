@@ -30,10 +30,22 @@ import { lesson_03_6 } from './lessonContent/lesson-03-6'
 import { lesson_03_7 } from './lessonContent/lesson-03-7'
 import { lesson_03_8 } from './lessonContent/lesson-03-8'
 import { lesson_03_9 } from './lessonContent/lesson-03-9'
+import { lesson_04_1 } from './lessonContent/lesson-04-1'
+import { lesson_04_2 } from './lessonContent/lesson-04-2'
+import { lesson_04_3 } from './lessonContent/lesson-04-3'
+import { lesson_04_4 } from './lessonContent/lesson-04-4'
+import { lesson_04_5 } from './lessonContent/lesson-04-5'
 import { lesson_04_6 } from './lessonContent/lesson-04-6'
 import { lesson_04_7 } from './lessonContent/lesson-04-7'
 import { lesson_04_8 } from './lessonContent/lesson-04-8'
+import { lesson_05_1 } from './lessonContent/lesson-05-1'
+import { lesson_05_2 } from './lessonContent/lesson-05-2'
+import { lesson_05_3 } from './lessonContent/lesson-05-3'
+import { lesson_05_4 } from './lessonContent/lesson-05-4'
 import { lesson_05_5 } from './lessonContent/lesson-05-5'
+import { lesson_06_1 } from './lessonContent/lesson-06-1'
+import { lesson_06_2 } from './lessonContent/lesson-06-2'
+import { lesson_06_3 } from './lessonContent/lesson-06-3'
 import { lesson_06_4 } from './lessonContent/lesson-06-4'
 import { lesson_07_1 } from './lessonContent/lesson-07-1'
 import { lesson_07_2 } from './lessonContent/lesson-07-2'
@@ -104,22 +116,22 @@ export const lessonContentMap = {
 	"lesson-03-7": lesson_03_7,
 	"lesson-03-8": lesson_03_8,
 	"lesson-03-9": lesson_03_9,
-	"lesson-04-1": lesson_04_6,
-	"lesson-04-2": lesson_04_6,
-	"lesson-04-3": lesson_04_6,
-	"lesson-04-4": lesson_04_6,
-	"lesson-04-5": lesson_04_6,
+	"lesson-04-1": lesson_04_1,
+	"lesson-04-2": lesson_04_2,
+	"lesson-04-3": lesson_04_3,
+	"lesson-04-4": lesson_04_4,
+	"lesson-04-5": lesson_04_5,
 	"lesson-04-6": lesson_04_6,
 	"lesson-04-7": lesson_04_7,
 	"lesson-04-8": lesson_04_8,
-	"lesson-05-1": lesson_05_5,
-	"lesson-05-2": lesson_05_5,
-	"lesson-05-3": lesson_05_5,
-	"lesson-05-4": lesson_05_5,
+	"lesson-05-1": lesson_05_1,
+	"lesson-05-2": lesson_05_2,
+	"lesson-05-3": lesson_05_3,
+	"lesson-05-4": lesson_05_4,
 	"lesson-05-5": lesson_05_5,
-	"lesson-06-1": lesson_06_4,
-	"lesson-06-2": lesson_06_4,
-	"lesson-06-3": lesson_06_4,
+	"lesson-06-1": lesson_06_1,
+	"lesson-06-2": lesson_06_2,
+	"lesson-06-3": lesson_06_3,
 	"lesson-06-4": lesson_06_4,
 	"lesson-07-1": lesson_07_1,
 	"lesson-07-2": lesson_07_2,

@@ -607,7 +607,7 @@ const RobloxLessonPage = ({
                           <span>{t('questionNumber', { number: index + 1 })}</span>
                           {show &&
                             (isCorrect ? (
-                              <span style={{ color: '#059669' }}>
+                              <span style={{ color: '#e85d3a' }}>
                                 <CheckCircle2 size={16} /> {t('correct')}
                               </span>
                             ) : (

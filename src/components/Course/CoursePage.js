@@ -24,6 +24,7 @@ import { ROBOX_PHASES } from '@/lib/robloxModuleMeta'
 import { getUserProgress, checkCoursePurchase } from '@/lib/authClient'
 import { getUnlockedLessonSet, hasStudentCourseAccess } from '@/lib/courseLessonAccess'
 import { useAuthSession } from '@/components/AuthSessionProvider'
+import LmsHeader from '@/components/Nav/LmsHeader'
 import styles from './CoursePage.module.css'
 
 const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress: initialProgress = null }) => {
@@ -37,7 +38,9 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
           ? 'scratch'
           : courseId === 'minecraft-education'
             ? 'minecraft'
-            : 'python'
+            : courseId === 'ai-at-work'
+              ? 'ai'
+              : 'python'
   const tCommon = useTranslations('lms.common')
   const tCourse = useTranslations('lms.course')
   const tVariant = useTranslations(`lms.course.${courseSlug}`)
@@ -164,9 +167,21 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
         isAdmin: user?.role === 'admin',
         isTeacher: user?.role === 'teacher',
         isPurchased: isPurchased || user?.role === 'teacher',
+        isSubscribed: Array.isArray(user?.subscribedCourseIds)
+          ? user.subscribedCourseIds.includes(courseId)
+          : user?.subscriptionActive === true,
         isEnrolled,
       }),
-    [courseId, user?.studentProfile, user?.role, userProgress, isPurchased, isEnrolled]
+    [
+      courseId,
+      user?.studentProfile,
+      user?.role,
+      user?.subscriptionActive,
+      user?.subscribedCourseIds,
+      userProgress,
+      isPurchased,
+      isEnrolled,
+    ]
   )
 
   const isLessonUnlocked = useCallback(
@@ -258,6 +273,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
 
   return (
     <div className={`${styles.container} ${isLoaded ? styles.loaded : ''}`}>
+      <LmsHeader />
       <section className={styles.heroSection}>
         <div className={styles.particles} aria-hidden="true">
           {Array.from({ length: 18 }).map((_, i) => (
@@ -513,7 +529,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                           className={`${styles.lessonItem} ${!unlocked ? styles.locked : ''} ${completed ? styles.completed : ''} ${lessonColor ? styles[`lesson${lessonColor.charAt(0).toUpperCase() + lessonColor.slice(1)}`] : ''}`}
                           style={lessonColor ? {
                             borderLeft: `4px solid ${
-                              lessonColor === 'green' ? '#10b981' :
+                              lessonColor === 'green' ? '#fc6e51' :
                               lessonColor === 'yellow' ? '#f59e0b' :
                               '#ef4444'
                             }`
@@ -556,7 +572,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
                             </span>
                             {quizScore !== null && (
                               <span className={styles.quizScore} style={{
-                                color: lessonColor === 'green' ? '#10b981' :
+                                color: lessonColor === 'green' ? '#fc6e51' :
                                        lessonColor === 'yellow' ? '#f59e0b' :
                                        '#ef4444'
                               }}>

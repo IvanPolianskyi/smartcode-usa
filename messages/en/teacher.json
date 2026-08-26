@@ -1,0 +1,80 @@
+{
+  "title": "Teacher Dashboard",
+  "subtitle": "Courses are open. Payroll batch data comes from the CRM recording bot.",
+  "loading": "Loading...",
+  "logout": "Log out",
+  "tabs": {
+    "courses": "Courses",
+    "students": "Students"
+  },
+  "nextLesson": {
+    "title": "Next Lesson",
+    "empty": "No lessons scheduled for the next few weeks.",
+    "with": "with",
+    "course": "Course",
+    "lmsLesson": "Lesson to cover",
+    "openLesson": "Open lesson",
+    "openCourse": "Open course",
+    "noCourse": "The student's course has not been set in the LMS yet",
+    "loading": "Looking for the next lesson…"
+  },
+  "recordings": {
+    "title": "Lessons (recording bot)",
+    "credited": "Logged in bot",
+    "currentBatch": "In current batch (CRM Payroll)",
+    "batchIu": "Individual lessons in batch (CRM Payroll)",
+    "batchGu": "Group lessons in batch (CRM Payroll)",
+    "withVideo": "With video",
+    "withoutVideo": "Without video",
+    "missing": "Not logged yet",
+    "completed": "Completed",
+    "syncNote": "Individual and group lesson counters come from the Payroll tab in the CRM: unpaid lessons logged by the bot (trial lessons are not counted). They reset after a payroll batch is paid out. Click Refresh after logging a lesson in the bot.",
+    "payoutAmount": "Amount due",
+    "crmError": "Could not load metrics from the CRM. Check your connection or refresh the page.",
+    "refresh": "Refresh"
+  },
+  "courses": {
+    "title": "Programs",
+    "open": "Open course",
+    "python": "Python",
+    "roblox": "Roblox Studio",
+    "web": "Web Development",
+    "scratch": "Scratch",
+    "minecraft": "Minecraft Education",
+    "fullAccess": "All lessons unlocked"
+  },
+  "students": {
+    "title": "My Students",
+    "empty": "No students are linked to your CRM profile.",
+    "name": "Name",
+    "code": "Code",
+    "courses": "Courses",
+    "progress": "LMS progress",
+    "lessonsCompleted": "Lessons completed",
+    "lessonsRecorded": "In payroll batch",
+    "totalCompleted": "Completed",
+    "totalRecorded": "In current batch (CRM)",
+    "studentsCount": "Students",
+    "actions": "Actions",
+    "viewProgress": "Details",
+    "unlockLesson": "Unlock lesson",
+    "resetLesson": "Reset lesson",
+    "resetCourse": "Reset course",
+    "selectCourse": "Course",
+    "lessonId": "Lesson ID (e.g., lesson-roblox-1-2)",
+    "apply": "Apply",
+    "close": "Close",
+    "privacyNote": "Only student names and codes are shown here. Email addresses, phone numbers, and other contact details are hidden.",
+    "notLinked": "Your account is not linked to CRM staff. Contact an administrator.",
+    "crmStatsError": "Could not load lesson statistics from the CRM. The student list may be incomplete.",
+    "noLms": "Not in LMS",
+    "error": "Failed to load",
+    "saved": "Saved"
+  },
+  "materials": {
+    "title": "Teacher Materials",
+    "empty": "No materials added yet.",
+    "guides": "Guides",
+    "starter": "Starter Place"
+  }
+}

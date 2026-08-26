@@ -3,13 +3,13 @@ import { redirect } from 'next/navigation'
 import { getCollection } from '@/lib/mongodb'
 import { comparePassword, issueAuthSession } from '@/lib/auth'
 import { consumeLoginToken } from '@/lib/loginTokens'
-import { toAuthUserResponse } from '@/lib/crmLmsSync'
+import { toAuthUserResponse } from '@/lib/authUserResponse'
 import { normalizeLoginIdentifier, isStudentShortCode } from '@/lib/authLogin'
 import { syntheticStudentLogin } from '@/lib/studentLmsLogin'
 
 /**
  * GET /api/auth/login?token=...&redirect=/dashboard
- * One-time magic login (CRM / Telegram).
+ * One-time magic login.
  */
 export async function GET(request) {
   const { searchParams } = new URL(request.url)
@@ -39,10 +39,7 @@ export async function POST(request) {
 
     if (!email || !password) {
       return NextResponse.json(
-        {
-          error:
-            'Вкажіть логін і пароль. Логін — email або код учня з CRM / Telegram.',
-        },
+        { error: 'Enter your email and password.' },
         { status: 400 }
       )
     }
@@ -69,7 +66,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           error:
-            'Невірний логін або пароль. Якщо акаунт видавав менеджер — перевірте логін з листа / Telegram. Без акаунта напишіть у SmartCode.',
+            'Incorrect email or password. If you just paid, finish checkout after signing in, or start from Pricing.',
         },
         { status: 401 }
       )
@@ -79,7 +76,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           error:
-            'Для цього акаунта потрібне одноразове посилання з Telegram або CRM. Попросіть менеджера надіслати нове.',
+            'This account needs a one-time sign-in link. Ask support to send a new one.',
         },
         { status: 401 }
       )
@@ -91,7 +88,7 @@ export async function POST(request) {
       return NextResponse.json(
         {
           error:
-            'Невірний логін або пароль. Забули пароль? Попросіть нове посилання в Telegram-боті або у менеджера.',
+            'Incorrect email or password. Forgot your password? Use Forgot password on the login page.',
         },
         { status: 401 }
       )

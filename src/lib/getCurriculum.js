@@ -1,9 +1,7 @@
 import { pythonCurriculum } from './pythonCurriculum'
 import { enrichPythonModules } from './pythonModuleMeta'
-import { webDevCurriculum } from './webDevCurriculum'
 import { getRobloxCurriculum } from './robloxCurriculumLocale'
-import { scratchCurriculum } from './scratchCurriculum'
-import { minecraftCurriculum } from './minecraftCurriculum'
+import { aiAtWorkCurriculum } from './aiAtWorkCurriculum'
 
 export function getPythonCurriculum() {
 	return {
@@ -12,30 +10,12 @@ export function getPythonCurriculum() {
 	}
 }
 
-export function getWebDevCurriculum() {
-	return webDevCurriculum
-}
-
-export function getScratchCurriculum() {
-	return scratchCurriculum
-}
-
-export function getMinecraftCurriculum() {
-	return minecraftCurriculum
-}
-
-export function getCurriculum(courseId) {
-	if (courseId === 'web-development') {
-		return getWebDevCurriculum()
-	}
+export function getCurriculum(courseId, locale = 'en') {
 	if (courseId === 'roblox-studio') {
-		return getRobloxCurriculum()
+		return getRobloxCurriculum(locale)
 	}
-	if (courseId === 'scratch') {
-		return getScratchCurriculum()
-	}
-	if (courseId === 'minecraft-education') {
-		return getMinecraftCurriculum()
+	if (courseId === 'ai-at-work') {
+		return aiAtWorkCurriculum
 	}
 	return getPythonCurriculum()
 }

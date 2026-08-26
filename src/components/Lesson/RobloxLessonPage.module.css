@@ -27,8 +27,8 @@
 .heroCard {
   background: var(--bg-elevated);
   border-radius: 20px;
-  border: 1px solid rgba(161, 0, 255, 0.12);
-  box-shadow: 0 12px 40px rgba(161, 0, 255, 0.1);
+  border: 1px solid rgba(252, 110, 81, 0.12);
+  box-shadow: 0 12px 40px rgba(252, 110, 81, 0.1);
   padding: 1.5rem 1.35rem;
   margin-bottom: 1.25rem;
 }
@@ -43,13 +43,13 @@
 .courseProgressTrack {
   height: 8px;
   border-radius: 999px;
-  background: rgba(161, 0, 255, 0.12);
+  background: rgba(252, 110, 81, 0.12);
   overflow: hidden;
 }
 
 .courseProgressFill {
   height: 100%;
-  background: linear-gradient(90deg, #10b981, #34d399, #a78bfa);
+  background: linear-gradient(90deg, #fc6e51, #ff9a7a, #a78bfa);
   border-radius: inherit;
   transition: width 0.4s ease;
 }
@@ -94,7 +94,7 @@
   margin-top: 1.25rem;
   padding: 1rem 1.1rem;
   border-radius: 14px;
-  border: 1px solid rgba(161, 0, 255, 0.2);
+  border: 1px solid rgba(252, 110, 81, 0.2);
   background: rgba(18, 18, 24, 0.55);
 }
 
@@ -120,7 +120,7 @@
   margin-top: 0.2rem;
   width: 1.05rem;
   height: 1.05rem;
-  accent-color: #a100ff;
+  accent-color: #fc6e51;
   flex-shrink: 0;
 }
 
@@ -131,7 +131,7 @@
 }
 
 .practiceDoneMsg {
-  color: #34d399;
+  color: #ff9a7a;
   font-weight: 700;
   margin-top: 1rem;
 }
@@ -148,8 +148,8 @@
   margin: 0 0 1rem;
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
-  border: 1px solid rgba(161, 0, 255, 0.2);
-  background: rgba(161, 0, 255, 0.06);
+  border: 1px solid rgba(252, 110, 81, 0.2);
+  background: rgba(252, 110, 81, 0.06);
   color: var(--text-primary);
   font-size: 0.9rem;
   font-weight: 600;
@@ -237,7 +237,7 @@
 
 .stepBtnActive {
   border-color: var(--brand-accent-hot);
-  background: linear-gradient(135deg, rgba(161, 0, 255, 0.08), rgba(161, 0, 255, 0.1));
+  background: linear-gradient(135deg, rgba(252, 110, 81, 0.08), rgba(252, 110, 81, 0.1));
   color: var(--brand-accent-deep);
 }
 
@@ -263,9 +263,9 @@
 .objectives {
   margin-bottom: 1.25rem;
   padding: 1rem 1.1rem;
-  background: linear-gradient(135deg, rgba(161, 0, 255, 0.08) 0%, rgba(161, 0, 255, 0.1) 100%);
+  background: linear-gradient(135deg, rgba(252, 110, 81, 0.08) 0%, rgba(252, 110, 81, 0.1) 100%);
   border-radius: 14px;
-  border: 1px solid rgba(161, 0, 255, 0.15);
+  border: 1px solid rgba(252, 110, 81, 0.15);
 }
 
 .objectives h2 {
@@ -344,7 +344,7 @@
 }
 
 .theoryBody :global(table.md-table th) {
-  background: linear-gradient(135deg, rgba(161, 0, 255, 0.08), rgba(161, 0, 255, 0.1));
+  background: linear-gradient(135deg, rgba(252, 110, 81, 0.08), rgba(252, 110, 81, 0.1));
   color: var(--brand-accent-hot);
   font-weight: 700;
   text-align: left;
@@ -368,7 +368,7 @@
 }
 
 .theoryBody :global(table.md-table code) {
-  background: rgba(161, 0, 255, 0.15);
+  background: rgba(252, 110, 81, 0.15);
   color: var(--brand-accent-deep);
   font-weight: 700;
   padding: 0.15rem 0.4rem;
@@ -449,7 +449,7 @@
 .theoryBody :global(.md-goal) {
   margin: 0 0 1.15rem;
   padding: 0.85rem 1.1rem;
-  background: linear-gradient(135deg, rgba(161, 0, 255, 0.08), rgba(161, 0, 255, 0.1));
+  background: linear-gradient(135deg, rgba(252, 110, 81, 0.08), rgba(252, 110, 81, 0.1));
   border: 1px solid var(--border-accent);
   border-radius: 12px;
   font-size: 0.92rem;
@@ -464,7 +464,7 @@
   background: var(--bg-elevated);
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
-  box-shadow: 0 4px 14px rgba(161, 0, 255, 0.06);
+  box-shadow: 0 4px 14px rgba(252, 110, 81, 0.06);
 }
 
 .theoryBody :global(.md-step-title) {
@@ -517,7 +517,7 @@
   display: inline-block;
   margin: 0 0.15rem;
   padding: 0.1rem 0.35rem;
-  background: rgba(161, 0, 255, 0.15);
+  background: rgba(252, 110, 81, 0.15);
   color: var(--brand-accent-deep);
   border-radius: 4px;
   font-weight: 700;
@@ -566,7 +566,7 @@
 }
 
 .theoryBody :global(.md-prop-v code) {
-  background: rgba(161, 0, 255, 0.15);
+  background: rgba(252, 110, 81, 0.15);
   color: var(--brand-accent-deep);
 }
 
@@ -686,10 +686,10 @@
 .challenge {
   margin-top: 1.25rem;
   padding: 1rem 1.1rem;
-  background: linear-gradient(135deg, rgba(161, 0, 255, 0.1), rgba(161, 0, 255, 0.1));
+  background: linear-gradient(135deg, rgba(252, 110, 81, 0.1), rgba(252, 110, 81, 0.1));
   border: 1px solid var(--border-accent);
   border-radius: 14px;
-  box-shadow: 0 4px 14px rgba(161, 0, 255, 0.08);
+  box-shadow: 0 4px 14px rgba(252, 110, 81, 0.08);
 }
 
 .challengeLabel {
@@ -712,7 +712,7 @@
 }
 
 .challengeBody :global(code) {
-  background: rgba(161, 0, 255, 0.2);
+  background: rgba(252, 110, 81, 0.2);
   color: var(--brand-accent-hot);
   padding: 0.1rem 0.35rem;
   border-radius: 4px;
@@ -870,11 +870,11 @@
 
 .optionSelected {
   border-color: var(--brand-accent-hot);
-  background: rgba(161, 0, 255, 0.08);
+  background: rgba(252, 110, 81, 0.08);
 }
 
 .optionCorrect {
-  border-color: #22c55e;
+  border-color: #fc6e51;
   background: rgba(16, 185, 129, 0.12);
 }
 
@@ -914,7 +914,7 @@
   text-align: center;
   padding: 1.25rem;
   border-radius: 14px;
-  background: linear-gradient(135deg, rgba(161, 0, 255, 0.08), rgba(161, 0, 255, 0.1));
+  background: linear-gradient(135deg, rgba(252, 110, 81, 0.08), rgba(252, 110, 81, 0.1));
   margin-top: 1rem;
 }
 
