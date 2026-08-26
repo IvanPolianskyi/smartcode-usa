@@ -49,13 +49,18 @@ on file presence, and see `git diff --stat` for the full pivot.
    in the Paddle dashboard first — this needs the account owner, not just an
    API key. Until then every checkout silently falls through to the dev-only
    local grant in non-prod, and would hard-fail in prod.
-2. **Admin panel removed, not replaced.** `requireAdmin.js` / `requireTeacher.js`
-   and the `admin`/`teacher` roles still exist in the data model, but there is
-   no admin UI left (`src/app/[locale]/admin/**` was deleted). Unclear if this
-   is deliberate (defer ops tooling until there are paying customers) or
-   mid-refactor and still owed. Confirm before rebuilding or before launch —
-   day-one operations (refunds, manual grants, viewing signups) currently
-   have no UI.
+2. ~~Admin panel removed, not replaced.~~ Rebuilt 2026-08-26, scoped to the
+   new model: `/admin` (student list + search + subscription counts) and
+   `/admin/students/[studentId]` (subscription history, manual grant/revoke).
+   API in [src/app/api/admin/](src/app/api/admin/). Manual grants are tagged
+   `paddleCustomerId: 'admin_manual'` so the webhook (which only matches on
+   `paddleSubscriptionId`) can never confuse one for a real purchase. Revoking
+   a real Paddle subscription calls Paddle's cancel API, not just a local
+   status flip. The old CRM-era admin surface (groups, receipts, teacher
+   scheduling, lesson-slot booking) was **not** ported — this panel only
+   covers billing support (view a student, grant/revoke course access).
+   Teacher-facing tooling is still owed if/when premium-tier live lessons
+   ship.
 3. **Locale is English-only now** ([src/i18n/routing.js](src/i18n/routing.js):
    `locales: ['en']`). `messages/uk*.json` and `messages/uk/` still exist and
    are still being edited (see recent `git status`), and there's a large
