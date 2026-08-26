@@ -25,7 +25,7 @@ export const lesson_08_3 = {
     sections: [
       {
         title: "Introduction to the functools module",
-        content: `The ``functools'' module provides functions for working with higher-order functions and functional programming. 
+        content: `The \`functools\` module provides functions for working with higher-order functions and functional programming. 
 
 **Main Features:** 
 
@@ -71,7 +71,7 @@ say_hello = partial(greet, 'Hello', punctuation='!')
 print(say_hello('Alexander')) # Hello, Alexander! 
 
 # We create a function with a fixed name 
-greet_alex = partial(greet, name='Александр', punctuation='!') 
+greet_alex = partial(greet, name='Alexander', punctuation='!') 
 print(greet_alex('Congratulations')) # Greetings, Alexander! 
 \`\`\`
 **Use with functions that accept functions:** 

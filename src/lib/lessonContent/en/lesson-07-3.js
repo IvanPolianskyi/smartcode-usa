@@ -25,254 +25,207 @@ export const lesson_07_3 = {
     sections: [
       {
         title: "What are iterators?",
-        content: `An iterator is an object that allows you to iterate through the elements of a sequence one at a time.
+        content: `An iterator is an object that allows you to iterate through the elements of a sequence one at a time. 
 
-**Key concepts:**
+**Key concepts:** 
 
-1. **Iterable object (Iterable)** - an object that can be iterated (list, string, dictionary)
-2. **Iterator** - an object that actually performs an iteration
-3. **Iteration protocol** - rules that allow an object to be iteratable
+1. **Iterable object (Iterable)** - an object that can be iterated over (list, string, dictionary) 
+2. **Iterator (Iterator)** - an object that actually performs iteration 
+3. **Iteration protocol** - rules that allow an object to be iterable 
 
-**How it works:**
+**How it works:**\`\`\`python 
+# The list is an iterable object 
+numbers = [1, 2, 3] 
 
-\`\`\`python
-# List - iterable object
-numbers = [1, 2, 3]
+# We get an iterator 
+iterator = iter(numbers) 
 
-# Getting an iterator
-iterator = iter(numbers)
+# We use an iterator 
+print(next(iterator)) # 1 
+print(next(iterator)) # 2 
+print(next(iterator)) # 3 
+print(next(iterator)) # StopIteration\`\`\`**Built-in iterable objects:** 
 
-# Using an iterator
-print(next(iterator))  # 1
-print(next(iterator))  # 2
-print(next(iterator))  # 3
-print(next(iterator))  # StopIteration
-\`\`\`
+- Lists:\`[1, 2, 3]\`- Rows:\`"hello"\`- Dictionaries:\`{'a': 1, 'b': 2}\`
+- range: \`range(10)\`- Files:\`open('file.txt')\`**For loop automatically:** 
 
-**Built-in iterable objects:**
-
-- Lists: \'[1, 2, 3]\'
-- Strings: \'"hello"\'
-- Dictionaries: \'{'a': 1, 'b': 2}\'
-- range: \`range(10)\`
-- Files: \'open('file.txt')\'
-
-**Loop for Auto:**
-
-1. Calls \'iter()\' to get an iterator
-2. Calls `next()` to get values
-3. Handles `StopIteration` to finish`
+1. Causes\`iter()\`to get an iterator 
+2. Causes\`next()\`to get the values 
+3. Processes\`StopIteration\`to complete`
       },
       {
         title: "Iteration protocol",
-        content: `The iteration protocol is a set of methods that an object must implement to be iterable.
+        content: `An iteration protocol is a set of methods that an object must implement in order to be iterable. 
 
-**Two methods of the protocol:**
+**Two protocol methods:** 
 
-1. **__iter__()** - returns an iterator
-2. **__next__()** - returns the next value or raises StopIteration
+1. **__iter__()** - returns an iterator 
+2. **__next__()** - returns the next value or calls StopIteration 
 
-**Simple iterator:**
+**Simple iterator:**\`\`\`python 
+class CountDown: 
+def __init__(self, start): 
+self.current = start 
 
-```python
-class CountDown:
-    def __init__(self, start):
-        self.current = start
-    
-    def __iter__(self):
-        return self  # The iterator itself is an iterator
-    
-    def __next__(self):
-        if self.current <= 0:
-            raise StopIteration
-        self.current -= 1
-        return self.current + 1
+def __iter__(self): 
+return self # An iterator is itself an iterator 
 
-# Usage
-counter = CountDown(5)
-for num in counter:
-    print(num)
-# Prints: 5, 4, 3, 2, 1
-```
+def __next__(self): 
+if self.current <= 0: 
+raise StopIteration 
+self.current -= 1 
+return self.current + 1 
 
-**How it works:**
+# Usage 
+counter = CountDown(5) 
+for num in counter: 
+print(num) 
+# Outputs: 5, 4, 3, 2, 1\`\`\`**How it works:** 
 
-1. `for num in counter:` calls `iter(counter)`
-2. `iter(counter)` calls `counter.__iter__()`
-3. Each iteration calls `next(counter)`
-4. `next(counter)` calls `counter.__next__()`
-5. When `__next__()` raises `StopIteration`, the loop ends`
+1.\`for num in counter:\`causes\`iter(counter)\`
+2. \`iter(counter)\`causes\`counter.__iter__()\`3. Each iteration causes\`next(counter)\`
+4. \`next(counter)\`causes\`counter.__next__()\`5. When\`__next__()\`causes\`StopIteration\`, the cycle ends`
       },
       {
         title: "Creating your own iterator",
-        content: `Let's create a few examples of custom iterators:
+        content: `Let's create some examples of custom iterators: 
 
-**Example 1: Iterator for Fibonacci numbers**
+**Example 1: Iterator for Fibonacci numbers**\`\`\`python 
+class Fibonacci: 
+def __init__(self, limit): 
+self.limit = limit 
+self.a, self.b = 0, 1 
+self.count = 0 
 
-```python
-class Fibonacci:
-    def __init__(self, limit):
-        self.limit = limit
-        self.a, self.b = 0, 1
-        self.count = 0
-    
-    def __iter__(self):
-        return self
-    
-    def __next__(self):
-        if self.count >= self.limit:
-            raise StopIteration
-        result = self.a
-        self.a, self.b = self.b, self.a + self.b
-        self.count += 1
-        return result
+def __iter__(self): 
+return self 
 
-# Usage
-fib = Fibonacci(10)
-for num in fib:
-    print(num)
-# Will print: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34
-```
+def __next__(self): 
+if self.count >= self.limit: 
+raise StopIteration 
+result = self.a 
+self.a, self.b = self.b, self.a + self.b 
+self.count += 1 
+return result 
 
-**Example 2: Iterator for range with step**
+# Usage 
+fib = Fibonacci(10) 
+for num in fib: 
+print(num) 
+# Outputs: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34\`\`\`**Example 2: An Iterator for a Stepped Range**\`\`\`python 
+class Range: 
+def __init__(self, start, stop, step=1): 
+self.start = start 
+self.stop = stop 
+self.step = step 
+self.current = start 
 
-```python
-class Range:
-    def __init__(self, start, stop, step=1):
-        self.start = start
-        self.stop = stop
-        self.step = step
-        self.current = start
-    
-    def __iter__(self):
-        return self
-def __next__(self):
-        if (self.step > 0 and self.current >= self.stop) or \
-           (self.step < 0 and self.current <= self.stop):
-            raise StopIteration
-        result = self.current
-        self.current += self.step
-        return result
+def __iter__(self): 
+return self 
 
-# Usage
-my_range = Range(0, 10, 2)
-for num in my_range:
-    print(num)
-# Will print: 0, 2, 4, 6, 8
+def __next__(self): 
+if (self.step > 0 and self.current >= self.stop) or \ 
+(self.step < 0 and self.current <= self.stop): 
+raise StopIteration 
+result = self.current 
+self.current += self.step 
+return result 
 
-**Example 3: Iterator for traversing a list in reverse order**
+# Usage 
+my_range = Range(0, 10, 2) 
+for num in my_range: 
+print(num) 
+# Outputs: 0, 2, 4, 6, 8\`\`\`**Example 3: An iterator for traversing a list in reverse order**\`\`\`python 
+class ReverseList: 
+def __init__(self, items): 
+self.items = items 
+self.index = len(items) - 1 
 
-```python
-class ReverseList:
-    def __init__(self, items):
-        self.items = items
-        self.index = len(items) - 1
-    
-    def __iter__(self):
-        return self
-    
-    def __next__(self):
-        if self.index < 0:
-            raise StopIteration
-        result = self.items[self.index]
-        self.index -= 1
-        return result
+def __iter__(self): 
+return self 
 
-# Usage
-rev = ReverseList([1, 2, 3, 4, 5])
-for num in rev:
-    print(num)
-# Will print: 5, 4, 3, 2, 1
-\`\`\``
+def __next__(self): 
+if self.index < 0: 
+raise StopIteration 
+result = self.items[self.index] 
+self.index -= 1 
+return result 
+
+# Usage 
+rev = ReverseList([1, 2, 3, 4, 5]) 
+for num in rev: 
+print(num) 
+# Outputs: 5, 4, 3, 2, 1\`\`\`
+`
       },
       {
         title: "The difference between an iterable object and an iterator",
-        content: `It is important to understand the difference between an iterable object and an iterator:
+        content: `It is important to understand the difference between an iterable object and an iterator: 
 
-**Iterable object (Iterable):**
+**Iterable object (Iterable):** 
 
-- Has the `__iter__()` method
-- Can create many iterators
-- Can be used in a for loop many times
+- Has a method\`__iter__()\`- Can create many iterators 
+- Can be used in a for loop many times\`\`\`python 
+# The list is an iterable object 
+numbers = [1, 2, 3] 
 
-```python
-# List - iterable object
-numbers = [1, 2, 3]
+# Many iterators can be created 
+iter1 = iter(numbers) 
+iter2 = iter(numbers) 
 
-# Can create many iterators
-iter1 = iter(numbers)
-iter2 = iter(numbers)
+# Can be used many times 
+for number in numbers: 
+print(num) # First time 
+for number in numbers: 
+print(num) # Second time\`\`\`**Iterator:** 
 
-# Can be used many times
-for num in numbers:
-    print(num)  # First time
-for num in numbers:
-    print(num)  # Second time
-```
+- Has methods\`__iter__()\`and\`__next__()\`- Usually runs out after one use 
+- Stores iteration state\`\`\`python 
+# An iterator 
+iterator = iter([1, 2, 3]) 
 
-**Iterator (Iterator):**
+# We use it once 
+for num in iterator: 
+print(num) # 1, 2, 3 
 
-- Has `__iter__()` and `__next__()` methods
-- Usually exhausted after one use
-- Maintains the iteration state
+# The second time is empty 
+for num in iterator: 
+print(num) # Print nothing\`\`\`**Generators are iterators:**\`\`\`python 
+def generator(): 
+yield 1 
+yield 2 
+yield 3 
 
-```python
-# Iterator
-iterator = iter([1, 2, 3])
+gen = generator() 
+print(hasattr(gen, '__iter__')) # True 
+print(hasattr(gen, '__next__')) # True 
 
-# Use once
-for num in iterator:
-    print(num)  # 1, 2, 3
-
-# Second time - empty
-for num in iterator:
-    print(num)  # Will print nothing
-```
-
-**Generators are iterators:**
-\'\'\'Python
-Def generator():
-    Yeld 1
-    Yeld 2
-    Yeld 3
-
-gene = generator()
-print(hasattr(gen, '__iter__')) # True
-print(hasattr(gen, '__next__')) # True
-
-# The generator is running low
-For Nam In Jen:
-    print(num) # 1, 2, 3
-For Nam In Jen:
-    print(num) # Nothing
-\`\`\``
+# The generator is running out 
+for num in gen: 
+print(num) # 1, 2, 3 
+for num in gen: 
+print(num) # Nothing\`\`\`
+`
       },
       {
         title: "The iter() and next() functions",
-        content: `Python provides built-in functions for working with iterators:
+        content: `Python provides built-in functions for working with iterators: 
 
-**iter() - obtaining an iterator:**
+**iter() - getting an iterator:**\`\`\`python 
+# From an iterable object 
+numbers = [1, 2, 3] 
+iterator = iter(numbers) 
 
-```python
-# From an iterable object
-numbers = [1, 2, 3]
-iterator = iter(numbers)
+# From a function (creates a generator) 
+def gen(): 
+yield 1 
+yield 2 
 
-# From a function (creates a generator)
-def gen():
-    yield 1
-    yield 2
+iterator = iter(gen()) 
 
-iterator = iter(gen())
-
-# From a string
-text = "hello"
-iterator = iter(text)
-```
-
-**next() - getting the next value:**
-
-```python
+# From the line 
+text = "hello" 
+iterator = iter(text)\`\`\`**next() - getting the next value:**\`\`\`python
 numbers = [1, 2, 3]
 iterator = iter(numbers)
 
@@ -280,25 +233,17 @@ print(next(iterator))  # 1
 print(next(iterator))  # 2
 print(next(iterator))  # 3
 print(next(iterator))  # StopIteration
-```
+\`\`\`**next() with default value:**\`\`\`python 
+iterator = iter([1, 2, 3]) 
 
-**next() with a default value:**
+# We use all values 
+print(next(iterator)) # 1 
+print(next(iterator)) # 2 
+print(next(iterator)) # 3 
 
-```python
-iterator = iter([1, 2, 3])
-
-# Using all the values
-print(next(iterator))  # 1
-print(next(iterator))  # 2
-print(next(iterator))  # 3
-
-# The next call will raise StopIteration
-# But a default value can be specified
-print(next(iterator, 'End'))  # 'End'
-```
-**Checking if an object is iterable:**
-
-```python
+# The next call will call StopIteration 
+# But you can specify a default value 
+print(next(iterator, 'End')) # 'End'\`\`\`**Checking if an object is iterable:**\`\`\`python
 def is_iterable(obj):
     try:
         iter(obj)
@@ -309,120 +254,104 @@ def is_iterable(obj):
 print(is_iterable([1, 2, 3]))  # True
 print(is_iterable("hello"))    # True
 print(is_iterable(123))        # False
-````
+\`\`\`
+`
       },
       {
         title: "Practical examples",
-        content: `**Example 1: Iterator for even numbers**
+        content: `**Example 1: Iterator for even numbers**\`\`\`python 
+class EvenNumbers: 
+def __init__(self, limit): 
+self.limit = limit 
+self.current = 0 
 
-```python
-class EvenNumbers:
-    def __init__(self, limit):
-        self.limit = limit
-        self.current = 0
-    
-    def __iter__(self):
-        return self
-    
-    def __next__(self):
-        if self.current >= self.limit:
-            raise StopIteration
-        result = self.current
-        self.current += 2
-        return result
+def __iter__(self): 
+return self 
 
-# Usage
-evens = EvenNumbers(10)
-for num in evens:
-    print(num)
-# Outputs: 0, 2, 4, 6, 8
-```
+def __next__(self): 
+if self.current >= self.limit: 
+raise StopIteration 
+result = self.current 
+self.current += 2 
+return result 
 
-**Example 2: Iterator for squares**
+# Usage 
+evens = EvenNumbers(10) 
+for num in evens: 
+print(num) 
+# Outputs: 0, 2, 4, 6, 8\`\`\`**Example 2: Iterator for Squares**\`\`\`python 
+class Squares: 
+def __init__(self, limit): 
+self.limit = limit 
+self.current = 1 
 
-```python
-class Squares:
-    def __init__(self, limit):
-        self.limit = limit
-        self.current = 1
-    
-    def __iter__(self):
-        return self
-    
-    def __next__(self):
-        if self.current > self.limit:
-            raise StopIteration
-        result = self.current ** 2
-        self.current += 1
-        return result
+def __iter__(self): 
+return self 
 
-# Usage
-squares = Squares(5)
-for square in squares:
-    print(square)
-# Output: 1, 4, 9, 16, 25
-\`\`\`
+def __next__(self): 
+if self.current > self.limit: 
+raise StopIteration 
+result = self.current ** 2 
+self.current += 1 
+return result 
 
-**Example 3: Iterator with condition**
+# Usage 
+squares = Squares(5) 
+for square in squares: 
+print(square) 
+# Outputs: 1, 4, 9, 16, 25\`\`\`**Example 3: An iterator with a condition**\`\`\`python 
+class FilteredNumbers: 
+def __init__(self, limit, condition): 
+self.limit = limit 
+self.condition = condition 
+self.current = 0 
 
-\`\`\`python
-class FilteredNumbers:
-    def __init__(self, limit, condition):
-        self.limit = limit
-        self.condition = condition
-        self.current = 0
-    
-def __iter__(self):
-        return self
-    
-def __next__(self):
-        while self.current < self.limit:
-            if self.condition(self.current):
-                result = self.current
-                self.current += 1
-                return result
-            self.current += 1
-        raise StopIteration
+def __iter__(self): 
+return self 
 
-# Usage
-# Only numbers that are divisible by 3
-filtered = FilteredNumbers(20, lambda x: x % 3 == 0)
-for num in filtered:
-    print(num)
-# Output: 0, 3, 6, 9, 12, 15, 18
-\`\`\``
+def __next__(self): 
+while self.current < self.limit: 
+if self.condition(self.current): 
+result = self.current 
+self.current += 1 
+return result 
+self.current += 1 
+raise StopIteration 
+
+# Usage 
+# Only numbers divisible by 3 
+filtered = FilteredNumbers(20, lambda x: x % 3 == 0) 
+for num in filtered: 
+print(num) 
+# Outputs: 0, 3, 6, 9, 12, 15, 18\`\`\`
+`
       },
       {
         title: "Summary",
-        content: `In this lesson, we studied iterators and the iteration protocol:
+        content: `In this lesson, we studied iterators and the iteration protocol: 
 
-**Key concepts:**
+**Key Concepts:** 
 
-1. **Iterable object** - an object that can be iterated over (has __iter__)
-2. **Iterator** - an object that performs iteration (has __iter__ and __next__)
-3. **Iteration protocol** - methods __iter__() and __next__()
-4. **StopIteration** - an exception that signals the end of iteration
+1. **Iterable object** - an object that can be iterated over (has __iter__) 
+2. **Iterator** - an object that performs iteration (has __iter__ and __next__) 
+3. **Iteration protocol** - methods __iter__() and __next__() 
+4. **StopIteration** - an exception that signals the end of the iteration 
 
-**Creating your own iterator:**
+**Creating a custom iterator:**\`\`\`python 
+class MyIterator: 
+def __iter__(self): 
+return self 
 
-```python
-class MyIterator:
-    def __iter__(self):
-        return self
-    
-    def __next__(self):
-        # Logic for generating values
-        if termination_condition:
-            raise StopIteration
-        return value
-```
+def __next__(self): 
+# Value generation logic 
+if completion_condition: 
+raise StopIteration 
+return value\`\`\`**Features:** 
 
-**Functions:**
+-\`iter(obj)\`- get an iterator 
+-\`next(iterator)\`- get the next value 
 
-- `iter(obj)` - get an iterator
-- `next(iterator)` - get the next value
-
-**Next step:**
+**Next step:** 
 
 In the next lesson, we will consolidate all knowledge about generators and iterators in practice.`
       }

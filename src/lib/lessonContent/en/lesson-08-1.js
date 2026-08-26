@@ -25,7 +25,7 @@ export const lesson_08_1 = {
     sections: [
       {
         title: "Introduction to the collections module",
-        content: `The ``collections'' module provides specialized data containers that are an alternative to standard Python types (list, dict, tuple, set). 
+        content: `The \`collections\` module provides specialized data containers that are an alternative to standard Python types (list, dict, tuple, set). 
 
 **Why collections?** 
 
