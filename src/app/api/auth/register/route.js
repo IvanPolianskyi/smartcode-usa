@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
-import { getCollection } from '@/lib/mongodb'
+import { ensureUserIndexes, getCollection } from '@/lib/mongodb'
 import { hashPassword, issueAuthSession } from '@/lib/auth'
 import { toAuthUserResponse } from '@/lib/authUserResponse'
 import { sendWelcomeEmail } from '@/lib/email'
@@ -58,6 +58,11 @@ export async function POST(request) {
 		}
 
 		const usersCollection = await getCollection('users')
+		// Memoised after the first call. This is what actually puts the unique
+		// email index in place, so the race below fails at insert time.
+		await ensureUserIndexes().catch((err) => {
+			console.warn('[register] ensureUserIndexes:', err?.message || err)
+		})
 		const existingUser = await usersCollection.findOne({ email: normalizedEmail })
 		if (existingUser) {
 			return NextResponse.json(
@@ -92,7 +97,19 @@ export async function POST(request) {
 			updatedAt: now,
 		}
 
-		const result = await usersCollection.insertOne(user)
+		let result
+		try {
+			result = await usersCollection.insertOne(user)
+		} catch (insertError) {
+			// Lost the race to a simultaneous signup with the same email.
+			if (insertError?.code === 11000) {
+				return NextResponse.json(
+					{ error: 'An account with this email already exists. Log in instead.' },
+					{ status: 409 }
+				)
+			}
+			throw insertError
+		}
 		const userId = result.insertedId.toString()
 		const token = await issueAuthSession(userId)
 

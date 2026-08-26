@@ -50,12 +50,28 @@ export async function getCollection(collectionName) {
   return db.collection(collectionName)
 }
 
-/** Unique sparse indexes for CRM↔LMS identity (idempotent). */
+/**
+ * Unique sparse indexes for account identity (idempotent).
+ *
+ * email is the login key, so its uniqueness has to be the database's job:
+ * the findOne check in the register route is a friendly error message, not
+ * a guarantee - two simultaneous signups both pass it and both insert.
+ */
 export async function ensureUserIndexes() {
   if (userIndexesPromise) return userIndexesPromise
   userIndexesPromise = (async () => {
     const users = await getCollection('users')
     const ops = [
+      users.createIndex(
+        { email: 1 },
+        {
+          unique: true,
+          name: 'users_email_unique',
+          partialFilterExpression: {
+            email: { $type: 'string', $gt: '' },
+          },
+        }
+      ),
       users.createIndex(
         { telegramUserId: 1 },
         {
