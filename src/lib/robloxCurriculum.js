@@ -123,7 +123,7 @@ export const robloxCurriculum = {
           "title": "2.1 - Island HQ (Model + physics)",
           "learningObjectives": [],
           "estimatedTime": 60,
-          "prerequisites": [],
+          "prerequisites": ["lesson-roblox-1-8"],
           "isCheckpoint": false
         },
         {
@@ -178,7 +178,7 @@ export const robloxCurriculum = {
           "title": "3.1 - ClickDetector + ProximityPrompt",
           "learningObjectives": [],
           "estimatedTime": 60,
-          "prerequisites": [],
+          "prerequisites": ["lesson-roblox-2-4"],
           "isCheckpoint": false
         },
         {
@@ -277,7 +277,7 @@ export const robloxCurriculum = {
           "title": "4.1 - Arrays + for",
           "learningObjectives": [],
           "estimatedTime": 60,
-          "prerequisites": [],
+          "prerequisites": ["lesson-roblox-3-8"],
           "isCheckpoint": false
         },
         {
@@ -376,7 +376,7 @@ export const robloxCurriculum = {
           "title": "5.1 - Design 3 biomes",
           "learningObjectives": [],
           "estimatedTime": 60,
-          "prerequisites": [],
+          "prerequisites": ["lesson-roblox-4-8"],
           "isCheckpoint": false
         },
         {
@@ -497,7 +497,7 @@ export const robloxCurriculum = {
           "title": "6.1 - Core loop + scene",
           "learningObjectives": [],
           "estimatedTime": 60,
-          "prerequisites": [],
+          "prerequisites": ["lesson-roblox-5-10"],
           "isCheckpoint": false
         },
         {
@@ -618,7 +618,7 @@ export const robloxCurriculum = {
           "title": "7.1 - Plot / dropper / collector",
           "learningObjectives": [],
           "estimatedTime": 60,
-          "prerequisites": [],
+          "prerequisites": ["lesson-roblox-6-10"],
           "isCheckpoint": false
         },
         {
@@ -717,7 +717,7 @@ export const robloxCurriculum = {
           "title": "8.1 - Humanoid Health",
           "learningObjectives": [],
           "estimatedTime": 60,
-          "prerequisites": [],
+          "prerequisites": ["lesson-roblox-7-8"],
           "isCheckpoint": false
         },
         {
@@ -816,7 +816,7 @@ export const robloxCurriculum = {
           "title": "9.1 - Car + track",
           "learningObjectives": [],
           "estimatedTime": 60,
-          "prerequisites": [],
+          "prerequisites": ["lesson-roblox-8-8"],
           "isCheckpoint": false
         },
         {
@@ -915,7 +915,7 @@ export const robloxCurriculum = {
           "title": "10.1 - Hub build + RS/SSS",
           "learningObjectives": [],
           "estimatedTime": 60,
-          "prerequisites": [],
+          "prerequisites": ["lesson-roblox-9-8"],
           "isCheckpoint": false
         },
         {
@@ -1014,7 +1014,7 @@ export const robloxCurriculum = {
           "title": "11.1 - Explorer audit",
           "learningObjectives": [],
           "estimatedTime": 60,
-          "prerequisites": [],
+          "prerequisites": ["lesson-roblox-10-8"],
           "isCheckpoint": false
         },
         {
@@ -1091,7 +1091,7 @@ export const robloxCurriculum = {
           "title": "12.1 - Pitch + MVP + systems table",
           "learningObjectives": [],
           "estimatedTime": 60,
-          "prerequisites": [],
+          "prerequisites": ["lesson-roblox-11-6"],
           "isCheckpoint": false
         },
         {

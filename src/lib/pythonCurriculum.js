@@ -924,7 +924,7 @@ export const pythonCurriculum = {
             "Follow robots.txt rules"
           ],
           estimatedTime: 120,
-          prerequisites: ["lesson-09-1"]
+          prerequisites: ["lesson-09-2"]
         },
         {
           lessonId: "lesson-09-4",
@@ -1111,7 +1111,7 @@ export const pythonCurriculum = {
             "Prepare for the GUI module"
           ],
           estimatedTime: 90,
-          prerequisites: ["lesson-12-5"]
+          prerequisites: ["lesson-12-3", "lesson-12-5"]
         }
       ]
     },

@@ -345,14 +345,15 @@ The whole of programming builds on that fourth point. Next lesson: variables - g
   practiceTask: {
     title: "Your first program",
     description: "Write a program that introduces you",
-    problemStatement: `Write a program that prints four lines:
-1. A greeting
-2. Your name
-3. That you are learning Python
-4. A farewell
+    problemStatement: `Write a program that prints exactly four lines, in this order:
+1. A greeting (starts with Hello, Hi, or Hey)
+2. Your name (the line must include "name" or "My name is …")
+3. That you are learning Python (the line must include the word Python)
+4. A farewell (Goodbye, Bye, or See you)
 
-Use one print() per line. The exact words are up to you - only the shape matters.`,
-    outputFormat: `Sample output:
+Use one print() per line. Exact wording can vary - the checker looks at the shape of each line, not a fixed script.`,
+    outputFormat: `Four non-empty lines. Example:
+
 Hello!
 My name is Alexander
 I am learning Python
@@ -363,7 +364,21 @@ Goodbye!`,
 My name is Alexander
 I am learning Python
 Goodbye!`,
-        explanation: "Four print() calls produce four lines"
+        explanation: "Typical case: Hello + My name is + Python + Goodbye"
+      },
+      {
+        output: `Hi!
+My name is Maria
+I am learning Python
+Bye!`,
+        explanation: "Edge-ish wording: Hi/Bye still match the greeting and farewell rules"
+      },
+      {
+        output: `Hey
+name: Sam
+Learning Python today
+See you`,
+        explanation: "Unusual but valid: greeting Hey, 'name' without 'My name is', 'See you' farewell"
       }
     ],
     solution: {
@@ -376,10 +391,9 @@ print("Goodbye!")`,
         "Four separate print() calls, each producing its own line, in the order they are written."
     },
     hints: [
-      "One print() per line of output",
-      "Each print() automatically starts a new line",
-      "Single or double quotes both work - just match them",
-      "Line 3 has to contain the word Python"
+      "Start by sketching the four lines on paper: greeting, name, Python, farewell — then turn each into a print()",
+      "Use the print() function for every line; you do not need input() for this task",
+      "Put the word Python on the third line and a farewell word (Goodbye, Bye, or See you) on the fourth"
     ],
     validation: {
       minLines: 4,

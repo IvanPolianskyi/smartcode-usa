@@ -18,7 +18,7 @@ export const lesson_13_1 = {
     "Prepare the environment for work"
   ],
   
-  prerequisites: ["lesson-12-3"],
+  prerequisites: ["lesson-12-6"],
   
   videoUrl: "",
   

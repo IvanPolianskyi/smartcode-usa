@@ -124,9 +124,11 @@ function runPython(code, stdin) {
 }
 
 async function runTest() {
-  const dirs = ['src/lib/lessonContent', 'src/lib/lessonContent/en'];
+  // EN content only (UK root lessonContent/*.js removed in the platform pivot).
+  const dirs = ['src/lib/lessonContent/en'];
   let failedCount = 0;
   let checkedCount = 0;
+  let exampleCount = 0;
 
   for (const contentDir of dirs) {
     const absDir = path.join(root, contentDir);
@@ -169,13 +171,16 @@ async function runTest() {
 
           for (let i = 0; i < cases.length; i++) {
             const example = cases[i];
+            exampleCount++;
             try {
               const stdin = parsePracticeStdin(example.input);
               const output = runPython(code, stdin);
               const result = checkAgainstExample(output, example, validation);
 
               if (result.isCorrect === false) {
-                console.log(`❌ FAILED: ${lessonObj.lessonId} case ${i + 1} (${fullPath})`);
+                console.log(
+                  `❌ FAILED: ${lessonObj.lessonId} example[${i}] (${fullPath})`
+                );
                 console.log(`--- Output ---\n${String(output).trim()}`);
                 console.log(`--- Expected ---\n${example.output || 'Line Rules'}`);
                 console.log(`-----------------------------------`);
@@ -183,7 +188,9 @@ async function runTest() {
                 break;
               }
             } catch (err) {
-              console.log(`💥 ERROR in ${lessonObj.lessonId} case ${i + 1} (${fullPath}):\n${err.message}`);
+              console.log(
+                `💥 ERROR in ${lessonObj.lessonId} example[${i}] (${fullPath}):\n${err.message}`
+              );
               failedCount++;
               break;
             }
@@ -198,7 +205,9 @@ async function runTest() {
     }
   }
 
-  console.log(`\nChecked ${checkedCount} practice solutions. Failed: ${failedCount}`);
+  console.log(
+    `\nChecked ${checkedCount} practice solutions (${exampleCount} examples). Failed: ${failedCount}`
+  );
   process.exit(failedCount > 0 ? 1 : 0);
 }
 
