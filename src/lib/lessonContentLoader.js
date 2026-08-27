@@ -1,7 +1,11 @@
 import { lessonContentMap as pythonLessonsEn } from './lessonContentMap.en.js'
 import { getRobloxLessonContent } from './robloxLessonContent/index.js'
 import { getAiAtWorkLessonContent } from './aiAtWorkLessonContent/index.js'
-import { ROBLOX_COURSE_ID, AI_AT_WORK_COURSE_ID } from './courseLessonAccess.js'
+import {
+  PYTHON_COURSE_ID,
+  ROBLOX_COURSE_ID,
+  AI_AT_WORK_COURSE_ID,
+} from './courseIds.js'
 
 /**
  * Server-only helper to load a single lesson's full content by course and lesson ID.
@@ -13,7 +17,7 @@ import { ROBLOX_COURSE_ID, AI_AT_WORK_COURSE_ID } from './courseLessonAccess.js'
  * @returns {object|null}
  */
 export function getLessonContent(courseId, lessonId, locale = 'en') {
-  if (!lessonId) return null
+  if (!lessonId || !courseId) return null
 
   if (courseId === ROBLOX_COURSE_ID || courseId === 'roblox-studio') {
     return getRobloxLessonContent(lessonId, locale)
@@ -23,5 +27,9 @@ export function getLessonContent(courseId, lessonId, locale = 'en') {
     return getAiAtWorkLessonContent(lessonId, locale)
   }
 
-  return pythonLessonsEn[lessonId] || null
+  if (courseId === PYTHON_COURSE_ID || courseId === 'python-developer-zero-to-junior') {
+    return pythonLessonsEn[lessonId] || null
+  }
+
+  return null
 }

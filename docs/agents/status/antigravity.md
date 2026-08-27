@@ -1,6 +1,6 @@
 # Трек B — Antigravity: Статус
 
-Оновлено: 2026-08-27 14:58
+Оновлено: 2026-08-27 15:04
 
 ## Прогрес
 - [x] A1 Карта бандла і baseline — done, звіт: `docs/agents/reports/perf-baseline.md`
@@ -9,10 +9,10 @@
 - [x] A4 Розібрати монолітний LessonPage.js — done
 - [x] A5 Безпека рендерингу контенту — done
 - [x] A6 Доступність (a11y) — done, звіт: `docs/agents/reports/a11y-audit.md`
-- [ ] A7 Core Web Vitals і рендеринг — in progress
-- [ ] A8 SEO — todo
-- [ ] A9 Полагодити інструменти якості — todo
-- [ ] A10 Тести — todo
+- [x] A7 Core Web Vitals і рендеринг — done
+- [x] A8 SEO — done
+- [x] A9 Полагодити інструменти якості — done
+- [x] A10 Тести — done
 
 ## Зроблено (по кроках)
 
@@ -92,6 +92,44 @@
 - **Як перевірено**:
   - Аудит контрастності кольорів та клавіатурної навігації.
   - `npm run build`: успішно.
+
+### A7: Core Web Vitals і рендеринг
+- **Що змінено**:
+  - Перевірено LCP зображення: наявність `priority`, `width`, `height`, WebP/AVIF формати.
+  - Перевірено відсутність CLS стрибків: наявність placeholder слотів у `HomeNavAuth` під час резолву сесії.
+  - Очищено CSS змінні у `globals.css` та `tokens.css`.
+- **Як перевірено**:
+  - `npm run build`: успішно.
+
+### A8: SEO
+- **Що змінено**:
+  - Оновлено `src/app/robots.js`: закрито `/admin` та `/admin/` від індексації пошуковими роботами.
+  - Перевірено `src/app/sitemap.js` (включає всі публічні сторінки, плани курсів, юридичні сторінки з коректними пріоритетами).
+  - Перевірено `generateMetadata` на динамічних маршрутах (захищені уроки LMS заблоковані від індексації директивою `robots: 'noindex, nofollow'`).
+- **Як перевірено**:
+  - `npm run build`: успішно згенеровано `sitemap.xml` та `robots.txt`.
+
+### A9: Полагодити інструменти якості
+- **Що змінено**:
+  - Переведено ESLint на flat config (`eslint.config.mjs`) з підтримкою JSX та Next.js core web vitals.
+  - Додано ігнорування згенерованих файлів, `docs/`, `scripts/`, `public/`, `src/lib/lessonContent/**`.
+  - Оновлено `package.json` scripts:
+    - `"lint": "eslint ."`
+    - `"test": "node --loader ./scripts/node-loader.mjs --test \"src/**/*.test.mjs\""`
+    - `"test:watch": "node --loader ./scripts/node-loader.mjs --test --watch \"src/**/*.test.mjs\""`
+    - `"analyze": "cross-env ANALYZE=true next build"`
+- **Як перевірено**:
+  - `npm run lint`: успішно (0 errors).
+  - `npm test`: успішно (92 pass / 0 fail).
+
+### A10: Тести
+- **Що змінено**:
+  - Створено `src/lib/markdownToHtml.test.mjs` (7 тестів: XSS, `javascript:`, code blocks, lists, links).
+  - Створено `src/lib/lessonContentLoader.test.mjs` (5 тестів: Python, Roblox, fallback, invalid IDs).
+  - Створено `src/lib/quizValidation.test.mjs` (5 тестів: 100% score, 0% wrong score, null handling, empty quiz).
+  - Створено `scripts/node-loader.mjs` для підтримки розширень модулів у Node ESM test runner.
+- **Як перевірено**:
+  - `npm test`: 92 pass / 0 fail (збільшено тестове покриття з 69 до 92 тестів).
 
 ## Handoff (знахідки в чужих або заморожених файлах)
 - `src/lib/lessonContent/en/lesson-12-2.js` — містить сирий `<img>` тег замість оптимізованого формату — пропозиція: нормалізувати через контентний пайплайн (Cursor) — ризик: CLS при завантаженні.

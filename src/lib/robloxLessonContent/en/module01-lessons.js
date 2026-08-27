@@ -1,1024 +1,1117 @@
-/** Roblox Module 01 EN - lesson 1.1 */
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+/** Roblox Module 01 EN - lessons 1.1-1.8 */
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
 
 export const enLesson11 = {
- lessonId: "lesson-roblox-1-1",
- moduleId: "module-01",
- order: 1,
- title: "1.1 - Tools + Union → House",
- theoryMinutes: 35,
- quizMinutes: 15,
- estimatedTime: 60,
- learningObjectives: [
- "Open Roblox Studio and the Baseplate template.",
- "Control the camera and the Explorer, Properties, and Output panels.",
- "Use the Select, Move, Scale, Rotate, Snap, and Duplicate tools.",
- "Distinguish between Part types (Block, Sphere, Wedge, Cylinder, CornerWedge).",
- "Build a house and cut out windows and doors using Negate and Union.",
- "Save the Place to Roblox as the first course project.",
- ],
- theory: {
- sections: [
- {
- title: "Course introduction and lesson task",
- content: `In this lesson, you will create a complete house with a floor, walls, a roof, windows, and a doorway.
+  lessonId: "lesson-roblox-1-1",
+  moduleId: "module-01",
+  order: 1,
+  title: "1.1 - Tools + Union → House",
+  theoryMinutes: 35,
+  quizMinutes: 15,
+  estimatedTime: 60,
+  learningObjectives: [
+    "Open Roblox Studio and start a level from the Baseplate template.",
+    "Move the camera with confidence and read the Explorer, Properties, and Output panels.",
+    "Use Select, Move, Scale, Rotate, Snap, and Duplicate without hunting through menus.",
+    "Tell the Part types apart (Block, Sphere, Wedge, Cylinder, CornerWedge) and pick the right one.",
+    "Cut real window and door openings with Negate and Union instead of faking them.",
+    "Save your Place to Roblox as the first project in your portfolio.",
+  ],
+  theory: {
+    sections: [
+      {
+        title: "Today's mission (lesson 1 of 92)",
+        content: `Welcome. Ninety-two lessons from now you will publish a finished game with a menu, saved progress, and a Badge. This is lesson one, and it starts the way every real Roblox project starts: with an empty grey plane and a decision about what to put on it.
 
-You will cut out the windows and door using the Negate and Union tools. This method lets you create complex shapes without assembling them from many small details. Learning Union now will make it easier to work on more complex levels later.
+Today you build a house. Not a box with a rectangle painted on it to suggest a window - an actual house, with holes cut clean through the walls, that your character can walk into.
 
-Keep Roblox Studio open as you read and repeat each action in the Viewport. Hands-on practice is the fastest way to learn the interface.
+That difference matters more than it sounds. Every builder can stack blocks. The moment you can *subtract* geometry, you stop being limited to shapes Studio hands you, and you start making shapes nobody else has.
 
-**Complete these items by the end of the lesson:**
+| What you have right now | What you will have in 60 minutes |
+|---|---|
+| Studio, never opened or barely opened | A level you built, saved to your account |
+| Blocks are the only shape you know | Negate + Union, the tool that cuts anything |
+| No project to show | \`House_01\`, project #1 of your portfolio |
+
+**Your finish line for today:**
 - A grouped model named \`House_01\`.
-- At least 2 window openings created with Union.
-- A doorway, or a third window.
-- A saved level named \`Lesson 1.1 - House_01\`.`,
- },
- {
- title: "Roblox Studio basics",
- content: `Roblox Studio is a game development environment for Roblox. You can use it to create game objects (Parts), build landscapes (Terrain), write scripts (Luau), and configure the user interface (UI).
+- At least 2 window openings, cut with Union.
+- A doorway your character can actually walk through.
+- The level saved to Roblox as \`Lesson 1.1 - House_01\`.
 
-Go to [create.roblox.com](https://create.roblox.com/) and sign in to your account. Launch Studio, select New, and choose the Baseplate template.
+One rule for the whole course, starting now: **read with Studio open**. Every "Do now" below is meant to be done in the moment, not saved for later. Reading about the Move tool teaches you nothing. Dragging a wall with it teaches you everything.
 
-Baseplate is an empty level with a flat floor and sky. Unlike templates such as City or Obby, it has no extra objects or scripts to get in the way.
+**Do now (2 min):** open Studio and leave it open beside this page.`,
+      },
+      {
+        title: "Getting into Studio",
+        content: `Roblox Studio is the whole workshop in one window. Objects (Parts), landscape (Terrain), code (Luau), interface (UI) - all of it lives here, and all of it is free.
 
-**Do this now:** create a level from the Baseplate template. On the View tab, enable the Explorer and Properties panels. Select the floor. The \`Baseplate\` object should be highlighted in Explorer.`,
- },
- {
- title: "Interface and workspace",
- content: `The Studio workspace consists of several main panels.
+Go to [create.roblox.com](https://create.roblox.com/), sign in, and launch Studio. Choose **New**, then the **Baseplate** template.
 
-| Panel | Location | Purpose |
-|--------|-------------|----------------------|
-| **Viewport** | Center | The 3D world where you build the level and control the camera. |
-| **Home** | Top | Main tools (Part, Move, Scale, Rotate, Play, Snap). |
-| **Model** | Top | Model tools (Group, Union, Negate, Separate). |
-| **Explorer** | Right | The hierarchy and tree of every object in the game. |
-| **Properties** | Below Explorer | Properties of the selected object (Name, Size, Anchored, Material). |
-| **Output** | Bottom | Messages and system errors. |
+Why Baseplate and not something prettier? Because the pretty templates - City, Obby, Racing - come pre-loaded with somebody else's parts and somebody else's scripts. When something breaks, you will not know whether you broke it or it came that way. Baseplate is a flat floor and a sky. Everything in it after today is yours.
 
-Explorer shows the level structure. Properties lets you edit the selected object's settings. Always select an object before changing its values.
+That is also how professional builders start. An empty scene is not a limitation, it is a clean workbench.
 
-**Do this now:**
-1. Select Baseplate and review its Name, Anchored, Size, and Material properties in Properties.
-2. Open Output from the View tab.
-3. Review the tools on the Home and Model tabs.`,
- },
- {
- title: "Camera controls",
- content: `Accurate camera control is essential for placing objects precisely in 3D space.
+**Do now (3 min):** create a Baseplate level. Open the **View** tab and switch on **Explorer** and **Properties** if they are not already showing. Click the grey floor - \`Baseplate\` should light up in Explorer. That is your first confirmation that clicking in the world and the object list are the same thing.`,
+      },
+      {
+        title: "Reading the workspace",
+        content: `Studio looks busy the first time. It is really only five areas, and you will use four of them constantly.
 
-Viewport navigation:
-|Action|Control|
-|---|---------|
-|Forward / backward| **W** / **S**|
-|Left / right| **A** / **D**|
-|Up / down| **E** / **Q**|
-|Rotate the camera| **Right mouse button** + move the mouse|
-|Zoom in and out|**Mouse wheel**|
-|Focus on an object| Select the object in Explorer and press **F**|
+| Panel | Where | What it is for |
+|---|---|---|
+| **Viewport** | Center | The 3D world. You build here and fly the camera here. |
+| **Home** | Top | The everyday tools: Part, Move, Scale, Rotate, Play, Snap. |
+| **Model** | Top | The shape tools: Group, Union, Negate, Separate. |
+| **Explorer** | Right | The list of everything that exists in your game. |
+| **Properties** | Under Explorer | The settings of whatever is selected right now. |
+| **Output** | Bottom | Messages and errors. Ignored today, essential from 1.3 onward. |
 
-Use several viewing angles as you work. Inspect the structure from above, from the side, and from the player's perspective. Before applying Union, always inspect the wall from several sides.
+Think of Explorer as the table of contents and Properties as the page you are currently reading. Properties always shows the *selected* object - which is the source of the single most common beginner moment: changing a value, seeing nothing happen, and not realising you had the wrong thing selected.
 
-**Do this now:** move the camera above Baseplate. Select Baseplate and press F to focus on it.`,
- },
- {
- title: "Basic building tools",
- content: `The main object manipulation tools are:
+**Do now (4 min):**
+1. Select Baseplate and read its \`Name\`, \`Anchored\`, \`Size\`, and \`Material\` in Properties.
+2. Open **Output** from the View tab so it is there when you need it.
+3. Hover across the Home and Model tabs and read the tool names. You do not have to remember them - you just want to know where they live.`,
+      },
+      {
+        title: "Flying the camera",
+        content: `Camera control is the skill that separates a frustrating hour from a fun one. In a 3D world you cannot place anything accurately until you can look at it from any angle on demand.
 
-| Key | Tool | Action |
-|---------|------------|-----------|
-| **1** | **Select** | Select an object. |
-| **2** | **Move** | Move an object along the axes. |
-| **3** | **Scale** | Resize an object. |
-| **4** | **Rotate** | Rotate an object around its axis. |
+| What you want | How |
+|---|---|
+| Forward / back | **W** / **S** |
+| Left / right | **A** / **D** |
+| Up / down | **E** / **Q** |
+| Look around | Hold **right mouse button** and move the mouse |
+| Zoom | **Mouse wheel** |
+| Snap to an object | Select it, press **F** |
 
-Always enable **Snap to Grid** on the Home tab. This helps objects align precisely without gaps.
+**F is the one to memorise.** Lost your house? Click it in Explorer, press F, and the camera flies to it. You will use that hundreds of times.
 
-Use **Ctrl+D** (Duplicate) to copy objects quickly.
+The habit worth building today: look at your work from at least three angles before you trust it. Top-down to check the footprint, from the side to check heights, and from ground level to see what a player will see. A wall that looks perfectly placed from above is often floating two studs off the floor when you look at it from the side.
 
-Important: all static objects, including walls, floors, and roofs, must have **Anchored = true**. This fixes them in place so gravity does not make them fall during the game.
+**Do now (3 min):** fly the camera above Baseplate, then down to floor level. Select Baseplate, press F, and watch the camera frame it.`,
+      },
+      {
+        title: "The four tools you will use forever",
+        content: `Four tools, four number keys. Learn the keys now and you will never touch these buttons with the mouse again.
 
-**Do this now:**
-1. Create a block (Home → Part → Block).
-2. Rename it \`TestBlock\`.
-3. Use Scale to change its shape, then use Move and Snap to place it on the floor.
-4. Confirm that Anchored = true, then run Play (F5) to verify that it stays in place.`,
- },
- {
- title: "Geometric shape types (Parts)",
- content: `Studio provides several basic shapes for modeling:
+| Key | Tool | What it does |
+|---|---|---|
+| **1** | **Select** | Pick an object. |
+| **2** | **Move** | Slide it along an axis. |
+| **3** | **Scale** | Resize it by dragging a handle. |
+| **4** | **Rotate** | Spin it around an axis. |
 
-| Type | Use |
-|-----|---------------------------|
-| **Block** | Walls, floors, roofs, and basic structures. |
-| **Sphere** | Decorative elements. |
-| **Wedge** | Roof slopes and ramps. |
-| **Cylinder** | Columns, pipes, and chimneys. |
-| **CornerWedge** | Corners for complex slopes. |
+Two settings turn these from "roughly right" into "exactly right":
 
-You will build the house frame entirely from Blocks because they provide a reliable shape for learning Union.
+**Snap to Grid** (Home tab) makes objects jump in fixed increments instead of landing wherever your mouse happened to be. Without it your walls end up 0.03 studs apart, which looks fine in the editor and shows up in-game as a hairline crack of daylight. Turn it on and leave it on.
 
-**Do this now:** add one Sphere, one Wedge, and one Cylinder to the scene. Resize and rotate them, then delete them to clear the space for the house.`,
- },
- {
- title: "Object properties (Properties)",
- content: `These are the main properties you will use:
+**Ctrl+D** duplicates whatever is selected. You are about to build four walls. You are going to build *one* wall and press Ctrl+D three times.
+
+And one property that is not optional: **\`Anchored = true\`** on everything that should not move. Roblox runs real physics. An unanchored wall is not a wall, it is a very large falling object. Floors, walls, roofs - all anchored.
+
+**Do now (5 min):**
+1. Home → Part → Block.
+2. Rename it \`TestBlock\` in Properties.
+3. Press 3 and stretch it. Press 2 and slide it onto the floor with Snap on.
+4. Set \`Anchored = true\`, press **F5** to play, and watch it stay put. Then untick Anchored, play again, and watch it fall. Seeing it fall once is worth more than reading this paragraph.`,
+      },
+      {
+        title: "Choosing the right shape",
+        content: `Studio gives you five primitive shapes. Each one exists because it saves you from faking it with something else.
+
+| Type | What it is really for |
+|---|---|
+| **Block** | Walls, floors, roofs, platforms - the skeleton of almost everything. |
+| **Sphere** | Decoration, orbs, collectables, planets. |
+| **Wedge** | Anything sloped: roof pitches, ramps, stairs you can walk up. |
+| **Cylinder** | Columns, pipes, chimneys, tree trunks. |
+| **CornerWedge** | Where two slopes meet - the fiddly corner of a pitched roof. |
+
+Today the whole house is Blocks. That is deliberate: Union behaves most predictably on flat-faced shapes, and you want your first cut to succeed, not to debug a sphere.
+
+**Do now (3 min):** drop one Sphere, one Wedge, and one Cylinder into the scene. Scale and rotate each one so you know how they behave. Then delete all three and clear the floor for the house.`,
+      },
+      {
+        title: "Properties worth knowing by name",
+        content: `You will read these eight properties more than all the others put together.
 
 | Property | Meaning | Example |
-|----------|------------------|-----------------------------|
-| **Name** | The object's name in the hierarchy | \`Wall_Front\`. |
-| **Size** | Dimensions along X, Y, and Z in studs | \`20, 1, 16\`. |
-| **Position** | The object's coordinates | Changed with the Move tool. |
-| **Orientation** | Rotation angle in degrees | \`0, 90, 0\`. |
-| **BrickColor** / **Color** | The object's color | Any standard color. |
-| **Material** | The material texture | Plastic, Wood, Brick. |
-| **Anchored** | Fixes the object in 3D space | **true** (required for walls). |
-| **CanCollide** | Enables physical collision | **true**. |
+|---|---|---|
+| **Name** | What it is called in Explorer | \`Wall_Front\` |
+| **Size** | Dimensions in studs (X, Y, Z) | \`20, 1, 16\` |
+| **Position** | Where it sits in the world | Usually set by dragging |
+| **Orientation** | Rotation in degrees | \`0, 90, 0\` |
+| **BrickColor** / **Color** | Its colour | Any |
+| **Material** | Its surface texture | Plastic, Wood, Brick |
+| **Anchored** | Immune to gravity | **true** for anything structural |
+| **CanCollide** | Solid to the player | **true** for walls, **false** for decoration you walk through |
 
-Give objects clear names as soon as you create them. This makes it much easier to find specific parts later.
+A word about **Name**, because it is the habit that pays off latest and largest. Right now you have six objects and you can find anything. By module 6 you will have hundreds, and a script will be searching for a Part by name. \`Part\`, \`Part1\`, \`Part2\` is a debt you take out today and repay with interest in three weeks.
 
-**Do this now:** change the Material and BrickColor properties of any test block, then delete it.`,
- },
- {
- title: "House construction plan",
- content: `Recommended sequence:
+Name things when you create them. It takes four seconds.
 
-1. **Floor**: Create the floor that serves as the foundation.
-2. **Walls**: Build four walls around the edge of the floor (\`Wall_Back\`, \`Wall_Left\`, \`Wall_Right\`, \`Wall_Front\`).
-3. **Roof**: Add a roof that is slightly wider than the base.
-4. **Windows**: Create openings in the walls with Negate and Union.
-5. **Doorway**: Cut out an entrance.
-6. **Grouping**: Combine the parts into the \`House_01\` model.
-7. **Saving**: Save the project to the cloud.
+**Do now (2 min):** change \`Material\` and \`BrickColor\` on a test block, look at the result, then delete it.`,
+      },
+      {
+        title: "The build order",
+        content: `Build in this order and each step supports the next. Build out of order and you will be moving walls that already have windows in them.
 
-Suggested dimensions:
-- Floor: \`20, 1, 16\`.
-- Wall height: \`10\`.
-- Wall thickness: \`1\`.
-- Window cutout: ≈ \`3, 3, 2\`.
-- Door cutout: \`3, 5, 3\` (height of at least \`5\`).
+1. **Floor** - the foundation everything else measures against.
+2. **Walls** - four of them, on the floor's edges (\`Wall_Back\`, \`Wall_Left\`, \`Wall_Right\`, \`Wall_Front\`).
+3. **Roof** - slightly oversized, so it overhangs.
+4. **Windows** - cut with Negate + Union.
+5. **Doorway** - same technique, but reaching the floor.
+6. **Group** - everything becomes the \`House_01\` model.
+7. **Save** - to your Roblox account.
 
-`,
- },
- {
- title: "Step-by-step construction: floor, walls, and roof",
- content: `### Floor
-1. Create a block and rename it \`Floor\`.
-2. Set its dimensions to approximately \`20, 1, 16\`, enable Anchored = true, and choose a material such as Concrete or Wood.
+Numbers that work, if you would rather not invent your own:
+
+- Floor: \`20, 1, 16\`
+- Wall height: \`10\`, thickness: \`1\`
+- Window cut: about \`3, 3, 2\`
+- Door cut: \`3, 5, 3\` - and the height genuinely needs to be 5 or more, because a Roblox character is 5 studs tall and will not duck.
+
+These are starting points, not laws. A bigger house is fine. A house so big you spend forty minutes on walls is not.`,
+      },
+      {
+        title: "Building the shell: floor, walls, roof",
+        content: `### Floor
+1. Make a Block, rename it \`Floor\`.
+2. Size it around \`20, 1, 16\`, set \`Anchored = true\`, and give it a material with some character - Concrete or Wood beats default Plastic.
 
 ### Walls
-1. Create a block named \`Wall_Back\` and place it along the back edge of the floor. Use an approximate height of 10 and thickness of 1.
-2. Use Ctrl+D to duplicate it and create \`Wall_Left\`, \`Wall_Right\`, and \`Wall_Front\`.
-3. Use Rotate for the side walls as needed.
-4. Make sure the corners meet cleanly without large gaps. All walls must have Anchored = true.
+1. Make a Block called \`Wall_Back\` and stand it on the back edge of the floor. Height about 10, thickness 1.
+2. **Ctrl+D** to duplicate, and move the copy into place. Repeat for \`Wall_Left\`, \`Wall_Right\`, \`Wall_Front\`.
+3. The side walls need Rotate (key 4) to turn 90°.
+4. Fly around the corners and check they actually meet. Snap should handle this - if you see daylight through a corner, Snap was off.
+5. Every wall: \`Anchored = true\`.
 
 ### Roof
-1. Create an object named \`Roof\`. Make it slightly wider than the floor, for example \`22, 1, 18\`, to create an overhang.
-2. Place it above the walls and make sure there are no gaps.
-3. Enable Anchored = true.
+1. A Block named \`Roof\`, sized a little larger than the floor - \`22, 1, 18\` gives you an overhang, which is what makes a box read as a *building*.
+2. Sit it on top of the walls with no gap.
+3. \`Anchored = true\`.
 
+**Do now (12 min):** build the shell and press **F5**. Nothing should move, wobble, or fall. If something falls, you missed an Anchored - and now you know exactly which part, because it is the one on the ground.`,
+      },
+      {
+        title: "Negate and Union: cutting real holes",
+        content: `This is the part of the lesson worth remembering.
 
-### Do this now
-Build the house frame and run Play (F5) to verify that the objects stay in place.`,
- },
- {
- title: "Creating openings with Negate and Union",
- content: `Constructive solid geometry (CSG) tools let you cut sections out of objects.
+Negate and Union are CSG tools - constructive solid geometry. The idea is simple and powerful: you place a block where you want a hole, mark it as "this is a hole, not an object", and then merge it into the wall. The wall keeps its shape minus the block.
 
-### Creating a window
-1. Select a wall, such as \`Wall_Left\`.
-2. Create a new block and name it \`WindowCut_01\`.
-3. Set the cutout size. It must be thicker than the wall.
-4. Place the cutout block inside the wall where the window will be. Check its position from several angles.
-5. Select \`WindowCut_01\` and choose **Negate** on the Model tab. The block will become translucent.
-6. Select the wall and cutout block together by holding Ctrl, then choose **Union**.
-7. Rename the resulting object and enable **Anchored = true**.
+You are not painting a window. You are removing material.
+
+### Cutting a window
+1. Select a wall - \`Wall_Left\` is a good first victim.
+2. Make a new Block and name it \`WindowCut_01\`.
+3. Size it - and make it **thicker than the wall**. If the wall is 1 thick, make the cutter 2. A cutter that stops flush with the surface leaves a paper-thin skin of wall behind, and that is the number one reason a Union "doesn't work".
+4. Push it into the wall where the window belongs. Check from the front *and* from the side - it must poke out both faces.
+5. Select \`WindowCut_01\` and hit **Negate** on the Model tab. It turns translucent red. That red means "I am a hole waiting to happen".
+6. Hold **Ctrl**, click the wall so both are selected, and hit **Union**.
+7. Rename the result something sensible, and set **\`Anchored = true\`** again - Union frequently resets it.
 
 ### Doorway
-Repeat the same process for \`Wall_Front\`, but position the cutout block so that it touches the floor. The opening must be tall enough for the character to pass through, at least 5 studs.
+Same process on \`Wall_Front\`, except the cutter reaches down to the floor and stands at least 5 studs tall.
 
-If Union produces the wrong result, select the object and choose **Separate** to split it apart and correct the problem.
+### When it goes wrong
+Select the object and press **Separate**. It splits back into its pieces and you can fix the cutter and retry. Union is not a one-way door - nothing you do here is unrecoverable.
 
-### Do this now
-Create at least two windows and one doorway. Check the results in Play mode.`,
- },
- {
- title: "Grouping and saving the project",
- content: `### Grouping the model
-1. In Explorer, hold Ctrl and select the floor, all walls, and the roof. Make sure unrelated objects such as Baseplate are not selected.
-2. Press **Ctrl+G** (or Model → Group) and name the resulting model \`House_01\`.
+**Do now (15 min):** cut at least two windows and one doorway. Press F5 and walk through your own front door. That moment - your character stepping through a hole you cut - is the actual point of lesson 1.1.`,
+      },
+      {
+        title: "Grouping and saving",
+        content: `### Group it
+1. In Explorer, Ctrl-click the floor, all four walls, and the roof. Do **not** include Baseplate - it is the world, not your house.
+2. **Ctrl+G** (or Model → Group). Name the result \`House_01\`.
 
-### Saving to the cloud
-Select **File → Save to Roblox** and enter the name \`Lesson 1.1 - House_01\`. This saves the level to your account.
-`,
- },
- {
- title: "Project completion requirements",
- content: `Review your work before completing the lesson.
+Now the whole house moves as one object. You will appreciate this in 1.2, when you build an island and need to pick the house up and set it down somewhere flat.
 
-1. **Object names:** Every part in Explorer should have a meaningful name (\`Floor\`, \`Wall_Front\`, \`Roof\`).
-2. **Anchoring:** Confirm that every part has Anchored = true.
-3. **Play test:** Run the level and try to walk through the doorway.
-4. **Saving:** Confirm that the project is saved to Roblox with the correct name.
+### Save it
+**File → Save to Roblox**, name it \`Lesson 1.1 - House_01\`.
 
-Later lessons cover facade decoration, lighting, and scripts. For now, focus on accurate geometry and a clean frame.
+"Save to Roblox" puts the Place in your account, in the cloud. You can open it from any computer, and it is the version the course expects you to bring to the next lesson. Saving to your hard drive only is how people lose a week of work.
 
-**Do this now:** complete the checks above.`,
- },
- {
- title: "Evaluation criteria",
- content: `| Level | Requirements |
-|--------|------------------|
-| **Incomplete** | No windows were created with Union. Objects are not anchored and fall. The project is not saved. |
-| **Complete** | The project includes a floor, walls, and a roof, with at least 2 windows and a doorway. The model is grouped and saved. |
-| **Good** | Snap keeps the geometry aligned. Objects have clear names. The character can pass through the door. |
-| **Excellent** | The house includes simple decorative details, such as a chimney, and has clean proportions. |`,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "The walls fall or collapse after starting Play",
- explanation: "Anchored is disabled. Union can reset this property automatically.",
- correctApproach: "Select every part of the house and set Anchored = true. Always check this after using Union.",
- },
- {
- mistake: "Explorer or Properties is missing",
- explanation: "The panels were closed accidentally.",
- correctApproach: "Open the View tab and enable Explorer and Properties.",
- },
- {
- mistake: "Union does not cut all the way through the wall",
- explanation: "The cutout block was not converted with Negate, or it is thinner than the wall.",
- correctApproach: "Apply Negate to the cutout block. Before using Union, make sure it extends through both sides of the wall.",
- },
- {
- mistake: "Union combined extra parts",
- explanation: "More than two objects were selected.",
- correctApproach: "Undo the action (Ctrl+Z) or use Separate. Select only the required wall and cutout block, then repeat the operation.",
- },
- {
- mistake: "The character cannot pass through the door",
- explanation: "The doorway is too small or does not reach the floor.",
- correctApproach: "Check the opening height in Play mode. Increase the cutout block dimensions and repeat Union.",
- },
- {
- mistake: "The project was not saved",
- explanation: "The project was saved only locally or was not saved at all.",
- correctApproach: "Use File → Save to Roblox and give the level a clear name.",
- },
- {
- mistake: "Gaps appear between the walls",
- explanation: "The objects were moved without Snap to Grid enabled.",
- correctApproach: "Enable Snap to Grid to align the blocks precisely.",
- },
- ],
- summary:
- "In this lesson, you reviewed the Studio interface, basic modeling tools, object types, and the use of CSG (Negate + Union) to create openings. You created and saved the course's first structural project, a house model.",
- practiceTask: {
- title: "Practice: House_01",
- difficulty: "beginner",
- description: `**Task:** Create a house frame with window and door openings, then save the project.
+**Do now (3 min):** group, save, and confirm the name is right.`,
+      },
+      {
+        title: "Check your work before you move on",
+        content: `Four checks. They take two minutes and they catch almost everything.
 
-### Part A: Frame
-1. Create a level from the Baseplate template. Add a \`Floor\` block with approximate dimensions of 20×1×16 and enable Anchored.
-2. Build four walls: \`Wall_Front\`, \`Wall_Back\`, \`Wall_Left\`, and \`Wall_Right\` (height around 10, Anchored = true).
-3. Add a \`Roof\` object above the walls.
-4. Run Play to test stability.
+1. **Names** - open Explorer. Can you tell what each object is without clicking it? \`Floor\`, \`Wall_Front\`, \`Roof\` - good. \`Union\`, \`Part\`, \`Part2\` - go back and rename.
+2. **Anchored** - click through every part. Any \`false\` is a part that will fall in-game.
+3. **Play test** - F5, and walk through the door. Not past it. Through it.
+4. **Saved** - the title bar should show your place name.
 
-### Part B: Openings
-1. Cut a window in \`Wall_Left\` using Negate and Union.
-2. Create at least one more window in another wall.
-3. Create a doorway in \`Wall_Front\`.
-4. Confirm that Anchored = true after every Union operation.
-5. Test the doorway in Play mode.
+Decoration, lighting, and scripts are all coming in later lessons. Today the win is clean geometry and a shell that holds together. Resist the urge to spend twenty minutes picking a colour.
 
-### Part C: Saving
-1. Group the objects into a model named \`House_01\`.
-2. Save the project through **File → Save to Roblox** with the name \`Lesson 1.1 - House_01\`.
-3. Mark the practice as complete in the system.`,
- hints: [
- "Enable Snap to Grid to position the walls precisely.",
- "The cutout block must be thicker than the wall.",
- "Always check the Anchored property after Union.",
- "To focus the camera, select an object and press F.",
- "Use Separate to correct Union errors.",
- ],
- optionalChallenge:
- "Create a more complex roof with Wedge Parts, then add a chimney with a Cylinder.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 15,
- questions: [
- {
- id: "q1",
- type: MC,
- question: "Which template is the best starting point?",
- options: [
+**Do now (2 min):** run all four checks.`,
+      },
+      {
+        title: "How to grade yourself",
+        content: `Be honest here - this table is for you, not for a mark.
+
+| Level | What it looks like |
+|---|---|
+| **Not done yet** | No Union windows, parts falling in Play, or nothing saved. |
+| **Done** | Floor, walls, roof, 2+ windows, a doorway. Grouped and saved. |
+| **Good** | Geometry is snapped tight with no gaps, everything is named clearly, and the character walks through the door without getting stuck. |
+| **Excellent** | The house has a detail that was your idea - a chimney, a porch, a stepped roof - and the proportions look deliberate. |
+
+If you landed on "Done", you passed. If you landed on "Excellent", you have already started designing rather than following - which is the whole game.`,
+      },
+    ],
+  },
+  commonMistakes: [
+    {
+      mistake: "The walls collapse the moment you press Play",
+      explanation: "Something is not Anchored. Union is the usual culprit - it often resets Anchored back to false on the object it creates, even when both originals were anchored.",
+      correctApproach: "Select every part of the house and set Anchored = true. Make it a reflex: every time you finish a Union, check Anchored immediately.",
+    },
+    {
+      mistake: "Explorer or Properties has vanished",
+      explanation: "The panel got closed. It happens to everyone in the first week.",
+      correctApproach: "View tab → tick Explorer and Properties. They dock back where they were.",
+    },
+    {
+      mistake: "Union runs, but the window is not a hole - the wall looks solid",
+      explanation: "Either the cutter was never Negated, or it was thinner than the wall and only hollowed out the middle.",
+      correctApproach: "Negate the cutter first - it must be translucent red before you Union. And make it thicker than the wall so it pokes out both sides.",
+    },
+    {
+      mistake: "Union swallowed parts you did not want in it",
+      explanation: "More than two objects were selected when you clicked Union.",
+      correctApproach: "Ctrl+Z, or select the result and press Separate. Then Ctrl-click exactly two things - one wall, one cutter - and try again.",
+    },
+    {
+      mistake: "The character cannot get through the door",
+      explanation: "The opening is under 5 studs tall, or it does not reach the floor so there is a lip to climb.",
+      correctApproach: "A Roblox character is about 5 studs tall. Make the cutter at least 5 high and make sure its bottom is level with the floor, then redo the Union.",
+    },
+    {
+      mistake: "The work is gone next time you open Studio",
+      explanation: "The place was saved locally, or not saved at all.",
+      correctApproach: "File → Save to Roblox, with a clear name. Cloud-saved places open on any machine and cannot be lost with your laptop.",
+    },
+    {
+      mistake: "Thin gaps of daylight between the walls",
+      explanation: "Parts were dragged with Snap to Grid switched off, so they landed on fractional coordinates.",
+      correctApproach: "Turn Snap to Grid on and nudge the walls again. They will click into alignment.",
+    },
+  ],
+  summary:
+    "You opened Studio, learned to fly the camera, met the four core tools and the properties that matter, and then did the thing most beginners never get to on day one - you cut real openings with Negate and Union instead of faking them. Your house is grouped, anchored, and saved to your account as project #1.",
+  practiceTask: {
+    title: "Practice: House_01",
+    difficulty: "beginner",
+    description: `**The build:** a house shell with real window and door openings, grouped and saved to your account.
+
+Work through it in three parts. Do not skip ahead to the windows - cutting into walls that are not yet snapped and anchored just means redoing them.
+
+### Part A: The shell
+1. New level from the **Baseplate** template.
+2. \`Floor\` block, roughly 20×1×16, \`Anchored = true\`.
+3. Four walls - \`Wall_Front\`, \`Wall_Back\`, \`Wall_Left\`, \`Wall_Right\` - about 10 tall, all anchored. Build one, then Ctrl+D the rest.
+4. A \`Roof\` slightly wider than the floor, so it overhangs.
+5. **F5.** Nothing should move.
+
+### Part B: The openings
+1. Cut a window in \`Wall_Left\`: cutter block → Negate → Ctrl-select wall → Union.
+2. Cut at least one more window in a different wall.
+3. Cut a doorway in \`Wall_Front\` - at least 5 studs tall, reaching the floor.
+4. Re-check \`Anchored\` after every single Union.
+5. **F5** and walk through the doorway yourself.
+
+### Part C: Wrap up
+1. Ctrl-select the floor, walls, and roof in Explorer → **Ctrl+G** → name it \`House_01\`.
+2. **File → Save to Roblox** as \`Lesson 1.1 - House_01\`.
+3. Mark the practice complete here.`,
+    hints: [
+      "Snap to Grid on, always. It is the difference between walls that meet and walls that nearly meet.",
+      "Make the cutter block thicker than the wall - it has to poke out of both faces or the hole will not go all the way through.",
+      "Anchored resets after Union more often than you would expect. Check it every time.",
+      "Lost track of something? Click it in Explorer and press F to fly the camera to it.",
+      "A Union gone wrong is not permanent - Separate splits it back apart so you can retry.",
+    ],
+    optionalChallenge:
+      "Give the roof a real pitch using two Wedge parts instead of a flat slab, then add a Cylinder chimney poking through it. If you want to push further: cut an arched doorway by using a Cylinder as the cutter instead of a Block.",
+  },
+  quiz: {
+    passingScore: 70,
+    timeLimit: 15,
+    questions: [
+      {
+        id: "q1",
+        type: MC,
+        question: "Which template is the best starting point for learning?",
+        options: [
           "Obby",
           "City",
           "Baseplate",
           "Empty",
         ],
- correctAnswer: 2,
- explanation: "Baseplate provides an empty plane and sky, making it a useful starting point without extra objects.",
- },
- {
- id: "q2",
- type: MC,
- question: "Which key activates the Move tool?",
- options: [
+        correctAnswer: 2,
+        explanation: "Baseplate gives you a floor and a sky and nothing else. The other templates come pre-loaded with parts and scripts you did not write, which makes it impossible to tell your bugs from theirs.",
+      },
+      {
+        id: "q2",
+        type: MC,
+        question: "Which key activates the Move tool?",
+        options: [
           "2",
           "1",
           "3",
           "4",
         ],
- correctAnswer: 0,
- explanation: "Key 2 activates Move, 1 activates Select, 3 activates Scale, and 4 activates Rotate.",
- },
- {
- id: "q3",
- type: MC,
- question: "Which key activates the Scale tool?",
- options: [
+        correctAnswer: 0,
+        explanation: "The tools sit on 1-2-3-4 in the order you use them: 1 Select, 2 Move, 3 Scale, 4 Rotate.",
+      },
+      {
+        id: "q3",
+        type: MC,
+        question: "You have built one wall and need three more. Which shortcut duplicates it?",
+        options: [
+          "Ctrl+S",
+          "Ctrl+Z",
+          "Ctrl+G",
+          "Ctrl+D",
+        ],
+        correctAnswer: 3,
+        explanation: "Ctrl+D duplicates the selection in place. Build one wall properly, then duplicate - it is faster and the copies keep the exact same size.",
+      },
+      {
+        id: "q4",
+        type: MC,
+        question: "Which key activates the Rotate tool?",
+        options: [
           "1",
-          "2",
           "4",
+          "2",
           "3",
         ],
- correctAnswer: 3,
- explanation: "Key 3 activates the Scale tool.",
- },
- {
- id: "q4",
- type: MC,
- question: "Which key activates the Rotate tool?",
- options: [
-          "1",
-          "4",
-          "2",
-          "3",
-        ],
- correctAnswer: 1,
- explanation: "Key 4 activates the Rotate tool.",
- },
- {
- id: "q5",
- type: MC,
- question: "What does the F key do after you select an object?",
- options: [
-          "Focuses the camera on the object",
+        correctAnswer: 1,
+        explanation: "4 is Rotate. You need it for the side walls, which start facing the wrong way after you duplicate them.",
+      },
+      {
+        id: "q5",
+        type: MC,
+        question: "What does the F key do after you select an object?",
+        options: [
+          "Flies the camera to the object",
           "Deletes the object",
           "Starts Play mode",
           "Combines objects with Union",
         ],
- correctAnswer: 0,
- explanation: "Pressing F moves the camera to the selected object.",
- },
- {
- id: "q6",
- type: MC,
- question: "Which panel displays the hierarchy of every object in the game?",
- options: [
+        correctAnswer: 0,
+        explanation: "F frames the selection. Select something in Explorer, press F, and the camera goes to it - the fastest way to find anything in a big level.",
+      },
+      {
+        id: "q6",
+        type: MC,
+        question: "Which panel shows the hierarchy of every object in the game?",
+        options: [
           "Properties",
           "Toolbox",
           "Explorer",
           "Output",
         ],
- correctAnswer: 2,
- explanation: "Explorer contains the tree of every object in the level.",
- },
- {
- id: "q7",
- type: MC,
- question: "What does Anchored = true mean?",
- options: [
+        correctAnswer: 2,
+        explanation: "Explorer is the table of contents for your whole game. Properties shows the settings of whatever is selected in it.",
+      },
+      {
+        id: "q7",
+        type: MC,
+        question: "What does Anchored = true mean?",
+        options: [
           "The object becomes invisible",
           "The object is fixed in place and is not affected by gravity",
           "The object cannot be selected",
-          "The object becomes a negative shape",
+          "The object glows",
         ],
- correctAnswer: 1,
- explanation: "This property fixes the object in position during the game.",
- },
- {
- id: "q8",
- type: MC,
- question: "What is Snap to Grid used for?",
- options: [
-          "Playing sounds",
-          "Deleting Terrain",
-          "Publishing the game",
-          "Aligning objects precisely to the grid",
+        correctAnswer: 1,
+        explanation: "Roblox runs real physics. Anchored takes an object out of the simulation so it stays exactly where you put it - essential for anything structural.",
+      },
+      {
+        id: "q8",
+        type: MC,
+        question: "What does Negate do to a Part?",
+        options: [
+          "Deletes it permanently",
+          "Marks it as a cutter, so Union will subtract it from another object",
+          "Doubles its size",
+          "Makes it unmovable",
         ],
- correctAnswer: 3,
- explanation: "Snap to Grid helps prevent gaps between parts when you position them.",
- },
- {
- id: "q9",
- type: MC,
- question: "What is the correct process for cutting out a window?",
- options: [
-          "Apply Union, then apply Negate to the wall",
-          "Resize the wall with the Scale tool",
-          "Apply Negate to the cutout block, select it with the wall, then apply Union",
-          "Disable Anchored and start Play",
+        correctAnswer: 1,
+        explanation: "Negate flags a Part as negative space. It turns translucent red, and the next Union removes its volume from whatever it is merged with.",
+      },
+      {
+        id: "q9",
+        type: MC,
+        question: "Your Union ran, but the wall still looks solid. What is the most likely cause?",
+        options: [
+          "The cutter was thinner than the wall, or was never Negated",
+          "Snap to Grid was on",
+          "The wall was Anchored",
+          "Output was closed",
         ],
- correctAnswer: 2,
- explanation: "First apply Negate to the cutout block, then combine it with the wall using Union.",
- },
- {
- id: "q10",
- type: MC,
- question: "What does Negate do?",
- options: [
-          "Converts an object into a volume that will be subtracted from another shape",
-          "Changes the color to green",
-          "Saves the project",
-          "Creates a new Script",
+        correctAnswer: 0,
+        explanation: "A cutter has to be Negated first, and it has to be thicker than the wall so it pokes out both faces. Otherwise it hollows the middle and leaves a thin skin behind.",
+      },
+      {
+        id: "q10",
+        type: MC,
+        question: "How do you undo a Union that came out wrong?",
+        options: [
+          "You cannot - Union is permanent",
+          "Delete the whole model and rebuild it",
+          "Select it and press Separate",
+          "Set Anchored to false",
         ],
- correctAnswer: 0,
- explanation: "Negate converts a Part into negative space for a cutting operation.",
- },
- {
- id: "q11",
- type: MC,
- question: "When should you use Separate?",
- options: [
-          "Publishing the game",
-          "To control the camera",
-          "To create Terrain",
-          "To split objects after an incorrect Union",
+        correctAnswer: 2,
+        explanation: "Separate splits a Union back into its original parts. Nothing you do with CSG is a one-way door.",
+      },
+      {
+        id: "q11",
+        type: MC,
+        question: "Why should a doorway be at least 5 studs tall?",
+        options: [
+          "Union does not work below 5 studs",
+          "Because that is roughly the height of a Roblox character, and characters do not duck",
+          "Because Snap to Grid uses 5-stud steps",
+          "It does not matter",
         ],
- correctAnswer: 3,
- explanation: "Separate splits a combined model back into its original components.",
- },
- {
- id: "q12",
- type: MC,
- question: "Which keyboard shortcut duplicates an object?",
- options: [
-          "Ctrl+S",
-          "Ctrl+D",
-          "F5",
-          "Delete",
+        correctAnswer: 1,
+        explanation: "A standard character is about 5 studs tall. Anything shorter and they walk into the wall above the opening.",
+      },
+      {
+        id: "q12",
+        type: MC,
+        question: "What is Snap to Grid for?",
+        options: [
+          "Making objects transparent",
+          "Speeding up the camera",
+          "Snapping objects to fixed increments so they align without gaps",
+          "Saving the level automatically",
         ],
- correctAnswer: 1,
- explanation: "Ctrl+D quickly creates a copy of the selected object.",
- },
- {
- id: "q13",
- type: MC,
- question: "Which shape is best for creating a column?",
- options: [
-          "Block",
-          "Wedge",
+        correctAnswer: 2,
+        explanation: "Without Snap, parts land on fractional coordinates. It looks fine in the editor and shows up in-game as hairline cracks of daylight between the walls.",
+      },
+      {
+        id: "q13",
+        type: MC,
+        question: "What does Ctrl+G do in Explorer?",
+        options: [
+          "Groups the selected objects into a Model",
+          "Saves the game",
+          "Generates terrain",
+          "Applies a material",
+        ],
+        correctAnswer: 0,
+        explanation: "Ctrl+G groups a selection into a Model, so the whole house can be moved, copied, or scripted as one thing.",
+      },
+      {
+        id: "q14",
+        type: MC,
+        question: "Why save with File → Save to Roblox rather than only to your computer?",
+        options: [
+          "It runs faster",
+          "It stores the Place in your account so you can open it from any machine",
+          "It is the only way to use Union",
+          "It makes the level public",
+        ],
+        correctAnswer: 1,
+        explanation: "Saving to Roblox puts the Place in the cloud on your account. A local-only save is lost with the machine it lives on.",
+      },
+      {
+        id: "q15",
+        type: MC,
+        question: "Which Part type is the right choice for a sloped roof or a ramp?",
+        options: [
+          "Sphere",
           "Cylinder",
-          "CornerWedge",
+          "Wedge",
+          "Block",
         ],
- correctAnswer: 2,
- explanation: "A Cylinder has the right shape for columns and pipes.",
- },
- {
- id: "q14",
- type: MC,
- question: "How do you save a project to the Roblox cloud?",
- options: [
-          "Take a screenshot",
-          "Edit → Copy",
-          "View → Output",
-          "File → Save to Roblox",
-        ],
- correctAnswer: 3,
- explanation: "Save to Roblox stores the current level in your account.",
- },
- {
- id: "q15",
- type: MC,
- question: "What are the requirements for the final task in lesson 1.1?",
- options: [
-          "A grouped House_01 model with cutout windows and a saved project",
-          "A completely empty level",
-          "Creating a lighting Script",
-          "Opening the Toolbox panel",
-        ],
- correctAnswer: 0,
- explanation: "The task requires you to build a frame with openings, group it, and save it.",
- },
- ],
- },
+        correctAnswer: 2,
+        explanation: "A Wedge is a block with one sloped face - exactly what a roof pitch or a walkable ramp needs.",
+      },
+    ],
+  },
 }
 
 export const enLesson12 = {
- lessonId: "lesson-roblox-1-2",
- moduleId: "module-01",
- order: 2,
- title: "1.2 - Terrain Editor",
- theoryMinutes: 35,
- quizMinutes: 15,
- estimatedTime: 60,
- learningObjectives: [
- "Distinguish Terrain from Parts and understand when to use each one.",
- "Open Terrain Editor and use the Generate and Edit tabs.",
- "Shape the landscape with Draw, Sculpt, Smooth, and Flatten.",
- "Paint the landscape with Grass, Sand, and Rock materials, then add Water.",
- "Place the House_01 model on an island, test the level, and save it.",
- ],
- theory: {
- sections: [
- {
- title: "Lesson task: build an island around the house",
- content: `In the previous lesson, you built a house. In this lesson, you will create a complete island around it with hills, water, grass, and sand. You will use the Terrain tools for this work.
+  lessonId: "lesson-roblox-1-2",
+  moduleId: "module-01",
+  order: 2,
+  title: "1.2 - Terrain Editor",
+  theoryMinutes: 35,
+  quizMinutes: 15,
+  estimatedTime: 60,
+  learningObjectives: [
+    "Explain when to reach for Terrain and when to reach for Parts.",
+    "Navigate the Terrain Editor's Create and Edit tabs without guessing.",
+    "Shape land with Draw, Sculpt, Smooth, and Flatten, in that order.",
+    "Paint a believable shoreline with a Grass → Sand → Water transition.",
+    "Set your House_01 down on an island, playtest the walk, and save it.",
+  ],
+  theory: {
+    sections: [
+      {
+        title: "Today's mission (lesson 2 of 92)",
+        content: `Your house from 1.1 is sitting on an infinite grey plane. It looks like a house in a void, because that is exactly what it is.
 
-**Complete these items by the end of the lesson:**
-- Create an island with land and water.
-- Create at least one hill and smooth the shoreline with Smooth.
-- Use at least 3 materials, such as Grass, Sand, and Water.
-- Place the house from the previous lesson on a flat area.
-- Save the level as \`Lesson 1.2 - Island\`.
+Today you give it a world: an island with a hill behind it, water in front, and a sand beach in between. And you build all of it with a completely different toolset from yesterday's - one where you sculpt the ground like clay instead of stacking blocks.
 
-Open your saved level from lesson 1.1 (\`Lesson 1.1 - House_01\`). Keep Roblox Studio open and repeat each action as you read.`,
- },
- {
- title: "The difference between Parts and Terrain",
- content: `| Characteristic | **Parts** | **Terrain** |
-|---|-----------|-------------|
-| What it is | Separate blocks such as walls, roofs, and buttons. | The continuous ground of the level. |
-| What it is used for | Buildings, mechanisms, and small objects. | Islands, lakes, beaches, mountains, and paths. |
-| How to edit it | Move, Scale, Rotate, Union. | **Terrain Editor**: Generate, Sculpt, Paint. |
-| How it appears in Explorer | Many objects with individual names. | One \`Terrain\` object in the Workspace Folder. |
+| After 1.1 | Result of 1.2 |
+|---|---|
+| A house on a flat grey plane | A house on an island you shaped |
+| Parts are the only thing you can build with | Terrain: hills, water, beaches, cliffs |
+| The level has no sense of place | Somewhere a player would want to explore |
 
-**Common mistakes:**
-1. Creating large natural features, such as an ocean, from basic blocks. This reduces performance. Use Water in Terrain Editor.
-2. Replacing interactive objects, such as doors or buttons, with Terrain. Interactive elements must use Parts.
+**Your finish line for today:**
+- An island with land and water.
+- At least one hill, with a shoreline smoothed by Smooth.
+- At least 3 materials, including the Grass → Sand → Water transition.
+- The house standing on flat ground you levelled with Flatten.
+- Saved as \`Lesson 1.2 - Island\`.
 
-**Do this now:** find \`Workspace → Terrain\` in Explorer. Select it and review its properties. Do not delete it.`,
- },
- {
- title: "How Terrain Editor works",
- content: `To start working with Terrain:
-1. Open the **Home** tab.
-2. Select **Terrain**, which has a mountain icon. You can also open it through **Window → 3D**.
-3. A panel with two main tabs will appear on the left.
+**Do now (2 min):** open \`Lesson 1.1 - House_01\` from your account. Studio open, this page beside it, as always.`,
+      },
+      {
+        title: "Two completely different building systems",
+        content: `Roblox gives you two ways to make solid things, and they are not interchangeable. Knowing which is which saves you from the classic beginner project: an ocean built out of 400 blue blocks that drops the frame rate to single digits.
 
-Main tabs:
-- **Create**: Generate Terrain automatically with Generate, or import a heightmap with Import.
-- **Edit**: Edit Terrain manually with Select, Transform, Draw, Sculpt, Smooth, Paint, Flatten, and other tools.
+| | **Parts** | **Terrain** |
+|---|---|---|
+| What it is | Individual objects - walls, roofs, buttons | One continuous mass of ground |
+| Best for | Buildings, machines, anything a script touches | Islands, lakes, beaches, mountains, paths |
+| How you edit it | Move, Scale, Rotate, Union | Terrain Editor: Generate, Sculpt, Paint |
+| In Explorer | Dozens of named objects | A single \`Terrain\` object under Workspace |
 
-Most Edit tools include brush settings: **Brush Shape** (sphere, box, cylinder), **Brush Size**, and **Strength** for a softer effect. A large brush is useful for the island's overall shape, while a small brush works well for paths and details near the house. Important: Terrain tools do not work in Play mode, so select Stop before editing.
+The rule of thumb: **if a player interacts with it, it is a Part. If a player walks across it, it is Terrain.**
 
-**Do this now:** open Terrain Editor and review the Create and Edit tabs. Do not select any tools yet.`,
- },
- {
- title: "Generate: creating an island quickly",
- content: `1. Open the **Create** tab in Terrain Editor.
-2. Select **Generate**.
-3. Choose a size, such as 512 × 128 × 512.
-4. Choose biomes to generate, such as **Plains** or **Dunes**, along with **Water**. Configure **Blending** and **Biome Size**.
-5. Select **Generate** and wait for Studio to create the map. If the result does not work for your level, press Ctrl+Z and try again with different settings or change the Seed.
+Two mistakes this rule prevents:
+1. Building nature out of blocks. A block ocean is slow and it looks like blocks. Terrain Water is one operation and it moves.
+2. Building interactive things out of Terrain. You cannot attach a script to a patch of ground. Doors, buttons, and platforms stay Parts.
 
-**Important:** Generation may change the ground level, leaving your house underground or high in the air. Keep the house. Find it in Explorer, focus the camera on it with F, level the ground below it with Flatten, and use Move to place it correctly.
+**Do now (2 min):** find \`Workspace → Terrain\` in Explorer. Click it, look at its properties. Do not delete it - it is the object all your landscape will live inside.`,
+      },
+      {
+        title: "Opening the Terrain Editor",
+        content: `1. **Home** tab.
+2. Click **Terrain** - the little mountain icon. (Also under **Window → 3D**.)
+3. A panel appears on the left with two tabs.
 
-**Do this now:** generate an island. Fly around it with the camera and find a flat location near the water for the house. Save the project after generation.`,
- },
- {
- title: "Adding volume with Draw and Sculpt (Add mode)",
- content: `The **Edit** tab has two tools for raising the ground:
+**Create** is the automatic half: **Generate** builds you a whole landscape from settings, and **Import** turns a heightmap image into terrain.
 
-- **Draw (Add mode)**: Adds volume quickly and noticeably. Use it to create rough forms such as hills, cliffs, and small islands. It works quickly but produces sharp edges.
-- **Sculpt (Add mode)**: Builds up the ground more gently without sharp peaks. Its **Strength** setting controls the effect. Lower values add volume more gradually. Use it to refine hills after Draw.
+**Edit** is the hand-tool half: Select, Transform, Draw, Sculpt, Smooth, Paint, Flatten and friends.
 
-**Tip:** First create the mountain's general shape with a large Draw (Add) brush. Then refine it with Sculpt (Add), using a smaller brush and a Strength of about 0.3-0.5.
+Most Edit tools share three settings, and they are worth understanding before you start clicking:
+- **Brush Shape** - sphere, box, or cylinder.
+- **Brush Size** - big for landmasses, small for the path to your front door.
+- **Strength** - how hard each stroke bites. Low strength and several passes always beats one heavy stroke.
 
-Avoid making hills too steep, or the character will not be able to climb them during the game. Check the hill's profile from the side as you work.
+Think of it like a real brush: you block in the big shapes with the widest brush you own, then switch to something fine for detail. Trying to sculpt a whole island with a small brush is an hour you will not get back.
 
-**Do this now:** use Draw (Add) to create the general shape of a hill near the house. Then use Sculpt (Add) with a smaller brush to smooth it. Inspect it from the side.`,
- },
- {
- title: "Excavating with Draw and Sculpt (Subtract mode)",
- content: `To remove ground, use Draw and Sculpt with **Subtract** selected in the toolbar. You can also hold **Ctrl** while drawing.
+One gotcha: **Terrain tools do nothing in Play mode.** If a tool seems dead, check you are not still running the game. Press Stop.
 
-- **Draw (Subtract)**: Digs clearly defined holes. Use it to create depressions for lakes, bays, or cliffs quickly. It produces sharp edges.
-- **Sculpt (Subtract)**: Removes the surface more gently. Use it to make shorelines look more natural or reduce a mountain peak that is too sharp. The **Strength** setting controls how much material is removed.
+**Do now (3 min):** open Terrain Editor and click through both tabs. Do not use anything yet - just see what is there.`,
+      },
+      {
+        title: "Generate: an island in ten seconds",
+        content: `You could sculpt an island from nothing. You should not, on your first try. Generate gives you a landscape with realistic noise and variation in it - the kind of irregularity that is genuinely hard to draw by hand - and you edit from there.
 
-**Tip:** First dig a hole with Draw (Subtract), then apply Sculpt (Subtract) around the edges at low Strength to make them look more natural.
+1. **Create** tab → **Generate**.
+2. Size: 512 × 128 × 512 is a good island scale.
+3. Pick biomes - **Plains** or **Dunes** are easy to work with - and tick **Water**. Adjust **Blending** and **Biome Size** if you want.
+4. Hit **Generate** and wait.
 
-To create a beach:
-1. Dig a depression for the water with Draw (Subtract).
-2. Leave a gently sloped strip of land between the water and grass. This will become the beach.
-3. Later, paint this strip with the Sand material.
+Do not like it? **Ctrl+Z**, change the **Seed**, generate again. The seed is just a number that decides the random layout, so a new seed is a whole new island for free. Try three or four before you settle.
 
-Do not dig directly next to the house foundation until you have leveled the area beneath it.
+**Fair warning:** generation replaces the ground under everything, so your house will end up either buried or floating in mid-air. This is normal and it is not a disaster. Do not delete the house. Find it in Explorer, press **F** to fly to it, and deal with it in the next steps.
 
-**Do this now:** use Draw (Subtract) to dig an area for a lake or bay. Smooth the shoreline with Sculpt (Subtract), leaving a strip of land for the beach.`,
- },
- {
- title: "Leveling and smoothing with Smooth and Flatten",
- content: `After using the previous tools, the ground often remains uneven with sharp edges.
+**Do now (6 min):** generate an island. Fly around it. Find a flattish spot near the water where the house would look good. Save the file.`,
+      },
+      {
+        title: "Raising ground: Draw and Sculpt in Add mode",
+        content: `Two tools add ground, and they have different personalities.
 
-- **Smooth**: Softens sharp edges without making them completely flat. Apply it to shorelines near the water and to hill slopes. You can also activate it quickly by holding **Shift** while using Draw or Sculpt.
-- **Flatten**: Levels a surface into a flat area. Use it to create a level yard beneath the house or a flat path. It has three **Flatten Mode** options: **Erode to Flat** removes ground above the plane, **Grow to Flat** adds ground below the plane, and **Flatten All** levels in both directions at once.
+- **Draw (Add)** is the blunt one. Big, fast, obvious. It builds volume in a hurry and leaves hard edges. Perfect for "there is a hill here now".
+- **Sculpt (Add)** is the gentle one. It swells the ground gradually, and its **Strength** setting controls how gradually. Perfect for turning a lumpy blob into something that looks like landscape.
 
-**Do this now:** level an area for the house with Flatten and place the house on it. Then use Smooth to soften the shoreline of your body of water.`,
- },
- {
- title: "Paint: applying materials",
- content: `The **Edit** tab includes **Paint**, which changes the ground texture. Choose a material and apply it with the brush.
+The workflow that works: **Draw big, Sculpt small.** Rough the hill in with a large Draw brush in twenty seconds, then go over it with Sculpt at Strength 0.3-0.5 and a smaller brush until the silhouette looks right.
 
-Paint supports two **Material Mode** options:
-- **Paint**: Applies the selected material over the existing material.
-- **Replace**: Replaces one material with another throughout an area. This is useful when you want to replace all the grass with sand in a specific zone, for example.
+Watch the steepness. A slope steeper than roughly 45° is a wall as far as your character is concerned - they will run at it and slide back down. Check the profile from the side, not from above, because from above every hill looks perfectly climbable.
 
-Main island materials:
-- **Grass**: Use for most of the island and the yard.
-- **Sand**: Use for the shoreline next to the water.
-- **Rock**: Use for cliffs and steep slopes.
-- **Water**: Use to fill excavated low areas for lakes or the ocean.
+**Do now (7 min):** Draw (Add) a hill near the house. Then Sculpt (Add) over it with a smaller, softer brush. Fly to ground level and look at it from the side.`,
+      },
+      {
+        title: "Removing ground: Draw and Sculpt in Subtract mode",
+        content: `Same two tools, opposite direction. Switch to **Subtract** in the toolbar, or just hold **Ctrl** while you drag.
 
-A natural shoreline has layers: grass transitions to sand, and sand transitions to water.
+- **Draw (Subtract)** digs decisively. Lakes, bays, quarry walls, cliff faces.
+- **Sculpt (Subtract)** shaves. Use it to soften a shoreline or knock the point off a peak that came out too sharp.
 
-**Important:** Water wave animation may not be visible in the editor. Run Play mode to check how the water looks.
+**How to get a beach that reads as a beach:**
+1. Draw (Subtract) a basin where the water will sit.
+2. Leave a gently sloping strip of land between the basin and the grass. That strip is your beach - and the *slope* is what sells it. A vertical drop from grass to water is a cliff, not a coast.
+3. Paint that strip Sand later.
 
-**Do this now:** paint the island with Grass, Sand, and Water. Make sure there is a strip of sand between the grass and water.`,
- },
- {
- title: "Testing and saving",
- content: `1. Check that the house stands on a flat area created with Flatten and that its Parts are Anchored.
-2. Create a short path from the door to the beach by painting it with sand or soil.
-3. Select **Play (F5)** and move your character from the house to the water, then up the hill.
-4. Confirm that the character does not get stuck, the water remains in place, and the house does not float above the ground.
-5. Save your work with **File → Save to Roblox** using the name \`Lesson 1.2 - Island\`.
+Nature almost never makes a sharp edge. If your island's outline looks like it was cut with scissors, it will read as fake no matter how good the materials are. Sculpt (Subtract) at low strength around the water line fixes this in about a minute.
 
-**Do this now:** run a Play test of the route. If the character cannot climb the hill, return to Smooth and make the slope more gradual.`,
- },
- {
- title: "Recommended workflow",
- content: `For an efficient Terrain Editor workflow, use this sequence:
+One caution: leave the ground immediately under the house alone for now. You will level it properly with Flatten in the next step, and digging next to it first just makes that harder.
 
-1. **Generate**: Create the initial land and water masses. Save the project.
-2. **Shape the terrain**: Use a large brush with Draw/Sculpt to create hills and bodies of water.
-3. **Level and smooth**: Use Flatten for building sites and Smooth for shores and slopes.
-4. **Place objects**: Move the house model onto the leveled area.
-5. **Add detail (Paint)**: Apply materials (Grass, Sand, Rock, Water).
-6. **Playtest**: Check that the environment is navigable.
-7. **Save the final version**.
+**Do now (7 min):** dig a basin for a lake or a bay. Soften its edge with Sculpt (Subtract) at low Strength, leaving a sloped strip for the beach.`,
+      },
+      {
+        title: "Smooth and Flatten: making it liveable",
+        content: `After Draw and Sculpt, your island has character and also a lot of jagged nonsense. These two tools clean it up.
 
-Following this structure prevents duplicate work, such as applying materials before the terrain has been fully smoothed.`,
- },
- {
- title: "Lesson 1.2 review criteria",
- content: `**Project requirements:**
-- [ ] The landscape is shaped with Terrain Editor, not a flat Baseplate.
-- [ ] The terrain includes raised areas (hills) and depressions (bodies of water).
-- [ ] Shores and slopes are smoothed with the Smooth tool.
-- [ ] At least 3 materials are used, including a Grass → Sand → Water transition.
-- [ ] The house is placed on a leveled area made with Flatten.
-- [ ] A Play test confirms that the character can navigate the route.
-- [ ] The project is saved as \`Lesson 1.2 - Island\`.
+**Smooth** rounds off sharp edges without flattening them. Use it on every shoreline and every slope before you paint anything. Shortcut: hold **Shift** while using Draw or Sculpt and it smooths instead.
 
-| Level | Criteria |
-|--------|-------------------------------|
-| **Incomplete** | Water or terrain is missing. The house is placed incorrectly, either floating or underground. The project is not saved. |
-| **Complete** | Land, water, and a hill are present, and at least 3 materials are used. The house is placed on level ground. |
-| **Good** | The shoreline looks realistic, Smooth has been used, and the slopes and path to the house are navigable. |
-| **Excellent** | The landscape has a complex, intentional shape, such as several bodies of water or a bay. |`,
- }
- ],
- },
- commonMistakes: [
- {
- mistake: "Nothing changed after using Generate, or Studio stopped responding.",
- explanation: "The application is still processing the map.",
- correctApproach: "Wait 10-20 seconds. If nothing happens, clear the Terrain and try generating it again.",
- },
- {
- mistake: "The house sank underground or is floating high above the ground.",
- explanation: "The generator changed the overall ground elevation in the level.",
- correctApproach: "Do not delete the house. Level the area beneath it with Flatten, then lower or raise the house with the Move tool.",
- },
- {
- mistake: "The shores and mountains have sharp, saw-like edges.",
- explanation: "Smooth was not used after shaping the terrain.",
- correctApproach: "Apply Smooth to every steep slope and shore before painting them.",
- },
- {
- mistake: "The beach does not look natural.",
- explanation: "The grass meets the water directly, with no transition area.",
- correctApproach: "Leave a strip of land between them and paint it with the Sand material.",
- },
- {
- mistake: "The water looks like plain blue paint with no waves.",
- explanation: "Water animation usually does not run in edit mode.",
- correctApproach: "Start Play mode (F5) to see the water correctly.",
- },
- ],
- summary:
- "You can now work with Terrain Editor. You generated a basic island, shaped hills and bodies of water with Draw and Sculpt, leveled a site for the house, and painted the landscape with materials. The house now stands in a complete level.",
- practiceTask: {
- title: "Practice: Create an island around the house",
- difficulty: "beginner",
- description: `**Task:** Create an island with a hill, water, and a beach around the house from the previous lesson.
+**Flatten** makes a surface genuinely level - which is what a building needs. It has three modes worth knowing:
+- **Erode to Flat** - cuts down anything above the plane.
+- **Grow to Flat** - fills up anything below it.
+- **Flatten All** - does both at once.
 
-### Part A: Basic shape
-1. Open Terrain Editor and generate a biome, such as Plains or Dunes, together with Water.
-2. Find your house. Use Flatten to create a level area beneath it.
-3. Place the house on this site and check Anchored.
+For the house pad, Flatten All is usually what you want: it fills the dips and shaves the bumps in one pass. A house on unlevel ground either floats at one corner or sinks at another, and there is no fixing that by nudging the house.
 
-### Part B: Terrain
-1. Use Draw (Add) or Sculpt (Add) to make one nearby hill.
-2. Use Draw (Subtract) to dig a depression for a lake or sea. Leave room for a beach.
-3. Apply Smooth to the shores and the hill slopes.
+**Do now (6 min):** Flatten a pad for the house and set the house down on it with the Move tool. Then Smooth your shoreline.`,
+      },
+      {
+        title: "Paint: where it stops looking like a prototype",
+        content: `**Paint** lives on the Edit tab. Pick a material, brush it on. This is the step where a grey-brown lump becomes a place.
 
-### Part C: Painting and testing
-1. Paint the main land area with Grass.
-2. Paint the shore near the water with Sand.
-3. Fill the depression with Water.
-4. Start Play and try walking from the house to the water.
-5. Save the level through **File → Save to Roblox** as \`Lesson 1.2 - Island\`.
-6. Mark the practice as complete.`,
- hints: [
- "Use a large brush for the overall shape and a small brush for details near the house.",
- "Smooth the shores before painting so they look natural.",
- "Always check the water in Play mode.",
- ],
- optionalChallenge:
- "Create a rocky cliff on one side of the water using the Rock material, and a gently sloping sandy beach on the other side.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 15,
- questions: [
- {
- id: "q1",
- type: MC,
- question: "What is Terrain best used for?",
- options: [
+Two **Material Modes**:
+- **Paint** - lays the new material over whatever is there.
+- **Replace** - swaps one specific material for another across an area. Handy when you decide the whole northern half should be sand instead of grass.
+
+The four materials that do most of the work:
+
+| Material | Where it goes |
+|---|---|
+| **Grass** | Most of the island, and the yard |
+| **Sand** | The strip between grass and water |
+| **Rock** | Cliffs, steep slopes, anything too steep to walk |
+| **Water** | Fills the basin you dug |
+
+**The one rule that makes shorelines believable: never let grass touch water.** Real coasts go grass → sand → water, and your eye knows it even if you have never thought about it. A band of sand two or three studs wide is enough.
+
+Rock has a second job worth knowing: painting a slope with Rock tells the player *"do not bother climbing this"* without a single sign or barrier. Materials are level design, not just decoration.
+
+**Heads up:** water in the editor often sits perfectly still and looks like blue paint. It animates in Play mode. Do not spend ten minutes trying to fix a bug that is not there.
+
+**Do now (7 min):** paint Grass, then a Sand band along the shore, then fill the basin with Water. Press F5 to see the water actually move.`,
+      },
+      {
+        title: "Playtest the walk",
+        content: `A level is not finished when it looks right. It is finished when it *walks* right.
+
+1. Confirm the house sits on the Flatten pad and its Parts are still Anchored.
+2. Paint a short path of sand or ground from the front door toward the beach. Players follow visual paths without being told to - it is one of the cheapest bits of level design there is.
+3. **F5.** Walk from the house to the water, then turn around and climb the hill.
+4. Ask three questions: Did you get stuck anywhere? Did the water stay put? Is the house sitting on the ground or hovering above it?
+5. **File → Save to Roblox** → \`Lesson 1.2 - Island\`.
+
+If the hill defeated your character, that is useful information, not a failure. Go back to Smooth, take the slope down, test again. Adjusting a level after playing it is the actual job - you will be doing this in every module from here to 12.
+
+**Do now (5 min):** run the walk. Fix whatever the walk tells you to fix.`,
+      },
+      {
+        title: "The order that saves you time",
+        content: `Terrain work punishes doing things out of order. Paint before you smooth and you will smooth away your paint. Place the house before you flatten and you will place it twice.
+
+1. **Generate** the base landmass and water. Save.
+2. **Shape** with large Draw / Sculpt brushes - hills and basins.
+3. **Level and smooth** - Flatten for building pads, Smooth for shores and slopes.
+4. **Place objects** - move House_01 onto the pad.
+5. **Paint** - materials last.
+6. **Playtest** - walk it.
+7. **Save** the final version.
+
+Big shapes first, fine detail last. This is the same order a painter, a sculptor, and a level designer all work in, and it is not a coincidence.`,
+      },
+      {
+        title: "Check your work before you move on",
+        content: `**Requirements:**
+- [ ] The landscape is genuinely shaped, not a flat Baseplate with a colour on it.
+- [ ] There is at least one raised area (hill) and one lowered area (water).
+- [ ] Shores and slopes have been Smoothed.
+- [ ] At least 3 materials, including a Grass → Sand → Water transition.
+- [ ] The house stands on a pad levelled with Flatten.
+- [ ] You have walked the route in Play mode and it works.
+- [ ] Saved as \`Lesson 1.2 - Island\`.
+
+| Level | What it looks like |
+|---|---|
+| **Not done yet** | No water or no shaped terrain. The house floats or is buried. Not saved. |
+| **Done** | Land, water, a hill, three materials, house on level ground. |
+| **Good** | The shoreline reads as natural, Smooth has been used properly, and every slope is walkable. |
+| **Excellent** | The island has a deliberate shape - a bay, a second islet, a rocky headland - and you made a choice about where the player's eye goes. |`,
+      },
+    ],
+  },
+  commonMistakes: [
+    {
+      mistake: "You clicked Generate and nothing happened, or Studio froze",
+      explanation: "Generating a 512×512 map is real work. Studio goes quiet while it thinks.",
+      correctApproach: "Give it 10-20 seconds. If it truly did nothing, clear the Terrain and generate again - and consider a smaller map size.",
+    },
+    {
+      mistake: "The house is buried underground or floating in the sky after Generate",
+      explanation: "Generate replaces the ground everywhere, including under objects you already placed. Completely expected.",
+      correctApproach: "Do not delete the house. Select it in Explorer, press F to fly to it, Flatten a pad at the right height, and Move the house onto it.",
+    },
+    {
+      mistake: "Hills and shores look like torn paper - all jagged edges",
+      explanation: "Draw and Sculpt leave hard edges. That is what Smooth is for, and it got skipped.",
+      correctApproach: "Run Smooth over every slope and shoreline before you paint. Or hold Shift while sculpting to smooth as you go.",
+    },
+    {
+      mistake: "The beach does not look like a beach",
+      explanation: "Grass is touching water with nothing in between, so the eye reads it as a cliff edge.",
+      correctApproach: "Leave a sloped strip of land between grass and water and paint it Sand. Two or three studs wide is plenty.",
+    },
+    {
+      mistake: "The water is a flat blue sheet with no waves",
+      explanation: "Water animation usually does not run in edit mode.",
+      correctApproach: "Press F5. It moves in Play mode. Nothing is broken.",
+    },
+    {
+      mistake: "The character cannot climb your hill",
+      explanation: "The slope is steeper than a character can walk - roughly 45° is the limit.",
+      correctApproach: "Smooth the slope down, or accept it and paint it Rock so the player reads it as scenery rather than a route.",
+    },
+    {
+      mistake: "A Terrain tool does nothing no matter where you click",
+      explanation: "The game is still running - Terrain tools are disabled in Play mode.",
+      correctApproach: "Press Stop, then try again.",
+    },
+  ],
+  summary:
+    "You met Roblox's second building system. You generated an island, pushed the ground around with Draw and Sculpt, levelled a pad with Flatten, softened it with Smooth, and painted a shoreline that goes grass → sand → water the way a real one does. Your house from 1.1 now stands somewhere, and you walked the route yourself to prove it works.",
+  practiceTask: {
+    title: "Practice: An island around the house",
+    difficulty: "beginner",
+    description: `**The build:** an island with a hill, water, and a beach, with House_01 standing on it.
+
+Follow the order. Terrain punishes doing things out of sequence more than any other part of Studio.
+
+### Part A: Base shape
+1. Terrain Editor → Create → **Generate**. Pick a biome (Plains or Dunes) and tick **Water**.
+2. Find your house - it will be buried or floating. Select it in Explorer, press **F**.
+3. **Flatten** a level pad for it, then **Move** the house onto the pad. Check \`Anchored\` is still true.
+
+### Part B: Shaping
+1. **Draw (Add)** one hill near the house, then refine it with **Sculpt (Add)** at low Strength.
+2. **Draw (Subtract)** a basin for a lake or bay. Leave a sloped strip for the beach.
+3. **Smooth** every shoreline and slope.
+
+### Part C: Paint and test
+1. Paint the main landmass **Grass**.
+2. Paint a band of **Sand** between grass and water.
+3. Fill the basin with **Water**.
+4. **F5.** Walk from the front door to the water, then up the hill. Fix anything that stops you.
+5. **File → Save to Roblox** as \`Lesson 1.2 - Island\`.
+6. Mark the practice complete here.`,
+    hints: [
+      "Big brush for landmasses, small brush for the path to the front door. Switching sizes is most of the skill.",
+      "Smooth before you Paint. Smoothing afterwards will drag your materials around.",
+      "Low Strength and three passes beats high Strength and one. Terrain is much easier to add to than to repair.",
+      "Water looks dead in the editor and alive in Play mode. Check with F5 before you assume it is broken.",
+      "Do not like the island Generate gave you? Change the Seed and roll again. It costs nothing.",
+    ],
+    optionalChallenge:
+      "Make the two sides of your water tell different stories: a Rock cliff dropping straight into the sea on one side, and a long shallow Sand beach on the other. Then add a narrow sand path winding from the beach up to the front door - and playtest whether a first-time player would follow it without being told to.",
+  },
+  quiz: {
+    passingScore: 70,
+    timeLimit: 15,
+    questions: [
+      {
+        id: "q1",
+        type: MC,
+        question: "What is Terrain best used for?",
+        options: [
           "Creating interface buttons",
           "Writing scripts",
-          "Creating natural landscapes such as hills, beaches, and lakes",
+          "Natural landscape - hills, beaches, lakes, cliffs",
           "Adding sounds",
         ],
- correctAnswer: 2,
- explanation: "Terrain is used to create land and natural environments, while Parts are used for buildings.",
- },
- {
- id: "q2",
- type: MC,
- question: "How is Terrain different from regular blocks (Parts)?",
- options: [
-          "Terrain is continuous ground, while a Part is an individual building block",
+        correctAnswer: 2,
+        explanation: "Terrain is for the ground a player walks across. Anything a player interacts with, or a script touches, stays a Part.",
+      },
+      {
+        id: "q2",
+        type: MC,
+        question: "How is Terrain different from Parts?",
+        options: [
+          "Terrain is one continuous mass of ground; a Part is an individual object",
           "Terrain cannot be saved",
           "Terrain always glows",
           "Terrain is visible only in Play mode",
         ],
- correctAnswer: 0,
- explanation: "Terrain forms a continuous world landscape, while Parts are individual construction elements.",
- },
- {
- id: "q3",
- type: MC,
- question: "Which tool automatically creates terrain from selected settings?",
- options: [
+        correctAnswer: 0,
+        explanation: "In Explorer, all your landscape is a single Terrain object, while Parts appear as dozens of separately named things.",
+      },
+      {
+        id: "q3",
+        type: MC,
+        question: "Which tool builds a whole landscape automatically from settings?",
+        options: [
           "Paint",
           "Properties",
           "Toolbox",
           "Generate",
         ],
- correctAnswer: 3,
- explanation: "The Generate tool on the Create tab creates a map using the selected settings.",
- },
- {
- id: "q4",
- type: MC,
- question: "What does the Draw tool do in Add mode?",
- options: [
+        correctAnswer: 3,
+        explanation: "Generate, on the Create tab, builds terrain with realistic natural variation in it - the kind that is genuinely hard to sculpt by hand.",
+      },
+      {
+        id: "q4",
+        type: MC,
+        question: "What does Draw do in Add mode?",
+        options: [
           "Deletes the level",
-          "Raises and adds terrain",
+          "Builds terrain volume up, quickly and with hard edges",
           "Paints the ground with sand",
           "Combines objects with Union",
         ],
- correctAnswer: 1,
- explanation: "Draw in Add mode quickly builds terrain volume to create hills and rough shapes.",
- },
- {
- id: "q5",
- type: MC,
- question: "What is the difference between Draw and Sculpt?",
- options: [
-           "Draw removes water",
-           "Draw works only in Play mode",
-           "Draw creates a script",
-           "Sculpt raises terrain more gently and smoothly",
+        correctAnswer: 1,
+        explanation: "Draw (Add) is the blunt instrument - it is how you rough in a hill in twenty seconds before refining it.",
+      },
+      {
+        id: "q5",
+        type: MC,
+        question: "What is the practical difference between Draw and Sculpt?",
+        options: [
+          "Draw removes water",
+          "Draw works only in Play mode",
+          "Draw creates a script",
+          "Draw is fast and hard-edged; Sculpt builds up gradually and smoothly",
         ],
- correctAnswer: 3,
- explanation: "Sculpt builds terrain more smoothly than the sharper Draw tool.",
- },
- {
- id: "q6",
- type: MC,
- question: "What are the Subtract modes in Draw and Sculpt used for?",
- options: [
+        correctAnswer: 3,
+        explanation: "The workflow is Draw big, Sculpt small: rough the shape in with Draw, then refine the silhouette with Sculpt at low Strength.",
+      },
+      {
+        id: "q6",
+        type: MC,
+        question: "What is Subtract mode for?",
+        options: [
           "Saving the game",
-          "Cutting holes and lakes and removing terrain",
+          "Digging - lakes, bays, cliffs, and removing terrain",
           "Grouping models",
           "Opening the Output panel",
         ],
- correctAnswer: 1,
- explanation: "Draw (Subtract) cuts clearly into the terrain, while Sculpt (Subtract) removes the surface more gently.",
- },
- {
- id: "q7",
- type: MC,
- question: "What does the Smooth tool do?",
- options: [
-          "Smooths sharp terrain edges",
+        correctAnswer: 1,
+        explanation: "Draw (Subtract) digs decisively; Sculpt (Subtract) shaves gently. You can also just hold Ctrl while dragging.",
+      },
+      {
+        id: "q7",
+        type: MC,
+        question: "What does Smooth do?",
+        options: [
+          "Rounds off sharp terrain edges",
           "Makes blocks transparent",
           "Enables Anchored",
           "Changes the brush size",
         ],
- correctAnswer: 0,
- explanation: "Smooth softens steep slopes and shores after other tools have been used.",
- },
- {
- id: "q8",
- type: MC,
- question: "When is the Flatten tool most commonly used?",
- options: [
+        correctAnswer: 0,
+        explanation: "Smooth softens the jagged edges Draw and Sculpt leave behind. Nature rarely makes a sharp edge, and your eye notices when a level does.",
+      },
+      {
+        id: "q8",
+        type: MC,
+        question: "When do you reach for Flatten?",
+        options: [
           "Creating buttons",
           "Cutting windows",
-          "Leveling a site for construction",
-          "Changing a wall color",
+          "Levelling a pad so a building can sit on it properly",
+          "Changing a wall colour",
         ],
- correctAnswer: 2,
- explanation: "Flatten makes a surface completely level, which is ideal for placing buildings.",
- },
- {
- id: "q9",
- type: MC,
- question: "Which sequence is the best workflow for terrain?",
- options: [
+        correctAnswer: 2,
+        explanation: "A house on unlevel ground floats at one corner and sinks at another, and moving the house will not fix it. Level the ground instead.",
+      },
+      {
+        id: "q9",
+        type: MC,
+        question: "Which order of operations will save you the most rework?",
+        options: [
           "Paint → Generate → Smooth",
-          "Generate → Add/subtract mountains and holes → Smooth → Paint",
+          "Generate → shape hills and basins → Smooth and Flatten → Paint",
           "Play mode → Subtract → Generate",
           "Union walls → Paint → Generate",
         ],
- correctAnswer: 1,
- explanation: "First define the shape, then level and smooth it, and apply paint last.",
- },
- {
- id: "q10",
- type: MC,
- question: "Where is the Sand material most appropriate?",
- options: [
+        correctAnswer: 1,
+        explanation: "Big shapes first, fine detail last. Painting before smoothing means smoothing your paint away and doing it twice.",
+      },
+      {
+        id: "q10",
+        type: MC,
+        question: "Where does Sand belong?",
+        options: [
           "On the house roof",
           "On the ceiling",
           "On the doors",
-          "On the shore near the water",
+          "In a band between the grass and the water",
         ],
- correctAnswer: 3,
- explanation: "Sand looks natural along a shoreline or beach.",
- },
- {
- id: "q11",
- type: MC,
- question: "Which material sequence creates a natural shore?",
- options: [
+        correctAnswer: 3,
+        explanation: "Sand is the transition material. Its whole job is stopping grass from touching water.",
+      },
+      {
+        id: "q11",
+        type: MC,
+        question: "Which material sequence makes a shoreline look real?",
+        options: [
           "Rock only",
           "Neon glow only",
           "Grass → Sand → Water",
           "Plastic only",
         ],
- correctAnswer: 2,
- explanation: "A transition from grass to sand and then water creates a realistic shore.",
- },
- {
- id: "q12",
- type: MC,
- question: "What should you do if the house sinks underground after generating the terrain?",
- options: [
-          "Level the ground with Flatten and raise the house with the Move tool",
-          "Delete the account",
+        correctAnswer: 2,
+        explanation: "Real coasts have a transition zone, and your eye knows it even if you have never consciously thought about it. Grass meeting water directly reads as a cliff.",
+      },
+      {
+        id: "q12",
+        type: MC,
+        question: "Generate buried your house underground. What now?",
+        options: [
+          "Flatten a pad at the right height and Move the house onto it",
+          "Delete the house and rebuild it",
           "Close the Explorer panel",
           "Apply Negate to the entire map",
         ],
- correctAnswer: 0,
- explanation: "Prepare a level site and move the house back to the surface.",
- },
- {
- id: "q13",
- type: MC,
- question: "Why should you check water in Play mode?",
- options: [
-          "Because the terrain disappears in Play mode",
-          "Because painting is available only in Play mode",
-          "Because the generator works only in Play mode",
-          "Because wave animation might not appear in the editor",
+        correctAnswer: 0,
+        explanation: "Completely normal - Generate replaces the ground everywhere. Press F to find the house, level a pad, move it up. Never delete it.",
+      },
+      {
+        id: "q13",
+        type: MC,
+        question: "Why check water in Play mode?",
+        options: [
+          "Because terrain disappears in Play mode",
+          "Because painting only works in Play mode",
+          "Because Generate only works in Play mode",
+          "Because wave animation usually does not run in the editor",
         ],
- correctAnswer: 3,
- explanation: "The full appearance and movement of water are enabled when you test the game.",
- },
- {
- id: "q14",
- type: MC,
- question: "What is a large Brush Size useful for?",
- options: [
+        correctAnswer: 3,
+        explanation: "Still, flat water in the editor is not a bug. Press F5 and it moves.",
+      },
+      {
+        id: "q14",
+        type: MC,
+        question: "What is a large Brush Size good for?",
+        options: [
           "Renaming files",
-          "Quickly creating the overall shape of a large mountain",
+          "Blocking in big landmasses and hills fast",
           "Writing code",
           "Joining small blocks",
         ],
- correctAnswer: 1,
- explanation: "A large brush lets you establish the main terrain masses quickly.",
- },
- {
- id: "q15",
- type: MC,
- question: "What are the requirements for the final Lesson 1.2 task?",
- options: [
-          "A completely empty level with no terrain",
-          "One glowing block",
-          "A saved island with water, smooth shores, three materials, and a placed house",
-          "An open toolbar",
+        correctAnswer: 1,
+        explanation: "Same logic as painting: widest brush for the big shapes, fine brush for detail. Sculpting an island with a small brush wastes an hour.",
+      },
+      {
+        id: "q15",
+        type: MC,
+        question: "A Terrain tool does nothing no matter where you click. What is the most likely cause?",
+        options: [
+          "Terrain has been deleted from Explorer",
+          "The game is still running - press Stop",
+          "The brush is too large",
+          "You need to Union the terrain first",
         ],
- correctAnswer: 2,
- explanation: "The task requires a complete, edited landscape with a house placed on it.",
- },
- ],
- },
+        correctAnswer: 1,
+        explanation: "Terrain tools are disabled while the game is playing. If a tool feels dead, check whether you are still in Play mode.",
+      },
+    ],
+  },
 }
 
-
 export const enLesson13 = {
- lessonId: "lesson-roblox-1-3",
- moduleId: "module-01",
- order: 3,
- title: "1.3 - Properties, variables, and your first Script",
- theoryMinutes: 35,
- quizMinutes: 15,
- estimatedTime: 60,
- learningObjectives: [
- "Read and change an object's Properties through code.",
- "Create a Script inside a Part and work with the Output panel.",
- "Create local variables and use them to change an object's appearance.",
- "Use the print command to check whether code is working.",
- "Place a MagicCube on your island and save the project.",
- ],
- theory: {
- sections: [
- {
- title: "Lesson task: MagicCube",
- content: `In previous lessons, you built walls, windows, and terrain manually. In this lesson, you will work with code. Your task is to create a magic cube (\`MagicCube\`) that contains a Script. The code will change the cube's appearance and display text in the Output panel.
+  lessonId: "lesson-roblox-1-3",
+  moduleId: "module-01",
+  order: 3,
+  title: "1.3 - Properties, variables, and your first Script",
+  theoryMinutes: 35,
+  quizMinutes: 15,
+  estimatedTime: 60,
+  learningObjectives: [
+    "Read and change an object's Properties from code instead of from the mouse.",
+    "Put a Script inside a Part and use the Output panel to see what it did.",
+    "Create local variables and use them to control how an object looks.",
+    "Use print as your primary debugging tool from day one.",
+    "Put a working MagicCube on your island and save the project.",
+  ],
+  theory: {
+    sections: [
+      {
+        title: "Today's mission (lesson 3 of 92)",
+        content: `Two lessons of building. Today you write code.
 
-**Complete these steps by the end of the lesson:**
-- Create a \`MagicCube\` block on your island.
-- Add a **Script** inside it, not a LocalScript.
-- Write code that uses \`local\`, changes Properties, and calls \`print\`.
-- Use Play mode to confirm that the cube changes and text appears in Output.
-- Save the level as \`Lesson 1.3 - MagicCube\`.
+Here is the shift, and it is a big one. So far, everything you changed you changed by hand: click the object, find the property, type a value. That works for one cube. It does not work for a hundred coins that need to spin, or a door that has to know when a player touches it, or a leaderboard that updates when someone scores.
 
-Open your saved \`Lesson 1.2 - Island\` level and keep the Output panel open.`,
- },
- {
- title: "Using Properties as code data",
- content: `In previous lessons, you changed Properties with the mouse. Now you will change the same settings with a script.
+A script is you giving instructions once, and the game following them forever.
 
-| Property | Meaning | How it is used here |
-|----------|------------|-------------------------|
-| **Name** | Object name | Identifies the cube among other objects. |
-| **Size** | Dimensions (X, Y, Z) | Changes the cube's size through code. |
-| **Position** | Coordinates | Leave this unchanged for now so the cube does not move into the sky. |
-| **BrickColor** | Color | Creates a magic effect. |
-| **Material** | Surface material | Uses Neon to make the cube glow. |
-| **Anchored** | Fixed position | The cube must be anchored (true). |
-| **Transparency**| Transparency | 0 = fully visible, 1 = invisible. |
+| After 1.2 | Result of 1.3 |
+|---|---|
+| Everything is changed by hand in Properties | Code changes properties for you at runtime |
+| Nothing in your level reacts to anything | The level does something on its own the second it starts |
+| No idea what Output is for | Output is where you find out what your code actually did |
 
-Set basic options such as Anchored and Name manually before writing the Script. Code does not replace an organized Explorer structure.
+Today's build is deliberately small: a cube that turns violet, starts glowing, and announces itself in Output when you press Play. Small on purpose. Every big system in this course - shops, checkpoints, leaderboards, enemy waves - is built from exactly these pieces: a variable, a property, a print to check it worked.
 
-**Do this now:** Create a block near the house. Name it \`MagicCube\`. Set its size to about \`4, 4, 4\`, choose the SmoothPlastic material and a bright color, and enable Anchored = true.`,
- },
- {
- title: "Creating a Script and opening Output",
- content: `1. Select \`MagicCube\` in Explorer.
-2. Select **Insert → Script**, or right-click and select Insert Object → Script.
-3. Make sure the Script is **inside** the cube, not directly in Workspace.
-4. Open **View → Output**.
+**Your finish line for today:**
+- A \`MagicCube\` block on your island.
+- A **Script** inside it (a Script, not a LocalScript - this matters, and we will get to why).
+- Code using \`local\`, changing Properties, and calling \`print\`.
+- Press Play: the cube changes and text appears in Output.
+- Saved as \`Lesson 1.3 - MagicCube\`.
 
-Studio automatically adds the code line \`print("Hello world!")\`.
+**Do now (2 min):** open \`Lesson 1.2 - Island\` and open the Output panel (View → Output). Leave it open for the rest of your life in Studio.`,
+      },
+      {
+        title: "The same properties, now reachable from code",
+        content: `You already know these properties - you have been clicking them for two lessons. The new idea is that code can read and write every single one of them.
 
-**Why must the Script be inside the Part?** This makes the code operate on this cube instead of another object.
+| Property | What it is | What you do with it today |
+|---|---|---|
+| **Name** | The object's name | Change it from code and watch Explorer update live |
+| **Size** | Dimensions (X, Y, Z) | Grow the cube in code |
+| **Position** | World coordinates | Leave it alone today, or the cube ends up in the sky |
+| **BrickColor** | Its colour | The magic |
+| **Material** | Its surface | Neon, so it glows |
+| **Anchored** | Immune to gravity | Must be true, or it falls |
+| **Transparency** | 0 = solid, 1 = invisible | Try 0.3 and see |
 
-Use a standard server **Script**. A LocalScript is used for other tasks, such as interfaces, and is not needed here.
+One habit worth adopting now: **set the boring stuff by hand, script the interesting stuff.** Name it, anchor it, and place it with the mouse. Save code for the things that need to change while the game is running. Code is not a replacement for a tidy Explorer.
 
-**Do this now:** Add a Script to your \`MagicCube\`. Open Output and select Play. If you see "Hello world!", the setup is correct. Select Stop.`,
- },
- {
- title: "Variables (local) as data containers",
- content: `A **variable** is a named location in memory that stores data such as text, numbers, or object references.
+**Do now (4 min):** make a block near the house. Name it \`MagicCube\`. Size about \`4, 4, 4\`, material SmoothPlastic, any bright colour, \`Anchored = true\`.`,
+      },
+      {
+        title: "Adding a Script (and why it goes inside the cube)",
+        content: `1. Select \`MagicCube\` in Explorer.
+2. **Insert → Script** (or right-click → Insert Object → Script).
+3. Check in Explorer that the Script appears **indented under** MagicCube, not sitting beside it in Workspace.
+4. **View → Output** if it is not already open.
 
-This is how you create variables in Luau:
+Studio drops in a starter line: \`print("Hello world!")\`.
+
+**Why does the Script have to live inside the Part?** Because of one line you will write in about three minutes: \`script.Parent\`. That means "the thing I am inside of". If the script is inside the cube, \`script.Parent\` is the cube. If it is loose in Workspace, \`script.Parent\` is Workspace, and your code will confidently try to paint the entire world violet - or, more likely, throw an error.
+
+Location is not decoration. In Roblox, where a script lives determines what it can reach.
+
+**One more choice:** use a **Script**, not a **LocalScript**. The short version for today is that a Script runs on the server, where the real game state lives, and a LocalScript runs on one player's own machine. Changing a cube for everybody is server work. You will learn the full story in module 9 - for now, Script.
+
+**Do now (3 min):** add the Script, press **Play**, and look for "Hello world!" in Output. That line is proof your code ran. Press **Stop**.`,
+      },
+      {
+        title: "Variables: names for things",
+        content: `A variable is a name you give to a value so you can use it more than once without retyping it.
 
 \`\`\`lua
 local part = script.Parent
@@ -1026,19 +1119,21 @@ local cubeName = "MagicCube"
 local glowPower = 1
 \`\`\`
 
-Here is what each part does:
-- \`local\` means the variable works only within this script. Use it whenever you create a local variable.
-- \`part\` and \`cubeName\` are variable names. Use descriptive names instead of names such as \`x\` or \`y\`.
-- \`=\` assigns a value to the variable.
-- \`script.Parent\` refers to the object containing the Script, which is the cube.
+Reading that line by line:
+- \`local\` means "this name exists inside this script only". Get in the habit now - always \`local\`.
+- \`part\`, \`cubeName\`, \`glowPower\` are the names. Make them say what they hold. \`part\` tells you something; \`x\` tells you nothing, and in three weeks \`x\` will tell *you* nothing either.
+- \`=\` puts the value into the name.
+- \`script.Parent\` is the cube, as we just covered.
 
-Variables prevent repeated code and make code easier to read and change.
+Why bother? Two reasons that will matter for the next eighty-nine lessons:
+1. **You stop repeating yourself.** Write \`script.Parent\` once, then use \`part\` twenty times.
+2. **You change things in one place.** Want a different colour? Edit line 3, not the eleven places you typed it.
 
-**Do this now:** Delete the default text in the script and enter the three variable lines from the example. Start Play and confirm that Output contains no red errors.`,
- },
- {
- title: "Using print to display text",
- content: `The \`print\` command displays text or variable values in the **Output** panel. It is the main tool for checking whether your code works correctly.
+**Do now (4 min):** delete the starter line and type those three variables. Press Play. Nothing visible should happen, and - importantly - Output should have no red text. Silence means it compiled.`,
+      },
+      {
+        title: "print: your flashlight",
+        content: `\`print\` writes text to the Output panel. It sounds trivial. It is the single most used debugging tool in this course, and in professional game development generally.
 
 \`\`\`lua
 local part = script.Parent
@@ -1047,19 +1142,23 @@ print("Object name:", part.Name)
 print("Is the object anchored?", part.Anchored)
 \`\`\`
 
-If Output is empty after you start Play, check the following:
-- Confirm that you selected Play.
-- Confirm that the Output panel is open.
-- Confirm that the script is in the correct location.
-- Check for red error text above.
+Notice you can print variables, not just text - and you can pass several things separated by commas. That second line is you asking the game "what do you *think* this object is called?" and getting a straight answer.
 
-Use this workflow for every code change: select Stop, edit the code, and then select Play again. Editing a script while the game is running can cause confusion.
+That question is how you fix almost every bug you will ever have. Not by staring at the code and hoping, but by printing what the code actually sees at that moment.
 
-**Do this now:** Add the \`print\` commands to your script. Start Play and check whether the cube's name appears in Output.`,
- },
- {
- title: "Changing the cube's appearance through code",
- content: `Now configure the code to change the cube's Properties as soon as the game starts.
+**Output stayed empty?** Work down this list:
+- Did you actually press Play?
+- Is the Output panel open?
+- Is the script where you think it is?
+- Is there red text further up? Read the *first* red line - everything after it is usually knock-on damage.
+
+**A workflow rule, starting now:** Stop → edit → Play. Editing a script while the game is running is legal and Studio will let you, but the changes evaporate when you press Stop, and you will lose twenty minutes wondering why your fix "didn't work".
+
+**Do now (4 min):** add those prints. Press Play and read what comes back.`,
+      },
+      {
+        title: "Making the magic happen",
+        content: `Now the cube actually changes when the game starts.
 
 \`\`\`lua
 local part = script.Parent
@@ -1073,19 +1172,21 @@ part.Size = Vector3.new(5, 5, 5)
 print("Magic is working:", part.Name, part.Material)
 \`\`\`
 
-Code details:
-- \`part.Name = ...\` changes the object's name.
-- \`BrickColor.new("...")\` sets the color using a name from the BrickColor palette.
-- \`Enum.Material.Neon\` applies the glowing Neon material.
-- \`Vector3.new(x, y, z)\` sets the cube's new size.
+What each new piece is:
+- \`part.Name = newName\` - assignment. Same \`=\` as before, but the thing on the left is a property of an object rather than a fresh variable.
+- \`BrickColor.new("Bright violet")\` - Roblox's named colour palette. There are hundreds; "Really red", "Bright yellow", "Lime green" all work.
+- \`Enum.Material.Neon\` - Enums are Roblox's fixed lists of options. You cannot invent a material, so you pick one from the Enum. Autocomplete will show you the whole list if you type \`Enum.Material.\` and pause.
+- \`Vector3.new(x, y, z)\` - three numbers bundled into one value. Size, Position and anything else spatial uses Vector3, because a point in 3D needs three numbers, not one.
 
-This lesson uses \`BrickColor\` because it is a simple way to specify a color by name. Changing \`Size\` can sometimes shift the cube relative to the ground, so you might need to reposition it with the Move tool after testing.
+**Press Play and watch Explorer while you do it.** The name changes in the tree in real time. That is your code reaching into the live game and moving things.
 
-**Do this now:** Add this code to your script and select Play. The cube should change color and size and begin to glow, and a message should appear in Output.`,
- },
- {
- title: "Reading Properties into variables",
- content: `Variables can store current values as well as set new ones.
+One quirk: changing \`Size\` grows the cube from its centre, so it may end up half-buried. Move it up afterwards with the Move tool.
+
+**Do now (6 min):** write this in, press Play, and watch your cube light up.`,
+      },
+      {
+        title: "Reading properties, not just writing them",
+        content: `Assignment goes both ways. You can pull a property's current value *into* a variable and look at it.
 
 \`\`\`lua
 local part = script.Parent
@@ -1099,39 +1200,45 @@ part.Transparency = 0.5
 print("The cube is now semitransparent")
 \`\`\`
 
-The \`Transparency\` property accepts values from 0 (fully visible) to 1 (fully transparent). Do not use 1 for the final task because the cube would be invisible.
+This is more useful than it looks. "Ask the game what state something is actually in" is how you find out that the door you thought was open is closed, or that the coin you thought you deleted is still there.
 
-**Do this now:** Read the size and material into variables, display them with \`print\`, and slightly change the cube's transparency, for example to 0.2 or 0.3.`,
- },
- {
- title: "Understanding red error messages",
- content: `| Output message | Cause | Fix |
-|------------------------|------------------|------------|
-| \`attempt to index nil\` | \`script.Parent\` cannot find the object | Make sure the Script is **inside** \`MagicCube\`. |
-| No output appears | The game is not running or the script is disabled | Press F5 (Play) and check Explorer. |
-| \`BrickColor is not a valid member\` | There is a typo in the code, or the script is in the wrong object | Check that the property name is spelled correctly. |
-| The cube falls through the ground | Anchored is disabled | Enable Anchored = true in Properties or through code. |
+\`Transparency\` runs 0 to 1. 0 is solid, 1 is completely invisible - and an invisible cube is a hard thing to debug, so keep it around 0.2-0.3 for the final version.
 
-**Error-checking process:**
-1. Read the **first** red line in Output.
-2. Check the structure in Explorer. The Script must be inside MagicCube.
-3. If the problem remains, temporarily remove the complex code and enter only \`print("hi")\`. If that does not work, the script is in the wrong location.
+**Do now (4 min):** read size and material into variables, print them, and nudge Transparency to 0.2 or 0.3.`,
+      },
+      {
+        title: "Reading errors without panicking",
+        content: `Red text in Output is not you failing. It is the game telling you exactly what went wrong, in a format that takes about a week to get used to. Here are the four you will hit today.
 
-**Do this now:** Move the Script out of the cube and place it directly in Workspace. Start Play and inspect the resulting error. Then move the Script back.`,
- },
- {
- title: "Organizing a clean Script",
- content: `This is an example of clean, readable code for the task:
+| Output says | What actually happened | Fix |
+|---|---|---|
+| \`attempt to index nil\` | \`script.Parent\` found nothing useful | The Script is not inside \`MagicCube\`. Drag it in. |
+| Nothing at all | Game not running, or script disabled | Press F5; check the script exists in Explorer. |
+| \`... is not a valid member\` | A typo in a property name | Check spelling and capitals. \`brickcolor\` is not \`BrickColor\`. |
+| The cube falls through the ground | Anchored is off | Set \`Anchored = true\` in Properties, or in code. |
+
+**The debugging routine that always works:**
+1. Read the **first** red line. Later errors are usually caused by the first one.
+2. Check Explorer. Is the script where you think it is?
+3. Still stuck? Delete everything and leave just \`print("hi")\`. If that does not print, the problem is *where the script is*, not *what it says*. If it does print, add your code back a few lines at a time until it breaks - and now you know which line.
+
+That third step is called bisecting, and professionals use it daily.
+
+**Do now (4 min):** break it on purpose. Drag the Script out of the cube into Workspace, press Play, and read the error. Now you have seen \`attempt to index nil\` in a situation where you know exactly what caused it - which means you will recognise it in three weeks when you do not. Drag the script back.`,
+      },
+      {
+        title: "Writing code someone can read",
+        content: `Here is the same script, organised the way you should organise every script from here on:
 
 \`\`\`lua
 local part = script.Parent
 
--- Settings (all values are grouped at the top for convenience)
+-- Settings (everything you might want to tweak, gathered at the top)
 local magicName = "MagicCube"
 local magicColor = "Bright violet"
 local magicSize = Vector3.new(5, 5, 5)
 
--- Change properties
+-- Apply them
 part.Anchored = true
 part.Name = magicName
 part.BrickColor = BrickColor.new(magicColor)
@@ -1139,348 +1246,377 @@ part.Material = Enum.Material.Neon
 part.Size = magicSize
 part.Transparency = 0
 
--- Display the result
+-- Report what happened
 print("MagicCube activated!")
 print("Current color:", magicColor)
 print("Current size:", part.Size)
 \`\`\`
 
-Keeping settings such as color and size in variables at the beginning of the script is good practice. To change the color, you can edit one line at the top instead of searching through the entire file.`,
- },
- {
- title: "Project completion requirements",
- content: `**Where to place the cube:** Put it on level ground near the house or on the path to the beach. It should be clearly visible when the game starts. Do not hide it underwater or place the Script in ServerScriptService.
+Three things are going on structurally, and they are worth naming:
 
-**Completion checklist:**
-- [ ] The \`MagicCube\` object exists and has Anchored = true.
+**Settings at the top.** Every number and string you might want to change lives in the first block. Want a red cube? Line 5. You never go hunting through the file.
+
+**Comments with \`--\`.** Anything after \`--\` is ignored by the game and read by humans. Comments explain *why*, not *what* - \`-- Settings\` earns its place; \`-- set the colour\` above a line that obviously sets the colour does not.
+
+**Three clear phases:** configure, apply, report. You will see this shape again in module 4 when you meet ModuleScripts and Config tables - this is the seed of it.
+
+Code is read far more often than it is written, and most of the time the person reading it is you, later, having forgotten everything.`,
+      },
+      {
+        title: "Check your work before you move on",
+        content: `**Where to put the cube:** on flat ground near the house, or along the path to the beach. Somewhere you can see it the moment the game starts. Not underwater, not inside a wall, and the Script not parked in ServerScriptService.
+
+**Checklist:**
+- [ ] \`MagicCube\` exists, \`Anchored = true\`.
 - [ ] The Script is inside the cube.
-- [ ] The code contains \`local\` variables.
-- [ ] The code changes the cube's color and/or material after startup.
-- [ ] The \`print\` command displays a message in Output.
-- [ ] The project is saved as \`Lesson 1.3 - MagicCube\`.
+- [ ] The code uses \`local\` variables.
+- [ ] The cube's colour and/or material change when the game starts.
+- [ ] \`print\` puts a message in Output.
+- [ ] Saved as \`Lesson 1.3 - MagicCube\`.
 
-| Level | Requirements |
-|--------|------|
-| **Complete** | The script works, variables are defined, the appearance changes, and a message appears in Output. |
-| **Good** | Variables have descriptive names, the Neon material is used, and the cube is positioned appropriately near the house. |
-| **Excellent** | Several print commands display different data, and code settings are grouped at the beginning of the file. |
+| Level | What it looks like |
+|---|---|
+| **Done** | The script runs, variables exist, the cube changes, Output has a message. |
+| **Good** | Variables are named meaningfully, the cube uses Neon, and it is placed somewhere you actually notice it. |
+| **Excellent** | Several prints reporting different things, and all the settings grouped at the top of the file. |
 
-Continue in the same \`Lesson 1.2 - Island\` file and save it as a new version. Do not create an empty level for the cube because that would remove your previous work.`,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "The Script is in Workspace instead of inside MagicCube",
- explanation: "In this case, script.Parent does not refer to the cube, so the code produces an error or tries to change another object.",
- correctApproach: "Drag the Script inside MagicCube in Explorer.",
- },
- {
- mistake: "A LocalScript was used instead of a standard Script",
- explanation: "A LocalScript works differently and is used for other tasks, such as interfaces.",
- correctApproach: "Delete the LocalScript and add a standard server Script.",
- },
- {
- mistake: "The Output panel is empty",
- explanation: "The game is not running, the panel is closed, or there is a syntax error earlier in the script.",
- correctApproach: "Open View → Output, press F5 (Play), and read every red message.",
- },
- {
- mistake: "Variables were created without the local keyword",
- explanation: "This can cause conflicts later in larger scripts.",
- correctApproach: "Write local before creating each new local variable.",
- },
- {
- mistake: "The cube falls through the ground after startup",
- explanation: "Anchored is disabled, or the cube is floating above uneven ground.",
- correctApproach: "Enable Anchored = true manually in Properties or set it directly in the script.",
- },
- {
- mistake: "Editing code while the game is running in Play mode",
- explanation: "Changes made in Play mode are not saved and can make debugging confusing.",
- correctApproach: "Select Stop before editing the code, then select Play again.",
- },
- ],
- summary:
- "You have written your first script. You can now create local variables, change object Properties through code, and display information in Output with the print command.",
- practiceTask: {
- title: "Practice: MagicCube",
- difficulty: "beginner",
- description: `**Task:** Create a script that changes a cube's appearance when the game starts.
+Keep working in your \`Lesson 1.2 - Island\` file and save it under the new name. Do not start a blank level for the cube - you would be throwing away two lessons of work.`,
+      },
+    ],
+  },
+  commonMistakes: [
+    {
+      mistake: "The Script is sitting in Workspace instead of inside MagicCube",
+      explanation: "This is the number one first-script problem. script.Parent means 'whatever I am inside of' - loose in Workspace, that is Workspace, not your cube.",
+      correctApproach: "In Explorer, drag the Script onto MagicCube. It should appear indented underneath it.",
+    },
+    {
+      mistake: "A LocalScript was used instead of a Script",
+      explanation: "A LocalScript runs on one player's machine, not on the server, and in Workspace it often will not run at all.",
+      correctApproach: "Delete it and insert a plain Script. LocalScripts get their proper introduction in 3.7 and module 9.",
+    },
+    {
+      mistake: "Output is completely empty",
+      explanation: "Either the game is not running, the panel is closed, or there is a syntax error that stopped the script before it reached your print.",
+      correctApproach: "View → Output, press F5, and read every red line - starting with the first one.",
+    },
+    {
+      mistake: "Variables created without local",
+      explanation: "It works today, but it creates a global that any other script in the game can collide with. That bug is miserable to find later.",
+      correctApproach: "Put local in front of every new variable. Make it muscle memory now while your scripts are five lines long.",
+    },
+    {
+      mistake: "The cube falls through the ground when you press Play",
+      explanation: "Anchored is false, or the cube was floating and gravity found it.",
+      correctApproach: "Set Anchored = true in Properties, or better, set it in the script so it is true every time the game starts.",
+    },
+    {
+      mistake: "Editing the script while the game is running",
+      explanation: "Studio lets you do it, but every change is thrown away the moment you press Stop.",
+      correctApproach: "Stop → edit → Play. Always in that order.",
+    },
+    {
+      mistake: "The cube half sinks into the ground after the script resizes it",
+      explanation: "Size grows outward from the centre, so making it bigger pushes the bottom below ground level.",
+      correctApproach: "Not a bug - just move the cube up with the Move tool afterwards, or set a smaller size.",
+    },
+  ],
+  summary:
+    "You wrote your first script. You know what a local variable is and why it earns its keep, you can read and write any property from code, you have seen print report the game's actual state back to you, and you have deliberately broken a script and read the error it produced. Everything in modules 3 through 12 is built out of these four things.",
+  practiceTask: {
+    title: "Practice: MagicCube",
+    difficulty: "beginner",
+    description: `**The build:** a cube that transforms itself the instant the game starts, and says so in Output.
 
 ### Part A: Setup
 1. Open your island level.
-2. Create a block near the house and name it \`MagicCube\`.
-3. Set Anchored = true and use a size of about 4×4×4.
-4. Add a **Script** inside the cube and open Output.
+2. Make a block near the house, name it \`MagicCube\`.
+3. \`Anchored = true\`, size about 4×4×4.
+4. Insert a **Script** inside the cube. Open Output.
 
-### Part B: Write the code
-1. Create the variable \`local part = script.Parent\`.
-2. Create several more local variables for the color and size.
-3. Write code that changes the cube's material to Neon and gives it a new BrickColor.
-4. Add at least two \`print\` commands that display different data in Output.
-5. Select Play and confirm that the cube changes and text appears in Output.
+### Part B: The code
+1. \`local part = script.Parent\`.
+2. Add a few more \`local\` variables for the colour and size.
+3. Write code that sets the material to Neon and applies a new BrickColor.
+4. At least two \`print\` calls reporting different things.
+5. Press Play. The cube changes; Output speaks.
 
 ### Part C: Save
-1. Confirm that Output contains no red errors.
-2. Save the level through **File → Save to Roblox** as \`Lesson 1.3 - MagicCube\`.
-3. Mark the practice as complete.`,
- hints: [
- "Start with print('test') and confirm that it works before adding the color-changing code.",
- "The Script must be inside the MagicCube object.",
- "Always select Stop before editing code.",
- "Do not place the cube underwater or far from the house.",
- ],
- optionalChallenge:
- "Create two cubes, MagicCube_A and MagicCube_B, with nearly identical scripts, but assign different colors through variables. This demonstrates how useful local variables are.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 15,
- questions: [
- {
- id: "q1",
- type: MC,
- question: "Where should the Script be placed for this lesson's task?",
- options: [
+1. Output should have no red text.
+2. **File → Save to Roblox** as \`Lesson 1.3 - MagicCube\`.
+3. Mark the practice complete here.`,
+    hints: [
+      "Start with print('test') and confirm it appears before you write anything else. Prove the plumbing works, then build on it.",
+      "The Script goes inside MagicCube. In Explorer it should be indented under it, not next to it.",
+      "Stop before you edit. Changes made during Play are discarded.",
+      "Broken and cannot see why? Strip the script back to one print. If that works, add lines back until it breaks - now you know the line.",
+      "Do not hide the cube underwater or behind the house. You want to see it change.",
+    ],
+    optionalChallenge:
+      "Build \`MagicCube_A\` and \`MagicCube_B\` with the same script in each, but different values in the settings variables at the top - one violet Neon, one green ForceField. Then ask yourself: you changed two lines, not two scripts. That is exactly the idea Config tables and ModuleScripts are built on in module 4, and you just used it three weeks early.",
+  },
+  quiz: {
+    passingScore: 70,
+    timeLimit: 15,
+    questions: [
+      {
+        id: "q1",
+        type: MC,
+        question: "Where does the Script go for this lesson?",
+        options: [
           "Only in the Lighting folder",
-          "It must be a LocalScript in StarterGui",
+          "As a LocalScript in StarterGui",
           "Inside the Terrain object",
-          "Inside the MagicCube object (script.Parent = the cube)",
+          "Inside the MagicCube object, so that script.Parent is the cube",
         ],
- correctAnswer: 3,
- explanation: "Placing the script inside the Part ensures that script.Parent refers to that cube.",
- },
- {
- id: "q2",
- type: MC,
- question: "What is the local keyword used for?",
- options: [
-          "Deleting an object",
-          "Creating a new variable",
-          "Enabling a Neon glow",
-          "Saving the game",
+        correctAnswer: 3,
+        explanation: "In Roblox, where a script lives decides what it can reach. Inside the cube, script.Parent is the cube.",
+      },
+      {
+        id: "q2",
+        type: MC,
+        question: "What does the local keyword do?",
+        options: [
+          "Deletes an object",
+          "Creates a variable that exists only inside this script",
+          "Enables a Neon glow",
+          "Saves the game",
         ],
- correctAnswer: 1,
- explanation: "The local keyword creates a local variable within the current script.",
- },
- {
- id: "q3",
- type: MC,
- question: "What does script.Parent refer to in this lesson?",
- options: [
-          "The object that directly contains the script",
+        correctAnswer: 1,
+        explanation: "local scopes the variable to this script, so it cannot collide with a name in someone else's code.",
+      },
+      {
+        id: "q3",
+        type: MC,
+        question: "What does script.Parent refer to?",
+        options: [
+          "The object the script is inside of",
           "The player",
           "The Sky",
           "The Roblox website",
         ],
- correctAnswer: 0,
- explanation: "Parent means the parent object, which is the container that holds the script.",
- },
- {
- id: "q4",
- type: MC,
- question: "Where does print(...) display text?",
- options: [
+        correctAnswer: 0,
+        explanation: "Parent is the container. Move the script and script.Parent changes with it - which is exactly why a misplaced script errors.",
+      },
+      {
+        id: "q4",
+        type: MC,
+        question: "Where does print(...) show up?",
+        options: [
           "In the Explorer panel",
           "In the Toolbox panel",
           "In the Output panel",
           "In the Terrain Editor window",
         ],
- correctAnswer: 2,
- explanation: "Output displays messages from print and system errors.",
- },
- {
- id: "q5",
- type: MC,
- question: "Which type of script is used in this lesson?",
- options: [
+        correctAnswer: 2,
+        explanation: "Output is where both your prints and the game's error messages appear. Keep it open permanently.",
+      },
+      {
+        id: "q5",
+        type: MC,
+        question: "Which kind of script does this lesson use?",
+        options: [
           "LocalScript",
-          "A standard Script",
+          "A plain Script, running on the server",
           "ModuleScript",
           "Animation",
         ],
- correctAnswer: 1,
- explanation: "A standard server Script is used for basic object interaction.",
- },
- {
- id: "q6",
- type: MC,
- question: "What does BrickColor.new(\"Bright violet\") do?",
- options: [
+        correctAnswer: 1,
+        explanation: "A Script runs on the server where the shared game state lives. LocalScripts run on one player's machine and are covered properly in 3.7 and module 9.",
+      },
+      {
+        id: "q6",
+        type: MC,
+        question: "What does BrickColor.new(\"Bright violet\") do?",
+        options: [
           "Changes the level name",
           "Changes the sound volume",
           "Changes the island's size",
-          "Changes the object's color",
+          "Produces a colour value from Roblox's named palette",
         ],
- correctAnswer: 3,
- explanation: "BrickColor sets an object's color using its standard name.",
- },
- {
- id: "q7",
- type: MC,
- question: "What is Enum.Material.Neon used for?",
- options: [
-          "Applying a glowing material",
-          "Deleting the terrain",
-          "Creating a Folder",
-          "Opening a plugin",
+        correctAnswer: 3,
+        explanation: "BrickColor lets you name a colour instead of specifying numbers. Hundreds of names are available.",
+      },
+      {
+        id: "q7",
+        type: MC,
+        question: "What is Enum.Material.Neon?",
+        options: [
+          "A value picked from Roblox's fixed list of materials",
+          "A command that deletes terrain",
+          "A way to create a Folder",
+          "A plugin",
         ],
- correctAnswer: 0,
- explanation: "This command changes the surface material to Neon through code.",
- },
- {
- id: "q8",
- type: MC,
- question: "Which property is configured with Vector3.new(5, 5, 5)?",
- options: [
-          "ClockTime",
-          "SoundId",
-          "Size",
-          "WalkSpeed",
+        correctAnswer: 0,
+        explanation: "An Enum is a fixed menu of allowed options. You cannot invent a material, so you choose one - and autocomplete will list them all for you.",
+      },
+      {
+        id: "q8",
+        type: MC,
+        question: "Why does Size need Vector3.new(5, 5, 5) rather than just a number?",
+        options: [
+          "Roblox requires it for all properties",
+          "Because a size in 3D needs three numbers - X, Y and Z - bundled into one value",
+          "Because print would not work otherwise",
+          "Because it enables Neon",
         ],
- correctAnswer: 2,
- explanation: "The Size property requires three coordinates (X, Y, Z), which are supplied through Vector3.",
- },
- {
- id: "q9",
- type: MC,
- question: "What should you do first when red error text appears in Output?",
- options: [
+        correctAnswer: 1,
+        explanation: "Vector3 packages three numbers together. Anything spatial - Size, Position, velocity - uses one.",
+      },
+      {
+        id: "q9",
+        type: MC,
+        question: "Red errors in Output. What is your first move?",
+        options: [
           "Delete the account",
           "Delete all terrain",
           "Apply the Union tool",
-          "Read the first error line and check the script's location",
+          "Read the first red line and check where the script actually is",
         ],
- correctAnswer: 3,
- explanation: "Debugging begins by carefully reading the text in Output.",
- },
- {
- id: "q10",
- type: MC,
- question: "Why is it useful to store color and size in variables at the beginning of a script?",
- options: [
-          "Because Roblox always requires it",
-          "Because settings are much easier to change in one place",
+        correctAnswer: 3,
+        explanation: "Later errors are usually knock-on damage from the first one. Read that one, then verify the script's location in Explorer.",
+      },
+      {
+        id: "q10",
+        type: MC,
+        question: "Why put colour and size in variables at the top of the script?",
+        options: [
+          "Because Roblox requires it",
+          "So there is one place to change a setting instead of hunting through the file",
           "Because print would not work otherwise",
           "To disable gravity",
         ],
- correctAnswer: 1,
- explanation: "Storing settings in variables makes code cleaner and easier to edit.",
- },
- {
- id: "q11",
- type: MC,
- question: "What value should the MagicCube Anchored property have?",
- options: [
-          "true, so the cube does not fall",
+        correctAnswer: 1,
+        explanation: "One place to change, one place to look. It is a small habit at 12 lines and a survival skill at 200.",
+      },
+      {
+        id: "q11",
+        type: MC,
+        question: "What should Anchored be on MagicCube?",
+        options: [
+          "true, or physics will drag it to the ground",
           "Always false",
           "nil",
-          "This value is used only in a LocalScript",
+          "It only matters in a LocalScript",
         ],
- correctAnswer: 0,
- explanation: "To keep the object in place and prevent it from falling, it must have Anchored = true.",
- },
- {
- id: "q12",
- type: MC,
- question: "Which command does Roblox Studio automatically add to a Script?",
- options: [
+        correctAnswer: 0,
+        explanation: "Roblox runs real physics on anything unanchored. A floating decorative cube with Anchored off is a falling cube.",
+      },
+      {
+        id: "q12",
+        type: MC,
+        question: "What line does Studio put in a new Script automatically?",
+        options: [
           "script.Parent = part",
           "local newName = \"Roblox Studio\"",
-          "print(\"Hello, World!\")",
+          "print(\"Hello world!\")",
           "BrickColor.new(\"Bright violet\")",
         ],
- correctAnswer: 2,
- explanation: "Studio automatically adds the code line print(\"Hello world!\").",
- },
- {
- id: "q13",
- type: MC,
- question: "What does Transparency = 1 mean?",
- options: [
-          "The object always glows with Neon",
-          "The object becomes completely invisible",
-          "The object is deleted from the game",
-          "The object moves to Workspace",
+        correctAnswer: 2,
+        explanation: "A starter print - which doubles as a free test that your script is in a place where it will actually run.",
+      },
+      {
+        id: "q13",
+        type: MC,
+        question: "What does Transparency = 1 do?",
+        options: [
+          "Makes the object glow with Neon",
+          "Makes the object completely invisible",
+          "Deletes the object",
+          "Moves the object to Workspace",
         ],
- correctAnswer: 1,
- explanation: "A value of 1 makes the Part 100% transparent and invisible to the player.",
- },
- {
- id: "q14",
- type: MC,
- question: "Why should you avoid editing a script while the game is running in Play mode?",
- options: [
-          "Because it is easy to become confused and the changes will not be saved",
-          "Because the rules prohibit it",
-          "Because print text will turn green",
-          "Because all terrain will disappear",
+        correctAnswer: 1,
+        explanation: "0 is solid, 1 is fully invisible. Invisible objects are hard to debug, so keep the cube around 0.2-0.3.",
+      },
+      {
+        id: "q14",
+        type: MC,
+        question: "Why not edit a script while the game is running?",
+        options: [
+          "Every change is discarded the moment you press Stop",
+          "It is against the rules",
+          "print text turns green",
+          "All terrain disappears",
         ],
- correctAnswer: 0,
- explanation: "All changes made in Play mode are discarded after you select Stop.",
- },
- {
- id: "q15",
- type: MC,
- question: "What are the requirements for the final Lesson 1.3 task?",
- options: [
-          "Only an island with no code",
-          "A completely empty level",
-          "Only a Decal on the roof",
-          "A MagicCube with a script, variables, changed appearance, and Output messages",
+        correctAnswer: 0,
+        explanation: "Studio allows it, but Play mode is a sandbox that gets thrown away. Stop, edit, Play.",
+      },
+      {
+        id: "q15",
+        type: MC,
+        question: "Your script prints nothing and shows no errors. What is the fastest way to find out why?",
+        options: [
+          "Rebuild the island from scratch",
+          "Strip the script down to a single print, then add lines back until it breaks",
+          "Switch to a LocalScript",
+          "Turn Anchored off",
         ],
- correctAnswer: 3,
- explanation: "The task requires a cube that changes its Properties through a script you write.",
- },
- ],
- },
+        correctAnswer: 1,
+        explanation: "This is bisecting. If the lone print does not appear, the problem is where the script lives. If it does, you add code back until you find the exact line that breaks it.",
+      },
+    ],
+  },
 }
 
 export const enLesson14 = {
- lessonId: "lesson-roblox-1-4",
- moduleId: "module-01",
- order: 4,
- title: "1.4 - Arithmetic and if/else conditions",
- theoryMinutes: 35,
- quizMinutes: 15,
- estimatedTime: 60,
- learningObjectives: [
- "Perform mathematical operations in Luau using +, -, *, and /, and understand their order.",
- "Compare values with the operators ==, ~=, >, <, >=, and <=.",
- "Write if, elseif, and else conditions.",
- "Use ClickDetector to detect mouse clicks.",
- "Create and save LogicCube, an object that responds to player actions.",
- ],
- theory: {
- sections: [
- {
- title: "Lesson task: A cube with logic",
- content: `In the previous lesson, an object performed a simple action as soon as the game started. Now it will make decisions: one event occurs when a condition is true, and another occurs when it is false. Your task is to create a \`LogicCube\` object. You can reuse the previous MagicCube or create a new block.
+  lessonId: "lesson-roblox-1-4",
+  moduleId: "module-01",
+  order: 4,
+  title: "1.4 - Arithmetic and if/else conditions",
+  theoryMinutes: 35,
+  quizMinutes: 15,
+  estimatedTime: 60,
+  learningObjectives: [
+    "Do maths in Luau with +, -, *, / and know which one happens first.",
+    "Compare values with ==, ~=, >, <, >=, <= and understand what true and false really are.",
+    "Write if / elseif / else and get the order of the branches right.",
+    "Use a ClickDetector so the player can interact with an object.",
+    "Build and save LogicCube - an object that reacts differently depending on what has happened.",
+  ],
+  theory: {
+    sections: [
+      {
+        title: "Today's mission (lesson 4 of 92)",
+        content: `Your MagicCube from 1.3 does exactly one thing, exactly once, the moment the game starts. It cannot tell the difference between a player standing next to it and an empty island.
 
-**Complete these steps by the end of the lesson:**
-- Add a \`LogicCube\` object with a Script and ClickDetector.
-- Write code with mathematical operations and if/else conditions.
-- Configure the code so the cube changes its appearance and displays a message in Output when clicked.
-- Save the level as \`Lesson 1.4 - LogicCube\`.
+Today it learns to decide.
 
-Open the saved level from the previous lesson and open Output.`,
- },
- {
- title: "Why conditions and numbers matter",
- content: `Most game systems are built with numbers and condition checks.
+That is the entire difference between a decoration and a game. A game asks questions - *has the player got enough coins? is their health above zero? have they touched the checkpoint yet?* - and does different things depending on the answer. Every one of those questions is an \`if\`.
 
- **For example:**
- - if health <= 0, the player loses;
- - if coins >= the item's price, the purchase is completed.
+| After 1.3 | Result of 1.4 |
+|---|---|
+| Code runs top to bottom, once | Code chooses between branches |
+| The cube ignores the player | The cube counts clicks and reacts |
+| No numbers being tracked | A counter that changes as the game is played |
 
-Without conditions, code simply runs commands in sequence. Conditions allow a game to respond to its current state and the player's actions.
+You are about to write the pattern that runs underneath shops (module 7), damage (module 8), lap timers (module 9), and quests (module 10). It is genuinely the same three lines every time: change a number, check the number, do something different depending on the answer.
 
-**Do this now:** Find your \`MagicCube\` or create a new \`LogicCube\` block near the house. Enable Anchored = true and add a Script inside the object.`,
- },
- {
- title: "Math in Luau: +, -, *, /",
- content: `Calculations in the code are written according to the standard rules of mathematics.
+**Your finish line for today:**
+- A \`LogicCube\` with a Script and a ClickDetector.
+- Arithmetic and an \`if / else\` in the code.
+- Click it: the appearance changes and Output says something new.
+- Saved as \`Lesson 1.4 - LogicCube\`.
+
+**Do now (2 min):** open your level from 1.3 and open Output.`,
+      },
+      {
+        title: "Why games are mostly numbers and questions",
+        content: `Almost every system you will build is a number plus a question about that number.
+
+| The number | The question | The game does |
+|---|---|---|
+| health | \`health <= 0\` | The player loses |
+| coins | \`coins >= price\` | The purchase goes through |
+| checkpointsReached | \`== total\` | Show the win screen |
+| lapTime | \`< bestTime\` | New record |
+
+Without conditions, code just runs its lines in order and stops. With conditions, code responds to what is actually happening - which is what makes something feel like a game rather than an animation.
+
+**Do now (3 min):** find your \`MagicCube\`, or make a fresh block named \`LogicCube\`. \`Anchored = true\`, and put a Script inside it.`,
+      },
+      {
+        title: "Arithmetic",
+        content: `Maths in Luau works the way it does on paper.
 
 \`\`\`lua
 local a = 10
@@ -1494,29 +1630,34 @@ local quotient = a / b -- 3.333...
 print(sum, diff, product, quotient)
 \`\`\`
 
-| Operator | Operation | Example |
-|----------|-----------|----------------|
-| \`+\` | Addition | \`score + 1\` |
-| \`-\` | Subtraction | \`health - damage\` |
-| \`*\` | Multiplication | \`price * 2\` |
-| \`/\` | Division | \`time / 60\` |
+| Operator | Does | You will use it for |
+|---|---|---|
+| \`+\` | Add | \`score + 1\` |
+| \`-\` | Subtract | \`health - damage\` |
+| \`*\` | Multiply | \`price * quantity\` |
+| \`/\` | Divide | \`seconds / 60\` |
 
-**Order of operations:** multiplication and division are performed first, then addition and subtraction. The \`()\` parentheses change the priority: \`(1 + 2) * 3\` is 9 and \`1 + 2 * 3\` is 7.
+**Order matters.** Multiplication and division run before addition and subtraction, exactly like in maths class. Parentheses override it:
 
-**Try it now:** temporarily add \`print(2 + 2 * 5)\` and \`print((2 + 2) * 5)\` in your script. Run Play, check the results in Output, and then delete these lines.`,
- },
- {
- title: "Comparison operators",
- content: `In order for the \`if\` condition to work, it needs an expression that returns **true** or **false**.
+- \`1 + 2 * 3\` is **7** - the multiply goes first.
+- \`(1 + 2) * 3\` is **9** - the parentheses go first.
 
-| Operator | Value | Example |
-|----------|----------|---------|
-| \`==\` | Is equal to | \`score == 10\` |
-| \`~=\` | Not equal to | \`color ~= "Red"\` |
-| \`>\`, \`<\` | More / less | \`coins > 5\` |
-| \`>=\`, \`<=\` | Greater than or equal to / Less than or equal to | \`health <= 0\` |
+This is not a trivia question. A price formula like \`base + level * multiplier\` behaves completely differently from \`(base + level) * multiplier\`, and in module 7 you will balance a tycoon economy with formulas that look exactly like that. Getting one set of parentheses wrong is the difference between a shop that works and a shop where the second upgrade costs four million.
 
-**Important:** double sign (\`==\`) is used to check for equality. Single (\`=\`) is only used to write a value to a variable.
+**Do now (3 min):** temporarily add \`print(2 + 2 * 5)\` and \`print((2 + 2) * 5)\`. Play, read Output - you should get 12 and 20 - then delete the lines.`,
+      },
+      {
+        title: "Comparisons, and the true/false world",
+        content: `An \`if\` needs a question that comes back either **true** or **false**. Comparison operators are how you ask.
+
+| Operator | Asks | Example |
+|---|---|---|
+| \`==\` | Are these equal? | \`score == 10\` |
+| \`~=\` | Are these different? | \`color ~= "Red"\` |
+| \`>\` \`<\` | Greater / less than | \`coins > 5\` |
+| \`>=\` \`<=\` | Greater or equal / less or equal | \`health <= 0\` |
+
+**The one that catches everybody:** \`=\` assigns, \`==\` compares. One equals sign means "put this value in here". Two means "are these the same?". Mixing them up is the single most common beginner error in any language, and it will still catch you occasionally in five years.
 
 \`\`\`lua
 local clicks = 3
@@ -1525,59 +1666,78 @@ print(clicks > 5)   -- false
 print(clicks ~= 0)  -- true
 \`\`\`
 
-**Try it now:** create a variable \`local clicks = 0\` and write some \`print\` commands with comparison operators. Check in Play mode whether \`true\` or \`false\` is output.`,
- },
- {
- title: "if / else conditions",
- content: `The basic structure of the conditional statement looks like this:
+That works because \`true\` and \`false\` are real values, just like numbers and text. A comparison does not do anything by itself - it just produces one of those two values. The \`if\` is what acts on it.
+
+Note that Luau uses \`~=\` for "not equal", not \`!=\` like some other languages. If you have seen code elsewhere, this one will trip you up once.
+
+**Do now (3 min):** make \`local clicks = 0\` and print a few comparisons. Watch Output print true and false.`,
+      },
+      {
+        title: "if / else",
+        content: `Here is the shape:
 
 \`\`\`lua
 local score = 8
 
 if score >= 10 then
- print("Excellent")
+  print("Excellent")
 else
- print("Try again")
+  print("Try again")
 end
 \`\`\`
 
-The logic is as follows: **if** the condition is met, **then** (then) the first block of commands is executed, **else** the second block is executed. The statement ends with the keyword **end**.
+Read it out loud and it says what it does: *if* score is at least 10, *then* print Excellent, *otherwise* print Try again, *end*.
 
-Basic rules:
-- \`then\` must be written after the condition.
-- Each \`if\` block must end with the word \`end\`.
-- The \`else\` block is optional, but allows for alternative scenarios to be handled.
+Three rules Luau will hold you to:
+- \`then\` goes after the condition. Forget it and you get \`then expected\`.
+- Every \`if\` closes with \`end\`. Forget it and you get \`end expected\`.
+- \`else\` is optional. Sometimes you only care about one case.
 
-**Try it now:** write the statement \`if score >= 10\` with the block \`else\`. Change the value of the \`score\` variable (for example, to 12 or 3) and use Play to check how the different branches of the code work.`,
- },
- {
- title: "Multiple conditions: elseif",
- content: `When there are more than two possible options, \`elseif\` is used:
+That second one deserves a word. Luau does not use curly braces \`{}\`. It uses words - \`then\`, \`do\`, \`end\`. The upside is that it reads almost like English. The downside is that a missing \`end\` produces an error message pointing at the *bottom* of your file rather than the line you forgot. Indent your code properly and mismatched \`end\`s become visible instead of invisible.
+
+**Do now (4 min):** write that if/else. Now change \`score\` to 12, Play, read Output. Change it to 3, Play again. You have just tested both branches - which is exactly what you should do to every condition you ever write.`,
+      },
+      {
+        title: "elseif, and why order decides everything",
+        content: `More than two outcomes? \`elseif\`.
 
 \`\`\`lua
 local rankScore = 15
 
 if rankScore >= 20 then
- print("Rank S")
+  print("Rank S")
 elseif rankScore >= 10 then
- print("Rank A")
+  print("Rank A")
 else
- print("Rank B")
+  print("Rank B")
 end
 \`\`\`
 
-Conditions are checked sequentially **from top to bottom**. As soon as the program finds the first true condition, it executes that block, ignoring the rest. Therefore, the highest or strictest values (\`>= 20\`) should be checked first.
+**The crucial rule: conditions are checked top to bottom, and the first true one wins.** Everything below it is skipped entirely.
 
-**Try it now:** Write code with three branches of validation for a variable (for example \`energy\`) and test it by substituting different numeric values.`,
- },
- {
- title: "Handling clicks: ClickDetector",
- content: `In order for the script to respond to user actions, we will add a tool that detects clicks.
+Which means order is not a style choice, it is the logic. Flip those two lines:
 
-1. Select the object \`LogicCube\`.
-2. Click **Insert → ClickDetector**.
-3. Set the MaxActivationDistance property to \`32\`.
-4. In the script, add the code for handling the click:
+\`\`\`lua
+if rankScore >= 10 then   -- this catches 25 as well!
+  print("Rank A")
+elseif rankScore >= 20 then
+  print("Rank S")         -- unreachable. Nothing will ever get here.
+end
+\`\`\`
+
+A score of 25 is greater than 10, so it matches the first branch and stops. Rank S becomes impossible to earn, and the game will not warn you - it is perfectly valid code that does the wrong thing.
+
+**Strictest condition first.** Highest number at the top, working down. Remember it now and you will save yourself a genuinely confusing bug hunt in module 6 when your reward tiers all pay out the lowest amount.
+
+**Do now (5 min):** write a three-branch check on a variable like \`energy\`, then try several values and confirm each branch is reachable. Then deliberately put them in the wrong order and watch a branch become unreachable.`,
+      },
+      {
+        title: "ClickDetector: letting the player in",
+        content: `So far your code runs and finishes. Now it needs to sit and wait for the player to do something.
+
+1. Select \`LogicCube\`.
+2. **Insert → ClickDetector**.
+3. Set \`MaxActivationDistance\` to \`32\` - that is how close the player must stand.
 
 \`\`\`lua
 local part = script.Parent
@@ -1585,26 +1745,34 @@ local detector = part:WaitForChild("ClickDetector")
 local clicks = 0
 
 detector.MouseClick:Connect(function(player)
- clicks = clicks + 1
- print(player.Name, "clicked", clicks, "times")
+  clicks = clicks + 1
+  print(player.Name, "clicked", clicks, "times")
 
- if clicks >= 3 then
-  part.BrickColor = BrickColor.new("Bright green")
-  print("Enough clicks")
- else
-  part.BrickColor = BrickColor.new("Bright red")
-  print("More clicks needed")
- end
+  if clicks >= 3 then
+    part.BrickColor = BrickColor.new("Bright green")
+    print("Enough clicks")
+  else
+    part.BrickColor = BrickColor.new("Bright red")
+    print("More clicks needed")
+  end
 end)
 \`\`\`
 
-This code combines a mathematical operation (\`clicks = clicks + 1\`) and a condition check \`if/else\`. The instructions inside the \`Connect\` block are executed each time the object is clicked.
+Three new ideas in there, and all three come back constantly:
 
-**Try it now:** add ClickDetector and this block of code. Start Play, click on the cube a few times and watch the color change and the Output panel.`,
- },
- {
- title: "Complete code for LogicCube",
- content: `Below is a structured code example that can be used as a basis for the final task. Numbers and colors can be changed:
+**\`WaitForChild("ClickDetector")\`** - "pause here until that object exists". Roblox loads a game's objects in an unpredictable order, and a script can start running before the thing it needs has appeared. WaitForChild is the polite way to handle that.
+
+**\`:Connect(function(player) ... end)\`** - this is an *event connection*. You are handing the game a chunk of code and saying "run this every time somebody clicks". The code inside does not run now; it runs later, once per click, possibly hundreds of times. This is the pattern behind every interactive thing in Roblox.
+
+**\`clicks = clicks + 1\`** - read the right side first. Take the current value of clicks, add one, and put the result back in clicks. It looks like a broken equation and it is not one - \`=\` here means "store", not "equals".
+
+Notice \`clicks\` is declared *above* the function, not inside it. That is deliberate and it is the subject of the most common bug in this lesson.
+
+**Do now (6 min):** add the ClickDetector and this code. Play, click the cube several times, and watch both the colour and Output.`,
+      },
+      {
+        title: "The full LogicCube",
+        content: `A version with three branches and a bit of showmanship. Change the numbers and colours to taste.
 
 \`\`\`lua
 local part = script.Parent
@@ -1615,1375 +1783,1457 @@ local goal = 3
 local growAmount = 0.5
 
 detector.MouseClick:Connect(function(player)
- clicks = clicks + 1
+  clicks = clicks + 1
 
- -- Increase the object's size
- local s = part.Size
- part.Size = Vector3.new(s.X + growAmount, s.Y + growAmount, s.Z + growAmount)
+  -- Grow the cube a little on every click
+  local s = part.Size
+  part.Size = Vector3.new(s.X + growAmount, s.Y + growAmount, s.Z + growAmount)
 
- if clicks >= goal then
-  part.Material = Enum.Material.Neon
-  part.BrickColor = BrickColor.new("Bright green")
-  print(player.Name, "Goal reached! Clicks:", clicks)
- elseif clicks == 2 then
-  part.BrickColor = BrickColor.new("Bright yellow")
-  print("One click remaining")
- else
-  part.BrickColor = BrickColor.new("Bright red")
-  print("Current click count:", clicks)
- end
+  if clicks >= goal then
+    part.Material = Enum.Material.Neon
+    part.BrickColor = BrickColor.new("Bright green")
+    print(player.Name, "Goal reached! Clicks:", clicks)
+  elseif clicks == 2 then
+    part.BrickColor = BrickColor.new("Bright yellow")
+    print("One click remaining")
+  else
+    part.BrickColor = BrickColor.new("Bright red")
+    print("Current click count:", clicks)
+  end
 end)
 \`\`\`
 
-Check the result in Play mode: with each click, the cube will grow, and the color and message will change according to the number of clicks. If resizing causes bugs (the cube flies or falls), you can remove the \`Size\` changing block.`,
- },
- {
- title: "Preventing double clicks (Debounce)",
- content: `Sometimes a double click of the mouse button registers too quickly and breaks the logic. To prevent this, a guard variable (debounce) is added:
+Play it. Red, then yellow, then green and glowing - and it grows a little each time. Three lines of feedback for a player who has done nothing but click a box three times, and it already feels like *something is happening*. That is not an accident; it is the same principle that makes the coin sounds in module 6 worth the twenty minutes they take.
+
+Note \`goal\` and \`growAmount\` sitting at the top as named settings. Same habit as 1.3, and it makes tuning this a five-second job instead of a hunt.
+
+If the growing cube starts misbehaving - jumping, falling through the ground - just delete the Size lines. It is decoration, not the point of the lesson.`,
+      },
+      {
+        title: "Debounce: guarding against double fires",
+        content: `Sometimes a click registers twice in a few milliseconds, and your counter jumps by 2. The standard fix is a guard variable, universally called a **debounce**:
 
 \`\`\`lua
 local busy = false
 
 detector.MouseClick:Connect(function(player)
- if busy then
-  return -- Prevent another run while the script is busy
- end
- busy = true
+  if busy then
+    return -- already handling a click; ignore this one
+  end
+  busy = true
 
- -- Place the main if/else logic here
+  -- main if/else logic goes here
 
- task.wait(0.2) -- Delay
- busy = false
+  task.wait(0.2)
+  busy = false
 end)
 \`\`\`
 
-For this lesson, such protection is optional, but it increases the stability of interactive objects.`,
- },
- {
- title: "Common errors and solutions",
- content: `| Error / Symptom | Cause | How to fix it |
-|---------|---------|-------------|
-| Only one condition always runs | Conditions are in the wrong order | Put the highest or strictest requirements (\`>= 10\`) at the start of the conditional block. |
-| \`then expected\` error | The \`then\` keyword is missing | Write the condition in the form \`if condition then\`. |
-| \`end expected\` error | The block is not closed with \`end\` | Add \`end\` at the end of every \`if\` statement. |
-| \`=\` instead of \`==\` | The assignment operator is used instead of a comparison | Always use \`==\` to compare values. |
-| Clicks are not detected | ClickDetector is missing, or testing is taking place in Edit mode | Add a ClickDetector and test the logic only in Play mode (F5). |
-| The click counter does not increase | The variable is declared inside the function | Move \`local clicks = 0\` to the start of the script. |
+The logic: put up a flag saying "I am dealing with this", do the work, wait a fraction of a second, take the flag down. Any click arriving in between hits the \`return\` and is dropped.
 
-**Try it now:** replace \`==\` with \`=\` in your code, start the game, review the error message in Output, and then restore the correct operator.`,
- },
- {
- title: "Project completion requirements",
- content: `**Checklist:**
-- [ ] \`LogicCube\` object with script and \`ClickDetector\` configured.
-- [ ] Mathematical calculations are present in the code (for example, \`clicks = clicks + 1\`).
-- [ ] An \`if / else\` conditional statement is implemented (preferably also \`elseif\`).
-- [ ] Depending on the conditions, the appearance of the cube changes and corresponding \`print\` messages are displayed.
-- [ ] Testing in Play mode works correctly.
-- [ ] The project is saved with the name \`Lesson 1.4 - LogicCube\`.
+\`return\` means "leave this function immediately, skip everything below". It is one of the most useful words in programming for exactly this reason - handling the case you want to ignore first, then getting on with the real work.
 
-| Level | Evaluation |
-|--------|------|
-| **Complete** | The code performs a mathematical operation and condition \`if/else\`, the appearance of the object changes after clicking. |
-| **Good** | \`elseif\` is used, messages are clearly delimited, code is structured. |
-| **Advanced** | Adjusted resizing and added protection against double clicks. |`,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Using = instead of == in an if condition",
- explanation: "The single equal sign sets a value, not compares it.",
- correctApproach: "Always use the double equals sign (==) to check values.",
- },
- {
- mistake: "Missing keywords then or end",
- explanation: "Luau syntax requires a clear block structure.",
- correctApproach: "Use the basic pattern: if [condition] then [action] end.",
- },
- {
- mistake: "Declaring the clicks variable inside the function",
- explanation: "If the variable is created inside the Connect function, it will be reset to zero on each click.",
- correctApproach: "Declare local clicks = 0 at the beginning of the file outside the function block.",
- },
- {
- mistake: "Attempting to click on an object in edit mode",
- explanation: "MouseClick events are only logged while the game is running.",
- correctApproach: "Add ClickDetector and test the interaction in Play mode (F5).",
- },
- {
- mistake: "Incorrect order of conditions when using elseif",
- explanation: "The code executes the first true condition, so weak conditions can intercept execution before stricter ones.",
- correctApproach: "Start checking with the strictest conditions (for example, >= 20 must come before >= 10).",
- },
- {
- mistake: "The script does not find ClickDetector",
- explanation: "The script is not a child of the object, or the command that waits for loading is missing.",
- correctApproach: "Make sure Script and ClickDetector are inside LogicCube and use WaitForChild('ClickDetector').",
- },
- {
- mistake: "Only a mathematical operation is written without if conditions",
- explanation: "The task requires demonstration of both skills.",
- correctApproach: "Be sure to add at least an if/else statement for processing the result of a mathematical operation.",
- },
- ],
- summary:
- "Today you learned the principles of mathematical calculations and logical comparisons in Luau. You configured if/elseif/else conditional constructs and used ClickDetector to handle mouse clicks. You created a LogicCube object that changes its behavior depending on the number of clicks.",
- practiceTask: {
- title: "Practical task: Object with logic (LogicCube)",
- difficulty: "beginner",
- description: `**Task:** Create a cube that counts the number of clicks and changes its appearance using conditions.
+Optional today. Mandatory in 5.2, when you build hazards that would otherwise kill a player six times in one touch.`,
+      },
+      {
+        title: "Errors you will hit today",
+        content: `| Symptom | Cause | Fix |
+|---|---|---|
+| One branch always runs, others never | Conditions in the wrong order | Strictest first: \`>= 20\` above \`>= 10\`. |
+| \`then expected\` | Missing \`then\` | \`if condition then\` - the word is required. |
+| \`end expected\` | A block was never closed | Every \`if\` and every \`function\` needs its \`end\`. Indent and count them. |
+| \`=\` where \`==\` belongs | Assignment instead of comparison | \`==\` to compare, always. |
+| Clicks do nothing | No ClickDetector, or you are in Edit mode | Add the ClickDetector and test with F5. Nothing clickable works in Edit mode. |
+| The counter is always 1 | \`local clicks = 0\` is inside the function | Move it above the \`Connect\` line. |
 
-### Part A: Preparation
-1. Open your previous level with the house.
-2. Create the \`LogicCube\` object and enable Anchored = true.
-3. Add **ClickDetector** and **Script** inside the cube.
-4. Open the Output panel.
+That last one is worth understanding rather than memorising. If \`local clicks = 0\` sits inside the function, it runs *on every single click* - so the counter is created fresh, set to zero, incremented to 1, and thrown away. Declared outside, it is created once and survives between clicks.
 
-### Part B: Math and conditions
-1. Declare the variable \`local clicks = 0\` at the beginning of the script.
-2. In the click handler, increase the value: \`clicks = clicks + 1\`.
-3. Write an \`if / elseif / else\` statement that checks the value of \`clicks\` and sets different colors of the object.
-4. Add a unique message via \`print\` to each condition branch.
-5. Run Play and test the code.
+"Where does this variable live, and how long does it last?" is a question you will ask for the rest of your programming life. This is the first time it bites.
 
-### Part C: Finish and save
-1. Check the Output panel for red errors.
-2. Save the project in Roblox via **File → Save to Roblox** under the name \`Lesson 1.4 - LogicCube\`.
-3. Mark the practice as complete.`,
- hints: [
- "Create the clicks variable outside the Connect function.",
- "First, check the operation of the logic using print, and only then add the color change.",
- "In the elseif condition, arrange the value from largest to smallest.",
- "Increase MaxActivationDistance in ClickDetector properties if clicks are not being registered.",
- "Always use the cycle Stop → Edit → Play.",
- ],
- optionalChallenge:
- "Add a mathematical multiplication operation (for example, score = clicks * 10) and display the result in the Output panel. Use debounce to eliminate double triggers.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 15,
- questions: [
- {
- id: "q1",
- type: MC,
- question: "Which operator is responsible for adding numbers?",
- options: [
+**Do now (4 min):** swap a \`==\` for a \`=\` on purpose, Play, read the error, then put it back. Then move \`local clicks = 0\` inside the function, Play, and watch the counter refuse to go past 1. Breaking things deliberately is the cheapest way to learn to recognise them.`,
+      },
+      {
+        title: "Check your work before you move on",
+        content: `**Checklist:**
+- [ ] \`LogicCube\` with a Script and a ClickDetector.
+- [ ] Arithmetic in the code (\`clicks = clicks + 1\` counts).
+- [ ] An \`if / else\`, ideally with an \`elseif\`.
+- [ ] Appearance changes and a distinct \`print\` per branch.
+- [ ] Tested in Play mode, all branches reachable.
+- [ ] Saved as \`Lesson 1.4 - LogicCube\`.
+
+| Level | What it looks like |
+|---|---|
+| **Done** | Arithmetic plus an if/else; the cube changes when clicked. |
+| **Good** | An \`elseif\` in the right order, clearly distinct messages, tidy structure. |
+| **Excellent** | Size changes tuned so they behave, and a debounce guarding the handler. |`,
+      },
+    ],
+  },
+  commonMistakes: [
+    {
+      mistake: "Writing = instead of == inside an if",
+      explanation: "One equals sign stores a value; two compare values. Every programmer does this, in every language, forever.",
+      correctApproach: "== to compare. If you are asking a question, use two.",
+    },
+    {
+      mistake: "Missing then or end",
+      explanation: "Luau closes blocks with words rather than braces, and the error often points at the bottom of the file rather than the line you forgot.",
+      correctApproach: "Keep the pattern in your head: if [condition] then ... end. Indent your code so unmatched ends become visible.",
+    },
+    {
+      mistake: "The click counter never goes above 1",
+      explanation: "local clicks = 0 is declared inside the Connect function, so it is recreated and reset on every single click.",
+      correctApproach: "Move local clicks = 0 above the Connect line, at the top of the script, so it survives between clicks.",
+    },
+    {
+      mistake: "Clicking the cube in Edit mode and nothing happens",
+      explanation: "MouseClick only fires while the game is actually running.",
+      correctApproach: "Press F5 first. Interactive things only interact in Play mode.",
+    },
+    {
+      mistake: "One branch of the elseif chain never runs",
+      explanation: "A looser condition sits above a stricter one and catches the value first. The first true condition wins and everything below is skipped.",
+      correctApproach: "Order strictest to loosest - >= 20 before >= 10. Then test with a value for each branch and confirm each one is reachable.",
+    },
+    {
+      mistake: "The script cannot find the ClickDetector",
+      explanation: "Either the ClickDetector is not inside LogicCube alongside the Script, or the script ran before it had loaded.",
+      correctApproach: "Check both are children of LogicCube in Explorer, and use WaitForChild('ClickDetector') rather than a direct reference.",
+    },
+    {
+      mistake: "Arithmetic but no conditions, or conditions but no arithmetic",
+      explanation: "The lesson is about the two working together - a number that changes, and a question asked about it.",
+      correctApproach: "Make sure your script both changes a value and branches on the result. That pairing is the point.",
+    },
+  ],
+  summary:
+    "You made an object that thinks. You can do arithmetic and you know which operations run first, you can compare values and get true or false back, and you can branch with if / elseif / else - including the trap where a loose condition placed too high makes a branch below it unreachable. You also connected your first event, so your code now waits for the player instead of running once and stopping.",
+  practiceTask: {
+    title: "Practice: LogicCube",
+    difficulty: "beginner",
+    description: `**The build:** a cube that counts clicks and looks different depending on how many it has had.
+
+### Part A: Setup
+1. Open your level from 1.3.
+2. Make \`LogicCube\`, \`Anchored = true\`.
+3. Put a **ClickDetector** and a **Script** inside it.
+4. Open Output.
+
+### Part B: Maths and logic
+1. \`local clicks = 0\` at the top of the script - **outside** the Connect function.
+2. Inside the click handler: \`clicks = clicks + 1\`.
+3. An \`if / elseif / else\` on \`clicks\` that sets a different colour per branch.
+4. A distinct \`print\` in every branch, so Output tells you which one ran.
+5. Play, and click enough times to reach every branch.
+
+### Part C: Save
+1. No red text in Output.
+2. **File → Save to Roblox** as \`Lesson 1.4 - LogicCube\`.
+3. Mark the practice complete here.`,
+    hints: [
+      "Declare clicks outside the Connect function, or it resets to zero on every click.",
+      "Get the logic right with prints alone first, then add colours. Debugging one thing at a time is much faster than debugging two.",
+      "Order your elseif branches from the biggest number down, or the loose one swallows the strict one.",
+      "Clicks not registering? Raise MaxActivationDistance on the ClickDetector - the player may simply be standing too far away.",
+      "Stop → edit → Play. Every time.",
+    ],
+    optionalChallenge:
+      "Add a multiplication - \`local score = clicks * 10\` - and print it alongside the click count. Then add the debounce guard from the lesson and prove it works: click as fast as you physically can and check the counter still only goes up by one each time.",
+  },
+  quiz: {
+    passingScore: 70,
+    timeLimit: 15,
+    questions: [
+      {
+        id: "q1",
+        type: MC,
+        question: "Which operator adds numbers?",
+        options: [
           "==",
           "+",
           "then",
           "end",
         ],
- correctAnswer: 1,
- explanation: "The + operator is used to add values.",
- },
- {
- id: "q2",
- type: MC,
- question: "What does the == operator do?",
- options: [
-          "Writes a value to a variable",
-          "Performs division",
+        correctAnswer: 1,
+        explanation: "+ adds. It is also the workhorse of every counter you will ever write: score = score + 1.",
+      },
+      {
+        id: "q2",
+        type: MC,
+        question: "What does == do?",
+        options: [
+          "Stores a value in a variable",
+          "Divides",
           "Creates a new object",
-          "Checks values for equality",
+          "Asks whether two values are equal, and returns true or false",
         ],
- correctAnswer: 3,
- explanation: "The == operator logically compares two values.",
- },
- {
- id: "q3",
- type: MC,
- question: "Why is the expression 2 + 2 * 5 equal to 12 and not 20?",
- options: [
-          "This is a compiler error",
-          "The addition operator is ignored",
-          "Multiplication has a higher execution priority",
-          "The system automatically rounds the result",
+        correctAnswer: 3,
+        explanation: "== compares and produces true or false. = stores. Two different jobs that look almost identical.",
+      },
+      {
+        id: "q3",
+        type: MC,
+        question: "Why does 2 + 2 * 5 come out as 12 rather than 20?",
+        options: [
+          "It is a bug in Luau",
+          "The + is ignored",
+          "Multiplication runs before addition",
+          "Luau rounds the result",
         ],
- correctAnswer: 2,
- explanation: "Multiplication and division are performed before addition and subtraction.",
- },
- {
- id: "q4",
- type: MC,
- question: "What is the correct syntax for writing a condition?",
- options: [
+        correctAnswer: 2,
+        explanation: "Same order of operations as maths class: multiply and divide first, then add and subtract. (2 + 2) * 5 would give you 20.",
+      },
+      {
+        id: "q4",
+        type: MC,
+        question: "Which is correct Luau syntax for a condition?",
+        options: [
           "if clicks >= 3 then",
           "if clicks >= 3",
           "when clicks >= 3",
           "if clicks >= 3 {",
         ],
- correctAnswer: 0,
- explanation: "In Luau, the keyword then must be written after the condition is checked.",
- },
- {
- id: "q5",
- type: MC,
- question: "What is the else block used for?",
- options: [
-          "To delete the script",
-          "To activate the terrain",
-          "To save progress",
-          "To execute the code if the previous if condition is false",
+        correctAnswer: 0,
+        explanation: "Luau uses the word then, not braces. Leave it out and you get a 'then expected' error.",
+      },
+      {
+        id: "q5",
+        type: MC,
+        question: "What is else for?",
+        options: [
+          "Deleting the script",
+          "Activating terrain",
+          "Saving progress",
+          "Running code when the if condition turned out false",
         ],
- correctAnswer: 3,
- explanation: "The else block is responsible for handling the alternative scenario when the initial condition is not met.",
- },
- {
- id: "q6",
- type: MC,
- question: "In what cases is elseif used?",
- options: [
-          "When there is only one verification option",
-          "When you need to check several different conditions in a row",
-          "When the object does not have ClickDetector",
-          "When the object is not fixed",
+        correctAnswer: 3,
+        explanation: "else is the fallback branch. It is optional - sometimes you only care about the true case.",
+      },
+      {
+        id: "q6",
+        type: MC,
+        question: "When do you need elseif?",
+        options: [
+          "When there is only one thing to check",
+          "When there are more than two possible outcomes to choose between",
+          "When the object has no ClickDetector",
+          "When the object is not anchored",
         ],
- correctAnswer: 1,
- explanation: "The elseif statement allows you to add additional checks if the first condition is not met.",
- },
- {
- id: "q7",
- type: MC,
- question: "Where should the counter variable (local clicks) be declared?",
- options: [
-          "Only inside the click handler function",
+        correctAnswer: 1,
+        explanation: "if/else gives you two outcomes. elseif lets you chain as many as you need - rank tiers, price brackets, difficulty levels.",
+      },
+      {
+        id: "q7",
+        type: MC,
+        question: "Where should local clicks = 0 be declared?",
+        options: [
+          "Inside the click handler function",
           "In the Lighting folder",
-          "Outside of the Connect function at the beginning of the script",
-          "In the name of the object",
+          "At the top of the script, outside the Connect function",
+          "In the object's name",
         ],
- correctAnswer: 2,
- explanation: "If a variable is created inside a function, its value will be reset every time it is clicked.",
- },
- {
- id: "q8",
- type: MC,
- question: "What function did ClickDetector perform in this lesson?",
- options: [
-          "A tool to run code on mouse click",
-          "A terrain editing tool",
-          "Replacing the server script",
-          "Camera settings module",
+        correctAnswer: 2,
+        explanation: "Inside the function it is recreated and reset on every click, so the counter never gets past 1. Outside, it is created once and survives.",
+      },
+      {
+        id: "q8",
+        type: MC,
+        question: "What does a ClickDetector do?",
+        options: [
+          "Lets a Part respond when a player clicks it",
+          "Edits terrain",
+          "Replaces the server script",
+          "Configures the camera",
         ],
- correctAnswer: 0,
- explanation: "ClickDetector allows the system to register the player's interaction with the object using clicks.",
- },
- {
- id: "q9",
- type: MC,
- question: "What does the ~= operator mean?",
- options: [
-          "Is equal to",
+        correctAnswer: 0,
+        explanation: "It gives a Part a MouseClick event you can connect code to. Without one, a Part is not clickable at all.",
+      },
+      {
+        id: "q9",
+        type: MC,
+        question: "What does ~= mean?",
+        options: [
+          "Equal to",
           "Not equal to",
-          "Multiplication",
-          "Marking a comment",
+          "Multiply",
+          "Start a comment",
         ],
- correctAnswer: 1,
- explanation: "The ~= operator checks values for inequality.",
- },
- {
- id: "q10",
- type: MC,
- question: "If the condition elseif >= 10 is in the code before if >= 20, what will be the result if score = 25?",
- options: [
-          "The code will correctly output Rank S",
-          "A critical script error will occur",
-          "The script will delete the object",
-          "A weaker condition (>= 10) will work due to incorrect check order",
+        correctAnswer: 1,
+        explanation: "Luau writes 'not equal' as ~=, not != like some other languages. Worth remembering if you have seen code elsewhere.",
+      },
+      {
+        id: "q10",
+        type: MC,
+        question: "A chain checks elseif >= 10 before if >= 20. What happens when score is 25?",
+        options: [
+          "It correctly prints Rank S",
+          "The script crashes",
+          "The object is deleted",
+          "The looser condition (>= 10) wins, because the first true branch stops the chain",
         ],
- correctAnswer: 3,
- explanation: "The code fulfills the first true condition. Since 25 is greater than 10, the first check will stop further execution.",
- },
- {
- id: "q11",
- type: MC,
- question: "The entry clicks = clicks + 1 is an example:",
- options: [
-          "Changes the value of a variable through a mathematical operation",
-          "Tools Union",
-          "Painting Terrain",
-          "Adding image Decal",
+        correctAnswer: 3,
+        explanation: "25 is greater than 10, so that branch matches and everything below is skipped. Rank S becomes unreachable - valid code doing the wrong thing, with no warning.",
+      },
+      {
+        id: "q11",
+        type: MC,
+        question: "What is clicks = clicks + 1 doing?",
+        options: [
+          "Taking the current value, adding one, and storing the result back",
+          "Comparing clicks to 1",
+          "Creating a new object",
+          "Adding an image Decal",
         ],
- correctAnswer: 0,
- explanation: "This expression increments the current value of the variable by one.",
- },
- {
- id: "q12",
- type: MC,
- question: "What keyword closes a conditional if block?",
- options: [
+        correctAnswer: 0,
+        explanation: "Read the right side first. It looks like a broken equation but = means 'store', not 'equals'.",
+      },
+      {
+        id: "q12",
+        type: MC,
+        question: "Which keyword closes an if block?",
+        options: [
           "stop",
           "finish",
           "end",
           "close",
         ],
- correctAnswer: 2,
- explanation: "In Luau, every if block must end with the keyword end.",
- },
- {
- id: "q13",
- type: MC,
- question: "What will happen if you write = instead of == in if?",
- options: [
-          "Delete the account",
-          "Assign a value to a variable",
-          "Error in Output",
-          "Nothing",
+        correctAnswer: 2,
+        explanation: "Luau closes blocks with end rather than a brace. Every if, every function, every loop needs one.",
+      },
+      {
+        id: "q13",
+        type: MC,
+        question: "What happens if you write = instead of == inside an if?",
+        options: [
+          "Nothing - both work the same",
+          "The account is deleted",
+          "A syntax error appears in Output and the script does not run",
+          "The condition is always true",
         ],
- correctAnswer: 3,
- explanation: "In Output, an error about an incorrectly written command will be displayed",
- },
- {
- id: "q14",
- type: MC,
- question: "Why should ClickDetector be tested in Play mode?",
- options: [
-          "The Output panel is only available in edit mode",
-          "Click events are registered only while the game is running",
-          "In Play mode, the object is deleted",
-          "If conditions do not work in edit mode",
+        correctAnswer: 2,
+        explanation: "Luau will not accept an assignment where a condition belongs, so it errors out. Read the first red line - it points you at the line.",
+      },
+      {
+        id: "q14",
+        type: MC,
+        question: "Why must a ClickDetector be tested in Play mode?",
+        options: [
+          "Output only works in Edit mode",
+          "Click events only fire while the game is actually running",
+          "The object is deleted in Play mode",
+          "Conditions do not work in Edit mode",
         ],
- correctAnswer: 1,
- explanation: "The user's interaction with the objects of the game world is recorded by the system only after starting the Play mode.",
- },
- {
- id: "q15",
- type: MC,
- question: "What are the requirements for the final task of lesson 1.4?",
- options: [
-          "Object LogicCube with mathematical calculations, conditions and ClickDetector",
-          "An edited terrain with no code",
-          "Empty level template",
-          "A level with added images",
+        correctAnswer: 1,
+        explanation: "Edit mode is a builder's view, not a running game. Nothing interactive interacts until you press F5.",
+      },
+      {
+        id: "q15",
+        type: MC,
+        question: "What does WaitForChild(\"ClickDetector\") protect you from?",
+        options: [
+          "Players clicking too fast",
+          "The script running before the ClickDetector has finished loading",
+          "The cube falling through the ground",
+          "Errors in the if condition",
         ],
- correctAnswer: 0,
- explanation: "The final task involves creating an object that contains a working script with logical checks.",
- },
- ],
- },
+        correctAnswer: 1,
+        explanation: "Roblox loads objects in an unpredictable order. WaitForChild pauses until the object exists instead of erroring because it was not there yet.",
+      },
+    ],
+  },
 }
 
 export const enLesson15 = {
- lessonId: "lesson-roblox-1-5",
- moduleId: "module-01",
- order: 5,
- title: "1.5 - Materials, Decals, and decoration",
- theoryMinutes: 35,
- quizMinutes: 15,
- estimatedTime: 60,
- learningObjectives: [
- "Choose materials (Material) for the facade, roof and other details of the house.",
- "Understand the difference between BrickColor and Color3 and know when to use them.",
- "Apply the image (Decal / Texture) to walls or signs.",
- "Use material Neon for accents without overloading the design.",
- "Save and submit the decorated House_01 with a consistent style.",
- ],
- theory: {
- sections: [
- {
- title: "Lesson task: decorating the house",
- content: `In the previous lessons, you assembled the frame, added the island and wrote the code. Today we're working on the exterior: your \`House_01\` house will get its own style with materials, colors, textures (Decal/Texture) and neat neon accents.
+  lessonId: "lesson-roblox-1-5",
+  moduleId: "module-01",
+  order: 5,
+  title: "1.5 - Materials, Decals, and decoration",
+  theoryMinutes: 35,
+  quizMinutes: 15,
+  estimatedTime: 60,
+  learningObjectives: [
+    "Choose materials for walls, roof, and details that hold together as one style.",
+    "Know the difference between BrickColor and Color3, and when each is the right tool.",
+    "Put an image on a surface with a Decal, and a repeating pattern with a Texture.",
+    "Use Neon as an accent rather than as a wall material.",
+    "Save a decorated House_01 that reads as a deliberate design.",
+  ],
+  theory: {
+    sections: [
+      {
+        title: "Today's mission (lesson 5 of 92)",
+        content: `Four lessons in, you have a house, an island, and two cubes that do things. And the whole thing is grey plastic.
 
-**What you need to do before the end of the lesson:**
-- A house with selected materials (walls, roof, accents).
-- At least 1 Decal or Texture in a prominent place (for example sign or wall).
-- Material Neon only for small parts (lamp, sign), not for the whole house.
-- Saved level named: \`Lesson 1.5 - Decorated House\`.
+Today is the one where it starts to look like somebody built it on purpose.
 
-Open your saved level with the house and continue working in it.`,
- },
- {
- title: "Why appearance is so important",
- content: `The appearance immediately sets the mood of the game. The player instantly understands: whether they are looking at just a gray plastic box or a real house. Using materials and images (Decal) is the easiest way to make a game visually interesting without creating complex 3D models.
+This is not "decoration" as an afterthought. Materials and colour are how a player instantly understands what kind of place they are standing in - cosy or hostile, old or futuristic, safe or dangerous - before they read a single word of text. It is the cheapest storytelling tool you have, and it costs you nothing but a few minutes in the Properties panel.
 
-**Important tip:** Choose 2-3 main materials (for example brick + wood + neon accent) and stick to them. You shouldn't make every wall out of a different material just because it's possible.
+| After 1.4 | Result of 1.5 |
+|---|---|
+| Grey default plastic everywhere | A facade with a chosen theme |
+| Nothing tells the player what this place is | The style says it before any text does |
+| No images anywhere in the level | A sign, a poster, or a pattern of your own |
 
-**Try it now:** Inspect your \`House_01\` from all sides. Come up with a style for it: it can be a wooden hut by the water, a brick station or a modern cafe. The choice of colors will depend on this.`,
- },
- {
- title: "Material Setup (Material)",
- content: `To change a material, select the Part, find the Properties panel, and open the **Material** list.
+**Your finish line for today:**
+- The house has chosen materials for walls, roof, and accents.
+- At least 1 Decal or Texture, somewhere you will actually see it.
+- Neon used on small details only - a lamp, a sign - not on the walls.
+- Saved as \`Lesson 1.5 - Decorated House\`.
 
-| Material | Appearance | Where to use it |
-|----------|----------|-----------------|
-| **Brick** | Brick | Walls |
-| **Wood / WoodPlanks** | Wood, planks | Walls, roof, door frame |
-| **Concrete** | Concrete | Floor, foundation |
-| **Slate / Rock** | Stone | Roof, foundation |
-| **Metal** | Metal | Railings, frame |
-| **Glass** | Glass | Windows |
-| **Neon** | Glow | Accents only |
-| **SmoothPlastic** | Smooth plastic | Default material; consider replacing it |
+**Do now (2 min):** open your house level and fly around it once at ground level, like a player arriving for the first time.`,
+      },
+      {
+        title: "Pick a theme before you pick a colour",
+        content: `The temptation here is to click through the material list and use everything that looks cool. Resist it, because that is exactly how you get a house that looks like a colour swatch chart.
 
-Material and color work together. Dark red brick looks very different from bright yellow brick.
+Instead, decide in one sentence what this building *is*. A wooden fishing hut by the water. A brick railway station. A neon-lit noodle bar. A ruined watchtower. Then every material choice answers to that sentence, and choosing gets easy: a fishing hut does not have chrome trim, and a noodle bar does not have thatch.
 
-**Try it now:**
-1. Use one material for all walls, such as Brick or Wood.
-2. Choose a different material for the roof, such as Slate or Wood.
-3. Use Concrete for the floor or foundation.
-4. Start Play and check how the house looks in daylight.`,
- },
- {
- title: "Difference between BrickColor and Color3",
- content: `The Properties panel has two fields for adjusting the color: **BrickColor** and **Color**.
+**The rule that does most of the work: two or three main materials, and stick to them.** Brick and wood with a neon accent. Concrete and metal with a glass front. Constraint is what makes a design look intentional rather than random - which is true in game art, graphic design, and architecture alike.
+
+Experienced builders do not have better taste than you. They just decide first and choose second.
+
+**Do now (4 min):** walk around \`House_01\` and write down, in one sentence, what kind of building it is. Everything below follows from that sentence.`,
+      },
+      {
+        title: "Materials",
+        content: `Select a Part, find **Material** in Properties, pick from the list.
+
+| Material | Looks like | Natural home |
+|---|---|---|
+| **Brick** | Brickwork | Walls |
+| **Wood / WoodPlanks** | Timber, planking | Walls, roof, door frames |
+| **Concrete** | Poured concrete | Floors, foundations |
+| **Slate / Rock** | Stone | Roofing, foundations |
+| **Metal** | Sheet metal | Railings, frames, industrial builds |
+| **Glass** | Transparent glass | Windows |
+| **Neon** | Emits light | Accents only |
+| **SmoothPlastic** | Flat plastic | The default. Almost always worth replacing. |
+
+**Material and colour are one decision, not two.** The same Brick material reads as a cosy cottage in dark red and a municipal car park in pale grey. Change one, look at the other. Roblox materials also respond to light differently, so a colour that looked right on plastic can look washed out on metal - adjust after you switch, not before.
+
+**Do now (6 min):**
+1. One material across all the walls.
+2. A different one for the roof - contrast between wall and roof is what makes a building read as a building.
+3. Concrete or stone for the floor or foundation.
+4. Press Play and look at it in daylight from a distance.`,
+      },
+      {
+        title: "BrickColor vs Color3",
+        content: `Properties gives you two ways to set colour, and they are not redundant.
 
 | | **BrickColor** | **Color** (Color3) |
-|---|----------------|---------------------|
-| Description | Preset colors with names | Any shade (RGB) |
-| Advantages | Quickly choose a color (for example 'Bright red') | Precise shade control |
-| In the code | \`BrickColor.new(...)\` | \`Color3.fromRGB(...)\` |
+|---|---|---|
+| What it is | A fixed palette of named colours | Any colour at all, as RGB |
+| Strength | Fast, memorable, hard to make ugly | Exact control over the shade |
+| In code | \`BrickColor.new("Bright red")\` | \`Color3.fromRGB(255, 0, 0)\` |
 
-For the facade, it is quite enough to change the color manually via Properties. You will need the code if you want to change the color during the game.
+BrickColor is a curated set - Roblox chose those colours and they tend to work together. Color3 gives you all sixteen million, which is more freedom and also more rope. Use BrickColor while you are finding your style; reach for Color3 when you need one specific shade to match something.
 
-**Tip:** make the walls muted colors, and small details (frames, signs), more saturated. This keeps the design comfortable to view.
+**A design tip that works everywhere, not just here: big surfaces get muted colours, small details get saturated ones.** Walls in a soft, low-intensity tone; window frames, the sign, the door in something punchy. It is why real buildings have a bright red door and not bright red walls. Invert that ratio and the whole thing becomes exhausting to look at.
 
-**Try it now:** choose a color for the walls and roof. Make window or door frames a little more contrasting than the main walls.`,
- },
- {
- title: "Neon: bright accent",
- content: `**Neon** material glows brightly and creates a strong visual effect, especially at night. But if you make all the walls from it, the house will turn into a continuous bright spot.
+For today you can set everything by hand in Properties. You need code only when a colour has to change *during* the game - which you already did in 1.3 and 1.4.
 
-**Where to use Neon:**
-- a sign above the door;
-- small lanterns at the entrance;
-- window lighting;
-- your LogicCube/MagicCube from the previous lesson.
+**Do now (4 min):** choose wall and roof colours, then make the window and door frames noticeably more contrasting than the walls.`,
+      },
+      {
+        title: "Neon: accent, not wall",
+        content: `**Neon** makes a Part glow. It is spectacular, especially at night, and it is the single most over-used material by beginners.
 
-**Tip:** don't make the main walls completely neon.
+The reason is worth understanding. A glow only reads as a glow if there is something dark next to it. Make everything Neon and your eye has no reference point, so nothing looks bright any more - it just looks flat and loud. Contrast is what creates the effect, and contrast requires restraint.
 
-**Try it now:** add 1-3 small neon details. Keep the main facade wood, brick, or concrete. Check from a distance: the accent should be noticeable, but not overpower the appearance of the entire island.`,
- },
- {
- title: "Decal: image on object",
- content: `**Decal** is an image that is applied to **one face** of a part (works like a poster or sign).
+**Good places for Neon:**
+- A sign above the door.
+- Small lamps flanking the entrance.
+- A strip of light along a window.
+- Your MagicCube or LogicCube from the last two lessons.
 
-**How to add it:**
-1. Select a detail (for example, a thin panel above the door).
-2. Click **Insert → Decal**.
-3. In the properties (Properties) of the Decal object, find the **Texture** field and paste the link (\`rbxassetid://...\`) from the Toolbox → Images panel there.
-4. The **Face** property determines on which side of the part the picture will appear (Front, Back, etc.). If the image is not visible, simply change the Face or rotate the part.
+**Bad place for Neon:** the walls.
 
-**Ideas for the house:** cafe name, house number, pointer arrow, imitation of curtains on the windows.
+**Do now (5 min):** add 1-3 small neon details, keeping the main facade wood, brick, or concrete. Then fly the camera far back and check: is the accent noticeable without dominating the whole island?`,
+      },
+      {
+        title: "Decal: putting an image on a surface",
+        content: `A **Decal** is an image stuck to **one face** of a Part - a poster, a logo, a house number, a sign.
 
-**Try it now:** Create a thin detail above the entrance, name it \`Sign_Board\` and add Decal with a picture to it. Start Play and approach the house to check how the sign reads.`,
- },
- {
- title: "Texture: A repeating pattern",
- content: `**Texture** works similar to Decal, but the image is **repeated** over the entire surface. It is very convenient for creating tiles, wallpaper or pavers.
+1. Select the Part you want it on. A thin panel above the door works well.
+2. **Insert → Decal**.
+3. In the Decal's Properties, find the **Texture** field and paste an asset link (\`rbxassetid://...\`). Get one from **Toolbox → Images**.
+4. **Face** controls which side of the Part the image lands on - Front, Back, Top, and so on.
 
-When to choose:
-- **Decal**: for single images (logo, picture).
-- **Texture**: for patterns covering a large area.
+**If your Decal seems invisible, it is almost certainly on the wrong Face.** It is not missing, it is on the back of the panel, facing the wall. Cycle through the Face options and it will appear. This is the single most common Decal problem and it takes five seconds to fix once you know.
 
-To complete the task, it is enough to use one thing: either Decal or Texture.
+**Ideas:** the name of your cafe, a house number, an arrow pointing to the beach, curtains painted onto the inside of a window.
 
-**Try it now (Optional):** Add Texture to the porch floor and adjust the size of the pattern using the \`StudsPerTileU\` and \`StudsPerTileV\` properties.`,
- },
- {
- title: "Decoration of windows and doors",
- content: `We already cut the windows in the first lesson. Now we are only **improving** them. No need to use the Negate/Union tools again to avoid accidentally breaking the finished walls.
+**Do now (6 min):** make a thin Part above the entrance, name it \`Sign_Board\`, and put a Decal on it. Press Play and walk up to the house - can you read the sign from where a player would stand? If not, make it bigger. Signs are for players, not for screenshots taken from two studs away.`,
+      },
+      {
+        title: "Texture: a pattern that repeats",
+        content: `A **Texture** works like a Decal, except the image **tiles** across the whole surface instead of being placed once. Tiles, brickwork, wallpaper, paving stones.
 
-Ideas for decor:
-- add thin blocks around the window (frames made of wood or metal);
-- make window sills;
-- put Decal with the image of the curtains from the inside.
+The choice is simple:
+- **Decal** for one image in one place - a logo, a poster, a sign.
+- **Texture** for a pattern that should cover an area - a floor, a path, a wall.
 
-**Door opening:** you can make a door frame from 2-3 narrow blocks. It is not necessary to make the doors themselves movable yet, the main thing is that the entrance looks neat and stands out on the facade.
+\`StudsPerTileU\` and \`StudsPerTileV\` control how big each repetition is. Small numbers mean a dense pattern; large numbers stretch it out. Get this wrong and paving stones end up either the size of postage stamps or the size of cars.
 
-**Try it now:** design at least one window and a doorway. Enter Play mode and see if it looks like a real entrance to a house.`,
- },
- {
- title: "Checklist of the finished facade",
- content: `Before saving, check your work as a design review:
+One or the other is enough for today's task.
 
-1. **Materials:** the roof and walls are made of different but logical materials.
-2. **Style:** colors and textures blend together (don't look like a random rainbow).
-3. **Highlights:** there are only a few neon details, the house is not fully illuminated.
-4. **Image:** Added at least one Decal or Texture prominently.
-5. **Order:** new parts (\`Sign_Board\`, \`Lamp\`) have clear names in the Explorer panel.
-6. **Testing:** in Play mode nothing falls off (Anchored enabled everywhere).
+**Do now (4 min, optional):** put a Texture on the porch floor and tune StudsPerTile until the scale looks right next to your character.`,
+      },
+      {
+        title: "Windows and doors, without touching the geometry",
+        content: `You cut those openings in 1.1. Today you frame them - and you do it with ordinary Parts, not with Union.
 
-**Try it now:** take a screenshot of the facade from the beach side. You can use it for your portfolio at the end of the module.`,
- },
- {
- title: "Common mistakes and how to fix them",
- content: `| Problem | Cause | How to fix it |
-|---------|---------|------------|
-| The image (Decal) is not visible | Face is set incorrectly, or Texture is empty | Change Face and paste the correct image link |
-| The image is stretched | The Part proportions do not match the image | Resize the Part with Scale |
-| Everything glows too brightly | Too much Neon material | Use Neon only for 1-3 small details |
-| The color changed after selecting a material | Materials reflect light differently | Adjust BrickColor slightly to suit the new material |
-| Objects fall in Play | Anchored is not enabled | Select the new decorations and enable Anchored |
-| The windows are broken | New details were cut with Union | Use regular blocks for frames; do not cut the walls |`,
- },
- {
- title: "Saving the project",
- content: `**File → Save to Roblox** → \`Lesson 1.5 - Decorated House\`.
+**This matters: do not re-run Negate/Union on walls that already have openings in them.** CSG operations stack, and a second pass on an already-unioned wall is the most reliable way to produce a wall with mysterious holes, missing faces, or geometry that vanishes at certain camera angles. Every improvement below is achievable with plain blocks sitting *next to* the opening.
 
-In the next lesson, we will add lighting and sounds. Your design should look good during the day, and the neon accents will shine brightly in the evening.
+Things that make an opening look finished:
+- Thin blocks around the window edge as a frame - wood or metal.
+- A window sill: one flat block along the bottom edge, sticking out slightly.
+- A Decal of curtains on the inside face.
+- Two or three narrow blocks around the door to make a proper frame.
 
-**Requirements for submitting the project**
+The door does not need to open yet. It needs to look like somewhere a person would walk in.
+
+**Do now (6 min):** frame at least one window and the doorway. Press Play and approach on foot. Does it read as an entrance?`,
+      },
+      {
+        title: "Give it a design review",
+        content: `Look at your house the way you would look at somebody else's, and ask six questions.
+
+1. **Materials** - do the roof and walls differ, and does the difference make sense?
+2. **Style** - does it look like a chosen palette, or a rainbow of everything you clicked?
+3. **Accents** - only a few neon details, or is the whole house glowing?
+4. **Image** - is there at least one Decal or Texture, somewhere a player will see it?
+5. **Order** - do the new parts have real names in Explorer (\`Sign_Board\`, \`Lamp_Left\`) or are they \`Part\`, \`Part1\`, \`Part2\`?
+6. **Physics** - press Play. Does anything fall off? Every new decoration needs \`Anchored = true\`.
+
+**Do now (4 min):** run all six. Then take a screenshot from the beach side - you will want it for the module portfolio in 1.8, and later for the real one in 12.5.`,
+      },
+      {
+        title: "Save, and what is coming",
+        content: `**File → Save to Roblox** → \`Lesson 1.5 - Decorated House\`.
+
+Next lesson is lighting, atmosphere, and sound - and this is where today's restraint pays off. A house with three neon accents becomes genuinely dramatic once you turn the sun down and let those accents be the only light source. A house that is entirely neon just becomes a bright blob at any time of day.
+
 **Checklist:**
-- [ ] Wall and roof materials are configured.
-- [ ] The facade colors work well together.
+- [ ] Wall and roof materials chosen and different.
+- [ ] Colours that belong to one palette.
 - [ ] At least 1 Decal or Texture.
-- [ ] Neon is used only as an accent.
-- [ ] All new objects are anchored (Anchored = true).
-- [ ] The project is saved with the correct name.
+- [ ] Neon on accents only.
+- [ ] Every new part \`Anchored = true\`.
+- [ ] Saved with the correct name.
 
-| Level | Criteria |
-|--------|----------|
-| Complete | Consistent Material + ≥1 Decal/Texture + Save |
-| Good | Frames/entrance + Neon-accent + names |
-| Advanced | The theme of the facade is clear from the screenshot without explanation |
-`,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Using material Neon for all walls",
- explanation: "The house loses its realism and looks like a solid lamp.",
- correctApproach: "Use basic materials (Brick/Wood), and leave Neon for 1-3 small parts.",
- },
- {
- mistake: "Image (Decal) is not displayed",
- explanation: "The picture was superimposed on the invisible or inner edge of the part.",
- correctApproach: "Change the Face value in the properties or rotate the part itself.",
- },
- {
- mistake: "The TextureId field is empty",
- explanation: "Object Decal has been created, but there is no reference to the picture.",
- correctApproach: "Copy and paste rbxassetid from the Toolbox panel (Images tab).",
- },
- {
- mistake: "Trying to cut the windows again via Union for decoration",
- explanation: "This can break down the existing walls created in the first lesson.",
- correctApproach: "Create frames and window sills from ordinary individual blocks.",
- },
- {
- mistake: "New decorative details fall during Play",
- explanation: "Anchored was not enabled for the new objects.",
- correctApproach: "Select all new frames, signs and lights and enable Anchored = true.",
- },
- {
- mistake: "The use of different materials without a single style",
- explanation: "The facade looks chaotic and unnatural.",
- correctApproach: "Choose 2-3 main materials that fit the theme of your home.",
- },
- {
- mistake: "The project was saved with the wrong name or in the wrong file",
- explanation: "This will make it difficult to find the desired artifact in the future.",
- correctApproach: "Save via Save to Roblox with the title Lesson 1.5 - Decorated House.",
- },
- ],
- summary:
- "In this lesson, you decorated your house: adjusted the materials and colors of the facade, added images (Decal/Texture) and used neon accents. The level is now ready to set up the lighting and sounds in the next lesson.",
- practiceTask: {
- title: "Practical task: Decorating the facade",
- difficulty: "beginner",
- description: `**Task:** Decorate House_01 by creating a single facade style and adding images (Decal/Texture).
+| Level | What it looks like |
+|---|---|
+| **Done** | Consistent materials, at least one image, saved. |
+| **Good** | Framed windows and entrance, a couple of neon accents, everything sensibly named. |
+| **Excellent** | Someone could look at a screenshot and tell you what kind of building it is without you saying a word. |`,
+      },
+    ],
+  },
+  commonMistakes: [
+    {
+      mistake: "Neon on every wall",
+      explanation: "A glow only reads as a glow next to something dark. Make it all glow and nothing looks bright - it just looks flat and loud.",
+      correctApproach: "Brick or wood for the walls, Neon on one to three small details. Contrast is what creates the effect.",
+    },
+    {
+      mistake: "The Decal is invisible",
+      explanation: "Almost always the Face property - the image is on the back of the panel, pointing into the wall.",
+      correctApproach: "Cycle through the Face options in Properties until it appears, or rotate the Part.",
+    },
+    {
+      mistake: "The Decal's Texture field is empty",
+      explanation: "The Decal object exists but has no image assigned, so it renders nothing.",
+      correctApproach: "Copy an rbxassetid from Toolbox → Images and paste it into the Decal's Texture field.",
+    },
+    {
+      mistake: "Re-cutting finished windows with Union to improve them",
+      explanation: "CSG operations stack. A second Union on an already-unioned wall regularly produces missing faces or geometry that disappears from certain angles.",
+      correctApproach: "Build frames and sills from plain blocks placed around the opening. Never touch the wall geometry again.",
+    },
+    {
+      mistake: "Decorations fall off when you press Play",
+      explanation: "New parts default to Anchored = false, and Roblox physics does the rest.",
+      correctApproach: "Select every new frame, sign, and lamp and set Anchored = true.",
+    },
+    {
+      mistake: "Every surface a different material",
+      explanation: "Without a limited palette the facade reads as random rather than designed, no matter how good the individual materials look.",
+      correctApproach: "Decide what the building is in one sentence, then pick two or three materials that serve it.",
+    },
+    {
+      mistake: "The colour looks wrong after changing the material",
+      explanation: "Materials respond to light differently, so the same colour value looks different on plastic than on metal or brick.",
+      correctApproach: "Change the material first, then adjust the colour to suit it. Not the other way around.",
+    },
+    {
+      mistake: "The sign is unreadable from where a player stands",
+      explanation: "It was sized while the camera was two studs away from it.",
+      correctApproach: "Press Play, walk up to the house on foot, and size the sign from that distance.",
+    },
+  ],
+  summary:
+    "You gave the house a point of view. You chose a theme first and let it drive the materials, learned why a limited palette reads as design and an unlimited one reads as noise, used Neon as an accent rather than a wall, and put your own image into the world with a Decal. The level is now ready for lighting and sound - which is where those accents earn their keep.",
+  practiceTask: {
+    title: "Practice: Decorating the facade",
+    difficulty: "beginner",
+    description: `**The build:** House_01 with a coherent facade style and at least one image of your own.
 
-### Part A: Materials and colors
-1. Open your level with house and island.
-2. Come up with a theme for the facade (for example, a forest house or a modern cafe).
-3. Change the materials and colors of the walls, roof and floor so that they harmonize.
-4. Start Play and look at the house from the beach.
+### Part A: Theme, materials, colour
+1. Open your level with the house and island.
+2. Decide in one sentence what this building is - forest cabin, roadside cafe, watchtower, whatever you like.
+3. Set materials and colours for walls, roof, and floor so they serve that sentence. Two or three materials, no more.
+4. Press Play and look at the house from the beach.
 
-### Part B: Details and Images (Decal)
-1. Create a thin Part \`Sign_Board\` above the door and add **Decal** to it (or use Texture on the porch floor).
-2. Make frames for windows or doors from regular thin Parts.
-3. Add 1-3 neon accents (light, sign or edging).
-4. Make sure all new parts have Anchored enabled and have meaningful names in Explorer.
+### Part B: Details and images
+1. Make a thin Part above the door named \`Sign_Board\` and put a **Decal** on it (or use a **Texture** on the porch floor).
+2. Frame at least one window and the doorway using plain blocks - **not** Union.
+3. Add 1-3 neon accents: a lamp, a sign edge, a strip of light.
+4. Every new part: \`Anchored = true\`, and a real name in Explorer.
 
-### Part C: Save
-1. Check your work using the lesson checklist.
-2. Save the level via **File → Save to Roblox** under the name \`Lesson 1.5 - Decorated House\`.
-3. Mark the practice as completed in the system.`,
- hints: [
- "Choose an overall theme first, and then select the materials.",
- "If Decal is not visible, try changing the Face property.",
- "Use Neon with care - only for small details.",
- "Don't change finished walls with Negate/Union tools unless absolutely necessary.",
- "Give the objects clear names (for example, Sign_Board), this will help a lot in the next lessons.",
- ],
- optionalChallenge:
- "Take two screenshots of your facade, one in daytime and one at night. Adjust the lighting slightly or emphasize the Neon accents. These images will be useful additions to your portfolio.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 15,
- questions: [
- {
- id: "q1",
- type: MC,
- question: "What does the Material property change in the Properties panel?",
- options: [
+### Part C: Review and save
+1. Run the six-question design review from the lesson.
+2. **File → Save to Roblox** as \`Lesson 1.5 - Decorated House\`.
+3. Mark the practice complete here.`,
+    hints: [
+      "Theme first, materials second. Choosing gets dramatically easier once you know what the building is.",
+      "Decal invisible? It is the Face property nine times out of ten - the image is pointing into the wall.",
+      "Neon on small things only. The glow needs something dark beside it to read as a glow at all.",
+      "Never re-Union a wall that already has an opening in it. Build frames from separate blocks instead.",
+      "Name things as you make them - Sign_Board, Lamp_Left. Module 11 has an entire lesson about auditing Explorer, and you can save yourself from it right now.",
+    ],
+    optionalChallenge:
+      "Screenshot the facade twice: once in daylight, once with the lighting turned down so only your neon accents show. If the second shot still reads as the same building - same shape, same character, just lit differently - your design is working. If it turns into an unrecognisable blob of light, you have too much Neon, and now you know before lesson 1.6 rather than after it.",
+  },
+  quiz: {
+    passingScore: 70,
+    timeLimit: 15,
+    questions: [
+      {
+        id: "q1",
+        type: MC,
+        question: "What does the Material property change?",
+        options: [
           "The script type",
           "The Studio interface language",
-          "The surface and appearance of an object (Part)",
-          "The island size during generation",
+          "How an object's surface looks and reacts to light",
+          "The island size when generating",
         ],
- correctAnswer: 2,
- explanation: "Material defines the appearance of an object's surface.",
- },
- {
- id: "q2",
- type: MC,
- question: "Which material works best for the main walls of a house?",
- options: [
-          "Neon for every wall",
+        correctAnswer: 2,
+        explanation: "Material controls the surface itself - and because different materials respond to light differently, it also changes how a given colour reads.",
+      },
+      {
+        id: "q2",
+        type: MC,
+        question: "Which material suits the main walls of a house?",
+        options: [
+          "Neon on every wall",
           "Brick or Wood",
           "ForceField",
           "Air",
         ],
- correctAnswer: 1,
- explanation: "Brick or Wood gives a facade a natural appearance, while Neon is best reserved for accents.",
- },
- {
- id: "q3",
- type: MC,
- question: "What is the main advantage of using BrickColor?",
- options: [
-          "It removes unnecessary terrain",
-          "It creates a ClickDetector",
-          "It replaces script writing",
-          "It provides preset colors with convenient names",
+        correctAnswer: 1,
+        explanation: "Brick and Wood read as real building materials. Neon belongs on small accents, where it has something dark to contrast against.",
+      },
+      {
+        id: "q3",
+        type: MC,
+        question: "What is BrickColor good for?",
+        options: [
+          "Removing terrain",
+          "Creating a ClickDetector",
+          "Replacing scripts",
+          "A curated palette of named colours that tend to work together",
         ],
- correctAnswer: 3,
- explanation: "BrickColor provides a list of preset colors for quick configuration.",
- },
- {
- id: "q4",
- type: MC,
- question: "When should you use the Color (Color3) property instead of BrickColor?",
- options: [
-          "When you need a precise custom shade",
-          "When you need to generate a new island",
-          "When you need to combine parts with Union",
-          "When you need to close the Output panel",
+        correctAnswer: 3,
+        explanation: "BrickColor is a fixed set Roblox chose. Fast to use, and hard to make something ugly with.",
+      },
+      {
+        id: "q4",
+        type: MC,
+        question: "When would you use Color (Color3) instead of BrickColor?",
+        options: [
+          "When you need one exact shade that the named palette does not contain",
+          "When generating an island",
+          "When using Union",
+          "When closing the Output panel",
         ],
- correctAnswer: 0,
- explanation: "Color3 lets you specify any precise color in RGB format.",
- },
- {
- id: "q5",
- type: MC,
- question: "How should you use the Neon material on a house facade?",
- options: [
-          "As the main material for every wall",
-          "Only as a bright accent, such as a sign, lamp, or backlight",
-          "As a replacement for the Anchored property",
-          "As a game camera type",
+        correctAnswer: 0,
+        explanation: "Color3 gives you every RGB value - more control, and more rope. Reach for it when you need to match a specific shade.",
+      },
+      {
+        id: "q5",
+        type: MC,
+        question: "How should Neon be used on a facade?",
+        options: [
+          "As the main wall material",
+          "On small accents only - a sign, a lamp, a light strip",
+          "Instead of Anchored",
+          "As a camera type",
         ],
- correctAnswer: 1,
- explanation: "Neon works best as an accent, not as the main material for the entire house.",
- },
- {
- id: "q6",
- type: MC,
- question: "What is a Decal?",
- options: [
-          "A tool for cutting terrain",
+        correctAnswer: 1,
+        explanation: "A glow needs darkness beside it. Cover everything in Neon and nothing looks bright any more, because there is no contrast left.",
+      },
+      {
+        id: "q6",
+        type: MC,
+        question: "What is a Decal?",
+        options: [
+          "A terrain-cutting tool",
           "A type of remote event",
-          "Empty level template",
-          "An image applied to one face of an object",
+          "An empty level template",
+          "An image applied to one face of a Part",
         ],
- correctAnswer: 3,
- explanation: "A Decal applies an image, such as a poster or logo, to one face of a Part.",
- },
- {
- id: "q7",
- type: MC,
- question: "What should you check first if an added Decal is not visible?",
- options: [
-          "The Face property and whether Texture contains a link",
-          "Whether the Workspace folder was deleted",
-          "The application interface language",
-          "Whether Snap to Grid is enabled",
+        correctAnswer: 3,
+        explanation: "One image, one face. Posters, logos, signs, house numbers.",
+      },
+      {
+        id: "q7",
+        type: MC,
+        question: "Your Decal does not appear. What do you check first?",
+        options: [
+          "The Face property, and whether the Texture field has a link in it",
+          "Whether Workspace was deleted",
+          "The interface language",
+          "Whether Snap to Grid is on",
         ],
- correctAnswer: 0,
- explanation: "An image is often invisible because it was applied to a hidden face or because its image link is missing.",
- },
- {
- id: "q8",
- type: MC,
- question: "What is Texture better suited for than Decal?",
- options: [
+        correctAnswer: 0,
+        explanation: "Nine times out of ten it is on the wrong Face - present, but pointing into the wall. Cycle through the Face options.",
+      },
+      {
+        id: "q8",
+        type: MC,
+        question: "When is Texture the better choice over Decal?",
+        options: [
           "Handling mouse clicks",
           "Generating islands",
-          "Creating a pattern that repeats across an entire surface",
-          "Creating modular scripts",
+          "When you need a pattern to repeat across a whole surface",
+          "Writing modular scripts",
         ],
- correctAnswer: 2,
- explanation: "Texture is ideal for patterns that need to cover a large area by repeating.",
- },
- {
- id: "q9",
- type: MC,
- question: "What must you do with new decorative parts before running the game?",
- options: [
-          "Apply Negate to them",
-          "Delete the house",
-          "Close the Explorer panel",
-          "Anchor them (Anchored = true)",
+        correctAnswer: 2,
+        explanation: "Texture tiles; Decal places once. Paving, tiles, and wallpaper are Texture jobs - and StudsPerTileU/V control how big each tile is.",
+      },
+      {
+        id: "q9",
+        type: MC,
+        question: "What must every new decorative Part have before you press Play?",
+        options: [
+          "Negate applied",
+          "The house deleted",
+          "Explorer closed",
+          "Anchored = true",
         ],
- correctAnswer: 3,
- explanation: "If new objects are not secured (Anchored = true), gravity will make them fall.",
- },
- {
- id: "q10",
- type: MC,
- question: "Why should you avoid cutting finished windows again with Union just to refine them?",
- options: [
-          "It can break walls that are already complete and configured",
-          "Union is prohibited in Roblox",
-          "Decal will never work afterward",
-          "Studio will automatically delete all terrain",
+        correctAnswer: 3,
+        explanation: "New Parts are unanchored by default, and Roblox physics will find them the moment the game starts.",
+      },
+      {
+        id: "q10",
+        type: MC,
+        question: "Why should you not re-Union a wall that already has a window cut into it?",
+        options: [
+          "CSG operations stack, and a second pass often produces missing faces or geometry that vanishes at some angles",
+          "Union is banned in Roblox",
+          "Decals stop working afterwards",
+          "Studio deletes the terrain",
         ],
- correctAnswer: 0,
- explanation: "It is much safer to build decorative frames from separate standard blocks without modifying the wall geometry.",
- },
- {
- id: "q11",
- type: MC,
- question: "What is the minimum image-use requirement for this task?",
- options: [
-          "Add at least 50 premade models",
-          "Use at least one Decal or Texture",
-          "Do not use any images",
+        correctAnswer: 0,
+        explanation: "Build frames and sills from plain blocks placed around the opening instead. Once a wall is cut, leave its geometry alone.",
+      },
+      {
+        id: "q11",
+        type: MC,
+        question: "What is the minimum image requirement for this lesson?",
+        options: [
+          "50 premade models",
+          "At least one Decal or Texture",
+          "No images at all",
           "Change only the sky",
         ],
- correctAnswer: 1,
- explanation: "To complete the task, place at least one image, using a Decal or Texture, as a decorative element.",
- },
- {
- id: "q12",
- type: MC,
- question: "What does a cohesive facade mean in design?",
- options: [
-          "Every part has a unique random material",
-          "Every part is made only of plastic",
-          "It uses two or three primary materials and colors that work well together",
+        correctAnswer: 1,
+        explanation: "One image, placed somewhere a player will actually see it.",
+      },
+      {
+        id: "q12",
+        type: MC,
+        question: "What makes a facade look cohesive rather than random?",
+        options: [
+          "Every part gets a different material",
+          "Everything is plastic",
+          "Two or three materials serving one clear idea of what the building is",
           "The house has no roof",
         ],
- correctAnswer: 2,
- explanation: "A cohesive design uses a limited material palette that supports a shared theme.",
- },
- {
- id: "q13",
- type: MC,
- question: "What should you do if an image is stretched?",
- options: [
-          "Resize the Part with Scale",
+        correctAnswer: 2,
+        explanation: "Constraint is what reads as intentional. Decide what the building is in one sentence, then let that sentence pick the materials.",
+      },
+      {
+        id: "q13",
+        type: MC,
+        question: "Your Decal image is stretched out of shape. What fixes it?",
+        options: [
+          "Resize the Part with Scale so its proportions match the image",
           "Delete the account",
           "Write a Script",
-          "Find another Decal",
+          "Find a different image",
         ],
- correctAnswer: 0,
- explanation: "If the Part's proportions do not match the image, correct them with Scale.",
- },
- {
- id: "q14",
- type: MC,
- question: "What is an appropriate name for a sign Part in the Explorer panel?",
- options: [
+        correctAnswer: 0,
+        explanation: "A Decal stretches to fill its face, so a square image on a long thin Part will distort. Change the Part, not the image.",
+      },
+      {
+        id: "q14",
+        type: MC,
+        question: "Which is a good name for the sign Part in Explorer?",
+        options: [
           "Part",
           "asdf",
           "Union",
           "Sign_Board",
         ],
- correctAnswer: 3,
- explanation: "Clear names keep the project organized and make parts easier to find later.",
- },
- {
- id: "q15",
- type: MC,
- question: "What name should you use when saving the level at the end of lesson 1.5?",
- options: [
-          "Untitled",
-          "Lesson 1.5 - Decorated House",
-          "Lesson 1.1 - House_01 only",
-          "Module 9",
+        correctAnswer: 3,
+        explanation: "Names are free now and expensive later. Module 11 has a whole lesson on cleaning up an Explorer tree that got away from someone.",
+      },
+      {
+        id: "q15",
+        type: MC,
+        question: "Why decide on a theme before choosing materials?",
+        options: [
+          "Roblox requires a theme field",
+          "Because it turns an open-ended aesthetic choice into a simple yes/no question for each material",
+          "Because Decals only work on themed buildings",
+          "It does not matter",
         ],
- correctAnswer: 1,
- explanation: "The task requires you to save the finished house artifact with the correct name.",
- },
- ],
- },
+        correctAnswer: 1,
+        explanation: "'Does a fishing hut have chrome trim?' is easy to answer. 'What material should this wall be?' is not. Deciding first is why experienced builders seem to choose faster.",
+      },
+    ],
+  },
 }
 
 export const enLesson16 = {
- lessonId: "lesson-roblox-1-6",
- moduleId: "module-01",
- order: 6,
- title: "1.6 - Lighting, Atmosphere, and Sound",
- theoryMinutes: 35,
- quizMinutes: 15,
- estimatedTime: 60,
- learningObjectives: [
- "Configure the level's time of day (ClockTime) and overall brightness (Brightness).",
- "Add fog (Atmosphere) and a glow effect (Bloom).",
- "Distinguish ambient audio (Ambient) from short sound effects (SFX).",
- "Create two distinct moods for the level: morning and night.",
- "Save the level with its atmosphere configured.",
- ],
- theory: {
- sections: [
- {
- title: "Lesson task: morning and night on the island",
- content: `The house is finished, the island is ready, and objects respond to clicks. You will now add lighting, atmosphere, and sound to make the level look and sound realistic.
+  lessonId: "lesson-roblox-1-6",
+  moduleId: "module-01",
+  order: 6,
+  title: "1.6 - Lighting, Atmosphere, and Sound",
+  theoryMinutes: 35,
+  quizMinutes: 15,
+  estimatedTime: 60,
+  learningObjectives: [
+    "Set the time of day with ClockTime and control overall light with Brightness.",
+    "Add fog with Atmosphere and a glow with Bloom, without drowning the level in either.",
+    "Tell ambient audio apart from sound effects, and mix them so both can be heard.",
+    "Build two genuinely different moods - morning and night - from the same geometry.",
+    "Save a level that has an atmosphere, not just objects.",
+  ],
+  theory: {
+    sections: [
+      {
+        title: "Today's mission (lesson 6 of 92)",
+        content: `Here is something worth knowing early: **lighting and sound will change how your level feels more than another hour of building ever will.**
 
-**By the end of this lesson, you will have:**
-- A level with configured **Lighting** and **Atmosphere** objects.
-- Two configured modes: **morning** and **night**, which you can switch using ClockTime.
-- Ambient audio and at least one sound effect (SFX).
-- A completed Play test from the house to the beach in both modes.
-- A saved level named \`Lesson 1.6 - Island Atmosphere\`.
+You have a decorated house on an island. Today you do not add a single new object to it - and by the end of the hour it will feel like a completely different place. Twice, in fact: once as a bright morning, once as a night scene where your neon sign is the only thing burning.
 
-Open the level you saved in the previous lesson.`,
- },
- {
- title: "Components of a level's atmosphere",
- content: `A game's atmosphere has three main components:
-1. **Light:** time of day, sun or moon brightness, and shadows.
-2. **Air:** fog and horizon color (Atmosphere).
-3. **Sound:** ambient nature or city audio and interaction sounds.
+This is the closest thing to a cheat code in game development. Film crews have known it for a century, which is why they spend more on lighting than on sets. Same room, different light, different film.
 
-A level feels empty without sound. Without appropriate lighting, even bright materials can look dull.
+| After 1.5 | Result of 1.6 |
+|---|---|
+| Flat default daylight, total silence | A time of day you chose, with air and sound in it |
+| One mood: none | Two moods, from the same build |
+| Neon accents that are just bright | Neon accents that light the scene at night |
 
-**Try it now:** before changing any settings, enter Play mode and walk from the door to the water. Note how everything currently looks and sounds so you can compare it with the result at the end of the lesson.`,
- },
- {
- title: "Lighting: time, brightness, and shadows",
- content: `In the Explorer panel, find the **Lighting** object. It is separate from Workspace.
+**Your finish line for today:**
+- **Lighting** and **Atmosphere** configured.
+- Two presets - **morning** and **night** - you can switch between with ClockTime.
+- Ambient audio, plus at least one sound effect.
+- Playtested from house to beach in both moods.
+- Saved as \`Lesson 1.6 - Island Atmosphere\`.
 
-| Property | What it does | Recommended values |
-|----------|-----------|----------------------|
-| **ClockTime** | Time of day from 0 to 24 | Morning: \`8\`-\`10\`; Night: \`0\`-\`2\` |
-| **Brightness** | Overall light brightness | Day: \`2\`-\`3\`; Night: lower, but not \`0\` |
-| **GlobalShadows** | Enables shadows from objects | \`true\` (adds visual depth) |
-| **OutdoorAmbient** | Color of outdoor shadows | Slightly blue in the morning, warm in the evening |
-| **Ambient** | Overall fill light | Keep it moderate to avoid washing out the materials from \`1.5\` |
+**Do now (3 min):** open your level from 1.5, press Play, and walk from the door to the water. Pay attention to how it looks and how it sounds right now - because in an hour you want to be able to feel the difference.`,
+      },
+      {
+        title: "What atmosphere is actually made of",
+        content: `Three ingredients, and they are worth separating in your head because they are tuned in different places:
 
-**Try it now:**
-1. Set ClockTime to morning, such as \`9\`, set Brightness to \`2.5\`, and enable GlobalShadows.
-2. Change ClockTime to night (\`0.5\`) and reduce Brightness slightly.
-3. Confirm that the Neon parts from the previous lesson remain visible in the dark.`,
- },
- {
- title: "Atmosphere: fog and the horizon",
- content: `If the Atmosphere object is not in the Explorer panel, right-click **Lighting** → Insert Object → **Atmosphere**.
+1. **Light** - time of day, how bright the sun is, whether things cast shadows.
+2. **Air** - fog, haze, the colour of the horizon. This is what gives a scene *depth*, because distant things go hazy and near things do not.
+3. **Sound** - the continuous background, and the short sounds that punctuate it.
 
-| Property | Purpose | Starting values |
-|----------|--------|-------------------|
-| **Density** | Fog density | \`0.25\`-\`0.4\` |
-| **Offset** | Shifts the fog closer or farther away | \`0.25\` |
-| **Color** | Color of the fog | Depends on the time of day |
+Silence is the one people forget. A perfectly lit level with no sound feels like a screenshot you can walk around in. Add wind and waves and the same level suddenly feels like it exists whether you are there or not.
 
-**Important:** do not set Density too high. At values above \`0.5\`, the player may not even be able to see the house.
+That is the real trick behind all three: they make the world feel like it does not need the player. Everything you build up to lesson 92 is more convincing when the world was already running before the player arrived.`,
+      },
+      {
+        title: "Lighting: time, brightness, shadow",
+        content: `Find **Lighting** in Explorer. It sits at the top level, not inside Workspace - it is a service, a global setting for the whole place, not an object in the world.
 
-**Try it now:** add Atmosphere and set Density to \`0.3\`. Adjust the time of day (ClockTime) and observe how the fog's appearance changes.`,
- },
- {
- title: "Bloom: glow effect",
- content: `**Bloom** gives bright objects, such as Neon signs or lamps, a soft glow.
+| Property | What it does | Where to start |
+|---|---|---|
+| **ClockTime** | Time of day, 0-24 | Morning \`8\`-\`10\`; night \`0\`-\`2\` |
+| **Brightness** | How strong the sun/moon is | Day \`2\`-\`3\`; night lower, never \`0\` |
+| **GlobalShadows** | Objects cast real shadows | \`true\` |
+| **OutdoorAmbient** | The colour of shadowed areas | Slightly blue in the morning, warm in the evening |
+| **Ambient** | Overall fill light | Moderate - too much washes out your 1.5 materials |
 
-1. Right-click **Lighting** → Insert Object → **BloomEffect** (or Bloom).
-2. Keep Intensity low. If the entire screen turns white, the effect is too strong.
-3. Check the settings at night (ClockTime = 0.5), when the glow is most visible.
+**GlobalShadows deserves special attention.** Shadows are what tell your eye that objects have volume and sit *on* the ground rather than floating above it. Turn them off and everything flattens out. It is the single highest-impact tickbox in this panel.
 
-**Try it now:** add Bloom and configure it so the sign looks bright without obscuring the scene.`,
- },
- {
- title: "Sound: ambient audio and effects",
- content: `Game audio falls into two main categories:
+**And OutdoorAmbient is the one most people never touch.** Shadows are not black in real life - they are lit by the sky, which is why shadows outdoors are slightly blue. Set OutdoorAmbient to a dim blue and your morning scene immediately looks like morning rather than like a scene with the lights turned down.
 
-| Type | What it sounds like | Where to place it | Looped |
-|-----|----------------|---------|--------|
-| **Ambient** | Background nature audio, waves, or wind | In **Workspace** or SoundService | **true** |
-| **SFX** | A short effect, such as a click, creak, or impact | Inside a specific Part | **false** |
+**Do now (6 min):**
+1. Morning: ClockTime \`9\`, Brightness \`2.5\`, GlobalShadows on.
+2. Now drag ClockTime slowly from 9 down to 0.5 and watch the island change. That slider is the most fun control in Studio.
+3. At night, check your Neon parts from 1.5. They should still be clearly visible - that is them doing their job.`,
+      },
+      {
+        title: "Atmosphere: putting air in the world",
+        content: `If there is no **Atmosphere** object under Lighting: right-click **Lighting** → Insert Object → **Atmosphere**.
 
-Ambient audio should remain quiet (Volume \`0.25\`-\`0.45\`) so the player can hear short sound effects (SFX).
+| Property | Does | Start with |
+|---|---|---|
+| **Density** | How thick the haze is | \`0.25\`-\`0.4\` |
+| **Offset** | Pushes the fog nearer or further | \`0.25\` |
+| **Color** | The colour of the haze | Match the time of day |
 
-**Try it now:** decide which ambient sound best fits your island. For example, waves work well for a house near the water.`,
- },
- {
- title: "Configuring ambient audio (Ambient)",
- content: `1. Right-click Workspace → Insert Object → **Sound**.
-2. Rename the object to \`Ambient_Waves\`.
-3. Find audio in the Audio tab of Toolbox and copy its ID. Paste the link into the **SoundId** property.
-4. Enable **Looped** and **Playing**.
-5. Set **Volume** to \`0.35\`.
+Fog is not just weather. It is **depth**. Without it, a hill 500 studs away is rendered exactly as sharply as the wall in front of you, and your brain reads the whole scene as flat. Add a little haze and suddenly distance exists.
 
-**Try it now:** add the ambient audio, run the game in Play mode, and walk around the island. If it is too loud, reduce Volume. If it stops, check Looped.`,
- },
- {
- title: "Configuring sound effects (SFX)",
- content: `1. Select a Part, such as \`LogicCube\` from the previous lesson or the sign.
-2. Add a **Sound** inside it and name it \`SFX_Click\`.
-3. Add a link to a short sound in **SoundId**. Disable **Looped** and set Volume to \`0.5\`.
-4. The **RollOffMaxDistance** property, set to about \`60\`, controls the sound's range so it cannot be heard from the other side of the island.
+**Do not overdo Density.** Past about \`0.5\` you cannot see your own house, and there is a particular kind of frustration in spending an hour on a facade and then hiding it in soup. Small values do more than you expect.
 
-To play this sound on a click, add the following code to your script, inside the click function:
+**Do now (4 min):** add Atmosphere, set Density to \`0.3\`. Then swing ClockTime between morning and night and watch how differently the same fog reads at each - this is why you tune atmosphere and lighting together, never separately.`,
+      },
+      {
+        title: "Bloom: making light bleed",
+        content: `**Bloom** makes bright things glow softly outward, the way a real bright light does when you look at it.
+
+1. Right-click **Lighting** → Insert Object → **BloomEffect**.
+2. Keep Intensity low. If the screen goes white, you have gone too far - and you will go too far the first time, because bloom is very satisfying to crank up.
+3. Judge it at night (ClockTime \`0.5\`), when there is darkness for the glow to bleed into.
+
+The failure mode is worth naming: bloom applied to everything makes the whole image hazy and low-contrast, which reads as "cheap" rather than "atmospheric". Bloom applied to two neon signs in a dark scene reads as expensive. Same effect, different restraint - the same lesson as Neon in 1.5, arriving from a different direction.
+
+**Do now (4 min):** add Bloom and tune it until your sign glows and the rest of the scene stays readable.`,
+      },
+      {
+        title: "The two kinds of sound",
+        content: `Game audio splits cleanly in two, and the split determines every setting.
+
+| Type | Sounds like | Lives in | Looped |
+|---|---|---|---|
+| **Ambient** | Waves, wind, forest, city hum | Workspace or SoundService | **true** |
+| **SFX** | A click, a creak, a coin, a thud | Inside a specific Part | **false** |
+
+**Ambient is continuous and quiet. SFX are brief and clear.**
+
+The volume relationship matters more than either volume alone. Ambient at \`0.25\`-\`0.45\` leaves acoustic room for effects to cut through. Ambient at \`1.0\` means the player literally cannot hear the coin they just collected, and the game feels unresponsive for a reason they will never be able to name.
+
+Mixing is not an afterthought. When something in your game feels mushy or unsatisfying later in the course, the ambient track being too loud is a genuinely common cause.
+
+**Do now (2 min):** decide what your island sounds like. Waves for a house by the water. Wind if the hill is high. Birds if it is a forest.`,
+      },
+      {
+        title: "Adding ambient audio",
+        content: `1. Right-click **Workspace** → Insert Object → **Sound**.
+2. Name it \`Ambient_Waves\`.
+3. Find audio in **Toolbox → Audio**, copy its ID, paste it into **SoundId**.
+4. Tick **Looped** and **Playing**.
+5. **Volume** \`0.35\`.
+
+The \`Ambient_\` prefix is not decoration. By module 11 you will have a dozen sounds and an entire lesson dedicated to auditing your Explorer tree - and \`Ambient_Waves\`, \`SFX_Click\`, \`SFX_Coin\` sort themselves into groups automatically, while \`Sound\`, \`Sound1\`, \`Sound3\` do not.
+
+**Do now (5 min):** add the ambient sound and walk the island in Play mode. Too loud? Drop the volume. Stops after one play? Looped is off.`,
+      },
+      {
+        title: "Adding a sound effect",
+        content: `1. Select an interactive Part - your \`LogicCube\` from 1.4 is ideal.
+2. Insert a **Sound** inside it, named \`SFX_Click\`.
+3. A short sound in **SoundId**, **Looped** off, Volume \`0.5\`.
+4. Set **RollOffMaxDistance** to about \`60\`, so it is not audible from the far side of the island.
+
+That last one is what makes a sound feel like it belongs to an object rather than to the whole world. Sounds parented to a Part are positional - they get quieter with distance and they come from the right direction. It is nearly free and it does a lot of work.
+
+Now play it on click, inside the handler you wrote in 1.4:
 
 \`\`\`lua
 local part = script.Parent
 local sound = part:FindFirstChild("SFX_Click")
 
 if sound then
- sound:Play()
- print("Sound played")
+  sound:Play()
+  print("Sound played")
 else
- print("Sound not found")
+  print("Sound not found")
 end
 \`\`\`
 
-**Try it now:** add a short sound to \`LogicCube\` or another Part. In Play mode, verify that it works during interaction.`,
- },
- {
- title: "Two presets: morning and night",
- content: `
+**Why \`FindFirstChild\` and not \`WaitForChild\` here?** They handle a missing object differently, and the difference is the point.
+- \`WaitForChild\` stops and waits. Right when you *must* have the object and the script cannot go on without it.
+- \`FindFirstChild\` returns \`nil\` immediately. Right when the object is optional.
+
+A missing sound should not freeze your cube. So you ask nicely, get \`nil\` if it is not there, and the \`if sound then\` guard keeps everything running. That pattern - check before you use - is how you write code that degrades gracefully instead of exploding.
+
+**Do now (6 min):** add the sound, wire up the code, and click the cube in Play mode.`,
+      },
+      {
+        title: "Your two presets",
+        content: `Write these down somewhere - you are building two looks, not one, and you want to be able to flip between them on demand.
+
 | | Morning | Night |
-|-|-------|-----|
+|---|---|---|
 | ClockTime | \`9\` | \`0.5\` |
-| Brightness | higher | lower, but the path remains visible |
-| Atmosphere.Color | lighter / blue | cooler |
-| Ambient Sound | waves / birds | quieter wind / night loop |
-| Neon | less prominent | main facade accent |
- `,
- },
- {
- title: "Recommended workflow",
- content: `Use the following order to keep the configuration manageable:
+| Brightness | Higher | Lower - but the path stays visible |
+| Atmosphere.Color | Lighter, slightly blue | Cooler and deeper |
+| Ambient sound | Waves, birds | Quieter wind, night loop |
+| Neon | A detail | The main light source |
 
-1. Configure **morning** settings: ClockTime, Brightness, and shadows.
-2. Add **Atmosphere** and configure the fog so the island looks natural.
-3. Add subtle **Bloom** for glow.
-4. Add **ambient audio** (Ambient), followed by short sounds (SFX).
-5. Change the time to **night** and confirm that the scene remains balanced, the path is visible, and the Neon parts glow.
-6. Run a Play test and save the game.
+Notice the last row. In daylight your neon sign is a small nice touch. At night it becomes the thing lighting the entrance, and suddenly the restraint you showed in 1.5 pays off - the accents have something to do.
 
-**Try it now:** review your level using this sequence. If the night scene is too dark, raise Brightness or OutdoorAmbient slightly.`,
- },
- {
- title: "Common issues and fixes",
- content: `| Problem | Cause | Fix |
-|---------|------------------|------------|
-| No sound | SoundId is empty or Volume is 0 | Enter the correct ID from Toolbox and check the volume |
-| Ambient audio stops | Looped is disabled | Enable Looped in Properties |
-| The screen is too white or hazy | Bloom or Brightness is too high | Reduce these settings |
-| Nothing is visible at night | Brightness is zero | Increase the light and shadow brightness |
-| Fog hides the house | Atmosphere Density is too high | Set it to about 0.25-0.35 |`,
- },
- {
- title: "Project completion requirements",
- content: `**Checklist:**
-- [ ] You can switch between morning and night with ClockTime.
-- [ ] Atmosphere is present, and the fog does not obscure the entire level.
-- [ ] Ambient audio loops and plays in Play mode.
-- [ ] At least one short sound (SFX) is present.
-- [ ] The level has been tested in both lighting modes.
-- [ ] The level is saved as \`Lesson 1.6 - Island Atmosphere\`.
+In 1.7 you will write code that switches between these presets automatically. Today you are just proving both of them look good.`,
+      },
+      {
+        title: "The order to do it in",
+        content: `1. Set up **morning** - ClockTime, Brightness, shadows.
+2. Add **Atmosphere**, tune the fog against that light.
+3. Add subtle **Bloom**.
+4. Add **ambient** audio, then **SFX**.
+5. Switch to **night** and check the scene still works - path visible, neon glowing, nothing pitch black.
+6. Playtest both, then save.
 
-| **Level** | **Description** |
-|-----------|----------|
-| Complete | Morning/night + Atmosphere + ambient + 1 SFX + Save |
-| Good | Balanced volume and a readable facade at night |
-| Advanced | Two ambient tracks or subtle Bloom + clear Sound names |
-`,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Ambient audio is set to maximum volume",
- explanation: "Loud ambient audio masks every other sound in the game.",
- correctApproach: "Keep Ambient volume between 0.25 and 0.45. SFX can be louder.",
- },
- {
- mistake: "Empty SoundId field",
- explanation: "Without a link to an audio asset, the sound will not work.",
- correctApproach: "Find audio in Toolbox and copy its ID into the SoundId field.",
- },
- {
- mistake: "The night scene is completely dark",
- explanation: "Brightness was reduced too much.",
- correctApproach: "The player must be able to navigate even at night. Raise Brightness slightly or use Neon parts to light the path.",
- },
- {
- mistake: "Fog (Atmosphere) completely hides the island",
- explanation: "Density is set too high.",
- correctApproach: "A suitable Density range is 0.25 to 0.4.",
- },
- {
- mistake: "Sounds are tested only in edit mode",
- explanation: "Some sound and lighting settings work correctly only while the game is running.",
- correctApproach: "Always test atmosphere and sound in Play mode (F5).",
- },
- {
- mistake: "Ambient audio plays once and stops",
- explanation: "Looping was not enabled on the Sound object.",
- correctApproach: "Enable Looped for ambient audio.",
- },
- {
- mistake: "The project was not saved under a new name",
- explanation: "Changes may be lost or saved to the old file.",
- correctApproach: "Save your progress with Save to Roblox using the name Lesson 1.6 - Island Atmosphere.",
- },
- ],
- summary:
- "In this lesson, you configured Lighting and Atmosphere and created two distinct moods for the level: morning and night. You also added ambient audio and an interaction sound effect. The island is now ready for an interactive party mode in the next lesson.",
- practiceTask: {
- title: "Practical task: Island atmosphere",
- difficulty: "beginner",
- description: `**Task:** Configure two lighting modes, morning and night, then add ambient audio and a short sound effect.
+Light before sound, and both before you decide anything is finished. Tuning audio against lighting you are about to change is wasted work.
 
-### Part A: Light and fog
-1. Open the level with the house and island.
-2. In **Lighting**, set the time to morning (ClockTime), choose an appropriate brightness (Brightness), and enable shadows (GlobalShadows).
-3. Add **Atmosphere** and configure light fog with Density around 0.3.
-4. Record the night ClockTime value and switch to it manually to check how the level looks in the dark.
+**Do now (4 min):** run the sequence end to end. If night is too dark to navigate, nudge Brightness or OutdoorAmbient up - "dark" and "unplayable" are different things.`,
+      },
+      {
+        title: "When it goes wrong",
+        content: `| Problem | Cause | Fix |
+|---|---|---|
+| No sound at all | SoundId empty, or Volume 0 | Paste a real ID from Toolbox; check the volume |
+| Ambient plays once, then silence | Looped is off | Tick Looped |
+| The screen is white and washed out | Bloom or Brightness too high | Bring both down; judge at night |
+| You cannot see anything at night | Brightness at or near 0 | Raise Brightness or OutdoorAmbient - dark, not blind |
+| The fog ate your house | Atmosphere Density too high | Back down to 0.25-0.35 |
+| Sound is audible across the whole island | RollOffMaxDistance too large | Around 60 for a small object sound |`,
+      },
+      {
+        title: "Check your work before you move on",
+        content: `**Checklist:**
+- [ ] ClockTime switches between a morning and a night look.
+- [ ] Atmosphere is present and the fog does not hide the level.
+- [ ] Ambient audio loops during Play.
+- [ ] At least one SFX plays on interaction.
+- [ ] Both modes tested on foot.
+- [ ] Saved as \`Lesson 1.6 - Island Atmosphere\`.
+
+| Level | What it looks like |
+|---|---|
+| **Done** | Morning and night, Atmosphere, ambient audio, one SFX, saved. |
+| **Good** | The mix is balanced and the facade still reads clearly at night. |
+| **Excellent** | Two ambient tracks, restrained Bloom, and every Sound named with an \`Ambient_\` or \`SFX_\` prefix. |`,
+      },
+    ],
+  },
+  commonMistakes: [
+    {
+      mistake: "Ambient audio at full volume",
+      explanation: "It drowns everything else, so the click, the coin, and the footstep all vanish - and the game feels unresponsive for a reason the player cannot identify.",
+      correctApproach: "Ambient 0.25-0.45, SFX louder. The relationship between the two matters more than either number alone.",
+    },
+    {
+      mistake: "SoundId left empty",
+      explanation: "The Sound object exists but points at no audio, so it plays nothing and reports no error.",
+      correctApproach: "Find audio in Toolbox → Audio, copy the ID, paste it into SoundId.",
+    },
+    {
+      mistake: "Night is so dark the level is unplayable",
+      explanation: "Brightness was taken to zero. Atmospheric and unnavigable are not the same thing.",
+      correctApproach: "Raise Brightness or OutdoorAmbient slightly, and use your Neon parts to light the route. A player should always be able to find their way.",
+    },
+    {
+      mistake: "Fog completely hides the island",
+      explanation: "Atmosphere Density is above 0.5.",
+      correctApproach: "0.25 to 0.4. Fog should suggest distance, not erase it.",
+    },
+    {
+      mistake: "Testing sound and lighting in Edit mode",
+      explanation: "Several audio and lighting behaviours only run properly while the game is running.",
+      correctApproach: "F5 for everything in this lesson. Judge it from where the player stands.",
+    },
+    {
+      mistake: "Ambient audio plays once and stops",
+      explanation: "Looped was never enabled.",
+      correctApproach: "Tick Looped on the Sound. Ambient is by definition continuous.",
+    },
+    {
+      mistake: "Bloom cranked up until the scene glows all over",
+      explanation: "Bloom on everything reads as a hazy, low-contrast image rather than an atmospheric one.",
+      correctApproach: "Low Intensity, judged at night, so the glow has darkness to bleed into. Same restraint rule as Neon in 1.5.",
+    },
+  ],
+  summary:
+    "You changed how the level feels without adding a single object. You set the time of day, put shadows and haze into the world so it stopped looking flat, added a glow that makes bright things read as bright, and gave the island a sound of its own plus an effect that responds to the player. You also met FindFirstChild and the difference between asking for something and waiting for it - a distinction that comes back constantly.",
+  practiceTask: {
+    title: "Practice: Island atmosphere",
+    difficulty: "beginner",
+    description: `**The build:** two moods, morning and night, plus a soundscape.
+
+### Part A: Light and air
+1. Open your level from 1.5.
+2. In **Lighting**: morning ClockTime, a suitable Brightness, **GlobalShadows** on.
+3. Add **Atmosphere** with Density around 0.3, and set its Color to suit the light.
+4. Write down your night ClockTime, switch to it, and check the level still reads.
 
 ### Part B: Sound
-1. Add ambient audio (\`Ambient_Waves\`) to Workspace. Enable Looped and set a low volume around 0.35.
-2. Add a sound effect (SFX) inside an interactive Part, such as \`LogicCube\`. Disable Looped.
-3. Add the \`Play()\` command to the Part's script so the sound plays on a click.
-4. Start Play mode and walk around the island while checking the audio balance.
+1. \`Ambient_Waves\` in Workspace: Looped on, Volume about 0.35.
+2. \`SFX_Click\` inside \`LogicCube\`: Looped off, RollOffMaxDistance about 60.
+3. Add the \`FindFirstChild\` + \`sound:Play()\` block to the cube's click handler.
+4. Play, walk the island, and listen to the balance between the two.
 
 ### Part C: Finish and save
-1. Confirm that Output contains no errors.
-2. Save the level through **File → Save to Roblox** as \`Lesson 1.6 - Island Atmosphere\`.
-3. Mark the practical task complete in the system.`,
- hints: [
- "Configure the lighting before adding sound.",
- "Ambient audio should always be quieter than sound effects.",
- "Keep the fog density moderate.",
- "At night, confirm that the player can see the path to the water.",
- "Give sounds clear names using Ambient_ and SFX_ prefixes. This will simplify future work.",
- ],
- optionalChallenge:
- "Create two different ambient sounds, one for daytime and one for night, and record their settings. In the next lesson, you will write a script that switches them automatically.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 15,
- questions: [
- {
- id: "q1",
- type: MC,
- question: "What does the ClockTime property in Lighting control?",
- options: [
-          "The level's time of day",
-          "The sound volume",
-          "The object size",
+1. No red errors in Output.
+2. **File → Save to Roblox** as \`Lesson 1.6 - Island Atmosphere\`.
+3. Mark the practice complete here.`,
+    hints: [
+      "Light first, sound second. Tuning audio against lighting you are about to change wastes the work.",
+      "Ambient always quieter than SFX. If you can hear the waves clearly over the click, the waves are too loud.",
+      "Fog density is one of those settings where a small number does a lot. Start at 0.3 and adjust in small steps.",
+      "Turn ClockTime down slowly rather than jumping to 0. Watching the transition tells you far more than looking at two endpoints.",
+      "Prefix your sounds: Ambient_, SFX_. You will have a dozen of them by module 11.",
+    ],
+    optionalChallenge:
+      "Build two complete ambient beds - a daytime one and a night one - and write down every setting for both. In 1.7 you will write the script that crossfades between them automatically, and having the numbers ready turns that into a ten-minute job instead of an hour of re-tuning.",
+  },
+  quiz: {
+    passingScore: 70,
+    timeLimit: 15,
+    questions: [
+      {
+        id: "q1",
+        type: MC,
+        question: "What does ClockTime control?",
+        options: [
+          "The time of day in the level, from 0 to 24",
+          "Sound volume",
+          "Object size",
           "The script type",
         ],
- correctAnswer: 0,
- explanation: "ClockTime sets the in-game time from 0 to 24.",
- },
- {
- id: "q2",
- type: MC,
- question: "What does the Density property in Atmosphere affect?",
- options: [
-          "The character's running speed",
-          "The number of cut-out windows",
-          "The click detection range",
-          "The density of fog in the air",
+        correctAnswer: 0,
+        explanation: "It is the sun and moon position. Dragging it slowly is the fastest way to see how much lighting changes a scene.",
+      },
+      {
+        id: "q2",
+        type: MC,
+        question: "What does Atmosphere's Density affect?",
+        options: [
+          "Running speed",
+          "The number of windows",
+          "Click detection range",
+          "How thick the haze in the air is",
         ],
- correctAnswer: 3,
- explanation: "Density determines how thick the fog appears in the level.",
- },
- {
- id: "q3",
- type: MC,
- question: "Which settings should ambient audio (Ambient) use?",
- options: [
-          "Looped = false and Volume = 1",
-          "Looped = true and low volume",
-          "It must be located only in Terrain",
-          "It must replace the ClickDetector",
+        correctAnswer: 3,
+        explanation: "Haze is what creates a sense of distance. Without it, a hill 500 studs away is as sharp as the wall in front of you and the scene reads as flat.",
+      },
+      {
+        id: "q3",
+        type: MC,
+        question: "How should ambient audio be configured?",
+        options: [
+          "Looped = false, Volume = 1",
+          "Looped = true, and a low volume",
+          "Only inside Terrain",
+          "Instead of a ClickDetector",
         ],
- correctAnswer: 1,
- explanation: "Ambient audio should loop continuously without masking other game sounds.",
- },
- {
- id: "q4",
- type: MC,
- question: "What are SFX (Sound Effects) in this lesson?",
- options: [
-          "A required database",
-          "A game camera type",
-          "A short sound that plays during an action, such as a click",
-          "An empty-level template",
+        correctAnswer: 1,
+        explanation: "Continuous and quiet. It has to leave acoustic room for the short sounds to cut through.",
+      },
+      {
+        id: "q4",
+        type: MC,
+        question: "What is an SFX?",
+        options: [
+          "A database",
+          "A camera type",
+          "A short sound triggered by an action - a click, a coin, a thud",
+          "An empty level template",
         ],
- correctAnswer: 2,
- explanation: "SFX are short interaction sounds, unlike continuous ambient audio.",
- },
- {
- id: "q5",
- type: MC,
- question: "Why must you check the night lighting in Play mode?",
- options: [
-          "Because ClockTime works only in edit mode",
-          "Because fog disappears in Play mode",
-          "Because saving is unavailable at night",
-          "To confirm that the player can see the path and the house",
+        correctAnswer: 2,
+        explanation: "Brief, not looped, and usually parented to the Part that produces it so it comes from the right direction.",
+      },
+      {
+        id: "q5",
+        type: MC,
+        question: "Why check your night lighting in Play mode specifically?",
+        options: [
+          "ClockTime only works in Edit mode",
+          "Fog disappears in Play mode",
+          "Saving is unavailable at night",
+          "To confirm a player standing on the ground can actually find their way",
         ],
- correctAnswer: 3,
- explanation: "In darkness, incorrect brightness settings can easily make a level impossible to navigate.",
- },
- {
- id: "q6",
- type: MC,
- question: "Which property should you check if ambient audio stops after playing once?",
- options: [
+        correctAnswer: 3,
+        explanation: "A scene that looks moody from a flying camera can be completely unnavigable at eye level. Atmospheric and unplayable are different things.",
+      },
+      {
+        id: "q6",
+        type: MC,
+        question: "Ambient audio plays once and stops. Which property?",
+        options: [
           "Looped",
           "Anchored",
           "Union",
           "Snap to Grid",
         ],
- correctAnswer: 0,
- explanation: "Looped makes the sound repeat continuously.",
- },
- {
- id: "q7",
- type: MC,
- question: "How should you use Bloom at this stage?",
- options: [
-          "Set it to maximum for every object",
-          "Use it to replace Atmosphere",
-          "Use it as a subtle glow accent",
-          "Use it to replace every sound in the game",
+        correctAnswer: 0,
+        explanation: "Looped makes it repeat forever, which is what 'ambient' means.",
+      },
+      {
+        id: "q7",
+        type: MC,
+        question: "How should Bloom be used?",
+        options: [
+          "At maximum, on everything",
+          "As a replacement for Atmosphere",
+          "Subtly, so bright objects glow while the rest of the scene stays readable",
+          "To replace sound",
         ],
- correctAnswer: 2,
- explanation: "Bloom gives bright objects a soft glow, but excessive values can obscure the player's view.",
- },
- {
- id: "q8",
- type: MC,
- question: "What does the sound:Play() command do in the code?",
- options: [
-          "Generates new terrain",
-          "Starts sound playback",
-          "Creates a new Folder",
+        correctAnswer: 2,
+        explanation: "Bloom on everything reads as a hazy, low-contrast image. Bloom on two neon signs in a dark scene reads as expensive.",
+      },
+      {
+        id: "q8",
+        type: MC,
+        question: "What does sound:Play() do?",
+        options: [
+          "Generates terrain",
+          "Starts playback of that sound",
+          "Creates a Folder",
           "Deletes Lighting",
         ],
- correctAnswer: 1,
- explanation: "This command plays the specified sound effect.",
- },
- {
- id: "q9",
- type: MC,
- question: "Why should you avoid setting ambient audio volume to 1.0, the maximum?",
- options: [
-          "The application prohibits values above 0.5",
-          "The ambient track will mask the sound effects and make the game sound chaotic",
-          "Changing the time of day will stop working",
-          "Every image (Decal) will disappear",
+        correctAnswer: 1,
+        explanation: "It plays the Sound object it is called on - which is why the sound has to be found first.",
+      },
+      {
+        id: "q9",
+        type: MC,
+        question: "Why not set ambient volume to 1.0?",
+        options: [
+          "Values above 0.5 are not allowed",
+          "It masks every sound effect, so the game feels unresponsive without the player knowing why",
+          "Time of day stops working",
+          "Decals disappear",
         ],
- correctAnswer: 1,
- explanation: "Quiet ambient audio leaves acoustic space for important sound effects.",
- },
- {
- id: "q10",
- type: MC,
- question: "What is the OutdoorAmbient property in Lighting useful for?",
- options: [
+        correctAnswer: 1,
+        explanation: "Mixing is the relationship between the two levels, not either one on its own. A too-loud ambient bed is a genuinely common cause of a game feeling mushy.",
+      },
+      {
+        id: "q10",
+        type: MC,
+        question: "What is OutdoorAmbient for?",
+        options: [
           "Cutting openings in walls",
-          "Saving the game to the cloud",
-          "Changing the tint of objects in shadow",
-          "Opening the Toolbox panel",
+          "Cloud saving",
+          "The colour that lights shadowed areas",
+          "Opening the Toolbox",
         ],
- correctAnswer: 2,
- explanation: "OutdoorAmbient determines the color used to illuminate shadowed areas of the level.",
- },
- {
- id: "q11",
- type: MC,
- question: "Which workflow is most effective for configuring the atmosphere?",
- options: [
-          "Lighting → Atmosphere → Sound → Testing",
-          "Add five ambient sounds → Configure time",
-          "Set glow to maximum → Save without testing",
-          "Start writing party code before configuring lighting",
+        correctAnswer: 2,
+        explanation: "Real shadows are lit by the sky, which is why outdoor shadows are slightly blue. Set this and a morning scene starts looking like morning.",
+      },
+      {
+        id: "q11",
+        type: MC,
+        question: "Which order works best?",
+        options: [
+          "Lighting → Atmosphere → Sound → Test",
+          "Five ambient tracks → then set the time",
+          "Bloom to maximum → save without testing",
+          "Write the party script before touching the lighting",
         ],
- correctAnswer: 0,
- explanation: "Configure the visual settings first, then add sound.",
- },
- {
- id: "q12",
- type: MC,
- question: "What should you do if the screen is too white or hazy?",
- options: [
-          "Change ClockTime",
-          "Delete the account",
-          "Create a flashlight",
-          "Reduce Bloom or Brightness",
+        correctAnswer: 0,
+        explanation: "Visual first, audio second. Tuning sound against lighting you are about to change means doing it twice.",
+      },
+      {
+        id: "q12",
+        type: MC,
+        question: "The screen is white and washed out. What do you reduce?",
+        options: [
+          "ClockTime",
+          "The volume",
+          "Nothing - that is correct",
+          "Bloom or Brightness",
         ],
- correctAnswer: 3,
- explanation: "If the screen is too white or hazy, check and reduce Bloom or Brightness.",
- },
- {
- id: "q13",
- type: MC,
- question: "Why should a script use FindFirstChild(\"SFX_Click\")?",
- options: [
-          "To generate new terrain",
-          "To open the plugin list",
-          "To find the sound safely and avoid a script error when it is missing",
-          "To change the interface language",
+        correctAnswer: 3,
+        explanation: "Both push the image toward white. Turn them down and judge the result at night, where the glow has darkness to work against.",
+      },
+      {
+        id: "q13",
+        type: MC,
+        question: "Why use FindFirstChild(\"SFX_Click\") rather than WaitForChild here?",
+        options: [
+          "It generates terrain",
+          "It opens the plugin list",
+          "It returns nil instead of waiting, so a missing optional sound does not freeze the script",
+          "It changes the interface language",
         ],
- correctAnswer: 2,
- explanation: "If the object is not found, this command returns an empty value (nil) instead of stopping the script with an error.",
- },
- {
- id: "q14",
- type: MC,
- question: "What is the result of setting GlobalShadows = true?",
- options: [
-          "It provides free assets",
-          "It creates realistic shadows from objects, adding visual depth",
-          "It automatically applies images to walls",
-          "It disables every sound",
+        correctAnswer: 2,
+        explanation: "WaitForChild stops and waits - right when you must have the object. FindFirstChild asks and moves on - right when the object is optional. The if guard handles the nil.",
+      },
+      {
+        id: "q14",
+        type: MC,
+        question: "What does GlobalShadows = true give you?",
+        options: [
+          "Free assets",
+          "Real cast shadows, which tell your eye that objects have volume and sit on the ground",
+          "Automatic Decals",
+          "Sound disabled",
         ],
- correctAnswer: 1,
- explanation: "Shadows add depth and realism to the scene.",
- },
- {
- id: "q15",
- type: MC,
- question: "What name should you use when saving the level at the end of lesson 1.6?",
- options: [
-          "Lesson 1.6 - Island Atmosphere",
-          "Untitled",
-          "Lesson 1.1 - House_01",
-          "Module 12",
+        correctAnswer: 1,
+        explanation: "Without shadows everything flattens out and objects look like they are hovering. It is the highest-impact single tickbox in the Lighting panel.",
+      },
+      {
+        id: "q15",
+        type: MC,
+        question: "What does RollOffMaxDistance control on a Sound?",
+        options: [
+          "How far away the sound can still be heard",
+          "How long the sound lasts",
+          "The pitch",
+          "Whether it loops",
         ],
- correctAnswer: 0,
- explanation: "The task requires you to save the level artifact with its configured atmosphere under the specified name.",
- },
- ],
- },
+        correctAnswer: 0,
+        explanation: "Sounds inside a Part are positional. Setting this to around 60 keeps a small object's sound local instead of audible across the whole island.",
+      },
+    ],
+  },
 }
 
 export const enLesson17 = {
- lessonId: "lesson-roblox-1-7",
- moduleId: "module-01",
- order: 7,
- title: "1.7 - Party Mode",
- theoryMinutes: 35,
- quizMinutes: 15,
- estimatedTime: 60,
- learningObjectives: [
- "Create a Neon PartyButton with a ClickDetector.",
- "Store the current state in the partyOn variable and toggle it on each click.",
- "Use an if condition to activate night mode, music, and a visual effect.",
- "Restore the daytime lighting preset when the mode is disabled.",
- "Test and save a working Party Mode toggle on the island.",
- ],
- theory: {
- sections: [
- {
- title: "Lesson task: party button",
- content: `In the previous lesson, you configured morning and night settings, ambient audio, and effects manually. You will now create a button that automates these changes. One click enables Party Mode, and the next restores the island's normal state.
+  lessonId: "lesson-roblox-1-7",
+  moduleId: "module-01",
+  order: 7,
+  title: "1.7 - Party Mode",
+  theoryMinutes: 35,
+  quizMinutes: 15,
+  estimatedTime: 60,
+  learningObjectives: [
+    "Build a Neon PartyButton with a ClickDetector and a Script.",
+    "Hold state in a partyOn variable and flip it with the not operator.",
+    "Use one if/else to drive lighting, music, and a visual effect together.",
+    "Write an else branch that genuinely restores the previous state.",
+    "Ship a working two-way toggle on the island and save it.",
+  ],
+  theory: {
+    sections: [
+      {
+        title: "Today's mission (lesson 7 of 92)",
+        content: `In 1.6 you built two moods by hand, dragging ClockTime back and forth and starting sounds yourself. Today you hand that job to a button.
 
-**By the end of this lesson, you will have:**
-- A \`PartyButton\` object with Neon material, a ClickDetector, and a Script.
-- A \`partyOn\` variable that toggles state (\`partyOn = not partyOn\`).
-- An \`if partyOn then ... else ... end\` condition that activates night mode, music, and a visual effect.
-- An \`else\` block that restores the daytime preset from lesson 1.6.
-- A saved level named \`Lesson 1.7 - Party Mode\`.
+This is the first thing you have built that a *player* can control. Everything before now was you configuring a world. This is the world reacting to somebody who is not you - which is, in one sentence, what a game is.
 
-Open your saved level \`Lesson 1.6 - Island Atmosphere\`.`,
- },
- {
- title: "What is a toggle?",
- content: `A **toggle** switches between two states. Each click changes the state to its opposite, like a standard light switch:
+| After 1.6 | Result of 1.7 |
+|---|---|
+| Two moods you switch by hand in Studio | One button a player presses to switch them |
+| Code that reacts to one thing at a time | One click driving lighting, audio, and visuals together |
+| No memory of what state anything is in | A variable holding state between clicks |
 
-- state \`false\` (off) → click → becomes \`true\` (on);
-- state \`true\` → click → becomes \`false\` again.
+**Your finish line for today:**
+- A \`PartyButton\` - Neon, with a ClickDetector and a Script.
+- A \`partyOn\` variable, flipped every click with \`not\`.
+- \`if partyOn then ... else ... end\` driving night + music + a visual effect.
+- An \`else\` branch that puts everything back exactly as it was.
+- Saved as \`Lesson 1.7 - Party Mode\`.
 
-In code, this looks like:
+**Do now (2 min):** open \`Lesson 1.6 - Island Atmosphere\`.`,
+      },
+      {
+        title: "What a toggle actually is",
+        content: `A toggle is a thing with two states that swaps between them. A light switch. Mute. Fullscreen.
+
+- \`false\` → click → \`true\`
+- \`true\` → click → \`false\`
+
+In code, the entire mechanism is one line:
 
 \`\`\`lua
 local partyOn = false
-partyOn = not partyOn -- invert the value
+partyOn = not partyOn  -- flip it
 \`\`\`
 
-The \`not\` operator changes a Boolean value to its opposite. The variable lets the script remember the button's current state.`,
- },
- {
- title: "Creating PartyButton",
- content: `1. Create a Block near the house entrance or in the yard where it is easy to see.
+\`not\` inverts a boolean. \`not false\` is \`true\`; \`not true\` is \`false\`. That is the whole trick.
+
+**The important word in that snippet is "remember".** Your LogicCube in 1.4 counted clicks - it remembered a number. This remembers a *situation*: is the party currently on? Without a variable holding that, the button has no way of knowing whether this click should start the party or end it. It would be a switch with no idea which way it is currently flipped.
+
+Almost every system in the rest of this course keeps state like this. Whether a door is open, whether a quest is accepted, whether a player already claimed today's reward - all of it is a variable somewhere remembering what happened.`,
+      },
+      {
+        title: "Building the button",
+        content: `1. A Block near the entrance or in the yard, somewhere obvious.
 2. Name it \`PartyButton\`.
-3. Select the **Neon** material and a bright color.
-4. Set a convenient clickable size, such as \`3, 1, 3\` or \`2, 4, 2\`.
-5. Enable **Anchored = true**.
-6. Add a **ClickDetector** inside the button and set MaxActivationDistance to \`32\`.
-7. Add a **Script** inside the button.
+3. **Neon** material, bright colour - it should look pressable.
+4. Size it to be easy to click: \`3, 1, 3\` or \`2, 4, 2\`.
+5. \`Anchored = true\`.
+6. **ClickDetector** inside it, MaxActivationDistance \`32\`.
+7. A **Script** inside it.
 
-For organization, group interactive objects such as the button and LogicCube in an \`Interactives\` Folder in Explorer.
+A note on making it *look* clickable: players do not read instructions. A glowing object at eye height, on a plinth, in an empty patch of yard reads as "press me" without a single word. A grey cube in a corner does not. That is level design, and it is free.
 
-**Try it now:** place the Neon button, then add a ClickDetector and an empty Script. Start the game in Play mode and confirm that the click icon appears.
-`,
- },
- {
- title: "Music and ambient audio",
- content: `Prepare the Sound objects before writing the toggle logic.
+**Tidiness:** make a Folder called \`Interactives\` and put \`PartyButton\` and \`LogicCube\` in it. Two objects does not feel like it needs a folder. Two hundred does, and by then reorganising is a chore.
 
-| Sound | Purpose | Looped | Volume |
-|-------|------|--------|--------|
-| \`Ambient_Day\` | Daytime ambience from lesson 1.6 | true | 0.3-0.4 |
-| \`Music_Party\` | Party music | true | 0.35-0.5 |
-| \`SFX_PartyStart\` | Optional short startup effect | false | 0.5 |
+**Do now (5 min):** place the button, add the ClickDetector and an empty Script. Press Play and confirm the click cursor appears when you look at it.`,
+      },
+      {
+        title: "Getting the sounds ready first",
+        content: `Set up the audio before writing any logic. Debugging a toggle is easy; debugging a toggle *and* missing sound objects at the same time is not.
 
-Toggle behavior:
-- Party Mode **on**: \`Music_Party:Play()\` starts, and the daytime ambience stops.
-- Party Mode **off**: the daytime ambience starts, and the music stops.
+| Sound | Role | Looped | Volume |
+|---|---|---|---|
+| \`Ambient_Day\` | Your daytime bed from 1.6 | true | 0.3-0.4 |
+| \`Music_Party\` | The party track | true | 0.35-0.5 |
+| \`SFX_PartyStart\` | Optional stinger on activation | false | 0.5 |
+
+The behaviour you want:
+- Party **on**: \`Music_Party\` plays, \`Ambient_Day\` stops.
+- Party **off**: \`Ambient_Day\` plays, \`Music_Party\` stops.
+
+**Both halves matter.** Starting the music is the obvious part. Stopping the ambient is the part people forget, and the result is waves and dance music playing simultaneously - a bug that sounds exactly like a bug.
 
 \`\`\`lua
 local music = workspace:FindFirstChild("Music_Party")
 local ambient = workspace:FindFirstChild("Ambient_Day")
 
 if music then
- music.Looped = true
+  music.Looped = true
 end
 \`\`\`
 
-Use two separate, clearly named Sound objects in Workspace.
+Note \`FindFirstChild\` again, and the \`if music then\` guard around it - same defensive pattern as 1.6. If you rename a sound later and forget to update the script, the button still works and simply makes no noise, instead of throwing an error and breaking the lighting too.
 
-**Try it now:** add \`Music_Party\` from the Audio tab in Toolbox and verify its SoundId.`,
- },
- {
- title: "Confetti visual effect",
- content: `You can implement the visual change in several ways. Choose one of these options:
+**Do now (5 min):** add \`Music_Party\` from Toolbox → Audio and check its SoundId is filled in.`,
+      },
+      {
+        title: "The visual effect",
+        content: `The mode has to be *visible*, not just audible. Three ways, pick one:
 
-**Option A (simplest):** create several small Neon blocks (\`Confetti_1\`, \`Confetti_2\`) near the button. Set them to \`Transparency = 0\` while Party Mode is on and \`Transparency = 1\` while it is off.
-**Option B:** use a **ParticleEmitter** and toggle its \`Enabled\` property.
-**Option C:** change existing lamp colors to brighter colors.
+**Option A - simplest.** Several small Neon blocks named \`Confetti_1\`, \`Confetti_2\`... near the button. \`Transparency = 0\` when on, \`1\` when off.
+**Option B.** A **ParticleEmitter**, toggling its \`Enabled\` property.
+**Option C.** Change your existing lamps to brighter colours.
 
-**Main requirement:** the two modes must look visibly different.
+The requirement is just that the two states look unmistakably different. If you have to squint to tell whether the party is on, it is not on.
 
 \`\`\`lua
 local function setConfetti(visible)
- for _, child in ipairs(workspace:GetChildren()) do
-  if child.Name:match("^Confetti_") and child:IsA("BasePart") then
-   child.Transparency = visible and 0 or 1
+  for _, child in ipairs(workspace:GetChildren()) do
+    if child.Name:match("^Confetti_") and child:IsA("BasePart") then
+      child.Transparency = visible and 0 or 1
+    end
   end
- end
 end
 \`\`\`
 
-If the loop is difficult to manage, set each Part's transparency separately.
+That loop is a preview of module 4, where you meet \`ipairs\` properly. For now, the shape is: go through everything in Workspace, and for each thing whose name starts with \`Confetti_\`, set its transparency. Rather than naming six objects individually, you describe a rule.
 
-**Try it now:** create three to six small Neon parts (Anchored = true) and make them invisible (\`Transparency = 1\`).`,
- },
- {
- title: "Basic button code",
- content: `Use this script as the foundation for click handling:
+If the loop feels like too much today, set each Part's transparency on its own line. Nothing is lost - it just gets long, which is exactly the itch that makes loops feel like a relief when you meet them formally.
+
+**Do now (5 min):** make three to six small Neon parts, Anchored, all starting at \`Transparency = 1\`.`,
+      },
+      {
+        title: "The button code",
+        content: `Start here, and get it working before adding anything else.
 
 \`\`\`lua
 local part = script.Parent
@@ -2998,471 +3248,500 @@ local music = workspace:FindFirstChild("Music_Party")
 local ambient = workspace:FindFirstChild("Ambient_Day")
 
 detector.MouseClick:Connect(function(player)
- partyOn = not partyOn
- print(player.Name, "partyOn =", partyOn)
+  partyOn = not partyOn
+  print(player.Name, "partyOn =", partyOn)
 
- if partyOn then
-  Lighting.ClockTime = nightTime
-  if music then
-   if ambient then ambient:Stop() end
-   music:Play()
+  if partyOn then
+    Lighting.ClockTime = nightTime
+    if music then
+      if ambient then ambient:Stop() end
+      music:Play()
+    end
+    print("Party enabled")
+  else
+    Lighting.ClockTime = dayTime
+    if music then music:Stop() end
+    if ambient then ambient:Play() end
+    print("Party disabled")
   end
-  print("Party enabled")
- else
-  Lighting.ClockTime = dayTime
-  if music then music:Stop() end
-  if ambient then ambient:Play() end
-  print("Party disabled")
- end
 end)
 \`\`\`
 
-This code toggles the time of day and the music.
+**\`game:GetService("Lighting")\`** is the new piece. Lighting is a *service* - a global system, not an object sitting in Workspace. \`GetService\` is the correct way to reach any of them, and you will use it constantly: \`Players\`, \`ReplicatedStorage\`, \`TweenService\`, \`DataStoreService\`. Learn the shape now, because from module 3 onward it appears in nearly every script.
 
-**Try it now:** add the code to the Script, enter your Sound object names and time settings, then start Play mode. Click the button several times and check the state changes in Output.`,
- },
- {
- title: "Complete code with visual effects",
- content: `Next, add confetti activation. This example uses parts grouped in a Folder:
+Also notice \`dayTime\` and \`nightTime\` are named variables at the top rather than bare numbers buried in the logic. Same habit as 1.3 and 1.4, and by now it should be starting to feel automatic.
+
+**Do now (8 min):** put this in, fill in your own sound names and times, and click the button several times. Watch \`partyOn\` flip in Output. Get this working before you touch the confetti.`,
+      },
+      {
+        title: "Adding the visuals",
+        content: `Now hook the confetti in. This version assumes the pieces live in a Folder called \`ConfettiBits\`.
 
 \`\`\`lua
 local confettiFolder = workspace:FindFirstChild("ConfettiBits")
 
 local function showPartyVisuals(isOn)
- if confettiFolder then
-  for _, piece in ipairs(confettiFolder:GetChildren()) do
-   if piece:IsA("BasePart") then
-    piece.Transparency = isOn and 0 or 1
-   end
+  if confettiFolder then
+    for _, piece in ipairs(confettiFolder:GetChildren()) do
+      if piece:IsA("BasePart") then
+        piece.Transparency = isOn and 0 or 1
+      end
+    end
   end
- end
- part.BrickColor = isOn and BrickColor.new("Hot pink") or BrickColor.new("Bright blue")
+  part.BrickColor = isOn and BrickColor.new("Hot pink") or BrickColor.new("Bright blue")
 end
 
--- In MouseClick, instead of changing only the time:
+-- inside MouseClick, replacing the time-only version:
 if partyOn then
- Lighting.ClockTime = nightTime
- if ambient then ambient:Stop() end
- if music then music:Play() end
- showPartyVisuals(true)
+  Lighting.ClockTime = nightTime
+  if ambient then ambient:Stop() end
+  if music then music:Play() end
+  showPartyVisuals(true)
 else
- Lighting.ClockTime = dayTime
- if music then music:Stop() end
- if ambient then ambient:Play() end
- showPartyVisuals(false)
+  Lighting.ClockTime = dayTime
+  if music then music:Stop() end
+  if ambient then ambient:Play() end
+  showPartyVisuals(false)
 end
 \`\`\`
 
-A separate function (\`showPartyVisuals\`) keeps the code cleaner and easier to edit.
+**This is your first real function, and it is worth pausing on.** \`showPartyVisuals\` bundles up "everything the visuals need to do" and gives it a name. The if/else no longer has to care *how* the confetti works - it just says on or off. Change how the effect works later and you change one function, not two branches.
 
-**Try it now:** add visual-effect control. In Play mode, verify that the parts' transparency changes.`,
- },
- {
- title: "Preventing double clicks (Debounce)",
- content: `To prevent errors from rapid double-clicks, use a short delay:
+Functions get a full lesson in 3.6. This is the version where you feel why they are useful before anyone defines them at you.
+
+Note also that the button changes its own colour - pink when on, blue when off. The control itself shows its state. Real interfaces do this, and it costs one line.
+
+**Do now (6 min):** add the visuals and confirm the confetti appears and disappears cleanly.`,
+      },
+      {
+        title: "Debounce",
+        content: `Impatient players double-click. Without a guard, that flips \`partyOn\` twice in a few milliseconds and the mode appears to do nothing at all - or worse, the music starts and immediately stops.
 
 \`\`\`lua
 local busy = false
 
 detector.MouseClick:Connect(function(player)
- if busy then return end
- busy = true
+  if busy then return end
+  busy = true
 
- partyOn = not partyOn
- -- Main if/else code
+  partyOn = not partyOn
+  -- main if/else here
 
- task.wait(0.35)
- busy = false
+  task.wait(0.35)
+  busy = false
 end)
 \`\`\`
 
-This safeguard prevents sound playback issues caused by repeated clicks. Also note that after you stop a test with Stop, audio can sometimes remain loaded in Studio. Always start a fresh Play session when testing.`,
- },
- {
- title: "Testing the Modes",
- content: `During testing, make sure the mode change is obvious:
-1. Clicking the button darkens the sky, starts the music, and enables the party lights.
-2. Clicking it again fully restores the normal daytime state, stops the music, and starts the ambient nature sound.
+Same pattern you saw in 1.4, now with a real reason to use it. \`0.35\` seconds is long enough to swallow a double-click and short enough that a deliberate second press still works.
 
-If the change is difficult to notice, increase the difference in ClockTime or make the confetti brighter.
+One Studio quirk worth knowing: after you press Stop, audio can occasionally linger in the editor. If sound is behaving oddly, start a fresh Play session before assuming your code is wrong.`,
+      },
+      {
+        title: "Test it like a player would",
+        content: `Both directions, twice. The second click is the one that finds bugs, because the "off" branch is the one people write carelessly.
 
-**Try it now:** test the feature in Play mode and verify both button states.`,
- },
- {
- title: "Common errors and solutions",
- content: `| Problem | Cause | Fix |
-|---------|---------|-------------|
-| Party Mode does not turn off | The \`else\` block is missing, or \`partyOn\` is not inverted | Add \`partyOn = not partyOn\` and configure the \`else\` block. |
-| Music does not play | SoundId is missing, or Play() is not called | Check the audio asset, then add \`music:Play()\` to the enable block. |
-| Both sounds play at once | The ambient sound is not stopped | Add \`ambient:Stop()\` when Party Mode is enabled. |
-| Confetti does not disappear | The \`else\` block does not hide it | Set \`Transparency = 1\` in the disable block. |
-| Clicking does not work | ClickDetector is missing, or you are testing in Edit mode | Add ClickDetector and test in Play mode (F5). |
-| \`Lighting is nil\` error | The service is accessed incorrectly | Use \`game:GetService("Lighting")\`. |`,
- },
- {
- title: "Project completion requirements",
- content: `**Checklist:**
-- [ ] \`PartyButton\` uses the Neon material and contains ClickDetector and Script.
-- [ ] The \`partyOn\` variable and its inversion are configured.
-- [ ] Enabling the mode activates night, music, and a visual effect.
-- [ ] Disabling the mode restores daytime and the ambient sound.
-- [ ] Status messages from print appear in Output.
-- [ ] The project is saved as \`Lesson 1.7 - Party Mode\`.
+1. Click once: sky darkens, music starts, ambient stops, confetti appears, button turns pink.
+2. Click again: daylight returns, music stops, ambient restarts, confetti vanishes, button turns blue.
+3. Now do it three more times in a row. Anything that drifts - a sound that stacks, confetti that stays behind - shows up on repeat, not on the first go.
 
-| Level | Requirements |
-|--------|------|
-| Meets requirements | Night and music toggle correctly, with a simple visual effect. |
-| Proficient | The \`else\` block is clean, two sound objects are used, and the confetti hides correctly. |
-| Advanced | Functions organize the code, double-click protection (debounce) is implemented, and the button changes color. |`,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "partyOn is not inverted",
- explanation: "The variable remains in one state, so the mode never toggles.",
- correctApproach: "Add partyOn = not partyOn on every click, before the if/else block.",
- },
- {
- mistake: "Party Mode can only be enabled because there is no else block",
- explanation: "A second click does not restore the previous settings.",
- correctApproach: "Add an else branch that restores daytime and stops the music.",
- },
- {
- mistake: "The ambient sound and music play at the same time",
- explanation: "The code does not stop one sound when switching modes.",
- correctApproach: "In ON mode, start the music and stop the ambient sound. Do the reverse in OFF mode.",
- },
- {
- mistake: "Visual effects remain visible after the mode is disabled",
- explanation: "The else branch has no command to hide the objects.",
- correctApproach: "Set Transparency = 1 or Enabled = false for the visual effects in the else block.",
- },
- {
- mistake: "Mouse clicks are not detected",
- explanation: "ClickDetector is missing, or the script is in the wrong location.",
- correctApproach: "Make sure ClickDetector and Script are directly inside PartyButton.",
- },
- {
- mistake: "Testing is performed in Edit mode",
- explanation: "Clicks are processed only while the game is running.",
- correctApproach: "Always test the feature in Play mode (F5).",
- },
- {
- mistake: "The music is too loud",
- explanation: "High volume is uncomfortable and masks other sounds.",
- correctApproach: "Set the music Volume between 0.35 and 0.5.",
- },
- ],
- summary:
- "In this lesson, you configured a Neon button with a partyOn toggle. One click now activates night mode, music, and visual effects, while a second click restores daytime. Party Mode is ready to demonstrate.",
- practiceTask: {
- title: "Practice: Party Mode",
- difficulty: "beginner",
- description: `**Task:** Create a button that toggles Party Mode on the island.
+If the change is hard to notice, widen the gap: a bigger ClockTime difference, brighter confetti, louder music. Feedback that a player might miss is feedback that does not exist.
 
-### Part A: Button and Sounds
-1. Open the level with the atmosphere configured in lesson 1.6.
-2. Create \`PartyButton\` (Neon material, Anchored = true), then add ClickDetector and Script to it.
-3. Prepare the \`Music_Party\` audio and a daytime ambient sound in Workspace.
+**Do now (5 min):** run at least three full on-off cycles and watch for anything that does not return to where it started.`,
+      },
+      {
+        title: "When it goes wrong",
+        content: `| Problem | Cause | Fix |
+|---|---|---|
+| It turns on but never off | No \`else\`, or \`partyOn\` never inverted | Add \`partyOn = not partyOn\` and a full else branch. |
+| No music | SoundId empty, or \`Play()\` never called | Check the asset, and check the enable branch calls \`music:Play()\`. |
+| Waves and dance music at once | The ambient is never stopped | \`ambient:Stop()\` in the ON branch. |
+| Confetti stays visible | The else branch does not hide it | \`Transparency = 1\` in the OFF branch. |
+| Clicking does nothing | No ClickDetector, or you are in Edit mode | Add it, and test with F5. |
+| \`Lighting is nil\` | Reaching for the service the wrong way | \`game:GetService("Lighting")\`. |
 
-### Part B: Toggle Logic
-1. Declare \`local partyOn = false\` and invert it on each click.
-2. Write an \`if partyOn\` block that sets the time to night with ClockTime, starts the music, stops the daytime ambience, and activates a visual effect.
-3. Write an \`else\` block that restores daytime, stops the music, starts the daytime ambience, and hides the visual effect.
-4. Print the current state to Output.
-5. Start Play and test at least two complete on-and-off cycles.
+**The pattern behind half this table:** whatever the ON branch does, the OFF branch has to undo. Write them side by side and check line for line - start music / stop music, hide confetti / show confetti, night / day. A toggle where one direction does three things and the other does two is a toggle that leaves your world in a state it can never get out of.`,
+      },
+      {
+        title: "Check your work before you move on",
+        content: `**Checklist:**
+- [ ] \`PartyButton\` is Neon and contains a ClickDetector and a Script.
+- [ ] \`partyOn\` exists and is inverted every click.
+- [ ] ON gives night + music + a visual effect.
+- [ ] OFF restores day + ambient + hides the effect.
+- [ ] Output reports the state on each click.
+- [ ] Saved as \`Lesson 1.7 - Party Mode\`.
+
+| Level | What it looks like |
+|---|---|
+| **Done** | Night and music toggle correctly, with some visual change. |
+| **Good** | A clean else branch, two separate sounds, confetti that hides properly. |
+| **Excellent** | The visual work lives in a function, a debounce guards the handler, and the button shows its own state through colour. |`,
+      },
+    ],
+  },
+  commonMistakes: [
+    {
+      mistake: "partyOn is never inverted",
+      explanation: "The variable stays on its starting value forever, so every click takes the same branch and the mode never turns off.",
+      correctApproach: "partyOn = not partyOn as the first line of the handler, before the if/else.",
+    },
+    {
+      mistake: "The mode turns on but there is no way to turn it off",
+      explanation: "The else branch is missing, so the second click has nothing to run.",
+      correctApproach: "Write the else branch as the exact mirror of the if branch, undoing everything it did.",
+    },
+    {
+      mistake: "The ambient track and the party music play at the same time",
+      explanation: "Starting the new sound is remembered; stopping the old one is forgotten.",
+      correctApproach: "ON: start music, stop ambient. OFF: start ambient, stop music. Both halves, every time.",
+    },
+    {
+      mistake: "Confetti stays visible after the party ends",
+      explanation: "Same cause - the OFF branch does less than the ON branch did.",
+      correctApproach: "Transparency = 1, or Enabled = false, in the else branch. Read the two branches side by side and check them line for line.",
+    },
+    {
+      mistake: "Clicking the button does nothing",
+      explanation: "There is no ClickDetector, or the Script is not a child of the button.",
+      correctApproach: "In Explorer, both ClickDetector and Script should be indented directly under PartyButton.",
+    },
+    {
+      mistake: "Testing in Edit mode",
+      explanation: "MouseClick only fires while the game is running.",
+      correctApproach: "F5, every time.",
+    },
+    {
+      mistake: "The music is deafening",
+      explanation: "Volume left at or near 1.",
+      correctApproach: "0.35-0.5. Loud enough to change the mood, quiet enough that the click SFX still cuts through.",
+    },
+    {
+      mistake: "A fast double-click makes the mode appear to do nothing",
+      explanation: "Two clicks in a few milliseconds flip partyOn twice, so it ends up back where it started.",
+      correctApproach: "Add the busy/task.wait debounce so the second click inside 0.35s is ignored.",
+    },
+  ],
+  summary:
+    "You built the first thing in this course that a player can operate. A single click now drives lighting, audio, and visuals together, and a second click puts all of it back. Along the way you met state held in a variable, the not operator, services via game:GetService, and your first function - all four of which show up in nearly every script from here to lesson 92.",
+  practiceTask: {
+    title: "Practice: Party Mode",
+    difficulty: "beginner",
+    description: `**The build:** a button that toggles the whole island between normal and party.
+
+### Part A: Button and sounds
+1. Open your level from 1.6.
+2. \`PartyButton\`: Neon, \`Anchored = true\`, with a ClickDetector and a Script inside it.
+3. Prepare \`Music_Party\` and your daytime ambient sound in Workspace, both named clearly.
+
+### Part B: The toggle
+1. \`local partyOn = false\`, inverted on every click.
+2. The \`if partyOn\` branch: night ClockTime, start the music, stop the ambient, show the visual effect.
+3. The \`else\` branch: day ClockTime, stop the music, start the ambient, hide the visual effect.
+4. \`print\` the state so Output tells you what happened.
+5. Play, and run at least two full on-off cycles.
 
 ### Part C: Finish
-1. Fix any issues and organize the object names.
-2. Save the level with **File → Save to Roblox** as \`Lesson 1.7 - Party Mode\`.
-3. Mark the practice as complete.`,
- hints: [
- "Configure only the time change first, without music. This makes debugging easier.",
- "Sound names in Workspace must exactly match the names in the code (FindFirstChild).",
- "Remember to test the second click that disables the mode.",
- "The simplest way to hide the confetti is with the Transparency property.",
- ],
- optionalChallenge:
- "Add a short sound effect (SFX_PartyStart) that plays only when Party Mode is enabled.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 15,
- questions: [
- {
- id: "q1",
- type: MC,
- question: "What does the expression partyOn = not partyOn do?",
- options: [
-          "Sets the value to true",
+1. Fix anything that does not return to its starting state, and tidy your object names.
+2. **File → Save to Roblox** as \`Lesson 1.7 - Party Mode\`.
+3. Mark the practice complete here.`,
+    hints: [
+      "Get the ClockTime change working on its own before you add music or confetti. One thing at a time is always faster than three things at once.",
+      "The names in FindFirstChild must match your Sound objects exactly - including capitals.",
+      "Test the second click. The 'off' branch is where nearly every bug in this lesson lives.",
+      "Simplest possible confetti: Transparency 0 and 1. Do not reach for particles until the toggle itself works.",
+      "Write the ON and OFF branches side by side and check them line for line. Whatever one does, the other must undo.",
+    ],
+    optionalChallenge:
+      "Add \`SFX_PartyStart\` - a short stinger that plays only on activation, never on deactivation. It is a small thing, and it teaches something real: not everything in the ON branch needs a mirror in the OFF branch. A one-shot sound has nothing to undo. Knowing which actions need reversing and which do not is exactly the judgement that makes toggles reliable.",
+  },
+  quiz: {
+    passingScore: 70,
+    timeLimit: 15,
+    questions: [
+      {
+        id: "q1",
+        type: MC,
+        question: "What does partyOn = not partyOn do?",
+        options: [
+          "Sets it to true",
           "Deletes the object",
           "Saves progress",
-          "Changes the variable's Boolean state to its opposite",
+          "Flips the boolean to its opposite",
         ],
- correctAnswer: 3,
- explanation: "The not operator inverts a Boolean value from true to false or from false to true.",
- },
- {
- id: "q2",
- type: MC,
- question: "What is the else branch used for in this task?",
- options: [
-          "To disable the party effects and restore daytime",
-          "To enable Party Mode",
-          "To create terrain",
-          "To open the Toolbox panel",
+        correctAnswer: 3,
+        explanation: "not true is false, not false is true. One line, and you have a switch.",
+      },
+      {
+        id: "q2",
+        type: MC,
+        question: "What is the else branch doing here?",
+        options: [
+          "Undoing everything the on branch did - restoring day, stopping music, hiding the effect",
+          "Enabling Party Mode",
+          "Creating terrain",
+          "Opening the Toolbox",
         ],
- correctAnswer: 0,
- explanation: "The else branch restores the island's original settings.",
- },
- {
- id: "q3",
- type: MC,
- question: "How should PartyButton be configured?",
- options: [
-          "It must not use the Anchored property",
-          "It should contain only a LocalScript",
-          "It should use the Neon material and contain a ClickDetector",
-          "It should be a MeshPart with no scripts",
+        correctAnswer: 0,
+        explanation: "A toggle is only as good as its off branch. Whatever the on branch changes, the off branch has to change back.",
+      },
+      {
+        id: "q3",
+        type: MC,
+        question: "How should PartyButton be set up?",
+        options: [
+          "With Anchored off",
+          "With only a LocalScript",
+          "Neon material, Anchored, with a ClickDetector and a Script inside it",
+          "As a MeshPart with no scripts",
         ],
- correctAnswer: 2,
- explanation: "For this task, the button must use the Neon material and respond to clicks.",
- },
- {
- id: "q4",
- type: MC,
- question: "How should sounds be configured during Party Mode?",
- options: [
-          "Delete the Lighting object",
-          "Stop the ambient sound when partyOn = true",
-          "Disable ClickDetector",
-          "Set a constant ClockTime = 14",
+        correctAnswer: 2,
+        explanation: "Neon so it reads as pressable, Anchored so it stays put, ClickDetector so it is clickable at all.",
+      },
+      {
+        id: "q4",
+        type: MC,
+        question: "What must happen to the ambient sound when the party starts?",
+        options: [
+          "Delete Lighting",
+          "Stop it, so it does not play over the music",
+          "Disable the ClickDetector",
+          "Fix ClockTime at 14",
         ],
- correctAnswer: 1,
- explanation: "The music should replace the daytime ambience so the sounds do not overlap.",
- },
- {
- id: "q5",
- type: MC,
- question: "What is the simplest way to hide a visual effect?",
- options: [
+        correctAnswer: 1,
+        explanation: "Starting the new sound is the obvious half. Stopping the old one is the half people forget, and the result sounds exactly like a bug.",
+      },
+      {
+        id: "q5",
+        type: MC,
+        question: "Simplest way to hide a visual effect?",
+        options: [
           "Delete Workspace",
-          "Use the Union tool",
-          "Set Transparency = 1 on the effect objects",
+          "Use Union",
+          "Set Transparency = 1",
           "Change the interface language",
         ],
- correctAnswer: 2,
- explanation: "The Transparency = 1 property makes Parts completely transparent.",
- },
- {
- id: "q6",
- type: MC,
- question: "Why is game:GetService(\"Lighting\") used in the code?",
- options: [
-          "To add images (Decal)",
-          "To access time-of-day settings (ClockTime)",
+        correctAnswer: 2,
+        explanation: "Transparency 1 is invisible, 0 is solid. No creating or destroying objects needed.",
+      },
+      {
+        id: "q6",
+        type: MC,
+        question: "Why game:GetService(\"Lighting\")?",
+        options: [
+          "To add Decals",
+          "Because Lighting is a service - a global system, not an object in Workspace - and GetService is how scripts reach one",
           "To create folders",
-          "To enable grid snapping",
+          "To enable snapping",
         ],
- correctAnswer: 1,
- explanation: "This service lets a script modify lighting settings.",
- },
- {
- id: "q7",
- type: MC,
- question: "Where should the button script be located?",
- options: [
-          "Directly inside PartyButton",
-          "Only in Terrain",
-          "In the name of the object",
+        correctAnswer: 1,
+        explanation: "The same call gets you Players, ReplicatedStorage, TweenService and DataStoreService later. Learn the shape once, use it everywhere.",
+      },
+      {
+        id: "q7",
+        type: MC,
+        question: "Where does the button's Script belong?",
+        options: [
+          "Inside PartyButton",
+          "In Terrain",
+          "In the object's name",
           "In the BrickColor property",
         ],
- correctAnswer: 0,
- explanation: "Placing the script inside the button ensures that script.Parent refers to the correct object.",
- },
- {
- id: "q8",
- type: MC,
- question: "Which skills does the Party Mode task combine?",
- options: [
-          "Working with databases (DataStore)",
-          "Using RemoteEvent",
-          "Only generating terrain",
-          "Using if conditions, ClickDetector, and lighting settings",
+        correctAnswer: 0,
+        explanation: "Same rule as every script so far: inside the Part, so script.Parent points at the right thing.",
+      },
+      {
+        id: "q8",
+        type: MC,
+        question: "Which earlier skills does Party Mode combine?",
+        options: [
+          "DataStore",
+          "RemoteEvent",
+          "Terrain generation only",
+          "if/else conditions, ClickDetector events, and the Lighting and Sound settings from 1.6",
         ],
- correctAnswer: 3,
- explanation: "The task combines conditional logic with the atmosphere settings covered earlier.",
- },
- {
- id: "q9",
- type: MC,
- question: "How does the print(partyOn) command help during development?",
- options: [
-          "It displays the button's current state in Output",
-          "It increases screen brightness",
-          "It creates fog (Atmosphere)",
-          "It cuts openings in walls",
+        correctAnswer: 3,
+        explanation: "Nothing in this lesson is new on its own. The lesson is about wiring several known things into one feature.",
+      },
+      {
+        id: "q9",
+        type: MC,
+        question: "Why print the state on every click?",
+        options: [
+          "It shows in Output which branch actually ran, so you can tell a logic bug from a sound bug",
+          "It brightens the screen",
+          "It creates fog",
+          "It cuts wall openings",
         ],
- correctAnswer: 0,
- explanation: "This is a standard way to verify that mode toggling works correctly.",
- },
- {
- id: "q10",
- type: MC,
- question: "What should the confetti visual effect do?",
- options: [
-          "It must contain 1,000 Parts",
-          "It should only change the level name",
-          "It should consist only of print messages",
-          "It should create a clear visual difference between the enabled and disabled states",
+        correctAnswer: 0,
+        explanation: "If Output says partyOn = true and no music plays, the toggle is fine and the sound is the problem. That split saves you a lot of guessing.",
+      },
+      {
+        id: "q10",
+        type: MC,
+        question: "What is the actual requirement for the visual effect?",
+        options: [
+          "It must use 1,000 Parts",
+          "It should change the level name",
+          "It should only be print messages",
+          "The two states must be unmistakably different to look at",
         ],
- correctAnswer: 3,
- explanation: "The main goal is to provide visual feedback to the player.",
- },
- {
- id: "q11",
- type: MC,
- question: "Why is music:Stop() required in the else branch?",
- options: [
-          "To delete the ClickDetector object",
-          "To stop the party music when daytime is restored",
-          "To reset the Anchored property",
-          "To clear the terrain",
+        correctAnswer: 3,
+        explanation: "Feedback a player might miss does not count as feedback. If you have to squint to tell, make it bigger.",
+      },
+      {
+        id: "q11",
+        type: MC,
+        question: "Why is music:Stop() needed in the else branch?",
+        options: [
+          "To delete the ClickDetector",
+          "Because otherwise the party music keeps playing after daylight returns",
+          "To reset Anchored",
+          "To clear terrain",
         ],
- correctAnswer: 1,
- explanation: "When Party Mode is disabled, the music must stop.",
- },
- {
- id: "q12",
- type: MC,
- question: "Which mode should you use to test the button?",
- options: [
-          "Only Terrain Editor",
-          "Directly on the Roblox website",
+        correctAnswer: 1,
+        explanation: "Every start needs its stop. Read the two branches side by side and pair them up line for line.",
+      },
+      {
+        id: "q12",
+        type: MC,
+        question: "Where do you test the button?",
+        options: [
+          "Terrain Editor",
+          "On the Roblox website",
           "Play mode",
           "Edit mode",
         ],
- correctAnswer: 2,
- explanation: "ClickDetector interactions are processed only while the game is running.",
- },
- {
- id: "q13",
- type: MC,
- question: "What does the busy variable do together with task.wait?",
- options: [
-          "Prevents materials from being lost",
-          "Protects the script from issues caused by clicks that occur too frequently",
-          "Changes object materials",
-          "Generates new terrain objects",
+        correctAnswer: 2,
+        explanation: "Click events only fire in a running game. Nothing interactive interacts in Edit mode.",
+      },
+      {
+        id: "q13",
+        type: MC,
+        question: "What do busy and task.wait do together?",
+        options: [
+          "Prevent materials being lost",
+          "Ignore extra clicks arriving within a fraction of a second, so a double-click does not flip the state twice",
+          "Change materials",
+          "Generate terrain",
         ],
- correctAnswer: 1,
- explanation: "This debounce mechanism prevents the code from running multiple times after a double-click.",
- },
- {
- id: "q14",
- type: MC,
- question: "What should you do if both sounds play at the same time?",
- options: [
-          "Add ambient:Stop() when Party Mode is enabled.",
-          "Add the sounds again",
-          "Disable them manually in Properties",
-          "Configure the sound in Roblox",
+        correctAnswer: 1,
+        explanation: "That is a debounce. Without it, an impatient double-click flips partyOn twice and the mode appears to do nothing.",
+      },
+      {
+        id: "q14",
+        type: MC,
+        question: "What is the benefit of putting the visual changes in a showPartyVisuals function?",
+        options: [
+          "The if/else no longer has to know how the effect works - and changing the effect means editing one place, not two branches",
+          "It makes the script run faster",
+          "It is required by Roblox",
+          "It replaces the need for a ClickDetector",
         ],
- correctAnswer: 0,
- explanation: "If both sounds play at the same time, add ambient:Stop() when Party Mode is enabled.",
- },
- {
- id: "q15",
- type: MC,
- question: "What name should you use when saving the file?",
- options: [
+        correctAnswer: 0,
+        explanation: "That is the whole argument for functions, and you just felt it before anyone defined it at you. Functions get a full lesson in 3.6.",
+      },
+      {
+        id: "q15",
+        type: MC,
+        question: "What name should you save under?",
+        options: [
           "Untitled",
           "Lesson 1.2 - Island",
           "Lesson 1.7 - Party Mode",
           "Module 5",
         ],
- correctAnswer: 2,
- explanation: "Save the project with the corresponding lesson name.",
- },
- ],
- },
+        correctAnswer: 2,
+        explanation: "One saved Place per lesson, named for the lesson. In 1.8 you will be glad you can find each of them.",
+      },
+    ],
+  },
 }
 
 export const enLesson18 = {
- lessonId: "lesson-roblox-1-8",
- moduleId: "module-01",
- order: 8,
- title: "1.8 - Checkpoint M1",
- theoryMinutes: 35,
- quizMinutes: 15,
- estimatedTime: 60,
- learningObjectives: [
- "Complete the Module 1 level review without using new mechanics.",
- "Organize Explorer by giving objects clear names and grouping them into folders.",
- "Verify that the project was saved correctly to Roblox cloud with the correct name.",
- "Demonstrate Party Mode in a peer demo.",
- "Consolidate the skills you have learned before moving to Module 2.",
- ],
- theory: {
- sections: [
- {
- title: "Lesson Task: Submit the Level",
- content: `This is a **checkpoint**, not a new topic. Your main goal is to refine and prepare everything you created in lessons 1.1-1.7 for presentation.
+  lessonId: "lesson-roblox-1-8",
+  moduleId: "module-01",
+  order: 8,
+  title: "1.8 - Checkpoint M1",
+  theoryMinutes: 35,
+  quizMinutes: 15,
+  estimatedTime: 60,
+  learningObjectives: [
+    "Bring all of Module 1 together into one level and review it against a checklist.",
+    "Organise Explorer with folders and names you will still understand in a month.",
+    "Confirm the project is genuinely saved to the Roblox cloud under a findable name.",
+    "Present Party Mode in a 30-60 second demo.",
+    "Be able to explain a variable and an if condition in your own words.",
+  ],
+  theory: {
+    sections: [
+      {
+        title: "Today's mission (lesson 8 of 92)",
+        content: `No new tools today. Today you finish something.
 
-**Complete these items by the end of the lesson:**
-- Prepare one level that combines all Module 1 work.
-- Check the level against the checklist.
-- Organize Explorer with folders and clear names.
-- Save the level as \`Module 1 - Living Island\`.
-- Prepare a short 30-60 second Party Mode demonstration.
+That is a real skill, and it is rarer than it sounds. Plenty of people can start a Roblox project. Far fewer take one from "mostly works" to "I can hand this to someone and be proud of it" - and that gap is where a hobby turns into a portfolio.
 
-Open the saved level from the previous lesson. Use the most complete version available.`,
- },
- {
- title: "What Your Level Should Already Include",
- content: `Check that your level includes every required element from the previous stages:
+Seven lessons ago you opened a grey plane. You now have an island with a decorated house on it, three scripted objects, an atmosphere, a soundscape, and a button that transforms the whole place. Today you tidy it, test it, save it properly, and show it.
 
-| Lesson | Required content |
-|------|-------------------|
-| **1.1** | A \`House_01\` with windows and a doorway cut using Union. |
-| **1.2** | An island with terrain, water, a beach, and smoothed shorelines. |
-| **1.3** | A \`MagicCube\` with a script, variables, a print command, and a modified appearance. |
-| **1.4** | A \`LogicCube\` with ClickDetector and if/else conditions. |
-| **1.5** | House details with configured materials, images (Decal/Texture), and Neon accents. |
-| **1.6** | A configured atmosphere (Lighting, Atmosphere), ambient sound, and effects (SFX). |
-| **1.7** | A \`PartyButton\` that toggles night mode, music, and visual effects. |
+| After 1.7 | Result of 1.8 |
+|---|---|
+| Seven separate saved Places | One finished level that contains everything |
+| Explorer is a long unsorted list | Folders and names a stranger could navigate |
+| It works when you know where to click | It works for someone seeing it for the first time |
 
-**Try it now:** review the list and confirm that every component is present. If anything is missing, add it with tools you have already used. Do not add new mechanics at this stage. Focus on refining the existing work.`,
- },
- {
- title: "Completed Level Checklist",
- content: `The level will be reviewed against these criteria:
+**Your finish line for today:**
+- One level combining everything from 1.1-1.7.
+- Explorer organised with folders and clear names.
+- Saved as \`Module 1 - Living Island\`.
+- A 30-60 second Party Mode demo you have actually rehearsed.
+
+**Do now (2 min):** open your most complete level from after 1.7. Not the tidiest one - the most complete one.`,
+      },
+      {
+        title: "What should already be in there",
+        content: `Run down the list. Anything missing gets added today - using only tools you already know.
+
+| Lesson | What it contributed |
+|---|---|
+| **1.1** | \`House_01\` with Union-cut windows and a doorway |
+| **1.2** | An island: terrain, water, beach, smoothed shores |
+| **1.3** | \`MagicCube\` - a script with variables, print, and property changes |
+| **1.4** | \`LogicCube\` - ClickDetector with if/else logic |
+| **1.5** | A decorated facade: materials, a Decal, neon accents |
+| **1.6** | Lighting, Atmosphere, ambient audio and an SFX |
+| **1.7** | \`PartyButton\` toggling night, music, and visuals |
+
+**Do not add new mechanics today.** It is tempting - you feel capable now, and there is a whole Toolbox full of things you could bolt on. Resist it. Unfamiliar code at submission time is how a working project becomes a broken one with an hour left. Polish beats novelty here, and it will beat novelty again in 5.10, 6.10, and 12.6.
+
+**Do now (5 min):** go down the list and confirm every row exists in your level.`,
+      },
+      {
+        title: "The review checklist",
+        content: `Read these as though the level belonged to someone else.
 
 **World**
-- [ ] The house has an accessible interior.
-- [ ] The level has terrain with land and water, not only the default Baseplate.
-- [ ] The house is positioned correctly on the ground.
+- [ ] The house has an interior you can walk into.
+- [ ] The terrain is shaped, with land and water - not a bare Baseplate.
+- [ ] The house sits properly on the ground, neither floating nor sunk.
 
 **Code**
-- [ ] A script uses variables (\`local\`) and the \`print\` command.
-- [ ] \`if/else\` conditions respond to a click.
-- [ ] Party Mode turns on and off correctly.
+- [ ] A script uses \`local\` variables and \`print\`.
+- [ ] \`if/else\` responds to a click.
+- [ ] Party Mode turns on **and off**.
 
-**Appearance and Atmosphere**
-- [ ] The house exterior uses materials and images.
-- [ ] Visibility remains comfortable at night.
-- [ ] The ambient sound and sound effect work.
+**Look and feel**
+- [ ] The facade has chosen materials and at least one image.
+- [ ] Night is atmospheric but still navigable.
+- [ ] Ambient audio loops and the SFX fires.
 
-**Organization**
-- [ ] All Parts have clear names, and Explorer contains no unnecessary Parts.
-- [ ] The project is saved with the correct name.
+**Organisation**
+- [ ] Every Part has a real name, and there are no stray leftovers in Explorer.
+- [ ] The project is saved under the right name.
 
-**Try it now:** test the level in Play mode. Fix each issue as you find it.`,
- },
- {
- title: "Organizing Objects with Folders",
- content: `Keep Explorer organized. Create several folders (Folder) and arrange the objects as shown:
+**Do now (8 min):** Play the level and work through the list, fixing as you go.`,
+      },
+      {
+        title: "Organising Explorer",
+        content: `Right now your Workspace is probably a long flat list with a few things called \`Part\` in it. Here is where it should end up:
 
 \`\`\`text
 Workspace
@@ -3482,375 +3761,385 @@ Workspace
 Lighting
 \`\`\`
 
-**Important:** use the standard folder tools (Insert → Folder) and drag objects into place. Do not move scripts out of interactive Parts such as \`LogicCube\` or \`PartyButton\`, because this will break the \`script.Parent\` reference.
+Insert → Folder, then drag things in. A Folder is purely organisational - it does not affect physics, rendering, or performance in any way. It exists entirely for the human reading the tree.
 
+**The one rule that will bite you if you break it: never drag a Script out of its Part.** Move \`PartyButton\` into the \`Interactives\` folder and its Script travels with it, still inside it, still working. Drag just the Script into a folder and \`script.Parent\` becomes the folder, and everything you built in 1.7 stops functioning. Move Parts, not scripts.
 
-**Try it now:** create 1-3 folders and use them to group decorative objects, sounds, and interactive elements.`,
- },
- {
- title: "Playtest from the Player's Perspective",
- content: `Start the game and explore the level as if you were seeing it for the first time:
+If your confetti pieces are still loose in Workspace and your 1.7 code loops over \`workspace:GetChildren()\`, moving them into a folder will break that loop. Either update the code to look inside the folder, or leave those particular parts where they are. Both are fine - noticing before you press Play is the point.
 
-1. Can you see the door and sign when you spawn?
-2. Approach the interactive cubes. Do they respond to clicks?
-3. Click \`PartyButton\`. Do the music, confetti, and night mode activate?
-4. Click it again. Do daytime and the ambient sound return?
-5. Walk to the beach. Does the character get stuck in the terrain?
+**Do now (8 min):** create your folders and sort everything into them. Then press Play and confirm nothing broke.`,
+      },
+      {
+        title: "Playtest as a stranger",
+        content: `You know where everything is, which makes you the worst possible tester of your own level. Try to forget.
 
-If something falls, check Anchored.
-If clicking does not work, check ClickDetector and confirm that you are testing in Play mode.
-If sounds overlap, check that the Party Mode script includes \`Stop()\`.
+1. You spawn. Can you see the house, the door, the sign?
+2. Walk to the interactive cubes. Do they respond?
+3. Is it obvious that \`PartyButton\` is a button? Would someone press it without being told?
+4. Press it. Night, music, confetti - all of it?
+5. Press it again. Does everything actually go back?
+6. Walk to the beach. Do you get stuck anywhere?
 
-**Try it now:** complete this entire route and record any issues.`,
- },
- {
- title: "Saving the project",
- content: `Perform a final save with **File → Save to Roblox**.
+Question 3 is the one people skip and it is the most valuable. A player who never finds your best feature has, from their point of view, played a game that does not have it.
 
-**Important:** use a clear project name, such as \`Module 1 - Living Island\`. Avoid names such as \`Untitled\`, \`test\`, or \`Place1\`, because they make the level difficult to find later when building your portfolio.
+**Quick diagnoses:** things falling → Anchored. Clicks doing nothing → ClickDetector, or you are in Edit mode. Sounds stacking → a missing \`Stop()\` in the 1.7 script.
 
-After saving, close the level and reopen it from your project list. Confirm that the latest working version with Party Mode was saved to the cloud.
+**Do now (6 min):** walk the whole route and write down every problem before fixing any of them. Making the list first stops you disappearing down one rabbit hole and running out of time.`,
+      },
+      {
+        title: "Saving it properly",
+        content: `**File → Save to Roblox** → \`Module 1 - Living Island\`.
 
-**Try it now:** save the level with the correct name and verify that it appears in your projects.`,
- },
- {
- title: "Party Mode Demonstration",
- content: `Prepare a short 30-60 second presentation.
+Not \`Untitled\`. Not \`test\`. Not \`Place1\`. In lesson 12.5 you build a portfolio, and you will be scrolling through a list of everything you made across three months. \`Module 1 - Living Island\` will be instantly recognisable. \`Place7\` will not.
 
-**Demonstration outline:**
-1. Introduce the island and house while showing them with the camera.
-2. Identify the Party Mode button and move the character to PartyButton.
-3. Click it and explain that you enabled night, music, and effects.
-4. Click it again and explain that you disabled Party Mode and restored daytime.
-5. Optionally, click LogicCube and briefly explain that it uses an if condition.
+**Then do the thing almost nobody does: close the level and reopen it from your project list.** Saving is not the same as saved. Reopening is the only way to actually confirm the cloud has the version you think it has - and finding out now costs two minutes, while finding out in three weeks costs your whole island.
 
-Keep the demonstration clear and avoid long pauses. Always demonstrate in Play mode, because sounds and clicks do not work in Edit mode.
+**Do now (4 min):** save, close, reopen, and confirm Party Mode still works in the reopened copy.`,
+      },
+      {
+        title: "The demo",
+        content: `30 to 60 seconds. Short is harder than long and much better.
 
-**Try it now:** rehearse this outline and complete one test run in the game.`,
- },
- {
- title: "Code Reference",
- content: `Review the main constructs used in your scripts. Understanding them will help you answer questions confidently during the presentation.
+1. Show the island and house with the camera while you say what it is.
+2. Walk your character to \`PartyButton\`.
+3. Click. Say what just happened - night, music, effects.
+4. Click again. Say that it restored daytime.
+5. Optional: click \`LogicCube\` and mention it uses an \`if\` condition.
+
+**Rehearse it once before you record or present.** The gap between a first attempt and a second attempt at the same 45 seconds is enormous - fewer pauses, no hunting for the button, no "wait, hold on". One practice run is all it takes.
+
+**Everything in Play mode.** Nothing clicks and nothing sounds in Edit mode, and discovering that live is a specific kind of unpleasant.
+
+Being able to say clearly what you built, in a minute, to someone who was not there is a genuinely valuable skill - and it is the same one you will use in 12.6 on Showcase Day, when the thing you are presenting is a finished game.
+
+**Do now (6 min):** run through the outline once, then do it again properly.`,
+      },
+      {
+        title: "The code you should be able to explain",
+        content: `Someone might ask how it works. These are the two patterns behind everything you built.
 
 \`\`\`lua
--- Variable and property changes
+-- A variable, and changing a property through it
 local part = script.Parent
 part.BrickColor = BrickColor.new("Bright violet")
 print(part.Name)
 \`\`\`
 
 \`\`\`lua
--- if/else condition and Boolean toggle
+-- State, inversion, and a branch
 local partyOn = false
 partyOn = not partyOn
 if partyOn then
- print("Enabled")
+  print("Enabled")
 else
- print("Disabled")
+  print("Disabled")
 end
 \`\`\`
 
-**Try it now:** open the script in PartyButton and make sure you understand each line.`,
- },
- {
- title: "Final Checklist",
- content: `- [ ] The level meets the completed-level requirements and passes the Play test.
-- [ ] Folders are created in Explorer, and object names are organized.
-- [ ] Party Mode consistently turns on and off.
-- [ ] The project is saved as \`Module 1 - Living Island\`.
-- [ ] A 30-60 second demonstration is prepared.
-- [ ] You can explain a variable and an \`if\` condition in your own words.
+If you can read those aloud in plain English - "this remembers the cube, then paints it violet"; "this flips the switch, then does one thing or the other depending on which way it is now pointing" - you have understood Module 1. Not memorised it. Understood it.
 
-**Try it now:** review every item. Resolve any incomplete item before the final submission.`,
- },
- {
- title: "Common Submission Issues",
- content: `| Issue | Cause | Fix |
-|-------|-----------------|-------------------------|
-| Party Mode does not turn off | The \`else\` block is missing, or \`not\` was omitted | Compare the code structure with the lesson 1.7 template. |
-| The house is underwater or floating | The terrain was modified | Use Flatten and move the house with the Move tool. |
-| Unnamed Parts are clustered near the entrance | Decorative objects were created without organizing them | Rename the Parts and group them in the Decor folder. |
-| The button does not respond during the demo | The demonstration is running in Edit mode | Always start Play mode (F5) before testing. |
-| Music is missing after reopening the project | The project was not saved to the cloud | Use Save to Roblox and save the project correctly. |
-| The level is too dark to see | Brightness is set to zero | Increase Brightness or OutdoorAmbient slightly in Lighting. |`,
- },
- {
- title: "Preparing for Module 2",
- content: `The next stage is **Module 2 (World Craft)**. You will work with 3D models, moving connections such as doors and bridges, and more advanced mechanics for building an amusement park.
+**Do now (4 min):** open your PartyButton script and explain each line out loud. Anything you cannot explain, look back at the lesson it came from.`,
+      },
+      {
+        title: "Final checklist",
+        content: `- [ ] The level passes the review checklist and the Play test.
+- [ ] Explorer has folders, and everything has a real name.
+- [ ] Party Mode toggles reliably, both ways, several times in a row.
+- [ ] Saved as \`Module 1 - Living Island\`, and verified by reopening it.
+- [ ] A 30-60 second demo, rehearsed at least once.
+- [ ] You can explain a variable and an \`if\` in your own words.`,
+      },
+      {
+        title: "Things that go wrong at submission",
+        content: `| Problem | Cause | Fix |
+|---|---|---|
+| Party Mode will not turn off | Missing \`else\`, or \`not\` was left out | Compare against the 1.7 template line by line. |
+| The house is underwater or floating | The terrain moved after the house was placed | Flatten a pad, Move the house onto it. |
+| A cluster of unnamed Parts by the door | Decorations made in 1.5 and never renamed | Rename them and put them in \`Decor\`. |
+| Nothing responds during the demo | Demoing in Edit mode | F5 first. Every time. |
+| The music is gone after reopening | The save never reached the cloud | Save to Roblox, then reopen to verify. |
+| Too dark to see anything | Brightness at zero | Raise Brightness or OutdoorAmbient. |
+| The confetti loop broke after tidying up | The parts moved into a folder the code does not look in | Point the loop at the folder, or leave those parts where they were. |`,
+      },
+      {
+        title: "What Module 2 brings",
+        content: `Next is **Module 2 - World Craft**: 3D models, moving connections like doors and bridges, and building an amusement park with attractions people actually queue for.
 
+But finish this thought first. Eight lessons ago you had never opened Studio. You have now cut geometry with CSG, sculpted terrain, written scripts with variables and conditions, connected an event, lit a scene, mixed audio, and built a feature a player can operate - and you have organised, tested, saved, and presented the result.
 
-You have now completed Module 1 and turned an empty space into a functional interactive environment.`,
- },
- ],
- },
- commonMistakes: [
- {
- mistake: "Attempting to add complex mechanics from online sources",
- explanation: "At the submission stage, there is limited time to debug unfamiliar code. The review covers only the material from this module.",
- correctApproach: "Refine only the work created in lessons 1.1-1.7.",
- },
- {
- mistake: "Running the Party Mode demonstration in Edit mode",
- explanation: "Clicks, sounds, and most scripts do not work fully outside Play mode.",
- correctApproach: "Always use Play for the demonstration and complete a practice run in advance.",
- },
- {
- mistake: "Testing only whether Party Mode turns on",
- explanation: "It is easy to overlook whether the mode also turns off correctly.",
- correctApproach: "Click the button twice to test the else branch.",
- },
- {
- mistake: "Moving the script into a folder instead of keeping it in the Part",
- explanation: "If you move Script into Folder, script.Parent will no longer refer to the required object.",
- correctApproach: "Keep the script inside its Part. Move the entire Part, including its script, into the folder.",
- },
- {
- mistake: "Saving as Untitled or losing the latest version",
- explanation: "After several weeks, the correct level can be difficult to identify among many projects.",
- correctApproach: "Always use Save to Roblox with the Module 1 name. Reopen the file to verify it.",
- },
- {
- mistake: "Ignoring the checklist to focus on visual details",
- explanation: "The level does not meet the requirements without working code and correct geometry.",
- correctApproach: "Complete every technical checklist item before refining minor decorative details.",
- },
- {
- mistake: "Deleting the house or island to simplify the submission",
- explanation: "The module is designed around building one complete environment in layers.",
- correctApproach: "Keep all results, including the house, island, cubes, and atmosphere, in one final level.",
- },
- ],
- summary:
- "In this lesson, you combined all Module 1 skills into one functional environment. You reviewed it against the checklist, organized Explorer, saved the project for your portfolio, and demonstrated the interactive Party Mode.",
- practiceTask: {
- title: "Practice: Living Island Checkpoint",
- difficulty: "beginner",
- description: `**Task:** Prepare and demonstrate the final Module 1 level.
+That last part matters as much as any of the rest. Plenty of people can make something work once. Finishing it is the harder half, and you just did it.`,
+      },
+    ],
+  },
+  commonMistakes: [
+    {
+      mistake: "Bolting on complicated mechanics from the internet right before submitting",
+      explanation: "Unfamiliar code you have no time to debug is the fastest route from a working project to a broken one.",
+      correctApproach: "Polish what you built in 1.1-1.7. Novelty is not what is being assessed here - a finished thing is.",
+    },
+    {
+      mistake: "Demonstrating in Edit mode",
+      explanation: "Clicks and sounds do not work outside Play, and finding that out during a live demo is memorable for the wrong reason.",
+      correctApproach: "F5 before you start, and do one full rehearsal run beforehand.",
+    },
+    {
+      mistake: "Only testing that Party Mode turns on",
+      explanation: "The off branch is where the bugs live, because it is the half people write in a hurry.",
+      correctApproach: "Click it at least four times - on, off, on, off - and confirm the level returns to exactly its starting state each time.",
+    },
+    {
+      mistake: "Dragging a Script into a folder while leaving its Part behind",
+      explanation: "script.Parent then points at the folder, and everything the script controls stops working.",
+      correctApproach: "Move Parts into folders. The scripts inside them come along automatically and keep working.",
+    },
+    {
+      mistake: "Saving as Untitled, or assuming a save succeeded",
+      explanation: "In three months your project list will be long, and 'saved' and 'actually in the cloud' are not the same thing.",
+      correctApproach: "Save to Roblox with the proper name, then close and reopen the place to verify what is really up there.",
+    },
+    {
+      mistake: "Polishing decorations while checklist items are still failing",
+      explanation: "A beautiful level where the button does not work does not pass, and prettier decorations will not change that.",
+      correctApproach: "Clear every technical item first. Decoration is what you do with the time left over.",
+    },
+    {
+      mistake: "Deleting parts of the level to make it simpler to submit",
+      explanation: "Module 1 was designed as one environment built up in seven layers. Removing layers removes the point.",
+      correctApproach: "Everything - house, island, cubes, atmosphere, party button - stays in one final level.",
+    },
+  ],
+  summary:
+    "You took seven lessons of separate work and turned it into one finished, organised, tested, saved, and presentable level. You also practised something that gets no attention and matters enormously: reviewing your own work as though it belonged to someone else, and getting it over the line rather than starting something new.",
+  practiceTask: {
+    title: "Practice: Living Island Checkpoint",
+    difficulty: "beginner",
+    description: `**The build:** one finished Module 1 level, saved and demonstrated.
 
-### Part A: Review the Level
-1. Open your most complete level from after lesson 1.7.
-2. Follow the theory section's "What Your Level Should Already Include" checklist.
-3. Fix any issues using only familiar tools.
+### Part A: Review
+1. Open your most complete level from after 1.7.
+2. Work through "What should already be in there" and the review checklist.
+3. Fix everything using only tools from this module. No new mechanics.
 
-### Part B: Organization and Testing
-1. Create 1-3 folders (Folder) in Explorer and use them to organize decorative and interactive objects. Do not move scripts out of their Parts.
-2. Start Play and follow the complete visitor route. Test Party Mode by turning it on and off twice.
-3. Save the level with **File → Save to Roblox** as \`Module 1 - Living Island\`.
-4. Close and reopen the level to verify the saved version.
+### Part B: Organise, test, save
+1. Create folders in Explorer and sort your objects into them. **Move Parts, never scripts.**
+2. Play the level as a first-time visitor. Toggle Party Mode on and off at least twice.
+3. **File → Save to Roblox** as \`Module 1 - Living Island\`.
+4. Close the place and reopen it from your project list to confirm the save landed.
 
-### Part C: Demonstration
-1. Prepare a 30-60 second presentation using the outline.
-2. Demonstrate Party Mode in Play mode to another person or record a screen video.
-3. Mark the practice and checkpoint as complete in the system.`,
- hints: [
- "Test the scripts before organizing Explorer.",
- "The script must remain inside its Part.",
- "Make sure you test the second Party Mode click.",
- "Run the demonstration only in Play mode.",
- "Do not replace your house with a large premade model from Free Models.",
- ],
- optionalChallenge:
- "Write five short sentences about what you learned, such as \"I can cut windows with Union\" or \"I can write an if condition.\" Use them as a quick reference before the next module.",
- },
- quiz: {
- passingScore: 70,
- timeLimit: 15,
- questions: [
- {
- id: "q1",
- type: MC,
- question: "What is the main goal of lesson 1.8?",
- options: [
-          "Learn to work with databases (DataStore)",
-          "Submit and demonstrate the completed Module 1 level",
-          "Build a Tycoon game",
-          "Create a user interface (GUI)",
+### Part C: Demo
+1. Prepare 30-60 seconds using the outline from the lesson.
+2. Rehearse it once, then present it in Play mode to someone - or record it.
+3. Mark the practice and the checkpoint complete here.`,
+    hints: [
+      "Test the scripts before you reorganise Explorer, so you know any breakage came from the reorganising.",
+      "Scripts stay inside their Parts. Move the Part into the folder and the script goes with it.",
+      "Click the party button four times, not once. On, off, on, off.",
+      "Demo in Play mode, and rehearse once. The second run is always dramatically better than the first.",
+      "Do not swap your house for a big free model. A house you built and can explain beats a fancier one you cannot.",
+      "Write your list of problems first, fix second. Otherwise you lose the hour to the first thing you found.",
+    ],
+    optionalChallenge:
+      "Write five plain sentences about what you can now do - \"I can cut a window with Union\", \"I can write an if condition\", \"I know why a script has to live inside its Part\". Keep them somewhere. In lesson 12.5 you build a real portfolio, and a running record of what you learned when is worth far more than trying to reconstruct it from memory three months later.",
+  },
+  quiz: {
+    passingScore: 70,
+    timeLimit: 15,
+    questions: [
+      {
+        id: "q1",
+        type: MC,
+        question: "What is lesson 1.8 for?",
+        options: [
+          "Learning DataStore",
+          "Finishing, organising, saving, and presenting the Module 1 level",
+          "Building a Tycoon",
+          "Creating a GUI",
         ],
- correctAnswer: 1,
- explanation: "The checkpoint is for refining and submitting existing work, not learning new topics.",
- },
- {
- id: "q2",
- type: MC,
- question: "Which item should already be in the level before lesson 1.8 begins?",
- options: [
+        correctAnswer: 1,
+        explanation: "A checkpoint is about getting existing work over the line, which is a different skill from starting new work - and a rarer one.",
+      },
+      {
+        id: "q2",
+        type: MC,
+        question: "What should the level already contain when 1.8 begins?",
+        options: [
           "A weapon shop",
-          "Only an empty Baseplate template",
-          "House_01, an island, coded cubes, decorative details, atmosphere, and Party Mode",
-          "Only a configuration script",
+          "An empty Baseplate",
+          "House_01, the island, the scripted cubes, the decorated facade, the atmosphere, and Party Mode",
+          "Just a config script",
         ],
- correctAnswer: 2,
- explanation: "The level should combine all work completed in lessons 1.1-1.7.",
- },
- {
- id: "q3",
- type: MC,
- question: "What should you NOT do during the checkpoint submission?",
- options: [
-          "Add complex new mechanics that were not covered in the module",
-          "Fix geometry and Part names",
+        correctAnswer: 2,
+        explanation: "Everything from 1.1 through 1.7, in one place. The module was built as layers on one environment.",
+      },
+      {
+        id: "q3",
+        type: MC,
+        question: "What should you NOT do at checkpoint time?",
+        options: [
+          "Add complicated new mechanics you have not used before",
+          "Fix geometry and rename Parts",
           "Test the Party Mode toggle",
-          "Save the project with the correct name",
+          "Save with a proper name",
         ],
- correctAnswer: 0,
- explanation: "Demonstrate only the skills covered in the module to avoid unexpected errors.",
- },
- {
- id: "q4",
- type: MC,
- question: "Why do we create folders (Folder) in Explorer?",
- options: [
+        correctAnswer: 0,
+        explanation: "Unfamiliar code with no time to debug it is the fastest way to break something that was working.",
+      },
+      {
+        id: "q4",
+        type: MC,
+        question: "Why create Folders in Explorer?",
+        options: [
           "To replace scripts",
-          "To generate new terrain",
-          "To enable the glow effect",
-          "To group Parts logically and organize the level before submission",
+          "To generate terrain",
+          "To enable glow",
+          "To group objects so the tree stays readable as it grows",
         ],
- correctAnswer: 3,
- explanation: "Folders organize large numbers of objects into a manageable structure.",
- },
- {
- id: "q5",
- type: MC,
- question: "What happens if you move a script into Folder but leave its Part in place?",
- options: [
-          "script.Parent no longer refers to the Part, and the code breaks",
-          "A new image appears automatically",
-          "Data saving is activated",
-          "All terrain is deleted",
+        correctAnswer: 3,
+        explanation: "A Folder is purely organisational - no effect on physics, rendering, or performance. It exists for the human reading the tree.",
+      },
+      {
+        id: "q5",
+        type: MC,
+        question: "What breaks if you drag a Script into a Folder but leave its Part behind?",
+        options: [
+          "script.Parent becomes the folder, so the script no longer controls the Part",
+          "An image appears",
+          "Saving activates",
+          "Terrain is deleted",
         ],
- correctAnswer: 0,
- explanation: "A script should remain inside the object it interacts with.",
- },
- {
- id: "q6",
- type: MC,
- question: "How should you run the Party Mode demonstration?",
- options: [
-          "In Edit mode, without clicking any buttons",
-          "In Play mode, in 30-60 seconds",
-          "Without sound and without testing whether the mode turns off",
-          "In an empty level without the button",
+        correctAnswer: 0,
+        explanation: "Move Parts into folders, not scripts. The script travels inside its Part and keeps working.",
+      },
+      {
+        id: "q6",
+        type: MC,
+        question: "How should the demo be run?",
+        options: [
+          "In Edit mode, without clicking",
+          "In Play mode, in 30-60 seconds, rehearsed once beforehand",
+          "Without sound, and without showing the off state",
+          "In an empty level",
         ],
- correctAnswer: 1,
- explanation: "Keep the demonstration brief and run it entirely in Play mode to show all functionality.",
- },
- {
- id: "q7",
- type: MC,
- question: "Which name is best for saving the project?",
- options: [
+        correctAnswer: 1,
+        explanation: "Nothing clicks or sounds in Edit mode. And the second run through the same 45 seconds is always dramatically better than the first.",
+      },
+      {
+        id: "q7",
+        type: MC,
+        question: "Which save name is right?",
+        options: [
           "asdf",
           "Untitled Game",
           "test123",
           "Module 1 - Living Island",
         ],
- correctAnswer: 3,
- explanation: "Use a clear name so the project is easy to find for your portfolio.",
- },
- {
- id: "q8",
- type: MC,
- question: "How should you fix a house that is underwater after editing?",
- options: [
-          "Use complex server scripts",
-          "Write an infinite loop",
-          "Use the Flatten and Move tools for the terrain",
-          "Delete the lighting settings",
+        correctAnswer: 3,
+        explanation: "In 12.5 you assemble a portfolio from a long project list. A descriptive name now saves you real confusion later.",
+      },
+      {
+        id: "q8",
+        type: MC,
+        question: "The house ends up underwater after terrain edits. What fixes it?",
+        options: [
+          "A server script",
+          "An infinite loop",
+          "Flatten a pad, then Move the house onto it",
+          "Deleting the lighting",
         ],
- correctAnswer: 2,
- explanation: "This common issue can be resolved with the basic Terrain Editor and Move tools.",
- },
- {
- id: "q9",
- type: MC,
- question: "Why is it important to give projects clear names?",
- options: [
-          "I don't know",
-          "To avoid losing the account",
-          "To make the required level easier to find",
-          "It is not important",
+        correctAnswer: 2,
+        explanation: "Exactly the 1.2 technique. Level the ground first, then place the building - never the other way round.",
+      },
+      {
+        id: "q9",
+        type: MC,
+        question: "Why close and reopen the place after saving?",
+        options: [
+          "To clear the fog",
+          "To reset variables",
+          "Because 'saved' and 'actually in the cloud' are not the same thing, and reopening is the only real proof",
+          "To load plugins",
         ],
- correctAnswer: 2,
- explanation: "Clear project names make the required level easier to find.",
- },
- {
- id: "q10",
- type: MC,
- question: "What should you do if the button does not respond during the demo?",
- options: [
-          "Check whether Play mode is running",
+        correctAnswer: 2,
+        explanation: "Two minutes now, versus discovering in three weeks that your island was never uploaded.",
+      },
+      {
+        id: "q10",
+        type: MC,
+        question: "The button does not respond during your demo. First check?",
+        options: [
+          "Whether you are actually in Play mode",
           "Turn off the computer",
           "Delete the account",
-          "Rewrite Script",
+          "Rewrite the script",
         ],
- correctAnswer: 0,
- explanation: "If the button does not respond, check whether Play mode is running.",
- },
- {
- id: "q11",
- type: MC,
- question: "What must you test in Party Mode?",
- options: [
-          "Only the first click that enables it",
-          "Only changing the button name in the panel",
-          "Only its appearance without starting Play",
-          "Whether the mode turns on and off correctly",
+        correctAnswer: 0,
+        explanation: "It is the cause far more often than a code bug, especially under the pressure of presenting.",
+      },
+      {
+        id: "q11",
+        type: MC,
+        question: "What must you test about Party Mode?",
+        options: [
+          "Only the first click",
+          "Only the button's name",
+          "Only how it looks, without pressing Play",
+          "Both directions, several times, confirming the level returns to its starting state",
         ],
- correctAnswer: 3,
- explanation: "The button works as a toggle, so verify that both states work without errors.",
- },
- {
- id: "q12",
- type: MC,
- question: "What is Module 2 about?",
- options: [
-          "Repeating work with the Baseplate template",
-          "World Craft, including models, connections, and amusement park features",
-          "Publishing the game in the store",
-          "Working with databases from the first lesson",
+        correctAnswer: 3,
+        explanation: "The off branch is where the bugs live. Repeat cycles catch things that leak - a sound that stacks, confetti that lingers.",
+      },
+      {
+        id: "q12",
+        type: MC,
+        question: "What is Module 2 about?",
+        options: [
+          "Repeating the Baseplate work",
+          "World Craft - 3D models, moving connections like doors and bridges, and an amusement park",
+          "Publishing to the store",
+          "DataStore from lesson one",
         ],
- correctAnswer: 1,
- explanation: "After completing the introductory course in Module 1, the next step is more advanced modeling.",
- },
- {
- id: "q13",
- type: MC,
- question: "Which tools did we use to create the house windows at the start of the module?",
- options: [
+        correctAnswer: 1,
+        explanation: "Building on Module 1's foundations with models and mechanisms rather than static geometry.",
+      },
+      {
+        id: "q13",
+        type: MC,
+        question: "Which tools cut the house windows back in 1.1?",
+        options: [
           "RemoteEvent",
           "DataStore",
           "Raycast",
           "Negate and Union",
         ],
- correctAnswer: 3,
- explanation: "The windows were cut with basic constructive solid geometry (CSG) tools.",
- },
- {
- id: "q14",
- type: MC,
- question: "Why should you close and reopen the project after saving?",
- options: [
-          "To remove fog (Atmosphere)",
-          "To reset all variables",
-          "To confirm that the latest working version was saved to the cloud",
-          "To enable third-party plugins",
+        correctAnswer: 3,
+        explanation: "CSG - place a cutter, Negate it, Union it into the wall. Real holes rather than painted-on ones.",
+      },
+      {
+        id: "q14",
+        type: MC,
+        question: "Why walk the level pretending you have never seen it?",
+        options: [
+          "To remove Atmosphere",
+          "Because knowing where everything is makes you unable to notice what a first-time player cannot find",
+          "To reset variables",
+          "To enable plugins",
         ],
- correctAnswer: 2,
- explanation: "This is a reliable way to confirm that the project was saved successfully to Roblox cloud.",
- },
- {
- id: "q15",
- type: MC,
- question: "What is the main artifact submitted at the end of Module 1?",
- options: [
-          "One complete interactive environment that meets the checklist, a saved project, and a short Party Mode demo",
-          "A completely empty level",
-          "One image on the Baseplate",
-          "A new game created from scratch",
+        correctAnswer: 1,
+        explanation: "A player who never finds your best feature has played a game that does not have it. Question 3 of the playtest - 'would someone press this without being told?' - is the one worth the most.",
+      },
+      {
+        id: "q15",
+        type: MC,
+        question: "What is the deliverable at the end of Module 1?",
+        options: [
+          "One complete interactive level that passes the checklist, saved under a clear name, plus a short Party Mode demo",
+          "An empty level",
+          "One image on a Baseplate",
+          "A brand new game started from scratch",
         ],
- correctAnswer: 0,
- explanation: "The checkpoint requires one complete result that combines all previous work in the module.",
- },
- ],
- },
+        correctAnswer: 0,
+        explanation: "One finished thing, combining every layer from 1.1 to 1.7 - and the ability to show it and explain it.",
+      },
+    ],
+  },
 }

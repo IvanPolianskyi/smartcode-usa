@@ -1,28 +1,8 @@
-import { getRobloxLessonContent } from '@/lib/robloxLessonContent'
-import { getAiAtWorkLessonContent } from '@/lib/aiAtWorkLessonContent'
-import { lessonContentMap } from '@/lib/lessonContentMap.en'
-import {
-  AI_AT_WORK_COURSE_ID,
-  ROBLOX_COURSE_ID,
-} from '@/lib/courseLessonAccess'
-
-function getPythonLessonContent(lessonId) {
-  return lessonContentMap[lessonId] || null
-}
-
-function getLessonForQuiz(courseId, lessonId, locale = 'en') {
-  if (courseId === ROBLOX_COURSE_ID) {
-    return getRobloxLessonContent(lessonId, locale)
-  }
-  if (courseId === AI_AT_WORK_COURSE_ID) {
-    return getAiAtWorkLessonContent(lessonId, locale)
-  }
-  return getPythonLessonContent(lessonId, locale)
-}
+import { getLessonContent } from './lessonContentLoader.js'
 
 /** Server-side quiz scoring - never trust client quizScore. */
 export function scoreLessonQuiz({ courseId, lessonId, quizAnswers, locale = 'en' }) {
-  const lesson = getLessonForQuiz(courseId, lessonId, locale)
+  const lesson = getLessonContent(courseId, lessonId, locale)
   const questions = lesson?.quiz?.questions
   if (!questions?.length) return null
 
@@ -42,12 +22,12 @@ export function scoreLessonQuiz({ courseId, lessonId, quizAnswers, locale = 'en'
 }
 
 export function lessonRequiresPractice(courseId, lessonId, locale = 'en') {
-  const lesson = getLessonForQuiz(courseId, lessonId, locale)
+  const lesson = getLessonContent(courseId, lessonId, locale)
   return Boolean(lesson?.practiceTask)
 }
 
 export function lessonRequiresQuiz(courseId, lessonId, locale = 'en') {
-  const lesson = getLessonForQuiz(courseId, lessonId, locale)
+  const lesson = getLessonContent(courseId, lessonId, locale)
   return Boolean(lesson?.quiz?.questions?.length)
 }
 
@@ -59,7 +39,7 @@ export function lessonRequiresQuiz(courseId, lessonId, locale = 'en') {
  * @returns {Array<object>} interactives in document order (may be empty)
  */
 export function getLessonInteractives(courseId, lessonId, locale = 'en') {
-  const lesson = getLessonForQuiz(courseId, lessonId, locale)
+  const lesson = getLessonContent(courseId, lessonId, locale)
   const sections = lesson?.theory?.sections
   if (!Array.isArray(sections)) return []
 
@@ -79,4 +59,10 @@ export function getLessonInteractive(courseId, lessonId, interactiveId, locale =
   )
 }
 
-export { getPythonLessonContent, getLessonForQuiz }
+export function getPythonLessonContent(lessonId) {
+  return getLessonContent('python-developer-zero-to-junior', lessonId, 'en')
+}
+
+export function getLessonForQuiz(courseId, lessonId, locale = 'en') {
+  return getLessonContent(courseId, lessonId, locale)
+}
