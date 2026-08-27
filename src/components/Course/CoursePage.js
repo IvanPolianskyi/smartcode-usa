@@ -31,7 +31,11 @@ import { useAuthSession } from '@/components/AuthSessionProvider'
 import SiteHeader from '@/components/Nav/SiteHeader'
 import styles from './CoursePage.module.css'
 
-const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress: initialProgress = null }) => {
+const CoursePage = ({
+  courseId = "python-developer-zero-to-junior",
+  userProgress: initialProgress = null,
+  curriculum: serverCurriculum = null,
+}) => {
   const locale = useLocale()
   const courseSlug =
     courseId === 'web-development'
@@ -58,9 +62,10 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
   const [isPurchased, setIsPurchased] = useState(false)
 
   const course = useMemo(() => {
+    if (serverCurriculum) return serverCurriculum
     if (courseId === 'roblox-studio') return getRobloxCurriculum(locale)
     return getCurriculum(courseId, locale)
-  }, [courseId, locale])
+  }, [courseId, locale, serverCurriculum])
 
   const hasCourseAccess = useMemo(
     () => hasStudentCourseAccess(user, courseId) || isPurchased,

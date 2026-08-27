@@ -1,207 +1,51 @@
-"use client"
-import React, { useState, useEffect } from 'react'
+'use client'
+
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
+import dynamic from 'next/dynamic'
 import { Link, useRouter } from '@/i18n/navigation'
-import { 
-  ArrowLeft, 
-  Play, 
-  Code, 
-  BookOpen, 
-  Target, 
-  CheckCircle2,
-  XCircle,
-  Clock,
-  AlertCircle,
-  Lightbulb,
+import {
+  ArrowLeft,
   ChevronRight,
   ChevronLeft,
+  CheckCircle2,
   Lock,
   Loader2,
-  Terminal,
-  GripVertical
 } from 'lucide-react'
-import { updateProgress, updateProgressWithRewards, checkCoursePurchase, enrollInCourse } from '@/lib/authClient'
+import { updateProgress, updateProgressWithRewards } from '@/lib/authClient'
 import { useLocale, useTranslations } from 'next-intl'
-import { getCurriculum } from '@/lib/getCurriculum'
 import { checkPracticeOutputs } from '@/lib/practiceValidation'
 import { parsePracticeStdin } from '@/lib/parsePracticeStdin'
 import { hasBlockedPythonCode } from '@/lib/pythonCodeGuard'
-import { executePythonWithPyodide } from '@/lib/pyodideRunner'
 import { useLessonGamification } from '@/hooks/useLessonGamification'
-import InteractiveBlock from '@/components/Lesson/Interactive/InteractiveBlock'
-import XpHud from '@/components/Lesson/Gamification/XpHud'
 import AchievementToast from '@/components/Lesson/Gamification/AchievementToast'
+import LessonSidebar from './LessonSidebar'
+import LessonNav from './LessonNav'
+import LessonTheory from './LessonTheory'
+import LessonQuiz from './LessonQuiz'
 import styles from './LessonPage.module.css'
 
-// Функція для конвертації markdown в HTML
-const markdownToHtml = (text) => {
-  if (!text) return ''
-  
-  let html = String(text)
-  
-  // Екрануємо HTML для безпеки (крім тих місць, де ми додаємо HTML навмисно)
-  const escapeHtml = (str) => {
-    if (!str) return ''
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;')
-  }
-  
-  // КРОК 1: Спочатку обробляємо код блоки - це найважливіше!
-  // Розекрановуємо backticks (замінюємо \`\`\` на ```)
-  html = html.replace(/\\`\\`\\`/g, '```')
-  html = html.replace(/\\`/g, '`')
-  
-  // Зберігаємо код блоки в масив перед обробкою
-  const codeBlocks = []
-  let codeBlockIndex = 0
-  
-  // Знаходимо всі код блоки (з мовою та без)
-  // Використовуємо більш надійний regex, який знаходить блоки навіть з відступами
-  html = html.replace(/```(\w+)?\s*\n([\s\S]*?)```/g, (match, lang, code) => {
-    const placeholder = `__CODEBLOCK_${codeBlockIndex}__`
-    const language = (lang && lang.trim()) || 'text'
-    const codeContent = code.trim()
-    
-    if (codeContent) {
-      codeBlocks.push({
-        placeholder,
-        html: `<pre class="code-block"><code class="language-${language}">${escapeHtml(codeContent)}</code></pre>`
-      })
-      codeBlockIndex++
-      // Повертаємо унікальний плейсхолдер
-      return placeholder
-    }
-    return match
-  })
-  
-  // КРОК 2: Обробляємо inline код (тільки якщо не всередині код блоку)
-  html = html.replace(/`([^`\n]+)`/g, '<code>$1</code>')
-  
-  // КРОК 3: Обробляємо жирний текст
-  html = html.replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>')
-  html = html.replace(/__([^_\n]+?)__/g, '<strong>$1</strong>')
-  
-  // КРОК 4: Обробляємо курсив
-  html = html.replace(/(?<!\*)\*([^*\n]+?)\*(?!\*)/g, '<em>$1</em>')
-  html = html.replace(/(?<!_)_([^_\n]+?)_(?!_)/g, '<em>$1</em>')
-  
-  // КРОК 5: Обробляємо списки та параграфи
-  const lines = html.split('\n')
-  let inOrderedList = false
-  let inUnorderedList = false
-  let result = []
-  
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]
-    const trimmedLine = line.trim()
-    
-    // Перевіряємо, чи це плейсхолдер код блоку
-    const isCodeBlockPlaceholder = /__CODEBLOCK_\d+__/.test(trimmedLine)
-    
-    if (isCodeBlockPlaceholder) {
-      // Закриваємо відкриті списки перед код блоком
-      if (inOrderedList) {
-        result.push('</ol>')
-        inOrderedList = false
-      }
-      if (inUnorderedList) {
-        result.push('</ul>')
-        inUnorderedList = false
-      }
-      // Додаємо плейсхолдер БЕЗ обгортання в <p>
-      result.push(trimmedLine)
-      continue
-    }
-    
-    // Перевіряємо нумеровані списки
-    const orderedMatch = trimmedLine.match(/^\d+\.\s+(.+)$/)
-    if (orderedMatch) {
-      if (!inOrderedList) {
-        if (inUnorderedList) {
-          result.push('</ul>')
-          inUnorderedList = false
-        }
-        result.push('<ol>')
-        inOrderedList = true
-      }
-      result.push(`<li>${orderedMatch[1]}</li>`)
-      continue
-    }
-    
-    // Перевіряємо марковані списки
-    const unorderedMatch = trimmedLine.match(/^[-*+]\s+(.+)$/)
-    if (unorderedMatch) {
-      if (!inUnorderedList) {
-        if (inOrderedList) {
-          result.push('</ol>')
-          inOrderedList = false
-        }
-        result.push('<ul>')
-        inUnorderedList = true
-      }
-      result.push(`<li>${unorderedMatch[1]}</li>`)
-      continue
-    }
-    
-    // Звичайний текст - закриваємо списки якщо потрібно
-    if (inOrderedList) {
-      result.push('</ol>')
-      inOrderedList = false
-    }
-    if (inUnorderedList) {
-      result.push('</ul>')
-      inUnorderedList = false
-    }
-    
-    // Додаємо параграф або порожній рядок
-    if (trimmedLine) {
-      result.push(`<p>${trimmedLine}</p>`)
-    } else {
-      result.push('<br />')
-    }
-  }
-  
-  // Закриваємо відкриті списки
-  if (inOrderedList) result.push('</ol>')
-  if (inUnorderedList) result.push('</ul>')
-  
-  html = result.join('')
-  
-  // КРОК 6: Відновлюємо код блоки (ВАЖЛИВО: після всіх інших обробок!)
-  codeBlocks.forEach(({ placeholder, html: blockHtml }) => {
-    // Замінюємо плейсхолдер на реальний HTML код блоку
-    // Використовуємо глобальну заміну для всіх входжень
-    const escapedPlaceholder = placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-    
-    // Спочатку пробуємо знайти в <p> тегах (якщо випадково обгорнувся)
-    html = html.replace(new RegExp(`<p>\\s*${escapedPlaceholder}\\s*</p>`, 'g'), blockHtml)
-    
-    // Потім знаходимо безпосередньо (може бути з пробілами)
-    html = html.replace(new RegExp(`\\s*${escapedPlaceholder}\\s*`, 'g'), blockHtml)
-    
-    // Нарешті, точний збіг
-    html = html.replace(new RegExp(escapedPlaceholder, 'g'), blockHtml)
-  })
-  
-  // КРОК 7: Очищаємо зайві <p> теги навколо код блоків
-  html = html.replace(/<p>\s*(<pre class="code-block">[\s\S]*?<\/pre>)\s*<\/p>/gi, '$1')
-  
-  // КРОК 8: Очищаємо порожні параграфи та зайві br
-  html = html.replace(/<p><\/p>/g, '')
-  html = html.replace(/<p>\s*<\/p>/g, '')
-  html = html.replace(/<p><br \/><\/p>/g, '')
-  html = html.replace(/(<br \/>){2,}/g, '<br />')
-  
-  // КРОК 9: Видаляємо залишки плейсхолдерів (на випадок якщо щось пішло не так)
-  html = html.replace(/__CODEBLOCK_\d+__/g, '')
-  
-  return html
-}
+const LessonPractice = dynamic(() => import('./LessonPractice'), {
+  loading: () => (
+    <div className={styles.tabContent}>
+      <div className={styles.noContent}>
+        <p>Loading practice environment...</p>
+      </div>
+    </div>
+  ),
+  ssr: false,
+})
 
-const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python-developer-zero-to-junior", userProgress = null, isPurchased = false, userRole = 'user', isAccessible = false, allowedLessons = [] }) => {
+const LessonPage = ({
+  lessonId,
+  lesson: initialLesson = null,
+  curriculum = null,
+  courseId = 'python-developer-zero-to-junior',
+  userProgress = null,
+  isPurchased = false,
+  userRole = 'user',
+  isAccessible = false,
+  allowedLessons = [],
+}) => {
   const locale = useLocale()
   const t = useTranslations('lms.lesson')
   const tCommon = useTranslations('lms.common')
@@ -211,8 +55,6 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
   const [quizSubmitted, setQuizSubmitted] = useState(false)
   const [quizScore, setQuizScore] = useState(null)
   const [showPracticeSolution, setShowPracticeSolution] = useState(false)
-  // Latches once the reference solution has been revealed - hiding it again
-  // does not un-see it, and the "no safety net" bonus depends on that.
   const [revealedSolution, setRevealedSolution] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [userCode, setUserCode] = useState('')
@@ -220,17 +62,17 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
     isRunning: false,
     output: null,
     error: null,
-    success: null
+    success: null,
   })
   const [isSaving, setIsSaving] = useState(false)
   const [practiceCompleted, setPracticeCompleted] = useState(false)
   const [practiceChecked, setPracticeChecked] = useState(false)
-  const [outputErrors, setOutputErrors] = useState([]) // Масив індексів рядків з помилками
+  const [outputErrors, setOutputErrors] = useState([])
   const [failedExampleIndexes, setFailedExampleIndexes] = useState([])
   const [practiceTestCount, setPracticeTestCount] = useState(0)
   const [isPyodideLoading, setIsPyodideLoading] = useState(false)
 
-  // Gamification: XP, streak and badges for this course, scored server-side.
+  // Gamification: XP, streak and badges
   const {
     gamification,
     completedIds: completedInteractiveIds,
@@ -245,73 +87,71 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
     locale,
     initialGamification: userProgress?.gamification || null,
   })
-  
-  // Sidebar state - fixed defaults for SSR; restored from localStorage after mount
+
+  // Sidebar state
   const [sidebarWidth, setSidebarWidth] = useState(320)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const [isResizing, setIsResizing] = useState(false)
   const [isSidebarClosed, setIsSidebarClosed] = useState(false)
   const [sidebarPrefsHydrated, setSidebarPrefsHydrated] = useState(false)
-  
-  const curriculum = getCurriculum(courseId, locale)
-  
-  // If lesson not found in prop, try to get fallback placeholder from curriculum
-  const curriculumLesson = curriculum.modules
-    .flatMap(m => m.lessons)
-    .find(l => l.lessonId === lessonId)
 
-  // Get lesson content
+  const modulesList = useMemo(() => curriculum?.modules || [], [curriculum])
+
+  const allLessons = useMemo(() => {
+    return modulesList.flatMap((m) => m.lessons || [])
+  }, [modulesList])
+
+  const curriculumLesson = useMemo(() => {
+    return allLessons.find((l) => l.lessonId === lessonId) || null
+  }, [allLessons, lessonId])
+
   const lesson = initialLesson || curriculumLesson || null
-  
-  // Користувач вважається зареєстрованим якщо є userProgress або якщо він авторизований
-  // (API автоматично створить прогрес при збереженні)
-  const isEnrolled = userProgress !== null || userRole !== 'user'
+
   const isCompleted = userProgress?.completedLessons?.includes(lessonId) || false
-  
-  // Find next lesson
-  const getNextLesson = () => {
-    const allLessons = curriculum.modules.flatMap(m => m.lessons)
-    const currentIndex = allLessons.findIndex(l => l.lessonId === lessonId)
+
+  const nextLesson = useMemo(() => {
+    const currentIndex = allLessons.findIndex((l) => l.lessonId === lessonId)
     if (currentIndex >= 0 && currentIndex < allLessons.length - 1) {
       return allLessons[currentIndex + 1]
     }
     return null
-  }
-  
-  const nextLesson = getNextLesson()
-  
+  }, [allLessons, lessonId])
+
+  const prevLesson = useMemo(() => {
+    const currentIndex = allLessons.findIndex((l) => l.lessonId === lessonId)
+    if (currentIndex > 0) {
+      return allLessons[currentIndex - 1]
+    }
+    return null
+  }, [allLessons, lessonId])
+
   useEffect(() => {
     setIsLoaded(true)
-    
-    // Завантажити стан практичного завдання при завантаженні сторінки
-    if ((Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false)) {
+
+    if (
+      Array.isArray(userProgress?.completedPracticeTasks)
+        ? userProgress.completedPracticeTasks.includes(lessonId)
+        : false
+    ) {
       setPracticeCompleted(true)
     }
-    
-    // Завантажити результат тесту якщо він вже пройдений
+
     if (userProgress?.completedQuizzes?.[lessonId]) {
       const quizData = userProgress.completedQuizzes[lessonId]
       setQuizScore(quizData.score)
       setQuizSubmitted(true)
-      // Відновити відповіді якщо вони збережені
       if (quizData.answers) {
-        // Конвертуємо всі відповіді в числа для коректного порівняння
         const normalizedAnswers = {}
-        Object.keys(quizData.answers).forEach(key => {
+        Object.keys(quizData.answers).forEach((key) => {
           const value = quizData.answers[key]
-          normalizedAnswers[key] = value !== undefined && value !== null ? Number(value) : value
+          normalizedAnswers[key] =
+            value !== undefined && value !== null ? Number(value) : value
         })
         setQuizAnswers(normalizedAnswers)
       }
     }
-    
-    // Перевірити чи урок пройдено
-    if (userProgress?.completedLessons?.includes(lessonId)) {
-      // Lesson already completed
-    }
   }, [lessonId, userProgress])
 
-  // Автоматично відкрити тест для модулів 11 та 12, якщо немає практичного завдання
   useEffect(() => {
     if (isLoaded && lesson) {
       const moduleId = lesson.moduleId
@@ -321,7 +161,6 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
     }
   }, [isLoaded, lesson])
 
-  // Restore sidebar prefs after mount (avoids SSR/client hydration mismatch)
   useEffect(() => {
     const savedWidth = localStorage.getItem('lessonSidebarWidth')
     if (savedWidth) {
@@ -347,13 +186,11 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
     setSidebarPrefsHydrated(true)
   }, [])
 
-  // Save sidebar width to localStorage when it changes
   useEffect(() => {
     if (!sidebarPrefsHydrated || isResizing || !sidebarWidth) return
     localStorage.setItem('lessonSidebarWidth', sidebarWidth.toString())
   }, [sidebarWidth, isResizing, sidebarPrefsHydrated])
 
-  // Auto-close sidebar on mobile when viewport shrinks
   useEffect(() => {
     if (!sidebarPrefsHydrated) return
 
@@ -371,15 +208,55 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [sidebarPrefsHydrated])
-  
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      document.removeEventListener('mousemove', () => {})
-      document.removeEventListener('mouseup', () => {})
-    }
-  }, [])
-  
+
+  const fullLesson = useMemo(() => {
+    return (
+      lesson || {
+        ...curriculumLesson,
+        theory: { sections: [] },
+        codeExamples: [],
+        practiceTask: null,
+        quiz: { questions: [] },
+        commonMistakes: [],
+        summary: '',
+      }
+    )
+  }, [lesson, curriculumLesson])
+
+  const lessonInteractives = useMemo(() => {
+    return (fullLesson.theory?.sections || []).flatMap(
+      (section) => section.interactives || []
+    )
+  }, [fullLesson.theory?.sections])
+
+  const lessonModuleIndex = useMemo(() => {
+    return modulesList.findIndex((m) =>
+      (m.lessons || []).some((l) => l.lessonId === lessonId)
+    )
+  }, [modulesList, lessonId])
+
+  const currentModule = lessonModuleIndex >= 0 ? modulesList[lessonModuleIndex] : null
+
+  const explicitAllowedSet = useMemo(() => new Set(allowedLessons || []), [allowedLessons])
+  const hasAccess =
+    userRole === 'admin' ||
+    userRole === 'teacher' ||
+    isAccessible ||
+    explicitAllowedSet.has(lessonId)
+
+  const isLessonCompleted = useCallback(
+    (id) => userProgress?.completedLessons?.includes(id) || false,
+    [userProgress?.completedLessons]
+  )
+
+  const isLessonUnlocked = useCallback(
+    (l) => {
+      if (userRole === 'admin' || userRole === 'teacher') return true
+      return explicitAllowedSet.has(l.lessonId)
+    },
+    [userRole, explicitAllowedSet]
+  )
+
   if (!lesson && !curriculumLesson) {
     return (
       <div className={styles.container}>
@@ -390,22 +267,7 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
       </div>
     )
   }
-  
-  // Check if lesson is accessible
-  const allLessons = curriculum.modules.flatMap(m => m.lessons)
-  const lessonModuleIndex = curriculum.modules.findIndex(m => 
-    m.lessons.some(l => l.lessonId === lessonId)
-  )
-  const explicitAllowedSet = new Set(allowedLessons || [])
-  const hasAccess =
-    userRole === 'admin' ||
-    userRole === 'teacher' ||
-    isAccessible ||
-    explicitAllowedSet.has(lessonId)
-  
-  // Find current module
-  const currentModule = lessonModuleIndex >= 0 ? curriculum.modules[lessonModuleIndex] : null
-  
+
   const lockedDescription = isPurchased
     ? t('lockedDescriptionDrip')
     : courseId === 'roblox-studio'
@@ -414,28 +276,24 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
         ? t('lockedDescriptionPython')
         : t('lockedDescription')
 
-  // Show locked message if lesson is not accessible
   if (!hasAccess) {
     return (
       <div className={styles.container}>
         <header className={styles.header}>
-          <Link 
-            href={`/courses/${courseId}`}
-            className={styles.backButton}
-          >
-            <ArrowLeft className="w-5 h-5" />
+          <Link href={`/courses/${courseId}`} className={styles.backButton}>
+            <ArrowLeft className="w-5 h-5" aria-hidden="true" />
             {t('backToCourse')}
           </Link>
         </header>
         <div className={styles.error}>
-          <Lock className="w-16 h-16" style={{ marginBottom: '1rem', opacity: 0.5 }} />
+          <Lock className="w-16 h-16" style={{ marginBottom: '1rem', opacity: 0.5 }} aria-hidden="true" />
           <h2>{t('lockedTitle')}</h2>
           <p style={{ marginBottom: '2rem', textAlign: 'center', maxWidth: '500px' }}>
             {lockedDescription}
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             {!isPurchased && (
-              <Link 
+              <Link
                 href={`/plans/${courseId}`}
                 className={styles.nextLessonButton}
                 style={{ textDecoration: 'none' }}
@@ -443,76 +301,55 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
                 Start 3 days free trial
               </Link>
             )}
-            <Link 
+            <Link
               href={`/courses/${courseId}`}
               className={styles.backButton}
               style={{ textDecoration: 'none' }}
             >
-              {t('returnToCourse')}
+              {t('backToCourse')}
             </Link>
           </div>
         </div>
       </div>
     )
   }
-  
-  // Use full lesson content if available, otherwise use curriculum data
-  const fullLesson = lesson || {
-    ...curriculumLesson,
-    theory: { sections: [] },
-    codeExamples: [],
-    practiceTask: null,
-    quiz: { questions: [] },
-    commonMistakes: [],
-    summary: ""
-  }
-
-  // Every interactive declared across this lesson's theory sections, in order.
-  const lessonInteractives = (fullLesson.theory?.sections || []).flatMap(
-    (section) => section.interactives || []
-  )
 
   const handleQuizSubmit = async (e) => {
-    // Запобігаємо стандартній поведінці форми та перекиданню на футер
     if (e) {
       e.preventDefault()
       e.stopPropagation()
     }
-    
+
     if (!fullLesson.quiz || !fullLesson.quiz.questions) return
-    
+
     let correct = 0
-    fullLesson.quiz.questions.forEach(q => {
+    fullLesson.quiz.questions.forEach((q) => {
       const userAnswer = quizAnswers[q.id]
-      // Порівнюємо як числа (індекси відповідей)
-      const isCorrect = userAnswer !== undefined && userAnswer !== null && Number(userAnswer) === Number(q.correctAnswer)
+      const isCorrect =
+        userAnswer !== undefined &&
+        userAnswer !== null &&
+        Number(userAnswer) === Number(q.correctAnswer)
       if (isCorrect) {
         correct++
       }
     })
-    
+
     const score = Math.round((correct / fullLesson.quiz.questions.length) * 100)
     setQuizScore(score)
     setQuizSubmitted(true)
-    
-    // Запам'ятовуємо позицію скролу перед оновленням
+
     const scrollPosition = window.scrollY || window.pageYOffset
-    
-    // Save quiz result (API автоматично створить прогрес якщо його немає)
+
     setIsSaving(true)
     try {
-      // Спочатку зберігаємо результат тесту (API створить прогрес якщо потрібно)
-      // Зберігаємо також відповіді для відображення результатів
       const quizRewards = await updateProgressWithRewards(courseId, {
         action: 'completeQuiz',
         lessonId,
-        quizAnswers: quizAnswers,
+        quizAnswers,
         locale,
       })
       applyRewards(quizRewards)
-      const quizResult = quizRewards.progress
 
-      // Mark lesson as completed ONLY if quiz passed (score >= passingScore)
       const passingScore = fullLesson.quiz?.passingScore || 60
       if (score >= passingScore) {
         await updateProgress(courseId, {
@@ -521,28 +358,25 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
           locale,
         })
       }
-      
-      // Refresh page data without reloading
+
       router.refresh()
-      
-      // Прокручуємо до результатів тесту замість футеру
+
       setTimeout(() => {
         const quizResultsElement = document.getElementById('quiz-results')
         if (quizResultsElement) {
-          // Додаємо offset для хедера (якщо він фіксований на десктопі)
           const headerOffset = window.innerWidth > 1024 ? 100 : 0
-          const elementPosition = quizResultsElement.getBoundingClientRect().top + window.pageYOffset
+          const elementPosition =
+            quizResultsElement.getBoundingClientRect().top + window.pageYOffset
           const offsetPosition = elementPosition - headerOffset
-          
+
           window.scrollTo({
             top: offsetPosition,
-            behavior: 'smooth'
+            behavior: 'smooth',
           })
         } else {
-          // Якщо елемент ще не відрендерений, відновлюємо попередню позицію
           window.scrollTo({
             top: scrollPosition,
-            behavior: 'instant'
+            behavior: 'instant',
           })
         }
       }, 300)
@@ -553,22 +387,17 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
       setIsSaving(false)
     }
   }
-  
+
   const handleQuizAnswer = (questionId, answerIndex) => {
     if (quizSubmitted) return
-    setQuizAnswers(prev => ({
+    setQuizAnswers((prev) => ({
       ...prev,
-      [questionId]: answerIndex
+      [questionId]: answerIndex,
     }))
   }
-  
-  const handleRetakeQuiz = () => {
-    setQuizAnswers({})
-    setQuizSubmitted(false)
-    setQuizScore(null)
-  }
-  
-  const isQuizPassed = quizScore !== null && quizScore >= (fullLesson.quiz?.passingScore || 60)
+
+  const isQuizPassed =
+    quizScore !== null && quizScore >= (fullLesson.quiz?.passingScore || 60)
 
   const handleRunCode = async () => {
     if (!userCode.trim()) {
@@ -576,7 +405,7 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
         isRunning: false,
         output: null,
         error: t('runCodeErrors.emptyCode'),
-        success: false
+        success: false,
       })
       return
     }
@@ -588,18 +417,17 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
         isRunning: false,
         output: null,
         error: t('runCodeErrors.dangerousCode'),
-        success: false
+        success: false,
       })
       return
     }
 
-    // Check code length
     if (userCode.length > 50000) {
       setCodeExecution({
         isRunning: false,
         output: null,
         error: t('runCodeErrors.codeTooLong'),
-        success: false
+        success: false,
       })
       return
     }
@@ -608,7 +436,7 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
       isRunning: true,
       output: null,
       error: null,
-      success: null
+      success: null,
     })
     setPracticeChecked(false)
     setOutputErrors([])
@@ -617,6 +445,8 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
     setIsPyodideLoading(true)
 
     try {
+      const { executePythonWithPyodide } = await import('@/lib/pyodideRunner')
+
       const examples = fullLesson.practiceTask?.examples?.length
         ? fullLesson.practiceTask.examples
         : [null]
@@ -652,7 +482,9 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
       const displayOutput =
         outputs.length > 1
           ? outputs
-              .map((out, i) => `=== ${t('testCaseLabel', { number: i + 1 })} ===\n${out}`.trimEnd())
+              .map((out, i) =>
+                `=== ${t('testCaseLabel', { number: i + 1 })} ===\n${out}`.trimEnd()
+              )
               .join('\n\n')
           : outputs[0] || ''
 
@@ -710,12 +542,15 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
       setFailedExampleIndexes([])
       setPracticeTestCount(0)
       setPracticeCompleted(
-        Boolean((Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false))
+        Boolean(
+          Array.isArray(userProgress?.completedPracticeTasks)
+            ? userProgress.completedPracticeTasks.includes(lessonId)
+            : false
+        )
       )
     }
   }
 
-  // Handle keyboard shortcuts (Tab indentation, Shift+Tab dedent, Ctrl/Cmd+Enter run) in code editor
   const handleCodeKeyDown = (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       e.preventDefault()
@@ -731,20 +566,19 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
       const start = textarea.selectionStart
       const end = textarea.selectionEnd
       const value = userCode
-      const indent = '    ' // 4 spaces for Python
+      const indent = '    '
       const indentSize = 4
-      
+
       if (e.shiftKey) {
-        // Shift+Tab: remove indentation
         const lines = value.split('\n')
         const startLine = value.substring(0, start).split('\n').length - 1
         const endLine = value.substring(0, end).split('\n').length - 1
-        
+
         let newValue = ''
         let newStart = start
         let newEnd = end
         let removedChars = 0
-        
+
         for (let i = 0; i < lines.length; i++) {
           if (i >= startLine && i <= endLine) {
             const line = lines[i]
@@ -767,16 +601,14 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
             if (i < lines.length - 1) newValue += '\n'
           }
         }
-        
+
         setUserCode(newValue)
         setTimeout(() => {
           textarea.selectionStart = Math.max(0, newStart)
           textarea.selectionEnd = Math.max(0, newEnd)
         }, 0)
       } else {
-        // Tab: add indentation
         if (start === end) {
-          // Single cursor - just add indent
           const newValue = value.substring(0, start) + indent + value.substring(end)
           setUserCode(newValue)
           setTimeout(() => {
@@ -784,15 +616,14 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
             textarea.selectionEnd = start + indent.length
           }, 0)
         } else {
-          // Multiple lines selected - indent all lines
           const lines = value.split('\n')
           const startLine = value.substring(0, start).split('\n').length - 1
           const endLine = value.substring(0, end).split('\n').length - 1
-          
+
           let newValue = ''
           let newStart = start + indent.length
           let newEnd = end
-          
+
           for (let i = 0; i < lines.length; i++) {
             if (i >= startLine && i <= endLine) {
               newValue += indent + lines[i]
@@ -802,7 +633,7 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
             }
             if (i < lines.length - 1) newValue += '\n'
           }
-          
+
           setUserCode(newValue)
           setTimeout(() => {
             textarea.selectionStart = newStart
@@ -812,919 +643,184 @@ const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python
       }
     }
   }
-  
-  // Helper function to check if lesson is completed
-  const isLessonCompleted = (lessonId) => {
-    return userProgress?.completedLessons?.includes(lessonId) || false
-  }
 
-  // Helper function to check if lesson is unlocked (server drip set is authoritative)
-  const isLessonUnlocked = (lesson) => {
-    if (userRole === 'admin' || userRole === 'teacher') return true
-    return explicitAllowedSet.has(lesson.lessonId)
-  }
-
-  // Handle sidebar resize
-  const handleResizeStart = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setIsResizing(true)
-    
-    const startX = e.clientX
-    const startWidth = isSidebarClosed ? 0 : sidebarWidth
-    let currentWidth = startWidth
-    let isClosed = isSidebarClosed
-    
-    let rafId = null
-    
-    const handleMouseMove = (e) => {
-      if (rafId) {
-        cancelAnimationFrame(rafId)
-      }
-      
-      rafId = requestAnimationFrame(() => {
-        const diff = e.clientX - startX
-        const newWidth = Math.max(0, startWidth + diff)
-        const maxWidth = Math.min(600, window.innerWidth * 0.5)
-        
-        if (newWidth <= 0) {
-          currentWidth = 0
-          isClosed = true
-          setIsSidebarClosed(true)
-          setSidebarWidth(0)
-        } else if (newWidth > 0 && newWidth < 50) {
-          // Мінімальна ширина для відображення
-          currentWidth = 50
-          isClosed = false
-          setSidebarWidth(50)
-          setIsSidebarClosed(false)
-        } else if (newWidth >= 50 && newWidth <= maxWidth) {
-          currentWidth = newWidth
-          isClosed = false
-          setSidebarWidth(newWidth)
-          setIsSidebarClosed(false)
-        } else if (newWidth > maxWidth) {
-          currentWidth = maxWidth
-          isClosed = false
-          setSidebarWidth(maxWidth)
-          setIsSidebarClosed(false)
-        }
+  const handleCompleteLesson = async () => {
+    setIsSaving(true)
+    try {
+      await updateProgress(courseId, {
+        action: 'completeLesson',
+        lessonId,
+        locale,
       })
-    }
-    
-    const handleMouseUp = () => {
-      if (rafId) {
-        cancelAnimationFrame(rafId)
-      }
-      setIsResizing(false)
-      localStorage.setItem('lessonSidebarWidth', currentWidth.toString())
-      localStorage.setItem('lessonSidebarClosed', isClosed.toString())
-      document.removeEventListener('mousemove', handleMouseMove)
-      document.removeEventListener('mouseup', handleMouseUp)
-      document.body.style.cursor = ''
-      document.body.style.userSelect = ''
-      document.body.style.pointerEvents = ''
-    }
-    
-    document.body.style.cursor = 'col-resize'
-    document.body.style.userSelect = 'none'
-    document.body.style.pointerEvents = 'auto'
-    document.addEventListener('mousemove', handleMouseMove, { passive: true })
-    document.addEventListener('mouseup', handleMouseUp)
-  }
 
-  // Handle edge drag to open sidebar when closed
-  const handleEdgeDragStart = (e) => {
-    if (!isSidebarClosed) return
-    
-    e.preventDefault()
-    setIsResizing(true)
-    
-    const startX = e.clientX
-    const savedWidth = sidebarWidth > 0 ? sidebarWidth : 320
-    let currentWidth = 0
-    let isClosed = true
-    
-    let rafId = null
-    
-    const handleMouseMove = (e) => {
-      if (rafId) {
-        cancelAnimationFrame(rafId)
+      if (nextLesson) {
+        router.push(`/courses/${courseId}/lessons/${nextLesson.lessonId}`)
+      } else {
+        router.push(`/courses/${courseId}`)
       }
-      
-      rafId = requestAnimationFrame(() => {
-        const newWidth = Math.max(0, e.clientX)
-        const maxWidth = Math.min(600, window.innerWidth * 0.5)
-        
-        if (newWidth >= 50 && newWidth <= maxWidth) {
-          currentWidth = newWidth
-          isClosed = false
-          setSidebarWidth(newWidth)
-          setIsSidebarClosed(false)
-        } else if (newWidth > maxWidth) {
-          currentWidth = maxWidth
-          isClosed = false
-          setSidebarWidth(maxWidth)
-          setIsSidebarClosed(false)
-        } else if (newWidth < 50 && newWidth > 0) {
-          currentWidth = 50
-          isClosed = false
-          setSidebarWidth(50)
-          setIsSidebarClosed(false)
-        }
-      })
-    }
-    
-    const handleMouseUp = () => {
-      if (rafId) {
-        cancelAnimationFrame(rafId)
-      }
-      setIsResizing(false)
-      localStorage.setItem('lessonSidebarWidth', currentWidth > 0 ? currentWidth.toString() : savedWidth.toString())
-      localStorage.setItem('lessonSidebarClosed', isClosed.toString())
-      document.removeEventListener('mousemove', handleMouseMove)
-      document.removeEventListener('mouseup', handleMouseUp)
-      document.body.style.cursor = ''
-      document.body.style.userSelect = ''
-    }
-    
-    document.body.style.cursor = 'col-resize'
-    document.body.style.userSelect = 'none'
-    document.addEventListener('mousemove', handleMouseMove, { passive: true })
-    document.addEventListener('mouseup', handleMouseUp)
-  }
-
-  // Handle sidebar toggle
-  const toggleSidebar = () => {
-    if (isSidebarClosed) {
-      // Якщо закрите, відкрити
-      setIsSidebarClosed(false)
-      const savedWidth = sidebarWidth > 0 ? sidebarWidth : 320
-      setSidebarWidth(savedWidth)
-      localStorage.setItem('lessonSidebarClosed', 'false')
-      localStorage.setItem('lessonSidebarWidth', savedWidth.toString())
-    } else {
-      // Якщо відкрите, закрити
-      setIsSidebarClosed(true)
-      setSidebarWidth(0)
-      localStorage.setItem('lessonSidebarClosed', 'true')
+    } catch (error) {
+      console.error('Error completing lesson:', error)
+      alert(t('progressError'))
+    } finally {
+      setIsSaving(false)
     }
   }
 
   return (
-    <>
-      {/* Edge drag area when sidebar is closed */}
-      {isSidebarClosed && (
-        <div 
-          className={styles.edgeDragArea}
-          onMouseDown={handleEdgeDragStart}
-          title={t('dragOpenMenu')}
-        />
-      )}
+    <div className={styles.pageContainer}>
+      <AchievementToast toasts={toasts} onDismiss={dismissToast} />
 
-      {/* Toggle button when closed */}
-      {isSidebarClosed && (
-        <button 
-          className={styles.sidebarToggleClosed}
-          onClick={toggleSidebar}
-          title={t('openMenu')}
-        >
-          <ChevronRight className={styles.toggleIcon} />
-        </button>
-      )}
-
-      {/* Toggle button when open */}
-      {!isSidebarClosed && (
-        <button 
-          className={styles.sidebarToggle}
-          style={{ left: isSidebarCollapsed ? '45px' : `calc(${sidebarWidth}px - 25px)` }}
-          onClick={toggleSidebar}
-          title={isSidebarCollapsed ? t('expandMenu') : t('collapseMenu')}
-        >
-          {isSidebarCollapsed ? (
-            <ChevronRight className={styles.toggleIcon} />
-          ) : (
-            <ChevronLeft className={styles.toggleIcon} />
-          )}
-        </button>
-      )}
+      <LessonSidebar
+        curriculum={curriculum}
+        lessonId={lessonId}
+        courseId={courseId}
+        lessonModuleIndex={lessonModuleIndex}
+        isSidebarCollapsed={isSidebarCollapsed}
+        setIsSidebarCollapsed={setIsSidebarCollapsed}
+        isSidebarClosed={isSidebarClosed}
+        setIsSidebarClosed={setIsSidebarClosed}
+        sidebarWidth={sidebarWidth}
+        setSidebarWidth={setSidebarWidth}
+        isResizing={isResizing}
+        setIsResizing={setIsResizing}
+        isLessonCompleted={isLessonCompleted}
+        isLessonUnlocked={isLessonUnlocked}
+        t={t}
+      />
 
       <div className={`${styles.pageWrapper} ${isResizing ? styles.resizing : ''}`}>
-        
-        {/* Sidebar Navigation */}
-      <aside 
-        className={`${styles.sidebar} ${isSidebarCollapsed ? styles.collapsed : ''} ${isSidebarClosed ? styles.closed : ''}`}
-        style={{ 
-          width: isSidebarClosed ? '0px' : (isSidebarCollapsed ? '60px' : `${sidebarWidth}px`),
-          '--sidebar-width': `${sidebarWidth}px`
-        }}
-        >
-          {/* Resize Handle */}
-          {!isSidebarCollapsed && (
-          <div 
-            className={styles.resizeHandle}
-            onMouseDown={handleResizeStart}
-            title={t('resizeMenu')}
-          >
-            <GripVertical className={styles.resizeIcon} />
-          </div>
-        )}
+        <div className={styles.mainContent}>
+          <div className={styles.container}>
+            <LessonNav
+              courseId={courseId}
+              currentModule={currentModule}
+              fullLesson={fullLesson}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              practiceCompleted={practiceCompleted}
+              userProgress={userProgress}
+              lessonId={lessonId}
+              gamification={gamification}
+              lessonInteractives={lessonInteractives}
+              completedInteractiveIds={completedInteractiveIds}
+              isCompleted={isCompleted}
+              t={t}
+              tCommon={tCommon}
+            />
 
-        <div className={styles.sidebarHeader}>
-          {!isSidebarCollapsed && <h3>{t('sidebarTitle')}</h3>}
-        </div>
-        {!isSidebarCollapsed && (
-          <nav className={styles.sidebarNav}>
-            {curriculum.modules.map((module, moduleIndex) => {
-              const isModuleExpanded = moduleIndex === lessonModuleIndex || moduleIndex < lessonModuleIndex
-              return (
-                <div key={module.moduleId} className={styles.moduleSection}>
-                  <div className={styles.moduleHeader}>
-                    <span className={styles.moduleTitle}>
-                      {t('sidebarModule', { order: module.order, title: module.title })}
-                    </span>
-                  </div>
-                  <div className={styles.lessonsList}>
-                    {module.lessons.map((lesson, lessonIndex) => {
-                      const isCompleted = isLessonCompleted(lesson.lessonId)
-                      const isUnlocked = isLessonUnlocked(lesson)
-                      const isActive = lesson.lessonId === lessonId
-                      
-                      return (
-                        <Link
-                          key={lesson.lessonId}
-                          href={`/courses/${courseId}/lessons/${lesson.lessonId}`}
-                          className={`${styles.lessonLink} ${isActive ? styles.active : ''} ${!isUnlocked ? styles.locked : ''} ${isCompleted ? styles.completed : ''}`}
-                          onClick={(e) => {
-                            if (!isUnlocked) {
-                              e.preventDefault()
-                            }
-                          }}
-                        >
-                          <div className={styles.lessonLinkContent}>
-                            {isCompleted ? (
-                              <CheckCircle2 className={styles.lessonIcon} />
-                            ) : isUnlocked ? (
-                              <Play className={styles.lessonIcon} />
-                            ) : (
-                              <Lock className={styles.lessonIcon} />
-                            )}
-                            <span className={styles.lessonNumber}>{lesson.order}</span>
-                            <span className={styles.lessonTitle}>{lesson.title}</span>
-                          </div>
-                        </Link>
-                      )
-                    })}
-                  </div>
-                </div>
-              )
-            })}
-          </nav>
-        )}
-      </aside>
-
-      {/* Main Content */}
-      <div className={styles.mainContent}>
-        <div className={styles.container}>
-          {/* Header */}
-          <header className={styles.header}>
-        <div className={styles.backButtons}>
-          <Link 
-            href={`/courses/${courseId}`}
-            className={styles.backButton}
-          >
-            <ArrowLeft className="w-5 h-5" />
-            {t('backToCourse')}
-          </Link>
-          {currentModule && (
-            <Link 
-              href={`/courses/${courseId}#module-${currentModule.moduleId}`}
-              className={styles.backButton}
-            >
-              <ArrowLeft className="w-5 h-5" />
-              {t('backToModule')}
-            </Link>
-          )}
-        </div>
-        
-        <div className={styles.headerInfo}>
-          <div className={styles.breadcrumb}>
-            <Link href="/">{tCommon('breadcrumb.home')}</Link>
-            <ChevronRight className="w-4 h-4" />
-            <Link href={`/courses/${courseId}`}>{t('breadcrumb.course')}</Link>
-            <ChevronRight className="w-4 h-4" />
-            {currentModule ? (
-              <Link href={`/courses/${courseId}#module-${currentModule.moduleId}`}>{t('breadcrumb.module')}</Link>
-            ) : (
-              <span>{t('breadcrumb.module')}</span>
-            )}
-            <ChevronRight className="w-4 h-4" />
-            <span>{t('breadcrumb.lesson')}</span>
-          </div>
-          
-          <h1 className={styles.title}>{fullLesson.title}</h1>
-
-          <XpHud
-            gamification={gamification}
-            lessonQuest={{
-              total: lessonInteractives.length,
-              done: lessonInteractives.filter((i) => completedInteractiveIds.has(i.id)).length,
-            }}
-          />
-
-          <div className={styles.meta}>
-            <div className={styles.metaItem}>
-              <Clock className="w-4 h-4" />
-              <span>{t('minutes', { count: fullLesson.estimatedTime || 60 })}</span>
-            </div>
-            {isCompleted && (
-              <div className={styles.metaItem}>
-                <CheckCircle2 className="w-4 h-4" />
-                <span>{t('completed')}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
-      
-      {/* Learning Objectives */}
-      {fullLesson.learningObjectives && fullLesson.learningObjectives.length > 0 && (
-        <section className={styles.objectivesSection}>
-          <h2 className={styles.sectionTitle}>
-            <Target className="w-5 h-5" />
-            {t('objectivesTitle')}
-          </h2>
-          <ul className={styles.objectivesList}>
-            {fullLesson.learningObjectives.map((objective, index) => (
-              <li key={index}>{objective}</li>
-            ))}
-          </ul>
-        </section>
-      )}
-      
-      {/* Tabs */}
-      <div className={styles.tabs}>
-        <button
-          className={`${styles.tab} ${activeTab === 'theory' ? styles.active : ''}`}
-          onClick={() => setActiveTab('theory')}
-        >
-          <BookOpen className="w-4 h-4" />
-          {t('tabs.theory')}
-        </button>
-        <button
-          className={`${styles.tab} ${activeTab === 'practice' ? styles.active : ''}`}
-          onClick={() => setActiveTab('practice')}
-        >
-          <Code className="w-4 h-4" />
-          {t('tabs.practice')}
-        </button>
-        <button
-          className={`${styles.tab} ${activeTab === 'quiz' ? styles.active : ''} ${!practiceCompleted && !(Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false) && fullLesson.practiceTask ? styles.disabled : ''}`}
-          onClick={() => {
-            const isPracticeCompleted = practiceCompleted || (Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false)
-            if (!isPracticeCompleted && fullLesson.practiceTask) {
-              alert(t('practiceRequiredAlert'))
-              setActiveTab('practice')
-            } else {
-              setActiveTab('quiz')
-            }
-          }}
-          disabled={!practiceCompleted && !(Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false) && fullLesson.practiceTask}
-          title={!practiceCompleted && !(Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false) && fullLesson.practiceTask ? t('practiceRequiredTitle') : ''}
-        >
-          <Target className="w-4 h-4" />
-          {t('tabs.quiz')}
-          {!practiceCompleted && !(Array.isArray(userProgress?.completedPracticeTasks) ? userProgress.completedPracticeTasks.includes(lessonId) : false) && fullLesson.practiceTask && <Lock className="w-3 h-3" />}
-        </button>
-      </div>
-      
-      {/* Content */}
-      <div className={styles.content}>
-        {/* Theory Tab */}
-        {activeTab === 'theory' && (
-          <div className={styles.tabContent}>
-            {/* Video Placeholder */}
-            {fullLesson.videoUrl && (
-              <div className={styles.videoSection}>
-                <div className={styles.videoPlaceholder}>
-                  <Play className="w-16 h-16" />
-                  <p>{t('videoLesson')}</p>
-                </div>
-              </div>
-            )}
-            
-            {/* Theory Sections */}
-            {fullLesson.theory?.sections?.map((section, index) => (
-              <div key={index} className={`${styles.theorySection} navigable-block`}>
-                <h3 className={styles.theorySectionTitle}>{section.title}</h3>
-                <div
-                  className={styles.theoryContent}
-                  dangerouslySetInnerHTML={{
-                    __html: markdownToHtml(section.content)
-                  }}
-                />
-                {(section.interactives || []).map((interactive) => (
-                  <InteractiveBlock
-                    key={interactive.id}
-                    interactive={interactive}
-                    moduleId={fullLesson.moduleId}
-                    completedIds={completedInteractiveIds}
-                    pendingId={pendingInteractiveId}
-                    onSubmit={submitInteractive}
+            <div className={styles.content}>
+              <div
+                id="panel-theory"
+                role="tabpanel"
+                aria-labelledby="tab-theory"
+                hidden={activeTab !== 'theory'}
+              >
+                {activeTab === 'theory' && (
+                  <LessonTheory
+                    fullLesson={fullLesson}
+                    t={t}
+                    completedInteractiveIds={completedInteractiveIds}
+                    pendingInteractiveId={pendingInteractiveId}
+                    submitInteractive={submitInteractive}
                   />
-                ))}
+                )}
               </div>
-            ))}
-            
-            {/* Code Examples */}
-            {fullLesson.codeExamples && fullLesson.codeExamples.length > 0 && (
-              <div className={`${styles.codeExamplesSection} navigable-block`}>
-                <h3 className={styles.sectionTitle}>
-                  <Code className="w-5 h-5" />
-                  {t('codeExamplesTitle')}
-                </h3>
-                {fullLesson.codeExamples.map((example, index) => (
-                  <div key={index} className={styles.codeExample}>
-                    <h4 className={styles.codeExampleTitle}>{example.title}</h4>
-                    <pre className={styles.codeBlock}>
-                      <code>{example.code}</code>
-                    </pre>
-                    <p className={styles.codeExplanation}>{example.explanation}</p>
-                  </div>
-                ))}
+
+              <div
+                id="panel-practice"
+                role="tabpanel"
+                aria-labelledby="tab-practice"
+                hidden={activeTab !== 'practice'}
+              >
+                {activeTab === 'practice' && (
+                  <LessonPractice
+                    fullLesson={fullLesson}
+                    t={t}
+                    userCode={userCode}
+                    setUserCode={setUserCode}
+                    handleCodeKeyDown={handleCodeKeyDown}
+                    handleRunCode={handleRunCode}
+                    codeExecution={codeExecution}
+                    isPyodideLoading={isPyodideLoading}
+                    showPracticeSolution={showPracticeSolution}
+                    setShowPracticeSolution={setShowPracticeSolution}
+                    setRevealedSolution={setRevealedSolution}
+                    outputErrors={outputErrors}
+                    failedExampleIndexes={failedExampleIndexes}
+                    practiceTestCount={practiceTestCount}
+                    practiceChecked={practiceChecked}
+                    practiceCompleted={practiceCompleted}
+                  />
+                )}
               </div>
-            )}
-            
-            {/* Common Mistakes */}
-            {fullLesson.commonMistakes && fullLesson.commonMistakes.length > 0 && (
-              <div className={`${styles.mistakesSection} navigable-block`}>
-                <h3 className={styles.sectionTitle}>
-                  <AlertCircle className="w-5 h-5" />
-                  {t('mistakesTitle')}
-                </h3>
-                {fullLesson.commonMistakes.map((mistake, index) => (
-                  <div key={index} className={styles.mistakeItem}>
-                    <div className={styles.mistakeHeader}>
-                      <XCircle className="w-5 h-5" />
-                      <strong>{mistake.mistake}</strong>
-                    </div>
-                    <p className={styles.mistakeExplanation}>{mistake.explanation}</p>
-                    <div className={styles.mistakeCorrect}>
-                      <CheckCircle2 className="w-5 h-5" />
-                      <strong>{t('correctLabel')}</strong> {mistake.correctApproach}
-                    </div>
-                  </div>
-                ))}
+
+              <div
+                id="panel-quiz"
+                role="tabpanel"
+                aria-labelledby="tab-quiz"
+                hidden={activeTab !== 'quiz'}
+              >
+                {activeTab === 'quiz' && (
+                  <LessonQuiz
+                    fullLesson={fullLesson}
+                    t={t}
+                    practiceCompleted={practiceCompleted}
+                    setActiveTab={setActiveTab}
+                    quizAnswers={quizAnswers}
+                    handleQuizAnswer={handleQuizAnswer}
+                    quizSubmitted={quizSubmitted}
+                    handleQuizSubmit={handleQuizSubmit}
+                    quizScore={quizScore}
+                    isQuizPassed={isQuizPassed}
+                    isSaving={isSaving}
+                  />
+                )}
               </div>
-            )}
-            
-            {/* Summary */}
-            {fullLesson.summary && (
-              <div className={`${styles.summarySection} navigable-block`}>
-                <h3 className={styles.sectionTitle}>
-                  <Lightbulb className="w-5 h-5" />
-                  {t('summaryTitle')}
-                </h3>
-                <div className={styles.summaryContent}>
-                  {fullLesson.summary.split('\n').map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-        
-        {/* Practice Tab */}
-        {activeTab === 'practice' && (
-          <div className={styles.tabContent}>
-            {fullLesson.practiceTask ? (
-              <>
-                <div className={`${styles.practiceTask} navigable-block`}>
-                  <h3 className={styles.sectionTitle}>
-                    <Code className="w-5 h-5" />
-                    {t('practiceTitle')}
-                  </h3>
-                  
-                  <div className={styles.taskHeader}>
-                    <h4>{fullLesson.practiceTask.title}</h4>
-                    <span className={styles.difficultyBadge}>
-                      {fullLesson.practiceTask.difficulty === 'beginner' ? t('difficulty.beginner') :
-                       fullLesson.practiceTask.difficulty === 'intermediate' ? t('difficulty.intermediate') :
-                       t('difficulty.advanced')}
-                    </span>
-                  </div>
-                  
-                  <p className={styles.taskDescription}>{fullLesson.practiceTask.description}</p>
-                  
-                  <div className={styles.taskSection}>
-                    <h5>{t('taskCondition')}</h5>
-                    <p>{fullLesson.practiceTask.problemStatement}</p>
-                  </div>
-                  
-                  {fullLesson.practiceTask.examples && fullLesson.practiceTask.examples.length > 0 && (
-                    <div className={styles.taskSection}>
-                      <h5>{t('examplesTitle')}</h5>
-                      {fullLesson.practiceTask.examples.map((example, index) => (
-                        <div key={index} className={styles.exampleBox}>
-                          {example.input && (
-                            <div className={styles.exampleInput}>
-                              <strong>{t('inputLabel')}</strong>
-                              <pre>{example.input}</pre>
-                            </div>
-                          )}
-                          <div className={styles.exampleOutput}>
-                            <strong>{t('outputLabel')}</strong>
-                            <pre>{example.output}</pre>
-                          </div>
-                          {example.explanation && (
-                            <p className={styles.exampleExplanation}>{example.explanation}</p>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  
-                  {fullLesson.practiceTask.hints && fullLesson.practiceTask.hints.length > 0 && (
-                    <div className={styles.hintsSection}>
-                      <h5>
-                        <Lightbulb className="w-4 h-4" />
-                        {t('hintsTitle')}
-                      </h5>
-                      <ul>
-                        {fullLesson.practiceTask.hints.map((hint, index) => (
-                          <li key={index}>{hint}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  
-                  <div className={styles.codeEditor}>
-                    <div className={styles.editorHeader}>
-                      <span>{t('yourCode')}</span>
-                      <button
-                        className={styles.solutionButton}
-                        onClick={() => {
-                          if (!showPracticeSolution) setRevealedSolution(true)
-                          setShowPracticeSolution(!showPracticeSolution)
-                        }}
-                      >
-                        {t('solutionToggle', { action: showPracticeSolution ? t('hideSolution') : t('showSolution') })}
-                      </button>
-                    </div>
-                    <textarea
-                      className={styles.codeInput}
-                      placeholder={t('codePlaceholder')}
-                      rows={15}
-                      value={userCode}
-                      onChange={(e) => setUserCode(e.target.value)}
-                      onKeyDown={handleCodeKeyDown}
-                      disabled={codeExecution.isRunning}
-                    />
-                    <button 
-                      className={styles.runButton}
-                      onClick={handleRunCode}
-                      disabled={codeExecution.isRunning}
-                      title={`${t('runCode')} (Ctrl+Enter)`}
-                    >
-                      {codeExecution.isRunning ? (
-                        <>
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                          {isPyodideLoading ? t('pyodideLoading') : t('running')}
-                        </>
-                      ) : (
-                        <>
-                          <Terminal className="w-4 h-4" />
-                          {t('runCode')}
-                        </>
-                      )}
-                    </button>
-                  </div>
-                  
-                  {/* Code Execution Results */}
-                  {codeExecution.output !== null || codeExecution.error ? (
-                    <div className={styles.executionResults}>
-                      <h5>
-                        <Terminal className="w-4 h-4" />
-                        {t('executionResult')}
-                      </h5>
-                      {codeExecution.success !== false && codeExecution.output && (
-                        <div className={styles.executionOutput}>
-                          <strong>{t('outputResult')}</strong>
-                          <pre>
-                            {codeExecution.output.split('\n').map((line, index) => {
-                              const isError = outputErrors.includes(index)
-                              return (
-                                <React.Fragment key={index}>
-                                  <span
-                                    className={isError ? styles.outputErrorLine : ''}
-                                    style={{
-                                      color: isError ? '#ef4444' : undefined,
-                                      backgroundColor: isError ? 'rgba(239, 68, 68, 0.2)' : undefined,
-                                      padding: isError ? '2px 4px' : undefined,
-                                      borderRadius: isError ? '3px' : undefined,
-                                      display: 'inline-block',
-                                      width: '100%'
-                                    }}
-                                  >
-                                    {line || '\u00A0'}
-                                  </span>
-                                  {'\n'}
-                                </React.Fragment>
-                              )
-                            })}
-                          </pre>
-                        </div>
-                      )}
-                      {codeExecution.error && (
-                        <div className={styles.executionError}>
-                          <strong>{t('errorLabel')}</strong>
-                          <pre>{codeExecution.error}</pre>
-                        </div>
-                      )}
-                      {codeExecution.success === false && !codeExecution.error && codeExecution.output && (
-                        <div className={styles.executionError}>
-                          <strong>{t('executionError')}</strong>
-                          <pre>{codeExecution.output}</pre>
-                        </div>
-                      )}
-                      {/* Перевірка практичного завдання */}
-                      {practiceChecked && fullLesson.practiceTask && (
-                        <div className={practiceCompleted ? styles.practiceSuccess : styles.practiceError}>
-                          {practiceCompleted ? (
-                            <>
-                              <CheckCircle2 className="w-5 h-5" />
-                              <strong>{t('practiceSuccess')}</strong>
-                              <p>{t('practiceSuccessHint')}</p>
-                            </>
-                          ) : (
-                            <>
-                              <XCircle className="w-5 h-5" />
-                              <strong>{t('practiceFail')}</strong>
-                              <p>{t('practiceFailHint')}</p>
-                              {practiceTestCount > 1 && failedExampleIndexes.length > 0 && (
-                                <p style={{ fontSize: '0.875rem', marginTop: '0.5rem', color: '#ef4444' }}>
-                                  {t('failedTestsFound', {
-                                    failed: failedExampleIndexes.map((i) => i + 1).join(', '),
-                                    total: practiceTestCount,
-                                  })}
-                                </p>
-                              )}
-                              {outputErrors.length > 0 && (
-                                <p style={{ fontSize: '0.875rem', marginTop: '0.5rem', color: '#ef4444' }}>
-                                  {t('outputErrorsFound', { count: outputErrors.length })}
-                                </p>
-                              )}
-                            </>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  ) : null}
-                  
-                  {showPracticeSolution && fullLesson.practiceTask.solution && (
-                    <div className={styles.solutionSection}>
-                      <h5>{t('exampleSolution')}</h5>
-                      <pre className={styles.codeBlock}>
-                        <code>{fullLesson.practiceTask.solution.code}</code>
-                      </pre>
-                      <button
-                        className={styles.solutionButton}
-                        onClick={() => {
-                          setUserCode(fullLesson.practiceTask.solution.code)
-                          setShowPracticeSolution(false)
-                        }}
-                        style={{ marginTop: '1rem' }}
-                      >
-                        {t('insertCode')}
-                      </button>
-                      <p className={styles.solutionExplanation}>
-                        {fullLesson.practiceTask.solution.explanation}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </>
-            ) : (
-              <div className={styles.noContent}>
-                <p>
-                  {(fullLesson?.moduleId === 'module-09' && fullLesson?.lessonId !== 'lesson-09-1') ||
-                   (fullLesson?.moduleId === 'module-10') ||
-                   (fullLesson?.moduleId === 'module-11') ||
-                   (fullLesson?.moduleId === 'module-12') ||
-                   (fullLesson?.moduleId === 'module-13')
-                    ? t('noPracticeAdvanced')
-                    : t('noPracticeYet')}
-                </p>
-              </div>
-            )}
-          </div>
-        )}
-        
-        {/* Quiz Tab */}
-        {activeTab === 'quiz' && (
-          <div className={styles.tabContent}>
-            {/* Перевірка чи практичне завдання виконано */}
-            {!practiceCompleted && fullLesson.practiceTask ? (
-              <div className={styles.practiceError}>
-                <Lock className="w-5 h-5" />
-                <div>
-                  <strong>{t('quizLockedTitle')}</strong>
-                  <p>{t('quizLockedDescription')}</p>
-                  <button
-                    className={styles.ctaButton}
-                    onClick={() => setActiveTab('practice')}
-                    style={{ marginTop: '1rem' }}
-                  >
-                    {t('goToPractice')}
-                  </button>
-                </div>
-              </div>
-            ) : fullLesson.quiz && fullLesson.quiz.questions && fullLesson.quiz.questions.length > 0 ? (
-              <>
-                <div className={`${styles.quizHeader} navigable-block`}>
-                  <h3 className={styles.sectionTitle}>
-                    <Target className="w-5 h-5" />
-                    {t('quizTitle')}
-                  </h3>
-                  <p className={styles.quizInfo}>
-                    {t('quizInfo', { count: fullLesson.quiz.questions.length, passingScore: fullLesson.quiz?.passingScore || 60 })}
-                    {fullLesson.quiz.timeLimit > 0 && t('quizTimeLimit', { minutes: fullLesson.quiz.timeLimit })}
-                  </p>
-                </div>
-                
-                <div className={styles.quizQuestions}>
-                  {fullLesson.quiz.questions.map((question, index) => {
-                    const userAnswer = quizAnswers[question.id]
-                    // Перевірка правильності відповіді: порівнюємо індекси відповідей як числа
-                    const isCorrect = userAnswer !== undefined && 
-                                     userAnswer !== null && 
-                                     Number(userAnswer) === Number(question.correctAnswer)
-                    const showAnswer = quizSubmitted
-                    
-                    return (
-                      <div 
-                        key={question.id}
-                        className={`${styles.quizQuestion} navigable-block ${
-                          showAnswer ? (isCorrect ? styles.correct : styles.incorrect) : ''
-                        }`}
-                      >
-                        <div className={styles.questionHeader}>
-                          <span className={styles.questionNumber}>
-                            {t('questionNumber', { number: index + 1 })}
-                          </span>
-                          {showAnswer && (
-                            <span className={styles.questionResult}>
-                              {isCorrect ? (
-                                <><CheckCircle2 className="w-5 h-5" /> {t('correct')}</>
-                              ) : (
-                                <><XCircle className="w-5 h-5" /> {t('incorrect')}</>
-                              )}
-                            </span>
-                          )}
-                        </div>
-                        
-                        <div 
-                          className={styles.questionText}
-                          dangerouslySetInnerHTML={{ 
-                            __html: markdownToHtml(question.question)
-                          }}
-                        />
-                        
-                        {question.type === 'code_reading' && question.code && (
-                          <pre className={styles.questionCode}>
-                            <code>{question.code}</code>
-                          </pre>
-                        )}
-                        
-                        <div className={styles.questionOptions}>
-                          {question.options.map((option, optionIndex) => {
-                            const isSelected = userAnswer !== undefined && userAnswer !== null && Number(userAnswer) === optionIndex
-                            const isCorrectAnswer = optionIndex === Number(question.correctAnswer)
-                            
-                            return (
-                              <button
-                                key={optionIndex}
-                                className={`${styles.optionButton} ${
-                                  isSelected ? styles.selected : ''
-                                } ${
-                                  showAnswer && isCorrectAnswer ? styles.correctAnswer : ''
-                                } ${
-                                  showAnswer && isSelected && !isCorrect ? styles.wrongAnswer : ''
-                                }`}
-                                onClick={() => handleQuizAnswer(question.id, optionIndex)}
-                                disabled={quizSubmitted}
-                              >
-                                <span className={styles.optionLetter}>
-                                  {String.fromCharCode(65 + optionIndex)}
-                                </span>
-                                <span 
-                                  className={styles.optionText}
-                                  dangerouslySetInnerHTML={{ 
-                                    __html: markdownToHtml(option)
-                                  }}
-                                />
-                                {showAnswer && isCorrectAnswer && (
-                                  <CheckCircle2 className={styles.optionIcon} />
-                                )}
-                                {showAnswer && isSelected && !isCorrect && (
-                                  <XCircle className={styles.optionIcon} />
-                                )}
-                              </button>
-                            )
-                          })}
-                        </div>
-                        
-                        {showAnswer && question.explanation && (
-                          <div 
-                            className={styles.questionExplanation}
-                            dangerouslySetInnerHTML={{ 
-                              __html: `<strong>${t('explanation')}</strong> ${markdownToHtml(question.explanation)}`
-                            }}
-                          />
-                        )}
-                      </div>
-                    )
-                  })}
-                </div>
-                
-                <div className={styles.quizActions}>
-                  {!quizSubmitted ? (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', width: '100%' }}>
-                      <button
-                        type="button"
-                        className={styles.submitButton}
-                        onClick={handleQuizSubmit}
-                        disabled={Object.keys(quizAnswers).length < fullLesson.quiz.questions.length}
-                      >
-                        {t('submitQuiz')}
-                      </button>
-                      {Object.keys(quizAnswers).length < fullLesson.quiz.questions.length && (
-                        <span style={{ fontSize: '0.875rem', color: '#64748b' }}>
-                          ({Object.keys(quizAnswers).length}/{fullLesson.quiz.questions.length})
-                        </span>
-                      )}
-                    </div>
+            </div>
+
+            {/* Navigation Footer */}
+            <footer className={styles.footer}>
+              {prevLesson ? (
+                <Link
+                  href={`/courses/${courseId}/lessons/${prevLesson.lessonId}`}
+                  className={styles.prevLessonButton}
+                >
+                  <ChevronLeft className="w-4 h-4" aria-hidden="true" />
+                  {t('prevLesson')}
+                </Link>
+              ) : (
+                <div />
+              )}
+
+              {nextLesson ? (
+                <Link
+                  href={`/courses/${courseId}/lessons/${nextLesson.lessonId}`}
+                  className={styles.nextLessonButton}
+                >
+                  {t('nextLesson')}
+                  <ChevronRight className="w-4 h-4" aria-hidden="true" />
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  className={styles.completeLessonButton}
+                  onClick={handleCompleteLesson}
+                  disabled={isSaving}
+                >
+                  {isSaving ? (
+                    <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
                   ) : (
-                    <div id="quiz-results" className={styles.quizResults}>
-                      <div className={styles.scoreCard}>
-                        <h4>{t('yourScore')}</h4>
-                        <div className={styles.scoreValue}>
-                          {quizScore}%
-                        </div>
-                        <div className={styles.scoreStatus}>
-                          {isQuizPassed ? (
-                            <><CheckCircle2 className="w-5 h-5" /> {t('quizPassed')}</>
-                          ) : (
-                            <><XCircle className="w-5 h-5" /> {t('quizFailed')}</>
-                          )}
-                        </div>
-                        {!isQuizPassed && (
-                          <p className={styles.retakeInfo}>
-                            {t('retakeInfo', { passingScore: fullLesson.quiz?.passingScore || 60 })}
-                          </p>
-                        )}
-                        {nextLesson && (
-                          <Link
-                            href={`/courses/${courseId}/lessons/${nextLesson.lessonId}`}
-                            className={styles.nextLessonButton}
-                          >
-                            <ChevronRight className="w-5 h-5" />
-                            {t('nextLesson', { title: nextLesson.title })}
-                          </Link>
-                        )}
-                        {!nextLesson && (
-                          <p className={styles.completionMessage}>
-                            {t('courseCompleted')}
-                          </p>
-                        )}
-                        <button
-                          className={styles.retakeButton}
-                          onClick={handleRetakeQuiz}
-                          style={{ marginTop: '1rem' }}
-                        >
-                          {t('retakeQuiz')}
-                        </button>
-                      </div>
-                    </div>
+                    <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
                   )}
-                </div>
-              </>
-            ) : (
-              <div className={styles.noContent}>
-                <p>{t('noQuizYet')}</p>
-              </div>
-            )}
+                  {t('finishCourse')}
+                </button>
+              )}
+            </footer>
           </div>
-        )}
-        </div>
         </div>
       </div>
     </div>
-    <AchievementToast toasts={toasts} onDismiss={dismissToast} />
-    </>
   )
 }
 
 export default LessonPage
-

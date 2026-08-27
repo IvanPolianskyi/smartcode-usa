@@ -18,8 +18,6 @@ import {
   Zap,
   Trophy,
 } from 'lucide-react'
-import { getCurriculum } from '@/lib/getCurriculum'
-import { getRobloxCurriculum } from '@/lib/robloxCurriculumLocale'
 import { markdownToHtml } from '@/lib/markdownToHtml'
 import { updateProgress } from '@/lib/authClient'
 import {
@@ -44,6 +42,7 @@ const STEPS = ['theory', 'practice', 'quiz']
 const RobloxLessonPage = ({
   lessonId,
   lesson = null,
+  curriculum: serverCurriculum = null,
   lessonContent: initialLessonContent = null,
   courseId = 'roblox-studio',
   userProgress = null,
@@ -90,11 +89,9 @@ const RobloxLessonPage = ({
   const practiceChecklistReady =
     practiceChecks.studio && practiceChecks.steps && practiceChecks.saved
 
-  const curriculum = isAiCourse
-    ? getCurriculum(courseId, locale)
-    : getRobloxCurriculum(locale)
+  const curriculum = serverCurriculum || { modules: [] }
   const allLessons = useMemo(
-    () => curriculum.modules.flatMap((m) => m.lessons),
+    () => (curriculum.modules || []).flatMap((m) => m.lessons || []),
     [curriculum]
   )
   const curriculumLesson = allLessons.find((l) => l.lessonId === lessonId)

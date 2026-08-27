@@ -5,6 +5,7 @@ import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { getLocalizedMetadata, buildAlternates } from '@/lib/i18nMetadata'
 import { isKnownCourseId } from '@/lib/courseLessonAccess'
+import { getCurriculum } from '@/lib/getCurriculum'
 
 export async function generateMetadata({ params }) {
 	const { locale, courseId } = await params
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function CoursePageRoute({ params }) {
-	const { courseId } = await params
+	const { courseId, locale } = await params
 
 	if (!isKnownCourseId(courseId)) {
 		notFound()
@@ -57,5 +58,13 @@ export default async function CoursePageRoute({ params }) {
 		console.error('Error fetching user progress:', error)
 	}
 
-	return <CoursePage courseId={courseId} userProgress={userProgress} />
+	const curriculum = getCurriculum(courseId, locale)
+
+	return (
+		<CoursePage
+			courseId={courseId}
+			userProgress={userProgress}
+			curriculum={curriculum}
+		/>
+	)
 }

@@ -13,15 +13,33 @@ export function markdownToHtml(text) {
       .replace(/'/g, '&#039;')
   }
 
+  const sanitizeUrl = (url) => {
+    if (!url) return '#'
+    const trimmed = url.trim()
+    if (/^(javascript|vbscript|data):/i.test(trimmed)) {
+      return '#'
+    }
+    return trimmed
+  }
+
   const applyInline = (line) => {
+    if (!line) return ''
     let s = line
     const codes = []
     s = s.replace(/`([^`\n]+)`/g, (_, code) => {
       const ph = `\u00A0\u00A0IC_${codes.length}\u00A0\u00A0`
-      codes.push(`<code>${code}</code>`)
+      codes.push(`<code>${escapeHtml(code)}</code>`)
       return ph
     })
-    s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+
+    // Escape HTML in the text before inserting formatting HTML
+    s = escapeHtml(s)
+
+    s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, linkText, url) => {
+      const rawUrl = url.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+      const safeUrl = sanitizeUrl(rawUrl)
+      return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${linkText}</a>`
+    })
     s = s.replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>')
     s = s.replace(/__([^_\n]+?)__/g, '<strong>$1</strong>')
     s = s.replace(/(?<!\*)\*([^*\n]+?)\*(?!\*)/g, '<em>$1</em>')
