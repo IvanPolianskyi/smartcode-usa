@@ -149,6 +149,37 @@
   padding: 0;
 }
 
+/* Accessibility: WCAG 2.4.7 / 2.4.11 Visible keyboard focus indicators */
+:focus-visible {
+  outline: 2px solid var(--brand-accent, #fc6e51);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[role="tab"]:focus-visible,
+[role="radio"]:focus-visible {
+  outline: 2px solid var(--brand-accent, #fc6e51);
+  outline-offset: 2px;
+}
+
+/* Screen reader only utility class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 html {
   /* auto = нативний momentum; smooth лише ламає Instagram / iOS WebView */
   scroll-behavior: auto;

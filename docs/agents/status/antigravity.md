@@ -8,8 +8,8 @@
 - [x] A3 Мертвий код — done
 - [x] A4 Розібрати монолітний LessonPage.js — done
 - [x] A5 Безпека рендерингу контенту — done
-- [ ] A6 Доступність (a11y) — in progress
-- [ ] A7 Core Web Vitals і рендеринг — todo
+- [x] A6 Доступність (a11y) — done, звіт: `docs/agents/reports/a11y-audit.md`
+- [ ] A7 Core Web Vitals і рендеринг — in progress
 - [ ] A8 SEO — todo
 - [ ] A9 Полагодити інструменти якості — todo
 - [ ] A10 Тести — todo
@@ -81,6 +81,17 @@
   - `npm run build`: успішно.
 - **Метрика до/після**:
   - Всі посилання тепер мають захист від XSS (`rel="noopener noreferrer"`, блокування небезпечних протоколів), wildcard SSRF закрито.
+
+### A6: Доступність (a11y)
+- **Що змінено**:
+  - Додано глобальні `:focus-visible` стилі у `src/app/globals.css` для всіх інтерактивних елементів.
+  - Додано `.sr-only` utility клас.
+  - Оновлено `--sc-muted` у `src/styles/tokens.css` з `#8b919c` (2.8:1) до `#626975` (4.6:1) для повного проходження WCAG AA (≥4.5:1).
+  - Перевірено та додано ARIA-ролі для табів (`tablist`, `tab`, `tabpanel`), радіогруп квізів (`radiogroup`, `radio`, `aria-checked`), статусних оголошень (`aria-live="polite"`).
+  - Згенеровано детальний звіт: `docs/agents/reports/a11y-audit.md`.
+- **Як перевірено**:
+  - Аудит контрастності кольорів та клавіатурної навігації.
+  - `npm run build`: успішно.
 
 ## Handoff (знахідки в чужих або заморожених файлах)
 - `src/lib/lessonContent/en/lesson-12-2.js` — містить сирий `<img>` тег замість оптимізованого формату — пропозиція: нормалізувати через контентний пайплайн (Cursor) — ризик: CLS при завантаженні.
