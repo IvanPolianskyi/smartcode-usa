@@ -25,6 +25,14 @@ function toLocalInputValue(iso) {
 	return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`
 }
 
+function addHoursLocal(localValue, hours) {
+	if (!localValue) return ''
+	const d = new Date(localValue)
+	if (Number.isNaN(d.getTime())) return ''
+	d.setHours(d.getHours() + hours)
+	return toLocalInputValue(d.toISOString())
+}
+
 function formatWhen(iso) {
 	if (!iso) return '-'
 	const d = new Date(iso)
@@ -114,6 +122,21 @@ export default function AdminLiveLessonsPage() {
 		setForm(lessonToForm(lesson))
 		setNotice('')
 		setError('')
+		if (typeof window !== 'undefined') {
+			window.scrollTo({ top: 0, behavior: 'smooth' })
+		}
+	}
+
+	function onStartsAtChange(value) {
+		setForm((f) => ({
+			...f,
+			startsAt: value,
+			// Default length: 1 hour when ending time is empty or still matches the old start+1h.
+			endsAt:
+				!f.endsAt || f.endsAt === addHoursLocal(f.startsAt, 1)
+					? addHoursLocal(value, 1)
+					: f.endsAt,
+		}))
 	}
 
 	async function handleSubmit(e) {
@@ -134,7 +157,11 @@ export default function AdminLiveLessonsPage() {
 			})
 			const json = await res.json().catch(() => ({}))
 			if (!res.ok) throw new Error(json.error || 'Save failed')
-			setNotice(editingId ? 'Lesson updated' : 'Lesson created')
+			setNotice(
+				editingId
+					? 'Lesson updated — Premium students see the new Zoom link on their dashboard.'
+					: 'Lesson created — Premium students can join from their dashboard.'
+			)
 			setEditingId(null)
 			setForm(EMPTY_FORM)
 			await load()
@@ -167,6 +194,38 @@ export default function AdminLiveLessonsPage() {
 		}
 	}
 
+	async function quickSetZoom(lesson) {
+		const next = window.prompt(
+			`Zoom / broadcast link for “${lesson.title}”`,
+			lesson.joinUrl || 'https://zoom.us/j/'
+		)
+		if (next === null) return
+		const joinUrl = next.trim()
+		if (!joinUrl) {
+			setError('Zoom link cannot be empty')
+			return
+		}
+		setBusy(true)
+		setNotice('')
+		setError('')
+		try {
+			const res = await fetch(`/api/admin/live-lessons/${lesson.id}`, {
+				method: 'PATCH',
+				credentials: 'include',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ joinUrl }),
+			})
+			const json = await res.json().catch(() => ({}))
+			if (!res.ok) throw new Error(json.error || 'Could not update Zoom link')
+			setNotice('Zoom link updated')
+			await load()
+		} catch (err) {
+			setError(err.message || 'Could not update Zoom link')
+		} finally {
+			setBusy(false)
+		}
+	}
+
 	if (sessionLoading || !user || user.role !== 'admin') {
 		return <div className={styles.loading}>Loading…</div>
 	}
@@ -188,6 +247,10 @@ export default function AdminLiveLessonsPage() {
 					<div>
 						<p className={styles.pageEyebrow}>Admin</p>
 						<h1 className={styles.pageTitle}>Live lessons</h1>
+						<p className={styles.panelHint}>
+							Pick a time, paste the Zoom (or Meet) link, save. Premium students
+							see it on <strong>/dashboard</strong> and tap Join.
+						</p>
 					</div>
 				</header>
 
@@ -197,7 +260,7 @@ export default function AdminLiveLessonsPage() {
 				<section className={styles.panel}>
 					<div className={styles.panelHead}>
 						<h2 className={styles.panelTitle}>
-							{editingId ? 'Edit lesson' : 'Add lesson'}
+							{editingId ? 'Edit lesson' : 'Schedule a live lesson'}
 						</h2>
 						{editingId ? (
 							<button type="button" className="sc-btn sc-btn-ghost" onClick={startCreate}>
@@ -243,7 +306,7 @@ export default function AdminLiveLessonsPage() {
 								type="datetime-local"
 								required
 								value={form.startsAt}
-								onChange={(e) => setForm((f) => ({ ...f, startsAt: e.target.value }))}
+								onChange={(e) => onStartsAtChange(e.target.value)}
 							/>
 						</label>
 						<label className={styles.field}>
@@ -257,17 +320,18 @@ export default function AdminLiveLessonsPage() {
 							/>
 						</label>
 						<label className={styles.field}>
-							Join URL
+							Zoom / broadcast link
 							<input
 								className={styles.input}
 								type="url"
+								required
 								value={form.joinUrl}
 								onChange={(e) => setForm((f) => ({ ...f, joinUrl: e.target.value }))}
-								placeholder="https://zoom.us/j/…"
+								placeholder="https://zoom.us/j/123456789"
 							/>
 						</label>
 						<label className={styles.field}>
-							YouTube recording
+							YouTube recording (optional, after the class)
 							<input
 								className={styles.input}
 								type="url"
@@ -277,7 +341,7 @@ export default function AdminLiveLessonsPage() {
 							/>
 						</label>
 						<button type="submit" className="sc-btn sc-btn-primary" disabled={busy}>
-							{busy ? 'Saving…' : editingId ? 'Save changes' : 'Create lesson'}
+							{busy ? 'Saving…' : editingId ? 'Save changes' : 'Publish lesson'}
 						</button>
 					</form>
 				</section>
@@ -297,6 +361,7 @@ export default function AdminLiveLessonsPage() {
 											<th>When</th>
 											<th>Title</th>
 											<th>Program</th>
+											<th>Zoom</th>
 											<th>Recording</th>
 											<th />
 										</tr>
@@ -314,6 +379,20 @@ export default function AdminLiveLessonsPage() {
 												<td>{lesson.title}</td>
 												<td>{lesson.courseLabel}</td>
 												<td>
+													{lesson.joinUrl ? (
+														<a
+															href={lesson.joinUrl}
+															target="_blank"
+															rel="noopener noreferrer"
+															className={styles.rowLink}
+														>
+															Open Zoom
+														</a>
+													) : (
+														'-'
+													)}
+												</td>
+												<td>
 													{lesson.youtubeUrl ? (
 														<a
 															href={lesson.youtubeUrl}
@@ -328,6 +407,14 @@ export default function AdminLiveLessonsPage() {
 													)}
 												</td>
 												<td>
+													<button
+														type="button"
+														className="sc-btn sc-btn-ghost"
+														disabled={busy}
+														onClick={() => quickSetZoom(lesson)}
+													>
+														Set Zoom
+													</button>{' '}
 													<button
 														type="button"
 														className="sc-btn sc-btn-ghost"

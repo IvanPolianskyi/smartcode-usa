@@ -1,9 +1,8 @@
 'use client'
 
 import { Suspense, useState } from 'react'
-import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
-import StickyNav from '@/components/Nav/StickyNav'
+import SiteHeader from '@/components/Nav/SiteHeader'
 import { Link } from '@/i18n/navigation'
 import { Eye, EyeOff } from 'lucide-react'
 import styles from '../login/Auth.module.css'
@@ -155,32 +154,7 @@ function ResetPasswordForm() {
 export default function ResetPasswordPage() {
 	return (
 		<div className={styles.page} data-theme="light">
-			<StickyNav
-				className={styles.nav}
-				innerClassName={styles.navInner}
-				brand={
-					<Link href="/" className={styles.wordmark} aria-label="SmartCode home">
-						<Image
-							src="/logo.jpeg"
-							alt=""
-							width={30}
-							height={30}
-							className={styles.mark}
-							priority
-						/>
-						SmartCode
-					</Link>
-				}
-			>
-				<div className={styles.navLinks}>
-					<Link href="/login" className={styles.navLink}>
-						Log in
-					</Link>
-					<Link href="/register" className="sc-btn sc-btn-primary">
-						Create account
-					</Link>
-				</div>
-			</StickyNav>
+			<SiteHeader />
 
 			<main className={styles.main}>
 				<Suspense fallback={<div className={styles.panel}><p>Loading…</p></div>}>

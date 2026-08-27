@@ -21,77 +21,6 @@
 	color-scheme: light;
 }
 
-.topBar {
-	position: sticky;
-	top: 0;
-	z-index: 20;
-	padding: 16px 20px 0;
-	display: flex;
-	justify-content: center;
-	background: transparent;
-}
-
-.nav {
-	width: min(100%, calc(var(--legal-shell) + 4rem));
-	padding: 10px 12px 10px 16px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 1rem;
-	background: color-mix(in srgb, var(--legal-elev) 92%, transparent);
-	border: 1px solid var(--legal-border);
-	border-radius: 9999px;
-	backdrop-filter: blur(16px);
-	box-shadow: 0 8px 28px rgba(20, 21, 26, 0.08);
-}
-
-.brand {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.75rem;
-	color: var(--legal-text);
-	text-decoration: none;
-	font-weight: 700;
-	font-size: 1.35rem;
-	letter-spacing: -0.025em;
-}
-
-.mark {
-	width: 40px;
-	height: 40px;
-	border-radius: 10px;
-	display: block;
-	object-fit: cover;
-}
-
-.navLinks {
-	display: flex;
-	align-items: center;
-	gap: 0.25rem;
-	flex-wrap: wrap;
-	justify-content: flex-end;
-}
-
-.navLink {
-	padding: 0.45rem 0.85rem;
-	border-radius: 9999px;
-	color: var(--legal-muted);
-	text-decoration: none;
-	font-size: 0.875rem;
-	font-weight: 500;
-	transition: color 0.15s ease, background 0.15s ease;
-}
-
-.navLink:hover {
-	color: var(--legal-text);
-	background: rgba(20, 21, 26, 0.04);
-}
-
-.navLink[aria-current='page'] {
-	color: var(--legal-text);
-	background: rgba(20, 21, 26, 0.06);
-}
-
 .main {
 	flex: 1;
 	padding: 2.5rem 1.5rem 4rem;
@@ -121,6 +50,33 @@
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 	color: var(--legal-accent);
+}
+
+.docSwitch {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem;
+	margin: 0 0 1.1rem;
+}
+
+.docSwitchLink {
+	padding: 0.4rem 0.85rem;
+	border-radius: 9999px;
+	color: var(--legal-muted);
+	text-decoration: none;
+	font-size: 0.875rem;
+	font-weight: 500;
+	transition: color 0.15s ease, background 0.15s ease;
+}
+
+.docSwitchLink:hover {
+	color: var(--legal-text);
+	background: rgba(20, 21, 26, 0.04);
+}
+
+.docSwitchLink[aria-current='page'] {
+	color: var(--legal-text);
+	background: rgba(20, 21, 26, 0.06);
 }
 
 .title {

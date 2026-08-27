@@ -99,7 +99,16 @@ export function parseLiveLessonBody(body, opts = {}) {
 
 	if (!partial || body.joinUrl !== undefined) {
 		const joinUrl = String(body?.joinUrl || '').trim()
-		data.joinUrl = joinUrl || DEFAULT_JOIN_URL
+		if (!joinUrl) {
+			return { error: 'Zoom / broadcast join URL is required' }
+		}
+		if (!/^https?:\/\//i.test(joinUrl)) {
+			return { error: 'joinUrl must be an http(s) URL (e.g. https://zoom.us/j/…)' }
+		}
+		if (joinUrl.length > 500) {
+			return { error: 'joinUrl is too long' }
+		}
+		data.joinUrl = joinUrl
 	}
 
 	if (!partial || body.youtubeUrl !== undefined) {

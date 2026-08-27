@@ -22,7 +22,11 @@ import { getCurriculum } from '@/lib/getCurriculum'
 import { getRobloxCurriculum } from '@/lib/robloxCurriculumLocale'
 import { ROBOX_PHASES } from '@/lib/robloxModuleMeta'
 import { getUserProgress, checkCoursePurchase } from '@/lib/authClient'
-import { getUnlockedLessonSet, hasStudentCourseAccess } from '@/lib/courseLessonAccess'
+import {
+  getUnlockedLessonSet,
+  hasStudentCourseAccess,
+  resolveDripStartedAt,
+} from '@/lib/courseLessonAccess'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import SiteHeader from '@/components/Nav/SiteHeader'
 import styles from './CoursePage.module.css'
@@ -184,10 +188,7 @@ const CoursePage = ({ courseId = "python-developer-zero-to-junior", userProgress
             ? user.subscribedCourseIds.includes(courseId)
             : user?.subscriptionActive === true),
         isEnrolled,
-        dripStartedAt:
-          userProgress?.enrolledAt ||
-          user?.courseDripStartedAt?.[courseId] ||
-          null,
+        dripStartedAt: resolveDripStartedAt(user, courseId, userProgress),
       }),
     [
       courseId,

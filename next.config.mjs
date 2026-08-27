@@ -51,6 +51,14 @@ const nextConfig = {
         source,
         headers: [{ key: 'Cache-Control', value: IMMUTABLE_CACHE }],
       })),
+      // Apple Pay domain association — must be publicly readable, no HTML wrapper
+      {
+        source: '/.well-known/apple-developer-merchantid-domain-association',
+        headers: [
+          { key: 'Content-Type', value: 'text/plain; charset=utf-8' },
+          { key: 'Cache-Control', value: 'public, max-age=86400' },
+        ],
+      },
       // Security headers for all routes
       {
         source: '/:path*',

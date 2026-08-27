@@ -85,10 +85,25 @@ export default function AdminPanelPage() {
 						<p className={styles.pageEyebrow}>Admin</p>
 						<h1 className={styles.pageTitle}>Students &amp; subscriptions</h1>
 					</div>
-					<Link href="/admin/live-lessons" className="sc-btn sc-btn-ghost">
-						Live lessons
+					<Link href="/admin/live-lessons" className="sc-btn sc-btn-primary">
+						Live lessons · Zoom
 					</Link>
 				</header>
+
+				<section className={styles.panel}>
+					<div className={styles.panelHead}>
+						<div>
+							<h2 className={styles.panelTitle}>Premium live lessons</h2>
+							<p className={styles.panelHint}>
+								Set the time and paste the Zoom link — Premium students see it on
+								their dashboard and join with one click.
+							</p>
+						</div>
+						<Link href="/admin/live-lessons" className="sc-btn sc-btn-ghost">
+							Open calendar
+						</Link>
+					</div>
+				</section>
 
 				{error ? <p className={styles.error}>{error}</p> : null}
 

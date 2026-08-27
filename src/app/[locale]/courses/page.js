@@ -14,6 +14,7 @@ import { getUserProgress } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import { useCoursesListData } from '@/hooks/useCoursesListData'
 import { KNOWN_COURSE_IDS } from '@/lib/courseLessonAccess'
+import SiteHeader from '@/components/Nav/SiteHeader'
 import styles from './CoursesPage.module.css'
 
 export default function CoursesPage() {
@@ -55,6 +56,7 @@ export default function CoursesPage() {
 
 	return (
 		<div className={styles.container}>
+			<SiteHeader />
 			<section className={styles.heroSection}>
 				<div className={styles.heroContent}>
 					<div className={styles.breadcrumb}>

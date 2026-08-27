@@ -115,6 +115,14 @@
 	font-weight: 700;
 }
 
+.panelHint {
+	margin: 0.35rem 0 0;
+	max-width: 42rem;
+	font-size: var(--sc-text-sm, 0.875rem);
+	line-height: 1.45;
+	color: var(--sc-muted, #8b919c);
+}
+
 .searchInput {
 	width: min(280px, 100%);
 	padding: 0.55rem 0.8rem;

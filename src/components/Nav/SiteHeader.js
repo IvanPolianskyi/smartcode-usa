@@ -2,17 +2,11 @@
 
 import Image from 'next/image'
 import { LogOut } from 'lucide-react'
-import { Link, usePathname } from '@/i18n/navigation'
+import { Link } from '@/i18n/navigation'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import StickyNav from '@/components/Nav/StickyNav'
 import HomeNavAuth from '@/components/Nav/HomeNavAuth'
 import styles from './SiteHeader.module.css'
-
-function accountLabel(user) {
-	const name = String(user?.name || '').trim()
-	if (name) return name.split(/\s+/)[0]
-	return String(user?.email || '').split('@')[0] || 'Account'
-}
 
 function Brand({ href, asAnchor }) {
 	const content = (
@@ -45,7 +39,11 @@ function Brand({ href, asAnchor }) {
 	)
 }
 
-function MarketingActions({ ctaHref, ctaAsAnchor }) {
+/**
+ * Same action cluster everywhere: Pricing · Contact · account · optional CTA/logout.
+ * Matches the homepage pill header in both guest and signed-in states.
+ */
+function NavActions({ ctaHref, ctaAsAnchor, onLogout }) {
 	const { user, loading } = useAuthSession()
 	const showCta = !loading && !user
 
@@ -69,40 +67,14 @@ function MarketingActions({ ctaHref, ctaAsAnchor }) {
 			<Link href="/contact" className={styles.quiet}>
 				Contact
 			</Link>
+			{!loading && user?.role === 'admin' ? (
+				<Link href="/admin" className={styles.quiet}>
+					Admin
+				</Link>
+			) : null}
 			<HomeNavAuth />
 			{cta}
-		</>
-	)
-}
-
-function LmsActions({ onLogout }) {
-	const { user, loading } = useAuthSession()
-	const pathname = usePathname()
-	const onDashboard = pathname === '/dashboard'
-
-	if (loading) return <span aria-hidden="true" />
-
-	if (!user) {
-		return <MarketingActions ctaHref="/#programs" />
-	}
-
-	const label = accountLabel(user)
-
-	return (
-		<>
-			<Link
-				href="/dashboard"
-				className={styles.account}
-				aria-label="Open your account"
-				aria-current={onDashboard ? 'page' : undefined}
-				title={`${user.name || user.email} - open your account`}
-			>
-				<span className={styles.avatar} aria-hidden="true">
-					{label.charAt(0).toUpperCase()}
-				</span>
-				<span className={styles.accountName}>{label}</span>
-			</Link>
-			{typeof onLogout === 'function' ? (
+			{!loading && user && typeof onLogout === 'function' ? (
 				<button type="button" className={styles.logout} onClick={onLogout}>
 					<LogOut size={15} aria-hidden />
 					Log out
@@ -113,26 +85,29 @@ function LmsActions({ onLogout }) {
 }
 
 /**
- * Shared pill header for marketing surfaces (home, pricing, plans).
- * Auth, legal, and LMS keep their own chrome.
+ * Shared floating pill header for every public/LMS surface.
  *
- * @param {'home' | 'marketing' | 'lms'} variant
+ * @param {'home' | 'marketing' | 'lms'} [variant]
+ *   `home` keeps in-page anchors (#top / #programs). Other variants link home.
+ * @param {(() => void) | null} [onLogout]
+ *   When set (dashboard), shows Log out next to the account chip.
  */
-export default function SiteHeader({ variant = 'marketing', onLogout = null, children = null }) {
+export default function SiteHeader({
+	variant = 'marketing',
+	onLogout = null,
+	children = null,
+}) {
 	const isHome = variant === 'home'
 	const brandHref = isHome ? '#top' : '/'
 	const ctaHref = isHome ? '#programs' : '/#programs'
 
-	let actions = children
-	if (!actions) {
-		if (variant === 'lms') {
-			actions = <LmsActions onLogout={onLogout} />
-		} else {
-			actions = (
-				<MarketingActions ctaHref={ctaHref} ctaAsAnchor={isHome} />
-			)
-		}
-	}
+	const actions = children || (
+		<NavActions
+			ctaHref={ctaHref}
+			ctaAsAnchor={isHome}
+			onLogout={onLogout}
+		/>
+	)
 
 	return (
 		<StickyNav

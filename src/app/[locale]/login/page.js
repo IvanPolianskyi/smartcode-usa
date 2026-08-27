@@ -1,12 +1,11 @@
 'use client'
 
 import { Suspense, useEffect, useMemo, useState } from 'react'
-import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Check, Eye, EyeOff } from 'lucide-react'
 import { login } from '@/lib/authClient'
 import { normalizeLoginIdentifier } from '@/lib/authLogin'
-import StickyNav from '@/components/Nav/StickyNav'
+import SiteHeader from '@/components/Nav/SiteHeader'
 import { Link } from '@/i18n/navigation'
 import styles from './Auth.module.css'
 
@@ -234,39 +233,10 @@ function LoginForm() {
 	)
 }
 
-function AuthBrand() {
-	return (
-		<Link href="/" className={styles.wordmark} aria-label="SmartCode home">
-			<Image
-				src="/logo.jpeg"
-				alt=""
-				width={30}
-				height={30}
-				className={styles.mark}
-				priority
-			/>
-			SmartCode
-		</Link>
-	)
-}
-
 export default function LoginPage() {
 	return (
 		<div className={styles.page} data-theme="light">
-			<StickyNav
-				className={styles.nav}
-				innerClassName={styles.navInner}
-				brand={<AuthBrand />}
-			>
-				<div className={styles.navLinks}>
-					<Link href="/register" className={styles.navLink}>
-						Create account
-					</Link>
-					<Link href="/login" className="sc-btn sc-btn-primary">
-						Log in
-					</Link>
-				</div>
-			</StickyNav>
+			<SiteHeader />
 
 			<main className={styles.main}>
 				<div className={styles.shell}>

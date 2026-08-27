@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import { LEGAL } from '@/lib/legalConfig'
+import SiteHeader from '@/components/Nav/SiteHeader'
 import styles from './LegalDoc.module.css'
 
 const DOCS = [
@@ -30,38 +30,24 @@ export function LegalDoc({
 
 	return (
 		<div className={styles.page} data-theme="light">
-			<header className={styles.topBar}>
-				<nav className={styles.nav} aria-label="Primary">
-					<Link href="/" className={styles.brand}>
-						<Image
-							src="/logo.jpeg"
-							alt=""
-							width={40}
-							height={40}
-							className={styles.mark}
-							priority
-						/>
-						SmartCode
-					</Link>
-					<div className={styles.navLinks} aria-label="Legal documents">
-						{DOCS.map((doc) => (
-							<Link
-								key={doc.href}
-								href={doc.href}
-								className={styles.navLink}
-								aria-current={active === doc.href ? 'page' : undefined}
-							>
-								{doc.label}
-							</Link>
-						))}
-					</div>
-				</nav>
-			</header>
+			<SiteHeader />
 
 			<main className={styles.main}>
 				<article className={styles.doc}>
 					<header className={styles.header}>
 						<p className={styles.kicker}>Legal</p>
+						<nav className={styles.docSwitch} aria-label="Legal documents">
+							{DOCS.map((doc) => (
+								<Link
+									key={doc.href}
+									href={doc.href}
+									className={styles.docSwitchLink}
+									aria-current={active === doc.href ? 'page' : undefined}
+								>
+									{doc.label}
+								</Link>
+							))}
+						</nav>
 						<h1 className={styles.title}>{title}</h1>
 						{intro ? <p className={styles.summary}>{intro}</p> : null}
 						<p className={styles.updated}>Last updated: {dated}</p>

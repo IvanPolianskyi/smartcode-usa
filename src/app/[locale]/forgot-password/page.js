@@ -1,8 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
-import StickyNav from '@/components/Nav/StickyNav'
+import SiteHeader from '@/components/Nav/SiteHeader'
 import { Link } from '@/i18n/navigation'
 import styles from '../login/Auth.module.css'
 
@@ -42,32 +41,7 @@ export default function ForgotPasswordPage() {
 
 	return (
 		<div className={styles.page} data-theme="light">
-			<StickyNav
-				className={styles.nav}
-				innerClassName={styles.navInner}
-				brand={
-					<Link href="/" className={styles.wordmark} aria-label="SmartCode home">
-						<Image
-							src="/logo.jpeg"
-							alt=""
-							width={30}
-							height={30}
-							className={styles.mark}
-							priority
-						/>
-						SmartCode
-					</Link>
-				}
-			>
-				<div className={styles.navLinks}>
-					<Link href="/login" className={styles.navLink}>
-						Log in
-					</Link>
-					<Link href="/register" className="sc-btn sc-btn-primary">
-						Create account
-					</Link>
-				</div>
-			</StickyNav>
+			<SiteHeader />
 
 			<main className={styles.main}>
 				<div className={styles.panel}>

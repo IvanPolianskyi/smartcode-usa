@@ -56,7 +56,7 @@ function LessonRow({ lesson, mode }) {
 						className={styles.primaryBtn}
 					>
 						<Video size={15} aria-hidden />
-						Join
+						Join Zoom
 					</a>
 				) : lesson.youtubeUrl ? (
 					<a

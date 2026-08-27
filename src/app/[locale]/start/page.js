@@ -1,9 +1,8 @@
 'use client'
 
 import { Suspense, useEffect, useMemo, useState } from 'react'
-import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
-import StickyNav from '@/components/Nav/StickyNav'
+import SiteHeader from '@/components/Nav/SiteHeader'
 import { Link } from '@/i18n/navigation'
 import { programForCourseId } from '@/lib/billingCatalog'
 import { LEGAL } from '@/lib/legalConfig'
@@ -191,39 +190,10 @@ function StartFlow() {
 	)
 }
 
-function AuthBrand() {
-	return (
-		<Link href="/" className={styles.wordmark} aria-label="SmartCode home">
-			<Image
-				src="/logo.jpeg"
-				alt=""
-				width={30}
-				height={30}
-				className={styles.mark}
-				priority
-			/>
-			SmartCode
-		</Link>
-	)
-}
-
 export default function StartPage() {
 	return (
 		<div className={styles.page} data-theme="light">
-			<StickyNav
-				className={styles.nav}
-				innerClassName={styles.navInner}
-				brand={<AuthBrand />}
-			>
-				<div className={styles.navLinks}>
-					<Link href="/login" className={styles.navLink}>
-						Log in
-					</Link>
-					<Link href="/register" className="sc-btn sc-btn-primary">
-						Create account
-					</Link>
-				</div>
-			</StickyNav>
+			<SiteHeader />
 
 			<main className={styles.main}>
 				<Suspense fallback={<div className={styles.panel} />}>

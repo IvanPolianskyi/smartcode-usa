@@ -5,7 +5,14 @@ import { routing } from './i18n/routing'
 const intlMiddleware = createMiddleware(routing)
 
 // Static asset folders - skip locale rewrite (matcher already excludes /api).
-const SKIP_PREFIXES = ['/uploads', '/logos', '/comments', '/tiktoklogo', '/referral']
+const SKIP_PREFIXES = [
+	'/uploads',
+	'/logos',
+	'/comments',
+	'/tiktoklogo',
+	'/referral',
+	'/.well-known',
+]
 
 function shouldSkip(pathname) {
 	if (SKIP_PREFIXES.some((p) => pathname.startsWith(p))) return true
