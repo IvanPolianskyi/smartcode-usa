@@ -86,7 +86,7 @@ def outer():
 outer()  # Will display: "outer"
 \`\`\`
 
-**G: Global (Глобальна)**
+**G: Global**
 - Variables defined at the module (file) level
 - Accessible anywhere within the module
 

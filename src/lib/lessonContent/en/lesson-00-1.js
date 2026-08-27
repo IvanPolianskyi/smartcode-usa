@@ -1,6 +1,8 @@
 /**
- * Lesson 00-1: Introduction to Python. Setup and First Program
- * Full educational content
+ * Lesson 00-1: Introduction to Python. Setup and Your First Program
+ *
+ * Title matches pythonCurriculum.js exactly - the sidebar reads from the
+ * curriculum and the <h1> reads from here, so they must not drift.
  */
 
 import { QUIZ_QUESTION_TYPES } from '../../courseData'
@@ -9,245 +11,347 @@ export const lesson_00_1 = {
   lessonId: "lesson-00-1",
   moduleId: "module-00",
   order: 1,
-  title: "Introduction to Python. Setup and First Program",
-  
+  title: "Introduction to Python. Setup and Your First Program",
+
   learningObjectives: [
-    "Understand what Python is and its advantages",
-    "Install Python and set up your environment",
-    "Write your first 'Hello, World!' program",
-    "Get familiar with the Python interpreter"
+    "Run your first Python program without installing anything",
+    "Use print() to make a program say something",
+    "Read an error message instead of fearing it",
+    "Install Python locally for work outside the browser"
   ],
-  
+
   prerequisites: [],
-  
+
   videoUrl: "",
-  
+
   theory: {
     sections: [
       {
-        title: "What is Python?",
-        content: `Python is a modern high-level programming language created by Guido van Rossum in 1991. The name comes from the comedy show "Monty Python's Flying Circus," but the language itself is serious and powerful.
+        title: "Your first program, right now",
+        content: `Most courses open with twenty minutes of installation. Not this one.
 
-**Why is Python so popular?**
+Every code box in these lessons runs **real Python** in your browser. Same language, same rules, same error messages as the Python that runs Instagram and Spotify. Nothing to download, nothing to configure.
 
-1. **Readability**: Python code reads almost like English
-2. **Versatility**: Python is used for:
-   - Web development (Django, Flask)
-   - Scientific computing (Data Science, AI)
-   - Task automation
-   - Game development
-   - Working with data
-3. **Large community**: Millions of developers worldwide
-4. **Free**: Python is completely free and open source
+So let's skip the theory and write a program.
 
-**Where is Python used?**
-- YouTube, Instagram, Spotify - built with Python
-- Google, NASA, Netflix - use Python
-- Artificial intelligence and machine learning
-- Automation and scripting`
-      },
-      {
-        title: "Installing Python",
-        content: `**Step 1: Download Python**
-
-1. Go to the official website: https://www.python.org/downloads/
-2. Download the latest Python 3.x version (3.11 or newer recommended)
-3. During installation, make sure to check "Add Python to PATH"
-
-**Step 2: Verify the installation**
-
-Open Command Prompt (Windows) or Terminal (Mac/Linux) and enter:
-
-\`\`\`bash
-python --version
-\`\`\`
-
-Or:
-
-\`\`\`bash
-python3 --version
-\`\`\`
-
-You should see something like: \`Python 3.11.5\`
-
-**Step 3: Install a code editor**
-
-Recommended editors:
-- **VS Code** (Visual Studio Code) - free and popular
-- **PyCharm** - a powerful IDE for Python
-- **Sublime Text** - lightweight and fast
-
-For beginners, we recommend VS Code.`
-      },
-      {
-        title: "First program: Hello, World!",
-        content: `A programming tradition is to start with a program that prints "Hello, World!". This is the simplest program that confirms everything works correctly.
-
-**Creating the file:**
-
-1. Open your code editor
-2. Create a new file named \`hello.py\`
-3. Write the following code:
+The \`print()\` function shows something on screen. Whatever you put between the brackets, Python prints:
 
 \`\`\`python
 print("Hello, World!")
 \`\`\`
 
-Save the file
+Text goes in quotes. \`"Hello, World!"\` is called a **string** - a piece of text. The quotes are not part of the message; they are how you tell Python "this is text, not a command."
 
-**Running the program:**
-
-**Option 1: From the command line**
-\`\`\`bash
-python hello.py
-\`\`\`
-
-**Option 2: In VS Code**
-- Right-click the file
-- Select "Run Python File in Terminal"
-
-**Result:**
-You will see in the terminal:
-\`\`\`
-Hello, World!
-\`\`\`
-
-Congratulations! You have written your first Python program!`
+Press **Run** below and watch it happen. Then change the name to yours and run it again.`,
+        interactives: [
+          {
+            id: 'hello',
+            type: 'tryIt',
+            prompt: 'Change the text to your own name, then run it.',
+            starterCode: 'print("Hello, World!")',
+            expect: { mustMatch: '\\S' },
+            hint: 'Keep the quotes and the brackets - only change the words inside.',
+          },
+        ],
       },
       {
-        title: "Working with the Python interpreter",
-        content: `Python has an interactive mode (REPL - Read-Eval-Print Loop) where you can run code immediately without creating files.
-
-**Starting interactive mode:**
-
-Open the command line and enter:
-\`\`\`bash
-python
-\`\`\`
-
-Or:
-\`\`\`bash
-python3
-\`\`\`
-
-You will see something like:
-\`\`\`
-Python 3.11.5 (main, ...)
-Type "help", "copyright", "credits" or "license" for more information.
->>>
-\`\`\`
-
-**The \`>>>\` symbol** is a prompt showing that Python is ready to accept commands.
-
-**Usage examples:**
+        title: "How print() is built",
+        content: `That one line has four separate pieces, and every one of them matters:
 
 \`\`\`python
->>> print("Hello, Python!")
-Hello, Python!
+print("Hello, World!")
+#  ^      ^         ^
+#  |      |         |
+#  |      |         closing bracket
+#  |      the text, wrapped in quotes
+#  the function name
+\`\`\`
 
+1. **\`print\`** - the name of the function. Lowercase. \`Print\` or \`PRINT\` will not work.
+2. **\`(\` and \`)\`** - the brackets. They mean "call this function".
+3. **\`"\` and \`"\`** - the quotes. They mark where the text starts and ends.
+4. Everything in between - the message.
+
+Single quotes work exactly the same as double quotes:
+
+\`\`\`python
+print('Hello')     # fine
+print("Hello")     # also fine
+print("Hello')     # error - the quotes must match
+\`\`\`
+
+Use whichever you like, but open and close with the same one.`,
+        interactives: [
+          {
+            id: 'print-blanks',
+            type: 'fillBlank',
+            prompt: 'Complete the line so it prints the word Python. The text needs its quotes.',
+            template: '{{fn}}({{text}})',
+            blanks: [
+              { id: 'fn', answer: 'print', width: 7, placeholder: 'function' },
+              {
+                id: 'text',
+                answer: '"Python"',
+                accept: ['"Python"', "'Python'"],
+                width: 12,
+                placeholder: 'the text',
+              },
+            ],
+            explanation: 'print, then brackets, then the text wrapped in matching quotes.',
+            hint: 'The function name is lowercase, and the text needs quotes around it.',
+          },
+        ],
+      },
+      {
+        title: "One print, one line",
+        content: `Each \`print()\` puts its output on its own line. Python does not squash them together:
+
+\`\`\`python
+print("Line one")
+print("Line two")
+\`\`\`
+
+gives you
+
+\`\`\`
+Line one
+Line two
+\`\`\`
+
+Code runs **top to bottom**, one line at a time. The first \`print()\` finishes completely before the second one starts. That order is not a detail you can ignore - it is the single most important rule in programming, and it will explain most of the bugs you write this year.
+
+Before you run the next one, decide in your head what it will print. Guessing first is how you find out what you actually believe.`,
+        interactives: [
+          {
+            id: 'guess-order',
+            type: 'predictOutput',
+            prompt: 'What does this print?',
+            code: 'print("Ready")\nprint("Set")\nprint("Go")',
+            options: [
+              'Ready Set Go',
+              'Ready\nSet\nGo',
+              'Go\nSet\nReady',
+              'Nothing - three prints in a row is an error',
+            ],
+            correctAnswer: 1,
+            explanation:
+              'Three separate print() calls, so three separate lines - in the order they are written.',
+          },
+        ],
+      },
+      {
+        title: "Comments: notes Python ignores",
+        content: `Anything after a \`#\` on a line is a **comment**. Python skips it entirely.
+
+\`\`\`python
+# This line does nothing at all
+print("Visible")     # this bit is ignored too
+\`\`\`
+
+Comments are for humans - the you of next month, who will not remember why this code looks like that. They cost nothing and they are not decoration: a comment that explains *why* is worth ten that explain *what*.
+
+\`\`\`python
+# Bad: says what the code already says
+print("Hi")     # prints Hi
+
+# Good: says something the code cannot
+print("Hi")     # greeting shown before the menu loads
+\`\`\`
+
+Commenting a line out is also the fastest debugging tool there is - put a \`#\` in front and Python pretends the line was never written.`,
+        interactives: [
+          {
+            id: 'guess-comment',
+            type: 'predictOutput',
+            prompt: 'Careful - what actually reaches the screen?',
+            code: '# print("First")\nprint("Second")  # print("Third")',
+            options: [
+              'First\nSecond\nThird',
+              'Second\nThird',
+              'Second',
+              'Nothing',
+            ],
+            correctAnswer: 2,
+            explanation:
+              'The first line is commented out, and the trailing comment on line 2 is ignored too. Only "Second" survives.',
+          },
+        ],
+      },
+      {
+        title: "Errors are information, not failure",
+        content: `You will write broken code today. Everyone does. Python does not punish you for it - it tells you what went wrong and where.
+
+Miss a closing bracket and you get:
+
+\`\`\`
+SyntaxError: '(' was never closed
+\`\`\`
+
+Misspell the function and you get:
+
+\`\`\`
+NameError: name 'prnt' is not defined
+\`\`\`
+
+Read the **last line** first - that is the actual problem. The rest is Python showing its work.
+
+The three you will meet this week:
+
+| Error | What it usually means |
+|---|---|
+| \`SyntaxError\` | A typo: missing bracket, missing quote, stray character |
+| \`NameError\` | You used a name Python has never seen (often a misspelling) |
+| \`TypeError\` | You did something to a value its type does not allow |
+
+Break the code below on purpose - delete a bracket, misspell \`print\` - and read what comes back. Getting comfortable with error messages now saves you hours later.`,
+        interactives: [
+          {
+            id: 'break-it',
+            type: 'tryIt',
+            prompt: 'Break it deliberately, read the error, then fix it so it runs again.',
+            starterCode: '# Try: remove a bracket, or misspell print, then run.\n# Then put it back and run again.\nprint("It works")',
+            expect: { mustContain: ['it works'] },
+            hint: 'To finish this block, get it back to a working state that prints "It works".',
+          },
+        ],
+      },
+      {
+        title: "Installing Python on your machine",
+        content: `The browser is enough for this whole module. When you want to build things that live outside a lesson page - scripts, bots, real projects - you will want Python installed locally.
+
+**1. Download**
+
+Go to [python.org/downloads](https://www.python.org/downloads/) and take the latest 3.x release.
+
+**2. Tick the box**
+
+On Windows the installer shows a checkbox: **"Add python.exe to PATH"**. Tick it. If you skip it, your terminal will not find Python and you will spend an evening confused about why.
+
+**3. Check it worked**
+
+Open Command Prompt (Windows) or Terminal (macOS/Linux):
+
+\`\`\`bash
+python --version
+\`\`\`
+
+If that says "command not found", try \`python3 --version\` - on macOS and Linux, \`python3\` is usually the right name.
+
+You should see something like \`Python 3.12.5\`.
+
+**4. Get an editor**
+
+[VS Code](https://code.visualstudio.com/) is free, and its Python extension gives you highlighting and error hints as you type. That is the one to start with.
+
+**The interactive shell**
+
+Typing \`python\` on its own opens a prompt where each line runs as you press Enter:
+
+\`\`\`
+>>> print("Hello")
+Hello
 >>> 2 + 2
 4
-
->>> print("This is my first Python code!")
-This is my first Python code!
 \`\`\`
 
-**Exiting interactive mode:**
+The \`>>>\` means Python is waiting for you. It is perfect for testing one small thing - notice that \`2 + 2\` printed \`4\` without any \`print()\`, which only happens in the shell. Type \`exit()\` to leave.
 
-Enter:
-\`\`\`python
->>> exit()
-\`\`\`
-
-Or press \`Ctrl+Z\` (Windows) or \`Ctrl+D\` (Mac/Linux)
-
-**When to use interactive mode:**
-- Quick code testing
-- Experimenting with Python
-- Learning and exploration
-
-**When to use files:**
-- Building real programs
-- Saving code for later use
-- Projects you need to run many times`
+Use the shell to try things. Use files for anything you want to keep.`,
       },
-      {
-        title: "Python program structure",
-        content: `Let's look at the basic structure of a Python program:
-
-\`\`\`python
-# This is a comment - Python ignores everything after the # symbol
-
-# Importing modules (we will cover this in more detail later)
-import math
-
-# Comments explain the code
-# This is just an example of program structure
-
-# Running code
-print("Hello! This is my first Python program")
-
-# Simple output
-print("Python is a great programming language!")
-\`\`\`
-
-**Key points:**
-
-1. **Comments** start with \`#\` - they help explain the code
-2. **The print() function** displays information on the screen
-3. **Code runs from top to bottom**, line by line
-
-**Code style:**
-
-Python follows the philosophy that "beautiful code is readable code." It is important to:
-- Use indentation (4 spaces)
-- Write clear code
-- Add comments where needed`
-      }
     ]
   },
-  
-  commonMistakes: [
+
+  codeExamples: [
     {
-      mistake: "Forgetting to add Python to PATH during installation",
-      explanation: "Without this, Python will not be available from the command line, and you will not be able to run programs.",
-      correctApproach: "During Python installation, always check the 'Add Python to PATH' box."
+      title: "Example 1: A program that says several things",
+      code: `print("Welcome!")
+print("This is Python.")
+print("Let's build something.")`,
+      explanation:
+        "Three print() calls run top to bottom and produce three lines, in exactly that order."
     },
     {
-      mistake: "Using mismatched quotes",
-      explanation: "Python distinguishes between single (') and double (\") quotes, but they must come in matching pairs.",
-      correctApproach: "Use matching quotes: print('Hello') or print(\\\"Hello\\\"), but not print('Hello\\\")."
+      title: "Example 2: Both kinds of quotes",
+      code: `print("Double quotes work")
+print('Single quotes work too')
+print("It's easier to use double quotes when the text has an apostrophe")`,
+      explanation:
+        "Pick either quote style. Double quotes save you from escaping an apostrophe inside the text."
     },
     {
-      mistake: "Problematic file names",
-      explanation: "File names with spaces or special characters can cause problems.",
-      correctApproach: "Use simple names: hello.py, my_program.py (not 'my program.py' or 'my-program.py')."
+      title: "Example 3: Blank lines and spacing",
+      code: `print("First block")
+print()
+print("Second block")`,
+      explanation:
+        "print() with nothing inside prints an empty line - a cheap way to space out output."
     },
     {
-      mistake: "Forgetting to save the file before running",
-      explanation: "If the file is not saved, an older version of the code is run.",
-      correctApproach: "Always save the file (Ctrl+S) before running the program."
+      title: "Example 4: Comments in real use",
+      code: `# Shown to the player when the game starts
+print("=== SPACE ADVENTURE ===")
+print("Press any key to begin")
+
+# print("DEBUG: menu loaded")  <- switched off, kept for later`,
+      explanation:
+        "Comments explain intent, and commenting a line out disables it without deleting it."
     }
   ],
-  
-  summary: `In this lesson we learned:
 
-1. Python - a powerful and simple programming language
-2. Installing Python - download from python.org and add it to PATH
-3. First program - print("Hello, World!")
-4. Interactive mode - quick code testing with python
-5. Program structure - comments and code execution
+  commonMistakes: [
+    {
+      mistake: "Capitalising the function name",
+      explanation:
+        "Python is case-sensitive. Print() and PRINT() are different names from print(), and none of them exist.",
+      correctApproach: "Always lowercase: print(\"Hello\"). A NameError almost always means a typo like this."
+    },
+    {
+      mistake: "Mismatched or missing quotes",
+      explanation:
+        "print(\"Hello') mixes quote styles, and print(Hello) has none - Python then thinks Hello is a variable name and raises NameError.",
+      correctApproach: "Open and close with the same quote character: print(\"Hello\") or print('Hello')."
+    },
+    {
+      mistake: "Forgetting the closing bracket",
+      explanation:
+        "print(\"Hello\" leaves the call unfinished, and Python reports SyntaxError: '(' was never closed.",
+      correctApproach: "Every ( needs its ). Most editors highlight the matching pair when you put the cursor on one."
+    },
+    {
+      mistake: "Skipping 'Add Python to PATH' during installation",
+      explanation:
+        "Without it the python command is not on your system path, so the terminal cannot find it even though Python is installed.",
+      correctApproach: "Tick the box during install, or re-run the installer and choose Modify to add it."
+    },
+    {
+      mistake: "Editing a file but running the old saved version",
+      explanation:
+        "Running a file executes what is on disk, not what is on your screen, so unsaved changes appear to do nothing.",
+      correctApproach: "Save (Ctrl+S / Cmd+S) before running. Unsaved files usually show a dot in the editor tab."
+    }
+  ],
 
-You are now ready to write your first Python programs! Next lesson - variables and data types.`,
-  
+  summary: `What you can do now:
+
+1. Run Python - in the browser here, and locally once you have installed it
+2. Use print() to make a program produce output
+3. Write text as a string, wrapped in matching quotes
+4. Know that code runs top to bottom, one line at a time
+5. Write comments with # to explain why, and to switch lines off
+6. Read an error message and find the useful line
+
+The whole of programming builds on that fourth point. Next lesson: variables - giving names to values so a program can remember things.`,
+
   practiceTask: {
-    title: "First program",
-    description: "Create your first Python program",
-    problemStatement: `Write a program that:
-1. Prints a greeting
-2. Prints your name
-3. Prints a message that you are learning Python
-4. Prints a farewell`,
+    title: "Your first program",
+    description: "Write a program that introduces you",
+    problemStatement: `Write a program that prints four lines:
+1. A greeting
+2. Your name
+3. That you are learning Python
+4. A farewell
+
+Use one print() per line. The exact words are up to you - only the shape matters.`,
     outputFormat: `Sample output:
 Hello!
 My name is Alexander
@@ -259,7 +363,7 @@ Goodbye!`,
 My name is Alexander
 I am learning Python
 Goodbye!`,
-        explanation: "The program uses the print() function to display messages"
+        explanation: "Four print() calls produce four lines"
       }
     ],
     solution: {
@@ -268,12 +372,14 @@ print("Hello!")
 print("My name is Alexander")
 print("I am learning Python")
 print("Goodbye!")`,
-      explanation: "The solution uses the print() function to display several messages on the screen."
+      explanation:
+        "Four separate print() calls, each producing its own line, in the order they are written."
     },
     hints: [
-      "Use the print() function for each line",
-      "Each print() outputs text on a new line",
-      "You can use either single or double quotes"
+      "One print() per line of output",
+      "Each print() automatically starts a new line",
+      "Single or double quotes both work - just match them",
+      "Line 3 has to contain the word Python"
     ],
     validation: {
       minLines: 4,
@@ -286,7 +392,7 @@ print("Goodbye!")`,
     },
     difficulty: "beginner"
   },
-  
+
   quiz: {
     questions: [
       {
@@ -300,12 +406,12 @@ print("Goodbye!")`,
           "A web browser"
         ],
         correctAnswer: 0,
-        explanation: "Python is a high-level programming language created in 1991."
+        explanation: "Python is a high-level programming language, created by Guido van Rossum in 1991."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Which command prints text to the screen in Python?",
+        question: "Which function prints text to the screen?",
         options: [
           "echo()",
           "print()",
@@ -313,7 +419,7 @@ print("Goodbye!")`,
           "display()"
         ],
         correctAnswer: 1,
-        explanation: "The print() function is used to display text on the screen."
+        explanation: "print() is the built-in function for showing output."
       },
       {
         id: "q3",
@@ -321,38 +427,31 @@ print("Goodbye!")`,
         question: "What does this code print?\n\n```python\nprint('Hello')\nprint('World')\n```",
         options: [
           "HelloWorld",
-          "Hello\nWorld",
+          "Hello and World on separate lines",
           "An error",
           "Nothing"
         ],
         correctAnswer: 1,
-        explanation: "Each print() outputs text on a new line, so the result is 'Hello' on one line and 'World' on the next."
+        explanation: "Each print() ends its line, so the two words land on separate lines."
       },
       {
         id: "q4",
-        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
-        question: "Python is a free programming language.",
-        options: ["True", "False"],
-        correctAnswer: 0,
-        explanation: "Yes, Python is completely free and open source."
+        type: QUIZ_QUESTION_TYPES.CODE_READING,
+        question: "Which line raises an error?\n\n```python\nprint(\"A\")\nprint('B')\nprint(\"C')\n```",
+        options: [
+          "Line 1",
+          "Line 2",
+          "Line 3",
+          "None of them"
+        ],
+        correctAnswer: 2,
+        explanation:
+          "Line 3 opens with a double quote and closes with a single one. Quotes must match, so this is a SyntaxError."
       },
       {
         id: "q5",
-        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "How do you start Python's interactive mode?",
-        options: [
-          "python run",
-          "python",
-          "python start",
-          "python interactive"
-        ],
-        correctAnswer: 1,
-        explanation: "The 'python' or 'python3' command starts Python's interactive mode (REPL)."
-      },
-      {
-        id: "q6",
         type: QUIZ_QUESTION_TYPES.LOGIC,
-        question: "Which symbol is used for comments in Python?",
+        question: "Which symbol starts a comment in Python?",
         options: [
           "//",
           "#",
@@ -360,7 +459,38 @@ print("Goodbye!")`,
           "--"
         ],
         correctAnswer: 1,
-        explanation: "The # symbol is used for comments in Python. Everything after # on a line is ignored."
+        explanation: "# starts a comment. Everything after it on that line is ignored by Python."
+      },
+      {
+        id: "q6",
+        type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
+        question: "You run your code and see `NameError: name 'prnt' is not defined`. What is most likely wrong?",
+        options: [
+          "Python is not installed correctly",
+          "The function name is misspelled",
+          "A quote is missing",
+          "The file was not saved"
+        ],
+        correctAnswer: 1,
+        explanation:
+          "A NameError means Python does not recognise that name. Here 'prnt' is a typo for 'print'."
+      },
+      {
+        id: "q7",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "Python code runs from top to bottom, one line at a time.",
+        options: ["True", "False"],
+        correctAnswer: 0,
+        explanation:
+          "Yes. Execution order follows the order of the lines - the foundation everything else builds on."
+      },
+      {
+        id: "q8",
+        type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
+        question: "Python is free and open source.",
+        options: ["True", "False"],
+        correctAnswer: 0,
+        explanation: "Python is completely free to download, use and distribute."
       }
     ],
     timeLimit: 10,

@@ -52,3 +52,8 @@ scripts/_bing_*
 scripts/_translate_*
 scripts/_json_*
 scripts/_build_*
+scripts/_baseline_counts.*
+*.csv
+tasks.json
+tmp_lesson-*.js
+nul.css
