@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_00_3 = {
   lessonId: "lesson-00-3",
@@ -502,13 +502,13 @@ print("'" + check_item + "' is in the list:", check_item in shopping_list)`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "How do you create an empty list?",
         options: [
-          "list()",
-          "[]",
-          "Both options are correct",
-          "None of the above"
+          "Only with list()",
+          "Only with []",
+          "With either list() or []",
+          "With list[]"
         ],
         correctAnswer: 2,
-        explanation: "You can create an empty list in two ways: list() or []"
+        explanation: "Both list() and [] create an empty list. Beginners often think only one syntax works. list[] is invalid."
       },
       {
         id: "q2",

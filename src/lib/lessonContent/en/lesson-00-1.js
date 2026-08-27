@@ -5,7 +5,7 @@
  * curriculum and the <h1> reads from here, so they must not drift.
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_00_1 = {
   lessonId: "lesson-00-1",

@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_00_8 = {
   lessonId: "lesson-00-8",
@@ -482,13 +482,13 @@ print(f"Student {name2} ({age2} years old): average score {avg2}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "How do you safely copy a nested list in Python?",
         options: [
-          "copy() or list() / slice for a shallow copy; deepcopy for a deep copy",
-          "Always with =",
-          "Only with pickle",
-          "With int()"
+          "Use copy.deepcopy for nested lists",
+          "Assign with =",
+          "Call pickle.dump only",
+          "Cast with int()"
         ],
         correctAnswer: 0,
-        explanation: "Assignment with = creates a reference to the same object; copy/deepcopy create a copy."
+        explanation: "Assignment (=) shares the same object. list.copy() is shallow — nested lists still share inner references. For a true independent nested copy, use copy.deepcopy. pickle and int() are unrelated."
       }
     ],
     timeLimit: 15,

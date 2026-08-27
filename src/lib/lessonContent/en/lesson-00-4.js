@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_00_4 = {
   lessonId: "lesson-00-4",
@@ -530,13 +530,13 @@ print("Phone:", phone)`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "How do you create an empty dictionary?",
         options: [
-          "dict()",
-          "{}",
-          "Both options are correct",
-          "None of the above"
+          "Only with dict()",
+          "Only with {}",
+          "With either dict() or {}",
+          "With dict[]"
         ],
         correctAnswer: 2,
-        explanation: "You can create an empty dictionary in two ways: dict() or {}"
+        explanation: "Both dict() and {} create an empty dictionary. Note that set() creates an empty set — {} alone is a dict, not a set."
       },
       {
         id: "q2",

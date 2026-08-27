@@ -1,54 +1,46 @@
 # Трек A (Cursor) — статус
 
-Оновлено: 2026-08-27 15:25 EEST
+Оновлено: 2026-08-27 16:10 EEST
 
 ## Baseline (до змін)
 
-Відхилення від очікуваного (промпт: 49 pass / 513 quiz):
-
-| Метрика | Очікувано (промпт) | Факт на старті |
+| Метрика | Очікувано (промпт) | Факт на старті → зараз |
 |---|---|---|
-| `node --test "src/**/*.test.mjs"` | 49 pass / 0 fail | **69 pass / 0 fail** |
-| `verify_python_solutions` | Checked 114, Failed: 0 | Checked 114 → зараз **57** (UK root `lessonContent/*.js` прибрано іншим треком) / Failed: 0 |
-| `npm run build` | успіх | успіх |
-| Python EN | 84 / 513 quiz / videoUrl "" ×84 | 84 / **515** / 84 |
-| Roblox EN | 92, 0 comingSoon | 92 / 0 |
-| AI at Work | 28 у 6 модулях | 28 / 6 |
+| tests | 49 pass | 69 → **92 pass** |
+| verify_python | 114 / 0 fail | 114 → **57** (UK root removed) / 0 fail |
+| build | ok | ok |
+| Python quiz Qs | 513 | 515 |
 
 ## Прогрес
-- [x] C1 Інвентаризація контенту — done, звіт: docs/agents/reports/content-inventory.md
-- [x] C2 Тест цілісності — done, `src/lib/courseContent.test.mjs`
-- [ ] C3 Якість квізів
+- [x] C1 Інвентаризація
+- [x] C2 Тест цілісності
+- [x] C3 Якість квізів (Python 00–05) — звіт: docs/agents/reports/content-quiz-audit.md
 - [ ] C4 Практика
 - [ ] C5 practiceValidation тести
 - [ ] C6 Prerequisites
 - [ ] C7 Теорія
-- [ ] C8 Roblox структурна повнота
+- [ ] C8 Roblox
 - [ ] C9 AI at Work
-- [ ] C10 Gaps report
+- [ ] C10 Gaps
 
 ## Зроблено (по кроках)
 
 ### C1
-Що змінено: `scripts/audit-course-content.mjs`, `docs/agents/reports/content-inventory.md`
-Як перевірено: audit exit 1 (blocking є); tests 69 pass
-Метрика: **204 уроки, 52 blocking** на першому прогоні
+audit-course-content.mjs → 204 уроки / 52 blocking (див. inventory)
 
 ### C2
-Що змінено:
-- `src/lib/courseContent.test.mjs` (6 тестів)
-- `lesson-03-7.js` — прибрано кирилицю в «Global»
-- `lesson-04-1.js` — повний EN переклад (був весь українською)
-- `module04-lessons.js` / `module12-lessons.js` — прибрано false-positive / реальний TODO
-- audit: uppercase `TODO` only (lowercase «todo» = to-do list)
+courseContent.test.mjs (6); виправлено Cyrillic lesson-04-1 + placeholders
 
-Як перевірено: тест **спочатку впав** на 4 дефектах (Cyrillic×2, TODO×2) → виправлено → 6/6 green; full suite **82 pass**; build OK; verify Failed: 0
-Метрика до/після: 69 → 82 тестів; Cyrillic EN lessons 2 → 0; placeholder TODO 2 → 0
+### C3
+Python модулі 00–05: **286 питань переглянуто, ~60 переписано**
+- прибрано None/All of the above (00-3, 00-4, 03-1)
+- length-leak / thin-explanation flags очищені
+- звіт: content-quiz-audit.md
+- усі EN lesson imports: `courseData` → `courseData.js` (потрібно для Node ESM у quizValidation.test Antigravity)
 
-## Handoff (знахідки в чужих або заморожених файлах)
-
-(ще немає)
+## Handoff
+- `src/lib/quizValidation.test.mjs` (Antigravity) падає без `.js` у `from '../../courseData.js'` у lesson-файлах — Node ESM. Ми уніфікували імпорти в EN Python уроках. Roblox/AI можуть ще мати extensionless — перевірити їхнім треком.
+- Модулі 06–15 ще мають "All of the above" (lesson-07-1, 08-5) — наступний батч C3.
 
 ## Заблоковано
-
-(ще немає)
+(немає)
