@@ -11,6 +11,8 @@ import {
   resolveDripStartedAt,
 } from '@/lib/courseLessonAccess'
 import { getLocalizedMetadata, buildAlternates } from '@/lib/i18nMetadata'
+import { serializeGamification } from '@/lib/lessonInteractiveXp'
+import { getLessonContent } from '@/lib/lessonContentLoader'
 import LessonPageLoading from '@/components/Lesson/LessonPageLoading'
 
 const LessonPage = dynamic(() => import('@/components/Lesson/LessonPage'), {
@@ -77,7 +79,8 @@ export default async function LessonPageRoute({ params }) {
           currentModule: progress.currentModule || 0,
           currentLesson: progress.currentLesson || 0,
           overallProgress: progress.overallProgress || 0,
-          certificates: progress.certificates || []
+          certificates: progress.certificates || [],
+          gamification: serializeGamification(progress.gamification),
         }
       }
     }
@@ -105,10 +108,12 @@ export default async function LessonPageRoute({ params }) {
 
   // Source of truth: unlocked set already includes free preview + drip access.
   const isAccessible = unlockedSet.has(lessonId)
+  const lesson = getLessonContent(courseId, lessonId, locale)
 
   const sharedProps = {
     lessonId,
     courseId,
+    lesson,
     userProgress,
     // Entitlement for CTAs - must NOT bypass drip locks in lesson UIs.
     isPurchased: isPurchased || isSubscribed || hasCourseAccess,

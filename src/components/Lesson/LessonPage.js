@@ -19,15 +19,17 @@ import {
   Terminal,
   GripVertical
 } from 'lucide-react'
-import { updateProgress, checkCoursePurchase, enrollInCourse } from '@/lib/authClient'
+import { updateProgress, updateProgressWithRewards, checkCoursePurchase, enrollInCourse } from '@/lib/authClient'
 import { useLocale, useTranslations } from 'next-intl'
 import { getCurriculum } from '@/lib/getCurriculum'
-import { lessonContentMap as lessonContentMapEn } from '@/lib/lessonContentMap.en'
-import { lessonContentMap as lessonContentMapUk } from '@/lib/lessonContentMap.uk'
 import { checkPracticeOutputs } from '@/lib/practiceValidation'
 import { parsePracticeStdin } from '@/lib/parsePracticeStdin'
 import { hasBlockedPythonCode } from '@/lib/pythonCodeGuard'
 import { executePythonWithPyodide } from '@/lib/pyodideRunner'
+import { useLessonGamification } from '@/hooks/useLessonGamification'
+import InteractiveBlock from '@/components/Lesson/Interactive/InteractiveBlock'
+import XpHud from '@/components/Lesson/Gamification/XpHud'
+import AchievementToast from '@/components/Lesson/Gamification/AchievementToast'
 import styles from './LessonPage.module.css'
 
 // Функція для конвертації markdown в HTML
@@ -199,9 +201,8 @@ const markdownToHtml = (text) => {
   return html
 }
 
-const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", userProgress = null, isPurchased = false, userRole = 'user', isAccessible = false, allowedLessons = [] }) => {
+const LessonPage = ({ lessonId, lesson: initialLesson = null, courseId = "python-developer-zero-to-junior", userProgress = null, isPurchased = false, userRole = 'user', isAccessible = false, allowedLessons = [] }) => {
   const locale = useLocale()
-  const lessonContentMap = locale === 'uk' ? lessonContentMapUk : lessonContentMapEn
   const t = useTranslations('lms.lesson')
   const tCommon = useTranslations('lms.common')
   const router = useRouter()
@@ -210,6 +211,9 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const [quizSubmitted, setQuizSubmitted] = useState(false)
   const [quizScore, setQuizScore] = useState(null)
   const [showPracticeSolution, setShowPracticeSolution] = useState(false)
+  // Latches once the reference solution has been revealed - hiding it again
+  // does not un-see it, and the "no safety net" bonus depends on that.
+  const [revealedSolution, setRevealedSolution] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [userCode, setUserCode] = useState('')
   const [codeExecution, setCodeExecution] = useState({
@@ -225,6 +229,22 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const [failedExampleIndexes, setFailedExampleIndexes] = useState([])
   const [practiceTestCount, setPracticeTestCount] = useState(0)
   const [isPyodideLoading, setIsPyodideLoading] = useState(false)
+
+  // Gamification: XP, streak and badges for this course, scored server-side.
+  const {
+    gamification,
+    completedIds: completedInteractiveIds,
+    pendingId: pendingInteractiveId,
+    submitInteractive,
+    applyRewards,
+    toasts,
+    dismissToast,
+  } = useLessonGamification({
+    courseId,
+    lessonId,
+    locale,
+    initialGamification: userProgress?.gamification || null,
+  })
   
   // Sidebar state - fixed defaults for SSR; restored from localStorage after mount
   const [sidebarWidth, setSidebarWidth] = useState(320)
@@ -233,16 +253,15 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
   const [isSidebarClosed, setIsSidebarClosed] = useState(false)
   const [sidebarPrefsHydrated, setSidebarPrefsHydrated] = useState(false)
   
-  
-  // Get lesson content
-  const lesson = lessonContentMap[lessonId]
-  
   const curriculum = getCurriculum(courseId, locale)
   
-  // If lesson not found in content map, try to get from curriculum
+  // If lesson not found in prop, try to get fallback placeholder from curriculum
   const curriculumLesson = curriculum.modules
     .flatMap(m => m.lessons)
     .find(l => l.lessonId === lessonId)
+
+  // Get lesson content
+  const lesson = initialLesson || curriculumLesson || null
   
   // Користувач вважається зареєстрованим якщо є userProgress або якщо він авторизований
   // (API автоматично створить прогрес при збереженні)
@@ -447,7 +466,12 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     commonMistakes: [],
     summary: ""
   }
-  
+
+  // Every interactive declared across this lesson's theory sections, in order.
+  const lessonInteractives = (fullLesson.theory?.sections || []).flatMap(
+    (section) => section.interactives || []
+  )
+
   const handleQuizSubmit = async (e) => {
     // Запобігаємо стандартній поведінці форми та перекиданню на футер
     if (e) {
@@ -479,13 +503,15 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
     try {
       // Спочатку зберігаємо результат тесту (API створить прогрес якщо потрібно)
       // Зберігаємо також відповіді для відображення результатів
-      const quizResult = await updateProgress(courseId, {
+      const quizRewards = await updateProgressWithRewards(courseId, {
         action: 'completeQuiz',
         lessonId,
         quizAnswers: quizAnswers,
         locale,
       })
-      
+      applyRewards(quizRewards)
+      const quizResult = quizRewards.progress
+
       // Mark lesson as completed ONLY if quiz passed (score >= passingScore)
       const passingScore = fullLesson.quiz?.passingScore || 60
       if (score >= passingScore) {
@@ -650,13 +676,15 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
 
         if (checkResult.isCorrect) {
           try {
-            await updateProgress(courseId, {
+            const rewards = await updateProgressWithRewards(courseId, {
               action: 'completePracticeTask',
               lessonId,
               practiceOutput: outputs[0] || '',
               practiceOutputs: outputs,
+              hintsUsed: revealedSolution,
               locale,
             })
+            applyRewards(rewards)
             router.refresh()
           } catch (error) {
             console.error('Error saving practice task completion:', error)
@@ -1095,7 +1123,15 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
           </div>
           
           <h1 className={styles.title}>{fullLesson.title}</h1>
-          
+
+          <XpHud
+            gamification={gamification}
+            lessonQuest={{
+              total: lessonInteractives.length,
+              done: lessonInteractives.filter((i) => completedInteractiveIds.has(i.id)).length,
+            }}
+          />
+
           <div className={styles.meta}>
             <div className={styles.metaItem}>
               <Clock className="w-4 h-4" />
@@ -1181,12 +1217,22 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
             {fullLesson.theory?.sections?.map((section, index) => (
               <div key={index} className={`${styles.theorySection} navigable-block`}>
                 <h3 className={styles.theorySectionTitle}>{section.title}</h3>
-                <div 
+                <div
                   className={styles.theoryContent}
-                  dangerouslySetInnerHTML={{ 
+                  dangerouslySetInnerHTML={{
                     __html: markdownToHtml(section.content)
                   }}
                 />
+                {(section.interactives || []).map((interactive) => (
+                  <InteractiveBlock
+                    key={interactive.id}
+                    interactive={interactive}
+                    moduleId={fullLesson.moduleId}
+                    completedIds={completedInteractiveIds}
+                    pendingId={pendingInteractiveId}
+                    onSubmit={submitInteractive}
+                  />
+                ))}
               </div>
             ))}
             
@@ -1318,7 +1364,10 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
                       <span>{t('yourCode')}</span>
                       <button
                         className={styles.solutionButton}
-                        onClick={() => setShowPracticeSolution(!showPracticeSolution)}
+                        onClick={() => {
+                          if (!showPracticeSolution) setRevealedSolution(true)
+                          setShowPracticeSolution(!showPracticeSolution)
+                        }}
                       >
                         {t('solutionToggle', { action: showPracticeSolution ? t('hideSolution') : t('showSolution') })}
                       </button>
@@ -1672,6 +1721,7 @@ const LessonPage = ({ lessonId, courseId = "python-developer-zero-to-junior", us
         </div>
       </div>
     </div>
+    <AchievementToast toasts={toasts} onDismiss={dismissToast} />
     </>
   )
 }

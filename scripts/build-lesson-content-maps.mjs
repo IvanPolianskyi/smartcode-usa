@@ -5,50 +5,19 @@ const { lessonMap, uniqueFiles } = JSON.parse(
 	fs.readFileSync('scripts/python-lesson-files.json', 'utf8')
 )
 
-const exportToStem = {}
-for (const stem of uniqueFiles) {
-	const exportName = `lesson_${stem.replace('lesson-', '').replace(/-/g, '_')}`
-	exportToStem[exportName] = stem
-}
-
-function stemFromExport(exportName) {
-	return exportToStem[exportName] || null
-}
-
-function buildMapModule(locale) {
-	const enDir = path.join('src/lib/lessonContent/en')
-	const imports = new Set()
-	const entries = []
-
-	for (const [lessonId, exportName] of Object.entries(lessonMap)) {
-		const stem = stemFromExport(exportName)
-		if (!stem) continue
-
-		const useEn = locale === 'en' && fs.existsSync(path.join(enDir, `${stem}.js`))
-		const importPath = useEn ? `./lessonContent/en/${stem}` : `./lessonContent/${stem}`
-		imports.add({ exportName, importPath, stem })
-	}
-
-	for (const { exportName, importPath } of imports) {
-		// dedupe imports by exportName
-	}
-}
-
-// dedupe imports by exportName
-function getImports(locale) {
+function getImports() {
 	const enDir = path.join('src/lib/lessonContent/en')
 	const byExport = new Map()
 	for (const stem of uniqueFiles) {
 		const exportName = `lesson_${stem.replace('lesson-', '').replace(/-/g, '_')}`
-		const useEn = locale === 'en' && fs.existsSync(path.join(enDir, `${stem}.js`))
-		const importPath = useEn ? `./lessonContent/en/${stem}` : `./lessonContent/${stem}`
+		const importPath = `./lessonContent/en/${stem}.js`
 		byExport.set(exportName, importPath)
 	}
 	return byExport
 }
 
-function generate(locale) {
-	const byExport = getImports(locale)
+function generate() {
+	const byExport = getImports()
 	const importLines = [...byExport.entries()]
 		.sort((a, b) => a[0].localeCompare(b[0]))
 		.map(([exportName, importPath]) => `import { ${exportName} } from '${importPath}'`)
@@ -58,7 +27,7 @@ function generate(locale) {
 		.map(([lessonId, exportName]) => `\t"${lessonId}": ${exportName},`)
 
 	const content = `/**
- * Auto-generated lesson content map (${locale}). Run: node scripts/build-lesson-content-maps.mjs
+ * Auto-generated lesson content map (en). Run: node scripts/build-lesson-content-maps.mjs
  */
 ${importLines.join('\n')}
 
@@ -67,13 +36,9 @@ ${mapLines.join('\n')}
 }
 `
 
-	const outPath =
-		locale === 'en'
-			? 'src/lib/lessonContentMap.en.js'
-			: 'src/lib/lessonContentMap.uk.js'
+	const outPath = 'src/lib/lessonContentMap.en.js'
 	fs.writeFileSync(outPath, content)
 	console.log(`Wrote ${outPath} (${importLines.length} imports, ${mapLines.length} entries)`)
 }
 
-generate('uk')
-generate('en')
+generate()

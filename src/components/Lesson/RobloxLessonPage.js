@@ -15,13 +15,26 @@ import {
   ClipboardCheck,
   HelpCircle,
   XCircle,
+  Zap,
+  Trophy,
 } from 'lucide-react'
 import { getCurriculum } from '@/lib/getCurriculum'
 import { getRobloxCurriculum } from '@/lib/robloxCurriculumLocale'
-import { getRobloxLessonContent } from '@/lib/robloxLessonContent'
-import { getAiAtWorkLessonContent } from '@/lib/aiAtWorkLessonContent'
 import { markdownToHtml } from '@/lib/markdownToHtml'
 import { updateProgress } from '@/lib/authClient'
+import {
+  computeLessonXp,
+  extractMissions,
+  getRank,
+  maxLessonXp,
+  splitSectionMission,
+  XP,
+} from '@/lib/lessonGamification'
+import {
+  MissionCard,
+  MissionProgress,
+  useMissionState,
+} from './LessonMissions'
 import styles from './RobloxLessonPage.module.css'
 import LessonPageWithSidebar from './LessonPageWithSidebar'
 import { useCopyCodeBlocks } from '@/hooks/useCopyCodeBlocks'
@@ -30,6 +43,8 @@ const STEPS = ['theory', 'practice', 'quiz']
 
 const RobloxLessonPage = ({
   lessonId,
+  lesson = null,
+  lessonContent: initialLessonContent = null,
   courseId = 'roblox-studio',
   userProgress = null,
   isPurchased = false,
@@ -78,19 +93,55 @@ const RobloxLessonPage = ({
   const curriculum = isAiCourse
     ? getCurriculum(courseId, locale)
     : getRobloxCurriculum(locale)
-  const lessonContent = isAiCourse
-    ? getAiAtWorkLessonContent(lessonId, locale)
-    : getRobloxLessonContent(lessonId, locale)
   const allLessons = useMemo(
     () => curriculum.modules.flatMap((m) => m.lessons),
     [curriculum]
   )
   const curriculumLesson = allLessons.find((l) => l.lessonId === lessonId)
+  const lessonContent = initialLessonContent || lesson || curriculumLesson || null
   const lessonModuleIndex = curriculum.modules.findIndex((m) =>
     m.lessons.some((l) => l.lessonId === lessonId)
   )
   const currentModule = curriculum.modules[lessonModuleIndex]
   const allowedSet = useMemo(() => new Set(allowedLessons || []), [allowedLessons])
+
+  // --- Gamification -------------------------------------------------------
+  // Missions are parsed out of the lesson's own "Do now" callouts, so every
+  // lesson in the curriculum is interactive without per-lesson authoring.
+  const missions = useMemo(
+    () => extractMissions(lessonContent),
+    [lessonContent]
+  )
+  const missionIds = useMemo(() => missions.map((m) => m.id), [missions])
+  const {
+    done: missionsDone,
+    toggle: toggleMission,
+    reset: resetMissions,
+  } = useMissionState(courseId, lessonId, missionIds)
+
+  // Section bodies with their trailing mission stripped out, so the mission can
+  // be rendered as an interactive card instead of a line of bold text.
+  const theorySections = useMemo(() => {
+    const sections = lessonContent?.theory?.sections
+    if (!Array.isArray(sections)) return []
+    let missionIndex = -1
+    return sections.map((section, index) => {
+      const { body, mission } = splitSectionMission(section?.content)
+      if (mission) missionIndex += 1
+      return {
+        title: section?.title,
+        bodyHtml: markdownToHtml(body),
+        mission: mission
+          ? {
+              id: `m${index}`,
+              minutes: mission.minutes,
+              html: markdownToHtml(mission.text),
+              order: missionIndex,
+            }
+          : null,
+      }
+    })
+  }, [lessonContent])
 
   const practiceDone =
     (Array.isArray(localProgress?.completedPracticeTasks)
@@ -282,6 +333,30 @@ const RobloxLessonPage = ({
   const isCheckpoint = !!curriculumLesson?.isCheckpoint
   const showCheckpointCelebrate = lessonComplete && isCheckpoint
 
+  const missionsDoneCount = missions.filter((m) => missionsDone.has(m.id)).length
+  const lessonXp = computeLessonXp({
+    missionsDone: missionsDoneCount,
+    missionsTotal: missions.length,
+    practiceDone,
+    quizScore,
+    passingScore,
+  })
+  const lessonMaxXp = maxLessonXp(missions.length)
+  const rank = getRank(completedCount)
+  // Parameterised strings stay as functions so next-intl does the ICU
+  // interpolation - formatting a "{n}" message without values throws.
+  const missionLabels = {
+    title: tRoblox('missionsTitle'),
+    allDone: tRoblox('missionsAllDone'),
+    reset: tRoblox('missionsReset'),
+    markDone: tRoblox('missionMarkDone'),
+    markUndone: tRoblox('missionMarkUndone'),
+    subtitle: (done, total) => tRoblox('missionsSubtitle', { done, total }),
+    bonus: (xp) => tRoblox('missionsBonus', { xp }),
+    missionN: (n) => tRoblox('missionN', { n }),
+    minutes: (n) => tRoblox('missionMinutes', { n }),
+  }
+
   const stepLabels = {
     theory: t('tabs.theory'),
     practice: t('tabs.practice'),
@@ -344,6 +419,20 @@ const RobloxLessonPage = ({
           )}
           <h1 className={styles.title}>{fullLesson.title}</h1>
           <div className={styles.metaRow}>
+            <span className={`${styles.metaPill} ${styles.metaPillRank}`} title={
+              rank.next
+                ? tRoblox('rankNext', { count: rank.toNext })
+                : tRoblox('rankMax')
+            }>
+              <span aria-hidden="true">{rank.icon}</span>
+              {tRoblox(`ranks.${rank.key}`)}
+            </span>
+            {!fullLesson.comingSoon && (
+              <span className={`${styles.metaPill} ${styles.metaPillXp}`}>
+                <Zap size={14} />
+                {tRoblox('xpEarned', { xp: lessonXp, max: lessonMaxXp })}
+              </span>
+            )}
             <span className={styles.metaPill}>
               <BookOpen size={14} />
               {tRoblox('theoryDuration', { minutes: theoryMin })}
@@ -447,14 +536,34 @@ const RobloxLessonPage = ({
             </section>
           )}
 
+          {activeStep === 'theory' && missions.length > 0 && (
+            <MissionProgress
+              total={missions.length}
+              doneCount={missionsDoneCount}
+              xp={lessonXp}
+              maxXp={lessonMaxXp}
+              onReset={resetMissions}
+              labels={missionLabels}
+            />
+          )}
+
           {activeStep === 'theory' &&
-            fullLesson.theory?.sections?.map((section, index) => (
+            theorySections.map((section, index) => (
               <article key={index} className={`${styles.theoryBlock} navigable-block`}>
                 <h3 className={styles.theoryTitle}>{section.title}</h3>
                 <div
                   className={styles.theoryBody}
-                  dangerouslySetInnerHTML={{ __html: markdownToHtml(section.content) }}
+                  dangerouslySetInnerHTML={{ __html: section.bodyHtml }}
                 />
+                {section.mission && (
+                  <MissionCard
+                    mission={section.mission}
+                    index={section.mission.order}
+                    checked={missionsDone.has(section.mission.id)}
+                    onToggle={toggleMission}
+                    labels={missionLabels}
+                  />
+                )}
               </article>
             ))}
 
@@ -699,6 +808,68 @@ const RobloxLessonPage = ({
                         <p style={{ fontWeight: 700 }}>
                           {quizPassed ? t('quizPassed') : t('quizFailed')}
                         </p>
+                        <div className={styles.xpBreakdown}>
+                          <p className={styles.xpBreakdownTotal}>
+                            <Zap size={16} />
+                            {tRoblox('xpEarned', {
+                              xp: lessonXp,
+                              max: lessonMaxXp,
+                            })}
+                          </p>
+                          <ul className={styles.xpBreakdownList}>
+                            {missions.length > 0 && (
+                              <li>
+                                {tRoblox('xpLineMissions', {
+                                  done: missionsDoneCount,
+                                  total: missions.length,
+                                  xp: missionsDoneCount * XP.MISSION,
+                                })}
+                              </li>
+                            )}
+                            {missions.length > 0 &&
+                              missionsDoneCount >= missions.length && (
+                                <li>
+                                  {tRoblox('xpLineAllMissions', {
+                                    xp: XP.ALL_MISSIONS_BONUS,
+                                  })}
+                                </li>
+                              )}
+                            {practiceDone && (
+                              <li>
+                                {tRoblox('xpLinePractice', { xp: XP.PRACTICE })}
+                              </li>
+                            )}
+                            {quizPassed && (
+                              <li>
+                                {tRoblox('xpLineQuiz', { xp: XP.QUIZ_PASS })}
+                              </li>
+                            )}
+                            {quizScore === 100 && (
+                              <li className={styles.xpLinePerfect}>
+                                <Trophy size={13} />
+                                {tRoblox('xpLinePerfect', {
+                                  xp: XP.PERFECT_QUIZ_BONUS,
+                                })}
+                              </li>
+                            )}
+                          </ul>
+                          {missions.length > 0 &&
+                            missionsDoneCount < missions.length && (
+                              <button
+                                type="button"
+                                className={styles.xpNudge}
+                                onClick={() => setActiveStep('theory')}
+                              >
+                                {tRoblox('xpNudgeMissions', {
+                                  count: missions.length - missionsDoneCount,
+                                  xp:
+                                    (missions.length - missionsDoneCount) *
+                                      XP.MISSION +
+                                    XP.ALL_MISSIONS_BONUS,
+                                })}
+                              </button>
+                            )}
+                        </div>
                         <button
                           type="button"
                           className={styles.btnSecondary}
