@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_03_8 = {
   lessonId: "lesson-03-8",
@@ -966,13 +966,13 @@ print(f"{base}^{exp} = {power(base, exp)}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is recursion?",
         options: [
-          "A technique where a function calls itself",
-          "Data type in Python",
-          "Sorting method",
-          "Object method"
+          "Solving a problem by a function calling itself",
+          "A built-in data type stored in memory",
+          "A sorting algorithm like bubble sort",
+          "Any method called on an object instance"
         ],
         correctAnswer: 0,
-        explanation: "Recursion is a programming technique where a function calls itself to solve a problem."
+        explanation: "Recursion means a function invokes itself (with a base case). That is not a data type, a sort algorithm, or simply 'any method'."
       },
       {
         id: "q2",
@@ -1018,13 +1018,13 @@ print(f"{base}^{exp} = {power(base, exp)}")`,
         type: QUIZ_QUESTION_TYPES.CODE_READING,
         question: "What will this code output?\n\n```python\ndef countdown(n):\n    if n <= 0:\n        print(\"Done!\")\n        return\n    print(n)\n    countdown(n - 1)\n\ncountdown(3)\n```",
         options: [
-          "3, 2, 1, Ready!",
-          "Done!, 1, 2, 3",
-          "3, 2, 1",
-          "Error"
+          "3, 2, 1, then Done!",
+          "Done! first, then 1, 2, 3",
+          "Only 3, 2, 1 with no Done!",
+          "RecursionError on the first call"
         ],
         correctAnswer: 0,
-        explanation: "First 3 is printed, then countdown(2) is called, 2 is printed, then countdown(1), 1 is printed, then countdown(0) prints 'Done!'."
+        explanation: "countdown prints n then calls countdown(n-1). So 3, 2, 1 print first; when n<=0 it prints Done!. It does not print Done! first or skip it."
       },
       {
         id: "q6",

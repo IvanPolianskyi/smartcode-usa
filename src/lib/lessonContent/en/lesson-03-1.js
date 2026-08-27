@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_03_1 = {
   lessonId: "lesson-03-1",
@@ -673,26 +673,26 @@ print(f"Average of {num1}, {num2}, {num3}: {average(num1, num2, num3)}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is a function in Python?",
         options: [
-          "A block of code that performs a specific task and can be called many times",
-          "A variable that stores a value",
-          "An operator for comparing values",
-          "A data type for storing text"
+          "Reusable named code you call to perform a task",
+          "A variable that only stores one number value",
+          "An operator used only for comparing values",
+          "A data type reserved for storing text strings"
         ],
         correctAnswer: 0,
-        explanation: "A function is a block of code that performs a specific task. You can call it many times without rewriting the code."
+        explanation: "A function packages reusable logic under a name so you call it instead of copying code. It is not a variable, comparison operator, or text type."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Which keyword is used to create a function?",
+        question: "You want to define a reusable greet(name) routine. Which line starts that definition?",
         options: [
-          "def",
-          "function",
-          "create",
-          "make"
+          "def greet(name):",
+          "function greet(name):",
+          "create greet(name):",
+          "make greet(name):"
         ],
         correctAnswer: 0,
-        explanation: "The keyword def (short for 'define') is used to create a function in Python."
+        explanation: "Python uses def to start a function. Keywords like function/create/make are from other languages or invented syntax — they raise SyntaxError here."
       },
       {
         id: "q3",
@@ -725,13 +725,13 @@ print(f"Average of {num1}, {num2}, {num3}: {average(num1, num2, num3)}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is a function parameter?",
         options: [
-          "A variable in the function definition that receives a value when called",
-          "A value passed when calling the function",
-          "The result of the function",
-          "The name of the function"
+          "A name in the def line that receives a value",
+          "The concrete value you pass at call time",
+          "The value the function returns to the caller",
+          "The function's name after the def keyword"
         ],
         correctAnswer: 0,
-        explanation: "A parameter is a variable in the function definition (for example, def add(a, b):). An argument is the value passed when calling (for example, add(5, 3))."
+        explanation: "In def add(a, b):, a and b are parameters. The numbers in add(5, 3) are arguments. Return values and the function name are separate ideas."
       },
       {
         id: "q6",
@@ -751,13 +751,13 @@ print(f"Average of {num1}, {num2}, {num3}: {average(num1, num2, num3)}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "Why are functions useful?",
         options: [
-          "All of the above",
-          "They help avoid repeating code",
-          "They organize code into smaller parts",
-          "They can be used many times"
+          "They help avoid repeating the same code",
+          "They make Python run without indentation",
+          "They replace the need for variables",
+          "They only work in Jupyter notebooks"
         ],
         correctAnswer: 0,
-        explanation: "Functions are useful for many reasons: they avoid repetition, organize code, can be reused, and make testing easier."
+        explanation: "Functions package reusable logic so you write it once and call it many times. They do not remove indentation rules, replace variables, or depend on Jupyter."
       },
       {
         id: "q8",

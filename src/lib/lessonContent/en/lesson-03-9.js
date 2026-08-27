@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_03_9 = {
   lessonId: "lesson-03-9",
@@ -893,26 +893,26 @@ print(f"Average of squares of numbers > 10: {complex_processing(data)}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is a higher-order function?",
         options: [
-          "A function that takes other functions as arguments or returns functions",
-          "High priority function",
-          "A function that works only with numbers",
-          "Python built-in function"
+          "A function that takes or returns other functions",
+          "A function marked high priority by the OS",
+          "A function that may only accept number inputs",
+          "Any function that ships built into Python"
         ],
         correctAnswer: 0,
-        explanation: "A higher-order function is a function that takes other functions as arguments or returns functions as a result. Examples: map(), filter(), reduce()."
+        explanation: "Higher-order means functions as inputs or outputs (map, filter, reduce). Priority, 'numbers only', or 'built-in' alone do not define it."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "What does map() return?",
+        question: "You write map(str, [1, 2, 3]) and print the result. What do you see without list()?",
         options: [
-          "Iterator",
-          "List",
-          "Dictionary",
-          "Tuple"
+          "A map iterator object, not a finished list",
+          "The list ['1', '2', '3'] printed immediately",
+          "A dictionary of index-to-value pairs",
+          "A tuple ('1', '2', '3') of strings"
         ],
         correctAnswer: 0,
-        explanation: "map() returns an iterator. To get a list, you need to use list(map(...))."
+        explanation: "map returns a lazy iterator. You must wrap list(...) (or iterate) to materialize ['1','2','3']; it is not already a list, dict, or tuple."
       },
       {
         id: "q3",

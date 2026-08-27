@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_03_5 = {
   lessonId: "lesson-03-5",
@@ -759,13 +759,13 @@ print(f"User data: {formatted_data}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is an object method?",
         options: [
-          "A function bound to an object, which is called through the object",
-          "Variable inside the object",
-          "Data type",
-          "Python operator"
+          "A function you call on an object with obj.method()",
+          "Any variable stored inside the object only",
+          "A built-in data type like int or str",
+          "A comparison operator such as == or +"
         ],
         correctAnswer: 0,
-        explanation: "A method is a function that is bound to an object and is called through the object using the syntax object.method()."
+        explanation: "Methods are functions attached to objects and invoked as obj.method(). Attributes store data; types and operators are different concepts."
       },
       {
         id: "q2",
@@ -796,15 +796,15 @@ print(f"User data: {formatted_data}")`,
       {
         id: "q4",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Which list method adds an element to the end?",
+        question: "You have nums = [1, 2] and want [1, 2, 3]. Which call is correct?",
         options: [
-          "append()",
-          "add()",
-          "insert()",
-          "extend()"
+          "nums.append(3)",
+          "nums.add(3)",
+          "nums.insert(3)",
+          "nums.extend(3)"
         ],
         correctAnswer: 0,
-        explanation: "append() adds an element to the end of the list. insert() inserts at a position, extend() adds all elements from another list."
+        explanation: "append(3) adds one item at the end. lists have no add(); insert needs an index; extend expects an iterable, not a bare int."
       },
       {
         id: "q5",

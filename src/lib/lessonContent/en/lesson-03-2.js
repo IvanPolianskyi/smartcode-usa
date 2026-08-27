@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_03_2 = {
   lessonId: "lesson-03-2",
@@ -814,15 +814,15 @@ print(f"Analysis: {analysis}")`,
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "What is a function parameter?",
+        question: "In def add(a, b):, what are a and b?",
         options: [
-          "A variable in the function definition that receives a value when called",
-          "A value passed when calling the function",
-          "The result of the function",
-          "The name of the function"
+          "Parameters that receive values when add is called",
+          "Arguments already fixed at definition time",
+          "The values returned by every add call",
+          "Aliases for the function name itself"
         ],
         correctAnswer: 0,
-        explanation: "A parameter is a variable in the function definition (for example, def add(a, b):). An argument is the value passed when calling (for example, add(5, 3))."
+        explanation: "a and b are parameters in the definition. Arguments are the values supplied at call time (add(5, 3)). They are not return values or the function's name."
       },
       {
         id: "q2",
@@ -853,15 +853,15 @@ print(f"Analysis: {analysis}")`,
       {
         id: "q4",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "How do you return multiple values from a function?",
+        question: "How can a function hand back two results to the caller?",
         options: [
-          "Via a tuple: return value1, value2",
-          "Via a list: return [value1, value2]",
-          "Both options work",
-          "It is impossible to return multiple values"
+          "Only with return value1, value2 (tuple packing)",
+          "Only with return [value1, value2] (a list)",
+          "Either a packed tuple or an explicit list works",
+          "It is impossible — one return means one value only"
         ],
         correctAnswer: 2,
-        explanation: "You can return multiple values via a tuple (return a, b) or a list (return [a, b]). A tuple is more commonly used for this."
+        explanation: "Python allows return a, b (a tuple) or return [a, b] (a list). Both deliver multiple results; claiming only one form works, or that it is impossible, is wrong."
       },
       {
         id: "q5",

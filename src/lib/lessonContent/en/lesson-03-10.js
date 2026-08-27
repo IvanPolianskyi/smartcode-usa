@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_03_10 = {
   lessonId: "lesson-03-10",
@@ -1110,39 +1110,39 @@ print(f"Number of books after removal: {len(library['books'])}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is a docstring?",
         options: [
-          "Function documentation written in triple quotes",
-          "Function Name",
-          "Function parameters",
-          "Function return type"
+          "A triple-quoted string documenting the function",
+          "The identifier used as the function's name",
+          "The list of parameters in the def line",
+          "The annotation of the return type alone"
         ],
         correctAnswer: 0,
-        explanation: "Docstring is the documentation of a function, written in triple quotes (\"\"\"). It describes what the function does, what parameters it takes, and what it returns."
+        explanation: "A docstring is the \"\"\"...\"\"\" text right under def that documents purpose, params, and return. It is not the name, the parameter list, or only a type hint."
       },
       {
         id: "q5",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Is it necessary to test functions?",
+        question: "Why should you test functions with varied inputs?",
         options: [
-          "Yes, it helps to make sure that the feature is working correctly",
-          "No, that is not necessary",
-          "Only for complex functions",
-          "Only before the release"
+          "To catch wrong results before users do",
+          "Tests are optional if the code runs once",
+          "Only huge functions ever need any tests",
+          "Testing matters only on release day"
         ],
         correctAnswer: 0,
-        explanation: "Yes, testing functions is important. It helps to ensure that the function works correctly on different input data and helps to find errors earlier."
+        explanation: "Tests verify behavior on normal and edge inputs so bugs show up early. Skipping tests because code 'ran once', is small, or is pre-release leaves failures for users."
       },
       {
         id: "q6",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "How is it better to name functions?",
+        question: "Which function name best communicates intent?",
         options: [
-          "Clearly and descriptively, to understand the purpose",
-          "In short, to print less",
-          "Abbreviations",
-          "Anyway, the main thing is short"
+          "calculate_total_price",
+          "ctp",
+          "func",
+          "x"
         ],
         correctAnswer: 0,
-        explanation: "It is better to name functions clearly and descriptively, so that it is clear from the name what the function does. For example, calculate_total_price is better than calc or func."
+        explanation: "Descriptive names like calculate_total_price tell readers the purpose. Tiny abbreviations or vague names (ctp, func, x) hide intent and slow debugging."
       },
       {
         id: "q7",

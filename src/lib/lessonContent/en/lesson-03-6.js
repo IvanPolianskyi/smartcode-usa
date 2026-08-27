@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_03_6 = {
   lessonId: "lesson-03-6",
@@ -745,13 +745,13 @@ print(f"Long names (min_length={min_length}): {filter_long_words(formatted_names
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is a lambda function?",
         options: [
-          "An anonymous function that can contain only one expression",
-          "A regular function with the def keyword",
-          "Object method",
-          "Data type"
+          "A one-expression anonymous function (no def)",
+          "A normal multi-line function using def",
+          "A method that only exists on objects",
+          "A separate built-in data type like list"
         ],
         correctAnswer: 0,
-        explanation: "A lambda function is an anonymous function that can contain only one expression. It is created without the def keyword."
+        explanation: "lambda makes a small nameless function from one expression. Multi-line logic needs def; lambdas are not methods or a new data type."
       },
       {
         id: "q2",
@@ -784,13 +784,13 @@ print(f"Long names (min_length={min_length}): {filter_long_words(formatted_names
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What does the filter() function do?",
         options: [
-          "Filters elements, leaving only those for which the function returns True",
-          "Sorts elements",
-          "Transforms elements",
-          "Adds elements"
+          "Keeps items where the test function is True",
+          "Sorts the iterable into ascending order",
+          "Maps each item to a transformed value",
+          "Appends extra items onto the iterable"
         ],
         correctAnswer: 0,
-        explanation: "filter() filters elements of an iterable, leaving only those for which the passed function returns True."
+        explanation: "filter() keeps elements for which the callback is True. Sorting is sorted(), transforming is map(), and filter never adds items."
       },
       {
         id: "q5",
@@ -808,15 +808,15 @@ print(f"Long names (min_length={min_length}): {filter_long_words(formatted_names
       {
         id: "q6",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Can you use return in lambda function?",
+        question: "Can you use return inside a lambda?",
         options: [
-          "No, return is not needed, the result of the expression is automatically returned",
-          "Yes, a return is definitely needed",
-          "Only for complex lambdas",
-          "Depends on the Python version"
+          "No — the expression value is returned automatically",
+          "Yes — every lambda must include return",
+          "Only when the lambda spans multiple lines",
+          "Only in Python 3.11 and newer versions"
         ],
         correctAnswer: 0,
-        explanation: "In lambda, the return function is not needed and will cause an error. The result of the expression is automatically returned."
+        explanation: "A lambda body is one expression whose value is the result. Writing return inside it is a SyntaxError; version and 'complex' lambdas do not change that."
       },
       {
         id: "q7",

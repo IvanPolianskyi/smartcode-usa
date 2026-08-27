@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_03_3 = {
   lessonId: "lesson-03-3",
@@ -821,28 +821,28 @@ display_settings(settings, format=fmt)`,
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Does order matter for keyword arguments?",
+        question: "For greet(name=\"Alex\", age=20) vs greet(age=20, name=\"Alex\"), which is true?",
         options: [
-          "No, order does not matter",
-          "Yes, order always matters",
-          "It depends on the function",
-          "Only for some data types"
+          "Both calls bind the same values — keyword order is free",
+          "The second call always raises SyntaxError",
+          "Order only matters when defaults are present",
+          "Keyword order must match the def parameter order"
         ],
         correctAnswer: 0,
-        explanation: "For keyword arguments order does not matter because each argument has a parameter name. greet(name=\"Alexander\", age=20) and greet(age=20, name=\"Alexander\") are equivalent."
+        explanation: "Keyword arguments bind by name, so order can change without changing meaning. Positional order matters; keyword order does not."
       },
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
         question: "What does this code print?\n\n```python\ndef greet(name, greeting=\"Hello\"):\n    print(f\"{greeting}, {name}!\")\n\ngreet(\"Alexander\")\ngreet(\"Alexander\", \"Good morning\")\n```",
         options: [
-          "Hello, Alexander!, then Good morning, Alexander!",
-          "An error",
-          "Only Hello, Alexander!",
-          "Only Good morning, Alexander!"
+          "Hello then Good morning (default, then override)",
+          "TypeError because greeting was omitted once",
+          "Only the default Hello line is printed",
+          "Only the Good morning line is printed"
         ],
         correctAnswer: 0,
-        explanation: "The first call uses the default greeting (\"Hello\"); the second passes its own value (\"Good morning\")."
+        explanation: "greet(\"Alexander\") uses greeting=\"Hello\". The second call passes \"Good morning\", so both lines print — omitting the default does not error."
       },
       {
         id: "q4",

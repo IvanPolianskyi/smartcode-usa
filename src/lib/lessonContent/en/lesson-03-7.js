@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_03_7 = {
   lessonId: "lesson-03-7",
@@ -976,15 +976,15 @@ print(f"Multiplier({x4}) with n={n4}: {create_multiplier(n4)(x4)}")`,
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "What does the acronym LEGB mean?",
+        question: "Name x is used inside a nested function. In what order does Python search scopes?",
         options: [
-          "Local, Enclosing, Global, Built-in - the order of variable lookup",
-          "Local, Export, Global, Basic variables",
-          "Linear, Exponential, Geometric, Binary",
-          "This is not an acronym"
+          "Local → enclosing → global → built-in (LEGB)",
+          "Global first, then local, skipping enclosing",
+          "Built-in names only — user scopes are ignored",
+          "Random order depending on the Python version"
         ],
         correctAnswer: 0,
-        explanation: "LEGB is the order in which variables are found in Python: first Local (local), then Enclosing (nested functions), then Global (global), finally Built-in (built-in)."
+        explanation: "LEGB means Local, Enclosing, Global, Built-in — Python checks those scopes in that order. It does not skip enclosing or search randomly."
       },
       {
         id: "q2",
@@ -1017,13 +1017,13 @@ print(f"Multiplier({x4}) with n={n4}: {create_multiplier(n4)(x4)}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is a closure?",
         options: [
-          "A function that 'remembers' variables from the outer scope",
-          "Method of closing the program",
-          "Data type in Python",
-          "Syntax error"
+          "An inner function that keeps outer-scope variables",
+          "A command that exits the whole program",
+          "A built-in data type like dict or set",
+          "Always a SyntaxError in Python code"
         ],
         correctAnswer: 0,
-        explanation: "A closure is a function that retains references to variables from an external scope (enclosing scope), even after the external function has finished executing."
+        explanation: "A closure is an inner function that still sees enclosing variables after the outer function returns. It is not 'closing' a program, a type, or an error."
       },
       {
         id: "q5",
