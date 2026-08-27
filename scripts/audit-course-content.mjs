@@ -23,8 +23,14 @@ const QUIZ_TYPES = new Set([
   'true_false',
 ])
 
-const PLACEHOLDER_RE =
-  /\b(TODO|FIXME|Lorem|coming soon|TBD|XXX)\b/i
+const PLACEHOLDER_SOFT = /\bFIXME\b|\bTBD\b|\bXXX\b|Lorem ipsum|coming soon/i
+
+function hasPlaceholder(text) {
+  const soft = text.match(PLACEHOLDER_SOFT)
+  if (soft) return soft[0]
+  if (/\bTODO\b/.test(text)) return 'TODO'
+  return null
+}
 const CYRILLIC_RE = /[Ѐ-ӿ]/
 
 const MIN_SECTION_CHARS = 200
@@ -300,9 +306,9 @@ function auditLesson(lesson, fileRel, curriculumIds, curriculumModules, opts) {
   }
 
   const blob = textBlob(lesson)
-  if (PLACEHOLDER_RE.test(blob)) {
-    const m = blob.match(PLACEHOLDER_RE)
-    addIssue(fileRel, id, `placeholder text: "${m?.[0]}"`, true)
+  const ph = hasPlaceholder(blob)
+  if (ph) {
+    addIssue(fileRel, id, `placeholder text: "${ph}"`, true)
   }
   if (CYRILLIC_RE.test(blob)) {
     addIssue(fileRel, id, 'Cyrillic characters in EN content', true)

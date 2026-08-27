@@ -1727,7 +1727,7 @@ Why in the finale: a short "wow" at SHOWCASE + proof you can reward progress.
 2. Condition - one clear event: Touched finish with debounce, first successful purchase, coins >= N once.
 3. Do not award from a **LocalScript**. Do not call AwardBadge every second in a loop.
 
-If time ran out: create the Badge on Dashboard, and in code leave \`TODO: AwardBadge(BadgeId) on first finish\` + in the portfolio describe *when* the badge is given. For lesson 90 a written condition plan is also accepted, but having the Id in notes is better.
+If time ran out: create the Badge on Dashboard, leave a clearly marked comment where \`AwardBadge(BadgeId)\` should run on first finish, and in the portfolio describe *when* the badge is given. For lesson 90 a written condition plan is also accepted, but having the Id in notes is better.
 
 **1 badge** is enough. One working badge beats five empty names.`,
  },

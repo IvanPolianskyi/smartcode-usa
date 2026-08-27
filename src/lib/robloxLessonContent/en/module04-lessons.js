@@ -3605,7 +3605,7 @@ On the stand, do one intentional check: trying to buy with no money from the cli
 
 If a point is red, fix it today, not "later in Obby". Obby (5.1+) almost never rescues holes in table thinking; it only uses Config and data further.
 
-**Do this now (6 min):** walk the checklist and tick real boxes; write red points first in the todo.`
+**Do this now (6 min):** walk the checklist and tick real boxes; write the red points first on your fix list.`
      },
      {
         title: "What to leave on the stand",

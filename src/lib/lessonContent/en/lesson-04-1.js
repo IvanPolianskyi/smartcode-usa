@@ -1,5 +1,5 @@
 /**
- * Lesson 04-1: Основи ООП: класи та об'єкти
+ * Lesson 04-1: OOP Basics: Classes and Objects
  * Full educational content
  */
 
@@ -9,14 +9,13 @@ export const lesson_04_1 = {
   lessonId: "lesson-04-1",
   moduleId: "module-04",
   order: 1,
-  title: "Основи ООП: класи та об'єкти",
+  title: "OOP Basics: Classes and Objects",
 
   learningObjectives: [
-    "Пояснити, що таке клас і чим він відрізняється від об'єкта",
-    "Оголошувати власні класи за допомогою ключового слова class",
-    "Створювати екземпляри (об'єкти) класу",
-    "Використовувати конструктор __init__ для ініціалізації атрибутів",
-    "Розуміти роль параметра self у методах екземпляра"
+    "Create classes",
+    "Create objects (instances)",
+    "Understand attributes and methods",
+    "Use the __init__ constructor"
   ],
 
   prerequisites: ["lesson-03-10"],
@@ -26,68 +25,66 @@ export const lesson_04_1 = {
   theory: {
     sections: [
       {
-        title: "Що таке ООП?",
-        content: `**Об'єктно-орієнтоване програмування (ООП)** — підхід, у якому програма будується навколо **об'єктів**: сутностей, що поєднують дані та поведінку.
+        title: "What is OOP?",
+        content: `**Object-oriented programming (OOP)** is an approach where a program is built around **objects**: entities that combine data and behavior.
 
-Досі ми працювали зі змінними, списками й функціями окремо. В ООП ми об'єднуємо їх у логічні «коробки».
+Until now we worked with variables, lists, and functions separately. In OOP we group them into logical "boxes".
 
-**Аналогія з реального життя:**
+**Real-life analogy:**
 
-Уявіть автомобіль:
-- **Дані (атрибути):** колір, марка, швидкість, рівень палива
-- **Поведінка (методи):** їхати, гальмувати, сигналити
+Imagine a car:
+- **Data (attributes):** color, make, speed, fuel level
+- **Behavior (methods):** drive, brake, honk
 
-В Python автомобіль можна описати як **клас** \`Car\`, а конкретну Toyota чи BMW — як **об'єкти** цього класу.
+In Python a car can be described as a **class** \`Car\`, and a specific Toyota or BMW as **objects** of that class.
 
-**Навіщо ООП?**
+**Why OOP?**
 
-1. **Організація коду** — пов'язані дані й дії живуть разом
-2. **Повторне використання** — один клас → багато об'єктів
-3. **Масштабованість** — легше розширювати великі програми
-4. **Моделювання** — код ближчий до реальних сутностей
+1. **Code organization** — related data and actions live together
+2. **Reuse** — one class → many objects
+3. **Scalability** — easier to grow large programs
+4. **Modeling** — code stays closer to real-world entities
 
-**Чотири стовпи ООП** (на них ми будемо опиратися в модулі):
+**Four pillars of OOP** (we will build on these in this module):
 
-1. **Інкапсуляція** — приховування внутрішніх деталей
-2. **Наслідування** — створення нових класів на базі існуючих
-3. **Поліморфізм** — один інтерфейс, різна поведінка
-4. **Абстракція** — виділення головного, ігнорування деталей
+1. **Encapsulation** — hiding internal details
+2. **Inheritance** — creating new classes based on existing ones
+3. **Polymorphism** — one interface, different behavior
+4. **Abstraction** — focusing on essentials, ignoring details
 
-У цьому уроці зосередимось на фундаменті: **класи, об'єкти, \`__init__\` і \`self\`**.`
+In this lesson we focus on the foundation: **classes, objects, \`__init__\`, and \`self\`**.`
       },
       {
-        title: "Клас vs об'єкт",
-        content: `**Клас** — це креслення (шаблон). **Об'єкт** (екземпляр) — конкретна річ, створена за цим кресленням.
+        title: "Class vs object",
+        content: `A **class** is a blueprint (template). An **object** (instance) is a concrete thing built from that blueprint.
 
 \`\`\`python
-# Клас — шаблон
+# Class — the template
 class Dog:
     pass
 
-# Об'єкти — конкретні екземпляри
+# Objects — concrete instances
 dog1 = Dog()
 dog2 = Dog()
 
 print(type(dog1))  # <class '__main__.Dog'>
-print(dog1 is dog2)  # False — різні об'єкти
+print(dog1 is dog2)  # False — different objects
 \`\`\`
 
-**Важливо:**
+**Key ideas:**
 
-| Поняття | Що це | Приклад |
-|---------|--------|---------|
-| Клас | Опис / шаблон | \`class Student:\` |
-| Об'єкт (екземпляр) | Конкретний екземпляр | \`s = Student()\` |
-| Атрибут | Дані об'єкта | \`s.name\` |
-| Метод | Функція всередині класу | \`s.greet()\` |
+- **Class** — description / template → \`class Student:\`
+- **Object (instance)** — a concrete instance → \`s = Student()\`
+- **Attribute** — data belonging to the object → \`s.name\`
+- **Method** — a function defined inside the class → \`s.greet()\`
 
-Один клас може породити **скільки завгодно** об'єктів — кожен зі своїми даними.`
+One class can create **as many objects as you need** — each with its own data.`
       },
       {
-        title: "Створення класу та конструктор __init__",
-        content: `Клас оголошується ключовим словом \`class\`. Ім'я класу зазвичай пишуть у стилі **PascalCase** (\`Student\`, \`BankAccount\`).
+        title: "Creating a class and the __init__ constructor",
+        content: `A class is declared with the \`class\` keyword. Class names are usually written in **PascalCase** (\`Student\`, \`BankAccount\`).
 
-**Конструктор \`__init__\`** викликається автоматично під час створення об'єкта. У ньому задають початкові атрибути.
+The **\`__init__\` constructor** runs automatically when you create an object. Use it to set initial attributes.
 
 \`\`\`python
 class Student:
@@ -95,18 +92,18 @@ class Student:
         self.name = name
         self.age = age
 
-student = Student("Олена", 20)
-print(student.name)  # Олена
+student = Student("Elena", 20)
+print(student.name)  # Elena
 print(student.age)   # 20
 \`\`\`
 
-**Що відбувається крок за кроком:**
+**What happens step by step:**
 
-1. Python створює новий порожній об'єкт
-2. Викликається \`__init__(self, "Олена", 20)\`
-3. \`self\` — посилання на **цей** новий об'єкт
-4. Атрибути \`name\` і \`age\` зберігаються в об'єкті
-5. Змінна \`student\` отримує посилання на готовий об'єкт
+1. Python creates a new empty object
+2. It calls \`__init__(self, "Elena", 20)\`
+3. \`self\` is a reference to **this** new object
+4. The \`name\` and \`age\` attributes are stored on the object
+5. The \`student\` variable gets a reference to the ready object
 
 \`\`\`python
 class Point:
@@ -120,15 +117,15 @@ print(p1.x, p1.y)  # 3 4
 print(p2.x, p2.y)  # 0 0
 \`\`\`
 
-**Правила \`__init__\`:**
+**Rules for \`__init__\`:**
 
-- Перший параметр завжди \`self\`
-- \`__init__\` **не повертає** значення через \`return\` (окрім \`None\`)
-- Атрибути створюють через \`self.назва = значення\``
+- The first parameter is always \`self\`
+- \`__init__\` must **not** return a value via \`return\` (except \`None\`)
+- Create attributes with \`self.name = value\``
       },
       {
-        title: "Параметр self",
-        content: `**\`self\`** — це посилання на поточний екземпляр класу. Через нього методи «бачать» атрибути саме **цього** об'єкта.
+        title: "The self parameter",
+        content: `**\`self\`** is a reference to the current instance of the class. Through it, methods "see" the attributes of **this** specific object.
 
 \`\`\`python
 class Cat:
@@ -136,36 +133,36 @@ class Cat:
         self.name = name
 
     def meow(self):
-        print(f"{self.name} каже: Мяу!")
+        print(f"{self.name} says: Meow!")
 
-cat1 = Cat("Мурка")
-cat2 = Cat("Сніжок")
+cat1 = Cat("Whiskers")
+cat2 = Cat("Snowball")
 
-cat1.meow()  # Мурка каже: Мяу!
-cat2.meow()  # Сніжок каже: Мяу!
+cat1.meow()  # Whiskers says: Meow!
+cat2.meow()  # Snowball says: Meow!
 \`\`\`
 
-Коли ви пишете \`cat1.meow()\`, Python фактично викликає \`Cat.meow(cat1)\` — тобто передає об'єкт як \`self\` автоматично.
+When you write \`cat1.meow()\`, Python actually calls \`Cat.meow(cat1)\` — it passes the object as \`self\` automatically.
 
-**Типові помилки з self:**
+**Common mistakes with self:**
 
 \`\`\`python
-# Неправильно — забули self у визначенні методу
+# Wrong — forgot self in the method definition
 class Demo:
-    def greet():  # TypeError при виклику
-        print("Привіт")
+    def greet():  # TypeError when called
+        print("Hello")
 
-# Неправильно — забули self. перед атрибутом
+# Wrong — forgot self. before the attribute
 class Demo:
     def __init__(self, name):
-        name = name  # локальна змінна, не атрибут!
+        name = name  # local variable, not an attribute!
 \`\`\`
 
-**Запам'ятайте:** \`self\` — це «я» об'єкта. Без нього методи не знають, з чиїми даними працювати.`
+**Remember:** \`self\` is the object's "me". Without it, methods do not know whose data to use.`
       },
       {
-        title: "Атрибути та прості методи",
-        content: `**Атрибути екземпляра** — дані конкретного об'єкта. **Методи** — функції, визначені всередині класу.
+        title: "Attributes and simple methods",
+        content: `**Instance attributes** are data belonging to a specific object. **Methods** are functions defined inside a class.
 
 \`\`\`python
 class Rectangle:
@@ -180,22 +177,22 @@ class Rectangle:
         return 2 * (self.width + self.height)
 
     def describe(self):
-        print(f"Прямокутник {self.width}x{self.height}")
-        print(f"Площа: {self.area()}")
-        print(f"Периметр: {self.perimeter()}")
+        print(f"Rectangle {self.width}x{self.height}")
+        print(f"Area: {self.area()}")
+        print(f"Perimeter: {self.perimeter()}")
 
 rect = Rectangle(4, 3)
 rect.describe()
 \`\`\`
 
-**Можна змінювати атрибути після створення:**
+**You can change attributes after creation:**
 
 \`\`\`python
 rect.width = 10
 print(rect.area())  # 30
 \`\`\`
 
-**Клас як «фабрика» об'єктів:**
+**A class as an object "factory":**
 
 \`\`\`python
 class Book:
@@ -205,53 +202,53 @@ class Book:
         self.pages = pages
 
     def info(self):
-        return f'"{self.title}" — {self.author} ({self.pages} стор.)'
+        return f'"{self.title}" — {self.author} ({self.pages} pages)'
 
 books = [
-    Book("Кобзар", "Т. Шевченко", 400),
-    Book("1984", "Дж. Оруелл", 328),
+    Book("Kobzar", "T. Shevchenko", 400),
+    Book("1984", "G. Orwell", 328),
 ]
 
 for book in books:
     print(book.info())
 \`\`\`
 
-Так ми вже моделюємо реальні сутності — а не просто купу окремих змінних.`
+This is how we model real entities — instead of a pile of separate variables.`
       },
       {
-        title: "Практичні поради для початківців",
-        content: `**1. Називайте класи іменниками, методи — дієсловами**
+        title: "Practical tips for beginners",
+        content: `**1. Name classes with nouns, methods with verbs**
 
 \`\`\`python
-class User:          # іменник
-    def login(self): # дієслово
+class User:          # noun
+    def login(self): # verb
         pass
 \`\`\`
 
-**2. Тримайте \`__init__\` простим** — лише збережіть початкові дані, складну логіку виносьте в методи.
+**2. Keep \`__init__\` simple** — only store initial data; put complex logic in methods.
 
-**3. Один клас — одна відповідальність**
+**3. One class — one responsibility**
 
-Не робіть клас \`EverythingManager\`. Краще окремо \`Student\`, \`Course\`, \`GradeBook\`.
+Do not build an \`EverythingManager\` class. Prefer separate \`Student\`, \`Course\`, and \`GradeBook\` classes.
 
-**4. Перевіряйте тип об'єкта**
+**4. Check the object type**
 
 \`\`\`python
-student = Student("Іван", 19)
+student = Student("Ivan", 19)
 print(isinstance(student, Student))  # True
 \`\`\`
 
-**5. Порівняння з функціональним підходом**
+**5. Compared with a functional approach**
 
-Без ООП:
+Without OOP:
 \`\`\`python
-name = "Олена"
+name = "Elena"
 age = 20
 def greet(name, age):
     print(f"{name}, {age}")
 \`\`\`
 
-З ООП:
+With OOP:
 \`\`\`python
 class Person:
     def __init__(self, name, age):
@@ -261,48 +258,48 @@ class Person:
         print(f"{self.name}, {self.age}")
 \`\`\`
 
-ООП зручніше, коли даних і дій багато і вони належать одній сутності.
+OOP is more convenient when data and actions belong to the same entity and there is a lot of both.
 
-У наступному уроці глибше розберемо **атрибути класу vs екземпляра** та типи методів.`
+In the next lesson we will go deeper into **class vs instance attributes** and method types.`
       }
     ]
   },
 
   codeExamples: [
     {
-      title: "Простий клас Person",
+      title: "Simple Person class",
       code: `class Person:
     def __init__(self, name, age):
         self.name = name
         self.age = age
 
     def introduce(self):
-        print(f"Привіт, мене звати {self.name}!")
-        print(f"Мені {self.age} років.")
+        print(f"Hi, my name is {self.name}!")
+        print(f"I am {self.age} years old.")
 
-person = Person("Андрій", 25)
+person = Person("Andrew", 25)
 person.introduce()`,
-      explanation: "Створюємо клас з конструктором і методом. Об'єкт зберігає свої name та age."
+      explanation: "We create a class with a constructor and a method. The object stores its own name and age."
     },
     {
-      title: "Кілька екземплярів одного класу",
+      title: "Multiple instances of one class",
       code: `class Dog:
     def __init__(self, name, breed):
         self.name = name
         self.breed = breed
 
     def bark(self):
-        print(f"{self.name} ({self.breed}) каже: Гав!")
+        print(f"{self.name} ({self.breed}) says: Woof!")
 
-dog1 = Dog("Рекс", "вівчарка")
-dog2 = Dog("Лакі", "лабрадор")
+dog1 = Dog("Rex", "shepherd")
+dog2 = Dog("Lucky", "labrador")
 
 dog1.bark()
 dog2.bark()`,
-      explanation: "Один клас — два незалежні об'єкти з різними атрибутами."
+      explanation: "One class — two independent objects with different attributes."
     },
     {
-      title: "Клас з обчислювальним методом",
+      title: "Class with a calculation method",
       code: `class Circle:
     def __init__(self, radius):
         self.radius = radius
@@ -314,13 +311,13 @@ dog2.bark()`,
         return self.radius * 2
 
 c = Circle(5)
-print(f"Радіус: {c.radius}")
-print(f"Діаметр: {c.diameter()}")
-print(f"Площа: {c.area()}")`,
-      explanation: "Методи використовують self.radius для обчислень на основі даних об'єкта."
+print(f"Radius: {c.radius}")
+print(f"Diameter: {c.diameter()}")
+print(f"Area: {c.area()}")`,
+      explanation: "Methods use self.radius to compute values from the object's data."
     },
     {
-      title: "Зміна атрибутів після створення",
+      title: "Changing attributes after creation",
       code: `class Counter:
     def __init__(self, start=0):
         self.value = start
@@ -329,21 +326,21 @@ print(f"Площа: {c.area()}")`,
         self.value += 1
 
     def show(self):
-        print(f"Поточне значення: {self.value}")
+        print(f"Current value: {self.value}")
 
 counter = Counter(10)
 counter.show()
 counter.increment()
 counter.increment()
 counter.show()`,
-      explanation: "Методи можуть змінювати стан об'єкта через self."
+      explanation: "Methods can change the object's state through self."
     }
   ],
 
   commonMistakes: [
     {
-      mistake: "Забути self у методі або конструкторі",
-      explanation: "Без self Python не передасть посилання на екземпляр — отримаєте TypeError.",
+      mistake: "Forgetting self in a method or constructor",
+      explanation: "Without self, Python will not pass a reference to the instance — you get a TypeError.",
       correctApproach: `class Demo:
     def __init__(self, value):
         self.value = value
@@ -352,85 +349,85 @@ counter.show()`,
         print(self.value)`
     },
     {
-      mistake: "Створити локальну змінну замість атрибута",
-      explanation: "Якщо написати name = name без self., атрибут об'єкта не з'явиться.",
-      correctApproach: `# Правильно:
+      mistake: "Creating a local variable instead of an attribute",
+      explanation: "If you write name = name without self., the object attribute is never created.",
+      correctApproach: `# Correct:
 self.name = name
 
-# Неправильно:
-name = name  # лише локальна змінна`
+# Incorrect:
+name = name  # only a local variable`
     },
     {
-      mistake: "Викликати метод без дужок або без об'єкта",
-      explanation: "Метод належить екземпляру; потрібен об'єкт і дужки виклику.",
-      correctApproach: `student = Student("Оля", 18)
-student.greet()  # правильно
-# Student.greet() без аргумента — помилка`
+      mistake: "Calling a method without parentheses or without an object",
+      explanation: "A method belongs to an instance; you need an object and call parentheses.",
+      correctApproach: `student = Student("Olya", 18)
+student.greet()  # correct
+# Student.greet() without an argument — error`
     },
     {
-      mistake: "Очікувати, що __init__ поверне значення",
-      explanation: "__init__ ініціалізує об'єкт і завжди неявно повертає None.",
-      correctApproach: `student = Student("Оля", 18)  # конструктор не повертає дані
-# дані беруть з атрибутів: student.name`
+      mistake: "Expecting __init__ to return a value",
+      explanation: "__init__ initializes the object and always implicitly returns None.",
+      correctApproach: `student = Student("Olya", 18)  # the constructor does not return data
+# read data from attributes: student.name`
     }
   ],
 
-  summary: `На цьому уроці ми вивчили основи ООП:
+  summary: `In this lesson we covered the basics of OOP:
 
-1. Клас — шаблон, об'єкт — конкретний екземпляр
-2. class — ключове слово для оголошення класу
-3. __init__ — конструктор для початкових атрибутів
-4. self — посилання на поточний екземпляр
-5. Атрибути зберігають стан, методи описують поведінку
+1. A class is a template; an object is a concrete instance
+2. class — the keyword for declaring a class
+3. __init__ — the constructor for initial attributes
+4. self — a reference to the current instance
+5. Attributes store state; methods describe behavior
 
-Це фундамент усього модуля ООП. Далі — глибше про атрибути та методи класу.`,
+This is the foundation of the entire OOP module. Next — a deeper look at attributes and class methods.`,
 
   practiceTask: {
-    title: "Профіль студента",
-    description: "Створіть клас Student і виведіть інформацію про студента з вводу",
-    problemStatement: `Напишіть програму, яка:
-1. Оголошує клас Student з конструктором __init__(self, name, age, course)
-2. Має метод info(self), який виводить три рядки:
-   - Студент: {name}
-   - Вік: {age}
-   - Курс: {course}
-3. Зчитує з stdin три рядки: ім'я, вік (ціле число), назву курсу
-4. Створює об'єкт Student і викликає info()
+    title: "Student profile",
+    description: "Create a Student class and print student information from input",
+    problemStatement: `Write a program that:
+1. Declares a Student class with constructor __init__(self, name, age, course)
+2. Has an info(self) method that prints three lines:
+   - Student: {name}
+   - Age: {age}
+   - Course: {course}
+3. Reads three lines from stdin: name, age (integer), course name
+4. Creates a Student object and calls info()
 
-Формат вводу:
-Марія
+Input format:
+Maria
 18
 Python`,
-    outputFormat: `Студент: Марія
-Вік: 18
-Курс: Python`,
+    outputFormat: `Student: Maria
+Age: 18
+Course: Python`,
     examples: [
       {
-        input: `Марія
+        input: `Maria
 18
 Python`,
-        output: `Студент: Марія
-Вік: 18
-Курс: Python`,
-        explanation: "Створено студента Марія, 18 років, курс Python"
+        output: `Student: Maria
+Age: 18
+Course: Python`,
+        explanation: "Created student Maria, age 18, course Python"
       },
       {
-        input: `Іван
+        input: `Ivan
 21
 JavaScript`,
-        output: `Студент: Іван
-Вік: 21
-Курс: JavaScript`,
-        explanation: "Створено студента Іван на курсі JavaScript"
+        output: `Student: Ivan
+Age: 21
+Course: JavaScript`,
+        explanation: "Created student Ivan on the JavaScript course"
       },
       {
-        input: `Оксана
+        input: `Oksana
 19
 Data Science`,
-        output: `Студент: Оксана
-Вік: 19
-Курс: Data Science`,
-        explanation: "Створено студентку Оксана на курсі Data Science"
+        output: `Student: Oksana
+Age: 19
+Course: Data Science`,
+        explanation: "Created student Oksana on the Data Science course"
       }
     ],
     solution: {
@@ -441,9 +438,9 @@ Data Science`,
         self.course = course
 
     def info(self):
-        print(f"Студент: {self.name}")
-        print(f"Вік: {self.age}")
-        print(f"Курс: {self.course}")
+        print(f"Student: {self.name}")
+        print(f"Age: {self.age}")
+        print(f"Course: {self.course}")
 
 name = input().strip()
 age = int(input())
@@ -451,13 +448,13 @@ course = input().strip()
 
 student = Student(name, age, course)
 student.info()`,
-      explanation: "Клас Student зберігає атрибути через self. Читаємо три рядки з stdin, створюємо об'єкт і викликаємо info()."
+      explanation: "The Student class stores attributes via self. We read three lines from stdin, create an object, and call info()."
     },
     hints: [
-      "Спочатку оголосіть class Student з __init__ і методом info",
+      "First declare class Student with __init__ and an info method",
       "name = input().strip(), age = int(input()), course = input().strip()",
-      "Створіть об'єкт: student = Student(name, age, course)",
-      "Не забудьте self у кожному методі"
+      "Create the object: student = Student(name, age, course)",
+      "Do not forget self in every method"
     ],
     difficulty: "beginner"
   },
@@ -467,20 +464,20 @@ student.info()`,
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Що таке клас у Python?",
+        question: "What is a class in Python?",
         options: [
-          "Шаблон (креслення) для створення об'єктів",
-          "Конкретний екземпляр у пам'яті",
-          "Вбудована функція для виводу",
-          "Тип циклу"
+          "A template (blueprint) for creating objects",
+          "A concrete instance in memory",
+          "A built-in function for printing",
+          "A type of loop"
         ],
         correctAnswer: 0,
-        explanation: "Клас — це шаблон. Об'єкти створюються на його основі."
+        explanation: "A class is a template. Objects are created from it."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Яке ключове слово використовується для оголошення класу?",
+        question: "Which keyword is used to declare a class?",
         options: [
           "class",
           "def",
@@ -488,81 +485,81 @@ student.info()`,
           "struct"
         ],
         correctAnswer: 0,
-        explanation: "Класи оголошують через ключове слово class."
+        explanation: "Classes are declared with the class keyword."
       },
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
-        question: "Метод __init__ викликається автоматично під час створення об'єкта.",
+        question: "The __init__ method is called automatically when an object is created.",
         options: [
           "True",
           "False"
         ],
         correctAnswer: 0,
-        explanation: "Так, __init__ — конструктор, він запускається при Student(...)."
+        explanation: "Yes, __init__ is the constructor; it runs when you call Student(...)."
       },
       {
         id: "q4",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе цей код?\\n\\n```python\\nclass Box:\\n    def __init__(self, value):\\n        self.value = value\\n\\nb = Box(10)\\nprint(b.value)\\n```",
+        question: "What does this code print?\\n\\n```python\\nclass Box:\\n    def __init__(self, value):\\n        self.value = value\\n\\nb = Box(10)\\nprint(b.value)\\n```",
         options: [
           "10",
           "value",
           "None",
-          "Помилка"
+          "Error"
         ],
         correctAnswer: 0,
-        explanation: "Атрибут value встановлено в __init__ і дорівнює 10."
+        explanation: "The value attribute is set in __init__ and equals 10."
       },
       {
         id: "q5",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Для чого потрібен параметр self?",
+        question: "What is the self parameter for?",
         options: [
-          "Це посилання на поточний екземпляр класу",
-          "Це ключове слово для створення класу",
-          "Це тип даних для рядків",
-          "Це обов'язкова назва будь-якої змінної"
+          "It is a reference to the current class instance",
+          "It is a keyword for creating a class",
+          "It is a data type for strings",
+          "It is a required name for any variable"
         ],
         correctAnswer: 0,
-        explanation: "self дозволяє методам працювати з атрибутами конкретного об'єкта."
+        explanation: "self lets methods work with the attributes of a specific object."
       },
       {
         id: "q6",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
-        question: "Що виведе цей код?\\n\\n```python\\nclass Dog:\\n    def __init__(self, name):\\n        self.name = name\\n\\n    def bark(self):\\n        print(f\\\"{self.name}: Гав!\\\")\\n\\nDog(\\\"Рекс\\\").bark()\\n```",
+        question: "What does this code print?\\n\\n```python\\nclass Dog:\\n    def __init__(self, name):\\n        self.name = name\\n\\n    def bark(self):\\n        print(f\\\"{self.name}: Woof!\\\")\\n\\nDog(\\\"Rex\\\").bark()\\n```",
         options: [
-          "Рекс: Гав!",
-          "Гав!",
+          "Rex: Woof!",
+          "Woof!",
           "None",
-          "Помилка"
+          "Error"
         ],
         correctAnswer: 0,
-        explanation: "Створюється об'єкт з name='Рекс' і одразу викликається bark()."
+        explanation: "An object with name='Rex' is created and bark() is called immediately."
       },
       {
         id: "q7",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Чим об'єкт відрізняється від класу?",
+        question: "How does an object differ from a class?",
         options: [
-          "Об'єкт — конкретний екземпляр, створений за шаблоном класу",
-          "Об'єкт і клас — одне й те саме",
-          "Клас існує лише під час виконання програми",
-          "Об'єкт не може мати методів"
+          "An object is a concrete instance created from a class template",
+          "An object and a class are the same thing",
+          "A class exists only while the program is running",
+          "An object cannot have methods"
         ],
         correctAnswer: 0,
-        explanation: "Клас — шаблон; об'єкт — конкретна реалізація цього шаблону."
+        explanation: "A class is a template; an object is a concrete realization of that template."
       },
       {
         id: "q8",
         type: QUIZ_QUESTION_TYPES.TRUE_FALSE,
-        question: "Один клас може використовуватися для створення багатьох незалежних об'єктів.",
+        question: "One class can be used to create many independent objects.",
         options: [
           "True",
           "False"
         ],
         correctAnswer: 0,
-        explanation: "Саме так: один шаблон — багато екземплярів зі своїми даними."
+        explanation: "Exactly: one template — many instances, each with its own data."
       }
     ],
     timeLimit: 15,
