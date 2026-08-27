@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_05_3 = {
   lessonId: "lesson-05-3",
@@ -434,18 +434,18 @@ for _ in range(n):
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "Why build an exception hierarchy?",
         options: [
-          "To catch groups of related errors via a base class",
-          "To speed up Python",
-          "To avoid functions",
-          "It is required by syntax"
+          "Catch related errors together via a shared base",
+          "Make the interpreter execute code faster",
+          "Replace ordinary functions with raise only",
+          "Because Python syntax requires custom trees"
         ],
         correctAnswer: 0,
-        explanation: "A base class lets you handle all subclasses with one except."
+        explanation: "A shared base lets except BaseError: cover many subclasses while you can still catch specifics. Hierarchies are not about speed, avoiding functions, or a syntax rule."
       },
       {
         id: "q6",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Best name for an “insufficient funds” exception?",
+        question: "Which name best fits an 'insufficient funds' failure?",
         options: [
           "InsufficientFundsError",
           "error1",
@@ -453,7 +453,7 @@ for _ in range(n):
           "problem"
         ],
         correctAnswer: 0,
-        explanation: "A descriptive name with the Error suffix is the accepted style."
+        explanation: "Names should describe the failure and usually end in Error. Vague labels like error1 or problem hide meaning when debugging or catching."
       },
       {
         id: "q7",

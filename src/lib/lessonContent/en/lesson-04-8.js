@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_04_8 = {
   lessonId: "lesson-04-8",
@@ -767,15 +767,15 @@ for i, robot in enumerate(robots):
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "When is it better to use composition?",
+        question: "When is composition usually the better design choice?",
         options: [
-          "When you need flexibility and there is a HAS-A relationship",
-          "Always",
-          "Never",
-          "Only for complex classes"
+          "When the relationship is HAS-A and you want swappable parts",
+          "Always — inheritance should never be used",
+          "Never — prefer deep inheritance trees instead",
+          "Only when a class already has 20+ methods"
         ],
         correctAnswer: 0,
-        explanation: "Composition is better when you need flexibility and there is a 'has-a' relationship."
+        explanation: "Composition fits HAS-A (a Car has an Engine) and keeps parts replaceable. 'Always'/'never' extremes and 'only if huge' miss the relationship test."
       },
       {
         id: "q4",
@@ -795,13 +795,13 @@ for i, robot in enumerate(robots):
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is the main problem with deep inheritance?",
         options: [
-          "Harder to maintain and understand the code",
-          "Slow execution",
-          "More memory",
-          "Syntax errors"
+          "The hierarchy becomes hard to reason about and change",
+          "Python suddenly runs several times slower",
+          "Each level doubles the object's RAM usage",
+          "Deeper trees always cause SyntaxError"
         ],
         correctAnswer: 0,
-        explanation: "Deep inheritance hierarchies are hard to maintain and understand."
+        explanation: "Deep chains hurt clarity and maintenance when behavior is spread across many parents. Speed, memory, and syntax errors are not the usual main issue."
       },
       {
         id: "q6",

@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_04_2 = {
   lessonId: "lesson-04-2",
@@ -469,15 +469,15 @@ account.status()`,
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Where are instance attributes usually created?",
+        question: "Where should per-object state like a student's name usually be set?",
         options: [
-          "In __init__ via self",
-          "Only outside the class",
-          "Only in @staticmethod",
-          "In a module import"
+          "In __init__ with self.name = ...",
+          "Only as a bare name outside the class body",
+          "Only inside a @staticmethod helper",
+          "Automatically when the module is imported"
         ],
         correctAnswer: 0,
-        explanation: "Instance attributes are set in the constructor: self.name = ..."
+        explanation: "Instance data is assigned on self in __init__. Module-level names and staticmethods do not create per-object attributes by themselves."
       },
       {
         id: "q2",
@@ -508,26 +508,26 @@ account.status()`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is an instance method?",
         options: [
-          "A method with parameter self that works with a specific object",
-          "A function outside a class",
-          "Only a method with no parameters",
-          "The @property decorator"
+          "A method whose first arg is self for one object",
+          "A plain function defined outside any class",
+          "A method that must take zero parameters",
+          "Another name for the @property decorator"
         ],
         correctAnswer: 0,
-        explanation: "An instance method receives self and works with the object’s state."
+        explanation: "Instance methods take self and use that object's attributes. They are not free functions, zero-arg-only methods, or @property itself."
       },
       {
         id: "q5",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
         question: "What is wrong?\n\n```python\nclass Bag:\n    items = []\n    def add(self, x):\n        self.items.append(x)\n```",
         options: [
-          "items as [] on the class will be shared by all instances",
-          "You cannot use append",
-          "@staticmethod is required",
-          "There is no problem"
+          "Class-level [] is shared by every Bag instance",
+          "Lists never support the append method",
+          "@staticmethod is required on every method",
+          "The pattern is fine — no shared-state bug"
         ],
         correctAnswer: 0,
-        explanation: "A mutable class attribute is shared between objects - better use self.items = [] in __init__."
+        explanation: "items = [] on the class is one shared list. Prefer self.items = [] in __init__. append works; staticmethod is unrelated; there is a real problem."
       },
       {
         id: "q6",

@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_04_3 = {
   lessonId: "lesson-04-3",
@@ -430,15 +430,15 @@ product.info()`,
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "What does a leading underscore (_value) mean?",
+        question: "You see self._balance on a BankAccount. What does the leading underscore signal?",
         options: [
-          "Convention: the attribute is internal (protected)",
-          "The attribute is completely inaccessible",
-          "The attribute is deleted automatically",
-          "It is a syntax error"
+          "Convention: treat it as internal — avoid casual outside use",
+          "Python hard-blocks all reads of that name forever",
+          "The attribute is deleted after the first access",
+          "A leading underscore is always a SyntaxError"
         ],
         correctAnswer: 0,
-        explanation: "_value is a signal to developers not to use the attribute from outside."
+        explanation: "_name is a convention for 'internal' API, not true privacy. The attribute still exists; it is not auto-deleted and not a syntax error."
       },
       {
         id: "q3",
@@ -467,15 +467,15 @@ product.info()`,
       {
         id: "q5",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Why is @property needed?",
+        question: "Why use @property on a getter?",
         options: [
-          "To access a method like an attribute with optional validation",
-          "To create a new class",
-          "To delete an object",
-          "To import a module"
+          "So callers write obj.x while you keep logic/validation",
+          "It is required to create any new class body",
+          "It is the only way to delete an object safely",
+          "It replaces the import statement for modules"
         ],
         correctAnswer: 0,
-        explanation: "@property gives convenient syntax obj.x with getter/setter logic."
+        explanation: "@property exposes a method as attribute syntax (obj.x) and can validate in a setter. It does not create classes, delete objects, or import modules."
       },
       {
         id: "q6",

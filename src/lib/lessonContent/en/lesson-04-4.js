@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_04_4 = {
   lessonId: "lesson-04-4",
@@ -449,13 +449,13 @@ create_animal(kind2, name2).speak()`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is inheritance?",
         options: [
-          "Creating a new class based on an existing one and inheriting members",
-          "Deleting parent class methods",
-          "Copying project files",
-          "Converting int to str"
+          "A child class reuses a parent's attributes and methods",
+          "Deleting every method from the parent class",
+          "Copying .py files into a new project folder",
+          "Casting an int value into a str value"
         ],
         correctAnswer: 0,
-        explanation: "Inheritance lets a child class take over parent attributes and methods."
+        explanation: "Inheritance means a subclass extends a parent and reuses its members. It is not file copying, type casting, or deleting parent methods."
       },
       {
         id: "q2",
@@ -505,20 +505,20 @@ create_animal(kind2, name2).speak()`,
           "Error"
         ],
         correctAnswer: 0,
-        explanation: "super().f() returns 1, plus 2 gives 3."
+        explanation: "B.f calls super().f() (A's version returns 1) then adds 2, so print shows 3 — not 1 alone, not 2 alone, and not an error."
       },
       {
         id: "q6",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What does method overriding mean?",
         options: [
-          "Declaring in a child class a method with the same name that replaces the parent one",
-          "Deleting the parent class",
-          "Creating two identical classes",
-          "Importing a module twice"
+          "Child defines same-named method, replacing the parent's",
+          "Deleting the parent class from the program",
+          "Creating two classes with identical empty bodies",
+          "Importing the same module two times in a file"
         ],
         correctAnswer: 0,
-        explanation: "Override replaces method behavior for child instances."
+        explanation: "Override: the child supplies its own version of a parent method name. That is not deleting the parent, cloning empty classes, or double-importing."
       },
       {
         id: "q7",

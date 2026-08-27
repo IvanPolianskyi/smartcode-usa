@@ -2,7 +2,7 @@
 * Lesson 08-5: Working with CSV and Excel 
 * Full educational content*/
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_08_5 = {
   lessonId: "lesson-08-5",

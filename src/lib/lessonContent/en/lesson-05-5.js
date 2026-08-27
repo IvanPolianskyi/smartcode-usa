@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_05_5 = {
   lessonId: "lesson-05-5",
@@ -550,15 +550,15 @@ for _ in range(n):
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Which error-handling principle is most important?",
+        question: "Before processing user input, which principle matters most?",
         options: [
-          "Validate at the entrance",
-          "Execution speed",
-          "Minimal code",
-          "No comments"
+          "Validate at the entrance, then process",
+          "Optimize for maximum execution speed first",
+          "Write the fewest lines possible, skip checks",
+          "Avoid comments so errors stay mysterious"
         ],
         correctAnswer: 0,
-        explanation: "Validate at the entrance is one of the most important principles because it prevents processing bad data."
+        explanation: "Checking inputs early stops bad data from corrupting later logic. Speed, brevity, and skipping comments do not replace validation."
       },
       {
         id: "q2",
@@ -589,15 +589,15 @@ for _ in range(n):
       {
         id: "q4",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "When is an exception hierarchy better?",
+        question: "When is an exception hierarchy the better design?",
         options: [
-          "When you need to handle different error types differently",
-          "When you need faster code",
-          "When you need less memory",
-          "Never"
+          "When callers must handle specific vs general errors",
+          "Whenever you want the program to run faster",
+          "Only as a trick to reduce memory usage",
+          "Never — flat raise Exception is always enough"
         ],
         correctAnswer: 0,
-        explanation: "An exception hierarchy lets you handle different error types at different levels (specific and general)."
+        explanation: "Hierarchies let you except SpecificError for special cases and except BaseError for the group. They are not about speed or memory, and 'never' throws away that control."
       },
       {
         id: "q5",

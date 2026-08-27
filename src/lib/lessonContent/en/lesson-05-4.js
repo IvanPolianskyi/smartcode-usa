@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_05_4 = {
   lessonId: "lesson-05-4",
@@ -377,13 +377,13 @@ for _ in range(n):
         type: QUIZ_QUESTION_TYPES.CODE_READING,
         question: "What happens?\n\n```python\nassert 1 == 2, \"not ok\"\n```",
         options: [
-          "AssertionError with message \"not ok\"",
-          "ValueError",
-          "Nothing",
-          "Prints \"not ok\""
+          "AssertionError carrying message 'not ok'",
+          "ValueError because 1 and 2 differ",
+          "Silent success — assert never raises",
+          "print('not ok') then continue running"
         ],
         correctAnswer: 0,
-        explanation: "Condition is false - AssertionError is raised with the text."
+        explanation: "A false assert raises AssertionError and uses the message you provided. It does not become ValueError, succeed silently, or print without raising."
       },
       {
         id: "q4",
@@ -398,13 +398,13 @@ for _ in range(n):
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is data validation?",
         options: [
-          "Checking that data is correct before processing",
-          "Sorting a list",
-          "Deleting a file",
-          "Compiling a program"
+          "Checking inputs meet rules before you process them",
+          "Sorting a list into ascending order only",
+          "Deleting a file from the filesystem",
+          "Compiling .py sources into bytecode"
         ],
         correctAnswer: 0,
-        explanation: "Validation checks that data meets the rules."
+        explanation: "Validation means verifying data is acceptable (type/range/format) before use. Sorting, deleting files, and compiling are different tasks."
       },
       {
         id: "q6",

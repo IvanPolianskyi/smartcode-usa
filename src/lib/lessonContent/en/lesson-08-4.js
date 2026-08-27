@@ -2,7 +2,7 @@
 * Lesson 08-4: Working with JSON 
 * Full educational content*/
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_08_4 = {
   lessonId: "lesson-08-4",

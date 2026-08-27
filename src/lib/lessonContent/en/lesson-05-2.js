@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_05_2 = {
   lessonId: "lesson-05-2",
@@ -388,10 +388,10 @@ except ZeroDivisionError:
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Which exception occurs with int(\"abc\")?",
+        question: "Which exception does int(\"abc\") raise?",
         options: ["TypeError", "ValueError", "IndexError", "KeyError"],
         correctAnswer: 1,
-        explanation: "The string has type str, but the value is unsuitable for int - ValueError."
+        explanation: "The argument is already a str (correct type for int()), but \"abc\" is not a valid integer text — that is ValueError. TypeError would mean the wrong type (e.g. int([1]))."
       },
       {
         id: "q2",
@@ -428,7 +428,7 @@ except ZeroDivisionError:
         question: "Which exception for nums[10] when len(nums) == 3?",
         options: ["KeyError", "ValueError", "IndexError", "TypeError"],
         correctAnswer: 2,
-        explanation: "Index outside the list - IndexError."
+        explanation: "List access uses numeric indexes; 10 is past the last index, so IndexError. KeyError is for missing dict keys, ValueError for bad values, TypeError for wrong types."
       },
       {
         id: "q6",
@@ -457,7 +457,7 @@ except ZeroDivisionError:
         question: "\"hello\" + 5 raises:",
         options: ["ValueError", "TypeError", "IndexError", "ZeroDivisionError"],
         correctAnswer: 1,
-        explanation: "Incompatible types for + - TypeError."
+        explanation: "str and int cannot be added with +, so Python raises TypeError. ValueError is for the right type but bad value; IndexError is for bad indexes; ZeroDivisionError is for / 0."
       }
     ],
     timeLimit: 15,

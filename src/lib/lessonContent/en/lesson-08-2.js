@@ -2,7 +2,7 @@
 * Lesson 08-2: The itertools module 
 * Full educational content*/
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_08_2 = {
   lessonId: "lesson-08-2",

@@ -3,7 +3,7 @@
  * Full educational content (extra lesson)
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_15_6 = {
   lessonId: "lesson-15-6",

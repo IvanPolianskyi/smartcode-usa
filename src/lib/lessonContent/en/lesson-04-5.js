@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_04_5 = {
   lessonId: "lesson-04-5",
@@ -462,13 +462,13 @@ for name, shape in shapes:
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is polymorphism?",
         options: [
-          "One interface (method) - different behavior in different classes",
-          "Saving data to a file",
-          "Deleting unused variables",
-          "Compiling code to bytecode"
+          "Same method name, different class-specific behavior",
+          "Writing object state out to a disk file",
+          "Removing variables the GC already freed",
+          "Turning source code into .pyc bytecode"
         ],
         correctAnswer: 0,
-        explanation: "Polymorphism lets you call the same methods on different types with different results."
+        explanation: "Polymorphism means one interface (e.g. .run()) with type-specific results. File I/O, deleting vars, and compiling are unrelated."
       },
       {
         id: "q2",
@@ -523,15 +523,15 @@ for name, shape in shapes:
       {
         id: "q6",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Which example is already polymorphism in built-in Python?",
+        question: "Which built-in already shows polymorphism?",
         options: [
-          "len() works for both a string and a list",
-          "The def keyword",
-          "The assignment operator =",
-          "The # comment"
+          "len() works on both str and list objects",
+          "The def keyword that starts a function",
+          "The = operator that binds a name",
+          "A # comment that documents a line"
         ],
         correctAnswer: 0,
-        explanation: "len() is one interface for different types."
+        explanation: "len() is one call that dispatches by type (str, list, …). Keywords, assignment, and comments are not polymorphic interfaces."
       },
       {
         id: "q7",

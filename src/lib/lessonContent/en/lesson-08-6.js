@@ -2,7 +2,7 @@
 * Lesson 08-6: Practice: data processing with modules 
 * Full educational content*/
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_08_6 = {
   lessonId: "lesson-08-6",

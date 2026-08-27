@@ -2,7 +2,7 @@
  * Lesson 07-3: Iterators and the iteration protocol
  * Full educational content*/
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_07_3 = {
   lessonId: "lesson-07-3",

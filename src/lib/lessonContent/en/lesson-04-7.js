@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_04_7 = {
   lessonId: "lesson-04-7",
@@ -731,31 +731,31 @@ json_processor.process()`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is an abstract class?",
         options: [
-          "A class that cannot be instantiated and that defines an interface",
-          "A class without methods",
-          "A class with private attributes",
-          "A static class"
+          "A non-instantiable class that defines a required interface",
+          "Any class that happens to have zero methods",
+          "A class whose attributes are all private names",
+          "A class marked static with no instances ever"
         ],
         correctAnswer: 0,
-        explanation: "An abstract class cannot be instantiated and defines a contract for child classes."
+        explanation: "Abstract classes (ABC + @abstractmethod) define a contract and cannot be constructed until subclasses implement the abstracts. Empty, private, or 'static' alone do not make a class abstract."
       },
       {
         id: "q2",
         type: QUIZ_QUESTION_TYPES.CODE_READING,
         question: "What happens when you try to create an object?\n\n```python\nfrom abc import ABC, abstractmethod\n\nclass Shape(ABC):\n    @abstractmethod\n    def area(self):\n        pass\n\nshape = Shape()\n```",
         options: [
-          "TypeError: cannot create an object of an abstract class",
-          "The object is created successfully",
-          "None",
-          "SyntaxError"
+          "TypeError — abstract Shape cannot be instantiated",
+          "shape becomes a normal Shape instance",
+          "The expression evaluates silently to None",
+          "SyntaxError on the class Shape line"
         ],
         correctAnswer: 0,
-        explanation: "You cannot create objects of abstract classes."
+        explanation: "Shape still has abstract area(), so Shape() raises TypeError. It does not succeed, return None, or fail as SyntaxError."
       },
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Which decorator is used for abstract methods?",
+        question: "You need subclasses to implement area(). Which decorator marks that requirement?",
         options: [
           "@abstractmethod",
           "@abstract",
@@ -763,7 +763,7 @@ json_processor.process()`,
           "@interface"
         ],
         correctAnswer: 0,
-        explanation: "@abstractmethod is the decorator for marking abstract methods."
+        explanation: "From abc, @abstractmethod marks methods subclasses must implement. @abstract/@virtual/@interface are not the Python ABC decorator."
       },
       {
         id: "q4",

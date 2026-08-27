@@ -2,7 +2,7 @@
 * Lesson 07-4: Practice: generators in practice 
 * Full educational content*/
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_07_4 = {
   lessonId: "lesson-07-4",

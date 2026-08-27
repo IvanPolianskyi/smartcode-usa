@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_04_6 = {
   lessonId: "lesson-04-6",
@@ -639,13 +639,13 @@ print(f"Available books: {library.available_books_count()}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "What is a dataclass in Python?",
         options: [
-          "A decorator for automatic generation of data class methods",
-          "A data type",
-          "A function",
-          "A module"
+          "A @dataclass decorator that auto-builds helpers",
+          "A brand-new primitive type like int or float",
+          "Just another name for a plain function",
+          "A standard-library module you always import"
         ],
         correctAnswer: 0,
-        explanation: "A dataclass is a decorator that automatically generates methods for classes that store data."
+        explanation: "@dataclass generates __init__/__repr__/__eq__ for data-holding classes. It is a decorator pattern, not a new primitive, a function synonym, or 'the module' itself."
       },
       {
         id: "q2",
@@ -663,15 +663,15 @@ print(f"Available books: {library.available_books_count()}")`,
       {
         id: "q3",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "How do you correctly set a list as a default value in a dataclass?",
+        question: "How do you safely default a list field on a dataclass?",
         options: [
           "items: list = field(default_factory=list)",
-          "items: list = []",
-          "items = []",
-          "items: list()"
+          "items: list = []  # shared mutable default",
+          "items = [] without a type annotation",
+          "items: list() as if list were a type alias"
         ],
         correctAnswer: 0,
-        explanation: "For mutable objects (lists, dictionaries) you need to use field(default_factory)."
+        explanation: "Mutable defaults need field(default_factory=list) so each instance gets its own list. Bare [] is shared across instances; list() is not a valid annotation form here."
       },
       {
         id: "q4",
