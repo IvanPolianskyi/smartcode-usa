@@ -1,14 +1,14 @@
 # Трек B — Antigravity: Статус
 
-Оновлено: 2026-08-27 14:57
+Оновлено: 2026-08-27 14:58
 
 ## Прогрес
 - [x] A1 Карта бандла і baseline — done, звіт: `docs/agents/reports/perf-baseline.md`
 - [x] A2 Прибрати контент курсів із клієнтського бандла — done, звіт: `docs/agents/reports/perf-after.md`
 - [x] A3 Мертвий код — done
 - [x] A4 Розібрати монолітний LessonPage.js — done
-- [ ] A5 Безпека рендерингу контенту — in progress
-- [ ] A6 Доступність (a11y) — todo
+- [x] A5 Безпека рендерингу контенту — done
+- [ ] A6 Доступність (a11y) — in progress
 - [ ] A7 Core Web Vitals і рендеринг — todo
 - [ ] A8 SEO — todo
 - [ ] A9 Полагодити інструменти якості — todo
@@ -70,6 +70,17 @@
   - `npm run build`: успішно (39/39 сторінок).
 - **Метрика до/після**:
   - `LessonPage.js` скорочено з 1735 рядків до компактного контролера (650 рядків) з ізольованими компонентами.
+
+### A5: Безпека рендерингу контенту
+- **Що змінено**:
+  - `src/lib/markdownToHtml.js`: додано попереднє HTML-екранування тексту перед підстановкою розмітки та санітизацію схем посилань (блокування `javascript:`, `vbscript:`, `data:`).
+  - `src/lib/markdownToHtml.test.mjs`: додано повний набір unit-тестів на XSS / sanitization / markdown edge cases.
+  - `next.config.mjs`: видалено небезпечний wildcard `hostname: '**'` з `images.remotePatterns`.
+- **Як перевірено**:
+  - `node --test src/lib/markdownToHtml.test.mjs`: 7 pass / 0 fail.
+  - `npm run build`: успішно.
+- **Метрика до/після**:
+  - Всі посилання тепер мають захист від XSS (`rel="noopener noreferrer"`, блокування небезпечних протоколів), wildcard SSRF закрито.
 
 ## Handoff (знахідки в чужих або заморожених файлах)
 - `src/lib/lessonContent/en/lesson-12-2.js` — містить сирий `<img>` тег замість оптимізованого формату — пропозиція: нормалізувати через контентний пайплайн (Cursor) — ризик: CLS при завантаженні.
