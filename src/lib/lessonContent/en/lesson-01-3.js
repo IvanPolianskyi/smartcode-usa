@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_01_3 = {
   lessonId: "lesson-01-3",
@@ -329,7 +329,7 @@ print(f"Cannot join: {cannot_join}")`,
           "3"
         ],
         correctAnswer: 1,
-        explanation: "5 > 3 is True, so not True = False."
+        explanation: "Parentheses evaluate 5 > 3 first (True). not flips that boolean, so the result is False — not the numbers 5 or 3."
       },
       {
         id: "q4",
@@ -360,15 +360,15 @@ print(f"Cannot join: {cannot_join}")`,
       {
         id: "q6",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Which operator returns True only if both conditions are True?",
+        question: "You need a check that is True only when age >= 13 AND score >= 60. Which expression does that?",
         options: [
-          "and",
-          "or",
-          "not",
-          "=="
+          "age >= 13 and score >= 60",
+          "age >= 13 or score >= 60",
+          "not (age >= 13)",
+          "age >= 13 + score >= 60"
         ],
         correctAnswer: 0,
-        explanation: "The and operator returns True only if both conditions are True."
+        explanation: "and requires both sides True. or would pass if either check passes, and not only flips one condition — it does not combine both."
       }
     ],
     timeLimit: 10,

@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_02_8 = {
   lessonId: "lesson-02-8",
@@ -474,15 +474,15 @@ for author, titles in by_author.items():
       {
         id: "q1",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "What is better to use for filtering a list?",
+        question: "You need a new list of books with rating >= 4. Which approach is clearest?",
         options: [
-          "Nested loops",
-          "List comprehension",
-          "Only if",
-          "Nothing"
+          "Nested loops that mutate the original list in place",
+          "A list comprehension with an if filter",
+          "A lone if with no loop over the books",
+          "Deleting low ratings from a set of integers"
         ],
         correctAnswer: 1,
-        explanation: "List comprehension is the most efficient and readable way to filter."
+        explanation: "A comprehension with if builds a filtered list in one readable expression. Nested mutating loops are harder to follow, and a bare if cannot walk the collection."
       },
       {
         id: "q2",
@@ -515,26 +515,26 @@ for author, titles in by_author.items():
         type: QUIZ_QUESTION_TYPES.CODE_READING,
         question: "What does this code create?\n\n```python\nhigh_rated = [b['title'] for b in books if b['rating'] >= 4.5]\n```",
         options: [
-          "A list of all books",
-          "A list of titles of books with rating >= 4.5",
-          "A list of ratings",
-          "An error"
+          "A list of every book dict unchanged",
+          "Titles of books rated 4.5 or higher",
+          "A list of all rating numbers only",
+          "A runtime error from invalid syntax"
         ],
         correctAnswer: 1,
-        explanation: "The list comprehension filters books with rating >= 4.5 and takes their titles."
+        explanation: "The comprehension keeps only books with rating >= 4.5 and collects b['title'], so you get titles — not full dicts or raw rating numbers."
       },
       {
         id: "q5",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "Why is it important to test code on different data?",
+        question: "Why test filtering code on empty lists and edge ratings?",
         options: [
-          "To find bugs",
-          "To make sure the code works correctly",
-          "Both options",
-          "It is not important"
+          "Only to make the program run faster",
+          "To catch bugs that happy-path data hides",
+          "Because Python requires at least three test cases",
+          "It is optional once the code compiles"
         ],
-        correctAnswer: 2,
-        explanation: "Testing on different data helps find bugs and confirm correctness."
+        correctAnswer: 1,
+        explanation: "Edge cases often expose off-by-one and empty-input bugs that typical sample data never triggers. Speed and 'compile success' are not the reason to test."
       }
     ],
     timeLimit: 15,

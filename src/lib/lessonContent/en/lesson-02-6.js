@@ -3,7 +3,7 @@
  * Full educational content
  */
 
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 export const lesson_02_6 = {
   lessonId: "lesson-02-6",
@@ -431,20 +431,20 @@ print(f"Grades 80-90: {in_range}")`,
           "An error"
         ],
         correctAnswer: 0,
-        explanation: "1 is odd, 2 is even, 3 is odd."
+        explanation: "For each x the ternary picks 'even' or 'odd'. 1→odd, 2→even, 3→odd, so you get ['odd', 'even', 'odd'] — not the reverse pairing."
       },
       {
         id: "q4",
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
-        question: "What is the correct syntax for a list comprehension with a condition?",
+        question: "In [x for x in nums if x > 0], what does the if clause do?",
         options: [
-          "[expression for item in sequence if condition]",
-          "[expression if condition for item in sequence]",
-          "[for item in sequence if condition expression]",
-          "[if condition expression for item in sequence]"
+          "Keeps only elements where the condition is True",
+          "Stops the comprehension after the first True match",
+          "Sorts the list before building the result",
+          "Converts every element into a boolean value"
         ],
         correctAnswer: 0,
-        explanation: "Correct order: expression for item in sequence if condition"
+        explanation: "The trailing if filters: only items that make the condition True are kept. It does not stop early, sort, or turn values into booleans."
       },
       {
         id: "q5",
@@ -464,13 +464,13 @@ print(f"Grades 80-90: {in_range}")`,
         type: QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE,
         question: "When is it better to use a list comprehension instead of a loop?",
         options: [
-          "Always",
-          "For simple list creation/filtering operations",
-          "For complex operations with break/continue",
-          "Never"
+          "Always — even for multi-step logic with break",
+          "For simple create/filter builds of a new list",
+          "When you need break, continue, or many statements",
+          "Never — always write an explicit for-loop instead"
         ],
         correctAnswer: 1,
-        explanation: "List comprehensions are better for simple operations. For complex ones with break/continue, use a loop."
+        explanation: "Comprehensions shine for simple map/filter builds. If you need break/continue or several statements, a normal loop is clearer — 'always' and 'never' are both wrong extremes."
       }
     ],
     timeLimit: 10,
