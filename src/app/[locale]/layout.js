@@ -9,6 +9,7 @@ import SupportWidget from '@/components/Support/SupportWidget'
 import Analytics from '@/components/Analytics/Analytics'
 import VisitTracker from '@/components/Analytics/VisitTracker'
 import { routing } from '@/i18n/routing'
+import { normalizeSiteUrl } from '@/lib/legalConfig'
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -39,7 +40,7 @@ const sourceSerif = Source_Serif_4({
 	weight: ['600', '700'],
 })
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://smartcode.academy'
+const SITE_URL = normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL)
 
 /**
  * Site-wide metadata defaults.

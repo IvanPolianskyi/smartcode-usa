@@ -3,8 +3,24 @@
  * Paddle reviewers check these values - never leave template placeholders.
  */
 
+/** Strip BOM / whitespace from env URLs (Windows copy-paste into Vercel). */
+export function normalizeSiteUrl(
+	raw,
+	fallback = 'https://smartcode.academy'
+) {
+	const clean = String(raw || '')
+		.replace(/^\uFEFF/, '')
+		.trim()
+	if (!clean) return fallback
+	try {
+		return new URL(clean).toString().replace(/\/$/, '')
+	} catch {
+		return fallback
+	}
+}
+
 function siteHostFromEnv() {
-	const raw = process.env.NEXT_PUBLIC_SITE_URL || 'https://smartcode.academy'
+	const raw = normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL)
 	try {
 		return new URL(raw).host
 	} catch {
@@ -40,7 +56,7 @@ export const LEGAL = {
 		'smartcodeacadem@gmail.com',
 	supportPhone: process.env.NEXT_PUBLIC_SUPPORT_PHONE || '+380 96 957 67 23',
 	siteDomain: displaySiteHost(),
-	siteUrl: `https://${displaySiteHost()}`,
+	siteUrl: normalizeSiteUrl(`https://${displaySiteHost()}`),
 	lastUpdated: '26 August 2026',
 	/** Per-program pricing shown on the marketing site and in Terms. */
 	monthlyPrice: '$14',

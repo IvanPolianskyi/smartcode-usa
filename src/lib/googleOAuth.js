@@ -1,4 +1,5 @@
 import crypto from 'crypto'
+import { normalizeSiteUrl } from './legalConfig.js'
 
 const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth'
 const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token'
@@ -8,11 +9,11 @@ export const GOOGLE_OAUTH_STATE_COOKIE = 'google_oauth_state'
 export const GOOGLE_OAUTH_REDIRECT_COOKIE = 'google_oauth_redirect'
 
 export function getSiteUrl() {
-	return (
+	return normalizeSiteUrl(
 		process.env.NEXT_PUBLIC_SITE_URL ||
-		(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
-		'http://localhost:3000'
-	).replace(/\/$/, '')
+			(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
+			'http://localhost:3000'
+	)
 }
 
 export function getGoogleOAuthConfig() {
