@@ -16,10 +16,22 @@ import {
 import { getPythonLessonContent } from '@/lib/quizValidation'
 import { checkPracticeOutputs } from '@/lib/practiceValidation'
 import {
+  getLessonInteractive,
+  getLessonInteractives,
   lessonRequiresPractice,
   lessonRequiresQuiz,
   scoreLessonQuiz,
 } from '@/lib/quizValidation'
+import {
+  awardKey,
+  checkInteractiveSubmission,
+  grantAchievements,
+  normalizeGamification,
+  serializeGamification,
+  touchStreak,
+  totalXp,
+  XP_AWARDS,
+} from '@/lib/lessonInteractiveXp'
 import {
   migrateRobloxProgressDoc,
   ROBLOX_CURRICULUM_REVISION,
@@ -29,6 +41,7 @@ const ALLOWED_ACTIONS = new Set([
   'completeLesson',
   'completeQuiz',
   'completePracticeTask',
+  'completeInteractive',
   'updateCurrentLesson',
 ])
 
@@ -121,6 +134,7 @@ export async function GET(request) {
       currentLesson: doc.currentLesson || 0,
       overallProgress: doc.overallProgress || 0,
       certificates: doc.certificates || [],
+      gamification: serializeGamification(doc.gamification),
       ...(courseId === ROBLOX_COURSE_ID
         ? { robloxCurriculumRevision: doc.robloxCurriculumRevision || ROBLOX_CURRICULUM_REVISION }
         : {}),
@@ -155,6 +169,9 @@ export async function POST(request) {
       quizAnswers,
       practiceOutput,
       practiceOutputs,
+      interactiveId,
+      submission,
+      hintsUsed,
       locale = 'en',
       action,
     } = body
@@ -234,7 +251,7 @@ export async function POST(request) {
       }
     }
 
-    const lessonScopedActions = ['completeLesson', 'completeQuiz', 'completePracticeTask', 'updateCurrentLesson']
+    const lessonScopedActions = ['completeLesson', 'completeQuiz', 'completePracticeTask', 'completeInteractive', 'updateCurrentLesson']
     if (lessonScopedActions.includes(action) && lessonId) {
       if (!canUpdateLessonProgress(user, courseId, lessonId, progress)) {
         return NextResponse.json(
@@ -246,6 +263,10 @@ export async function POST(request) {
 
     const update = { $set: { updatedAt: new Date() } }
     const addToSetOperations = {}
+
+    // Filled in by the action blocks below, consumed by the gamification pass.
+    let quizResult = null
+    let interactiveAward = null
 
     if (action === 'completeLesson' && lessonId) {
       const prereq = lessonPrerequisitesMet({
@@ -260,6 +281,7 @@ export async function POST(request) {
 
       if (!progress.completedLessons || !progress.completedLessons.includes(lessonId)) {
         addToSetOperations.completedLessons = lessonId
+        update.$set[`lessonCompletedAt.${lessonId}`] = new Date()
       }
     }
 
@@ -290,6 +312,7 @@ export async function POST(request) {
         )
       }
 
+      quizResult = scored
       update.$set[`completedQuizzes.${lessonId}`] = {
         score: scored.score,
         attempts: (progress.completedQuizzes?.[lessonId]?.attempts || 0) + 1,
@@ -333,6 +356,45 @@ export async function POST(request) {
       }
     }
 
+    if (action === 'completeInteractive') {
+      if (!lessonId || !interactiveId) {
+        return NextResponse.json(
+          { error: 'Lesson and interactive are required' },
+          { status: 400 }
+        )
+      }
+
+      const interactive = getLessonInteractive(
+        courseId,
+        lessonId,
+        interactiveId,
+        contentLocale
+      )
+      if (!interactive) {
+        return NextResponse.json(
+          { error: 'Interactive not found for this lesson' },
+          { status: 400 }
+        )
+      }
+
+      // Scored against the lesson definition - the client's own verdict is
+      // never trusted, only the raw submission it sends.
+      const verdict = checkInteractiveSubmission(interactive, submission)
+      if (!verdict.ok) {
+        return NextResponse.json(
+          { error: 'Incorrect answer', reason: verdict.reason },
+          { status: 400 }
+        )
+      }
+
+      interactiveAward = {
+        key: awardKey('interactive', lessonId, `${interactive.type}:${interactive.id}`),
+        xp: XP_AWARDS[interactive.type] || 0,
+        // A first-try correct answer is what "mind reader" counts.
+        flawless: Number(submission?.attempts) <= 1,
+      }
+    }
+
     if (action === 'updateCurrentLesson' && lessonId) {
       update.$set.currentLesson = lessonId
     }
@@ -356,6 +418,74 @@ export async function POST(request) {
 
     update.$set.overallProgress = newProgress
 
+    /* ---------------------------------------------------------------------
+     * Gamification. XP is recorded in an idempotent ledger keyed by action, so
+     * replaying a request can never inflate a score, and the total is always
+     * recomputed from the ledger rather than incremented in place.
+     * ------------------------------------------------------------------- */
+    const previousGamification = normalizeGamification(progress.gamification)
+    const nextAwards = { ...previousGamification.awards }
+    const xpBefore = totalXp(previousGamification)
+    let flawless = previousGamification.flawless
+
+    if (interactiveAward) {
+      if (!nextAwards[interactiveAward.key]) {
+        nextAwards[interactiveAward.key] = interactiveAward.xp
+        if (interactiveAward.flawless) flawless += 1
+      }
+    }
+
+    if (action === 'completePracticeTask' && lessonId) {
+      nextAwards[awardKey('practice', lessonId)] = XP_AWARDS.practiceTask
+      // Solving without opening a hint earns the "no safety net" bonus - but
+      // only if no earlier attempt on this lesson already leaned on one.
+      if (!hintsUsed && !previousGamification.awards[awardKey('practice', lessonId)]) {
+        nextAwards[awardKey('practiceClean', lessonId)] = XP_AWARDS.practiceNoHints
+      }
+    }
+
+    if (quizResult?.passed && lessonId) {
+      nextAwards[awardKey('quiz', lessonId)] = XP_AWARDS.quizPassed
+      if (quizResult.score === 100) {
+        nextAwards[awardKey('quizPerfect', lessonId)] = XP_AWARDS.quizPerfectBonus
+      }
+    }
+
+    if (action === 'completeLesson' && lessonId) {
+      nextAwards[awardKey('lesson', lessonId)] = XP_AWARDS.lessonComplete
+    }
+
+    // Achievement predicates read the post-update picture, not the stale doc.
+    const projectedProgress = {
+      ...progress,
+      completedLessons: updatedCompletedLessons,
+      completedPracticeTasks:
+        update.$set.completedPracticeTasks || progress.completedPracticeTasks || [],
+      completedQuizzes: {
+        ...(progress.completedQuizzes || {}),
+        ...(quizResult && lessonId
+          ? { [lessonId]: { score: quizResult.score, passed: quizResult.passed } }
+          : {}),
+      },
+    }
+
+    const { gamification: grantedGamification, unlocked } = grantAchievements({
+      gamification: {
+        ...previousGamification,
+        awards: nextAwards,
+        flawless,
+        streak: touchStreak(previousGamification.streak),
+      },
+      progress: projectedProgress,
+      lessonId,
+      lessonInteractiveIds: lessonId
+        ? getLessonInteractives(courseId, lessonId, contentLocale).map((i) => i.id)
+        : [],
+    })
+
+    update.$set.gamification = grantedGamification
+    const xpGained = Math.max(0, totalXp(grantedGamification) - xpBefore)
+
     await progressCollection.updateOne(
       { userId: userIdObj, courseId },
       update
@@ -376,10 +506,18 @@ export async function POST(request) {
       currentModule: updatedProgress.currentModule || 0,
       currentLesson: updatedProgress.currentLesson || 0,
       overallProgress: updatedProgress.overallProgress || 0,
-      certificates: updatedProgress.certificates || []
+      certificates: updatedProgress.certificates || [],
+      gamification: serializeGamification(updatedProgress.gamification),
     }
 
-    return NextResponse.json({ progress: progressResponse }, { status: 200 })
+    return NextResponse.json(
+      {
+        progress: progressResponse,
+        xpGained,
+        unlockedAchievements: unlocked,
+      },
+      { status: 200 }
+    )
   } catch (error) {
     console.error('Update progress error:', error)
     return NextResponse.json(

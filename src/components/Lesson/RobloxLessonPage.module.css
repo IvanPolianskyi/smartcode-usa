@@ -67,20 +67,26 @@
 
 .celebrateBanner {
   display: flex;
-  gap: 0.85rem;
-  align-items: flex-start;
-  padding: 1rem 1.15rem;
-  margin-bottom: 1.1rem;
-  border-radius: 16px;
-  border: 1px solid rgba(16, 185, 129, 0.35);
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(167, 139, 250, 0.12));
+  gap: 1rem;
+  align-items: center;
+  padding: 1.15rem 1.35rem;
+  margin-bottom: 1.25rem;
+  border-radius: 18px;
+  border: 1.5px solid rgba(16, 185, 129, 0.35);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.14), rgba(252, 110, 81, 0.12));
   color: var(--text-primary);
+}
+
+.checkpointPip {
+  flex-shrink: 0;
 }
 
 .celebrateBanner strong {
   display: block;
-  margin-bottom: 0.2rem;
-  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #10b981;
 }
 
 .celebrateBanner p {
@@ -88,6 +94,26 @@
   font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.45;
+}
+
+.mascotBanner {
+  margin-bottom: 1.25rem;
+  padding: 0.85rem 1.1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 18px;
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.04);
+}
+
+:global([data-theme="dark"]) .mascotBanner {
+  background: rgba(30, 31, 38, 0.7);
+  border-color: rgba(44, 46, 56, 0.8);
+}
+
+.scorePipWrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.75rem;
 }
 
 .practiceGate {
@@ -938,4 +964,81 @@
   .panel {
     padding: 1.75rem 1.65rem;
   }
+}
+
+/* ---------- Gamification: rank + XP ---------- */
+
+.metaPillRank {
+  background: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.28);
+  color: #a78bfa;
+  font-weight: 800;
+  cursor: default;
+}
+
+.metaPillXp {
+  background: rgba(252, 110, 81, 0.12);
+  border-color: rgba(252, 110, 81, 0.28);
+  color: var(--brand-accent);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.xpBreakdown {
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(252, 110, 81, 0.2);
+  background: rgba(252, 110, 81, 0.06);
+  text-align: left;
+}
+
+.xpBreakdownTotal {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.55rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--brand-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.xpBreakdownList {
+  margin: 0;
+  padding-left: 1.05rem;
+  list-style: disc;
+}
+
+.xpBreakdownList li {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.xpLinePerfect {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  list-style: none;
+  margin-left: -1.05rem;
+  font-weight: 800;
+  color: var(--brand-accent);
+}
+
+.xpNudge {
+  margin-top: 0.7rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  border: 1px dashed rgba(252, 110, 81, 0.45);
+  background: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--brand-accent);
+  cursor: pointer;
+}
+
+.xpNudge:hover {
+  background: rgba(252, 110, 81, 0.1);
 }

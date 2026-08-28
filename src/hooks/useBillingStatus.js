@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { entitlementCoversCheckout } from '@/lib/billingActivation'
 
 async function fetchStatus() {
 	const response = await fetch('/api/billing/status', { credentials: 'include' })
@@ -83,13 +84,49 @@ export function formatBillingDate(value) {
 export function useBillingStatus() {
 	const searchParams = useSearchParams()
 	const checkoutSuccess = searchParams.get('checkout') === 'success'
+	const expectedCourseId = String(searchParams.get('course') || '').trim() || null
 	const [status, setStatus] = useState(null)
 	const [loading, setLoading] = useState(true)
 	const [activating, setActivating] = useState(checkoutSuccess)
 	const [activationStalled, setActivationStalled] = useState(false)
+	const [syncing, setSyncing] = useState(false)
 	const [error, setError] = useState(null)
 	const [opening, setOpening] = useState(false)
 	const [cancellingId, setCancellingId] = useState(null)
+
+	const markReady = useCallback(() => {
+		setActivating(false)
+		// The session's subscribedCourseIds decide whether the course card
+		// unlocks. It was fetched before the webhook landed, so re-sync it -
+		// otherwise a paying customer sees "locked" until they reload.
+		window.dispatchEvent(new Event('auth:login'))
+	}, [])
+
+	const syncPurchases = useCallback(async () => {
+		setSyncing(true)
+		setError(null)
+		try {
+			await fetch('/api/billing/reconcile', {
+				method: 'POST',
+				credentials: 'include',
+			})
+			const data = await fetchStatus()
+			setStatus(data)
+			// Always re-sync the session: reconcile may have added a second
+			// program (e.g. Roblox after Python) that the JWT payload still misses.
+			window.dispatchEvent(new Event('auth:login'))
+			if (entitlementCoversCheckout(data, expectedCourseId)) {
+				setActivationStalled(false)
+				setActivating(false)
+			}
+			return data
+		} catch (caught) {
+			setError(caught.message || 'Could not refresh access')
+			return null
+		} finally {
+			setSyncing(false)
+		}
+	}, [expectedCourseId])
 
 	useEffect(() => {
 		let cancelled = false
@@ -101,12 +138,8 @@ export function useBillingStatus() {
 				if (cancelled) return false
 				setStatus(data)
 				setError(null)
-				if (poll && data?.hasSubscription && (data.courseIds || []).length > 0) {
-					setActivating(false)
-					// The session's subscribedCourseIds decide whether the course card
-					// unlocks. It was fetched before the webhook landed, so re-sync it -
-					// otherwise a paying customer sees "locked" until they reload.
-					window.dispatchEvent(new Event('auth:login'))
+				if (poll && entitlementCoversCheckout(data, expectedCourseId)) {
+					markReady()
 					return true
 				}
 				return false
@@ -123,14 +156,38 @@ export function useBillingStatus() {
 		if (checkoutSuccess) {
 			setActivating(true)
 			let attempts = 0
+			let repaired = false
 			const poll = async () => {
 				attempts += 1
 				const ready = await load({ poll: true })
 				if (cancelled) return
 				if (ready) return
+
+				// Ask Paddle directly early when we know which course is missing:
+				// an existing Python sub used to stop this loop on the first tick,
+				// so a lost Roblox webhook never got repaired.
+				const shouldRepair =
+					!repaired && (attempts === 1 || attempts === 6)
+				if (shouldRepair) {
+					repaired = true
+					try {
+						await fetch('/api/billing/reconcile', {
+							method: 'POST',
+							credentials: 'include',
+						})
+						if (await load({ poll: true })) return
+						// Allow a second repair pass around the ~15s mark if the
+						// first attempt ran before Paddle finished creating the sub.
+						if (attempts === 1) repaired = false
+					} catch {
+						if (attempts === 1) repaired = false
+					}
+				}
+
 				if (attempts >= 12) {
-					// ~30s without a webhook. The payment is not lost - say so plainly
-					// instead of dropping the customer onto a silently locked dashboard.
+					// ~30s and Paddle has nothing for us either. The payment is not
+					// lost - say so plainly instead of dropping the customer onto a
+					// silently locked dashboard.
 					setActivating(false)
 					setActivationStalled(true)
 					return
@@ -144,7 +201,7 @@ export function useBillingStatus() {
 			cancelled = true
 			if (timer) clearTimeout(timer)
 		}
-	}, [checkoutSuccess])
+	}, [checkoutSuccess, expectedCourseId, markReady])
 
 	const openPortal = useCallback(async () => {
 		setOpening(true)
@@ -208,12 +265,15 @@ export function useBillingStatus() {
 		loading,
 		activating,
 		activationStalled,
+		syncing,
 		error,
 		opening,
 		cancellingId,
 		openPortal,
 		cancelSubscription,
+		syncPurchases,
 		programForCourse,
+		expectedCourseId,
 		canManageBilling: Boolean(status?.canManageBilling),
 	}
 }

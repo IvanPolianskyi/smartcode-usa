@@ -8,6 +8,15 @@ import SiteHeader from '@/components/Nav/SiteHeader'
 import { Link } from '@/i18n/navigation'
 import { LEGAL } from '@/lib/legalConfig'
 import { programForCourseId } from '@/lib/billingCatalog'
+import { track } from '@/lib/analytics'
+import { loadPaddle } from '@/lib/paddleClient'
+import {
+	parseStartRedirect,
+	readPromoCode,
+	runAuthenticatedCheckout,
+	startPath,
+} from '@/lib/startCheckout'
+import GoogleSignInButton from '@/components/Auth/GoogleSignInButton'
 import styles from '../login/Auth.module.css'
 
 const PERKS = [
@@ -15,12 +24,6 @@ const PERKS = [
 	'Write real code and get it checked instantly',
 	'Private Discord with other builders',
 	`Cancel anytime · ${LEGAL.refundDays}-day money-back`,
-]
-
-const PROGRAMS = [
-	{ tone: 'coral', label: 'Roblox Studio' },
-	{ tone: 'cyan', label: 'Python' },
-	{ tone: 'violet', label: 'AI for Real Life' },
 ]
 
 function RegisterAside() {
@@ -44,14 +47,6 @@ function RegisterAside() {
 					</li>
 				))}
 			</ul>
-			<div className={styles.programRow} aria-label="Programs">
-				{PROGRAMS.map((p) => (
-					<span key={p.label} className={styles.programPill} data-tone={p.tone}>
-						<span className={styles.programDot} />
-						{p.label}
-					</span>
-				))}
-			</div>
 		</aside>
 	)
 }
@@ -60,14 +55,16 @@ function RegisterForm() {
 	const router = useRouter()
 	const searchParams = useSearchParams()
 	const [formData, setFormData] = useState({
-		name: '',
 		email: '',
 		password: '',
-		privacyAccepted: false,
 	})
 	const [error, setError] = useState('')
-	const [loading, setLoading] = useState(false)
+	// 'idle' | 'creating' | 'checkout' - the button has to say which of the two
+	// waits the visitor is in, otherwise creating an account and opening Paddle
+	// look like one stuck spinner.
+	const [stage, setStage] = useState('idle')
 	const [showPassword, setShowPassword] = useState(false)
+	const loading = stage !== 'idle'
 
 	useEffect(() => {
 		const prefill = String(searchParams.get('email') || '').trim()
@@ -77,28 +74,41 @@ function RegisterForm() {
 	}, [searchParams])
 
 	/**
-	 * The program the visitor already chose, carried in the resume redirect.
-	 * Naming it here keeps the purchase visible across the account step instead
-	 * of telling someone who just picked Roblox that they pick a program next.
+	 * The purchase already in progress, carried in the resume redirect. When it
+	 * is set, this page finishes the sale itself instead of handing off to
+	 * `/start` - that hand-off cost a navigation, a session round trip and a
+	 * cold Paddle.js load, all of it spent staring at a spinner.
 	 */
-	const chosenProgram = useMemo(() => {
-		const redirect = searchParams.get('redirect') || ''
-		const courseId = redirect.includes('course=')
-			? decodeURIComponent(redirect.split('course=')[1].split('&')[0])
-			: ''
-		return courseId ? programForCourseId(courseId) : null
-	}, [searchParams])
+	const checkoutIntent = useMemo(
+		() => parseStartRedirect(searchParams.get('redirect')),
+		[searchParams]
+	)
+
+	/**
+	 * Naming the chosen program keeps the purchase visible across the account
+	 * step instead of telling someone who just picked Roblox that they pick a
+	 * program next.
+	 */
+	const chosenProgram = useMemo(
+		() => (checkoutIntent ? programForCourseId(checkoutIntent.courseId) : null),
+		[checkoutIntent]
+	)
+
+	// Warm Paddle.js while the form is being filled in. `loadPaddle` caches its
+	// promise, so the call after submit reuses this one instead of waiting on a
+	// cold CDN fetch. A failed preload is silent - checkout reports for real.
+	useEffect(() => {
+		if (!checkoutIntent) return
+		loadPaddle().catch(() => {})
+	}, [checkoutIntent])
 
 	const banner = useMemo(() => {
-		if (
-			searchParams.get('needAccount') === '1' ||
-			searchParams.get('paid') === '1'
-		) {
+		if (searchParams.get('paid') === '1') {
 			return {
 				kind: 'info',
 				text: chosenProgram
-					? `One quick step - create your account and your ${LEGAL.trialDays} free days of ${chosenProgram.label} start right after.`
-					: `One quick step - create your account and your ${LEGAL.trialDays} free days start right after.`,
+					? `Create your account to continue with ${chosenProgram.label}.`
+					: 'Create your account to continue.',
 			}
 		}
 		return null
@@ -107,29 +117,74 @@ function RegisterForm() {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		setError('')
-		setLoading(true)
+		setStage('creating')
 
+		let user = null
 		try {
-			const redirectParam =
-				new URLSearchParams(window.location.search).get('redirect') || ''
-			await register({
-				name: formData.name,
+			// No `privacyAccepted` flag: consent is the submit itself, and the
+			// server records it that way rather than claiming a box was ticked.
+			const data = await register({
 				email: formData.email,
 				password: formData.password,
-				privacyAccepted: formData.privacyAccepted,
 			})
+			user = data?.user || null
+			track('sign_up', { method: 'password' })
 			window.dispatchEvent(new Event('auth:login'))
+		} catch (err) {
+			setError(err.message || 'Could not create your account.')
+			setStage('idle')
+			return
+		}
+
+		// Not a purchase in progress - follow the redirect as before.
+		if (!checkoutIntent || !user) {
+			const redirectParam =
+				new URLSearchParams(window.location.search).get('redirect') || ''
 			const safeRedirect =
 				redirectParam.startsWith('/') && !redirectParam.startsWith('//')
 					? redirectParam
 					: '/pricing'
 			router.push(safeRedirect)
 			router.refresh()
-		} catch (err) {
-			setError(err.message || 'Could not create your account.')
-		} finally {
-			setLoading(false)
+			return
 		}
+
+		setStage('checkout')
+		try {
+			track('begin_checkout', {
+				course_id: checkoutIntent.courseId,
+				plan: checkoutIntent.plan,
+				tier: checkoutIntent.tier,
+			})
+			const result = await runAuthenticatedCheckout({
+				...checkoutIntent,
+				user,
+				// An account created seconds ago cannot hold a subscription, so
+				// there is nothing to compare against for an upgrade.
+				programs: [],
+				discountCode: readPromoCode(),
+				loadPaddle: () => loadPaddle(),
+			})
+
+			// Overlay is open on top of this page - leave the form mounted behind
+			// it and the button disabled, or closing Paddle reveals a live form
+			// for an account that already exists.
+			if (result.action === 'paddle') return
+
+			if (result.action === 'dashboard' && result.path) {
+				router.push(result.path)
+				router.refresh()
+				return
+			}
+		} catch {
+			// Fall through to /start below.
+		}
+
+		// Paddle could not be opened here (blocked script, missing price, an
+		// upgrade path we do not handle inline). `/start` runs the same checkout
+		// with a proper error screen, so hand off rather than dead-end.
+		router.push(startPath(checkoutIntent))
+		router.refresh()
 	}
 
 	const handleChange = (e) => {
@@ -155,18 +210,6 @@ function RegisterForm() {
 					: 'Free to join. You pick a program next - nothing is charged today.'}
 			</p>
 
-			<div className={styles.programRowCompact} aria-label="Programs">
-				{(chosenProgram
-					? PROGRAMS.filter((p) => p.label === chosenProgram.label)
-					: PROGRAMS
-				).map((p) => (
-					<span key={p.label} className={styles.programPill} data-tone={p.tone}>
-						<span className={styles.programDot} />
-						{p.label}
-					</span>
-				))}
-			</div>
-
 			{banner ? (
 				<div
 					className={banner.kind === 'warn' ? styles.bannerWarn : styles.bannerInfo}
@@ -178,25 +221,15 @@ function RegisterForm() {
 
 			{error ? <div className={styles.error}>{error}</div> : null}
 
-			<form onSubmit={handleSubmit} className={styles.form}>
-				<div className={styles.field}>
-					<label htmlFor="name" className={styles.fieldLabel}>
-						Name
-					</label>
-					<input
-						type="text"
-						id="name"
-						name="name"
-						autoComplete="name"
-						value={formData.name}
-						onChange={handleChange}
-						required
-						minLength={2}
-						className={styles.input}
-						placeholder="Your name"
-					/>
-				</div>
+			<div className={styles.oauthBlock}>
+				<GoogleSignInButton label="Sign up with Google" defaultRedirect="/pricing" />
+			</div>
 
+			<div className={styles.divider} role="separator" aria-label="or">
+				<span>or</span>
+			</div>
+
+			<form onSubmit={handleSubmit} className={styles.form}>
 				<div className={styles.field}>
 					<label htmlFor="email" className={styles.fieldLabel}>
 						Email
@@ -206,6 +239,7 @@ function RegisterForm() {
 						id="email"
 						name="email"
 						autoComplete="email"
+						autoFocus
 						value={formData.email}
 						onChange={handleChange}
 						required
@@ -243,38 +277,37 @@ function RegisterForm() {
 					<p className={styles.hint}>Use 6+ characters. You can change it later.</p>
 				</div>
 
-				<label className={styles.checkRow}>
-					<input
-						type="checkbox"
-						name="privacyAccepted"
-						checked={formData.privacyAccepted}
-						onChange={handleChange}
-						required
-					/>
-					<span>
-						I agree to the{' '}
-						<Link href="/privacy" target="_blank">
-							Privacy Policy
-						</Link>
-						,{' '}
-						<Link href="/terms" target="_blank">
-							Terms of Service
-						</Link>
-						, and{' '}
-						<Link href="/refund" target="_blank">
-							Refund Policy
-						</Link>
-						.
-					</span>
-				</label>
-
 				<button
 					type="submit"
 					disabled={loading}
 					className={`sc-btn sc-btn-primary sc-btn-lg ${styles.submit}`}
 				>
-					{loading ? 'Creating account…' : 'Create account'}
+					{stage === 'checkout'
+						? 'Opening checkout…'
+						: stage === 'creating'
+							? 'Creating account…'
+							: chosenProgram
+								? `Create account & continue`
+								: 'Create account'}
 				</button>
+
+				{/* Clickwrap: the notice rides on the button instead of a separate
+				    checkbox that people miss and then get an error for. */}
+				<p className={styles.consentNote}>
+					By creating an account you agree to our{' '}
+					<Link href="/terms" target="_blank">
+						Terms of Service
+					</Link>
+					,{' '}
+					<Link href="/privacy" target="_blank">
+						Privacy Policy
+					</Link>
+					, and{' '}
+					<Link href="/refund" target="_blank">
+						Refund Policy
+					</Link>
+					.
+				</p>
 			</form>
 
 			<div className={styles.footer}>

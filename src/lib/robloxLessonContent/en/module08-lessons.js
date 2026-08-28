@@ -1,5 +1,5 @@
 /** Roblox Module 08 EN - 8 уроків (prod-92), Arena */
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
 

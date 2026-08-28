@@ -104,10 +104,17 @@ export async function assertPaddleWebhookIp(request) {
 
 	const ip = clientIpFromRequest(request)
 	if (!ip) {
-		// Missing IP header — do not soft-pass in production; signature still required.
-		if (process.env.NODE_ENV === 'production' || process.env.PADDLE_ENV === 'production') {
-			return { ok: false, reason: 'missing_client_ip' }
-		}
+		// No client IP to check. The HMAC signature has already authenticated this
+		// request, so refusing here would only drop real payments.
+		console.warn('[paddle] webhook with no client IP - allowed on signature')
+		return { ok: true }
+	}
+
+	// Paddle publishes IPv4 ranges only. If the edge hands us an IPv6 address
+	// there is nothing to match it against, and failing closed would reject
+	// every webhook the moment Vercel routes over IPv6.
+	if (ip.includes(':')) {
+		console.warn('[paddle] IPv6 webhook source - allowed on signature:', ip)
 		return { ok: true }
 	}
 
@@ -119,9 +126,6 @@ export async function assertPaddleWebhookIp(request) {
 		ip.startsWith('192.168.') ||
 		/^172\.(1[6-9]|2\d|3[0-1])\./.test(ip)
 	) {
-		if (process.env.PADDLE_ENV === 'production') {
-			return { ok: false, reason: 'private_ip', ip }
-		}
 		return { ok: true }
 	}
 
@@ -130,10 +134,10 @@ export async function assertPaddleWebhookIp(request) {
 		cidrs = await getPaddleWebhookIpv4Cidrs()
 	} catch (error) {
 		console.error('[paddle] IP allowlist fetch failed:', error.message)
-		// Fail closed in live — open in sandbox so a Paddle outage on /ips does not brick testing.
-		if (process.env.PADDLE_ENV === 'production') {
-			return { ok: false, reason: 'ip_list_unavailable', ip }
-		}
+		// Do not fail closed. If Paddle's /ips endpoint is down, failing closed
+		// rejects every real payment webhook for as long as the outage lasts,
+		// and the signature check already proves the request came from Paddle.
+		// The allowlist is defence in depth, not the authentication.
 		return { ok: true }
 	}
 

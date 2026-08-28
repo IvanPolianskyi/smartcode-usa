@@ -1,15 +1,12 @@
 'use client'
 
-import React, { useEffect, useState, useTransition } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import {
 	Award,
 	Calendar,
-	ChevronRight,
 	Crown,
-	Flame,
 	Gamepad2,
-	Gift,
 	Medal,
 	RefreshCw,
 	Sparkles,
@@ -24,7 +21,6 @@ export default function ArcadeLeaderboard({ onPlayClick, refreshTrigger = 0 }) {
 	const locale = useLocale()
 	const [data, setData] = useState(null)
 	const [loading, setLoading] = useState(true)
-	const [isPending, startTransition] = useTransition()
 
 	const fetchLeaderboard = async () => {
 		setLoading(true)
@@ -49,7 +45,6 @@ export default function ArcadeLeaderboard({ onPlayClick, refreshTrigger = 0 }) {
 
 	const currentUser = data?.currentUser
 	const leaderboard = data?.leaderboard || []
-	const prizes = data?.prizes || []
 	const daysRemaining = data?.daysRemaining ?? 0
 	const seasonTitle = data?.seasonTitle || ''
 	const totalPlayers = data?.totalPlayers || leaderboard.length
@@ -178,51 +173,6 @@ export default function ArcadeLeaderboard({ onPlayClick, refreshTrigger = 0 }) {
 				)}
 			</div>
 
-			{/* Prizes Showcase Section */}
-			<div className={styles.prizesSection}>
-				<div className={styles.prizesHead}>
-					<div className={styles.prizesTitleRow}>
-						<Gift size={18} className={styles.giftIcon} aria-hidden />
-						<h4 className={styles.prizesTitle}>{t('prizesTitle')}</h4>
-					</div>
-					<p className={styles.prizesSubtitle}>{t('prizesSubtitle')}</p>
-				</div>
-
-				<div className={styles.prizeGrid}>
-					<div className={[styles.prizeCard, styles.prizeCardGold].join(' ')}>
-						<div className={styles.prizeCardHeader}>
-							<span className={styles.prizeMedalGold}>🥇</span>
-							<strong>{t('prize1Title')}</strong>
-						</div>
-						<p className={styles.prizeRewardText}>{t('prize1Reward')}</p>
-					</div>
-
-					<div className={[styles.prizeCard, styles.prizeCardSilver].join(' ')}>
-						<div className={styles.prizeCardHeader}>
-							<span className={styles.prizeMedalSilver}>🥈</span>
-							<strong>{t('prize2Title')}</strong>
-						</div>
-						<p className={styles.prizeRewardText}>{t('prize2Reward')}</p>
-					</div>
-
-					<div className={[styles.prizeCard, styles.prizeCardBronze].join(' ')}>
-						<div className={styles.prizeCardHeader}>
-							<span className={styles.prizeMedalBronze}>🥉</span>
-							<strong>{t('prize3Title')}</strong>
-						</div>
-						<p className={styles.prizeRewardText}>{t('prize3Reward')}</p>
-					</div>
-
-					<div className={[styles.prizeCard, styles.prizeCardTop10].join(' ')}>
-						<div className={styles.prizeCardHeader}>
-							<span className={styles.prizeMedalTop10}>🎖️</span>
-							<strong>{t('prizeTop10Title')}</strong>
-						</div>
-						<p className={styles.prizeRewardText}>{t('prizeTop10Reward')}</p>
-					</div>
-				</div>
-			</div>
-
 			{/* Leaderboard Table */}
 			<div className={styles.tableCard}>
 				<table className={styles.leaderboardTable}>
@@ -239,7 +189,22 @@ export default function ArcadeLeaderboard({ onPlayClick, refreshTrigger = 0 }) {
 						{leaderboard.length === 0 && !loading ? (
 							<tr>
 								<td colSpan={5} className={styles.emptyTableTd}>
-									{t('noScoresYet')}
+									<div className={styles.emptyLeaderboard}>
+										<p className={styles.emptyLeaderboardTitle}>
+											{t('noScoresYet')}
+										</p>
+										<p className={styles.emptyLeaderboardHint}>
+											{t('noScoresYetHint')}
+										</p>
+										<button
+											type="button"
+											className={styles.playNowBtn}
+											onClick={onPlayClick}
+										>
+											<Gamepad2 size={16} aria-hidden />
+											{t('claimFirstPlace')}
+										</button>
+									</div>
 								</td>
 							</tr>
 						) : (
@@ -358,15 +323,6 @@ export default function ArcadeLeaderboard({ onPlayClick, refreshTrigger = 0 }) {
 						</div>
 					</div>
 				)}
-			</div>
-
-			{/* Rules & Info Footnote */}
-			<div className={styles.rulesNote}>
-				<Sparkles size={14} className={styles.rulesIcon} aria-hidden />
-				<div>
-					<strong>{t('rulesTitle')} </strong>
-					<span>{t('rulesText')}</span>
-				</div>
 			</div>
 		</div>
 	)

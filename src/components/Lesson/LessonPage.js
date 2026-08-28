@@ -18,7 +18,7 @@ import { parsePracticeStdin } from '@/lib/parsePracticeStdin'
 import { hasBlockedPythonCode } from '@/lib/pythonCodeGuard'
 import { useLessonGamification } from '@/hooks/useLessonGamification'
 import AchievementToast from '@/components/Lesson/Gamification/AchievementToast'
-import LessonSidebar from './LessonSidebar'
+import LessonPageWithSidebar from './LessonPageWithSidebar'
 import LessonNav from './LessonNav'
 import LessonTheory from './LessonTheory'
 import LessonQuiz from './LessonQuiz'
@@ -88,13 +88,6 @@ const LessonPage = ({
     initialGamification: userProgress?.gamification || null,
   })
 
-  // Sidebar state
-  const [sidebarWidth, setSidebarWidth] = useState(320)
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
-  const [isResizing, setIsResizing] = useState(false)
-  const [isSidebarClosed, setIsSidebarClosed] = useState(false)
-  const [sidebarPrefsHydrated, setSidebarPrefsHydrated] = useState(false)
-
   const modulesList = useMemo(() => curriculum?.modules || [], [curriculum])
 
   const allLessons = useMemo(() => {
@@ -160,54 +153,6 @@ const LessonPage = ({
       }
     }
   }, [isLoaded, lesson])
-
-  useEffect(() => {
-    const savedWidth = localStorage.getItem('lessonSidebarWidth')
-    if (savedWidth) {
-      const width = parseInt(savedWidth, 10)
-      if (!Number.isNaN(width) && width > 0) {
-        setSidebarWidth(width)
-      }
-    }
-
-    const savedCollapsed = localStorage.getItem('lessonSidebarCollapsed')
-    if (savedCollapsed === 'true') {
-      setIsSidebarCollapsed(true)
-    }
-
-    const savedClosed = localStorage.getItem('lessonSidebarClosed')
-    if (savedClosed !== null) {
-      setIsSidebarClosed(savedClosed === 'true')
-    } else if (window.innerWidth <= 1024) {
-      setIsSidebarClosed(true)
-      localStorage.setItem('lessonSidebarClosed', 'true')
-    }
-
-    setSidebarPrefsHydrated(true)
-  }, [])
-
-  useEffect(() => {
-    if (!sidebarPrefsHydrated || isResizing || !sidebarWidth) return
-    localStorage.setItem('lessonSidebarWidth', sidebarWidth.toString())
-  }, [sidebarWidth, isResizing, sidebarPrefsHydrated])
-
-  useEffect(() => {
-    if (!sidebarPrefsHydrated) return
-
-    const handleResize = () => {
-      const isMobile = window.innerWidth <= 1024
-      if (isMobile) {
-        setIsSidebarClosed((closed) => {
-          if (closed) return closed
-          localStorage.setItem('lessonSidebarClosed', 'true')
-          return true
-        })
-      }
-    }
-
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [sidebarPrefsHydrated])
 
   const fullLesson = useMemo(() => {
     return (
@@ -667,29 +612,17 @@ const LessonPage = ({
   }
 
   return (
-    <div className={styles.pageContainer}>
+    <>
       <AchievementToast toasts={toasts} onDismiss={dismissToast} />
 
-      <LessonSidebar
-        curriculum={curriculum}
-        lessonId={lessonId}
+      <LessonPageWithSidebar
         courseId={courseId}
+        curriculum={curriculum || { modules: [] }}
+        currentLessonId={lessonId}
         lessonModuleIndex={lessonModuleIndex}
-        isSidebarCollapsed={isSidebarCollapsed}
-        setIsSidebarCollapsed={setIsSidebarCollapsed}
-        isSidebarClosed={isSidebarClosed}
-        setIsSidebarClosed={setIsSidebarClosed}
-        sidebarWidth={sidebarWidth}
-        setSidebarWidth={setSidebarWidth}
-        isResizing={isResizing}
-        setIsResizing={setIsResizing}
-        isLessonCompleted={isLessonCompleted}
         isLessonUnlocked={isLessonUnlocked}
-        t={t}
-      />
-
-      <div className={`${styles.pageWrapper} ${isResizing ? styles.resizing : ''}`}>
-        <div className={styles.mainContent}>
+        isLessonCompleted={isLessonCompleted}
+      >
           <div className={styles.container}>
             <LessonNav
               courseId={courseId}
@@ -797,7 +730,7 @@ const LessonPage = ({
                   href={`/courses/${courseId}/lessons/${nextLesson.lessonId}`}
                   className={styles.nextLessonButton}
                 >
-                  {t('nextLesson')}
+                  {t('nextLesson', { title: nextLesson.title })}
                   <ChevronRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
               ) : (
@@ -817,9 +750,8 @@ const LessonPage = ({
               )}
             </footer>
           </div>
-        </div>
-      </div>
-    </div>
+      </LessonPageWithSidebar>
+    </>
   )
 }
 

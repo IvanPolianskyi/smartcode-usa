@@ -1,5 +1,5 @@
 /** Roblox Module 10 EN - 8 уроків (prod-92), живий хаб */
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
 

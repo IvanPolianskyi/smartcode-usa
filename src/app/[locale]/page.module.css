@@ -92,7 +92,7 @@
 	align-items: stretch;
 	min-height: 0;
 	/* Extra bottom padding nudges the optical center up a bit. */
-	padding: 8px 0 64px;
+	padding: 8px 0 40px;
 	box-sizing: border-box;
 }
 
@@ -332,6 +332,10 @@
 	padding: 72px 0;
 }
 
+#programs {
+	padding-top: 48px;
+}
+
 .sectionHead {
 	max-width: 36rem;
 	margin-bottom: 40px;
@@ -463,6 +467,12 @@
 
 .stepCardHit:focus-visible {
 	box-shadow: inset 0 0 0 2px var(--br-green);
+}
+
+.stepHead {
+	display: flex;
+	align-items: center;
+	width: 100%;
 }
 
 .stepNum {
@@ -970,6 +980,10 @@
 	.section {
 		width: min(100% - 28px, var(--br-shell));
 		padding: 56px 0;
+	}
+
+	#programs {
+		padding-top: 32px;
 	}
 
 	.section.planSection {

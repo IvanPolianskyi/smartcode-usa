@@ -1,5 +1,5 @@
 /** Roblox Module 02 EN */
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
 

@@ -119,7 +119,14 @@ export async function getUserProgress(courseId) {
   }
 }
 
-export async function updateProgress(courseId, updates) {
+/**
+ * Full progress-API payload: the progress document plus whatever the server
+ * decided to reward for this action. Callers that only care about progress can
+ * keep using `updateProgress`.
+ *
+ * @returns {Promise<{ progress: object, xpGained: number, unlockedAchievements: Array }>}
+ */
+export async function updateProgressWithRewards(courseId, updates) {
   const response = await fetch('/api/progress', {
     method: 'POST',
     headers: {
@@ -132,10 +139,23 @@ export async function updateProgress(courseId, updates) {
   const data = await response.json()
 
   if (!response.ok) {
-    throw new Error(data.error || 'Failed to update progress')
+    const error = new Error(data.error || 'Failed to update progress')
+    error.reason = data.reason
+    throw error
   }
 
-  return data.progress
+  return {
+    progress: data.progress,
+    xpGained: Number(data.xpGained) || 0,
+    unlockedAchievements: Array.isArray(data.unlockedAchievements)
+      ? data.unlockedAchievements
+      : [],
+  }
+}
+
+export async function updateProgress(courseId, updates) {
+  const { progress } = await updateProgressWithRewards(courseId, updates)
+  return progress
 }
 
 export async function enrollInCourse(courseId) {

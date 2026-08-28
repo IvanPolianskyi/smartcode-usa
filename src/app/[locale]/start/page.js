@@ -10,6 +10,7 @@ import { loadPaddle } from '@/lib/paddleClient'
 import {
 	normalizePlan,
 	normalizeTier,
+	readPromoCode,
 	runAuthenticatedCheckout,
 	startPath,
 } from '@/lib/startCheckout'
@@ -29,11 +30,11 @@ function StartFlow() {
 	const resume = startPath({ courseId, plan, tier })
 
 	const registerHref = useMemo(
-		() => `/register?needAccount=1&redirect=${encodeURIComponent(resume)}`,
+		() => `/register?redirect=${encodeURIComponent(resume)}`,
 		[resume]
 	)
 	const loginHref = useMemo(
-		() => `/login?needAccount=1&redirect=${encodeURIComponent(resume)}`,
+		() => `/login?redirect=${encodeURIComponent(resume)}`,
 		[resume]
 	)
 
@@ -48,7 +49,12 @@ function StartFlow() {
 			}
 
 			try {
-				const meResponse = await fetch('/api/auth/me', { credentials: 'include' })
+				// Session and billing state are independent - fetching them together
+				// removes a full round trip from the wait before the overlay opens.
+				const [meResponse, billingResponse] = await Promise.all([
+					fetch('/api/auth/me', { credentials: 'include' }),
+					fetch('/api/billing/status', { credentials: 'include' }).catch(() => null),
+				])
 				// A stale or missing session is the register path, not an error.
 				if (!meResponse.ok && meResponse.status !== 401 && meResponse.status !== 404) {
 					throw new Error('Could not check your account')
@@ -65,16 +71,13 @@ function StartFlow() {
 				if (!cancelled) setPhase('checkout')
 
 				let paddleCustomerId = null
-				try {
-					const billing = await fetch('/api/billing/status', { credentials: 'include' })
-					if (billing.ok) {
-						const status = await billing.json()
-						if (status?.paddleCustomerId?.startsWith?.('ctm_')) {
-							paddleCustomerId = status.paddleCustomerId
-						}
+				let programs = []
+				if (billingResponse?.ok) {
+					const status = await billingResponse.json().catch(() => null)
+					if (status?.paddleCustomerId?.startsWith?.('ctm_')) {
+						paddleCustomerId = status.paddleCustomerId
 					}
-				} catch {
-					// Retain is best-effort
+					programs = status?.programs || []
 				}
 
 				const result = await runAuthenticatedCheckout({
@@ -82,9 +85,35 @@ function StartFlow() {
 					plan,
 					tier,
 					user,
+					programs,
+					discountCode: readPromoCode(),
 					loadPaddle: () => loadPaddle({ paddleCustomerId }),
 				})
 				if (cancelled) return
+
+				if (result.action === 'change-plan') {
+					const response = await fetch('/api/billing/change-plan', {
+						method: 'POST',
+						credentials: 'include',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							paddleSubscriptionId: result.paddleSubscriptionId,
+							courseId: result.courseId,
+							plan: result.plan,
+							tier: result.tier,
+						}),
+					})
+					const payload = await response.json().catch(() => ({}))
+					if (cancelled) return
+					if (!response.ok) {
+						setError(payload.error || 'Could not change your plan')
+						setPhase('error')
+						return
+					}
+					window.dispatchEvent(new Event('auth:login'))
+					router.replace(`${result.path}?plan=changed`)
+					return
+				}
 
 				if (result.action === 'dashboard' && result.path) {
 					window.dispatchEvent(new Event('auth:login'))

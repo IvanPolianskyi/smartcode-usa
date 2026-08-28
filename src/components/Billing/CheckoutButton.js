@@ -3,9 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { loadPaddle } from '@/lib/paddleClient'
+import { track } from '@/lib/analytics'
 import {
 	normalizePlan,
 	normalizeTier,
+	readPromoCode,
 	registerPath,
 	runAuthenticatedCheckout,
 } from '@/lib/startCheckout'
@@ -45,7 +47,14 @@ export default function CheckoutButton({
 			const planLabel = normalizePlan(plan)
 			const planTier = normalizeTier(tier)
 
-			const meResponse = await fetch('/api/auth/me', { credentials: 'include' })
+			// Both answers are needed before checkout can open, and neither depends
+			// on the other - running them in series added a whole round trip to
+			// every "Opening checkout…" spinner.
+			const [meResponse, billingResponse] = await Promise.all([
+				fetch('/api/auth/me', { credentials: 'include' }),
+				fetch('/api/billing/status', { credentials: 'include' }).catch(() => null),
+			])
+
 			// 401/404 mean "no usable session", not "something broke" - fall through
 			// to the account step rather than dead-ending someone trying to pay.
 			if (!meResponse.ok && meResponse.status !== 401 && meResponse.status !== 404) {
@@ -60,25 +69,58 @@ export default function CheckoutButton({
 			}
 
 			let paddleCustomerId = null
-			try {
-				const billing = await fetch('/api/billing/status', { credentials: 'include' })
-				if (billing.ok) {
-					const status = await billing.json()
-					if (status?.paddleCustomerId?.startsWith?.('ctm_')) {
-						paddleCustomerId = status.paddleCustomerId
-					}
+			let programs = []
+			if (billingResponse?.ok) {
+				const status = await billingResponse.json().catch(() => null)
+				if (status?.paddleCustomerId?.startsWith?.('ctm_')) {
+					paddleCustomerId = status.paddleCustomerId
 				}
-			} catch {
-				// Retain is best-effort — checkout still works without it.
+				programs = status?.programs || []
 			}
+
+			track('begin_checkout', {
+				course_id: courseId,
+				plan: planLabel,
+				tier: planTier,
+			})
 
 			const result = await runAuthenticatedCheckout({
 				courseId,
 				plan: planLabel,
 				tier: planTier,
 				user,
+				programs,
+				discountCode: readPromoCode(),
 				loadPaddle: () => loadPaddle({ paddleCustomerId }),
 			})
+
+			if (result.action === 'change-plan') {
+				const response = await fetch('/api/billing/change-plan', {
+					method: 'POST',
+					credentials: 'include',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						paddleSubscriptionId: result.paddleSubscriptionId,
+						courseId: result.courseId,
+						plan: result.plan,
+						tier: result.tier,
+					}),
+				})
+				const payload = await response.json().catch(() => ({}))
+				if (!response.ok) {
+					throw new Error(payload.error || 'Could not change your plan')
+				}
+				track('plan_change', {
+					course_id: result.courseId,
+					tier: result.tier,
+					plan: result.plan,
+					upgrade: result.upgrade,
+				})
+				window.dispatchEvent(new Event('auth:login'))
+				router.push(`${result.path}?plan=changed`)
+				router.refresh()
+				return
+			}
 
 			if (result.action === 'dashboard' && result.path) {
 				window.dispatchEvent(new Event('auth:login'))

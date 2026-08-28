@@ -4,9 +4,32 @@ import { ensureUserIndexes, getCollection } from '@/lib/mongodb'
 import { hashPassword, issueAuthSession } from '@/lib/auth'
 import { toAuthUserResponse } from '@/lib/authUserResponse'
 import { sendWelcomeEmail } from '@/lib/email'
+import {
+	recordFunnelEvent,
+	stitchVisitorToUser,
+	VISITOR_COOKIE,
+} from '@/lib/analyticsStore'
 
 function isValidEmail(email) {
 	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
+/**
+ * A display name when the signup form did not ask for one.
+ *
+ * Signup only collects email + password now, so the local part of the address
+ * is the best guess we have. It is a label in the UI, not an identity - the
+ * student can set a real one later.
+ */
+function displayNameFromEmail(email) {
+	const local = String(email).split('@')[0] || ''
+	const cleaned = local.replace(/[._-]+/g, ' ').replace(/\d+/g, '').trim()
+	if (cleaned.length < 2) return 'Student'
+	return cleaned
+		.split(/\s+/)
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(' ')
+		.slice(0, 60)
 }
 
 export async function POST(request) {
@@ -20,9 +43,9 @@ export async function POST(request) {
 			privacyAccepted,
 		} = body
 
-		if (!email || !password || !name) {
+		if (!email || !password) {
 			return NextResponse.json(
-				{ error: 'Name, email, and password are required.' },
+				{ error: 'Email and password are required.' },
 				{ status: 400 }
 			)
 		}
@@ -35,13 +58,6 @@ export async function POST(request) {
 			)
 		}
 
-		if (!privacyAccepted) {
-			return NextResponse.json(
-				{ error: 'Please confirm that you have read the Privacy Policy.' },
-				{ status: 400 }
-			)
-		}
-
 		if (String(password).length < 6) {
 			return NextResponse.json(
 				{ error: 'Password must be at least 6 characters.' },
@@ -49,13 +65,11 @@ export async function POST(request) {
 			)
 		}
 
-		const displayName = String(name).trim()
-		if (displayName.length < 2) {
-			return NextResponse.json(
-				{ error: 'Enter your name (at least 2 characters).' },
-				{ status: 400 }
-			)
-		}
+		// Name is optional: the signup form no longer asks for one. Callers that
+		// do send it (admin tooling, imports) still win over the derived label.
+		const providedName = String(name || '').trim()
+		const displayName =
+			providedName.length >= 2 ? providedName : displayNameFromEmail(normalizedEmail)
 
 		const usersCollection = await getCollection('users')
 		// Memoised after the first call. This is what actually puts the unique
@@ -93,6 +107,11 @@ export async function POST(request) {
 			purchasedCourses: [],
 			enrolledCourses: [],
 			referralId,
+			// Consent is clickwrap now - the signup button carries the notice
+			// instead of a separate checkbox. Record when and how it was given,
+			// because "they ticked a box" is no longer the evidence.
+			legalAcceptedAt: now,
+			legalAcceptedVia: privacyAccepted ? 'checkbox' : 'signup_button',
 			createdAt: now,
 			updatedAt: now,
 		}
@@ -112,6 +131,24 @@ export async function POST(request) {
 		}
 		const userId = result.insertedId.toString()
 		const token = await issueAuthSession(userId)
+
+		// Funnel bookkeeping, recorded server-side so an ad blocker cannot make
+		// signups disappear from the dashboard.
+		//
+		// Stitch first: it rewrites this person's anonymous page views onto the
+		// new account, so the funnel counts them as one entity rather than an
+		// anonymous visitor plus an unexplained extra signup.
+		const visitorId = cookieStore.get(VISITOR_COOKIE)?.value || null
+		await stitchVisitorToUser({ visitorId, userId })
+		await recordFunnelEvent({
+			step: 'sign_up',
+			visitorId,
+			userId,
+			path: '/register',
+			params: { method: 'password' },
+			dedupeKey: `sign_up:${userId}`,
+			occurredAt: now,
+		})
 
 		// Send welcome email asynchronously without blocking registration response
 		sendWelcomeEmail({

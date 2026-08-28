@@ -1,5 +1,5 @@
 /** Rich UK content for Roblox Module 04 */
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
 

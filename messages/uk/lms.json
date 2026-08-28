@@ -59,8 +59,22 @@
     "formatPracticeSub": "та код-рев'ю",
     "python": {
       "valueProposition": "Твоя подорож у світ IT починається тут! Створюй реальні проекти на Python.",
-      "skillShort": ["Python", "Дані", "ООП", "Бази", "Flask", "Тести", "Git", "API", "Деплой"],
-      "requirementsShort": ["Англійська", "ПК + інтернет", "Мотивація"],
+      "skillShort": [
+        "Python",
+        "Дані",
+        "ООП",
+        "Бази",
+        "Flask",
+        "Тести",
+        "Git",
+        "API",
+        "Деплой"
+      ],
+      "requirementsShort": [
+        "Англійська",
+        "ПК + інтернет",
+        "Мотивація"
+      ],
       "certificateShort": "Міжнародний сертифікат SmartCode після всіх модулів та фінального проєкту.",
       "skills": [
         "Основи програмування на Python",
@@ -90,8 +104,22 @@
     },
     "webdev": {
       "valueProposition": "Твоя подорож у веб-розробку починається тут! Створюй сучасні сайти та додатки.",
-      "skillShort": ["HTML", "CSS", "Адаптив", "JS", "DOM", "API", "React", "Next.js", "Деплой"],
-      "requirementsShort": ["Англійська", "ПК + інтернет", "Мотивація"],
+      "skillShort": [
+        "HTML",
+        "CSS",
+        "Адаптив",
+        "JS",
+        "DOM",
+        "API",
+        "React",
+        "Next.js",
+        "Деплой"
+      ],
+      "requirementsShort": [
+        "Англійська",
+        "ПК + інтернет",
+        "Мотивація"
+      ],
       "certificateShort": "Сертифікат SmartCode після всіх модулів та фінального веб-проєкту.",
       "skills": [
         "HTML5 та семантична розмітка",
@@ -121,8 +149,19 @@
     },
     "roblox": {
       "valueProposition": "92 уроки: спочатку світ і моделі, потім іскри з готовим кодом, серйозний Lua і жанри до релізу власної гри.",
-      "skillShort": ["Studio", "Models", "Lua", "Obby", "Tycoon", "Реліз"],
-      "requirementsShort": ["Windows/Mac", "Roblox", "Інтернет"],
+      "skillShort": [
+        "Studio",
+        "Models",
+        "Lua",
+        "Obby",
+        "Tycoon",
+        "Реліз"
+      ],
+      "requirementsShort": [
+        "Windows/Mac",
+        "Roblox",
+        "Інтернет"
+      ],
       "certificateShort": "Сертифікат SmartCode з Roblox game development після Showcase.",
       "skills": [
         "Roblox Studio, Parts, Models, Union",
@@ -150,8 +189,17 @@
     },
     "ai": {
       "valueProposition": "Інженерія промптів, генерація медіа та робоча контент-система, яку ти зможеш запускати щотижня.",
-      "skillShort": ["Промптинг", "Зображення", "Відео", "Воркфлоу"],
-      "requirementsShort": ["Браузер", "Інтернет", "Цікавість"],
+      "skillShort": [
+        "Промптинг",
+        "Зображення",
+        "Відео",
+        "Воркфлоу"
+      ],
+      "requirementsShort": [
+        "Браузер",
+        "Інтернет",
+        "Цікавість"
+      ],
       "certificateShort": "Сертифікат SmartCode Academy після завершення курсу AI for Real Life.",
       "skills": [
         "Як насправді працюють генеративні моделі",
@@ -176,8 +224,19 @@
     },
     "scratch": {
       "valueProposition": "92 уроки блокового коду: від першого спрайта до власної гри з рівнями та фінальним проєктом.",
-      "skillShort": ["Спрайти", "Події", "Змінні", "Цикли", "Клони", "Ігри"],
-      "requirementsShort": ["ПК + інтернет", "Scratch Online", "Мотивація"],
+      "skillShort": [
+        "Спрайти",
+        "Події",
+        "Змінні",
+        "Цикли",
+        "Клони",
+        "Ігри"
+      ],
+      "requirementsShort": [
+        "ПК + інтернет",
+        "Scratch Online",
+        "Мотивація"
+      ],
       "certificateShort": "Сертифікат SmartCode з Scratch після фінального проєкту.",
       "skills": [
         "Інтерфейс Scratch і робота зі спрайтами",
@@ -204,8 +263,19 @@
     },
     "minecraft": {
       "valueProposition": "92 уроки в Minecraft Education: агент, MakeCode, command blocks, квести та STEM-проєкти.",
-      "skillShort": ["Агент", "MakeCode", "Будівництво", "Команди", "Квести", "STEM"],
-      "requirementsShort": ["Windows/Mac", "Minecraft Education", "Інтернет"],
+      "skillShort": [
+        "Агент",
+        "MakeCode",
+        "Будівництво",
+        "Команди",
+        "Квести",
+        "STEM"
+      ],
+      "requirementsShort": [
+        "Windows/Mac",
+        "Minecraft Education",
+        "Інтернет"
+      ],
       "certificateShort": "Сертифікат SmartCode з Minecraft Education після фінального світу.",
       "skills": [
         "Орієнтація в Minecraft Education",
@@ -377,7 +447,34 @@
       "checklistOpenStudio": "Відкрив Roblox Studio і свій Place",
       "checklistDidSteps": "Зробив кроки практики з уроку",
       "checklistSaved": "Збереження Place (File → Save)",
-      "checklistHint": "Постав усі три галочки - тоді кнопка стане активною"
+      "checklistHint": "Постав усі три галочки - тоді кнопка стане активною",
+      "missionsTitle": "Lesson missions",
+      "missionsSubtitle": "{done} of {total} done - tick each one off as you do it in Studio",
+      "missionsAllDone": "All missions cleared. Nice work.",
+      "missionsBonus": "All-missions bonus: +{xp} XP",
+      "missionsReset": "Reset missions",
+      "missionN": "Mission {n}",
+      "missionMinutes": "{n} min",
+      "missionMarkDone": "Mark this mission done",
+      "missionMarkUndone": "Mark this mission not done",
+      "xpEarned": "{xp} / {max} XP",
+      "xpLineMissions": "Missions {done}/{total}: +{xp} XP",
+      "xpLineAllMissions": "Every mission cleared: +{xp} XP",
+      "xpLinePractice": "Studio practice: +{xp} XP",
+      "xpLineQuiz": "Quiz passed: +{xp} XP",
+      "xpLinePerfect": "Perfect score: +{xp} XP",
+      "xpNudgeMissions": "{count} missions left - worth {xp} XP",
+      "rankNext": "{count} more lessons to the next rank",
+      "rankMax": "Top rank reached",
+      "ranks": {
+        "newBuilder": "New Builder",
+        "apprentice": "Apprentice",
+        "scripter": "Scripter",
+        "systemsBuilder": "Systems Builder",
+        "gameDesigner": "Game Designer",
+        "engineer": "Engineer",
+        "shipper": "Shipper"
+      }
     },
     "ai": {
       "lockedDescriptionEn": "Цей урок закритий. Оформіть підписку на AI for Real Life, щоб відкрити всю програму.",
@@ -411,6 +508,83 @@
       "checklistDidSteps": "Зробив кроки практики з уроку",
       "checklistSaved": "Зберіг найкращий результат (док, папка або нотатка)",
       "checklistHint": "Постав усі три галочки - тоді кнопка стане активною"
+    },
+    "interactive": {
+      "tryItLabel": "Спробуй сам",
+      "predictLabel": "Вгадай вивід",
+      "fillLabel": "Заповни пропуски",
+      "traceLabel": "Простеж змінні",
+      "done": "Готово",
+      "reset": "Скинути",
+      "checkAnswer": "Перевірити",
+      "correct": "Правильно!",
+      "notQuite": "Не зовсім",
+      "pythonSays": "Що Python вивів насправді",
+      "noOutput": "(немає виводу)",
+      "tryAgain": "Ще не те - зміни код і запусти ще раз.",
+      "tryAgainButton": "Спробувати ще",
+      "blankAria": "Пропущений код",
+      "memoryTitle": "Пам'ять",
+      "memoryEmpty": "Змінних ще немає - зроби крок далі.",
+      "prevStep": "Попередній крок",
+      "nextStep": "Наступний крок",
+      "play": "Запустити",
+      "pause": "Пауза",
+      "replay": "Спочатку",
+      "stepCounter": "Крок {current} з {total}"
+    },
+    "gamification": {
+      "level": "Рівень {level}",
+      "levelHint": "XP нараховується за інтерактивні блоки, практику й тести.",
+      "xpBarAria": "Прогрес до наступного рівня",
+      "xpOf": "{into} / {need} XP",
+      "streakDays": "Серія: {days} дн.",
+      "streakHint": "Навчайся щодня поспіль, щоб не втратити серію.",
+      "questLabel": "Цей урок",
+      "xpGained": "+{xp} XP",
+      "dismiss": "Закрити"
+    },
+    "achievements": {
+      "first-program": {
+        "title": "Hello, World!",
+        "description": "Ти запустив свою першу програму на Python.",
+        "howTo": "Запусти будь-який блок «Спробуй сам»."
+      },
+      "curious": {
+        "title": "Допитливий",
+        "description": "Ти пройшов усі інтерактивні блоки в уроці.",
+        "howTo": "Заверши всі інтерактивні блоки одного уроку."
+      },
+      "mind-reader": {
+        "title": "Читач думок",
+        "description": "Три правильні відповіді з першої спроби.",
+        "howTo": "Дай три правильні відповіді з першого разу."
+      },
+      "perfectionist": {
+        "title": "Перфекціоніст",
+        "description": "Бездоганні 100% за тест.",
+        "howTo": "Набери 100% у будь-якому тесті."
+      },
+      "no-safety-net": {
+        "title": "Без страховки",
+        "description": "Ти розв’язав практику, не відкриваючи розв’язок.",
+        "howTo": "Здай практику, не підглядаючи у розв’язок."
+      },
+      "graduate": {
+        "title": "Випускник",
+        "description": "Перший урок повністю пройдено.",
+        "howTo": "Заверши урок цілком."
+      },
+      "streak-3": {
+        "title": "У вогні",
+        "description": "Три дні навчання поспіль.",
+        "howTo": "Навчайся три дні поспіль."
+      },
+      "level-5": {
+        "title": "Висхідна зірка",
+        "description": "Ти досяг 5-го рівня.",
+        "howTo": "Набери 400 XP."
+      }
     }
   }
 }

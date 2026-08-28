@@ -23,7 +23,7 @@ export default function HomeNavAuth() {
 
 	if (!user) {
 		return (
-			<Link href="/login" className={styles.login}>
+			<Link href="/register" className={styles.login}>
 				Sign in
 			</Link>
 		)

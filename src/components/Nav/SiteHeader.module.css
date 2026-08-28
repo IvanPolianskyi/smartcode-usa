@@ -72,6 +72,15 @@
 	height: calc(32px * var(--br-scale, 1));
 	border-radius: calc(8px * var(--br-scale, 1));
 	object-fit: cover;
+	display: block;
+}
+
+.logoWrap {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
 }
 
 .navRight {

@@ -50,6 +50,16 @@ export const BILLING_TIERS = {
 	},
 }
 
+/**
+ * Tiers the public site is allowed to sell, in display order.
+ *
+ * Premium is still a real tier everywhere else - existing subscribers keep it,
+ * the webhook still recognises its price IDs, and admin can still grant it -
+ * it is simply not offered on the marketing/purchase surface right now. Put
+ * `'premium'` back in this list to start selling it again.
+ */
+export const SELLABLE_TIER_IDS = ['standard']
+
 /** Numeric value of a display price like "$14" - used for savings math. */
 export function priceValue(display) {
 	const n = Number(String(display || '').replace(/[^0-9.]/g, ''))
@@ -336,6 +346,57 @@ export function priceIdFor(courseId, interval = 'month', tier = 'standard') {
 			entry.interval === wantInterval
 	)
 	return match ? cleanId(match.priceId) : null
+}
+
+/**
+ * Where a plan sits on the ladder we actually want customers to climb.
+ *
+ * Deliberately not a money comparison: annual costs *less* per year than
+ * monthly ($99 vs $168), so ranking by price would file "switch to annual"
+ * as a downgrade and defer it to the next renewal - the opposite of what the
+ * business wants from the plan it is trying to sell.
+ *
+ * @returns {{ tier: number, interval: number }}
+ */
+export function planRank({ tier = 'standard', interval = 'month' } = {}) {
+	return {
+		tier: normalizeTier(tier) === 'premium' ? 1 : 0,
+		interval: normalizeInterval(interval) === 'year' ? 1 : 0,
+	}
+}
+
+/** Details behind a Paddle price ID: `{ courseIds, interval, tier, label }` or null. */
+export function planForPriceId(priceId) {
+	if (!priceId) return null
+	return priceMap().get(String(priceId)) || null
+}
+
+/**
+ * Classify a move from one price to another.
+ *
+ * A tier change decides on its own; at the same tier, the billing period
+ * decides. Upgrades are billed immediately, everything else waits for the
+ * next renewal.
+ *
+ * @returns {{ same: boolean, upgrade: boolean } | null} null when the current
+ *   price is not in our catalogue (legacy or foreign price).
+ */
+export function comparePlans(currentPriceId, nextPriceId) {
+	if (!nextPriceId) return null
+	if (currentPriceId && String(currentPriceId) === String(nextPriceId)) {
+		return { same: true, upgrade: false }
+	}
+	const current = planForPriceId(currentPriceId)
+	const next = planForPriceId(nextPriceId)
+	if (!current || !next) return null
+
+	const from = planRank(current)
+	const to = planRank(next)
+
+	if (to.tier !== from.tier) {
+		return { same: false, upgrade: to.tier > from.tier }
+	}
+	return { same: false, upgrade: to.interval > from.interval }
 }
 
 export function programForCourseId(courseId) {

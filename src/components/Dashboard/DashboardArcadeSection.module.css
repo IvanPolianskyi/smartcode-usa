@@ -1,0 +1,16 @@
+.row {
+	display: grid;
+	grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+	gap: 1rem;
+	align-items: stretch;
+}
+
+@media (max-width: 960px) {
+	.row {
+		grid-template-columns: 1fr;
+	}
+}
+
+.row > [data-leaderboard='true'] {
+	grid-column: 1 / -1;
+}

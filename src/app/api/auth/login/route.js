@@ -73,6 +73,15 @@ export async function POST(request) {
     }
 
     if (!user.password) {
+      if (user.googleId) {
+        return NextResponse.json(
+          {
+            error:
+              'This account uses Google sign-in. Click Continue with Google on the login page.',
+          },
+          { status: 401 }
+        )
+      }
       return NextResponse.json(
         {
           error:

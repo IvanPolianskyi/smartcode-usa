@@ -1,12 +1,15 @@
 'use client'
 
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { useRouter } from '@/i18n/navigation'
 import { Link } from '@/i18n/navigation'
 import SiteHeader from '@/components/Nav/SiteHeader'
 import SiteFooter from '@/components/Nav/SiteFooter'
 import { useBillingStatus } from '@/hooks/useBillingStatus'
+import { entitlementCoversCheckout } from '@/lib/billingActivation'
 import { LEGAL } from '@/lib/legalConfig'
+import { track } from '@/lib/analytics'
 import styles from '../page.module.css'
 import welcomeStyles from './welcome.module.css'
 
@@ -17,16 +20,35 @@ import welcomeStyles from './welcome.module.css'
  */
 function WelcomeBody() {
 	const router = useRouter()
+	const searchParams = useSearchParams()
+	const expectedCourseId = String(searchParams.get('course') || '').trim() || null
 	const {
 		status,
 		loading,
 		activating,
 		activationStalled,
+		syncing,
 		error,
+		syncPurchases,
 	} = useBillingStatus()
 
-	const ready =
-		Boolean(status?.hasSubscription) && (status?.courseIds || []).length > 0
+	const ready = entitlementCoversCheckout(status, expectedCourseId)
+
+	// Fired once, when entitlements actually land. Reporting the conversion on
+	// page view instead would count every abandoned checkout as a sale.
+	const reported = useRef(false)
+
+	useEffect(() => {
+		if (!ready || reported.current) return
+		reported.current = true
+		const params = {
+			currency: 'USD',
+			course_ids: status?.courseIds || [],
+			tier: status?.programs?.[0]?.planTier || 'standard',
+			plan: status?.programs?.[0]?.billingInterval || null,
+		}
+		track(status?.trialing ? 'start_trial' : 'purchase', params)
+	}, [ready, status])
 
 	useEffect(() => {
 		if (!ready) return
@@ -43,7 +65,7 @@ function WelcomeBody() {
 		lede = 'Your trial is active. Opening your dashboard…'
 	} else if (activationStalled) {
 		title = 'Payment received'
-		lede = `Your payment went through. Access can take a minute to unlock — open the dashboard, or email ${LEGAL.supportEmail} if it is still locked.`
+		lede = `Your payment went through. Access can take a minute to unlock — try refresh access below, or email ${LEGAL.supportEmail} if it is still locked.`
 	} else if (error) {
 		title = 'Almost there'
 		lede = error
@@ -66,6 +88,16 @@ function WelcomeBody() {
 			) : null}
 
 			<div className={welcomeStyles.actions}>
+				{activationStalled ? (
+					<button
+						type="button"
+						className="sc-btn sc-btn-primary sc-btn-lg"
+						onClick={() => syncPurchases()}
+						disabled={syncing}
+					>
+						{syncing ? 'Refreshing…' : 'Refresh access'}
+					</button>
+				) : null}
 				<Link href="/dashboard" className="sc-btn sc-btn-primary sc-btn-lg">
 					Go to dashboard
 				</Link>

@@ -104,9 +104,8 @@ export default function TermsPage() {
 					not be charged during the trial if you cancel in time.
 				</p>
 				<p>
-					<strong>Prices (USD).</strong> Standard: {LEGAL.monthlyPrice}/month or{' '}
-					{LEGAL.annualPrice}/year. Premium: {LEGAL.premiumMonthlyPrice}/month
-					or {LEGAL.premiumAnnualPrice}/year. Applicable taxes (VAT, sales tax,
+					<strong>Prices (USD).</strong> {LEGAL.monthlyPrice}/month or{' '}
+					{LEGAL.annualPrice}/year per program. Applicable taxes (VAT, sales tax,
 					etc.) are calculated and collected by Paddle as Merchant of Record and
 					shown at checkout. Prices may change for future renewal periods; we
 					will provide notice as required by law and/or via email before a

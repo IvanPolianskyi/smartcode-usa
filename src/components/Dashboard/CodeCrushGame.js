@@ -7,149 +7,44 @@ import {
 	Flame,
 	Gamepad2,
 	Gift,
-	Medal,
 	RotateCcw,
 	Sparkles,
+	Timer,
 	Trophy,
 } from 'lucide-react'
 import ArcadeLeaderboard from './ArcadeLeaderboard'
+import {
+	SIZE,
+	ROUND_SECONDS,
+	FREEZE_SECONDS,
+	GEM_META,
+	createBoardWithoutMatches,
+	findMatches,
+	pickSpecialSpawn,
+	clearMatches,
+	applyGravity,
+	expandWithSpecials,
+	swapCells,
+	areAdjacent,
+	cellType,
+	cellSpecial,
+	activateSpecial,
+	mergeMarks,
+	hasAnyMatch,
+} from '@/lib/codeCrushLogic.mjs'
 import styles from './CodeCrushGame.module.css'
 
-const SIZE = 8
-const MOVES = 20
-const GEM_COUNT = 6
-const GEM_LABELS = ['bit', 'byte', 'chip', 'node', 'spark', 'loop']
-
-function randomGem() {
-	return Math.floor(Math.random() * GEM_COUNT)
-}
-
-function emptyBoard() {
-	return Array.from({ length: SIZE }, () => Array.from({ length: SIZE }, () => 0))
-}
-
-function cloneBoard(board) {
-	return board.map((row) => row.slice())
-}
-
-function findMatches(board) {
-	const matched = Array.from({ length: SIZE }, () =>
-		Array.from({ length: SIZE }, () => false)
-	)
-	let count = 0
-
-	for (let r = 0; r < SIZE; r += 1) {
-		let run = 1
-		for (let c = 1; c <= SIZE; c += 1) {
-			if (c < SIZE && board[r][c] === board[r][c - 1]) {
-				run += 1
-			} else {
-				if (run >= 3) {
-					for (let k = 0; k < run; k += 1) {
-						matched[r][c - 1 - k] = true
-						count += 1
-					}
-				}
-				run = 1
-			}
-		}
-	}
-
-	for (let c = 0; c < SIZE; c += 1) {
-		let run = 1
-		for (let r = 1; r <= SIZE; r += 1) {
-			if (r < SIZE && board[r][c] === board[r - 1][c]) {
-				run += 1
-			} else {
-				if (run >= 3) {
-					for (let k = 0; k < run; k += 1) {
-						if (!matched[r - 1 - k][c]) count += 1
-						matched[r - 1 - k][c] = true
-					}
-				}
-				run = 1
-			}
-		}
-	}
-
-	return { matched, count }
-}
-
-function clearMatches(board, matched) {
-	const next = cloneBoard(board)
-	for (let r = 0; r < SIZE; r += 1) {
-		for (let c = 0; c < SIZE; c += 1) {
-			if (matched[r][c]) next[r][c] = -1
-		}
-	}
-	return next
-}
-
-function applyGravity(board) {
-	const next = emptyBoard()
-	for (let c = 0; c < SIZE; c += 1) {
-		const stack = []
-		for (let r = SIZE - 1; r >= 0; r -= 1) {
-			if (board[r][c] >= 0) stack.push(board[r][c])
-		}
-		let write = SIZE - 1
-		for (const gem of stack) {
-			next[write][c] = gem
-			write -= 1
-		}
-		while (write >= 0) {
-			next[write][c] = randomGem()
-			write -= 1
-		}
-	}
-	return next
-}
-
-function hasAnyMatch(board) {
-	return findMatches(board).count > 0
-}
-
-function createBoardWithoutMatches() {
-	let board = emptyBoard()
-	for (let r = 0; r < SIZE; r += 1) {
-		for (let c = 0; c < SIZE; c += 1) {
-			let gem
-			do {
-				gem = randomGem()
-			} while (
-				(c >= 2 && board[r][c - 1] === gem && board[r][c - 2] === gem) ||
-				(r >= 2 && board[r - 1][c] === gem && board[r - 2][c] === gem)
-			)
-			board[r][c] = gem
-		}
-	}
-	return board
-}
-
-function areAdjacent(a, b) {
-	if (!a || !b) return false
-	return Math.abs(a.r - b.r) + Math.abs(a.c - b.c) === 1
-}
-
-function swapCells(board, a, b) {
-	const next = cloneBoard(board)
-	const tmp = next[a.r][a.c]
-	next[a.r][a.c] = next[b.r][b.c]
-	next[b.r][b.c] = tmp
-	return next
-}
-
 /**
- * Match-3 “Code Crush” arcade for the student dashboard.
- * Includes Monthly Tournament Leaderboard, Monthly Prizes, and Rank Tracking.
+ * Match-3 “Code Crush” arcade — timed rounds, match specials + bomb/freeze drops.
  */
-export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
+export default function CodeCrushGame({ bestScore = 0, onRoundEnd, embedded = false }) {
 	const t = useTranslations('dashboard.student.arcade')
-	const [activeTab, setActiveTab] = useState('game') // 'game' | 'leaderboard'
+	const [activeTab, setActiveTab] = useState('game')
 	const [board, setBoard] = useState(() => createBoardWithoutMatches())
 	const [selected, setSelected] = useState(null)
 	const [dragOver, setDragOver] = useState(null)
-	const [moves, setMoves] = useState(MOVES)
+	const [timeLeft, setTimeLeft] = useState(ROUND_SECONDS)
+	const [freezeLeft, setFreezeLeft] = useState(0)
 	const [score, setScore] = useState(0)
 	const [busy, setBusy] = useState(false)
 	const [popping, setPopping] = useState(null)
@@ -158,19 +53,28 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 	const [roundRankData, setRoundRankData] = useState(null)
 	const [rankInfo, setRankInfo] = useState(null)
 	const [refreshLeaderboardTrigger, setRefreshLeaderboardTrigger] = useState(0)
+	const [lastXp, setLastXp] = useState(0)
 
 	const endedRef = useRef(false)
 	const dragRef = useRef(null)
 	const boardRef = useRef(null)
 	const busyRef = useRef(false)
 	const boardStateRef = useRef(board)
-	const movesRef = useRef(moves)
+	const timeLeftRef = useRef(timeLeft)
+	const freezeLeftRef = useRef(freezeLeft)
+	const scoreRef = useRef(score)
 	const roundOverRef = useRef(roundOver)
+	const toastTimerRef = useRef(null)
 
-	// Fetch initial rank
+	const showToast = useCallback((message) => {
+		if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current)
+		setToast(message)
+		toastTimerRef.current = window.setTimeout(() => setToast(null), 1600)
+	}, [])
+
 	useEffect(() => {
 		let isMounted = true
-		fetch('/api/arcade/leaderboard')
+		fetch('/api/arcade/leaderboard?locale=en')
 			.then((res) => res.json())
 			.then((data) => {
 				if (isMounted && data?.currentUser) {
@@ -190,25 +94,22 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 		boardStateRef.current = board
 	}, [board])
 	useEffect(() => {
-		movesRef.current = moves
-	}, [moves])
+		timeLeftRef.current = timeLeft
+	}, [timeLeft])
+	useEffect(() => {
+		freezeLeftRef.current = freezeLeft
+	}, [freezeLeft])
+	useEffect(() => {
+		scoreRef.current = score
+	}, [score])
 	useEffect(() => {
 		roundOverRef.current = roundOver
 	}, [roundOver])
 
-	const resetGame = useCallback(() => {
-		setBoard(createBoardWithoutMatches())
-		setSelected(null)
-		setDragOver(null)
-		dragRef.current = null
-		setMoves(MOVES)
-		setScore(0)
-		setBusy(false)
-		setPopping(null)
-		setToast(null)
-		setRoundOver(false)
-		setRoundRankData(null)
-		endedRef.current = false
+	useEffect(() => {
+		return () => {
+			if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current)
+		}
 	}, [])
 
 	const finishRound = useCallback(
@@ -216,15 +117,18 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 			if (endedRef.current) return
 			endedRef.current = true
 			setRoundOver(true)
+			setFreezeLeft(0)
 			const result = onRoundEnd?.(finalScore)
 			const xp = result?.xpGained ?? 0
-			setToast(t('xpEarned', { xp }))
+			setLastXp(xp)
 
-			// Sync score with backend monthly tournament
 			fetch('/api/arcade/score', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ score: finalScore }),
+				body: JSON.stringify({
+					score: finalScore,
+					level: result?.progress?.level || 1,
+				}),
 			})
 				.then((res) => res.json())
 				.then((data) => {
@@ -240,57 +144,141 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 				})
 				.catch((err) => console.warn('Could not submit arcade score:', err))
 		},
-		[onRoundEnd, t]
+		[onRoundEnd]
 	)
 
-	useEffect(() => {
-		if (moves <= 0 && !busy && !endedRef.current) {
-			finishRound(score)
-		}
-	}, [moves, busy, score, finishRound])
-
-	const trySwap = useCallback(async (a, b) => {
-		if (busyRef.current || movesRef.current <= 0 || roundOverRef.current) return
-		if (!areAdjacent(a, b)) return
-
-		const currentBoard = boardStateRef.current
-		busyRef.current = true
-		setBusy(true)
+	const resetGame = useCallback(() => {
+		setBoard(createBoardWithoutMatches())
 		setSelected(null)
 		setDragOver(null)
+		dragRef.current = null
+		setTimeLeft(ROUND_SECONDS)
+		setFreezeLeft(0)
+		setScore(0)
+		setBusy(false)
+		setPopping(null)
+		setToast(null)
+		setRoundOver(false)
+		setRoundRankData(null)
+		setLastXp(0)
+		endedRef.current = false
+	}, [])
 
-		const swapped = swapCells(currentBoard, a, b)
-		if (!hasAnyMatch(swapped)) {
-			setBoard(swapped)
-			await wait(160)
-			setBoard(currentBoard)
+	// Countdown — pauses while freeze is active or while on leaderboard tab
+	useEffect(() => {
+		if (roundOver || activeTab !== 'game') return
+		const id = window.setInterval(() => {
+			if (freezeLeftRef.current > 0) {
+				setFreezeLeft((f) => Math.max(0, f - 1))
+				return
+			}
+			setTimeLeft((prev) => {
+				if (prev <= 1) {
+					if (!endedRef.current) {
+						window.setTimeout(() => finishRound(scoreRef.current), 0)
+					}
+					return 0
+				}
+				return prev - 1
+			})
+		}, 1000)
+		return () => window.clearInterval(id)
+	}, [roundOver, activeTab, finishRound])
+
+	const applyFreeze = useCallback(() => {
+		setFreezeLeft((f) => Math.max(f, FREEZE_SECONDS))
+		showToast(t('toastFreeze'))
+	}, [showToast, t])
+
+	const trySwap = useCallback(
+		async (a, b) => {
+			if (busyRef.current || timeLeftRef.current <= 0 || roundOverRef.current) return
+			if (!areAdjacent(a, b)) return
+
+			const currentBoard = boardStateRef.current
+
+			busyRef.current = true
+			setBusy(true)
+			setSelected(null)
+			setDragOver(null)
+
+			const swapped = swapCells(currentBoard, a, b)
+			const aKind = cellSpecial(swapped[a.r][a.c])
+			const bKind = cellSpecial(swapped[b.r][b.c])
+			const aSpec = Boolean(aKind)
+			const bSpec = Boolean(bKind)
+			const naturalMatch = hasAnyMatch(swapped)
+			if (!naturalMatch && !aSpec && !bSpec) {
+				setBoard(swapped)
+				await wait(160)
+				setBoard(currentBoard)
+				busyRef.current = false
+				setBusy(false)
+				return
+			}
+
+			let current = swapped
+			setBoard(current)
+			await wait(120)
+
+			let totalGain = 0
+			let firstPass = true
+
+			for (let safety = 0; safety < 40; safety += 1) {
+				let matched
+				let count
+				let spawn = null
+
+				if (firstPass && (aSpec || bSpec)) {
+					firstPass = false
+					const { matched: natMatched, runs } = findMatches(current)
+					let base = natMatched
+					spawn = pickSpecialSpawn(runs)
+					if (aSpec) {
+						base = mergeMarks(base, activateSpecial(current, a.r, a.c)).matched
+					}
+					if (bSpec) {
+						base = mergeMarks(base, activateSpecial(current, b.r, b.c)).matched
+					}
+					;({ matched, count } = expandWithSpecials(current, base))
+					if (aKind === 'bomb' || bKind === 'bomb') showToast(t('toastBomb'))
+					else if (aKind === 'freeze' || bKind === 'freeze') {
+						/* toast via applyFreeze */
+					} else showToast(t('toastSpecial'))
+					if (aKind === 'freeze' || bKind === 'freeze') applyFreeze()
+				} else {
+					firstPass = false
+					const found = findMatches(current)
+					if (found.count === 0) break
+					spawn = pickSpecialSpawn(found.runs)
+					;({ matched, count } = expandWithSpecials(current, found.matched))
+				}
+
+				if (count === 0) break
+
+				const cascade = safety + 1
+				setPopping(matched)
+				if (cascade === 2) showToast(t('toastCombo', { n: 2 }))
+				if (cascade >= 3) showToast(t('toastCascade', { n: cascade }))
+				if (spawn?.special === 'row' || spawn?.special === 'col') {
+					showToast(t('toastLineClear'))
+				}
+				if (spawn?.special === 'color') showToast(t('toastNuke'))
+
+				await wait(240)
+				totalGain += count * 10 * cascade
+				current = applyGravity(clearMatches(current, matched, spawn))
+				setPopping(null)
+				setBoard(current)
+				await wait(140)
+			}
+
+			setScore((s) => s + totalGain)
 			busyRef.current = false
 			setBusy(false)
-			return
-		}
-
-		setMoves((m) => m - 1)
-		let current = swapped
-		setBoard(current)
-		await wait(120)
-
-		let totalGain = 0
-		for (let safety = 0; safety < 40; safety += 1) {
-			const { matched, count } = findMatches(current)
-			if (count === 0) break
-			setPopping(matched)
-			await wait(220)
-			totalGain += count * 10 * (safety + 1)
-			current = applyGravity(clearMatches(current, matched))
-			setPopping(null)
-			setBoard(current)
-			await wait(140)
-		}
-
-		setScore((s) => s + totalGain)
-		busyRef.current = false
-		setBusy(false)
-	}, [])
+		},
+		[applyFreeze, showToast, t]
+	)
 
 	const cellFromPoint = useCallback((clientX, clientY) => {
 		const boardEl = boardRef.current
@@ -318,25 +306,21 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 		setDragOver(null)
 	}, [])
 
-	const onPointerDown = useCallback(
-		(event, r, c) => {
-			if (busyRef.current || movesRef.current <= 0 || roundOverRef.current) return
-			if (event.button != null && event.button !== 0) return
-			event.preventDefault()
-			const target = event.currentTarget
-			target.setPointerCapture?.(event.pointerId)
-			dragRef.current = {
-				origin: { r, c },
-				startX: event.clientX,
-				startY: event.clientY,
-				swapped: false,
-				pointerId: event.pointerId,
-			}
-			setSelected({ r, c })
-			setDragOver(null)
-		},
-		[]
-	)
+	const onPointerDown = useCallback((event, r, c) => {
+		if (busyRef.current || timeLeftRef.current <= 0 || roundOverRef.current) return
+		if (event.button != null && event.button !== 0) return
+		event.preventDefault()
+		event.currentTarget.setPointerCapture?.(event.pointerId)
+		dragRef.current = {
+			origin: { r, c },
+			startX: event.clientX,
+			startY: event.clientY,
+			swapped: false,
+			pointerId: event.pointerId,
+		}
+		setSelected({ r, c })
+		setDragOver(null)
+	}, [])
 
 	const onPointerMove = useCallback(
 		(event) => {
@@ -410,15 +394,25 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 
 	const hint = useMemo(() => {
 		if (roundOver) return t('roundOver')
+		if (freezeLeft > 0) return t('hintFrozen', { sec: freezeLeft })
 		if (selected) return t('hintSwap')
 		return t('hintPick')
-	}, [roundOver, selected, t])
+	}, [roundOver, freezeLeft, selected, t])
 
 	const displayBest = Math.max(bestScore, score, rankInfo?.score || 0)
+	const timerUrgent = timeLeft <= 10 && freezeLeft === 0
 
 	return (
-		<section className={styles.panel} aria-labelledby="code-crush-title">
-			{/* Header with Title and Segmented Tabs */}
+		<section
+			className={[
+				styles.panel,
+				embedded ? styles.panelEmbedded : null,
+			]
+				.filter(Boolean)
+				.join(' ')}
+			data-leaderboard={activeTab === 'leaderboard' ? 'true' : undefined}
+			aria-labelledby="code-crush-title"
+		>
 			<header className={styles.head}>
 				<div>
 					<div className={styles.headEyebrowRow}>
@@ -447,11 +441,9 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 					<h2 id="code-crush-title" className={styles.title}>
 						{t('title')}
 					</h2>
-					<p className={styles.lede}>{t('lede')}</p>
 				</div>
 
 				<div className={styles.headActions}>
-					{/* Tab switcher */}
 					<div className={styles.tabSwitcher} role="tablist">
 						<button
 							type="button"
@@ -494,22 +486,42 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 				</div>
 			</header>
 
-			{/* Main Content Area */}
 			{activeTab === 'leaderboard' ? (
 				<ArcadeLeaderboard
 					onPlayClick={() => setActiveTab('game')}
 					refreshTrigger={refreshLeaderboardTrigger}
 				/>
 			) : (
-				<div className={styles.gameContent}>
+				<div
+					className={[
+						styles.gameContent,
+						freezeLeft > 0 ? styles.gameFrozen : null,
+					]
+						.filter(Boolean)
+						.join(' ')}
+				>
 					<div className={styles.hud} aria-live="polite">
 						<div className={styles.hudItem}>
 							<span className={styles.hudLabel}>{t('score')}</span>
 							<strong className={styles.hudValue}>{score}</strong>
 						</div>
-						<div className={styles.hudItem}>
-							<span className={styles.hudLabel}>{t('moves')}</span>
-							<strong className={styles.hudValue}>{moves}</strong>
+						<div
+							className={[
+								styles.hudItem,
+								timerUrgent ? styles.hudTimerUrgent : null,
+								freezeLeft > 0 ? styles.hudTimerFrozen : null,
+							]
+								.filter(Boolean)
+								.join(' ')}
+						>
+							<span className={styles.hudLabel}>
+								<Timer size={12} aria-hidden /> {t('time')}
+							</span>
+							<strong className={styles.hudValue}>
+								{freezeLeft > 0
+									? t('timeFrozen', { sec: freezeLeft })
+									: `${timeLeft}s`}
+							</strong>
 						</div>
 						<div className={styles.hudItem}>
 							<span className={styles.hudLabel}>
@@ -536,6 +548,7 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 
 					<p className={styles.hint}>{hint}</p>
 
+					<div className={styles.boardShell}>
 					<div
 						ref={boardRef}
 						className={[styles.board, selected ? styles.boardDragging : null]
@@ -549,10 +562,13 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 						onPointerCancel={endDrag}
 					>
 						{board.map((row, r) =>
-							row.map((gem, c) => {
+							row.map((cell, c) => {
+								const type = cellType(cell)
+								const special = cellSpecial(cell)
 								const isSelected = selected?.r === r && selected?.c === c
 								const isOver = dragOver?.r === r && dragOver?.c === c
 								const isPop = popping?.[r]?.[c]
+								const meta = GEM_META[type] || GEM_META[0]
 								return (
 									<button
 										key={`${r}-${c}`}
@@ -560,7 +576,8 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 										role="gridcell"
 										className={[
 											styles.cell,
-											styles[`gem${gem}`],
+											styles[`gem${type}`],
+											special ? styles[`special${special}`] : null,
 											isSelected ? styles.cellSelected : null,
 											isOver ? styles.cellDragOver : null,
 											isPop ? styles.cellPop : null,
@@ -568,11 +585,11 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 											.filter(Boolean)
 											.join(' ')}
 										aria-label={t('cellLabel', {
-											gem: GEM_LABELS[gem] || 'orb',
+											gem: special || meta.short,
 											row: r + 1,
 											col: c + 1,
 										})}
-										disabled={busy || roundOver || moves <= 0}
+										disabled={busy || roundOver || timeLeft <= 0}
 										onPointerDown={(event) => onPointerDown(event, r, c)}
 										onPointerMove={onPointerMove}
 										onPointerUp={onPointerUp}
@@ -583,6 +600,7 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 								)
 							})
 						)}
+					</div>
 					</div>
 
 					{toast ? (
@@ -596,6 +614,9 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 						<div className={styles.overlay}>
 							<p className={styles.overlayTitle}>{t('roundOverTitle')}</p>
 							<p className={styles.overlayScore}>{t('finalScore', { score })}</p>
+							{lastXp > 0 ? (
+								<p className={styles.overlayXp}>{t('xpEarned', { xp: lastXp })}</p>
+							) : null}
 
 							{roundRankData?.monthlyRank ? (
 								<div className={styles.overlayRankBox}>
@@ -603,11 +624,13 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 										<Trophy size={14} />
 										{t('yourNewRank', { rank: roundRankData.monthlyRank })}
 									</span>
-									{roundRankData.score >= roundRankData.bestScore ? (
+									{roundRankData.score === roundRankData.bestScore ? (
 										<p className={styles.overlayNewBest}>{t('newMonthlyBest')}</p>
 									) : null}
 								</div>
-							) : null}
+							) : (
+								<p className={styles.overlaySyncing}>{t('syncingRank')}</p>
+							)}
 
 							<div className={styles.overlayButtons}>
 								<button
@@ -622,7 +645,6 @@ export default function CodeCrushGame({ bestScore = 0, onRoundEnd }) {
 									type="button"
 									className={styles.overlayLeaderboardBtn}
 									onClick={() => {
-										resetGame()
 										setActiveTab('leaderboard')
 									}}
 								>

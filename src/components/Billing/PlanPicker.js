@@ -1,17 +1,24 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Check } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
-import { BILLING_TIERS, annualSaving, priceIdFor } from '@/lib/billingCatalog'
+import {
+	BILLING_TIERS,
+	SELLABLE_TIER_IDS,
+	annualSaving,
+	comparePlans,
+	priceIdFor,
+} from '@/lib/billingCatalog'
 import { LEGAL } from '@/lib/legalConfig'
 import { usePaddlePrices } from '@/hooks/usePaddlePrices'
 import CheckoutButton from './CheckoutButton'
 import styles from './ProgramPricingFlow.module.css'
 
 const TRIAL = LEGAL.trialDays
-const TIER_ORDER = ['standard', 'premium']
+const TIER_ORDER = SELLABLE_TIER_IDS
+const DEFAULT_TIER = TIER_ORDER[TIER_ORDER.length - 1]
 
 /**
  * Step 2 of the purchase: tier + billing period for one already-chosen program.
@@ -27,7 +34,7 @@ export default function PlanPicker({ courseId, country = null }) {
 		planParam === 'annual' || planParam === 'year' ? 'annual' : 'monthly'
 	)
 	const [selectedTier, setSelectedTier] = useState(
-		tierParam === 'standard' || tierParam === 'premium' ? tierParam : 'premium'
+		TIER_ORDER.includes(tierParam) ? tierParam : DEFAULT_TIER
 	)
 
 	const priceIds = TIER_ORDER.flatMap((tierId) => [
@@ -40,8 +47,36 @@ export default function PlanPicker({ courseId, country = null }) {
 		country
 	)
 
+	/**
+	 * The plan this visitor is already on, if any. An existing subscriber
+	 * arriving from the dashboard upgrade banner must not be sold "Start 3 days
+	 * free" on the plan they are already paying for.
+	 */
+	const [currentPriceId, setCurrentPriceId] = useState(null)
+
+	useEffect(() => {
+		let cancelled = false
+		fetch('/api/billing/status', { credentials: 'include' })
+			.then((response) => (response.ok ? response.json() : null))
+			.then((status) => {
+				if (cancelled || !status) return
+				const program = (status.programs || []).find((entry) =>
+					(entry.courseIds || []).includes(courseId)
+				)
+				setCurrentPriceId(program?.priceId || null)
+			})
+			.catch(() => {
+				// Guests 401 here - the default "start free" copy is correct for them.
+			})
+		return () => {
+			cancelled = true
+		}
+	}, [courseId])
+
 	const isAnnual = billing === 'annual'
-	const standardSaving = annualSaving('standard')
+	// Show the saving for the tier actually selected - quoting Standard's $69
+	// next to a selected Premium card understates the annual saving by $22.
+	const toggleSaving = annualSaving(selectedTier)
 
 	function displayPrice(tierId) {
 		const interval = isAnnual ? 'year' : 'month'
@@ -69,8 +104,8 @@ export default function PlanPicker({ courseId, country = null }) {
 					onClick={() => setBilling('annual')}
 				>
 					Annual
-					{!pricesLoading && standardSaving ? (
-						<span className={styles.saveTag}>save {standardSaving.display}</span>
+					{!pricesLoading && toggleSaving ? (
+						<span className={styles.saveTag}>save {toggleSaving.display}</span>
 					) : null}
 				</button>
 			</div>
@@ -85,7 +120,20 @@ export default function PlanPicker({ courseId, country = null }) {
 					const price = displayPrice(tierId)
 					const saving = annualSaving(tierId)
 					const isSelected = selectedTier === tierId
-					const isPremium = tierId === 'premium'
+					// A "Recommended" badge only means something next to an alternative.
+					const showFlag = TIER_ORDER.length > 1 && tierId === 'premium'
+					const cardPriceId = priceIdFor(courseId, isAnnual ? 'year' : 'month', tierId)
+					const move = currentPriceId
+						? comparePlans(currentPriceId, cardPriceId)
+						: null
+					const isCurrentPlan = Boolean(move?.same)
+					const ctaLabel = !currentPriceId
+						? `Start ${TRIAL} days free`
+						: isCurrentPlan
+							? 'Your current plan'
+							: move?.upgrade
+								? `Upgrade to ${tier.label}`
+								: `Switch to ${tier.label}`
 					const priceBusy = pricesLoading && !paddlePrices[priceIdFor(courseId, isAnnual ? 'year' : 'month', tierId)]
 
 					return (
@@ -106,7 +154,7 @@ export default function PlanPicker({ courseId, country = null }) {
 						>
 							<div className={styles.tierTop}>
 								<h2 className={styles.tierName}>{tier.label}</h2>
-								{isPremium ? (
+								{showFlag ? (
 									<span className={styles.tierFlag}>Recommended</span>
 								) : null}
 							</div>
@@ -117,9 +165,15 @@ export default function PlanPicker({ courseId, country = null }) {
 								<span className={styles.per}>{isAnnual ? '/year' : '/month'}</span>
 							</p>
 							<p className={styles.priceNote}>
-								{isAnnual && saving
-									? `First ${TRIAL} days free ($0 today), then ${priceBusy ? '…' : price}/year (save ${saving.display})`
-									: `First ${TRIAL} days free ($0 today), then ${priceBusy ? '…' : price}/month · cancel anytime`}
+								{currentPriceId
+									? isCurrentPlan
+										? `You are on this plan · ${priceBusy ? '…' : price}${isAnnual ? '/year' : '/month'}`
+										: move?.upgrade
+											? `Switch today · you are only billed the difference for the rest of this period`
+											: `Switch at your next renewal · nothing is charged today`
+									: isAnnual && saving
+										? `First ${TRIAL} days free ($0 today), then ${priceBusy ? '…' : price}/year (save ${saving.display})`
+										: `First ${TRIAL} days free ($0 today), then ${priceBusy ? '…' : price}/month · cancel anytime`}
 							</p>
 
 							<ul className={styles.featureList}>
@@ -141,15 +195,21 @@ export default function PlanPicker({ courseId, country = null }) {
 								className={styles.tierCtaWrap}
 								onClick={(event) => event.stopPropagation()}
 							>
-								<CheckoutButton
-									courseId={courseId}
-									plan={billing}
-									tier={tierId}
-									className={styles.tierCta}
-									variant={isSelected ? 'primary' : 'ghost'}
-								>
-									Start {TRIAL} days free
-								</CheckoutButton>
+								{isCurrentPlan ? (
+									<p className={styles.currentPlanNote} role="status">
+										{ctaLabel}
+									</p>
+								) : (
+									<CheckoutButton
+										courseId={courseId}
+										plan={billing}
+										tier={tierId}
+										className={styles.tierCta}
+										variant={isSelected ? 'primary' : 'ghost'}
+									>
+										{ctaLabel}
+									</CheckoutButton>
+								)}
 							</div>
 						</div>
 					)

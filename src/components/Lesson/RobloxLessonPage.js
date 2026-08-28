@@ -28,6 +28,8 @@ import {
   splitSectionMission,
   XP,
 } from '@/lib/lessonGamification'
+import Pip from '@/components/Mascot/Pip'
+import PipCompanion from '@/components/Mascot/PipCompanion'
 import {
   MissionCard,
   MissionProgress,
@@ -480,11 +482,85 @@ const RobloxLessonPage = ({
 
         {showCheckpointCelebrate && (
           <div className={styles.celebrateBanner} role="status">
-            <CheckCircle2 size={22} />
+            <div className={styles.checkpointPip}>
+              <Pip mood="cheer" size={56} label="Pip celebrating checkpoint" />
+            </div>
             <div>
               <strong>{tRoblox('checkpointCelebrateTitle')}</strong>
               <p>{tRoblox('checkpointCelebrateBody')}</p>
             </div>
+          </div>
+        )}
+
+        {!fullLesson.comingSoon && (
+          <div className={styles.mascotBanner}>
+            <PipCompanion
+              mood={
+                lessonComplete
+                  ? 'cheer'
+                  : activeStep === 'quiz' && quizSubmitted
+                    ? quizPassed
+                      ? 'cheer'
+                      : 'sad'
+                    : activeStep === 'quiz'
+                      ? 'think'
+                      : activeStep === 'practice'
+                        ? practiceChecklistReady
+                          ? 'happy'
+                          : 'think'
+                        : missions.length > 0 && missionsDoneCount >= missions.length
+                          ? 'cheer'
+                          : missionsDoneCount > 0
+                            ? 'happy'
+                            : 'wave'
+              }
+              size={64}
+              bubblePosition="right"
+              compact
+              speech={
+                lessonComplete ? (
+                  <span>
+                    <strong>Awesome job, {tRoblox(`ranks.${rank.key}`)}!</strong> You completed this lesson and banked <strong>+{lessonXp} XP</strong>!
+                  </span>
+                ) : activeStep === 'quiz' && quizSubmitted ? (
+                  quizPassed ? (
+                    <span>
+                      <strong>Quiz passed!</strong> You scored <strong>{quizScore}%</strong> and earned your XP reward!
+                    </span>
+                  ) : (
+                    <span>
+                      <strong>Don’t give up!</strong> You scored {quizScore}%. Review the theory and retake the quiz to pass!
+                    </span>
+                  )
+                ) : activeStep === 'quiz' ? (
+                  <span>
+                    <strong>Quiz time!</strong> Test what you learned in Studio. Answer all questions to unlock XP.
+                  </span>
+                ) : activeStep === 'practice' ? (
+                  practiceChecklistReady ? (
+                    <span>
+                      <strong>Practice verified!</strong> All steps checked. You are ready to crush the quiz!
+                    </span>
+                  ) : (
+                    <span>
+                      <strong>Studio Practice:</strong> Follow the steps in Roblox Studio, save your Place, and complete the checklist.
+                    </span>
+                  )
+                ) : missions.length > 0 && missionsDoneCount >= missions.length ? (
+                  <span>
+                    <strong>All missions checked!</strong> You unlocked the <strong>+{XP.ALL_MISSIONS_BONUS} XP</strong> all-missions bonus!
+                  </span>
+                ) : missions.length > 0 ? (
+                  <span>
+                    <strong>Build & Learn:</strong> Complete the interactive missions in Studio to level up your XP!
+                  </span>
+                ) : (
+                  <span>
+                    <strong>Ready to build?</strong> Follow the theory sections below and test concepts in Roblox Studio!
+                  </span>
+                )
+              }
+            />
           </div>
         )}
 
@@ -800,6 +876,13 @@ const RobloxLessonPage = ({
                       </div>
                     ) : (
                       <div className={styles.scoreCard} style={{ width: '100%' }}>
+                        <div className={styles.scorePipWrap}>
+                          <Pip
+                            mood={quizPassed ? 'cheer' : 'sad'}
+                            size={72}
+                            label={quizPassed ? 'Pip cheering score' : 'Pip encouraging score'}
+                          />
+                        </div>
                         <p>{t('yourScore')}</p>
                         <div className={styles.scoreValue}>{quizScore}%</div>
                         <p style={{ fontWeight: 700 }}>

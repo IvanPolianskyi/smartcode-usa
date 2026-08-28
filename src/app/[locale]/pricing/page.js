@@ -22,10 +22,9 @@ export default async function PricingPage({ params }) {
 				<div className={styles.sectionHead}>
 					<h1 className={styles.sectionTitle}>Pick your program</h1>
 					<p className={styles.sectionLede}>
-						{BILLING_TIERS.standard.monthlyPrice}/month for one program, or{' '}
-						{BILLING_TIERS.premium.monthlyPrice}/month with two live lessons a
-						week. Free for {LEGAL.trialDays} days - nothing is charged today, and
-						you can cancel anytime.
+						{BILLING_TIERS.standard.monthlyPrice}/month for one program. Free for{' '}
+						{LEGAL.trialDays} days - nothing is charged today, and you can cancel
+						anytime.
 					</p>
 				</div>
 

@@ -18,7 +18,8 @@
     padding-top: 0;
   }
 
-  .sidebarToggleClosed,
+  /* Keep the reopen control visible: the sidebar often starts closed on
+     narrower viewports, and hiding this button left no way to open it. */
   .edgeDragArea {
     display: none !important;
   }
@@ -1686,9 +1687,32 @@
   }
   
   .sidebar.closed {
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
     max-height: 0;
     border-bottom: none;
     overflow: hidden;
+    padding: 0;
+  }
+
+  .sidebarToggleClosed {
+    display: flex;
+    position: fixed;
+    top: auto;
+    bottom: 1.25rem;
+    left: 0.75rem;
+    transform: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    border: 3px solid var(--background);
+    z-index: 10000;
+  }
+
+  .sidebarToggleClosed:hover,
+  .sidebarToggleClosed:active {
+    transform: scale(1.05);
   }
   
   .sidebarHeader {
@@ -1704,17 +1728,24 @@
   }
   
   .sidebarToggle {
-    display: block;
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    width: 40px;
-    height: 40px;
+    display: flex;
+    position: fixed;
+    top: auto;
+    bottom: 1.25rem;
+    left: auto;
+    right: 0.75rem;
+    width: 48px;
+    height: 48px;
     background: var(--gradient-primary);
-    border: 2px solid var(--background);
-    border-radius: 8px;
+    border: 3px solid var(--background);
+    border-radius: 999px;
     transform: none;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .sidebarToggle:hover,
+  .sidebarToggle:active {
+    transform: scale(1.05);
   }
   
   .resizeHandle {

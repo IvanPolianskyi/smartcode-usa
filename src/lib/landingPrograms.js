@@ -7,9 +7,8 @@ import {
 /**
  * Program cards shown on the marketing site (pick → pricing flow).
  *
- * `outcome` is the promise the card closes on - what the student actually has
- * at the end. Traffic arrives from Instagram reels of finished student games,
- * so every card states a finished thing, not a syllabus.
+ * Every card closes on the same free-trial line rather than a per-program
+ * promise - the offer, not the syllabus, is what the card is selling.
  */
 export const LANDING_PROGRAMS = [
 	{
@@ -19,7 +18,6 @@ export const LANDING_PROGRAMS = [
 		title: 'Roblox Studio',
 		popular: true,
 		text: 'Build a world, give it rules, and publish a game people can play.',
-		outcome: 'You finish with a published game your friends can actually play.',
 		topics: [
 			'Build your first world',
 			'Script it with Luau',
@@ -34,7 +32,6 @@ export const LANDING_PROGRAMS = [
 		kind: 'Programming',
 		title: 'Python',
 		text: 'Study the world’s most popular programming language - right in your browser from lesson one.',
-		outcome: 'You finish able to write real Python without following a tutorial.',
 		topics: [
 			'Run code in your browser',
 			'Loops, lists, and logic',
@@ -49,7 +46,6 @@ export const LANDING_PROGRAMS = [
 		kind: 'AI & content',
 		title: 'AI for Real Life',
 		text: 'Prompting as a skill, generative media, and a content system you can run.',
-		outcome: 'You finish with a content system you can run for yourself or a client.',
 		topics: [
 			'How AI models really work',
 			'Prompting like a pro',

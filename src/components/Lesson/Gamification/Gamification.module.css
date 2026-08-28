@@ -1,0 +1,271 @@
+/* XP HUD and celebration toasts. */
+
+.hud {
+	display: flex;
+	flex-direction: column;
+	gap: 0.65rem;
+	padding: 0.85rem 1rem;
+	margin-bottom: 1.25rem;
+	border-radius: 12px;
+	background: var(--background-secondary);
+	border: 1px solid var(--border-subtle, rgba(128, 128, 128, 0.22));
+}
+
+.hudTop {
+	display: flex;
+	align-items: center;
+	gap: 0.85rem;
+	flex-wrap: wrap;
+}
+
+.levelChip,
+.streakChip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	padding: 0.3rem 0.65rem;
+	border-radius: 999px;
+	font-size: 0.8rem;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.levelChip {
+	background: color-mix(in srgb, var(--brand-accent, #7c5cff) 16%, transparent);
+	color: var(--brand-accent, #7c5cff);
+}
+
+.streakChip {
+	background: color-mix(in srgb, var(--accent-yellow, #fbbf24) 18%, transparent);
+	color: var(--accent-yellow, #fbbf24);
+}
+
+.barWrap {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	flex: 1 1 180px;
+	min-width: 0;
+}
+
+.bar {
+	position: relative;
+	flex: 1;
+	height: 8px;
+	min-width: 0;
+	border-radius: 999px;
+	background: var(--background-tertiary);
+	overflow: hidden;
+}
+
+.barFill {
+	display: block;
+	height: 100%;
+	border-radius: 999px;
+	background: var(--gradient-primary, linear-gradient(90deg, #7c5cff, #38bdf8));
+	transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.barLabel {
+	font-size: 0.75rem;
+	color: var(--text-tertiary);
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+/* ----------------------------------------------------------- lesson quest */
+
+.quest {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	flex-wrap: wrap;
+}
+
+.questLabel {
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--text-tertiary);
+}
+
+.questDots {
+	display: flex;
+	gap: 0.3rem;
+}
+
+.questDot {
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	background: var(--background-tertiary);
+	border: 1px solid var(--border-subtle, rgba(128, 128, 128, 0.35));
+	transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.questDotDone {
+	background: var(--brand-accent, #7c5cff);
+	border-color: var(--brand-accent, #7c5cff);
+	transform: scale(1.15);
+}
+
+.questCount {
+	font-size: 0.75rem;
+	color: var(--text-tertiary);
+	font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------- badges */
+
+.badges {
+	display: flex;
+	gap: 0.4rem;
+	flex-wrap: wrap;
+}
+
+.badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.9rem;
+	height: 1.9rem;
+	border-radius: 50%;
+	font-size: 0.95rem;
+	background: var(--background-tertiary);
+	border: 1px solid var(--border-subtle, rgba(128, 128, 128, 0.28));
+	filter: grayscale(1);
+	opacity: 0.4;
+	transition: filter 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+	cursor: help;
+}
+
+.badgeEarned {
+	filter: none;
+	opacity: 1;
+	border-color: var(--brand-accent, #7c5cff);
+	background: color-mix(in srgb, var(--brand-accent, #7c5cff) 14%, transparent);
+}
+
+.srOnly {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* ---------------------------------------------------------------- toasts */
+
+.toastStack {
+	position: fixed;
+	right: 1.25rem;
+	bottom: 1.25rem;
+	z-index: 60;
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+	max-width: min(22rem, calc(100vw - 2.5rem));
+	pointer-events: none;
+}
+
+.toast {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.7rem;
+	padding: 0.8rem 0.9rem;
+	border-radius: 12px;
+	background: var(--bg-elevated, var(--background-secondary));
+	border: 1px solid var(--border-subtle, rgba(128, 128, 128, 0.3));
+	box-shadow: var(--shadow-lg, 0 12px 32px rgba(0, 0, 0, 0.28));
+	pointer-events: auto;
+	animation: toastIn 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toastXp {
+	border-left: 3px solid var(--brand-accent, #7c5cff);
+}
+
+.toastAchievement {
+	border-left: 3px solid var(--accent-yellow, #fbbf24);
+}
+
+@keyframes toastIn {
+	from {
+		transform: translateX(24px);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+.toastIcon {
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.9rem;
+	height: 1.9rem;
+	font-size: 1.15rem;
+	color: var(--brand-accent, #7c5cff);
+}
+
+.toastBody {
+	display: flex;
+	flex-direction: column;
+	gap: 0.15rem;
+	min-width: 0;
+}
+
+.toastTitle {
+	font-size: 0.9rem;
+	color: var(--text-primary);
+}
+
+.toastText {
+	font-size: 0.8rem;
+	color: var(--text-secondary);
+	line-height: 1.5;
+}
+
+.toastXpTag {
+	align-self: flex-start;
+	margin-top: 0.2rem;
+	padding: 0.1rem 0.45rem;
+	border-radius: 999px;
+	font-size: 0.7rem;
+	font-weight: 700;
+	background: color-mix(in srgb, var(--accent-yellow, #fbbf24) 20%, transparent);
+	color: var(--accent-yellow, #fbbf24);
+}
+
+.toastClose {
+	flex-shrink: 0;
+	margin-left: auto;
+	padding: 0.15rem;
+	border: none;
+	background: transparent;
+	color: var(--text-tertiary);
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+.toastClose:hover {
+	color: var(--text-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.toast,
+	.barFill,
+	.questDot,
+	.badge {
+		animation: none;
+		transition: none;
+	}
+}

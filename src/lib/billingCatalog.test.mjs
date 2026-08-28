@@ -30,6 +30,9 @@ const {
 	programForCourseId,
 	labelForCourseIds,
 	tierPricing,
+	comparePlans,
+	planRank,
+	planForPriceId,
 } = await import('./billingCatalog.js')
 
 const {
@@ -91,4 +94,69 @@ test('tierPricing returns display amounts', () => {
 	assert.equal(tierPricing('standard').monthlyPrice, '$14')
 	assert.equal(tierPricing('premium').annualPrice, '$149')
 	assert.equal(tierPricing('nonsense').id, 'standard')
+})
+
+
+/**
+ * Plan comparison decides whether a switch bills now or at renewal, and
+ * whether the upgrade CTA appears at all. Getting `same` wrong is what made
+ * Premium unsellable to existing Standard subscribers.
+ */
+
+test('comparePlans recognises the plan the customer is already on', () => {
+	assert.deepEqual(comparePlans('pri_roblox_m', 'pri_roblox_m'), {
+		same: true,
+		upgrade: false,
+	})
+})
+
+test('comparePlans treats standard -> premium as an upgrade', () => {
+	const move = comparePlans('pri_roblox_m', 'pri_roblox_pm')
+	assert.equal(move.same, false)
+	assert.equal(move.upgrade, true)
+})
+
+test('comparePlans treats premium -> standard as a downgrade', () => {
+	const move = comparePlans('pri_roblox_pm', 'pri_roblox_m')
+	assert.equal(move.same, false)
+	assert.equal(move.upgrade, false)
+})
+
+test('comparePlans treats monthly -> annual as an upgrade at the same tier', () => {
+	assert.equal(comparePlans('pri_roblox_m', 'pri_roblox_y').upgrade, true)
+})
+
+test('comparePlans returns null when the current price is not in the catalogue', () => {
+	// A legacy or foreign price must not be classified - the caller falls back
+	// to billing at the next period rather than charging immediately.
+	assert.equal(comparePlans('pri_not_ours', 'pri_roblox_pm'), null)
+})
+
+test('comparePlans returns null without a target price', () => {
+	assert.equal(comparePlans('pri_roblox_m', null), null)
+})
+
+test('planRank puts premium above standard and annual above monthly', () => {
+	assert.equal(planRank({ tier: 'premium', interval: 'month' }).tier, 1)
+	assert.equal(planRank({ tier: 'standard', interval: 'month' }).tier, 0)
+	assert.equal(planRank({ tier: 'standard', interval: 'year' }).interval, 1)
+	assert.equal(planRank({ tier: 'standard', interval: 'month' }).interval, 0)
+})
+
+test('a tier change outranks the billing period', () => {
+	// Premium monthly over Standard annual is still an upgrade, even though the
+	// annual plan costs more per payment.
+	assert.equal(comparePlans('pri_roblox_y', 'pri_roblox_pm').upgrade, true)
+	assert.equal(comparePlans('pri_roblox_py', 'pri_roblox_m').upgrade, false)
+})
+
+test('annual -> monthly at the same tier is a downgrade', () => {
+	assert.equal(comparePlans('pri_roblox_y', 'pri_roblox_m').upgrade, false)
+})
+
+test('planForPriceId resolves catalogue details and nothing else', () => {
+	assert.equal(planForPriceId('pri_python_py').tier, 'premium')
+	assert.equal(planForPriceId('pri_python_py').interval, 'year')
+	assert.equal(planForPriceId('pri_nope'), null)
+	assert.equal(planForPriceId(null), null)
 })

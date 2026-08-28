@@ -127,61 +127,6 @@
 	color: var(--dash-muted);
 }
 
-.continueCta {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.75rem;
-	margin-top: auto;
-	align-self: flex-end;
-	flex: 0 1 auto;
-	width: fit-content;
-	max-width: 100%;
-	padding: 0.7rem 1rem 0.7rem 0.7rem;
-	border-radius: 999px;
-	background: var(--dash-coral);
-	color: #fff;
-	text-decoration: none;
-	box-shadow: 0 10px 24px rgba(252, 110, 81, 0.35);
-	transition: transform 0.2s var(--dash-ease), filter 0.2s ease;
-}
-
-.continueCta:hover {
-	transform: translateY(-2px);
-	filter: brightness(1.03);
-	color: #fff;
-}
-
-.continueIcon {
-	display: grid;
-	place-items: center;
-	width: 36px;
-	height: 36px;
-	border-radius: 999px;
-	background: rgba(255, 255, 255, 0.2);
-	flex-shrink: 0;
-}
-
-.continueText {
-	display: grid;
-	gap: 0.1rem;
-	min-width: 0;
-	padding-right: 0.35rem;
-}
-
-.continueText strong {
-	font-size: 0.92rem;
-	font-weight: 750;
-	line-height: 1.2;
-}
-
-.continueText span {
-	font-size: 0.75rem;
-	opacity: 0.9;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
 .heroStats {
 	display: flex;
 	flex-direction: column;
@@ -959,12 +904,6 @@
 		padding: 1.15rem 1.05rem;
 	}
 
-	.continueCta {
-		width: 100%;
-		justify-content: flex-start;
-		align-self: stretch;
-	}
-
 	.heroIntro {
 		flex-direction: column;
 		align-items: stretch;
@@ -1014,9 +953,36 @@
 @media (prefers-reduced-motion: reduce) {
 	.hero,
 	.dashLayout,
-	.courseCard,
-	.continueCta {
+	.courseCard {
 		animation: none;
 		transition: none;
 	}
+}
+
+/* Upgrade CTA on an owned course card - Premium's only in-context entry point. */
+.courseUpgradeBtn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.4rem;
+	width: 100%;
+	padding: 0.6rem 0.9rem;
+	border: 1px solid #fc6e51;
+	border-radius: 10px;
+	background: rgba(252, 110, 81, 0.08);
+	color: #c2410c;
+	font-size: 0.85rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.courseUpgradeBtn:hover:not(:disabled) {
+	background: rgba(252, 110, 81, 0.16);
+	transform: translateY(-1px);
+}
+
+.courseUpgradeBtn:disabled {
+	opacity: 0.6;
+	cursor: progress;
 }

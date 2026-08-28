@@ -1,5 +1,5 @@
 /** Roblox Module 11 EN - 6 уроків (prod-92), фінал 11.6 сліпий playtest */
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
 

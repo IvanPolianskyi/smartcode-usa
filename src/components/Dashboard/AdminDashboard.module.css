@@ -1,0 +1,141 @@
+.wrap {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 1rem 2rem;
+}
+
+.eyebrow {
+	margin: 0;
+	font-family: var(--sc-font-mono, ui-monospace, monospace);
+	font-size: 0.72rem;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--dash-coral, #fc6e51);
+}
+
+.title {
+	margin: 0.35rem 0 0;
+	font-family: var(--sc-font-display, Georgia, serif);
+	font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+
+.lede {
+	margin: 0.45rem 0 0;
+	max-width: 52ch;
+	font-size: 0.9rem;
+	line-height: 1.45;
+	color: var(--dash-muted, #5c6370);
+}
+
+.headActions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.65rem;
+}
+
+.rangeLabel {
+	display: grid;
+	gap: 0.25rem;
+	font-size: 0.72rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--dash-muted, #5c6370);
+}
+
+.rangeSelect {
+	padding: 0.45rem 0.65rem;
+	border-radius: 10px;
+	border: 1px solid var(--dash-line, rgba(20, 21, 26, 0.1));
+	background: #fff;
+	font: inherit;
+	font-size: 0.88rem;
+}
+
+.loading {
+	margin: 0;
+	color: var(--dash-soft, #8b919c);
+	font-weight: 600;
+}
+
+.lifetimeGroup {
+	display: grid;
+	gap: 0.5rem;
+}
+
+.lifetimeLabel {
+	margin: 0;
+	font-size: 0.7rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--dash-soft, #8b919c);
+}
+
+.chartCard {
+	padding: 1rem 1.1rem 0.85rem;
+	border-radius: 16px;
+	border: 1px solid var(--dash-line, rgba(20, 21, 26, 0.1));
+	background: #fff;
+	box-shadow: 0 8px 24px rgba(20, 21, 26, 0.04);
+}
+
+.chartTitle {
+	margin: 0 0 0.65rem;
+	font-size: 0.92rem;
+	font-weight: 700;
+}
+
+.chartSvg {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.chartGridLine {
+	stroke: rgba(20, 21, 26, 0.06);
+	stroke-width: 1;
+}
+
+.chartAxis {
+	fill: #8b919c;
+	font-size: 10px;
+}
+
+.chartArea {
+	fill: #fc6e51;
+	opacity: 0.08;
+	stroke: none;
+}
+
+.chartLine {
+	stroke: #fc6e51;
+	stroke-width: 2.5;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.chartDot {
+	fill: #fc6e51;
+	stroke: #fff;
+	stroke-width: 2;
+	cursor: default;
+}
+
+.adminMeta {
+	margin: 0;
+	font-size: 0.8rem;
+	color: var(--dash-soft, #8b919c);
+}

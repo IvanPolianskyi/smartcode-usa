@@ -1,16 +1,16 @@
 import { NextResponse } from 'next/server'
+import { recordFunnelEvent } from '@/lib/analyticsStore'
 import { ObjectId } from 'mongodb'
 import { getCollection } from '@/lib/mongodb'
 import {
 	verifyWebhookSignature,
 	normalizeSubscription,
 	readUserIdFromCustomData,
-	readCourseIdFromCustomData,
+	getCustomerFromPaddle,
 } from '@/lib/paddle'
 import { assertPaddleWebhookIp } from '@/lib/paddleIps'
 import { ensureBillingIndexes } from '@/lib/entitlements'
-import { courseIdsForPriceId, tierForPriceId } from '@/lib/billingCatalog'
-import { isKnownCourseId } from '@/lib/courseLessonAccess'
+import { upsertSubscription } from '@/lib/subscriptionStore'
 import { SUBSCRIPTION_EVENT_TYPES } from '@/lib/paddleEvents'
 
 /**
@@ -36,6 +36,19 @@ function toObjectId(value) {
 }
 
 /**
+ * Which funnel step a subscription status proves.
+ *
+ * `past_due` is deliberately a purchase: the customer did convert, they are
+ * simply behind on a renewal. Cancellations map to nothing - the funnel counts
+ * conversions that happened, and a later cancellation does not unmake one.
+ */
+const FUNNEL_STEP_FOR_STATUS = {
+	trialing: 'start_trial',
+	active: 'purchase',
+	past_due: 'purchase',
+}
+
+/**
  * Resolve the account this subscription belongs to.
  * `custom_data.userId` is set at checkout; the customer id is the fallback for
  * events that arrive after a customer has been linked once.
@@ -50,6 +63,29 @@ async function resolveUserId(normalized) {
 			paddleCustomerId: normalized.paddleCustomerId,
 		})
 		if (existing?.userId) return existing.userId
+
+		// Last resort: match the Paddle customer's email to an account.
+		//
+		// Not every subscription is born in our overlay - Retain recovery links,
+		// reactivations and invoices raised inside Paddle carry no `custom_data`.
+		// Without this the customer is charged and the webhook files them under
+		// "unattributed", so they never get access and we never learn why.
+		try {
+			const customer = await getCustomerFromPaddle(normalized.paddleCustomerId)
+			const email = String(customer?.email || '').trim().toLowerCase()
+			if (email) {
+				const users = await getCollection('users')
+				const user = await users.findOne({ email })
+				if (user?._id) {
+					console.warn('[paddle] attributed subscription by customer email', {
+						customerId: normalized.paddleCustomerId,
+					})
+					return user._id
+				}
+			}
+		} catch (error) {
+			console.error('[paddle] email attribution failed:', error?.message || error)
+		}
 	}
 
 	return null
@@ -127,52 +163,38 @@ export async function POST(request) {
 			return NextResponse.json({ ok: true, warning: 'unattributed' })
 		}
 
-		const subscriptions = await getCollection('subscriptions')
-		const now = new Date()
-		let courseIds = courseIdsForPriceId(normalized.priceId)
-		if (!courseIds.length) {
-			const fromCheckout = readCourseIdFromCustomData(normalized.customData)
-			if (fromCheckout && isKnownCourseId(fromCheckout)) {
-				courseIds = [fromCheckout]
-				console.warn('[paddle] price map miss; using customData.courseId', {
-					priceId: normalized.priceId,
-					courseId: fromCheckout,
-				})
-			} else {
-				console.error('[paddle] subscription with no course mapping', {
-					eventType,
-					subscriptionId: normalized.paddleSubscriptionId,
-					priceId: normalized.priceId,
-				})
-			}
-		}
-		const planTier =
-			tierForPriceId(normalized.priceId) ||
-			(normalized.customData?.tier === 'premium' ? 'premium' : 'standard')
+		const occurredAt = event?.occurred_at ? new Date(event.occurred_at) : new Date()
+		const result = await upsertSubscription({
+			normalized,
+			userId,
+			eventType,
+			occurredAt,
+		})
 
-		await subscriptions.updateOne(
-			{ paddleSubscriptionId: normalized.paddleSubscriptionId },
-			{
-				$set: {
-					userId,
-					paddleCustomerId: normalized.paddleCustomerId,
-					priceId: normalized.priceId,
-					productId: normalized.productId,
-					courseIds,
-					planTier,
-					status: normalized.status,
-					billingInterval: normalized.billingInterval,
-					trialEndsAt: normalized.trialEndsAt,
-					currentPeriodEnd: normalized.currentPeriodEnd,
-					cancelAtPeriodEnd: normalized.cancelAtPeriodEnd,
-					scheduledChangeAt: normalized.scheduledChangeAt,
-					lastEventType: eventType,
-					updatedAt: now,
+		if (result.stale) {
+			return NextResponse.json({ ok: true, stale: true })
+		}
+
+		// Conversions are recorded here, not on the browser's /welcome page: the
+		// student can close the tab before it renders, and the dashboard would
+		// then show a trial that produced no revenue and a sale that never
+		// happened. The dedupe key makes Paddle's retries and the repeated
+		// `subscription.updated` events land exactly once.
+		const conversionStep = FUNNEL_STEP_FOR_STATUS[normalized.status]
+		if (conversionStep) {
+			await recordFunnelEvent({
+				step: conversionStep,
+				userId: String(userId),
+				path: '/api/billing/webhook',
+				params: {
+					course_ids: result.courseIds || [],
+					price_id: normalized.priceId || null,
+					billing_interval: normalized.billingInterval || null,
 				},
-				$setOnInsert: { createdAt: now },
-			},
-			{ upsert: true }
-		)
+				dedupeKey: `${conversionStep}:${normalized.paddleSubscriptionId}`,
+				occurredAt,
+			})
+		}
 
 		return NextResponse.json({ ok: true })
 	} catch (error) {

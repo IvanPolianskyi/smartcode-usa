@@ -4,7 +4,11 @@ const BASE =
 const paths = [
 	{ path: '', priority: 1.0, changeFrequency: 'weekly' },
 	{ path: '/pricing', priority: 0.95, changeFrequency: 'weekly' },
-	{ path: '/start', priority: 0.8, changeFrequency: 'monthly' },
+	// /plans/* are the pages where the buying decision is actually made - they
+	// were missing, while /start (a redirect gate, noindex) was listed.
+	{ path: '/plans/roblox-studio', priority: 0.95, changeFrequency: 'weekly' },
+	{ path: '/plans/python-developer-zero-to-junior', priority: 0.95, changeFrequency: 'weekly' },
+	{ path: '/plans/ai-at-work', priority: 0.95, changeFrequency: 'weekly' },
 	{ path: '/courses', priority: 0.9, changeFrequency: 'monthly' },
 	{ path: '/courses/python-developer-zero-to-junior', priority: 0.9, changeFrequency: 'monthly' },
 	{ path: '/courses/roblox-studio', priority: 0.9, changeFrequency: 'monthly' },

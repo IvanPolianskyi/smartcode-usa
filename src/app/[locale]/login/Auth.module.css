@@ -513,6 +513,27 @@
 	text-underline-offset: 0.15em;
 }
 
+/* Clickwrap notice under the signup button - deliberately quiet, but the
+   links stay obvious enough to be "conspicuous" in the legal sense. */
+.consentNote {
+	margin: var(--sc-2) 0 0;
+	font-size: var(--sc-text-xs);
+	line-height: 1.5;
+	color: var(--sc-muted);
+	text-align: center;
+}
+
+.consentNote a {
+	color: var(--sc-ink-2);
+	font-weight: 600;
+	text-decoration: underline;
+	text-underline-offset: 0.15em;
+}
+
+.consentNote a:hover {
+	color: var(--sc-coral, #fc6e51);
+}
+
 .footer {
 	margin-top: var(--sc-6);
 	padding-top: var(--sc-5);
@@ -533,6 +554,54 @@
 .footer a:hover {
 	text-decoration: underline;
 	text-underline-offset: 0.15em;
+}
+
+.oauthBlock {
+	margin-bottom: var(--sc-5);
+}
+
+.googleBtn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	width: 100%;
+	min-height: 48px;
+	padding: 0.75rem 1rem;
+	border: 1px solid var(--sc-line);
+	border-radius: 12px;
+	background: var(--sc-surface);
+	color: var(--sc-ink);
+	font: inherit;
+	font-size: var(--sc-text-base);
+	font-weight: 600;
+	text-decoration: none;
+	box-shadow: var(--sc-shadow-sm);
+	transition: border-color 0.2s var(--sc-ease), box-shadow 0.2s var(--sc-ease),
+		background 0.2s var(--sc-ease);
+}
+
+.googleBtn:hover {
+	border-color: color-mix(in srgb, var(--sc-ink) 18%, var(--sc-line));
+	box-shadow: var(--sc-shadow-md);
+	background: color-mix(in srgb, var(--sc-surface-2) 55%, var(--sc-surface));
+}
+
+.divider {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 0 0 var(--sc-5);
+	color: var(--sc-muted);
+	font-size: var(--sc-text-sm);
+}
+
+.divider::before,
+.divider::after {
+	content: '';
+	flex: 1;
+	height: 1px;
+	background: var(--sc-line);
 }
 
 @media (max-width: 640px) {

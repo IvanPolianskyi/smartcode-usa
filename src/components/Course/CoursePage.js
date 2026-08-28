@@ -29,6 +29,7 @@ import {
 } from '@/lib/courseLessonAccess'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import SiteHeader from '@/components/Nav/SiteHeader'
+import Pip from '@/components/Mascot/Pip'
 import styles from './CoursePage.module.css'
 
 const CoursePage = ({
@@ -366,21 +367,32 @@ const CoursePage = ({
 
             <div className={styles.heroRight}>
               <div className={styles.progressCard}>
-                <div className={styles.progressHeader}>
-                  <span>{tCourse('progressLabel')}</span>
-                  <span className={styles.progressPercent}>{progress}%</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '0.75rem' }}>
+                  <div style={{ flexShrink: 0 }}>
+                    <Pip
+                      mood={progress >= 100 ? 'cheer' : progress > 0 ? 'happy' : 'wave'}
+                      size={52}
+                      label="Pip mascot"
+                    />
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div className={styles.progressHeader} style={{ marginBottom: 0 }}>
+                      <span>{tCourse('progressLabel')}</span>
+                      <span className={styles.progressPercent}>{progress}%</span>
+                    </div>
+                    <p className={styles.progressHint} style={{ marginTop: '0.2rem' }}>
+                      {progress === 0
+                        ? tCourse('progressStart')
+                        : tCourse('progressLessons', {
+                            done: userProgress?.completedLessons?.length || 0,
+                            total: totalLessons,
+                          })}
+                    </p>
+                  </div>
                 </div>
                 <div className={styles.progressBar}>
                   <div className={styles.progressFill} style={{ width: `${progress}%` }} />
                 </div>
-                <p className={styles.progressHint}>
-                  {progress === 0
-                    ? tCourse('progressStart')
-                    : tCourse('progressLessons', {
-                        done: userProgress?.completedLessons?.length || 0,
-                        total: totalLessons,
-                      })}
-                </p>
               </div>
             </div>
           </div>

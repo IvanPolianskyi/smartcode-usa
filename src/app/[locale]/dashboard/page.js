@@ -2,7 +2,7 @@
 
 import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { useRouter, Link } from '@/i18n/navigation'
+import { useRouter } from '@/i18n/navigation'
 import { logout, getUserProgress } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import { isStudentDashboardReady } from '@/lib/studentAccountReady'
@@ -12,16 +12,12 @@ import { useArcadeProgress } from '@/hooks/useArcadeProgress'
 import MyCoursesSection from '@/components/Dashboard/MyCoursesSection'
 import ProfileAccountSection from '@/components/Dashboard/ProfileAccountSection'
 import PremiumLiveLessons from '@/components/Dashboard/PremiumLiveLessons'
-import CodeCrushGame from '@/components/Dashboard/CodeCrushGame'
+import DashboardArcadeSection from '@/components/Dashboard/DashboardArcadeSection'
+import AdminDashboard from '@/components/Dashboard/AdminDashboard'
 import LmsHeader from '@/components/Nav/LmsHeader'
+import PipCompanion from '@/components/Mascot/PipCompanion'
 import styles from './Dashboard.module.css'
-import { BookOpen, Flame, LogOut, Play, Zap } from 'lucide-react'
-
-const COURSE_PATHS = {
-	'roblox-studio': '/courses/roblox-studio',
-	'python-developer-zero-to-junior': '/courses/python-developer-zero-to-junior',
-	'ai-at-work': '/courses/ai-at-work',
-}
+import { Flame, LogOut, Zap } from 'lucide-react'
 
 function PendingDashboard({ user, onLogout, t, getCourseInfo }) {
 	const userId = String(user?._id || user?.id || '')
@@ -35,10 +31,15 @@ function PendingDashboard({ user, onLogout, t, getCourseInfo }) {
 		<div className={styles.dashBody}>
 			<header className={styles.hero}>
 				<div className={styles.heroCopy}>
-					<h1 className={styles.pageTitle}>
-						{t('student.greetingNamed', { name: displayName })}
-					</h1>
-					<p className={styles.pageLede}>{t('student.lede')}</p>
+					<div style={{ marginBottom: '0.75rem' }}>
+						<PipCompanion
+							mood="wave"
+							size={56}
+							speech={t('student.lede')}
+							title={t('student.greetingNamed', { name: displayName })}
+							compact
+						/>
+					</div>
 					<ProfileAccountSection user={user} variant="inline" />
 				</div>
 				<div className={styles.heroStats}>
@@ -61,7 +62,7 @@ function PendingDashboard({ user, onLogout, t, getCourseInfo }) {
 						getCourseInfo={getCourseInfo}
 					/>
 				</Suspense>
-				<CodeCrushGame bestScore={arcade.bestScore} onRoundEnd={recordRound} />
+				<DashboardArcadeSection bestScore={arcade.bestScore} onRoundEnd={recordRound} />
 			</div>
 		</div>
 	)
@@ -93,26 +94,6 @@ function StudentDashboard({
 		String(user?.email || '').split('@')[0] ||
 		'there'
 
-	const continueTarget = useMemo(() => {
-		const primary = String(user?.studentProfile?.primaryCourseId || '').trim()
-		const owned = DASHBOARD_COURSE_IDS.filter((id) =>
-			hasStudentCourseAccess(user, id)
-		)
-		const ordered = primary && owned.includes(primary)
-			? [primary, ...owned.filter((id) => id !== primary)]
-			: owned
-		const courseId = ordered[0]
-		if (!courseId) return null
-		const course = getCourseInfo(courseId)
-		const progress = progressData?.[courseId]?.overallProgress || 0
-		return {
-			courseId,
-			title: course.title,
-			progress: Math.round(progress),
-			href: COURSE_PATHS[courseId] || course.link,
-		}
-	}, [user, progressData, getCourseInfo])
-
 	const activeCourseCount = DASHBOARD_COURSE_IDS.filter((id) =>
 		hasStudentCourseAccess(user, id)
 	).length
@@ -129,10 +110,23 @@ function StudentDashboard({
 				<div className={styles.heroCopy}>
 					<div className={styles.heroIntro}>
 						<div className={styles.heroGreeting}>
-							<h1 className={styles.pageTitle}>
-								{t('student.greetingNamed', { name: displayName })}
-							</h1>
-							<p className={styles.pageLede}>{t('student.lede')}</p>
+							<PipCompanion
+								mood={
+									arcade.streak > 0
+										? 'happy'
+										: platformCompletedTotal > 5
+											? 'cheer'
+											: 'wave'
+								}
+								size={64}
+								title={t('student.greetingNamed', { name: displayName })}
+								speech={
+									arcade.streak > 0
+										? `🔥 ${arcade.streak}-day streak! Keep up the momentum!`
+										: t('student.lede')
+								}
+								compact
+							/>
 						</div>
 					</div>
 					<ProfileAccountSection user={user} variant="inline" />
@@ -171,30 +165,6 @@ function StudentDashboard({
 							<dd>{platformCompletedTotal}</dd>
 						</div>
 					</dl>
-
-					{continueTarget ? (
-						<Link href={continueTarget.href} className={styles.continueCta}>
-							<span className={styles.continueIcon} aria-hidden>
-								<Play size={16} />
-							</span>
-							<span className={styles.continueText}>
-								<strong>{t('student.continueLearning')}</strong>
-								<span>
-									{continueTarget.title} · {continueTarget.progress}%
-								</span>
-							</span>
-						</Link>
-					) : (
-						<Link href="/pricing" className={styles.continueCta}>
-							<span className={styles.continueIcon} aria-hidden>
-								<BookOpen size={16} />
-							</span>
-							<span className={styles.continueText}>
-								<strong>{t('student.pickProgram')}</strong>
-								<span>{t('student.pickProgramHint')}</span>
-							</span>
-						</Link>
-					)}
 				</div>
 			</header>
 
@@ -211,7 +181,7 @@ function StudentDashboard({
 						getCourseInfo={getCourseInfo}
 					/>
 				</Suspense>
-				<CodeCrushGame
+				<DashboardArcadeSection
 					bestScore={arcade.bestScore}
 					onRoundEnd={recordRound}
 				/>
@@ -321,17 +291,7 @@ export default function DashboardPage() {
 				) : null}
 
 				{isAdmin ? (
-					<div className={styles.dashBody}>
-						<div className={styles.card}>
-							<h3 className={styles.cardTitle}>
-								<BookOpen size={18} aria-hidden /> {t('adminView.management.title')}
-							</h3>
-							<p className={styles.cardText}>{t('adminView.management.text')}</p>
-							<Link href="/admin" className={styles.primaryLink}>
-								{t('adminView.management.button')}
-							</Link>
-						</div>
-					</div>
+					<AdminDashboard user={user} />
 				) : accountPendingSetup ? (
 					<PendingDashboard
 						user={user}

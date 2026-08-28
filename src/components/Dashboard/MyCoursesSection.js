@@ -3,7 +3,7 @@
 import React, { useCallback, useMemo } from 'react'
 import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
-import { BookOpen, CheckCircle2, Play, Lock } from 'lucide-react'
+import { CheckCircle2, Play, Lock } from 'lucide-react'
 import CheckoutButton from '@/components/Billing/CheckoutButton'
 import { DASHBOARD_COURSE_IDS } from '@/hooks/useDashboardCourses'
 import {
@@ -47,11 +47,13 @@ export default function MyCoursesSection({ user, progressData, getCourseInfo }) 
 		loading: billingLoading,
 		activating,
 		activationStalled,
+		syncing,
 		error,
 		opening,
 		cancellingId,
 		openPortal,
 		cancelSubscription,
+		syncPurchases,
 		programForCourse,
 		canManageBilling,
 		status,
@@ -192,6 +194,9 @@ export default function MyCoursesSection({ user, progressData, getCourseInfo }) 
 									<Play size={15} aria-hidden />
 									{isPrimary ? t('openTrack') : t('resume')}
 								</Link>
+								{/* Premium is not being sold right now (see SELLABLE_TIER_IDS),
+								    so there is no upgrade to offer here. Subscribers who already
+								    hold it keep it - only the sales path is gone. */}
 								{program?.canCancel ? (
 									<button
 										type="button"
@@ -212,21 +217,9 @@ export default function MyCoursesSection({ user, progressData, getCourseInfo }) 
 										tier="standard"
 										className="sc-btn sc-btn-primary"
 									>
-										Standard
-									</CheckoutButton>
-									<CheckoutButton
-										courseId={courseId}
-										plan="monthly"
-										tier="premium"
-										className="sc-btn sc-btn-ghost"
-									>
-										Premium
+										Unlock this program
 									</CheckoutButton>
 								</div>
-								<Link href={href} className={styles.courseCtaGhost}>
-									<BookOpen size={15} aria-hidden />
-									{t('preview')}
-								</Link>
 							</>
 						)}
 					</div>
@@ -248,7 +241,22 @@ export default function MyCoursesSection({ user, progressData, getCourseInfo }) 
 
 			{activationStalled ? (
 				<p className={styles.courseBillingNotice} role="alert">
-					{t('activationStalled', { email: LEGAL.supportEmail })}
+					{t('activationStalled', { email: LEGAL.supportEmail })}{' '}
+					<button
+						type="button"
+						className={styles.courseInlineLink}
+						onClick={() => syncPurchases()}
+						disabled={syncing}
+						style={{
+							background: 'none',
+							border: 'none',
+							padding: 0,
+							cursor: syncing ? 'wait' : 'pointer',
+							font: 'inherit',
+						}}
+					>
+						{syncing ? 'Refreshing…' : 'Refresh access'}
+					</button>
 				</p>
 			) : null}
 
@@ -273,6 +281,16 @@ export default function MyCoursesSection({ user, progressData, getCourseInfo }) 
 						disabled={opening}
 					>
 						{opening ? t('portalOpening') : t('updatePayment')}
+					</button>
+				) : null}
+				{hasAnySubscription ? (
+					<button
+						type="button"
+						className={styles.coursePortalBtn}
+						onClick={() => syncPurchases()}
+						disabled={syncing}
+					>
+						{syncing ? 'Refreshing…' : 'Refresh access'}
 					</button>
 				) : null}
 				<p className={styles.courseBillingMeta}>

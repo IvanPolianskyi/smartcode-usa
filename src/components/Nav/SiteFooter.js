@@ -29,9 +29,6 @@ export default function SiteFooter() {
 					{LEGAL.supportPhone}
 				</p>
 				<p className={styles.footerNote}>
-					{LEGAL.legalName}, {LEGAL.legalForm} · {LEGAL.businessAddress}
-				</p>
-				<p className={styles.footerNote}>
 					Payments are processed by Paddle.com Market Limited, our Merchant of
 					Record. {LEGAL.refundDays}-day money-back guarantee · cancel anytime.
 				</p>

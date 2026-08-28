@@ -461,25 +461,25 @@
 	0%,
 	12% {
 		opacity: 0;
-		transform: translateY(-18px) scale(0.8);
+		transform: translateY(-18px);
 	}
 	22% {
 		opacity: 1;
-		transform: none;
+		transform: translateY(0);
 	}
 	38% {
-		transform: translateY(4px) scale(1.08, 0.9);
+		transform: translateY(5px);
 	}
 	48% {
-		transform: translateY(-10px) scale(0.96, 1.06);
+		transform: translateY(-9px);
 	}
 	58% {
-		transform: translateY(2px) scale(1.03, 0.98);
+		transform: translateY(2px);
 	}
 	70%,
 	100% {
 		opacity: 1;
-		transform: none;
+		transform: translateY(0);
 	}
 }
 
@@ -488,6 +488,8 @@
 	inset: 0;
 	display: block;
 	border-radius: 4px;
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
 }
 
 .partTop {

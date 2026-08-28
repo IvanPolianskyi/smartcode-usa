@@ -20,7 +20,7 @@ export async function POST(request) {
     const rawScore = Number(body?.score)
     const rawLevel = Number(body?.level)
 
-    if (isNaN(rawScore) || rawScore < 0 || rawScore > 1000000) {
+    if (isNaN(rawScore) || rawScore < 0 || rawScore > 5000) {
       return NextResponse.json({ error: 'Invalid score' }, { status: 400 })
     }
 
@@ -94,7 +94,7 @@ export async function POST(request) {
         score,
         bestScore: currentBest,
         monthlyRank,
-        totalPlayers: Math.max(totalPlayers, 10),
+        totalPlayers: totalPlayers,
         xpGained,
         monthKey,
       },

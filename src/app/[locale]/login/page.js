@@ -7,12 +7,13 @@ import { login } from '@/lib/authClient'
 import { normalizeLoginIdentifier } from '@/lib/authLogin'
 import SiteHeader from '@/components/Nav/SiteHeader'
 import { Link } from '@/i18n/navigation'
+import GoogleSignInButton from '@/components/Auth/GoogleSignInButton'
 import styles from './Auth.module.css'
 
 const PERKS = [
 	'Pick up where you left off in your lessons',
 	'Jump into Discord and keep building with peers',
-	'Manage Standard or Premium from your dashboard',
+	'Manage your subscription from your dashboard',
 ]
 
 const PROGRAMS = [
@@ -83,9 +84,38 @@ function LoginForm() {
 				text: 'That sign-in link is incomplete. Open the full link from your email.',
 			}
 		}
+		if (err === 'google_denied') {
+			return {
+				kind: 'warn',
+				text: 'Google sign-in was cancelled. Try again or use your email and password.',
+			}
+		}
+		if (err === 'google_email_unverified') {
+			return {
+				kind: 'warn',
+				text: 'Your Google email is not verified. Verify it in Google, then try again.',
+			}
+		}
+		if (err === 'google_admin_blocked') {
+			return {
+				kind: 'warn',
+				text: 'Admin accounts must sign in with email and password.',
+			}
+		}
+		if (err === 'google_account_conflict') {
+			return {
+				kind: 'warn',
+				text: 'This email is linked to a different Google account. Contact support if you need help.',
+			}
+		}
+		if (err?.startsWith('google_')) {
+			return {
+				kind: 'warn',
+				text: 'Google sign-in failed. Try again or use your email and password.',
+			}
+		}
 		if (
 			searchParams.get('paid') === '1' ||
-			searchParams.get('needAccount') === '1' ||
 			searchParams.get('claimOrder')
 		) {
 			return {
@@ -162,6 +192,14 @@ function LoginForm() {
 			) : null}
 
 			{error ? <div className={styles.error}>{error}</div> : null}
+
+			<div className={styles.oauthBlock}>
+				<GoogleSignInButton />
+			</div>
+
+			<div className={styles.divider} role="separator" aria-label="or">
+				<span>or</span>
+			</div>
 
 			<form onSubmit={handleSubmit} className={styles.form}>
 				<div className={styles.field}>

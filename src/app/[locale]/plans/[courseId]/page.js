@@ -11,6 +11,8 @@ import { countryFromHeaders } from '@/lib/paddleCountry'
 import { LANDING_PROGRAMS } from '@/lib/landingPrograms'
 import { ALL_PROGRAM_COURSE_IDS } from '@/lib/courseIds'
 import { LEGAL } from '@/lib/legalConfig'
+import JsonLd from '@/components/Seo/JsonLd'
+import { courseSchema } from '@/lib/structuredData'
 import styles from '../../page.module.css'
 import SiteFooter from '@/components/Nav/SiteFooter'
 
@@ -23,9 +25,23 @@ export async function generateMetadata({ params }) {
 	const program = programForCourseId(courseId)
 	if (!program) return { title: 'Choose your plan - SmartCode' }
 
+	const description = `Start ${program.label} free for ${LEGAL.trialDays} days, then ${LEGAL.monthlyPrice}/month. Cancel anytime, ${LEGAL.refundDays}-day money-back.`
+
 	return {
 		title: `${program.label} - choose your plan | SmartCode`,
-		description: `Start ${program.label} free for ${LEGAL.trialDays} days, then ${LEGAL.monthlyPrice}/month. Cancel anytime, ${LEGAL.refundDays}-day money-back.`,
+		description,
+		alternates: { canonical: `/plans/${courseId}` },
+		openGraph: {
+			title: `${program.label} - start free for ${LEGAL.trialDays} days`,
+			description,
+			url: `/plans/${courseId}`,
+		},
+		twitter: {
+			// Restated because page metadata replaces the layout's twitter object.
+			card: 'summary_large_image',
+			title: `${program.label} - start free for ${LEGAL.trialDays} days`,
+			description,
+		},
 	}
 }
 
@@ -41,6 +57,13 @@ export default async function PlanPage({ params }) {
 
 	return (
 		<div className={styles.page} data-theme="light">
+			<JsonLd
+				data={courseSchema({
+					name: program.label,
+					description: landing?.outcome || program.blurb,
+					courseId,
+				})}
+			/>
 			<div className={styles.gridBg} aria-hidden="true" />
 
 			<SiteHeader />

@@ -1,5 +1,6 @@
 'use client'
 
+import Pip from '@/components/Mascot/Pip'
 import styles from './DemoScenes.module.css'
 
 /**
@@ -151,6 +152,9 @@ export function DemoRoblox() {
 							<i className={styles.partFront} />
 							<i className={styles.partSide} />
 						</span>
+						<div style={{ position: 'absolute', right: '14px', bottom: '12px', zIndex: 3 }}>
+							<Pip mood="happy" size={46} label="Pip mascot" />
+						</div>
 						<span className={styles.spark} />
 					</div>
 				</div>

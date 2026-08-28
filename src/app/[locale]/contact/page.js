@@ -18,12 +18,13 @@ export default async function ContactPage({ params }) {
 	setRequestLocale(locale)
 
 	return (
-		<div className={styles.page} data-theme="light">
+		<div className={`${styles.page} ${contactStyles.page}`} data-theme="light">
 			<div className={styles.gridBg} aria-hidden="true" />
 
 			<SiteHeader />
 
-			<section className={`${styles.section} ${contactStyles.section}`}>
+			<main className={contactStyles.main}>
+				<section className={`${styles.section} ${contactStyles.section}`}>
 				<div className={styles.sectionHead}>
 					<h1 className={styles.sectionTitle}>Contact us</h1>
 					<p className={styles.sectionLede}>
@@ -66,11 +67,6 @@ export default async function ContactPage({ params }) {
 								/month or {BILLING_TIERS.standard.annualPrice}/year (platform +
 								Discord)
 							</li>
-							<li>
-								<strong>Premium</strong> — {BILLING_TIERS.premium.monthlyPrice}
-								/month or {BILLING_TIERS.premium.annualPrice}/year (+ 2 live
-								lessons/week)
-							</li>
 						</ul>
 						<p>
 							<Link href="/pricing">View plans and start a trial</Link>
@@ -97,6 +93,7 @@ export default async function ContactPage({ params }) {
 					</div>
 				</div>
 			</section>
+			</main>
 
 			<SiteFooter />
 		</div>

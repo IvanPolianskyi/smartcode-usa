@@ -11,14 +11,16 @@ import styles from './SiteHeader.module.css'
 function Brand({ href, asAnchor }) {
 	const content = (
 		<>
-			<Image
-				src="/logo.jpeg"
-				alt=""
-				width={32}
-				height={32}
-				className={styles.mark}
-				priority
-			/>
+			<div className={styles.logoWrap}>
+				<Image
+					src="/logo.jpeg"
+					alt=""
+					width={32}
+					height={32}
+					className={styles.mark}
+					priority
+				/>
+			</div>
 			SmartCode
 			<span className={styles.tag}> - programming courses</span>
 		</>
@@ -40,7 +42,7 @@ function Brand({ href, asAnchor }) {
 }
 
 /**
- * Same action cluster everywhere: Pricing · Contact · account · optional CTA/logout.
+ * Same action cluster everywhere: Pricing · account · optional CTA/logout.
  * Matches the homepage pill header in both guest and signed-in states.
  */
 function NavActions({ ctaHref, ctaAsAnchor, onLogout }) {
@@ -64,14 +66,6 @@ function NavActions({ ctaHref, ctaAsAnchor, onLogout }) {
 			<Link href="/pricing" className={styles.quiet}>
 				Pricing
 			</Link>
-			<Link href="/contact" className={styles.quiet}>
-				Contact
-			</Link>
-			{!loading && user?.role === 'admin' ? (
-				<Link href="/admin" className={styles.quiet}>
-					Admin
-				</Link>
-			) : null}
 			<HomeNavAuth />
 			{cta}
 			{!loading && user && typeof onLogout === 'function' ? (

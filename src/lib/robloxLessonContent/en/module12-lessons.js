@@ -1,5 +1,5 @@
 /** Roblox Module 12 EN - 6 уроків (prod-92), фінал 12.6 SHOWCASE DAY */
-import { QUIZ_QUESTION_TYPES } from '../../courseData'
+import { QUIZ_QUESTION_TYPES } from '../../courseData.js'
 
 const MC = QUIZ_QUESTION_TYPES.MULTIPLE_CHOICE
 

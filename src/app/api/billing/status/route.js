@@ -39,9 +39,19 @@ export async function GET() {
 				cancellableStatus &&
 				!sub.cancelAtPeriodEnd &&
 				Boolean(row)
+			// A plan change only works on a live Paddle subscription: manual/admin
+			// grants have no Paddle side to move, and a cancelled one is not ours
+			// to re-price.
+			const canChangePlan =
+				Boolean(sub.paddleSubscriptionId) &&
+				Boolean(sub.priceId) &&
+				(sub.status === 'active' || sub.status === 'trialing') &&
+				isPaddleManagedCustomerId(row?.paddleCustomerId)
 			return {
 				courseIds: sub.courseIds,
 				label: labelForCourseIds(sub.courseIds),
+				priceId: sub.priceId,
+				canChangePlan,
 				status: sub.status,
 				trialing: sub.trialing,
 				inGrace: sub.inGrace,

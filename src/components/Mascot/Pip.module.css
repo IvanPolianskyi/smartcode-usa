@@ -1,0 +1,141 @@
+/* Pip's palette and motion.
+   Flat fills only - see the design notes in Pip.js before adding gradients. */
+
+.pip {
+  --pip-body: #fc6e51;
+  --pip-shade: #e0523a;
+  --pip-light: #ff8f78;
+  --pip-belly: #ffe4d8;
+  --pip-dark: #2b1a15;
+  display: block;
+  overflow: visible;
+}
+
+.body { fill: var(--pip-body); }
+.shade { fill: var(--pip-shade); }
+.bodyLight { fill: var(--pip-light); }
+.belly { fill: var(--pip-belly); }
+.eyeWhite { fill: #ffffff; }
+.pupil { fill: var(--pip-dark); }
+.glint { fill: #ffffff; }
+.groundShadow { fill: rgba(20, 21, 26, 0.13); }
+
+.brow {
+  fill: none;
+  stroke: var(--pip-dark);
+  stroke-width: 5.5;
+  stroke-linecap: round;
+}
+
+.mouth {
+  fill: none;
+  stroke: var(--pip-dark);
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.mouthOpen { fill: var(--pip-dark); }
+
+/* ---------------- Motion ----------------
+   Everything is a small, slow, looping move. Big fast motion reads as cheap;
+   Duolingo's characters mostly breathe and settle. */
+
+.bob { animation: pipBob 3.4s ease-in-out infinite; }
+.sway { animation: pipSway 4s ease-in-out infinite; }
+.cheer { animation: pipCheer 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) 2; }
+.sink { animation: pipSink 3s ease-in-out infinite; }
+.sleep { animation: pipSleep 4.5s ease-in-out infinite; }
+.wave { animation: pipBob 3.4s ease-in-out infinite; }
+
+@keyframes pipBob {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  50% { transform: translateY(-5px) scale(0.995, 1.01); }
+}
+
+@keyframes pipSway {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
+}
+
+@keyframes pipCheer {
+  0% { transform: translateY(0) scale(1, 1); }
+  30% { transform: translateY(-22px) scale(0.94, 1.08); }
+  60% { transform: translateY(0) scale(1.07, 0.93); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+
+@keyframes pipSink {
+  0%, 100% { transform: translateY(2px) scale(1.01, 0.99); }
+  50% { transform: translateY(4px) scale(1.015, 0.985); }
+}
+
+@keyframes pipSleep {
+  0%, 100% { transform: translateY(2px) scale(1.02, 0.98); }
+  50% { transform: translateY(-1px) scale(0.99, 1.02); }
+}
+
+/* Blink: squash the whole pupil group vertically for two frames. Cheaper and
+   more convincing than animating eyelid shapes. */
+.blinker {
+  transform-origin: 100px 99px;
+  animation: pipBlink 5.2s ease-in-out infinite;
+}
+
+@keyframes pipBlink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95%, 97% { transform: scaleY(0.08); }
+}
+
+/* The waving arm. Only animates in the wave/cheer moods. */
+.armRight { transform-origin: 158px 126px; }
+
+.wave .armRight { animation: pipWave 1.1s ease-in-out 3; }
+.cheer .armRight { animation: pipRaise 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) 2; }
+
+@keyframes pipWave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-32deg); }
+  75% { transform: rotate(-12deg); }
+}
+
+@keyframes pipRaise {
+  0%, 100% { transform: rotate(0deg); }
+  40% { transform: rotate(-48deg); }
+}
+
+.armLeft { transform-origin: 38px 130px; }
+.cheer .armLeft { animation: pipRaiseL 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) 2; }
+
+@keyframes pipRaiseL {
+  0%, 100% { transform: rotate(0deg); }
+  40% { transform: rotate(44deg); }
+}
+
+/* Sleep Zs */
+.zzz .z1,
+.zzz .z2 {
+  fill: var(--pip-shade);
+  font-family: system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.zzz .z2 { font-size: 15px; }
+
+.zzz .z1 { animation: pipZ 2.6s ease-in-out infinite; }
+.zzz .z2 { animation: pipZ 2.6s ease-in-out 0.5s infinite; }
+
+@keyframes pipZ {
+  0% { opacity: 0; transform: translateY(6px); }
+  35% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+
+/* Respect the OS setting. A looping mascot is exactly the kind of motion
+   people turn this on to stop. */
+@media (prefers-reduced-motion: reduce) {
+  .pip,
+  .pip * {
+    animation: none !important;
+  }
+}

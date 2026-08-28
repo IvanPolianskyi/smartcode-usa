@@ -129,6 +129,78 @@ export async function createPortalSession(paddleCustomerId, subscriptionIds = []
 	}
 }
 
+/**
+ * Move a live subscription onto a different price (tier or interval change).
+ *
+ * `items` replaces the whole set, so the new price is passed alone rather than
+ * appended - appending would bill the customer for both tiers at once.
+ *
+ * Upgrades bill the difference straight away so the customer gets what they
+ * just paid for; downgrades wait for the next period, because charging someone
+ * to spend less is how a downgrade turns into a cancellation.
+ *
+ * @param {string} subscriptionId
+ * @param {string} priceId
+ * @param {{ upgrade?: boolean }} [options]
+ */
+export async function updateSubscriptionPrice(subscriptionId, priceId, { upgrade = true } = {}) {
+	if (!subscriptionId) throw new Error('subscriptionId is required')
+	if (!priceId) throw new Error('priceId is required')
+
+	return paddleRequest(`/subscriptions/${subscriptionId}`, {
+		method: 'PATCH',
+		body: {
+			items: [{ price_id: priceId, quantity: 1 }],
+			proration_billing_mode: upgrade
+				? 'prorated_immediately'
+				: 'prorated_next_billing_period',
+		},
+	})
+}
+
+/** Preview an upgrade/downgrade without committing it - used to show the exact charge. */
+export async function previewSubscriptionPrice(subscriptionId, priceId, { upgrade = true } = {}) {
+	if (!subscriptionId) throw new Error('subscriptionId is required')
+	if (!priceId) throw new Error('priceId is required')
+
+	return paddleRequest(`/subscriptions/${subscriptionId}/preview`, {
+		method: 'PATCH',
+		body: {
+			items: [{ price_id: priceId, quantity: 1 }],
+			proration_billing_mode: upgrade
+				? 'prorated_immediately'
+				: 'prorated_next_billing_period',
+		},
+	})
+}
+
+/** Subscriptions Paddle holds for one customer - the reconciler's source of truth. */
+export async function listSubscriptionsForCustomer(paddleCustomerId) {
+	if (!paddleCustomerId) throw new Error('paddleCustomerId is required')
+	const data = await paddleRequest(
+		`/subscriptions?customer_id=${encodeURIComponent(paddleCustomerId)}&per_page=50`
+	)
+	return Array.isArray(data) ? data : []
+}
+
+/** One Paddle customer record - used to attribute a subscription by email. */
+export async function getCustomerFromPaddle(paddleCustomerId) {
+	if (!paddleCustomerId) throw new Error('paddleCustomerId is required')
+	return paddleRequest(`/customers/${paddleCustomerId}`)
+}
+
+/** Find a Paddle customer by email - last-resort attribution for a webhook with no custom_data. */
+export async function findCustomerByEmail(email) {
+	const clean = String(email || '').trim().toLowerCase()
+	if (!clean) return null
+	const data = await paddleRequest(
+		`/customers?email=${encodeURIComponent(clean)}&per_page=2`
+	)
+	const rows = Array.isArray(data) ? data : []
+	const match = rows.find((row) => String(row?.email || '').toLowerCase() === clean)
+	return match?.id || null
+}
+
 export async function getSubscriptionFromPaddle(subscriptionId) {
 	if (!subscriptionId) throw new Error('subscriptionId is required')
 	return paddleRequest(`/subscriptions/${subscriptionId}`)

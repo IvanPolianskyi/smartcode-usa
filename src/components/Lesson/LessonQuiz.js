@@ -3,6 +3,7 @@
 import React, { useMemo } from 'react'
 import { Target, Lock, CheckCircle2, XCircle, Loader2 } from 'lucide-react'
 import { markdownToHtml } from '@/lib/markdownToHtml'
+import Pip from '@/components/Mascot/Pip'
 import styles from './LessonPage.module.css'
 
 export default function LessonQuiz({
@@ -224,6 +225,13 @@ export default function LessonQuiz({
         ) : (
           <div id="quiz-results" className={styles.quizResults} role="status" aria-live="polite">
             <div className={styles.scoreCard}>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.75rem' }}>
+                <Pip
+                  mood={isQuizPassed ? 'cheer' : 'sad'}
+                  size={72}
+                  label={isQuizPassed ? 'Pip celebrating quiz pass' : 'Pip encouraging quiz retake'}
+                />
+              </div>
               <h4>{t('yourScore')}</h4>
               <div className={styles.scoreValue}>{quizScore}%</div>
               <div className={styles.scoreStatus}>

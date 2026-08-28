@@ -1,18 +1,18 @@
-import { Link } from '@/i18n/navigation'
 import { BILLING_TIERS } from '@/lib/billingCatalog'
 import { LEGAL } from '@/lib/legalConfig'
-import { planPath } from '@/lib/startCheckout'
 import pageStyles from '@/app/[locale]/page.module.css'
+import CheckoutButton from './CheckoutButton'
 import styles from './ProgramPricingFlow.module.css'
 
 const TRIAL = LEGAL.trialDays
+const STANDARD = BILLING_TIERS.standard
 
 /**
- * Step 1 of the purchase: pick a program.
+ * Pick a program and buy it in one click.
  *
- * Choosing one navigates to its own plan page rather than expanding a panel
- * in place - a card that grows a second decision underneath it reads as a
- * dead end on a phone, where the new controls open below the fold.
+ * With Premium off the market there is no second decision left to make, so the
+ * card opens Paddle directly instead of routing through a tier picker - every
+ * extra screen between the button and the card form costs conversions.
  */
 export default function ProgramPricingFlow({ programs }) {
 	return (
@@ -32,27 +32,22 @@ export default function ProgramPricingFlow({ programs }) {
 								<li key={topic}>{topic}</li>
 							))}
 						</ul>
-						{program.outcome ? (
-							<p className={styles.outcome}>{program.outcome}</p>
-						) : null}
-						<p className={styles.cardPrice}>
-							<span className={styles.cardPriceValue}>$0</span>
-							<span className={styles.cardPriceWas}>
-								{BILLING_TIERS.standard.monthlyPrice}
-							</span>
-							<span className={styles.cardPricePer}>
-								today · Standard from {BILLING_TIERS.standard.monthlyPrice}/mo ·
-								Premium from {BILLING_TIERS.premium.monthlyPrice}/mo after {TRIAL}{' '}
-								days
-							</span>
-						</p>
+						<div className={styles.bigPriceRow}>
+							<span className={styles.bigPriceNow}>$0</span>
+							<span className={styles.bigPriceWas}>{STANDARD.monthlyPrice}/mo</span>
+						</div>
 						<div className={pageStyles.programCta}>
-							<Link
-								href={planPath(program.courseId)}
+							<CheckoutButton
+								courseId={program.courseId}
+								plan="monthly"
+								tier="standard"
 								className={styles.chooseBtn}
 							>
-								Choose {program.title}
-							</Link>
+								Try {program.title} for free
+							</CheckoutButton>
+							<p className={styles.cardFinePrint}>
+								Then {STANDARD.monthlyPrice}/mo after {TRIAL} days · cancel anytime
+							</p>
 						</div>
 					</article>
 				))}

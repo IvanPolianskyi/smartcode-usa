@@ -83,6 +83,16 @@ export async function ensureUserIndexes() {
         }
       ),
       users.createIndex(
+        { googleId: 1 },
+        {
+          unique: true,
+          name: 'users_googleId_unique',
+          partialFilterExpression: {
+            googleId: { $type: 'string', $gt: '' },
+          },
+        }
+      ),
+      users.createIndex(
         { 'studentProfile.crmStudentId': 1 },
         {
           unique: true,

@@ -445,7 +445,34 @@
       "checklistOpenStudio": "Opened Roblox Studio and your Place",
       "checklistDidSteps": "Completed the practice steps from the lesson",
       "checklistSaved": "Saved the Place (File → Save)",
-      "checklistHint": "Check all three boxes - then the button becomes active"
+      "checklistHint": "Check all three boxes - then the button becomes active",
+      "missionsTitle": "Lesson missions",
+      "missionsSubtitle": "{done} of {total} done - tick each one off as you do it in Studio",
+      "missionsAllDone": "All missions cleared. Nice work.",
+      "missionsBonus": "All-missions bonus: +{xp} XP",
+      "missionsReset": "Reset missions",
+      "missionN": "Mission {n}",
+      "missionMinutes": "{n} min",
+      "missionMarkDone": "Mark this mission done",
+      "missionMarkUndone": "Mark this mission not done",
+      "xpEarned": "{xp} / {max} XP",
+      "xpLineMissions": "Missions {done}/{total}: +{xp} XP",
+      "xpLineAllMissions": "Every mission cleared: +{xp} XP",
+      "xpLinePractice": "Studio practice: +{xp} XP",
+      "xpLineQuiz": "Quiz passed: +{xp} XP",
+      "xpLinePerfect": "Perfect score: +{xp} XP",
+      "xpNudgeMissions": "{count} missions left - worth {xp} XP",
+      "rankNext": "{count} more lessons to the next rank",
+      "rankMax": "Top rank reached",
+      "ranks": {
+        "newBuilder": "New Builder",
+        "apprentice": "Apprentice",
+        "scripter": "Scripter",
+        "systemsBuilder": "Systems Builder",
+        "gameDesigner": "Game Designer",
+        "engineer": "Engineer",
+        "shipper": "Shipper"
+      }
     },
     "ai": {
       "lockedDescriptionEn": "This lesson is locked. Subscribe to AI for Real Life to unlock the full program. The first lesson is free to preview.",
@@ -483,6 +510,83 @@
     "lockedDescriptionPython": "To unlock the course, attend SmartCode online Python lessons. Module 1 lesson 1 is available as a preview.",
     "lockedDescriptionRoblox": "To unlock the course, attend SmartCode online Roblox Studio lessons. Module 1 lesson 1 is available as a preview.",
     "testCaseLabel": "Test {number}",
-    "failedTestsFound": "Failed tests: {failed} (of {total})."
+    "failedTestsFound": "Failed tests: {failed} (of {total}).",
+    "interactive": {
+      "tryItLabel": "Try it",
+      "predictLabel": "Predict the output",
+      "fillLabel": "Fill the blanks",
+      "traceLabel": "Watch the variables",
+      "done": "Done",
+      "reset": "Reset",
+      "checkAnswer": "Check",
+      "correct": "Correct!",
+      "notQuite": "Not quite",
+      "pythonSays": "What Python actually printed",
+      "noOutput": "(no output)",
+      "tryAgain": "Not there yet - adjust the code and run it again.",
+      "tryAgainButton": "Try again",
+      "blankAria": "Missing code",
+      "memoryTitle": "Memory",
+      "memoryEmpty": "No variables yet - step forward to create one.",
+      "prevStep": "Previous step",
+      "nextStep": "Next step",
+      "play": "Play",
+      "pause": "Pause",
+      "replay": "Replay",
+      "stepCounter": "Step {current} of {total}"
+    },
+    "gamification": {
+      "level": "Level {level}",
+      "levelHint": "Earn XP by finishing interactive blocks, practice tasks and quizzes.",
+      "xpBarAria": "Progress to the next level",
+      "xpOf": "{into} / {need} XP",
+      "streakDays": "{days}-day streak",
+      "streakHint": "Study on consecutive days to keep the streak alive.",
+      "questLabel": "This lesson",
+      "xpGained": "+{xp} XP",
+      "dismiss": "Dismiss"
+    },
+    "achievements": {
+      "first-program": {
+        "title": "Hello, World!",
+        "description": "You ran your first Python program in the browser.",
+        "howTo": "Run any \"Try it\" block."
+      },
+      "curious": {
+        "title": "Curious",
+        "description": "You finished every interactive block in a lesson.",
+        "howTo": "Complete all interactive blocks in one lesson."
+      },
+      "mind-reader": {
+        "title": "Mind reader",
+        "description": "Three interactive answers correct on the first try.",
+        "howTo": "Get three answers right first time."
+      },
+      "perfectionist": {
+        "title": "Perfectionist",
+        "description": "A flawless 100% on a lesson quiz.",
+        "howTo": "Score 100% on any quiz."
+      },
+      "no-safety-net": {
+        "title": "No safety net",
+        "description": "You solved a practice task without opening the solution.",
+        "howTo": "Pass a practice task without revealing the solution."
+      },
+      "graduate": {
+        "title": "Graduate",
+        "description": "Your first lesson is complete.",
+        "howTo": "Finish a whole lesson."
+      },
+      "streak-3": {
+        "title": "On fire",
+        "description": "Three days of studying in a row.",
+        "howTo": "Study three days running."
+      },
+      "level-5": {
+        "title": "Rising star",
+        "description": "You reached level 5.",
+        "howTo": "Earn 400 XP."
+      }
+    }
   }
 }

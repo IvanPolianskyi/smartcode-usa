@@ -8,12 +8,30 @@ import SiteHeader from '@/components/Nav/SiteHeader'
 import { LANDING_PROGRAMS } from '@/lib/landingPrograms'
 import { BILLING_TIERS } from '@/lib/billingCatalog'
 import { LEGAL } from '@/lib/legalConfig'
+import JsonLd from '@/components/Seo/JsonLd'
+import { faqSchema, organizationSchema } from '@/lib/structuredData'
 import styles from './page.module.css'
 import SiteFooter from '@/components/Nav/SiteFooter'
 
+const HOME_DESCRIPTION = `Learn Roblox, Python, or AI by building real projects. Write code, run it, get it checked instantly. ${LEGAL.monthlyPrice}/month, first ${LEGAL.trialDays} days free, cancel anytime.`
+
 export const metadata = {
 	title: 'SmartCode - build a game people actually play',
-	description: `Learn Roblox, Python, or AI by building real projects. Write code, run it, get it checked instantly. ${LEGAL.monthlyPrice}/month, first ${LEGAL.trialDays} days free, cancel anytime.`,
+	description: HOME_DESCRIPTION,
+	alternates: { canonical: '/' },
+	openGraph: {
+		title: 'SmartCode - build a game people actually play',
+		description: HOME_DESCRIPTION,
+		url: '/',
+	},
+	twitter: {
+		// Page-level `twitter` replaces the layout's object outright, so the card
+		// type has to be restated - without it the share card silently drops to
+		// the small `summary` layout.
+		card: 'summary_large_image',
+		title: 'SmartCode - build a game people actually play',
+		description: HOME_DESCRIPTION,
+	},
 }
 
 const REVIEWS = [
@@ -44,11 +62,11 @@ const REVIEWS = [
 		initials: 'SL',
 		tone: 'ink',
 		role: 'Mom · Denver, CO',
-		context: 'missed a live class',
+		context: 'after the free days',
 		stars: 5,
 		quote:
-			'We tried the free days mostly to see if she’d stick with it. She did. When she skipped a live lesson she watched the recording the next morning - no guilt trip, just catch-up.',
-		course: 'Live lessons',
+			'We tried the free days mostly to see if she’d stick with it. She did. She goes at her own pace after school - some days one lesson, some days four - and nobody is nagging her to do it.',
+		course: 'AI for Real Life',
 	},
 ]
 
@@ -82,8 +100,8 @@ const INCLUDED = [
 		text: 'Publish a game and we can feature it on our Instagram - the same account your friends already follow.',
 	},
 	{
-		title: 'Live lessons with a teacher',
-		text: `On Premium (${BILLING_TIERS.premium.monthlyPrice}/month) you get two live sessions a week. Miss one and the recording is waiting for you.`,
+		title: 'Every lesson in your program',
+		text: `One subscription, the whole program - ${BILLING_TIERS.standard.monthlyPrice}/month after the free days, and you can cancel in two clicks.`,
 	},
 ]
 
@@ -102,7 +120,7 @@ const FAQ = [
 	},
 	{
 		q: 'Do I need to buy all three programs?',
-		a: `No. Each program is its own subscription, so you only pay for the one you are actually doing. Standard is ${BILLING_TIERS.standard.monthlyPrice}/month (or ${BILLING_TIERS.standard.annualPrice}/year). Premium is ${BILLING_TIERS.premium.monthlyPrice}/month (or ${BILLING_TIERS.premium.annualPrice}/year) and adds two live lessons a week.`,
+		a: `No. Each program is its own subscription, so you only pay for the one you are actually doing - ${BILLING_TIERS.standard.monthlyPrice}/month, or ${BILLING_TIERS.standard.annualPrice}/year if you pick annual.`,
 	},
 	{
 		q: 'What do I need to install?',
@@ -124,6 +142,8 @@ export default async function Home({ params }) {
 
 	return (
 		<div className={styles.page} data-theme="light" id="top">
+			<JsonLd data={organizationSchema()} />
+			<JsonLd data={faqSchema(FAQ)} />
 			<div className={styles.gridBg} aria-hidden="true" />
 
 			<div className={styles.firstFold}>
@@ -178,40 +198,20 @@ export default async function Home({ params }) {
 				</div>
 			</div>
 
-			<section className={styles.section} id="how">
+			<section className={styles.section} id="programs">
 				<div className={`${styles.sectionHead} sc-reveal`}>
-					<h2 className={styles.sectionTitle}>How it works</h2>
+					<h2 className={styles.sectionTitle}>Pick your program</h2>
 					<p className={styles.sectionLede}>
-						Three steps. You are writing code in the first lesson.
+						Each one is its own subscription, so you only pay for what you are
+						actually doing. Free for {LEGAL.trialDays} days, cancel anytime.
 					</p>
 				</div>
-				<ol className={styles.stepGrid}>
-					{STEPS.map((step, index) => (
-						<li
-							key={step.title}
-							className={`${styles.stepCard} sc-reveal${step.href ? ` ${styles.stepCardLink}` : ''}`}
-							style={{ '--sc-reveal-delay': `${index * 90}ms` }}
-						>
-							{step.href ? (
-								<a href={step.href} className={styles.stepCardHit}>
-									<span className={styles.stepNum} aria-hidden="true">
-										{index + 1}
-									</span>
-									<h3 className={styles.stepTitle}>{step.title}</h3>
-									<p className={styles.stepText}>{step.text}</p>
-								</a>
-							) : (
-								<>
-									<span className={styles.stepNum} aria-hidden="true">
-										{index + 1}
-									</span>
-									<h3 className={styles.stepTitle}>{step.title}</h3>
-									<p className={styles.stepText}>{step.text}</p>
-								</>
-							)}
-						</li>
-					))}
-				</ol>
+
+				<div className={styles.pricingWrap}>
+					<Suspense fallback={<p className={styles.sectionLede}>Loading plans…</p>}>
+						<ProgramPricingFlow programs={LANDING_PROGRAMS} />
+					</Suspense>
+				</div>
 			</section>
 
 			<section className={styles.section} id="showcase">
@@ -258,12 +258,51 @@ export default async function Home({ params }) {
 				</div>
 			</section>
 
+			<section className={styles.section} id="how">
+				<div className={`${styles.sectionHead} sc-reveal`}>
+					<h2 className={styles.sectionTitle}>How it works</h2>
+					<p className={styles.sectionLede}>
+						Three steps. You are writing code in the first lesson.
+					</p>
+				</div>
+				<ol className={styles.stepGrid}>
+					{STEPS.map((step, index) => (
+						<li
+							key={step.title}
+							className={`${styles.stepCard} sc-reveal${step.href ? ` ${styles.stepCardLink}` : ''}`}
+							style={{ '--sc-reveal-delay': `${index * 90}ms` }}
+						>
+							{step.href ? (
+								<a href={step.href} className={styles.stepCardHit}>
+									<div className={styles.stepHead}>
+										<span className={styles.stepNum} aria-hidden="true">
+											{index + 1}
+										</span>
+									</div>
+									<h3 className={styles.stepTitle}>{step.title}</h3>
+									<p className={styles.stepText}>{step.text}</p>
+								</a>
+							) : (
+								<>
+									<div className={styles.stepHead}>
+										<span className={styles.stepNum} aria-hidden="true">
+											{index + 1}
+										</span>
+									</div>
+									<h3 className={styles.stepTitle}>{step.title}</h3>
+									<p className={styles.stepText}>{step.text}</p>
+								</>
+							)}
+						</li>
+					))}
+				</ol>
+			</section>
+
 			<section className={styles.section} id="included">
 				<div className={`${styles.sectionHead} sc-reveal`}>
 					<h2 className={styles.sectionTitle}>What you get</h2>
 					<p className={styles.sectionLede}>
-						The first three come with every plan. Live lessons are the Premium
-						upgrade.
+						All of it comes with every subscription - there is no upsell tier.
 					</p>
 				</div>
 				<div className={styles.includedGrid}>
@@ -325,21 +364,7 @@ export default async function Home({ params }) {
 				</div>
 			</section>
 
-			<section className={styles.section} id="programs">
-				<div className={`${styles.sectionHead} sc-reveal`}>
-					<h2 className={styles.sectionTitle}>Pick your program</h2>
-					<p className={styles.sectionLede}>
-						Each one is its own subscription, so you only pay for what you are
-						actually doing. Free for {LEGAL.trialDays} days, cancel anytime.
-					</p>
-				</div>
-
-				<div className={styles.pricingWrap}>
-					<Suspense fallback={<p className={styles.sectionLede}>Loading plans…</p>}>
-						<ProgramPricingFlow programs={LANDING_PROGRAMS} />
-					</Suspense>
-				</div>
-
+			<section className={styles.section} id="faq">
 				<div className={`${styles.faqHead} sc-reveal`}>
 					<h2 className={styles.faqTitle}>Popular questions</h2>
 				</div>

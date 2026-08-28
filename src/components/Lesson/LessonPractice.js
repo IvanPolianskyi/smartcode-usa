@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { Code, Lightbulb, Terminal, Loader2, CheckCircle2, XCircle } from 'lucide-react'
+import Pip from '@/components/Mascot/Pip'
 import styles from './LessonPage.module.css'
 
 export default function LessonPractice({
@@ -204,32 +205,39 @@ export default function LessonPractice({
                 aria-live="polite"
                 className={practiceCompleted ? styles.practiceSuccess : styles.practiceError}
               >
-                {practiceCompleted ? (
-                  <>
-                    <CheckCircle2 className="w-5 h-5 text-green-500" aria-hidden="true" />
-                    <strong>{t('practiceSuccess')}</strong>
-                    <p>{t('practiceSuccessHint')}</p>
-                  </>
-                ) : (
-                  <>
-                    <XCircle className="w-5 h-5 text-red-500" aria-hidden="true" />
-                    <strong>{t('practiceFail')}</strong>
-                    <p>{t('practiceFailHint')}</p>
-                    {practiceTestCount > 1 && failedExampleIndexes.length > 0 && (
-                      <p style={{ fontSize: '0.875rem', marginTop: '0.5rem', color: '#ef4444' }}>
-                        {t('failedTestsFound', {
-                          failed: failedExampleIndexes.map((i) => i + 1).join(', '),
-                          total: practiceTestCount,
-                        })}
-                      </p>
-                    )}
-                    {outputErrors.length > 0 && (
-                      <p style={{ fontSize: '0.875rem', marginTop: '0.5rem', color: '#ef4444' }}>
-                        {t('outputErrorsFound', { count: outputErrors.length })}
-                      </p>
-                    )}
-                  </>
-                )}
+                <div style={{ flexShrink: 0 }}>
+                  <Pip
+                    mood={practiceCompleted ? 'cheer' : 'sad'}
+                    size={48}
+                    label={practiceCompleted ? 'Pip cheering practice success' : 'Pip sad practice fail'}
+                  />
+                </div>
+                <div>
+                  {practiceCompleted ? (
+                    <>
+                      <strong>{t('practiceSuccess')}</strong>
+                      <p>{t('practiceSuccessHint')}</p>
+                    </>
+                  ) : (
+                    <>
+                      <strong>{t('practiceFail')}</strong>
+                      <p>{t('practiceFailHint')}</p>
+                      {practiceTestCount > 1 && failedExampleIndexes.length > 0 && (
+                        <p style={{ fontSize: '0.875rem', marginTop: '0.5rem', color: '#ef4444' }}>
+                          {t('failedTestsFound', {
+                            failed: failedExampleIndexes.map((i) => i + 1).join(', '),
+                            total: practiceTestCount,
+                          })}
+                        </p>
+                      )}
+                      {outputErrors.length > 0 && (
+                        <p style={{ fontSize: '0.875rem', marginTop: '0.5rem', color: '#ef4444' }}>
+                          {t('outputErrorsFound', { count: outputErrors.length })}
+                        </p>
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
             )}
           </div>
