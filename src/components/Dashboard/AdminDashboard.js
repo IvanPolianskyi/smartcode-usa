@@ -16,6 +16,55 @@ function StatusBadge({ active, trialing }) {
 	return <span className={`${adminStyles.badge} ${adminStyles.badgeInactive}`}>No access</span>
 }
 
+function formatPct(value) {
+	if (value === null || value === undefined) return '—'
+	return `${value}%`
+}
+
+function FunnelChart({ rows = [], anomalies = [] }) {
+	if (!rows.length) return null
+
+	return (
+		<section className={styles.chartCard}>
+			<h3 className={styles.chartTitle}>Funnel conversion</h3>
+			<p className={styles.chartHint}>
+				Percent of site sessions that reached each step, and step-over-step drop-off.
+			</p>
+			{anomalies.length > 0 ? (
+				<ul className={styles.anomalyList}>
+					{anomalies.map((item) => (
+						<li key={item.id}>{item.message}</li>
+					))}
+				</ul>
+			) : null}
+			<div className={styles.funnelList}>
+				{rows.map((row, index) => (
+					<div key={row.id} className={styles.funnelRow}>
+						<div className={styles.funnelMeta}>
+							<span className={styles.funnelLabel}>{row.label}</span>
+							<span className={styles.funnelCount}>{row.count}</span>
+						</div>
+						<div className={styles.funnelBarTrack} aria-hidden="true">
+							<div
+								className={styles.funnelBarFill}
+								style={{ width: `${row.barPct}%` }}
+							/>
+						</div>
+						<div className={styles.funnelRates}>
+							<span title="Share of site sessions">{formatPct(row.pctOfTop)} of top</span>
+							{index > 0 ? (
+								<span title="Conversion from previous step">
+									{formatPct(row.pctOfPrev)} from prev
+								</span>
+							) : null}
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+	)
+}
+
 function VisitorsChart({ series }) {
 	const width = 640
 	const height = 200
@@ -212,6 +261,8 @@ export default function AdminDashboard({ user }) {
 							</div>
 						</div>
 					)}
+
+					<FunnelChart rows={analytics.funnel} anomalies={analytics.anomalies} />
 
 					<section className={styles.chartCard}>
 						<h3 className={styles.chartTitle}>Unique visitors per day</h3>

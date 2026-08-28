@@ -98,6 +98,84 @@
 	font-weight: 700;
 }
 
+.chartHint {
+	margin: -0.35rem 0 0.85rem;
+	font-size: 0.8rem;
+	line-height: 1.4;
+	color: var(--dash-muted, #5c6370);
+}
+
+.anomalyList {
+	margin: 0 0 0.85rem;
+	padding: 0.65rem 0.85rem;
+	border-radius: 10px;
+	border: 1px solid rgba(252, 110, 81, 0.25);
+	background: rgba(252, 110, 81, 0.06);
+	list-style: none;
+}
+
+.anomalyList li {
+	font-size: 0.8rem;
+	line-height: 1.45;
+	color: #8a4a3d;
+}
+
+.anomalyList li + li {
+	margin-top: 0.35rem;
+}
+
+.funnelList {
+	display: grid;
+	gap: 0.75rem;
+}
+
+.funnelRow {
+	display: grid;
+	gap: 0.35rem;
+}
+
+.funnelMeta {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.75rem;
+}
+
+.funnelLabel {
+	font-size: 0.84rem;
+	font-weight: 600;
+}
+
+.funnelCount {
+	font-family: var(--sc-font-mono, ui-monospace, monospace);
+	font-size: 0.82rem;
+	font-weight: 700;
+	color: var(--dash-coral, #fc6e51);
+}
+
+.funnelBarTrack {
+	height: 10px;
+	border-radius: 999px;
+	background: rgba(20, 21, 26, 0.06);
+	overflow: hidden;
+}
+
+.funnelBarFill {
+	height: 100%;
+	border-radius: inherit;
+	background: linear-gradient(90deg, #fc6e51, #ff8f78);
+	transition: width 0.35s ease;
+}
+
+.funnelRates {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem 1rem;
+	font-size: 0.72rem;
+	font-weight: 600;
+	color: var(--dash-soft, #8b919c);
+}
+
 .chartSvg {
 	width: 100%;
 	height: auto;
