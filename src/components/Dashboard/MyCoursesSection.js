@@ -264,7 +264,10 @@ export default function MyCoursesSection({ user, progressData, getCourseInfo }) 
 				<p className={styles.softLoading}>{t('billingLoading')}</p>
 			) : null}
 
-			{!billingLoading && !hasAnySubscription ? (
+			{!billingLoading &&
+			!hasAnySubscription &&
+			user?.role !== 'admin' &&
+			user?.role !== 'teacher' ? (
 				<p className={styles.courseBillingNotice}>
 					{t('pricingBlurb', { days: LEGAL.trialDays })}
 				</p>

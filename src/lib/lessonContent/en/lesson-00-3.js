@@ -15,7 +15,7 @@ export const lesson_00_3 = {
     "Create and modify lists",
     "Use indexing and slicing",
     "Apply list methods",
-    "Work with list comprehensions"
+    "Copy a list without accidentally sharing it"
   ],
   
   prerequisites: ["lesson-00-2"],
@@ -26,7 +26,7 @@ export const lesson_00_3 = {
     sections: [
       {
         title: "What are lists?",
-        content: `Lists can be considered the most general version of a *sequence* in Python. They are **mutable**, which means that elements inside a list can be changed!
+        content: `A list is an ordered collection of values, stored in one variable. Unlike the variables from the last lesson, which held a single value, a list holds many - and it is **mutable**, which means the elements inside it can be changed after you create it.
 
 **Why are lists important?**
 - Store multiple values in one variable
@@ -40,7 +40,17 @@ export const lesson_00_3 = {
 3. Basic list methods
 4. Nested lists
 
-Lists are created using square brackets \`[]\` and commas that separate each element in the list.`
+Lists are created using square brackets \`[]\` and commas that separate each element in the list.`,
+        interactives: [
+          {
+            id: 'first-list',
+            type: 'tryIt',
+            prompt: 'Create a list called colors with three of your favorite colors, then print it.',
+            starterCode: 'colors = ["red", "green", "blue"]\nprint(colors)',
+            expect: { mustContain: ['['] },
+            hint: 'Keep the square brackets, and separate each item with a comma.',
+          },
+        ],
       },
       {
         title: "Creating lists",
@@ -64,12 +74,31 @@ empty_list = []
 print(empty_list)  # []
 \`\`\`
 
+You can also build a list with the \`list()\` function - \`list()\` is exactly the same as \`[]\`, just spelled differently:
+\`\`\`python
+also_empty = list()
+print(also_empty)  # []
+\`\`\`
+
 **List length:**
 The \`len()\` function shows how many elements are in the list:
 \`\`\`python
 my_list = [1, 2, 3, 4, 5]
 print(len(my_list))  # 5
-\`\`\``
+\`\`\``,
+        interactives: [
+          {
+            id: 'list-length',
+            type: 'fillBlank',
+            prompt: 'Print how many items are in the list below.',
+            template: 'numbers = [10, 20, 30, 40]\nprint({{fn}}(numbers))',
+            blanks: [
+              { id: 'fn', answer: 'len', accept: ['len'], width: 6, placeholder: 'function' },
+            ],
+            explanation: 'len() counts the elements in any list.',
+            hint: 'The same function you used to measure the length of a string.',
+          },
+        ],
       },
       {
         title: "Indexing and slicing",
@@ -106,7 +135,23 @@ print(my_list[1:3])  # ['two', 'three']
 print(my_list[::2])  # ['one', 'three', 5]
 \`\`\`
 
-**Important:** Slices do not include the end index! \`my_list[1:3]\` returns the elements at indexes 1 and 2, but not 3.`
+**Important:** Slices do not include the end index! \`my_list[1:3]\` returns the elements at indexes 1 and 2, but not 3.`,
+        interactives: [
+          {
+            id: 'slice-predict',
+            type: 'predictOutput',
+            prompt: 'What does this print?',
+            code: 'my_list = ["a", "b", "c", "d", "e"]\nprint(my_list[1:3])',
+            options: [
+              "['a', 'b']",
+              "['b', 'c']",
+              "['b', 'c', 'd']",
+              "['c']",
+            ],
+            correctAnswer: 1,
+            explanation: 'The slice [1:3] grabs the elements at index 1 and 2, and stops before index 3.',
+          },
+        ],
       },
       {
         title: "List operations",
@@ -139,15 +184,29 @@ print(doubled)  # [1, 2, 3, 1, 2, 3]
 fruits = ['apple', 'banana', 'orange']
 print('apple' in fruits)  # True
 print('grape' in fruits)  # False
-\`\`\``
+\`\`\``,
+        interactives: [
+          {
+            id: 'concat-predict',
+            type: 'predictOutput',
+            prompt: 'What prints here?',
+            code: 'a = [1, 2]\nb = [3, 4]\nprint(a + b)\nprint(a)',
+            options: [
+              '[1, 2, 3, 4]\n[1, 2, 3, 4]',
+              '[1, 2, 3, 4]\n[1, 2]',
+              '[4, 6]\n[1, 2]',
+              'Error',
+            ],
+            correctAnswer: 1,
+            explanation: '+ builds a brand new combined list. It never changes a or b themselves.',
+          },
+        ],
       },
       {
         title: "Basic list methods",
-        content: `If you are familiar with other programming languages, you can draw a parallel between arrays in those languages and lists in Python. However, Python lists are more flexible for two reasons:
-1. **No fixed size** - you do not need to specify how large the list will be
-2. **No type restrictions** - you can store different data types
+        content: `Python lists are flexible: you never declare how large they will be, and they grow or shrink as you call the methods below.
 
-**append() - add an element to the end:**
+**append() - add one element to the end:**
 \`\`\`python
 my_list = [1, 2, 3]
 my_list.append(4)
@@ -156,6 +215,14 @@ print(my_list)  # [1, 2, 3, 4]
 my_list.append('five')
 print(my_list)  # [1, 2, 3, 4, 'five']
 \`\`\`
+
+**extend() - add all elements from another list:**
+\`\`\`python
+my_list = [1, 2, 3]
+my_list.extend([4, 5])
+print(my_list)  # [1, 2, 3, 4, 5]
+\`\`\`
+The difference matters: \`my_list.append([4, 5])\` would add the sublist \`[4, 5]\` as one single item, while \`extend()\` unpacks it and adds \`4\` and \`5\` separately.
 
 **pop() - remove and return an element:**
 \`\`\`python
@@ -222,7 +289,17 @@ print(count)  # 3
 \`\`\`python
 my_list = [1, 2, 3]
 # print(my_list[100])  # Error: IndexError
-\`\`\``
+\`\`\``,
+        interactives: [
+          {
+            id: 'methods-practice',
+            type: 'tryIt',
+            prompt: 'Start with the list below. Append "kiwi", remove "banana", then print the result.',
+            starterCode: 'fruits = ["apple", "banana"]\n',
+            expect: { mustContain: ['kiwi'] },
+            hint: 'Use fruits.append("kiwi") and fruits.remove("banana"), then print(fruits).',
+          },
+        ],
       },
       {
         title: "Nested lists",
@@ -270,7 +347,18 @@ print("Alexander:", alex_grades[1:])
 # Get Maria's second grade
 maria_second = grades[1][2]
 print("Maria's second grade:", maria_second)  # 88
-\`\`\``
+\`\`\``,
+        interactives: [
+          {
+            id: 'matrix-predict',
+            type: 'predictOutput',
+            prompt: 'What does this print?',
+            code: 'matrix = [[1, 2], [3, 4], [5, 6]]\nprint(matrix[2][0])',
+            options: ['1', '2', '5', '6'],
+            correctAnswer: 2,
+            explanation: 'matrix[2] is [5, 6], and [0] takes the first element of that row: 5.',
+          },
+        ],
       },
     ]
   },
@@ -283,10 +371,10 @@ numbers = [1, 2, 3, 4, 5]
 fruits = ['apple', 'banana', 'orange']
 mixed = ['text', 42, 3.14, True]
 
-print("Numbers:", numbers)
-print("Fruits:", fruits)
-print("Mixed list:", mixed)
-print("Length of numbers:", len(numbers))`,
+print(f"Numbers: {numbers}")
+print(f"Fruits: {fruits}")
+print(f"Mixed list: {mixed}")
+print(f"Length of numbers: {len(numbers)}")`,
       explanation: "Demonstrates creating lists of different types and using the len() function."
     },
     {
@@ -295,11 +383,11 @@ print("Length of numbers:", len(numbers))`,
 my_list = ['one', 'two', 'three', 'four', 'five']
 
 # Get elements
-print("First:", my_list[0])
-print("Last:", my_list[-1])
-print("From 1 to 3:", my_list[1:3])
-print("Everything except the first:", my_list[1:])
-print("Everything except the last:", my_list[:-1])`,
+print(f"First: {my_list[0]}")
+print(f"Last: {my_list[-1]}")
+print(f"From 1 to 3: {my_list[1:3]}")
+print(f"Everything except the first: {my_list[1:]}")
+print(f"Everything except the last: {my_list[:-1]}")`,
       explanation: "Shows different ways to index and slice lists."
     },
     {
@@ -309,19 +397,19 @@ shopping = ['bread', 'milk']
 
 # Add an element
 shopping.append('eggs')
-print("After append:", shopping)
+print(f"After append: {shopping}")
 
 # Insert at a position
 shopping.insert(1, 'butter')
-print("After insert:", shopping)
+print(f"After insert: {shopping}")
 
 # Remove by value
 shopping.remove('milk')
-print("After remove:", shopping)
+print(f"After remove: {shopping}")
 
 # Remove the last item
 last = shopping.pop()
-print("Removed:", last, ", remaining:", shopping)`,
+print(f"Removed: {last}, remaining: {shopping}")`,
       explanation: "Demonstrates the main methods for modifying lists."
     },
     {
@@ -329,15 +417,15 @@ print("Removed:", last, ", remaining:", shopping)`,
       code: `# Sorting lists
 numbers = [3, 1, 4, 1, 5, 9, 2, 6]
 numbers.sort()
-print("Sorted:", numbers)
+print(f"Sorted: {numbers}")
 
 words = ['apple', 'banana', 'orange']
 words.sort()
-print("Words sorted:", words)
+print(f"Words sorted: {words}")
 
 # Reverse
 numbers.reverse()
-print("In reverse order:", numbers)`,
+print(f"In reverse order: {numbers}")`,
       explanation: "Shows how to sort and reverse the order of elements in a list."
     },
     {
@@ -349,15 +437,14 @@ matrix = [
     [7, 8, 9]
 ]
 
-print("Full matrix:", matrix)
-print("First row:", matrix[0])
-print("Element [0][0]:", matrix[0][0])
-print("Element [2][1]:", matrix[2][1])
+print(f"Full matrix: {matrix}")
+print(f"First row: {matrix[0]}")
+print(f"Element [0][0]: {matrix[0][0]}")
+print(f"Element [2][1]: {matrix[2][1]}")
 
-# Get a column (first element of each row)
-# Get the first element of each row separately
+# Get a column (the first element of each row)
 column = [matrix[0][0], matrix[1][0], matrix[2][0]]
-print("First column:", column)`,
+print(f"First column: {column}")`,
       explanation: "Demonstrates working with nested lists and accessing matrix elements."
     }
   ],
@@ -464,25 +551,25 @@ Number of items: 4
     solution: {
       code: `# Shopping list management system
 shopping_list = input().split()
-print("Initial list:", shopping_list)
+print(f"Initial list: {shopping_list}")
 
 item1 = input().strip()
 item2 = input().strip()
 shopping_list.append(item1)
 shopping_list.append(item2)
-print("After adding:", shopping_list)
+print(f"After adding: {shopping_list}")
 
 to_remove = input().strip()
 shopping_list.remove(to_remove)
-print("After removing:", shopping_list)
+print(f"After removing: {shopping_list}")
 
 shopping_list.sort()
-print("Sorted list:", shopping_list)
+print(f"Sorted list: {shopping_list}")
 
-print("Number of items:", len(shopping_list))
+print(f"Number of items: {len(shopping_list)}")
 
 check_item = input().strip()
-print("'" + check_item + "' is in the list:", check_item in shopping_list)`,
+print(f"'{check_item}' is in the list: {check_item in shopping_list}")`,
       explanation: "The solution reads data with input() and uses append(), remove(), sort(), len(), and the in operator."
     },
     hints: [

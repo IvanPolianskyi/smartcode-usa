@@ -9,6 +9,8 @@ import {
 import {
 	asDripDate,
 	countDripUnlockedLessons,
+	countPaidPeriods,
+	FREE_TRIAL_LESSON_COUNT,
 } from '@/lib/lessonDrip'
 
 export {
@@ -19,6 +21,7 @@ export {
 
 export {
 	LESSONS_UNLOCKED_PER_WEEK,
+	FREE_TRIAL_LESSON_COUNT,
 	countDripUnlockedLessons,
 	getNextDripUnlockAt,
 } from '@/lib/lessonDrip'
@@ -130,6 +133,43 @@ export function buildCourseDripStartedAt(subscriptions = []) {
 	return map
 }
 
+/**
+ * Map courseId → { trialing, paidPeriods } from active subscription rows.
+ *
+ * `trialing: true` means the free trial (no payment yet) - unlock exactly
+ * FREE_TRIAL_LESSON_COUNT lessons. Otherwise `paidPeriods` is how many
+ * billing cycles have been paid, one whole curriculum module per cycle.
+ * Only courses with a real Paddle subscription row get an entry here -
+ * purchased/manually-granted/online-course access keeps the weekly drip.
+ * Admin comps (`isManualGrant`) are not billing cycles to count, so they are
+ * skipped here too and fall through to the same weekly-drip treatment.
+ */
+export function buildCourseModuleAccess(subscriptions = []) {
+	const map = {}
+	for (const sub of subscriptions || []) {
+		if (sub?.isManualGrant) continue
+		const ids = Array.isArray(sub?.courseIds) ? sub.courseIds : []
+		if (!ids.length) continue
+
+		const trialing = Boolean(sub.trialing)
+		const paidStartAt = sub.trialEndsAt || sub.createdAt
+		const paidPeriods = trialing
+			? 0
+			: countPaidPeriods(paidStartAt, sub.currentPeriodEnd, sub.billingInterval)
+
+		for (const courseId of ids) {
+			if (!courseId || !isKnownCourseId(String(courseId))) continue
+			const key = String(courseId)
+			const existing = map[key] || { trialing: true, paidPeriods: 0 }
+			map[key] = {
+				trialing: existing.trialing && trialing,
+				paidPeriods: Math.max(existing.paidPeriods, paidPeriods),
+			}
+		}
+	}
+	return map
+}
+
 /** Читання/запис прогресу: оплачений/онлайн курс або Roblox-прев’ю (урок 1.1). */
 export function canReadCourseProgress(user, courseId) {
 	if (!user || !courseId || !isKnownCourseId(courseId)) return false
@@ -155,6 +195,7 @@ export function canUpdateLessonProgress(user, courseId, lessonId, progress = nul
 		isSubscribed: isSubscribedToCourse(user, courseId),
 		isEnrolled: Boolean(progress),
 		dripStartedAt: resolveDripStartedAt(user, courseId, progress),
+		moduleAccess: user.courseModuleAccess?.[courseId] || null,
 	})
 
 	return unlocked.has(lessonId)
@@ -172,7 +213,11 @@ export function isCourseFullAccess(profile, courseId) {
 /**
  * Open lesson IDs for a user.
  * Staff: all lessons.
- * Entitled students: weekly drip (2 new lessons per week from access start).
+ * Paddle subscribers (moduleAccess given): free trial unlocks the first
+ *   FREE_TRIAL_LESSON_COUNT lessons; each paid billing cycle then unlocks one
+ *   whole curriculum module (cycle 1 → module 1, cycle 2 → +module 2, ...).
+ * Other entitled students (purchased/online/manually granted): weekly drip
+ *   (2 new lessons per week from access start).
  * Everyone else: free preview (first lesson) + any manual unlocks.
  */
 export function getUnlockedLessonSet({
@@ -185,6 +230,7 @@ export function getUnlockedLessonSet({
 	isEnrolled = false,
 	isSubscribed = false,
 	dripStartedAt = null,
+	moduleAccess = null,
 	now = new Date(),
 }) {
 	const allLessons = flattenCourseLessons(courseId)
@@ -203,6 +249,19 @@ export function getUnlockedLessonSet({
 
 	if (isAdmin || isTeacher) {
 		return new Set(allIds)
+	}
+
+	if (moduleAccess) {
+		const unlocked =
+			moduleAccess.trialing && moduleAccess.paidPeriods <= 0
+				? new Set(allIds.slice(0, FREE_TRIAL_LESSON_COUNT))
+				: new Set(
+						(ONLINE_COURSE_CURRICULA[courseId]?.modules || [])
+							.slice(0, Math.max(1, moduleAccess.paidPeriods))
+							.flatMap((module) => (module.lessons || []).map((l) => l.lessonId))
+					)
+		for (const id of manualUnlocked) unlocked.add(id)
+		return unlocked
 	}
 
 	const hasOnline =

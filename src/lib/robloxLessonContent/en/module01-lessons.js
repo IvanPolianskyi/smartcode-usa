@@ -1000,7 +1000,7 @@ Follow the order. Terrain punishes doing things out of sequence more than any ot
           "Because wave animation usually does not run in the editor",
         ],
         correctAnswer: 3,
-        explanation: "Still, flat water in the editor is not a bug. Press F5 and it moves.",
+        explanation: "Wave animation is a Play-mode effect. Flat water in the editor is not a bug - press F5 and it moves.",
       },
       {
         id: "q14",
@@ -1162,7 +1162,7 @@ That question is how you fix almost every bug you will ever have. Not by staring
 
 \`\`\`lua
 local part = script.Parent
-local newName = "MaGicCuBe"
+local newName = "MagicCube"
 
 part.Name = newName
 part.BrickColor = BrickColor.new("Bright violet")
@@ -1196,7 +1196,7 @@ local currentMaterial = part.Material
 print("Current size:", currentSize)
 print("Current material:", currentMaterial)
 
-part.Transparency = 0.5
+part.Transparency = 0.3
 print("The cube is now semitransparent")
 \`\`\`
 

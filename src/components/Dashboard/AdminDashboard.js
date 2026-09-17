@@ -5,6 +5,7 @@ import { Link } from '@/i18n/navigation'
 import adminStyles from '@/app/[locale]/admin/AdminPanel.module.css'
 import styles from './AdminDashboard.module.css'
 import { niceAxis, labelStride } from '@/lib/funnelAnalytics.mjs'
+import MyCoursesSection from './MyCoursesSection'
 
 function StatusBadge({ active, trialing }) {
 	if (trialing) {
@@ -136,7 +137,7 @@ function VisitorsChart({ series }) {
 	)
 }
 
-export default function AdminDashboard({ user }) {
+export default function AdminDashboard({ user, getCourseInfo }) {
 	const [days, setDays] = useState(30)
 	const [analytics, setAnalytics] = useState(null)
 	const [stats, setStats] = useState(null)
@@ -205,6 +206,10 @@ export default function AdminDashboard({ user }) {
 
 	return (
 		<div className={styles.wrap}>
+			{getCourseInfo ? (
+				<MyCoursesSection user={user} progressData={{}} getCourseInfo={getCourseInfo} />
+			) : null}
+
 			<header className={styles.head}>
 				<div>
 					<p className={styles.eyebrow}>Analytics</p>

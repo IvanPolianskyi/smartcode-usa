@@ -82,6 +82,7 @@ export function toAuthUserResponse(user) {
     subscribedCourseIds: user?.subscribedCourseIds || [],
     subscriptionActive: Boolean(user?.subscriptionActive),
     courseDripStartedAt: user?.courseDripStartedAt || {},
+    courseModuleAccess: user?.courseModuleAccess || {},
     createdAt: user?.createdAt ?? null,
     referralId: user?.referralId ?? null,
   }

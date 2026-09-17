@@ -46,6 +46,16 @@ function asDate(value) {
 	return Number.isNaN(date.getTime()) ? null : date
 }
 
+/** Admin comps and local-dev grants, as opposed to a real Paddle subscription. */
+export function isManualGrantSubscription(subscription) {
+	return (
+		subscription?.paddleCustomerId === 'admin_manual' ||
+		subscription?.paddleCustomerId === 'local_dev_customer' ||
+		String(subscription?.paddleSubscriptionId || '').startsWith('admin_manual_') ||
+		String(subscription?.paddleSubscriptionId || '').startsWith('local_dev_')
+	)
+}
+
 /** Resolve course IDs stored on the subscription, falling back to the price map. */
 export function resolveSubscriptionCourseIds(subscription) {
 	if (Array.isArray(subscription?.courseIds) && subscription.courseIds.length > 0) {
@@ -112,11 +122,7 @@ export function evaluateSubscription(subscription, { now = new Date() } = {}) {
 
 	if (ACTIVE_STATUSES.has(status)) {
 		// Timed admin/local grants store currentPeriodEnd; honor expiry so comps end.
-		const isManualGrant =
-			subscription.paddleCustomerId === 'admin_manual' ||
-			subscription.paddleCustomerId === 'local_dev_customer' ||
-			String(subscription.paddleSubscriptionId || '').startsWith('admin_manual_') ||
-			String(subscription.paddleSubscriptionId || '').startsWith('local_dev_')
+		const isManualGrant = isManualGrantSubscription(subscription)
 		if (isManualGrant && endsAt && now >= endsAt) {
 			return {
 				active: false,
@@ -233,8 +239,14 @@ export async function getEntitlement(userId, { now = new Date() } = {}) {
 			planTier: resolvePlanTier(row),
 			priceId: row.priceId || null,
 			paddleSubscriptionId: row.paddleSubscriptionId || null,
+			paddleCustomerId: row.paddleCustomerId || null,
+			isManualGrant: isManualGrantSubscription(row),
 			// Access-start clock for weekly lesson drip unlock.
 			createdAt: row.createdAt || null,
+			// Raw (unadjusted) period end - the past_due grace bump on `endsAt`
+			// above would overcount paid billing cycles, so module unlock reads
+			// this field instead.
+			currentPeriodEnd: asDate(row.currentPeriodEnd),
 		}
 
 		if (evaluated.active) {
