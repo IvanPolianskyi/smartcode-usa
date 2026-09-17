@@ -195,6 +195,7 @@ const CoursePage = ({
             : user?.subscriptionActive === true),
         isEnrolled,
         dripStartedAt: resolveDripStartedAt(user, courseId, userProgress),
+        moduleAccess: user?.courseModuleAccess?.[courseId] || null,
       }),
     [
       courseId,
@@ -204,6 +205,7 @@ const CoursePage = ({
       user?.subscribedCourseIds,
       user?.purchasedCourses,
       user?.courseDripStartedAt,
+      user?.courseModuleAccess,
       userProgress,
       isPurchased,
       isEnrolled,

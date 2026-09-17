@@ -3,7 +3,7 @@ import { getEntitlement } from '@/lib/entitlements'
 import { getCurrentUser, issueAuthSession, removeAuthCookie } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
-import { getStudentAccessibleCourseIds, KNOWN_COURSE_IDS, buildCourseDripStartedAt } from '@/lib/courseLessonAccess'
+import { getStudentAccessibleCourseIds, KNOWN_COURSE_IDS, buildCourseDripStartedAt, buildCourseModuleAccess } from '@/lib/courseLessonAccess'
 import { isStudentDashboardReady, shouldPersistAccountReady } from '@/lib/studentAccountReady'
 import { toAuthUserResponse } from '@/lib/authUserResponse'
 
@@ -61,6 +61,10 @@ export async function GET() {
       user.role === 'admin' || user.role === 'teacher'
         ? {}
         : buildCourseDripStartedAt(entitlement?.subscriptions || [])
+    user.courseModuleAccess =
+      user.role === 'admin' || user.role === 'teacher'
+        ? {}
+        : buildCourseModuleAccess(entitlement?.subscriptions || [])
     const allowedCourseIds = new Set(getStudentAccessibleCourseIds(user))
     let currentEnrolledCourses = user.enrolledCourses || []
 

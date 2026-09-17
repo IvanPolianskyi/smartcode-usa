@@ -165,7 +165,7 @@ export async function sendWelcomeEmail({ to, name, programName, dashboardUrl, di
 	const title = 'Welcome to SmartCode Academy!'
 	const previewText = 'Start coding and building your first project today.'
 	const link = dashboardUrl || `${SITE_URL}/dashboard`
-	const discord = discordUrl || process.env.NEXT_PUBLIC_DISCORD_INVITE || 'https://discord.gg/r2mBfduASW'
+	const discord = discordUrl || process.env.NEXT_PUBLIC_DISCORD_INVITE || 'https://discord.gg/rSGUxWyEPt'
 
 	const programText = programName ? ` in the <strong>${programName}</strong> program` : ''
 

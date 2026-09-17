@@ -105,6 +105,7 @@ export default async function LessonPageRoute({ params }) {
     isSubscribed: isSubscribed || hasCourseAccess,
     isEnrolled,
     dripStartedAt,
+    moduleAccess: courseUser?.courseModuleAccess?.[courseId] || null,
   })
 
   // Source of truth: unlocked set already includes free preview + drip access.

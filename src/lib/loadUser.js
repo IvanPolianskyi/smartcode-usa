@@ -4,6 +4,7 @@ import { getEntitlement } from '@/lib/entitlements'
 import {
 	KNOWN_COURSE_IDS,
 	buildCourseDripStartedAt,
+	buildCourseModuleAccess,
 } from '@/lib/courseLessonAccess'
 
 /**
@@ -39,6 +40,7 @@ export async function loadUserWithAccess(userId) {
 			subscriptionActive: true,
 			subscribedCourseIds: [...KNOWN_COURSE_IDS],
 			courseDripStartedAt: {},
+			courseModuleAccess: {},
 			entitlement: null,
 		}
 	}
@@ -53,6 +55,7 @@ export async function loadUserWithAccess(userId) {
 			subscriptionActive: false,
 			subscribedCourseIds: [],
 			courseDripStartedAt: {},
+			courseModuleAccess: {},
 			entitlement: null,
 		}
 	}
@@ -64,6 +67,7 @@ export async function loadUserWithAccess(userId) {
 		subscriptionActive: subscribedCourseIds.length > 0,
 		subscribedCourseIds,
 		courseDripStartedAt: buildCourseDripStartedAt(entitlement.subscriptions || []),
+		courseModuleAccess: buildCourseModuleAccess(entitlement.subscriptions || []),
 		entitlement,
 	}
 }

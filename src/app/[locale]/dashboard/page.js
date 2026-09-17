@@ -291,7 +291,7 @@ export default function DashboardPage() {
 				) : null}
 
 				{isAdmin ? (
-					<AdminDashboard user={user} />
+					<AdminDashboard user={user} getCourseInfo={getCourseInfo} />
 				) : accountPendingSetup ? (
 					<PendingDashboard
 						user={user}

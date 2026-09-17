@@ -5,7 +5,7 @@ import { MessageCircle } from 'lucide-react'
 import styles from '@/app/[locale]/dashboard/Dashboard.module.css'
 
 const DISCORD_INVITE =
-	process.env.NEXT_PUBLIC_DISCORD_INVITE || 'https://discord.gg/r2mBfduASW'
+	process.env.NEXT_PUBLIC_DISCORD_INVITE || 'https://discord.gg/rSGUxWyEPt'
 
 /**
  * @param {{ user: object, variant?: 'card' | 'inline' }} props

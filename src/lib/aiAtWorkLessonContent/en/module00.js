@@ -42,7 +42,7 @@ Every lesson is **theory → practice brief → quiz**. Practice happens in your
 Strong brief = **role + task + constraints + format**:
 
 \`\`\`text
-Role: You are a practical content coach for a 17-year-old creator.
+Role: You are a practical content coach for a small business owner.
 Task: Draft a one-week plan for posting about learning AI skills.
 Constraints: Max 7 posts. No jargon. Each post under 30 minutes to make.
 Format: Markdown table - Day | Platform | Hook | Format | Time estimate.
@@ -269,7 +269,7 @@ When the model “remembers” earlier turns, that is **context**, not lifelong 
 					'Formatting a markdown table',
 				],
 				correctAnswer: 1,
-				explanation: 'Citations are a classic hallucination magnet.',
+				explanation: 'Models can invent citations that look real but do not exist - always check the source before you trust it.',
 			},
 			{
 				id: 'q4',
@@ -305,13 +305,13 @@ export const aiLesson003 = {
 		sections: [
 			{
 				title: 'Confident ≠ correct',
-				content: `A **hallucination** is a fluent answer that is wrong or unsupported. Models optimize for sounding coherent, not for epistemic humility.
+				content: `A **hallucination** is a fluent answer that is wrong or unsupported. Models optimize for sounding coherent, not for being right.
 
 **Red flags:** specific papers/URLs you cannot open, exact statistics with no source, “as of…” with no browse tool, agreeing with a false premise you planted.`,
 			},
 			{
 				title: 'Bias and framing',
-				content: `Training data and product rules shape defaults: tone, culture, what gets emphasized. Bias is often a **statistical default**, not a cartoon villain.
+				content: `Training data and product rules shape defaults: tone, culture, what gets emphasized. Bias is often a **statistical default** baked into the data, not a deliberate agenda.
 
 For health, law, politics, or hiring: AI is a drafting aid only. Final judgment stays human.`,
 			},
@@ -348,7 +348,7 @@ Do not invent sources.
 		},
 	],
 	summary:
-		'Fluency hides errors. You have a claim→check→correct loop. Next: pick a small toolkit you will stick with.',
+		'Fluency hides errors. You have a claim→check→correct→ship loop. Next: pick a small toolkit you will stick with.',
 	practiceTask: {
 		title: 'Break a confident answer (~25 min)',
 		difficulty: 'beginner',
