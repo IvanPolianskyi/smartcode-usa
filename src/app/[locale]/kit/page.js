@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { setRequestLocale } from 'next-intl/server'
 import KitBuyButton from '@/components/Funnel/KitBuyButton'
 import KitClip from '@/components/Funnel/KitClip'
@@ -21,10 +22,10 @@ export const metadata = {
 }
 
 const STACK = [
-	{ badge: 'Core', title: 'The 10-minute setup', text: 'Switch on the free AI inside Roblox Studio step by step. Already pay for Claude or ChatGPT? The guide shows how to use them too.' },
-	{ badge: 'Core', title: '68 copy-paste prompts', text: 'Obby, tycoon, simulator, tower defense and a story game - each from empty map to working game, one prompt at a time.' },
-	{ badge: 'Core', title: 'Fix-it and polish prompts', text: 'What to paste when the script breaks or the Output window turns red, and how to make a working game feel fun.' },
-	{ badge: 'Bonus', title: 'The reel playbook', text: 'How we film our games for Instagram - the formats behind 57M+ views in 90 days, plus 20 hooks you can copy.' },
+	{ thumb: 'house', note: 'Inside the kit', title: 'The 10-minute setup', text: 'Switch on the free AI inside Roblox Studio step by step. Already pay for Claude or ChatGPT? The guide shows how to use them too.' },
+	{ thumb: 'sinkhole', note: 'Inside the kit', title: '68 copy-paste prompts', text: 'Obby, tycoon, simulator, tower defense and a story game - each from empty map to working game, one prompt at a time.' },
+	{ thumb: 'nanobots', note: 'Inside the kit', title: 'Fix-it and polish prompts', text: 'What to paste when the script breaks or the Output window turns red, and how to make a working game feel fun.' },
+	{ thumb: 'vortex', note: 'Bonus', title: 'The reel playbook', text: 'How we film our games for Instagram - the formats behind 57M+ views in 90 days, plus 20 hooks you can copy.' },
 ]
 
 const FAQ = [
@@ -121,19 +122,24 @@ export default async function KitPage({ params }) {
 				</section>
 
 				<section className={s.section} aria-labelledby="stack">
-					<h2 id="stack" className={s.h2}>
-						What you <em>get</em>
-					</h2>
-					<div className={s.cards}>
-						{STACK.map((item) => (
-							<article key={item.title} className={s.card}>
-								<h3>
-									{item.title} <span className={s.badge}>{item.badge}</span>
-								</h3>
-								<p>{item.text}</p>
-							</article>
-						))}
+					<div className={s.getHead}>
+						<h2 id="stack" className={s.h2}>
+							What you <em>get</em>
+						</h2>
+						<p>One PDF you keep forever, plus every update for free.</p>
 					</div>
+					<ul className={s.getList}>
+						{STACK.map((item) => (
+							<li key={item.title} className={s.getRow}>
+								<Image src={`/kits/thumbs/${item.thumb}.jpg`} alt="" width={108} height={108} className={s.getThumb} />
+								<div>
+									<h3 className={s.getTitle}>{item.title}</h3>
+									<p className={s.getText}>{item.text}</p>
+									<span className={s.getNote}>{item.note}</span>
+								</div>
+							</li>
+						))}
+					</ul>
 				</section>
 
 				<section className={s.section} aria-labelledby="how">

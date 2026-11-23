@@ -490,3 +490,91 @@
 .trust a {
 	color: var(--k-accent);
 }
+
+/* "What you get": one card, a row per item with a game screenshot. */
+.getHead {
+	display: grid;
+	gap: 10px;
+	text-align: center;
+}
+
+.getHead p {
+	margin: 0;
+	color: var(--k-muted);
+	font-size: 1.05rem;
+}
+
+.getList {
+	list-style: none;
+	margin: 0;
+	padding: 8px 22px;
+	background: var(--k-card);
+	border: 1px solid var(--k-line);
+	border-radius: 18px;
+}
+
+.getRow {
+	display: grid;
+	grid-template-columns: 84px 1fr;
+	gap: 18px;
+	align-items: start;
+	padding: 18px 0;
+}
+
+.getRow + .getRow {
+	border-top: 1px solid var(--k-line);
+}
+
+.getThumb {
+	width: 84px;
+	height: 84px;
+	border-radius: 12px;
+	object-fit: cover;
+	display: block;
+}
+
+.getTitle {
+	margin: 0;
+	font-family: var(--k-display);
+	font-weight: 400;
+	font-size: 1.6rem;
+	line-height: 1.05;
+	text-transform: uppercase;
+	letter-spacing: 0.01em;
+}
+
+.getText {
+	margin: 6px 0 0;
+	color: var(--k-muted);
+	font-size: 1rem;
+	line-height: 1.5;
+}
+
+.getNote {
+	display: inline-block;
+	margin-top: 8px;
+	font-size: 0.85rem;
+	color: var(--k-muted);
+	opacity: 0.85;
+}
+
+@media (min-width: 720px) {
+	.getList {
+		padding: 10px 32px;
+	}
+
+	.getRow {
+		grid-template-columns: 108px 1fr;
+		gap: 24px;
+		align-items: center;
+	}
+
+	.getThumb {
+		width: 108px;
+		height: 108px;
+	}
+
+	.getTitle {
+		font-size: 2rem;
+	}
+}
