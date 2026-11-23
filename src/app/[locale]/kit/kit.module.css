@@ -19,6 +19,7 @@
 	--br-coral: var(--k-accent);
 	--br-green: #3ccf8e;
 	min-height: 100vh;
+	font-family: var(--k-body), system-ui, sans-serif;
 	background: radial-gradient(120% 60% at 50% 0%, #1a1d27 0%, var(--k-bg) 60%);
 	color: var(--k-text);
 	color-scheme: dark;
@@ -77,7 +78,7 @@
 }
 
 .eyebrow {
-	font-weight: 800;
+	font-weight: 700;
 	font-size: 13px;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
@@ -197,7 +198,7 @@
 
 .bigBtn {
 	font: inherit;
-	font-weight: 800;
+	font-weight: 700;
 	font-size: 20px;
 	width: 100%;
 	padding: 18px 20px;
@@ -216,36 +217,29 @@
 
 .price {
 	display: flex;
-	align-items: baseline;
-	justify-content: center;
-	gap: 10px;
-	font-size: 15px;
-	color: var(--k-muted);
+	align-items: center;
+	gap: 16px;
+	margin-top: 4px;
 }
 
 .price strong {
-	font-size: 22px;
+	font-family: var(--k-display);
+	font-weight: 400;
+	font-size: 2.6rem;
+	line-height: 1;
 	color: var(--k-text);
 }
 
+.price small {
+	font-size: 0.95rem;
+	color: var(--k-muted);
+}
+
 .trust {
-	text-align: center;
+	text-align: left;
 	font-size: 13px;
 	color: var(--k-muted);
 	margin: 0;
-}
-
-.warn {
-	display: flex;
-	gap: 10px;
-	align-items: flex-start;
-	background: rgba(255, 196, 0, 0.08);
-	border: 1px solid rgba(255, 196, 0, 0.35);
-	color: #ffd98a;
-	border-radius: 14px;
-	padding: 12px 14px;
-	font-size: 14px;
-	line-height: 1.45;
 }
 
 .goodToKnow {
@@ -266,7 +260,7 @@
 .goodToKnow li::before {
 	content: '✓';
 	color: var(--br-green);
-	font-weight: 800;
+	font-weight: 700;
 }
 
 .h2 {
@@ -320,7 +314,7 @@
 
 .badge {
 	font-size: 11px;
-	font-weight: 800;
+	font-weight: 700;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 	padding: 3px 8px;

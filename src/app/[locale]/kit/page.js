@@ -1,4 +1,4 @@
-import { Anton } from 'next/font/google'
+import { Anton, Rubik } from 'next/font/google'
 import { setRequestLocale } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import KitBuyButton from '@/components/Funnel/KitBuyButton'
@@ -10,6 +10,7 @@ import { LEGAL } from '@/lib/legalConfig'
 import s from './kit.module.css'
 
 const anton = Anton({ weight: '400', subsets: ['latin'], variable: '--k-display', display: 'swap' })
+const rubik = Rubik({ weight: ['400', '500', '700'], subsets: ['latin'], variable: '--k-body', display: 'swap' })
 
 const KIT = KITS['roblox-ai-games']
 const DESCRIPTION = `Build Roblox games with AI. The setup and 68 copy-paste prompts behind our AI-built Roblox games (57M+ views). ${KIT.displayPrice} one-time, instant access, ${LEGAL.refundDays}-day money-back guarantee.`
@@ -50,7 +51,8 @@ function BuyBlock({ id }) {
 				Get instant access
 			</KitBuyButton>
 			<div className={s.price}>
-				<strong>{KIT.displayPrice}</strong> one-time · no subscription
+				<strong>{KIT.displayPrice}</strong>
+				<small>one-time · no subscription</small>
 			</div>
 			<p className={s.trust}>
 				Secure checkout by Paddle · access by email in a minute · {LEGAL.refundDays}-day money-back
@@ -68,7 +70,7 @@ export default async function KitPage({ params }) {
 	setRequestLocale(locale)
 
 	return (
-		<div className={`${s.page} ${anton.variable}`} data-theme="dark">
+		<div className={`${s.page} ${anton.variable} ${rubik.variable}`} data-theme="dark">
 			<PromoCapture />
 
 			<header className={s.header}>
@@ -118,14 +120,6 @@ export default async function KitPage({ params }) {
 					</p>
 
 					<BuyBlock id="hero-buy" />
-
-					<div className={s.warn} role="note">
-						<span aria-hidden="true">💻</span>
-						<span>
-							<strong>Computer only.</strong> Roblox Studio runs on Windows and Mac, not on
-							phones. Buy now, build tonight.
-						</span>
-					</div>
 
 					<ul className={s.goodToKnow}>
 						<li>No coding skills needed</li>
