@@ -37,7 +37,7 @@ const PRESALE_FAQS = [
 	},
 	{
 		q: 'What is the difference between the kit and the club?',
-		a: 'The Roblox AI Game Kit is a one-time $27 download: setup guide, 68 prompts and the reel playbook. SmartCode Club is the full 92-lesson course with live builds, billed monthly or yearly.',
+		a: 'The Roblox AI Game Kit is a one-time $19 download: the Claude Code setup, the prompts for 3 games and the finished game files. SmartCode Club is the full 92-lesson course with live builds, billed monthly or yearly.',
 	},
 	{
 		q: 'Can I get a refund?',

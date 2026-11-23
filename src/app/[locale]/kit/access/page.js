@@ -6,8 +6,7 @@ import KitResendForm from '@/components/Funnel/KitResendForm'
 import { getCurrentUser } from '@/lib/auth'
 import { getCollection } from '@/lib/mongodb'
 import { KITS, userHasKit } from '@/lib/kits'
-import s from '../kit.module.css'
-import f from '../../funnel.module.css'
+import s from '../sales.module.css'
 
 export const dynamic = 'force-dynamic'
 
@@ -35,45 +34,47 @@ export default async function KitAccessPage({ params }) {
 
 	return (
 		<KitShell>
-			<main className={s.wrap}>
-				{owns ? (
-					<>
-						<section className={s.hero}>
-							<p className={s.eyebrow}>{KIT.title}</p>
-							<h1 className={s.h1}>
-								Your kit is <em>ready</em>{firstName ? `, ${firstName}` : ''}.
+			<header className={s.hero}>
+				<div className={s.wrap}>
+					<div className={s.pill}>{KIT.title}</div>
+					{owns ? (
+						<>
+							<h1>
+								Your kit is <span className={s.accent}>ready</span>
+								{firstName ? `, ${firstName}` : ''}.
 							</h1>
-							<p className={s.lede}>Open it on your computer and start with the setup guide.</p>
-							<div className={s.buy}>
-								<a href={`/api/kit/download?kit=${KIT.id}`} className={s.bigBtn} style={{ textAlign: 'center', textDecoration: 'none' }}>
-									Download the kit (PDF)
+							<p className={s.lead}>
+								Open it on your computer and start with the setup on page 3. The starter files have
+								the rules file and the 3 finished games.
+							</p>
+							<div className={s.priceRow}>
+								<a href={`/api/kit/download?kit=${KIT.id}`} className={s.btn}>
+									Download the guide (PDF)
+								</a>
+								<a href={`/api/kit/download?kit=${KIT.id}&part=files`} className={`${s.btn} ${s.ghost}`}>
+									Starter files (.zip)
 								</a>
 							</div>
 							<p className={s.trust}>This page is your home for the kit - bookmark it. Updates appear here.</p>
-						</section>
-					</>
-				) : (
-					<>
-						<section className={s.hero}>
-							<p className={s.eyebrow}>{KIT.title}</p>
-							<h1 className={s.h1}>{user ? 'No kit on this account yet' : 'Open your kit'}</h1>
-							<p className={s.lede}>
+						</>
+					) : (
+						<>
+							<h1>{user ? 'No kit on this account yet' : 'Open your kit'}</h1>
+							<p className={s.lead}>
 								{user
 									? `You are logged in as ${user.email}. If you bought the kit with a different email, send the access link to that email.`
 									: 'Use the “Open my kit” button in the email we sent after you paid, or get a new link here.'}
 							</p>
-						</section>
-						<section className={s.card}>
-							<div className={f.form}>
+							<div className={s.card}>
 								<KitResendForm />
 							</div>
-						</section>
-						<p className={s.trust}>
-							Don&apos;t have the kit yet? <Link href="/kit">Get the {KIT.title}</Link>.
-						</p>
-					</>
-				)}
-			</main>
+							<p className={s.trust}>
+								Don&apos;t have the kit yet? <Link href="/kit">Get the {KIT.title}</Link>.
+							</p>
+						</>
+					)}
+				</div>
+			</header>
 		</KitShell>
 	)
 }

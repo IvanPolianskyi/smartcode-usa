@@ -2,8 +2,7 @@ import { setRequestLocale } from 'next-intl/server'
 import KitShell from '@/components/Funnel/KitShell'
 import KitResendForm from '@/components/Funnel/KitResendForm'
 import { KITS } from '@/lib/kits'
-import s from '../kit.module.css'
-import f from '../../funnel.module.css'
+import s from '../sales.module.css'
 
 export const metadata = {
 	title: 'Thanks - check your email',
@@ -22,26 +21,23 @@ export default async function KitThanksPage({ params }) {
 
 	return (
 		<KitShell>
-			<main className={s.wrap}>
-				<section className={s.hero}>
-					<p className={s.eyebrow}>Payment received</p>
-					<h1 className={s.h1}>
-						Check your <em>email</em>.
+			<header className={s.hero}>
+				<div className={s.wrap}>
+					<div className={s.pill}>Payment received</div>
+					<h1>
+						Check your <span className={s.accent}>email</span>.
 					</h1>
-					<p className={s.lede}>
+					<p className={s.lead}>
 						In a minute you will get “Your {KIT.title} is ready” from SmartCode. Tap{' '}
-						<strong>Open my kit</strong> - no password needed.
+						<b>Open my kit</b> - no password needed.
 					</p>
-				</section>
-
-				<section className={s.card}>
-					<h3>No email after 5 minutes?</h3>
-					<p>Check spam and promotions, or send the link again:</p>
-					<div className={f.form}>
+					<div className={s.card}>
+						<h3>No email after 5 minutes?</h3>
+						<p style={{ marginBottom: 12 }}>Check spam and promotions, or send the link again:</p>
 						<KitResendForm />
 					</div>
-				</section>
-			</main>
+				</div>
+			</header>
 		</KitShell>
 	)
 }

@@ -15,7 +15,7 @@ export const KITS = {
 	'roblox-ai-games': {
 		id: 'roblox-ai-games',
 		title: 'Roblox AI Game Kit',
-		displayPrice: '$27',
+		displayPrice: '$19',
 		landingPath: '/kit',
 		file: 'roblox-ai-game-kit.pdf',
 		downloadName: 'SmartCode-Roblox-AI-Game-Kit.pdf',

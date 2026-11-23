@@ -13,11 +13,22 @@ export const dynamic = 'force-dynamic'
  * Kit files live outside /public, so only owners can download them.
  */
 const FILES = {
-	'roblox-ai-games': () => readFile(path.join(process.cwd(), 'content', 'kits', 'roblox-ai-game-kit.pdf')),
+	'roblox-ai-games': {
+		pdf: () => readFile(path.join(process.cwd(), 'content', 'kits', 'roblox-ai-game-kit.pdf')),
+		files: () => readFile(path.join(process.cwd(), 'content', 'kits', 'roblox-ai-starter.zip')),
+	},
+}
+
+/** ?part=files gives the starter files zip; anything else gives the PDF. */
+const PARTS = {
+	pdf: { type: 'application/pdf', name: (kit) => kit.downloadName },
+	files: { type: 'application/zip', name: () => 'roblox-ai-starter.zip' },
 }
 
 export async function GET(request) {
-	const kitId = new URL(request.url).searchParams.get('kit') || ''
+	const params = new URL(request.url).searchParams
+	const kitId = params.get('kit') || ''
+	const partId = params.get('part') === 'files' ? 'files' : 'pdf'
 	const kit = KITS[kitId]
 	if (!kit) return new Response('Not found', { status: 404 })
 
@@ -31,18 +42,19 @@ export async function GET(request) {
 	}
 
 	try {
-		const load = FILES[kit.id]
+		const load = FILES[kit.id]?.[partId]
 		if (!load) return new Response('Not found', { status: 404 })
 		const file = await load()
+		const part = PARTS[partId]
 		return new Response(file, {
 			headers: {
-				'Content-Type': 'application/pdf',
-				'Content-Disposition': `attachment; filename="${kit.downloadName}"`,
+				'Content-Type': part.type,
+				'Content-Disposition': `attachment; filename="${part.name(kit)}"`,
 				'Cache-Control': 'private, no-store',
 			},
 		})
 	} catch (error) {
-		console.error('[kit] file missing:', kit.file, error?.message)
+		console.error('[kit] file missing:', kit.id, partId, error?.message)
 		return new Response('The file is being updated - try again in a few minutes.', { status: 503 })
 	}
 }

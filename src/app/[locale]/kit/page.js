@@ -7,11 +7,10 @@ import InAppBrowserNotice from '@/components/Funnel/InAppBrowserNotice'
 import PromoCapture from '@/components/Funnel/PromoCapture'
 import { KITS } from '@/lib/kits'
 import { LEGAL } from '@/lib/legalConfig'
-import s from './kit.module.css'
-
+import s from './sales.module.css'
 
 const KIT = KITS['roblox-ai-games']
-const DESCRIPTION = `Build Roblox games with AI. The setup and 68 copy-paste prompts behind our AI-built Roblox games (57M+ views). ${KIT.displayPrice} one-time, instant access, ${LEGAL.refundDays}-day money-back guarantee.`
+const DESCRIPTION = `Build Roblox games with Claude Code. The setup and the exact prompts behind our AI-built Roblox games (57M+ views), plus the finished game files. ${KIT.displayPrice} one-time, instant access, ${LEGAL.refundDays}-day money-back guarantee.`
 
 export const metadata = {
 	title: 'Build Roblox games with AI - Roblox AI Game Kit',
@@ -21,45 +20,36 @@ export const metadata = {
 	twitter: { card: 'summary_large_image', title: 'Build Roblox games with AI', description: DESCRIPTION },
 }
 
-const STACK = [
-	{ thumb: 'house', note: 'Inside the kit', title: 'The 10-minute setup', text: 'Switch on the free AI inside Roblox Studio step by step. Already pay for Claude or ChatGPT? The guide shows how to use them too.' },
-	{ thumb: 'sinkhole', note: 'Inside the kit', title: '68 copy-paste prompts', text: 'Obby, tycoon, simulator, tower defense and a story game - each from empty map to working game, one prompt at a time.' },
-	{ thumb: 'nanobots', note: 'Inside the kit', title: 'Fix-it and polish prompts', text: 'What to paste when the script breaks or the Output window turns red, and how to make a working game feel fun.' },
-	{ thumb: 'vortex', note: 'Bonus', title: 'The reel playbook', text: 'How we film our games for Instagram - the formats behind 57M+ views in 90 days, plus 20 hooks you can copy.' },
+const INSIDE = [
+	{ thumb: 'claude', title: 'Full setup guide', text: 'Install Claude Code and Rojo, add our rules file and connect Roblox Studio - every command, step by step.', by: 'About 15 minutes' },
+	{ thumb: 'house', title: 'Game 1: LEGO house', text: 'The exact prompt for a house of 2 000 blocks you can smash through, plus 3 follow-ups to make it yours.', by: 'One prompt' },
+	{ thumb: 'vortex', title: 'Game 2: Vortex floor', text: '14 400 blocks that sink into a whirlpool under your feet - and the prompt that keeps it smooth.', by: 'One prompt' },
+	{ thumb: 'grass', title: 'Game 3: Wind & grass', text: 'A field of 14 000 grass blades that bends in the wind and around the player.', by: 'One prompt' },
+	{ thumb: 'nanobots', title: 'Test & fix prompts', text: 'Let Claude press Play, read the errors and fix them itself. Plus 3 more game prompts to try.', by: 'Inside the kit' },
+	{ thumb: 'sinkhole', title: 'The starter files', text: 'The rules file and the 3 finished games as .rbxlx files, with the reel playbook in the guide.' },
+]
+
+const NEED = [
+	{ title: 'A computer', text: 'Windows or Mac. Roblox Studio and Claude Code do not run on phones or tablets.' },
+	{ title: 'Claude Code', text: 'On a paid Claude Pro plan or other paid Claude subscription. Not included: you buy it from Anthropic.' },
+	{ title: 'Roblox Studio + Rojo', text: 'Both free. The guide shows you how to install them - Claude can even install Rojo for you.' },
 ]
 
 const FAQ = [
-	{ q: 'How much do I pay, exactly?', a: `${KIT.displayPrice} once, in USD. No subscription. Paddle, our Merchant of Record, adds sales tax or VAT only where the law requires it.` },
-	{ q: 'Can I do this on my phone?', a: 'No. Roblox Studio runs on Windows and Mac. You can buy and read the kit on your phone, then build on your computer.' },
-	{ q: 'Do I need coding skills?', a: 'No. The prompts are written for beginners, and every prompt says where the script goes and how to test it. You will pick up real Luau along the way.' },
-	{ q: 'Do I need a paid AI plan?', a: 'No. The AI assistant inside Roblox Studio is free. Claude or ChatGPT are optional and not included.' },
-	{ q: 'How do I get access after paying?', a: 'We email you a link straight away - tap it and the kit opens, no password needed.' },
+	{ q: 'How much do I pay, exactly?', a: `${KIT.displayPrice}, once, in USD. No subscription. Paddle, our Merchant of Record, adds sales tax or VAT only where the law requires it.` },
+	{ q: 'Can I do this on my phone?', a: 'No. Building the games needs a Windows or Mac computer, because Roblox Studio and Claude Code run there. You can read the guide on your phone.' },
+	{ q: 'What do I need?', a: 'A Windows or Mac computer, Claude Code on a paid Claude plan, Roblox Studio (free) and Rojo (free).' },
+	{ q: 'How do I get access after paying?', a: 'We email you a link straight away - tap it and your kit page opens, no password needed. Download the PDF and the starter files there.' },
+	{ q: 'Do I need any skills?', a: 'No. You paste the prompts and Claude Code writes all the code. The guide explains every step in plain words.' },
+	{ q: 'Is Claude included?', a: `No. You need a paid Claude Pro plan or another paid Claude subscription, bought separately from Anthropic. The ${KIT.displayPrice} covers the guide and the starter files only.` },
 	{ q: 'Will my game go viral?', a: 'Results are not guaranteed. Players and views depend on your game, how you share it, and the platforms.' },
 	{ q: "I'm under 18.", a: 'Ask a parent or guardian to buy it with their card - the kit is yours to use.' },
 	{ q: 'Can I get a refund?', a: `Yes. Email us within ${LEGAL.refundDays} days of buying and we refund you in full.` },
 ]
 
-function BuyBlock({ id }) {
-	return (
-		<div className={s.buy} id={id}>
-			<InAppBrowserNotice />
-			<KitBuyButton kitId={KIT.id} className={s.bigBtn}>
-				Get instant access
-			</KitBuyButton>
-			<div className={s.price}>
-				<strong>{KIT.displayPrice}</strong>
-				<small>one-time · no subscription</small>
-			</div>
-			<p className={s.trust}>
-				Secure checkout by Paddle · access by email in a minute · {LEGAL.refundDays}-day money-back
-			</p>
-		</div>
-	)
-}
-
 /**
- * Sales page for the Roblox AI Game Kit. Link in bio / Direct bot:
- * smartcode.academy/kit?src=ig
+ * Sales page for the Roblox AI Game Kit, laid out like the reference page.
+ * Link in bio / Direct bot: smartcode.academy/kit?src=ig
  */
 export default async function KitPage({ params }) {
 	const { locale } = await params
@@ -68,131 +58,156 @@ export default async function KitPage({ params }) {
 	return (
 		<KitShell
 			action={
-				<KitBuyButton kitId={KIT.id} className={s.headerBtn}>
+				<KitBuyButton kitId={KIT.id} className={`${s.btn} ${s.small}`}>
 					Get it for {KIT.displayPrice}
 				</KitBuyButton>
 			}
 		>
 			<PromoCapture />
 
-			<main className={s.wrap}>
-				<section className={s.hero}>
-					<p className={s.eyebrow}>57M+ views on our Roblox reels</p>
-					<h1 className={s.h1}>
-						Build <em>Roblox games</em> with AI.
+			<header className={s.hero}>
+				<div className={s.wrap}>
+					<div className={s.pill}>57M+ views on our Roblox reels</div>
+					<h1>
+						Build <span className={s.accent}>Roblox games</span> with AI.
 					</h1>
 
-					<div className={s.clips}>
-						<KitClip src="/kits/clips/vortex.mp4" poster="/kits/clips/vortex.jpg" label="From our reels" className={s.clip} tagClassName={s.clipTag} />
-						<KitClip src="/kits/clips/blocks.mp4" poster="/kits/clips/blocks.jpg" label="From our reels" className={s.clip} tagClassName={s.clipTag} />
+					<div className={s.phones}>
+						<KitClip src="/kits/clips/vortex.mp4" poster="/kits/clips/vortex.jpg" className={s.phone} />
+						<KitClip src="/kits/clips/blocks.mp4" poster="/kits/clips/blocks.jpg" className={s.phone} />
 					</div>
 
 					<div className={s.stats}>
-						<div>
-							<strong>
-								57M<em>+</em>
-							</strong>
-							<span>views in 90 days</span>
-						</div>
-						<div>
-							<strong>68</strong>
-							<span>copy-paste prompts</span>
-						</div>
-						<div>
-							<strong>
-								1 <em>prompt</em>
-							</strong>
-							<span>to start a new game</span>
+						<div className={s.wrap}>
+							<div>
+								<b>
+									57M<em>+</em>
+								</b>
+								<span>views in 90 days</span>
+							</div>
+							<div>
+								<b>
+									3 <em>games</em>
+								</b>
+								<span>one prompt each</span>
+							</div>
+							<div>
+								<b>
+									~3 <em>min</em>
+								</b>
+								<span>from prompt to game</span>
+							</div>
 						</div>
 					</div>
 
-					<p className={s.lede}>
-						The step-by-step setup and 68 prompts behind my AI-built Roblox games. You type
-						an idea, AI writes the scripts, builds the map and makes it playable in Roblox
-						Studio - then you test it and publish a ready-to-play game.
+					<p className={s.lead}>
+						The step-by-step setup and the exact prompts behind my AI-built Roblox games. You paste
+						one prompt, Claude Code writes every script, builds the map and hands you a game file -
+						open it in Roblox Studio and press Play.
 					</p>
 
-					<BuyBlock id="hero-buy" />
-
-					<ul className={s.goodToKnow}>
-						<li>No coding skills needed</li>
-						<li>The AI in Roblox Studio is free - no paid AI plan required</li>
-						<li>Lifetime access, free updates</li>
-					</ul>
-				</section>
-
-				<section className={s.section} aria-labelledby="stack">
-					<div className={s.getHead}>
-						<h2 id="stack" className={s.h2}>
-							What you <em>get</em>
-						</h2>
-						<p>One PDF you keep forever, plus every update for free.</p>
+					<InAppBrowserNotice />
+					<div className={s.priceRow}>
+						<KitBuyButton kitId={KIT.id} className={s.btn}>
+							Get instant access
+						</KitBuyButton>
+						<div className={s.price}>
+							{KIT.displayPrice} <small>one-time</small>
+						</div>
 					</div>
-					<ul className={s.getList}>
-						{STACK.map((item) => (
-							<li key={item.title} className={s.getRow}>
-								<Image src={`/kits/thumbs/${item.thumb}.jpg`} alt="" width={108} height={108} className={s.getThumb} />
+					<p className={s.trust}>
+						Secure checkout by Paddle &nbsp;·&nbsp; Instant access &nbsp;·&nbsp; {LEGAL.refundDays}-day
+						money-back
+					</p>
+
+					<div className={s.disclaim}>
+						<b>Good to know</b>
+						<ul>
+							<li>
+								<b>No skills needed:</b> Claude Code writes the scripts and builds the map for you.
+							</li>
+							<li>
+								<b>Not included:</b> a paid Claude Pro plan (or other paid Claude subscription) is
+								required and sold separately by Anthropic.
+							</li>
+							<li>
+								<b>Results are not guaranteed.</b> Players and views depend on your game, your
+								posting and the platforms.
+							</li>
+						</ul>
+					</div>
+				</div>
+			</header>
+
+			<section className={s.block}>
+				<div className={s.wrap}>
+					<h2 className={s.center}>What you get</h2>
+					<p className={`${s.sub} ${s.center}`}>
+						A step-by-step guide and the starter files. Everything is on one private page you can
+						come back to any time, and every update is free.
+					</p>
+					<ul className={`${s.inside} ${s.card}`}>
+						{INSIDE.map((item) => (
+							<li key={item.title}>
+								<Image src={`/kits/thumbs/${item.thumb}.jpg`} alt="" width={72} height={72} className={s.thumb} />
 								<div>
-									<h3 className={s.getTitle}>{item.title}</h3>
-									<p className={s.getText}>{item.text}</p>
-									<span className={s.getNote}>{item.note}</span>
+									<h3>{item.title}</h3>
+									<p>{item.text}</p>
+									{item.by ? <span className={s.by}>{item.by}</span> : null}
 								</div>
 							</li>
 						))}
 					</ul>
-				</section>
+				</div>
+			</section>
 
-				<section className={s.section} aria-labelledby="how">
-					<h2 id="how" className={s.h2}>
-						From idea to <em>game</em>
-					</h2>
-					<ol className={s.steps}>
-						<li>
+			<section className={s.block} style={{ paddingTop: 0 }}>
+				<div className={s.wrap}>
+					<h2 className={s.center}>How it works</h2>
+					<p className={`${s.sub} ${s.center}`}>From one prompt to a game you can play.</p>
+					<div className={`${s.grid} ${s.c3}`}>
+						<div className={`${s.card} ${s.step}`}>
+							<Image src="/kits/how-setup.jpg" alt="" width={640} height={400} />
 							<div>
-								<strong>Set it up once</strong>
-								<span>Open Roblox Studio, switch on the AI assistant, follow the guide. About 10 minutes.</span>
+								<h3>Set it up once</h3>
+								<p>Follow the guide to install Claude Code and Rojo and connect Roblox Studio. About 15 minutes.</p>
 							</div>
-						</li>
-						<li>
+						</div>
+						<div className={`${s.card} ${s.step}`}>
+							<div className={s.prompt}>
+								<q>make me a Roblox game where the floor sinks into a whirlpool wherever I walk</q>
+							</div>
 							<div>
-								<strong>Paste a prompt</strong>
-								<span>Pick a game type and paste the first prompt.</span>
-								<code className={s.prompt}>Build an obby with 10 stages that get harder, with checkpoints, themed lava.</code>
+								<h3>Paste a prompt</h3>
+								<p>Claude Code writes the scripts, builds the map and makes the game file.</p>
 							</div>
-						</li>
-						<li>
+						</div>
+						<div className={`${s.card} ${s.step}`}>
+							<Image src="/kits/how-play.jpg" alt="" width={640} height={400} />
 							<div>
-								<strong>Play, fix, publish</strong>
-								<span>Test it, use the fix prompts when something breaks, then publish to Roblox and share it.</span>
+								<h3>Press Play</h3>
+								<p>Open the file in Roblox Studio and play. Ask Claude to change anything, then publish.</p>
 							</div>
-						</li>
-					</ol>
-					<div className={s.clips}>
-						<KitClip src="/kits/clips/bridge.mp4" poster="/kits/clips/bridge.jpg" className={s.clip} tagClassName={s.clipTag} label="From our reels" />
-						<KitClip src="/kits/clips/neon-bridge.mp4" poster="/kits/clips/neon-bridge.jpg" className={s.clip} tagClassName={s.clipTag} label="From our reels" />
+						</div>
 					</div>
-				</section>
+				</div>
+			</section>
 
-				<section className={s.guarantee} aria-label="Money-back guarantee">
-					<div className={s.seal}>
-						30
-						<br />
-						DAYS
+			<section className={s.block} style={{ paddingTop: 0 }}>
+				<div className={s.wrap}>
+					<h2 className={s.center}>What you need</h2>
+					<p className={`${s.sub} ${s.center}`}>Check this before you buy.</p>
+					<div className={`${s.grid} ${s.c3}`} style={{ marginBottom: 72 }}>
+						{NEED.map((item) => (
+							<div key={item.title} className={s.card}>
+								<h3>{item.title}</h3>
+								<p>{item.text}</p>
+							</div>
+						))}
 					</div>
-					<div>
-						<h3>Money-back guarantee</h3>
-						<p>
-							Try the kit. If it does not help you build your first game, email us within{' '}
-							{LEGAL.refundDays} days and get every cent back.
-						</p>
-					</div>
-				</section>
 
-				<section className={s.section} aria-labelledby="faq">
-					<h2 id="faq" className={s.h2}>
-						Questions
-					</h2>
-					<div className={s.faq}>
+					<h2 className={s.center}>Questions</h2>
+					<div className={s.faq} style={{ marginTop: 24 }}>
 						{FAQ.map((item) => (
 							<details key={item.q}>
 								<summary>{item.q}</summary>
@@ -200,16 +215,28 @@ export default async function KitPage({ params }) {
 							</details>
 						))}
 					</div>
-				</section>
+				</div>
+			</section>
 
-				<section className={s.section} aria-labelledby="close">
-					<h2 id="close" className={s.h2}>
-						Start building <em>tonight</em>
-					</h2>
-					<BuyBlock id="close-buy" />
-				</section>
-			</main>
-
+			<section className={s.block} style={{ paddingTop: 0 }}>
+				<div className={s.wrap}>
+					<div className={s.ctaBox}>
+						<h2>Start building tonight</h2>
+						<p className={s.muted} style={{ marginBottom: 24 }}>
+							The setup guide, the prompts for 3 games and the finished game files. {KIT.displayPrice}{' '}
+							one-time.
+							<br />
+							No skills needed. Requires a Windows or Mac computer and a paid Claude subscription (not
+							included).
+						</p>
+						<div style={{ display: 'flex', justifyContent: 'center' }}>
+							<KitBuyButton kitId={KIT.id} className={s.btn}>
+								Get instant access
+							</KitBuyButton>
+						</div>
+					</div>
+				</div>
+			</section>
 		</KitShell>
 	)
 }

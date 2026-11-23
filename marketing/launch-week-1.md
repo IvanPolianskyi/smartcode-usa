@@ -1,6 +1,6 @@
 # Запуск Roblox AI Game Kit — тиждень 1
 
-Продукт: **Roblox AI Game Kit, $27 разово** → `smartcode.academy/kit`
+Продукт: **Roblox AI Game Kit, $19 разово** (Claude Code, 3 гри) → `smartcode.academy/kit`
 Після покупки: лист із посиланням на набір → сторінка «Твій набір» → Telegram `t.me/smart_ai_academy`.
 Другий тест: `smartcode.academy/shorts` — збір пошт для набору AI-роликів (оплати немає).
 
@@ -31,9 +31,9 @@
 ```
 Hey! Here's everything I used to build that game with AI 👇
 
-The Roblox AI Game Kit: setup guide + 68 copy-paste prompts (obby, tycoon, simulator, tower defense, story) + the reel playbook.
+The Roblox AI Game Kit: the Claude Code setup + the exact prompts for 3 games (LEGO house, vortex floor, wind & grass) + the finished game files.
 
-$27 one-time, instant access, 30-day money-back.
+$19 one-time, instant access, 30-day money-back.
 👉 [Get the kit] → smartcode.academy/kit?src=dm
 
 Tip: open the link in Safari or Chrome - payments work better there than inside Instagram.
@@ -100,7 +100,7 @@ Want the exact prompts? Comment GAME 👇
 
 ## 6. Драбина продуктів (як у Хормозі)
 
-1. **$27 набір** — імпульсна покупка з роликів (зараз).
+1. **$19 набір** — імпульсна покупка з роликів (зараз).
 2. **Telegram** — прогрів: щодня цінність, раз на тиждень жива збірка.
 3. **Клуб $14/міс** (вже є на сайті, `/club`) — для тих, хто хоче весь курс на 92 уроки.
 4. **Дорожчий продукт для 17–25 у США** ($97–197): «Publish your first Roblox game in 14 days» — потік із живими розборами в Telegram. Продаємо після живих збірок тим, хто купив набір. Через Paddle — лише як доступ до платформи з бонусом живих занять.
@@ -113,7 +113,7 @@ Want the exact prompts? Comment GAME 👇
 |---|---|---|---|
 | Коментар GAME | 0,5% | 10 000 | 50 000 |
 | Натиснули посилання в Direct | 45% | 4 500 | 22 500 |
-| Купили ($27) | 3% | 135 | 675 |
-| **Виручка** | | **≈ $3 600** | **≈ $18 200** |
+| Купили ($19) | 3% | 135 | 675 |
+| **Виручка** | | **≈ $2 600** | **≈ $12 800** |
 
-$10k за тиждень реальні, якщо 1–2 ролики «вистрілять» на 5+ млн (як наш на 34 млн). Тому — 2 ролики щодня, і повторювати формат, що зайшов, у той самий день.
+$10k за тиждень реальні, якщо 1–2 ролики «вистрілять» на 10+ млн (як наш на 34 млн). Тому — 2 ролики щодня, і повторювати формат, що зайшов, у той самий день.
