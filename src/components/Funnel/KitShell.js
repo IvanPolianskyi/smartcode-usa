@@ -1,10 +1,11 @@
-import { Anton, Rubik } from 'next/font/google'
+import localFont from 'next/font/local'
 import { Link } from '@/i18n/navigation'
 import { LEGAL } from '@/lib/legalConfig'
 import s from '@/app/[locale]/kit/sales.module.css'
 
-const anton = Anton({ weight: '400', subsets: ['latin'], variable: '--k-display', display: 'swap' })
-const rubik = Rubik({ weight: ['400', '500', '700'], subsets: ['latin'], variable: '--k-body', display: 'swap' })
+// Self-hosted (OFL) so builds never depend on downloading Google Fonts.
+const anton = localFont({ src: '../../fonts/anton-latin.woff2', weight: '400', variable: '--k-display', display: 'swap' })
+const rubik = localFont({ src: '../../fonts/rubik-latin-var.woff2', weight: '400 700', variable: '--k-body', display: 'swap' })
 
 /**
  * Frame shared by the kit sales, thank-you and access pages. The kit is sold
