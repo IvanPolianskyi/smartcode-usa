@@ -112,9 +112,9 @@ export default async function KitPage({ params }) {
 					</div>
 
 					<p className={s.lede}>
-						The setup and prompts behind our AI-built Roblox games.{' '}
-						<strong>Type an idea, AI builds it in Roblox Studio</strong> - then you play it,
-						fix it and publish it. No coding experience needed.
+						The step-by-step setup and 68 prompts behind my AI-built Roblox games. You type
+						an idea, AI writes the scripts, builds the map and makes it playable in Roblox
+						Studio - then you test it and publish a ready-to-play game.
 					</p>
 
 					<BuyBlock id="hero-buy" />
