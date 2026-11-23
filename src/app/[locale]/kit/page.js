@@ -1,192 +1,206 @@
+import { Anton } from 'next/font/google'
 import { setRequestLocale } from 'next-intl/server'
-import SiteHeader from '@/components/Nav/SiteHeader'
-import SiteFooter from '@/components/Nav/SiteFooter'
+import { Link } from '@/i18n/navigation'
 import KitBuyButton from '@/components/Funnel/KitBuyButton'
+import KitClip from '@/components/Funnel/KitClip'
 import InAppBrowserNotice from '@/components/Funnel/InAppBrowserNotice'
 import PromoCapture from '@/components/Funnel/PromoCapture'
-import StickyBuyBar from '@/components/Funnel/StickyBuyBar'
-import Image from 'next/image'
 import { KITS } from '@/lib/kits'
 import { LEGAL } from '@/lib/legalConfig'
-import styles from '../page.module.css'
-import f from '../funnel.module.css'
+import s from './kit.module.css'
+
+const anton = Anton({ weight: '400', subsets: ['latin'], variable: '--k-display', display: 'swap' })
 
 const KIT = KITS['roblox-ai-games']
-const DESCRIPTION = `Build a Roblox game with AI. The setup and copy-paste prompts behind our AI vs student reels. ${KIT.displayPrice} one-time, instant access, ${LEGAL.refundDays}-day money-back guarantee.`
+const DESCRIPTION = `Build Roblox games with AI. The setup and 68 copy-paste prompts behind our AI-built Roblox games (57M+ views). ${KIT.displayPrice} one-time, instant access, ${LEGAL.refundDays}-day money-back guarantee.`
 
 export const metadata = {
-	title: 'Roblox AI Game Kit - build a Roblox game with AI',
+	title: 'Build Roblox games with AI - Roblox AI Game Kit',
 	description: DESCRIPTION,
 	alternates: { canonical: '/kit' },
-	openGraph: { title: 'Roblox AI Game Kit', description: DESCRIPTION, url: '/kit' },
-	twitter: { card: 'summary_large_image', title: 'Roblox AI Game Kit', description: DESCRIPTION },
+	openGraph: { title: 'Build Roblox games with AI', description: DESCRIPTION, url: '/kit' },
+	twitter: { card: 'summary_large_image', title: 'Build Roblox games with AI', description: DESCRIPTION },
 }
 
-const STATS = [
-	{ big: '57M', small: 'views on our Roblox reels in 90 days' },
-	{ big: '68', small: 'copy-paste prompts' },
-	{ big: '5', small: 'game types' },
-]
-
 const STACK = [
-	{
-		title: 'The setup guide',
-		text: 'Connect AI to Roblox Studio step by step: the free Roblox Assistant built into Studio, plus Claude or ChatGPT if you have them. About 10 minutes.',
-	},
-	{
-		title: '60+ copy-paste prompts',
-		text: 'Prompts for 5 game types, each from first map to working game loop: obby, tycoon, simulator, tower defense and a story game.',
-	},
-	{
-		title: 'Bug-fix and polish prompts',
-		text: 'What to paste when the script breaks, when the Output window turns red, and when the game works but feels boring.',
-	},
-	{
-		title: 'Publish checklist + the reel playbook',
-		text: 'Publish your game on Roblox, then film it the way we film ours - the format behind 57M views on our page.',
-	},
-	{
-		title: 'AI helper - 50 questions a day',
-		text: 'Paste your script or an error on our site and the AI helper explains what is wrong and how to fix it.',
-	},
-	{
-		title: 'Private Telegram',
-		text: 'New prompts, weekly live builds and help when you are stuck. Updates to the kit are included free.',
-	},
-]
-
-const STEPS = [
-	{ title: 'Set it up once', text: 'Open Roblox Studio, switch on the AI assistant, follow the guide. About 10 minutes.' },
-	{ title: 'Paste a prompt', text: 'Pick a game type and paste the first prompt. Example: “Make an obby with 10 stages that get harder, with checkpoints.”' },
-	{ title: 'Play, fix, publish', text: 'Test it, use the fix prompts when something breaks, then publish to Roblox and share it.' },
+	{ badge: 'Core', title: 'The 10-minute setup', text: 'Switch on the free AI inside Roblox Studio step by step. Already pay for Claude or ChatGPT? The guide shows how to use them too.' },
+	{ badge: 'Core', title: '68 copy-paste prompts', text: 'Obby, tycoon, simulator, tower defense and a story game - each from empty map to working game, one prompt at a time.' },
+	{ badge: 'Core', title: 'Fix-it and polish prompts', text: 'What to paste when the script breaks or the Output window turns red, and how to make a working game feel fun.' },
+	{ badge: 'Bonus', title: 'The reel playbook', text: 'How we film our games for Instagram - the formats behind 57M+ views in 90 days, plus 20 hooks you can copy.' },
+	{ badge: 'Bonus', title: 'AI helper - 50 questions a day', text: 'Paste your script or an error on our site and get a plain-English fix, right inside the lesson.' },
+	{ badge: 'Bonus', title: 'Private Telegram + live builds', text: 'New prompts every week, live builds, and help when you are stuck. Every kit update is free.' },
 ]
 
 const FAQ = [
-	{ q: 'How much is it, exactly?', a: `${KIT.displayPrice} once, in USD. No subscription. Checkout is handled by Paddle, our Merchant of Record, which adds sales tax or VAT where it applies.` },
-	{ q: 'Do I need to know how to code?', a: 'No. The prompts are written for beginners, and the AI helper explains anything you do not understand. You will pick up real Luau along the way.' },
+	{ q: 'How much do I pay, exactly?', a: `${KIT.displayPrice} once, in USD. No subscription. Paddle, our Merchant of Record, adds sales tax or VAT only where the law requires it.` },
 	{ q: 'Can I do this on my phone?', a: 'No. Roblox Studio runs on Windows and Mac. You can buy and read the kit on your phone, then build on your computer.' },
-	{ q: 'Do I need to pay for an AI tool?', a: 'No. The Roblox Assistant inside Roblox Studio is free. If you already pay for Claude or ChatGPT, the guide shows how to use them too. They are not included.' },
-	{ q: 'How do I get it after paying?', a: 'We email you a link straight away - tap it and the kit opens, no password needed. You can also join our Telegram from the thank-you page.' },
-	{ q: 'Will my game get popular?', a: 'Results are not guaranteed. Players and views depend on your game, how you share it, and the platforms.' },
+	{ q: 'Do I need coding skills?', a: 'No. The prompts are written for beginners, and the AI helper explains anything you do not understand. You will pick up real Luau along the way.' },
+	{ q: 'Do I need a paid AI plan?', a: 'No. The AI assistant inside Roblox Studio is free. Claude or ChatGPT are optional and not included.' },
+	{ q: 'How do I get access after paying?', a: 'We email you a link straight away - tap it and the kit opens, no password needed. Join our Telegram from the thank-you page.' },
+	{ q: 'Will my game go viral?', a: 'Results are not guaranteed. Players and views depend on your game, how you share it, and the platforms.' },
 	{ q: "I'm under 18.", a: 'Ask a parent or guardian to buy it with their card - the kit is yours to use.' },
-	{ q: 'Can I get a refund?', a: `Yes. If the kit is not for you, email us within ${LEGAL.refundDays} days of buying for a full refund.` },
+	{ q: 'Can I get a refund?', a: `Yes. Email us within ${LEGAL.refundDays} days of buying and we refund you in full.` },
 ]
 
+function BuyBlock({ id }) {
+	return (
+		<div className={s.buy} id={id}>
+			<InAppBrowserNotice />
+			<KitBuyButton kitId={KIT.id} className={s.bigBtn}>
+				Get instant access
+			</KitBuyButton>
+			<div className={s.price}>
+				<strong>{KIT.displayPrice}</strong> one-time · no subscription
+			</div>
+			<p className={s.trust}>
+				Secure checkout by Paddle · access by email in a minute · {LEGAL.refundDays}-day money-back
+			</p>
+		</div>
+	)
+}
+
 /**
- * Link in bio / Direct bot destination: smartcode.academy/kit?src=ig
+ * Sales page for the Roblox AI Game Kit. Link in bio / Direct bot:
+ * smartcode.academy/kit?src=ig
  */
 export default async function KitPage({ params }) {
 	const { locale } = await params
 	setRequestLocale(locale)
 
-	const buyBlock = (id) => (
-		<div style={{ display: 'grid', gap: 10 }} id={id}>
-			<InAppBrowserNotice />
-			<KitBuyButton kitId={KIT.id}>Get the kit - {KIT.displayPrice}</KitBuyButton>
-			<p className={f.fine}>
-				{KIT.displayPrice} one-time · instant access · {LEGAL.refundDays}-day money-back guarantee ·
-				secure checkout by Paddle
-			</p>
-		</div>
-	)
-
 	return (
-		<div className={styles.page} data-theme="light">
-			<div className={styles.gridBg} aria-hidden="true" />
-			<SiteHeader variant="sales" />
+		<div className={`${s.page} ${anton.variable}`} data-theme="dark">
 			<PromoCapture />
-			<StickyBuyBar kitId={KIT.id} title={KIT.title} price={KIT.displayPrice} watchId="hero-buy" />
 
-			<main className={f.wrap}>
-				<div style={{ display: 'grid', gap: 16 }}>
-					<p className={f.eyebrow}>Roblox AI Game Kit</p>
-					<h1 className={f.title}>Build a Roblox game with AI - from one prompt</h1>
-					<p className={f.lede}>
-						The setup and the prompts behind our “AI vs student” reels. Turn an idea
-						into a playable Roblox game in Roblox Studio, even if you have never
-						written code.
-					</p>
-					<div className={f.statRow}>
-						{STATS.map((s) => (
-							<div key={s.big} className={f.stat}>
-								<strong>{s.big}</strong>
-								<span>{s.small}</span>
-							</div>
-						))}
+			<header className={s.header}>
+				<Link href="/kit" className={s.logo} aria-label="SmartCode">
+					SMART<span>CODE</span>
+				</Link>
+				<KitBuyButton kitId={KIT.id} className={s.headerBtn}>
+					Get it for {KIT.displayPrice}
+				</KitBuyButton>
+			</header>
+
+			<main className={s.wrap}>
+				<section className={s.hero}>
+					<p className={s.eyebrow}>57M+ views on our Roblox reels</p>
+					<h1 className={s.h1}>
+						Build <em>Roblox games</em> with AI.
+					</h1>
+
+					<div className={s.clips}>
+						<KitClip src="/kits/clips/bridge.mp4" poster="/kits/clips/bridge.jpg" label="From our reels" className={s.clip} tagClassName={s.clipTag} />
+						<KitClip src="/kits/clips/wave.mp4" poster="/kits/clips/wave.jpg" label="From our reels" className={s.clip} tagClassName={s.clipTag} />
 					</div>
-					{buyBlock('hero-buy')}
-					<p className={f.fine}>
-						Needs a Windows or Mac computer with Roblox Studio (free). Buy on your phone,
-						build on your computer.
-					</p>
-				</div>
 
-				<section className={f.proof} aria-label="Proof">
-					<figure>
-						<Image
-							src="/images/student-games-instagram.png"
-							alt="Our Instagram reels of Roblox games, with view counts up to millions"
-							width={873}
-							height={1024}
-							sizes="(max-width: 700px) 45vw, 360px"
-						/>
-						<figcaption>Our Roblox reels on Instagram</figcaption>
-					</figure>
-					<figure>
-						<Image
-							src="/kits/kit-prompts.png"
-							alt="A page of the kit with numbered copy-paste prompts for Roblox Studio"
-							width={910}
-							height={1287}
-							sizes="(max-width: 700px) 45vw, 360px"
-						/>
-						<figcaption>Inside the kit: 13 pages, 68 prompts</figcaption>
-					</figure>
-				</section>
-
-				<section style={{ display: 'grid', gap: 14 }} aria-labelledby="kit-stack">
-					<h2 id="kit-stack" className={f.cardTitle}>
-						What you get
-					</h2>
-					<div className={f.included}>
-						{STACK.map((item) => (
-							<div key={item.title} className={f.includedItem}>
-								<h3>{item.title}</h3>
-								<p>{item.text}</p>
-							</div>
-						))}
+					<div className={s.stats}>
+						<div>
+							<strong>
+								57M<em>+</em>
+							</strong>
+							<span>views in 90 days</span>
+						</div>
+						<div>
+							<strong>68</strong>
+							<span>copy-paste prompts</span>
+						</div>
+						<div>
+							<strong>
+								1 <em>prompt</em>
+							</strong>
+							<span>to start a new game</span>
+						</div>
 					</div>
-				</section>
 
-				<section style={{ display: 'grid', gap: 14 }} aria-labelledby="kit-how">
-					<h2 id="kit-how" className={f.cardTitle}>
-						How it works
-					</h2>
-					<ol className={f.list}>
-						{STEPS.map((s) => (
-							<li key={s.title}>
-								<strong>{s.title}.</strong> {s.text}
-							</li>
-						))}
-					</ol>
-				</section>
+					<p className={s.lede}>
+						The setup and prompts behind our AI-built Roblox games.{' '}
+						<strong>Type an idea, AI builds it in Roblox Studio</strong> - then you play it,
+						fix it and publish it. No coding experience needed.
+					</p>
 
-				<section className={f.card} aria-labelledby="kit-need">
-					<h2 id="kit-need" className={f.cardTitle}>
-						What you need
-					</h2>
-					<ul className={f.list}>
-						<li>A Windows or Mac computer</li>
-						<li>Roblox Studio - free from roblox.com</li>
-						<li>Nothing else. The AI assistant in Roblox Studio is free.</li>
+					<BuyBlock id="hero-buy" />
+
+					<div className={s.warn} role="note">
+						<span aria-hidden="true">💻</span>
+						<span>
+							<strong>Computer only.</strong> Roblox Studio runs on Windows and Mac, not on
+							phones. Buy now, build tonight.
+						</span>
+					</div>
+
+					<ul className={s.goodToKnow}>
+						<li>No coding skills needed</li>
+						<li>The AI in Roblox Studio is free - no paid AI plan required</li>
+						<li>Lifetime access, free updates</li>
 					</ul>
 				</section>
 
-				<section style={{ display: 'grid', gap: 14 }} aria-labelledby="kit-faq">
-					<h2 id="kit-faq" className={f.cardTitle}>
+				<section className={s.section} aria-labelledby="stack">
+					<h2 id="stack" className={s.h2}>
+						What you <em>get</em>
+					</h2>
+					<div className={s.cards}>
+						{STACK.map((item) => (
+							<article key={item.title} className={s.card}>
+								<h3>
+									{item.title} <span className={s.badge}>{item.badge}</span>
+								</h3>
+								<p>{item.text}</p>
+							</article>
+						))}
+					</div>
+				</section>
+
+				<section className={s.section} aria-labelledby="how">
+					<h2 id="how" className={s.h2}>
+						From idea to <em>game</em>
+					</h2>
+					<ol className={s.steps}>
+						<li>
+							<div>
+								<strong>Set it up once</strong>
+								<span>Open Roblox Studio, switch on the AI assistant, follow the guide. About 10 minutes.</span>
+							</div>
+						</li>
+						<li>
+							<div>
+								<strong>Paste a prompt</strong>
+								<span>Pick a game type and paste the first prompt.</span>
+								<code className={s.prompt}>Build an obby with 10 stages that get harder, with checkpoints, themed lava.</code>
+							</div>
+						</li>
+						<li>
+							<div>
+								<strong>Play, fix, publish</strong>
+								<span>Test it, use the fix prompts when something breaks, then publish to Roblox and share it.</span>
+							</div>
+						</li>
+					</ol>
+					<div className={s.clips}>
+						<KitClip src="/kits/clips/vortex.mp4" poster="/kits/clips/vortex.jpg" className={s.clip} tagClassName={s.clipTag} label="From our reels" />
+						<KitClip src="/kits/clips/neon.mp4" poster="/kits/clips/neon.jpg" className={s.clip} tagClassName={s.clipTag} label="From our reels" />
+					</div>
+				</section>
+
+				<section className={s.guarantee} aria-label="Money-back guarantee">
+					<div className={s.seal}>
+						30
+						<br />
+						DAYS
+					</div>
+					<div>
+						<h3>Money-back guarantee</h3>
+						<p>
+							Try the kit. If it does not help you build your first game, email us within{' '}
+							{LEGAL.refundDays} days and get every cent back.
+						</p>
+					</div>
+				</section>
+
+				<section className={s.section} aria-labelledby="faq">
+					<h2 id="faq" className={s.h2}>
 						Questions
 					</h2>
-					<div className={f.faq}>
+					<div className={s.faq}>
 						{FAQ.map((item) => (
 							<details key={item.q}>
 								<summary>{item.q}</summary>
@@ -196,20 +210,32 @@ export default async function KitPage({ params }) {
 					</div>
 				</section>
 
-				<section className={f.card} aria-labelledby="kit-close">
-					<h2 id="kit-close" className={f.cardTitle}>
-						Start building today
+				<section className={s.section} aria-labelledby="close">
+					<h2 id="close" className={s.h2}>
+						Start building <em>tonight</em>
 					</h2>
-					{buyBlock('close-buy')}
+					<BuyBlock id="close-buy" />
 				</section>
-
-				<p className={f.fine}>
-					Results are not guaranteed. View counts are from our own Instagram. SmartCode is
-					not affiliated with Roblox, Anthropic or OpenAI.
-				</p>
 			</main>
 
-			<SiteFooter />
+			<footer className={s.footer}>
+				<nav aria-label="Legal">
+					<Link href="/terms">Terms</Link>
+					<Link href="/privacy">Privacy</Link>
+					<Link href="/refund">Refunds</Link>
+					<Link href="/contact">Contact</Link>
+					<Link href="/kit/access">I already bought</Link>
+				</nav>
+				<span>
+					© {new Date().getFullYear()} {LEGAL.brandName} · {LEGAL.legalName}, {LEGAL.legalForm} ·{' '}
+					{LEGAL.supportEmail}
+				</span>
+				<span>
+					Payments by Paddle.com, our Merchant of Record. Results are not guaranteed. View counts
+					are from our own Instagram. Not affiliated with Roblox, Anthropic or OpenAI.
+				</span>
+			</footer>
+
 		</div>
 	)
 }
