@@ -88,8 +88,8 @@ export default async function KitPage({ params }) {
 					</h1>
 
 					<div className={s.clips}>
-						<KitClip src="/kits/clips/bridge.mp4" poster="/kits/clips/bridge.jpg" label="From our reels" className={s.clip} tagClassName={s.clipTag} />
-						<KitClip src="/kits/clips/wave.mp4" poster="/kits/clips/wave.jpg" label="From our reels" className={s.clip} tagClassName={s.clipTag} />
+						<KitClip src="/kits/clips/neon-bridge.mp4" poster="/kits/clips/neon-bridge.jpg" label="From our reels" className={s.clip} tagClassName={s.clipTag} />
+						<KitClip src="/kits/clips/blocks.mp4" poster="/kits/clips/blocks.jpg" label="From our reels" className={s.clip} tagClassName={s.clipTag} />
 					</div>
 
 					<div className={s.stats}>
@@ -176,8 +176,8 @@ export default async function KitPage({ params }) {
 						</li>
 					</ol>
 					<div className={s.clips}>
+						<KitClip src="/kits/clips/bridge.mp4" poster="/kits/clips/bridge.jpg" className={s.clip} tagClassName={s.clipTag} label="From our reels" />
 						<KitClip src="/kits/clips/vortex.mp4" poster="/kits/clips/vortex.jpg" className={s.clip} tagClassName={s.clipTag} label="From our reels" />
-						<KitClip src="/kits/clips/neon.mp4" poster="/kits/clips/neon.jpg" className={s.clip} tagClassName={s.clipTag} label="From our reels" />
 					</div>
 				</section>
 
