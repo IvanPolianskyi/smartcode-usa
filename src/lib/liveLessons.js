@@ -1,5 +1,6 @@
 /**
- * Live lesson calendar for Premium students.
+ * Live lesson calendar for Premium students, plus free public live builds
+ * (`isPublic: true`, see liveEvents.js).
  * Admin CRUD writes to Mongo `liveLessons`; students read via /api/live-lessons.
  */
 
@@ -43,6 +44,8 @@ export function serializeLiveLesson(doc) {
 		endsAt: doc.endsAt ? new Date(doc.endsAt).toISOString() : null,
 		joinUrl,
 		youtubeUrl: youtubeUrl || null,
+		isPublic: Boolean(doc.isPublic),
+		description: String(doc.description || '').trim(),
 		createdAt: doc.createdAt ? new Date(doc.createdAt).toISOString() : null,
 		updatedAt: doc.updatedAt ? new Date(doc.updatedAt).toISOString() : null,
 	}
@@ -117,6 +120,18 @@ export function parseLiveLessonBody(body, opts = {}) {
 			return { error: 'youtubeUrl must be an http(s) URL' }
 		}
 		data.youtubeUrl = youtubeUrl
+	}
+
+	if (!partial || body.isPublic !== undefined) {
+		data.isPublic = body?.isPublic === true || body?.isPublic === 'true'
+	}
+
+	if (!partial || body.description !== undefined) {
+		const description = String(body?.description || '').trim()
+		if (description.length > 600) {
+			return { error: 'Description is too long (600 characters max)' }
+		}
+		data.description = description
 	}
 
 	return { data }

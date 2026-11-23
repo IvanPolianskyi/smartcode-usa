@@ -20,6 +20,8 @@ import {
 } from 'lucide-react'
 import { markdownToHtml } from '@/lib/markdownToHtml'
 import { updateProgress } from '@/lib/authClient'
+import AiHelper from './AiHelper'
+import ComputerNudge from './ComputerNudge'
 import {
   computeLessonXp,
   extractMissions,
@@ -417,6 +419,7 @@ const RobloxLessonPage = ({
             </p>
           )}
           <h1 className={styles.title}>{fullLesson.title}</h1>
+          {courseId === 'roblox-studio' ? <ComputerNudge lessonId={lessonId} /> : null}
           <div className={styles.metaRow}>
             <span className={`${styles.metaPill} ${styles.metaPillRank}`} title={
               rank.next
@@ -1020,6 +1023,7 @@ const RobloxLessonPage = ({
               </button>
             )}
         </div>
+        {courseId === 'roblox-studio' ? <AiHelper lessonId={lessonId} /> : null}
           </div>
         </div>
       </LessonPageWithSidebar>

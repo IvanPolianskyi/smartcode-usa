@@ -1,0 +1,165 @@
+.panel {
+	margin-top: 1.5rem;
+	background: var(--bg-elevated, #fff);
+	border: 1px solid rgba(252, 110, 81, 0.18);
+	border-radius: 20px;
+	padding: 1.25rem;
+	display: grid;
+	gap: 0.9rem;
+}
+
+.head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+	flex-wrap: wrap;
+}
+
+.title {
+	margin: 0;
+	font-size: 1.1rem;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.counter {
+	font-size: 0.85rem;
+	color: var(--text-secondary, #5c6370);
+}
+
+.intro {
+	margin: 0;
+	font-size: 0.95rem;
+	color: var(--text-secondary, #5c6370);
+	line-height: 1.5;
+}
+
+.chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.chip {
+	font: inherit;
+	font-size: 0.85rem;
+	padding: 0.4rem 0.8rem;
+	border-radius: 999px;
+	border: 1px solid rgba(20, 21, 26, 0.14);
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+}
+
+.chip:hover {
+	background: rgba(252, 110, 81, 0.08);
+}
+
+.thread {
+	display: grid;
+	gap: 0.75rem;
+	max-height: 520px;
+	overflow-y: auto;
+}
+
+.msgUser,
+.msgAi {
+	border-radius: 14px;
+	padding: 0.75rem 0.9rem;
+	font-size: 0.95rem;
+	line-height: 1.55;
+	overflow-wrap: anywhere;
+	min-width: 0;
+}
+
+.msgUser {
+	background: rgba(252, 110, 81, 0.1);
+	justify-self: end;
+	max-width: 90%;
+	white-space: pre-wrap;
+}
+
+.msgAi {
+	background: rgba(20, 21, 26, 0.04);
+}
+
+.msgAi pre {
+	overflow-x: auto;
+	background: #14151a;
+	color: #f3f4f7;
+	padding: 0.75rem;
+	border-radius: 10px;
+	font-size: 0.85rem;
+}
+
+.msgAi p {
+	margin: 0 0 0.5rem;
+}
+
+.form {
+	display: grid;
+	gap: 0.6rem;
+}
+
+.textarea {
+	font: inherit;
+	font-size: 0.95rem;
+	width: 100%;
+	min-height: 70px;
+	padding: 0.7rem 0.8rem;
+	border-radius: 12px;
+	border: 1px solid rgba(20, 21, 26, 0.18);
+	background: var(--bg-elevated, #fff);
+	color: inherit;
+	resize: vertical;
+	box-sizing: border-box;
+}
+
+.code {
+	font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+	font-size: 0.85rem;
+	min-height: 90px;
+}
+
+.row {
+	display: flex;
+	gap: 0.6rem;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.linkBtn {
+	font: inherit;
+	font-size: 0.85rem;
+	background: none;
+	border: none;
+	padding: 0;
+	color: #e1502f;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.error {
+	margin: 0;
+	color: #b42318;
+	font-size: 0.9rem;
+}
+
+.upsell {
+	border: 1px solid rgba(252, 110, 81, 0.35);
+	background: rgba(252, 110, 81, 0.06);
+	border-radius: 14px;
+	padding: 0.8rem 0.9rem;
+	display: grid;
+	gap: 0.5rem;
+	font-size: 0.95rem;
+}
+
+.fine {
+	margin: 0;
+	font-size: 0.8rem;
+	color: var(--text-secondary, #5c6370);
+}

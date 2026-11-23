@@ -6,6 +6,7 @@ import {
 	serializeLiveLesson,
 } from '@/lib/liveLessons'
 import { requireAdmin } from '@/lib/requireAdmin'
+import { getCollection } from '@/lib/mongodb'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -20,7 +21,15 @@ export async function GET() {
 		const rows = await col.find({}).sort({ startsAt: -1 }).limit(200).toArray()
 		const lessons = rows.map(serializeLiveLesson)
 		const { upcoming, past } = partitionLiveLessons(lessons)
-		return NextResponse.json({ upcoming, past, lessons })
+
+		// Sign-up counts for free public live builds (null key = waitlist).
+		const registrations = await getCollection('liveRegistrations')
+		const counts = await registrations
+			.aggregate([{ $group: { _id: '$eventId', n: { $sum: 1 } } }])
+			.toArray()
+		const signups = Object.fromEntries(counts.map((c) => [c._id ?? 'waitlist', c.n]))
+
+		return NextResponse.json({ upcoming, past, lessons, signups })
 	} catch (error) {
 		console.error('[admin] live-lessons list error:', error)
 		return NextResponse.json({ error: 'Could not load live lessons' }, { status: 500 })

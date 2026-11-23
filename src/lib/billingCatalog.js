@@ -19,17 +19,19 @@ import {
 export const BILLING_TIERS = {
 	standard: {
 		id: 'standard',
-		label: 'Standard',
+		label: 'Club',
 		monthlyPrice: '$14',
 		annualPrice: '$99',
-		includes: 'Platform + Discord',
-		includesDetail: 'Self-paced lessons on the platform and the private Discord community.',
-		tagline: 'Everything you need to learn on your own time.',
+		includes: 'Course + live builds + club Discord',
+		includesDetail: 'The full Roblox course, weekly live builds with AI, and club-only Discord channels.',
+		tagline: 'Everything you need to build and publish your first Roblox game.',
 		features: [
-			'Every lesson in your program',
+			'All 92 Roblox lessons',
+			'AI helper in every lesson - 50 questions a day',
 			'Your code checked the moment you run it',
-			'Private Discord with other builders',
-			'Your finished project promoted on our Instagram',
+			'Weekly live builds with AI',
+			'Club-only Discord channels',
+			'Best member games featured on our Instagram',
 		],
 	},
 	premium: {
@@ -59,6 +61,19 @@ export const BILLING_TIERS = {
  * `'premium'` back in this list to start selling it again.
  */
 export const SELLABLE_TIER_IDS = ['standard']
+
+/**
+ * Programs the public site sells. One product: Roblox.
+ *
+ * Python and AI for Real Life stay fully live for people who already pay for
+ * them (webhook, entitlements, admin grants, their lessons), but no marketing
+ * or purchase surface offers them. Add an id back here to sell it again.
+ */
+export const SELLABLE_COURSE_IDS = [ROBLOX_COURSE_ID]
+
+export function isSellableCourse(courseId) {
+	return SELLABLE_COURSE_IDS.includes(String(courseId || ''))
+}
 
 /** Numeric value of a display price like "$14" - used for savings math. */
 export function priceValue(display) {

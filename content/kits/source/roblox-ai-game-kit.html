@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Roblox AI Game Kit - SmartCode</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 18mm 16mm; }
+  :root { --ink:#14151a; --muted:#5c6370; --coral:#ef5a3c; --soft:#fff1ec; --line:#e4e6eb; --code:#f4f5f7; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; color: var(--ink); font-size: 10.5pt; line-height: 1.5; margin: 0; }
+  h1 { font-size: 30pt; line-height: 1.05; margin: 0 0 10px; }
+  h2 { font-size: 17pt; margin: 0 0 8px; color: var(--ink); border-bottom: 2px solid var(--coral); padding-bottom: 4px; }
+  h3 { font-size: 12pt; margin: 14px 0 4px; }
+  p { margin: 0 0 8px; }
+  ul, ol { margin: 0 0 8px; padding-left: 18px; }
+  li { margin-bottom: 3px; }
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .cover { height: 250mm; display: flex; flex-direction: column; justify-content: center; }
+  .eyebrow { font-size: 9pt; letter-spacing: .12em; text-transform: uppercase; color: var(--coral); font-weight: 700; margin-bottom: 10px; }
+  .lede { font-size: 13pt; color: var(--muted); max-width: 150mm; }
+  .box { background: var(--soft); border-left: 4px solid var(--coral); padding: 8px 12px; margin: 8px 0 10px; }
+  .prompt { background: var(--code); border: 1px solid var(--line); border-radius: 6px; padding: 7px 10px; margin: 0 0 8px; font-family: Consolas, "Courier New", monospace; font-size: 9pt; white-space: pre-wrap; page-break-inside: avoid; }
+  .num { display: inline-block; min-width: 26px; font-weight: 700; color: var(--coral); font-family: "Segoe UI", Arial, sans-serif; }
+  .muted { color: var(--muted); font-size: 9pt; }
+  table { border-collapse: collapse; width: 100%; font-size: 9.5pt; margin: 6px 0 10px; }
+  td, th { border: 1px solid var(--line); padding: 5px 7px; text-align: left; vertical-align: top; }
+  th { background: var(--code); }
+  .toc li { margin-bottom: 4px; }
+  .check li { list-style: none; margin-left: -18px; }
+  .check li::before { content: "☐  "; color: var(--coral); }
+</style>
+</head>
+<body>
+
+<section class="page cover">
+  <div class="eyebrow">SmartCode · Roblox AI Game Kit</div>
+  <h1>Build a Roblox game with AI - from one prompt</h1>
+  <p class="lede">The setup, the prompts and the checklists behind our “AI vs student” reels. Pick a game type, paste the prompts in order, test, fix, publish.</p>
+  <p class="muted" style="margin-top:24px">Version 1.0 · Updates are free and posted in our Telegram: t.me/smart_ai_academy<br>Stuck? Ask the AI helper on smartcode.academy - 50 questions a day with this kit.</p>
+  <p class="muted" style="margin-top:40px">© SmartCode Academy. For your personal use - please do not share or resell this file. SmartCode is not affiliated with Roblox, Anthropic or OpenAI. Results are not guaranteed.</p>
+</section>
+
+<section class="page">
+  <h2>What is inside</h2>
+  <ol class="toc">
+    <li><strong>How to use this kit</strong> - the 4 rules that make AI build working games</li>
+    <li><strong>Setup</strong> - Roblox Studio + the free Roblox Assistant, plus Claude or ChatGPT (optional)</li>
+    <li><strong>Starter prompts</strong> - 6 prompts every game needs (prompts 1-6)</li>
+    <li><strong>Obby</strong> - 12 prompts (7-18)</li>
+    <li><strong>Tycoon</strong> - 12 prompts (19-30)</li>
+    <li><strong>Simulator</strong> - 10 prompts (31-40)</li>
+    <li><strong>Tower defense</strong> - 8 prompts (41-48)</li>
+    <li><strong>Story game</strong> - 6 prompts (49-54)</li>
+    <li><strong>Fix it</strong> - 8 bug-fix prompts (55-62)</li>
+    <li><strong>Polish</strong> - 6 prompts that make a game feel good (63-68)</li>
+    <li><strong>Publish checklist</strong></li>
+    <li><strong>The reel playbook</strong> - how we film games for Instagram</li>
+  </ol>
+  <h2 style="margin-top:18px">1. How to use this kit</h2>
+  <p>AI is fast at writing Roblox code and bad at guessing what you want. These four rules fix most problems before they happen.</p>
+  <ol>
+    <li><strong>One step at a time.</strong> Paste one prompt, test it (press <em>Play</em>), then paste the next. A prompt that asks for a whole game at once gives you a mess that is hard to fix.</li>
+    <li><strong>Say where the code goes.</strong> Every prompt here already says it: <em>Script in ServerScriptService</em> (runs on the server, for game rules), <em>LocalScript in StarterPlayerScripts</em> or <em>StarterGui</em> (runs on the player's screen, for UI and camera), <em>ModuleScript in ReplicatedStorage</em> (shared code).</li>
+    <li><strong>Test after every prompt.</strong> Press Play, try to break it, open the <em>Output</em> window (View → Output). Red text = an error. Copy it into a fix prompt from section 9.</li>
+    <li><strong>Change the brackets.</strong> Words in [square brackets] are yours to change: theme, numbers, names. That is how your game stops looking like everyone else's.</li>
+  </ol>
+  <div class="box"><strong>Save often.</strong> File → Save to Roblox (Ctrl+S). Before a big prompt, also File → Save to File As… so you can go back if the AI breaks something.</div>
+</section>
+
+<section class="page">
+  <h2>2. Setup (about 10 minutes)</h2>
+  <h3>Step 1 - Roblox Studio</h3>
+  <ol>
+    <li>Go to <strong>create.roblox.com</strong>, log in with your Roblox account, click <strong>Start Creating</strong> and install Roblox Studio (Windows or Mac).</li>
+    <li>Open Studio → <strong>New</strong> → <strong>Baseplate</strong>. This is your empty world.</li>
+    <li>Open the windows you will use every time: <strong>View → Explorer</strong>, <strong>View → Properties</strong>, <strong>View → Output</strong>.</li>
+  </ol>
+  <h3>Step 2 - the free Roblox Assistant (recommended start)</h3>
+  <ol>
+    <li>Find the <strong>Assistant</strong> button in Studio's top bar (in some versions it is under the View or Window menu - Roblox moves it between updates).</li>
+    <li>The Assistant can write scripts, insert them into your game and change parts in the world. Paste the prompts from this kit into the Assistant chat.</li>
+    <li>When it shows code, check <em>where</em> it put the script (Explorer). If it is in the wrong place, drag it to the place the prompt asked for.</li>
+  </ol>
+  <h3>Step 3 (optional) - Claude or ChatGPT</h3>
+  <p>If you already pay for Claude or ChatGPT, they are great for longer scripts and for explaining errors. Two ways to use them:</p>
+  <ul>
+    <li><strong>Copy and paste (works with any AI).</strong> Paste a prompt into the chat. In Studio, right-click the place the prompt names (for example ServerScriptService) → Insert Object → Script, delete the default line and paste the code.</li>
+    <li><strong>Connect the AI to Studio (advanced).</strong> Roblox publishes an open-source <em>Studio MCP server</em> that lets apps like Claude Desktop read and edit your open place. Search “Roblox Studio MCP server” on GitHub (published by Roblox), follow its install steps, restart Studio and the AI app, and you can ask the AI to build directly in Studio.</li>
+  </ul>
+  <div class="box">Tip: start every AI chat with prompt 1 below. It tells the AI how to write Roblox code that works.</div>
+  <h3>Step 4 - the AI helper on smartcode.academy</h3>
+  <p>Log in with the email you used at checkout. Under each Roblox lesson there is the AI helper: paste your script or the red text from Output and ask what is wrong. With this kit you get 50 questions a day.</p>
+</section>
+
+<section class="page">
+  <h2>3. Starter prompts (every game)</h2>
+  <div class="prompt"><span class="num">1</span>You are an expert Roblox developer writing Luau for Roblox Studio. Rules for everything you write in this chat: say exactly where each script goes (Script in ServerScriptService, LocalScript in StarterPlayerScripts or StarterGui, ModuleScript in ReplicatedStorage). Game rules run on the server; the client only shows UI and sends requests through RemoteEvents, and the server checks every request. Use task.wait, not wait. Wrap DataStore calls in pcall. Keep each answer to one feature and tell me how to test it in Play mode. My game: [one sentence about your game].</div>
+  <div class="prompt"><span class="num">2</span>Create a leaderstats folder for every player who joins, with [Coins] and [Stage] as IntValues starting at 0. Script in ServerScriptService. Tell me how to see it on the leaderboard in Play mode.</div>
+  <div class="prompt"><span class="num">3</span>Save and load [Coins] and [Stage] with DataStoreService so players keep progress between sessions. Save when a player leaves and every 60 seconds, retry up to 3 times with pcall, and never overwrite data with zeros if loading failed. Remind me to turn on "Enable Studio Access to API Services" in Game Settings → Security to test it.</div>
+  <div class="prompt"><span class="num">4</span>Make a spawn area: a [10x10] platform at the start with a SpawnLocation, a sign that says "[Game name]" and invisible walls so players cannot fall off the edges at the start. Build it with parts in Workspace using a script I can run once, then tell me I can delete the script.</div>
+  <div class="prompt"><span class="num">5</span>Add a simple main menu: a ScreenGui with the game title, a big "Play" button and a small "How to play" button that opens a text panel. LocalScript in StarterGui. Hide the menu when the player clicks Play. Make it look clean on phones and computers (use Scale, not Offset, and UIAspectRatioConstraint).</div>
+  <div class="prompt"><span class="num">6</span>Explain the game we have so far like I am new: which scripts exist, where they are, what each one does, in a short list. Then suggest the next 3 features that would make it more fun, smallest first.</div>
+
+  <h2 style="margin-top:14px">4. Obby (prompts 7-18)</h2>
+  <p class="muted">An obstacle course: jump from stage to stage, do not fall. The fastest game type to finish - start here if this is your first game.</p>
+  <div class="prompt"><span class="num">7</span>Build an obby with [10] stages in a straight line going up and forward. Each stage is a platform with a checkpoint (SpawnLocation with a number) at the start. Stages get harder: wider gaps, smaller platforms. Use a script I run once to generate the parts, themed [lava / candy / space].</div>
+  <div class="prompt"><span class="num">8</span>Make checkpoints work: when a player touches checkpoint N and N is higher than their leaderstats Stage, set Stage to N and respawn them at that checkpoint when they die. Script in ServerScriptService. Add a debounce so touching once counts once.</div>
+  <div class="prompt"><span class="num">9</span>Add kill bricks: any part named "KillBrick" or tagged "Kill" with CollectionService resets the player who touches it. Make them neon [red] and slightly pulse in transparency so players see the danger.</div>
+  <div class="prompt"><span class="num">10</span>Add moving platforms on stages [3, 6 and 9] that slide back and forth smoothly with TweenService. Players standing on them should move with the platform. Explain how to make more.</div>
+  <div class="prompt"><span class="num">11</span>Add spinning bars on stage [5]: a long thin part rotating around its center that knocks players off. Speed [1 turn every 3 seconds]. Use a server Script and make it work for every part tagged "Spinner".</div>
+  <div class="prompt"><span class="num">12</span>Add disappearing platforms on stage [7]: when touched they fade out over 1 second, stay gone 2 seconds, then come back. Work for every part tagged "Fade".</div>
+  <div class="prompt"><span class="num">13</span>Add a stage counter on screen: "Stage 4 / 10" at the top, updating when leaderstats Stage changes. LocalScript in StarterGui.</div>
+  <div class="prompt"><span class="num">14</span>Add a "Skip stage" button that teleports the player to their next checkpoint. For now it is free and limited to [3] skips per session; tell me how I could later connect it to a Developer Product.</div>
+  <div class="prompt"><span class="num">15</span>Add a timer that starts when the player leaves stage 1 and stops at the last checkpoint. Show their time on screen and save their best time to a DataStore. Show "New record!" when they beat it.</div>
+  <div class="prompt"><span class="num">16</span>Add a finish area after the last stage: confetti particles, a sound, a "You finished!" message and a teleport back to the start after 5 seconds.</div>
+  <div class="prompt"><span class="num">17</span>Add a global leaderboard board in the lobby showing the top [10] best times using OrderedDataStore. Refresh every 60 seconds.</div>
+  <div class="prompt"><span class="num">18</span>Look at my obby stages and suggest 5 new obstacle ideas that fit the [theme] theme. For the one I pick, write the script to make it work for any part with that tag.</div>
+</section>
+
+<section class="page">
+  <h2>5. Tycoon (prompts 19-30)</h2>
+  <p class="muted">Players earn money from droppers, buy upgrades with buttons and watch their base grow.</p>
+  <div class="prompt"><span class="num">19</span>Build a tycoon plot: a [40x40] base with a claim door. The first player who touches the door owns the plot; show their name on a sign above it. Support [4] plots so 4 players can play at once. Script in ServerScriptService.</div>
+  <div class="prompt"><span class="num">20</span>Add a dropper: a machine on the plot that drops a small part every [2] seconds onto a conveyor. The conveyor carries it into a collector that adds [5] money to the plot owner's leaderstats Cash and destroys the part.</div>
+  <div class="prompt"><span class="num">21</span>Add buy buttons: a button pad shows a name and a price. When the owner steps on it with enough Cash, take the money, make the item appear with a short build animation and hide the button. Items start hidden. Make it work for any button through a config (price, item name, which button unlocks next).</div>
+  <div class="prompt"><span class="num">22</span>Create the first 8 buttons in order: walls, 2nd dropper, faster conveyor, upgrader, 3rd dropper, floor 2 stairs, decoration, VIP area. Prices [50, 150, 400, 900, 2000, 4500, 8000, 15000].</div>
+  <div class="prompt"><span class="num">23</span>Add an upgrader: a laser on the conveyor that doubles the value of each part passing through it, once per part.</div>
+  <div class="prompt"><span class="num">24</span>Save each player's Cash and bought buttons. When they come back and claim a plot, rebuild everything they owned. DataStore with pcall and retries.</div>
+  <div class="prompt"><span class="num">25</span>Add a cash display on screen with a "+5" popup animation every time money is collected. LocalScript in StarterGui, listen to leaderstats changes.</div>
+  <div class="prompt"><span class="num">26</span>Add rebirth: when a player has [100000] Cash they can rebirth - reset Cash and buttons but get a permanent x[1.5] money multiplier per rebirth. Save rebirths. Show a confirm dialog first.</div>
+  <div class="prompt"><span class="num">27</span>Stop exploits: make sure the client can never give itself money. All money changes happen on the server; buttons check ownership and price on the server. Review my scripts and list anything unsafe.</div>
+  <div class="prompt"><span class="num">28</span>Add a gamepass "x2 Cash": if the player owns game pass ID [your ID], double all money they earn. Use MarketplaceService:UserOwnsGamePassId on join and handle a purchase made during the session.</div>
+  <div class="prompt"><span class="num">29</span>Add idle earnings: when a player comes back, give them [10%] of what their droppers would have earned while away, up to 8 hours, and show a "While you were away" popup.</div>
+  <div class="prompt"><span class="num">30</span>My tycoon is [theme]. Suggest 10 themed names and looks for the droppers and upgrades, and change the button names and colors to match.</div>
+
+  <h2 style="margin-top:14px">6. Simulator (prompts 31-40)</h2>
+  <p class="muted">Click or collect to earn, buy better tools and pets, unlock new areas.</p>
+  <div class="prompt"><span class="num">31</span>Make the core loop of a [mining] simulator: the player holds a tool; each click on a "Resource" part gives [1] Ore to leaderstats. Resources respawn after [5] seconds. The server checks the player is close enough and not clicking faster than [5] times a second.</div>
+  <div class="prompt"><span class="num">32</span>Add a backpack limit: players can carry [20] Ore. When full, show "Backpack full - sell!" and stop collecting.</div>
+  <div class="prompt"><span class="num">33</span>Add a sell zone: stepping on it converts all Ore to Coins at [2] coins per ore with a coin sound and popup.</div>
+  <div class="prompt"><span class="num">34</span>Add a shop GUI with 5 tools that collect more per click and 5 backpacks that hold more. Prices grow by about x3 each. Purchases happen on the server through a RemoteFunction; the GUI only asks.</div>
+  <div class="prompt"><span class="num">35</span>Add areas: a second zone behind a wall that opens when the player has [1000] Coins, with resources worth x5. Show a price sign on the wall.</div>
+  <div class="prompt"><span class="num">36</span>Add pets: an egg costs [500] Coins and hatches one of 4 pets by chance (common 60%, rare 25%, epic 12%, legendary 3%). Pets follow the player and multiply collection. Show a hatch animation. Save owned pets.</div>
+  <div class="prompt"><span class="num">37</span>Add a pet inventory GUI: equip up to 3 pets, see each pet's multiplier, delete pets. LocalScript for UI, server decides everything.</div>
+  <div class="prompt"><span class="num">38</span>Save everything (Coins, Ore, tools, backpack, areas, pets) in one DataStore table per player with a version number, so I can add new fields later without breaking old saves.</div>
+  <div class="prompt"><span class="num">39</span>Add daily rewards: a popup once every 24 hours with a reward that grows for 7 days in a row and resets if they miss a day.</div>
+  <div class="prompt"><span class="num">40</span>Balance check: list every price and reward in my game and estimate how many minutes a new player needs to reach each upgrade. Suggest changes so the first upgrade takes about 1 minute and the 5th about 20 minutes.</div>
+</section>
+
+<section class="page">
+  <h2>7. Tower defense (prompts 41-48)</h2>
+  <div class="prompt"><span class="num">41</span>Make a tower defense map: a path of waypoints (parts named 1, 2, 3… in a folder) from the enemy spawn to the base. Enemies are simple NPCs that walk the waypoints with Humanoid:MoveTo and damage the base when they reach the end. Base health [100].</div>
+  <div class="prompt"><span class="num">42</span>Add waves: wave 1 sends [5] slow enemies, every next wave adds more and faster enemies, every 5th wave has a boss with 10x health. Show "Wave 3" at the top and a 10-second break between waves.</div>
+  <div class="prompt"><span class="num">43</span>Add placing towers: the player picks a tower in a GUI, sees a ghost preview following the mouse on allowed ground, clicks to place. The server checks money and that the spot is free.</div>
+  <div class="prompt"><span class="num">44</span>Make towers shoot: every [1] second a tower finds the enemy furthest along the path within range [20] and deals [10] damage, with a beam effect. Server Script, works for every tower model.</div>
+  <div class="prompt"><span class="num">45</span>Add 3 tower types: fast low damage, slow splash damage, and slowing (enemies move at 50% speed for 2 seconds). Each has a cost and an upgrade with better stats.</div>
+  <div class="prompt"><span class="num">46</span>Add money: players earn [5] per enemy killed and a bonus at the end of each wave. Split money between all players in the server.</div>
+  <div class="prompt"><span class="num">47</span>Add a game over screen when base health hits 0 with "Wave reached: X", and a lobby with a "Play" pad that starts the match when 1-4 players stand on it for 5 seconds.</div>
+  <div class="prompt"><span class="num">48</span>Performance check: my tower defense lags with many enemies. Review the scripts and make enemies and towers cheaper to run (fewer loops, one manager script instead of one script per enemy).</div>
+
+  <h2 style="margin-top:14px">8. Story game (prompts 49-54)</h2>
+  <p class="muted">A short adventure with a story, dialogue and an ending - the type that works best for reels.</p>
+  <div class="prompt"><span class="num">49</span>Write a 5-chapter story for a Roblox game about [a town where it rains upwards]. Each chapter: where it happens, what the player must do (find, escape, solve), one surprise. Keep it suitable for all ages.</div>
+  <div class="prompt"><span class="num">50</span>Build a dialogue system: talk to an NPC with a ProximityPrompt, show their lines one by one with a typewriter effect and a "Next" button, sometimes 2 answer choices. Store all dialogue in a ModuleScript so I can edit it easily.</div>
+  <div class="prompt"><span class="num">51</span>Add chapters: a ModuleScript tracks which chapter the player is in, shows an objective at the top ("Find the key in the library") and opens the next area when the objective is done. Save progress.</div>
+  <div class="prompt"><span class="num">52</span>Add a cutscene: when chapter [3] starts, move the camera along 3 points with TweenService for 6 seconds, show a subtitle, then give control back. LocalScript.</div>
+  <div class="prompt"><span class="num">53</span>Add a simple puzzle: 4 levers that must be pulled in the right order shown on a painting. Wrong order resets them with a sound. Right order opens a door.</div>
+  <div class="prompt"><span class="num">54</span>Add an ending: a final scene, a "The End" screen with the time it took, and a badge award using BadgeService (badge ID [your ID]).</div>
+</section>
+
+<section class="page">
+  <h2>9. Fix it (prompts 55-62)</h2>
+  <p>Copy the error from the <strong>Output</strong> window exactly. Paste it with your script.</p>
+  <div class="prompt"><span class="num">55</span>This script does not work. Here is the script, where it is, and the red error from Output. Find the exact line that causes it, explain why in one sentence, and give me the fixed script.
+[paste script] [where it is] [paste error]</div>
+  <div class="prompt"><span class="num">56</span>Nothing happens and there is no error. Add print statements at every important step so I can see in Output where it stops, and tell me what each print means.</div>
+  <div class="prompt"><span class="num">57</span>It works in Studio but not when I play the published game. List the usual reasons (API access, LocalScript vs Script, things that load late) and check my script for each.</div>
+  <div class="prompt"><span class="num">58</span>"Infinite yield possible on WaitForChild" appears in Output. Explain what is missing and fix my script so it waits only for things that will exist, with a timeout.</div>
+  <div class="prompt"><span class="num">59</span>"attempt to index nil with …" appears. Explain which value is nil, why, and add a safe check so the script does not break.</div>
+  <div class="prompt"><span class="num">60</span>My game lags. Review these scripts for loops that run too often, things created every frame and memory that is never cleaned up. Give me fixed versions.</div>
+  <div class="prompt"><span class="num">61</span>Two of my scripts fight each other ([describe what happens]). Find the conflict and merge them into one clean script.</div>
+  <div class="prompt"><span class="num">62</span>I do not understand this code. Explain it line by line in simple words, like I am learning, and tell me the one most important thing to remember from it.</div>
+
+  <h2 style="margin-top:14px">10. Polish (prompts 63-68)</h2>
+  <div class="prompt"><span class="num">63</span>Make the game feel better: add sounds for jumping, collecting, buying and errors, and a short screen shake on big moments. Keep it quiet and not annoying.</div>
+  <div class="prompt"><span class="num">64</span>Improve the lighting for a [sunset / night / cartoon] look: Lighting settings, Atmosphere, a little Bloom and ColorCorrection. Give me exact values.</div>
+  <div class="prompt"><span class="num">65</span>Make all my GUIs look modern: rounded corners (UICorner), padding, one accent color [#ef5a3c], readable font sizes on phones. Keep my buttons and logic the same.</div>
+  <div class="prompt"><span class="num">66</span>Add a tutorial for new players: arrows and short tips that show the first 3 things to do, and never show again after they finish it.</div>
+  <div class="prompt"><span class="num">67</span>Check my game for mobile: buttons big enough to tap, nothing hidden under the jump button, text readable. List problems and fixes.</div>
+  <div class="prompt"><span class="num">68</span>Pretend you are a 12-year-old playing my game for the first time. Describe the first 2 minutes honestly: what is confusing, what is boring, what is fun. Then give me the 3 most important fixes.</div>
+</section>
+
+<section class="page">
+  <h2>11. Publish checklist</h2>
+  <ul class="check">
+    <li>File → Publish to Roblox. Give it a clear name players would search for.</li>
+    <li>Game Settings → Basic Info: description with what to do in the first sentence, the right genre, a good icon.</li>
+    <li>Thumbnails: 3 screenshots of the most exciting moments (use the Studio screenshot tool in Play mode).</li>
+    <li>Game Settings → Permissions: set the game to Public when you are ready.</li>
+    <li>Game Settings → Security: turn on API Services if you save data.</li>
+    <li>Play the published game on a phone and on a computer. Ask 2 friends to play without help and watch where they get stuck.</li>
+    <li>Fill in the Maturity / content questionnaire honestly.</li>
+    <li>Create game passes or developer products only for things that do not make the game unfair.</li>
+    <li>Share the link in our Telegram - we look at member games every week.</li>
+  </ul>
+
+  <h2 style="margin-top:14px">12. The reel playbook</h2>
+  <p>Our Roblox reels got 57M views in 90 days. These are the formats that worked best and how to film them.</p>
+  <table>
+    <tr><th>Format</th><th>What it shows</th><th>Why it works</th></tr>
+    <tr><td>“Game by our student”</td><td>A finished game, best 20 seconds, ending on a fun moment</td><td>Our top reel: 34M views. Viewers want to see that a normal person made it.</td></tr>
+    <tr><td>“AI vs student”</td><td>The same game built by AI and by a person, side by side, who did it better?</td><td>A built-in question makes people watch to the end and comment.</td></tr>
+    <tr><td>Satisfying physics</td><td>Parts exploding, falling, collapsing</td><td>Easy to rewatch - reels with replays get pushed.</td></tr>
+  </table>
+  <h3>How to film</h3>
+  <ol>
+    <li>Record in Play mode with OBS or the Roblox screen recorder, 1080×1920 (vertical). Hide the Studio windows.</li>
+    <li><strong>The first 2 seconds decide everything.</strong> Start on the most surprising frame, with text on screen: “AI built this in 1 prompt”, “My student made this in a week”.</li>
+    <li>Keep it 15-30 seconds. Cut every pause.</li>
+    <li>Captions word by word, large, in the middle of the screen.</li>
+    <li>End with a reason to comment: “Who won - AI or the student?” or “Comment GAME and I'll send you the prompts”.</li>
+  </ol>
+  <h3>20 hooks you can use</h3>
+  <ul>
+    <li>“AI built this Roblox game from one prompt.” · “I asked AI to make an obby harder than mine.” · “AI vs a 15-year-old: who builds the better tycoon?”</li>
+    <li>“This took 10 minutes in Roblox Studio.” · “Roblox game made with AI - would you play it?” · “I gave AI one sentence. This is the game.”</li>
+    <li>“Rate this game 1-10.” · “The bug that almost killed my game.” · “POV: you finally publish your first Roblox game.”</li>
+    <li>“AI made the code. I made it fun.” · “Day 1 vs day 7 of building with AI.” · “3 prompts, 1 simulator.”</li>
+    <li>“Don't make this mistake in Roblox Studio.” · “This obby stage made my friend rage quit.” · “Claude vs ChatGPT vs a student.”</li>
+    <li>“How long does it take to make a Roblox game with AI?” · “I let AI design the boss fight.” · “Making a horror game with AI in 60 seconds.”</li>
+    <li>“The most satisfying thing I built this week.” · “Comment a game idea - AI builds the best one.”</li>
+  </ul>
+  <p class="muted" style="margin-top:12px">Results are not guaranteed. Views and players depend on your game, your posting and the platforms.</p>
+</section>
+
+</body>
+</html>

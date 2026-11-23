@@ -15,6 +15,7 @@
     "paddle:go-live": "node scripts/paddle-go-live.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.6.0",
     "@paddle/paddle-js": "^1.6.5",
     "bcryptjs": "^3.0.3",
     "jsonwebtoken": "^9.0.3",

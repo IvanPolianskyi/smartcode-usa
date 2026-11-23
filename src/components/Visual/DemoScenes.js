@@ -242,8 +242,8 @@ export function DemoAi() {
 	)
 }
 
+// The site sells one product - Roblox - so the hero shows only that scene.
+// DemoPython / DemoAi stay exported in case those programs come back.
 export const DEMO_SCENES = [
-	{ id: 'python', label: 'Python', Component: DemoPython },
 	{ id: 'roblox', label: 'Roblox Studio', Component: DemoRoblox },
-	{ id: 'ai', label: 'AI', Component: DemoAi },
 ]

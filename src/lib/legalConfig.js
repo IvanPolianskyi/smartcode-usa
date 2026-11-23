@@ -57,7 +57,7 @@ export const LEGAL = {
 	supportPhone: process.env.NEXT_PUBLIC_SUPPORT_PHONE || '+380 96 957 67 23',
 	siteDomain: displaySiteHost(),
 	siteUrl: normalizeSiteUrl(`https://${displaySiteHost()}`),
-	lastUpdated: '26 August 2026',
+	lastUpdated: '6 November 2026',
 	/** Per-program pricing shown on the marketing site and in Terms. */
 	monthlyPrice: '$14',
 	annualPrice: '$99',

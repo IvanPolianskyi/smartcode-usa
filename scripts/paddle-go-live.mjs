@@ -19,7 +19,7 @@ import path from 'node:path'
 
 loadEnv()
 
-const { WEBHOOK_PATH, SUBSCRIPTION_EVENT_TYPES } = await import(
+const { WEBHOOK_PATH, WEBHOOK_EVENT_TYPES } = await import(
 	'../src/lib/paddleEvents.js'
 )
 const { allPriceSlots, priceEnvNameFor } = await import('../src/lib/billingCatalog.js')
@@ -82,7 +82,7 @@ if (!match) {
 			description: 'SmartCode production billing',
 			type: 'url',
 			destination: webhookUrl,
-			subscribed_events: [...SUBSCRIPTION_EVENT_TYPES],
+			subscribed_events: [...WEBHOOK_EVENT_TYPES],
 			include_sensitive_fields: false,
 			traffic_source: 'platform',
 		},

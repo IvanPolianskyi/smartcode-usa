@@ -25,7 +25,7 @@ const { BILLING_TIERS, allPriceSlots, priceValue } = await import(
 	'../src/lib/billingCatalog.js'
 )
 const { LEGAL } = await import('../src/lib/legalConfig.js')
-const { SUBSCRIPTION_EVENT_TYPES, WEBHOOK_PATH } = await import(
+const { WEBHOOK_EVENT_TYPES, WEBHOOK_PATH } = await import(
 	'../src/lib/paddleEvents.js'
 )
 
@@ -259,14 +259,14 @@ async function checkWebhook() {
 	const subscribed = new Set(
 		(match.subscribed_events || []).map((e) => e.name || e).filter(Boolean)
 	)
-	const missing = SUBSCRIPTION_EVENT_TYPES.filter((name) => !subscribed.has(name))
+	const missing = WEBHOOK_EVENT_TYPES.filter((name) => !subscribed.has(name))
 	if (missing.length) {
 		fail(
 			`destination is not subscribed to: ${missing.join(', ')}`,
 			'Access is granted and revoked from these events only.'
 		)
 	} else {
-		pass(`subscribed to all ${SUBSCRIPTION_EVENT_TYPES.length} subscription events`)
+		pass(`subscribed to all ${WEBHOOK_EVENT_TYPES.length} webhook events`)
 	}
 
 	if (!process.env.PADDLE_WEBHOOK_SECRET) {

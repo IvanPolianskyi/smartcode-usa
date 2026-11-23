@@ -94,6 +94,14 @@ export default function PrivacyPage() {
 					benefits.
 				</p>
 				<p>
+					<strong>Live event sign-ups:</strong> if you sign up for a free live
+					build, we store your email address, first name (optional), the event,
+					and where the sign-up came from (for example Discord or Instagram). We
+					use it to send you the event link, reminders, and news about our
+					course. You can unsubscribe at any time from any email or by
+					contacting us.
+				</p>
+				<p>
 					<strong>Marketing / lead forms (if used):</strong> if you submit a
 					lead form (including Meta/Facebook or similar), we receive the contact
 					details you provide for follow-up. Those platforms also process data

@@ -1,15 +1,15 @@
 import { Suspense } from 'react'
 import { headers } from 'next/headers'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import { ArrowLeft } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
 import SiteHeader from '@/components/Nav/SiteHeader'
 import PlanPicker from '@/components/Billing/PlanPicker'
-import { programForCourseId } from '@/lib/billingCatalog'
+import InAppBrowserNotice from '@/components/Funnel/InAppBrowserNotice'
+import { isSellableCourse, programForCourseId, SELLABLE_COURSE_IDS } from '@/lib/billingCatalog'
 import { countryFromHeaders } from '@/lib/paddleCountry'
 import { LANDING_PROGRAMS } from '@/lib/landingPrograms'
-import { ALL_PROGRAM_COURSE_IDS } from '@/lib/courseIds'
 import { LEGAL } from '@/lib/legalConfig'
 import JsonLd from '@/components/Seo/JsonLd'
 import { courseSchema } from '@/lib/structuredData'
@@ -17,7 +17,7 @@ import styles from '../../page.module.css'
 import SiteFooter from '@/components/Nav/SiteFooter'
 
 export function generateStaticParams() {
-	return ALL_PROGRAM_COURSE_IDS.map((courseId) => ({ courseId }))
+	return SELLABLE_COURSE_IDS.map((courseId) => ({ courseId }))
 }
 
 export async function generateMetadata({ params }) {
@@ -51,6 +51,9 @@ export default async function PlanPage({ params }) {
 
 	const program = programForCourseId(courseId)
 	if (!program) notFound()
+	// Lesson and dashboard "Unlock" buttons for Python / AI for Real Life still
+	// point here; they are not sold any more, so send them to the club.
+	if (!isSellableCourse(courseId)) redirect('/club')
 
 	const landing = LANDING_PROGRAMS.find((p) => p.courseId === courseId)
 	const country = countryFromHeaders(await headers())
@@ -82,6 +85,7 @@ export default async function PlanPage({ params }) {
 					</p>
 				</div>
 
+				<InAppBrowserNotice />
 				<Suspense
 					fallback={<p className={styles.sectionLede}>Loading plans…</p>}
 				>

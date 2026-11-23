@@ -12,6 +12,7 @@ import { assertPaddleWebhookIp } from '@/lib/paddleIps'
 import { ensureBillingIndexes } from '@/lib/entitlements'
 import { upsertSubscription } from '@/lib/subscriptionStore'
 import { SUBSCRIPTION_EVENT_TYPES } from '@/lib/paddleEvents'
+import { fulfilKitTransaction } from '@/lib/kitFulfilment'
 
 /**
  * Paddle webhook - the only thing in the app that may grant or revoke access.
@@ -140,6 +141,14 @@ export async function POST(request) {
 				return NextResponse.json({ ok: true, duplicate: true })
 			}
 			throw error
+		}
+
+		// One-time kit purchases: no subscription involved. The buyer may have no
+		// account yet - fulfilment creates one from the checkout email.
+		if (eventType === 'transaction.completed') {
+			const occurredAt = event?.occurred_at ? new Date(event.occurred_at) : new Date()
+			const kit = await fulfilKitTransaction(event.data, { occurredAt })
+			return NextResponse.json({ ok: true, kit: kit.handled ? kit.kits : null })
 		}
 
 		if (!SUBSCRIPTION_EVENTS.has(eventType)) {

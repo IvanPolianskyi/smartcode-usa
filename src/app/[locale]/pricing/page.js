@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { setRequestLocale } from 'next-intl/server'
 import ProgramPricingFlow from '@/components/Billing/ProgramPricingFlow'
+import InAppBrowserNotice from '@/components/Funnel/InAppBrowserNotice'
 import SiteHeader from '@/components/Nav/SiteHeader'
 import { LANDING_PROGRAMS } from '@/lib/landingPrograms'
 import { BILLING_TIERS } from '@/lib/billingCatalog'
@@ -20,15 +21,17 @@ export default async function PricingPage({ params }) {
 
 			<section className={styles.section} id="pricing">
 				<div className={styles.sectionHead}>
-					<h1 className={styles.sectionTitle}>Pick your program</h1>
+					<h1 className={styles.sectionTitle}>SmartCode Club pricing</h1>
 					<p className={styles.sectionLede}>
-						{BILLING_TIERS.standard.monthlyPrice}/month for one program. Free for{' '}
+						{BILLING_TIERS.standard.monthlyPrice}/month or {BILLING_TIERS.standard.annualPrice}/year
+						for the full Roblox course, live builds, and club-only Discord. Free for{' '}
 						{LEGAL.trialDays} days - nothing is charged today, and you can cancel
 						anytime.
 					</p>
 				</div>
 
 				<div className={styles.pricingWrap}>
+					<InAppBrowserNotice />
 					<Suspense fallback={<p className={styles.sectionLede}>Loading plans…</p>}>
 						<ProgramPricingFlow programs={LANDING_PROGRAMS} />
 					</Suspense>

@@ -15,6 +15,8 @@ const EMPTY_FORM = {
 	endsAt: '',
 	joinUrl: '',
 	youtubeUrl: '',
+	isPublic: false,
+	description: '',
 }
 
 function toLocalInputValue(iso) {
@@ -54,6 +56,8 @@ function lessonToForm(lesson) {
 		endsAt: toLocalInputValue(lesson.endsAt),
 		joinUrl: lesson.joinUrl || '',
 		youtubeUrl: lesson.youtubeUrl || '',
+		isPublic: Boolean(lesson.isPublic),
+		description: lesson.description || '',
 	}
 }
 
@@ -65,6 +69,8 @@ function formToPayload(form) {
 		endsAt: new Date(form.endsAt).toISOString(),
 		joinUrl: form.joinUrl.trim(),
 		youtubeUrl: form.youtubeUrl.trim(),
+		isPublic: Boolean(form.isPublic),
+		description: form.description.trim(),
 	}
 }
 
@@ -80,6 +86,22 @@ export default function AdminLiveLessonsPage() {
 	const [busy, setBusy] = useState(false)
 	const [editingId, setEditingId] = useState(null)
 	const [form, setForm] = useState(EMPTY_FORM)
+	const [signups, setSignups] = useState({})
+
+	const copyEmails = useCallback(async (eventId) => {
+		try {
+			const res = await fetch(`/api/admin/live-registrations?event=${eventId}`, {
+				credentials: 'include',
+			})
+			if (!res.ok) throw new Error('load failed')
+			const json = await res.json()
+			const list = (json.registrations || []).map((r) => r.email).join(', ')
+			await navigator.clipboard.writeText(list)
+			setNotice(`Copied ${json.registrations?.length || 0} emails`)
+		} catch {
+			setError('Could not copy emails')
+		}
+	}, [])
 
 	const load = useCallback(async () => {
 		setLoading(true)
@@ -90,6 +112,7 @@ export default function AdminLiveLessonsPage() {
 			const json = await res.json()
 			setUpcoming(json.upcoming || [])
 			setPast(json.past || [])
+			setSignups(json.signups || {})
 		} catch {
 			setError('Could not load live lessons')
 		} finally {
@@ -340,6 +363,27 @@ export default function AdminLiveLessonsPage() {
 								placeholder="https://youtube.com/…"
 							/>
 						</label>
+						<label className={styles.field} style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+							<input
+								type="checkbox"
+								checked={form.isPublic}
+								onChange={(e) => setForm((f) => ({ ...f, isPublic: e.target.checked }))}
+							/>
+							Free public live build (shown on smartcode.academy/live, anyone can sign up)
+						</label>
+						{form.isPublic ? (
+							<label className={styles.field}>
+								What we build (shown on /live, optional)
+								<textarea
+									className={styles.input}
+									rows={3}
+									maxLength={600}
+									value={form.description}
+									onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+									placeholder="This week: a tycoon game built with AI in 60 minutes"
+								/>
+							</label>
+						) : null}
 						<button type="submit" className="sc-btn sc-btn-primary" disabled={busy}>
 							{busy ? 'Saving…' : editingId ? 'Save changes' : 'Publish lesson'}
 						</button>
@@ -377,7 +421,26 @@ export default function AdminLiveLessonsPage() {
 													</span>
 												</td>
 												<td>{lesson.title}</td>
-												<td>{lesson.courseLabel}</td>
+												<td>
+													{lesson.isPublic ? (
+														<>
+															Free public live build
+															<br />
+															<span className={styles.subDetail}>
+																{signups[lesson.id] || 0} signed up
+															</span>{' '}
+															<button
+																type="button"
+																className="sc-btn sc-btn-ghost"
+																onClick={() => copyEmails(lesson.id)}
+															>
+																Copy emails
+															</button>
+														</>
+													) : (
+														lesson.courseLabel
+													)}
+												</td>
 												<td>
 													{lesson.joinUrl ? (
 														<a
