@@ -469,3 +469,24 @@
 .buy > div {
 	justify-items: stretch !important;
 }
+
+/* Shared forms (resend link) were styled for light pages: make the button visible here. */
+.page form button[type='submit'] {
+	font: inherit;
+	font-weight: 700;
+	font-size: 17px;
+	padding: 14px 20px;
+	border: none;
+	border-radius: 14px;
+	background: var(--k-accent);
+	color: #fff;
+	cursor: pointer;
+}
+
+.page form button[type='submit']:hover {
+	background: var(--k-accent-2);
+}
+
+.trust a {
+	color: var(--k-accent);
+}

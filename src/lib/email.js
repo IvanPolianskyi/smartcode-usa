@@ -275,7 +275,7 @@ export async function sendLessonLinkEmail({ to, name, lessonTitle, lessonUrl }) 
 }
 
 /** Sent by the webhook after a kit purchase: one-time login link straight to the kit. */
-export async function sendKitAccessEmail({ to, name, kitTitle, loginUrl, telegramUrl }) {
+export async function sendKitAccessEmail({ to, name, kitTitle, loginUrl }) {
 	const hi = name ? `Hi ${escapeHtml(name)},` : 'Hi,'
 	const title = `Your ${kitTitle} is ready`
 	const contentHtml = `
@@ -283,14 +283,10 @@ export async function sendKitAccessEmail({ to, name, kitTitle, loginUrl, telegra
 		<p class="p">${hi}</p>
 		<p class="p">Thanks for getting the <strong>${escapeHtml(kitTitle)}</strong>. Tap the button to open your kit - no password needed:</p>
 		<div class="btn-wrap"><a href="${loginUrl}" class="btn" target="_blank">Open my kit</a></div>
-		<p class="p" style="font-size: 13px; color: #64748b;">The button works once and for 7 days. Later, log in at smartcode.academy with this email, or ask for a new link on the kit page.</p>
-		<div class="box">
-			<p style="margin: 0 0 8px; font-size: 14px; color: #475569;"><strong>Next:</strong> join our Telegram for new prompts, live builds and help:</p>
-			<p style="margin: 0; font-size: 14px;"><a href="${telegramUrl}" style="color: #2563eb;">${telegramUrl}</a></p>
-		</div>
+		<p class="p" style="font-size: 13px; color: #64748b;">The button works once and for 7 days. Lost it? Ask for a new link at smartcode.academy/kit/access.</p>
 		<p class="p">Roblox Studio runs on Windows and Mac - open the kit on your computer to build along.</p>
 		<p class="p">Have fun building,<br><strong>SmartCode</strong></p>
 	`
-	const text = `${hi}\n\nThanks for getting the ${kitTitle}. Open your kit (no password needed, link works once for 7 days):\n${loginUrl}\n\nJoin our Telegram: ${telegramUrl}\n\nSmartCode`
+	const text = `${hi}\n\nThanks for getting the ${kitTitle}. Open your kit (no password needed, link works once for 7 days):\n${loginUrl}\n\nSmartCode`
 	return sendEmail({ to, subject: title, html: emailLayout({ title, previewText: 'Open your kit - no password needed', contentHtml }), text })
 }

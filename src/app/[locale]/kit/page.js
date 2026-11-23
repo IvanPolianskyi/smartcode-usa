@@ -1,16 +1,13 @@
-import { Anton, Rubik } from 'next/font/google'
 import { setRequestLocale } from 'next-intl/server'
-import { Link } from '@/i18n/navigation'
 import KitBuyButton from '@/components/Funnel/KitBuyButton'
 import KitClip from '@/components/Funnel/KitClip'
+import KitShell from '@/components/Funnel/KitShell'
 import InAppBrowserNotice from '@/components/Funnel/InAppBrowserNotice'
 import PromoCapture from '@/components/Funnel/PromoCapture'
 import { KITS } from '@/lib/kits'
 import { LEGAL } from '@/lib/legalConfig'
 import s from './kit.module.css'
 
-const anton = Anton({ weight: '400', subsets: ['latin'], variable: '--k-display', display: 'swap' })
-const rubik = Rubik({ weight: ['400', '500', '700'], subsets: ['latin'], variable: '--k-body', display: 'swap' })
 
 const KIT = KITS['roblox-ai-games']
 const DESCRIPTION = `Build Roblox games with AI. The setup and 68 copy-paste prompts behind our AI-built Roblox games (57M+ views). ${KIT.displayPrice} one-time, instant access, ${LEGAL.refundDays}-day money-back guarantee.`
@@ -28,8 +25,6 @@ const STACK = [
 	{ badge: 'Core', title: '68 copy-paste prompts', text: 'Obby, tycoon, simulator, tower defense and a story game - each from empty map to working game, one prompt at a time.' },
 	{ badge: 'Core', title: 'Fix-it and polish prompts', text: 'What to paste when the script breaks or the Output window turns red, and how to make a working game feel fun.' },
 	{ badge: 'Bonus', title: 'The reel playbook', text: 'How we film our games for Instagram - the formats behind 57M+ views in 90 days, plus 20 hooks you can copy.' },
-	{ badge: 'Bonus', title: 'Free first lessons', text: 'Our Roblox Studio lessons on the site walk you through the basics - parts, scripts, Explorer - so the AI code makes sense.' },
-	{ badge: 'Bonus', title: 'Private Telegram + live builds', text: 'New prompts every week, live builds, and help when you are stuck. Every kit update is free.' },
 ]
 
 const FAQ = [
@@ -37,7 +32,7 @@ const FAQ = [
 	{ q: 'Can I do this on my phone?', a: 'No. Roblox Studio runs on Windows and Mac. You can buy and read the kit on your phone, then build on your computer.' },
 	{ q: 'Do I need coding skills?', a: 'No. The prompts are written for beginners, and every prompt says where the script goes and how to test it. You will pick up real Luau along the way.' },
 	{ q: 'Do I need a paid AI plan?', a: 'No. The AI assistant inside Roblox Studio is free. Claude or ChatGPT are optional and not included.' },
-	{ q: 'How do I get access after paying?', a: 'We email you a link straight away - tap it and the kit opens, no password needed. Join our Telegram from the thank-you page.' },
+	{ q: 'How do I get access after paying?', a: 'We email you a link straight away - tap it and the kit opens, no password needed.' },
 	{ q: 'Will my game go viral?', a: 'Results are not guaranteed. Players and views depend on your game, how you share it, and the platforms.' },
 	{ q: "I'm under 18.", a: 'Ask a parent or guardian to buy it with their card - the kit is yours to use.' },
 	{ q: 'Can I get a refund?', a: `Yes. Email us within ${LEGAL.refundDays} days of buying and we refund you in full.` },
@@ -70,17 +65,14 @@ export default async function KitPage({ params }) {
 	setRequestLocale(locale)
 
 	return (
-		<div className={`${s.page} ${anton.variable} ${rubik.variable}`} data-theme="dark">
-			<PromoCapture />
-
-			<header className={s.header}>
-				<Link href="/kit" className={s.logo} aria-label="SmartCode">
-					SMART<span>CODE</span>
-				</Link>
+		<KitShell
+			action={
 				<KitBuyButton kitId={KIT.id} className={s.headerBtn}>
 					Get it for {KIT.displayPrice}
 				</KitBuyButton>
-			</header>
+			}
+		>
+			<PromoCapture />
 
 			<main className={s.wrap}>
 				<section className={s.hero}>
@@ -212,24 +204,6 @@ export default async function KitPage({ params }) {
 				</section>
 			</main>
 
-			<footer className={s.footer}>
-				<nav aria-label="Legal">
-					<Link href="/terms">Terms</Link>
-					<Link href="/privacy">Privacy</Link>
-					<Link href="/refund">Refunds</Link>
-					<Link href="/contact">Contact</Link>
-					<Link href="/kit/access">I already bought</Link>
-				</nav>
-				<span>
-					© {new Date().getFullYear()} {LEGAL.brandName} · {LEGAL.legalName}, {LEGAL.legalForm} ·{' '}
-					{LEGAL.supportEmail}
-				</span>
-				<span>
-					Payments by Paddle.com, our Merchant of Record. Results are not guaranteed. View counts
-					are from our own Instagram. Not affiliated with Roblox, Anthropic or OpenAI.
-				</span>
-			</footer>
-
-		</div>
+		</KitShell>
 	)
 }

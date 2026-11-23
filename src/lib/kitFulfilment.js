@@ -5,7 +5,7 @@ import { createLoginToken } from '@/lib/loginTokens'
 import { sendKitAccessEmail } from '@/lib/email'
 import { recordFunnelEvent } from '@/lib/analyticsStore'
 import { normalizeSiteUrl } from '@/lib/legalConfig'
-import { KITS, TELEGRAM_URL, kitIdsFromTransaction, nameFromEmail } from '@/lib/kits'
+import { KITS, kitIdsFromTransaction, nameFromEmail } from '@/lib/kits'
 
 const SITE_URL = normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL)
 const LINK_TTL_MS = 7 * 24 * 60 * 60 * 1000
@@ -31,7 +31,6 @@ export async function emailKitAccessLink(user, kitId) {
 		name: String(user.name || '').split(' ')[0],
 		kitTitle: kit.title,
 		loginUrl: `${SITE_URL}${loginPath}`,
-		telegramUrl: TELEGRAM_URL,
 	})
 }
 
