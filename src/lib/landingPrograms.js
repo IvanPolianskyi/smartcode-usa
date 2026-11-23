@@ -14,10 +14,9 @@ export const LANDING_PROGRAMS = [
 		kind: 'Roblox game development',
 		title: 'SmartCode Club',
 		popular: true,
-		text: 'Learn Roblox Studio and Luau with an AI helper in every lesson, build with us at weekly live AI sessions, and publish a game people can play.',
+		text: 'Learn Roblox Studio and Luau step by step, build with us at weekly live AI sessions, and publish a game people can play.',
 		topics: [
 			'92 lessons from your first part to a published game',
-			'An AI helper in every lesson that explains your code',
 			'Your code checked the moment you hit Run',
 			'Weekly live builds with AI in our Discord',
 			'Club-only Discord channels and help when you get stuck',

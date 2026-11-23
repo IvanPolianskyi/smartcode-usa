@@ -89,7 +89,6 @@ export default async function FreePage({ params, searchParams }) {
 						<ul className={f.list}>
 							{build ? <li>The code from the reel, ready to open in Roblox Studio</li> : null}
 							<li>Your first Roblox Studio lesson, free</li>
-							<li>An AI helper that explains your code and errors (5 free questions a day)</li>
 							<li>Free weekly live builds with AI in our Discord</li>
 						</ul>
 						<div className={f.row}>

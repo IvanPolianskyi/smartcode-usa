@@ -14,7 +14,7 @@ import styles from '../page.module.css'
 import f from '../funnel.module.css'
 
 const PRICE = BILLING_TIERS.standard
-const DESCRIPTION = `SmartCode Club: the full Roblox Studio course with an AI helper in every lesson, weekly live AI builds, and club-only Discord. ${LEGAL.trialDays} days free, then ${PRICE.monthlyPrice}/month or ${PRICE.annualPrice}/year. Cancel anytime.`
+const DESCRIPTION = `SmartCode Club: the full Roblox Studio course, weekly live AI builds, and club-only Discord. ${LEGAL.trialDays} days free, then ${PRICE.monthlyPrice}/month or ${PRICE.annualPrice}/year. Cancel anytime.`
 
 export const metadata = {
 	title: 'SmartCode Club: build and publish your own Roblox game',
@@ -26,8 +26,8 @@ export const metadata = {
 
 const INCLUDED = [
 	{
-		title: 'An AI helper in every lesson',
-		text: 'Paste your script or an error and get an explanation and a fix, right inside the lesson. Club members get 50 questions a day.',
+		title: 'Your code checked as you go',
+		text: 'Every lesson has practice tasks, and your code is checked the moment you run it - so you know right away what to fix.',
 	},
 	{
 		title: 'The full Roblox course - 92 lessons',
@@ -54,7 +54,7 @@ const FAQ = [
 	},
 	{
 		q: 'Does AI build the game for me?',
-		a: 'No - it builds it with you. The AI helper explains your code and errors, and the course teaches you the Roblox Studio and Luau skills to understand AI code, fix it, and make the game yours.',
+		a: 'No - it builds it with you. The course teaches you the Roblox Studio and Luau skills to understand AI code, fix it, and make the game yours.',
 	},
 	{
 		q: `What happens after the ${LEGAL.trialDays} free days?`,
@@ -90,7 +90,7 @@ export default async function ClubPage({ params }) {
 					<p className={f.eyebrow}>SmartCode Club</p>
 					<h1 className={f.title}>Build and publish your own Roblox game</h1>
 					<p className={f.lede}>
-						One membership: the full Roblox course with an AI helper in every lesson,
+						One membership: the full Roblox course,
 						weekly live AI builds, and club-only Discord. Start with {LEGAL.trialDays} free days - nothing is
 						charged today, cancel anytime.
 					</p>

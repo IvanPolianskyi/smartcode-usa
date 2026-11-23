@@ -55,7 +55,7 @@ export default async function KitAccessPage({ params }) {
 								<strong>Join the Telegram</strong> - new prompts and the weekly live builds are posted there.
 							</li>
 							<li>
-								<strong>Stuck?</strong> Ask the AI helper - you have 50 questions a day.
+								<strong>New to Roblox Studio?</strong> Start with our free first lesson.
 							</li>
 						</ol>
 
@@ -68,7 +68,7 @@ export default async function KitAccessPage({ params }) {
 									Join the Telegram
 								</a>
 								<Link href={FREE_FIRST_LESSON_PATH} className="sc-btn sc-btn-ghost sc-btn-lg">
-									Ask the AI helper
+									Open the first lesson
 								</Link>
 							</div>
 							<p className={f.fine}>

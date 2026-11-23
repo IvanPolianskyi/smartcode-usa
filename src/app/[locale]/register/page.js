@@ -23,7 +23,6 @@ import styles from '../login/Auth.module.css'
 
 const PERKS = [
 	'Start building in Roblox Studio free - no card',
-	'An AI helper that explains your code and errors',
 	'Free weekly live builds with AI in our Discord',
 	`Club: ${LEGAL.trialDays} days free, cancel anytime · ${LEGAL.refundDays}-day money-back`,
 ]

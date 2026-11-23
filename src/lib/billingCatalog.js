@@ -27,7 +27,6 @@ export const BILLING_TIERS = {
 		tagline: 'Everything you need to build and publish your first Roblox game.',
 		features: [
 			'All 92 Roblox lessons',
-			'AI helper in every lesson - 50 questions a day',
 			'Your code checked the moment you run it',
 			'Weekly live builds with AI',
 			'Club-only Discord channels',

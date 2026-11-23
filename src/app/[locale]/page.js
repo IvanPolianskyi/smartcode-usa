@@ -13,7 +13,7 @@ import { faqSchema, organizationSchema } from '@/lib/structuredData'
 import styles from './page.module.css'
 import SiteFooter from '@/components/Nav/SiteFooter'
 
-const HOME_DESCRIPTION = `Build Roblox games with AI: an AI helper in every lesson, weekly live AI builds, and the Roblox Studio skills to turn AI code into a real game. Start free, then ${LEGAL.monthlyPrice}/month. Cancel anytime.`
+const HOME_DESCRIPTION = `Build Roblox games with AI: a step-by-step Roblox course, weekly live AI builds, and the Roblox Studio skills to turn AI code into a real game. Start free, then ${LEGAL.monthlyPrice}/month. Cancel anytime.`
 
 export const metadata = {
 	title: 'SmartCode - build Roblox games with AI',
@@ -37,7 +37,7 @@ export const metadata = {
 const STEPS = [
 	{
 		title: 'Start building free',
-		text: 'Make a free account - no card - and build in Roblox Studio from the first lesson, with an AI helper that explains your code when you get stuck.',
+		text: 'Make a free account - no card - and build in Roblox Studio from the first lesson, with your code checked the moment you run it.',
 		href: '/free',
 	},
 	{
@@ -54,8 +54,8 @@ const STEPS = [
 
 const INCLUDED = [
 	{
-		title: 'An AI helper in every lesson',
-		text: 'Paste your script or the error from Output and the AI helper explains what is wrong and how to fix it - right inside the lesson.',
+		title: 'Your code checked as you go',
+		text: 'Practice tasks in every lesson check your code the moment you run it, so you see right away what is wrong and how to fix it.',
 	},
 	{
 		title: 'Weekly live builds with AI',
@@ -86,7 +86,7 @@ const FAQ = [
 	},
 	{
 		q: 'Does AI build the game for me?',
-		a: 'No - it builds it with you. The AI helper in every lesson explains your code and errors, and in our live builds we use AI tools the way developers do. The lessons teach you the Roblox Studio and Luau skills to understand AI code, fix it, and make the game your own.',
+		a: 'No - it builds it with you. In our live builds we use AI tools the way developers do. The lessons teach you the Roblox Studio and Luau skills to understand AI code, fix it, and make the game your own.',
 	},
 	{
 		q: 'Are the live builds free?',
@@ -130,7 +130,7 @@ export default async function Home({ params }) {
 								className={`${styles.heroLede} ${styles.heroLedeMobile} ${styles.heroIn}`}
 								style={{ '--heroInDelay': '90ms' }}
 							>
-								An AI helper in every lesson, live AI builds every week, and the
+								A step-by-step Roblox course, live AI builds every week, and the
 								skills to turn AI code into a real game.
 							</p>
 							<p

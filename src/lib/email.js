@@ -268,7 +268,6 @@ export async function sendLessonLinkEmail({ to, name, lessonTitle, lessonUrl }) 
 		<p class="p"><strong>${escapeHtml(lessonTitle)}</strong></p>
 		<div class="btn-wrap"><a href="${lessonUrl}" class="btn" target="_blank">Open the lesson</a></div>
 		<p class="p">Don't have Roblox Studio yet? It's free: <a href="https://create.roblox.com/">create.roblox.com</a></p>
-		<p class="p">Stuck on something? The AI helper under every lesson explains your code and errors.</p>
 		<p class="p">See you there,<br><strong>SmartCode</strong></p>
 	`
 	const text = `${hi}\n\nOpen this lesson on your computer (Roblox Studio runs on Windows and Mac):\n${lessonTitle}\n${lessonUrl}\n\nRoblox Studio is free: https://create.roblox.com/\n\nSmartCode`

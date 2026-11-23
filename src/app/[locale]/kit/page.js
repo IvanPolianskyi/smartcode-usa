@@ -27,14 +27,14 @@ const STACK = [
 	{ badge: 'Core', title: '68 copy-paste prompts', text: 'Obby, tycoon, simulator, tower defense and a story game - each from empty map to working game, one prompt at a time.' },
 	{ badge: 'Core', title: 'Fix-it and polish prompts', text: 'What to paste when the script breaks or the Output window turns red, and how to make a working game feel fun.' },
 	{ badge: 'Bonus', title: 'The reel playbook', text: 'How we film our games for Instagram - the formats behind 57M+ views in 90 days, plus 20 hooks you can copy.' },
-	{ badge: 'Bonus', title: 'AI helper - 50 questions a day', text: 'Paste your script or an error on our site and get a plain-English fix, right inside the lesson.' },
+	{ badge: 'Bonus', title: 'Free first lessons', text: 'Our Roblox Studio lessons on the site walk you through the basics - parts, scripts, Explorer - so the AI code makes sense.' },
 	{ badge: 'Bonus', title: 'Private Telegram + live builds', text: 'New prompts every week, live builds, and help when you are stuck. Every kit update is free.' },
 ]
 
 const FAQ = [
 	{ q: 'How much do I pay, exactly?', a: `${KIT.displayPrice} once, in USD. No subscription. Paddle, our Merchant of Record, adds sales tax or VAT only where the law requires it.` },
 	{ q: 'Can I do this on my phone?', a: 'No. Roblox Studio runs on Windows and Mac. You can buy and read the kit on your phone, then build on your computer.' },
-	{ q: 'Do I need coding skills?', a: 'No. The prompts are written for beginners, and the AI helper explains anything you do not understand. You will pick up real Luau along the way.' },
+	{ q: 'Do I need coding skills?', a: 'No. The prompts are written for beginners, and every prompt says where the script goes and how to test it. You will pick up real Luau along the way.' },
 	{ q: 'Do I need a paid AI plan?', a: 'No. The AI assistant inside Roblox Studio is free. Claude or ChatGPT are optional and not included.' },
 	{ q: 'How do I get access after paying?', a: 'We email you a link straight away - tap it and the kit opens, no password needed. Join our Telegram from the thank-you page.' },
 	{ q: 'Will my game go viral?', a: 'Results are not guaranteed. Players and views depend on your game, how you share it, and the platforms.' },

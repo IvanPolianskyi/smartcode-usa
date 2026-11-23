@@ -20,7 +20,6 @@ import {
 } from 'lucide-react'
 import { markdownToHtml } from '@/lib/markdownToHtml'
 import { updateProgress } from '@/lib/authClient'
-import AiHelper from './AiHelper'
 import ComputerNudge from './ComputerNudge'
 import {
   computeLessonXp,
@@ -1023,7 +1022,6 @@ const RobloxLessonPage = ({
               </button>
             )}
         </div>
-        {courseId === 'roblox-studio' ? <AiHelper lessonId={lessonId} /> : null}
           </div>
         </div>
       </LessonPageWithSidebar>

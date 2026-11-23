@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { Laptop } from 'lucide-react'
 import { track } from '@/lib/analytics'
-import styles from './AiHelper.module.css'
+import styles from './ComputerNudge.module.css'
 
 function isPhone() {
 	if (typeof navigator === 'undefined') return false
