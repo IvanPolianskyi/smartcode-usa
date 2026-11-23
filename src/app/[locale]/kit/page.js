@@ -24,8 +24,8 @@ const INSIDE = [
 	{ thumb: 'claude', title: 'Full setup guide', text: 'Install Claude Code and Rojo, add our rules file and connect Roblox Studio - every command, step by step.', by: 'About 15 minutes' },
 	{ thumb: 'house', title: 'Game 1: LEGO house', text: 'The exact prompt for a house of 2 000 blocks you can smash through, plus 3 follow-ups to make it yours.', by: 'One prompt' },
 	{ thumb: 'vortex', title: 'Game 2: Vortex floor', text: '14 400 blocks that sink into a whirlpool under your feet - and the prompt that keeps it smooth.', by: 'One prompt' },
-	{ thumb: 'grass', title: 'Game 3: Wind & grass', text: 'A field of 14 000 grass blades that bends in the wind and around the player.', by: 'One prompt' },
-	{ thumb: 'nanobots', title: 'Test & fix prompts', text: 'Let Claude press Play, read the errors and fix them itself. Plus 3 more game prompts to try.', by: 'Inside the kit' },
+	{ thumb: 'swarm', title: 'Game 3: Nanobot swarm', text: '2 000 cubes that swirl around you, spin into a tornado and build walls - the game from our 6M-view reel.', by: 'One prompt + one fix' },
+	{ thumb: 'grass', title: 'Test & fix prompts', text: 'Let Claude press Play, read the errors and fix them itself. Plus 3 more game prompts to try.', by: 'Inside the kit' },
 	{ thumb: 'sinkhole', title: 'The starter files', text: 'The rules file and the 3 finished games as .rbxlx files, with the reel playbook in the guide.' },
 ]
 

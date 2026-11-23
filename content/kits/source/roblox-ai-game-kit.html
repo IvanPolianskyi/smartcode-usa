@@ -52,7 +52,7 @@
   <h1>Build Roblox games<br>with <em>Claude Code</em>.</h1>
   <p class="lede">You type one prompt. Claude Code writes every script, builds the map and hands you a game file you open in Roblox Studio and press Play. This kit is the exact setup and the exact prompts behind our three favourite games.</p>
   <img src="img/house-2.jpg" alt="">
-  <div class="row"><img src="img/vortex-2.jpg" alt=""><img src="img/grass-2.jpg" alt=""></div>
+  <div class="row"><img src="img/vortex-2.jpg" alt=""><img src="img/swarm-tornado.jpg" alt=""></div>
   <div class="stats">
     <div><b>3</b><span>games, one prompt each</span></div>
     <div><b>~3 <em>min</em></b><span>from prompt to game file</span></div>
@@ -69,7 +69,7 @@
     <li><strong>How every game is made</strong> - the 4-step loop</li>
     <li><strong>Game 1 · LEGO house</strong> - smash through walls</li>
     <li><strong>Game 2 · Vortex floor</strong> - 14 000 blocks that sink under your feet</li>
-    <li><strong>Game 3 · Wind &amp; grass</strong> - a field that bends around you</li>
+    <li><strong>Game 3 · Nanobot swarm</strong> - 2 000 cubes that follow you, spin and build walls</li>
     <li><strong>Let Claude test your game</strong> - it presses Play and reads the errors itself</li>
     <li><strong>Fix-it prompts</strong> - what to paste when something breaks</li>
     <li><strong>More games to try</strong> - 3 more prompts</li>
@@ -155,15 +155,16 @@ Mac:      curl -fsSL https://claude.ai/install.sh | bash</div>
 </section>
 
 <section class="page">
-  <h2>6. Game 3 · <em>Wind &amp; grass</em></h2>
-  <p>A field of 14 000 separate grass blades. Gusts of wind roll across it, and the grass bends away from your character and slowly stands back up.</p>
-  <div class="two"><img class="shot" src="img/grass-1.jpg" alt=""><img class="shot" src="img/grass-2.jpg" alt=""></div>
+  <h2>6. Game 3 · <em>Nanobot swarm</em></h2>
+  <p>2 000 black metal cubes swirl around you like a living cloud. Click the floor and they rush there as a spinning tornado. Press E and they build a giant wall, press E again and it falls apart. This is the game from our reel with 6M views.</p>
+  <div class="two"><img class="shot" src="img/swarm-cloud.jpg" alt=""><img class="shot" src="img/swarm-wall.jpg" alt=""></div>
   <h3>The prompt</h3>
-  <div class="prompt">Make a Roblox game in this folder: a huge field of tall green grass under a bright sky. Every grass blade is its own thin part, thousands of them, with slightly different heights and shades of green. Wind waves roll across the field so the blades sway in gusts. When the player walks through, the grass bends away from them and slowly stands back up after they pass. Keep it smooth: only animate the blades near the camera, and do it on the client. Build it as a Rojo project and build game.rbxlx.</div>
+  <div class="prompt">Make a Roblox game in this folder: a swarm of 2 000 small black metal cubes - nanobots - lives on a white floor. The swarm flows after the player like a living cloud, swirling around them and never passing through each other in a messy way. Click anywhere on the floor and the swarm rushes there and forms a tall spinning tornado. Press E and the swarm builds a giant cube wall in front of the player, press E again and it falls apart back into the cloud. Run the movement on the client so it stays smooth. Build it as a Rojo project and build game.rbxlx.</div>
+  <div class="box"><strong>We hit one snag:</strong> on the first try the cloud flew right around the camera and covered the screen. One follow-up fixed it - paste it if you see the same thing:</div>
+  <div class="prompt">When the game starts, the swarm cloud flies right around the camera and covers the whole screen. Keep the cloud a bit in front of and around the player at chest height, never between the camera and the player, and start the camera zoomed out to about 25 studs so you see the player and the whole cloud. Rebuild game.rbxlx.</div>
   <h3>Make it yours</h3>
-  <div class="prompt">Add flowers in 3 colours between the grass, and butterflies that fly away when the player comes close.</div>
-  <div class="prompt">Add a day-night cycle: after 60 seconds the sun sets, the sky turns orange, then night with fireflies over the grass.</div>
-  <div class="prompt">Hide 5 glowing coins in the tall grass and show how many the player has found.</div>
+  <div class="prompt">Make the cubes glow neon blue at night, and let the tornado pick up anything loose on the floor.</div>
+  <div class="prompt">Press Q and the swarm forms a giant copy of my character that copies my moves.</div>
 </section>
 
 <section class="page">
@@ -190,8 +191,8 @@ Mac:      curl -fsSL https://claude.ai/install.sh | bash</div>
 <section class="page">
   <h2>9. More games to <em>try</em></h2>
   <p>Three more ideas from our reels, written the same way. Paste one into a new folder and tweak with your own follow-ups.</p>
-  <h3>Nanobot swarm</h3>
-  <div class="prompt">Make a Roblox game in this folder: a swarm of 2 000 small black metal cubes - nanobots - lives on a white floor. The swarm flows after the player like a living cloud, swirling around them and never passing through each other in a messy way. Click anywhere on the floor and the swarm rushes there and forms a tall spinning tornado. Press E and the swarm builds a giant cube wall in front of the player, press E again and it falls apart back into the cloud. Run the movement on the client so it stays smooth. Build it as a Rojo project and build game.rbxlx.</div>
+  <h3>Wind &amp; grass</h3>
+  <div class="prompt">Make a Roblox game in this folder: a huge field of tall green grass under a bright sky. Every grass blade is its own thin part, thousands of them, with slightly different heights and shades of green. Wind waves roll across the field so the blades sway in gusts. When the player walks through, the grass bends away from them and slowly stands back up after they pass. Keep it smooth: only animate the blades near the camera, and do it on the client. Build it as a Rojo project and build game.rbxlx.</div>
   <h3>Neon bridge</h3>
   <div class="prompt">Make a Roblox game in this folder: a long suspension bridge at night over dark water, with two tall towers and glowing cables. The road is made of tiles; the tile under the player lights up in bright cyan neon and the light trails behind them, fading after a second. Neon lamps along the sides pulse slowly. Add fog, a starry sky and the city lights far away. Spawn the player at one end of the bridge. Build it as a Rojo project and build game.rbxlx.</div>
   <h3>Red sinkhole</h3>

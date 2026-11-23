@@ -31,7 +31,7 @@
 ```
 Hey! Here's everything I used to build that game with AI 👇
 
-The Roblox AI Game Kit: the Claude Code setup + the exact prompts for 3 games (LEGO house, vortex floor, wind & grass) + the finished game files.
+The Roblox AI Game Kit: the Claude Code setup + the exact prompts for 3 games (LEGO house, vortex floor, nanobot swarm) + the finished game files.
 
 $19 one-time, instant access, 30-day money-back.
 👉 [Get the kit] → smartcode.academy/kit?src=dm
