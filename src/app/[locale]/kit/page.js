@@ -78,18 +78,20 @@ export default async function KitPage({ params }) {
 						<KitClip src="/kits/clips/blocks.mp4" poster="/kits/clips/blocks.jpg" className={s.phone} priority />
 					</div>
 
-					<div className={s.priceRow}>
-						<KitBuyButton kitId={KIT.id} className={s.btn}>
-							Get instant access
-						</KitBuyButton>
-						<div className={s.price}>
-							{KIT.displayPrice} <small>one-time</small>
+					<div className={s.heroBuy}>
+						<div className={s.priceRow}>
+							<KitBuyButton kitId={KIT.id} className={s.btn}>
+								Get instant access
+							</KitBuyButton>
+							<div className={s.price}>
+								{KIT.displayPrice} <small>one-time</small>
+							</div>
 						</div>
+						<p className={s.trust}>
+							Secure checkout by Paddle &nbsp;·&nbsp; Instant access &nbsp;·&nbsp; {LEGAL.refundDays}-day
+							money-back
+						</p>
 					</div>
-					<p className={s.trust}>
-						Secure checkout by Paddle &nbsp;·&nbsp; Instant access &nbsp;·&nbsp; {LEGAL.refundDays}-day
-						money-back
-					</p>
 
 					<div className={s.stats}>
 						<div className={s.wrap}>
