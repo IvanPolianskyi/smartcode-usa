@@ -29,7 +29,13 @@ function setFlag(key) {
 export function useInAppBrowser() {
 	const [info, setInfo] = useState(null)
 	useEffect(() => {
-		const detected = detectInAppBrowser(navigator.userAgent)
+		let ua = navigator.userAgent
+		// Local testing only: /kit?iab=instagram (or tiktok, facebook) pretends to be that app.
+		if (process.env.NODE_ENV !== 'production') {
+			const fake = new URLSearchParams(window.location.search).get('iab')
+			if (fake) ua = `Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) Mobile/15E148 ${{ instagram: 'Instagram 350.0', tiktok: 'BytedanceWebview TikTok', facebook: 'FBAN/FBIOS' }[fake] || fake}`
+		}
+		const detected = detectInAppBrowser(ua)
 		if (detected) setInfo({ ...detected, href: window.location.href })
 	}, [])
 	return info
@@ -76,20 +82,41 @@ export function OpenInBrowserOverlay({ info, onClose, onPayHere }) {
 	// Portal: the sticky nav has backdrop-filter, which would trap position: fixed.
 	return createPortal(
 		<div className={styles.overlay} role="dialog" aria-modal="true" aria-labelledby="iab-title">
-			<div className={styles.dots} aria-hidden="true">
-				{dots}
+			{/* Points up at the app's own ••• button, which sits just above the page. */}
+			<div className={styles.tap} aria-hidden="true">
+				<svg className={styles.arrow} viewBox="0 0 40 64">
+					<path d="M22 60 C 8 48, 8 24, 24 8" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+					<path d="M13 12 L 25 6 L 29 19" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+				</svg>
+				<span className={styles.tapPill}>Tap here</span>
 			</div>
-			<svg className={styles.arrow} viewBox="0 0 120 92" aria-hidden="true">
-				<path d="M14 84 C 40 80, 76 66, 92 30" fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
-				<path d="M78 34 L 94 22 L 100 42" fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-			</svg>
+
+			<div className={styles.progress}>
+				<div className={styles.progressHead}>
+					<span className={styles.eyebrow}>Almost there</span>
+					<span className={styles.count}>3/4</span>
+				</div>
+				<div className={styles.bar}>
+					<span />
+				</div>
+				<p className={styles.next}>Kit picked ✓ · Open in browser · Pay · Download</p>
+			</div>
 
 			<h2 id="iab-title" className={styles.title}>
-				Pay in your <span>browser</span>
+				Open in your <span>browser</span>
 			</h2>
 			<p className={styles.why}>
-				The kit may not open properly inside {info.app}. Open this page in {info.ios ? 'Safari' : 'Chrome'} so your games and guide download right after you pay.
+				The kit may not open properly in {info.app}. Open it in {info.ios ? 'Safari' : 'Chrome'} so your files download right after you pay.
 			</p>
+
+			<div className={styles.getting}>
+				<p className={styles.gettingTitle}>You&apos;re getting</p>
+				<ul>
+					<li>3 finished Roblox games + all the code</li>
+					<li>Step-by-step guide to Roblox games with AI</li>
+					<li>The exact Claude Code prompts</li>
+				</ul>
+			</div>
 
 			<ol className={styles.steps}>
 				<li>
@@ -128,7 +155,7 @@ export function OpenInBrowserOverlay({ info, onClose, onPayHere }) {
 					onPayHere?.()
 				}}
 			>
-				Pay here anyway
+				Continue here anyway
 			</button>
 			<button
 				type="button"
