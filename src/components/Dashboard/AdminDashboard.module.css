@@ -217,3 +217,20 @@
 	font-size: 0.8rem;
 	color: var(--dash-soft, #8b919c);
 }
+
+.legacy {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+
+.legacy > summary {
+	cursor: pointer;
+	font-weight: 600;
+	color: var(--sc-muted, #6b7280);
+	padding: 0.6rem 0;
+}
+
+.legacy[open] > summary {
+	margin-bottom: 1rem;
+}

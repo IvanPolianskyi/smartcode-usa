@@ -244,7 +244,46 @@ export function summarizeKit(events, { currency = 'USD' } = {}) {
 		medianSeconds: median(times),
 	}
 
-	return { totals, funnel, daily, breakdowns, scroll, sections, ctas, checkout, inApp, faq, insights: buildInsights({ totals, funnel, breakdowns, checkout, inApp, sections }) }
+	// Last sales with where the buyer came from (newest first).
+	const recentPurchases = purchases
+		.slice(-10)
+		.reverse()
+		.map((p) => {
+			const who = profileOf(p)
+			return {
+				at: p.createdAt,
+				amount: Number(p.props?.amount) || 0,
+				currency: p.props?.currency || currency,
+				method: p.props?.method || null,
+				cta: p.props?.cta || null,
+				src: who.src,
+				browser: who.browser,
+				device: who.device,
+				country: who.country,
+			}
+		})
+
+	return { totals, verdict: buildVerdict(totals), funnel, daily, breakdowns, scroll, sections, ctas, checkout, inApp, faq, recentPurchases, insights: buildInsights({ totals, funnel, breakdowns, checkout, inApp, sections }) }
+}
+
+/**
+ * One plain sentence: is the kit selling, and is there enough data to judge.
+ * Cold Instagram traffic to a $19 digital product usually converts 0.5-3%.
+ */
+export function buildVerdict(totals) {
+	const { visitors, purchases, revenue, conversion } = totals
+	const sales = `${purchases} sale${purchases === 1 ? '' : 's'}`
+	if (visitors === 0) return { level: 'info', text: 'No visitors yet. Put smartcode.academy/kit?src=bio in the Instagram bio and send traffic.' }
+	if (purchases === 0 && visitors < 150) {
+		return { level: 'info', text: `${visitors} visitors and no sales yet. Too early to judge: wait for about 150-300 visitors.` }
+	}
+	if (purchases === 0) {
+		return { level: 'warn', text: `${visitors} visitors and no sales. Something blocks buying: look at the funnel below to see where people stop.` }
+	}
+	if (conversion >= 1) {
+		return { level: 'good', text: `Selling: ${sales}, $${revenue} from ${visitors} visitors (${conversion}% buy). That is a healthy rate for Instagram traffic. Send more traffic.` }
+	}
+	return { level: 'warn', text: `Selling, but slowly: ${sales}, $${revenue} from ${visitors} visitors (${conversion}% buy, aim for 1%+). Fix the biggest drop below.` }
 }
 
 /** Plain-language hints about the biggest problems, ordered by impact. */
