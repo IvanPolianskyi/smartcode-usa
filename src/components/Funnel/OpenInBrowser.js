@@ -29,7 +29,13 @@ function setFlag(key) {
 export function useInAppBrowser() {
 	const [info, setInfo] = useState(null)
 	useEffect(() => {
-		const detected = detectInAppBrowser(navigator.userAgent)
+		let ua = navigator.userAgent
+		// Local testing only: /kit?iab=instagram (or tiktok, facebook) pretends to be that app.
+		if (process.env.NODE_ENV !== 'production') {
+			const fake = new URLSearchParams(window.location.search).get('iab')
+			if (fake) ua = `Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) Mobile/15E148 ${{ instagram: 'Instagram 350.0', tiktok: 'BytedanceWebview TikTok', facebook: 'FBAN/FBIOS' }[fake] || fake}`
+		}
+		const detected = detectInAppBrowser(ua)
 		if (detected) setInfo({ ...detected, href: window.location.href })
 	}, [])
 	return info
