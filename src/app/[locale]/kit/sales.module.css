@@ -232,20 +232,15 @@
 	object-fit: cover;
 }
 
-/* buy block right under the hero clips: centred on the same axis as the clips */
+/* buy block under the offer text, left-aligned like the reference */
 .heroBuy {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	text-align: center;
+	align-items: flex-start;
 }
 
-.heroBuy .priceRow {
-	justify-content: center;
-}
-
-.heroBuy .btn {
-	min-width: 300px;
+.lead b {
+	color: var(--text);
 }
 
 /* stats */
@@ -566,9 +561,6 @@
 		align-items: stretch;
 	}
 
-	.heroBuy .btn {
-		min-width: 0;
-	}
 
 	/* the buy button sits in a small wrapper div: let it take the full row too */
 	.priceRow > div:has(> .btn) {

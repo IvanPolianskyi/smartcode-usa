@@ -78,6 +78,35 @@ export default async function KitPage({ params }) {
 						<KitClip src="/kits/clips/blocks.mp4" poster="/kits/clips/blocks.jpg" className={s.phone} priority />
 					</div>
 
+					<div className={s.stats}>
+						<div className={s.wrap}>
+							<div>
+								<b>
+									57M<em>+</em>
+								</b>
+								<span>views in 90 days</span>
+							</div>
+							<div>
+								<b>
+									3 <em>games</em>
+								</b>
+								<span>our best, code included</span>
+							</div>
+							<div>
+								<b>
+									~3 <em>min</em>
+								</b>
+								<span>from prompt to game</span>
+							</div>
+						</div>
+					</div>
+
+					<p className={s.lead}>
+						<b>Get our 3 best Roblox games</b> - the ones from our viral reels - ready to play, with
+						all the code. Plus the step-by-step guide and exact prompts to build your own with
+						Claude Code: you paste one prompt, it writes every script and hands you a game file.
+					</p>
+
 					<div className={s.heroBuy}>
 						<div className={s.priceRow}>
 							<KitBuyButton kitId={KIT.id} className={s.btn}>
@@ -92,35 +121,6 @@ export default async function KitPage({ params }) {
 							money-back
 						</p>
 					</div>
-
-					<div className={s.stats}>
-						<div className={s.wrap}>
-							<div>
-								<b>
-									57M<em>+</em>
-								</b>
-								<span>views in 90 days</span>
-							</div>
-							<div>
-								<b>
-									3 <em>games</em>
-								</b>
-								<span>one prompt each</span>
-							</div>
-							<div>
-								<b>
-									~3 <em>min</em>
-								</b>
-								<span>from prompt to game</span>
-							</div>
-						</div>
-					</div>
-
-					<p className={s.lead}>
-						The step-by-step setup and the exact prompts behind my AI-built Roblox games. You paste
-						one prompt, Claude Code writes every script, builds the map and hands you a game file -
-						open it in Roblox Studio and press Play.
-					</p>
 
 					<div className={s.disclaim}>
 						<b>Good to know</b>
