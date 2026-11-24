@@ -26,7 +26,7 @@ const INSIDE = [
 	{ thumb: 'vortex', title: 'Game 2: Vortex floor', text: '14 400 blocks that sink into a whirlpool under your feet - and the prompt that keeps it smooth.', by: 'One prompt' },
 	{ thumb: 'swarm', title: 'Game 3: Nanobot swarm', text: '2 000 cubes that swirl around you, spin into a tornado and build walls - the game from our 6M-view reel.', by: 'One prompt + one fix' },
 	{ thumb: 'grass', title: 'Test & fix prompts', text: 'Let Claude press Play, read the errors and fix them itself. Plus 3 more game prompts to try.', by: 'Inside the kit' },
-	{ thumb: 'sinkhole', title: 'The starter files', text: 'The rules file and the 3 finished games as .rbxlx files, with the reel playbook in the guide.' },
+	{ thumb: 'sinkhole', title: 'The 3 finished games', text: 'Every game as a full project - the game file plus all the scripts Claude wrote - so you can play it now and change it with Claude.', by: 'Download' },
 ]
 
 const NEED = [
@@ -143,7 +143,7 @@ export default async function KitPage({ params }) {
 				<div className={s.wrap}>
 					<h2 className={s.center}>What you get</h2>
 					<p className={`${s.sub} ${s.center}`}>
-						A step-by-step guide and the starter files. Everything is on one private page you can
+						A 22-page guide and the 3 finished games. Everything is on one private page you can
 						come back to any time, and every update is free.
 					</p>
 					<ul className={`${s.inside} ${s.card}`}>
