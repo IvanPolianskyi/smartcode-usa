@@ -121,7 +121,7 @@ export default function KitBuyButton({ kitId, children, className = 'sc-btn sc-b
 			{askBrowser && inApp ? (
 				<OpenInBrowserOverlay
 					info={inApp}
-					mode="pay"
+					onClose={() => setAskBrowser(false)}
 					onPayHere={() => {
 						setAskBrowser(false)
 						buy()
