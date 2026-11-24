@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { setRequestLocale } from 'next-intl/server'
+import KitAnalytics from '@/components/Funnel/KitAnalytics'
 import KitBuyButton from '@/components/Funnel/KitBuyButton'
 import KitClip from '@/components/Funnel/KitClip'
 import KitShell from '@/components/Funnel/KitShell'
@@ -58,11 +59,12 @@ export default async function KitPage({ params }) {
 	return (
 		<KitShell
 			action={
-				<KitBuyButton kitId={KIT.id} className={`${s.btn} ${s.small}`}>
+				<KitBuyButton kitId={KIT.id} position="header" className={`${s.btn} ${s.small}`}>
 					Get it for {KIT.displayPrice}
 				</KitBuyButton>
 			}
 		>
+			<KitAnalytics />
 			<PromoCapture />
 			<OpenInBrowserGate />
 
@@ -101,7 +103,7 @@ export default async function KitPage({ params }) {
 						</div>
 					</div>
 
-					<p className={s.lead}>
+					<p className={s.lead} data-kit-section="offer">
 						<b>Get our 3 best Roblox games</b> - the ones from our viral reels - ready to play, with
 						all the code. Plus the step-by-step guide and exact prompts to build your own with
 						Claude Code: you paste one prompt, it writes every script and hands you a game file.
@@ -109,7 +111,7 @@ export default async function KitPage({ params }) {
 
 					<div className={s.heroBuy}>
 						<div className={s.priceRow}>
-							<KitBuyButton kitId={KIT.id} className={s.btn}>
+							<KitBuyButton kitId={KIT.id} position="hero" className={s.btn}>
 								Get instant access
 							</KitBuyButton>
 							<div className={s.price}>
@@ -141,7 +143,7 @@ export default async function KitPage({ params }) {
 				</div>
 			</header>
 
-			<section className={s.block} style={{ paddingBottom: 0 }} aria-labelledby="proof">
+			<section className={s.block} style={{ paddingBottom: 0 }} aria-labelledby="proof" data-kit-section="proof">
 				<div className={s.wrap}>
 					<h2 id="proof" className={s.center}>
 						Seen by <span className={s.accent}>millions</span>
@@ -164,7 +166,7 @@ export default async function KitPage({ params }) {
 				</div>
 			</section>
 
-			<section className={s.block}>
+			<section className={s.block} data-kit-section="get">
 				<div className={s.wrap}>
 					<h2 className={s.center}>What you get</h2>
 					<p className={`${s.sub} ${s.center}`}>
@@ -186,7 +188,7 @@ export default async function KitPage({ params }) {
 				</div>
 			</section>
 
-			<section className={s.block} style={{ paddingTop: 0 }}>
+			<section className={s.block} style={{ paddingTop: 0 }} data-kit-section="how">
 				<div className={s.wrap}>
 					<h2 className={s.center}>How it works</h2>
 					<p className={`${s.sub} ${s.center}`}>From one prompt to a game you can play.</p>
@@ -218,7 +220,7 @@ export default async function KitPage({ params }) {
 				</div>
 			</section>
 
-			<section className={s.block} style={{ paddingTop: 0 }}>
+			<section className={s.block} style={{ paddingTop: 0 }} data-kit-section="need">
 				<div className={s.wrap}>
 					<h2 className={s.center}>What you need</h2>
 					<p className={`${s.sub} ${s.center}`}>Check this before you buy.</p>
@@ -232,7 +234,7 @@ export default async function KitPage({ params }) {
 					</div>
 
 					<h2 className={s.center}>Questions</h2>
-					<div className={s.faq} style={{ marginTop: 24 }}>
+					<div className={s.faq} style={{ marginTop: 24 }} data-kit-section="faq" data-kit-faq>
 						{FAQ.map((item) => (
 							<details key={item.q}>
 								<summary>{item.q}</summary>
@@ -243,7 +245,7 @@ export default async function KitPage({ params }) {
 				</div>
 			</section>
 
-			<section className={s.block} style={{ paddingTop: 0 }}>
+			<section className={s.block} style={{ paddingTop: 0 }} data-kit-section="final">
 				<div className={s.wrap}>
 					<div className={s.ctaBox}>
 						<h2>Start building tonight</h2>
@@ -255,7 +257,7 @@ export default async function KitPage({ params }) {
 							included).
 						</p>
 						<div style={{ display: 'flex', justifyContent: 'center' }}>
-							<KitBuyButton kitId={KIT.id} className={s.btn}>
+							<KitBuyButton kitId={KIT.id} position="final" className={s.btn}>
 								Get instant access
 							</KitBuyButton>
 						</div>

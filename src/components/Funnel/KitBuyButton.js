@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { loadPaddle } from '@/lib/paddleClient'
+import { loadPaddle, onPaddleEvent } from '@/lib/paddleClient'
 import { track } from '@/lib/analytics'
+import { kitIds, kitTrack, readSource } from '@/lib/kitTrack'
 import { readPromoCode } from '@/lib/startCheckout'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import { OpenInBrowserOverlay, useInAppBrowser, wantsToPayHere } from '@/components/Funnel/OpenInBrowser'
@@ -11,16 +12,37 @@ const KIT_PRICE_IDS = {
 	'roblox-ai-games': process.env.NEXT_PUBLIC_PADDLE_PRICE_KIT_GAMES || '',
 }
 
-function readSource() {
-	try {
-		const params = new URLSearchParams(window.location.search)
-		const raw = params.get('src') || params.get('utm_source') || ''
-		const clean = /^[a-z0-9_-]{1,32}$/i.test(raw) ? raw.toLowerCase() : ''
-		if (clean) window.sessionStorage.setItem('sc_src', clean)
-		return clean || window.sessionStorage.getItem('sc_src') || 'direct'
-	} catch {
-		return 'direct'
-	}
+/** Paddle overlay events -> kit analytics. Subscribed once per page. */
+const CHECKOUT_EVENTS = {
+	'checkout.loaded': 'checkout_open',
+	'checkout.customer.created': 'checkout_email',
+	'checkout.payment.initiated': 'payment_attempt',
+	'checkout.payment.failed': 'payment_failed',
+	'checkout.error': 'checkout_error',
+	'checkout.completed': 'checkout_completed',
+	'checkout.closed': 'checkout_closed',
+}
+let checkoutTracking = null
+let lastPosition = null
+let completed = false
+
+function trackCheckoutEvents() {
+	if (checkoutTracking) return
+	checkoutTracking = onPaddleEvent((event) => {
+		const name = CHECKOUT_EVENTS[event?.name]
+		if (!name) return
+		if (name === 'checkout_completed') completed = true
+		if (name === 'checkout_closed' && completed) return
+		const data = event?.data || {}
+		const method = data?.payment?.method_details?.type || data?.payment_method || null
+		const reason = event?.error?.code || event?.error?.detail || event?.detail || data?.error?.code || null
+		kitTrack(name, {
+			position: lastPosition,
+			...(method ? { method: String(method) } : {}),
+			...(reason ? { reason: String(reason).slice(0, 80) } : {}),
+			...(data?.currency_code ? { currency: data.currency_code } : {}),
+		})
+	})
 }
 
 /**
@@ -28,7 +50,7 @@ function readSource() {
  * account first. Paddle collects the email; the webhook creates the account
  * and emails the access link. Access is never granted from the success page.
  */
-export default function KitBuyButton({ kitId, children, className = 'sc-btn sc-btn-primary sc-btn-lg' }) {
+export default function KitBuyButton({ kitId, children, className = 'sc-btn sc-btn-primary sc-btn-lg', position = 'other' }) {
 	const { user } = useAuthSession()
 	const [busy, setBusy] = useState(false)
 	const [error, setError] = useState('')
@@ -38,6 +60,8 @@ export default function KitBuyButton({ kitId, children, className = 'sc-btn sc-b
 
 	/** Inside Instagram / TikTok, first ask to reopen the page in Safari / Chrome. */
 	function onClick() {
+		lastPosition = position
+		kitTrack('cta_click', { position, in_app: Boolean(inApp) })
 		if (inApp && !wantsToPayHere()) {
 			setAskBrowser(true)
 			return
@@ -53,7 +77,10 @@ export default function KitBuyButton({ kitId, children, className = 'sc-btn sc-b
 		}
 		setBusy(true)
 		const source = readSource()
+		const { kid, sid } = kitIds()
 		track('begin_checkout', { kit: kitId, source })
+		trackCheckoutEvents()
+		completed = false
 		try {
 			const Paddle = await loadPaddle()
 			Paddle.Checkout.open({
@@ -63,6 +90,9 @@ export default function KitBuyButton({ kitId, children, className = 'sc-btn sc-b
 				customData: {
 					kit: kitId,
 					src: source,
+					...(kid ? { kid } : {}),
+					...(sid ? { ksid: sid } : {}),
+					...(position ? { cta: position } : {}),
 					...(user?._id || user?.id ? { userId: String(user._id || user.id) } : {}),
 				},
 				settings: {

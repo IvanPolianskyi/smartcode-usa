@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { chromeIntentUrl, detectInAppBrowser } from '@/lib/inAppBrowser'
 import { track } from '@/lib/analytics'
+import { kitTrack } from '@/lib/kitTrack'
 import styles from './OpenInBrowser.module.css'
 
 const SEEN_KEY = 'sc_iab_seen'
@@ -55,6 +56,7 @@ export function OpenInBrowserOverlay({ info, mode = 'land', onClose, onPayHere }
 	const [copied, setCopied] = useState(false)
 	useEffect(() => {
 		track('iab_overlay_shown', { app: info.app, mode })
+		kitTrack('iab_shown', { app: info.app, mode })
 	}, [info.app, mode])
 
 	const intent = info.android ? chromeIntentUrl(info.href) : null
@@ -65,6 +67,7 @@ export function OpenInBrowserOverlay({ info, mode = 'land', onClose, onPayHere }
 			await navigator.clipboard.writeText(info.href)
 			setCopied(true)
 			track('iab_copy_link', { app: info.app })
+			kitTrack('iab_copy_link', { app: info.app, mode })
 		} catch {
 			window.prompt('Copy this link and open it in Safari or Chrome:', info.href)
 		}
@@ -113,7 +116,10 @@ export function OpenInBrowserOverlay({ info, mode = 'land', onClose, onPayHere }
 			</ol>
 
 			{intent ? (
-				<a href={intent} className={styles.primary} onClick={() => track('iab_open_chrome', { app: info.app })}>
+				<a href={intent} className={styles.primary} onClick={() => {
+					track('iab_open_chrome', { app: info.app })
+					kitTrack('iab_open_chrome', { app: info.app, mode })
+				}}>
 					Open in Chrome
 				</a>
 			) : null}
@@ -128,6 +134,7 @@ export function OpenInBrowserOverlay({ info, mode = 'land', onClose, onPayHere }
 					onClick={() => {
 						setFlag(PAY_HERE_KEY)
 						track('iab_pay_here', { app: info.app })
+						kitTrack('iab_pay_here', { app: info.app })
 						onPayHere?.()
 					}}
 				>
@@ -139,6 +146,7 @@ export function OpenInBrowserOverlay({ info, mode = 'land', onClose, onPayHere }
 					className={styles.skip}
 					onClick={() => {
 						track('iab_continue_here', { app: info.app })
+						kitTrack('iab_continue', { app: info.app })
 						onClose?.()
 					}}
 				>

@@ -1,9 +1,10 @@
 import { ObjectId } from 'mongodb'
 import { getCollection, ensureUserIndexes } from '@/lib/mongodb'
-import { getCustomerFromPaddle } from '@/lib/paddle'
+import { getCustomerFromPaddle, isSandbox } from '@/lib/paddle'
 import { createLoginToken } from '@/lib/loginTokens'
 import { sendKitAccessEmail } from '@/lib/email'
 import { recordFunnelEvent } from '@/lib/analyticsStore'
+import { recordKitEvent } from '@/lib/kitEvents'
 import { normalizeSiteUrl } from '@/lib/legalConfig'
 import { KITS, kitIdsFromTransaction, nameFromEmail } from '@/lib/kits'
 
@@ -32,6 +33,38 @@ export async function emailKitAccessLink(user, kitId) {
 		kitTitle: kit.title,
 		loginUrl: `${SITE_URL}${loginPath}`,
 	})
+}
+
+/** Minor units (cents) as a string -> major units number, or null. */
+export function majorAmount(minor) {
+	const n = Number(minor)
+	return Number.isFinite(n) ? Math.round(n) / 100 : null
+}
+
+/**
+ * Purchase row for the kit landing analytics. Joined to the visit through the
+ * `kid` the page put in Paddle custom data. Exactly once per transaction.
+ */
+async function recordKitPurchase(transaction, { kitIds, occurredAt }) {
+	const custom = transaction?.custom_data || {}
+	const totals = transaction?.details?.totals || {}
+	const payment = Array.isArray(transaction?.payments) ? transaction.payments[0] : null
+	await recordKitEvent({
+		name: 'purchase',
+		kid: custom.kid || null,
+		sid: custom.ksid || null,
+		props: {
+			kit: kitIds[0],
+			amount: majorAmount(totals.grand_total ?? totals.total),
+			net: majorAmount(totals.earnings),
+			currency: transaction?.currency_code || null,
+			method: payment?.method_details?.type || null,
+			cta: custom.cta || null,
+		},
+		context: { src: custom.src || null, test: isSandbox() },
+		dedupeKey: `kit:purchase:${transaction?.id}`,
+		occurredAt,
+	}).catch(() => {})
 }
 
 /**
@@ -131,6 +164,7 @@ export async function fulfilKitTransaction(transaction, { occurredAt = new Date(
 			dedupeKey: `purchase:kit:${transactionId}`,
 			occurredAt,
 		}).catch(() => {})
+		await recordKitPurchase(transaction, { kitIds, occurredAt })
 	}
 
 	return { handled: true, kits: kitIds, userId: String(user._id), created }
