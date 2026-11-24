@@ -7,7 +7,6 @@ import { track } from '@/lib/analytics'
 import { kitTrack } from '@/lib/kitTrack'
 import styles from './OpenInBrowser.module.css'
 
-const SEEN_KEY = 'sc_iab_seen'
 export const PAY_HERE_KEY = 'sc_iab_pay_here'
 
 function readFlag(key) {
@@ -47,12 +46,13 @@ function menuLabel(info) {
 }
 
 /**
- * Full-screen prompt that points at the in-app browser's ••• menu and asks
- * the visitor to reopen the page in Safari / Chrome, where Apple Pay, Google
- * Pay and saved cards work. `mode="pay"` is shown when they press Buy inside
- * the app and offers "Pay here anyway".
+ * Full-screen prompt shown when someone presses Buy inside Instagram /
+ * TikTok. It points at the in-app browser's ••• menu and asks them to reopen
+ * the page in Safari / Chrome, where Apple Pay, Google Pay and saved cards
+ * work. They can still pay here anyway, or close it and keep reading.
  */
-export function OpenInBrowserOverlay({ info, mode = 'land', onClose, onPayHere }) {
+export function OpenInBrowserOverlay({ info, onClose, onPayHere }) {
+	const mode = 'pay'
 	const [copied, setCopied] = useState(false)
 	useEffect(() => {
 		track('iab_overlay_shown', { app: info.app, mode })
@@ -85,15 +85,7 @@ export function OpenInBrowserOverlay({ info, mode = 'land', onClose, onPayHere }
 			</svg>
 
 			<h2 id="iab-title" className={styles.title}>
-				{mode === 'pay' ? (
-					<>
-						Pay in your <span>browser</span>
-					</>
-				) : (
-					<>
-						Open in your <span>browser</span>
-					</>
-				)}
+				Pay in your <span>browser</span>
 			</h2>
 			<p className={styles.why}>
 				Payments often fail inside {info.app}. In {info.ios ? 'Safari' : 'Chrome'} you can pay in one tap with{' '}
@@ -127,50 +119,31 @@ export function OpenInBrowserOverlay({ info, mode = 'land', onClose, onPayHere }
 				{copied ? 'Link copied - paste it in your browser' : 'Copy the link instead'}
 			</button>
 
-			{mode === 'pay' ? (
-				<button
-					type="button"
-					className={styles.skip}
-					onClick={() => {
-						setFlag(PAY_HERE_KEY)
-						track('iab_pay_here', { app: info.app })
-						kitTrack('iab_pay_here', { app: info.app })
-						onPayHere?.()
-					}}
-				>
-					Pay here anyway
-				</button>
-			) : (
-				<button
-					type="button"
-					className={styles.skip}
-					onClick={() => {
-						track('iab_continue_here', { app: info.app })
-						kitTrack('iab_continue', { app: info.app })
-						onClose?.()
-					}}
-				>
-					Keep reading here
-				</button>
-			)}
+			<button
+				type="button"
+				className={styles.skip}
+				onClick={() => {
+					setFlag(PAY_HERE_KEY)
+					track('iab_pay_here', { app: info.app })
+					kitTrack('iab_pay_here', { app: info.app })
+					onPayHere?.()
+				}}
+			>
+				Pay here anyway
+			</button>
+			<button
+				type="button"
+				className={styles.skip}
+				onClick={() => {
+					track('iab_continue_here', { app: info.app })
+					kitTrack('iab_continue', { app: info.app })
+					onClose?.()
+				}}
+			>
+				Back to the page
+			</button>
 		</div>,
 		// inside the kit page (it carries the font variables) when there is one
 		document.querySelector('[data-kit-page]') || document.body,
 	)
-}
-
-/** Shows the prompt once per visit when the page opens inside Instagram / TikTok. */
-export default function OpenInBrowserGate() {
-	const info = useInAppBrowser()
-	const [open, setOpen] = useState(false)
-
-	useEffect(() => {
-		if (info && !readFlag(SEEN_KEY)) {
-			setFlag(SEEN_KEY)
-			setOpen(true)
-		}
-	}, [info])
-
-	if (!info || !open) return null
-	return <OpenInBrowserOverlay info={info} onClose={() => setOpen(false)} />
 }

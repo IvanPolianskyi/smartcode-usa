@@ -4,7 +4,6 @@ import KitAnalytics from '@/components/Funnel/KitAnalytics'
 import KitBuyButton from '@/components/Funnel/KitBuyButton'
 import KitClip from '@/components/Funnel/KitClip'
 import KitShell from '@/components/Funnel/KitShell'
-import OpenInBrowserGate from '@/components/Funnel/OpenInBrowser'
 import PromoCapture from '@/components/Funnel/PromoCapture'
 import { KITS } from '@/lib/kits'
 import { LEGAL } from '@/lib/legalConfig'
@@ -66,7 +65,6 @@ export default async function KitPage({ params }) {
 		>
 			<KitAnalytics />
 			<PromoCapture />
-			<OpenInBrowserGate />
 
 			<header className={s.hero}>
 				<div className={s.wrap}>
