@@ -5,6 +5,7 @@ import { loadPaddle } from '@/lib/paddleClient'
 import { track } from '@/lib/analytics'
 import { readPromoCode } from '@/lib/startCheckout'
 import { useAuthSession } from '@/components/AuthSessionProvider'
+import { OpenInBrowserOverlay, useInAppBrowser, wantsToPayHere } from '@/components/Funnel/OpenInBrowser'
 
 const KIT_PRICE_IDS = {
 	'roblox-ai-games': process.env.NEXT_PUBLIC_PADDLE_PRICE_KIT_GAMES || '',
@@ -31,7 +32,18 @@ export default function KitBuyButton({ kitId, children, className = 'sc-btn sc-b
 	const { user } = useAuthSession()
 	const [busy, setBusy] = useState(false)
 	const [error, setError] = useState('')
+	const [askBrowser, setAskBrowser] = useState(false)
+	const inApp = useInAppBrowser()
 	const priceId = String(KIT_PRICE_IDS[kitId] || '').trim()
+
+	/** Inside Instagram / TikTok, first ask to reopen the page in Safari / Chrome. */
+	function onClick() {
+		if (inApp && !wantsToPayHere()) {
+			setAskBrowser(true)
+			return
+		}
+		buy()
+	}
 
 	async function buy() {
 		setError('')
@@ -68,10 +80,20 @@ export default function KitBuyButton({ kitId, children, className = 'sc-btn sc-b
 
 	return (
 		<div style={{ display: 'grid', gap: 8, justifyItems: 'start' }}>
-			<button type="button" className={className} onClick={buy} disabled={busy}>
+			<button type="button" className={className} onClick={onClick} disabled={busy}>
 				{busy ? 'Opening checkout…' : children}
 			</button>
 			{error ? <p style={{ margin: 0, color: '#b42318', fontSize: 14 }}>{error}</p> : null}
+			{askBrowser && inApp ? (
+				<OpenInBrowserOverlay
+					info={inApp}
+					mode="pay"
+					onPayHere={() => {
+						setAskBrowser(false)
+						buy()
+					}}
+				/>
+			) : null}
 		</div>
 	)
 }

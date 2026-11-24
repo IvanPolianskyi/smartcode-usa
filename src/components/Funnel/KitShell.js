@@ -14,7 +14,7 @@ const rubik = localFont({ src: '../../fonts/rubik-latin-var.woff2', weight: '400
  */
 export default function KitShell({ action = null, children }) {
 	return (
-		<div className={`${s.page} ${anton.variable} ${rubik.variable}`} data-theme="dark">
+		<div className={`${s.page} ${anton.variable} ${rubik.variable}`} data-theme="dark" data-kit-page>
 			<nav className={s.nav}>
 				<div className={s.wrap}>
 					<Link href="/kit" className={s.logo} aria-label="SmartCode">

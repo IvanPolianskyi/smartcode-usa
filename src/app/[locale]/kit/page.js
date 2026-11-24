@@ -3,7 +3,7 @@ import { setRequestLocale } from 'next-intl/server'
 import KitBuyButton from '@/components/Funnel/KitBuyButton'
 import KitClip from '@/components/Funnel/KitClip'
 import KitShell from '@/components/Funnel/KitShell'
-import InAppBrowserNotice from '@/components/Funnel/InAppBrowserNotice'
+import OpenInBrowserGate from '@/components/Funnel/OpenInBrowser'
 import PromoCapture from '@/components/Funnel/PromoCapture'
 import { KITS } from '@/lib/kits'
 import { LEGAL } from '@/lib/legalConfig'
@@ -64,6 +64,7 @@ export default async function KitPage({ params }) {
 			}
 		>
 			<PromoCapture />
+			<OpenInBrowserGate />
 
 			<header className={s.hero}>
 				<div className={s.wrap}>
@@ -106,7 +107,6 @@ export default async function KitPage({ params }) {
 						open it in Roblox Studio and press Play.
 					</p>
 
-					<InAppBrowserNotice />
 					<div className={s.priceRow}>
 						<KitBuyButton kitId={KIT.id} className={s.btn}>
 							Get instant access
