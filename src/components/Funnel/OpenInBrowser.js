@@ -76,13 +76,25 @@ export function OpenInBrowserOverlay({ info, onClose, onPayHere }) {
 	// Portal: the sticky nav has backdrop-filter, which would trap position: fixed.
 	return createPortal(
 		<div className={styles.overlay} role="dialog" aria-modal="true" aria-labelledby="iab-title">
-			<div className={styles.dots} aria-hidden="true">
-				{dots}
+			{/* Points up at the app's own ••• button, which sits just above the page. */}
+			<div className={styles.tap} aria-hidden="true">
+				<svg className={styles.arrow} viewBox="0 0 40 64">
+					<path d="M22 60 C 8 48, 8 24, 24 8" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+					<path d="M13 12 L 25 6 L 29 19" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+				</svg>
+				<span className={styles.tapPill}>Tap here</span>
 			</div>
-			<svg className={styles.arrow} viewBox="0 0 120 92" aria-hidden="true">
-				<path d="M14 84 C 40 80, 76 66, 92 30" fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
-				<path d="M78 34 L 94 22 L 100 42" fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-			</svg>
+
+			<div className={styles.progress}>
+				<div className={styles.progressHead}>
+					<span className={styles.eyebrow}>Almost there</span>
+					<span className={styles.count}>3/4</span>
+				</div>
+				<div className={styles.bar}>
+					<span />
+				</div>
+				<p className={styles.next}>Kit picked ✓ · Open in browser · Pay · Download</p>
+			</div>
 
 			<h2 id="iab-title" className={styles.title}>
 				Pay in your <span>browser</span>
