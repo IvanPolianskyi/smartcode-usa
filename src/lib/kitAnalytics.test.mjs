@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { summarizeKit } from './kitAnalytics.mjs'
+import { buildVerdict, summarizeKit } from './kitAnalytics.mjs'
 
 let n = 0
 const at = (min) => new Date(Date.UTC(2026, 10, 24, 10, min)).toISOString()
@@ -82,4 +82,16 @@ test('handles no data without dividing by zero', () => {
 	assert.equal(r.totals.conversion, 0)
 	assert.equal(r.funnel[0].people, 0)
 	assert.ok(r.insights.some((i) => i.text.includes('not reliable')))
+})
+
+test('lists recent sales with the buyer source and gives a plain verdict', () => {
+	const r = summarizeKit(events)
+	assert.equal(r.recentPurchases.length, 1)
+	const p = r.recentPurchases[0]
+	assert.deepEqual({ amount: p.amount, src: p.src, browser: p.browser, cta: p.cta }, { amount: 19, src: 'dm', browser: 'browser', cta: 'final' })
+	assert.equal(r.verdict.level, 'good')
+	assert.equal(buildVerdict({ visitors: 0, purchases: 0, revenue: 0, conversion: 0 }).level, 'info')
+	assert.equal(buildVerdict({ visitors: 80, purchases: 0, revenue: 0, conversion: 0 }).level, 'info')
+	assert.equal(buildVerdict({ visitors: 400, purchases: 0, revenue: 0, conversion: 0 }).level, 'warn')
+	assert.equal(buildVerdict({ visitors: 400, purchases: 2, revenue: 38, conversion: 0.5 }).level, 'warn')
 })

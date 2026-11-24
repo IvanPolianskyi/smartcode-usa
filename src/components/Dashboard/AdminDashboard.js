@@ -6,6 +6,7 @@ import adminStyles from '@/app/[locale]/admin/AdminPanel.module.css'
 import styles from './AdminDashboard.module.css'
 import { niceAxis, labelStride } from '@/lib/funnelAnalytics.mjs'
 import MyCoursesSection from './MyCoursesSection'
+import KitReport from './KitReport'
 
 function StatusBadge({ active, trialing }) {
 	if (trialing) {
@@ -210,74 +211,80 @@ export default function AdminDashboard({ user, getCourseInfo }) {
 				<MyCoursesSection user={user} progressData={{}} getCourseInfo={getCourseInfo} />
 			) : null}
 
-			<header className={styles.head}>
-				<div>
-					<p className={styles.eyebrow}>Analytics</p>
-					<h2 className={styles.title}>Acquisition funnel</h2>
-					<p className={styles.lede}>
-						First-party tracking: sessions, funnel steps, and conversion rates — last{' '}
-						{days} days.
-					</p>
-				</div>
-				<div className={styles.headActions}>
-					<label className={styles.rangeLabel}>
-						Range
-						<select
-							className={styles.rangeSelect}
-							value={days}
-							onChange={(e) => setDays(Number(e.target.value))}
-						>
-							<option value={7}>7 days</option>
-							<option value={14}>14 days</option>
-							<option value={30}>30 days</option>
-							<option value={90}>90 days</option>
-						</select>
-					</label>
-					<Link href="/admin/kit" className="sc-btn">
-						Kit analytics
-					</Link>
-					<Link href="/admin/live-lessons" className="sc-btn sc-btn-primary">
-						Live lessons
-					</Link>
-				</div>
-			</header>
+			{/* The kit is what we sell now, so its report comes first. */}
+			<section className={adminStyles.panel}>
+				<KitReport />
+			</section>
 
-			{error ? <p className={adminStyles.error}>{error}</p> : null}
-			{loading ? <p className={styles.loading}>Loading analytics…</p> : null}
-
-			{!loading && analytics ? (
-				<>
-					<div className={adminStyles.statGrid}>
-						{periodCards.map((card) => (
-							<div className={adminStyles.statCard} key={card.label}>
-								<p className={adminStyles.statValue}>{card.value}</p>
-								<p className={adminStyles.statLabel}>{card.label}</p>
-							</div>
-						))}
+			<details className={styles.legacy}>
+				<summary>Old subscription site: courses funnel, trials, subscriptions</summary>
+				<header className={styles.head}>
+					<div>
+						<p className={styles.eyebrow}>Analytics</p>
+						<h2 className={styles.title}>Acquisition funnel</h2>
+						<p className={styles.lede}>
+							First-party tracking: sessions, funnel steps, and conversion rates — last{' '}
+							{days} days.
+						</p>
 					</div>
+					<div className={styles.headActions}>
+						<label className={styles.rangeLabel}>
+							Range
+							<select
+								className={styles.rangeSelect}
+								value={days}
+								onChange={(e) => setDays(Number(e.target.value))}
+							>
+								<option value={7}>7 days</option>
+								<option value={14}>14 days</option>
+								<option value={30}>30 days</option>
+								<option value={90}>90 days</option>
+							</select>
+						</label>
+						<Link href="/admin/live-lessons" className="sc-btn sc-btn-primary">
+							Live lessons
+						</Link>
+					</div>
+				</header>
 
-					{lifetimeCards.length > 0 && (
-						<div className={styles.lifetimeGroup}>
-							<p className={styles.lifetimeLabel}>All-time</p>
-							<div className={adminStyles.statGrid}>
-								{lifetimeCards.map((card) => (
-									<div className={adminStyles.statCard} key={card.label}>
-										<p className={adminStyles.statValue}>{card.value}</p>
-										<p className={adminStyles.statLabel}>{card.label}</p>
-									</div>
-								))}
-							</div>
+				{error ? <p className={adminStyles.error}>{error}</p> : null}
+				{loading ? <p className={styles.loading}>Loading analytics…</p> : null}
+
+				{!loading && analytics ? (
+					<>
+						<div className={adminStyles.statGrid}>
+							{periodCards.map((card) => (
+								<div className={adminStyles.statCard} key={card.label}>
+									<p className={adminStyles.statValue}>{card.value}</p>
+									<p className={adminStyles.statLabel}>{card.label}</p>
+								</div>
+							))}
 						</div>
-					)}
 
-					<FunnelChart rows={analytics.funnel} anomalies={analytics.anomalies} />
+						{lifetimeCards.length > 0 && (
+							<div className={styles.lifetimeGroup}>
+								<p className={styles.lifetimeLabel}>All-time</p>
+								<div className={adminStyles.statGrid}>
+									{lifetimeCards.map((card) => (
+										<div className={adminStyles.statCard} key={card.label}>
+											<p className={adminStyles.statValue}>{card.value}</p>
+											<p className={adminStyles.statLabel}>{card.label}</p>
+										</div>
+									))}
+								</div>
+							</div>
+						)}
 
-					<section className={styles.chartCard}>
-						<h3 className={styles.chartTitle}>Unique visitors per day</h3>
-						<VisitorsChart series={daily} />
-					</section>
-				</>
-			) : null}
+						<FunnelChart rows={analytics.funnel} anomalies={analytics.anomalies} />
+
+						<section className={styles.chartCard}>
+							<h3 className={styles.chartTitle}>Unique visitors per day</h3>
+							<VisitorsChart series={daily} />
+						</section>
+					</>
+				) : null}
+
+			</details>
 
 			<section className={adminStyles.panel}>
 				<div className={adminStyles.panelHead}>
