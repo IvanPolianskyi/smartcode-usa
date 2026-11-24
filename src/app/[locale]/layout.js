@@ -2,7 +2,7 @@ import '../globals.css'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
-import { Geist, Geist_Mono, Instrument_Sans, Source_Serif_4 } from 'next/font/google'
+import localFont from 'next/font/local'
 import AuthSessionProvider from '@/components/AuthSessionProvider'
 import RevealProvider from '@/components/Motion/Reveal'
 import SupportWidget from '@/components/Support/SupportWidget'
@@ -11,33 +11,35 @@ import VisitTracker from '@/components/Analytics/VisitTracker'
 import { routing } from '@/i18n/routing'
 import { normalizeSiteUrl } from '@/lib/legalConfig'
 
-const geistSans = Geist({
+// Fonts are self-hosted: next/font/google downloads them at build time, and a
+// failed download from Google broke production deploys (24.11.2026).
+const geistSans = localFont({
+	src: '../../fonts/geist-latin-var.woff2',
 	variable: '--font-geist-sans',
-	subsets: ['latin'],
 	display: 'swap',
-	weight: ['400', '500', '600', '700'],
+	weight: '400 700',
 })
 
-const geistMono = Geist_Mono({
+const geistMono = localFont({
+	src: '../../fonts/geist-mono-latin-var.woff2',
 	variable: '--font-geist-mono',
-	subsets: ['latin'],
 	display: 'swap',
-	weight: ['400', '500'],
+	weight: '400 500',
 })
 
-const instrumentSans = Instrument_Sans({
+const instrumentSans = localFont({
+	src: '../../fonts/instrument-sans-latin-var.woff2',
 	variable: '--font-instrument-sans',
-	subsets: ['latin'],
 	display: 'swap',
-	weight: ['500', '600', '700'],
+	weight: '500 700',
 })
 
 /** Serif display - Brilliant-style headlines. */
-const sourceSerif = Source_Serif_4({
+const sourceSerif = localFont({
+	src: '../../fonts/source-serif-4-latin-var.woff2',
 	variable: '--font-source-serif',
-	subsets: ['latin'],
 	display: 'swap',
-	weight: ['600', '700'],
+	weight: '600 700',
 })
 
 const SITE_URL = normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL)
