@@ -88,8 +88,7 @@ export function OpenInBrowserOverlay({ info, onClose, onPayHere }) {
 				Pay in your <span>browser</span>
 			</h2>
 			<p className={styles.why}>
-				Payments often fail inside {info.app}. In {info.ios ? 'Safari' : 'Chrome'} you can pay in one tap with{' '}
-				{info.ios ? 'Apple Pay' : 'Google Pay'} or a saved card.
+				The kit may not open properly inside {info.app}. Open this page in {info.ios ? 'Safari' : 'Chrome'} so your games and guide download right after you pay.
 			</p>
 
 			<ol className={styles.steps}>
