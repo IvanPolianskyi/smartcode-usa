@@ -24,7 +24,7 @@ const INSIDE = [
 	{ thumb: 'claude', title: 'Full setup guide', text: 'Install Claude Code and Rojo, add our rules file and connect Roblox Studio - every command, step by step.', by: 'About 15 minutes' },
 	{ thumb: 'house', title: 'Game 1: LEGO house', text: 'The exact prompt for a house of 2 000 blocks you can smash through, plus 3 follow-ups to make it yours.', by: 'One prompt' },
 	{ thumb: 'vortex', title: 'Game 2: Vortex floor', text: '14 400 blocks that sink into a whirlpool under your feet - and the prompt that keeps it smooth.', by: 'One prompt' },
-	{ thumb: 'swarm', title: 'Game 3: Nanobot swarm', text: '2 000 cubes that swirl around you, spin into a tornado and build walls - the game from our 6M-view reel.', by: 'One prompt + one fix' },
+	{ thumb: 'swarm', title: 'Game 3: Nanobot swarm', text: '2 000 cubes that swirl around you, spin into a tornado and build walls - the game from our reel seen by 4.4M people.', by: 'One prompt + one fix' },
 	{ thumb: 'grass', title: 'Test & fix prompts', text: 'Let Claude press Play, read the errors and fix them itself. Plus 3 more game prompts to try.', by: 'Inside the kit' },
 	{ thumb: 'sinkhole', title: 'The 3 finished games', text: 'Every game as a full project - the game file plus all the scripts Claude wrote - so you can play it now and change it with Claude.', by: 'Download' },
 ]
@@ -140,6 +140,29 @@ export default async function KitPage({ params }) {
 					</div>
 				</div>
 			</header>
+
+			<section className={s.block} style={{ paddingBottom: 0 }} aria-labelledby="proof">
+				<div className={s.wrap}>
+					<h2 id="proof" className={s.center}>
+						Seen by <span className={s.accent}>millions</span>
+					</h2>
+					<p className={`${s.sub} ${s.center}`}>Straight from our Instagram dashboard - the games in this kit come from these reels.</p>
+					<div className={s.proof}>
+						<figure className={s.proofCard}>
+							<Image src="/kits/proof/views-90d.jpg" alt="Instagram dashboard: 57,191,258 views and 19,386,035 viewers in 90 days" width={790} height={250} />
+							<figcaption>
+								<b>57.2M views</b> in the last 90 days
+							</figcaption>
+						</figure>
+						<figure className={s.proofCard}>
+							<Image src="/kits/proof/top-reels.jpg" alt="Our top Roblox reels: 14M, 4.4M, 1.7M and 1.6M viewers" width={924} height={690} />
+							<figcaption>
+								Our top reels: <b>14M</b>, <b>4.4M</b> (the nanobot swarm), 1.7M and 1.6M people
+							</figcaption>
+						</figure>
+					</div>
+				</div>
+			</section>
 
 			<section className={s.block}>
 				<div className={s.wrap}>

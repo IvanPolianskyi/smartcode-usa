@@ -417,6 +417,41 @@
 	margin-top: 2px;
 }
 
+/* Instagram proof */
+.proof {
+	display: grid;
+	grid-template-columns: 1fr 1.15fr;
+	gap: 16px;
+	align-items: start;
+}
+
+.proofCard {
+	min-width: 0;
+	margin: 0;
+	background: var(--card);
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
+	padding: 12px;
+	display: grid;
+	gap: 12px;
+}
+
+.proofCard img {
+	width: 100%;
+	height: auto;
+	border-radius: 10px;
+}
+
+.proofCard figcaption {
+	color: var(--muted);
+	font-size: 0.95rem;
+	padding: 0 4px 4px;
+}
+
+.proofCard figcaption b {
+	color: var(--text);
+}
+
 /* faq */
 .faq {
 	max-width: 760px;
@@ -508,6 +543,10 @@
 	}
 
 	.c3 {
+		grid-template-columns: 1fr;
+	}
+
+	.proof {
 		grid-template-columns: 1fr;
 	}
 
