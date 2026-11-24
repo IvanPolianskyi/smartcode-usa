@@ -103,11 +103,20 @@ export function OpenInBrowserOverlay({ info, onClose, onPayHere }) {
 			</div>
 
 			<h2 id="iab-title" className={styles.title}>
-				Pay in your <span>browser</span>
+				Open in your <span>browser</span>
 			</h2>
 			<p className={styles.why}>
-				The kit may not open properly inside {info.app}. Open this page in {info.ios ? 'Safari' : 'Chrome'} so your games and guide download right after you pay.
+				The kit may not open properly in {info.app}. Open it in {info.ios ? 'Safari' : 'Chrome'} so your files download right after you pay.
 			</p>
+
+			<div className={styles.getting}>
+				<p className={styles.gettingTitle}>You&apos;re getting</p>
+				<ul>
+					<li>3 finished Roblox games + all the code</li>
+					<li>Step-by-step guide to Roblox games with AI</li>
+					<li>The exact Claude Code prompts</li>
+				</ul>
+			</div>
 
 			<ol className={styles.steps}>
 				<li>
@@ -146,7 +155,7 @@ export function OpenInBrowserOverlay({ info, onClose, onPayHere }) {
 					onPayHere?.()
 				}}
 			>
-				Pay here anyway
+				Continue here anyway
 			</button>
 			<button
 				type="button"
