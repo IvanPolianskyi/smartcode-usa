@@ -233,6 +233,9 @@ export default function AdminDashboard({ user, getCourseInfo }) {
 							<option value={90}>90 days</option>
 						</select>
 					</label>
+					<Link href="/admin/kit" className="sc-btn">
+						Kit analytics
+					</Link>
 					<Link href="/admin/live-lessons" className="sc-btn sc-btn-primary">
 						Live lessons
 					</Link>

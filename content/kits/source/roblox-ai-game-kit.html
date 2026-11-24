@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Roblox AI Game Kit - SmartCode</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=block" rel="stylesheet">
+<style>
+  @font-face { font-family: "Anton"; src: url(fonts/anton-latin.woff2) format("woff2"); font-weight: 400; }
+  @font-face { font-family: "Rubik"; src: url(fonts/rubik-latin-var.woff2) format("woff2"); font-weight: 300 900; }
+  @page { size: A4; margin: 0; }
+  :root {
+    --bg: #0a0a0a; --bg2: #111; --card: #151515; --card2: #1b1b1b; --line: #262626;
+    --text: #f5f5f5; --muted: #a3a3a3; --dim: #6f6f6f;
+    --blue: #4f86ff; --blue2: #6b9bff; --blueSoft: rgba(79,134,255,.12); --blueLine: rgba(79,134,255,.35);
+    --amber: #ffb547; --amberSoft: rgba(255,181,71,.1); --green: #3ccf8e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); }
+  body { font-family: "Rubik", "Segoe UI", sans-serif; color: var(--text); font-size: 10.6pt; line-height: 1.5;
+         -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .page { width: 210mm; height: 297mm; padding: 16mm 15mm 20mm; position: relative; overflow: hidden;
+          background: var(--bg); page-break-after: always; break-after: page; }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  .page.glow { background: radial-gradient(ellipse at 85% 8%, rgba(79,134,255,.22), transparent 55%), var(--bg); }
+  .page.glow-left { background: radial-gradient(ellipse at 10% 95%, rgba(79,134,255,.18), transparent 55%), var(--bg); }
+  .foot { position: absolute; left: 15mm; right: 15mm; bottom: 9mm; display: flex; justify-content: space-between;
+          font-size: 7.5pt; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); border-top: 1px solid var(--line); padding-top: 3mm; }
+  .foot b { color: var(--blue); font-weight: 700; }
+
+  h1, h2, h3, .display { font-family: "Anton", Impact, sans-serif; font-weight: 400; text-transform: uppercase; letter-spacing: .01em; line-height: 1.02; }
+  h1 { font-size: 54pt; }
+  h2 { font-size: 30pt; margin-bottom: 4mm; }
+  h3 { font-size: 15pt; margin: 5mm 0 2mm; }
+  h1 em, h2 em, h3 em, .display em { font-style: normal; color: var(--blue); }
+  p { margin-bottom: 2.6mm; }
+  .kicker { font-size: 8.5pt; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); margin-bottom: 3mm; }
+  .lede { font-size: 12.5pt; color: var(--muted); line-height: 1.55; }
+  .muted { color: var(--muted); }
+  .small { font-size: 8.8pt; }
+  b, strong { font-weight: 700; color: var(--text); }
+  code, .mono { font-family: "JetBrains Mono", Consolas, monospace; font-size: 8.8pt; background: #1f1f1f; border: 1px solid var(--line);
+                border-radius: 4px; padding: 0 4px; color: #dfe6ff; }
+  ul, ol { padding-left: 5mm; margin-bottom: 2.6mm; }
+  li { margin-bottom: 1.4mm; }
+  li::marker { color: var(--blue); }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 5mm; }
+  .card p:last-child, .card ul:last-child { margin-bottom: 0; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; }
+  .stack { display: grid; gap: 3.2mm; }
+
+  .shot { width: 100%; display: block; border-radius: 12px; border: 1px solid var(--line); object-fit: cover; }
+  .cap { font-size: 8.4pt; color: var(--dim); margin-top: 1.6mm; }
+
+  .prompt { position: relative; background: var(--card2); border: 1px solid var(--line); border-left: 4px solid var(--blue);
+            border-radius: 12px; padding: 3.4mm 4.2mm 3.2mm; margin-bottom: 2.6mm; page-break-inside: avoid; }
+  .prompt .who { font-size: 7.4pt; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); margin-bottom: 1.6mm; display: flex; justify-content: space-between; }
+  .prompt .who span { color: var(--dim); letter-spacing: .08em; }
+  .prompt .say { font-size: 10pt; line-height: 1.5; color: #e9e9e9; }
+  .prompt.sm .say { font-size: 9.4pt; }
+
+  .term { background: #050505; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-bottom: 3mm; page-break-inside: avoid; }
+  .term .bar { display: flex; gap: 5px; align-items: center; padding: 2.2mm 3mm; background: #161616; border-bottom: 1px solid var(--line); }
+  .term .bar i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .term .bar span { margin-left: 2mm; font-size: 7.6pt; color: var(--dim); letter-spacing: .08em; text-transform: uppercase; }
+  .term pre { font-family: "JetBrains Mono", Consolas, monospace; font-size: 8.8pt; line-height: 1.6; padding: 3mm 4mm; color: #e6e6e6; white-space: pre-wrap; }
+  .term pre .c { color: #6f7b95; }
+  .term pre .g { color: var(--green); }
+  .term pre .p { color: var(--blue2); }
+
+  .tip, .warn { border-radius: 10px; padding: 3.4mm 4mm; margin-bottom: 3mm; font-size: 9.8pt; page-break-inside: avoid; }
+  .tip { background: var(--blueSoft); border: 1px solid var(--blueLine); border-left: 4px solid var(--blue); }
+  .warn { background: var(--amberSoft); border: 1px solid rgba(255,181,71,.35); border-left: 4px solid var(--amber); }
+  .tip b:first-child { color: var(--blue2); }
+  .warn b:first-child { color: var(--amber); }
+
+  .stepbar { display: flex; gap: 2mm; margin-bottom: 5mm; }
+  .stepbar div { flex: 1; height: 5px; border-radius: 3px; background: var(--line); }
+  .stepbar div.on { background: var(--blue); }
+  .step { display: grid; grid-template-columns: 13mm 1fr; gap: 4mm; margin-bottom: 5mm; page-break-inside: avoid; }
+  .step .n { width: 13mm; height: 13mm; border-radius: 10px; background: var(--blue); color: #fff; display: grid; place-items: center;
+             font-family: "Anton", sans-serif; font-size: 17pt; }
+  .step .label { font-size: 7.5pt; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); font-weight: 700; }
+  .step h3 { margin: .5mm 0 1.6mm; }
+
+  table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 9.2pt; margin-bottom: 3mm;
+          border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  th { text-align: left; font-size: 7.6pt; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); background: #121212; padding: 2mm 3mm; border-bottom: 1px solid var(--line); }
+  td { padding: 1.9mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; color: #dedede; background: #0d0d0d; }
+  tr:last-child td { border-bottom: 0; }
+  td code { white-space: nowrap; }
+
+  .pill { display: inline-block; font-size: 7.4pt; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px;
+          background: var(--blueSoft); color: var(--blue2); border: 1px solid var(--blueLine); margin-right: 1.5mm; vertical-align: 2px; font-family: "Rubik", sans-serif; }
+  .pill.amber { background: var(--amberSoft); color: var(--amber); border-color: rgba(255,181,71,.35); }
+  .pill.green { background: rgba(60,207,142,.1); color: var(--green); border-color: rgba(60,207,142,.35); }
+
+  .cover { padding: 18mm 15mm 16mm; display: flex; flex-direction: column; }
+  .logo { font-family: "Anton", sans-serif; font-size: 16pt; letter-spacing: .02em; }
+  .logo span { color: var(--blue); }
+  .cover h1 { font-size: 64pt; margin: 9mm 0 5mm; }
+  .collage { display: grid; grid-template-columns: 1.35fr 1fr; grid-template-rows: 44mm 44mm; gap: 3mm; margin: 6mm 0 6mm; }
+  .collage img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); }
+  .collage img:first-child { grid-row: span 2; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); border-radius: 14px; background: var(--bg2); }
+  .stats div { padding: 4mm; text-align: center; }
+  .stats div + div { border-left: 1px solid var(--line); }
+  .stats b { display: block; font-family: "Anton", sans-serif; font-weight: 400; font-size: 24pt; line-height: 1.1; }
+  .stats b em { font-style: normal; color: var(--blue); }
+  .stats span { color: var(--muted); font-size: 8.6pt; }
+
+  .gamecard { display: grid; grid-template-columns: 62mm 1fr; gap: 5mm; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 4mm; margin-bottom: 4mm; }
+  .gamecard img { width: 62mm; height: 44mm; object-fit: cover; border-radius: 11px; }
+  .gamecard .gn { font-family: "Anton", sans-serif; font-size: 9pt; letter-spacing: .14em; color: var(--blue); }
+  .gamecard h3 { font-size: 19pt; margin: .5mm 0 2mm; }
+  .gamecard p { color: var(--muted); font-size: 9.6pt; margin-bottom: 2mm; }
+
+  .toc { list-style: none; padding: 0; }
+  .toc li { display: grid; grid-template-columns: 12mm 1fr auto; align-items: baseline; padding: 2.4mm 0; border-bottom: 1px solid var(--line); margin: 0; }
+  .toc li span:first-child { font-family: "Anton", sans-serif; color: var(--blue); font-size: 13pt; }
+  .toc li b { font-weight: 500; }
+  .toc li i { font-style: normal; color: var(--dim); font-size: 8.6pt; }
+
+  .tree { font-family: "JetBrains Mono", Consolas, monospace; font-size: 8.8pt; line-height: 1.8; background: #050505; border: 1px solid var(--line); border-radius: 10px; padding: 3.5mm 4.5mm; }
+  .tree .d { color: var(--blue2); }
+  .tree .x { color: var(--dim); }
+
+  .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; }
+  .flow div { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 3.5mm; }
+  .flow div b { display: block; font-family: "Anton", sans-serif; font-weight: 400; font-size: 20pt; color: var(--blue); line-height: 1; margin-bottom: 1.5mm; }
+  .flow div span { font-size: 9pt; color: var(--muted); }
+
+  .kbd { display: inline-block; font-family: "JetBrains Mono", monospace; font-size: 8.4pt; font-weight: 600; padding: 0 6px; border-radius: 5px; border: 1px solid #3a3a3a; border-bottom-width: 2px; background: #1c1c1c; color: #fff; }
+
+  .cheat td:first-child { width: 34mm; color: var(--blue2); font-weight: 700; }
+  .cheat td { font-size: 8.8pt; padding: 2mm 3mm; }
+</style>
+</head>
+<body>
+
+<section class="page glow cover">
+  <div class="logo">SMART<span>CODE</span></div>
+  <div class="kicker" style="margin-top:14mm">Roblox AI Game Kit · Version 2.0</div>
+  <h1>Build Roblox games<br>with <em>Claude Code</em>.</h1>
+  <p class="lede" style="max-width:160mm">You paste one prompt. Claude Code writes every script, builds the map and hands you a game file you open in Roblox Studio and play. This guide is the exact setup and the exact prompts behind three games from our reels - with the finished games in your download.</p>
+  <div class="collage">
+    <img src="img/house-2.jpg" alt="">
+    <img src="img/vortex-2.jpg" alt="">
+    <img src="img/swarm-tornado.jpg" alt="">
+  </div>
+  <div class="stats">
+    <div><b>3 <em>games</em></b><span>built and tested with Claude Code</span></div>
+    <div><b>~3 <em>min</em></b><span>from prompt to game file</span></div>
+    <div><b>0</b><span>lines of code you type</span></div>
+  </div>
+  <p class="small muted" style="margin-top:auto">Personal use only - please do not share or resell this guide or the starter files. Results are not guaranteed. Not affiliated with Roblox or Anthropic. Free updates: smartcode.academy/kit/access</p>
+</section>
+
+<section class="page">
+  <div class="kicker">What you'll build</div>
+  <h2>Three games. <em>Three prompts.</em></h2>
+  <p class="lede" style="margin-bottom:6mm">Each one is a physics effect our viewers kept replaying. Each one came from a single prompt to Claude Code - and the finished version is in your starter files, so you can play it before you build it.</p>
+  <div class="gamecard">
+    <img src="img/house-2.jpg" alt="">
+    <div>
+      <div class="gn">GAME 01</div>
+      <h3>LEGO house</h3>
+      <p>A cozy house made of about 2 000 one-stud blocks. Run into a wall and the blocks break off and fly with real physics, leaving a hole the shape of your character.</p>
+      <p><span class="pill">Server physics</span><span class="pill">Hit counter</span></p>
+    </div>
+  </div>
+  <div class="gamecard">
+    <img src="img/vortex-2.jpg" alt="">
+    <div>
+      <div class="gn">GAME 02</div>
+      <h3>Vortex floor</h3>
+      <p>A floor of 14 400 blue blocks. Wherever you walk it sinks into a spinning whirlpool, darker in the middle, and springs back up behind you.</p>
+      <p><span class="pill">14 400 blocks</span><span class="pill">Smooth on the client</span></p>
+    </div>
+  </div>
+  <div class="gamecard">
+    <img src="img/swarm-wall.jpg" alt="">
+    <div>
+      <div class="gn">GAME 03</div>
+      <h3>Nanobot swarm</h3>
+      <p>2 000 black cubes swirl around you. Click the floor and they become a tornado. Press <span class="kbd">E</span> and they build a giant wall. The game from our reel seen by 4.4M people.</p>
+      <p><span class="pill">2 000 bots</span><span class="pill">Click · E · F</span></p>
+    </div>
+  </div>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>02</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Inside</div>
+  <h2>Your <em>route</em></h2>
+  <ul class="toc" style="margin-bottom:6mm">
+    <li><span>01</span><b>What you need</b><i>p. 4</i></li>
+    <li><span>02</span><b>Setup in 5 steps - Claude Code, Rojo, rules file, Studio</b><i>p. 5</i></li>
+    <li><span>03</span><b>How Claude Code makes a game - for total beginners</b><i>p. 8</i></li>
+    <li><span>04</span><b>Game 1 · LEGO house</b><i>p. 10</i></li>
+    <li><span>05</span><b>Game 2 · Vortex floor</b><i>p. 12</i></li>
+    <li><span>06</span><b>Game 3 · Nanobot swarm</b><i>p. 14</i></li>
+    <li><span>07</span><b>Let Claude test your game</b><i>p. 16</i></li>
+    <li><span>08</span><b>Fix-it prompts and troubleshooting</b><i>p. 17</i></li>
+    <li><span>09</span><b>Write your own game prompts</b><i>p. 18</i></li>
+    <li><span>10</span><b>More games to try</b><i>p. 19</i></li>
+    <li><span>11</span><b>Publish and earn Robux the Roblox way</b><i>p. 20</i></li>
+    <li><span>12</span><b>The reel playbook</b><i>p. 21</i></li>
+    <li><span>13</span><b>Prompt cheat sheet</b><i>p. 22</i></li>
+  </ul>
+  <div class="tip"><b>Your starter files.</b> Next to this guide you downloaded <code>roblox-ai-starter.zip</code>. Inside: the rules file <code>CLAUDE.md</code> and the three games as full project folders - every script Claude wrote plus a ready <code>game.rbxlx</code>. Unzip it, double-click a <code>game.rbxlx</code>, press <span class="kbd">F5</span>. That is your target.</div>
+  <h3>How to use this guide</h3>
+  <ol>
+    <li><b>Play the finished games first</b> (2 minutes). You will know what “done” looks like.</li>
+    <li><b>Do the setup once</b> (about 15 minutes). Chapter 02.</li>
+    <li><b>Rebuild game 1 yourself</b> with the prompt, then change it with the follow-ups. That is where it clicks.</li>
+    <li><b>Then games 2 and 3, then your own idea</b> with the prompt formula in chapter 09.</li>
+  </ol>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>03</span></div>
+</section>
+
+<section class="page glow-left">
+  <div class="kicker">Chapter 01</div>
+  <h2>What you <em>need</em></h2>
+  <p class="lede" style="margin-bottom:6mm">Three tools. Two are free. One is a paid Claude plan you buy from Anthropic - it is not part of this kit.</p>
+  <div class="grid3" style="margin-bottom:6mm">
+    <div class="card"><span class="pill green">Free</span><h3>Roblox Studio</h3><p class="muted">Where you open, play, test and publish the game. Windows or Mac.</p></div>
+    <div class="card"><span class="pill amber">Paid plan</span><h3>Claude Code</h3><p class="muted">The AI that writes the whole game in a terminal window. Needs Claude Pro or higher.</p></div>
+    <div class="card"><span class="pill green">Free</span><h3>Rojo</h3><p class="muted">Turns the code files Claude writes into one Roblox game file: <code>game.rbxlx</code>.</p></div>
+  </div>
+  <div class="warn"><b>Computer only.</b> Roblox Studio and Claude Code run on Windows and Mac. You can read this guide on a phone, but you build on a computer.</div>
+  <h3>The whole workflow at a glance</h3>
+  <div class="flow" style="margin-bottom:6mm">
+    <div><b>1</b><span>New folder, open Claude Code in it</span></div>
+    <div><b>2</b><span>Paste a game prompt, wait 2-5 min</span></div>
+    <div><b>3</b><span>Double-click <code>game.rbxlx</code>, press Play</span></div>
+    <div><b>4</b><span>Ask Claude for changes, play again</span></div>
+  </div>
+  <img class="shot" src="img/vortex-3.jpg" alt="" style="height:78mm">
+  <p class="cap">The vortex floor in Play mode - step 3 of the loop.</p>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>04</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Chapter 02 · Setup</div>
+  <h2>Setup in <em>5 steps</em></h2>
+  <p class="muted" style="margin-bottom:5mm">About 15 minutes, once. After this every new game is a folder and a prompt.</p>
+  <div class="stepbar"><div class="on"></div><div class="on"></div><div></div><div></div><div></div></div>
+  <div class="step">
+    <div class="n">1</div>
+    <div>
+      <div class="label">Step 1 of 5</div>
+      <h3>Install Roblox Studio</h3>
+      <p>Go to <b>create.roblox.com</b>, log in with your Roblox account, click <b>Start Creating</b> and install Studio. Open it once and log in.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n">2</div>
+    <div>
+      <div class="label">Step 2 of 5</div>
+      <h3>Install Claude Code</h3>
+      <p>Open a terminal - Windows: press <span class="kbd">Win</span>, type <b>PowerShell</b>, Enter. Mac: open <b>Terminal</b>. Paste the line for your computer:</p>
+      <div class="term"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span>Terminal</span></div>
+<pre><span class="c"># Windows (PowerShell)</span>
+irm https://claude.ai/install.ps1 | iex
+
+<span class="c"># Mac</span>
+curl -fsSL https://claude.ai/install.sh | bash</pre></div>
+      <p>Close the terminal, open a new one, type <code>claude</code> and press Enter. A browser window asks you to log in with your Claude account - use the account with your paid plan.</p>
+      <div class="tip"><b>Something different on screen?</b> Anthropic updates the installer from time to time. The current steps are always at <b>claude.ai/code</b>.</div>
+    </div>
+  </div>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>05</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Chapter 02 · Setup</div>
+  <div class="stepbar"><div class="on"></div><div class="on"></div><div class="on"></div><div class="on"></div><div></div></div>
+  <div class="step">
+    <div class="n">3</div>
+    <div>
+      <div class="label">Step 3 of 5</div>
+      <h3>Rojo - let Claude install it</h3>
+      <p>Rojo is the free tool that packs Claude's code files into one Roblox game file. You don't need to install it by hand: in the Claude Code window, paste</p>
+      <div class="prompt sm"><div class="who">You → Claude Code</div><div class="say">Install Rojo 7 on this computer so the command rojo works in any terminal, then run rojo --version to check it.</div></div>
+      <p class="small muted">Prefer to do it yourself? Download Rojo from github.com/rojo-rbx/rojo/releases and put it on your PATH.</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="n">4</div>
+    <div>
+      <div class="label">Step 4 of 5</div>
+      <h3>Add the rules file</h3>
+      <p>Make one folder for all your games, for example <code>Documents\roblox-games</code>. Copy <code>CLAUDE.md</code> from the starter files into it. Claude Code reads this file automatically every time you start it there or in a folder inside it.</p>
+      <p>What the rules file teaches Claude - so your prompts can stay short:</p>
+      <table>
+        <tr><th>Rule</th><th>Why it matters</th></tr>
+        <tr><td>Every game is a Rojo project: <code>src/server</code>, <code>src/client</code>, <code>src/shared</code></td><td>You always know where things are.</td></tr>
+        <tr><td>Build the world from code at server start</td><td>One build gives a finished game, not an empty map.</td></tr>
+        <tr><td>Thousands of parts: create in batches, anchor what doesn't move, keep under ~15 000</td><td>Your game stays smooth.</td></tr>
+        <tr><td>Looks-only effects run on the client; game rules run on the server</td><td>No lag, no cheating.</td></tr>
+        <tr><td>Always finish with <code>rojo build</code> → <code>game.rbxlx</code></td><td>You get a file you can double-click.</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>06</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Chapter 02 · Setup</div>
+  <div class="stepbar"><div class="on"></div><div class="on"></div><div class="on"></div><div class="on"></div><div class="on"></div></div>
+  <div class="step">
+    <div class="n">5</div>
+    <div>
+      <div class="label">Step 5 of 5</div>
+      <h3>Connect Claude to Roblox Studio</h3>
+      <p>Roblox Studio has a built-in <b>MCP server</b>: a door that lets Claude Code start Play, read errors, take screenshots and walk your character - so it can test your game itself (chapter 07).</p>
+      <ol>
+        <li>Open Roblox Studio and any place. Open <b>Assistant → … → Manage MCP Servers</b> (Assistant Settings → <b>MCP Servers</b>).</li>
+        <li>Switch on <b>Enable Studio as MCP server</b>. We switch <b>off</b> the data-sharing option under it.</li>
+        <li>Under <b>Quick connect</b> open <b>Claude Code CLI</b> and copy the command it shows - it is the right one for your computer. On Windows it looks like this:</li>
+      </ol>
+      <div class="term"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span>Terminal</span></div>
+<pre>claude mcp add --scope user --transport stdio Roblox_Studio -- cmd.exe /c "%LOCALAPPDATA%\Roblox\mcp.bat"
+
+claude mcp list
+<span class="g">Roblox_Studio: cmd.exe /c %LOCALAPPDATA%\Roblox\mcp.bat - ✓ Connected</span></pre></div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div><img class="shot" src="img/mcp-settings.jpg" alt="" style="height:64mm"><p class="cap">Assistant Settings → MCP Servers in Roblox Studio.</p></div>
+    <div class="stack">
+      <div class="tip"><b>Green light.</b> When it works, Studio shows a green indicator with the number of connected clients.</div>
+      <div class="warn"><b>Only connect apps you trust.</b> A connected app can read and change the places you have open. Claude Code only acts when you ask it to.</div>
+      <div class="card"><b>Done.</b> <span class="muted">From here on, every game is: new folder → <code>claude</code> → prompt → play.</span></div>
+    </div>
+  </div>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>07</span></div>
+</section>
+
+<section class="page glow">
+  <div class="kicker">Chapter 03 · For total beginners</div>
+  <h2>How Claude Code <em>makes a game</em></h2>
+  <p class="lede" style="margin-bottom:5mm">You don't need to understand code. You only need to know where things are and what to say.</p>
+  <div class="grid2" style="margin-bottom:5mm">
+    <div class="card">
+      <h3 style="margin-top:0">1 · The folder</h3>
+      <p class="muted">Each game lives in its own folder inside your games folder. Claude only works inside the folder you start it in.</p>
+      <div class="term" style="margin-bottom:0"><div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i><span>Windows</span></div>
+<pre>right-click the folder → <span class="p">Open in Terminal</span>
+claude</pre></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">2 · The terminal</h3>
+      <p class="muted">Claude Code is a chat in that terminal. You paste a prompt and press Enter. It plans, writes files, runs Rojo and tells you in plain words what it made.</p>
+      <p class="muted">It asks before running unusual commands - read the question and pick <b>Yes</b> when it is about your game folder.</p>
+    </div>
+  </div>
+  <h3>3 · What it writes</h3>
+  <div class="grid2">
+    <div class="tree">
+<span class="d">lego-house/</span><br>
+├─ default.project.json <span class="x">← map of the game</span><br>
+├─ <span class="d">src/server/</span> <span class="x">← rules: world, physics</span><br>
+├─ <span class="d">src/client/</span> <span class="x">← what each player sees</span><br>
+├─ <span class="d">src/shared/</span> <span class="x">← settings for both</span><br>
+└─ game.rbxlx <span class="x">← the file you open</span>
+    </div>
+    <div>
+      <p><b>Server</b> scripts run once for the whole game - they decide what is true: a wall broke, the swarm should form a tornado.</p>
+      <p><b>Client</b> scripts run on each player's computer - smooth animation and on-screen text.</p>
+      <p><b>Shared</b> holds the settings file. Every game in this kit has one, full of numbers you can change.</p>
+    </div>
+  </div>
+  <h3>4 · What “rojo build” does</h3>
+  <p>Claude writes plain text files. Roblox Studio wants one game file. <code>rojo build</code> packs the folder into <code>game.rbxlx</code>. Claude runs it for you at the end of every change.</p>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>08</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Chapter 03 · For total beginners</div>
+  <h2>Change it, <em>play again</em></h2>
+  <img class="shot" src="img/claude-writing.jpg" alt="" style="height:92mm;object-position:left top">
+  <p class="cap">Claude Code writing the LEGO house: the project map, the settings file, the world script - then fixing a detail on its own.</p>
+  <div class="grid2" style="margin-top:4mm">
+    <div class="stack">
+      <div class="card"><b>Ask for changes in plain words.</b><p class="muted">Stay in the same Claude Code window: “make the hole bigger”, “add a counter”. It edits the files and builds <code>game.rbxlx</code> again.</p></div>
+      <div class="card"><b>Reopen to see the change.</b><p class="muted">Close the game in Studio (don't save) and double-click <code>game.rbxlx</code> again. The new build is in there.</p></div>
+    </div>
+    <div class="stack">
+      <div class="card"><b>Undo with /rewind.</b><p class="muted">If a change made it worse, type <code>/rewind</code> and pick the moment before it.</p></div>
+      <div class="card"><b>Read the Output window.</b><p class="muted">In Studio: <b>View → Output</b>. Red lines are errors. Copy one into Claude with “fix this”.</p></div>
+    </div>
+  </div>
+  <div class="tip" style="margin-top:3mm"><b>One change at a time.</b> Ask for one thing, play it, then ask for the next. Five changes in one message is how games break.</div>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>09</span></div>
+</section>
+
+<section class="page glow">
+  <div class="kicker">Chapter 04 · Game 1 of 3</div>
+  <h2>LEGO <em>house</em></h2>
+  <img class="shot" src="img/house-2.jpg" alt="" style="height:92mm">
+  <p class="cap">Running into the front wall: blocks break off in the shape of the character.</p>
+  <div class="grid2" style="margin:4mm 0">
+    <img class="shot" src="img/house-1.jpg" alt="" style="height:44mm">
+    <div class="card"><b>What happens</b><p class="muted">You spawn facing a cream house with a red roof, chimney, windows and a door. Run into any wall: the blocks in front of you fly off with physics and disappear after 6 seconds. A counter shows how many you knocked off.</p></div>
+  </div>
+  <div class="prompt"><div class="who">You → Claude Code<span>new folder · lego-house</span></div><div class="say">Make a Roblox game in this folder: a cozy voxel house made of 1-stud blocks - cream walls, red roof, a chimney, windows with white frames, a wooden door - standing on a big grey checker floor. When the player runs into a wall, the blocks in front of them break off and fly away with real physics, like the house is made of LEGO. The hole should be about the size of the player, so they can run straight through the house and out the other side, leaving a player-shaped hole. Fallen blocks disappear after 6 seconds. Spawn the player outside, facing the house. Build it as a Rojo project and build game.rbxlx.</div></div>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>10</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Game 1 · LEGO house</div>
+  <h2>What Claude <em>built</em></h2>
+  <table>
+    <tr><th>File</th><th>What it does</th></tr>
+    <tr><td><code>server/World.server.luau</code></td><td>Builds the checker floor, the 1-stud house (about 2 000 blocks), the spawn pad and lighting.</td></tr>
+    <tr><td><code>server/Breaker.server.luau</code></td><td>Breaks a player-shaped hole in front of a running player; removes fallen blocks.</td></tr>
+    <tr><td><code>client/Hud.client.luau</code></td><td>Shows “Run into the house!” and the knocked-off counter.</td></tr>
+    <tr><td><code>shared/Config.luau</code></td><td>All the numbers below.</td></tr>
+  </table>
+  <h3>Numbers you can change <span class="pill">shared/Config.luau</span></h3>
+  <table>
+    <tr><th>Setting</th><th>Now</th><th>Try</th></tr>
+    <tr><td><code>WALL_HEIGHT</code></td><td>11 rows</td><td>20 for a tower house</td></tr>
+    <tr><td><code>X0, X1 / Z0, Z1</code></td><td>24 × 18 blocks</td><td>a bigger house (more blocks = more work for the PC)</td></tr>
+    <tr><td><code>FLY_SPEED_MIN / MAX</code></td><td>20 / 36</td><td>60 / 90 for explosive walls</td></tr>
+    <tr><td><code>FALLEN_LIFETIME</code></td><td>6 s</td><td>20 to leave a pile of rubble</td></tr>
+    <tr><td><code>REACH</code></td><td>1.5 studs</td><td>3 if the wall stops you before it breaks</td></tr>
+  </table>
+  <h3>Make it yours <span class="muted small" style="text-transform:none;font-family:Rubik">- paste one at a time</span></h3>
+  <div class="prompt sm"><div class="who">Follow-up</div><div class="say">Make the hole twice as big and make the blocks fly twice as far.</div></div>
+  <div class="prompt sm"><div class="who">Follow-up</div><div class="say">Build a street of 5 houses in different colours, and show a counter of blocks knocked off at the top of the screen.</div></div>
+  <div class="prompt sm"><div class="who">Follow-up</div><div class="say">Add a big red button on the floor. When a player steps on it, every house rebuilds itself block by block in 10 seconds.</div></div>
+  <p class="small muted"><b>Remix ideas:</b> a castle you smash, an ice house that shatters, a destructible city block, a race through 10 houses.</p>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>11</span></div>
+</section>
+
+<section class="page glow">
+  <div class="kicker">Chapter 05 · Game 2 of 3</div>
+  <h2>Vortex <em>floor</em></h2>
+  <img class="shot" src="img/vortex-2.jpg" alt="" style="height:92mm">
+  <p class="cap">The floor bends into a funnel around the player and follows every step.</p>
+  <div class="grid2" style="margin:4mm 0">
+    <img class="shot" src="img/vortex-1.jpg" alt="" style="height:44mm">
+    <div class="card"><b>What happens</b><p class="muted">A 120 × 120 floor of blue blocks. Where you stand it sinks into a smooth whirlpool with spinning ripples on the rim; deeper blocks turn darker. Move and the funnel follows; the floor behind you springs back with a little bounce.</p></div>
+  </div>
+  <div class="prompt"><div class="who">You → Claude Code<span>new folder · vortex-floor</span></div><div class="say">Make a Roblox game in this folder: the ground is a big square floor made of blue blocks, 1 stud each, about 120 x 120 of them. Wherever the player walks, the floor sinks into a smooth whirlpool funnel around them, like they stand in a vortex: the blocks under the player sink deepest, the rim of the funnel ripples and spins. When the player moves, the funnel follows them and the floor behind springs back up. Blocks get darker the deeper they sink, with bright light-blue on the rim. Soft sky fog. It must run smoothly. Build it as a Rojo project and build game.rbxlx.</div></div>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>12</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Game 2 · Vortex floor</div>
+  <h2>What Claude <em>built</em></h2>
+  <table>
+    <tr><th>File</th><th>What it does</th></tr>
+    <tr><td><code>server/BuildFloor.server.luau</code></td><td>Builds the 120 × 120 floor (14 400 blocks) and invisible edge walls once at start.</td></tr>
+    <tr><td><code>client/Vortex.client.luau</code></td><td>Every frame, moves only the blocks near players with <code>BulkMoveTo</code> - the reason it stays smooth.</td></tr>
+    <tr><td><code>shared/VortexConfig.luau</code></td><td>All the numbers below.</td></tr>
+  </table>
+  <div class="tip"><b>Why it doesn't lag.</b> 14 400 parts is a lot. Claude moves only the blocks near the player each frame, on the player's own computer. Ask for this trick in your own prompts: “only animate what is near the player, on the client”.</div>
+  <h3>Numbers you can change <span class="pill">shared/VortexConfig.luau</span></h3>
+  <table>
+    <tr><th>Setting</th><th>Now</th><th>Try</th></tr>
+    <tr><td><code>Radius</code></td><td>17</td><td>30 for a giant whirlpool</td></tr>
+    <tr><td><code>Depth</code></td><td>9</td><td>20 for a deep pit</td></tr>
+    <tr><td><code>SpinSpeed</code></td><td>4.5</td><td>10 for a crazy spin</td></tr>
+    <tr><td><code>Damping</code></td><td>7</td><td>3 for a bouncy floor</td></tr>
+    <tr><td><code>BaseColor / RimColor</code></td><td>blue / light blue</td><td>lava, slime, gold…</td></tr>
+  </table>
+  <h3>Make it yours</h3>
+  <div class="prompt sm"><div class="who">Follow-up</div><div class="say">Turn the floor into lava: orange blocks, a glowing yellow rim, and the player slowly loses health at the bottom of the funnel.</div></div>
+  <div class="prompt sm"><div class="who">Follow-up</div><div class="say">Make the funnel twice as deep and spin faster for 2 seconds every time the player jumps.</div></div>
+  <div class="prompt sm"><div class="who">Follow-up</div><div class="say">Add 3 friendly robots that wander around the floor, each with its own smaller funnel.</div></div>
+  <p class="small muted"><b>Remix ideas:</b> a trampoline floor, a quicksand escape, a ripple pond, a dance floor that pulses with every step.</p>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>13</span></div>
+</section>
+
+<section class="page glow">
+  <div class="kicker">Chapter 06 · Game 3 of 3</div>
+  <h2>Nanobot <em>swarm</em></h2>
+  <div class="grid2">
+    <img class="shot" src="img/swarm-cloud.jpg" alt="" style="height:60mm">
+    <img class="shot" src="img/swarm-tornado.jpg" alt="" style="height:60mm">
+  </div>
+  <p class="cap">The cloud around the player, and the tornado after a click on the floor.</p>
+  <div class="card" style="margin:3mm 0">
+    <b>Controls</b>
+    <p class="muted" style="margin:1.6mm 0 0"><b>Click the floor</b> - the swarm rushes there as a 70-stud tornado (ends after 15 s). <span class="kbd">E</span> builds a 50 × 40 wall in front of you, <span class="kbd">E</span> again knocks it down. <span class="kbd">F</span> calls the swarm back.</p>
+  </div>
+  <div class="prompt sm"><div class="who">You → Claude Code<span>new folder · nanobot-swarm</span></div><div class="say">Make a Roblox game in this folder: a swarm of 2 000 small black metal cubes - nanobots - lives on a white floor. The swarm flows after the player like a living cloud, swirling around them and never passing through each other in a messy way. Click anywhere on the floor and the swarm rushes there and forms a tall spinning tornado. Press E and the swarm builds a giant cube wall in front of the player, press E again and it falls apart back into the cloud. Run the movement on the client so it stays smooth. Build it as a Rojo project and build game.rbxlx.</div></div>
+  <div class="warn"><b>We hit one snag.</b> On our first try the cloud flew right around the camera and covered the screen. One follow-up fixed it - paste it if you see the same:</div>
+  <div class="prompt sm"><div class="who">Fix</div><div class="say">When the game starts, the swarm cloud flies right around the camera and covers the whole screen. Keep the cloud a bit in front of and around the player at chest height, never between the camera and the player, and start the camera zoomed out to about 25 studs so you see the player and the whole cloud. Rebuild game.rbxlx.</div></div>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>14</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Game 3 · Nanobot swarm</div>
+  <h2>What Claude <em>built</em></h2>
+  <div class="grid2" style="margin-bottom:3mm">
+    <table style="margin:0">
+      <tr><th>File</th><th>Job</th></tr>
+      <tr><td><code>client/Swarm</code></td><td>Moves and draws all 2&nbsp;000 cubes every frame</td></tr>
+      <tr><td><code>client/Controls</code></td><td>Click, <b>E</b>, <b>F</b>, hint bar</td></tr>
+      <tr><td><code>client/Camera</code></td><td>Starts the camera zoomed out</td></tr>
+      <tr><td><code>server/SwarmServer</code></td><td>Decides: follow, tornado or wall</td></tr>
+      <tr><td><code>server/World</code></td><td>White lab, grid, pillars</td></tr>
+    </table>
+    <img class="shot" src="img/swarm-wall.jpg" alt="" style="height:100%">
+  </div>
+  <h3>Numbers you can change <span class="pill">shared/SwarmConfig.luau</span></h3>
+  <table>
+    <tr><th>Setting</th><th>Now</th><th>Try</th></tr>
+    <tr><td><code>COUNT</code></td><td>2 000</td><td>1 500 if it stutters, 3 000 on a strong PC</td></tr>
+    <tr><td><code>CUBE_SIZE</code></td><td>0.75</td><td>0.4 for a fine dust cloud</td></tr>
+    <tr><td><code>TORNADO_HEIGHT</code></td><td>70</td><td>150 for a sky-high storm</td></tr>
+    <tr><td><code>TORNADO_LIFETIME</code></td><td>15 s</td><td>60 to keep it spinning</td></tr>
+    <tr><td><code>WALL_COLS × WALL_ROWS</code></td><td>50 × 40</td><td>keep it ≥ COUNT</td></tr>
+  </table>
+  <h3>Make it yours</h3>
+  <div class="prompt sm"><div class="who">Follow-up</div><div class="say">Make the cubes glow neon blue at night, and let the tornado pick up anything loose on the floor.</div></div>
+  <div class="prompt sm"><div class="who">Follow-up</div><div class="say">Press Q and the swarm forms a giant copy of my character that copies my moves.</div></div>
+  <div class="prompt sm"><div class="who">Follow-up</div><div class="say">Add a second swarm in red that chases the player, and the black swarm flies between them to block it.</div></div>
+  <p class="small muted"><b>Remix ideas:</b> a bee swarm, a flock of birds, magic sand that builds stairs, a robot army that follows the leader.</p>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>15</span></div>
+</section>
+
+<section class="page glow-left">
+  <div class="kicker">Chapter 07</div>
+  <h2>Let Claude <em>test</em> your game</h2>
+  <p class="lede" style="margin-bottom:5mm">With Studio connected (setup step 5), Claude can press Play, walk the character, take screenshots and read the errors - by itself. Open the game in Studio first, then in its Claude Code window paste:</p>
+  <div class="prompt"><div class="who">You → Claude Code</div><div class="say">Roblox Studio is open with this game. Use the Roblox Studio tools: start Play, walk the character straight into [the house], take a screenshot, read the Output for errors, then stop Play. Tell me in plain words if [the wall broke] and if anything is wrong.</div></div>
+  <div class="grid2">
+    <img class="shot" src="img/mcp-test.jpg" alt="" style="height:104mm;object-position:left top">
+    <div class="stack">
+      <div class="card"><b>What happened when we ran it</b><p class="muted">Claude pressed Play, walked the character into the house, reported 18 blocks broken, took a screenshot, read the Output and found no errors in the game's own scripts. Then it stopped Play.</p></div>
+      <div class="card"><b>What Claude can do in Studio</b>
+        <ul class="muted" style="margin:1.5mm 0 0">
+          <li>start and stop Play</li>
+          <li>walk the character, press keys, click</li>
+          <li>take screenshots of the game</li>
+          <li>read the Output window</li>
+          <li>read and edit scripts, run Luau</li>
+        </ul>
+      </div>
+      <div class="tip"><b>Best habit:</b> after every bigger change, ask Claude to test before you do.</div>
+    </div>
+  </div>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>16</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Chapter 08</div>
+  <h2>Fix-it prompts &amp; <em>troubleshooting</em></h2>
+  <table>
+    <tr><th style="width:36%">You see</th><th>Paste this in the game's Claude Code window</th></tr>
+    <tr><td><b>rojo build fails</b></td><td>rojo build fails with this error: [paste the error]. Fix it and build game.rbxlx again.</td></tr>
+    <tr><td><b>Play starts, nothing happens</b></td><td>I pressed Play and [nothing happens]. Use the Roblox Studio tools to start Play, read the Output, and fix every error you find.</td></tr>
+    <tr><td><b>Red text in Output</b></td><td>The Output shows this error: [paste]. Explain it in one sentence and fix it.</td></tr>
+    <tr><td><b>It stutters / low FPS</b></td><td>The game stutters. Find everything that runs every frame, move only the parts near the player, and keep the total part count under 15 000.</td></tr>
+    <tr><td><b>Wrong spawn / falling through</b></td><td>The player spawns [inside the house / under the floor]. Move the spawn point to [where] and make sure the player lands on solid ground.</td></tr>
+    <tr><td><b>Effect covers the camera</b></td><td>[The effect] covers the camera. Keep it in front of the player, never between the camera and the player, and start the camera zoomed out.</td></tr>
+    <tr><td><b>Too hard / can't get through</b></td><td>Players can't [get through the wall]. Make it easier and test it with the Roblox Studio tools.</td></tr>
+    <tr><td><b>Looks plain</b></td><td>Make the game look better without making it slower: nicer lighting, a sky, fog in the distance and colours that fit [the theme].</td></tr>
+    <tr><td><b>A change broke it</b></td><td>Type <code>/rewind</code> and go back to before the change. Then ask again, in smaller steps.</td></tr>
+    <tr><td><b>You want to learn</b></td><td>Explain what each script in this game does in simple words, and tell me which numbers I can change to make it feel different.</td></tr>
+  </table>
+  <div class="tip"><b>Change the [brackets].</b> They are your words: what you see, where you want it, your theme.</div>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>17</span></div>
+</section>
+
+<section class="page glow">
+  <div class="kicker">Chapter 09</div>
+  <h2>Write your own <em>game prompts</em></h2>
+  <p class="lede" style="margin-bottom:5mm">All three prompts in this kit have the same shape. Copy the shape, swap the idea.</p>
+  <div class="flow" style="margin-bottom:6mm">
+    <div><b>1</b><span><b>The world.</b> What it looks like: materials, colours, size, light.</span></div>
+    <div><b>2</b><span><b>The action.</b> What happens when the player does X.</span></div>
+    <div><b>3</b><span><b>The feel.</b> Smooth, bouncy, scary - and how it resets.</span></div>
+    <div><b>4</b><span><b>The ending.</b> “Build it as a Rojo project and build game.rbxlx.”</span></div>
+  </div>
+  <h3>Example · from idea to prompt</h3>
+  <p class="muted">Idea: “a floor that turns to ice where I walk”.</p>
+  <div class="prompt sm"><div class="who">Your prompt</div><div class="say"><b>World:</b> Make a Roblox game in this folder: a big grassy hill made of 1-stud green blocks under a winter sky. <b>Action:</b> Every block the player steps on freezes into slippery blue ice, and the player slides on ice. <b>Feel:</b> Ice cracks and melts back to grass after 8 seconds, with a soft crackle effect. Keep it smooth. <b>Ending:</b> Build it as a Rojo project and build game.rbxlx.</div></div>
+  <h3>Example · a game, not just an effect</h3>
+  <p class="muted">Idea: “escape the rising lava, with checkpoints”.</p>
+  <div class="prompt sm"><div class="who">Your prompt</div><div class="say">Make a Roblox game in this folder: a tall tower of floating platforms over a lava sea. The lava rises slowly; players jump up the platforms to escape. Every 10 platforms there is a checkpoint flag. Show the height reached on screen and a leaderboard of the best height. If the lava touches a player, they respawn at their last checkpoint. Build it as a Rojo project and build game.rbxlx.</div></div>
+  <div class="warn"><b>These two are examples of the formula</b> - we did not build them. Try them, and use chapters 07-08 if something needs fixing.</div>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>18</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Chapter 10</div>
+  <h2>More games <em>to try</em></h2>
+  <p class="muted" style="margin-bottom:5mm">Three more ideas from our reels, written with the same formula. Paste each into a new folder.</p>
+  <h3><span class="pill green">Tested</span> Wind &amp; grass</h3>
+  <div class="prompt sm"><div class="who">You → Claude Code</div><div class="say">Make a Roblox game in this folder: a huge field of tall green grass under a bright sky. Every grass blade is its own thin part, thousands of them, with slightly different heights and shades of green. Wind waves roll across the field so the blades sway in gusts. When the player walks through, the grass bends away from them and slowly stands back up after they pass. Keep it smooth: only animate the blades near the camera, and do it on the client. Build it as a Rojo project and build game.rbxlx.</div></div>
+  <p class="small muted" style="margin-top:-1mm">Claude built a field of 14 000 blades from this prompt on our first try.</p>
+  <h3><span class="pill amber">Idea</span> Neon bridge</h3>
+  <div class="prompt sm"><div class="who">You → Claude Code</div><div class="say">Make a Roblox game in this folder: a long suspension bridge at night over dark water, with two tall towers and glowing cables. The road is made of tiles; the tile under the player lights up in bright cyan neon and the light trails behind them, fading after a second. Neon lamps along the sides pulse slowly. Add fog, a starry sky and the city lights far away. Spawn the player at one end of the bridge. Build it as a Rojo project and build game.rbxlx.</div></div>
+  <h3><span class="pill amber">Idea</span> Red sinkhole</h3>
+  <div class="prompt sm"><div class="who">You → Claude Code</div><div class="say">Make a Roblox game in this folder: the ground is a big floor of red blocks, 1 stud each. When the player stands still for a second, the floor around them starts to crack and collapses into a deep round sinkhole - the blocks fall down with physics, ring by ring, and the player falls in. At the bottom there is a trampoline that throws them back up to the surface. After 10 seconds the hole fills back in, block by block. Build it as a Rojo project and build game.rbxlx.</div></div>
+  <div class="tip"><b>Two more follow-ups for games 1 and 2.</b> LEGO house: “When the player holds Shift and runs, the wall breaks in big chunks of 4 × 4 blocks instead of single blocks.” Vortex: “Give every player their own funnel colour, and when two funnels touch, the floor between them bounces up.”</div>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>19</span></div>
+</section>
+
+<section class="page glow-left">
+  <div class="kicker">Chapter 11</div>
+  <h2>Publish &amp; <em>earn Robux</em> the Roblox way</h2>
+  <h3>Publish checklist</h3>
+  <table>
+    <tr><th style="width:9mm"></th><th>Step</th></tr>
+    <tr><td>☐</td><td>Play it for 5 minutes yourself, then ask Claude to test it (chapter 07).</td></tr>
+    <tr><td>☐</td><td>In Studio: <b>File → Publish to Roblox</b>. A clear name and a one-line description.</td></tr>
+    <tr><td>☐</td><td>An icon and a thumbnail - a screenshot of the best moment works.</td></tr>
+    <tr><td>☐</td><td>Game Settings → Permissions → Public when you are ready.</td></tr>
+    <tr><td>☐</td><td>Fill in the maturity questionnaire honestly.</td></tr>
+    <tr><td>☐</td><td>Open it in the Roblox app on your phone and play once there too.</td></tr>
+  </table>
+  <h3>Ways Roblox lets games earn</h3>
+  <div class="grid2" style="margin-bottom:4mm">
+    <div class="card"><b>Passes</b><p class="muted">A one-time purchase for a lasting perk: a skin for the swarm, a second house colour. You create them on the Creator Dashboard.</p></div>
+    <div class="card"><b>Developer products</b><p class="muted">Things players can buy more than once, like a tornado refill. Also created on the Creator Dashboard.</p></div>
+  </div>
+  <div class="prompt sm"><div class="who">You → Claude Code</div><div class="say">I created a pass with ID [number] called [Blue Swarm]. When a player owns it, make their swarm cubes glow blue. Use MarketplaceService, check ownership on the server, and add a button that opens the purchase prompt.</div></div>
+  <div class="warn"><b>Be fair and follow Roblox rules.</b> Sell fun and looks, not power that ruins the game for others. No promises: most new games earn little at first, and results are not guaranteed.</div>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>20</span></div>
+</section>
+
+<section class="page glow">
+  <div class="kicker">Chapter 12</div>
+  <h2>The reel <em>playbook</em></h2>
+  <p class="lede" style="margin-bottom:5mm">Our Roblox reels got 57M views in 90 days. The nanobot swarm reel alone reached 4.4M people. This is how we film them.</p>
+  <table>
+    <tr><th>Format</th><th>What it shows</th><th>Why it works</th></tr>
+    <tr><td><b>“1 prompt = 1 game”</b></td><td>The prompt on screen, then the game</td><td>People want the prompt - that's your comment bait.</td></tr>
+    <tr><td><b>Satisfying physics</b></td><td>Walls breaking, floors sinking, swarms flying</td><td>Easy to rewatch; replays get pushed.</td></tr>
+    <tr><td><b>“AI vs student”</b></td><td>Two versions side by side</td><td>A built-in question makes people comment.</td></tr>
+  </table>
+  <div class="grid2" style="margin-bottom:4mm">
+    <div class="card">
+      <b>How to film</b>
+      <ol class="muted" style="margin:1.5mm 0 0">
+        <li>Record Play mode vertical, 1080 × 1920. Hide Studio panels.</li>
+        <li>The first 2 seconds decide everything: start on the most surprising frame, with text on screen.</li>
+        <li>15-30 seconds, every pause cut, captions word by word.</li>
+        <li>End with a question: “Would you play this?”</li>
+      </ol>
+    </div>
+    <img class="shot" src="img/swarm-tornado.jpg" alt="" style="height:100%">
+  </div>
+  <h3>Hooks you can use</h3>
+  <div class="grid2">
+    <div class="card small"><ul class="muted" style="margin:0"><li>“AI built this Roblox game from one prompt.”</li><li>“I gave Claude one sentence. This is the game.”</li><li>“This floor reacts to every step.”</li><li>“3 minutes, 1 prompt, 14 000 blocks.”</li></ul></div>
+    <div class="card small"><ul class="muted" style="margin:0"><li>“2 000 nanobots. One click.”</li><li>“I can run through this house.”</li><li>“Rate this AI game 1-10.”</li><li>“POV: you publish your first Roblox game.”</li></ul></div>
+  </div>
+  <p class="small muted" style="margin-top:3mm">Results are not guaranteed. Views depend on your game, your posting and the platforms.</p>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>21</span></div>
+</section>
+
+<section class="page">
+  <div class="kicker">Chapter 13 · Keep this page open</div>
+  <h2>Prompt <em>cheat sheet</em></h2>
+  <table class="cheat">
+    <tr><th>When</th><th>Type / paste</th></tr>
+    <tr><td>Start a game</td><td>New folder → right-click → Open in Terminal → <code>claude</code></td></tr>
+    <tr><td>New game</td><td>Make a Roblox game in this folder: [world]. When the player [action], [what happens]. [How it feels]. Build it as a Rojo project and build game.rbxlx.</td></tr>
+    <tr><td>Play it</td><td>Double-click <code>game.rbxlx</code> → <span class="kbd">F5</span></td></tr>
+    <tr><td>Change it</td><td>Make [thing] [bigger / faster / another colour] and rebuild game.rbxlx.</td></tr>
+    <tr><td>Add a feature</td><td>Add [feature]. Keep everything else the same.</td></tr>
+    <tr><td>Test it</td><td>Use the Roblox Studio tools: start Play, [do X], take a screenshot, read the Output, stop Play, tell me what's wrong.</td></tr>
+    <tr><td>Error</td><td>The Output shows: [paste]. Fix it and rebuild.</td></tr>
+    <tr><td>Lag</td><td>Only animate what is near the player, on the client. Keep parts under 15 000.</td></tr>
+    <tr><td>Undo</td><td><code>/rewind</code></td></tr>
+    <tr><td>Learn</td><td>Explain each script in simple words and list the numbers I can change.</td></tr>
+    <tr><td>Look better</td><td>Nicer lighting, sky and fog without making it slower.</td></tr>
+    <tr><td>Publish</td><td>Studio → File → Publish to Roblox</td></tr>
+  </table>
+  <div class="card" style="margin-top:4mm">
+    <div class="logo" style="font-size:13pt">SMART<span>CODE</span></div>
+    <p class="small muted" style="margin:2mm 0 0">Roblox AI Game Kit, version 2.0. New versions of this guide and the starter files: smartcode.academy/kit/access. Personal use only - please do not share or resell. Results are not guaranteed. Claude Code requires a paid Claude plan sold by Anthropic. Not affiliated with Roblox or Anthropic. Roblox and Roblox Studio are trademarks of Roblox Corporation; Claude is a trademark of Anthropic.</p>
+  </div>
+  <div class="foot"><span><b>SmartCode</b> · Roblox AI Game Kit</span><span>22</span></div>
+</section>
+
+</body>
+</html>

@@ -3,8 +3,9 @@
 import { Suspense, useEffect, useMemo, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import SiteHeader from '@/components/Nav/SiteHeader'
+import InAppBrowserNotice from '@/components/Funnel/InAppBrowserNotice'
 import { Link } from '@/i18n/navigation'
-import { programForCourseId } from '@/lib/billingCatalog'
+import { isSellableCourse, programForCourseId } from '@/lib/billingCatalog'
 import { LEGAL } from '@/lib/legalConfig'
 import { loadPaddle } from '@/lib/paddleClient'
 import {
@@ -45,6 +46,12 @@ function StartFlow() {
 			if (!courseId) {
 				setPhase('error')
 				setError('Pick a program first.')
+				return
+			}
+			// Old links to programs the site no longer sells land on the one
+			// product it does sell, instead of opening a checkout for it.
+			if (!isSellableCourse(courseId)) {
+				router.replace('/club')
 				return
 			}
 
@@ -157,6 +164,7 @@ function StartFlow() {
 						? `Getting ${program.label} ready.`
 						: 'One moment while we continue.'}
 				</p>
+				<InAppBrowserNotice />
 				{error ? <div className={styles.error}>{error}</div> : null}
 			</div>
 		)
@@ -170,7 +178,7 @@ function StartFlow() {
 				{error ? <div className={styles.error}>{error}</div> : null}
 				<div className={styles.footer}>
 					<p>
-						<Link href="/#programs">Back to programs</Link>
+						<Link href="/club">Back to the club</Link>
 					</p>
 				</div>
 			</div>

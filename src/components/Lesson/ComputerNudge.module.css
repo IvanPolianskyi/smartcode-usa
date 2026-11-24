@@ -1,0 +1,11 @@
+/* Phone-only note under a Roblox lesson: build this on your computer. */
+
+.upsell {
+	border: 1px solid rgba(252, 110, 81, 0.35);
+	background: rgba(252, 110, 81, 0.06);
+	border-radius: 14px;
+	padding: 0.8rem 0.9rem;
+	display: grid;
+	gap: 0.5rem;
+	font-size: 0.95rem;
+}

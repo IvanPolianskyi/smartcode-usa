@@ -14,6 +14,7 @@ import { getUserProgress } from '@/lib/authClient'
 import { useAuthSession } from '@/components/AuthSessionProvider'
 import { useCoursesListData } from '@/hooks/useCoursesListData'
 import { KNOWN_COURSE_IDS } from '@/lib/courseLessonAccess'
+import { isSellableCourse } from '@/lib/billingCatalog'
 import SiteHeader from '@/components/Nav/SiteHeader'
 import styles from './CoursesPage.module.css'
 
@@ -71,7 +72,15 @@ export default function CoursesPage() {
 
 			<section className={styles.coursesSection}>
 				<div className={styles.coursesGrid}>
-					{courses.map((course) => {
+					{courses
+						// Only Roblox is sold; the other programs stay visible to the
+						// people already enrolled in them.
+						.filter(
+							(course) =>
+								isSellableCourse(course.courseId) ||
+								user?.enrolledCourses?.includes(course.courseId)
+						)
+						.map((course) => {
 						const progress = progressData[course.courseId]
 						const isEnrolled = !!progress
 						const progressPercent = progress?.overallProgress || 0
@@ -97,12 +106,6 @@ export default function CoursesPage() {
 									</div>
 									<div className={styles.courseTitleSection}>
 										<h2 className={styles.courseTitle}>{course.title}</h2>
-										<div className={styles.courseMeta}>
-											<div className={styles.rating}>
-												<Star size={14} fill="#fbbf24" color="#fbbf24" />
-												<span>{course.rating}</span>
-											</div>
-										</div>
 									</div>
 								</div>
 

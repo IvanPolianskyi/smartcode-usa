@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { setRequestLocale } from 'next-intl/server'
 import Image from 'next/image'
-import { Star } from 'lucide-react'
+import { Link } from '@/i18n/navigation'
 import ProgramPricingFlow from '@/components/Billing/ProgramPricingFlow'
 import HeroDemo from '@/components/Visual/HeroDemo'
 import SiteHeader from '@/components/Nav/SiteHeader'
@@ -13,14 +13,14 @@ import { faqSchema, organizationSchema } from '@/lib/structuredData'
 import styles from './page.module.css'
 import SiteFooter from '@/components/Nav/SiteFooter'
 
-const HOME_DESCRIPTION = `Learn Roblox, Python, or AI by building real projects. Write code, run it, get it checked instantly. ${LEGAL.monthlyPrice}/month, first ${LEGAL.trialDays} days free, cancel anytime.`
+const HOME_DESCRIPTION = `Build Roblox games with AI: a step-by-step Roblox course, weekly live AI builds, and the Roblox Studio skills to turn AI code into a real game. Start free, then ${LEGAL.monthlyPrice}/month. Cancel anytime.`
 
 export const metadata = {
-	title: 'SmartCode - build a game people actually play',
+	title: 'SmartCode - build Roblox games with AI',
 	description: HOME_DESCRIPTION,
 	alternates: { canonical: '/' },
 	openGraph: {
-		title: 'SmartCode - build a game people actually play',
+		title: 'SmartCode - build Roblox games people actually play',
 		description: HOME_DESCRIPTION,
 		url: '/',
 	},
@@ -29,106 +29,76 @@ export const metadata = {
 		// type has to be restated - without it the share card silently drops to
 		// the small `summary` layout.
 		card: 'summary_large_image',
-		title: 'SmartCode - build a game people actually play',
+		title: 'SmartCode - build Roblox games people actually play',
 		description: HOME_DESCRIPTION,
 	},
 }
 
-const REVIEWS = [
-	{
-		name: 'Marcus',
-		initials: 'MK',
-		tone: 'coral',
-		role: 'Dad · Austin, TX',
-		context: 'after week 3',
-		stars: 5,
-		quote:
-			'He used to only play other people’s games. Last Tuesday he yelled from his room that his obstacle course finally worked - and made me watch the whole run. Twice.',
-		course: 'Roblox',
-	},
-	{
-		name: 'Jordan',
-		initials: 'JT',
-		tone: 'cyan',
-		role: '15 · learning on his own',
-		context: 'Discord bot shipped',
-		stars: 5,
-		quote:
-			'YouTube tutorials always lost me halfway. Here I hit Run and see what broke. Module 3 and I actually have a bot in our class server. Still messy. But it works.',
-		course: 'Python',
-	},
-	{
-		name: 'Sarah',
-		initials: 'SL',
-		tone: 'ink',
-		role: 'Mom · Denver, CO',
-		context: 'after the free days',
-		stars: 5,
-		quote:
-			'We tried the free days mostly to see if she’d stick with it. She did. She goes at her own pace after school - some days one lesson, some days four - and nobody is nagging her to do it.',
-		course: 'AI for Real Life',
-	},
-]
-
 const STEPS = [
 	{
-		title: 'Pick your program',
-		text: 'Roblox, Python, or AI for Real Life. One subscription covers one program - start with the one you actually want.',
-		href: '#programs',
+		title: 'Start building free',
+		text: 'Make a free account - no card - and build in Roblox Studio from the first lesson, with your code checked the moment you run it.',
+		href: '/free',
 	},
 	{
-		title: 'Study programming',
-		text: 'Learn by doing - write real code, hit Run, and get it checked instantly. No sitting through someone else’s build.',
+		title: 'Build with us live',
+		text: 'Every week we build a Roblox game live in Discord, using AI the way real developers do - and fixing the parts AI gets wrong.',
+		href: '/live',
 	},
 	{
-		title: 'Publish it and get seen',
-		text: 'Finish real projects. Publish them. We put the best student games in front of our Instagram audience for free.',
+		title: 'Join the club and ship',
+		text: 'All 92 lessons, club-only Discord channels, and a path to a published game. The best member games get featured on our Instagram.',
+		href: '/club',
 	},
 ]
 
 const INCLUDED = [
 	{
-		title: 'Lessons that check your work',
-		text: 'Write code, hit Run, and find out instantly if it works - no waiting for someone to grade it.',
+		title: 'Your code checked as you go',
+		text: 'Practice tasks in every lesson check your code the moment you run it, so you see right away what is wrong and how to fix it.',
 	},
 	{
-		title: 'A Discord full of builders',
-		text: 'A private community of students working on the same things. Get unstuck in minutes instead of giving up.',
+		title: 'Weekly live builds with AI',
+		text: 'Watch a game get built with AI tools in real time, ask questions, and learn the scripting that makes AI code actually work.',
 	},
 	{
-		title: 'Free promotion for your project',
-		text: 'Publish a game and we can feature it on our Instagram - the same account your friends already follow.',
+		title: 'Club-only Discord channels',
+		text: 'Members-only channels with other builders. Get unstuck in minutes instead of giving up.',
 	},
 	{
-		title: 'Every lesson in your program',
-		text: `One subscription, the whole program - ${BILLING_TIERS.standard.monthlyPrice}/month after the free days, and you can cancel in two clicks.`,
+		title: 'All 92 Roblox lessons',
+		text: `From your first part to a published game - ${BILLING_TIERS.standard.monthlyPrice}/month or ${BILLING_TIERS.standard.annualPrice}/year, and you can cancel in two clicks.`,
 	},
 ]
 
 const FAQ = [
 	{
 		q: "I've never written code. Can I still do this?",
-		a: 'Yes - that is who these programs are built for. Every one starts from zero and assumes you have never written a line of code. If you already have, you just move faster.',
+		a: 'Yes. The course starts from zero and assumes you have never written a line of code. If you already have, you just move faster.',
 	},
 	{
 		q: `What happens after the ${LEGAL.trialDays} free days?`,
-		a: `Your program continues at ${LEGAL.monthlyPrice}/month (or ${LEGAL.annualPrice}/year if you pick annual). Nothing is charged during the free days, and you can cancel before they end from your account page - it takes two clicks.`,
+		a: `Your club membership continues at ${LEGAL.monthlyPrice}/month (or ${LEGAL.annualPrice}/year if you pick annual). Nothing is charged during the free days, and you can cancel before they end from your account page - it takes two clicks.`,
 	},
 	{
 		q: "I'm not old enough to have a card. How do I pay?",
 		a: 'A parent or guardian can pay with their card and you keep your own account and login. Full pricing, refunds, and billing details are in our Terms and Refund Policy.',
 	},
 	{
-		q: 'Do I need to buy all three programs?',
-		a: `No. Each program is its own subscription, so you only pay for the one you are actually doing - ${BILLING_TIERS.standard.monthlyPrice}/month, or ${BILLING_TIERS.standard.annualPrice}/year if you pick annual.`,
+		q: 'Does AI build the game for me?',
+		a: 'No - it builds it with you. In our live builds we use AI tools the way developers do. The lessons teach you the Roblox Studio and Luau skills to understand AI code, fix it, and make the game your own.',
+	},
+	{
+		q: 'Are the live builds free?',
+		a: 'Yes. Anyone can join the weekly live build in our Discord - register on the live page and we email you the time and link. Club members also get members-only channels.',
 	},
 	{
 		q: 'What do I need to install?',
-		a: 'For Python and AI for Real Life, nothing - everything runs in your browser. For Roblox you install Roblox Studio, which is free.',
+		a: 'Roblox Studio, which is free, on a Windows or Mac computer. Everything else happens in your browser and in Discord.',
 	},
 	{
 		q: 'Will you really promote my game?',
-		a: 'We feature student projects on our Instagram at no extra cost - it is included in every plan, not an upsell. Student game reels on that account have gone from tens of thousands of views to 2.9 million.',
+		a: 'We pick the best member games and feature them on our Instagram at no extra cost. We cannot promise that every game gets featured or how many players it gets. Student game reels on that account have gone from tens of thousands of views to 2.9 million.',
 	},
 	{
 		q: 'How do I cancel?',
@@ -153,39 +123,40 @@ export default async function Home({ params }) {
 					<section className={styles.hero}>
 						<div className={styles.heroCopy}>
 							<h1 className={`${styles.heroTitle} ${styles.heroIn}`}>
-								Build a game people{' '}
-								<span className={styles.hl}>actually play</span>
+								Build Roblox games{' '}
+								<span className={styles.hl}>with AI</span>
 							</h1>
 							<p
 								className={`${styles.heroLede} ${styles.heroLedeMobile} ${styles.heroIn}`}
 								style={{ '--heroInDelay': '90ms' }}
 							>
-								Learn to code, build games and real projects - and get them in
-								front of people who actually play.
+								A step-by-step Roblox course, live AI builds every week, and the
+								skills to turn AI code into a real game.
 							</p>
 							<p
 								className={`${styles.heroLede} ${styles.heroLedeDesktop} ${styles.heroIn}`}
 								style={{ '--heroInDelay': '90ms' }}
 							>
-								Learn programming by making things that matter - games, apps,
-								real projects. When you ship something great, we put it in front of
-								the world so players can find it.
+								AI can write a Roblox script in seconds. Turning it into a game
+								people play is the skill. Learn Roblox Studio and Luau with an AI
+								helper in every lesson, build with us at weekly live AI sessions,
+								and ship your first game.
 							</p>
 							<div className={styles.heroCtas}>
-								<a
-									href="#programs"
+								<Link
+									href="/free"
 									className={`${styles.btnPrimary} ${styles.heroIn}`}
 									style={{ '--heroInDelay': '170ms' }}
 								>
-									Start free for {LEGAL.trialDays} days
-								</a>
-								<a
-									href="#how"
+									Start building free
+								</Link>
+								<Link
+									href="/live"
 									className={`${styles.btnGhost} ${styles.heroIn}`}
 									style={{ '--heroInDelay': '210ms' }}
 								>
-									See how it works
-								</a>
+									Join the free live build
+								</Link>
 							</div>
 						</div>
 						<div
@@ -200,10 +171,10 @@ export default async function Home({ params }) {
 
 			<section className={styles.section} id="programs">
 				<div className={`${styles.sectionHead} sc-reveal`}>
-					<h2 className={styles.sectionTitle}>Pick your program</h2>
+					<h2 className={styles.sectionTitle}>Join the club</h2>
 					<p className={styles.sectionLede}>
-						Each one is its own subscription, so you only pay for what you are
-						actually doing. Free for {LEGAL.trialDays} days, cancel anytime.
+						One membership for everything: the full Roblox course, live builds,
+						and club-only Discord. Free for {LEGAL.trialDays} days, cancel anytime.
 					</p>
 				</div>
 
@@ -217,16 +188,16 @@ export default async function Home({ params }) {
 			<section className={styles.section} id="showcase">
 				<div className={styles.showcase}>
 					<div className={`${styles.showcaseCopy} sc-reveal`}>
-						<p className={styles.showcaseEyebrow}>Included in every plan</p>
+						<p className={styles.showcaseEyebrow}>Included in the club</p>
 						<h2 className={styles.showcaseTitle}>
 							We put <span className={styles.hl}>student games</span> on{' '}
 							<span className={styles.hl}>Instagram</span>
 						</h2>
 						<p className={styles.showcaseLede}>
-							Finish <span className={styles.hl}>your project</span> and we
-							promote it to our audience for{' '}
-							<span className={styles.hl}>free</span>. Real projects, real
-							players - from tens of thousands of views to{' '}
+							Finish <span className={styles.hl}>your game</span> and the best
+							ones get featured to our audience for{' '}
+							<span className={styles.hl}>free</span>. Student game reels have
+							reached from tens of thousands of views to{' '}
 							<span className={styles.hl}>millions</span>.
 						</p>
 						<p className={styles.showcaseStat}>
@@ -262,7 +233,7 @@ export default async function Home({ params }) {
 				<div className={`${styles.sectionHead} sc-reveal`}>
 					<h2 className={styles.sectionTitle}>How it works</h2>
 					<p className={styles.sectionLede}>
-						Three steps. You are writing code in the first lesson.
+						Start free, build with us live, then join the club when you are ready.
 					</p>
 				</div>
 				<ol className={styles.stepGrid}>
@@ -302,7 +273,7 @@ export default async function Home({ params }) {
 				<div className={`${styles.sectionHead} sc-reveal`}>
 					<h2 className={styles.sectionTitle}>What you get</h2>
 					<p className={styles.sectionLede}>
-						All of it comes with every subscription - there is no upsell tier.
+						All of it comes with one club membership - there is no upsell tier.
 					</p>
 				</div>
 				<div className={styles.includedGrid}>
@@ -317,48 +288,6 @@ export default async function Home({ params }) {
 							</span>
 							<h3 className={styles.includedTitle}>{item.title}</h3>
 							<p className={styles.includedText}>{item.text}</p>
-						</article>
-					))}
-				</div>
-			</section>
-
-			<section className={styles.section} id="reviews">
-				<div className={`${styles.sectionHead} sc-reveal`}>
-					<h2 className={styles.sectionTitle}>What people actually say</h2>
-					<p className={styles.sectionLede}>
-						Parents and students - not polished marketing copy.
-					</p>
-				</div>
-				<div className={styles.reviewsGrid}>
-					{REVIEWS.map((review, index) => (
-						<article
-							key={review.name}
-							className={`${styles.reviewCard} ${styles[`reviewTone_${review.tone}`] || ''} sc-reveal`}
-							style={{ '--sc-reveal-delay': `${index * 90}ms`, '--review-i': index }}
-						>
-							<div className={styles.reviewTop}>
-								<div className={styles.reviewStars} aria-label={`${review.stars} out of 5 stars`}>
-									{Array.from({ length: review.stars }).map((_, i) => (
-										<Star key={i} size={14} fill="currentColor" />
-									))}
-								</div>
-								<span className={styles.reviewContext}>{review.context}</span>
-							</div>
-							<p className={styles.reviewQuote}>{review.quote}</p>
-							<div className={styles.reviewAuthor}>
-								<span
-									className={`${styles.reviewAvatar} ${styles[`avatar_${review.tone}`] || ''}`}
-									aria-hidden="true"
-								>
-									{review.initials}
-								</span>
-								<span className={styles.reviewMeta}>
-									<span className={styles.reviewName}>{review.name}</span>
-									<span className={styles.reviewRole}>
-										{review.role} · {review.course}
-									</span>
-								</span>
-							</div>
 						</article>
 					))}
 				</div>
@@ -385,15 +314,15 @@ export default async function Home({ params }) {
 
 			<section className={`${styles.close} sc-reveal`}>
 				<h2 className={styles.closeTitle}>
-					Stop watching other people build things
+					Stop watching other people build games
 				</h2>
 				<p className={styles.closeLede}>
-					Pick a program and write your first line of code today. Free for{' '}
-					{LEGAL.trialDays} days, then {LEGAL.monthlyPrice}/month. Cancel anytime.
+					Start building in Roblox Studio today - free, no card. Join the club when
+					you want the full course: {LEGAL.monthlyPrice}/month, cancel anytime.
 				</p>
-				<a href="#programs" className={styles.btnPrimary}>
-					Start free for {LEGAL.trialDays} days
-				</a>
+				<Link href="/free" className={styles.btnPrimary}>
+					Start building free
+				</Link>
 			</section>
 
 			<SiteFooter />

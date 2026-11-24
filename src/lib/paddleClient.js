@@ -8,6 +8,28 @@ import { initializePaddle } from '@paddle/paddle-js'
 let paddlePromise = null
 /** @type {string | null} */
 let paddlePwCustomerId = null
+/** @type {Set<(event: any) => void>} */
+const eventListeners = new Set()
+
+/**
+ * Listen to Paddle.js checkout events (checkout.loaded, checkout.payment.failed,
+ * checkout.completed, …). Returns an unsubscribe function. Listener errors are
+ * swallowed so analytics can never break a checkout.
+ */
+export function onPaddleEvent(listener) {
+	eventListeners.add(listener)
+	return () => eventListeners.delete(listener)
+}
+
+function emitPaddleEvent(event) {
+	for (const listener of eventListeners) {
+		try {
+			listener(event)
+		} catch {
+			/* analytics only */
+		}
+	}
+}
 
 /**
  * Initialise Paddle.js once per page load.
@@ -66,6 +88,7 @@ export function loadPaddle(options = {}) {
 	const init = {
 		token,
 		environment,
+		eventCallback: emitPaddleEvent,
 	}
 	if (nextPw) {
 		init.pwCustomer = { id: nextPw }

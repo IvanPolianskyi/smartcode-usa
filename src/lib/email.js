@@ -196,3 +196,97 @@ export async function sendWelcomeEmail({ to, name, programName, dashboardUrl, di
 		text,
 	})
 }
+
+function escapeHtml(value) {
+	return String(value || '')
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+}
+
+/**
+ * Confirmation for a free live build sign-up. With no `event` it is a
+ * waitlist confirmation ("we will email you the next date").
+ */
+export async function sendLiveRegistrationEmail({
+	to,
+	name,
+	event = null,
+	joinUrl = '',
+	calendarUrl = '',
+	icsUrl = '',
+	discordUrl = '',
+}) {
+	const hi = name ? `Hi ${escapeHtml(name)},` : 'Hi,'
+	const clubUrl = `${SITE_URL}/club`
+	const freeUrl = `${SITE_URL}/free`
+
+	if (!event) {
+		const title = "You're on the list for the next live build"
+		const contentHtml = `
+			<h1 class="h1">You're on the list 🎮</h1>
+			<p class="p">${hi}</p>
+			<p class="p">The next free live build is being scheduled. We'll email you the date and the link as soon as it's set.</p>
+			<p class="p">While you wait, start building in Roblox Studio - free, no card:</p>
+			<div class="btn-wrap"><a href="${freeUrl}" class="btn" target="_blank">Start building free</a></div>
+			<p class="p">Hang out with other builders in our Discord: <a href="${discordUrl}">${discordUrl}</a></p>
+			<p class="p">See you soon,<br><strong>SmartCode</strong></p>
+		`
+		const text = `${hi}\n\nThe next free live build is being scheduled. We'll email you the date and link.\n\nStart building free: ${freeUrl}\nDiscord: ${discordUrl}\n\nSmartCode`
+		return sendEmail({ to, subject: title, html: emailLayout({ title, previewText: 'We will email you the date and link.', contentHtml }), text })
+	}
+
+	const when = new Date(event.startsAt).toUTCString().replace(' GMT', ' UTC')
+	const title = `You're in: ${event.title}`
+	const contentHtml = `
+		<h1 class="h1">You're in 🎮</h1>
+		<p class="p">${hi}</p>
+		<p class="p"><strong>${escapeHtml(event.title)}</strong><br>${when}</p>
+		<div class="btn-wrap"><a href="${joinUrl}" class="btn" target="_blank">Join the live build</a></div>
+		<div class="box">
+			<p style="margin: 0 0 8px; font-size: 14px; color: #475569;">Add it to your calendar so you get a reminder:</p>
+			<p style="margin: 0; font-size: 14px;"><a href="${calendarUrl}" style="color: #2563eb;">Google Calendar</a> · <a href="${icsUrl}" style="color: #2563eb;">Apple / Outlook</a></p>
+		</div>
+		<p class="p">The live build happens in our Discord. Join now so you're ready: <a href="${discordUrl}">${discordUrl}</a></p>
+		<p class="p">Want a head start? Start building before we go live - free, no card: <a href="${freeUrl}">${freeUrl}</a></p>
+		<p class="p">See you there,<br><strong>SmartCode</strong></p>
+		<p class="p" style="font-size: 12px; color: #94a3b8;">Curious about the full course? <a href="${clubUrl}" style="color: #94a3b8;">SmartCode Club</a></p>
+	`
+	const text = `${hi}\n\nYou're registered: ${event.title}\n${when}\n\nJoin link: ${joinUrl}\nGoogle Calendar: ${calendarUrl}\nApple / Outlook: ${icsUrl}\nDiscord: ${discordUrl}\n\nStart building free: ${freeUrl}\n\nSmartCode`
+	return sendEmail({ to, subject: title, html: emailLayout({ title, previewText: when, contentHtml }), text })
+}
+
+/** "Open this on your computer" - Roblox Studio does not run on phones. */
+export async function sendLessonLinkEmail({ to, name, lessonTitle, lessonUrl }) {
+	const hi = name ? `Hi ${escapeHtml(name)},` : 'Hi,'
+	const title = `Open on your computer: ${lessonTitle}`
+	const contentHtml = `
+		<h1 class="h1">Your lesson is ready on your computer 💻</h1>
+		<p class="p">${hi}</p>
+		<p class="p">Roblox Studio runs on Windows and Mac, so open this link on your computer to build along:</p>
+		<p class="p"><strong>${escapeHtml(lessonTitle)}</strong></p>
+		<div class="btn-wrap"><a href="${lessonUrl}" class="btn" target="_blank">Open the lesson</a></div>
+		<p class="p">Don't have Roblox Studio yet? It's free: <a href="https://create.roblox.com/">create.roblox.com</a></p>
+		<p class="p">See you there,<br><strong>SmartCode</strong></p>
+	`
+	const text = `${hi}\n\nOpen this lesson on your computer (Roblox Studio runs on Windows and Mac):\n${lessonTitle}\n${lessonUrl}\n\nRoblox Studio is free: https://create.roblox.com/\n\nSmartCode`
+	return sendEmail({ to, subject: title, html: emailLayout({ title, previewText: 'Roblox Studio runs on your computer', contentHtml }), text })
+}
+
+/** Sent by the webhook after a kit purchase: one-time login link straight to the kit. */
+export async function sendKitAccessEmail({ to, name, kitTitle, loginUrl }) {
+	const hi = name ? `Hi ${escapeHtml(name)},` : 'Hi,'
+	const title = `Your ${kitTitle} is ready`
+	const contentHtml = `
+		<h1 class="h1">You're in 🎮</h1>
+		<p class="p">${hi}</p>
+		<p class="p">Thanks for getting the <strong>${escapeHtml(kitTitle)}</strong>. Tap the button to open your kit - no password needed:</p>
+		<div class="btn-wrap"><a href="${loginUrl}" class="btn" target="_blank">Open my kit</a></div>
+		<p class="p" style="font-size: 13px; color: #64748b;">The button works once and for 7 days. Lost it? Ask for a new link at smartcode.academy/kit/access.</p>
+		<p class="p">Roblox Studio runs on Windows and Mac - open the kit on your computer to build along.</p>
+		<p class="p">Have fun building,<br><strong>SmartCode</strong></p>
+	`
+	const text = `${hi}\n\nThanks for getting the ${kitTitle}. Open your kit (no password needed, link works once for 7 days):\n${loginUrl}\n\nSmartCode`
+	return sendEmail({ to, subject: title, html: emailLayout({ title, previewText: 'Open your kit - no password needed', contentHtml }), text })
+}

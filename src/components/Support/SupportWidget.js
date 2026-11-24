@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import {
 	ChevronDown,
 	HelpCircle,
@@ -27,24 +28,28 @@ const SUPPORT_PHONE =
 
 const PRESALE_FAQS = [
 	{
-		q: 'What age is this suitable for?',
-		a: 'Any age works. Lessons start from zero - kids, teens, and adults can all learn at their own pace.',
+		q: 'Who is this for?',
+		a: 'Anyone who wants to build Roblox games - beginners included. If you are under 18, ask a parent or guardian to pay; the account is yours.',
 	},
 	{
-		q: 'What computer do we need?',
-		a: 'For Python & AI, any laptop/Chromebook with a web browser. For Roblox, a Windows PC or Mac capable of running the free Roblox Studio app.',
+		q: 'What computer do I need?',
+		a: 'A Windows PC or Mac that runs the free Roblox Studio app. Roblox Studio does not run on phones or Chromebooks.',
 	},
 	{
-		q: 'How does the 3-day trial work?',
-		a: 'You get immediate full access to all course lessons and the student Discord for 3 days. If you cancel before the trial ends, you are charged $0.',
+		q: 'What is the difference between the kit and the club?',
+		a: 'The Roblox AI Game Kit is a one-time $19 download: the Claude Code setup, the prompts for 3 games and the finished game files. SmartCode Club is the full 92-lesson course with live builds, billed monthly or yearly.',
 	},
 	{
-		q: 'How do live lessons work (Premium)?',
-		a: 'On the Premium plan ($20/mo), students get two live Zoom/Meet teacher sessions every week in small groups, with recordings available if you miss one.',
+		q: 'Can I get a refund?',
+		a: 'Yes - email us within 30 days of your first payment for a full refund.',
 	},
 ]
 
+/** Sales landings stay focused on one button - no support bubble there. */
+const HIDDEN_ON = /^(\/[a-z]{2})?\/(kit|shorts)(\/|$)/
+
 export default function SupportWidget() {
+	const pathname = usePathname() || ''
 	const [isOpen, setIsOpen] = useState(false)
 	const cardRef = useRef(null)
 
@@ -69,6 +74,8 @@ export default function SupportWidget() {
 			document.removeEventListener('mousedown', handleClickOutside)
 		}
 	}, [isOpen])
+
+	if (HIDDEN_ON.test(pathname)) return null
 
 	return (
 		<aside className={styles.container} ref={cardRef} aria-label="Support & FAQ widget">

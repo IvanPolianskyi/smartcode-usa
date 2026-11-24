@@ -17,5 +17,11 @@ export const SUBSCRIPTION_EVENT_TYPES = [
 	'subscription.canceled',
 ]
 
+/** One-time purchases (kits). Subscription renewals also fire this; non-kit ones are ignored. */
+export const TRANSACTION_EVENT_TYPES = ['transaction.completed']
+
+/** Everything the webhook destination must be subscribed to. */
+export const WEBHOOK_EVENT_TYPES = [...SUBSCRIPTION_EVENT_TYPES, ...TRANSACTION_EVENT_TYPES]
+
 /** Path Paddle should POST to. */
 export const WEBHOOK_PATH = '/api/billing/webhook'

@@ -1,0 +1,150 @@
+.toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+.insights {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.insight {
+	border-radius: 10px;
+	padding: 0.7rem 0.9rem;
+	font-size: 0.92rem;
+	line-height: 1.45;
+	border: 1px solid var(--sc-line, rgba(20, 21, 26, 0.1));
+	background: var(--sc-surface, #fff);
+}
+
+.warn {
+	border-color: #f0b44c;
+	background: #fff8ea;
+}
+
+.good {
+	border-color: #4fbf7f;
+	background: #effaf3;
+}
+
+.bars {
+	display: flex;
+	flex-direction: column;
+	gap: 0.55rem;
+}
+
+.barRow {
+	display: grid;
+	grid-template-columns: minmax(110px, 200px) 1fr auto;
+	gap: 0.75rem;
+	align-items: center;
+	font-size: 0.9rem;
+}
+
+.barTrack {
+	height: 14px;
+	border-radius: 7px;
+	background: var(--sc-line, rgba(20, 21, 26, 0.08));
+	overflow: hidden;
+}
+
+.barFill {
+	height: 100%;
+	border-radius: 7px;
+	background: #4f86ff;
+}
+
+.barValue {
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+	color: var(--sc-muted, #5b616c);
+}
+
+.barValue b {
+	color: var(--sc-ink, #14151a);
+}
+
+.days {
+	display: flex;
+	align-items: flex-end;
+	gap: 3px;
+	height: 140px;
+	padding-top: 8px;
+}
+
+.day {
+	flex: 1;
+	min-width: 4px;
+	background: #4f86ff;
+	border-radius: 3px 3px 0 0;
+	position: relative;
+}
+
+.dayBuy {
+	position: absolute;
+	top: -8px;
+	left: 50%;
+	width: 6px;
+	height: 6px;
+	margin-left: -3px;
+	border-radius: 50%;
+	background: #1f9d55;
+}
+
+.dayAxis {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.75rem;
+	color: var(--sc-muted, #8b919c);
+	margin-top: 4px;
+}
+
+.twoCol {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	gap: 1.75rem;
+}
+
+.tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	margin-bottom: 0.75rem;
+}
+
+.tab {
+	border: 1px solid var(--sc-line, rgba(20, 21, 26, 0.15));
+	background: var(--sc-surface, #fff);
+	border-radius: 999px;
+	padding: 0.3rem 0.8rem;
+	font: inherit;
+	font-size: 0.85rem;
+	cursor: pointer;
+}
+
+.tabOn {
+	background: #14151a;
+	border-color: #14151a;
+	color: #fff;
+}
+
+.num {
+	text-align: right !important;
+	font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 560px) {
+	.barRow {
+		grid-template-columns: 1fr auto;
+	}
+	.barTrack {
+		grid-column: 1 / -1;
+		grid-row: 2;
+	}
+}

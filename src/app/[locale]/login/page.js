@@ -16,11 +16,9 @@ const PERKS = [
 	'Manage your subscription from your dashboard',
 ]
 
-const PROGRAMS = [
-	{ tone: 'coral', label: 'Roblox Studio' },
-	{ tone: 'cyan', label: 'Python' },
-	{ tone: 'violet', label: 'AI for Real Life' },
-]
+// The site sells one product now (Roblox). Python / AI for Real Life
+// subscribers still log in here and find their courses in the dashboard.
+const PROGRAMS = [{ tone: 'coral', label: 'Roblox Studio' }]
 
 function LoginAside() {
 	return (
@@ -120,7 +118,7 @@ function LoginForm() {
 		) {
 			return {
 				kind: 'info',
-				text: 'Log in to continue. New here? Create an account, then subscribe to a program.',
+				text: 'Log in to continue. New here? Create a free account and start building.',
 			}
 		}
 		return null

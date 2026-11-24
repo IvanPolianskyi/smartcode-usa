@@ -17,13 +17,14 @@ import {
 	startPath,
 } from '@/lib/startCheckout'
 import GoogleSignInButton from '@/components/Auth/GoogleSignInButton'
+import InAppBrowserNotice from '@/components/Funnel/InAppBrowserNotice'
+import { FREE_FIRST_LESSON_PATH } from '@/lib/freeStart'
 import styles from '../login/Auth.module.css'
 
 const PERKS = [
-	`${LEGAL.trialDays} days free - nothing is charged today`,
-	'Write real code and get it checked instantly',
-	'Private Discord with other builders',
-	`Cancel anytime · ${LEGAL.refundDays}-day money-back`,
+	'Start building in Roblox Studio free - no card',
+	'Free weekly live builds with AI in our Discord',
+	`Club: ${LEGAL.trialDays} days free, cancel anytime · ${LEGAL.refundDays}-day money-back`,
 ]
 
 function RegisterAside() {
@@ -31,11 +32,11 @@ function RegisterAside() {
 		<aside className={styles.aside}>
 			<p className={styles.asideEyebrow}>Start free</p>
 			<h2 className={styles.asideTitle}>
-				Build things people <em>actually use.</em>
+				Build Roblox games people <em>actually play.</em>
 			</h2>
 			<p className={styles.asideLede}>
-				Create your account in under a minute, pick a program, and write your
-				first line of code today.
+				Create your account in under a minute and start building in Roblox
+				Studio today.
 			</p>
 			<ul className={styles.perkList}>
 				{PERKS.map((text) => (
@@ -143,7 +144,7 @@ function RegisterForm() {
 			const safeRedirect =
 				redirectParam.startsWith('/') && !redirectParam.startsWith('//')
 					? redirectParam
-					: '/pricing'
+					: FREE_FIRST_LESSON_PATH
 			router.push(safeRedirect)
 			router.refresh()
 			return
@@ -207,8 +208,10 @@ function RegisterForm() {
 			<p className={styles.lede}>
 				{chosenProgram
 					? `Free to join. Next step is checkout for ${chosenProgram.label} - nothing is charged today.`
-					: 'Free to join. You pick a program next - nothing is charged today.'}
+					: 'Free to join, no card. You go straight to your first lesson.'}
 			</p>
+
+			{chosenProgram ? <InAppBrowserNotice /> : null}
 
 			{banner ? (
 				<div

@@ -16,7 +16,8 @@ export default function SiteFooter() {
 				<span className={styles.footerBrand}>SmartCode</span>
 
 				<div className={styles.footerLinks}>
-					<Link href="/pricing">Pricing</Link>
+					<Link href="/club">Club</Link>
+					<Link href="/live">Live build</Link>
 					<Link href="/contact">Contact</Link>
 					<Link href="/terms">Terms</Link>
 					<Link href="/privacy">Privacy</Link>

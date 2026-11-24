@@ -29,7 +29,8 @@ export default async function ContactPage({ params }) {
 					<h1 className={styles.sectionTitle}>Contact us</h1>
 					<p className={styles.sectionLede}>
 						{LEGAL.brandName} is an online learning platform for self-paced
-						programming courses (Roblox Studio, Python, and AI). Questions
+						Roblox game development: a self-paced Roblox Studio course with
+						weekly live builds. Questions
 						before you subscribe? Reach us directly — we typically reply within{' '}
 						{LEGAL.complaintAckDays} business days.
 					</p>
@@ -59,17 +60,17 @@ export default async function ContactPage({ params }) {
 					<div className={contactStyles.card}>
 						<h2 className={contactStyles.cardTitle}>Subscription pricing (USD)</h2>
 						<p className={contactStyles.priceNote}>
-							Per program. {LEGAL.trialDays}-day free trial, then:
+							SmartCode Club. {LEGAL.trialDays}-day free trial, then:
 						</p>
 						<ul className={contactStyles.priceList}>
 							<li>
-								<strong>Standard</strong> — {BILLING_TIERS.standard.monthlyPrice}
-								/month or {BILLING_TIERS.standard.annualPrice}/year (platform +
-								Discord)
+								<strong>Club</strong> — {BILLING_TIERS.standard.monthlyPrice}
+								/month or {BILLING_TIERS.standard.annualPrice}/year (full Roblox
+								course, live builds, club-only Discord)
 							</li>
 						</ul>
 						<p>
-							<Link href="/pricing">View plans and start a trial</Link>
+							<Link href="/club">See the club and start a trial</Link>
 						</p>
 					</div>
 

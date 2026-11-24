@@ -22,7 +22,7 @@ function Brand({ href, asAnchor }) {
 				/>
 			</div>
 			SmartCode
-			<span className={styles.tag}> - programming courses</span>
+			<span className={styles.tag}> - Roblox games with AI</span>
 		</>
 	)
 
@@ -63,8 +63,11 @@ function NavActions({ ctaHref, ctaAsAnchor, onLogout }) {
 
 	return (
 		<>
-			<Link href="/pricing" className={styles.quiet}>
-				Pricing
+			<Link href="/live" className={styles.quiet}>
+				Live build
+			</Link>
+			<Link href="/club" className={styles.quiet}>
+				Club
 			</Link>
 			<HomeNavAuth />
 			{cta}
@@ -93,12 +96,13 @@ export default function SiteHeader({
 }) {
 	const isHome = variant === 'home'
 	const brandHref = isHome ? '#top' : '/'
-	const ctaHref = isHome ? '#programs' : '/#programs'
+	const ctaHref = '/free'
 
-	const actions = children || (
+	// Sales pages keep visitors on the offer: brand only, no other exits.
+	const actions = variant === 'sales' ? null : children || (
 		<NavActions
 			ctaHref={ctaHref}
-			ctaAsAnchor={isHome}
+			ctaAsAnchor={false}
 			onLogout={onLogout}
 		/>
 	)
