@@ -83,10 +83,11 @@ export default function KitBuyButton({ kitId, children, className = 'sc-btn sc-b
 		completed = false
 		try {
 			const Paddle = await loadPaddle()
+			const promo = readPromoCode()
 			Paddle.Checkout.open({
 				items: [{ priceId, quantity: 1 }],
 				customer: user?.email ? { email: user.email } : undefined,
-				discountCode: readPromoCode() || undefined,
+				discountCode: promo || undefined,
 				customData: {
 					kit: kitId,
 					src: source,
@@ -98,6 +99,9 @@ export default function KitBuyButton({ kitId, children, className = 'sc-btn sc-b
 				settings: {
 					displayMode: 'overlay',
 					variant: 'one-page',
+					// An empty "Add discount code" box sends people off to hunt for
+					// coupons. Show it only when they came with a promo link.
+					showAddDiscounts: Boolean(promo),
 					successUrl: `${window.location.origin}/kit/thanks?kit=${encodeURIComponent(kitId)}`,
 				},
 			})
