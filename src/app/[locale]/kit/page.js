@@ -68,7 +68,7 @@ export default async function KitPage({ params }) {
 
 			<header className={s.hero}>
 				<div className={s.wrap}>
-					<div className={s.pill}>57M+ views on our Roblox reels</div>
+					<div className={s.pill}>57M+ views on Instagram</div>
 					<h1>
 						Build <span className={s.accent}>Roblox games</span> with AI.
 					</h1>
