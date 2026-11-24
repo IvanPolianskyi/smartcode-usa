@@ -74,8 +74,8 @@ export default async function KitPage({ params }) {
 					</h1>
 
 					<div className={s.phones}>
-						<KitClip src="/kits/clips/vortex.mp4" poster="/kits/clips/vortex.jpg" className={s.phone} />
-						<KitClip src="/kits/clips/blocks.mp4" poster="/kits/clips/blocks.jpg" className={s.phone} />
+						<KitClip src="/kits/clips/vortex.mp4" poster="/kits/clips/vortex.jpg" className={s.phone} priority />
+						<KitClip src="/kits/clips/blocks.mp4" poster="/kits/clips/blocks.jpg" className={s.phone} priority />
 					</div>
 
 					<div className={s.stats}>
